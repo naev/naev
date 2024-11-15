@@ -330,7 +330,7 @@ function land()
       populate_bar()
       mem.official = misn.npcAdd("cleanNbegin", _("An official"), mem.officialFace, _("This person seems to be looking for suitable combat pilots."))
 
-      elseif mem.stage == 3 and spob.cur() == mispla then  --player will be payed
+      elseif mem.stage == 3 and spob.cur() == mispla then  --player will be paid
 
       if mem.level == 5 then  --you are the champion
          tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))

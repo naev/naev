@@ -70,14 +70,14 @@ She coughs a bit, and although she tries to hide it, you notice speckles of bloo
 
    vn.label("decline")
    zuri(_([["I'll be waiting."
-She sort of slumps at the wall, you're not sure if she's still concious.]]))
+She sort of slumps at the wall, you're not sure if she's still conscious.]]))
    vn.done()
 
    vn.label("accept")
    vn.func( function () mem.state=0 end )
    vn.na(_([[You manage to help get Zuri up to her feet, and begin to drag her to the spaceport.]]))
    vn.na(_([[With all the commotion going on the Jade Court, most of the security is preoccupied and barely give you a second glance as they run around following orders.]]))
-   vn.na(_([[Eventually you make it unnoticed to the spaceport and manage sneak both Zuri, who seems to be breathing very hard, and Kex into ship. As soon as you help her into a bunk bed, her body seems to lose tension as her conciousness fades away.]]))
+   vn.na(_([[Eventually you make it unnoticed to the spaceport and manage to sneak both Zuri, who seems to be breathing very hard, and Kex into the ship. As soon as you help her into a bunk bed, her body seems to lose tension as her consciousness fades away.]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(_([[Suddenly, an alarm starts blaring. It seems like the situation is getting worse and the station is headed for a lock down.]]))
    vn.na(_([[As the station gates begin to close, you deftly activate your ship, hit the accelerator and aim for free space. It's a close call with the spaceport almost clamping down on your ship, but you break through.]]))
@@ -290,7 +290,7 @@ function spawn_bogeys ()
       m.guardpos = { trialspb:pos(), jmp:pos() }
    end
 
-   -- Spam stuff everytime they spawn
+   -- Spam stuff every time they spawn
    local pp = player.pilot()
    local inr, nofuz = l:inrange( pp )
    if inr and nofuz then

@@ -338,7 +338,7 @@ end
 local function spawn_dvaereds( ships )
    local plts = {}
    for k,v in ipairs(ships) do
-      -- We exploit the 'guard' AI to get the Dvaered to go ontop of the
+      -- We exploit the 'guard' AI to get the Dvaered to go on top of the
       -- interrogation ship and destroy it
       local p = pilot.add( v, "Dvaered", dvaeredsys, nil, {ai="guard"} )
       p:setVisplayer(true)

@@ -206,7 +206,7 @@ function scene02 ()
    vn.na(_([[Chattering amongst themselves, they begin to hide themselves along the stars.]]))
    vn.func( function ()
       for k,p in ipairs{pilot_ya, pilot_yb} do
-         -- Shouldn't be targetted by other enemies since they are invincible
+         -- Shouldn't be targeted by other enemies since they are invincible
          p:control()
          p:stealth()
       end

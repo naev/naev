@@ -1,0 +1,29 @@
+name: Spellcheck
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  spellcheck:
+    name: Spelling
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        show-progress: false
+    - uses: codespell-project/actions-codespell@master
+      with:
+#        builtin: clear,en-GB_to_en-OED,en-US_to_en-OED
+        path: dat/missions/
+        exclude_file: .codespell.exclude
+        ignore_words_file: .codespell.words.exclude
+#        skip: dat/*.lua

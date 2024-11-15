@@ -140,13 +140,13 @@ function enter_ship()
     vn.na(_("You wonder what to do."))
     vn.menu( {
         { _("Explore the spaceport"), "spaceport" },
-        { _("Take off immediately"), "abbort" },
+        { _("Take off immediately"), "abort" },
         { _("Start learning your speech"), "learn" },
     } )
     vn.label( "at_ship_learned" )
     vn.menu( {
         { _("Explore the spaceport"), "spaceport" },
-        { _("Take off immediately"), "abbort" },
+        { _("Take off immediately"), "abort" },
     } )
 
     vn.label( "at_spaceport" )
@@ -175,8 +175,8 @@ function enter_ship()
     } )
 
 
-    vn.label( "abbort" )
-    vn.na(_("This is too much! You better leave before doing anything embarrassing or humiliating."))
+    vn.label( "abort" )
+    vn.na(_("This is too much! You better leave before doing anything embarrassing or humiliating happens."))
     vn.func( function ()
         misn.finish(false)
     end )

@@ -417,7 +417,7 @@ function landed_lab ()
    end )
 
    vn.label("living")
-   vn.na(_("You make your way through a tight, nearly impassible passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here. It rather seems all abandoned."))
+   vn.na(_("You make your way through a tight, nearly impassable passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here. It rather seems all abandoned."))
    vn.na(_("Eventually, you reach a very small room with a bed capsule. The ground and bed are splattered with blood, but it seems very old and desiccated. Some empty medical syringes and pouches are scattered on the floor."))
    vn.na(_("You turn over everything, but find nothing of interest."))
    vn.func( function () check_living = true end )
