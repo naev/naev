@@ -197,9 +197,6 @@ pub fn naev() -> Result<()> {
         naevc::print_SDLversion();
         nlog!("");
 
-        /* Random numbers, TODO replace with rust rand library. */
-        naevc::rng_init();
-
         /* Set up OpenGL. */
         if naevc::gl_init(0) != 0 {
             let err = gettext("Initializing video output failed, exiting…");

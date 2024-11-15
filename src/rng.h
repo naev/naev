@@ -44,9 +44,6 @@
 #define RNG_3SIGMA()                                                           \
    NormalInverse( 0.0013498985 + RNGF() * ( 1. - 0.0013498985 * 2. ) )
 
-/* Init */
-void rng_init( void );
-
 /* Random functions */
 unsigned int randint( void );
 double       randfp( void );
