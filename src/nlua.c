@@ -81,88 +81,9 @@ static int        luaB_loadstring( lua_State *L );
 static int        lua_cache_cmp( const void *p1, const void *p2 );
 static int        nlua_errTraceInternal( lua_State *L, int idx );
 
-/* gettext */
-static int            nlua_gettext( lua_State *L );
-static int            nlua_ngettext( lua_State *L );
-static int            nlua_pgettext( lua_State *L );
-static int            nlua_gettext_noop( lua_State *L );
-static const luaL_Reg gettext_methods[] = {
-   { "gettext", nlua_gettext },
-   { "ngettext", nlua_ngettext },
-   { "pgettext", nlua_pgettext },
-   { "gettext_noop", nlua_gettext_noop },
-   { 0, 0 } }; /**< Vector metatable methods. */
-
 static const lua_CFunction loaders[] = {
    nlua_package_preload, nlua_package_loader_lua, nlua_package_loader_c,
    nlua_package_loader_croot, NULL }; /**< Our loaders. */
-
-/**
- * @brief gettext support.
- *
- * @usage _( str )
- *    @luatparam str String to gettext on.
- *    @luatreturn The string converted to gettext.
- * @luafunc gettext
- */
-static int nlua_gettext( lua_State *L )
-{
-   const char *str = luaL_checkstring( L, 1 );
-   lua_pushstring( L, _( str ) );
-   return 1;
-}
-
-/**
- * @brief gettext support for singular and plurals.
- *
- * @usage ngettext( msgid1, msgid2, n )
- *    @luatparam msgid1 Singular form.
- *    @luatparam msgid2 Plural form.
- *    @luatparam n Number of elements.
- *    @luatreturn The string converted to gettext.
- * @luafunc ngettext
- */
-static int nlua_ngettext( lua_State *L )
-{
-   const char *stra = luaL_checkstring( L, 1 );
-   const char *strb = luaL_checkstring( L, 2 );
-   int         n    = luaL_checkinteger( L, 3 );
-   lua_pushstring( L, n_( stra, strb, n ) );
-   return 1;
-}
-
-/**
- * @brief gettext support with context.
- *
- * @usage pgettext( context, msg )
- *    @luatparam context Context of the message.
- *    @luatparam msg Message to translate.
- *    @luatreturn The string converted to gettext.
- * @luafunc pgettext
- */
-static int nlua_pgettext( lua_State *L )
-{
-   const char *msgctxt = luaL_checkstring( L, 1 );
-   const char *msgid   = luaL_checkstring( L, 2 );
-   lua_pushstring( L, pgettext_var( msgctxt, msgid ) );
-   return 1;
-}
-
-/**
- * @brief gettext support (noop). Does not actually do anything, but gets
- * detected by gettext.
- *
- * @usage N_( str )
- *    @luatparam str String to gettext on.
- *    @luatreturn The string converted to gettext.
- * @luafunc gettext_noop
- */
-static int nlua_gettext_noop( lua_State *L )
-{
-   const char *str = luaL_checkstring( L, 1 );
-   lua_pushstring( L, str );
-   return 1;
-}
 
 /** @brief Implements the Lua function math.log2 (base-2 logarithm). */
 static int nlua_log2( lua_State *L )
@@ -594,12 +515,9 @@ static int nlua_loadBasic( lua_State *L )
    lua_register( L, "printRaw", cli_printRaw );
    lua_register( L, "warn", cli_warn );
 
-   /* Gettext functionality. */
-   lua_register( L, "_", nlua_gettext );
-   lua_register( L, "N_", nlua_gettext_noop );
-   lua_register( L, "n_", nlua_ngettext );
-   lua_register( L, "p_", nlua_pgettext );
-   luaL_register( L, "gettext", gettext_methods );
+   /* TODO not sure why this nil is needed, but stack is unbalanced otherwise...
+    */
+   lua_pushnil( L );
 
    /* Sandbox "io" and "os". */
    lua_newtable( L ); /* io table */

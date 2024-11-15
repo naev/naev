@@ -42,7 +42,7 @@ pub fn ngettext<'a>(msg_id: &'a str, msg_id_plural: &'a str, n: u64) -> &'static
     }
 }
 */
-pub fn ngettext<T, S>(msgid: T, msgid_plural: S, n: u32) -> String
+pub fn ngettext<T, S>(msgid: T, msgid_plural: S, n: i32) -> String
 where
     T: Into<String>,
     S: Into<String>,
