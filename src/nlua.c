@@ -77,7 +77,6 @@ static int        nlua_package_loader_croot( lua_State *L );
 static int        nlua_require( lua_State *L );
 static lua_State *nlua_newState( void ); /* creates a new state */
 static int        nlua_loadBasic( lua_State *L );
-static int        luaB_loadstring( lua_State *L );
 static int        lua_cache_cmp( const void *p1, const void *p2 );
 static int        nlua_errTraceInternal( lua_State *L, int idx );
 
@@ -114,24 +113,6 @@ void lua_init( void )
 
    /* Initialize the caches. */
    lua_cache = array_create( LuaCache_t );
-}
-
-/**
- * @brief Replacement for the internal Lua loadstring().
- */
-static int luaB_loadstring( lua_State *L )
-{
-   size_t      l;
-   const char *s         = luaL_checklstring( L, 1, &l );
-   const char *chunkname = luaL_optstring( L, 2, s );
-   int         status    = luaL_loadbuffer( L, s, l, chunkname );
-   if ( status == 0 ) /* OK? */
-      return 1;
-   else {
-      lua_pushnil( L );
-      lua_insert( L, -2 ); /* put before error message */
-      return 2;            /* return nil plus error message */
-   }
 }
 
 /*
