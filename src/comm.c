@@ -122,8 +122,10 @@ int comm_openPilot( unsigned int pilot )
    /* Check to see if pilot wants to communicate. */
    msg = comm_getString( p, "comm_no" );
    if ( msg != NULL ) {
-      if ( comm_commClose == 0 )
-         player_messageRaw( msg );
+      if ( comm_commClose == 0 ) {
+         char col = pilot_getFactionColourChar( p );
+         player_message( _( "#%c%s>#0 %s" ), col, p->name, msg );
+      }
       ai_unsetPilot( oldmem );
       return 0;
    }

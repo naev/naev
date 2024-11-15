@@ -164,7 +164,7 @@ function enter ()
       }
       local drones = fleet.add( 1, ships, zbh.evilpi(), jump.get(atksys, retsys):pos()*0.9, nil, {ai="baddiepos"} )
       for k,p in ipairs(drones) do
-         p:memory().comm_no = _("ACCESS DENIED.")
+         p:memory().comm_no = _([["ACCESS DENIED."]])
          p:setHostile(true)
       end
    end

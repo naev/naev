@@ -31,7 +31,7 @@ return function ()
                for i=1,npack do
                   local e = pilot.add("Dvaered Vendetta", "Dvaered", pos )
                   local em = p:memory()
-                  em.comm_no = _("*BARK*")
+                  em.comm_no = _([["*BARK*"]])
                   em.__packleader = p
                   e:setVel(vel)
                   e:setLeader(p)

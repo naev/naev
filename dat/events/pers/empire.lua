@@ -84,7 +84,7 @@ return function ()
                for i=1,3 do
                   local e = pilot.add("Empire Lancelot", "Empire", pos, _("ECB Intern") )
                   local em = p:memory()
-                  em.comm_no = _("I don't have the authority to talk to you.")
+                  em.comm_no = _([["I don't have the authority to talk to you."]])
                   e:setVel(vel)
                   e:setLeader(p)
                end
