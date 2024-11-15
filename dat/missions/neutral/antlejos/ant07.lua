@@ -117,7 +117,7 @@ end
 
 local function spawn_protesters( pos, ships )
    local puaaa = ant.puaaa()
-   local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Protestor"), {ai="baddiepos"} )
+   local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Protester"), {ai="baddiepos"} )
    for k,p in ipairs(f) do
       p:setHostile(true)
    end

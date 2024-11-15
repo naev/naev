@@ -166,7 +166,7 @@ function enter ()
       shipnum = 1
    end
 
-   plts = fleet.add( shipnum, ships, puaaa, returnpnt:pos(), _("Protestor"), {ai="guard"} )
+   plts = fleet.add( shipnum, ships, puaaa, returnpnt:pos(), _("Protester"), {ai="guard"} )
    for _k,p in ipairs(plts) do
       p:setVisplayer()
    end

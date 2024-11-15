@@ -146,7 +146,7 @@ function enter ()
    pilot.toggleSpawn(false)
 
    local puaaa = ant.puaaa()
-   plts = fleet.add( 2, "Hyena", puaaa, returnpnt:pos(), _("Protestor"), {ai="guard"} )
+   plts = fleet.add( 2, "Hyena", puaaa, returnpnt:pos(), _("Protester"), {ai="guard"} )
    for _k,p in ipairs(plts) do
       p:setVisplayer()
    end
