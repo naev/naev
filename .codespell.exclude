@@ -1,8 +1,16 @@
+# dat/missions/minerva/maikki1.lua:373
       scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
+# dat/missions/minerva/pirate4.lua:230
 "What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
+# dat/missions/dvaered/dv_rehab.lua:16
    txtsuccess = _([[Dvaered High Command commends you on your efforts to recover your relationship with House Dvaered, and have cleared your previous offense record with the House.]]),
+# dat/missions/shadow/shadowrun.lua:97
    rebina(fmt.f(_([["You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on {pnt}. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discreet. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."]]),
+# dat/missions/
    "Alright, {player}," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]]), {player=player.name()}))
+# dat/missions/flf/flf_pre01.lua:110
                [[Despite the seemingly imbalanced weaponry at play, you can't tell for certain who won the duel. Judging by the result it might be fair to say they both lost. One thing is for certain though, a few blaster shots aren't enough to explain the explosion which clearly took place here. You do find a singed journal in the captain's pocket however, and start leafing through the most recent entries.]]))
+# dat/missions/baron/baron_baron.lua:149
    vn.na(_([[The three shifty-looking patrons regard you with apprehension as you approach their table. Clearly they don't know who their contact is supposed to be. You decide to be discreet, asking them if they've ever heard of a certain Sauterfeldt. Upon hearing this, the trio visibly relaxes. They tell you that indeed they know the man you speak of, and that they have something of his in their possession. Things proceed smoothly from that point, and several hectoseconds later you are back at your ship, preparing it for takeoff while you wait for the agents to bring you your cargo.]]))
+# dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:56
       czesc(fmt.f(_([[You approach Lieutenant Czesc, who seems a bit busy. "Hey, {player}. I've got some potential work for you. However, the Empire requires a minimum of experience with shipping missions before I can entrust you with it. Try to do a few Empire Shipping (#gES#0) missions and get back to me."]]),
