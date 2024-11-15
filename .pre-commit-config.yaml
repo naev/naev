@@ -24,6 +24,11 @@ repos:
   rev: v0.10.0.1
   hooks:
     - id: shellcheck
+- repo: https://github.com/codespell-project/actions-codespell
+  hooks:
+    - id: codespell
+      files: ^.*\.(lua)$
+      args: ["--ignore-words", ".codespell.words.ignore" ],["--exclude", ".codespell.ignore" ]
 - repo: local
   hooks:
     - id: nluacheck
