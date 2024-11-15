@@ -695,4 +695,5 @@ void main (void)
    //colour_out = vec4( vec3(sheen), 1.0 );
    //colour_out = vec4( vec3(sheenTint), 1.0 );
    //colour_out.rgb = vec3(position.z);
+   //colour_out = vec4( vec3(shadow_map( shadowmap_tex[0], shadow[0] )), 1.0 );
 }
