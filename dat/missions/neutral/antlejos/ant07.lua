@@ -115,7 +115,7 @@ function land ()
    end
 end
 
-local function spawn_protestors( pos, ships )
+local function spawn_protesters( pos, ships )
    local puaaa = ant.puaaa()
    local f = fleet.add( 1, ships, puaaa, pos, _("PUAAA Protestor"), {ai="baddiepos"} )
    for k,p in ipairs(f) do
@@ -126,13 +126,13 @@ end
 
 function enter ()
    if mem.state==0 and system.cur()==mainsys then
-      spawn_protestors( vec2.new( 3000, 4000 ), {"Lancelot", "Shark", "Shark"} )
+      spawn_protesters( vec2.new( 3000, 4000 ), {"Lancelot", "Shark", "Shark"} )
 
    elseif mem.state==1 and system.cur()==mainsys then
-      spawn_protestors( vec2.new( -10000, 8700 ), {"Admonisher", "Hyena", "Hyena"} )
+      spawn_protesters( vec2.new( -10000, 8700 ), {"Admonisher", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
-      local f = spawn_protestors( vec2.new( -10000, 8700 ), {"Pacifier", "Lancelot", "Lancelot"} )
+      local f = spawn_protesters( vec2.new( -10000, 8700 ), {"Pacifier", "Lancelot", "Lancelot"} )
       for k,p in ipairs(f) do
          p:changeAI( "baddiepatrol" )
          pilotai.patrol( p, {

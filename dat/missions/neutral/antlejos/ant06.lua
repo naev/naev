@@ -138,21 +138,21 @@ function enter ()
    local puaaa = ant.puaaa()
    local pos = vec2.new( -4500, 4500 )
 
-   local protestors = {}
+   local protesters = {}
    supplyship = pilot.add( "Mule", puaaa, pos, _("PUAAA Supply Ship"), {ai="baddiepos"} )
    supplyship:setVisplayer(true)
    supplyship:setHilight(true)
    hook.pilot( supplyship, "death", "supplydeath" )
    hook.pilot( supplyship, "board", "supplyboard" )
-   table.insert( protestors, supplyship )
+   table.insert( protesters, supplyship )
 
    for k,s in ipairs{ "Lancelot", "Shark", "Shark" } do
       local p = pilot.add( s, puaaa, pos+vec2.newP( 100+rnd.rnd(100), rnd.angle() ), _("PUAAA Escort"), {ai="baddiepos"} )
       p:setLeader( supplyship )
-      table.insert( protestors, p )
+      table.insert( protesters, p )
    end
 
-   for k,p in ipairs(protestors) do
+   for k,p in ipairs(protesters) do
       p:setHostile(true)
    end
 end

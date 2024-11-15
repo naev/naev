@@ -119,7 +119,7 @@ function land ()
 end
 
 local puaaa, fsup
-local protestors, supplyships
+local protesters, supplyships
 local function add_protestor( shipname, fromrear )
    -- They will just go to Antlejos V and attack any hostiles on their way, including the player.
    local ent = (fromrear and rearpoint) or entrypoint
@@ -127,7 +127,7 @@ local function add_protestor( shipname, fromrear )
    p:setHostile()
    local m = p:memory()
    m.guardpos = mainpnt:pos()
-   table.insert( protestors, p )
+   table.insert( protesters, p )
 end
 
 local function add_supplyship( shipname )
@@ -191,7 +191,7 @@ function approaching ()
    player.msg(_("The supply ships will be incoming shortly!"))
 
    -- Initialize ship stuff
-   protestors = {}
+   protesters = {}
    supplyships = {}
    puaaa = ant.puaaa()
    fsup = faction.dynAdd( nil, "ant_supp", _("Supplier") )
@@ -262,16 +262,16 @@ function protest ()
    end
 
    -- See surviving pilots
-   local nprotestors = {}
-   for _k,p in ipairs(protestors) do
+   local nprotesters = {}
+   for _k,p in ipairs(protesters) do
       if p:exists() then
-         table.insert( nprotestors, p )
+         table.insert( nprotesters, p )
       end
    end
-   protestors = nprotestors
-   if #protestors > 0 then
+   protesters = nprotesters
+   if #protesters > 0 then
       -- Say some protest slogan
-      local p = protestors[ rnd.rnd(1,#protestors) ]
+      local p = protesters[ rnd.rnd(1,#protesters) ]
       p:broadcast( protest_lines[ protest_id ], true )
       protest_id = math.fmod(protest_id, #protest_lines)+1
    end
