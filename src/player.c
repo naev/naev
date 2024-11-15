@@ -322,8 +322,9 @@ void player_new( void )
                   WARN( _( "Unable to delete temporary file '%s': %s" ),
                         SAVEPATH,
                         PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+               else
+                  invalid = 0;
             }
-            invalid = 0;
          }
       }
       if ( invalid )
