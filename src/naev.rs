@@ -18,6 +18,7 @@ mod log;
 mod ndata;
 mod ntime;
 mod physfs;
+mod rng;
 mod slots;
 mod version;
 

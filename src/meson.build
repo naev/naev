@@ -11,6 +11,7 @@ source_rust = files(
    'ndata.rs',
    'ntime.rs',
    'physfs.rs',
+   'rng.rs',
    'slots.rs',
    'version.rs',
 )
@@ -126,7 +127,6 @@ source = files(
    'quadtree.c',
    'queue.c',
    'render.c',
-   'rng.c',
    'safelanes.c',
    'save.c',
    'ship.c',
