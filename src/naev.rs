@@ -16,6 +16,7 @@ mod gettext;
 mod linebreak;
 mod log;
 mod ndata;
+mod nlua;
 mod ntime;
 mod physfs;
 mod rng;
@@ -105,10 +106,10 @@ pub fn naev() -> Result<()> {
         Err(e) => panic!("Unable to initialize SDL Video: {}", e),
     };
 
+    let _lua = nlua::init();
     unsafe {
         naevc::nxml_init(); /* We'll be parsing XML. */
         naevc::input_init(); /* input has to be initialized for config to work. */
-        naevc::lua_init(); /* initializes lua. */
         naevc::conf_setDefaults(); /* set the default config values. */
 
         /*
