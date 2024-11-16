@@ -42,7 +42,7 @@ function sbase.init( args )
    param( "board_mod",     0.25 )
 
    param( "capture_max",   30 )
-   param( "capture_max",   -100 )
+   param( "capture_min",   -100 )
    param( "capture_mod",   1 )
 
    param( "distress_max",  -20 ) -- Can't get positive  reputation from distress
