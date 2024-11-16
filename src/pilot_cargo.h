@@ -38,3 +38,4 @@ int pilot_cargoAddRaw( Pilot *pilot, const Commodity *cargo, int quantity,
 unsigned int pilot_addMissionCargo( Pilot *pilot, const Commodity *cargo,
                                     int quantity );
 int pilot_rmMissionCargo( Pilot *pilot, unsigned int cargo_id, int jettison );
+unsigned int pilot_genMissionCargoID( Pilot *pilot );

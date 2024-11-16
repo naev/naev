@@ -58,12 +58,12 @@ function accept ()
 
    vn.label("nospace")
    v(fmt.f(_([["You only have {freespace} of free space. You need to be able to carry at least {neededspace}!"]]),
-         {freespace=fmt.tonnes(player.pilot():cargoFree()), neededspace=fmt.tonnes(cargo_amount) }))
+         {freespace=fmt.tonnes(player.fleetCargoMissionFree()), neededspace=fmt.tonnes(cargo_amount) }))
    vn.done()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_amount then
+      if player.fleetCargoMissionFree() < cargo_amount then
          vn.jump("nospace")
          return
       end

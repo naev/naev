@@ -72,7 +72,7 @@ function log.open( font )
 end
 
 function log.draw ()
-   -- Drawn ontop of text so have to clear depth
+   -- Drawn on top of text so have to clear depth
    naev.gfx.clearDepth()
 
    graphics.setColour( 0, 0, 0, 0.9*log.alpha )

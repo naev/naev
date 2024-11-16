@@ -133,7 +133,7 @@ function lmusic.stop( m )
    _apply( m, function (v)
       if v.state ~= "fadeout" then
          v.state = "fadeout"
-         v.progess = 0
+         v.progress = 0
       end
    end )
 end

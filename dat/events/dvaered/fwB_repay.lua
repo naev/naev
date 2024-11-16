@@ -30,7 +30,7 @@ npc_desc[1] = _("In the Dvaered military reserved bar, where you now have access
 npc_desc[2] = _("Leblanc is alone at a table, typing on her laptop.")
 npc_desc[3] = _([[Strafer has put heaps of papers and datapads on his table. He is starring at it as someone who has something tedious to do, but does not want to start yet.]])
 
-local fillIn
+local fill_in
 
 
 -- Each time the player lands, he meets a member of the team
@@ -41,11 +41,11 @@ end
 
 function pay()
    if tk.yesno(_("We need more credits from the DHC"), fmt.f(_("I need to proofread the letter we are going to send to the High Command in order to obtain an extra funding of {credits} to continue with our mission. Do you want to help me?"), {credits=fmt.credits(fw.pirate_price)})) then
-      fillIn()
+      fill_in()
    end
 end
 
-function fillIn()
+function fill_in()
    local failed = false
 
    vn.clear()

@@ -62,7 +62,7 @@ function accept()
    student(_([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony."]]))
 
    -- Check for cargo space
-   if player.pilot():cargoFree() < amount then
+   if player.fleetCargoMissionFree() < amount then
       student(_([["Unfortunately it looks like your ship does not have enough free cargo space."
 He leaves the bar. It appears he has given up finding a pilot, at least for now.]]))
       vn.done()

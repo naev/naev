@@ -36,6 +36,7 @@
 #include "nluadef.h"
 #include "npc.h"
 #include "player.h"
+#include "player_fleet.h"
 
 /**
  * @brief Mission Lua bindings.
@@ -710,7 +711,7 @@ static int misn_cargoAdd( lua_State *L )
    cur_mission = misn_getFromLua( L );
 
    /* First try to add the cargo. */
-   ret = pilot_addMissionCargo( player.p, cargo, quantity );
+   ret = pfleet_cargoMissionAdd( cargo, quantity );
    mission_linkCargo( cur_mission, ret );
 
    lua_pushnumber( L, ret );
@@ -731,7 +732,8 @@ static int misn_cargoRm( lua_State *L )
 
    id = luaL_checklong( L, 1 );
 
-   /* First try to remove the cargo from player. */
+   /* First try to remove the cargo from player, since only player can have it.
+    */
    if ( pilot_rmMissionCargo( player.p, id, 0 ) != 0 ) {
       lua_pushboolean( L, 0 );
       return 1;

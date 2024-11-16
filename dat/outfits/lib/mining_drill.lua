@@ -26,7 +26,7 @@ function drill.ontoggle( p, _po, on )
       return false
    end
 
-   -- See if there's an asteroid targetted
+   -- See if there's an asteroid targeted
    local a = p:targetAsteroid()
    if not a or not p:inrange( a ) then
       -- Get nearest if not found

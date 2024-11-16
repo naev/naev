@@ -87,7 +87,7 @@ end
 function accept ()
    misn.accept()
 
-   local q = player.pilot():cargoFree()
+   local q = player.fleetCargoMissionFree()
    mem.credits = mem.credits_factor * q + mem.credits_mod
 
    lmisn.sfxMoney()

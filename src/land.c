@@ -950,6 +950,7 @@ static void misn_update( unsigned int wid, const char *str )
    int               misn_ref;
    const StarSystem *sys;
    char              txt[STRMAX_SHORT], *buf;
+   int               cargofree = pfleet_cargoMissionFree();
 
    /* Clear computer markers. */
    space_clearComputerMarkers();
@@ -957,8 +958,7 @@ static void misn_update( unsigned int wid, const char *str )
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
    snprintf( txt, sizeof( txt ),
-             n_( "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free ), buf,
-             player.p->cargo_free );
+             n_( "%s\n%d Tonne", "%s\n%d Tonnes", cargofree ), buf, cargofree );
    free( buf );
    window_modifyText( wid, "txtDate", txt );
 

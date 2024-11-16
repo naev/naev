@@ -444,6 +444,10 @@ static int gl_createWindow( unsigned int flags )
       gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
    }
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
+   int srgb_capable;
+   SDL_GL_GetAttribute( SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, &srgb_capable );
+   if ( !srgb_capable )
+      WARN( _( "Unable to set framebuffer to SRGB!" ) );
    gl_activated = 1; /* Opengl is now activated. */
 
    return 0;

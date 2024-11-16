@@ -270,7 +270,7 @@ function heartbeat ()
       local ppos = player.pos()
       for k,v in ipairs(af) do
          if ppos:dist( v.pos ) < v.radius+1000 then
-            nelly_say(_("Get close to an asteroid try to stop on top of it. I want to try the Drillmaster!"))
+            nelly_say(_("Get close to an asteroid and try to stop on top of it. I want to try the Drillmaster!"))
             misn.osdActive(2)
             hb_state = hb_state+1
          end

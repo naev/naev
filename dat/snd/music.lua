@@ -453,7 +453,7 @@ local function should_combat ()
       return true
    end
 
-   -- Nearby enemies targetting the player will also switch
+   -- Nearby enemies targeting the player will also switch
    local enemies = pp:getEnemies( enemy_dist )
    for k,v in ipairs(enemies) do
       local tgt = v:target()

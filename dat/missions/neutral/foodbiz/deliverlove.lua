@@ -97,7 +97,7 @@ function accept ()
 
       vn.label("2yes")
       vn.func( function ()
-         if player.pilot():cargoFree() <  1 then
+         if player.fleetCargoMissionFree() < 1 then
             vn.jump("nospace")
          end
          accepted = true

@@ -5,11 +5,11 @@ local lanes = {}
 --]]
 local function nearestVertex( vertices, pos )
    local n = nil
-   local nd = math.huge
+   local nd = math.huge -- codespell:ignore nd
    for k,v in ipairs(vertices) do
       local d = v:dist2(pos)
-      if d < nd then
-         nd = d
+      if d < nd then -- codespell:ignore nd
+         nd = d -- codespell:ignore nd
          n = k
       end
    end

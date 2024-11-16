@@ -66,7 +66,7 @@ function create ()
          {adj=adj, pnt=mem.destpnt, sys=mem.destsys}) )
    misn.setReward(mem.reward)
 
-   local desc = fmt.f(_("Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to further accelerate the terraforming. Note that protestors from the PUAAA are expected to show up.\n"),
+   local desc = fmt.f(_("Pick up {cargo} at {pnt} in the {sys} system and bring them to {retpnt} to further accelerate the terraforming. Note that protesters from the PUAAA are expected to show up.\n"),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt})
    desc = desc .. "\n" .. fmt.f( _("#nCargo:#0 {cargo} ({mass})"), {cargo=cargo_name, mass=fmt.tonnes(mem.amount)} )
    desc = desc .. "\n" .. fmt.f( n_("#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", mem.numjumps ), {jumps=mem.numjumps} )
@@ -100,7 +100,7 @@ end
 function land ()
    if mem.state==1 and  spob.cur() == mem.destpnt then
 
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < mem.amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(mem.amount)}))
@@ -166,7 +166,7 @@ function enter ()
       shipnum = 1
    end
 
-   plts = fleet.add( shipnum, ships, puaaa, returnpnt:pos(), _("Protestor"), {ai="guard"} )
+   plts = fleet.add( shipnum, ships, puaaa, returnpnt:pos(), _("Protester"), {ai="guard"} )
    for _k,p in ipairs(plts) do
       p:setVisplayer()
    end

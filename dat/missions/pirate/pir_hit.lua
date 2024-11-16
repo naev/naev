@@ -4,6 +4,14 @@
  <priority>3</priority>
  <chance>1260</chance>
  <location>Computer</location>
+ <cond>
+   local pir = require "common.pirate"
+   -- Lower probability on non-pirate places
+   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() &lt; 0.5 then
+      return false
+   end
+   return true
+ </cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
@@ -73,11 +81,6 @@ local hunters = {}
 local hunter_hits = {}
 
 function create ()
-   -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.5 then
-      misn.finish(false)
-   end
-
    -- Determine paying faction probabilistic
    mem.paying_faction = pir.systemClanP( system.cur() )
    local faction_text = pir.reputationMessage( mem.paying_faction )
@@ -132,7 +135,7 @@ function create ()
       misn.finish( false )
    end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 8 )
+   mem.deadline = time.get() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    mem.name = pilotname.generic()
    mem.level = level_setup()
@@ -148,8 +151,9 @@ function create ()
 
 #nTarget:#0 {plt} ({shipclass}-class ship)
 #nWanted:#0 Dead
-#nLast Seen:#0 {sys} system]]),
-      {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text, reason=reason } )
+#nLast seen:#0 {sys} system
+#nTime limit:#0 {deadline}]]),
+      {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text, reason=reason, deadline=tostring(mem.deadline-time.get()) } )
    if pir.factionIsClan(mem.paying_faction) then
       mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=mem.paying_faction})
@@ -167,22 +171,35 @@ function create ()
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
+local function update_osd ()
+   misn.osdCreate( _("Assassination"), {
+      fmt.f( _("Fly to the {sys} system before {time_limit} ({time} remaining)"),
+         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.get())} ),
+      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
+   } )
+end
 
 function accept ()
    misn.accept()
 
-   misn.osdCreate( _("Assassination"), {
-      fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} ),
-      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
-   } )
+   update_osd()
 
    mem.last_sys = system.cur()
 
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
    hook.takeoff( "takeoff" )
+   hook.date( time.new( 0, 0, 1e3 ), "date" )
 end
 
+function date ()
+   if system.cur() ~= mem.missys then
+      if time.get() > mem.deadline then
+         return lmisn.fail( _("Target got away.") )
+      end
+      update_osd()
+   end
+end
 
 function jumpin ()
    -- Nothing to do.
@@ -213,7 +230,6 @@ end
 
 
 function jumpout ()
-   mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
       lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
@@ -276,14 +292,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         lmisn.fail( _("Another pilot eliminated your target.") )
+         lmisn.fail( fmt.f(_("Another pilot eliminated {plt}."), {plt=mem.name}) )
       end
    end
 end
 
 
 function pilot_jump ()
-   lmisn.fail( _("Target got away.") )
+   lmisn.fail( fmt.f(_("{plt} got away."), {plt=mem.name} ) )
 end
 
 
@@ -608,11 +624,6 @@ end
 -- Spawn the ship at the location param.
 local _target_faction
 function spawn_target( param )
-   if mem.jumps_permitted < 0 then
-      lmisn.fail( _("Target got away.") )
-      return
-   end
-
    -- Use a dynamic faction so they don't get killed
    if not _target_faction then
       _target_faction = faction.dynAdd( mem.target_faction, "wanted_"..mem.target_faction, mem.target_faction, {clear_enemies=true, clear_allies=true} )
@@ -635,19 +646,12 @@ function succeed ()
    player.pay( mem.credits )
 
    -- Pirate rep cap increase
-   --local bounty_done = var.peek( "pir_bounty_done" )
    var.push( "pir_bounty_done", true )
-   --[[
-   if bounty_done ~= true then
-      pir.modReputation( 5 )
-   end
-   --]]
 
    if mem.level >= 5 then
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if not bounty_dangerous_done then
-         --pir.modReputation( 2 )
          pir.modDecayFloor( 2 )
       end
 
@@ -655,7 +659,6 @@ function succeed ()
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if not bounty_highly_dangerous_done then
-            --pir.modReputation( 3 )
             pir.modDecayFloor( 3 )
          end
       end

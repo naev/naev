@@ -20,7 +20,7 @@
 </mission>
 --]]
 --[[
--- Dvaered Negociation 1
+-- Dvaered Negotiation 1
 -- This is the mission of the Dvaered Recruitment arc when the player has to help a Warlord getting a second Goddard Battleship.
 -- The player has to transport commandos to sabotage a ship's engine in a hangar.
 -- Things don't go as expected and player has to intercept a ship (pretending to need fuel) and let the commandos board.
@@ -262,7 +262,7 @@ function land()
       vn.jump("menu")
 
       vn.label("tricon")
-      civ(_([["Ahah! Of course, it is! Nothing enters nor gets out of that warehouse! I have informations that suggest that Tricon is already lobbying for Nexus docks to accept our claims because they cannot afford that strike!"]]))
+      civ(_([["Ahah! Of course, it is! Nothing enters nor gets out of that warehouse! I have information that suggests that Tricon is already lobbying for Nexus docks to accept our claims because they cannot afford that strike!"]]))
       vn.jump("menu")
 
       vn.label("leave")
@@ -423,12 +423,12 @@ function spawnShark()
    mem.atkhook = hook.pilot(mem.shark,"attacked","sharkAttacked")
    hook.timer( 5.0, "makeSilentDeathAnnoying" )
 
-   -- Make sure the battle actually happends
+   -- Make sure the battle actually happens
    player.pilot():setVisible()
    mem.shark:setHilight()
    mem.shark:control()
    mem.shark:attack(player.pilot())
-   mem.agressive = true
+   mem.aggressive = true
 end
 
 -- Silent Death won't shut their mouth
@@ -439,8 +439,8 @@ function makeSilentDeathAnnoying()
          messg = silent_taunts[rnd.rnd(1,#silent_taunts)]
       else
          messg = silent_beg[rnd.rnd(1,#silent_beg)]
-         if mem.agressive then -- Manage Silent running away
-            mem.agressive = false
+         if mem.aggressive then -- Manage Silent running away
+            mem.aggressive = false
             mem.shark:taskClear()
             mem.shark:runaway(player.pilot())
          end

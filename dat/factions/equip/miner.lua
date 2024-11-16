@@ -32,6 +32,7 @@ function equip( p )
    params.launcher = 0.5
    params.bolt = 1.5
    params.beam = 1.5
+   params.disable = 0 -- Don't want disable weapons
    params.prefer["Mining Lance MK1"] = 2
    params.prefer["Mining Lance MK2"] = 2
    if rnd.rnd() < 0.2 then

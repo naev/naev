@@ -46,7 +46,8 @@ local misn_desc = _([[The pirate known as {pirname} was recently seen in the {sy
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
-#nLast Seen:#0 {sys} system]])
+#nLast seen:#0 {sys} system
+#nTime limit:#0 {deadline}]])
 
 -- In the case the player has to capture the target alive
 local misn_title_alive = {
@@ -60,7 +61,8 @@ local misn_desc_alive = _([[The pirate known as {pirname} was recently seen in t
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Alive
-#nLast Seen:#0 {sys} system]])
+#nLast seen:#0 {sys} system
+#nTime limit:#0 {deadline}]])
 
 local reason_list = {
    ["Independent"] = {
@@ -327,10 +329,13 @@ function create ()
       prefix = require("common.prefix").prefix(payingfaction)
    end
 
+   mem.missys = missys
+   mem.deadline = time.get() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
+
    -- Set mission details
    misn.setTitle( prefix..fmt.f(title[mem.level], {sys=missys}) )
    local mdesc = fmt.f( desc,
-      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason })
+      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason, deadline=(mem.deadline-time.get()) })
    if not payingfaction:static() then
       mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=payingfaction})
@@ -345,7 +350,9 @@ function create ()
       targetfactionfunc = "get_faction", -- have to pass by name
       alive_only        = alive_only,
       osd_objective     = osd_objective,
+      deadline          = mem.deadline,
    } )
+
 end
 
 function accept ()

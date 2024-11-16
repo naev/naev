@@ -134,7 +134,7 @@ end
 --[[--
    Sets a custom message and handler for a pilot.
 
-   Important note: the setup function will be called from the comm enivronment. You can not call misn/evt functions or access the memory of a mission or event through this!
+   Important note: the setup function will be called from the comm environment. You can not call misn/evt functions or access the memory of a mission or event through this!
 
       @tparam Pilot plt Pilot to set up for.
       @tparam string|function menu Menu message or function returning message or nil.
@@ -152,9 +152,9 @@ function comm.customComm( plt, menu, setup, label )
 end
 
 --[[--
-   Removes a custom messag eand handler from a pilot.
+   Removes a custom message and handler from a pilot.
 
-      @tparam Pilot plt Pilot te remove from.
+      @tparam Pilot plt Pilot to remove from.
       @tparam string label Label matching label assigned to comm.customComm
 --]]
 function comm.customCommRemove( plt, label )

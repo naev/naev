@@ -34,6 +34,7 @@ enum {
    PILOT_NOFREE,  /**< Don't free the pilot memory (but erase from stack). */
    PILOT_PERSIST, /**< Persist pilot on jump. */
    PILOT_NOCLEAR, /**< Pilot isn't removed by pilots_clear(). */
+   PILOT_CARRIER_DIED, /**< The carrier carrying the fighter died. */
    /* Hyperspace. */
    PILOT_HYP_PREP,   /**< Pilot is getting ready for hyperspace. */
    PILOT_HYP_BRAKE,  /**< Pilot has already braked before jumping. */

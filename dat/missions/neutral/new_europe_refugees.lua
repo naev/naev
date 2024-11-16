@@ -34,8 +34,8 @@ function create ()
 end
 
 function accept ()
-   local pp = player.pilot()
-   if pp:cargoFree() <= 0 then
+   local fs = player.fleetCargoMissionFree()
+   if fs <= 0 then
       vntk.msg(_("No room in ship"), _([[You don't have enough room on your ship to take any refugees!]]))
       return
    end
@@ -43,7 +43,7 @@ function accept ()
    misn.accept()
 
    local c = commodity.new( N_("Nebula Refugees"), N_("A bunch of poor and ragged looking refugees looking for a better life.") )
-   mem.amount = pp:cargoFree()
+   mem.amount = fs
    mem.cargo = misn.cargoAdd( c, mem.amount )
 
    misn.setReward(mem.reward*mem.amount)

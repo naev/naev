@@ -17,7 +17,7 @@ local sadmonisher = ship.get("Admonisher")
 local sstarbridge = ship.get("Starbridge")
 local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
-local spacifier   = ship.get("Pacifier")
+local spacifier   = ship.get("Pacifier") -- codespell:ignore spacifier
 local skestrel    = ship.get("Kestrel")
 local shawking    = ship.get("Hawking")
 local sgoddard    = ship.get("Goddard")
@@ -120,7 +120,7 @@ local function spawn_medium ()
       sstarbridge,
       svigilance,
       sbedivere,
-      spacifier,
+      spacifier, -- codespell:ignore spacifier
       -- Empire
       sempadmonisher,
       semppacifier,

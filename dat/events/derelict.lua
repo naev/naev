@@ -2,13 +2,21 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Derelict">
  <location>enter</location>
- <chance>45</chance>
+ <chance>80</chance>
  <cond>
    local sc = system.cur()
-   if sc:faction() == nil then
+   local st = sc:tags()
+   if st.noderelicts or st.tradelane or st.restricted then
       return false
    end
-   if sc:tags().noderelicts then
+   local _nebu_dens, nebu_vol = sc:nebula()
+   if nebu_vol &gt; 0 then
+      return false
+   end
+   if sc:faction()==faction.get("Thurion") then
+      return false
+   end
+   if rnd.rnd() &lt; 0.5 and #require("lmisn").getSpobAtDistance( nil, 0, 2, faction.get("Independent") ) &gt; 0 then
       return false
    end
    return true
@@ -31,6 +39,7 @@ local der = require 'common.derelict'
 local pir = require "common.pirate"
 local vn = require 'vn'
 local lf = require "love.filesystem"
+local lmisn = require "lmisn"
 
 local badevent, goodevent, specialevent, neutralevent, derelict_msg -- forward-declared functions
 local derelict -- Non-persistent state
@@ -39,24 +48,9 @@ local special_list, dospecial
 
 function create ()
    local cursys = system.cur()
-   local _nebu_dens, nebu_vol = cursys:nebula()
-   if nebu_vol > 0 then
-      evt.finish()
-   end
-
-   -- Don't spawn in restricted space
-   if cursys:tags().restricted then
-      evt.finish()
-   end
-
-   -- Don't spawn in Thurion space
-   if cursys:faction()==faction.get("Thurion") then
-      evt.finish()
-   end
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
    if not naev.claimTest( cursys, true ) then evt.finish() end
-
 
    special_list = {}
    --[[
@@ -227,7 +221,7 @@ function neutralevent()
       },
       {
          _("Empty Derelict"),
-         _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASNT". Otherwise, there is nothing of interest left on this ship.]]),
+         _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASN'T". Otherwise, there is nothing of interest left on this ship.]]),
          fmt.f(_([[You searched an empty derelict in {sys} and found only graffiti.]]), {sys=system.cur()})
       },
       {
@@ -297,49 +291,47 @@ function goodevent()
          derelict_msg( gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them and leave the derelict.]]), fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}) )
          player.pay( rnd.rnd(5e3,30e3) )
       end,
-      function ()
-         local csys = system.cur()
-         local sysset = { [csys:nameRaw()] = csys:faction() }
-         for i=1,3 do
-            for s,f in pairs(sysset) do
-               for j,n in ipairs(system.get(s):adjacentSystems()) do
-                  sysset[ n:nameRaw() ] = n:faction()
-               end
-            end
+   }
+
+   local csys = system.cur()
+   local sysset = { [csys:nameRaw()] = csys:faction() }
+   for i=1,3 do
+      for s,f in pairs(sysset) do
+         for j,n in ipairs(system.get(s):adjacentSystems()) do
+            sysset[ n:nameRaw() ] = n:faction()
          end
-         local whitelist = {
-            ["Empire"]  = true,
-            ["Dvaered"] = true,
-            ["Sirius"]  = true,
-            ["Soromid"] = true,
-            ["Za'lek"]  = true,
-            ["Frontier"]= true,
-            ["Goddard"] = true
-         }
-         local sysfct = {}
-         for s,f in pairs(sysset) do
-            if f then
-               local nr = f:nameRaw()
-               if whitelist[nr] then
-                  sysfct[ nr ] = true
-               end
-            end
+      end
+   end
+   local whitelist = {
+      ["Empire"]  = true,
+      ["Dvaered"] = true,
+      ["Sirius"]  = true,
+      ["Soromid"] = true,
+      ["Za'lek"]  = true,
+      ["Frontier"]= true,
+      ["Goddard"] = true
+   }
+   local sysfct = {}
+   for s,f in pairs(sysset) do
+      if f then
+         local nr = f:nameRaw()
+         if whitelist[nr] then
+            sysfct[ nr ] = true
          end
-         local fcts = {}
-         for f,i in pairs(sysfct) do
-            table.insert( fcts, f )
-         end
-         if #fcts == 0 then
-            for f,i in pairs(whitelist) do
-               table.insert( fcts, f )
-            end
-         end
+      end
+   end
+   local fcts = {}
+   for f,i in pairs(sysfct) do
+      table.insert( fcts, f )
+   end
+   if #fcts > 0 then
+      table.insert( goodevent_list, function ()
          local rndfactRaw = fcts[ rnd.rnd(1, #fcts) ]
          local rndfact = _(rndfactRaw)
          derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship AI, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame(), fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict:ship(), fct=rndfact}))
          faction.hit( rndfactRaw, 2 )
-      end,
-   }
+      end )
+   end
 
    -- Only give cargo if enough space
    if player.fleetCargoFree() > 10 then
@@ -358,9 +350,9 @@ function goodevent()
          local c = commodity.get( commodities[ rnd.rnd(1,#commodities) ] )
          player.fleetCargoAdd( c, rnd.rnd(30,100) )
          if player.fleetCargoFree()==0 then
-            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. You find that there is an entirely hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
          else
-            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You are able to load all of it into your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. You find that there is an entirely hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You are able to load all of it into your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
          end
       end )
    end
@@ -412,7 +404,7 @@ function goodevent()
    local armour, shield = pp:health()
    if armour < 50 and stats.armour_regen <= 0 then
       table.insert( goodevent_list, function ()
-         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
+         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and stripped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
          pp:setHealth( 100, shield )
       end )
    end
@@ -432,16 +424,22 @@ function badevent()
          player.pilot():control(true)
          hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
-      function ()
+   }
+   local has_presence = false
+   for k,v in pairs(system.cur():presences()) do -- luacheck: ignore
+      has_presence = true
+      break
+   end
+   if #lmisn.getSpobAtDistance( nil, 0, 2, faction.get("Independent") ) > 0 and has_presence then
+      table.insert( badevent_list, function ()
          derelict_msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, your ship's sensors finds there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]), fmt.f(_([[Space Leeches attached to a derelict you found in {sys} sucked your ship empty of jump fuel before you could get rid of them! Rough break.]]), {sys=system.cur()}))
          player.pilot():setFuel(false)
          destroyevent()
-      end,
-   }
+      end )
+   end
    if pir.systemPresence() > 0 then
-      table.insert( badevent_list,
-         function ()
-            derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
+      table.insert( badevent_list, function ()
+            derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale, but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
 
             local s = player.pilot():ship():size()
             local enemies_tiny = {

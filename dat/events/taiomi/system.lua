@@ -540,7 +540,7 @@ Scavenger goes silent for a second, as if thinking.
          d(_([["With all the noise we have stirred up in the nearby systems. I would not be surprised that there are already more patrols coming this way. More than ever, time is of essence."]]))
          d(fmt.f(_([["For now, all you have to do is deliver my deal to the smuggler, and make sure they deliver the cargo to the {sys} system. Do everything you can to ensure a safe delivery. Bon Voyage!"]]),
             {sys=system.get("Bastion")}))
-         vn.na(fmt.f(_([[You recieve a transmission containing Scavenger's deals and the details necessary to find the Smuggler on {spob}.]]),
+         vn.na(fmt.f(_([[You receive a transmission containing Scavenger's deals and the details necessary to find the Smuggler on {spob}.]]),
             {spob=target}))
          vn.func( function ()
             naev.missionStart("Taiomi 9")

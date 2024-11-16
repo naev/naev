@@ -68,6 +68,7 @@ function accept ()
    end
 
    local accepted = false
+   local fs = player.fleetCargoMissionFree()
 
    vn.clear()
    vn.scene()
@@ -89,7 +90,7 @@ You just start to marvel at the self-assurance of one so young when she signals 
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < misn_cargoamount2 then
+      if fs < misn_cargoamount2 then
          vn.jump("nospace")
       end
    end )
@@ -105,7 +106,7 @@ You just start to marvel at the self-assurance of one so young when she signals 
    vn.label("nospace")
    mia(fmt.f(_([["Aw, I forgot" she adds. "We would of course need {needed} of free cargo space for our box."
 #rYou need an additional {space} of free space.#o]]),
-      {needed=fmt.tonnes(misn_cargoamount2), space=fmt.tonnes(misn_cargoamount2-player.pilot():cargoFree())}))
+      {needed=fmt.tonnes(misn_cargoamount2), space=fmt.tonnes(misn_cargoamount2-fs)}))
    vn.done()
 
    vn.run()
@@ -215,7 +216,7 @@ function nerds_land2()
       end
       cleanup()
 
-      if player.pilot():cargoFree() >= misn_cargoamount2 then
+      if player.fleetCargoMissionFree() >= misn_cargoamount2 then
       -- player has enough free cargo
          nerds_return()
       else
@@ -281,7 +282,7 @@ end
 function nerds_bar()
    hook.rm(mem.jhook)
    hook.rm(mem.lhook)
-   if player.pilot():cargoFree() >= misn_cargoamount2 then
+   if player.fleetCargoMissionFree() >= misn_cargoamount2 then
       vntk.msg(_("Departure"), _([[The nerds follow you to your ship and finally stow away their box. Now, you're all set to go.]]))
       nerds_return()
    else

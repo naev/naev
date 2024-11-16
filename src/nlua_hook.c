@@ -564,7 +564,7 @@ static int hookL_timerClear( lua_State *L )
  *
  * The hook receives only the optional argument.
  *
- * @usage hook.date( time.create( 0, 0, 1000 ), "some_func", nil ) -- Hooks with
+ * @usage hook.date( time.new( 0, 0, 1000 ), "some_func", nil ) -- Hooks with
  * a 1000 second resolution
  *
  *    @luatparam Time resolution Resolution of the timer (should be a time

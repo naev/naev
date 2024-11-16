@@ -105,7 +105,7 @@ function accept()
    local pp = player.pilot()
    vn.label("accept")
    vn.func( function ()
-      if pp:cargoFree() < mem.cargo_size then
+      if player.fleetCargoMissionFree() < mem.cargo_size then
          vn.jump("nospace")
          return
       end

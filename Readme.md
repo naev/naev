@@ -104,7 +104,7 @@ directory to see a list of all available options.
 
 **For installation**, try: `meson configure --buildtype=release -Db_lto=true`
 
-**For Building a Windows Installer**, try adding: `--bindir=. -Dndata_path=. -Dinstaller=true`. Check the `dist` folder in your build directory
+**For Building a Windows Installer**, try adding: `--prefix="$(pwd)"/build/windows --bindir=. -Dndata_path=. -Dinstaller=true`. Check the `dist` folder in your build directory
 
 **For Building a macOS DMG**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources -Dinstaller=true`. Check the `dist` folder in your build directory
 
@@ -112,6 +112,8 @@ directory to see a list of all available options.
 (If your system supports debuginfod, also add `set debuginfod enabled on` to a file named `.gdbinit` in your home directory!)
 
 **For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
+
+#### For up to date build instructions, check out the compilation page in our [Wiki](https://github.com/naev/naev/wiki/Compiling)
 
 ### RUNNING NAEV
 

@@ -27,7 +27,7 @@ function background ()
    -- Let's add big nebula because we can
    nebula.init{ size=3000, movemod=0.2, opacity=50 }
 
-   -- Slighty blue
+   -- Slightly blue
    gfx.lightAmbient( 0.6, 0.8, 1.0, 2 )
    gfx.lightIntensity( 0.5 * gfx.lightIntensityGet() )
 end

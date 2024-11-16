@@ -391,7 +391,7 @@ int main (void) { return 0; }''')
    gen_zip_command += ['--cd', 'outfits/bioship']
    #gen_zip_command += bio_outfits.to_list()
    foreach target: bio_outfits
-     gen_zip_command += target.to_list()
+     gen_zip_command += target
    endforeach
    zip_overlay = custom_target(
       'zip_overlay',

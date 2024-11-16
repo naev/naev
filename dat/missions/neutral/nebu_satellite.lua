@@ -65,6 +65,7 @@ end
 
 function accept ()
    local accepted = false
+   local fs = player.fleetCargoMissionFree()
 
    vn.clear()
    vn.scene()
@@ -82,21 +83,21 @@ function accept ()
 
    vn.label("nospace")
    vn.na(fmt.f(_([["You need an additional {space} of free cargo space to accept this mission!"]]),
-      {space=cargo_space - player.pilot():cargoFree()}))
+      {space=cargo_space - fs}))
    vn.done()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_space then
+      if fs < cargo_space then
          vn.jump("nospace")
          return
       end
       accepted = true
    end )
-   vn.na(fmt.f(_([["We had a trip scheduled with a space trader, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we want to release into the {sys} system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
+   sci(fmt.f(_([["We had a trip scheduled with a space trader, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we want to release into the {sys} system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
 He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost heritage. So far, the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this probe we're going to launch."]]),
       {sys=mem.satellite_sys}))
-   vn.na(fmt.f(_([["The plan is for you to take us to {sys} so we can launch the probe, and then return us to our home at {home_pnt} in the {home_sys} system. If all goes well, the probe will automatically send us the data we need. You'll be paid {credits} when we arrive."]]),
+   sci(fmt.f(_([["The plan is for you to take us to {sys} so we can launch the probe, and then return us to our home at {home_pnt} in the {home_sys} system. If all goes well, the probe will automatically send us the data we need. You'll be paid {credits} when we arrive."]]),
       {sys=mem.satellite_sys, home_pnt=mem.homeworld, home_sys=mem.homeworld_sys, credits=fmt.credits(credits)}))
    vn.run()
 

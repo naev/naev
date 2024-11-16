@@ -42,7 +42,7 @@ function create()
    -- Zuri gives the mission to go to court at minerva
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    misn.setTitle( title )
-   misn.setDesc(fmt.f(_("The future of Minerva Station is at stake with deliberations being held at {spb} in the {sys} system. Zuri has aske you to take her to the courtroom to see if it is possible to influence the case."),
+   misn.setDesc(fmt.f(_("The future of Minerva Station is at stake with deliberations being held at {spb} in the {sys} system. Zuri has asked you to take her to the courtroom to see if it is possible to influence the case."),
       {sys=trialspb, spb=trialspb}))
    misn.setReward(_("The future of Minerva Station!"))
 end
@@ -390,7 +390,7 @@ Having finished her interrogation, Maikki sits down.]]))
    end )
 
    vn.label("02_met")
-   dvd(fmt.f(_([["Not only did {playername} meet up wit the scavengers, they blew them up, and left their remains in the Nebula!"]]),
+   dvd(fmt.f(_([["Not only did {playername} meet up with the scavengers, they blew them up, and left their remains in the Nebula!"]]),
       {playername=player.name()}))
    if scavengers_alive then
       vn.appear( scv, "slideup" )

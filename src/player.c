@@ -322,8 +322,9 @@ void player_new( void )
                   WARN( _( "Unable to delete temporary file '%s': %s" ),
                         SAVEPATH,
                         PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+               else
+                  invalid = 0;
             }
-            invalid = 0;
          }
       }
       if ( invalid )
@@ -2088,7 +2089,6 @@ int player_jump( void )
 
       /* Order escorts to jump; just for aesthetics (for now) */
       escorts_jump( player.p, &cur_system->jumps[player.p->nav_hyperspace] );
-
       return 1;
    }
 
@@ -2713,21 +2713,18 @@ void player_destroyed( void )
  */
 static int player_shipsCompare( const void *arg1, const void *arg2 )
 {
-   PlayerShip_t *ps1, *ps2;
-   int           ret;
-
-   /* Get the arguments. */
-   ps1 = (PlayerShip_t *)arg1;
-   ps2 = (PlayerShip_t *)arg2;
-
-   if ( ps1->favourite && !ps2->favourite )
-      return -1;
-   else if ( ps2->favourite && !ps1->favourite )
-      return +1;
+   const PlayerShip_t *ps1 = arg1;
+   const PlayerShip_t *ps2 = arg2;
+   int                 ret;
 
    if ( ps1->deployed && !ps2->deployed )
       return -1;
    else if ( ps2->deployed && !ps1->deployed )
+      return +1;
+
+   if ( ps1->favourite && !ps2->favourite )
+      return -1;
+   else if ( ps2->favourite && !ps1->favourite )
       return +1;
 
    if ( ps1->p->ship->points < ps2->p->ship->points )

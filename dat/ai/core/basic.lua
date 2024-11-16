@@ -738,6 +738,10 @@ function hyperspace( target )
    end
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach", target )
+
+   -- Order followers to return if possible
+   local p = ai.pilot()
+   p:msg(p:followers(), "e_return", jump)
 end
 
 -- luacheck: globals hyperspace_follow (AI Task functions passed by name)
@@ -759,7 +763,7 @@ function __hyp_approach( target, jumptsk )
    local pos      = target:pos() + mem.target_bias
    local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
-   jumptsk  = jumptsk or "_hyp_jump"
+   jumptsk = jumptsk or "_hyp_jump"
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
@@ -784,7 +788,7 @@ end
 
 -- luacheck: globals _hyp_jump (AI Task functions passed by name)
 function _hyp_jump ( jump )
-   if ai.hyperspace( jump ) == nil then
+   if ai.hyperspace( jump ) then
       local p = ai.pilot()
       p:msg(p:followers(), "hyperspace", jump)
    end
@@ -798,9 +802,13 @@ function _hyp_jump_follow( jump )
       -- Wait until leader is in hyperspace
       if l:flags("jumpingout") then
          _hyp_jump( jump )
-      elseif not ai.canHyperspace() then
-         -- Drifted away or whatever, so pop and go back
-         ai.popsubtask()
+      else
+         -- Stop and wait just to get ready to hyperspace
+         ai.brake()
+         if ai.isstopped() and not ai.canHyperspace() then
+            -- Drifted away or whatever, so pop and go back
+            ai.popsubtask()
+         end
       end
    else
       _hyp_jump( jump )

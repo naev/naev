@@ -15,7 +15,7 @@ local vn = require 'vn'
 local graphics = require 'love.graphics'
 
 
--- List of avaliable posters and index of the corresponding message
+-- List of available posters and index of the corresponding message
 local imagesNmsg = {
    {"gfx/vn/posters/dvaered/dv_athena.png", 1},
    {"gfx/vn/posters/dvaered/dv_brunhilde.png", 1},

@@ -859,15 +859,19 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
                pilot_afterburn( player.p );
                /* Allow keeping it on outside of weapon sets. */
-               if ( player.p->afterburner != NULL )
-                  player.p->afterburner->flags |= PILOTOUTFIT_ISON_LUA;
+               if ( player.p->afterburner != NULL ) {
+                  player.p->afterburner->flags |= PILOTOUTFIT_ISON_TOGGLE;
+                  pilot_weapSetUpdateOutfitState( player.p );
+               }
             }
          } else if ( value == KEY_RELEASE ) {
             if ( NODEAD() ) {
                pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
                /* Make sure to release the weapon set lock. */
-               if ( player.p->afterburner != NULL )
-                  player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_LUA;
+               if ( player.p->afterburner != NULL ) {
+                  player.p->afterburner->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
+                  pilot_weapSetUpdateOutfitState( player.p );
+               }
             }
          }
 

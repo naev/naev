@@ -99,7 +99,7 @@ If this keeps up, the clan is going to tear itself apart. I think it's time to g
             vn.na(_(
                [[You quickly search the room, and discover evidence of a fight between the captain and the pirate. Blaster burns pockmark the walls, and the captain's uniform is covered in bloodstained slashes. You note with some curiosity that the pirate seemed to have been using a curved, nanosteel sabre instead of a blaster. You pick up the dusty blade and note its excellent craftsmanship. With the ornate engravings covering the blade, the sword is as much a work of art as it is a weapon.]]))
             vn.na(_(
-               [[Despite the seemingly imbalanced weaponry at play, you can't tell for certain who won the duel. Judging by the result it might be fair to say they both lost. One thing is for certain though, a few blaster shots aren't enough to explain the explosion which clearly took place here. You do find a singed journal in the captain's pocket however, and start leafing through the most recent entries.]]))
+               [[Despite the seemingly imbalanced weaponry at play, you can't tell for certain who won the duel. Judging by the result it might be fair to say they both lost. One thing is for certain though, a few blaster shots aren't enough to explain the explosion which clearly took place here. You do find a singed journal in the captain's pocket however, and start leafing through the most recent entries.]])) -- codespell:ignore singed
 
             local log = vne.notebookStart()
             log(_([[Captain's log, UST 551:3480

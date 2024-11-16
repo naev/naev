@@ -242,6 +242,14 @@ void pilot_cargoCalc( Pilot *pilot )
 unsigned int pilot_addMissionCargo( Pilot *pilot, const Commodity *cargo,
                                     int quantity )
 {
+   unsigned int id = pilot_genMissionCargoID( pilot );
+   /* Add the cargo. */
+   pilot_cargoAdd( pilot, cargo, quantity, id );
+   return id;
+}
+
+unsigned int pilot_genMissionCargoID( Pilot *pilot )
+{
    unsigned int id, max_id;
 
    /* Get ID. */
@@ -253,10 +261,6 @@ unsigned int pilot_addMissionCargo( Pilot *pilot, const Commodity *cargo,
       max_id = MAX( max_id, pilot->commodities[i].id );
    if ( max_id >= id )
       id = mission_cargo_id = max_id + 1;
-
-   /* Add the cargo. */
-   pilot_cargoAdd( pilot, cargo, quantity, id );
-
    return id;
 }
 

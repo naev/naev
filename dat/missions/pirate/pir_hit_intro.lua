@@ -3,7 +3,22 @@
 <mission name="Pirate Hit Intro">
  <unique />
  <priority>3</priority>
- <cond>player.outfitNum("Mercenary License") &gt; 0 or spob.cur():blackmarket() or spob.cur():tags().criminal ~= nil</cond>
+ <cond>
+   local scur = spob.cur()
+   if not scur:blackmarket() and not scur:tags().criminal then
+      if not require("misn_test").mercenary(true) then
+         return false
+      end
+   end
+
+   -- Lower probability on non-pirate places
+   local pir = require "common.pirate"
+   if not pir.factionIsPirate( scur:faction() ) and rnd.rnd() &lt; 0.2 then
+      return false
+   end
+
+   return true
+   </cond>
  <chance>100</chance>
  <location>Bar</location>
  <faction>Wild Ones</faction>
@@ -45,11 +60,6 @@ local givername = _("Shady Individual")
 mem.giverimage, mem.giverportrait = vni.generic()
 
 function create ()
-   -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.2 then
-      misn.finish(false)
-   end
-
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 6,
       function(s)
          local p = s:presences()[ target_faction ]
@@ -62,19 +72,26 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys ) then
+   if not misn.claim( mem.missys, true ) then
       misn.finish( false )
    end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 10 )
-   if rnd.rnd() < 0.05 then
-      mem.jumps_permitted = mem.jumps_permitted - 1
-   end
+   mem.deadline = time.get() + time.new( 0, 3 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    mem.name = pilotname.generic()
    mem.retpnt, mem.retsys = spob.cur()
 
    misn.setNPC( givername, mem.giverportrait, _("You see a shady individual who seems to be looking for pilots to do a mission for them. You're not entirely sure you want to associate with them though.") )
+end
+
+local function update_osd ()
+   misn.osdCreate( _("Dark Compensation"), {
+      fmt.f( _("Fly to the {sys} system before {time_limit} ({time} remaining)"),
+         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.get())} ),
+      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
+      fmt.f( _("Return to {pnt} ({sys} system)"), {pnt=mem.retpnt,sys=mem.retsys} ),
+   } )
+
 end
 
 local talked = false
@@ -103,8 +120,8 @@ They grin.]]),
    }
 
    vn.label("accept")
-   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system. Leaving their ship as a charred memento to their avarice will be a fitting end for them."]]),
-      {name=mem.name, sys=mem.missys}))
+   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system, although it is believed thy will leave by {deadline}. Leaving their ship as a charred memento to their avarice will be a fitting end for them."]]),
+      {name=mem.name, sys=mem.missys, deadline=mem.deadline}))
    vn.func( function () accepted = true end )
    vn.done()
 
@@ -127,11 +144,7 @@ They grin.]]),
    misn.setReward( reward )
    mem.marker = misn.markerAdd( mem.missys )
 
-   misn.osdCreate( _("Dark Compensation"), {
-      fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} ),
-      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
-      fmt.f( _("Return to {pnt} ({sys} system)"), {pnt=mem.retpnt,sys=mem.retsys} ),
-   } )
+   update_osd()
 
    mem.last_sys = system.cur()
 
@@ -139,8 +152,17 @@ They grin.]]),
    hook.jumpout( "jumpout" )
    hook.takeoff( "takeoff" )
    hook.land( "land" )
+   hook.date( time.new( 0, 0, 1e3 ), "date" )
 end
 
+function date ()
+   if system.cur() ~= mem.missys then
+      if time.get() > mem.deadline then
+         return lmisn.fail( _("Target got away.") )
+      end
+      update_osd()
+   end
+end
 
 function jumpin ()
    -- Nothing to do.
@@ -162,13 +184,11 @@ function jumpout ()
       return
    end
 
-   mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
       lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
    end
 end
-
 
 function takeoff ()
    -- Nothing to do.
@@ -213,11 +233,6 @@ end
 local _target_faction
 function spawn_target( param )
    if mem.state ~= 1 then
-      return
-   end
-
-   if mem.jumps_permitted < 0 then
-      lmisn.fail( _("Target got away.") )
       return
    end
 

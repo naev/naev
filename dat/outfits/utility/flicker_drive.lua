@@ -27,7 +27,7 @@ Gives a #g{sigbonus}% Signature Range#0 bonus when equipped.]]), {
 end
 
 function onload( o )
-   heat = o:heatFor( 20/cooldown ) -- Roughly overheat in 20 secs of continious usage (more in reality)
+   heat = o:heatFor( 20/cooldown ) -- Roughly overheat in 20 secs of continuous usage (more in reality)
 end
 
 function init( p, po )

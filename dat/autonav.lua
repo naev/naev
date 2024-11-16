@@ -521,6 +521,8 @@ function autonav_jump_brake ()
 
    if ai.canHyperspace() then
       ai.hyperspace()
+      local pp = player.pilot()
+      pp:msg( pp:followers(), "hyperspace", pp:navJump() )
    elseif ret then
       -- Recompute the location for a better position
       recompute_jump_pos()
@@ -675,7 +677,7 @@ function autonav_plt_follow ()
    end
 end
 
--- Geting close to board a pilot
+-- Getting close to board a pilot
 function autonav_plt_board_approach ()
    local plt = target_plt
    local target_known = false

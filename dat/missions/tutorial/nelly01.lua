@@ -142,7 +142,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_q then
+      if player.fleetCargoMissionFree() < cargo_q then
          vn.jump("nofreespace")
          return
       end

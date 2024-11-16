@@ -22,7 +22,7 @@ function create ()
    local pt = ps:tags()
    mem.isdrone = pt.drone
    if mem.isdrone then
-      mem.comm_no = _("ACCESS DENIED.")
+      mem.comm_no = _([["ACCESS DENIED."]])
    end
    create_post()
 end

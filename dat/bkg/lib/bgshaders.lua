@@ -1,6 +1,6 @@
 --[[
    Small library to handle rendering a fullscreen background shader.
-   Automatically handles scaling as necesary.
+   Automatically handles scaling as necessary.
 --]]
 local lg = require "love.graphics"
 local love_shaders = require 'love_shaders'

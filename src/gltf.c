@@ -1298,7 +1298,6 @@ void gltf_render( GLuint fb, GltfObject *obj, const mat4 *H, GLfloat time,
 void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
                        GLfloat time, double size, const Lighting *L )
 {
-   (void)time; /* TODO implement animations. */
    if ( scene < 0 )
       return;
    const GLfloat sca    = 1.0 / obj->radius;

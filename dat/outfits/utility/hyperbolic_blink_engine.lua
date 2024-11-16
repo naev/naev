@@ -29,7 +29,7 @@ function descextra( _p, _o )
 end
 
 function onload( o )
-   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continious usage (more in reality)
+   heat = o:heatFor( 30/cooldown ) -- Roughly overheat in 30 secs of continuous usage (more in reality)
 end
 
 function init( p, po )
