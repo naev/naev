@@ -5,10 +5,8 @@
  <chance>45</chance>
  <cond>
    local sc = system.cur()
-   if sc:faction() == nil then
-      return false
-   end
-   if sc:tags().noderelicts then
+   local st = sc:tags()
+   if st.noderelicts or st.tradelane then
       return false
    end
    return true
