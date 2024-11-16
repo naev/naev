@@ -297,49 +297,47 @@ function goodevent()
          derelict_msg( gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them and leave the derelict.]]), fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}) )
          player.pay( rnd.rnd(5e3,30e3) )
       end,
-      function ()
-         local csys = system.cur()
-         local sysset = { [csys:nameRaw()] = csys:faction() }
-         for i=1,3 do
-            for s,f in pairs(sysset) do
-               for j,n in ipairs(system.get(s):adjacentSystems()) do
-                  sysset[ n:nameRaw() ] = n:faction()
-               end
-            end
+   }
+
+   local csys = system.cur()
+   local sysset = { [csys:nameRaw()] = csys:faction() }
+   for i=1,3 do
+      for s,f in pairs(sysset) do
+         for j,n in ipairs(system.get(s):adjacentSystems()) do
+            sysset[ n:nameRaw() ] = n:faction()
          end
-         local whitelist = {
-            ["Empire"]  = true,
-            ["Dvaered"] = true,
-            ["Sirius"]  = true,
-            ["Soromid"] = true,
-            ["Za'lek"]  = true,
-            ["Frontier"]= true,
-            ["Goddard"] = true
-         }
-         local sysfct = {}
-         for s,f in pairs(sysset) do
-            if f then
-               local nr = f:nameRaw()
-               if whitelist[nr] then
-                  sysfct[ nr ] = true
-               end
-            end
+      end
+   end
+   local whitelist = {
+      ["Empire"]  = true,
+      ["Dvaered"] = true,
+      ["Sirius"]  = true,
+      ["Soromid"] = true,
+      ["Za'lek"]  = true,
+      ["Frontier"]= true,
+      ["Goddard"] = true
+   }
+   local sysfct = {}
+   for s,f in pairs(sysset) do
+      if f then
+         local nr = f:nameRaw()
+         if whitelist[nr] then
+            sysfct[ nr ] = true
          end
-         local fcts = {}
-         for f,i in pairs(sysfct) do
-            table.insert( fcts, f )
-         end
-         if #fcts == 0 then
-            for f,i in pairs(whitelist) do
-               table.insert( fcts, f )
-            end
-         end
+      end
+   end
+   local fcts = {}
+   for f,i in pairs(sysfct) do
+      table.insert( fcts, f )
+   end
+   if #fcts > 0 then
+      table.insert( goodevent_list, function ()
          local rndfactRaw = fcts[ rnd.rnd(1, #fcts) ]
          local rndfact = _(rndfactRaw)
          derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship AI, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame(), fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict:ship(), fct=rndfact}))
          faction.hit( rndfactRaw, 2 )
-      end,
-   }
+      end )
+   end
 
    -- Only give cargo if enough space
    if player.fleetCargoFree() > 10 then
@@ -358,9 +356,9 @@ function goodevent()
          local c = commodity.get( commodities[ rnd.rnd(1,#commodities) ] )
          player.fleetCargoAdd( c, rnd.rnd(30,100) )
          if player.fleetCargoFree()==0 then
-            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. You find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
          else
-            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You are able to load all of it into your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+            derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. You find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You are able to load all of it into your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
          end
       end )
    end
