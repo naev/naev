@@ -54,7 +54,7 @@ function create ()
    mem.outfits = plt:outfits()
    for k,v in pairs(mem.outfits) do
       -- Ignore outfits that can't be stolen
-      if v:tags().nosteal then
+      if v and v:tags().nosteal then
          mem.outfits[k] = nil
       end
    end
