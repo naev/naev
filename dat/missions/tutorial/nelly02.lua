@@ -448,7 +448,7 @@ function timer_pirate_nelly ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    nel(_([["It looks like we've been spotted by a trio of Pirate Hyenas. Normally I would say run, but I don't think we'll be able to outrun them. I think that bribing them may be the only way out."]]))
-   nel(fmt.f(_([["If you target a pirate and hail them with {hailkey}, you should have an option to bribe them and their friends if they are hostile. Although it can be expensive, it beats getting blown to bits. Try targetting the nearest enemy with {targetkey}, hailing them with {hailkey}, and bribing them!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")}))
+   nel(fmt.f(_([["If you target a pirate and hail them with {hailkey}, you should have an option to bribe them and their friends if they are hostile. Although it can be expensive, it beats getting blown to bits. Try targeting the nearest enemy with {targetkey}, hailing them with {hailkey}, and bribing them!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")}))
    if player.credits() < 1000 then
       nel(fmt.f(_([["It looks like you won't have enough money to bribe them. Here, take #g{credits}#0, that should be enough, hopefully."]]),{credits=fmt.credits(1e3)}))
       vn.func( function() player.pay(1000) end )

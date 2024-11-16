@@ -114,7 +114,7 @@ function puzzle01_addship ()
    local emem = e:memory()
    emem.comm_no = _("No response.")
 
-   -- Readd ship when dead
+   -- Re-add ship when dead
    hook.pilot( e, "exploded", "puzzle01_shipdeath" )
 
    -- keep track of them

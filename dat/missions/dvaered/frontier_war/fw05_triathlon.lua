@@ -496,7 +496,7 @@ function takeoff()
    end
 end
 
--- Test wether the player only has mace rockets
+-- Test whether the player only has mace rockets
 function checkMace()
    local weap = player.pilot():outfitsList("weapon")
    for i, w in ipairs(weap) do
@@ -686,7 +686,7 @@ function competitorIdle( self )
    self:gather()
 end
 
--- A competitor is hit during Stadion (problematic if the player is the agressor)
+-- A competitor is hit during Stadion (problematic if the player is the aggressor)
 function compHitS( _victim, attacker )
    if attacker and attacker:withPlayer() then
       tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors during the Mace Stadion. The Stadion must now be interrupted, and you receive 5 penalty points. Land and speak again with Major Tam.") )

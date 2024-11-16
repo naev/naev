@@ -12,7 +12,7 @@
    Mission Template (mission name goes here)
 
    This is a Naev mission template.
-   In this document aims to provide a structure on which to build many
+   This document aims to provide a structure on which to build many
    Naev missions and teach how to make basic missions in Naev.
    For more information on Naev, please visit: http://naev.org/
    Naev missions are written in the Lua programming language: http://www.lua.org/

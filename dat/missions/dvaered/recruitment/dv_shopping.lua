@@ -32,7 +32,7 @@
 -- Dvaered Shopping
 -- This is the last mission of the Dvaered Recruitment arc.
 -- The player escorts the fleet of Colonel Okran in route to Zhiru in Goddard.
--- Mission is really straightforward, until, on Goddard, the Trickster appears and reveals that Lord Fatgun has been assasinated.
+-- Mission is really straightforward, until, on Goddard, the Trickster appears and reveals that Lord Fatgun has been assassinated.
 -- Okran tries to kill the player with the Goddard cruiser and player meets the trickster.
 
    Stages :
@@ -304,7 +304,7 @@ end
 
 -- Manage Okran's death
 function OkranDeath()
-   -- Mission failure (not sure how it can happend that way)
+   -- Mission failure (not sure how it can happen that way)
    if mem.misn_state == 0 or mem.misn_state == 1 then
       vntk.msg(_("Mission Failure"), _([[You're not sure how this routine escort mission came to the point where a cruiser was lost, but the result is there: you failed.]]))
       misn.finish(false)

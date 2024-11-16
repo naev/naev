@@ -108,7 +108,7 @@ function tut_illegal ()
    sai(_([["If some ship begins to scan you, I'll turn your autonav system off, to give you time to do what you have to do. Furthermore, the ships scanning you will be marked on your radar and overlay map, which is convenient to get away."]]))
    sai(fmt.f(_([["You can check to see if your commodities or outfits are illegal from the #bInfo Menu#0 which you can open with {infokey}, and then looking at your ship outfits or commodities. Note that illegality is determined on a per-faction basis instead of globally."]]),
       {infokey=tut.getKey("info")}))
-   vn.na(fmt.f(_([[{ainame} vanishes and you are left wondering why they are so knowledgable about illegal activities.]]),{ainame=tut.ainame()}))
+   vn.na(fmt.f(_([[{ainame} vanishes and you are left wondering why they are so knowledgeable about illegal activities.]]),{ainame=tut.ainame()}))
    vn.done( tut.shipai.transition )
    vn.run()
 

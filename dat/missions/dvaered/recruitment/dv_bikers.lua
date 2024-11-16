@@ -576,7 +576,7 @@ function nextActivity( leader )
       leader:moveto(mem.MV_pos1)
    end
 
-   -- Pilots runaway from eachother. This might look like they perform tricks hopefully
+   -- Pilots runaways from each other. This might look like they perform tricks hopefully
    if tricks then
       for i, p in ipairs(leader:followers()) do
          p:control()
@@ -625,7 +625,7 @@ end
 -- Manage timer in OSD
 function tick()
    mem.timer = mem.timer-1. -- TODO: I guess it will deviate with time
-   if mem.misn_state == 2 then -- If player didnt already win
+   if mem.misn_state == 2 then -- If player didn't already win
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Negotiation 2"), {
          fmt.f(_("Destroy the 3 targets \n ({time} s remaining)"), {time=string.format("%.0f",mem.timer)} ),

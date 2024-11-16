@@ -31,9 +31,9 @@ return function ( mem )
          end
 
          vn.na(_([[The ship's systems list only one item of interest in the manifest: a press guidelines document.]]))
-         vn.na(_([[Curious, you check out the hold. There are many copies of an old, dessicated and crumbling paper file. Who uses paper these days? Is this a pre-warp ship or something?]]))
+         vn.na(_([[Curious, you check out the hold. There are many copies of an old, desiccated, and crumbling paper file. Who uses paper these days? Is this a pre-warp ship or something?]]))
          vn.na(_([[The document seems to have been typeset in an old format loved by the Za'lek, called LaTeX. Sadly, the long exposure to the light has faded the first page beyond all recognition. You decide to read the rest of the text, which is still legible, if in poor condition.]]))
-         --LaTeX does not specify a format, but the future has likely moved past LaTeX, which is retained in idioms like this one. (Typeset like LaTeX i.e. formally)
+         -- LaTeX does not specify a format, but the future has likely moved past LaTeX, which is retained in idioms like this one. (Typeset like LaTeX i.e. formally)
 
          vn.scene()
          local log = vne.flashbackTextStart()
@@ -92,7 +92,7 @@ return function ( mem )
          vn.func( function ()
             var.push( misnvar, true )
             poi.data_give(1)
-            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with a dessicated copy of some press guidelines. You also were able to recover {reward} from the ship.]]),
+            poi.log(fmt.f(_([[You found a derelict ship in the {sys} system with a desiccated copy of some press guidelines. You also were able to recover {reward} from the ship.]]),
                {sys=mem.sys, reward=reward}))
          end)
       end,

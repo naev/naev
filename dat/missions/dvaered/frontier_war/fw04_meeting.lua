@@ -295,7 +295,7 @@ function scheduleIncoming()
 
    -- Then annoying people the player has to control
    controls = { nil, nil, nil, nil, nil }
-   canland = { false, false, false, false, false } -- Marks wether the ship has been controlled by the player
+   canland = { false, false, false, false, false } -- Marks whether the ship has been controlled by the player
    mem.noCtrl = 1
    spawnControl()
    hook.timer( 40.0, "spawnControl" )
@@ -367,7 +367,7 @@ function spawnControl()
    controls[mem.noCtrl]:land(targpla)
 
    hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- First one for detection
-   hook.timer(0.5, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- Second one for loosing
+   hook.timer(0.5, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- Second one for losing
 
    mem.noCtrl = mem.noCtrl + 1
 end

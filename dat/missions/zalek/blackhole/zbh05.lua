@@ -129,9 +129,9 @@ function land ()
       z(_([["How'd it go? … Damn, you met some hostile drones nearby? That can't be a good omen, and I wanted to think we were in the clear. At least you managed to bring all the cargo safe in one piece. Now I have to see how Icarus enjoys them."]]))
       z(_([[He goes to a nearby container and opens it up, causing a cloud of frozen gas to come rolling out.
 "Very interesting. Let's give this a try."
-He picks up a thick glass cylindrical cannister with metallic stoppers on both end. There seems to be a thick viscous liquid in it, reminding you of some sort of primordial soup. Without much grace, he musters all his strength and flings it towards space.]]))
+He picks up a thick glass cylindrical canister with metallic stoppers on both ends. There seems to be a thick viscous liquid in it, reminding you of some sort of primordial soup. Without much grace, he musters all his strength and flings it towards space.]]))
       vn.sfx( zbh.sfx.bite )
-      vn.na(_([[The cannister slowly rotates as it flies out the space dock. Icarus is still doing weird loops and chasing nearby drones, when suddenly it stops moving, and begins to look at the cannister. In the blink of an eye, Icarus lunges at it, opening what can only be described as a gaping maw, and crushes the cannister in a single impetuous chomp, with you and Zach staring dumbfounded.]]))
+      vn.na(_([[The canister slowly rotates as it flies out the space dock. Icarus is still doing weird loops and chasing nearby drones, when suddenly it stops moving, and begins to look at the canister. In the blink of an eye, Icarus lunges at it, opening what can only be described as a gaping maw, and crushes the canister in a single impetuous chomp, with you and Zach staring dumbfounded.]]))
       z(_([["Holy shit! Did you just see what I did!?"
 Zach looks pale and goes stiff.]]))
       z(_([["That… was…   …"]]))
