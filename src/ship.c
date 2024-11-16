@@ -1389,6 +1389,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
          glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[1] );
          glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+         glDisable( GL_SCISSOR_TEST );
 
          /* First render separately. */
          gltf_renderScene( ship_fbo[1], obj, obj->scene_body, H, t, scale, L );
