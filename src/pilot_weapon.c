@@ -424,7 +424,7 @@ void pilot_weapSetType( Pilot *p, int id, WeaponSetType type )
    PilotWeaponSet *ws = pilot_weapSet( p, id );
    ws->type           = type;
    ws->active         = 0; /* Disable no matter what. */
-   p->autoweap        = 0;
+   // p->autoweap        = 0;
    pilot_weapSetUpdateOutfits( p, ws );
 }
 
@@ -452,7 +452,7 @@ void pilot_weapSetInrange( Pilot *p, int id, int inrange )
 {
    PilotWeaponSet *ws = pilot_weapSet( p, id );
    ws->inrange        = inrange;
-   p->autoweap        = 0;
+   // p->autoweap        = 0;
 }
 
 /**
@@ -479,7 +479,7 @@ void pilot_weapSetManual( Pilot *p, int id, int manual )
 {
    PilotWeaponSet *ws = pilot_weapSet( p, id );
    ws->manual         = manual;
-   p->autoweap        = 0;
+   // p->autoweap        = 0;
 }
 
 /**
@@ -506,7 +506,7 @@ void pilot_weapSetVolley( Pilot *p, int id, int volley )
 {
    PilotWeaponSet *ws = pilot_weapSet( p, id );
    ws->volley         = volley;
-   p->autoweap        = 0;
+   // p->autoweap        = 0;
 }
 
 /**
@@ -652,8 +652,8 @@ void pilot_weapSetClear( Pilot *p, int id )
    PilotWeaponSet *ws = pilot_weapSet( p, id );
    ws->type           = WEAPSET_TYPE_TOGGLE;
    array_free( ws->slots );
-   ws->slots   = NULL;
-   p->autoweap = 0;
+   ws->slots = NULL;
+   // p->autoweap = 0;
 
    /* Update if needed. */
    pilot_weapSetUpdateOutfits( p, ws );
