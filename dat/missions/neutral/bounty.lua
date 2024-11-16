@@ -47,7 +47,7 @@ local misn_desc = _([[The pirate known as {pirname} was recently seen in the {sy
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
 #nLast seen:#0 {sys} system
-#nTime limit:#0 {deadline} ({timeleft} left)]])
+#nTime limit:#0 {deadline}]])
 
 -- In the case the player has to capture the target alive
 local misn_title_alive = {
@@ -62,7 +62,7 @@ local misn_desc_alive = _([[The pirate known as {pirname} was recently seen in t
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Alive
 #nLast seen:#0 {sys} system
-#nTime limit:#0 {deadline} ({timeleft} left)]])
+#nTime limit:#0 {deadline}]])
 
 local reason_list = {
    ["Independent"] = {
@@ -335,7 +335,7 @@ function create ()
    -- Set mission details
    misn.setTitle( prefix..fmt.f(title[mem.level], {sys=missys}) )
    local mdesc = fmt.f( desc,
-      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason, deadline=mem.deadline, timeleft=(mem.deadline-time.get()) })
+      {pirname=pname, sys=missys, fct=payingfaction, shipclass=_(ship.get(pship):classDisplay()), reason=reason, deadline=(mem.deadline-time.get()) })
    if not payingfaction:static() then
       mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
          {fct=payingfaction})

@@ -292,14 +292,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         lmisn.fail( _("Another pilot eliminated your target.") )
+         lmisn.fail( fmt.f(_("Another pilot eliminated {plt}."), {plt=mem.name}) )
       end
    end
 end
 
 
 function pilot_jump ()
-   lmisn.fail( _("Target got away.") )
+   lmisn.fail( fmt.f(_("{plt} got away."), {plt=mem.name} ) )
 end
 
 
@@ -646,19 +646,12 @@ function succeed ()
    player.pay( mem.credits )
 
    -- Pirate rep cap increase
-   --local bounty_done = var.peek( "pir_bounty_done" )
    var.push( "pir_bounty_done", true )
-   --[[
-   if bounty_done ~= true then
-      pir.modReputation( 5 )
-   end
-   --]]
 
    if mem.level >= 5 then
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if not bounty_dangerous_done then
-         --pir.modReputation( 2 )
          pir.modDecayFloor( 2 )
       end
 
@@ -666,7 +659,6 @@ function succeed ()
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if not bounty_highly_dangerous_done then
-            --pir.modReputation( 3 )
             pir.modDecayFloor( 3 )
          end
       end
