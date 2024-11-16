@@ -2,18 +2,21 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Derelict">
  <location>enter</location>
- <chance>45</chance>
+ <chance>80</chance>
  <cond>
    local sc = system.cur()
    local st = sc:tags()
    if st.noderelicts or st.tradelane or st.restricted then
       return false
    end
-   local _nebu_dens, nebu_vol = cursys:nebula()
+   local _nebu_dens, nebu_vol = sc:nebula()
    if nebu_vol &gt; 0 then
       return false
    end
    if sc:faction()==faction.get("Thurion") then
+      return false
+   end
+   if rnd.rnd() &lt; 0.5 and #require("lmisn").getSpobAtDistance( nil, 0, 2, faction.get("Independent") ) &gt; 0 then
       return false
    end
    return true
