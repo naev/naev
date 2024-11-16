@@ -28,8 +28,9 @@ repos:
   rev: v2.3.0
   hooks:
     - id: codespell
-      files: ^.*\.(lua)$
-      args: ["--ignore-words", ".codespell.words.exclude" ]
+      files: '^dat/'
+      types: [lua]
+      args: ["--ignore-words", ".codespellignore" ]
       additional_dependencies:
         - tomli
 - repo: local
