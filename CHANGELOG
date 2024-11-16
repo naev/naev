@@ -34,7 +34,7 @@
       * Messages get folded instead of repeating
       * Asteroids no longer fade out if close to or targeted by the player
       * Display fuel consumption for ships in the equipment overlay
-      * Added option to match speed with slowest ship in the fleet (on by default)
+      * Added option to match speed with the slowest ship in the fleet (on by default)
       * Made it so ships in the equipment screen do not change order based on value
       * Mark spaceport bar tab when there is an important NPC
       * Weapon set keybindings change window tabs
@@ -44,7 +44,7 @@
       * Added small optional bounce to NPCs when they start talking
       * Inform the player when they don't meet mission requirements for some important missions
       * Can add new plugins directly from the options menu
-      * Can toggle whether or not autonav stops when missile lock-ons are detected
+      * Can toggle whether autonav stops when missile lock-ons are detected
       * Added colour coded factional backgrounds in the shipyard
       * Can rotate shipyard image for ships with 3D graphics
       * Prompt when deleting notes
@@ -104,7 +104,7 @@
          * Global weapon range, damage, fire-rate and energy usage
          * Range ship stat for all specific weapon types
          * Turn, speed, and accel for launchers
-         * Shield down time modifier
+         * Shield downtime modifier
       * Deprecated old faction API in favour of the new one for local / global standings
       * Added support for temporarily overriding faction standings
    * Fixes
@@ -128,10 +128,8 @@
       * zbh10: Godheart and friends get at most 1 fighter bay per ship now
       * Fixed ESS Trinity being bribeable
       * Cargo on fleets with be displayed to make room for mission cargo when necessary
-
-* 0.11.6 (unreleased)
-   * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
-   * `blackhole/zbh09`: fixed softlock during a cutscene under certain conditions
+      * Made it so Shadow Vigil doesn't try to go through Surano system for reasons
+      * `blackhole/zbh09`: fixed softlock during a cutscene under certain conditions
 
 * 0.11.5
    * Fixed FLF-Pirate map not providing jump information
