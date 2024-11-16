@@ -443,7 +443,7 @@ jobs:
         Package_Source,
         Linux_Package_Release,
         Windows_Naev_Release,
-        Darwin_Package_Release
+        Darwin_Package_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
 
