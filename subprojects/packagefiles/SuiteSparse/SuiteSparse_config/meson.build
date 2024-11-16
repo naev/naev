@@ -1,5 +1,5 @@
 source = [
-   configure_file(input: 'Config/SuiteSparse_config.h.in', output: 'SuiteSparse_config.h', configuration: config),
+   configure_file(input: 'Config/SuiteSparse_config.h.in', output: 'SuiteSparse_config.h', format: 'cmake@', configuration: config),
    'SuiteSparse_config.c',
 ]
 

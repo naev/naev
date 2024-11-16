@@ -1,5 +1,5 @@
 source = [
-   configure_file(input: 'Config/cholmod.h.in', output: 'cholmod.h', configuration: config),
+   configure_file(input: 'Config/cholmod.h.in', output: 'cholmod.h', format: 'cmake@', configuration: config),
    'Check/cholmod_check.c',                    # 'Check/cholmod_l_check.c',
    'Check/cholmod_read.c',                     # 'Check/cholmod_l_read.c',
    'Check/cholmod_write.c',                    # 'Check/cholmod_l_write.c',
