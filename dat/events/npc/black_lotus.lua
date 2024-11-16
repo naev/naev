@@ -9,7 +9,7 @@ local msg_combined
 local desc_list = {}
 desc_list["generic"] = {
    _("A Black Lotus clansperson sipping a sophisticated cocktail."),
-   _("A Black Lotus pirate with a sharp wit and a charming smile."),
+   _("A Black Lotus pirate with a sharp wit and a charming smile."), -- codespell:ignore wit
    _("A Black Lotus clansperson with a subtle hint of intrigue."),
    _("A Black Lotus clansperson skillfully manipulating a deck of cards in a mesmerizing display of precision."),
    _("A Black Lotus pirate elegantly sipping a glass of vintage wine."),

@@ -36,7 +36,7 @@ local articles = {
    },
    {
       head = N_([[Two-headed Cow Extinct]]),
-      body = _([[Lack of management and overall neglect sees the last of the two-headed cows dead, rendering the species extinct. These cows, revered for their milk and meat, were originally cultivated and bred on Sorom, and are the last of the species rescued from the destruction of our old home.]]),
+      body = _([[Lack of management and overall neglect sees the last of the two-headed cows dead, rendering the species extinct. These cows, revered for their milk and meat, were originally cultivated and bred on Sorom, and are the last of the species rescued from the destruction of our old home.]]), -- codespell:ignore revered
    },
    --[[
       Politics

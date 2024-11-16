@@ -18,7 +18,7 @@ local vni = require "vnimage"
 local fmt = require "format"
 local tut = require "common.tutorial"
 local strmess = require "strmess"
-local thn = require "common.thurion"
+local thn = require "common.thurion" -- codespell:ignore thn
 
 local landspb, landsys = spob.getS("FD-24")
 local fthurion = faction.get("Thurion")
@@ -110,7 +110,7 @@ function land ()
       vn.na(_([[Eventually your ship reaches the far side of the station, and you are told to wait as preparations are undertaken. You idle by the airlock unsure of what is going to happen.]]))
 
       -- TODO image
-      local alice = thn.vn_drone(_("Alice"))
+      local alice = thn.vn_drone(_("Alice")) -- codespell:ignore thn
       vn.appear{ alice }
       vn.na(_([[After a short while, you hear the other side of the airlock pressurize, and the door opens. To your surprise, you see a drone flanked by two security robots. Fully automated station?]]))
       alice(fmt.f(_([[The drone in the centre's speaker begins to emit sound, in standard tongue.

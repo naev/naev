@@ -454,7 +454,7 @@ local function vn_blackjack( npc )
    end
    bj._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-      -- Horrible hack where we draw ontop of the textbox a background
+      -- Horrible hack where we draw on top of the textbox a background
       lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
       lg.setColour( 0, 0, 0 )
@@ -597,7 +597,7 @@ function approach_chuckaluck ()
    end
    cl._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-      -- Horrible hack where we draw ontop of the textbox a background
+      -- Horrible hack where we draw on top of the textbox a background
       lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
       lg.setColour( 0, 0, 0 )

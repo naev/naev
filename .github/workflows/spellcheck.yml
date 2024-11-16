@@ -22,8 +22,5 @@ jobs:
         show-progress: false
     - uses: codespell-project/actions-codespell@master
       with:
-#        builtin: clear,en-GB_to_en-OED,en-US_to_en-OED
-        path: dat/missions/
-        exclude_file: .codespell.exclude
+        path: dat/missions/, dat/events
         ignore_words_file: .codespell.words.exclude
-#        skip: dat/*.lua

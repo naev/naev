@@ -227,7 +227,7 @@ function neutralevent()
       },
       {
          _("Empty Derelict"),
-         _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASNT". Otherwise, there is nothing of interest left on this ship.]]),
+         _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASN'T". Otherwise, there is nothing of interest left on this ship.]]),
          fmt.f(_([[You searched an empty derelict in {sys} and found only graffiti.]]), {sys=system.cur()})
       },
       {

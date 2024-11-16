@@ -370,7 +370,7 @@ function approach_scavengers ()
    if mem.misn_state==4 then
       -- Already got mission, just give player a refresher
       scavB(_([["Aren't you drinking too much? Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
-      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
+      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid." -- codespell:ignore tooo
 He takes another long swig of his drink and burps.]]))
    else
       -- Blabber target to player
