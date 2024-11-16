@@ -14,12 +14,10 @@
  * been removed. In the unlikely event more cutef8 features are required, check
  * earlier revisions in git. */
 
-#include "nstring.h"
-
 /* is c the start of a utf8 sequence? */
 #define isutf( c ) ( ( ( c ) & 0xC0 ) != 0x80 )
 
-#define UEOF ( (uint32_t)-1 )
+#define UEOF ( ( uint32_t ) - 1 )
 
 /* convert UTF-8 data to wide character */
 size_t u8_toucs( uint32_t *dest, size_t sz, const char *src, size_t srcsz );
