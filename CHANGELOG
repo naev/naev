@@ -25,6 +25,8 @@
          * Spittle Tubuloid Cluster is now a utility and does more damage
          * Guardian Interception System does double damage
          * Missiles explode when intercepted
+      * Bounties have explicit time limits
+      * Derelicts should appear in remote systems
    * Quality of Life
       * Added colourblind correction mode
       * Exposed more colourblind options to the user
