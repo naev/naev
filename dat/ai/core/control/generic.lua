@@ -211,7 +211,7 @@ local function sameFleet( pa, pb )
 end
 
 --[[
-Functions to handle different commands that can be recieved
+Functions to handle different commands that can be received
 --]]
 local message_handler_funcs = {
    -- Case message is being sent from the environment, such as asteroids
@@ -889,7 +889,7 @@ function control( dt )
    end
 
    -- Run custom function if applicable
-   task = ai.taskname() -- Reget the task in case something got pushed ontop
+   task = ai.taskname() -- Reget the task in case something got pushed on top
    if task then
       local cc = control_funcs[ task ]
       if cc then
@@ -919,7 +919,7 @@ function create ()
    create_post()
 end
 
--- Sets up some per-pilot defaults that can be overriden afterwards
+-- Sets up some per-pilot defaults that can be overridden afterwards
 function create_pre ()
    local p        = ai.pilot()
    mem.tookoff    = p:flags("takingoff")
@@ -1007,7 +1007,7 @@ function distress_handler( pilot, attacker )
    -- Make sure pilot is setting their target properly
    if pilot == attacker then return end
 
-   -- Ignore pleas of help when bribed by the attacker
+   -- Ignore please of help when bribed by the attacker
    if ai.isbribed(attacker) then return end
 
    local p       = ai.pilot()

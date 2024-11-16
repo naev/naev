@@ -155,7 +155,7 @@ function scom.createSpawnTable( weights )
    end
    spawn_table._maxw = max
 
-   -- Sort so it's a wee bit faster
+   -- Sort so it's a wee bit faster -- codespell:ignore wee
    table.sort( spawn_table, function( a, b )
       return a.w > b.w
    end )

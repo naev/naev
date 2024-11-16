@@ -482,7 +482,7 @@ function luatk.Window:draw()
    -- Clear depth
    naev.gfx.clearDepth()
 
-   -- Draw widgets ontop
+   -- Draw widgets on top
    for _k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
    end

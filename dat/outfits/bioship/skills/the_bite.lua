@@ -39,7 +39,7 @@ local function turnon( p, po )
       end
       mem.isasteroid = true
    end
-   -- Must be roughly infront
+   -- Must be roughly in front
    local tp = t:pos()
    local _m, a = (p:pos()-tp):polar()
    if math.abs(math.fmod(p:dir()-a, math.pi*2)) > 30/math.pi then
@@ -117,10 +117,10 @@ function descextra( p, o )
       dmg = "#o"..fmt.number(dmg).."#0"
 
       if improved then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       elseif lust then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       else
          return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage} damage ({mass})."),

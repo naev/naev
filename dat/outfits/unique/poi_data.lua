@@ -1,4 +1,4 @@
-notactive = true -- Doesnt' become active
+notactive = true -- Doesn't become active
 
 local fmt = require "format"
 local poi = require "common.poi"
