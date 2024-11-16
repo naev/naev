@@ -1013,7 +1013,7 @@ function vn.StateMenu:_init()
    local font = vn.namebox_font
    -- Border information
    local tb = 15 -- Inner border around text
-   local b = 15 -- Outter border
+   local b = 15 -- Outer border
    self._tb = tb
    self._b = b
    -- Get longest line

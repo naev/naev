@@ -88,8 +88,8 @@ function graphics.newImage( filename )
    if type(filename)=='string' then
       ttex = naev.tex.open( filesystem.newFile( filename ) )
    elseif type(filename)=='table' and filename.type then
-      local ot = filename:type()
-      if ot=='ImageData' then
+      local ot = filename:type() -- codespell:ignore ot
+      if ot=='ImageData' then -- codespell:ignore ot
          ttex = naev.tex.open( filename.d, filename.w, filename.h )
       end
    -- Assume Naev texture

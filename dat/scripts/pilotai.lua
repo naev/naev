@@ -59,7 +59,7 @@ function pilotai.hyperspace( plts, target )
 end
 
 --[[--
-   Makes a pilot patrol a set of waypoints indefinately
+   Makes a pilot patrol a set of waypoints indefinitely
 
       @tparam Pilot|table plts Pilot or pilots to make patrol.
       @tparam Table waypoints Ordered table with the waypoints as Vec2.
@@ -90,7 +90,7 @@ end
 --[[--
    Tries to clear the system by making all the AI pilots go away. Soft alternative to pilot.clear()
 
-      @tparam[opt=false] boolean allpilots Wether or not to affect all non-player pilots, or just natural pilots.
+      @tparam[opt=false] boolean allpilots Whether or not to affect all non-player pilots, or just natural pilots.
 --]]
 function pilotai.clear( allpilots )
    for k,p in ipairs(pilot.get()) do
@@ -100,7 +100,7 @@ function pilotai.clear( allpilots )
          m.loiter       = -1 -- for generic AI
          m.boarded      = 1 -- for pirate AI
          m.doscans      = false
-         m.vulnerability = math.huge -- Have them be targetted less
+         m.vulnerability = math.huge -- Have them be targeted less
          p:taskClear()
 
          -- Try to make them leave from the closest place

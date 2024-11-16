@@ -490,7 +490,7 @@ local actors = {
    _("Wedge"),
    _("Widget"),
    _("Widow"),
-   _("Wight"),
+   _("Wight"), -- codespell:ignore wight
    _("Willow"),
    _("Wind"),
    _("Wizard"),

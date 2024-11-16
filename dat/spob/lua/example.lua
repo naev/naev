@@ -19,7 +19,7 @@ end
    overwritten).
 
       @luatreturn Texture A texture to be used as the planet image.
-      @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
+      @luatreturn[opt] number The value to use for the radius of the planet (for targeting, etc...)
 --]]
 function load ()
    if tex==nil then

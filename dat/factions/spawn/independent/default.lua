@@ -9,7 +9,7 @@ local sphalanx    = ship.get("Phalanx")
 local sadmonisher = ship.get("Admonisher")
 local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
-local spacifier   = ship.get("Pacifier")
+local spacifier   = ship.get("Pacifier") -- codespell:ignore spacifier
 local shawking    = ship.get("Hawking")
 local sgoddard    = ship.get("Goddard")
 
@@ -76,7 +76,7 @@ local function spawn_bounty_hunter_med ()
       sphalanx,
       var.starbridge,
       svigilance,
-      spacifier,
+      spacifier, -- codespell:ignore spacifier
    }
    if frontier then
       table.insert( ships, sbedivere )

@@ -50,7 +50,7 @@ end
 --[[--
 Gets a random integer value between min and max.
 
-If max is ommitted, a value between [1,max] is returned.
+If max is omitted, a value between [1,max] is returned.
 
 If both min and max are nil, a floating point value between [0,1] is returned.
 
