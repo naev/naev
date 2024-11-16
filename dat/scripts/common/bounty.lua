@@ -60,7 +60,7 @@ mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys}
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
 #nWanted:#0 Dead or Alive
-#nLast Seen:#0 {sys} system]])
+#nLast seen:#0 {sys} system]])
 
 -- Messages
 msg = {
@@ -73,7 +73,7 @@ local msg_eliminated_other_def = _("Another pilot eliminated {plt}.")
 local msg_leftsystem_def = _("You have left the {sys} system.")
 
 local osd_title_def  = _("Bounty Hunt")
-local osd_goto_def   = _("Fly to the {sys} system")
+local osd_goto_def   = _("Fly to the {sys} system before {time_limit} ({time} remaining)")
 local osd_objective_def = _("Kill or capture {plt}")
 local osd_reward_def = _("Land in {fct} territory to collect your bounty")
 
@@ -96,7 +96,7 @@ function bounty.init( system, targetname, targetship, targetfaction, reward, par
    -- Other important stuff
    b.targetfactionfunc = params.targetfactionfunc
    b.payingfaction   = params.payingfaction or faction.get("Independent")
-   b.jumps_permitted = params.jumps_permitted or (system.cur():jumpDist(b.system) + rnd.rnd(3,5))
+   b.deadline        = params.deadline
    b.alive_only      = params.alive_only
    -- Custom messages (can be tables of messages from which one will be chosen)
    b.msg_subdue      = params.msg_subdue or msg_subdue_def
@@ -116,14 +116,27 @@ function bounty.init( system, targetname, targetship, targetfaction, reward, par
    b.marker = misn.markerAdd( b.system, "computer" )
 end
 
+local function update_osd ()
+   local b = mem._bounty
+   if b.deadline then
+      misn.osdCreate( b.osd_title, {
+         fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.get())} ),
+         fmt.f( b.osd_objective, {plt=b.targetname} ),
+         fmt.f( b.osd_reward,    {fct=b.payingfaction} )
+      } )
+   else
+      misn.osdCreate( b.osd_title, {
+         fmt.f( b.osd_goto,      {sys=b.system} ),
+         fmt.f( b.osd_objective, {plt=b.targetname} ),
+         fmt.f( b.osd_reward,    {fct=b.payingfaction} )
+      } )
+   end
+end
+
 function bounty.accept()
    local b = mem._bounty
 
-   misn.osdCreate( b.osd_title, {
-      fmt.f( b.osd_goto,      {sys=b.system} ),
-      fmt.f( b.osd_objective, {plt=b.targetname} ),
-      fmt.f( b.osd_reward,    {fct=b.payingfaction} )
-   } )
+   update_osd()
 
    b.last_sys = system.cur()
    b.job_done = false
@@ -133,6 +146,19 @@ function bounty.accept()
    hook.jumpout( "_bounty_jumpout" )
    hook.takeoff( "_bounty_takeoff" )
    hook.land( "_bounty_land" )
+   if b.deadline then
+      hook.date( time.new( 0, 0, 1e3 ), "_bounty_date" )
+   end
+end
+
+function _bounty_date ()
+   local b = mem._bounty
+   if system.cur() ~= b.system then
+      if time.get() > mem.deadline then
+         return lmisn.fail( fmt.f(_("{plt} got away."), {plt=b.targetname} ))
+      end
+      update_osd()
+   end
 end
 
 local spawn_bounty
@@ -167,7 +193,6 @@ end
 
 function _bounty_jumpout ()
    local b = mem._bounty
-   b.jumps_permitted = b.jumps_permitted - 1
    b.last_sys = system.cur()
    if not b.job_done and b.last_sys == b.system then
       lmisn.fail( fmt.f( msg[3], {sys=b.last_sys} ) )
@@ -180,7 +205,6 @@ end
 
 function _bounty_land ()
    local b = mem._bounty
-   b.jumps_permitted = b.jumps_permitted - 1
 
    local okspob = false
    -- Matching faction is always OK
@@ -348,12 +372,6 @@ function spawn_bounty( params )
 
    -- Not the time to spawn
    if b.job_done or system.cur()~=b.system then
-      return
-   end
-
-   -- Can't jump anymore
-   if b.jumps_permitted < 0 then
-      lmisn.fail( fmt.f( b.msg_gotaway, {plt=b.targetname} ) )
       return
    end
 
