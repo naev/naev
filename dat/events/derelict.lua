@@ -422,7 +422,12 @@ function badevent()
          hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
    }
-   if #lmisn.getSpobAtDistance( nil, 0, 2, faction.get("Independent") ) > 0 then
+   local has_presence = false
+   for k,v in pairs(system.cur():presences()) do -- luacheck: ignore
+      has_presence = true
+      break
+   end
+   if #lmisn.getSpobAtDistance( nil, 0, 2, faction.get("Independent") ) > 0 and has_presence then
       table.insert( badevent_list, function ()
          derelict_msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, your ship's sensors finds there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]), fmt.f(_([[Space Leeches attached to a derelict you found in {sys} sucked your ship empty of jump fuel before you could get rid of them! Rough break.]]), {sys=system.cur()}))
          player.pilot():setFuel(false)
