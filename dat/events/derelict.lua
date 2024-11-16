@@ -31,6 +31,7 @@ local der = require 'common.derelict'
 local pir = require "common.pirate"
 local vn = require 'vn'
 local lf = require "love.filesystem"
+local lmisn = require "lmisn"
 
 local badevent, goodevent, specialevent, neutralevent, derelict_msg -- forward-declared functions
 local derelict -- Non-persistent state
@@ -410,7 +411,7 @@ function goodevent()
    local armour, shield = pp:health()
    if armour < 50 and stats.armour_regen <= 0 then
       table.insert( goodevent_list, function ()
-         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
+         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and stripped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
          pp:setHealth( 100, shield )
       end )
    end
@@ -430,16 +431,17 @@ function badevent()
          player.pilot():control(true)
          hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
-      function ()
+   }
+   if #lmisn.getSpobAtDistance( nil, 0, 2, faction.get("Independent") ) > 0 then
+      table.insert( badevent_list, function ()
          derelict_msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, your ship's sensors finds there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]), fmt.f(_([[Space Leeches attached to a derelict you found in {sys} sucked your ship empty of jump fuel before you could get rid of them! Rough break.]]), {sys=system.cur()}))
          player.pilot():setFuel(false)
          destroyevent()
-      end,
-   }
+      end )
+   end
    if pir.systemPresence() > 0 then
-      table.insert( badevent_list,
-         function ()
-            derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
+      table.insert( badevent_list, function ()
+            derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale, but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
 
             local s = player.pilot():ship():size()
             local enemies_tiny = {
