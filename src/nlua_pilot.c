@@ -2293,6 +2293,12 @@ static int pilotL_weapsetAmmo( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Makes the pilot's weapons get automatically set.
+ *
+ *    @luatparam Pilot p Pilot to automatically handle weapon sets for.
+ * @luafunc weapsetAuto
+ */
 static int pilotL_weapsetAuto( lua_State *L )
 {
    Pilot *p = luaL_validpilot( L, 1 );
