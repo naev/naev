@@ -6,7 +6,14 @@
  <cond>
    local sc = system.cur()
    local st = sc:tags()
-   if st.noderelicts or st.tradelane then
+   if st.noderelicts or st.tradelane or st.restricted then
+      return false
+   end
+   local _nebu_dens, nebu_vol = cursys:nebula()
+   if nebu_vol &gt; 0 then
+      return false
+   end
+   if sc:faction()==faction.get("Thurion") then
       return false
    end
    return true
@@ -38,24 +45,9 @@ local special_list, dospecial
 
 function create ()
    local cursys = system.cur()
-   local _nebu_dens, nebu_vol = cursys:nebula()
-   if nebu_vol > 0 then
-      evt.finish()
-   end
-
-   -- Don't spawn in restricted space
-   if cursys:tags().restricted then
-      evt.finish()
-   end
-
-   -- Don't spawn in Thurion space
-   if cursys:faction()==faction.get("Thurion") then
-      evt.finish()
-   end
 
    -- Ignore claimed systems (don't want to ruin the atmosphere)
    if not naev.claimTest( cursys, true ) then evt.finish() end
-
 
    special_list = {}
    --[[
