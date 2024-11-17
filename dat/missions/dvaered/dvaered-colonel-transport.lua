@@ -60,12 +60,14 @@ function accept()
    vn.jump("mission description")
 
    vn.label("mission description")
-   m(fmt.f([["Well, to the point. I need somebody to escort me and my Arsenal to {pnt}. Would you be willing to do that? I can't tell you why."]]))
+   m(fmt.f([["Well, to the point. I need somebody to escort me and my Arsenal to {pnt}. Would you be willing to do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous.]]))
      {pnt=mem.dest_planet}
+   m(_([["Oh, and one more thing I've got to warn you about: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks."]]))
    vn.menu{
       {_([["Remind me what system that's in?"]]), "what system"},
       {_([["I'd be happy to do that!"]]), "sure"},
       {_([["What is your name?"]]), "what is your name"},
+      {_([["Wait, why is there someone trying to kill you?"]]), "why would you die"},
    }
 
    vn.label("what system")
@@ -74,7 +76,7 @@ function accept()
    vn.jump("choice")
 
    vn.label("what is your name")
-   m(_([[The Dvaered seems slightly taken aback. "Well... that may be classified information... call me Radver."]]))
+   m(_([[The Dvaered seems slightly taken aback. "Well... that may also be classified information... call me Radver."]]))
    vn.jump("choice")
 
    vn.label("sure")
@@ -84,6 +86,9 @@ function accept()
    end )
 
    vn.run()
+
+   vn.label("why would you die")
+   m(_([[The Dvaered colonel looks uncomfortable. "I'm afraid that too is classified information. Let's just say that I've got a vendetta (not the ship, the relation) with this other warlord, and we're on blowing-each-other-up terms. Don't ask me to reveal more information."]]))
 
    vn.label("choice")
    m(_([["Well? Will you do this?"]]))
