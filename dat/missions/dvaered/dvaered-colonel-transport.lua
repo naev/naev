@@ -5,34 +5,42 @@
  <priority>4</priority>
  <chance>86</chance>
  <location>Bar</location>
- <spob>Dvaer Prime</spob>
+ <faction>Dvaered</faction>
 </mission>
 --]]
 --[[
 
    Mission: Escort a Dvaered colonel
-   Description: Small mission where you escort a Dvaered Arsenal
+   Description: Small mission where you escort a Dvaered Arsenal.
+                This is a one-off that's not part of any major
+                storyline; the in-game purpose will remain a mystery.
 
 --]]
 
+local escort = require "escort"
 local fmt = require "format"
+local pir = require "pirate"
 local vn = require "vn"
 local vni = require "vnimage"
+
+local mem.dest_planet = spob.getS("Adham")
 
 
 local npc_name = _("Dvaered Colonel")
 local npc_portrait, npc_image
 function create()
-   npc_image, npc_portrait = vni.dvaered
+   mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
 
 function accept()
+   local accepted = false
    vn.clear()
    vn.scene()
    local m = vn.newCharacter( npc_name {image=npc_image} )
    vn.transition()
-   m(_([[As you approach, the Dvaered soldier stands. "Hello, captain!" they say. "Nice to see you around here. How's it going?"]]))
+   m(fmt.f([[As you approach, the Dvaered soldier stands. "Hello, captain {playername}!" they say. "Nice to see you around here. How's it going?"]]))
+     {playername=player.name()}
    vn.menu{
       {_([["Quite well, thank you!"]]), "well"},
       {_([["I guess it's going alright."]]), "fine"},
@@ -66,7 +74,11 @@ function accept()
 
    vn.label("sure")
    m(_([["Wonderful! I'll be on your ship when you leave."]]))
-   misn.accept()
+   vn.func( function ()
+      accepted = true
+   end )
+
+   vn.run()
 
    vn.label("choice")
    m(_([["Well? Will you do this?"]]))
@@ -78,19 +90,34 @@ function accept()
    vn.label("never")
    m(_([["That's sad. Oh well, I'll ask someone else." The Dvaered leaves.]]))
    vn.done()
+
+   if not accepted then return end
+
+   misn.accept()
    
-   misn.setReward(2500)
+   misn.setReward(750000)
    misn.setDesc("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspob, sys=mem.destsys},
    misn.osdCreate(_("Dvaered colonel escort"), {
       fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.destspob, sys=mem.destsys}),
    }
    misn.markerAdd( mem.destspob )
    hook.land( "land" )
+   hook.enter( "pirate_ambush" )
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init ( colonel_ship, {
    })
 end
 
+function pirate_ambush ()
+   local ambush
+   local ambushes = {
+      {"Pirate Ancestor", "Pirate Phalanx"}
+      {"Pirate Rhino", "Pirate Vendetta"}
+   }
+
+   ambush = fleet.add ( 1, ambushes[rnd.rnd(1,2)], "Marauder", {ai="baddie_norun"} )
+end
+   
 function land ()
    if spob.cur() == misplanet then
       vntk.msg( fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Thank you for bringing me here!" says the colonel. "Here is {reward}, as we agreed. Have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
