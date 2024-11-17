@@ -86,7 +86,7 @@ function comm()
    local Jen = vn.newCharacter(_("Jennet"), {image="neutral/female1n.webp", color=nil, shader=love_shaders.hologram(), pos="right"})
    Jen(_([[Oh. This isn't a holo, is it? This is real. You weren't playing around this time.]])) --Double quotes dropped to highlight the context change (usual comm -> convo)
    bob(_([[For your information, ensign Jennet, I was never "playing around". I was practicing in order to better defend our glorious Autarchy.]]))
-   Jen(_([[Riight, of course... "Practising", huh? I'll keep that in mind.]]))
+   Jen(_([[Riight, of course... "Practising", huh? I'll keep that in mind.]])) -- codespell:ignore Riight
    vn.menu( function ()
       return {
          { _("Cough loudly"), "cont" },
