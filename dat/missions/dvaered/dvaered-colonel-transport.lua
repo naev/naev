@@ -96,7 +96,7 @@ function accept()
    misn.accept()
    
    misn.setReward(750000)
-   misn.setDesc("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.dest_planet, sys=mem.dest_sys},
+   misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.dest_planet, sys=mem.dest_sys}))
    misn.osdCreate(_("Dvaered colonel escort"), {
       fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.dest_planet, sys=mem.dest_sys}),
    }
