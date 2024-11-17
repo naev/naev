@@ -23,7 +23,7 @@ local pir = require "pirate"
 local vn = require "vn"
 local vni = require "vnimage"
 
-local mem.dest_planet = spob.getS("Adham")
+local dest_planet = spob.getS("Adham")
 
 
 local npc_name = _("Dvaered Colonel")
