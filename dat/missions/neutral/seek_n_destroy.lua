@@ -562,7 +562,7 @@ function hail( target )
          if mmem.attack then
             hook.rm(mmem.attack)
          end
-         mmem.attack = hook.pilot( target, "attacked", "clue_attacked" )
+         var.push("seekndestroy_set_attack_hook",true)
          player.commClose()
       end )
       lvn.done()
@@ -585,12 +585,17 @@ function hail( target )
       vn.jump("menu")
    end, lbl )
 
-   hook.timer(-1, "board_done")
+   hook.timer(-1, "board_done", target)
 end
 
-function board_done ()
+function board_done ( target )
    if var.peek("seekndestroy_nextsys") then
       next_sys()
+      var.pop("seekndestroy_nextsys")
+   end
+   if var.peek("seekndestroy_set_attack_hook") then
+      mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
+      var.pop("seekndestroy_set_attack_hook")
    end
 end
 
