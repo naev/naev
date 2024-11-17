@@ -106,7 +106,7 @@ pub fn naev() -> Result<()> {
         Err(e) => panic!("Unable to initialize SDL Video: {}", e),
     };
 
-    let _lua = nlua::init();
+    let _lua = nlua::NLua::new();
     unsafe {
         naevc::nxml_init(); /* We'll be parsing XML. */
         naevc::input_init(); /* input has to be initialized for config to work. */
