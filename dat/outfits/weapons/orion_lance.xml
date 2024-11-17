@@ -4,21 +4,21 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>14</mass>
+  <mass>6</mass>
   <price>60000</price>
-  <description>The Orion Lance is a fixed-mount weapon designed to be mounted on fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
+  <description>The Orion Lance is a fixed-mount weapon designed to be mounted on fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam. Due to the large energy usage and need for focus, like the Particle Lance, the Orion Beam shares a fairly limiting short range. That said, very few enemy ships survive the encounter once they are in range.</description>
   <gfx_store>orion.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
  <specific type="beam">
-  <delay>3</delay>
+  <delay min="1">3</delay>
   <duration>4</duration>
   <range>400</range>
   <energy>10</energy>
   <heatup>35</heatup>
   <swivel>22</swivel>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>12</penetrate>
    <physical>62</physical>
   </damage>

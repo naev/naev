@@ -3,9 +3,14 @@
 <mission name="Za'lek Black Hole 1">
  <unique />
  <priority>4</priority>
- <chance>20</chance>
+ <chance>30</chance>
  <faction>Za'lek</faction>
- <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
+ <cond>
+   if system.cur():reputation("Za'lek") &lt; 0 or faction.reputationGlobal("Za'lek") &lt; 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <location>Bar</location>
  <done>Za'lek Particle Physics 6</done>
  <notes>
@@ -22,7 +27,6 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 
--- luacheck: globals land enter heartbeat (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh01
 local destpnt, destsys = spob.getS("Research Post Sigma-13")
@@ -75,7 +79,7 @@ He seems visibly distraught and you try to soothe him.]]))
 
    -- mission details
    misn.setTitle( _("Black Hole Research") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Take Zach to see what happened to his colleagues at {pnt} in the {sys} system."),
       {pnt=destpnt, sys=destsys} ))
 
@@ -99,7 +103,7 @@ function land ()
    local z = vn.newCharacter( zbh.vn_zach() )
    vn.music( 'snd/music/landing_sinister.ogg' ) -- TODO new song? Also add to music.lua
    vn.transition( zbh.zach.transition )
-   vn.na(_("As you approach the station you can can make out clear plasma blast craters on the outer hull. Your ship has to push away floating debris as you make a landing approach at the space docks while Zach is silent the entire time with a dumbfounded look on his face. You don't think this is what he was expecting. After what seems like an eternity, the ship's magnetic docking clamps make contact with the station."))
+   vn.na(_("As you approach the station you can make out clear plasma blast craters on the outer hull. Your ship has to push away floating debris as you make a landing approach at the space docks while Zach is silent the entire time with a dumbfounded look on his face. You don't think this is what he was expecting. After what seems like an eternity, the ship's magnetic docking clamps make contact with the station."))
    z(_([["This can't be happening. It was only supposed to be a two cycle post-doc…"
 He looks pale.]]))
    vn.menu{
@@ -109,7 +113,7 @@ He looks pale.]]))
    }
    vn.label("cont01")
    vn.na(_("You and Zach don your space suits and begin to search the atmosphere-less breached station in eerie silence. A floating spoon, some dirty boots… It seems like the station had inhabitants in it until quite recently. Although the base is quite a mess, knowing the Za'lek, chances are that was the usual state of affairs at the station. As you go through all the rooms one by one, but are unable to find any signs of life. During the whole ordeal, Zach remains silent and concentrated."))
-   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship, {shipname}. Zach seems to be staring at some of the of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot()} ))
+   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship, {shipname}. Zach seems to be staring at some of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot()} ))
    z(_([["Say, doesn't that over there look like bite marks?"]]))
    vn.na(_([[You look over at where Zach is pointing, but can't really make out what he's getting at. However, after a while of staring and squinting, you seem to make out some damage that could indeed be bite marks, but what on earth would bite a station?]]))
    z(_([["Something isn't right here."
@@ -130,7 +134,7 @@ He stops one second realizing what he just said and gives a puzzled look.
 
    zbh.unidiff( "sigma13_fixed1" )
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh01)
+   faction.hit("Za'lek", zbh.fctmod.zbh01)
    player.pay( reward )
    zbh.log(fmt.f(_("You took Zach to {pnt} where he found that his colleagues had seemingly met a gruesome fate. He vowed to look into what happened and continue the research that was started. Using his engineering skills, he was able to restore minimum functionality of the station."),{pnt=destpnt}))
    music.play()

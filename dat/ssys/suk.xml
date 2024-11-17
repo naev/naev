@@ -2,14 +2,13 @@
 <ssys name="Suk">
  <general>
   <radius>17000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="264.252112" y="-813.142676"/>
+ <pos x="400.597614" y="-995.335774"/>
  <spobs>
-  <spob>Allan</spob>
   <spob>Cristen</spob>
+  <spob>Fort Allan</spob>
   <spob>Suk II</spob>
   <spob>Suk IV</spob>
   <spob_virtual>Dvaered Small</spob_virtual>

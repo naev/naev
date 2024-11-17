@@ -12,7 +12,7 @@
   <gfx_store>swamp_bombing.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <jump_delay>-10</jump_delay>
  </specific>
 </outfit>

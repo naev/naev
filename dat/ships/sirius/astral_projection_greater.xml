@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Astral Projection Greater">
+ <lua>sirius_projection.lua</lua>
+ <points>30</points>
+ <base_type>Astral Projection Greater</base_type>
+ <gfx size="140" sx="12" sy="12" noengine="1" comm="outfit/store/placeholder.webp">apparition_cruiser</gfx>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>1</price>
+ <fabricator>Sirius Psychic Powers</fabricator>
+ <description>N/A</description>
+ <movement>
+  <accel>180</accel>
+  <speed>300</speed>
+  <turn>150</turn>
+ </movement>
+ <health>
+  <absorb>60</absorb>
+  <armour>1300</armour>
+  <shield>0</shield>
+  <shield_regen>0</shield_regen>
+  <energy>1000</energy>
+  <energy_regen>100</energy_regen>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>300</mass>
+  <fuel>0</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+  <cpu>80</cpu>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="10" y="-2" h="0">Greater Astral Cannon</weapon>
+  <weapon size="medium" x="10" y="2" h="0">Greater Astral Cannon</weapon>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
+ </slots>
+ <stats>
+  <stress_dissipation>10000</stress_dissipation>
+ </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <tag>sirius</tag>
+  <tag>nonaevpedia</tag>
+ </tags>
+</ship>

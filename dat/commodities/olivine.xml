@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Olivine</name>
- <description>Although used mainly for decorations in ancient history, demand for Olivine is steadly increasing for it's usefulness in enhanced weathering and terraforming, for which immense amounts are needed.</description>
+ <description>Although used mainly for decorations in ancient history, demand for olivine is steadily increasing because of its usefulness in enhanced weathering and terraforming, for which immense amounts are needed.</description>
  <gfx_store>olivine.webp</gfx_store>
  <price_mod>1.3</price_mod>
  <price_ref>Ore</price_ref>

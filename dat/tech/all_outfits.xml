@@ -9,12 +9,13 @@
  <item>Heavy Ripper Turret</item>
  <item>Heavy Laser Turret</item>
  <item>Turbolaser</item>
- <item>Razor MK1</item>
- <item>Razor MK2</item>
- <item>Slicer</item>
- <item>Razor Turret MK1</item>
- <item>Razor Turret MK2</item>
- <item>Heavy Razor Turret</item>
+ <item>Razor Artillery S1</item>
+ <item>Razor Artillery S2</item>
+ <item>Razor Artillery S3</item>
+ <item>Razor Battery S2</item>
+ <item>Disruptor Artillery S1</item>
+ <item>Disruptor Artillery S2</item>
+ <item>Disruptor Battery S2</item>
  <item>Ion Cannon</item>
  <item>Heavy Ion Cannon</item>
  <item>Heavy Ion Turret</item>
@@ -46,7 +47,6 @@
  <item>Neutron Disruptor</item>
  <item>Heavy Neutron Disruptor</item>
  <item>Electron Burst Cannon</item>
- <item>Tesla Cannon</item>
  <item>TeraCom Fury Launcher</item>
  <item>Enygma Systems Turreted Fury Launcher</item>
  <item>TeraCom Headhunter Launcher</item>
@@ -110,7 +110,7 @@
  <item>Asteroid Scanner</item>
  <item>Map: Nebula Edge</item>
  <item>Map: Collective Space</item>
- <item>Map: Dvaered-Soromid Trade Route</item>
+ <item>Map: Empire-Soromid Trade Route</item>
  <item>Map: Sirian Border Systems</item>
  <item>Map: The Frontier</item>
  <item>Map: Sol</item>
@@ -119,7 +119,7 @@
  <item>Map: Sirius Core</item>
  <item>Map: Za'lek Core</item>
  <item>Map: Pirate Strongholds</item>
- <item>Map: Qorel Expanse</item>
+ <item>Map: Qorel Tunnel</item>
  <item>Map: New Haven's Secrets</item>
  <item>Map: Kretogg's Secrets</item>
  <item>Map: FLF Hidden Jumps</item>
@@ -141,7 +141,7 @@
  <item>Pirate Hyena Bay</item>
  <item>Empire Lancelot Bay</item>
  <item>Sirius Shaman Bay</item>
- <item>Fidelity Bay</item>
+ <item>Sirius Fidelity Bay</item>
  <item>Drone Bay</item>
  <item>Za'lek Light Drone Mini Bay</item>
  <item>Za'lek Heavy Drone Mini Bay</item>
@@ -151,7 +151,8 @@
  <item>Za'lek Bomber Drone Bay</item>
  <item>Thurion Perspicacity Bay</item>
  <item>Thurion Perspicacity Dock</item>
- <item>Proteron Derivative Bay</item>
+ <item>Proteron Dalton Dock</item>
+ <item>Proteron Dalton Bay</item>
  <item>Soromid Brigand Bay</item>
  <item>Large Civilian Vessel License</item>
  <item>Medium Weapon License</item>
@@ -175,28 +176,28 @@
  <item>Milspec Thalos 4702 Core System</item>
  <item>Milspec Thalos 5402 Core System</item>
  <item>Previous Generation Large Systems</item>
- <item>Unicorp PT-500 Core System</item>
- <item>Unicorp PT-2200 Core System</item>
+ <item>Unicorp PT-440 Core System</item>
+ <item>Unicorp PT-1750 Core System</item>
  <item>Milspec Orion 8601 Core System</item>
  <item>Milspec Orion 9901 Core System</item>
  <item>Milspec Thalos 8502 Core System</item>
  <item>Milspec Thalos 9802 Core System</item>
  <item>Beat Up Small Engine</item>
- <item>Unicorp Hawk 350 Engine</item>
- <item>Nexus Dart 150 Engine</item>
+ <item>Unicorp Hawk 360 Engine</item>
+ <item>Nexus Dart 160 Engine</item>
  <item>Melendez Ox XL Engine</item>
  <item>Krain Patagium Engine</item>
  <item>Tricon Zephyr Engine</item>
  <item>Tricon Zephyr II Engine</item>
  <item>Beat Up Medium Engine</item>
- <item>Unicorp Falcon 1300 Engine</item>
+ <item>Unicorp Falcon 1400 Engine</item>
  <item>Nexus Arrow 700 Engine</item>
  <item>Melendez Buffalo XL Engine</item>
  <item>Tricon Cyclone Engine</item>
  <item>Tricon Cyclone II Engine</item>
  <item>Beat Up Large Engine</item>
- <item>Unicorp Eagle 7000 Engine</item>
- <item>Nexus Bolt 3500 Engine</item>
+ <item>Unicorp Eagle 6500 Engine</item>
+ <item>Nexus Bolt 3000 Engine</item>
  <item>Melendez Mammoth XL Engine</item>
  <item>Krain Remige Engine</item>
  <item>Tricon Typhoon Engine</item>
@@ -204,23 +205,23 @@
  <item>Za'lek Test Engine</item>
  <item>Patchwork Light Plating</item>
  <item>Unicorp D-2 Light Plating</item>
- <item>Unicorp D-4 Light Plating</item>
+ <item>Unicorp D-9 Light Plating</item>
  <item>S&amp;K Ultralight Combat Plating</item>
  <item>S&amp;K Light Combat Plating</item>
  <item>Nexus Light Stealth Plating</item>
  <item>Red Star Small Cargo Hull</item>
  <item>S&amp;K Small Cargo Hull</item>
  <item>Patchwork Medium Plating</item>
- <item>Unicorp D-12 Medium Plating</item>
- <item>Unicorp D-24 Medium Plating</item>
+ <item>Unicorp D-23 Medium Plating</item>
+ <item>Unicorp D-38 Medium Plating</item>
  <item>S&amp;K Medium Combat Plating</item>
  <item>Nexus Medium Stealth Plating</item>
  <item>Red Star Medium Cargo Hull</item>
  <item>S&amp;K Medium Cargo Hull</item>
  <item>S&amp;K Medium-Heavy Combat Plating</item>
  <item>Patchwork Heavy Plating</item>
- <item>Unicorp D-48 Heavy Plating</item>
- <item>Unicorp D-68 Heavy Plating</item>
+ <item>Unicorp D-58 Heavy Plating</item>
+ <item>Unicorp D-72 Heavy Plating</item>
  <item>Red Star Large Cargo Hull</item>
  <item>S&amp;K Large Cargo Hull</item>
  <item>S&amp;K Heavy Combat Plating</item>
@@ -231,6 +232,7 @@
  <item>Combat Hologram Projector</item>
  <item>Emergency Stasis Inducer</item>
  <item>Targeting Conduit</item>
+ <item>Flicker Drive</item>
  <item>Blink Drive</item>
  <item>Hyperbolic Blink Engine</item>
  <item>Weakness Harmonizer AI</item>
@@ -256,4 +258,19 @@
  <item>Scanning Combat AI</item>
  <item>S&amp;K Plasma Drill</item>
  <item>S&amp;K Heavy Plasma Drill</item>
+ <item>Small Flow Resonator</item>
+ <item>Medium Flow Resonator</item>
+ <item>Large Flow Resonator</item>
+ <item>Small Flow Amplifier</item>
+ <item>Medium Flow Amplifier</item>
+ <item>Large Flow Amplifier</item>
+ <item>Small Meditation Chamber</item>
+ <item>Medium Meditation Chamber</item>
+ <item>Large Meditation Chamber</item>
+ <item>Guardian Interception System</item>
+ <item>Guardian Overseer System</item>
+ <item>Spittle Tubuloid Cluster</item>
+ <item>Ratchet Point Defense</item>
+ <item>Dvaered Flare Battery</item>
+ <item>Port &amp; Polish</item>
 </tech>

@@ -4,6 +4,7 @@
  <duration>5</duration>
  <icon>/gfx/misc/icons/burning-embers.webp</icon>
  <shader>effects/plasma_burn.frag</shader>
+ <debuff/>
  <stats>
   <damage>0.2</damage>
  </stats>

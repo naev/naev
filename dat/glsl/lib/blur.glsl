@@ -6,6 +6,7 @@
 /*
    Blur originally taken from https://github.com/Jam3/glsl-fast-gaussian-blur
    Heavily modified to suit Naev.
+*/
 /*
 The MIT License (MIT) Copyright (c) 2015 Jam3
 

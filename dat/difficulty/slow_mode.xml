@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<difficulty name="Slow Mode">
- <description>Makes gameplay run at half speed. Useful if you have difficulties with reaction times.</description>
- <time_mod>-50</time_mod>
-</difficulty>

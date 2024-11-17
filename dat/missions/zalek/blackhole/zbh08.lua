@@ -24,8 +24,6 @@ local zbh = require "common.zalek_blackhole"
 local lmisn = require  "lmisn"
 local pilotai = require "pilotai"
 
--- luacheck: globals land enter scout_discovered feral_hail (Hook functions passed by name)
-
 local reward = zbh.rewards.zbh08
 local cargo_name = _("Sensor Upgrades")
 local cargo_amount = 32 -- Amount of cargo to take
@@ -84,7 +82,7 @@ function accept ()
    -- mission details
    local title = _("Sigma-13 Sensors")
    misn.setTitle( title )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} ({sys} system) and bring them back to Zach at {retpnt} ({retsys} system)."),
       {pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt, retsys=retsys} ))
 
@@ -102,7 +100,7 @@ end
 
 function land ()
    if mem.state==1 and spob.cur() == mem.destpnt then
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
@@ -131,7 +129,7 @@ function land ()
       vn.done( zbh.zach.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh08)
+      faction.hit("Za'lek", zbh.fctmod.zbh08)
       player.pay( reward )
       zbh.log(fmt.f(_("You helped Zach get cargo important to upgrading the sensors of {pnt}, despite heavy enemy patrols on the way."),
          {pnt=retpnt}))
@@ -144,7 +142,7 @@ function enter ()
       local j1 = jump.get( atksys, retsys )
       local j2 = jump.get( atksys, "NGC-1001" )
       local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), j1:pos()+(j2:pos()-j1:pos()):mul(0.8), nil, {ai="baddie"} )
-      p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
+      p:intrinsicSet( "ew_hide", 100 ) -- Easier to spot
       p:control(true)
       p:stealth()
       hook.pilot( p, "discovered", "scout_discovered" )
@@ -190,7 +188,7 @@ function enter ()
       local function spawn_drone( shipname, pos )
          local p = pilot.add( shipname, fevil, fuzz_pos(pos) )
          -- We are nice and make the drones easier to see for this mission
-         p:intrinsicSet( "ew_hide", -50 )
+         p:intrinsicSet( "ew_hide", 100 )
          return p
       end
 

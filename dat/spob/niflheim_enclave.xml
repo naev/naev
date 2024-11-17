@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Niflheim Enclave">
+ <pos x="-9965.863598" y="2823.758187"/>
+ <GFX>
+  <space>station-sphere.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>6000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Although not a large installation by any measure, Niflheim Enclave is the main commercial station in the southwestern quadrant of Empire space. Though it doesn't see as much traffic as the more centrally located trade hubs, it provides a good opportunity for traders between the Empire, the Za'lek and the Consortium to meet and greet. Of course, the Imperial Navy also uses this station as a base of operations.</description>
+  <bar>On Niflheim Enclave, space is at a premium. As such there is not much room to spare for leisure, which shows in the spaceport bar. All tables are stand-up arrangements, and there is not much room to maneuver. Any visitor will have to be prepared for some necessary intimacies if he wants to frequent this establishment.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Laser 1</item>
+  <item>Missiles 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Systems High</item>
+ </tech>
+ <tags>
+  <tag>trade</tag>
+  <tag>military</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

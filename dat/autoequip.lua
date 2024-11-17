@@ -10,7 +10,7 @@ function autoequip( p )
    -- First check, make sure required slots are equipped
    local hasrequired = true
    for k,v in ipairs( s:getSlots() ) do
-      if v.required and not p:outfitByID(k) then
+      if v.required and not p:outfitGet(k) then
          hasrequired = false
          break
       end
@@ -28,7 +28,7 @@ function autoequip( p )
    -- Remove all non-cores from the ship and add to inventory
    for k,v in ipairs( s:getSlots() ) do
       if not v.required and not v.locked then
-         local o = p:outfitByID(k)
+         local o = p:outfitGet(k)
          if o then
             -- Store and remove old
             player.outfitAdd( o )
@@ -51,7 +51,7 @@ function autoequip( p )
    -- Set parameters, making sure we don't equip too many of the same
    local opt_params = equipopt.params.choose( p )
    for k,o in ipairs(poutfits) do
-      opt_params.type_range[ o:nameRaw() ] = { max = player.numOutfit(o, true) }
+      opt_params.type_range[ o:nameRaw() ] = { max = player.outfitNum(o, true) }
    end
 
    -- Do equipopt
@@ -60,7 +60,7 @@ function autoequip( p )
    -- Remove equipped outfits from inventory
    for k,v in ipairs( s:getSlots() ) do
       if not v.required and not v.locked then
-         local o = p:outfitByID(k)
+         local o = p:outfitGet(k)
          if o then
             player.outfitRm( o )
          end

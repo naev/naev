@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorator>
  <image>zalek.webp</image>
- <x>-582.606486</x>
- <y>-881.496039</y>
+ <x>-350.606486</x>
+ <y>-720.496039</y>
  <detection_radius>100</detection_radius>
 </decorator>

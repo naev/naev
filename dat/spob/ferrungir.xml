@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ferrungir">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-5527.157340" y="6055.653934"/>
  <GFX>
   <space>C01.webp</space>
@@ -31,4 +31,7 @@
  <tech>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </spob>

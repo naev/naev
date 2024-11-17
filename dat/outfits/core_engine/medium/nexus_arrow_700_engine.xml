@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Arrow 700 Engine">
  <general>
+  <shortname>N. Arrow 700 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
@@ -11,11 +12,11 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>20</energy_regen_malus>
+  <energy_regen_malus>10</energy_regen_malus>
   <engine_limit>700</engine_limit>
-  <fuel>800</fuel>
+  <fuel>1000</fuel>
   <speed>200</speed>
-  <thrust>115</thrust>
+  <accel>115</accel>
   <turn>100</turn>
   <time_mod>-15</time_mod>
  </specific>

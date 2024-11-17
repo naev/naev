@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Poltergeist Alpha">
+ <pos x="2034.481559" y="14537.119196"/>
+ <GFX>
+  <space>moon-Y00.webp</space>
+  <exterior>uninhabited-rocky-magenta-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -8,23 +8,27 @@ local scans = {}
 -- Assumes the pilot exists!
 --]]
 function scans.check_visible( target )
-   local self   = ai.pilot()
-   if not target:flags("invisible") then
-      -- Pilot still sees the target: continue attack
-      if self:inrange( target ) then
-         return true
-      end
+   if target:flags("invisible") then
+      return false
+   end
+   local self = ai.pilot()
 
-      -- Pilots on manual control (in missions or events) never loose target
-      -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags("manualcontrol") then
-         return true
-      end
+   -- Carried ships depend on the visibility of their parent
+   local checker = (mem.carried and self:leader()) or self
+
+   -- Pilot still sees the target: continue attack
+   if checker:inrange( target ) then
+      return true
+   end
+
+   -- Pilots on manual control (in missions or events) never loose target
+   -- /!\ This is not necessary desirable all the time /!\
+   -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+   if self:flags("manualcontrol") then
+      return true
    end
    return false
 end
-
 
 --[[
 -- Aborts current task and tries to see what happened to the target.
@@ -35,18 +39,21 @@ function scans.investigate( target )
    ai.poptask()
 
    -- No need to investigate: target has jumped out.
-   if target:flags("jumpingout") then
+   if target:flags("jumpingout") or target:flags("landing") then
       return
    end
 
    -- Guess the pilot will be randomly between the current position and the
    -- future position if they go in the same direction with the same velocity
-   local ttl = ai.dist(target) / p:stats().speed_max
-   local fpos = target:pos() + vec2.newP( target:vel()*ttl, target:dir() ) * rnd.rnd()
+   local ttl = ai.dist(target) / p:speedMax()
+   local fpos = target:pos() + vec2.newP( target:vel():mod()*ttl, target:dir() ) * rnd.rnd()
+   mem._scan_last = target
    ai.pushtask("inspect_moveto", fpos )
 end
 
-
+--[[--
+   Initializes a scanning task to target
+--]]
 function scans.push( target )
    -- Send a message if applicable
    local msg = mem.scan_msg or _("Prepare to be scanned.")
@@ -54,11 +61,9 @@ function scans.push( target )
    ai.pushtask( "scan", target )
 end
 
-
---[[
--- Tries to get close to scan the enemy
+--[[--
+   Tries to get close to scan the enemy
 --]]
--- luacheck: globals scan (AI Task functions passed by name)
 function scans.scan( target )
    if not target:exists() then
       ai.poptask()
@@ -92,8 +97,8 @@ function scans.scan( target )
                v:setHostile(true)
                v:memory().found_illegal = true
             end
-            -- Small faction hit
-            p:faction():modPlayer( -1 )
+            -- Faction hit is computed based on the player's ship
+            p:faction():hit( -player.pilot():points(), system.cur(), "scan" )
          end
       else
          local msg = mem.scan_msg_ok or _("Thank you for your cooperation.")
@@ -113,12 +118,9 @@ function scans.scan( target )
       return
    end
 
-   -- Get stats about the enemy
-   local dist = ai.dist(target)
-
    -- Get closer and scan
-   ai.iface( target )
-   if dist > 1000 then
+   local off = ai.iface( target )
+   if off < math.rad(30) and ai.dist2(target) > 1000*1000 then
       ai.accel()
    end
 end
@@ -130,6 +132,11 @@ local function __needs_scan( target )
    if not mem.scanned then
       return false
    end
+   -- Don't scan immediately
+   if target:memory().elapsed < 20 then
+      return false
+   end
+   -- See if have already been scanned
    for k,v in ipairs(mem.scanned) do
       if target==v then
          return false
@@ -138,13 +145,12 @@ local function __needs_scan( target )
    return true
 end
 
-
 --[[
 -- Whether or not we want to scan, ignore players for now
 --]]
 local function __wanttoscan( p, target )
-   -- Bribed pilots don't care about scanning
-   if p:flags("bribed") then
+   -- Bribed pilots don't care about scanning player ships
+   if p:flags("bribed") and target:withPlayer() then
       return false
    end
 
@@ -168,7 +174,6 @@ local function __wanttoscan( p, target )
    return true
 end
 
-
 --[[
 -- Tries to get find a good target to scan with some heuristics based on mass
 -- and distance
@@ -179,6 +184,7 @@ function scans.get_target ()
    local pv = {}
    do
       local inserted = {}
+      -- TODO probably try to change this to getInrange() instead to be a bit faster
       for k,v in ipairs(p:getVisible()) do
          -- Only care about leaders
          local l = v:leader()
@@ -225,6 +231,5 @@ function scans.get_target ()
    end
    return pv[1].p
 end
-
 
 return scans

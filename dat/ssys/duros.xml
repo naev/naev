@@ -2,15 +2,14 @@
 <ssys name="Duros">
  <general>
   <radius>18000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="943.474515" y="-572.953627"/>
+ <pos x="1105.170966" y="-533.605813"/>
  <spobs>
   <spob>Duros I</spob>
   <spob>Duros Ia</spob>
-  <spob>Trevis Station</spob>
+  <spob>Trevis Cloister</spob>
  </spobs>
  <jumps>
   <jump target="Fulcrum">

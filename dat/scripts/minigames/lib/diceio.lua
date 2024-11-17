@@ -31,9 +31,9 @@ function diceio.newDie()
    return c
 end
 function diceio.Die:draw( x, y )
-   lg.setColor( 1, 1, 1 )
+   lg.setColour( 1, 1, 1 )
    lg.rectangle( "fill", x, y, 50, 50 )
-   lg.setColor( 0, 0, 0 )
+   lg.setColour( 0, 0, 0 )
    lg.rectangle( "line", x, y, 50, 50 )
 
    if self.value==1 then

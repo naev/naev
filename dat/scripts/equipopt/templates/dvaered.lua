@@ -15,6 +15,9 @@ local dvaered_outfits = eoutfits.merge{{
    -- Small Weapons
    "Shredder", "Vulcan Gun", "Gauss Gun",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
+   -- Point Defense
+   "Dvaered Flare Battery",
+   "Ratchet Point Defense",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
@@ -114,15 +117,23 @@ local function equip_dvaered( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
+
+   -- Outfits
+   local outfits = dvaered_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
 
    -- See cores
-   local cores
-   local dvrcor = dvaered_cores[ sname ]
-   if dvrcor then
-      cores = dvrcor()
-   else
-      cores = ecores.get( p, { hulls="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local dvrcor = dvaered_cores[ sname ]
+      if dvrcor then
+         cores = dvrcor()
+      else
+         cores = ecores.get( p, { hulls="elite" } )
+      end
    end
 
    -- Set some pilot meta-data
@@ -130,7 +141,7 @@ local function equip_dvaered( p, opt_params )
    mem.equip = { type="dvaered", level="elite" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, dvaered_outfits, params )
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 return equip_dvaered

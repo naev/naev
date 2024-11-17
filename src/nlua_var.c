@@ -9,39 +9,33 @@
 /** @cond */
 #include <lauxlib.h>
 #include <lua.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "naev.h"
 /** @endcond */
 
 #include "nlua_var.h"
 
 #include "array.h"
-#include "log.h"
-#include "nluadef.h"
-#include "nstring.h"
-#include "nxml.h"
-#include "nlua_time.h"
 #include "lvar.h"
+#include "nxml.h"
 
 /*
  * variable stack
  */
-static lvar* var_stack = NULL; /**< Stack of mission variables. */
+static lvar *var_stack = NULL; /**< Stack of mission variables. */
 /* externed */
 
 /* var */
 static int varL_peek( lua_State *L );
 static int varL_pop( lua_State *L );
 static int varL_push( lua_State *L );
+
 static const luaL_Reg var_methods[] = {
    { "peek", varL_peek },
    { "pop", varL_pop },
    { "push", varL_push },
-   {0,0}
-}; /**< Mission variable Lua methods. */
+   { 0, 0 } }; /**< Mission variable Lua methods. */
 
 /**
  * @brief Loads the mission variable Lua library.
@@ -50,7 +44,7 @@ static const luaL_Reg var_methods[] = {
  */
 int nlua_loadVar( nlua_env env )
 {
-   nlua_register(env, "var", var_methods, 0);
+   nlua_register( env, "var", var_methods, 0 );
    return 0;
 }
 
@@ -70,9 +64,9 @@ static lvar *var_get( const char *str )
  */
 int var_save( xmlTextWriterPtr writer )
 {
-   xmlw_startElem(writer, "vars");
+   xmlw_startElem( writer, "vars" );
    lvar_save( var_stack, writer );
-   xmlw_endElem(writer); /* "vars" */
+   xmlw_endElem( writer ); /* "vars" */
    return 0;
 }
 
@@ -87,11 +81,11 @@ int var_load( xmlNodePtr parent )
    xmlNodePtr node = parent->xmlChildrenNode;
    var_cleanup();
    do {
-      xml_onlyNodes(node);
-      if (!xml_isNode(node,"vars"))
+      xml_onlyNodes( node );
+      if ( !xml_isNode( node, "vars" ) )
          continue;
       var_stack = lvar_load( node );
-   } while (xml_nextNode(node));
+   } while ( xml_nextNode( node ) );
    return 0;
 }
 
@@ -104,7 +98,7 @@ int var_load( xmlNodePtr parent )
  */
 static int var_add( lvar *new_var, int sort )
 {
-   if (var_stack==NULL)
+   if ( var_stack == NULL )
       var_stack = array_create( lvar );
    return lvar_addArray( &var_stack, new_var, sort );
 }
@@ -134,7 +128,7 @@ static int var_add( lvar *new_var, int sort )
  *    @param str Name of the mission var.
  *    @return 1 if it exists, 0 if it doesn't.
  */
-int var_checkflag( const char* str )
+int var_checkflag( const char *str )
 {
    return var_get( str ) != NULL;
 }
@@ -143,15 +137,15 @@ int var_checkflag( const char* str )
  * @brief Gets the mission variable value of a certain name.
  *
  *    @luatparam string name Name of the mission variable to get.
- *    @luareturn The value of the mission variable which will depend on what type
- *             it is.
+ *    @luareturn The value of the mission variable which will depend on what
+ * type it is.
  * @luafunc peek
  */
 static int varL_peek( lua_State *L )
 {
-   const char *str = luaL_checkstring(L,1);
-   lvar *mv = var_get( str );
-   if (mv == NULL)
+   const char *str = luaL_checkstring( L, 1 );
+   lvar       *mv  = var_get( str );
+   if ( mv == NULL )
       return 0;
    return lvar_push( L, mv );
 }
@@ -159,16 +153,17 @@ static int varL_peek( lua_State *L )
 /**
  * @brief Pops a mission variable off the stack, destroying it.
  *
- * This does not give you any value and destroys it permanently (or until recreated).
+ * This does not give you any value and destroys it permanently (or until
+ * recreated).
  *
  *    @luatparam string name Name of the mission variable to pop.
  * @luafunc pop
  */
 static int varL_pop( lua_State *L )
 {
-   const char* str = luaL_checkstring(L,1);
-   lvar *mv = var_get( str );
-   if (mv == NULL)
+   const char *str = luaL_checkstring( L, 1 );
+   lvar       *mv  = var_get( str );
+   if ( mv == NULL )
       return 0;
    lvar_rmArray( &var_stack, mv );
    return 0;
@@ -187,8 +182,8 @@ static int varL_pop( lua_State *L )
  */
 static int varL_push( lua_State *L )
 {
-   const char *str = luaL_checkstring(L,1);
-   lvar var = lvar_tovar( L, str, 2 );
+   const char *str = luaL_checkstring( L, 1 );
+   lvar        var = lvar_tovar( L, str, 2 );
    var_add( &var, 1 );
    return 0;
 }
@@ -196,7 +191,7 @@ static int varL_push( lua_State *L )
 /**
  * @brief Cleans up all the mission variables.
  */
-void var_cleanup (void)
+void var_cleanup( void )
 {
    lvar_freeArray( var_stack );
    var_stack = NULL;

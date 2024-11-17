@@ -14,7 +14,7 @@
  <general>
   <class>A</class>
   <population>3e+06</population>
-  <hide>2.000000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -29,9 +29,17 @@
  </general>
  <tech>
   <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Hulls Low</item>
   <item>Ion 1</item>
+  <item>Ion 2</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Low Tech Upgrades</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+  <tag>mining</tag>
+  <tag>rich</tag>
+ </tags>
 </spob>

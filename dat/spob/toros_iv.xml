@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Toros IV">
+ <pos x="11725.784963" y="9274.632174"/>
+ <GFX>
+  <space>moon-P03.webp</space>
+  <exterior>uninhabited-rocky-blue-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>R</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Toros IV once had a city that covered the entire planetary surface. Despite being originally a frozen world covered in ice, the perserverance of the people of Toros IV and the good location led to a quick expansion of settlements and population. The Toros IV you find today has reverted back to its more wild and natural frozen state with the complete destruction of the entire city. It doesn't help that the planet seems to no longer be orbiting the Toros Star nor that it seems to have arrived to a completely different system…</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>

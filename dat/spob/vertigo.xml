@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vertigo">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-1176.579442" y="26162.619259"/>
  <GFX>
   <space>moon-D01.webp</space>

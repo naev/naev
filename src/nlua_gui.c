@@ -17,12 +17,8 @@
 #include "gui.h"
 #include "gui_omsg.h"
 #include "gui_osd.h"
-#include "info.h"
-#include "log.h"
-#include "menu.h"
 #include "map_overlay.h"
 #include "nlua_tex.h"
-#include "nluadef.h"
 
 /* GUI methods. */
 static int guiL_viewport( lua_State *L );
@@ -36,9 +32,8 @@ static int guiL_targetSpobGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
 static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
-static int guiL_menuInfo( lua_State *L );
-static int guiL_menuSmall( lua_State *L );
 static int guiL_setMapOverlayBounds( lua_State *L );
+
 static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
@@ -51,11 +46,8 @@ static const luaL_Reg guiL_methods[] = {
    { "targetPilotGFX", guiL_targetPilotGFX },
    { "mouseClickEnable", guiL_mouseClickEnable },
    { "mouseMoveEnable", guiL_mouseMoveEnable },
-   { "menuInfo", guiL_menuInfo },
-   { "menuSmall", guiL_menuSmall },
    { "setMapOverlayBounds", guiL_setMapOverlayBounds },
-   {0,0}
-}; /**< GUI methods. */
+   { 0, 0 } }; /**< GUI methods. */
 
 /**
  * @brief Loads the GUI library.
@@ -66,8 +58,7 @@ static const luaL_Reg guiL_methods[] = {
 int nlua_loadGUI( nlua_env env )
 {
    /* Register the values */
-   nlua_register(env, "gui", guiL_methods, 0);
-
+   nlua_register( env, "gui", guiL_methods, 0 );
    return 0;
 }
 
@@ -91,21 +82,24 @@ int nlua_loadGUI( nlua_env env )
  *  possible.
  *
  * @usage gui.viewport( 0, 0, screen_w, screen_h ) -- Resets viewport.
- * @usage gui.viewport( 0, 20, screen_w, screen_h-20 ) -- Gives 20 pixels for a bottom bar.
+ * @usage gui.viewport( 0, 20, screen_w, screen_h-20 ) -- Gives 20 pixels for a
+ * bottom bar.
  *
  *    @luatparam number x X position to start clipping (bottom left is 0.)
  *    @luatparam number y Y position to start clipping (bottom left is 0.)
- *    @luatparam number w Width of the clipping (width of the screen is default).
- *    @luatparam number h Height of the clipping (height of the screen is default).
+ *    @luatparam number w Width of the clipping (width of the screen is
+ * default).
+ *    @luatparam number h Height of the clipping (height of the screen is
+ * default).
  * @luafunc viewport
  */
 static int guiL_viewport( lua_State *L )
 {
    /* Parameters. */
-   double x = luaL_checknumber(L,1);
-   double y = luaL_checknumber(L,2);
-   double w = luaL_checknumber(L,3);
-   double h = luaL_checknumber(L,4);
+   double x = luaL_checknumber( L, 1 );
+   double y = luaL_checknumber( L, 2 );
+   double w = luaL_checknumber( L, 3 );
+   double h = luaL_checknumber( L, 4 );
 
    /* Set the viewport. */
    gui_setViewport( x, y, w, h );
@@ -123,8 +117,8 @@ static int guiL_viewport( lua_State *L )
  */
 static int guiL_fpsPos( lua_State *L )
 {
-   double x = luaL_checknumber(L,1);
-   double y = luaL_checknumber(L,2);
+   double x = luaL_checknumber( L, 1 );
+   double y = luaL_checknumber( L, 2 );
    fps_setPos( x, y );
    return 0;
 }
@@ -141,10 +135,10 @@ static int guiL_fpsPos( lua_State *L )
 static int guiL_osdInit( lua_State *L )
 {
    /* Parameters. */
-   int x = luaL_checkinteger(L,1);
-   int y = luaL_checkinteger(L,2);
-   int w = luaL_checkinteger(L,3);
-   int h = luaL_checkinteger(L,4);
+   int x = luaL_checkinteger( L, 1 );
+   int y = luaL_checkinteger( L, 2 );
+   int w = luaL_checkinteger( L, 3 );
+   int h = luaL_checkinteger( L, 4 );
 
    /* Set up. */
    osd_setup( x, y, w, h );
@@ -197,7 +191,8 @@ static int guiL_omsgInit( lua_State *L )
  * @usage gui.radarInit( true, 82 ) -- Circular radar with 82 radius.
  *
  *    @luatparam number circle Whether or not it should be a circle.
- *    @luatparam number width Width if it's not a circle or radius if it is a circle.
+ *    @luatparam number width Width if it's not a circle or radius if it is a
+ * circle.
  *    @luatparam number height Only needed if not a circle.
  * @luafunc radarInit
  */
@@ -205,11 +200,10 @@ static int guiL_radarInit( lua_State *L )
 {
    int id, circle, width, height;
 
-
    /* Parse parameters. */
    circle = lua_toboolean( L, 1 );
-   width = luaL_checkinteger( L, 2 );
-   if (!circle)
+   width  = luaL_checkinteger( L, 2 );
+   if ( !circle )
       height = luaL_checkinteger( L, 3 );
    else
       height = width;
@@ -269,16 +263,19 @@ static int guiL_targetPilotGFX( lua_State *L )
  *
  * It enables receiving mouse clicks with a callback function like:<br />
  * function mouse_click( button, x, y, state ) <br />
- * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
+ * With button being the ID of the button, x/y being the position clicked and
+ * state being true if pressed, false if lifted. It should return true if it
+ * used the mouse event or false if it let it through.
  *
- *    @luatparam[opt=true] boolean enable Whether or not to enable the mouse click callback.
+ *    @luatparam[opt=true] boolean enable Whether or not to enable the mouse
+ * click callback.
  * @luafunc mouseClickEnable
  */
 static int guiL_mouseClickEnable( lua_State *L )
 {
    int b;
-   if (lua_gettop(L) > 0)
-      b = lua_toboolean(L,1);
+   if ( lua_gettop( L ) > 0 )
+      b = lua_toboolean( L, 1 );
    else
       b = 1;
    gui_mouseClickEnable( b );
@@ -292,90 +289,18 @@ static int guiL_mouseClickEnable( lua_State *L )
  * function mouse_move( x, y ) <br />
  * With x/y being the position of the mouse.
  *
- *    @luatparam[opt] boolean enable Whether or not to enable the mouse movement callback.
+ *    @luatparam[opt] boolean enable Whether or not to enable the mouse movement
+ * callback.
  * @luafunc mouseMoveEnable
  */
 static int guiL_mouseMoveEnable( lua_State *L )
 {
    int b;
-   if (lua_gettop(L) > 0)
-      b = lua_toboolean(L,1);
+   if ( lua_gettop( L ) > 0 )
+      b = lua_toboolean( L, 1 );
    else
       b = 1;
    gui_mouseMoveEnable( b );
-   return 0;
-}
-
-/**
- * @brief Opens the info menu window.
- *
- * Possible window targets are: <br />
- *  - "main" : Main window.<br />
- *  - "ship" : Ship info window.<br />
- *  - "weapons" : Weapon configuration window.<br />
- *  - "cargo" : Cargo view window.<br />
- *  - "missions" : Mission view window.<br />
- *  - "standings" : Standings view window.<br />
- *
- * @usage gui.menuInfo( "ship" ) -- Opens ship tab
- *
- *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
- * @luafunc menuInfo
- */
-static int guiL_menuInfo( lua_State *L )
-{
-   const char *str;
-   int window;
-
-
-   if (menu_open)
-      return 0;
-
-   if (lua_gettop(L) > 0)
-      str = luaL_checkstring(L,1);
-   else {
-      /* No parameter. */
-      menu_info( INFO_DEFAULT );
-      return 0;
-   }
-
-   /* Parse string. */
-   if (strcasecmp( str, "main" )==0)
-      window = INFO_MAIN;
-   else if (strcasecmp( str, "ship" )==0)
-      window = INFO_SHIP;
-   else if (strcasecmp( str, "weapons" )==0)
-      window = INFO_WEAPONS;
-   else if (strcasecmp( str, "cargo" )==0)
-      window = INFO_CARGO;
-   else if (strcasecmp( str, "missions" )==0)
-      window = INFO_MISSIONS;
-   else if (strcasecmp( str, "standings" )==0)
-      window = INFO_STANDINGS;
-   else {
-      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
-      return 0;
-   }
-
-   /* Open window. */
-   menu_info( window );
-
-   return 0;
-}
-
-/**
- * @brief Opens the small menu window.
- *
- * @usage gui.menuSmall()
- *
- * @luafunc menuSmall
- */
-static int guiL_menuSmall( lua_State *L )
-{
-   (void) L;
-   if (menu_open)
-      return 0;
-   menu_small();
    return 0;
 }
 
@@ -390,10 +315,10 @@ static int guiL_menuSmall( lua_State *L )
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {
-   int top    = luaL_checkinteger(L,1);
-   int right  = luaL_checkinteger(L,2);
-   int bottom = luaL_checkinteger(L,3);
-   int left   = luaL_checkinteger(L,4);
+   int top    = luaL_checkinteger( L, 1 );
+   int right  = luaL_checkinteger( L, 2 );
+   int bottom = luaL_checkinteger( L, 3 );
+   int left   = luaL_checkinteger( L, 4 );
 
    ovr_boundsSet( top, right, bottom, left );
    return 0;

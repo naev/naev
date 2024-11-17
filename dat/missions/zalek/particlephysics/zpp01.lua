@@ -3,10 +3,19 @@
 <mission name="Za'lek Particle Physics 1">
  <unique />
  <priority>4</priority>
- <chance>20</chance>
+ <chance>30</chance>
  <faction>Za'lek</faction>
  <location>Bar</location>
- <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
+ <cond>
+   if spob.cur() == spob.get("Katar I") then
+      return false
+   end
+   if system.cur():reputation("Za'lek") &lt; 0 or faction.reputationGlobal("Za'lek") &lt; 0 then
+      return false
+   end
+   --return require("misn_test").reweight_active() -- Don't reweight since license are important
+   return true
+ </cond>
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
   <tier>1</tier>
@@ -22,14 +31,12 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 
--- luacheck: globals land (Hook functions passed by name)
-
 local reward = zpp.rewards.zpp01
 local destpnt, destsys = spob.getS("Katar I")
 local cargo_amount = 30 -- Amount of cargo to take
 
 function create ()
-   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking or someone to do something for them.") )
+   misn.setNPC( _("Za'lek Scientist"), zpp.noona.portrait, _("You see a Za'lek scientist who seems to be looking for someone to do something for them.") )
 end
 
 function accept ()
@@ -55,12 +62,12 @@ She furrows her brow.]]),{pnt=destpnt}))
 
    vn.label("nospace")
    n(fmt.f(_([["You only have {freespace} of free cargo space. My equipment is {neededspace}!"]]),
-         {freespace=fmt.tonnes(player.pilot():cargoFree()), neededspace=fmt.tonnes(cargo_amount) }))
+         {freespace=fmt.tonnes(player.fleetCargoMissionFree()), neededspace=fmt.tonnes(cargo_amount) }))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_amount then
+      if player.fleetCargoMissionFree() < cargo_amount then
          vn.jump("nospace")
          return
       end
@@ -88,7 +95,7 @@ That doesn't sound very reassuring.
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Take Noona and some equipment to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )
@@ -119,7 +126,7 @@ As she keeps on babbling she sort of wanders off into the base, and you make no 
    vn.done( zpp.noona.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zpp.fctmod.zpp01)
+   faction.hit("Za'lek", zpp.fctmod.zpp01)
    player.pay( reward )
    zpp.log(fmt.f(_("You helped deliver Noona and her equipment to {pnt}. It seems like she may still have more work for you."),{pnt=destpnt}))
    misn.finish(true)

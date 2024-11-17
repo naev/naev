@@ -10,8 +10,8 @@ if genCDoc.disabled() == false
             'HAVE_DOT'           : dot.found() ? 'YES' : 'NO',
             'PROJECT_NAME'       : meson.project_name(),
             'PROJECT_NUMBER'     : meson.project_version(),
-            'PROJECT_LOGO'       : meson.source_root() / 'extras/logos/logo32.png',
-            'INPUT'              : meson.source_root() / 'src',
+            'PROJECT_LOGO'       : meson.project_source_root() / 'extras/logos/logo32.png',
+            'INPUT'              : meson.project_source_root() / 'src',
             'OUTPUT_DIRECTORY'   : meson.current_build_dir() / doxy_output
         })
 
@@ -65,11 +65,36 @@ if genLDoc.disabled() == false
             ldoc,
             '-c', lconfig,
             '-d', '@OUTPUT@',
-            '-l', meson.source_root() / 'docs/lua',
-            '-s', meson.source_root() / 'docs/lua',
+            '-l', meson.project_source_root() / 'docs/lua',
+            '-s', meson.project_source_root() / 'docs/lua',
             '@PRIVATE_DIR@'],
             install: true,
             install_dir: 'doc/naev')
     endif
 endif
 summary('Lua', is_variable('ldoc'), section: 'Documentation', bool_yn: true)
+
+genLore = get_option('docs_lore')
+if genLore.disabled() == false
+    # Lore website build deps
+    bundler = find_program('bundle', required: genLore)
+    tidy = find_program('tidy', required: genLore)
+    yq = find_program('yq', required: genLore)
+    graphicsmagick = find_program('gm', required: genLore)
+    #ruby_header = cc.find_library('ruby', required: genLore, has_headers: ['ruby.h'])
+    #yaml_header = cc.find_library('yaml', required: genLore, has_headers: ['yaml.h'])
+
+    loremasterpy = find_program(join_paths('lore','loremaster.py'))
+
+
+    lore = custom_target(
+        'lore',
+        output: 'lore',  # Specify 'lore' as the output directory
+        command: [
+            loremasterpy,
+            '--source-dir', meson.project_source_root(),
+            '--build-dir', meson.build_root()
+        ],
+    )
+endif
+summary('Lore', is_variable('lore'), section: 'Documentation', bool_yn: true)

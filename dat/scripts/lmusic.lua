@@ -83,6 +83,13 @@ function lmusic.setPitch( m, pitch )
    end )
 end
 
+function lmusic.setVolume( m, vol )
+   local mvol = naev.music.getVolume(true)
+   _apply( m, function (v)
+      v.source:setVolume( vol * mvol, true )
+   end )
+end
+
 function lmusic.update( dt )
    local remove = {}
    local mvol = naev.music.getVolume(true)
@@ -126,7 +133,7 @@ function lmusic.stop( m )
    _apply( m, function (v)
       if v.state ~= "fadeout" then
          v.state = "fadeout"
-         v.progess = 0
+         v.progress = 0
       end
    end )
 end

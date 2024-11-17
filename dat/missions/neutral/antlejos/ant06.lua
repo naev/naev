@@ -29,8 +29,6 @@ local reward = ant.rewards.ant06
 local retpnt, retsys = spob.getS("Antlejos V")
 local mainsys = system.get("Knave")
 
--- luacheck: globals approaching enter land supplydeath supplyboard (Hook functions passed by name)
-
 function create ()
    if not misn.claim(mainsys) then misn.finish() end
    misn.setNPC( _("Verner"), ant.verner.portrait, ant.verner.description )
@@ -65,8 +63,8 @@ He points to the unconscious individual being carried away.]]), {sys=mainsys}))
    vn.done()
 
    vn.label("accept")
-   v(_([["Great! Just take out the supply ship with any means necessary and we should be all good. I've got to go take care of this now."
-He points towards a glancing burn mark on his abdomen. It looks like the shot fired during the commotion grazed him, but it doesn't look life threatening. He chugs down his drink, and gets up before heading off.
+   v(_([["Great! Just take out the supply ship with any means necessary, and we should be all good. I've got to go take care of this now."
+He points towards a glancing burn mark on his abdomen. It looks like the shot fired during the commotion grazed him, but it doesn't look life-threatening. He chugs down his drink, and gets up before heading off.
 "Take care!"]]))
    vn.func( function () accepted = true end )
 
@@ -80,7 +78,7 @@ He points towards a glancing burn mark on his abdomen. It looks like the shot fi
    misn.accept()
    misn.setTitle( _("Eliminate the PUAAA Supply Ship") )
    misn.setDesc(fmt.f(_("Eliminate the PUAAA supply ship at {sys}."),{sys=mainsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Eliminate the PUAAA Supply Ship"), {
       fmt.f(_("Go to {sys}"),{sys=mainsys}),
       _("Destroy the PUAAA supply ship"),
@@ -101,9 +99,9 @@ function land ()
       local v = vn.newCharacter( ant.vn_verner() )
       vn.transition()
       vn.na(_("You land and go meet up with Verner, who is overseeing the terraforming."))
-      v(_([["You got rid of the pesky supply ship? Great to hear that. Hopefully with fewer supplies the PUAAA will less active and we'll be able to progress more. It's almost starting to look like a place I can call home."
-He looks over the terraforming site and you can see a mix of happiness and sorrow on his face.]]))
-      v(_([[Without turning to you he continues.
+      v(_([["You got rid of the pesky supply ship? Great to hear that. Hopefully with fewer supplies the PUAAA will less active, and we'll be able to progress more. It's almost starting to look like a place I can call home."
+He looks over the terraforming site, and you can see a mix of happiness and sorrow on his face.]]))
+      v(_([[Without turning to you, he continues.
 "It's going to be great. Thanks for your hard work."]]))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
@@ -140,21 +138,21 @@ function enter ()
    local puaaa = ant.puaaa()
    local pos = vec2.new( -4500, 4500 )
 
-   local protestors = {}
+   local protesters = {}
    supplyship = pilot.add( "Mule", puaaa, pos, _("PUAAA Supply Ship"), {ai="baddiepos"} )
    supplyship:setVisplayer(true)
    supplyship:setHilight(true)
    hook.pilot( supplyship, "death", "supplydeath" )
    hook.pilot( supplyship, "board", "supplyboard" )
-   table.insert( protestors, supplyship )
+   table.insert( protesters, supplyship )
 
    for k,s in ipairs{ "Lancelot", "Shark", "Shark" } do
       local p = pilot.add( s, puaaa, pos+vec2.newP( 100+rnd.rnd(100), rnd.angle() ), _("PUAAA Escort"), {ai="baddiepos"} )
       p:setLeader( supplyship )
-      table.insert( protestors, p )
+      table.insert( protesters, p )
    end
 
-   for k,p in ipairs(protestors) do
+   for k,p in ipairs(protesters) do
       p:setHostile(true)
    end
 end
@@ -169,7 +167,7 @@ end
 
 function supplyboard ()
    vntk.msg(_("No more supplies"), _([[You board the ship and blast out the entire control panel rendering the ship unrepairable and not operational. That should satisfy Verner.]]))
-   supplyship:disable() -- Permanently disable
+   supplyship:setDisable() -- Permanently disable
    mem.state = 2
    misn.osdActive(3)
    misn.markerMove( mem.mrk, retpnt )

@@ -2,11 +2,10 @@
 <ssys name="Ux">
  <general>
   <radius>22200.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-434.672018" y="-482.147547"/>
+ <pos x="-221.579397" y="-233.866370"/>
  <spobs>
   <spob>Astana</spob>
   <spob>Grandard</spob>
@@ -16,11 +15,11 @@
   <spob>UX VII</spob>
  </spobs>
  <jumps>
-  <jump target="Valerie">
+  <jump target="Dendria">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Vega">
+  <jump target="Valerie">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

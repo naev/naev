@@ -5,7 +5,6 @@ local diceio = require 'minigames.lib.diceio'
 local love_math = require 'love.math'
 local fmt = require "format"
 
--- luacheck: globals minerva_secretcode (Hook functions passed by name)
 
 local cl = { -- too lazy to write chuck-a-luck
    sound = {
@@ -55,15 +54,15 @@ function cl.init( x, y, w, _h, donefunc )
    cl.betting = true
    cl.msg = nil
    cl.chatter = nil
-   cl.chatter_color = nil
+   cl.chatter_colour = nil
    cl.donefunc = donefunc
 end
 
 local function _chatter( chat_type )
    local text
-   cl.chatter_color = nil
+   cl.chatter_colour = nil
    -- Special secretcode being input chat
-   if var.peek("minerva_caninputcode") then
+   if not cl.secretcode and var.peek("minerva_caninputcode") then
       if secretcode_status == 4 then
          cl.chatter = _("The dealer hands you a note saying to meet him after his shift.")
          naev.trigger( "minerva_secretcode" )
@@ -125,7 +124,7 @@ function cl.draw( bx, by, bw, _bh )
 
    -- Special chatter
    if cl.chatter then
-      lg.setColor( cl.chatter_color or {1,1,1} )
+      lg.setColour( cl.chatter_colour or {1,1,1} )
       local tw = cl.font:getWidth( cl.chatter )
       lg.print( cl.chatter, cl.font, bx+(bw-tw)/2, y )
    end
@@ -140,7 +139,7 @@ function cl.draw( bx, by, bw, _bh )
 
    -- Print status
    if cl.msg ~= nil then
-      lg.setColor( 1, 1, 1 )
+      lg.setColour( 1, 1, 1 )
       local tw = cl.font:getWidth( cl.msg )
       lg.print( cl.msg, cl.font, bx+(bw-tw)/2, y )
    end
@@ -170,11 +169,11 @@ function cl.draw( bx, by, bw, _bh )
       else
          col = {0, 0, 0}
       end
-      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, tw+2*b, h+2*b )
-      lg.setColor( col )
+      lg.setColour( col )
       lg.rectangle( "fill", x+2, y+2, tw+2*b-4, h+2*b-4 )
-      lg.setColor( 0.7, 0.7, 0.7 )
+      lg.setColour( 0.7, 0.7, 0.7 )
       lg.print( s, cl.font, x+b, y+b )
       x = x + 3*b + tw
    end

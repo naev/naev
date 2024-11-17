@@ -25,4 +25,8 @@
   <description>Rhaana is one of the outer worlds of Dvaered control. The population is high, but forced to live in insulated containment centres. It is a poor world, with little to recommend it to the wider galaxy. Thusly, it's very quiet.</description>
   <bar>The bar is a standard-issue model, seen in most space stations. Other than that, it is as overlarge and dingy as any Dvaered bar.</bar>
  </general>
+ <tags>
+  <tag>urban</tag>
+  <tag>poor</tag>
+ </tags>
 </spob>

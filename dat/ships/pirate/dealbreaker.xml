@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Dealbreaker">
+ <points>200</points>
+ <base_type>Dealbreaker</base_type>
+ <gfx size="125">dealbreaker</gfx>
+ <rarity>2</rarity>
+ <sound>engine</sound>
+ <class>Battleship</class>
+ <price>9200000</price>
+ <time_mod>1.4</time_mod>
+ <fabricator>Skull and Bones</fabricator>
+ <faction>Black Lotus</faction>
+ <description>Few people meet a Dealbreaker and survive to tell the tale. Designed through a mix of reverse engineering other fabricators and reusing existing components, the Skull and Bones engineers designed a monstrous battleship used by the upper bosses of the Black Lotus Pirate Clan. Although pirate shipbuilders lack the formal training of traditional fabricators, they make up for it in cunning and experience, and the Dealbreaker is much more capable than you would expect from a hodgepodge of pirates. Given how few are made, not only is it an icon that strikes fear in those who know the Black Lotus, but it is a status symbol that even pirates from other clans have come to know and respect.</description>
+ <health>
+  <armour>1600</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>61</crew>
+  <mass>2200</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>180</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" />
+  <weapon size="large" />
+  <weapon size="large" prop="fighter_bay" />
+  <weapon size="large" prop="fighter_bay" />
+  <weapon size="large" />
+  <weapon size="large" />
+  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
+  <utility size="large" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <speed_mod>10</speed_mod>
+  <accel_mod>10</accel_mod>
+  <cargo_mod>10</cargo_mod>
+  <armour_mod>-10</armour_mod>
+  <ew_hide>-20</ew_hide>
+ </stats>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</ship>

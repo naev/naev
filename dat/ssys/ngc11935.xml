@@ -3,11 +3,11 @@
  <general>
   <background>blackhole</background>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="-776.980860" y="-317.000182"/>
+ <pos x="-533.604484" y="-65.634967"/>
  <spobs/>
  <jumps>
   <jump target="NGC-5483">

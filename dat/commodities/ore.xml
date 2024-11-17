@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Ore</name>
- <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
+ <description>Ore is rock material bearing valuable minerals that is smelted into the metals crucial for many industries. Without ore, the ship-building industry and many others would grind to a halt.</description>
  <price>210</price>
  <gfx_store>ore.webp</gfx_store>
  <standard/>

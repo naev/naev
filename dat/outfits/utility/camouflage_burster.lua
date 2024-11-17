@@ -1,10 +1,17 @@
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
+local fmt = require "format"
 
-local active = 8 -- active time in seconds
-local cooldown = 30 -- cooldown time in seconds
+local active = 10 -- active time in seconds
+local cooldown = 20 -- cooldown time in seconds
 
 local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
+
+function descextra( _p, _o )
+  return fmt.f(_("{duration} second duration with {cooldown} second cooldown. Will not activate if the ship is unable to stealth with the bonus."), {
+     duration=active, cooldown=cooldown
+  })
+end
 
 local function turnon( p, po )
    -- Still on cooldown
@@ -31,19 +38,25 @@ local function turnon( p, po )
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    return true
 end
 
+function onstealth( p, po, stealthed )
+   if not stealthed then
+      turnoff( p, po )
+   end
+end
+
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications

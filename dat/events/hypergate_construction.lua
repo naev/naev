@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>100</chance>
  <chapter>0</chapter>
+ <priority>99</priority>
 </event>
 --]]
 --[[
@@ -14,7 +15,6 @@ local vn = require "vn"
 local der = require "common.derelict"
 local ccomm = require "common.comm"
 
--- luacheck: globals endevent boss_first boss_hail boss_board (Hook functions passed by name)
 
 local hypergates_list = {
    "Hypergate Dvaer", -- Dvaered
@@ -47,7 +47,7 @@ local boss_name_list = {
 }
 
 local boss_message_list = {
-   ["Za'lek"]  = _("Mineral acquiration skills required. Inquire within."),
+   ["Za'lek"]  = _("Mineral acquisition skills required. Inquire within."),
    ["Dvaered"] = _("Interested in blowing asteroids up? Looking for miners!"),
    ["Soromid"] = _("Seeking mineral gatherers."),
    ["Sirius"]  = _("Requiring miners for Sirichana."),
@@ -56,6 +56,7 @@ local boss_message_list = {
 
 local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
 local markup = 1.2 -- Multiplier for amount being paid
+local standing = 0.1 -- Multiplier for standing increase
 
 local id, hypergate, boss, talked_check, traded_amount
 local traded_total = "hypconst_traded_total"
@@ -63,7 +64,7 @@ local traded_total = "hypconst_traded_total"
 function create ()
    local csys = system.cur()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( csys, true ) then evt.finish() end
+   if not naev.claimTest( csys, true ) then evt.finish() end
 
    -- Only care if we're in a system with hypergates
    local sysid
@@ -136,7 +137,11 @@ function boss_hail ()
       b(_([["We don't deal with the likes of you!"]]))
    else
       if not var.peek( talked_check ) then
-         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_list),markup=markup*100}))
+         local mineral_name_list = {}
+         for i,m in ipairs(mineral_list) do
+            mineral_name_list[i] = _(mineral_list[i])
+         end
+         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_name_list),markup=markup*100}))
          vn.func( function ()
             boss:setActiveBoard(true)
             hook.pilot( boss, "board", "boss_board" )
@@ -220,6 +225,8 @@ function boss_board ()
          local a = pp:cargoHas(m)
          pp:cargoRm( m, a )
          player.pay( a * markup * m:price() )
+         -- Add some faction too
+         hypergate:faction():hit( a * standing )
          -- Store how much was traded
          local q = var.peek( traded_amount ) or 0
          var.push( traded_amount, q+a )

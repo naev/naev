@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="SY-413">
+ <lua>thurion.lua</lua>
  <pos x="-6767.788609" y="-2307.127415"/>
  <GFX>
   <space>003.webp</space>
@@ -47,4 +48,7 @@
   <item>Thurion Elite Outfits</item>
   <item>Thurion Maps</item>
  </tech>
+ <tags>
+  <tag>station</tag>
+ </tags>
 </spob>

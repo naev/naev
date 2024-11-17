@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Copia">
+ <lua>soromid.lua</lua>
  <points>120</points>
  <base_type>Copia</base_type>
- <GFX size="132" sx="12" sy="12">copia</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="132" sx="12" sy="12">copia</gfx>
+ <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Freighter">Bulk Freighter</class>
  <price>5500000</price>
@@ -18,9 +18,10 @@
  <trail_generator x="27" y="17" h="-12" always_under="1">nebula</trail_generator>
  <trail_generator x="27" y="-17" h="-12" always_under="1">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Large Civilian Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt;= 60</cond>
- <condstr>You need at least 60 reputation with the Soromid.</condstr>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 60</cond>
+ <condstr>You need at least 60% reputation with the Soromid.</condstr>
  <description>The Copia bio-freighter is the backbone of Soromid convoys and is frequently used to supply Soromid fleets or military installations with critical supplies. Unlike most cargo ships, the Copia is designed to not shy away from combat, and can be a very deadly ship in the right hands.</description>
  <health>
   <armour>900</armour>
@@ -40,7 +41,7 @@
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
@@ -48,11 +49,12 @@
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <armour_mod>-10</armour_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>

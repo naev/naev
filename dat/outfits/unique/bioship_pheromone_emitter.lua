@@ -42,6 +42,6 @@ function ontoggle( p, po, _on )
 
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    return true
 end

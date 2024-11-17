@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Cyborg Feather">
+ <general>
+  <unique />
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A feather from a cyborg duck. Although the quill is made of some lightweight metal alloy, the rest looks surisingly close to anormal feather.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <fwd_damage>10</fwd_damage>
+  <shield_mod>10</shield_mod>
+ </specific>
+</outfit>

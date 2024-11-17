@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Razor Battery S2">
+ <general>
+  <shortname>Razor B. S2</shortname>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <mass>22</mass>
+  <price>130000</price>
+  <description>Being the only turreted version of the Razor Artillery series, the Razor Battery S2 sees a lot of application on medium escort ships. The strong shield stripping effect in combination with the heavy systems damage can quickly demoralize pirates and marauders looking to make some quick credits.</description>
+  <gfx_store>razorturret1.webp</gfx_store>
+  <cpu>-50</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx type="shader" size="6.3" col_size="6.3">particles/razor_s2.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.8</delay>
+  <speed>700</speed>
+  <range>1200</range>
+  <falloff>1050</falloff>
+  <energy>25</energy>
+  <heatup>80</heatup>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
+  <damage>
+   <type>ion</type>
+   <penetrate>32</penetrate>
+   <physical>12</physical>
+   <disable>8</disable>
+  </damage>
+ </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
+</outfit>

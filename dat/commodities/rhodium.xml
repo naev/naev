@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Rhodium</name>
- <description>Although Rhodium's corrosion resistance has traditionally been very important in many alloys, the wide availability of new ceramic and radiation-hardened materials has led to a decrease in demand. However, lower-end and older technologies still require Rhodium and are the backbone of the market demand.</description>
+ <description>Although rhodium's corrosion resistance has traditionally been very important in many alloys, the wide availability of new ceramic and radiation-hardened materials has led to a decrease in demand. However, lower-end and older technologies still require rhodium and are the main source of market demand.</description>
  <gfx_store>rhodium.webp</gfx_store>
  <gfx_space>gold.webp</gfx_space>
  <price_ref>Gold</price_ref>

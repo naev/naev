@@ -20,7 +20,7 @@ uniform float bm; /* Bump mapping parameter. */
 
 in vec2 tex_coord;
 in vec3 normal;
-out vec4 color_out;
+out vec4 colour_out;
 
 /* Illumination. */
 //const vec3 lightDir = normalize( vec3(0.0, 0.0, 1.0) );
@@ -49,8 +49,8 @@ void main(void) {
    vec3 Te = texture(map_Ke, tex_coord).rgb;
 
    /* We do the model here. */
-   color_out = vec4(
+   colour_out = vec4(
          ( Ke * Te + Ka * La * Td + Kd * Ld * Td + Ks * Ts * pow( Ls, vec3(Ns) ) ),
          d );
-   //color_out.rgb = mix( color_out.rgb, norm*0.5+0.5, 0.999 );
+   //colour_out.rgb = mix( colour_out.rgb, norm*0.5+0.5, 0.999 );
 }

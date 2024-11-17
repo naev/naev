@@ -4,7 +4,7 @@
  <location>enter</location>
  <unique />
  <chance>100</chance>
- <cond>system.cur() == system.get("Bastion")</cond>
+ <system>Bastion</system>
  <chapter>[^0]</chapter>
  <notes>
   <campaign>Taiomi</campaign>
@@ -17,11 +17,10 @@
 
 --]]
 local vn = require 'vn'
-local vne = require "vn.extras"
+local vne = require "vnextras"
 
 local board_flashback -- Forward-declared functions
 local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
--- luacheck: globals board boardnothing boardothers drone_runaway fidget heartbeat leave returncontrol whatwasthat (Hook functions passed by name)
 
 -- Threshold distances to detect the drone
 local dist_detect_mule = 3e3 -- first encounter at mule
@@ -38,7 +37,6 @@ local dist_detect_jump = 3e3 -- second encounter at jump
 evt_state = 0
 
 function create ()
-   if not var.peek("testing") then evt.finish(false) end
    -- Extra derelicts
    numboarded = 0
    derelicts = {}
@@ -47,9 +45,9 @@ function create ()
       for i = 1,number do
          local p = pos + vec2.new( 3000*rnd.rnd(), rnd.rnd()*359 )
          local s = shiptype[ rnd.rnd(1,#shiptype) ]
-         local d = pilot.add( s, "Derelict", p, _("Derelict") )
+         local d = pilot.add( s, "Derelict", p, p_("ship", "Derelict") )
          d:setInvincible(true)
-         d:disable()
+         d:setDisable()
          hook.pilot( d, "board", boardfunc )
          table.insert( derelicts, d )
       end
@@ -59,9 +57,9 @@ function create ()
 
    -- Main derelict
    local pos = vec2.new( 12000, 4250 )
-   derelict_mule = pilot.add( "Mule", "Derelict", pos, _("Derelict") )
+   derelict_mule = pilot.add( "Mule", "Derelict", pos, p_("ship", "Derelict") )
    derelict_mule:setInvincible(true)
-   derelict_mule:disable()
+   derelict_mule:setDisable()
 
    -- Drone
    pos = derelict_mule:pos() + vec2.newP( 30, rnd.angle() )
@@ -160,6 +158,7 @@ function boardnothing ()
    player.unboard()
 end
 
+-- luacheck: globals boardothers
 function boardothers( _p )
    numboarded = numboarded + 1
    if numboarded == 2 then
@@ -273,7 +272,7 @@ A---s--hm---t---
 
    vne.notebookEnd()
    vn.sfxEerie()
-   vn.na(_([[You tune your ship sensors to pick up the most miniscule of disturbances and focus on the area indicated by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
+   vn.na(_([[You tune your ship sensors to pick up the most minuscule of disturbances and focus on the area indicated by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
    vn.done()
    vn.run()
 end

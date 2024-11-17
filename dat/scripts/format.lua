@@ -17,10 +17,11 @@ If you pass a more exotic "number" value, you'll get a string back, but you won'
 --]]
 function format.number( number )
    local numberstring = ""
+   local separator = _(",%03d%s") -- separator for large numbers
    if number > -math.huge and number < math.huge then
       number = math.floor(number + 0.5)
       while number >= 1000 do
-         numberstring = string.format( ",%03d%s", number % 1000, numberstring )
+         numberstring = string.format( separator, number % 1000, numberstring )
          number = math.floor(number / 1000)
       end
       numberstring = number % 1000 .. numberstring
@@ -42,7 +43,7 @@ Converts a number of credits to a string.
       @return A string taking the form of "X ¤".
 --]]
 function format.credits( credits )
-   return n_("%s ¤", "%s ¤", credits):format( format.number(credits) )
+   return n_("%s ¤", "%s ¤", credits):format(format.number(credits))
 end
 
 
@@ -51,13 +52,23 @@ Converts an item object or number of credits to reward string ("You have receive
 
    @usage vn.na(fmt.reward(money_reward))
 
-      @param reward Thing or number of credits the player is receiving.
-                    Avoid passing strings (English or translated) for clarity's sake.
-      @return A string taking the form of "You have received X." -- translated and colorized.
+      @param reward_list Thing or number of credits the player is receiving.
+                    Avoid passing strings (English or translated) for clarity's sake. Can be a table containing multiple instances.
+      @return A string taking the form of "You have received X." -- translated and colourized.
 --]]
-function format.reward( reward )
-   local reward_text = (type(reward) == "number") and format.credits(reward) or reward
-   return format.f(_("You have received #g{reward}#0."), {reward=reward_text})
+function format.reward( reward_list )
+   if type(reward_list)~="table" then
+      reward_list = {reward_list}
+   end
+   local out = ""
+   for i,reward in ipairs(reward_list) do
+      local reward_text = (type(reward) == "number") and format.credits(reward) or reward
+      if i>1 then
+         out=out.."\n"
+      end
+      out = out..format.f(_("You have received #g{reward}#0."), {reward=reward_text})
+   end
+   return out
 end
 
 
@@ -75,7 +86,7 @@ Converts a number of tonnes to a string, using ngettext.
    @return A string taking the form of "X tonne" or "X tonnes".
 --]]
 function format.tonnes( tonnes )
-   return n_("%s tonne", "%s tonnes", tonnes):format( format.number(tonnes) )
+   return n_("%s tonne", "%s tonnes", tonnes):format(format.number(tonnes))
 end
 
 
@@ -87,7 +98,7 @@ Like fmt.tonnes, but for abbreviations.
 --]]
 function format.tonnes_short( tonnes )
    -- Translator note: this form represents an abbreviation of "_ tonnes".
-   return n_( "%d t", "%d t", tonnes ):format( tonnes )
+   return n_( "%s t", "%s t", tonnes ):format(format.number(tonnes))
 end
 
 

@@ -16,7 +16,7 @@ local bribe_no_list = {
 }
 local taunt_list = {
    _("Alea iacta est!"),
-   _("Morituri te salutant!"),
+   _("Morituri te salutant!"), -- codespell:ignore te
    _("Your head will make a great trophy!"),
    _("Cave canem!"),
    _("Death awaits you!"),
@@ -51,7 +51,7 @@ function hail ()
    if not mem.hailsetup then
       mem.refuel_base = mem.refuel_base or rnd.rnd( 1000, 3000 )
       mem.refuel_rng = rnd.rnd()
-      mem.bribe_base = mem.bribe_base or math.sqrt( p:stats().mass ) * (750 * rnd.rnd() + 2500)
+      mem.bribe_base = mem.bribe_base or math.sqrt( p:mass() ) * (750 * rnd.rnd() + 2500)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end
@@ -66,7 +66,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Get refuel chance
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing > 50 or
          (standing > 0 and mem.refuel_rng > 0.8) or

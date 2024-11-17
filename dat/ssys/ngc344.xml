@@ -2,11 +2,11 @@
 <ssys name="NGC-344">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="1230.783519" y="-43.402222"/>
+ <pos x="1340.227344" y="-1090.567068"/>
  <spobs/>
  <jumps>
   <jump target="NGC-13564">

@@ -16,8 +16,8 @@
  <specific type="modification">
   <lua>outfits/unique/pulse_scanner.lua</lua>
   <ew_detect>100</ew_detect>
-  <ew_hide>-30</ew_hide>
-  <ew_stealth>-50</ew_stealth>
+  <ew_hide>45</ew_hide>
+  <ew_stealth>100</ew_stealth>
  </specific>
  <tags>
   <tag>poi_scan</tag>

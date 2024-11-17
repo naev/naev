@@ -2,9 +2,8 @@
 <ship name="Pirate Phalanx">
  <points>60</points>
  <base_type>Phalanx</base_type>
- <GFX size="95" sx="10" sy="10">phalanx_pirate</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="95" sx="10" sy="10">phalanx_pirate</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>925000</price>
@@ -14,6 +13,7 @@
  <trail_generator x="-12" y="40" h="0">nebula</trail_generator>
  <trail_generator x="-12" y="-40" h="0">nebula</trail_generator>
  <fabricator>Skull and Bones</fabricator>
+ <faction>Pirate</faction>
  <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
  <health>
   <armour>190</armour>
@@ -36,6 +36,7 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
   <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
   <structure size="medium" />
@@ -46,12 +47,13 @@
  <stats>
   <speed_mod>15</speed_mod>
   <turn_mod>-5</turn_mod>
-  <thrust_mod>-5</thrust_mod>
+  <accel_mod>-5</accel_mod>
   <cargo_mod>15</cargo_mod>
   <energy_mod>10</energy_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <launch_range>20</launch_range>
   <ammo_capacity>10</ammo_capacity>
+  <fuel>400</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

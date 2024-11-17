@@ -1,14 +1,14 @@
 local lanes = require 'ai.core.misc.lanes'
 local scans = require 'ai.core.misc.scans'
+local atk = require "ai.core.attack.util"
 
 -- Default task to run when idle
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local p = ai.pilot()
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
-   if mem.aggressive then
-      local enemy  = ai.getenemy()
+   if not mem.force_leave and mem.aggressive then
+      local enemy  = atk.preferred_enemy( nil, true )
       if should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return
@@ -16,7 +16,7 @@ function idle ()
    end
 
    -- Try to leave
-   if mem.loiter == 0 then
+   if mem.force_leave or mem.loiter == 0 then
       -- Get a goal
       if not mem.goal then
          if mem.land_planet and not mem.tookoff then
@@ -41,7 +41,11 @@ function idle ()
             return
          end
 
-         mem.route = lanes.getRouteP( p, mem.goal_pos )
+         if mem.uselanes then
+            mem.route = lanes.getRouteP( p, mem.goal_pos )
+         else
+            mem.route = { mem.goal_pos }
+         end
       end
 
       -- Arrived at goal
@@ -70,12 +74,14 @@ function idle ()
          if target then
             -- Don't scan if they're going to be attacked anyway
             if ai.isenemy(target) then
-               -- TODO probably use should_attack here
-               ai.pushtask( "attack", target )
+               if should_attack(target) then
+                  ai.pushtask( "attack", target )
+                  return
+               end
             else
                scans.push( target )
+               return
             end
-            return
          end
       end
 
@@ -102,8 +108,14 @@ function idle ()
       else
          -- Go to an interesting
          if not mem.route then
-            local target = lanes.getPointInterestP( p )
-            mem.route = lanes.getRouteP( p, target )
+            if mem.uselanes then
+               local target = lanes.getPointInterestP( p )
+               mem.route = lanes.getRouteP( p, target )
+            else
+               -- Old school anywhere in the system
+               local target = vec2.newP( rnd.rnd() * system.cur():radius(), rnd.angle() )
+               mem.route = { target }
+            end
          end
          local pos = mem.route[1]
          table.remove( mem.route, 1 )

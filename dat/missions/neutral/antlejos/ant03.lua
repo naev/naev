@@ -29,7 +29,6 @@ local reward = ant.rewards.ant03
 
 local returnpnt, returnsys = spob.getS("Antlejos V")
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
@@ -49,7 +48,7 @@ function create ()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
    vn.na(_("As soon as you land, Verner comes bouncing up to you."))
-   v(fmt.f(_([["Everything is going great, thanks to you! However, the debris we are creating is getting very abrasive and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
+   v(fmt.f(_([["Everything is going great, thanks to you! However, the debris we are creating is getting very abrasive, and we need to start setting up an atmosphere. I've found a Za'lek factory that seems to provide exactly what we need. Would you go to {pnt} in the {sys} system to pick up an atmosphere generator? It should be {amount}. If you do me this favour I'll pay you {creds}. What do you say?"]]),
       {pnt=mem.destpnt, sys=mem.destsys, amount=fmt.tonnes(cargo_amount), creds=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
@@ -75,7 +74,7 @@ function create ()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Pick up the {cargo} at {pnt} ({sys} system)"), {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys}),
       fmt.f(_("Deliver the cargo to {pnt} ({sys} system)"), {pnt=returnpnt, sys=returnsys})
@@ -90,7 +89,7 @@ end
 function land ()
    if mem.state==1 and  spob.cur() == mem.destpnt then
 
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))

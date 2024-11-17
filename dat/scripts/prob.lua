@@ -5,8 +5,8 @@
 local prob = {}
 
 --[[--
-Samples from the poisson distribution.
-   @tparam number lambda Expected mean and varianc eof the distribution.
+Samples from the Poisson distribution.
+   @tparam number lambda Expected mean and variance of the distribution.
 --]]
 function prob.poisson_sample( lambda )
    local x = 0

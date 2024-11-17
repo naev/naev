@@ -11,7 +11,7 @@ tutnel.nelly = {
    portrait = "nelly.webp",
    image = "nelly.webp",
    name = _("Nelly"),
-   color = nil,
+   colour = nil,
    transition = nil, -- Use default
 }
 
@@ -19,7 +19,7 @@ function tutnel.vn_nelly( params )
    return vn.Character.new( tutnel.nelly.name,
          tmerge( {
             image=tutnel.nelly.image,
-            color=tutnel.nelly.colour,
+            colour=tutnel.nelly.colour,
          }, params) )
 end
 

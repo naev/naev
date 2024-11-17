@@ -59,28 +59,28 @@ function nebu_research.vn_student( params )
     return vn.Character.new( nebu_research.student.name,
         tmerge( {
             image=nebu_research.student.image,
-            color=nebu_research.student.colour,
+            colour=nebu_research.student.colour,
         }, params) )
 end
 function nebu_research.vn_mensing( params )
     return vn.Character.new( nebu_research.mensing.name,
         tmerge( {
             image=nebu_research.mensing.image,
-            color=nebu_research.mensing.colour,
+            colour=nebu_research.mensing.colour,
         }, params) )
 end
 function nebu_research.vn_dvaered_officer( params )
     return vn.Character.new( nebu_research.dvaered_officer.name,
         tmerge( {
             image=nebu_research.dvaered_officer.image,
-            color=nebu_research.dvaered_officer.colour,
+            colour=nebu_research.dvaered_officer.colour,
         }, params) )
 end
 function nebu_research.vn_empire_captain( params )
     return vn.Character.new( nebu_research.empire_captain.name,
         tmerge( {
             image=nebu_research.empire_captain.image,
-            color=nebu_research.empire_captain.colour,
+            colour=nebu_research.empire_captain.colour,
         }, params) )
 end
 

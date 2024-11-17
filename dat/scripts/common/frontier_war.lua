@@ -1,6 +1,7 @@
 --[[
 -- Common data for the Frontier War campaign
 --]]
+local ai_setup = require "ai.core.setup"
 
 local fw = {}
 
@@ -14,24 +15,6 @@ fw.credits_04 = 700e3
 fw.pirate_price = 10e6
 
 fw.wlrd_planet = "Buritt"
-
-fw.lords = {
-   _("Lord Jim"),
-   _("Lady Bitterfly"),
-   _("Lady Pointblank"),
-   _("Lord Chainsaw"),
-   _("Lord Painbishop"),
-   _("Lord Kriegsreich Hundertfeuer"),
-   _("Lady Blackswan"),
-   _("Lady Killington"),
-   _("Lord Richthofen"),
-   _("Lady Dewinter"),
-   _("Lord Easytrigger"),
-   _("Lady Sainte-Beuverie"),
-   _("Lord Louverture"),
-   _("Lord Abdelkiller"),
-   _("Lady Proserpina")
-}
 
 -- Character's portraits. TODO: create unique portraits for them
 fw.portrait_tam     = "major_tam.webp" -- Major Tam: main mission giver of this campaign
@@ -87,10 +70,38 @@ function fw.equipVendettaMace( pilot )
    pilot:outfitAdd("Shield Capacitor I")
    pilot:outfitAdd("Milspec Impacto-Plastic Coating")
    pilot:outfitAdd("TeraCom Mace Launcher", 6)
+   ai_setup.setup(pilot)
 
    pilot:setHealth(100,100)
    pilot:setEnergy(100)
    pilot:setFuel(true)
+end
+
+local function make_fct ()
+   local f1 = faction.dynAdd( "Dvaered", "fw_warlords", _("Warlords"), {
+      ai="baddie",
+      clear_enemies=true,
+      clear_allies=true,
+      player=-10,
+   } )
+   local f2 =  faction.dynAdd( "Dvaered", "fw_dhc", _("Thugs"), {
+      longname=_("Dvaered High Command"),
+      ai="baddie_norun",
+      player=10,
+      -- Don't clear enemies/allies so they behave like Dvaered
+   } )
+   f2:dynEnemy( f1 )
+   return f1, f2
+end
+
+function fw.fct_warlords ()
+   local f, _f = make_fct()
+   return f
+end
+
+function fw.fct_dhc ()
+   local _f, f = make_fct()
+   return f
 end
 
 return fw

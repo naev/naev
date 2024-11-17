@@ -27,6 +27,7 @@
    final "this is a bug, please report" happens more than it ought to.
 
 --]]
+local vntk = require "vntk"
 
 local required = {} -- Slots that must be filled in order to take off.
 local equipped = {} -- Outfits equipped in required slots.
@@ -35,9 +36,7 @@ local nrequired = 0
 local nequipped = 0
 local cancelled = false -- Whether the player opted to stop the script.
 
-
 --[[
-
    Determines whether the player is stranded.
 
    In the simplest case, a player is stranded if their ship isn't spaceworthy
@@ -49,8 +48,8 @@ local cancelled = false -- Whether the player opted to stop the script.
    The last simple case is: If the planet has a shipyard that sells ships the
    player can afford, the player is not considered stranded.
 
-   From there, it gets decidedly more complex. An outfit pool is created,
-   consisting of the player's inventory, plus:
+   From there, it gets more complex. An outfit pool is created, consisting of
+   the player's inventory, plus:
 
       a) If the planet has a shipyard, the player's other ships' outfits
       b) If the planet has an outfitter, the outfitter's stock
@@ -61,20 +60,22 @@ local cancelled = false -- Whether the player opted to stop the script.
       2) The ship is bare aside from core outfits, yet isn't spaceworthy
             and no other suitable core outfits are available.
 
+   In parallel, if the player can't modify their fleet and are over fleet
+   capacity, they are also considered stranded.
 --]]
-local function check_stranded()
+local function check_stranded ()
    local pp = player.pilot()
    local services = spob.cur():services()
 
    -- Player has no ability to fix whatever's wrong, definitely stuck.
-   if not services["shipyard"] and not services["outfits"] then
+   if not services["refuel"] then
       return true
    end
 
    if services["shipyard"] then
       -- Get value of player's ship.
       local _basevalue, playervalue = pp:ship():price()
-      for k,v in ipairs( pp:outfits() ) do
+      for k,v in ipairs( pp:outfitsList() ) do
          playervalue = playervalue + v:price()
       end
 
@@ -89,7 +90,7 @@ local function check_stranded()
    -- When all cores are equipped along with non-cores, it's nearly impossible
    -- to determine where the problem lies, so let the player sort it out.
    if #missing == 0 then
-      for k,v in ipairs( pp:outfits() ) do
+      for k,v in ipairs( pp:outfitsList() ) do
          local _name, _size, prop = v:slot()
          if not prop then
             return false
@@ -100,7 +101,7 @@ local function check_stranded()
    local inv = player.outfits()
 
    -- Add the player's other ships' outfits.
-   if services["shipyard"] then
+   if services["refuel"] then
       for k, s in ipairs( player.ships() ) do
          if s.name ~= pp:name() then
             local outfits = player.shipOutfits(s.name)
@@ -155,7 +156,7 @@ end
 -- Builds the tables of required, equipped, and missing outfits.
 local function buildTables()
    local slots   = player.pilot():ship():getSlots()
-   local outfits = player.pilot():outfits()
+   local outfits = player.pilot():outfitsList()
 
    -- Clear tables.
    required = {}
@@ -195,7 +196,7 @@ end
 local function removeNonCores( slottype )
    local pp = player.pilot() -- Convenience.
 
-   for k,v in pairs( pp:outfits() ) do
+   for k,v in pairs( pp:outfitsList() ) do
       local slot, _size, prop = v:slot()
       if not prop and (not slottype or slot == slottype) then
          -- Store and remove old
@@ -211,7 +212,7 @@ local function removeEquipDefaults()
    local pp = player.pilot() -- Convenience.
 
    -- Store and remove old outfits
-   for k,v in ipairs( pp:outfits() ) do
+   for k,v in ipairs( pp:outfitsList() ) do
       player.outfitAdd(v:nameRaw())
       pp:outfitRm(v:nameRaw())
    end
@@ -236,7 +237,7 @@ end
 local function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
-   for k,v in ipairs( pp:outfits() ) do
+   for k,v in ipairs( pp:outfitsList() ) do
       local _name, _size, prop, is_required = v:slot()
 
       -- Remove if required but not default.
@@ -260,7 +261,7 @@ end
 
 local function cancel()
    cancelled = true
-   tk.msg( _("Stranded"), _([[Very well, but it's unlikely you'll be able to take off.
+   vntk.msg( _("Stranded"), _([[Very well, but it's unlikely you'll be able to take off.
 
 If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]]) )
 end
@@ -280,7 +281,7 @@ local function assessOutfits()
       end
    end
 
-   for k,o in ipairs( player.pilot():outfits() ) do
+   for k,o in ipairs( player.pilot():outfitsList() ) do
       local s, _size, prop = o:slot()
       if not prop and s == "Weapon" then
          weapons = true
@@ -316,6 +317,18 @@ local tasks = {
 }
 
 function rescue()
+   -- Mae sure fleet capacity is ok
+   local totalcap, curcap, capok = player.fleetCapacity()
+   if not capok then
+      if vntk.yesno(string.format(_("You need {diff} more fleet capacity to take off with your current fleet. Reset all deploy ships to allow taking off with your current ship?"),{diff=curcap-totalcap})) then
+         for k,v in ipairs(player.ships()) do
+            if v.deployed then
+               player.shipDeploy( v.name, false )
+            end
+         end
+      end
+   end
+
    -- Do nothing if already spaceworthy.
    if player.pilot():spaceworthy() then
       return
@@ -364,11 +377,11 @@ function rescue()
          local msg_success = gettext.ngettext(
             [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
             [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
-         tk.msg(_("Stranded"), msg_success)
+         vntk.msg(_("Stranded"), msg_success)
          return
       end
 
-      tk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
+      vntk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
       buildTables() -- Rebuild tables, as we've added outfits.
    end
 
@@ -397,7 +410,7 @@ function rescue()
 
       -- Only "Cancel" remains, nothing to do.
       if #strings < 2 then
-         tk.msg(_("Stranded"), _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
+         vntk.msg(_("Stranded"), _([[Well… this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
 
 Please report this to the developers along with a copy of your save file.]]))
          return
@@ -411,7 +424,7 @@ Please report this to the developers along with a copy of your save file.]]))
       end
 
       if player.pilot():spaceworthy() then
-         tk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
+         vntk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
          return
       end
 

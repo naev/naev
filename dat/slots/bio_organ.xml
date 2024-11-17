@@ -4,4 +4,5 @@
  <description>Through biological synthesis, bioships are able to modify and adapt their organs for many different purposes without the need of any external equipment.</description>
  <exclusive/>
  <locked/>
+ <icon>bio.png</icon>
 </slot>

@@ -1,29 +1,26 @@
 project('naev', 'c',
-   version : '0.10.0-alpha.1',
+   version : '0.12.0-beta.1',
    default_options : [
-      'warning_level=2',
       'optimization=g',
       'c_std=gnu11',
-      'werror=false'
+      'werror=false',
+      'warning_level=3',
    ],
-   meson_version: '>=0.53.0')
+   meson_version: '>=1.4.0')
 
-copyright_year = 2022
-
-if meson.version().startswith('0.53.') or meson.version().startswith('0.54.')
-   warning('This version of Meson is nearly too old to work, but partially supported for subproject-free builds (e.g., for distro packages). In most cases you will need to upgrade Meson or use the included meson.sh wrapper script.')
-   forced_fallbacks = []
-else
-   forced_fallbacks = get_option('force_fallback_for')
-endif
+copyright_year = 2024
+forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wextra', '-Wshadow'])
+c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow'])
 add_project_arguments(c_args, language: 'c')
+
+# Filesystem module for copying files
+fs = import('fs')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
 python_module = import('python')
@@ -41,9 +38,6 @@ meson.add_dist_script(add_to_package, 'dat/VERSION')
 summary('tag', version)
 
 # Initialization
-config_data = configuration_data()
-naev_deps = []
-
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
    ndata_path = get_option('datadir') / 'naev'
@@ -52,44 +46,72 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
-subdir('dat/outfits/bioship')
+subdir('dat/outfits/bioship') # Has to be before naevpedia
+subdir('dat/naevpedia')
 subdir('dat/scripts')
 subdir('docs')
-subdir('po')
 
 ####
 # Naev
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
+   config_data = configuration_data()
+   app_metadata = configuration_data()  # For Info.plist, resource.rc, etc.
+   naev_deps = []
    debug = get_option('debug')
    debug_arrays = get_option('debug_arrays')
+   debug_gl = get_option('debug_gl')
+   tracy = get_option('tracy')
    paranoid = get_option('paranoid')
+   # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
    config_data.set_quoted('PACKAGE', meson.project_name())
    config_data.set_quoted('PACKAGE_NAME', meson.project_name())
-   config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
+   config_data.set_quoted('PACKAGE_VERSION', '0')
    config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
-   config_data.set('VMAJOR', meson.project_version().split('.')[0])
-   config_data.set('VMINOR', meson.project_version().split('.')[1])
-   config_data.set('YEAR', copyright_year)
-   config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
+   app_metadata.set('VERSION', meson.project_version())
+   app_metadata.set('VMAJOR', meson.project_version().split('.')[0])
+   app_metadata.set('VMINOR', meson.project_version().split('.')[1])
+   app_metadata.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
+   app_metadata.set('YEAR', copyright_year)
+   app_metadata.set('COPYRIGHT', copyright_holder)
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
+   config_data.set10('DEBUG_GL', debug_gl)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
-   summary('Enabled' , debug   , section: 'Debug', bool_yn: true)
-   summary('Paranoid', paranoid, section: 'Debug', bool_yn: true)
+   summary('Enabled' , debug       , section: 'Debug', bool_yn: true)
+   summary('Paranoid', paranoid    , section: 'Debug', bool_yn: true)
+   summary('Arrays'  , debug_arrays, section: 'Debug', bool_yn: true)
+   summary('OpenGL'  , debug_gl    , section: 'Debug', bool_yn: true)
+   assert(debug or not debug_gl, 'debug_gl option is only valid for debug builds. Try "meson configure --buildtype=debug" for example.')
+
+   # Some OS voodoo TODO these are not very correct, but ported from ncompat.h . Maybe use .system?
+   has_posix = host_machine.system()=='darwin' or cc.compiles('''#if !(defined(__unix) || defined(__unix__))
+#error "Not unix"
+#endif
+int main (void) { return 0; }''')
+   # Version below requires meson 1.3.0 or later, so just use the horrible hack above for now
+   #has_posix = cc.has_define('__unix__') or cc.has_define('__unix') or host_machine.system()=='darwin'
+   config_data.set10('HAS_POSIX', has_posix)
+   config_data.set10('HAS_UNIX', has_posix)
 
    ### Hard deps (required: true)
 
    naev_deps += cc.find_library('m', required : false)
 
+   enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
-   sdl = dependency('sdl2', required: true)
-   sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
-   libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'])
+   sdl = dependency('sdl2', version: '>=2.0.26', required: true)
+   sdl_image = dependency('SDL2_image', required: true)
+   libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
+   cmark = dependency('libcmark', required: true, version: '>=0.29.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
+   yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
+
+   # TODO replace nfd with SDL3 native functions when possible
+   nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
@@ -98,7 +120,7 @@ if buildExec.disabled() == false
 
    use_system_physfs = ('physfs' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
    if use_system_physfs
-      system_physfs = dependency('physfs', required: false)
+      system_physfs = dependency('physfs', required: false, static: get_option('steamruntime'))
       if not system_physfs.found()
          system_physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
       endif
@@ -107,12 +129,16 @@ if buildExec.disabled() == false
    naev_deps += use_system_physfs ? system_physfs : subproject('physfs').get_variable('physfs_dep')
 
    naev_deps += [
+      cmark,
+      yaml,
+      enet,
       dependency('freetype2', required: true),
       libunibreak,
       libxml2,
       pcre2,
       sdl,
       sdl_image,
+      nfd,
       dependency('libpng', required: true),
       dependency('libwebp', required: true, static: get_option('steamruntime')),
    ]
@@ -121,7 +147,7 @@ if buildExec.disabled() == false
    useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
    if useLuaJIT.disabled() == false
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['luajit=false'])
    endif
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
@@ -130,7 +156,11 @@ if buildExec.disabled() == false
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
-   naev_deps += lua
+   naev_deps += [lua]
+
+   # Lua Libraries
+   lyaml = subproject('lyaml').get_variable('lyaml_dep')
+   naev_deps += [lyaml]
 
    # Linear Algebra
    use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
@@ -184,59 +214,74 @@ if buildExec.disabled() == false
       blas = cc.find_library(get_option('blas'), required: true)
    endif
 
-   # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
-   #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
-   #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
    naev_deps += blas
 
    ### Soft deps (required: false)
 
    # libdl can be used for debugging stack traces. On non-Windows platforms, GLAD relies on dlopen().
    glad_requires_libdl = not cc.has_header('windows.h')
-   libdl = cc.find_library('dl', required: glad_requires_libdl)
-
-   # BFD
-   if get_option('debug')
-      bfd = cc.find_library('bfd', required: false)
-   else
-      bfd = dependency('', required: false)
+   if glad_requires_libdl or debug
+     # TODO maybe use dependency('dl') instead of find_library. Requires meson 0.62, however.
+     # ref: https://mesonbuild.com/Dependencies.html#dl-libdl
+     libdl = cc.find_library('dl', required: false )
+     if libdl.found()
+       naev_deps += libdl
+     elif host_machine.system()=='windows'
+       naev_deps += subproject('dlfcn-win32').get_variable('dl_dep')
+     endif
    endif
-   summary('BFD', bfd.found(), section: 'Debug', bool_yn: true)
 
-   naev_deps += bfd
+   if get_option('debug')
+      libbacktrace = cc.find_library('backtrace', has_headers: 'backtrace.h', required: false)
+      if not libbacktrace.found() or 'backtrace' in forced_fallbacks or 'libbacktrace' in forced_fallbacks or get_option('wrap_mode') == 'forcefallback'
+         libbacktrace = dependency('backtrace', fallback: ['libbacktrace', 'libbacktrace_dep'], required: true)
+      endif
+      naev_deps += libbacktrace
+   endif
 
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
    # Luacheck (linter) wrapper
    luacheck = find_program('luacheck', required: false)
+   nluacheck = find_program(join_paths('utils','nluacheck.py'))
 
    # Audio
-   openal    = dependency('openal', required: true)
+   openal = dependency('openal', required: true)
    vorbis = dependency('vorbis', required: true)
    vorbisfile = dependency('vorbisfile', required: true)
    ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
 
-   naev_deps += [libdl, openal, ogg, vorbis, vorbisfile]
+   naev_deps += [openal, ogg, vorbis, vorbisfile]
+
+   have_tracy = false
+   if tracy
+      if not debug
+         error('tracy requires a debug build!')
+      endif
+      use_system_tracy = ('tracy' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
+      if use_system_tracy
+         system_tracy = cc.find_library('tracy', required: false, has_headers: ['tracy/TracyC.h'] )
+         use_system_tracy = system_tracy.found()
+      endif
+      naev_deps += use_system_tracy ? system_tracy : subproject('tracy').get_variable('tracy_dep')
+      config_data.set10('HAVE_TRACY', true)
+      config_data.set10('TRACY_ENABLE', true) # Needed for tracy to actually work
+      have_tracy = true
+   endif
+   summary('tracy', have_tracy, section: 'Debug', bool_yn: true )
 
    # Standard library feature tests
-   config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
-   config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
-   config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
-   config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_BFD_H', bfd.found())
-   config_data.set10('HAVE_DLADDR', cc.has_function('dladdr') and libdl.found())
-   config_data.set10('HAVE_EXECINFO_H', cc.has_header('execinfo.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
-   # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
+   # SDL_strndup and SDL_strnstr is in SDL3, so we can remove this once it is released
+   # strndup() detection must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
+   config_data.set10('HAVE_SIGACTION', cc.has_function('sigaction'))
    config_data.set10('HAVE_STRSIGNAL', cc.has_function('strsignal'))
-   config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
    # BLAS include tests
    cblas_test = '\nint main (void) { double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }'
    config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.links('#include <Accelerate/Accelerate.h>' + cblas_test, dependencies: blas))
@@ -245,28 +290,13 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.links('#include <cblas-openblas.h>' + cblas_test, dependencies: blas))
    config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.links('#include <openblas/cblas.h>' + cblas_test, dependencies: blas))
    config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
-
-   # OS declaration (Shows which OS we built this with in the options menu)
-   if host_machine.system() == 'linux'
-      config_data.set10('LINUX', true)
-   elif host_machine.system() == 'freebsd'
-      config_data.set10('FREEBSD', true)
-   elif host_machine.system() == 'darwin'
-      config_data.set10('MACOS', true)
-   elif host_machine.system() == 'windows'
-      config_data.set10('WIN32', true)
-   endif
+   config_data.set10('HAVE_OPENBLAS_F77BLAS_H', cc.has_header('openblas/f77blas.h', dependencies: blas))
 
    ### Generated sources
 
-   # VERSION
-   config_data.set_quoted('VERSION', version)
-
-   # config.h
-   configure_file(
-      output: 'config.h',
-      configuration: config_data
-   )
+   # Generated headers
+   configure_file(output: 'config.h', configuration: config_data)
+   configure_file(output: 'naev_build_version.h', configuration: {'VERSION': '"'+version+'"'})
    add_project_arguments('-include', 'config.h', language: 'c')
 
    include_dirs = [include_directories(
@@ -280,10 +310,11 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
-      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data,
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: app_metadata,
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
       naev_source += mac_source
+      naevlua_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
 
@@ -292,8 +323,8 @@ if buildExec.disabled() == false
       icon = files('extras/logos/logo.ico')
       install_data(icon, install_dir: '.')
       res_include = include_directories('extras/logos')
-      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: config_data)
-      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: config_data)
+      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
+      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
       naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
 
@@ -304,6 +335,7 @@ if buildExec.disabled() == false
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
    naev_source += shaders_source
+   naevlua_source += shaders_source
    colours_source = custom_target(
       'generate_colours',
       command: [python, '@INPUT@'],
@@ -311,16 +343,25 @@ if buildExec.disabled() == false
       output: ['colours.gen.c', 'colours.gen.h']
    )
    naev_source += colours_source
+   naevlua_source += colours_source
 
    naev_bin = executable(
       'naev',
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      export_dynamic: bfd.found(),
+      export_dynamic: get_option('debug'),
       install: true)
+   naevlua_bin = executable(
+      'naevlua',
+      naevlua_source,
+      include_directories: include_dirs,
+      dependencies: naev_deps,
+      export_dynamic: get_option('debug'),
+      override_options: ['-DNOMAIN=1'],
+      install: false)
 
-   gen_authors = find_program('utils/build/gen_authors.py')
+   gen_authors = find_program(join_paths('utils','build','gen_authors.py'))
    authors = custom_target(
       'authors',
       command: [
@@ -335,7 +376,7 @@ if buildExec.disabled() == false
       install_dir: ndata_path / 'dat',
    )
 
-   gen_gettext_stats = find_program('utils/build/gen_gettext_stats.py')
+   gen_gettext_stats = find_program(join_paths('utils','build','gen_gettext_stats.py'))
    gettext_stats = custom_target(
       'gettext_stats',
       command: [gen_gettext_stats, '--output', '@OUTPUT@', '@INPUT@'],
@@ -345,14 +386,12 @@ if buildExec.disabled() == false
       install_dir: ndata_path / 'dat/gettext_stats',
    )
 
-   gen_zip_overlay = find_program('utils/build/gen_zip_overlay.py')
+   gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
    gen_zip_command += ['--cd', 'outfits/bioship']
+   #gen_zip_command += bio_outfits.to_list()
    foreach target: bio_outfits
-     # Meson 0.60 supports "gen_zip_command += target.to_list()", but until then...
-     foreach output: target.to_list()
-       gen_zip_command += output.full_path()
-     endforeach
+     gen_zip_command += target
    endforeach
    zip_overlay = custom_target(
       'zip_overlay',
@@ -362,14 +401,32 @@ if buildExec.disabled() == false
       build_by_default: true
    )
 
-   naev_sh = configure_file(
-      input: 'utils/build/naev.sh',
-      output: 'naev.sh',
+   naev_py = configure_file(
+      input: join_paths('utils','build','naev.py'),
+      output: 'naev.py',
       configuration: {
          'build_root': meson.current_build_dir(),
-         'source_root': meson.source_root(),
+         'source_root': meson.project_source_root(),
          'naev_bin' : naev_bin.full_path(),
          'zip_overlay' : zip_overlay.full_path(),
+         'debug' : debug,
+         'debug_paranoid' : paranoid,
+      }
+   )
+
+   gdbinit = configure_file(
+      input: join_paths('utils','build','gdbinit.in'),
+      output: '.gdbinit',
+      configuration: {
+         'source_root': meson.project_source_root(),
+      }
+   )
+
+   lldbinit = configure_file(
+      input: join_paths('utils','build','lldbinit.py.in'),
+      output: 'lldbinit.py',
+      configuration: {
+         'source_root': meson.project_source_root(),
       }
    )
 
@@ -387,7 +444,7 @@ if buildExec.disabled() == false
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build'],
+      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build', 'scripts/lyaml/meson.build', ],
       exclude_directories: 'outfits/bioship/templates',
    )
 
@@ -424,26 +481,22 @@ if buildExec.disabled() == false
 
    subdir('test')
 
-   if host_machine.system() == 'windows'
-     meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
-   endif
-   if host_machine.system() == 'darwin'
-     meson.add_install_script('extras/macos/bundle.py')
-     meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
-   endif
+   subdir ('extras')
 endif
+
+subdir('po')
 
 ####
 # Soundtrack
 ####
 if (mutagen.found())
-   soundtrackpy = find_program('utils/soundtrack.py')
+   soundtrackpy = find_program(join_paths('utils','soundtrack.py'))
    custom_target(
       'soundtrack',
       command: [
          soundtrackpy,
          '--csv', 'yes',
-         '--source-dir', meson.source_root(),
+         '--source-dir', meson.project_source_root(),
          '--output', '@OUTPUT0@'
       ],
       output: [
@@ -452,3 +505,21 @@ if (mutagen.found())
       ]
    )
 endif
+
+####
+# luacheckrc
+####
+luacheckrc_extractor = find_program(join_paths('utils','luacheckrc_extractor.py'))
+custom_target(
+  'luacheckrc_gen',
+  build_by_default: true,
+  command: [
+    luacheckrc_extractor,
+    nlua_source,
+    '--output',
+    join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
+  ],
+  output: [
+    'luacheckrc_gen.lua',
+  ]
+)

@@ -69,7 +69,7 @@ function hail ()
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = mem.refuel_base or rnd.rnd( 2000, 4000 )
-      mem.bribe_base = mem.bribe_base or math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe_base = mem.bribe_base or math.sqrt( ai.pilot():mass() ) * (500 * rnd.rnd() + 1750)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end
@@ -84,7 +84,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Get refuel chance
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing < 0 then
       mem.refuel_no = _([["My fuel is property of the Empire."]])

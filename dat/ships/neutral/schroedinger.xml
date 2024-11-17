@@ -2,8 +2,7 @@
 <ship name="Schroedinger">
  <points>20</points>
  <base_type>Schroedinger</base_type>
- <GFX size="47">schroedinger</GFX>
- <GUI>brushed</GUI>
+ <gfx size="47">schroedinger</gfx>
  <sound>engine</sound>
  <class>Scout</class>
  <price>180000</price>
@@ -13,6 +12,7 @@
  <trail_generator x="5" y="13" h="-8">nebula</trail_generator>
  <trail_generator x="5" y="-13" h="-8">nebula</trail_generator>
  <fabricator>Sirius Systems</fabricator>
+ <faction>Independent</faction>
  <description>The Schroedinger is primarily used as a reconnaissance vessel. It requires a skeleton crew due to its advanced automation subsystems, and its proprietary fuel tanks allow it to have range much greater than most ships. The downside is that the ship is extremely vulnerable to attack due to its light armour and low amount of weapons space. It is also equipped with a pair of Eraedon engines, making it highly manoeuvrable.</description>
  <health>
   <armour>25</armour>
@@ -33,15 +33,16 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
   <speed_mod>10</speed_mod>
   <cargo_mod>-25</cargo_mod>
   <armour_mod>-20</armour_mod>
-  <ew_hide>20</ew_hide>
+  <ew_hide>-17</ew_hide>
   <ew_detect>25</ew_detect>
   <ew_jump_detect>25</ew_jump_detect>
   <misc_instant_jump>1</misc_instant_jump>

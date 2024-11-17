@@ -3,31 +3,39 @@
 <event name="Pirate Fake Transponder">
   <unique/>
  <location>land</location>
- <cond>require("common.pirate").factionIsPirate( spob.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
+ <cond>
+   local pir = require("common.pirate")
+   if not pir.factionIsPirate( spob.cur():faction() ) then
+      return false
+   end
+   if faction.reputationGlobal("Pirate") &lt; -20 then
+      return false
+   end
+   if player.credits() &lt; 1e6 then
+      return false
+   end
+   return true
+  </cond>
  <chance>50</chance>
 </event>
 --]]
 --[[
    Pirate offers to sell the player a fake transponder. Might be better to have it be a small mission or campaign to be a bit more interesting given that it should be fairly strong.
 --]]
-local portrait = require 'portrait'
 local vn = require 'vn'
+local vni = require 'vnimage'
 local fmt = require "format"
 
 local pir_name = _("Shifty-Eyed Pirate")
-local pir_portrait = portrait.get()
-local pir_image = portrait.getFullPath(pir_portrait)
+local pir_image, pir_portrait = vni.pirate()
 local pir_description = _("You see a seedy pirate flashing looks at you, as if they had something interesting to show you.")
 
 local transponder = outfit.get("Fake Transponder")
 local cost = 1e6
 
--- luacheck: globals enter (Hook functions passed by name)
--- luacheck: globals approach_pirate (NPC functions passed by name)
-
 function create ()
    -- Player already has it somehow, so this event makes no sense
-   if player.numOutfit(transponder) > 0 then
+   if player.outfitNum(transponder) > 0 then
       evt.finish(true)
    end
 
@@ -72,7 +80,7 @@ Having sold his wares, the pirate disappears into the shadows.]]))
    vn.run()
 
    -- Player bought it, we're done!
-   if player.numOutfit(transponder) > 0 then
+   if player.outfitNum(transponder) > 0 then
       evt.finish(true)
    end
 end

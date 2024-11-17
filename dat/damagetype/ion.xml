@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dtype name="ion">
+<dtype name="ion" display="#yIon#0">
  <shield>1.3</shield>
  <armour>0.8</armour>
- <knockback>0</knockback>
+ <knockback>0.1</knockback>
 </dtype>

@@ -4,4 +4,5 @@
  <duration>0.3</duration>
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <shader>effects/blink.frag</shader>
+ <priority>2</priority>
 </effect>

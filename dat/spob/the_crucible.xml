@@ -2,13 +2,13 @@
 <spob name="The Crucible">
  <pos x="5212.946189" y="780.244879"/>
  <GFX>
-  <space>003.webp</space>
+  <space>station-round1.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -34,14 +34,16 @@
   <item>Missiles 1</item>
   <item>Ion 1</item>
   <item>Plasma 1</item>
-  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 3</item>
   <item>Star Maps</item>
   <item>Basic Outfits 1</item>
   <item>Basic Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Criminal Outfits</item>
+  <item>Port N Polish</item>
  </tech>
  <tags>
   <tag>criminal</tag>
+  <tag>station</tag>
  </tags>
 </spob>

@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Smuggling">
  <priority>4</priority>
- <cond>faction.playerStanding("Pirate") &gt;= -100</cond>
+ <cond>faction.reputationGlobal("Pirate") &gt;= -100</cond>
  <chance>960</chance>
  <location>Computer</location>
  <done>Pirate Smuggle Cake</done>
@@ -19,8 +19,7 @@ local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
-
--- luacheck: globals land tick (Hook functions passed by name)
+local vntk = require "vntk"
 
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
@@ -46,7 +45,7 @@ function create()
    mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination. Override "always_available" to true.
-   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), {always_available=true} )
    if mem.destplanet == nil or pir.factionIsPirate( mem.destplanet:faction() ) then
       misn.finish(false)
    end
@@ -95,11 +94,13 @@ function create()
          {N_("Bio-weapons"), N_("Highly dangerous, illegal biological weapons.")},
          {N_("Abducted Drosophila"), N_("Genetically modified small fruit flies illegally stolen from a laboratory.")},
          {N_("Mislabeled Plasmids"), N_("Independently replicating DNA that has been mislabeled and is no longer clear what exactly it does. Illegal for its uncertain and dangerous nature.")},
+         {N_("Soromid Cheese"), N_("The 'don't ask, don't tell' of the cheese world. It is completely covered with puffy green and blue mold.")},
       },
       ["Sirius"] = {
          {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
          {N_("Itch Powder"), N_("A banned substance with a history of disrupting robed processions.")},
          {N_("Unauthorized Sirichana Merchandise"), N_("Horribly tacky and outright bad merchandise with Sirichana pasted all over it. Sirichana toenail clipper anyone?")},
+         {N_("Tinfoil Caps"), N_("Tinfoil caps that do not look very stylish.")},
       },
       ["Za'lek"] = {
          {N_("Scientific Preprints"), N_("Non-paywalled illegal scientific papers.")},
@@ -126,12 +127,12 @@ function create()
    local stuperpx   = 0.3 - 0.015 * mem.tier
    local stuperjump = 11000 - 200 * mem.tier
    local stupertakeoff = 12000 - 50 * mem.tier
-   mem.timelimit  = time.get() + time.create(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
+   mem.timelimit  = time.get() + time.new(0, 0, mem.traveldist * stuperpx + mem.numjumps * stuperjump + stupertakeoff + 240 * mem.numjumps)
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(mem.tier, 1)
    if mem.numjumps > jumpsperstop then
-      mem.timelimit:add(time.create( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
+      mem.timelimit:add(time.new( 0, 0, math.floor((mem.numjumps-1) / jumpsperstop) * stuperjump ))
    end
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
@@ -147,51 +148,53 @@ function create()
    if pir.factionIsPirate( spob.cur():faction() ) then
       car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
    else
-      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=mem.destplanet, sys=mem.destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems, and you will face consequences if caught by patrols."), mem.cargo, mem.amount, mem.destplanet, mem.timelimit )
+      misn.setIllegal( true ) -- Considered illegal
    end
 
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
 end
 
 -- Mission is accepted
 function accept()
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
    if mem.timelimit < playerbest then
-      if not tk.yesno( _("Too slow"), fmt.f(
+      if not vntk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          return
       end
    end
-   if player.pilot():cargoFree() < mem.amount then
-      tk.msg( _("No room in ship"), fmt.f(
+   local fs = player.fleetCargoMissionFree()
+   if fs < mem.amount then
+      vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
-         { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
+         { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - fs ) } ) )
       return
    end
 
    misn.accept()
 
    mem.carg_id = misn.cargoAdd( mem.cargo, mem.amount )
-   tk.msg( _("Mission Accepted"), fmt.f(
+   vntk.msg( _("Mission Accepted"), fmt.f(
       _("{tonnes} of {cargo} are loaded onto your ship."),
       {tonnes=fmt.tonnes(mem.amount), cargo=_(mem.cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
-   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   hook.date(time.new(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
 end
 
 -- Land hook
 function land()
    if spob.cur() == mem.destplanet then
-         tk.msg( _("Successful Delivery"), fmt.f(
+         vntk.msg( _("Successful Delivery"), fmt.f(
             _("The containers of {cargo} are unloaded at the docks."), {cargo=_(mem.cargo)} ) )
       player.pay(mem.reward)
       local n = var.peek("ps_misn") or 0
       var.push("ps_misn", n+1)
 
       -- increase faction
-      faction.modPlayerSingle(mem.reward_faction, rnd.rnd(2, 4))
+      faction.hit( mem.reward_faction, rnd.rnd(2, 4), nil, nil, true )
       misn.finish(true)
    end
 end

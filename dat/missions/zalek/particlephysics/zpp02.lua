@@ -23,7 +23,6 @@ local zpp = require "common.zalek_physics"
 local lmisn = require "lmisn"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land approach_guy (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp02
 local cargo_name = _("drone interface controllers")
@@ -65,7 +64,7 @@ She furrows her brow.]]))
    vn.done( zpp.noona.transition )
 
    vn.label("accept")
-   n(_([["Thanks! Once I get the interface up and working, I should be able to start my particle physics experiments. I'm so excited. While you're gone, I guess I'll double check all my code just to calm down. It's going to be great!"]]))
+   n(_([["Thanks! Once I get the interface up and working, I should be able to start my particle physics experiments. I'm so excited. While you're gone, I guess I'll double-check all my code just to calm down. It's going to be great!"]]))
    vn.func( function () accepted = true end )
    vn.done( zpp.noona.transition )
    vn.run()
@@ -77,7 +76,7 @@ She furrows her brow.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up some {cargo} from {pnt} in the {sys} system and deliver them to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt} ))
 
@@ -108,7 +107,7 @@ function land ()
       vn.na(_([[You land and the lone loading drone starts to slowly remove the cargo from your ship. While waiting, you decide to look for Noona, who you quickly find staring at the testing site at the observation deck of the base.]]))
       n(_([["Look at it! Isn't it breathtaking?"
 She motions towards the testing site.
-"To think of all of the brains that went into designing and preparing for this. All the famous experiments run on that platform. The advancement of humanity as a whole! What new technological wonders are awaiting for us on the other side of the particle physics conundrums?"]]))
+"To think of all the brains that went into designing and preparing for this. All the famous experiments run on that platform. The advancement of humanity as a whole! What new technological wonders are waiting for us on the other side of the particle physics conundrums?"]]))
       n(_([[She breathes deeply and turns to you.
 "Did you get the interface controllers? That's great! Let me try to get them hooked up and I'll finally be able to start my tests. I'm so excited!"
 She starts to prance off, when she suddenly turns to you and tosses you a credstick.
@@ -118,7 +117,7 @@ She starts to prance off, when she suddenly turns to you and tosses you a credst
       vn.done( zpp.noona.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zpp.fctmod.zpp02)
+      faction.hit("Za'lek", zpp.fctmod.zpp02)
       player.pay( reward )
       zpp.log(_("You brought some drone interface controllers to Noona so that she can begin her particle physics experiments."))
       misn.finish(true)
@@ -141,11 +140,11 @@ function approach_guy ()
          c(_([[They raise an eyebrow as you approach.
 "You must be Dr. Sanderaite's acquaintance. I have the drone interface controllers ready, but there was kind of a mishap and they're stuck now."
 They scratch their head.]]))
-         c(_([["I tried to take a look at it, but wasn't able to figure out a damn thing, and since my post-doc eloped to Rulk'ar, I don't have anyone to deal with these sort of inconveniences. If you could take a look at it and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot at it."]]))
+         c(_([["I tried to look at it myself, but wasn't able to figure out a damn thing, and since my post-doc eloped to Rulk'ar, I don't have anyone to deal with this sort of inconvenience. If you could give it a shot and get it apart, you should be able to take the controllers with you. All you have to do is align the memory by pushing the data boxes into data sockets. Please take a shot at it."]]))
          talked_once = true
       end
 
-      sokoban.vn{ levels={1,2,3}, header="Drone Memory Banks"}
+      sokoban.vn{ levels={1,2,3}, header=_("Drone Memory Banks") }
       vn.func( function ()
          if sokoban.completed() then
             mem.state = 2
@@ -168,7 +167,7 @@ They scratch their head.]]))
 
    end
 
-   local fs = player.pilot():cargoFree()
+   local fs = player.fleetCargoMissionFree()
    if fs < cargo_amount then
       vn.na(fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
          {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))

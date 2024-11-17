@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Maanen">
+ <pos x="-9044.304033" y="4796.681802"/>
+ <GFX>
+  <space>J06.webp</space>
+  <exterior>aquatic2.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

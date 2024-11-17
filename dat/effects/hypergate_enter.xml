@@ -6,4 +6,5 @@
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <lua>effects/lua/hypergate_enter.lua</lua>
  <shader vertex="effect15x.vert">effects/hypergate_enter.frag</shader>
+ <priority>0</priority>
 </effect>

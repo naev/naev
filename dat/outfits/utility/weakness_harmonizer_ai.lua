@@ -1,3 +1,5 @@
+notactive = true
+
 -- Global constant variables for the outfit
 local range = 2000
 local bonus = 10
@@ -16,7 +18,8 @@ function init( p, po )
 end
 
 function update( p, po, _dt )
-   local h = p:getHostiles( range )
+   local mod = p:shipstat("ew_detect",true)
+   local h = p:getEnemies(range*mod) -- Only consider visible ships
    local n = 0
    for k,v in ipairs(h) do
       local l = pilotToLevel( v )

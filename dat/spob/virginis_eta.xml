@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Virginis Eta">
+ <pos x="6716.747507" y="-4094.455672"/>
+ <GFX>
+  <space>A00.webp</space>
+  <exterior>asteroid.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

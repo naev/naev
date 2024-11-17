@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Nyx">
+ <lua>soromid.lua</lua>
  <points>90</points>
  <base_type>Nyx</base_type>
- <GFX size="96" sx="10" sy="10">nyx</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="96" sx="10" sy="10">nyx</gfx>
+ <rarity>1</rarity>
  <sound pitch="0.75">engine_soromid</sound>
  <class display="Bio-Destroyer">Destroyer</class>
  <price>2900000</price>
@@ -12,9 +12,10 @@
  <trail_generator x="-25" y="8" h="0">soromid</trail_generator>
  <trail_generator x="-25" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt;= 50</cond>
- <condstr>You need at least 50 reputation with the Soromid.</condstr>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with the Soromid.</condstr>
  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Soromid fleet.</description>
  <health>
   <armour>550</armour>
@@ -41,10 +42,11 @@
   <structure size="medium" prop="bio_hull" name="shell">Largus Cortex I</structure>
   <structure size="large" />
   <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>soromid</tag>

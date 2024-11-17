@@ -2,18 +2,17 @@
 <ssys name="Severus">
  <general>
   <radius>11000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-472.525756" y="-924.697674"/>
+ <pos x="-194.168577" y="-732.722812"/>
  <spobs/>
  <jumps>
   <jump target="Astana">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Damien">
+  <jump target="Ruadan">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

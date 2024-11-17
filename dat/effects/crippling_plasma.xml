@@ -4,6 +4,7 @@
  <duration>7.5</duration>
  <overwrite>crippling_plasma</overwrite>
  <icon>/gfx/misc/icons/chemical-bolt.webp</icon>
+ <debuff/>
  <stats>
   <fwd_firerate>-20</fwd_firerate>
   <tur_firerate>-20</tur_firerate>

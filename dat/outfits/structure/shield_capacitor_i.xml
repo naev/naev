@@ -4,7 +4,7 @@
   <typename>Shield Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
-  <mass>40</mass>
+  <mass>30</mass>
   <price>25000</price>
   <description>An enhancement for the shield power system, giving small ships a better chance of escaping attackers.</description>
   <gfx_store>capacitor.webp</gfx_store>

@@ -2,8 +2,7 @@
 <ship name="Lancelot">
  <points>40</points>
  <base_type>Lancelot</base_type>
- <GFX size="56">lancelot</GFX>
- <GUI>brushed</GUI>
+ <gfx size="56">lancelot</gfx>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>450000</price>
@@ -13,6 +12,7 @@
  <trail_generator x="-20" y="5" h="0" />
  <trail_generator x="-20" y="-5" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Independent</faction>
  <license>Light Combat Vessel</license>
  <description>One of the prized heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military but its existence was revealed during an aborted test flight. Now, a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the galaxy for its reliability and availability.</description>
  <health>
@@ -35,8 +35,10 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>

@@ -2,6 +2,10 @@ local atk = require "ai.core.attack.util"
 
 local atk_bomber = {}
 
+function atk_bomber.init ()
+   mem.atk_pref_func = atk.prefer_capship
+end
+
 --[[
 -- Main control function for bomber behavior.
 -- Bombers are expected to have heavy weapons and target
@@ -20,7 +24,7 @@ function atk_bomber.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
 
    -- TODO bombers need their own specific routines
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then

@@ -2,11 +2,10 @@
 <ssys name="Eridani">
  <general>
   <radius>17500.000000</radius>
-  <stars>500</stars>
-  <interference>5.882353</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>500</spacedust>
+  <interference>13.235294</interference>
  </general>
- <pos x="131.000000" y="40.000000"/>
+ <pos x="200.441921" y="292.633380"/>
  <spobs>
   <spob>Eridani II</spob>
   <spob>Eridani III</spob>

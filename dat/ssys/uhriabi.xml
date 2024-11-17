@@ -2,24 +2,32 @@
 <ssys name="Uhriabi">
  <general>
   <radius>14000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-253.000000" y="-417.000000"/>
+ <pos x="21.590040" y="-210.035984"/>
  <spobs>
   <spob>Mugen</spob>
-  <spob>Steiner</spob>
+  <spob>Steiner Station</spob>
   <spob>Uhriabi-17</spob>
   <spob>Uhriabi-9</spob>
  </spobs>
  <jumps>
+  <jump target="Groombridge">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Overture">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Qex">
    <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Qorel">
+   <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

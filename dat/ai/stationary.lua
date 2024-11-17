@@ -2,10 +2,9 @@
       AI for stationary turrets.
 --]]
 require 'ai.core.core'
-
+local atk = require "ai.core.attack.util"
 
 control_rate = 2
-
 
 local function attack_nearest( hostile )
    -- Must not be same
@@ -29,9 +28,10 @@ function create ()
 end
 
 
-function control ()
+function control( dt )
+   mem.elapsed = mem.elapsed + dt
    local task = ai.taskname()
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
 
    if task == "stationary" then
       if enemy ~= nil then
@@ -57,13 +57,11 @@ function attacked( hostile )
 end
 
 
--- luacheck: globals stationary (AI Task functions passed by name)
 function stationary ()
    -- Do nothing
 end
 
 
--- luacheck: globals attack (AI Task functions passed by name)
 function attack ()
    local target = ai.taskdata()
 
@@ -78,26 +76,14 @@ function attack ()
 
    -- Choose how to face
    local dist  = ai.dist( target )
-   local range = ai.getweaprange( 3 ) -- Short range
-   local dir
+   local range = atk.primary_range()
    if dist < range then
-      dir = ai.aim( target )
+      ai.aim( target )
    else
-      dir = ai.face( target )
+      ai.face( target )
    end
 
-   -- In melee
-   if dist < range then
-      ai.weapset( 3 ) -- Forward/turret
-      if dir < math.rad(10) then
-         ai.shoot() -- Forward
-      end
-      ai.shoot(true) -- Turret
-   end
-
-   -- Long-range
-   if dir < math.rad(10) then
-      ai.weapset( 4 ) -- Missiles, it's a fire group
-   end
-   ai.weapset( 9 ) -- Turreted Missiles
+   -- Fire all weapons, let inrange decideIn melee
+   atk.primary()
+   atk.secondary()
 end

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Pilot Doll">
+ <general>
+  <unique />
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A doll made by orphans out of their old clothes. You believe it's supposed to be you, but it looks nothing like you at all. However, what is important here is the intention and not the result.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <cargo_inertia>-10</cargo_inertia>
+  <land_delay>-10</land_delay>
+ </specific>
+</outfit>

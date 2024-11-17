@@ -4,7 +4,7 @@
  <unique />
  <priority>3</priority>
  <done>The Gauntlet</done>
- <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
  <chance>100</chance>
  <location>Bar</location>
  <spob>Margot</spob>
@@ -21,18 +21,17 @@
 local fmt = require "format"
 local srs = require "common.sirius"
 
--- luacheck: globals landing (Hook functions passed by name)
 
 function create()
    --this mission makes no system claims
    --create some mission variables
-   mem.nasin_rep = faction.playerStanding("Nasin")
+   mem.nasin_rep = spob.cur():reputation("Nasin")
    mem.misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
    mem.targetasset, mem.targetsystem = spob.getS("The Wringer")
    --set the mission stuff
    misn.setTitle(_("The Return"))
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
    misn.setNPC(_("A Tall Man"), "sirius/unique/shaman.webp", _("A tall man sitting at a table littered with papers."))
    misn.setDesc(_("A tall man sitting at a table littered with papers."))
 end
@@ -71,7 +70,7 @@ function landing()
       player.pay(mem.reward)
       misn.cargoRm(mem.message)
       mem.misn_tracker = mem.misn_tracker + 1
-      faction.modPlayer("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
+      faction.hit("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
       var.push("heretic_misn_tracker", mem.misn_tracker)
       srs.addHereticLog( _([[You found out that the organization you delivered an illegal package for is Nasin, a group of followers of Sirichana who the Sirii brand as "heretics". You then delivered a message for Nasin to their base in The Wringer. You were then invited to meet the Nasin officials at the bar on The Wringer.]]) )
       misn.finish(true)

@@ -4,6 +4,7 @@
  <duration>1</duration>
  <overwrite>valkyrie_beam</overwrite>
  <icon>/gfx/misc/icons/viking-helmet.webp</icon>
+ <debuff/>
  <stats>
   <shield_regen_malus>80</shield_regen_malus>
  </stats>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gliese VI">
+ <pos x="-9213.398902" y="4483.443278"/>
+ <GFX>
+  <space>moon-A01.webp</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services/>
+ </general>
+</spob>

@@ -18,25 +18,25 @@ skills.set.bite = {
       icon = "food-chain.webp",
    },
    ["bite2"] = {
+      name = _("The Bite"),
+      tier = 2,
+      outfit = "The Bite",
+      slot = "the_bite",
+      requires = { "bite1" },
+      desc = function( p )
+         local dmg = 10*math.sqrt(p:mass())
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% accel and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
+      end,
+      icon = "fangs.webp",
+   },
+   ["bite3"] = {
       --name = _("Cannibalism II"),
       name = _("Cannibal II"),
-      tier = 2,
-      requires = { "bite1" },
+      tier = 3,
+      requires = { "bite2" },
       shipvar = "cannibal2",
       desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
       icon = "food-chain.webp",
-   },
-   ["bite3"] = {
-      name = _("The Bite"),
-      tier = 3,
-      outfit = "The Bite",
-      slot = "the_bite",
-      requires = { "bite2" },
-      desc = function( p )
-         local dmg = 10*math.sqrt(p:mass())
-         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% thrust and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
-      end,
-      icon = "fangs.webp",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
@@ -69,7 +69,7 @@ skills.set.move = {
       outfit = "Adrenal Gland I",
       desc = _("The ship is able to generate an overflow of adrenaline from energy, allowing for accelerated motion for a short time."),
       test = function( p )
-         for k,o in ipairs(p:outfits()) do
+         for k,o in ipairs(p:outfitsList()) do
             if o:typeBroad()=="Afterburner" then
                --if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
                luatk.msg(_("Afterburner"),_("Your ship already has an afterburner equipped! Please remove to be able to learn this skill."))
@@ -94,7 +94,7 @@ skills.set.move = {
       name = _("Wanderer"),
       tier = 3,
       requires = { "move2" },
-      desc = _("Gives a 50% thrust bonus."),
+      desc = _("Gives a 50% accel bonus."),
       outfit = "Wanderer",
       icon = "manta-ray.webp",
    },
@@ -186,9 +186,9 @@ skills.set.health = {
       name = _("Reflective Shell"),
       tier = 5,
       requires = { "health4" },
-      desc = _("TODO damage reflection?"),
+      desc = _("Reflects 5% of damage back to attackers. Reflected damage is affected by turret damage bonus."),
+      outfit = "Reflective Shell",
       icon = "spiked-shell.webp",
-      -- TODO
    },
 }
 
@@ -218,7 +218,7 @@ skills.set.attack = {
       requires = { "attack2" },
       slot = "feral_rage",
       outfit = "Feral Rage II",
-      desc = _("The damage bonus is increased to 25% and the ship gains 25% speed and thrust bonuses, and a 15% turning bonus."),
+      desc = _("The damage bonus is increased to 25% and the ship gains 25% speed and accel bonuses, and a 15% turning bonus."),
       icon = "oni.webp",
    },
    ["attack4"] = {
@@ -248,7 +248,7 @@ skills.set.plasma = {
       name = _("Corrosion I"),
       tier = 1,
       outfit = "Corrosion I",
-      desc = _("Plasma burn duration increased by 50%."),
+      desc = _("Plasma burn duration increased by 50%. Bonus is halved for non-organ weapons."),
       icon = "acid-blob.webp",
    },
    ["plasma2"] = {
@@ -256,7 +256,7 @@ skills.set.plasma = {
       tier = 2,
       outfit = "Paralyzing Plasma",
       requires = { "plasma1" },
-      desc = _("Plasma burn slows enemy speed, thrust, and turn by 25%."),
+      desc = _("Plasma burn slows enemy speed, accel, and turn by 25%."),
       icon = "chemical-bolt.webp",
    },
    ["plasma3"] = {
@@ -272,16 +272,17 @@ skills.set.plasma = {
       tier = 4,
       outfit = "Corrosion II",
       requires = { "plasma3" },
-      desc = _("Plasma burn duration further increased by 50%."),
+      desc = _("Plasma burn duration further increased by 50%. Bonus is halved for non-organ weapons."),
       icon = "acid-blob.webp",
    },
    ["plasma5"] = {
       name = _("Plasma Burst"),
       tier = 5,
       requires = { "plasma4" },
-      desc = _("creates an explosion of plasma affecting all ships around the pilot"),
-      -- TODO
+      desc = _("Creates an explosion of plasma affecting all ships around the pilot. Deals 100 damage with 50% penetration to all hostiles ships within 200 range. Deals an additional 200 damage over 10 seconds while lowering speed, accel, and turn by 25% and fire rate by 20%."),
+      outfit = "Plasma Burst",
       icon = "goo-skull.webp",
+      slot = "plasma_burst",
    },
 }
 

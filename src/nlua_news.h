@@ -3,10 +3,9 @@
  */
 #pragma once
 
-#include "news.h"
 #include "nlua.h"
 
-#define NEWS_METATABLE   "news" /**< System metatable identifier. */
+#define NEWS_METATABLE "news" /**< System metatable identifier. */
 
 /**
  * @brief Lua news Wrapper.

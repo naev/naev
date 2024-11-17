@@ -17,10 +17,9 @@
 --]]
 local fleet = require "fleet"
 local fmt = require "format"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 
--- luacheck: globals enter land leave pay_text success_text (shared with derived missions flf_dvk01, flf_dvk04)
--- luacheck: globals pilot_attacked_dv pilot_death_dv rm_attention timer_mission_success timer_spawn_dv update_dv (Hook functions passed by name)
+-- luacheck: globals success_text pay_text (inherited by missions that require this one, TODO get rid of this hack)
 
 success_text = {
    _("You receive a transmission from an FLF officer saying that the operation was completed, and you can now return to the base."),
@@ -49,15 +48,16 @@ function create ()
    if num_empire == nil then num_empire = 0 end
    if num_flf == nil then num_flf = 0 end
    mem.dv_attention_target = num_dvaereds / 50
-   mem.credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( mem.missys, true ) / 3
-   mem.credits = mem.credits + rnd.sigma() * 10e3
+   mem.credits = 200 * (num_dvaereds + num_empire - num_flf)
+   mem.credits = mem.credits * (system.cur():jumpDist( mem.missys, true )+1) / 3
+   mem.credits = mem.credits * (1 + 0.2*rnd.sigma())
    mem.reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
    if mem.credits < 10e3 then misn.finish( false ) end
 
    -- Set mission details
    misn.setTitle( fmt.f( _("FLF: Diversion in {sys}"), {sys=mem.missys} ) )
    misn.setDesc( fmt.f( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
@@ -186,7 +186,7 @@ function land ()
    if spob.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
-      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("FLF"):hit( mem.reputation )
       misn.finish( true )
    end
 end

@@ -6,7 +6,7 @@
   <license>Medium Weapon</license>
   <mass>18</mass>
   <price>40000</price>
-  <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defence capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to courier vessels.</description>
+  <description>A pair of modified laser cannon MK1s mounted on a rotating turret, providing excellent defensive capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to courier vessels. They are highly valued among civilian ships to provide defenses against stray pirates and marauders.</description>
   <gfx_store>laserturret.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
@@ -16,7 +16,7 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>0.8</delay>
-  <speed>1050</speed>
+  <speed>1100</speed>
   <range>900</range>
   <falloff>750</falloff>
   <energy>8</energy>
@@ -24,9 +24,9 @@
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
   <damage>
-   <type>normal</type>
-   <penetrate>6</penetrate>
-   <physical>17</physical>
+   <type>energy</type>
+   <penetrate>10</penetrate>
+   <physical>20</physical>
   </damage>
  </specific>
 </outfit>

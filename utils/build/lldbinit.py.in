@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+import lldb
+
+def enable_leak_sanitizer(debugger, command, result, internal_dict):
+    debugger.HandleCommand("process detach")
+    debugger.HandleCommand("quit")
+
+def __lldb_init_module(debugger, internal_dict):
+    # Set the terminal width to the maximum allowed value (1024)
+    debugger.HandleCommand("settings set term-width 1024")
+
+    # Handle signals
+    debugger.HandleCommand("process handle -p true -s false SIGTERM")
+    debugger.HandleCommand("process handle -p true -s false SIGPIPE")
+    debugger.HandleCommand("process handle -p true -s false SIGINT")
+
+    # Set the breakpoint and add commands
+    debugger.HandleCommand('breakpoint set --name debug_enableLeakSanitizer')
+    debugger.HandleCommand('breakpoint command add -s python -o "enable_leak_sanitizer(lldb.debugger, None, None, None)" 1')
+
+    # Print a message indicating the script is running
+    print(".lldbinit: running naev with lldb wrapper")
+
+# Source the Lua LLDB helpers script
+helpers_script_path = "@source_root@/utils/build/lua_lldb_helpers.py"
+lldb.debugger.HandleCommand(f'command script import {helpers_script_path}')
+
+# Run the program
+lldb.debugger.HandleCommand("run")

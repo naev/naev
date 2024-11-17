@@ -39,8 +39,14 @@ function flip.vn( params )
    s._keypressed = function( _self, key )
       return score.keypressed( key )
    end
+   s._mousemoved = function( _self, mx, my )
+      return score.mousemoved( mx, my )
+   end
    s._mousepressed = function( _self, mx, my, button )
       return score.mousepressed( mx, my, button )
+   end
+   s._mousereleased = function( _self, mx, my )
+      return score.mousereleased( mx, my )
    end
    s._update = function( self, dt )
       if score.update( dt ) then

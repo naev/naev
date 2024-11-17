@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Virtuosity">
+ <lua>thurion.lua</lua>
  <points>60</points>
  <base_type>Virtuosity</base_type>
- <GFX size="70">virtuosity</GFX>
+ <gfx size="70">virtuosity</gfx>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1250000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-15" y="5" h="0" />
- <trail_generator x="-15" y="-5" h="0" />
+ <trail_generator x="-15" y="5" h="0">thurion</trail_generator>
+ <trail_generator x="-15" y="-5" h="0">thurion</trail_generator>
  <trail_generator x="-13" y="-25" h="-5">nebula</trail_generator>
  <trail_generator x="-11" y="-11" h="8">nebula</trail_generator>
  <trail_generator x="-13" y="25" h="-5">nebula</trail_generator>
  <trail_generator x="-11" y="11" h="8">nebula</trail_generator>
- <fabricator>Thurion shipyards</fabricator>
- <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt;= 40</cond>
- <condstr>You need at least 40 reputation with the Thurion.</condstr>
+ <fabricator>Thurion Shipyards</fabricator>
+ <faction>Thurion</faction>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 40</cond>
+ <condstr>You need at least 40% reputation with the Thurion.</condstr>
  <description>The Thurion Virtuosity is a medium-sized ship used by the Thurion for frontal assaults. While weapon space is less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for it.</description>
  <health>
   <armour>300</armour>
@@ -26,7 +26,7 @@
  </health>
  <characteristics>
   <crew>9</crew>
-  <mass>130</mass>
+  <mass>140</mass>
   <fuel>600</fuel>
   <fuel_consumption>200</fuel_consumption>
   <cargo>25</cargo>
@@ -40,16 +40,19 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>
  <stats>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
+  <launch_calibration>-50</launch_calibration>
+  <launch_lockon>-25</launch_lockon>
  </stats>
 </ship>

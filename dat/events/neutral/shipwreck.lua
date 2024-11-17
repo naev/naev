@@ -23,13 +23,12 @@ local fmt = require "format"
 
 local shipname = _("August")
 local bctimer, derelict, timer_delay -- Non-persistent state
--- luacheck: globals broadcast destroyevent endevent rescue (Hook functions passed by name)
 
 function create ()
    local cursys = system.cur()
 
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( cursys, true ) then evt.finish() end
+   if not naev.claimTest( cursys ) then evt.finish() end
 
    -- Don't do volatile systems
    local _nebu_dens, nebu_vol = cursys:nebula()
@@ -58,7 +57,7 @@ function create ()
    -- Create the derelict.
    local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.angle() )
    derelict    = pilot.add( dship, "Derelict", pos, fmt.f(_("Shipwrecked {plt}"), {plt=shipname}), {ai="dummy"} )
-   derelict:disable()
+   derelict:setDisable()
    -- Added extra visibility for big systems (A.)
    derelict:setVisplayer( true )
    derelict:setHilight( true )

@@ -26,17 +26,18 @@
    3) Taking off from Laars
    4) Land on Laars and get rewarded
 --]]
+-- luacheck: globals toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5
 
 local fw = require "common.frontier_war"
+local dv = require "common.dvaered"
 require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
+local cinema = require "cinema"
+local ai_setup = require "ai.core.setup"
 
 local alpha, attackers, canland, controls, hamelsen, jules, spy, targpos, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
--- luacheck: globals beepMe checkClearance1 checkClearance2 checkClearance3 checkClearance4 checkClearance5 checkHamelsen deathOfStrafer flee hamelsenLanded imDoingNothing incomingHamelsen killerDied land loading message spawnControl spawnHam spawnKillers spawnWrlrd straferDied takeoff warlordTaunt (Hook functions passed by name)
--- luacheck: globals incomingControl1 incomingControl2 incomingControl3 incomingControl4 incomingControl5 toocloseControl1 toocloseControl2 toocloseControl3 toocloseControl4 toocloseControl5 (Dynamic proximity hooks)
--- luacheck: globals discussOff discussStr (NPC functions passed by name)
 
 message = fw.message -- common hooks
 
@@ -49,7 +50,7 @@ local haltpla = spob.get("Laarss")
 local lore_text = {}
 
 lore_text[1] = _([["Both squadrons of the DHC station's space security force will be deployed with a full range ships from Vendettas to Goddards. Those squadrons are the 'Beta-Storks' and the 'Beta-Hammer' and their mission will be to control medium and heavy ships and to provide heavy firepower in case of need. Our squadron, named 'Alpha-NightClaws', is in charge of fast ships (Yachts and Fighters). We will be flying Hyenas.
-   "The plan is the following: any ship approaching the station will be assigned to a squad by the fleet leader, and then to a pilot by the squad leader (Captain Leblanc). When a ship is assigned to you, you will have to approach the ship within 1000m. Their security clearance code will be automatically requested and processed by the system we'll install in your core unit. Afterwards, the ship will be allowed to land, or ordered to fly away. The same thing happens for ships that leave the station.
+   "The plan is the following: any ship approaching the station will be assigned to a squad by the fleet leader, and then to a pilot by the squad leader (Captain Leblanc). When a ship is assigned to you, you will have to approach the ship within 1000 km. Their security clearance code will be automatically requested and processed by the system we'll install in your core unit. Afterwards, the ship will be allowed to land, or ordered to fly away. The same thing happens for ships that leave the station.
    "Finally, in case something unexpected happens, you will, of course, have to obey orders. Watch your messages closely. A few pilots will be kept in reserve close to the station.
    "Oh, and there is another thing I must warn you about: it's the warlord's odd sense of humour. When they see a small ship close to their Goddard, they may get the idea to shoot a small railgun-volley in your direction. Some of them tend to enjoy seeing pilots fend for their lives. Dvaered law allows warlords to do so provided they can assure the High Command that there was no hostile intention. That can be a bit annoying, sometimes."]])
 
@@ -101,10 +102,10 @@ function accept()
    if not tk.yesno( _("We need you once more"), _([[As you sit at his table, the clearly anxious Dvaered pilot stops biting his nails and explains why he is here.
    "The High Command summoned, under request of General Klank, a special meeting of the high council of Warlords, and all of them have agreed to come..." You frown, and before you have a chance to ask why that's a problem, he continues: "... but we received an intelligence report according to which the ex-Colonel Hamelsen, who has already tried to murder Major Tam several times, is going to take advantage of this meeting to take action against us."
    "Do you want to help us against this threat?"]]) ) then
-      tk.msg(_("Too bad"), _([[Mm. I see. you probably have much more interesting things to do than being loyal to the Dvaered Nation...]]))
+      tk.msg(_("Too bad"), _([[Mm. I see. You probably have much more interesting things to do than being loyal to the Dvaered Nation...]]))
       return
    end
-   tk.msg(_("Here is the situation"), _([["General Klank has summoned the Warlords in order to present them with the Frontier invasion plan. When a meeting of the high council of Warlords occurs, a short truce takes place and they all come to the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try to either assassinate warlords, or record our invasion plan in order to sell it to hostile foreign powers.
+   tk.msg(_("Here is the situation"), _([["General Klank has summoned the Warlords in order to present them with the Frontier invasion plan. When a meeting of the high council of Warlords occurs, a short truce takes place, and they all come to the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try to either assassinate warlords, or record our invasion plan in order to sell it to hostile foreign powers.
    "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]]))
 
    misn.accept()
@@ -137,7 +138,7 @@ function land()
       } )
 
    -- Player is running away
-   elseif (mem.stage == 1 or mem.stage == 3 or (mem.stage == 2 and (not spob.cur() == haltpla) )) then
+   elseif (mem.stage == 1 or mem.stage == 3 or (mem.stage == 2 and (spob.cur() ~= haltpla) )) then
       flee()
 
    -- Landing on Laars after Hamelsen
@@ -150,7 +151,7 @@ function land()
       tk.msg( _("Time for a gorgeous reward?"), _([[When you step out of your ship, you see an officer alone on the dock, obviously waiting for you. As you get closer, you recognize Major Tam. The cold wind pulls the lapels of his coat, and make them whip his sad face.
    "We had better days, eh, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots, and Hamelsen escaped... Once more." Tam looks at the sky as it starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice as hard in winter, and the rain often turns to acid."
    You enter and head to the military bar. Tam looks at you: "I grew up on Nanek in Allous. For 13 years, the only part of the universe I knew was my village on Nanek, and the only people I knew were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point. Now they are corpses, drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is filled with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/" .. fw.portrait_tam) )
-      tk.msg( _("Time for a gorgeous reward?"), fmt.f(_([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel winds of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
+      tk.msg( _("Time for a gorgeous reward?"), fmt.f(_([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valour of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel winds of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
    "I did not anticipate that the traitor Hamelsen could reassemble her group of mercenaries so fast, but you already killed some of them, and Leblanc's squadron will kill even more in the near future. We will then hunt ex-Colonel Hamelsen down, and finally we will continue the invasion.
    "Anyway, for now, we will transfer {credits} to your account, as a reward for this mission, and be certain that we will need you again soon!"]]), {credits=fmt.credits(mem.reward)}), ("portraits/" .. fw.portrait_tam) )
       player.pay(mem.reward)
@@ -219,7 +220,7 @@ end
 
 -- Player discusses with Lieutenant Strafer
 function discussStr()
-   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask to the lieutenant before taking off?"), _("Ask for a briefing"), _("Ask about Colonel Hamelsen"), _("Ask why you were hired for this mission"), _("Ask how one becomes a warlord"), _("I am ready for action!") )
+   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask the lieutenant before taking off?"), _("Ask for a briefing"), _("Ask about Colonel Hamelsen"), _("Ask why you were hired for this mission"), _("Ask how one becomes a warlord"), _("I am ready for action!") )
    if c <= 4 then
       if toldya[c] >= 3 then -- Strafer gets annoyed if one asks several times the same question
          tk.msg( _("Lieutenant Strafer"), _("Is this some kind of joke?") )
@@ -294,7 +295,7 @@ function scheduleIncoming()
 
    -- Then annoying people the player has to control
    controls = { nil, nil, nil, nil, nil }
-   canland = { false, false, false, false, false } -- Marks wether the ship has been controlled by the player
+   canland = { false, false, false, false, false } -- Marks whether the ship has been controlled by the player
    mem.noCtrl = 1
    spawnControl()
    hook.timer( 40.0, "spawnControl" )
@@ -332,7 +333,8 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, fw.lords[mem.noWrlrd] )
+   local lords = dv.warlords()
+   wrlrds[mem.noWrlrd] = pilot.add( "Dvaered Goddard", fw.fct_warlords(), origin, lords[mem.noWrlrd] )
    wrlrds[mem.noWrlrd]:control()
 
    -- Decide if the Warlord will play at shooting at the player
@@ -365,7 +367,7 @@ function spawnControl()
    controls[mem.noCtrl]:land(targpla)
 
    hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- First one for detection
-   hook.timer(0.5, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- Second one for loosing
+   hook.timer(0.5, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(mem.noCtrl)), focus = controls[mem.noCtrl]}) -- Second one for losing
 
    mem.noCtrl = mem.noCtrl + 1
 end
@@ -410,29 +412,29 @@ local function incomingControl( self )
 end
 function incomingControl1()
    incomingControl( controls[1] )
-   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = ("checkClearance1")}) -- Just because I cannot pass an argument to proximity hooks :(
+   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = "checkClearance1"}) -- Just because I cannot pass an argument to proximity hooks :(
 end
 function incomingControl2()
    incomingControl( controls[2] )
-   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = ("checkClearance2")})
+   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = "checkClearance2"})
 end
 function incomingControl3()
    incomingControl( controls[3] )
-   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = ("checkClearance3")})
+   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = "checkClearance3"})
 end
 function incomingControl4()
    incomingControl( controls[4] )
-   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = ("checkClearance4")})
+   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = "checkClearance4"})
 end
 function incomingControl5()
    incomingControl( controls[5] )
-   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = ("checkClearance5")})
+   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = "checkClearance5"})
 end
 
 -- Player checks security clearance of a ship
 local function checkClearance( self )
    mem.myjob = occupations[ rnd.rnd(1,#occupations) ]
-   tk.msg( _("Controlling incoming ship"), fmt.f(_([[As you approach the ship, your targeting array focuses on it and processes its clearance code. You read on your control pad: "This citizen is an honorable {job} whose presence is required for the meeting: let the ship land on the station."]]), {job=mem.myjob}) )
+   tk.msg( _("Controlling incoming ship"), fmt.f(_([[As you approach the ship, your targeting array focuses on it and processes its clearance code. You read on your control pad: "This citizen is an honourable {job} whose presence is required for the meeting: let the ship land on the station."]]), {job=mem.myjob}) )
    self:setHilight( false )
 
    -- Change osd if needed
@@ -465,16 +467,16 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
+   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo"), nil, {naked=true} )
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
 
    hook.pilot( hamelsen, "land", "hamelsenLanded" )
-   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = "incomingHamelsen", focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
+   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo"), nil, {naked=true} )
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )
@@ -482,8 +484,7 @@ end
 
 -- Equips a quick and strong Hyena
 function equipHyena( p )
-   p:outfitRm("cores")
-   p:outfitRm("all")
+   -- TODO switch to equipopt
    p:outfitAdd("Tricon Zephyr Engine")
    p:outfitAdd("Milspec Orion 2301 Core System")
    p:outfitAdd("S&K Ultralight Combat Plating")
@@ -495,6 +496,8 @@ function equipHyena( p )
 
    -- Remove all cargo (to make them lighter)
    p:cargoRm( "all" )
+
+   ai_setup.setup(p)
 end
 
 function hamelsenLanded()
@@ -502,9 +505,9 @@ function hamelsenLanded()
       tk.msg( _("An unidentified ship landed on the station"), _("A ship managed to land on the station, and you failed to confirm it. Unidentified and potentially hostile individuals have entered the Dvaered High Command station: The mission is a failure.") )
       misn.finish(false)
    else -- Landing on Laarss: indicate the player he has to follow her
-      tk.msg( _("Hi there!"), fmt.f(_([[The fleeing ship suddenly hails you. You answer and the face of Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, {player}. Not this time. Not anymore." Aware that she is now too far away for you to catch her, you ask her why she constantly harasses Major Tam. "This is all that I have left," she answers.
+      tk.msg( _("Hi there!"), fmt.f(_([[The fleeing ship suddenly hails you. You answer and the face of Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, {player}. Not this time. Not any more." Aware that she is now too far away for you to catch her, you ask her why she constantly harasses Major Tam. "This is all that I have left," she answers.
    "My hate for Tam and Klank is all that remains now that my Lord is dead. I dedicated my entire life to the glory of House Dvaered, I practiced and honed my skills to serve the Army. When I was recruited by Lord Battleaddict, I became faithful to him because he gave me the opportunity to serve House Dvaered through him. And then...
-   "Since the day Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by the nation that claims to reward Valor and Righteousness. Tell me, when did I give up Valor?! Tell me, when did I give up Righteousness?! Never! The Dvaered social contract is broken as far as I am concerned.
+   "Since the day Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by the nation that claims to reward Valour and Righteousness. Tell me, when did I give up Valour?! Tell me, when did I give up Righteousness?! Never! The Dvaered social contract is broken as far as I am concerned.
    "All that remains of me is a vassal without a ruler, a colonel without a regiment, a corpse without a grave. I will haunt you until your demise. I will squash all your hopes and dreams, be they big or small. There will be no forgiveness, no respite, no relief, neither for you nor for me."
    After this very rousing speech, Hamelsen cuts off the communication channel and lands.]]), {player=player.name()}) )
       tk.msg( _("Follow her!"), fmt.f(_([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! {player}, go and investigate on {pnt}. Bring me the head of ex-Colonel Hamelsen!"]]), {player=player.name(), pnt=haltpla} ) )
@@ -519,13 +522,13 @@ function incomingHamelsen()
    alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and confirm their security clearance code"), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()
-   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
+   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = "checkHamelsen"})
    misn.osdActive(2)
 end
 
 -- Player checks security clearance of Hamelsen: let the fun begin
 function checkHamelsen()
-   tk.msg( _("Incoming ship refuses confirmation"), fmt.f(_([[As you come within range, an alarm goes off. This ship does not have an invitation. Suddenly, the pilot charges the the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {plt}".]]), {player=player.name(), plt=hamelsen} ) )
+   tk.msg( _("Incoming ship refuses confirmation"), fmt.f(_([[As you come within range, an alarm goes off. This ship does not have an invitation. Suddenly, the pilot charges the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {plt}".]]), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHostile()
    --hamelsen:rename( _("Suspect Hyena") )
 
@@ -562,12 +565,12 @@ function StraferNspy()
 
    -- First, teleport Strafer far away from any backup
    alpha[2]:rm()
-   alpha[2] = pilot.add( "Hyena", "DHC", strpos, _("Lieutenant Strafer") )
+   alpha[2] = pilot.add( "Hyena", fw.fct_dhc(), strpos, _("Lieutenant Strafer") )
    alpha[2]:setVisplayer()
    alpha[2]:control()
 
    -- Then put the fleeing spy
-   spy = pilot.add( "Schroedinger", "Warlords", spypos )
+   spy = pilot.add( "Schroedinger", fw.fct_warlords(), spypos )
    spy:setVisplayer()
    spy:control()
    spy:hyperspace( system.get("Gremlin") )
@@ -582,16 +585,15 @@ end
 
 -- Many enemies jump and kill Strafer
 function deathOfStrafer()
-   player.pilot():control()
-   player.pilot():brake()
-   player.cinematics( true, { gui = true } )
+   cinema.on{ gui=true }
    camera.set( alpha[2], false, 20000 )
 
    tk.msg( _("Something is happening at the station"), _([[You start to head to the station, but you hear a flurry of messages coming from the NightClaws squadron. A Schroedinger has managed to take off, unnoticed, from the High Command station, presumably carrying classified information. It managed to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]]) )
 
+   local fwarlords = fw.fct_warlords()
    attackers = {}
    for i = 1, 10 do
-      attackers[i] = pilot.add( "Hyena", "Warlords", system.get("Gremlin") )
+      attackers[i] = pilot.add( "Hyena", fwarlords, system.get("Gremlin") )
       attackers[i]:control()
       attackers[i]:attack( alpha[2] )
    end
@@ -601,9 +603,8 @@ end
 
 -- Strafer just died: now, there will be action for the player
 function straferDied()
+   cinema.off()
    camera.set( nil, true )
-   player.pilot():control( false )
-   player.cinematics( false )
    hook.timer( 1.0, "spawnKillers" )
 
    for i = 1, #attackers do
@@ -623,10 +624,11 @@ function spawnKillers()
    misn.osdDestroy()
    misn.osdCreate( _("The Meeting"), {_("Eliminate the hostile fighters")} )
 
+   local fwarlords = fw.fct_warlords()
    local killers = {}
-   killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
-   killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
-   killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[1] = pilot.add( "Hyena", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[2] = pilot.add( "Shark", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[3] = pilot.add( "Lancelot", fwarlords, haltpla, _("Curiatius"), {ai="baddie_norun"} )
 
    mem.deadkillers = 0
    for i = 1, #killers do

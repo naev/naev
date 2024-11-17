@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <location>land</location>
  <chance>100</chance>
- <cond>spob.cur()==spob.get("Minerva Station")</cond>
+ <spob>Minerva Station</spob>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
@@ -15,8 +15,8 @@
 --]]
 local fmt = require "format"
 local minerva = require 'common.minerva'
-local portrait = require "portrait"
 local vn = require 'vn'
+local vni = require 'vnimage'
 local blackjack = require 'minigames.blackjack'
 local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
@@ -24,8 +24,6 @@ local window = require 'love.window'
 --local love_shaders = require 'love_shaders'
 
 local npc_patrons -- Non-persistent state
--- luacheck: globals bargreeter leave molecaught start_alter1 start_alter2 start_spapropaganda (Hook functions passed by name)
--- luacheck: globals approach_blackjack approach_chuckaluck approach_maikki approach_patron approach_scavengers approach_terminal (NPC functions passed by name)
 
 -- NPC Stuff
 local gambling_priority = 3
@@ -34,13 +32,14 @@ local terminal = minerva.terminal
 local blackjack_portrait = "blackjack.png"
 local chuckaluck_portrait, chuckaluck_image
 if var.peek("minerva_chuckaluck_change") then
-   chuckaluck_portrait = portrait.get() -- Becomes a random NPC
-   chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
+   -- Becomes a random NPC
+   chuckaluck_image, chuckaluck_portrait = vni.generic()
 else
    chuckaluck_portrait = minerva.mole.portrait
    chuckaluck_image = minerva.mole.image
 end
-local greeter_portrait = portrait.get() -- TODO replace?
+local blackjack_image = vni.generic()
+local greeter_image = vni.generic() -- TODO replace?
 
 -- Special
 local spaticketcost = 100
@@ -62,12 +61,24 @@ local patron_messages = {
    _([["It's incredible! Who would have thought to make money physical! These Minerva Tokens defy all logic!"]]),
    function ()
       local soldoutmsg = ""
-      if player.numOutfit("Fuzzy Dice") > 0 then
-         soldoutmsg = _(" Wait, what? What do you mean they are sold out!?")
+      if player.outfitNum("Fuzzy Dice") > 0 then
+         soldoutmsg = _(" Wait, what? What do you mean the Fuzzy Dice are sold out!?")
       end
       return fmt.f(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!{msg}"]]), {msg=soldoutmsg} ) end,
-   _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
-   _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
+   function ()
+      if player.misnDone( "Minerva Pirates 6" ) then
+         return _([["They say the station always wins, but that doesn't stop us from trying!"]])
+      else
+         return _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]])
+      end
+   end,
+   function ()
+      if player.misnDone( "Minerva Pirates 6" ) then
+         return _([["I've seen folks come in with nothing and leave with a brand new Kestrel! Minerva station is a crazy place!"]])
+      else
+         return _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]])
+      end
+   end,
    function () return fmt.f(
       _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
       {pnt=spob.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
@@ -88,14 +99,25 @@ local patron_messages = {
 }
 
 function create()
+   local trial_start = player.misnDone( "Minerva Pirates 6" )
+   --local minerva_end = (diff.isApplied("minerva_3") or diff.isApplied("minerva_3d") or diff.isApplied("minerva_3z"))
+
+   -- Station is not "usable"
+   if diff.isApplied("minerva_1") or diff.isApplied("minerva_2") then
+      return
+   end
 
    -- Create NPCs
    mem.npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
-   mem.npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
+   if trial_start then
+      mem.npc_blackjack = evt.npcAdd( "approach_blackjack_nocc", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games."), gambling_priority )
+   else
+      mem.npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
+   end
    mem.npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", _("Chuck-a-luck"), chuckaluck_portrait, _("A fast-paced luck-based betting game using dice."), gambling_priority )
 
    -- Some conditional NPCs
-   if player.misnDone("Maikki's Father 2") then
+   if player.misnDone("Maikki's Father 2") and not trial_start then
       local desclist = {
          _("You see Maikki enjoying a parfait."),
          _("You see Maikki talking on a transponder."),
@@ -111,16 +133,24 @@ function create()
    local msglist = rnd.permutation( patron_messages ) -- avoids duplicates
    for i = 1,npatrons do
       local name = patron_names[ rnd.rnd(1, #patron_names) ]
-      local img = portrait.get()
+      local img
+      if diff.isApplied("minerva_3z") and rnd.rnd() < 0.5 then
+         img = vni.zalek()
+      elseif diff.isApplied("minerva_3d") and rnd.rnd() < 0.5 then
+         img = vni.dvaered()
+      end
+      if not img then
+         img = vni.generic()
+      end
       local desc = patron_descriptions[ rnd.rnd(1, #patron_descriptions) ]
       local msg = msglist[i]
       local id = evt.npcAdd( "approach_patron", name, img, desc, 10 )
-      local npcdata = { name=name, image=portrait.getFullPath(img), message=msg }
+      local npcdata = { name=name, image=img, message=msg }
       npc_patrons[id] = npcdata
    end
 
    -- If scavengers are not dead, they sometimes appear
-   if var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
+   if (not trial_start or player.misnDone("Minerva Judgement")) and var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
       evt.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
    end
 
@@ -141,6 +171,9 @@ end
 -- bar. This is triggered randomly upon finishing gambling activities.
 --]]
 local function random_event()
+   -- No events after the trial
+   local trial_start = player.misnDone( "Minerva Pirates 6" )
+   if trial_start then return end
    -- Conditional helpers
    local alter1 = has_event("Minerva Station Altercation 1")
    local alter_helped = (var.peek("minerva_altercation_helped")~=nil)
@@ -178,8 +211,7 @@ end
 function bargreeter()
    vn.clear()
    vn.scene()
-   local g = vn.newCharacter( _("Greeter"),
-         { image=portrait.getFullPath( greeter_portrait ) } )
+   local g = vn.newCharacter( _("Greeter"), {image=greeter_image} )
    vn.transition()
    vn.na( _([[As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.]]) )
    g:say( _([["Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!"]]) )
@@ -224,13 +256,19 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    vn.label( "more_info" )
    t:say( _([["WHAT ELSE WOULD YOU LIKE TO KNOW?"]]) )
    vn.label( "info_menu" )
-   vn.menu( {
-      {_("Station"), "info_station"},
-      {_("Gambling"), "info_gambling"},
-      {_("Trade-in"), "info_trade"},
-      {_("Cyborg Chicken"), "info_chicken"},
-      {_("Back"), "start"},
-   } )
+   vn.menu( function ()
+      local opts = {
+         {_("Station"), "info_station"},
+         {_("Gambling"), "info_gambling"},
+         {_("Trade-in"), "info_trade"},
+         {_("Back"), "start"},
+      }
+      local trial_start = player.misnDone( "Minerva Pirates 6" )
+      if not trial_start then
+         table.insert( opts, 4, {_("Cyborg Chicken"), "info_chicken"} )
+      end
+      return opts
+   end )
    vn.label( "info_station" )
    t:say( _([["MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF THE STATION."]]) )
    vn.jump( "more_info" )
@@ -241,7 +279,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    t:say( _([["IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 72, ALL TRADE-INS ARE NOT SUBJECT TO STANDARD IMPERIAL LICENSE RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva Station' ENGRAVED ON THEM."]]) )
    vn.jump( "more_info" )
    vn.label( "info_chicken" )
-   t:say( _([["CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NO WHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS."]]) )
+   t:say( _([["CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NOWHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS."]]) )
    vn.jump( "more_info" )
 
    vn.label( "trade_notenough" )
@@ -318,7 +356,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
       local opts = {}
       for k,v in ipairs(trades) do
          local tokens = v[2][1]
-         local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
+         local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.outfitNum(v[1])>0)
          if soldout then
             opts[k] = { fmt.f(_("{item} (#rSOLD OUT#0)"), {item=_(v[1])}), -1 }
          else
@@ -349,9 +387,8 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          minerva.tokens_pay( -ti[2][1] )
          if ti[2][2]=="outfit" then
             player.outfitAdd( ti[1] )
-            player.msg( _("Gambling Bounty"), fmt.reward(ti[1]))
          elseif ti[2][2]=="ship" then
-            player.addShip( ti[1] )
+            player.shipAdd( ti[1] )
          else
             error(_("unknown tradein type"))
          end
@@ -385,6 +422,58 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    random_event()
 end
 
+local function vn_blackjack( npc )
+   -- Resize the window
+   local lw, lh = window.getDesktopDimensions()
+   local textbox_h = vn.textbox_h
+   local textbox_x = vn.textbox_x
+   local textbox_y = vn.textbox_y
+   local dealer_x, dealer_newx
+   local blackjack_h = 500
+   local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
+   local blackjack_y = (lh-blackjack_h)/2
+   local setup_blackjack = function (alpha)
+      if dealer_x == nil then
+         dealer_x = npc.offset -- cc.offset is only set up when the they appear in the VN
+         dealer_newx = 0.2
+      end
+      vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
+      vn.textbox_x = textbox_x + (blackjack_x - textbox_x)*alpha
+      vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
+      vn.namebox_alpha = 1-alpha
+      npc.offset = dealer_x + (dealer_newx - dealer_x)*alpha
+   end
+   vn.animation( 0.5, function (alpha) setup_blackjack(alpha) end )
+   local bj = vn.custom()
+   bj._init = function( self )
+      -- TODO play some blackjack music
+      blackjack.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
+         self.done = true
+         -- TODO go back to normal music
+      end )
+   end
+   bj._draw = function( _self )
+      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
+      -- Horrible hack where we draw on top of the textbox a background
+      lg.setColour( 0.5, 0.5, 0.5 )
+      lg.rectangle( "fill", x, y, w, h )
+      lg.setColour( 0, 0, 0 )
+      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+
+      -- Draw blackjack game
+      blackjack.draw( x, y, w, h)
+   end
+   bj._keypressed = function( _self, key )
+      blackjack.keypressed( key )
+   end
+   bj._mousepressed = function( _self, mx, my, button )
+      blackjack.mousepressed( mx, my, button )
+   end
+   -- Undo the resize
+   vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
+   return bj
+end
+
 function approach_blackjack()
    local firsttime = not var.peek("cc_known")
    -- Not adding to queue first
@@ -403,7 +492,7 @@ function approach_blackjack()
       vn.transition()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
-   vn.na( "", true ) -- Clear buffer without waiting
+   vn.na( "", false, true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
@@ -416,54 +505,40 @@ function approach_blackjack()
    vn.na( _("Cyborg Chicken eyes flutter as it seems like consciousness returns to its body.") )
    vn.jump("menu")
    vn.label( "blackjack" )
-   -- Resize the window
-   local lw, lh = window.getDesktopDimensions()
-   local textbox_h = vn.textbox_h
-   local textbox_x = vn.textbox_x
-   local textbox_y = vn.textbox_y
-   local dealer_x, dealer_newx
-   local blackjack_h = 500
-   local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
-   local blackjack_y = (lh-blackjack_h)/2
-   local setup_blackjack = function (alpha)
-      if dealer_x == nil then
-         dealer_x = cc.offset -- cc.offset is only set up when the they appear in the VN
-         dealer_newx = 0.2
-      end
-      vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
-      vn.textbox_x = textbox_x + (blackjack_x - textbox_x)*alpha
-      vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
-      vn.namebox_alpha = 1-alpha
-      cc.offset = dealer_x + (dealer_newx - dealer_x)*alpha
-   end
-   vn.animation( 0.5, function (alpha) setup_blackjack(alpha) end )
-   local bj = vn.custom()
-   bj._init = function( self )
-      -- TODO play some blackjack music
-      blackjack.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
-         self.done = true
-         -- TODO go back to normal music
-      end )
-   end
-   bj._draw = function( _self )
-      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-      -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
-      lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
-      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+   vn_blackjack( cc )
+   vn.label( "leave" )
+   vn.na( _("You leave the blackjack table behind and head back to the main area.") )
+   vn.run()
 
-      -- Draw blackjack game
-      blackjack.draw( x, y, w, h)
-   end
-   bj._keypressed = function( _self, key )
-      blackjack.keypressed( key )
-   end
-   bj._mousepressed = function( _self, mx, my, button )
-      blackjack.mousepressed( mx, my, button )
-   end
-   -- Undo the resize
-   vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
+   -- Handle random bar events if necessary
+   random_event()
+end
+
+function approach_blackjack_nocc()
+   -- Not adding to queue first
+   vn.clear()
+   vn.scene()
+   local dealer = vn.newCharacter( _("Dealer"), {image=blackjack_image} )
+   vn.transition()
+   vn.na(_([[You approach the blackjack table that seems to have a new dealer.]]))
+   vn.label("menu")
+   vn.menu( {
+      { _("Play"), "blackjack" },
+      { _("Explanation"), "explanation" },
+      { _("Ask about Cyborg Chicken"), "cc" },
+      { _("Leave"), "leave" },
+   } )
+
+   vn.label( "explanation" )
+   dealer(_([["You've never played blackjack before? The objective of the card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King, which are all worth 10, and ace is worth either 1 or 11. The winner is whoever has a higher value without going over 21."]]))
+   vn.jump("menu")
+
+   vn.label( "cc" )
+   dealer(_([["Cyborg Chicken? Yeah, don't know what happened to it. I guess it must have broken down and is under repairs."]]))
+   vn.jump("menu")
+
+   vn.label( "blackjack" )
+   vn_blackjack( dealer )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
    vn.run()
@@ -479,7 +554,7 @@ function approach_chuckaluck ()
    local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
    vn.transition()
    vn.na(_("You approach the chuck-a-luck table."))
-   vn.na( "", true ) -- Clear buffer without waiting
+   vn.na( "", false, true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "chuckaluck" },
@@ -522,10 +597,10 @@ function approach_chuckaluck ()
    end
    cl._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-      -- Horrible hack where we draw ontop of the textbox a background
-      lg.setColor( 0.5, 0.5, 0.5 )
+      -- Horrible hack where we draw on top of the textbox a background
+      lg.setColour( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
-      lg.setColor( 0, 0, 0 )
+      lg.setColour( 0, 0, 0 )
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 
       -- Draw chuckaluck game
@@ -573,13 +648,13 @@ end
 function approach_scavengers ()
    vn.clear()
    vn.scene()
-   --[[local scavA =]] vn.newCharacter( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
-   local scavB = vn.newCharacter( minerva.scavengerb.name,
-         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
+   local scavA = vn.newCharacter( minerva.scavengera.name,
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="left" } )
+   --[[local scavB =]] vn.newCharacter( minerva.scavengerb.name,
+         { image=minerva.scavengerb.image, colour=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
-   -- TODO maybe more text?
-   scavB(_([["What are you looking at?"]]))
+   vn.na(_([[The scavengers fall silent as soon as they notice your presence.]]))
+   scavA(_([["What are you looking at?"]]))
    vn.done()
    vn.run()
 end
@@ -589,7 +664,7 @@ function approach_maikki ()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
    --local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
-   local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180. }
+   local kex = minerva.vn_kex{ pos=0, rotation=math.rad(30) }
    vn.music( minerva.loops.maikki )
    vn.transition("hexagon")
    vn.na(_("You find Maikki, who beams you a smile as you approach."))

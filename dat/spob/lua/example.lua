@@ -19,13 +19,13 @@ end
    overwritten).
 
       @luatreturn Texture A texture to be used as the planet image.
-      @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
+      @luatreturn[opt] number The value to use for the radius of the planet (for targeting, etc...)
 --]]
 function load ()
    if tex==nil then
       mem.tex = lg.newImage( "path/to/image.png" )
       mem.pos = mem.spob:pos()
-      mem.tw, mem.th = tex:getDimensions()
+      mem.tw, mem.th = tex:dim()
       mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
    end
    return mem.tex.tex, (mem.tw+mem.th)/4
@@ -46,7 +46,7 @@ end
       @luatreturn string Message to give the player regarding being able to land or not.
 --]]
 function can_land ()
-   return true, _("Go ahead.")
+   return true, _([["Go ahead."]])
 end
 
 --[[
@@ -81,4 +81,10 @@ end
    @brief Runs when hailed by the player.
 --]]
 function comm ()
+end
+
+--[[
+   @brief Run when receiving a distress signal from an attacker against a pilot.
+--]]
+function distress ( _p, _attacker )
 end

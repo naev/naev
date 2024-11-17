@@ -7,7 +7,7 @@
  <done>Diversion from Raelid</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 30</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 30</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>
@@ -20,10 +20,9 @@
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 
 local boss, pirates -- Non-persistent state
--- luacheck: globals enter land pilot_death_boss pilot_death_pirate pilot_hail_boss pilot_hail_pirate (Hook functions passed by name)
 
 -- TODO this mission needs to be adapted to the new pirate clan stuff
 -- for now I just swapped "Pirate" for "Dreamer Clan"
@@ -81,7 +80,7 @@ function accept ()
       mem.credits = 300e3
       mem.reputation = 1
       mem.pir_reputation = 10
-      mem.pir_starting_reputation = faction.get("Dreamer Clan"):playerStanding()
+      mem.pir_starting_reputation = faction.get("Dreamer Clan"):reputationGlobal()
 
       hook.enter( "enter" )
    else
@@ -105,9 +104,9 @@ function pilot_hail_boss ()
    if mem.stage <= 1 then
       if mem.boss_impressed then
          mem.stage = 2
-         local standing = faction.get("Dreamer Clan"):playerStanding()
+         local standing = faction.get("Dreamer Clan"):reputationGlobal()
          if standing < 25 then
-            faction.get("Dreamer Clan"):setPlayerStanding( 25 )
+            faction.get("Dreamer Clan"):setReputationGlobal( 25 )
          end
 
          if boss ~= nil then
@@ -243,8 +242,8 @@ function land ()
       diff.apply( "flf_pirate_ally" )
       player.pay( mem.credits )
       flf.setReputation( 50 )
-      faction.get("FLF"):modPlayer( mem.reputation )
-      faction.get("Dreamer Clan"):modPlayerSingle( mem.pir_reputation )
+      faction.get("FLF"):hit( mem.reputation )
+      faction.get("Dreamer Clan"):hit( mem.pir_reputation )
       flf.addLog( _([[You helped the Pirates to build a new base in the Anger system and established a trade alliance between the FLF and the Pirates. Benito suggested that you should buy a Skull and Bones ship from the pirates and destroy Dvaered ships in areas where pirates are to keep your reputation with the pirates up. She also suggested you may want to upgrade your ship now that you have access to the black market.]]) )
       misn.finish( true )
    end
@@ -252,7 +251,7 @@ end
 
 
 function abort ()
-   faction.get("Dreamer Clan"):setPlayerStanding( mem.pir_starting_reputation )
+   faction.get("Dreamer Clan"):setReputationGlobal( mem.pir_starting_reputation )
    local hj1, hj2 = jump.get( "Tormulex", "Anger" )
    hj1:setKnown( false )
    hj2:setKnown( false )

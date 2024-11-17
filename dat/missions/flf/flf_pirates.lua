@@ -11,13 +11,12 @@
 </mission>
 --]]
 --[[
-
    FLF pirate elimination mission.
-
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
+local vn = require "vn"
 
 -- luacheck: globals enter land_flf leave misn_title pay_text setDescription (shared with derived mission flf_dvk05)
 -- luacheck: globals pilot_death_pirate timer_lateFLF (Hook functions passed by name)
@@ -121,7 +120,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
    misn.setDesc( desc )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
@@ -208,9 +207,17 @@ function land_flf ()
    leave()
    mem.last_system = spob.cur()
    if spob.cur():faction() == faction.get("FLF") then
-      tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
-      player.pay( mem.credits )
-      faction.get("FLF"):modPlayerSingle( mem.reputation )
+
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na( pay_text[ rnd.rnd(1,#pay_text) ] )
+      vn.sfxMoney()
+      vn.func( function ()
+         player.pay( mem.credits )
+         faction.get("FLF"):hit( mem.reputation )
+      end )
+
       misn.finish( true )
    end
 end
@@ -250,9 +257,9 @@ end
 -- Spawn n FLF ships at/from the location param.
 function patrol_spawnFLF( n, param, comm )
    if rnd.rnd() < 0.05 then n = n - 1 end
-   local lancelots = rnd.rnd( n )
-   fleetFLF = fleet.add( lancelots, "Lancelot", "FLF", param, nil, {ai="escort_player"} )
-   local vendetta_fleet = fleet.add( n - lancelots, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
+   local tristans = rnd.rnd( n )
+   fleetFLF = fleet.add( tristans, "Tristan", "FLF", param, nil, {ai="escort_player"} )
+   local vendetta_fleet = fleet.add( n - tristans, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
    for i, j in ipairs( vendetta_fleet ) do
       fleetFLF[ #fleetFLF + 1 ] = j
    end

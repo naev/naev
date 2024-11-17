@@ -7,7 +7,16 @@
  <chance>30</chance>
  <location>Bar</location>
  <faction>Empire</faction>
- <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
+ <cond>
+   if system.get("Gamma Polaris"):jumpDist() &gt; 3 then
+      return false
+   end
+   local t = spob.cur():tags()
+   if t.station then
+      return false
+   end
+   return true
+ </cond>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>
@@ -29,7 +38,6 @@ local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
--- luacheck: globals land (Hook functions passed by name)
 
 -- Mission constants
 local credits = nebu_research.rewards.credits02
@@ -59,34 +67,28 @@ function accept()
         { _("Accept"), "accept" },
         { _("Decline"), "decline" },
     } )
+
     vn.label( "decline" )
     vn.na(_("You don't want to be involved again in a dangerous, poorly paid job so you decline and leave the bar."))
     vn.done()
+
     vn.label( "accept" )
     vn.func( function () accepted = true end )
-    vn.run()
-
-    if not accepted then
-        return
-    end
-
-    vn.clear()
-    vn.scene()
-    mensing = vn.newCharacter( nebu_research.vn_mensing() )
     mensing(_([["Splendid! I'd like to start with my work as soon as possible.
 But before I forget, there's some issue..."]]))
     mensing(_([["You see, I'm not allowed to leave officially. Therefore I'd rather let them think that I was kidnapped. I'm sure it'll be fine! But don't let an Empire ship scan your ship! I don't know how they would react finding me onboard of your ship. Try to be stealthy and once we're in Za'lek territory there will be no problem."]]))
     vn.menu( {
-        { fmt.f(_("Take her to {sys}"), {sys=homeworld_sys}), "accept" },
-        { _("Leave her"), "decline" },
+        { fmt.f(_("Take her to {sys}"), {sys=homeworld_sys}), "accept2" },
+        { _("Leave her"), "decline2" },
     } )
-    vn.label( "decline" )
+    vn.label( "decline2" )
     vn.func( function () accepted = false end )
     vn.na(_("That sounds too risky for you. You'll probably end up dead or in prison."))
     vn.done()
-    vn.label( "accept" )
+    vn.label( "accept2" )
     vn.func( function () accepted = true end )
     vn.run()
+
     if not accepted then
         misn.finish()
         return
@@ -94,11 +96,11 @@ But before I forget, there's some issue..."]]))
 
     -- Set up mission information
     misn.setTitle(_("Emergency of Immediate Inspiration"))
-    misn.setReward(fmt.credits(credits))
+    misn.setReward(credits)
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
     mem.misn_marker = misn.markerAdd(homeworld, "low")
 
-    local c = commodity.new( N_("Dr. Mensing"), fmt.f(N_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!"), {sys=homeworld_sys}) )
+    local c = commodity.new( N_("Dr. Mensing"), N_("You need to bring Dr. Mensing to her destination but the Empire will assume you have kidnapped her if they scan you!") )
     c:illegalto( {"Empire"} )
     mem.carg_id = misn.cargoAdd( c, 0 )
 
@@ -123,7 +125,6 @@ function land()
         vn.done()
         vn.run()
         player.pay(credits)
-        misn.markerRm(mem.misn_marker)
         nebu_research.log(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end

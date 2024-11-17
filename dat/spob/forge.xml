@@ -5,12 +5,6 @@
   <space>A04.webp</space>
   <exterior>lava.webp</exterior>
  </GFX>
- <presence>
-  <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
-  <range>2</range>
- </presence>
  <general>
   <class>A</class>
   <population>0</population>

@@ -33,11 +33,7 @@ function ontoggle( _p, po, on )
       mem.forced_on = true
    else
       po:state( "off" )
-      if not mem.forced_on then
-         mem.forced_off = true
-      else
-         mem.forced_off = true
-      end
+      mem.forced_off = true
       mem.forced_on = false
    end
    return true

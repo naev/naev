@@ -5,6 +5,12 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
+ <cond>
+   if system.cur():reputation("Dvaered") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <done>Dvaered Census 0</done>
  <notes>
   <campaign>Dvaered Recruitment</campaign>
@@ -27,7 +33,6 @@ local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 local vntk   = require 'vntk'
 
--- luacheck: globals enter land testInRange (Hook functions passed by name)
 
 local detected
 
@@ -39,7 +44,7 @@ function create ()
 
    -- Mission details
    misn.setTitle(fmt.f(dv.prefix.._("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered ships"), {sys=mem.sys, nb=mem.nbships}))
    mem.misn_marker = misn.markerAdd( mem.sys )
 end
@@ -47,7 +52,7 @@ end
 function accept()
    misn.accept()
    mem.misn_state = 0
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, "Dvaered", "Dvaered" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, _("Dvaered"), _("Dvaered") )
    hook.enter("enter")
    hook.land("land")
 end
@@ -67,7 +72,8 @@ end
 function land()
    --Pay the player
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
-      vntk.msg( _("Reward"), _("You land and transmit a datapad to the local Dvaered liaison officer.") )
+      vntk.msg( _("Mission Complete"), fmt.f(_([[You land and transmit a datapad to the local Dvaered liaison officer.
+{reward}]]),{reward=fmt.reward(mem.credits)}) )
       player.pay( mem.credits )
 
       -- Manage counting of missions
@@ -78,7 +84,7 @@ function land()
          var.push("dc_misn", 1)
       end
 
-      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
+      faction.hit("Dvaered", rnd.rnd(2, 3))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
@@ -95,9 +101,10 @@ function testInRange()
    if mem.nbships <= #detected then
       misn.osdActive(2)
       mem.misn_state = 1
+      misn.markerRm( mem.misn_marker )
       player.msg( _("You have acquired data on enough Dvaered ships") )
       return
    end
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, "Dvaered", "Dvaered" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, _("Dvaered"), _("Dvaered") )
    hook.timer(1, "testInRange") -- Recursivity 1 s
 end

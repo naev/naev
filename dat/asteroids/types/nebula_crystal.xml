@@ -20,11 +20,11 @@
  <absorb>90</absorb>
  <commodity>
   <name>Silicate</name>
-  <quantity>5</quantity>
+  <quantity>30</quantity>
  </commodity>
  <commodity>
   <name>Nebula Crystals</name>
-  <quantity>3</quantity>
+  <quantity>30</quantity>
   <rarity>2</rarity>
  </commodity>
 </asteroid>

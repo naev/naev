@@ -3,8 +3,13 @@
 <mission name="Empire Shipping 3">
  <unique />
  <priority>2</priority>
- <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
- <chance>50</chance>
+ <cond>
+   if system.cur():reputation("Empire") &lt; 0 or faction.reputationGlobal("Empire") &lt; 0 or faction.reputationGlobal("Dvaered") &lt; 0 or faction.reputationGlobal("FLF") &gt;= 10 then
+      return false
+   end
+   return true
+ </cond>
+ <chance>100</chance>
  <done>Empire Shipping 2</done>
  <location>Bar</location>
  <spob>Halir</spob>
@@ -37,36 +42,60 @@ local fleet = require "fleet"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local emp = require "common.empire"
+local vn = require "vn"
+local vntk = require "vntk"
 
 -- Mission constants
 local destsys     = system.get( "Slaccid" )
 local log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
 
--- luacheck: globals board death delay_flf enter jumpout land (Hook functions passed by name)
-
 function create ()
-   -- Target destination
-   mem.ret, mem.retsys  = spob.getLandable( "Halir" )
-   if mem.ret== nil then
-      misn.finish(false)
-   end
+   -- Planet targets
+   mem.ret, mem.retsys  = spob.getS( "Halir" )
 
    -- Must claim system
    if not misn.claim( destsys ) then
       misn.finish(false)
    end
 
-   -- Add NPC.
-   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", _("Commander Soldner is waiting for you.") )
+   -- Bar NPC
+   misn.setNPC( emp.soldner.name, emp.soldner.portrait, _("Commander Soldner is waiting for you.") )
 end
 
-
 function accept ()
+   local accepted = false
+
+   vn.clear()
+   vn.scene()
+   local soldner = vn.newCharacter( emp.vn_soldner() )
+   vn.transition( emp.soldner.transition )
+
    -- Intro text
-   if not tk.yesno( _("Commander Soldner"), fmt.f( _([[You meet up once more with Commander Soldner at the bar.
-    "Hello again, {player}. Still interested in doing another mission? This one will be more dangerous."]]), {player=player.name()} ) ) then
-      return
-   end
+   soldner(fmt.f( _([[You meet up once more with Commander Soldner at the bar.
+"Hello again, {player}. Still interested in doing another mission? We need someone to rescue a VIP. This mission will be more dangerous than the last."]]),
+      {player=player.name()}))
+   vn.menu{
+      {_([[Accept]]), "accept"},
+      {_([[Decline]]), "decline"},
+   }
+
+   vn.label("decline")
+   vn.done( emp.soldner.transition )
+
+   -- Flavour text and mini-briefing
+   vn.label("accept")
+   soldner(fmt.f(_([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while carrying a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled, and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.]]),
+      {sys=destsys}))
+   soldner(fmt.f(_([["You're going to have to fly to the {sys} system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]),
+      {sys=destsys}))
+   soldner(fmt.f( _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid {credits} when you return with the VIP. Good luck, pilot."]]),
+      {credits=fmt.credits(emp.rewards.es02)} ) )
+   vn.func( function () accepted = true end )
+
+   vn.done( emp.soldner.transition )
+   vn.run()
+
+   if not accepted then return end
 
    -- Accept the mission
    misn.accept()
@@ -77,13 +106,8 @@ function accept ()
    -- Mission details
    mem.misn_stage = 0
    misn.setTitle(_("Empire VIP Rescue"))
-   misn.setReward( fmt.credits( emp.rewards.es02 ) )
+   misn.setReward( emp.rewards.es02 )
    misn.setDesc( fmt.f( _("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys} ) )
-
-   -- Flavour text and mini-briefing
-   tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while carrying a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.
-    "You're going to have to fly to the {sys} system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]), {sys=destsys} ) )
-   tk.msg( _("Commander Soldner"), fmt.f( _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid {credits} when you return with the VIP. Good luck, pilot."]]), {credits=fmt.credits(emp.rewards.es02)} ) )
    misn.osdCreate(_("Empire VIP Rescue"), {
       fmt.f(_("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys}),
    })
@@ -96,7 +120,6 @@ function accept ()
    mem.prevsys = system.cur()
 end
 
-
 function land ()
    mem.landed = spob.cur()
    if mem.landed == mem.ret then
@@ -104,31 +127,42 @@ function land ()
       if mem.misn_stage == 2 then
          local getlicense = not diff.isApplied( "heavy_combat_vessel_license" )
 
-         -- VIP gets off
-         misn.cargoRm(mem.vip)
+         vn.clear()
+         vn.scene()
+         local soldner = vn.newCharacter( emp.vn_soldner() )
+         vn.transition( emp.soldner.transition )
 
-         -- Rewards
-         player.pay( emp.rewards.es02 )
-         faction.modPlayerSingle("Empire",5)
-         faction.modPlayerSingle("Dvaered",5)
-
-         -- Flavour text
+         vn.na(_([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.]]))
          if getlicense then
-            tk.msg( _("Mission Success"), _([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
-    "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for a Heavy Combat Vessel License; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]]) )
-            emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for a Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
-            diff.apply("heavy_combat_vessel_license")
+            soldner(_([["It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for a Heavy Combat Vessel License; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]]))
+            vn.sfxBingo()
+            vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
+
+            vn.func( function ()
+               emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for a Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
+               diff.apply("heavy_combat_vessel_license")
+            end )
          else
-            tk.msg( _("Mission Success"), _([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
-    "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. We have nothing more for you now, but check in periodically in case something comes up for you."]]) )
-            emp.addShippingLog( _([[You successfully rescued a VIP for the Empire.]]) )
+            soldner(_([["It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. We have nothing more for you now, but check in periodically in case something comes up for you."]]) )
+            vn.func( function ()
+               emp.addShippingLog( _([[You successfully rescued a VIP for the Empire.]]) )
+            end )
          end
+
+         vn.func( function ()
+            player.pay( emp.rewards.es02 )
+            faction.hit( "Empire", 5 )
+            faction.hit( "Dvaered", 5 )
+         end )
+         vn.sfxVictory()
+         vn.na(fmt.reward( emp.rewards.es02 ))
+         vn.done( emp.soldner.transition )
+         vn.run()
 
          misn.finish(true)
       end
    end
 end
-
 
 function enter ()
    mem.sys = system.cur()
@@ -145,7 +179,7 @@ function enter ()
 
       v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
-      v:disable()
+      v:setDisable()
       v:setHilight(true)
       v:setVisplayer(true)
       v:setFaction( "Empire" )
@@ -153,13 +187,13 @@ function enter ()
       hook.pilot( v, "death", "death" )
 
       -- FLF Spawn around the Gawain
-      local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
+      local flf_med_force = { "Hyena", "Hyena", "Bedivere", "Tristan", "Tristan", "Pacifier" }
       local p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
       for k,pk in ipairs(p) do
          pk:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.add( "Vendetta", "FLF", enter_vect )
+      p = pilot.add( "Tristan", "FLF", enter_vect )
       p:setHostile()
       -- If player is seen, have them target player
       local pp = player.pilot()
@@ -191,7 +225,6 @@ function enter ()
    end
 end
 
-
 function jumpout ()
    -- Storing the system the player jumped from.
    mem.prevsys = system.cur()
@@ -201,26 +234,24 @@ function jumpout ()
    end
 end
 
-
 function delay_flf ()
    if mem.misn_stage ~= 0 then
       return
    end
 
    -- More ships to pressure player from behind
-   local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
+   local flf_sml_force = { "Hyena", "Bedivere", "Tristan" }
    local p = fleet.add( 1, flf_sml_force, "FLF", mem.prevsys, _("FLF Ambusher") )
    for k,v in ipairs(p) do
       v:setHostile()
    end
 end
 
-
 function board ()
    -- VIP boards
    local c = commodity.new( N_("VIP"), N_("A Very Important Person.") )
    mem.vip = misn.cargoAdd( c, 0 )
-   tk.msg( _("Disabled Ship"), _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
+   vntk.msg( _("Disabled Ship"), _([[The ship's hatch opens, and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
 
    -- Update mission details
    mem.misn_stage = 2
@@ -234,7 +265,6 @@ function board ()
    player.unboard()
 end
 
-
 function death ()
    if mem.misn_stage == 1 then
       -- Notify of death
@@ -243,7 +273,6 @@ function death ()
       lmisn.fail( _("VIP is dead.") )
    end
 end
-
 
 function abort ()
    -- If aborted you'll also leave the VIP to fate. (A.)

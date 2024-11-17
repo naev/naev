@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Totoran">
- <pos x="16083.220696" y="24917.325789"/>
+ <pos x="15685.736460" y="21737.451901"/>
  <GFX>
   <space>M06.webp</space>
   <exterior>traderoom.webp</exterior>
@@ -42,5 +42,6 @@
  </tech>
  <tags>
   <tag>nonpc</tag>
+  <tag>tourism</tag>
  </tags>
 </spob>

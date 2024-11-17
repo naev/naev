@@ -31,7 +31,6 @@ local reward = ant.rewards.ant04
 
 local returnpnt, returnsys = spob.getS("Antlejos V")
 
--- luacheck: globals enter land protest (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
@@ -81,7 +80,7 @@ function create ()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Pick up the {cargo} at {pnt} ({sys} system)"), {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys}),
       fmt.f(_("Deliver the cargo to {pnt} ({sys} system)"), {pnt=returnpnt, sys=returnsys})
@@ -97,13 +96,13 @@ end
 function land ()
    if mem.state==1 and  spob.cur() == mem.destpnt then
 
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
          return
       end
-      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
+      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dockworkers load the {amount} of {cargo} onto your ship."),{cargo=cargo_name, amount=fmt.tonnes(cargo_amount)}))
 
       local c = commodity.new( N_("Morphogenic Archaea"), N_("Containers filled to the brim with organisms that are suitable for creating life from scratch.") )
       misn.cargoAdd( c, cargo_amount )
@@ -147,7 +146,7 @@ function enter ()
    pilot.toggleSpawn(false)
 
    local puaaa = ant.puaaa()
-   plts = fleet.add( 2, "Hyena", puaaa, returnpnt:pos(), _("Protestor"), {ai="guard"} )
+   plts = fleet.add( 2, "Hyena", puaaa, returnpnt:pos(), _("Protester"), {ai="guard"} )
    for _k,p in ipairs(plts) do
       p:setVisplayer()
    end

@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Apprehension">
+ <lua>thurion.lua</lua>
  <points>90</points>
  <base_type>Apprehension</base_type>
- <GFX size="90" sx="12" sy="12">apprehension</GFX>
+ <gfx size="90" sx="12" sy="12">apprehension</gfx>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2300000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-30" y="9" h="-5" />
- <trail_generator x="-30" y="-9" h="-5" />
- <trail_generator x="-30" y="0" h="10" />
+ <trail_generator x="-30" y="9" h="-5">thurion</trail_generator>
+ <trail_generator x="-30" y="-9" h="-5">thurion</trail_generator>
+ <trail_generator x="-30" y="0" h="10">thurion</trail_generator>
  <trail_generator x="-20" y="-20" h="10">nebula</trail_generator>
  <trail_generator x="-20" y="20" h="10">nebula</trail_generator>
- <fabricator>Thurion shipyards</fabricator>
- <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt;= 50</cond>
- <condstr>You need at least 50 reputation with the Thurion.</condstr>
- <description>...</description>
+ <fabricator>Thurion Shipyards</fabricator>
+ <faction>Thurion</faction>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with the Thurion.</condstr>
+ <description>The Thurion Apprehension is a defense-focused light destroyer. High mobility paired with advanced electronic defenses make it difficult for enemies to detect the ship, let alone attemp to lock onto it.</description>
  <health>
   <armour>550</armour>
   <armour_regen>0</armour_regen>
@@ -40,16 +40,19 @@
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="medium" />
   <structure size="medium" />
  </slots>
  <stats>
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
-  <ew_hide>30</ew_hide>
+  <speed_mod>10</speed_mod>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
+  <jam_chance>30</jam_chance>
  </stats>
 </ship>

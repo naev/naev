@@ -23,7 +23,6 @@ local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat cutscene_done welcome_back (Hook functions passed by name)
 
 local reward = zbh.rewards.zbh02
 local cargo_name = _("Repair Supplies")
@@ -79,7 +78,7 @@ function accept ()
 
    -- mission details
    misn.setTitle( _("Repairing Sigma-13") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Pick up the necessary supplies at {pnt} in the {sys} system and bring them back to Zach at {retpnt}."),
       {pnt=mem.destpnt, sys=mem.destsys, retpnt=retpnt} ))
 
@@ -97,7 +96,7 @@ end
 
 function land ()
    if mem.state==1 and spob.cur() == mem.destpnt then
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
@@ -180,7 +179,7 @@ He looks more determined than ever.]]))
 
       zbh.unidiff( "sigma13_fixed2" )
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh02)
+      faction.hit("Za'lek", zbh.fctmod.zbh02)
       player.pay( reward )
       zbh.log(fmt.f(_("You helped Zach get more supplies to repair {pnt}, but were threatened by an unknown individual, and also ran into an unknown ship leading to more questions than answers."),{pnt=retpnt}))
       misn.finish(true)

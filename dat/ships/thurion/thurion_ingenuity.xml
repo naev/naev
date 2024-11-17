@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Ingenuity">
+ <lua>thurion.lua</lua>
  <points>40</points>
  <base_type>Ingenuity</base_type>
- <GFX>ingenuity</GFX>
+ <gfx size="56">ingenuity</gfx>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>650000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-8" y="0" h="0" />
+ <trail_generator x="-8" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-8" y="-24" h="-7">nebula</trail_generator>
  <trail_generator x="-8" y="24" h="-7">nebula</trail_generator>
  <trail_generator x="-4" y="0" h="10">nebula</trail_generator>
- <fabricator>Thurion shipyards</fabricator>
- <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt;= 30</cond>
- <condstr>You need at least 30 reputation with the Thurion.</condstr>
+ <fabricator>Thurion Shipyards</fabricator>
+ <faction>Thurion</faction>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 30</cond>
+ <condstr>You need at least 30% reputation with the Thurion.</condstr>
  <description>The Thurion Ingenuity is a fighter built for survival. Like all Thurian ships, it puts defensive capabilities first and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>
  <health>
   <armour>100</armour>
@@ -24,7 +24,7 @@
  </health>
  <characteristics>
   <crew>2</crew>
-  <mass>45</mass>
+  <mass>47</mass>
   <fuel>600</fuel>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
@@ -37,13 +37,15 @@
   <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
 </ship>

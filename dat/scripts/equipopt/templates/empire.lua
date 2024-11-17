@@ -16,6 +16,9 @@ local empire_outfits = eoutfits.merge{{
    -- Small Weapons
    "TeraCom Banshee Launcher",
    "Laser Cannon MK1", "Ripper Cannon",
+   -- Point Defense
+   "Guardian Overseer System",
+   "Guardian Interception System",
    -- Utility
    "Hunting Combat AI", "Photo-Voltaic Nanobot Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
@@ -113,6 +116,9 @@ local function equip_empire( p, opt_params )
    else
       emp_out = empire_outfits
    end
+   if opt_params.outfits_add then
+      emp_out = eoutfits.merge{ emp_out, opt_params.outfits_add }
+   end
 
    local sname = p:ship():nameRaw()
    --if empire_skip[sname] then return end
@@ -125,15 +131,17 @@ local function equip_empire( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
 
    -- See cores
-   local cores
-   local empcor = empire_cores[ sname ]
-   if empcor then
-      cores = empcor()
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local empcor = empire_cores[ sname ]
+      if empcor then
+         cores = empcor()
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some pilot meta-data

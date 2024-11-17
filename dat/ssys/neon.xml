@@ -2,17 +2,16 @@
 <ssys name="Neon">
  <general>
   <radius>18000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1031.480309" y="-387.783063"/>
+ <pos x="1057.094580" y="-313.243184"/>
  <spobs>
   <spob>Maatsu</spob>
   <spob>Neon I</spob>
   <spob>Neon III</spob>
   <spob>Passir</spob>
-  <spob>Umbrella Station</spob>
+  <spob>Umbrella Clinic</spob>
  </spobs>
  <jumps>
   <jump target="Kiwi">

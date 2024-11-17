@@ -1,0 +1,116 @@
+@import "scss/_bootstrap";
+@import "scss/_fluidbox";
+
+.nebula-bg {
+   background: #202080;
+   background-image: url(<%= @items["/imgs/nebula-tile.png"].path %>);
+   background-repeat: repeat-x;
+}
+
+div#naev-header {
+   padding: 0;
+   margin: 0;
+   height: 5rem;
+
+   img {
+      height: 5rem;
+   }
+}
+
+.navbar-brand {
+   img#logo {
+      height: 2rem;
+      filter: contrast(0%) brightness(200%);
+   }
+}
+
+.navbar {
+   margin-bottom: 1rem;
+}
+
+.video720p {
+   max-width: 720px;
+}
+
+main {
+   text-align: justify;
+   text-justify: inter-word;
+
+   div#download-list {
+      width: 300px;
+   }
+
+   div.blog-post {
+      margin-bottom: 3rem;
+   }
+
+   .foto-gallery {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+      a {
+         padding: 1px;
+         @include media-breakpoint-only(xs) { width: calc(100% /1); }
+         @include media-breakpoint-only(sm) { width: calc(100% /2); }
+         @include media-breakpoint-only(md) { width: calc(100% /3); }
+         @include media-breakpoint-only(lg) { width: calc(100% /4); }
+         @include media-breakpoint-only(xl) { width: calc(100% /5); }
+
+         > img {
+            max-width: 500px;
+         }
+      }
+   }
+}
+
+footer {
+   height: 5rem;
+   padding-top: 2rem
+}
+
+// Only apply to the smallest breakpoint (xs)
+@media (max-width:576px) {
+   // Don't justify in small mobile, since it causes weird word spacing.
+   main {
+      text-align:left;
+   }
+
+   // Decrease the bullet indentation, so we have less whitespace on nested lists.
+   ol, ul {
+      padding-left: 1.5rem;
+   }
+
+   // Add margin to the top and bottom of the navbar menu, and add a line at the top separating
+   // the toolbar and menu.
+   .navbar-nav {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      padding-top: 0.5em;
+      border-top: 1px solid #888;
+
+      // Transition makes sure that when expanding or collapsing, the margins smoothly transition.
+      transition: margin 0.3s ease-out, padding 0.3s ease-out, border-top 0.3s ease-out;
+
+      // Add margin to nav links so they aren't on the very edge of screen.
+      .nav-link {
+         margin-left:1rem;
+      }
+   }
+
+   // When the navbar is collapsed, don't add margin or the horizontal line.
+   .navbar-collapse.collapse:not(.show) > .navbar-nav {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      border-top: 0;
+   }
+
+   // Fix for mobile footer, so text doesn't end below the nebula image.
+   footer {
+      padding-top:1em;
+      > p {
+         margin-bottom:0;
+      }
+   }
+}

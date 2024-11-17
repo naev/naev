@@ -7,18 +7,19 @@ require 'ai.core.core'
 control_rate = 2
 
 function create ()
+   mem.comm_no = _("No response.")
    ai.pushtask( "brake" )
 end
 
 -- No need for control
-function control () end
-function control_manual () end
+function control( _dt ) end
+function control_manual( _dt ) end
 
 -- No response
-function attacked ( _attacker ) end
+function attacked( _attacker ) end
+function attacked_manual( _attacker ) end
 
 -- Does nothing
--- luacheck: globals idle (AI Task functions passed by name)
 function idle () end
 
 -- Brakes the pilot

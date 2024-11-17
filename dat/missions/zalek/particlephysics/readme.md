@@ -1,3 +1,6 @@
+---
+name: "Za'lek Particle Physics"
+---
 ## Za'lek Particle Physics Campaign
 
 This is a small set of missions designed to let the player get some understanding of Za'lek culture and, more importantly, get the licenses needed to be able to use most of the outfits and ships available in for civilians.

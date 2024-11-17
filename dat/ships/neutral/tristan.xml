@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Tristan">
+ <points>35</points>
+ <base_type>Tristan</base_type>
+ <gfx size="39">tristan</gfx>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>250000</price>
+ <time_mod>1.0</time_mod>
+ <fabricator>Nexus Shipyards</fabricator>
+ <faction>Independent</faction>
+ <license>Light Combat Vessel</license>
+ <description>The Tristan is the predecessor of Nexus Shipyards' popular Lancelot model. Originally developed for the Empire during the Dvaered Revolts for peacekeeping and suppressing dissent, delays made it so the Tristan was unable prevent the loss of territory and creation of House Dvaered. Due to a powerful atmospheric flight mode, the Tristan quickly became very popular as a flexible fighter. However, production quickly ceased when it was replaced by the Lancelot, with a more compact and flexible form. Although no new Tristan ships are being produced anymore, the abundance of decommissioned vessels and a large refurbishing and repair community make it so they are still surprisingly in use, especially by those who can not afford better.</description>
+ <health>
+  <armour>80</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>3</crew>
+  <mass>95</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>23</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" />
+  <weapon size="medium" />
+  <weapon size="small" />
+  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <land_delay>-40</land_delay>
+ </stats>
+ <tags>
+  <tag>frontier</tag>
+  <tag>standard</tag>
+ </tags>
+</ship>

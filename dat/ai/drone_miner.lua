@@ -12,7 +12,6 @@ function create ()
 end
 
 -- Default task to run when idle
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local ast = asteroid.get( mem.mining_field ) -- Get a random asteroid in the system (or current mining field)
    if ast then

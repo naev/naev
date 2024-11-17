@@ -15,8 +15,8 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 love = {
    _basepath = "",
    _version_major = 11,
-   _version_minor = 1,
-   _version_patch = 3,
+   _version_minor = 4,
+   _version_patch = 0,
    _codename = "naev",
    _default = {
       title = "LÖVE",
@@ -45,6 +45,7 @@ local function _clearfuncs()
       "mousereleased",
       "wheelmoved",
       "resize",
+      "textinput",
    }
    for k,v in ipairs(f) do
       love[v] = _noop
@@ -99,6 +100,10 @@ function love.origin()
    local lg = require "love.graphics"
    lg.origin()
 end
+-- Non-standard function to refresh the screen
+function love.refresh ()
+   tk.refresh()
+end
 
 
 --[[
@@ -111,6 +116,8 @@ local function _draw( x, y, w, h )
    love.h = h
    if love.graphics then
       love.graphics.origin()
+      love.graphics.setScissor()
+      love.graphics.setCanvas()
       love.graphics.clear()
    end
    love.draw()
@@ -156,12 +163,26 @@ local function _mouse( x, y, mtype, button )
       return love.wheelmoved( x, y )
    end
 end
-local function _keyboard( pressed, key, _mod )
+local key_translation = {
+   ["left shift"] = "lshift",
+   ["right shift"] = "rshift",
+   ["left alt"] = "lalt",
+   ["right alt"] = "ralt",
+   ["left ctrl"] = "lctrl",
+   ["right ctrl"] = "rctrl",
+   ["left gui"] = "lgui",
+   ["right gui"] = "rgui",
+}
+local function _keyboard( pressed, key, _mod, isrepeat )
    if not love.keyboard then return false end
    local k = string.lower( key )
+   local t = key_translation[k]
+   if t then
+      k = t
+   end
    love.keyboard._keystate[ k ] = pressed
    if pressed then
-      return love.keypressed( k, k, false )
+      return love.keypressed( k, k, isrepeat )
    else
       return love.keyreleased( k, k )
    end
@@ -169,10 +190,13 @@ end
 local function _resize( w, h )
    if w ~= 0 and h ~= 0 and (w ~= love.w or h ~= love.h) then
       naev.tk.customFullscreen( love.fullscreen )
+      love.origin()
       return love.resize( w, h )
    end
 end
-
+local function _textinput( str )
+   return love.textinput( str )
+end
 
 --[[
 -- Initialize
@@ -266,7 +290,7 @@ function love.exec( path )
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput, t.drawondemand )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 
@@ -315,7 +339,7 @@ function love.run()
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 

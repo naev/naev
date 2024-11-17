@@ -1,11 +1,11 @@
 #include "lib/sdf.glsl"
 
-uniform vec4 color;
+uniform vec4 colour;
 uniform vec2 dimensions;
 uniform int parami;
 
 in vec2 pos;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void) {
    const vec2 b = vec2( 1.0, 0.65 );
@@ -21,5 +21,5 @@ void main(void) {
 
    float alpha = smoothstep(     -m, 0.0, -d );
    float beta  = smoothstep( -2.0*m,  -m, -d );
-   color_out   = color * vec4( vec3(alpha), beta );
+   colour_out   = colour * vec4( vec3(alpha), beta );
 }

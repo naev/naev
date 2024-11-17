@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="thurion_espionage">
+ <spob name="Tenal-P">
+  <service_add>missions</service_add>
+ </spob>
+</unidiff>

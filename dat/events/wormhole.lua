@@ -11,8 +11,6 @@ local pp_shaders = require "pp_shaders"
 
 local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
 
--- luacheck: globals update wormhole (Hook functions passed by name)
-
 local target, shader, r
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 function create ()
@@ -54,6 +52,7 @@ function update( _dt, real_dt )
 end
 
 function wormhole ()
+   time.inc( time.new( 0, 0, 1000 + 2000*rnd.rnd() ) )
    player.teleport( target )
    local pp = player.pilot()
    pp:setPos( pp:pos() + vec2.newP( 100+100*rnd.rnd(), rnd.angle() ) )

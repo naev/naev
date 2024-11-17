@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>4e+09</population>
+  <population>4e+08</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -29,8 +29,11 @@
  </general>
  <tech>
   <item>Engines Low</item>
+  <item>Engines High</item>
   <item>Low Tech Upgrades</item>
   <item>Star Maps</item>
-  <item>Engines High</item>
  </tech>
+ <tags>
+  <tag>old</tag>
+ </tags>
 </spob>

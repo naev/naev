@@ -11,11 +11,11 @@ const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
-   vec4 color     = texture( tex, texcoord );
+   vec4 colour     = texture( tex, texcoord );
    float opacity  = 0.8 * clamp( progress, 0.0, 1.0 );
-   vec3 grayscale = vec3(rgb2lum(color.rgb));
-   color.rgb      = mix( color.rgb, grayscale, opacity );
-   return color;
+   vec3 grayscale = vec3(rgb2lum(colour.rgb));
+   colour.rgb      = mix( colour.rgb, grayscale, opacity );
+   return colour;
 }
 ]])
 
@@ -41,20 +41,20 @@ local function turnon( p, po )
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    oshader:off()
    return true
 end
 
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications

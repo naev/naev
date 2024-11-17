@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Virginis Lambda">
+ <pos x="-671.674751" y="8106.102128"/>
+ <GFX>
+  <space>J09.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

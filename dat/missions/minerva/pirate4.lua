@@ -27,7 +27,7 @@ local reward_amount = minerva.rewards.pirate4
 
 local mainsys     = system.get("Fried")
 local dvaeredsys  = system.get("Limbo")
-local piratesys   = system.get("Effetey")
+local piratesys   = system.get("Gold")
 local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 -- Mission states:
 --  nil: mission not accepted yet
@@ -36,8 +36,6 @@ local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 --    2. defend torture ship
 mem.misn_state = nil
 local mainship, spawned_dvaereds, spawned_pirates -- Non-persistent state
--- luacheck: globals attack_spam_over dv_reinforcement1 dv_reinforcement2 dv_reinforcement3 enter followup found_mole generate_npc heartbeat mainship_attacked mainship_board mainship_dead mainship_stealth minerva_molecaught msg1 msg2 msg3 msg4 pir_reinforcements (Hook functions passed by name)
--- luacheck: globals approach_pir (NPC functions passed by name)
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -220,7 +218,7 @@ function mainship_board ()
    vn.clear()
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_pirate() )
-   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
+   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { colour = minerva.maikkiP.colour } )
    vn.transition()
    vn.na(_("You board the ship and are once again greeting by the sketchy figure you are getting used to."))
    pir(_([["I was worried. Glad you made it here in one piece!"
@@ -229,14 +227,14 @@ Some crew members escort the Dvaered mole towards the inner part of the ship. Th
 She beams you a smile.
 "If all goes well, we'll get the information we were looking for in the next few periods and we can all go ]]))
    maikki(_([[You faintly hear an angry voice that sounds strangely familiar.
-"What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
+"What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]])) -- codespell:ignore loafing
    pir(_([[They visibly wince when they hear the angry voice.
 "Let us talk about your payment."]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(_([[Suddenly an alarm starts blaring throughout the ship.]]))
    -- Using boars as slang for Dvaered
    maikki(_([[The familiar and angry voice bellows in the distance.
-"Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
+"Zuri! We've got incoming boars closing in on our position! Take care of it!"]]))
    pir:rename(_("Zuri"))
    pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I dunno, just shoot them or something! I'll be manning the turrets here."
 She rushes off into the depths of the ship.]]))
@@ -273,7 +271,7 @@ function mainship_attacked ()
 
    mainship:comm(_("We are under attack!"), true)
    mem.attacked_spam = true
-   hook.timer( 6e3, "attack_spam_over" )
+   hook.timer( 10, "attack_spam_over" )
 end
 function attack_spam_over ()
    mem.attacked_spam = false
@@ -340,7 +338,7 @@ end
 local function spawn_dvaereds( ships )
    local plts = {}
    for k,v in ipairs(ships) do
-      -- We exploit the 'guard' AI to get the Dvaered to go ontop of the
+      -- We exploit the 'guard' AI to get the Dvaered to go on top of the
       -- interrogation ship and destroy it
       local p = pilot.add( v, "Dvaered", dvaeredsys, nil, {ai="guard"} )
       p:setVisplayer(true)
@@ -412,9 +410,9 @@ function followup ()
    vn.clear()
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_zuri{ shader=love_shaders.hologram()} )
-   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
+   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { colour = minerva.maikkiP.colour } )
    vn.transition("electric")
-   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on screen.."))
+   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on-screen."))
    pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))
    pir(_([["I'm sure you have a lot of questions, however, now is not the time for answers. We can't linger here long, the Dvaered are bound to be back, and this time in larger numbers."]]))
    maikki(_([[The still familiar voice butts in.
@@ -427,7 +425,7 @@ She gives you a tired grin.
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       minerva.log.pirate(_("You helped defend an interrogation ship from Dvaered vessels.") )
-      faction.modPlayerSingle("Wild Ones", 5)
+      faction.hit( "Wild Ones", 5, nil, nil, true )
    end )
    vn.sfxVictory()
    vn.done("electric")

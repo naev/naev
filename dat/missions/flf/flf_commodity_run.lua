@@ -18,7 +18,7 @@
 --]]
 require "missions.neutral.commodity_run"
 
--- luacheck: globals cargo_land commchoices (from base mission neutral.commodity_run)
+-- luacheck: globals cargo_land commchoices (inheriting variables, TODO get rid of)
 
 mem.misn_title = _("FLF: {cargo} Supply Run")
 mem.misn_desc = _("There is a need to supply {pnt} with more {cargo}. Find a planet where you can buy this commodity and bring as much of it back as possible.")

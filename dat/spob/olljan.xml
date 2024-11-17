@@ -35,4 +35,7 @@
   <item>Missiles 1</item>
   <item>Low Tech Upgrades</item>
  </tech>
+ <tags>
+  <tag>research</tag>
+ </tags>
 </spob>

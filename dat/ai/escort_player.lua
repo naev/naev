@@ -4,9 +4,10 @@ require 'ai.escort'
 mem.aggressive = true
 
 function create ()
+   mem.bribe_no = true
+   mem.refuel_no = true
 end
 
--- luacheck: globals idle (AI Task functions passed by name)
 function idle ()
    local pp = player.pilot()
    ai.pushtask( "follow", pp )

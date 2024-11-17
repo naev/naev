@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Avatar of Sirichana">
+ <description>You are an avatar of Sirichana!</description>
+ <duration>1</duration>
+ <icon>/gfx/misc/icons/angel-outfit.webp</icon>
+ <overwrite>avatar_of_sirichana</overwrite>
+ <shader vertex="effect2x.vert">effects/avatar_of_sirichana.frag</shader>
+ <buff/>
+ <priority>4</priority>
+ <stats>
+  <weapon_damage>25</weapon_damage>
+  <speed_mod>25</speed_mod>
+  <turn_mod>25</turn_mod>
+  <accel_mod>25</accel_mod>
+  <time_speedup>25</time_speedup>
+  <time_mod>-25</time_mod>
+  <absorb>20</absorb>
+  <jam_chance>30</jam_chance>
+  <shield_regen_mod>50</shield_regen_mod>
+  <energy_regen_mod>50</energy_regen_mod>
+ </stats>
+</effect>

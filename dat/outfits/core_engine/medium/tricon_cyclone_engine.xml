@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Tricon Cyclone Engine">
  <general>
+  <shortname>T. Cyclone Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
@@ -11,11 +12,11 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>25</energy_regen_malus>
-  <engine_limit>700</engine_limit>
-  <fuel>600</fuel>
+  <energy_regen_malus>12</energy_regen_malus>
+  <engine_limit>630</engine_limit>
+  <fuel>800</fuel>
   <speed>230</speed>
-  <thrust>130</thrust>
+  <accel>130</accel>
   <turn>115</turn>
  </specific>
 </outfit>

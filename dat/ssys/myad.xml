@@ -2,12 +2,15 @@
 <ssys name="Myad">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
-  <interference>15.789474</interference>
+  <spacedust>400</spacedust>
+  <interference>35.526300</interference>
   <nebula volatility="1.000000">400.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="476.000000" y="-79.000000"/>
- <spobs/>
+ <pos x="607.222605" y="-413.479878"/>
+ <spobs>
+  <spob>Toros IV</spob>
+ </spobs>
  <jumps>
   <jump target="Doeston">
    <autopos/>
@@ -23,4 +26,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

@@ -1,9 +1,9 @@
 in vec4 vertex;
-in vec4 vertex_color;
+in vec4 vertex_colour;
 uniform mat4 projection;
-out vec4 color;
+out vec4 colour;
 
 void main(void) {
-   color = vertex_color;
+   colour = vertex_colour;
    gl_Position = projection * vertex;
 }

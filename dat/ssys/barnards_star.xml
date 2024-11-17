@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Barnard's Star">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>29.250000</interference>
+  <nebula volatility="0.700000" hue="275.000000">400.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="461.330827" y="-59.313814"/>
+ <spobs>
+  <spob>Barnard's Star Ruined Ringworld</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Traders Society Unpresence</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Carrza">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Tau Ceti">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
+</ssys>

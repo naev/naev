@@ -2,8 +2,7 @@
 <ship name="Admonisher">
  <points>60</points>
  <base_type>Admonisher</base_type>
- <GFX size="68">admonisher</GFX>
- <GUI>brushed</GUI>
+ <gfx size="68">admonisher</gfx>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>950000</price>
@@ -15,6 +14,7 @@
  <trail_generator x="-20" y="5" h="-5" always_under="1" />
  <trail_generator x="-20" y="-5" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Independent</faction>
  <license>Medium Combat Vessel</license>
  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid combat ship.</description>
  <health>
@@ -23,7 +23,7 @@
  </health>
  <characteristics>
   <crew>13</crew>
-  <mass>160</mass>
+  <mass>170</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>25</cargo>
  </characteristics>
@@ -37,9 +37,11 @@
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
+  <utility size="medium" />
   <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

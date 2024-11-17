@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ross Prime">
+ <pos x="-3565.396793" y="-4485.499191"/>
+ <GFX>
+  <space>X01.webp</space>
+  <exterior>gas.webp</exterior>
+ </GFX>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

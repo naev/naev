@@ -1,9 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Preacher">
+<event name="Sirius Preacher">
  <location>enter</location>
  <chance>10</chance>
- <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
+ <cond>
+   if system.cur():presence(faction.get("Sirius"))&lt;50 then
+      return false
+   end
+   if player.evtActive("Sirius Preacher") then
+      return false
+   end
+   return ((var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)
+ </cond>
  <unique />
  <notes>
   <tier>1</tier>
@@ -14,10 +22,13 @@
 -- Sudarshan S <ssoxygen@users.sf.net>
 local fleet = require "fleet"
 local fmt = require "format"
+local cinema = require "cinema"
+local vn = require "vn"
+local vni = require "vnimage"
+local love_shaders = require "love_shaders"
 
 local restoreControl -- Forward-declared function
 local attackers, curr, follower, followers, hailHook, praiser, preacher, rep, target -- Event state, never saved.
--- luacheck: globals anotherdead badCleanup cleanup funStartsSoon hail jumpCleanup landCleanup pirateSpawn praise preacherSpeak reHail release theFunBegins violence (Hook functions passed by name)
 
 local althoughEnemy={
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
@@ -42,7 +53,7 @@ _("May Sirichana's light shine on you henceforth!")
 local praiseSirichana={
 _("We shall all follow Sirichana now!"),
 _("We have been liberated from our evil ways!"),
-_("No more shall we tread the path of evil!"),
+_("No more shall we tread the path of evil!"), -- codespell:ignore tread
 _("We see the True path now!"),
 _("No more shall we commit sins!")
 }
@@ -109,17 +120,19 @@ _("Someone killed the preacher!")
 
 --initialize the event
 function create()
+   -- Claim is done in "theFunBegins"
+
    curr = system.cur() --save the current system
 
    -- Start the fun when the player jumps
    hook.jumpin("funStartsSoon")
-   hook.land("cleanup") --oops he landed
+   hook.land("cleanup") --oops they landed
 end
 
 --Start the real mission after a short delay
 function funStartsSoon()
    if rep then return end -- Probably system tour event
-   rep = faction.playerStanding(faction.get("Sirius"))
+   rep = system.cur():reputation("Sirius")
    hook.timer(5, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 
@@ -128,12 +141,19 @@ local claimed
 function theFunBegins()
    if claimed then evt.finish(false) end -- Case player jumps out in under 5 seconds
 
-   -- Make sure system is not claimed
-   if not evt.claim({system.cur()}) then evt.finish(false) end
-   claimed = true
+   -- Make sure system is adjacent to the previous one (system tour)
+   local found = false
+   for k,v in ipairs(system.cur():adjacentSystems()) do
+      if v==curr then
+         found = true
+         break
+      end
+   end
+   if not found then evt.finish(false) end
 
-   -- Only increment if we can actually do stuff
-   var.push( "si_convert", (var.peek("si_convert") or 0)+1 )
+   -- Make sure system is not claimed. Doesn't pilot.clear so inclusive claim
+   if not evt.claim({system.cur()}, true) then evt.finish(false) end
+   claimed = true
 
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
@@ -142,13 +162,18 @@ function theFunBegins()
          return
       end
    end
+
+   -- Only increment if we can actually do stuff
+   local si_convert = var.peek("si_convert") or 0
+   var.push( "si_convert", si_convert+1 )
+
    --summon a preacher from the jump point and highlight him and take control and focus on him
    preacher = pilot.add("Sirius Preacher", "Sirius", curr, _("Sirius Reverence"), {ai="sirius_norun"})
    preacher:intrinsicSet( "armour_mod", 400 )
    preacher:intrinsicSet( "shield_mod", 400 )
    preacher:intrinsicSet( "shield_regen_mod", 100 )
    preacher:intrinsicSet( "speed", 100 )
-   preacher:intrinsicSet( "thrust", 100 )
+   preacher:intrinsicSet( "accel", 100 )
    preacher:intrinsicSet( "turn", 100 )
    preacher:setHilight()
    preacher:setVisplayer()
@@ -169,11 +194,11 @@ function theFunBegins()
    hook.jumpout("cleanup")
 
    camera.set(preacher)
-   player.cinematics(true,{gui=true, abort=presence[rnd.rnd(1,#presence)]})
+   cinema.on{ gui=true, abort=presence[rnd.rnd(1,#presence)] }
 
    --you're hooked till you hear him out!
-   pp:control()
    player.msg(urge[rnd.rnd(1,#urge)])
+   pp:face( preacher )
 
    --create a random band of converted pirate followers
    local followerShips = {"Pirate Kestrel", "Pirate Admonisher", "Pirate Shark", "Pirate Vendetta", "Pirate Rhino"} --the types of followers allowed
@@ -233,7 +258,7 @@ function theFunBegins()
    hook.timer(17.5, "release")
 
    --hook up timer for re-hailing player
-   hailHook=hook.date(time.create(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
+   hailHook=hook.date(time.new(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
 
    --when hailed, the preacher preaches to you
    hook.pilot(preacher, "hail", "hail")
@@ -364,18 +389,12 @@ function restoreControl()
 end
 
 local function release_player ()
-   local pp = player.pilot()
-   pp:setInvincible(false)
-   pp:control(false)
-   for k,v in ipairs(pp:followers()) do
-      v:setInvincible(false)
-   end
+   cinema.off()
+   camera.set()
 end
 
---releases the player after the cutscene
+-- releases the player after the cutscene
 function release()
-   camera.set()
-   player.cinematics(false)
    release_player ()
    --if the attacks have already started, we shouldn't set a target yet
    if #attackers==0 then
@@ -383,11 +402,23 @@ function release()
    end
 end
 
---when hailed back, show the message
+-- when hailed back, show the message
 function hail()
-   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral, yet intense, gaze.
-    "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
-    You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
+   vn.clear()
+   vn.scene()
+   local vnp = vn.newCharacter( _("Preacher"), {
+      image=vni.sirius.any(), -- TODO should be specific echelon?
+      shader=love_shaders.hologram(),
+   } )
+   vn.transition("electric")
+
+   vnp(_([[A Sirian appears on your viewscreen. They seems different than most Sirii you've met. They regards you with a neutral, yet intense, gaze.]]))
+   vnp(_([["Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. They shall guide you to peace and wisdom. They are the sole refuge for humans like you and me. You MUST follow them!"]]))
+   vn.na(_([[You feel a brief but overpowering urge to follow them, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
+   vn.done("electric")
+
+   vn.run()
+
    player.commClose()
    hook.rm(hailHook) --no more hailing
 end
@@ -395,8 +426,6 @@ end
 --everything is done
 function cleanup()
    release_player()
-   camera.set( nil, true )
-   player.cinematics(false)
    evt.finish(true)
 end
 

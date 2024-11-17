@@ -2,6 +2,7 @@ require 'ai.core.core'
 require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
 local fmt = require "format"
+local dv = require "common.dvaered"
 
 mem.lanes_useneutral = true
 mem.simplecombat = true
@@ -25,6 +26,7 @@ local ads_empire = {
    _("Need help with your EW-59831 form? Try Bob's Bureaucratic Bazaar at Semper!"),
    _("Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to your Empire Animal Bureau now."),
    _("Keep your documents properly filed. Unicorp Filing Cabinets."),
+   _("Want to test your skills in racing? Come to the Melendez Dome in the Qex system!"),
 }
 local ads_dvaered = {
    _("Only your hard work will save the Dvaered economy!"),
@@ -37,7 +39,7 @@ local ads_dvaered = {
 local ads_soromid = {
    _("Remember Sorom."),
    _("Special offer on Crow: buy one IR-eye, and the second comes for free!"),
-   _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Station!"),
+   _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Nidus!"),
    _("Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."),
    _("Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and counting!"),
    _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"),
@@ -48,7 +50,7 @@ local ads_zalek = {
    _("Love non-convex minimization? Join Ruadan's Computation Science Lab!"),
    _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."),
    _("Interested in Genetic Lifeforms research? Apply to Interstice Science!"), -- Reference to Aperture Science (synonyms) from Portal
-   _("Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
+   _("Want to learn about Anti-Mass Spectrometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
 }
 local ads_sirius = {
    _("Want a new look? Try Verrill's Ceremonial Robes at Burnan!"),
@@ -82,7 +84,7 @@ function create ()
          {credits=fmt.credits(mem.refuel)})
 
    -- Set up potential advertiser messages in msg variable
-   local msg = tmerge( {}, ads_generic )
+   local msg = tmergei( {}, ads_generic )
 
    -- Faction specific messages
    local fpres = system.cur():presences()
@@ -90,51 +92,36 @@ function create ()
    -- Empire messages
    local fem = fpres["Empire"] or 0
    if fem > 1 then
-      msg = tmerge( msg, ads_empire )
-      msg = tmerge( msg, ads_cyber )
+      msg = tmergei( msg, ads_empire )
+      msg = tmergei( msg, ads_cyber )
    end
 
    -- Dvaered messages
    local fdv = fpres["Dvaered"] or 0
    if fdv > 1 then
-      msg = tmerge( msg, ads_dvaered )
+      msg = tmergei( msg, ads_dvaered )
       local badwords = {
-         _("Butthead"),
-         _("Nincompoop"),
-         _("Dunderhead"),
-         _("Ass"),
-         _("Fool"),
-         _("Coward"),
+         _("a Butthead"),
+         _("a Nincompoop"),
+         _("a Dunderhead"),
+         _("an Ass"),
+         _("a Fool"),
+         _("a Coward"),
       }
-      -- TODO probably merge this with 'common.frontier_war' into a separate module
-      local lords = { _("Lord Jim"),
-         _("Lady Bitterfly"),
-         _("Lady Pointblank"),
-         _("Lord Chainsaw"),
-         _("Lord Painbishop"),
-         _("Lord Kriegsreich Hundertfeuer"),
-         _("Lady Blackswan"),
-         _("Lady Killington"),
-         _("Lord Richthofen"),
-         _("Lady Dewinter"),
-         _("Lord Easytrigger"),
-         _("Lady Sainte-Beuverie"),
-         _("Lord Louverture"),
-         _("Lord Abdelkiller"),
-         _("Lady Proserpina") }
+      local lords = dv.warlords () -- Gets all warlorlds
       local r = rnd.rnd(1,#lords)
       local butthead = lords[r]
       table.remove( lords, r )
       local sponsor = lords[ rnd.rnd(1,#lords) ]
       local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor}
-      table.insert(msg, fmt.f(_("I hereby declare {butthead} is a {badword}. -{sponsor}"), params))
-      table.insert(msg, fmt.f(_("Let it be known that {butthead} is a {badword}. -{sponsor}"), params))
+      table.insert(msg, fmt.f(_("I hereby declare {butthead} is {badword}. -{sponsor}"), params))
+      table.insert(msg, fmt.f(_("Let it be known that {butthead} is {badword}. -{sponsor}"), params))
    end
 
    -- Soromid messages
    local fsr = fpres["Soromid"] or 0
    if fsr > 1 then
-      msg = tmerge( msg, ads_soromid )
+      msg = tmergei( msg, ads_soromid )
    end
 
    -- Soromid+Empire messages
@@ -145,8 +132,8 @@ function create ()
    -- Za'lek messages
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
-      msg = tmerge( msg, ads_zalek )
-      msg = tmerge( msg, ads_cyber )
+      msg = tmergei( msg, ads_zalek )
+      msg = tmergei( msg, ads_cyber )
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       local pn = player.name()
@@ -158,7 +145,7 @@ function create ()
    -- Sirius messages
    local fsi = fpres["Sirius"] or 0
    if fsi > 1 then
-      msg = tmerge( msg, ads_sirius )
+      msg = tmergei( msg, ads_sirius )
    end
 
    mem.ad = msg[rnd.rnd(1,#msg)]

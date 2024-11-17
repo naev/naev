@@ -2,8 +2,7 @@
 <ship name="Gawain">
  <points>20</points>
  <base_type>Gawain</base_type>
- <GFX size="56">gawain</GFX>
- <GUI>brushed</GUI>
+ <gfx size="56">gawain</gfx>
  <sound>engine</sound>
  <class display="Luxury Yacht">Yacht</class>
  <price>500000</price>
@@ -12,6 +11,7 @@
  <trail_generator x="-2" y="-15" h="-2">nebula</trail_generator>
  <trail_generator x="-15" y="0" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Independent</faction>
  <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely survive combat due to their meagre weapons space and relative fragility.</description>
  <health>
   <armour>40</armour>
@@ -31,7 +31,8 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
@@ -39,7 +40,7 @@
  <stats>
   <speed_mod>15</speed_mod>
   <turn_mod>10</turn_mod>
-  <thrust_mod>10</thrust_mod>
+  <accel_mod>10</accel_mod>
   <cargo_mod>-10</cargo_mod>
   <armour_mod>-10</armour_mod>
   <land_delay>-20</land_delay>
@@ -47,5 +48,6 @@
  <tags>
   <tag>standard</tag>
   <tag>transport</tag>
+  <tag>luxury</tag>
  </tags>
 </ship>

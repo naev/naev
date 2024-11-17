@@ -52,7 +52,7 @@ function create()
    -- See if a drone
    mem.isdrone = pt.drone
    if mem.isdrone then
-      local msg = _([["ACCESS DENIED.]])
+      local msg = _([["ACCESS DENIED."]])
       mem.refuel_no = msg
       mem.bribe_no = msg
       mem.scan_msg = _("COMMENCING SCAN PROCEDURE.")
@@ -60,7 +60,7 @@ function create()
       mem.scan_msg_bad = _("ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!")
       mem.armour_run = 0 -- Drones don't run
       -- Drones can get indirectly bribed as part of fleets
-      mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe = math.sqrt( p:mass() ) * (500 * rnd.rnd() + 1750)
       -- Smaller faction hits than normal ships
       mem.distress_hit = mem.distress_hit * 0.5
       create_post()
@@ -90,7 +90,7 @@ function hail ()
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = mem.refuel_base or rnd.rnd( 2000, 4000 )
-      mem.bribe_base = mem.bribe_base or math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe_base = mem.bribe_base or math.sqrt( p:mass() ) * (500 * rnd.rnd() + 1750)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end
@@ -105,7 +105,7 @@ function hail ()
    mem.bribe_no      = nil
 
    -- Deal with refueling
-   local standing = p:faction():playerStanding()
+   local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing < -10 then
       mem.refuel_no = _([["I do not have fuel to spare."]])
@@ -129,8 +129,8 @@ function hail ()
 end
 
 function taunt ( target, offense )
-   -- Only 50% of actually taunting.
-   if rnd.rnd(0,1) == 0 and not mem.isdrone then
+   -- Only 30% of actually taunting.
+   if rnd.rnd() > 0.3 then
       return
    end
 

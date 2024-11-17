@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Cebus Prime">
+ <pos x="4866.050981" y="-2336.731605"/>
+ <GFX>
+  <space>moon-H02.webp</space>
+  <exterior>mining_shaft.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>3000</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Although originally small-time calm world, the Nebula has stripped away most of the atmosphere making it nearly unlivable. Most of the inhabitants have long since left, and the Empire has officially declared it a ruined world, however, some stubborn individuals still persist and survive in a mainly self-sufficient outside of what could be considered civilized society. The locals mainly live in the underground installations around the spaceport, using the abandoned spacious accommodations freely.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+  <tag>rural</tag>
+ </tags>
+</spob>

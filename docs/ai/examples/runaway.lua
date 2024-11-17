@@ -28,7 +28,7 @@ function runaway( target )
       local dist = ai.dist( target:pos() )
       if dist < 300 then
          ai.settarget(target)
-         ai.shoot()
+         ai.weapset( 1, true ) -- Shoot primary weapons
       end
    end
 end

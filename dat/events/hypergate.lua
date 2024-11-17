@@ -11,12 +11,10 @@ local pp_shaders = require "pp_shaders"
 
 local pixelcode = lf.read( "glsl/love/hypergate_travel.frag" )
 
--- luacheck: globals update hypergate (Hook functions passed by name)
 
 local target, shader, prevtex
 local sfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 function create ()
-
    target = var.peek("hypergate_target")
    if not target then
       warn(_("Hypergate event run with no target!"))
@@ -43,7 +41,11 @@ function hypergate ()
    shader = pp_shaders.newShader( pixelcode )
    shader:send( "u_prevtex", prevtex )
    shader:send( "u_colour", col )
-   shader.addPPShader( shader, "final" )
+   shader.addPPShader( shader, "gui" )
+
+   -- Clean up if necessary
+   hook.land( "cleanup" )
+   hook.enter( "cleanup" )
 end
 
 local timer = 0
@@ -52,8 +54,12 @@ function update( _dt, real_dt )
    timer = timer + real_dt
    shader:send( "u_progress", math.min(timer/jumptime,1.0) )
    if timer >= jumptime  then
-      shader.rmPPShader( shader )
-      var.pop("hypergate_target")
-      evt.finish()
+      cleanup()
    end
+end
+
+function cleanup ()
+   shader.rmPPShader( shader )
+   var.pop("hypergate_target")
+   evt.finish()
 end

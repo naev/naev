@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Ira">
+ <lua>soromid.lua</lua>
  <points>200</points>
  <base_type>Ira</base_type>
- <GFX size="112" sx="12" sy="12">ira</GFX>
- <GUI>brushed</GUI>
- <rarity>2</rarity>
+ <gfx size="112" sx="12" sy="12">ira</gfx>
+ <rarity>1</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>
  <price>7100000</price>
@@ -16,9 +16,10 @@
  <trail_generator x="-40" y="-5" h="-5" always_under="1">soromidS</trail_generator>
  <trail_generator x="-40" y="-12" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt;= 60</cond>
- <condstr>You need at least 60 reputation with the Soromid.</condstr>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 60</cond>
+ <condstr>You need at least 60% reputation with the Soromid.</condstr>
  <description>The Ira is a purpose-grown cruiser commonly found leading Soromid forces. While its armour is somewhat weak, this rarely saves those met with its devastating barrage.</description>
  <health>
   <armour>1700</armour>
@@ -34,13 +35,12 @@
   <weapon size="large" prop="bio_weapon" name="weap2" x="25" y="0" h="2">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap3" x="12" y="-6" h="0">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap4" x="12" y="6" h="0">Tentacle Organ I</weapon>
-  <weapon size="large" x="0" y="0" h="7" />
-  <weapon size="large" x="-15" y="0" h="7" />
-  <weapon size="large" x="-33" y="0" h="7" />
+  <weapon size="medium" x="-15" y="0" h="7" />
+  <weapon size="medium" x="-33" y="0" h="7" />
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
@@ -48,15 +48,14 @@
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <armour_mod>-20</armour_mod>
-  <ew_hide>10</ew_hide>
-  <fwd_damage>10</fwd_damage>
-  <tur_damage>-10</tur_damage>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>soromid</tag>

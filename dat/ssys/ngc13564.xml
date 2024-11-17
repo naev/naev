@@ -2,22 +2,22 @@
 <ssys name="NGC-13564">
  <general>
   <radius>15000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="1216.583519" y="-132.802222"/>
+ <pos x="1313.438238" y="-1004.101215"/>
  <spobs/>
  <jumps>
+  <jump target="Lazuli">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="NGC-13747">
    <pos x="-14595.521693" y="1315.384068"/>
    <hide>0.300000</hide>
   </jump>
   <jump target="NGC-344">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NGC-9607">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Neodymium</name>
- <description>Neodymium is very useful for its magnetic and heat capacity properties, playing a critical role in cryo-cooling applications and stasis chambers. Given the post-Incident population growth and widespread use of new technologies, the demand for Neodymium remains relatively high and constant throughout the galaxy.</description>
+ <description>Neodymium is very useful for its magnetic and heat capacity properties, playing a critical role in cryo-cooling applications such as stasis chambers. Given the post-Incident population growth and widespread use of new technologies, the demand for neodymium remains relatively high and constant throughout the galaxy.</description>
  <gfx_store>neodymium.webp</gfx_store>
  <gfx_space>gold.webp</gfx_space>
  <price_ref>Gold</price_ref>

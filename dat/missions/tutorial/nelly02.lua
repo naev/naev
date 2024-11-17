@@ -59,14 +59,14 @@ local lmisn = require "lmisn"
 --]]
 mem.misn_state = nil
 local enemies, rampant, rampant_pos, rampant_pos_idx, spotter, spotter_pos -- Non-persistent state
--- luacheck: globals board death disable enter equip idle land reset_osd_hook spotter_spot timer_pirate timer_pirate_checkbribe timer_pirate_nelly timer_spotter timer_spotter_start (Hook functions passed by name)
--- luacheck: globals approach_nelly (NPC functions passed by name)
 
 local reward_amount = tutnel.reward.nelly02
 
 local function has_disable( o )
-   local _dmg, dis = o:weapstats()
-   return dis and dis > 0
+   local dmg, dis = o:weapstats()
+   dmg = dmg or 0
+   dis = dis or 0
+   return dis > dmg
 end
 
 function create ()
@@ -82,7 +82,7 @@ function create ()
    local pntfilter = function( p )
       -- Must be claimable
       local s = p:system()
-      if not misn.claim( s, true ) then
+      if not naev.claimTest( s ) then
          return false
       end
       -- Sells Outfits
@@ -99,11 +99,11 @@ function create ()
       misn.finish()
    end
 
-   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see a Nelly motioning to you at a table.") )
+   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see Nelly motioning to you at a table.") )
 
    misn.setTitle( _("Helping Nelly Out… Again") )
    misn.setDesc( _("Help Nelly fix their ship.") )
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 end
 
 
@@ -114,7 +114,7 @@ function accept ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    nel(_([[Nelly brightens up when you get near.
-"Hey, I thought was able to get my ship up and running, but before I was able to get in and do a test run, the thing went haywire and now it's spinning around in circles! You have an Ion Cannon, do you? Could you help me disable my ship and get it back?"]]))
+"Hey, I thought was able to get my ship up and running, but before I was able to get in and do a test run, the thing went haywire, and now it's spinning around in circles! You have an Ion Cannon, do you? Could you help me disable my ship and get it back?"]]))
    vn.menu{
       {_("Help them with their ship"), "accept"},
       {_("Decline to help"), "decline"},
@@ -127,13 +127,13 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () doaccept = true end )
-   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pnt}!"]]),{pnt=mem.retpnt}))
+   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside {pnt}!"]]),{pnt=mem.retpnt}))
 
    local pp = player.pilot()
    local has_dis = false
    local has_dis_owned = false
    local owned = {}
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       has_dis = has_dis or has_disable(o)
    end
    for k,o in ipairs(player.outfits()) do
@@ -164,12 +164,16 @@ function accept ()
    local nearplanet = pnts[1]
 
    if has_dis then
-      nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
+      if pp:autoweap() then
+         nel(_([["It looks like you already have some disabling weapons equipped. They should be set as your primary or secondary weapon, so let's go get my ship back!"]]))
+      else
+         nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon and let's go get my ship back!"]]))
+      end
    elseif has_dis_owned then
       nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname}#0 before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]}))
       local s = spob.cur():services()
       if not s.outfits and not s.shipyard then
-         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet}))
+         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0, so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet}))
       end
    else
       nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet, outfitname=outfit_tobuy}))
@@ -210,7 +214,7 @@ end
 
 function equip ()
    local pp = player.pilot()
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       if has_disable(o) then
          info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o}))
          mem.misn_state = 0
@@ -238,7 +242,7 @@ function enter ()
       rampant_pos = mem.retpnt:pos() + vec2.newP( 2000, rnd.angle() )
       rampant = pilot.add( "Llama", "Dummy", rampant_pos, _("Llaminator MK2") )
       rampant:intrinsicSet( "speed", -50 )
-      rampant:intrinsicSet( "thrust", -50 )
+      rampant:intrinsicSet( "accel", -50 )
       rampant:intrinsicSet( "turn", -50 )
       rampant:intrinsicSet( "shield_regen_mod", -90 )
       rampant:intrinsicSet( "stress_dissipation", -90 )
@@ -298,7 +302,7 @@ function idle ()
 end
 
 function disable ()
-   player.pilot():comm(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}))
+   player.msg(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("approach")}),true)
 end
 
 function board ()
@@ -347,7 +351,7 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
+      vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something, and she comes back with a grin on her face."))
       nel(fmt.f(_([["Got the parts! Cheaper than I expected too. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!"]]), {pnt=mem.retpnt, sys=mem.retsys}))
       vn.done( tutnel.nelly.transition )
       vn.run()
@@ -364,14 +368,14 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      nel(_([["We finally made it. Nothing ever comes really easy does it? Ah, before I forget, let me reward you for your troubles."]]))
+      nel(_([["We finally made it. Nothing ever comes really easy, does it? Ah, before I forget, let me reward you for your troubles."]]))
       vn.sfxVictory()
       vn.na(fmt.reward(reward_amount))
       vn.func( function () -- Rewards
          player.pay( reward_amount )
       end )
       nel(_([["I'm going to get my ship fixed and hopefully next time we meet it'll be in space. Have fun!"
-She runs off to where here ship is stored with the repair parts in hand.]]))
+She runs off to where her ship is stored with the repair parts in hand.]]))
       vn.done( tutnel.nelly.transition )
       vn.run()
 
@@ -389,7 +393,7 @@ function approach_nelly ()
    vn.na(_("As you approach her you can see she is a bit flustered."))
    nel(fmt.f(_([["I got my ship checked up again, and it looks like it wasn't just an autonav malfunction, but the jumpdrive is toast. I need a spare part, but they don't seem to have any here, and told me I'll have to wait at least a hectaperiod if I want it delivered. However, I was able to find that they seem to have replacements on #o{destpnt}#0 in #o{destsys}#0."]]),{destpnt=mem.destpnt, destsys=mem.destsys}))
    nel(fmt.f(_([[Before you can answer she grabs your arm and pulls you towards where your ship is docked.
-"Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally get my ship off the ground."]]),{destpnt=mem.destpnt}))
+"Come on, let's head to #o{destpnt}#0 to grab a spare part, so I can finally get my ship off the ground."]]),{destpnt=mem.destpnt}))
    vn.na(_("Looks like you'll have to do another round trip if you want to get paid."))
    vn.done( tutnel.nelly.transition )
    vn.run()
@@ -404,7 +408,9 @@ function approach_nelly ()
    mem.misn_state = 2
 end
 
+local spawned = false
 function timer_pirate( fpir )
+   if spawned then return end
    local pp = player.pilot()
    local d = mem.jump_dest:pos():dist( pp:pos() )
    if d < 5000 then
@@ -425,11 +431,12 @@ function timer_pirate( fpir )
          aimem.vulnignore = true -- Ignore vulnerability
          table.insert( enemies, p )
       end
-      pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
-      player.autonavReset(7)
-      hook.timer( 5, "timer_pirate_nelly" )
+      player.msg(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])),true)
+      player.autonavReset(5)
+      hook.timer( 3, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
       mem.nelly_spam = 2
+      spawned = true
       return
    end
    hook.timer( 1, "timer_pirate", fpir )
@@ -441,9 +448,9 @@ function timer_pirate_nelly ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    nel(_([["It looks like we've been spotted by a trio of Pirate Hyenas. Normally I would say run, but I don't think we'll be able to outrun them. I think that bribing them may be the only way out."]]))
-   nel(fmt.f(_([["If you target a pirate and hail them with {hailkey}, you should have an option to bribe them and their friends if they are hostile. Although it can be expensive, it beats getting blown to bits. Try targetting the nearest enemy with {targetkey}, hailing them with {hailkey}, and bribing them!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")}))
+   nel(fmt.f(_([["If you target a pirate and hail them with {hailkey}, you should have an option to bribe them and their friends if they are hostile. Although it can be expensive, it beats getting blown to bits. Try targeting the nearest enemy with {targetkey}, hailing them with {hailkey}, and bribing them!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")}))
    if player.credits() < 1000 then
-      nel(fmt.f(_([["It looks like you won't have enough money to bribe them. Here, take #g{credits}#0, that should be enough hopefully."]]),{credits=fmt.credits(1e3)}))
+      nel(fmt.f(_([["It looks like you won't have enough money to bribe them. Here, take #g{credits}#0, that should be enough, hopefully."]]),{credits=fmt.credits(1e3)}))
       vn.func( function() player.pay(1000) end )
    end
    vn.done( tutnel.nelly.transition )
@@ -452,6 +459,13 @@ function timer_pirate_nelly ()
    local osdtitle, osdelem = misn.osdGet()
    table.insert( osdelem, 1, _("Hail and bribe the pirates") )
    misn.osdCreate( osdtitle, osdelem )
+
+   player.setSpeed( 2/3 )
+   hook.timer( 15, "reset_speed" )
+end
+
+function reset_speed ()
+   player.setSpeed()
 end
 
 function timer_pirate_checkbribe ()
@@ -470,9 +484,9 @@ function timer_pirate_checkbribe ()
       end
    end
 
-   local pp = player.pilot()
    if allbribed then
-      pp:comm(_([[Nelly: "Now we should be able to get out of here safely."]]))
+      player.msg(_([[Nelly: "Now we should be able to get out of here safely."]]),true)
+      player.setSpeed()
       return
    end
 
@@ -481,15 +495,19 @@ function timer_pirate_checkbribe ()
       local msg
       if n <= 0 then
          msg = _([[Nelly: "I guess that's another way of doing it."]])
+         player.setSpeed()
       elseif somebribed then
          msg = _([[Nelly: "You only bribed some pilots, try to bribe them all!"]])
       else
-         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
+         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),
+            {targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
       end
-      pp:comm( msg )
+      player.msg( msg, true )
    end
 
-   hook.timer( 3, "timer_pirate_checkbribe" )
+   if n > 0 then
+      hook.timer( 3, "timer_pirate_checkbribe" )
+   end
 end
 
 function reset_osd_hook ()
@@ -537,7 +555,7 @@ She frowns.
    nel(_([["I'll try to be brief. So ship sensors are based on detecting gravitational anomalies, and thus the mass of a ship plays a critical role in being detected. Smaller ships like yachts or interceptors are much harder to detect than carriers or battleship."]]))
    nel(p_("Nelly", [["Each ship has three important electronic warfare statistics:
 - #oDetection#0 determines the distance at which a ship appears on the radar.
-- #oEvasion#0 determines the distance at which a ship is fully detected, that is, ship type and faction are visible. It also plays a role in how missiles and weapons track the ship.
+- #oSignature#0 determines the distance at which a ship is fully detected, that is, ship type and faction are visible. It also plays a role in how missiles and weapons track the ship.
 - #oStealth#0 determines the distance at which the ship is undetected when in stealth mode"]]))
    nel(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))
@@ -577,7 +595,7 @@ function spotter_spot ()
       mem.spotter_scanning = false
       spotter:taskClear()
       spotter:moveto( spotter_pos )
-      pp:comm(_([[Nelly: "Phew, it seems like they lost track of us."]]))
+      player.msg(_([[Nelly: "Phew, it seems like they lost track of us."]]),true)
 
    elseif mem.spotter_scanning and spotter:scandone() then
       spotter:control(false)
@@ -591,7 +609,7 @@ function spotter_spot ()
       mem.spotter_scanning = true
       spotter:taskClear()
       spotter:pushtask( "scan", pp )
-      pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))
+      player.msg(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try stealthing with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}),true)
       player.autonavReset( 5 )
 
    end

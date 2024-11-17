@@ -20,7 +20,7 @@ local articles = {
          return not player.misnDone("Za'lek Black Hole 11")
       end,
       head = N_([[Scientific Rivalries on the Rise]]),
-      body = _([[Following a worrisome trend, two rival scientists bickering escalated to all out warfare in the Stelman system. Forensic researchers are currently investigating the strewn debris.]]),
+      body = _([[Following a worrisome trend, two rival scientists bickering escalated to all-out warfare in the Stelman system. Forensic researchers are currently investigating the strewn debris.]]),
    },
 }
 

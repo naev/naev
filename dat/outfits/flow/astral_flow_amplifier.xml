@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Astral Flow Amplifier">
+ <general>
+  <typename>Flow Amplifier</typename>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>flow_amplifier</limit>
+  <description>TODO</description>
+  <desc_extra>TODO</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/flow/flow_amplifier.lua</lua>
+ </specific>
+ <tags>
+  <tag>flow</tag>
+  <tag>flow_amplifier</tag>
+ </tags>
+</outfit>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Soromid Databank">
- <lua>spob/lua/soromid_mil_restricted.lua</lua>
+ <lua>soromid_mil_restricted.lua</lua>
  <pos x="10950.997946" y="12105.389613"/>
  <GFX>
   <space>station-sphere.webp</space>

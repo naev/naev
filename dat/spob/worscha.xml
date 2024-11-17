@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Worscha">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="-3271.270726" y="-7117.605452"/>
  <GFX>
   <space>M00.webp</space>
@@ -8,13 +8,13 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>M</class>
-  <population>2e+09</population>
+  <population>2e+07</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -32,17 +32,16 @@
  <tech>
   <item>Systems Low</item>
   <item>Hulls Medium</item>
-  <item>Laser 1</item>
   <item>Ion 2</item>
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
-  <item>High Tech Upgrades 1</item>
   <item>Low Tech Upgrades</item>
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Missiles 1</item>
   <item>Hulls Elite</item>
   <item>Sirius Elite Outfits</item>
+  <item>High Tech Upgrades 3</item>
  </tech>
  <tags>
   <tag>rich</tag>

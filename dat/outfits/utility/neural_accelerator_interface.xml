@@ -13,9 +13,9 @@
   <gfx_store>neural_accelerator_interface.webp</gfx_store>
   <limit>neural_accelerator_interface</limit>
  </general>
- <specific type="modification" group="7">
+ <specific type="modification">
   <lua>outfits/utility/neural_accelerator_interface.lua</lua>
-  <energy_regen_mod>-80</energy_regen_mod>
+  <energy_regen_mod>-100</energy_regen_mod>
   <time_mod>-50</time_mod>
   <time_speedup>50</time_speedup>
  </specific>

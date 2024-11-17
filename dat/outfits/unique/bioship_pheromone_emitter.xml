@@ -8,7 +8,7 @@
   <size>small</size>
   <mass>1</mass>
   <price>1000</price>
-  <description>TODO</description>
+  <description>It is not clear how exactly bioships communicate with each other, however, what is clear is that they do not only use electromagnetic frequencies, but also pheromones to influence and communicate with each other. This experimental device is designed to mimic some observed pheromone patterns, albeit with much more potency, and it may be able to have some influence on bioships in some cases.</description>
   <desc_extra>Release bioship pheromones when used.</desc_extra>
   <gfx_store>placeholder.webp</gfx_store>
  </general>

@@ -1,3 +1,4 @@
+// clang-format off
 /*
  * This code provides a glue layer between PhysicsFS and Simple Directmedia
  *  Layer's (SDL) RWops i/o abstraction.

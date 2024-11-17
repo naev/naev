@@ -5,7 +5,12 @@
  <priority>3</priority>
  <chance>20</chance>
  <location>Bar</location>
- <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+ <cond>
+   if require("common.pirate").systemPresence() &lt; 0 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -18,20 +23,16 @@
 
 ]]--
 local pir = require "common.pirate"
-local portrait = require 'portrait'
 local vn = require 'vn'
+local vni = require "vnimage"
 local car = require "common.cargo"
 local fmt = require "format"
 
-
 -- TODO replace images with something meant for the VN
 local givername = _("Sweaty Individual")
-local giverportrait = portrait.get()
-local giverimage = portrait.getFullPath(giverportrait)
+local giverimage, giverportrait = vni.generic()
 local receivername = _("Burly Individual")
-local receiverimage = portrait.getFullPath(portrait.get())
-
--- luacheck: globals land (Hook functions passed by name)
+local receiverimage = vni.generic()
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -39,7 +40,7 @@ function create()
    mem.origin_p, mem.origin_s = spob.cur()
 
    -- target destination. Override "always_available" to true.
-   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), {always_available=true} )
    if mem.destplanet == nil or pir.factionIsPirate( mem.destplanet:faction() ) then
       misn.finish(false)
    end
@@ -75,7 +76,7 @@ They furrow their brows for a second.
 They shiver with disgust to emphasize and you can see some of their sweat fly off onto the bar floor.
 "Once you deliver it I'll split the money half and half with you."]]), {pnt=mem.destplanet, sys=mem.destsys}))
    vn.na(_("You stare at them coldly."))
-   g(fmt.f(_([["Fine fine, take it all. It should be {credits}. Just remember no scanning means no problems."
+   g(fmt.f(_([["Fine, fine, take it all. It should be {credits}. Just remember no scanning means no problems."
 They extend their sweaty hand towards you.
 "So, are you in?"]]), {credits=fmt.credits(mem.reward)}))
    vn.menu{
@@ -94,7 +95,7 @@ They extend their sweaty hand towards you.
    vn.na(_("You accept their mission without shaking their hand."))
    g(_([["You're a lifesaver!"
 They lean forward and get a bit more serious.
-"One thing though, you do know how to stealth to get around scanning right?"]]))
+"One thing though, you do know how to use stealth to get around scanning right?"]]))
    vn.func( function () accepted = true end )
    vn.menu{
       {_("Stealth?"), "stealthtut"},
@@ -102,11 +103,12 @@ They lean forward and get a bit more serious.
    }
 
    vn.label("stealthtut")
-   g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple. All ships have three main statistics: range they are detected at, evasion range, and stealth range. Detection determines how far away ships can detect your presence, while evasion range controls how well they can target your ship and identify it. When within evasion range, ships can then scan you which does nasty things like melting cakes."]]))
-   g(fmt.f(_([["To avoid getting spotted and scanned, you can go into stealth with {key}. When in stealth, you move much slower than normal, however, ships can only detect you when they are within your stealth range. No detection, no scanning, no problems. You can only stealth if there are no ships nearby, and it is easier to stealth in asteroids or systems with interference. And if you get detected while in stealth, your cover will be blown."]]),
+   g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple. All ships have three main statistics: range they are detected at, signature range, and stealth range. Detection determines how far away ships can detect your presence, while signature range controls how well they can target your ship and identify it. When within signature range, ships can then scan you which does nasty things like melting cakes."]]))
+   g(fmt.f(_([["To avoid getting spotted and scanned, you can go into stealth with {key}. When in stealth, you move much slower than normal, however, ships can only detect you when they are within your stealth range. No detection, no scanning, no problems. You can only use stealth if there are no ships nearby, and it is easier to stealth in asteroids or systems with interference. And if you get detected while in stealth, your cover will be blown."]]),
       {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
    g(fmt.f(_([["So as long as you stealth with {key} and stay away from ships, you won't be scanned and the cake will be alright."]]),
       {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
+   g(_([["If a ship starts to scan you, it'll be marked on your radar and overlay map. Furthermore, if you're carrying stuff that you don't want scanned, your autonav system will automatically be paused so you react. Make sure to get away and stealth so that they can't scan you any more. Don't want to spoil the cake!"]]))
 
    vn.label("notut")
    g(fmt.f(_([["Great. One second, let me get the cake."
@@ -128,7 +130,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
    misn.osdCreate( _("Deliver Cake"), { fmt.f(_("Fly to {pnt} in the {sys} system without getting scanned"), {pnt=mem.destplanet, sys=mem.destsys}) } )
 
    misn.setTitle(_("Deliver Cake"))
-   misn.setReward( fmt.credits(mem.reward) )
+   misn.setReward(mem.reward)
    misn.setDesc( fmt.f(_("Deliver a cake to {pnt} in the {sys} system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), {pnt=mem.destplanet, sys=mem.destsys} ) )
    misn.markerAdd(mem.destplanet)
 
@@ -144,11 +146,12 @@ function land()
    vn.clear()
    vn.scene()
    local b = vn.newCharacter( receivername, { image=receiverimage } )
+   vn.transition()
    vn.na(_("After you land you are promptly greeted by a burly looking individual."))
    b(_([["So you've been sent by Sam? That weasel, I knew they weren't cut out for this work."]]))
    vn.na(_([[You guess that this is the person you were supposed to deliver the cake to and hand it over.]]))
    b(_([[They take a look at the word 'Cake' written on the box and burst into laughter. After a while they calm down and turn to you.
-"This was their idea wasn't it? Always been a bit weird that one."]]))
+"This was their idea, wasn't it? Always been a bit weird that one."]]))
    b(_([["I guess you're not naïve enough to think this is a cake right?"
 They chuckle.
 "Anyway, you did good work bringing it here. I'll get you your reward wired and if you're interested in doing new jobs look into the mission computers. I've white-listed you to act as a courier."]]))
@@ -162,7 +165,6 @@ As they lumber away, you suddenly notice that quite a few suspicious figures in 
 
    pir.addMiscLog(_("You helped deliver a 'cake' for some shady individuals. Your success has opened up more 'special' delivery missions from the mission computer."))
 
-   -- increase faction
-   faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))
+   faction.hit( pir.systemClan(), rnd.rnd(2, 4), nil, nil, true )
    misn.finish(true)
 end

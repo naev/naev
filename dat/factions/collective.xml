@@ -5,7 +5,8 @@
  <player>-100</player>
  <colour>silver</colour>
  <spawn>collective</spawn>
- <standing>collective</standing>
+ <standing>static</standing>
+ <static />
  <description>The Collective are a hivemind of AI ships gone rogue. They seem to attack and destroy all humans on sight.</description>
  <enemies>
   <enemy>Empire</enemy>
@@ -17,6 +18,6 @@
   <enemy>Black Lotus</enemy>
   <enemy>Trader</enemy>
   <enemy>Independent</enemy>
-  <enemy>Traders Guild</enemy>
+  <enemy>Traders Society</enemy>
  </enemies>
 </faction>

@@ -1,4 +1,5 @@
 lua_source = files(
+   'cinema.lua',
    'equipopt/optimize.lua',
    'escort.lua',
    'fleet.lua',
@@ -19,3 +20,5 @@ lua_source = files(
    'vn/core.lua',
    'vntk.lua',
 )
+
+subdir('lyaml')

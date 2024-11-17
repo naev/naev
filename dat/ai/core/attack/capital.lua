@@ -4,6 +4,10 @@ local __atk_g_capital -- Forward-declared functions
 
 local atk_capital = {}
 
+function atk_capital.init ()
+   mem.atk_pref_func = atk.prefer_capship
+end
+
 --[[
 -- Main control function for capital ship behavior.
 --]]
@@ -20,7 +24,7 @@ function atk_capital.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
@@ -39,15 +43,16 @@ end
 --As there is no aiming involved this is a turret/capital ship only attack method
 --]]
 function __atk_g_capital( target, dist )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    local aimdir, dir
    local shoot = false
 
    -- Always launch fighters for now
-   ai.weapset( 5 )
+   atk.fb_and_pd()
 
-   -- Set main weapon set
-   ai.weapset( mem.weapset )
+   -- Also try to shoot missiles
+   aimdir = ai.aim(target)
+   atk.dogfight_seekers( dist, aimdir )
 
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
    if ai.pilot():energy() <= 1 then
@@ -70,7 +75,6 @@ function __atk_g_capital( target, dist )
    elseif dist > 0.6* range then
       --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
-      aimdir = ai.aim(target)
       dir    = ai.iface(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
          ai.accel()
@@ -80,7 +84,6 @@ function __atk_g_capital( target, dist )
    elseif dist > 0.3*range then
       --capital ship turning is slow
       --emphasize facing for being able to close quickly
-      aimdir = ai.aim(target)
       dir    = ai.iface(target)
       -- Only accelerate if the target is getting away.
       if dir < math.rad(10) and dir > -math.rad(10) and ai.relvel(target) > -math.rad(10) then
@@ -91,25 +94,15 @@ function __atk_g_capital( target, dist )
 
    --within close range; aim and blast away with everything
    else
-      dir = ai.aim(target)
-      -- At point-blank range, we ignore recharge.
-      if dir < math.rad(10) then
-         ai.shoot()
-      end
-      ai.shoot(true)
+      atk.primary()
+      atk.secondary()
    end
 
    if shoot then
       if not mem.recharge then
-         -- test if, by chance, the target can be hit by cannons
-         if aimdir < math.rad(10) then
-            ai.shoot()
-         end
-         ai.shoot(true)
+         atk.primary()
+         atk.secondary()
       end
-
-      -- Also try to shoot missiles
-      atk.dogfight_seekers( dist, aimdir )
    end
 end
 

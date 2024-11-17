@@ -2,9 +2,8 @@
 <ship name="Empire Pacifier">
  <points>90</points>
  <base_type>Pacifier</base_type>
- <GFX size="77" sx="10" sy="10">pacifier_empire</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="77" sx="10" sy="10">pacifier_empire</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2100000</price>
@@ -14,9 +13,10 @@
  <trail_generator x="-25" y="8" h="0" />
  <trail_generator x="-25" y="-8" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Empire</faction>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Empire") &gt;= 50</cond>
- <condstr>You need at least 50 reputation with the Empire.</condstr>
+ <cond>math.floor(system.cur():reputation("Empire")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with the Empire.</condstr>
  <description>This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
   <armour>550</armour>
@@ -24,7 +24,7 @@
  </health>
  <characteristics>
   <crew>17</crew>
-  <mass>290</mass>
+  <mass>400</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
@@ -40,9 +40,10 @@
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

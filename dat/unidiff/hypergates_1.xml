@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="hypergates_1">
+ <!-- All hypergates are almost there! -->
  <spob name="Hypergate Dvaer">
-  <gfx_space>hypergate_dvaered_deactivated.webp</gfx_space>
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
  <spob name="Hypergate Feye">
-  <gfx_space>hypergate_soromid_deactivated.webp</gfx_space>
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
  <spob name="Hypergate Gamma Polaris">
-  <gfx_space>hypergate_empire_deactivated.webp</gfx_space>
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
  <spob name="Hypergate Kiwi">
-  <gfx_space>hypergate_sirius_deactivated.webp</gfx_space>
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
  <spob name="Hypergate Ruadan">
-  <gfx_space>hypergate_zalek_deactivated.webp</gfx_space>
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
  <spob name="Hypergate NGC-14549">
-  <gfx_space>hypergate_neutral_deactivated.webp</gfx_space>
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
 </unidiff>

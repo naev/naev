@@ -14,11 +14,10 @@
 
 #include "nlua_transform.h"
 
-#include "log.h"
-#include "ndata.h"
 #include "nluadef.h"
 
 /* Transform metatable methods. */
+static int transformL_tostring( lua_State *L );
 static int transformL_eq( lua_State *L );
 static int transformL_new( lua_State *L );
 static int transformL_mul( lua_State *L );
@@ -30,7 +29,9 @@ static int transformL_rotate2d( lua_State *L );
 static int transformL_ortho( lua_State *L );
 static int transformL_applyPoint( lua_State *L );
 static int transformL_applyDim( lua_State *L );
+
 static const luaL_Reg transformL_methods[] = {
+   { "__tostring", transformL_tostring },
    { "__eq", transformL_eq },
    { "__mul", transformL_mul },
    { "get", transformL_get },
@@ -42,8 +43,7 @@ static const luaL_Reg transformL_methods[] = {
    { "ortho", transformL_ortho },
    { "applyPoint", transformL_applyPoint },
    { "applyDim", transformL_applyDim },
-   {0,0}
-}; /**< Transform metatable methods. */
+   { 0, 0 } }; /**< Transform metatable methods. */
 
 /**
  * @brief Loads the transform library.
@@ -53,7 +53,7 @@ static const luaL_Reg transformL_methods[] = {
  */
 int nlua_loadTransform( nlua_env env )
 {
-   nlua_register(env, TRANSFORM_METATABLE, transformL_methods, 1);
+   nlua_register( env, TRANSFORM_METATABLE, transformL_methods, 1 );
    return 0;
 }
 
@@ -69,22 +69,23 @@ int nlua_loadTransform( nlua_env env )
  *    @param ind Index position to find the transform.
  *    @return Transform found at the index in the state.
  */
-mat4* lua_totransform( lua_State *L, int ind )
+mat4 *lua_totransform( lua_State *L, int ind )
 {
-   return (mat4*) lua_touserdata(L,ind);
+   return (mat4 *)lua_touserdata( L, ind );
 }
 /**
- * @brief Gets transform at index or raises error if there is no transform at index.
+ * @brief Gets transform at index or raises error if there is no transform at
+ * index.
  *
  *    @param L Lua state to get transform from.
  *    @param ind Index position to find transform.
  *    @return Transform found at the index in the state.
  */
-mat4* luaL_checktransform( lua_State *L, int ind )
+mat4 *luaL_checktransform( lua_State *L, int ind )
 {
-   if (lua_istransform(L,ind))
-      return lua_totransform(L,ind);
-   luaL_typerror(L, ind, TRANSFORM_METATABLE);
+   if ( lua_istransform( L, ind ) )
+      return lua_totransform( L, ind );
+   luaL_typerror( L, ind, TRANSFORM_METATABLE );
    return NULL;
 }
 /**
@@ -94,12 +95,12 @@ mat4* luaL_checktransform( lua_State *L, int ind )
  *    @param transform Transform to push.
  *    @return Newly pushed transform.
  */
-mat4* lua_pushtransform( lua_State *L, mat4 transform )
+mat4 *lua_pushtransform( lua_State *L, mat4 transform )
 {
-   mat4 *t = (mat4*) lua_newuserdata(L, sizeof(mat4));
-   *t = transform;
-   luaL_getmetatable(L, TRANSFORM_METATABLE);
-   lua_setmetatable(L, -2);
+   mat4 *t = (mat4 *)lua_newuserdata( L, sizeof( mat4 ) );
+   *t      = transform;
+   luaL_getmetatable( L, TRANSFORM_METATABLE );
+   lua_setmetatable( L, -2 );
    return t;
 }
 /**
@@ -113,16 +114,32 @@ int lua_istransform( lua_State *L, int ind )
 {
    int ret;
 
-   if (lua_getmetatable(L,ind)==0)
+   if ( lua_getmetatable( L, ind ) == 0 )
       return 0;
-   lua_getfield(L, LUA_REGISTRYINDEX, TRANSFORM_METATABLE);
+   lua_getfield( L, LUA_REGISTRYINDEX, TRANSFORM_METATABLE );
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
+   if ( lua_rawequal( L, -1, -2 ) ) /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */
+   lua_pop( L, 2 ); /* remove both metatables */
    return ret;
+}
+
+/**
+ * @brief Gets a string representing the transform.
+ *
+ *    @luatparam Transform t Transform to get string of.
+ *    @luatreturn string String corresponding to the transform.
+ * @luafunc __tostring
+ */
+static int transformL_tostring( lua_State *L )
+{
+   char        buf[STRMAX_SHORT];
+   const mat4 *t = luaL_checktransform( L, 1 );
+   mat4_tostr( t, buf, sizeof( buf ) );
+   lua_pushstring( L, buf );
+   return 1;
 }
 
 /**
@@ -135,9 +152,9 @@ int lua_istransform( lua_State *L, int ind )
  */
 static int transformL_eq( lua_State *L )
 {
-   mat4 *t1 = luaL_checktransform(L,1);
-   mat4 *t2 = luaL_checktransform(L,2);
-   lua_pushboolean( L, (memcmp( t1, t2, sizeof(mat4) )==0) );
+   const mat4 *t1 = luaL_checktransform( L, 1 );
+   const mat4 *t2 = luaL_checktransform( L, 2 );
+   lua_pushboolean( L, ( memcmp( t1, t2, sizeof( mat4 ) ) == 0 ) );
    return 1;
 }
 
@@ -149,11 +166,10 @@ static int transformL_eq( lua_State *L )
  */
 static int transformL_new( lua_State *L )
 {
-   if (lua_istransform(L,1)) {
-      mat4 *M = lua_totransform(L,1);
+   if ( lua_istransform( L, 1 ) ) {
+      const mat4 *M = lua_totransform( L, 1 );
       lua_pushtransform( L, *M );
-   }
-   else
+   } else
       lua_pushtransform( L, mat4_identity() );
    return 1;
 }
@@ -168,11 +184,11 @@ static int transformL_new( lua_State *L )
  */
 static int transformL_mul( lua_State *L )
 {
-   mat4 *A = luaL_checktransform(L, 1);
-   mat4 *B = luaL_checktransform(L, 2);
-   mat4 C;
+   const mat4 *A = luaL_checktransform( L, 1 );
+   const mat4 *B = luaL_checktransform( L, 2 );
+   mat4        C;
    mat4_mul( &C, A, B );
-   lua_pushtransform(L, C);
+   lua_pushtransform( L, C );
    return 1;
 }
 
@@ -187,15 +203,15 @@ static int transformL_mul( lua_State *L )
  */
 static int transformL_get( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
-   lua_newtable(L);              /* t */
-   for (int i=0; i<4; i++) {
-      lua_newtable(L);           /* t, t */
-      for (int j=0; j<4; j++) {
-         lua_pushnumber(L,M->m[j][i]); /* t, t, n */
-         lua_rawseti(L,-2,j+1);       /* t, t */
+   mat4 *M = luaL_checktransform( L, 1 );
+   lua_newtable( L ); /* t */
+   for ( int i = 0; i < 4; i++ ) {
+      lua_newtable( L ); /* t, t */
+      for ( int j = 0; j < 4; j++ ) {
+         lua_pushnumber( L, M->m[j][i] ); /* t, t, n */
+         lua_rawseti( L, -2, j + 1 );     /* t, t */
       }
-      lua_rawseti(L,-2,i+1);          /* t */
+      lua_rawseti( L, -2, i + 1 ); /* t */
    }
    return 1;
 }
@@ -211,18 +227,18 @@ static int transformL_get( lua_State *L )
  */
 static int transformL_set( lua_State *L )
 {
-   mat4 *M  = luaL_checktransform(L, 1);
-   int i    = luaL_checkinteger(L, 2)-1;
-   int j    = luaL_checkinteger(L, 3)-1;
-   double v = luaL_checknumber(L, 4);
+   mat4  *M = luaL_checktransform( L, 1 );
+   int    i = luaL_checkinteger( L, 2 ) - 1;
+   int    j = luaL_checkinteger( L, 3 ) - 1;
+   double v = luaL_checknumber( L, 4 );
 #if DEBUGGING
-   if (i < 0 || i > 3) {
-      WARN(_("Matrix column value not in range: %d"),i);
-      i = CLAMP(0,3,i);
+   if ( i < 0 || i > 3 ) {
+      NLUA_WARN( L, _( "Matrix column value not in range: %d" ), i );
+      i = CLAMP( 0, 3, i );
    }
-   if (j < 0 || j > 3) {
-      WARN(_("Matrix row value not in range: %d"),j);
-      j = CLAMP(0,3,j);
+   if ( j < 0 || j > 3 ) {
+      NLUA_WARN( L, _( "Matrix row value not in range: %d" ), j );
+      j = CLAMP( 0, 3, j );
    }
 #endif /* DEBUGGING */
    M->m[i][j] = v;
@@ -241,13 +257,13 @@ static int transformL_set( lua_State *L )
  */
 static int transformL_scale( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
-   double x = luaL_checknumber(L,2);
-   double y = luaL_checknumber(L,3);
-   double z = luaL_optnumber(L,4,1.);
-   mat4 out = *M;
+   const mat4 *M   = luaL_checktransform( L, 1 );
+   double      x   = luaL_checknumber( L, 2 );
+   double      y   = luaL_checknumber( L, 3 );
+   double      z   = luaL_optnumber( L, 4, 1. );
+   mat4        out = *M;
    mat4_scale( &out, x, y, z );
-   lua_pushtransform(L, out);
+   lua_pushtransform( L, out );
    return 1;
 }
 
@@ -263,13 +279,13 @@ static int transformL_scale( lua_State *L )
  */
 static int transformL_translate( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
-   double x = luaL_checknumber(L,2);
-   double y = luaL_checknumber(L,3);
-   double z = luaL_optnumber(L,4,0.);
-   mat4 out = *M;
+   const mat4 *M   = luaL_checktransform( L, 1 );
+   double      x   = luaL_checknumber( L, 2 );
+   double      y   = luaL_checknumber( L, 3 );
+   double      z   = luaL_optnumber( L, 4, 0. );
+   mat4        out = *M;
    mat4_translate( &out, x, y, z );
-   lua_pushtransform(L, out);
+   lua_pushtransform( L, out );
    return 1;
 }
 
@@ -282,11 +298,11 @@ static int transformL_translate( lua_State *L )
  */
 static int transformL_rotate2d( lua_State *L )
 {
-   mat4 *M = luaL_checktransform(L, 1);
-   double a = luaL_checknumber(L,2);
-   mat4 out = *M;
+   const mat4 *M   = luaL_checktransform( L, 1 );
+   double      a   = luaL_checknumber( L, 2 );
+   mat4        out = *M;
    mat4_rotate2d( &out, a );
-   lua_pushtransform(L, out);
+   lua_pushtransform( L, out );
    return 1;
 }
 
@@ -304,13 +320,14 @@ static int transformL_rotate2d( lua_State *L )
  */
 static int transformL_ortho( lua_State *L )
 {
-   double left    = luaL_checknumber(L,1);
-   double right   = luaL_checknumber(L,2);
-   double bottom  = luaL_checknumber(L,3);
-   double top     = luaL_checknumber(L,4);
-   double nearVal = luaL_checknumber(L,5);
-   double farVal  = luaL_checknumber(L,6);
-   lua_pushtransform(L, mat4_ortho(left, right, bottom, top, nearVal, farVal) );
+   double left    = luaL_checknumber( L, 1 );
+   double right   = luaL_checknumber( L, 2 );
+   double bottom  = luaL_checknumber( L, 3 );
+   double top     = luaL_checknumber( L, 4 );
+   double nearVal = luaL_checknumber( L, 5 );
+   double farVal  = luaL_checknumber( L, 6 );
+   lua_pushtransform( L,
+                      mat4_ortho( left, right, bottom, top, nearVal, farVal ) );
    return 1;
 }
 
@@ -329,24 +346,26 @@ static int transformL_ortho( lua_State *L )
 static int transformL_applyPoint( lua_State *L )
 {
    double gp[3], p[3];
-   mat4 *M = luaL_checktransform(L, 1);
-   gp[0] = luaL_checknumber(L,2);
-   gp[1] = luaL_checknumber(L,3);
-   gp[2] = luaL_checknumber(L,4);
+   mat4  *M = luaL_checktransform( L, 1 );
+   gp[0]    = luaL_checknumber( L, 2 );
+   gp[1]    = luaL_checknumber( L, 3 );
+   gp[2]    = luaL_checknumber( L, 4 );
 
-   for (int i=0; i<3; i++)
-      p[i] = M->m[0][i]*gp[0] + M->m[1][i]*gp[1] + M->m[2][i]*gp[2] + M->m[3][i];
+   for ( int i = 0; i < 3; i++ )
+      p[i] = M->m[0][i] * gp[0] + M->m[1][i] * gp[1] + M->m[2][i] * gp[2] +
+             M->m[3][i];
 
-   lua_pushnumber(L, p[0]);
-   lua_pushnumber(L, p[1]);
-   lua_pushnumber(L, p[2]);
+   lua_pushnumber( L, p[0] );
+   lua_pushnumber( L, p[1] );
+   lua_pushnumber( L, p[2] );
    return 3;
 }
 
 /**
  * @brief Applies a transformation to a dimension.
  *
- * @note This is similar to Transform.applyPoint, except the translation is not applied.
+ * @note This is similar to Transform.applyPoint, except the translation is not
+ * applied.
  *
  *    @luatparam Transform T Transform to apply.
  *    @luatparam number x Dimension X-coordinate.
@@ -360,16 +379,16 @@ static int transformL_applyPoint( lua_State *L )
 static int transformL_applyDim( lua_State *L )
 {
    double gp[3], p[3];
-   mat4 *M = luaL_checktransform(L, 1);
-   gp[0] = luaL_checknumber(L,2);
-   gp[1] = luaL_checknumber(L,3);
-   gp[2] = luaL_checknumber(L,4);
+   mat4  *M = luaL_checktransform( L, 1 );
+   gp[0]    = luaL_checknumber( L, 2 );
+   gp[1]    = luaL_checknumber( L, 3 );
+   gp[2]    = luaL_checknumber( L, 4 );
 
-   for (int i=0; i<3; i++)
-      p[i] = M->m[0][i]*gp[0] + M->m[1][i]*gp[1] + M->m[2][i]*gp[2];
+   for ( int i = 0; i < 3; i++ )
+      p[i] = M->m[0][i] * gp[0] + M->m[1][i] * gp[1] + M->m[2][i] * gp[2];
 
-   lua_pushnumber(L, p[0]);
-   lua_pushnumber(L, p[1]);
-   lua_pushnumber(L, p[2]);
+   lua_pushnumber( L, p[0] );
+   lua_pushnumber( L, p[1] );
+   lua_pushnumber( L, p[2] );
    return 3;
 }

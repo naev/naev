@@ -2,24 +2,31 @@
 <ssys name="Sten">
  <general>
   <radius>10000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>76.725000</interference>
+  <nebula volatility="16.700000" hue="285.000000">600.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="902.036592" y="-259.267411"/>
+ <pos x="722.428542" y="-283.396978"/>
  <spobs/>
  <jumps>
-  <jump target="Atlantis">
+  <jump target="Anger">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Rei">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Ryder">
+  <jump target="Proxima Centauri">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>Nebula Crystal</group>
+   <radius>2500.000000</radius>
+   <pos x="-7220.247986" y="543.115999"/>
+  </asteroid>
+ </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

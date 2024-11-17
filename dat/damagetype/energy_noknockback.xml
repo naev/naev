@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dtype name="energy_noknockback" display="#gEnergy#0">
+ <shield>1.0</shield>
+ <armour>1.0</armour>
+ <knockback>0</knockback>
+</dtype>

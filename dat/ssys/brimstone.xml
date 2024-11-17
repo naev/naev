@@ -2,11 +2,10 @@
 <ssys name="Brimstone">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="682.000000" y="-337.000000"/>
+ <pos x="760.027802" y="-527.735516"/>
  <spobs>
   <spob>Alleyway</spob>
   <spob>Brimstone I</spob>
@@ -20,10 +19,14 @@
  </spobs>
  <jumps>
   <jump target="Andee">
-   <pos x="7451.987055" y="-21525.246705"/>
+   <pos x="9240.952485" y="-14852.017837"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Aneel Azi">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gilligan's Light">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

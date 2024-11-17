@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Wunomi">
+ <pos x="0.000000" y="0.000000"/>
+ <GFX>
+  <space>L00.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

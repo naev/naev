@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Scholz's Moon">
+ <pos x="-4215.084823" y="-5379.217403"/>
+ <GFX>
+  <space>moon-Y00.webp</space>
+  <exterior>uninhabited-rocky-magenta-02.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <nomissionspawn/>
+   <uninhabited/>
+  </services>
+  <commodities/>
+  <description>Completely ravaged and barely recognizable, your ship logs indicate that Scholz's Moon was once a prosperous city-moon of Scholz IIa. However, unlike the records, the top one kilometer of the surface has been completely burnt off, leaving only irradiated waste. Scattered large craters seem to indicate the fate of the planet around which the moon was once orbiting.
+
+Although there is no forms of life, you find a grisly scene of a pile of ships, likely landing after the incident to try to take cover, however, the chance for any survivors is long gone. At least you can find decent amounts of fuel to refuel your ship as necessary, as long as you don't focus on the horrific scenery.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+  <tag>nonews</tag>
+  <tag>nonpc</tag>
+ </tags>
+</spob>

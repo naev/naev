@@ -14,25 +14,25 @@
  <absorb>90</absorb>
  <commodity>
   <name>Iron</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Nickel</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Gold</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
  <commodity>
   <name>Platinum</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
  <commodity>
   <name>Therite</name>
-  <quantity>10</quantity>
+  <quantity>50</quantity>
   <rarity>2</rarity>
  </commodity>
 </asteroid>

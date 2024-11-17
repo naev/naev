@@ -14,8 +14,10 @@ local _sfx
 local function _sfx_load ()
    audio = require 'love.audio'
    _sfx = {
+      bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
       money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
       victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
+      eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
    }
 end
 
@@ -39,6 +41,25 @@ function lmisn.sfxMoney ()
    luaspfx.sfx( false, nil, sfx )
 end
 
+--[[--
+   Plays a jingle indicating success. Meant more for small good things advancing missions rather than completion.
+--]]
+function lmisn.sfxBingo()
+   if not _sfx then _sfx_load() end
+
+   local sfx = _sfx.bingo:clone()
+   luaspfx.sfx( false, nil, sfx )
+end
+
+--[[--
+   Plays a weird eerie sfx.
+--]]
+function lmisn.sfxEerie ()
+   if not _sfx then _sfx_load() end
+
+   local sfx = _sfx.eerie:clone()
+   luaspfx.sfx( false, nil, sfx )
+end
 
 --[[--
    Returns a complete or filtered table of landable spobs (that is, landable, inhabitable, and not restricted)
@@ -88,6 +109,28 @@ function lmisn.getNextSystem( nowsys, finalsys, hidden )
    end
 
    return path[1]:dest()
+end
+
+--[[--
+   Gets the route between nowsys and finalsys.
+
+   @treturn table A table of systems including the nowsys and finalsys.
+--]]
+function lmisn.getRoute( nowsys, finalsys, hidden )
+   local route = {nowsys}
+   if nowsys == finalsys or finalsys == nil then
+      return route
+   end
+
+   local path = nowsys:jumpPath( finalsys, hidden )
+   if not path then
+      return route
+   end
+
+   for k,v in ipairs(path) do
+      route[ k+1 ] = v:dest()
+   end
+   return route
 end
 
 lmisn.sysFilters = {}
@@ -160,7 +203,7 @@ end
            return false
        end )
 
-   if #spobs == 0 then abort() end -- In case no suitable spobs are in range.
+   if #spobs == 0 then misn.finish(false) end -- In case no suitable spobs are in range.
 
    local index = rnd.rnd(1, #spobs)
    destspob = spobs[index][1]
@@ -185,6 +228,7 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
 
    -- Run max times
    for i=1,max do
+      local added = 0
       local nopen = {}
       -- Get all the adjacent system of the current set
       for _j,s in ipairs(open) do
@@ -195,8 +239,13 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
                nopen[ #nopen+1 ] = a
                close[ a:nameRaw() ] = a
                dist[  a:nameRaw() ] = i
+               added = added+1
             end
          end
+      end
+      -- Found all systems
+      if added==0 then
+         break
       end
       open = nopen -- New table becomes the old
    end
@@ -232,7 +281,7 @@ end
    @tparam[opt=system.cur()] System sys System to base distance calculations off of.
    @tparam number min Minimum jump distance to get spob at.
    @tparam number max Maximum jump distance to get spob at.
-   @tparam[opt=nil] Faction fct What faction to do landing checks with.
+   @tparam[opt=faction.get("Player")] Faction fct What faction to do landing checks with.
    @tparam[opt=false] boolean samefct Whether or not to only allow spobs to belong exactly to fct.
    @tparam[opt=nil] function filter Filtering function that returns a boolean and takes a spob being tested as a parameter.
    @param[opt=nil] data Custom data that will be passed to filter.
@@ -240,6 +289,7 @@ end
    @treturn table A table containing all the spobs matching the criteria. Can be empty if no matches found.
 --]]
 function lmisn.getSpobAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+   fct = fct or faction.get("Player")
    local pnts = {}
    local candidates = lmisn.getSysAtDistance( sys, min, max, lmisn.sysFilters.factionLandable( fct ), nil, hidden )
    if #candidates == 0 then
@@ -277,6 +327,44 @@ function lmisn.getRandomSpobAtDistance( sys, min, max, fct, samefct, filter, dat
       return nil, nil
    end
    return spob.getS( candidates[ rnd.rnd(1,#candidates) ] )
+end
+
+--[[--
+Calculates the distance (in pixels) from a position in a system to a position in another system.
+
+   @tparam System origin_sys System to calculate distance from.
+   @tparam Vec2 origin_pos Position to calculate distance from.
+   @tparam System dest_sys Target system to calculate distance to.
+   @tparam Vec2 dest_pos Target position to calculate distance to.
+   @tparam table params Table of parameters. Currently supported are "use_hidden".
+   @return The distance travelled
+   @return The jumpPath leading to the target system
+--]]
+function lmisn.calculateDistance( origin_sys, origin_pos, dest_sys, dest_pos, params )
+   params = params or {}
+   local traveldist = 0
+   local pos = origin_pos
+
+   local jumps = origin_sys:jumpPath( dest_sys, params.use_hidden )
+   if jumps then
+      for k, v in ipairs(jumps) do
+         -- We're not in the destination system yet.
+         -- So, get the next system on the route, and the distance between
+         -- our entry point and the jump point to the next system.
+         -- Then, set the exit jump point as the next entry point.
+         local j, r = jump.get( v:system(), v:dest() )
+         traveldist = traveldist + vec2.dist(pos, j:pos())
+         pos = r:pos()
+      end
+   else
+      jumps = {}
+   end
+
+   -- We ARE in the destination system now, so route from the entry point to the destination planet.
+   if dest_pos then
+      traveldist = traveldist + vec2.dist( pos, dest_pos )
+   end
+   return traveldist, jumps
 end
 
 --[[--

@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>40</mass>
+  <mass>16</mass>
   <price>100000</price>
   <description>Mass Drivers fire massive slugs of matter at enemy ships, dealing damage through kinetic impact and knocking the target back. One of the most economical heavy weapons in the galaxy.</description>
   <gfx_store>weapon02.webp</gfx_store>
@@ -19,15 +19,15 @@
   <delay>0.35</delay>
   <speed>500</speed>
   <range blowup="armour">1900</range>
-  <energy>10.5</energy>
+  <energy>11.5</energy>
   <heatup>50</heatup>
   <trackmin>1000</trackmin>
   <trackmax>6000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
-   <penetrate>48</penetrate>
-   <physical>12</physical>
+   <type>kinetic</type>
+   <penetrate>54</penetrate>
+   <physical>13.5</physical>
   </damage>
  </specific>
  <tags>

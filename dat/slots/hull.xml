@@ -4,4 +4,5 @@
  <description>This slot is used for structural modifications to the ship's hull. This slot represents the base layer of armour plating, and also greatly affects mass, cargo space and available weapon slots.</description>
  <exclusive/>
  <required/>
+ <icon>hull.png</icon>
 </slot>

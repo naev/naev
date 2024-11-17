@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Ancestor">
+ <lua>dvaered.lua</lua>
  <points>40</points>
  <base_type>Ancestor</base_type>
- <GFX size="65">ancestor_dvaered</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="65">ancestor_dvaered</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>550000</price>
@@ -13,9 +13,10 @@
  <trail_generator x="-2" y="-29" h="0">nebula</trail_generator>
  <trail_generator x="-10" y="0" h="0">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
+ <faction>Dvaered</faction>
  <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt;= 30</cond>
- <condstr>You need at least 30 reputation with House Dvaered.</condstr>
+ <cond>math.floor(system.cur():reputation("Dvaered")+0.5) &gt;= 30</cond>
+ <condstr>You need at least 30% reputation with House Dvaered.</condstr>
  <description>On this military grade version of the Ancestor, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
   <armour>60</armour>
@@ -36,8 +37,12 @@
   <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

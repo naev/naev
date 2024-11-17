@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Salsax Nest">
+ <pos x="5891.722356" y="1332.614973"/>
+ <GFX>
+  <space>station-commerce3.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Salsax Nest is a commerce station much like stations found all over the galaxy. It acts as a local centre for commodity trade, and is considered a home away from home for many regular freighter captains because they can meet kindred spirits here.</description>
+  <bar>Trader-heavy spacedock bars like this one are often a good place to hear stories from across the galaxy. Word of mouth is still a potent source of information even in this day and age, as the news channels only report on so much that goes on in the galaxy.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+ </tech>
+ <tags>
+  <tag>trade</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

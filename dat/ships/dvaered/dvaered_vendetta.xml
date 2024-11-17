@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vendetta">
+ <lua>dvaered.lua</lua>
  <points>50</points>
  <base_type>Vendetta</base_type>
- <GFX size="49">vendetta_dvaered</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="49">vendetta_dvaered</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>450000</price>
@@ -14,9 +14,10 @@
  <trail_generator x="-5" y="4" h="0" always_under="1">fire</trail_generator>
  <trail_generator x="-5" y="-4" h="0" always_under="1">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
+ <faction>Dvaered</faction>
  <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt;= 30</cond>
- <condstr>You need at least 30 reputation with House Dvaered.</condstr>
+ <cond>math.floor(system.cur():reputation("Dvaered")+0.5) &gt;= 30</cond>
+ <condstr>You need at least 30% reputation with House Dvaered.</condstr>
  <description>On this military grade version of the Vendetta, the distribution of the weight on the structure has been optimized in order to allow embarking more payload.</description>
  <health>
   <armour>100</armour>
@@ -24,7 +25,7 @@
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>100</mass>
+  <mass>140</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
@@ -38,8 +39,10 @@
   <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

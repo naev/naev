@@ -12,20 +12,26 @@ local function count_classes( pilots )
 end
 
 local formations = {}
+local keys = {}
+local names = {}
 
-function formations.cross(leader)
+keys[#keys + 1] = "cross"
+names[#names + 1] = p_("formation", "Cross")
+formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    -- Cross logic. Forms an X.
    local angle = math.pi/4 -- Spokes start rotated at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       angle = math.fmod(angle + math.pi/2, 2*math.pi) -- Rotate spokes by 90 degrees.
       radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
    end
 end
 
-function formations.buffer(leader)
+keys[#keys + 1] = "buffer"
+names[#names + 1] = p_("formation", "Buffer")
+formations[keys[#keys]] = function (leader)
    -- Buffer logic. Consecutive arcs emanating from the fleader. Stored as polar coordinates.
    local pilots = leader:followers()
    local class_count = count_classes(pilots)
@@ -68,23 +74,27 @@ function formations.buffer(leader)
          count[ship_class] = count[ship_class] + 1 --Update the count
       end
       radius = radii[ship_class] --Assign the radius, defined above.
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
    end
 end
 
-function formations.vee(leader)
+keys[#keys + 1] = "vee"
+names[#names + 1] = p_("formation", "Vee")
+formations[keys[#keys]] = function (leader)
    -- The vee formation forms a v, with the fleader at the apex, and the arms extending in front.
    local pilots = leader:followers()
    local angle = math.pi/4 -- Arms start at a 45 degree angle.
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       angle = angle * -1 -- Flip the arms between -45 and 45 degrees.
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
 
-function formations.wedge(leader)
+keys[#keys + 1] = "wedge"
+names[#names + 1] = p_("formation", "Wedge")
+formations[keys[#keys]] = function (leader)
    -- The wedge formation forms a v, with the fleader at the apex, and the arms extending out back.
    local pilots = leader:followers()
    local flip = -1
@@ -92,13 +102,15 @@ function formations.wedge(leader)
    local radius = 100 -- First ship distance.
    for i, p in ipairs(pilots) do
       angle = (flip * math.pi/4) + math.pi -- Flip the arms between 135 and 225 degrees.
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
 
-function formations.echelon_left(leader)
+keys[#keys + 1] = "echelon_left"
+names[#names + 1] = p_("formation", "Echelon Left")
+formations[keys[#keys]] = function (leader)
    --This formation forms a "/", with the fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -106,13 +118,15 @@ function formations.echelon_left(leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(135 + (90 * flip))  --Flip between 45 degrees and 225 degrees.
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1) / 2)) -- Increase the radius every 2 positions
    end
 end
 
-function formations.echelon_right(leader)
+keys[#keys + 1] = "echelon_right"
+names[#names + 1] = p_("formation", "Echelon Right")
+formations[keys[#keys]] = function (leader)
    --This formation forms a "\", with the fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -120,13 +134,15 @@ function formations.echelon_right(leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(225 + (90 * flip)) --Flip between 315 degrees, and 135 degrees
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1) / 2))
    end
 end
 
-function formations.column(leader)
+keys[#keys + 1] = "column"
+names[#names + 1] = p_("formation", "Column")
+formations[keys[#keys]] = function (leader)
    --This formation is a simple "|", with fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -134,13 +150,15 @@ function formations.column(leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.pi * (1+flip)/2  --flip between 0 degrees and 180 degrees
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
 end
 
-function formations.wall(leader)
+keys[#keys + 1] = "wall"
+names[#names + 1] = p_("formation", "Wall")
+formations[keys[#keys]] = function (leader)
    --This formation is a "-", with the fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -148,13 +166,15 @@ function formations.wall(leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.pi + (math.pi/2 * flip) --flip between 90 degrees and 270 degrees
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
       radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
 end
 
-function formations.fishbone(leader)
+keys[#keys + 1] = "fishbone"
+names[#names + 1] = p_("formation", "Fishbone")
+formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    local radius = 500
    local flip = -1
@@ -162,7 +182,7 @@ function formations.fishbone(leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(22.5 * flip) / (radius / orig_radius)
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       if flip == 0 then
          flip = -1
          radius = (orig_radius * (math.ceil((i+1)/3))) + ((orig_radius * (math.ceil((i+1)/3))) / 30)
@@ -175,7 +195,9 @@ function formations.fishbone(leader)
    end
 end
 
-function formations.chevron(leader)
+keys[#keys + 1] = "chevron"
+names[#names + 1] = p_("formation", "Chevron")
+formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    local radius = 500
    local flip = -1
@@ -183,7 +205,7 @@ function formations.chevron(leader)
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(22.5 * flip) / (radius / orig_radius)
-      leader:msg(p, "form-pos", {angle, radius})
+      leader:msg(p, "form_pos", {angle, radius})
       if flip == 0 then
          flip = -1
          radius = (orig_radius * (math.ceil((i+1)/3))) - ((orig_radius * (math.ceil((i+1)/3))) / 20)
@@ -196,26 +218,27 @@ function formations.chevron(leader)
    end
 end
 
-function formations.circle(leader)
+keys[#keys + 1] = "circle"
+names[#names + 1] = p_("formation", "Circle")
+formations[keys[#keys]] = function (leader)
    -- Default to circle.
    local pilots = leader:followers()
    local angle = 2*math.pi / #pilots -- The angle between each ship, in radians.
    local radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle * i, radius, "absolute"})
+      leader:msg(p, "form_pos", {angle * i, radius, "absolute"})
    end
 end
 
-local keys = {}
-for k, _ in pairs(formations) do
-   keys[#keys+1] = k
-end
-
 formations.keys = keys
+formations.names = names
+if #keys ~= #names then
+   warn(_("The size of formation.keys doesn't match the size of formation.names!"))
+end
 
 -- Clear formation; not really a 'formation' so it is not in keys
 function formations.clear(leader)
-   leader:msg(leader:followers(), "form-pos", nil)
+   leader:msg(leader:followers(), "form_pos", nil)
 end
 
 function formations.random_key()
@@ -231,7 +254,7 @@ function formations.circleLarge(leader)
    local angle = 2*math.pi / #pilots -- The angle between each ship, in radians.
    local radius = 1500
    for i, p in ipairs(pilots) do
-      leader:msg(p, "form-pos", {angle * i, radius, "absolute"})
+      leader:msg(p, "form_pos", {angle * i, radius, "absolute"})
    end
 end
 

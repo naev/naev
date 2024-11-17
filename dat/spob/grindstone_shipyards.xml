@@ -7,8 +7,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
   <range>1</range>
  </presence>
  <general>
@@ -22,11 +22,17 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Grindstone Shipyards is a private manufacturing plant owned by Titus Grindstone, a wealthy Fyrra Sirian who has moved into the spaceship business. He is licensed to manufacture some of the more common civilian models, and his factory supplies a fair number of the surrounding retailers. Ships can also be purchased directly from this station.</description>
+  <description>Grindstone Shipyards is a private manufacturing plant owned by Titus Grindstone, a wealthy Fyrra Sirian who has moved into the spaceship business. He is licensed to manufacture some of the more common civilian models, and his factory supplies a fair number of the surrounding retailers. Ships can also be purchased directly from this station.
+Although originally distributing ships to both the Empire and House Sirius, with the trade lane now cut off, it focuses entirely on the Sirius market, also producing House Sirius ships.</description>
   <bar>Titus Grindstone likes to keep his potential customers in a good mood, which is why he has invested into a small yet luxurious spacedock bar on his manufacturing plant. It sports all the standard bar facilities, as well as ready access to the station's ship catalogue.</bar>
  </general>
  <tech>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
+  <item>Sirius Military Ships</item>
  </tech>
+ <tags>
+  <tag>station</tag>
+  <tag>shipbuilding</tag>
+ </tags>
 </spob>

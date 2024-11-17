@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Taciturnity">
+ <lua>thurion.lua</lua>
  <points>80</points>
  <base_type>Taciturnity</base_type>
- <GFX size="80" sx="10" sy="10">taciturnity</GFX>
+ <gfx size="80" sx="10" sy="10">taciturnity</gfx>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
  <sound>engine</sound>
- <trail_generator x="-20" y="0" h="0" />
+ <trail_generator x="-20" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-7" y="23" h="-13">nebula</trail_generator>
  <trail_generator x="-7" y="-23" h="-13">nebula</trail_generator>
  <trail_generator x="-7" y="0" h="30">nebula</trail_generator>
  <class>Armoured Transport</class>
  <price>1600000</price>
  <time_mod>1.25</time_mod>
- <fabricator>Thurion shipyards</fabricator>
- <license>Large Civilian Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt;= 50</cond>
- <condstr>You need at least 50 reputation with the Thurion.</condstr>
+ <fabricator>Thurion Shipyards</fabricator>
+ <faction>Thurion</faction>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with the Thurion.</condstr>
  <description>The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
  <health>
   <armour>500</armour>
@@ -35,13 +35,13 @@
   <weapon size="medium" prop="fighter_bay" x="6" y="0" h="5" />
   <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" />
+  <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
-  <structure size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -49,7 +49,7 @@
  <stats>
   <cargo_mod>20</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
  <tags>

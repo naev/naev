@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Soromid Wards Gamma">
- <lua>spob/lua/highclass.lua</lua>
+ <lua>highclass.lua</lua>
  <pos x="11050.675296" y="6217.996620"/>
  <GFX>
   <space>station-commerce.webp</space>

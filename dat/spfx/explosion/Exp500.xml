@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfx name="Exp500">
- <anim>3636</anim>
+ <anim>3.636</anim>
  <shader>
   <vert>project_pos.vert</vert>
   <frag>explosion.frag</frag>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Alpha Centauri">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>144.400000</interference>
+  <nebula volatility="3.900000" hue="320.000000">600.000000</nebula>
+  <nolanes/>
+ </general>
+ <pos x="814.033246" y="457.439564"/>
+ <spobs>
+  <spob_virtual>Lost Small</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Baitas">
+   <pos x="-12804.710552" y="-7398.200960"/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Veses">
+   <pos x="2130.713495" y="14747.322004"/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>thenebula</tag>
+  <tag>spoiler</tag>
+  <tag>noderelicts</tag>
+  <tag>wildspace</tag>
+ </tags>
+</ssys>

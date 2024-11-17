@@ -17,7 +17,7 @@
    FLF Empire patrol elimination mission
 
 --]]
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 local fmt = require "format"
 require "missions.flf.flf_patrol"
 

@@ -5,14 +5,14 @@
   <slot prop="hull">structure</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>80</mass>
+  <mass>60</mass>
   <price>240000</price>
   <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is a product made for fighters and bombers, providing optimum protection.</description>
   <gfx_store>combat_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
   <cargo>4</cargo>
-  <absorb>6</absorb>
+  <absorb>15</absorb>
   <armour>110</armour>
   <heat_dissipation>10</heat_dissipation>
  </specific>

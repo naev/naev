@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>H</class>
+  <class>M</class>
   <population>3e+06</population>
   <hide>1.000000</hide>
   <services>
@@ -22,7 +22,8 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Wilibrord Gilligan was a famous explorer of space in the times of the Second Growth. He is responsible for charting many of the currently known jump routes, having a knack for spotting the areas in space that allowed entry into hyperspace for prolonged periods. In those days this was exceptional, since scanning technology was nowhere near as advanced as now. In honor of Gilligan's services to the old Factions, he was granted his own planetary system and settlement therein. After the Faction Wars, Gilligan's Memory came to fall under Sirian rule, though the Sirii have chosen to uphold Gilligan's memory.</description>
+  <description>Wilibrord Gilligan was a famous explorer of space in the times of the Second Growth. He was responsible for charting many of the currently known jump routes, having a knack for spotting the areas in space that allowed entry into hyperspace for prolonged periods. In those days this was exceptional, since scanning technology was nowhere near as advanced as now.
+In honour of Gilligan's services to the old Factions, he was granted his own planetary system and settlement therein. After the Faction Wars, Gilligan's Memory came to fall under Sirian rule, though the Sirii have chosen to uphold Gilligan's memory.</description>
   <bar>Predictably, the spaceport bar is themed on Wilibrord Gilligan, showing his likeness in several places and displaying a map of his travels through the galaxy on the wall. A popular topic in this bar is the dwarf planets in Gilligan's Memory, particularly speculations on why Gilligan chose to name them the way he did.</bar>
  </general>
  <tech>
@@ -33,4 +34,7 @@
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
  </tech>
+ <tags>
+  <tag>old</tag>
+ </tags>
 </spob>

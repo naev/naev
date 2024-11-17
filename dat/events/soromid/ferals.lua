@@ -15,14 +15,16 @@ local pilotai = require "pilotai"
 
 local targetsys = system.get( "Fertile Crescent" )
 
+local plts
 function create ()
    local scur = system.cur()
 
    -- Inclusive claim
-   if not evt.claim( scur, nil, true ) then evt.finish() end
+   if not evt.claim( scur, true ) then evt.finish() end
 
    -- Special case final destination
    if scur == targetsys then
+      plts = {}
       for i = 1,rnd.rnd(20,30) do
          local shp
          local r = rnd.rnd()
@@ -33,7 +35,8 @@ function create ()
          else
             shp = "Nohinohi"
          end
-         pilot.add( shp, ferals.faction(), vec2.newP( scur:radius() * 0.8 * rnd.rnd(), rnd.angle() ) )
+         local p = pilot.add( shp, ferals.faction(), vec2.newP( scur:radius() * 0.8 * rnd.rnd(), rnd.angle() ) )
+         table.insert( plts, p )
       end
 
       hook.jumpout("leave")
@@ -87,14 +90,20 @@ local function whalesound( pos )
    luaspfx.sfx( pos, nil, sfx, { dist_ref = 5e3, dist_max = 50e3 } )
 end
 
-local plts, nextjump, lastsys
+local nextjump, lastsys
 local spawned = false
 function pheromones ()
-   if not spawned then
+   -- Don't do anything if system is not inclusively claimed
+   if not naev.claimTest( system.cur(), true ) then
+      return
+   end
+
+   if not spawned and system.cur() ~= targetsys then
       spawned = true
       hook.timer( 5, "spawn_ferals" )
    else
       if plts then
+         plts = rnd.permutation(plts)
          for k,p in ipairs(plts) do
             if p:exists() then
                hook.timer( 3, "delay_sfx", p:pos() )
@@ -117,7 +126,7 @@ function spawn_ferals ()
 
    lastsys = (#jumps==1)
 
-   mem.mrk = system.mrkAdd( vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
+   mem.mrk = system.markerAdd( pos+vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
    player.msg(_("You have detected an unknown signal!"), true)
    player.autonavReset( 1 )
 
@@ -145,7 +154,7 @@ end
 
 function ferals_discovered ()
    if mem.mrk then
-      system.mrkRm( mem.mrk )
+      system.markerRm( mem.mrk )
       mem.mrk = nil
    end
    for k,p in ipairs(plts) do
@@ -153,6 +162,7 @@ function ferals_discovered ()
          p:control(false)
       end
    end
+   player.autonavReset( 5 )
    if plts[1]:exists() then
       -- Just try to go to the next system
       pilotai.hyperspace( plts[1], nextjump )

@@ -7,7 +7,7 @@
  <done>Assault on Raelid</done>
  <location>Bar</location>
  <faction>FLF</faction>
- <cond>faction.playerStanding("FLF") &gt;= 70</cond>
+ <cond>spob.cur():reputation("FLF") &gt;= 70</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>
@@ -19,10 +19,10 @@
 
 --]]
 local fmt = require "format"
-local flf = require "missions.flf.flf_common"
+local flf = require "common.flf"
 require "missions.flf.flf_diversion"
 
--- luacheck: globals enter land leave pay_text success_text (from base mission flf_diversion)
+-- luacheck: globals success_text pay_text land (overwriting main mission, TODO get rid of this hack)
 
 success_text = {
    _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]]),
@@ -56,7 +56,7 @@ function accept ()
       misn.setTitle( _("Diversion from Haleb") )
       misn.setDesc( fmt.f( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
       mem.marker = misn.markerAdd( mem.missys, "plot" )
-      misn.setReward( fmt.credits( mem.credits ) )
+      misn.setReward( mem.credits )
 
       mem.dv_attention = 0
       mem.job_done = false
@@ -75,7 +75,7 @@ function land ()
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( mem.credits )
       flf.setReputation( 75 )
-      faction.get("FLF"):modPlayer( mem.reputation )
+      faction.get("FLF"):hit( mem.reputation )
       flf.addLog( _([[You diverted Dvaered forces away from Haleb so that other FLF agents could complete an important operation there, most likely planting a bomb on another Dvaered base.]]) )
       misn.finish( true )
    end

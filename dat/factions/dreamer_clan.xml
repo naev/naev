@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Dreamer Clan">
- <ai>pirate</ai>
+ <ai>dreamer_clan</ai>
  <logo>dreamerclan</logo>
  <longname>Dreamer Pirate Clan</longname>
  <player>-10</player>
@@ -8,6 +8,7 @@
  <spawn>pirate_dreamer_clan</spawn>
  <standing>pirate_dreamer_clan</standing>
  <equip>pirate</equip>
+ <local_th>5</local_th>
  <useshiddenjumps/>
  <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny.</description>
  <generator weight="0.4">Pirate</generator>
@@ -26,10 +27,8 @@
   <enemy>Proteron</enemy>
   <enemy>Sirius</enemy>
   <enemy>Soromid</enemy>
-  <enemy>Thurion</enemy>
-  <enemy>DHC</enemy>
   <enemy>Trader</enemy>
-  <enemy>Traders Guild</enemy>
+  <enemy>Traders Society</enemy>
   <enemy>Za'lek</enemy>
  </enemies>
  <tags>

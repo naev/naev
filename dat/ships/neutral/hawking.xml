@@ -2,8 +2,7 @@
 <ship name="Hawking">
  <points>150</points>
  <base_type>Hawking</base_type>
- <GFX size="139" sx="12" sy="12">hawking</GFX>
- <GUI>brushed</GUI>
+ <gfx size="139" sx="12" sy="12">hawking</gfx>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>4800000</price>
@@ -16,6 +15,7 @@
  <trail_generator x="-21" y="10" h="-10" always_under="1">nebula</trail_generator>
  <trail_generator x="-21" y="-10" h="-10" always_under="1">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
+ <faction>Independent</faction>
  <license>Heavy Combat Vessel</license>
  <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
  <health>
@@ -33,19 +33,16 @@
   <weapon size="large" x="25" y="0" h="2" />
   <weapon size="large" x="12" y="-6" h="0" />
   <weapon size="large" x="12" y="6" h="0" />
-  <weapon size="large" x="0" y="0" h="7" />
   <weapon size="large" prop="fighter_bay" x="-15" y="0" h="7" />
   <weapon size="large" prop="fighter_bay" x="-33" y="0" h="7" />
-  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
-  <structure size="large" />
+  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

@@ -1,0 +1,13 @@
+[wrap-file]
+directory = nativefiledialog-extended-1.2.1
+source_url = https://github.com/btzy/nativefiledialog-extended/archive/refs/tags/v1.2.1.tar.gz
+source_filename = nativefiledialog-extended-1.2.1.tar.gz
+source_hash = 443697a857c4efacbe08cdaf5182724fa9d9b9a79b8feff2a1601bde1df46b07
+patch_filename = nativefiledialog-extended_1.2.1-1_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/nativefiledialog-extended_1.2.1-1/get_patch
+patch_hash = 044a2e881d874d55a892b61cf553aa7678d1c0f06cfaeb39a1b43f34ca976b09
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/nativefiledialog-extended_1.2.1-1/nativefiledialog-extended-1.2.1.tar.gz
+wrapdb_version = 1.2.1-1
+
+[provide]
+nativefiledialog-extended = nfde_dep

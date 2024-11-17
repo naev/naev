@@ -37,7 +37,7 @@ function tcopy( tbl, copy )
 end
 
 --[[--
-   Merges src table into dest. Does not recurse into subtables.
+   Merges src table into dest. Does not recurse into subtables. This function is for unordered tables.
 
    @tparam table dest Destination table. Must not be nil.
    @tparam[opt={}] table src Source table to be merged into dest.
@@ -47,6 +47,21 @@ function tmerge( dest, src )
    src = src or {}
    for k,v in pairs(src) do
       dest[k] = v
+   end
+   return dest
+end
+
+--[[--
+   Merges src table into dest. Does not recurse into subtables. This function is for ordered tables.
+
+   @tparam table dest Destination table. Must not be nil.
+   @tparam[opt={}] table src Source table to be merged into dest.
+   @treturn table Returns dest.
+--]]
+function tmergei( dest, src )
+   src = src or {}
+   for k,v in ipairs(src) do
+      table.insert( dest, v )
    end
    return dest
 end
@@ -99,6 +114,22 @@ function treverse( tbl )
    local t = {}
    for i = #tbl, 1, -1 do
       table.insert( t, tbl[i] )
+   end
+   return t
+end
+
+--[[--
+Removes duplicate from an ordered table
+
+   @tparam table tbl Table to remove duplicates from.
+   @treturn table An ordered table without any duplicates.
+--]]
+function tunique( tbl )
+   local t = {}
+   for i,v in ipairs(tbl) do
+      if not inlist( t, v ) then
+         table.insert( t, v )
+      end
    end
    return t
 end

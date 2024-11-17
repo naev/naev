@@ -3,8 +3,6 @@ local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
 
--- luacheck: globals _textoverlay_fg _textoverlay_update (Hook functions passed by name)
-
 local textoverlay = {}
 
 local nw, nh
@@ -66,9 +64,9 @@ float vignette( vec2 uv )
    return vig;
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = color * texture( tex, uv );
+   vec4 texcolour = colour * texture( tex, uv );
 
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
@@ -76,18 +74,19 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
       n += snoise( px * u_sharp * 0.003 * m + 1000.0 * u_r ) * (1.0 / m);
    }
 
-   texcolor.a *= 0.4*n+0.8;
-   texcolor.a *= vignette( uv );
-   texcolor.rgb *= 0.0;
+   texcolour.a *= 0.4*n+0.8;
+   texcolour.a *= vignette( uv );
+   texcolour.rgb *= 0.0;
 
-   return texcolor;
+   return texcolour;
 }
 ]], love_math.random(), 3 )
    local shader = lg.newShader( pixelcode, love_shaders.vertexcode )
    local w, h
    if subtitle then
       w = math.max( title.w, subtitle.w )*1.5
-      h = (title.h * 1.5 + subtitle.h)*2
+      local _mw, st = subtitle.font:getWrap( subtitle.text, w )
+      h = (title.h * 1.5 + subtitle.h+subtitle.font:getLineHeight()*(#st-1))*2
    else
       w = title.w*1.5
       h = title.h*2
@@ -124,7 +123,7 @@ function _textoverlay_fg ()
       textshader:send( "progress", progress )
    end
 
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
 
    local x = (nw-textcanvas.w)*0.5
    local y = (nh-textcanvas.h)*0.3

@@ -23,11 +23,16 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Duran Shipyard produces light support craft used by the Dvaered military machine. It also has a line of civilian and cargo ships which it makes available to retailers and consumers. Since the ships produced here are combat-ready and the facility always has at least one completed squadron standing by, Duran Shipyard is an important contributor to the stability in the region.</description>
+  <description>Duran Shipyard produces light support craft used by the Dvaered military machine. It also has a line of civilian and cargo ships which it makes available to retailers and consumers.
+Since the ships produced here are combat-ready and the facility always has at least one completed squadron standing by, Duran Shipyard is an important contributor to the stability in the region.</description>
   <bar>The spacedock bar provides visitors with a view over part of the assembly line. It is quite impressive to see a spacecraft being built, even if it is only a relatively small one.</bar>
  </general>
  <tech>
   <item>Light Civilian Combat Ships</item>
   <item>Basic Trade Ships</item>
  </tech>
+ <tags>
+  <tag>shipbuilding</tag>
+  <tag>station</tag>
+ </tags>
 </spob>

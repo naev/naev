@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Bomber Drone">
+ <lua>zalek.lua</lua>
  <points>40</points>
- <base_type>Za'lek Bomber Drone</base_type>
- <GFX size="48">zalek_drone_bomber</GFX>
- <GUI>brushed</GUI>
+ <base_type path="Zalek_Bomber_Drone">Za'lek Bomber Drone</base_type>
+ <gfx size="36">zalek_drone_bomber</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Bomber">Bomber</class>
  <price>250000</price>
@@ -11,9 +11,10 @@
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
  <trail_generator x="-11" y="0" h="0">zalekS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
+ <faction>Za'lek</faction>
  <description>This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be flown by the player.</description>
  <movement>
-  <thrust>180</thrust>
+  <accel>180</accel>
   <speed>360</speed>
   <turn>150</turn>
  </movement>

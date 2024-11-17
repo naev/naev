@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Hephaestus">
+ <lua>zalek.lua</lua>
  <points>300</points>
  <base_type>Hephaestus</base_type>
- <GFX size="170" sx="12" sy="12">hephaestus</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="171" sx="12" sy="12">hephaestus</gfx>
+ <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Carrier</class>
  <price>16000000</price>
@@ -14,6 +14,7 @@
  <trail_generator x="45" y="25" h="20">zalek</trail_generator>
  <trail_generator x="45" y="-30" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
+ <faction>Za'lek</faction>
  <license>Heavy Combat Vessel</license>
  <description>The crown of the House Za'lek Defence Fleet, these proud buttresses of the Za'lek's ideals frequently serve as the nerve centre of a Za'lek battle fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, but commands respect.</description>
  <health>
@@ -22,20 +23,20 @@
  </health>
  <characteristics>
   <crew>32</crew>
-  <mass>2100</mass>
+  <mass>2700</mass>
   <cargo>110</cargo>
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="-20" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="20" h="0" />
+  <weapon size="large" prop="fighter_bay"  x="40" y="-20" h="0" />
+  <weapon size="large" prop="fighter_bay"  x="40" y="20" h="0" />
   <weapon size="large" x="0" y="-20" h="0" />
   <weapon size="large" x="0" y="20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-20" y="-20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-20" y="20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="-20" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="20" h="0" />
-  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
@@ -43,9 +44,9 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 7000 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-68 Heavy Plating</structure>
+  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure size="large" />
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -59,6 +60,7 @@
   <fbay_capacity>50</fbay_capacity>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
+  <cpu_mod>40</cpu_mod>
  </stats>
  <tags>
   <tag>zalek</tag>

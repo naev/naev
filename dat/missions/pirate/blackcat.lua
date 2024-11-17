@@ -17,10 +17,10 @@
 ]]--
 local fmt = require "format"
 local vn  = require 'vn'
+local vni = require 'vnimage'
 local vntk= require 'vntk'
 local tut = require "common.tutorial"
 local der = require 'common.derelict'
-local portrait = require 'portrait'
 local audio = require 'love.audio'
 local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
@@ -28,10 +28,9 @@ local love_shaders = require "love_shaders"
 local cat_image = "blackcat.webp"
 local cat_colour = nil
 
-local owner_image = portrait.getFullPath( portrait.get() )
+local owner_image = vni.generic()
 local owner_colour = nil
 local owner -- Non-persistent state
--- luacheck: globals disable_restart enter event_check jumpin owner_board owner_gone owner_hail owner_hail_check (Hook functions passed by name)
 
 local meow = audio.newSource( "snd/sounds/meow.ogg" )
 
@@ -44,7 +43,7 @@ function create ()
    vn.scene()
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
-   local cat = vn.Character.new( _("Black Cat"), {image=cat_image, color=cat_colour} )
+   local cat = vn.Character.new( _("Black Cat"), {image=cat_image, colour=cat_colour} )
    vn.transition()
    vn.na(_([[You make your way through the derelict, each step you take resonating throughout the vacuous vessel. As your traverse a hallway you notice a peculiar texture on one of the walls. As your light illuminates the wall, you can make out a hastily written graffiti. Although it is hard to read, you can make out the following text "#rBEW-RE OF C-T#0". What could it mean?]]))
    vn.na(_([[You eventually reach the command room when your ship suddenly informs you that there is a life form present on the ship. Not only that, it's very close! You frantically ready for a fight and prepare for the worst…
@@ -114,7 +113,7 @@ local function islucky ()
    if pp:ship():tags().lucky then
       return true
    end
-   for k,o in ipairs(pp:outfits("all")) do
+   for k,o in ipairs(pp:outfitsList("all")) do
       if o:tags().lucky then
          return true
       end
@@ -137,14 +136,14 @@ local event_list = {
    end,
    function () -- Temporarily disable
       local pp = player.pilot()
-      local _a, _s, _st, dis = pp:health()
+      local dis = pp:disabled()
       if dis then return end -- Already disabled
       luaspfx.sfx( false, nil, meow )
       if islucky() then
          player.msg(_("The black cat accidentally hit the ship restart button, but nothing happens."), true)
          return
       end
-      pp:disable( true )
+      pp:setDisable( true )
       hook.timer( 5, "disable_restart" )
       player.msg(_("The black cat accidentally hit the ship restart button!"), true)
       player.autonavReset()
@@ -223,7 +222,7 @@ function jumpin ()
 
    local fwo = faction.get("Wild Ones")
    local fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
-   fpir:setPlayerStanding(0)
+   fpir:setReputationGlobal(0)
 
    local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.angle() )
    owner = pilot.add( "Pirate Shark", fpir, pos )
@@ -258,7 +257,7 @@ function owner_hail ()
 
    vn.clear()
    vn.scene()
-   local o = vn.newCharacter( _("Nervous Individual"), {image=owner_image, color=owner_colour, shader=love_shaders.hologram()} )
+   local o = vn.newCharacter( _("Nervous Individual"), {image=owner_image, colour=owner_colour, shader=love_shaders.hologram()} )
    vn.transition("electric")
    vn.na(fmt.f(_("You open a communication channel with the {plt} and a hologram of a nervous-looking individual materializes in front of you."),{plt=owner}))
    o(_([["H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?"]]))
@@ -293,7 +292,7 @@ end
 function owner_board ()
    vn.clear()
    vn.scene()
-   local _cat = vn.Character.new(_("Black Cat"), {image=cat_image, color=cat_colour})
+   local _cat = vn.Character.new(_("Black Cat"), {image=cat_image, colour=cat_colour})
    vn.sfx( der.sfx.board )
    vn.transition()
    vn.na(fmt.f(_("Your ship locks its boarding clamps on the {plt}, and the airlock opens up revealing some strangely musty air and pitch black darkness. How odd."),{plt=owner}))
@@ -311,7 +310,7 @@ function owner_board ()
    player.outfitAdd( "Black Cat Doll" )
 
    der.addMiscLog(_([[You rescued a black cat from a derelict ship and safely delivered it to its owner, who was flying a Wild Ones pirate ship.]]))
-   faction.get("Wild Ones"):modPlayerSingle(3)
+   faction.get("Wild Ones"):hit( 3, nil, nil, true )
 
    player.unboard()
    hook.safe("owner_gone")

@@ -5,7 +5,6 @@
    @module proximity
 --]]
 
--- luacheck: globals _proximity _proximityScan proximity proximityCancel proximityScan (Hook functions passed by name)
 
 --[[--
 Poll for player proximity to a point in space.
@@ -50,7 +49,7 @@ function _proximity( trigger )
         end
     end
 
-    -- Check global proxmitiy table
+    -- Check global proxmity table
     if mem.__proximity_tbl == nil then
        mem.__proximity_tbl = {}
        mem.__proximity_tbl["id"] = 0

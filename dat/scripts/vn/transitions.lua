@@ -148,7 +148,7 @@ transitions._t.wave = [[
 
 const float amplitude = 1.0;
 const float waves = 30.0;
-const float colorSeparation = 0.3;
+const float colourSeparation = 0.3;
 
 float compute(vec2 p, float progress, vec2 center) {
    vec2 o = p*sin(progress * amplitude)-center;
@@ -171,9 +171,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    float pdisp = progress*disp;
    vec4 texFromCenter = Texel( texprev, p + pdisp );
    vec4 texFrom = vec4(
-         Texel( texprev, p + pdisp*(1.0 - colorSeparation)).r,
+         Texel( texprev, p + pdisp*(1.0 - colourSeparation)).r,
          texFromCenter.g,
-         Texel( texprev, p + pdisp*(1.0 + colorSeparation)).b,
+         Texel( texprev, p + pdisp*(1.0 + colourSeparation)).b,
          texFromCenter.a );
    return texTo*progress + texFrom*inv;
 }
@@ -213,7 +213,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    vec2 p = (dist>0.0) ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
 
    vec4 c1 = Texel( texprev, p );
-   vec4 c2 = Texel( tex, p )
+   vec4 c2 = Texel( tex, p );
    return mix( c1, c2, progress);
 }
 ]]
@@ -318,14 +318,14 @@ uniform Image noisetex;
 
 const float smoothness = 0.1;
 
-vec4 burncolor( vec4 color, float value )
+vec4 burncolour( vec4 colour, float value )
 {
    const vec3 cred      = vec3( 1.00, 0.03, 0.00 );
    const vec3 corange   = vec3( 0.95, 0.3,  0.02 );
    const vec3 cblack    = vec3( 0.0 );
    const vec3 cwhite    = vec3( 1.0 );
 
-   vec4 outcol = color;
+   vec4 outcol = colour;
    if (value <= 0.1)
       outcol.rgb = mix( cred, corange, value * (1.0/0.1) );
    else if (value < 0.4)
@@ -343,9 +343,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
    float higher = p + smoothness;
    float q = smoothstep(lower, higher, n);
 
-   vec4 color = (q <= 0.0) ? Texel( tex, uv ) : burncolor( Texel( texprev, uv ), q );
+   vec4 colour = (q <= 0.0) ? Texel( tex, uv ) : burncolour( Texel( texprev, uv ), q );
 
-   return color;
+   return colour;
 }
 ]]
 local function _burn_noise ()
@@ -421,6 +421,40 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 }
 ]]
 
+transitions._t.blinkin = [[
+#include "lib/sdf.glsl"
+#include "lib/blur.glsl"
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 sdfuv = uv-0.5;
+
+   float d = sdVesica( sdfuv.yx, 0.8, progress );
+   float a = (1.0-smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, progress*2.0);
+
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( tex, uv );
+   return mix( c1, c2, a );
+}
+]]
+
+transitions._t.blinkout = [[
+#include "lib/sdf.glsl"
+#include "lib/blur.glsl"
+
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 sdfuv = uv-0.5;
+
+   float d = sdVesica( sdfuv.yx, 0.8, 1.0-progress );
+   float a = (smoothstep( 0.0, 0.2, -d )) * smoothstep(0.0, 1.0, progress*2.0);
+
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( tex, uv );
+   return mix( c1, c2, a );
+}
+]]
+
 transitions._t.slideleft = [[
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
@@ -461,6 +495,61 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
+transitions._t.centerout = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 nuv = abs(uv*2.0-1.0);
+   if (max(nuv.x,nuv.y) < progress)
+      return Texel(tex, uv);
+   return Texel(texprev, uv);
+}
+]]
+
+transitions._t.centerin = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 nuv = abs(uv*2.0-1.0);
+   if (max(nuv.x,nuv.y) < 1.0-progress)
+      return Texel(texprev, uv);
+   return Texel(tex, uv);
+}
+]]
+
+transitions._t.fadeup = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.y < 1.0-progress)
+      return Texel(texprev, uv);
+   return Texel(tex, uv);
+}
+]]
+
+transitions._t.fadedown = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.y < progress)
+      return Texel(tex, uv);
+   return Texel(texprev, uv);
+}
+]]
+
+transitions._t.faderight = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.x < progress)
+      return Texel(tex, uv);
+   return Texel(texprev, uv);
+}
+]]
+
+transitions._t.fadeleft = [[
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   if (uv.x < 1.0-progress)
+      return Texel(texprev, uv);
+   return Texel(tex, uv);
+}
+]]
 
 function transitions.get( name, seconds, transition )
    -- Sane defaults

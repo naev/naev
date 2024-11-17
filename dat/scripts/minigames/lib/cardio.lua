@@ -106,20 +106,20 @@ local function _tosuitestr( suite )
 end
 function cardio.CardWestern.drawBack( _self, x, y )
    -- background
-   lg.setColor( 0.8, 0.8, 1 )
+   lg.setColour( 0.8, 0.8, 1 )
    lg.rectangle( "fill", x, y, 75, 105 )
-   lg.setColor( 0, 0, 0 )
+   lg.setColour( 0, 0, 0 )
    lg.rectangle( "line", x, y, 75, 105 )
-   lg.setColor( 0.5, 0.5, 1 )
+   lg.setColour( 0.5, 0.5, 1 )
    lg.rectangle( "fill", x+6, y+5, 63, 95 )
 end
 function cardio.CardWestern:draw( x, y )
    -- background
-   lg.setColor( 0.8, 0.8, 1 )
+   lg.setColour( 0.8, 0.8, 1 )
    lg.rectangle( "fill", x, y, 75, 105 )
-   lg.setColor( 0, 0, 0 )
+   lg.setColour( 0, 0, 0 )
    lg.rectangle( "line", x, y, 75, 105 )
-   lg.setColor( 1, 1, 1 )
+   lg.setColour( 1, 1, 1 )
    lg.rectangle( "fill", x+6, y+5, 63, 95 )
 
    -- number
@@ -127,9 +127,9 @@ function cardio.CardWestern:draw( x, y )
    local s = _torankstr(self.rank)
    local w = font:getWidth(s)
    if self.suite=="heart" or self.suite=="diamond" then
-      lg.setColor( 1, 0.2, 0.2 )
+      lg.setColour( 1, 0.2, 0.2 )
    else
-      lg.setColor( 0, 0, 0 )
+      lg.setColour( 0, 0, 0 )
    end
    lg.print( s, font, x+6+(63-w)/2, y+5+10 )
    s = _tosuitestr(self.suite)

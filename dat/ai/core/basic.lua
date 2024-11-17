@@ -15,7 +15,6 @@ function __hoge( data ) -- internal in name only, or forward-declared local func
 
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
-
 local atk = require "ai.core.attack.util"
 local fmt = require "format"
 local scans = require "ai.core.misc.scans"
@@ -94,9 +93,8 @@ local function __zigzag_run_decide( self, target )
    -- Some AI will not do fancy maneuvers
    if mem.simplecombat then return false end
    -- Try to figure it out
-   local ss = self:stats()
-   local relspe = ss.speed_max/target:stats().speed_max
-   return ( ss.mass <= 400
+   local relspe = self:speedMax() / target:speedMax()
+   return ( self:mass() <= 400
             and relspe <= 1.01
             and ai.hasprojectile()
             and (not ai.hasafterburner() or self:energy() < 10)
@@ -129,7 +127,7 @@ function _attack_zigzag( target )
 
    -- Are we ready to shoot?
    local dist = ai.dist( target )
-   local range = ai.getweaprange(3)
+   local range = atk.primary_range()
    if dist < range then
       ai.popsubtask()
       return
@@ -195,7 +193,7 @@ end
 
 
 --[[
--- Lunges towards the target always thrusting
+-- Lunges towards the target always accelerating
 --]]
 function lunge( target )
    if not target:exists() then
@@ -214,19 +212,19 @@ function __moveto_generic( target, dir )
    local dist  = ai.dist( target )
    local bdist = 50
 
-   -- Need to get closer
-   if dir < math.rad(10) and dist > bdist then
-      ai.accel()
-
    -- Need to start braking
-   elseif dist < bdist then
+   if dist < bdist then
       ai.poptask()
+
+   -- Need to get closer
+   elseif dir < math.rad(10) and dist > bdist then
+      ai.accel()
    end
 end
 
 
 --[[
--- Follows it's target.
+-- Follows its target.
 --]]
 function follow( target )
    -- Will just float without a target to escort.
@@ -237,6 +235,9 @@ function follow( target )
 
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
+
+   -- Stealth like whoever is being followed
+   ai.stealth( target:flags("stealth") )
 
    -- Must approach
    if dir < math.rad(10) and dist > 300 then
@@ -251,6 +252,9 @@ function follow_accurate( target )
       ai.poptask()
       return
    end
+
+   -- Stealth like whoever is being followed
+   ai.stealth( target:flags("stealth") )
 
    local goal = ai.follow_accurate(target, mem.radius,
          mem.angle, mem.Kp, mem.Kd)
@@ -352,7 +356,7 @@ end
 -- luacheck: globals _hyp_approach_shoot (AI Task functions passed by name)
 function _hyp_approach_shoot( target )
    -- Shoot and approach
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    __shoot_turret( enemy )
    __hyp_approach( target )
 end
@@ -364,7 +368,7 @@ end
 
 -- luacheck: globals _landgo_shoot (AI Task functions passed by name)
 function _landgo_shoot ( planet )
-   local enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    __shoot_turret( enemy )
    __landgo( planet )
 end
@@ -399,7 +403,7 @@ function __choose_land_target ( target )
    return target
 end
 
-function land ( target )
+function land( target )
    local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo", planet )
 end
@@ -446,11 +450,25 @@ function _landland ( planet )
    end
 end
 
-
 --[[
 -- Attempts to run away from the target.
 --]]
 function runaway( target )
+   if mem.mothership and mem.mothership:exists() then
+      local goal = ai.follow_accurate( mem.mothership, 0, 0, mem.Kp, mem.Kd )
+      local dir  = ai.face( goal )
+      local dist = ai.dist( goal )
+
+      if dist > 300 then
+         if dir < math.rad(10) then
+            ai.accel()
+         end
+      else -- Time to dock
+         ai.dock( mem.mothership )
+      end
+      return
+   end
+
    -- Target must exist
    if not target or not target:exists() then
       ai.poptask()
@@ -503,7 +521,7 @@ function _run_target( target )
    __run_target( target )
 end
 function __run_target( target )
-   local plt    = ai.pilot()
+   local plt = ai.pilot()
 
    -- Target must exist
    if not target or not target:exists() then
@@ -525,9 +543,15 @@ function __run_target( target )
       ai.accel()
    end
 
-   -- Afterburner handling.
-   if ai.hasafterburner() and plt:energy() > 10 then
-      ai.weapset( 8, true )
+   -- Outfits for running away
+   if mem._o then
+      if mem._o.afterburner and plt:energy() > 30 then
+         plt:outfitToggle( mem._o.afterburner, true )
+      elseif mem._o.blink_drive then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine then
+         plt:outfitToggle( mem._o.blink_engine, true )
+      end
    end
 
    return false
@@ -538,17 +562,15 @@ function __shoot_turret( target )
       return
    end
 
+   -- Point defense and Fighters
+   atk.fb_and_pd()
+
    -- Shoot the target
    ai.hostile(target)
    ai.settarget(target)
-   local dist = ai.dist(target)
    -- See if we have some turret to use
    if ai.hasturrets() then
-      if dist < ai.getweaprange(3) then
-         ai.weapset( 3 )
-         ai.shoot( true )
-         ai.weapset( 9 )
-      end
+      atk.turrets()
    end
 end
 
@@ -581,7 +603,7 @@ function _run_hyp( data )
          local dir = ai.dir(jp_pos)
          __zigzag(dir, math.rad(70))
       else
-         if jdist > 3*bdist and plt:stats().mass < 600 then
+         if jdist > 3*bdist and plt:mass() < 600 then
             jdir = ai.careful_face(jp_pos)
          else --Heavy ships should rush to jump point
             jdir = ai.face( jp_pos, nil, true )
@@ -599,12 +621,20 @@ function _run_hyp( data )
       end
    end
 
-   --Afterburner: activate while far away from jump
-   if ai.hasafterburner() and plt:energy() > 10 then
-      if jdist > 3 * bdist then
-         ai.weapset( 8, true )
-      else
-         ai.weapset( 8, false )
+   -- Hyperbolic blink drives have a distance of 2000
+   if mem._o then
+      if mem._o.afterburner then
+         -- Afterburner: activate while far away from jump
+         if jdist > 3 * bdist and plt:energy() > 30 then
+            plt:outfitToggle( mem._o.afterburner, true )
+         else
+            plt:outfitToggle( mem._o.afterburner, false )
+         end
+      end
+      if mem._o.blink_drive and jdist > 500 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine and jdist > 2000 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_engine, true )
       end
    end
 end
@@ -618,6 +648,7 @@ function _run_landgo( data )
    -- Shoot the target
    __shoot_turret( enemy )
 
+   local dir
    local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
    local plt      = ai.pilot()
@@ -625,7 +656,10 @@ function _run_landgo( data )
    if dist < bdist then -- Need to start braking
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
-      ai.weapset( 8, false ) -- Turn off afterburner just in case
+      -- Turn off afterburner just in case
+      if mem._o and mem._o.afterburner then
+         plt:outfitToggle( mem._o.afterburner, false )
+      end
       return -- Don't try to afterburn
 
    else
@@ -638,12 +672,11 @@ function _run_landgo( data )
 
       if dozigzag then
          -- Pilot is agile, but too slow to outrun the enemy: dodge
-         local dir = ai.dir(pl_pos)
+         dir = ai.dir(pl_pos)
          __zigzag(dir, math.rad(70))
       else
 
          -- 2 methods depending on mem.careful
-         local dir
          if not mem.careful or dist < 3*bdist then
             dir = ai.face( pl_pos )
          else
@@ -655,12 +688,20 @@ function _run_landgo( data )
       end
    end
 
-   --Afterburner
-   if ai.hasafterburner() and plt:energy() > 10 then
-      if dist > 3 * bdist then
-         ai.weapset( 8, true )
-      else
-         ai.weapset( 8, false )
+   -- Hyperbolic blink drives have a distance of 2000
+   if mem._o and dir < math.rad(25) then
+      if mem._o.afterburner then
+         -- Afterburner: activate while far away from jump
+         if dist > 3 * bdist and plt:energy() > 30 then
+            plt:outfitToggle( mem._o.afterburner, true )
+         else
+            plt:outfitToggle( mem._o.afterburner, false )
+         end
+      end
+      if mem._o.blink_drive and dist > 500 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_drive, true )
+      elseif mem._o.blink_engine and dist > 2000 + 3 * bdist then
+         plt:outfitToggle( mem._o.blink_engine, true )
       end
    end
 end
@@ -689,24 +730,40 @@ function hyperspace( target )
          ai.poptask()
          return
       else
-         -- Push the new task
-         ai.pushsubtask("hyperspace", target)
+         -- Switch to a new task with the target
+         ai.poptask()
+         ai.pushtask("hyperspace", target)
          return
       end
    end
    mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
    ai.pushsubtask( "_hyp_approach", target )
+
+   -- Order followers to return if possible
+   local p = ai.pilot()
+   p:msg(p:followers(), "e_return", jump)
+end
+
+-- luacheck: globals hyperspace_follow (AI Task functions passed by name)
+function hyperspace_follow( target )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.angle() )
+   ai.pushsubtask( "_hyp_approach_follow", target )
 end
 
 -- luacheck: globals _hyp_approach (AI Task functions passed by name)
 function _hyp_approach( target )
    __hyp_approach( target )
 end
-function __hyp_approach( target )
+-- luacheck: globals _hyp_approach_follow (AI Task functions passed by name)
+function _hyp_approach_follow( target )
+   __hyp_approach( target, "_hyp_jump_follow" )
+end
+function __hyp_approach( target, jumptsk )
    local dir
    local pos      = target:pos() + mem.target_bias
    local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
+   jumptsk = jumptsk or "_hyp_jump"
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
@@ -721,9 +778,9 @@ function __hyp_approach( target )
    -- Need to start braking
    elseif dist < bdist then
       if ai.instantJump() then
-         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask(jumptsk, target)
       else
-         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask(jumptsk, target)
          ai.pushsubtask("_subbrake")
       end
    end
@@ -731,11 +788,31 @@ end
 
 -- luacheck: globals _hyp_jump (AI Task functions passed by name)
 function _hyp_jump ( jump )
-   if ai.hyperspace( jump ) == nil then
+   if ai.hyperspace( jump ) then
       local p = ai.pilot()
       p:msg(p:followers(), "hyperspace", jump)
    end
    ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
+end
+
+-- luacheck: globals _hyp_jump_follow (AI Task functions passed by name)
+function _hyp_jump_follow( jump )
+   local l = ai.pilot():leader()
+   if l and l:exists() then
+      -- Wait until leader is in hyperspace
+      if l:flags("jumpingout") then
+         _hyp_jump( jump )
+      else
+         -- Stop and wait just to get ready to hyperspace
+         ai.brake()
+         if ai.isstopped() and not ai.canHyperspace() then
+            -- Drifted away or whatever, so pop and go back
+            ai.popsubtask()
+         end
+      end
+   else
+      _hyp_jump( jump )
+   end
 end
 
 
@@ -887,9 +964,59 @@ end
 --]]
 -- luacheck: globals mine (AI Task functions passed by name)
 function mine( ast )
-   ai.weapset( 1 )
+   if mem._o and mem._o.plasma_drill then
+      ai.pushsubtask("mine_drill", ast)
+   else
+      ai.pushsubtask("mine_shoot", ast)
+   end
+end
+-- luacheck: globals mine_drill (AI Task functions passed by name)
+function mine_drill( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
+
    local p         = ai.pilot()
-   local wrange    = ai.getweaprange(nil, 0)
+   local mbd       = ai.minbrakedist()
+
+   ai.setasterotarget( ast )
+
+   local target = ast:pos()
+   local vel = ast:vel()
+   local _dist, angle = vec2.polar( p:pos() - target )
+
+   -- First task : place the ship close to the asteroid
+   local goal = ai.face_accurate( target, vel, 0, angle, mem.Kp, mem.Kd )
+
+   local dir  = ai.face(goal)
+   local mod  = ai.dist(goal)
+
+   if dir < math.rad(10) and mod > mbd then
+      ai.accel()
+   elseif mod < mbd then
+      ai.pushsubtask( "mine_drill_brake", ast )
+   end
+end
+-- luacheck: globals mine_drill_brake (AI Task functions passed by name)
+function mine_drill_brake( ast )
+   if ai.isstopped() then
+      ai.popsubtask()
+      return
+   end
+   ai.setasterotarget( ast )
+   ai.brake()
+   ai.pilot():outfitToggle( mem._o.plasma_drill, true )
+end
+-- luacheck: globals mine_shoot (AI Task functions passed by name)
+function mine_shoot( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
+
+   local p         = ai.pilot()
+   local wrange    = atk.primary_range()
    local erange    = 100
    local trange    = math.min( math.max( erange, wrange * 3 / 4 ), wrange )
    local mbd       = ai.minbrakedist()
@@ -928,7 +1055,7 @@ end
 
 -- luacheck: globals _killasteroid (AI Task functions passed by name)
 function _killasteroid( ast )
-   local wrange    = ai.getweaprange()
+   local wrange    = atk.primary_range()
 
    local target = ast:pos()
    local dir  = ai.face(target)
@@ -949,9 +1076,9 @@ function _killasteroid( ast )
 
    -- Second task : destroy it
    if dir < math.rad(8) then
-      ai.weapset( 1 )
-      ai.shoot()
-      ai.shoot(true)
+      -- TODO really use all weapon sets?
+      atk.primary()
+      atk.secondary()
    end
    if not ast:exists() then
       ai.poptask()
@@ -1114,7 +1241,7 @@ function ambush_stalk( target )
    local dist  = ai.dist(target)
 
    -- Must approach
-   local range = ai.getweaprange( 3 )
+   local range = atk.primary_range()
    if dist < range * mem.atk_aim then
       -- Go for the kill!
       ai.pushtask( "attack", target )

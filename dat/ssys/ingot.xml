@@ -2,11 +2,10 @@
 <ssys name="Ingot">
  <general>
   <radius>21000.000000</radius>
-  <stars>500</stars>
-  <interference>5.882350</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>500</spacedust>
+  <interference>13.235288</interference>
  </general>
- <pos x="372.605613" y="-211.000000"/>
+ <pos x="555.473373" y="-557.020919"/>
  <spobs>
   <spob>Ingot I</spob>
   <spob>Ulios</spob>
@@ -21,11 +20,6 @@
   </jump>
   <jump target="Toaxis">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Tuoladis">
-   <autopos/>
-   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

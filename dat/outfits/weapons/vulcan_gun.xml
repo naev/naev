@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <mass>18</mass>
+  <mass>7</mass>
   <price>46000</price>
   <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc even to medium-sized vessels with a pair of Vulcan Guns installed on their ship.</description>
   <gfx_store>vulcangun.webp</gfx_store>
@@ -19,15 +19,15 @@
   <delay>0.25</delay>
   <speed>500</speed>
   <range blowup="armour">1100</range>
-  <energy>2.5</energy>
+  <energy>2.7</energy>
   <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>impact</type>
-   <penetrate>12</penetrate>
-   <physical>6</physical>
+   <type>kinetic</type>
+   <penetrate>14</penetrate>
+   <physical>7</physical>
   </damage>
  </specific>
  <tags>

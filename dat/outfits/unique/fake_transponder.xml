@@ -20,6 +20,7 @@
    <faction>Za'lek</faction>
    <faction>Goddard</faction>
    <faction>Frontier</faction>
+   <faction>Traders Society</faction>
   </illegalto>
  </general>
  <specific type="modification">

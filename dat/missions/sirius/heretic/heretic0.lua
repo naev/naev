@@ -3,7 +3,7 @@
 <mission name="The Gauntlet">
  <unique />
  <priority>3</priority>
- <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
  <chance>50</chance>
  <location>Bar</location>
  <faction>Sirius</faction>
@@ -21,7 +21,6 @@
 local fmt = require "format"
 local srs = require "common.sirius"
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create()
    --this mission makes no mission claims
@@ -33,7 +32,7 @@ function create()
       misn.finish(false)
    end
    --set the mission stuff
-   misn.setReward(fmt.credits(mem.reward))
+   misn.setReward(mem.reward)
    misn.setTitle(_("The Gauntlet"))
    misn.setNPC(_("A Scrappy Man"), "sirius/unique/strangeman.webp", _("You see a rougher looking man sitting at the bar and guzzling a brownish ale."))
 end
@@ -71,7 +70,7 @@ function land ()
     You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]]), {pnt=mem.targetasset} ) )
       player.pay(mem.reward)
       misn.cargoRm(mem.small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
-      faction.modPlayer("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.
+      faction.hit("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.
       var.push("heretic_misn_tracker",1) --using "misn_tracker", as later on in-game, i plan on having multiple arcs to the ending.
       srs.addHereticLog( fmt.f(_([[You helped a rough-looking man deliver an illegal shipment. After you completed the delivery, another man told you that there may be another mission opportunity and that you should meet some commander in the bar on {pnt} ({sys} system) if you're interested.]]), {pnt=mem.targetasset, sys=mem.targetsystem} ) )
       misn.finish( true )

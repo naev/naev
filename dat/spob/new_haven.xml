@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Haven">
- <lua>spob/lua/pirate_clanworld.lua</lua>
- <pos x="-34532.161684" y="3671.278901"/>
+ <lua>pirate_clanworld.lua</lua>
+ <pos x="-29845.859288" y="4223.363841"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>gas.webp</exterior>
@@ -41,6 +41,7 @@
   <item>Low Tech Upgrades</item>
   <item>Star Maps</item>
   <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 3</item>
   <item>Crappy Core Systems</item>
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
@@ -53,6 +54,8 @@
   <item>New Haven Maps</item>
   <item>Pirate Elite Outfits</item>
   <item>Criminal Outfits</item>
+  <item>Wild Ones Tech</item>
+  <item>Pirate Kestrel Yuri's Kiss</item>
  </tech>
  <tags>
   <tag>criminal</tag>

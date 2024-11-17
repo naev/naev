@@ -25,8 +25,7 @@ local vn = require "vn"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
-
--- luacheck: globals land enter scout_discovered zach_say heartbeat_wormhole heartbeat_ferals feral_hail (Hook functions passed by name)
+local cinema = require "cinema"
 
 local reward = zbh.rewards.zbh09
 
@@ -103,7 +102,7 @@ OK, maybe a little. Let's get going!"]]))
 
    -- mission details
    misn.setTitle( title )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Investigate the mysterious signal coming from the {sys} system with Zach."),{sys=insys}))
 
    local c = commodity.new( N_("Zach"), N_("A Za'lek scientist.") )
@@ -135,7 +134,7 @@ function land ()
       vn.done( zbh.zach.transition )
       vn.run()
 
-      faction.modPlayer("Za'lek", zbh.fctmod.zbh09)
+      faction.hit("Za'lek", zbh.fctmod.zbh09)
       player.pay( reward )
       zbh.log(_("You travelled through a wormhole with Zach and met a family of feral bioships. After a brief and intense exchange, Icarus came to make peace and decided to return to their family."))
       misn.finish(true)
@@ -153,7 +152,7 @@ local function icarus_talk ()
    z(_([["It looks like there's been a misunderstanding. Could this be from where Icarus came from? I have no idea where we are, but the rough coordinates seem to indicate we are near Soromid space."]]))
    i(_([["Elders. Ahaeosrc."
 The translation system struggles with what Icarus is saying.]]))
-   z(_([["Mmmm, this seems to be a word that wasn't in the original notes. I'm not sure we're going to be able to translate it."]]))
+   z(_([["Mmmm, this seems to be a word that wasn't in the original notes. I'm not sure how we're going to be able to translate it."]]))
    i(_([["Ahaeosrc. Zach."]]))
    z(_([["Wait, what? How did my name get picked up in the translation system?… Does this mean that…"
 He goes silent, lost in thought.]]))
@@ -198,18 +197,18 @@ function enter ()
 
    elseif mem.state==2 and system.cur() == mainsys then
       local p = pilot.add( "Za'lek Scout Drone", zbh.evilpi(), mainpnt:pos(), nil, {ai="baddie"} )
-      p:intrinsicSet( "ew_hide", -50 ) -- Easier to spot
+      p:intrinsicSet( "ew_hide", 100 ) -- Easier to spot
       p:control(true)
       p:stealth()
       hook.pilot( p, "discovered", "scout_discovered" )
 
    elseif mem.state==1 and system.cur() == insys then
-      player.allowLand( false, _("Zach is analyzing the wormhole signal.") )
+      player.landAllow( false, _("Zach is analyzing the wormhole signal.") )
 
       if mem.wormholeknown then
-         system.mrkAdd( inwormhole:pos(), _("Wormhole") )
+         system.markerAdd( inwormhole:pos(), _("Wormhole") )
       else
-         system.mrkAdd( inwormhole:pos(), _("Suspicious Signal") )
+         system.markerAdd( inwormhole:pos(), _("Suspicious Signal") )
       end
 
       hook.timer( 5, "zach_say", _("Weird that Icarus didn't follow us through the jump…") )
@@ -220,7 +219,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      player.allowLand( false, _("The wormhole seems to have become too weak to go through.") )
+      player.landAllow( false, _("The wormhole seems to have become too weak to go through.") )
 
       --local j = jump.get( outsys, "NGC-4771" )
       local pp = player.pilot()
@@ -252,7 +251,7 @@ function enter ()
       hook.timer( 18, "heartbeat_ferals" )
 
    elseif mem.state == 2 and system.cur() == mainsys then
-      hook.timer( 15, "zach_say", _("It's a bit quiet without Icarus around anymore…") )
+      hook.timer( 15, "zach_say", _("It's a bit quiet without Icarus around any more…") )
 
    end
 end
@@ -265,13 +264,13 @@ end
 
 function zach_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Zach: "{msg}"]]),{msg=msg}),true)
 end
 
 local zach_msg_known = {
    _("It's… mesmerizing!"),
    _("It's safe right? Maybe we should send a drone first."),
-   _("I guess we might as well try it. Experimental physics at it's finest."),
+   _("I guess we might as well try it. Experimental physics at its finest."),
    _("Try to go through it carefully!"),
 }
 local zach_msg_unknown = {
@@ -280,7 +279,7 @@ local zach_msg_unknown = {
    _("I can't make much sense out of this, but…"),
    _("It seems like some sort of space-time discontinuity…"),
    _("It doesn't seem dangerous, at least the readings seem strangely fine."),
-   _("I guess we might as well try it. Experimental physics at it's finest."),
+   _("I guess we might as well try it. Experimental physics at its finest."),
    _("Try to go through it carefully!"),
 }
 
@@ -303,7 +302,7 @@ function heartbeat_wormhole ()
       local msg = msglist[ wstate-2 ]
       zach_say( msg )
       if msglist[ wstate-1 ]==nil then -- Was the last message
-         player.allowLand()
+         player.landAllow()
          misn.osdCreate( title, { _("Go through the wormhole") } )
          return
       end
@@ -320,13 +319,10 @@ function heartbeat_ferals ()
    local l = pack[1]
 
    if fstate == 0 then
-      player.cinematics( true )
+      cinema.on()
       camera.set( l )
       l:taskClear()
       l:moveto( l:pos() + (player.pos()-l:pos()):normalize() * 1000 )
-      local pp = player.pilot()
-      pp:control()
-      pp:brake()
       nexttime = 10
       fstate = 1
 
@@ -335,10 +331,8 @@ function heartbeat_ferals ()
       fstate = 2
 
    elseif fstate == 2 then
-      player.cinematics( false )
+      cinema.off()
       camera.set()
-      local pp = player.pilot()
-      pp:control(false)
       nexttime = 3
       fstate = 3
 
@@ -356,7 +350,7 @@ function heartbeat_ferals ()
    elseif fstate == 5 and player.pos():dist( l:pos() ) < 3000 then
 
       local pp = player.pilot()
-      player.cinematics( true )
+      cinema.on()
       camera.set( (l:pos()+pp:pos())/2 )
       camera.setZoom( 3 )
 
@@ -364,8 +358,6 @@ function heartbeat_ferals ()
       l:taskClear()
       l:brake()
       l:face( pp )
-      pp:control()
-      pp:brake()
       pp:face( l )
 
       local lp = l:pos()
@@ -396,7 +388,7 @@ function heartbeat_ferals ()
       end
       misn.osdCreate( title, { _("Survive!") } )
 
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       camera.setZoom()
 
@@ -463,7 +455,7 @@ function heartbeat_ferals ()
 
    elseif fstate == 11 and icarus:pos():dist( player.pos() ) < 3000 then
       local pp = player.pilot()
-      player.allowLand()
+      player.landAllow()
       pp:setNoJump(false)
 
       pp:control()
@@ -478,7 +470,7 @@ function heartbeat_ferals ()
             p:setInvincible(true)
             p:setHostile(false)
             p:setInvisible(true)
-            p:control()
+            p:control(true)
             p:moveto( l:pos() + vec2.newP( 500*rnd.rnd(), rnd.angle() ) )
          end
       end
@@ -499,10 +491,13 @@ function heartbeat_ferals ()
          icarus:face( l )
 
          for k,p in ipairs(pack) do
-            p:setInvisible(false)
-            p:taskClear()
-            p:brake()
-            p:face( icarus )
+            if p:exists() then
+               p:setInvisible(false)
+               p:taskClear()
+               p:control(true)
+               p:brake()
+               p:face( icarus )
+            end
          end
 
          nexttime = 3
@@ -536,7 +531,7 @@ function heartbeat_ferals ()
       for k,p in ipairs(pack) do
          p:control( false )
       end
-      l:control()
+      l:control(true)
       l:hyperspace()
       l:setHilight(false)
 

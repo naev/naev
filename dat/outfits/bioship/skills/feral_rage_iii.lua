@@ -13,10 +13,10 @@ const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
-   vec4 color     = texture( tex, texcoord );
+   vec4 colour     = texture( tex, texcoord );
    float opacity  = clamp( progress, 0.0, 1.0 );
-   color.rgb      = blendSoftLight( color.rgb, colmod, opacity );
-   return color;
+   colour.rgb      = blendSoftLight( colour.rgb, colmod, opacity );
+   return colour;
 }
 ]])
 --]=]
@@ -37,14 +37,14 @@ function cleanup( _p, _po )
    --oshader:force_off()
 end
 
-function update( _p, po, dt )
+function update( p, po, dt )
    if not mem.timer then return end
    mem.timer = mem.timer - dt
    if mem.active then
       --oshader:update_on(dt)
       if mem.timer <= 0 then
          po:state( "cooldown" )
-         mem.timer = cooldown
+         mem.timer = cooldown * p:shipstat("cooldown_mod",true)
          mem.active = false
          mem.cooldown = true
          po:progress( 1 )

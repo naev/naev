@@ -24,7 +24,6 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 
--- luacheck: globals land (Hook functions passed by name)
 
 local reward = zpp.rewards.zpp06
 local destpnt, destsys = spob.getS("PRP-1")
@@ -69,7 +68,7 @@ She hands you the report package, which seems a bit heavier than you expected, a
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Deliver Noona's preliminary report to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys} ))
 
    misn.markerAdd( destpnt )
@@ -90,10 +89,10 @@ function land ()
 
    vn.clear()
    vn.scene()
-   local n = vn.newCharacter( zpp.noona.name, {color=zpp.noona.colour} ) -- Just for the letter
+   local n = vn.newCharacter( zpp.noona.name, {colour=zpp.noona.colour} ) -- Just for the letter
    vn.transition()
    vn.na(_([[You land and head to where Noona told you to drop off the package. On the way you get lost in the maze of research laboratories, coffee machines, dangerous looking experiments, and Za'lek scientists engaged in heated arguments who don't notice your presence.]]))
-   vn.na(_([[Eventually, you find the hidden away room labeled "Particle Physics Experiments Registration Department", and enter to meet a unenthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you an envelope that was in the package mentioning that it is not part of the report.]]))
+   vn.na(_([[Eventually, you find the hidden away room labelled "Particle Physics Experiments Registration Department", and enter to meet an unenthusiastic academic secretary. You hand them the package, and, after sighing, they proceed to inspect the contents. They mention something about Dr. Sanderaite being at it again, and hand you an envelope that was in the package mentioning that it is not part of the report.]]))
    vn.na(_([[As you wonder about what is in the envelope, suddenly two Za'lek Military officers bust in to the room.]]))
    -- TODO proper graphics
    local z1 = vn.Character.new( _("Za'lek Officer A"), {image="zalek_thug1.png", pos="left"} )
@@ -102,7 +101,7 @@ function land ()
    z1(_([["Where is Chairwoman Sanderaite!? We just got the signal that she submitted a report here!"]]))
    vn.na(_([[The secretary lazily points at you.]]))
    z1(_([["Damnit, she got someone else to bring the report for her again…"]]))
-   z2(_([["The council should have never passed the law permitting third parties to hand-in official reports."]]))
+   z2(_([["The board should have never passed the law permitting third parties to hand-in official reports."]]))
    z1(_([["They're trying to revoke it, but last time the meeting ended in fisticuffs."]]))
    z2(_([["Oh well, at least we have a hint to where she is now. On to Katar I!"]]))
    vn.disappear( { z1, z2 }, "slideleft" ) -- Played in reverse
@@ -110,6 +109,8 @@ function land ()
    if getlicense then
       n(_([[You read the letter:
    Thanks for all your help at Katar I. By now you've probably realized I am not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+      vn.sfxBingo()
+      vn.na(_([[You can now purchase the #bHeavy Combat Vessel License#0.]]))
    else
       n(_([[You read the letter:
    Thanks for all your help at Katar I. By now you've probably realized am I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
@@ -118,7 +119,7 @@ function land ()
    vn.na( fmt.reward(reward) )
    vn.run()
 
-   faction.modPlayer("Za'lek", zpp.fctmod.zpp06)
+   faction.hit("Za'lek", zpp.fctmod.zpp06)
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_combat_vessel_license")

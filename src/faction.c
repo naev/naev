@@ -10,39 +10,42 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include "SDL_timer.h"
+
 #include "naev.h"
 /** @endcond */
 
 #include "faction.h"
 
-#include "conf.h"
 #include "array.h"
 #include "colour.h"
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
-#include "nluadef.h"
+#include "nlua_system.h"
 #include "nxml.h"
-#include "nstring.h"
+#include "opengl_tex.h"
 #include "player.h"
-#include "opengl.h"
-#include "rng.h"
 #include "space.h"
 
-#define XML_FACTION_ID  "Factions"  /**< XML section identifier */
-#define XML_FACTION_TAG "faction"   /**< XML tag identifier. */
+#define XML_FACTION_ID "Factions" /**< XML section identifier */
+#define XML_FACTION_TAG "faction" /**< XML tag identifier. */
 
-#define FACTION_STATIC     (1<<0) /**< Faction doesn't change standing with player. */
-#define FACTION_INVISIBLE  (1<<1) /**< Faction isn't exposed to the player. */
-#define FACTION_KNOWN      (1<<2) /**< Faction is known to the player. */
-#define FACTION_DYNAMIC    (1<<3) /**< Faction was created dynamically. */
-#define FACTION_USESHIDDENJUMPS (1<<4) /**< Faction will try to use hidden jumps when possible. */
+#define FACTION_STATIC                                                         \
+   ( 1 << 0 ) /**< Faction doesn't change standing with player. */
+#define FACTION_INVISIBLE                                                      \
+   ( 1 << 1 )                      /**< Faction isn't exposed to the player. */
+#define FACTION_KNOWN ( 1 << 2 )   /**< Faction is known to the player. */
+#define FACTION_DYNAMIC ( 1 << 3 ) /**< Faction was created dynamically. */
+#define FACTION_USESHIDDENJUMPS                                                \
+   ( 1 << 4 ) /**< Faction will try to use hidden jumps when possible. */
+#define FACTION_REPOVERRIDE ( 1 << 5 ) /* Reputation is being overidden. */
 
-#define faction_setFlag(fa,f) ((fa)->flags |= (f))
-#define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
-#define faction_isFlag(fa,f)  ((fa)->flags & (f))
-#define faction_isKnown_(fa)  ((fa)->flags & (FACTION_KNOWN))
+#define faction_setFlag( fa, f ) ( ( fa )->flags |= ( f ) )
+#define faction_rmFlag( fa, f ) ( ( fa )->flags &= ~( f ) )
+#define faction_isFlag( fa, f ) ( ( fa )->flags & ( f ) )
+#define faction_isKnown_( fa ) ( ( fa )->flags & ( FACTION_KNOWN ) )
 
 int faction_player; /**< Player faction identifier. */
 
@@ -52,16 +55,22 @@ int faction_player; /**< Player faction identifier. */
  * @brief Represents a faction.
  */
 typedef struct Faction_ {
-   char *name;          /**< Normal Name. */
-   char *longname;      /**< Long Name. */
-   char *displayname;   /**< Display name. */
-   char *mapname;       /**< Name to use on the map. */
-   char *ai;            /**< Name of the faction's default pilot AI. */
-   char *description;   /**< Description of the faction. */
+   char  *name;        /**< Normal Name. */
+   char  *longname;    /**< Long Name. */
+   char  *displayname; /**< Display name. */
+   char  *mapname;     /**< Name to use on the map. */
+   char  *ai;          /**< Name of the faction's default pilot AI. */
+   char  *description; /**< Description of the faction. */
+   double local_th;    /**< Local threshold between adjacent systems. */
+
+   /* Scripts. */
+   char *script_standing;
+   char *script_spawn;
+   char *script_equip;
 
    /* Graphics. */
-   glTexture *logo; /**< Tiny logo. */
-   glColour colour; /**< Faction specific colour. */
+   glTexture *logo;   /**< Tiny logo. */
+   glColour   colour; /**< Faction specific colour. */
 
    /* Enemies */
    int *enemies; /**< Enemies by ID of the faction. */
@@ -71,64 +80,69 @@ typedef struct Faction_ {
 
    /* Player information. */
    double player_def; /**< Default player standing. */
-   double player; /**< Standing with player - from -100 to 100 */
+   double player;     /**< Standing with player - from -100 to 100 */
+   double override;   /**< Override the player standing. */
 
    /* Scheduler. */
    nlua_env sched_env; /**< Lua scheduler script. */
 
    /* Behaviour. */
-   nlua_env env; /**< Faction specific environment. */
-   double friendly_at;  /**< value of "standing.friendly_at" */
-   int lua_standing;    /**< "faction_player_friend" */
-   int lua_hit;         /**< "standing.hit" */
-   int lua_text_rank;   /**< "standing.text_rank" */
-   int lua_text_broad;  /**< "standing.text_broad" */
-   int lua_reputation_max; /**< "standing.reputation_max" */
+   double   friendly_at;        /**< Value of "standing.friendly_at" */
+   nlua_env lua_env;            /**< Faction specific environment. */
+   int      lua_hit;            /**< "standing.hit" */
+   int      lua_hit_test;       /**< "standing.hit_test" */
+   int      lua_text_rank;      /**< "standing.text_rank" */
+   int      lua_text_broad;     /**< "standing.text_broad" */
+   int      lua_reputation_max; /**< "standing.reputation_max" */
 
    /* Safe lanes. */
-   double lane_length_per_presence; /**< Influences the choice to build patrolled safe lanes in the way the name suggests. */
-   double lane_base_cost; /**< Base cost of the lane. */
+   double
+      lane_length_per_presence; /**< Influences the choice to build patrolled
+                                   safe lanes in the way the name suggests. */
+   double lane_base_cost;       /**< Base cost of the lane. */
 
    /* Presence stuff. */
-   FactionGenerator *generators; /**< Secondary factions generated by this faction. */
+   FactionGenerator
+      *generators; /**< Secondary factions generated by this faction. */
 
    /* Equipping. */
    nlua_env equip_env; /**< Faction equipper enviornment. */
 
    /* Flags. */
-   unsigned int flags; /**< Flags affecting the faction. */
+   unsigned int flags;  /**< Flags affecting the faction. */
    unsigned int oflags; /**< Original flags (for when new game is started). */
 
    /* Tags. */
    char **tags; /**< array.h: List of tags the faction has. */
 } Faction;
 
-static Faction* faction_stack = NULL; /**< Faction stack. */
-static int* faction_grid = NULL; /**< Grid of faction status. */
-static size_t faction_mgrid = 0; /**< Allocated memory. */
+static Faction *faction_stack = NULL; /**< Faction stack. */
+static int     *faction_grid  = NULL; /**< Grid of faction status. */
+static size_t   faction_mgrid = 0;    /**< Allocated memory. */
 
 /*
  * Prototypes
  */
 /* static */
-static int faction_getRaw( const char *name );
-static void faction_freeOne( Faction *f );
-static void faction_sanitizePlayer( Faction* faction );
-static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
-static int faction_parse( Faction* temp, const char *file );
-static int faction_parseSocial( const char *file );
-static void faction_addStandingScript( Faction* temp, const char* scriptname );
-static void faction_computeGrid (void);
+static int    faction_getRaw( const char *name );
+static void   faction_freeOne( Faction *f );
+static void   faction_sanitizePlayer( Faction *faction );
+static double faction_hitLua( int f, const StarSystem *sys, double mod,
+                              const char *source, int secondary,
+                              int primary_faction );
+static int    faction_parse( Faction *temp, const char *file );
+static int    faction_parseSocial( const char *file );
+static void faction_addStandingScript( Faction *temp, const char *scriptname );
+static void faction_computeGrid( void );
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
 
 static int faction_cmp( const void *p1, const void *p2 )
 {
-   const Faction *f1, *f2;
-   f1 = (const Faction*) p1;
-   f2 = (const Faction*) p2;
-   return strcmp(f1->name,f2->name);
+   const Faction *f1 = p1;
+   const Faction *f2 = p2;
+   return strcmp( f1->name, f2->name );
 }
 
 /**
@@ -137,26 +151,29 @@ static int faction_cmp( const void *p1, const void *p2 )
  *    @param name Name of the faction to seek.
  *    @return ID of the faction.
  */
-static int faction_getRaw( const char* name )
+static int faction_getRaw( const char *name )
 {
+   if ( name == NULL )
+      return -1;
+
    /* Escorts are part of the "player" faction. */
-   if (strcmp(name, "Escort") == 0)
+   if ( strcmp( name, "Escort" ) == 0 )
       return FACTION_PLAYER;
 
-   if (name != NULL) {
+   if ( name != NULL ) {
       int i;
-      for (i=0; i<array_size(faction_stack); i++)
-         if (strcmp(faction_stack[i].name, name)==0)
+      for ( i = 0; i < array_size( faction_stack ); i++ )
+         if ( strcmp( faction_stack[i].name, name ) == 0 )
             break;
 
-      if (i != array_size(faction_stack))
+      if ( i != array_size( faction_stack ) )
          return i;
 
       /* Dynamic factions are why we can't have nice things.
       const Faction f = { .name = (char*)name };
-      Faction *found = bsearch( &f, faction_stack, array_size(faction_stack), sizeof(Faction), faction_cmp );
-      if (found != NULL)
-         return found - faction_stack;
+      Faction *found = bsearch( &f, faction_stack, array_size(faction_stack),
+      sizeof(Faction), faction_cmp ); if (found != NULL) return found -
+      faction_stack;
       */
    }
    return -1;
@@ -168,9 +185,9 @@ static int faction_getRaw( const char* name )
  *    @param name Name of the faction to seek.
  *    @return ID of the faction.
  */
-int faction_exists( const char* name )
+int faction_exists( const char *name )
 {
-   return faction_getRaw(name)!=-1;
+   return faction_getRaw( name ) != -1;
 }
 
 /**
@@ -179,34 +196,33 @@ int faction_exists( const char* name )
  *    @param name Name of the faction to seek.
  *    @return ID of the faction.
  */
-int faction_get( const char* name )
+int faction_get( const char *name )
 {
-   int id = faction_getRaw(name);
-   if (id<0)
-      WARN(_("Faction '%s' not found in stack."), name);
+   int id = faction_getRaw( name );
+   if ( id < 0 )
+      WARN( _( "Faction '%s' not found in stack." ), name );
    return id;
 }
 
 /**
  * @brief Returns all faction IDs in an array (array.h).
  */
-int* faction_getAll (void)
+int *faction_getAll( void )
 {
-   int *f = array_create_size( int, array_size(faction_stack) );
-   for (int i=0; i<array_size(faction_stack); i++)
+   int *f = array_create_size( int, array_size( faction_stack ) );
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
       array_push_back( &f, i );
-
    return f;
 }
 
 /**
  * @brief Returns all non-invisible faction IDs in an array (array.h).
  */
-int* faction_getAllVisible (void)
+int *faction_getAllVisible( void )
 {
-   int *f = array_create_size( int, array_size(faction_stack) );
-   for (int i=0; i<array_size(faction_stack); i++)
-      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
+   int *f = array_create_size( int, array_size( faction_stack ) );
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
+      if ( !faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) )
          array_push_back( &f, i );
    return f;
 }
@@ -214,12 +230,13 @@ int* faction_getAllVisible (void)
 /**
  * @brief Gets all the known factions in an array (array.h).
  */
-int* faction_getKnown()
+int *faction_getKnown()
 {
-   int *f = array_create_size( int, array_size(faction_stack) );
+   int *f = array_create_size( int, array_size( faction_stack ) );
    /* Get IDs. */
-   for (int i=0; i<array_size(faction_stack); i++)
-      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown_( &faction_stack[i] ))
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
+      if ( !faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) &&
+           faction_isKnown_( &faction_stack[i] ) )
          array_push_back( &f, i );
    return f;
 }
@@ -229,9 +246,17 @@ int* faction_getKnown()
  */
 void faction_clearKnown()
 {
-   for (int i=0; i<array_size(faction_stack); i++)
-      if (faction_isKnown_( &faction_stack[i] ))
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
+      if ( faction_isKnown_( &faction_stack[i] ) )
          faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
+}
+
+/**
+ * @brief Is the faction static?
+ */
+int faction_isStatic( int id )
+{
+   return faction_isFlag( &faction_stack[id], FACTION_STATIC );
 }
 
 /**
@@ -247,11 +272,11 @@ int faction_isInvisible( int id )
  */
 int faction_setInvisible( int id, int state )
 {
-   if (!faction_isFaction(id)) {
-      WARN(_("Faction id '%d' is invalid."),id);
+   if ( !faction_isFaction( id ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), id );
       return -1;
    }
-   if (state)
+   if ( state )
       faction_setFlag( &faction_stack[id], FACTION_INVISIBLE );
    else
       faction_rmFlag( &faction_stack[id], FACTION_INVISIBLE );
@@ -280,11 +305,10 @@ int faction_isDynamic( int id )
  */
 int faction_setKnown( int id, int state )
 {
-   if (state)
+   if ( state )
       faction_setFlag( &faction_stack[id], FACTION_KNOWN );
    else
       faction_rmFlag( &faction_stack[id], FACTION_KNOWN );
-
    return 0;
 }
 
@@ -294,14 +318,14 @@ int faction_setKnown( int id, int state )
  *    @param f Faction to get the name of.
  *    @return Name of the faction (internal/English).
  */
-const char* faction_name( int f )
+const char *faction_name( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
    /* Don't want player to see their escorts as "Player" faction. */
-   if (f == FACTION_PLAYER)
+   if ( f == FACTION_PLAYER )
       return "Escort";
 
    return faction_stack[f].name;
@@ -313,21 +337,21 @@ const char* faction_name( int f )
  *    @param f Faction to get the name of.
  *    @return Name of the faction (in player's native language).
  */
-const char* faction_shortname( int f )
+const char *faction_shortname( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
    /* Don't want player to see their escorts as "Player" faction. */
-   if (f == FACTION_PLAYER)
-      return _("Escort");
+   if ( f == FACTION_PLAYER )
+      return _( "Escort" );
 
    /* Possibly get display name. */
-   if (faction_stack[f].displayname != NULL)
-      return _(faction_stack[f].displayname);
+   if ( faction_stack[f].displayname != NULL )
+      return _( faction_stack[f].displayname );
 
-   return _(faction_stack[f].name);
+   return _( faction_stack[f].name );
 }
 
 /**
@@ -336,15 +360,15 @@ const char* faction_shortname( int f )
  *    @param f Faction to get the name of.
  *    @return The faction's long name (in player's native language).
  */
-const char* faction_longname( int f )
+const char *faction_longname( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-   if (faction_stack[f].longname != NULL)
-      return _(faction_stack[f].longname);
-   return _(faction_stack[f].name);
+   if ( faction_stack[f].longname != NULL )
+      return _( faction_stack[f].longname );
+   return _( faction_stack[f].name );
 }
 
 /**
@@ -353,15 +377,15 @@ const char* faction_longname( int f )
  *    @param f Faction to get the name of.
  *    @return The faction's map name (in User's language).
  */
-const char* faction_mapname( int f )
+const char *faction_mapname( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-   if (faction_stack[f].mapname != NULL)
-      return _(faction_stack[f].mapname);
-   return _(faction_stack[f].name);
+   if ( faction_stack[f].mapname != NULL )
+      return _( faction_stack[f].mapname );
+   return _( faction_stack[f].name );
 }
 
 /**
@@ -370,14 +394,14 @@ const char* faction_mapname( int f )
  *    @param f Faction to get the name of.
  *    @return The faction's description (in User's language).
  */
-const char* faction_description( int f )
+const char *faction_description( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-   if (faction_stack[f].description != NULL)
-      return _(faction_stack[f].description);
+   if ( faction_stack[f].description != NULL )
+      return _( faction_stack[f].description );
    return NULL;
 }
 
@@ -387,10 +411,10 @@ const char* faction_description( int f )
  *    @param f Faction ID.
  *    @return The faction's AI profile name.
  */
-const char* faction_default_ai( int f )
+const char *faction_default_ai( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
    return faction_stack[f].ai;
@@ -402,22 +426,23 @@ const char* faction_default_ai( int f )
  *    @param f Faction ID.
  *    @return The tagss the faction has (array.h).
  */
-const char** faction_tags( int f )
+const char *const *faction_tags( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-   return (const char**) faction_stack[f].tags;
+   return (const char **)faction_stack[f].tags;
 }
 
 /**
- * @brief Gets the faction's weight for patrolled safe-lane construction (0 means they don't build lanes).
+ * @brief Gets the faction's weight for patrolled safe-lane construction (0
+ * means they don't build lanes).
  */
 double faction_lane_length_per_presence( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return 0.;
    }
    return faction_stack[f].lane_length_per_presence;
@@ -428,8 +453,8 @@ double faction_lane_length_per_presence( int f )
  */
 double faction_lane_base_cost( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return 0.;
    }
    return faction_stack[f].lane_base_cost;
@@ -441,13 +466,12 @@ double faction_lane_base_cost( int f )
  *    @param f Faction to get the logo of.
  *    @return The faction's logo image.
  */
-const glTexture* faction_logo( int f )
+const glTexture *faction_logo( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-
    return faction_stack[f].logo;
 }
 
@@ -457,13 +481,12 @@ const glTexture* faction_logo( int f )
  *    @param f Faction to get the colour of.
  *    @return The faction's colour
  */
-const glColour* faction_colour( int f )
+const glColour *faction_colour( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
-
    return &faction_stack[f].colour;
 }
 
@@ -473,21 +496,21 @@ const glColour* faction_colour( int f )
  *    @param f Faction to get enemies of.
  *    @return Array (array.h): The enemies of the faction.
  */
-const int* faction_getEnemies( int f )
+const int *faction_getEnemies( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
 
    /* Player's faction ratings can change, so regenerate each call. */
-   if (f == FACTION_PLAYER) {
+   if ( f == FACTION_PLAYER ) {
       int *enemies = array_create( int );
 
-      for (int i=0; i<array_size(faction_stack); i++)
-         if (faction_isPlayerEnemy(i)) {
+      for ( int i = 0; i < array_size( faction_stack ); i++ )
+         if ( faction_isPlayerEnemy( i ) ) {
             int *tmp = &array_grow( &enemies );
-            *tmp = i;
+            *tmp     = i;
          }
 
       array_free( faction_stack[f].enemies );
@@ -503,24 +526,24 @@ const int* faction_getEnemies( int f )
  *    @param f Faction to get allies of.
  *    @return Array (array.h): The allies of the faction.
  */
-const int* faction_getAllies( int f )
+const int *faction_getAllies( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return NULL;
    }
 
    /* Player's faction ratings can change, so regenerate each call. */
-   if (f == FACTION_PLAYER) {
+   if ( f == FACTION_PLAYER ) {
       int *allies = array_create( int );
 
-      for (int i=0; i<array_size(faction_stack); i++)
-         if (faction_isPlayerFriend(i)) {
+      for ( int i = 0; i < array_size( faction_stack ); i++ )
+         if ( faction_isPlayerFriend( i ) ) {
             int *tmp = &array_grow( &allies );
-            *tmp = i;
+            *tmp     = i;
          }
 
-      array_free( faction_stack[ f ].allies );
+      array_free( faction_stack[f].allies );
       faction_stack[f].allies = allies;
    }
 
@@ -536,13 +559,14 @@ void faction_clearEnemy( int f )
 {
    Faction *ff;
    /* Get faction. */
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       ff = &faction_stack[f];
    else { /* f is invalid */
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-   array_erase( &ff->enemies, array_begin(ff->enemies), array_end(ff->enemies) );
+   array_erase( &ff->enemies, array_begin( ff->enemies ),
+                array_end( ff->enemies ) );
    faction_computeGrid();
 }
 
@@ -555,38 +579,39 @@ void faction_clearEnemy( int f )
 void faction_addEnemy( int f, int o )
 {
    Faction *ff;
-   int *tmp;
+   int     *tmp;
 
-   if (f==o) return;
+   if ( f == o )
+      return;
 
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       ff = &faction_stack[f];
    else { /* f is invalid */
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
 
-   if (!faction_isFaction(o)) { /* o is invalid */
-      WARN(_("Faction id '%d' is invalid."), o);
+   if ( !faction_isFaction( o ) ) { /* o is invalid */
+      WARN( _( "Faction id '%d' is invalid." ), o );
       return;
    }
 
    /* player cannot be made an enemy this way */
-   if (f==FACTION_PLAYER) {
-      WARN(_("%d is the player faction"), f);
+   if ( f == FACTION_PLAYER ) {
+      WARN( _( "%d is the player faction" ), f );
       return;
    }
-   if (o==FACTION_PLAYER) {
-      WARN(_("%d is the player faction"), o);
+   if ( o == FACTION_PLAYER ) {
+      WARN( _( "%d is the player faction" ), o );
       return;
    }
 
-   for (int i=0;i<array_size(ff->enemies);i++) {
-      if (ff->enemies[i] == o)
+   for ( int i = 0; i < array_size( ff->enemies ); i++ ) {
+      if ( ff->enemies[i] == o )
          return;
    }
 
-   tmp = &array_grow( &ff->enemies );
+   tmp  = &array_grow( &ff->enemies );
    *tmp = o;
 
    faction_computeGrid();
@@ -602,18 +627,19 @@ void faction_rmEnemy( int f, int o )
 {
    Faction *ff;
 
-   if (f==o) return;
+   if ( f == o )
+      return;
 
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       ff = &faction_stack[f];
    else { /* f is invalid */
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
 
-   for (int i=0;i<array_size(ff->enemies);i++) {
-      if (ff->enemies[i] == o) {
-         array_erase( &ff->enemies, &ff->enemies[i], &ff->enemies[i+1] );
+   for ( int i = 0; i < array_size( ff->enemies ); i++ ) {
+      if ( ff->enemies[i] == o ) {
+         array_erase( &ff->enemies, &ff->enemies[i], &ff->enemies[i + 1] );
          faction_computeGrid();
          return;
       }
@@ -629,13 +655,14 @@ void faction_clearAlly( int f )
 {
    Faction *ff;
    /* Get faction. */
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       ff = &faction_stack[f];
    else { /* f is invalid */
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-   array_erase( &ff->allies, array_begin(ff->allies), array_end(ff->allies) );
+   array_erase( &ff->allies, array_begin( ff->allies ),
+                array_end( ff->allies ) );
    faction_computeGrid();
 }
 
@@ -648,38 +675,39 @@ void faction_clearAlly( int f )
 void faction_addAlly( int f, int o )
 {
    Faction *ff;
-   int *tmp;
+   int     *tmp;
 
-   if (f==o) return;
+   if ( f == o )
+      return;
 
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       ff = &faction_stack[f];
    else { /* f is invalid */
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
 
-   if (!faction_isFaction(o)) { /* o is invalid */
-      WARN(_("Faction id '%d' is invalid."), o);
+   if ( !faction_isFaction( o ) ) { /* o is invalid */
+      WARN( _( "Faction id '%d' is invalid." ), o );
       return;
    }
 
    /* player cannot be made an ally this way */
-   if (f==FACTION_PLAYER) {
-      WARN(_("%d is the player faction"), f);
+   if ( f == FACTION_PLAYER ) {
+      WARN( _( "%d is the player faction" ), f );
       return;
    }
-   if (o==FACTION_PLAYER) {
-      WARN(_("%d is the player faction"), o);
+   if ( o == FACTION_PLAYER ) {
+      WARN( _( "%d is the player faction" ), o );
       return;
    }
 
-   for (int i=0;i<array_size(ff->allies);i++) {
-      if (ff->allies[i] == o)
+   for ( int i = 0; i < array_size( ff->allies ); i++ ) {
+      if ( ff->allies[i] == o )
          return;
    }
 
-   tmp = &array_grow( &ff->allies );
+   tmp  = &array_grow( &ff->allies );
    *tmp = o;
 
    faction_computeGrid();
@@ -695,18 +723,19 @@ void faction_rmAlly( int f, int o )
 {
    Faction *ff;
 
-   if (f==o) return;
+   if ( f == o )
+      return;
 
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       ff = &faction_stack[f];
    else { /* f is invalid */
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
 
-   for (int i=0;i<array_size(ff->allies);i++) {
-      if (ff->allies[i] == o) {
-         array_erase( &ff->allies, &ff->allies[i], &ff->allies[i+1] );
+   for ( int i = 0; i < array_size( ff->allies ); i++ ) {
+      if ( ff->allies[i] == o ) {
+         array_erase( &ff->allies, &ff->allies[i], &ff->allies[i + 1] );
          faction_computeGrid();
          return;
       }
@@ -718,8 +747,8 @@ void faction_rmAlly( int f, int o )
  */
 nlua_env faction_getScheduler( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return LUA_NOREF;
    }
    return faction_stack[f].sched_env;
@@ -730,8 +759,8 @@ nlua_env faction_getScheduler( int f )
  */
 nlua_env faction_getEquipper( int f )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return LUA_NOREF;
    }
    return faction_stack[f].equip_env;
@@ -742,7 +771,7 @@ nlua_env faction_getEquipper( int f )
  *
  *    @param faction Faction to sanitize.
  */
-static void faction_sanitizePlayer( Faction* faction )
+static void faction_sanitizePlayer( Faction *faction )
 {
    faction->player = CLAMP( -100., 100., faction->player );
 }
@@ -750,68 +779,165 @@ static void faction_sanitizePlayer( Faction* faction )
 /**
  * @brief Mods player using the power of Lua.
  */
-static void faction_modPlayerLua( int f, double mod, const char *source, int secondary )
+static double faction_hitLua( int f, const StarSystem *sys, double mod,
+                              const char *source, int secondary,
+                              int primary_faction )
 {
-   Faction *faction;
-   double old, delta;
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return 0.;
 
-   faction = &faction_stack[f];
+   Faction *faction = &faction_stack[f];
 
    /* Make sure it's not static. */
-   if (faction_isFlag(faction, FACTION_STATIC))
-      return;
+   if ( faction_isFlag( faction, FACTION_STATIC ) )
+      return 0.;
 
-   /* Player is dead or cleared. */
-   if (player.p == NULL)
-      return;
+   /* Overriden, so doesn't budge. */
+   if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
+      return 0.;
 
-   old   = faction->player;
+   /* Set up the function:
+    * standing:hit( sys, amount, source, secondary ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
+   if ( sys != NULL )
+      lua_pushsystem( naevL, sys->id );
+   else
+      lua_pushnil( naevL );
+   lua_pushnumber( naevL, mod );
+   lua_pushstring( naevL, source );
+   lua_pushinteger( naevL, secondary );
+   if ( faction_isFaction( primary_faction ) )
+      lua_pushfaction( naevL, primary_faction );
+   else
+      lua_pushnil( naevL );
 
-   if (faction->env == LUA_NOREF)
-      faction->player += mod;
-   else {
-
-      /* Set up the function:
-       * standing:hit( current, amount, source, secondary ) */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
-      lua_pushnumber(  naevL, faction->player );
-      lua_pushnumber(  naevL, mod );
-      lua_pushstring(  naevL, source );
-      lua_pushboolean( naevL, secondary );
-
-      /* Call function. */
-      if (nlua_pcall( faction->env, 5, 1 )) { /* An error occurred. */
-         WARN(_("Faction '%s': %s"), faction->name, lua_tostring(naevL,-1));
-         lua_pop( naevL, 1 );
-         return;
-      }
-
-      /* Parse return. */
-      if (!lua_isnumber( naevL, -1 ))
-         WARN( _("Lua script for faction '%s' did not return a number from 'standing:hit(...)'."), faction->name );
-      else
-         faction->player = lua_tonumber( naevL, -1 );
+   /* Call function. */
+   if ( nlua_pcall( faction->lua_env, 5, 1 ) ) { /* An error occurred. */
+      WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
+      return 0.;
    }
 
    /* Sanitize just in case. */
    faction_sanitizePlayer( faction );
 
    /* Run hook if necessary. */
-   delta = faction->player - old;
-   if (FABS(delta) > 1e-10) {
-      HookParam hparam[3];
-      hparam[0].type    = HOOK_PARAM_FACTION;
-      hparam[0].u.lf    = f;
-      hparam[1].type    = HOOK_PARAM_NUMBER;
-      hparam[1].u.num   = delta;
-      hparam[2].type    = HOOK_PARAM_SENTINEL;
+   double delta = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
+   if ( FABS( delta ) > DOUBLE_TOL ) {
+      HookParam hparam[7];
+      hparam[0].type = HOOK_PARAM_FACTION;
+      hparam[0].u.lf = f;
+      if ( sys != NULL ) {
+         hparam[1].type = HOOK_PARAM_SSYS;
+         hparam[1].u.ls = sys->id;
+      } else
+         hparam[1].type = HOOK_PARAM_NIL;
+      hparam[2].type  = HOOK_PARAM_NUMBER;
+      hparam[2].u.num = delta;
+      hparam[3].type  = HOOK_PARAM_STRING;
+      hparam[3].u.str = source;
+      hparam[4].type  = HOOK_PARAM_NUMBER;
+      hparam[4].u.num = secondary;
+      if ( faction_isFaction( primary_faction ) ) {
+         hparam[5].type = HOOK_PARAM_FACTION;
+         hparam[5].u.lf = primary_faction;
+      } else
+         hparam[5].type = HOOK_PARAM_NIL;
+      hparam[6].type = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
 
       /* Tell space the faction changed. */
       space_factionChange();
    }
+
+   return delta;
+}
+
+/**
+ * @brief Handles a faction hit against a faction and how to apply it.
+ */
+double faction_hit( int f, const StarSystem *sys, double mod,
+                    const char *source, int single )
+{
+   double ret;
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
+      return 0;
+   }
+   const Faction *faction = &faction_stack[f];
+
+   /* Modify faction standing with parent faction. */
+   ret = faction_hitLua( f, sys, mod, source, 0, -1 );
+
+   /* Don't apply secondary hits. */
+   if ( !single ) {
+      /* Now mod allies to a lesser degree */
+      for ( int i = 0; i < array_size( faction->allies ); i++ )
+         /* Modify faction standing */
+         faction_hitLua( faction->allies[i], sys, mod, source, 1, f );
+      /* Now mod enemies */
+      for ( int i = 0; i < array_size( faction->enemies ); i++ )
+         /* Modify faction standing. */
+         faction_hitLua( faction->enemies[i], sys, -mod, source, -1, f );
+   }
+
+   return ret;
+}
+
+/**
+ * @brief Tests a faction hit to see how much it would apply. Does not actually
+ * modify standing.
+ */
+double faction_hitTest( int f, const StarSystem *sys, double mod,
+                        const char *source )
+{
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
+      return 0;
+   }
+
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return 0.;
+
+   Faction *faction = &faction_stack[f];
+
+   /* Make sure it's not static. */
+   if ( faction_isFlag( faction, FACTION_STATIC ) )
+      return 0.;
+
+   /* Overriden, so doesn't budge. */
+   if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
+      return 0.;
+
+   /* Set up the function:
+    * standing:hit( sys, amount, source, secondary ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
+   if ( sys != NULL )
+      lua_pushsystem( naevL, sys->id );
+   else
+      lua_pushnil( naevL );
+   lua_pushnumber( naevL, mod );
+   lua_pushstring( naevL, source );
+   lua_pushinteger( naevL, 0 );
+   lua_pushnil( naevL );
+
+   /* Call function. */
+   if ( nlua_pcall( faction->lua_env, 5, 1 ) ) { /* An error occurred. */
+      WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return 0.;
+   }
+
+   /* Sanitize just in case. */
+   faction_sanitizePlayer( faction );
+
+   /* Run hook if necessary. */
+   double delta = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
+   return delta;
 }
 
 /**
@@ -827,30 +953,29 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
  *    - "kill" : Pilot death.
  *    - "distress" : Pilot distress signal.
  *    - "script" : Either a mission or an event.
- *
  */
 void faction_modPlayer( int f, double mod, const char *source )
 {
    Faction *faction;
 
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
    faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   faction_modPlayerLua( f, mod, source, 0 );
+   faction_hitLua( f, NULL, mod, source, 0, -1 );
 
    /* Now mod allies to a lesser degree */
-   for (int i=0; i<array_size(faction->allies); i++)
+   for ( int i = 0; i < array_size( faction->allies ); i++ )
       /* Modify faction standing */
-      faction_modPlayerLua( faction->allies[i], mod, source, 1 );
+      faction_hitLua( faction->allies[i], NULL, mod, source, 1, f );
 
    /* Now mod enemies */
-   for (int i=0; i<array_size(faction->enemies); i++)
+   for ( int i = 0; i < array_size( faction->enemies ); i++ )
       /* Modify faction standing. */
-      faction_modPlayerLua( faction->enemies[i], -mod, source, 1 );
+      faction_hitLua( faction->enemies[i], NULL, -mod, source, 1, f );
 }
 
 /**
@@ -871,12 +996,11 @@ void faction_modPlayer( int f, double mod, const char *source )
  */
 void faction_modPlayerSingle( int f, double mod, const char *source )
 {
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-
-   faction_modPlayerLua( f, mod, source, 0 );
+   faction_hitLua( f, NULL, mod, source, 0, -1 );
 }
 
 /**
@@ -892,22 +1016,20 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
 void faction_modPlayerRaw( int f, double mod )
 {
    Faction *faction;
-   HookParam hparam[3];
 
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return;
+
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
 
    faction = &faction_stack[f];
    faction->player += mod;
-   /* Run hook if necessary. */
-   hparam[0].type    = HOOK_PARAM_FACTION;
-   hparam[0].u.lf    = f;
-   hparam[1].type    = HOOK_PARAM_NUMBER;
-   hparam[1].u.num   = mod;
-   hparam[2].type    = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "standing", hparam );
+
+   /* Deprecated so no hook now. */
 
    /* Sanitize just in case. */
    faction_sanitizePlayer( faction );
@@ -922,33 +1044,53 @@ void faction_modPlayerRaw( int f, double mod )
  *    @param f Faction to set the player's standing for.
  *    @param value Value to set the player's standing to.
  */
-void faction_setPlayer( int f, double value )
+void faction_setReputation( int f, double value )
 {
    Faction *faction;
-   HookParam hparam[3];
-   double mod;
+   double   mod;
 
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."), f);
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return;
+
+   if ( !faction_isFaction( f ) ) {
+      WARN( _( "Faction id '%d' is invalid." ), f );
       return;
    }
-
    faction = &faction_stack[f];
-   mod = value - faction->player;
+
+   /* Make sure it's not static. */
+   if ( faction_isFlag( faction, FACTION_STATIC ) )
+      return;
+
+   /* Overriden, so doesn't budge. */
+   if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
+      return;
+
+   mod             = value - faction->player;
    faction->player = value;
    /* Run hook if necessary. */
-   hparam[0].type    = HOOK_PARAM_FACTION;
-   hparam[0].u.lf    = f;
-   hparam[1].type    = HOOK_PARAM_NUMBER;
-   hparam[1].u.num   = mod;
-   hparam[2].type    = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "standing", hparam );
+   if ( !faction_isFlag( faction, FACTION_DYNAMIC ) ) {
+      HookParam hparam[7];
+      hparam[0].type  = HOOK_PARAM_FACTION;
+      hparam[0].u.lf  = f;
+      hparam[1].type  = HOOK_PARAM_NIL;
+      hparam[2].type  = HOOK_PARAM_NUMBER;
+      hparam[2].u.num = mod;
+      hparam[3].type  = HOOK_PARAM_STRING;
+      hparam[3].u.str = "script";
+      hparam[4].type  = HOOK_PARAM_NUMBER;
+      hparam[4].u.num = 0;
+      hparam[5].type  = HOOK_PARAM_NIL;
+      hparam[6].type  = HOOK_PARAM_SENTINEL;
+      hooks_runParam( "standing", hparam );
 
-   /* Sanitize just in case. */
-   faction_sanitizePlayer( faction );
+      /* Sanitize just in case. */
+      faction_sanitizePlayer( faction );
 
-   /* Tell space the faction changed. */
-   space_factionChange();
+      /* Tell space the faction changed. */
+      space_factionChange();
+   }
 }
 
 /**
@@ -957,11 +1099,16 @@ void faction_setPlayer( int f, double value )
  *    @param f Faction to get player's standing from.
  *    @return The standing the player has with the faction.
  */
-double faction_getPlayer( int f )
+double faction_reputation( int f )
 {
-   if (faction_isFaction(f))
-      return faction_stack[f].player;
-   WARN(_("Faction id '%d' is invalid."), f);
+   if ( faction_isFaction( f ) ) {
+      Faction *fac = &faction_stack[f];
+      if ( faction_isFlag( fac, FACTION_REPOVERRIDE ) )
+         return fac->override;
+      else
+         return fac->player;
+   }
+   WARN( _( "Faction id '%d' is invalid." ), f );
    return -1000.;
 }
 
@@ -971,11 +1118,11 @@ double faction_getPlayer( int f )
  *    @param f Faction to get player's default standing from.
  *    @return The default standing the player has with the faction.
  */
-double faction_getPlayerDef( int f )
+double faction_reputationDefault( int f )
 {
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       return faction_stack[f].player_def;
-   WARN(_("Faction id '%d' is invalid."), f);
+   WARN( _( "Faction id '%d' is invalid." ), f );
    return -1000.;
 }
 
@@ -987,8 +1134,13 @@ double faction_getPlayerDef( int f )
  */
 int faction_isPlayerFriend( int f )
 {
-   Faction *faction = &faction_stack[f];
-   return faction->player >= faction->friendly_at;
+   const Faction *faction = &faction_stack[f];
+   return ( faction_reputation( f ) >= faction->friendly_at );
+}
+int faction_isPlayerFriendSystem( int f, const StarSystem *sys )
+{
+   const Faction *faction = &faction_stack[f];
+   return ( system_getReputationOrGlobal( sys, f ) >= faction->friendly_at );
 }
 
 /**
@@ -999,8 +1151,11 @@ int faction_isPlayerFriend( int f )
  */
 int faction_isPlayerEnemy( int f )
 {
-   Faction *faction = &faction_stack[f];
-   return faction->player < 0;
+   return ( faction_reputation( f ) < 0. );
+}
+int faction_isPlayerEnemySystem( int f, const StarSystem *sys )
+{
+   return ( system_getReputationOrGlobal( sys, f ) < 0 );
 }
 
 /**
@@ -1011,29 +1166,59 @@ int faction_isPlayerEnemy( int f )
  *    @param f Faction to get the colour of based on player's standing.
  *    @return Pointer to the colour.
  */
-const glColour* faction_getColour( int f )
+const glColour *faction_reputationColour( int f )
 {
-   if (f<0) return &cInert;
-   else if (areAllies(FACTION_PLAYER,f)) return &cFriend;
-   else if (areEnemies(FACTION_PLAYER,f)) return &cHostile;
-   else return &cNeutral;
+   if ( f < 0 )
+      return &cInert;
+   else if ( areAllies( FACTION_PLAYER, f ) )
+      return &cFriend;
+   else if ( areEnemies( FACTION_PLAYER, f ) )
+      return &cHostile;
+   else
+      return &cNeutral;
+}
+const glColour *faction_reputationColourSystem( int f, const StarSystem *sys )
+{
+   if ( f < 0 )
+      return &cInert;
+   else if ( areAlliesSystem( FACTION_PLAYER, f, sys ) )
+      return &cFriend;
+   else if ( areEnemiesSystem( FACTION_PLAYER, f, sys ) )
+      return &cHostile;
+   else
+      return &cNeutral;
 }
 
 /**
  * @brief Gets the faction character associated to its standing with the player.
  *
- * Use this to do something like "#%c", faction_getColourChar( some_faction ) in the
- *  font print routines.
+ * Use this to do something like "#%c", faction_reputationColourChar(
+ * some_faction ) in the font print routines.
  *
  *    @param f Faction to get the colour of based on player's standing.
  *    @return The character associated to the faction.
  */
-char faction_getColourChar( int f )
+char faction_reputationColourChar( int f )
 {
-   if (f<0) return 'I';
-   else if (areEnemies(FACTION_PLAYER,f)) return 'H';
-   else if (areAllies(FACTION_PLAYER,f)) return 'F';
-   else return 'N';
+   if ( f < 0 )
+      return 'I';
+   else if ( areEnemies( FACTION_PLAYER, f ) )
+      return 'H';
+   else if ( areAllies( FACTION_PLAYER, f ) )
+      return 'F';
+   else
+      return 'N';
+}
+char faction_reputationColourCharSystem( int f, const StarSystem *sys )
+{
+   if ( f < 0 )
+      return 'I';
+   else if ( areEnemiesSystem( FACTION_PLAYER, f, sys ) )
+      return 'H';
+   else if ( areAlliesSystem( FACTION_PLAYER, f, sys ) )
+      return 'F';
+   else
+      return 'N';
 }
 
 /**
@@ -1044,41 +1229,57 @@ char faction_getColourChar( int f )
  */
 const char *faction_getStandingText( int f )
 {
+   return faction_getStandingTextAtValue( f, faction_stack[f].player );
+}
+
+/**
+ * @brief Gets the player's standing in human readable form.
+ *
+ *    @param f Faction to get standing of.
+ *    @param value Value to get the readable string from.
+ *    @return Human readable player's standing (in player's native language).
+ */
+const char *faction_getStandingTextAtValue( int f, double value )
+{
    Faction *faction;
 
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return _( "???" );
+
    /* Escorts always have the same standing. */
-   if (f == FACTION_PLAYER)
-      return _("Escort");
+   if ( f == FACTION_PLAYER )
+      return _( "Escort" );
 
    faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
-      return _("???");
+   if ( faction->lua_env == LUA_NOREF )
+      return _( "???" );
    else {
       const char *r;
       /* Set up the method:
        * standing:text_rank( standing ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_rank );
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
-      lua_pushnumber( naevL, faction->player );
+      lua_pushnumber( naevL, value );
 
       /* Call function. */
-      if (nlua_pcall( faction->env, 2, 1 )) {
+      if ( nlua_pcall( faction->lua_env, 1, 1 ) ) {
          /* An error occurred. */
-         WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
+         WARN( _( "Faction '%s': %s" ), faction->name,
+               lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
-         return _("???");
+         return _( "???" );
       }
 
       /* Parse return. */
-      if (!lua_isstring( naevL, -1 )) {
-         WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_rank(...)'."), faction->name );
-         r = _("???");
-      }
-      else
+      if ( !lua_isstring( naevL, -1 ) ) {
+         WARN(
+            _( "Lua script for faction '%s' did not return a %s from '%s'." ),
+            faction->name, _( "string" ), "text_rank" );
+         r = _( "???" );
+      } else
          r = lua_tostring( naevL, -1 ); /* Should be translated already. */
       lua_pop( naevL, 1 );
-
       return r;
    }
 }
@@ -1093,43 +1294,47 @@ const char *faction_getStandingText( int f )
  */
 const char *faction_getStandingBroad( int f, int bribed, int override )
 {
-   Faction *faction;
+   Faction    *faction;
    const char *r;
 
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return _( "???" );
+
    /* Escorts always have the same standing. */
-   if (f == FACTION_PLAYER)
-      return _("Escort");
+   if ( f == FACTION_PLAYER )
+      return _( "Escort" );
 
    faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
-      return _("???");
+   if ( faction->lua_env == LUA_NOREF )
+      return _( "???" );
 
    /* Set up the method:
-      * standing:text_broad( standing, bribed, override ) */
+    * standing:text_broad( standing, bribed, override ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_broad );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
-   lua_pushnumber( naevL, faction->player );
+   lua_pushnumber( naevL, ( faction_isFlag( faction, FACTION_REPOVERRIDE )
+                               ? faction->override
+                               : faction->player ) );
    lua_pushboolean( naevL, bribed );
-   lua_pushnumber( naevL, override );
+   lua_pushinteger( naevL, override );
 
    /* Call function. */
-   if (nlua_pcall( faction->env, 4, 1 )) {
+   if ( nlua_pcall( faction->lua_env, 3, 1 ) ) {
       /* An error occurred. */
-      WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
+      WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
-      return "???";
+      return _( "???" );
    }
 
    /* Parse return. */
-   if (!lua_isstring( naevL, -1 )) {
-      WARN( _("Lua script for faction '%s' did not return a string from 'standing:text_broad(...)'."), faction->name );
-      r = "???";
-   }
-   else
+   if ( !lua_isstring( naevL, -1 ) ) {
+      WARN( _( "Lua script for faction '%s' did not return a %s from '%s'." ),
+            faction->name, _( "string" ), "text_broad" );
+      r = _( "???" );
+   } else
       r = lua_tostring( naevL, -1 );
    lua_pop( naevL, 1 );
-
    return r;
 }
 
@@ -1142,39 +1347,41 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 double faction_reputationMax( int f )
 {
    Faction *faction;
-   double r;
+   double   r;
+
+   /* Ignore it if player is dead. */
+   if ( player.p == NULL )
+      return 0.;
 
    /* Escorts always have the same standing. */
-   if (f == FACTION_PLAYER)
+   if ( f == FACTION_PLAYER )
       return 100.;
 
    faction = &faction_stack[f];
 
-   if (faction->env == LUA_NOREF)
+   if ( faction->lua_env == LUA_NOREF )
       return 0.;
 
    /* Set up the method:
-      * standing:reputation_max( standing ) */
+    * standing:reputation_max( standing ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_reputation_max );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing );
 
    /* Call function. */
-   if (nlua_pcall( faction->env, 1, 1 )) {
+   if ( nlua_pcall( faction->lua_env, 0, 1 ) ) {
       /* An error occurred. */
-      WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
+      WARN( _( "Faction '%s': %s" ), faction->name, lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       return 0.;
    }
 
    /* Parse return. */
-   if (!lua_isnumber( naevL, -1 )) {
-      WARN( _("Lua script for faction '%s' did not return a string from 'standing:reputation_max(...)'."), faction->name );
-      r =  0.;
-   }
-   else
+   if ( !lua_isnumber( naevL, -1 ) ) {
+      WARN( _( "Lua script for faction '%s' did not return a %s from '%s'." ),
+            faction->name, _( "number" ), "reputation_max" );
+      r = 0.;
+   } else
       r = lua_tonumber( naevL, -1 );
    lua_pop( naevL, 1 );
-
    return r;
 }
 
@@ -1188,19 +1395,20 @@ double faction_reputationMax( int f )
 int areEnemies( int a, int b )
 {
    /* luckily our factions aren't masochistic */
-   if (a==b) return 0;
+   if ( a == b )
+      return 0;
 
    /* Make sure they're valid. */
-   if (!faction_isFaction(a) || !faction_isFaction(b))
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
       return 0;
 
    /* player handled separately */
-   if (a==FACTION_PLAYER)
-      return faction_isPlayerEnemy(b);
-   else if (b==FACTION_PLAYER)
-      return faction_isPlayerEnemy(a);
+   if ( a == FACTION_PLAYER )
+      return faction_isPlayerEnemy( b );
+   else if ( b == FACTION_PLAYER )
+      return faction_isPlayerEnemy( a );
 
-   return faction_grid[ a * faction_mgrid + b ] < 0;
+   return faction_grid[a * faction_mgrid + b] < 0;
 }
 
 /**
@@ -1213,19 +1421,58 @@ int areEnemies( int a, int b )
 int areAllies( int a, int b )
 {
    /* If they are the same they must be allies. */
-   if (a==b) return 1;
+   if ( a == b )
+      return 1;
 
    /* Make sure they're valid. */
-   if (!faction_isFaction(a) || !faction_isFaction(b))
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
       return 0;
 
    /* we assume player becomes allies with high rating */
-   if (a==FACTION_PLAYER)
-      return faction_isPlayerFriend(b);
-   else if (b==FACTION_PLAYER)
-      return faction_isPlayerFriend(a);
+   if ( a == FACTION_PLAYER )
+      return faction_isPlayerFriend( b );
+   else if ( b == FACTION_PLAYER )
+      return faction_isPlayerFriend( a );
 
-   return faction_grid[ a * faction_mgrid + b ] > 0;
+   return faction_grid[a * faction_mgrid + b] > 0;
+}
+
+int areEnemiesSystem( int a, int b, const StarSystem *sys )
+{
+   /* luckily our factions aren't masochistic */
+   if ( a == b )
+      return 0;
+
+   /* Make sure they're valid. */
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
+      return 0;
+
+   /* player handled separately */
+   if ( a == FACTION_PLAYER )
+      return faction_isPlayerEnemySystem( b, sys );
+   else if ( b == FACTION_PLAYER )
+      return faction_isPlayerEnemySystem( a, sys );
+
+   return faction_grid[a * faction_mgrid + b] < 0;
+}
+
+int areAlliesSystem( int a, int b, const StarSystem *sys )
+{
+   /* If they are the same they must be allies. */
+   if ( a == b )
+      return 1;
+
+   /* Make sure they're valid. */
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
+      return 0;
+
+   /* we assume player becomes allies with high rating */
+   if ( a == FACTION_PLAYER )
+      return faction_isPlayerFriendSystem( b, sys );
+   else if ( b == FACTION_PLAYER )
+      return faction_isPlayerFriendSystem( a, sys );
+
+   return faction_grid[a * faction_mgrid + b] > 0;
 }
 
 /**
@@ -1236,7 +1483,7 @@ int areAllies( int a, int b )
  */
 int faction_isFaction( int f )
 {
-   if ((f<0) || (f>=array_size(faction_stack)))
+   if ( ( f < 0 ) || ( f >= array_size( faction_stack ) ) )
       return 0;
    return 1;
 }
@@ -1248,132 +1495,148 @@ int faction_isFaction( int f )
  *    @param file File to parse.
  *    @return Faction created from parent node.
  */
-static int faction_parse( Faction* temp, const char *file )
+static int faction_parse( Faction *temp, const char *file )
 {
    xmlNodePtr node, parent;
-   int saw_player;
+   int        saw_player;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
-   if (doc == NULL)
+   if ( doc == NULL )
       return -1;
 
    parent = doc->xmlChildrenNode; /* first faction node */
-   if (parent == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), file);
+   if ( parent == NULL ) {
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
    /* Clear memory. */
-   memset( temp, 0, sizeof(Faction) );
-   temp->equip_env   = LUA_NOREF;
-   temp->env         = LUA_NOREF;
-   temp->sched_env   = LUA_NOREF;
+   memset( temp, 0, sizeof( Faction ) );
+   temp->local_th           = 10.;
+   temp->equip_env          = LUA_NOREF;
+   temp->sched_env          = LUA_NOREF;
+   temp->lua_env            = LUA_NOREF;
+   temp->lua_hit            = LUA_NOREF;
+   temp->lua_hit_test       = LUA_NOREF;
+   temp->lua_text_rank      = LUA_NOREF;
+   temp->lua_text_broad     = LUA_NOREF;
+   temp->lua_reputation_max = LUA_NOREF;
 
-   xmlr_attr_strd(parent,"name",temp->name);
-   if (temp->name == NULL)
-      WARN(_("Faction from file '%s' has no name!"), file);
+   xmlr_attr_strd( parent, "name", temp->name );
+   if ( temp->name == NULL )
+      WARN( _( "Faction from file '%s' has no name!" ), file );
 
    saw_player = 0;
-   node   = parent->xmlChildrenNode;
+   node       = parent->xmlChildrenNode;
    do {
       /* Only care about nodes. */
-      xml_onlyNodes(node);
+      xml_onlyNodes( node );
 
       /* Can be 0 or negative, so we have to take that into account. */
-      if (xml_isNode(node,"player")) {
-         temp->player_def = xml_getFloat(node);
-         saw_player = 1;
+      if ( xml_isNode( node, "player" ) ) {
+         temp->player_def = xml_getFloat( node );
+         saw_player       = 1;
          continue;
       }
 
-      xmlr_strd(node,"longname",temp->longname);
-      xmlr_strd(node,"display",temp->displayname);
-      xmlr_strd(node,"mapname",temp->mapname);
-      xmlr_strd(node,"description",temp->description);
-      xmlr_strd(node,"ai",temp->ai);
-      xmlr_float(node,"lane_length_per_presence",temp->lane_length_per_presence);
-      xmlr_float(node,"lane_base_cost",temp->lane_base_cost);
-      if (xml_isNode(node, "colour")) {
-         char *ctmp = xml_get(node);
-         if (ctmp != NULL)
-            temp->colour = *col_fromName(xml_raw(node));
+      xmlr_strd( node, "longname", temp->longname );
+      xmlr_strd( node, "display", temp->displayname );
+      xmlr_strd( node, "mapname", temp->mapname );
+      xmlr_strd( node, "description", temp->description );
+      xmlr_strd( node, "ai", temp->ai );
+      xmlr_float( node, "local_th", temp->local_th );
+      xmlr_float( node, "lane_length_per_presence",
+                  temp->lane_length_per_presence );
+      xmlr_float( node, "lane_base_cost", temp->lane_base_cost );
+      if ( xml_isNode( node, "colour" ) ) {
+         const char *ctmp = xml_get( node );
+         if ( ctmp != NULL )
+            temp->colour = *col_fromName( xml_raw( node ) );
          /* If no named colour is present, RGB attributes are used. */
          else {
             /* Initialize in case a colour channel is absent. */
-            xmlr_attr_float(node,"r",temp->colour.r);
-            xmlr_attr_float(node,"g",temp->colour.g);
-            xmlr_attr_float(node,"b",temp->colour.b);
+            xmlr_attr_float( node, "r", temp->colour.r );
+            xmlr_attr_float( node, "g", temp->colour.g );
+            xmlr_attr_float( node, "b", temp->colour.b );
             temp->colour.a = 1.;
             col_gammaToLinear( &temp->colour );
          }
          continue;
       }
 
-      if (xml_isNode(node, "known")) {
-         faction_setFlag(temp, FACTION_KNOWN);
+      if ( xml_isNode( node, "known" ) ) {
+         faction_setFlag( temp, FACTION_KNOWN );
          continue;
       }
 
-      if (xml_isNode(node,"logo")) {
+      if ( xml_isNode( node, "logo" ) ) {
          char buf[PATH_MAX];
-         if (temp->logo != NULL)
-            WARN(_("Faction '%s' has duplicate 'logo' tag."), temp->name);
-         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s.webp", xml_get(node) );
-         temp->logo = gl_newImage(buf, 0);
+         if ( temp->logo != NULL ) {
+            WARN( _( "Faction '%s' has duplicate 'logo' tag." ), temp->name );
+            continue;
+         }
+         snprintf( buf, sizeof( buf ), FACTION_LOGO_PATH "%s.webp",
+                   xml_get( node ) );
+         temp->logo = gl_newImage( buf, 0 );
          continue;
       }
 
-      if (xml_isNode(node,"static")) {
-         faction_setFlag(temp, FACTION_STATIC);
+      if ( xml_isNode( node, "static" ) ) {
+         faction_setFlag( temp, FACTION_STATIC );
          continue;
       }
 
-      if (xml_isNode(node,"invisible")) {
-         faction_setFlag(temp, FACTION_INVISIBLE);
+      if ( xml_isNode( node, "invisible" ) ) {
+         faction_setFlag( temp, FACTION_INVISIBLE );
          continue;
       }
 
-      if (xml_isNode(node,"useshiddenjumps")) {
-         faction_setFlag(temp, FACTION_USESHIDDENJUMPS);
+      if ( xml_isNode( node, "useshiddenjumps" ) ) {
+         faction_setFlag( temp, FACTION_USESHIDDENJUMPS );
          continue;
       }
 
-      if (xml_isNode(node, "tags")) {
+      if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         if (temp->tags != NULL)
-            WARN(_("Faction '%s' has duplicate '%s' node!"), temp->name, "tags");
+         if ( temp->tags != NULL )
+            WARN( _( "Faction '%s' has duplicate '%s' node!" ), temp->name,
+                  "tags" );
          else
-            temp->tags = array_create( char* );
+            temp->tags = array_create( char * );
          do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur, "tag")) {
-               char *tmp = xml_get(cur);
-               if (tmp != NULL)
-                  array_push_back( &temp->tags, strdup(tmp) );
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "tag" ) ) {
+               const char *tmp = xml_get( cur );
+               if ( tmp != NULL )
+                  array_push_back( &temp->tags, strdup( tmp ) );
                continue;
             }
-            WARN(_("Faction '%s' has unknown node in tags '%s'."), temp->name, cur->name );
-         } while (xml_nextNode(cur));
+            WARN( _( "Faction '%s' has unknown node in tags '%s'." ),
+                  temp->name, cur->name );
+         } while ( xml_nextNode( cur ) );
          continue;
       }
 
 #if DEBUGGING
       /* Avoid warnings. */
-      if (xml_isNode(node,"allies") || xml_isNode(node,"enemies") ||
-            xml_isNode(node,"generator") || xml_isNode(node,"standing") ||
-            xml_isNode(node,"spawn") || xml_isNode(node,"equip"))
+      if ( xml_isNode( node, "allies" ) || xml_isNode( node, "enemies" ) ||
+           xml_isNode( node, "generator" ) || xml_isNode( node, "standing" ) ||
+           xml_isNode( node, "spawn" ) || xml_isNode( node, "equip" ) )
          continue;
-      WARN(_("Unknown node '%s' in faction '%s'"),node->name,temp->name);
+      WARN( _( "Unknown node '%s' in faction '%s'" ), node->name, temp->name );
 #endif /* DEBUGGING */
 
-   } while (xml_nextNode(node));
+   } while ( xml_nextNode( node ) );
 
-   if (!saw_player)
-      WARN(_("Faction '%s' missing 'player' tag."), temp->name);
-   if (faction_isKnown_(temp) && !faction_isFlag(temp, FACTION_INVISIBLE) && temp->description==NULL)
-      WARN(_("Faction '%s' is known but missing 'description' tag."), temp->name);
+   if ( !saw_player )
+      WARN( _( "Faction '%s' missing 'player' tag." ), temp->name );
+   if ( faction_isKnown_( temp ) &&
+        !faction_isFlag( temp, FACTION_INVISIBLE ) &&
+        temp->description == NULL )
+      WARN( _( "Faction '%s' is known but missing 'description' tag." ),
+            temp->name );
 
-   xmlFreeDoc(doc);
+   xmlFreeDoc( doc );
 
    return 0;
 }
@@ -1384,43 +1647,43 @@ static int faction_parse( Faction* temp, const char *file )
  *    @param temp Faction to associate the script to.
  *    @param scriptname Name of the lua script to use (e.g., "static").
  */
-static void faction_addStandingScript( Faction* temp, const char* scriptname )
+static void faction_addStandingScript( Faction *temp, const char *scriptname )
 {
-   char buf[PATH_MAX], *dat;
+   char   buf[PATH_MAX], *dat;
    size_t ndat;
 
-   snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", scriptname );
-   temp->env = nlua_newEnv();
+   snprintf( buf, sizeof( buf ), FACTIONS_PATH "standing/%s.lua", scriptname );
+   temp->lua_env = nlua_newEnv( temp->name );
 
-   nlua_loadStandard( temp->env );
+   nlua_loadStandard( temp->lua_env );
    dat = ndata_read( buf, &ndat );
-   if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
-      WARN(_("Failed to run standing script: %s\n"
-            "%s\n"
-            "Most likely Lua file has improper syntax, please check"),
-            buf, lua_tostring(naevL,-1));
-      nlua_freeEnv( temp->env );
-      temp->env = LUA_NOREF;
+   if ( nlua_dobufenv( temp->lua_env, dat, ndat, buf ) != 0 ) {
+      WARN( _( "Failed to run standing script: %s\n"
+               "%s\n"
+               "Most likely Lua file has improper syntax, please check" ),
+            buf, lua_tostring( naevL, -1 ) );
+      nlua_freeEnv( temp->lua_env );
+      temp->lua_env = LUA_NOREF;
+      free( dat );
+      lua_pop( naevL, 1 );
+      return;
    }
-   free(dat);
+   free( dat );
 
    /* Set up the references. */
-   temp->lua_standing      = nlua_refenvtype( temp->env, "standing", LUA_TTABLE );
-   temp->lua_hit           = nlua_reffield( temp->lua_standing, "hit" );
-   temp->lua_text_broad    = nlua_reffield( temp->lua_standing, "text_broad" );
-   temp->lua_text_rank     = nlua_reffield( temp->lua_standing, "text_rank" );
-   temp->lua_reputation_max= nlua_reffield( temp->lua_standing, "reputation_max" );
+   temp->lua_hit = nlua_refenvtype( temp->lua_env, "hit", LUA_TFUNCTION );
+   temp->lua_hit_test =
+      nlua_refenvtype( temp->lua_env, "hit_test", LUA_TFUNCTION );
+   temp->lua_text_broad =
+      nlua_refenvtype( temp->lua_env, "text_broad", LUA_TFUNCTION );
+   temp->lua_text_rank =
+      nlua_refenvtype( temp->lua_env, "text_rank", LUA_TFUNCTION );
+   temp->lua_reputation_max =
+      nlua_refenvtype( temp->lua_env, "reputation_max", LUA_TFUNCTION );
 
-   if (temp->lua_standing != LUA_NOREF) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, temp->lua_standing );
-      lua_getfield( naevL, -1, "friendly_at" );
-      temp->friendly_at = lua_tonumber( naevL, -1 );
-      lua_pop( naevL, 2 );
-   }
-   else {
-      WARN(_("Standing script did not set the \"standing\" variable: %s"), buf);
-      temp->friendly_at = 0.;
-   }
+   nlua_getenv( naevL, temp->lua_env, "friendly_at" );
+   temp->friendly_at = lua_tonumber( naevL, -1 );
+   lua_pop( naevL, 1 );
 }
 
 /**
@@ -1431,139 +1694,218 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
  */
 static int faction_parseSocial( const char *file )
 {
-   char buf[PATH_MAX], *name, *dat;
-   size_t ndat;
+   char      *name;
    xmlNodePtr node, parent;
-   Faction *base;
+   Faction   *base;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
-   if (doc == NULL)
+   if ( doc == NULL )
       return -1;
 
    parent = doc->xmlChildrenNode; /* first faction node */
-   if (parent == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), file);
+   if ( parent == NULL ) {
+      WARN( _( "Malformed '%s' file: does not contain elements" ), file );
       return -1;
    }
 
    /* Get name. */
    base = NULL;
-   xmlr_attr_strd(parent, "name", name);
-   if (name != NULL)
-      base = &faction_stack[ faction_get( name ) ];
+   xmlr_attr_strd( parent, "name", name );
+   if ( name != NULL )
+      base = &faction_stack[faction_get( name )];
    free( name );
    name = NULL;
 
    assert( base != NULL );
 
    /* Create arrays, not much memory so it doesn't really matter. */
-   base->allies = array_create( int );
+   base->allies  = array_create( int );
    base->enemies = array_create( int );
 
    /* Parse social stuff. */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node, "generator")) {
+      xml_onlyNodes( node );
+
+      if ( xml_isNode( node, "generator" ) ) {
          FactionGenerator *fg;
-         if (base->generators==NULL)
+         if ( base->generators == NULL )
             base->generators = array_create( FactionGenerator );
          fg = &array_grow( &base->generators );
-         xmlr_attr_float(node,"weight",fg->weight);
-         fg->id = faction_get( xml_get(node) );
+         xmlr_attr_float( node, "weight", fg->weight );
+         fg->id = faction_get( xml_get( node ) );
          continue;
       }
 
-      /* Standing scripts. */
-      if (xml_isNode(node, "standing")) {
-         if (base->env != LUA_NOREF)
-            WARN(_("Faction '%s' has duplicate 'standing' tag."), base->name);
-         faction_addStandingScript( base, xml_raw(node) );
-         continue;
-      }
-
-      /* Spawning scripts. */
-      if (xml_isNode(node, "spawn")) {
-         if (base->sched_env != LUA_NOREF)
-            WARN(_("Faction '%s' has duplicate 'spawn' tag."), base->name);
-         snprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
-         base->sched_env = nlua_newEnv();
-         nlua_loadStandard( base->sched_env );
-         dat = ndata_read( buf, &ndat );
-         if (nlua_dobufenv(base->sched_env, dat, ndat, buf) != 0) {
-            WARN(_("Failed to run spawn script: %s\n"
-                  "%s\n"
-                  "Most likely Lua file has improper syntax, please check"),
-                  buf, lua_tostring(naevL,-1));
-            nlua_freeEnv( base->sched_env );
-            base->sched_env = LUA_NOREF;
-         }
-         free(dat);
-         continue;
-      }
-
-      /* Equipment scripts. */
-      if (xml_isNode(node, "equip")) {
-         if (base->equip_env != LUA_NOREF)
-            WARN(_("Faction '%s' has duplicate 'equip' tag."), base->name);
-         snprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
-         base->equip_env = nlua_newEnv();
-         nlua_loadStandard( base->equip_env );
-         dat = ndata_read( buf, &ndat );
-         if (nlua_dobufenv(base->equip_env, dat, ndat, buf) != 0) {
-            WARN(_("Failed to run equip script: %s\n"
-                  "%s\n"
-                  "Most likely Lua file has improper syntax, please check"),
-                  buf, lua_tostring(naevL, -1));
-            nlua_freeEnv( base->equip_env );
-            base->equip_env = LUA_NOREF;
-         }
-         free(dat);
-         continue;
-      }
+      /* Load script paths. */
+      xmlr_strd( node, "standing", base->script_standing );
+      xmlr_strd( node, "spawn", base->script_spawn );
+      xmlr_strd( node, "equip", base->script_equip );
 
       /* Grab the allies */
-      if (xml_isNode(node,"allies")) {
+      if ( xml_isNode( node, "allies" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"ally")) {
-               int *tmp = &array_grow( &base->allies );
-               *tmp = faction_get(xml_get(cur));
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "ally" ) ) {
+               int fct = faction_get( xml_get( cur ) );
+               if ( faction_isFaction( fct ) )
+                  array_push_back( &base->allies, fct );
             }
-         } while (xml_nextNode(cur));
+         } while ( xml_nextNode( cur ) );
          continue;
       }
 
       /* Grab the enemies */
-      if (xml_isNode(node,"enemies")) {
+      if ( xml_isNode( node, "enemies" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"enemy")) {
-               int *tmp = &array_grow( &base->enemies );
-               *tmp = faction_get(xml_get(cur));
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "enemy" ) ) {
+               int fct = faction_get( xml_get( cur ) );
+               if ( faction_isFaction( fct ) )
+                  array_push_back( &base->enemies, fct );
             }
-         } while (xml_nextNode(cur));
+         } while ( xml_nextNode( cur ) );
          continue;
       }
-   } while (xml_nextNode(node));
+   } while ( xml_nextNode( node ) );
 
-   if ((base->env==LUA_NOREF) && !faction_isFlag( base, FACTION_STATIC ))
-      WARN(_("Faction '%s' has no Lua and isn't static!"), base->name);
-
-   xmlFreeDoc(doc);
+   xmlFreeDoc( doc );
    return 0;
 }
 
 /**
  * @brief Resets player standing and flags of factions to default.
  */
-void factions_reset (void)
+void factions_reset( void )
 {
-   for (int i=0; i<array_size(faction_stack); i++) {
+   factions_clearDynamic();
+
+   /* Reset global standing. */
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
       faction_stack[i].player = faction_stack[i].player_def;
-      faction_stack[i].flags = faction_stack[i].oflags;
+      faction_stack[i].flags  = faction_stack[i].oflags;
    }
+   factions_resetLocal();
+}
+
+/**
+ * @brief Reset local standing.
+ */
+void factions_resetLocal( void )
+{
+   StarSystem *sys_stack = system_getAll();
+   for ( int i = 0; i < array_size( sys_stack ); i++ ) {
+      StarSystem *sys = &sys_stack[i];
+      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+         SystemPresence *sp = &sys->presence[j];
+         sp->local          = faction_reputation( sp->faction );
+      }
+   }
+   // faction_updateGlobal();
+}
+
+static void faction_updateSingle( int f )
+{
+   int         n         = 0;
+   double      v         = 0.;
+   StarSystem *sys_stack = system_getAll();
+   for ( int j = 0; j < array_size( sys_stack ); j++ ) {
+      StarSystem *sys = &sys_stack[j];
+      for ( int k = 0; k < array_size( sys->presence ); k++ ) {
+         SystemPresence *sp = &sys->presence[k];
+         if ( sp->faction != f )
+            continue;
+         v += sp->local;
+         n++;
+      }
+   }
+   faction_stack[f].player = v / (double)n;
+}
+
+/**
+ * @brief Computes the global faction standing for each of the factions.
+ */
+void faction_updateGlobal( void )
+{
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
+      faction_updateSingle( i );
+}
+
+void faction_applyLocalThreshold( int f, StarSystem *sys )
+{
+   SystemPresence *srep =
+      system_getFactionPresence( sys, f ); /* Starting reputation. */
+   if ( srep == NULL )
+      return;
+
+#if DEBUGGING
+   if ( srep->value <= 0. ) {
+      WARN( "Trying to apply local faction threshol from system with no "
+            "presence." );
+      return;
+   }
+#endif /* DEBUGGING */
+
+   double      n         = 0;
+   double      rep       = srep->local;
+   StarSystem *sys_stack = system_getAll();
+   double      th        = faction_stack[f].local_th;
+   /* TODO avoid a memory allocation every call. */
+   int *done   = array_create( int );
+   int *queuea = array_create( int );
+   int *queueb = array_create( int );
+
+   array_push_back( &queuea, sys->id );
+   array_push_back( &done, sys->id );
+   while ( array_size( queuea ) > 0 ) {
+      /* Go backwards through queue. */
+      for ( int i = 0; i < array_size( queuea ); i++ ) {
+         StarSystem *qsys = &sys_stack[queuea[i]];
+
+         /* Update local presence. */
+         srep = system_getFactionPresence( qsys, f );
+         if ( srep != NULL )
+            srep->local = CLAMP( rep - n * th, rep + n * th, srep->local );
+
+         /* Propagate to next systems. */
+         for ( int j = 0; j < array_size( qsys->jumps ); j++ ) {
+            StarSystem *nsys  = qsys->jumps[j].target;
+            int         found = 0;
+            /* Ignore systems already looked at. */
+            for ( int k = 0; k < array_size( done ); k++ ) {
+               if ( nsys->id == done[k] ) {
+                  found = 1;
+                  break;
+               }
+            }
+            if ( found )
+               continue;
+            /* We only process systems that have presence. No presence systems
+             * will act as a buffer. */
+            if ( system_getPresence( nsys, f ) > 0. )
+               array_push_back( &queueb, nsys->id );
+            array_push_back( &done, nsys->id );
+         }
+      }
+      array_erase( &queuea, array_begin( queuea ), array_end( queuea ) );
+
+      /* Increment distance. */
+      n++;
+
+      /* Flip buffers. */
+      int *queue = queuea;
+      queuea     = queueb;
+      queueb     = queue;
+   }
+
+   array_free( done );
+   array_free( queuea );
+   array_free( queueb );
+
+   /* Update global standing. */
+   faction_updateSingle( f );
 }
 
 /**
@@ -1571,96 +1913,167 @@ void factions_reset (void)
  *
  *    @return 0 on success.
  */
-int factions_load (void)
+int factions_load( void )
 {
-   Faction *f;
+#if DEBUGGING
    Uint32 time = SDL_GetTicks();
-   char **faction_files = ndata_listRecursive( FACTION_DATA_PATH );
+#endif /* DEBUGGING */
+   Faction *f;
+   char   **faction_files = ndata_listRecursive( FACTION_DATA_PATH );
 
    /* player faction is hard-coded */
    faction_stack = array_create( Faction );
-   f = &array_grow( &faction_stack );
-   memset( f, 0, sizeof(Faction) );
-   f->name        = strdup("Player");
-   f->flags       = FACTION_STATIC | FACTION_INVISIBLE;
-   f->equip_env   = LUA_NOREF;
-   f->env         = LUA_NOREF;
-   f->sched_env   = LUA_NOREF;
-   f->allies      = array_create( int );
-   f->enemies     = array_create( int );
+   f             = &array_grow( &faction_stack );
+   memset( f, 0, sizeof( Faction ) );
+   f->name               = strdup( "Player" );
+   f->flags              = FACTION_STATIC | FACTION_INVISIBLE;
+   f->equip_env          = LUA_NOREF;
+   f->sched_env          = LUA_NOREF;
+   f->lua_env            = LUA_NOREF;
+   f->lua_hit            = LUA_NOREF;
+   f->lua_hit_test       = LUA_NOREF;
+   f->lua_text_rank      = LUA_NOREF;
+   f->lua_text_broad     = LUA_NOREF;
+   f->lua_reputation_max = LUA_NOREF;
+   f->allies             = array_create( int );
+   f->enemies            = array_create( int );
 
    /* Add the base factions. */
-   for (int i=0; i<array_size(faction_files); i++) {
-      if (ndata_matchExt( faction_files[i], "xml" )) {
+   for ( int i = 0; i < array_size( faction_files ); i++ ) {
+      if ( ndata_matchExt( faction_files[i], "xml" ) ) {
          Faction nf;
-         int ret = faction_parse( &nf, faction_files[i] );
-         if (ret == 0) {
+         int     ret = faction_parse( &nf, faction_files[i] );
+         if ( ret == 0 ) {
             nf.oflags = nf.flags;
             array_push_back( &faction_stack, nf );
          }
+
+         /* Render if necessary. */
+         naev_renderLoadscreen();
       }
    }
 
    /* Sort by name. */
-   qsort( faction_stack, array_size(faction_stack), sizeof(Faction), faction_cmp );
-   faction_player = faction_get("Player");
+   qsort( faction_stack, array_size( faction_stack ), sizeof( Faction ),
+          faction_cmp );
+   faction_player = faction_get( "Player" );
 
    /* Second pass - sets allies and enemies */
-   for (int i=0; i<array_size(faction_files); i++) {
-      if (ndata_matchExt( faction_files[i], "xml" )) {
+   for ( int i = 0; i < array_size( faction_files ); i++ ) {
+      if ( ndata_matchExt( faction_files[i], "xml" ) ) {
          faction_parseSocial( faction_files[i] );
       }
    }
 
    /* Third pass, Make allies/enemies symmetric. */
-   for (int i=0; i<array_size(faction_stack); i++) {
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
       f = &faction_stack[i];
 
       /* First run over allies and make sure it's mutual. */
-      for (int j=0; j < array_size(f->allies); j++) {
-         Faction *sf = &faction_stack[ f->allies[j] ];
-         int r = 0;
-         for (int k=0; k < array_size(sf->allies); k++)
-            if (sf->allies[k] == i) {
+      for ( int j = 0; j < array_size( f->allies ); j++ ) {
+         const Faction *sf = &faction_stack[f->allies[j]];
+         int            r  = 0;
+         for ( int k = 0; k < array_size( sf->allies ); k++ )
+            if ( sf->allies[k] == i ) {
                r = 1;
                break;
             }
 
          /* Add ally if necessary. */
-         if (r == 0)
+         if ( r == 0 )
             faction_addAlly( f->allies[j], i );
       }
 
       /* Now run over enemies. */
-      for (int j=0; j < array_size(f->enemies); j++) {
-         Faction *sf = &faction_stack[ f->enemies[j] ];
-         int r = 0;
-         for (int k=0; k < array_size(sf->enemies); k++)
-            if (sf->enemies[k] == i) {
+      for ( int j = 0; j < array_size( f->enemies ); j++ ) {
+         const Faction *sf = &faction_stack[f->enemies[j]];
+         int            r  = 0;
+         for ( int k = 0; k < array_size( sf->enemies ); k++ )
+            if ( sf->enemies[k] == i ) {
                r = 1;
                break;
             }
 
-         if (r == 0)
+         if ( r == 0 )
             faction_addEnemy( f->enemies[j], i );
       }
    }
 
    /* Clean up stuff. */
-   for (int i=0; i<array_size(faction_files); i++)
+   for ( int i = 0; i < array_size( faction_files ); i++ )
       free( faction_files[i] );
    array_free( faction_files );
 
    /* Compute grid and finalize. */
    faction_computeGrid();
-   if (conf.devmode) {
+#if DEBUGGING
+   if ( conf.devmode ) {
       time = SDL_GetTicks() - time;
-      DEBUG( n_( "Loaded %d Faction in %.3f s", "Loaded %d Factions in %.3f s", array_size(faction_stack) ), array_size(faction_stack), time/1000. );
-   }
-   else
-      DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
+      DEBUG( n_( "Loaded %d Faction in %.3f s", "Loaded %d Factions in %.3f s",
+                 array_size( faction_stack ) ),
+             array_size( faction_stack ), time / 1000. );
+   } else
+      DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions",
+                 array_size( faction_stack ) ),
+             array_size( faction_stack ) );
+#endif /* DEBUGGING */
 
    return 0;
+}
+
+void factions_loadPost( void )
+{
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+      Faction *f = &faction_stack[i];
+
+      /* Standing scripts. */
+      if ( f->script_standing != NULL )
+         faction_addStandingScript( f, f->script_standing );
+
+      if ( f->script_spawn != NULL ) {
+         char   buf[PATH_MAX], *dat;
+         size_t ndat;
+
+         snprintf( buf, sizeof( buf ), FACTIONS_PATH "spawn/%s.lua",
+                   f->script_spawn );
+         f->sched_env = nlua_newEnv( buf );
+         nlua_loadStandard( f->sched_env );
+         dat = ndata_read( buf, &ndat );
+         if ( nlua_dobufenv( f->sched_env, dat, ndat, buf ) != 0 ) {
+            WARN( _( "Failed to run spawn script: %s\n"
+                     "%s\n"
+                     "Most likely Lua file has improper syntax, please check" ),
+                  buf, lua_tostring( naevL, -1 ) );
+            nlua_freeEnv( f->sched_env );
+            f->sched_env = LUA_NOREF;
+         }
+         free( dat );
+      }
+
+      if ( f->script_equip != NULL ) {
+         char   buf[PATH_MAX], *dat;
+         size_t ndat;
+
+         snprintf( buf, sizeof( buf ), FACTIONS_PATH "equip/%s.lua",
+                   f->script_equip );
+         f->equip_env = nlua_newEnv( buf );
+         nlua_loadStandard( f->equip_env );
+         dat = ndata_read( buf, &ndat );
+         if ( nlua_dobufenv( f->equip_env, dat, ndat, buf ) != 0 ) {
+            WARN( _( "Failed to run equip script: %s\n"
+                     "%s\n"
+                     "Most likely Lua file has improper syntax, please check" ),
+                  buf, lua_tostring( naevL, -1 ) );
+            nlua_freeEnv( f->equip_env );
+            f->equip_env = LUA_NOREF;
+         }
+         free( dat );
+      }
+
+      /* Make sure functions that need Lua have it. */
+      if ( ( f->lua_env == LUA_NOREF ) && !faction_isFlag( f, FACTION_STATIC ) )
+         WARN( _( "Faction '%s' has no Lua and isn't static!" ), f->name );
+   }
 }
 
 /**
@@ -1668,39 +2081,42 @@ int factions_load (void)
  */
 static void faction_freeOne( Faction *f )
 {
-   free(f->name);
-   free(f->longname);
-   free(f->displayname);
-   free(f->mapname);
-   free(f->description);
-   free(f->ai);
-   array_free(f->generators);
-   gl_freeTexture(f->logo);
-   array_free(f->allies);
-   array_free(f->enemies);
+   free( f->name );
+   free( f->longname );
+   free( f->displayname );
+   free( f->mapname );
+   free( f->description );
+   free( f->ai );
+   free( f->script_standing );
+   free( f->script_spawn );
+   free( f->script_equip );
+   array_free( f->generators );
+   gl_freeTexture( f->logo );
+   array_free( f->allies );
+   array_free( f->enemies );
    nlua_freeEnv( f->sched_env );
-   nlua_freeEnv( f->env );
-   if (!faction_isFlag(f, FACTION_DYNAMIC))
+   nlua_freeEnv( f->lua_env );
+   if ( !faction_isFlag( f, FACTION_DYNAMIC ) )
       nlua_freeEnv( f->equip_env );
-   for (int i=0; i<array_size(f->tags); i++)
-      free(f->tags[i]);
-   array_free(f->tags);
+   for ( int i = 0; i < array_size( f->tags ); i++ )
+      free( f->tags[i] );
+   array_free( f->tags );
 }
 
 /**
  * @brief Frees the factions.
  */
-void factions_free (void)
+void factions_free( void )
 {
    /* Free factions. */
-   for (int i=0; i<array_size(faction_stack); i++)
+   for ( int i = 0; i < array_size( faction_stack ); i++ )
       faction_freeOne( &faction_stack[i] );
-   array_free(faction_stack);
+   array_free( faction_stack );
    faction_stack = NULL;
 
    /* Clean up faction grid. */
    free( faction_grid );
-   faction_grid = NULL;
+   faction_grid  = NULL;
    faction_mgrid = 0;
 }
 
@@ -1712,26 +2128,29 @@ void factions_free (void)
  */
 int pfaction_save( xmlTextWriterPtr writer )
 {
-   xmlw_startElem(writer,"factions");
+   xmlw_startElem( writer, "factions" );
 
-   for (int i=1; i<array_size(faction_stack); i++) { /* player is faction 0 */
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
+      const Faction *f = &faction_stack[i];
+
       /* Must not be static. */
-      if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
+      if ( faction_isFlag( f, FACTION_STATIC ) )
          continue;
 
-      xmlw_startElem(writer,"faction");
+      xmlw_startElem( writer, "faction" );
 
-      xmlw_attr(writer,"name","%s",faction_stack[i].name);
-      xmlw_elem(writer,"standing","%f",faction_stack[i].player);
+      xmlw_attr( writer, "name", "%s", f->name );
+      xmlw_elem( writer, "standing", "%f", f->player );
+      if ( faction_isFlag( f, FACTION_REPOVERRIDE ) )
+         xmlw_elem( writer, "override", "%f", f->override );
 
-      if (faction_isKnown_(&faction_stack[i]))
-         xmlw_elemEmpty(writer, "known");
+      if ( faction_isKnown_( f ) )
+         xmlw_elemEmpty( writer, "known" );
 
-      xmlw_endElem(writer); /* "faction" */
+      xmlw_endElem( writer ); /* "faction" */
    }
 
-   xmlw_endElem(writer); /* "factions" */
-
+   xmlw_endElem( writer ); /* "factions" */
    return 0;
 }
 
@@ -1746,36 +2165,42 @@ int pfaction_load( xmlNodePtr parent )
    xmlNodePtr node = parent->xmlChildrenNode;
 
    do {
-      if (xml_isNode(node,"factions")) {
+      if ( xml_isNode( node, "factions" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
-            if (xml_isNode(cur,"faction")) {
-               int faction;
+            if ( xml_isNode( cur, "faction" ) ) {
+               int   faction;
                char *str;
-               xmlr_attr_strd(cur, "name", str);
-               faction = faction_get(str);
+               xmlr_attr_strd( cur, "name", str );
+               faction = faction_get( str );
+               free( str );
+               if ( faction < 0 )
+                  continue;
 
-               if (faction != -1) { /* Faction is valid. */
-                  xmlNodePtr sub = cur->xmlChildrenNode;
-                  do {
-                     if (xml_isNode(sub,"standing")) {
+               xmlNodePtr sub = cur->xmlChildrenNode;
+               Faction   *fct = &faction_stack[faction];
+               do {
+                  if ( xml_isNode( sub, "standing" ) ) {
 
-                        /* Must not be static. */
-                        if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
-                           faction_stack[faction].player = xml_getFloat(sub);
-                        continue;
-                     }
-                     if (xml_isNode(sub,"known")) {
-                        faction_setFlag(&faction_stack[faction], FACTION_KNOWN);
-                        continue;
-                     }
-                  } while (xml_nextNode(sub));
-               }
-               free(str);
+                     /* Must not be static. */
+                     if ( !faction_isFlag( fct, FACTION_STATIC ) )
+                        fct->player = xml_getFloat( sub );
+                     continue;
+                  }
+                  if ( xml_isNode( sub, "known" ) ) {
+                     faction_setFlag( fct, FACTION_KNOWN );
+                     continue;
+                  }
+                  if ( xml_isNode( sub, "override" ) ) {
+                     fct->override = xml_getFloat( sub );
+                     faction_setFlag( fct, FACTION_REPOVERRIDE );
+                     continue;
+                  }
+               } while ( xml_nextNode( sub ) );
             }
-         } while (xml_nextNode(cur));
+         } while ( xml_nextNode( cur ) );
       }
-   } while (xml_nextNode(node));
+   } while ( xml_nextNode( node ) );
 
    return 0;
 }
@@ -1783,41 +2208,67 @@ int pfaction_load( xmlNodePtr parent )
 /**
  * @brief Returns an array of faction ids.
  *
- *    @param which Which factions to get. (0,1,2,3 : all, friendly, neutral, hostile)
+ *    @param which Which factions to get. (0,1,2,3 : all, friendly, neutral,
+ * hostile)
  *    @return Array (array.h): The faction IDs of the specified alignment.
  */
 int *faction_getGroup( int which )
 {
    int *group;
 
-   switch (which) {
-      case 0: /* 'all' */
-         return array_copy( int, faction_stack );
+   switch ( which ) {
+   case 0: /* 'all' */
+      return array_copy( int, faction_stack );
 
-      case 1: /* 'friendly' */
-         group = array_create( int );
-         for (int i=0; i < array_size(faction_stack); i++)
-            if (areAllies( FACTION_PLAYER, i ))
-               array_push_back( &group, i );
-         return group;
+   case 1: /* 'friendly' */
+      group = array_create( int );
+      for ( int i = 0; i < array_size( faction_stack ); i++ )
+         if ( areAllies( FACTION_PLAYER, i ) )
+            array_push_back( &group, i );
+      return group;
 
-      case 2: /* 'neutral' */
-         group = array_create( int );
-         for (int i=0; i < array_size(faction_stack); i++)
-            if (!areAllies( FACTION_PLAYER, i ) && !areEnemies( FACTION_PLAYER, i ))
-               array_push_back( &group, i );
-         return group;
+   case 2: /* 'neutral' */
+      group = array_create( int );
+      for ( int i = 0; i < array_size( faction_stack ); i++ )
+         if ( !areAllies( FACTION_PLAYER, i ) &&
+              !areEnemies( FACTION_PLAYER, i ) )
+            array_push_back( &group, i );
+      return group;
 
-      case 3: /* 'hostile' */
-         group = array_create( int );
-         for (int i=0; i < array_size(faction_stack); i++)
-            if (areEnemies( FACTION_PLAYER, i ))
-               array_push_back( &group, i );
-         return group;
+   case 3: /* 'hostile' */
+      group = array_create( int );
+      for ( int i = 0; i < array_size( faction_stack ); i++ )
+         if ( areEnemies( FACTION_PLAYER, i ) )
+            array_push_back( &group, i );
+      return group;
 
-      default:
-         return NULL;
+   default:
+      return NULL;
    }
+}
+
+double faction_reputationOverride( int f, int *set )
+{
+   if ( !faction_isFaction( f ) ) {
+      *set = -1;
+      return 0.;
+   }
+   Faction *fct = &faction_stack[f];
+   *set         = faction_isFlag( fct, FACTION_REPOVERRIDE );
+   return fct->override;
+}
+
+void faction_setReputationOverride( int f, int set, double value )
+{
+   if ( !faction_isFaction( f ) )
+      return;
+   Faction *fct = &faction_stack[f];
+   if ( !set ) {
+      faction_rmFlag( fct, FACTION_REPOVERRIDE );
+      return;
+   }
+   faction_setFlag( fct, FACTION_REPOVERRIDE );
+   fct->override = value;
 }
 
 /**
@@ -1825,7 +2276,7 @@ int *faction_getGroup( int which )
  */
 int faction_usesHiddenJumps( int f )
 {
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       return faction_isFlag( &faction_stack[f], FACTION_USESHIDDENJUMPS );
    return 0;
 }
@@ -1833,9 +2284,9 @@ int faction_usesHiddenJumps( int f )
 /**
  * @brief Gets the faction's generators.
  */
-const FactionGenerator* faction_generators( int f )
+const FactionGenerator *faction_generators( int f )
 {
-   if (faction_isFaction(f))
+   if ( faction_isFaction( f ) )
       return faction_stack[f].generators;
    return NULL;
 }
@@ -1843,15 +2294,14 @@ const FactionGenerator* faction_generators( int f )
 /**
  * @brief Clears dynamic factions.
  */
-void factions_clearDynamic (void)
+void factions_clearDynamic( void )
 {
-   for (int i=0; i<array_size(faction_stack); i++) {
+   for ( int i = array_size( faction_stack ) - 1; i >= 0; i-- ) {
       Faction *f = &faction_stack[i];
-      if (faction_isFlag(f, FACTION_DYNAMIC)) {
-         faction_freeOne( f );
-         array_erase( &faction_stack, f, f+1 );
-         i--;
-      }
+      if ( !faction_isFlag( f, FACTION_DYNAMIC ) )
+         continue;
+      faction_freeOne( f );
+      array_erase( &faction_stack, f, f + 1 );
    }
    faction_computeGrid();
 }
@@ -1863,84 +2313,97 @@ void factions_clearDynamic (void)
  *    @param name Name of the faction to set.
  *    @param display Display name to use.
  *    @param ai Default pilot AI to use (if NULL, inherit from base).
+ *    @param colour Default colour to use (if NULL, inherit from base).
  */
-int faction_dynAdd( int base, const char* name, const char* display, const char* ai )
+int faction_dynAdd( int base, const char *name, const char *display,
+                    const char *ai, const glColour *colour )
 {
    Faction *f = &array_grow( &faction_stack );
-   memset( f, 0, sizeof(Faction) );
+   memset( f, 0, sizeof( Faction ) );
    f->name        = strdup( name );
-   f->displayname = (display==NULL) ? NULL : strdup( display );
-   f->ai          = (ai==NULL) ? NULL : strdup( ai );
+   f->displayname = ( display == NULL ) ? NULL : strdup( display );
+   f->ai          = ( ai == NULL ) ? NULL : strdup( ai );
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
    f->equip_env   = LUA_NOREF;
-   f->env         = LUA_NOREF;
+   f->lua_env     = LUA_NOREF;
    f->sched_env   = LUA_NOREF;
-   f->flags       = FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
+   f->flags =
+      FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
    faction_addStandingScript( f, "static" );
-   if (base>=0) {
+   if ( base >= 0 ) {
       Faction *bf = &faction_stack[base];
 
-      if (bf->ai!=NULL && f->ai==NULL)
+      if ( bf->ai != NULL && f->ai == NULL )
          f->ai = strdup( bf->ai );
-      if (bf->logo!=NULL)
+      if ( bf->logo != NULL )
          f->logo = gl_dupTexture( bf->logo );
 
-      for (int i=0; i<array_size(bf->allies); i++) {
+      for ( int i = 0; i < array_size( bf->allies ); i++ ) {
          int *tmp = &array_grow( &f->allies );
-         *tmp = bf->allies[i];
+         *tmp     = bf->allies[i];
       }
-      for (int i=0; i<array_size(bf->enemies); i++) {
+      for ( int i = 0; i < array_size( bf->enemies ); i++ ) {
          int *tmp = &array_grow( &f->enemies );
-         *tmp = bf->enemies[i];
+         *tmp     = bf->enemies[i];
       }
 
       f->player_def = bf->player_def;
-      f->player = bf->player;
-      f->colour = bf->colour;
+      f->player     = bf->player;
+      f->colour     = bf->colour;
 
       /* Lua stuff. */
       f->equip_env = bf->equip_env;
    }
 
+   /* Copy colour over if applicable. */
+   if ( colour != NULL )
+      f->colour = *colour;
+
    /* TODO make this incremental. */
    faction_computeGrid();
 
-   return f-faction_stack;
+   return f - faction_stack;
 }
 
 /**
  * @brief Computes the faction relationship grid.
  */
-static void faction_computeGrid (void)
+static void faction_computeGrid( void )
 {
-   size_t n = array_size(faction_stack);
-   if (faction_mgrid < n) {
+   size_t n = array_size( faction_stack );
+   if ( faction_mgrid < n ) {
       free( faction_grid );
-      faction_grid = malloc( n * n * sizeof(int) );
+      faction_grid  = malloc( n * n * sizeof( int ) );
       faction_mgrid = n;
    }
    n = faction_mgrid;
-   memset( faction_grid, 0, n*n*sizeof(int) );
-   for (int i=0; i<array_size(faction_stack); i++) {
+   memset( faction_grid, 0, n * n * sizeof( int ) );
+   for ( int i = 0; i < array_size( faction_stack ); i++ ) {
       Faction *fa = &faction_stack[i];
-      for (int k=0; k<array_size(fa->allies); k++) {
+      for ( int k = 0; k < array_size( fa->allies ); k++ ) {
          int j = fa->allies[k];
 #if DEBUGGING
-         if ((faction_grid[i*n+j] < 0) || (faction_grid[j*n+i]) < 0)
-            WARN("Incoherent faction grid! '%s' and '%s' are already enemies, but trying to set to allies!", faction_stack[i].name, faction_stack[j].name );
+         if ( ( faction_grid[i * n + j] < 0 ) ||
+              ( faction_grid[j * n + i] ) < 0 )
+            WARN( "Incoherent faction grid! '%s' and '%s' are already enemies, "
+                  "but trying to set to allies!",
+                  faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
-         faction_grid[i*n+j] = 1;
-         faction_grid[j*n+i] = 1;
+         faction_grid[i * n + j] = 1;
+         faction_grid[j * n + i] = 1;
       }
-      for (int k=0; k<array_size(fa->enemies); k++) {
+      for ( int k = 0; k < array_size( fa->enemies ); k++ ) {
          int j = fa->enemies[k];
 #if DEBUGGING
-         if ((faction_grid[i*n+j] > 0) || (faction_grid[j*n+i] > 0))
-            WARN("Incoherent faction grid! '%s' and '%s' are already allies, but trying to set to enemies!", faction_stack[i].name, faction_stack[j].name );
+         if ( ( faction_grid[i * n + j] > 0 ) ||
+              ( faction_grid[j * n + i] > 0 ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' are already allies, "
+                  "but trying to set to enemies!",
+                  faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
-         faction_grid[i*n+j] = -1;
-         faction_grid[j*n+i] = -1;
+         faction_grid[i * n + j] = -1;
+         faction_grid[j * n + i] = -1;
       }
    }
 }

@@ -25,4 +25,7 @@
   <description>Even the Dvaered realise that not every world can be devoted to industry. Food has to be grown somewhere and crop-growing stations are not yet practical, for the Dvaered, on a large scale. Hence the setting aside of Dunmer for agriculture. Despite its small size, the planet actually has a significantly larger population than Castellan III, due to its much more pleasant climate.</description>
   <bar>This bar is populated by traders carrying food to Castellan III and beyond, farmers who maintain the agri-businesses and Dvaered soldiers who function as a garrison. The bar is lively and friendly, except for the dour soldiers.</bar>
  </general>
+ <tags>
+  <tag>agriculture</tag>
+ </tags>
 </spob>

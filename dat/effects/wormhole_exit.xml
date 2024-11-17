@@ -6,4 +6,5 @@
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <lua>effects/lua/wormhole_exit.lua</lua>
  <shader vertex="effect2x.vert">effects/wormhole_exit.frag</shader>
+ <priority>0</priority>
 </effect>

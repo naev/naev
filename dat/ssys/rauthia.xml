@@ -2,11 +2,12 @@
 <ssys name="Rauthia">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>20.000000</interference>
+  <spacedust>400</spacedust>
+  <interference>45.000000</interference>
   <nebula volatility="11.800000" hue="280.000000">600.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="729.014660" y="337.822531"/>
+ <pos x="746.797602" y="94.087649"/>
  <spobs>
   <spob>Eryla</spob>
   <spob>NS-144</spob>
@@ -24,4 +25,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

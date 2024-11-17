@@ -2,11 +2,10 @@
 <ssys name="Cygnus">
  <general>
   <radius>24500.000000</radius>
-  <stars>400</stars>
-  <interference>5.882353</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>13.235294</interference>
  </general>
- <pos x="83.000000" y="-92.000000"/>
+ <pos x="137.789211" y="218.419450"/>
  <spobs>
   <spob>Cygnus IV</spob>
   <spob>Hassak</spob>
@@ -14,7 +13,7 @@
   <spob>Jaan</spob>
   <spob>Maya</spob>
   <spob>Torloth</spob>
-  <spob>Triton Station</spob>
+  <spob>Triton Shipyard</spob>
  </spobs>
  <jumps>
   <jump target="Delta Pavonis">

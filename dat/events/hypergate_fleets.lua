@@ -4,6 +4,7 @@
  <location>enter</location>
  <chance>100</chance>
  <chapter>1</chapter>
+ <priority>99</priority>
 </event>
 --]]
 --[[
@@ -11,7 +12,6 @@
 --]]
 local fleet = require "fleet"
 
--- luacheck: globals endevent (Hook functions passed by name)
 
 local hypergates_list = {
    "Hypergate Dvaer", -- Dvaered
@@ -65,7 +65,7 @@ local fleets_list = {
 function create ()
    local scur = system.cur()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( scur, true ) then evt.finish() end
+   if not naev.claimTest( scur, true ) then evt.finish() end
 
    -- Only care if we're in a system with hypergates
    local sysid

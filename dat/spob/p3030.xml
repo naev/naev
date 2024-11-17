@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-3030">
+ <pos x="-5786.877303" y="-961.398146"/>
+ <GFX>
+  <space>G03.webp</space>
+  <exterior>uninhabited-rocky-yellow-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>G</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>The planet seems to be enveloped in a never ending sandstorm that tears at the outer hull of your ship until you find an alcove where you can land. Your ship sensors pick up some strange undulations beneath the surface, but you are unable to determine the exact source. The hostility of the planet makes you feel like you should not overstay your welcome.</description>
+ </general>
+</spob>

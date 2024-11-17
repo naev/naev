@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tankard Cloister">
+ <pos x="-20551.681519" y="12636.184692"/>
+ <GFX>
+  <space>station-commerce3.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <base>33.333300</base>
+  <bonus>16.666700</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Tankard Cloister is a Sirius economical space facility. It processes a large portion of all trade transactions made within An'ku, and also serves as a terminal for the materials produced by Sroolu. There is also a small security detail stationed here, but this is merely for the purpose of customs, not so much the repulsion of hostile elements.</description>
+  <bar>Serving both as a trading hub and an outlet of consumer end products, the spacedock bar on Tankard Cloister is always a bustle of activity. In fact, the actual bar seems more like a section of a larger commerce centre than the other way around.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+ <tags>
+  <tag>station</tag>
+  <tag>trade</tag>
+  <tag>military</tag>
+ </tags>
+</spob>

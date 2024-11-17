@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="P-9199">
+ <pos x="-12246.733309" y="-6056.808321"/>
+ <GFX>
+  <space>moon-J02.webp</space>
+  <exterior>oceanic.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

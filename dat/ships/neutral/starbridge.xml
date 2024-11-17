@@ -2,8 +2,7 @@
 <ship name="Starbridge">
  <points>80</points>
  <base_type>Starbridge</base_type>
- <GFX sx="10" sy="10">starbridge</GFX>
- <GUI>brushed</GUI>
+ <gfx sx="10" sy="10" size="80">starbridge</gfx>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1700000</price>
@@ -13,15 +12,16 @@
  <trail_generator x="-28" y="6" h="5" />
  <trail_generator x="-28" y="-6" h="5" />
  <fabricator>Krain Industries</fabricator>
+ <faction>Independent</faction>
  <license>Medium Combat Vessel</license>
- <description>The Starbridge is the latest ship designed by Krain Industries. It is a lightweight destroyer reaching the same manoeuvrability as a corvette and comparable maximum speed. It's low mass comes at the cost of reduced structural space.</description>
+ <description>The Starbridge is the latest ship designed by Krain Industries. It is a lightweight destroyer reaching the same manoeuvrability as a corvette and comparable maximum speed. Its low mass comes at the cost of reduced structural space.</description>
  <health>
   <armour>320</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>12</crew>
-  <mass>200</mass>
+  <mass>300</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>50</cargo>
  </characteristics>
@@ -39,7 +39,8 @@
   <utility size="medium" />
   <utility size="medium" />
   <structure size="medium" prop="engines">Krain Patagium Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -48,7 +49,7 @@
   <shield_mod>5</shield_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <ew_hide>5</ew_hide>
+  <ew_hide>-5</ew_hide>
  </stats>
  <tags>
   <tag>standard</tag>

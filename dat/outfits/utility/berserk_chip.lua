@@ -10,10 +10,10 @@ const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
-   vec4 color     = texture( tex, texcoord );
+   vec4 colour     = texture( tex, texcoord );
    float opacity  = clamp( progress, 0.0, 1.0 );
-   color.rgb      = blendSoftLight( color.rgb, colmod, opacity );
-   return color;
+   colour.rgb      = blendSoftLight( colour.rgb, colmod, opacity );
+   return colour;
 }
 ]])
 
@@ -44,13 +44,13 @@ local function turnon( p, po )
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    oshader:off()
    po:set( "armour_regen_malus", 0 )
@@ -59,13 +59,13 @@ local function turnoff( _p, po )
    po:set( "fwd_damage", -20 )
    po:set( "tur_damage", -20 )
    po:set( "turn_mod", -20 )
-   po:set( "thrust_mod", -20 )
+   po:set( "accel_mod", -20 )
    po:set( "speed_mod", -20 )
    return true
 end
 
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications

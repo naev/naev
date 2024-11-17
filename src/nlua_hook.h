@@ -9,5 +9,5 @@
 int nlua_loadHook( nlua_env env );
 
 /* Misc. */
-int hookL_getarg( unsigned int hook );
+int  hookL_getarg( unsigned int hook );
 void hookL_unsetarg( unsigned int hook );

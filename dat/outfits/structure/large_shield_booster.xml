@@ -4,13 +4,13 @@
   <typename>Shield Booster</typename>
   <slot>structure</slot>
   <size>large</size>
-  <mass>200</mass>
+  <mass>120</mass>
   <price>260000</price>
   <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
   <gfx_store>shield.webp</gfx_store>
  </general>
  <specific type="modification">
   <shield_regen>12</shield_regen>
-  <energy_regen_malus>40</energy_regen_malus>
+  <energy_regen_malus>20</energy_regen_malus>
  </specific>
 </outfit>

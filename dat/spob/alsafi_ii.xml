@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Alsafi II">
+ <pos x="2721.969595" y="-6325.703988"/>
+ <GFX>
+  <space>D07.webp</space>
+  <exterior>uninhabited-rocky-airless-00.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Alsafi II is a barren world that other than some indications of prospection sites looking for mineral, is devoid of anything of interest.</description>
+ </general>
+</spob>

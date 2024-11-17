@@ -84,12 +84,11 @@ chmod +x "$STEAMPATH"/content/lin64/naev.x64
 # Move macOS bundle to deployment location
 unzip "$TEMPPATH/naev-macos/naev-macos.zip" -d "$STEAMPATH/content/macos/"
 
-# Unzip Windows binary and DLLs and move to deployment location
-tar -Jxf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$STEAMPATH/content/win64"
-mv "$STEAMPATH"/content/win64/naev*.exe "$STEAMPATH/content/win64/naev.exe"
+# Untar Windows binary and DLLs
+tar -Jxf "$TEMPPATH/naev-win64/naev-windows.tar.xz" -C "$STEAMPATH/content/win64"
 
 # Move data to deployment location
-tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
+tar -Jxf "$TEMPPATH/naev-ndata/naev-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 
@@ -97,9 +96,6 @@ if [ "$DRYRUN" == "false" ]; then
 
     # Trigger 2FA request and get 2FA code
     steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +quit || true
-
-    # Wait a bit for the email to arrive
-    sleep 60s
     python3 "$SCRIPTROOT/2fa/get_2fa.py"
     STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
 

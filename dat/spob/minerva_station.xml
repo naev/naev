@@ -2,13 +2,13 @@
 <spob name="Minerva Station">
  <pos x="-3354.178874" y="-10499.199403"/>
  <GFX>
-  <space>station-commerce3.webp</space>
+  <space>station-pointy1.webp</space>
   <exterior>scrapped_station.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -48,5 +48,6 @@
  <tags>
   <tag>nonpc</tag>
   <tag>criminal</tag>
+  <tag>station</tag>
  </tags>
 </spob>

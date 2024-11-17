@@ -2,11 +2,10 @@
 <ssys name="Ginger">
  <general>
   <radius>25200.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="241.018776" y="-510.626286"/>
+ <pos x="478.561922" y="-765.002348"/>
  <spobs>
   <spob>Buritt</spob>
   <spob>Ginger II</spob>

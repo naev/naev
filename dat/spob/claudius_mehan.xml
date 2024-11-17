@@ -2,11 +2,11 @@
 <spob name="Claudius Mehan">
  <pos x="-1794.199676" y="-8602.957423"/>
  <GFX>
-  <space>000.webp</space>
+  <space>P01.webp</space>
   <exterior>snow.webp</exterior>
  </GFX>
  <general>
-  <class>0</class>
+  <class>P</class>
   <population>0</population>
   <hide>3.000000</hide>
   <services/>

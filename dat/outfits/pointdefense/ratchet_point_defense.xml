@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Ratchet Point Defense">
+ <general>
+  <shortname>Ratchet P.D.</shortname>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <typename>Point Defense</typename>
+  <mass>50</mass>
+  <price>120000</price>
+  <description>The Ratchet was a popular weapon used during the Dvaered revolts by the Dvaered revolutionaries. Although they lacked power and reliability, they were easily mass produced helping turn the tide of war. Similar to the original Ratchet, the Ratchet Point Defense launches explosive cluster rounds that break and detonate in a large area, making them effective at clearing groups of interceptors or missiles. Unlike the original model, the point defense system has a much higher reliability thanks to tighter tolerances and controls giving it significantly more reliability.</description>
+  <gfx_store>pd3.webp</gfx_store>
+  <cpu>-30</cpu>
+ </general>
+ <specific type="turret launcher">
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <gfx col_size="20">empgrenade_blue.png</gfx>
+  <sound>grenadefire</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>Firework30</spfx_shield>
+  <spfx_armour>Firework30</spfx_armour>
+  <delay>0.2</delay>
+  <reload_time>2</reload_time>
+  <amount>50</amount>
+  <speed>800</speed>
+  <duration>0.6</duration>
+  <trackmin>0</trackmin>
+  <trackmax>3800</trackmax>
+  <ammo_mass>0.1</ammo_mass>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>0</penetrate>
+   <physical>10</physical>
+  </damage>
+  <radius>30</radius>
+  <ai>unguided</ai>
+  <pointdefense />
+  <miss_explode />
+  <dispersion>5</dispersion>
+  <speed_dispersion>100</speed_dispersion>
+ </specific>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
+</outfit>

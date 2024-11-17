@@ -21,8 +21,8 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Falas is a sparsely populated garrison planet with little to no resources of any use. However, it was cheaper to build an outpost here than to build a whole new space station. Being located in a relatively safe area of Empire space, there are not many things to do, with most of the problems being caused by personnel bored out of their minds.</description>
-  <bar>The bar is host to several off-duty personnel. There aren't many of them here and the bar is mostly empty.</bar>
+  <description>Falas is a sparsely populated garrison planet with little to no resources of any economic use. The existence of the garrison, however, owes itself to the fact that it was cheaper to build an outpost on this barren rock than to build a whole new space station. But being located in a relatively safe area of Empire space, there's not much to do for those assigned here. Instead, most of the problems are caused by soldiers bored out of their minds.</description>
+  <bar>This fairly spartan bar is host to several off-duty personnel. There aren't many of them here and the bar is mostly empty.</bar>
  </general>
  <tags>
   <tag>military</tag>

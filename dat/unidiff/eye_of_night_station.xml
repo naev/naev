@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="Eye of Night Station">
+ <system name="Eye of Night">
+  <spob_add>Eye of Night Station</spob_add>
+ </system>
+</unidiff>

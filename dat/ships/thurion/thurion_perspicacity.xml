@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Perspicacity">
+ <lua>thurion.lua</lua>
  <points>30</points>
  <base_type>Perspicacity</base_type>
- <GFX size="50">perspicacity</GFX>
+ <gfx size="50">perspicacity</gfx>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>350000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-8" y="0" h="0" />
+ <trail_generator x="-8" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-5" y="0" h="0">nebula</trail_generator>
  <trail_generator x="-5" y="-8" h="3">nebula</trail_generator>
  <trail_generator x="-5" y="0" h="15">nebula</trail_generator>
  <trail_generator x="-5" y="8" h="3">nebula</trail_generator>
  <trail_generator x="-5" y="0" h="-15">nebula</trail_generator>
- <fabricator>Thurion shipyards</fabricator>
- <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt;= 20</cond>
- <condstr>You need at least 20 reputation with the Thurion.</condstr>
+ <fabricator>Thurion Shipyards</fabricator>
+ <faction>Thurion</faction>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 20</cond>
+ <condstr>You need at least 20% reputation with the Thurion.</condstr>
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
  <health>
   <armour>50</armour>
@@ -26,7 +26,7 @@
  </health>
  <characteristics>
   <crew>1</crew>
-  <mass>40</mass>
+  <mass>30</mass>
   <fuel>600</fuel>
   <fuel_consumption>100</fuel_consumption>
   <cargo>10</cargo>
@@ -38,14 +38,14 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <structure size="small" prop="engines">Nexus Dart 160 Engine</structure>
   <structure size="small" prop="hull">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
   <cpu_mod>10</cpu_mod>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
 </ship>

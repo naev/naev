@@ -1,6 +1,7 @@
-source = files([
-   'Source/colamd.c',
-])
+source = [
+   configure_file(input: 'Config/colamd.h.in', output: 'colamd.h', configuration: config),
+   'Source/colamd.c',   # 'Source/colamd_l.c',
+]
 
 include = include_directories([
    'Include',

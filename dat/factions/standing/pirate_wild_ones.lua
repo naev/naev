@@ -1,6 +1,5 @@
 -- Wild Ones faction standing script
 local spir = require "factions.standing.lib.pirate"
-
-standing = spir.newPirateStanding{
+spir.init{
    fct = faction.get("Wild Ones"),
 }

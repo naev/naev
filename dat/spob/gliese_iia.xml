@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gliese II-a">
+ <pos x="-2499.541473" y="-1469.562733"/>
+ <GFX>
+  <space>D05.webp</space>
+  <exterior>methane.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

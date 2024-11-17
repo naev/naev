@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Scorpii Omega-2">
+ <pos x="526.492165" y="4451.071414"/>
+ <GFX>
+  <space>J05.webp</space>
+  <exterior>station00.webp</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>1.500000</hide>
+  <services/>
+ </general>
+</spob>

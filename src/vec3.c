@@ -2,15 +2,25 @@
  * See Licensing and Copyright notice in naev.h
  */
 /** @cond */
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "naev.h"
 /** @endcond */
 
 #include <math.h>
 
 #include "vec3.h"
+
+void vec3_print( const vec3 *v )
+{
+   for ( int i = 0; i < 3; i++ )
+      printf( "%7.5g ", v->v[i] );
+   printf( "\n" );
+}
+
+void vec3_copy( vec3 *o, const vec3 *i )
+{
+   for ( int j = 0; j < 3; j++ )
+      o->v[j] = i->v[j];
+}
 
 /**
  * @brief Adds two vectors together (out = a + b).
@@ -21,7 +31,7 @@
  */
 void vec3_add( vec3 *out, const vec3 *a, const vec3 *b )
 {
-   for (int i=0; i<3; i++)
+   for ( int i = 0; i < 3; i++ )
       out->v[i] = a->v[i] + b->v[i];
 }
 
@@ -34,7 +44,7 @@ void vec3_add( vec3 *out, const vec3 *a, const vec3 *b )
  */
 void vec3_sub( vec3 *out, const vec3 *a, const vec3 *b )
 {
-   for (int i=0; i<3; i++)
+   for ( int i = 0; i < 3; i++ )
       out->v[i] = a->v[i] - b->v[i];
 }
 
@@ -49,8 +59,8 @@ void vec3_sub( vec3 *out, const vec3 *a, const vec3 *b )
  */
 void vec3_wadd( vec3 *out, const vec3 *a, const vec3 *b, double wa, double wb )
 {
-   for (int i=0; i<3; i++)
-      out->v[i] = wa*a->v[i] + wb*b->v[i];
+   for ( int i = 0; i < 3; i++ )
+      out->v[i] = wa * a->v[i] + wb * b->v[i];
 }
 
 /**
@@ -62,7 +72,7 @@ void vec3_wadd( vec3 *out, const vec3 *a, const vec3 *b, double wa, double wb )
  */
 void vec3_max( vec3 *out, const vec3 *a, const vec3 *b )
 {
-   for (int i=0; i<3; i++)
+   for ( int i = 0; i < 3; i++ )
       out->v[i] = MAX( a->v[i], b->v[i] );
 }
 
@@ -75,7 +85,7 @@ void vec3_max( vec3 *out, const vec3 *a, const vec3 *b )
  */
 void vec3_min( vec3 *out, const vec3 *a, const vec3 *b )
 {
-   for (int i=0; i<3; i++)
+   for ( int i = 0; i < 3; i++ )
       out->v[i] = MIN( a->v[i], b->v[i] );
 }
 
@@ -88,7 +98,7 @@ void vec3_min( vec3 *out, const vec3 *a, const vec3 *b )
  */
 double vec3_dot( const vec3 *a, const vec3 *b )
 {
-   return a->v[0]*b->v[0] + a->v[1]*b->v[1] + a->v[2]*b->v[2];
+   return a->v[0] * b->v[0] + a->v[1] * b->v[1] + a->v[2] * b->v[2];
 }
 
 /**
@@ -100,9 +110,9 @@ double vec3_dot( const vec3 *a, const vec3 *b )
  */
 void vec3_cross( vec3 *out, const vec3 *a, const vec3 *b )
 {
-   out->v[0] =  a->v[1]*b->v[2] - a->v[2]*b->v[1];
-   out->v[1] = -a->v[0]*b->v[2] + a->v[2]*b->v[0];
-   out->v[2] =  a->v[0]*b->v[1] - a->v[1]*b->v[0];
+   out->v[0] = a->v[1] * b->v[2] - a->v[2] * b->v[1];
+   out->v[1] = -a->v[0] * b->v[2] + a->v[2] * b->v[0];
+   out->v[2] = a->v[0] * b->v[1] - a->v[1] * b->v[0];
 }
 
 /**
@@ -112,8 +122,8 @@ void vec3_cross( vec3 *out, const vec3 *a, const vec3 *b )
  */
 void vec3_normalize( vec3 *a )
 {
-   double n = vec3_length(a);
-   for (int i=0; i<3; i++)
+   double n = vec3_length( a );
+   for ( int i = 0; i < 3; i++ )
       a->v[i] /= n;
 }
 
@@ -126,7 +136,8 @@ void vec3_normalize( vec3 *a )
  */
 double vec3_dist( const vec3 *a, const vec3 *b )
 {
-   return sqrt( pow2(a->v[0]-b->v[0]) + pow2(a->v[1]-b->v[1]) + pow2(a->v[2]-b->v[2]) );
+   return sqrt( pow2( a->v[0] - b->v[0] ) + pow2( a->v[1] - b->v[1] ) +
+                pow2( a->v[2] - b->v[2] ) );
 }
 
 /**
@@ -141,13 +152,23 @@ double vec3_length( const vec3 *a )
 }
 
 /**
+ * @brief Scales a 3D vector.
+ */
+void vec3_scale( vec3 *v, double s )
+{
+   for ( int i = 0; i < 3; i++ )
+      v->v[i] *= s;
+}
+
+/**
  * @brief Distance between a point and a triangle.
  *
- * Based on  https://www.geometrictools.com/Documentation/DistancePoint3Triangle3.pdf
+ * Based on
+ * https://www.geometrictools.com/Documentation/DistancePoint3Triangle3.pdf
  */
 double vec3_distPointTriangle( const vec3 *point, const vec3 tri[3] )
 {
-   vec3 diff, edge0, edge1, res;
+   vec3   diff, edge0, edge1, res;
    double a00, a01, a11, b0, b1, det, s, t;
 
    vec3_sub( &diff, &tri[0], point );
@@ -157,123 +178,110 @@ double vec3_distPointTriangle( const vec3 *point, const vec3 tri[3] )
    a00 = vec3_dot( &edge0, &edge0 );
    a01 = vec3_dot( &edge0, &edge1 );
    a11 = vec3_dot( &edge1, &edge1 );
-   b0  = vec3_dot( &diff,  &edge0 );
-   b1  = vec3_dot( &diff,  &edge1 );
-   det = MAX( a00*a11 - a01*a01, 0. );
+   b0  = vec3_dot( &diff, &edge0 );
+   b1  = vec3_dot( &diff, &edge1 );
+   det = MAX( a00 * a11 - a01 * a01, 0. );
    s   = a01 * b1 - a11 * b0;
    t   = a01 * b0 - a00 * b1;
 
-   if (s + t <= det) {
-      if (s < 0.) {
-         if (t < 0.) { // region 4
-            if (b0 < 0.) {
+   if ( s + t <= det ) {
+      if ( s < 0. ) {
+         if ( t < 0. ) { // region 4
+            if ( b0 < 0. ) {
                t = 0.;
-               if (-b0 >= a00)
+               if ( -b0 >= a00 )
                   s = 1.;
                else
                   s = -b0 / a00;
-            }
-            else {
+            } else {
                s = 0.;
-               if (b1 >= 0.)
+               if ( b1 >= 0. )
                   t = 0.;
-               else if (-b1 >= a11)
+               else if ( -b1 >= a11 )
                   t = 1.;
                else
                   t = -b1 / a11;
             }
-         }
-         else { // region 3
+         } else { // region 3
             s = 0.;
-            if (b1 >= 0.)
+            if ( b1 >= 0. )
                t = 0.;
-            else if (-b1 >= a11)
+            else if ( -b1 >= a11 )
                t = 1.;
             else
                t = -b1 / a11;
          }
-      }
-      else if (t < 0.) { // region 5
+      } else if ( t < 0. ) { // region 5
          t = 0.;
-         if (b0 >= 0.)
+         if ( b0 >= 0. )
             s = 0.;
-         else if (-b0 >= a00)
+         else if ( -b0 >= a00 )
             s = 1.;
          else
             s = -b0 / a00;
-      }
-      else { // region 0
+      } else { // region 0
          // minimum at interior point
          s /= det;
          t /= det;
       }
-   }
-   else {
+   } else {
       double tmp0, tmp1, numer, denom;
 
-      if (s < 0.) { // region 2
+      if ( s < 0. ) { // region 2
          tmp0 = a01 + b0;
          tmp1 = a11 + b1;
-         if (tmp1 > tmp0) {
+         if ( tmp1 > tmp0 ) {
             numer = tmp1 - tmp0;
             denom = a00 - 2. * a01 + a11;
-            if (numer >= denom) {
+            if ( numer >= denom ) {
                s = 1.;
                t = 0.;
-            }
-            else {
+            } else {
                s = numer / denom;
                t = 1. - s;
             }
-         }
-         else {
+         } else {
             s = 0.;
-            if (tmp1 <= 0.)
+            if ( tmp1 <= 0. )
                t = 1.;
-            else if (b1 >= 0.)
+            else if ( b1 >= 0. )
                t = 0.;
             else
                t = -b1 / a11;
          }
-      }
-      else if (t < 0.) { // region 6
+      } else if ( t < 0. ) { // region 6
          tmp0 = a01 + b1;
          tmp1 = a00 + b0;
-         if (tmp1 > tmp0) {
+         if ( tmp1 > tmp0 ) {
             numer = tmp1 - tmp0;
             denom = a00 - 2. * a01 + a11;
-            if (numer >= denom) {
+            if ( numer >= denom ) {
                t = 1.;
                s = 0.;
-            }
-            else {
+            } else {
                t = numer / denom;
                s = 1. - t;
             }
-         }
-         else {
+         } else {
             t = 0.;
-            if (tmp1 <= 0.)
+            if ( tmp1 <= 0. )
                s = 1.;
-            else if (b0 >= 0.)
+            else if ( b0 >= 0. )
                s = 0.;
             else
                s = -b0 / a00;
          }
-      }
-      else { // region 1
+      } else { // region 1
          numer = a11 + b1 - a01 - b0;
-         if (numer <= 0.) {
+         if ( numer <= 0. ) {
             s = 0.;
             t = 1.;
-         }
-         else {
+         } else {
             denom = a00 - 2. * a01 + a11;
-            if (numer >= denom) {
+            if ( numer >= denom ) {
                s = 1.;
                t = 0.;
-            }
-            else {
+            } else {
                s = numer / denom;
                t = 1. - s;
             }
@@ -282,7 +290,7 @@ double vec3_distPointTriangle( const vec3 *point, const vec3 tri[3] )
    }
 
    vec3_wadd( &res, &edge0, &edge1, s, t );
-   vec3_add(  &res, &res,   &tri[0] );
+   vec3_add( &res, &res, &tri[0] );
    return vec3_dist( point, &res );
    /*
    result.closest[0] = point;

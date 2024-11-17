@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Light Stealth Plating">
  <general>
+  <shortname>N. Light Stealth Plating</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
@@ -11,9 +12,9 @@
   <gfx_store>stealth_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>3</cargo>
+  <cargo>7</cargo>
   <absorb>3</absorb>
   <armour>60</armour>
-  <ew_hide>15</ew_hide>
+  <ew_hide>-15</ew_hide>
  </specific>
 </outfit>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Octantis I">
+ <pos x="7831.697207" y="6123.366655"/>
+ <GFX>
+  <space>moon-C02.webp</space>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>0.900000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>An uninhabited planet devoid of atmosphere and life. Given the small size, it is also quite difficult to perform the minimum terraforming to sustain genetically modified humans, for which the Soromid have left it be for now.</description>
+ </general>
+</spob>

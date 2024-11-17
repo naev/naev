@@ -58,7 +58,6 @@ local lmisn = require "lmisn"
 --]]
 mem.misn_state = nil
 local derelict -- Non-persistent state
--- luacheck: globals board clear_target_hyperspace enter equip equipment info info_cargo info_mission info_reminder info_ship info_shiplog info_standing info_weapons land outfit_buy outfits talk_derelict target_hyperspace (Hook functions passed by name)
 
 -- Constants
 local cargo_type  = commodity.get("Food")
@@ -105,7 +104,7 @@ function create ()
 
    misn.setTitle( _("Helping Nelly Out") )
    misn.setDesc( fmt.f(_("Help Nelly deliver {tonnes} of {cargo} to {destpnt} in the {destsys} system."), {tonnes=fmt.tonnes(cargo_q), cargo=cargo_type, destpnt=mem.destpnt, destsys=mem.destsys} ))
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 end
 
 
@@ -118,11 +117,11 @@ function accept ()
 
    if var.peek("nelly_met") then
       nel(fmt.f(_([[Nelly lightens up when you near her.
-"Hello again! I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
+"Hello again! I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down, and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
          {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
    else
       nel(fmt.f(_([[The lone individual lightens up when you near her.
-"Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
+"Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down, and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
          {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
    end
 
@@ -143,16 +142,16 @@ function accept ()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_q then
+      if player.fleetCargoMissionFree() < cargo_q then
          vn.jump("nofreespace")
          return
       end
       doaccept = true
    end )
    if var.peek("nelly_met") then
-      nel(_([["Great! I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."]]))
+      nel(_([["Great! I'll have the dockworkers load up your ship, and we can be off. This should be a piece of cake."]]))
    else
-      nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."
+      nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dockworkers load up your ship, and we can be off. This should be a piece of cake."
    They cock their head a bit at you.
    "Say, you wouldn't happen to be a novice pilot?"]]))
       vn.func( function ()
@@ -165,7 +164,7 @@ function accept ()
 
       vn.label("novice_yes")
       nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
-   "For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
+   "For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfitting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
       vn.done( tutnel.nelly.transition )
 
       vn.label("novice_no")
@@ -231,8 +230,6 @@ function land ()
 
       vn.done( tutnel.nelly.transition )
       vn.run()
-
-      player.pay( outfit_tobuy:price() )
 
       -- Get rid of cargo
       misn.cargoRm( mem.cargo_id )
@@ -300,7 +297,7 @@ function enter ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sys}!"), {sys=mem.destsys}))
+      vn.na(fmt.f(_("After the dockworkers load the cargo on your ship, you take off with Nelly aboard. On to {sys}!"), {sys=mem.destsys}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
       vn.menu{
@@ -325,12 +322,12 @@ function enter ()
       mem.misn_state = 1
 
    elseif mem.misn_state==2 and system.cur() == mem.retsys then
-      hook.timer( 5e3, "talk_derelict" )
+      hook.timer( 5, "talk_derelict" )
 
       local pos = player.pos() * 0.6 -- Should be to the center of the system
-      derelict = pilot.add( "Koala", "Derelict", pos, _("Derelict") )
-      derelict:disable()
-      derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
+      derelict = pilot.add( "Koala", "Derelict", pos, p_("ship", "Derelict") )
+      derelict:setDisable()
+      derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
       derelict:setHilight(true)
       hook.pilot( derelict, "board", "board" )
 
@@ -345,7 +342,7 @@ function talk_derelict ()
    vn.transition( tutnel.nelly.transition )
    vn.na(_([[After you enter the system, Nelly points something out on the radar.]]))
    -- TODO autoboard!
-   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try #odouble-click#0ing or selecting the derelict and pressing {boardkey}. It should enable your autonav system to board the ship. You can toggle the overlay to see exactly where the ship is with {overlaykey}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
+   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try #odouble-click#0ing or selecting the derelict and pressing {boardkey}. It should enable your autonav system to board the ship. You can toggle the overlay to see exactly where the ship is with {overlaykey}."]]),{boardkey=tut.getKey("approach"), overlaykey=tut.getKey("overlay")}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 end
@@ -355,6 +352,7 @@ function board ()
    vn.clear()
    vn.scene()
    local nel = tutnel.vn_nelly()
+   vn.transition( tutnel.nelly.transition )
    vn.na(_([[You enter the derelict ship which is eerily silent. A large hole in the engine room indicates that likely the core engine blew out, forcing the ship crew to abandon ship. Although you don't find anything of significant value, there is still lots of ore cargo available on the ship. You quickly load as much as you can onto your ship before you depart.]]))
    vn.appear( nel )
    nel(fmt.f(_([["Looks like your scored a lot of ore there. That should bring you a pretty penny at a planet with commodity exchange. Boarding derelicts is not always as easy as this and sometimes bad things can happen. We should head to {pnt} that should be nearby now."]]), {pnt=mem.retpnt}))
@@ -369,7 +367,7 @@ function board ()
 end
 
 function info_reminder ()
-   player.pilot():comm(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}))
+   player.msg(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}), true)
    mem.times_said = (mem.times_said or 0) + 1
    if mem.times_said < 4 then
       mem.hk_info_timer = hook.timer( 15, "info_reminder" )
@@ -392,7 +390,7 @@ function info ()
       mem.hk_info = nil
    end
 
-   info_msg( _([["Ah, the info menu in all it's glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
+   info_msg( _([["Ah, the info menu in all its glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
 
    mem.hk_info_ship      = hook.info( "info_ship",     "ship" )
    mem.hk_info_weapons   = hook.info( "info_weapons",  "weapons" )
@@ -422,10 +420,7 @@ function info_ship ()
 end
 
 function info_weapons ()
-   info_msg( fmt.f(_([["At the #oWeapon Info#0, you can modify the current ship's weapon sets. There are three types of weapon sets:
-- #oWeapons - Switched#0: when activated define the weapons you should with the primary weapon key {keyprimary} and secondary weapon key {keysecondary}.
-- #oWeapons - Instant#0: immediately fires the weapon set weapons when the set hotkey is pressed. Enable this for a set by checking the #oEnable instant mode#0 checkbox.
-- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in the set."]]), {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
+   info_msg( _([["At the #oWeapon Info#0, you can modify the current ship's weapon sets, including your ships primary and secondary weapons. Weapon sets will be normally automatically handled by your ship, but you can always configure them to whatever liking your want! If you want full details, you can click on the #bHelp#0 button for all the information about it. It always makes me head dizzy though, so I just keep the defaults and mash the weapon controls. It works great!"]]) )
    hook.rm( mem.hk_info_weapons )
    mem.hk_info_weapons = nil
    info_checkdone()
@@ -489,8 +484,7 @@ function outfits ()
    mem.hk_land_outfits = nil
 end
 
-function outfit_buy( name, _q )
-   local o = outfit.get( name )
+function outfit_buy( o, _q )
    local t = o:type()
    if t=="Map" or t=="Local Map" or t=="License" or t=="GUI" or t=="Unknown" then
       return
@@ -509,7 +503,7 @@ function outfit_buy( name, _q )
 end
 
 function equipment ()
-   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows to handle your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right clicking on the slot you want to equip it at. If you have free slots you can also right click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy}) )
+   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows handling your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right-clicking on the slot you want to equip it at. If you have free slots you can also right-click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy}) )
 
    mem.hk_equip = hook.equip( "equip" )
 end
@@ -517,7 +511,7 @@ end
 function equip ()
    local pp = player.pilot()
    local hasoutfit = false
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       if o == outfit_tobuy then
          hasoutfit = true
          break
@@ -528,7 +522,11 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   if pp:autoweap() then
+      info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. Looks like your ship is set to automatically handle weapons, so it should be assigned to a primary weapon. You can always change this from the #oInfo Window#0 you can open with {infokey}. Let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   else
+      info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. Looks like your ship is not set to automatically handle weapons. You might have to assign the #o{outfit}#0 to a weapon set, so you can use it. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy, infokey=tut.getKey("info"), pnt=mem.retpnt, sys=mem.retsys} ))
+   end
 
    hook.rm( mem.hk_equip )
    mem.hk_equip = nil

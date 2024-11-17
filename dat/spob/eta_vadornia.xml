@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Eta Vadornia">
+ <pos x="13066.010241" y="1339.554931"/>
+ <GFX>
+  <space>moon-M04.webp</space>
+  <exterior>oceanic_city.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>980000</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>A small planet on the outsides of the inner asteroid ring of Vadornia, Eta Vadornia is known for being composed mainly of water. There is a small core of rocks surrounded by hundreds of kilometers of ice, before being covered by water. The population lives in dense urban floating cities that drift endlessly around the surface. Every so often two cities get close to collision, requiring complex reorienting procedures, however, other than those rare events, life on Eta Vadornia is calm and relaxing, with many Dvaereds opting to retire to a life at sea.
+While not having important industries or agriculture, Eta Vadornia is mainly self-sufficient. Most of the lifeforms consist of small animals and plants that float along the currents. However, the exception is the Vadornia Jellywhale which can grow up to hundreds of meters. These jellywhales endlessly roam the currents and, although not very tasteful, are considered a local delicacy.</description>
+  <bar>The bar is located under sea level with view the abyssal depths of the sea. From the windows you can see lots of small dust-like animals and plants floating around. If you get very lucky, you can get to see a large jelly whale passing by. They have been known to try to engulf and devour the bar leading to quite a impressive, yet harmless, spectacle. Most of the drinks are local, with premium jellywhale extracts-based beverages.</bar>
+ </general>
+ <tags>
+  <tag>urban</tag>
+ </tags>
+</spob>

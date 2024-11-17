@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 
+num_shaders = 0
+
 class Shader:
-    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines):
+    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines={}, geom_path=None):
+        global num_shaders
+        num_shaders += 1
         self.name       = name
         self.vs_path    = vs_path
         self.fs_path    = fs_path
+        self.geom_path  = geom_path
         self.attributes = attributes
         self.uniforms   = uniforms
         self.subroutines= subroutines
@@ -25,7 +30,10 @@ class Shader:
         yield f"   }} {self.name};\n"
 
     def source_chunks(self):
-        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
+        if self.geom_path!=None:
+            yield f"   shaders.{self.name}.program = gl_program_vert_frag_geom(\"{self.vs_path}\", \"{self.fs_path}\", \"{self.geom_path}\");\n"
+        else:
+            yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
         for attribute in self.attributes:
             yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
         for uniform in self.uniforms:
@@ -38,10 +46,13 @@ class Shader:
                     yield f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n"
             yield "   }\n"
 
+    def __lt__( self, other ):
+        return self.name < other.name
+
 num_simpleshaders = 0
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
-        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","paramf","parami","paramv"], subroutines={} )
+        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","colour","dimensions","dt","paramf","parami","paramv"], subroutines={} )
         global num_simpleshaders
         num_simpleshaders += 1
     def header_chunks(self):
@@ -55,74 +66,84 @@ SHADERS = [
       vs_path = "project.vert",
       fs_path = "solid.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color"],
-      subroutines = {},
-   ),
-   Shader(
-      name = "trail",
-      vs_path = "project_pos.vert",
-      fs_path = "trail.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r", "nebu_col" ],
-      subroutines = {
-        "trail_func" : [
-            "trail_default",
-            "trail_pulse",
-            "trail_wave",
-            "trail_flame",
-            "trail_nebula",
-            "trail_arc",
-            "trail_bubbles",
-        ]
-      }
+      uniforms = ["projection", "colour"],
    ),
    Shader(
       name = "smooth",
       vs_path = "smooth.vert",
       fs_path = "smooth.frag",
-      attributes = ["vertex", "vertex_color"],
+      attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
-      subroutines = {},
    ),
    Shader(
       name = "texture",
       vs_path = "texture.vert",
       fs_path = "texture.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat", "sampler"],
-      subroutines = {},
+      uniforms = ["projection", "colour", "tex_mat", "sampler"],
+   ),
+   Shader(
+      name = "texture_depth",
+      vs_path = "texture.vert",
+      fs_path = "texture_depth.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler", "depth"],
+   ),
+   Shader(
+      name = "texture_depth_only",
+      vs_path = "texture.vert",
+      fs_path = "texture_depth_only.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "tex_mat", "sampler"],
+   ),
+   Shader(
+      name = "texture_bicubic",
+      vs_path = "texture.vert",
+      fs_path = "texture_bicubic.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "tex_mat", "sampler"],
+   ),
+   Shader(
+      name = "texture_sharpen",
+      vs_path = "texture.vert",
+      fs_path = "texture_sharpen.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler"],
    ),
    Shader(
       name = "texture_interpolate",
       vs_path = "texture.vert",
       fs_path = "texture_interpolate.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat", "sampler1", "sampler2", "inter"],
-      subroutines = {},
+      uniforms = ["projection", "colour", "tex_mat", "sampler1", "sampler2", "inter"],
+   ),
+   Shader(
+      name = "texturesdf",
+      vs_path = "texturesdf.vert",
+      fs_path = "texturesdf.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour", "tex_mat", "sampler", "m", "outline"],
    ),
    Shader(
       name = "stealthoverlay",
       vs_path = "texture.vert",
       fs_path = "stealthoverlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"],
-      subroutines = {},
+      uniforms = ["projection", "colour", "tex_mat"],
    ),
    Shader(
       name = "nebula",
       vs_path = "nebula.vert",
       fs_path = "nebula_overlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "brightness", "horizon", "eddy_scale", "time"],
-      subroutines = {},
+      uniforms = ["projection", "hue", "nonuniformity", "horizon", "eddy_scale", "time"],
    ),
    Shader(
       name = "nebula_background",
       vs_path = "nebula.vert",
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "brightness", "eddy_scale", "time", "volatility"],
-      subroutines = {},
+      uniforms = ["projection", "hue", "nonuniformity", "eddy_scale", "time", "volatility"],
    ),
    Shader(
       name = "nebula_puff",
@@ -130,7 +151,6 @@ SHADERS = [
       fs_path = "nebula_puff.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "nebu_col", "time", "r" ],
-      subroutines = {},
    ),
    Shader(
       name = "nebula_map",
@@ -138,38 +158,42 @@ SHADERS = [
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "hue", "time", "globalpos", "alpha", "volatility"],
-      subroutines = {},
    ),
    Shader(
       name = "points",
       vs_path = "smooth.vert",
       fs_path = "points.frag",
-      attributes = ["vertex", "vertex_color"],
+      attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
-      subroutines = {},
    ),
    Shader(
-      name = "stars",
-      vs_path = "stars.vert",
-      fs_path = "stars.frag",
+      name = "dust",
+      vs_path = "dust.vert",
+      fs_path = "dust.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "dims", "xy", "use_lines"],
-      subroutines = {},
+      uniforms = ["projection", "offset_xy", "dims", "screen", "use_lines"],
+      geom_path = "dust.geom",
+   ),
+   Shader(
+      name = "lines",
+      vs_path = "lines.vert",
+      fs_path = "lines.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour"],
    ),
    Shader(
       name = "font",
       vs_path = "font.vert",
       fs_path = "font.frag",
       attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "m", "color", "outline_color"],
-      subroutines = {},
+      uniforms = ["projection", "m", "colour", "outline_colour"],
    ),
    Shader(
       name = "beam",
       vs_path = "project_pos.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "dt", "r", "dimensions" ],
+      uniforms = ["projection", "colour", "dt", "r", "dimensions" ],
       subroutines = {
         "beam_func" : [
             "beam_default",
@@ -187,7 +211,7 @@ SHADERS = [
       vs_path = "project_pos.vert",
       fs_path = "jump.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "progress", "direction", "dimensions"],
+      uniforms = ["projection", "progress", "direction", "dimensions", "brightness"],
       subroutines = {
         "jump_func" : [
             "jump_default",
@@ -204,15 +228,20 @@ SHADERS = [
       fs_path = "material.frag",
       attributes = ["vertex", "vertex_normal", "vertex_tex"],
       uniforms = ["projection", "model", "map_Kd", "map_Ks", "map_Ke", "map_Bump", "Ns", "Ka", "Kd", "Ks", "Ke", "Ni", "d", "bm"],
-      subroutines = {},
    ),
    Shader(
-      name = "colorblind",
+      name = "colourblind_sim",
       vs_path = "postprocess.vert",
-      fs_path = "colorblind.frag",
+      fs_path = "colourblind_sim.frag",
       attributes = ["VertexPosition"],
-      uniforms = ["ClipSpaceFromLocal", "MainTex"],
-      subroutines = {},
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "type", "intensity" ],
+   ),
+   Shader(
+      name = "colourblind_correct",
+      vs_path = "postprocess.vert",
+      fs_path = "colourblind.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "type", "intensity"],
    ),
    Shader(
       name = "shake",
@@ -220,7 +249,6 @@ SHADERS = [
       fs_path = "shake.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos", "shake_vel", "shake_force"],
-      subroutines = {},
    ),
    Shader(
       name = "damage",
@@ -228,7 +256,6 @@ SHADERS = [
       fs_path = "damage.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength", "love_ScreenSize"],
-      subroutines = {},
    ),
    Shader(
       name = "gamma_correction",
@@ -236,7 +263,6 @@ SHADERS = [
       fs_path = "gamma_correction.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex", "gamma"],
-      subroutines = {},
    ),
    SimpleShader(
       name = "status",
@@ -271,12 +297,20 @@ SHADERS = [
       fs_path = "spobmarker_wormhole.frag",
    ),
    SimpleShader(
+      name = "spobmarker_obelisk",
+      fs_path = "spobmarker_obelisk.frag",
+   ),
+   SimpleShader(
       name = "jumpmarker",
       fs_path = "jumpmarker.frag",
    ),
    SimpleShader(
       name = "pilotmarker",
       fs_path = "pilotmarker.frag",
+   ),
+   SimpleShader(
+      name = "pilotscanning",
+      fs_path = "pilotscanning.frag",
    ),
    SimpleShader(
       name = "playermarker",
@@ -362,7 +396,16 @@ SHADERS = [
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
    ),
+   SimpleShader(
+      name = "healthbar",
+      fs_path = "healthbar.frag",
+   ),
+   SimpleShader(
+      name = "shop_bg",
+      fs_path = "shop_bg.frag",
+   ),
 ]
+SHADERS.sort()
 
 def header_chunks():
     yield f"/* FILE GENERATED BY {__file__} */"
@@ -373,8 +416,13 @@ def generate_h_file():
     yield f"""
 #pragma once
 
-#include "glad.h"
+#include <time.h>
 
+#include "glad.h"
+#include "conf.h"
+#include "log.h"
+
+#define NUM_SHADERS         {num_shaders}
 #define NUM_SIMPLE_SHADERS  {num_simpleshaders}
 
 typedef struct SimpleShader_ {{
@@ -382,7 +430,7 @@ typedef struct SimpleShader_ {{
    GLuint program;
    GLuint vertex;
    GLuint projection;
-   GLuint color;
+   GLuint colour;
    GLuint dimensions;
    GLuint dt;
    GLuint parami;
@@ -411,6 +459,7 @@ def generate_c_file():
 
     yield """
 #include <string.h>
+#include "SDL_timer.h"
 #include "shaders.gen.h"
 #include "opengl_shader.h"
 
@@ -431,7 +480,7 @@ static int shaders_loadSimple( const char *name, SimpleShader *shd, const char *
    shd->program = gl_program_vert_frag( "project_pos.vert", fs_path );
    shd->vertex = glGetAttribLocation( shd->program, "vertex" );
    shd->projection = glGetUniformLocation( shd->program, "projection" );
-   shd->color  = glGetUniformLocation( shd->program, "color" );
+   shd->colour  = glGetUniformLocation( shd->program, "colour" );
    shd->dimensions = glGetUniformLocation( shd->program, "dimensions" );
    shd->dt     = glGetUniformLocation( shd->program, "dt" );
    shd->paramf = glGetUniformLocation( shd->program, "paramf" );
@@ -455,13 +504,20 @@ const SimpleShader *shaders_getSimple( const char *name )
 }
 
 void shaders_load (void) {
+   Uint32 time = SDL_GetTicks();
 """
+
     for i, shader in enumerate(SHADERS):
         yield from shader.source_chunks()
         if i != len(SHADERS) - 1:
             yield "\n"
     yield """
-   qsort( shaders.simple_shaders, nsimpleshaders, sizeof(SimpleShader*), shaders_cmp );
+   if (conf.devmode) {
+      time = SDL_GetTicks() - time;
+      DEBUG( n_("Loaded %d Shader in %.3f s", "Loaded %d Shaders in %.3f s", NUM_SHADERS ), NUM_SHADERS, time/1000. );
+   }
+   else
+      DEBUG( n_("Loaded %d Shader", "Loaded %d Shaders", NUM_SHADERS ), NUM_SHADERS );
 }
 
 void shaders_unload (void) {

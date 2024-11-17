@@ -14,7 +14,7 @@
  <general>
   <class>H</class>
   <population>1.2e+06</population>
-  <hide>2.000000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>
@@ -32,4 +32,7 @@
   <item>Missiles 1</item>
   <item>Missiles 2</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+ </tags>
 </spob>

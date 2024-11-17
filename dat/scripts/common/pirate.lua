@@ -5,6 +5,7 @@
 --  Pirate mission functions.
 --]]
 local fmt = require 'format'
+local lmisn = require 'lmisn'
 local pir = {}
 
 -- List of all the pirate factions
@@ -39,14 +40,6 @@ function pir.prefix( fct )
       p = _("PIRATE: ")
    end
    return "#H"..p.."#0"
-end
-
---[[
-   @brief Increases the reputation limit of the player.
---]]
-function pir.modReputation( increment )
-   local cur = var.peek("_fcap_pirate") or 30
-   var.push( "_fcap_pirate", math.min(cur+increment, 100) )
 end
 
 --[[
@@ -158,9 +151,10 @@ end
    @brief Decrease pirate standings for doing normal missions.
 --]]
 function pir.reputationNormalMission( amount )
+   -- Modify all the clans
    for k,v in ipairs(pir.factions_clans) do
-      local s = v:playerStanding()
-      local d = v:playerStandingDefault()
+      local s = v:reputationGlobal()
+      local d = v:reputationDefault()
       -- TODO Probably should handle this minimum stuff better
       local vamount = -amount
       if s > d then
@@ -169,7 +163,13 @@ function pir.reputationNormalMission( amount )
          elseif s > 0 then
             vamount = vamount * 2
          end
-         v:modPlayerSingle( vamount )
+
+         -- We'll only do the hit if there are pirates "nearby"
+         if #lmisn.getSysAtDistance( nil, 0, 4, function ( sys )
+            return sys:presence( v ) > 0
+         end ) > 0 then
+            v:hit( vamount, nil, nil, true )
+         end
       end
    end
 end
@@ -187,7 +187,7 @@ end
 function pir.maxClanStanding ()
    local maxval = -100
    for k,v in ipairs(pir.factions_clans) do
-      local vs = v:playerStanding()
+      local vs = v:reputationGlobal()
       maxval = math.max( maxval, vs )
    end
    return maxval
@@ -197,13 +197,34 @@ end
    @brief Updates the standing of the marauders and pirates based on maxval (computed as necessary)
 --]]
 function pir.updateStandings( maxval )
+   local pp = player.pilot()
+   if not pp:exists() then return end
    maxval = maxval or pir.maxClanStanding()
-   if pir.isPirateShip( player.pilot() ) then
-      fpir:setPlayerStanding( maxval )
-      fmar:setPlayerStanding( maxval - 20 )
+   if pir.isPirateShip( pp ) then
+      fpir:setReputationGlobal( maxval )
+      fmar:setReputationGlobal( maxval - 20 )
    else
-      fpir:setPlayerStanding( maxval - 20 )
-      fmar:setPlayerStanding( maxval - 40 )
+      fpir:setReputationGlobal( maxval - 20 )
+      fmar:setReputationGlobal( maxval - 40 )
+   end
+end
+
+--[[
+   @brief Clears pirate pilots and stops them from spawning.
+   @param onlynatural Whether or not to only clear natural pilots.
+--]]
+function pir.clearPirates( onlynatural )
+   if not onlynatural then
+      pilot.clearSelect( pir.factions )
+      pilot.toggleSpawn( pir.factions, false )
+   else
+      for k,p in ipairs(pilot.get{ pir.factions }, true) do
+         local m = p:memory()
+         if  m.natural then
+            p:rm()
+         end
+      end
+      pilot.toggleSpawn( pir.factions, false )
    end
 end
 

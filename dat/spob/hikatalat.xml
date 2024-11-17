@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hikatalat">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="20640.000000" y="1920.000000"/>
  <GFX>
   <space>S00.webp</space>
@@ -25,4 +25,7 @@
   <commodities/>
   <description>Hikatalat used to be a resource world, before the rise of the Empire. But over time the colony was deemed to be unprofitable, and operations ceased. The world is still inhabited today, but its only value now lies in territorial control for Dvaered Warlords. The population is poor and lives in bad circumstances. There's nothing much to do here for offworlders.</description>
  </general>
+ <tags>
+  <tag>poor</tag>
+ </tags>
 </spob>

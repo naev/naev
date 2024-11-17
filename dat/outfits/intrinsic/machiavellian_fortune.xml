@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Machiavellian Fortune">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>Fortune is like an onrushing river pushing an impenetrable wall of water ahead of it. It is possible to build dams and walls to try to contain the flow, but there is no way to prevent the water from hitting.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>6</rarity>
+  <desc_extra>#pImproves luck!#0</desc_extra>
+ </general>
+ <specific type="modification">
+  <ew_track>10</ew_track>
+  <ew_stealth_timer>-10</ew_stealth_timer>
+ </specific>
+ <tags>
+  <tag>lucky</tag>
+ </tags>
+</outfit>

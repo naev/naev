@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ryder III">
+ <pos x="-5977.924371" y="-1941.284718"/>
+ <GFX>
+  <space>moon-I00.webp</space>
+  <exterior>asteroid.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

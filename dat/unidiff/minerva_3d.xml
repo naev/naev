@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="minerva_3d">
+ <spob name="Minerva Station">
+  <description>The station consists of essentially one gigantic gambling complex. No matter where you go, there seems to be gambling going on, that combined with the constant coming and going of ships, creates a very high-energy frenetic environment. When docking to the station there is a big neon says that displays "What happens in Limbo, stays in Limbo". The station was remodeled after an unexplained large explosion took out a large part of the station.
+
+The station is currently under Dvaered rule, after a public hearing at the Jade Court ended up removing the Independent status it had held after its construction. This has lead to a larger affluence of Dvaered tourists and military than you remember.</description>
+  <faction>Dvaered</faction>
+ </spob>
+</unidiff>

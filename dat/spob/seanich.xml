@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Seanich">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="18820.828324" y="10428.462646"/>
  <GFX>
   <space>moon-M00.webp</space>

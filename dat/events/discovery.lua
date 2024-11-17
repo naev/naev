@@ -13,7 +13,6 @@ local fmt = require 'format'
 local audio = require 'love.audio'
 local textoverlay = require "textoverlay"
 
--- luacheck: globals discovered endevent heartbeat textfg textupdate (Hook functions passed by name)
 
 -- These trigger at specific places
 local system_events = {
@@ -37,9 +36,9 @@ local system_events = {
    ["Za'lek"] = {
       type = "distance",
       dist = 5e3,
-      pos  = spob.get("House Za'lek Central Station"):pos(),
+      pos  = spob.get("House Za'lek Central"):pos(),
       name = "disc_zalekcentral",
-      title = _("House Za'lek Central Station"),
+      title = _("House Za'lek Central"),
       subtitle = _("Bastion of Knowledge"),
    },
    Ruadan = {
@@ -176,6 +175,7 @@ local faction_events = {
    },
 }
 -- Custom events can handle custom triggers such as nebula systems
+--[[
 local function test_systems( syslist )
    local n = system.cur():nameRaw()
    for k,v in ipairs(syslist) do
@@ -185,6 +185,7 @@ local function test_systems( syslist )
    end
    return false
 end
+--]]
 local function pir_discovery( fname, disc, subtitle )
    return {
       test = function ()
@@ -193,7 +194,7 @@ local function pir_discovery( fname, disc, subtitle )
       end,
       type = "enter",
       name = disc,
-      title = "#H"..fmt.f(_("{fname} Territory"),{fname=fname}).."#0",
+      title = "#H"..fmt.f(_("{fname} Territory"),{fname=_(fname)}).."#0",
       subtitle = "#H"..subtitle.."#0",
       func = function()
          local fpir = faction.get(fname)
@@ -210,16 +211,7 @@ end
 local custom_events = {
    Nebula = {
       test = function ()
-         -- These are currently the only systems from which the player can
-         -- enter the nebula
-         local nsys = {
-            "Thirty Stars",
-            "Raelid",
-            "Toaxis",
-            "Myad",
-            "Tormulex",
-         }
-         return test_systems( nsys )
+         return system.cur():tags().thenebula ~= nil
       end,
       type = "enter",
       name = "disc_nebula",
@@ -347,6 +339,11 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
+   -- Don't trigger stuff in cinematics (looking at your chapter 1)
+   if player.cinematicsCheck() then
+      return
+   end
+
    local template = (event.subtitle and _("You found #o{title} - {subtitle}#0!")) or _("You found #o{title}#0!")
    local msg = fmt.f(template, event)
    -- Log and message

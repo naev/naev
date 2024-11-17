@@ -2,17 +2,18 @@
 <ssys name="Theras">
  <general>
   <radius>17500.000000</radius>
-  <stars>400</stars>
-  <interference>5.882353</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>13.235288</interference>
  </general>
- <pos x="436.000000" y="-382.000000"/>
+ <pos x="582.526674" y="-625.194582"/>
  <spobs>
   <spob>Cetrat</spob>
   <spob>Theras II</spob>
   <spob>Theras III</spob>
+  <spob>Theras IV</spob>
   <spob_virtual>Dvaered Small</spob_virtual>
   <spob_virtual>FLF Small</spob_virtual>
+  <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Dakron">

@@ -30,7 +30,6 @@ local credits = 2e6
 local targetsys = system.get("Doranthex") -- TODO: not sure it's needed.
 
 local finish, jumphook, landhook, source_system, stage, vendetta, yohail -- Non-persistent state.
--- luacheck: globals begin finish hail hailme leave reaction (Hook functions passed by name)
 
 -- Start at previous system
 function create ()
@@ -86,7 +85,7 @@ function hail()
       tk.msg(
          _("Your task"),
          fmt.f(
-            _([["Very good choice, colleague!" The pilot answers. "Go to {system}, and you will be hailed by an other Vendetta for your briefing."]]),
+            _([["Very good choice, colleague!" The pilot answers. "Go to {system}, and you will be hailed by another Vendetta for your briefing."]]),
             {system=targetsys} ) )
       stage = 1
    elseif c == 2 then

@@ -3,14 +3,15 @@
  */
 #pragma once
 
-#define NEBULA_DEFAULT_HUE    260.0 /**< Default hue (in degrees) for the nebula. */
+#define NEBULA_DEFAULT_HUE                                                     \
+   260.0 /**< Default hue (in degrees) for the nebula. */
 
 /*
  * Init/Exit
  */
-int nebu_init (void);
-int nebu_resize (void);
-void nebu_exit (void);
+int  nebu_init( void );
+int  nebu_resize( void );
+void nebu_exit( void );
 
 /*
  * Render
@@ -26,5 +27,5 @@ void nebu_update( double dt );
 /*
  * Misc
  */
-double nebu_getSightRadius (void);
-void nebu_prep( double density, double volatility, double hue );
+double nebu_getSightRadius( void );
+void   nebu_prep( double density, double volatility, double hue );

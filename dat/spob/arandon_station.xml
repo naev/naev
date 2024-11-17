@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Arandon Station">
+ <display>Ruined Station</display>
+ <pos x="-4360.187106" y="4175.302847"/>
+ <GFX>
+  <space>station-destroyed5.webp</space>
+  <exterior>station04.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+  </services>
+  <commodities/>
+  <description>Once a bustling commerce center, the station was irreparably wrecked in the Incident, and has been picked clean by scavengers. One inexplicable thing is that it seems like large nebula crystals have started to grow on the station ruins. Wait, is this really Arandon Station?</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

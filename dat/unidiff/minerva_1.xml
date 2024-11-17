@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="minerva_1">
+ <spob name="Minerva Station">
+  <description>The station consists of essentially one gigantic gambling complex. While it is usually a very high-energy frenetic environment full of gambling, the station seems to be in a partially locked down state full of Imperial bureaucrats running around. It's not really clear what is going on, but at least nobody seems to give you a second look so you quite free to move around the station.</description>
+  <bar>Like most of the station, the bar is directly built into the gambling complex. It's mainly empty except for some bureaucrats and personnel who seem to be taking a break from whatever they are doing.</bar>
+  <service_remove>missions</service_remove>
+  <service_remove>commodity</service_remove>
+  <service_remove>outfits</service_remove>
+  <service_remove>shipyard</service_remove>
+  <tag_add>nonpc</tag_add>
+  <nomissionspawn_add/>
+ </spob>
+</unidiff>

@@ -10,15 +10,15 @@
  <absorb>20</absorb>
  <commodity>
   <name>Water</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Clay</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Space Moss</name>
-  <quantity>3</quantity>
+  <quantity>50</quantity>
   <rarity>2</rarity>
  </commodity>
 </asteroid>

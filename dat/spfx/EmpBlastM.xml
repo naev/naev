@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfx name="EmpBlastM">
+ <anim>0.923</anim>
+ <shader>
+  <vert>project_pos.vert</vert>
+  <frag>emp_blast.frag</frag>
+  <size>70</size>
+  <uniforms>
+   <u_speed x="1.083" />
+  </uniforms>
+ </shader>
+</spfx>

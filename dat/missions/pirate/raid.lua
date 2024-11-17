@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Convoy Raid">
  <priority>4</priority>
- <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
+ <cond>faction.reputationGlobal("Pirate") &gt;= -20</cond>
  <chance>460</chance>
  <location>Computer</location>
  <faction>Wild Ones</faction>
@@ -28,7 +28,6 @@ local lmisn = require "lmisn"
 local vntk = require "vntk"
 
 local sconvoy, sescorts -- Non-persistent state
--- luacheck: globals convoy_attacked convoy_board convoy_boarded convoy_done enter enter_delay land spawn_convoy (Hook functions passed by name)
 
 local function get_route( sys )
    local adj = sys:jumps()
@@ -37,7 +36,7 @@ local function get_route( sys )
    local dist = 0
    for i,j1 in ipairs(adj) do
       for j,j2 in ipairs(adj) do
-         if i ~= j then
+         if i~=j and not j1:exitonly() and not j1:hidden() and not j2:hidden() then
             local d = j1:pos():dist2(j2:pos())
             if d > dist then
                dist = d
@@ -77,7 +76,7 @@ function create ()
          return false
       end
       -- Must not be claimed
-      if not misn.claim( sys, true, true ) then
+      if not naev.claimTest( sys, true ) then
          return false
       end
       -- Must have two jumps that are fair away-ish
@@ -95,7 +94,7 @@ function create ()
 
    -- Choose system
    mem.targetsys = syslist[ rnd.rnd(1,#syslist) ]
-   if not misn.claim( mem.targetsys, false, true ) then
+   if not misn.claim( mem.targetsys, true ) then
       misn.finish(false)
    end
 
@@ -141,16 +140,16 @@ function create ()
    mod = math.max( 0.5, mod ) -- Limit it so that 50% are large
    if r < 0.5*mod then
       mem.tier = 1
-      mem.adjective = "tiny"
+      mem.adjective = p_("raid", "tiny")
    elseif r < 1.0*mod then
       mem.tier = 2
-      mem.adjective = "small"
+      mem.adjective = p_("raid", "small")
    elseif r < 1.2*mod then
       mem.tier = 3
-      mem.adjective = "medium"
+      mem.adjective = p_("raid", "medium")
    else
       mem.tier = 4
-      mem.adjective = "large"
+      mem.adjective = p_("raid", "large")
    end
 
    -- Set up rewards
@@ -180,7 +179,7 @@ function accept ()
 end
 
 function enter ()
-   local q = player.pilot():cargoHas( mem.misn_cargo )
+   local q = player.fleetCargoOwned( mem.misn_cargo )
    if mem.convoy_spawned and q <= 0 then
       lmisn.fail(fmt.f(_("You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
    end
@@ -197,17 +196,16 @@ function enter ()
 end
 
 function land ()
-   local pp = player.pilot()
-   local q = pp:cargoHas( mem.misn_cargo )
+   local q = player.fleetCargoOwned( mem.misn_cargo )
    if mem.convoy_spawned and q > 0 and spob.cur()==mem.returnpnt then
-      q = pp:cargoRm( mem.misn_cargo, q ) -- Remove it
+      q = player.fleetCargoRm( mem.misn_cargo, q ) -- Remove it
       local reward = mem.reward_base + q * mem.reward_cargo
       lmisn.sfxVictory()
       vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=mem.misn_cargo, reward=fmt.credits(reward)}) )
       player.pay( reward )
 
       -- Faction hit
-      faction.modPlayerSingle(mem.reward_faction, mem.tier*(rnd.rnd(1, 2)+math.min(q*3/100,3)))
+      faction.hit( mem.reward_faction, mem.tier*(rnd.rnd(1, 2)+math.min(q*3/100,3)) )
 
       -- Mark as done
       local done = var.peek( "pir_convoy_raid" ) or 0
@@ -219,8 +217,8 @@ function land ()
 end
 
 function enter_delay ()
-   mem.mrkentry = system.mrkAdd( mem.convoy_enter:pos(), _("Convoy Entry Point") )
-   mem.mrkexit = system.mrkAdd( mem.convoy_exit:pos(), _("Convoy Exit Point") )
+   mem.mrkentry = system.markerAdd( mem.convoy_enter:pos(), _("Convoy Entry Point") )
+   mem.mrkexit = system.markerAdd( mem.convoy_exit:pos(), _("Convoy Exit Point") )
 
    player.autonavReset( 5 )
    player.msg(fmt.f(_("The convoy will be coming in from {sys} shortly!"), {sys=mem.convoy_enter:dest()}))
@@ -298,7 +296,7 @@ function spawn_convoy ()
    end
    -- Only slow down leader, or it can be faster than other guys
    sconvoy[1]:intrinsicSet( "speed_mod", -33 )
-   sconvoy[1]:intrinsicSet( "thrust_mod", -33 )
+   sconvoy[1]:intrinsicSet( "accel_mod", -33 )
    sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()
@@ -325,11 +323,11 @@ function convoy_board ()
 end
 
 function convoy_boarded ()
-   if player.pilot():cargoHas( mem.misn_cargo ) > 0 then
+   if player.fleetCargoOwned( mem.misn_cargo ) > 0 then
       misn.osdGetActive(3)
    end
 end
 
 function convoy_done ()
-   system.mrkClear()
+   system.markerClear()
 end

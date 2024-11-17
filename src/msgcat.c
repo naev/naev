@@ -1,7 +1,4 @@
-/*
- * See Licensing and Copyright notice in naev.h
- */
-
+// clang-format off
 /**
  * @file msgcat.c
  *

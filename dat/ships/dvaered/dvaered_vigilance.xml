@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vigilance">
+ <lua>dvaered.lua</lua>
  <points>90</points>
  <base_type>Vigilance</base_type>
- <GFX size="95" sx="10" sy="10">vigilance_dvaered</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="95" sx="10" sy="10">vigilance_dvaered</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>
@@ -13,9 +13,10 @@
  <trail_generator x="-30" y="15" h="-3">nebula</trail_generator>
  <trail_generator x="-30" y="-15" h="-3">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
+ <faction>Dvaered</faction>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Dvaered") &gt;= 50</cond>
- <condstr>You need at least 50 reputation with House Dvaered.</condstr>
+ <cond>math.floor(system.cur():reputation("Dvaered")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with House Dvaered.</condstr>
  <description>This military grade version of the Vigilance has an optimized weight distribution allowing it to carry more payload.</description>
  <health>
   <armour>550</armour>
@@ -39,10 +40,11 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
-  <structure size="medium" />
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>

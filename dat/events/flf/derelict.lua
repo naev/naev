@@ -3,7 +3,19 @@
 <event name="FLF/DV Derelicts">
  <location>enter</location>
  <chance>60</chance>
- <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+ <cond>
+   if player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")  then
+      return false
+   end
+   if player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home") then
+      return false
+   end
+   if faction.get("Dvaered"):reputationGlobal() &lt; 0 then
+      return false
+   end
+   return true
+ </cond>
+ <chapter>[^0]</chapter>
 </event>
 --]]
 --[[
@@ -13,13 +25,10 @@
 local fmt = require "format"
 
 local boarded, shipDV, shipFLF, timerDV, timerFLF
--- luacheck: globals boardDV boardFLF broadcastDV broadcastFLF deathDV deathFLF enter (Hook functions passed by name)
 
 function create()
    local csys = system.cur()
    local cp = csys:presences()
-
-   -- TODO make this a chapter 1 or later mission
 
    -- Must have both Dvaered and FLF presence
    if (cp["Dvaered"] or 0) <= 0 or (cp["FLF"] or 0) <= 0 then
@@ -52,10 +61,10 @@ function create()
    local posFLF = vec2.new(-10500, -8500)
 
    shipDV = pilot.add( "Dvaered Vendetta", "Dvaered", posDV, _("Dvaered Patrol"), {ai="dummy"} )
-   shipFLF = pilot.add( "Vendetta", "FLF", posFLF, _("Frontier Patrol"), {ai="dummy"} )
+   shipFLF = pilot.add( "Tristan", "FLF", posFLF, _("Frontier Patrol"), {ai="dummy"} )
 
-   shipDV:disable()
-   shipFLF:disable()
+   shipDV:setDisable()
+   shipFLF:setDisable()
 
    shipDV:setHilight(true)
    shipFLF:setHilight(true)
@@ -93,7 +102,7 @@ end
 function boardFLF()
    if shipDV:exists() then
       shipDV:setHilight(false)
-      shipDV:setNoboard(true)
+      shipDV:setNoBoard(true)
    end
    shipFLF:setHilight(false)
    hook.rm(timerFLF)
@@ -113,7 +122,7 @@ end
 function boardDV()
    if shipFLF:exists() then
       shipFLF:setHilight(false)
-      shipFLF:setNoboard(true)
+      shipFLF:setNoBoard(true)
    end
    shipDV:setHilight(false)
    hook.rm(timerDV)

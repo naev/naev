@@ -33,6 +33,7 @@ local fw = require "common.frontier_war"
 local lmisn = require "lmisn"
 local fmt = require "format"
 local pir = require "common.pirate"
+local ai_setup = require "ai.core.setup"
 
 -- Mission constants
 local destpla1, destsys1 = spob.getS("Ginni")
@@ -42,15 +43,13 @@ local fleepla, fleesys = spob.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
 local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
--- luacheck: globals ambushDied ambush_end ambush_msg attackMe enter explain_battle hamelsen_attacked land loading meeting meeting_msg1 meeting_msg2 meeting_msg3 meeting_timer moreBadGuys tamDied tamJump (Hook functions passed by name)
--- luacheck: globals discussWithTam (NPC functions passed by name)
 
 local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on {pnt} in order to refuel and rest for some time."]])
 
 function create()
    -- The mission should not appear just after the FLF destruction
    if not (var.peek("invasion_time") == nil or
-           time.get() >= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) then
+           time.get() >= time.fromnumber(var.peek("invasion_time")) + time.new(0, 20, 0)) then
       misn.finish(false)
    end
 
@@ -68,7 +67,7 @@ function create()
 end
 
 function accept()
-   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Sigur. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more use of your services. That is why I propose to you now a simple escort mission. All that you need is a fast combat ship that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
+   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course, I know your name, you're one of the pilots who destroyed that damn FLF base in Sigur. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more use of your services. That is why I propose to you now a simple escort mission. All that you need is a fast combat ship that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
       tk.msg(_("Too bad"), _([[Tam seems disappointed by your answer. "Well, then, maybe we will meet again later, who knows?"]]))
       return
    end
@@ -158,7 +157,7 @@ function testPlayerSpeed()
 end
 
 function explain_battle()
-   tk.msg(_("That was really close!"), fmt.f(_([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to {pnt} at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
+   tk.msg(_("That was really close!"), fmt.f(_([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to {pnt} at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
    You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]]), {pnt=fleepla}))
 end
 
@@ -174,13 +173,12 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
-   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam") )
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin, _("Major Tam"), {naked=true} )
    majorTam:setHilight()
    majorTam:setVisplayer()
-   majorTam:setFaction("DHC")
+   majorTam:setFaction( fw.fct_dhc() )
 
-   majorTam:outfitRm("all")
-   majorTam:outfitRm("cores")
+   -- TODO switch to equipopt
    majorTam:outfitAdd("S&K Light Combat Plating")
    majorTam:outfitAdd("Milspec Orion 3701 Core System")
    majorTam:outfitAdd("Tricon Zephyr II Engine")
@@ -192,15 +190,13 @@ function spawnTam( origin )
    majorTam:setEnergy(100)
    majorTam:setFuel(true)
    majorTam:cargoRm( "all" )
+   ai_setup.setup(majorTam)
 
    mem.dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
 
 function encounterWarlord( name, origin )
-   for k,f in ipairs(pir.factions) do
-      pilot.toggleSpawn(f, false) -- Make sure Pirates don't get on the way
-      pilot.clearSelect(f)
-   end
+   pir.clearPirates(true)
 
    warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin, name )
    warlord:control(true)
@@ -273,10 +269,9 @@ function loading()
 end
 
 function meeting_timer() -- Delay the triggering of the meeting
-   player.pilot():control() -- Make sure to remove the autonav
-   player.pilot():brake()
-   player.cinematics( true )
-   player.cinematics( false )
+   local pp = player.pilot()
+   pp:control() -- Make sure to remove the autonav
+   pp:brake()
 
    hook.timer(7.0, "meeting")
 end
@@ -299,7 +294,7 @@ function meeting()
       mem.stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:cargoRm( "all" )
-      quickie:setFaction("Warlords")
+      quickie:setFaction( fw.fct_warlords() )
 
       majorTam:taskClear()
       majorTam:memory().careful = true
@@ -325,7 +320,7 @@ function attackMe()
 
    -- Change the enemies to Warlords in order to make them attack
    for i = 1,#p do
-      p[i]:setFaction("Warlords")
+      p[i]:setFaction( fw.fct_warlords() )
       p[i]:control(false)
    end
 end
@@ -333,15 +328,16 @@ end
 -- Battleaddict's bros
 function moreBadGuys()
    local buff
+   local fwarlords = fw.fct_warlords()
    for i = 1, 3 do
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
-      buff:setFaction("Warlords")
+      buff:setFaction(fwarlords)
    end
    buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2, _("Colonel Hamelsen") )
-   buff:setFaction("Warlords")
+   buff:setFaction(fwarlords)
    buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
-   buff:setFaction("Warlords")
-   warlord:setFaction("Warlords")
+   buff:setFaction(fwarlords)
+   warlord:setFaction(fwarlords)
    warlord:control(false)
 end
 
@@ -349,13 +345,14 @@ end
 function hamelsenAmbush()
    local jp     = jump.get(system.cur(), mem.previous)
    local x, y, pos
+   local fwarlords = fw.fct_warlords()
    ambush = {}
    for i = 1, 3 do
       x = 1000 * rnd.rnd() + 1000
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.add( "Shark", "Warlords", pos, nil, {ai="baddie_norun"} )
+      ambush[i] = pilot.add( "Shark", fwarlords, pos, nil, {ai="baddie_norun"} )
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
@@ -365,11 +362,10 @@ function hamelsenAmbush()
    x = 1000 * rnd.rnd() + 2000
    y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
-   hamelsen = pilot.add( "Shark", "Warlords", pos, _("Colonel Hamelsen"), {ai="baddie_norun"} )
+   hamelsen = pilot.add( "Shark", fwarlords, pos, _("Colonel Hamelsen"), {ai="baddie_norun", naked=true} )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-   hamelsen:outfitRm("all")
-   hamelsen:outfitRm("cores")
+   -- TODO switch to equipopt
    hamelsen:outfitAdd("S&K Ultralight Combat Plating")
    hamelsen:outfitAdd("Milspec Orion 2301 Core System")
    hamelsen:outfitAdd("Tricon Zephyr Engine")
@@ -382,6 +378,7 @@ function hamelsenAmbush()
    hamelsen:setFuel(true)
    hamelsen:setNoDeath() -- We can't afford to loose our main baddie
    hamelsen:setNoDisable()
+   ai_setup.setup(hamelsen)
 
    mem.attack = hook.pilot( hamelsen, "attacked", "hamelsen_attacked" )
 
@@ -411,8 +408,9 @@ function ambush_msg()
    majorTam:control(false)
    hook.rm(mem.proxHook) -- To avoid triggering by mistake
 
+   local fdhc = fw.fct_dhc()
    for i, pi in ipairs(savers) do
-      pi:setFaction("DHC")
+      pi:setFaction( fdhc )
    end
 end
 
@@ -441,7 +439,7 @@ end
 
 -- The end of the Ambush: a message that explains what happened
 function ambush_end()
-   tk.msg(_("Hostiles eliminated"), fmt.f(_([[As the remaining attackers flee, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir." the other answers, "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old scumbag had done to you, we put him under surveillance and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
+   tk.msg(_("Hostiles eliminated"), fmt.f(_([[As the remaining attackers flee, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir." the other answers, "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old scumbag had done to you, we put him under surveillance, and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
    Tam responds: "By the way, {player}, let me introduce you the Captain Leblanc. She belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. {player} is the private pilot I told you about, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who do their duty and serve the Dvaered Nation."]]), {player=player.name()}))
    tk.msg(_("Two attacks are one too many"), _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard means of expression for a warlord, but setting an ambush here denotes a true lack of respect."
    "He will answer for this, trust me." answers Tam, "I will refer this matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]]))

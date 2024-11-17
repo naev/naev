@@ -1,0 +1,27 @@
+name: Feature Proposal
+description: Submit a new idea
+title: "[Proposal]: "
+labels: ["Type-Enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We always welcome feedback and new ideas!
+        Thanks for taking the time to suggest something!
+  - type: textarea
+    id: idea-suggestion
+    attributes:
+      label: Suggestion
+      description: Feel free to include as much information as you'd like.
+      placeholder: Tell your idea!
+      value: "Idea goes here!"
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/naev/naev/blob/main/code_of_conduct.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

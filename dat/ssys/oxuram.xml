@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Oxuram">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>0.000000</interference>
+ </general>
+ <pos x="191.666609" y="-917.771349"/>
+ <spobs/>
+ <jumps>
+  <jump target="Ksher">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="PSO">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

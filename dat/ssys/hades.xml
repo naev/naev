@@ -2,11 +2,10 @@
 <ssys name="Hades">
  <general>
   <radius>14700.000000</radius>
-  <stars>200</stars>
+  <spacedust>200</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-179.609568" y="40.532407"/>
+ <pos x="-159.404507" y="308.553545"/>
  <spobs/>
  <jumps>
   <jump target="C-43">

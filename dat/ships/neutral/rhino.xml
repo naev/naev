@@ -2,18 +2,18 @@
 <ship name="Rhino">
  <points>60</points>
  <base_type>Rhino</base_type>
- <GFX size="100" sx="10" sy="10">rhino</GFX>
- <GUI>brushed</GUI>
+ <gfx size="100" sx="10" sy="10">rhino</gfx>
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1400000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-35" y="4" h="10" />
- <trail_generator x="-35" y="4" h="0" always_under="1" />
- <trail_generator x="-35" y="-4" h="10" />
- <trail_generator x="-35" y="-4" h="0" always_under="1" />
+ <trail_generator x="-35" y="4" h="10">melendez</trail_generator>
+ <trail_generator x="-35" y="4" h="0" always_under="1">melendez</trail_generator>
+ <trail_generator x="-35" y="-4" h="10">melendez</trail_generator>
+ <trail_generator x="-35" y="-4" h="0" always_under="1">melendez</trail_generator>
  <trail_generator x="-35" y="0" h="5">nebula</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
+ <faction>Independent</faction>
  <license>Large Civilian Vessel</license>
  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
  <health>
@@ -36,9 +36,10 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
-  <structure size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

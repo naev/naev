@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Guardian Interception System">
+ <general>
+  <shortname>Guardian I.S.</shortname>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <typename>Point Defense</typename>
+  <mass>30</mass>
+  <price>120000</price>
+  <description>Marketed as a unified system for intercepting missiles and interceptors, the Guardian Interception System is a favourite of merchants and mercenaries alike. Although it lacks the sufficient firepower to efficiently take down torpedoes and other heavy ordnance, it excels at tracking lighter missiles and can even be used to deter small assault craft.</description>
+  <gfx_store>pd1.webp</gfx_store>
+  <cpu>-40</cpu>
+ </general>
+ <specific type="turret bolt">
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <gfx>laser2M.png</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.5</delay>
+  <speed>900</speed>
+  <range>800</range>
+  <falloff>650</falloff>
+  <energy>8</energy>
+  <heatup>60</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>4200</trackmax>
+  <damage>
+   <type>energy</type>
+   <penetrate>10</penetrate>
+   <physical>10</physical>
+  </damage>
+  <pointdefense />
+ </specific>
+ <tags>
+  <tag>empire</tag>
+ </tags>
+</outfit>

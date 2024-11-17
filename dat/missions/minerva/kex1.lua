@@ -31,8 +31,6 @@ local lmisn = require "lmisn"
 --  2: return to kex
 mem.misn_state = nil
 local escorts, mainguy -- Non-persistent state
--- luacheck: globals enter generate_npc mainguy_attacked mainguy_board mainguy_dead mainguy_dead_scanned mainguy_left (Hook functions passed by name)
--- luacheck: globals approach_ceo approach_kex (NPC functions passed by name)
 
 local targetsys = system.get("Provectus Nova")
 local jumpinsys = system.get("Waterhole")
@@ -74,7 +72,7 @@ function approach_kex ()
 
    if mem.misn_state==2 then
       local maikki = minerva.vn_maikkiP{
-            shader = love_shaders.color{ color={0,0,0,1} },
+            shader = love_shaders.colour{ colour={0,0,0,1} },
             pos = "right" }
 
       vn.na(_("You tell Kex about your encounter with the transports and how you weren't able to find the supposed cargo."))
@@ -187,15 +185,11 @@ He looks at you with determination.
    })
 
    vn.label("help")
-   kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
+   kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
    kex(_([["It would be ideal if you can disable the ship and find the evidence itself, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
       if mem.misn_state==nil then
-         if not misn.accept() then
-            tk.msg(_("You have too many active missions."))
-            vn.jump("menu_msg")
-            return
-         end
+         misn.accept()
 
          minerva.log.kex(_("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
          mem.misn_marker = misn.markerAdd( targetsys )
@@ -325,7 +319,7 @@ function mainguy_board ()
    vn.run()
 
    -- Permanently disable mainguy
-   mainguy:disable()
+   mainguy:setDisable()
 
    -- Message update
    minerva.log.kex(_("You boarded a transport destined for the Minerva CEO, but didn't find anything."))

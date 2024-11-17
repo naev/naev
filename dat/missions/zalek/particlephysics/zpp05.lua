@@ -25,7 +25,6 @@ local sokoban = require "minigames.sokoban"
 local audio = require 'love.audio'
 local love = require "love"
 
--- luacheck: globals land enter drone_board heartbeat update renderbg (Hook functions passed by name)
 
 --local reward = zpp.rewards.zpp05 -- No reward
 local mainpnt, mainsys = spob.getS("Katar I")
@@ -108,7 +107,7 @@ She starts to hum and skips off towards her laboratory space.]]))
    vn.done( zpp.noona.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zpp.fctmod.zpp05)
+   faction.hit("Za'lek", zpp.fctmod.zpp05)
    --player.pay( reward )
    zpp.log(_("You helped Noona conduct her particle physics experiment. However, you saw something you couldn't really make out during the experiments."))
    misn.finish(true)
@@ -151,7 +150,7 @@ function enter ()
       pextra:setDir( a+math.pi )
    end
 
-   system.mrkAdd( pos, _("Experiment Site") )
+   system.markerAdd( pos, _("Experiment Site") )
 
    hook.timer( 5, "heartbeat" )
    hook.update( "update" )
@@ -192,7 +191,7 @@ function drone_board ()
    vn.na(_([[You access the amplifier's control panel and jack in.]]))
 
    -- TODO maybe do another minigame?
-   sokoban.vn{ levels={6,7}, header="Amplifier Control Panel"}
+   sokoban.vn{ levels={6,7}, header=_("Amplifier Control Panel") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2
@@ -247,7 +246,7 @@ function heartbeat ()
    elseif stage==5 and inrange() then
       -- CUTSCENE START
       player.cinematics( true )
-      player.allowLand( false )
+      player.landAllow( false )
       love.origin()
       music.stop()
       stage = 6
@@ -306,7 +305,7 @@ function heartbeat ()
    elseif stage==15 then
       -- CUTSCENE END
       player.cinematics( false )
-      player.allowLand( true )
+      player.landAllow( true )
       music.play("ambient1.ogg")
       cutscene = false
       mem.state = 2
@@ -319,7 +318,7 @@ function heartbeat ()
    elseif stage==17 then
       pilot.comm(_("Noona"), _("Come back to Katar I."))
       misn.osdActive(2)
-      system.mrkClear()
+      system.markerClear()
       misn.markerAdd( mainpnt )
       return
    end

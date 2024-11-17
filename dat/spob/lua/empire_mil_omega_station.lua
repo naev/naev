@@ -4,7 +4,7 @@ mem.params = {
    std_land = 50,
    std_bribe = 100,
    msg_granted = {
-      _("Landing access authorized."),
+      _([["Landing access authorized."]]),
    },
    msg_notyet = {
       _([["You are not authorized to land here."]]),
@@ -13,6 +13,7 @@ mem.params = {
       _([["Don't attempt to bribe an Empire official, pilot."]]),
    },
 }
+luaspob.setup( mem.params )
 
 local function initparams ()
    local std_land = 50
@@ -32,6 +33,3 @@ load = function ()
    initparams()
    return luaspob.load()
 end
-unload = luaspob.unload
-can_land = luaspob.can_land
-comm = luaspob.comm

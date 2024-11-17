@@ -2,11 +2,11 @@
 <ssys name="Vean">
  <general>
   <radius>13000.000000</radius>
-  <stars>400</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>25.000000</interference>
+  <nolanes/>
  </general>
- <pos x="817.000000" y="473.000000"/>
+ <pos x="814.271996" y="286.923009"/>
  <spobs>
   <spob>HS-24</spob>
   <spob>NS-63</spob>

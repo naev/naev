@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Bedimann Shipyards">
- <lua>spob/lua/zalek_mil_restricted.lua</lua>
+ <lua>zalek_mil_restricted.lua</lua>
  <pos x="4304.105547" y="1996.749996"/>
  <GFX>
   <space>station-shipyard2.webp</space>
@@ -36,10 +36,13 @@
   <item>Engines High</item>
   <item>Hulls Medium</item>
   <item>Hulls High</item>
+  <item>Za'lek Sting Type IV</item>
  </tech>
  <tags>
   <tag>restricted</tag>
   <tag>industrial</tag>
   <tag>military</tag>
+  <tag>station</tag>
+  <tag>shipbuilding</tag>
  </tags>
 </spob>

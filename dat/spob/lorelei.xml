@@ -39,5 +39,10 @@
   <item>Missiles 2</item>
   <item>Engines High</item>
   <item>Engines Cargo</item>
+  <item>Llama Voyager</item>
  </tech>
+ <tags>
+  <tag>industrial</tag>
+  <tag>trade</tag>
+ </tags>
 </spob>

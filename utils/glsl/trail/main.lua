@@ -308,7 +308,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate width
    // By multiplying two sine waves with different period it looks more like
    // a natural flame.
-   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 5.0 + r);
+   p = 2.0*M_PI * (pos_tex.x*2.0 + dt * 5.0 + r);
    y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1.0-pos_tex.x) * sin( p ) * sin( 2.7*p );
    color.a *= smoothbeam( y, m );
 
@@ -406,6 +406,74 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
    return color;
 }
 
+/* Modulated with multiple wavy beams. */
+TRAIL_FUNC_PROTOTYPE
+vec4 trail_split( vec4 colour, vec2 pos_tex, vec2 pos_px )
+{
+   // Modulate alpha base on length
+   colour.a *= fastdropoff( pos_tex.x, 1.0 );
+
+   // Modulate alpha based on dispersion
+   float m = 1.5 + 5.0*impulse( 1.0-pos_tex.x, 1.0 );
+
+   // Modulate width
+   colour.a *= smoothbeam( pos_tex.y, m );
+
+   // Split the tail
+   colour.a -= max( 0.0, (0.9 - pos_tex.x) * smoothbeam( pos_tex.y, 0.2 ) );
+
+   return colour;
+}
+
+/* Very pale with light pulses. */
+TRAIL_FUNC_PROTOTYPE
+vec4 trail_pale( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   float m;
+
+   // Modulate alpha base on length
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
+
+   // Modulate width
+   color.a *= smoothbeam( pos_tex.y, m );
+
+   // Pulse effect
+   float v = smoothstep( 0.0, 0.5, 1.0-pos_tex.x );
+   color.rgb += m;
+   color.a *=  0.8 + 0.2 * mix( 1.0, sin( 2.0*M_PI * (0.02 * pos_px.x + dt * 2.0) ), v );
+
+   return color;
+}
+
+/* Flame-like periodic movement. */
+TRAIL_FUNC_PROTOTYPE
+vec4 trail_melendez( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   float m, p, y;
+
+   // Modulate alpha base on length
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
+
+   // Modulate width
+   // By multiplying two sine waves with different period it looks more like
+   // a natural flame.
+   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 3.0 + r);
+   y = pos_tex.y + 0.15 * smoothstep(0, 0.9, 1.0-2.0*pos_tex.x) * sin( p ) * sin( 2.7*p );
+   color.a *= smoothbeam( y, m );
+
+   float r = smoothstep( 0.2, 0.8, 1.4-pos_tex.x);
+   color.rgb = mix( color.rgb, vec3( 1.0, 0.84, 0.0 ), r );
+
+   return color;
+}
+
+
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 color_out;
@@ -428,6 +496,12 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       color_out = trail_arc( color, pos, pos_px );
    else if (type==6)
       color_out = trail_bubbles( color, pos, pos_px );
+   else if (type==7)
+      color_out = trail_split( color, pos, pos_px );
+   else if (type==8)
+      color_out = trail_pale( color, pos, pos_px );
+   else if (type==9)
+      color_out = trail_melendez( color, pos, pos_px );
    else
       color_out = trail_default( color, pos, pos_px );
 
@@ -462,6 +536,12 @@ local function set_shader( num )
       shader_color = { 0.9, 0.1, 0.4, 0.7 }
    elseif shader_type == 6 then -- soromid
       shader_color = { 0.5, 0.9, 0.2, 0.7 }
+   elseif shader_type == 7 then -- proteron
+      shader_color = { 0.9, 0.75, 0.95, 0.7 }
+   elseif shader_type == 8 then -- thurion
+      shader_color = { 0.7, 1.0, 1.0, 0.7 }
+   elseif shader_type == 8 then -- melendez
+      shader_color = { 0, 1, 1, 0.7 }
    else -- default
       shader_color = { 0, 1, 1, 0.7 }
    end
@@ -480,7 +560,7 @@ function love.load()
    love.graphics.setNewFont( 24 )
    -- Scaling
    scaling = 2
-   love.graphics.setBackgroundColor( 0.5, 0.5, 0.5, 1 )
+   love.graphics.setBackgroundColor( 0, 0, 0, 1 )
 end
 
 function love.keypressed(key)

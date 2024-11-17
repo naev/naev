@@ -2,30 +2,31 @@ local optimize = require 'equipopt.optimize'
 local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
+local bioship = require 'bioship'
+local prob = require "prob"
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local pirate_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Pirate Hyena Dock",
-   "Pirate Hyena Bay",
+   "Pirate Hyena Dock", "Pirate Hyena Bay",
    "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    -- Medium Weapons
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
-   "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+   "Laser Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher",
-   "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+   "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
    "Orion Lance", "Ion Cannon",
    -- Small Weapons
-   "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
-   "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+   "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
+   "Laser Turret MK1", "Turreted Gauss Gun",
    "Plasma Turret MK1", "Particle Beam",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
@@ -34,8 +35,7 @@ local pirate_outfits = eoutfits.merge{{
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    "Scanning Combat AI",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
+   "Battery III", "Shield Capacitor III", "Reactor Class III",
    "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
@@ -56,14 +56,15 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Pirate Kestrel"] = function (p)
-         local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
-         table.insert( c, choose_one{ "Nexus Bolt 3500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
-         return c
+   ["Pirate Revenant"] = function ()
+         return {choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }}
+      end,
+   ["Pirate Kestrel"] = function ()
+         return { "Krain Remige Engine", "Unicorp PT-440 Core System", "Unicorp D-58 Heavy Plating" }
       end,
    ["Pirate Starbridge"] = function (p)
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
-         table.insert( c, choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine", } )
+         table.insert( c, choose_one{ "Unicorp Falcon 1400 Engine", "Krain Patagium Engine", } )
          return c
       end,
 }
@@ -103,22 +104,38 @@ local function equip_pirate( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
+
+   -- Outfits
+   local outfits = pirate_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
 
    -- See cores
-   local cores
-   local pircor = pirate_cores[ sname ]
-   if pircor then
-      cores = pircor( p )
-   else
-      cores = ecores.get( p, { all=pirate_class } )
+   local cores = opt_params.cores
+   if not cores then
+      local pircor = pirate_cores[ sname ]
+      if pircor then
+         cores = pircor( p )
+      end
+      if ps:tags().bioship then
+         local stage = params.bioship_stage
+         if not stage then
+            local maxstage = bioship.maxstage( p )
+            stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
+         end
+         bioship.simulate( p, stage, params.bioship_skills )
+      elseif not cores then
+         cores = ecores.get( p, { all=pirate_class } )
+      end
    end
 
    local mem = p:memory()
    mem.equip = { type="pirate", level="standard" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, pirate_outfits, params )
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 return equip_pirate

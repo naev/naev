@@ -10,37 +10,34 @@
  */
 /** @cond */
 #include <dirent.h>
-#include <limits.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "physfs.h"
 
-#include "naev.h"
+#include "SDL_stdinc.h"
 
+#include <errno.h>
+#include <libgen.h> /* dirname / basename */
 #if HAS_POSIX
+#include <libgen.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <errno.h>
-#include <libgen.h>
 #endif /* HAS_POSIX */
-#if WIN32
+#if __WIN32__
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* __WIN32__ */
 /** @endcond */
 
 #include "nfile.h"
 
 #include "array.h"
 #include "conf.h"
-#if MACOS
+#if __MACOSX__
 #include "glue_macos.h"
-#endif /* MACOS */
+#endif /* __MACOSX__ */
 #include "log.h"
-#include "nstring.h"
 
-#if HAS_UNIX && !MACOS
+#if HAS_UNIX && !__MACOSX__
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -49,14 +46,14 @@
  *    @param name Name of environment variable.
  *    @return The environment variable or NULL if an error occurs.
  */
-static char* xdgGetEnv(const char *name)
+static char *xdgGetEnv( const char *name )
 {
-    char *env = SDL_getenv(name);
-    if ((env != NULL) && (env[0] != '\0'))
-        return env;
-    /* What errno signifies missing env var? */
-    errno = EINVAL;
-    return NULL;
+   char *env = SDL_getenv( name );
+   if ( ( env != NULL ) && ( env[0] != '\0' ) )
+      return env;
+   /* What errno signifies missing env var? */
+   errno = EINVAL;
+   return NULL;
 }
 
 /**
@@ -65,47 +62,47 @@ static char* xdgGetEnv(const char *name)
  * Sets @c errno to @c EINVAL if variable is not set or empty.
  *    @return The duplicated string or NULL if an error occurs.
  */
-static char* xdgEnvDup(const char *name)
+static char *xdgEnvDup( const char *name )
 {
-    const char *env;
-    env = xdgGetEnv( name );
-    if (env != NULL)
-        return strdup(env);
-     return NULL;
+   const char *env = xdgGetEnv( name );
+   if ( env != NULL )
+      return strdup( env );
+   return NULL;
 }
 
 /**
- * Get a home directory from the environment or a fallback relative to @c \$HOME.
- * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
+ * Get a home directory from the environment or a fallback relative to @c
+ * \$HOME. Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
  * Sets @c errno to @c EINVAL if variable is not set or empty.
  *    @param envname Name of environment variable.
- *    @param relativefallback Path starting with "/" and relative to @c \$HOME to use as fallback.
+ *    @param relativefallback Path starting with "/" and relative to @c \$HOME
+ * to use as fallback.
  *    @return The home directory path or @c NULL of an error occurs.
  */
-static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
+static char *xdgGetRelativeHome( const char *envname,
+                                 const char *relativefallback )
 {
-    char *relhome;
-    relhome = xdgEnvDup(envname);
-    if ((relhome == NULL) && (errno != ENOMEM)) {
-        errno = 0;
-        const char *home;
-        unsigned int homelen;
-        home = xdgGetEnv( "HOME" );
-        if (home == NULL)
-            return NULL;
-        homelen = strlen(home);
-        unsigned int fallbacklength;
-        fallbacklength = strlen( relativefallback );
-        relhome = malloc( homelen + fallbacklength + 1 );
-        if (relhome == NULL)
-           return NULL;
-        memcpy( relhome, home, homelen );
-        memcpy( &relhome[ homelen ], relativefallback, fallbacklength + 1 );
-        relhome[ homelen + fallbacklength ] = '\0'; /* Just in case. */
-    }
-    return relhome;
+   char *relhome = xdgEnvDup( envname );
+   if ( ( relhome == NULL ) && ( errno != ENOMEM ) ) {
+      const char  *home;
+      unsigned int homelen;
+      errno = 0;
+      home  = xdgGetEnv( "HOME" );
+      if ( home == NULL )
+         return NULL;
+      homelen = strlen( home );
+      unsigned int fallbacklength;
+      fallbacklength = strlen( relativefallback );
+      relhome        = malloc( homelen + fallbacklength + 1 );
+      if ( relhome == NULL )
+         return NULL;
+      memcpy( relhome, home, homelen );
+      memcpy( &relhome[homelen], relativefallback, fallbacklength + 1 );
+      relhome[homelen + fallbacklength] = '\0'; /* Just in case. */
+   }
+   return relhome;
 }
-#endif
+#endif /* HAS_UNIX && !__MACOSX__ */
 
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
 /**
@@ -113,41 +110,47 @@ static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
  *
  *    @return The xdg config path.
  */
-const char* nfile_configPath (void)
+const char *nfile_configPath( void )
 {
-    if (naev_configPath[0] == '\0') {
-        /* Global override is set. */
-        if (conf.datapath) {
-           snprintf( naev_configPath, sizeof(naev_configPath), "%s/", conf.datapath );
-           return naev_configPath;
-        }
-#if MACOS
-        if (macos_configPath( naev_configPath, sizeof(naev_configPath) ) != 0) {
-           WARN(_("Cannot determine config path, using current directory."));
-           snprintf( naev_configPath, sizeof(naev_configPath), "./naev/" );
-        }
+   if ( naev_configPath[0] == '\0' ) {
+      /* Global override is set. */
+      if ( conf.datapath ) {
+         snprintf( naev_configPath, sizeof( naev_configPath ), "%s/",
+                   conf.datapath );
+         return naev_configPath;
+      }
+#if __MACOSX__
+      if ( macos_configPath( naev_configPath, sizeof( naev_configPath ) ) !=
+           0 ) {
+         WARN( _( "Cannot determine config path, using current directory." ) );
+         snprintf( naev_configPath, sizeof( naev_configPath ), "./naev/" );
+      }
 #elif HAS_UNIX
-        char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
-        if (path == NULL) {
-            WARN(_("$XDG_CONFIG_HOME isn't set, using current directory."));
-            path = strdup(".");
-        }
+      char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
+      if ( path == NULL ) {
+         WARN( _( "$XDG_CONFIG_HOME isn't set, using current directory." ) );
+         path = strdup( "." );
+      }
 
-        snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
-        free (path);
-#elif WIN32
-      char *path = SDL_getenv("APPDATA");
-      if (path == NULL) {
-         WARN(_("%%APPDATA%% isn't set, using current directory."));
+      snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
+      free( path );
+#elif __WIN32__
+      char *path = SDL_getenv( "APPDATA" );
+      if ( path == NULL ) {
+         WARN( _( "%%APPDATA%% isn't set, using current directory." ) );
          path = ".";
       }
-      snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
+      snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+      char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
+      strncpy( naev_configPath, sizeof( naev_configPath ), prefpath );
+      SDL_free( prefpath );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-    }
+   }
 
-    return naev_configPath;
+   return naev_configPath;
 }
 
 static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
@@ -156,76 +159,83 @@ static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
  *
  *    @return The xdg cache path.
  */
-const char* nfile_cachePath (void)
+const char *nfile_cachePath( void )
 {
-    if (naev_cachePath[0] == '\0') {
-        /* Global override is set. */
-        if (conf.datapath) {
-           snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/", conf.datapath );
-           return naev_cachePath;
-        }
-#if MACOS
-        if (macos_cachePath( naev_cachePath, sizeof(naev_cachePath) ) != 0) {
-           WARN(_("Cannot determine cache path, using current directory."));
-           snprintf( naev_cachePath, sizeof(naev_cachePath), "./naev/" );
-        }
+   if ( naev_cachePath[0] == '\0' ) {
+      /* Global override is set. */
+      if ( conf.datapath ) {
+         snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/",
+                   conf.datapath );
+         return naev_cachePath;
+      }
+#if __MACOSX__
+      if ( macos_cachePath( naev_cachePath, sizeof( naev_cachePath ) ) != 0 ) {
+         WARN( _( "Cannot determine cache path, using current directory." ) );
+         snprintf( naev_cachePath, sizeof( naev_cachePath ), "./naev/" );
+      }
 #elif HAS_UNIX
-        char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
-        if (path == NULL) {
-            WARN(_("$XDG_CACHE_HOME isn't set, using current directory."));
-            path = strdup(".");
-        }
+      char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
+      if ( path == NULL ) {
+         WARN( _( "$XDG_CACHE_HOME isn't set, using current directory." ) );
+         path = strdup( "." );
+      }
 
-        snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
-        free (path);
-#elif WIN32
-      char *path = SDL_getenv("APPDATA");
-      if (path == NULL) {
-         WARN(_("%%APPDATA%% isn't set, using current directory."));
+      snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
+      free( path );
+#elif __WIN32__
+      char *path = SDL_getenv( "APPDATA" );
+      if ( path == NULL ) {
+         WARN( _( "%%APPDATA%% isn't set, using current directory." ) );
          path = ".";
       }
-      snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
+      snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+      char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
+      strncpy( naev_cachePath, sizeof( naev_cachePath ), prefpath );
+      SDL_free( prefpath );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-    }
+   }
 
-    return naev_cachePath;
+   return naev_cachePath;
 }
 
-#if HAS_POSIX
-#define MKDIR mkdir( opath, mode )
-static int mkpath( const char *path, mode_t mode )
-#elif WIN32
+#if __WIN32__
 #define MKDIR !CreateDirectory( opath, NULL )
 static int mkpath( const char *path )
+#elif HAS_POSIX
+#define MKDIR mkdir( opath, mode )
+static int mkpath( const char *path, mode_t mode )
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+#define MKDIR SDL_CreateDirectory( opath )
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
 {
-   char opath[PATH_MAX];
-   char *p;
+   char   opath[PATH_MAX];
+   char  *p;
    size_t len;
-   int ret;
+   int    ret;
 
-   if (path == NULL)
+   if ( path == NULL )
       return 0;
 
-   strncpy( opath, path, sizeof(opath)-1 );
-   opath[ sizeof(opath)-1 ] = '\0';
-   len = strlen(opath);
+   strncpy( opath, path, sizeof( opath ) - 1 );
+   opath[sizeof( opath ) - 1] = '\0';
+   len                        = strlen( opath );
 
-   p = &opath[len-1];
-   if (nfile_isSeparator(p[0])) {
+   p = &opath[len - 1];
+   if ( nfile_isSeparator( p[0] ) ) {
       p[0] = '\0';
       p--;
    }
 
    // Traverse up until we find a directory that exists.
-   for (; p >= opath; p--) {
-      if (nfile_isSeparator(p[0])) {
+   for ( ; p >= opath; p-- ) {
+      if ( nfile_isSeparator( p[0] ) ) {
          p[0] = '\0';
-         if (nfile_dirExists(opath)) {
+         if ( nfile_dirExists( opath ) ) {
             p[0] = '/';
             break;
          }
@@ -237,20 +247,20 @@ static int mkpath( const char *path )
    p++;
 
    // Traverse down, creating directories.
-   for (; p[0] != '\0'; p++) {
-      if (nfile_isSeparator(p[0])) {
+   for ( ; p[0] != '\0'; p++ ) {
+      if ( nfile_isSeparator( p[0] ) ) {
          p[0] = '\0';
-         ret = MKDIR;
-         if (ret)
+         ret  = MKDIR;
+         if ( ret && ( errno != EEXIST ) )
             return ret;
          p[0] = '/';
       }
    }
 
    // Create the final directory.
-   if (!nfile_dirExists(opath)) {
+   if ( !nfile_dirExists( opath ) ) {
       ret = MKDIR;
-      if (ret)
+      if ( ret )
          return ret;
    }
 
@@ -275,12 +285,15 @@ int nfile_dirMakeExist( const char *path )
 
 #if HAS_POSIX
    if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
-#elif WIN32
+#elif __WIN32__
    if ( mkpath( path ) < 0 ) {
+#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+   if ( SDL_CreateDirectory( path ) < 0 ) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-      WARN( _( "Dir '%s' does not exist and unable to create: %s" ), path, strerror( errno ) );
+      WARN( _( "Dir '%s' does not exist and unable to create: %s" ), path,
+            strerror( errno ) );
       return -1;
    }
 
@@ -297,13 +310,13 @@ int nfile_dirExists( const char *path )
 {
    DIR *d;
 
-   if (path == NULL)
+   if ( path == NULL )
       return -1;
 
    d = opendir( path );
    if ( d == NULL )
       return 0;
-   closedir(d);
+   closedir( d );
    return 1;
 }
 
@@ -342,7 +355,7 @@ int nfile_fileExists( const char *path )
  */
 int nfile_backupIfExists( const char *path )
 {
-   char backup[ PATH_MAX ];
+   char backup[PATH_MAX];
 
    if ( path == NULL )
       return -1;
@@ -350,7 +363,7 @@ int nfile_backupIfExists( const char *path )
    if ( !nfile_fileExists( path ) )
       return 0;
 
-   snprintf(backup, sizeof(backup), "%s.backup", path);
+   snprintf( backup, sizeof( backup ), "%s.backup", path );
 
    return nfile_copyIfExists( path, backup );
 }
@@ -362,46 +375,47 @@ int nfile_backupIfExists( const char *path )
  *    @param file2 Filename to copy to.
  *    @return 0 on success, or if file1 does not exist, -1 on error.
  */
-int nfile_copyIfExists( const char* file1, const char* file2 )
+int nfile_copyIfExists( const char *file1, const char *file2 )
 {
-   FILE *f_in, *f_out;
-   char buf[ 8*1024 ];
+   FILE  *f_in, *f_out;
+   char   buf[8 * 1024];
    size_t lr, lw;
 
-   if (file1 == NULL)
+   if ( file1 == NULL )
       return -1;
 
    /* Check if input file exists */
-   if (!nfile_fileExists(file1))
+   if ( !nfile_fileExists( file1 ) )
       return 0;
 
    /* Open files. */
    f_in  = fopen( file1, "rb" );
    f_out = fopen( file2, "wb" );
-   if ((f_in==NULL) || (f_out==NULL)) {
-      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
-      if (f_in!=NULL)
-         fclose(f_in);
-      if (f_out!=NULL)
-         fclose(f_out);
+   if ( ( f_in == NULL ) || ( f_out == NULL ) ) {
+      WARN( _( "Failure to copy '%s' to '%s': %s" ), file1, file2,
+            strerror( errno ) );
+      if ( f_in != NULL )
+         fclose( f_in );
+      if ( f_out != NULL )
+         fclose( f_out );
       return -1;
    }
 
    /* Copy data over. */
    do {
-      lr = fread( buf, 1, sizeof(buf), f_in );
-      if (ferror(f_in))
+      lr = fread( buf, 1, sizeof( buf ), f_in );
+      if ( ferror( f_in ) )
          goto err;
-      else if (!lr) {
-         if (feof(f_in))
+      else if ( !lr ) {
+         if ( feof( f_in ) )
             break;
          goto err;
       }
 
       lw = fwrite( buf, 1, lr, f_out );
-      if (ferror(f_out) || (lr != lw))
+      if ( ferror( f_out ) || ( lr != lw ) )
          goto err;
-   } while (lr > 0);
+   } while ( lr > 0 );
 
    /* Close files. */
    fclose( f_in );
@@ -410,7 +424,8 @@ int nfile_copyIfExists( const char* file1, const char* file2 )
    return 0;
 
 err:
-   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
+   WARN( _( "Failure to copy '%s' to '%s': %s" ), file1, file2,
+         strerror( errno ) );
    fclose( f_in );
    fclose( f_out );
 
@@ -426,11 +441,11 @@ err:
  */
 char *nfile_readFile( size_t *filesize, const char *path )
 {
-   int n;
-   char *buf;
-   FILE *file;
-   int len;
-   size_t pos;
+   int         n;
+   char       *buf;
+   FILE       *file;
+   int         len;
+   size_t      pos;
    struct stat path_stat;
 
    if ( path == NULL ) {
@@ -439,13 +454,15 @@ char *nfile_readFile( size_t *filesize, const char *path )
    }
 
    if ( stat( path, &path_stat ) ) {
-      WARN( _( "Error occurred while opening '%s': %s" ), path, strerror( errno ) );
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            strerror( errno ) );
       *filesize = 0;
       return NULL;
    }
 
    if ( !S_ISREG( path_stat.st_mode ) ) {
-      WARN( _( "Error occurred while opening '%s': It is not a regular file" ), path );
+      WARN( _( "Error occurred while opening '%s': It is not a regular file" ),
+            path );
       *filesize = 0;
       return NULL;
    }
@@ -453,31 +470,34 @@ char *nfile_readFile( size_t *filesize, const char *path )
    /* Open file. */
    file = fopen( path, "rb" );
    if ( file == NULL ) {
-      WARN( _( "Error occurred while opening '%s': %s" ), path, strerror( errno ) );
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            strerror( errno ) );
       *filesize = 0;
       return NULL;
    }
 
    /* Get file size. */
    if ( fseek( file, 0L, SEEK_END ) == -1 ) {
-      WARN( _( "Error occurred while seeking '%s': %s" ), path, strerror( errno ) );
+      WARN( _( "Error occurred while seeking '%s': %s" ), path,
+            strerror( errno ) );
       fclose( file );
       *filesize = 0;
       return NULL;
    }
    len = ftell( file );
    if ( fseek( file, 0L, SEEK_SET ) == -1 ) {
-      WARN( _( "Error occurred while seeking '%s': %s" ), path, strerror( errno ) );
+      WARN( _( "Error occurred while seeking '%s': %s" ), path,
+            strerror( errno ) );
       fclose( file );
       *filesize = 0;
       return NULL;
    }
 
    /* Allocate buffer. */
-   buf = malloc( len+1 );
-   if (buf == NULL) {
-      WARN(_("Out of Memory"));
-      fclose(file);
+   buf = malloc( len + 1 );
+   if ( buf == NULL ) {
+      WARN( _( "Out of Memory" ) );
+      fclose( file );
       *filesize = 0;
       return NULL;
    }
@@ -486,19 +506,20 @@ char *nfile_readFile( size_t *filesize, const char *path )
    /* Read the file. */
    n = 0;
    while ( n < len ) {
-      pos = fread( &buf[ n ], 1, len - n, file );
+      pos = fread( &buf[n], 1, len - n, file );
       if ( pos <= 0 ) {
-         WARN( _( "Error occurred while reading '%s': %s" ), path, strerror( errno ) );
+         WARN( _( "Error occurred while reading '%s': %s" ), path,
+               strerror( errno ) );
          fclose( file );
          *filesize = 0;
-         free(buf);
+         free( buf );
          return NULL;
       }
       n += pos;
    }
 
    /* Close the file. */
-   fclose(file);
+   fclose( file );
 
    *filesize = len;
    return buf;
@@ -513,7 +534,7 @@ int nfile_touch( const char *path )
 {
    FILE *f;
 
-   if (path == NULL)
+   if ( path == NULL )
       return -1;
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
@@ -523,7 +544,7 @@ int nfile_touch( const char *path )
       return -1;
    }
 
-   fclose(f);
+   fclose( f );
    return 0;
 }
 
@@ -538,7 +559,7 @@ int nfile_touch( const char *path )
 int nfile_writeFile( const char *data, size_t len, const char *path )
 {
    size_t n;
-   FILE *file;
+   FILE  *file;
    size_t pos;
 
    if ( path == NULL )
@@ -547,16 +568,18 @@ int nfile_writeFile( const char *data, size_t len, const char *path )
    /* Open file. */
    file = fopen( path, "wb" );
    if ( file == NULL ) {
-      WARN( _( "Error occurred while opening '%s': %s" ), path, strerror( errno ) );
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            strerror( errno ) );
       return -1;
    }
 
    /* Write the file. */
    n = 0;
    while ( n < len ) {
-      pos = fwrite( &data[ n ], 1, len - n, file );
+      pos = fwrite( &data[n], 1, len - n, file );
       if ( pos <= 0 ) {
-         WARN( _( "Error occurred while writing '%s': %s" ), path, strerror( errno ) );
+         WARN( _( "Error occurred while writing '%s': %s" ), path,
+               strerror( errno ) );
          fclose( file ); /* don't care about further errors */
          return -1;
       }
@@ -565,7 +588,8 @@ int nfile_writeFile( const char *data, size_t len, const char *path )
 
    /* Close the file. */
    if ( fclose( file ) == EOF ) {
-      WARN( _( "Error occurred while closing '%s': %s" ), path, strerror( errno ) );
+      WARN( _( "Error occurred while closing '%s': %s" ), path,
+            strerror( errno ) );
       return -1;
    }
 
@@ -580,21 +604,22 @@ int nfile_writeFile( const char *data, size_t len, const char *path )
  */
 int nfile_isSeparator( uint32_t c )
 {
-   if (c == '/')
+   if ( c == '/' )
       return 1;
-#if WIN32
-   else if (c == '\\')
+#if __WIN32__
+   else if ( c == '\\' )
       return 1;
-#endif /* WIN32 */
+#endif /* __WIN32__ */
    return 0;
 }
 
-int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[static 1], ... )
+int _nfile_concatPaths( char buf[static 1], int maxLength,
+                        const char path[static 1], ... )
 {
-   char *bufPos;
-   char *bufEnd;
+   char       *bufPos;
+   char       *bufEnd;
    const char *section;
-   va_list ap;
+   va_list     ap;
 
    bufPos = buf;
    bufEnd = buf + maxLength;
@@ -603,8 +628,9 @@ int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[stati
 
 #if DEBUGGING
    if ( section == NULL )
-      WARN( _( "First argument to nfile_concatPaths was NULL. This is probably an error." ) );
-#endif
+      WARN( _( "First argument to nfile_concatPaths was NULL. This is probably "
+               "an error." ) );
+#endif /* DEBUGGING */
 
    do {
       // End of arg list?
@@ -613,8 +639,8 @@ int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[stati
 
       if ( bufPos > buf ) {
          // Make sure there's a path seperator.
-         if ( bufPos[ -1 ] != '/' ) {
-            bufPos[ 0 ] = '/';
+         if ( bufPos[-1] != '/' ) {
+            bufPos[0] = '/';
             bufPos += 1;
          }
          // But not too many path seperators.
@@ -629,7 +655,9 @@ int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[stati
 
       // Next path section
       section = va_arg( ap, char * );
-   } while ( bufPos-- < bufEnd ); // Rewind after compare so we're pointing at the NULL character.
+   } while (
+      bufPos-- <
+      bufEnd ); // Rewind after compare so we're pointing at the NULL character.
    va_end( ap );
 
    // Did we run out of space?
@@ -638,3 +666,197 @@ int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[stati
 
    return bufPos - buf;
 }
+
+/**
+ * @brief Simplifies the path removing things like ".." or consecutive "/".
+ *
+ *    @param path Path to simplify. Gets overwritten.
+ *    @return 0 on success.
+ */
+int nfile_simplifyPath( char path[static 1] )
+{
+   char **dirnames = array_create( char * );
+   char  *saveptr  = NULL;
+   size_t n        = strlen( path );
+   int    absolute = ( path[0] == '/' );
+   char  *token    = SDL_strtokr( path, "/", &saveptr );
+
+   while ( token != NULL ) {
+      /* Skip noop. */
+      if ( ( strcmp( token, "" ) == 0 ) || ( strcmp( token, "." ) == 0 ) ) {
+         token = SDL_strtokr( NULL, "/", &saveptr );
+         continue;
+      }
+
+      /* Go up if ".." */
+      if ( strcmp( token, ".." ) == 0 ) {
+         int dn = array_size( dirnames );
+         if ( dn > 0 ) {
+            free( dirnames[dn - 1] );
+            array_erase( &dirnames, &dirnames[dn - 1], &dirnames[dn] );
+         }
+      } else {
+         array_push_back( &dirnames, strdup( token ) );
+      }
+
+      /* On to the next one. */
+      token = SDL_strtokr( NULL, "/", &saveptr );
+   }
+
+   /* If nothing, we're empty. */
+   if ( array_size( dirnames ) <= 0 ) {
+      array_free( dirnames );
+      path[0] = '\0';
+      return 0;
+   }
+
+   /* Build back the path, assume 'path' is smaller than simplified one. */
+   size_t s = 0;
+   for ( int i = 0; i < array_size( dirnames ); i++ ) {
+      char *ds = dirnames[i];
+      if ( ( absolute || ( s > 0 ) ) && ( s < n ) )
+         path[s++] = '/';
+      for ( size_t j = 0; j < strlen( ds ); j++ )
+         if ( s < n )
+            path[s++] = ds[j];
+      free( ds );
+   }
+   path[s] = '\0';
+   array_free( dirnames );
+   return 0;
+}
+
+#if !SDL_VERSION_ATLEAST( 3, 0, 0 )
+#include "nfd.h"
+void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
+                             SDL_Window                 *window,
+                             const SDL_DialogFileFilter *filters,
+                             const char *default_location, SDL_bool allow_many )
+{
+   (void)allow_many;
+   (void)window;
+   char *filelist[2] = { NULL, NULL };
+
+   int n;
+   for ( n = 0; filters[n].name != NULL; n++ )
+      ;
+
+   nfdfilteritem_t *fitem = calloc( n, sizeof( nfdfilteritem_t ) );
+   for ( int i = 0; i < n; i++ ) {
+      fitem[i].name = filters[i].name;
+      fitem[i].spec = filters[i].pattern;
+   }
+
+   NFD_Init();
+
+   nfdchar_t  *outPath;
+   nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, default_location );
+   switch ( result ) {
+   case NFD_OKAY:
+      filelist[0] = outPath;
+      callback( userdata, (const char **)filelist, 0 );
+      NFD_FreePath( outPath );
+      break;
+
+   case NFD_CANCEL:
+      callback( userdata, (const char **)filelist, 0 );
+      break;
+
+   default:
+      SDL_SetError( "%s", NFD_GetError() );
+      callback( userdata, NULL, -1 );
+      break;
+   }
+
+   NFD_Quit();
+
+   free( fitem );
+}
+
+void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
+                               SDL_Window *window, const char *default_location,
+                               SDL_bool allow_many )
+{
+   (void)allow_many;
+   (void)window;
+   char *filelist[2] = { NULL, NULL };
+
+   NFD_Init();
+
+   nfdchar_t  *outPath;
+   nfdresult_t result = NFD_PickFolder( &outPath, default_location );
+   switch ( result ) {
+   case NFD_OKAY:
+      filelist[0] = outPath;
+      callback( userdata, (const char **)filelist, 0 );
+      NFD_FreePath( outPath );
+      break;
+
+   case NFD_CANCEL:
+      callback( userdata, (const char **)filelist, 0 );
+      break;
+
+   default:
+      SDL_SetError( "%s", NFD_GetError() );
+      callback( userdata, NULL, -1 );
+      break;
+   }
+
+   NFD_Quit();
+}
+
+void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
+                             SDL_Window                 *window,
+                             const SDL_DialogFileFilter *filters,
+                             const char                 *default_location )
+{
+   (void)window;
+   char *filelist[2] = { NULL, NULL };
+   char *tmp, *bname, *dname;
+
+   int n;
+   for ( n = 0; filters[n].name != NULL; n++ )
+      ;
+
+   nfdfilteritem_t *fitem = calloc( n, sizeof( nfdfilteritem_t ) );
+   for ( int i = 0; i < n; i++ ) {
+      fitem[i].name = filters[i].name;
+      fitem[i].spec = filters[i].pattern;
+   }
+
+   /* Get paths. */
+   tmp   = strdup( default_location );
+   dname = strdup( dirname( tmp ) );
+   free( tmp );
+   tmp   = strdup( default_location );
+   bname = strdup( basename( tmp ) );
+   free( tmp );
+
+   NFD_Init();
+
+   nfdchar_t  *outPath;
+   nfdresult_t result = NFD_SaveDialog( &outPath, fitem, n, dname, bname );
+   switch ( result ) {
+   case NFD_OKAY:
+      filelist[0] = outPath;
+      callback( userdata, (const char **)filelist, 0 );
+      NFD_FreePath( outPath );
+      break;
+
+   case NFD_CANCEL:
+      callback( userdata, (const char **)filelist, 0 );
+      break;
+
+   default:
+      SDL_SetError( "%s", NFD_GetError() );
+      callback( userdata, NULL, -1 );
+      break;
+   }
+
+   NFD_Quit();
+
+   free( dname );
+   free( bname );
+   free( fitem );
+}
+#endif /* ! SDL_VERSION_ATLEAST(3,0,0) */

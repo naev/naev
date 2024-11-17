@@ -2,17 +2,16 @@
 <ship name="Kestrel">
  <points>130</points>
  <base_type>Kestrel</base_type>
- <GFX size="125" sx="10" sy="10">kestrel</GFX>
- <GUI>brushed</GUI>
+ <gfx size="125" sx="10" sy="10">kestrel</gfx>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>3700000</price>
  <time_mod>1.3</time_mod>
-
  <trail_generator x="-23" y="28" h="2">nebula</trail_generator>
  <trail_generator x="-23" y="-28" h="2">nebula</trail_generator>
  <trail_generator x="-45" y="0" h="17" />
  <fabricator>Krain Industries</fabricator>
+ <faction>Independent</faction>
  <license>Heavy Combat Vessel</license>
  <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
  <health>
@@ -32,15 +31,14 @@
   <weapon size="large" x="-6" y="0" h="12" />
   <weapon size="medium" prop="fighter_bay" x="-24" y="-8" h="8" />
   <weapon size="medium" prop="fighter_bay" x="-24" y="8" h="8" />
-  <utility size="large" prop="systems">Unicorp PT-500 Core System</utility>
+  <utility size="large" prop="systems">Unicorp PT-440 Core System</utility>
   <utility size="large" prop="accessory" />
-  <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <structure size="large" prop="engines">Krain Remige Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
@@ -50,7 +48,7 @@
   <shield_mod>5</shield_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
-  <ew_hide>5</ew_hide>
+  <ew_hide>-5</ew_hide>
  </stats>
  <tags>
   <tag>standard</tag>

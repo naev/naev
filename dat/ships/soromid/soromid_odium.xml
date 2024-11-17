@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Odium">
+ <lua>soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
- <GFX>odium</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="72">odium</gfx>
+ <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>
  <price>1350000</price>
@@ -13,9 +13,10 @@
  <trail_generator x="-15" y="0" h="0">soromid</trail_generator>
  <trail_generator x="-10" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt;= 40</cond>
- <condstr>You need at least 40 reputation with the Soromid.</condstr>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 40</cond>
+ <condstr>You need at least 40% reputation with the Soromid.</condstr>
  <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
  <health>
   <armour>220</armour>
@@ -46,7 +47,7 @@
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>soromid</tag>

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Marauder">
+ <lua>soromid.lua</lua>
  <points>40</points>
  <base_type>Marauder</base_type>
- <GFX size="66">marauder</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="66">marauder</gfx>
+ <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Bomber">Bomber</class>
  <price>700000</price>
@@ -12,9 +12,10 @@
  <trail_generator x="7" y="8" h="0" always_under="1">soromid</trail_generator>
  <trail_generator x="7" y="-8" h="0" always_under="1">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt;= 30</cond>
- <condstr>You need at least 30 reputation with the Soromid.</condstr>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 30</cond>
+ <condstr>You need at least 30% reputation with the Soromid.</condstr>
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
  <health>
   <armour>45</armour>
@@ -36,8 +37,10 @@
   <utility size="small" prop="bio_organ" name="the_bite" />
   <utility size="small" prop="accessory" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
+  <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>

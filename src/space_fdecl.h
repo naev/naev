@@ -5,5 +5,5 @@
 
 /* Forward declarations. */
 typedef struct StarSystem_ StarSystem;
-typedef struct Spob_ Spob;
-typedef struct JumpPoint_ JumpPoint;
+typedef struct Spob_       Spob;
+typedef struct JumpPoint_  JumpPoint;

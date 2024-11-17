@@ -10,10 +10,10 @@
   <gfx_store>jammer1.webp</gfx_store>
   <limit>jammer</limit>
  </general>
- <specific type="modification" group="6">
+ <specific type="modification">
   <active cooldown="5" />
-  <energy_loss>50</energy_loss>
-  <ew_evade>30</ew_evade>
-  <jam_chance>80</jam_chance>
+  <energy_regen_malus>50</energy_regen_malus>
+  <ew_signature>-25</ew_signature>
+  <jam_chance>100</jam_chance>
  </specific>
 </outfit>

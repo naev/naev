@@ -23,7 +23,7 @@
 local pir = require "common.pirate"
 require "missions.neutral.commodity_run"
 
--- luacheck: globals cargo_land commchoices (from base mission neutral.commodity_run)
+-- luacheck: globals cargo_land (inherited function)
 
 mem.misn_title = _("Exploit the Demand for {cargo}")
 mem.misn_desc = _("Pirates on {pnt} have been demanding a lot of {cargo} lately, and that's driving the price up. If you find some of it and bring it back, you can make some good money off of them.")

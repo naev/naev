@@ -11,24 +11,23 @@ local atk_fighter = {}
 -- Mainly targets small fighters.
 --]]
 function atk_fighter.think( target, _si )
-   local enemy    = ai.getenemy_size(0, 200)
-   local nearest_enemy = ai.getenemy()
-   local dist     = ai.dist(target)
+   -- Lower chance to not change targets
+   if rnd.rnd() < 0.3 then
+      return
+   end
 
-   local range = ai.getweaprange(3, 0)
-   -- Get new target if it's closer
-   --prioritize targets within the size limit
+   -- Don't switch targets if close to current one
+   local dist  = ai.dist( target )
+   local range = atk.primary_range()
+   if dist < range * mem.atk_changetarget then
+      return
+   end
+
+   -- Prioritize preferred target
+   local enemy = atk.preferred_enemy( atk.prefer_capship )
    if enemy ~= target and enemy ~= nil then
-      -- Shouldn't switch targets if close
-      if dist > range * mem.atk_changetarget then
-         ai.pushtask("attack", enemy )
-      end
-
-   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
-      -- Shouldn't switch targets if close
-      if dist > range * mem.atk_changetarget then
-         ai.pushtask("attack", nearest_enemy )
-      end
+      ai.pushtask("attack", enemy )
+      return
    end
 end
 
@@ -49,7 +48,7 @@ function atk_fighter.atk( target, dokill )
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)
+   local range = atk.primary_range()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
@@ -57,7 +56,7 @@ function atk_fighter.atk( target, dokill )
 
    -- Otherwise melee
    else
-      if target:stats().mass < 200 then
+      if target:mass() < 200 then
          atk.space_sup( target, dist )
       else
          atk.flyby( target, dist )

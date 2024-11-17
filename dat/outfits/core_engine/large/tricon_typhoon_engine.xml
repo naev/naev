@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Tricon Typhoon Engine">
  <general>
+  <shortname>T. Typhoon Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
@@ -11,11 +12,11 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>80</energy_regen_malus>
-  <engine_limit>3500</engine_limit>
-  <fuel>1200</fuel>
+  <energy_regen_malus>32</energy_regen_malus>
+  <engine_limit>2700</engine_limit>
+  <fuel>2000</fuel>
   <speed>115</speed>
-  <thrust>65</thrust>
+  <accel>65</accel>
   <turn>75</turn>
  </specific>
 </outfit>

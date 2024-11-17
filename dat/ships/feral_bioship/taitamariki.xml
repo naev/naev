@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Taitamariki">
+ <lua>soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
- <GFX>odium</GFX>
+ <gfx size="76">odium_feral</gfx>
  <rarity>5</rarity>
- <GUI>brushed</GUI>
  <flags>
   <noplayer/>
  </flags>
@@ -16,6 +16,7 @@
  <trail_generator x="-15" y="0" h="0">soromid</trail_generator>
  <trail_generator x="-10" y="-8" h="0">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <description>Still to do...</description>
  <health>
   <armour>220</armour>
@@ -31,14 +32,14 @@
   <weapon size="medium" prop="bio_weapon" name="weap2" x="4" y="2" h="-5">Talon Organ III</weapon>
   <weapon size="medium" prop="bio_weapon" name="weap3" x="4" y="-2" h="-5">Talon Organ III</weapon>
   <utility size="medium" prop="bio_systems" name="brain">Mediocre Cerebrum II</utility>
-  <utility size="medium" prop="bio_organ" name="the_bite" />
+  <utility size="medium" prop="bio_organ" name="the_bite">The Bite</utility>
   <utility size="small" prop="bio_organ" name="adrenal_gland" />
   <utility size="medium" prop="accessory" />
   <structure size="medium" prop="bio_engines" name="genedrive">Mediocris Gene Drive III</structure>
   <structure size="medium" prop="bio_hull" name="shell">Mediocris Cortex II</structure>
  </slots>
  <stats>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
  </stats>
  <tags>
   <tag>noplayer</tag>

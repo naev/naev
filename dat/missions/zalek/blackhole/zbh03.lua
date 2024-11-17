@@ -23,8 +23,6 @@ local zbh = require "common.zalek_blackhole"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
 
--- luacheck: globals land enter heartbeat (Hook functions passed by name)
-
 local reward = zbh.rewards.zbh03
 
 local mainpnt, mainsys = spob.getS("Research Post Sigma-13")
@@ -93,7 +91,7 @@ He chuckles slightly.]]))
 
    -- mission details
    misn.setTitle( _("Black Hole Scouting") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Patrol the {sys} system and report your observations to Zach at {pnt}."), {pnt=mainpnt, sys=mainsys}) )
 
    mem.mrk = misn.markerAdd( mainsys )
@@ -108,8 +106,16 @@ He chuckles slightly.]]))
    hook.enter( "enter" )
 end
 
+local heartbeat_state = 0
 function land ()
    if mem.state~=2 or spob.cur() ~= mainpnt then
+      if heartbeat_state > 0 then
+         lmisn.fail(_("You were supposed to eliminate all hostiles!"))
+      end
+      if mem.hook_heartbeat then
+         hook.rm( mem.hook_heartbeat )
+         mem.hook_heartbeat = nil
+      end
       return
    end
 
@@ -126,14 +132,13 @@ He rubs his temples.]]))
    vn.done( zbh.zach.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh03)
+   faction.hit("Za'lek", zbh.fctmod.zbh03)
    player.pay( reward )
    zbh.log(fmt.f(_("During a patrol of the {sys} system, you were attacked by some unidentified Za'lek forces. You were able to destroy them, but have not yet found out what is going on at {pnt}."),{sys=mainsys,pnt=mainpnt}))
    misn.finish(true)
 end
 
 -- Set up the enemies
-local heartbeat_state = 0
 function enter ()
    if system.cur() ~= mainsys then
       if mem.state==1 and heartbeat_state > 0 then
@@ -142,7 +147,7 @@ function enter ()
       return
    end
 
-   hook.timer( 90, "heartbeat" )
+   mem.hook_heartbeat = hook.timer( 90, "heartbeat" )
 end
 
 local badguys

@@ -18,10 +18,8 @@
 
 local fmt = require "format"
 local fleet = require "fleet"
-local flf = require "missions.flf.flf_common"
-
--- luacheck: globals enter land_flf leave (shared with derived mission flf_dvk07)
--- luacheck: globals pilot_death_rogue timer_lateFLF (Hook functions passed by name)
+local flf = require "common.flf"
+local vn = require "vn"
 
 local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
 local rogue_spawnFLF, rogue_spawnRogue -- Forward-declared functions
@@ -80,8 +78,8 @@ function create ()
    end
 
    mem.credits = mem.ships * 30e3 - mem.flfships * 1e3
-   mem.credits = mem.credits * system.cur():jumpDist( mem.missys, true ) / 3
-   mem.credits = mem.credits + rnd.sigma() * 8e3
+   mem.credits = mem.credits * (system.cur():jumpDist( mem.missys, true )+1) / 3
+   mem.credits = mem.credits * (1 + 0.2*rnd.sigma())
 
    local desc = setDescription()
 
@@ -91,7 +89,7 @@ function create ()
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
    misn.setDesc( desc )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
@@ -168,8 +166,17 @@ function land_flf ()
    leave()
    mem.last_system = spob.cur()
    if spob.cur():faction() == faction.get("FLF") then
-      tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
-      player.pay( mem.credits )
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na( text[ rnd.rnd(1,#text) ] )
+      vn.sfxMoney()
+      vn.func( function ()
+         player.pay( mem.credits )
+      end )
+      vn.na(fmt.reward(mem.credits))
+      vn.run()
+
       misn.finish( true )
    end
 end
@@ -181,8 +188,8 @@ function rogue_spawnRogue( n )
    pilot.toggleSpawn( false )
 
    if rnd.rnd() < 0.05 then n = n + 1 end
-   local shipnames = { "Vendetta", "Lancelot" }
-   local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Lancelot") }
+   local shipnames = { "Vendetta", "Tristan" }
+   local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Tristan") }
    local frogue = faction.dynAdd( "FLF", "Rogue FLF", _("Rogue FLF"), {clear_allies=true, clear_enemies=true})
    frogue:dynEnemy("FLF")
 
@@ -204,9 +211,9 @@ end
 -- Spawn n FLF ships at/from the location param.
 function rogue_spawnFLF( n, param )
    if rnd.rnd() < 0.25 then n = n - 1 end
-   local lancelots = rnd.rnd( n )
-   fleetFLF = fleet.add( lancelots, "Lancelot", "FLF", param, nil, {ai="escort_player"} )
-   local vendetta_fleet = fleet.add( n - lancelots, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
+   local tristans = rnd.rnd( n )
+   fleetFLF = fleet.add( tristans, "Tristan", "FLF", param, nil, {ai="escort_player"} )
+   local vendetta_fleet = fleet.add( n - tristans, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
    for i, j in ipairs( vendetta_fleet ) do
       fleetFLF[ #fleetFLF + 1 ] = j
    end

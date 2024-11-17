@@ -7,6 +7,8 @@
 -- We use the default background too!
 local starfield = require "bkg.lib.starfield"
 local lg = require 'love.graphics'
+local taiomi = require "common.taiomi"
+local class = require "class"
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
@@ -18,23 +20,58 @@ local nw2, nh2 = nw/2, nh/2
 local buffer, tw, th, fgparts, bgparts, wing, pos
 
 function background ()
+   -- Check to see taiomi progress
+   local lastfight = false
+   if player.pilot():exists() then
+      if taiomi.progress() == 9 and taiomi.inprogress() then
+         lastfight = true
+      end
+   end
+
    -- Create particles and buffer
-   local density = 250*250
+   local density = 400
+   if lastfight then
+      density = 600
+   end
    buffer = 200
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer
-   local nparts = math.floor( tw * th / density + 0.5 )
+   local nparts = math.floor( tw * th / math.pow(density,2) + 0.5 )
+
+   -- New class that randomly samples from ship images
+   local sImage = class.inheritsFrom( lg.Image )
+   sImage._type = "ShipImage"
+   function sImage.newImage( s )
+      local t = sImage.new()
+      t.ship = s
+      t.t = {}
+      for i=1,16 do
+         local c = s:render( rnd.angle(), 0, rnd.angle() )
+         table.insert( t.t, c:getTex() )
+      end
+      t.tex = t.t[1]
+      t.w, t.h = t.tex:dim()
+      t.s = 1
+      return t
+   end
+   function sImage:draw( id, ... )
+      self.tex = self.t[id]
+      lg.Image.draw( self, ... )
+   end
+   function sImage:id()
+      return rnd.rnd( 1, #self.t )
+   end
 
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 5, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
+      { n = 3, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
       { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
       -- Neutral
@@ -45,20 +82,20 @@ function background ()
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_phalanx1.webp' ), s = 6 },
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_shark1.webp' ), s = 6 },
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_vendetta1.webp' ), s = 6 },
-      { i = lg.newImage( 'gfx/ship/quicksilver/quicksilver.webp' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/rhino/rhino.webp' ), s = 10 },
+      { n = 1, i = sImage.newImage( ship.get("Quicksilver") ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get("Rhino") ), s = 1 },
       -- Pirate
-      { n = 3, i = lg.newImage( 'gfx/ship/hyena/hyena.webp' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/shark/shark_pirate.webp' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/vendetta/vendetta_pirate.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/ancestor/ancestor_pirate.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/phalanx/phalanx_pirate.webp' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/rhino/rhino_pirate.webp' ), s = 10 },
+      { n = 3, i = sImage.newImage( ship.get('Hyena' ) ), s = 1 },
+      { n = 2, i = sImage.newImage( ship.get('Pirate Shark' ) ), s = 1 },
+      { n = 2, i = sImage.newImage( ship.get('Pirate Vendetta' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Pirate Ancestor' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Pirate Phalanx' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Pirate Rhino' ) ), s = 1 },
       -- Empire
-      { n = 2, i = lg.newImage( 'gfx/ship/lancelot/lancelot_empire.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/shark/shark_empire.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/admonisher/admonisher_empire.webp' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/pacifier/pacifier_empire.webp' ), s = 10 },
+      { n = 2, i = sImage.newImage( ship.get('Empire Lancelot' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Empire Shark' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Empire Admonisher' ) ), s = 1 },
+      { n = 1, i = sImage.newImage( ship.get('Empire Pacifier' ) ), s = 1 },
    }
    local images = {}
    for k,v in ipairs(images_raw) do
@@ -78,18 +115,23 @@ function background ()
    end
 
    local function parts_create( nodebris )
-      local part = {}
-      part.x = tw*rnd.rnd() - buffer
-      part.y = th*rnd.rnd() - buffer
+      local part = {
+         x = tw*rnd.rnd() - buffer,
+         y = th*rnd.rnd() - buffer,
+      }
       if nodebris then
          part.i = images_nodebris[ rnd.rnd( 1, #images_nodebris ) ]
       else
          part.i = images[ rnd.rnd( 1, #images ) ]
       end
       local img = part.i
-      local sx = rnd.rnd(1,img.s)-1
-      local sy = rnd.rnd(1,img.s)-1
-      part.q = lg.newQuad( sx*img.w, sy*img.h, img.w, img.h, img.i )
+      if img.i._type=="ShipImage" then
+         part.id = img.i:id()
+      else
+         local sx = rnd.rnd(1,img.s)-1
+         local sy = rnd.rnd(1,img.s)-1
+         part.q = lg.newQuad( sx*img.w, sy*img.h, img.w, img.h, img.i )
+      end
       part.w = img.w
       part.h = img.h
       return part
@@ -102,7 +144,7 @@ function background ()
    -- Create background
    bgparts = {}
    for i = 1,nparts*3 do
-      local part = parts_create()
+      local part = parts_create( true )
       bgparts[i] = part
       part.s = 1 / (2 + 5*rnd.rnd())
    end
@@ -111,7 +153,7 @@ function background ()
    -- Create foreground
    fgparts = {}
    for i = 1,nparts do
-      local part = parts_create()
+      local part = parts_create( false )
       fgparts[i] = part
       part.s = 1 + rnd.rnd()
    end
@@ -126,7 +168,7 @@ function background ()
    }
 
    -- Set up hooks
-   pos = camera.get() -- Computes
+   pos = camera.pos() -- Computes
 
    -- Use cache
    local cache = naev.cache()
@@ -156,7 +198,7 @@ function background ()
       local oldcanvas = lg.getCanvas()
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
-      lg.setColor( g, g, g, 1 )
+      lg.setColour( g, g, g, 1 )
       local angle = math.rad( 20 + 10 * rnd.rnd() )
       for i = 1,n do
          local p = parts_create( true )
@@ -165,7 +207,11 @@ function background ()
          local y = 0.7 * naev.rnd.threesigma()
          p.x = w*(x+3) / 6
          p.y = h*(y+3) / 6
-         lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
+         if p.q then
+            p.i.i:draw( p.q,  p.x, p.y, 0, p.s )
+         else
+            p.i.i:draw( p.id, p.x, p.y, 0, p.s )
+         end
       end
       lg.setCanvas(oldcanvas)
       naev.bkg.image( cvs.t.tex, 0, 0, move, scale, angle )
@@ -175,16 +221,24 @@ function background ()
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   add_bkg( 0, 9e3, 0.03, 1.5, 0.6, 6.7, 3 )
-   add_bkg( 1, 6e3, 0.05, 1.5, 0.7, 4.0, 3 )
-   add_bkg( 2, 3e3, 0.08, 1.5, 0.8, 2.5, 3 )
+   local a = 0.5
+   if lastfight then
+      a = 0.4
+   end
+   add_bkg( 0, 9e3, 0.03, 1.5, a+0.0, 6.7, 3 )
+   add_bkg( 1, 6e3, 0.05, 1.5, a+0.1, 4.0, 3 )
+   add_bkg( 2, 3e3, 0.08, 1.5, a+0.2, 2.5, 3 )
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
+
+   -- Almost no ambient
+   gfx.lightAmbient( 0 )
+   gfx.lightIntensity( 0.8 * gfx.lightIntensityGet() )
 end
 local function update ()
    -- Calculate player motion
-   local npos = camera.get()
+   local npos = camera.pos()
    local z = camera.getZoom()
    local diff = npos - pos
    local dx, dy = diff:get()
@@ -232,7 +286,11 @@ renderbg = starfield.render
 
 local function draw_part( p, s, z )
    if p.r then
-      lg.draw( p.i.i, p.q, p.rx, p.ry, 0, p.s * s / z )
+      if p.q then
+         p.i.i:draw( p.q,  p.x, p.y, 0, p.s * s / z )
+      else
+         p.i.i:draw( p.id, p.x, p.y, 0, p.s * s / z )
+      end
    end
 end
 function renderfg ()
@@ -240,14 +298,14 @@ function renderfg ()
    update()
 
    local z = camera.getZoom()
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    for k,p in ipairs( bgparts ) do
       draw_part( p, 2, z )
    end
 end
 function renderov ()
    local z = camera.getZoom()
-   lg.setColor( 1, 1, 1, 1 )
+   lg.setColour( 1, 1, 1, 1 )
    for k,p in ipairs( fgparts ) do
       draw_part( p, 1, z )
    end

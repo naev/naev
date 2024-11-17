@@ -2,9 +2,7 @@
 <ship name="Sindbad">
  <points>1000</points>
  <base_type>Sindbad</base_type>
- <gfx_space sx="1" sy="1">spob/space/000.webp</gfx_space>
- <gfx_comm>spob/exterior/station00.webp</gfx_comm>
- <GUI>brushed</GUI>
+ <gfx sx="1" sy="1" size="150" polygon="000.webp" comm="spob/exterior/station00.webp" noengine="1">/gfx/spob/space/000.webp</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
@@ -13,7 +11,7 @@
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
  <mission />
  <movement>
-  <thrust>0.01</thrust>
+  <accel>0.01</accel>
   <turn>100</turn>
   <speed>0.01</speed>
  </movement>
@@ -43,11 +41,10 @@
   <weapon size="large" x="0" y="-40" h="5" />
   <weapon size="large" x="0" y="0" h="30" />
   <weapon size="large" x="0" y="0" h="30" />
-  <utility size="large" prop="systems">Dummy Systems</utility>
-  <structure size="large" prop="engines">Dummy Engine</structure>
-  <structure size="large" prop="hull">Dummy Plating</structure>
  </slots>
  <tags>
   <tag>noplayer</tag>
+  <tag>nocores</tag>
+  <tag>nonaevpedia</tag>
  </tags>
 </ship>

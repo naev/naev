@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Gliese III">
+ <pos x="2489.078042" y="743.008371"/>
+ <GFX>
+  <space>moon-C01.webp</space>
+  <exterior>mining5.webp</exterior>
+ </GFX>
+ <general>
+  <class>C</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

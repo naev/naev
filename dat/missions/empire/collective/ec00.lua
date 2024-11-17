@@ -3,11 +3,12 @@
 <mission name="Collective Scouting">
  <unique />
  <priority>2</priority>
- <cond>var.peek("es_cargo") == true and faction.playerStanding("Empire") &gt; 5</cond>
+ <cond>var.peek("es_cargo") == true and faction.reputationGlobal("Empire") &gt; 5</cond>
  <chance>40</chance>
  <location>Bar</location>
  <done>Empire Shipping 3</done>
- <spob>Omega Station</spob>
+ <spob>Omega Enclave</spob>
+ <chapter>[^0]</chapter>
  <notes>
   <campaign>Collective</campaign>
  </notes>
@@ -32,10 +33,9 @@ local emp = require "common.empire"
 -- Mission constants
 local misn_nearby = system.get("Acheron")
 local misn_target = system.get("Merisi")
-local misn_base, misn_base_sys = spob.getS("Omega Station")
+local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 
 local p -- Non-persistent state
--- luacheck: globals enter idle jumpout kill land spotdrone (Hook functions passed by name)
 
 function create ()
     local missys = {misn_target}
@@ -63,7 +63,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Collective Scout"))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Find a scout last seen in the {sys} system"), {sys=misn_nearby}))
 
    -- Flavour text and mini-briefing
@@ -113,6 +113,9 @@ end
 
 function spotdrone()
    p = pilot.add( "Drone", "Collective", vec2.new(8000, -20000), _("Collective Drone"), {ai="scout"} )
+   local m = p:memory()
+   m.comm_no = _("No response.")
+   m.doscans = false
    p:control()
    p:setHilight(true)
    idle()
@@ -134,9 +137,9 @@ function land()
    if mem.misn_stage == 1 and  pnt == misn_base then
       tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
     "Well it seems like the drone has some strange fixation on {sys}. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]), {sys=misn_target}) )
-      faction.modPlayerSingle("Empire",5)
+      faction.hit("Empire",5)
       player.pay(mem.credits)
-      emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Station for your next mission.]]) )
+      emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Enclave for your next mission.]]) )
       misn.finish(true)
    end
 end

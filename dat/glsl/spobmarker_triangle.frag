@@ -7,4 +7,4 @@ float marker_func( vec2 pos, float rad )
    return abs( sdTriangleEquilateral( pos / M_SQRT3_2 / rad ) * rad * M_SQRT3_2 );
 }
 
-#include "spobmarker_base.frag"
+#include "spobmarker_base.glsl"

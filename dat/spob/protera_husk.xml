@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Protera Husk">
+ <lua>protera_husk.lua</lua>
+ <pos x="7830.104028" y="-8539.559224"/>
+ <GFX>
+  <space>X00.webp</space>
+  <exterior>mining4.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Lost</faction>
+  <base>500.000000</base>
+  <bonus>0.000000</bonus>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>5000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <!--<bar/>-->
+   <!--<outfits/>-->
+   <blackmarket/>
+   <nomissionspawn/>
+  </services>
+  <commodities/>
+  <description>Protera Husk seems to be the remains of a once populous city-world that took a turn for the worst in the aftermath of the Incident. The planet seems to have lost most of it's sphericity and has an extremely eccentric orbit. While this would usually be a major problem for any celestial body, it seems to be the least of the problems Protera Husk is facing, with radiation readings off the charts and endless destruction and carnage all over.
+
+The only place to land seems to be the urban remains of the elongated side of the planet. The rest of the planet is covered in a endless layer of ruins and decay. As your ship approaches, you pick up a surprising amount of lifeforms, it is best to be careful, you don't think you would be given a warm welcome by the natives. You keep a low profile on your entry to the feeble atmosphere, hoping to confuse your ship signature with the orbital rubbish.
+
+There is no functioning landing port, and you have to land among the rubble. At least it seems like you can refuel by siphoning from the remains of a fuel tank. You probably shouldn't overstay your welcome though.</description>
+ </general>
+ <tech>
+  <item>Lost Tech</item>
+ </tech>
+ <tags>
+  <tag>criminal</tag>
+  <tag>nonews</tag>
+  <tag>nonpc</tag>
+  <tag>ruined</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>

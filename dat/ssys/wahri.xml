@@ -2,36 +2,27 @@
 <ssys name="Wahri">
  <general>
   <radius>19000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-77.953704" y="326.787037"/>
+ <pos x="178.752470" y="710.934337"/>
  <spobs>
   <spob>Dono</spob>
-  <spob>Raptor Station</spob>
+  <spob>Raptor Nest</spob>
   <spob>Tarrum</spob>
   <spob>Wahri III</spob>
   <spob>Wahri IV</spob>
  </spobs>
  <jumps>
-  <jump target="Daled">
+  <jump target="Diadem">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Forlat">
+  <jump target="Moordra">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Kelvos">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Octantis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Regulus">
+  <jump target="Muran">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

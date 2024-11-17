@@ -39,6 +39,7 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
 local lmisn = require "lmisn"
+local cinema = require "cinema"
 
 local maikki_portrait = minerva.maikki.portrait
 
@@ -46,7 +47,7 @@ local oldman_portrait = "old_man.png"
 local oldman_image = "old_man.png"
 
 local mainsys = system.get("Limbo")
-local searchsys = system.get("Doeston")
+local searchspob, searchsys = spob.getS("Cerberus Outpost")
 local cutscenesys = system.get("Arandon")
 local stealthsys = system.get("Zerantix")
 -- Mission states:
@@ -61,8 +62,6 @@ local stealthsys = system.get("Zerantix")
 mem.misn_state = nil
 local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
 local scavengers_encounter -- Forward-declared functions
--- luacheck: globals board_wreck cutscene_hail cutscene_timeout cutscene_timer enter generate_npc scav_attacked stealthbroadcast stealthheartbeat stealthstart stealthstartanimation wreckcutscene (Hook functions passed by name)
--- luacheck: globals approach_maikki approach_oldman approach_scavengers (NPC functions passed by name)
 
 function create ()
    if not misn.claim( {cutscenesys, stealthsys} ) then
@@ -96,7 +95,7 @@ end
 
 
 function generate_npc ()
-   if spob.cur() == spob.get("Cerberus") then
+   if spob.cur() == searchspob then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if mem.misn_state==3 or mem.misn_state==4 or mem.bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
@@ -204,13 +203,13 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    maikki(_([["My mother died without telling me, but, after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
    maikki(_([["Apparently, one day he went into the nebula with his business partner Mireia and they were never seen again. All attempts to find them failed."]]))
    maikki(_([["Most people believe they are dead, but I think he was kidnapped and is being held here. Maybe he hit his head and even forgot who he was!"]]))
-   maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus bar in Doeston. Maybe there is a hint there."]]))
+   maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus Outpost bar in Doeston. Maybe there is a hint there."]]))
    vn.func( function ()
       if mem.misn_state < 0 then
          mem.misn_state = 0
          misn.osdCreate( _("Finding Maikki's Father"),
-            { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
-         mem.misn_marker = misn.markerAdd( searchsys, "low" )
+            { fmt.f(_("Look around {spb} ({sys} system)"), {spb=searchspob, sys=searchsys}) } )
+         mem.misn_marker = misn.markerAdd( searchspob, "low" )
          minerva.log.maikki(_("You were told her father could be near Doeston.") )
       end
    end )
@@ -318,7 +317,7 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "scavengers" )
-   om(_([["It's not uncommon to see scavengers around here. Although there are no where near as many as there were in Kex's time."]]))
+   om(_([["It's not uncommon to see scavengers around here. Although there are nowhere near as many as there were in Kex's time."]]))
    om(_([[He takes a long sip, gets close and whispers.
 "You wouldn't suppose they found something interesting?"]]))
    om(_([["Suppose not. However, you could ask them over there. Those two look like they could be scavengers."]]))
@@ -355,9 +354,9 @@ function approach_scavengers ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( minerva.scavengera.name,
-         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
+         { image=minerva.scavengera.image, colour=minerva.scavengera.colour, pos="left" } )
    local scavB = vn.newCharacter( minerva.scavengerb.name,
-         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
+         { image=minerva.scavengerb.image, colour=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
 
    if mem.bribed_scavengers==true then
@@ -371,7 +370,7 @@ function approach_scavengers ()
    if mem.misn_state==4 then
       -- Already got mission, just give player a refresher
       scavB(_([["Aren't you drinking too much? Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
-      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
+      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid." -- codespell:ignore tooo
 He takes another long swig of his drink and burps.]]))
    else
       -- Blabber target to player
@@ -478,7 +477,7 @@ function cutscene_timer ()
          mem.cuttimeout = nil
       end
       if mem.sysmarker then
-         system.mrkRm( mem.sysmarker )
+         system.markerRm( mem.sysmarker )
          mem.sysmarker = nil
       end
    else
@@ -493,7 +492,7 @@ end
 
 function cutscene_timeout ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
-   mem.sysmarker = system.mrkAdd( pscavB:pos(), _("Curious Signal") )
+   mem.sysmarker = system.markerAdd( pscavB:pos(), _("Curious Signal") )
    mem.cuttimeout = nil
 end
 
@@ -504,7 +503,7 @@ function cutscene_hail ()
    vn.scene()
    local scavB = vn.newCharacter( _("Scavenger"),
          { image=minerva.scavengerb.image,
-         color=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0} } )
+         colour=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0} } )
    vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
@@ -556,7 +555,7 @@ function stealthstart ()
 
    -- Start the cinematics
    mem.stealthanimation = 0
-   player.cinematics( true )
+   cinema.on()
    camera.set( waypoints[1] )
    hook.timer( 1.0, "stealthstartanimation" )
 end
@@ -581,7 +580,7 @@ function stealthstartanimation ()
       hook.timer( 4.0, "stealthstartanimation" )
    elseif mem.stealthanimation==6 then
       -- Back to player
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       player.pilot():control(false)
       mem.stealthtarget = 0
@@ -631,10 +630,10 @@ end
 function stealthheartbeat ()
    local pp = player.pilot()
    local dist= math.min ( pscavA:pos():dist(pp:pos()), pscavB:pos():dist(pp:pos()) )
-   if not pp:flags("stealth") and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
+   if not pp:flags("stealth") and dist < 1000 * pp:shipstat("ew_hide",true) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg( _("#rYou are about to be discovered!"), true )
+         player.msg( "#r".._("You are about to be discovered!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
@@ -644,14 +643,14 @@ function stealthheartbeat ()
             p:taskClear()
             p:hyperspace( cutscenesys )
          end
-         player.msg( _("#rYou have been detected! Stealth failed!"), true )
+         player.msg( "#r".._("You have been detected! Stealth failed!"), true )
          hook.rm( stealthbroadcasthook )
          return
       end
-   elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
+   elseif dist > 2000 * pp:shipstat("ew_detect",true) then
       if mem.stealthfailing==nil then
          mem.stealthfailing = 0
-         player.msg( _("#rYou are about to lose track of the scavengers!!"), true )
+         player.msg( "#r".._("You are about to lose track of the scavengers!!"), true )
       end
       mem.stealthfailing = mem.stealthfailing+1
       if mem.stealthfailing > 6 then
@@ -660,7 +659,7 @@ function stealthheartbeat ()
          if wreck ~= nil then
             wreck:rm()
          end
-         player.msg( _("#rYou lost track of the scavengers! Stealth failed!"), true )
+         player.msg( "#r".._("You lost track of the scavengers! Stealth failed!"), true )
          hook.rm( stealthbroadcasthook )
          return
       end
@@ -691,9 +690,7 @@ function stealthheartbeat ()
                p:brake()
                p:face( wreck )
             end
-            pp:control()
-            pp:brake()
-            player.cinematics( true )
+            cinema.on()
             camera.set( waypoints[ #waypoints ] )
             mem.wreckscene = 0
             hook.timer( 3.0, "wreckcutscene" )
@@ -725,7 +722,7 @@ function stealthheartbeat ()
          if mem.stealthtarget==4 then
             pos = waypoints[ #waypoints ] + vec2.new(-10, -50)
             wreck = pilot.add( "Rhino", "Derelict", pos, _("Ship Wreck") )
-            wreck:disable()
+            wreck:setDisable()
             wreck:setInvincible()
             hook.pilot( wreck, "board", "board_wreck" )
          end
@@ -750,9 +747,7 @@ function wreckcutscene ()
    elseif mem.wreckscene==5 then
       scavengers_encounter()
       mem.found_wreck = true
-      local pp = player.pilot()
-      pp:control( false )
-      player.cinematics( false )
+      cinema.off()
       camera.set()
       return
    end
@@ -767,10 +762,10 @@ function scavengers_encounter ()
    vn.scene()
    local scavA = vn.newCharacter( minerva.scavengera.name,
          { image=minerva.scavengera.image,
-         color=minerva.scavengera.colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
+         colour=minerva.scavengera.colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
    local scavB = vn.newCharacter( minerva.scavengerb.name,
          { image=minerva.scavengerb.image,
-         color=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
+         colour=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
    vn.transition("electric")
 
    vn.na(_("Two angry scavengers appear on your screen."))

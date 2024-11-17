@@ -2,11 +2,12 @@
 <ssys name="Zerantix">
  <general>
   <radius>17500.000000</radius>
-  <stars>500</stars>
-  <interference>27.272700</interference>
+  <spacedust>500</spacedust>
+  <interference>61.363600</interference>
   <nebula volatility="4.200000" hue="275.000000">500.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="594.000000" y="26.000000"/>
+ <pos x="647.889589" y="-271.148229"/>
  <spobs>
   <spob_virtual>Empire Unpresence</spob_virtual>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
@@ -17,4 +18,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

@@ -2,24 +2,19 @@
 <ssys name="Firk">
  <general>
   <radius>24500.000000</radius>
-  <stars>200</stars>
-  <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>200</spacedust>
+  <interference>22.000000</interference>
+  <nolanes/>
  </general>
- <pos x="60.000000" y="-400.000000"/>
+ <pos x="154.864487" y="25.496038"/>
  <spobs/>
  <jumps>
   <jump target="Doowa">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Qorel">
+  <jump target="Flok">
    <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Torg">
-   <autopos/>
-   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

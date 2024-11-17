@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Razor Artillery S1">
+ <general>
+  <shortname>Razor A. S1</shortname>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>2</mass>
+  <price>28000</price>
+  <description>Designed and employed by House Sirius, the Razor Artillery S1 fires concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. However, the ion energy is also very effective at damaging system components, effectively disabling ships. The ionization effect lingers for several seconds, and can drain significant energy reserves during that time. While House Sirius proclaims their use as non-lethal weapons, if care is not taken, they can prove to be quite lethal.</description>
+  <gfx_store>razor1.webp</gfx_store>
+  <cpu>-5</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx type="shader" size="6" col_size="6">particles/razor_s1.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.6</delay>
+  <speed>700</speed>
+  <range>1000</range>
+  <falloff>850</falloff>
+  <energy>3.3</energy>
+  <heatup>60</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>2000</trackmax>
+  <swivel>26</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>0</penetrate>
+   <physical>6</physical>
+   <disable>4</disable>
+  </damage>
+ </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
+</outfit>

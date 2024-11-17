@@ -24,8 +24,6 @@ local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
 
--- luacheck: globals land enter drone_board heartbeat (Hook functions passed by name)
-
 local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = spob.getS("Katar I")
 
@@ -46,7 +44,7 @@ function accept ()
    vn.na(_([[You approach Noona, who doesn't seem too happy.]]))
    n(_([["I have no idea what went wrong."
 She has trouble keeping her composure.
-"I double checked everything and still it seems like the drones failed to perform the procedure. It should have been a walk in the park!"]]))
+"I double-checked everything and still it seems like the drones failed to perform the procedure. It should have been a walk in the park!"]]))
    n(_([[She looks at you with hope gleaming in her eyes.
 "Say, could you fly out and see what happened? The drones shouldn't be far from here and they don't seem to be moving. If you can, try to access the black box by opening the hull component. Could you look into this for me?"]]))
    vn.menu{
@@ -72,7 +70,7 @@ She goes back to ruminating on what to do.]]))
 
    -- mission details
    misn.setTitle( _("Particle Physics") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Investigate the issue with the drones near the particle physics testing site at {sys}."),
       {sys=mainsys}))
 
@@ -106,13 +104,15 @@ She tosses you a credstick and runs to her room with the black box.]]))
       n(_([[Just before she disappears around the corner she turns back to you and yells.
 "Oh, and by the way, I was able to pull some strings with my friend and you should be cleared for the Heavy Weapon License now. Seeing the dangers you face, it would be good for you to have bigger guns."
 Without giving you time to process what she yelled, she vanishes.]]))
+      vn.sfxBingo()
+      vn.na(_([[You can now purchase the #bHeavy Weapon License#0.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( zpp.noona.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zpp.fctmod.zpp03)
+   faction.hit("Za'lek", zpp.fctmod.zpp03)
    player.pay( reward )
    if getlicense then
       diff.apply("heavy_weapons_license")
@@ -161,10 +161,12 @@ function enter ()
 end
 
 function heartbeat ()
+   if not pdis or not pdis:exists() then return end
+
    if stage==0 then
       pilot.comm(_("Noona"), _("I've sent you the drone positions, please get close to investigate."))
       stage = 1
-   elseif stage==1 and  pdis:pos():dist( player.pilot():pos() ) < 500 then
+   elseif stage==1 and pdis:pos():dist( player.pilot():pos() ) < 500 then
       pilot.comm(_("Noona"), _("That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"))
       stage = 2
    elseif stage==2 then
@@ -202,7 +204,7 @@ function drone_board ()
 
    vn.na(_([[You access the drone control panel and jack into the black box.]]))
 
-   sokoban.vn{ levels={4,5}, header="Drone Black Box"}
+   sokoban.vn{ levels={4,5}, header=_("Drone Black Box") }
    vn.func( function ()
       if sokoban.completed() then
          mem.state = 2

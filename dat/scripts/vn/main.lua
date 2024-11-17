@@ -2,20 +2,28 @@ local vn = require 'vn.core'
 
 -- luacheck: globals love (vn overrides parts of love2d.)
 
-function love.keypressed( key )
-   vn.keypressed( key )
+function love.keypressed( key, _scancode, isrepeat )
+   return vn.keypressed( key, isrepeat )
 end
 
 function love.mousepressed( mx, my, button )
-   vn.mousepressed( mx, my, button )
+   return vn.mousepressed( mx, my, button )
 end
 
 function love.mousereleased( mx, my, button )
-   vn.mousereleased( mx, my, button )
+   return vn.mousereleased( mx, my, button )
 end
 
 function love.mousemoved( mx, my, dx, dy )
-   vn.mousemoved( mx, my, dx, dy )
+   return vn.mousemoved( mx, my, dx, dy )
+end
+
+function love.wheelmoved( dx, dy )
+   return vn.wheelmoved( dx, dy )
+end
+
+function love.textinput( str )
+   return vn.textinput( str )
 end
 
 function love.draw()
@@ -26,16 +34,20 @@ function love.update(dt)
    vn.update(dt)
 end
 
+function love.resize( w, h )
+   vn.resize( w, h )
+end
+
 function love.load()
    -- Transparent background in Naev
-   love.graphics.setColor( 1, 1, 1, 1 )
-   love.graphics.setBackgroundColor( 0, 0, 0, 0 )
+   love.graphics.setColour( 1, 1, 1, 1 )
+   love.graphics.setBackgroundColour( 0, 0, 0, 0 )
 
    -- Check to see if running standalone
    if not love._vn then
       -- Small test
       vn.scene()
-      local d = vn.newCharacter( "Developer", { color={1,0,0}, image="gfx/portraits/neutral/scientist.webp" } )
+      local d = vn.newCharacter( "Developer", { colour={1,0,0}, image="gfx/portraits/neutral/scientist.webp" } )
       local me = vn.me
       local na = vn.na
       vn.transition()

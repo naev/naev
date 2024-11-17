@@ -8,12 +8,12 @@
   <license>Heavy Weapon</license>
   <mass>0</mass>
   <price>850000</price>
-  <description>This Combat AI augments the normal ship functionality with a focus on agility. Through careful regulation of the ship's thrusters, the AI is able to increase both the overall thrust and turn of the ship without actually modifying the hardware nor increasing the energy consumption.</description>
+  <description>This Combat AI augments the normal ship functionality with a focus on agility. Through careful regulation of the ship's thrusters, the AI is able to increase both the overall acceleration and turn of the ship without actually modifying the hardware nor increasing the energy consumption.</description>
   <gfx_store>agility_combat_ai.webp</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">
-  <thrust_mod>10</thrust_mod>
+  <accel_mod>10</accel_mod>
   <turn_mod>10</turn_mod>
  </specific>
 </outfit>

@@ -20,8 +20,7 @@ local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
-   lg.setColor( 1, 1, 1, 1 )
-   --lg.setBlendMode( "alpha", "premultiplied" )
+   lg.setColour( 1, 1, 1, 1 )
 
    -- Draw base hypergate
    mem.tex:draw( 0, 0 )
@@ -32,7 +31,6 @@ local function update_canvas ()
    mem.mask:draw( 0, 0 )
    lg.setShader( oldshader )
 
-   --lg.setBlendMode( "alpha" )
    lg.setCanvas( oldcanvas )
 end
 
@@ -51,7 +49,7 @@ function hypergate.load( opts )
       mem.cost_mod = opts.cost_mod or 1
       if type(opts.cost_mod)=="table" then
          mem.cost_mod = 1
-         local standing = mem.spob:faction():playerStanding()
+         local standing = mem.spob:reputation()
          for k,v in ipairs(opts.cost_mod) do
             if standing >= k then
                mem.cost_mod = v
@@ -138,21 +136,20 @@ end
 function hypergate_window ()
    local w = 900
    local h = 600
-   luatk.setDefaultFont( lg.newFont(12) )
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "center", lg.newFont(14) )
 
    -- Load shaders
-   local path = "spob/lua/glsl/"
+   local path = "scripts/luatk/glsl/"
    local function load_shader( filename )
       local src = lf.read( path..filename )
       return lg.newShader( src )
    end
-   local shd_jumpgoto = load_shader( "jumpgoto.frag" )
+   local shd_jumpgoto = load_shader( "jumplanegoto.frag" )
+   shd_jumpgoto:send( "parami", 1 )
    shd_jumpgoto.dt = 0
    local shd_selectsys = load_shader( "selectsys.frag" )
    shd_selectsys.dt = 0
-   shd_selectsys:send( "dimensions", {2*luatk_map.sys_radius, 2*luatk_map.sys_radius} )
 
    -- Get potential destinations from tags
    local csys = system.cur()
@@ -194,30 +191,35 @@ function hypergate_window ()
    local mapw, maph = w-330, h-60
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
    local targetx, targety = 0, 0
-   local jumpw = 10
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
-      render = function ( m )
+      notinteractive = true,
+      hidetarget = true,
+      render = function ( m, bx, by )
          if not targetknown then
-            lg.setColor( {0, 0, 0, 0.3} )
+            lg.setColour( {0, 0, 0, 0.3} )
             lg.rectangle("fill", 0, 0, mapw, maph )
             -- Show big question mark or something
          else
+            luatk.rerender() -- Animated, so we have to draw every frame
             local mx, my = m.pos:get()
-            local s = luatk_map.scale
-            lg.setColor( {0, 0.5, 1, 0.7} )
-            lg.push()
-            lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
-            lg.rotate( jumpa )
-            lg.setShader( shd_jumpgoto )
-            love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
-            lg.setShader()
-            lg.pop()
+            local s = m.scale
+            local r = luatk_map.sys_radius * s
+            local jumpw = math.max( 10, 2*r )
+            lg.setColour( {0, 0.8, 1, 0.8} )
 
-            local r = luatk_map.sys_radius
-            lg.setColor( {1, 1, 1, 0.8} )
+            local jx = bx + (jumpx-mx)*s + mapw*0.5
+            local jy = by + (jumpy-my)*s + maph*0.5
+            local shd = lg.getShader()
+            lg.setShader( shd_jumpgoto )
+            shd_jumpgoto:send( "paramf", r )
+            shd_jumpgoto:send( "dimensions", {jumpl*s,jumpw} )
+            love_shaders.img:draw( jx-jumpl*0.5*s, jy-jumpw*0.5, jumpa, jumpl*s, jumpw )
+
+            lg.setColour( {1, 1, 1, 1} )
+            shd_selectsys:send( "dimensions", {2*r, 2*r} )
             lg.setShader( shd_selectsys )
-            love_shaders.img:draw( (targetx-mx)*s + mapw*0.5 - 2*r, (targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
-            lg.setShader()
+            love_shaders.img:draw( bx+(targetx-mx)*s + mapw*0.5 - 2*r, by+(targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
+            lg.setShader( shd )
          end
       end,
    } )
@@ -229,7 +231,6 @@ function hypergate_window ()
          jumpx, jumpy = (p*inv):get()
          targetx, targety = (s:pos()*inv):get()
          jumpl, jumpa = ((s:pos()-cpos)*inv):polar()
-         shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
          map:center( p, hardset )
       else
          jumpx, jumpy = 0, 0
@@ -237,6 +238,7 @@ function hypergate_window ()
          map:center( cpos, hardset )
       end
    end
+   map:setScale( 1/3 )
    map_center( nil, 1, true ) -- Center on first item in the list
 
    local pp = player.pilot()
@@ -246,8 +248,10 @@ function hypergate_window ()
       totalmass = totalmass + v:mass()
    end
    local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * mem.cost_mod
+   local hgsys = mem.spob:system()
    local hgfact = mem.spob:faction()
-   local standing_value, standing = hgfact:playerStanding()
+   local standing_value = mem.spob:reputation()
+   local standing = hgfact:reputationText( standing_value )
    local cost_mod_str = tostring(mem.cost_mod*100)
    if mem.cost_mod < 1 then
       cost_mod_str = "#g"..cost_mod_str
@@ -255,9 +259,9 @@ function hypergate_window ()
       cost_mod_str = "#r"..cost_mod_str
    end
    local standing_col = "#N"
-   if hgfact:areAllies(ppf) then
+   if hgfact:areAllies(ppf,hgsys) then
       standing_col = "#F"
-   elseif hgfact:areEnemies(ppf) then
+   elseif hgfact:areEnemies(ppf,hgsys) then
       standing_col = "#H"
    end
    local txt = luatk.newText( wdw, w-260-20, 40, 260, 200, fmt.f(_(
@@ -268,7 +272,7 @@ function hypergate_window ()
 #nFleet Mass:#0 {totalmass}
 #nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)
 
-#nAvailable Jump Target:#0]]), {
+#nAvailable Jump Targets:#0]]), {
       cursys = csys,
       fact = hgfact,
       standing = standing_col..standing.."#0",

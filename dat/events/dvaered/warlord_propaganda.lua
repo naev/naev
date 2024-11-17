@@ -4,7 +4,7 @@
   <unique />
   <location>land</location>
   <chance>30</chance>
-  <cond>spob.cur():faction() and spob.cur():faction() == faction.get("Dvaered") and var.peek("dc_misn") ~= nil and var.peek("dc_misn") &gt;= 2</cond>
+  <cond>spob.cur():faction() == faction.get("Dvaered") and var.peek("dc_misn") ~= nil and var.peek("dc_misn") &gt;= 2</cond>
   <notes>
    <campaign>Dvaered Recruitment</campaign>
    <done_misn name="Dvaered Census">2 times or more</done_misn>
@@ -16,13 +16,10 @@
 --]]
 
 local fmt      = require "format"
-local portrait = require "portrait"
 local vn       = require 'vn'
+local vni      = require 'vnimage'
 
--- luacheck: globals takeoff (Hook functions passed by name)
--- luacheck: globals approach (NPC functions passed by name)
-
-local port = portrait.getMil("Dvaered")
+local img, port = vni.dvaeredMilitary()
 
 function create()
    evt.npcAdd("approach", _("Dvaered soldier"),  port, _("A Dvaered soldier with many bruises on their face is looking at you."))
@@ -33,7 +30,7 @@ function approach()
 
    vn.clear()
    vn.scene()
-   local sol = vn.newCharacter( _("Dvaered soldier"), { image=portrait.getFullPath(port) } )
+   local sol = vn.newCharacter( _("Dvaered soldier"), { image=img } )
    local doaccept = false
 
    vn.transition( "hexagon" )
@@ -50,7 +47,7 @@ function approach()
    }
 
    vn.label("decline")
-   sol(_([["Ah! I knew it! you refuse because I said it is dangerous! You're a coward, as shown by the disturbing absence of bruises on your face!"]]))
+   sol(_([["Ah! I knew it! You refuse because I said it is dangerous! You're a coward, as shown by the disturbing absence of bruises on your face!"]]))
    vn.func( function () doaccept = false end )
    vn.done( "hexagon" )
 
@@ -65,7 +62,7 @@ function approach()
 
    vn.label("info")
    sol(_([["Warlords, as you know, are successful generals who have been entrusted with regalian sovereignty on Dvaered planets. Warlords are allowed to declare war to their rivals if they were offended or in order to conquer their planets."]]))
-   sol(_([["I will not explain in detail how the Dvaered internal wars work, but you have ot know that they are often divided into a space campaign and a ground campaign. The space campaign usually takes only a few periods, while ground campaign can take an entire cycle. And during ground campaigns, for many strategic reasons, it is necessary for each warlord to keep the support of the planet's population."]]))
+   sol(_([["I will not explain in detail how the Dvaered internal wars work, but you have to know that they are often divided into a space campaign and a ground campaign. The space campaign usually takes only a few periods, while ground campaign can take an entire cycle. And during ground campaigns, for many strategic reasons, it is necessary for each warlord to keep the support of the planet's population."]]))
    sol(_([["This is where private pilots are used: a Warlord can require to the Warlords Affairs Office to hire a private pilot for him to spread a few tonnes of propaganda flyers in the atmosphere of a given planet. And the more tonnes of flyers you can carry, the more you will get paid."]]))
    sol(_([["On the technical point of view, all you have to do is to fly over the planet, and the posters will be automatically dropped."]]))
    sol(_([["However, you have to be aware that after that, the rival of the Warlord who ordered the operation, and maybe also their allies will probably send ships after you. So you have to be ready to dodge Vendettas attacks if you take one of these missions. What is more, landing on the planet where you just dropped your posters is not an option."]]))

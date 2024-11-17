@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Arx">
+ <lua>soromid.lua</lua>
  <points>200</points>
  <base_type>Arx</base_type>
- <GFX size="124" sx="12" sy="12">arx</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="124" sx="12" sy="12">arx</gfx>
+ <rarity>1</rarity>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Bio-Carrier">Carrier</class>
  <price>18900000</price>
@@ -18,9 +18,10 @@
  <trail_generator x="0" y="15" h="-15">nebula</trail_generator>
  <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
+ <faction>Soromid</faction>
  <license>Heavy Combat Vessel</license>
- <cond>faction.playerStanding("Soromid") &gt;= 70</cond>
- <condstr>You need at least 70 reputation with the Soromid.</condstr>
+ <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 70</cond>
+ <condstr>You need at least 70% reputation with the Soromid.</condstr>
  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. Its unique properties allow it amply the strength of its carried ships, which easily makes up for its reduced number of slots. The Arx tends to be a more lightweight carrier than is typically found in non-Soromid fleets, without sacrificing carrying capacity.</description>
  <health>
   <armour>1300</armour>
@@ -35,12 +36,12 @@
   <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="leftweap">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" name="rightweap">Tentacle Organ I</weapon>
   <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="20" y="0" h="0" />
   <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0" />
+  <weapon size="large" prop="fighter_bay" x="20" y="0" h="0" />
   <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum I</utility>
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="primal_yell" />
+  <utility size="large" prop="bio_organ" name="plasma_burst" />
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
@@ -53,7 +54,7 @@
  <stats>
   <turn_mod>-10</turn_mod>
   <armour_mod>-10</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
   <fbay_health>50</fbay_health>
   <fbay_damage>50</fbay_damage>
   <fbay_reload>-10</fbay_reload>

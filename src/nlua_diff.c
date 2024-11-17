@@ -7,32 +7,24 @@
  * @brief Unidiff Lua module.
  */
 /** @cond */
-#include "nstring.h"
 #include <lauxlib.h>
 #include <lua.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 /** @endcond */
-
-#include "naev.h"
 
 #include "nlua_diff.h"
 
-#include "log.h"
-#include "nluadef.h"
 #include "unidiff.h"
 
 /* diffs */
 static int diffL_apply( lua_State *L );
 static int diffL_remove( lua_State *L );
 static int diffL_isapplied( lua_State *L );
+
 static const luaL_Reg diffL_methods[] = {
    { "apply", diffL_apply },
    { "remove", diffL_remove },
    { "isApplied", diffL_isapplied },
-   {0,0}
-}; /**< Unidiff Lua methods. */
+   { 0, 0 } }; /**< Unidiff Lua methods. */
 
 /**
  * @brief Loads the diff Lua library.
@@ -41,7 +33,7 @@ static const luaL_Reg diffL_methods[] = {
  */
 int nlua_loadDiff( nlua_env env )
 {
-   nlua_register(env, "diff", diffL_methods, 0);
+   nlua_register( env, "diff", diffL_methods, 0 );
    return 0;
 }
 
@@ -70,7 +62,7 @@ int nlua_loadDiff( nlua_env env )
  */
 static int diffL_apply( lua_State *L )
 {
-   const char *name = luaL_checkstring(L,1);
+   const char *name = luaL_checkstring( L, 1 );
    diff_apply( name );
    return 0;
 }
@@ -83,7 +75,7 @@ static int diffL_apply( lua_State *L )
  */
 static int diffL_remove( lua_State *L )
 {
-   const char *name = luaL_checkstring(L,1);
+   const char *name = luaL_checkstring( L, 1 );
    diff_remove( name );
    return 0;
 }
@@ -97,7 +89,7 @@ static int diffL_remove( lua_State *L )
  */
 static int diffL_isapplied( lua_State *L )
 {
-   const char *name = luaL_checkstring(L,1);
-   lua_pushboolean(L,diff_isApplied(name));
+   const char *name = luaL_checkstring( L, 1 );
+   lua_pushboolean( L, diff_isApplied( name ) );
    return 1;
 }

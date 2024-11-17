@@ -1,31 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Scintillation">
+ <lua>thurion.lua</lua>
  <points>40</points>
  <base_type>Scintillation</base_type>
- <GFX size="70">scintillation</GFX>
+ <gfx size="70">scintillation</gfx>
  <rarity>3</rarity>
- <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>750000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-10" y="0" h="0" />
+ <trail_generator x="-10" y="0" h="0">thurion</trail_generator>
  <trail_generator x="-10" y="-30" h="0">nebula</trail_generator>
  <trail_generator x="-9" y="-5" h="10">nebula</trail_generator>
  <trail_generator x="-10" y="30" h="0">nebula</trail_generator>
  <trail_generator x="-9" y="5" h="10">nebula</trail_generator>
- <fabricator>Thurion shipyards</fabricator>
- <license>Light Combat Vessel</license>
- <cond>faction.playerStanding("Thurion") &gt;= 30</cond>
- <condstr>You need at least 30 reputation with the Thurion.</condstr>
- <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as other non-Thurion bombers.</description>
+ <fabricator>Thurion Shipyards</fabricator>
+ <faction>Thurion</faction>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 30</cond>
+ <condstr>You need at least 30% reputation with the Thurion.</condstr>
+ <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as bombers from other makers.</description>
  <health>
   <armour>60</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>70</mass>
+  <mass>65</mass>
   <fuel>200</fuel>
   <fuel_consumption>100</fuel_consumption>
   <cargo>20</cargo>
@@ -39,8 +39,9 @@
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 350 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-4 Light Plating</structure>
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />
@@ -51,7 +52,7 @@
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>
   <cpu_mod>10</cpu_mod>
-  <ew_hide>30</ew_hide>
+  <ew_hide>-25</ew_hide>
   <nebu_absorb>15</nebu_absorb>
  </stats>
 </ship>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Lyncis IIa">
+ <pos x="3067.797331" y="-1823.263932"/>
+ <GFX>
+  <space>moon-A00.webp</space>
+  <exterior>desertic.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</spob>

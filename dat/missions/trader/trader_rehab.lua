@@ -2,17 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Trader Rehabilitation">
  <priority>10</priority>
- <cond>faction.playerStanding("Traders Guild") &lt; 0</cond>
+ <cond>faction.reputationGlobal("Traders Society") &lt; 0</cond>
  <chance>100</chance>
  <location>Computer</location>
 </mission>
- --]]
---[[
---
--- Rehabilitation Mission
---
 --]]
-
-require "missions.rehab_common"
-
-mem.fac = faction.get("Traders Guild")
+--[[
+   Rehabilitation Mission
+--]]
+require("common.rehab").init( faction.get("Traders Society"), {
+} )

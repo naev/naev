@@ -2,13 +2,13 @@
 <spob name="PRP-2">
  <pos x="-13713.206143" y="1921.173807"/>
  <GFX>
-  <space>001.webp</space>
+  <space>zalek_research_station1.webp</space>
   <exterior>station01.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <base>6.666667</base>
-  <bonus>3.333333</bonus>
+  <base>6.666670</base>
+  <bonus>3.333330</bonus>
   <range>0</range>
  </presence>
  <general>
@@ -23,10 +23,11 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>One of four stations devoted to houses much of the research and knowledge that House Za'lek has accumulated and continues to accumulate. Many of the most prestigious scientific organizations make its main headquarters on these stations. The walls are covered in old publication posters and research symposium fliers.</description>
+  <description>One of four stations devoted to housing much of the research and knowledge that House Za'lek has accumulated and continues to accumulate. Many of the most prestigious scientific organizations make its main headquarters on these stations. The walls are covered in old publication posters and research symposium fliers.</description>
   <bar>A rather eclectic bar with various 'enhancements' and upgrades that make it into a mad scientist's dream and a neat freak's nightmare. The constant flux of scientists in and out of the bar further accentuates the chaotic behaviour.</bar>
  </general>
  <tags>
   <tag>research</tag>
+  <tag>station</tag>
  </tags>
 </spob>

@@ -8,6 +8,11 @@ if [ -n "$1" ]; then
 elif [ -n "$MESON_SOURCE_ROOT" ]; then
    cd "$MESON_SOURCE_ROOT"
 fi
+if [ -n "$2" ]; then
+   BUILDDIR="$2"
+else
+   BUILDDIR="."
+fi
 
 if [[ ! -f naev.6 ]]; then
    echo "Please run from the source root dir, or pass it as an argument." >&2
@@ -38,13 +43,18 @@ deterministic_sort() { LC_ALL=C sort; }
 # language detection and gives them unwanted "c-format" or "lua-format" tags.
 
 # shellcheck disable=SC2046
-po/credits_pot.py \
+po/credits_pot.py po/credits.pot \
    dat/intro \
    dat/AUTHORS \
-   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|') \
-   > po/credits.pot
+   $(cd artwork; find_files gfx/loading txt | sed 's|^|artwork/|')
+
+# shellcheck disable=SC2046
+po/naevpedia_pot.py po/naevpedia.pot \
+   $(cd dat; find_files naevpedia md | sed 's|^|dat/|') \
+   $(find "${BUILDDIR}/dat/naevpedia" -name "*.md") \
 
 (
+   echo po/naevpedia.pot
    echo po/physfs.pot
    echo po/credits.pot
    find_files dat xml | deterministic_sort
@@ -52,7 +62,7 @@ po/credits_pot.py \
    echo dat/outfits/bioship/generate.py
 ) | filter_skipped > po/POTFILES.in
 
-if [ "$2" = "--pre-commit" ]; then
+if [ "$3" = "--pre-commit" ]; then
    # The "pre-commit" package requires hooks to fail if they touch any files.
    git diff --exit-code po/POTFILES.in && exit 0
    echo Fixing po/POTFILES.in

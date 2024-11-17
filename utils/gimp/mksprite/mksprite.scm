@@ -60,7 +60,7 @@
                    ; Paste non rotated sprite
                    (gimp-edit-paste tdrawable 0)
 
-                   ; Move Sprite to it's position and anchor it
+                   ; Move Sprite to its position and anchor it
                    (gimp-layer-translate (car (gimp-image-floating-selection timg)) (* numX sprite_width) (* numY sprite_height))
                    (gimp-floating-sel-anchor (car (gimp-image-floating-selection timg)))
 

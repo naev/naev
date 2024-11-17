@@ -11,7 +11,7 @@ The general rule of thumb when choosing which to make is that if you want the pl
 Example missions include cargo deliveries, system patrols, etc.
 On the other hand, most events are related to game internals and cutscenes such as the save game updater event ([`dat/events/updater.lua`](https://github.com/naev/naev/blob/main/dat/events/updater.lua)) or news generator event ([`dat/events/news.lua`](https://github.com/naev/naev/blob/main/dat/events/news.lua)).
 
-A full overview of the Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
+A full overview of the Naev Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
 
 ## Mission Guidelines
 
@@ -39,7 +39,7 @@ Let us start by writing a simple mission header. This will be enclosed by long L
 --]]
 ```
 
-The mission is named "My First Mission" and has a 50\% chance of appearing in any spaceport bar. Furthermore, it is marked unique so that once it is successfully completed, it will not appear again to the same player. For more information on headers refer to Section \ref{sec:misn-headers}.
+The mission is named "My First Mission" and has a 50% chance of appearing in any spaceport bar. Furthermore, it is marked unique so that once it is successfully completed, it will not appear again to the same player. For more information on headers refer to Section `\ref{sec:misn-headers}`{=tex}.
 
 Now, we can start coding the actual mission. This all begins with the `create ()` function. Let us write a simple one to create an NPC at the Spaceport Bar where the mission appears:
 
@@ -53,10 +53,10 @@ end
 
 The create function in this case is really simple, it only creates a single NPC with `misn.setNPC`. Please note that only a single NPC is supported with `misn.setNPC`, if you want to use more NPC you would have to use `misn.npcAdd` which is much more flexible and not limited to mission givers. There are two important things to note:
 
-1. All human readable text is enclosed in `_()` for translations. In principle you should always use `_()` to enclose any text meant for the user to read, which will allow the translation system to automatically deal with it. For more details, please refer to Section \ref{sec:misn-basic-translation}.
+1. All human-readable text is enclosed in `_()` for translations. In principle, you should always use `_()` to enclose any text meant for the user to read, which will allow the translation system to automatically deal with it. For more details, please refer to Section `\ref{sec:misn-basic-translation}`{=tex}.
 1. There is an image defined as a string. In this case, this refers to an image in `gfx/portraits/`. Note that Naev uses a virtual filesystem and the exact place of the file may vary depending on where it is set up.
 
-With that set up, the mission will now spawn an NPC with 50% chance at any Spaceport Bar, but they will not do anything when approached. This is because we have not defined an `accept()` function. This function is only necessary when either using `misn.npcAdd` or creating mission computer missions (see Section \ref{sec:misn-basic-computer}). So let us define that which will determine what happens when the NPC is approached as follows:
+With that set up, the mission will now spawn an NPC with 50% chance at any Spaceport Bar, but they will not do anything when approached. This is because we have not defined an `accept()` function. This function is only necessary when either using `misn.npcAdd` or creating mission computer missions (see Section `\ref{sec:misn-basic-computer}`{=tex}). So let us define that which will determine what happens when the NPC is approached as follows:
 
 ```lua
 local vntk = require "vntk"
@@ -105,7 +105,7 @@ function accept ()
 end
 ```
 
-This time it's a bit more complicated than before. Let us try to break it down a bit. The first line includes the `vntk` library, which is a small wrapper around the `vn` Visual Novel library (explained in Section \ref{sec:misn-basic-vn}). This allows us to show simple dialogues and ask the player questions. We also include the `format` library to let us format arbitrary text, and we also define the local reward to be 50,000 credits in exponential notation.
+This time it's a bit more complicated than before. Let us try to break it down a bit. The first line includes the `vntk` library, which is a small wrapper around the `vn` Visual Novel library (explained in Section `\ref{sec:misn-basic-vn}`{=tex}). This allows us to show simple dialogues and ask the player questions. We also include the `format` library to let us format arbitrary text, and we also define the local reward to be 50,000 credits in exponential notation.
 
 The function contains of 3 main parts:
 
@@ -115,9 +115,9 @@ The function contains of 3 main parts:
 
 Some important notes.
 
-* We use `fmt.f` to format the strings. In this case, the `{spb}` will be replaced by the `spb` field in the table, which corresponds to the name of the `mem.dest` spob. This is further explained in Section \ref{sec:misn-basic-fmt}.
-* Variables don't get saved unless they are in the `mem` table. This table gets populated again every time the save game gets loaded. More details in Section \ref{sec:misn-basic-mem}.
-* You have to pass function names as strings to the family of `hook.*` functions. More details on hooks in Section \ref{sec:misn-basic-hooks}.
+* We use `fmt.f` to format the strings. In this case, the `{spb}` will be replaced by the `spb` field in the table, which corresponds to the name of the `mem.dest` spob. This is further explained in Section `\ref{sec:misn-basic-fmt}`{=tex}.
+* Variables don't get saved unless they are in the `mem` table. This table gets populated again every time the save game gets loaded. More details in Section `\ref{sec:misn-basic-mem}`{=tex}.
+* You have to pass function names as strings to the family of `hook.*` functions. More details on hooks in Section `\ref{sec:misn-basic-hooks}`{=tex}.
 
 Now this gives us almost the entirety of the mission, but a last crucial component is missing: we need to reward the player when they deliver the cargo to **Caladan**. We do this by exploiting the `hook.land` that makes it so our defined `land` function gets called whenever the player lands. We can define one as follows:
 
@@ -137,4 +137,4 @@ end
 
 We can see it's very simple. It first does a check to make sure the landed planet `spob.cur()` is indeed the destination planet `mem.dest`. If not, it returns, but if it is, it'll display a message, add a message to the ship log, pay the player, and finally finish the mission with `misn.finish(true)`. Remember that since this is defined to be a unique mission, once the mission is done it will not appear again to the same player.
 
-That concludes our very simple introduction to mission writing. Note that it doesn't handle things like playing victory sounds, nor other more advanced functionality. However, please refer to the full example in Section \ref{sec:misn-example} that covers more advanced functionality.
+That concludes our very simple introduction to mission writing. Note that it doesn't handle things like playing victory sounds, nor other more advanced functionality. However, please refer to the full example in Section `\ref{sec:misn-example}`{=tex} that covers more advanced functionality.

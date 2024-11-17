@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Razor Artillery S2">
+ <general>
+  <shortname>Razor A. S2</shortname>
+  <slot>weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon</license>
+  <mass>5</mass>
+  <price>51000</price>
+  <description>The upgraded Razor Artillery S2 model packs increased overall effectiveness compared to the more compact S2 model, and has less difficulty in overloading corvette and destroyer-grade shielding, and disabling critical components.</description>
+  <gfx_store>razor2.webp</gfx_store>
+  <cpu>-24</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx type="shader" size="6.3" col_size="6.3">particles/razor_s2.frag</gfx>
+  <lua>outfits/weapons/razor.lua</lua>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.7</delay>
+  <speed>700</speed>
+  <range>1150</range>
+  <falloff>1000</falloff>
+  <energy>7.5</energy>
+  <heatup>55</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
+  <swivel>26</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>10</penetrate>
+   <physical>9</physical>
+   <disable>6</disable>
+  </damage>
+ </specific>
+ <tags>
+  <tag>sirius</tag>
+ </tags>
+</outfit>

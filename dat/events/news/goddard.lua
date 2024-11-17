@@ -41,7 +41,7 @@ local articles = {
    },
    {
       head = N_([[Sneak Peek: the Kestrel]]),
-      body = _([[Our reporter took a tour through Krain's mysterious space craft. He says it poses a challenge to the Goddard.]])
+      body = _([[Our reporter took a tour through Krain's mysterious spacecraft. He says it poses a challenge to the Goddard.]])
    },
    --[[
       Politics

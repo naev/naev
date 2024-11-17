@@ -3,21 +3,28 @@
  <general>
   <features>#oRestricted#0</features>
   <radius>20000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="276.584910" y="-624.748747"/>
+ <pos x="580.967502" y="-1051.807183"/>
  <spobs>
   <spob>BGG-1356</spob>
   <spob>Baf I</spob>
   <spob>Baf IV</spob>
-  <spob>Dumas Station</spob>
+  <spob>Fort Dumas</spob>
   <spob>MGG-1294</spob>
   <spob_virtual>Independent All Unpresence</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Beeklo">
+  <jump target="Felzen">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Palin">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Peter">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

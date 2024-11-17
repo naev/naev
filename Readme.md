@@ -15,23 +15,51 @@ missions, equipment, and ships; Even the galaxy itself grows larger with each
 release. For the literarily-inclined, there are large amounts of lore
 accompanying everything from planets to equipment.
 
+Please note that Naev is still actively under development and not complete yet.
+Although there are a lot of things to do in the game, you will find incomplete
+or work in progress content as you progress.
+
+## GETTING NAEV
+
+Naev is on steam, itch.io, flathub, many linux distributions and more! If you
+don't feel up to the task of compiling it yourself, please see the [Naev
+website](https://naev.org/downloads/) for different ways to get started playing
+Naev!
+
+## PLUGINS
+
+Plugins are supported since version 0.10.0. Although we do not have a plugin
+manager yet ([help wanted!](https://github.com/naev/naev/issues/2180)), you can
+look at existing plugins registered on the [naev plugins
+repository](https://github.com/naev/naev-plugins) and install them manually. If
+you want to get started making your own, please take a look at the [Naev
+Development Manual](https://naev.org/devmanual/) (WIP).
+
 ## DEPENDENCIES
 
 Naev's dependencies are intended to be widely available. In addition to a
-graphics card and driver supporting at least OpenGL 3.1, Naev requires:
-* SDL 2
+graphics card and driver supporting at least OpenGL 3.2, Naev requires:
+* SDL2
 * libxml2
 * freetype2
-* GLPK
 * libpng
 * libwebp
 * OpenAL
 * OpenBLAS
 * libvorbis
-* binutils
 * intltool
-* libunibreak (included)
 * pyyaml
+* SuiteSparse`*`
+* enet`*`
+* physfs`*`
+* lua 5.1 / luajit`*`
+* pcre2`*`
+* GLPK`*`
+* libunibreak`*`
+* cmark`*`
+* libyaml`*`
+
+Dependencies marked with `*` will use subprojects if not found in the host system.
 
 ### DETAILS FOR YOUR OS
 
@@ -68,7 +96,7 @@ Run:
 meson setup builddir .
 cd builddir
 meson compile
-./naev.sh
+./naev.py
 ```
 
 If you need special settings you can run `meson configure` in your build
@@ -76,18 +104,20 @@ directory to see a list of all available options.
 
 **For installation**, try: `meson configure --buildtype=release -Db_lto=true`
 
-**For Windows packaging**, try adding: `--bindir=bin -Dndata_path=bin`
+**For Building a Windows Installer**, try adding: `--prefix="$(pwd)"/build/windows --bindir=. -Dndata_path=. -Dinstaller=true`. Check the `dist` folder in your build directory
 
-**For macOS**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources`
+**For Building a macOS DMG**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources -Dinstaller=true`. Check the `dist` folder in your build directory
 
 **For normal development**, try adding: `--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if compiling with Clang, substituting `-Ddebug_arrays=true` for `-Db_sanitize=...` on Windows if you can't use Clang).
 (If your system supports debuginfod, also add `set debuginfod enabled on` to a file named `.gdbinit` in your home directory!)
 
 **For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
 
+#### For up to date build instructions, check out the compilation page in our [Wiki](https://github.com/naev/naev/wiki/Compiling)
+
 ### RUNNING NAEV
 
-You can run Naev directly from the git repository using the `naev.sh` script
+You can run Naev directly from the git repository using the `naev.py` script
 which will be generated in the build directory. This script will automatically
 set up all the data paths for running Naev. Make sure the art assets are
 checked out and up to date as mentioned in the Updating Art Assets section
@@ -127,8 +157,11 @@ artwork submodule.
 To get in touch, you can visit [naev.org](https://naev.org/) which links to the project's Discord chat and Wiki.
 There are also Lua API docs there.
 
-Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) 2.17 or newer, and run `pre-commit install`.
+Before committing, it's advisable to install [pre-commit](https://pre-commit.com/) 2.17 or newer, and run `pre-commit install` from the Naev git directory root.
+pre-commit will run automatically when commiting files, but can also be run manually with `pre-commit run -a`.
 The dev team is teaching `pre-commit` to handle various fussy and forgettable steps.
+
+Naev uses [Oxford Spelling](https://en.wikipedia.org/wiki/Oxford_spelling) for all text in the game.
 
 ### ONLINE TRANSLATION
 
@@ -144,6 +177,7 @@ Naev's translation is handled with gettext. (It's custom, but C and Lua code can
 
 When content like missions is updated, new translatable text must be made available to Weblate.
 The key manual step is to regenerate the `po/naev.pot` file (`meson compile naev-pot` in the build dir) and commit it.
+To avoid merge conflicts, it is recommended to not include updated `po/naev.pot` in a pull request that isn't exclusively about translation.
 
 Under the hood: `po/POTFILES.in` is a catalog of files that may have translatable text.
 We keep it synced using pre-commit hooks (or manually: `meson compile potfiles`).

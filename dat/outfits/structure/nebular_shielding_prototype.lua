@@ -16,7 +16,7 @@ function update( _p, po )
    po:state("on")
    local regen = math.min( max_regen, mem.nebu_vol )
    po:set( "shield_regen_malus", -regen )
-   po:set( "energy_loss", regen )
+   po:set( "energy_regen_malus", regen )
 end
 
 

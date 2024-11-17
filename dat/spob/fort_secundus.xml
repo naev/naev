@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Fort Secundus">
+ <pos x="-5198.478537" y="-9255.152333"/>
+ <GFX>
+  <space>003.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <base>3.333330</base>
+  <bonus>1.666670</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>100</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>This old, rusty station has been mostly abandoned, but a handful of dedicated individuals continue to keep it running. It has been rumoured that the maintainers of the station have connections to pirates, but no such connection has been proven and the local Dvaered officials don't seem to care anyway.</description>
+ </general>
+ <tags>
+  <tag>station</tag>
+ </tags>
+</spob>

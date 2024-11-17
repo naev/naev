@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Hubfar I">
+ <pos x="61.628086" y="1140.119597"/>
+ <GFX>
+  <space>I08.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -39,7 +39,6 @@ local dronepos = vec2.new( -12000, -12000 )
 --    4: Get back to Minerva STation
 mem.misn_state = nil
 local boss, drone, fdrone, fthugs, thugs -- Non-persistent state
--- luacheck: globals enter harassed heartbeat land thugs_attacked thugs_dead (Hook functions passed by name)
 
 
 function create ()
@@ -173,8 +172,8 @@ function enter ()
       drone:control()
       drone:brake()
 
-      mem.dronemarker = system.mrkAdd( drone:pos(), _("Za'lek Drone") )
-      mem.thugsmarker = system.mrkAdd( boss:pos(), _("Dvaered Thugs") )
+      mem.dronemarker = system.markerAdd( drone:pos(), _("Za'lek Drone") )
+      mem.thugsmarker = system.markerAdd( boss:pos(), _("Dvaered Thugs") )
 
       hook.timer( 0.5, "heartbeat" )
    end
@@ -190,7 +189,7 @@ function heartbeat ()
       misn.osdActive(2)
       drone:taskClear()
       drone:follow(pp)
-      system.mrkRm( mem.dronemarker )
+      system.markerRm( mem.dronemarker )
       return
    end
    hook.timer( 0.5, "heartbeat" )
@@ -242,7 +241,7 @@ function harassed ()
       player.msg(_("#gThe thugs seem to be sufficiently riled up."))
       mem.misn_state=3
       misn.osdActive(3)
-      system.mrkRm( mem.thugsmarker )
+      system.markerRm( mem.thugsmarker )
       misn.markerMove( mem.misnmarker, runawaysys )
       return
    end

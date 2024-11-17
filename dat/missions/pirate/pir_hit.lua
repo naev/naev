@@ -4,6 +4,14 @@
  <priority>3</priority>
  <chance>1260</chance>
  <location>Computer</location>
+ <cond>
+   local pir = require "common.pirate"
+   -- Lower probability on non-pirate places
+   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() &lt; 0.5 then
+      return false
+   end
+   return true
+ </cond>
  <faction>Wild Ones</faction>
  <faction>Black Lotus</faction>
  <faction>Raven Clan</faction>
@@ -12,9 +20,9 @@
  <faction>Independent</faction>
  <faction>FLF</faction>
  <done>Pirate Hit Intro</done>
- <notes>
-  <tier>3</tier>
- </notes>
+ <tags>
+  <tag>pir_cap_ch01_med</tag>
+ </tags>
 </mission>
 --]]
 --[[
@@ -30,7 +38,6 @@ local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
 local bounty_setup, level_setup, spawn_target, succeed -- Forward-declared functions
--- luacheck: globals jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 
 -- Mission details
 local misn_title = {}
@@ -41,15 +48,39 @@ misn_title[4] = _("Big Assassination Job in {sys}")
 misn_title[5] = _("Dangerous Assassination Job in {sys}")
 misn_title[6] = _("Highly Dangerous Assassination Job in {sys}")
 
+-- Reasons
+local reason_list = {
+   _(" for excessive amounts of pineapple on pizza"),
+   _(" for messing with 'the business'"),
+   _(" for cozying up to the wrong pirate clans"),
+   _(" for increasing their bribe fees"),
+   _(" for being too nosy"),
+   _(" for winning in blackjack"),
+   _(" for being a beacon of order and peace"),
+   _(" for thwarting piracy"),
+   _(" for not respecting the pirate code"),
+   _(" for throwing out pineapple pizza"),
+   _(" for being a tool of bourgeoisie oppression"),
+   _(" for putting fellow pirates in prison"),
+   _(" for being an asshole"),
+   _(" for taking a Pirate Lord's landing spot"),
+   _(" for abandoning a pet cat"),
+   _(" for using pirates as scapegoats in insurance fraud and not giving a cut of the share"),
+   _(" for disrespecting poor people"),
+   _(" for fomenting class warfare"),
+   _(" for not respecting human freedom"),
+   _(" for just being a piece of shit human"),
+   _(" for spitting sunflower seeds on the space station floor"),
+   _(" for not properly recycling their garbage"),
+   _(" for hosting a lame party"),
+   _(" for raising tariffs on cheese imports"),
+   _(" for making fun of the space pirate shanty"),
+}
+
 local hunters = {}
 local hunter_hits = {}
 
 function create ()
-   -- Lower probability on non-pirate places
-   if not pir.factionIsPirate( spob.cur():faction() ) and rnd.rnd() < 0.5 then
-      misn.finish(false)
-   end
-
    -- Determine paying faction probabilistic
    mem.paying_faction = pir.systemClanP( system.cur() )
    local faction_text = pir.reputationMessage( mem.paying_faction )
@@ -63,7 +94,7 @@ function create ()
       "Sirius",
       "Soromid",
       "Trader",
-      "Traders Guild",
+      "Traders Society",
       "Za'lek",
    }
 
@@ -84,7 +115,7 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
+   if not misn.claim( mem.missys, true ) then misn.finish( false ) end
 
    mem.target_faction = nil
    while mem.target_faction == nil and #target_factions > 0 do
@@ -104,50 +135,88 @@ function create ()
       misn.finish( false )
    end
 
-   mem.jumps_permitted = system.cur():jumpDist(mem.missys, true) + rnd.rnd( 3, 10 )
-   if rnd.rnd() < 0.05 then
-      mem.jumps_permitted = mem.jumps_permitted - 1
-   end
+   mem.deadline = time.get() + time.new( 0, 2 * system.cur():jumpDist(mem.missys, true), rnd.rnd( 100e3, 150e3 ) )
 
    mem.name = pilotname.generic()
    mem.level = level_setup()
    mem.pship, mem.credits, mem.reputation = bounty_setup()
 
+   -- Get reason
+   local reason = reason_list[ rnd.rnd(1,#reason_list) ]
+
    -- Set mission details
    misn.setTitle( fmt.f( pir.prefix(mem.paying_faction)..misn_title[mem.level], {sys=mem.missys} ) )
 
-   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead. {plt} is known to be flying a {shipclass}-class ship.{msg}"), {fct=mem.target_faction, plt=mem.name, sys=mem.missys, shipclass=ship.get(mem.pship):classDisplay(), msg=faction_text } )
+   local mdesc = fmt.f( _([[A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} system. Local crime lords want this pilot dead{reason}. {plt} is known to be flying a {shipclass}-class ship. The pilot may disappear if you take too long to reach the {sys} system.{msg}
+
+#nTarget:#0 {plt} ({shipclass}-class ship)
+#nWanted:#0 Dead
+#nLast seen:#0 {sys} system
+#nTime limit:#0 {deadline}]]),
+      {fct=_(mem.target_faction), plt=mem.name, sys=mem.missys, shipclass=_(ship.get(mem.pship):classDisplay()), msg=faction_text, reason=reason, deadline=tostring(mem.deadline-time.get()) } )
+   if pir.factionIsClan(mem.paying_faction) then
+      mdesc = mdesc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
    if not pir.factionIsPirate( spob.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a clear warning that the
       -- mission is in fact illegal.
       mdesc = mdesc .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
+      misn.setIllegal(true)
    end
    misn.setDesc( mdesc )
 
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
+   misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), mem.missys ) )
    mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
+local function update_osd ()
+   misn.osdCreate( _("Assassination"), {
+      fmt.f( _("Fly to the {sys} system before {time_limit} ({time} remaining)"),
+         {sys=mem.missys, time_limit=mem.deadline, time=(mem.deadline-time.get())} ),
+      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
+   } )
+end
 
 function accept ()
    misn.accept()
 
-   misn.osdCreate( _("Assassination"), {
-      fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} ),
-      fmt.f( _("Kill {plt}"), {plt=mem.name} ),
-   } )
+   update_osd()
 
    mem.last_sys = system.cur()
 
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
    hook.takeoff( "takeoff" )
+   hook.date( time.new( 0, 0, 1e3 ), "date" )
 end
 
+function date ()
+   if system.cur() ~= mem.missys then
+      if time.get() > mem.deadline then
+         return lmisn.fail( _("Target got away.") )
+      end
+      update_osd()
+   end
+end
 
 function jumpin ()
    -- Nothing to do.
    if system.cur() ~= mem.missys then
+      return
+   end
+
+   -- Make sure system is adjacent to the previous one (system tour)
+   local found = false
+   for k,v in ipairs(system.cur():adjacentSystems()) do
+      if v==mem.last_sys then
+         found = true
+         break
+      end
+   end
+   if not found then
+      spawn_target()
       return
    end
 
@@ -161,7 +230,6 @@ end
 
 
 function jumpout ()
-   mem.jumps_permitted = mem.jumps_permitted - 1
    mem.last_sys = system.cur()
    if mem.last_sys == mem.missys then
       lmisn.fail( fmt.f( _("You have left the {sys} system."), {sys=mem.last_sys} ) )
@@ -224,14 +292,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         lmisn.fail( _("Another pilot eliminated your target.") )
+         lmisn.fail( fmt.f(_("Another pilot eliminated {plt}."), {plt=mem.name}) )
       end
    end
 end
 
 
 function pilot_jump ()
-   lmisn.fail( _("Target got away.") )
+   lmisn.fail( fmt.f(_("{plt} got away."), {plt=mem.name} ) )
 end
 
 
@@ -241,7 +309,7 @@ function level_setup ()
    local level
    if mem.target_faction == "Independent" then
       level = 1
-   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Trader" or mem.target_faction == "Traders Society" then
       if num_pirates <= 100 then
          level = rnd.rnd( 1, 2 )
       else
@@ -508,7 +576,7 @@ function bounty_setup ()
          credits = 1e6 + rnd.sigma() * 100e3
          reputation = 8
       end
-   elseif mem.target_faction == "Traders Guild" then
+   elseif mem.target_faction == "Traders Society" then
       if mem.level == 1 then
          if rnd.rnd() < 0.5 then
             pship = "Gawain"
@@ -556,11 +624,6 @@ end
 -- Spawn the ship at the location param.
 local _target_faction
 function spawn_target( param )
-   if mem.jumps_permitted < 0 then
-      lmisn.fail( _("Target got away.") )
-      return
-   end
-
    -- Use a dynamic faction so they don't get killed
    if not _target_faction then
       _target_faction = faction.dynAdd( mem.target_faction, "wanted_"..mem.target_faction, mem.target_faction, {clear_enemies=true, clear_allies=true} )
@@ -583,17 +646,12 @@ function succeed ()
    player.pay( mem.credits )
 
    -- Pirate rep cap increase
-   local bounty_done = var.peek( "pir_bounty_done" )
    var.push( "pir_bounty_done", true )
-   if bounty_done ~= true then
-      pir.modReputation( 5 )
-   end
 
    if mem.level >= 5 then
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if not bounty_dangerous_done then
-         pir.modReputation( 2 )
          pir.modDecayFloor( 2 )
       end
 
@@ -601,12 +659,11 @@ function succeed ()
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if not bounty_highly_dangerous_done then
-            pir.modReputation( 3 )
             pir.modDecayFloor( 3 )
          end
       end
    end
 
-   mem.paying_faction:modPlayerSingle( mem.reputation )
+   mem.paying_faction:hit( mem.reputation )
    misn.finish( true )
 end

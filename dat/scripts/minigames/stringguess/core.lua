@@ -9,6 +9,7 @@ local colours = {
    dark        = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
    bg          = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
    highlight   = {0x04/0xFF, 0x6B/0xFF, 0x99/0xFF},
+   mouseover   = {0x44/0xFF, 0xAB/0xFF, 0xD9/0xFF},
    ok          = {0x00/0xFF, 0xCF/0xFF, 0xFF/0xFF},
    --foobar      = {0xB3/0xFF, 0xEF/0xFF, 0xFF/0xFF},
    text        = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
@@ -24,8 +25,8 @@ local function getpos( tbl, elm )
    return false
 end
 
-local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length
-local bgshader, movekeys, standalone, headertext, headerfont
+local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length, mouseover
+local bgshader, movekeys, standalone, headertext, headerfont, canskip, btnskip
 function mg.load ()
    local c = naev.cache()
    local params = c.stringguess.params
@@ -34,6 +35,9 @@ function mg.load ()
    keyset = params.keyset or {"B","E","K","N","O","V"} -- NAEV OK -> change A to B so it doesn't interfere with WASD keybinds
    sol_length = params.sol_length or 3
    headertext = params.header
+
+   -- See if can skip.
+   canskip = naev.conf().puzzle_skip
 
    -- Get movement keys
    movekeys = {
@@ -69,11 +73,12 @@ function mg.load ()
    round = true
    alpha = 0
    done = false
+   mouseover = nil
    attempts = {}
 
    -- Window properties
    local lw, lh = love.window.getDesktopDimensions()
-   lg.setBackgroundColor(0, 0, 0, 0)
+   lg.setBackgroundColour(0, 0, 0, 0)
    local ww, wh
    ww = 90 + 60*#sol+14 + 220 + 20 + 40*#sol+10+40
    wh = 25 + #keyset*40+10
@@ -85,6 +90,17 @@ function mg.load ()
    end
    headerfont = lg.newFont(24)
    bgshader = love_shaders.circuit()
+
+   if canskip then
+      local luatk = require "luatk"
+      local bw, bh = 100, 30
+      btnskip = luatk.newButton( nil, lw-30-bw, lh-30-bh, bw, bh, _("SKIP"), function ()
+         game = 1
+         naev.cache().stringguess.won = true
+         mg.sfx.level:play()
+         done = true
+      end )
+   end
 end
 
 local matches_exact, matches_fuzzy
@@ -128,17 +144,7 @@ local function inguess( k )
    return false
 end
 
-function mg.keypressed( key )
-   if key == "escape" then
-      done = true
-   end
-
-   if game ~= 0 then
-      done = true
-      return
-   end
-
-   local k = string.upper(key)
+local function dopress( k )
    if inlist( keyset, k ) then
       if not round then
          selected = 2
@@ -161,10 +167,10 @@ function mg.keypressed( key )
          end
          if #guess >= #sol then
             finish_round()
-            return
+            return true
          end
       end
-      return
+      return true
    end
 
    -- Next round if applicable
@@ -172,6 +178,22 @@ function mg.keypressed( key )
       guess = {}
       selected = 1
       round = true
+      return true
+   end
+end
+
+function mg.keypressed( key )
+   if key == "escape" then
+      done = true
+   end
+
+   if game ~= 0 then
+      done = true
+      return
+   end
+
+   -- Handle the press first before handling other keys
+   if dopress( string.upper(key) ) then
       return
    end
 
@@ -203,10 +225,80 @@ function mg.keypressed( key )
    end
 end
 
+local function mousepos( x, y )
+   local offx, offy = 20, 25
+   local s, b = 40, 10
+   x = x - offx - b - bx
+   y = y - offy - b - by
+
+   -- First test x
+   if x < 0 or x > s-b then
+      return false
+   end
+
+   -- Figure out index
+   local i = math.floor(y / s)+1
+   y = y - (i-1)*s
+   if y < 0 or y > s-b then
+      return false
+   end
+   if i < 1 or i > #keyset then
+      return false
+   end
+   return i
+end
+
+local function btnover( x, y, btn )
+   if x < btn.x or x > btn.x+btn.w or y < btn.y or y > btn.y+btn.h then
+      return false
+   end
+   return true
+end
+
+function mg.mousemoved( x, y )
+   local i = mousepos( x, y )
+   if i then
+      mouseover = i
+   else
+      mouseover = nil
+   end
+
+   if canskip then
+      btnskip.mouseover = btnover( x, y, btnskip )
+   end
+end
+
+function mg.mousepressed( x, y, _button )
+   if game ~= 0 then
+      done = true
+      return
+   end
+
+   local i = mousepos( x, y )
+   -- Apply click
+   if i then
+      dopress( keyset[i] )
+   end
+
+   if canskip then
+      btnskip._pressed = btnover( x, y, btnskip )
+   end
+end
+
+function mg.mousereleased( x, y )
+   if canskip then
+      if btnskip._pressed and btnover( x, y, btnskip ) then
+         btnskip:clicked()
+      else
+         btnskip._pressed = false
+      end
+   end
+end
+
 local function setcol( col )
    local r, g, b, a = table.unpack( col )
    a = a or 1
-   lg.setColor( r, g, b, a*alpha )
+   lg.setColour( r, g, b, a*alpha )
 end
 
 local function drawglyph( g, f, x, y, w, h, col )
@@ -258,7 +350,7 @@ function mg.draw ()
    s = 40
    b = 10
    setcol( colours.text )
-   lg.printf( "Codes", font, bx+x, by+y, s+40+b, "center" )
+   lg.printf( p_("stringguess", "Codes"), font, bx+x, by+y, s+40+b, "center" )
    y = y+25
    x = x+20
    drawbox( bx+x, by+y, s+b, s*#keyset+b )
@@ -266,6 +358,8 @@ function mg.draw ()
       local col
       if inlist( guess, v ) then
          col = colours.highlight
+      elseif mouseover==k then
+         col = colours.mouseover
       else
          col = nil
       end
@@ -324,7 +418,7 @@ Guess the sequence of codes
    b = 10
    boxw = s*#sol+b+40
    setcol( colours.text )
-   lg.printf( "Attempts", font, bx+x, by+y, boxw, "center" )
+   lg.printf( p_("stringguess", "Attempts"), font, bx+x, by+y, boxw, "center" )
    y = y+25
    x = x
    drawbox( bx+x, by+y, boxw, s*(max_tries-1)+b )
@@ -334,6 +428,10 @@ Guess the sequence of codes
       end
       drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y, s+b )
       y = y+s
+   end
+
+   if canskip then
+      btnskip:draw( 0, 0 )
    end
 end
 

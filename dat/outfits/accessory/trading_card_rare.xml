@@ -18,6 +18,6 @@
   <loot_mod>10</loot_mod>
   <stress_dissipation>10</stress_dissipation>
   <heat_dissipation>10</heat_dissipation>
-  <ew_hide>5</ew_hide>
+  <ew_hide>-5</ew_hide>
  </specific>
 </outfit>

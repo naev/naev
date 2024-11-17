@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Majesteka">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>0.000000</interference>
+ </general>
+ <pos x="42.243987" y="-420.485787"/>
+ <spobs>
+  <spob>Erebus Enclave</spob>
+  <spob>Majesteka II</spob>
+  <spob>Majesteka IV</spob>
+  <spob>Majesteka Prime</spob>
+ </spobs>
+ <jumps>
+  <jump target="Hubfar">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Poltergeist">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Waterhole">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

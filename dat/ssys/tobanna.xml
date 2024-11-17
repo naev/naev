@@ -2,11 +2,12 @@
 <ssys name="Tobanna">
  <general>
   <radius>11000.000000</radius>
-  <stars>400</stars>
-  <interference>27.272700</interference>
+  <spacedust>400</spacedust>
+  <interference>61.363600</interference>
   <nebula volatility="19.400000" hue="300.000000">600.000000</nebula>
+  <nolanes/>
  </general>
- <pos x="818.745371" y="208.025463"/>
+ <pos x="799.080516" y="-148.086775"/>
  <spobs>
   <spob>Ariak</spob>
   <spob>HS-232</spob>
@@ -35,4 +36,7 @@
    <density>0.500000</density>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>thenebula</tag>
+ </tags>
 </ssys>

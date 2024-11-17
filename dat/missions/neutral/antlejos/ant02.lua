@@ -29,15 +29,12 @@ local reward = ant.rewards.ant02
 
 local returnpnt, returnsys = spob.getS("Antlejos V")
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    if ant.datecheck() then misn.finish() end
 
-   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Dvaered", true, function( _p )
-      -- TODO only look for industrial Dvaered planets
-      --return p:tags().industrial
-      return true
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 5, 30, "Dvaered", true, function( p )
+      return p:tags().industrial
    end )
    if not mem.destpnt then
       misn.finish()
@@ -77,7 +74,7 @@ function create ()
    misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."),
       {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Terraforming Antlejos V"), {
       fmt.f(_("Pick up the {cargo} at {pnt} ({sys} system)"), {cargo=cargo_name, pnt=mem.destpnt, sys=mem.destsys}),
       fmt.f(_("Deliver the cargo to {pnt} ({sys} system)"), {pnt=returnpnt, sys=returnsys})
@@ -92,13 +89,13 @@ end
 function land ()
    if mem.state==1 and  spob.cur() == mem.destpnt then
 
-      local fs = player.pilot():cargoFree()
+      local fs = player.fleetCargoMissionFree()
       if fs < cargo_amount then
          vntk.msg(_("Insufficient Space"), fmt.f(_("You have insufficient free cargo space for the {cargo}. You only have {freespace} of free space, but you need at least {neededspace}."),
             {cargo=cargo_name, freespace=fmt.tonnes(fs), neededspace=fmt.tonnes(cargo_amount)}))
          return
       end
-      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dock workers load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
+      vntk.msg(_("Cargo Loaded"), fmt.f(_("The dockworkers load the {amount} of {cargo} onto your ship."),{amount=fmt.tonnes(cargo_amount), cargo=cargo_name}))
 
       local c = commodity.new( N_("Heavy Machinery"), N_("Heavy machinery of Dvaered manufacture. Seems like it could be fairly useful for terraforming.") )
       misn.cargoAdd( c, cargo_amount )
@@ -115,7 +112,7 @@ function land ()
       vn.na(fmt.f(_([[You land and Verner, who now seems to be accompanied by a small team, quickly unloads the {cargo} and starts putting it to use.]]),{cargo=cargo_name}))
       v(fmt.f(_([["That was faster than expected."
 He slaps the hull of a heavy machine.
-"With these beauties we'll be able to make progress ten times faster now. That said, it does seem like this might not be enough. Come back to me once I get the {cargo} set up and I should have another task for you if you are interested."]]),{cargo=cargo_name}))
+"With these beauties we'll be able to make progress ten times faster now. That said, it does seem like this might not be enough. Come back to me once I get the {cargo} set up, and I should have another task for you if you are interested."]]),{cargo=cargo_name}))
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()

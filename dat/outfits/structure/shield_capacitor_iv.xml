@@ -4,7 +4,7 @@
   <typename>Shield Modifier</typename>
   <slot>structure</slot>
   <size>large</size>
-  <mass>320</mass>
+  <mass>240</mass>
   <price>500000</price>
   <description>The pinnacle in shield boosting technology, reinforcing the defences of ships fighting on the front lines.</description>
   <gfx_store>capacitor8.webp</gfx_store>

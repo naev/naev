@@ -4,20 +4,61 @@ TODO
 
 ### Handling Aborting Missions
 
-TODO
+When missions are aborted, the `abort` function is run if it exists. Although this function can't stop the mission from aborting, it can be used to clean up the mission stuff, or even start events such as a penalty for quitting halfway through the mission. A representative example is below:
+
+```lua
+local vntk = require "vntk"
+
+...
+
+function abort ()
+   vntk.msg(_("Mission Failure!"),_([[You have failed the mission, try again next time!]]))
+end
+```
+
+Not that it is not necessary to run `misn.finish()` nor any other clean up functions; this is all done for you by the engine.
 
 ### Dynamic Factions
 
 TODO
 
 ### Minigames
-\label{sec:misn-adv-minigames}
+`\label{sec:misn-adv-minigames}`{=tex}
 
 TODO
 
 ### Cutscenes
 
-TODO
+Cutscenes are a powerful way of conveying events that the player may or may not interact with. In order to activate cinematic mode, you must use `player.cinematics` function. However, the player will still be controllable and escorts will be doing their thing. If you want to make the player and escorts stop and be invulnerable, you can use the `cinema` library. In particular, the `cinema.on` function enables cinema mode and `cinema.off` disables it.
+
+You can also control where the camera is with `camera.set()`. By default, it will try to center the camera on the player, but if you pass a position or pilot as a parameter, it will move to the position or follow the pilot, respectively.
+
+The cornerstone of cutscenes is to use hooks to make things happen and show that to the player. In this case, one of the most useful hooks is the `hook.timer` timer hook. Let us put it all together to do a short example.
+
+```lua
+local cinema = require "cinema" -- load the cinema library
+...
+local someguy -- assume some pilot is stored here
+
+-- function that starts the cutscene
+function cutscene00 ()
+    cinema.on()
+    camera.set( someguy ) -- make the camera go to someguy
+    hook.timer( 5, "cutscene01" ) -- advance to next step in 5 seconds
+end
+function cutscene01 ()
+    someguy:broadcast(_("I like cheese!"),true) -- broadcast so the player can always see it
+    hook.timer( 6, "cutscene02" ) -- give 6 seconds for the player to see
+end
+function cutscene02 ()
+    cinema.off()
+    camera.set()
+end
+```
+
+Breaking down the example above, the cutscene itself is made of 3 functions. The first `cutscene00` initializes the cinematic mode and sets the camera to someguy. Afterwards, `cutscene01` makes someguy say some text and shows it to the player. Finally, in `cutscene02`, the cinematic mode is finished and the camera is returned to the player.
+
+While that is the basics, there is no limit to what can be done. It is possible to use shaders to create more visual effects, or the luaspfx library. Furthermore, pilots can be controlled and made to do all sorts of actions. There is no limit to what is possible!
 
 ### Unidiff
 
@@ -31,8 +72,8 @@ TODO
 
 In general, events and missions are to be seen as self-contained isolated entities, that is, they do not affect each other outside of mission variables. However, it is possible to exploit the `hook` module API to overcome this limitation with `hook.custom` and `naev.trigger`:
 
-* `hook.custom`: allows to define an arbitrary hook on an arbitrary string. The function takes two parameters: the first is the string to hook (should not collide with standard names), and the second is the function to run when the hook is triggered.
-* `naev.trigger`: also takes two parameters and allows to trigger the hooks set by `hook.custom`. In particular, the first parameter is the same as the first parameter string passed to `hook.custom`, and the second optional parameter is data to pass to the custom hooks.
+* `hook.custom`: allows defining an arbitrary hook on an arbitrary string. The function takes two parameters: the first is the string to hook (should not collide with standard names), and the second is the function to run when the hook is triggered.
+* `naev.trigger`: also takes two parameters and allows triggering the hooks set by `hook.custom`. In particular, the first parameter is the same as the first parameter string passed to `hook.custom`, and the second optional parameter is data to pass to the custom hooks.
 
 For example, you can define a mission to listen to a hook as below:
 
@@ -57,16 +98,16 @@ In this case, `"my_custom_hook_type"` is the name we are using for the hook. It 
 The hook will not be triggered immediately, but the second the current running code is done to ensure that no Lua code is run in parallel. In general, the mission variables should be more than good enough for event-mission communication, however, in the few cases communication needs to be more tightly coupled, custom hooks are a perfect solution.
 
 ### LuaTK API
-\label{sec:misn-adv-luatk}
+`\label{sec:misn-adv-luatk}`{=tex}
 
 TODO
 
 ### Love2D API
-\label{sec:misn-adv-love2d}
+`\label{sec:misn-adv-love2d}`{=tex}
 
 > LÖVE is an *awesome* framework you can use to make 2D games in Lua. It's free, open-source, and works on Windows, Mac OS X, Linux, Android and iOS.
 
-Naev implements a subset of the [LÖVE](https://love2d.org/) API (also known as Love2D), allowing it to execute many Love2D games out of the box. Furthermore, it is possible to use the Naev API from inside the Love2D to have the games interact with the Naev engine. In particular, the VN (Sec. \ref{sec:misn-basic-vn}), minigames (Sec. \ref{sec:misn-adv-minigames}), and LuaTK (Sec. \ref{sec:misn-adv-luatk}) are implemented using the Love2D API. Many of the core game functionality, such as the boarding or communication menus make use of this API also, albeit indirectly.
+Naev implements a subset of the [LÖVE](https://love2d.org/) API (also known as Love2D), allowing it to execute many Love2D games out of the box. Furthermore, it is possible to use the Naev API from inside the Love2D to have the games interact with the Naev engine. In particular, the VN (Sec. `\ref{sec:misn-basic-vn}`{=tex}), minigames (Sec. `\ref{sec:misn-adv-minigames}`{=tex}), and LuaTK (Sec. `\ref{sec:misn-adv-luatk}`{=tex}) are implemented using the Love2D API. Many of the core game functionality, such as the boarding or communication menus make use of this API also, albeit indirectly.
 
 The Love2D API works with a custom dialogue window that has to be started up. There are two ways to do this: create a Love2D game directory and run them, or set up the necessary functions and create the Love2D instance. Both are very similar.
 

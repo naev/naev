@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Mammon">
+ <lua>zalek.lua</lua>
  <points>110</points>
  <base_type>Mammon</base_type>
- <GFX size="128" sx="12" sy="12">mammon_zalek</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="128" sx="12" sy="12">mammon_zalek</gfx>
+ <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Bulk Freighter</class>
  <price>4600000</price>
@@ -18,9 +18,10 @@
  <trail_generator x="18" y="25" h="-6" always_under="1">nebula</trail_generator>
  <trail_generator x="18" y="-25" h="-6" always_under="1">nebula</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
+ <faction>Za'lek</faction>
  <license>Large Civilian Vessel</license>
- <cond>faction.playerStanding("Za'lek") &gt;= 60</cond>
- <condstr>You need at least 60 reputation with House Za'lek.</condstr>
+ <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 60</cond>
+ <condstr>You need at least 60% reputation with House Za'lek.</condstr>
  <description>While House Za'lek relies on drones for most everything, their limited fuel make them inadequate for performing long-distance transportation. To overcome this limitation, the Mammon Bulk Freighter was developed. It has large amounts of storage space, able to fit entire mobile research centres inside. Like most House Za'lek ships, the armour plating is fairly weak, although it is partially made up for by the advanced shield technology. However, the standard strategy is to rely on drones for fighting while making a getaway.</description>
  <health>
   <armour>400</armour>
@@ -38,17 +39,15 @@
   <weapon size="medium" prop="fighter_bay" x="51" y="-14" h="0" />
   <weapon size="medium" x="56" y="8" h="0" />
   <weapon size="medium" x="56" y="20" h="0" />
-  <utility size="large" prop="systems">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <utility size="medium" />
-  <structure size="large" prop="engines">Nexus Bolt 3500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-48 Heavy Plating</structure>
-  <structure size="large" />
+  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="medium" />
@@ -63,7 +62,7 @@
   <fbay_reload>15</fbay_reload>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <ew_hide>-10</ew_hide>
+  <ew_hide>10</ew_hide>
  </stats>
  <tags>
   <tag>zalek</tag>

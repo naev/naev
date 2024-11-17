@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Majesteka IV">
+ <pos x="5786.877303" y="6499.288121"/>
+ <GFX>
+  <space>A03.webp</space>
+  <exterior>desertic4.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

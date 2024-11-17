@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file pilot_heat.c
  *
  * @brief Handles the pilot heat stuff.
  */
-
 
 /** @cond */
 #include <math.h>
@@ -19,14 +16,11 @@
 #include "pilot_heat.h"
 
 #include "array.h"
-#include "log.h"
-
 
 /*
  * Prototypes.
  */
 static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o );
-
 
 /**
  * @brief Calculates the heat parameters for a pilot.
@@ -38,10 +32,10 @@ static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o );
 void pilot_heatCalc( Pilot *p )
 {
    double mass_kg;
-   mass_kg        = 1000. * p->base_mass;
-   p->heat_emis   = 0.8; /**< @TODO make it influencable. */
-   p->heat_cond   = STEEL_HEAT_CONDUCTIVITY;
-   p->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
+   mass_kg      = 1000. * p->base_mass;
+   p->heat_emis = 0.8; /**< @TODO make it influencable. */
+   p->heat_cond = STEEL_HEAT_CONDUCTIVITY;
+   p->heat_C    = STEEL_HEAT_CAPACITY * mass_kg;
 
    /* We'll approximate area for a sphere.
     *
@@ -58,19 +52,20 @@ void pilot_heatCalc( Pilot *p )
     * Substituting r in A we get:
     *  A = 4*pi*((3*mass)/(4*pi*density))^(2/3)
     * */
-   p->heat_area = 4.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. ) * p->stats.heat_dissipation;
+   p->heat_area = 4. * M_PI *
+                  pow( 3. / 4. * mass_kg / STEEL_DENSITY / M_PI, 2. / 3. ) *
+                  p->stats.heat_dissipation;
 }
-
 
 /**
  * @brief Calculates the thermal mass of an outfit.
  */
 double pilot_heatCalcOutfitC( const Outfit *o )
 {
-   /* Simple thermal mass. Put a floor on it so we get zero heat flux in case of NaN for massless outfits. */
+   /* Simple thermal mass. Put a floor on it so we get zero heat flux in case of
+    * NaN for massless outfits. */
    return STEEL_HEAT_CAPACITY * MAX( 1000. * o->mass, 1. );
 }
-
 
 /**
  * @brief Calculates the effective transfer area of an outfit.
@@ -81,26 +76,24 @@ double pilot_heatCalcOutfitArea( const Outfit *o )
 {
    double mass_kg = MAX( 1000. * o->mass, 1. ); /* Avoid it being 0. */
    /* We consider the effective area of outfits to be half of a sphere. */
-   return 2.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
+   return 2. * M_PI * pow( 3. / 4. * mass_kg / STEEL_DENSITY / M_PI, 2. / 3. );
 }
-
 
 /**
  * @brief Calculates the heat parameters for a pilot's slot.
  */
 void pilot_heatCalcSlot( PilotOutfitSlot *o )
 {
-   o->heat_T      = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
-   o->heat_start  = CONST_SPACE_STAR_TEMP; /* For cooldown purposes. */
-   if (o->outfit == NULL) {
-      o->heat_C      = 1.;
-      o->heat_area   = 0.;
+   o->heat_T     = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
+   o->heat_start = CONST_SPACE_STAR_TEMP; /* For cooldown purposes. */
+   if ( o->outfit == NULL ) {
+      o->heat_C    = 1.;
+      o->heat_area = 0.;
       return;
    }
-   o->heat_C      = pilot_heatCalcOutfitC(    o->outfit );
-   o->heat_area   = pilot_heatCalcOutfitArea( o->outfit );
+   o->heat_C    = pilot_heatCalcOutfitC( o->outfit );
+   o->heat_area = pilot_heatCalcOutfitArea( o->outfit );
 }
-
 
 /**
  * @brief Resets a pilot's heat.
@@ -110,30 +103,28 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o )
 void pilot_heatReset( Pilot *p )
 {
    p->heat_T = CONST_SPACE_STAR_TEMP;
-   for (int i=0; i<array_size(p->outfits); i++)
+   for ( int i = 0; i < array_size( p->outfits ); i++ )
       p->outfits[i]->heat_T = CONST_SPACE_STAR_TEMP;
 }
-
 
 /**
  * @brief Gets the heat mod for an outfit.
  */
 static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o )
 {
-   switch (o->type) {
-      case OUTFIT_TYPE_BOLT:
-      case OUTFIT_TYPE_BEAM:
-         return p->stats.fwd_heat;
+   switch ( o->type ) {
+   case OUTFIT_TYPE_BOLT:
+   case OUTFIT_TYPE_BEAM:
+      return p->stats.fwd_heat;
 
-      case OUTFIT_TYPE_TURRET_BOLT:
-      case OUTFIT_TYPE_TURRET_BEAM:
-         return p->stats.tur_heat;
+   case OUTFIT_TYPE_TURRET_BOLT:
+   case OUTFIT_TYPE_TURRET_BEAM:
+      return p->stats.tur_heat;
 
-      default:
-         return 1;
+   default:
+      return 1.;
    }
 }
-
 
 /**
  * @brief Adds heat to an outfit slot.
@@ -147,12 +138,11 @@ void pilot_heatAddSlot( const Pilot *p, PilotOutfitSlot *o )
     * this keeps numbers safe. */
    double hmod = pilot_heatOutfitMod( p, o->outfit );
 
-   o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
+   o->heat_T += hmod * outfit_heat( o->outfit ) / o->heat_C;
 
    /* Enforce a minimum value as a safety measure. */
    o->heat_T = MAX( o->heat_T, CONST_SPACE_STAR_TEMP );
 }
-
 
 /**
  * @brief Adds heat to an outfit slot over a period of time.
@@ -165,12 +155,11 @@ void pilot_heatAddSlotTime( const Pilot *p, PilotOutfitSlot *o, double dt )
 {
    double hmod = pilot_heatOutfitMod( p, o->outfit );
 
-   o->heat_T += (hmod * outfit_heat(o->outfit) / o->heat_C) * dt;
+   o->heat_T += ( hmod * outfit_heat( o->outfit ) / o->heat_C ) * dt;
 
    /* Enforce a minimum value as a safety measure. */
    o->heat_T = MAX( o->heat_T, CONST_SPACE_STAR_TEMP );
 }
-
 
 /**
  * @brief Heats the pilot's slot.
@@ -192,18 +181,15 @@ void pilot_heatAddSlotTime( const Pilot *p, PilotOutfitSlot *o, double dt )
  */
 double pilot_heatUpdateSlot( const Pilot *p, PilotOutfitSlot *o, double dt )
 {
-   double Q;
-
    /* Calculate energy leaving/entering ship chassis. */
-   Q           = -p->heat_cond * (o->heat_T - p->heat_T) * o->heat_area * dt;
+   double Q = -p->heat_cond * ( o->heat_T - p->heat_T ) * o->heat_area * dt;
 
    /* Update current temperature. */
-   o->heat_T  += Q / o->heat_C;
+   o->heat_T += Q / o->heat_C;
 
    /* Return energy moved. */
    return Q;
 }
-
 
 /**
  * @brief Heats the pilot's ship.
@@ -231,16 +217,15 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
    double Q, Q_rad;
 
    /* Calculate radiation. */
-   Q_rad       = CONST_STEFAN_BOLTZMANN * p->heat_area * p->heat_emis *
-         (CONST_SPACE_STAR_TEMP_4 - pow(p->heat_T,4.)) * dt;
+   Q_rad = CONST_STEFAN_BOLTZMANN * p->heat_area * p->heat_emis *
+           ( CONST_SPACE_STAR_TEMP_4 - pow( p->heat_T, 4. ) ) * dt;
 
    /* Total heat movement. */
-   Q           = Q_rad - Q_cond;
+   Q = Q_rad - Q_cond;
 
    /* Update ship temperature. */
-   p->heat_T  += Q / p->heat_C;
+   p->heat_T += Q / p->heat_C;
 }
-
 
 /**
  * @brief Returns a 0:1 modifier representing efficiency (1. being normal).
@@ -251,7 +236,7 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
  */
 double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
 {
-   return CLAMP( 0., 1., 1 - (T - Tb) / Tc );
+   return CLAMP( 0., 1., 1. - ( T - Tb ) / Tc );
 }
 
 /**
@@ -261,25 +246,25 @@ double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
  */
 void pilot_heatUpdateCooldown( Pilot *p )
 {
-   double t;
+   double t  = pow2( 1. - p->ctimer / p->cdelay );
+   p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP -
+               ( p->heat_start - CONST_SPACE_STAR_TEMP ) * t +
+               CONST_SPACE_STAR_TEMP;
 
-   t = pow2( 1. - p->ctimer / p->cdelay );
-   p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
-         CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
-
-   for (int i=0; i<array_size(p->outfits); i++) {
-      int ammo_threshold;
+   for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+      int              ammo_threshold;
       PilotOutfitSlot *o = p->outfits[i];
-      o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
-            CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+      o->heat_T          = o->heat_start - CONST_SPACE_STAR_TEMP -
+                  ( o->heat_start - CONST_SPACE_STAR_TEMP ) * t +
+                  CONST_SPACE_STAR_TEMP;
 
       /* Refill ammo too (also part of Active Cooldown) */
       /* Must be valid outfit. */
-      if (o->outfit == NULL)
+      if ( o->outfit == NULL )
          continue;
 
       /* Initial (raw) ammo threshold */
-      ammo_threshold = round(t * pilot_maxAmmoO(p,o->outfit));
+      ammo_threshold = round( t * pilot_maxAmmoO( p, o->outfit ) );
 
       /* Adjust for deployed fighters if needed */
       if ( outfit_isFighterBay( o->outfit ) )
@@ -295,23 +280,22 @@ void pilot_heatUpdateCooldown( Pilot *p )
  */
 double pilot_heatAccuracyMod( double T )
 {
-   return CLAMP( 0., 1., (T-500.)/600. );
+   return CLAMP( 0., 1., ( T - 500. ) / 600. );
 }
-
 
 /**
  * @brief Returns a 0:1 modifier representing fire rate (1. being normal).
  */
 double pilot_heatFireRateMod( double T )
 {
-   return CLAMP( 0., 1., (1100.-T)/300. );
+   return CLAMP( 0., 1., ( 1100. - T ) / 300. );
 }
 
-
 /**
- * @brief Returns a 0:2 level of fire, 0:1 is the accuracy point, 1:2 is fire rate point.
+ * @brief Returns a 0:2 level of fire, 0:1 is the accuracy point, 1:2 is fire
+ * rate point.
  */
 double pilot_heatFirePercent( double T )
 {
-   return 2.*pilot_heatAccuracyMod(T);
+   return 2. * pilot_heatAccuracyMod( T );
 }

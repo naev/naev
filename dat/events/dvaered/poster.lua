@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Dvaered Poster">
  <location>land</location>
- <cond>spob.cur():faction() == faction.get("Dvaered")</cond>
+ <faction>Dvaered</faction>
  <chance>50</chance>
 </event>
 --]]
@@ -14,10 +14,8 @@
 local vn = require 'vn'
 local graphics = require 'love.graphics'
 
--- luacheck: globals leave (Hook functions passed by name)
--- luacheck: globals watchPoster (NPC functions passed by name)
 
--- List of avaliable posters and index of the corresponding message
+-- List of available posters and index of the corresponding message
 local imagesNmsg = {
    {"gfx/vn/posters/dvaered/dv_athena.png", 1},
    {"gfx/vn/posters/dvaered/dv_brunhilde.png", 1},
@@ -65,7 +63,6 @@ function watchPoster()
       local oldcanvas = graphics.getCanvas()
       graphics.setCanvas(myCanvas)
       graphics.clear( 0, 0, 0, 0 )
-      graphics.setBlendMode( "alpha", "premultiplied" )
       graphics.draw( img, 0, 0, 0, 1, 1 )
 
       -- Add FLF stuff on it
@@ -77,7 +74,6 @@ function watchPoster()
       end
 
       -- Finish
-      graphics.setBlendMode( "alpha" )
       graphics.setCanvas(oldcanvas)
    end
 

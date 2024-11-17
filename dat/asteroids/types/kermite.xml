@@ -14,25 +14,25 @@
  <absorb>100</absorb>
  <commodity>
   <name>Water</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Clay</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
  </commodity>
  <commodity>
   <name>Gold</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
  <commodity>
   <name>Rhodium</name>
-  <quantity>5</quantity>
+  <quantity>25</quantity>
   <rarity>1</rarity>
  </commodity>
  <commodity>
   <name>Kermite</name>
-  <quantity>10</quantity>
+  <quantity>50</quantity>
   <rarity>2</rarity>
  </commodity>
 </asteroid>

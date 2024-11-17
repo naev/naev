@@ -3,6 +3,56 @@
 <event name="Ship Lover Quiz">
  <location>land</location>
  <chance>10</chance>
+ <cond>
+   local pnt = spob.cur()
+   -- Do not spawn on restricted spobs
+   if pnt:tags().restricted then return false end
+
+   -- Ignore on uninhabited and planets without bars
+   local services = pnt:services()
+   local flags = pnt:flags()
+   if not services.inhabited or not services.bar or flags.nomissionspawn then
+      return false
+   end
+
+   -- Only available on whitelisted factions
+   local whitelist = {
+      ["Independent"]= true,
+      ["Empire"]     = true,
+      ["Dvaered"]    = true,
+      ["Sirius"]     = true,
+      ["Soromid"]    = true,
+      ["Za'lek"]     = true,
+      ["Goddard"]    = true,
+      ["Frontier"]   = true,
+   }
+   local pfact = pnt:faction()
+   if not pfact or not whitelist[ pfact:nameRaw() ] then
+      return false
+   end
+
+   -- Make sure not same system as last time
+   local lastplanet = var.peek("shiplover_lastplanet")
+   if lastplanet then
+      if spob.get(lastplanet):system() == system.cur() then
+         return false
+      end
+   end
+
+   -- Only allow once every 10 periods at best
+   local lastplayed = var.peek("shiplover_lastplayed")
+   if not lastplayed then
+      lastplayed = time.get():tonumber()
+      var.push( "shiplover_lastplayed", lastplayed )
+   end
+   lastplayed = time.fromnumber( lastplayed )
+   if lastplayed + time.new( 0, 10, 0 ) > time.get() then
+      return false
+   end
+
+   -- Good to go
+   return true
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>
@@ -21,8 +71,6 @@ local shiplover_image   = "shiplover.webp"
 local shiplover_priority= 5
 
 local question_data, reward -- Non-persistent state
--- luacheck: globals event_end (Hook functions passed by name)
--- luacheck: globals approach_shiplover (NPC functions passed by name)
 
 local function getNUnique( t, n )
    local o = {}
@@ -70,7 +118,7 @@ local all_tags = merge_tables{ faction_tags, {"standard"} }
 local tagged_ships = {}
 for i, ship in ipairs(ship.getAll()) do
    local tags = ship:tags()
-   if not tags["noplayer"] then
+   if not tags["noplayer"] and not tags["nosteal"] and not ship:inherits() then
       for j, tag in ipairs(all_tags) do
          if tags[tag] then
             tagged_ships[tag] = tagged_ships[tag] or {}
@@ -144,56 +192,8 @@ end
 
 local nplayed
 function create ()
-   local pnt = spob.cur()
-
    -- Ignore claimed systems (don't want to ruin the atmosphere)
-   if not evt.claim( system.cur(), true ) then evt.finish() end
-
-   -- Do not spawn on restricted spobs
-   if pnt:tags().restricted then evt.finish() end
-
-   -- Ignore on uninhabited and planets without bars
-   local services = pnt:services()
-   local flags = pnt:flags()
-   if not services.inhabited or not services.bar or flags.nomissionspawn then
-      evt.finish()
-   end
-
-   -- Only available on whitelisted factions
-   local whitelist = {
-      ["Independent"]= true,
-      ["Empire"]     = true,
-      ["Dvaered"]    = true,
-      ["Sirius"]     = true,
-      ["Soromid"]    = true,
-      ["Za'lek"]     = true,
-      ["Goddard"]    = true,
-      ["Frontier"]   = true,
-   }
-
-   local pfact = pnt:faction()
-   if not pfact or not whitelist[ pfact:nameRaw() ] then
-      evt.finish()
-   end
-
-   -- Make sure not same system as last time
-   local lastplanet = var.peek("shiplover_lastplanet")
-   if lastplanet then
-      if spob.get(lastplanet):system() == system.cur() then
-         evt.finish()
-      end
-   end
-
-   -- Only allow once every 10 periods at best
-   local lastplayed = var.peek("shiplover_lastplayed")
-   if not lastplayed then
-      lastplayed = time.get():tonumber()
-      var.push( "shiplover_lastplayed", lastplayed )
-   end
-   lastplayed = time.fromnumber( lastplayed )
-   if lastplayed + time.create( 0, 10, 0 ) > time.get() then
-      evt.finish()
-   end
+   if not naev.claimTest( system.cur() ) then evt.finish() end
 
    -- See how many times cleared
    local quiz_types = {
@@ -231,7 +231,7 @@ function create ()
 
    -- Determine reward
    reward = {}
-   if nwon == 4 and player.numOutfit("Trading Card (Common)")<1 then
+   if nwon == 4 and player.outfitNum("Trading Card (Common)")<1 then
       local outfit_reward = outfit.get("Trading Card (Common)")
       reward.func = function ()
          shiplover_log(fmt.f(_("You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."), {outfit=outfit_reward}))
@@ -240,7 +240,7 @@ function create ()
       reward.msg_shiplover = _([["Wow. This is the 5th time you got my quiz right. This deserves a special reward. Here, take this special trading card. Don't worry, I have a dozen like it. I'll have to step up my quiz game from now on."]])
       reward.msg_obtain = fmt.reward(outfit_reward)
 
-   elseif nwon == 9 and player.numOutfit("Trading Card (Uncommon)")<1 then
+   elseif nwon == 9 and player.outfitNum("Trading Card (Uncommon)")<1 then
       local outfit_reward = outfit.get("Trading Card (Uncommon)")
       reward.func = function ()
          shiplover_log(fmt.f(_("You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes right."), {outfit=outfit_reward}))
@@ -249,7 +249,7 @@ function create ()
       reward.msg_shiplover = _([["Wow. This is the 10th time you got my quiz right. You are doing much better than I anticipated. Here, take one of my favourite trading cards. Make sure not to lose it, this one is fairly special! I'll have to think of better quizzes from now on."]])
       reward.msg_obtain = fmt.reward(outfit_reward)
 
-   elseif nwon == 24 and player.numOutfit("Trading Card (Rare)")<1 then
+   elseif nwon == 24 and player.outfitNum("Trading Card (Rare)")<1 then
       local outfit_reward = outfit.get("Trading Card (Rare)")
       reward.func = function ()
          shiplover_log(fmt.f(_("You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes right."), {outfit=outfit_reward}))
@@ -360,14 +360,7 @@ They lift up their toy Lancelot. You can barely make out a golden Efreeti etched
       local nw, _nh = naev.gfx.dim()
       local shipgfx = lg.newImage( ship.get(question_data.answer):gfxComm() )
       local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
-      local slpos, slnewpos
-      local function runinit ()
-         slpos = sl.offset
-         slnewpos = 0.75
-      end
-      vn.animation( 1, function( alpha, _dt, _params )
-         sl.offset = slnewpos*alpha + slpos*(1-alpha)
-      end, nil, "ease-in-out", runinit )
+      vn.move( sl, 0.75 )
       vn.appear( shipchar )
       vn.func( function ()
          vn.menu_x = math.min( -1, 500 - nw/2 )
@@ -375,9 +368,7 @@ They lift up their toy Lancelot. You can barely make out a golden Efreeti etched
       sl(_([["Great! So take a look at this ship and listen carefully."]]) .. "\n\n" .. question_data.question)
       function restore_vn ()
          vn.disappear( shipchar )
-         vn.animation( 1, function( alpha, _dt, _params )
-            sl.offset = slpos*alpha + slnewpos*(1-alpha)
-         end, nil, "ease-in-out" )
+         vn.move( sl, "center" )
       end
    end
 

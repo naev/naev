@@ -1,23 +1,31 @@
 local fmt = require "format"
 local luaspob = require "spob.lua.lib.spob"
 
-function init( spb )
-   return luaspob.init( spb, {
-      std_land = 50,
-      std_bribe = 100,
-      msg_granted = {
-         function () fmt.f(_([["Welcome, friend {player}. You may dock when ready."]]), {player=player.name()}) end,
-      },
-      msg_notyet = {
-         _([["We can't trust you to land here just yet."]]),
-      },
-      msg_cantbribe = {
-         _([["We have no need for your credits."]]),
-      },
-   } )
-end
+luaspob.setup{
+   std_land = 50,
+   std_bribe = 100,
+   msg_granted = {
+      function () return player.name() and fmt.f(_([["Welcome, friend {player}. You may dock when ready."]]), {player=player.name()}) or "" end,
+   },
+   msg_notyet = {
+      _([["We can't trust you to land here just yet."]]),
+   },
+   msg_cantbribe = {
+      _([["We have no need for your credits."]]),
+   },
+}
 
-load = luaspob.load
-unload = luaspob.unload
-can_land = luaspob.can_land
-comm = luaspob.comm
+local _can_land = can_land
+function can_land ()
+   local ret, msg = _can_land()
+   if type(msg) == "function" then
+      msg = msg()
+   end
+   if not ret then
+      return ret, msg
+   end
+   if not faction.get("Thurion"):known() then
+      return false, _([["You are not yet authorized to land here."]])
+   end
+   return ret, msg
+end

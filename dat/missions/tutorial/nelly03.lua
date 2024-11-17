@@ -47,7 +47,6 @@ local mining = require "minigames.mining"
    1: Acquired something and flying back
 --]]
 mem.misn_state = nil
--- luacheck: globals enter land heartbeat (Hook functions passed by name)
 
 local reward_amount = tutnel.reward.nelly03
 local reward_cargo = commodity.get("Nickel")
@@ -78,7 +77,7 @@ function create ()
       misn.finish()
    end
 
-   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see a Nelly motioning to you at a table.") )
+   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see Nelly motioning to you at a table.") )
 end
 
 
@@ -122,13 +121,13 @@ function accept ()
 
    vn.label("01_silent")
    if mem.destsys == system.cur() then
-      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field right here in {sys}! You just have to take us there, and get some materials from it and we should all be set!"]]),
+      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field right here in {sys}! You just have to take us there, and get some materials from it, and we should all be set!"]]),
          {sys=mem.destsys}))
    else
-      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field nearby at the {sys} system! You just have to take us there, and get some materials from it and we should all be set!"]]),
+      nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field nearby at the {sys} system! You just have to take us there, and get some materials from it, and we should all be set!"]]),
          {sys=mem.destsys}))
    end
-   nel(fmt.f(_([["I've recently learned about the notes functionality in the system map, it's very useful for writing down where good asteroids are! You can add notes to systems from the system map which you can access with the {mapkey}. You should try it out."]]),
+   nel(fmt.f(_([["I've recently learned about the #bnotes#0 functionality in the system map, it's very useful for writing down where good asteroids are! You can add #bnotes#0 to systems from the system map which you can access with the {mapkey}. You should try it out."]]),
       {mapkey=tut.getKey("starmap")}))
 
    nel(_([["One second. I have to… uh… go to the bathroom before we can be off!"
@@ -140,7 +139,7 @@ She runs off out of the spaceport bar.]]))
    nel(fmt.f(_([["Isn't it awesome! I figure we would need some drilling hardware to be able to get to the materials in the asteroid! You do know that normal weapons aren't able to extract materials properly right? Usually you have to use something like a {tool1}, or even better, a {tool2}! However, I'm pretty sure this should work as good or better! I wasn't able to fit an asteroid scanner, so we will have to eyeball it, but I'm great at that! Leave it to me."]]),
       {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")}))
    nel(_([["Time is credits or so they say, so let's go drill some asteroids!"]]))
-   vn.na(_("You don't really expect the 'Drillmaster 5000' to make it through takeoff, but worst comes to worst, you expect to be able to blast asteroids apart, which might work better."))
+   vn.na(_("You don't really expect the 'Drillmaster 5000' to make it through takeoff, but worse comes to worst, you expect to be able to blast asteroids apart, which might work better."))
 
    vn.done( tutnel.nelly.transition )
    vn.run()
@@ -163,7 +162,7 @@ She runs off out of the spaceport bar.]]))
 
    misn.setTitle( title )
    misn.setDesc(_("Help Nelly do some ad-hoc repairs on their ship by getting some materials from asteroids. There is no way this can go wrong, is there?"))
-   misn.setReward( fmt.credits(reward_amount) )
+   misn.setReward(reward_amount)
 
    hook.enter("enter")
    hook.land("land")
@@ -181,7 +180,7 @@ end
 
 local function nelly_say( msg )
    player.autonavReset( 3 )
-   player.pilot():comm(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}))
+   player.msg(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}),true)
 end
 
 local function drilltime ()
@@ -194,7 +193,7 @@ local function drilltime ()
    vn.transition( tutnel.nelly.transition )
    vn.na(_("You approach the asteroid, Nelly seems a bit nervous."))
    nel(_([["Time for the big moment! I've never actually tried the 'DRILLMASTER 5000'. This is like a maiden's voyage!"]]))
-   nel(_([["When I activate it, you'll see the drill interface. It will start stopped and you have to press any key for it to start. You have to press the trigger when the blue scanning thing is inside the red optimal target zone. I guess this is easier shown then done. Let me start it up and go ahead and try it!"]]))
+   nel(_([["When I activate it, you'll see the drill interface. It will start stopped, and you have to press any key for it to start. You have to press the trigger when the blue scanning thing is inside the red optimal target zone. I guess this is easier shown than done. Let me start it up and go ahead and try it!"]]))
 
    vn.label("mining")
    mining.vn{ difficulty=0, shots_max=2, reward_func=function( bonus )
@@ -252,22 +251,26 @@ She gives a small reverence to the debris before coming back to her happy self.
    vn.run()
 
    mem.misn_state = 1
+   misn.markerMove( mem.misn_marker, mem.retpnt )
    misn.osdActive(3)
 end
 
 function heartbeat ()
+   local scur = system.cur()
+   local af = scur:asteroidFields()
+   if #af <= 0 then
+      return -- Player probably changed systems
+   end
    if hb_state==1 then
-      local af = system.cur():asteroidFields()
       nelly_say(fmt.f(_("I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"),
          {overlaykey=tut.getKey("overlay")}))
-      system.mrkAdd( af[ rnd.rnd(1,#af) ].pos )
+      system.markerAdd( af[ rnd.rnd(1,#af) ].pos )
       hb_state = hb_state+1
    elseif hb_state==2 then
-      local af = system.cur():asteroidFields()
       local ppos = player.pos()
       for k,v in ipairs(af) do
          if ppos:dist( v.pos ) < v.radius+1000 then
-            nelly_say(_("Get close to an asteroid try to stop ontop of it. I want to try the Drillmaster!"))
+            nelly_say(_("Get close to an asteroid and try to stop on top of it. I want to try the Drillmaster!"))
             misn.osdActive(2)
             hb_state = hb_state+1
          end
@@ -276,8 +279,8 @@ function heartbeat ()
    elseif hb_state==3 then
       local pp = player.pilot()
       local a = asteroid.get( pp )
-      if a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
-         system.mrkClear()
+      if a and a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
+         system.markerClear()
          drilltime()
          a:setTimer( -1 ) -- Get rid of the asteroid
          return -- We're done here

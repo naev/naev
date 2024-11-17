@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tau Ceti e">
+ <pos x="3183.047860" y="-1809.968391"/>
+ <GFX>
+  <space>moon-M00.webp</space>
+  <exterior>uninhabited-rocky-green-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Tau Ceti e was once a well-developed world in the Imperial Core, and one of the most populated among human planets. Yet when the Incident came Tau Ceti e took complete and irreversible damage to its ionosphere. Although the effects were not immediate because of the distance from Sol, there was nevertheless a breakdown of the entire atmosphere and a destabilization of the planet's core.
+The population of Tau Ceti e were forced to flee as its atmosphere became less and less breathable and its tectonics became more violent, until it eventually reached the desolate state you find it in. The planet is covered in the ruins of many cities flooded and burned, but successive scavenging expeditions have picked the planet clean of anything of value.</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+ </tags>
+</spob>

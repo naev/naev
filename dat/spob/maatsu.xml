@@ -7,13 +7,13 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>L</class>
-  <population>2e+09</population>
+  <population>2e+08</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -25,12 +25,12 @@
   </services>
   <commodities/>
   <description>Though Maatsu's surface was never truly tamed, there is a fairly substantial population here. The larger population centres are kept climate neutral by localized weather control systems, while some of the more remote regions are left to the elements. This has made Maatsu a bit of an attraction to adventurous types who like to go out into the wild.</description>
-  <bar>Maatsu sees a fair bit of commerce traffic, so its spaceport bar thrives. Prices of food and drink are exorbitant as a result, but that's nothing new to the average interplanetary trader. So long as the basic facilities are present and readily available, bars can get away with quite a lot.</bar>
+  <bar>Maatsu sees a fair bit of commercial traffic, so its spaceport bar thrives. Prices of food and drink are exorbitant as a result, but that's nothing new to the average interplanetary trader. So long as the basic facilities are present and readily available, bars can get away with quite a lot.</bar>
  </general>
  <tech>
   <item>Hulls Low</item>
   <item>Ion 1</item>
-  <item>Laser 1</item>
+  <item>Ion 2</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Missiles 1</item>
@@ -38,4 +38,8 @@
   <item>Low Tech Upgrades</item>
   <item>Hulls High</item>
  </tech>
+ <tags>
+  <tag>rural</tag>
+  <tag>tourism</tag>
+ </tags>
 </spob>

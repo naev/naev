@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>This device seems to be almost like a parasite that hooks up to the ship's systems. It's not exactly clear what it does, but it seems to feed on the emitted radiation, allowing the ship to remain undetected longer when near other ships.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>firerate_turret.webp</gfx_store>
   <cpu>0</cpu>
  </general>
  <specific type="modification">

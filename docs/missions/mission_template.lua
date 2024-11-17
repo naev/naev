@@ -12,7 +12,7 @@
    Mission Template (mission name goes here)
 
    This is a Naev mission template.
-   In this document aims to provide a structure on which to build many
+   This document aims to provide a structure on which to build many
    Naev missions and teach how to make basic missions in Naev.
    For more information on Naev, please visit: http://naev.org/
    Naev missions are written in the Lua programming language: http://www.lua.org/
@@ -126,11 +126,11 @@ function accept ()
       -- `s1:format(arg1, ...)` or equivalently string.format(s1, arg1, ...)`.)
       -- You can tell `fmt.f()` to put a planet/system/commodity object into the text, and
       -- (via the `tostring` built-in) know to write its name in the player's native language.
-      text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pnt} in the {sys} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pnt=misplanet, sys=missys, reward=reward_text})
+      text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pnt} in the {sys} system, and I'll pay you {rwd} when we get there. How's that sound?"]]), {pnt=misplanet, sys=missys, rwd=reward_text})
    else
       text = fmt.f(_([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favourite suit! I had it custom tailored, you know.
-    "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]]),
-         {pnt=misplanet, sys=missys, reward=reward_text})
+    "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {rwd} for it! What do you say?"]]),
+         {pnt=misplanet, sys=missys, rwd=reward_text})
       mem.talked = true
    end
 
@@ -151,7 +151,7 @@ function accept ()
       -- mission.
       misn.setTitle( _("Suits Me Fine") )
       misn.setReward( reward_text )
-      misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pnt} in the {sys} system so he get some sort of special suit."), {pnt=misplanet, sys=missys}) )
+      misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pnt} in the {sys} system so he can get some sort of special suit."), {pnt=misplanet, sys=missys}) )
 
       -- Markers indicate a target planet (or system) on the map, it may not be
       -- needed depending on the type of mission you're writing.
@@ -186,7 +186,7 @@ function land ()
       -- Mission accomplished! Now we do an outro dialog and reward the
       -- player. Rewards are usually credits, as shown here, but
       -- other rewards can also be given depending on the circumstances.
-      vntk.msg( fmt.f(_([[As you arrive on {pnt}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
+      vntk.msg( fmt.f(_([[As you arrive at {pnt}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
 
       -- Reward the player. Rewards are usually credits, as shown here,
       -- but other rewards can also be given depending on the

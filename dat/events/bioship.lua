@@ -11,8 +11,6 @@ local bioship = require "bioship"
 local textoverlay = require "textoverlay"
 local audio = require 'love.audio'
 
--- luacheck: globals update_bioship bioship_pay bioship_land (Hook functions passed by name)
-
 local function bioship_click ()
    bioship.window()
    update_bioship()
@@ -30,14 +28,17 @@ function update_bioship ()
 
    -- Enable info window button based on bioship status
    if is_bioship then
-      local stage = player.shipvarPeek("biostage")
+      local pp = player.pilot()
+      -- Indicate to equipopt that we'll be handling the stages
+      pp:shipvarPush("bioship_init",true)
+      local stage = pp:shipvarPeek("biostage")
       -- Initialize in the case stage isn't set
       if not stage then
-         bioship.setstage( 1 )
+         bioship.setstage( pp, 1 )
       end
       local caption = _("Bioship")
-      if bioship.skillpointsfree() > 0 then
-         caption = caption .. _(" #r!!#0")
+      if bioship.skillpointsfree(pp) > 0 then
+         caption = caption .. "#r" .. _(" !!") .. "#0"
       end
       infobtn = player.infoButtonRegister( caption, bioship_click )
    end
@@ -54,7 +55,7 @@ function create ()
    -- Try to clean up outfits
    for k,o in ipairs(player.outfits()) do
       if remove_types[ o:type() ] then
-         local q = player.numOutfit( o, true )
+         local q = player.outfitNum( o, true )
          player.outfitRm( o, q )
          print(fmt.f(_("Removing unobtainable Bioship outfit '{outfit}'!"),{outfit=o}))
       end
@@ -74,12 +75,13 @@ function bioship_land ()
    canrankup = nil
 
    -- Check for stage up!
-   local exp = player.shipvarPeek("bioshipexp") or 0
-   local stage = player.shipvarPeek("biostage")
+   local pp = player.pilot()
+   local exp = pp:shipvarPeek("bioshipexp") or 0
+   local stage = pp:shipvarPeek("biostage")
    local maxstage = bioship.maxstage( player.pilot() )
-   local expstage =  bioship.curstage( exp, maxstage )
-   if expstage > stage then
-      bioship.setstage( expstage )
+   local expstage = bioship.curstage( exp, maxstage )
+   if expstage >= stage then
+      bioship.setstage( pp, expstage )
    end
 end
 
@@ -88,21 +90,29 @@ function bioship_pay( amount, _reason )
    if amount < 0 then return end
    if not bioship.playerisbioship() then return end
 
-   local stage = player.shipvarPeek("biostage")
+   local pp = player.pilot()
+   local stage = pp:shipvarPeek("biostage")
    local maxstage = bioship.maxstage( player.pilot() )
    -- Already max level
    if stage >= maxstage then
       return
    end
-   local exp = player.shipvarPeek("bioshipexp") or 0
+   local exp = pp:shipvarPeek("bioshipexp") or 0
    -- Enough exp for max level
    if bioship.curstage( exp, maxstage ) >= maxstage then
       return
    end
 
    -- Add exp
-   exp = exp + math.floor(amount / 1e3)
-   player.shipvarPush("bioshipexp",exp)
+   local BREAKPOINT = 500e3
+   if amount > BREAKPOINT then
+      local div = BREAKPOINT/1e3
+      exp = exp + math.floor( div / math.sqrt(div) * math.sqrt(amount / 1e3) + 0.5 )
+   else
+      exp = exp + math.floor( amount / 1e3 )
+   end
+   exp = math.min( exp, bioship.exptostage( maxstage ) )
+   pp:shipvarPush("bioshipexp",exp)
 
    -- Stage up!
    if exp >= bioship.exptostage( stage+1 ) and not canrankup then
@@ -115,7 +125,7 @@ function bioship_pay( amount, _reason )
       end
       sfx:play()
       if player.isLanded() then
-         bioship.setstage( bioship.curstage( exp, maxstage ) )
+         bioship.setstage( pp, bioship.curstage( exp, maxstage ) )
       end
    end
 end

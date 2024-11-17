@@ -17,10 +17,13 @@ local log         = require "vn.log"
 local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
 local luaspfx     = require "luaspfx"
+local luatk       = require "luatk"
+local fmt         = require "format"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
    autoscroll = (var.peek("vn_autoscroll")==true),
+   nobounce = (var.peek("vn_nobounce")==true),
 
    -- Internal usage
    _default = {
@@ -57,7 +60,6 @@ local function _setdefaults()
    vn._default.textbox_font = graphics.newFont(16)
    vn._default.textbox_font:setOutline( 0.5 )
    vn._default.textbox_w = 800
-   vn._default.textbox_tw = vn._default.textbox_w-60
    local fonth = vn._default.textbox_font:getLineHeight()
    vn._default.textbox_h = math.floor(200 / fonth) * fonth + 20*2
    vn._default.textbox_x = ox + (mw-vn._default.textbox_w)/2
@@ -76,6 +78,7 @@ local function _setdefaults()
    vn._default.menu_y = nil
    vn._default._postshader = nil
    vn._default._draw_fg = nil
+   vn._default._draw_mg = nil
    vn._default._draw_bg = nil
    vn._default._updatefunc = nil
    -- Options
@@ -87,9 +90,9 @@ local function _setdefaults()
    vn._default._options_over = false
    vn._default._show_options = false
    -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
-   vn._canvas     = graphics.newCanvas()
-   vn._prevcanvas = graphics.newCanvas()
-   vn._curcanvas  = graphics.newCanvas()
+   vn._canvas     = graphics.newCanvas( nil, nil, {depth=true} ) -- give depth
+   vn._prevcanvas = graphics.newCanvas( nil, nil, {depth=true} )
+   vn._curcanvas  = graphics.newCanvas( nil, nil, {depth=true} )
    -- Empty canvas used for some transitions
    vn._emptycanvas = graphics.newCanvas()
    local oldcanvas = graphics.getCanvas()
@@ -120,19 +123,19 @@ Sets the current drawing colour of the VN.
    @tparam tab col Colour table consisting of 3 or 4 number values.
    @tparam[opt=1] number alpha Additional alpha to multiply by.
 --]]
-function vn.setColor( col, alpha )
+function vn.setColour( col, alpha )
    local a = col[4] or 1
    alpha = alpha or 1
    a = a*alpha
-   graphics.setColor( col[1], col[2], col[3], a*vn._globalalpha )
+   graphics.setColour( col[1], col[2], col[3], a*vn._globalalpha )
 end
 
 local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
-   vn.setColor( border_col, alpha )
+   vn.setColour( border_col, alpha )
    graphics.rectangle( "fill", x, y, w, h )
-   vn.setColor( col, alpha )
+   vn.setColour( col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -154,6 +157,7 @@ local function _draw_character( c )
       x = (lw-vn.display_w)/2 + c.offset*vn.display_w - w*scale/2
       y = (lh-vn.display_h)/2
    end
+   y = y + (c.offy or 0) + (c.bouncey or 0)
    local col
    if c.talking then
       col = { 1, 1, 1 }
@@ -181,7 +185,7 @@ local function _draw_character( c )
    if c.shader and c.shader.prerender then
       c.shader:prerender( c.image )
    end
-   vn.setColor( col, c.alpha )
+   vn.setColour( col, c.alpha )
    graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, r, flip*scale, scale )
    graphics.setShader()
@@ -226,8 +230,13 @@ local function _draw()
    local bh = 20
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
-   vn.setColor( vn._bufcol, vn.textbox_text_alpha )
-   graphics.setScissor( x, y+bh, w, h-2*bh )
+   vn.setColour( vn._bufcol, vn.textbox_text_alpha )
+   -- We pad a bit here so that the top doesn't get cut off from certain
+   -- characters that extend above the font height
+   local padh = font:getLineHeight()-font:getHeight()
+   graphics.setScissor( x, y+bh-padh, w, h-2*bh+padh )
+   -- We're actually printing the entire text and using scissors to cut it out
+   -- TODO only show the visible text while not trying to render it
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
@@ -246,8 +255,13 @@ local function _draw()
       end
       _draw_bg( x, y, w, h, vn.namebox_bg, nil, vn.namebox_alpha )
       -- Draw text
-      vn.setColor( vn._bufcol, vn.namebox_alpha )
+      vn.setColour( vn._bufcol, vn.namebox_alpha )
       graphics.print( vn._title, font, x+bw, y+bh )
+   end
+
+   -- Custom Namebox
+   if vn._draw_mg then
+      vn._draw_mg()
    end
 
    -- Options
@@ -264,12 +278,12 @@ local function _draw()
       end
       _draw_bg( x, y, w, h, colbg, nil, 1 )
       graphics.setShader( sdf.gear )
-      vn.setColor( {0.95,0.95,0.95} )
+      vn.setColour( {0.95,0.95,0.95} )
       sdf.img:draw( x+5, y+5, 0, w-10, h-10 )
       graphics.setShader()
    end
 
-   -- Draw if necessary
+   -- Draw current state if necessary
    if not vn.isDone() then
       local s = vn._states[ vn._state ]
       s:draw()
@@ -284,10 +298,8 @@ local function _draw()
       -- Draw canvas
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
-      vn.setColor( {1, 1, 1, 1} )
-      graphics.setBlendMode( "alpha", "premultiplied" )
+      vn.setColour( {1, 1, 1, 1} )
       vn._canvas:draw( 0, 0 )
-      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
@@ -373,10 +385,31 @@ function vn.update( dt )
 end
 
 --[[--
+Handles resizing of the windows.
+   @tparam number _w New width.
+   @tparam number _h New height.
+--]]
+function vn.resize( _w, _h )
+   -- TODO fix scissoring breaking for the characters
+end
+
+--[[--
 Key press handler.
    @tparam string key Name of the key pressed.
+   @tparam boolean isrepeat Whether or not the string is repeating.
 --]]
-function vn.keypressed( key )
+function vn.keypressed( key, isrepeat )
+   if love._vn_keyrepeat_check and isrepeat then
+      return false
+   end
+   love._vn_keyrepeat_check = false
+
+   local tkopen = luatk.isOpen()
+   if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
+      naev.menuSmall()
+      return true
+   end
+
    if vn._show_options then
       opt.keypressed( key )
       return true
@@ -384,14 +417,14 @@ function vn.keypressed( key )
 
    -- Skip modifier keys
    local blacklist = {
-      "left alt",
-      "left shift",
-      "left ctrl",
-      "left gui",
-      "right alt",
-      "right ctrl",
-      "right shift",
-      "right gui",
+      "lalt",
+      "lshift",
+      "lctrl",
+      "lgui",
+      "ralt",
+      "rctrl",
+      "rshift",
+      "rgui",
    }
    for k,v in ipairs(blacklist) do
       if key == v then
@@ -400,7 +433,7 @@ function vn.keypressed( key )
    end
 
    if not vn._show_log then
-      if key=="tab" or key=="escape" then
+      if not tkopen and (key=="tab" or key=="escape") then
          vn._show_log = not vn._show_log
          log.open( vn.textbox_font )
          return true
@@ -424,7 +457,7 @@ end
 --[[--
 Mouse move handler.
 --]]
-function vn.mousemoved( mx, my )
+function vn.mousemoved( mx, my, dx, dy )
    if vn._show_options then
       opt.mousemoved( mx, my )
       return true
@@ -432,10 +465,14 @@ function vn.mousemoved( mx, my )
 
    if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
       vn._options_over = true
+      return true
    else
       vn._options_over = false
    end
-   return true
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:mousemoved( mx, my, dx, dy )
 end
 
 --[[--
@@ -475,8 +512,40 @@ Mouse released handler.
 function vn.mousereleased( mx, my, button )
    if vn._show_options then
       opt.mousereleased( mx, my, button )
+      return true
    end
-   return true
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:mousereleased( mx, my, button )
+end
+
+--[[--
+Mouse wheel handler.
+--]]
+function vn.wheelmoved( dx, dy )
+   if vn._show_options then
+      opt.wheelmoved( dx, dy )
+      return true
+   end
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:wheelmoved( dx, dy )
+end
+
+--[[--
+Text input handler.
+--]]
+function vn.textinput( str )
+   if vn._show_options then
+      opt.textinput( str )
+      return true
+   end
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:textinput( str )
 end
 
 -- Helpers
@@ -484,16 +553,18 @@ end
 Makes the player say something.
 
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.me( what, nowait ) vn.say( "You", what, nowait ) end
+function vn.me( what, noclear, nowait ) vn.say( "You", what, noclear, nowait ) end
 --[[--
 Makes the narrator say something.
 
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.na( what, nowait ) vn.say( "Narrator", what, nowait ) end
+function vn.na( what, noclear, nowait ) vn.say( "Narrator", what, noclear, nowait ) end
 
 --[[
 -- State
@@ -510,7 +581,11 @@ function vn.State.new()
    s._draw = _dummy
    s._update = _dummy
    s._mousepressed = _dummy
+   s._mousereleased = _dummy
+   s._mousemoved = _dummy
+   s._wheelmoved = _dummy
    s._keypressed = _dummy
+   s._textinput = _dummy
    s.done = false
    return s
 end
@@ -532,12 +607,33 @@ function vn.State:mousepressed( mx, my, button )
    vn._checkDone()
    return ret
 end
+function vn.State:mousereleased( mx, my, button )
+   local ret = self:_mousereleased( mx, my, button )
+   vn._checkDone()
+   return ret
+end
+function vn.State:mousemoved( mx, my, dx, dy )
+   local ret = self:_mousemoved( mx, my, dx, dy )
+   vn._checkDone()
+   return ret
+end
+function vn.State:wheelmoved( dx, dy )
+   local ret = self:_wheelmoved( dx, dy )
+   vn._checkDone()
+   return ret
+end
 function vn.State:keypressed( key )
    local ret = self:_keypressed( key )
    vn._checkDone()
    return ret
 end
+function vn.State:textinput( key )
+   local ret = self:_textinput( key )
+   vn._checkDone()
+   return ret
+end
 function vn.State:isDone() return self.done end
+local __needs_transition
 --[[
 -- Scene
 --]]
@@ -549,6 +645,8 @@ function vn.StateScene.new()
    return s
 end
 function vn.StateScene:_init()
+   __needs_transition = true
+
    -- Render previous scene to an image
    local canvas = vn._prevcanvas
    _draw_to_canvas( canvas )
@@ -562,6 +660,11 @@ function vn.StateScene:_init()
 
    -- Set alpha to max (since transitions will be used in general)
    vn._globalalpha = 1
+
+   -- Clear stuff
+   vn._buffer = ""
+   vn._buffer_y = 0
+   vn._title = nil
 
    _finish(self)
 end
@@ -577,6 +680,27 @@ function vn.StateCharacter.new( character, remove )
    s.remove = remove or false
    return s
 end
+local function _getpos( pos )
+   pos = pos or "center"
+   if type(pos)=="number" then
+      return pos
+   elseif pos == "center" then
+      return 0.5
+   elseif pos == "left" then
+      return 0.25
+   elseif pos == "right" then
+      return 0.75
+   elseif pos == "farleft" then
+      return 0.15
+   elseif pos == "farright" then
+      return 0.85
+   elseif pos == nil then
+      return 0.5
+   else
+      warn(fmt.f(_("vn: trying to set unknown character position '{pos}'!"),{pos=pos}))
+      return 0.5
+   end
+end
 function vn.StateCharacter:_init()
    if self.remove then
       local found = false
@@ -588,27 +712,14 @@ function vn.StateCharacter:_init()
          end
       end
       if not found then
-         error(_("character not found to remove!"))
+         error(_("vn: character not found to remove!"))
       end
    else
       local c = self.character
       table.insert( vn._characters, c )
       c.alpha = 1
       c.displayname = c.who -- reset name
-      local pos = self.character.pos or "center"
-      if type(pos)=="number" then
-         self.character.offset = pos
-      elseif pos == "center" then
-         self.character.offset = 0.5
-      elseif pos == "left" then
-         self.character.offset = 0.25
-      elseif pos == "right" then
-         self.character.offset = 0.75
-      elseif pos == "farleft" then
-         self.character.offset = 0.15
-      elseif pos == "farright" then
-         self.character.offset = 0.85
-      end
+      self.character.offset = _getpos( self.character.pos )
    end
    _finish(self)
 end
@@ -616,7 +727,7 @@ end
 -- Say
 --]]
 vn.StateSay = {}
-function vn.StateSay.new( who, what )
+function vn.StateSay.new( who, what, noclear )
    local s = vn.State.new()
    s._init = vn.StateSay._init
    s._update = vn.StateSay._update
@@ -625,9 +736,14 @@ function vn.StateSay.new( who, what )
    s._type = "Say"
    s.who = who
    s._what = what
+   s._noclear = noclear
    return s
 end
 function vn.StateSay:_init()
+   if __needs_transition then
+      warn(_("vn: vn.say being used after vn.scene without a vn.transition!"))
+   end
+
    -- Get the main text
    if type(self._what)=="function" then
       self.what = self._what()
@@ -637,40 +753,64 @@ function vn.StateSay:_init()
    self._textbuf = self.what
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
-   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_tw )
+   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_w-60 )
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
+   if self._noclear then
+      self._pos = utf8.len( vn._buffer )
+      self._textbuf = vn._buffer .. self._textbuf
+      self._text = vn._buffer
+      vn._buffer = self._text
+   else
+      self._pos = utf8.next( self._textbuf )
+      self._text = ""
+      -- Initialize scroll
+      vn._buffer_y = 0
+   end
    self._len = utf8.len( self._textbuf )
-   self._pos = utf8.next( self._textbuf )
-   self._text = ""
-   local c = vn._getCharacter( self.who )
-   vn._bufcol = c.color or vn._default._bufcol
-   vn._buffer = self._text
+   local c, ck = vn._getCharacter( self.who )
+   vn._bufcol = c.colour or vn._default._bufcol
    if c.hidetitle then
       vn._title = nil
    else
       vn._title = c.displayname or c.who
    end
+   local wastalking = c.talking
    -- Reset talking
    for k,v in ipairs( vn._characters ) do
       v.talking = false
    end
    c.talking = true
-
-   -- Initialize scroll
-   vn._buffer_y = 0
+   if not vn.nobounce and c.talking and not wastalking then
+      self.bounce = 0
+      c.bouncey = 0
+   else
+      self.bounce = nil
+   end
+   -- Resort the characters
+   table.remove( vn._characters, ck )
+   table.insert( vn._characters, c  )
 end
 function vn.StateSay:_update( dt )
+   if self.bounce ~= nil then
+      local c = vn._getCharacter( self.who )
+      self.bounce = self.bounce + dt
+      c.bouncey = math.sin( self.bounce * 5 * math.pi ) * math.max(0, (1-self.bounce)^2) * 10
+      if self.bounce > 1 then
+         self.bounce = nil
+         c.bouncey = 0
+      end
+   end
    self._timer = self._timer - dt
    while self._timer < 0 do
       -- No more characters left -> done!
       if utf8.len(self._text) == self._len then
-         _finish( self )
+         vn.StateSay._finish( self )
          return
       end
       self._pos = utf8.next( self._textbuf, self._pos )
-      self._text = string.sub( self._textbuf, 1, self._pos )
+      self._text = utf8.sub( self._textbuf, 1, self._pos )
       self._timer = self._timer + vn.speed
       vn._buffer = self._text
 
@@ -684,7 +824,7 @@ function vn.StateSay:_update( dt )
       -- Checks to see if we should scroll down
       local bh = 20
       local font = vn.textbox_font
-      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw )
+      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_w-60 )
       local lh = font:getLineHeight()
       if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
          if vn.autoscroll then
@@ -700,10 +840,11 @@ function vn.StateSay:_finish()
    vn._buffer = self._text
 
    local c = vn._getCharacter( self.who )
+   c.bouncey = nil
    log.add{
       who   = c.displayname or c.who,
       what  = self.what, -- Avoids newlines
-      colour= c.color or vn._default._bufcol,
+      colour= c.colour or vn._default._bufcol,
    }
 
    _finish( self )
@@ -717,6 +858,7 @@ function vn.StateWait.new()
    s._init = vn.StateWait._init
    s._draw = vn.StateWait._draw
    s._mousepressed = vn.StateWait._mousepressed
+   s._wheelmoved = vn.StateWait._wheelmoved
    s._keypressed = vn.StateWait._keypressed
    s._type = "Wait"
    return s
@@ -743,8 +885,8 @@ function vn.StateWait:_init()
    self._scrolled = _check_scroll( self._lines )
 end
 function vn.StateWait:_draw()
-   --vn.setColor( vn._bufcol )
-   vn.setColor( {0,1,1,1} )
+   --vn.setColour( vn._bufcol )
+   vn.setColour( {0,1,1,1} )
    if vn._buffer_y < 0 then
       graphics.setShader( sdf.arrow )
       graphics.draw( sdf.img, self._x-10, vn.textbox_y+30, -math.pi/2, 45, 15  )
@@ -770,14 +912,46 @@ end
 function vn.StateWait:_mousepressed( _mx, _my, _button )
    wait_scrollorfinish( self )
 end
+function vn.StateWait:_wheelmoved( _dx, dy )
+   if dy > 0 then -- upwards movement
+      vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif dy < 0 then -- downwards movement
+      vn._buffer_y = vn._buffer_y - vn.textbox_font:getLineHeight()
+      vn._buffer_y = math.max( vn._buffer_y, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      self._scrolled = _check_scroll( self._lines )
+      -- we don't check for finish, have to click for that
+      return true
+   end
+   return false
+end
 function vn.StateWait:_keypressed( key )
-   if key=="up" or key=="pageup" then
+   if key=="up" then
       if vn._buffer_y < 0 then
          vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
       end
+      vn._buffer_y = math.min( 0, vn._buffer_y )
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pageup" then
+      if vn._buffer_y < 0 then
+         local fonth = vn.textbox_font:getLineHeight()
+         local h = (math.floor( vn.textbox_h / fonth )-1) * fonth
+         vn._buffer_y = math.min( 0, vn._buffer_y+h )
+      end
+      self._scrolled = _check_scroll( self._lines )
+      return true
+   elseif key=="pagedown" then
+      local fonth = vn.textbox_font:getLineHeight()
+      local h = (math.floor( vn.textbox_h / fonth )-2) * fonth -- wait_scrollorfinish adds an extra line movement
+      vn._buffer_y = math.max( vn._buffer_y-h, (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines) )
+      wait_scrollorfinish( self )
       return true
    elseif key=="home" then
       vn._buffer_y = 0
+      self._scrolled = _check_scroll( self._lines )
       return true
    elseif key=="end" then
       vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
@@ -790,7 +964,6 @@ function vn.StateWait:_keypressed( key )
       "space",
       "right",
       "down",
-      "pagedown",
       "escape",
    }
    local found = false
@@ -832,24 +1005,26 @@ function vn.StateMenu:_init()
       self._items = self.items
    end
    if __debugging then
-      if self._items == nil then
-         warn(_("[VN]: menu has no options!"))
+      if self._items == nil or #self._items==0 then
+         error(_("vn: menu has no options!"))
       end
    end
    -- Set up the graphics stuff
    local font = vn.namebox_font
    -- Border information
    local tb = 15 -- Inner border around text
-   local b = 15 -- Outter border
+   local b = 15 -- Outer border
    self._tb = tb
    self._b = b
    -- Get longest line
+   local wmin = 300
+   local wmax = 900
    local w = 0
    local h = 0
    self._elem = {}
    for k,v in ipairs(self._items) do
       local text = string.format("#w%d#0. %s", k, v[1])
-      local sw, wrapped = font:getWrap( text, 900 )
+      local sw, wrapped = font:getWrap( text, wmax )
       sw = sw + 2*tb
       local sh =  2*tb + font:getHeight() + font:getLineHeight() * (#wrapped-1)
       local elem = { text, 0, h, sw, sh }
@@ -859,7 +1034,7 @@ function vn.StateMenu:_init()
       h = h + sh + b
       self._elem[k] = elem
    end
-   self._w = math.max( w, 300 )
+   self._w = math.max( w, wmin ) -- enforce minimum size
    self._h = h-b
    self._x = (love.w-self._w)/2
    self._y = (love.h-self._h)/2-100
@@ -898,10 +1073,10 @@ function vn.StateMenu:_draw()
       else
          col = {0.2, 0.2, 0.2}
       end
-      vn.setColor( col )
+      vn.setColour( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      vn.setColor( {0.7, 0.7, 0.7} )
-      graphics.print( text, font, gx+x+tb, gy+y+tb )
+      vn.setColour( {0.7, 0.7, 0.7} )
+      graphics.printf( text, font, gx+x+tb, gy+y+tb, w-tb*2 )
    end
 end
 function vn.StateMenu:_mousepressed( mx, my, button )
@@ -914,7 +1089,7 @@ function vn.StateMenu:_mousepressed( mx, my, button )
       local _text, x, y, w, h = table.unpack(v)
       if _inbox( mx, my, gx+x-b, gy+y-b, w+2*b, h+2*b ) then
          self:_choose(k)
-         return
+         return true
       end
    end
 end
@@ -924,6 +1099,7 @@ function vn.StateMenu:_keypressed( key )
    if n==0 then n = n + 10 end
    if n > #self._items then return false end
    self:_choose(n)
+   return true
 end
 function vn.StateMenu:_choose( n )
    vn._sfx.ui.option:play()
@@ -1100,9 +1276,10 @@ vn.Character = {}
 --[[--
 Makes a character say something.
    @tparam string what What is being said.
+   @tparam bool noclear Whether or not to clear the text buffer.
    @tparam bool nowait Whether or not to wait for player input when said.
 --]]
-function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
+function vn.Character:say( what, noclear, nowait ) return vn.say( self.who, what, noclear, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
 --[[--
 Creates a new character without adding it to the VN.
@@ -1116,13 +1293,18 @@ function vn.Character.new( who, params )
    setmetatable( c, vn.Character_mt )
    params = params or {}
    c.who = who
-   c.color = params.color or vn._default.color
+   c.colour = params.colour or vn._default.colour
    local pimage = params.image
    if pimage ~= nil then
       local img
-      if type(pimage)=='string' then
-         local searchpath = { "",
-               "gfx/vn/characters/" }
+      local timg = type(pimage)
+      if timg=='function' then
+         img = pimage()
+      elseif timg=='string' then
+         local searchpath = {
+            "",
+            "gfx/vn/characters/",
+         }
          for k,s in ipairs(searchpath) do
             local info = filesystem.getInfo( s..pimage )
             if info ~= nil then
@@ -1134,6 +1316,10 @@ function vn.Character.new( who, params )
          end
          if img == nil then
             error(string.format(_("vn: character image '%s' not found!"),pimage))
+         end
+         local iw, ih = img:getDimensions()
+         if iw <= 256 or ih <= 256 then
+            img:setFilter( "linear", "nearest" )
          end
       elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )
@@ -1147,6 +1333,7 @@ function vn.Character.new( who, params )
    c.shader = params.shader
    c.hidetitle = params.hidetitle
    c.pos = params.pos
+   c.offy = params.offy
    c.rotation = params.rotation
    c.params = params
    return c
@@ -1182,27 +1369,29 @@ local function _appear_setup( c, shader )
    vn.func( function ()
       shader:send( "texprev", vn._emptycanvas )
       for k,v in ipairs(c) do
-         local d = graphics.Drawable.new()
-         d.image = v.image
-         d.getDimensions = function ( self, ... )
-            return self.image:getDimensions(...)
-         end
-         d.draw = function ( self, ... )
-            local oldcanvas = graphics.getCanvas()
-            graphics.setCanvas( vn._curcanvas )
-            graphics.clear( 0, 0, 0, 0 )
-            self.image:draw( ... )
-            graphics.setCanvas( oldcanvas )
+         if v.image then
+            local d = graphics.Drawable.new()
+            d.image = v.image
+            d.getDimensions = function ( self, ... )
+               return self.image:getDimensions(...)
+            end
+            d.draw = function ( self, ... )
+               local oldcanvas = graphics.getCanvas()
+               graphics.setCanvas( vn._curcanvas )
+               graphics.clear( 0, 0, 0, 0 )
+               self.image:draw( ... )
+               graphics.setCanvas( oldcanvas )
 
-            local oldshader = graphics.getShader()
-            graphics.setShader( shader )
-            vn.setColor( {1, 1, 1, 1} )
-            graphics.setBlendMode( "alpha", "premultiplied" )
-            vn._curcanvas:draw( 0, 0 )
-            graphics.setBlendMode( "alpha" )
-            graphics.setShader( oldshader )
+               local oldshader = graphics.getShader()
+               graphics.setShader( shader )
+               vn.setColour( {1, 1, 1, 1} )
+               vn._curcanvas:draw( 0, 0 )
+               graphics.setShader( oldshader )
+            end
+            v.image = d
+         else
+            warn(fmt.f(_("vn: Appearing character '{c}' without an image!"),{c=(v.displayname or v.who)}))
          end
-         v.image = d
       end
    end )
 end
@@ -1210,7 +1399,9 @@ local function _appear_cleanup( c )
    -- Undo new drawables
    vn.func( function ()
       for k,v in ipairs(c) do
-         v.image = v.image.image
+         if v.image then
+            v.image = v.image.image
+         end
       end
    end )
 end
@@ -1219,7 +1410,7 @@ end
 Makes a character appear in the VN.
    @see vn.transition
    @see vn.appear
-   @tparam Character c Character to make appear.
+   @tparam Character|table c Character or table of Characters to make appear.
    @tparam[opt="fade"] string name Name of the transition effect to use (see vn.transition)
    @tparam number seconds Seconds to do the transition.
    @tparam[opt="linear"] string transition Name of the CSS transition to use.
@@ -1280,6 +1471,25 @@ function vn.disappear( c, name, seconds, transition )
 end
 
 --[[--
+Moves a character to another position.
+
+   @see vn.animation
+   @tparam Character c Character to move.
+   @tparam[opt="center"] string|number pos Position to move to. Can be either a [0,1] value, "center", "left", "right", "farleft", or "farright".
+--]]
+function vn.move( c, pos )
+   local function runinit ()
+      local cpos = c.offset
+      local tpos = _getpos( pos )
+      return { cpos, tpos }
+   end
+   vn.animation( 1, function( alpha, _dt, params )
+      local cpos, tpos = table.unpack(params)
+      c.offset = tpos*alpha + cpos*(1-alpha)
+   end, nil, "ease-in-out", runinit )
+end
+
+--[[--
 Starts a new scene.
 --]]
 function vn.scene()
@@ -1294,13 +1504,19 @@ Has a character say something.
 
    @tparam string who The name of the character that is saying something.
    @tparam string what What the character is saying.
+   @tparam[opt=false] bool noclear Whether or not to clear the text buffer.
    @tparam[opt=false] bool nowait Whether or not to introduce a wait or just skip to the next text right away (defaults to false).
 ]]
-function vn.say( who, what, nowait )
+function vn.say( who, what, noclear, nowait )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateSay.new( who, what ) )
-   if not nowait then
-      table.insert( vn._states, vn.StateWait.new() )
+   if type(what)~="table" then
+      what = {what}
+   end
+   for k,s in ipairs(what) do
+      table.insert( vn._states, vn.StateSay.new( who, s, noclear ) )
+      if not nowait then
+         table.insert( vn._states, vn.StateWait.new() )
+      end
    end
 end
 
@@ -1375,19 +1591,43 @@ Stops certain playing music.
 --]]
 function vn.musicStop( filename )
    vn.func( function ()
-      lmusic.stop( filename )
+      if type(filename)=="table" and filename.m then
+         lmusic.stop( filename.m )
+      else
+         lmusic.stop( filename )
+      end
    end )
 end
 
 --[[--
 Sets the pitch for playing music.
 
-   @tparam string|nil filename Name of the music to change pitch of or all if nil.
+   @tparam table|string|nil data Name of the music to change pitch of or all if nil. Passing the table returned from vn.music can also be done to specify the music.
    @tparam number p Pitch to set.
 --]]
-function vn.musicPitch( filename, p )
+function vn.musicPitch( data, p )
    vn.func( function ()
-      lmusic.setPitch( filename, p )
+      if type(data)=="table" and data.m then
+         lmusic.setPitch( data.m, p )
+      else
+         lmusic.setPitch( data, p )
+      end
+   end )
+end
+
+--[[--
+Sets the volume for playing music.
+
+   @tparam table|string|nil data Name of the music to change volume of or all if nil. Passing the table returned from vn.music can also be done to specify the music.
+   @tparam number p Volume to set.
+--]]
+function vn.musicVolume( data, p )
+   vn.func( function ()
+      if type(data)=="table" and data.m then
+         lmusic.setVolume( data.m, p )
+      else
+         lmusic.setVolume( data, p )
+      end
    end )
 end
 
@@ -1402,6 +1642,7 @@ function vn.done( ... )
    vn.func( function ()
       vn._globalalpha = 0
       vn._draw_fg = nil
+      vn._draw_mg = nil
       vn._draw_bg = nil
       vn._postshader = nil
       vn._update = nil
@@ -1421,7 +1662,7 @@ Allows doing arbitrary animations.
    @tparam number seconds Seconds to perform the animation
    @tparam func func Function to call when progress is being done.
    @tparam func drawfunc Function to call when drawing.
-   @tparam string|tab transition A CSS transition to use. Can be one of "ease", "ease-in", "ease-out", "ease-in-out", "linear", or a table defining the bezier curve parameters.
+   @tparam string|table transition A CSS transition to use. Can be one of "ease", "ease-in", "ease-out", "ease-in-out", "linear", or a table defining the bezier curve parameters.
    @tparam func initfunc Function run once at the beginning.
    @tparam func drawoverride Function that overrides the drawing function for the VN.
 --]]
@@ -1450,6 +1691,7 @@ function vn.transition( name, seconds, transition )
          end
       end, nil, -- no draw function
       transition, function () -- init
+         __needs_transition = false
          shader:send( "texprev", vn._prevscene )
          if shader:hasUniform( "u_r" ) then
             shader:send( "u_r", love_math.random() )
@@ -1460,9 +1702,7 @@ function vn.transition( name, seconds, transition )
 
          local oldshader = graphics.getShader()
          graphics.setShader( shader )
-         graphics.setBlendMode( "alpha", "premultiplied" )
          canvas:draw( 0, 0 )
-         graphics.setBlendMode( "alpha" )
          graphics.setShader( oldshader )
       end )
 end
@@ -1545,7 +1785,13 @@ Sets the shader to be used for post-processing the VN.
    @tparam Shader shader Shader to use for post-processing or nil to disable.
 --]]
 function vn.setShader( shader )
-   vn._postshader = shader
+   if vn._started then
+      vn._postshader = shader
+      return
+   end
+   vn.func( function ()
+      vn._postshader = shader
+   end )
 end
 
 --[[--
@@ -1554,7 +1800,13 @@ Sets the background drawing function. Drawn behind the VN stuff.
    @tparam func drawfunc Function to call to draw the background or nil to disable.
 --]]
 function vn.setBackground( drawfunc )
-   vn._draw_bg = drawfunc
+   if vn._started then
+      vn._draw_bg = drawfunc
+      return
+   end
+   vn.func( function ()
+      vn._draw_bg = drawfunc
+   end )
 end
 
 --[[--
@@ -1563,7 +1815,28 @@ Sets the foreground drawing function. Drawn in front the VN stuff.
    @tparam func drawfunc Function to call to draw the foreground or nil to disable.
 --]]
 function vn.setForeground( drawfunc )
-   vn._draw_fg = drawfunc
+   if vn._started then
+      vn._draw_fg = drawfunc
+      return
+   end
+   vn.func( function ()
+      vn._draw_fg = drawfunc
+   end )
+end
+
+--[[--
+Sets the middle drawing function. Drawn in right in front of the normal "namebox".
+
+   @tparam func drawfunc Function to call to draw the middle or nil to disable.
+--]]
+function vn.setMiddle( drawfunc )
+   if vn._started then
+      vn._draw_mg = drawfunc
+      return
+   end
+   vn.func( function ()
+      vn._draw_mg = drawfunc
+   end )
 end
 
 --[[--
@@ -1572,7 +1845,13 @@ Sets a custom update function. This gets run every frame.
    @tparam func updatefunc Update function to run every frame.
 --]]
 function vn.setUpdateFunc( updatefunc )
-   vn._updatefunc = updatefunc
+   if vn._started then
+      vn._updatefunc = updatefunc
+      return
+   end
+   vn.func( function ()
+      vn._updatefunc = updatefunc
+   end )
 end
 
 function vn._jump( label )
@@ -1592,7 +1871,7 @@ end
 function vn._getCharacter( who )
    for k,v in ipairs(vn._characters) do
       if v.who == who then
-         return v
+         return v, k
       end
    end
    error( string.format(_("vn: character '%s' not found!"), who) )
@@ -1631,7 +1910,43 @@ function vn.run()
    if #vn._states == 0 then
       error( _("vn: run without any states") )
    end
+   -- Check for duplicate labels
+   if __debugging then
+      local jumps = {}
+      local labels = {}
+      local menu_jumps = {}
+      for k,s in ipairs( vn._states ) do
+         if s._type=="Label" then
+            table.insert( labels, s.label )
+         elseif s._type=="Jump" then
+            table.insert( jumps, s.label )
+         elseif s._type=="Menu" then
+            if type(s.items)=="table" then
+               for i,m in ipairs(s.items) do
+                  table.insert( menu_jumps, m[2] )
+               end
+            end
+         end
+      end
+      table.sort( labels )
+      for k,v in ipairs(labels) do
+         if v==labels[k+1] then
+            warn(fmt.f(_("vn: Duplicate label '{lbl}'!"),{lbl=v}))
+         end
+      end
+      for k,v in ipairs(jumps) do
+         if not inlist( labels, v ) then
+            warn(fmt.f(_("vn: Jump to non-existent label '{lbl}'!"),{lbl=v}))
+         end
+      end
+      for k,v in ipairs(menu_jumps) do
+         if not inlist( labels, v ) then
+            warn(fmt.f(_("vn: Menu has jump to non-existent label '{lbl}'!"),{lbl=v}))
+         end
+      end
+   end
    love._vn = true
+   love._vn_keyrepeat_check = true
    love.exec( 'scripts/vn' )
    love._vn = nil
    vn._started = false
@@ -1644,7 +1959,7 @@ end
 --[[--
 Clears the fundamental running variables. Run before starting a new VN instance.
 
-<em>Note</em> Leaves customization to colors and positions untouched.
+<em>Note</em> Leaves customization to colours and positions untouched.
 --]]
 function vn.clear()
    local var = {
@@ -1681,8 +1996,8 @@ function vn.reset()
 end
 
 -- Default characters
-vn._me = vn.Character.new( "You", { color={1, 1, 1}, hidetitle=true } )
-vn._na = vn.Character.new( "Narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
+vn._me = vn.Character.new( "You", { colour={1, 1, 1} } )
+vn._na = vn.Character.new( "Narrator", { colour={0.5, 0.5, 0.5}, hidetitle=true } )
 
 -- Set defaults
 _setdefaults()

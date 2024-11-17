@@ -49,6 +49,19 @@ local articles = {
       head = N_([[Genetric Board Meets]]),
       body = _([[In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, the board of directors will meet today. The group is expected to appoint a new chief science officer.]])
    },
+   {
+      -- Note that Guild from Discworld
+      head = N_([[Space Traders Society Grows to 500 Members]]),
+      body = _([[With the joining of the Guild of Ecdysiasts, Nautchers, Cancanieres, and Exponents of Exotic Dance, the Space Traders Society has now reached 500 member organizations. The official ceremony was held at the New Space Trade Hub to the delight of visitors.]]),
+   },
+   {
+      head = N_([[Astra Vigilis Applicants Hit New Record]]),
+      body = _([[Applicants to the Astra Vigilis mercenary guild have hit a new record, with crowds of candidates amassing at New Xantusia's spaceport. Analysts believe that increasing galaxy insecurity is the lead driver of applications.]]),
+   },
+   {
+      head = N_([[Unrest at new Mining Vrata Quotas]]),
+      body = _([[Given the overexploitation of space resources, the Mining Vrata has posted the new mining quotas for the current cycle. The dismay in miners faces was clearly visible, with one saying "How are we supposed to make a living with this? No wonder everyone is turning to piracy!". Mining Vrata spokesperson was not available for comment.]]),
+   },
    --[[
       Politics
    --]]
@@ -87,7 +100,8 @@ local articles = {
       head = N_([[Former Pirate Writes Target Management Self-Help Book]]),
       body = function () fmt.f(
          _([[A former pirate shares her story on how she steered herself away from piracy, which she wrote about in an award-winning self-help book. "I used to spend my whole life pressing {target_nearest} to target enemies, but my life changed when I had a dream about a cat munching on some grass. 'Are you using the {target_hostile} key?' it asked. 'I find that it is very useful.' I have been doing as the strange cat in my dream said ever since, and I no longer have to lose money or alienate friends. If the universe followed this simple advice, I suspect we would live in a much safer society."]]),
-	 {target_nearest=naev.keyGet("target_nearest"), target_hostile=naev.keyGet("target_hostile")} ) end
+         {target_nearest=naev.keyGet("target_nearest"), target_hostile=naev.keyGet("target_hostile")} )
+      end
    },
 }
 

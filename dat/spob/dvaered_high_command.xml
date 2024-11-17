@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dvaered High Command">
- <lua>spob/lua/dvaered_mil_dhc.lua</lua>
+ <feature>#pDvaered Homeworld#0</feature>
+ <lua>dvaered_mil_dhc.lua</lua>
  <pos x="-16173.088338" y="-11736.708576"/>
  <GFX>
-  <space>000.webp</space>
+  <space>station-battlestation.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
@@ -23,7 +24,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>This is Dvaered High Command, the true seat of power over all Dvaered controlled territories. It is here that the Dvaered Generals come together and decide on a course of action for the Dvaered military forces. Understandably, Dvaered High Command is a military stronghold, one of the most heavily guarded places in the galaxy. One needs a certain number of Dvaered commendations to be even allowed to set foot on the station.</description>
+  <description>This is Dvaered High Command, the true seat of power over all Dvaered space, and where the Generals come together and decide on a course of action for the Dvaered military forces.
+Understandably, Dvaered High Command is a military stronghold, one of the most heavily guarded places in the galaxy. One needs a certain number of Dvaered commendations to be even allowed to set foot on the station.</description>
  </general>
  <tech>
   <item>Systems Low</item>
@@ -46,5 +48,7 @@
  <tags>
   <tag>military</tag>
   <tag>restricted</tag>
+  <tag>station</tag>
+  <tag>government</tag>
  </tags>
 </spob>

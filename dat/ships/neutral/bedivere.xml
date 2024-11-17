@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Bedivere">
+ <points>75</points>
+ <base_type>Bedivere</base_type>
+ <gfx size="83">bedivere</gfx>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1300000</price>
+ <time_mod>1.25</time_mod>
+ <fabricator>Nexus Shipyards</fabricator>
+ <faction>Independent</faction>
+ <license>Medium Combat Vessel</license>
+ <description>One of the most long-lived designs in spacefaring, the Bedivere was designed to be able to fulfill a diversity of different roles. Although technically considered a combat vessel, it has significant cargo holds and can also serve as a cargo ship. While still a flexible ship, even with retrofitting, the ancient system layout and lack of specialization led to the Bedivere being discontinued in favour of more modern ships. Although it is not possible to obtain new Bediveres, given their ease to repair, it seems like it will take a long time for them to completely disappear.</description>
+ <health>
+  <armour>390</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>22</crew>
+  <mass>420</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>110</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" />
+  <weapon size="large" />
+  <weapon size="medium" />
+  <weapon size="medium" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <loot_mod>30</loot_mod>
+  <stress_dissipation>25</stress_dissipation>
+ </stats>
+ <tags>
+  <tag>frontier</tag>
+  <tag>standard</tag>
+ </tags>
+</ship>

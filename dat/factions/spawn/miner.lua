@@ -1,22 +1,23 @@
 local scom = require "factions.spawn.lib.common"
+local var = require "shipvariants"
 
-local sllama   = ship.get("Llama")
-local skoala   = ship.get("Koala")
-local smule    = ship.get("Mule")
-local srhino   = ship.get("Rhino")
+local smule = scom.variants{
+   { w=1,   s=ship.get("Mule") },
+   { w=0.2, s=ship.get("Mule Hardhat") },
+}
 
 -- @brief Spawns a small group of miners
 local function spawn_lone_miner ()
    local pilots = {}
    local r = rnd.rnd()
    if r < 0.4 then
-      scom.addPilot( pilots, sllama, {name=_("Miner Llama"), ai="miner"}  )
+      scom.addPilot( pilots, var.llama, {name=_("Miner Llama"), ai="miner"} )
    elseif r < 0.7 then
-      scom.addPilot( pilots, skoala, {name=_("Miner Koala"), ai="miner"} )
+      scom.addPilot( pilots, var.koala, {name=_("Miner Koala"), ai="miner"} )
    elseif r < 0.9 then
       scom.addPilot( pilots, smule,  {name=_("Miner Mule"), ai="miner"} )
    else
-      scom.addPilot( pilots, srhino,  {name=_("Miner Rhino"), ai="miner"} )
+      scom.addPilot( pilots, var.rhino, {name=_("Miner Rhino"), ai="miner"} )
    end
 
    return pilots

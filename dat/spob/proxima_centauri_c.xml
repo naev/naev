@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Proxima Centauri c">
+ <pos x="8412.233780" y="4437.222213"/>
+ <GFX>
+  <space>I06.webp</space>
+  <exterior>station01.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

@@ -39,6 +39,15 @@ function stringguess.vn( params )
    s._keypressed = function( _self, key )
       return score.keypressed( key )
    end
+   s._mousemoved = function( _self, mx, my )
+      return score.mousemoved( mx, my )
+   end
+   s._mousepressed = function( _self, mx, my )
+      return score.mousepressed( mx, my )
+   end
+   s._mousereleased = function( _self, mx, my )
+      return score.mousereleased( mx, my )
+   end
    s._update = function( self, dt )
       if score.update( dt ) then
          self.done = true

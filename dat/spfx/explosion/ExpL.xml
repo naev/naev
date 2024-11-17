@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfx name="ExpL">
- <anim>2000</anim>
+ <anim>2</anim>
  <shader>
   <vert>project_pos.vert</vert>
   <frag>explosion.frag</frag>

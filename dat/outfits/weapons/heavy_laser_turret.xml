@@ -5,9 +5,9 @@
   <size>large</size>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
-  <mass>65</mass>
+  <mass>36</mass>
   <price>320000</price>
-  <description>The Heavy Laser Turret is more or less an upscaled version of the Laser Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
+  <description>The Heavy Laser Turret is more or less an upscaled version of the Laser Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon. While the resulting design only fits larger ships, very few pilots who equip them regret their purchase.</description>
   <gfx_store>laserturret2.webp</gfx_store>
   <cpu>-75</cpu>
  </general>
@@ -17,7 +17,7 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.4</delay>
-  <speed>1000</speed>
+  <speed>1100</speed>
   <range>1750</range>
   <falloff>1400</falloff>
   <gfx_end>laser2L.png</gfx_end>
@@ -26,7 +26,7 @@
   <trackmin>2400</trackmin>
   <trackmax>9600</trackmax>
   <damage>
-   <type>normal</type>
+   <type>energy</type>
    <penetrate>62</penetrate>
    <physical>48</physical>
   </damage>

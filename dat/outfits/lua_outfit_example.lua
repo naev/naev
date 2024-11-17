@@ -11,20 +11,36 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 * You have access to the pilotoutfit API which is meant for manipulating po.
 * Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
+-- The 'notactive' variable controls whether the outfit is considered an active
+-- outfit or not. By default, it is set to nil and thus the outfit is
+-- considered an active outfit. It can be used to have outfits with custom
+-- descriptions or prices while not being an active outfit.
+notactive = false
 
 -- The onload is run once when the outfit Lua is loaded. Useful for setting up
 -- variables. The passed variable is the outfit itself.
 function onload( _o )
 end
 
+-- Called to get the extra description of the outfit. This gets appended to the
+-- summary and description, and should be short. The function receives the
+-- pilot p if applicable, and the current outfit o. The function should return
+-- a translated string.
+function descextra( _p, _o )
+   return _("This outfit is very cool.")
+end
+
 -- Called when the price of the outfit for the player is check
--- Returns 3 values, the cost string, whether the player can buy it, and
--- whether the player can sell it
+-- Returns 4 values, the cost string, whether the player can buy it,
+-- whether the player can sell it, and what to display for the player "You
+-- have:" field. Note the last return is optional and defaults to displaying
+-- the player's owned credits when not specified.
 function price( q )
    local pricestr = string.format("%d credits",500*q) -- Use format library instead
    local canbuy = true
    local cansell = true
-   return pricestr, canbuy, cansell
+   local youhave = string.format("%d credits",player.credits())
+   return pricestr, canbuy, cansell, youhave
 end
 
 -- Run when the player tries to buy an outfit. Should determine whether the
@@ -45,8 +61,16 @@ function sell( q )
    --return false, reason
 end
 
--- The init is run when the pilot is created
+-- The init is run when the pilot is created or enters a new system (takeoff/jumpin)
 function init( _p, _po )
+end
+
+-- The function is run when the outfit is added to the pilot
+function onadd( _p, _po )
+end
+
+-- The function is run when the outfit is removed from the pilot
+function onremove( _p, _po )
 end
 
 -- The update function is run periodically every 1/3 seconds
@@ -55,27 +79,28 @@ function update( _p, _po, _dt )
 end
 
 -- When the pilot is out of energy, this function triggers. Note that before
--- this triggers, 'ontoggle( p, po false )' will be run if it exists.
+-- this triggers, 'ontoggle( p, po false, false )' will be run if it exists.
 -- This is especially useful for outfits that can't be toggled, but want to
 -- turn off when they run out of energy.
 function outofenergy( _p, _po )
 end
 
 -- The onhit function is run when the pilot 'p' takes damage
--- armour is the amount of armour damage taken (in MJ)
--- shield is the amount of shield damage taken (in MJ)
+-- armour is the amount of armour damage taken (in GJ)
+-- shield is the amount of shield damage taken (in GJ)
 -- attacker is the pilot that attacked
 function onhit( _p, _po, _armour, _shield, _attacker )
 end
 
--- The onshoot function is run when the pilot 'p' shoots. This includes primary / secondary / instant weapon sets
-function onshoot( _p, _po )
+-- The onshoot function is run when the pilot 'p' shoots ANY weapon. This includes primary / secondary / instant weapon sets
+function onshootany( _p, _po )
 end
 
--- The ontoggle function allows the oufit to be toggled by the player
--- on is whether it was toggled "on" or "off" and is a boolean value
--- the function returns whether or not the outfit changed state
-function ontoggle( _p, _po, _on )
+-- The ontoggle function is run when the outfit is part of a toggle weapon set
+-- and is toggled by the player. If it was not "on" when toggled, the on value
+-- will be true, it will be false otherwise.
+-- It returns a boolean whether or not the outfit was actually triggered.
+function ontoggle( _p, _po, _on, _natural )
    return false
 end
 
@@ -112,16 +137,38 @@ end
 function jumpin( _p, _po )
 end
 
+-- Triggered when pilot boards a target ship
+function board( _p, _po, _target )
+end
+
+-- Triggered when the player double taps a specific key, which can be either "accel", "left", or "right". Should return true if it activated something
+function keydoubletap( _p, _po, _key )
+end
+
+-- Triggered when the player releases a specific key, same as "keydoubletap"
+function keyrelease( _p, _po, _key )
+end
+
 --[[
-   Below are WEAPONS ONLY
+   Below are WEAPONS ONLY. However, they can be triggered by munitions,
+   which share the memory with the ORIGINAL spawning outfit.
 
    Note that these are calculated with particles.
 --]]
-function onimpact( _p, _target, _pos, _vel )
+-- Triggered when the weapon is about to shoot and can be used to control
+-- whether or not it should be able to shoot. By returning true, it'll start
+-- firing the weapon, while returning false will block in from shooting.
+function onshoot( _p, _po )
+   return false
 end
-function onmiss( _p, _pos, _vel ) -- _p may not exist
+-- Triggered when a particle shot by p impacts the target. p may not exist if
+-- the pilot that shot the weapon ceased to exist.
+function onimpact( _p, _target, _pos, _vel, _o )
 end
-
+--- Triggered when a particle times out without hitting a target. p may not
+--exist if the pilot that shot the weapon ceased to exist.
+function onmiss( _p, _pos, _vel, _o )
+end
 
 --[[
    Example of an activated outfit implemented fully in Lua

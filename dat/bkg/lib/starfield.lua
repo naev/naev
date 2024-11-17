@@ -1,7 +1,6 @@
 --[[
    Some sort of stellar wind type background.
 --]]
-local bgshaders = require "bkg.lib.bgshaders"
 local love = require 'love'
 local love_shaders = require 'love_shaders'
 local lg = require "love.graphics"
@@ -10,26 +9,28 @@ local prng = require("prng").new()
 
 local starfield = {}
 
+-- Radiosity has been computed by blurring the base images and getting a representative colour
+-- Alpha can be used to control the intensity of the radiosity and multiplies the RGB values
 starfield.stars = {
-   "blue01.webp",
-   "blue02.webp",
-   "blue04.webp",
-   "green01.webp",
-   "green02.webp",
-   "orange01.webp",
-   "orange02.webp",
-   "orange05.webp",
-   "redgiant01.webp",
-   "white01.webp",
-   "white02.webp",
-   "yellow01.webp",
-   "yellow02.webp"
+   { i="blue01.webp",     r=colour.new(0.90, 0.93, 0.98, 5) },
+   { i="blue02.webp",     r=colour.new(0.88, 0.94, 1.00, 5) },
+   { i="blue04.webp",     r=colour.new(0.91, 0.96, 1.00, 5) },
+   { i="green01.webp",    r=colour.new(0.90, 0.98, 0.89, 5) },
+   { i="green02.webp",    r=colour.new(0.94, 0.99, 0.93, 5) },
+   { i="orange01.webp",   r=colour.new(0.97, 0.85, 0.75, 5) }, -- r=colour.new(0.94, 0.30, 0.00, 8) }, Too red otherwise
+   { i="orange02.webp",   r=colour.new(1.00, 0.95, 0.83, 5) },
+   { i="orange05.webp",   r=colour.new(0.99, 0.93, 0.73, 5) },
+   { i="redgiant01.webp", r=colour.new(0.89, 0.80, 0.80, 5) }, -- r=colour.new(0.57, 0.00, 0.00, 8) }, Too red otherwise
+   --{ i="redgiant02.webp", r=colour.new(0.82, 0.53, 0.26, 5) }, -- Unused, would need colour tweaks
+   { i="white01.webp",    r=colour.new(0.84, 0.96, 0.98, 5) },
+   { i="white02.webp",    r=colour.new(0.94, 0.96, 0.98, 5) },
+   { i="yellow01.webp",   r=colour.new(1.00, 0.98, 0.91, 5) },
+   { i="yellow02.webp",   r=colour.new(1.00, 0.98, 0.79, 5) },
 }
 
 local starfield_frag = lf.read('bkg/shaders/starfield.frag')
 
-local cvs, texw, texh, nw, nh -- For static shader
-local shader, sstarfield, sf, sz, sb -- For dynamic shader
+local cvs, texw, texh, sb
 
 local function star_add( added, num_added )
    -- Set up parameters
@@ -43,7 +44,8 @@ local function star_add( added, num_added )
       num = prng:random(1,#stars)
       i   = i + 1
    end
-   local star  = stars[ num ]
+   local data  = stars[ num ]
+   local star  = data.i
    -- Load and set stuff
    local img   = tex.open( path .. star )
    -- Position should depend on whether there's more than a star in the system
@@ -58,7 +60,16 @@ local function star_add( added, num_added )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1 - nmove/0.2)/5
    scale = scale * 0.75
-   bkg.image( img, x, y, move, scale ) -- On the background
+   -- Normalize the radiosity so all stars are same brightness for same value of rad and equivalent to white light
+   local cr, cg, cb = data.r:rgb()
+   local cn = math.sqrt( cr*cr + cg*cg + cb*cb )
+   local rad = colour.new( cr, cg, cb, data.r:alpha() / cn * math.sqrt(3) )
+   -- Now, none of this makes sense, the "star dust" should be rendered on top
+   -- of the star because it moves faster the stars and should be closer,
+   -- however, it seems like this is actually a bit jarring, even though it's
+   -- more correct, so we just mess things up and make the star render in front
+   -- of the space dust. Has to move faster than the nebula to not be really really weird.
+   bkg.image( img, x, y, move, scale, nil, nil, true, rad )
    return num
 end
 
@@ -68,10 +79,16 @@ local function add_local_stars ()
    local r = prng:random()
    if r > 0.97 then
       n = 3
+      gfx.lightIntensity( 0.18 ) -- sun gives 3*4*0.18 =  2.16
    elseif r > 0.94 then
       n = 2
+      gfx.lightIntensity( 0.25 ) -- sun gives 2*4*0.25 = 2
    elseif r > 0.1 then
       n = 1
+      gfx.lightIntensity( 0.5 ) -- sun gives 1*4*0.5 = 2
+      gfx.lightAmbient( 0.05 )
+   else
+      gfx.lightAmbient( 0.1 ) -- Default to some weak ambient light
    end
 
    -- If there is an inhabited planet we'll need at least one star
@@ -94,16 +111,14 @@ local function add_local_stars ()
    end
 end
 
-local static = true
 function starfield.init( params )
    params = params or {}
    local nconf = naev.conf()
-   static = params.static or not nconf.background_fancy
    local seed = params.seed or system.cur():nameRaw()
 
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
-   sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
+   local sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
 
    -- Per system parameters
    prng:setSeed( seed )
@@ -113,47 +128,38 @@ function starfield.init( params )
    local rx, ry = vec2.newP( 3+1*prng:random(), 7+1*prng:random() ):get()
    local rz = 5+1*prng:random()
    --rx, ry, rz = 5, 7, 11
-   sz = 1+1*prng:random()
+   local sz = 1+1*prng:random()
    sb = nconf.bg_brightness
-
-   local motionblur = 1
-   if static then
-      motionblur = 0
-   end
 
    -- Ensure we're caught up with the current window/screen dimensions.
    love.origin()
    -- Initialize shader
-   shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
+   local shader = lg.newShader( string.format(starfield_frag, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
-   if static then
-      nw, nh = gfx.dim()
-      if params.size then
-         texw = params.size
-         texh = params.size
-      else
-         texw = nw
-         texh = nh
-         local texs = 4096 / math.max( texw, texh )
-         if texs < 1 then
-            texw = texw / texs
-            texh = texh / texs
-         end
-      end
-      cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
-      shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
-
-      local oldcanvas = lg.getCanvas()
-      lg.setCanvas( cvs )
-      lg.clear( 0, 0, 0, 0 )
-      lg.setShader( shader )
-      lg.setColor( {1,1,1,1} )
-      love_shaders.img:draw( 0, 0, 0, texw, texh )
-      lg.setShader()
-      lg.setCanvas( oldcanvas )
+   if params.size then
+      texw = params.size
+      texh = params.size
    else
-      sstarfield = bgshaders.init( shader, sf, {usetex=true} )
+      local nw, nh = gfx.dim()
+      texw = nw
+      texh = nh
+      local texs = 4096 / math.max( texw, texh )
+      if texs < 1 then
+         texw = texw / texs
+         texh = texh / texs
+      end
    end
+   cvs = lg.newCanvas( texw, texh, {dpiscale=1} )
+   shader:send( "u_camera", 0, 0, sz, 0.0008*sf )
+
+   local oldcanvas = lg.getCanvas()
+   lg.setCanvas( cvs )
+   lg.clear( 0, 0, 0, 0 )
+   lg.setShader( shader )
+   lg.setColour( {1,1,1,1} )
+   love_shaders.img:draw( 0, 0, 0, texw, texh )
+   lg.setShader()
+   lg.setCanvas( oldcanvas )
 
    if not params.nolocalstars then
       add_local_stars()
@@ -164,20 +170,9 @@ function starfield.canvas ()
    return cvs
 end
 
-function starfield.render( dt )
-   if static then
-      lg.setColor( {sb,sb,sb,1} )
-      cvs:draw( 0, 0 )
-      return
-   end
-   -- Get camera properties
-   local x, y = camera.get():get()
-   local z = camera.getZoom()
-   x = x / 1e6
-   y = y / 1e6
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )
-
-   sstarfield:render( dt )
+function starfield.render( _dt )
+   lg.setColour( {sb,sb,sb,1} )
+   cvs:draw( 0, 0 )
 end
 
 return starfield

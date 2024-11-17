@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Orion 4801 Core System">
  <general>
+  <shortname>M. Orion 4801 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
@@ -13,7 +14,7 @@
  <specific type="modification">
   <cpu_max>260</cpu_max>
   <energy>750</energy>
-  <energy_regen>65</energy_regen>
+  <energy_regen>33</energy_regen>
   <shield>450</shield>
   <shield_regen>10</shield_regen>
  </specific>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Point Zero Nidus">
+ <pos x="2859.481738" y="1778.531207"/>
+ <GFX>
+  <space>station-sphere.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>14000</population>
+  <hide>2.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Acting as the primary gateway for goods traveling to and from Sol, Point Zero Nidus was a very busy commercial port. This changed quite significantly when the trade lane was cut off by the Incident. While some traders still reminiscence of the golden era of Point Zero, due to its strategic position, it has suffered much less than other systems near the Nebula, still acting as an important trade hub in Soromid space.</description>
+  <bar>Reminiscent of the stock markets on pre-Federation Earth, the spacedock bar of Point Zero Nidus is one of the biggest and most important facilities aboard. People come here on business just as much as to socialize. Commodity exchange rates are displayed on big screens along the walls, and for a small fee a pilot can make use of a private trade booth.</bar>
+ </general>
+ <tags>
+  <tag>trade</tag>
+  <tag>station</tag>
+ </tags>
+</spob>

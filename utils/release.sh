@@ -45,7 +45,6 @@ done
 
 if [ -z "$SOURCEROOT" ] || [ -z "$BUILDPATH" ] || [ -z "$RUNNER" ]; then
     usage
-    exit 1
 fi
 
 

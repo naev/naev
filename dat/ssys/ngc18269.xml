@@ -5,11 +5,11 @@
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
   <radius>15000.000000</radius>
-  <stars>400</stars>
-  <interference>25.000000</interference>
-  <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>56.250000</interference>
+  <nolanes/>
  </general>
- <pos x="1651.222259" y="-621.797593"/>
+ <pos x="1602.146394" y="-56.137775"/>
  <spobs/>
  <jumps>
   <jump target="NGC-10653">

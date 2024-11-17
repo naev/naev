@@ -5,6 +5,7 @@
 --]]
 local vn = require "vn"
 local ferals = require "common.ferals"
+local lg = require "love.graphics"
 
 local zbh = {}
 
@@ -22,8 +23,7 @@ zbh.zach = {
 zbh.icarus = {
    name = _("Icarus"),
    portrait = nil,
-   -- TODO change image to proper one when Nohinohi graphics are changed
-   image = 'gfx/ship/reaver/reaver_comm.webp',
+   image = function () return lg.newImage( ship.get("Nohinohi"):gfxComm(1024) ) end,
    colour = nil,
 }
 zbh.pi = {
@@ -37,7 +37,7 @@ function zbh.vn_zach( params )
    return vn.Character.new( zbh.zach.name,
          tmerge( {
             image=zbh.zach.image,
-            color=zbh.zach.colour,
+            colour=zbh.zach.colour,
          }, params) )
 end
 
@@ -45,7 +45,7 @@ function zbh.vn_icarus( params )
    return vn.Character.new( zbh.icarus.name,
          tmerge( {
             image=zbh.icarus.image,
-            color=zbh.icarus.colour,
+            colour=zbh.icarus.colour,
          }, params) )
 end
 
@@ -53,7 +53,7 @@ function zbh.vn_pi( params )
    return vn.Character.new( zbh.pi.name,
          tmerge( {
             image=zbh.pi.image,
-            color=zbh.pi.colour,
+            colour=zbh.pi.colour,
          }, params) )
 end
 

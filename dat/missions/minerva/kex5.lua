@@ -38,8 +38,6 @@ local lmisn = require "lmisn"
 --  3: return to kex
 mem.misn_state = nil
 local strangelove_ship, thug_leader, thug_pilots -- Non-persistent state
--- luacheck: globals enter landed strangelove_board strangelove_dead strangelove_hail thug_check thug_heartbeat thugs_cleared (Hook functions passed by name)
--- luacheck: globals approach_kex (NPC functions passed by name)
 
 local landed_lab -- Forward-declared functions
 
@@ -262,7 +260,7 @@ function enter ()
          local pos = targetplanet:pos()
          spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
-         player.allowLand( false, _("#rYou are unable to land while the bounty hunters are still active.#0") )
+         player.landAllow( false, "#r".._("You are unable to land while the bounty hunters are still active.").."#0" )
 
          hook.timer( 3, "thug_check" )
 
@@ -277,7 +275,7 @@ function enter ()
             local p = pilot.add( d, "Za'lek", pos + vec2.newP( 100+700*rnd.rnd(), rnd.angle() ) )
             p:setInvincible(true)
             p:setInvisible(true)
-            p:disable()
+            p:setDisable()
          end
 
       -- State 1: Do nothing (just in case the player kills bounty hunters and goes off somewhere)
@@ -300,8 +298,8 @@ function enter ()
       end
 
    elseif mem.misn_state~=1 and rnd.rnd() < mem.thug_chance then
-      -- Make sure system isn't claimed, but we don't claim it
-      if misn.claim( system.cur(), true ) then
+      -- Make sure system isn't claimed, but we don't claim it (inclusive test)
+      if naev.claimTest( system.cur(), true ) then
          -- Spawn near the center, they home in on player
          spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(), rnd.angle()), false )
          -- Timer
@@ -384,7 +382,7 @@ function thugs_cleared ()
    vn.run()
 
    mem.misn_state = 1
-   player.allowLand( true )
+   player.landAllow( true )
 end
 
 function landed_lab ()
@@ -419,7 +417,7 @@ function landed_lab ()
    end )
 
    vn.label("living")
-   vn.na(_("You make your way through a tight, nearly impassible passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here. It rather seems all abandoned."))
+   vn.na(_("You make your way through a tight, nearly impassable passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here. It rather seems all abandoned."))
    vn.na(_("Eventually, you reach a very small room with a bed capsule. The ground and bed are splattered with blood, but it seems very old and desiccated. Some empty medical syringes and pouches are scattered on the floor."))
    vn.na(_("You turn over everything, but find nothing of interest."))
    vn.func( function () check_living = true end )
@@ -456,7 +454,7 @@ function landed_lab ()
    player.takeoff()
 
    -- Disable landing, will get disabled on entering new system
-   player.allowLand( false, _("You have better things to do right now.") )
+   player.landAllow( false, _("You have better things to do right now.") )
 end
 
 function strangelove_hail ()
@@ -487,6 +485,7 @@ function strangelove_board ()
    vn.clear()
    vn.scene()
    local dr = minerva.vn_strangelove()
+   vn.transition()
    -- TODO small scene
    vn.na(_("You cautiously board the ship, not sure what you are about to encounter. Trusting your system's sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you enter the ship, a strong, pungent odour makes you regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
@@ -545,7 +544,7 @@ His voice tears up slightly.]]))
    vn.label("2cont")
    dr(_([["Why did you have to kill yourself?"
 His sightless eyes look vacantly while tears flow down his face.]]))
-   dr(_([[You don't know how to answer and silence envelopes the room. Finally, he breaks the calmness.
+   dr(_([[You don't know how to answer and silence envelops the room. Finally, he breaks the calmness.
 "I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you."]]))
    dr(_([[The vitals monitor starts flashing red, and the medical droid begins to tweak and make adjustments to intravenous drips and other medical devices.
 He coughs a bit and you can see blood flecks splatter onto his clothes.]]))
@@ -621,7 +620,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
    vn.label("dr_death")
    vn.musicStop() -- Stop music
-   vn.na(_([[Silence once again envelopes the room. You look around and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
+   vn.na(_([[Silence once again envelops the room. You look around and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
    vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a flaw in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
 #rHONEYPOT ##329 ACTIVATED

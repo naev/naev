@@ -1,3 +1,4 @@
+// clang-format off
 /*
   Basic UTF-8 manipulation routines
   by Jeff Bezanson

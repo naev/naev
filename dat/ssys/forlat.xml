@@ -2,13 +2,16 @@
 <ssys name="Forlat">
  <general>
   <radius>12000.000000</radius>
-  <stars>400</stars>
-  <interference>11.111100</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>24.999975</interference>
  </general>
- <pos x="3.293802" y="371.581129"/>
+ <pos x="0.602024" y="672.908867"/>
  <spobs/>
  <jumps>
+  <jump target="Andres">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Dust">
    <autopos/>
    <hide>1.000000</hide>
@@ -20,15 +23,6 @@
   <jump target="New Haven">
    <autopos/>
    <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Regulus">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Wahri">
-   <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

@@ -2,11 +2,10 @@
 <ssys name="Borla">
  <general>
   <radius>14000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-131.533333" y="-192.766667"/>
+ <pos x="72.949660" y="144.362607"/>
  <spobs>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>

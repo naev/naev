@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Baitas">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>0.000000</interference>
+  <nolanes/>
+ </general>
+ <pos x="807.795878" y="520.502144"/>
+ <spobs>
+  <spob_virtual>Lost Small</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Alpha Centauri">
+   <pos x="-14901.412862" y="1174.628339"/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Protera">
+   <pos x="13197.498074" y="-4819.743244"/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <tags>
+  <tag>spoiler</tag>
+  <tag>noderelicts</tag>
+  <tag>wildspace</tag>
+ </tags>
+</ssys>

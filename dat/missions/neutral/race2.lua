@@ -2,10 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Racing Skills 2">
  <priority>3</priority>
+ <!--
  <cond>player.pilot():ship():class() == "Yacht" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
  <done>Racing Skills 1</done>
  <chance>20</chance>
  <location>Bar</location>
+ -->
+ <chance>0</chance>
+ <location>None</location>
  <notes>
   <tier>2</tier>
  </notes>
@@ -21,7 +25,6 @@
 local fmt = require "format"
 
 local checkpoint, racers, target -- Non-persistent state
--- luacheck: globals board counter jumpin land nexttarget1 nexttarget2 nexttarget3 racer1idle racer2idle racer3idle racerland stopcount takeoff (Hook functions passed by name)
 
 local chatter = {}
 chatter[1] = _("Let's do this!")
@@ -61,7 +64,7 @@ function accept ()
          mem.credits = mem.credits_hard
          tk.msg(_("Hard Mode"), _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]]))
       end
-      misn.setReward(fmt.credits(mem.credits))
+      misn.setReward(mem.credits)
       hook.takeoff("takeoff")
       else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
@@ -74,7 +77,7 @@ function takeoff()
       misn.finish(false)
    end
    if mem.choice ~= 1 then
-      for k,v in ipairs(player.pilot():outfits()) do
+      for k,v in ipairs(player.pilot():outfitsList()) do
          if v:type() == "Afterburner" then
             tk.msg(_("Illegal ship!"), _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]]))
             misn.finish(false)
@@ -120,7 +123,7 @@ function takeoff()
          racers[i]:outfitAdd("Unicorp PT-16 Core System")
          racers[i]:outfitAdd("Unicorp D-2 Light Plating")
          local en_choices = {
-            "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
+            "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
          racers[i]:outfitAdd(en_choices[rnd.rnd(1, #en_choices)])
       end
    end
@@ -242,7 +245,7 @@ end
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-         if mem.choice==2 and player.numOutfit("Racing Trophy") <= 0 then
+         if mem.choice==2 and player.outfitNum("Racing Trophy") <= 0 then
             tk.msg(_("You Won!"), fmt.f(_([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of {credits}!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]), {credits=fmt.credits(mem.credits)}))
             player.outfitAdd("Racing Trophy")
          else

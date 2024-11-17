@@ -5,11 +5,10 @@
   <map_shader>plasmastorm_map.frag</map_shader>
   <features>#pPlasma Storm (-50% energy and -50% stress dissipation)#0</features>
   <radius>27000.000000</radius>
-  <stars>400</stars>
-  <interference>10.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
+  <spacedust>400</spacedust>
+  <interference>22.500000</interference>
  </general>
- <pos x="1379.009482" y="-533.312606"/>
+ <pos x="1431.223046" y="-200.745584"/>
  <spobs>
   <spob>Gorgate</spob>
   <spob>Mirror I</spob>

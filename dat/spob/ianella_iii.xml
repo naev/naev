@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Ianella III">
+ <pos x="2890.192107" y="5174.111454"/>
+ <GFX>
+  <space>A04.webp</space>
+  <exterior>aquatic3.webp</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services/>
+ </general>
+</spob>

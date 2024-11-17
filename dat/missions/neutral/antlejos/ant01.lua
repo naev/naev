@@ -5,7 +5,14 @@
  <priority>4</priority>
  <chance>5</chance>
  <location>Bar</location>
- <cond>system.jumpDist("Antlejos") &gt; 3 and system.jumpDist("Antlejos") &lt; 13</cond>
+ <cond>
+   -- Must be "nearby" Antlejos
+   local d = system.jumpDist("Antlejos")
+   if d &lt; 4 or d &gt; 12 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
  <notes>
   <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>
@@ -26,7 +33,6 @@ local destpnt, destsys = spob.getS("Antlejos V")
 local cargo_amount = 20 -- Amount in mass
 local reward = ant.rewards.ant01
 
--- luacheck: globals land (Hook functions passed by name)
 
 function create ()
    misn.setNPC( _("Verner"), ant.verner.portrait, _("A bored individual that seems to be looking for someone to do a task for him.") )
@@ -52,12 +58,12 @@ function accept ()
 
    vn.label("nospace")
    v(fmt.f(_([["You only have {freespace} of free space. You need to be able to carry at least {neededspace}!"]]),
-         {freespace=fmt.tonnes(player.pilot():cargoFree()), neededspace=fmt.tonnes(cargo_amount) }))
+         {freespace=fmt.tonnes(player.fleetCargoMissionFree()), neededspace=fmt.tonnes(cargo_amount) }))
    vn.done()
 
    vn.label("accept")
    vn.func( function ()
-      if player.pilot():cargoFree() < cargo_amount then
+      if player.fleetCargoMissionFree() < cargo_amount then
          vn.jump("nospace")
          return
       end
@@ -79,7 +85,7 @@ function accept ()
 
    misn.setTitle( _("Verner's Request") )
    misn.setDesc(fmt.f(_("Verner asked you to take him to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.osdCreate(_("Verner's Request"), {
       fmt.f(_("Take Verner to {pnt} ({sys} system)"), {pnt=destpnt, sys=destsys}),
    })
@@ -103,7 +109,7 @@ function land ()
 "More silica content than expected. This is perfect!", he mumbles to himself.]]))
    v(_([[He turns to you and speaks.
 "Thank you for bringing me here. This is much better than expected. You are probably wondering what I've come to do to such an inhospitable place, but it should be obvious. I'm going to terraform this wonderful place into a paradise!"]]))
-   v(_([["I'm going to be setting up camp, but come back in a bit and I'll have more work for you. This is going to be very exciting indeed!"]]))
+   v(_([["I'm going to be setting up camp, but come back in a bit, and I'll have more work for you. This is going to be very exciting indeed!"]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.run()

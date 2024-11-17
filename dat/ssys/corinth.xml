@@ -2,11 +2,10 @@
 <ssys name="Corinth">
  <general>
   <radius>20000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-695.872686" y="-726.417439"/>
+ <pos x="-535.683491" y="-513.460093"/>
  <spobs>
   <spob>Corinth 1</spob>
   <spob>Corinth 2</spob>
@@ -14,12 +13,12 @@
  </spobs>
  <jumps>
   <jump target="Kohler">
-   <pos x="-20360.894424" y="-13308.977974"/>
+   <pos x="-14862.362492" y="-13375.225347"/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Orion">
-   <autopos/>
+   <pos x="4.897009" y="19024.301455"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Procyon">

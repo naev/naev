@@ -37,19 +37,19 @@ local function turnon( p, po )
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    return true
 end
 
 function init( p, po )
-   turnoff()
+   turnoff( p, po )
    mem.timer = nil
    po:state("off")
    mem.isp = (p == player.pilot())
@@ -76,7 +76,5 @@ end
 function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
-   else
-      return turnoff( p, po )
    end
 end

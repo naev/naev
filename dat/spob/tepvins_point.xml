@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tepvin's Point">
+ <pos x="-8635.359788" y="5219.463804"/>
+ <GFX>
+  <space>moon-M04.webp</space>
+  <exterior>forest.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <base>50.000000</base>
+  <bonus>25.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>570000</population>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Tepvin's Point is a small moon orbiting Tepvin Lambda. While having a fairly low habitability ranking, it was nonetheless colonized as a minor Imperial colony. Due to the scarcity of metals and resources on the planet, the local industry focuses mainly on agriculture, however, low fertility and sub-optimal lighting gives fairly meager yields, even when using the most bountiful types of crops. Despite that, since there is nothing much better to do, the locals persevere in the fields. Since the incident, many refugees have also found their way, someway or other, to Tepvin's Point and it is currently at its highest population ever. </description>
+  <bar>The bar is calm with more patrons than you would expect. It seems like the low agricultural yields also imply not much work to do for the locals, and many turn to drinking as their main hobby.</bar>
+ </general>
+ <tags>
+  <tag>agriculture</tag>
+ </tags>
+</spob>

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Demon">
+ <lua>zalek.lua</lua>
  <points>100</points>
  <base_type>Demon</base_type>
- <GFX sx="12" sy="12">demon</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="83" sx="12" sy="12">demon</gfx>
+ <rarity>1</rarity>
  <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
  <price>2400000</price>
@@ -14,9 +14,10 @@
  <trail_generator x="-30" y="8" h="0">zalek</trail_generator>
  <trail_generator x="-30" y="-8" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
+ <faction>Za'lek</faction>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Za'lek") &gt;= 50</cond>
- <condstr>You need at least 50 reputation with House Za'lek.</condstr>
+ <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 50</cond>
+ <condstr>You need at least 50% reputation with House Za'lek.</condstr>
  <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers and it has poor armour, like all Za'lek ships, but this comes as little consolation to the Za'lek's enemies.</description>
  <health>
   <armour>400</armour>
@@ -40,8 +41,8 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Unicorp Falcon 1300 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

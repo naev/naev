@@ -28,6 +28,7 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local bioship = require "bioship"
+local ai_setup = require "ai.core.setup"
 
 -- NPC
 mem.npc_portrait = {}
@@ -46,8 +47,6 @@ local opponent, sec11, sec12, sec21, sec22, tv1, tv2
 local mispla, missys = spob.getS("Dvaer Prime")
 
 local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
--- luacheck: globals assault enter escort_attacked jumpout land oppo_attacked oppo_boarded oppo_dead oppo_disabled oppo_jump player_disabled (Hook functions passed by name)
--- luacheck: globals cleanNbegin competitor1 competitor2 competitor3 competitor4 competitor5 (NPC functions passed by name)
 
 function create ()
    if not misn.claim ( missys ) then
@@ -66,7 +65,7 @@ local function populate_bar() --add some random npcs
       misn.npcAdd("competitor2", _("Pilot"), mem.npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", _("Imperial pilot"), mem.npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
+      misn.npcAdd("competitor3", _("Imperial pilot"), mem.npc_portrait[4], _([[This pilot is clearly from the Empire.]]))
    end
    if rnd.rnd() < 0.5 then
       misn.npcAdd("competitor4", _("Dvaered pilot"), mem.npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
@@ -108,7 +107,7 @@ function accept()
       misn.accept()
 
       misn.setTitle(_("The Dvaered Championship"))
-      misn.setReward(_("From 50k to 1.6m credits, depending on your rank"))
+      misn.setReward(fmt.f(_("From {low} to {high} credits, depending on your rank"),{low=fmt.credits(50e3), high=fmt.credits(1.6e6)}))
       misn.setDesc(_("You are taking part in a fight contest. Try to do your best!"))
       misn.osdCreate(_("The Dvaered Championship"), {
          _("Go to the starting point"),
@@ -166,10 +165,11 @@ function beginbattle()
 end
 
 function enter()
-   mem.playerclass = ship.class(pilot.ship(player.pilot()))
+   local pp = player.pilot()
+   mem.playerclass = pp:ship():class()
 
    --Launchers are forbidden
-   local listofoutfits = player.pilot():outfits()
+   local listofoutfits = pp:outfitsList()
    local haslauncher = false
    for i, j in ipairs(listofoutfits) do
       if j:type() == "Launcher" then
@@ -191,7 +191,7 @@ function enter()
 
       local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie", naked=true} )
+      opponent = pilot.add( oppotype, "Mercenary", mispla, mem.opponame, {ai="baddie", naked=true} )
 
       oppotype = opponent:ship()
 
@@ -232,6 +232,7 @@ function enter()
 
       opponent:control()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
+      ai_setup.setup(opponent)
 
       --The TV and the security
       tv1 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), {ai="civilian"} )
@@ -243,41 +244,25 @@ function enter()
 
       hooks = {}
 
-      for i, k in ipairs({sec11, sec12, sec21, sec22}) do
-         k:outfitRm("all")
-         k:outfitAdd("Gauss Gun", 3)
-         k:outfitAdd("Improved Stabilizer")
-      end
-
-      for i, k in ipairs({tv1,tv2}) do
-         k:outfitRm("all")
-         k:outfitAdd("Improved Stabilizer", 2)
-      end
-
+      -- TODO give outfits to make the security + holovision speedier?
       for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22}) do
          hooks[i] = hook.pilot(k, "attacked", "escort_attacked")
-         k:outfitRm("cores")
-         k:outfitAdd("Tricon Zephyr Engine")
-         k:outfitAdd("Milspec Orion 2301 Core System")
-         k:outfitAdd("S&K Ultralight Combat Plating")
-         k:setHealth(100,100)
-         k:setEnergy(100)
          k:control()
          k:memory().radius = 300 --Set the radius for the follow function
       end
 
       -- Set the angle for the follow function
-      tv1:memory().angle = math.rad(90)
+      tv1:memory().angle   = math.rad(90)
       sec11:memory().angle = math.rad(200)
       sec12:memory().angle = math.rad(240)
-      tv2:memory().angle = math.rad(90)
+      tv2:memory().angle   = math.rad(90)
       sec21:memory().angle = math.rad(200)
       sec22:memory().angle = math.rad(240)
 
       --The escort follows the competitors
-      tv1:follow(player.pilot(), true)
-      sec11:follow(player.pilot(), true)
-      sec12:follow(player.pilot(), true)
+      tv1:follow(pp, true)
+      sec11:follow(pp, true)
+      sec12:follow(pp, true)
       tv2:follow(opponent, true)
       sec21:follow(opponent, true)
       sec22:follow(opponent, true)
@@ -288,20 +273,20 @@ function enter()
 
       mem.opdehook = hook.pilot( opponent, "death", "oppo_dead" )
       mem.opjuhook = hook.pilot( opponent, "jump", "oppo_jump" )
-      mem.pldihook = hook.pilot( player.pilot(), "disable", "player_disabled" )
+      mem.pldihook = hook.pilot( pp, "disable", "player_disabled" )
       mem.opdihook = hook.pilot( opponent, "disable", "oppo_disabled" )
       mem.attackhook = hook.pilot( opponent, "attacked", "oppo_attacked" )
 
       --Adding the starting mark
       local start_pos = mispla:pos() + vec2.new( -1000, -1500)
-      mem.mark = system.mrkAdd( start_pos, _("START") )
+      mem.mark = system.markerAdd( start_pos, _("START") )
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
-      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles"))
+      tk.msg(_("You are dismissed"), _("You weren't allowed to use missiles!"))
       misn.finish(false)
    elseif mem.playerclass ~= "Fighter" then
-      tk.msg(_("You are dismissed"), _("You had to use a fighter"))
+      tk.msg(_("You are dismissed"), _("You had to use a fighter!"))
       misn.finish(false)
    end
 end
@@ -317,7 +302,7 @@ function oppo_attacked(_pilot, attacker)  --The player tries to cheat by attacki
    if mem.stage == 0 and (attacker and attacker:withPlayer()) then
       land_everyone()
       tk.msg(_("You are dismissed"), _("You weren't supposed to attack before the signal."))
-      system.mrkRm(mem.mark)
+      system.markerRm(mem.mark)
       misn.finish(false)
    end
 end
@@ -333,7 +318,7 @@ function assault()
    opponent:attack(player.pilot()) -- Probably fine to just attack player
    hook.rm(mem.prox)
    hook.rm(mem.attackhook)
-   system.mrkRm(mem.mark)
+   system.markerRm(mem.mark)
 end
 
 function land()
@@ -345,7 +330,7 @@ function land()
       populate_bar()
       mem.official = misn.npcAdd("cleanNbegin", _("An official"), mem.officialFace, _("This person seems to be looking for suitable combat pilots."))
 
-      elseif mem.stage == 3 and spob.cur() == mispla then  --player will be payed
+      elseif mem.stage == 3 and spob.cur() == mispla then  --player will be paid
 
       if mem.level == 5 then  --you are the champion
          tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))

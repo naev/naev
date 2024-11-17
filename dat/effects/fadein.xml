@@ -5,4 +5,5 @@
  <overwrite>fadein</overwrite>
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <shader>effects/fadein.frag</shader>
+ <priority>0</priority>
 </effect>

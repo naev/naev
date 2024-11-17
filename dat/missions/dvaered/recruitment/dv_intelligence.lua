@@ -5,7 +5,7 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <cond>player.outfitNum("Mercenary License") &gt; 0</cond>
  <notes>
   <tier>1</tier>
   <campaign>Dvaered Recruitment</campaign>
@@ -27,7 +27,6 @@ local dv     = require "common.dvaered"
 local pir    = require "common.pirate"
 local vntk   = require 'vntk'
 
--- luacheck: globals enter land testInRange (Hook functions passed by name)
 
 local detected
 
@@ -81,7 +80,7 @@ function create ()
 
    -- Mission details
    misn.setTitle(fmt.f(dv.prefix.._("Monitor Pirate Activity in {sys}"), {sys=mem.sys}))
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setReward( mem.credits )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Pirate ships"), {sys=mem.sys, nb=mem.nbships}))
    mem.misn_marker = misn.markerAdd( mem.sys )
 end
@@ -89,7 +88,7 @@ end
 function accept()
    misn.accept()
    mem.misn_state = 0
-   cens.osd( _("Dvaered Intelligence"), mem.sys, mem.nbships, 0, "Dvaered", "Pirate" )
+   cens.osd( _("Dvaered Intelligence"), mem.sys, mem.nbships, 0, _("Dvaered"), _("Pirate") )
    hook.enter("enter")
    hook.land("land")
 end
@@ -112,7 +111,7 @@ function land()
       vntk.msg( _("Mission Complete"), fmt.f(_([[You land and transmit a datapad to the local Dvaered liaison officer.
 {reward}]]),{reward=fmt.reward(mem.credits)}) )
       player.pay( mem.credits )
-      faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
+      faction.hit("Dvaered", rnd.rnd(1, 2))
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
@@ -129,9 +128,10 @@ function testInRange()
    if mem.nbships <= #detected then
       misn.osdActive(2)
       mem.misn_state = 1
+      misn.markerRm( mem.misn_marker )
       player.msg( _("You have acquired data on enough Pirate ships") )
       return
    end
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, "Dvaered", "Pirate" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, _("Dvaered"), _("Pirate") )
    hook.timer(1, "testInRange") -- Recursivity 1 s
 end

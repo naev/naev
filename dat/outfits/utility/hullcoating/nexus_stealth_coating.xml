@@ -11,6 +11,6 @@
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">
-  <ew_hide>15</ew_hide>
+  <ew_hide>-15</ew_hide>
  </specific>
 </outfit>

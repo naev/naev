@@ -1,5 +1,5 @@
 local head = {
-   _("Sirius News Reel. Words of the Sirichana for all."),
+   _("Sirius Newsreel. Words of the Sirichana for all."),
 }
 local greeting = {
    _("Stay faithful."),
@@ -14,7 +14,7 @@ local articles = {
    --]]
    {
       head = N_([[Trade Meeting at Lorelei]]),
-      body = _([[Lorelei, in the Churchill system, is the latest world to host major trade negotiations between the Fyrra and the Space Traders Guild. The Fyrra Arch-Canter has indicated that opening up trade routes is a major goal.]])
+      body = _([[Lorelei, in the Churchill system, is the latest world to host major trade negotiations between the Fyrra and the Space Traders Society. The Fyrra Arch-Canter has indicated that opening up trade routes is a major goal.]])
    },
    --[[
       Politics

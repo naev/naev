@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Chakra Burn">
+ <description>Your ship is being burned by chakra!</description>
+ <duration>7</duration>
+ <overwrite>chakra_corruption</overwrite>
+ <icon>/gfx/misc/icons/unstable-orb.webp</icon>
+ <debuff/>
+ <stats>
+  <damage>1</damage>
+ </stats>
+</effect>

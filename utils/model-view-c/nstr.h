@@ -5,12 +5,9 @@
 
 /** @cond */
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 /** @endcond */
 
 #include "attributes.h"
-#include "ncompat.h"
 
 #ifdef __MINGW_PRINTF_FORMAT
    #define BUILTIN_PRINTF_FORMAT __MINGW_PRINTF_FORMAT

@@ -24,8 +24,7 @@ local lmisn = require "lmisn"
 local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
 local tut = require "common.tutorial"
-
--- luacheck: globals land enter feral_idle feral_move feral_discovered feral_hailstart feral_hail zach_msg spacewhale (Hook functions passed by name)
+local cinema = require "cinema"
 
 local reward = zbh.rewards.zbh04
 
@@ -49,7 +48,7 @@ function accept ()
    vn.na(_([[You find Zach deep in thought, who takes a while to notice your presence.]]))
    z(fmt.f(_([["Ah, didn't notice you. Sometimes I get lost in here. Too many things remind me of them."
 He chugs his drink and seems to sober up.
-"I've been organizing the notes I've found around the station, and it seems like there was anomalies or something going on around the station. Would you be willing to take a look for me?"]]),{}))
+"I've been organizing the notes I've found around the station, and it seems like there were anomalies or something going on around the station. Would you be willing to take a look for me?"]]),{}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -61,11 +60,11 @@ He chugs his drink and seems to sober up.
 
    vn.label("accept")
    z(_([["Thanks again. So, looking into the notes, I found mentions to some sort of object around the station. It seems like it was a ship or some sort of drone, but I haven't been able to restore all the data yet, so the initial encounters are missing. I only mainly know the codename they gave it, which is 'Icarus', although it's not clear why."]]))
-   z(_([["I have been able to recover lots of data regarding some sort of language, which is pretty strange given that all standard ship AI have universal translators, and languages haven't really been an issue outside of pure academic settings in ages. Quite a few details haven't really been recovered yet, but hopefully the data recovery drone will get something useful in a bit."]]))
+   z(_([["I have been able to recover lots of data regarding some sort of language, which is pretty strange given that all standard ship AI have universal translators, and languages haven't really been an issue outside pure academic settings in ages. Quite a few details haven't really been recovered yet, but hopefully the data recovery drone will get something useful in a bit."]]))
    z(fmt.f(_([["Other than that, there's still the mystery of the ships that tried to attack {pnt}. I have a feeling that they're not finished with business here. You should keep an eye out for any suspicious ships. There shouldn't be anyone here other than us."]]),{pnt=mainpnt}))
    vn.na(fmt.f(_([[Suddenly, one of Zach's drone starts flashing and announces that movement detected in {sys}.]]),{sys=mainsys}))
    z(_([["Shit, it looks like something is out there already! From the readings it doesn't look like it's very large. Quick, go see what is out there!"
-He gets up and starts running to the command center.
+He gets up and starts running to the command centre.
 "Looks like it's time to try the new scanner! I'll give you instructions once you're out there!"]]))
    vn.func( function () accepted = true end )
    vn.done( zbh.zach.transition )
@@ -78,7 +77,7 @@ He gets up and starts running to the command center.
 
    -- mission details
    misn.setTitle( _("Black Hole Mystery") )
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward(reward)
    misn.setDesc( fmt.f(_("Patrol the {sys} system and report your observations to Zach at {pnt}."), {pnt=mainpnt, sys=mainsys}) )
 
    mem.mrk = misn.markerAdd( mainsys )
@@ -119,7 +118,7 @@ function land ()
 The message resonates throughout the station and out into space…]]))
    vn.na(_([[After what seems like ages, the feral bioship starts approaching slowly, apparently intrigued by the holographic projections. As the drones have been programmed to keep their distance, they back away as the feral bioship approaches. This makes the bioship more intrigued and it begins to chase the cat drones around the exterior of the ship.]]))
    vn.na(_([[As you are enjoying the playful spectacle, you see Zach staring intently at all the collected data flashing on his cyberdeck screen.]]))
-   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#0, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double check with databases, but that's the only conclusion I can come to right now."]]))
+   z(_([["Mmmm… this isn't looking very good. From a preliminary analysis of the feral bioship, or shall I say #oIcarus#0, we can see there's some pretty major structural damage that hasn't quite healed fully. Furthermore, I would venture to say that it even seems to be what you would call 'malnourished'. I'm much more familiar with normal technology than this biotechnology, so I'll have to double-check with databases, but that's the only conclusion I can come to right now."]]))
    z(_([["I'm going to continue running a more in-depth scan, while I think of our next steps. Meet up with me at the bar when you're ready to help."]]))
    vn.na(_([[You see Icarus still playing with the cat drones, although it looks more like it is trying to eat them. Are those fangs?…]]))
    vn.sfxVictory()
@@ -127,7 +126,7 @@ The message resonates throughout the station and out into space…]]))
    vn.done( zbh.zach.transition )
    vn.run()
 
-   faction.modPlayer("Za'lek", zbh.fctmod.zbh04)
+   faction.hit("Za'lek", zbh.fctmod.zbh04)
    player.pay( reward )
    zbh.log(fmt.f(_("You and Zach found a feral bioship wandering around {sys}. After Zach managed to create a simple program to communicate with it, you were able to get it to follow you back to {pnt}."),{sys=mainsys, pnt=mainpnt}))
    misn.finish(true)
@@ -144,10 +143,10 @@ end
 
 local feral, points
 local function feral_map( first )
-   system.mrkClear()
+   system.markerClear()
    for k,v in ipairs(points) do
       local pos = v + vec2.newP( 300+1500*rnd.rnd(), rnd.angle() )
-      system.mrkAdd( pos, _("Detected Motion")  )
+      system.markerAdd( pos, _("Detected Motion")  )
    end
 
    local msg
@@ -242,7 +241,7 @@ function feral_discovered ()
    feral:face( player.pilot() )
 
    player.autonavAbort(_("You found something!"))
-   player.cinematics( true, {gui=true} )
+   cinema.on{ gui=true }
    camera.set( feral )
 
    -- Have to do this AFTER aborting autonav
@@ -251,7 +250,7 @@ function feral_discovered ()
    pp:brake()
    pp:face(feral)
 
-   system.mrkClear()
+   system.markerClear()
 
    hook.pilot( feral, "hail", "feral_hail" )
 
@@ -263,8 +262,7 @@ end
 local feral_canhail = false
 function feral_hailstart ()
    feral_canhail = true
-   player.pilot():control(false)
-   player.cinematics(false)
+   cinema.off()
    camera.set()
 end
 
@@ -286,13 +284,13 @@ function feral_hail ()
    z(_([["Hey, this looks a lot like a Soromid Bioship. Ship AI, what is that?"]]))
 
    vn.appear( ai, "electric" )
-   ai(fmt.f(_([[Your ship AI materializes infront of you.
+   ai(fmt.f(_([[Your ship AI materializes in front of you.
 "This appears to be a {shipname}. Although they are loosely based on a Soromid Reaver Bio-Fighter, they have gone back to a more wild biological state, rejecting most synthetic components. {shipname} are the smallest of what are commonly referred to as #oferal bioships#0. I advise caution with dealing with such ships as they lack any sort of ship AI."]]),{shipname=feral:ship()}))
    vn.disappear( ai, "electric" )
    z(_([["I see. However, this doesn't explain how the hell it got down here, There's no way it could have made the entire trip unnoticed."]]))
    vn.sfx( zbh.sfx.spacewhale1 )
    f(_("You can tell the ship is trying to convey something, but don't understand the meaning."))
-   z(_([["Wait wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes."]]))
+   z(_([["Wait, wait, this wouldn't be Icarus? Wouldn't it? That would explain lots of things. One second, I may be able to make use of these notes."]]))
    vn.sfx( zbh.sfx.spacewhale2 )
    f(_("The feral bioship once again lets out a stream of electromagnetic radiation that your ship AI translates as a sound."))
    z(_([["One second, I'm getting there…"

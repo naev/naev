@@ -1,21 +1,17 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file image.c
  *
  * @brief Image widget.
  */
 
-
 #include "tk/toolkit_priv.h"
 
-
-static void img_render( Widget* img, double bx, double by );
-static void img_freeLayers( Widget* img );
-static void img_cleanup( Widget* img );
-
+static void img_render( Widget *img, double bx, double by );
+static void img_freeLayers( Widget *img );
+static void img_cleanup( Widget *img );
 
 /**
  * @brief Adds an image widget to the window.
@@ -30,18 +26,17 @@ static void img_cleanup( Widget* img );
  *    @param image Image to use.
  *    @param border Whether to use a border.
  */
-void window_addImage( unsigned int wid,
-                      const int x, const int y,
-                      const int w, const int h,
-                      char* name, const glTexture* image, int border )
+void window_addImage( unsigned int wid, const int x, const int y, const int w,
+                      const int h, char *name, const glTexture *image,
+                      int border )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
+   Window *wdw = window_wget( wid );
+   Widget *wgt = window_newWidget( wdw, name );
+   if ( wgt == NULL )
       return;
 
    /* generic */
-   wgt->type   = WIDGET_IMAGE;
+   wgt->type = WIDGET_IMAGE;
 
    /* specific */
    wgt->render          = img_render;
@@ -53,11 +48,10 @@ void window_addImage( unsigned int wid,
    wgt->dat.img.nlayers = 0;
 
    /* position/size */
-   wgt->w = (w > 0) ? w : ((image==NULL) ? 0 : wgt->dat.img.image->sw);
-   wgt->h = (h > 0) ? h : ((image==NULL) ? 0 : wgt->dat.img.image->sh);
+   wgt->w = ( w > 0 ) ? w : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sw );
+   wgt->h = ( h > 0 ) ? h : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sh );
    toolkit_setPos( wdw, wgt, x, y );
 }
-
 
 /**
  * @brief Renders a image widget.
@@ -66,11 +60,11 @@ void window_addImage( unsigned int wid,
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
-static void img_render( Widget* img, double bx, double by )
+static void img_render( Widget *img, double bx, double by )
 {
-   double x,y;
-   double w,h;
-   int i;
+   double x, y;
+   double w, h;
+   int    i;
 
    /* Values. */
    x = bx + img->x;
@@ -81,26 +75,23 @@ static void img_render( Widget* img, double bx, double by )
    /*
     * image
     */
-   if (img->dat.img.image != NULL) {
-      gl_renderScaleAspect( img->dat.img.image, x, y,
-            w, h, &img->dat.img.colour );
+   if ( img->dat.img.image != NULL ) {
+      gl_renderScaleAspect( img->dat.img.image, x, y, w, h,
+                            &img->dat.img.colour );
    }
    /* Additional layers. */
-   for (i=0; i<img->dat.img.nlayers; i++) {
-      gl_renderScaleAspect( img->dat.img.layers[i], x, y,
-            w, h, &img->dat.img.colour );
+   for ( i = 0; i < img->dat.img.nlayers; i++ ) {
+      gl_renderScaleAspect( img->dat.img.layers[i], x, y, w, h,
+                            &img->dat.img.colour );
    }
 
-   if (img->dat.img.border) {
+   if ( img->dat.img.border ) {
       /* inner outline (outwards) */
-      toolkit_drawOutline( x, y+1, w-1,
-         h-1, 1., toolkit_colLight, NULL );
+      toolkit_drawOutline( x, y + 1, w - 1, h - 1, 1., toolkit_colLight, NULL );
       /* outer outline */
-      toolkit_drawOutline( x, y+1, w-1,
-            h-1, 2., toolkit_colDark, NULL );
+      toolkit_drawOutline( x, y + 1, w - 1, h - 1, 2., toolkit_colDark, NULL );
    }
 }
-
 
 /**
  * @brief Gets the image from an image widget
@@ -108,62 +99,70 @@ static void img_render( Widget* img, double bx, double by )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
  */
-glTexture* window_getImage( unsigned int wid, char* name )
+glTexture *window_getImage( unsigned int wid, char *name )
 {
    Widget *wgt;
 
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return NULL;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Trying to get image from non-image widget '%s'.", name);
+   if ( wgt->type != WIDGET_IMAGE ) {
+      WARN( "Trying to get image from non-image widget '%s'.", name );
       return NULL;
    }
 
    /* Get the value. */
-   return (wgt) ? wgt->dat.img.image : NULL;
+   return ( wgt ) ? wgt->dat.img.image : NULL;
 }
-
 
 /**
  * Modifies an existing image's image.
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget to modify image of.
- *    @param w New width to set, 0 uses image, -1 doesn't change and >0 sets directly.
- *    @param w New height to set, 0 uses image, -1 doesn't change and >0 sets directly.
+ *    @param w New width to set, 0 uses image, -1 doesn't change and >0 sets
+ * directly.
+ *    @param w New height to set, 0 uses image, -1 doesn't change and >0 sets
+ * directly.
  *    @param image New image to set.
  */
-void window_modifyImage( unsigned int wid,
-      char* name, const glTexture* image, int w, int h )
+void window_modifyImage( unsigned int wid, char *name, const glTexture *image,
+                         int w, int h )
 {
    Widget *wgt;
 
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Not modifying image on non-image widget '%s'.", name);
+   if ( wgt->type != WIDGET_IMAGE ) {
+      WARN( "Not modifying image on non-image widget '%s'.", name );
+      return;
+   }
+
+   /* Image must not be NULL. */
+   if ( image == NULL ) {
+      wgt->dat.img.image = NULL;
       return;
    }
 
    /* Free and set the image. */
    gl_freeTexture( wgt->dat.img.image );
-   wgt->dat.img.image   = gl_dupTexture( image );
+   wgt->dat.img.image = gl_dupTexture( image );
 
    /* Adjust size. */
-   if (w >= 0)
-      wgt->w = (w > 0) ? w : ((image==NULL) ? 0 : wgt->dat.img.image->sw);
-   if (h >= 0)
-      wgt->h = (h > 0) ? h : ((image==NULL) ? 0 : wgt->dat.img.image->sh);
+   if ( w >= 0 )
+      wgt->w =
+         ( w > 0 ) ? w : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sw );
+   if ( h >= 0 )
+      wgt->h =
+         ( h > 0 ) ? h : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sh );
 }
-
 
 /**
  * Modifies an existing image's colour.
@@ -172,19 +171,18 @@ void window_modifyImage( unsigned int wid,
  *    @param name Name of the widget to modify image colour of.
  *    @param colour New colour to use.
  */
-void window_imgColour( unsigned int wid,
-      char* name, const glColour* colour )
+void window_imgColour( unsigned int wid, char *name, const glColour *colour )
 {
    Widget *wgt;
 
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Not modifying image on non-image widget '%s'.", name);
+   if ( wgt->type != WIDGET_IMAGE ) {
+      WARN( "Not modifying image on non-image widget '%s'.", name );
       return;
    }
 
@@ -192,23 +190,22 @@ void window_imgColour( unsigned int wid,
    wgt->dat.img.colour = *colour;
 }
 
-
 /**
  * @brief Sets the image widget layers
  */
-void window_modifyImageLayers( unsigned int wid,
-      char* name, glTexture** layers, int n )
+void window_modifyImageLayers( unsigned int wid, char *name, glTexture **layers,
+                               int n )
 {
    Widget *wgt;
 
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
+   wgt = window_getwgt( wid, name );
+   if ( wgt == NULL )
       return;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Not modifying image on non-image widget '%s'.", name);
+   if ( wgt->type != WIDGET_IMAGE ) {
+      WARN( "Not modifying image on non-image widget '%s'.", name );
       return;
    }
 
@@ -218,19 +215,17 @@ void window_modifyImageLayers( unsigned int wid,
    wgt->dat.img.nlayers = n;
 }
 
-
 /**
  * Free layer stuff.
  */
-static void img_freeLayers( Widget* img )
+static void img_freeLayers( Widget *img )
 {
    free( img->dat.img.layers );
    img->dat.img.layers  = NULL;
    img->dat.img.nlayers = 0;
 }
 
-
-static void img_cleanup( Widget* img )
+static void img_cleanup( Widget *img )
 {
    gl_freeTexture( img->dat.img.image );
    img_freeLayers( img );

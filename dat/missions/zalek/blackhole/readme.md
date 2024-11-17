@@ -1,3 +1,6 @@
+---
+name: "Za'lek Black Hole"
+---
 ## Za'lek Black Hole Campaign
 
 Continuation of the Za'lek main story after the Particle Physics campaign. Player must help Zach discover what happened at Research Post Sigma-13 and defeat an evil Za'lek scientist while winning the trust of feral bioships.

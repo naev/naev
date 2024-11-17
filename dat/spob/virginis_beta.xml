@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Virginis Beta">
+ <pos x="-12719.776695" y="-377.163888"/>
+ <GFX>
+  <space>moon-I01.webp</space>
+  <exterior>zalek_station1.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services/>
+ </general>
+</spob>

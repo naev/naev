@@ -16,6 +16,8 @@
 --[[
    Destroy Za'lek hacking station
 
+   TODO probably should be changed from Gammacron to Fried system
+
    This mission has two ways of being done:
    1. Using brute force and killing everything.
    2. Using stealth if the player boards the drone controllers or hacking center, they can disable drones.
@@ -40,8 +42,6 @@ local mainsys = system.get("Gammacron")
 --    3. hacking center disabled
 mem.misn_state = nil
 local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_center, main_boss -- Non-persistent state
--- luacheck: globals blowup drone_control1_dead drone_control2_dead enter generate_npc hacking_center_dead message_first message_hostile message_warn plant_explosives (Hook functions passed by name)
--- luacheck: globals approach_zuri (NPC functions passed by name)
 
 
 function create ()
@@ -103,7 +103,7 @@ She grins at you.
       vn.func( function () -- Rewards
          player.pay( reward_amount )
          minerva.log.pirate(_("You took down an advanced Za'lek hacking centre and got rewarded for your efforts.") )
-         faction.modPlayerSingle("Wild Ones", 5)
+         faction.hit( "Wild Ones", 5, nil, nil ,true )
       end )
       vn.na(fmt.reward(reward_amount))
       vn.run()
@@ -143,7 +143,7 @@ She grins at you.]]), {sys=mainsys}))
    vn.menu( function ()
       local opts = {
          {_("Ask about the job"), "job"},
-         {_("Are you pirates?"), "pirate"},
+         {_([["Are you pirates?"]]), "pirate"},
          {_("Leave"), "leave"},
       }
       return opts
@@ -169,7 +169,7 @@ She chuckles.
    zuri(_([["We represent those who want to stand up to this tyranny and oppression, and believe that a better universe is possible. Sure, there are those who dismissively label us as pirates or scoundrels, but that is because they represent the status quo. They do not want anyone to challenge their reign and want to continue their life of luxury."]]))
    zuri(_([["Of course, it is not that easy, as many people are complicit even against their own interests. They believe they can become part of the elite if they work hard enough, you know, the Imperial dream. However, that never happens, and they die a sad, depressed life filled with delusions of grandeur. This is not the universe we wish for humankind."]]))
    zuri(_([["It is not easy to go toe-to-toe with such a large establishment, which is why we have to work from the shadows and focus on small objectives, like Minerva Station. The Station has such potential, yet it is wasted on Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station to live their full potential, even though we have to ruffle some feathers here and there."]]))
-   zuri(_([["So yes, maybe we are pirates. Pirates who dream of a better universe for you and I."
+   zuri(_([["So yes, maybe we are pirates. Pirates who dream of a better universe for you and me."
 Her eyes blaze with hard determination.]]))
    vn.jump("menu_msg")
 
@@ -253,7 +253,7 @@ function enter ()
       dc:setVisplayer(true)
       dc:setHilight(true)
       -- Controllers can't detect anything
-      dc:intrinsicSet( "ew_hide", -75 )
+      dc:intrinsicSet( "ew_hide", 300 )
       dc:intrinsicSet( "ew_detect", -1000 )
       -- Much more bulky than normal
       dc:intrinsicSet( "shield", 500 )
@@ -276,7 +276,7 @@ function enter ()
    local function spawn_drone( shipname, pos )
       local p = pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
       -- We are nice and make the drones easier to see for this mission
-      p:intrinsicSet( "ew_hide", -50 )
+      p:intrinsicSet( "ew_hide", 100 )
       table.insert( all_ships, p )
       return p
    end
@@ -420,7 +420,7 @@ end
 function drone_control1_dead ()
    for k,p in ipairs(drone_group1) do
       if p:exists() then
-         p:disable()
+         p:setDisable()
          p:setInvisible(true)
       end
    end
@@ -430,7 +430,7 @@ end
 function drone_control2_dead ()
    for k,p in ipairs(drone_group2) do
       if p:exists() then
-         p:disable()
+         p:setDisable()
          p:setInvisible(true)
       end
    end

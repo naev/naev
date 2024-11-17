@@ -8,6 +8,7 @@
  <spawn>empire</spawn>
  <standing>empire</standing>
  <equip>empire</equip>
+ <local_th>15</local_th>
  <description>The Empire is the bureaucratic heart of the universe that provides stability and cohesion, when possible.</description>
  <generator weight="0.45">Independent</generator>
  <generator weight="0.35">Trader</generator>

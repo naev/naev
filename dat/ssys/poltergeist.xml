@@ -2,38 +2,37 @@
 <ssys name="Poltergeist">
  <general>
   <radius>16000.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="-532.550030" y="-756.063426"/>
+ <pos x="121.644574" y="-400.451271"/>
  <spobs>
+  <spob>Poltergeist Alpha</spob>
   <spob_virtual>Miner Local</spob_virtual>
-  <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Regas">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Seelie">
+  <jump target="Majesteka">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Seiben">
+  <jump target="Pas">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
   </jump>
-  <jump target="Vost">
+  <jump target="Tepdania">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Virgo">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
   <asteroid>
    <group>typeC-poor</group>
    <radius>6000.000000</radius>
-   <pos x="-3709.852869" y="-2649.894907"/>
+   <pos x="-3715.012649" y="-2669.704257"/>
    <density>0.400000</density>
   </asteroid>
  </asteroids>

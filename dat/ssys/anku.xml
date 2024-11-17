@@ -2,21 +2,24 @@
 <ssys name="An'ku">
  <general>
   <radius>24500.000000</radius>
-  <stars>400</stars>
+  <spacedust>400</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="1020.096582" y="-916.738076"/>
+ <pos x="1326.944046" y="-829.723968"/>
  <spobs>
   <spob>An'ku I</spob>
   <spob>An'ku II</spob>
   <spob>An'ku III</spob>
   <spob>Eenerim</spob>
   <spob>Sroolu</spob>
-  <spob>Tankard Station</spob>
+  <spob>Tankard Cloister</spob>
  </spobs>
  <jumps>
   <jump target="Humdrum">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="NGC-10284">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

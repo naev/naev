@@ -1,12 +1,16 @@
 local active = 4 -- active time in seconds
 local cooldown = 8 -- cooldown time in seconds
 local boost = 5 -- How much the shield regen is increased by
-local efficiency = 3 -- MJ of energy used per shield recovered
+local efficiency = 3 -- GJ of energy used per shield recovered
 
 local function turnon( p, po )
    -- Still on cooldown
    if mem.timer > 0 then
       return false
+   end
+   local _a, s = p:health()
+   if s > 99 then
+      return false -- Don't activate at full health
    end
    po:state("on")
    po:progress(1)
@@ -18,7 +22,7 @@ local function turnon( p, po )
    local ps = p:stats()
    local regen = boost * ps.shield_regen
    po:set( "shield_regen_malus", -regen )
-   po:set( "energy_loss", efficiency * regen )
+   po:set( "energy_regen_malus", efficiency * regen )
 
    mem.timer = active
 
@@ -35,14 +39,14 @@ local function turnoff( p, po )
    po:state("cooldown")
    po:progress(1)
    po:clear() -- clear stat modifications
-   mem.timer = cooldown
+   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    mem.active = false
    p:effectAdd("Shield Boost", 1)
    return true
 end
 
-function init( _p, po )
-   turnoff()
+function init( p, po )
+   turnoff( p, po )
    mem.timer = 0
    po:state("off")
 end

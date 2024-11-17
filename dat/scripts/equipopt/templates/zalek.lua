@@ -65,17 +65,17 @@ local zalek_cores = {
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          "Milspec Orion 9901 Core System",
-         choose_one{ "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine" },
-         choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
+         choose_one{ "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine" },
+         choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
       } end,
    ["Za'lek Diablo"] = function (_p) return {
          "Milspec Thalos 9802 Core System",
-         choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
+         choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
          choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" },
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
          "Milspec Thalos 9802 Core System",
-         choose_one{ "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating" },
+         choose_one{ "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating" },
          "Melendez Mammoth XL Engine",
       } end,
 }
@@ -108,15 +108,23 @@ local function equip_zalek( p, opt_params )
    if sp then
       params = tmerge_r( params, sp() )
    end
-   params = tmerge( params, opt_params )
+   params = tmerge_r( params, opt_params )
+
+   -- Outfits
+   local outfits = zalek_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
 
    -- See cores
-   local cores
-   local zlkcor = zalek_cores[ sname ]
-   if zlkcor then
-      cores = zlkcor(p)
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local zlkcor = zalek_cores[ sname ]
+      if zlkcor then
+         cores = zlkcor(p)
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some meta-data
@@ -124,7 +132,7 @@ local function equip_zalek( p, opt_params )
    mem.equip = { type="zalek", level="elite" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, zalek_outfits, params )
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 return equip_zalek

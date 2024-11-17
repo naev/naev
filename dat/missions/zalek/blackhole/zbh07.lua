@@ -37,7 +37,7 @@ function accept ()
    local icarus = zbh.vn_icarus()
    vn.transition( zbh.zach.transition )
    vn.na(_([[You meet with Zach who seems to be doing the last preparations for the surgery.]]))
-   z(_([["Heya. I think I got this finally figured out. So most of the anatomy is like that of an arthropod, however, the inner scaffolding follows ship designs. It's incredibly well thought out the entire layout, and it also guarantees that no two ships will ever be exactly alike!"
+   z(_([["Heya. I think I got this finally figured out. So most of the anatomy is like that of an arthropod, however, the inner scaffolding follows ship designs. It's incredibly well-thought-out the entire layout, and it also guarantees that no two ships will ever be exactly alike!"
 He seems fairly excited about the entire prospect.]]))
    z(_([["There are still some rough details here and there, but I feel confident enough to try to improvise live as necessary. No matter how many simulations I run, I don't think it's going to be anything like the real thing. Although Icarus isn't really showing signs of stress, my scans indicate that it's probably better to try to operate sooner than later. Would you be willing to assist me?"]]))
    vn.menu{
@@ -50,7 +50,7 @@ He seems fairly excited about the entire prospect.]]))
    vn.done( zbh.zach.transition )
 
    vn.label("accept")
-   z(_([["Great! So let's get preparations started then. The tricky part will be getting Icarus all set up. I think it is more trusting of us, so hopefully we'll be able do it without a hitch. You seem to get along pretty well with Icarus, I still have to do some final runs on the surgery software and prepare the drones. Could you try to get Icarus into the docks and calm enough for surgery? I'll be back soon."
+   z(_([["Great! So let's get preparations started then. The tricky part will be getting Icarus all set up. I think it is more trusting of us, so hopefully we'll be able to do it without a hitch. You seem to get along pretty well with Icarus, I still have to do some final runs on the surgery software and prepare the drones. Could you try to get Icarus into the docks and calm enough for surgery? I'll be back soon."
 Before you have a chance to respond, Zach leaves to do the final preparations.]]))
    vn.disappear( z )
    vn.appear( icarus )
@@ -139,6 +139,9 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
          end
       end
    end )
+   -- Add two pointless labels to quiet runtime warnings
+   vn.label("come")
+   vn.label("wait")
 
    vn.label("idle")
    icarus(_("Icarus keeps on lazily floating at a distance without a care in the world."))
@@ -175,7 +178,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
    vn.func( function ()
       local lw, lh = lg.getDimensions()
       vn.setBackground( function ()
-         lg.setColor( 1, 1, 1, 1 )
+         lg.setColour( 1, 1, 1, 1 )
          lg.rectangle( "fill", 0, 0, lw, lh )
       end )
       music.stop()
@@ -226,7 +229,7 @@ He grins happily.]]))
    vn.jump("cont01")
 
    vn.label("cont01b")
-   z(_([["Well the entirely plan relied on your natural reactions. If I had warned you, Icarus would have likely sensed that and we would have had to gone with plan B."
+   z(_([["Well the entire plan relied on your natural reactions. If I had warned you, Icarus would have likely sensed that and we would have had to go with plan B."
 The way he says plan B makes you feel glad plan A worked.]]))
    vn.jump("cont01")
 

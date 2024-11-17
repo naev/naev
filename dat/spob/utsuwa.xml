@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Utsuwa">
- <lua>spob/lua/lowclass.lua</lua>
+ <lua>lowclass.lua</lua>
  <pos x="-13000.000000" y="-4700.000000"/>
  <GFX>
   <space>K00.webp</space>
@@ -8,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>
@@ -34,4 +34,7 @@
   <item>Star Maps</item>
   <item>Missiles 2</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+ </tags>
 </spob>

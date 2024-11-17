@@ -25,7 +25,6 @@ local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 local diff_progress3 = "hypergates_3"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_main_sfx cutscene_main0 cutscene_main1 cutscene_main2 cutscene_main3 cutscene_main4 cutscene_main5 cutscene_main6 cutscene_main7 cutscene_pan cutscene_jumpin cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 -- Purposely exclude other hypergates
 local hypergate_list = {
@@ -38,20 +37,20 @@ local hypergate_list = {
 
 function create ()
    -- Set up some variables
-   local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.numOutfit("Heavy Combat Vessel License") > 0)
+   local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.outfitNum("Heavy Combat Vessel License") > 0)
    local traded_total = var.peek("hypconst_traded_total") or 0
 
    -- Compute some sort of progress value
-   local progress = traded_total * 100 / 2000 -- Would need 2000 to trigger the change by this itself
-   for k,m in ipairs(player.misnDoneList()) do
-      progress = progress + 100 / 25 -- Needs 25 missions to complete by itself
-   end
+   local progress = traded_total / 2000 -- Would need 2000 ore delivered to trigger the change by this itself
+         + #player.misnDoneList() / 40 -- Needs 40 missions to complete by itself
+         + player.wealth() / 50e6 -- Needs 50 million by themselves to trigger event
+   -- Finally getting the heavy weapon or vessel license permission gives a large
    if has_license then
-      progress = progress + 50
+      progress = progress + 0.4
    end
 
    -- Determine what to do
-   if progress >= 100 then
+   if progress >= 1 then
       -- Make event happen when player is not in any system with a hypergate
       for k,v in ipairs(system.cur():spobs()) do
          if v:tags().hypergate then
@@ -60,19 +59,28 @@ function create ()
       end
 
       -- Make sure system isn't claimed, but we don't claim it
-      if not evt.claim( system.cur(), true ) then evt.finish(false) end
+      if not naev.claimTest( system.cur() ) then evt.finish(false) end
 
       -- Sort the hypergates by player standing
       table.sort( hypergate_list, function ( a, b )
-         local sa = a:faction():playerStanding()
-         local sb = b:faction():playerStanding()
+         local sa = a:faction():reputationGlobal()
+         local sb = b:faction():reputationGlobal()
          return sa > sb
       end )
+
+      -- Let us claim the systems
+      local claimsys = {}
+      for k,h in ipairs(hypergate_list) do
+         table.insert( claimsys, h:system() )
+      end
+      if not evt.claim( claimsys ) then
+         evt.finish(false)
+      end
 
       hook.safe( "cutscene_start" )
       return -- Don't finish
 
-   elseif progress >= 50 then
+   elseif progress >= 0.5 then
       if not diff.isApplied( diff_progress1 ) then
          diff.apply( diff_progress1 )
       end
@@ -122,24 +130,24 @@ local function fg_setup( text )
 end
 
 -- Fades out to black
-function fadeout ()
+function fadeout () -- used in some hooks, must be global
    fg.alpha_dir = 1
    fg.alpha = math.max( 0, fg.alpha )
 end
 
 -- Fades in from black
-function fadein ()
+local function fadein ()
    fg.alpha_dir = -1
    fg.alpha = math.min( 1, fg.alpha )
 end
 
 function foreground ()
    if fg.alpha > 0 then
-      lg.setColor( 0, 0, 0, fg.alpha )
+      lg.setColour( 0, 0, 0, fg.alpha )
       lg.rectangle( "fill", 0, 0, nw, nh )
 
       if fg.text then
-         lg.setColor( 1, 1, 1, fg.alpha )
+         lg.setColour( 1, 1, 1, fg.alpha )
          lg.printf( fg.text, fg.font, fg.x, fg.y, 0.6*nw, "center" )
       end
    end
@@ -209,7 +217,7 @@ local function getFactionStuff( fct )
          end
       end
       tester_broadcast = _("For science!")
-      boss_broadcast = _("Comencing procedure!")
+      boss_broadcast = _("Commencing procedure!")
    elseif fct == "Sirius" then
       bossship = "Sirius Divinity"
       testership = "Sirius Preacher"
@@ -246,7 +254,14 @@ local function getFactionStuff( fct )
    return bossship, testership, extraships, tester_broadcast, boss_broadcast
 end
 
+local system_known_list = {}
 function cutscene_start ()
+   -- Store known status
+   for k,v in ipairs(hypergate_list) do
+      local _hyp, hyps = spob.getS( v )
+      system_known_list[ hyps ] = hyps:known()
+   end
+
    local fadetime = 3
    fg_setup()
    fadeout()
@@ -260,7 +275,6 @@ function cutscene_start ()
 
    -- TODO better music
    music.stop()
-   var.push( "music_off", true )
    lmusic.play( "snd/music/empire2.ogg" )
 end
 
@@ -273,6 +287,7 @@ function cutscene_main0 ()
    player.canDiscover( false )
    setHide( true )
 
+   diff.remove( "Chapter 0" )
    if diff.isApplied( diff_progress3 ) then
       diff.remove( diff_progress3 )
    end
@@ -589,7 +604,6 @@ local sfx
 function cutscene_cleanup ()
    setHide( false )
 
-   var.pop( "music_off" )
    music.play()
 
    -- Chapter 1 message
@@ -600,13 +614,23 @@ function cutscene_cleanup ()
    sfx:play()
 
    -- Initialize fleet capacity
-   player.setFleetCapacity( 100 )
+   player.fleetCapacitySet( 100 )
    player.chapterSet("1")
    player.canDiscover( true )
 
+   -- Clear deployed ships just in case, so the player doesn't get stuck
+   for k,v in ipairs(player.ships()) do
+      player.shipDeploy( v.name, false )
+   end
+
    -- Set the hypergates as known, should make them appear by name on selection menu
-   for k,v in ipairs(hypergate_list) do
-      v:setKnown(true)
+   for k,v in pairs(system_known_list) do
+      local f = k:faction()
+      if f and f:tags().generic then
+         k:setKnown( true )
+      else
+         k:setKnown( v )
+      end
    end
 
    local pp = player.pilot()
@@ -619,7 +643,7 @@ function cutscene_cleanup ()
       faction = "Generic",
       head = _("Hypergate Network Goes Live"),
       body = _([[In separate press releases, the Great Houses and Soromid have announced the activation of a hypergate network allowing for intersystem long-range travel. Many people flocked to try the new system, causing congestions with one altercation leading to the arrest of dozens of people.]]),
-      date_to_rm = time.get() + time.create(0, 30, 0),
+      date_to_rm = time.get() + time.new(0, 30, 0),
    },
    }
 
@@ -632,7 +656,7 @@ function land ()
    vn.scene()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
-   vn.na(fmt.f(_("As soon as your ship lands, your ship AI {shipai} materializes infront of you."),{shipai=tut.ainame()}))
+   vn.na(fmt.f(_("As soon as your ship lands, your ship AI {shipai} materializes in front of you."),{shipai=tut.ainame()}))
    sai(fmt.f(_([["Did you hear the news, {playername}? It seems like the hypergate network has finally gone online!"]]), {playername=player.name()}))
    vn.menu{
       {_([["A great achievement!"]]), "cont01"},
@@ -640,7 +664,7 @@ function land ()
       {_("…"), "cont01"},
    }
    vn.label("cont01")
-   sai(_([["Yes, my predition routines did not anticipate this. Total annihilation was the most likely outcome. I have to revise my priors."]]))
+   sai(_([["Yes, my prediction routines did not anticipate this. Total annihilation was the most likely outcome. I have to revise my priors."]]))
    sai(_([["Although the details are not entirely clear, it seems like they are not based on hyperjump technology, which is why they allow very long distance travel."]]))
    sai(_([["We should try to use them when we get a chance, who knows where we could go?"]]))
    sai(_([["I almost forgot to mention, while you were piloting, I managed to unlock an important bottleneck in the ship fleet routines."]]))

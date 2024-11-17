@@ -5,7 +5,12 @@
  <chance>150</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
- <cond>var.peek("dp_available") == true</cond>
+ <cond>
+   if var.peek("dp_available") ~= true then
+      return false
+   end
+   return require("misn_test").computer()
+ </cond>
  <notes>
   <tier>2</tier>
   <campaign>Dvaered Recruitment</campaign>
@@ -29,7 +34,6 @@ local lmisn  = require "lmisn"
 local pir    = require "common.pirate"
 require "proximity"
 
--- luacheck: globals enter land beginSpread spreadFlyers spawnHostiles (Hook functions passed by name)
 
 -- Define the flyers commodity
 local cargo_flyers
@@ -68,7 +72,7 @@ function create ()
    -- Mission details
    misn.setTitle(fmt.f(dv.prefix.._("Warlords Propaganda spreading on {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
    misn.setReward( fmt.f(_("{credits} per ton"), {credits=fmt.credits( mem.credits )}) )
-   misn.setDesc( fmt.f(_("The Warlords Affairs Office requires a pilot to spread as much posters as possible in the atmosphere of {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
+   misn.setDesc( fmt.f(_("The Warlords Affairs Office requires a pilot to spread as many posters as possible in the atmosphere of {pnt} in {sys}"), {pnt=mem.pnt,sys=mem.sys}))
    mem.misn_marker = misn.markerAdd( mem.pnt )
 end
 
@@ -84,10 +88,10 @@ function accept()
 
    -- Add the Cargo
    local cflyers = _flyers()
-   mem.qtt = player.pilot():cargoFree()
+   mem.qtt = player.fleetCargoMissionFree()
    mem.pay = mem.credits * mem.qtt
    mem.cid = misn.cargoAdd( cflyers, mem.qtt )
-   misn.setReward( fmt.credits( mem.pay ) )
+   misn.setReward( mem.pay )
 end
 
 function enter()
@@ -149,7 +153,7 @@ end
 
 -- Activates hostility
 function spawnHostiles()
-   mem.dynFact:setPlayerStanding( -100 )
+   mem.dynFact:setReputationGlobal( -100 )
    for i = 1, 2 do
       pilot.add( "Dvaered Vendetta", mem.dynFact, mem.pnt )
    end
@@ -170,13 +174,13 @@ function land()
    if mem.misn_state == 1 then
 
       if spob.cur() == mem.pnt then -- Should not have landed here!
-         vntk.msg( _("What are you doing here?"), fmt.f(_([[As you step out of your ship, your eye is catched by a flying poster, carried away by the wind. And suddentry, you remember there was written on your mission pad: 'Land on any Dvaered planet or station (except {pnt})'. A group of angry-looking Dvaered soldiers comes at you: maybe you will discover soon why you were told not to land there...
+         vntk.msg( _("What are you doing here?"), fmt.f(_([[As you step out of your ship, your eye is caught by a flying poster, carried away by the wind. And suddenly, you remember there was written on your mission pad: 'Land on any Dvaered planet or station (except {pnt})'. A group of angry-looking Dvaered soldiers comes at you: maybe you will discover soon why you were told not to land there...
 Your mission is a FAILURE!]]),{pnt=mem.pnt}) ) -- That's not realistic the player doesn't get killed, but that's not realistic either anyone would land here anyways...
          finish( false )
       elseif spob.cur():faction() == faction.get("Dvaered") then -- Pay the player
          vntk.msg( _("Reward"), fmt.f(_("For accomplishing a Warlord Propaganda Mission, you are rewarded {pay}."),{pay=fmt.credits( mem.pay )}) )
          player.pay( mem.pay )
-         faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
+         faction.hit("Dvaered", rnd.rnd(2, 3))
          pir.reputationNormalMission(rnd.rnd(2,3))
          finish( true )
       end

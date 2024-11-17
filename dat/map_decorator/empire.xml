@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorator>
  <image>empire.webp</image>
- <x>-320.200000</x>
- <y>-313.800000</y>
+ <x>-5.000000</x>
+ <y>5.000000</y>
  <detection_radius>100</detection_radius>
 </decorator>

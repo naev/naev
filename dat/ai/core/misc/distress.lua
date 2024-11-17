@@ -8,7 +8,7 @@ mem.enemyclose = 500
 mem.careful    = true
 
 -- Send a distress signal which causes faction loss
-local function sos ()
+local function sos( target )
    local plt = ai.pilot()
    local fct = plt:faction()
    local msg = {
@@ -22,7 +22,7 @@ local function sos ()
       _("Mayday! Ship taking damage!"),
       fmt.f(_("Mayday! {fct} {cls} being assaulted!"), {fct=fct, cls=_(plt:ship():class())})
    }
-   ai.settarget( ai.taskdata() )
+   ai.settarget( target )
    ai.distress( msg[ rnd.rnd(1,#msg) ])
 end
 

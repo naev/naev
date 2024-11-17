@@ -3,8 +3,8 @@
 uniform float u_time = 0.0;
 uniform sampler2D u_bgtex;
 
-const vec3 col_inner  = vec3( 0.2, 0.8, 1.0 );
-const vec3 col_outter = vec3( 0.0, 0.8, 1.0 );
+const vec3 col_inner  = vec3( %f, %f, %f );
+const vec3 col_outter = vec3( %f, %f, %f );
 
 float fbm3( vec3 x )
 {

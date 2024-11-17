@@ -71,5 +71,6 @@ for k in s:
     print( f"   {k}: {imgdict[k][0]} ({', '.join(imgdict[k][1])})" )
 
 print( "UNDERUSED ASSETS:")
+underused.sort()
 for k in underused:
     print( f"   {k}" )

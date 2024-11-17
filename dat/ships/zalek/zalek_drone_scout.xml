@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Scout Drone">
+ <lua>zalek.lua</lua>
  <points>24</points>
- <base_type>Za'lek Scout Drone</base_type>
- <GFX size="38">zalek_drone_scout</GFX>
- <GUI>brushed</GUI>
+ <base_type path="Zalek_Scout_Drone">Za'lek Scout Drone</base_type>
+ <gfx size="28">zalek_drone_scout</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Scout">Scout</class>
  <price>180000</price>
@@ -11,9 +11,10 @@
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
  <trail_generator x="-11" y="0" h="0">zalekXS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
+ <faction>Za'lek</faction>
  <description>This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to be flown by the player.</description>
  <movement>
-  <thrust>240</thrust>
+  <accel>240</accel>
   <speed>460</speed>
   <turn>210</turn>
  </movement>
@@ -23,7 +24,7 @@
   <shield>60</shield>
   <shield_regen>6</shield_regen>
   <energy>40</energy>
-  <energy_regen>4</energy_regen>
+  <energy_regen>2</energy_regen>
  </health>
  <characteristics>
   <crew>1</crew>
@@ -39,7 +40,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <ew_hide>20</ew_hide>
+  <ew_hide>-17</ew_hide>
   <ew_detect>25</ew_detect>
   <ew_jump_detect>25</ew_jump_detect>
   <misc_instant_jump>1</misc_instant_jump>

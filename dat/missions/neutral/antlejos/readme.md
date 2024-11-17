@@ -1,3 +1,6 @@
+---
+name: "Terraforming Antlejos"
+---
 ## Terraforming Antlejos Campaign
 
 Early game campaign where the player can help terraform a small moon to create a somewhat successful colony. Not meant to be very hard, with slowly incrementing difficulty.

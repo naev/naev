@@ -2,8 +2,7 @@
 <ship name="Phalanx">
  <points>60</points>
  <base_type>Phalanx</base_type>
- <GFX size="95" sx="10" sy="10">phalanx</GFX>
- <GUI>brushed</GUI>
+ <gfx size="95" sx="10" sy="10">phalanx</gfx>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>850000</price>
@@ -13,6 +12,7 @@
  <trail_generator x="-12" y="40" h="0">nebula</trail_generator>
  <trail_generator x="-12" y="-40" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
+ <faction>Independent</faction>
  <license>Medium Combat Vessel</license>
  <description>The Phalanx is, by Dvaered standards, a fast corvette that can be used as a missile platform, that it also maneuvers poorly is standard Dvaered construction. Its high armor makes it a capable corvette provided one equips it with turrets.</description>
  <health>
@@ -36,8 +36,9 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -46,12 +47,13 @@
  <stats>
   <cpu_mod>-15</cpu_mod>
   <speed_mod>5</speed_mod>
-  <thrust_mod>-20</thrust_mod>
+  <accel_mod>-20</accel_mod>
   <turn_mod>-20</turn_mod>
   <armour_mod>15</armour_mod>
   <energy_regen_mod>-15</energy_regen_mod>
   <launch_range>20</launch_range>
   <ammo_capacity>10</ammo_capacity>
+  <fuel>200</fuel>
  </stats>
  <tags>
   <tag>frontier</tag>

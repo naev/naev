@@ -2,8 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Seek And Destroy">
  <priority>4</priority>
- <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
- <chance>875</chance>
+ <cond>
+   require("misn_test").mercenary()
+ </cond>
+ <chance>475</chance>
  <location>Computer</location>
  <faction>Dvaered</faction>
  <faction>Empire</faction>
@@ -30,14 +32,16 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
-local portrait = require "portrait"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
+local vn = require "vn"
+local vntk = require "vntk"
+local vni = require "vnimage"
+local ccomm = require "common.comm"
+local pilotai = require "pilotai"
 
-local trigger_ambush, spawn_advisor, space_clue, next_sys -- Forward-declared functions
+local trigger_ambush, spawn_advisor, next_sys, clear_target_hook -- Forward-declared functions
 local adm_factions, advisor, ambush, hailed, target_ship -- Non-persistent state
--- luacheck: globals ambust_msg clue_attacked enter hail hail_ad hailme land player_flee target_death target_flee target_land (Hook functions passed by name)
--- luacheck: globals clue_bar (NPC functions passed by name)
 
 local quotes = {}
 local comms = {}
@@ -158,12 +162,12 @@ function create ()
    -- There will probably be lot of failure in this loop.
    -- Just increase the mission probability to compensate.
    for i = 2, mem.nbsys do
-      mem.thesys = systems[ rnd.rnd( 1, #systems ) ]
-      -- Don't re-use the previous system
-      if mem.thesys == mem.mysys[i-1] then
+      local thesys = systems[ rnd.rnd( 1, #systems ) ]
+      -- Don't reuse the previous system
+      if thesys == mem.mysys[i-1] then
          misn.finish( false )
       end
-      mem.mysys[i] = mem.thesys
+      mem.mysys[i] = thesys
    end
 
    if not misn.claim(mem.mysys) then
@@ -186,12 +190,28 @@ function create ()
    mem.tgtship = ships[rnd.rnd(1,#ships)]
    mem.credits = 1e6 + rnd.rnd()*500e3
    mem.cursys = 1
+   -- Faction prefix
+   local prefix
+   if mem.paying_faction:static() then
+      prefix = ""
+   else
+      prefix = require("common.prefix").prefix(mem.paying_faction)
+   end
 
    -- Set mission details
-   misn.setTitle( fmt.f( _("Seek And Destroy Mission, starting in {sys}"), {sys=mem.mysys[1]} ) )
-   misn.setDesc( fmt.f( _("The {target_faction} pilot known as {plt} is wanted dead or alive by {paying_faction} authorities. He was last seen in the {sys} system."),
-         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
-   misn.setReward( fmt.credits( mem.credits ) )
+   misn.setTitle(prefix..fmt.f( _("Seek And Destroy Mission, starting in {sys}"), {sys=mem.mysys[1]} ) )
+   local desc = fmt.f(_([[The {target_faction} pilot known as {plt} is wanted dead or alive by {paying_faction} authorities. They were last seen in the {sys} system.
+
+#nTarget:#0 {plt} ({shipclass}-class ship)
+#nWanted:#0 Dead or Alive
+#nLast Seen:#0 {sys} system]]),
+         {target_faction=mem.target_faction, plt=mem.name, paying_faction=mem.paying_faction, sys=mem.mysys[1], shipclass=_(ship.get(mem.tgtship):classDisplay())} )
+   if not mem.paying_faction:static() then
+      desc = desc.."\n"..fmt.f(_([[#nReputation Gained:#0 {fct}]]),
+         {fct=mem.paying_faction})
+   end
+   misn.setDesc(desc)
+   misn.setReward( mem.credits )
    mem.marker = misn.markerAdd( mem.mysys[1], "computer" )
 end
 
@@ -201,8 +221,10 @@ function accept ()
    mem.stage = 0
    mem.increment = false
    mem.last_sys = system.cur()
-   tk.msg( _("Find and Kill a pilot"), fmt.f( _("{plt} is a notorious {target_faction} pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize {plt} by any means necessary will be given {credits} as a reward. {paying_faction} authorities have lost track of this pilot in the {sys} system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation."), {plt=mem.name, target_faction=mem.target_faction, credits=fmt.credits(mem.credits), paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
-   mem.jumphook = hook.enter( "enter" )
+
+   vntk.msg( _("Find and Kill a pilot"), fmt.f( _("{plt} is a notorious {target_faction} pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize {plt} by any means necessary will be given {credits} as a reward. {paying_faction} authorities have lost track of this pilot in the {sys} system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation."),
+      {plt=mem.name, target_faction=mem.target_faction, credits=fmt.credits(mem.credits), paying_faction=mem.paying_faction, sys=mem.mysys[1]} ) )
+   mem.jumphook = hook.jumpin( "enter" )
    mem.hailhook = hook.hail( "hail" )
    mem.landhook = hook.land( "land" )
 
@@ -241,7 +263,7 @@ function enter ()
 
          -- Get the position of the target
          local jp  = jump.get(system.cur(), mem.last_sys)
-	 local pos
+         local pos
          if jp ~= nil then
             local x = 6000 * rnd.rnd() - 3000
             local y = 6000 * rnd.rnd() - 3000
@@ -252,7 +274,7 @@ function enter ()
 
          -- Spawn the target
          pilot.toggleSpawn( false )
-         pilot.clear()
+         pilotai.clear()
 
          target_ship = pilot.add( mem.tgtship, mem.target_faction, pos, mem.name )
          target_ship:setHilight( true )
@@ -260,8 +282,9 @@ function enter ()
          target_ship:setHostile()
 
          mem.death_hook = hook.pilot( target_ship, "death", "target_death" )
+         mem.board_hook = hook.pilot( target_ship, "board", "target_board" )
          mem.pir_jump_hook = hook.pilot( target_ship, "jump", "target_flee" )
-         mem.pir_land_hook = hook.pilot( target_ship, "land", "target_land" )
+         mem.pir_land_hook = hook.pilot( target_ship, "land", "target_flee" )
          mem.jumpout = hook.jumpout( "player_flee" )
 
          -- If the target is weaker, runaway
@@ -278,7 +301,7 @@ end
 
 -- Enemies wait for the player
 function trigger_ambush()
-   local jp     = jump.get(system.cur(), mem.last_sys)
+   local jp = jump.get( system.cur(), mem.last_sys )
    local x, y
    ambush = {}
 
@@ -335,51 +358,15 @@ end
 function hail_ad()
    hook.rm(mem.hailie)
    hook.rm(mem.hailie2)
-   tk.msg( _("You're looking for someone"), _([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction as your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
-end
 
--- Player hails a ship for info
-function hail( target )
-   if target:leader() == player.pilot() then
-      -- Don't want the player hailing their own escorts.
-      return
-   end
+   vn.clear()
+   vn.scene()
+   local p = ccomm.newCharacter( vn, advisor )
+   vn.transition()
+   p(_([["Hi there", says the pilot. "You seem to be lost." As you explain that you're looking for an outlaw pilot and have no idea where to find your target, the pilot laughs. "So, you've taken a Seek and Destroy job, but you have no idea how it works. Well, there are two ways to get information on an outlaw: first way is to land on a planet and ask questions at the bar. The second way is to ask pilots in space. By the way, pilots of the same faction as your target are most likely to have information, but won't give it easily. Good luck with your task!"]]) ) -- Give advice to the player
+   vn.run()
 
-   if system.cur() == mem.mysys[mem.cursys] and mem.stage == 0 and not inlist( hailed, target ) then
-      hailed[#hailed+1] = target -- A pilot can be hailed only once
-
-      if mem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
-         tk.msg( _("Your track is cold"), fmt.f( quotes.cold[rnd.rnd(1,#quotes.cold)], {plt=mem.name} ) )
-         misn.finish(false)
-      else
-
-         -- If hailed pilot is enemy to the target, there is less chance he knows
-         if mem.target_faction:areEnemies( target:faction() ) then
-            mem.know = (rnd.rnd() > .9)
-         else
-            mem.know = (rnd.rnd() > .3)
-         end
-
-         -- If hailed pilot is enemy to the player, there is less chance he mem.tells
-         if target:hostile() then
-            mem.tells = (rnd.rnd() > .95)
-         else
-            mem.tells = (rnd.rnd() > .5)
-         end
-
-         if not mem.know then -- NPC does not know the target
-            tk.msg( _("No clue"), fmt.f( quotes.dono[rnd.rnd(1,#quotes.dono)], {plt=mem.name} ) )
-         elseif mem.tells then
-            tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            next_sys()
-            target:setHostile( false )
-         else
-            space_clue( target )
-         end
-      end
-
-      player.commClose()
-   end
+   player.commClose()
 end
 
 -- Decides if the pilot is scared by the player
@@ -408,71 +395,208 @@ local function isScared( target )
    return true
 end
 
--- The NPC knows the target. The player has to convince him to give info
-function space_clue( target )
-   if target:hostile() then -- Pilot doesn't like you
-      local choice = tk.choice(_("I won't tell you"), quotes.noinfo[rnd.rnd(1,#quotes.noinfo)], _("Give up"), _("Threaten the pilot")) -- TODO maybe: add the possibility to pay
-      if choice ~= 1 then
-         if isScared( target ) and rnd.rnd() < .5 then
-            tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            next_sys()
-            target:control()
-            target:runaway(player.pilot())
-         else
-            tk.msg( _("Not impressed"), fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
-
-            -- Clean the previous hook if it exists
-            if mem.attack then
-               hook.rm(mem.attack)
-            end
-            mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
-         end
-      end
-
-   else -- Pilot wants payment
-      mem.price = (5 + 5*rnd.rnd()) * 1e3
-      local choice = tk.choice(
-         _("How much money do you have?"),
-         fmt.f( quotes.money[rnd.rnd(1,#quotes.money)], {plt=mem.name, credits=fmt.credits(mem.price)} ),
-         _("Pay the sum"), _("Give up"), _("Threaten the pilot")
-      )
-
-      if choice == 1 then
-         if player.credits() >= mem.price then
-            player.pay(-mem.price)
-            tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            next_sys()
-            target:setHostile( false )
-            target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
-         else
-            tk.msg( _("Not enough money"), _("You don't have enough money.") )
-         end
-      elseif choice == 3 then -- Threaten the pilot
-
-         -- Everybody except the pirates takes offence if you threaten them
-         if target:faction() ~= faction.get("Pirate") then
-            faction.modPlayerSingle( target:faction(), -1 )
-         end
-
-         if isScared (target) then
-            tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            next_sys()
-            target:control()
-            target:runaway(player.pilot())
-         else
-            tk.msg( _("Not impressed"), fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-            target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
-
-            -- Clean the previous hook if it exists
-            if mem.attack then
-               hook.rm(mem.attack)
-            end
-            mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
-         end
-      end
+-- Player hails a ship for info
+function hail( target )
+   if target:withPlayer() or (target:leader() == player.pilot()) then
+      -- Don't want the player hailing their own escorts.
+      return
    end
 
+   -- Don't duplicate if in memory
+   local m = target:memory()
+   if m._seekndestroy then
+      return
+   end
+   m._seekndestroy = true
+
+   -- Precompute random numbers
+   m._seekndestroy_cold = rnd.rnd(1,#quotes.cold)
+   m._seekndestroy_dono = rnd.rnd(1,#quotes.dono)
+   m._seekndestroy_clue = rnd.rnd(1,#quotes.clue)
+   m._seekndestroy_rnd1 = rnd.rnd()
+   m._seekndestroy_rnd2 = rnd.rnd()
+
+   -- Custom option
+   local lbl = "seekndestroy_check"
+   local mmem = mem -- have to use auxiliary variable here
+   local nextsys = mmem.mysys[mmem.cursys+1]
+   ccomm.customComm( target, function ()
+      if mmem.stage ~= 0 or system.cur() ~= mmem.mysys[mmem.cursys] or inlist( hailed, target )then
+         return nil -- Past first stage
+      end
+      return fmt.f(_("Ask about {plt} (#bSeek And Destroy#0)"),
+         {plt=mmem.name,})
+   end, function ( lvn, vnp )
+      lvn.func( function ()
+         table.insert( hailed, target )
+         if not nextsys then -- No more claimed system : need to finish the mission
+            return lvn.jump( "seekndestroy_cold")
+         end
+         return lvn.jump("seekndestroy_std")
+      end )
+
+      -- Message has gone cold
+      lvn.label("seekndestroy_cold")
+      vnp(fmt.f( quotes.cold[m._seekndestroy_cold], {plt=mmem.name}))
+      lvn.func( function ()
+         ccomm.customCommRemove( lbl )
+         misn.finish(false)
+      end )
+      lvn.jump("menu")
+
+      lvn.label("seekndestroy_std")
+      lvn.func( function ()
+         -- If hailed pilot is enemy to the target, there is less chance he knows
+         if mmem.target_faction:areEnemies( target:faction() ) then
+            m._seekndestroy_know = (m._seekndestroy_rnd1 > 0.9)
+         else
+            m._seekndestroy_know = (m._seekndestroy_rnd1 > 0.3)
+         end
+
+         -- If hailed pilot is enemy to the player, there is less chance they mmem.tells
+         if target:hostile() then
+            m._seekndestroy_tells = (m._seekndestroy_rnd2 > 0.95)
+         else
+            m._seekndestroy_tells = (m._seekndestroy_rnd2 > 0.5)
+         end
+
+         if not m._seekndestroy_know then
+            return lvn.jump("seekndestroy_notknow")
+         elseif m._seekndestroy_tells then
+            return lvn.jump("seekndestroy_tells")
+         else
+            return lvn.jump("seekndestroy_clue")
+         end
+      end )
+
+      lvn.label("seekndestroy_notknow")
+      vnp(fmt.f( quotes.dono[m._seekndestroy_dono],
+            {plt=mmem.name}))
+      lvn.jump("menu")
+
+      lvn.label("seekndestroy_tells")
+      lvn.func( function ()
+         var.push("seekndestroy_nextsys",true)
+         target:setHostile( false )
+      end )
+      vnp(fmt.f( quotes.clue[m._seekndestroy_clue],
+            {plt=mmem.name, sys=nextsys}))
+      lvn.jump("menu")
+
+      lvn.label("seekndestroy_clue")
+      lvn.func( function ()
+         if target:hostile() then
+            lvn.jump("seekndestroy_hostile")
+         end
+      end )
+      lvn.func( function ()
+         m._seekndestroy_price = (5 + 5*rnd.rnd()) * 1e3
+      end )
+      vnp(_([["How much money do you have?"]]))
+      lvn.menu( function ()
+         return {
+            {fmt.f(_([[Pay {amount}]]), {amount=fmt.credits(m._seekndestroy_price)}), "seekndestroy_pay"},
+            {_([[Give up]]), "menu"}, -- Back to menu
+            {_([[Threaten the pilot]]), "seekndestroy_threaten"},
+         }
+      end )
+
+      lvn.label("seekndestroy_broke")
+      lvn.na(_("You don't have enough money."))
+      lvn.done()
+
+      lvn.label("seekndestroy_pay")
+      lvn.func( function ()
+         if player.credits() < m._seekndestroy_price then
+            lvn.jump("seekndestroy_broke")
+            return
+         end
+         player.pay(-m._seekndestroy_price)
+      end )
+      vnp(_([["I know the pilot you're looking for."]]))
+      vnp(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mmem.name, sys=nextsys}))
+      lvn.func( function ()
+         var.push("seekndestroy_nextsys",true)
+         target:setHostile( false )
+         target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
+      end )
+      lvn.jump("menu")
+
+      lvn.label("seekndestroy_threaten")
+      lvn.func( function ()
+         if not target:hostile() then
+            -- Everybody except the pirates takes offence if you threaten them
+            if not pir.factionIsPirate( target:faction() ) then
+               faction.hit( target:faction(), -1 )
+            end
+
+            if isScared(target) then
+               return lvn.jump("seekndestroy_scared")
+            else
+               return lvn.jump("seekndestroy_notimpressed")
+            end
+         else
+            if isScared( target ) and rnd.rnd() < 0.5 then
+               return lvn.jump( "seekndestroy_intimidating" )
+            else
+               return lvn.jump( "seekndestroy_notimpressed" )
+            end
+         end
+      end )
+
+      lvn.label("seekndestroy_scared")
+      vnp(fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys}))
+      lvn.func( function ()
+         var.push("seekndestroy_nextsys",true)
+         target:control()
+         target:runaway(player.pilot())
+         player.commClose()
+      end )
+      lvn.done()
+
+      lvn.label("seekndestroy_notimpressed")
+      vnp(fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {plt=mmem.name, sys=nextsys}))
+      lvn.func( function ()
+         target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
+         -- Clean the previous hook if it exists
+         if mmem.attack then
+            hook.rm(mmem.attack)
+         end
+         var.push("seekndestroy_set_attack_hook",true)
+         player.commClose()
+      end )
+      lvn.done()
+
+      lvn.label("seekndestroy_hostile")
+      vnp(quotes.noinfo[rnd.rnd(1,#quotes.noinfo)])
+      lvn.menu{
+         {_([[Give up]]), "menu"}, -- Go back to main menu
+         {_([[Threaten the pilot]]), "seekndestroy_threaten"},
+         -- TODO maybe: add the possibility to pay
+      }
+
+      lvn.label( "seekndestroy_intimidating" )
+      vnp( fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mmem.name, sys=nextsys} ) )
+      lvn.func( function ()
+         var.push("seekndestroy_nextsys",true)
+         target:control()
+         target:runaway(player.pilot())
+      end )
+      vn.jump("menu")
+   end, lbl )
+
+   hook.timer(-1, "board_done", target)
+end
+
+function board_done ( target )
+   if var.peek("seekndestroy_nextsys") then
+      next_sys()
+      var.pop("seekndestroy_nextsys")
+   end
+   if var.peek("seekndestroy_set_attack_hook") then
+      mem.attack = hook.pilot( target, "attacked", "clue_attacked" )
+      var.pop("seekndestroy_set_attack_hook")
+   end
 end
 
 -- Player attacks an informant who has refused to give info
@@ -481,7 +605,7 @@ function clue_attacked( p, attacker )
    if attacker and attacker:withPlayer() and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
-      tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
+      vntk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
       next_sys()
       hook.rm(mem.attack)
    end
@@ -503,13 +627,16 @@ function land()
       else -- NPC mem.tells the clue
          mem.know = 2
       end
-      mem.mynpc = misn.npcAdd("clue_bar", _("Shifty Person"), portrait.get("Pirate"), _("This person might be an outlaw, a pirate, or even worse, a bounty hunter. You normally wouldn't want to get close to this kind of person, but they may be a useful source of information."))
+      mem.mynpc_name = _("Shifty Person")
+      mem.mynpc_image, mem.mynpc_portrait = vni.pirate()
+      mem.mynpc = misn.npcAdd("clue_bar", mem.mynpc_name, mem.mynpc_portrait, _("This person might be an outlaw, a pirate, or even worse, a bounty hunter. You normally wouldn't want to get close to this kind of person, but they may be a useful source of information."))
 
    -- Player wants to be paid
    elseif spob.cur():faction() == mem.paying_faction and mem.stage == 4 then
-      tk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)] )
+      lmisn.sfxVictory()
+      vntk.msg( _("Good work, pilot!"), quotes.pay[rnd.rnd(1,#quotes.pay)].."\n\n"..fmt.reward(mem.credits) )
       player.pay( mem.credits )
-      mem.paying_faction:modPlayerSingle( rnd.rnd(1,2) )
+      mem.paying_faction:hit( rnd.rnd(1,2) )
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish( true )
    end
@@ -517,35 +644,61 @@ end
 
 -- The player ask for clues in the bar
 function clue_bar()
+   vn.clear()
+   vn.scene()
+   local p = vn.newCharacter( mem.mynpc_name, {image=mem.mynpc_image} )
+   vn.transition()
+
    if mem.cursys+1 >= mem.nbsys then -- No more claimed system : need to finish the mission
-      tk.msg( _("Your track is cold"), fmt.f( quotes.cold[rnd.rnd(1,#quotes.cold)], {plt=mem.name} ) )
+      p(fmt.f( quotes.cold[rnd.rnd(1,#quotes.cold)] .. "\n\n#r" .. _("MISSION FAILED") .. "#0", {plt=mem.name}))
+      vn.run()
+
       misn.finish(false)
    else
       if mem.know == 0 then -- NPC does not know the target
-         tk.msg( _("No clue"), fmt.f( quotes.dono[rnd.rnd(1,#quotes.dono)], {plt=mem.name} ) )
-      elseif mem.know == 1 then -- NPC wants money
-         local choice = tk.choice(
-            _("How much money do you have?"),
-            fmt.f( quotes.money[rnd.rnd(1,#quotes.money)], {plt=mem.name, credits=fmt.credits(mem.price)} ),
-            _("Pay the sum"), _("Give up")
-         )
+         p(fmt.f( quotes.dono[rnd.rnd(1,#quotes.dono)], {plt=mem.name} ) )
 
-         if choice == 1 then
+      elseif mem.know == 1 then -- NPC wants money
+         p( fmt.f( quotes.money[rnd.rnd(1,#quotes.money)], {plt=mem.name, credits=fmt.credits(mem.price)} ) )
+         vn.menu{
+            {_([[Pay the sum]]), "pay"},
+            {_([[Give up]]), "giveup"},
+         }
+
+         vn.label("giveup")
+         vn.done()
+
+         vn.label("pay")
+         vn.func( function ()
             if player.credits() >= mem.price then
                player.pay(-mem.price)
-               tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-               next_sys()
+               vn.jump("paid")
             else
-               tk.msg( _("Not enough money"), _("You don't have enough money.") )
+               vn.jump("nomoney")
             end
-         end
+         end )
+
+         vn.label("nomoney")
+         vn.na(_([[You don't have enough money.]]))
+         vn.done()
+
+         vn.label("paid")
+         p(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+         vn.func( function ()
+            next_sys()
+         end )
+         vn.done()
 
       else -- NPC tells the clue
-         tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )
-         next_sys()
+         p(fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]}))
+         vn.func( function ()
+            next_sys()
+         end )
       end
-
    end
+
+   vn.run()
+
    misn.npcRm(mem.mynpc)
 end
 
@@ -557,38 +710,51 @@ function next_sys ()
 end
 
 function player_flee ()
-   tk.msg( _("You're not going to kill anybody like that"), fmt.f( _("You had a chance to neutralize {plt}, and you wasted it! Now you have to start all over. Maybe some other pilots in {sys} know where your target is going."), {plt=mem.name, sys=system.cur()} ) )
+   vntk.msg( _("You're not going to kill anybody like that"), fmt.f( _("You had a chance to neutralize {plt}, and you wasted it! Now you have to start all over. Maybe some other pilots in {sys} know where your target is going."), {plt=mem.name, sys=system.cur()} ) )
    mem.stage = 0
    misn.osdActive( 1 )
-
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
+   clear_target_hook()
 end
 
 function target_flee ()
    -- Target ran away. Unfortunately, we cannot continue the mission
    -- on the other side because the system has not been claimed...
-   tk.msg( _("Target ran away"), fmt.f( _("That was close, but unfortunately, {plt} ran away. Maybe some other pilots in this system know where your target is heading."), {plt=mem.name} ) )
+   vntk.msg( _("Target ran away"), fmt.f( _("That was close, but unfortunately, {plt} ran away. Maybe some other pilots in this system know where your target is heading."), {plt=mem.name} ) )
    pilot.toggleSpawn(true)
    mem.stage = 0
    misn.osdActive( 1 )
-
-   hook.rm(mem.death_hook)
-   hook.rm(mem.pir_jump_hook)
-   hook.rm(mem.pir_land_hook)
-   hook.rm(mem.jumpout)
+   clear_target_hook()
 end
 
 function target_death ()
    mem.stage = 4
+   clear_target_hook()
+
+   misn.osdActive( 3 )
+   misn.markerRm(mem.marker)
+   pilot.toggleSpawn(true)
+end
+
+function target_board( p )
+   mem.stage = 4
+   clear_target_hook()
+
+   vntk.msg( _("Target captured"), _("You board the ship and, after a short but intense firefight, are able to take the wanted outlaw alive. Time to hand them in to the authorities.") )
+   p:setDisable() -- Permanently disable
+   local c = commodity.new( N_("Wanted Outlaw"), N_("A wanted outlaw you captured.") )
+   misn.cargoAdd( c, 0 )
+
+   misn.osdActive( 3 )
+   misn.markerRm(mem.marker)
+   pilot.toggleSpawn(true)
+
+   player.unboard()
+end
+
+function clear_target_hook ()
    hook.rm(mem.death_hook)
+   hook.rm(mem.board_hook)
    hook.rm(mem.pir_jump_hook)
    hook.rm(mem.pir_land_hook)
    hook.rm(mem.jumpout)
-
-   misn.osdActive( 3 )
-   misn.markerRm (mem.marker)
-   pilot.toggleSpawn(true)
 end

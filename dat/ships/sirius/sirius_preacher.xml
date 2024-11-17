@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Preacher">
+ <lua>sirius_preacher.lua</lua>
  <points>60</points>
  <base_type>Preacher</base_type>
- <GFX size="70" sx="10" sy="10">preacher</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="70" sx="10" sy="10">preacher</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1200000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-25" y="0" h="0">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
+ <faction>Sirius</faction>
  <license>Medium Combat Vessel</license>
- <cond>faction.playerStanding("Sirius") &gt;= 40</cond>
- <condstr>You need at least 40 reputation with House Sirius.</condstr>
+ <cond>math.floor(system.cur():reputation("Sirius")+0.5) &gt;= 40</cond>
+ <condstr>You need at least 40% reputation with House Sirius.</condstr>
  <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
  <health>
   <armour>250</armour>
@@ -21,26 +22,29 @@
  </health>
  <characteristics>
   <crew>11</crew>
-  <mass>140</mass>
+  <mass>150</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="1" h="2" />
-  <weapon size="medium" x="15" y="-1" h="2" />
   <weapon size="medium" x="-9" y="-10" h="2" />
   <weapon size="medium" x="-9" y="10" h="2" />
   <weapon size="medium" x="-9" y="-3" h="2" />
   <weapon size="medium" x="-9" y="3" h="2" />
+  <weapon size="small" x="15" y="0" h="2" />
   <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
+  <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

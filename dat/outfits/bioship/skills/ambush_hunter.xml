@@ -11,8 +11,6 @@
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/ambush_hunter.lua</lua>
-  <fwd_damage>50</fwd_damage>
-  <tur_damage>50</tur_damage>
-  <launch_damage>50</launch_damage>
+  <weapon_damage>50</weapon_damage>
  </specific>
 </outfit>

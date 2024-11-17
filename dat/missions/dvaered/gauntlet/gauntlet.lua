@@ -14,12 +14,11 @@ local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
 local tables = require 'missions.dvaered.gauntlet.tables'
 local fmt = require "format"
 local equipopt = require 'equipopt'
+local flow = require "ships.lua.lib.flow"
 
 local logidstr = "log_gauntlet"
 local enemies, enemy_faction, gmods, wave_enemies, wave_killed -- Non-persistent state
 local wave_end -- Forward-declared functions
--- luacheck: globals countdown countdown_done enter_the_ring enter_wave land leave_the_ring loaded p_death p_disabled player_lost player_lost_disable wave_end_msg wave_round_setup (Hook functions passed by name)
--- luacheck: globals approach_gauntlet (NPC functions passed by name)
 
 local npc_portrait   = "/gfx/misc/crimson_gauntlet.webp"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
@@ -69,6 +68,12 @@ function approach_gauntlet ()
    -- Accept mission
    misn.accept()
 
+   -- We try to claim if possible, but it's not a failure if we can't
+   -- This allows it to work with kex03
+   if naev.claimTest( gauntletsys ) then
+      misn.claim( gauntletsys )
+   end
+
    -- Set details
    misn.setDesc( _("Annihilate all enemies in the Crimson Gauntlet.") )
    misn.setReward( _("Great riches!") )
@@ -99,7 +104,7 @@ function abort ()
 end
 
 -- Clears pilots include the player's escorts
-local function clear_pilots ()
+function clear_pilots ()
    gauntlet.clear_pilots()
 end
 
@@ -173,7 +178,7 @@ local function enemy_out( p )
    end
 end
 function p_disabled( p )
-   p:disable() -- don't let them come back
+   p:setDisable() -- don't let them come back
    p:setInvisible( true ) -- can't target
    p:setInvincible( true ) -- just stays there
    enemy_out( p )
@@ -212,7 +217,7 @@ end
 --[[
    Wave stuff
 --]]
-function enter_wave ()
+function enter_wave () -- luacheck: globals enter_wave (passed by reference)
    if system.cur() ~= system.get("Crimson Gauntlet") then
       return
    end
@@ -240,6 +245,7 @@ function wave_round_setup ()
    end
    pp:fillAmmo() -- Have to fill ammo or deployed fighters get "lost"
    -- TODO reset outfit cooldown stuff
+   flow.reset( pp )
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
 
@@ -358,65 +364,65 @@ local function wave_compute_score ()
    local c = pp:ship():class()
    if mem.wave_category == "skirmisher" then
       if c=="Corvette" then
-         newbonus( "Corvette %d%%", -20 )
+         newbonus( _("Corvette %d%%"), -20 )
       elseif c=="Destroyer" then
-         newbonus( "Destroyer %d%%", -40 )
+         newbonus( _("Destroyer %d%%"), -40 )
       elseif c=="Cruiser" then
-         newbonus( "Cruiser %d%%", -80 )
+         newbonus( _("Cruiser %d%%"), -80 )
       elseif c=="Carrier" then
-         newbonus( "Carrier %d%%", -90 )
+         newbonus( _("Carrier %d%%"), -90 )
       elseif c=="Battleship" then
-         newbonus( "Battleship %d%%", -90 )
+         newbonus( _("Battleship %d%%"), -90 )
       end
       if elapsed < 15 then
-         newbonus( "Fast Clear (<15s) %d%%", 25 )
+         newbonus( _("Fast Clear (<15s) %d%%"), 25 )
       elseif elapsed > 90 then
-         newbonus( "Slow Clear (>90s) %d%%", -25 )
+         newbonus( _("Slow Clear (>90s) %d%%"), -25 )
       end
    elseif mem.wave_category == "warrior" then
       if c=="Fighter" then
-         newbonus( "Fighter %d%%", 100 )
+         newbonus( _("Fighter %d%%"), 100 )
       elseif c=="Bomber" then
-         newbonus( "Bomber %d%%", 100 )
+         newbonus( _("Bomber %d%%"), 100 )
       elseif c=="Corvette" then
-         newbonus( "Corvette %d%%", 25 )
+         newbonus( _("Corvette %d%%"), 25 )
       elseif c=="Cruiser" then
-         newbonus( "Cruiser %d%%", -20 )
+         newbonus( _("Cruiser %d%%"), -20 )
       elseif c=="Carrier" then
-         newbonus( "Carrier %d%%", -30 )
+         newbonus( _("Carrier %d%%"), -30 )
       elseif c=="Battleship" then
-         newbonus( "Battleship %d%%", -30 )
+         newbonus( _("Battleship %d%%"), -30 )
       end
       if elapsed < 25 then
-         newbonus( "Fast Clear (<25s) %d%%", 25 )
+         newbonus( _("Fast Clear (<25s) %d%%"), 25 )
       elseif elapsed > 120 then
-         newbonus( "Slow Clear (>120s) %d%%", -25 )
+         newbonus( _("Slow Clear (>120s) %d%%"), -25 )
       end
    elseif mem.wave_category == "warlord" then
       if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
-         newbonus( "Fighter %d%%", 500 )
+         newbonus( _("Fighter %d%%"), 500 )
       elseif c=="Bomber" then
-         newbonus( "Bomber %d%%", 400 )
+         newbonus( _("Bomber %d%%"), 400 )
       elseif c=="Corvette" then
-         newbonus( "Corvette %d%%", 100 )
+         newbonus( _("Corvette %d%%"), 100 )
       elseif c=="Destroyer" then
-         newbonus( "Destroyer %d%%", 50 )
+         newbonus( _("Destroyer %d%%"), 50 )
       elseif c=="Cruiser" then
-         newbonus( "Cruiser %d%%", 25 )
+         newbonus( _("Cruiser %d%%"), 25 )
       end
       if elapsed < 40 then
-         newbonus( "Fast Clear (<40s) %d%%", 25 )
+         newbonus( _("Fast Clear (<40s) %d%%"), 25 )
       elseif elapsed > 180 then
-         newbonus( "Slow Clear (>180s) %d%%", -25 )
+         newbonus( _("Slow Clear (>180s) %d%%"), -25 )
       end
    end
 
    -- Implement global modifier bonuses here
    if gmods.doubledmgtaken then
-      newbonus( "Double Damage Enemies %d%%", 50 )
+      newbonus( _("Double Damage Enemies %d%%"), 50 )
    end
    if gmods.nohealing then
-      newbonus( "No Healing Between Waves %d%%", 25 )
+      newbonus( _("No Healing Between Waves %d%%"), 25 )
    end
 
    score = math.max( 0, score * bonus / 100 )
@@ -438,6 +444,7 @@ function wave_end ()
       local s = 1.2 -- time to display each message
       local f = (n+2)*s
       player.omsgAdd( string.format( "#p".._("WAVE %d CLEAR").."#0", mem.wave_round ), f )
+      hook.safe( "clear_pilots" ) -- can't be done in the same frame as it is run on an enemy hook
       sfx_clear:play()
       for k,v in pairs(score_str) do
          local start = k*s

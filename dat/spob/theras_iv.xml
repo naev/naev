@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Theras IV">
+ <pos x="3404.378873" y="16561.843167"/>
+ <GFX>
+  <space>H04.webp</space>
+  <exterior>mining5.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Theras IV was originally considered as a colonization prospect. However, the increase of animosity between the Frontier and House Dvaered have led to it being declared an unmanned waste disposal site. Although meant for usage by the frontier, it has seen an increase in usage by House Dvaered, whose ships do not always pay the necessary processing fees.</description>
+ </general>
+ <tags>
+  <tag>garbage</tag>
+ </tags>
+</spob>

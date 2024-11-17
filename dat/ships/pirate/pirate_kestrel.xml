@@ -2,19 +2,18 @@
 <ship name="Pirate Kestrel">
  <points>130</points>
  <base_type>Kestrel</base_type>
- <GFX size="125" sx="10" sy="10">kestrel_pirate</GFX>
- <rarity>2</rarity>
- <GUI>brushed</GUI>
+ <gfx size="125" sx="10" sy="10">kestrel_pirate</gfx>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>3960000</price>
  <time_mod>1.3</time_mod>
-
  <trail_generator x="-23" y="28" h="2">nebula</trail_generator>
  <trail_generator x="-23" y="-28" h="2">nebula</trail_generator>
  <trail_generator x="-45" y="0" h="17">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
- <description>The Kestrel is the best ship offered by Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
+ <faction>Pirate</faction>
+ <description>The Kestrel is one of the best ship offered by Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirate captains who can afford it and want to make a lasting impression.</description>
  <health>
   <armour>950</armour>
   <armour_regen>0</armour_regen>
@@ -37,7 +36,6 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <utility size="large" />
   <utility size="medium" />
   <structure size="large" prop="engines">Krain Remige Engine</structure>
   <structure size="large" prop="hull">Patchwork Heavy Plating</structure>
@@ -50,10 +48,11 @@
   <shield_mod>5</shield_mod>
   <speed_mod>10</speed_mod>
   <turn_mod>10</turn_mod>
-  <thrust_mod>5</thrust_mod>
+  <accel_mod>5</accel_mod>
   <cargo_mod>15</cargo_mod>
   <armour_mod>-10</armour_mod>
-  <ew_hide>10</ew_hide>
+  <ew_hide>-10</ew_hide>
+  <fuel>400</fuel>
  </stats>
  <tags>
   <tag>pirate</tag>

@@ -3,11 +3,10 @@
  <general>
   <background>nebu_butterfly</background>
   <radius>21000.000000</radius>
-  <stars>500</stars>
+  <spacedust>500</spacedust>
   <interference>0.000000</interference>
-  <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos x="39.000000" y="-183.000000"/>
+ <pos x="-84.397313" y="-431.492415"/>
  <spobs>
   <spob>Geron</spob>
   <spob>Goddard III</spob>
@@ -18,15 +17,15 @@
   <spob_virtual>Trade Lane</spob_virtual>
  </spobs>
  <jumps>
-  <jump target="Arcturus">
+  <jump target="Daan">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Delta Pavonis">
-   <pos x="-17204.057496" y="16139.359158"/>
-   <hide>1.000000</hide>
+  <jump target="Provectus Nova">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
-  <jump target="Ogat">
+  <jump target="Waterhole">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
@@ -43,4 +42,7 @@
    <pos x="9734.023114" y="-1549.655486"/>
   </exclusion>
  </asteroids>
+ <tags>
+  <tag>tradelane</tag>
+ </tags>
 </ssys>

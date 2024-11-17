@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Black Lotus">
- <ai>pirate</ai>
+ <ai>black_lotus</ai>
  <logo>blacklotus</logo>
  <longname>Black Lotus Pirate Clan</longname>
  <player>-20</player>
@@ -8,6 +8,7 @@
  <spawn>pirate_black_lotus</spawn>
  <standing>pirate_black_lotus</standing>
  <equip>pirate</equip>
+ <local_th>5</local_th>
  <useshiddenjumps/>
  <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space. Organized crime at its finest.</description>
  <generator weight="0.65">Pirate</generator>
@@ -26,10 +27,8 @@
   <enemy>Proteron</enemy>
   <enemy>Sirius</enemy>
   <enemy>Soromid</enemy>
-  <enemy>Thurion</enemy>
-  <enemy>DHC</enemy>
   <enemy>Trader</enemy>
-  <enemy>Traders Guild</enemy>
+  <enemy>Traders Society</enemy>
   <enemy>Za'lek</enemy>
  </enemies>
  <tags>

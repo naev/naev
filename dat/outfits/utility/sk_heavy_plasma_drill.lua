@@ -1,4 +1,4 @@
-local drill = require "outfits.utility.mining_drill"
+local drill = require "outfits.lib.mining_drill"
 
 function init( p, po )
    -- Since this outfit is usually off, we use shipstats to forcibly set the
