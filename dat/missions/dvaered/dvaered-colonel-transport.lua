@@ -18,13 +18,14 @@
 --]]
 
 local escort = require "escort"
-local fleet = require "fleet"
 local fmt = require "format"
 local neu = require "neutral"
 local vn = require "vn"
 local vni = require "vnimage"
 
 local reward = 0
+
+local source_system = nil
 
 local dest_planet = spob.getS("Adham")
 
@@ -114,7 +115,7 @@ function accept()
    hook.land( "land" )
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init ( colonel_ship, {
-         pilot.add( "Dvaered Arsenal", "ffriendly", source_system, name )
+         pilot.add( "Dvaered Arsenal", "ffriendly", source_system, "Radver" ) -- The Dvaered colonel is telling you to call them the name of the Arsenal; their real name is classified information.
    })
 
    hook.enter( "ambush" )
@@ -128,7 +129,7 @@ function ambush ()
    ffriendly = faction.dynAdd( dvaered_factions, "warlords_friendly", _("Warlords") ) -- codespell:ignore ffriendly
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
 
-   pilot.add( "Dvaered Phalanx", "fhostile", source_system, name )
+   pilot.add( "Dvaered Phalanx", "fhostile", source_system, "Asheron Anomaly" )
 end
 
 function land ()
