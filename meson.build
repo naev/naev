@@ -358,7 +358,8 @@ int main (void) { return 0; }''')
       include_directories: [include_dirs, '.'],
       dependencies: naev_deps,
       args: ['--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
-             '--blocklist-file', '/usr/include/math.h'],
+             '--blocklist-file', '/usr/include/math.h',
+             '--override-abi', 'nlua_package_.*=C-unwind'],
    )
    copydir = find_program('utils/build/copydir.py')
    naevc_crate = custom_target(

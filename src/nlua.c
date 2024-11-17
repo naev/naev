@@ -70,10 +70,6 @@ static LuaCache_t *lua_cache = NULL;
 /*
  * prototypes
  */
-static int        nlua_package_preload( lua_State *L );
-static int        nlua_package_loader_lua( lua_State *L );
-static int        nlua_package_loader_c( lua_State *L );
-static int        nlua_package_loader_croot( lua_State *L );
 static int        nlua_require( lua_State *L );
 static lua_State *nlua_newState( void ); /* creates a new state */
 static int        nlua_loadBasic( lua_State *L );
@@ -474,7 +470,7 @@ static int lua_cache_cmp( const void *p1, const void *p2 )
    return strcmp( lc1->path, lc2->path );
 }
 
-static int nlua_package_preload( lua_State *L )
+int nlua_package_preload( lua_State *L )
 {
    const char *name = luaL_checkstring( L, 1 );
 
@@ -503,7 +499,7 @@ static int nlua_package_preload( lua_State *L )
  *    @return Stack depth (1), and on the stack: a loader function, a string
  * explaining there is none, or nil (no explanation).
  */
-static int nlua_package_loader_lua( lua_State *L )
+int nlua_package_loader_lua( lua_State *L )
 {
    LuaCache_t *lc;
    size_t      bufsize, l = 0;
@@ -612,7 +608,7 @@ static int nlua_package_loader_lua( lua_State *L )
  *    @return Stack depth (1), and on the stack: a loader function, a string
  * explaining there is none, or nil (no explanation).
  */
-static int nlua_package_loader_c( lua_State *L )
+int nlua_package_loader_c( lua_State *L )
 {
    const char *name = luaL_checkstring( L, 1 );
    /* Hardcoded libraries only: we DO NOT honor package.cpath. */
@@ -637,7 +633,7 @@ static int nlua_package_loader_c( lua_State *L )
  *    @return Stack depth (1), and on the stack: a loader function, a string
  * explaining there is none, or nil (no explanation).
  */
-static int nlua_package_loader_croot( lua_State *L )
+int nlua_package_loader_croot( lua_State *L )
 {
    lua_pushnil( L );
    return 1;
