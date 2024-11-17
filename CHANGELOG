@@ -1,4 +1,11 @@
-* 0.12.0 (unreleased)
+* 0.12.0-beta.2 (unreleased)
+   * Fallback for missing naevpedia ship entries
+   * Reset proteron reputation more aggressively
+   * seek_n_destroy: fixed hints breaking in certain cases
+   * mephisto type v: lowered heat generation
+   * pir_hit_intro: fixed OSD being displayed wrong
+
+* 0.12.0-beta.1
    * Gameplay
       * Ability to capture disabled ships
       * Faction reputation is no longer universal, but varies on systems
