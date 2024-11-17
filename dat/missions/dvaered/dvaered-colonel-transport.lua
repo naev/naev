@@ -100,7 +100,7 @@ function accept()
    misn.osdCreate(_("Dvaered colonel escort"), {
       fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.dest_planet, sys=mem.dest_sys},
    }
-   misn.markerAdd( mem.destspob )
+   misn.markerAdd( mem.dest_planet )
    hook.land( "land" )
    hook.enter( "pirate_ambush" )
    local colonel_ship = ship.get("Dvaered Arsenal")
