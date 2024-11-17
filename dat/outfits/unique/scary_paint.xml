@@ -8,7 +8,7 @@
   <size>small</size>
   <mass>1</mass>
   <price>1000000</price>
-  <description>War paint has been used to strike fear in those that lay their eyes upon the ships that bear it for millenia. This holographic matrix allows the visual appearance of a ship to be altered to make it appear as if it had been painted in bloody crimson.</description>
+  <description>War paint has been used to strike fear in those that lay their eyes upon the ships that bear it for millennia. This holographic matrix allows the visual appearance of a ship to be altered to make it appear as if it had been painted in bloody crimson.</description>
   <desc_extra>Projects an unsettling visual appearance onto the ship's hull, causing a mild shock to those that lay their eyes upon it. Pirates tend to respect those that go the extra mile just for appearance's sake.</desc_extra>
   <gfx_store>black_cat_doll.webp</gfx_store>
   <limit>fake_transponder</limit>
