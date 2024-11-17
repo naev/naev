@@ -137,7 +137,7 @@ impl NLua<'_> {
     pub fn new() -> NLua<'static> {
         let lua = unsafe {
             // TODO get rid of the lua_init() and move entirely to mlua.
-            naevc::lua_init(); /* initializes lua. */
+            naevc::lua_init();
             mlua::Lua::init_from_ptr(naevc::naevL as *mut mlua::lua_State)
         };
 
@@ -237,6 +237,7 @@ impl NLua<'_> {
     }
 }
 
+#[allow(dead_code)]
 impl LuaEnv<'_> {
     fn get<V: FromLua>(self, key: impl IntoLua) -> mlua::Result<V> {
         //let t: mlua::Table = self.rk.into_lua( self.lua )?.into();
@@ -244,5 +245,8 @@ impl LuaEnv<'_> {
     }
     fn set(self, key: impl IntoLua, value: impl IntoLua) -> mlua::Result<()> {
         self.table.set(key, value)
+    }
+    fn id(self) -> std::os::raw::c_int {
+        self.rk.id()
     }
 }
