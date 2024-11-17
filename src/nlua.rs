@@ -1,18 +1,23 @@
 use crate::gettext;
 use crate::ndata;
 use constcat::concat;
+use mlua::{FromLua, IntoLua};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
 const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
 
-pub struct LuaEnv(mlua::RegistryKey);
+pub struct LuaEnv<'a> {
+    lua: &'a mlua::Lua,
+    table: mlua::Table,
+    rk: mlua::RegistryKey,
+}
 
 #[allow(dead_code)]
-pub struct NLua {
+pub struct NLua<'a> {
     pub lua: mlua::Lua,
-    common: Option<mlua::Function>,
-    envs: Vec<LuaEnv>,
+    common: mlua::Function,
+    envs: Vec<LuaEnv<'a>>,
 }
 
 /// Opens the gettext library
@@ -128,10 +133,10 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
     )))
 }
 
-impl NLua {
-    pub fn new() -> NLua {
+impl NLua<'_> {
+    pub fn new() -> NLua<'static> {
         let lua = unsafe {
-            /* TODO get rid of the lua_init() and move entirely to mlua. */
+            // TODO get rid of the lua_init() and move entirely to mlua.
             naevc::lua_init(); /* initializes lua. */
             mlua::Lua::init_from_ptr(naevc::naevL as *mut mlua::lua_State)
         };
@@ -146,19 +151,19 @@ impl NLua {
         open_gettext(&lua).unwrap();
 
         // Load common chunk
-        //let data = ndata::read(String::from(LUA_COMMON_PATH)).unwrap();
-        //let common = std::str::from_utf8(&data).unwrap();
-        //let chunk = lua.load(common).into_function().unwrap();
+        let data = ndata::read(String::from(LUA_COMMON_PATH)).unwrap();
+        let common = std::str::from_utf8(&data).unwrap();
+        let chunk = lua.load(common).into_function().unwrap();
 
         // Return it
         NLua {
             lua,
             envs: Vec::new(),
-            common: None, //chunk,
+            common: chunk,
         }
     }
 
-    pub fn new_env(&mut self, name: &str) -> mlua::Result<mlua::RegistryKey> {
+    pub fn new_env(&mut self, name: &str) -> mlua::Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
 
@@ -221,8 +226,23 @@ impl NLua {
         t.set("naev", lua.create_table()?)?;
 
         // Load common script
-        //self.
+        self.common.set_environment(t.clone())?;
+        self.common.call::<()>(())?;
 
-        lua.create_registry_value(t)
+        Ok(LuaEnv {
+            lua,
+            table: t.clone(),
+            rk: lua.create_registry_value(t)?,
+        })
+    }
+}
+
+impl LuaEnv<'_> {
+    fn get<V: FromLua>(self, key: impl IntoLua) -> mlua::Result<V> {
+        //let t: mlua::Table = self.rk.into_lua( self.lua )?.into();
+        self.table.get(key)
+    }
+    fn set(self, key: impl IntoLua, value: impl IntoLua) -> mlua::Result<()> {
+        self.table.set(key, value)
     }
 }

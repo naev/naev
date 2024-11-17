@@ -106,7 +106,6 @@ pub fn naev() -> Result<()> {
         Err(e) => panic!("Unable to initialize SDL Video: {}", e),
     };
 
-    let _lua = nlua::NLua::new();
     unsafe {
         naevc::nxml_init(); /* We'll be parsing XML. */
         naevc::input_init(); /* input has to be initialized for config to work. */
@@ -177,7 +176,11 @@ pub fn naev() -> Result<()> {
             gettext("Write location: {}\n"),
             cptr_to_cstr(naevc::PHYSFS_getWriteDir())
         );
+    }
 
+    let _lua = nlua::NLua::new();
+
+    unsafe {
         /* Enable FPU exceptions. */
         if naevc::conf.fpu_except != 0 {
             naevc::debug_enableFPUExcept();
