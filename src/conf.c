@@ -9,6 +9,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "lualib.h"
 #include "physfs.h"
 
 #include "conf.h"
@@ -25,51 +26,51 @@
 #include "space.h"
 #include "utf8.h"
 
-#define conf_loadInt( env, n, i )                                              \
+#define conf_loadInt( L, n, i )                                                \
    {                                                                           \
-      nlua_getenv( naevL, env, n );                                            \
-      if ( lua_isnumber( naevL, -1 ) ) {                                       \
-         i = (int)lua_tonumber( naevL, -1 );                                   \
+      lua_getglobal( L, n );                                                   \
+      if ( lua_isnumber( L, -1 ) ) {                                           \
+         i = lua_tointeger( L, -1 );                                           \
       }                                                                        \
-      lua_pop( naevL, 1 );                                                     \
+      lua_pop( L, 1 );                                                         \
    }
 
-#define conf_loadFloat( env, n, f )                                            \
+#define conf_loadFloat( L, n, f )                                              \
    {                                                                           \
-      nlua_getenv( naevL, env, n );                                            \
-      if ( lua_isnumber( naevL, -1 ) ) {                                       \
-         f = (double)lua_tonumber( naevL, -1 );                                \
+      lua_getglobal( L, n );                                                   \
+      if ( lua_isnumber( L, -1 ) ) {                                           \
+         f = lua_tonumber( L, -1 );                                            \
       }                                                                        \
-      lua_pop( naevL, 1 );                                                     \
+      lua_pop( L, 1 );                                                         \
    }
 
-#define conf_loadTime( env, n, i )                                             \
+#define conf_loadTime( L, n, i )                                               \
    {                                                                           \
-      nlua_getenv( naevL, env, n );                                            \
-      if ( lua_isnumber( naevL, -1 ) ) {                                       \
-         i = (time_t)lua_tonumber( naevL, -1 );                                \
+      lua_getglobal( L, n );                                                   \
+      if ( lua_isnumber( L, -1 ) ) {                                           \
+         i = (time_t)lua_tonumber( L, -1 );                                    \
       }                                                                        \
-      lua_pop( naevL, 1 );                                                     \
+      lua_pop( L, 1 );                                                         \
    }
 
-#define conf_loadBool( env, n, b )                                             \
+#define conf_loadBool( L, n, b )                                               \
    {                                                                           \
-      nlua_getenv( naevL, env, n );                                            \
-      if ( lua_isnumber( naevL, -1 ) )                                         \
-         b = ( lua_tonumber( naevL, -1 ) != 0. );                              \
-      else if ( !lua_isnil( naevL, -1 ) )                                      \
-         b = lua_toboolean( naevL, -1 );                                       \
-      lua_pop( naevL, 1 );                                                     \
+      lua_getglobal( L, n );                                                   \
+      if ( lua_isnumber( L, -1 ) )                                             \
+         b = ( lua_tonumber( L, -1 ) != 0. );                                  \
+      else if ( !lua_isnil( L, -1 ) )                                          \
+         b = lua_toboolean( L, -1 );                                           \
+      lua_pop( L, 1 );                                                         \
    }
 
-#define conf_loadString( env, n, s )                                           \
+#define conf_loadString( L, n, s )                                             \
    {                                                                           \
-      nlua_getenv( naevL, env, n );                                            \
-      if ( lua_isstring( naevL, -1 ) ) {                                       \
+      lua_getglobal( L, n );                                                   \
+      if ( lua_isstring( L, -1 ) ) {                                           \
          free( s );                                                            \
-         s = strdup( lua_tostring( naevL, -1 ) );                              \
+         s = strdup( lua_tostring( L, -1 ) );                                  \
       }                                                                        \
-      lua_pop( naevL, 1 );                                                     \
+      lua_pop( L, 1 );                                                         \
    }
 
 /* Global configuration. */
@@ -287,11 +288,15 @@ void conf_loadConfigPath( void )
    if ( !nfile_fileExists( file ) )
       return;
 
-   nlua_env lEnv = nlua_newEnv( file );
-   if ( nlua_dofileenv( lEnv, file ) == 0 )
-      conf_loadString( lEnv, "datapath", conf.datapath );
+   lua_State *L = luaL_newstate();
 
-   nlua_freeEnv( lEnv );
+   if ( luaL_dofile( L, file ) != 0 ) {
+      lua_close( L );
+      return;
+   }
+   conf_loadString( L, "datapath", conf.datapath );
+
+   lua_close( L );
 }
 
 /*
@@ -304,6 +309,7 @@ int conf_loadConfig( const char *file )
    int         type;
    int         w, h;
    SDL_Keymod  m;
+   lua_State  *L;
 
    /* Check to see if file exists. */
    if ( !nfile_fileExists( file ) ) {
@@ -312,264 +318,265 @@ int conf_loadConfig( const char *file )
    }
 
    /* Load the configuration. */
-   nlua_env lEnv = nlua_newEnv( file );
-   if ( nlua_dofileenv( lEnv, file ) == 0 ) {
-
-      /* ndata. */
-      conf_loadString( lEnv, "data", conf.ndata );
-
-      /* Language. */
-      conf_loadString( lEnv, "language", conf.language );
-
-      /* OpenGL. */
-      conf_loadInt( lEnv, "fsaa", conf.fsaa );
-      conf_loadBool( lEnv, "vsync", conf.vsync );
-
-      /* Window. */
-      w = h = 0;
-      conf_loadInt( lEnv, "width", w );
-      conf_loadInt( lEnv, "height", h );
-      if ( w != 0 ) {
-         conf.explicit_dim = 1;
-         conf.width        = w;
-      }
-      if ( h != 0 ) {
-         conf.explicit_dim = 1;
-         conf.height       = h;
-      }
-      conf_loadFloat( lEnv, "scalefactor", conf.scalefactor );
-      conf_loadFloat( lEnv, "nebu_scale", conf.nebu_scale );
-      conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
-      conf_loadBool( lEnv, "modesetting", conf.modesetting );
-      conf_loadBool( lEnv, "notresizable", conf.notresizable );
-      conf_loadBool( lEnv, "borderless", conf.borderless );
-      conf_loadBool( lEnv, "minimize", conf.minimize );
-      cb = 0;
-      conf_loadBool( lEnv, "colourblind",
-                     cb ); /* TODO remove in 0.13.0 or so. */
-      if ( cb ) {
-         /* Old colourblind used Rod Monochromancy, so we'll restore that in
-          * this case. TODO Remove in 0.13.0 or so. */
-         conf.colourblind_type = 3;
-         conf.colourblind_sim  = 1.; /* Turn on at max. */
-      }
-      conf_loadFloat( lEnv, "colourblind_sim", conf.colourblind_sim );
-      conf_loadFloat( lEnv, "colourblind_correct", conf.colourblind_correct );
-      conf_loadInt( lEnv, "colourblind_type", conf.colourblind_type );
-      conf_loadFloat( lEnv, "game_speed", conf.game_speed );
-      conf_loadBool( lEnv, "healthbars", conf.healthbars );
-      conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
-      conf_loadBool( lEnv, "puzzle_skip", conf.puzzle_skip );
-      /* TODO leave only nebu_nonuniformity for 0.13.0 */
-      conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
-      conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
-      /* end todo */
-      conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
-      conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
-      conf_loadBool( lEnv, "low_memory", conf.low_memory );
-      conf_loadInt( lEnv, "max_3d_tex_size", conf.max_3d_tex_size );
-
-      /* FPS */
-      conf_loadBool( lEnv, "showfps", conf.fps_show );
-      conf_loadInt( lEnv, "maxfps", conf.fps_max );
-
-      /*  Pause */
-      conf_loadBool( lEnv, "showpause", conf.pause_show );
-
-      /* Sound. */
-      conf_loadBool( lEnv, "al_efx", conf.al_efx );
-      conf_loadBool( lEnv, "nosound", conf.nosound );
-      conf_loadFloat( lEnv, "sound", conf.sound );
-      conf_loadFloat( lEnv, "music", conf.music );
-      conf_loadFloat( lEnv, "engine_vol", conf.engine_vol );
-
-      /* Joystick. */
-      nlua_getenv( naevL, lEnv, "joystick" );
-      if ( lua_isnumber( naevL, -1 ) )
-         conf.joystick_ind = (int)lua_tonumber( naevL, -1 );
-      else if ( lua_isstring( naevL, -1 ) )
-         conf.joystick_nam = strdup( lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
-
-      /* GUI. */
-      conf_loadInt( lEnv, "mesg_visible", conf.mesg_visible );
-      if ( conf.mesg_visible <= 0 )
-         conf.mesg_visible = 5;
-      conf_loadFloat( lEnv, "map_overlay_opacity", conf.map_overlay_opacity );
-      conf.map_overlay_opacity = CLAMP( 0, 1, conf.map_overlay_opacity );
-      conf_loadBool( lEnv, "big_icons", conf.big_icons );
-      conf_loadBool( lEnv, "always_radar", conf.always_radar );
-
-      /* Key repeat. */
-      conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
-      conf_loadInt( lEnv, "repeat_freq", conf.repeat_freq );
-
-      /* Zoom. */
-      conf_loadBool( lEnv, "zoom_manual", conf.zoom_manual );
-      conf_loadFloat( lEnv, "zoom_far", conf.zoom_far );
-      conf_loadFloat( lEnv, "zoom_near", conf.zoom_near );
-      conf_loadFloat( lEnv, "zoom_speed", conf.zoom_speed );
-
-      /* Font size. */
-      conf_loadInt( lEnv, "font_size_console", conf.font_size_console );
-      conf_loadInt( lEnv, "font_size_intro", conf.font_size_intro );
-      conf_loadInt( lEnv, "font_size_def", conf.font_size_def );
-      conf_loadInt( lEnv, "font_size_small", conf.font_size_small );
-
-      /* Misc. */
-      conf_loadString( lEnv, "difficulty", conf.difficulty );
-      conf_loadFloat( lEnv, "compression_velocity", conf.compression_velocity );
-      conf_loadFloat( lEnv, "compression_mult", conf.compression_mult );
-      conf_loadBool( lEnv, "redirect_file", conf.redirect_file );
-      conf_loadBool( lEnv, "save_compress", conf.save_compress );
-      conf_loadInt( lEnv, "doubletap_sensitivity", conf.doubletap_sens );
-      conf_loadFloat( lEnv, "mouse_hide", conf.mouse_hide );
-      conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
-      conf_loadInt( lEnv, "mouse_accel", conf.mouse_accel );
-      conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
-      conf_loadFloat( lEnv, "autonav_reset_dist", conf.autonav_reset_dist );
-      conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
-      conf_loadBool( lEnv, "devmode", conf.devmode );
-      conf_loadBool( lEnv, "devautosave", conf.devautosave );
-      conf_loadBool( lEnv, "lua_enet", conf.lua_enet );
-      conf_loadBool( lEnv, "lua_repl", conf.lua_repl );
-      conf_loadBool( lEnv, "conf_nosave", conf.nosave );
-      conf_loadString( lEnv, "lastversion", conf.lastversion );
-      conf_loadBool( lEnv, "translation_warning_seen",
-                     conf.translation_warning_seen );
-      conf_loadTime( lEnv, "last_played", conf.last_played );
-
-      /* Debugging. */
-      conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
-
-      /* Editor. */
-      conf_loadString( lEnv, "dev_data_dir", conf.dev_data_dir );
-
-      /*
-       * Keybindings.
-       */
-      for ( int i = 0; i <= KST_PASTE; i++ ) {
-         nlua_getenv( naevL, lEnv, input_getKeybindBrief( i ) );
-
-         /* Use 'none' to differentiate between not instantiated and disabled
-          * bindings. */
-         if ( lua_isstring( naevL, -1 ) ) {
-            const char *str = lua_tostring( naevL, -1 );
-            if ( strcmp( str, "none" ) == 0 ) {
-               input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-            }
-         } else if ( lua_istable( naevL, -1 ) ) { /* it's a table */
-            const char *str, *mod;
-            /* gets the event type */
-            lua_getfield( naevL, -1, "type" );
-            if ( lua_isstring( naevL, -1 ) )
-               str = lua_tostring( naevL, -1 );
-            else if ( lua_isnil( naevL, -1 ) ) {
-               WARN( _( "Found keybind with no type field!" ) );
-               str = "null";
-            } else {
-               WARN( _( "Found keybind with invalid type field!" ) );
-               str = "null";
-            }
-            lua_pop( naevL, 1 );
-
-            /* gets the key */
-            lua_getfield( naevL, -1, "key" );
-            t = lua_type( naevL, -1 );
-            if ( t == LUA_TNUMBER )
-               key = (int)lua_tonumber( naevL, -1 );
-            else if ( t == LUA_TSTRING )
-               key = input_keyConv( lua_tostring( naevL, -1 ) );
-            else if ( t == LUA_TNIL ) {
-               WARN( _( "Found keybind with no key field!" ) );
-               key = SDLK_UNKNOWN;
-            } else {
-               WARN( _( "Found keybind with invalid key field!" ) );
-               key = SDLK_UNKNOWN;
-            }
-            lua_pop( naevL, 1 );
-
-            /* Get the modifier. */
-            lua_getfield( naevL, -1, "mod" );
-            if ( lua_isstring( naevL, -1 ) )
-               mod = lua_tostring( naevL, -1 );
-            else
-               mod = NULL;
-            lua_pop( naevL, 1 );
-
-            if ( str != NULL ) { /* keybind is valid */
-               /* get type */
-               if ( strcmp( str, "null" ) == 0 )
-                  type = KEYBIND_NULL;
-               else if ( strcmp( str, "keyboard" ) == 0 )
-                  type = KEYBIND_KEYBOARD;
-               else if ( strcmp( str, "jaxispos" ) == 0 )
-                  type = KEYBIND_JAXISPOS;
-               else if ( strcmp( str, "jaxisneg" ) == 0 )
-                  type = KEYBIND_JAXISNEG;
-               else if ( strcmp( str, "jbutton" ) == 0 )
-                  type = KEYBIND_JBUTTON;
-               else if ( strcmp( str, "jhat_up" ) == 0 )
-                  type = KEYBIND_JHAT_UP;
-               else if ( strcmp( str, "jhat_down" ) == 0 )
-                  type = KEYBIND_JHAT_DOWN;
-               else if ( strcmp( str, "jhat_left" ) == 0 )
-                  type = KEYBIND_JHAT_LEFT;
-               else if ( strcmp( str, "jhat_right" ) == 0 )
-                  type = KEYBIND_JHAT_RIGHT;
-               else {
-                  WARN( _( "Unknown keybinding of type %s" ), str );
-                  continue;
-               }
-
-               /* Check to see if it is valid. */
-               if ( ( key == SDLK_UNKNOWN ) && ( type == KEYBIND_KEYBOARD ) ) {
-                  WARN( _( "Keybind for '%s' is invalid" ),
-                        input_getKeybindName( i ) );
-                  continue;
-               }
-
-               /* Set modifier, probably should be able to handle two at a time.
-                */
-               if ( mod != NULL ) {
-                  if ( strcmp( mod, "ctrl" ) == 0 )
-                     m = NMOD_CTRL;
-                  else if ( strcmp( mod, "shift" ) == 0 )
-                     m = NMOD_SHIFT;
-                  else if ( strcmp( mod, "alt" ) == 0 )
-                     m = NMOD_ALT;
-                  else if ( strcmp( mod, "meta" ) == 0 )
-                     m = NMOD_META;
-                  else if ( strcmp( mod, "any" ) == 0 )
-                     m = NMOD_ANY;
-                  else if ( strcmp( mod, "none" ) == 0 )
-                     m = NMOD_NONE;
-                  else {
-                     WARN( _( "Unknown keybinding mod of type %s" ), mod );
-                     m = NMOD_NONE;
-                  }
-               } else
-                  m = NMOD_NONE;
-
-               /* set the keybind */
-               input_setKeybind( i, type, key, m );
-            } else
-               WARN( _( "Malformed keybind for '%s' in '%s'." ),
-                     input_getKeybindName( i ), file );
-         }
-         /* clean up after table stuff */
-         lua_pop( naevL, 1 );
-      }
-      lua_pop( naevL, 1 );
-   } else { /* failed to load the config file */
+   L = luaL_newstate();
+   // TODO sandbox
+   luaL_openlibs( L );
+   if ( luaL_dofile( L, file ) != 0 ) {
       WARN( _( "Config file '%s' has invalid syntax:" ), file );
-      WARN( "   %s", lua_tostring( naevL, -1 ) );
-      nlua_freeEnv( lEnv );
-      return 1;
+      WARN( "   %s", lua_tostring( L, -1 ) );
+      lua_close( L );
+      return -1;
    }
 
+   /* ndata. */
+   conf_loadString( L, "data", conf.ndata );
+
+   /* Language. */
+   conf_loadString( L, "language", conf.language );
+
+   /* OpenGL. */
+   conf_loadInt( L, "fsaa", conf.fsaa );
+   conf_loadBool( L, "vsync", conf.vsync );
+
+   /* Window. */
+   w = h = 0;
+   conf_loadInt( L, "width", w );
+   conf_loadInt( L, "height", h );
+   if ( w != 0 ) {
+      conf.explicit_dim = 1;
+      conf.width        = w;
+   }
+   if ( h != 0 ) {
+      conf.explicit_dim = 1;
+      conf.height       = h;
+   }
+   conf_loadFloat( L, "scalefactor", conf.scalefactor );
+   conf_loadFloat( L, "nebu_scale", conf.nebu_scale );
+   conf_loadBool( L, "fullscreen", conf.fullscreen );
+   conf_loadBool( L, "modesetting", conf.modesetting );
+   conf_loadBool( L, "notresizable", conf.notresizable );
+   conf_loadBool( L, "borderless", conf.borderless );
+   conf_loadBool( L, "minimize", conf.minimize );
+   cb = 0;
+   conf_loadBool( L, "colourblind", cb ); /* TODO remove in 0.13.0 or so. */
+   if ( cb ) {
+      /* Old colourblind used Rod Monochromancy, so we'll restore that in
+       * this case. TODO Remove in 0.13.0 or so. */
+      conf.colourblind_type = 3;
+      conf.colourblind_sim  = 1.; /* Turn on at max. */
+   }
+   conf_loadFloat( L, "colourblind_sim", conf.colourblind_sim );
+   conf_loadFloat( L, "colourblind_correct", conf.colourblind_correct );
+   conf_loadInt( L, "colourblind_type", conf.colourblind_type );
+   conf_loadFloat( L, "game_speed", conf.game_speed );
+   conf_loadBool( L, "healthbars", conf.healthbars );
+   conf_loadFloat( L, "bg_brightness", conf.bg_brightness );
+   conf_loadBool( L, "puzzle_skip", conf.puzzle_skip );
+   /* TODO leave only nebu_nonuniformity for 0.13.0 */
+   conf_loadFloat( L, "nebu_uniformity", conf.nebu_nonuniformity );
+   conf_loadFloat( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
+   /* end todo */
+   conf_loadFloat( L, "jump_brightness", conf.jump_brightness );
+   conf_loadFloat( L, "gamma_correction", conf.gamma_correction );
+   conf_loadBool( L, "low_memory", conf.low_memory );
+   conf_loadInt( L, "max_3d_tex_size", conf.max_3d_tex_size );
+
+   /* FPS */
+   conf_loadBool( L, "showfps", conf.fps_show );
+   conf_loadInt( L, "maxfps", conf.fps_max );
+
+   /*  Pause */
+   conf_loadBool( L, "showpause", conf.pause_show );
+
+   /* Sound. */
+   conf_loadBool( L, "al_efx", conf.al_efx );
+   conf_loadBool( L, "nosound", conf.nosound );
+   conf_loadFloat( L, "sound", conf.sound );
+   conf_loadFloat( L, "music", conf.music );
+   conf_loadFloat( L, "engine_vol", conf.engine_vol );
+
+   /* Joystick. */
+   lua_getglobal( L, "joystick" );
+   if ( lua_isnumber( L, -1 ) )
+      conf.joystick_ind = (int)lua_tonumber( L, -1 );
+   else if ( lua_isstring( L, -1 ) )
+      conf.joystick_nam = strdup( lua_tostring( L, -1 ) );
+   lua_pop( L, 1 );
+
+   /* GUI. */
+   conf_loadInt( L, "mesg_visible", conf.mesg_visible );
+   if ( conf.mesg_visible <= 0 )
+      conf.mesg_visible = 5;
+   conf_loadFloat( L, "map_overlay_opacity", conf.map_overlay_opacity );
+   conf.map_overlay_opacity = CLAMP( 0, 1, conf.map_overlay_opacity );
+   conf_loadBool( L, "big_icons", conf.big_icons );
+   conf_loadBool( L, "always_radar", conf.always_radar );
+
+   /* Key repeat. */
+   conf_loadInt( L, "repeat_delay", conf.repeat_delay );
+   conf_loadInt( L, "repeat_freq", conf.repeat_freq );
+
+   /* Zoom. */
+   conf_loadBool( L, "zoom_manual", conf.zoom_manual );
+   conf_loadFloat( L, "zoom_far", conf.zoom_far );
+   conf_loadFloat( L, "zoom_near", conf.zoom_near );
+   conf_loadFloat( L, "zoom_speed", conf.zoom_speed );
+
+   /* Font size. */
+   conf_loadInt( L, "font_size_console", conf.font_size_console );
+   conf_loadInt( L, "font_size_intro", conf.font_size_intro );
+   conf_loadInt( L, "font_size_def", conf.font_size_def );
+   conf_loadInt( L, "font_size_small", conf.font_size_small );
+
+   /* Misc. */
+   conf_loadString( L, "difficulty", conf.difficulty );
+   conf_loadFloat( L, "compression_velocity", conf.compression_velocity );
+   conf_loadFloat( L, "compression_mult", conf.compression_mult );
+   conf_loadBool( L, "redirect_file", conf.redirect_file );
+   conf_loadBool( L, "save_compress", conf.save_compress );
+   conf_loadInt( L, "doubletap_sensitivity", conf.doubletap_sens );
+   conf_loadFloat( L, "mouse_hide", conf.mouse_hide );
+   conf_loadBool( L, "mouse_fly", conf.mouse_fly );
+   conf_loadInt( L, "mouse_accel", conf.mouse_accel );
+   conf_loadFloat( L, "mouse_doubleclick", conf.mouse_doubleclick );
+   conf_loadFloat( L, "autonav_reset_dist", conf.autonav_reset_dist );
+   conf_loadFloat( L, "autonav_reset_shield", conf.autonav_reset_shield );
+   conf_loadBool( L, "devmode", conf.devmode );
+   conf_loadBool( L, "devautosave", conf.devautosave );
+   conf_loadBool( L, "lua_enet", conf.lua_enet );
+   conf_loadBool( L, "lua_repl", conf.lua_repl );
+   conf_loadBool( L, "conf_nosave", conf.nosave );
+   conf_loadString( L, "lastversion", conf.lastversion );
+   conf_loadBool( L, "translation_warning_seen",
+                  conf.translation_warning_seen );
+   conf_loadTime( L, "last_played", conf.last_played );
+
+   /* Debugging. */
+   conf_loadBool( L, "fpu_except", conf.fpu_except );
+
+   /* Editor. */
+   conf_loadString( L, "dev_data_dir", conf.dev_data_dir );
+
+   /*
+    * Keybindings.
+    */
+   for ( int i = 0; i <= KST_PASTE; i++ ) {
+      lua_getglobal( L, input_getKeybindBrief( i ) );
+
+      /* Use 'none' to differentiate between not instantiated and disabled
+       * bindings. */
+      if ( lua_isstring( L, -1 ) ) {
+         const char *str = lua_tostring( L, -1 );
+         if ( strcmp( str, "none" ) == 0 ) {
+            input_setKeybind( i, KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+         }
+      } else if ( lua_istable( L, -1 ) ) { /* it's a table */
+         const char *str, *mod;
+         /* gets the event type */
+         lua_getfield( L, -1, "type" );
+         if ( lua_isstring( L, -1 ) )
+            str = lua_tostring( L, -1 );
+         else if ( lua_isnil( L, -1 ) ) {
+            WARN( _( "Found keybind with no type field!" ) );
+            str = "null";
+         } else {
+            WARN( _( "Found keybind with invalid type field!" ) );
+            str = "null";
+         }
+         lua_pop( L, 1 );
+
+         /* gets the key */
+         lua_getfield( L, -1, "key" );
+         t = lua_type( L, -1 );
+         if ( t == LUA_TNUMBER )
+            key = (int)lua_tonumber( L, -1 );
+         else if ( t == LUA_TSTRING )
+            key = input_keyConv( lua_tostring( L, -1 ) );
+         else if ( t == LUA_TNIL ) {
+            WARN( _( "Found keybind with no key field!" ) );
+            key = SDLK_UNKNOWN;
+         } else {
+            WARN( _( "Found keybind with invalid key field!" ) );
+            key = SDLK_UNKNOWN;
+         }
+         lua_pop( L, 1 );
+
+         /* Get the modifier. */
+         lua_getfield( L, -1, "mod" );
+         if ( lua_isstring( L, -1 ) )
+            mod = lua_tostring( L, -1 );
+         else
+            mod = NULL;
+         lua_pop( L, 1 );
+
+         if ( str != NULL ) { /* keybind is valid */
+            /* get type */
+            if ( strcmp( str, "null" ) == 0 )
+               type = KEYBIND_NULL;
+            else if ( strcmp( str, "keyboard" ) == 0 )
+               type = KEYBIND_KEYBOARD;
+            else if ( strcmp( str, "jaxispos" ) == 0 )
+               type = KEYBIND_JAXISPOS;
+            else if ( strcmp( str, "jaxisneg" ) == 0 )
+               type = KEYBIND_JAXISNEG;
+            else if ( strcmp( str, "jbutton" ) == 0 )
+               type = KEYBIND_JBUTTON;
+            else if ( strcmp( str, "jhat_up" ) == 0 )
+               type = KEYBIND_JHAT_UP;
+            else if ( strcmp( str, "jhat_down" ) == 0 )
+               type = KEYBIND_JHAT_DOWN;
+            else if ( strcmp( str, "jhat_left" ) == 0 )
+               type = KEYBIND_JHAT_LEFT;
+            else if ( strcmp( str, "jhat_right" ) == 0 )
+               type = KEYBIND_JHAT_RIGHT;
+            else {
+               WARN( _( "Unknown keybinding of type %s" ), str );
+               continue;
+            }
+
+            /* Check to see if it is valid. */
+            if ( ( key == SDLK_UNKNOWN ) && ( type == KEYBIND_KEYBOARD ) ) {
+               WARN( _( "Keybind for '%s' is invalid" ),
+                     input_getKeybindName( i ) );
+               continue;
+            }
+
+            /* Set modifier, probably should be able to handle two at a time.
+             */
+            if ( mod != NULL ) {
+               if ( strcmp( mod, "ctrl" ) == 0 )
+                  m = NMOD_CTRL;
+               else if ( strcmp( mod, "shift" ) == 0 )
+                  m = NMOD_SHIFT;
+               else if ( strcmp( mod, "alt" ) == 0 )
+                  m = NMOD_ALT;
+               else if ( strcmp( mod, "meta" ) == 0 )
+                  m = NMOD_META;
+               else if ( strcmp( mod, "any" ) == 0 )
+                  m = NMOD_ANY;
+               else if ( strcmp( mod, "none" ) == 0 )
+                  m = NMOD_NONE;
+               else {
+                  WARN( _( "Unknown keybinding mod of type %s" ), mod );
+                  m = NMOD_NONE;
+               }
+            } else
+               m = NMOD_NONE;
+
+            /* set the keybind */
+            input_setKeybind( i, type, key, m );
+         } else
+            WARN( _( "Malformed keybind for '%s' in '%s'." ),
+                  input_getKeybindName( i ), file );
+      }
+      /* clean up after table stuff */
+      lua_pop( L, 1 );
+   }
+   lua_pop( L, 1 );
+
    conf.loaded = 1;
-   nlua_freeEnv( lEnv );
+
+   lua_close( L );
    return 0;
 }
 
