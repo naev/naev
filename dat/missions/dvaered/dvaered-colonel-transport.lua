@@ -19,7 +19,7 @@
 
 local escort = require "escort"
 local fmt = require "format"
-local pir = require "pirate"
+local neu = require "neutral"
 local vn = require "vn"
 local vni = require "vnimage"
 
@@ -27,7 +27,8 @@ local dest_planet = spob.getS("Adham")
 
 
 local npc_name = _("Dvaered Colonel")
-local npc_portrait, npc_image
+local npc_portrait
+local npc_image
 function create()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
@@ -94,7 +95,7 @@ function accept()
    if not accepted then return end
 
    misn.accept()
-   
+
    misn.setReward(750000)
    misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.dest_planet, sys=mem.dest_sys}))
    misn.osdCreate(_("Dvaered colonel escort"), {
@@ -105,9 +106,9 @@ function accept()
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init ( colonel_ship, {
    })
-   
+
    if not naev.claimTest( system.cur(), true ) then return end
-   
+
    hook.enter( "pirate ambush" )
 end
 
@@ -120,12 +121,12 @@ function pirate_ambush ()
 
    ambush = fleet.add ( 1, ambushes[rnd.rnd(1,2)], "Marauder", {ai="baddie_norun"} )
 end
-   
+
 function land ()
-   if spob.cur() == misplanet then
-      vntk.msg( fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Thank you for bringing me here!" says the colonel. "Here is {reward}, as we agreed. Have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
-      player.pay( credits )
-      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. For some reason, they didn't tell you why.]]), {pnt=misplanet} ) )
+   if spob.cur() == dest_planet then
+      vn.msg( fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Thank you for bringing me here!" says the colonel. "Here is {reward}, as we agreed. Have safe travels!"]]), {pnt=dest_planet, reward=reward}) )
+      player.pay( reward )
+      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. For some reason, they didn't tell you why.]]), {pnt=dest_planet} ) )
       misn.finish( true )
    end
 end
