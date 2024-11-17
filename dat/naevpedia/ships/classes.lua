@@ -15,8 +15,13 @@ function classes.list( c )
       return a:name() < b:name()
    end )
    for k,s in ipairs(ships) do
-      local desc = fmt.f(_("{fct} {class}"), {fct=s:faction(), class=_(s:classDisplay())})
-      out = out.."* **["..s:name().."]("..naevpedia.get(s:nameRaw())..")**: "..desc.."\n"
+      local shipPage = naevpedia.get(s:nameRaw())
+      if shipPage then
+         local desc = fmt.f(_("{fct} {class}"), {fct=s:faction(), class=_(s:classDisplay())})
+         out = out.."* **["..s:name().."]("..shipPage..")**: "..desc.."\n"
+      else
+         warn( fmt.f(_("Ship {s} has neither naevpedia content nor 'nonaevpedia' tag"), {s=s} ) )
+      end
    end
    return out
 end
