@@ -177,7 +177,7 @@ function miner_attacked( p )
    end
 end
 
-local protestors = {}
+local protesters = {}
 local protest_lines = ant.protest_lines
 local protest_id, protest_hook
 function protest ()
@@ -186,16 +186,16 @@ function protest ()
    end
 
    -- See surviving pilots
-   local nprotestors = {}
-   for _k,p in ipairs(protestors) do
+   local nprotesters = {}
+   for _k,p in ipairs(protesters) do
       if p:exists() then
-         table.insert( nprotestors, p )
+         table.insert( nprotesters, p )
       end
    end
-   protestors = nprotestors
-   if #protestors > 0 then
+   protesters = nprotesters
+   if #protesters > 0 then
       -- Say some protest slogan
-      local p = protestors[ rnd.rnd(1,#protestors) ]
+      local p = protesters[ rnd.rnd(1,#protesters) ]
       p:broadcast( protest_lines[ protest_id ], true )
       protest_id = math.fmod(protest_id, #protest_lines)+1
    end
@@ -204,12 +204,12 @@ function protest ()
    protest_hook = hook.timer( 15, "protest" )
 end
 
-local function spawn_protestors( pos, ships )
-   local f = fleet.add( 1, ships, ant.puaaa(), pos, _("PUAAA Protestor"), {ai="baddiepos"} )
-   protestors = {}
+local function spawn_protesters( pos, ships )
+   local f = fleet.add( 1, ships, ant.puaaa(), pos, _("PUAAA Protester"), {ai="baddiepos"} )
+   protesters = {}
    for k,p in ipairs(f) do
       p:setHostile(true)
-      table.insert( protestors, p )
+      table.insert( protesters, p )
    end
    if protest_hook then
       hook.rm( protest_hook )
@@ -220,13 +220,13 @@ end
 
 function enter ()
    if mem.state==1 and system.cur()==atksys1 then
-      spawn_protestors( vec2.new( 9000, 3000 ), {"Lancelot","Lancelot","Shark","Shark"} )
+      spawn_protesters( vec2.new( 9000, 3000 ), {"Lancelot","Lancelot","Shark","Shark"} )
 
    elseif mem.state==1 and system.cur()==atksys2 then
-      spawn_protestors( vec2.new( -18000, 7000 ), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
+      spawn_protesters( vec2.new( -18000, 7000 ), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
-      local f = spawn_protestors( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
+      local f = spawn_protesters( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
       for k,p in ipairs(f) do
          p:changeAI( "baddiepatrol" )
          pilotai.patrol( p, {

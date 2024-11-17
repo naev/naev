@@ -16,7 +16,7 @@ local bribe_no_list = {
 }
 local taunt_list = {
    _("Alea iacta est!"),
-   _("Morituri te salutant!"),
+   _("Morituri te salutant!"), -- codespell:ignore te
    _("Your head will make a great trophy!"),
    _("Cave canem!"),
    _("Death awaits you!"),

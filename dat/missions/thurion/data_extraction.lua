@@ -74,8 +74,8 @@ function create ()
             N_("Data regarding gifts given and received by the different members of the Imperial Aristocracy, paid by the Imperial Coffers.") },
          { N_("Aristocratic Secrets"),
             N_("Detailed information about the likes, dislikes, and personalities of various important figures in the Empire.") },
-         { N_("Great House Liason Logs"),
-            N_("Logs regarding the behaviours and details of interactions between the Great House Liasons and the Empire.") },
+         { N_("Great House Liaison Logs"),
+            N_("Logs regarding the behaviours and details of interactions between the Great House Liaisons and the Empire.") },
       } )
    end
    if fspb==faction.get("Dvaered") then

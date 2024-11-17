@@ -52,7 +52,7 @@ local function turnon( p, po )
    po:state("on")
    po:progress( flow.get(p) / flow.max(p) )
 
-   -- Astral proection
+   -- Astral projection
    local pos = p:pos() + vec2.newP( 20, p:dir() )
    local np = pilot.add( mem.projection, p:faction(), pos, _("Astral Projection"), {ai="escort"} )
    mem.p = np

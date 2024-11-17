@@ -141,7 +141,6 @@ function create ()
       misn.finish( false )
    end
 
-   mem.jumps_permitted = math.huge --system.cur():jumpDist(mem.missys) + 3
    mem.hostiles = {}
    mem.hostiles_encountered = false
 
@@ -227,13 +226,10 @@ function jumpout ()
       mem.mark = nil
    end
 
-   mem.jumps_permitted = mem.jumps_permitted - 1
    local last_sys = system.cur()
    if not mem.job_done then
       if last_sys == mem.missys then
          lmisn.fail( fmt.f(msg[6], {sys=last_sys} ) )
-      elseif mem.jumps_permitted < 0 then
-         lmisn.fail(msg[5])
       end
    end
 end
@@ -253,7 +249,6 @@ function land ()
       okspob = true
    end
 
-   mem.jumps_permitted = mem.jumps_permitted - 1
    if mem.job_done and okspob then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       vntk.msg( _("Mission Completed"), txt )

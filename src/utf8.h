@@ -14,8 +14,6 @@
  * been removed. In the unlikely event more cutef8 features are required, check
  * earlier revisions in git. */
 
-#include "nstring.h"
-
 /* is c the start of a utf8 sequence? */
 #define isutf( c ) ( ( ( c ) & 0xC0 ) != 0x80 )
 

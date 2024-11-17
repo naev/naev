@@ -6,7 +6,7 @@ name: "Lucas"
 ### Campaign Sheet
 
 * **Name:** Lucas
-* **Requeriments:** none
+* **Requirements:** none
 * **Main Location:** Qorelia, Maanen's Moon
 * **Notable Characters:**
     * Lucas

@@ -152,9 +152,9 @@ local function compute_lootables ( plt )
       local ocand = {}
       for _k,o in ipairs(plt:outfitsList(nil,true)) do -- Skips locked outfits
          local _name, _size, _prop, req = o:slot()
-         local ot = o:tags()
+         local ot = o:tags() --codespell:ignore ot
          -- Don't allow looting required outfits
-         if not req and not ot.noplayer and not ot.nosteal and o~=oloot then
+         if not req and not ot.noplayer and not ot.nosteal and o~=oloot then --codespell:ignore ot
             table.insert( ocand, o )
          end
       end

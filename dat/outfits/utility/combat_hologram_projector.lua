@@ -24,7 +24,7 @@ local function turnon( p, po )
    local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), {ai="escort", naked=true} )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
-   np:setNoDeath( true ) -- Dosen't die
+   np:setNoDeath( true ) -- Doesn't die
    -- Copy outfits
    np:outfitRm("all")
    for k,v in ipairs(p:outfitsList()) do
@@ -63,7 +63,7 @@ local function turnon( p, po )
    --]]
    np:attack( t )
 
-   -- Modify randomly targetting of hostiles (probably don't have to go over all ships)
+   -- Modify randomly targeting of hostiles (probably don't have to go over all ships)
    for k,v in ipairs(p:getEnemies(dist)) do
       if v:target()==p and rnd.rnd() > 0.5 then
          -- Note that this does not currently work with the AI, as it stores

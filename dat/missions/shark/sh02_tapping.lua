@@ -175,8 +175,8 @@ function ambush()
       add_llama()
    end
 
-   -- The kind of enemy is choosen randomly, but the weight is changed depending on the player's ship
-   -- And depending on the number of avaliable ships of the given class
+   -- The kind of enemy is chosen randomly, but the weight is changed depending on the player's ship
+   -- And depending on the number of available ships of the given class
    if playerSize <= 2 then
       choose( 3*mem.nInterce, 2*mem.nFighter, mem.nBombers, mem.nCorvett, mem.nCruiser )
    elseif playerSize <= 4 then

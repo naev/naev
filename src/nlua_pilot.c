@@ -103,6 +103,7 @@ static int pilotL_weapsetCleanup( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_weapsetSetInrange( lua_State *L );
 static int pilotL_weapsetAmmo( lua_State *L );
+static int pilotL_weapsetAuto( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
@@ -298,6 +299,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetHeat", pilotL_weapsetHeat },
    { "weapsetSetInrange", pilotL_weapsetSetInrange },
    { "weapsetAmmo", pilotL_weapsetAmmo },
+   { "weapsetAuto", pilotL_weapsetAuto },
    { "actives", pilotL_actives },
    { "outfitsList", pilotL_outfitsList },
    { "outfits", pilotL_outfits },
@@ -2289,6 +2291,19 @@ static int pilotL_weapsetAmmo( lua_State *L )
    int    id = luaL_checkinteger( L, 2 );
    lua_pushnumber( L, pilot_weapSetAmmo( p, id ) );
    return 1;
+}
+
+/**
+ * @brief Makes the pilot's weapons get automatically set.
+ *
+ *    @luatparam Pilot p Pilot to automatically handle weapon sets for.
+ * @luafunc weapsetAuto
+ */
+static int pilotL_weapsetAuto( lua_State *L )
+{
+   Pilot *p = luaL_validpilot( L, 1 );
+   pilot_weaponAuto( p );
+   return 0;
 }
 
 /**

@@ -1,4 +1,4 @@
-notactive = true -- Doesnt' become active
+notactive = true -- Doesn't become active
 
 local flow = require "ships.lua.lib.flow"
 local fmt = require "format"

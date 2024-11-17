@@ -287,7 +287,7 @@ function patrol_death( d )
       misn.osdActive(2)
       misn.markerMove( mem.marker, base )
 
-      -- Reenable pilots
+      -- Re-enable pilots
       pilot.toggleSpawn(true)
    else
       -- Rehighlight as necessary

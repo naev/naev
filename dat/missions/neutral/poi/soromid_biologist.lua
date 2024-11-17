@@ -57,7 +57,7 @@ I believe I have completed the pheromone extractor. The smell is… let us say n
          log(_([[The rest of the pages are blank.]]))
          vne.notebookEnd()
 
-         vn.na(fmt.f(_([[You ask {shipai} to perform an in-depth scan for biological signals, and surprisingly enough, find a faint signal that differs from the dessicated biological material of the ship. You go to inspect it and the first thing you find is that it stinks. A quick analysis seems to indicate that this is the pheromone extractor mentioned in the notebook. You carefully take it aboard your ship.]]),
+         vn.na(fmt.f(_([[You ask {shipai} to perform an in-depth scan for biological signals, and surprisingly enough, find a faint signal that differs from the desiccated biological material of the ship. You go to inspect it and the first thing you find is that it stinks. A quick analysis seems to indicate that this is the pheromone extractor mentioned in the notebook. You carefully take it aboard your ship.]]),
             {shipai=tut.ainame()}))
 
          vn.na(fmt.reward(reward))

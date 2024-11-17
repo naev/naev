@@ -163,7 +163,7 @@ function create ()
    -- Just increase the mission probability to compensate.
    for i = 2, mem.nbsys do
       local thesys = systems[ rnd.rnd( 1, #systems ) ]
-      -- Don't re-use the previous system
+      -- Don't reuse the previous system
       if thesys == mem.mysys[i-1] then
          misn.finish( false )
       end

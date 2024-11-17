@@ -53,7 +53,7 @@ function accept ()
 
    -- Case requirement not met, inform the player to do missions
    if (var.peek("es_misn") or 0) < 2 then
-      czesc(fmt.f(_([[You approach Lieutenant Czesc, he seems a bit busy. "Hey, {player}. I've got some potential work for you. However, the Empire requires a minimum of experience with shipping missions before I can entrust you with it. Try to do a few Empire Shipping (#gES#0) missions and get back to me."]]),
+      czesc(fmt.f(_([[You approach Lieutenant Czesc, who seems a bit busy. "Hey, {player}. I've got some potential work for you. However, the Empire requires a minimum of experience with shipping missions before I can entrust you with it. Try to do a few Empire Shipping (#gES#0) missions and get back to me."]]), -- codespell:ignore
          {player=player.name()}))
       vn.done( emp.czesc.transition )
    end

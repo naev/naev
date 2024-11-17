@@ -53,7 +53,7 @@ _("May Sirichana's light shine on you henceforth!")
 local praiseSirichana={
 _("We shall all follow Sirichana now!"),
 _("We have been liberated from our evil ways!"),
-_("No more shall we tread the path of evil!"),
+_("No more shall we tread the path of evil!"), -- codespell:ignore tread
 _("We see the True path now!"),
 _("No more shall we commit sins!")
 }

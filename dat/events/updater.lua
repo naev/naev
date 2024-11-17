@@ -15,8 +15,7 @@ local fmt = require 'format'
 local luatk = require "luatk"
 
 -- Runs on saves older than 0.11.0
-local function updater0120( _did0110, _did0100, _did090 )
-
+local function updater0120( did0110, did0100, did090 )
    -- Have to apply diff to lower pirates if necessary
    if player.chapter()=="0" then
       if not diff.isApplied( "Chapter 0" ) then
@@ -26,21 +25,6 @@ local function updater0120( _did0110, _did0100, _did090 )
       diff.remove( "Chapter 0" )
    end
 
-   --[[
-      TODO new features explanation
-
-      1. Ship Capturing (chapter 1+)
-      1. Reputation changes
-      1. Holo-Archives
-      1. Fuel increase
-      1. Equip ships with refueling
-      1. Stats are additive
-      1. Scanning (scan key)
-   --]]
-end
-
--- Runs on saves older than 0.11.0
-local function updater0110( did0100, did090 )
    local metai = (var.peek("shipai_name") ~= nil)
    local hasbioship = player.pilot():ship():tags().bioship
    for k,v in ipairs(player.ships()) do
@@ -91,7 +75,7 @@ They stare at you for a few seconds.
       }
 
       vn.label("gavename")
-      sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]),
+      sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 window which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]),
          {ainame=tut.ainame(), infokey=tut.getKey("info")}) end )
    else
       vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
@@ -113,20 +97,76 @@ Many of the new features come with small tutorials in form of missions. I will n
       if hasbioship then
          sai(_([["Bioships have also been reworked completely. Similar to the old ships, they gain ranks through experience. However, instead of the ranks being on a per-outfit level, they are now on per-ship levels. Increasing ranks will give you better core outfits and weapons, while also unlocking skill points that you can use to significantly change the functionality and performance of the bioship."]]))
       end
-      --sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 menu, so make sure to check that if interested."]]))
+      --sai(_([["This update also provides significant modernization of the engine and many other features. To list a few, the star map is larger and you can save system notes, many new missions and campaigns, health bars are shown for pilots in combat, backgrounds reworked, news and NPCs reworked, unique pilots appear throughout the universe, manual aiming mode, save snapshots, difficulty settings, etc. Some features can be toggled through the #oOptions#0 window, so make sure to check that if interested."]]))
    end
 
    -- 0.11.0 changes
-   sai(_([["The universe has also undergone drastic changes to fit the game lore and make it overall a more interesting place. The old Trader's Guild has been revamped as the Space Traders Society and has control of several new systems. All these changes include lots of new events and things to discover which I will not spoil for you."]]))
-   sai(_([["The number of slots ships have, and structural slots have been significantly tweaked. Additionally, House Sirius has been reworked completely. They have new weapons and outfits that you will be able to discover. Due to this, you may notice that some of your owned outfits and ship loadouts may have changed."]]))
-   sai(fmt.f(_([["Naev now supports plugins! Although there aren't many available yet, we hope that this will increase in the future. If you are interested in creating plugins, please check out the website {website} for more information."]]),
-      {website="#bhttps://naev.org#0"}))
-   sai(fmt.f(_([["Some settings have been moved to be per-player instead of global. This includes all the autonav settings, which are now accessible from the #bInfo menu#0, which you can open with {infokey}. Autonav has also been rewritten and by default it should be much more useful and is able to use patrol lanes among other things."]]),
-      {infokey=tut.getKey("info")}) )
-   sai(fmt.f(_([[The 'board' and 'land' keys have been merged into a single one called 'approach'. The 'approach' key defaults to {keybind}, and will first try to board your current target (if applicable), before trying to land on your space target object. Please rebind the key as necessary.]]),
-      {keybind=tut.getKey("approach")}))
-   sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few, point defense weapons have been added, collisions have been significantly optimized, you can use manual aiming, you can sell outfits at any outfitter, faction standing limits have been increased, tons of new content... I hope you enjoy the update!"]]))
+   if did0110 then
+      sai(_([["The universe has also undergone drastic changes to fit the game lore and make it overall a more interesting place. The old Trader's Guild has been revamped as the Space Traders Society and has control of several new systems. All these changes include lots of new events and things to discover which I will not spoil for you."]]))
+      sai(_([["The number of slots ships have, and structural slots have been significantly tweaked. Additionally, House Sirius has been reworked completely. They have new weapons and outfits that you will be able to discover. Due to this, you may notice that some of your owned outfits and ship loadouts may have changed."]]))
+      sai(fmt.f(_([["Naev now supports plugins! Although there aren't many available yet, we hope that this will increase in the future. If you are interested in creating plugins, please check out the website {website} for more information."]]),
+         {website="#bhttps://naev.org#0"}))
+      sai(fmt.f(_([["Some settings have been moved to be per-player instead of global. This includes all the autonav settings, which are now accessible from the #oInfo menu#0, which you can open with {infokey}. Autonav has also been rewritten and by default it should be much more useful and is able to use patrol lanes among other things."]]),
+         {infokey=tut.getKey("info")}) )
+      sai(fmt.f(_([[The 'board' and 'land' keys have been merged into a single one called 'approach'. The 'approach' key defaults to {keybind}, and will first try to board your current target (if applicable), before trying to land on your space target object. Please rebind the key as necessary.]]),
+         {keybind=tut.getKey("approach")}))
+   end
 
+   -- 0.12.0 changes
+   --[[
+      TODO new features explanation
+
+      1. Ship Capturing (chapter 1+)
+      1. Reputation changes
+      1. Holo-Archives
+      1. Fuel increase
+      1. Stats are additive
+      1. Scanning (scan key)
+   --]]
+   if player.chapter()~="0" then
+      sai(_([["You will now be able to capture ships that you disable for a price. However, you will need enough free fleet capacity to add the ship to your fleet when you capture it. Good thing that the fleet capacity limits have been significantly increase!"]]))
+   end
+   sai(fmt.f(_([["The Holo-Archives has also been added as a repository for information on mechanics, ships, outfits, and lore! Not only does it explain in detail many mechanics that you may have missed, but it also helps you find all the ships and outfits you've met in your travels. If that was not enough, there are also in-depth sections of lore explaining things about the universe that grow as you unlock them. You can access the Holo-Archives from the information menu you open with {infokey}."]]),
+      {infokey=tut.getKey("info")}))
+   sai(_([["Reputation has been significantly reworked. It is no longer a single absolute value for every faction, but computed on a local level. This means that your actions will mainly have local consequences, and are more forgiving. However, this only affects local actions such as attacking and boarding, reputation gained through missions is still global. If that was not enough, all reputation changes are shown by default, which you can disable from the information window."]]))
+   sai(fmt.f(_([["Up until now, other ships could scan you, but you couldn't scan them. This has been changed in the latest release. You can now scan ships with the {scankey}. However, you will only be able to scan a ship after you have them as your active target for a while. You will see a spinning icon in the GUI. When it stops spinning, you will be able to scan!"]]),
+      {scankey=tut.getKey("scan")}))
+   sai(_([["This update also provides a significant modernization of the engine and many other features. To list a few, fuel has been increased for most ships, statistics are now additive instead of multiplicative, ship variants, improved point defense, reworked ship trails, much faster loading, tons of new content... I hope you enjoy the update!"]]))
+   sai(_([["Weapon sets have also been simplified significantly. Unless you activate 'advanced' mode, there are no weapon set modes. Instead, now you have 2 additional weapon sets for your primary and secondary weapons. Furthermore, for the weapon set hotkeys, if you hold the key, it activates the outfits while held. However, if you tap it, it'll toggle the outfits from on to off, or off to on, depending on the current state. Additionally, by default, it will automatically try to assign all your active outfits to weapon sets, making the automatic setting much easier to use!"]]))
+   sai(_([["Would you like me to reset your weapon sets to be automatically handled?"]]))
+   vn.menu{
+      {_("Keep current weapon sets"), "ws_cont"},
+      {_("Reset weapon sets."), "ws_reset"},
+   }
+
+   vn.label("ws_reset")
+   vn.func( function ()
+      local curship = player.pilot():name()
+      local ships = player.ships()
+      local deployed = {}
+      for k,s in ipairs( ships ) do
+         if s.deployed then
+            table.insert( deployed, s )
+         end
+      end
+      for k,s in ipairs( ships ) do
+         player.shipSwap( s.name, true )
+         player.pilot():weapsetAuto()
+      end
+      player.shipSwap( curship, true )
+      player.pilot():weapsetAuto()
+      for k,s in ipairs( deployed ) do
+         player.shipDeploy( s.name, true )
+      end
+   end )
+   sai(_([["I've reset all the weapon sets on all your ships. Hopefully they should be easier to use now!"]]))
+   vn.jump("ws_done")
+
+   vn.label("ws_cont")
+   sai(_([["OK, your weapon sets won't be updated, but if you need to make changes, please modify them from the #oInformation#0 window!"]]))
+   vn.jump("ws_done")
+
+   vn.label("ws_done")
    if not metai then
       sai(_([["With that said, would you like me to provide small, in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help you learn new things."]]))
       vn.menu{
@@ -135,21 +175,25 @@ Many of the new features come with small tutorials in form of missions. I will n
       }
 
       vn.label("enable")
-      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )
 
       vn.label("disable")
       vn.func( function ()
          var.push( "tut_disable", true )
       end )
-      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["OK, I will not be giving you any hints. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
    else
-      sai(fmt.f(_([["And that is all! If you want to brush on game mechanics or get more hints, remember you can get in touch with me directly by clicking the '#oShip AI#0' button in the #oInformation#0 menu that you can open with {infokey}. Now, let's go adventuring!"]]),
+      sai(fmt.f(_([["And that is all! If you want to brush on game mechanics or get more hints, remember you can get in touch with me directly by clicking the '#oShip AI#0' button in the #oInformation#0 window that you can open with {infokey}. Now, let's go adventuring!"]]),
          {infokey=tut.getKey("info")}))
    end
 
    vn.done( tut.shipai.transition )
    vn.run()
+end
+
+-- Runs on saves older than 0.11.0
+local function updater0110( _did0100, _did090 )
 end
 
 -- Runs on saves older than 0.10.0
@@ -233,7 +277,7 @@ function create ()
       did0110 = true
    end
    -- Run on saves older than 0.12.0
-   if not save_version or naev.versionTest( save_version, "0.12.0") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.12.0-beta.1") < 0 then
       updater0120( did0110, did0100, did090 )
       didupdate = true
    end
@@ -257,7 +301,7 @@ function create ()
 
       vn.label("enable")
       vn.func( function () tut.reset() end )
-      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),
+      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),
          {infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )
 
@@ -265,7 +309,7 @@ function create ()
       vn.func( function ()
          var.push( "tut_disable", true )
       end )
-      sai(fmt.f(_([["OK, I will not be resetting the hints, and leave them as is. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["OK, I will not be resetting the hints, and leave them as is. If you want to change my settings, turn on the hints, or get information and advice, please do so from the '#oShip AI#0' button in the #oInformation#0 window you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
 
       vn.done( tut.shipai.transition )
       vn.run()

@@ -26,7 +26,7 @@ function create ()
    -- Set an info button up
    player.infoButtonRegister( _("Escort AI"), escort_gui, 2, "E" )
 
-   -- Hooks are cleared upon entering, so we have to readd the hook each time
+   -- Hooks are cleared upon entering, so we have to re-add the hook each time
    hook.enter( "setup" )
 end
 

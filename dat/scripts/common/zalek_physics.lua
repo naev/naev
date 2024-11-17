@@ -38,7 +38,7 @@ zpp.rewards = {
    zpp02 = 300e3,
    zpp03 = 200e3, -- + "Heavy Weapons Combat License" permission
    zpp04 = 400e3,
-   --zpp05 = 0, -- No payment, reall small flashback really
+   --zpp05 = 0, -- No payment, really small flashback
    zpp06 = 500e3, -- + "Heavy Combat Vessel License" permission
 }
 

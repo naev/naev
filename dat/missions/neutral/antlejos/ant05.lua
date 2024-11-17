@@ -119,15 +119,15 @@ function land ()
 end
 
 local puaaa, fsup
-local protestors, supplyships
-local function add_protestor( shipname, fromrear )
+local protesters, supplyships
+local function add_Protester( shipname, fromrear )
    -- They will just go to Antlejos V and attack any hostiles on their way, including the player.
    local ent = (fromrear and rearpoint) or entrypoint
-   local p = pilot.add( shipname, puaaa, ent, _("Protestor"), {ai="baddiepos"} )
+   local p = pilot.add( shipname, puaaa, ent, _("Protester"), {ai="baddiepos"} )
    p:setHostile()
    local m = p:memory()
    m.guardpos = mainpnt:pos()
-   table.insert( protestors, p )
+   table.insert( protesters, p )
 end
 
 local function add_supplyship( shipname )
@@ -191,7 +191,7 @@ function approaching ()
    player.msg(_("The supply ships will be incoming shortly!"))
 
    -- Initialize ship stuff
-   protestors = {}
+   protesters = {}
    supplyships = {}
    puaaa = ant.puaaa()
    fsup = faction.dynAdd( nil, "ant_supp", _("Supplier") )
@@ -207,10 +207,10 @@ function approaching ()
    hook.timer( 170, "supply5" )
    hook.timer( 170, "heartbeat")
 
-   hook.timer( 20, "protestor1" )
-   hook.timer( 60, "protestor2" )
-   hook.timer( 120, "protestor3" )
-   hook.timer( 190, "protestor4" )
+   hook.timer( 20, "Protester1" )
+   hook.timer( 60, "Protester2" )
+   hook.timer( 120, "Protester3" )
+   hook.timer( 190, "Protester4" )
 
    hook.timer( 25, "protest" )
 end
@@ -236,22 +236,22 @@ function supply5 ()
    system.markerRm( sysmrk )
 end
 
-function protestor1 ()
-   add_protestor( "Hyena" )
-   add_protestor( "Hyena" )
+function Protester1 ()
+   add_Protester( "Hyena" )
+   add_Protester( "Hyena" )
 end
-function protestor2 ()
-   add_protestor( "Shark" )
-   add_protestor( "Hyena" )
+function Protester2 ()
+   add_Protester( "Shark" )
+   add_Protester( "Hyena" )
 end
-function protestor3 ()
-   add_protestor( "Shark" )
-   add_protestor( "Hyena" )
+function Protester3 ()
+   add_Protester( "Shark" )
+   add_Protester( "Hyena" )
 end
-function protestor4 ()
-   add_protestor( "Lancelot" )
-   add_protestor( "Shark" )
-   add_protestor( "Shark" )
+function Protester4 ()
+   add_Protester( "Lancelot" )
+   add_Protester( "Shark" )
+   add_Protester( "Shark" )
 end
 
 local protest_lines = ant.protest_lines
@@ -262,16 +262,16 @@ function protest ()
    end
 
    -- See surviving pilots
-   local nprotestors = {}
-   for _k,p in ipairs(protestors) do
+   local nprotesters = {}
+   for _k,p in ipairs(protesters) do
       if p:exists() then
-         table.insert( nprotestors, p )
+         table.insert( nprotesters, p )
       end
    end
-   protestors = nprotestors
-   if #protestors > 0 then
+   protesters = nprotesters
+   if #protesters > 0 then
       -- Say some protest slogan
-      local p = protestors[ rnd.rnd(1,#protestors) ]
+      local p = protesters[ rnd.rnd(1,#protesters) ]
       p:broadcast( protest_lines[ protest_id ], true )
       protest_id = math.fmod(protest_id, #protest_lines)+1
    end

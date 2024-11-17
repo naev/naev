@@ -106,10 +106,10 @@ They also tend to run protection rackets, which are often favoured over the whim
 The newest of the main pirate clans, the Dreamer Clan was able to capitalize on [the Incident](lore/history/incident) and establish itself as a force to be reckoned with.
 Formed mainly by refugees and outcasts of the so-called "civilized society", the Dreamer Clan is formed by individuals who do not want to follow rules.
 They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action.
-Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/historyincident).
+Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/history/incident).
 They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse.
 
-They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontienr), making use of abandoned planets and stations, which they adapt to their purposes.
+They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontier), making use of abandoned planets and stations, which they adapt to their purposes.
 Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the <%= strravenclan %>, which wants access to the lucrative drug trade.
 Although in general less organized than other clans, they can be ruthless at raiding convoys, sometimes going deep into [House Sirius](lore/factions/sirius) space.
 <% end %>

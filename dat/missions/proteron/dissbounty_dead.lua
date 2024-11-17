@@ -90,11 +90,6 @@ function create ()
    local missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   mem.jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 5 )
-   if rnd.rnd() < 0.05 then
-      mem.jumps_permitted = mem.jumps_permitted - 1
-   end
-
    local pname = _("Target Dissident")
    local choices = { "Schroedinger", "Hyena", "Llama", "Gawain" }
    local pship = choices[ rnd.rnd( 1, #choices ) ]

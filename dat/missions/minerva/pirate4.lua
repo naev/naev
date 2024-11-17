@@ -227,7 +227,7 @@ Some crew members escort the Dvaered mole towards the inner part of the ship. Th
 She beams you a smile.
 "If all goes well, we'll get the information we were looking for in the next few periods and we can all go ]]))
    maikki(_([[You faintly hear an angry voice that sounds strangely familiar.
-"What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
+"What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]])) -- codespell:ignore loafing
    pir(_([[They visibly wince when they hear the angry voice.
 "Let us talk about your payment."]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
@@ -338,7 +338,7 @@ end
 local function spawn_dvaereds( ships )
    local plts = {}
    for k,v in ipairs(ships) do
-      -- We exploit the 'guard' AI to get the Dvaered to go ontop of the
+      -- We exploit the 'guard' AI to get the Dvaered to go on top of the
       -- interrogation ship and destroy it
       local p = pilot.add( v, "Dvaered", dvaeredsys, nil, {ai="guard"} )
       p:setVisplayer(true)

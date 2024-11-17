@@ -284,7 +284,7 @@ function feral_hail ()
    z(_([["Hey, this looks a lot like a Soromid Bioship. Ship AI, what is that?"]]))
 
    vn.appear( ai, "electric" )
-   ai(fmt.f(_([[Your ship AI materializes infront of you.
+   ai(fmt.f(_([[Your ship AI materializes in front of you.
 "This appears to be a {shipname}. Although they are loosely based on a Soromid Reaver Bio-Fighter, they have gone back to a more wild biological state, rejecting most synthetic components. {shipname} are the smallest of what are commonly referred to as #oferal bioships#0. I advise caution with dealing with such ships as they lack any sort of ship AI."]]),{shipname=feral:ship()}))
    vn.disappear( ai, "electric" )
    z(_([["I see. However, this doesn't explain how the hell it got down here, There's no way it could have made the entire trip unnoticed."]]))
