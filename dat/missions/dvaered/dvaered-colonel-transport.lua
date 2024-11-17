@@ -1,47 +1,92 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Escort a Dvaered colonel to a system">
+<mission name="Dvaered Colonel Escort">
  <unique />
- <priority>1</priority>
- <chance>24</chance>
+ <priority>4</priority>
+ <chance>86</chance>
  <location>Bar</location>
  <spob>Dvaer Prime</spob>
 </mission>
 --]]
 --[[
 
-   MISSION: ESCORT TO A PLANET
-   DESCRIPTION: SMALL MISSION WHERE YOU ESCORT AN ARSENAL TO A PLANET: WIP
+   Mission: Escort a Dvaered colonel
+   Description: Small mission where you escort a Dvaered Arsenal
 
 --]]
 
 local fmt = require "format"
+local vn = require "vn"
+local vni = require "vnimage"
 
 
-function create ()
-   mem.talked = false
-   misn.setNPC( _("A Dvaered colonel"), "devaered/dv_military_f6.webp", _("This soldier seems to be a colonel.") )
+local npc_name = _("Dvaered Colonel")
+local npc_portrait, npc_image
+function create()
+   npc_image, npc_portrait = vni.dvaered
+   misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
 
-function accept ()
-   local text
-   else
-      text = fmt.f(_([[You approach the Dvaered, who seems to be a soldier, probably one of the colonel rank. Arriving at their table, you are greeted, "Hello! Could you escort my ship, an Arsenal, to {pnt} in the {sys} system? I'll give you {rwd} for it, but I can't tell you why. Well, what do you say?"]]),
-         {pnt=misplanet, sys=missys, rwd=reward_text})
-      mem.talked = true
-   end
-   if vntk.yesno( _("Escort Agreed"), text ) then
-      vntk.msg( _("Escort Agreed"), _([["Perfect! I'll pay you as soon as we get there."]]) )
-      misn.accept()
-      misn.osdCreate(_("Dvaered colonel escort"), {
-         fmt.f(_("Escort a Dvaered colonel flying an Arsenal to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment.")), {pnt=mem.destspob, sys=mem.destsys}),
-      }
-      misn.markerAdd( mem.destspob )
-      hook.land( "land" )
-   end
-   local colonel_ship
-      colonel_ship = trepeat{Arsenal}
-   end
+function accept()
+   vn.clear()
+   vn.scene()
+   local m = vn.newCharacter( npc_name {image=npc_image} )
+   vn.transition()
+   m(_([[As you approach, the Dvaered soldier stands. "Hello, captain!" they say. "Nice to see you around here. How's it going?"]]))
+   vn.menu{
+      {_([["Quite well, thank you!"]]), "well"},
+      {_([["I guess it's going alright."]]), "fine"},
+   }
+
+   vn.label("well")
+   m(_([["Wonderful! Glad you're having a good time."]]))
+   vn.jump("mission description")
+
+   vn.label("fine")
+   m(_([["As long as there's no trouble..."]]))
+   vn.jump("mission description")
+
+   vn.label("mission description")
+   m(fmt.f([["Well, to the point. I need somebody to escort me and my Arsenal to {pnt}. Would you be willing to do that? I can't tell you why."]]))
+     {pnt=mem.dest_planet}
+   vn.menu{
+      {_([["Remind me what system that's in?"]]), "what system"},
+      {_([["I'd be happy to do that!"]]), "sure"},
+      {_([["What is your name?"]]), "what is your name"},
+   }
+
+   vn.label("what system")
+   m(fmt.f([["Umm..." the Dvaered says. They consult a watch. "Alright, {pnt} is in {sys}."]]))
+     {pnt=mem.dest_planet, sys=mem.dest_sys}
+   vn.jump("choice")
+
+   vn.label("what is your name")
+   m(_([[The Dvaered seems slightly taken aback. "Well... that may be classified information... call me Radver."]]))
+   vn.jump("choice")
+
+   vn.label("sure")
+   m(_([["Wonderful! I'll be on your ship when you leave."]]))
+   misn.accept()
+
+   vn.label("choice")
+   m(_([["Well? Will you do this?"]]))
+   vn.menu{
+      {_([["Yep, I'd be glad to!"]]), "sure"},
+      {_([["Not going to happen, sorry."]]), "never"},
+   }
+
+   vn.label("never")
+   m(_([["That's sad. Oh well, I'll ask someone else." The Dvaered leaves.]]))
+   vn.done()
+   
+   misn.setReward(2500)
+   misn.setDesc("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspob, sys=mem.destsys},
+   misn.osdCreate(_("Dvaered colonel escort"), {
+      fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.destspob, sys=mem.destsys}),
+   }
+   misn.markerAdd( mem.destspob )
+   hook.land( "land" )
+   local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init ( colonel_ship, {
    })
 end
