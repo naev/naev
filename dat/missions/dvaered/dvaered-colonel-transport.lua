@@ -112,8 +112,7 @@ function pirate_ambush ()
    local ambush
    local ambushes = {
       {"Pirate Ancestor", "Pirate Phalanx"}
-      {"Pirate Rhino", "Pirate Vendetta"}
-   }
+      {"Pirate Rhino", "Pirate Vendetta"}}
 
    ambush = fleet.add ( 1, ambushes[rnd.rnd(1,2)], "Marauder", {ai="baddie_norun"} )
 end
