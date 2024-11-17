@@ -156,7 +156,7 @@ They grin.]]),
 end
 
 function date ()
-   if system.cur() ~= mem.missys then
+   if system.cur() ~= mem.missys and mem.state==1 then
       if time.get() > mem.deadline then
          return lmisn.fail( _("Target got away.") )
       end
