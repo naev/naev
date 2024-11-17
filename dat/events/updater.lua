@@ -34,6 +34,13 @@ local function updater0120( did0110, did0100, did090 )
       end
    end
 
+   -- Player may have not met the proteron but have positive standing due to bugs in how the reputation worked
+   -- Reset standing to hostile unless player is in proteron system
+   local fproteron = faction.get("Proteron")
+   if not fproteron:known() or system.cur():faction()~=fproteron then
+      fproteron:setReputationGlobal( fproteron:reputationDefault() )
+   end
+
    -- Do update tutorial, have to handle older versions here
    vn.clear()
    vn.scene()
