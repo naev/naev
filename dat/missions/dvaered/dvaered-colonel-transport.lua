@@ -18,18 +18,21 @@
 --]]
 
 local escort = require "escort"
+local fleet = require "fleet"
 local fmt = require "format"
 local neu = require "neutral"
 local vn = require "vn"
 local vni = require "vnimage"
+
+local reward = 0
 
 local dest_planet = spob.getS("Adham")
 
 local ffriendly, fhostile -- codespell:ignore ffriendly
 
 local npc_name = _("Dvaered Colonel")
-local npc_portrait
-local npc_image
+local npc_portrait = nil
+local npc_image = nil
 function create()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
@@ -120,7 +123,7 @@ function ambush ()
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
 
 
-   local ambush
+   local ambush = 0
    local ambushes = {
       {"Pirate Ancestor", "Pirate Phalanx"},
       {"Pirate Rhino", "Pirate Vendetta"},
