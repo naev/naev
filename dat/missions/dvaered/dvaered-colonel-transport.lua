@@ -109,6 +109,7 @@ function accept()
    hook.land( "land" )
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init ( colonel_ship, {
+         pilot.add( "Dvaered Arsenal", "ffriendly", source_system, name )
    })
 
    hook.enter( "ambush" )
@@ -118,18 +119,11 @@ function ambush ()
    if not naev.claimTest( system.cur(), true ) then return end
    local dvaered_factions = faction.get("Dvaered")
 
-   fhostile = faction.dynAdd( dvaered_factions, "warlords_invaders", _("Warlords") )
-   ffriendly = faction.dynAdd( dvaered_factions, "warlords_invaders", _("Warlords") ) -- codespell:ignore ffriendly
+   fhostile = faction.dynAdd( dvaered_factions, "warlords_hostile", _("Warlords") )
+   ffriendly = faction.dynAdd( dvaered_factions, "warlords_friendly", _("Warlords") ) -- codespell:ignore ffriendly
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
 
-
-   local ambush = 0
-   local ambushes = {
-      {"Pirate Ancestor", "Pirate Phalanx"},
-      {"Pirate Rhino", "Pirate Vendetta"},
-   }
-
-   ambush = fleet.add ( 1, ambushes[rnd.rnd(1,2)], "Marauder", {ai="baddie_norun"} )
+   pilot.add( "Dvaered Phalanx", "fhostile", source_system, name )
 end
 
 function land ()
