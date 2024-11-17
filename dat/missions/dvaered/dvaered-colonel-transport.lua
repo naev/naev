@@ -25,6 +25,7 @@ local vni = require "vnimage"
 
 local dest_planet = spob.getS("Adham")
 
+local ffriendly, fhostile -- codespell:ignore ffriendly
 
 local npc_name = _("Dvaered Colonel")
 local npc_portrait
@@ -107,12 +108,18 @@ function accept()
    escort.init ( colonel_ship, {
    })
 
-   if not naev.claimTest( system.cur(), true ) then return end
-
-   hook.enter( "pirate ambush" )
+   hook.enter( "ambush" )
 end
 
-function pirate_ambush ()
+function ambush ()
+   if not naev.claimTest( system.cur(), true ) then return end
+   local dvaered_factions = faction.get("Dvaered")
+
+   fhostile = faction.dynAdd( dvaered_factions, "warlords_invaders", _("Warlords") )
+   ffriendly = faction.dynAdd( dvaered_factions, "warlords_invaders", _("Warlords") ) -- codespell:ignore ffriendly
+   faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
+
+
    local ambush
    local ambushes = {
       {"Pirate Ancestor", "Pirate Phalanx"},
