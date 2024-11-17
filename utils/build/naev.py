@@ -48,6 +48,7 @@ def wrapper(*args):
         os.environ["ALSOFT_TRAP_AL_ERROR"] = "1"
     elif debug == "True":
         os.environ["ALSOFT_LOGLEVEL"] = "2"
+    os.environ["RUST_BACKTRACE"] = "1"
 
     os.environ["ASAN_OPTIONS"] = "halt_on_error=1"
     debugger = get_debugger()
