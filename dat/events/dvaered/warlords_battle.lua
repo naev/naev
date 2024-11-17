@@ -55,7 +55,7 @@ function begin ()
    for i, j in ipairs(plan) do  --choose only Dvaered planets (and no stations)
       local jtags = j:tags()
       local jserve = j:services()
-      if j:faction()==faction.get("Dvaered") and (not jtags.station) and jserve.land and  jserve.inhabited and jserve.refuel then
+      if j:faction()==faction.get("Dvaered") and (not jtags.station) and jserve.land and jserve.inhabited and jserve.refuel then
          cand[k] = j
          k = k+1
       end
