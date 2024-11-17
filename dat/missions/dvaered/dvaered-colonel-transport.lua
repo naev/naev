@@ -102,10 +102,13 @@ function accept()
    })
    misn.markerAdd( mem.dest_planet )
    hook.land( "land" )
-   hook.enter( "pirate_ambush" )
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init ( colonel_ship, {
    })
+   
+   if not naev.claimTest( system.cur(), true ) then return end
+   
+   hook.enter( "pirate ambush" )
 end
 
 function pirate_ambush ()
