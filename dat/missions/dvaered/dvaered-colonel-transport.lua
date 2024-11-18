@@ -3,9 +3,10 @@
 <mission name="Dvaered Colonel Escort">
  <unique />
  <priority>4</priority>
- <chance>86</chance>
+ <chance>43</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>
+ <cond>require("misn_test").reweight_active()</cond>
 </mission>
 --]]
 --[[
@@ -27,7 +28,7 @@ local reward = 0
 
 local source_system = nil
 
-local dest_planet = spob.getS("Adham")
+lmisn.getSpobAtDistance([sys=system.cur()], 2, 5, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
 
 local ffriendly, fhostile -- codespell:ignore ffriendly
 
@@ -43,7 +44,7 @@ function accept()
    local accepted = false
    vn.clear()
    vn.scene()
-   local m = vn.newCharacter( npc_name {image=npc_image} )
+   local m = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
    m(fmt.f([[As you approach, the Dvaered soldier stands. "Hello, captain {playername}!" they say. "Nice to see you around here. How's it going?"]]))
      {playername=player.name()}
@@ -53,7 +54,7 @@ function accept()
    }
 
    vn.label("well")
-   m(_([["Wonderful! Glad you're having a good time."]]))
+   m(_([["Alright."]]))
    vn.jump("mission description")
 
    vn.label("fine")
@@ -61,46 +62,40 @@ function accept()
    vn.jump("mission description")
 
    vn.label("mission description")
-   m(fmt.f([["Well, to the point. I need somebody to escort me and my Arsenal to {pnt}. Would you be willing to do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous.]]))
-     {pnt=mem.dest_planet}
-   m(_([["Oh, and one more thing I've got to warn you about: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks."]]))
+   m(fmt.f([["Well, to the point. I need somebody who's not crazy to escort me and my Arsenal to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]))
+     {pnt=mem.dest_planet, sys=mem.dest_sys}
+   m(_([["One more thing: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks."]]))
    vn.menu{
-      {_([["Remind me what system that's in?"]]), "what system"},
       {_([["I'd be happy to do that!"]]), "sure"},
       {_([["What is your name?"]]), "what is your name"},
       {_([["Wait, why is there someone trying to kill you?"]]), "why would you die"},
    }
-
-   vn.label("what system")
-   m(fmt.f([["Umm..." the Dvaered says. They consult a watch. "Alright, {pnt} is in {sys}."]]))
-     {pnt=mem.dest_planet, sys=mem.dest_sys}
-   vn.jump("choice")
 
    vn.label("what is your name")
    m(_([[The Dvaered seems slightly taken aback. "Well... that may also be classified information... call me Radver."]]))
    vn.jump("choice")
 
    vn.label("sure")
-   m(_([["Wonderful! I'll be on your ship when you leave."]]))
+   m(_([["Surprising but good! I'll be on your ship in a while, so don't leave too soon."]]))
    vn.func( function ()
       accepted = true
    end )
 
-   vn.run()
-
    vn.label("why would you die")
-   m(_([[The Dvaered colonel looks uncomfortable. "I'm afraid that too is classified information. Let's just say that I've got a vendetta (not the ship, the relation) with this other warlord, and we're on blowing-each-other-up terms. Don't ask me to reveal more information."]]))
+   m(_([[The Dvaered colonel looks uncomfortable. "That too is classified information. Let's just say that I've got a vendetta (not the ship, the relation) with this other warlord, and we're on blowing-each-other-up terms, and you can't ask me to reveal more information."]]))
 
    vn.label("choice")
-   m(_([["Well? Will you do this?"]]))
+   m(_([["Well? Will you do this for the sake of all true Dvaered, or else..?"]]))
    vn.menu{
       {_([["Yep, I'd be glad to!"]]), "sure"},
       {_([["Not going to happen, sorry."]]), "never"},
    }
 
    vn.label("never")
-   m(_([["That's sad. Oh well, I'll ask someone else." The Dvaered leaves.]]))
+   m(_([["Quite an impolite answer," says the Dvaered. "Well, I suppose no choice is offered, so I'll stay here, but don't take too long in coming back."]]))
    vn.done()
+
+   vn.run()
 
    if not accepted then return end
 
@@ -114,29 +109,42 @@ function accept()
    misn.markerAdd( mem.dest_planet )
    hook.land( "land" )
    local colonel_ship = ship.get("Dvaered Arsenal")
-   escort.init ( colonel_ship, {
-         pilot.add( "Dvaered Arsenal", "ffriendly", source_system, "Radver" ) -- The Dvaered colonel is telling you to call them the name of the Arsenal; their real name is classified information.
-   })
+   escort.init( colonel_ship, {
+      func_pilot_create = function ( p )
+        local fct = ffriendly()
+        p:rename("Radver")
+        local ffriendly = factions()
+        p:setFaction( ffriendly() )
+   end } )
 
    hook.enter( "ambush" )
+   hook.enter( "factions" )
 end
 
 function ambush ()
    if not naev.claimTest( system.cur(), true ) then return end
    local dvaered_factions = faction.get("Dvaered")
 
-   fhostile = faction.dynAdd( dvaered_factions, "warlords_hostile", _("Warlords") )
-   ffriendly = faction.dynAdd( dvaered_factions, "warlords_friendly", _("Warlords") ) -- codespell:ignore ffriendly
-   faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
-
    pilot.add( "Dvaered Phalanx", "fhostile", source_system, "Asheron Anomaly" )
+end
+
+local function factions ()
+   local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
+   local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
+   faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
+   return ffriendly, fhostile
 end
 
 function land ()
    if spob.cur() == dest_planet then
-      vn.msg( fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Thank you for bringing me here!" says the colonel. "Here is {reward}, as we agreed. Have safe travels!"]]), {pnt=dest_planet, reward=reward}) )
-      player.pay( reward )
-      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. For some reason, they didn't tell you why.]]), {pnt=dest_planet} ) )
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=dest_planet, reward=reward}) )
+      vn.func( function () player.pay(reward) end )
+      vn.sfxVictory()
+      vn.na( fmt.reward(reward) )
+      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said to call them Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=dest_planet} ) )
       misn.finish( true )
    end
 end
