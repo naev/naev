@@ -28,7 +28,7 @@ local reward = 0
 
 local source_system = nil
 
-lmisn.getSpobAtDistance([sys=system.cur()], 2, 5, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
+lmisn.getSpobAtDistance(2, 5, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
 
 local ffriendly, fhostile -- codespell:ignore ffriendly
 
@@ -46,11 +46,12 @@ function accept()
    vn.scene()
    local m = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
-   m(fmt.f([[As you approach, the Dvaered soldier stands. "Hello, captain {playername}!" they say. "Nice to see you around here. How's it going?"]]))
+   m(fmt.f([[As you approach, the Dvaered soldier stands. "Oh, is it Captain {playername}?" they say. "Nice to see you around here. How's it going?"]]))
      {playername=player.name()}
    vn.menu{
       {_([["Quite well, thank you!"]]), "well"},
       {_([["I guess it's going alright."]]), "fine"},
+      {_([["Wait a minute. How did you know my name?"]]), "my name"},
    }
 
    vn.label("well")
@@ -61,10 +62,15 @@ function accept()
    m(_([["As long as there's no trouble..."]]))
    vn.jump("mission description")
 
+   vn.label("my name")
+   m(_([["Uhh... tough luck, captain, I'm not allowed to tell you. Too bad.]]))
+   m(_([["Let's just say that my espionage services are of the best, and leave it at that... shall we?"]])) -- When/if possible, the word "shall" should be italicized.
+   vn.jump("mission description")
+
    vn.label("mission description")
    m(fmt.f([["Well, to the point. I need somebody who's not crazy to escort me and my Arsenal to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]))
      {pnt=mem.dest_planet, sys=mem.dest_sys}
-   m(_([["One more thing: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks."]]))
+   m(_([["One more thing: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks. The ship will probably be called 'Asheron Anomaly', but it may be something else."]]))
    vn.menu{
       {_([["I'd be happy to do that!"]]), "sure"},
       {_([["What is your name?"]]), "what is your name"},
@@ -92,7 +98,7 @@ function accept()
    }
 
    vn.label("never")
-   m(_([["Quite an impolite answer," says the Dvaered. "Well, I suppose no choice is offered, so I'll stay here, but don't take too long in coming back."]]))
+   m(_([["Quite an impolite answer," says the Dvaered. "Well, I suppose no choice is offered to me, so I'll stay here, but don't take too long in coming back."]]))
    vn.done()
 
    vn.run()
@@ -123,9 +129,13 @@ end
 
 function ambush ()
    if not naev.claimTest( system.cur(), true ) then return end
+
+   rm.hook( "ambush" )
+   rm.hook( "factions" )
+   
    local dvaered_factions = faction.get("Dvaered")
 
-   pilot.add( "Dvaered Phalanx", "fhostile", source_system, "Asheron Anomaly" )
+   pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
 end
 
 local function factions ()
