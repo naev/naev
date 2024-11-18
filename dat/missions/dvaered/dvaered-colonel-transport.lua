@@ -28,7 +28,7 @@ local reward = 0
 
 local source_system = nil
 
-lmisn.getSpobAtDistance(2, 5, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
+lmisn.getSpobAtDistance([sys=system.cur(source)], 2, 5, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
 
 local ffriendly, fhostile -- codespell:ignore ffriendly
 
@@ -130,8 +130,9 @@ end
 function ambush ()
    if not naev.claimTest( system.cur(), true ) then return end
 
-   rm.hook( "ambush" )
-   rm.hook( "factions" )
+   if mem.ambushed then return end
+   
+   mem.ambushed = true
    
    local dvaered_factions = faction.get("Dvaered")
 
@@ -139,6 +140,8 @@ function ambush ()
 end
 
 local function factions ()
+   if mem.ambushed then return end
+
    local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
    local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
