@@ -80,9 +80,9 @@ function log.draw ()
    graphics.rectangle( "fill", 0, 0, lw, lh )
 
    local font = log.font
-   local x = (lw-1080)/2
+   local x = (lw-log.headerw-log.bodyw)/2
    local headerx = x
-   local bodyx = x+200
+   local bodyx = x+log.headerw
    local lineh = font:getLineHeight()
    local y = log.y - lineh
    for k = 1,#_header do
