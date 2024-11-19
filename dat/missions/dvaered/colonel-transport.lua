@@ -29,9 +29,6 @@ local reward = 750e3
 
 local source_system = nil
 
-local ffriendly = nil -- codespell:ignore ffriendly
-local fhostile = nil
-
 local npc_name = _("Dvaered Colonel")
 local npc_portrait = nil
 local npc_image = nil
@@ -46,7 +43,8 @@ function create()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
-local function factions()
+
+function factions()
    local dvaered_factions = faction.get("Dvaered")
 
    local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
@@ -54,13 +52,14 @@ local function factions()
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
    return ffriendly, fhostile -- codespell:ignore ffriendly
 end
+
 function accept()
    local accepted = false
    vn.clear()
    vn.scene()
    vn.transition()
    m(fmt.f([[As you approach, the Dvaered soldier stands. "Oh, is it Captain {playername}?" they say. "Nice to see you around here. How's it going?"]]))
-     {playername=player.name()}
+      {playername=player.name()}
    vn.menu{
       {_([["Quite well, thank you!"]]), "well"},
       {_([["I guess it's going alright."]]), "fine"},
@@ -145,9 +144,8 @@ function ambush ()
 
    mem.ambushed = true
 
-   local dvaered_factions = faction.get("Dvaered")
-local _ffriendly, fhostile = factions()
-pilot.add( "Dvaered Phalanx", fhostile, source_system, _("Asheron Anomaly") )
+   local _ffriendly, fhostile = factions()
+   pilot.add( "Dvaered Phalanx", fhostile, source_system, _("Asheron Anomaly") )
 end
 
 function land ()
@@ -155,12 +153,12 @@ function land ()
       vn.clear()
       vn.scene()
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=destspb, reward=fmt.credits(reward)}) )
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=mem.destspb, reward=fmt.credits(reward)}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
-      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=destspb} ) )
+      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=mem.destspb} ) )
       misn.finish( true )
    end
 end
