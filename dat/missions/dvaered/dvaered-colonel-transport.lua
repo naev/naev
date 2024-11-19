@@ -28,7 +28,7 @@ local reward = 0
 
 local source_system = nil
 
-lmisn.getSpobAtDistance([sys=Dvaer], 1, 6, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
+lmisn.getSpobAtDistance(sys=Dvaer, 1, 6, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
 
 local ffriendly, fhostile -- codespell:ignore ffriendly
 
