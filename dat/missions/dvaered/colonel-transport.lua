@@ -44,7 +44,7 @@ function create()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
 
-function factions()
+local function factions()
    local dvaered_factions = faction.get("Dvaered")
 
    local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
@@ -149,7 +149,7 @@ function ambush ()
 end
 
 function land ()
-   if spob.cur() == destspb then
+   if spob.cur() == mem.destspb then
       vn.clear()
       vn.scene()
       vn.transition()
