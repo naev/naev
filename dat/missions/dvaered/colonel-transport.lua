@@ -28,13 +28,17 @@ local reward = 0
 
 local source_system = nil
 
-local ffriendly, fhostile -- codespell:ignore ffriendly
+local ffriendly = nil -- codespell:ignore ffriendly
+local fhostile = nil
 
 local npc_name = _("Dvaered Colonel")
 local npc_portrait = nil
 local npc_image = nil
+
+local m = vn.newCharacter( npc_name, {image=npc_image} )
+
 function create()
-   local spbs = lmisn.getSpobAtDistance( nil, 4, 6, "Dvaered" )
+   local spbs = misn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
    if #spbs <= 0 then misn.finish(false) end
    mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
 
@@ -46,7 +50,6 @@ function accept()
    local accepted = false
    vn.clear()
    vn.scene()
-   local m = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
    m(fmt.f([[As you approach, the Dvaered soldier stands. "Oh, is it Captain {playername}?" they say. "Nice to see you around here. How's it going?"]]))
      {playername=player.name()}
@@ -71,7 +74,7 @@ function accept()
 
    vn.label("mission description")
    m(fmt.f([["Well, to the point. I need somebody who's not crazy to escort me and my Arsenal to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]))
-     {pnt=mem.dest_planet, sys=mem.dest_sys}
+     {pnt=mem.destspb, sys=mem.dest_sys}
    m(_([["One more thing: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks. The ship will probably be called 'Asheron Anomaly', but it may be something else."]]))
    vn.menu{
       {_([["I'd be happy to do that!"]]), "sure"},
@@ -110,9 +113,9 @@ function accept()
    misn.accept()
 
    misn.setReward(750000)
-   misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.dest_planet, sys=mem.dest_sys}))
+   misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspb, sys=mem.dest_sys}))
    misn.osdCreate(_("Dvaered colonel escort"), {
-      fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.dest_planet, sys=mem.dest_sys},
+      fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.destspb, sys=mem.dest_sys},
    })
    misn.markerAdd( mem.dest_planet )
    hook.land( "land" )
@@ -126,40 +129,41 @@ function accept()
    end } )
 
    hook.enter( "ambush" )
-   hook.enter( "factions" )
+--   hook.enter( "factions" )
 end
 
 function ambush ()
    if not naev.claimTest( system.cur(), true ) then return end
 
    if mem.ambushed then return end
-   
+
    mem.ambushed = true
-   
-   local dvaered_factions = faction.get("Dvaered")
-
-   pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
-end
-
-local function factions ()
-   if mem.ambushed then return end
 
    local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
    local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
    return ffriendly, fhostile
+
+   local dvaered_factions = faction.get("Dvaered")
+
+   pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
 end
 
+[[--
+local function factions ()
+   if mem.ambushed then return end
+end
+--]]
 function land ()
-   if spob.cur() == dest_planet then
+   if spob.cur() == destspb then
       vn.clear()
       vn.scene()
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=dest_planet, reward=reward}) )
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=destspb, reward=reward}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
-      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said to call them Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=dest_planet} ) )
+      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=destspb} ) )
       misn.finish( true )
    end
 end
