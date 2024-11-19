@@ -28,14 +28,16 @@ local reward = 0
 
 local source_system = nil
 
-lmisn.getSpobAtDistance(sys=Dvaer, 1, 6, fct=faction.get("Dvaered")[, samefct=true[, filter=nil[, data=nil[, hidden=false]]]])
-
 local ffriendly, fhostile -- codespell:ignore ffriendly
 
 local npc_name = _("Dvaered Colonel")
 local npc_portrait = nil
 local npc_image = nil
 function create()
+   local spbs = lmisn.getSpobAtDistance( nil, 4, 6, "Dvaered" )
+   if #spbs <= 0 then misn.finish(false) end
+   mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
+
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
