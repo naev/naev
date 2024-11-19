@@ -130,7 +130,6 @@ function accept()
    end } )
 
    hook.enter( "ambush" )
---   hook.enter( "factions" )
 end
 
 function ambush ()
@@ -146,15 +145,9 @@ function ambush ()
    return ffriendly, fhostile
 
    local dvaered_factions = faction.get("Dvaered")
-
    pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
 end
 
-[[--
-local function factions ()
-   if mem.ambushed then return end
-end
---]]
 function land ()
    if spob.cur() == destspb then
       vn.clear()
