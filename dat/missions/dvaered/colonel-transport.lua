@@ -65,12 +65,12 @@ function accept()
    vn.jump("mission description")
 
    vn.label("fine")
-   m(_([["As long as there's no trouble..."]]))
+   m(_([["As long as there's no trouble…"]]))
    vn.jump("mission description")
 
    vn.label("my name")
-   m(_([["Uhh... tough luck, captain, I'm not allowed to tell you. Too bad.]]))
-   m(_([["Let's just say that my espionage services are of the best, and leave it at that... shall we?"]])) -- When/if possible, the word "shall" should be italicized.
+   m(_([["Uhh… tough luck, captain, I'm not allowed to tell you. Too bad.]]))
+   m(_([["Let's just say that my espionage services are of the best, and leave it at that… shall we?"]])) -- When/if possible, the word "shall" should be italicized.
    vn.jump("mission description")
 
    vn.label("mission description")
@@ -84,7 +84,7 @@ function accept()
    }
 
    vn.label("what is your name")
-   m(_([[The Dvaered seems slightly taken aback. "Well... that may also be classified information... call me Radver."]]))
+   m(_([[The Dvaered seems slightly taken aback. "Well… that may also be classified information… call me Radver."]]))
    vn.jump("choice")
 
    vn.label("sure")
@@ -144,8 +144,7 @@ function ambush ()
    local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
    local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
-   return ffriendly, fhostile
-
+   
    pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
 end
 
