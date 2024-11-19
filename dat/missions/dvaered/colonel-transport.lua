@@ -20,6 +20,7 @@
 
 local escort = require "escort"
 local fmt = require "format"
+local lmisn = require "lmisn"
 local neu = require "neutral"
 local vn = require "vn"
 local vni = require "vnimage"
@@ -38,7 +39,7 @@ local npc_image = nil
 local m = vn.newCharacter( npc_name, {image=npc_image} )
 
 function create()
-   local spbs = misn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
+   local spbs = lmisn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
    if #spbs <= 0 then misn.finish(false) end
    mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
 
