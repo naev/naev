@@ -939,7 +939,7 @@ static void map_update( unsigned int wid )
                             p_( "system features", ", " ) );
 
          itf = sys->interference;
-         if ( sys->interference > 60. ) {
+         if ( sys->interference > 70. ) {
             p += scnprintf( &buf[p], sizeof( buf ) - p, "#r" );
             p += scnprintf( &buf[p], sizeof( buf ) - p,
                             _( "Dense Interference (%.0f%%)" ), itf );
