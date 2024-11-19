@@ -25,7 +25,7 @@ local neu = require "neutral"
 local vn = require "vn"
 local vni = require "vnimage"
 
-local reward = 0
+local reward = 750e3
 
 local source_system = nil
 
@@ -113,7 +113,7 @@ function accept()
 
    misn.accept()
 
-   misn.setReward(750000)
+   misn.setReward(reward)
    misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspb, sys=mem.dest_sys}))
    misn.osdCreate(_("Dvaered colonel escort"), {
       fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.destspb, sys=mem.dest_sys},
@@ -154,10 +154,11 @@ function land ()
       vn.clear()
       vn.scene()
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=destspb, reward=reward}) )
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=destspb, reward=fmt.credits(reward)}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
+      vn.run()
       neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=destspb} ) )
       misn.finish( true )
    end
