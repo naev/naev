@@ -80,6 +80,7 @@ static int playerL_jumps( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
+static int playerL_autonavSetSpeed( lua_State *L );
 static int playerL_autonavSetTarget( lua_State *L );
 static int playerL_autonavSetPos( lua_State *L );
 static int playerL_autonavRoute( lua_State *L );
@@ -184,6 +185,7 @@ static const luaL_Reg playerL_methods[] = {
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
+   { "autonavSetSpeed", playerL_autonavSetSpeed },
    { "autonavSetTarget", playerL_autonavSetTarget },
    { "autonavSetPos", playerL_autonavSetPos },
    { "autonavRoute", playerL_autonavRoute },
@@ -678,13 +680,34 @@ static int playerL_refuel( lua_State *L )
  *
  * @usage autonav = player.autonav()
  *    @luatreturn boolean true if the player has autonav enabled.
+ *    @luatreturn number Speed of the current autonav.
  * @luafunc autonav
  */
 static int playerL_autonav( lua_State *L )
 {
    PLAYER_CHECK();
    lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
-   return 1;
+   lua_pushnumber( L, player.speed_autonav );
+   return 2;
+}
+
+/**
+ * @brief Sets the autonav speed.
+ */
+static int playerL_autonavSetSpeed( lua_State *L )
+{
+   double speed = luaL_optnumber( L, 1, -1 );
+   double sound = luaL_optnumber( L, 2, speed );
+
+   if ( speed > 0. ) {
+      pause_setSpeed( speed * conf.game_speed );
+      sound_setSpeed( sound );
+      player.speed_autonav = speed;
+   } else {
+      player_resetSpeed();
+   }
+
+   return 0;
 }
 
 /**
@@ -863,16 +886,13 @@ static int playerL_setSpeed( lua_State *L )
 {
    double speed = luaL_optnumber( L, 1, -1 );
    double sound = luaL_optnumber( L, 2, speed );
-   int    noset = lua_toboolean( L, 3 );
 
    if ( speed > 0. ) {
-      if ( !noset )
-         player.speed = speed * conf.game_speed;
-      pause_setSpeed( speed * conf.game_speed );
+      player.speed = speed * conf.game_speed * player.speed_autonav;
+      pause_setSpeed( player.speed );
       sound_setSpeed( sound );
    } else {
-      if ( !noset )
-         player.speed = conf.game_speed;
+      player.speed = conf.game_speed * player.speed_autonav;
       player_resetSpeed();
    }
 

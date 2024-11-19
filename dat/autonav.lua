@@ -58,7 +58,7 @@ local function autonav_setup ()
    -- Set initial time compression base
    tc_base = player.dt_default() * player.speed()
    tc_mod = math.max( tc_base, tc_mod )
-   player.setSpeed( tc_mod, nil, true )
+   player.autonavSetSpeed( tc_mod, nil )
 
    -- Initialize health
    last_shield, last_armour = pp:health()
@@ -88,7 +88,7 @@ local function resetSpeed ()
    tc_mod = 1
    tc_rampdown = false
    tc_down = 0
-   player.setSpeed( nil, nil, true ) -- restore sped
+   player.autonavSetSpeed( nil, nil ) -- restore sped
 end
 
 local function shouldResetSpeed ()
@@ -732,7 +732,7 @@ function autonav_update( realdt )
       if tc_mod > tc_base then
          tc_mod = tc_mod - tc_down * realdt
          tc_mod = math.max( tc_mod, tc_base )
-         player.setSpeed( tc_mod, tc_mod / dt_default, true )
+         player.autonavSetSpeed( tc_mod, tc_mod / dt_default )
       end
       return
    end
@@ -743,7 +743,7 @@ function autonav_update( realdt )
    -- 5 seconds to reach max speed
    tc_mod = tc_mod + 0.2 * realdt * (tc_max - tc_base )
    tc_mod = math.min( tc_mod, tc_max )
-   player.setSpeed( tc_mod, tc_mod / dt_default, true )
+   player.autonavSetSpeed( tc_mod, tc_mod / dt_default )
 end
 
 function autonav_enter ()

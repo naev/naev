@@ -164,6 +164,7 @@ void player_autonavEnd( void )
    player_rmFlag( PLAYER_AUTONAV );
    ovr_autonavClear();
    player_accelOver();
+   player.speed_autonav = 1.;
 
    /* End it. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_end );
