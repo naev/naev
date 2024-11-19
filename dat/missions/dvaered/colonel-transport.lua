@@ -144,7 +144,8 @@ function ambush ()
    local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
    local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
    faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
-   
+   return ffriendly, fhostile -- codespell:ignore ffriendly
+
    pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
 end
 
