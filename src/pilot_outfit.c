@@ -651,6 +651,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cargo_free < 0,
                       _( "!! Insufficient Free Cargo Space" ) );
    SPACEWORTHY_CHECK( p->crew < 0, _( "!! Insufficient Crew" ) );
+   SPACEWORTHY_CHECK( pilot_massFactor( p ) < 0.05, ( "!! Too Heavy" ) );
 
    /* No need to mess with the string. */
    if ( buf == NULL )
