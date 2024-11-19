@@ -42,11 +42,18 @@ function create()
    local spbs = lmisn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
    if #spbs <= 0 then misn.finish(false) end
    mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
-
+   mem.dest_sys = mem.destspb:system()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
    misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
+local function factions()
+   local dvaered_factions = faction.get("Dvaered")
 
+   local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
+   local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
+   faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
+   return ffriendly, fhostile -- codespell:ignore ffriendly
+end
 function accept()
    local accepted = false
    vn.clear()
@@ -123,7 +130,6 @@ function accept()
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init( colonel_ship, {
       func_pilot_create = function ( p )
-        local fct = ffriendly()
         p:rename("Radver")
         local ffriendly = factions()
         p:setFaction( ffriendly() )
@@ -140,13 +146,8 @@ function ambush ()
    mem.ambushed = true
 
    local dvaered_factions = faction.get("Dvaered")
-
-   local ffriendly = faction.dynAdd( dvaered_factions, "radver", _("Dvaered") ) -- codespell:ignore ffriendly
-   local fhostile = faction.dynAdd( dvaered_factions, "radver_baddie", _("Dvaered Warlord") )
-   faction.dynEnemy( ffriendly, fhostile ) -- codespell:ignore ffriendly
-   return ffriendly, fhostile -- codespell:ignore ffriendly
-
-   pilot.add( "Dvaered Phalanx", "fhostile", source_system, _("Asheron Anomaly") )
+local _ffriendly, fhostile = factions()
+pilot.add( "Dvaered Phalanx", fhostile, source_system, _("Asheron Anomaly") )
 end
 
 function land ()
