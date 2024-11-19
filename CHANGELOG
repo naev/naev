@@ -3,6 +3,7 @@
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
    * Made pilots in formation less prone to spinning
+   * Ships significantly past the mass limit are no longer space worthy
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
