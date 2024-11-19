@@ -292,19 +292,23 @@ function follow_fleet ()
       end
 
       local angle, radius, method = table.unpack(mem.form_pos)
-      local goal  = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method) -- Standard controller
-      local dist  = ai.dist(goal)
+      local goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method) -- Standard controller
+      local dist = ai.dist(goal)
+      --local relvel = plt:dist( leader:vel() )
 
-      if mem.app == 2 then
+      if mem.app == 1 then
          local dir   = ai.face(goal)
          if dist > 300 then
             if dir < math.rad(10) then  -- Must approach
                ai.accel()
             end
-         else  -- Toggle precise positioning controller
-            mem.app = 1
+         else
+            mem.app = 0
          end
 
+      --[[ While the approach below is much more accurate when enabled, it
+      --   causes the ships to constantly do small corrections which can be
+      --   visually unpleasing. Disabling it gives more consistent results.
       elseif mem.app == 1 then -- only small corrections to do
          if dist > 300 then -- We're much too far away, we need to toggle large correction
             mem.app = 2
@@ -320,15 +324,14 @@ function follow_fleet ()
                mem.app = 0
             end
          end
-
+      --]]
       else
-         ai.face(goal)
          if dist > 300 then   -- Must approach
             mem.app = 1
          else   -- Face forward
             goal = plt:pos() + leader:vel()
-            ai.face(goal)
          end
+         ai.face(goal)
       end
    end
 end
