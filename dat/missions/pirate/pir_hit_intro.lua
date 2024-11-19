@@ -120,7 +120,7 @@ They grin.]]),
    }
 
    vn.label("accept")
-   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system, although it is believed thy will leave by {deadline}. Leaving their ship as a charred memento to their avarice will be a fitting end for them."]]),
+   g(fmt.f(_([["My clients will be pleased to hear that. {name} can be found around the {sys} system, although it is believed they will leave by {deadline}. Leaving their ship as a charred memento to their avarice will be a fitting end for them."]]),
       {name=mem.name, sys=mem.missys, deadline=mem.deadline}))
    vn.func( function () accepted = true end )
    vn.done()
