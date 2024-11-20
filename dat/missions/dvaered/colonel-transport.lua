@@ -31,9 +31,7 @@ local source_system = nil
 
 local npc_name = _("Dvaered Colonel")
 local npc_portrait = nil
-local npc_image = nil
-
-local m = vn.newCharacter( npc_name, {image=npc_image} )
+local npc_image = ni
 
 function create()
    local spbs = lmisn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
@@ -41,7 +39,7 @@ function create()
    mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
    mem.dest_sys = mem.destspb:system()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
-   misn.setNPC(npc_name, npc_portrait, _("A Dvaered, very professional-looking, is sitting with an excellant posture at the bar.") )
+   misn.setNPC(npc_name, npc_portrait, _("A Dvaered soldier, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
 
 local function factions()
@@ -57,6 +55,7 @@ function accept()
    local accepted = false
    vn.clear()
    vn.scene()
+   local m = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
    m(fmt.f([[As you approach, the Dvaered soldier stands. "Oh, is it Captain {playername}?" they say. "Nice to see you around here. How's it going?"]]))
       {playername=player.name()}
@@ -76,7 +75,7 @@ function accept()
 
    vn.label("my name")
    m(_([["Uhh… tough luck, captain, I'm not allowed to tell you. Too bad.]]))
-   m(_([["Let's just say that my espionage services are of the best, and leave it at that… shall we?"]])) -- When/if possible, the word "shall" should be italicized.
+   m(_([["Let's just say that my espionage services are of the best, and leave it at that… #nshall#0 we?"]])) -- When possible, the word "shall" should be italicized and the color change removed.
    vn.jump("mission description")
 
    vn.label("mission description")
@@ -87,6 +86,7 @@ function accept()
       {_([["I'd be happy to do that!"]]), "sure"},
       {_([["What is your name?"]]), "what is your name"},
       {_([["Wait, why is there someone trying to kill you?"]]), "why would you die"},
+      {_([["'Asheron Anomaly'?"]]), "asheron anomaly"},
    }
 
    vn.label("what is your name")
@@ -99,8 +99,18 @@ function accept()
       accepted = true
    end )
 
+   vn.done
+
    vn.label("why would you die")
    m(_([[The Dvaered colonel looks uncomfortable. "That too is classified information. Let's just say that I've got a vendetta (not the ship, the relation) with this other warlord, and we're on blowing-each-other-up terms, and you can't ask me to reveal more information."]]))
+   vn.jump("choice")
+
+   vn.label("asheron anomaly")
+   m(_([["What about it? If you're wondering why it's named that; well, don't ask me. You'd have to ask this warlord, and I doubt they'd tell you.]]))
+   vn.menu{
+      {_([["Why are they trying to kill you?]]), "why would you die"},
+      {_([["I get that."]]), "choice"},
+   }
 
    vn.label("choice")
    m(_([["Well? Will you do this for the sake of all true Dvaered, or else..?"]]))
@@ -152,8 +162,9 @@ function land ()
    if spob.cur() == mem.destspb then
       vn.clear()
       vn.scene()
+      local m = vn.newCharacter( npc_name, {image=npc_image} )
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=mem.destspb, reward=fmt.credits(reward)}) )
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. The Dvaered seems to have slightly changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=mem.destspb, reward=fmt.credits(reward)}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
