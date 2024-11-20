@@ -7,8 +7,8 @@ local autonav_pos_approach_brake, autonav_pos_approach
 local autonav_spob_approach_brake, autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
-local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed
-local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_jump, brake_pos
+local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed, escort_health
+local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_jump, brake_pos, include_escorts
 
 -- Some defaults
 autonav_timer = 0
@@ -17,8 +17,10 @@ map_npath = 0
 tc_down = 0
 uselanes_jump = true
 uselanes_spob = false
+include_escorts = true
 last_shield = 0
 last_armour = 0
+escort_health = {}
 
 --[[
 Common code for setting decent defaults and global variables when starting autonav.
@@ -62,6 +64,10 @@ local function autonav_setup ()
 
    -- Initialize health
    last_shield, last_armour = pp:health()
+   escort_health = {}
+   for k,p in pp:followers() do
+      escort_health[ p:id() ] = { p:health() }
+   end
 
    -- Compute slowest fleet speed
    local followers = pp:followers()
@@ -72,6 +78,11 @@ local function autonav_setup ()
       for k,p in pairs(followers) do
          fleet_speed = math.min( fleet_speed, p:speedMax() )
       end
+   end
+
+   -- Send message to follows to regroup
+   if include_escorts then
+      pp:msg( pp:followers(), "e_autonav" )
    end
 
    -- Start timer to begin time compressing right away
@@ -102,6 +113,14 @@ local function shouldResetSpeed ()
 
    local armour, shield = pp:health()
    local lowhealth = (shield < last_shield and shield < reset_shield) or (armour < last_armour)
+   if include_escorts then
+      for k,p in pp:followers() do
+         local a, s = p:health()
+         local la, ls = table.unpack(escort_health[ p:id() ])
+         lowhealth = lowhealth and ((s < ls and s < reset_shield) or (a < la))
+         escort_health[ p:id() ] = {a,s}
+      end
+   end
 
    -- First check enemies in distance which should be fast
    if not will_reset and reset_dist > 0 then
