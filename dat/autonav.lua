@@ -65,7 +65,7 @@ local function autonav_setup ()
    -- Initialize health
    last_shield, last_armour = pp:health()
    escort_health = {}
-   for k,p in pp:followers() do
+   for k,p in ipairs(pp:followers()) do
       escort_health[ p:id() ] = { p:health() }
    end
 
@@ -114,9 +114,15 @@ local function shouldResetSpeed ()
    local armour, shield = pp:health()
    local lowhealth = (shield < last_shield and shield < reset_shield) or (armour < last_armour)
    if include_escorts then
-      for k,p in pp:followers() do
+      for k,p in ipairs(pp:followers()) do
          local a, s = p:health()
-         local la, ls = table.unpack(escort_health[ p:id() ])
+         local h = escort_health[ p:id() ]
+         local la, ls
+         if not h then
+            la, ls = 0, 0
+         else
+            la, ls = table.unpack(h)
+         end
          lowhealth = lowhealth and ((s < ls and s < reset_shield) or (a < la))
          escort_health[ p:id() ] = {a,s}
       end
