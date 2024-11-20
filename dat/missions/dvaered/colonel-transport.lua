@@ -98,8 +98,7 @@ function accept()
    vn.func( function ()
       accepted = true
    end )
-
-   vn.done
+   vn.done()
 
    vn.label("why would you die")
    m(_([[The Dvaered colonel looks uncomfortable. "That too is classified information. Let's just say that I've got a vendetta (not the ship, the relation) with this other warlord, and we're on blowing-each-other-up terms, and you can't ask me to reveal more information."]]))
