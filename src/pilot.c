@@ -2862,7 +2862,7 @@ void pilot_sample_trails( Pilot *p, int none )
          mode = MODE_JUMPING;
       else if ( pilot_isFlag( p, PILOT_AFTERBURNER ) )
          mode = MODE_AFTERBURN;
-      else if ( p->solid.accel > 0. )
+      else if ( p->solid.accel > 0.2 )
          mode = MODE_GLOW;
       else
          mode = MODE_IDLE;

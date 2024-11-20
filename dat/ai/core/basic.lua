@@ -287,27 +287,40 @@ function follow_fleet ()
       end
 
    else -- Ship has a precise position in formation
-      if mem.app == nil then
-         mem.app = 2
-      end
 
       local angle, radius, method = table.unpack(mem.form_pos)
-      local goal  = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method) -- Standard controller
-      local dist  = ai.dist(goal)
+      local goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method) -- Standard controller
+      local dist = ai.dist(goal)
+      --local relvel = plt:vel():dist( leader:vel() )
 
-      if mem.app == 2 then
+      --if dist > 0 then
+         local dir = ai.face(goal)
+         if dir < math.rad(10) then  -- Must approach
+            ai.accel( (dist-50) / 200 )
+         end
+      --else
+      --   ai.face( leader:dir() )
+      --end
+
+      --[[ While the approach below is much more accurate when enabled, it
+      --   causes the ships to constantly do small corrections which can be
+      --   visually unpleasing. Disabling it gives more consistent results.
+      if mem._flw == nil then
+         mem._flw = 1
+      end
+      if mem._flw == 1 then
          local dir   = ai.face(goal)
-         if dist > 300 then
+         if dist > 30 then
             if dir < math.rad(10) then  -- Must approach
-               ai.accel()
+               ai.accel( dist / 200 - 0.5 )
             end
-         else  -- Toggle precise positioning controller
-            mem.app = 1
+         else
+            mem._flw = 0
          end
 
-      elseif mem.app == 1 then -- only small corrections to do
+      elseif mem._flw == 1 then -- only small corrections to do
          if dist > 300 then -- We're much too far away, we need to toggle large correction
-            mem.app = 2
+            mem._flw = 2
          else  -- Derivative-augmented controller
             local goal0 = ai.follow_accurate(leader, radius, angle, 2*mem.Kp, 10*mem.Kd, method)
             local dist0 = ai.dist(goal0)
@@ -317,19 +330,17 @@ function follow_fleet ()
                   ai.accel()
                end
             else  -- No need to approach anymore
-               mem.app = 0
+               mem._flw = 0
             end
          end
-
       else
-         ai.face(goal)
          if dist > 300 then   -- Must approach
-            mem.app = 1
-         else   -- Face forward
-            goal = plt:pos() + leader:vel()
-            ai.face(goal)
+            mem._flw = 1
+            return
          end
+         ai.face( leader:dir() )
       end
+      --]]
    end
 end
 
