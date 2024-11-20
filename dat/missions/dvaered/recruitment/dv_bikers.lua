@@ -87,7 +87,7 @@ function accept()
       sol(fmt.f(_([["Hello, citizen. You lack reputation with House Dvareed for us to entrust you with work."
 
 You need at least {needed} standing with House Dvaered to do this mission (you have {amount} standing).]]),
-         {needed=20, amount=std}))
+         {needed=20, amount=fmt.number(std)}))
       vn.done()
    end
 
