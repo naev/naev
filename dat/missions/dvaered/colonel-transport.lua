@@ -31,7 +31,7 @@ local source_system = nil
 
 local npc_name = _("Dvaered Colonel")
 local npc_portrait = nil
-local npc_image = ni
+local npc_image = nil
 
 function create()
    local spbs = lmisn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
