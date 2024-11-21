@@ -22,7 +22,7 @@
 #include "nlua_pilotoutfit.h"
 #include "pilot.h"
 #include "player.h"
-#include "player_autonav.h"
+// #include "player_autonav.h"
 #include "sound.h"
 #include "spfx.h"
 #include "weapon.h"
@@ -1245,8 +1245,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
    w->timer += rate_mod * outfit_delay( w->outfit );
 
    /* Reset autonav if is player. */
-   if ( pilot_isPlayer( p ) )
-      player_autonavReset( 1. );
+   // if ( pilot_isPlayer( p ) )
+   //    player_autonavReset( 1. );
 
    return 1;
 }
