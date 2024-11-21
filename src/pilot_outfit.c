@@ -1485,8 +1485,10 @@ void pilot_outfitLInitAll( Pilot *pilot )
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
       pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
    /* Recalculate if anything changed. */
-   if ( pilotoutfit_modified )
+   if ( pilotoutfit_modified ) {
       pilot_calcStats( pilot );
+      pilot_weapSetUpdateOutfitState( pilot );
+   }
 }
 
 /**

@@ -241,6 +241,8 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
             if ( ( n > 0 ) &&
                  !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
                breakstealth = 1;
+            else
+               pos->flags &= ~( PILOTOUTFIT_ISON | PILOTOUTFIT_DYNAMIC_FLAGS );
             non += n;
          }
       } else {
@@ -1508,7 +1510,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o, int natural )
       if ( ret ) {
          if ( outfit_isWeapon( o->outfit ) )
             o->state = PILOT_OUTFIT_OFF;
-         o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
+         o->flags &= ~( PILOTOUTFIT_DYNAMIC_FLAGS | PILOTOUTFIT_ISON );
       }
       return ret;
    } else {
