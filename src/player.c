@@ -4790,6 +4790,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       } while ( xml_nextNode( cur ) );
    } while ( xml_nextNode( node ) );
 
+   /* If we set the flag during creation, it changes the ID and behaviour, so
+    * we set it after creation. It is necessary to set or the auto weapons uses
+    * the non-player variant for the player ships. */
+   pilot_setFlag( ship, PILOT_PLAYER );
+
    /* Set up autoweap if necessary. */
    ship->autoweap = autoweap;
    if ( autoweap )
