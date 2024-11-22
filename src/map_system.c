@@ -467,10 +467,10 @@ static void map_system_render( double bx, double by, double w, double h,
          double      itf = sys->interference;
          const char *sint;
          char        col;
-         if ( itf > 700. ) {
+         if ( itf > 70. ) {
             col  = 'r';
             sint = p_( "interference", "Dense" );
-         } else if ( itf > 300. ) {
+         } else if ( itf > 30. ) {
             col  = 'o';
             sint = p_( "interference", "Medium" );
          } else {
