@@ -3,6 +3,7 @@
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
    * Shooting weapons no longer resets autonav speed up
+   * Fixed plural form of 0 items in many cases
    * Made pilots in formation less prone to spinning
    * Ships significantly past the mass limit are no longer space worthy
    * Fixed automatic weapon sets behaving oddly with multiple ships
