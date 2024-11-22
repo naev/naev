@@ -131,7 +131,7 @@ Many of the new features come with small tutorials in form of missions. I will n
       1. Scanning (scan key)
    --]]
    if player.chapter()~="0" then
-      sai(_([["You will now be able to capture ships that you disable for a price. However, you will need enough free fleet capacity to add the ship to your fleet when you capture it. Good thing that the fleet capacity limits have been significantly increase!"]]))
+      sai(_([["You will now be able to capture ships that you disable for a price. However, you will need enough free fleet capacity to add the ship to your fleet when you capture it. Good thing that the fleet capacity limits have been significantly increased!"]]))
    end
    sai(fmt.f(_([["The Holo-Archives has also been added as a repository for information on mechanics, ships, outfits, and lore! Not only does it explain in detail many mechanics that you may have missed, but it also helps you find all the ships and outfits you've met in your travels. If that was not enough, there are also in-depth sections of lore explaining things about the universe that grow as you unlock them. You can access the Holo-Archives from the information menu you open with {infokey}."]]),
       {infokey=tut.getKey("info")}))
