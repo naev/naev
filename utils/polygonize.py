@@ -752,8 +752,8 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
     inherits = root.get('inherits')
     tag = root.find( "gfx" )
     basetag = root.find( "base_type" )
-    basetype = "Llama"
-    #basetype = basetag.get("path")
+    #basetype = "Llama"
+    basetype = basetag.get("path")
     if basetype == None:
         basetype = basetag.text
     if tag != None:
