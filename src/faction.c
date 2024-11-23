@@ -1059,6 +1059,12 @@ void faction_setReputation( int f, double value )
    }
    faction = &faction_stack[f];
 
+   /* In case of a dynamic faction, we just overwrite. */
+   if ( faction_isFlag( faction, FACTION_DYNAMIC ) ) {
+      faction->player = value;
+      return;
+   }
+
    /* Make sure it's not static. */
    if ( faction_isFlag( faction, FACTION_STATIC ) )
       return;
