@@ -13,8 +13,7 @@ local pixelcode = lf.read( "bkg/shaders/blackhole.frag" )
 local blackhole, shader, time, bx, by, sf, move
 local bgstars
 function background ()
-   local nconf = naev.conf()
-   sf = math.max( 1.0, nconf.nebu_scale * 0.5 )
+   sf = math.max( 1.0, bgshaders.scale_factor_default() * 0.5 )
 
    local sysname = system.cur():nameRaw()
    prng:setSeed( sysname )

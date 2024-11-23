@@ -15,7 +15,7 @@ local shader, scircuit
 function background ()
    -- Shader isn't too expensive, but we try to respect nebu_scale to an
    -- extent.
-   local sf = math.max( 1, naev.conf().nebu_scale / 2 )
+   local sf = math.max( 1, bgshaders.scale_factor_default() / 2 )
 
    -- Initialize the shader
    shader = love_shaders.circuit{ strength=sf }
