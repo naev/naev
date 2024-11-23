@@ -148,10 +148,11 @@ end
 local npc_nel
 function land ()
    local spb = spob.cur()
+   if spb:tags().restricted then return end
    local f = spb:faction()
-   if spb:tags().restricted or not f or pir.factionIsPirate(f) then
-      return
-   end
+   if not f then return end
+   local ft = f:tags()
+   if not ft.generic or pir.factionIsPirate(f) then return end
 
    if mem.state > 0 then return end
 
