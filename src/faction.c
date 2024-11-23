@@ -1848,7 +1848,7 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
 
 #if DEBUGGING
    if ( srep->value <= 0. ) {
-      WARN( "Trying to apply local faction threshol from system with no "
+      WARN( "Trying to apply local faction threshold from system with no "
             "presence." );
       return;
    }
