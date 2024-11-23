@@ -583,7 +583,7 @@ def polygonFromPoints( points, minlen, maxlen ):
             stop = 1
 
             pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta )
-            if len(ppx[1]) <= 3:
+            if len(pplg[1]) <= 3:
                 stop = 0
                 print( f"Too few points for view (only {len(ppx)}, trying again ", file=sys.stderr)
                 pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta+math.pi/2 )
