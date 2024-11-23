@@ -15,10 +15,11 @@
    * Fixed rare crash when setting hook on non-existent pilot
    * Fixed map thresholds for interference
    * Fixed some reputation values not being correctly rounded
+   * Fixed OSD not advancing in a certain mission
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
-   * Fixed OSD not advancing in a certain mission
+   * bounty: fixed OSD getting reset after killing/capturing target
    * Minor typo fixes
 
 * 0.12.0-beta.1

@@ -113,7 +113,7 @@ end
 
 local function update_osd ()
    local b = mem._bounty
-   if b.deadline then
+   if b.deadline and misn.osdGetActive()==1 then
       misn.osdCreate( b.osd_title, {
          fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.get())} ),
          fmt.f( b.osd_objective, {plt=b.targetname} ),
@@ -148,7 +148,7 @@ end
 
 function _bounty_date ()
    local b = mem._bounty
-   if system.cur() ~= b.system then
+   if system.cur() ~= b.system and not b.job_done then
       if time.get() > mem.deadline then
          return lmisn.fail( fmt.f(_("{plt} got away."), {plt=b.targetname} ))
       end
@@ -200,6 +200,7 @@ end
 
 function _bounty_land ()
    local b = mem._bounty
+   if not b.job_done then return end
 
    local okspob = false
    -- Matching faction is always OK
@@ -209,22 +210,21 @@ function _bounty_land ()
    elseif b.payingfaction:static() and not b.payingfaction:areEnemies(spob.cur():faction()) then
       okspob = true
    end
+   if not okspob then return end
 
-   if b.job_done and okspob then
-      local pay_text
-      if b.target_killed then
-         pay_text = b.msg_killed[ rnd.rnd( 1, #b.msg_killed ) ]
-      else
-         pay_text = b.msg_captured[ rnd.rnd( 1, #b.msg_captured ) ]
-      end
-      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=b.targetname, credits=fmt.credits(b.reward)} ) )
-      player.pay( b.reward )
-      if b.reputation then
-         b.payingfaction:hit( b.reputation )
-         pir.reputationNormalMission( b.reputation )
-      end
-      misn.finish( true )
+   local pay_text
+   if b.target_killed then
+      pay_text = b.msg_killed[ rnd.rnd( 1, #b.msg_killed ) ]
+   else
+      pay_text = b.msg_captured[ rnd.rnd( 1, #b.msg_captured ) ]
    end
+   vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=b.targetname, credits=fmt.credits(b.reward)} ) )
+   player.pay( b.reward )
+   if b.reputation then
+      b.payingfaction:hit( b.reputation )
+      pir.reputationNormalMission( b.reputation )
+   end
+   misn.finish( true )
 end
 
 function _bounty_disable ()
