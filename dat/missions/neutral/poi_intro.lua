@@ -55,7 +55,7 @@ function create ()
       local goodneighbour = false
       for k,s in ipairs(sys:adjacentSystems()) do
          local f = s:faction()
-         if not f or not f:faction():tags().generic then
+         if not f or not f:tags().generic then
             goodneighbour = true
             break
          end
