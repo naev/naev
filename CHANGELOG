@@ -16,6 +16,7 @@
    * Fixed map thresholds for interference
    * Fixed some reputation values not being correctly rounded
    * Fixed OSD not advancing in a certain mission
+   * sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong

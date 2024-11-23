@@ -50,6 +50,20 @@ function create ()
             return false
          end
       end
+
+      -- For Nelly, we don't want it to be too uninhabited
+      local goodneighbour = false
+      for k,s in ipairs(sys:adjacentSystems()) do
+         local f = s:faction()
+         if not f or not f:faction():tags().generic then
+            goodneighbour = true
+            break
+         end
+      end
+      if not goodneighbour then
+         return false
+      end
+
       return true
    end )
 
