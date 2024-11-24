@@ -913,7 +913,13 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 
    /* Beam weapons */
    if ( outfit_isBeam( o ) ) {
-      if ( dist <= o->u.bem.range )
+      double range_mod;
+      if ( o->type == OUTFIT_TYPE_BEAM )
+         range_mod = parent->stats.fwd_range * parent->stats.weapon_range;
+      else
+         range_mod = parent->stats.tur_range * parent->stats.weapon_range;
+
+      if ( dist <= o->u.bem.range * range_mod )
          return INFINITY;
       return -1.; /* Impossible. */
    }
