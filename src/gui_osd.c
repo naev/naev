@@ -121,7 +121,7 @@ static void osd_sort( void )
  *    @return ID of newly created OSD.
  */
 unsigned int osd_create( const char *title, int nitems, const char **items,
-                         int priority )
+                         int priority, int hidden )
 {
    int    id;
    OSD_t *osd;
@@ -140,6 +140,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items,
    osd->msg      = array_create_size( char *, nitems );
    osd->items    = array_create_size( char **, nitems );
    osd->titlew   = array_create( char   *);
+   osd->hide     = hidden;
    for ( int i = 0; i < nitems; i++ ) {
       array_push_back( &osd->msg, strdup( items[i] ) );
       array_push_back( &osd->items, array_create( char * ) );

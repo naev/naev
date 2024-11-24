@@ -515,6 +515,20 @@ const char **mission_loadFailed( void )
 }
 
 /**
+ * @brief Sets the hide state of the mission OSD.
+ */
+void misn_osdSetHide( Mission *misn, int hide )
+{
+   misn->osd_hide = hide;
+   osd_setHide( misn->osd, hide );
+}
+
+int misn_osdGetHide( const Mission *misn )
+{
+   return misn->osd_hide;
+}
+
+/**
  * @brief Loads a mission marker from xml.
  */
 static int mission_markerLoad( Mission *misn, xmlNodePtr node )
@@ -1383,7 +1397,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_attr( writer, "title", "%s", osd_getTitle( misn->osd ) );
          xmlw_attr( writer, "nitems", "%d", array_size( items ) );
          xmlw_attr( writer, "active", "%d", osd_getActive( misn->osd ) );
-         xmlw_attr( writer, "hidden", "%d", osd_getHide( misn->osd ) );
+         xmlw_attr( writer, "hidden", "%d", misn->osd_hide );
          priority = osd_getPriority( misn->osd );
          if ( priority != misn->data->avail.priority )
             xmlw_attr( writer, "priority", "%d", osd_getPriority( misn->osd ) );
@@ -1613,7 +1627,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if ( xml_isNode( cur, "osd" ) ) {
-               int        hidden, priority;
+               int        priority;
                xmlNodePtr nest;
                int        i = 0;
                xmlr_attr_int_def( cur, "nitems", nitems, -1 );
@@ -1639,7 +1653,8 @@ static int missions_parseActive( xmlNodePtr parent )
                                   data->avail.priority );
 
                /* Create the OSD. */
-               misn->osd = osd_create( title, nitems, items, priority );
+               misn->osd =
+                  osd_create( title, nitems, items, priority, misn->osd_hide );
                free( items );
                free( title );
 
@@ -1648,8 +1663,8 @@ static int missions_parseActive( xmlNodePtr parent )
                if ( active != -1 )
                   osd_active( misn->osd, active );
 
-               xmlr_attr_int_def( cur, "hidden", hidden, 0 );
-               osd_setHide( misn->osd, hidden );
+               xmlr_attr_int_def( cur, "hidden", misn->osd_hide, 0 );
+               osd_setHide( misn->osd, misn->osd_hide );
             }
 
             /* Claims. */

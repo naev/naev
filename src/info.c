@@ -1468,7 +1468,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
       window_checkboxSet( wid, "chkHide", 0 );
       window_checkboxSet( wid, "chkPrefer", 0 );
    } else {
-      window_checkboxSet( wid, "chkHide", osd_getHide( misn->osd ) );
+      window_checkboxSet( wid, "chkHide", misn_osdGetHide( misn ) );
       window_checkboxSet( wid, "chkPrefer",
                           osd_getPriority( misn->osd ) !=
                              misn->data->avail.priority );
@@ -1489,7 +1489,7 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
 
    if ( misn->osd == 0 )
       return;
-   osd_setHide( misn->osd, window_checkboxState( wid, str ) );
+   misn_osdSetHide( misn, window_checkboxState( wid, str ) );
 }
 static void mission_menu_chk_priority( unsigned int wid, const char *str )
 {
