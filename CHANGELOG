@@ -2,14 +2,26 @@
    * Fallback for missing naevpedia ship entries
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
+   * Shooting weapons no longer resets autonav speed up
+   * Fixed plural form of 0 items in many cases
    * Made pilots in formation less prone to spinning
    * Ships significantly past the mass limit are no longer space worthy
+   * Lowered the price of a certain map
+   * Lowered presence of a certain faction
+   * Fixed text overlap in the holo-archives for certain languages
+   * Fixed reputation changes not working on dynamic factions
+   * Fixed text overlap if ship name is too long
+   * Fixed automatic weapon sets behaving oddly with multiple ships
    * Fixed rare crash when setting hook on non-existent pilot
    * Fixed map thresholds for interference
    * Fixed some reputation values not being correctly rounded
+   * Fixed OSD not advancing in a certain mission
+   * Fixed Sirius Divinity collisions
+   * sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
+   * bounty: fixed OSD getting reset after killing/capturing target
    * Minor typo fixes
 
 * 0.12.0-beta.1

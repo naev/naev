@@ -50,6 +50,20 @@ function create ()
             return false
          end
       end
+
+      -- For Nelly, we don't want it to be too uninhabited
+      local goodneighbour = false
+      for k,s in ipairs(sys:adjacentSystems()) do
+         local f = s:faction()
+         if not f or not f:tags().generic then
+            goodneighbour = true
+            break
+         end
+      end
+      if not goodneighbour then
+         return false
+      end
+
       return true
    end )
 
@@ -148,10 +162,11 @@ end
 local npc_nel
 function land ()
    local spb = spob.cur()
+   if spb:tags().restricted then return end
    local f = spb:faction()
-   if spb:tags().restricted or not f or pir.factionIsPirate(f) then
-      return
-   end
+   if not f then return end
+   local ft = f:tags()
+   if not ft.generic or pir.factionIsPirate(f) then return end
 
    if mem.state > 0 then return end
 

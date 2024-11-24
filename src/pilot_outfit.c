@@ -1306,9 +1306,9 @@ static void pilot_outfitLRun( Pilot *p,
    }
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
+      /* TODO pilot_calcStats can be called twice here. */
+      pilot_weapSetUpdateOutfitState( p );
       pilot_calcStats( p );
-      pilot_weapSetUpdateOutfitState(
-         p ); /* TODO pilot_calcStats can be called twice here. */
    }
 }
 static void outfitLRunWarning( const Pilot *p, const Outfit *o,
@@ -1485,8 +1485,11 @@ void pilot_outfitLInitAll( Pilot *pilot )
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
       pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
    /* Recalculate if anything changed. */
-   if ( pilotoutfit_modified )
+   if ( pilotoutfit_modified ) {
+      /* TODO calcStats computed twice maybe. */
+      pilot_weapSetUpdateOutfitState( pilot );
       pilot_calcStats( pilot );
+   }
 }
 
 /**

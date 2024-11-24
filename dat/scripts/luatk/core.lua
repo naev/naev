@@ -1194,6 +1194,9 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    wgt:cleanpos()
 
    -- Chop text if necessary
+   if wgt.scrolls then
+      w = w - 12
+   end
    wgt.itemsfit = {}
    for k,v in ipairs( wgt.items ) do
       local _maxw, wrapped = font:getWrap( v, w-4 )

@@ -423,11 +423,7 @@ static void opt_gameplay( unsigned int wid )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSMSG", NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
-   y -= 30;
-   s = _( "Max Time Compression Factor" );
-   l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtTMax", NULL, NULL, s );
-   window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
+   // y -= 30;
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );

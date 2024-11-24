@@ -3484,6 +3484,9 @@ void pilot_reset( Pilot *pilot )
    for ( int i = PILOT_NOCLEAR + 1; i < PILOT_FLAGS_MAX; i++ )
       pilot->flags[i] = 0;
 
+   /* Reset weapon sets. */
+   pilot_weaponAuto( pilot );
+
    /* Initialize heat. */
    pilot_heatReset( pilot );
 

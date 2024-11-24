@@ -12,7 +12,7 @@ function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
    local nc = naev.conf()
-   sf = nc.nebu_scale
+   sf = bgshaders.scale_factor_default()
    nonuninformity = nc.nebu_nonuniformity
 
    -- Initialize bg shader

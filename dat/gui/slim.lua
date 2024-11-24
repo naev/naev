@@ -439,7 +439,7 @@ function update_nav()
          navstring = _("Unknown")
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( jumps )
+         navstring = navstring.." "..fmt.jumps(jumps)
       end
    else
       navstring = _("none")

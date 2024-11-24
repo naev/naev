@@ -444,17 +444,22 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     return (xlist, ylist, factor)
 
 # Computes a single polygon from an image
-def singlePolygonFromImg( px, py, minlen, maxlen, ppi ):
+def singlePolygonFromImg( px, py, minlen, maxlen, ppi, theta=0. ):
     npt = len(px)
     minlen2 = minlen**2
     maxlen2 = maxlen**2
 
-    star    = np.argmax(px) # Choose the starting point
+    dvec = np.zeros( npt )
+    dpos = np.array([math.cos(theta),math.sin(theta)])
+    for i in range(npt):
+        dvec[i] = np.dot( dpos, (px[i], py[i] ) )
+
+    star    = np.argmax(dvec) # Choose the starting point
     polygon = [star] # Initialize the polygon
 
     # Now we do a loop
     pcur     = star
-    pdir     = [1e-12,1]     # Previous direction
+    pdir     = [1e-8,1]     # Previous direction
     d02      = 0             # This value will store the distance between first and second one
 
     for i in range(1000): # Limit number of iterations
@@ -560,8 +565,8 @@ def polygonFromPoints( points, minlen, maxlen ):
     polyall = []
 
     # List of values for minlen and maxlen. Both list should have same length
-    minlist = [ 5,  4, 3, 2, 1 ]
-    maxlist = [ 10, 8, 6, 4, 1.5 ]
+    minlist = [ 6, 5,  4, 3, 2, 1 ]
+    maxlist = [ 12, 10, 8, 6, 4, 1.5 ]
     assert( len(minlist)==len(maxlist) )
 
     # Adapt minlist and maxlist in order to match presripted values
@@ -572,13 +577,21 @@ def polygonFromPoints( points, minlen, maxlen ):
         px = pxa[ppi]
         py = pya[ppi]
 
+        theta = ppi/npict * 2*math.pi + math.pi/2
+
         for j in range(len(minlist)):
             stop = 1
 
-            pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi )
+            pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta )
+            if len(pplg[1]) <= 3:
+                stop = 0
+                print( f"Too few points for view (only {len(ppx)}, trying again ", file=sys.stderr)
+                pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta+math.pi/2 )
+
             polygon = pplg[0]
             ppx     = pplg[1]
             ppy     = pplg[2]
+            #print( polygon, ppx, ppy )
 
             # Some checks
             if len(polygon)==1001:
@@ -752,8 +765,8 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
     inherits = root.get('inherits')
     tag = root.find( "gfx" )
     basetag = root.find( "base_type" )
-    basetype = "Llama"
-    #basetype = basetag.get("path")
+    #basetype = "Llama"
+    basetype = basetag.get("path")
     if basetype == None:
         basetype = basetag.text
     if tag != None:

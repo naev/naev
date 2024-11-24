@@ -1981,6 +1981,12 @@ function vn.clear()
    -- Have to create new tables. Reset canvases in case the game was resized.
    vn._characters = {}
    vn._states = {}
+
+   -- Something bad happened and some other VN errored out
+   if vn._started then
+      warn(_("vn: clear called but VN seems to be running. Resetting started state."))
+      vn._started = false
+   end
 end
 
 --[[--

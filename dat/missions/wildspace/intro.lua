@@ -151,6 +151,7 @@ function land ()
       player.takeoff()
       misn.markerRm()
       misn.markerAdd( main )
+      misn.osdActive(2)
 
    elseif mem.state>=1 and spob.cur() == main then
       vn.clear()

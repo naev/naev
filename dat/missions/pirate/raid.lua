@@ -324,7 +324,7 @@ end
 
 function convoy_boarded ()
    if player.fleetCargoOwned( mem.misn_cargo ) > 0 then
-      misn.osdGetActive(3)
+      misn.osdActive(3)
    end
 end
 

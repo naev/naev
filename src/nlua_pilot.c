@@ -2701,7 +2701,7 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
    if ( activate ) {
       int ret = pilot_outfitOn( p, po );
       if ( ret )
-         po->flags |= PILOTOUTFIT_ISON_LUA;
+         po->flags |= PILOTOUTFIT_ISON_TOGGLE;
       return ret;
    } else
       return pilot_outfitOff( p, po, 1 );
@@ -2740,8 +2740,10 @@ static int pilotL_outfitToggle( lua_State *L )
    /* See if we have to do updates. */
    if ( n > 0 && pilot_isFlag( p, PILOT_STEALTH ) )
       pilot_destealth( p ); /* pilot_destealth should run calcStats already. */
-   else if ( n > 0 || pilotoutfit_modified )
+   else if ( n > 0 || pilotoutfit_modified ) {
+      pilot_weapSetUpdateOutfitState( p );
       pilot_calcStats( p );
+   }
 
    lua_pushboolean( L, n );
    return 1;

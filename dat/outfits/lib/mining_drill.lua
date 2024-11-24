@@ -23,7 +23,7 @@ end
 function drill.ontoggle( p, _po, on )
    if not on then
       mem.lastmsg = nil -- clear helper.msgnospam timer
-      return false
+      return true -- Can always turn off
    end
 
    -- See if there's an asteroid targeted

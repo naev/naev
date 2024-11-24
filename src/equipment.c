@@ -1994,13 +1994,13 @@ void equipment_updateShips( unsigned int wid, const char *str )
    (void)str;
    char          buf[STRMAX], buf_price[ECON_CRED_STRLEN];
    char          errorReport[STRMAX_SHORT], tbuf[64];
-   const char   *shipname, *acquired;
+   const char   *shipname, *acquired, *modelname;
    char          scargo[NUM2STRLEN];
    Pilot        *ship;
    PlayerShip_t *ps, *prevship;
    char         *nt;
    int           onboard, cargo, jumps, favourite, deployed, x, h, spaceworthy;
-   int           ww, wh, sw, sh, bw, bh, hacquired, hname;
+   int           ww, wh, sw, sh, bw, bh, hacquired, hname, hmodelname;
    int           wgtw, wgth;
    size_t        l = 0;
 
@@ -2048,7 +2048,9 @@ void equipment_updateShips( unsigned int wid, const char *str )
    window_dimWidget( wid, "txtAcquired", &wgtw, &wgth );
    hacquired = gl_printLinesRaw( &gl_defFont, wgtw, acquired );
    window_dimWidget( wid, "txtDDesc", &wgtw, &wgth );
-   hname = gl_printLinesRaw( &gl_defFont, wgtw, ship->name );
+   hname      = gl_printLinesRaw( &gl_defFont, wgtw, ship->name );
+   modelname  = _( ship->ship->name );
+   hmodelname = gl_printLinesRaw( &gl_defFont, wgtw, modelname );
 
    /* Helper strings. */
    num2str( scargo, pilot_cargoUsed( ship ), 0 );
@@ -2061,6 +2063,8 @@ void equipment_updateShips( unsigned int wid, const char *str )
    for ( int i = 0; i < hname - 1; i++ )
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", _( "Model:" ) );
+   for ( int i = 0; i < hmodelname - 1; i++ )
+      l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", _( "Class:" ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", _( "Acquired Date:" ) );
    for ( int i = 0; i < hacquired + 1; i++ )
@@ -2112,7 +2116,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
    /* Generic. */
    l = 0;
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", ship->name );
-   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", _( ship->ship->name ) );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", modelname );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    _( ship_classDisplay( ship->ship ) ) );
    if ( ps->acquired_date == 0 )

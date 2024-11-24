@@ -12,7 +12,7 @@ local lanes = require "ai.core.misc.lanes"
 
 local bounty = {}
 
--- luacheck: globals board_fail bounty_setup get_faction misn_title msg pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
+-- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
 
 local msg_subdue_def = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),
@@ -63,11 +63,6 @@ mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys}
 #nLast seen:#0 {sys} system]])
 
 -- Messages
-msg = {
-   _("{plt} got away."),
-   _("Another pilot eliminated {plt}."),
-   _("You have left the {sys} system."),
-}
 local msg_gotaway_def = _("{plt} got away.")
 local msg_eliminated_other_def = _("Another pilot eliminated {plt}.")
 local msg_leftsystem_def = _("You have left the {sys} system.")
@@ -118,7 +113,7 @@ end
 
 local function update_osd ()
    local b = mem._bounty
-   if b.deadline then
+   if b.deadline and misn.osdGetActive()==1 then
       misn.osdCreate( b.osd_title, {
          fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.get())} ),
          fmt.f( b.osd_objective, {plt=b.targetname} ),
@@ -153,7 +148,7 @@ end
 
 function _bounty_date ()
    local b = mem._bounty
-   if system.cur() ~= b.system then
+   if system.cur() ~= b.system and not b.job_done then
       if time.get() > mem.deadline then
          return lmisn.fail( fmt.f(_("{plt} got away."), {plt=b.targetname} ))
       end
@@ -195,7 +190,7 @@ function _bounty_jumpout ()
    local b = mem._bounty
    b.last_sys = system.cur()
    if not b.job_done and b.last_sys == b.system then
-      lmisn.fail( fmt.f( msg[3], {sys=b.last_sys} ) )
+      lmisn.fail( fmt.f( b.msg_leftsystem, {sys=b.last_sys} ) )
    end
 end
 
@@ -205,6 +200,7 @@ end
 
 function _bounty_land ()
    local b = mem._bounty
+   if not b.job_done then return end
 
    local okspob = false
    -- Matching faction is always OK
@@ -214,22 +210,21 @@ function _bounty_land ()
    elseif b.payingfaction:static() and not b.payingfaction:areEnemies(spob.cur():faction()) then
       okspob = true
    end
+   if not okspob then return end
 
-   if b.job_done and okspob then
-      local pay_text
-      if b.target_killed then
-         pay_text = b.msg_killed[ rnd.rnd( 1, #b.msg_killed ) ]
-      else
-         pay_text = b.msg_captured[ rnd.rnd( 1, #b.msg_captured ) ]
-      end
-      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=b.targetname, credits=fmt.credits(b.reward)} ) )
-      player.pay( b.reward )
-      if b.reputation then
-         b.payingfaction:hit( b.reputation )
-         pir.reputationNormalMission( b.reputation )
-      end
-      misn.finish( true )
+   local pay_text
+   if b.target_killed then
+      pay_text = b.msg_killed[ rnd.rnd( 1, #b.msg_killed ) ]
+   else
+      pay_text = b.msg_captured[ rnd.rnd( 1, #b.msg_captured ) ]
    end
+   vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=b.targetname, credits=fmt.credits(b.reward)} ) )
+   player.pay( b.reward )
+   if b.reputation then
+      b.payingfaction:hit( b.reputation )
+      pir.reputationNormalMission( b.reputation )
+   end
+   misn.finish( true )
 end
 
 function _bounty_disable ()
@@ -244,8 +239,8 @@ function succeed ()
    if b.marker ~= nil then
       misn.markerRm( b.marker )
    end
-   hook.rm( b.pir_jump_hook )
-   hook.rm( b.pir_land_hook )
+   hook.rm( b.jump_hook )
+   hook.rm( b.land_hook )
 end
 
 function _bounty_board ()
@@ -317,18 +312,18 @@ function _bounty_death( _p, attacker )
          hook.pilot( top_hunter, "land", "hunter_leave" )
          hook.jumpout( "hunter_leave" )
          hook.land( "hunter_leave" )
-         player.msg( "#r" .. fmt.f( msg[2], {plt=b.targetname} ) .. "#0" )
+         player.msg( "#r" .. fmt.f( b.msg_eliminated_other, {plt=b.targetname} ) .. "#0" )
          hook.timer( 3.0, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
-         lmisn.fail( fmt.f( msg[2], {plt=b.targetname} ) )
+         lmisn.fail( fmt.f( b.msg_eliminated_other, {plt=b.targetname} ) )
       end
    end
 end
 
 function _bounty_jump ()
    local b = mem._bounty
-   lmisn.fail( fmt.f( msg[1], {plt=b.targetname} ) )
+   lmisn.fail( fmt.f( b.msg_gotaway, {plt=b.targetname} ) )
 end
 
 function timer_hail( arg )
@@ -384,8 +379,8 @@ function spawn_bounty( params )
    hook.pilot( target_ship, "board", "_bounty_board" )
    hook.pilot( target_ship, "attacked", "_bounty_attacked" )
    b.death_hook = hook.pilot( target_ship, "death", "_bounty_death" )
-   b.pir_jump_hook = hook.pilot( target_ship, "jump", "_bounty_jump" )
-   b.pir_land_hook = hook.pilot( target_ship, "land", "_bounty_jump" )
+   b.jump_hook = hook.pilot( target_ship, "jump", "_bounty_jump" )
+   b.land_hook = hook.pilot( target_ship, "land", "_bounty_jump" )
 
    return target_ship
 end
