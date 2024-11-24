@@ -460,7 +460,7 @@ def singlePolygonFromImg( px, py, minlen, maxlen, ppi, theta=0. ):
 
     # Now we do a loop
     pcur     = star
-    pdir     = [1e-8,1]     # Previous direction
+    pdir     = [math.cos(theta-1e-8),math.sin(theta-1e-8)] # Previous direction
     d02      = 0             # This value will store the distance between first and second one
 
     for i in range(1000): # Limit number of iterations
