@@ -830,9 +830,9 @@ static int misn_osdCreate( lua_State *L )
    }
 
    /* Create OSD. */
-   cur_mission->osd =
-      osd_create( title, nitems, (const char **)items,
-                  cur_mission->data->avail.priority, cur_mission->osd_hide );
+   cur_mission->osd     = osd_create( title, nitems, (const char **)items,
+                                      misn_osdGetPriority( cur_mission ),
+                                      misn_osdGetHide( cur_mission ) );
    cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */

@@ -109,9 +109,10 @@ typedef struct Mission_ {
    MissionMarker *markers; /**< Markers array. */
 
    /* OSD. */
-   unsigned int osd;      /**< On-Screen Display ID. */
-   int          osd_set;  /**< OSD was set explicitly. */
-   int          osd_hide; /**< OSD is being hidden. */
+   unsigned int osd;          /**< On-Screen Display ID. */
+   int          osd_set;      /**< OSD was set explicitly. */
+   int          osd_hide;     /**< OSD is being hidden. */
+   int          osd_priority; /**< OSD priority. */
 
    /* Claims. */
    Claim_t *claims; /**< System claims. */
@@ -156,6 +157,8 @@ void              mission_toLuaTable( lua_State *L, const MissionData *m );
 const char      **mission_loadFailed( void );
 void              misn_osdSetHide( Mission *misn, int hide );
 int               misn_osdGetHide( const Mission *misn );
+void              misn_osdSetPriority( Mission *misn, int priority );
+int               misn_osdGetPriority( const Mission *misn );
 
 /*
  * cargo stuff

@@ -1464,15 +1464,10 @@ static void mission_menu_update( unsigned int wid, const char *str )
    window_enableButton( wid, "btnAbortMission" );
    window_enableCheckbox( wid, "chkHide" );
    window_enableCheckbox( wid, "chkPrefer" );
-   if ( misn->osd == 0 ) {
-      window_checkboxSet( wid, "chkHide", 0 );
-      window_checkboxSet( wid, "chkPrefer", 0 );
-   } else {
-      window_checkboxSet( wid, "chkHide", misn_osdGetHide( misn ) );
-      window_checkboxSet( wid, "chkPrefer",
-                          osd_getPriority( misn->osd ) !=
-                             misn->data->avail.priority );
-   }
+   window_checkboxSet( wid, "chkHide", misn_osdGetHide( misn ) );
+   window_checkboxSet( wid, "chkPrefer",
+                       misn_osdGetPriority( misn ) !=
+                          misn->data->avail.priority );
 
    /* Select the system. */
    sys = mission_getSystemMarker( misn );
@@ -1501,8 +1496,8 @@ static void mission_menu_chk_priority( unsigned int wid, const char *str )
 
    if ( misn->osd == 0 )
       return;
-   osd_setPriority( misn->osd, misn->data->avail.priority -
-                                  100 * window_checkboxState( wid, str ) );
+   misn_osdSetPriority( misn, misn->data->avail.priority -
+                                 100 * window_checkboxState( wid, str ) );
 }
 /**
  * @brief Aborts a mission in the mission menu.

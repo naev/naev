@@ -160,7 +160,8 @@ static int mission_init( Mission *mission, const MissionData *misn, int genid,
 
    if ( id != NULL )
       *id = mission->id;
-   mission->data = misn;
+   mission->data         = misn;
+   mission->osd_priority = misn->avail.priority;
    if ( create ) {
       mission->title = strdup( _( misn->name ) );
       mission->desc  = strdup( _( "No description." ) );
@@ -526,6 +527,15 @@ void misn_osdSetHide( Mission *misn, int hide )
 int misn_osdGetHide( const Mission *misn )
 {
    return misn->osd_hide;
+}
+void misn_osdSetPriority( Mission *misn, int priority )
+{
+   misn->osd_priority = priority;
+   osd_setPriority( misn->osd, priority );
+}
+int misn_osdGetPriority( const Mission *misn )
+{
+   return misn->osd_priority;
 }
 
 /**
@@ -1388,7 +1398,6 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
       /* OSD. */
       if ( misn->osd > 0 ) {
-         int    priority;
          char **items = osd_getItems( misn->osd );
 
          xmlw_startElem( writer, "osd" );
@@ -1398,9 +1407,8 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_attr( writer, "nitems", "%d", array_size( items ) );
          xmlw_attr( writer, "active", "%d", osd_getActive( misn->osd ) );
          xmlw_attr( writer, "hidden", "%d", misn->osd_hide );
-         priority = osd_getPriority( misn->osd );
-         if ( priority != misn->data->avail.priority )
-            xmlw_attr( writer, "priority", "%d", osd_getPriority( misn->osd ) );
+         if ( misn->osd_priority != misn->data->avail.priority )
+            xmlw_attr( writer, "priority", "%d", misn->osd_priority );
 
          /* Save messages. */
          for ( int j = 0; j < array_size( items ); j++ )
@@ -1627,7 +1635,6 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if ( xml_isNode( cur, "osd" ) ) {
-               int        priority;
                xmlNodePtr nest;
                int        i = 0;
                xmlr_attr_int_def( cur, "nitems", nitems, -1 );
@@ -1649,12 +1656,12 @@ static int missions_parseActive( xmlNodePtr parent )
                } while ( xml_nextNode( nest ) );
 
                /* Get priority if set differently. */
-               xmlr_attr_int_def( cur, "priority", priority,
+               xmlr_attr_int_def( cur, "priority", misn->osd_priority,
                                   data->avail.priority );
 
                /* Create the OSD. */
-               misn->osd =
-                  osd_create( title, nitems, items, priority, misn->osd_hide );
+               misn->osd = osd_create( title, nitems, items, misn->osd_priority,
+                                       misn->osd_hide );
                free( items );
                free( title );
 
