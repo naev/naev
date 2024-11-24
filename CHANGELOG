@@ -22,7 +22,7 @@
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
    * bounty: fixed OSD getting reset after killing/capturing target
-   * Minor typo fixes
+   * Minor typo fixes and translation updates
 
 * 0.12.0-beta.1
    * Gameplay
