@@ -21,15 +21,13 @@
 local escort = require "escort"
 local fmt = require "format"
 local lmisn = require "lmisn"
-local neu = require "neutral"
+local neu = require "common.neutral"
 local vn = require "vn"
 local vni = require "vnimage"
 
 local reward = 750e3
 
 local npc_name = _("Dvaered Colonel")
-local npc_portrait = nil
-local npc_image = nil
 
 function create()
    local spbs = lmisn.getSpobAtDistance( nil, 2, 6, "Dvaered" )
@@ -37,7 +35,7 @@ function create()
    mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
    mem.dest_sys = mem.destspb:system()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
-   misn.setNPC(npc_name, npc_portrait, _("A Dvaered soldier, very professional-looking, is sitting with an excellant posture at the bar.") )
+   misn.setNPC(npc_name, mem.npc_portrait, _("A Dvaered soldier, very professional-looking, is sitting with an excellant posture at the bar.") )
 end
 
 local function factions()
@@ -53,10 +51,10 @@ function accept()
    local accepted = false
    vn.clear()
    vn.scene()
-   local m = vn.newCharacter( npc_name, {image=npc_image} )
+   local m = vn.newCharacter( npc_name, {image=mem.npc_image} )
    vn.transition()
-   m(fmt.f([[As you approach, the Dvaered soldier stands. "Oh, is it Captain {playername}?" they say. "Nice to see you around here. How's it going?"]]))
-      {playername=player.name()}
+   m(fmt.f(_([[As you approach, the Dvaered soldier stands. "Oh, is it Captain {playername}?" they say. "Nice to see you around here. How's it going?"]]),
+      {playername=player.name()}))
    vn.menu{
       {_([["Quite well, thank you!"]]), "well"},
       {_([["I guess it's going alright."]]), "fine"},
@@ -77,9 +75,9 @@ function accept()
    vn.jump("mission description")
 
    vn.label("mission description")
-   m(fmt.f([["Well, to the point. I need somebody who's not crazy to escort me and my Arsenal to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]))
-     {pnt=mem.destspb, sys=mem.dest_sys}
-   m(_([["One more thing: another warlord would be only to happy to blow any of the colonel rank such as myself up, so you may need to expect attacks. The ship will probably be called 'Asheron Anomaly', but it may be something else."]]))
+   m(fmt.f(_([["Well, to the point. I need somebody who's not crazy to escort me and my Arsenal to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]),
+     {pnt=mem.destspb, sys=mem.dest_sys}))
+   m(_([["One more thing: another warlord would be only too happy to blow any of the colonel rank such as myself up, so you may need to expect attacks. The ship will probably be called 'Asheron Anomaly', but it may be something else."]]))
    vn.menu{
       {_([["I'd be happy to do that!"]]), "sure"},
       {_([["What is your name?"]]), "what is your name"},
@@ -129,7 +127,7 @@ function accept()
    misn.setReward(reward)
    misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspb, sys=mem.dest_sys}))
    misn.osdCreate(_("Dvaered colonel escort"), {
-      fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.destspb, sys=mem.dest_sys},
+      fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system."), {pnt=mem.destspb, sys=mem.dest_sys}),
    })
    misn.markerAdd( mem.destspb )
    hook.land( "land" )
@@ -163,14 +161,16 @@ function land ()
    if spob.cur() == mem.destspb then
       vn.clear()
       vn.scene()
-      local m = vn.newCharacter( npc_name, {image=npc_image} )
+      local m = vn.newCharacter( npc_name, {image=mem.npc_image} )
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. The Dvaered seems to have slightly changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]), {pnt=mem.destspb, reward=fmt.credits(reward)}) )
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. The Dvaered seems to have slightly changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]),
+            {pnt=mem.destspb, reward=fmt.credits(reward)}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
-      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]), {pnt=mem.destspb} ) )
+      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]),
+            {pnt=mem.destspb} ) )
       misn.finish( true )
    end
 end
