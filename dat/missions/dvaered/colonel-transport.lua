@@ -27,8 +27,6 @@ local vni = require "vnimage"
 
 local reward = 750e3
 
-local source_system = nil
-
 local npc_name = _("Dvaered Colonel")
 local npc_portrait = nil
 local npc_image = nil
