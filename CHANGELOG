@@ -2,6 +2,7 @@
    * Fallback for missing naevpedia ship entries
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
+   * Show intrinsic outfits in the "Other" tab
    * Shooting weapons no longer resets autonav speed up
    * Fixed plural form of 0 items in many cases
    * Made pilots in formation less prone to spinning
