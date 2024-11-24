@@ -133,21 +133,25 @@ function accept()
    misn.osdCreate(_("Dvaered colonel escort"), {
       fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system.")), {pnt=mem.destspb, sys=mem.dest_sys},
    })
-   misn.markerAdd( mem.dest_planet )
+   misn.markerAdd( mem.destspb )
    hook.land( "land" )
    local colonel_ship = ship.get("Dvaered Arsenal")
    escort.init( colonel_ship, {
       func_pilot_create = function ( p )
         p:rename("Radver")
         local ffriendly = factions()
-        p:setFaction( ffriendly() )
+        p:setFaction( ffriendly )
    end } )
 
-   hook.enter( "ambush" )
+   hook.jumpin( "ambush" )
 end
 
+local source_system = system.cur()
 function ambush ()
-   if not naev.claimTest( system.cur(), true ) then return end
+   if not naev.claimTest( system.cur(), true ) then
+      source_system = system.cur()
+      return
+    end
 
    if mem.ambushed then return end
 
