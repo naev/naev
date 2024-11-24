@@ -31,7 +31,7 @@ end
 function chaos ()
    local plts = {}
    for k,p in ipairs(pilot.get( {flost, fnewlost} )) do
-      if not p:mothership() then
+      if not p:mothership() and not p:flags("carried") then
          table.insert( plts, p )
       end
    end
