@@ -1770,12 +1770,9 @@ int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
 
    /* Handle return boolean. */
    ret = lua_toboolean( naevL, -1 );
-   if ( ret )
-      po->flags &= ~PILOTOUTFIT_ISON_LUA; /* Clear if it was set via toggle. */
    lua_pop( naevL, 1 );
    pilot_outfitLunmem( env, oldmem );
-   return ret || pilotoutfit_modified; /* Even if the script says it didn't
-                                          change, it may have been modified. */
+   return ret;
 }
 
 /**

@@ -75,7 +75,7 @@ static int pilot_weapSetPressToggle( Pilot *p, PilotWeaponSet *ws )
 
       /* Flip state to ON/OFF. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
-         pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_LUA );
+         pos->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
       } else {
          pos->flags |= PILOTOUTFIT_ISON_TOGGLE;
          if ( ws->volley )
@@ -229,13 +229,10 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
 
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
-         /* If outfit is ISON_LUA, this gets clear so it just stays normal "on".
-          */
          /* Weapons are handled separately. */
          if ( outfit_isWeapon( o ) && ( o->lua_ontoggle == LUA_NOREF ) )
             continue;
 
-         pos->flags &= ~PILOTOUTFIT_ISON_LUA;
          if ( pos->state == PILOT_OUTFIT_OFF ) {
             int n = pilot_outfitOn( p, pos );
             if ( ( n > 0 ) &&
@@ -246,8 +243,6 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
             non += n;
          }
       } else {
-         if ( pos->flags & PILOTOUTFIT_ISON_LUA )
-            continue;
          if ( pos->state == PILOT_OUTFIT_ON )
             noff += pilot_outfitOff( p, pos, 1 );
       }

@@ -243,7 +243,7 @@ static int poL_state( lua_State *L )
          } else if ( strcmp( state, "on" ) == 0 ) {
             po->flags |=
                PILOTOUTFIT_ISON |
-               PILOTOUTFIT_ISON_LUA; /* Gets disabled if ontoggle is set. */
+               PILOTOUTFIT_ISON_TOGGLE; /* Gets disabled if ontoggle is set. */
          } else
             return NLUA_ERROR( L,
                                _( "'pilotoutfit.%s' only works with \"on\" and "
@@ -262,7 +262,6 @@ static int poL_state( lua_State *L )
          ~( PILOTOUTFIT_DYNAMIC_FLAGS | PILOTOUTFIT_ISON ); /* Clear toggles. */
    } else if ( strcmp( state, "warmup" ) == 0 ) {
       po->state = PILOT_OUTFIT_WARMUP;
-      po->flags &= ~PILOTOUTFIT_ISON_LUA;
    } else if ( strcmp( state, "on" ) == 0 ) {
       if ( po->state != PILOT_OUTFIT_ON )
          po->flags |= PILOTOUTFIT_ISON | PILOTOUTFIT_ISON_TOGGLE;
