@@ -699,6 +699,12 @@ static int playerL_autonavSetTarget( lua_State *L )
 {
    PLAYER_CHECK();
    const StarSystem *sys = luaL_validsystem( L, 1 );
+   if ( pilot_isFlag( player.p, PILOT_HYP_PREP ) ||
+        pilot_isFlag( player.p, PILOT_HYP_BEGIN ) ||
+        pilot_isFlag( player.p, PILOT_HYPERSPACE ) ) {
+      WARN( _( "Unable to set autonav target while jumping!" ) );
+      return 0;
+   }
    map_select( sys, lua_toboolean( L, 2 ) );
    return 0;
 }
