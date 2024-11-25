@@ -22,6 +22,7 @@
    * Fixed Sirius Divinity collisions
    * Fixed beam weapons in "in range" mode not respecting range bonuse
    * Fixed hiding mission OSDs and changing priority being reset on take off or jump
+   * Fixed asking your ship AI for advice
    * sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
