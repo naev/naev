@@ -9,6 +9,8 @@
    * Ships significantly past the mass limit are no longer space worthy
    * Lowered the price of a certain map
    * Lowered presence of a certain faction
+   * Prevent changing autonav target via Lua when jumping
+   * Disable opening the info menu while landing
    * Fixed text overlap in the holo-archives for certain languages
    * Fixed reputation changes not working on dynamic factions
    * Fixed text overlap if ship name is too long
@@ -24,6 +26,7 @@
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
+   * taiomi04: update OSD after boarding ship
    * bounty: fixed OSD getting reset after killing/capturing target
    * Minor typo fixes and translation updates
 
