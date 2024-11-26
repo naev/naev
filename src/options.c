@@ -165,7 +165,8 @@ void opt_menu( void )
       unsigned int wid = opt_windows[i];
       window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
                         _( "OK" ), opt_OK );
-      window_addText( opt_windows[i], 20, 20 + BUTTON_HEIGHT, w - 40, 30, 0,
+      window_addText( opt_windows[i], 20, 10,
+                      w - 20 - 3 * ( BUTTON_WIDTH + 20 ), BUTTON_HEIGHT + 10, 0,
                       "txtRestart", NULL, NULL, NULL );
    }
 
@@ -573,9 +574,9 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h, int *lw,
 
    /* Get list dimensions. */
    if ( lw != NULL )
-      *lw = 350; //*w - BUTTON_WIDTH - 60;
+      *lw = *w - 40 - 2 * ( BUTTON_WIDTH + 20 );
    if ( lh != NULL )
-      *lh = *h - 60;
+      *lh = *h - 90;
 }
 
 /**
@@ -1958,7 +1959,7 @@ static void opt_plugins_regenList( unsigned int wid )
    bw = BUTTON_WIDTH;
    window_dimWindow( wid, &w, &h );
    lw = w - 40 - 2 * ( bw + 20 );
-   lh = h - 90;
+   lh = h - 130;
 
    p = 0;
    if ( widget_exists( wid, "lstPlugins" ) ) {
