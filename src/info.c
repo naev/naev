@@ -1046,7 +1046,7 @@ static void cargo_update( unsigned int wid, const char *str )
    }
 
    /* Can jettison all but mission cargo when not landed. */
-   if ( landed )
+   if ( landed || pilot_isFlag( player.p, PILOT_LANDING ) )
       window_disableButton( wid, "btnJettisonCargo" );
    else
       window_enableButton( wid, "btnJettisonCargo" );

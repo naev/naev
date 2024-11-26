@@ -1309,7 +1309,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
 
    /* shows pilot information */
    case KST_MENU_INFO:
-      if ( repeat || LAND() || DEAD() || HYP() )
+      if ( repeat || DEAD() || HYP() )
          break;
       if ( value == KEY_PRESS )
          menu_info( INFO_DEFAULT );
