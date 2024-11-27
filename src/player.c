@@ -1115,7 +1115,7 @@ static void player_renderStealthUnderlay( double dt )
    Pilot *const *ps;
 
    /* Don't display if overlay is open. */
-   if ( ovr_isOpen() )
+   if ( ovr_isOpen() || player_isFlag( PLAYER_CINEMATICS ) )
       return;
 
    /* Iterate and draw for all pilots. */

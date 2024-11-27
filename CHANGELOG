@@ -13,6 +13,7 @@
    * Disable jettisoning cargo when landing
    * Removed overlap in the options menu
    * Don't allow ship shield/energy to go negative
+   * Don't show stealth circles during cinematics
    * Fixed text overlap in the holo-archives for certain languages
    * Fixed reputation changes not working on dynamic factions
    * Fixed text overlap if ship name is too long
