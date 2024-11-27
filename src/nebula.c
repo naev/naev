@@ -376,9 +376,11 @@ void nebu_prep( double density, double volatility, double hue )
    nebu_hue = hue;
    glUseProgram( shaders.nebula.program );
    glUniform1f( shaders.nebula.hue, nebu_hue );
+   glUniform1f( shaders.nebula.saturation, conf.nebu_saturation );
    glUseProgram( shaders.nebula_background.program );
    glUniform1f( shaders.nebula_background.hue, nebu_hue );
    glUniform1f( shaders.nebula_background.volatility, volatility );
+   glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
 
    /* Set up ambient colour. */
    col_hsv2rgb( &col, nebu_hue * 360., 1., 1. );
@@ -390,7 +392,7 @@ void nebu_prep( double density, double volatility, double hue )
    spfx_setNebulaColour( col.r, col.g, col.b );
 
    /* Also set the hue for puffs. */
-   col_hsv2rgb( &col, nebu_hue * 360., 0.95, 1.0 );
+   col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, 1.0 );
    glUseProgram( shaders.nebula_puff.program );
    glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
 
