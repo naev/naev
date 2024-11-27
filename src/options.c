@@ -26,6 +26,7 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
+#include "nebula.h"
 #include "nfile.h"
 #include "nstring.h"
 #include "pause.h"
@@ -1867,12 +1868,7 @@ static void opt_setSaturation( unsigned int wid, const char *str )
    double fad           = window_getFaderValue( wid, str );
    conf.nebu_saturation = fad;
 
-   /* Update uniforms. */
-   glUseProgram( shaders.nebula.program );
-   glUniform1f( shaders.nebula.saturation, conf.nebu_saturation );
-   glUseProgram( shaders.nebula_background.program );
-   glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
-   glUseProgram( 0 );
+   nebu_updateColour();
 
    /* Update text. */
    snprintf( buf, sizeof( buf ), _( "Nebula saturation: %.0f%%" ), 100. * fad );

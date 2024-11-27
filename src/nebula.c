@@ -359,30 +359,16 @@ static void nebu_renderPuffs( int below_player )
    }
 }
 
-/**
- * @brief Prepares the nebualae to be rendered.
- *
- *    @param density Density of the nebula (0-1000).
- *    @param volatility Volatility of the nebula.
- *    @param hue Hue of the nebula (0-1).
- */
-void nebu_prep( double density, double volatility, double hue )
+void nebu_updateColour( void )
 {
    glColour col;
    double   saturation = conf.nebu_saturation;
    double   value      = conf.nebu_saturation * 0.5 + 0.5;
 
-   NTracingZone( _ctx, 1 );
-
-   /* Set the hue. */
-   nebu_hue = hue;
    glUseProgram( shaders.nebula.program );
-   glUniform1f( shaders.nebula.hue, nebu_hue );
-   glUniform1f( shaders.nebula.saturation, saturation );
+   glUniform1f( shaders.nebula.saturation, conf.nebu_saturation );
    glUseProgram( shaders.nebula_background.program );
-   glUniform1f( shaders.nebula_background.hue, nebu_hue );
-   glUniform1f( shaders.nebula_background.volatility, volatility );
-   glUniform1f( shaders.nebula_background.saturation, saturation );
+   glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
 
    /* Set up ambient colour. */
    col_hsv2rgb( &col, nebu_hue * 360., saturation, value );
@@ -398,8 +384,30 @@ void nebu_prep( double density, double volatility, double hue )
    glUseProgram( shaders.nebula_puff.program );
    glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
 
-   /* Done setting shaders. */
    glUseProgram( 0 );
+}
+
+/**
+ * @brief Prepares the nebualae to be rendered.
+ *
+ *    @param density Density of the nebula (0-1000).
+ *    @param volatility Volatility of the nebula.
+ *    @param hue Hue of the nebula (0-1).
+ */
+void nebu_prep( double density, double volatility, double hue )
+{
+   NTracingZone( _ctx, 1 );
+
+   /* Set the hue. */
+   nebu_hue = hue;
+   glUseProgram( shaders.nebula.program );
+   glUniform1f( shaders.nebula.hue, nebu_hue );
+   glUseProgram( shaders.nebula_background.program );
+   glUniform1f( shaders.nebula_background.hue, nebu_hue );
+   glUniform1f( shaders.nebula_background.volatility, volatility );
+
+   /* Update the colour. */
+   nebu_updateColour();
 
    if ( density > 0. ) {
       /* Set density parameters. */
