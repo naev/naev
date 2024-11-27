@@ -90,6 +90,7 @@ static int  opt_accessibilitySave( unsigned int wid, const char *str );
 static void opt_accessibilityDefaults( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
+static void opt_setSaturation( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_setColourblindCorrect( unsigned int wid, const char *str );
 static void opt_setColourblindSimulate( unsigned int wid, const char *str );
@@ -1233,6 +1234,13 @@ static void opt_accessibility( unsigned int wid )
    window_addText( wid, x, y, 100, 20, 0, "txtSVideo", NULL, cHeader,
                    _( "Video:" ) );
    y -= 20;
+   window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtSaturation", NULL, NULL,
+                   NULL );
+   y -= 20;
+   window_addFader( wid, x + 20, y, cw - 60, 20, "fadSaturation", 0., 1.,
+                    conf.nebu_saturation, opt_setSaturation );
+   opt_setSaturation( wid, "fadSaturation" );
+   y -= 30;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtNebuNonuniformity", NULL,
                    NULL, NULL );
    y -= 20;
@@ -1254,6 +1262,11 @@ static void opt_accessibility( unsigned int wid )
                     conf.jump_brightness, opt_setJumpBrightness );
    opt_setJumpBrightness( wid, "fadJumpBrightness" );
    y -= 30;
+
+   /* Second column. */
+   x = 20 + cw + 20;
+   y = -40;
+
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtColourblind", NULL, NULL,
                    _( "Colourblind type:" ) );
    y -= 25;
@@ -1273,10 +1286,7 @@ static void opt_accessibility( unsigned int wid )
    window_addFader( wid, x + 20, y, cw - 60, 20, "fadColourblindSimulate", 0.,
                     1., conf.colourblind_sim, opt_setColourblindSimulate );
    opt_setColourblindSimulate( wid, "fadColourblindSimulate" );
-
-   /* Second column. */
-   x = 20 + cw + 20;
-   y = -40;
+   y -= 50;
 
    window_addText( wid, x, y, cw - 20, 20, 0, "txtSGameplay", NULL, cHeader,
                    _( "Gamplay:" ) );
@@ -1849,6 +1859,24 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
    snprintf( buf, sizeof( buf ), _( "BG (Stars, etc.) brightness: %.0f%%" ),
              100. * fad );
    window_modifyText( wid, "txtBGBrightness", buf );
+}
+
+static void opt_setSaturation( unsigned int wid, const char *str )
+{
+   char   buf[STRMAX_SHORT];
+   double fad           = window_getFaderValue( wid, str );
+   conf.nebu_saturation = fad;
+
+   /* Update uniforms. */
+   glUseProgram( shaders.nebula.program );
+   glUniform1f( shaders.nebula.saturation, conf.nebu_saturation );
+   glUseProgram( shaders.nebula_background.program );
+   glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
+   glUseProgram( 0 );
+
+   /* Update text. */
+   snprintf( buf, sizeof( buf ), _( "Nebula saturation: %.0f%%" ), 100. * fad );
+   window_modifyText( wid, "txtSaturation", buf );
 }
 
 /**
