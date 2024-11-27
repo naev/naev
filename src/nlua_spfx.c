@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "debris.h"
 #include "nlua_audio.h"
+#include "nlua_colour.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nopenal.h"
@@ -78,26 +79,28 @@ static int spfxL_setVel( lua_State *L );
 static int spfxL_sfx( lua_State *L );
 static int spfxL_data( lua_State *L );
 static int spfxL_debris( lua_State *L );
+static int spfxL_nebulaColour( lua_State *L );
 
-static const luaL_Reg spfxL_methods[] = { { "__gc", spfxL_gc },
-                                          { "__eq", spfxL_eq },
-                                          { "getAll", spfxL_getAll },
-                                          { "new", spfxL_new },
-                                          { "rm", spfxL_rm },
-                                          { "pos", spfxL_pos },
-                                          { "vel", spfxL_vel },
-                                          { "setPos", spfxL_setPos },
-                                          { "setVel", spfxL_setVel },
-                                          { "sfx", spfxL_sfx },
-                                          { "data", spfxL_data },
-                                          { "debris", spfxL_debris },
-                                          { 0, 0 } }; /**< SpfxLua methods. */
+static const luaL_Reg spfxL_methods[] = {
+   { "__gc", spfxL_gc },
+   { "__eq", spfxL_eq },
+   { "getAll", spfxL_getAll },
+   { "new", spfxL_new },
+   { "rm", spfxL_rm },
+   { "pos", spfxL_pos },
+   { "vel", spfxL_vel },
+   { "setPos", spfxL_setPos },
+   { "setVel", spfxL_setVel },
+   { "sfx", spfxL_sfx },
+   { "data", spfxL_data },
+   { "debris", spfxL_debris },
+   { "nebulaColour", spfxL_nebulaColour },
+   { 0, 0 } }; /**< SpfxLua methods. */
 
 static int spfx_cmp( const void *p1, const void *p2 )
 {
-   const LuaSpfxData_t *s1, *s2;
-   s1 = (const LuaSpfxData_t *)p1;
-   s2 = (const LuaSpfxData_t *)p2;
+   const LuaSpfxData_t *s1 = p1;
+   const LuaSpfxData_t *s2 = p2;
    return s1->id - s2->id;
 }
 
@@ -815,5 +818,28 @@ static int spfxL_debris( lua_State *L )
    const vec2 *p      = luaL_checkvector( L, 3 );
    const vec2 *v      = luaL_checkvector( L, 4 );
    debris_add( mass, radius, p->x, p->y, v->x, v->y );
+   return 0;
+}
+
+/**
+ * @brief Sets the nebula colour.
+ *
+ * @usage spfx.nebulaColour( 0.3, 0.5, 0.8 )
+ * @usage spfx.nebulaColour( colour.new( 0.3, 0.5, 0.8 ) )
+ *
+ *    @luatparam Colour|number col Colour to set.
+ * @luafunc nebulaColour
+ */
+static int spfxL_nebulaColour( lua_State *L )
+{
+   if ( lua_iscolour( L, 1 ) ) {
+      const glColour *c = lua_tocolour( L, 1 );
+      spfx_setNebulaColour( c->r, c->g, c->b );
+   } else {
+      double r = luaL_checknumber( L, 1 );
+      double g = luaL_checknumber( L, 2 );
+      double b = luaL_checknumber( L, 3 );
+      spfx_setNebulaColour( r, g, b );
+   }
    return 0;
 }
