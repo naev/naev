@@ -369,6 +369,8 @@ static void nebu_renderPuffs( int below_player )
 void nebu_prep( double density, double volatility, double hue )
 {
    glColour col;
+   double   saturation = conf.nebu_saturation;
+   double   value      = conf.nebu_saturation * 0.5 + 0.5;
 
    NTracingZone( _ctx, 1 );
 
@@ -376,23 +378,23 @@ void nebu_prep( double density, double volatility, double hue )
    nebu_hue = hue;
    glUseProgram( shaders.nebula.program );
    glUniform1f( shaders.nebula.hue, nebu_hue );
-   glUniform1f( shaders.nebula.saturation, conf.nebu_saturation );
+   glUniform1f( shaders.nebula.saturation, saturation );
    glUseProgram( shaders.nebula_background.program );
    glUniform1f( shaders.nebula_background.hue, nebu_hue );
    glUniform1f( shaders.nebula_background.volatility, volatility );
-   glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
+   glUniform1f( shaders.nebula_background.saturation, saturation );
 
    /* Set up ambient colour. */
-   col_hsv2rgb( &col, nebu_hue * 360., conf.nebu_saturation, 1. );
+   col_hsv2rgb( &col, nebu_hue * 360., saturation, value );
    gltf_lightAmbient( 3.0 * col.r, 3.0 * col.g, 3.0 * col.b );
    gltf_lightIntensity( 0.5 );
 
    /* Also set the hue for trails */
-   col_hsv2rgb( &col, nebu_hue * 360., 0.7 * conf.nebu_saturation, 1.0 );
+   col_hsv2rgb( &col, nebu_hue * 360., 0.7 * conf.nebu_saturation, value );
    spfx_setNebulaColour( col.r, col.g, col.b );
 
    /* Also set the hue for puffs. */
-   col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, 1.0 );
+   col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, value );
    glUseProgram( shaders.nebula_puff.program );
    glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
 
