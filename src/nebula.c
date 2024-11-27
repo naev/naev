@@ -383,12 +383,12 @@ void nebu_prep( double density, double volatility, double hue )
    glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
 
    /* Set up ambient colour. */
-   col_hsv2rgb( &col, nebu_hue * 360., 1., 1. );
+   col_hsv2rgb( &col, nebu_hue * 360., conf.nebu_saturation, 1. );
    gltf_lightAmbient( 3.0 * col.r, 3.0 * col.g, 3.0 * col.b );
    gltf_lightIntensity( 0.5 );
 
    /* Also set the hue for trails */
-   col_hsv2rgb( &col, nebu_hue * 360., 0.7, 1.0 );
+   col_hsv2rgb( &col, nebu_hue * 360., 0.7 * conf.nebu_saturation, 1.0 );
    spfx_setNebulaColour( col.r, col.g, col.b );
 
    /* Also set the hue for puffs. */

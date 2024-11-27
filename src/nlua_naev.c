@@ -605,6 +605,7 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "game_speed", conf.game_speed );
    PUSH_DOUBLE( L, "bg_brightness", conf.bg_brightness );
    PUSH_DOUBLE( L, "nebu_nonuniformity", conf.nebu_nonuniformity );
+   PUSH_DOUBLE( L, "nebu_saturation", conf.nebu_saturation );
    PUSH_DOUBLE( L, "gamma_correction", conf.gamma_correction );
    PUSH_BOOL( L, "low_memory", conf.low_memory );
    PUSH_BOOL( L, "showfps", conf.fps_show );
