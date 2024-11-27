@@ -274,7 +274,7 @@ local zach_msg_known = {
    _("Try to go through it carefully!"),
 }
 local zach_msg_unknown = {
-   _("Damn, that the hell is that?" ),
+   _("Damn, what the hell is that?" ),
    _("One second, let me analyze the data." ),
    _("I can't make much sense out of this, but…"),
    _("It seems like some sort of space-time discontinuity…"),
