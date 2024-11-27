@@ -1278,13 +1278,12 @@ static void opt_accessibility( unsigned int wid )
    x = 20 + cw + 20;
    y = -40;
 
-   window_addCheckbox( wid, x, y, cw - 20, 20, "chkPuzzleSkip",
-                       _( "Allow skipping puzzles" ), NULL, conf.puzzle_skip );
-   y -= 30;
-
    window_addText( wid, x, y, cw - 20, 20, 0, "txtSGameplay", NULL, cHeader,
                    _( "Gamplay:" ) );
    y -= 20;
+   window_addCheckbox( wid, x, y, cw - 20, 20, "chkPuzzleSkip",
+                       _( "Allow skipping puzzles" ), NULL, conf.puzzle_skip );
+   y -= 30;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtGameSpeed", NULL, NULL,
                    NULL );
    y -= 20;
