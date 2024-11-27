@@ -163,7 +163,7 @@ function land ()
       vn.scene()
       local m = vn.newCharacter( npc_name, {image=mem.npc_image} )
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. The Dvaered seems to have slightly changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]),
+      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. The Dvaered seems to have changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]),
             {pnt=mem.destspb, reward=fmt.credits(reward)}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
