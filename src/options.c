@@ -165,7 +165,8 @@ void opt_menu( void )
       unsigned int wid = opt_windows[i];
       window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
                         _( "OK" ), opt_OK );
-      window_addText( opt_windows[i], 20, 20 + BUTTON_HEIGHT, w - 40, 30, 0,
+      window_addText( opt_windows[i], 20, 10,
+                      w - 20 - 3 * ( BUTTON_WIDTH + 20 ), BUTTON_HEIGHT + 10, 0,
                       "txtRestart", NULL, NULL, NULL );
    }
 
@@ -573,9 +574,9 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h, int *lw,
 
    /* Get list dimensions. */
    if ( lw != NULL )
-      *lw = 350; //*w - BUTTON_WIDTH - 60;
+      *lw = *w - 40 - 2 * ( BUTTON_WIDTH + 20 );
    if ( lh != NULL )
-      *lh = *h - 60;
+      *lh = *h - 90;
 }
 
 /**
@@ -1642,16 +1643,19 @@ static void opt_checkRestart( unsigned int wid, const char *str )
 int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
 {
    int old_conf_w, old_conf_h, old_conf_f, status;
-   int old_w, old_h, old_f, new_w, new_h, new_f;
+   int old_w, old_h, old_f, old_exp, new_w, new_h, new_f;
    int changed_size, maximized;
 
    opt_getVideoMode( &old_w, &old_h, &old_f );
    old_conf_w      = conf.width;
    old_conf_h      = conf.height;
    old_conf_f      = conf.fullscreen;
+   old_exp         = conf.explicit_dim;
    conf.width      = w;
    conf.height     = h;
    conf.fullscreen = fullscreen;
+   conf.explicit_dim =
+      conf.explicit_dim || ( w != old_conf_w ) || ( h != old_conf_h );
 
    status = gl_setupFullscreen();
    if ( status == 0 && !fullscreen && ( w != old_w || h != old_h ) ) {
@@ -1662,22 +1666,23 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
    naev_resize();
 
    opt_getVideoMode( &new_w, &new_h, &new_f );
-   changed_size = new_w != old_w || new_h != old_h;
+   changed_size = ( new_w != old_w ) || ( new_h != old_h );
    maximized    = !new_f && ( SDL_GetWindowFlags( gl_screen.window ) &
                            SDL_WINDOW_MAXIMIZED );
 
    if ( confirm && !changed_size && maximized )
       dialogue_alertRaw( _( "Resolution can't be changed while maximized." ) );
-   if ( confirm && ( status != 0 || new_f != fullscreen ) )
+   if ( confirm && ( ( status != 0 ) || ( new_f != fullscreen ) ) )
       opt_needRestart();
 
-   if ( confirm && ( status != 0 || changed_size || new_f != old_f ) &&
+   if ( confirm && ( ( status != 0 ) || changed_size || ( new_f != old_f ) ) &&
         !dialogue_YesNo( _( "Keep Video Settings" ),
                          _( "Do you want to keep running at %dx%d %s?" ), new_w,
                          new_h,
                          new_f ? _( "fullscreen" ) : _( "windowed" ) ) ) {
 
       opt_setVideoMode( old_conf_w, old_conf_h, old_conf_f, 0 );
+      conf.explicit_dim = old_exp;
 
       dialogue_msg( _( "Video Settings Restored" ),
                     _( "Resolution reset to %dx%d %s." ), old_w, old_h,
@@ -1686,7 +1691,6 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
       return 1;
    }
 
-   conf.explicit_dim = conf.explicit_dim || w != old_conf_w || h != old_conf_h;
    return 0;
 }
 
@@ -1955,7 +1959,7 @@ static void opt_plugins_regenList( unsigned int wid )
    bw = BUTTON_WIDTH;
    window_dimWindow( wid, &w, &h );
    lw = w - 40 - 2 * ( bw + 20 );
-   lh = h - 90;
+   lh = h - 130;
 
    p = 0;
    if ( widget_exists( wid, "lstPlugins" ) ) {

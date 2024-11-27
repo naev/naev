@@ -29,9 +29,11 @@ function create ()
 end
 
 function chaos ()
+   hook.timer( 15 + 20*rnd.rnd(), "chaos" )
+
    local plts = {}
    for k,p in ipairs(pilot.get( {flost, fnewlost} )) do
-      if not p:mothership() then
+      if not p:mothership() and not p:flags("carried") then
          table.insert( plts, p )
       end
    end
@@ -47,7 +49,6 @@ function chaos ()
          p:setFaction( flost )
       end
    end
-   hook.timer( 15 + 20*rnd.rnd(), "chaos" )
 end
 
 function lost_boarded( boarded, boarder )

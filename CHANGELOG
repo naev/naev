@@ -2,12 +2,18 @@
    * Fallback for missing naevpedia ship entries
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
+   * Show intrinsic outfits in the "Other" tab
    * Shooting weapons no longer resets autonav speed up
    * Fixed plural form of 0 items in many cases
    * Made pilots in formation less prone to spinning
    * Ships significantly past the mass limit are no longer space worthy
    * Lowered the price of a certain map
    * Lowered presence of a certain faction
+   * Prevent changing autonav target via Lua when jumping
+   * Disable jettisoning cargo when landing
+   * Removed overlap in the options menu
+   * Don't allow ship shield/energy to go negative
+   * Don't show stealth circles during cinematics
    * Fixed text overlap in the holo-archives for certain languages
    * Fixed reputation changes not working on dynamic factions
    * Fixed text overlap if ship name is too long
@@ -17,12 +23,16 @@
    * Fixed some reputation values not being correctly rounded
    * Fixed OSD not advancing in a certain mission
    * Fixed Sirius Divinity collisions
+   * Fixed beam weapons in "in range" mode not respecting range bonuse
+   * Fixed hiding mission OSDs and changing priority being reset on take off or jump
+   * Fixed asking your ship AI for advice
    * sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
+   * taiomi04: update OSD after boarding ship
    * bounty: fixed OSD getting reset after killing/capturing target
-   * Minor typo fixes
+   * Minor typo fixes and translation updates
 
 * 0.12.0-beta.1
    * Gameplay

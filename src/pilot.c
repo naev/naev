@@ -30,6 +30,7 @@
 #include "hook.h"
 #include "log.h"
 #include "nlua_outfit.h"
+#include "nlua_pilotoutfit.h"
 #include "nlua_vec2.h"
 #include "ntime.h"
 #include "ntracing.h"
@@ -936,7 +937,8 @@ void pilot_cooldown( Pilot *p, int dochecks )
    pilot_weapSetUpdateOutfitState( p );
 
    /* Disable active outfits. */
-   if ( pilot_outfitOffAll( p ) > 0 )
+   pilotoutfit_modified = 0;
+   if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
       pilot_calcStats( p );
 
    /* Calculate the ship's overall heat. */
@@ -1636,7 +1638,8 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
       p->dtimer_accum = 0.;
 
       /* Disable active outfits. */
-      if ( pilot_outfitOffAll( p ) > 0 )
+      pilotoutfit_modified = 0;
+      if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
          pilot_calcStats( p );
 
       pilot_setFlag( p, PILOT_DISABLED ); /* set as disabled */
@@ -2369,8 +2372,9 @@ void pilot_update( Pilot *pilot, double dt )
       }
    }
    /* Update heat. */
-   a    = -1.;
-   Q    = 0.;
+   pilotoutfit_modified = 0;
+   a                    = -1.;
+   Q                    = 0.;
    nchg = 0; /* Number of outfits that change state, processed at the end. */
    for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
       PilotOutfitSlot *pos = pilot->outfits[i];
@@ -2672,7 +2676,7 @@ void pilot_update( Pilot *pilot, double dt )
                  Lua to be unhappy. */
 
    /* Must recalculate stats because something changed state. */
-   if ( nchg > 0 )
+   if ( ( nchg > 0 ) || pilotoutfit_modified )
       pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */

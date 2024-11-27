@@ -151,7 +151,7 @@ function create ()
    mem.ad = msg[rnd.rnd(1,#msg)]
 
    -- Custom greeting
-   mem.comm_greet = mem.ad
+   mem.comm_greet = fmt.f(_([["{msg}"]]), {msg=mem.ad})
 
    mem.loiter = rnd.rnd(5,20) -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()

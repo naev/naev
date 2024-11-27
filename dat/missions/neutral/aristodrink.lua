@@ -41,16 +41,16 @@ mem.prevPlanets = {}
 
 
 local moreinfotxt = {}
-moreinfotxt[1] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where they work now, but they started working at the bar on {pnt} in the {sys} system after they left here. Good luck!" With high hopes, you decide to head off to there.]])
-moreinfotxt[2] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where he works now, but he started working at the bar on {pnt} in the {sys} system after he left here. Good luck!" With high hopes, you decide to head off to there.]])
-moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where she works now, but she started working at the bar on {pnt} in the {sys} system after she left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[1] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the speciality of any one bar, but actually the speciality of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where they work now, but they started working at the bar on {pnt} in the {sys} system after they left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[2] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the speciality of any one bar, but actually the speciality of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where he works now, but he started working at the bar on {pnt} in the {sys} system after he left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the speciality of any one bar, but actually the speciality of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where she works now, but she started working at the bar on {pnt} in the {sys} system after she left here. Good luck!" With high hopes, you decide to head off to there.]])
 
 local worktxt = {}
-worktxt[1] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be them. You start to describe the drink to them and they interrupt. "A Swamp Bombing. Of course, that's my specialty." You ask if they can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+worktxt[1] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be them. You start to describe the drink to them and they interrupt. "A Swamp Bombing. Of course, that's my speciality." You ask if they can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as they're about to start making it, though, you stop them and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully their trained hands move, flipping bottles and shaking various containers. Before you know it, they've set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
-worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to him and he interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to him and he interrupts. "A Swamp Bombing. Of course, that's my speciality." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as he's about to start making it, though, you stop him and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully his trained hands move, flipping bottles and shaking various containers. Before you know it, he's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
-worktxt[3] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be her. You start to describe the drink to her and she interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if she can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+worktxt[3] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be her. You start to describe the drink to her and she interrupts. "A Swamp Bombing. Of course, that's my speciality." You ask if she can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 
 function create ()
@@ -77,7 +77,7 @@ function accept ()
    vn.transition()
 
    ari(fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so… common.
-    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]),
+    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's speciality. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]),
       {pnt=mem.clueplanet, sys=mem.cluesys}))
    vn.menu{
       {_([[Accept]]), "accept"},
@@ -132,7 +132,7 @@ function land ()
             {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
       else
-         if not mem.foundexwork then   -- find out that it's a bartender's specialty
+         if not mem.foundexwork then   -- find out that it's a bartender's speciality
             mem.foundexwork = true
             mem.numexwork = mem.numexwork - 1
             mem.numjumps = mem.numjumps + 1
@@ -159,6 +159,8 @@ function land ()
 
             elseif not mem.hasDrink then  -- get the drink
                mem.hasDrink = true
+               local c = commodity.new( N_("Swamp Bombing"), N_("A rare cocktail favoured by some aristocrats. Seems a bit overrated though.") )
+               misn.cargoAdd( c, 0 )
 
                vntk.msg( _("This is it!"), worktxt[mem.fintendergen] )
 

@@ -1120,6 +1120,9 @@ void pilot_calcStats( Pilot *pilot )
    pilot->shield_regen *= s->shield_regen_mod;
    pilot->energy_max *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
+   /* We'll be kind and allow negative shield and energy. */
+   pilot->shield_max = MAX( 0., pilot->shield_max );
+   pilot->energy_max = MAX( 0., pilot->energy_max );
    /* Enforce health to be at least 0 after mods, so that something like -1000%
     * would just set it to 0 instead of negative. */
    pilot->armour_regen = MAX( 0., pilot->armour_regen );
@@ -1767,12 +1770,9 @@ int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
 
    /* Handle return boolean. */
    ret = lua_toboolean( naevL, -1 );
-   if ( ret )
-      po->flags &= ~PILOTOUTFIT_ISON_LUA; /* Clear if it was set via toggle. */
    lua_pop( naevL, 1 );
    pilot_outfitLunmem( env, oldmem );
-   return ret || pilotoutfit_modified; /* Even if the script says it didn't
-                                          change, it may have been modified. */
+   return ret;
 }
 
 /**

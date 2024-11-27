@@ -68,6 +68,11 @@ function create ()
    hook.custom( "mine_drill", "update_osd" )
    hook.takeoff( "update_osd" )
    hook.gather( "update_osd" )
+   hook.board( "board" )
+end
+
+function board ()
+   hook.timer( 1, "update_osd" )
 end
 
 function update_osd ()

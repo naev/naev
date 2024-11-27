@@ -205,7 +205,7 @@ function advice ()
       table.insert( adv, msg_hostiles )
    end
 
-   local _hmean, hpeak = pp:weapsetHeat(true)
+   local _hmean, hpeak = pp:weapsetHeat()
    local msg_heat = fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cool down with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")})
    table.insert( adv_rnd, msg_heat )
    if pp:temp() > 300 or hpeak > 0.2 then
