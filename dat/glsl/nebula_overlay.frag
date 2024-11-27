@@ -3,11 +3,11 @@
 #include "lib/nebula.glsl"
 
 uniform float hue;
-uniform float brightness;
 uniform mat4 projection;
 uniform float horizon;
 uniform float eddy_scale;
 uniform float time;
+uniform float brightness;
 in vec4 base_col;
 out vec4 colour_out;
 
