@@ -145,7 +145,7 @@ function land ()
    end
 end
 
-local plts
+local plts, attacked
 function enter ()
    if mem.state~=2 or system.cur() ~= returnsys then
       return
@@ -153,6 +153,7 @@ function enter ()
 
    pilot.clear()
    pilot.toggleSpawn(false)
+   attacked = false
 
    local puaaa = ant.puaaa()
 
@@ -174,7 +175,7 @@ function enter ()
    hook.timer( 10, "protest" )
 end
 
-local protest_id, attacked
+local protest_id
 function protest ()
    if protest_id == nil then
       protest_id = rnd.rnd(1,#ant.protest_lines)
