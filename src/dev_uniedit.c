@@ -356,7 +356,7 @@ void uniedit_saveError( void )
                             "the error logs or open the console for more "
                             "information. You likely "
                             "have the wrong path set."
-                            "\n"
+                            "\n\n"
                             "The current data directory is '#b%s#0'"
                             "\n"
                             "Do you wish to choose a new directory?" ),
@@ -379,7 +379,7 @@ static void uniedit_saveTest( void )
 failed:
    if ( !dialogue_YesNo( _( "Invalid Save Directory" ),
                          _( "The writing directory for the editor does not "
-                            "seem to exist. Maybe the path is wrong?"
+                            "seem to exist. Maybe the path is wrong?\n"
                             "\n"
                             "The current data directory is '#b%s#0'"
                             "\n"
