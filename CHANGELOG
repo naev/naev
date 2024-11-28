@@ -1,8 +1,9 @@
 * 0.12.0-beta.3 (unreleased)
    * Fixed map decorators not shown in editor
+   * Centered buttons at the top of the holo-archives
 
 * 0.12.0-beta.2
-   * Fallback for missing naevpedia ship entries
+   * Fallback for missing holo-archives ship entries
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
    * Show intrinsic outfits in the "Other" tab
@@ -29,7 +30,7 @@
    * Fixed some reputation values not being correctly rounded
    * Fixed OSD not advancing in a certain mission
    * Fixed Sirius Divinity collisions
-   * Fixed beam weapons in "in range" mode not respecting range bonuse
+   * Fixed beam weapons in "in range" mode not respecting range bonus
    * Fixed hiding mission OSDs and changing priority being reset on take off or jump
    * Fixed asking your ship AI for advice
    * Fixed point defense requiring toggling thrice to turn off in some cases

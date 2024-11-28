@@ -430,7 +430,7 @@ function naevpedia.setup( name )
    local topbar = {N_("Mechanics"),N_("Ships"),N_("Outfits"),N_("Lore")}
    local bw, bh = 100, 30
    local topbarw = #topbar*(20+bw)-20
-   local xoff = 340 + (w-340-topbarw)*0.5
+   local xoff = (w-topbarw)*0.5
    for k,v in ipairs(topbar) do
       local s = string.lower(v)
       local bx = xoff+(20+bw)*(k-1)
