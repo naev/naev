@@ -87,10 +87,6 @@
 #define SOUND_VOLUME_DEFAULT 0.7  /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT 0.8  /**< Default music volume. */
 #define ENGINE_VOLUME_DEFAULT 0.8 /**< Default engine volume. */
-/* Editor Options */
-#define DEV_DATA_DIR_DEFAULT "../dat/"
-#define DEV_DATA_DIR_DEFAULT                                                   \
-   NULL /**< Default data directory, will try to save things there. */
 
 /**
  * @brief Struct containing player options.

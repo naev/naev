@@ -12,6 +12,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include <unistd.h>
+
 #include "dev_uniedit.h"
 
 #include "array.h"
@@ -368,6 +370,23 @@ void uniedit_saveError( void )
                              gl_screen.window, conf.dev_data_dir, 0 );
 }
 
+static int uniedit_saveTestDirectory( const char *path )
+{
+   char buf[PATH_MAX];
+   if ( nfile_dirExists( path ) )
+      return 0;
+   if ( !nfile_dirMakeExist( path ) )
+      return -1;
+   snprintf( buf, sizeof( buf ), "%s/.naevtestpath", path );
+   if ( !nfile_touch( path ) )
+      return -1;
+   if ( !remove( buf ) )
+      return -1;
+   if ( !rmdir( path ) )
+      return -1;
+   return 0;
+}
+
 static void uniedit_saveTest( void )
 {
    char buf[PATH_MAX];
@@ -386,12 +405,13 @@ static void uniedit_saveTest( void )
    }
 
    snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
-   if ( !nfile_dirExists( buf ) )
+   if ( uniedit_saveTestDirectory( buf ) )
       goto failed;
    snprintf( buf, sizeof( buf ), "%s/spob/", conf.dev_data_dir );
-   if ( !nfile_dirExists( buf ) )
+   if ( uniedit_saveTestDirectory( buf ) )
       goto failed;
 
+   return;
 failed:
    if ( !dialogue_YesNo( _( "Invalid Save Directory" ),
                          _( "The writing directory for the editor does not "
