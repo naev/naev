@@ -21,13 +21,14 @@ uniform float normal_scale;
 uniform float metallicFactor;
 uniform float roughnessFactor;
 uniform vec4 baseColour;
+#if 0
 /* Sheen. */
 uniform vec3 sheenTint;
 uniform float sheen;
-
 /* Clearcoat */
 uniform float clearcoat;
 uniform float clearcoat_roughness;
+#endif
 uniform vec3 emissive;
 uniform sampler2D emissive_tex; /**< Emission texture. */
 uniform bool emissive_texcoord;
@@ -199,10 +200,12 @@ struct Material {
    vec3 f0;             /**< Fresnel value at 0 degrees. */
    vec3 f90;            /**< Fresnel value at 90 degrees. */
    vec3 c_diff;
+#if 0
    vec3 sheenTint;
    float sheen;
    float clearcoat;     /**< Clear coat colour. */
    float clearcoat_roughness;/**< Clear coat roughness. */
+#endif
 
    /* KHR_materials_specular */
    //float specularWeight; /**< product of specularFactor and specularTexture.a */
@@ -546,18 +549,22 @@ void main (void)
    M.f0        = mix( vec3(0.04), M.albedo.rgb, M.metallic );
    M.f90       = vec3(1.0);
    M.c_diff    = mix( M.albedo.rgb, vec3(0.), M.metallic );
+#if 0
    M.sheenTint = sheenTint;
    M.sheen     = sheen;
    M.clearcoat = clearcoat;
    M.clearcoat_roughness = clearcoat_roughness * clearcoat_roughness;
    //M.specularWeight = 1.0;
+#endif
 
    vec3 f_specular   = vec3(0.0);
    vec3 f_diffuse    = vec3(0.0);
    //vec3 f_subsurface = vec3(0.0);
-   vec3 f_sheen      = vec3(0.0);
    vec3 f_emissive   = vec3(0.0);
+#if 0
+   vec3 f_sheen      = vec3(0.0);
    vec3 f_clearcoat  = vec3(0.0);
+#endif
 
    /* Would have to do IBL lighting here. */
    //f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
@@ -658,12 +665,14 @@ void main (void)
          f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
          /* Sheen lobe if applicable. */
+#if 0
          if (M.sheen > 0.0)
             f_sheen  += BRDF_sheen( LoH, M.c_diff, M.sheenTint, M.sheen );
 
          /* Clear coat lobe if applicable. */
          if (M.clearcoat > 0.0)
             f_clearcoat += intensity * BRDF_specularGGX( M.f0, M.f90, M.clearcoat_roughness, VoH, NoL, NoV, NoH );
+#endif
       //}
    }
 
@@ -674,14 +683,17 @@ void main (void)
    /* Combine diffuse, emissive, and specular.. */
    colour_out.a = (u_blend==1) ? M.albedo.a : 1.0;
    //colour_out = vec4( f_emissive + mix(f_diffuse,f_subsurface,sheen) + f_sheen + f_specular, alpha );
-   colour_out.rgb = f_emissive + f_diffuse + f_sheen + f_specular;
+   //colour_out.rgb = f_emissive + f_diffuse + f_sheen + f_specular;
+   colour_out.rgb = f_emissive + f_diffuse + f_specular;
 
    /* Apply clearcoat. */
+#if 0
    if (M.clearcoat > 0.0) {
       vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, NoV );
       f_clearcoat *= M.clearcoat;
       colour_out.rgb = colour_out.rgb * (1.0 - M.clearcoat * clearcoatFresnel) + f_clearcoat;
    }
+#endif
 
    /* Some fancy tone mapping. */
    colour_out.rgb = tonemap( colour_out.rgb );
