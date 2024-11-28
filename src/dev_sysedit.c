@@ -13,6 +13,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include <libgen.h>
+
 #include "dev_sysedit.h"
 
 #include "array.h"
@@ -667,9 +669,9 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
          }
 
          /* Rename. */
-         filtered = uniedit_nameFilter( p->name );
-         SDL_asprintf( &oldName, "%s/spob/%s.xml", conf.dev_data_dir,
-                       filtered );
+         filtered = strdup( p->filename );
+         SDL_asprintf( &oldName, "%s/spob/%s", conf.dev_data_dir,
+                       basename( filtered ) );
          free( filtered );
 
          filtered = uniedit_nameFilter( name );
@@ -682,10 +684,11 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          /* Clean up. */
          free( oldName );
-         free( newName );
+         free( p->filename );
 
          /* Replace name in stack. */
          spob_rename( p, name );
+         p->filename = newName;
 
          dsys_saveSystem( sysedit_sys );
          dpl_saveSpob( p );

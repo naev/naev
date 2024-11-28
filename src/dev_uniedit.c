@@ -12,6 +12,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include <libgen.h>
+
 #include <unistd.h>
 
 #include "dev_uniedit.h"
@@ -1701,9 +1703,9 @@ static void uniedit_renameSys( void )
          }
 
          /* Change the name. */
-         filtered = uniedit_nameFilter( sys->name );
-         SDL_asprintf( &oldName, "%s/ssys/%s.xml", conf.dev_data_dir,
-                       filtered );
+         filtered = strdup( sys->filename );
+         SDL_asprintf( &oldName, "%s/ssys/%s", conf.dev_data_dir,
+                       basename( filtered ) );
          free( filtered );
 
          filtered = uniedit_nameFilter( name );
@@ -1715,11 +1717,14 @@ static void uniedit_renameSys( void )
             WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
 
          free( oldName );
-         free( newName );
+         free( sys->filename );
          free( sys->name );
 
-         sys->name = name;
+         sys->filename = newName;
+         sys->name     = name;
          dsys_saveSystem( sys );
+
+         /* TODO probably have to reupdate stack?? */
 
          /* Re-save adjacent systems. */
          for ( int j = 0; j < array_size( sys->jumps ); j++ )
