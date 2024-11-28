@@ -1,5 +1,5 @@
 #ifndef MAX_LIGHTS
-#  define MAX_LIGHTS 5
+#  define MAX_LIGHTS 7
 #endif
 
 /*
