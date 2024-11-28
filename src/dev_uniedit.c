@@ -350,6 +350,8 @@ static void uniedit_saveDirectoryChoose( void              *data,
 }
 void uniedit_saveError( void )
 {
+   const char *datadir =
+      ( conf.dev_data_dir == NULL ) ? "[NULL]" : conf.dev_data_dir;
    if ( !dialogue_YesNo( _( "Unable to Save Data!" ),
                          _( "There has been an error saving data from the "
                             "editor! Please check "
@@ -360,7 +362,7 @@ void uniedit_saveError( void )
                             "The current data directory is '#b%s#0'"
                             "\n"
                             "Do you wish to choose a new directory?" ),
-                         conf.dev_data_dir ) )
+                         datadir ) )
       return;
    SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
                              gl_screen.window, conf.dev_data_dir, 0 );
@@ -369,6 +371,20 @@ void uniedit_saveError( void )
 static void uniedit_saveTest( void )
 {
    char buf[PATH_MAX];
+   if ( conf.dev_data_dir == NULL ) {
+      if ( !dialogue_YesNoRaw(
+              _( "Invalid Save Directory" ),
+              _( "Data directory is not set. Do you wish to choose a directory "
+                 "to save files with the editor to? You will be unable to save "
+                 "until it is set."
+                 "\n\n"
+                 "Do you wish to choose a new directory?" ) ) )
+         return;
+      SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
+                                gl_screen.window, conf.dev_data_dir, 0 );
+      return;
+   }
+
    snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
    if ( !nfile_dirExists( buf ) )
       goto failed;

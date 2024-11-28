@@ -88,6 +88,11 @@ int dsys_saveSystem( StarSystem *sys )
    char               *file, *cleanName;
    int                 ret = 0;
 
+   if ( conf.dev_data_dir == NULL ) {
+      WARN( _( "%s is not set!" ), "conf.dev_data_dir" );
+      return -1;
+   }
+
    /* Reconstruct jumps so jump pos are updated. */
    system_reconstructJumps( sys );
 

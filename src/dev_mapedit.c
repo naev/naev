@@ -910,7 +910,8 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
    ns.price       = atoll( window_getInput( wdw, "inpPrice" ) );
    ns.rarity      = atoi( window_getInput( wdw, "inpRarity" ) );
 
-   mapedit_saveMap( mapedit_sys, &ns );
+   if ( mapedit_saveMap( mapedit_sys, &ns ) )
+      uniedit_saveError();
 
    free( ns.fileName );
    free( ns.mapName );
@@ -1098,6 +1099,12 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
    xmlDocPtr        doc;
    xmlTextWriterPtr writer;
    char            *file;
+   int              ret = 0;
+
+   if ( conf.dev_data_dir == NULL ) {
+      WARN( _( "%s is not set!" ), "conf.dev_data_dir" );
+      return -1;
+   }
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, 0 );
@@ -1169,12 +1176,14 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
 
    /* Actually write data */
    SDL_asprintf( &file, "%s/outfits/maps/%s", conf.dev_data_dir, ns->fileName );
-   if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 )
+   if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( _( "Failed writing '%s'!" ), file );
+      ret = -1;
+   }
    free( file );
 
    /* Clean up. */
    xmlFreeDoc( doc );
 
-   return 0;
+   return ret;
 }

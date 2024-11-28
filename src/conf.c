@@ -176,7 +176,10 @@ void conf_setDefaults( void )
    conf.fpu_except = 0; /* Causes many issues. */
 
    /* Editor. */
-   conf.dev_data_dir = strdup( DEV_DATA_DIR_DEFAULT );
+   if ( DEV_DATA_DIR_DEFAULT == NULL )
+      conf.dev_data_dir = NULL;
+   else
+      conf.dev_data_dir = strdup( DEV_DATA_DIR_DEFAULT );
 }
 
 /**
