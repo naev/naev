@@ -241,6 +241,7 @@ static int poL_state( lua_State *L )
             po->flags &= ~( PILOTOUTFIT_DYNAMIC_FLAGS |
                             PILOTOUTFIT_ISON ); /* Clear toggles. */
          } else if ( strcmp( state, "on" ) == 0 ) {
+            po->state = PILOT_OUTFIT_ON;
             po->flags |=
                PILOTOUTFIT_ISON |
                PILOTOUTFIT_ISON_TOGGLE; /* Gets disabled if ontoggle is set. */

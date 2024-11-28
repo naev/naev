@@ -4333,8 +4333,6 @@ void pilots_renderOverlay( void )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   int n;
-
    /* Clear outfits first to not leave some outfits in dangling states. */
    pilot_outfitOffAll( pilot );
 
@@ -4345,20 +4343,11 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->otimer   = 0.; /* Outfit timer. */
    for ( int i = 0; i < MAX_AI_TIMERS; i++ )
       pilot->timer[i] = 0.; /* Specific AI timers. */
-   n = 0;
    for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
       PilotOutfitSlot *o = pilot->outfits[i];
       o->timer           = 0.; /* Last used timer. */
       o->stimer          = 0.; /* State timer. */
-      if ( o->state != PILOT_OUTFIT_OFF ) {
-         o->state = PILOT_OUTFIT_OFF; /* Set off. */
-         n++;
-      }
    }
-
-   /* Must recalculate stats. */
-   if ( n > 0 )
-      pilot_calcStats( pilot );
 }
 
 /**
