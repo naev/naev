@@ -26,6 +26,7 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
+#include "nebula.h"
 #include "nfile.h"
 #include "nstring.h"
 #include "pause.h"
@@ -90,6 +91,7 @@ static int  opt_accessibilitySave( unsigned int wid, const char *str );
 static void opt_accessibilityDefaults( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
+static void opt_setSaturation( unsigned int wid, const char *str );
 static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_setColourblindCorrect( unsigned int wid, const char *str );
 static void opt_setColourblindSimulate( unsigned int wid, const char *str );
@@ -165,7 +167,8 @@ void opt_menu( void )
       unsigned int wid = opt_windows[i];
       window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
                         _( "OK" ), opt_OK );
-      window_addText( opt_windows[i], 20, 20 + BUTTON_HEIGHT, w - 40, 30, 0,
+      window_addText( opt_windows[i], 20, 10,
+                      w - 20 - 3 * ( BUTTON_WIDTH + 20 ), BUTTON_HEIGHT + 10, 0,
                       "txtRestart", NULL, NULL, NULL );
    }
 
@@ -423,11 +426,7 @@ static void opt_gameplay( unsigned int wid )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSMSG", NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
-   y -= 30;
-   s = _( "Max Time Compression Factor" );
-   l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtTMax", NULL, NULL, s );
-   window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
+   // y -= 30;
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -577,9 +576,9 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h, int *lw,
 
    /* Get list dimensions. */
    if ( lw != NULL )
-      *lw = 350; //*w - BUTTON_WIDTH - 60;
+      *lw = *w - 40 - 2 * ( BUTTON_WIDTH + 20 );
    if ( lh != NULL )
-      *lh = *h - 60;
+      *lh = *h - 90;
 }
 
 /**
@@ -1236,6 +1235,13 @@ static void opt_accessibility( unsigned int wid )
    window_addText( wid, x, y, 100, 20, 0, "txtSVideo", NULL, cHeader,
                    _( "Video:" ) );
    y -= 20;
+   window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtSaturation", NULL, NULL,
+                   NULL );
+   y -= 20;
+   window_addFader( wid, x + 20, y, cw - 60, 20, "fadSaturation", 0., 1.,
+                    conf.nebu_saturation, opt_setSaturation );
+   opt_setSaturation( wid, "fadSaturation" );
+   y -= 30;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtNebuNonuniformity", NULL,
                    NULL, NULL );
    y -= 20;
@@ -1257,6 +1263,11 @@ static void opt_accessibility( unsigned int wid )
                     conf.jump_brightness, opt_setJumpBrightness );
    opt_setJumpBrightness( wid, "fadJumpBrightness" );
    y -= 30;
+
+   /* Second column. */
+   x = 20 + cw + 20;
+   y = -40;
+
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtColourblind", NULL, NULL,
                    _( "Colourblind type:" ) );
    y -= 25;
@@ -1276,18 +1287,14 @@ static void opt_accessibility( unsigned int wid )
    window_addFader( wid, x + 20, y, cw - 60, 20, "fadColourblindSimulate", 0.,
                     1., conf.colourblind_sim, opt_setColourblindSimulate );
    opt_setColourblindSimulate( wid, "fadColourblindSimulate" );
-
-   /* Second column. */
-   x = 20 + cw + 20;
-   y = -40;
-
-   window_addCheckbox( wid, x, y, cw - 20, 20, "chkPuzzleSkip",
-                       _( "Allow skipping puzzles" ), NULL, conf.puzzle_skip );
-   y -= 30;
+   y -= 50;
 
    window_addText( wid, x, y, cw - 20, 20, 0, "txtSGameplay", NULL, cHeader,
                    _( "Gamplay:" ) );
    y -= 20;
+   window_addCheckbox( wid, x, y, cw - 20, 20, "chkPuzzleSkip",
+                       _( "Allow skipping puzzles" ), NULL, conf.puzzle_skip );
+   y -= 30;
    window_addText( wid, x, y - 3, cw - 20, 20, 0, "txtGameSpeed", NULL, NULL,
                    NULL );
    y -= 20;
@@ -1646,16 +1653,19 @@ static void opt_checkRestart( unsigned int wid, const char *str )
 int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
 {
    int old_conf_w, old_conf_h, old_conf_f, status;
-   int old_w, old_h, old_f, new_w, new_h, new_f;
+   int old_w, old_h, old_f, old_exp, new_w, new_h, new_f;
    int changed_size, maximized;
 
    opt_getVideoMode( &old_w, &old_h, &old_f );
    old_conf_w      = conf.width;
    old_conf_h      = conf.height;
    old_conf_f      = conf.fullscreen;
+   old_exp         = conf.explicit_dim;
    conf.width      = w;
    conf.height     = h;
    conf.fullscreen = fullscreen;
+   conf.explicit_dim =
+      conf.explicit_dim || ( w != old_conf_w ) || ( h != old_conf_h );
 
    status = gl_setupFullscreen();
    if ( status == 0 && !fullscreen && ( w != old_w || h != old_h ) ) {
@@ -1666,22 +1676,23 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
    naev_resize();
 
    opt_getVideoMode( &new_w, &new_h, &new_f );
-   changed_size = new_w != old_w || new_h != old_h;
+   changed_size = ( new_w != old_w ) || ( new_h != old_h );
    maximized    = !new_f && ( SDL_GetWindowFlags( gl_screen.window ) &
                            SDL_WINDOW_MAXIMIZED );
 
    if ( confirm && !changed_size && maximized )
       dialogue_alertRaw( _( "Resolution can't be changed while maximized." ) );
-   if ( confirm && ( status != 0 || new_f != fullscreen ) )
+   if ( confirm && ( ( status != 0 ) || ( new_f != fullscreen ) ) )
       opt_needRestart();
 
-   if ( confirm && ( status != 0 || changed_size || new_f != old_f ) &&
+   if ( confirm && ( ( status != 0 ) || changed_size || ( new_f != old_f ) ) &&
         !dialogue_YesNo( _( "Keep Video Settings" ),
                          _( "Do you want to keep running at %dx%d %s?" ), new_w,
                          new_h,
                          new_f ? _( "fullscreen" ) : _( "windowed" ) ) ) {
 
       opt_setVideoMode( old_conf_w, old_conf_h, old_conf_f, 0 );
+      conf.explicit_dim = old_exp;
 
       dialogue_msg( _( "Video Settings Restored" ),
                     _( "Resolution reset to %dx%d %s." ), old_w, old_h,
@@ -1690,7 +1701,6 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
       return 1;
    }
 
-   conf.explicit_dim = conf.explicit_dim || w != old_conf_w || h != old_conf_h;
    return 0;
 }
 
@@ -1852,6 +1862,19 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
    window_modifyText( wid, "txtBGBrightness", buf );
 }
 
+static void opt_setSaturation( unsigned int wid, const char *str )
+{
+   char   buf[STRMAX_SHORT];
+   double fad           = window_getFaderValue( wid, str );
+   conf.nebu_saturation = fad;
+
+   nebu_updateColour();
+
+   /* Update text. */
+   snprintf( buf, sizeof( buf ), _( "Nebula saturation: %.0f%%" ), 100. * fad );
+   window_modifyText( wid, "txtSaturation", buf );
+}
+
 /**
  * @brief Callback to set the nebula non-uniformity parameter.
  *
@@ -1959,7 +1982,7 @@ static void opt_plugins_regenList( unsigned int wid )
    bw = BUTTON_WIDTH;
    window_dimWindow( wid, &w, &h );
    lw = w - 40 - 2 * ( bw + 20 );
-   lh = h - 90;
+   lh = h - 130;
 
    p = 0;
    if ( widget_exists( wid, "lstPlugins" ) ) {

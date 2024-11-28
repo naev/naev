@@ -65,8 +65,6 @@ function discover_spob ()
          fmt.f(_([[Take Lucas to {spob} ({sys} system})]]),
             {spob=last_spob, sys=last_sys}),
       })
-      misn.markerRm() -- just in case remove all
-      mem.mrk = misn.markerAdd( last_spob )
    end
 end
 
@@ -293,6 +291,8 @@ local function got_info ()
       fmt.f(_([[Explore Qorel Tunnel and find your way to {spob}.]]),
          {spob=last_spob}),
    })
+   misn.markerRm() -- just in case remove all
+   mem.mrk = misn.markerAdd( last_spob )
    mem.stage = 2
    discover_spob()
    hook.discover( "discover_spob" )

@@ -29,3 +29,4 @@ void nebu_update( double dt );
  */
 double nebu_getSightRadius( void );
 void   nebu_prep( double density, double volatility, double hue );
+void   nebu_updateColour( void );

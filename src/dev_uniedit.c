@@ -12,6 +12,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include <unistd.h>
+
 #include "dev_uniedit.h"
 
 #include "array.h"
@@ -189,6 +191,8 @@ static void uniedit_diff_remove( unsigned int wid, const char *wgt );
 static void uniedit_diff_close( unsigned int wid, const char *unused );
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y );
 static void uniedit_diffClear( void );
+/* Misc. */
+static void uniedit_saveTest( void );
 
 /**
  * @brief Opens the system editor interface.
@@ -322,6 +326,104 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Deselect everything. */
    uniedit_deselect();
+
+   /* Do a test. */
+   uniedit_saveTest();
+}
+
+static void uniedit_saveDirectoryChoose( void              *data,
+                                         const char *const *filelist,
+                                         int                filter )
+{
+   (void)data;
+   (void)filter;
+   if ( filelist == NULL ) {
+      WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFolderDialog",
+            SDL_GetError() );
+      return;
+   } else if ( filelist[0] == NULL ) {
+      /* Cancelled by user.  */
+      return;
+   }
+
+   free( conf.dev_data_dir );
+   conf.dev_data_dir = strdup( filelist[0] );
+   uniedit_saveTest();
+}
+void uniedit_saveError( void )
+{
+   const char *datadir =
+      ( conf.dev_data_dir == NULL ) ? "[NULL]" : conf.dev_data_dir;
+   if ( !dialogue_YesNo( _( "Unable to Save Data!" ),
+                         _( "There has been an error saving data from the "
+                            "editor! Please check "
+                            "the error logs or open the console for more "
+                            "information. You likely "
+                            "have the wrong path set."
+                            "\n\n"
+                            "The current data directory is '#b%s#0'"
+                            "\n"
+                            "Do you wish to choose a new directory?" ),
+                         datadir ) )
+      return;
+   SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
+                             gl_screen.window, conf.dev_data_dir, 0 );
+}
+
+static int uniedit_saveTestDirectory( const char *path )
+{
+   char buf[PATH_MAX];
+   if ( nfile_dirExists( path ) )
+      return 0;
+   if ( !nfile_dirMakeExist( path ) )
+      return -1;
+   snprintf( buf, sizeof( buf ), "%s/.naevtestpath", path );
+   if ( !nfile_touch( path ) )
+      return -1;
+   if ( !remove( buf ) )
+      return -1;
+   if ( !rmdir( path ) )
+      return -1;
+   return 0;
+}
+
+static void uniedit_saveTest( void )
+{
+   char buf[PATH_MAX];
+   if ( conf.dev_data_dir == NULL ) {
+      if ( !dialogue_YesNoRaw(
+              _( "Invalid Save Directory" ),
+              _( "Data directory is not set. Do you wish to choose a directory "
+                 "to save files with the editor to? You will be unable to save "
+                 "until it is set."
+                 "\n\n"
+                 "Do you wish to choose a new directory?" ) ) )
+         return;
+      SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
+                                gl_screen.window, conf.dev_data_dir, 0 );
+      return;
+   }
+
+   snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
+   if ( uniedit_saveTestDirectory( buf ) )
+      goto failed;
+   snprintf( buf, sizeof( buf ), "%s/spob/", conf.dev_data_dir );
+   if ( uniedit_saveTestDirectory( buf ) )
+      goto failed;
+
+   return;
+failed:
+   if ( !dialogue_YesNo( _( "Invalid Save Directory" ),
+                         _( "The writing directory for the editor does not "
+                            "seem to exist. Maybe the path is wrong?\n"
+                            "\n"
+                            "The current data directory is '#b%s#0'"
+                            "\n"
+                            "Do you wish to choose a new directory?" ),
+                         conf.dev_data_dir ) )
+      return;
+   SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
+                             gl_screen.window, conf.dev_data_dir, 0 );
 }
 
 /**
@@ -436,8 +538,11 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
       SDL_ShowSaveFileDialog( uniedit_save_callback, NULL, gl_screen.window,
                               filter, buf );
    } else {
-      dsys_saveAll();
-      dpl_saveAll();
+      int ret = 0;
+      ret |= dsys_saveAll();
+      ret |= dpl_saveAll();
+      if ( ret )
+         uniedit_saveError();
    }
 }
 
@@ -1423,9 +1528,13 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
             }
          }
          uniedit_dragSys = 0;
-         if ( conf.devautosave )
+         if ( conf.devautosave ) {
+            int ret = 0;
             for ( int i = 0; i < array_size( uniedit_sys ); i++ )
-               dsys_saveSystem( uniedit_sys[i] );
+               ret |= dsys_saveSystem( uniedit_sys[i] );
+            if ( ret )
+               uniedit_saveError();
+         }
       }
       if ( uniedit_dragSel ) {
          double l, r, b, t;
@@ -1667,8 +1776,10 @@ static void uniedit_newSys( double x, double y )
    uniedit_deselect();
    uniedit_selectAdd( sys );
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sys ) )
+         uniedit_saveError();
+   }
 }
 
 /**
@@ -1717,9 +1828,11 @@ static void uniedit_toggleJump( StarSystem *sys )
       safelanes_recalculate();
 
       if ( conf.devautosave ) {
-         dsys_saveSystem( sys );
+         int ret = dsys_saveSystem( sys );
          if ( isys != NULL )
-            dsys_saveSystem( isys );
+            ret |= dsys_saveSystem( isys );
+         if ( ret )
+            uniedit_saveError();
       }
    }
 
@@ -2316,8 +2429,10 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    /* Text might need changing. */
    uniedit_selectText();
 
-   if ( conf.devautosave )
-      dsys_saveSystem( uniedit_sys[0] );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( uniedit_sys[0] ) )
+         uniedit_saveError();
+   }
 
    /* Close the window. */
    window_close( wid, name );
@@ -2426,8 +2541,10 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
       space_reconstructPresences();
       economy_execQueued();
 
-      if ( conf.devautosave )
-         dsys_saveSystem( uniedit_sys[0] );
+      if ( conf.devautosave ) {
+         if ( dsys_saveSystem( uniedit_sys[0] ) )
+            uniedit_saveError();
+      }
    }
 
    /* Regenerate the list. */

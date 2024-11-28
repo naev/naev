@@ -12,7 +12,7 @@ local background_default = background
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
-   sf = naev.conf().nebu_scale
+   sf = bgshaders.scale_factor_default()
 
    -- Initialize shader
    shader = love_shaders.windy{ strength=sf, density=0.7 }

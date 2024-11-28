@@ -40,7 +40,7 @@ vec4 nebula( vec4 bg, vec2 rel_pos, float time, float hue, float value, float vo
 
    /* Choose the colour. */
    hue = nebula_hue( hue, uv );
-   hsv = vec3( hue, value, 1.0 );
+   hsv = vec3( hue, value, 0.5 + 0.5*value );
    rgb = hsv2rgb( hsv );
    vec4 colour = mix( bg, vec4( rgb, 1.0 ), brightness+(1.0-brightness)*f );
 

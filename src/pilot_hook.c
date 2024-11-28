@@ -117,6 +117,12 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 {
    PilotHook *phook;
 
+   /* Don't crash if pilot is NULL. */
+   if ( pilot == NULL ) {
+      WARN( _( "Trying to set hook on NULL pilot!" ) );
+      return;
+   }
+
    /* Allocate memory. */
    if ( pilot->hooks == NULL )
       pilot->hooks = array_create( PilotHook );

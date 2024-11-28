@@ -8,11 +8,12 @@ local love_shaders = require 'love_shaders'
 local shader_bg, shader_ov, sf, sbg, sov
 local nonuninformity
 
+local rgba, r, g, b
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
    local nc = naev.conf()
-   sf = nc.nebu_scale
+   sf = bgshaders.scale_factor_default()
    nonuninformity = nc.nebu_nonuniformity
 
    -- Initialize bg shader
@@ -115,7 +116,11 @@ vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
    end
    sov = bgshaders.init( shader_ov, sf, {nobright=true} )
 
-   gfx.lightAmbient( 92/255, 230/255, 23/255, 3 )
+   local h, s, v = colour.new( 92/255, 230/255, 23/255, 1, true ):hsv()
+   r, g, b = colour.newHSV( h, s * nc.nebu_saturation, v, 1, true ):rgb()
+   rgba = {r, g, b, 1}
+
+   gfx.lightAmbient( r, g, b, 3 )
    gfx.lightIntensity( 0.3 * gfx.lightIntensityGet() )
 
    -- Set some fancy effects
@@ -134,7 +139,7 @@ function renderov( dt )
    local m = 1
    shader_ov:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
 
-   sov:render( dt, {92/255, 230/255, 23/255, 1.0} )
+   sov:render( dt, rgba )
 end
 
 function renderbg( dt )
@@ -144,5 +149,5 @@ function renderbg( dt )
       shader_bg:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
    end
 
-   sbg:render( dt, {92/255, 230/255, 23/255, 1.0} )
+   sbg:render( dt, rgba )
 end

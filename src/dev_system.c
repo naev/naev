@@ -86,6 +86,12 @@ int dsys_saveSystem( StarSystem *sys )
    const VirtualSpob **sorted_virtualspobs;
    const JumpPoint   **sorted_jumps;
    char               *file, *cleanName;
+   int                 ret = 0;
+
+   if ( conf.dev_data_dir == NULL ) {
+      WARN( _( "%s is not set!" ), "conf.dev_data_dir" );
+      return -1;
+   }
 
    /* Reconstruct jumps so jump pos are updated. */
    system_reconstructJumps( sys );
@@ -276,15 +282,17 @@ int dsys_saveSystem( StarSystem *sys )
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
    SDL_asprintf( &file, "%s/ssys/%s.xml", conf.dev_data_dir, cleanName );
-   if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 )
+   if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( "Failed writing '%s'!", file );
+      ret = -1;
+   }
 
    /* Clean up. */
    xmlFreeDoc( doc );
    free( cleanName );
    free( file );
 
-   return 0;
+   return ret;
 }
 
 /**
@@ -297,8 +305,9 @@ int dsys_saveAll( void )
    StarSystem *sys = system_getAll();
 
    /* Write systems. */
+   int ret = 0;
    for ( int i = 0; i < array_size( sys ); i++ )
-      dsys_saveSystem( &sys[i] );
+      ret |= dsys_saveSystem( &sys[i] );
 
-   return 0;
+   return ret;
 }

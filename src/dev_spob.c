@@ -32,6 +32,11 @@ int dpl_saveSpob( const Spob *p )
    int              ret         = 0;
    const char      *lua_default = start_spob_lua_default();
 
+   if ( conf.dev_data_dir == NULL ) {
+      WARN( _( "%s is not set!" ), "conf.dev_data_dir" );
+      return -1;
+   }
+
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, 0 );
    if ( writer == NULL ) {
@@ -180,11 +185,12 @@ int dpl_saveSpob( const Spob *p )
  */
 int dpl_saveAll( void )
 {
-   const Spob *p = spob_getAll();
+   const Spob *p   = spob_getAll();
+   int         ret = 0;
 
    /* Write spobs. */
    for ( int i = 0; i < array_size( p ); i++ )
-      dpl_saveSpob( &p[i] );
+      ret |= dpl_saveSpob( &p[i] );
 
-   return 0;
+   return ret;
 }

@@ -13,6 +13,7 @@
         */
 
 void  uniedit_open( unsigned int wid_unused, const char *unused );
+void  uniedit_saveError( void );
 void  uniedit_selectText( void );
 char *uniedit_nameFilter( const char *name );
 void  uniedit_options( unsigned int wid_unused, const char *unused );

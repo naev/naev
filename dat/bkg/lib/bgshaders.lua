@@ -14,6 +14,12 @@ local nw, nh
 local bgshader = {}
 local bgshader_mt = { __index = bgshader }
 
+function bgshaders.scale_factor_default()
+   local nc = naev.conf()
+   local _nw, _nh, ns  = gfx.dim()
+   return math.max( 1.0, nc.nebu_scale * ns )
+end
+
 function bgshaders.init( shader, scale, params )
    params = params or {}
    nw, nh = naev.gfx.dim()

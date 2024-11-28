@@ -423,6 +423,17 @@ static void map_system_render( double bx, double by, double w, double h,
          double      dmg = sys->nebu_volatility;
          const char *sdmg, *adj;
          char        col;
+         char        dmgstr[32];
+
+         /* Damage string. */
+         if ( sys_isFlag( sys, SYSTEM_HIDENEBULADAMAGE ) )
+            snprintf( dmgstr, sizeof( dmgstr ),
+                      p_( "nebula_volatility", "??? %s" ), UNIT_POWER );
+         else
+            snprintf( dmgstr, sizeof( dmgstr ),
+                      p_( "nebula_volatility", "%.1f %s" ),
+                      sys->nebu_volatility, UNIT_POWER );
+
          /* Volatility */
          if ( dmg > SYS_VOLATILITY_VOLATILE ) {
             col  = 'r';
@@ -447,8 +458,8 @@ static void map_system_render( double bx, double by, double w, double h,
             adj = "";
 
          cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt,
-                           _( "#nNebula: #%c%s%s (%.1f %s)#0\n" ), col, adj,
-                           sdmg, dmg, UNIT_POWER );
+                           _( "#nNebula: #%c%s%s (%s)#0\n" ), col, adj, sdmg,
+                           dmgstr );
       }
 
       /* Interference. */
@@ -456,10 +467,10 @@ static void map_system_render( double bx, double by, double w, double h,
          double      itf = sys->interference;
          const char *sint;
          char        col;
-         if ( itf > 700. ) {
+         if ( itf > 70. ) {
             col  = 'r';
             sint = p_( "interference", "Dense" );
-         } else if ( itf > 300. ) {
+         } else if ( itf > 30. ) {
             col  = 'o';
             sint = p_( "interference", "Medium" );
          } else {

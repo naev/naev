@@ -1831,7 +1831,7 @@ static int aiL_turn( lua_State *L )
  * position (Vec2), or an orientation (number representing angle in radians).
  *    @luatparam[opt=false] boolean invert Invert away from target.
  *    @luatparam[opt=false] boolean compensate Compensate for velocity?
- *    @luatreturn number Angle offset in radians.
+ *    @luatreturn number Absolute angle offset in radians.
  * @luafunc face
  */
 static int aiL_face( lua_State *L )

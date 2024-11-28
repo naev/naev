@@ -104,6 +104,7 @@ close to pi is suppressed.
 
 import numpy as np
 import math
+import glob
 import matplotlib.pyplot as plt
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as pretty
@@ -444,17 +445,22 @@ def pointsFrom3D( address, slices, size, center, alpha ):
     return (xlist, ylist, factor)
 
 # Computes a single polygon from an image
-def singlePolygonFromImg( px, py, minlen, maxlen, ppi ):
+def singlePolygonFromImg( px, py, minlen, maxlen, ppi, theta=0. ):
     npt = len(px)
     minlen2 = minlen**2
     maxlen2 = maxlen**2
 
-    star    = np.argmax(px) # Choose the starting point
+    dvec = np.zeros( npt )
+    dpos = np.array([math.cos(theta),math.sin(theta)])
+    for i in range(npt):
+        dvec[i] = np.dot( dpos, (px[i], py[i] ) )
+
+    star    = np.argmax(dvec) # Choose the starting point
     polygon = [star] # Initialize the polygon
 
     # Now we do a loop
     pcur     = star
-    pdir     = [1e-12,1]     # Previous direction
+    pdir     = [math.cos(theta-1e-8),math.sin(theta-1e-8)] # Previous direction
     d02      = 0             # This value will store the distance between first and second one
 
     for i in range(1000): # Limit number of iterations
@@ -560,8 +566,8 @@ def polygonFromPoints( points, minlen, maxlen ):
     polyall = []
 
     # List of values for minlen and maxlen. Both list should have same length
-    minlist = [ 5,  4, 3, 2, 1 ]
-    maxlist = [ 10, 8, 6, 4, 1.5 ]
+    minlist = [ 6, 5,  4, 3, 2, 1 ]
+    maxlist = [ 12, 10, 8, 6, 4, 1.5 ]
     assert( len(minlist)==len(maxlist) )
 
     # Adapt minlist and maxlist in order to match presripted values
@@ -572,13 +578,21 @@ def polygonFromPoints( points, minlen, maxlen ):
         px = pxa[ppi]
         py = pya[ppi]
 
+        theta = ppi/npict * 2*math.pi + math.pi/2
+
         for j in range(len(minlist)):
             stop = 1
 
-            pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi )
+            pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta )
+            if len(pplg[1]) <= 3:
+                stop = 0
+                print( f"Too few points for view (only {len(ppx)}, trying again ", file=sys.stderr)
+                pplg    = singlePolygonFromImg( px, py, minlist[j], maxlist[j], ppi, theta+math.pi/2 )
+
             polygon = pplg[0]
             ppx     = pplg[1]
             ppy     = pplg[2]
+            #print( polygon, ppx, ppy )
 
             # Some checks
             if len(polygon)==1001:
@@ -746,16 +760,39 @@ def polygonify_all_asteroids( gfxPath, polyPath, overwrite ):
         generateXML(polygon,polyAddress)
 
 
+ships = {}
+def parse_ships():
+    searchpath = os.path.dirname(sys.argv[0])+"/../dat/ships/**/*.xml"
+    for f in glob.glob( searchpath, recursive=True ):
+        root = ET.parse( f ).getroot()
+        name = root.get('name')
+        inherits = root.get('inherits')
+        gfx = root.find( "gfx" )
+        base_type = root.find( "base_type" )
+        if base_type != None:
+            typepath = base_type.get("path")
+            if typepath == None:
+                typepath = base_type.text
+        if inherits == None:
+            ships[ name ] = { "name": name, "gfx": gfx, "base_type": base_type, "typepath": typepath }
+
 def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
     root = ET.parse( filename ).getroot()
     name = root.get('name')
     inherits = root.get('inherits')
-    tag = root.find( "gfx" )
-    basetag = root.find( "base_type" )
-    basetype = "Llama"
-    #basetype = basetag.get("path")
-    if basetype == None:
-        basetype = basetag.text
+    tag, basetag, typepath = None, None, None
+    if inherits != None:
+        s = ships[ inherits ]
+        tag = s["gfx"]
+        basetag = s["base_type"]
+        typepath = s["typepath"]
+    def replace_none( key, val ):
+        return val if val != None else key
+    tag = replace_none( tag, root.find( "gfx" ) )
+    basetag = replace_none( tag, root.find( "base_type" ) )
+    typepath = replace_none( typepath, basetag.get("path") )
+    if typepath == None:
+        typepath = basetag.text
     if tag != None:
         if outpath != None:
             outname = f"{outpath}/ship/{tag.text}.xml"
@@ -763,7 +800,7 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
         pntNplg = None
         if use3d:
             # Try 3D first
-            gltfpath = f"{gfxpath}/ship3d/{basetype}/{tag.text}.gltf"
+            gltfpath = f"{gfxpath}/ship3d/{typepath}/{tag.text}.gltf"
             if os.path.isfile(gltfpath):
                 pntNplg = polygonFrom3D( gltfpath, scale=int(tag.get("size")) )
             else:
@@ -844,7 +881,13 @@ if __name__ == "__main__":
         plt.show()
         sys.exit(0)
 
+    # Load up the ships
+    parse_ships()
+
     # Normal mode we just try to process the files
     for a in args.path:
         print(f"Processing {a}...")
-        polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
+        try:
+            polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
+        except Exception as e:
+            print( f"Failed to process '{a}': {e}", file=sys.stderr)

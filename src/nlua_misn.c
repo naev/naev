@@ -831,7 +831,8 @@ static int misn_osdCreate( lua_State *L )
 
    /* Create OSD. */
    cur_mission->osd     = osd_create( title, nitems, (const char **)items,
-                                      cur_mission->data->avail.priority );
+                                      misn_osdGetPriority( cur_mission ),
+                                      misn_osdGetHide( cur_mission ) );
    cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */
@@ -886,30 +887,29 @@ static int misn_osdActive( lua_State *L )
 /**
  * @brief Gets the active OSD element.
  *
- *    @luatreturn string Th ename of the active element or nil if none.
+ *    @luatreturn number|nil The active element or nil if not active.
  * @luafunc osdGetActive
  */
 static int misn_osdGetActiveItem( lua_State *L )
 {
    const Mission *cur_mission = misn_getFromLua( L );
-   char         **items       = osd_getItems( cur_mission->osd );
    int            active      = osd_getActive( cur_mission->osd );
 
-   if ( !items || active < 0 ) {
+   if ( active < 0 ) {
       lua_pushnil( L );
       return 1;
    }
 
-   lua_pushstring( L, items[active] );
+   lua_pushinteger( L, active + 1 );
    return 1;
 }
 
 /**
  * @brief Gets the current mission OSD information.
  *
- *    @luatparam string Title of the OSD.
- *    @luatparam table List of items in the OSD.
- *    @luatparam number ID of the current active OSD element.
+ *    @luatreturn string Title of the OSD.
+ *    @luatreturn table List of items in the OSD.
+ *    @luatreturn number ID of the current active OSD element.
  * @luafunc osdGet
  */
 static int misn_osdGet( lua_State *L )

@@ -211,7 +211,7 @@ function third_trd()
    misn.npcRm(mem.bar1pir1)
    misn.cargoRm(mem.carg_id)
    mem.carg_id = nil
-   player.msg(mem.t_sys[3]:name())
+   --player.msg(mem.t_sys[3]:name())
    misn.osdCreate(_("The one with the Shopping"), {
       fmt.f(_("Return to the {sys} system and deliver to Dr. Geller on {pnt}"), {sys=mem.t_sys[3], pnt=mem.t_pla[3]}),
    })

@@ -30,6 +30,7 @@
 #include "hook.h"
 #include "log.h"
 #include "nlua_outfit.h"
+#include "nlua_pilotoutfit.h"
 #include "nlua_vec2.h"
 #include "ntime.h"
 #include "ntracing.h"
@@ -936,7 +937,8 @@ void pilot_cooldown( Pilot *p, int dochecks )
    pilot_weapSetUpdateOutfitState( p );
 
    /* Disable active outfits. */
-   if ( pilot_outfitOffAll( p ) > 0 )
+   pilotoutfit_modified = 0;
+   if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
       pilot_calcStats( p );
 
    /* Calculate the ship's overall heat. */
@@ -1636,7 +1638,8 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
       p->dtimer_accum = 0.;
 
       /* Disable active outfits. */
-      if ( pilot_outfitOffAll( p ) > 0 )
+      pilotoutfit_modified = 0;
+      if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
          pilot_calcStats( p );
 
       pilot_setFlag( p, PILOT_DISABLED ); /* set as disabled */
@@ -2369,8 +2372,9 @@ void pilot_update( Pilot *pilot, double dt )
       }
    }
    /* Update heat. */
-   a    = -1.;
-   Q    = 0.;
+   pilotoutfit_modified = 0;
+   a                    = -1.;
+   Q                    = 0.;
    nchg = 0; /* Number of outfits that change state, processed at the end. */
    for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
       PilotOutfitSlot *pos = pilot->outfits[i];
@@ -2672,7 +2676,7 @@ void pilot_update( Pilot *pilot, double dt )
                  Lua to be unhappy. */
 
    /* Must recalculate stats because something changed state. */
-   if ( nchg > 0 )
+   if ( ( nchg > 0 ) || pilotoutfit_modified )
       pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */
@@ -2862,7 +2866,7 @@ void pilot_sample_trails( Pilot *p, int none )
          mode = MODE_JUMPING;
       else if ( pilot_isFlag( p, PILOT_AFTERBURNER ) )
          mode = MODE_AFTERBURN;
-      else if ( p->solid.accel > 0. )
+      else if ( p->solid.accel > 0.2 )
          mode = MODE_GLOW;
       else
          mode = MODE_IDLE;
@@ -3378,11 +3382,10 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
       for ( int j = 0; j < array_size( ship_list[i] ); j++ ) {
          PilotOutfitSlot *slot = &array_grow( pilot_list_ptr[i] );
          memset( slot, 0, sizeof( PilotOutfitSlot ) );
-         slot->id    = array_size( pilot->outfits );
-         slot->sslot = &ship_list[i][j];
+         slot->id      = array_size( pilot->outfits );
+         slot->sslot   = &ship_list[i][j];
+         slot->weapset = -1;
          array_push_back( &pilot->outfits, slot );
-         if ( pilot_list_ptr[i] != &pilot->outfit_weapon )
-            slot->weapset = -1;
          /* We'll ignore non-required outfits if NO_OUTFITS is set. */
          if ( ( !pilot_isFlagRaw( flags, PILOT_NO_OUTFITS ) ||
                 slot->sslot->required ) &&
@@ -3400,7 +3403,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
 
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */
-   pilot_weaponAuto( pilot );
+   // pilot_weaponAuto( pilot );
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free =
@@ -3483,6 +3486,9 @@ void pilot_reset( Pilot *pilot )
    /* Clean up flag.s */
    for ( int i = PILOT_NOCLEAR + 1; i < PILOT_FLAGS_MAX; i++ )
       pilot->flags[i] = 0;
+
+   /* Reset weapon sets. */
+   pilot_weaponAuto( pilot );
 
    /* Initialize heat. */
    pilot_heatReset( pilot );
@@ -4327,8 +4333,6 @@ void pilots_renderOverlay( void )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   int n;
-
    /* Clear outfits first to not leave some outfits in dangling states. */
    pilot_outfitOffAll( pilot );
 
@@ -4339,20 +4343,11 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->otimer   = 0.; /* Outfit timer. */
    for ( int i = 0; i < MAX_AI_TIMERS; i++ )
       pilot->timer[i] = 0.; /* Specific AI timers. */
-   n = 0;
    for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
       PilotOutfitSlot *o = pilot->outfits[i];
       o->timer           = 0.; /* Last used timer. */
       o->stimer          = 0.; /* State timer. */
-      if ( o->state != PILOT_OUTFIT_OFF ) {
-         o->state = PILOT_OUTFIT_OFF; /* Set off. */
-         n++;
-      }
    }
-
-   /* Must recalculate stats. */
-   if ( n > 0 )
-      pilot_calcStats( pilot );
 }
 
 /**

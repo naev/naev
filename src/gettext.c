@@ -248,7 +248,8 @@ const char *gettext_ngettext( const char *msgid, const char *msgid_plural,
       }
    }
 
-   return n > 1 && msgid_plural != NULL ? msgid_plural : msgid;
+   return ( ( ( n > 1 ) || ( n == 0 ) ) && msgid_plural != NULL ) ? msgid_plural
+                                                                  : msgid;
 }
 
 /**

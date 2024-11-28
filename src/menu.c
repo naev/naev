@@ -761,8 +761,6 @@ static void menu_editors_open( unsigned int wid, const char *unused )
 
    /* Editors menu is open. */
    menu_Open( MENU_EDITORS );
-
-   return;
 }
 
 /**
@@ -781,6 +779,4 @@ static void menu_editors_close( unsigned int wid, const char *str )
    bg_needs_reset = 0;
    menu_main();
    bg_needs_reset = 1;
-
-   return;
 }

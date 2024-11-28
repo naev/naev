@@ -22,7 +22,7 @@
 #include "nlua_pilotoutfit.h"
 #include "pilot.h"
 #include "player.h"
-#include "player_autonav.h"
+// #include "player_autonav.h"
 #include "sound.h"
 #include "spfx.h"
 #include "weapon.h"
@@ -75,7 +75,7 @@ static int pilot_weapSetPressToggle( Pilot *p, PilotWeaponSet *ws )
 
       /* Flip state to ON/OFF. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
-         pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE | PILOTOUTFIT_ISON_LUA );
+         pos->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
       } else {
          pos->flags |= PILOTOUTFIT_ISON_TOGGLE;
          if ( ws->volley )
@@ -229,23 +229,20 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
 
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
-         /* If outfit is ISON_LUA, this gets clear so it just stays normal "on".
-          */
          /* Weapons are handled separately. */
          if ( outfit_isWeapon( o ) && ( o->lua_ontoggle == LUA_NOREF ) )
             continue;
 
-         pos->flags &= ~PILOTOUTFIT_ISON_LUA;
          if ( pos->state == PILOT_OUTFIT_OFF ) {
             int n = pilot_outfitOn( p, pos );
             if ( ( n > 0 ) &&
                  !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
                breakstealth = 1;
+            else
+               pos->flags &= ~( PILOTOUTFIT_ISON | PILOTOUTFIT_DYNAMIC_FLAGS );
             non += n;
          }
       } else {
-         if ( pos->flags & PILOTOUTFIT_ISON_LUA )
-            continue;
          if ( pos->state == PILOT_OUTFIT_ON )
             noff += pilot_outfitOff( p, pos, 1 );
       }
@@ -911,7 +908,13 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 
    /* Beam weapons */
    if ( outfit_isBeam( o ) ) {
-      if ( dist <= o->u.bem.range )
+      double range_mod;
+      if ( o->type == OUTFIT_TYPE_BEAM )
+         range_mod = parent->stats.fwd_range * parent->stats.weapon_range;
+      else
+         range_mod = parent->stats.tur_range * parent->stats.weapon_range;
+
+      if ( dist <= o->u.bem.range * range_mod )
          return INFINITY;
       return -1.; /* Impossible. */
    }
@@ -1243,8 +1246,8 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
    w->timer += rate_mod * outfit_delay( w->outfit );
 
    /* Reset autonav if is player. */
-   if ( pilot_isPlayer( p ) )
-      player_autonavReset( 1. );
+   // if ( pilot_isPlayer( p ) )
+   //    player_autonavReset( 1. );
 
    return 1;
 }
@@ -1508,7 +1511,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o, int natural )
       if ( ret ) {
          if ( outfit_isWeapon( o->outfit ) )
             o->state = PILOT_OUTFIT_OFF;
-         o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
+         o->flags &= ~( PILOTOUTFIT_DYNAMIC_FLAGS | PILOTOUTFIT_ISON );
       }
       return ret;
    } else {

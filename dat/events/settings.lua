@@ -14,7 +14,7 @@ local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
 local fcthit_hide--, fcthit_hide_secondary
-local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos, reset_lockon
+local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos, reset_lockon, include_escorts
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
@@ -46,6 +46,7 @@ function create ()
    match_fleet = var_peek_fix( "autonav_match_fleet", true )
    follow_jump = var_peek_fix( "autonav_follow_jump", false )
    brake_pos   = var_peek_fix( "autonav_brake_pos",   false )
+   include_escorts = var_peek_fix( "autonav_include_escorts", true )
 
    -- Set an info button up
    player.infoButtonRegister( _("Settings"), settings, 1, "S" )
@@ -53,9 +54,9 @@ end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide--, chk_fcthit_hide_secondary
+   local chk_include_escorts, chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide--, chk_fcthit_hide_secondary
 
-   local w, h = 600, 620
+   local w, h = 600, 650
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
    luatk.newText( wdw, 0, 10, w, 20, _("Player Settings"), nil, "center" )
@@ -136,6 +137,8 @@ function settings ()
    txt_compr = luatk.newText( wdw, 20, y, w-40, 20 )
    update_ship_tc()
    y = y + 30
+   chk_include_escorts = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Have escorts not attack during autonav"), nil, include_escorts )
+   y = y + 30
    chk_reset_lockon = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Stop autonav when missile lock-on detected"), nil, reset_lockon )
    y = y + 30
    chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
@@ -168,12 +171,14 @@ function settings ()
          follow_jump = false
          brake_pos = false
          reset_lockon = true
+         include_escorts = true
          update_autonav_value()
          chk_fcthit_hide:set( fcthit_hide )
          --chk_fcthit_hide_secondary:set( fcthit_hide_secondary )
          chk_uselanes_jump:set( uselanes_jump )
          chk_uselanes_spob:set( uselanes_spob )
          chk_reset_lockon:set( reset_lockon )
+         chk_include_escorts:set( include_escorts )
          chk_match_fleet:set( match_fleet )
          chk_follow_jump:set( follow_jump )
          chk_brake_pos:set( brake_pos )
@@ -192,6 +197,7 @@ function settings ()
          var.push( "autonav_follow_jump", follow_jump )
          var.push( "autonav_brake_pos", brake_pos )
          var.push( "autonav_reset_lockon", reset_lockon )
+         var.push( "autonav_include_escorts", include_escorts )
 
          -- Also set GUI
          player.guiSet( player.start().gui ) -- Default setting GUI
@@ -209,6 +215,7 @@ function settings ()
    follow_jump = chk_follow_jump:get()
    brake_pos = chk_brake_pos:get()
    reset_lockon = chk_reset_lockon:get()
+   include_escorts = chk_include_escorts:get()
    var.push( "factionhit_hide", fcthit_hide )
    --var.push( "factionhit_hide_secondary", fcthit_hide_secondary )
    var.push( "autonav_uselanes_jump", uselanes_jump )
@@ -222,6 +229,7 @@ function settings ()
    var.push( "autonav_follow_jump", follow_jump )
    var.push( "autonav_brake_pos", brake_pos)
    var.push( "autonav_reset_lockon", reset_lockon )
+   var.push( "autonav_include_escorts", include_escorts )
 end
 
 function pick_gui ()

@@ -1059,6 +1059,12 @@ void faction_setReputation( int f, double value )
    }
    faction = &faction_stack[f];
 
+   /* In case of a dynamic faction, we just overwrite. */
+   if ( faction_isFlag( faction, FACTION_DYNAMIC ) ) {
+      faction->player = value;
+      return;
+   }
+
    /* Make sure it's not static. */
    if ( faction_isFlag( faction, FACTION_STATIC ) )
       return;
@@ -1842,7 +1848,7 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
 
 #if DEBUGGING
    if ( srep->value <= 0. ) {
-      WARN( "Trying to apply local faction threshol from system with no "
+      WARN( "Trying to apply local faction threshold from system with no "
             "presence." );
       return;
    }

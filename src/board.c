@@ -134,6 +134,11 @@ int player_canBoard( int noisy )
       if ( noisy )
          player_message( "#r%s", _( "Your target cannot be boarded again." ) );
       return PLAYER_BOARD_IMPOSSIBLE;
+   } else if ( pilot_isFlag( p, PILOT_CARRIED ) &&
+               ( p->dockpilot != PLAYER_ID ) ) {
+      if ( noisy )
+         player_message( "#r%s", _( "You can not board deployed fighters." ) );
+      return PLAYER_BOARD_IMPOSSIBLE;
    }
 
    return PLAYER_BOARD_OK;

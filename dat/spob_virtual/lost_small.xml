@@ -2,8 +2,8 @@
 <spob name="Lost Small">
  <presence>
   <faction>Lost</faction>
-  <base>300</base>
-  <bonus>200</bonus>
+  <base>200</base>
+  <bonus>100</bonus>
   <range>1</range>
  </presence>
 </spob>

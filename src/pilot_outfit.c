@@ -651,6 +651,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cargo_free < 0,
                       _( "!! Insufficient Free Cargo Space" ) );
    SPACEWORTHY_CHECK( p->crew < 0, _( "!! Insufficient Crew" ) );
+   SPACEWORTHY_CHECK( pilot_massFactor( p ) < 0.05, ( "!! Too Heavy" ) );
 
    /* No need to mess with the string. */
    if ( buf == NULL )
@@ -1119,6 +1120,9 @@ void pilot_calcStats( Pilot *pilot )
    pilot->shield_regen *= s->shield_regen_mod;
    pilot->energy_max *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
+   /* We'll be kind and allow negative shield and energy. */
+   pilot->shield_max = MAX( 0., pilot->shield_max );
+   pilot->energy_max = MAX( 0., pilot->energy_max );
    /* Enforce health to be at least 0 after mods, so that something like -1000%
     * would just set it to 0 instead of negative. */
    pilot->armour_regen = MAX( 0., pilot->armour_regen );
@@ -1305,9 +1309,9 @@ static void pilot_outfitLRun( Pilot *p,
    }
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
+      /* TODO pilot_calcStats can be called twice here. */
+      pilot_weapSetUpdateOutfitState( p );
       pilot_calcStats( p );
-      pilot_weapSetUpdateOutfitState(
-         p ); /* TODO pilot_calcStats can be called twice here. */
    }
 }
 static void outfitLRunWarning( const Pilot *p, const Outfit *o,
@@ -1484,8 +1488,11 @@ void pilot_outfitLInitAll( Pilot *pilot )
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
       pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
    /* Recalculate if anything changed. */
-   if ( pilotoutfit_modified )
+   if ( pilotoutfit_modified ) {
+      /* TODO calcStats computed twice maybe. */
+      pilot_weapSetUpdateOutfitState( pilot );
       pilot_calcStats( pilot );
+   }
 }
 
 /**
@@ -1763,12 +1770,9 @@ int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
 
    /* Handle return boolean. */
    ret = lua_toboolean( naevL, -1 );
-   if ( ret )
-      po->flags &= ~PILOTOUTFIT_ISON_LUA; /* Clear if it was set via toggle. */
    lua_pop( naevL, 1 );
    pilot_outfitLunmem( env, oldmem );
-   return ret || pilotoutfit_modified; /* Even if the script says it didn't
-                                          change, it may have been modified. */
+   return ret;
 }
 
 /**

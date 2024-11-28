@@ -130,7 +130,7 @@ int nlua_warn( lua_State *L, int idx )
    const char *msg = luaL_checkstring( L, idx );
 #if DEBUGGING
    nlua_errTraceInternal( L, idx );
-   DEBUG( "%s", lua_tostring( L, -1 ) );
+   LOGERR( "%s", lua_tostring( L, -1 ) );
    cli_printCoreString( lua_tostring( L, -1 ), 1 );
    lua_pop( L, 1 );
 #endif /* DEBUGGING */

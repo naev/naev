@@ -392,7 +392,8 @@ int outfit_filterOther( const Outfit *o )
 {
    return ( !sp_required( o->slot.spid ) &&
             ( ( o->slot.type == OUTFIT_SLOT_NULL ) ||
-              ( o->slot.type == OUTFIT_SLOT_NA ) ) );
+              ( o->slot.type == OUTFIT_SLOT_NA ) ||
+              ( o->slot.type == OUTFIT_SLOT_INTRINSIC ) ) );
 }
 
 /**
