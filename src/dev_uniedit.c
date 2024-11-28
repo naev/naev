@@ -1770,6 +1770,11 @@ static void uniedit_newSys( double x, double y )
    sys->spacedust = DUST_DENSITY_DEFAULT;
    sys->radius    = RADIUS_DEFAULT;
 
+   /* Set filename. */
+   char *cleanname = uniedit_nameFilter( sys->name );
+   SDL_asprintf( &sys->filename, "%s.xml", cleanname );
+   free( cleanname );
+
    /* Select new system. */
    uniedit_deselect();
    uniedit_selectAdd( sys );

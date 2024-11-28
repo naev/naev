@@ -12,11 +12,12 @@
 #include "naev.h"
 /** @endcond */
 
+#include <libgen.h>
+
 #include "dev_system.h"
 
 #include "array.h"
 #include "conf.h"
-#include "dev_uniedit.h"
 #include "nebula.h"
 #include "nxml.h"
 #include "space.h"
@@ -85,7 +86,7 @@ int dsys_saveSystem( StarSystem *sys )
    const Spob        **sorted_spobs;
    const VirtualSpob **sorted_virtualspobs;
    const JumpPoint   **sorted_jumps;
-   char               *file, *cleanName;
+   char               *file;
    int                 ret = 0;
 
    if ( conf.dev_data_dir == NULL ) {
@@ -280,8 +281,10 @@ int dsys_saveSystem( StarSystem *sys )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   cleanName = uniedit_nameFilter( sys->name );
-   SDL_asprintf( &file, "%s/ssys/%s.xml", conf.dev_data_dir, cleanName );
+   char path[PATH_MAX];
+   snprintf( path, sizeof( path ), "%s", sys->filename );
+   const char *filename = basename( path );
+   SDL_asprintf( &file, "%s/ssys/%s", conf.dev_data_dir, filename );
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( "Failed writing '%s'!", file );
       ret = -1;
@@ -289,7 +292,6 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Clean up. */
    xmlFreeDoc( doc );
-   free( cleanName );
    free( file );
 
    return ret;

@@ -2576,6 +2576,9 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          spob->lua_file = strdup( str );
    }
 
+   /* Save the filename. */
+   spob->filename = strdup( filename );
+
 #if DEBUGGING
    /* Check for graphics. */
    if ( ( spob->gfx_exterior != NULL ) && !PHYSFS_exists( spob->gfx_exterior ) )
@@ -3829,6 +3832,7 @@ void space_exit( void )
    for ( int i = 0; i < array_size( spob_stack ); i++ ) {
       Spob *spb = &spob_stack[i];
 
+      free( spb->filename );
       free( spb->name );
       free( spb->display );
       free( spb->feature );

@@ -490,6 +490,11 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    p       = spob_new();
    p->name = name;
 
+   /* Set filename. */
+   char *cleanname = uniedit_nameFilter( p->name );
+   SDL_asprintf( &p->filename, "%s.xml", cleanname );
+   free( cleanname );
+
    /* Base spob data off another. */
    good = 0;
    while ( !good ) {
