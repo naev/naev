@@ -973,15 +973,13 @@ static void uniedit_renderPresenceSum( double x, double y, double r )
 void uniedit_renderMap( double bx, double by, double w, double h, double x,
                         double y, double zoom, double r )
 {
-   /* background */
+   /* Background */
    gl_renderRect( bx, by, w, h, &cBlack );
-
-   if ( UNIEDIT_VIEW_DEFAULT )
-      map_renderDecorators( x, y, zoom, 1, 1. );
 
    /* Render faction disks. */
    switch ( uniedit_viewmode ) {
    case UNIEDIT_VIEW_DEFAULT:
+      map_renderDecorators( x, y, zoom, 1, 1. );
       map_renderFactionDisks( x, y, zoom, r, 1, 1. );
       map_renderSystemEnvironment( x, y, zoom, 1, 1. );
       break;
