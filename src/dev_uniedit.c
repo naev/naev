@@ -322,6 +322,25 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Deselect everything. */
    uniedit_deselect();
+
+   /* Do a test. */
+   char buf[PATH_MAX];
+   snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
+   if ( !nfile_dirExists( buf ) ) {
+      return;
+   }
+   snprintf( buf, sizeof( buf ), "%s/spob/", conf.dev_data_dir );
+   if ( !nfile_dirExists( buf ) ) {
+      return;
+   }
+}
+
+void uniedit_saveError( void )
+{
+   dialogue_alertRaw(
+      _( "There has been an error saving data from the editor! Please check "
+         "the error logs or open the console for more information. You likely "
+         "have the wrong path set." ) );
 }
 
 /**
@@ -436,8 +455,11 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
       SDL_ShowSaveFileDialog( uniedit_save_callback, NULL, gl_screen.window,
                               filter, buf );
    } else {
-      dsys_saveAll();
-      dpl_saveAll();
+      int ret = 0;
+      ret |= dsys_saveAll();
+      ret |= dpl_saveAll();
+      if ( ret )
+         uniedit_saveError();
    }
 }
 
@@ -1423,9 +1445,13 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
             }
          }
          uniedit_dragSys = 0;
-         if ( conf.devautosave )
+         if ( conf.devautosave ) {
+            int ret = 0;
             for ( int i = 0; i < array_size( uniedit_sys ); i++ )
-               dsys_saveSystem( uniedit_sys[i] );
+               ret |= dsys_saveSystem( uniedit_sys[i] );
+            if ( ret )
+               uniedit_saveError();
+         }
       }
       if ( uniedit_dragSel ) {
          double l, r, b, t;
@@ -1667,8 +1693,10 @@ static void uniedit_newSys( double x, double y )
    uniedit_deselect();
    uniedit_selectAdd( sys );
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sys ) )
+         uniedit_saveError();
+   }
 }
 
 /**
@@ -1717,9 +1745,11 @@ static void uniedit_toggleJump( StarSystem *sys )
       safelanes_recalculate();
 
       if ( conf.devautosave ) {
-         dsys_saveSystem( sys );
+         int ret = dsys_saveSystem( sys );
          if ( isys != NULL )
-            dsys_saveSystem( isys );
+            ret |= dsys_saveSystem( isys );
+         if ( ret )
+            uniedit_saveError();
       }
    }
 
@@ -2316,8 +2346,10 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    /* Text might need changing. */
    uniedit_selectText();
 
-   if ( conf.devautosave )
-      dsys_saveSystem( uniedit_sys[0] );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( uniedit_sys[0] ) )
+         uniedit_saveError();
+   }
 
    /* Close the window. */
    window_close( wid, name );
@@ -2426,8 +2458,10 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
       space_reconstructPresences();
       economy_execQueued();
 
-      if ( conf.devautosave )
-         dsys_saveSystem( uniedit_sys[0] );
+      if ( conf.devautosave ) {
+         if ( dsys_saveSystem( uniedit_sys[0] ) )
+            uniedit_saveError();
+      }
    }
 
    /* Regenerate the list. */
