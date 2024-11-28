@@ -84,6 +84,9 @@ function setup.setup( p )
       end
    end
 
+   -- Set up the weapon sets
+   p:weapsetAuto()
+
    -- Some tweaks to default AI for certain cases
    -- TODO probably move atk.choose here if we use this in all cases we initialize pilots (see issue #2197)
 

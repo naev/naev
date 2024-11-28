@@ -3382,11 +3382,10 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
       for ( int j = 0; j < array_size( ship_list[i] ); j++ ) {
          PilotOutfitSlot *slot = &array_grow( pilot_list_ptr[i] );
          memset( slot, 0, sizeof( PilotOutfitSlot ) );
-         slot->id    = array_size( pilot->outfits );
-         slot->sslot = &ship_list[i][j];
+         slot->id      = array_size( pilot->outfits );
+         slot->sslot   = &ship_list[i][j];
+         slot->weapset = -1;
          array_push_back( &pilot->outfits, slot );
-         if ( pilot_list_ptr[i] != &pilot->outfit_weapon )
-            slot->weapset = -1;
          /* We'll ignore non-required outfits if NO_OUTFITS is set. */
          if ( ( !pilot_isFlagRaw( flags, PILOT_NO_OUTFITS ) ||
                 slot->sslot->required ) &&
@@ -3404,7 +3403,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
 
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */
-   pilot_weaponAuto( pilot );
+   // pilot_weaponAuto( pilot );
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free =
