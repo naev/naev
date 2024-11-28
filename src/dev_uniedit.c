@@ -1803,10 +1803,9 @@ static void uniedit_newSys( double x, double y )
  */
 static void uniedit_toggleJump( StarSystem *sys )
 {
-   StarSystem *isys = NULL;
    for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
-      int rm = 0;
-      isys   = uniedit_sys[i];
+      int         rm   = 0;
+      StarSystem *isys = uniedit_sys[i];
       for ( int j = 0; j < array_size( isys->jumps ); j++ ) {
          StarSystem *target = isys->jumps[j].target;
          /* Target already exists, remove. */
@@ -1845,8 +1844,10 @@ static void uniedit_toggleJump( StarSystem *sys )
 
       if ( conf.devautosave ) {
          int ret = dsys_saveSystem( sys );
-         if ( isys != NULL )
+         for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+            StarSystem *isys = uniedit_sys[i];
             ret |= dsys_saveSystem( isys );
+         }
          if ( ret )
             uniedit_saveError();
       }
