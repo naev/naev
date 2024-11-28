@@ -189,6 +189,8 @@ static void uniedit_diff_remove( unsigned int wid, const char *wgt );
 static void uniedit_diff_close( unsigned int wid, const char *unused );
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y );
 static void uniedit_diffClear( void );
+/* Misc. */
+static void uniedit_saveTest( void );
 
 /**
  * @brief Opens the system editor interface.
@@ -324,23 +326,68 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    uniedit_deselect();
 
    /* Do a test. */
-   char buf[PATH_MAX];
-   snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
-   if ( !nfile_dirExists( buf ) ) {
-      return;
-   }
-   snprintf( buf, sizeof( buf ), "%s/spob/", conf.dev_data_dir );
-   if ( !nfile_dirExists( buf ) ) {
-      return;
-   }
+   uniedit_saveTest();
 }
 
+static void uniedit_saveDirectoryChoose( void              *data,
+                                         const char *const *filelist,
+                                         int                filter )
+{
+   (void)data;
+   (void)filter;
+   if ( filelist == NULL ) {
+      WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFolderDialog",
+            SDL_GetError() );
+      return;
+   } else if ( filelist[0] == NULL ) {
+      /* Cancelled by user.  */
+      return;
+   }
+
+   free( conf.dev_data_dir );
+   conf.dev_data_dir = strdup( filelist[0] );
+   uniedit_saveTest();
+}
 void uniedit_saveError( void )
 {
-   dialogue_alertRaw(
-      _( "There has been an error saving data from the editor! Please check "
-         "the error logs or open the console for more information. You likely "
-         "have the wrong path set." ) );
+   if ( !dialogue_YesNo( _( "Unable to Save Data!" ),
+                         _( "There has been an error saving data from the "
+                            "editor! Please check "
+                            "the error logs or open the console for more "
+                            "information. You likely "
+                            "have the wrong path set."
+                            "\n"
+                            "The current data directory is '#b%s#0'"
+                            "\n"
+                            "Do you wish to choose a new directory?" ),
+                         conf.dev_data_dir ) )
+      return;
+   SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
+                             gl_screen.window, conf.dev_data_dir, 0 );
+}
+
+static void uniedit_saveTest( void )
+{
+   char buf[PATH_MAX];
+   snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
+   if ( !nfile_dirExists( buf ) )
+      goto failed;
+   snprintf( buf, sizeof( buf ), "%s/spob/", conf.dev_data_dir );
+   if ( !nfile_dirExists( buf ) )
+      goto failed;
+
+failed:
+   if ( !dialogue_YesNo( _( "Invalid Save Directory" ),
+                         _( "The writing directory for the editor does not "
+                            "seem to exist. Maybe the path is wrong?"
+                            "\n"
+                            "The current data directory is '#b%s#0'"
+                            "\n"
+                            "Do you wish to choose a new directory?" ),
+                         conf.dev_data_dir ) )
+      return;
+   SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
+                             gl_screen.window, conf.dev_data_dir, 0 );
 }
 
 /**
