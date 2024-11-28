@@ -2124,9 +2124,13 @@ void player_brokeHyperspace( void )
    /* Free old graphics. */
    space_gfxUnload( sys );
 
-   /* enter the new system */
+   /* Enter the new system. */
    jp = &cur_system->jumps[player.p->nav_hyperspace];
    space_init( jp->target->name, 1 );
+
+   /* Set jumps as known. */
+   if ( !pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) )
+      jp_setFlag( jp->returnJump, JP_KNOWN );
 
    /* Set up the overlay. */
    ovr_initAlpha();
