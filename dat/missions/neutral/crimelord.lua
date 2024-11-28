@@ -207,6 +207,6 @@ function capHailed ()
 end
 
 function land ()
-   vntk.msg( _("He told you so1…"), _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence."))
+   vntk.msg( _("He told you so!…"), _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence."))
    misn.finish(false)
 end
