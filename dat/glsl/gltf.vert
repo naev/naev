@@ -30,7 +30,7 @@ void main (void)
 {
    /* Coordinates and position. */
    vec4 pos    = u_model * vec4( vertex, 1.0 );
-   position    = pos.xyz;
+   position    = pos.xyz / pos.w;
    tex_coord0  = vertex_tex0;
    tex_coord1  = vertex_tex1;
 

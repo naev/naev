@@ -1915,6 +1915,7 @@ int gltf_init( void )
 
    /* Compile the shadow shader. */
    shd = &shadow_shader;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "shadow.vert", "shadow.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1928,6 +1929,7 @@ int gltf_init( void )
 
    /* Compile the X blur shader. */
    shd = &shadow_shader_blurX;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "blur.vert", "blurX.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1941,6 +1943,7 @@ int gltf_init( void )
 
    /* Compile the Y blur shader. */
    shd = &shadow_shader_blurY;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "blur.vert", "blurY.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1953,6 +1956,7 @@ int gltf_init( void )
 
    /* Compile the shader. */
    shd = &gltf_shader;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "gltf.vert", "gltf_pbr.frag", NULL, prepend );
    if ( shd->program == 0 )

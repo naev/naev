@@ -39,7 +39,7 @@ uniform bool occlusion_texcoord;
 #endif /* HAS_AO */
 uniform int u_blend;
 uniform vec3 u_ambient; /**< Ambient lighting. */
-uniform float u_waxiness;
+//uniform float u_waxiness;
 
 /**
  * @brief Lighting information.
