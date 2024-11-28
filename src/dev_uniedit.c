@@ -13,7 +13,6 @@
 /** @endcond */
 
 #include <libgen.h>
-
 #include <unistd.h>
 
 #include "dev_uniedit.h"
@@ -38,6 +37,7 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 #include "unidiff.h"
+#include "utf8.h"
 
 #define BUTTON_WIDTH 100 /**< Map button width. */
 #define BUTTON_HEIGHT 30 /**< Map button height. */
@@ -1641,18 +1641,26 @@ static int uniedit_checkName( const char *name )
 
 char *uniedit_nameFilter( const char *name )
 {
-   char *out = calloc( 1, ( strlen( name ) + 1 ) );
-   int   pos = 0;
-   for ( int i = 0; i < (int)strlen( name ); i++ ) {
-      if ( !ispunct( name[i] ) ) {
-         if ( name[i] == ' ' )
-            out[pos] = '_';
-         else
-            out[pos] = tolower( name[i] );
-         pos++;
+   size_t len = strlen( name ) + 1;
+   char  *out = malloc( len );
+   strncpy( out, name, len );
+   out[len - 1] = '\0';
+   size_t   i   = 0;
+   size_t   j   = 0;
+   uint32_t c;
+   while ( ( c = u8_nextchar( name, &i ) ) ) {
+      if ( isascii( c ) ) {
+         if ( ( c == ' ' ) || ( c == '/' ) || ( c == '\\' ) || ( c == ':' ) ||
+              ( c == '.' ) ) {
+            size_t o = u8_offset( name, j );
+            out[o]   = '_';
+         } else if ( isupper( c ) ) {
+            size_t o = u8_offset( name, j );
+            out[o]   = tolower( c );
+         }
       }
+      j++;
    }
-
    return out;
 }
 
