@@ -176,10 +176,10 @@ void conf_setDefaults( void )
    conf.fpu_except = 0; /* Causes many issues. */
 
    /* Editor. */
-   if ( DEV_DATA_DIR_DEFAULT == NULL )
-      conf.dev_data_dir = NULL;
+   if ( nfile_dirExists( "../dat/" ) )
+      conf.dev_data_dir = strdup( "../dat/" );
    else
-      conf.dev_data_dir = strdup( DEV_DATA_DIR_DEFAULT );
+      conf.dev_data_dir = NULL;
 }
 
 /**
