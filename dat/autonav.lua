@@ -50,6 +50,7 @@ local function autonav_setup ()
    reset_dist = var.peek("autonav_reset_dist")
    brake_pos = var.peek("autonav_brake_pos")
    reset_lockon = var.peek("autonav_reset_lockon")
+   include_escorts = var.peek("autonav_include_escorts")
    player.autonavSetPos()
 
    -- Set time compression maximum
@@ -123,7 +124,7 @@ local function shouldResetSpeed ()
          else
             la, ls = table.unpack(h)
          end
-         lowhealth = lowhealth and ((s < ls and s < reset_shield) or (a < la))
+         lowhealth = lowhealth or ((s < ls and s < reset_shield) or (a < la))
          escort_health[ p:id() ] = {a,s}
       end
    end
