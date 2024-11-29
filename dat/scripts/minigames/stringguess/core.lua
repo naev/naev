@@ -122,8 +122,6 @@ local function finish_round ()
       else
          table.insert(match_row, match.NEVER)
       end
-
-      print(v,sol[i])
    end
 
    tries = tries - 1
