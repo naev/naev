@@ -5,6 +5,12 @@ local love_shaders   = require "love_shaders"
 local fmt = require "format"
 local mg = {}
 
+local match = {
+   EXACT = 1,
+   FUZZY = 2,
+   NEVER = 3
+}
+
 local colours = {
    dark        = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
    bg          = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
@@ -103,16 +109,21 @@ function mg.load ()
    end
 end
 
-local matches_exact, matches_fuzzy
+local matches_exact, match_row
 local function finish_round ()
    matches_exact = 0
-   matches_fuzzy = 0
+   match_row = {}
    for i,v in ipairs(guess) do
       if v==sol[i] then
          matches_exact = matches_exact+1
+         table.insert(match_row, match.EXACT)
       elseif inlist( sol, v ) then
-         matches_fuzzy = matches_fuzzy+1
+         table.insert(match_row, match.FUZZY)
+      else
+         table.insert(match_row, match.NEVER)
       end
+
+      print(v,sol[i])
    end
 
    tries = tries - 1
@@ -127,8 +138,7 @@ local function finish_round ()
    else
       table.insert( attempts, {
          guess = tcopy( guess ),
-         matches_exact = matches_exact,
-         matches_fuzzy = matches_fuzzy,
+         match_row = match_row
       } )
       mg.sfx.invalid:play()
    end
@@ -317,13 +327,16 @@ local function drawbox( x, y, w, h )
    lg.rectangle( "line", x, y, w, h )
 end
 
-local function drawresult( exact, fuzzy, x, y, h )
+local function drawresult( match_row, x, y, h )
    local str = ""
-   for i=1,fuzzy do
-      str = str .. "#o?#0"
-   end
-   for i=1,exact do
-      str = str .. "#b!#0"
+   for _,v in ipairs(match_row) do
+      if v==match.EXACT then
+         str = str .. "#b!#0"
+      elseif v==match.FUZZY then
+         str = str .. "#o?#0"
+      else
+        str = str .. "x"
+      end
    end
    setcol{ 1, 0, 0 }
    lg.print( str, font, x, y+(h-fonth)*0.5 )
@@ -405,7 +418,8 @@ function mg.draw ()
    txt = _([[#nHelp:#0
 Guess the sequence of codes
 #o?#0 correct code, wrong position
-#b!#0 correct code and position]])
+#b!#0 correct code and position
+x not used anywhere at all]])
    lg.printf( txt, font, bx+x, by+y+s+b+10, len )
 
    -- Display attempts
@@ -426,7 +440,7 @@ Guess the sequence of codes
       for j,v in ipairs(t.guess) do
          drawglyph( v, font, bx+x+j*s-s+b, by+y+b, s-b, s-b )
       end
-      drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y, s+b )
+      drawresult( t.match_row, bx+x+boxw-40, by+y, s+b )
       y = y+s
    end
 
