@@ -1,6 +1,8 @@
 * 0.12.0-beta.3 (unreleased)
    * Fixed map decorators not shown in editor
    * Centered buttons at the top of the holo-archives
+   * onion04: don't fail if something happens to the gawain after taking the cargo
+   * Minor typo fixes and translation updates
 
 * 0.12.0-beta.2
    * Fallback for missing holo-archives ship entries
