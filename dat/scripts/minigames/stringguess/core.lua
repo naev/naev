@@ -333,7 +333,7 @@ local function drawresult( match_row, x, y, h )
       elseif v==match.FUZZY then
          str = str .. "#o?#0"
       else
-        str = str .. "x"
+        str = str .. "#rx#0"
       end
    end
    setcol{ 1, 0, 0 }
@@ -417,7 +417,7 @@ function mg.draw ()
 Guess the sequence of codes
 #o?#0 correct code, wrong position
 #b!#0 correct code and position
-x not used anywhere at all]])
+#rx#0 not used anywhere at all]])
    lg.printf( txt, font, bx+x, by+y+s+b+10, len )
 
    -- Display attempts
