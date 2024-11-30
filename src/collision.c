@@ -32,8 +32,9 @@ static int LineOnPolygon( const CollPolyView *at, const vec2 *ap, float x1,
  *
  *    @param[out] polygon Polygon.
  *    @param[in] base XML node to parse.
+ *    @param[in] name Name to give the polygon for debugging purposes.
  */
-void poly_load( CollPoly *polygon, xmlNodePtr base )
+void poly_load( CollPoly *polygon, xmlNodePtr base, const char *name )
 {
    int n;
    xmlr_attr_int_def( base, "num", n, 32 );
@@ -93,6 +94,27 @@ void poly_load( CollPoly *polygon, xmlNodePtr base )
    /* Compute useful offsets. */
    polygon->dir_inc = 2. * M_PI / array_size( polygon->views );
    polygon->dir_off = polygon->dir_inc * 0.5;
+
+   /* Some checks. */
+   double mean = 0.;
+   for ( int i = 0; i < array_size( polygon->views ); i++ ) {
+      CollPolyView *view = &polygon->views[i];
+      if ( view->npt < 3 )
+         WARN( _( "Polygon '%s' has under 3 points for view %d!" ), name, i );
+      mean += view->npt;
+   }
+   mean /= (double)array_size( polygon->views );
+   /* Second pass determines if they are too abnormal. */
+   for ( int i = 0; i < array_size( polygon->views ); i++ ) {
+      CollPolyView *view = &polygon->views[i];
+      if ( (double)view->npt < floor( mean * 0.4 ) )
+         WARN( _( "Polygon '%s' has very few points for view %d (%d points "
+                  "compared to %f mean)!" ),
+               name, i, view->npt, mean );
+      // if ((double)view->npt > mean*3.)
+      //    WARN(_("Polygon '%s' has too many points for view %d (%d points
+      //    compared to %f mean)!"),name,i,view->npt, mean);
+   }
 }
 
 void poly_free( CollPoly *poly )
