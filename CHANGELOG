@@ -1,4 +1,5 @@
 * 0.12.0-beta.3 (unreleased)
+   * Changed mouse click selection priority, it prefers spobs/jumps and will ignore clicks reselecting the same object
    * Fixed map decorators not shown in editor
    * Centered buttons at the top of the holo-archives
    * Fixed crashes when a faction is assigned a non-existent colour
