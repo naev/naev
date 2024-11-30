@@ -255,6 +255,8 @@ static void input_joyaxis( const SDL_Keycode axis, const int value );
 static void input_joyevent( const int event, const SDL_Keycode button );
 static void input_keyevent( const int event, const SDL_Keycode key,
                             const SDL_Keymod mod, const int repeat );
+static int  input_doubleClickTest( unsigned int *time, const void **last,
+                                   const void *clicked );
 
 /**
  * @brief Sets the default input keys.
@@ -1636,8 +1638,13 @@ int input_clickedJump( int jump, int autonav )
    if ( player.p->nav_hyperspace != jump )
       map_select( jp->target, 0 );
 
+   static unsigned int     lastclick_time = 0;
+   static const JumpPoint *lastclick_jump = NULL;
+   int                     doubleclick    = input_doubleClickTest(
+      &lastclick_time, (const void **)&lastclick_jump, jp );
+
    if ( jump == player.p->nav_hyperspace ) {
-      if ( input_isDoubleClick( jp ) ) {
+      if ( doubleclick ) {
          player_targetHyperspaceSet( jump, 0 );
          if ( space_canHyperspace( player.p ) )
             player_jump();
@@ -1649,7 +1656,6 @@ int input_clickedJump( int jump, int autonav )
    } else
       player_targetHyperspaceSet( jump, 0 );
 
-   input_clicked( jp );
    return 0;
 }
 
@@ -1673,8 +1679,13 @@ int input_clickedSpob( int spob, int autonav )
       return 1;
    }
 
+   static unsigned int lastclick_time = 0;
+   static const Spob  *lastclick_spob = NULL;
+   int                 doubleclick    = input_doubleClickTest(
+      &lastclick_time, (const void **)&lastclick_spob, pnt );
+
    if ( spob == player.p->nav_spob ) {
-      if ( input_isDoubleClick( (void *)pnt ) ) {
+      if ( doubleclick ) {
          player_hyperspacePreempt( 0 );
          spob_updateLand( pnt );
          if ( !spob_isFlag( pnt, SPOB_SERVICE_INHABITED ) || pnt->can_land ||
@@ -1687,12 +1698,12 @@ int input_clickedSpob( int spob, int autonav )
             }
          } else
             player_hailSpob();
+         return 1;
       } else
          return 0; /* Already selected, ignore. */
    } else
       player_targetSpobSet( spob );
 
-   input_clicked( pnt );
    return 1;
 }
 
@@ -1705,10 +1716,9 @@ int input_clickedSpob( int spob, int autonav )
  */
 int input_clickedAsteroid( int field, int asteroid )
 {
-   const AsteroidAnchor *anchor = &cur_system->asteroids[field];
-   const Asteroid       *ast    = &anchor->asteroids[asteroid];
+   // const AsteroidAnchor *anchor = &cur_system->asteroids[field];
+   // const Asteroid       *ast    = &anchor->asteroids[asteroid];
    player_targetAsteroidSet( field, asteroid );
-   input_clicked( ast );
    return 1;
 }
 
@@ -1721,8 +1731,6 @@ int input_clickedAsteroid( int field, int asteroid )
  */
 int input_clickedPilot( unsigned int pilot, int autonav )
 {
-   const Pilot *p;
-
    if ( pilot == PLAYER_ID )
       return 0;
 
@@ -1731,21 +1739,26 @@ int input_clickedPilot( unsigned int pilot, int autonav )
       player_autonavPil( pilot );
       return 1;
    }
+   const Pilot *p = pilot_get( pilot );
 
-   p = pilot_get( pilot );
+   static unsigned int lastclick_time  = 0;
+   static const Pilot *lastclick_pilot = NULL;
+   int                 doubleclick     = input_doubleClickTest(
+      &lastclick_time, (const void **)&lastclick_pilot, p );
+
    if ( pilot == player.p->target ) {
-      if ( input_isDoubleClick( p ) ) {
+      if ( doubleclick ) {
          if ( pilot_isDisabled( p ) || pilot_isFlag( p, PILOT_BOARDABLE ) ) {
             if ( player_tryBoard( 0 ) == PLAYER_BOARD_RETRY )
                player_autonavBoard( player.p->target );
          } else
             player_hail();
+         return 1;
       } else
          return 0; /* Ignore reselection. */
    } else
       player_targetSet( pilot );
 
-   input_clicked( (void *)p );
    return 1;
 }
 
@@ -1771,14 +1784,35 @@ int input_isDoubleClick( const void *clicked )
    unsigned int threshold;
 
    if ( conf.mouse_doubleclick <= 0. )
-      return 1;
+      return 0;
 
    /* Most recent time that constitutes a valid double-click. */
-   threshold = input_mouseClickLast + (int)( conf.mouse_doubleclick * 1000 );
+   threshold =
+      input_mouseClickLast + (int)floor( conf.mouse_doubleclick * 1000. );
 
    if ( ( SDL_GetTicks() <= threshold ) && ( clicked == input_lastClicked ) )
       return 1;
 
+   return 0;
+}
+
+static int input_doubleClickTest( unsigned int *time, const void **last,
+                                  const void *clicked )
+{
+   unsigned int threshold, ticks;
+
+   if ( conf.mouse_doubleclick <= 0. )
+      return 0;
+
+   /* Most recent time that constitutes a valid double-click. */
+   threshold = *time + (int)floor( conf.mouse_doubleclick * 1000. );
+   ticks     = SDL_GetTicks();
+
+   if ( ( ticks <= threshold ) && ( *last == clicked ) )
+      return 1;
+
+   *last = clicked;
+   *time = ticks;
    return 0;
 }
 
