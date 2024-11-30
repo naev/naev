@@ -1556,8 +1556,14 @@ static int faction_parse( Faction *temp, const char *file )
       xmlr_float( node, "lane_base_cost", temp->lane_base_cost );
       if ( xml_isNode( node, "colour" ) ) {
          const char *ctmp = xml_get( node );
-         if ( ctmp != NULL )
-            temp->colour = *col_fromName( xml_raw( node ) );
+         if ( ctmp != NULL ) {
+            const glColour *c = col_fromName( xml_raw( node ) );
+            if ( c != NULL )
+               temp->colour = *c;
+            else
+               WARN( _( "Faction '%s' has invalid colour '%s'!" ), temp->name,
+                     ctmp );
+         }
          /* If no named colour is present, RGB attributes are used. */
          else {
             /* Initialize in case a colour channel is absent. */
