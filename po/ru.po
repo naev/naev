@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-11-30 16:00+0000\n"
+"Last-Translator: Valeriy Sosnov <sigus@vivaldi.net>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
+"ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -873,11 +875,11 @@ msgstr ""
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "УВЕЩЕВАТЕЛЬ"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "ПИРАТСКИЙ УВЕЩЕВАТЕЛЬ"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
@@ -889,7 +891,7 @@ msgstr ""
 
 #: artwork/gfx/loading/dalton.webp.txt:1
 msgid "DALTON"
-msgstr ""
+msgstr "ДАЛЬТОН"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
@@ -897,11 +899,11 @@ msgstr ""
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "ДРОН"
 
 #: artwork/gfx/loading/euler.webp.txt:1
 msgid "EULER"
-msgstr ""
+msgstr "ЭЙЛЕР"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
@@ -909,7 +911,7 @@ msgstr ""
 
 #: artwork/gfx/loading/gauss.webp.txt:1
 msgid "GAUSS"
-msgstr ""
+msgstr "ГАУСС"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
@@ -917,35 +919,35 @@ msgstr ""
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
-msgstr ""
+msgstr "ГОДДАРД"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr ""
+msgstr "ХОКИНГ"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr ""
+msgstr "КОАЛА"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr ""
+msgstr "ЛАНСЕЛОТ"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr ""
+msgstr "ЛАМА"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "МУЛ"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "УМИРОТВОРИТЕЛЬ"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "ИМПЕРСКИЙ МИРОТВОРЕЦ"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
@@ -957,15 +959,15 @@ msgstr ""
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "НОСОРОГ"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "ПИРАТСКИЙ НОСОРОГ"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "ШРЁДИНГЕР"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
@@ -973,15 +975,15 @@ msgstr ""
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "АКУЛА"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "ИМПЕРСКАЯ АКУЛА"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "ПИРАТСКАЯ АКУЛА"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
@@ -989,11 +991,11 @@ msgstr ""
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr ""
+msgstr "ВЕНДЕТТА"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "ПИРАТСКАЯ ВЕНДЕТТА"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
@@ -7544,7 +7546,7 @@ msgstr ""
 
 #: dat/ships/neutral/admonisher.xml:2
 msgid "Admonisher"
-msgstr ""
+msgstr "Увещеватель"
 
 #: dat/ships/neutral/admonisher.xml:18
 msgid ""
@@ -7594,7 +7596,7 @@ msgstr ""
 
 #: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
-msgstr ""
+msgstr "Хокинг"
 
 #: dat/ships/neutral/hawking.xml:19
 msgid ""
@@ -7607,7 +7609,7 @@ msgstr ""
 
 #: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
-msgstr ""
+msgstr "Гиена"
 
 #: dat/ships/neutral/hyena.xml:14
 msgid "Aerosys"
@@ -7643,7 +7645,7 @@ msgstr ""
 
 #: dat/ships/neutral/koala.xml:2
 msgid "Koala"
-msgstr ""
+msgstr "Коала"
 
 #: dat/ships/neutral/koala.xml:13 dat/ships/neutral/llama.xml:15
 #: dat/ships/neutral/mule.xml:14 dat/ships/neutral/quicksilver.xml:14
@@ -7660,7 +7662,7 @@ msgstr ""
 
 #: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
-msgstr ""
+msgstr "Ланселот"
 
 #: dat/ships/neutral/lancelot.xml:16
 msgid ""
@@ -7675,7 +7677,7 @@ msgstr ""
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:180
 #: dat/missions/flf/dvk/flf_dvk06.lua:163
 msgid "Llama"
-msgstr ""
+msgstr "Лама"
 
 #: dat/ships/neutral/llama.xml:16
 msgid ""
@@ -7687,7 +7689,7 @@ msgstr ""
 
 #: dat/ships/neutral/mule.xml:2
 msgid "Mule"
-msgstr ""
+msgstr "Мул"
 
 #: dat/ships/neutral/mule.xml:16
 msgid ""
@@ -7699,7 +7701,7 @@ msgstr ""
 
 #: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
-msgstr ""
+msgstr "Умиротворитель"
 
 #: dat/ships/neutral/pacifier.xml:16
 msgid ""
@@ -7734,7 +7736,7 @@ msgstr ""
 
 #: dat/ships/neutral/rhino.xml:2
 msgid "Rhino"
-msgstr ""
+msgstr "Носорог"
 
 #: dat/ships/neutral/rhino.xml:17
 msgid ""
@@ -7747,7 +7749,7 @@ msgstr ""
 
 #: dat/ships/neutral/schroedinger.xml:2
 msgid "Schroedinger"
-msgstr ""
+msgstr "Шрёдингер"
 
 #: dat/ships/neutral/schroedinger.xml:14
 #: dat/ships/sirius/sirius_divinity.xml:14 dat/ships/sirius/sirius_dogma.xml:14
@@ -7770,7 +7772,7 @@ msgstr ""
 
 #: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
-msgstr ""
+msgstr "Акула"
 
 #: dat/ships/neutral/shark.xml:17
 msgid ""
@@ -7794,7 +7796,7 @@ msgstr ""
 #: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:217
 msgid "Vendetta"
-msgstr ""
+msgstr "Вендетта"
 
 #: dat/ships/neutral/vendetta.xml:16
 msgid ""
@@ -7821,7 +7823,7 @@ msgstr ""
 
 #: dat/ships/neutral/zebra.xml:2
 msgid "Zebra"
-msgstr ""
+msgstr "Зебра"
 
 #: dat/ships/neutral/zebra.xml:20
 msgid ""
@@ -7833,7 +7835,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr ""
+msgstr "Пиратский Увещеватель"
 
 #: dat/ships/pirate/pirate_admonisher.xml:17
 #: dat/ships/pirate/pirate_ancestor.xml:14 dat/ships/pirate/pirate_hyena.xml:15
@@ -7868,7 +7870,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_hyena.xml:2
 msgid "Pirate Hyena"
-msgstr ""
+msgstr "Пиратская Гиена"
 
 #: dat/ships/pirate/pirate_hyena.xml:16
 msgid ""
@@ -7905,7 +7907,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_revenant.xml:2
 msgid "Pirate Revenant"
-msgstr ""
+msgstr "Пиратский Призрак"
 
 #: dat/ships/pirate/pirate_revenant.xml:19
 msgid ""
@@ -7921,7 +7923,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr ""
+msgstr "Пиратский Носорог"
 
 #: dat/ships/pirate/pirate_rhino.xml:17
 msgid ""
@@ -7932,7 +7934,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr ""
+msgstr "Пиратская Акула"
 
 #: dat/ships/pirate/pirate_shark.xml:17
 msgid ""
@@ -7956,7 +7958,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr ""
+msgstr "Пиратская Вендетта"
 
 #: dat/ships/pirate/pirate_vendetta.xml:16
 msgid ""
@@ -7971,7 +7973,7 @@ msgstr ""
 
 #: dat/ships/pirate/pirate_zebra.xml:2
 msgid "Pirate Zebra"
-msgstr ""
+msgstr "Пиратская Зебра"
 
 #: dat/ships/pirate/pirate_zebra.xml:20
 msgid ""
@@ -94902,6 +94904,11 @@ msgid ""
 "your #bmouse pointer#0 automatically. It's up to you which method you prefer "
 "to use.\""
 msgstr ""
+"\"Отлично! Это было достаточно просто, не так ли? Я рекомендую этот способ "
+"полета, известный как 'полет на клавиатуре'. Однако есть еще один способ "
+"полета, если вы того пожелаете: нажмите {mouseflykey} на клавиатуре, и ваш "
+"корабль будет автоматически следовать за вашим #bуказателем мыши#0. Какой "
+"метод вы предпочтёте использовать, решать вам.\""
 
 #: dat/missions/tutorial/tutorial.lua:172
 msgid ""
