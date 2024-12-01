@@ -2449,7 +2449,8 @@ static void sysedit_spobDescReturn( unsigned int wid, const char *unused )
    const char *mydesc    = window_getInput( wid, "txtDescription" );
    const char *mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   if ( ( mydesc != NULL ) && strcmp( mydesc, p->description ) != 0 ) {
+   if ( ( mydesc != NULL ) && ( ( p->description == NULL ) ||
+                                ( strcmp( mydesc, p->description ) != 0 ) ) ) {
       if ( uniedit_diffMode ) {
          sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_DESCRIPTION,
                                     strdup( mydesc ) );
@@ -2459,7 +2460,8 @@ static void sysedit_spobDescReturn( unsigned int wid, const char *unused )
       }
    }
    if ( ( mybardesc != NULL ) &&
-        strcmp( mybardesc, p->bar_description ) != 0 ) {
+        ( ( p->bar_description == NULL ) ||
+          ( strcmp( mybardesc, p->bar_description ) != 0 ) ) ) {
       if ( uniedit_diffMode ) {
          sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_BAR,
                                     strdup( mybardesc ) );
