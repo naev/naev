@@ -29,7 +29,7 @@ There are a diversity of fabricators that produce different ships and outfits.
 * **Soromid**: Uses advanced genetic techniques to grow and train biological ships.
 * **Skull and Bones**: Known for stealing and developing variants of any ship they can get their hands on. Almost all the materials used are from dubious sources.
 <% if faction.get("Thurion"):known() then %>
-* **Thurion Shipyards**: DesignFactional ships
+* **Thurion Shipyards**: Produce ships with advanced interfaces for digital humans with minimal life support.
 <% end %>
 <% if faction.get("Proteron"):known() then %>
 * **Proteron**: Although they use an antiquated fabrication methods, they have refined them to a point they are extremely competitive with other ships.
