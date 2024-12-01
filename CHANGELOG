@@ -6,6 +6,7 @@
    * Fixed conf.mouse_doubleclick not disabling when set to 0
    * Fixed crashes when a faction is assigned a non-existent colour
    * Display local standing in the information window
+   * Can no longer abort missions during landing animation
    * Fixed editor crash with empty descriptions
    * Absorption is no longer limited to the 0% to 100% range
    * onion04: don't fail if something happens to the gawain after taking the cargo
