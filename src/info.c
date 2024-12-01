@@ -1242,7 +1242,7 @@ static void info_openStandings( unsigned int wid )
    /* Text. */
    window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), 20, 0, "txtName",
                    &gl_defFont, NULL, NULL );
-   window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), 20, 0, "txtStanding",
+   window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), 40, 0, "txtStanding",
                    &gl_defFont, NULL, NULL );
    window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), h - 80, 0,
                    "txtDescription", &gl_defFont, NULL, NULL );
@@ -1276,7 +1276,7 @@ static void standings_update( unsigned int wid, const char *str )
    int              p, x, y;
    const glTexture *t;
    int              w, h, lw, l;
-   double           m;
+   double           m, ml;
    const int       *flist;
    char             buf[STRMAX];
 
@@ -1304,9 +1304,16 @@ static void standings_update( unsigned int wid, const char *str )
    /* Modify text. */
    y -= 10;
    m = round( faction_reputation( info_factions[p] ) );
-   snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
-             faction_reputationColourChar( info_factions[p] ), m,
-             faction_getStandingText( info_factions[p] ) );
+   l = snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
+                 faction_reputationColourChar( info_factions[p] ), m,
+                 faction_getStandingText( info_factions[p] ) );
+   ml = round( system_getReputationOrGlobal( cur_system, info_factions[p] ) );
+   if ( ABS( ml - m ) > 1e-1 )
+      snprintf(
+         &buf[l], sizeof( buf ) - l,
+         p_( "standings", "\n#%c%+.0f%%#0 #nlocal reputation#0" ),
+         faction_reputationColourCharSystem( info_factions[p], cur_system ),
+         ml );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", x, y );
    y -= 20;
