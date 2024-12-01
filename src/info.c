@@ -1470,7 +1470,10 @@ static void mission_menu_update( unsigned int wid, const char *str )
    snprintf( buf, sizeof( buf ), _( "%s\n#nReward:#0 %s\n\n%s" ), misn->title,
              misn->reward, misn->desc );
    window_modifyText( wid, "txtDesc", buf );
-   window_enableButton( wid, "btnAbortMission" );
+   if ( pilot_isFlag( player.p, PILOT_LANDING ) )
+      window_disableButton( wid, "btnAbortMission" );
+   else
+      window_enableButton( wid, "btnAbortMission" );
    window_enableCheckbox( wid, "chkHide" );
    window_enableCheckbox( wid, "chkPrefer" );
    window_checkboxSet( wid, "chkHide", misn_osdGetHide( misn ) );
