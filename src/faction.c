@@ -1073,8 +1073,22 @@ void faction_setReputation( int f, double value )
    if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
       return;
 
+   /* Global and hit. */
    mod             = value - faction->player;
    faction->player = value;
+
+   /* Reset local. */
+   StarSystem *sys_stack = system_getAll();
+   for ( int j = 0; j < array_size( sys_stack ); j++ ) {
+      StarSystem *sys = &sys_stack[j];
+      for ( int k = 0; k < array_size( sys->presence ); k++ ) {
+         SystemPresence *sp = &sys->presence[k];
+         if ( sp->faction != f )
+            continue;
+         sp->local = value;
+      }
+   }
+
    /* Run hook if necessary. */
    if ( !faction_isFlag( faction, FACTION_DYNAMIC ) ) {
       HookParam hparam[7];
