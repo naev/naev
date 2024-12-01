@@ -1108,7 +1108,7 @@ void faction_setReputation( int f, double value )
 double faction_reputation( int f )
 {
    if ( faction_isFaction( f ) ) {
-      Faction *fac = &faction_stack[f];
+      const Faction *fac = &faction_stack[f];
       if ( faction_isFlag( fac, FACTION_REPOVERRIDE ) )
          return fac->override;
       else

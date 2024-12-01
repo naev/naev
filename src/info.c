@@ -15,7 +15,6 @@
 #include "array.h"
 #include "dialogue.h"
 #include "equipment.h"
-#include "gui_osd.h"
 #include "hook.h"
 #include "land.h"
 #include "log.h"
@@ -1223,6 +1222,9 @@ static void info_openStandings( unsigned int wid )
 {
    char **str;
    int    w, h, lw;
+
+   /* Update global standings just in case. */
+   faction_updateGlobal();
 
    /* Get dimensions. */
    info_getDim( wid, &w, &h, &lw );
