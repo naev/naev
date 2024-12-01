@@ -1311,9 +1311,9 @@ static void standings_update( unsigned int wid, const char *str )
    if ( ABS( ml - m ) > 1e-1 )
       snprintf(
          &buf[l], sizeof( buf ) - l,
-         p_( "standings", "\n#%c%+.0f%%#0 #nlocal reputation#0" ),
-         faction_reputationColourCharSystem( info_factions[p], cur_system ),
-         ml );
+         p_( "standings", "\n#%c%+.0f%%#0 #nin %s#0" ),
+         faction_reputationColourCharSystem( info_factions[p], cur_system ), ml,
+         system_name( cur_system ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", x, y );
    y -= 20;
