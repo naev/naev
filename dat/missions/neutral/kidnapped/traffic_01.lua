@@ -55,6 +55,9 @@ function create ()
       end
       return true
    end )
+   if #sys < 3 then
+      misn.finish(false)
+   end
    sys = rnd.permutation( sys )
 
    mem.targetsys = { sys[1], sys[2], sys[3] }
