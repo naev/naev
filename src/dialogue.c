@@ -876,6 +876,7 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
 /**
  * @brief Opens a custom dialogue window.
  *
+ *    @param wdwname Window name.
  *    @param caption Window title.
  *    @param width Width of the widget.
  *    @param height Height of the widget.
@@ -887,7 +888,7 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
  *    @param freefunc Function to be run when cleaning the custom data.
  */
 void dialogue_custom(
-   const char *caption, int width, int height,
+   const char *wdwname, const char *caption, int width, int height,
    int ( *update )( double dt, void *data ),
    void ( *render )( double x, double y, double w, double h, void *data ),
    int ( *event )( unsigned int wid, SDL_Event *event, void *data ), void *data,
@@ -903,11 +904,10 @@ void dialogue_custom(
 
    /* create the window */
    if ( fullscreen ) {
-      wid = window_create( "dlgCust", caption, -1, -1, -1, -1 );
+      wid = window_create( wdwname, caption, -1, -1, -1, -1 );
       window_setBorder( wid, 0 );
    } else
-      wid =
-         window_create( "dlgCust", caption, -1, -1, width + 40, height + 60 );
+      wid = window_create( wdwname, caption, -1, -1, width + 40, height + 60 );
    window_setData( wid, &done );
 
    /* custom widget for all! */
@@ -949,13 +949,13 @@ void dialogue_custom(
 /**
  * @brief Converts a custom dialogue to fullscreen.
  *
+ *    @param wid Window ID to use.
  *    @param enable Whether or not to enable it.
  *    @return 0 on success.
  */
-int dialogue_customFullscreen( int enable )
+int dialogue_customFullscreen( unsigned int wid, int enable )
 {
    struct dialogue_custom_data_s *cd;
-   unsigned int                   wid = window_get( "dlgCust" );
    int                            w, h;
    if ( wid == 0 )
       return -1;
@@ -984,14 +984,14 @@ int dialogue_customFullscreen( int enable )
 /**
  * @brief Resizes a custom dialogue.
  *
+ *    @param wid Window ID.
  *    @param width Width to set to.
  *    @param height Height to set to.
  *    @return 0 on success.
  */
-int dialogue_customResize( int width, int height )
+int dialogue_customResize( unsigned int wid, int width, int height )
 {
    struct dialogue_custom_data_s *cd;
-   unsigned int                   wid = window_get( "dlgCust" );
    if ( wid == 0 )
       return -1;
    cd         = (struct dialogue_custom_data_s *)window_getData( wid );

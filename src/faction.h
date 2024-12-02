@@ -72,7 +72,6 @@ void        faction_modPlayerRaw( int f, double mod );
 void        faction_setReputation( int f, double value );
 double      faction_reputation( int f );
 double      faction_reputationDefault( int f );
-void        faction_setReputation( int f, double value );
 int         faction_isPlayerFriend( int f );
 int         faction_isPlayerEnemy( int f );
 int         faction_isPlayerFriendSystem( int f, const StarSystem *sys );

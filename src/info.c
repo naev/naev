@@ -15,7 +15,6 @@
 #include "array.h"
 #include "dialogue.h"
 #include "equipment.h"
-#include "gui_osd.h"
 #include "hook.h"
 #include "land.h"
 #include "log.h"
@@ -1224,6 +1223,9 @@ static void info_openStandings( unsigned int wid )
    char **str;
    int    w, h, lw;
 
+   /* Update global standings just in case. */
+   faction_updateGlobal();
+
    /* Get dimensions. */
    info_getDim( wid, &w, &h, &lw );
 
@@ -1240,7 +1242,7 @@ static void info_openStandings( unsigned int wid )
    /* Text. */
    window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), 20, 0, "txtName",
                    &gl_defFont, NULL, NULL );
-   window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), 20, 0, "txtStanding",
+   window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), 40, 0, "txtStanding",
                    &gl_defFont, NULL, NULL );
    window_addText( wid, lw + 40, 0, ( w - ( lw + 60 ) ), h - 80, 0,
                    "txtDescription", &gl_defFont, NULL, NULL );
@@ -1274,7 +1276,7 @@ static void standings_update( unsigned int wid, const char *str )
    int              p, x, y;
    const glTexture *t;
    int              w, h, lw, l;
-   double           m;
+   double           m, ml;
    const int       *flist;
    char             buf[STRMAX];
 
@@ -1302,9 +1304,16 @@ static void standings_update( unsigned int wid, const char *str )
    /* Modify text. */
    y -= 10;
    m = round( faction_reputation( info_factions[p] ) );
-   snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
-             faction_reputationColourChar( info_factions[p] ), m,
-             faction_getStandingText( info_factions[p] ) );
+   l = snprintf( buf, sizeof( buf ), p_( "standings", "#%c%+.0f%%#0   [ %s ]" ),
+                 faction_reputationColourChar( info_factions[p] ), m,
+                 faction_getStandingText( info_factions[p] ) );
+   ml = round( system_getReputationOrGlobal( cur_system, info_factions[p] ) );
+   if ( ABS( ml - m ) > 1e-1 )
+      snprintf(
+         &buf[l], sizeof( buf ) - l,
+         p_( "standings", "\n#%c%+.0f%%#0 #nin %s#0" ),
+         faction_reputationColourCharSystem( info_factions[p], cur_system ), ml,
+         system_name( cur_system ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", x, y );
    y -= 20;
@@ -1461,7 +1470,10 @@ static void mission_menu_update( unsigned int wid, const char *str )
    snprintf( buf, sizeof( buf ), _( "%s\n#nReward:#0 %s\n\n%s" ), misn->title,
              misn->reward, misn->desc );
    window_modifyText( wid, "txtDesc", buf );
-   window_enableButton( wid, "btnAbortMission" );
+   if ( pilot_isFlag( player.p, PILOT_LANDING ) )
+      window_disableButton( wid, "btnAbortMission" );
+   else
+      window_enableButton( wid, "btnAbortMission" );
    window_enableCheckbox( wid, "chkHide" );
    window_enableCheckbox( wid, "chkPrefer" );
    window_checkboxSet( wid, "chkHide", misn_osdGetHide( misn ) );

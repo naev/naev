@@ -1073,8 +1073,22 @@ void faction_setReputation( int f, double value )
    if ( faction_isFlag( faction, FACTION_REPOVERRIDE ) )
       return;
 
+   /* Global and hit. */
    mod             = value - faction->player;
    faction->player = value;
+
+   /* Reset local. */
+   StarSystem *sys_stack = system_getAll();
+   for ( int j = 0; j < array_size( sys_stack ); j++ ) {
+      StarSystem *sys = &sys_stack[j];
+      for ( int k = 0; k < array_size( sys->presence ); k++ ) {
+         SystemPresence *sp = &sys->presence[k];
+         if ( sp->faction != f )
+            continue;
+         sp->local = value;
+      }
+   }
+
    /* Run hook if necessary. */
    if ( !faction_isFlag( faction, FACTION_DYNAMIC ) ) {
       HookParam hparam[7];
@@ -1108,11 +1122,11 @@ void faction_setReputation( int f, double value )
 double faction_reputation( int f )
 {
    if ( faction_isFaction( f ) ) {
-      Faction *fac = &faction_stack[f];
+      const Faction *fac = &faction_stack[f];
       if ( faction_isFlag( fac, FACTION_REPOVERRIDE ) )
          return fac->override;
       else
-         return fac->player;
+         return round( fac->player );
    }
    WARN( _( "Faction id '%d' is invalid." ), f );
    return -1000.;
@@ -1235,7 +1249,7 @@ char faction_reputationColourCharSystem( int f, const StarSystem *sys )
  */
 const char *faction_getStandingText( int f )
 {
-   return faction_getStandingTextAtValue( f, faction_stack[f].player );
+   return faction_getStandingTextAtValue( f, faction_reputation( f ) );
 }
 
 /**
@@ -1266,7 +1280,7 @@ const char *faction_getStandingTextAtValue( int f, double value )
       /* Set up the method:
        * standing:text_rank( standing ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_rank );
-      lua_pushnumber( naevL, value );
+      lua_pushnumber( naevL, round( value ) );
 
       /* Call function. */
       if ( nlua_pcall( faction->lua_env, 1, 1 ) ) {
@@ -1556,8 +1570,14 @@ static int faction_parse( Faction *temp, const char *file )
       xmlr_float( node, "lane_base_cost", temp->lane_base_cost );
       if ( xml_isNode( node, "colour" ) ) {
          const char *ctmp = xml_get( node );
-         if ( ctmp != NULL )
-            temp->colour = *col_fromName( xml_raw( node ) );
+         if ( ctmp != NULL ) {
+            const glColour *c = col_fromName( xml_raw( node ) );
+            if ( c != NULL )
+               temp->colour = *c;
+            else
+               WARN( _( "Faction '%s' has invalid colour '%s'!" ), temp->name,
+                     ctmp );
+         }
          /* If no named colour is present, RGB attributes are used. */
          else {
             /* Initialize in case a colour channel is absent. */

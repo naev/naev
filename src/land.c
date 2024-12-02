@@ -1423,6 +1423,8 @@ void land( Spob *p, int load )
       player.landed_times++;
       player.ps.landed_times++;
    }
+   /* Clear landing since we landed. */
+   pilot_rmFlag( player.p, PILOT_LANDING );
 
    /* Clear some unnecessary flags. */
    pilot_rmFlag( player.p, PILOT_COOLDOWN_BRAKE );

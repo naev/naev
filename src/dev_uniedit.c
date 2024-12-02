@@ -12,6 +12,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include <libgen.h>
 #include <unistd.h>
 
 #include "dev_uniedit.h"
@@ -36,6 +37,7 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 #include "unidiff.h"
+#include "utf8.h"
 
 #define BUTTON_WIDTH 100 /**< Map button width. */
 #define BUTTON_HEIGHT 30 /**< Map button height. */
@@ -973,15 +975,13 @@ static void uniedit_renderPresenceSum( double x, double y, double r )
 void uniedit_renderMap( double bx, double by, double w, double h, double x,
                         double y, double zoom, double r )
 {
-   /* background */
+   /* Background */
    gl_renderRect( bx, by, w, h, &cBlack );
-
-   if ( UNIEDIT_VIEW_DEFAULT )
-      map_renderDecorators( x, y, zoom, 1, 1. );
 
    /* Render faction disks. */
    switch ( uniedit_viewmode ) {
    case UNIEDIT_VIEW_DEFAULT:
+      map_renderDecorators( x, y, zoom, 1, 1. );
       map_renderFactionDisks( x, y, zoom, r, 1, 1. );
       map_renderSystemEnvironment( x, y, zoom, 1, 1. );
       break;
@@ -1641,18 +1641,26 @@ static int uniedit_checkName( const char *name )
 
 char *uniedit_nameFilter( const char *name )
 {
-   char *out = calloc( 1, ( strlen( name ) + 1 ) );
-   int   pos = 0;
-   for ( int i = 0; i < (int)strlen( name ); i++ ) {
-      if ( !ispunct( name[i] ) ) {
-         if ( name[i] == ' ' )
-            out[pos] = '_';
-         else
-            out[pos] = tolower( name[i] );
-         pos++;
+   size_t len = strlen( name ) + 1;
+   char  *out = malloc( len );
+   strncpy( out, name, len );
+   out[len - 1] = '\0';
+   size_t   i   = 0;
+   size_t   j   = 0;
+   uint32_t c;
+   while ( ( c = u8_nextchar( name, &i ) ) ) {
+      if ( isascii( c ) ) {
+         if ( ( c == ' ' ) || ( c == '/' ) || ( c == '\\' ) || ( c == ':' ) ||
+              ( c == '.' ) ) {
+            size_t o = u8_offset( name, j );
+            out[o]   = '_';
+         } else if ( isupper( c ) ) {
+            size_t o = u8_offset( name, j );
+            out[o]   = tolower( c );
+         }
       }
+      j++;
    }
-
    return out;
 }
 
@@ -1703,9 +1711,9 @@ static void uniedit_renameSys( void )
          }
 
          /* Change the name. */
-         filtered = uniedit_nameFilter( sys->name );
-         SDL_asprintf( &oldName, "%s/ssys/%s.xml", conf.dev_data_dir,
-                       filtered );
+         filtered = strdup( sys->filename );
+         SDL_asprintf( &oldName, "%s/ssys/%s", conf.dev_data_dir,
+                       basename( filtered ) );
          free( filtered );
 
          filtered = uniedit_nameFilter( name );
@@ -1717,11 +1725,14 @@ static void uniedit_renameSys( void )
             WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
 
          free( oldName );
-         free( newName );
+         free( sys->filename );
          free( sys->name );
 
-         sys->name = name;
+         sys->filename = newName;
+         sys->name     = name;
          dsys_saveSystem( sys );
+
+         /* TODO probably have to reupdate stack?? */
 
          /* Re-save adjacent systems. */
          for ( int j = 0; j < array_size( sys->jumps ); j++ )
@@ -1772,6 +1783,11 @@ static void uniedit_newSys( double x, double y )
    sys->spacedust = DUST_DENSITY_DEFAULT;
    sys->radius    = RADIUS_DEFAULT;
 
+   /* Set filename. */
+   char *cleanname = uniedit_nameFilter( sys->name );
+   SDL_asprintf( &sys->filename, "%s.xml", cleanname );
+   free( cleanname );
+
    /* Select new system. */
    uniedit_deselect();
    uniedit_selectAdd( sys );
@@ -1787,10 +1803,9 @@ static void uniedit_newSys( double x, double y )
  */
 static void uniedit_toggleJump( StarSystem *sys )
 {
-   StarSystem *isys = NULL;
    for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
-      int rm = 0;
-      isys   = uniedit_sys[i];
+      int         rm   = 0;
+      StarSystem *isys = uniedit_sys[i];
       for ( int j = 0; j < array_size( isys->jumps ); j++ ) {
          StarSystem *target = isys->jumps[j].target;
          /* Target already exists, remove. */
@@ -1829,8 +1844,10 @@ static void uniedit_toggleJump( StarSystem *sys )
 
       if ( conf.devautosave ) {
          int ret = dsys_saveSystem( sys );
-         if ( isys != NULL )
+         for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+            StarSystem *isys = uniedit_sys[i];
             ret |= dsys_saveSystem( isys );
+         }
          if ( ret )
             uniedit_saveError();
       }

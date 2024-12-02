@@ -224,6 +224,7 @@ int spob_getService( const char *name )
  */
 const char *spob_getClassName( const char *class )
 {
+   /* Station Classes. */
    if ( strcmp( class, "0" ) == 0 )
       return _( "Civilian Station" );
    else if ( strcmp( class, "1" ) == 0 )
@@ -234,6 +235,7 @@ const char *spob_getClassName( const char *class )
       return _( "Robotic Station" );
    else if ( strcmp( class, "4" ) == 0 )
       return _( "Artificial Ecosystem" );
+   /* Planet Classes. */
    else if ( strcmp( class, "A" ) == 0 )
       return _( "Geothermal" );
    else if ( strcmp( class, "B" ) == 0 )
@@ -272,9 +274,12 @@ const char *spob_getClassName( const char *class )
       return _( "Rogue" );
    else if ( strcmp( class, "S" ) == 0 || strcmp( class, "T" ) == 0 )
       return _( "Ultragiants" );
-   else if ( strcmp( class, "X" ) == 0 || strcmp( class, "Y" ) == 0 ||
-             strcmp( class, "Z" ) == 0 )
+   else if ( strcmp( class, "X" ) == 0 )
       return _( "Demon" );
+   else if ( strcmp( class, "Y" ) == 0 )
+      return _( "Toxic" );
+   else if ( strcmp( class, "Z" ) == 0 )
+      return _( "Shattered" );
    return class;
 }
 
@@ -2576,6 +2581,9 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          spob->lua_file = strdup( str );
    }
 
+   /* Save the filename. */
+   spob->filename = strdup( filename );
+
 #if DEBUGGING
    /* Check for graphics. */
    if ( ( spob->gfx_exterior != NULL ) && !PHYSFS_exists( spob->gfx_exterior ) )
@@ -3829,6 +3837,7 @@ void space_exit( void )
    for ( int i = 0; i < array_size( spob_stack ); i++ ) {
       Spob *spb = &spob_stack[i];
 
+      free( spb->filename );
       free( spb->name );
       free( spb->display );
       free( spb->feature );

@@ -784,7 +784,7 @@ static int ship_loadPLG( Ship *temp, const char *buf )
 
    do { /* load the polygon data */
       if ( xml_isNode( node, "polygons" ) )
-         poly_load( &temp->polygon, node );
+         poly_load( &temp->polygon, node, file );
    } while ( xml_nextNode( node ) );
 
    xmlFreeDoc( doc );

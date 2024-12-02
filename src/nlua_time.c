@@ -183,6 +183,7 @@ static int timeL_new( lua_State *L )
  *
  * @usage new_time = time.get() + time.new( 0, 5, 0 ) -- Adds 5 periods to the
  * current date
+ * @usage t:add( time.new( 0, 3, 0 ) ) -- Directly modifies t
  *
  *    @luatparam Time t1 Time metatable to add to.
  *    @luatparam Time t2 Time metatable added.
@@ -225,6 +226,7 @@ static int timeL_add__( lua_State *L )
  *
  * @usage new_time = time.get() - time.new( 0, 3, 0 ) -- Subtracts 3 periods
  * from the current date
+ * @usage t:sub( time.new( 0, 3, 0 ) ) -- Directly modifies t
  *
  *    @luatparam Time t1 Time metatable to subtract from.
  *    @luatparam Time t2 Time metatable subtracted.

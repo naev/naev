@@ -255,6 +255,8 @@ static void input_joyaxis( const SDL_Keycode axis, const int value );
 static void input_joyevent( const int event, const SDL_Keycode button );
 static void input_keyevent( const int event, const SDL_Keycode key,
                             const SDL_Keymod mod, const int repeat );
+static int  input_doubleClickTest( unsigned int *time, const void **last,
+                                   const void *clicked );
 
 /**
  * @brief Sets the default input keys.
@@ -1538,66 +1540,72 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
                     double minpr, double minr )
 {
    unsigned int pid;
-   const Pilot *p;
-   double       r, rp;
-   double       d, dp;
+   double       dp;
    int          pntid, jpid, astid, fieid;
 
    /* Don't allow selecting a new target with the right mouse button
     * (prevents pilots from getting in the way of autonav). */
    if ( event->button.button == SDL_BUTTON_RIGHT ) {
-      pid = player.p->target;
-      p   = pilot_get( pid );
-      dp  = pow2( x - p->solid.pos.x ) + pow2( y - p->solid.pos.y );
+      pid            = player.p->target;
+      const Pilot *p = pilot_get( pid );
+      dp             = pow2( x - p->solid.pos.x ) + pow2( y - p->solid.pos.y );
    } else {
       dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-      p  = pilot_get( pid );
    }
 
-   d  = system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
-   rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->size / 2 * zoom, minpr );
+   system_getClosest( cur_system, &pntid, &jpid, &astid, &fieid, x, y );
 
    if ( pntid >= 0 ) { /* Spob is closer. */
-      const Spob *pnt = cur_system->spobs[pntid];
-      r               = MAX( 1.5 * pnt->radius * zoom, minr );
-   } else if ( jpid >= 0 ) {
-      const JumpPoint *jp = &cur_system->jumps[jpid];
-      r                   = MAX( 1.5 * jp->radius * zoom, minr );
-   } else if ( astid >= 0 ) {
-      AsteroidAnchor *field = &cur_system->asteroids[fieid];
-      Asteroid       *ast   = &field->asteroids[astid];
-
+      const Spob *spb  = cur_system->spobs[pntid];
+      double      rspb = MAX( 1.5 * spb->radius * zoom, minr );
+      double      dspb = hypotf( spb->pos.x - x, spb->pos.y - y );
+      if ( dspb > rspb )
+         pntid = -1;
+   }
+   if ( jpid >= 0 ) {
+      const JumpPoint *jmp  = &cur_system->jumps[jpid];
+      double           rjmp = MAX( 1.5 * jmp->radius * zoom, minr );
+      double           djmp = hypotf( jmp->pos.x - x, jmp->pos.y - y );
+      if ( djmp > rjmp )
+         jpid = -1;
+   }
+   if ( astid >= 0 ) {
+      const AsteroidAnchor *field = &cur_system->asteroids[fieid];
+      const Asteroid       *ast   = &field->asteroids[astid];
       /* Recover the right gfx */
-      r = MAX( MAX( ast->gfx->sw * zoom, minr ), ast->gfx->sh * zoom );
-   } else
-      r = 0.;
-
-   /* Reject pilot if it's too far or a valid spob is closer. */
-   if ( ( dp > pow2( rp ) ) || ( ( d < pow2( r ) ) && ( dp > d ) ) )
-      pid = PLAYER_ID;
-
-   if ( d > pow2( r ) ) /* Spob or jump point is too far. */
-      jpid = pntid = astid = fieid = -1;
+      double rast =
+         MAX( MAX( ast->gfx->sw * zoom, minr ), ast->gfx->sh * zoom );
+      double dast = hypotf( ast->sol.pos.x - x, ast->sol.pos.y - y );
+      if ( dast > rast )
+         astid = -1;
+   }
+   if ( pid != PLAYER_ID ) {
+      const Pilot *p = pilot_get( pid );
+      double       rp =
+         MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->size / 2 * zoom, minpr );
+      /* Reject pilot if it's too far or a valid spob is closer. */
+      if ( dp > pow2( rp ) )
+         pid = PLAYER_ID;
+   }
 
    /* Target a pilot, spob or jump, and/or perform an appropriate action. */
    if ( event->button.button == SDL_BUTTON_LEFT ) {
-      if ( pid != PLAYER_ID ) {
-         return input_clickedPilot( pid, 0 );
-      } else if ( pntid >= 0 ) { /* Spob is closest. */
-         return input_clickedSpob( pntid, 0 );
-      } else if ( jpid >= 0 ) { /* Jump point is closest. */
-         return input_clickedJump( jpid, 0 );
-      } else if ( astid >= 0 ) { /* Asteroid is closest. */
-         return input_clickedAsteroid( fieid, astid );
-      }
+      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0 ) )
+         return 1;
+      else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 0 ) )
+         return 1;
+      else if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 0 ) )
+         return 1;
+      else if ( ( astid >= 0 ) && input_clickedAsteroid( fieid, astid ) )
+         return 1;
    }
    /* Right click only controls autonav. */
    else if ( event->button.button == SDL_BUTTON_RIGHT ) {
-      if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 1 ) )
-         return 1;
-      else if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 1 ) )
+      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 1 ) )
          return 1;
       else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 1 ) )
+         return 1;
+      else if ( ( pid != PLAYER_ID ) && input_clickedPilot( pid, 1 ) )
          return 1;
 
       /* Go to position, if the position is >= 1500 px away. */
@@ -1630,17 +1638,24 @@ int input_clickedJump( int jump, int autonav )
    if ( player.p->nav_hyperspace != jump )
       map_select( jp->target, 0 );
 
-   if ( ( jump == player.p->nav_hyperspace ) && input_isDoubleClick( jp ) ) {
-      player_targetHyperspaceSet( jump, 0 );
-      if ( space_canHyperspace( player.p ) )
-         player_jump();
-      else
-         player_autonavStart();
-      return 1;
+   static unsigned int     lastclick_time = 0;
+   static const JumpPoint *lastclick_jump = NULL;
+   int                     doubleclick    = input_doubleClickTest(
+      &lastclick_time, (const void **)&lastclick_jump, jp );
+
+   if ( jump == player.p->nav_hyperspace ) {
+      if ( doubleclick ) {
+         player_targetHyperspaceSet( jump, 0 );
+         if ( space_canHyperspace( player.p ) )
+            player_jump();
+         else
+            player_autonavStart();
+         return 1;
+      } else
+         return 0; /* Already selected, ignore. */
    } else
       player_targetHyperspaceSet( jump, 0 );
 
-   input_clicked( jp );
    return 0;
 }
 
@@ -1664,23 +1679,31 @@ int input_clickedSpob( int spob, int autonav )
       return 1;
    }
 
-   if ( spob == player.p->nav_spob && input_isDoubleClick( (void *)pnt ) ) {
-      player_hyperspacePreempt( 0 );
-      spob_updateLand( pnt );
-      if ( !spob_isFlag( pnt, SPOB_SERVICE_INHABITED ) || pnt->can_land ||
-           ( pnt->land_override > 0 ) ) {
-         int ret = player_land( 0 );
-         if ( ret == PLAYER_LAND_AGAIN ) {
-            player_autonavSpob( pnt->name, 1 );
-         } else if ( ret == PLAYER_LAND_DENIED ) {
-            player_autonavSpob( pnt->name, 0 );
-         }
+   static unsigned int lastclick_time = 0;
+   static const Spob  *lastclick_spob = NULL;
+   int                 doubleclick    = input_doubleClickTest(
+      &lastclick_time, (const void **)&lastclick_spob, pnt );
+
+   if ( spob == player.p->nav_spob ) {
+      if ( doubleclick ) {
+         player_hyperspacePreempt( 0 );
+         spob_updateLand( pnt );
+         if ( !spob_isFlag( pnt, SPOB_SERVICE_INHABITED ) || pnt->can_land ||
+              ( pnt->land_override > 0 ) ) {
+            int ret = player_land( 0 );
+            if ( ret == PLAYER_LAND_AGAIN ) {
+               player_autonavSpob( pnt->name, 1 );
+            } else if ( ret == PLAYER_LAND_DENIED ) {
+               player_autonavSpob( pnt->name, 0 );
+            }
+         } else
+            player_hailSpob();
+         return 1;
       } else
-         player_hailSpob();
+         return 0; /* Already selected, ignore. */
    } else
       player_targetSpobSet( spob );
 
-   input_clicked( pnt );
    return 1;
 }
 
@@ -1693,10 +1716,9 @@ int input_clickedSpob( int spob, int autonav )
  */
 int input_clickedAsteroid( int field, int asteroid )
 {
-   const AsteroidAnchor *anchor = &cur_system->asteroids[field];
-   const Asteroid       *ast    = &anchor->asteroids[asteroid];
+   // const AsteroidAnchor *anchor = &cur_system->asteroids[field];
+   // const Asteroid       *ast    = &anchor->asteroids[asteroid];
    player_targetAsteroidSet( field, asteroid );
-   input_clicked( ast );
    return 1;
 }
 
@@ -1709,8 +1731,6 @@ int input_clickedAsteroid( int field, int asteroid )
  */
 int input_clickedPilot( unsigned int pilot, int autonav )
 {
-   const Pilot *p;
-
    if ( pilot == PLAYER_ID )
       return 0;
 
@@ -1719,18 +1739,26 @@ int input_clickedPilot( unsigned int pilot, int autonav )
       player_autonavPil( pilot );
       return 1;
    }
+   const Pilot *p = pilot_get( pilot );
 
-   p = pilot_get( pilot );
-   if ( pilot == player.p->target && input_isDoubleClick( p ) ) {
-      if ( pilot_isDisabled( p ) || pilot_isFlag( p, PILOT_BOARDABLE ) ) {
-         if ( player_tryBoard( 0 ) == PLAYER_BOARD_RETRY )
-            player_autonavBoard( player.p->target );
+   static unsigned int lastclick_time  = 0;
+   static const Pilot *lastclick_pilot = NULL;
+   int                 doubleclick     = input_doubleClickTest(
+      &lastclick_time, (const void **)&lastclick_pilot, p );
+
+   if ( pilot == player.p->target ) {
+      if ( doubleclick ) {
+         if ( pilot_isDisabled( p ) || pilot_isFlag( p, PILOT_BOARDABLE ) ) {
+            if ( player_tryBoard( 0 ) == PLAYER_BOARD_RETRY )
+               player_autonavBoard( player.p->target );
+         } else
+            player_hail();
+         return 1;
       } else
-         player_hail();
+         return 0; /* Ignore reselection. */
    } else
       player_targetSet( pilot );
 
-   input_clicked( (void *)p );
    return 1;
 }
 
@@ -1756,14 +1784,35 @@ int input_isDoubleClick( const void *clicked )
    unsigned int threshold;
 
    if ( conf.mouse_doubleclick <= 0. )
-      return 1;
+      return 0;
 
    /* Most recent time that constitutes a valid double-click. */
-   threshold = input_mouseClickLast + (int)( conf.mouse_doubleclick * 1000 );
+   threshold =
+      input_mouseClickLast + (int)floor( conf.mouse_doubleclick * 1000. );
 
    if ( ( SDL_GetTicks() <= threshold ) && ( clicked == input_lastClicked ) )
       return 1;
 
+   return 0;
+}
+
+static int input_doubleClickTest( unsigned int *time, const void **last,
+                                  const void *clicked )
+{
+   unsigned int threshold, ticks;
+
+   if ( conf.mouse_doubleclick <= 0. )
+      return 0;
+
+   /* Most recent time that constitutes a valid double-click. */
+   threshold = *time + (int)floor( conf.mouse_doubleclick * 1000. );
+   ticks     = SDL_GetTicks();
+
+   if ( ( ticks <= threshold ) && ( *last == clicked ) )
+      return 1;
+
+   *last = clicked;
+   *time = ticks;
    return 0;
 }
 
