@@ -71,7 +71,7 @@ function accept()
 
    vn.label("my name")
    m(_([["Uhh… tough luck, captain, I'm not allowed to tell you. Too bad.]]))
-   m(_([["Let's just say that my espionage services are of the best, and leave it at that… #nshall#0 we?"]])) -- When possible, the word "shall" should be italicized and the color change removed.
+   m(_([["Let's just say that my espionage services are of the best, and leave it at that… *shall* we?"]]))
    vn.jump("mission description")
 
    vn.label("mission description")
