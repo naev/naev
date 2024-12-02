@@ -1126,7 +1126,7 @@ double faction_reputation( int f )
       if ( faction_isFlag( fac, FACTION_REPOVERRIDE ) )
          return fac->override;
       else
-         return fac->player;
+         return round( fac->player );
    }
    WARN( _( "Faction id '%d' is invalid." ), f );
    return -1000.;
@@ -1249,7 +1249,7 @@ char faction_reputationColourCharSystem( int f, const StarSystem *sys )
  */
 const char *faction_getStandingText( int f )
 {
-   return faction_getStandingTextAtValue( f, round( faction_stack[f].player ) );
+   return faction_getStandingTextAtValue( f, faction_reputation( f ) );
 }
 
 /**
