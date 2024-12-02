@@ -10,6 +10,8 @@
 #include <lauxlib.h>
 #include <lua.h>
 #include <stdlib.h>
+
+#include "naev.h"
 /** @endcond */
 
 #include "nlua_tk.h"
@@ -26,6 +28,7 @@
 #include "toolkit.h"
 
 /* Stuff for the custom toolkit. */
+#define TK_CUSTNAME "__cstdlg"
 #define TK_CUSTOMDONE "__customDone"
 typedef struct custom_functions_s {
    lua_State *L;    /**< Assosciated Lua state. */
@@ -454,6 +457,8 @@ static int tkL_custom( lua_State *L )
    const char         *caption = luaL_checkstring( L, 1 );
    custom_functions_t *cf      = calloc( 1, sizeof( custom_functions_t ) );
    int                 nodynamic;
+   char               *buf, dlgname[STRMAX_SHORT];
+   ;
 
    /* Set up custom function pointers. */
    cf->L = L;
@@ -478,12 +483,41 @@ static int tkL_custom( lua_State *L )
    lua_pushboolean( L, 0 );
    nlua_setenv( L, cf->env, TK_CUSTOMDONE );
 
+   /* Get current dialogue. */
+   buf = NULL;
+   nlua_getenv( L, cf->env, TK_CUSTNAME );
+   if ( lua_isstring( L, -1 ) )
+      buf = strdup( lua_tostring( L, -1 ) );
+   lua_pop( L, 1 );
+   /* Set new dialogue. */
+   static unsigned int dlgcust_counter = 0;
+   snprintf( dlgname, sizeof( dlgname ), "dlgCust%u", ++dlgcust_counter );
+   lua_pushstring( L, dlgname );
+   nlua_setenv( L, cf->env, TK_CUSTNAME );
+
    /* Create the dialogue. */
-   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf,
-                    !nodynamic, cust_cleanup );
+   dialogue_custom( dlgname, caption, w, h, cust_update, cust_render,
+                    cust_event, cf, !nodynamic, cust_cleanup );
    cf->done = 1;
 
+   /* Restore previous value. */
+   if ( buf == NULL )
+      lua_pushnil( L );
+   else
+      lua_pushstring( L, buf );
+   nlua_setenv( L, cf->env, TK_CUSTNAME );
+   free( buf );
+
    return 0;
+}
+
+/* Get the dialogue WID. */
+static unsigned int dlgWid( lua_State *L )
+{
+   nlua_getenv( L, __NLUA_CURENV, TK_CUSTNAME );
+   unsigned int wid = window_get( luaL_checkstring( L, -1 ) );
+   lua_pop( L, 1 );
+   return wid;
 }
 
 /**
@@ -495,7 +529,7 @@ static int tkL_custom( lua_State *L )
 static int tkL_customRename( lua_State *L )
 {
    const char  *s   = luaL_checkstring( L, 1 );
-   unsigned int wid = window_get( "dlgCust" );
+   unsigned int wid = dlgWid( L );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    window_setDisplayname( wid, s );
@@ -511,10 +545,10 @@ static int tkL_customRename( lua_State *L )
 static int tkL_customFullscreen( lua_State *L )
 {
    int          enable = lua_toboolean( L, 1 );
-   unsigned int wid    = window_get( "dlgCust" );
+   unsigned int wid    = dlgWid( L );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
-   dialogue_customFullscreen( enable );
+   dialogue_customFullscreen( wid, enable );
    return 0;
 }
 
@@ -528,12 +562,12 @@ static int tkL_customFullscreen( lua_State *L )
 static int tkL_customResize( lua_State *L )
 {
    int          w, h;
-   unsigned int wid = window_get( "dlgCust" );
+   unsigned int wid = dlgWid( L );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    w = luaL_checkinteger( L, 1 );
    h = luaL_checkinteger( L, 2 );
-   dialogue_customResize( w, h );
+   dialogue_customResize( wid, w, h );
    return 0;
 }
 
@@ -547,7 +581,7 @@ static int tkL_customResize( lua_State *L )
 static int tkL_customSize( lua_State *L )
 {
    int          w, h;
-   unsigned int wid = window_get( "dlgCust" );
+   unsigned int wid = dlgWid( L );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    window_dimWindow( wid, &w, &h );
@@ -565,7 +599,7 @@ static int tkL_customSize( lua_State *L )
  */
 static int tkL_customDone( lua_State *L )
 {
-   unsigned int wid = window_get( "dlgCust" );
+   unsigned int wid = dlgWid( L );
    if ( wid == 0 )
       return NLUA_ERROR( L, _( "custom dialogue not open" ) );
    lua_pushboolean( L, 1 );
