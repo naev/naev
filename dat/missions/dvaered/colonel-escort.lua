@@ -156,7 +156,8 @@ function jumpin ()
 end
 
 function ambush ()
-   if not naev.claimTest( system.cur(), true )
+   if not naev.claimTest( system.cur(), true ) then
+      source_system = system.cur()
       return
    end
 
