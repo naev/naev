@@ -1249,7 +1249,7 @@ char faction_reputationColourCharSystem( int f, const StarSystem *sys )
  */
 const char *faction_getStandingText( int f )
 {
-   return faction_getStandingTextAtValue( f, faction_stack[f].player );
+   return faction_getStandingTextAtValue( f, round( faction_stack[f].player ) );
 }
 
 /**
@@ -1280,7 +1280,7 @@ const char *faction_getStandingTextAtValue( int f, double value )
       /* Set up the method:
        * standing:text_rank( standing ) */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_text_rank );
-      lua_pushnumber( naevL, value );
+      lua_pushnumber( naevL, round( value ) );
 
       /* Call function. */
       if ( nlua_pcall( faction->lua_env, 1, 1 ) ) {

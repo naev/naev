@@ -5,6 +5,7 @@
    * Centered buttons at the top of the holo-archives
    * Fixed conf.mouse_doubleclick not disabling when set to 0
    * Fixed crashes when a faction is assigned a non-existent colour
+   * Round reputation values when displaying standing text for consistency
    * Display local standing in the information window
    * Can no longer abort missions during landing animation
    * Fixed editor crash with empty descriptions
