@@ -1,3 +1,4 @@
+//use mlua::prelude::*;
 use crate::gettext;
 use crate::ndata;
 use constcat::concat;
@@ -188,15 +189,35 @@ impl NLua<'_> {
         package.set("path", concat!("?.lua;", LUA_INCLUDE_PATH, "?.lua"))?;
         package.set("cpath", "")?;
         let loaders: mlua::Table = package.get("loaders")?;
+        loaders.push(
+            lua.create_function(|lua, name: String| -> mlua::Result<mlua::Value> {
+                let globals = lua.globals();
+                let package_val: mlua::Value = globals.get("package")?;
+                let package: mlua::Table = match package_val {
+                    mlua::Value::Table(t) => t,
+                    _ => {
+                        return Ok(mlua::Value::String(
+                            lua.create_string(gettext::gettext(" package not found."))?,
+                        ));
+                    }
+                };
+                let preload: mlua::Table = package.get("preload")?;
+                let lib: mlua::Value = preload.get(name.clone())?;
+                match lib {
+                    mlua::Value::Nil => {
+                        return Ok(mlua::Value::String(lua.create_string(format!(
+                            "\n\tno field package.preload['{}']",
+                            name
+                        ))?));
+                    }
+                    v => Ok(v),
+                }
+            })?,
+        )?;
         // TODO reimplement in rust...
         unsafe {
             type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
             type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
-            loaders.push(
-                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-                    naevc::nlua_package_preload,
-                ))?,
-            )?;
             loaders.push(
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
                     naevc::nlua_package_loader_lua,
@@ -207,12 +228,6 @@ impl NLua<'_> {
                     naevc::nlua_package_loader_c,
                 ))?,
             )?;
-            loaders.push(lua.create_c_function(std::mem::transmute::<
-                CFunctionNaev,
-                CFunctionMLua,
-            >(
-                naevc::nlua_package_loader_croot
-            ))?)?;
         }
 
         // Global state table _G should refer back to the environment.

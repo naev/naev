@@ -78,7 +78,7 @@ static int        nlua_errTraceInternal( lua_State *L, int idx );
 
 static const lua_CFunction loaders[] = {
    nlua_package_preload, nlua_package_loader_lua, nlua_package_loader_c,
-   nlua_package_loader_croot, NULL }; /**< Our loaders. */
+   NULL }; /**< Our loaders. */
 
 /**
  * @brief Handles what to do when Lua panics.
@@ -620,20 +620,6 @@ int nlua_package_loader_c( lua_State *L )
       lua_pushcfunction( L, luaopen_yaml );
    else
       lua_pushnil( L );
-   return 1;
-}
-
-/**
- * @brief load( string module ) -- searcher function to replace
- * package.loaders[4] (Lua 5.1), i.e., for C packages.
- *
- *    @param L Lua Environment.
- *    @return Stack depth (1), and on the stack: a loader function, a string
- * explaining there is none, or nil (no explanation).
- */
-int nlua_package_loader_croot( lua_State *L )
-{
-   lua_pushnil( L );
    return 1;
 }
 
