@@ -3,7 +3,7 @@
 <mission name="Dvaered Colonel Escort">
  <unique />
  <priority>4</priority>
- <chance>43</chance>
+ <chance>18</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>
  <cond>require("misn_test").reweight_active()</cond>
@@ -12,7 +12,7 @@
 --[[
 
    Mission: Escort a Dvaered colonel
-   Description: Small mission where you escort a Dvaered Arsenal.
+   Description: Small mission where you escort a Dvaered Ancestor.
                 This is a one-off that's not part of any major
                 storyline; the in-game purpose will remain a mystery.
 
@@ -35,7 +35,7 @@ function create()
    mem.destspb = spbs[ rnd.rnd(1,#spbs) ]
    mem.dest_sys = mem.destspb:system()
    mem.npc_image, mem.npc_portrait = vni.dvaeredMilitary()
-   misn.setNPC(npc_name, mem.npc_portrait, _("A Dvaered soldier, very professional-looking, is sitting with an excellant posture at the bar.") )
+   misn.setNPC(npc_name, mem.npc_portrait, _("A Dvaered soldier, very professional-looking, is sitting with an excellent posture at the bar.") )
 end
 
 local function factions()
@@ -75,7 +75,7 @@ function accept()
    vn.jump("mission description")
 
    vn.label("mission description")
-   m(fmt.f(_([["Well, to the point. I need somebody who's not crazy to escort me and my Arsenal to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]),
+   m(fmt.f(_([["Well, to the point. I need somebody who's not crazy to escort me and my Ancestor to {pnt} in the {sys} system. Would you do that? I can't tell you why, that would be classified information leaked to an outsider. Very dangerous, especially when we can't trust you.]]),
      {pnt=mem.destspb, sys=mem.dest_sys}))
    m(_([["One more thing: another warlord would be only too happy to blow any of the colonel rank such as myself up, so you may need to expect attacks. The ship will probably be called 'Asheron Anomaly', but it may be something else."]]))
    vn.menu{
@@ -125,51 +125,62 @@ function accept()
    misn.accept()
 
    misn.setReward(reward)
-   misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Arsenal, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspb, sys=mem.dest_sys}))
+   misn.setDesc(fmt.f(_("Escort a Dvaered colonel, who is flying an Ancestor, to {pnt} in the {sys} system. You haven't been told why, but there may be a large payment."), {pnt=mem.destspb, sys=mem.dest_sys}))
    misn.osdCreate(_("Dvaered colonel escort"), {
       fmt.f(_("Escort a Dvaered colonel to {pnt} in the {sys} system."), {pnt=mem.destspb, sys=mem.dest_sys}),
    })
    misn.markerAdd( mem.destspb )
-   hook.land( "land" )
-   local colonel_ship = ship.get("Dvaered Arsenal")
-   escort.init( colonel_ship, {
-      func_pilot_create = function ( p )
-        p:rename("Radver")
-        local ffriendly = factions()
-        p:setFaction( ffriendly )
-   end } )
 
-   hook.jumpin( "ambush" )
+   escort.init( { colonel_ship }, {
+      func_pilot_create = "create_radver"
+   } )
+   escort.setDest( mem.destspb, "success" )
+
+   hook.jumpin ( "jumpin" )
+end
+
+function create_radver ( p ) -- luacheck: globals create_radver
+   p:rename("Radver")
+   local ffriendly = factions() -- codespell:ignore ffriendly
+   p:setFaction( ffriendly ) -- codespell:ignore ffriendly
 end
 
 local source_system = system.cur()
-function ambush ()
+function jumpin ()
    if not naev.claimTest( system.cur(), true ) then
       source_system = system.cur()
       return
-    end
+   end
+
+   hook.timer( 20, "ambush" )
+end
+
+function ambush ()
+   if not naev.claimTest( system.cur(), true )
+      return
+   end
 
    if mem.ambushed then return end
 
    mem.ambushed = true
 
    local _ffriendly, fhostile = factions()
-   pilot.add( "Dvaered Phalanx", fhostile, source_system, _("Asheron Anomaly") )
+   pilot.add( "Dvaered Vigilance", fhostile, setHilight(true), source_system, _("Asheron Anomaly") )
 end
 
-function land ()
+function success () -- luacheck: globals success
    if spob.cur() == mem.destspb then
       vn.clear()
       vn.scene()
       local m = vn.newCharacter( npc_name, {image=mem.npc_image} )
       vn.transition()
-      m(fmt.f(_([[As you land on {pnt} with the Arsenal close behind, you receive an intercom message. The Dvaered seems to have changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]),
+      m(fmt.f(_([[As you land on {pnt} with the Ancestor close behind, you receive an intercom message. The Dvaered seems to have changed appearance. "Good job bringing me here!" says the colonel. "Here is {reward}, as we agreed."]]),
             {pnt=mem.destspb, reward=fmt.credits(reward)}) )
       vn.func( function () player.pay(reward) end )
       vn.sfxVictory()
       vn.na( fmt.reward(reward) )
       vn.run()
-      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Arsenal to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort.]]),
+      neu.addMiscLog( fmt.f(_([[You escorted a Dvaered colonel who was flying an Ancestor to {pnt}. This colonel, who said their name could be Radver, was very polite to you, though they didn't tell you why they needed the escort. Perhaps because of a hostile warlord's Vigilance.]]),
             {pnt=mem.destspb} ) )
       misn.finish( true )
    end
