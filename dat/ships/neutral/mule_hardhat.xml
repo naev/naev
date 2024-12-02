@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Mule Hardhat" inherits="Mule">
+ <rarity>2</rarity>
  <price>1100000</price>
  <description>Specially ordered by the Mining Vrata, the Mule Hardhat is a modified version of the Mule with a focus on augmenting the mining capabilities. In particular, the hull has been significantly reinforced to be able to withstand occasional collisions with asteroids. A built-in asteroid scanner, in addition to specialized asteroid processing equipment has made it quite popular among miners. However, such changes come with an increase in the fabrication cost.</description>
  <stats>
