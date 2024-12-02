@@ -109,10 +109,11 @@ typedef struct Player_s {
    double      mousex;  /**< Mouse X position (for mouse flying). */
    double      mousey;  /**< Mouse Y position (for mouse flying). */
    double
-         speed; /**< Gameplay speed modifier, multiplies the ship base speed. */
-   char *chapter;      /**< Chapter information. */
-   char *difficulty;   /**< Player-specific difficulty. */
-   int   discover_off; /**< Player is unable to discover anything. */
+      speed; /**< Gameplay speed modifier, multiplies the ship base speed. */
+   double speed_autonav; /**< Autonav speed. */
+   char  *chapter;       /**< Chapter information. */
+   char  *difficulty;    /**< Player-specific difficulty. */
+   int    discover_off;  /**< Player is unable to discover anything. */
 
    /* Loaded game version. */
    char *loaded_version; /**< Version of the loaded save game. */

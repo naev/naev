@@ -256,9 +256,7 @@ local message_handler_funcs = {
       if data and data:exists() then
          ai.hostile( data ) -- Set hostile
          -- Also signal to other followers
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "l_attacked", data )
-         end
+         p:msg( p:followers(), "l_attacked", data )
          if not si.fighting then
             if should_attack( data, si, true ) then
                if dopush then
@@ -328,6 +326,12 @@ local message_handler_funcs = {
       p:taskClear()
       return true
    end,
+   e_autonav = function( p, _si, dopush, sender, _data )
+      local l = p:leader()
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      ai.pushtask( "flyback", false )
+      return true
+   end
 }
 
 -- Returns true if the task changed

@@ -13,6 +13,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include <libgen.h>
+
 #include "dev_sysedit.h"
 
 #include "array.h"
@@ -332,8 +334,10 @@ static void sysedit_close( unsigned int wid, const char *wgt )
    system_updateAsteroids( sysedit_sys );
 
    /* Save the system */
-   if ( conf.devautosave )
-      dsys_saveSystem( sysedit_sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sysedit_sys ) )
+         uniedit_saveError();
+   }
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
@@ -437,8 +441,10 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    space_reconstructPresences();
 
    if ( !uniedit_diffMode ) {
-      if ( conf.devautosave )
-         dpl_saveSpob( p );
+      if ( conf.devautosave ) {
+         if ( dpl_saveSpob( p ) )
+            uniedit_saveError();
+      }
 
       /* Clean up presences. */
       space_reconstructPresences();
@@ -486,6 +492,11 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    p       = spob_new();
    p->name = name;
 
+   /* Set filename. */
+   char *cleanname = uniedit_nameFilter( p->name );
+   SDL_asprintf( &p->filename, "%s.xml", cleanname );
+   free( cleanname );
+
    /* Base spob data off another. */
    good = 0;
    while ( !good ) {
@@ -512,8 +523,10 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
    economy_execQueued();
 
    if ( conf.devautosave ) {
-      dsys_saveSystem( sysedit_sys );
-      dpl_saveSpob( p );
+      int ret = dsys_saveSystem( sysedit_sys );
+      ret |= dpl_saveSpob( p );
+      if ( ret )
+         uniedit_saveError();
    }
 
    /* Reload graphics. */
@@ -598,8 +611,10 @@ static void sysedit_btnNewAsteroids( unsigned int wid_unused,
       return;
    }
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sysedit_sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sysedit_sys ) )
+         uniedit_saveError();
+   }
 }
 
 static UniAttribute_t *sysedit_asteroidsAttr( const AsteroidAnchor *ast )
@@ -654,9 +669,9 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
          }
 
          /* Rename. */
-         filtered = uniedit_nameFilter( p->name );
-         SDL_asprintf( &oldName, "%s/spob/%s.xml", conf.dev_data_dir,
-                       filtered );
+         filtered = strdup( p->filename );
+         SDL_asprintf( &oldName, "%s/spob/%s", conf.dev_data_dir,
+                       basename( filtered ) );
          free( filtered );
 
          filtered = uniedit_nameFilter( name );
@@ -669,10 +684,11 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          /* Clean up. */
          free( oldName );
-         free( newName );
+         free( p->filename );
 
          /* Replace name in stack. */
          spob_rename( p, name );
+         p->filename = newName;
 
          dsys_saveSystem( sysedit_sys );
          dpl_saveSpob( p );
@@ -1336,10 +1352,12 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          sysedit_drag = 0;
 
          if ( conf.devautosave ) {
-            dsys_saveSystem( sysedit_sys );
+            int ret = dsys_saveSystem( sysedit_sys );
             for ( int i = 0; i < sysedit_nselect; i++ )
                if ( sysedit_select[i].type == SELECT_SPOB )
-                  dpl_saveSpob( sys->spobs[sysedit_select[i].u.spob] );
+                  ret |= dpl_saveSpob( sys->spobs[sysedit_select[i].u.spob] );
+            if ( ret )
+               uniedit_saveError();
          }
       }
       if ( sysedit_dragSel ) {
@@ -1358,10 +1376,12 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          /* Save all spobs in our selection - their positions might have
           * changed. */
          if ( conf.devautosave ) {
-            dsys_saveSystem( sysedit_sys );
+            int ret = dsys_saveSystem( sysedit_sys );
             for ( int i = 0; i < sysedit_nselect; i++ )
                if ( sysedit_select[i].type == SELECT_SPOB )
-                  dpl_saveSpob( sys->spobs[sysedit_select[i].u.spob] );
+                  ret |= dpl_saveSpob( sys->spobs[sysedit_select[i].u.spob] );
+            if ( ret )
+               uniedit_saveError();
          }
       }
       break;
@@ -2183,8 +2203,10 @@ static void sysedit_btnAsteroidsDelete( unsigned int wid, const char *unused )
    asteroid_freeAnchor( ast );
    array_erase( &sysedit_sys->asteroids, ast, ast + 1 );
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sysedit_sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sysedit_sys ) )
+         uniedit_saveError();
+   }
 
    window_close( wid, unused );
 }
@@ -2249,8 +2271,10 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
    /* Need to update some internals based on new values. */
    asteroids_computeInternals( ast );
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sysedit_sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sysedit_sys ) )
+         uniedit_saveError();
+   }
 
    window_close( wid, unused );
 }
@@ -2316,8 +2340,10 @@ static void sysedit_btnExclusionDelete( unsigned int wid, const char *unused )
 
    array_erase( &sysedit_sys->astexclude, exc, exc + 1 );
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sysedit_sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sysedit_sys ) )
+         uniedit_saveError();
+   }
 
    window_close( wid, unused );
 }
@@ -2347,8 +2373,10 @@ static void sysedit_editExclusionClose( unsigned int wid, const char *unused )
    }
    exc->radius = atof( window_getInput( sysedit_widEdit, "inpRadius" ) );
 
-   if ( conf.devautosave )
-      dsys_saveSystem( sysedit_sys );
+   if ( conf.devautosave ) {
+      if ( dsys_saveSystem( sysedit_sys ) )
+         uniedit_saveError();
+   }
 
    window_close( wid, unused );
 }
@@ -2421,7 +2449,8 @@ static void sysedit_spobDescReturn( unsigned int wid, const char *unused )
    const char *mydesc    = window_getInput( wid, "txtDescription" );
    const char *mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   if ( ( mydesc != NULL ) && strcmp( mydesc, p->description ) != 0 ) {
+   if ( ( mydesc != NULL ) && ( ( p->description == NULL ) ||
+                                ( strcmp( mydesc, p->description ) != 0 ) ) ) {
       if ( uniedit_diffMode ) {
          sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_DESCRIPTION,
                                     strdup( mydesc ) );
@@ -2431,7 +2460,8 @@ static void sysedit_spobDescReturn( unsigned int wid, const char *unused )
       }
    }
    if ( ( mybardesc != NULL ) &&
-        strcmp( mybardesc, p->bar_description ) != 0 ) {
+        ( ( p->bar_description == NULL ) ||
+          ( strcmp( mybardesc, p->bar_description ) != 0 ) ) ) {
       if ( uniedit_diffMode ) {
          sysedit_diffCreateSpobStr( p, HUNK_TYPE_SPOB_BAR,
                                     strdup( mybardesc ) );

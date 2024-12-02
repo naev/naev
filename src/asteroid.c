@@ -802,7 +802,7 @@ static int asteroid_loadPLG( AsteroidType *temp, const char *buf )
    do { /* load the polygon data */
       if ( xml_isNode( node, "polygons" ) ) {
          CollPoly plg;
-         poly_load( &plg, node );
+         poly_load( &plg, node, file );
          array_push_back( &temp->polygon, plg );
       }
    } while ( xml_nextNode( node ) );

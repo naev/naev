@@ -59,7 +59,7 @@ function accept ()
    end
 
    -- Intro Text
-   czesc(_([[You approach Lieutenant Czesc. His demeanor brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions, and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]))
+   czesc(_([[You approach Lieutenant Czesc. His demeanour brightens as he sees you. "Hello! I've been looking for you. You've done a great job with those Empire Shipping missions, and we have a new exciting opportunity. You see, the head office is looking to expand business with other factions, which has enormous untapped potential. They need someone competent and trustworthy to help them out. That's where you come in. Interested?"]]))
    vn.menu{
       {_([[Accept]]), "accept"},
       {_([[Decline]]), "decline"},

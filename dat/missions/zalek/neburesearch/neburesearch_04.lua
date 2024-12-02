@@ -25,6 +25,7 @@
 local fmt = require "format"
 local nebu_research = require "common.nebu_research"
 local vn = require 'vn'
+local vntk = require "vntk"
 
 local mensing_portrait = nebu_research.mensing.portrait
 
@@ -187,17 +188,20 @@ function takeoff()
       mem.stage = 6
       hook.timer(2, "startAmbush")
       hook.timer(12, "secondWarningMessage")
+      player.landAllow(false)
    end
 end
 
 function warningMessage()
-    tk.msg(_("Caution!"), fmt.f(_([[You receive a system wide broadcast. It appears to be a warning. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
-    Why is this happening so frequently in Za'lek space? A second glance at your radar shows that a drone squadron is flying right towards your ship.]]), {sys=system.cur()}))
+    vntk.msg(_("Caution!"), fmt.f(_([[You receive a system-wide broadcast. It appears to be a warning. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
+    Why is this happening so frequently in Za'lek space? A second glance at your radar shows that a drone squadron is flying right towards your ship.]]),
+      {sys=system.cur()}))
 end
 
 function secondWarningMessage()
-    tk.msg(_("Caution!"), fmt.f(_([[The now familiar warning appears once again on your ship's screen. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
-    Just how often is this going to happen?]]), {sys=system.cur()}))
+    vntk.msg(_("Caution!"), fmt.f(_([[The now familiar warning appears once again on your ship's screen. "Caution! A drone squadron in the {sys} system went haywire! Proceed with care."
+    Just how often is this going to happen?]]),
+      {sys=system.cur()}))
 end
 
 function startAmbush()
@@ -207,13 +211,12 @@ function startAmbush()
       table.insert( origins, j:dest() )
    end
    for i=1,#origins do
-      scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i])
-      scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i])
+      scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i], nil, {ai="baddiepos"})
+      scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i], nil, {ai="baddiepos"})
    end
    for i=1,#scom do
       scom[i]:setHostile(false)
-      scom[i]:control()
-      scom[i]:attack(player.pilot())
+      scom[i]:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
    end
 end
 

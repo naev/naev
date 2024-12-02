@@ -749,8 +749,12 @@ void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
 
    NFD_Init();
 
-   nfdchar_t  *outPath;
+   nfdchar_t *outPath;
+#if __WIN32__
+   nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, NULL );
+#else  /* __WIN32__ */
    nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, default_location );
+#endif /* __WIN32__ */
    switch ( result ) {
    case NFD_OKAY:
       filelist[0] = outPath;
@@ -783,8 +787,12 @@ void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
 
    NFD_Init();
 
-   nfdchar_t  *outPath;
+   nfdchar_t *outPath;
+#if __WIN32__
+   nfdresult_t result = NFD_PickFolder( &outPath, NULL );
+#else  /* __WIN32__ */
    nfdresult_t result = NFD_PickFolder( &outPath, default_location );
+#endif /* __WIN32__ */
    switch ( result ) {
    case NFD_OKAY:
       filelist[0] = outPath;
@@ -834,8 +842,12 @@ void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
 
    NFD_Init();
 
-   nfdchar_t  *outPath;
+   nfdchar_t *outPath;
+#if __WIN32__
+   nfdresult_t result = NFD_SaveDialog( &outPath, fitem, n, NULL, bname );
+#else  /* __WIN32__ */
    nfdresult_t result = NFD_SaveDialog( &outPath, fitem, n, dname, bname );
+#endif /* __WIN32__ */
    switch ( result ) {
    case NFD_OKAY:
       filelist[0] = outPath;

@@ -6,6 +6,7 @@ uniform mat4 projection;
 uniform float eddy_scale;
 uniform float time;
 uniform float volatility;
+uniform float saturation;
 in vec4 base_col;
 out vec4 colour_out;
 
@@ -13,7 +14,7 @@ vec4 nebula_default (void)
 {
    vec2 rel_pos = gl_FragCoord.xy + projection[3].xy;
    rel_pos /= eddy_scale;
-   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, 1.0, volatility, 0.1 );
+   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, saturation, volatility, 0.1 );
 }
 
 void main (void)

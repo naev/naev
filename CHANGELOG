@@ -1,5 +1,24 @@
-* 0.12.0-beta.2 (unreleased)
-   * Fallback for missing naevpedia ship entries
+* 0.12.0-beta.3 (unreleased)
+   * Fixed collisions for some ships at certain angles
+   * Changed mouse click selection priority, it prefers spobs/jumps and will ignore clicks reselecting the same object
+   * Fixed map decorators not shown in editor
+   * Centered buttons at the top of the holo-archives
+   * Fixed conf.mouse_doubleclick not disabling when set to 0
+   * Fixed crashes when a faction is assigned a non-existent colour
+   * Update the overlay scaling given the player's position
+   * Fixed population not being updated by universe diffs
+   * Round reputation values when displaying standing text for consistency
+   * Display local standing in the information window
+   * Can no longer abort missions during landing animation
+   * Fixed editor crash with empty descriptions
+   * Absorption is no longer limited to the 0% to 100% range
+   * onion04: don't fail if something happens to the gawain after taking the cargo
+   * traffic_01: don't use hardcoded systems
+   * neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
+   * Minor typo fixes and translation updates
+
+* 0.12.0-beta.2
+   * Fallback for missing holo-archives ship entries
    * Reset proteron reputation more aggressively
    * Fixed overlap in VN logs
    * Show intrinsic outfits in the "Other" tab
@@ -14,6 +33,9 @@
    * Removed overlap in the options menu
    * Don't allow ship shield/energy to go negative
    * Don't show stealth circles during cinematics
+   * Jumping through a one-way normal / hidden jump reveals the hidden side
+   * Escorts will try to respect player's autonav rules by default
+   * Increased nebula visibility by 400 km
    * Fixed text overlap in the holo-archives for certain languages
    * Fixed reputation changes not working on dynamic factions
    * Fixed text overlap if ship name is too long
@@ -23,15 +45,18 @@
    * Fixed some reputation values not being correctly rounded
    * Fixed OSD not advancing in a certain mission
    * Fixed Sirius Divinity collisions
-   * Fixed beam weapons in "in range" mode not respecting range bonuse
+   * Fixed beam weapons in "in range" mode not respecting range bonus
    * Fixed hiding mission OSDs and changing priority being reset on take off or jump
    * Fixed asking your ship AI for advice
+   * Fixed point defense requiring toggling thrice to turn off in some cases
    * sensor anomaly: Nelly will no longer appear in too dangerous or risky systems
    * mephisto type v: lowered heat generation
    * seek_n_destroy: fixed hints breaking in certain cases
    * pir_hit_intro: fixed OSD being displayed wrong
    * taiomi04: update OSD after boarding ship
    * bounty: fixed OSD getting reset after killing/capturing target
+   * ant_supplies: fixed hostility after jumping into system again
+   * Editor now shows dialogues on errors and allows user to choose directory to save data to
    * Minor typo fixes and translation updates
 
 * 0.12.0-beta.1

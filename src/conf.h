@@ -67,6 +67,8 @@
    0.5 /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT                                             \
    1. /**< How much to darken (or lighten) the nebula stuff. */
+#define NEBU_SATURATION_DEFAULT                                                \
+   0.9 /**< Saturation value of the nebula stuff. */
 #define PUZZLE_SKIP_DEFAULT                                                    \
    0 /**< WHether to give a button to skip puzzles.                            \
       */
@@ -85,9 +87,6 @@
 #define SOUND_VOLUME_DEFAULT 0.7  /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT 0.8  /**< Default music volume. */
 #define ENGINE_VOLUME_DEFAULT 0.8 /**< Default engine volume. */
-/* Editor Options */
-#define DEV_DATA_DIR_DEFAULT                                                   \
-   "../dat/" /* Default data directory, will try to save things there. */
 
 /**
  * @brief Struct containing player options.
@@ -129,6 +128,7 @@ typedef struct PlayerConf_s {
    int    healthbars; /**< Whether or not to show health bars next to pilots. */
    double bg_brightness;      /**< How much to darken the background stuff. */
    double nebu_nonuniformity; /**< How much to darken the nebula stuff. */
+   double nebu_saturation;    /**< Saturation value of the nebula. */
    double jump_brightness;    /**< Intensity to fade to/from when jumping. */
    int puzzle_skip; /**< Whether or not to allow skipping puzzles for free. */
    double gamma_correction; /**< How much gamma correction to do. */

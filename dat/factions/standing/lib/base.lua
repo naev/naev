@@ -251,7 +251,7 @@ function hit( sys, mod, source, secondary, primary_fct )
             for j,n in ipairs(s:adjacentSystems()) do
                if not inlist( done, n ) then
                   local v = hit_local( n, mod / (dist+1), min, max )
-                  if not val then
+                  if not val and v then
                      val = v
                      valsys = n
                   end
@@ -264,7 +264,7 @@ function hit( sys, mod, source, secondary, primary_fct )
       end
    end
 
-   -- Update frcom system that did hit and return change at that system
+   -- Update from system that did hit and return change at that system
    if val then
       sbase.fct:applyLocalThreshold( valsys )
    end

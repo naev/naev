@@ -107,7 +107,7 @@ He furrows his brows a bit as he tries to remember.]]))
    -- mission details
    misn.setTitle( title )
    misn.setReward( _("Unknown") )
-   misn.setDesc(_("Perform a non-stand jump towards the Anubis Black hole to recover a damaged scout drone."))
+   misn.setDesc(_("Perform a non-standard jump towards the Anubis Black hole to recover a damaged scout drone."))
 
    mem.mrk = misn.markerAdd( retsys )
    mem.state = 1

@@ -686,6 +686,7 @@ function convoyspawn ()
 end
 
 function gawain_lost ()
+   if mem.state > 0 then return end
    lmisn.fail(_([[You lost track of the target!!!]]))
 end
 
@@ -754,6 +755,7 @@ function postboard ()
 end
 
 function death ()
+   if mem.state > 0 then return end
    pilot.toggleSpawn(true) -- spawn again
    lmisn.fail(_([[You were supposed to capture the cargo, not destroy the ship!]]))
 end

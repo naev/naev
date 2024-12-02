@@ -218,8 +218,8 @@ void nebu_update( double dt )
       bonus = player.p->stats.nebu_visibility;
    }
 
-   /* At density 1200 you have zero visibility. */
-   nebu_view = ( 1200. - nebu_density ) * mod + bonus;
+   /* At 1600. density you have zero visibility. */
+   nebu_view = ( 1600. - nebu_density ) * mod + bonus;
 
    /* Below only care if not simulating. */
    if ( space_isSimulation() )
@@ -359,6 +359,34 @@ static void nebu_renderPuffs( int below_player )
    }
 }
 
+void nebu_updateColour( void )
+{
+   glColour col;
+   double   saturation = conf.nebu_saturation;
+   double   value      = conf.nebu_saturation * 0.5 + 0.5;
+
+   glUseProgram( shaders.nebula.program );
+   glUniform1f( shaders.nebula.saturation, conf.nebu_saturation );
+   glUseProgram( shaders.nebula_background.program );
+   glUniform1f( shaders.nebula_background.saturation, conf.nebu_saturation );
+
+   /* Set up ambient colour. */
+   col_hsv2rgb( &col, nebu_hue * 360., saturation, value );
+   gltf_lightAmbient( 3.0 * col.r, 3.0 * col.g, 3.0 * col.b );
+   gltf_lightIntensity( 0.5 );
+
+   /* Also set the hue for trails */
+   col_hsv2rgb( &col, nebu_hue * 360., 0.7 * conf.nebu_saturation, value );
+   spfx_setNebulaColour( col.r, col.g, col.b );
+
+   /* Also set the hue for puffs. */
+   col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, value );
+   glUseProgram( shaders.nebula_puff.program );
+   glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
+
+   glUseProgram( 0 );
+}
+
 /**
  * @brief Prepares the nebualae to be rendered.
  *
@@ -368,8 +396,6 @@ static void nebu_renderPuffs( int below_player )
  */
 void nebu_prep( double density, double volatility, double hue )
 {
-   glColour col;
-
    NTracingZone( _ctx, 1 );
 
    /* Set the hue. */
@@ -380,22 +406,8 @@ void nebu_prep( double density, double volatility, double hue )
    glUniform1f( shaders.nebula_background.hue, nebu_hue );
    glUniform1f( shaders.nebula_background.volatility, volatility );
 
-   /* Set up ambient colour. */
-   col_hsv2rgb( &col, nebu_hue * 360., 1., 1. );
-   gltf_lightAmbient( 3.0 * col.r, 3.0 * col.g, 3.0 * col.b );
-   gltf_lightIntensity( 0.5 );
-
-   /* Also set the hue for trails */
-   col_hsv2rgb( &col, nebu_hue * 360., 0.7, 1.0 );
-   spfx_setNebulaColour( col.r, col.g, col.b );
-
-   /* Also set the hue for puffs. */
-   col_hsv2rgb( &col, nebu_hue * 360., 0.95, 1.0 );
-   glUseProgram( shaders.nebula_puff.program );
-   glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
-
-   /* Done setting shaders. */
-   glUseProgram( 0 );
+   /* Update the colour. */
+   nebu_updateColour();
 
    if ( density > 0. ) {
       /* Set density parameters. */

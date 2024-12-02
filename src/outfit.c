@@ -1353,7 +1353,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  */
 static int outfit_loadPLG( Outfit *temp, const char *buf )
 {
-   char      *file;
+   char       file[PATH_MAX];
    OutfitGFX *gfx;
    xmlDocPtr  doc;
    xmlNodePtr node;
@@ -1368,7 +1368,7 @@ static int outfit_loadPLG( Outfit *temp, const char *buf )
       return -1;
    }
 
-   SDL_asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
+   snprintf( file, sizeof( file ), "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if ( !PHYSFS_exists( file ) ) {
@@ -1376,30 +1376,25 @@ static int outfit_loadPLG( Outfit *temp, const char *buf )
                Please use the script 'polygon_from_sprite.py' \
 that can be found in Naev's artwork repo." ),
             file );
-      free( file );
       return 0;
    }
 
    /* Load the XML. */
    doc = xml_parsePhysFS( file );
 
-   if ( doc == NULL ) {
-      free( file );
+   if ( doc == NULL )
       return 0;
-   }
 
    node = doc->xmlChildrenNode; /* First polygon node */
    if ( node == NULL ) {
       xmlFreeDoc( doc );
       WARN( _( "Malformed %s file: does not contain elements" ), file );
-      free( file );
       return 0;
    }
-   free( file );
 
    do { /* load the polygon data */
       if ( xml_isNode( node, "polygons" ) )
-         poly_load( &gfx->polygon, node );
+         poly_load( &gfx->polygon, node, file );
    } while ( xml_nextNode( node ) );
 
    xmlFreeDoc( doc );

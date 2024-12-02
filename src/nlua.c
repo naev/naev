@@ -374,12 +374,10 @@ nlua_env nlua_newEnv( const char *name )
    lua_rawseti( naevL, -1, ref );                      /* t, e */
    lua_pop( naevL, 1 );                                /* t */
 
-#if DEBUGGING
    if ( name != NULL ) {
       lua_pushstring( naevL, name );
       nlua_setenv( naevL, ref, "__name" );
    }
-#endif /* DEBUGGING */
 
    /* Metatable */
    lua_newtable( naevL );                    /* t, m */

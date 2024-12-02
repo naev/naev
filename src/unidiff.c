@@ -1016,7 +1016,7 @@ static int diff_parseSpob( UniDiffData_t *diff, xmlNodePtr node )
       HUNK_FLOAT( HUNK_TYPE_SPOB_PRESENCE_BONUS );
       HUNK_INT( HUNK_TYPE_SPOB_PRESENCE_RANGE );
       HUNK_FLOAT( HUNK_TYPE_SPOB_HIDE );
-      HUNK_FLOAT( HUNK_TYPE_SPOB_POPULATION );
+      HUNK_INT( HUNK_TYPE_SPOB_POPULATION );
       HUNK_STRD( HUNK_TYPE_SPOB_DISPLAYNAME );
       HUNK_STRD( HUNK_TYPE_SPOB_DESCRIPTION );
       HUNK_STRD( HUNK_TYPE_SPOB_BAR );
@@ -1582,7 +1582,7 @@ int diff_patchHunk( UniHunk_t *hunk )
    /* Changing spob hide. */
    case HUNK_TYPE_SPOB_HIDE:
       hunk->o.fdata = p->hide;
-      p->hide       = hunk->u.data;
+      p->hide       = hunk->u.fdata;
       return 0;
    case HUNK_TYPE_SPOB_HIDE_REVERT:
       p->hide = hunk->o.fdata;

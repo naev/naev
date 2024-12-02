@@ -893,6 +893,7 @@ void player_cleanup( void )
    difficulty_setLocal( NULL );
 
    /* Reset time compression. */
+   player_resetSpeed();
    pause_setSpeed( 1. );
    sound_setSpeed( 1. );
 
@@ -1521,6 +1522,7 @@ void player_resetSpeed( void )
    double spd = player.speed * player_dt_default();
    pause_setSpeed( spd );
    sound_setSpeed( spd / conf.game_speed );
+   player.speed_autonav = 1.;
 }
 
 /**
@@ -2124,9 +2126,13 @@ void player_brokeHyperspace( void )
    /* Free old graphics. */
    space_gfxUnload( sys );
 
-   /* enter the new system */
+   /* Enter the new system. */
    jp = &cur_system->jumps[player.p->nav_hyperspace];
    space_init( jp->target->name, 1 );
+
+   /* Set jumps as known. */
+   if ( !pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) )
+      jp_setFlag( jp->returnJump, JP_KNOWN );
 
    /* Set up the overlay. */
    ovr_initAlpha();
@@ -2676,6 +2682,7 @@ static int player_thinkMouseFly( double dt )
 void player_dead( void )
 {
    /* Explode at normal speed. */
+   player_resetSpeed();
    pause_setSpeed( 1. );
    sound_setSpeed( 1. );
 
@@ -2704,6 +2711,7 @@ void player_destroyed( void )
    player_autonavEnd();
 
    /* Reset time compression when player dies. */
+   player_resetSpeed();
    pause_setSpeed( 1. );
    sound_setSpeed( 1. );
 }

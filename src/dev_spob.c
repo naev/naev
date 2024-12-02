@@ -10,11 +10,12 @@
 #include <stdlib.h>
 /** @endcond */
 
+#include <libgen.h>
+
 #include "dev_spob.h"
 
 #include "array.h"
 #include "conf.h"
-#include "dev_uniedit.h"
 #include "nxml.h"
 #include "start.h"
 
@@ -28,9 +29,14 @@ int dpl_saveSpob( const Spob *p )
 {
    xmlDocPtr        doc;
    xmlTextWriterPtr writer;
-   char            *file, *cleanName;
+   char            *file;
    int              ret         = 0;
    const char      *lua_default = start_spob_lua_default();
+
+   if ( conf.dev_data_dir == NULL ) {
+      WARN( _( "%s is not set!" ), "conf.dev_data_dir" );
+      return -1;
+   }
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, 0 );
@@ -158,8 +164,10 @@ int dpl_saveSpob( const Spob *p )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   cleanName = uniedit_nameFilter( p->name );
-   SDL_asprintf( &file, "%s/spob/%s.xml", conf.dev_data_dir, cleanName );
+   char path[PATH_MAX];
+   snprintf( path, sizeof( path ), "%s", p->filename );
+   const char *filename = basename( path );
+   SDL_asprintf( &file, "%s/spob/%s", conf.dev_data_dir, filename );
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( "Failed to write '%s'!", file );
       ret = -1;
@@ -167,7 +175,6 @@ int dpl_saveSpob( const Spob *p )
 
    /* Clean up. */
    xmlFreeDoc( doc );
-   free( cleanName );
    free( file );
 
    return ret;
@@ -180,11 +187,12 @@ int dpl_saveSpob( const Spob *p )
  */
 int dpl_saveAll( void )
 {
-   const Spob *p = spob_getAll();
+   const Spob *p   = spob_getAll();
+   int         ret = 0;
 
    /* Write spobs. */
    for ( int i = 0; i < array_size( p ); i++ )
-      dpl_saveSpob( &p[i] );
+      ret |= dpl_saveSpob( &p[i] );
 
-   return 0;
+   return ret;
 }

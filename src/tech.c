@@ -375,7 +375,9 @@ static tech_item_t *tech_itemGrow( tech_group_t *grp )
 {
    if ( grp->items == NULL )
       grp->items = array_create( tech_item_t );
-   return &array_grow( &grp->items );
+   tech_item_t *itm = &array_grow( &grp->items );
+   memset( itm, 0, sizeof( tech_item_t ) );
+   return itm;
 }
 
 static tech_item_t *tech_addItemOutfit( tech_group_t *grp, const char *name )

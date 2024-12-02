@@ -100,6 +100,7 @@ typedef struct VirtualSpob_ {
  * planets, stations, wormholes, hypergates, etc...
  */
 typedef struct Spob_ {
+   char *filename; /**< File name of the spob, for use with the editor. */
    int   id;       /**< Spob ID. */
    char *name;     /**< Spob name */
    char *display;  /**< Name to be displayed to the player. Defaults to name if
@@ -296,8 +297,8 @@ typedef struct MapShader_ {
  * The star system is the basic setting in Naev.
  */
 struct StarSystem_ {
-   int   id;       /**< Star system index. */
    char *filename; /** Name of the file loaded from. */
+   int   id;       /**< Star system index. */
 
    /* General. */
    char *name;      /**< Star system name */

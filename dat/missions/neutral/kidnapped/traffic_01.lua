@@ -34,6 +34,7 @@ local vntk = require "vntk"
 local vn = require "vn"
 local portrait = require "portrait"
 local ccomm = require "common.comm"
+local lmisn = require "lmisn"
 
 local reward = 200e3
 
@@ -45,11 +46,26 @@ local npc_portrait = "neutral/unique/fakesister.webp"
 local npc_image = portrait.getFullPath( npc_portrait )
 
 function create ()
-   mem.targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
+   local sys = lmisn.getSysAtDistance( nil, 1, 4, function (s)
+      if #s:spobs() <= 0 then
+         return false
+      end
+      if s:faction() == nil then
+         return false
+      end
+      return true
+   end )
+   if #sys < 3 then
+      misn.finish(false)
+   end
+   sys = rnd.permutation( sys )
+
+   mem.targetsys = { sys[1], sys[2], sys[3] }
 
    -- randomly select spawn system and planet where brother will be
-   mem.brosys = mem.targetsys[math.random(3)]
-   mem.bropla = mem.brosys:spobs()[math.random(#mem.brosys:spobs())]
+   mem.brosys = mem.targetsys[ rnd.rnd(1,#mem.targetsys) ]
+   local spbs = mem.brosys:spobs() -- Doesn't have to be landable
+   mem.bropla = spbs[ rnd.rnd(1,#spbs) ]
 
    if not misn.claim(mem.brosys) then
       misn.finish(false)

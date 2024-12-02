@@ -286,10 +286,11 @@ def simplifyPolygon( indices, x, y, tol ):
 
 # Create the projections of the ship from the 3D data
 def pointsFrom3D( address, slices, size, center, alpha ):
-    # Note doing it directly from GLTF is not working, so we use blender to drop to STL
     """
+    from gltflib import GLTF
+    # Note doing it directly from GLTF is not working, so we use blender to drop to STL
     # Extract the mesh and the points
-    gltf = GLTF2().load( address )
+    gltf = GLTF().load( address )
     for s in gltf.scenes:
         if s.name=="body":
             scene = s
@@ -851,6 +852,7 @@ if __name__ == "__main__":
     parser.add_argument("--use3d", default=True, action=argparse.BooleanOptionalAction )
     parser.add_argument("--compare", action=argparse.BooleanOptionalAction )
     parser.add_argument("--gfxpath", type=str, default="artwork/gfx/" )
+    parser.add_argument("--visualize", type=bool, default=False, action=argparse.BooleanOptionalAction )
     args, unknown = parser.parse_known_args()
 
     # Comparison mode shows difference between 3D and 2D
@@ -888,6 +890,28 @@ if __name__ == "__main__":
     for a in args.path:
         print(f"Processing {a}...")
         try:
-            polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
+            poly = polygonify_ship( a, outpath=args.outpath, use2d=args.use2d, use3d=args.use3d, gfxpath=args.gfxpath )
+            if args.visualize:
+                import matplotlib.animation as animation
+                def display( poly, name, idx, frame=0 ):
+                    frame = frame % len(poly[0][0])
+                    points = poly[0]
+                    polygon = poly[1]
+                    plt.subplot(1, 2, idx)
+                    ax = plt.gca()
+                    ax.set_aspect('equal', 'box')
+                    plt.title( name + f" ({len(polygon[0][0])} points)" )
+                    plt.scatter(points[0][frame],points[1][frame])
+                    plt.scatter(polygon[1][frame],polygon[2][frame])
+
+                fig = plt.figure()
+                display( poly, "Model", 1 )
+                def animate( i ):
+                    plt.clf()
+                    display( poly, "Model", 1, i )
+
+                ani = animation.FuncAnimation( fig, animate, repeat=True, interval=500, cache_frame_data=False )
+                plt.show()
+                sys.exit(0)
         except Exception as e:
             print( f"Failed to process '{a}': {e}", file=sys.stderr)

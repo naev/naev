@@ -27,7 +27,7 @@ typedef struct CollPoly_ {
 } CollPoly;
 
 /* Loads a polygon data from xml. */
-void poly_load( CollPoly *polygon, xmlNodePtr node );
+void poly_load( CollPoly *polygon, xmlNodePtr node, const char *name );
 void poly_free( CollPoly *polygon );
 
 /* Rotates a polygon. */

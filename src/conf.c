@@ -176,7 +176,10 @@ void conf_setDefaults( void )
    conf.fpu_except = 0; /* Causes many issues. */
 
    /* Editor. */
-   conf.dev_data_dir = strdup( DEV_DATA_DIR_DEFAULT );
+   if ( nfile_dirExists( "../dat/" ) )
+      conf.dev_data_dir = strdup( "../dat/" );
+   else
+      conf.dev_data_dir = NULL;
 }
 
 /**
@@ -253,6 +256,7 @@ void conf_setVideoDefaults( void )
    conf.healthbars          = HEALTHBARS_DEFAULT;
    conf.bg_brightness       = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity  = NEBU_NONUNIFORMITY_DEFAULT;
+   conf.nebu_saturation     = NEBU_SATURATION_DEFAULT;
    conf.jump_brightness     = JUMP_BRIGHTNESS_DEFAULT;
    conf.gamma_correction    = GAMMA_CORRECTION_DEFAULT;
    conf.low_memory          = LOW_MEMORY_DEFAULT;
@@ -364,6 +368,7 @@ int conf_loadConfig( const char *file )
       conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
       conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
       /* end todo */
+      conf_loadFloat( lEnv, "nebu_saturation", conf.nebu_saturation );
       conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "low_memory", conf.low_memory );
@@ -986,6 +991,12 @@ int conf_saveConfig( const char *file )
       _( "Nebula non-uniformity. 1 is normal nebula while setting it to 0 "
          "would make the nebula a solid colour." ) );
    conf_saveFloat( "nebu_nonuniformity", conf.nebu_nonuniformity );
+   conf_saveEmptyLine();
+
+   conf_saveComment( _(
+      "Nebula saturation. Modifies the base saturation of the nebula colour. "
+      "Lower values desaturate the nebulas to make them easier to view." ) );
+   conf_saveFloat( "nebu_saturation", conf.nebu_saturation );
    conf_saveEmptyLine();
 
    conf_saveComment(

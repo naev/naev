@@ -163,21 +163,23 @@ typedef struct Shader_ {
    GLuint Hnormal;
    GLuint Hshadow;
    /* Fragment uniforms. */
-   GLuint      baseColour_tex;
-   GLuint      baseColour_texcoord;
-   GLuint      metallic_tex;
-   GLuint      metallic_texcoord;
-   GLuint      u_has_normal;
-   GLuint      normal_tex;
-   GLuint      normal_texcoord;
-   GLuint      normal_scale;
-   GLuint      metallicFactor;
-   GLuint      roughnessFactor;
-   GLuint      baseColour;
+   GLuint baseColour_tex;
+   GLuint baseColour_texcoord;
+   GLuint metallic_tex;
+   GLuint metallic_texcoord;
+   GLuint u_has_normal;
+   GLuint normal_tex;
+   GLuint normal_texcoord;
+   GLuint normal_scale;
+   GLuint metallicFactor;
+   GLuint roughnessFactor;
+   GLuint baseColour;
+#if 0
    GLuint      sheenTint;
    GLuint      sheen;
    GLuint      clearcoat;
    GLuint      clearcoat_roughness;
+#endif
    GLuint      emissive;
    GLuint      emissive_tex;
    GLuint      emissive_texcoord;
@@ -473,6 +475,7 @@ static int gltf_loadMaterial( const GltfObject *obj, Material *mat,
       mat->normal_tex      = tex_zero;
    }
 
+#if 0
    /* Sheen. */
    if ( cmat && cmat->has_sheen ) {
       memcpy( mat->sheen, cmat->sheen.sheen_color_factor,
@@ -491,6 +494,7 @@ static int gltf_loadMaterial( const GltfObject *obj, Material *mat,
       mat->clearcoat           = 0.;
       mat->clearcoat_roughness = 0.;
    }
+#endif
 
    /* Handle emissiveness and such. */
    if ( cmat ) {
@@ -989,10 +993,12 @@ static void renderMeshPrimitive( const GltfObject    *obj,
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1],
                 mat->baseColour[2], mat->baseColour[3] );
+#if 0
    glUniform3f( shd->sheenTint, mat->sheen[0], mat->sheen[1], mat->sheen[2] );
    glUniform1f( shd->sheen, mat->sheen_roughness );
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+#endif
    glUniform3f( shd->emissive, mat->emissiveFactor[0], mat->emissiveFactor[1],
                 mat->emissiveFactor[2] );
    glUniform1i( shd->blend, mat->blend );
@@ -1909,6 +1915,7 @@ int gltf_init( void )
 
    /* Compile the shadow shader. */
    shd = &shadow_shader;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "shadow.vert", "shadow.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1922,6 +1929,7 @@ int gltf_init( void )
 
    /* Compile the X blur shader. */
    shd = &shadow_shader_blurX;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "blur.vert", "blurX.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1935,6 +1943,7 @@ int gltf_init( void )
 
    /* Compile the Y blur shader. */
    shd = &shadow_shader_blurY;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "blur.vert", "blurY.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1947,6 +1956,7 @@ int gltf_init( void )
 
    /* Compile the shader. */
    shd = &gltf_shader;
+   memset( shd, 0, sizeof( Shader ) );
    shd->program =
       gl_program_backend( "gltf.vert", "gltf_pbr.frag", NULL, prepend );
    if ( shd->program == 0 )
@@ -1980,11 +1990,13 @@ int gltf_init( void )
    shd->roughnessFactor =
       glGetUniformLocation( shd->program, "roughnessFactor" );
    shd->baseColour = glGetUniformLocation( shd->program, "baseColour" );
+#if 0
    shd->sheenTint  = glGetUniformLocation( shd->program, "sheenTint" );
    shd->sheen      = glGetUniformLocation( shd->program, "sheen" );
    shd->clearcoat  = glGetUniformLocation( shd->program, "clearcoat" );
    shd->clearcoat_roughness =
       glGetUniformLocation( shd->program, "clearcoat_roughness" );
+#endif
    shd->emissive = glGetUniformLocation( shd->program, "emissive" );
    if ( use_ambient_occlusion ) {
       shd->occlusion_tex =
