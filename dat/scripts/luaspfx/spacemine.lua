@@ -59,8 +59,8 @@ local function update( s, dt )
    end
    if d.hostile then
       local pp = player.pilot()
-      if pp:pos():dist2( sp ) < d.range*d.range then
-         table.insert( triggers, player.pilot() )
+      if pp:exists() and pp:pos():dist2( sp ) < d.range*d.range then
+         table.insert( triggers, pp )
       end
    end
 
