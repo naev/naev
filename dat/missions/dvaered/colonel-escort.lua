@@ -131,6 +131,8 @@ function accept()
    })
    misn.markerAdd( mem.destspb )
 
+   local colonel_ship = "Dvaered Ancestor"
+
    escort.init( { colonel_ship }, {
       func_pilot_create = "create_radver"
    } )
@@ -165,8 +167,8 @@ function ambush ()
 
    mem.ambushed = true
 
-   local ffriendly, fhostile = factions()
-   pilot.add( "Dvaered Vigilance", fhostile, p:setHilight(true), source_system, _("Asheron Anomaly") )
+   local fhostile = factions()
+   pilot.add( "Dvaered Vigilance", fhostile, pilot:setHilight(true), source_system, _("Asheron Anomaly") )
 end
 
 function success () -- luacheck: globals success
