@@ -97,7 +97,18 @@ int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t )
    return 0;
 }
 
+int xmlw_saveNTime( xmlTextWriterPtr writer, const char *name, ntime_t t )
+{
+   xmlw_elem( writer, name, "%" PRIu64, t );
+   return 0;
+}
+
 int xml_parseTime( xmlNodePtr node, time_t *t )
+{
+   *t = xml_getULong( node );
+   return 0;
+}
+int xml_parseNTime( xmlNodePtr node, ntime_t *t )
 {
    *t = xml_getULong( node );
    return 0;

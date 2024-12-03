@@ -7,6 +7,7 @@
    * Fixed crashes when a faction is assigned a non-existent colour
    * Update the overlay scaling given the player's position
    * Fixed population not being updated by universe diffs
+   * Fixed date acquired being wrong on some platforms
    * Round reputation values when displaying standing text for consistency
    * Display local standing in the information window
    * Can no longer abort missions during landing animation

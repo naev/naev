@@ -82,7 +82,7 @@ typedef struct PlayerShip_s {
    /* Some meta-data. */
    double       time_played;      /**< Total time the player has used ship. */
    char        *acquired;         /**< How it got acquired. */
-   time_t       acquired_date;    /**< When the player was created. */
+   ntime_t      acquired_date;    /**< When the player was created. */
    double       dmg_done_shield;  /**< Total damage done to shields. */
    double       dmg_done_armour;  /**< Total damage done to armour. */
    double       dmg_taken_shield; /**< Total damage taken to shields. */
