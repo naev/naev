@@ -41,11 +41,11 @@ function rehab.init( fct, params )
       setFine( mem.rep )
 
       misn.setTitle(prefix.prefix(fct)..fmt.f(_("{fct} Rehabilitation"), {fct=fct}))
-      local stdval, stdname = fct:reputationGlobal()
+      local stdname = fct:reputationText( mem.rep )
       misn.setDesc(desc.."\n\n"..fmt.f(_([[#nFaction:#0 {fct}
 #nCost:#0 {credits}
 #nCurrent Standing:#0 #r{standingname} ({standingvalue})#0]]),
-         {fct=fct:longname(), credits=fmt.credits(mem.fine), standingname=stdname, standingvalue=stdval}))
+         {fct=fct:longname(), credits=fmt.credits(mem.fine), standingname=stdname, standingvalue=mem.rep}))
       misn.setReward(_("None"))
    end
 
