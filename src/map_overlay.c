@@ -238,10 +238,13 @@ void ovr_refresh( void )
    items = 0;
    n     = array_size( cur_system->jumps ) + array_size( cur_system->spobs ) +
        array_size( ovr_markers ) + autonav_pos;
-   pos   = calloc( n, sizeof( vec2   *) );
-   mo    = calloc( n, sizeof( MapOverlayPos    *) );
-   max_x = ABS( player.p->solid.pos.x );
-   max_y = ABS( player.p->solid.pos.y );
+   pos = calloc( n, sizeof( vec2 * ) );
+   mo  = calloc( n, sizeof( MapOverlayPos  *) );
+   if ( player.p != NULL ) {
+      max_x = ABS( player.p->solid.pos.x );
+      max_y = ABS( player.p->solid.pos.y );
+   } else
+      max_x = max_y = 0.;
    if ( autonav_pos ) {
       max_x                 = MAX( max_x, ABS( autonav_pos_v.x ) );
       max_y                 = MAX( max_y, ABS( autonav_pos_v.y ) );
