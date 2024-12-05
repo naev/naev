@@ -281,8 +281,8 @@ xmlDocPtr             xml_parsePhysFS( const char *filename );
 USE_RESULT glTexture *xml_parseTexture( xmlNodePtr node, const char *path,
                                         int defsx, int defsy,
                                         const unsigned int flags );
-int                   xml_parseTime( xmlNodePtr node, ntime_t *t );
-int                   xml_parseNTime( xmlNodePtr node, time_t *t );
+int                   xml_parseTime( xmlNodePtr node, time_t *t );
+int                   xml_parseNTime( xmlNodePtr node, ntime_t *t );
 
 /*
  * Functions for generic complex writing.
