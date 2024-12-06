@@ -75,6 +75,23 @@ static int gl_getGLInfo( void );
 static int gl_defState( void );
 static int gl_setupScaling( void );
 
+/**
+ * @brief Applies driver-specific fixes and workarounds before initializing
+ * OpenGL.
+ */
+static void gl_applyFixes( void )
+{
+#if __LINUX__
+   // Set AMD_DEBUG environment variable before initializing OpenGL to
+   // workaround driver bug.
+   if ( setenv( "AMD_DEBUG", "nooptvariant", 1 ) != 0 ) {
+      WARN( _( "Failed to set AMD_DEBUG environment variable" ) );
+   } else {
+      DEBUG( _( "Set AMD_DEBUG environment variable to 'nooptvariant'" ) );
+   }
+#endif
+}
+
 /*
  *
  * M I S C
@@ -585,15 +602,8 @@ int gl_init( unsigned int extra_flags )
    unsigned int flags;
    GLuint       VaoId;
 
-#if __LINUX__
-   // Set AMD_DEBUG environment variable before initializing OpenGL to
-   // workaround driver bug.
-   if ( setenv( "AMD_DEBUG", "nooptvariant", 1 ) != 0 ) {
-      WARN( _( "Failed to set AMD_DEBUG environment variable" ) );
-   } else {
-      DEBUG( _( "Set AMD_DEBUG environment variable to 'nooptvariant'" ) );
-   }
-#endif
+   /* Apply driver hacks and workarounds before we initialize the window. */
+   gl_applyFixes();
 
    /* Defaults. */
    memset( &gl_screen, 0, sizeof( gl_screen ) );
