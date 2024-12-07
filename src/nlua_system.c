@@ -1051,15 +1051,13 @@ static int systemL_reputation( lua_State *L )
  */
 static int systemL_setReputation( lua_State *L )
 {
-   const StarSystem *sys = luaL_validsystem( L, 1 );
-   int               f   = luaL_validfaction( L, 2 );
-   double            m   = luaL_checknumber( L, 3 );
-   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
-      if ( sys->presence[i].faction != f )
-         continue;
-      sys->presence[i].local = m;
-      break;
-   }
+   StarSystem     *sys = luaL_validsystem( L, 1 );
+   int             f   = luaL_validfaction( L, 2 );
+   double          m   = luaL_checknumber( L, 3 );
+   SystemPresence *sp  = system_getFactionPresence( sys, f );
+   if ( sp != NULL )
+      sp->local = m;
+   faction_updateSingle( f ); /* Brute-force propagate to global. */
    return 0;
 }
 

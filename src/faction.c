@@ -1832,7 +1832,7 @@ void factions_resetLocal( void )
    // faction_updateGlobal();
 }
 
-static void faction_updateSingle( int f )
+void faction_updateSingle( int f )
 {
    int         n         = 0;
    double      v         = 0.;
