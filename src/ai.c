@@ -101,9 +101,7 @@
 #define ai_setFlag( f ) ( pilot_flags |= f ) /**< Sets pilot flag f */
 #define ai_isFlag( f ) ( pilot_flags & f )   /**< Checks pilot flag f */
 /* flags */
-#define AI_PRIMARY ( 1 << 0 )   /**< Firing primary weapon */
-#define AI_SECONDARY ( 1 << 1 ) /**< Firing secondary weapon */
-#define AI_DISTRESS ( 1 << 2 )  /**< Sent distress signal. */
+#define AI_DISTRESS ( 1 << 0 ) /**< Sent distress signal. */
 
 /*
  * all the AI profiles
