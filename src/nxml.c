@@ -93,7 +93,7 @@ xmlDocPtr xml_parsePhysFS( const char *filename )
 
 int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t )
 {
-   xmlw_elem( writer, name, "%lu", t );
+   xmlw_elem( writer, name, "%lld", (long long)t );
    return 0;
 }
 

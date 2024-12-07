@@ -751,6 +751,7 @@ void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
 
    nfdchar_t *outPath;
 #if __WIN32__
+   (void)default_location;
    nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, NULL );
 #else  /* __WIN32__ */
    nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, default_location );
@@ -789,6 +790,7 @@ void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
 
    nfdchar_t *outPath;
 #if __WIN32__
+   (void)default_location;
    nfdresult_t result = NFD_PickFolder( &outPath, NULL );
 #else  /* __WIN32__ */
    nfdresult_t result = NFD_PickFolder( &outPath, default_location );
