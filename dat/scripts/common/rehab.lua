@@ -45,7 +45,7 @@ function rehab.init( fct, params )
       misn.setDesc(desc.."\n\n"..fmt.f(_([[#nFaction:#0 {fct}
 #nCost:#0 {credits}
 #nCurrent Standing:#0 #r{standingname} ({standingvalue})#0]]),
-         {fct=fct:longname(), credits=fmt.credits(mem.fine), standingname=stdname, standingvalue=mem.rep}))
+         {fct=fct:longname(), credits=fmt.credits(mem.fine), standingname=stdname, standingvalue=fmt.number(mem.rep)}))
       misn.setReward(_("None"))
    end
 
@@ -73,6 +73,7 @@ function rehab.init( fct, params )
 
 
       -- Store old standing
+      mem.rep_global = fct:reputationGlobal()
       mem.rep_local = {}
       for k,s in ipairs(system.getAll()) do
          mem.rep_local[ s:nameRaw() ] = s:reputation( fct )
@@ -140,7 +141,7 @@ function rehab.init( fct, params )
 
       -- Reapply the original negative reputation.
       for k,s in ipairs(system.getAll()) do
-         s:setReputation( fct, mem.rep_local[ s:nameRaw() ] )
+         s:setReputation( fct, (mem.rep_local[ s:nameRaw() ] or mem.rep_global) )
       end
       vntk.msg(fmt.f(_("{fct} Rehabilitation Cancelled"), {fct=fct}), txtabort )
       misn.finish(false)
