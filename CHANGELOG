@@ -16,6 +16,7 @@
    * Fixed spoiling of system names on the map
    * Can no longer abort missions during landing animation
    * Fixed editor crash with empty descriptions
+   * Fixed editor crash when making links to systems with no presence
    * Fixed rehabilitation missions
    * Absorption is no longer limited to the 0% to 100% range
    * derelict_rescue: only allow generic target space objects

@@ -2899,6 +2899,7 @@ static void system_init( StarSystem *sys )
    sys->asteroids     = array_create( AsteroidAnchor );
    sys->astexclude    = array_create( AsteroidExclusion );
    sys->faction       = -1;
+   sys->presence      = array_create( SystemPresence );
 }
 
 /**
@@ -3180,7 +3181,6 @@ static int system_parse( StarSystem *sys, const char *filename )
    /* Clear memory for safe defaults. */
    system_init( sys );
    flags              = 0;
-   sys->presence      = array_create( SystemPresence );
    sys->ownerpresence = 0.;
    sys->nebu_hue      = NEBULA_DEFAULT_HUE;
    sys->spacedust     = -1;
