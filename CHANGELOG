@@ -13,6 +13,7 @@
    * Can no longer abort missions during landing animation
    * Fixed editor crash with empty descriptions
    * Absorption is no longer limited to the 0% to 100% range
+   * derelict_rescue: only allow generic target space objects
    * onion04: don't fail if something happens to the gawain after taking the cargo
    * traffic_01: don't use hardcoded systems
    * neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
