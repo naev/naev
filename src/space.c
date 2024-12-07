@@ -139,9 +139,10 @@ static int  system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int  system_parseAsteroidExclusion( const xmlNodePtr node,
                                            StarSystem      *sys );
 /* misc */
-static int  spob_cmp( const void *p1, const void *p2 );
-static int  getPresenceIndex( StarSystem *sys, int faction );
-static void system_scheduler( double dt, int init );
+static int             spob_cmp( const void *p1, const void *p2 );
+static void            system_scheduler( double dt, int init );
+static SystemPresence *system_getFactionPresenceGrow( StarSystem *sys,
+                                                      int         faction );
 /* Markers. */
 static int space_addMarkerSystem( int sysid, MissionMarkerType type );
 static int space_addMarkerSpob( int pntid, MissionMarkerType type );
@@ -1436,15 +1437,14 @@ static void system_scheduler( double dt, int init )
             pilot->faction_spawn =
                p->faction; /* Save the faction who spawned it. */
             if ( pilot->faction != p->faction ) {
-               int pi;
                WARN( _( "Lua spawn script for faction '%s' actually spawned a "
                         "'%s' pilot." ),
                      faction_name( p->faction ),
                      faction_name( pilot->faction ) );
-               pi = getPresenceIndex( cur_system, pilot->faction );
-               p  = &cur_system->presence[pi];
+               p = system_getFactionPresence( cur_system, pilot->faction );
             }
-            p->curUsed += pilot->presence;
+            if ( p != NULL )
+               p->curUsed += pilot->presence;
             lua_pop( naevL, 2 ); /* tk, k */
          }
       }
@@ -4331,37 +4331,6 @@ static int space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys )
 }
 
 /**
- * @brief Gets the index of the presence element for a faction.
- *          Creates one if it doesn't exist.
- *
- *    @param sys Pointer to the system to check.
- *    @param faction The index of the faction to search for.
- *    @return The index of the presence array for faction.
- */
-static int getPresenceIndex( StarSystem *sys, int faction )
-{
-   int n;
-
-   /* Check for NULL and display a warning. */
-   if ( sys == NULL ) {
-      WARN( "sys == NULL" );
-      return 0;
-   }
-
-   /* Go through the array (if created), looking for the faction. */
-   for ( int i = 0; i < array_size( sys->presence ); i++ )
-      if ( sys->presence[i].faction == faction )
-         return i;
-
-   /* Grow the array. */
-   n = array_size( sys->presence );
-   memset( &array_grow( &sys->presence ), 0, sizeof( SystemPresence ) );
-   sys->presence[n].faction = faction;
-
-   return n;
-}
-
-/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
@@ -4369,7 +4338,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  */
 void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
 {
-   int                     id, curSpill;
+   int                     curSpill;
    Queue                   q, qn;
    double                  spillfactor;
    int                     faction   = ap->faction;
@@ -4397,16 +4366,15 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
    fgens = faction_generators( faction );
 
    /* Add the presence to the current system. */
-   id                     = getPresenceIndex( sys, faction );
-   sys->presence[id].base = MAX( sys->presence[id].base, base );
-   sys->presence[id].bonus += bonus;
-   sys->presence[id].value = sys->presence[id].base + sys->presence[id].bonus;
+   SystemPresence *sp = system_getFactionPresenceGrow( sys, faction );
+   sp->base           = MAX( sp->base, base );
+   sp->bonus += bonus;
+   sp->value = sp->base + sp->bonus;
    for ( int i = 0; i < array_size( fgens ); i++ ) {
-      int x = getPresenceIndex( sys, fgens[i].id );
-      sys->presence[x].base =
-         MAX( sys->presence[x].base, MAX( 0., base * fgens[i].weight ) );
-      sys->presence[x].bonus += MAX( 0., bonus * fgens[i].weight );
-      sys->presence[x].value = sys->presence[x].base + sys->presence[x].bonus;
+      SystemPresence *spf = system_getFactionPresenceGrow( sys, fgens[i].id );
+      spf->base           = MAX( spf->base, MAX( 0., base * fgens[i].weight ) );
+      spf->bonus += MAX( 0., bonus * fgens[i].weight );
+      spf->value = spf->base + spf->bonus;
    }
 
    /* If there's no range, we're done here. */
@@ -4439,8 +4407,6 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
    }
 
    while ( curSpill < range ) {
-      int x;
-
       /* Pull one off the current range queue. */
       StarSystem *cur = q_dequeue( q );
 
@@ -4459,21 +4425,19 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
       }
 
       /* Spill some presence. */
-      x                     = getPresenceIndex( cur, faction );
-      spillfactor           = 1. / ( 2. + (double)curSpill );
-      cur->presence[x].base = MAX( cur->presence[x].base, base * spillfactor );
-      cur->presence[x].bonus += bonus * spillfactor;
-      cur->presence[x].value = cur->presence[x].base + cur->presence[x].bonus;
+      sp          = system_getFactionPresenceGrow( cur, faction );
+      spillfactor = 1. / ( 2. + (double)curSpill );
+      sp->base    = MAX( sp->base, base * spillfactor );
+      sp->bonus += bonus * spillfactor;
+      sp->value = sp->base + sp->bonus;
 
       for ( int i = 0; i < array_size( fgens ); i++ ) {
-         int y = getPresenceIndex( cur, fgens[i].id );
-         cur->presence[y].base =
-            MAX( cur->presence[y].base,
-                 MAX( 0., base * spillfactor * fgens[i].weight ) );
-         cur->presence[y].bonus +=
-            MAX( 0., bonus * spillfactor * fgens[i].weight );
-         cur->presence[y].value =
-            cur->presence[y].base + cur->presence[y].bonus;
+         SystemPresence *spf =
+            system_getFactionPresenceGrow( cur, fgens[i].id );
+         spf->base =
+            MAX( spf->base, MAX( 0., base * spillfactor * fgens[i].weight ) );
+         spf->bonus += MAX( 0., bonus * spillfactor * fgens[i].weight );
+         spf->value = spf->base + spf->bonus;
       }
 
       /* Check to see if we've finished this range and grab the next queue. */
@@ -4496,6 +4460,22 @@ sys_cleanup:
    return;
 }
 
+static SystemPresence *system_getFactionPresenceGrow( StarSystem *sys,
+                                                      int         faction )
+{
+   /* Go through the array, looking for the faction. */
+   for ( int i = 0; i < array_size( sys->presence ); i++ ) {
+      if ( sys->presence[i].faction == faction )
+         return &sys->presence[i];
+   }
+   SystemPresence *sp = system_getFactionPresence( sys, faction );
+   if ( sp == NULL ) {
+      sp = &array_grow( &sys->presence );
+      memset( sp, 0, sizeof( SystemPresence ) );
+      sp->faction = faction;
+   }
+   return sp;
+}
 SystemPresence *system_getFactionPresence( StarSystem *sys, int faction )
 {
    /* Go through the array, looking for the faction. */
@@ -4697,21 +4677,17 @@ int system_hasSpob( const StarSystem *sys )
  */
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
-   int             id;
-   nlua_env        env;
-   SystemPresence *presence;
+   nlua_env env;
 
    /* Ignore dynamic factions. */
    if ( faction_isDynamic( faction ) )
       return;
 
    /* Remove the presence. */
-   id = getPresenceIndex( cur_system, faction );
-   sys->presence[id].curUsed -= amount;
-
-   /* Safety. */
-   presence          = &sys->presence[id];
-   presence->curUsed = MAX( 0, sys->presence[id].curUsed );
+   SystemPresence *presence = system_getFactionPresence( sys, faction );
+   if ( presence == NULL )
+      return;
+   presence->curUsed = MAX( 0, presence->curUsed - amount );
 
    /* Run lower hook. */
    env = faction_getScheduler( faction );
