@@ -126,6 +126,8 @@ unsigned int hook_addTimerMisn( unsigned int parent, const char *func,
                                 double ms );
 unsigned int hook_addTimerEvt( unsigned int parent, const char *func,
                                double ms );
+unsigned int hook_addTimerFunc( int ( *func )( void * ), void *data,
+                                double ms );
 
 /* Date hooks. */
 void         hooks_updateDate( ntime_t change );

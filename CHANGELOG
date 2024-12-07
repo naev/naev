@@ -19,6 +19,7 @@
    * neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
    * Minor typo fixes and translation updates
    * Restored portable installs with the Windows installer
+   * Documentation fixes
 
 * 0.12.0-beta.2
    * Fallback for missing holo-archives ship entries
