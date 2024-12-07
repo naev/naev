@@ -867,8 +867,12 @@ void ai_think( Pilot *pilot, double dt, int dotask )
 
    /* Mark weapon sets as off, and the AI will activate as necessary. */
    if ( !pilot_isPlayer( cur_pilot ) ) {
+      /* Turn off HOLD groups. */
       for ( int i = 0; i < PILOT_WEAPON_SETS; i++ )
          cur_pilot->weapon_sets[i].active = 0;
+      /* Now untoggle the rest. */
+      for ( int i = 0; i < array_size( cur_pilot->outfits ); i++ )
+         cur_pilot->outfits[i]->flags &= ~( PILOTOUTFIT_ISON_TOGGLE );
    }
 
    /* pilot has a currently running task */
