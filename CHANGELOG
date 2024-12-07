@@ -20,6 +20,7 @@
    * neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
    * minerva/judugement: fixed error in VN flow
    * Minor typo fixes and translation updates
+   * Increased maxmimum reputation for a certain hidden faction to 70
    * Restored portable installs with the Windows installer
    * Documentation fixes
 
