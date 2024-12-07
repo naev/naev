@@ -35,8 +35,10 @@ static const luaL_Reg music_methods[] = {
  *
  * Typical usage would be something like:
  * @code
- * music.load( "intro" ) -- Load the song
- * music.play() -- Play it
+ * music.choose( "combat" ) -- Starts a combat song
+ * music.play() -- Play it, it should play automatically unless music is stopped
+ * music.play( "machina.ogg" ) -- You can also directly define the name of the
+ * file to play instead
  * @endcode
  *
  * @luamod music
@@ -72,6 +74,8 @@ static int musicL_choose( lua_State *L )
 /**
  * @brief Plays the loaded song. Will resume paused songs.
  *
+ *    @lautparam[opt=nil] string filename Name of the file to play, or just the
+ * current loaded one if not set.
  * @luafunc play
  */
 static int musicL_play( lua_State *L )
