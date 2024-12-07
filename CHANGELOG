@@ -13,6 +13,7 @@
    * Display local standing in the information window
    * Fixed certain combination of opening menus locking up
    * Fixed fmt.number displaying wrong values when negative
+   * Fixed spoiling of system names on the map
    * Can no longer abort missions during landing animation
    * Fixed editor crash with empty descriptions
    * Fixed rehabilitation missions

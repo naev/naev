@@ -355,7 +355,7 @@ void map_open( void )
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname", &gl_defFont,
-                   NULL, system_name( cur ) );
+                   NULL, system_nameKnown( cur ) );
    y -= 10;
 
    /* Faction image */
@@ -613,7 +613,7 @@ static void map_update( unsigned int wid )
             _( "Showing %s prices relative to %s:\n"
                "Positive/blue indicate profit while negative/orange values "
                "indicate loss when sold at the corresponding system." ),
-            _( c->name ), system_name( sys ) );
+            _( c->name ), system_nameKnown( sys ) );
          map_update_status( wid, buf );
       } else {
          snprintf( buf, sizeof( buf ),
@@ -632,15 +632,10 @@ static void map_update( unsigned int wid )
    y = -20 - 20 - 64 -
        gl_defFont.h; /* Initialized to position for txtSFaction. */
 
-   if ( !sys_isKnown( sys ) ) { /* System isn't known, erase all */
-      /*
-       * Right Text
-       */
-      if ( sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) )
-         window_modifyText( wid, "txtSysname", system_name( sys ) );
-      else
-         window_modifyText( wid, "txtSysname", _( "Unknown" ) );
+   /* System name. */
+   window_modifyText( wid, "txtSysname", system_nameKnown( sys ) );
 
+   if ( !sys_isKnown( sys ) ) { /* System isn't known, erase all */
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", x, y );
@@ -680,9 +675,6 @@ static void map_update( unsigned int wid )
       map_update_status( wid, NULL );
       return;
    }
-
-   /* System is known */
-   window_modifyText( wid, "txtSysname", system_name( sys ) );
 
    f        = -1;
    multiple = 0;
