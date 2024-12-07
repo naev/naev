@@ -77,8 +77,8 @@ function rehab.init( fct, params )
       mem.rep_local = {}
       for k,s in ipairs(system.getAll()) do
          mem.rep_local[ s:nameRaw() ] = s:reputation( fct )
-         s:setReputation( fct, 0 ) -- Reset to 0
       end
+      fct:setReputationGlobal( 0 ) -- Reset to 0
 
       misn.accept()
       setosd()
