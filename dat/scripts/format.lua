@@ -9,16 +9,10 @@
 --]]
 local format = {}
 
---[[--
-Converts a nonnegative integer into a human readable string, delimiting every third digit with a comma.
-If you pass a more exotic "number" value, you'll get a string back, but you won't attain happiness.
-
-   @param number The number to format. Will be rounded to the nearest integer.
---]]
-function format.number( number )
+local function _number( number )
    local numberstring = ""
    local separator = _(",%03d%s") -- separator for large numbers
-   if number > -math.huge and number < math.huge then
+   if number < math.huge then
       number = math.floor(number + 0.5)
       while number >= 1000 do
          numberstring = string.format( separator, number % 1000, numberstring )
@@ -29,6 +23,20 @@ function format.number( number )
       numberstring = tostring(number):gsub("inf", "∞")
    end
    return numberstring
+end
+
+--[[--
+Converts a nonnegative integer into a human readable string, delimiting every third digit with a comma.
+If you pass a more exotic "number" value, you'll get a string back, but you won't attain happiness.
+
+   @param number The number to format. Will be rounded to the nearest integer.
+--]]
+function format.number( number )
+   if number < 0 then
+      return "-".._number( -number )
+   else
+      return _number( number )
+   end
 end
 
 
