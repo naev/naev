@@ -74,7 +74,7 @@ static int musicL_choose( lua_State *L )
 /**
  * @brief Plays the loaded song. Will resume paused songs.
  *
- *    @lautparam[opt=nil] string filename Name of the file to play, or just the
+ *    @luatparam[opt=nil] string filename Name of the file to play, or just the
  * current loaded one if not set.
  * @luafunc play
  */
