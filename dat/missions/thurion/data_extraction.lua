@@ -132,7 +132,7 @@ function land ()
          return
       end
 
-      vntk.msg(_("Ready to Go!"),fmt.f(_("After you land, some shady contract workers quickly load your ship with crates out of the site of the spaceport surveillance systems. With the documents the Thurion want in your hold, it is time to head back to {spb} in the {sys} system."),
+      vntk.msg(_("Ready to Go!"),fmt.f(_("After you land, some shady contract workers quickly load your ship with crates out of the sight of the spaceport surveillance systems. With the documents the Thurion want in your hold, it is time to head back to {spb} in the {sys} system."),
          {spb=mem.returnspb, sys=mem.returnsys}))
 
       misn.markerRm()
