@@ -3,6 +3,7 @@
    * Changed mouse click selection priority, it prefers spobs/jumps and will ignore clicks reselecting the same object
    * Fixed map decorators not shown in editor
    * Centered buttons at the top of the holo-archives
+   * Show if a system has a bar in the map
    * Fixed conf.mouse_doubleclick not disabling when set to 0
    * Fixed crashes when a faction is assigned a non-existent colour
    * Update the overlay scaling given the player's position

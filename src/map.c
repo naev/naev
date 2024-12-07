@@ -486,7 +486,7 @@ static void map_update_commod_av_price( void )
       double totPrice    = 0;
       int    totPriceCnt = 0;
       for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-         StarSystem *sys = system_getIndex( i );
+         const StarSystem *sys = system_getIndex( i );
 
          /* if system is not known, reachable, or marked. and we are not in the
           * editor */
@@ -499,7 +499,7 @@ static void map_update_commod_av_price( void )
             int    sumCnt   = 0;
             double thisPrice;
             for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
-               Spob *p = sys->spobs[j];
+               const Spob *p = sys->spobs[j];
                for ( int k = 0; k < array_size( p->commodities ); k++ ) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt >
