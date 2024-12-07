@@ -893,12 +893,12 @@ static int misn_osdActive( lua_State *L )
 static int misn_osdGetActiveItem( lua_State *L )
 {
    const Mission *cur_mission = misn_getFromLua( L );
-   int            active      = osd_getActive( cur_mission->osd );
+   if ( cur_mission->osd == 0 )
+      return 0;
 
-   if ( active < 0 ) {
-      lua_pushnil( L );
-      return 1;
-   }
+   int active = osd_getActive( cur_mission->osd );
+   if ( active < 0 )
+      return 0;
 
    lua_pushinteger( L, active + 1 );
    return 1;
