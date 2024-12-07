@@ -240,7 +240,7 @@ void ovr_refresh( void )
        array_size( ovr_markers ) + autonav_pos;
    pos = calloc( n, sizeof( vec2 * ) );
    mo  = calloc( n, sizeof( MapOverlayPos  *) );
-   if ( player.p != NULL ) {
+   if ( ( player.p != NULL ) && !pilot_isFlag( player.p, PILOT_HYP_END ) ) {
       max_x = ABS( player.p->solid.pos.x );
       max_y = ABS( player.p->solid.pos.y );
    } else
