@@ -407,7 +407,7 @@ Having finished her interrogation, Maikki sits down.]]))
          pir_points = pir_points-1
       end )
    end
-   vn.jump("02")
+   vn.jump("03")
 
    vn.label("02_blowup")
    dvd(_([["So you admit to destroying civilian vessels in the Nebula, does this not make you a pirate? We ought to have a trial about your infamy, rather than the future of Minerva Station!"]]))
@@ -422,10 +422,10 @@ Having finished her interrogation, Maikki sits down.]]))
          pir_points = pir_points+1
       end )
    end
-   vn.jump("02")
+   vn.jump("03")
 
    local gave_drink = var.peek("maikki_gave_drink")
-   vn.label("02")
+   vn.label("03")
    if gave_drink then
       dvd(_([["I would like to ask about your relationship with the Independent Counsel, Maisie McPherson. What is your relationship?"]]))
       vn.na(_([[Maikki objects, but is overruled.]]))
@@ -447,10 +447,10 @@ Having finished her interrogation, Maikki sits down.]]))
 
       vn.label("03_friends")
       dvd(_([["I would like to question the impartiality of the witness. With such a close relationship with the independent counsel, it is likely they have ulterior motivations regarding their declarations."]]))
-      vn.jump("03")
+      vn.jump("04")
    end
 
-   vn.label("03")
+   vn.label("04")
    dvd(_([["I have no further questions for the witness."]]))
 
    vn.scene()
@@ -481,22 +481,22 @@ Having finished her interrogation, Maikki sits down.]]))
          pir_points = pir_points-1
       end )
       zlk(_([["Not only do we have a testimony from Harper Bowdown that you met them, but that you forcibly took their possessions, a winning ticket from a Minerva Station raffle!"]]))
-      vn.jump("cont04")
+      vn.jump("05")
 
       vn.label("04_gave")
       vn.func( function ()
          pir_points = pir_points-1
       end )
       zlk(_([["You say they gave you their winning ticket, but we have a testimony from Harper Bowdown where they say you intimidated and took the ticket by force!"]]))
-      vn.jump("cont04")
+      vn.jump("05")
 
-      vn.label("cont04_took")
+      vn.label("04_took")
       zlk(fmt.f(_([["Let it be noted that {playername} admits to using intimidation and force to deprive a legal Imperial citizen of their possessions!"]]),
          {playername=player.name()}))
-      vn.jump("cont04")
+      vn.jump("05")
    end
 
-   vn.label("cont04")
+   vn.label("05")
    local strangelove_death = var.peek("strangelove_death") -- "unplug", "comforted", "shot", nil
    zlk(fmt.f(_([[The Za'lek Lawyer looks at their notes.
 "Let us see, {playername}, you wouldn't know what happened to the Za'lek Scientist Dr. Strangelove?"]]),
@@ -521,7 +521,7 @@ Having finished her interrogation, Maikki sits down.]]))
       zlk(fmt.f(_([["You see, {playername}, we were able to recover the black box from Dr. Strangelove's ship. The audio log makes it clear that you were the one to end their life."]]),
          {playername=player.name()}))
    end
-   vn.jump("05")
+   vn.jump("05_cont")
 
    vn.label("05_kill")
    --[[
@@ -536,9 +536,9 @@ Having finished her interrogation, Maikki sits down.]]))
    end )
    zlk(fmt.f(_([["Your honour, {playername} confesses to the murder of Dr. Strangelove."]]),
       {playername=player.name()}))
-   vn.jump("05")
+   vn.jump("05_cont")
 
-   vn.label("05")
+   vn.label("05_cont")
    zlk(fmt.f(_([["Although the exact details of what happened between {playername} and Dr. Strangelove is not clear, that should be subject to another trial, what is clear is that {playername} can not be trusted, and their testimony should be invalidated."]]),
       {playername=player.name()}))
    zlk(_([["That is all I have to say."
