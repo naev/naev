@@ -481,7 +481,7 @@ Having finished her interrogation, Maikki sits down.]]))
          pir_points = pir_points-1
       end )
       zlk(_([["Not only do we have a testimony from Harper Bowdown that you met them, but that you forcibly took their possessions, a winning ticket from a Minerva Station raffle!"]]))
-      vn.jump("04")
+      vn.jump("cont04")
 
       vn.label("04_gave")
       vn.func( function ()

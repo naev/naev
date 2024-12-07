@@ -18,6 +18,7 @@
    * onion04: don't fail if something happens to the gawain after taking the cargo
    * traffic_01: don't use hardcoded systems
    * neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
+   * minerva/judugement: fixed error in VN flow
    * Minor typo fixes and translation updates
    * Restored portable installs with the Windows installer
    * Documentation fixes
