@@ -83,9 +83,8 @@ function drill.ontoggle( p, _po, on )
       if #rwd > 0 then
          local rget = rwd[ rnd.rnd(1,#rwd) ]
          local rwd_bonus = p:shipstat("mining_bonus",true)
-         rwd_bonus = rwd_bonus * (0.5+0.5*bonus)
          local c = rget.commodity
-         local q = math.floor(rget.quantity * (rwd_bonus*rnd.rnd()+0.5) + 0.5)
+         local q = math.floor(rget.quantity * (rwd_bonus*rnd.rnd()+0.5*bonus+0.5) + 0.5)
          p:cargoAdd( c, q )
          if mem.isp then
             player.msg("#g"..fmt.f(_("You obtained {amount} of {cargo}"),{amount=fmt.tonnes(q),cargo=c}))
