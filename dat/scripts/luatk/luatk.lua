@@ -99,7 +99,7 @@ end
 Creates a custom state inside a vn state.
 
 A full example is shown below.
-@code
+```
 vn.clear()
 vn.scene()
 vn.transition()
@@ -111,7 +111,7 @@ luatk.vn( function ()
 end )
 vn.na("That was all!")
 vn.run()
-@endcode
+```
 
    @tparam function setup Function to set up the luatk.
 --]]
@@ -188,7 +188,7 @@ end
 --[[--
 Sets the default font to use for the toolkit.
 
-   @tparam font Font to set as default.
+   @tparam font font Font to set as default.
 --]]
 function luatk.setDefaultFont( font )
    luatk._deffont = font
@@ -304,6 +304,8 @@ Handles mouse motion.
 Only to be used when running the toolkit outside of luatk.run.
    @tparam number mx X coordinates of the mouse released position.
    @tparam number my Y coordinates of the mouse released position.
+   @tparam number dx Relative X motion from last event.
+   @tparam number dy Relative Y motion from last event.
    @treturn boolean true if the event was used, false otherwise.
 --]]
 function luatk.mousemoved( mx, my, dx, dy )
@@ -388,6 +390,8 @@ end
 
 --[[--
 Wheel moved event.
+   @tparam number mx Mouse x wheel movement.
+   @tparam number my Mouse y wheel movement.
 --]]
 function luatk.wheelmoved( mx, my )
    local wdw = luatk._windows[ #luatk._windows ]
@@ -586,7 +590,7 @@ end
 --[[--
 Sets the focused widget of a window.
 
-   @tparam Widget Widget to focus.
+   @tparam Widget wgt Widget to focus.
 --]]
 function luatk.Window:setFocus( wgt )
    if self.focuslocked or (wgt and not wgt.canfocus) then
@@ -604,7 +608,7 @@ end
 --[[--
 Locks the focus for a window to whatever widget is being currently focused.
 
-   @tparam boolean Whether to enable or disable the focus lock.
+   @tparam boolean state Whether to enable or disable the focus lock.
 --]]
 function luatk.Window:setFocusLock( state )
    self.focuslocked = state

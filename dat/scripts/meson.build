@@ -9,7 +9,7 @@ lua_source = files(
    'lmisn.lua',
    'lmusic.lua',
    'love_shaders.lua',
-   'luatk/core.lua',
+   'luatk/luatk.lua',
    'pilotai.lua',
    'portrait.lua',
    'prob.lua',
@@ -17,7 +17,7 @@ lua_source = files(
    'prng.lua',
    'proximity.lua',
    'swapship.lua',
-   'vn/core.lua',
+   'vn/vn.lua',
    'vntk.lua',
 )
 
