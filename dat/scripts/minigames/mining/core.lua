@@ -324,7 +324,7 @@ local function compute_bonus ()
          rwd = rwd + t.reward
       end
    end
-   return rwd
+   return rwd  / #targets
 end
 
 function mining.update( dt )
