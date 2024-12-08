@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Bilgewater">
+ <pos x="-1597.399997" y="2475.969995"/>
+ <GFX>
+  <space>Z00.webp</space>
+  <exterior>uninhabited-rocky-yellow-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>Z</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>This world was thoroughly unpleasant even before it became the Empire's official garbage dump. Technonically hyperactive, bombarded by asteroids and solar radiation, and prone to devastating acid rain, it did everything in it's power to dissuade colonization. It was found to even lack enough rare minerals to justify a penal mining colony by even the most callous Imperial bureaucrat. However, the violence of the surface did make it convenient for legally dumping the Empire's collective effluence here and forgetting about it.</description>
+ </general>
+ <tags>
+  <tag>garbage</tag>
+ </tags>
+</spob>
