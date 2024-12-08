@@ -70,19 +70,20 @@ function drill.ontoggle( p, _po, on )
 
    -- Handles giving the function
    local function reward( bonus )
-      local r = max_rarity
+      local maxr = max_rarity
       if bonus < rnd.rnd() then
-         r = math.max(r-1,0)
+         maxr = math.max(maxr-1,0)
       end
       local rwd = {}
       for k,m in ipairs(mat) do
-         if m.rarity==r then
+         if m.rarity==maxr then
             table.insert( rwd, m )
          end
       end
       if #rwd > 0 then
          local rget = rwd[ rnd.rnd(1,#rwd) ]
          local rwd_bonus = p:shipstat("mining_bonus",true)
+         rwd_bonus = rwd_bonus * (0.5+0.5*bonus)
          local c = rget.commodity
          local q = math.floor(rget.quantity * (rwd_bonus*rnd.rnd()+0.5) + 0.5)
          p:cargoAdd( c, q )
