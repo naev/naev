@@ -18,6 +18,7 @@
    * Fixed editor crash with empty descriptions
    * Fixed editor crash when making links to systems with no presence
    * Fixed rehabilitation missions
+   * Fixed escorts not using special outfits and abilities
    * Mining minigame result affects yield more
    * Absorption is no longer limited to the 0% to 100% range
    * derelict_rescue: only allow generic target space objects

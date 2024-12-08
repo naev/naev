@@ -48,9 +48,6 @@ end
 -- Wrapper for the think functions.
 --]]
 function atk.think( target, si, noretarget )
-   -- Ignore other enemies
-   if si.noattack then return end
-
    -- Update some high level stats
    mem.ranged_ammo = libatk.seekers_ammo()
 
@@ -124,42 +121,42 @@ function atk.think( target, si, noretarget )
          local fm = flow.max( p )
          local s = flow.size( p )
 
-         if mem._o.seeking_chakra and f > fm * 0.25 and rnd.rnd() < 0.3 then
+         if mem._o.seeking_chakra and f > fm * 0.25 and rnd.rnd() < 0.9 then
             -- Range is 5600 for small to 8000 for large
             if ai.dist( target ) < 5000 then -- TODO more exact range
                p:outfitToggle( mem._o.seeking_chakra, true )
             end
          end
-         if mem._o.feather_drive and f > fm * 0.25 and rnd.rnd() < 0.3 then
+         if mem._o.feather_drive and f > fm * 0.25 and rnd.rnd() < 0.6 then
             if ai.dir( target ) < math.rad(10) and ai.dist( target ) < 300  then
                p:outfitToggle( mem._o.feather_drive, true )
             end
          end
-         if mem._o.astral_projection and f >= fm * 0.45 and rnd.rnd() < 0.1 then
-            if ai.dist( target ) < 1500 + s * 500 then
+         if mem._o.astral_projection and f >= fm * 0.45 and rnd.rnd() < 0.6 then
+            if ai.dist( target ) < 1500 + s * 1000 then
                p:outfitToggle( mem._o.astral_projection, true )
             end
          end
-         if mem._o.cleansing_flames and f > fm * 0.25 and rnd.rnd() < 0.5 then
+         if mem._o.cleansing_flames and f > fm * 0.25 and rnd.rnd() < 0.8 then
             if ai.dist( target ) < 400 then
                p:outfitToggle( mem._o.cleansing_flames, true )
             end
          end
-         if mem._o.avatar_sirichana and f > fm * 0.4 and rnd.rnd() < 0.4 then
+         if mem._o.avatar_sirichana and f > fm * 0.4 and rnd.rnd() < 0.8 then
             -- Want enemy to be in shooting range
             local range = libatk.primary_range()
             if ai.dist( target ) < 0.8*range then
                p:outfitToggle( mem._o.avatar_sirichana, true )
             end
          end
-         if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.5 then
+         if mem._o.house_mirrors and f > fm * 0.4 and rnd.rnd() < 0.6 then
             -- Want enemy to be in shooting range
             local range = libatk.primary_range()
             if ai.dist( target ) < 0.8*range then
                p:outfitToggle( mem._o.house_mirrors, true )
             end
          end
-         if mem._o.reality_rip and f > fm * 0.4 and rnd.rnd() < 0.5 then
+         if mem._o.reality_rip and f > fm * 0.4 and rnd.rnd() < 0.6 then
             -- Want enemy to be close, but not too close
             local range = libatk.primary_range()
             local d = ai.dist( target )
@@ -169,6 +166,11 @@ function atk.think( target, si, noretarget )
          end
       end
    end
+
+   -- TODO si.noattack and noretarget are redundant?
+
+   -- Ignore other enemies
+   if si.noattack then return end
 
    -- The think function basically tries to figure out new targets
    if not noretarget then
