@@ -94,6 +94,9 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
          pfleet_cargoAdd( pc->commodity, pc->quantity );
          pilot_cargoRm( p, pc->commodity, pc->quantity );
       }
+
+      /* Undeploy fighters. */
+      escort_clearDeployed( p, -1 );
    }
    ps->deployed = deploy;
    if ( !ps->deployed ) {
