@@ -113,9 +113,11 @@ end
 
 local function update_osd ()
    local b = mem._bounty
+   print( b.deadline, "foo", misn.osdGetActive(), "bar" )
    if b.deadline then
+      local active = misn.osdGetActive() or 1
       -- Only care if first is selected, or time is ignored
-      if misn.osdGetActive()==1 then
+      if active==1 then
          misn.osdCreate( b.osd_title, {
             fmt.f( b.osd_goto,      {sys=b.system, time_limit=b.deadline, time=(b.deadline-time.get())} ),
             fmt.f( b.osd_objective, {plt=b.targetname} ),
