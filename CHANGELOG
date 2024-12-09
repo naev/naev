@@ -19,6 +19,7 @@
    * Fixed editor crash when making links to systems with no presence
    * Fixed rehabilitation missions
    * Fixed escorts not using special outfits and abilities
+   * Fixed escort fighters existing after undeploying escort
    * Fixed Certitude trails
    * Mining minigame result affects yield more
    * Absorption is no longer limited to the 0% to 100% range
