@@ -102,5 +102,5 @@ You are not aware of anywhere where <%= o:name() %> are available for purchase.
 <% end %>
 """
 
-with open( args.o, 'wb' ) as f:
+with open(args.o, 'w', encoding='utf-8', newline='\n') as f:
     f.write( outstr )

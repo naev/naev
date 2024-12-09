@@ -115,5 +115,5 @@ You are not aware of anywhere where the <%= s:name() %> is available for purchas
 <% end %>
 """
 
-with open(args.o, 'wb', encoding='utf-8') as f:
+with open(args.o, 'w', encoding='utf-8', newline='\n') as f:
     f.write(outstr)
