@@ -103,4 +103,4 @@ You are not aware of anywhere where <%= o:name() %> are available for purchase.
 """
 
 with open(args.o, 'w', encoding='utf-8', newline='\n') as f:
-    f.write( outstr )
+    f.write( outstr.replace('\r\n','\n') )
