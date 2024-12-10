@@ -102,8 +102,7 @@ pub fn normal_inverse(p: f64) -> f64 {
 
     if p <= 0.0 {
         return NEG_INFINITY;
-    }
-    if 1.0 <= p {
+    } else if 1.0 <= p {
         return INFINITY;
     }
 
