@@ -14,7 +14,7 @@
 --[[
    Freeing Kex 4
 
-   Player has to go confront a guy in the frontier and is constantly harassed
+   Player has to go confront a guy in the Frontier and is constantly harassed
    by bounty hunters while active. Fairly straight forward with a pretty hard
    fight at the end.
 --]]
@@ -156,7 +156,7 @@ He seems at a loss of words.
       kex(_([[Before you can speak, he keeps on going.
 "Anyway, don't let my silly thoughts bother you. Let us get back to topic."
 His eyes don't seem to have changed.]]))
-      kex(_([["So I was putting together the pieces and found a close collaborator of the CEO, someone called Jie de Luca who seems to be situated in the frontier. They seem to go fairly far back with the CEO and probably have more information. As this is our best lead for now, I hate to ask this of you, but would you be able to check them out and see if we can get some more information?"]]))
+      kex(_([["So I was putting together the pieces and found a close collaborator of the CEO, someone called Jie de Luca who seems to be situated in the Frontier. They seem to go fairly far back with the CEO and probably have more information. As this is our best lead for now, I hate to ask this of you, but would you be able to check them out and see if we can get some more information?"]]))
       vn.menu{
          { _("Accept"), "accept" },
          { _("Decline"), "decline" },

@@ -3546,7 +3546,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    /* Metadata. */
    if ( pship->acquired )
       xmlw_elem( writer, "acquired", "%s", pship->acquired );
-   xmlw_saveTime( writer, "acquired_date", pship->acquired_date );
+   xmlw_saveNTime( writer, "acquired_date", pship->acquired_date );
    xmlw_elem( writer, "time_played", "%f", pship->time_played );
    xmlw_elem( writer, "dmg_done_shield", "%f", pship->dmg_done_shield );
    xmlw_elem( writer, "dmg_done_armour", "%f", pship->dmg_done_armour );
@@ -4525,7 +4525,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       /* Meta-data. */
       xmlr_strd( node, "acquired", ps.acquired );
       if ( xml_isNode( node, "acquired_date" ) ) {
-         xml_parseTime( node, &ps.acquired_date );
+         xml_parseNTime( node, &ps.acquired_date );
          continue;
       }
       xmlr_float( node, "time_played", ps.time_played );

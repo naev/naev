@@ -3,19 +3,38 @@
    * Changed mouse click selection priority, it prefers spobs/jumps and will ignore clicks reselecting the same object
    * Fixed map decorators not shown in editor
    * Centered buttons at the top of the holo-archives
+   * Show if a system has a bar in the map
    * Fixed conf.mouse_doubleclick not disabling when set to 0
    * Fixed crashes when a faction is assigned a non-existent colour
    * Update the overlay scaling given the player's position
    * Fixed population not being updated by universe diffs
+   * Fixed date acquired being wrong on some platforms
    * Round reputation values when displaying standing text for consistency
    * Display local standing in the information window
+   * Fixed certain combination of opening menus locking up
+   * Fixed fmt.number displaying wrong values when negative
+   * Fixed spoiling of system names on the map
+   * Improved pilot facing corrections when jumping
    * Can no longer abort missions during landing animation
    * Fixed editor crash with empty descriptions
+   * Fixed editor crash when making links to systems with no presence
+   * Fixed rehabilitation missions
+   * Fixed escorts not using special outfits and abilities
+   * Fixed escort fighters existing after undeploying escort
+   * Fixed Certitude trails
+   * Pirate ambush derelict events break stealth
+   * Mining minigame result affects yield more
    * Absorption is no longer limited to the 0% to 100% range
+   * derelict_rescue: only allow generic target space objects
    * onion04: don't fail if something happens to the gawain after taking the cargo
    * traffic_01: don't use hardcoded systems
+   * bounty: fixed error with deadlines in certain cases
    * neburesearch04: don't let the drones see through stealth and disable the player from relanding to skip stage
+   * minerva/judugement: fixed error in VN flow
    * Minor typo fixes and translation updates
+   * Increased maxmimum reputation for a certain hidden faction to 70
+   * Restored portable installs with the Windows installer
+   * Documentation fixes
 
 * 0.12.0-beta.2
    * Fallback for missing holo-archives ship entries

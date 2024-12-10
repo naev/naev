@@ -1,2 +1,2 @@
 -- Lazy loader for luatk
-return require("lazyload")("luatk.core")
+return require("lazyload")("luatk.luatk")

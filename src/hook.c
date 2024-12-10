@@ -609,6 +609,24 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func,
 /**
  * @brief Adds a function hook to be run.
  */
+unsigned int hook_addTimerFunc( int ( *func )( void * ), void *data, double ms )
+{
+   Hook *new_hook = hook_new( HOOK_TYPE_FUNC, "timer" );
+
+   /* Function special stuff. */
+   new_hook->u.func.func = func;
+   new_hook->u.func.data = data;
+
+   /* Timer information. */
+   new_hook->is_timer = 1;
+   new_hook->ms       = ms;
+
+   return new_hook->id;
+}
+
+/**
+ * @brief Adds a function hook to be run.
+ */
 unsigned int hook_addFunc( int ( *func )( void * ), void *data,
                            const char *stack )
 {

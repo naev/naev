@@ -285,6 +285,11 @@ function _escort_e_death( p )
 end
 
 function _escort_e_attacked( p, attacker )
+   -- If they are not following the player, the player should protect them
+   if not mem._escort.followplayer then
+      player.autonavReset( 3 )
+      attacker:setHostile(true) -- Make attacker hostile
+   end
    if mem._escort.params.func_pilot_attacked then
       _G[mem._escort.params.func_pilot_attacked]( p, attacker )
    end

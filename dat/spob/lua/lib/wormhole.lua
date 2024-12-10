@@ -72,6 +72,9 @@ end
 function wormhole.unload ()
    mem.shader= nil
    mem.cvs   = nil
+   if mem.sfx then
+      mem.sfx:stop()
+   end
    mem.sfx   = nil
 end
 

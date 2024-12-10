@@ -505,7 +505,7 @@ function land ()
       vn.music( minerva.loops.maikki )
       vn.transition("hexagon")
 
-      vn.na(_([[You land and are immediately greeted by a Maikki. How did she track your ship?]]))
+      vn.na(_([[You land and are immediately greeted by Maikki. How did she track your ship?]]))
       maikki(_([["What did you find? Did you meet Marley and Sage?"]]))
       vn.na(_([[She takes you to an impromptu installation on her ship, the Pink Demon. There you give Maikki the holodrives that she promptly passes off to her engineers to inspect the contents, while you explain to her the ordeal you went through. She shows sorrow when you explain the fates of Marley and Sage, the two pirates you met, but such is the way of pirates.]]))
       vn.na(fmt.f(_([[She explains to you the situation of Zuri and Kex, while Kex hasn't changed at all, Zuri hasn't improved significantly and is under a deep coma. While the installations at {spb} are not bad, they are far from being the forefront in medical technology.]]),

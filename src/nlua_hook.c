@@ -691,7 +691,7 @@ static int hookL_outfitsell( lua_State *L )
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.
- * @luafunc outfit_sell
+ * @luafunc equip
  */
 static int hookL_equip( lua_State *L )
 {

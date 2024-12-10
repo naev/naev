@@ -3433,6 +3433,7 @@ dat/scripts/factions/pirate.lua
 dat/scripts/factions/proteron.lua
 dat/scripts/factions/sirius.lua
 dat/scripts/factions/soromid.lua
+dat/scripts/factions/thurion.lua
 dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
 dat/scripts/format.lua
@@ -3468,11 +3469,11 @@ dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/blink.lua
 dat/scripts/luaspfx/chakra_explosion.lua
 dat/scripts/luaspfx/cleansing_flames.lua
-dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/emp_blast.lua
 dat/scripts/luaspfx/explosion.lua
 dat/scripts/luaspfx/feather_drive.lua
+dat/scripts/luaspfx/luaspfx.lua
 dat/scripts/luaspfx/pheromones.lua
 dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/racetrack.lua
@@ -3484,8 +3485,8 @@ dat/scripts/luaspfx/trail.lua
 dat/scripts/luatk.lua
 dat/scripts/luatk/bezier.lua
 dat/scripts/luatk/conf.lua
-dat/scripts/luatk/core.lua
 dat/scripts/luatk/equipment.lua
+dat/scripts/luatk/luatk.lua
 dat/scripts/luatk/main.lua
 dat/scripts/luatk/map.lua
 dat/scripts/luatk/markdown.lua
@@ -3534,12 +3535,12 @@ dat/scripts/term.lua
 dat/scripts/textoverlay.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
-dat/scripts/vn/core.lua
 dat/scripts/vn/log.lua
 dat/scripts/vn/main.lua
 dat/scripts/vn/options.lua
 dat/scripts/vn/sdf.lua
 dat/scripts/vn/transitions.lua
+dat/scripts/vn/vn.lua
 dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua

@@ -1176,7 +1176,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
       /* Count spobs. */
       l = 0;
       for ( int j = 0; j < array_size( sys->spobs_virtual ); j++ ) {
-         VirtualSpob *va = sys->spobs_virtual[j];
+         const VirtualSpob *va = sys->spobs_virtual[j];
          l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
                          ( l > 0 ) ? "\n" : "", va->name );
       }
@@ -1316,7 +1316,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
                          base, getValCol( bonus ), bonus, spob_name( spob ) );
       }
       for ( int j = 0; j < array_size( sys->spobs_virtual ); j++ ) {
-         VirtualSpob *va = sys->spobs_virtual[j];
+         const VirtualSpob *va = sys->spobs_virtual[j];
          for ( int p = 0; p < array_size( va->presences ); p++ ) {
             if ( !getPresenceVal( f, &va->presences[p], &base, &bonus ) )
                continue;
@@ -1339,7 +1339,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
                             bonus * 0.5, spob_name( spob ), _( cur->name ) );
          }
          for ( int j = 0; j < array_size( cur->spobs_virtual ); j++ ) {
-            VirtualSpob *va = cur->spobs_virtual[j];
+            const VirtualSpob *va = cur->spobs_virtual[j];
             for ( int p = 0; p < array_size( va->presences ); p++ ) {
                if ( !getPresenceVal( f, &va->presences[p], &base, &bonus ) )
                   continue;

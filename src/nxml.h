@@ -4,8 +4,6 @@
 #pragma once
 
 /** @cond */
-#include <time.h>
-
 #ifdef __MINGW64_VERSION_MAJOR
 /* HACK: libxml2 assumes in its function declarations that its format
  * strings are handled by the native (legacy Microsoft) printf-family
@@ -23,6 +21,7 @@
 
 #include "attributes.h"
 #include "log.h"
+#include "ntime.h"
 #include "opengl_tex.h"
 
 #define XML_NODE_START 1
@@ -283,11 +282,13 @@ USE_RESULT glTexture *xml_parseTexture( xmlNodePtr node, const char *path,
                                         int defsx, int defsy,
                                         const unsigned int flags );
 int                   xml_parseTime( xmlNodePtr node, time_t *t );
+int                   xml_parseNTime( xmlNodePtr node, ntime_t *t );
 
 /*
  * Functions for generic complex writing.
  */
 void xmlw_setParams( xmlTextWriterPtr writer );
 int  xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t );
+int  xmlw_saveNTime( xmlTextWriterPtr writer, const char *name, ntime_t t );
 
 int nxml_init( void );

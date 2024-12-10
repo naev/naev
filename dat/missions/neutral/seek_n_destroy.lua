@@ -41,8 +41,9 @@ local ccomm = require "common.comm"
 local pilotai = require "pilotai"
 
 local trigger_ambush, spawn_advisor, next_sys, clear_target_hook -- Forward-declared functions
-local adm_factions, advisor, ambush, hailed, target_ship -- Non-persistent state
+local adm_factions, advisor, ambush, target_ship -- Non-persistent state
 
+local hailed = {}
 local quotes = {}
 local comms = {}
 
