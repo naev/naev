@@ -2119,7 +2119,13 @@ void equipment_updateShips( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", modelname );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    _( ship_classDisplay( ship->ship ) ) );
-   if ( ps->acquired_date == 0 )
+   /* On some platforms, the acquired date got truncated to 32 bits and is not
+    * restorable. It prints very low values instead of the true values. Since
+    * we can't fix it, just detect it as a really small value and display as
+    * unknown. This was detected at around 0.12.0, but is much older.
+    * TODO remove this sometime around 0.14.0. */
+   if ( ( ps->acquired_date == 0 ) ||
+        ( ps->acquired_date < start_date() >> 4 ) )
       snprintf( tbuf, sizeof( tbuf ), _( "Unknown" ) );
    else
       ntime_prettyBuf( tbuf, sizeof( tbuf ), ps->acquired_date, 2 );
