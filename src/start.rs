@@ -2,9 +2,12 @@ use crate::gettext::gettext;
 use crate::ndata;
 use crate::ntime::{NTime, NTimeC};
 use crate::nxml_err_node_unknown;
+use anyhow::Result;
 use std::ffi::CString;
-use std::io::{Error, ErrorKind, Result};
+use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
+
+use crate::nxml;
 
 #[derive(Default, Debug)]
 struct StartData {
@@ -33,17 +36,7 @@ macro_rules! nxml_attr_str {
 }
 macro_rules! nxml_attr_i32 {
     ($node: expr, $name: expr) => {
-        $node.attribute($name).unwrap().parse::<i32>().unwrap()
-    };
-}
-macro_rules! nxml_str {
-    ($node: expr) => {
-        CString::new($node.text().unwrap())?
-    };
-}
-macro_rules! nxml_f64 {
-    ($node: expr) => {
-        $node.text().unwrap().parse::<f64>().unwrap()
+        $node.attribute($name).unwrap().parse::<i32>()
     };
 }
 
@@ -52,7 +45,7 @@ impl StartData {
         let mut start: StartData = Default::default();
 
         let data = ndata::read(String::from("start.xml"))?;
-        let doc = roxmltree::Document::parse(std::str::from_utf8(&data).unwrap()).unwrap();
+        let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
         for node in root.children() {
             if !node.is_element() {
@@ -60,7 +53,7 @@ impl StartData {
             }
             match node.tag_name().name().to_lowercase().as_str() {
                 "name" => {
-                    start.name = nxml_str!(node);
+                    start.name = nxml::node_cstring(node)?;
                 }
                 "player" => {
                     for cnode in node.children() {
@@ -69,24 +62,24 @@ impl StartData {
                         }
                         match cnode.tag_name().name().to_lowercase().as_str() {
                             "credits" => {
-                                start.credits = cnode.text().unwrap().parse().unwrap();
+                                start.credits = nxml::node_str(cnode)?.parse()?;
                             }
                             "mission" => {
-                                start.mission = nxml_str!(cnode);
+                                start.mission = nxml::node_cstring(cnode)?;
                             }
                             "event" => {
-                                start.event = nxml_str!(cnode);
+                                start.event = nxml::node_cstring(cnode)?;
                             }
                             "chapter" => {
-                                start.chapter = nxml_str!(cnode);
+                                start.chapter = nxml::node_cstring(cnode)?;
                             }
                             "gui" => {
-                                start.gui = nxml_str!(cnode);
+                                start.gui = nxml::node_cstring(cnode)?;
                             }
                             "ship" => {
                                 start.shipname = nxml_attr_str!(cnode, "name");
                                 start.acquired = nxml_attr_str!(cnode, "acquired");
-                                start.ship = nxml_str!(cnode);
+                                start.ship = nxml::node_cstring(cnode)?;
                             }
                             "system" => {
                                 for ccnode in cnode.children() {
@@ -94,17 +87,17 @@ impl StartData {
                                         continue;
                                     }
                                     match ccnode.tag_name().name().to_lowercase().as_str() {
-                                        "name" => start.system = nxml_str!(ccnode),
+                                        "name" => start.system = nxml::node_cstring(ccnode)?,
                                         "x" => {
-                                            start.pos_x = nxml_f64!(ccnode);
+                                            start.pos_x = nxml::node_str(ccnode)?.parse()?;
                                         }
                                         "y" => {
-                                            start.pos_y = nxml_f64!(ccnode);
+                                            start.pos_y = nxml::node_str(ccnode)?.parse()?;
                                         }
                                         tag => {
                                             return nxml_err_node_unknown!(
                                                 "Start/player/system",
-                                                start.name.to_str().unwrap(),
+                                                start.name.to_str()?,
                                                 tag
                                             );
                                         }
@@ -114,7 +107,7 @@ impl StartData {
                             tag => {
                                 return nxml_err_node_unknown!(
                                     "Start/player",
-                                    start.name.to_str().unwrap(),
+                                    start.name.to_str()?,
                                     tag
                                 );
                             }
@@ -122,22 +115,22 @@ impl StartData {
                     }
                 }
                 "date" => {
-                    let scu = nxml_attr_i32!(node, "scu");
-                    let stp = nxml_attr_i32!(node, "stp");
-                    let stu = nxml_attr_i32!(node, "stu");
+                    let scu = nxml_attr_i32!(node, "scu")?;
+                    let stp = nxml_attr_i32!(node, "stp")?;
+                    let stu = nxml_attr_i32!(node, "stu")?;
                     start.date = NTime::new(scu, stp, stu);
                 }
                 "spob_lua_default" => {
-                    start.spob_lua_default = nxml_str!(node);
+                    start.spob_lua_default = nxml::node_cstring(node)?;
                 }
                 "dtype_default" => {
-                    start.dtype_default = nxml_str!(node);
+                    start.dtype_default = nxml::node_cstring(node)?;
                 }
                 "local_map_default" => {
-                    start.local_map_default = nxml_str!(node);
+                    start.local_map_default = nxml::node_cstring(node)?;
                 }
                 tag => {
-                    return nxml_err_node_unknown!("Start", start.name.to_str().unwrap(), tag);
+                    return nxml_err_node_unknown!("Start", start.name.to_str()?, tag);
                 }
             };
         }
