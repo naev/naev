@@ -2029,8 +2029,10 @@ void equipment_updateShips( unsigned int wid, const char *str )
 
    /* Just in case, turn off outfits and reset stats. */
    effect_clear( &ship->effects );
-   if ( pilot_outfitOffAll( ship ) )
-      pilot_calcStats( ship );
+   pilot_outfitOffAll( ship );
+   if ( ship->id )
+      pilot_outfitLInitAll( ship );
+   pilot_calcStats( ship );
 
    /* Select. */
    equipment_slotSelect( &eq_wgt, ps );
