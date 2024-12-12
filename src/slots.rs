@@ -1,10 +1,12 @@
+use anyhow::Result;
 use std::ffi::{CStr, CString};
-use std::io::{Error, ErrorKind, Result};
+use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
 use crate::array;
 use crate::gettext::gettext;
 use crate::ndata;
+use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
 #[derive(Debug, Clone)]
 pub struct SlotProperty {
@@ -151,14 +153,13 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
         Ok(i) => Ok(props.get(i).expect("")),
         Err(_) => Err(Error::new(
             ErrorKind::Other,
-            gettext(
-                format!(
-                    "Slot property '{name}' not found .",
-                    name = query.name.to_str().unwrap()
-                )
-                .as_str(),
-            ),
-        )),
+            format!(
+                "Slot property '{name}' not found .",
+                name = query.name.to_str()?
+            )
+            .as_str(),
+        )
+        .into()),
     }
 }
 
@@ -167,15 +168,20 @@ pub fn load() -> Result<Vec<SlotProperty>> {
     let sp_array = array::to_vec(sp_files)?;
     let mut files: Vec<String> = Vec::new();
     for sp in sp_array {
-        files.push(unsafe { CStr::from_ptr(sp).to_str().unwrap().to_string() });
+        files.push(unsafe { CStr::from_ptr(sp).to_str()?.to_string() });
     }
 
     let mut sp_data: Vec<SlotProperty> = Vec::new();
     for filename in files {
         let data = ndata::read(filename)?;
-        let doc = roxmltree::Document::parse(std::str::from_utf8(&data).unwrap()).unwrap();
+        let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
-        let name = CString::new(root.attribute("name").unwrap())?;
+        let name = CString::new(match root.attribute("name") {
+            Some(n) => n,
+            None => {
+                return nxml_err_attr_missing!("Slot property", "name");
+            }
+        })?;
         let mut sp = SlotProperty {
             name,
             ..SlotProperty::default()
@@ -185,28 +191,18 @@ pub fn load() -> Result<Vec<SlotProperty>> {
                 continue;
             }
             match node.tag_name().name().to_lowercase().as_str() {
-                "display" => sp.display = CString::new(node.text().unwrap())?,
-                "description" => sp.description = CString::new(node.text().unwrap())?,
+                "display" => sp.display = nxml::node_cstring(node)?,
+                "description" => sp.description = nxml::node_cstring(node)?,
                 "required" => sp.required = true,
                 "exclusive" => sp.exclusive = true,
                 "locked" => sp.locked = true,
                 "visible" => sp.visible = true,
                 "icon" => unsafe {
-                    let gfxname = CString::new(format!("gfx/slots/{}", node.text().unwrap()))?;
+                    let gfxname = CString::new(format!("gfx/slots/{}", nxml::node_str(node)?))?;
                     sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
                 },
                 tag => {
-                    return Err(Error::new(
-                        ErrorKind::Other,
-                        gettext(
-                            format!(
-                                "Slot property '{name}' has unknown node '{node}'.",
-                                name = sp.name.to_str().unwrap(),
-                                node = tag
-                            )
-                            .as_str(),
-                        ),
-                    ))
+                    return nxml_err_node_unknown!("Slot property", sp.name.to_str()?, tag);
                 }
             }
         }

@@ -9,6 +9,7 @@ path = @PATH@
 
 [dependencies]
 naevc = { path=@NAEVC@ }
+anyhow = "1"
 roxmltree = "0"
 formatx = "0"
 constcat = "0"
