@@ -25,7 +25,7 @@ pub fn warn(msg: &str) {
 #[macro_export]
 macro_rules! nlog {
     ($($arg:tt)*) => {
-        println!("{}",&formatx!($($arg)*).unwrap())
+        println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
@@ -33,7 +33,7 @@ macro_rules! nlog {
 macro_rules! debug {
     ($($arg:tt)*) => {
         if naevc::config::DEBUG {
-            println!("{}",&formatx!($($arg)*).unwrap());
+            println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
     };
 }
@@ -49,7 +49,7 @@ macro_rules! warn {
             eprintln!("{}WARNING {}:{}: {}",
                 std::backtrace::Backtrace::force_capture(),
                 file!(), line!(),
-                &formatx!($($arg)*).unwrap());
+                &formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
         if nw==1000 {
             eprintln!("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS");

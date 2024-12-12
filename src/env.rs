@@ -34,7 +34,7 @@ fn detect() -> AppEnv {
         }
         Err(_) => {
             e.is_appimage = false;
-            e.argv0 = env::args().next().unwrap();
+            e.argv0 = env::args().next().unwrap_or(String::from("Unknown"));
         }
     }
 

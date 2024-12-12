@@ -9,6 +9,7 @@ use std::os::raw::{c_char, c_int};
 
 use crate::nxml;
 
+// TODO get rid of CString and use String
 #[derive(Default, Debug)]
 struct StartData {
     name: CString,
