@@ -3782,6 +3782,7 @@ src/news.c
 src/news.h
 src/nfile.c
 src/nfile.h
+src/ngl.rs
 src/nlua.c
 src/nlua.h
 src/nlua.rs

@@ -10,6 +10,7 @@ source_rust = files(
    'naev.rs',
    'ndata.rs',
    'nlua.rs',
+   'ngl.rs',
    'ntime.rs',
    'nxml.rs',
    'physfs.rs',
