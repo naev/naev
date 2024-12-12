@@ -151,7 +151,7 @@ pub fn naev() -> Result<()> {
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
         nlog!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();
-        nlog!("{}", gettext("Read locations, searched in order:"));
+        nlog!(gettext("Read locations, searched in order:"));
         for p in {
             let mut out: Vec<&str> = Vec::new();
             let mut i = 0;
@@ -191,7 +191,7 @@ pub fn naev() -> Result<()> {
 
         if naevc::start_load() != 0 {
             let err = gettext("Failed to load start data.");
-            warn!("{}", err.clone());
+            warn!(err);
             // TODO show some simple error message
             return Err(Error::new(ErrorKind::Other, err));
         }
@@ -211,7 +211,7 @@ pub fn naev() -> Result<()> {
     unsafe {
         if naevc::gl_init(0) != 0 {
             let err = gettext("Initializing video output failed, exiting…");
-            warn!("{}", err.clone());
+            warn!(err);
             // TODO show some simple error message
             return Err(Error::new(ErrorKind::Other, err));
         }

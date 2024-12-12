@@ -25,8 +25,6 @@ thread_local! {
 /* Taken from probability package. */
 #[allow(clippy::excessive_precision)]
 pub fn normal_inverse(p: f64) -> f64 {
-    use core::f64::{INFINITY, NEG_INFINITY};
-
     //should!((0.0..=1.0).contains(&p));
 
     const CONST1: f64 = 0.180625;
@@ -102,9 +100,9 @@ pub fn normal_inverse(p: f64) -> f64 {
     }
 
     if p <= 0.0 {
-        return NEG_INFINITY;
+        return f64::NEG_INFINITY;
     } else if 1.0 <= p {
-        return INFINITY;
+        return f64::INFINITY;
     }
 
     let q = p - 0.5;

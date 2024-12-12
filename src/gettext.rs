@@ -7,7 +7,6 @@ pub fn init() {
     };
 }
 
-#[allow(dead_code)]
 /*
 pub fn gettext<'a>(msgid: &'a str) -> &'static str {
     let msgid = CString::new(msgid).unwrap();
@@ -17,17 +16,22 @@ pub fn gettext<'a>(msgid: &'a str) -> &'static str {
     }
 }
 */
-pub fn gettext<T: Into<String>>(msgid: T) -> String {
-    let msgid = CString::new(msgid.into()).expect("`msgid` contains an internal 0 byte");
+//pub fn gettext<T: Into<String>>(msgid: T) -> String {
+pub fn gettext(msg_id: &str) -> &str {
+    let msgid = CString::new(msg_id).expect("`msgid` contains an internal 0 byte");
     unsafe {
+        let ptr1 = msgid.as_ptr();
+        let ptr2 = naevc::gettext_rust(ptr1);
+        // If it's the original language, the pointer will remain unchanged.
+        if ptr1 == ptr2 {
+            return msg_id;
+        }
         CStr::from_ptr(naevc::gettext_rust(msgid.as_ptr()))
             .to_str()
             .expect("gettext() returned invalid UTF-8")
-            .to_owned()
     }
 }
 
-#[allow(dead_code)]
 /*
 pub fn ngettext<'a>(msg_id: &'a str, msg_id_plural: &'a str, n: u64) -> &'static str {
     let cmsg_id = CString::new(msg_id).unwrap();
@@ -62,7 +66,6 @@ where
     }
 }
 
-#[allow(dead_code)]
 /*
 pub fn pgettext<'a>(msg_context: &'a str, msg_id: &'a str) -> &'static str {
     let cmsg_context = CString::new(msg_context).unwrap();

@@ -29,8 +29,9 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     let globals = lua.globals();
     let gettext_table = lua.create_table()?;
 
-    let gettext =
-        lua.create_function(|_lua, msg: String| -> mlua::Result<String> { Ok(gettext(msg)) })?;
+    let gettext = lua.create_function(|_lua, msg: String| -> mlua::Result<String> {
+        Ok(gettext(msg.as_str()).to_owned())
+    })?;
     globals.set("_", gettext.clone())?;
     gettext_table.set("gettext", gettext)?;
     let gettext_noop =
@@ -247,12 +248,9 @@ impl NLua<'_> {
         t.set("naev", lua.create_table()?)?;
 
         // Load common script
-        match &self.common {
-            Some(common) => {
-                common.set_environment(t.clone())?;
-                common.call::<()>(())?;
-            }
-            None => (),
+        if let Some(common) = &self.common {
+            common.set_environment(t.clone())?;
+            common.call::<()>(())?;
         };
 
         Ok(LuaEnv {

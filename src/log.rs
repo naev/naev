@@ -1,6 +1,7 @@
 // Logging tools
 #![allow(dead_code)]
 
+use crate::gettext::gettext;
 use crate::{debug, nlog, warn};
 use formatx::formatx;
 
@@ -52,7 +53,7 @@ macro_rules! warn {
                 &formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
         if nw==1000 {
-            eprintln!("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS");
+            eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
             if cfg!(unix) {

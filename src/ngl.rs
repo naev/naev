@@ -113,8 +113,7 @@ pub fn init(
             100 * major + 10 * minor
         } else {
             150
-        }
-        .into();
+        };
         naevc::gl_screen.depth = gl_attr.depth_size();
         naevc::gl_screen.r = gl_attr.red_size();
         naevc::gl_screen.g = gl_attr.green_size();
