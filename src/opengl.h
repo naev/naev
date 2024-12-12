@@ -35,11 +35,11 @@
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
-   int major; /**< OpenGL major version. */
-   int minor; /**< OpenGL minor version. */
-   int glsl;  /**< GLSL version. */
-   int x;     /**< X offset of window viewport. */
-   int y;     /**< Y offset of window viewport. */
+   unsigned char major; /**< OpenGL major version. */
+   unsigned char minor; /**< OpenGL minor version. */
+   int           glsl;  /**< GLSL version. */
+   int           x;     /**< X offset of window viewport. */
+   int           y;     /**< Y offset of window viewport. */
    /* Viewport considers x/y offset. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
@@ -58,15 +58,15 @@ typedef struct glInfo_ {
    double        dhscale;              /**< Drawable width scale factor. */
    double        mxscale;              /**< Mouse X scale factor. */
    double        myscale;              /**< Mouse y scale factor. */
-   int           depth;                /**< Depth in bpp */
-   int           r;                    /**< How many red bits we have. */
-   int           g;                    /**< How many green bits we have. */
-   int           b;                    /**< How many blue bits we have. */
-   int           a;                    /**< How many alpha bits we have. */
+   unsigned char depth;                /**< Depth in bpp */
+   unsigned char r;                    /**< How many red bits we have. */
+   unsigned char g;                    /**< How many green bits we have. */
+   unsigned char b;                    /**< How many blue bits we have. */
+   unsigned char a;                    /**< How many alpha bits we have. */
    unsigned int  flags;                /**< Stores different properties */
    int           tex_max;              /**< Maximum texture size */
    int           multitex_max;         /**< Maximum multitexture levels */
-   int           fsaa;                 /**< Full Scene Anti Aliasing level. */
+   unsigned char fsaa;                 /**< Full Scene Anti Aliasing level. */
    SDL_Window   *window;               /**< Window for SDL2. */
    SDL_GLContext context;              /**< Context for OpenGL. */
    GLuint        current_fbo;          /**< Current framebuffer. */

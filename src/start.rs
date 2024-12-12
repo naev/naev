@@ -11,23 +11,23 @@ use crate::nxml;
 
 // TODO get rid of CString and use String
 #[derive(Default, Debug)]
-struct StartData {
-    name: CString,
-    ship: CString,
-    shipname: CString,
-    acquired: CString,
-    gui: CString,
-    system: CString,
-    mission: CString,
-    event: CString,
-    chapter: CString,
-    spob_lua_default: CString,
-    dtype_default: CString,
-    local_map_default: CString,
-    credits: i64,
-    date: NTime,
-    pos_x: f64,
-    pos_y: f64,
+pub struct StartData {
+    pub name: CString,
+    pub ship: CString,
+    pub shipname: CString,
+    pub acquired: CString,
+    pub gui: CString,
+    pub system: CString,
+    pub mission: CString,
+    pub event: CString,
+    pub chapter: CString,
+    pub spob_lua_default: CString,
+    pub dtype_default: CString,
+    pub local_map_default: CString,
+    pub credits: i64,
+    pub date: NTime,
+    pub pos_x: f64,
+    pub pos_y: f64,
 }
 
 macro_rules! nxml_attr_str {
@@ -141,6 +141,10 @@ impl StartData {
 
 use std::sync::LazyLock;
 static START: LazyLock<StartData> = LazyLock::new(|| StartData::load().unwrap());
+
+pub fn start() -> &'static StartData {
+    &START
+}
 
 macro_rules! start_c_func_str {
     ($funcname: ident, $field: ident) => {

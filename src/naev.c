@@ -969,7 +969,6 @@ void update_routine( double dt, int dohooks )
  */
 void window_caption( void )
 {
-   char      *buf;
    SDL_RWops *rw;
 
    /* Load icon. */
@@ -985,10 +984,7 @@ void window_caption( void )
    }
 
    /* Set caption. */
-   SDL_asprintf( &buf, APPNAME " - %s", _( start_name() ) );
-   SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon( gl_screen.window, naev_icon );
-   free( buf );
 }
 
 /**

@@ -68,7 +68,6 @@ mat4       gl_view_matrix = { { { { 0 } } } };
  * prototypes
  */
 /* gl */
-static int gl_setupAttributes( int fallback );
 static int gl_createWindow( unsigned int flags );
 static int gl_getFullscreenMode( void );
 static int gl_getGLInfo( void );
@@ -307,31 +306,6 @@ static void GLAPIENTRY gl_debugCallback( GLenum source, GLenum type, GLuint id,
 #endif /* DEBUGGING */
 
 /**
- * @brief Tries to set up the OpenGL attributes for the OpenGL context.
- *
- *    @return 0 on success.
- */
-static int gl_setupAttributes( int fallback )
-{
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, fallback ? 3 : 4 );
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 2 : 6 );
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK,
-                        SDL_GL_CONTEXT_PROFILE_CORE );
-   SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER,
-                        1 ); /* Ideally want double buffering. */
-   if ( conf.fsaa > 1 ) {
-      SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 1 );
-      SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, conf.fsaa );
-   }
-   SDL_GL_SetAttribute( SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1 );
-#if DEBUG_GL
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG );
-#endif /* DEBUG_GL */
-
-   return 0;
-}
-
-/**
  * @brief Tries to apply the configured display mode to the window.
  *
  *    @note Caller is responsible for calling gl_resize/naev_resize afterward.
@@ -387,14 +361,6 @@ static int gl_getFullscreenMode( void )
  */
 static int gl_createWindow( unsigned int flags )
 {
-   /* Save and store version. */
-   SDL_GL_GetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, &gl_screen.major );
-   SDL_GL_GetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, &gl_screen.minor );
-   if ( gl_screen.major * 100 + gl_screen.minor * 10 > 320 )
-      gl_screen.glsl = 100 * gl_screen.major + 10 * gl_screen.minor;
-   else
-      gl_screen.glsl = 150;
-
    /* Set Vsync. */
    if ( SDL_GL_GetSwapInterval() )
       gl_screen.flags |= OPENGL_VSYNC;
@@ -405,11 +371,6 @@ static int gl_createWindow( unsigned int flags )
       gl_screen.fbo[i]     = GL_INVALID_VALUE;
       gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
    }
-   SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
-   int srgb_capable;
-   SDL_GL_GetAttribute( SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, &srgb_capable );
-   if ( !srgb_capable )
-      WARN( _( "Unable to set framebuffer to SRGB!" ) );
    gl_activated = 1; /* Opengl is now activated. */
 
    return 0;
@@ -423,23 +384,12 @@ static int gl_createWindow( unsigned int flags )
 static int gl_getGLInfo( void )
 {
    int doublebuf;
-   SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
-   SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
-   SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
-   SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
    SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
-   SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &gl_screen.fsaa );
    if ( doublebuf )
       gl_screen.flags |= OPENGL_DOUBLEBUF;
    if ( GLAD_GL_ARB_shader_subroutine && glGetSubroutineIndex &&
         glGetSubroutineUniformLocation && glUniformSubroutinesuiv )
       gl_screen.flags |= OPENGL_SUBROUTINES;
-   /* Calculate real depth. */
-   gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
-
-   /* Texture information */
-   glGetIntegerv( GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max );
-   glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &gl_screen.multitex_max );
 
    /* Debug happiness */
    DEBUG( _( "OpenGL Drawable Created: %dx%d@%dbpp" ), gl_screen.rw,

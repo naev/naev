@@ -1,4 +1,5 @@
 use anyhow::Result;
+use glow::*;
 use sdl2 as sdl;
 
 use crate::log;
@@ -19,8 +20,15 @@ fn create_context(
     };
     gl_attr.set_context_version(major, minor);
 
+    //() = crate::start::start().name.into_string()?.as_str();
+
     let mut wdwbuild = sdlvid.window(
-        crate::APPNAME,
+        format!(
+            "{} - {}",
+            crate::APPNAME,
+            crate::start::start().name.clone().into_string()?
+        )
+        .as_str(),
         width.max(naevc::RESOLUTION_W_MIN),
         height.max(naevc::RESOLUTION_H_MIN),
     );
@@ -89,9 +97,34 @@ pub fn init(
             false => 0,
         })
         .unwrap_or_else(|_| log::warn("Unable to set OpenGL swap interval!"));
+
+    match gl_attr.framebuffer_srgb_compatible() {
+        true => (),
+        false => log::warn("Unable to set framebuffer to SRGB!"),
+    };
+
     unsafe {
         naevc::gl_screen.window = window.raw() as *mut naevc::SDL_Window;
         naevc::gl_screen.context = gl_context.raw();
+        (naevc::gl_screen.major, naevc::gl_screen.minor) = gl_attr.context_version();
+        let major: i32 = naevc::gl_screen.major.into();
+        let minor: i32 = naevc::gl_screen.minor.into();
+        naevc::gl_screen.glsl = if major * 100 + minor * 10 > 320 {
+            100 * major + 10 * minor
+        } else {
+            150
+        }
+        .into();
+        naevc::gl_screen.depth = gl_attr.depth_size();
+        naevc::gl_screen.r = gl_attr.red_size();
+        naevc::gl_screen.g = gl_attr.green_size();
+        naevc::gl_screen.b = gl_attr.blue_size();
+        naevc::gl_screen.a = gl_attr.alpha_size();
+        naevc::gl_screen.depth =
+            naevc::gl_screen.r + naevc::gl_screen.g + naevc::gl_screen.b + naevc::gl_screen.a;
+        naevc::gl_screen.fsaa = gl_attr.multisample_samples();
+        naevc::gl_screen.tex_max = gl.get_parameter_i32(glow::MAX_TEXTURE_SIZE);
+        naevc::gl_screen.multitex_max = gl.get_parameter_i32(glow::MAX_TEXTURE_IMAGE_UNITS);
     }
 
     Ok((window, gl_context, gl))

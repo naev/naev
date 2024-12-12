@@ -206,7 +206,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let (window, gl_context, gl) = ngl::init(&sdlvid).unwrap();
+    let (_window, _gl_context, _gl) = ngl::init(&sdlvid).unwrap();
 
     unsafe {
         if naevc::gl_init(0) != 0 {
