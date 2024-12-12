@@ -387,56 +387,6 @@ static int gl_getFullscreenMode( void )
  */
 static int gl_createWindow( unsigned int flags )
 {
-   flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-   if ( !conf.notresizable )
-      flags |= SDL_WINDOW_RESIZABLE;
-   if ( conf.borderless )
-      flags |= SDL_WINDOW_BORDERLESS;
-
-   /* Create the window. */
-   gl_screen.window =
-      SDL_CreateWindow( APPNAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                        MAX( RESOLUTION_W_MIN, conf.width ),
-                        MAX( RESOLUTION_H_MIN, conf.height ), flags );
-   if ( gl_screen.window == NULL ) {
-      char buf[STRMAX];
-      snprintf( buf, sizeof( buf ), _( "Unable to create window! %s" ),
-                SDL_GetError() );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf,
-                                gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
-      ERR( "%s", buf );
-   }
-
-   /* We want to enforce minimum window size or a ton of things break. */
-   SDL_SetWindowMinimumSize( gl_screen.window, RESOLUTION_W_MIN,
-                             RESOLUTION_H_MIN );
-
-   /* Set focus loss behaviour. */
-   SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
-                conf.minimize ? "1" : "0" );
-
-   /* Create the OpenGL context, note we don't need an actual renderer. */
-   for ( int fallback = 0; fallback <= 1; fallback++ ) {
-      gl_setupAttributes( fallback );
-      gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
-      if ( gl_screen.context != NULL )
-         break;
-   }
-   if ( !gl_screen.context ) {
-      char buf[STRMAX];
-      snprintf( buf, sizeof( buf ), _( "Unable to create OpenGL context! %s" ),
-                SDL_GetError() );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-      SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                _( "Naev Critical Error" ), buf,
-                                gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
-      ERR( "%s", buf );
-   }
-
    /* Save and store version. */
    SDL_GL_GetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, &gl_screen.major );
    SDL_GL_GetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, &gl_screen.minor );
@@ -446,13 +396,8 @@ static int gl_createWindow( unsigned int flags )
       gl_screen.glsl = 150;
 
    /* Set Vsync. */
-   if ( conf.vsync ) {
-      int ret = SDL_GL_SetSwapInterval( 1 );
-      if ( ret == 0 )
-         gl_screen.flags |= OPENGL_VSYNC;
-   } else {
-      SDL_GL_SetSwapInterval( 0 );
-   }
+   if ( SDL_GL_GetSwapInterval() )
+      gl_screen.flags |= OPENGL_VSYNC;
 
    /* Finish getting attributes. */
    gl_screen.current_fbo = 0; /* No FBO set. */
@@ -606,7 +551,7 @@ int gl_init( unsigned int extra_flags )
    gl_applyFixes();
 
    /* Defaults. */
-   memset( &gl_screen, 0, sizeof( gl_screen ) );
+   // memset( &gl_screen, 0, sizeof( gl_screen ) );
    SDL_SetHint( "SDL_WINDOWS_DPI_SCALING", "1" );
    flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode() | extra_flags;
 
