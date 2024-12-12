@@ -610,12 +610,6 @@ int gl_init( unsigned int extra_flags )
    SDL_SetHint( "SDL_WINDOWS_DPI_SCALING", "1" );
    flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode() | extra_flags;
 
-   /* Initializes Video */
-   if ( SDL_InitSubSystem( SDL_INIT_VIDEO ) < 0 ) {
-      WARN( _( "Unable to initialize SDL Video: %s" ), SDL_GetError() );
-      return -1;
-   }
-
    /* Create the window. */
    gl_createWindow( flags );
 
