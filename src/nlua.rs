@@ -4,10 +4,13 @@ use crate::ndata;
 use constcat::concat;
 use mlua::{FromLua, IntoLua};
 
+#[allow(dead_code)]
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
+#[allow(dead_code)]
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
 const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
 
+#[allow(dead_code)]
 pub struct LuaEnv<'a> {
     lua: &'a mlua::Lua,
     table: mlua::Table,
@@ -17,7 +20,7 @@ pub struct LuaEnv<'a> {
 #[allow(dead_code)]
 pub struct NLua<'a> {
     pub lua: mlua::Lua,
-    common: mlua::Function,
+    common: Option<mlua::Function>,
     envs: Vec<LuaEnv<'a>>,
 }
 
@@ -97,6 +100,7 @@ fn sandbox(lua: &mlua::Lua) -> mlua::Result<()> {
     Ok(())
 }
 
+#[allow(dead_code)]
 fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value> {
     let globals = lua.globals();
 
@@ -134,6 +138,12 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
     )))
 }
 
+fn load_common(lua: &mlua::Lua) -> mlua::Result<mlua::Function> {
+    let data = ndata::read(String::from(LUA_COMMON_PATH))?;
+    let common = std::str::from_utf8(&data)?;
+    lua.load(common).into_function()
+}
+
 impl NLua<'_> {
     pub fn new() -> NLua<'static> {
         let lua = unsafe {
@@ -152,18 +162,20 @@ impl NLua<'_> {
         open_gettext(&lua).unwrap();
 
         // Load common chunk
-        let data = ndata::read(String::from(LUA_COMMON_PATH)).unwrap();
-        let common = std::str::from_utf8(&data).unwrap();
-        let chunk = lua.load(common).into_function().unwrap();
+        let common = match load_common(&lua) {
+            Ok(chunk) => Some(chunk),
+            _ => None,
+        };
 
         // Return it
         NLua {
             lua,
             envs: Vec::new(),
-            common: chunk,
+            common,
         }
     }
 
+    #[allow(dead_code)]
     pub fn new_env(&mut self, name: &str) -> mlua::Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
@@ -238,8 +250,13 @@ impl NLua<'_> {
         t.set("naev", lua.create_table()?)?;
 
         // Load common script
-        self.common.set_environment(t.clone())?;
-        self.common.call::<()>(())?;
+        match &self.common {
+            Some(common) => {
+                common.set_environment(t.clone())?;
+                common.call::<()>(())?;
+            }
+            None => (),
+        };
 
         Ok(LuaEnv {
             lua,

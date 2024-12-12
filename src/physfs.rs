@@ -15,7 +15,10 @@ pub fn error_as_io_error() -> Error {
     };
     Error::new(
         ErrorKind::Other,
-        format!("PhysicsFS Error: `{}`", cerrstr.to_str().unwrap()),
+        format!(
+            "PhysicsFS Error: `{}`",
+            cerrstr.to_str().unwrap_or("Unknown")
+        ),
     )
 }
 

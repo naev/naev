@@ -88,15 +88,15 @@ impl NTime {
     }
     pub fn cycles(self) -> i32 {
         let t = self.0;
-        (t / (5_000 * 10_000 * 1_000)).try_into().unwrap()
+        (t / (5_000 * 10_000 * 1_000)).try_into().unwrap_or(-1)
     }
     pub fn periods(self) -> i32 {
         let t = self.0;
-        (t / (10_000 * 1_000) % 5_000).try_into().unwrap()
+        (t / (10_000 * 1_000) % 5_000).try_into().unwrap_or(-1)
     }
     pub fn seconds(self) -> i32 {
         let t = self.0;
-        (t / 1_000 % 10_000).try_into().unwrap()
+        (t / 1_000 % 10_000).try_into().unwrap_or(-1)
     }
     pub fn remainder(self) -> f64 {
         let t = self.0 as f64;

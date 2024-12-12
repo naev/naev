@@ -55,9 +55,11 @@ pub fn node_str<'a>(node: Node<'a, 'a>) -> Result<&'a str> {
     }
 }
 
+/*
 pub fn node_string(node: Node) -> Result<String> {
     Ok(String::from(node_str(node)?))
 }
+*/
 
 pub fn node_cstring(node: Node) -> Result<CString> {
     Ok(CString::new(node_str(node)?)?)
