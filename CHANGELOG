@@ -42,6 +42,7 @@
    * Minor typo fixes and translation updates
    * Increased maxmimum reputation for a certain hidden faction to 70
    * Restored portable installs with the Windows installer
+   * Workaround MESA driver bug that causes dark or invisible ships on AMD hardware
    * Documentation fixes
    * Minor typo fixes and translation updates
 
