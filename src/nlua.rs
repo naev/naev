@@ -40,13 +40,15 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     gettext_table.set("gettext_noop", gettext_noop)?;
     let ngettext = lua.create_function(
         |_lua, (msg1, msg2, n): (String, String, i32)| -> mlua::Result<String> {
-            Ok(ngettext(msg1, msg2, n))
+            Ok(ngettext(msg1.as_str(), msg2.as_str(), n).to_owned())
         },
     )?;
     globals.set("n_", ngettext.clone())?;
     gettext_table.set("ngettext", ngettext)?;
     let pgettext = lua.create_function(
-        |_lua, (msg1, msg2): (String, String)| -> mlua::Result<String> { Ok(pgettext(msg1, msg2)) },
+        |_lua, (msg1, msg2): (String, String)| -> mlua::Result<String> {
+            Ok(pgettext(msg1.as_str(), msg2.as_str()).to_owned())
+        },
     )?;
     globals.set("p_", pgettext.clone())?;
     gettext_table.set("pgettext", pgettext)?;
