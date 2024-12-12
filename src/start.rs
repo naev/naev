@@ -186,7 +186,6 @@ pub extern "C" fn start_position(x: *mut f64, y: *mut f64) {
 }
 #[no_mangle]
 pub extern "C" fn start_load() -> c_int {
-    dbg!("load");
     let _ = START;
     0
 }

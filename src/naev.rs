@@ -50,6 +50,14 @@ pub fn naev() -> Result<()> {
     /* Begin logging infrastructure. */
     log::init();
 
+    // Workarounds
+    if cfg!(target_os = "linux") {
+        // Set AMD_DEBUG environment variable before initializing OpenGL to
+        // workaround driver bug. TODO remove around 0.14.0 or when fixed (maybe changing
+        // backend?).
+        std::env::set_var("AMD_DEBUG", "nooptvariant");
+    }
+
     /* Start up PHYSFS. */
     unsafe {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
@@ -209,7 +217,7 @@ pub fn naev() -> Result<()> {
     let (_window, _gl_context, _gl) = ngl::init(&sdlvid).unwrap();
 
     unsafe {
-        if naevc::gl_init(0) != 0 {
+        if naevc::gl_init() != 0 {
             let err = gettext("Initializing video output failed, exiting…");
             warn!(err);
             // TODO show some simple error message

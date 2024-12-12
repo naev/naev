@@ -29,7 +29,6 @@
  */
 /** @cond */
 #include "SDL.h"
-#include "SDL_error.h"
 #include "SDL_image.h"
 #include "physfsrwops.h"
 
@@ -68,28 +67,10 @@ mat4       gl_view_matrix = { { { { 0 } } } };
  * prototypes
  */
 /* gl */
-static int gl_createWindow( unsigned int flags );
 static int gl_getFullscreenMode( void );
 static int gl_getGLInfo( void );
 static int gl_defState( void );
 static int gl_setupScaling( void );
-
-/**
- * @brief Applies driver-specific fixes and workarounds before initializing
- * OpenGL.
- */
-static void gl_applyFixes( void )
-{
-#if __LINUX__
-   // Set AMD_DEBUG environment variable before initializing OpenGL to
-   // workaround driver bug.
-   if ( setenv( "AMD_DEBUG", "nooptvariant", 1 ) != 0 ) {
-      WARN( _( "Failed to set AMD_DEBUG environment variable" ) );
-   } else {
-      DEBUG( _( "Set AMD_DEBUG environment variable to 'nooptvariant'" ) );
-   }
-#endif
-}
 
 /*
  *
@@ -194,19 +175,6 @@ void gl_saveFboDepth( GLuint fbo, const char *filename )
  * G L O B A L
  *
  */
-/**
- * @brief Checks to see if opengl version is at least major.minor.
- *
- *    @param major Major version to check.
- *    @param minor Minor version to check.
- *    @return True if major and minor version are met.
- */
-GLboolean gl_hasVersion( int major, int minor )
-{
-   if ( GLVersion.major >= major && GLVersion.minor >= minor )
-      return GL_TRUE;
-   return GL_FALSE;
-}
 
 #ifdef DEBUGGING
 /**
@@ -355,28 +323,6 @@ static int gl_getFullscreenMode( void )
 }
 
 /**
- * @brief Creates the OpenGL window.
- *
- *    @return 0 on success.
- */
-static int gl_createWindow( unsigned int flags )
-{
-   /* Set Vsync. */
-   if ( SDL_GL_GetSwapInterval() )
-      gl_screen.flags |= OPENGL_VSYNC;
-
-   /* Finish getting attributes. */
-   gl_screen.current_fbo = 0; /* No FBO set. */
-   for ( int i = 0; i < OPENGL_NUM_FBOS; i++ ) {
-      gl_screen.fbo[i]     = GL_INVALID_VALUE;
-      gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
-   }
-   gl_activated = 1; /* Opengl is now activated. */
-
-   return 0;
-}
-
-/**
  * @brief Gets some information about the OpenGL window.
  *
  *    @return 0 on success.
@@ -450,6 +396,8 @@ static int gl_setupScaling( void )
    /* Get the basic dimensions from SDL2. */
    SDL_GetWindowSize( gl_screen.window, &gl_screen.w, &gl_screen.h );
    SDL_GL_GetDrawableSize( gl_screen.window, &gl_screen.rw, &gl_screen.rh );
+   gl_checkErr();
+
    /* Calculate scale factor, if OS has native HiDPI scaling. */
    gl_screen.dwscale = (double)gl_screen.w / (double)gl_screen.rw;
    gl_screen.dhscale = (double)gl_screen.h / (double)gl_screen.rh;
@@ -457,7 +405,7 @@ static int gl_setupScaling( void )
    /* Combine scale factor from OS with the one in Naev's config */
    gl_screen.scale =
       fmax( gl_screen.dwscale, gl_screen.dhscale ) / conf.scalefactor;
-   glLineWidth( 1. / gl_screen.scale );
+   // glLineWidth( 1. / gl_screen.scale );
    glPointSize( 1. / gl_screen.scale + 2.0 );
 
    /* New window is real window scaled. */
@@ -492,21 +440,22 @@ static int gl_setupScaling( void )
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
-int gl_init( unsigned int extra_flags )
+int gl_init( void )
 {
-   unsigned int flags;
-   GLuint       VaoId;
+   GLuint VaoId;
 
-   /* Apply driver hacks and workarounds before we initialize the window. */
-   gl_applyFixes();
+   /* Set Vsync. */
+   if ( SDL_GL_GetSwapInterval() )
+      gl_screen.flags |= OPENGL_VSYNC;
 
-   /* Defaults. */
-   // memset( &gl_screen, 0, sizeof( gl_screen ) );
-   SDL_SetHint( "SDL_WINDOWS_DPI_SCALING", "1" );
-   flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode() | extra_flags;
-
-   /* Create the window. */
-   gl_createWindow( flags );
+   /* Finish getting attributes. */
+   gl_screen.current_fbo = 0; /* No FBO set. */
+   for ( int i = 0; i < OPENGL_NUM_FBOS; i++ ) {
+      gl_screen.fbo[i]           = GL_INVALID_VALUE;
+      gl_screen.fbo_tex[i]       = GL_INVALID_VALUE;
+      gl_screen.fbo_depth_tex[i] = GL_INVALID_VALUE;
+   }
+   gl_activated = 1; /* Opengl is now activated. */
 
    /* Apply the configured fullscreen display mode, if any. */
    gl_setupFullscreen();
@@ -533,6 +482,7 @@ int gl_init( unsigned int extra_flags )
 
    /* Set default opengl state. */
    gl_defState();
+   gl_checkErr();
 
    /* Handles resetting the viewport and scaling, rw/rh are set in createWindow.
     */
@@ -589,6 +539,7 @@ void gl_resize( void )
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
          glDeleteTextures( 1, &gl_screen.fbo_depth_tex[i] );
       }
+
       gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw,
                     gl_screen.rh );
       gl_fboAddDepth( gl_screen.fbo[i], &gl_screen.fbo_depth_tex[i],
