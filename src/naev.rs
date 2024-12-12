@@ -18,9 +18,11 @@ mod log;
 mod ndata;
 mod nlua;
 mod ntime;
+mod nxml;
 mod physfs;
 mod rng;
 mod slots;
+mod start;
 mod version;
 
 use crate::gettext::gettext;

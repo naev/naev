@@ -11,9 +11,11 @@ source_rust = files(
    'ndata.rs',
    'nlua.rs',
    'ntime.rs',
+   'nxml.rs',
    'physfs.rs',
    'rng.rs',
    'slots.rs',
+   'start.rs',
    'version.rs',
 )
 source = files(
@@ -136,7 +138,6 @@ source = files(
    'sound.c',
    'space.c',
    'spfx.c',
-   'start.c',
    'tech.c',
    'threadpool.c',
    'toolkit.c',
