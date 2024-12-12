@@ -7,15 +7,6 @@ pub fn init() {
     };
 }
 
-/*
-pub fn gettext<'a>(msgid: &'a str) -> &'static str {
-    let msgid = CString::new(msgid).unwrap();
-    unsafe {
-        let t = naevc::gettext_rust(msgid.as_ptr() as *const c_char);
-        CStr::from_ptr(t).to_str().unwrap()
-    }
-}
-*/
 //pub fn gettext<T: Into<String>>(msgid: T) -> String {
 pub fn gettext(msg_id: &str) -> &str {
     let msgid = CString::new(msg_id).expect("`msgid` contains an internal 0 byte");
@@ -33,20 +24,6 @@ pub fn gettext(msg_id: &str) -> &str {
     }
 }
 
-/*
-pub fn ngettext<'a>(msg_id: &'a str, msg_id_plural: &'a str, n: u64) -> &'static str {
-    let cmsg_id = CString::new(msg_id).unwrap();
-    let cmsg_id_plural = CString::new(msg_id_plural).unwrap();
-    unsafe {
-        let t = naevc::gettext_ngettext(
-            cmsg_id.as_ptr() as *const c_char,
-            cmsg_id_plural.as_ptr() as *const c_char,
-            n,
-        );
-        CStr::from_ptr(t).to_str().unwrap()
-    }
-}
-*/
 //pub fn ngettext(msg_id: &str, msg_id_plural: &str, n: i32) -> &str {
 //where
 //    T: Into<String>,
@@ -70,19 +47,6 @@ pub fn ngettext<'a>(msg_id: &'a str, msg_id_plural: &'a str, n: i32) -> &'a str 
     }
 }
 
-/*
-pub fn pgettext<'a>(msg_context: &'a str, msg_id: &'a str) -> &'static str {
-    let cmsg_context = CString::new(msg_context).unwrap();
-    let cmsg_id = CString::new(msg_id).unwrap();
-    unsafe {
-        let t = naevc::pgettext_var(
-            cmsg_context.as_ptr() as *const c_char,
-            cmsg_id.as_ptr() as *const c_char,
-        );
-        CStr::from_ptr(t).to_str().unwrap()
-    }
-}
-*/
 //pub fn pgettext<T, U>(msgctxt: T, msgid: U) -> String
 //where
 //    T: Into<String>,
@@ -92,7 +56,7 @@ pub fn pgettext<'a>(msgctxt: &'a str, msg_id: &'a str) -> &'a str {
     let msgid = CString::new(msg_id).expect("`msgid` contains an internal 0 byte");
     unsafe {
         let ptr1 = msgid.as_ptr();
-        let ptr2 = naevc::pgettext_var(msgctxt.as_ptr(), msgid.as_ptr());
+        let ptr2 = naevc::pgettext_var(msgctxt.as_ptr(), ptr1);
         if ptr1 == ptr2 {
             return msg_id;
         }
