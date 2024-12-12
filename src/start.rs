@@ -141,7 +141,6 @@ impl StartData {
                 }
             };
         }
-        dbg!(&start);
         Ok(start)
     }
 }

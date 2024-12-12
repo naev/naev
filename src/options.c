@@ -1380,7 +1380,7 @@ static void opt_video( unsigned int wid )
    j                 = 1;
    for ( i = 0; i < n; i++ ) {
       SDL_GetDisplayMode( display_index, i, &mode );
-      if ( ( mode.w == conf.width ) && ( mode.h == conf.height ) )
+      if ( ( mode.w == (int)conf.width ) && ( mode.h == (int)conf.height ) )
          j = 0;
    }
    res     = malloc( sizeof( char     *) * ( i + j ) );
@@ -1404,7 +1404,7 @@ static void opt_video( unsigned int wid )
       }
 
       /* Add as default if necessary and increment. */
-      if ( ( mode.w == conf.width ) && ( mode.h == conf.height ) )
+      if ( ( mode.w == (int)conf.width ) && ( mode.h == (int)conf.height ) )
          res_def = i;
       nres++;
    }
@@ -1521,8 +1521,9 @@ static void opt_videoRes( unsigned int wid, const char *str )
 static int opt_videoSave( unsigned int wid, const char *str )
 {
    (void)str;
-   const char *inp;
-   int         ret, w, h, f, fullscreen;
+   const char  *inp;
+   int          ret, f, fullscreen;
+   unsigned int w, h;
 
    /* Handle resolution. */
    inp = window_getInput( wid, "inpRes" );

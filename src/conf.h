@@ -105,21 +105,21 @@ typedef struct PlayerConf_s {
    char *language; /**< Language to use. */
 
    /* OpenGL properties. */
-   int fsaa;  /**< Full Scene Anti-Aliasing to use. */
-   int vsync; /**< Whether or not to use vsync. */
+   unsigned char fsaa;  /**< Full Scene Anti-Aliasing to use. */
+   int           vsync; /**< Whether or not to use vsync. */
 
    /* Video options. */
-   int    width;           /**< Width of the window to use. */
-   int    height;          /**< Height of the window to use. */
-   int    explicit_dim;    /**< Dimension is explicit. */
-   double scalefactor;     /**< Amount to reduce resolution by. */
-   double nebu_scale;      /**< Downscaling factor for the expensively rendered
-                              nebula. */
-   int    fullscreen;      /**< Whether or not game is fullscreen. */
-   int    modesetting;     /**< Whether to use modesetting for fullscreen. */
-   int    notresizable;    /**< Whether or not the window is resizable. */
-   int    borderless;      /**< Whether to disable window decorations. */
-   int    minimize;        /**< Whether to minimize on focus loss. */
+   unsigned int width;        /**< Width of the window to use. */
+   unsigned int height;       /**< Height of the window to use. */
+   int          explicit_dim; /**< Dimension is explicit. */
+   double       scalefactor;  /**< Amount to reduce resolution by. */
+   double       nebu_scale; /**< Downscaling factor for the expensively rendered
+                               nebula. */
+   int    fullscreen;       /**< Whether or not game is fullscreen. */
+   int    modesetting;      /**< Whether to use modesetting for fullscreen. */
+   int    notresizable;     /**< Whether or not the window is resizable. */
+   int    borderless;       /**< Whether to disable window decorations. */
+   int    minimize;         /**< Whether to minimize on focus loss. */
    double colourblind_sim; /**< Whether to enable colourblindness simulation. */
    int    colourblind_type; /**< Type of colourblindness. */
    double

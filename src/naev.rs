@@ -103,7 +103,7 @@ pub fn naev() -> Result<()> {
         std::env::set_var("SDL_VIDEO_X11_WMCLASS", APPNAME);
     }
 
-    let _sdlvid = match sdlctx.video() {
+    let sdlvid = match sdlctx.video() {
         Ok(s) => s,
         Err(e) => panic!("Unable to initialize SDL Video: {}", e),
     };
@@ -203,7 +203,39 @@ pub fn naev() -> Result<()> {
         naevc::print_SDLversion();
         nlog!("");
 
+        /* Focus behaviour. */
+        sdl::hint::set_video_minimize_on_focus_loss(naevc::conf.minimize != 0);
+
         /* Set up OpenGL. */
+        let gl_attr = sdlvid.gl_attr();
+        gl_attr.set_context_profile(sdl::video::GLProfile::Core);
+        gl_attr.set_context_version(3, 2);
+        gl_attr.set_double_buffer(true);
+        if naevc::conf.fsaa > 1 {
+            gl_attr.set_multisample_buffers(1);
+            gl_attr.set_multisample_samples(naevc::conf.fsaa);
+        }
+        gl_attr.set_framebuffer_srgb_compatible(true);
+        // gl_attr.set_context_flags().debug().set();
+        let mut wdwbuild = sdlvid.window(
+            APPNAME,
+            naevc::conf.width.max(naevc::RESOLUTION_W_MIN),
+            naevc::conf.height.max(naevc::RESOLUTION_H_MIN.into()),
+        );
+        wdwbuild.opengl().position_centered().allow_highdpi();
+        if naevc::conf.notresizable == 0 {
+            wdwbuild.resizable();
+        }
+        if naevc::conf.borderless != 0 {
+            wdwbuild.borderless();
+        }
+        let mut window = wdwbuild.build().unwrap();
+        window
+            .set_minimum_size(naevc::RESOLUTION_W_MIN, naevc::RESOLUTION_H_MIN)
+            .unwrap();
+        let gl_context = window.gl_create_context().unwrap();
+        let gl = glow::Context::from_loader_function(|s| sdlvid.gl_get_proc_address(s) as *const _);
+
         if naevc::gl_init(0) != 0 {
             let err = gettext("Initializing video output failed, exiting…");
             warn!("{}", err.clone());
