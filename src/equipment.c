@@ -2280,6 +2280,10 @@ void equipment_updateShips( unsigned int wid, const char *str )
       window_enableButton( wid, "btnSellShip" );
    }
 
+   /* Disallow selling of unique ships. */
+   if ( ship_isFlag( ps->p->ship, SHIP_UNIQUE ) )
+      window_disableButton( wid, "btnSellShip" );
+
    /* If pilot-dependent outfit filter modes are active, we have to regenerate
     * outfits always. */
    if ( ( equipment_outfitMode == 2 ) && ( eq_wgt.selected != prevship ) )
