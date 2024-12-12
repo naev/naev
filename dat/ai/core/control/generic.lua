@@ -298,7 +298,7 @@ local message_handler_funcs = {
    end,
    e_attack = function( p, _si, dopush, sender, data )
       local l = p:leader()
-      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or (data:exists() and data:leader() == l) then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data==nil or not data:exists() or data:leader() == l then return false end
       clean_task()
       --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
       if data:flags("disabled") then

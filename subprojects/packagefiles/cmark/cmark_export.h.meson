@@ -15,7 +15,7 @@
 #  if defined CMARK_STATIC_DEFINE
 #    define CMARK_EXPORT
    /* We are building this library */
-#  elif defined libcmark_gfm_EXPORTS
+#  elif defined libcmark_EXPORTS
 #    define CMARK_EXPORT __declspec(dllexport)
    /* We are using this library */
 #  else

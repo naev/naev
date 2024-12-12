@@ -2026,6 +2026,15 @@ void equipment_updateShips( unsigned int wid, const char *str )
    ship      = ps->p;
    favourite = ps->favourite;
    prevship  = eq_wgt.selected;
+
+   /* Just in case, turn off outfits and reset stats. */
+   effect_clear( &ship->effects );
+   pilot_outfitOffAll( ship );
+   if ( ship->id )
+      pilot_outfitLInitAll( ship );
+   pilot_calcStats( ship );
+
+   /* Select. */
    equipment_slotSelect( &eq_wgt, ps );
 
    /* update text */
@@ -2279,6 +2288,10 @@ void equipment_updateShips( unsigned int wid, const char *str )
       window_enableButton( wid, "btnChangeShip" );
       window_enableButton( wid, "btnSellShip" );
    }
+
+   /* Disallow selling of unique ships. */
+   if ( ship_isFlag( ps->p->ship, SHIP_UNIQUE ) )
+      window_disableButton( wid, "btnSellShip" );
 
    /* If pilot-dependent outfit filter modes are active, we have to regenerate
     * outfits always. */
