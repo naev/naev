@@ -577,6 +577,11 @@ int shipyard_canTrade( const Ship *ship, const Spob *spob )
       ship_buyPrice( ship ) - player_shipPrice( player.p->name, 0 );
    land_errClear();
 
+   if ( ship_isFlag( player.p->ship, SHIP_UNIQUE ) ) {
+      land_errDialogueBuild( _( "You can not trade in unique ships!" ) );
+      return 0;
+   }
+
    if ( pilot_cargoUsedMission( player.p ) > 0 ) {
       land_errDialogueBuild(
          _( "You can not trade in your ship when you have mission cargo!" ) );
