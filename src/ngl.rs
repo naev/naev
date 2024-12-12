@@ -76,6 +76,7 @@ pub fn init(
         gl_attr.set_multisample_samples(fsaa);
     }
     gl_attr.set_framebuffer_srgb_compatible(true);
+    gl_attr.set_context_flags().forward_compatible().set();
     // TODO reenable debug mode
     // gl_attr.set_context_flags().debug().set();
 
