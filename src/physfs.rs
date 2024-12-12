@@ -38,7 +38,7 @@ pub struct File<'f> {
     _marker: std::marker::PhantomData<&'f isize>,
 }
 
-impl<'f> File<'f> {
+impl File<'_> {
     /// Opens a file with a specific mode.
     pub fn open<'g>(filename: String, mode: Mode) -> Result<File<'g>> {
         let c_filename = CString::new(filename)?;
@@ -96,7 +96,7 @@ impl<'f> File<'f> {
     }
 }
 
-impl<'f> Read for File<'f> {
+impl Read for File<'_> {
     /// Reads from a file
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         let ret = unsafe {
@@ -114,7 +114,7 @@ impl<'f> Read for File<'f> {
     }
 }
 
-impl<'f> Write for File<'f> {
+impl Write for File<'_> {
     /// Writes to a file.
     /// This code performs no safety checks to ensure
     /// that the buffer is the correct length.
@@ -144,7 +144,7 @@ impl<'f> Write for File<'f> {
     }
 }
 
-impl<'f> Seek for File<'f> {
+impl Seek for File<'_> {
     /// Seek to a new position within a file
     fn seek(&mut self, pos: SeekFrom) -> Result<u64> {
         let seek_pos = match pos {
@@ -166,7 +166,7 @@ impl<'f> Seek for File<'f> {
     }
 }
 
-impl<'f> Drop for File<'f> {
+impl Drop for File<'_> {
     fn drop(&mut self) {
         let _ = self.close();
     }

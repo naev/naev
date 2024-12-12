@@ -204,12 +204,9 @@ impl NLua<'_> {
                 let preload: mlua::Table = package.get("preload")?;
                 let lib: mlua::Value = preload.get(name.clone())?;
                 match lib {
-                    mlua::Value::Nil => {
-                        return Ok(mlua::Value::String(lua.create_string(format!(
-                            "\n\tno field package.preload['{}']",
-                            name
-                        ))?));
-                    }
+                    mlua::Value::Nil => Ok(mlua::Value::String(
+                        lua.create_string(format!("\n\tno field package.preload['{}']", name))?,
+                    )),
                     v => Ok(v),
                 }
             })?,

@@ -11,11 +11,11 @@ pub unsafe extern "C" fn randfp() -> c_double {
 }
 #[no_mangle]
 pub unsafe extern "C" fn Normal(x: c_double) -> c_double {
-    normal(x as f64)
+    normal(x)
 }
 #[no_mangle]
 pub unsafe extern "C" fn NormalInverse(p: c_double) -> c_double {
-    normal_inverse(p as f64) as c_double
+    normal_inverse(p) as c_double
 }
 
 thread_local! {
@@ -23,6 +23,7 @@ thread_local! {
 }
 
 /* Taken from probability package. */
+#[allow(clippy::excessive_precision)]
 pub fn normal_inverse(p: f64) -> f64 {
     use core::f64::{INFINITY, NEG_INFINITY};
 
