@@ -1,5 +1,5 @@
 //use mlua::prelude::*;
-use crate::gettext;
+use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
 use constcat::concat;
 use mlua::{FromLua, IntoLua};
@@ -29,9 +29,8 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     let globals = lua.globals();
     let gettext_table = lua.create_table()?;
 
-    let gettext = lua.create_function(|_lua, msg: String| -> mlua::Result<String> {
-        Ok(gettext::gettext(msg))
-    })?;
+    let gettext =
+        lua.create_function(|_lua, msg: String| -> mlua::Result<String> { Ok(gettext(msg)) })?;
     globals.set("_", gettext.clone())?;
     gettext_table.set("gettext", gettext)?;
     let gettext_noop =
@@ -40,15 +39,13 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     gettext_table.set("gettext_noop", gettext_noop)?;
     let ngettext = lua.create_function(
         |_lua, (msg1, msg2, n): (String, String, i32)| -> mlua::Result<String> {
-            Ok(gettext::ngettext(msg1, msg2, n))
+            Ok(ngettext(msg1, msg2, n))
         },
     )?;
     globals.set("n_", ngettext.clone())?;
     gettext_table.set("ngettext", ngettext)?;
     let pgettext = lua.create_function(
-        |_lua, (msg1, msg2): (String, String)| -> mlua::Result<String> {
-            Ok(gettext::pgettext(msg1, msg2))
-        },
+        |_lua, (msg1, msg2): (String, String)| -> mlua::Result<String> { Ok(pgettext(msg1, msg2)) },
     )?;
     globals.set("p_", pgettext.clone())?;
     gettext_table.set("pgettext", pgettext)?;
@@ -209,7 +206,7 @@ impl NLua<'_> {
                     mlua::Value::Table(t) => t,
                     _ => {
                         return Ok(mlua::Value::String(
-                            lua.create_string(gettext::gettext(" package not found."))?,
+                            lua.create_string(gettext(" package not found."))?,
                         ));
                     }
                 };
