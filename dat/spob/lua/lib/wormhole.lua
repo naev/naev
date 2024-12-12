@@ -57,13 +57,16 @@ function wormhole.load ()
       starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
       mem.shader:send( "u_bgtex", starfield.canvas() )
 
-      mem.sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
-      mem.sfx:setRelative(false)
-      local px, py = mem.pos:get()
-      mem.sfx:setPosition( px, py, 0 )
-      mem.sfx:setAttenuationDistances( 500, 25e3 )
-      mem.sfx:setLooping(true)
-      mem.sfx:play()
+      -- Only play sound if player exists (avoid on menu, etc...)
+      if not player.pilot():exists() then
+         mem.sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
+         mem.sfx:setRelative(false)
+         local px, py = mem.pos:get()
+         mem.sfx:setPosition( px, py, 0 )
+         mem.sfx:setAttenuationDistances( 500, 25e3 )
+         mem.sfx:setLooping(true)
+         mem.sfx:play()
+      end
       update_canvas()
    end
    return mem.cvs.t.tex, s/2
@@ -102,7 +105,7 @@ function wormhole.land( _s, p )
    -- Not player, just play animation and remove
    if p ~= player.pilot() then
       p:effectAdd("Wormhole Enter")
-      luaspfx.sfx( p:pos(), p:vel(), jumpsfx )
+      luaspfx.sfx( false, nil, jumpsfx )
       return
    end
 

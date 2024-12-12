@@ -1,2 +1,2 @@
 -- Lazy loader for vn
-return require("lazyload")("vn.core", true)
+return require("lazyload")("vn.vn", true)

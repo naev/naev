@@ -61,7 +61,7 @@ function create ()
    -- TODO more custom ridiculous message about types of documents and such
    local cargos = {
       { N_("Confidential Documents"),
-         N_("A serious of notes and documents collected by Thurion agents.") },
+         N_("A series of notes and documents collected by Thurion agents.") },
       { N_("Situational Reports"),
          N_("Detailed reports covering different aspects of systems outside of the Nebula, mixed in with stolen documents and illegal recordings.") }
    }

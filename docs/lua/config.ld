@@ -8,3 +8,4 @@ full_description = [[
       <p>The Wiki has an in-depth <a href="https://github.com/naev/naev/wiki/Mission-Scripting">mission tutorial</a> covering both missions and events, and the API documentation provides common usage examples for each function.</p>
       <p>Most API modules can also be used from the in-game Lua console (accessible by pressing <strong>F2</strong> by default) for <span style="text-decoration: line-through;">cheating</span> <em>experimenting</em> to your heart's content.</p>
 ]]
+format = "markdown"

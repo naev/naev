@@ -166,7 +166,7 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
  *    @param[out] mean Sample mean, rounded to nearest credit.
  *    @param[out] std Sample standard deviation (via uncorrected population
  * formula).
- *    @return The average price of the commodity.
+ *    @return 0 on success.
  */
 int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
                                  credits_t *mean, double *std )
@@ -179,16 +179,18 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
       if ( ref == NULL )
          return -1;
       int ret = economy_getAverageSpobPrice( ref, p, mean, std );
-      *mean   = (credits_t)( (double)*mean * com->price_mod + 0.5 );
-      *std    = ( *std * com->price_mod );
-      return ( (double)ret * com->price_mod + 0.5 );
+      if ( !ret )
+         return ret;
+      *mean = (credits_t)( (double)*mean * com->price_mod + 0.5 );
+      *std  = ( *std * com->price_mod );
+      return 0;
    }
 
    /* Constant price. */
    if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
       *mean = com->price;
       *std  = 0.;
-      return com->price;
+      return 0;
    }
 
    /* Get position in stack */
@@ -229,6 +231,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    } else {
       *mean = 0;
       *std  = 0;
+      return -1;
    }
    return 0;
 }

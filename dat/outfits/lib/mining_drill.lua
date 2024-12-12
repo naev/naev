@@ -71,7 +71,7 @@ function drill.ontoggle( p, _po, on )
    -- Handles giving the function
    local function reward( bonus )
       local maxr = max_rarity
-      if bonus < rnd.rnd() then
+      if bonus+0.5 < rnd.rnd() then
          maxr = math.max(maxr-1,0)
       end
       local rwd = {}

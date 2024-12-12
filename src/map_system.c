@@ -857,10 +857,11 @@ static void map_system_array_update( unsigned int wid, const char *str )
       char       buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
       char       buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
       char       buf_buy_price[ECON_CRED_STRLEN];
-      int        owned;
+      int        owned, priceok;
       com = cur_spobObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
-      economy_getAverageSpobPrice( com, cur_spobObj_sel, &mean, &std );
+      priceok =
+         economy_getAverageSpobPrice( com, cur_spobObj_sel, &mean, &std );
       credits2str( buf_mean, mean, -1 );
       snprintf( buf_std, sizeof( buf_std ), "%.1f ¤",
                 std ); /* TODO credit2str could learn to do this... */
@@ -887,8 +888,12 @@ static void map_system_array_update( unsigned int wid, const char *str )
 
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "#n%s#0 ",
                       _( "Average price seen here:" ) );
-      l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, _( "%s/t ± %s/t" ),
-                      buf_mean, buf_std );
+      if ( !priceok )
+         l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, _( "%s/t ± %s/t" ),
+                         buf_mean, buf_std );
+      else
+         l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, _( "%s/t ± %s/t" ),
+                         _( "??" ), _( "??" ) );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n#n%s#0 ",
                       _( "Average price seen everywhere:" ) );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, _( "%s/t ± %s/t" ),

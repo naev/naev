@@ -346,11 +346,14 @@ static void info_cleanup( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;
-   /* Update weapon sets. */
-   pilot_weaponSafe( player.p );
 
-   /* Copy weapon sets over if changed. */
-   ws_copy( player.ps.weapon_sets, player.p->weapon_sets );
+   if ( player.p != NULL ) {
+      /* Update weapon sets. */
+      pilot_weaponSafe( player.p );
+
+      /* Copy weapon sets over if changed. */
+      ws_copy( player.ps.weapon_sets, player.p->weapon_sets );
+   }
 
    info_wid     = 0;
    info_windows = NULL;

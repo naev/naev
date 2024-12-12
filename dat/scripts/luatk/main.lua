@@ -1,4 +1,4 @@
-local luatk = require 'luatk.core'
+local luatk = require 'luatk.luatk'
 local le = require 'love.event'
 
 function love.keypressed( key )
