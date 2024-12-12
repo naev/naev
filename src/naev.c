@@ -345,8 +345,6 @@ int naev_main( void )
    gl_freeFont( &gl_smallFont );
    gl_freeFont( &gl_defFontMono );
 
-   start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
-
    /* exit subsystems */
    plugin_exit();
    cli_exit();        /* Clean up the console. */

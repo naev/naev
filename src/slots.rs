@@ -82,7 +82,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
 #[no_mangle]
 pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
     match get_c(sp) {
-        Some(prop) => prop.display.as_ptr() as *const c_char,
+        Some(prop) => prop.display.as_ptr(),
         None => std::ptr::null(),
     }
 }
@@ -90,7 +90,7 @@ pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
 #[no_mangle]
 pub extern "C" fn sp_description(sp: c_int) -> *const c_char {
     match get_c(sp) {
-        Some(prop) => prop.description.as_ptr() as *const c_char,
+        Some(prop) => prop.description.as_ptr(),
         None => std::ptr::null(),
     }
 }

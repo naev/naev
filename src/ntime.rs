@@ -5,8 +5,8 @@ use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
 use std::sync::Mutex;
 
-type NTimeC = i64;
-#[derive(Clone, Copy, PartialEq, Eq)]
+pub type NTimeC = i64;
+#[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]
 pub struct NTime(i64);
 struct NTimeInternal {
     time: NTime,

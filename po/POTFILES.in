@@ -3883,6 +3883,7 @@ src/ntime.rs
 src/ntracing.h
 src/nxml.c
 src/nxml.h
+src/nxml.rs
 src/nxml_lua.c
 src/nxml_lua.h
 src/opengl.c
@@ -3966,8 +3967,8 @@ src/space.h
 src/space_fdecl.h
 src/spfx.c
 src/spfx.h
-src/start.c
 src/start.h
+src/start.rs
 src/target.h
 src/tech.c
 src/tech.h
