@@ -20,6 +20,7 @@
 
 #include "array.h"
 #include "board.h"
+#include "camera.h"
 #include "comm.h"
 #include "event.h"
 #include "gui.h"
@@ -2459,6 +2460,7 @@ static int playerL_teleport( lua_State *L )
    /* Don't follow anything. */
    player_accelOver();
    player_autonavEnd();
+   cam_vel( 0., 0. );
 
    /* Free graphics. */
    space_gfxUnload( cur_system );

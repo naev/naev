@@ -144,6 +144,15 @@ void cam_getVel( double *vx, double *vy )
 }
 
 /**
+ * @brief Sets the camera velocity.
+ */
+void cam_vel( double vx, double vy )
+{
+   camera_VX = vx;
+   camera_VY = vy;
+}
+
+/**
  * @brief Sets the target to follow.
  */
 void cam_setTargetPilot( unsigned int follow, int soft_over )

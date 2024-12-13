@@ -5,6 +5,7 @@
    * Fixed Sirius Providence flow absorption bonus
    * Fixed positioning of a certain blockade
    * Fleshed out API for player.missions() to be as documentation indicates
+   * Fixed some visual aberrations when forcing the player to land or jump
    * Disabled Nasin campaign
    * Minor typo fixes and translation updates
 
