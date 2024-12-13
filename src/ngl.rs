@@ -69,7 +69,7 @@ pub fn init(
     /* Set up the attributes. */
     let gl_attr = sdlvid.gl_attr();
     gl_attr.set_context_profile(sdl::video::GLProfile::Core);
-    gl_attr.set_context_version(4, 7);
+    gl_attr.set_context_version(4, 6);
     gl_attr.set_double_buffer(true);
     if fsaa > 1 {
         gl_attr.set_multisample_buffers(1);
@@ -82,7 +82,7 @@ pub fn init(
 
     let (window, gl_context) = match create_context(sdlvid, &gl_attr, 4, 6) {
         Ok(v) => v,
-        _ => match create_context(sdlvid, &gl_attr, 3, 2) {
+        _ => match create_context(sdlvid, &gl_attr, 3, 3) {
             Ok(v) => v,
             _ => anyhow::bail!("Foo"),
         },

@@ -13,8 +13,10 @@ endif
 
 summary('System OpenGL Version', build_gl_version, section: 'Tests')
 
-if build_gl_version.version_compare('<3.2')
-    message('Could not detect OpenGL >= 3.2. Attempting to find software renderer for tests.')
+# glVertexAttribDivisor requires 3.3
+
+if build_gl_version.version_compare('<3.3')
+    message('Could not detect OpenGL >= 3.3. Attempting to find software renderer for tests.')
     if build_machine.system() in ['cygwin', 'windows']
         opengl32 = run_command('which', 'opengl32.dll', check: true).stdout()
         run_command('ln', '-f', '-s', opengl32, meson.project_build_root(), check: true)
@@ -35,7 +37,7 @@ if build_gl_version.version_compare('<3.2')
     endif
     message(note)
 else
-    note = 'OpenGL >= 3.2 support is available with your current driver/device.'
+    note = 'OpenGL >= 3.3 support is available with your current driver/device.'
 endif
 
 summary('Renderer', test_renderer, section: 'Tests')

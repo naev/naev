@@ -206,26 +206,41 @@ void background_renderDust( const double dt )
    gl_uniformMat4( shaders.dust.projection, &projection );
    glUniform2f( shaders.dust.offset_xy, dust_x, dust_y );
    if ( points )
-      glUniform3f( shaders.dust.dims, 1. / gl_screen.scale, 0., 0. );
-   else
-      glUniform3f( shaders.dust.dims,
-                   MAX( 0.5, 1. - m / 40. ) / gl_screen.scale, angle, m );
+      glUniform3f( shaders.dust.dims, m * z, 0., 0. );
+   else {
+      double p = MAX( 0.5, 1. - m / 40. );
+      glUniform3f( shaders.dust.dims, p * z, angle, m );
+   }
    glUniform3f( shaders.dust.screen, w, h, 1. / gl_screen.scale );
    glUniform1i( shaders.dust.use_lines, !points );
 
    /* Vertices. */
+   glEnableVertexAttribArray( shaders.dust.shape );
    glEnableVertexAttribArray( shaders.dust.vertex );
    glEnableVertexAttribArray( shaders.dust.brightness );
 
    /* Set up the vertices. */
+   gl_vboActivateAttribOffset( gl_circleVBO, shaders.dust.shape, 0, 2, GL_FLOAT,
+                               0 );
    gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.vertex, 0, 2,
                                GL_FLOAT, 3 * sizeof( GLfloat ) );
    gl_vboActivateAttribOffset( dust_vertexVBO, shaders.dust.brightness,
                                2 * sizeof( GLfloat ), 1, GL_FLOAT,
                                3 * sizeof( GLfloat ) );
-   glDrawArrays( GL_POINTS, 0, ndust );
+
+   glVertexAttribDivisor( shaders.dust.shape, 0 );
+   glVertexAttribDivisor( shaders.dust.vertex, 1 );
+   glVertexAttribDivisor( shaders.dust.brightness, 1 );
+
+   // glDrawArrays( GL_POINTS, 0, ndust );
+   glDrawArraysInstanced( GL_TRIANGLE_STRIP, 0, 4, ndust );
+
+   glVertexAttribDivisor( shaders.dust.shape, 0 );
+   glVertexAttribDivisor( shaders.dust.vertex, 0 );
+   glVertexAttribDivisor( shaders.dust.brightness, 0 );
 
    /* Disable vertex array. */
+   glDisableVertexAttribArray( shaders.dust.shape );
    glDisableVertexAttribArray( shaders.dust.vertex );
    glDisableVertexAttribArray( shaders.dust.brightness );
 

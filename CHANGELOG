@@ -1,3 +1,7 @@
+* 0.13.0 (unreleased)
+   * Begin porting to rust
+   * Use instancing instead of geometry shaders for space dust
+
 * 0.12.0 (unreleased)
    * Don't play wormhole sound on main menu
    * Don't allow the player to sell unique ships

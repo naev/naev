@@ -11,10 +11,13 @@ void main (void) {
    colour_out = vec4( 1.0, 1.0, 1.0, brightness_frag );
 
    if (use_lines) {
-      if (length_frag < dims.x)
-         pos.x = length_frag / dims.x - 1.0;
-      else
-         pos.x = (length_frag-dims.x) / (dims.x+dims.z);
+      float l = dims.z;
+      float r = 3.0* dims.x;
+      if (length_frag > 0.0) {
+         pos.x = length_frag / r;
+      } else {
+         pos.x = length_frag / (r+l);
+      }
    }
 
    colour_out.a *= smoothstep( 0.0, 1.0, 1.0-length(pos) );
