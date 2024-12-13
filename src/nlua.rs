@@ -139,7 +139,7 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
 }
 
 fn load_common(lua: &mlua::Lua) -> mlua::Result<mlua::Function> {
-    let data = ndata::read(String::from(LUA_COMMON_PATH))?;
+    let data = ndata::read(LUA_COMMON_PATH)?;
     let common = std::str::from_utf8(&data)?;
     lua.load(common).into_function()
 }

@@ -43,7 +43,7 @@ pub struct File<'f> {
 
 impl File<'_> {
     /// Opens a file with a specific mode.
-    pub fn open<'g>(filename: String, mode: Mode) -> Result<File<'g>> {
+    pub fn open<'g>(filename: &str, mode: Mode) -> Result<File<'g>> {
         let c_filename = CString::new(filename)?;
         let raw = unsafe {
             match mode {

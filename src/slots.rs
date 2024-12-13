@@ -1,4 +1,5 @@
 use anyhow::Result;
+use rayon::prelude::*;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
@@ -6,6 +7,7 @@ use std::os::raw::{c_char, c_int};
 use crate::array;
 use crate::gettext::gettext;
 use crate::ndata;
+use crate::{formatx, warn};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
 #[derive(Debug, Clone)]
@@ -18,6 +20,44 @@ pub struct SlotProperty {
     pub locked: bool,
     pub visible: bool,
     pub icon: *mut naevc::glTexture,
+}
+impl SlotProperty {
+    fn load(filename: &str) -> Result<Self> {
+        let data = ndata::read(filename)?;
+        let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
+        let root = doc.root_element();
+        let name = CString::new(match root.attribute("name") {
+            Some(n) => n,
+            None => {
+                return nxml_err_attr_missing!("Slot property", "name");
+            }
+        })?;
+        let mut sp = SlotProperty {
+            name,
+            ..SlotProperty::default()
+        };
+        for node in root.children() {
+            if !node.is_element() {
+                continue;
+            }
+            match node.tag_name().name().to_lowercase().as_str() {
+                "display" => sp.display = nxml::node_cstring(node)?,
+                "description" => sp.description = nxml::node_cstring(node)?,
+                "required" => sp.required = true,
+                "exclusive" => sp.exclusive = true,
+                "locked" => sp.locked = true,
+                "visible" => sp.visible = true,
+                "icon" => unsafe {
+                    let gfxname = CString::new(format!("gfx/slots/{}", nxml::node_str(node)?))?;
+                    sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
+                },
+                tag => {
+                    return nxml_err_node_unknown!("Slot property", sp.name.to_str()?, tag);
+                }
+            }
+        }
+        Ok(sp)
+    }
 }
 // Implementation of glTexture should be fairly thread safe, so set properties
 unsafe impl Sync for SlotProperty {}
@@ -171,44 +211,18 @@ pub fn load() -> Result<Vec<SlotProperty>> {
         files.push(unsafe { CStr::from_ptr(sp).to_str()?.to_string() });
     }
 
-    let mut sp_data: Vec<SlotProperty> = Vec::new();
-    for filename in files {
-        let data = ndata::read(filename)?;
-        let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
-        let root = doc.root_element();
-        let name = CString::new(match root.attribute("name") {
-            Some(n) => n,
-            None => {
-                return nxml_err_attr_missing!("Slot property", "name");
+    let mut sp_data: Vec<SlotProperty> = files
+        .par_iter()
+        .map(|filename| match SlotProperty::load(filename.as_str()) {
+            Ok(sp) => Some(sp),
+            _ => {
+                warn!("Unable to load Slot Property '{}'!", filename);
+                None
             }
-        })?;
-        let mut sp = SlotProperty {
-            name,
-            ..SlotProperty::default()
-        };
-        for node in root.children() {
-            if !node.is_element() {
-                continue;
-            }
-            match node.tag_name().name().to_lowercase().as_str() {
-                "display" => sp.display = nxml::node_cstring(node)?,
-                "description" => sp.description = nxml::node_cstring(node)?,
-                "required" => sp.required = true,
-                "exclusive" => sp.exclusive = true,
-                "locked" => sp.locked = true,
-                "visible" => sp.visible = true,
-                "icon" => unsafe {
-                    let gfxname = CString::new(format!("gfx/slots/{}", nxml::node_str(node)?))?;
-                    sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
-                },
-                tag => {
-                    return nxml_err_node_unknown!("Slot property", sp.name.to_str()?, tag);
-                }
-            }
-        }
-        //println!("{:?}", sp);
-        sp_data.push(sp);
-    }
+        })
+        .flatten()
+        .collect();
     sp_data.sort();
+
     Ok(sp_data)
 }

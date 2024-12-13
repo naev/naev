@@ -45,7 +45,7 @@ impl StartData {
     fn load() -> Result<Self> {
         let mut start: StartData = Default::default();
 
-        let data = ndata::read(String::from("start.xml"))?;
+        let data = ndata::read("start.xml")?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
         for node in root.children() {

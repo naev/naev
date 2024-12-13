@@ -17,6 +17,7 @@ semver = "1"
 sdl2 = "0"
 rand = "0"
 glow = "0"
+rayon = "1"
 # We support lua51 / luajit and they are ABI compatible, so just point at luajit
 mlua = { version = "0", features = ["luajit"] }
 
