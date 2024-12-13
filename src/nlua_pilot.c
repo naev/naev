@@ -5359,6 +5359,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "refueling", .id = PILOT_REFUELING },
    { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "disabled", .id = PILOT_DISABLED },
+   { .name = "disabled_perm", .id = PILOT_DISABLED_PERM },
    { .name = "landing", .id = PILOT_LANDING },
    { .name = "takingoff", .id = PILOT_TAKEOFF },
    { .name = "jumpprep", .id = PILOT_HYP_PREP },
