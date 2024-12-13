@@ -8,7 +8,7 @@ inspiration from the [Escape Velocity
 series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among
 others.
 
-You pilot a space ship from a top-down perspective, and are more or less free
+You pilot a spaceship from a top-down perspective, and are more or less free
 to do what you want. As the genre name implies, you’re able to trade and engage
 in combat at will. Beyond that, there’s an ever-growing number of storyline
 missions, equipment, and ships; Even the galaxy itself grows larger with each
@@ -38,7 +38,7 @@ Development Manual](https://naev.org/devmanual/) (WIP).
 ## DEPENDENCIES
 
 Naev's dependencies are intended to be widely available. In addition to a
-graphics card and driver supporting at least OpenGL 3.2, Naev requires:
+graphics card and driver supporting at least OpenGL 3.3, Naev requires:
 * rust
 * bindgen
 * SDL2
