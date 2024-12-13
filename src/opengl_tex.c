@@ -1031,7 +1031,7 @@ void gl_exitTextures( void )
    }
 
    /* Make sure there's no texture leak */
-#if DEBUGGING
+#if 0  // DEBUGGING
    DEBUG( _( "Texture leak detected!" ) );
    for ( int i = 0; i < array_size( texture_list ); i++ ) {
       const glTexList *cur = &texture_list[i];
