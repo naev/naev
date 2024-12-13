@@ -7,6 +7,7 @@
       * 6 new ship variants
       * 2 new outfits
    * Engine
+      * Use instancing instead of geometry shaders for space dust
       * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent

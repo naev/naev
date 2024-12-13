@@ -3,13 +3,12 @@
 num_shaders = 0
 
 class Shader:
-    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines={}, geom_path=None):
+    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines={}):
         global num_shaders
         num_shaders += 1
         self.name       = name
         self.vs_path    = vs_path
         self.fs_path    = fs_path
-        self.geom_path  = geom_path
         self.attributes = attributes
         self.uniforms   = uniforms
         self.subroutines= subroutines
@@ -30,10 +29,7 @@ class Shader:
         yield f"   }} {self.name};\n"
 
     def source_chunks(self):
-        if self.geom_path!=None:
-            yield f"   shaders.{self.name}.program = gl_program_vert_frag_geom(\"{self.vs_path}\", \"{self.fs_path}\", \"{self.geom_path}\");\n"
-        else:
-            yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
+        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
         for attribute in self.attributes:
             yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
         for uniform in self.uniforms:
@@ -170,9 +166,8 @@ SHADERS = [
       name = "dust",
       vs_path = "dust.vert",
       fs_path = "dust.frag",
-      attributes = ["vertex", "brightness"],
+      attributes = ["shape", "vertex", "brightness"],
       uniforms = ["projection", "offset_xy", "dims", "screen", "use_lines"],
-      geom_path = "dust.geom",
    ),
    Shader(
       name = "lines",
