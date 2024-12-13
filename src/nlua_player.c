@@ -1858,6 +1858,41 @@ static int playerL_missions( lua_State *L )
          lua_pushstring( L, pm->reward );
          lua_setfield( L, -2, "reward" );
       }
+      lua_pushinteger( L, md->avail.chance );
+      lua_setfield( L, -2, "chance" );
+      lua_pushinteger( L, md->avail.priority );
+      lua_setfield( L, -2, "priority" );
+      if ( md->avail.chapter != NULL ) {
+         lua_pushstring( L, md->avail.chapter );
+         lua_setfield( L, -2, "chapter" );
+      }
+      if ( md->avail.cond != NULL ) {
+         lua_pushstring( L, md->avail.cond );
+         lua_setfield( L, -2, "cond" );
+      }
+      if ( md->avail.done != NULL ) {
+         lua_pushstring( L, md->avail.done );
+         lua_setfield( L, -2, "done" );
+      }
+      if ( md->avail.spob != NULL ) {
+         lua_pushstring( L, md->avail.spob );
+         lua_setfield( L, -2, "spob" );
+      }
+      if ( md->avail.system != NULL ) {
+         lua_pushstring( L, md->avail.system );
+         lua_setfield( L, -2, "system" );
+      }
+      if ( mis_isFlag( md, MISSION_UNIQUE ) ) {
+         lua_pushboolean( L, 1 );
+         lua_setfield( L, -2, "unique" );
+      }
+      /* Tags. */
+      lua_newtable( L );
+      for ( int k = 0; k < array_size( md->tags ); k++ ) {
+         lua_pushboolean( L, 1 );
+         lua_setfield( L, -2, md->tags[k] );
+      }
+      lua_setfield( L, -2, "tags" );
       lua_rawseti( L, -2, j++ );
    }
    return 1;
