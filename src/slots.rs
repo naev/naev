@@ -213,14 +213,13 @@ pub fn load() -> Result<Vec<SlotProperty>> {
 
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()
-        .map(|filename| match SlotProperty::load(filename.as_str()) {
+        .filter_map(|filename| match SlotProperty::load(filename.as_str()) {
             Ok(sp) => Some(sp),
             _ => {
                 warn!("Unable to load Slot Property '{}'!", filename);
                 None
             }
         })
-        .flatten()
         .collect();
     sp_data.sort();
 
