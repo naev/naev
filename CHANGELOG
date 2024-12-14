@@ -4,6 +4,16 @@
    * Fixed corner cases where destroyed player ships would not properly be updated
    * Fixed Sirius Providence flow absorption bonus
    * Fixed positioning of a certain blockade
+   * Fleshed out API for player.missions() to be as documentation indicates
+   * Fixed some visual aberrations when forcing the player to land or jump
+   * Prioritize pilots and other objects over uninhabited planets when clicking
+   * Trading in a ship triggers both ship_sell and ship_buy hooks
+   * Disabled Nasin campaign
+   * Fixed weird commodity global average values
+   * Fixed weapon sets getting reset on game load
+   * Fixed exploit allowing the player to ignore cargo limits
+   * Consistently colour the ShipAI messages in the tutorial
+   * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
 
 * 0.12.0-beta.3

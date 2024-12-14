@@ -1107,10 +1107,11 @@ static void load_menu_delete( unsigned int wdw, const char *str )
    if ( array_size( load_saves ) <= 0 )
       return;
 
-   if ( dialogue_YesNo( _( "Permanently Delete?" ),
-                        _( "Are you sure you want to permanently delete the "
-                           "character '%s'?\n#rThis is an undoable action!#0" ),
-                        load_saves[pos].name ) == 0 )
+   if ( dialogue_YesNo(
+           _( "Permanently Delete?" ),
+           _( "Are you sure you want to permanently delete the "
+              "character '%s'?\n#rThis action is irreversible!#0" ),
+           load_saves[pos].name ) == 0 )
       return;
 
    /* Remove it. */
@@ -1148,7 +1149,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 
    if ( dialogue_YesNo( _( "Permanently Delete?" ),
                         _( "Are you sure you want to permanently delete the "
-                           "snapshot '%s'?\n#rThis is an undoable action!#0" ),
+                           "snapshot '%s'?\n#rThis action is irreversible!#0" ),
                         load_player->saves[pos].save_name ) == 0 )
       return;
 
