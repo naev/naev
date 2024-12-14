@@ -9,6 +9,7 @@
    * Prioritize pilots and other objects over uninhabited planets when clicking
    * Disabled Nasin campaign
    * Consistently colour the ShipAI messages in the tutorial
+   * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
 
 * 0.12.0-beta.3
