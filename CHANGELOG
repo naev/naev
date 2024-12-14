@@ -8,6 +8,7 @@
    * Fixed some visual aberrations when forcing the player to land or jump
    * Prioritize pilots and other objects over uninhabited planets when clicking
    * Disabled Nasin campaign
+   * Fixed weird commodity global average values
    * Consistently colour the ShipAI messages in the tutorial
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
