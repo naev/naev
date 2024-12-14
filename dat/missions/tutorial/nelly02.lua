@@ -285,8 +285,8 @@ function enter ()
 
       mem.hk_timer_spotter = hook.timer( 9, "timer_spotter" )
       hook.timer( 15, "timer_spotter_start" )
+   elseif mem.misn_state == 4 and scur ~= mem.destsys then
       mem.misn_state = 5
-   elseif mem.misn_state==5 then
       reset_osd()
    end
 end
