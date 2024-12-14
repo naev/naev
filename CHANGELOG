@@ -10,6 +10,7 @@
    * Trading in a ship triggers both ship_sell and ship_buy hooks
    * Disabled Nasin campaign
    * Fixed weird commodity global average values
+   * Fixed exploit allowing the player to ignore cargo limits
    * Consistently colour the ShipAI messages in the tutorial
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
