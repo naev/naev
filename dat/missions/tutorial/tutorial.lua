@@ -227,7 +227,7 @@ function land ()
 end
 
 function msg_info( msg )
-   vntk.msg( tut.ainame(), msg )
+   vntk.msg( tut.ainame(), msg, {colour=tut.shipai.colour} )
 end
 
 function land_bar ()

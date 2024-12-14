@@ -8,6 +8,7 @@
    * Fixed some visual aberrations when forcing the player to land or jump
    * Prioritize pilots and other objects over uninhabited planets when clicking
    * Disabled Nasin campaign
+   * Consistently colour the ShipAI messages in the tutorial
    * Minor typo fixes and translation updates
 
 * 0.12.0-beta.3
