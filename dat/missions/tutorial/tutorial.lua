@@ -211,7 +211,7 @@ function land ()
       hook.rm(mem.enter_timer_hook)
    end
    mem.enter_timer_hook = nil
-   if mem.stage == 2 then
+   if mem.stage <= 2 then
       mem.stage = 3
       msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refuelled automatically, and you can do things such as talk to civilians at the spaceport bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click through all the other tabs below, and I'll give you a tour of everything you can do on a planet. When you are done, click the '#bTake Off#0' button, so we can continue."]])}
 
