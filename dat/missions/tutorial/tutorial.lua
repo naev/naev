@@ -256,7 +256,7 @@ end
 function land_shipyard ()
    hook.rm(mem.shipyard_hook)
    mem.shipyard_hook = nil
-   msg_info{_([["This is the Shipyard, where you can buy new starships to either replace the one you've got, or to add to your collection! On the left of this screen, you will see ships available on the planet you're on. Click on a ship you're interested in learning more about. You can then either buy the ship with the '#bBuy#0' button, or trade your current ship in for the new ship with the '#bTrade-In#0' button. Different planets have different ships available; if you don't see a specific ship you're looking for, you can search for it via the '#bFind Ships#0' button on the starmap screen."]]),
+   msg_info{_([["This is the Shipyard, where you can buy new starships to either replace the one you've got, or to add to your collection! On the left of this screen, you will see ships available on the planet you're on. Click on a ship you're interested in learning more about. You can then either buy the ship with the '#bBuy#0' button, or trade your current ship in for the new ship with the '#bTrade-In#0' button. Different planets have different ships available; if you don't see a specific ship you're looking for, you can search for it via the '#bFind#0' button on the starmap screen."]]),
    _([["You likely don't have enough credits for a new ship now, but later on, when you've saved up enough, you'll probably want to upgrade your ship to an even better one, depending on what kinds of tasks you will be performing. Different ships have different strengths and weaknesses which interact with the different outfits you can equip them with. Note that some ships also require licenses before you can buy them."]])
    }
 end
