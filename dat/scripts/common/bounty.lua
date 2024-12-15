@@ -113,7 +113,6 @@ end
 
 local function update_osd ()
    local b = mem._bounty
-   print( b.deadline, "foo", misn.osdGetActive(), "bar" )
    if b.deadline then
       local active = misn.osdGetActive() or 1
       -- Only care if first is selected, or time is ignored

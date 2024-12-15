@@ -15,9 +15,8 @@
    content there (for now).
 --]]
 
-local pos_top = vec2.new(-15000, 2500)
-local pos_bot = vec2.new(-11000, -6000)
-
+local jmp = jump.get( "Leporis", "Haered" )
+local rad = 8000
 
 local function spawn_fleet( pos )
    local ships  = {}
@@ -53,10 +52,14 @@ local function spawn_fleet( pos )
 end
 
 function create ()
+   local jmppos   = jmp:pos()
+   local jmpang   = jmppos:angle()
+   local fan      = math.rad(60)
+
    local proteron_blockade = {}
    local n = rnd.rnd(5,6)
    for i=1,n do
-      local pos = pos_top + (pos_bot - pos_top) * (i-1) / (n-1)
+      local pos = jmppos - vec2.newP( rad, jmpang - fan + 2*fan*(i-1)/(n-1) )
       local plts = spawn_fleet( pos )
       for k,v in ipairs(plts) do
          table.insert( proteron_blockade, v )

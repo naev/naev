@@ -2026,6 +2026,15 @@ void equipment_updateShips( unsigned int wid, const char *str )
    ship      = ps->p;
    favourite = ps->favourite;
    prevship  = eq_wgt.selected;
+
+   /* Just in case, turn off outfits and reset stats. */
+   effect_clear( &ship->effects );
+   pilot_outfitOffAll( ship );
+   if ( ship->id )
+      pilot_outfitLInitAll( ship );
+   pilot_calcStats( ship );
+
+   /* Select. */
    equipment_slotSelect( &eq_wgt, ps );
 
    /* update text */

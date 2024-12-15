@@ -648,11 +648,35 @@ static void shipyard_trade( unsigned int wid, const char *str )
          return;
    }
 
+   /* Store stuff. */
+   const Ship *ssold = player.p->ship;
+   char       *sname = strdup( player.p->name );
+
    /* player just got a new ship */
    snprintf( buf, sizeof( buf ), _( "Bought at %s in the %s system." ),
              spob_name( land_spob ), _( cur_system->name ) );
-   if ( player_newShip( ship, NULL, 1, buf, 0 ) == NULL )
+   if ( player_newShip( ship, NULL, 1, buf, 0 ) == NULL ) {
+      free( sname );
       return; /* Player aborted the naming process. */
+   }
+
+   HookParam hparam[4];
+   hparam[0].type   = HOOK_PARAM_SHIP;
+   hparam[0].u.ship = ssold;
+   hparam[1].type   = HOOK_PARAM_STRING;
+   hparam[1].u.str  = sname;
+   hparam[2].type   = HOOK_PARAM_BOOL;
+   hparam[2].u.b    = 1;
+   hparam[3].type   = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_sell", hparam );
+   hparam[0].type   = HOOK_PARAM_SHIP;
+   hparam[0].u.ship = ssold;
+   hparam[1].type   = HOOK_PARAM_BOOL;
+   hparam[1].u.b    = 1;
+   hparam[2].type   = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "ship_buy", hparam );
+
+   free( sname );
 
    player_modCredits(
       playerprice -

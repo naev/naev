@@ -396,7 +396,7 @@ static int systemL_background( lua_State *L )
 /**
  * @brief Gets the system's nebula parameters.
  *
- * @usage density, volatility, damage = sys:nebula()
+ * @usage density, volatility = sys:nebula()
  *
  *    @luatparam System s System to get nebula parameters from.
  *    @luatreturn number The density of the system.

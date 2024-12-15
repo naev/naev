@@ -213,10 +213,14 @@ local function info_msg( msg )
 end
 
 function equip ()
+   if mem.state > 0 then
+      return
+   end
+
    local pp = player.pilot()
    for k,o in ipairs(pp:outfitsList()) do
       if has_disable(o) then
-         info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o}))
+         info_msg(fmt.f(_([["Your equipped #o{outfitname}#0 has disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o}))
          mem.misn_state = 0
          misn.osdActive(2)
          hook.rm( mem.hk_equip )
@@ -281,8 +285,8 @@ function enter ()
 
       mem.hk_timer_spotter = hook.timer( 9, "timer_spotter" )
       hook.timer( 15, "timer_spotter_start" )
+   elseif mem.misn_state == 4 and scur ~= mem.destsys then
       mem.misn_state = 5
-   elseif mem.misn_state==5 then
       reset_osd()
    end
 end
@@ -356,7 +360,7 @@ function land ()
       vn.done( tutnel.nelly.transition )
       vn.run()
 
-      local c = commodity.new( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
+      local c = commodity.new( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to repair a ship's broken jumpdrive.") )
       misn.cargoAdd( c, 0 )
       misn.markerMove( mem.misn_marker, mem.retpnt )
       misn.osdActive(2)

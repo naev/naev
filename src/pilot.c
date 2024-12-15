@@ -1709,6 +1709,13 @@ void pilot_dead( Pilot *p, unsigned int killer )
 
    /* Turn off all outfits, should disable Lua stuff as necessary. */
    pilot_outfitOffAll( p );
+   /* More aggressive force-turning off so that stats can be properly computed
+    * at the equipment place. */
+   for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+      PilotOutfitSlot *po = p->outfits[i];
+      po->state           = PILOT_OUTFIT_OFF;
+      po->flags &= ~( PILOTOUTFIT_DYNAMIC_FLAGS | PILOTOUTFIT_ISON );
+   }
 
    /* Pilot must die before setting death flag and probably messing with other
     * flags. */
@@ -3483,12 +3490,9 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
  */
 void pilot_reset( Pilot *pilot )
 {
-   /* Clean up flag.s */
+   /* Clean up flags. */
    for ( int i = PILOT_NOCLEAR + 1; i < PILOT_FLAGS_MAX; i++ )
       pilot->flags[i] = 0;
-
-   /* Reset weapon sets. */
-   pilot_weaponAuto( pilot );
 
    /* Initialize heat. */
    pilot_heatReset( pilot );
@@ -3754,16 +3758,15 @@ Pilot *pilot_setPlayer( Pilot *after )
    player.p = after;
    pilot_clearTrails( after );
 
+   /* Reset pilot. */
+   pilot_reset( after );
+
    /* Initialize AI as necessary. */
    ai_pinit( after, "player" );
 
    /* Set player flag. */
    pilot_setFlag( after, PILOT_PLAYER );
    pilot_setFlag( after, PILOT_NOFREE );
-
-   /* Run Lua stuff. */
-   pilot_shipLInit( after );
-   pilot_outfitLInitAll( after );
 
    return after;
 }
