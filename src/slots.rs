@@ -191,15 +191,10 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
     let props = &SLOT_PROPERTIES;
     match props.binary_search(&query) {
         Ok(i) => Ok(props.get(i).expect("")),
-        Err(_) => Err(Error::new(
-            ErrorKind::Other,
-            format!(
-                "Slot property '{name}' not found .",
-                name = query.name.to_str()?
-            )
-            .as_str(),
-        )
-        .into()),
+        Err(_) => anyhow::bail!(
+            "Slot property '{name}' not found .",
+            name = query.name.to_str()?
+        ),
     }
 }
 
