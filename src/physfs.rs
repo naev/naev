@@ -1,5 +1,6 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
+use sdl2 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
 use std::mem;
@@ -172,5 +173,21 @@ impl Seek for File<'_> {
 impl Drop for File<'_> {
     fn drop(&mut self) {
         let _ = self.close();
+    }
+}
+
+pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
+    unsafe {
+        let c_filename = CString::new(filename)?;
+        let raw = match mode {
+            Mode::Append => naevc::PHYSFSRWOPS_openAppend(c_filename.as_ptr()),
+            Mode::Read => naevc::PHYSFSRWOPS_openRead(c_filename.as_ptr()),
+            Mode::Write => naevc::PHYSFSRWOPS_openWrite(c_filename.as_ptr()),
+        };
+        if raw.is_null() {
+            Err(error_as_io_error())
+        } else {
+            Ok(sdl::rwops::RWops::from_ll(raw as *mut sdl::sys::SDL_RWops))
+        }
     }
 }
