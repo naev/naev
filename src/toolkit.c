@@ -607,7 +607,7 @@ int window_exists( const char *wdwname )
  */
 int window_existsID( unsigned int wid )
 {
-   if ( windows == NULL )
+   if ( ( windows == NULL ) || ( wid == 0 ) )
       return 0;
    for ( Window *w = windows; w != NULL; w = w->next )
       if ( ( w->id == wid ) && !window_isFlag( w, WINDOW_KILL ) )

@@ -2273,13 +2273,16 @@ int gui_borderClickEvent( SDL_Event *event )
       if ( input_clickedPilot( pid, autonav ) )
          return 1;
    } else if ( pntid >= 0 ) { /* Spob is closest. */
-      if ( input_clickedSpob( pntid, autonav ) )
+      if ( input_clickedSpob( pntid, autonav, 1 ) )
          return 1;
    } else if ( jpid >= 0 ) { /* Jump point is closest. */
       if ( input_clickedJump( jpid, autonav ) )
          return 1;
    } else if ( astid >= 0 ) { /* Asteroid is closest. */
       if ( input_clickedAsteroid( fieid, astid ) )
+         return 1;
+   } else if ( pntid >= 0 ) { /* Spob is closest. */
+      if ( input_clickedSpob( pntid, autonav, 0 ) )
          return 1;
    }
 

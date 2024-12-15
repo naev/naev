@@ -487,8 +487,14 @@ function runaway( target )
    end
 
    -- See if there's a target to use when running
-   local t = ai.nearhyptarget()
-   local p = ai.nearestspob()
+   local plt = ai.pilot()
+   local t, p
+   if not plt:flags("nojump") then
+      t = ai.nearhyptarget()
+   end
+   if not plt:flags("noland")  then
+      p = ai.nearestspob()
+   end
 
    if p == nil and t == nil then
       ai.pushsubtask( "_run_target" )

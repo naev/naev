@@ -93,6 +93,7 @@ static int    logWidgetsReady = 0;
  */
 /* information menu */
 static void info_close( unsigned int wid, const char *str );
+static void info_cleanup( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
 static void info_openShip( unsigned int wid );
 static void info_openWeapons( unsigned int wid );
@@ -153,7 +154,7 @@ static void info_buttonFree( InfoButton_t *btn )
 static void info_buttonRegen( void )
 {
    int wid, w, h, rows, cols;
-   if ( info_wid == 0 )
+   if ( !window_existsID( info_wid ) )
       return;
 
    wid = info_windows[INFO_WIN_MAIN];
@@ -224,7 +225,7 @@ int info_buttonUnregister( int id )
       InfoButton_t *btn = &info_buttons[i];
       if ( btn->id != id )
          continue;
-      if ( info_wid != 0 ) {
+      if ( window_existsID( info_wid ) ) {
          int wid = info_windows[INFO_WIN_MAIN];
          if ( widget_exists( wid, btn->button ) )
             window_destroyWidget( wid, btn->button );
@@ -244,7 +245,7 @@ void info_buttonClear( void )
 {
    for ( int i = 0; i < array_size( info_buttons ); i++ ) {
       InfoButton_t *btn = &info_buttons[i];
-      if ( info_wid != 0 ) {
+      if ( window_existsID( info_wid ) ) {
          int wid = info_windows[INFO_WIN_MAIN];
          if ( widget_exists( wid, btn->button ) )
             window_destroyWidget( wid, btn->button );
@@ -289,7 +290,7 @@ void menu_info( int window )
 
    /* Open closes when previously opened. */
    if ( menu_isOpen( MENU_INFO ) || dialogue_isOpen() ) {
-      if ( ( info_wid > 0 ) && !window_isTop( info_wid ) )
+      if ( window_existsID( info_wid ) && !window_isTop( info_wid ) )
          return;
       info_close( 0, NULL );
       return;
@@ -302,6 +303,7 @@ void menu_info( int window )
    /* Create the window. */
    info_wid = window_create( "wdwInfo", _( "Info" ), -1, -1, w, h );
    window_setCancel( info_wid, info_close );
+   window_onClose( info_wid, info_cleanup );
 
    /* Create tabbed window. */
    for ( size_t i = 0; i < INFO_WINDOWS; i++ )
@@ -336,21 +338,27 @@ void menu_info( int window )
 static void info_close( unsigned int wid, const char *str )
 {
    (void)wid;
-   if ( info_wid > 0 ) {
-      info_lastTab = window_tabWinGetActive( info_wid, "tabInfo" );
+   info_lastTab = window_tabWinGetActive( info_wid, "tabInfo" );
+   window_close( info_wid, str );
+}
 
+static void info_cleanup( unsigned int wid, const char *str )
+{
+   (void)wid;
+   (void)str;
+
+   if ( player.p != NULL ) {
       /* Update weapon sets. */
       pilot_weaponSafe( player.p );
 
       /* Copy weapon sets over if changed. */
       ws_copy( player.ps.weapon_sets, player.p->weapon_sets );
-
-      window_close( info_wid, str );
-      info_wid     = 0;
-      info_windows = NULL;
-      logs         = NULL;
-      menu_Close( MENU_INFO );
    }
+
+   info_wid     = 0;
+   info_windows = NULL;
+   logs         = NULL;
+   menu_Close( MENU_INFO );
 }
 
 /**

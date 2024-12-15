@@ -238,6 +238,7 @@ static int pilotL_canHyperspace( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_stealth( lua_State *L );
 static int pilotL_tryStealth( lua_State *L );
+static int pilotL_destealth( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
@@ -445,6 +446,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "hyperspace", pilotL_hyperspace },
    { "stealth", pilotL_stealth },
    { "tryStealth", pilotL_tryStealth },
+   { "destealth", pilotL_destealth },
    { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
@@ -5357,6 +5359,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "refueling", .id = PILOT_REFUELING },
    { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "disabled", .id = PILOT_DISABLED },
+   { .name = "disabled_perm", .id = PILOT_DISABLED_PERM },
    { .name = "landing", .id = PILOT_LANDING },
    { .name = "takingoff", .id = PILOT_TAKEOFF },
    { .name = "jumpprep", .id = PILOT_HYP_PREP },
@@ -6246,6 +6249,20 @@ static int pilotL_tryStealth( lua_State *L )
    Pilot *p = luaL_validpilot( L, 1 );
    lua_pushboolean( L, pilot_stealth( p ) );
    return 1;
+}
+
+/**
+ * @brief Tries to make the pilot stealth.
+ *
+ *    @luatparam Pilot p Pilot to try to make stealth.
+ *    @luatreturn boolean Whether or not the pilot was able to stealth.
+ * @luafunc destealth
+ */
+static int pilotL_destealth( lua_State *L )
+{
+   Pilot *p = luaL_validpilot( L, 1 );
+   pilot_destealth( p );
+   return 0;
 }
 
 /**

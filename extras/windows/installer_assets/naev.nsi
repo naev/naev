@@ -28,7 +28,7 @@ Var StartMenuFolder
 !define UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
 Name "${PACKAGE}"
-;OutFile "setuppp-${VERSION}.exe"
+;OutFile "naev-setup-${VERSION}.exe"
 
 InstallDir "$PROGRAMFILES64\${PACKAGE}"
 InstallDirRegKey HKLM "SOFTWARE\${PACKAGE}" ""
@@ -77,6 +77,10 @@ ShowUninstDetails show
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE $(gpl)
 !insertmacro MUI_PAGE_LICENSE $(naev-license)
+
+; Components page to choose portable mode
+!insertmacro MUI_PAGE_COMPONENTS
+
 !insertmacro MUI_PAGE_DIRECTORY
 
 ;Start Menu Folder Page Configuration
@@ -106,39 +110,52 @@ LicenseLangString gpl ${LANG_ENGLISH} "legal/gpl-3.0.txt"
 LicenseLangString naev-license ${LANG_ENGLISH} "legal\naev-license.txt"
 
 ;--------------------------------
-;Installer Sections
+;Sections
 
-Section "Naev Engine and Data" BinarySection
+; Main Naev installation (always installed)
+Section "Naev Engine and Data" SecMain
   SectionIn RO
-
   SetOutPath $INSTDIR
-   File /r bin\*
-   File logo.ico
+  File /r bin\*
+  File logo.ico
+SectionEnd
 
-  SetShellVarContext all
+; Portable section (optional)
+; Not selected by default; installs datapath.lua and skips registry/shortcuts.
+Section "Portable Install" SecPortable
+  SetOutPath $INSTDIR
+  File datapath.lua
+SectionEnd
 
-   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+; Post-install section
+Section "-PostInstall"
+  ${If} ${SectionIsSelected} ${SecPortable}
+    ; Portable mode selected: Do NOT create registry keys or shortcuts
+  ${Else}
+    ; Normal Install: Create registry keys, shortcuts, and uninstall entries
+    SetShellVarContext all
 
-      ;Create start menu and desktop shortcuts
+    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+
       CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
       CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${NAME}.lnk" "$INSTDIR\naev.exe"
       CreateShortCut "$DESKTOP\${NAME}.lnk" "$INSTDIR\naev.exe"
 
-   !insertmacro MUI_STARTMENU_WRITE_END
+    !insertmacro MUI_STARTMENU_WRITE_END
 
-;--------------------------------
-;Create Registry Keys
-  WriteRegStr HKLM "SOFTWARE\${NAME}" "" "$INSTDIR"
-  WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayName" "${PACKAGE} (remove only)"
-  WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
-  WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "Publisher" "${NAEV_DEV}"
-  WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayVersion" "${VERSION}"
-  WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "HelpLink" "${NAEV_URL}"
-  WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoModify" 1
-  WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoRepair" 1
-  ;Create Uninstaller
-  WriteUninstaller "uninstall.exe"
+    ;Create Registry Keys
+    WriteRegStr HKLM "SOFTWARE\${NAME}" "" "$INSTDIR"
+    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayName" "${PACKAGE} (remove only)"
+    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
+    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
+    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "Publisher" "${NAEV_DEV}"
+    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "DisplayVersion" "${VERSION}"
+    WriteRegStr HKLM "${UNINSTALL_KEY}\${NAME}" "HelpLink" "${NAEV_URL}"
+    WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoModify" 1
+    WriteRegDWORD HKLM "${UNINSTALL_KEY}\${NAME}" "NoRepair" 1
+    ;Create Uninstaller
+    WriteUninstaller "uninstall.exe"
+  ${EndIf}
 SectionEnd
 
 ;--------------------------------
@@ -159,24 +176,25 @@ SectionEnd
 
 Function .onInit
    !insertmacro MUI_LANGDLL_DISPLAY
+
+   ; Uncheck the portable section by default
+   SectionSetFlags ${SecPortable} 0
+
    ReadRegStr $R0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString"
    ${Unless} ${Errors}
       ;If we get here we're already installed
-     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?" IDNO skip
-     ExecWait $R0 $0
-     ${Unless} $0 = 0 ;note: = not ==
-        MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
-     ${EndUnless}
-     skip:
+      MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?" IDNO skip
+      ExecWait $R0 $0
+      ${Unless} $0 = 0 ;note: = not ==
+         MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
+      ${EndUnless}
+      skip:
    ${EndUnless}
-
 FunctionEnd
 
 ;--------------------------------
 ;Uninstaller Functions
 
 Function un.onInit
-
    !insertmacro MUI_UNGETLANGUAGE
-
 FunctionEnd

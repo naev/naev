@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Shark ΨIIIa" inherits="Shark">
+ <rarity>2</rarity>
  <price>290000</price>
  <class>Scout</class>
  <description>With the Shark ΨIIIa, Nexus Shipyards rethinks the Shark as a Scout-class vessel. The weapon mounts are significantly reduced in exchange for more utility. However, unlike most scout ships, it still retains the durability, allowing it to play a more combat-focused reconnaissance role. For reasons unknown, there has been almost no publicity regarding the ΨIIIa and it is very hard to find.</description>

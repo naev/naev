@@ -239,6 +239,7 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Meson Setup
+        # We disable b_lto here because it messes with backtraces on windows
         run: |
           meson setup build source \
               --prefix="$(pwd)"/build/windows \
@@ -249,7 +250,7 @@ jobs:
               --force-fallback-for=glpk,SuiteSparse \
               -Dinstaller=true \
               -Drelease=true \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled

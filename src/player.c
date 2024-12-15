@@ -3546,7 +3546,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    /* Metadata. */
    if ( pship->acquired )
       xmlw_elem( writer, "acquired", "%s", pship->acquired );
-   xmlw_saveTime( writer, "acquired_date", pship->acquired_date );
+   xmlw_saveNTime( writer, "acquired_date", pship->acquired_date );
    xmlw_elem( writer, "time_played", "%f", pship->time_played );
    xmlw_elem( writer, "dmg_done_shield", "%f", pship->dmg_done_shield );
    xmlw_elem( writer, "dmg_done_armour", "%f", pship->dmg_done_armour );
@@ -3778,7 +3778,15 @@ Spob *player_load( xmlNodePtr parent )
       difficulty_setLocal( NULL ); /* Sets the default. */
 
    /* Updates the fleet internals. */
+   int l = landed; /* We simulate landing, because it makes the player go over
+                      available limits and closes an exploit where the player
+                      can cheat the cargo limist by using outfits that increase
+                      the limit, accept missions, and then reduce it under the
+                      limit.
+                      TODO do this in a less hack way. */
+   landed = 1;
    pfleet_update();
+   landed = l;
 
    return pnt;
 }
@@ -4525,7 +4533,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       /* Meta-data. */
       xmlr_strd( node, "acquired", ps.acquired );
       if ( xml_isNode( node, "acquired_date" ) ) {
-         xml_parseTime( node, &ps.acquired_date );
+         xml_parseNTime( node, &ps.acquired_date );
          continue;
       }
       xmlr_float( node, "time_played", ps.time_played );

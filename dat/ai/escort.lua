@@ -1,5 +1,11 @@
 require 'ai.core.core'
 require 'ai.core.control.escort'
+local ai_setup = require "ai.core.setup"
+
+--[[
+   AI for ships that escort the player. Hardcoded into escort.c and
+   player_fleet.c.
+--]]
 
 -- Do not distress or board
 mem.distress   = false
@@ -29,4 +35,14 @@ local attacked_orig = attacked
 function attacked( ... )
    if not test_autonav() then return end
    return attacked_orig( ... )
+end
+
+local create_orig = create
+function create ()
+   create_orig()
+   ai.setcredits( 0 )
+   -- So, most escorts should be already equipped from player_fleet.c, so we
+   -- don't run equipopt again, and instead want to set up their equipment and
+   -- such
+   ai_setup.setup( ai.pilot() )
 end

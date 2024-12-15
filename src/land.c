@@ -1449,6 +1449,7 @@ void land( Spob *p, int load )
    /* Clear some target stuff. */
    player.p->nav_spob = -1;
    gui_setNav();
+   cam_vel( 0., 0. );
 
    /* Load stuff */
    land_spob    = p;

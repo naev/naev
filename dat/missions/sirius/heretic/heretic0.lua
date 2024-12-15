@@ -4,7 +4,7 @@
  <unique />
  <priority>3</priority>
  <cond>spob.cur():reputation("Nasin") &gt;= 0</cond>
- <chance>50</chance>
+ <chance>0</chance>
  <location>Bar</location>
  <faction>Sirius</faction>
  <notes>

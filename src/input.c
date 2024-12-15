@@ -1590,7 +1590,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
 
    /* Target a pilot, spob or jump, and/or perform an appropriate action. */
    if ( event->button.button == SDL_BUTTON_LEFT ) {
-      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0 ) )
+      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 1 ) )
          return 1;
       else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 0 ) )
          return 1;
@@ -1598,10 +1598,12 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
          return 1;
       else if ( ( astid >= 0 ) && input_clickedAsteroid( fieid, astid ) )
          return 1;
+      else if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 0 ) )
+         return 1;
    }
    /* Right click only controls autonav. */
    else if ( event->button.button == SDL_BUTTON_RIGHT ) {
-      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 1 ) )
+      if ( ( pntid >= 0 ) && input_clickedSpob( pntid, 0, 0 ) )
          return 1;
       else if ( ( jpid >= 0 ) && input_clickedJump( jpid, 1 ) )
          return 1;
@@ -1664,9 +1666,10 @@ int input_clickedJump( int jump, int autonav )
  *
  *    @param spob Index of the spob.
  *    @param autonav Whether to autonav to the target.
+ *    @param priority Whether to consider priority targets.
  *    @return Whether the click was used.
  */
-int input_clickedSpob( int spob, int autonav )
+int input_clickedSpob( int spob, int autonav, int priority )
 {
    Spob *pnt = cur_system->spobs[spob];
 
@@ -1683,6 +1686,11 @@ int input_clickedSpob( int spob, int autonav )
    static const Spob  *lastclick_spob = NULL;
    int                 doubleclick    = input_doubleClickTest(
       &lastclick_time, (const void **)&lastclick_spob, pnt );
+
+   /* If not priority, ignore non-landable / uninhabited. */
+   if ( priority &&
+        ( !spob_isFlag( pnt, SPOB_SERVICE_INHABITED ) || !pnt->can_land ) )
+      return 0;
 
    if ( spob == player.p->nav_spob ) {
       if ( doubleclick ) {

@@ -166,7 +166,7 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
  *    @param[out] mean Sample mean, rounded to nearest credit.
  *    @param[out] std Sample standard deviation (via uncorrected population
  * formula).
- *    @return The average price of the commodity.
+ *    @return 0 on success.
  */
 int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
                                  credits_t *mean, double *std )
@@ -179,16 +179,18 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
       if ( ref == NULL )
          return -1;
       int ret = economy_getAverageSpobPrice( ref, p, mean, std );
-      *mean   = (credits_t)( (double)*mean * com->price_mod + 0.5 );
-      *std    = ( *std * com->price_mod );
-      return ( (double)ret * com->price_mod + 0.5 );
+      if ( !ret )
+         return ret;
+      *mean = (credits_t)( (double)*mean * com->price_mod + 0.5 );
+      *std  = ( *std * com->price_mod );
+      return 0;
    }
 
    /* Constant price. */
    if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
       *mean = com->price;
       *std  = 0.;
-      return com->price;
+      return 0;
    }
 
    /* Get position in stack */
@@ -229,6 +231,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    } else {
       *mean = 0;
       *std  = 0;
+      return -1;
    }
    return 0;
 }
@@ -245,12 +248,6 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
 int economy_getAveragePrice( const Commodity *com, credits_t *mean,
                              double *std )
 {
-   int             i, k;
-   CommodityPrice *commPrice;
-   double          av  = 0;
-   double          av2 = 0;
-   int             cnt = 0;
-
    if ( com->price_ref != NULL ) {
       const Commodity *ref = commodity_get( com->price_ref );
       if ( ref == NULL )
@@ -268,48 +265,37 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean,
       return com->price;
    }
 
-   /* Get position in stack */
-   k = com - commodity_stack;
-
-   /* Find what commodity this is */
-   for ( i = 0; i < array_size( econ_comm ); i++ )
-      if ( econ_comm[i] == k )
-         break;
-
-   /* Check if found */
-   if ( i >= array_size( econ_comm ) ) {
-      WARN( _( "Average price for commodity '%s' not known." ), com->name );
-      *mean = 0;
-      *std  = 0;
-      return 1;
-   }
-   for ( i = 0; i < array_size( systems_stack ); i++ ) {
-      StarSystem *sys = &systems_stack[i];
+   double av  = 0;
+   double av2 = 0;
+   int    cnt = 0;
+   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+      const StarSystem *sys = &systems_stack[i];
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
-         Spob *p = sys->spobs[j];
-
-         /* and get the index on this spob */
-         for ( k = 0; k < array_size( p->commodities ); k++ ) {
-            if ( ( strcmp( p->commodities[k]->name, com->name ) == 0 ) )
-               break;
-         }
-         if ( k < array_size( p->commodityPrice ) ) {
-            commPrice = &p->commodityPrice[k];
+         const Spob *p = sys->spobs[j];
+         for ( int k = 0; k < array_size( p->commodities ); k++ ) {
+            if ( ( strcmp( p->commodities[k]->name, com->name ) != 0 ) )
+               continue;
+            const CommodityPrice *commPrice = &p->commodityPrice[k];
             if ( commPrice->cnt > 0 ) {
                av += commPrice->sum / commPrice->cnt;
                av2 += commPrice->sum * commPrice->sum /
                       ( commPrice->cnt * commPrice->cnt );
                cnt++;
             }
+            break;
          }
       }
    }
    if ( cnt > 0 ) {
       av /= cnt;
-      av2 = sqrt( av2 / cnt - av * av );
+      av2   = sqrt( av2 / cnt - av * av );
+      *mean = (credits_t)( av + 0.5 );
+      *std  = av2;
+   } else {
+      WARN( _( "Average price for commodity '%s' not known." ), com->name );
+      *mean = 0;
+      *std  = 0;
    }
-   *mean = (credits_t)( av + 0.5 );
-   *std  = av2;
    return 0;
 }
 

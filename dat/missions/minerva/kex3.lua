@@ -364,7 +364,10 @@ function enter_the_ring ()
    local player_vendetta = player.shipAdd( "Vendetta", _("Ketchup"), _("It's virtual reality!"), true )
    mem.player_prevship = player.pilot():name() -- Ship to go back to
    player.shipSwap( player_vendetta, true )
-   equipopt.generic( player.pilot(), {type_range={Afterburner={min=1}}}, "elite" )
+   equipopt.generic( player.pilot(), {
+      rnd=0,
+      type_range={Afterburner={min=1}}
+   }, "elite" )
    hook.pilot( player.pilot(), "death", "player_death" )
 
    -- Set up Major Malik

@@ -25,7 +25,7 @@ function vntk.msg( title, text, params )
    if params.pre then params.pre() end
    local c
    if title and title ~= "" then
-      c = vn.newCharacter( title )
+      c = vn.newCharacter( title, {colour=params.colour} )
    else
       c = vn.na
    end

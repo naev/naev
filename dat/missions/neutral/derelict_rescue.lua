@@ -20,14 +20,20 @@ local lmisn = require "lmisn"
 local der = require "common.derelict"
 
 function create ()
-   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 0, 5, "Independent" )
+   mem.destpnt, mem.destsys = lmisn.getRandomSpobAtDistance( system.cur(), 0, 5, "Independent", false, function (s)
+      local f = s:faction()
+      if not f or not f:tags().generic then
+         return false
+      end
+      return true
+   end )
 
    -- See if we got something
    if not mem.destpnt then
       -- Can't find target so just make everyone be dead
-      vntk.msg(_("Empty derelict"), _([[This derelict is not deserted. The crew are still onboard. Unfortunately for them they didn't survive whatever wrecked their ship. You decide to give them a proper space burial before moving on.]]))
+      vntk.msg(_("Empty derelict"), _([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship. You decide to give them a proper space burial before moving on.]]))
 
-      der.addMiscLog(fmt.f(_([[You gave the crew of a derelict a proper space buriel in {sys}.]]), {sys=system.cur()}))
+      der.addMiscLog(fmt.f(_([[You gave the crew of a derelict a proper space burial in {sys}.]]), {sys=system.cur()}))
 
       misn.finish(false)
    end

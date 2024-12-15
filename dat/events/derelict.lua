@@ -523,6 +523,7 @@ function badevent()
                   p:setLeader( leader )
                end
             end
+            player.pilot():destealth()
             destroyevent()
          end
       )
