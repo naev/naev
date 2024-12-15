@@ -223,7 +223,6 @@ pub fn naev() -> Result<()> {
             // TODO show some simple error message
             return Err(Error::new(ErrorKind::Other, err));
         }
-        naevc::window_caption();
     }
 
     unsafe {

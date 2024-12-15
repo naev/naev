@@ -1,8 +1,9 @@
 use anyhow::Result;
 use glow::*;
 use sdl2 as sdl;
+use sdl2::image::ImageRWops;
 
-use crate::log;
+use crate::{log, ndata};
 
 fn create_context(
     sdlvid: &sdl::VideoSubsystem,
@@ -48,6 +49,16 @@ fn create_context(
         Ok(ctx) => ctx,
         Err(e) => anyhow::bail!("Unable to create OpenGL context: {}", e),
     };
+
+    // Try to load the icon.
+    let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
+    match ndata::rwops(filename.as_str()) {
+        Ok(rw) => match rw.load() {
+            Ok(icon) => window.set_icon(icon),
+            Err(e) => anyhow::bail!(e),
+        },
+        Err(e) => anyhow::bail!(e),
+    }
 
     Ok((window, gl_context))
 }

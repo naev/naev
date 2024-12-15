@@ -965,29 +965,6 @@ void update_routine( double dt, int dohooks )
 }
 
 /**
- * @brief Sets the window caption.
- */
-void window_caption( void )
-{
-   SDL_RWops *rw;
-
-   /* Load icon. */
-   rw = PHYSFSRWOPS_openRead( GFX_PATH "icon.webp" );
-   if ( rw == NULL ) {
-      WARN( _( "Icon (icon.webp) not found!" ) );
-      return;
-   }
-   naev_icon = IMG_Load_RW( rw, 1 );
-   if ( naev_icon == NULL ) {
-      WARN( _( "Unable to load icon.webp!" ) );
-      return;
-   }
-
-   /* Set caption. */
-   SDL_SetWindowIcon( gl_screen.window, naev_icon );
-}
-
-/**
  * @brief Prints the SDL version to console.
  */
 void print_SDLversion( void )
