@@ -7,7 +7,7 @@ mem.params = {
       return (mem.std_land - std) * 500 + 1000
    end,
    std_land = 20,
-   std_bribe = -70,
+   std_bribe = -100,
    std_dangerous = -math.huge,
    msg_granted = {
       _([["Permission to land granted. Welcome, mate."]]),
