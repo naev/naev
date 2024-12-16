@@ -12,6 +12,10 @@ pub fn read(path: &str) -> Result<Vec<u8>> {
     Ok(out)
 }
 
+pub fn read_dir(path: &str) -> Result<Vec<String>> {
+    physfs::read_dir(path)
+}
+
 pub fn rwops(path: &str) -> Result<sdl::rwops::RWops> {
     physfs::rwops(path, physfs::Mode::Read)
 }

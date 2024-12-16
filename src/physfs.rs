@@ -176,6 +176,29 @@ impl Drop for File<'_> {
     }
 }
 
+pub fn read_dir(path: &str) -> Result<Vec<String>> {
+    let c_path = CString::new(path)?;
+    let mut list = unsafe { naevc::PHYSFS_enumerateFiles(c_path.as_ptr()) };
+    if list == std::ptr::null_mut() {
+        return Err(error_as_io_error());
+    }
+    let listptr = list;
+
+    let mut res = vec![];
+    while unsafe { *list } != std::ptr::null_mut() {
+        unsafe {
+            let filename = format!("{}/{}", path, CStr::from_ptr(*list).to_str().unwrap());
+            res.push(filename);
+        }
+        list = ((list as usize) + std::mem::size_of_val(&list)) as _;
+    }
+    unsafe {
+        naevc::PHYSFS_freeList(listptr as *mut c_void);
+    }
+
+    Ok(res)
+}
+
 pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
     unsafe {
         let c_filename = CString::new(filename)?;

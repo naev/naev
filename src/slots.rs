@@ -4,7 +4,6 @@ use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
-use crate::array;
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::{formatx, warn};
@@ -199,12 +198,7 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
 }
 
 pub fn load() -> Result<Vec<SlotProperty>> {
-    let sp_files = unsafe { naevc::ndata_listRecursive(naevc::SP_DATA_PATH.as_ptr().cast()) };
-    let sp_array = array::to_vec(sp_files)?;
-    let mut files: Vec<String> = Vec::new();
-    for sp in sp_array {
-        files.push(unsafe { CStr::from_ptr(sp).to_str()?.to_string() });
-    }
+    let files = ndata::read_dir("slots/")?;
 
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()
