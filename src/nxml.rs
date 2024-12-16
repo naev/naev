@@ -64,3 +64,7 @@ pub fn node_string(node: Node) -> Result<String> {
 pub fn node_cstring(node: Node) -> Result<CString> {
     Ok(CString::new(node_str(node)?)?)
 }
+
+pub fn node_f64(node: Node) -> Result<f64> {
+    Ok(node_str(node)?.parse::<f64>()?)
+}

@@ -3,6 +3,7 @@
 ####
 source_rust = files(
    'array.rs',
+   'damagetype.rs',
    'env.rs',
    'gettext.rs',
    'linebreak.rs',
@@ -35,7 +36,6 @@ source = files(
    'conf.c',
    'console.c',
    'cmark_wrap.c',
-   'damagetype.c',
    'debris.c',
    'debug.c',
    'debug_fpu.c',

@@ -517,14 +517,12 @@ static void loadscreen_unload( void )
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES 17. /**< Amount of loading stages. */
+#define LOADING_STAGES 16. /**< Amount of loading stages. */
 void load_all( void )
 {
    NTracingFrameMarkStart( "load_all" );
 
    int stage = 0;
-   /* We can do fast stuff here. */
-   sp_load();
 
    /* order is very important as they're interdependent */
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Commodities…" ) );
@@ -536,9 +534,6 @@ void load_all( void )
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Effects…" ) );
    effect_load(); /* no dep */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Damage Types…" ) );
-   dtype_load(); /* dep for outfits */
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Factions…" ) );
    factions_load(); /* dep for fleet, space, missions, AI */
@@ -620,13 +615,11 @@ void unload_all( void )
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
    effect_exit();
-   dtype_free(); /* gets rid of the damage types */
    missions_free();
    events_exit(); /* Clean up events. */
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */
-   sp_cleanup();
 }
 
 /**

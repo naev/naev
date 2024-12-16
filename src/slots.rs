@@ -28,7 +28,7 @@ impl SlotProperty {
         let name = CString::new(match root.attribute("name") {
             Some(n) => n,
             None => {
-                return nxml_err_attr_missing!("Slot property", "name");
+                return nxml_err_attr_missing!("Slot Property", "name");
             }
         })?;
         let mut sp = SlotProperty {
@@ -51,7 +51,7 @@ impl SlotProperty {
                     sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
                 },
                 tag => {
-                    return nxml_err_node_unknown!("Slot property", sp.name.to_str()?, tag);
+                    return nxml_err_node_unknown!("Slot Property", sp.name.to_str()?, tag);
                 }
             }
         }
@@ -96,21 +96,12 @@ use std::sync::LazyLock;
 static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().unwrap());
 
 #[no_mangle]
-pub extern "C" fn sp_load() -> c_int {
-    let _ = SLOT_PROPERTIES; // Should trigger a load, not necessary though
-    0
-}
-
-#[no_mangle]
-pub extern "C" fn sp_cleanup() {}
-
-#[no_mangle]
 pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
         let ptr = CStr::from_ptr(name);
-        let sname = CString::new(ptr.to_str().unwrap()).unwrap();
+        let name = CString::new(ptr.to_str().unwrap()).unwrap();
         let query = SlotProperty {
-            name: sname,
+            name,
             ..SlotProperty::default()
         };
         match SLOT_PROPERTIES.binary_search(&query) {
@@ -191,7 +182,7 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
     match props.binary_search(&query) {
         Ok(i) => Ok(props.get(i).expect("")),
         Err(_) => anyhow::bail!(
-            "Slot property '{name}' not found .",
+            "Slot Property '{name}' not found .",
             name = query.name.to_str()?
         ),
     }
@@ -199,7 +190,6 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
 
 pub fn load() -> Result<Vec<SlotProperty>> {
     let files = ndata::read_dir("slots/")?;
-
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()
         .filter_map(|filename| match SlotProperty::load(filename.as_str()) {
@@ -211,6 +201,5 @@ pub fn load() -> Result<Vec<SlotProperty>> {
         })
         .collect();
     sp_data.sort();
-
     Ok(sp_data)
 }

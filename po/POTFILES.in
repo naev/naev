@@ -3646,8 +3646,8 @@ src/conf.c
 src/conf.h
 src/console.c
 src/console.h
-src/damagetype.c
 src/damagetype.h
+src/damagetype.rs
 src/debris.c
 src/debris.h
 src/debug.c

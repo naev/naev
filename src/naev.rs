@@ -11,6 +11,7 @@ extern "C" {
 }
 
 mod array;
+mod damagetype;
 mod env;
 mod gettext;
 mod linebreak;

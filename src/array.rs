@@ -1,6 +1,7 @@
 use std::os::raw::c_void;
 
 /// Wrapper to convert C arrays to Vec
+#[allow(dead_code)]
 pub fn to_vec<T: Clone>(array: *mut T) -> std::io::Result<Vec<T>> {
     unsafe {
         let len = naevc::array_size_rust(array as *const c_void);

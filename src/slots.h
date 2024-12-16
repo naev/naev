@@ -5,10 +5,6 @@
 
 #include "opengl_tex.h"
 
-/* Load/exit. */
-int  sp_load( void );
-void sp_cleanup( void );
-
 /* Stuff. */
 unsigned int     sp_get( const char *name );
 const char      *sp_display( unsigned int sp );
