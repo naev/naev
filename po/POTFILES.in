@@ -3068,6 +3068,7 @@ dat/missions/dvaered/dv_antiflf02.lua
 dat/missions/dvaered/dv_antiflf03.lua
 dat/missions/dvaered/dv_diversion.lua
 dat/missions/dvaered/dv_rehab.lua
+dat/missions/dvaered/dvaered-colonel-transport.lua
 dat/missions/dvaered/frontier_war/fw00_escort.lua
 dat/missions/dvaered/frontier_war/fw01_sabotage.lua
 dat/missions/dvaered/frontier_war/fw02_escape.lua
