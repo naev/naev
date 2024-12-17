@@ -355,7 +355,9 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
         0 ) { /* error has occurred */
       WARN( _( "Hook [%s] '%d' -> '%s' failed" ), hook->stack, hook->id,
             hook->u.misn.func );
-      hook_rmRaw( hook );
+      /* Don't remove hooks on failure, or it can lead to stuck missions (like
+       * rehab). */
+      // hook_rmRaw( hook );
       return -1;
    }
    return 0;
@@ -407,7 +409,9 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
    if ( ret < 0 ) {
       WARN( _( "Hook [%s] '%d' -> '%s' failed" ), hook->stack, hook->id,
             hook->u.event.func );
-      hook_rmRaw( hook );
+      /* Don't remove hooks on failure, or it can lead to stuck missions (like
+       * rehab). */
+      // hook_rmRaw( hook );
       return -1;
    }
    return 0;

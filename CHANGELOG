@@ -12,6 +12,7 @@
    * Fixed weird commodity global average values
    * Can always bribe your way to pirate's clansworlds
    * Fixed weapon sets getting reset on game load
+   * Don't remove hooks on failure, which should make rehab missions a tad more robust
    * Fixed exploit allowing the player to ignore cargo limits
    * Consistently colour the ShipAI messages in the tutorial
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
