@@ -7,6 +7,7 @@
    * Fleshed out API for player.missions() to be as documentation indicates
    * Fixed some visual aberrations when forcing the player to land or jump
    * Prioritize pilots and other objects over uninhabited planets when clicking
+   * Fixed bug in rehab missions causing them to get stuck
    * Trading in a ship triggers both ship_sell and ship_buy hooks
    * Disabled Nasin campaign
    * Fixed weird commodity global average values
