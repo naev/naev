@@ -133,10 +133,8 @@ static void load_all( void );
 static void unload_all( void );
 static void window_caption( void );
 /* update */
-static void   fps_init( void );
-static double fps_elapsed( void );
-static void   fps_control( void );
-static void   update_all( int dohooks );
+static void fps_init( void );
+static void update_all( int dohooks );
 /* Misc. */
 static void loadscreen_update( double done, const char *msg );
 void        main_loop( int nested ); /* externed in dialogue.c */
@@ -798,10 +796,15 @@ void main_loop( int nested )
 {
    NTracingZone( _ctx, 1 );
 
-   /*
-    * Control FPS.
-    */
-   fps_control(); /* everyone loves fps control */
+   /* Update elapsed time */
+   {
+      Uint64 t = SDL_GetPerformanceCounter();
+      double dt =
+         (double)( t - last_t ) / (double)SDL_GetPerformanceFrequency();
+      last_t  = t;
+      real_dt = dt;
+      game_dt = real_dt * dt_mod; /* Apply the modifier. */
+   }
 
    /*
     * Handle update.
@@ -835,6 +838,29 @@ void main_loop( int nested )
       render_all( game_dt, real_dt );
       /* Draw buffer. */
       SDL_GL_SwapWindow( gl_screen.window );
+
+      /* if fps is limited */
+      if ( !conf.vsync && conf.fps_max != 0 ) {
+#if !SDL_VERSION_ATLEAST( 3, 0, 0 ) && HAS_POSIX
+         struct timespec ts;
+#endif /* HAS_POSIX */
+         const double fps_max = 1. / (double)conf.fps_max;
+         Uint64       t       = SDL_GetPerformanceCounter();
+         double       dt =
+            (double)( t - last_t ) / (double)SDL_GetPerformanceFrequency();
+         double delay = fps_max - dt;
+         if ( delay > 0. ) {
+#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+            SDL_DelayNS( delay * 1e9 );
+#elif HAS_POSIX
+            ts.tv_sec  = floor( delay );
+            ts.tv_nsec = fmod( delay, 1. ) * 1e9;
+            nanosleep( &ts, NULL );
+#else  /* HAS_POSIX */
+            SDL_Delay( (unsigned int)round( delay * 1000. ) );
+#endif /* HAS_POSIX */
+         }
+      }
 
       NTracingFrameMark;
    }
@@ -910,50 +936,6 @@ void naev_toggleFullscreen( void )
 static void fps_init( void )
 {
    last_t = SDL_GetPerformanceCounter();
-}
-/**
- * @brief Gets the elapsed time.
- *
- *    @return The elapsed time from the last frame.
- */
-static double fps_elapsed( void )
-{
-   Uint64 t  = SDL_GetPerformanceCounter();
-   double dt = (double)( t - last_t ) / (double)SDL_GetPerformanceFrequency();
-   last_t    = t;
-   return dt;
-}
-
-/**
- * @brief Controls the FPS.
- */
-static void fps_control( void )
-{
-#if !SDL_VERSION_ATLEAST( 3, 0, 0 ) && HAS_POSIX
-   struct timespec ts;
-#endif /* HAS_POSIX */
-
-   /* dt in s */
-   real_dt = fps_elapsed();
-   game_dt = real_dt * dt_mod; /* Apply the modifier. */
-
-   /* if fps is limited */
-   if ( !conf.vsync && conf.fps_max != 0 ) {
-      const double fps_max = 1. / (double)conf.fps_max;
-      if ( real_dt < fps_max ) {
-         double delay = fps_max - real_dt;
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
-         SDL_DelayNS( delay * 1e9 );
-#elif HAS_POSIX
-         ts.tv_sec  = floor( delay );
-         ts.tv_nsec = fmod( delay, 1. ) * 1e9;
-         nanosleep( &ts, NULL );
-#else                     /* HAS_POSIX */
-         SDL_Delay( (unsigned int)( delay * 1000. ) );
-#endif                    /* HAS_POSIX */
-         fps_dt += delay; /* makes sure it displays the proper fps */
-      }
-   }
 }
 
 /**

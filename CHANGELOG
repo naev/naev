@@ -17,6 +17,8 @@
    * Don't remove hooks on failure, which should make rehab missions a tad more robust
    * Fixed exploit allowing the player to ignore cargo limits
    * Consistently colour the ShipAI messages in the tutorial
+   * Made max_fps actually get respected
+   * Bumped tracy wrap to 0.11.1
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
 
