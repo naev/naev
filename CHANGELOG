@@ -11,6 +11,7 @@
    * Trading in a ship triggers both ship_sell and ship_buy hooks
    * Disabled Nasin campaign
    * Fixed weird commodity global average values
+   * Fixed how Lua environments were being stored and referenced
    * Can always bribe your way to pirate's clansworlds
    * Fixed weapon sets getting reset on game load
    * Don't remove hooks on failure, which should make rehab missions a tad more robust

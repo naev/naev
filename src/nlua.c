@@ -371,7 +371,7 @@ nlua_env nlua_newEnv( const char *name )
    /* Store in the environment table. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t, e */
    lua_pushvalue( naevL, -2 );                         /* t, e, t */
-   lua_rawseti( naevL, -1, ref );                      /* t, e */
+   lua_rawseti( naevL, -2, ref );                      /* t, e */
    lua_pop( naevL, 1 );                                /* t */
 
    if ( name != NULL ) {
