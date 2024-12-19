@@ -19,6 +19,7 @@
    * Consistently colour the ShipAI messages in the tutorial
    * Made max_fps actually get respected
    * Bumped tracy wrap to 0.11.1
+   * fw03_sirius: fixed Lua error
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
 

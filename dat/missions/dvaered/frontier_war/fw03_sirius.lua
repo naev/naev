@@ -144,6 +144,7 @@ function enter()
          -- Decide from where the ambushers come
          if system.cur() == destsys then
             mem.ambStart = destpla
+            ambJp = destpla
          else
             mem.ambStart = lmisn.getNextSystem(system.cur(), destsys)
             ambJp = jump.get(system.cur(), mem.ambStart) -- We assume there are no one-way jumps
