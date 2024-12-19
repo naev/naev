@@ -9,7 +9,7 @@
    * Prioritize pilots and other objects over uninhabited planets when clicking
    * Fixed bug in rehab missions causing them to get stuck
    * Trading in a ship triggers both ship_sell and ship_buy hooks
-   * Disabled Nasin campaign
+   * Disabled Nasin campaign and Defend the System missions
    * Fixed weird commodity global average values
    * Fixed how Lua environments were being stored and referenced
    * Can always bribe your way to pirate's clansworlds

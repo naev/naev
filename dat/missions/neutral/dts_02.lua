@@ -3,7 +3,7 @@
 <mission name="Defend the System 3">
  <unique />
  <priority>4</priority>
- <chance>3</chance>
+ <chance>0</chance>
  <done>Defend the System 2</done>
  <location>None</location>
  <faction>Dvaered</faction>
