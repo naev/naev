@@ -1543,12 +1543,14 @@
 //  - Float zero is mapped to center of integers (so clear to integer zero is a nice default for atomic max usage).
 // Burns 3 ops for conversion {shift,or,xor}.
 //==============================================================================================================================
- AU1 AFisToU1(AU1 x){return x^(( AShrSU1(x,AU1_(31)))|AU1_(0x80000000));}
- AU1 AFisFromU1(AU1 x){return x^((~AShrSU1(x,AU1_(31)))|AU1_(0x80000000));}
+/* bobbens: these commented out lines seem to give issues on some platforms when compiling. */
+ //AU1 AFisToU1(AU1 x){return x^(( AShrSU1(x,AU1_(31)))|AU1_(0x80000000));}
+ //AU1 AFisFromU1(AU1 x){return x^((~AShrSU1(x,AU1_(31)))|AU1_(0x80000000));}
 //------------------------------------------------------------------------------------------------------------------------------
  // Just adjust high 16-bit value (useful when upper part of 32-bit word is a 16-bit float value).
- AU1 AFisToHiU1(AU1 x){return x^(( AShrSU1(x,AU1_(15)))|AU1_(0x80000000));}
- AU1 AFisFromHiU1(AU1 x){return x^((~AShrSU1(x,AU1_(15)))|AU1_(0x80000000));}
+/* bobbens: these commented out lines seem to give issues on some platforms when compiling. */
+ //AU1 AFisToHiU1(AU1 x){return x^(( AShrSU1(x,AU1_(15)))|AU1_(0x80000000));}
+ //AU1 AFisFromHiU1(AU1 x){return x^((~AShrSU1(x,AU1_(15)))|AU1_(0x80000000));}
 //------------------------------------------------------------------------------------------------------------------------------
  #ifdef A_HALF
   AW1 AFisToW1(AW1 x){return x^(( AShrSW1(x,AW1_(15)))|AW1_(0x8000));}
