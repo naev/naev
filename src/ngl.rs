@@ -80,7 +80,6 @@ pub fn init(
     /* Set up the attributes. */
     let gl_attr = sdlvid.gl_attr();
     gl_attr.set_context_profile(sdl::video::GLProfile::Core);
-    gl_attr.set_context_version(4, 6);
     gl_attr.set_double_buffer(true);
     if fsaa > 1 {
         gl_attr.set_multisample_buffers(1);
