@@ -80,4 +80,5 @@ repos:
       entry: rustfmt
       types: [rust]
       files: '^src/'
+      args: ["--edition", "2021"]
       language: system
