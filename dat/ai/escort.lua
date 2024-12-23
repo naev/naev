@@ -17,10 +17,12 @@ mem.leadermaxdist = 8e3
 mem.atk_kill   = false
 
 local function test_autonav ()
-   -- Don't try to engage in combat. TODO check option
-   local autonav, speed = player.autonav()
-   if autonav and speed > 1. then
-      return false
+   -- Don't try to engage in combat
+   if var.peek( "autonav_include_escorts" ) then
+      local autonav, speed = player.autonav()
+      if autonav and speed > 1. then
+         return false
+      end
    end
    return true
 end
