@@ -113,7 +113,7 @@
          * Direct faction hit changes are shown as messages
          * Your actions will more directly affect ships in the system
       * Significantly increase maximum potential fleet capacity
-      * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
+      * Excess energy to battery recharge efficiency is now a flat instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
       * Can only have a single patrol mission active at a given time
       * Pirates are less numerous during Chapter 0

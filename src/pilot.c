@@ -3758,11 +3758,11 @@ Pilot *pilot_setPlayer( Pilot *after )
    player.p = after;
    pilot_clearTrails( after );
 
-   /* Reset pilot. */
-   pilot_reset( after );
-
    /* Initialize AI as necessary. */
    ai_pinit( after, "player" );
+
+   /* Reset pilot. */
+   pilot_reset( after );
 
    /* Set player flag. */
    pilot_setFlag( after, PILOT_PLAYER );
