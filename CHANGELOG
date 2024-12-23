@@ -1,4 +1,4 @@
-* 0.12.0 (unreleased)
+* 0.12.0
    * Don't play wormhole sound on main menu
    * Don't allow the player to sell unique ships
    * Fixed corner cases where destroyed player ships would not properly be updated
