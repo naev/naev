@@ -23,6 +23,7 @@
    * fw05_triathlon: fixed acquired information of ships the player can obtain
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
    * Minor typo fixes and translation updates
+   * Carried fighters don't investigate
 
 * 0.12.0-beta.3
    * Fixed collisions for some ships at certain angles
