@@ -40,5 +40,5 @@ function renderfg( dt )
    local z = camera.getZoom()
    shader:send( "u_camera", 0, 0, z )
 
-   scircuit:render( dt, {1, 1, 1, 0.02} )
+   scircuit:render( dt, {1, 1, 1, 0.03} )
 end
