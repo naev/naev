@@ -18,6 +18,7 @@
    * Fixed exploit allowing the player to ignore cargo limits
    * Consistently colour the ShipAI messages in the tutorial
    * Made max_fps actually get respected
+   * Fixed nebula trails on the Virtuosity
    * Bumped tracy wrap to 0.11.1
    * fw03_sirius: fixed Lua error
    * fw05_triathlon: fixed acquired information of ships the player can obtain
