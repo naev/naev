@@ -1810,7 +1810,7 @@ void player_checkLandAck( void )
       return;
 
    player_rmFlag( PLAYER_LANDACK );
-   player_message( _( "#%c%s>#0 Landing permission revoked." ),
+   player_message( _( "#%c%s>#0 \"Landing permission revoked.\"" ),
                    spob_getColourChar( p ), spob_name( p ) );
 }
 
