@@ -1,4 +1,5 @@
 * 0.12.1 (unreleased)
+   * Fixed psychic orbs having trails
    * Crop selected spob name if it goes out of bounds in the GUI
    * Fix obelisk tests not setting properly the primary weapons of the player
    * Fleet members don't try to investigate, only leaders do
