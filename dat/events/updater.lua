@@ -264,25 +264,25 @@ function create ()
 
    local did090, did0100, did0110
    -- Run on saves older than 0.9.0
-   if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.9.0" ) < -1 then
       updater090()
       didupdate = true
       did090 = true
    end
    -- Run on saves older than 0.10.0
-   if not save_version or naev.versionTest( save_version, "0.10.0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.10.0" ) < -1 then
       updater0100( did090 )
       didupdate = true
       did0100 = true
    end
    -- Run on saves older than 0.11.0
-   if not save_version or naev.versionTest( save_version, "0.11.0") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.11.0") < -1 then
       updater0110( did0100, did090 )
       didupdate = true
       did0110 = true
    end
    -- Run on saves older than 0.12.0
-   if not save_version or naev.versionTest( save_version, "0.12.0") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.12.0") < -1 then
       updater0120( did0110, did0100, did090 )
       didupdate = true
    end
