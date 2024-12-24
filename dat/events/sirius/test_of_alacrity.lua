@@ -79,7 +79,7 @@ function create ()
 
    -- Set up position
    local pp = player.pilot()
-   pp:weapsetSetInrange(nil,false)
+   srs.weapsets{}
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
    pp:setPos( vec2.new(0,-200) )

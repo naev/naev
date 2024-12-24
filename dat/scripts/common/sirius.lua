@@ -38,6 +38,7 @@ local astral = outfit.exists("Astral Projection")
 function srs.weapsets( outfits )
    local pp = player.pilot()
    pp:weapsetCleanup()
+   pp:weapsetAuto()
    pp:weapsetSetInrange(nil,false)
    for k,o in ipairs(outfits) do
       pp:weapsetAdd( k+2, o )
