@@ -1,5 +1,6 @@
 * 0.12.1 (unreleased)
    * Fleet members don't try to investigate, only leaders do
+   * More lenient update checks when updating saves
 
 * 0.12.0
    * Don't play wormhole sound on main menu
