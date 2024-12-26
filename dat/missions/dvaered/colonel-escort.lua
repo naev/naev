@@ -9,7 +9,7 @@
    if spob.cur():reputation("Dvaered") &lt; 0 then
       return false
    end
-   if player.wealth() < 1e6 then
+   if player.wealth() &lt; 1e6 then
       return false
    end
    return require("misn_test").reweight_active()
