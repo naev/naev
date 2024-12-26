@@ -2,11 +2,18 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Colonel Escort">
  <unique />
- <priority>4</priority>
  <chance>18</chance>
  <location>Bar</location>
  <faction>Dvaered</faction>
- <cond>require("misn_test").reweight_active()</cond>
+ <cond>
+   if spob.cur():reputation("Dvaered") &lt; 0 then
+      return false
+   end
+   if player.wealth() < 1e6 then
+      return false
+   end
+   return require("misn_test").reweight_active()
+ </cond>
 </mission>
 --]]
 --[[
@@ -164,7 +171,6 @@ function ambush ()
    end
 
    if mem.ambushed then return end
-
    mem.ambushed = true
 
    local _ffriendly, fhostile = factions()
