@@ -379,7 +379,7 @@ int main (void) { return 0; }''')
 
    # First create the static library with C using meson
    naev_clib = static_library(
-      'naev',
+      'naev', # Has to be called 'naev' like the executable, or things fail to compile (why?)
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
