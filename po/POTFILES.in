@@ -789,6 +789,7 @@ dat/spob/benteen.xml
 dat/spob/berkhere.xml
 dat/spob/beth.xml
 dat/spob/bgg1356.xml
+dat/spob/bilgewater.xml
 dat/spob/blackwell_i.xml
 dat/spob/blackwell_iix.xml
 dat/spob/blackwell_vii.xml
@@ -3063,6 +3064,7 @@ dat/missions/baron/baron_baron.lua
 dat/missions/baron/baron_prince.lua
 dat/missions/dvaered/assault_on_unicorn.lua
 dat/missions/dvaered/championship.lua
+dat/missions/dvaered/colonel-escort.lua
 dat/missions/dvaered/dv_antiflf01.lua
 dat/missions/dvaered/dv_antiflf02.lua
 dat/missions/dvaered/dv_antiflf03.lua
