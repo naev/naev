@@ -1,0 +1,8 @@
+option('amalgam', type: 'boolean', value: false, description: 'Enable amalgamated build')
+option('install_cmod', type: 'string')
+option('install_lmod', type: 'string')
+option('jitdir', type: 'string', description: 'Install directory for the Lua JIT code')
+option('luajit', type: 'boolean', value: true, description: 'Build and install the luajit executable')
+option('lua52compat', type: 'boolean', value: false, description: 'Enable additional backward incompatible Lua 5.2 features')
+option('sysmalloc', type: 'boolean', value: false, description: 'Use the system memory allocator instead of the bundled one')
+option('valgrind', type: 'boolean', value: false, description: 'Build for running under Valgrind, implies `sysmalloc`')
