@@ -1,3 +1,6 @@
+* 0.13.0 (unreleased)
+   * Sensor anomalies now appear in the on-screen display
+
 * 0.12.1 (unreleased)
    * Fixed psychic orbs having trails
    * Crop selected spob name if it goes out of bounds in the GUI
