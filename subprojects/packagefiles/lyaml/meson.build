@@ -41,7 +41,7 @@ if useLuaJIT.disabled() == false
 endif
 summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 if not lua.found()
-    lua = dependency('lua51', fallback: ['lua'], required: true)
+    lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
 endif
 deps += lua
 
