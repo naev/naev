@@ -7,6 +7,7 @@
  </general>
  <pos x="-408.238233" y="4.392060"/>
  <spobs>
+  <spob>Bilgewater</spob>
   <spob>Senara I</spob>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>
