@@ -4,6 +4,7 @@
    * Fix obelisk tests not setting properly the primary weapons of the player
    * Fleet members don't try to investigate, only leaders do
    * More lenient update checks when updating saves
+   * Pilots should no longer see through stealth when attacked from stealth
 
 * 0.12.0
    * Don't play wormhole sound on main menu
