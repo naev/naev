@@ -2,6 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Point of Interest">
  <location>none</location>
+ <priority>9</priority>
  <chance>0</chance>
 </mission>
 --]]

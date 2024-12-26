@@ -224,6 +224,9 @@ function poi.misnSetup( params )
       {sys=mem.poi.sys, risk=mem.poi.riskstr, reward=mem.poi.rewardstr} ) )
 
    misn.markerAdd( mem.poi.sys, "low" )
+   misn.osdCreate( _("Sensor Anomaly"), {
+      fmt.f(_("Investigate the sensor anomaly in the {sys} system."), {sys=mem.poi.sys}),
+   })
 
    hook.enter( "_poi_enter" )
    if system.cur() == mem.poi.sys then
