@@ -429,7 +429,7 @@ end
 -- Whether or not the pilot should investigate a certain location.
 --]]
 function should_investigate( pos, si )
-   if si.fighting or si.forced or si.noattack then
+   if si.fighting or si.forced or si.noattack or mem.carried or mem.leader() then
       return false
    end
 

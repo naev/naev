@@ -1,5 +1,5 @@
 project('naev', ['c','rust'],
-   version : '0.12.0-beta.3',
+   version : '0.12.0',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
@@ -108,7 +108,10 @@ int main (void) { return 0; }''')
    yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
 
    # TODO replace nfd with SDL3 native functions when possible
-   nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
+   nfd = dependency('nfd', required: false, static: true)
+   if not nfd.found()
+      nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
+   endif
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()

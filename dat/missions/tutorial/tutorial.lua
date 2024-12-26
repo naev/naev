@@ -148,12 +148,15 @@ They stare at you for a few seconds.
    hook.takeoff("takeoff")
    hook.enter("enter")
 
-   -- Set stuff known as necessary
-   dest_planet:setKnown(true)
-   jump.get( system.cur(), destsys ):setKnown(true)
+   mem.stage = 1
    mem.misnmarker = misn.markerAdd( start_planet )
 
-   mem.stage = 1
+   -- Set stuff known as necessary
+   dest_planet:setKnown(true)
+   local jp = jump.get( system.cur(), destsys )
+   if jp then
+      jp:setKnown(true)
+   end
 end
 
 function timer ()

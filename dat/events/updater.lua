@@ -121,8 +121,6 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    -- 0.12.0 changes
    --[[
-      TODO new features explanation
-
       1. Ship Capturing (chapter 1+)
       1. Reputation changes
       1. Holo-Archives
@@ -266,25 +264,25 @@ function create ()
 
    local did090, did0100, did0110
    -- Run on saves older than 0.9.0
-   if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.9" ) < 0 then
       updater090()
       didupdate = true
       did090 = true
    end
    -- Run on saves older than 0.10.0
-   if not save_version or naev.versionTest( save_version, "0.10.0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.10" ) < 0 then
       updater0100( did090 )
       didupdate = true
       did0100 = true
    end
    -- Run on saves older than 0.11.0
-   if not save_version or naev.versionTest( save_version, "0.11.0") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.11") < 0 then
       updater0110( did0100, did090 )
       didupdate = true
       did0110 = true
    end
    -- Run on saves older than 0.12.0
-   if not save_version or naev.versionTest( save_version, "0.12.0-beta.1") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.12") < 0 then
       updater0120( did0110, did0100, did090 )
       didupdate = true
    end

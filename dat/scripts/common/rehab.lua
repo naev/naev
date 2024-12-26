@@ -117,7 +117,7 @@ function rehab.init( fct, params )
             mem.excess = mem.excess + delta
 
             if sys then
-               sys:setReputation( 0 )
+               sys:setReputation( fct, 0 )
             else
                for k,s in ipairs(system.getAll()) do
                   s:setReputation( fct, 0 )

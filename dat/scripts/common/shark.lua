@@ -28,7 +28,7 @@ shark.arnold = {
 shark.arnold.image = portrait.getFullPath(shark.arnold.portrait)
 
 shark.agent = {
-   name = _("Nexu's Agent"),
+   name = _("Nexus' Agent"),
    portrait = "neutral/unique/nexus_agent.webp",
 }
 shark.agent.image = portrait.getFullPath(shark.agent.portrait)
