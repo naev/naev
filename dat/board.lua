@@ -168,7 +168,7 @@ local function compute_lootables ( plt )
             -- TODO better criteria
             local id = rnd.rnd(1,#ocand)
             local o = ocand[id]
-            local price = o:price() * (10+ps.crew) / (10+pps.crew)
+            local price = o:price() * (10+ps.crew) / (10+pps.crew) / loot_mod
             local lo = outfit_loot( o, price )
             table.insert( lootables, lo )
             table.remove( ocand, id ) -- Remove from candidates
@@ -380,7 +380,7 @@ local function board_capture ()
    local pps = pp:stats()
    -- TODO should this be affected by loot_mod and how?
    --local loot_mod = pp:shipstat("loot_mod", true)
-   local bonus = (10+ps.crew) / (10+pps.crew) + 0.25
+   local bonus = (10+ps.crew) / (10+pps.crew) / loot_mod
    local cost = board_plt:worth()
    local costnaked = cost
    local outfitsnaked = board_plt:outfits(nil,true) -- Get non-locked
@@ -395,7 +395,7 @@ local function board_capture ()
       end
    end
    cost = cost * bonus
-   costnaked = math.min( cost, costnaked * bonus * 1.1 ) -- Always a bit more expensive, but never more than base
+   costnaked = math.min( cost, costnaked * bonus ) -- Always a bit more expensive, but never more than base
    local sbonus
    if bonus > 1 then
       sbonus = string.format("#r%+d", bonus*100 - 100)
@@ -421,7 +421,7 @@ local function board_capture ()
       factionmsg = "#r"..factionmsg.."#0"
    end
 
-   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}% from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
+   local capturemsg = fmt.f(_([[Do you wish to capture the {shpname}? You estimate it will cost #o{credits}#0 ({sbonus}%#0 from crew strength) in repairs to successfully restore the ship with outfits, and #o{creditsnaked}#0 without outfits. You have {playercreds}.{fctmsg}
 
 You will still have to escort the ship and land with it to perform the repairs and complete the capture. The ship will not assist you in combat and will be lost if destroyed.]]),
       {shpname=board_plt:name(),

@@ -287,7 +287,10 @@ int naev_main( void )
 
    /* Incomplete game note (shows every time version number changes). */
    if ( conf.lastversion == NULL ||
-        naev_versionCompare( conf.lastversion ) != 0 ) {
+        ( ( naev_versionCompare( conf.lastversion ) < 0 ) &&
+          // "+" will appear on commits described by git describe, aka
+          // development builds
+          ( strstr( naev_version( 0 ), "+" ) == NULL ) ) ) {
       free( conf.lastversion );
       conf.lastversion = strdup( naev_version( 0 ) );
       dialogue_msg(
