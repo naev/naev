@@ -288,8 +288,10 @@ function create ()
    end
 
    -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch
+   local nc = naev.cache()
    local _local, lastplayed = naev.lastplayed()
-   if not didupdate and lastplayed > 30 and lastplayed < 365*30 then
+   if not nc.oldplay and not didupdate and lastplayed > 30 and lastplayed < 365*30 then
+      nc.oldplay = true -- Hack to avoid the player seeing the message every time they load a game without quitting
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
