@@ -1,3 +1,6 @@
+* 0.12.2 (unreleased)
+   * Difficulty modifiers extend to the player's escorts as well
+
 * 0.12.1
    * Fixed psychic orbs having trails
    * Crop selected spob name if it goes out of bounds in the GUI

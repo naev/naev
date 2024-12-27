@@ -1060,8 +1060,8 @@ void pilot_calcStats( Pilot *pilot )
    tm = s->time_mod;
    *s = pilot->ship->stats_array;
 
-   /* Player gets difficulty applied. */
-   if ( pilot_isPlayer( pilot ) )
+   /* Player and escorts gets difficulty applied. */
+   if ( pilot_isWithPlayer( pilot ) )
       difficulty_apply( s );
 
    /* Now add outfit changes */
