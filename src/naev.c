@@ -1189,7 +1189,7 @@ int naev_versionCompareTarget( const char *version, const char *target )
       return -1;
    }
 
-   res = semver_compare( sv_target, sv_version );
+   res = semver_compare( sv_version, sv_target );
    semver_free( &sv_target );
    semver_free( &sv_version );
    return res;
