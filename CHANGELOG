@@ -1,5 +1,7 @@
 * 0.12.2 (unreleased)
    * Difficulty modifiers extend to the player's escorts as well
+   * Boarding bonus affects outfit / ship capture costs
+   * Lowered the cost of capturing ships
 
 * 0.12.1
    * Fixed psychic orbs having trails
