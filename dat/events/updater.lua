@@ -264,32 +264,34 @@ function create ()
 
    local did090, did0100, did0110
    -- Run on saves older than 0.9.0
-   if not save_version or naev.versionTest( save_version, "0.9" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.9.0-0" ) < 0 then
       updater090()
       didupdate = true
       did090 = true
    end
    -- Run on saves older than 0.10.0
-   if not save_version or naev.versionTest( save_version, "0.10" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.10.0-0" ) < 0 then
       updater0100( did090 )
       didupdate = true
       did0100 = true
    end
    -- Run on saves older than 0.11.0
-   if not save_version or naev.versionTest( save_version, "0.11") < 0 then
+   if not save_version or naev.versionTest( save_version, "0.11.0-0") < 0 then
       updater0110( did0100, did090 )
       didupdate = true
       did0110 = true
    end
    -- Run on saves older than 0.12.0
-   if not save_version or naev.versionTest( save_version, "0.12") < 0 then
+   if not save_version or (naev.versionTest( save_version, "0.12.0-0") < 0) then
       updater0120( did0110, did0100, did090 )
       didupdate = true
    end
 
    -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch
+   local nc = naev.cache()
    local _local, lastplayed = naev.lastplayed()
-   if not didupdate and lastplayed > 30 and lastplayed < 365*30 then
+   if not nc.oldplay and not didupdate and lastplayed > 30 and lastplayed < 365*30 then
+      nc.oldplay = true -- Hack to avoid the player seeing the message every time they load a game without quitting
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )

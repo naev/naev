@@ -10,6 +10,7 @@
    * Fleet members don't try to investigate, only leaders do
    * More lenient update checks when updating saves
    * Pilots should no longer see through stealth when attacked from stealth
+   * Don't show the "didn't play in a while" message every time a save is loaded
    * Minor typo fixes and translation updates
 
 * 0.12.0
