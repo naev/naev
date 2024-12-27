@@ -4223,7 +4223,7 @@ int space_playerLoad( xmlNodePtr parent, const char *version )
    xmlNodePtr node;
 
    /* Whether or not using the old known system. */
-   int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) > 0;
+   int oldknown = naev_versionCompareTarget( version, "0.12.0-alpha.3" ) < 0;
 
    space_clearKnown();
    factions_resetLocal();

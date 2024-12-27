@@ -206,6 +206,16 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
    return 0;
 }
 
+static int map_shouldRenderSys( const StarSystem *sys, int editor )
+{
+   if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
+      return 0;
+   if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) &&
+        !sys_isKnown( sys ) && !editor )
+      return 0;
+   return 1;
+}
+
 static void map_setup( void )
 {
    /* Mark systems as discovered as necessary. */
@@ -1204,12 +1214,7 @@ void map_renderFactionDisks( double x, double y, double zoom, double r,
       double            tx, ty;
       const StarSystem *sys = system_getIndex( i );
 
-      if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
-         continue;
-
-      if ( ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) ||
-             !sys_isKnown( sys ) ) &&
-           !editor )
+      if ( !map_shouldRenderSys( sys, editor ) )
          continue;
 
       tx = x + sys->pos.x * zoom;
@@ -1247,10 +1252,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
       /* Fade in the disks to allow toggling between commodity and nothing */
       const StarSystem *sys = system_getIndex( i );
 
-      if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
-         continue;
-
-      if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) && !editor )
+      if ( !map_shouldRenderSys( sys, editor ) )
          continue;
 
       tx = x + sys->pos.x * zoom;
@@ -1334,10 +1336,7 @@ void map_renderJumps( double x, double y, double zoom, double radius,
       double            x1, y1;
       const StarSystem *sys = system_getIndex( i );
 
-      if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
-         continue;
-
-      if ( !sys_isKnown( sys ) && !editor )
+      if ( !map_shouldRenderSys( sys, editor ) )
          continue; /* we don't draw hyperspace lines */
 
       x1 = x + sys->pos.x * zoom;
@@ -1408,10 +1407,9 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
 
       /* if system is not known, reachable, or marked. and we are not in the
        * editor */
-      if ( ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) &&
-             !sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) &&
-             !space_sysReachable( sys ) ) &&
-           mode != MAPMODE_EDITOR )
+      if ( !map_shouldRenderSys( sys, mode == MAPMODE_EDITOR ) &&
+           !sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) &&
+           !space_sysReachable( sys ) )
          continue;
 
       tx = x + sys->pos.x * zoom;
@@ -1601,11 +1599,8 @@ void map_renderNames( double bx, double by, double x, double y, double zoom,
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       const StarSystem *sys = system_getIndex( i );
 
-      if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
-         continue;
-
       /* Skip system. */
-      if ( !editor && !sys_isKnown( sys ) )
+      if ( !map_shouldRenderSys( sys, editor ) && !sys_isKnown( sys ) )
          continue;
 
       font = ( zoom >= 1.5 ) ? &gl_defFont : &gl_smallFont;
@@ -1726,10 +1721,9 @@ static void map_renderSysBlack( double bx, double by, double x, double y,
 
       /* if system is not known, reachable, or marked. and we are not in the
        * editor */
-      if ( ( !sys_isKnown( sys ) &&
-             !sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) &&
-             !space_sysReachable( sys ) ) &&
-           !editor )
+      if ( !map_shouldRenderSys( sys, editor ) &&
+           !sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) &&
+           !space_sysReachable( sys ) )
          continue;
 
       tx = x + sys->pos.x * zoom;
