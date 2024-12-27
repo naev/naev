@@ -1,8 +1,3 @@
-* 0.12.2 (unreleased)
-   * Difficulty modifiers extend to the player's escorts as well
-   * Boarding bonus affects outfit / ship capture costs
-   * Lowered the cost of capturing ships
-
 * 0.12.1
    * Fixed psychic orbs having trails
    * Crop selected spob name if it goes out of bounds in the GUI
@@ -12,6 +7,9 @@
    * Pilots should no longer see through stealth when attacked from stealth
    * Fixed sometimes full map being partially displayed
    * Don't show the "didn't play in a while" message every time a save is loaded
+   * Difficulty modifiers extend to the player's escorts as well
+   * Boarding bonus affects outfit / ship capture costs
+   * Lowered the cost of capturing ships
    * Minor typo fixes and translation updates
 
 * 0.12.0
