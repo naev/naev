@@ -1250,7 +1250,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor,
       if ( sys_isFlag( sys, SYSTEM_HIDDEN ) )
          continue;
 
-      if ( !sys_isKnown( sys ) && !editor )
+      if ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) && !editor )
          continue;
 
       tx = x + sys->pos.x * zoom;
@@ -1408,7 +1408,7 @@ void map_renderSystems( double bx, double by, double x, double y, double zoom,
 
       /* if system is not known, reachable, or marked. and we are not in the
        * editor */
-      if ( ( !sys_isKnown( sys ) &&
+      if ( ( !sys_isFlag( sys, SYSTEM_HAS_KNOWN_FACTION_SPOB ) &&
              !sys_isFlag( sys, SYSTEM_MARKED | SYSTEM_CMARKED ) &&
              !space_sysReachable( sys ) ) &&
            mode != MAPMODE_EDITOR )
