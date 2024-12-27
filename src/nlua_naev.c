@@ -208,10 +208,11 @@ static int naevL_language( lua_State *L )
  */
 static int naevL_lastplayed( lua_State *L )
 {
-   double d = difftime( time( NULL ), player.last_played );
-   double g = difftime( time( NULL ), conf.last_played );
-   lua_pushnumber( L, d / ( 3600. * 24. ) ); /*< convert to days */
-   lua_pushnumber( L, g / ( 3600. * 24. ) ); /*< convert to days */
+   const double TO_DAYS = 1. / ( 3600. * 24. ); /* Convert to days. */
+   double       d       = difftime( time( NULL ), player.last_played );
+   double       g       = difftime( time( NULL ), conf.last_played );
+   lua_pushnumber( L, d * TO_DAYS );
+   lua_pushnumber( L, g * TO_DAYS );
    return 2;
 }
 

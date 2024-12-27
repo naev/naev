@@ -1781,7 +1781,8 @@ static void opt_setScalefactor( unsigned int wid, const char *str )
    double scale = window_getFaderValue( wid, str );
    // scale = round(scale * 10.) / 10.;
    conf.scalefactor = exp( scale );
-   snprintf( buf, sizeof( buf ), _( "Scaling: %.1fx" ), conf.scalefactor );
+   snprintf( buf, sizeof( buf ), _( "Scaling: %.1fx" ),
+             round( 10. * conf.scalefactor ) / 10. );
    window_modifyText( wid, "txtScale", buf );
    if ( FABS( conf.scalefactor - local_conf.scalefactor ) > 1e-4 )
       opt_needRestart();
@@ -1799,7 +1800,8 @@ static void opt_setZoomFar( unsigned int wid, const char *str )
    double scale = window_getFaderValue( wid, str );
    // scale = round(scale * 10.) / 10.;
    conf.zoom_far = expm1( scale );
-   snprintf( buf, sizeof( buf ), _( "Far Zoom: %.1fx" ), conf.zoom_far );
+   snprintf( buf, sizeof( buf ), _( "Far Zoom: %.1fx" ),
+             round( conf.zoom_far * 10. ) / 10. );
    window_modifyText( wid, "txtZoomFar", buf );
    if ( conf.zoom_far > conf.zoom_near ) {
       window_faderSetBoundedValue( wid, "fadZoomNear", log1p( conf.zoom_far ) );
@@ -1821,7 +1823,8 @@ static void opt_setZoomNear( unsigned int wid, const char *str )
    double scale = window_getFaderValue( wid, str );
    // scale = round(scale * 10.) / 10.;
    conf.zoom_near = expm1( scale );
-   snprintf( buf, sizeof( buf ), _( "Near Zoom: %.1fx" ), conf.zoom_near );
+   snprintf( buf, sizeof( buf ), _( "Near Zoom: %.1fx" ),
+             round( conf.zoom_near * 10. ) / 10. );
    window_modifyText( wid, "txtZoomNear", buf );
    if ( conf.zoom_near < conf.zoom_far ) {
       window_faderSetBoundedValue( wid, "fadZoomFar", log1p( conf.zoom_near ) );
@@ -1842,7 +1845,8 @@ static void opt_setGammaCorrection( unsigned int wid, const char *str )
    char   buf[STRMAX_SHORT];
    double scale          = window_getFaderValue( wid, str );
    conf.gamma_correction = exp( scale );
-   snprintf( buf, sizeof( buf ), _( "Gamma: %.1f" ), conf.gamma_correction );
+   snprintf( buf, sizeof( buf ), _( "Gamma: %.1f" ),
+             round( 10. * conf.gamma_correction ) / 10. );
    window_modifyText( wid, "txtGammaCorrection", buf );
    render_setGamma( conf.gamma_correction );
 }
@@ -1859,7 +1863,7 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
    double fad         = window_getFaderValue( wid, str );
    conf.bg_brightness = fad;
    snprintf( buf, sizeof( buf ), _( "BG (Stars, etc.) brightness: %.0f%%" ),
-             100. * fad );
+             round( 100. * fad ) );
    window_modifyText( wid, "txtBGBrightness", buf );
 }
 
@@ -1872,7 +1876,8 @@ static void opt_setSaturation( unsigned int wid, const char *str )
    nebu_updateColour();
 
    /* Update text. */
-   snprintf( buf, sizeof( buf ), _( "Nebula saturation: %.0f%%" ), 100. * fad );
+   snprintf( buf, sizeof( buf ), _( "Nebula saturation: %.0f%%" ),
+             round( 100. * fad ) );
    window_modifyText( wid, "txtSaturation", buf );
 }
 
@@ -1888,7 +1893,7 @@ static void opt_setNebuNonuniformity( unsigned int wid, const char *str )
    double fad              = window_getFaderValue( wid, str );
    conf.nebu_nonuniformity = fad;
    snprintf( buf, sizeof( buf ), _( "Nebula non-uniformity: %.0f%%" ),
-             100. * fad );
+             round( 100. * fad ) );
    window_modifyText( wid, "txtNebuNonuniformity", buf );
 }
 
@@ -1903,7 +1908,8 @@ static void opt_setJumpBrightness( unsigned int wid, const char *str )
    char   buf[STRMAX_SHORT];
    double fad           = window_getFaderValue( wid, str );
    conf.jump_brightness = fad;
-   snprintf( buf, sizeof( buf ), _( "Jump brightness: %.0f%%" ), 100. * fad );
+   snprintf( buf, sizeof( buf ), _( "Jump brightness: %.0f%%" ),
+             round( 100. * fad ) );
    window_modifyText( wid, "txtJumpBrightness", buf );
 }
 
@@ -1915,7 +1921,7 @@ static void opt_setGameSpeed( unsigned int wid, const char *str )
    player.speed *= conf.game_speed / prevspeed;
    pause_setSpeed( player.speed );
    snprintf( buf, sizeof( buf ), _( "Game speed: %.0f%%" ),
-             100. * conf.game_speed );
+             round( 100. * conf.game_speed ) );
    window_modifyText( wid, "txtGameSpeed", buf );
 }
 
@@ -1931,7 +1937,7 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
    double fad               = window_getFaderValue( wid, str );
    conf.map_overlay_opacity = fad;
    snprintf( buf, sizeof( buf ), _( "Map Overlay Opacity: %.0f%%" ),
-             100. * fad );
+             round( 100. * fad ) );
    window_modifyText( wid, "txtMOpacity", buf );
 }
 

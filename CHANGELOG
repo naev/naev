@@ -1,6 +1,9 @@
 * 0.13.0 (unreleased)
    * Begin porting to rust
    * Use instancing instead of geometry shaders for space dust
+   * Content
+      * 1 new mission
+   * Sensor anomalies now appear in the on-screen display
 
 * 0.12.1 (unreleased)
    * Fixed psychic orbs having trails
@@ -8,6 +11,9 @@
    * Fix obelisk tests not setting properly the primary weapons of the player
    * Fleet members don't try to investigate, only leaders do
    * More lenient update checks when updating saves
+   * Pilots should no longer see through stealth when attacked from stealth
+   * Don't show the "didn't play in a while" message every time a save is loaded
+   * Minor typo fixes and translation updates
 
 * 0.12.0
    * Don't play wormhole sound on main menu
@@ -34,8 +40,8 @@
    * fw03_sirius: fixed Lua error
    * fw05_triathlon: fixed acquired information of ships the player can obtain
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
-   * Minor typo fixes and translation updates
    * Carried fighters don't investigate
+   * Minor typo fixes and translation updates
 
 * 0.12.0-beta.3
    * Fixed collisions for some ships at certain angles
