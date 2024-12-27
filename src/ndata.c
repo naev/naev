@@ -103,8 +103,8 @@ static void ndata_testVersion( void )
    buf = ndata_read( "VERSION", &size );
    for ( size_t i = 0; i < MIN( size, PATH_MAX - 1 ); i++ )
       cbuf[i] = buf[i];
-   cbuf[MIN( size - 1, PATH_MAX - 1 )] = '\0';
-   diff                                = naev_versionCompare( cbuf );
+   cbuf[MIN( size, PATH_MAX - 1 )] = '\0';
+   diff                            = naev_versionCompare( cbuf );
    if ( diff != 0 ) {
       WARN( _( "ndata version inconsistency with this version of Naev!" ) );
       WARN( _( "Expected ndata version %s got %s." ), naev_version( 0 ), cbuf );
