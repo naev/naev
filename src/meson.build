@@ -3,6 +3,7 @@
 ####
 source_rust = files(
    'array.rs',
+   'camera.rs',
    'damagetype.rs',
    'env.rs',
    'gettext.rs',
@@ -15,6 +16,7 @@ source_rust = files(
    'ntime.rs',
    'nxml.rs',
    'physfs.rs',
+   'physics.rs',
    'rng.rs',
    'slots.rs',
    'start.rs',
@@ -26,7 +28,6 @@ source = files(
    'background.c',
    'base64.c',
    'board.c',
-   'camera.c',
    'claim.c',
    'collision.c',
    'colour.c',
