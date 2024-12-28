@@ -124,13 +124,14 @@ impl Camera {
             unsafe { (naevc::dt_mod, naevc::conf.zoom_far, naevc::conf.zoom_near) };
 
         /* Gradually zoom in/out. */
-        let mut d = (self.zoom_target - self.zoom).clamp(-self.zoom_speed, self.zoom_speed);
-        d *= dt / dt_mod; /* Remove dt dependence. */
-        if d < 0. {
+        let mut dz = (self.zoom_target - self.zoom).clamp(-self.zoom_speed, self.zoom_speed);
+        dz *= dt / dt_mod; /* Remove dt dependence. */
+        if dz < 0. {
             /* Speed up if needed. */
-            d *= 2.;
+            dz *= 2.;
         }
-        self.zoom = (self.zoom + d).clamp(zoom_far, zoom_near);
+        self.zoom += dz;
+        self.zoom = self.zoom.clamp(zoom_far, zoom_near);
     }
 
     fn update_pilot_zoom(
@@ -231,7 +232,9 @@ impl Camera {
         if dz < 0. {
             dz *= 2.;
         }
-        self.zoom = (z + dz).clamp(zfar, znear);
+        dbg!(z, tz, dz, zfar, znear);
+        self.zoom += dz;
+        self.zoom = self.zoom.clamp(zfar, znear);
     }
 
     fn update_pilot(&mut self, follow: *mut naevc::Pilot, dt: f64) {
