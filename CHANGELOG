@@ -3,6 +3,7 @@
       * 1 new mission
    * Sensor anomalies now appear in the on-screen display
    * Fixed texture interpolation when alpha is 0 for pixels
+   * Fixed adding commodities to space objects via tech groups
 
 * 0.12.1
    * Fixed psychic orbs having trails

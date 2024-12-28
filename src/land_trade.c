@@ -153,8 +153,10 @@ static void commodity_exchange_genList( unsigned int wid )
    iw = 565 + ( w - LAND_WIDTH );
    ih = h - 60;
 
-   /* goods list */
-   int ngoods = array_size( land_spob->commodities );
+   Commodity **tech = tech_getCommodity( land_spob->tech );
+
+   /* Goods list */
+   int ngoods = array_size( land_spob->commodities ) + array_size( tech );
 
    if ( exists ) {
       toolkit_saveImageArrayData( wid, "iarTrade", &idat );
@@ -192,14 +194,23 @@ static void commodity_exchange_genList( unsigned int wid )
          j++;
       }
 
-      /* Then add default. */
-      for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-         const Commodity *com = land_spob->commodities[i];
-         ;
+      /* Next add local specialties. */
+      for ( int i = 0; i < array_size( tech ); i++ ) {
+         Commodity *com     = tech[i];
          cgoods[j].image    = gl_dupTexture( com->gfx_store );
          cgoods[j].caption  = strdup( _( com->name ) );
          cgoods[j].quantity = pfleet_cargoOwned( com );
-         commodity_list[j]  = land_spob->commodities[i];
+         commodity_list[j]  = com;
+         j++;
+      }
+
+      /* Then add default. */
+      for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
+         Commodity *com     = land_spob->commodities[i];
+         cgoods[j].image    = gl_dupTexture( com->gfx_store );
+         cgoods[j].caption  = strdup( _( com->name ) );
+         cgoods[j].quantity = pfleet_cargoOwned( com );
+         commodity_list[j]  = com;
          j++;
       }
    } else {
@@ -226,6 +237,8 @@ static void commodity_exchange_genList( unsigned int wid )
 
    if ( exists )
       toolkit_loadImageArrayData( wid, "iarTrade", &idat );
+
+   array_free( tech );
 }
 
 void commodity_exchange_cleanup( void )
