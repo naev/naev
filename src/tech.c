@@ -646,6 +646,12 @@ static void **tech_addGroupItemPrice( void **items, double **price,
       for ( int j = 0; j < array_size( items ); j++ ) {
          if ( items[j] == item->u.ptr ) {
             f = 1;
+            /* Overwrite price if it's not 1. */
+            if ( price != NULL ) {
+               if ( fabs( item->price_mod - 1. ) > 1e-8 ) {
+                  ( *price )[j] = item->price_mod;
+               }
+            }
             break;
          }
       }
