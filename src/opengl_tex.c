@@ -22,6 +22,35 @@
 #include "nfile.h"
 #include "opengl.h"
 
+/**
+ * @brief Abstraction for rendering sprite sheets.
+ *
+ * The basic unit all the graphic rendering works with.
+ */
+typedef struct glTexture {
+   char *name; /**< name of the graphic */
+
+   /* dimensions */
+   double w; /**< Real width of the image. */
+   double h; /**< Real height of the image. */
+
+   /* sprites */
+   double sx;  /**< Number of sprites on the x axis. */
+   double sy;  /**< Number of sprites on the y axis. */
+   double sw;  /**< Width of a sprite. */
+   double sh;  /**< Height of a sprite. */
+   double srw; /**< Sprite render width - equivalent to sw/w. */
+   double srh; /**< Sprite render height - equivalent to sh/h. */
+
+   /* data */
+   GLuint   texture; /**< the opengl texture itself */
+   uint8_t *trans;   /**< maps the transparency */
+   double   vmax;    /**< Maximum value for SDF textures. */
+
+   /* properties */
+   uint8_t flags; /**< flags used for texture properties */
+} glTexture;
+
 /*
  * graphic list
  */
@@ -1070,4 +1099,29 @@ glTexture **gl_addTexArray( glTexture **tex, glTexture *t )
       tex = array_create_size( glTexture *, 1 );
    array_push_back( &tex, t );
    return tex;
+}
+
+double tex_w( const glTexture *tex )
+{
+   return tex->w;
+}
+double tex_h( const glTexture *tex )
+{
+   return tex->h;
+}
+double tex_sw( const glTexture *tex )
+{
+   return tex_sw( tex );
+}
+double tex_sh( const glTexture *tex )
+{
+   return tex_sh( tex );
+}
+double tex_sx( const glTexture *tex )
+{
+   return tex_sx( tex );
+}
+double tex_sy( const glTexture *tex )
+{
+   return tex_sy( tex );
 }
