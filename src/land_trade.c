@@ -26,12 +26,17 @@
 #include "space.h"
 #include "toolkit.h"
 
+typedef struct CommodityItem {
+   Commodity *com;
+   double     price_mod;
+} CommodityItem;
+
 /*
  * Quantity to buy on one click
  */
 static int commodity_mod =
    10; /**< Amount you can buy or sell in a single click. */
-static Commodity **commodity_list = NULL;
+static CommodityItem *commodity_list = NULL; /* Array.h */
 
 /* Prototypes. */
 static void commodity_exchange_genList( unsigned int wid );
@@ -143,7 +148,7 @@ static void commodity_exchange_genList( unsigned int wid )
    iar_data_t      idat;
    int             exists = widget_exists( wid, "iarTrade" );
    ImageArrayCell *cgoods;
-   int             w, h, iw, ih, j, iconsize;
+   int             w, h, iw, ih, iconsize, ngoods;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -153,15 +158,19 @@ static void commodity_exchange_genList( unsigned int wid )
    iw = 565 + ( w - LAND_WIDTH );
    ih = h - 60;
 
-   /* goods list */
-   int ngoods = array_size( land_spob->commodities );
+   double     *prices;
+   Commodity **tech = tech_getCommodity( land_spob->tech, &prices );
 
    if ( exists ) {
       toolkit_saveImageArrayData( wid, "iarTrade", &idat );
       window_destroyWidget( wid, "iarTrade" );
    }
 
-   /* Count always sellable goods. */
+   if ( commodity_list != NULL )
+      array_free( commodity_list );
+   commodity_list = array_create( CommodityItem );
+
+   /* First add special sellable. */
    PilotCommodity *pclist = pfleet_cargoList();
    for ( int i = 0; i < array_size( pclist ); i++ ) {
       PilotCommodity *pc = &pclist[i];
@@ -169,44 +178,72 @@ static void commodity_exchange_genList( unsigned int wid )
          continue;
       if ( !commodity_isFlag( pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL ) )
          continue;
-      ngoods++;
+      CommodityItem item = {
+         .com       = (Commodity *)pc->commodity,
+         .price_mod = 1.,
+      };
+      array_push_back( &commodity_list, item );
    }
+
+   /* Next add local specialties. */
+   for ( int i = 0; i < array_size( tech ); i++ ) {
+      Commodity *com = tech[i];
+      /* Ignore if already in the list. */
+      int found = 0;
+      for ( int k = 0; k < array_size( commodity_list ); k++ ) {
+         if ( com == commodity_list[k].com ) {
+            if ( FABS( prices[i] - 1. ) > DOUBLE_TOL )
+               commodity_list[k].price_mod =
+                  prices[i]; /* Overwrite if necessary. */
+            found = 1;
+            break;
+         }
+      }
+      if ( found )
+         continue;
+      CommodityItem item = {
+         .com       = com,
+         .price_mod = prices[i],
+      };
+      array_push_back( &commodity_list, item );
+   }
+
+   /* Then add default. */
+   for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
+      Commodity *com = land_spob->commodities[i];
+      /* Ignore if already in the list. */
+      int found = 0;
+      for ( int k = 0; k < array_size( commodity_list ); k++ ) {
+         if ( com == commodity_list[k].com ) {
+            found = 1;
+            break;
+         }
+      }
+      if ( found )
+         continue;
+      CommodityItem item = {
+         .com       = com,
+         .price_mod = 1.,
+      };
+      array_push_back( &commodity_list, item );
+   }
+
+   /* Now create the goods. */
+   ngoods = array_size( commodity_list );
    if ( ngoods > 0 ) {
       cgoods = calloc( ngoods, sizeof( ImageArrayCell ) );
-      if ( commodity_list != NULL )
-         free( commodity_list );
-      commodity_list = malloc( ngoods * sizeof( Commodity * ) );
-      j              = 0;
-
-      /* First add special sellable. */
-      for ( int i = 0; i < array_size( pclist ); i++ ) {
-         PilotCommodity *pc = &pclist[i];
-         if ( pc->id > 0 ) /* Ignore mission stuff. */
-            continue;
-         if ( !commodity_isFlag( pc->commodity,
-                                 COMMODITY_FLAG_ALWAYS_CAN_SELL ) )
-            continue;
-         cgoods[j].image   = gl_dupTexture( pc->commodity->gfx_store );
-         cgoods[j].caption = strdup( _( pc->commodity->name ) );
-         commodity_list[j] = (Commodity *)pc->commodity;
-         j++;
-      }
-
-      /* Then add default. */
-      for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-         const Commodity *com = land_spob->commodities[i];
-         ;
-         cgoods[j].image    = gl_dupTexture( com->gfx_store );
-         cgoods[j].caption  = strdup( _( com->name ) );
-         cgoods[j].quantity = pfleet_cargoOwned( com );
-         commodity_list[j]  = land_spob->commodities[i];
-         j++;
+      for ( int i = 0; i < ngoods; i++ ) {
+         const Commodity *com = commodity_list[i].com;
+         cgoods[i].image      = gl_dupTexture( com->gfx_store );
+         cgoods[i].caption    = strdup( _( com->name ) );
+         cgoods[i].quantity   = pfleet_cargoOwned( com );
       }
    } else {
       ngoods            = 1;
       cgoods            = calloc( ngoods, sizeof( ImageArrayCell ) );
       cgoods[0].image   = NULL;
       cgoods[0].caption = strdup( _( "None" ) );
+      commodity_list    = NULL;
    }
    array_free( pclist );
 
@@ -226,11 +263,13 @@ static void commodity_exchange_genList( unsigned int wid )
 
    if ( exists )
       toolkit_loadImageArrayData( wid, "iarTrade", &idat );
+
+   array_free( tech );
 }
 
 void commodity_exchange_cleanup( void )
 {
-   free( commodity_list );
+   array_free( commodity_list );
    commodity_list = NULL;
 }
 
@@ -258,7 +297,7 @@ void commodity_update( unsigned int wid, const char *str )
    cargo_free = pfleet_cargoFree();
    tonnes2str( buf_tonnes_free, cargo_free );
 
-   if ( i < 0 || array_size( land_spob->commodities ) == 0 ) {
+   if ( i < 0 || array_size( commodity_list ) == 0 ) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( "N/A" ) );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_tonnes_free );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_credits );
@@ -272,7 +311,8 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   com = commodity_list[i];
+   com              = commodity_list[i].com;
+   double price_mod = commodity_list[i].price_mod;
 
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 192, 192 );
@@ -290,7 +330,8 @@ void commodity_update( unsigned int wid, const char *str )
    owned                 = pfleet_cargoOwned( com );
    if ( owned > 0 )
       credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
-   credits2str( buf_local_price, spob_commodityPrice( land_spob, com ), -1 );
+   credits2str( buf_local_price,
+                price_mod * spob_commodityPrice( land_spob, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", buf_tonnes_owned );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_tonnes_free );
@@ -329,7 +370,7 @@ void commodity_update( unsigned int wid, const char *str )
       window_modifyText( wid, "txtDRef", NULL );
 
    /* Button enabling/disabling */
-   if ( commodity_canBuy( com ) )
+   if ( commodity_canBuy( com, price_mod ) )
       window_enableButton( wid, "btnCommodityBuy" );
    else
       window_disableButtonSoft( wid, "btnCommodityBuy" );
@@ -343,7 +384,7 @@ void commodity_update( unsigned int wid, const char *str )
 /**
  * @brief Checks to see if the player can buy a commodity.
  */
-int commodity_canBuy( const Commodity *com )
+int commodity_canBuy( const Commodity *com, double price_mod )
 {
    int          failure, incommodities;
    unsigned int q, price;
@@ -352,7 +393,7 @@ int commodity_canBuy( const Commodity *com )
    land_errClear();
    failure = 0;
    q       = commodity_getMod();
-   price   = spob_commodityPrice( land_spob, com ) * q;
+   price   = spob_commodityPrice( land_spob, com ) * q * price_mod;
 
    if ( !player_hasCredits( price ) ) {
       credits2str( buf, price - player.p->credits, 2 );
@@ -365,8 +406,8 @@ int commodity_canBuy( const Commodity *com )
    }
 
    incommodities = 0;
-   for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-      if ( land_spob->commodities[i] == com ) {
+   for ( int i = 0; i < array_size( commodity_list ); i++ ) {
+      if ( commodity_list[i].com == com ) {
          incommodities = 1;
          break;
       }
@@ -410,11 +451,11 @@ void commodity_buy( unsigned int wid, const char *str )
    /* Get selected. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = commodity_list[i];
-   price = spob_commodityPrice( land_spob, com );
+   com   = commodity_list[i].com;
+   price = spob_commodityPrice( land_spob, com ) * commodity_list[i].price_mod;
 
    /* Check stuff. */
-   if ( !commodity_canBuy( com ) ) {
+   if ( !commodity_canBuy( com, commodity_list[i].price_mod ) ) {
       land_errDisplay();
       return;
    }
@@ -455,8 +496,8 @@ void commodity_sell( unsigned int wid, const char *str )
    /* Get parameters. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = commodity_list[i];
-   price = spob_commodityPrice( land_spob, com );
+   com   = commodity_list[i].com;
+   price = spob_commodityPrice( land_spob, com ) * commodity_list[i].price_mod;
 
    /* Check stuff. */
    if ( !commodity_canSell( com ) ) {

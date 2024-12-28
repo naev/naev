@@ -33,7 +33,7 @@ An overview of all the ship classes is shown below:
     * **Carrier**: fighter bay-based extremely large ship (size 6)
 
 Note that it is also possible to give custom class names. For example, you can have a ship be of class `Yacht`, yet show the class name as `Luxury Yacht` in-game.
-The only thing that mattes from the ship class is the internal size which is use in different computations.
+The only thing that matters from the ship class is the internal size which is used in different computations.
 
 ## Ship XML
 
