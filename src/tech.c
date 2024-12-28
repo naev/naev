@@ -41,8 +41,9 @@ typedef enum tech_item_type_e {
  * @brief Item contained in a tech group.
  */
 typedef struct tech_item_s {
-   tech_item_type_t type;   /**< Type of data. */
-   double           chance; /**< For probalistic versions. */
+   tech_item_type_t type;      /**< Type of data. */
+   double           chance;    /**< For probalistic versions. */
+   double           price_mod; /**< Relative price modifier. */
    union {
       void         *ptr; /**< Pointer when needing to do indifferent voodoo. */
       const Outfit *outfit;       /**< Outfit pointer. */
@@ -333,6 +334,7 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
          } else
             itm = NULL;
          xmlr_attr_float_def( node, "chance", itm->chance, -1. );
+         xmlr_attr_float_def( node, "price_mod", itm->price_mod, 1. );
          free( buf );
          continue;
       }
@@ -669,6 +671,59 @@ static void **tech_addGroupItem( void **items, tech_item_type_t type,
 
    return items;
 }
+static void **tech_addGroupItemPrice( void **items, double **price,
+                                      tech_item_type_t    type,
+                                      const tech_group_t *tech )
+{
+   /* Set up. */
+   int size = array_size( tech->items );
+
+   /* Handle specified type. */
+   for ( int i = 0; i < size; i++ ) {
+      int          f;
+      tech_item_t *item = &tech->items[i];
+
+      /* Only care about type. */
+      if ( item->type != type )
+         continue;
+
+      /* Skip if already in list. */
+      f = 0;
+      for ( int j = 0; j < array_size( items ); j++ ) {
+         if ( items[j] == item->u.ptr ) {
+            f = 1;
+            break;
+         }
+      }
+      if ( f == 1 )
+         continue;
+
+      /* Check chance. */
+      if ( ( item->chance > 0. ) && ( RNGF() < item->chance ) )
+         continue;
+
+      /* Add. */
+      if ( items == NULL )
+         items = array_create( void * );
+      array_push_back( &items, item->u.ptr );
+      if ( price != NULL )
+         array_push_back( price, item->price_mod );
+   }
+
+   /* Now handle other groups. */
+   for ( int i = 0; i < size; i++ ) {
+      tech_item_t *item = &tech->items[i];
+
+      /* Only handle commodities for now. */
+      if ( item->type == TECH_TYPE_GROUP )
+         items = tech_addGroupItemPrice( items, price, type,
+                                         &tech_groups[item->u.grp] );
+      else if ( item->type == TECH_TYPE_GROUP_POINTER )
+         items = tech_addGroupItemPrice( items, price, type, item->u.grpptr );
+   }
+
+   return items;
+}
 
 /**
  * @brief Checks whether a given tech group has the specified item.
@@ -926,50 +981,33 @@ Ship **tech_getShipArray( tech_group_t **tech, int num )
 }
 
 /**
- * @brief Gets the ships from an array of techs.
- *
- * @note The returned list must be freed (but not the pointers).
- *
- *    @param tech Array of techs to get from.
- *    @param num Number of elements in the array.
- *    @return Array (array.h): Commodities found.
- */
-Commodity **tech_getCommodityArray( tech_group_t **tech, int num )
-{
-   tech_group_t grp;
-   Commodity  **c;
-
-   if ( tech == NULL )
-      return NULL;
-
-   tech_createMetaGroup( &grp, tech, num );
-   c = tech_getCommodity( &grp );
-   tech_freeGroup( &grp );
-
-   return c;
-}
-
-/**
- * @brief Gets all of the ships associated to a tech group.
+ * @brief Gets all of the commodities associated to a tech group.
  *
  * @note The returned array must be freed (but not the pointers).
  *
- *    @param tech Tech group to get list of ships from.
+ *    @param tech Tech group to get list of commodities from.
+ *    @param[out] price Array of prices.
  *    @return Array (array.h): The commodities found.
  */
-Commodity **tech_getCommodity( const tech_group_t *tech )
+Commodity **tech_getCommodity( const tech_group_t *tech, double **price )
 {
-   Commodity **c;
-
    if ( tech == NULL )
       return NULL;
 
+   double *pricelist = ( price == NULL ) ? NULL : array_create( double );
+
    /* Get the commodities. */
-   c = (Commodity **)tech_addGroupItem( NULL, TECH_TYPE_COMMODITY, tech );
+   Commodity **c = (Commodity **)tech_addGroupItemPrice(
+      NULL, &pricelist, TECH_TYPE_COMMODITY, tech );
 
    /* Sort. */
-   if ( c != NULL )
+   if ( ( c != NULL ) &&
+        ( price == NULL ) ) /* Don't sort when asking for price, or pricelist
+                               desyncs... */
       qsort( c, array_size( c ), sizeof( Commodity * ), commodity_compareTech );
+
+   if ( price != NULL )
+      *price = pricelist;
 
    return c;
 }
