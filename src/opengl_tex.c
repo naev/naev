@@ -1161,3 +1161,10 @@ unsigned int tex_flags( const glTexture *tex )
 {
    return tex->flags;
 }
+void tex_setVFLIP( glTexture *tex, int flip )
+{
+   if ( flip )
+      tex->flags |= OPENGL_TEX_VFLIP;
+   else
+      tex->flags &= ~OPENGL_TEX_VFLIP;
+}

@@ -360,7 +360,7 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       int        sx, sy;
 
       glcomm = gl_newImage( s->gfx_comm, 0 );
-      glcomm->flags &= ~OPENGL_TEX_VFLIP;
+      tex_setVFLIP( glcomm, 0 );
 
       scale = MIN( size / tex_w( glcomm ), size / tex_h( glcomm ) );
       w     = scale * tex_w( glcomm );
@@ -407,7 +407,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
 
    snprintf( buf, sizeof( buf ), "%s_fbo_gfx_store_%d", s->name, size );
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
-   gltex->flags |= OPENGL_TEX_VFLIP;
+   tex_setVFLIP( gltex, 1 );
 
    return gltex;
 }
@@ -482,7 +482,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
 
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->gfx_comm, size );
       glcomm = gl_newImage( s->gfx_comm, 0 );
-      glcomm->flags &= ~OPENGL_TEX_VFLIP;
+      tex_setVFLIP( glcomm, 0 );
 
       scale = MIN( size / tex_w( glcomm ), size / tex_h( glcomm ) );
       w     = scale * tex_w( glcomm );
@@ -501,7 +501,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    gl_contextUnset();
 
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
-   gltex->flags |= OPENGL_TEX_VFLIP;
+   tex_setVFLIP( gltex, 1 );
 
    return gltex;
 }

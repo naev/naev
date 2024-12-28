@@ -102,3 +102,4 @@ GLuint       tex_tex( const glTexture *tex );
 unsigned int tex_flags( const glTexture *tex );
 double       tex_vmax( const glTexture *tex );
 void         tex_setTex( glTexture *tex, GLuint texture );
+void         tex_setVFLIP( glTexture *tex, int flip );
