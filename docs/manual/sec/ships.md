@@ -85,7 +85,9 @@ Each ship is represented with a stand alone file that has to be located in `ship
 
 A full example of the $\naev$ starter ship "Llama" is shown below.
 
+``` {=tex}
 \lstinputlisting[language=XML]{../../dat/ships/neutral/llama.xml}
+```
 
 ## Ship Graphics
 
@@ -99,30 +101,36 @@ In particular, the `GFX` string name is sensitive to underscores, and the first 
 
 The base graphics are stored as a spritesheet and start facing right before spinning counter-clockwise. The top-left sprite faces to the right and it rotates across the row first before going down to the next row. The background should be stored in RGBA with a transparent background. An example can be seen in Figure `\ref{fig:llamagfx}`{=tex}.
 
+``` {=tex}
 \begin{figure}[h!]
 \centering
 \colorbox{black}{\includegraphics[width=0.8\linewidth]{images/llama.png}}
 \caption{Example of the ship graphics for the "Llama". Starting from top-left position, and going right first before going down, the ship rotates counter-clockwise and starts facing right. A black background has been added for visibility.}
-`\label{fig:llamagfx}`{=tex}
+\label{fig:llamagfx}
 \end{figure}
+```
 
 The engine glow graphics are similar to the base graphics, but should show engine glow of the ship. This graphic gets used instead of the normal graphic when accelerated with some interpolation to fade on and off. An example is shown in Figure `\ref{fig:llamaenginegfx}`{=tex}.
 
+``` {=tex}
 \begin{figure}[h!]
 \centering
 \colorbox{black}{\includegraphics[width=0.8\linewidth]{images/llamaengine.png}}
 \caption{Example of the engine glow graphics for the "Llama". Notice the yellow glow of the engines. A black background has been added for visibility.}
-`\label{fig:llamaenginegfx}`{=tex}
+\label{fig:llamaenginegfx}
 \end{figure}
+```
 
 The comm graphics should show the ship facing the player and be higher resolution. This image will be shown in large when the player communicates with them. An example is shown in Figure `\ref{fig:llamacommgfx}`{=tex}.
 
+``` {=tex}
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.8\linewidth]{images/llamacomm.png}
 \caption{Example of the comm graphics for the "Llama".}
-`\label{fig:llamacommgfx}`{=tex}
+\label{fig:llamacommgfx}
 \end{figure}
+```
 
 ### Specifying Full Paths
 
