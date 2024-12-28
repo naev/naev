@@ -1149,7 +1149,15 @@ GLuint tex_tex( const glTexture *tex )
 {
    return tex->texture;
 }
+double tex_vmax( const glTexture *tex )
+{
+   return tex->vmax;
+}
 void tex_setTex( glTexture *tex, GLuint texture )
 {
    tex->texture = texture;
+}
+unsigned int tex_flags( const glTexture *tex )
+{
+   return tex->flags;
 }

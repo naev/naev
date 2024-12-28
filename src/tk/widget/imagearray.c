@@ -232,11 +232,11 @@ static void iar_render( Widget *iar, double bx, double by )
 
          /* image */
          if ( cell->image != NULL ) {
-            if ( ( cell->image->sw < iar->dat.iar.iw ) &&
-                 ( cell->image->sh < iar->dat.iar.ih ) ) {
+            if ( ( tex_sw( cell->image ) < iar->dat.iar.iw ) &&
+                 ( tex_sh( cell->image ) < iar->dat.iar.ih ) ) {
                double offx, offy;
-               offx = ( iar->dat.iar.iw - cell->image->sw ) * 0.5;
-               offy = ( iar->dat.iar.ih - cell->image->sh ) * 0.5;
+               offx = ( iar->dat.iar.iw - tex_sw( cell->image ) ) * 0.5;
+               offy = ( iar->dat.iar.ih - tex_sh( cell->image ) ) * 0.5;
                gl_renderStatic( cell->image, xcurs + 5. + offx,
                                 ycurs + gl_smallFont.h + 7. + offy, NULL );
             } else
@@ -274,7 +274,7 @@ static void iar_render( Widget *iar, double bx, double by )
             double sx = xcurs + iar->dat.iar.iw - 10.;
             double sy = ycurs + iar->dat.iar.ih + 2.;
 
-            if ( cell->sloticon->flags & OPENGL_TEX_SDF )
+            if ( tex_isSDF( cell->sloticon ) )
                gl_renderSDF( cell->sloticon, sx, sy, sw, sh, &cWhite, 0., 1. );
             else
                gl_renderScaleAspect( cell->sloticon, sx, sy, sw, sh, NULL );

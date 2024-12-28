@@ -418,8 +418,8 @@ void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle )
 {
-   gl_renderTextureRaw( texture->texture, texture->flags, x, y, w, h, tx, ty,
-                        tw, th, c, angle );
+   gl_renderTextureRaw( tex_tex( texture ), tex_flags( texture ), x, y, w, h,
+                        tx, ty, tw, th, c, angle );
 }
 
 /**
@@ -445,7 +445,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
    glUseProgram( shaders.texturesdf.program );
 
    /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, texture->texture );
+   glBindTexture( GL_TEXTURE_2D, tex_tex( texture ) );
 
    /* Must have colour for now. */
    if ( c == NULL )
@@ -472,10 +472,11 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
     * but we have to actually pad the SDF first... */
    sw      = 0.; // 1./w;
    sh      = 0.; // 1./h;
-   tex_mat = ( texture->flags & OPENGL_TEX_VFLIP )
+   tex_mat = ( tex_flags( texture ) & OPENGL_TEX_VFLIP )
                 ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
                 : mat4_identity();
-   mat4_scale_xy( &tex_mat, texture->srw + 2. * sw, texture->srh + 2. * sh );
+   mat4_scale_xy( &tex_mat, tex_srw( texture ) + 2. * sw,
+                  tex_srh( texture ) + 2. * sh );
    mat4_translate_xy( &tex_mat, -sw, -sh );
 
    /* Set shader uniforms. */
@@ -483,7 +484,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
    gl_uniformMat4( shaders.texturesdf.projection, &projection );
    gl_uniformMat4( shaders.texturesdf.tex_mat, &tex_mat );
    glUniform1f( shaders.texturesdf.m,
-                ( 2.0 * texture->vmax * ( w + 2. ) / texture->w ) );
+                ( 2.0 * tex_vmax( texture ) * ( w + 2. ) / tex_w( texture ) ) );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -588,12 +589,12 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 
    projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
-   tex_mat = ( ta->flags & OPENGL_TEX_VFLIP )
+   tex_mat = ( tex_flags( ta ) & OPENGL_TEX_VFLIP )
                 ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
                 : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   return gl_renderTextureInterpolateRawH( ta->texture, tb->texture, inter,
+   return gl_renderTextureInterpolateRawH( tex_tex( ta ), tex_tex( tb ), inter,
                                            &projection, &tex_mat, c );
 }
 
@@ -696,11 +697,12 @@ void gl_renderSprite( const glTexture *sprite, double bx, double by, int sx,
       return;
 
    /* texture coords */
-   tx = tex_sw( sprite ) * (double)( sx ) / sprite->w;
-   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) / sprite->h;
+   tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
+   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) /
+        tex_h( sprite );
 
-   gl_renderTexture( sprite, x, y, w, h, tx, ty, sprite->srw, sprite->srh, c,
-                     0. );
+   gl_renderTexture( sprite, x, y, w, h, tx, ty, tex_srw( sprite ),
+                     tex_srh( sprite ), c, 0. );
 }
 
 /**
@@ -739,11 +741,12 @@ void gl_renderSpriteScale( const glTexture *sprite, double bx, double by,
       return;
 
    /* texture coords */
-   tx = tex_sw( sprite ) * (double)( sx ) / sprite->w;
-   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) / sprite->h;
+   tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
+   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) /
+        tex_h( sprite );
 
-   gl_renderTexture( sprite, x, y, w, h, tx, ty, sprite->srw, sprite->srh, c,
-                     0. );
+   gl_renderTexture( sprite, x, y, w, h, tx, ty, tex_srw( sprite ),
+                     tex_srh( sprite ), c, 0. );
 }
 
 /**
@@ -780,11 +783,12 @@ void gl_renderSpriteRotate( const glTexture *sprite, double bx, double by,
       return;
 
    /* texture coords */
-   tx = tex_sw( sprite ) * (double)( sx ) / sprite->w;
-   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) / sprite->h;
+   tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
+   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) /
+        tex_h( sprite );
 
-   gl_renderTexture( sprite, x, y, w, h, tx, ty, sprite->srw, sprite->srh, c,
-                     angle );
+   gl_renderTexture( sprite, x, y, w, h, tx, ty, tex_srw( sprite ),
+                     tex_srh( sprite ), c, angle );
 }
 
 /**
@@ -825,11 +829,12 @@ void gl_renderSpriteScaleRotate( const glTexture *sprite, double bx, double by,
       return;
 
    /* texture coords */
-   tx = tex_sw( sprite ) * (double)( sx ) / sprite->w;
-   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) / sprite->h;
+   tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
+   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) /
+        tex_h( sprite );
 
-   gl_renderTexture( sprite, x, y, w, h, tx, ty, sprite->srw, sprite->srh, c,
-                     angle );
+   gl_renderTexture( sprite, x, y, w, h, tx, ty, tex_srw( sprite ),
+                     tex_srh( sprite ), c, angle );
 }
 
 /**
@@ -897,11 +902,11 @@ void gl_renderSpriteInterpolateScale( const glTexture *sa, const glTexture *sb,
       return;
 
    /* texture coords */
-   tx = tex_sw( sa ) * (double)( sx ) / sa->w;
-   ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / sa->h;
+   tx = tex_sw( sa ) * (double)( sx ) / tex_w( sa );
+   ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / tex_h( sa );
 
-   gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h, tx, ty, sa->srw,
-                                sa->srh, c );
+   gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h, tx, ty,
+                                tex_srw( sa ), tex_srh( sa ), c );
 }
 
 /**
@@ -923,12 +928,13 @@ void gl_renderStaticSprite( const glTexture *sprite, double bx, double by,
    y = by;
 
    /* texture coords */
-   tx = tex_sw( sprite ) * (double)( sx ) / sprite->w;
-   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) / sprite->h;
+   tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
+   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) /
+        tex_h( sprite );
 
    /* actual blitting */
-   gl_renderTexture( sprite, x, y, sprite->sw, sprite->sh, tx, ty, sprite->srw,
-                     sprite->srh, c, 0. );
+   gl_renderTexture( sprite, x, y, tex_sw( sprite ), tex_sh( sprite ), tx, ty,
+                     tex_srw( sprite ), tex_srh( sprite ), c, 0. );
 }
 
 /**
@@ -996,11 +1002,11 @@ void gl_renderStaticSpriteInterpolateScale( const glTexture *sa,
       return;
 
    /* texture coords */
-   tx = tex_sw( sa ) * (double)( sx ) / sa->w;
-   ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / sa->h;
+   tx = tex_sw( sa ) * (double)( sx ) / tex_w( sa );
+   ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / tex_h( sa );
 
-   gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h, tx, ty, sa->srw,
-                                sa->srh, c );
+   gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h, tx, ty,
+                                tex_srw( sa ), tex_srh( sa ), c );
 }
 
 /**
@@ -1025,12 +1031,13 @@ void gl_renderScaleSprite( const glTexture *sprite, double bx, double by,
    y = by;
 
    /* texture coords */
-   tx = tex_sw( sprite ) * (double)( sx ) / sprite->w;
-   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) / sprite->h;
+   tx = tex_sw( sprite ) * (double)( sx ) / tex_w( sprite );
+   ty = tex_sh( sprite ) * ( tex_sy( sprite ) - (double)sy - 1 ) /
+        tex_h( sprite );
 
    /* actual blitting */
-   gl_renderTexture( sprite, x, y, bw, bh, tx, ty, sprite->srw, sprite->srh, c,
-                     0. );
+   gl_renderTexture( sprite, x, y, bw, bh, tx, ty, tex_srw( sprite ),
+                     tex_srh( sprite ), c, 0. );
 }
 
 /**
@@ -1056,8 +1063,8 @@ void gl_renderScale( const glTexture *texture, double bx, double by, double bw,
    tx = ty = 0.;
 
    /* Actual blitting. */
-   gl_renderTexture( texture, x, y, bw, bh, tx, ty, texture->srw, texture->srh,
-                     c, 0. );
+   gl_renderTexture( texture, x, y, bw, bh, tx, ty, tex_srw( texture ),
+                     tex_srh( texture ), c, 0. );
 }
 
 /**
@@ -1077,10 +1084,10 @@ void gl_renderScaleAspect( const glTexture *texture, double bx, double by,
    double scale;
    double nw, nh;
 
-   scale = MIN( bw / texture->w, bh / texture->h );
+   scale = MIN( bw / tex_w( texture ), bh / tex_h( texture ) );
 
-   nw = scale * texture->w;
-   nh = scale * texture->h;
+   nw = scale * tex_w( texture );
+   nh = scale * tex_w( texture );
 
    bx += ( bw - nw ) * 0.5;
    by += ( bh - nh ) * 0.5;
@@ -1106,8 +1113,8 @@ void gl_renderStatic( const glTexture *texture, double bx, double by,
    y = by;
 
    /* actual blitting */
-   gl_renderTexture( texture, x, y, texture->sw, texture->sh, 0., 0.,
-                     texture->srw, texture->srh, c, 0. );
+   gl_renderTexture( texture, x, y, tex_sw( texture ), tex_sh( texture ), 0.,
+                     0., tex_srw( texture ), tex_srh( texture ), c, 0. );
 }
 
 /**

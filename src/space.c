@@ -2255,7 +2255,8 @@ void spob_gfxLoad( Spob *spob )
    if ( ( spob->gfx_space3d != NULL ) && ( spob->radius < 0. ) )
       spob->radius = spob->gfx_space3d_size * 0.5;
    if ( ( spob->gfx_space != NULL ) && ( spob->radius < 0. ) )
-      spob->radius = ( spob->gfx_space->w + spob->gfx_space->h ) / 4.;
+      spob->radius =
+         ( tex_w( spob->gfx_space ) + tex_h( spob->gfx_space ) ) / 4.;
 }
 
 /**
@@ -2976,8 +2977,8 @@ void system_reconstructJumps( StarSystem *sys )
          vec2_pset( &jp->pos, sys->radius, a );
 
       /* Update jump specific data. */
-      gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx->sx,
-                           jumppoint_gfx->sy, a );
+      gl_getSpriteFromDir( &jp->sx, &jp->sy, tex_sx( jumppoint_gfx ),
+                           tex_sy( jumppoint_gfx ), a );
       jp->angle = 2. * M_PI - a;
       jp->cosa  = cos( jp->angle );
       jp->sina  = sin( jp->angle );

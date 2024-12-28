@@ -1457,14 +1457,14 @@ static void weapon_update( Weapon *w, double dt )
          if ( w->sprite >= tex_sx( tex ) * tex_sy( tex ) )
             w->sprite = 0;
 
-         tex_sx( w ) = w->sprite % (int)tex->sx;
-         tex_sy( w ) = w->sprite / (int)tex->sx;
+         w->sx = w->sprite % (int)tex_sx( tex );
+         w->sy = w->sprite / (int)tex_sy( tex );
       }
    } else if ( fabs( odir - w->solid.dir ) > DOUBLE_TOL ) {
       const OutfitGFX *gfx = outfit_gfx( w->outfit );
       if ( ( gfx != NULL ) && ( gfx->tex != NULL ) )
-         gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex->sx, gfx->tex->sy,
-                              w->solid.dir );
+         gl_getSpriteFromDir( &w->sx, &w->sy, tex_sx( gfx->tex ),
+                              tex_sy( gfx->tex ), w->solid.dir );
    }
 
    /* Update the sound. */
@@ -2404,8 +2404,8 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
    if ( gfx->tex != NULL )
-      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex->sx, gfx->tex->sy,
-                           w->solid.dir );
+      gl_getSpriteFromDir( &w->sx, &w->sy, tex_sx( gfx->tex ),
+                           tex_sy( gfx->tex ), w->solid.dir );
 }
 
 /**
@@ -2507,8 +2507,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
    if ( gfx->tex != NULL )
-      gl_getSpriteFromDir( &w->sx, &w->sy, gfx->tex->sx, gfx->tex->sy,
-                           w->solid.dir );
+      gl_getSpriteFromDir( &w->sx, &w->sy, tex_sx( gfx->tex ),
+                           tex_sy( gfx->tex ), w->solid.dir );
 
    /* Set up trails. */
    if ( w->outfit->u.lau.trail_spec != NULL )

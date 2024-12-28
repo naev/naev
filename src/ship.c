@@ -362,14 +362,16 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       glcomm = gl_newImage( s->gfx_comm, 0 );
       glcomm->flags &= ~OPENGL_TEX_VFLIP;
 
-      scale = MIN( size / glcomm->w, size / glcomm->h );
-      w     = scale * glcomm->w;
-      h     = scale * glcomm->h;
+      scale = MIN( size / tex_w( glcomm ), size / tex_h( glcomm ) );
+      w     = scale * tex_w( glcomm );
+      h     = scale * tex_h( glcomm );
       gl_getSpriteFromDir( &sx, &sy, s->sx, s->sy, dir );
-      tx = tex_sw( glcomm ) * (double)( sx ) / glcomm->w;
-      ty = tex_sh( glcomm ) * ( tex_sy( glcomm ) - (double)sy - 1 ) / glcomm->h;
+      tx = tex_sw( glcomm ) * (double)( sx ) / tex_w( glcomm );
+      ty = tex_sh( glcomm ) * ( tex_sy( glcomm ) - (double)sy - 1 ) /
+           tex_h( glcomm );
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
-                        tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
+                        tx, ty, tex_srw( glcomm ), tex_srh( glcomm ), NULL,
+                        0. );
 
       gl_freeTexture( glcomm );
 
@@ -482,9 +484,9 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       glcomm = gl_newImage( s->gfx_comm, 0 );
       glcomm->flags &= ~OPENGL_TEX_VFLIP;
 
-      scale = MIN( size / glcomm->w, size / glcomm->h );
-      w     = scale * glcomm->w;
-      h     = scale * glcomm->h;
+      scale = MIN( size / tex_w( glcomm ), size / tex_h( glcomm ) );
+      w     = scale * tex_w( glcomm );
+      h     = scale * tex_h( glcomm );
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
                         0., 0., 1., 1., NULL, 0. );
 
@@ -1527,14 +1529,15 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       glDisable( GL_SCISSOR_TEST );
 
       /* Texture coords */
-      tx = tex_sw( sa ) * (double)( sx ) / sa->w;
-      ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / sa->h;
+      tx = tex_sw( sa ) * (double)( sx ) / tex_w( sa );
+      ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / tex_h( sa );
 
       tmpm           = gl_view_matrix;
       gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
 
-      gl_renderTextureInterpolate( sb, sa, engine_glow, 0., 0., sa->sw, sa->sh,
-                                   tx, ty, sa->srw, sa->srh, c );
+      gl_renderTextureInterpolate( sb, sa, engine_glow, 0., 0., tex_sw( sa ),
+                                   tex_sh( sa ), tx, ty, tex_srw( sa ),
+                                   tex_srh( sa ), c );
 
       gl_view_matrix = tmpm;
 

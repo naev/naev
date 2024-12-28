@@ -6972,11 +6972,11 @@ static int pilotL_renderTo( lua_State *L )
    /* TODO handle when effects make the ship render larger than it really is. */
    w = p->ship->size;
    h = p->ship->size;
-   if ( ( lc->tex->w < w ) || ( lc->tex->h < h ) )
+   if ( ( tex_w( lc->tex ) < w ) || ( tex_h( lc->tex ) < h ) )
       NLUA_WARN(
          L,
          _( "Canvas is too small to fully render '%s': %.0f x %.0f < %d x %d" ),
-         p->name, lc->tex->w, lc->tex->h, w, h );
+         p->name, tex_w( lc->tex ), tex_h( lc->tex ), w, h );
 
    /* The code path below is really buggy.
     * 1. engine_glow seems to scale 3D models improperly when interpolating, so

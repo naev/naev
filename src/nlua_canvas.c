@@ -226,7 +226,7 @@ static int canvasL_set( lua_State *L )
       }
       gl_screen.current_fbo = lc->fbo;
       glDisable( GL_SCISSOR_TEST );
-      glViewport( 0, 0, lc->tex->w, lc->tex->h );
+      glViewport( 0, 0, tex_w( lc->tex ), tex_h( lc->tex ) );
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       render_needsReset();
    } else
@@ -245,8 +245,8 @@ static int canvasL_set( lua_State *L )
 static int canvasL_dims( lua_State *L )
 {
    const LuaCanvas_t *lc = luaL_checkcanvas( L, 1 );
-   lua_pushnumber( L, lc->tex->w );
-   lua_pushnumber( L, lc->tex->h );
+   lua_pushnumber( L, tex_w( lc->tex ) );
+   lua_pushnumber( L, tex_h( lc->tex ) );
    return 2;
 }
 
