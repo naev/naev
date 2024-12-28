@@ -232,7 +232,6 @@ impl Camera {
         if dz < 0. {
             dz *= 2.;
         }
-        dbg!(z, tz, dz, zfar, znear);
         self.zoom += dz;
         self.zoom = self.zoom.clamp(zfar, znear);
     }
@@ -325,7 +324,7 @@ pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
 #[no_mangle]
 pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.zoom = zoom
+    cam.zoom_target = zoom
         .clamp(naevc::conf.zoom_far, naevc::conf.zoom_near)
         .into();
     cam.zoom_speed = speed.into();
