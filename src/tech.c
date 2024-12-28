@@ -93,6 +93,9 @@ static tech_item_t *tech_addItemGroup( tech_group_t *grp, const char *name );
 /* Getting by tech. */
 static void **tech_addGroupItem( void **items, tech_item_type_t type,
                                  const tech_group_t *tech );
+static void **tech_addGroupItemPrice( void **items, double **pricelist,
+                                      tech_item_type_t    type,
+                                      const tech_group_t *tech );
 
 static int tech_cmp( const void *p1, const void *p2 )
 {
@@ -622,55 +625,6 @@ static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech,
  * @brief Recursive function for creating an array of commodities from a tech
  * group.
  */
-static void **tech_addGroupItem( void **items, tech_item_type_t type,
-                                 const tech_group_t *tech )
-{
-   /* Set up. */
-   int size = array_size( tech->items );
-
-   /* Handle specified type. */
-   for ( int i = 0; i < size; i++ ) {
-      int          f;
-      tech_item_t *item = &tech->items[i];
-
-      /* Only care about type. */
-      if ( item->type != type )
-         continue;
-
-      /* Skip if already in list. */
-      f = 0;
-      for ( int j = 0; j < array_size( items ); j++ ) {
-         if ( items[j] == item->u.ptr ) {
-            f = 1;
-            break;
-         }
-      }
-      if ( f == 1 )
-         continue;
-
-      /* Check chance. */
-      if ( ( item->chance > 0. ) && ( RNGF() < item->chance ) )
-         continue;
-
-      /* Add. */
-      if ( items == NULL )
-         items = array_create( void * );
-      array_push_back( &items, item->u.ptr );
-   }
-
-   /* Now handle other groups. */
-   for ( int i = 0; i < size; i++ ) {
-      tech_item_t *item = &tech->items[i];
-
-      /* Only handle commodities for now. */
-      if ( item->type == TECH_TYPE_GROUP )
-         items = tech_addGroupItem( items, type, &tech_groups[item->u.grp] );
-      else if ( item->type == TECH_TYPE_GROUP_POINTER )
-         items = tech_addGroupItem( items, type, item->u.grpptr );
-   }
-
-   return items;
-}
 static void **tech_addGroupItemPrice( void **items, double **price,
                                       tech_item_type_t    type,
                                       const tech_group_t *tech )
@@ -723,6 +677,11 @@ static void **tech_addGroupItemPrice( void **items, double **price,
    }
 
    return items;
+}
+static void **tech_addGroupItem( void **items, tech_item_type_t type,
+                                 const tech_group_t *tech )
+{
+   return tech_addGroupItemPrice( items, NULL, type, tech );
 }
 
 /**
