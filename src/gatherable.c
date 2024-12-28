@@ -92,8 +92,8 @@ int gatherable_init( const Commodity *com, const vec2 *pos, const vec2 *vel,
    g->vel         = *vel;
    g->timer       = 0.;
    g->quantity    = qtt;
-   g->sx          = RNG( 0, com->gfx_space->sx - 1 );
-   g->sy          = RNG( 0, com->gfx_space->sy - 1 );
+   g->sx          = RNG( 0, tex_sx( com->gfx_space ) - 1 );
+   g->sy          = RNG( 0, tex_sy( com->gfx_space ) - 1 );
    g->player_only = player_only;
 
    if ( lifeleng < 0. )

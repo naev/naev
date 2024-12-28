@@ -266,7 +266,7 @@ void ovr_refresh( void )
                                           : _( "Unknown" ) );
       pos[items]            = &jp->pos;
       mo[items]             = &jp->mo;
-      mo[items]->radius     = jumppoint_gfx->sw / 2.;
+      mo[items]->radius     = tex_sw( jumppoint_gfx ) / 2.;
       mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, buf );
       items++;
    }

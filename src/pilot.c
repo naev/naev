@@ -2253,11 +2253,12 @@ void pilot_renderOverlay( Pilot *p )
          int sx = (int)ico_hail->sx;
 
          /* Render. */
-         gl_renderSprite(
-            ico_hail,
-            p->solid.pos.x + PILOT_SIZE_APPROX * sw / 2. + ico_hail->sw / 4.,
-            p->solid.pos.y + PILOT_SIZE_APPROX * sh / 2. + ico_hail->sh / 4.,
-            p->hail_pos % sx, p->hail_pos / sx, NULL );
+         gl_renderSprite( ico_hail,
+                          p->solid.pos.x + PILOT_SIZE_APPROX * sw / 2. +
+                             tex_sw( ico_hail ) / 4.,
+                          p->solid.pos.y + PILOT_SIZE_APPROX * sh / 2. +
+                             tex_sh( ico_hail ) / 4.,
+                          p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }
 

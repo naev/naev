@@ -1454,11 +1454,11 @@ static void weapon_update( Weapon *w, double dt )
 
          /* Increment sprite. */
          w->sprite++;
-         if ( w->sprite >= tex->sx * tex->sy )
+         if ( w->sprite >= tex_sx( tex ) * tex_sy( tex ) )
             w->sprite = 0;
 
-         w->sx = w->sprite % (int)tex->sx;
-         w->sy = w->sprite / (int)tex->sx;
+         tex_sx( w ) = w->sprite % (int)tex->sx;
+         tex_sy( w ) = w->sprite / (int)tex->sx;
       }
    } else if ( fabs( odir - w->solid.dir ) > DOUBLE_TOL ) {
       const OutfitGFX *gfx = outfit_gfx( w->outfit );

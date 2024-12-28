@@ -1468,7 +1468,7 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    if ( array_size( gfx->polygon.views ) == 0 )
       flags |= OPENGL_TEX_MAPTRANS;
    gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH "space/%s", 6, 6, flags );
-   gfx->size = ( gfx->tex->sw + gfx->tex->sh ) * 0.5;
+   gfx->size = ( tex_sw( gfx->tex ) + tex_sh( gfx->tex ) ) * 0.5;
 
    /* See if there is a collision size, or an override. */
    char *col;

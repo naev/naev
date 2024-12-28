@@ -87,9 +87,16 @@ glTexture **gl_copyTexArray( glTexture **tex );
 glTexture **gl_addTexArray( glTexture **tex, glTexture *t );
 
 /* Transition getters. */
-double tex_w( const glTexture *tex );
-double tex_h( const glTexture *tex );
-double tex_sw( const glTexture *tex );
-double tex_sh( const glTexture *tex );
-double tex_sx( const glTexture *tex );
-double tex_sy( const glTexture *tex );
+const char *tex_name( const glTexture *tex );
+double      tex_w( const glTexture *tex );
+double      tex_h( const glTexture *tex );
+double      tex_sw( const glTexture *tex );
+double      tex_sh( const glTexture *tex );
+double      tex_sx( const glTexture *tex );
+double      tex_sy( const glTexture *tex );
+double      tex_srw( const glTexture *tex );
+double      tex_srh( const glTexture *tex );
+int         tex_isSDF( const glTexture *tex );
+int         tex_hasTrans( const glTexture *tex );
+GLuint      tex_tex( const glTexture *tex );
+void        tex_setTex( const glTexture *tex, GLuint texture );

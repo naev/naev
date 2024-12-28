@@ -424,8 +424,8 @@ static void background_renderImages( background_image_t *bkg_arr )
       rx = ( bkg->x - cx ) * m + gx;
       ry = ( bkg->y - cy ) * m + gy;
       /* Screen coordinates. */
-      y = ry + SCREEN_H / 2. - z * bkg->image->sw / 2.;
-      x = rx + SCREEN_W / 2. - z * bkg->image->sh / 2.;
+      y = ry + SCREEN_H / 2. - z * tex_sw( bkg->image ) / 2.;
+      x = rx + SCREEN_W / 2. - z * tex_sh( bkg->image ) / 2.;
 
       /* TODO speed up by not rendering when offscreen. */
 
@@ -433,9 +433,9 @@ static void background_renderImages( background_image_t *bkg_arr )
       col.g = bkg->col.g * conf.bg_brightness;
       col.b = bkg->col.b * conf.bg_brightness;
       col.a = bkg->col.a;
-      gl_renderTexture( bkg->image, x, y, z * bkg->image->sw,
-                        z * bkg->image->sh, 0., 0., bkg->image->srw,
-                        bkg->image->srh, &col, bkg->angle );
+      gl_renderTexture( bkg->image, x, y, z * tex_sw( bkg->image ),
+                        z * tex_sh( bkg->image ), 0., 0., tex_srw( bkg->image ),
+                        tex_srh( bkg->image ), &col, bkg->angle );
 
       /* See if we have to update scene lighting. */
       if ( bkg->L_idx >= 0 ) {

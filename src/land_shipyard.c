@@ -783,7 +783,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          double sh = 12.;
          double sx = x + 6;
          double sy = by + 6;
-         if ( icon->flags & OPENGL_TEX_SDF )
+         if ( tex_isSDF( icon ) )
             gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
          else
             gl_renderScaleAspect( icon, sx, sy, sw, sh, NULL );

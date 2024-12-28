@@ -1299,8 +1299,10 @@ static void standings_update( unsigned int wid, const char *str )
    y = -40;
    t = faction_logo( info_factions[p] );
    if ( t != NULL ) {
-      int tw = t->w * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
-      int th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
+      int tw =
+         tex_w( t ) * (double)FACTION_LOGO_SM / MAX( tex_w( t ), tex_h( t ) );
+      int th =
+         tex_h( t ) * (double)FACTION_LOGO_SM / MAX( tex_w( t ), tex_h( t ) );
       window_modifyImage( wid, "imgLogo", t, tw, th );
       window_moveWidget( wid, "imgLogo", x + ( FACTION_LOGO_SM - tw ),
                          y - ( FACTION_LOGO_SM - th ) / 2 );

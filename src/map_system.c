@@ -305,10 +305,10 @@ static void map_system_render( double bx, double by, double w, double h,
       else {
          ih = pitch;
          iw = ih;
-         if ( p->gfx_space->w > p->gfx_space->h )
-            ih = ih * p->gfx_space->h / p->gfx_space->w;
-         else if ( p->gfx_space->w < p->gfx_space->h )
-            iw = iw * p->gfx_space->w / p->gfx_space->h;
+         if ( tex_w( p->gfx_space ) > tex_h( p->gfx_space ) )
+            ih = ih * tex_h( p->gfx_space ) / tex_w( p->gfx_space );
+         else if ( tex_w( p->gfx_space ) < tex_h( p->gfx_space ) )
+            iw = iw * tex_w( p->gfx_space ) / tex_h( p->gfx_space );
          gl_renderScale( p->gfx_space, bx + ( pitch - iw ) / 2 + 2,
                          by + ( nshow - vis_index - 1 ) * pitch +
                             ( pitch - ih ) / 2 + offset,
@@ -330,10 +330,13 @@ static void map_system_render( double bx, double by, double w, double h,
          focusedStar %= array_size( starImages );
       }
 
-      if ( starImages[focusedStar]->w > starImages[focusedStar]->h )
-         ih = ih * starImages[focusedStar]->h / starImages[focusedStar]->w;
-      else if ( starImages[focusedStar]->w < starImages[focusedStar]->h )
-         iw = iw * starImages[focusedStar]->w / starImages[focusedStar]->h;
+      if ( tex_w( starImages[focusedStar] ) > tex_h( starImages[focusedStar] ) )
+         ih = ih * tex_h( starImages[focusedStar] ) /
+              tex_w( starImages[focusedStar] );
+      else if ( tex_w( starImages[focusedStar] ) <
+                tex_h( starImages[focusedStar] ) )
+         iw = iw * tex_w( starImages[focusedStar] ) /
+              tex_h( starImages[focusedStar] );
       ccol.r = ccol.g = ccol.b = ccol.a = 1;
       if ( phase > 120 && array_size( starImages ) > 1 )
          ccol.a = cos( ( phase - 121 ) / 30. * M_PI / 2. );
@@ -345,10 +348,10 @@ static void map_system_render( double bx, double by, double w, double h,
          ih = pitch;
          iw = ih;
          i  = ( focusedStar + 1 ) % array_size( starImages );
-         if ( starImages[i]->w > starImages[i]->h )
-            ih = ih * starImages[i]->h / starImages[i]->w;
-         else if ( starImages[i]->w < starImages[i]->h )
-            iw = iw * starImages[i]->w / starImages[i]->h;
+         if ( tex_w( starImages[i] ) > tex_h( starImages[i] ) )
+            ih = ih * tex_h( starImages[i] ) / tex_w( starImages[i] );
+         else if ( tex_w( starImages[i] ) < tex_h( starImages[i] ) )
+            iw = iw * tex_w( starImages[i] ) / tex_h( starImages[i] );
          ccol.a = 1 - ccol.a;
          gl_renderScale( starImages[i], bx + 2,
                          by + ( nshow - 1 ) * pitch + ( pitch - ih ) / 2 +
@@ -371,8 +374,8 @@ static void map_system_render( double bx, double by, double w, double h,
       double imgw, imgh, s;
       iw   = w - 50 - pitch - nameWidth;
       ih   = h;
-      imgw = bgImage->w;
-      imgh = bgImage->h;
+      imgw = tex_w( bgImage );
+      imgh = tex_h( bgImage );
       s    = MIN( iw / imgw, ih / imgh );
       imgw *= s;
       imgh *= s;

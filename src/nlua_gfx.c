@@ -230,16 +230,16 @@ static int gfxL_renderTex( lua_State *L )
 
    /* Some safety checking. */
 #if DEBUGGING
-   if ( sx < 0 || sx >= tex->sx )
+   if ( sx < 0 || sx >= tex_sx( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (X "
                             "position) sprite: %d > %d." ),
-                         tex->name, sx + 1, tex->sx );
-   if ( sy < 0 || sy >= tex->sy )
+                         tex->name, sx + 1, tex_sx( tex ) );
+   if ( sy < 0 || sy >= tex_sy( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (Y "
                             "position) sprite: %d > %d." ),
-                         tex->name, sy + 1, tex->sy );
+                         tex->name, sy + 1, tex_sy( tex ) );
 #endif /* DEBUGGING */
 
    /* Render. */
@@ -290,16 +290,16 @@ static int gfxL_renderTexScale( lua_State *L )
 
    /* Some safety checking. */
 #if DEBUGGING
-   if ( sx >= tex->sx )
+   if ( sx >= tex_sx( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (X "
                             "position) sprite: %d > %d." ),
-                         tex->name, sx + 1, tex->sx );
-   if ( sx >= tex->sx )
+                         tex->name, sx + 1, tex_sx( tex ) );
+   if ( sx >= tex_sx( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (Y "
                             "position) sprite: %d > %d." ),
-                         tex->name, sy + 1, tex->sy );
+                         tex->name, sy + 1, tex_sy( tex ) );
 #endif /* DEBUGGING */
 
    /* Render. */
@@ -360,24 +360,24 @@ static int gfxL_renderTexRaw( lua_State *L )
 
    /* Some safety checking. */
 #if DEBUGGING
-   if ( sx >= t->sx )
+   if ( sx >= tex_sx( t ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (X "
                             "position) sprite: %d > %d." ),
-                         t->name, sx + 1, t->sx );
-   if ( sx >= t->sx )
+                         t->name, sx + 1, tex_sx( t ) );
+   if ( sx >= tex_sx( t ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (Y "
                             "position) sprite: %d > %d." ),
-                         t->name, sy + 1, t->sy );
+                         t->name, sy + 1, tex_sy( t ) );
 #endif /* DEBUGGING */
 
    /* Translate as needed. */
-   tx = ( tx * t->sw + t->sw * (double)( sx ) ) / t->w;
+   tx = ( tx * tex_sw( t ) + t->sw * (double)( sx ) ) / t->w;
    tw = tw * t->srw;
    if ( tw < 0 )
       tx -= tw;
-   ty = ( ty * t->sh + t->sh * ( t->sy - (double)sy - 1 ) ) / t->h;
+   ty = ( ty * tex_sh( t ) + t->sh * ( tex_sy( t ) - (double)sy - 1 ) ) / t->h;
    th = th * t->srh;
    if ( th < 0 )
       ty -= th;

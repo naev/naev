@@ -1101,6 +1101,10 @@ glTexture **gl_addTexArray( glTexture **tex, glTexture *t )
    return tex;
 }
 
+const char *tex_name( const glTexture *tex )
+{
+   return tex->name;
+}
 double tex_w( const glTexture *tex )
 {
    return tex->w;
@@ -1111,17 +1115,41 @@ double tex_h( const glTexture *tex )
 }
 double tex_sw( const glTexture *tex )
 {
-   return tex_sw( tex );
+   return tex->sw;
 }
 double tex_sh( const glTexture *tex )
 {
-   return tex_sh( tex );
+   return tex->sh;
 }
 double tex_sx( const glTexture *tex )
 {
-   return tex_sx( tex );
+   return tex->sx;
 }
 double tex_sy( const glTexture *tex )
 {
-   return tex_sy( tex );
+   return tex->sy;
+}
+double tex_srw( const glTexture *tex )
+{
+   return tex->srw;
+}
+double tex_srh( const glTexture *tex )
+{
+   return tex->srh;
+}
+int tex_isSDF( const glTexture *tex )
+{
+   return tex->flags & OPENGL_TEX_SDF;
+}
+int tex_hasTrans( const glTexture *tex )
+{
+   return tex->trans != NULL;
+}
+GLuint tex_tex( const glTexture *tex )
+{
+   return tex->texture;
+}
+void tex_setTex( glTexture *tex, GLuint texture )
+{
+   tex->texture = texture;
 }

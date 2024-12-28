@@ -1516,10 +1516,10 @@ static void land_createMainTab( unsigned int wid )
    if ( land_spob->presence.faction != -1 ) {
       const glTexture *logo = faction_logo( land_spob->presence.faction );
       if ( logo != NULL ) {
-         int logow =
-            logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
-         int logoh =
-            logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         int logow = tex_w( logo ) * (double)FACTION_LOGO_SM /
+                     MAX( tex_w( logo ), tex_h( logo ) );
+         int logoh = tex_h( logo ) * (double)FACTION_LOGO_SM /
+                     MAX( tex_w( logo ), tex_h( logo ) );
          window_addImage( wid, 440 + ( w - 460 - logow ) / 2, -20, logow, logoh,
                           "imgFaction", logo, 0 );
          offset += FACTION_LOGO_SM;

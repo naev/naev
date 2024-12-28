@@ -312,8 +312,8 @@ void dialogue_msgImgRaw( const char *caption, const char *msg, const char *img,
       return;
 
    /* Find the popup's dimensions from text and image */
-   img_width  = ( width < 0 ) ? gfx->w : width;
-   img_height = ( height < 0 ) ? gfx->h : height;
+   img_width  = ( width < 0 ) ? tex_w( gfx ) : width;
+   img_height = ( height < 0 ) ? tex_h( gfx ) : height;
    font       = dialogue_getSize( caption, msg, &w, &h );
    if ( h < img_width ) {
       h = img_width;

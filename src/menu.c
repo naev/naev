@@ -210,9 +210,9 @@ void menu_main( void )
    }
 
    /* Calculate Logo and window offset. */
-   freespace = SCREEN_H - tex->sh - h;
+   freespace = SCREEN_H - tex_sh( tex ) - h;
    if ( freespace < 0 ) { /* Not enough freespace, this can get ugly. */
-      offset_logo = SCREEN_W - tex->sh;
+      offset_logo = SCREEN_W - tex_sh( tex );
       offset_wdw  = 0;
    }
    /* Otherwise space evenly. */
@@ -225,7 +225,7 @@ void menu_main( void )
    bwid = window_create( "wdwBG", "", -1, -1, -1, -1 );
    window_onClose( bwid, menu_main_cleanBG );
    window_setBorder( bwid, 0 );
-   window_addImage( bwid, ( SCREEN_W - tex->sw ) / 2., offset_logo, 0, 0,
+   window_addImage( bwid, ( SCREEN_W - tex_sw( tex ) ) / 2., offset_logo, 0, 0,
                     "imgLogo", tex, 0 );
    window_addText( bwid, 0, 10, SCREEN_W, 30., 1, "txtBG", NULL, &cWhite,
                    naev_version( 1 ) );
@@ -291,16 +291,16 @@ void menu_main_resize( void )
    window_dimWindow( menu_id, &w, &h );
    window_dimWindow( bg_id, &bgw, &bgh );
 
-   freespace = SCREEN_H - main_naevLogo->sh - h;
+   freespace = SCREEN_H - tex_sh( main_naevLogo ) - h;
    if ( freespace < 0 ) {
-      offset_logo = SCREEN_H - main_naevLogo->sh;
+      offset_logo = SCREEN_H - tex_sh( main_naevLogo );
       offset_wdw  = 0;
    } else {
       offset_logo = -freespace / 4;
       offset_wdw  = freespace / 2;
    }
 
-   window_moveWidget( bg_id, "imgLogo", ( bgw - main_naevLogo->sw ) / 2.,
+   window_moveWidget( bg_id, "imgLogo", ( bgw - tex_sw( main_naevLogo ) ) / 2.,
                       offset_logo );
 
    window_dimWidget( bg_id, "txtBG", &tw, &th );

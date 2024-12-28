@@ -366,8 +366,8 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       w     = scale * glcomm->w;
       h     = scale * glcomm->h;
       gl_getSpriteFromDir( &sx, &sy, s->sx, s->sy, dir );
-      tx = glcomm->sw * (double)( sx ) / glcomm->w;
-      ty = glcomm->sh * ( glcomm->sy - (double)sy - 1 ) / glcomm->h;
+      tx = tex_sw( glcomm ) * (double)( sx ) / glcomm->w;
+      ty = tex_sh( glcomm ) * ( tex_sy( glcomm ) - (double)sy - 1 ) / glcomm->h;
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
                         tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
 
@@ -735,10 +735,10 @@ int ship_gfxLoad( Ship *s )
 #if 0
 #if DEBUGGING
    if ( ( s->gfx_space != NULL ) &&
-        ( round( s->size ) != round( s->gfx_space->sw ) ) )
+        ( round( s->size ) != round( tex_sw(s->gfx_space)) ) )
       WARN( ( "Mismatch between 'size' and 'gfx_space' sprite size for ship "
               "'%s'! 'size' should be %.0f!" ),
-            s->name, s->gfx_space->sw );
+            s->name, tex_sw(s->gfx_space));
 #endif /* DEBUGGING */
 #endif
 
@@ -1521,14 +1521,14 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, sa->sw / gl_screen.scale + 1,
-                 sa->sh / gl_screen.scale + 1 );
+      glScissor( 0, 0, tex_sw( sa ) / gl_screen.scale + 1,
+                 tex_sh( sa ) / gl_screen.scale + 1 );
       glClear( GL_COLOR_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 
       /* Texture coords */
-      tx = sa->sw * (double)( sx ) / sa->w;
-      ty = sa->sh * ( sa->sy - (double)sy - 1 ) / sa->h;
+      tx = tex_sw( sa ) * (double)( sx ) / sa->w;
+      ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / sa->h;
 
       tmpm           = gl_view_matrix;
       gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );

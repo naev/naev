@@ -430,8 +430,8 @@ static int texL_dim( lua_State *L )
    /* Get all 4 values. */
    lua_pushnumber( L, tex->w );
    lua_pushnumber( L, tex->h );
-   lua_pushnumber( L, tex->sw );
-   lua_pushnumber( L, tex->sh );
+   lua_pushnumber( L, tex_sw( tex ) );
+   lua_pushnumber( L, tex_sh( tex ) );
    return 4;
 }
 
@@ -450,9 +450,9 @@ static int texL_sprites( lua_State *L )
 {
    const glTexture *tex = luaL_checktex( L, 1 );
    /* Get sprites. */
-   lua_pushnumber( L, tex->sx * tex->sy );
-   lua_pushnumber( L, tex->sx );
-   lua_pushnumber( L, tex->sy );
+   lua_pushnumber( L, tex_sx( tex ) * tex_sy( tex ) );
+   lua_pushnumber( L, tex_sx( tex ) );
+   lua_pushnumber( L, tex_sy( tex ) );
    return 3;
 }
 
