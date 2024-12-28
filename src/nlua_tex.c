@@ -428,8 +428,8 @@ static int texL_dim( lua_State *L )
 {
    const glTexture *tex = luaL_checktex( L, 1 );
    /* Get all 4 values. */
-   lua_pushnumber( L, tex_tex( tex ) );
-   lua_pushnumber( L, tex_tex( tex ) );
+   lua_pushnumber( L, tex_w( tex ) );
+   lua_pushnumber( L, tex_h( tex ) );
    lua_pushnumber( L, tex_sw( tex ) );
    lua_pushnumber( L, tex_sh( tex ) );
    return 4;

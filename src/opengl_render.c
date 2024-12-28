@@ -1087,7 +1087,7 @@ void gl_renderScaleAspect( const glTexture *texture, double bx, double by,
    scale = MIN( bw / tex_w( texture ), bh / tex_h( texture ) );
 
    nw = scale * tex_w( texture );
-   nh = scale * tex_w( texture );
+   nh = scale * tex_h( texture );
 
    bx += ( bw - nw ) * 0.5;
    by += ( bh - nh ) * 0.5;
