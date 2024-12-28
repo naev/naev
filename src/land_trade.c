@@ -148,7 +148,7 @@ static void commodity_exchange_genList( unsigned int wid )
    iar_data_t      idat;
    int             exists = widget_exists( wid, "iarTrade" );
    ImageArrayCell *cgoods;
-   int             w, h, iw, ih, iconsize;
+   int             w, h, iw, ih, iconsize, ngoods;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -161,15 +161,16 @@ static void commodity_exchange_genList( unsigned int wid )
    double     *prices;
    Commodity **tech = tech_getCommodity( land_spob->tech, &prices );
 
-   /* Goods list */
-   int ngoods = array_size( land_spob->commodities ) + array_size( tech );
-
    if ( exists ) {
       toolkit_saveImageArrayData( wid, "iarTrade", &idat );
       window_destroyWidget( wid, "iarTrade" );
    }
 
-   /* Count always sellable goods. */
+   if ( commodity_list != NULL )
+      array_free( commodity_list );
+   commodity_list = array_create( CommodityItem );
+
+   /* First add special sellable. */
    PilotCommodity *pclist = pfleet_cargoList();
    for ( int i = 0; i < array_size( pclist ); i++ ) {
       PilotCommodity *pc = &pclist[i];
@@ -177,73 +178,59 @@ static void commodity_exchange_genList( unsigned int wid )
          continue;
       if ( !commodity_isFlag( pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL ) )
          continue;
-      ngoods++;
+      CommodityItem item = {
+         .com       = (Commodity *)pc->commodity,
+         .price_mod = 1.,
+      };
+      array_push_back( &commodity_list, item );
    }
-   if ( commodity_list != NULL )
-      array_free( commodity_list );
+
+   /* Next add local specialties. */
+   for ( int i = 0; i < array_size( tech ); i++ ) {
+      Commodity *com = tech[i];
+      /* Ignore if already in the list. */
+      int found = 0;
+      for ( int k = 0; k < array_size( commodity_list ); k++ ) {
+         if ( com == commodity_list[k].com ) {
+            if ( FABS( prices[i] - 1. ) > DOUBLE_TOL )
+               commodity_list[k].price_mod =
+                  prices[i]; /* Overwrite if necessary. */
+            found = 1;
+            break;
+         }
+      }
+      if ( found )
+         continue;
+      CommodityItem item = {
+         .com       = com,
+         .price_mod = prices[i],
+      };
+      array_push_back( &commodity_list, item );
+   }
+
+   /* Then add default. */
+   for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
+      Commodity *com = land_spob->commodities[i];
+      /* Ignore if already in the list. */
+      int found = 0;
+      for ( int k = 0; k < array_size( commodity_list ); k++ ) {
+         if ( com == commodity_list[k].com ) {
+            found = 1;
+            break;
+         }
+      }
+      if ( found )
+         continue;
+      CommodityItem item = {
+         .com       = com,
+         .price_mod = 1.,
+      };
+      array_push_back( &commodity_list, item );
+   }
+
+   /* Now create the goods. */
+   ngoods = array_size( commodity_list );
    if ( ngoods > 0 ) {
-      commodity_list = array_create( CommodityItem );
-
-      /* First add special sellable. */
-      for ( int i = 0; i < array_size( pclist ); i++ ) {
-         PilotCommodity *pc = &pclist[i];
-         if ( pc->id > 0 ) /* Ignore mission stuff. */
-            continue;
-         if ( !commodity_isFlag( pc->commodity,
-                                 COMMODITY_FLAG_ALWAYS_CAN_SELL ) )
-            continue;
-         CommodityItem item = {
-            .com       = (Commodity *)pc->commodity,
-            .price_mod = 1.,
-         };
-         array_push_back( &commodity_list, item );
-      }
-
-      /* Next add local specialties. */
-      for ( int i = 0; i < array_size( tech ); i++ ) {
-         Commodity *com = tech[i];
-         /* Ignore if already in the list. */
-         int found = 0;
-         for ( int k = 0; k < array_size( commodity_list ); k++ ) {
-            if ( com == commodity_list[k].com ) {
-               if ( FABS( prices[i] - 1. ) > DOUBLE_TOL )
-                  commodity_list[k].price_mod =
-                     prices[i]; /* Overwrite if necessary. */
-               found = 1;
-               break;
-            }
-         }
-         if ( found )
-            continue;
-         CommodityItem item = {
-            .com       = com,
-            .price_mod = prices[i],
-         };
-         array_push_back( &commodity_list, item );
-      }
-
-      /* Then add default. */
-      for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-         Commodity *com = land_spob->commodities[i];
-         /* Ignore if already in the list. */
-         int found = 0;
-         for ( int k = 0; k < array_size( commodity_list ); k++ ) {
-            if ( com == commodity_list[k].com ) {
-               found = 1;
-               break;
-            }
-         }
-         if ( found )
-            continue;
-         CommodityItem item = {
-            .com       = com,
-            .price_mod = 1.,
-         };
-         array_push_back( &commodity_list, item );
-      }
-
-      /* Now create the goods. */
-      ngoods = array_size( commodity_list );
       cgoods = calloc( ngoods, sizeof( ImageArrayCell ) );
       for ( int i = 0; i < ngoods; i++ ) {
          const Commodity *com = commodity_list[i].com;
