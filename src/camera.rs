@@ -124,15 +124,13 @@ impl Camera {
             unsafe { (naevc::dt_mod, naevc::conf.zoom_far, naevc::conf.zoom_near) };
 
         /* Gradually zoom in/out. */
-        let mut d = (self.zoom_target - self.zoom)
-            .max(-self.zoom_speed)
-            .min(self.zoom_speed);
+        let mut d = (self.zoom_target - self.zoom).clamp(-self.zoom_speed, self.zoom_speed);
         d *= dt / dt_mod; /* Remove dt dependence. */
         if d < 0. {
             /* Speed up if needed. */
             d *= 2.;
         }
-        self.zoom = (self.zoom + d).max(zoom_far).min(zoom_near);
+        self.zoom = (self.zoom + d).clamp(zoom_far, zoom_near);
     }
 
     fn update_pilot_zoom(
@@ -179,7 +177,7 @@ impl Camera {
         let zfar = if nebu_density > 0. {
             let c: f64 = screen_w.min(screen_h).into();
             let sight: f64 = unsafe { naevc::nebu_getSightRadius() };
-            (c * 0.5 / sight).max(zoom_far).min(zoom_near)
+            (c * 0.5 / sight).clamp(zoom_far, zoom_near)
         } else {
             zoom_far
         };
@@ -228,12 +226,12 @@ impl Camera {
             }
         };
 
-        let mut dz = (tz - z).max(-self.zoom_speed).min(self.zoom_speed);
+        let mut dz = (tz - z).clamp(-self.zoom_speed, self.zoom_speed);
         dz *= dt / dt_mod;
         if dz < 0. {
             dz *= 2.;
         }
-        self.zoom = (z + dz).max(zfar).min(znear);
+        self.zoom = (z + dz).clamp(zfar, znear);
     }
 
     fn update_pilot(&mut self, follow: *mut naevc::Pilot, dt: f64) {
@@ -317,8 +315,7 @@ pub unsafe extern "C" fn cam_zoomOverride(enable: c_int) {
 pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
     let mut cam = CAMERA.lock().unwrap();
     cam.zoom = zoom
-        .min(naevc::conf.zoom_far)
-        .max(naevc::conf.zoom_near)
+        .clamp(naevc::conf.zoom_far, naevc::conf.zoom_near)
         .into();
 }
 
@@ -326,8 +323,7 @@ pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
 pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
     let mut cam = CAMERA.lock().unwrap();
     cam.zoom = zoom
-        .min(naevc::conf.zoom_far)
-        .max(naevc::conf.zoom_near)
+        .clamp(naevc::conf.zoom_far, naevc::conf.zoom_near)
         .into();
     cam.zoom_speed = speed.into();
 }
