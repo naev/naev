@@ -11,6 +11,7 @@ extern "C" {
 }
 
 mod array;
+mod camera;
 mod damagetype;
 mod env;
 mod gettext;
@@ -22,6 +23,7 @@ mod nlua;
 mod ntime;
 mod nxml;
 mod physfs;
+mod physics;
 mod rng;
 mod slots;
 mod start;

@@ -23,6 +23,23 @@
 /* Gatherables */
 #define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */
 
+/**
+ * @struct Gatherable
+ *
+ * @brief Represents stuff that can be gathered.
+ */
+typedef struct Gatherable_ {
+   const Commodity *type;        /**< Type of commodity. */
+   vec2             pos;         /**< Position. */
+   vec2             vel;         /**< Velocity. */
+   double           timer;       /**< Timer to de-spawn the gatherable. */
+   double           lifeleng;    /**< nb of seconds before de-spawn. */
+   int              quantity;    /**< Quantity of material. */
+   int              sx;          /**< X sprite to use. */
+   int              sy;          /**< Y sprite to use. */
+   int              player_only; /**< Can only be gathered by player. */
+} Gatherable;
+
 /* gatherables stack */
 static Gatherable *gatherable_stack =
    NULL; /**< Contains the gatherable stuff floating around. */

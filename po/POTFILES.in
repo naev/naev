@@ -3629,6 +3629,7 @@ src/board.c
 src/board.h
 src/camera.c
 src/camera.h
+src/camera.rs
 src/cgltf.h
 src/claim.c
 src/claim.h
@@ -3914,6 +3915,7 @@ src/physfsrwops.c
 src/physfsrwops.h
 src/physics.c
 src/physics.h
+src/physics.rs
 src/pilot.c
 src/pilot.h
 src/pilot_cargo.c
