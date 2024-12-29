@@ -292,7 +292,7 @@ void player_new( void )
       if ( badname &&
            !dialogue_YesNo(
               _( "Player Name" ),
-              _( "Your chosen name '%s' does not seem be very good. Are you "
+              _( "Your chosen name '%s' does not seem to be very good. Are you "
                  "sure you wish to proceed with this name?" ),
               player.name ) ) {
          player_new();

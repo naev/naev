@@ -8,6 +8,9 @@
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
 
+* 0.12.2 (unreleased)
+   * Minor typo fixes and translation updates
+
 * 0.12.1
    * Fixed psychic orbs having trails
    * Crop selected spob name if it goes out of bounds in the GUI
