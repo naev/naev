@@ -8,8 +8,8 @@ local fmt = require "format"
 local helper = require "outfits.lib.helper"
 
 -- Global stats
-local dist_threshold = math.pow( 50, 2 )
-local vel_threshold  = math.pow( 15, 2 )
+local dist_threshold = math.pow( 100, 2 )
+local vel_threshold  = math.pow( 25, 2 )
 
 function drill.setup( p, _po, params )
    params = params or {}
