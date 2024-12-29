@@ -162,8 +162,8 @@ static void initialize_image( intro_img_t *img )
 static void load_image( intro_img_t *img, const char *img_file )
 {
    img->tex       = gl_newImage( img_file, 0 );
-   img->w         = MIN( img->tex->w, IMAGE_WIDTH );
-   img->h         = img->tex->h * img->w / img->tex->w;
+   img->w         = MIN( tex_w( img->tex ), IMAGE_WIDTH );
+   img->h         = tex_h( img->tex ) * img->w / tex_w( img->tex );
    img->x         = ( IMAGE_WIDTH + SIDE_MARGIN - img->w ) / 2.0;
    img->y         = (double)SCREEN_H / 2.0 - ( img->h / 2.0 );
    img->c.a       = 0.0;

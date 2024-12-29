@@ -721,12 +721,12 @@ static void map_update( unsigned int wid )
 
       /* Modify the image. */
       logo  = faction_logo( f );
-      logow = logo == NULL
-                 ? 0
-                 : logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
-      logoh = logo == NULL
-                 ? 0
-                 : logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+      logow = logo == NULL ? 0
+                           : tex_w( logo ) * (double)FACTION_LOGO_SM /
+                                MAX( tex_w( logo ), tex_h( logo ) );
+      logoh = logo == NULL ? 0
+                           : tex_h( logo ) * (double)FACTION_LOGO_SM /
+                                MAX( tex_w( logo ), tex_h( logo ) );
       window_modifyImage( wid, "imgFaction", logo, logow, logoh );
       if ( logo != NULL )
          window_moveWidget( wid, "imgFaction", -90 + logow / 2,
@@ -1194,8 +1194,8 @@ void map_renderDecorators( double x, double y, double zoom, int editor,
          double tx = x + decorator->x * zoom;
          double ty = y + decorator->y * zoom;
 
-         int sw = decorator->image->sw * zoom;
-         int sh = decorator->image->sh * zoom;
+         int sw = tex_sw( decorator->image ) * zoom;
+         int sh = tex_sh( decorator->image ) * zoom;
 
          gl_renderScale( decorator->image, tx - sw * 0.5, ty - sh * 0.5, sw, sh,
                          &ccol );

@@ -281,7 +281,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    otex->gtex = gl_texExistsOrCreate( filepath, flags, 1, 1, &created );
    if ( !created ) {
       /* Already exists, so texture should be valid. */
-      otex->tex = otex->gtex->texture;
+      otex->tex = tex_tex( otex->gtex );
       return 0;
    }
 #endif /* HAVE_NAEV */
@@ -436,8 +436,8 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
 
    otex->tex = tex;
 #ifdef HAVE_NAEV
-   otex->gtex->texture = tex; /* Update the texture. */
-#endif                        /* HAVE_NAEV */
+   tex_setTex( otex->gtex, tex ); /* Update the texture. */
+#endif                            /* HAVE_NAEV */
    return 0;
 }
 

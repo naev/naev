@@ -380,13 +380,13 @@ static int texL_writeData( lua_State *L )
    SDL_Surface *surface;
    SDL_RWops   *rw;
 
-   w    = tex->w;
-   h    = tex->h;
+   w    = tex_w( tex );
+   h    = tex_h( tex );
    len  = w * h * 4 * sizeof( GLubyte );
    data = malloc( len );
 
    /* Read raw data. */
-   glBindTexture( GL_TEXTURE_2D, tex->texture );
+   glBindTexture( GL_TEXTURE_2D, tex_tex( tex ) );
    glGetTexImage( GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data );
    if ( gl_checkErr() )
       NLUA_ERROR( L, _( "OpenGL Error!" ) );
@@ -428,10 +428,10 @@ static int texL_dim( lua_State *L )
 {
    const glTexture *tex = luaL_checktex( L, 1 );
    /* Get all 4 values. */
-   lua_pushnumber( L, tex->w );
-   lua_pushnumber( L, tex->h );
-   lua_pushnumber( L, tex->sw );
-   lua_pushnumber( L, tex->sh );
+   lua_pushnumber( L, tex_w( tex ) );
+   lua_pushnumber( L, tex_h( tex ) );
+   lua_pushnumber( L, tex_sw( tex ) );
+   lua_pushnumber( L, tex_sh( tex ) );
    return 4;
 }
 
@@ -450,9 +450,9 @@ static int texL_sprites( lua_State *L )
 {
    const glTexture *tex = luaL_checktex( L, 1 );
    /* Get sprites. */
-   lua_pushnumber( L, tex->sx * tex->sy );
-   lua_pushnumber( L, tex->sx );
-   lua_pushnumber( L, tex->sy );
+   lua_pushnumber( L, tex_sx( tex ) * tex_sy( tex ) );
+   lua_pushnumber( L, tex_sx( tex ) );
+   lua_pushnumber( L, tex_sy( tex ) );
    return 3;
 }
 
@@ -475,7 +475,8 @@ static int texL_spriteFromDir( lua_State *L )
    double           a   = luaL_checknumber( L, 2 );
 
    /* Calculate with parameter validity.. */
-   gl_getSpriteFromDir( &sx, &sy, tex->sx, tex->sy, angle_clean( a ) );
+   gl_getSpriteFromDir( &sx, &sy, tex_sx( tex ), tex_sy( tex ),
+                        angle_clean( a ) );
 
    /* Return. */
    lua_pushinteger( L, sx + 1 );
@@ -505,7 +506,7 @@ static int texL_setFilter( lua_State *L )
    if ( min == 0 || mag == 0 )
       NLUA_INVALID_PARAMETER( L, 2 );
 
-   glBindTexture( GL_TEXTURE_2D, tex->texture );
+   glBindTexture( GL_TEXTURE_2D, tex_tex( tex ) );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min );
    if ( gl_checkErr() )
@@ -541,7 +542,7 @@ static int texL_setWrap( lua_State *L )
    if ( horiz == 0 || vert == 0 || depth == 0 )
       NLUA_INVALID_PARAMETER( L, 2 );
 
-   glBindTexture( GL_TEXTURE_2D, tex->texture );
+   glBindTexture( GL_TEXTURE_2D, tex_tex( tex ) );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, vert );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, depth );

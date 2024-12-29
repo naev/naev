@@ -48,8 +48,10 @@ void window_addImage( unsigned int wid, const int x, const int y, const int w,
    wgt->dat.img.nlayers = 0;
 
    /* position/size */
-   wgt->w = ( w > 0 ) ? w : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sw );
-   wgt->h = ( h > 0 ) ? h : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sh );
+   wgt->w =
+      ( w > 0 ) ? w : ( ( image == NULL ) ? 0 : tex_sw( wgt->dat.img.image ) );
+   wgt->h =
+      ( h > 0 ) ? h : ( ( image == NULL ) ? 0 : tex_sh( wgt->dat.img.image ) );
    toolkit_setPos( wdw, wgt, x, y );
 }
 
@@ -157,11 +159,13 @@ void window_modifyImage( unsigned int wid, char *name, const glTexture *image,
 
    /* Adjust size. */
    if ( w >= 0 )
-      wgt->w =
-         ( w > 0 ) ? w : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sw );
+      wgt->w = ( w > 0 )
+                  ? w
+                  : ( ( image == NULL ) ? 0 : tex_sw( wgt->dat.img.image ) );
    if ( h >= 0 )
-      wgt->h =
-         ( h > 0 ) ? h : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sh );
+      wgt->h = ( h > 0 )
+                  ? h
+                  : ( ( image == NULL ) ? 0 : tex_sh( wgt->dat.img.image ) );
 }
 
 /**

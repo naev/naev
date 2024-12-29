@@ -1907,7 +1907,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
       /* Has an image to use. */
       if ( ed->img != NULL ) {
          glActiveTexture( GL_TEXTURE1 );
-         glBindTexture( GL_TEXTURE_2D, ed->img->texture );
+         glBindTexture( GL_TEXTURE_2D, tex_tex( ed->img ) );
          glUniform1i( ed->u_img, 1 );
       }
 
@@ -2062,7 +2062,7 @@ void pilot_render( Pilot *p )
          /* Has an image to use. */
          if ( ed->img != NULL ) {
             glActiveTexture( GL_TEXTURE1 );
-            glBindTexture( GL_TEXTURE_2D, ed->img->texture );
+            glBindTexture( GL_TEXTURE_2D, tex_tex( ed->img ) );
             glUniform1i( ed->u_img, 1 );
          }
 
@@ -2250,14 +2250,15 @@ void pilot_renderOverlay( Pilot *p )
    if ( !playerdead && pilot_isFlag( p, PILOT_HAILING ) ) {
       glTexture *ico_hail = gui_hailIcon();
       if ( ico_hail != NULL ) {
-         int sx = (int)ico_hail->sx;
+         int sx = (int)tex_sx( ico_hail );
 
          /* Render. */
-         gl_renderSprite(
-            ico_hail,
-            p->solid.pos.x + PILOT_SIZE_APPROX * sw / 2. + ico_hail->sw / 4.,
-            p->solid.pos.y + PILOT_SIZE_APPROX * sh / 2. + ico_hail->sh / 4.,
-            p->hail_pos % sx, p->hail_pos / sx, NULL );
+         gl_renderSprite( ico_hail,
+                          p->solid.pos.x + PILOT_SIZE_APPROX * sw / 2. +
+                             tex_sw( ico_hail ) / 4.,
+                          p->solid.pos.y + PILOT_SIZE_APPROX * sh / 2. +
+                             tex_sh( ico_hail ) / 4.,
+                          p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }
 
@@ -2369,8 +2370,8 @@ void pilot_update( Pilot *pilot, double dt )
       if ( ico_hail != NULL ) {
          int sx, sy;
          pilot->htimer -= dt;
-         sx = (int)ico_hail->sx;
-         sy = (int)ico_hail->sy;
+         sx = (int)tex_sx( ico_hail );
+         sy = (int)tex_sy( ico_hail );
          if ( pilot->htimer < 0. ) {
             pilot->htimer = 0.1;
             pilot->hail_pos++;

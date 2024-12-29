@@ -158,27 +158,27 @@ int CollideSprite( const glTexture *at, const int asx, const int asy,
 
 #if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
-   if ( at->trans == NULL ) {
-      WARN( _( "Texture '%s' has no transparency map" ), at->name );
+   if ( !tex_hasTrans( at ) ) {
+      WARN( _( "Texture '%s' has no transparency map" ), tex_name( at ) );
       return 0;
    }
-   if ( bt->trans == NULL ) {
-      WARN( _( "Texture '%s' has no transparency map" ), bt->name );
+   if ( !tex_hasTrans( bt ) ) {
+      WARN( _( "Texture '%s' has no transparency map" ), tex_name( bt ) );
       return 0;
    }
 #endif /* DEBUGGING */
 
    /* a - cube coordinates */
-   ax1 = (int)VX( *ap ) - (int)( at->sw ) / 2;
-   ay1 = (int)VY( *ap ) - (int)( at->sh ) / 2;
-   ax2 = ax1 + (int)( at->sw ) - 1;
-   ay2 = ay1 + (int)( at->sh ) - 1;
+   ax1 = (int)VX( *ap ) - (int)( tex_sw( at ) ) / 2;
+   ay1 = (int)VY( *ap ) - (int)( tex_sh( at ) ) / 2;
+   ax2 = ax1 + (int)( tex_sw( at ) ) - 1;
+   ay2 = ay1 + (int)( tex_sh( at ) ) - 1;
 
    /* b - cube coordinates */
-   bx1 = (int)VX( *bp ) - (int)( bt->sw ) / 2;
-   by1 = (int)VY( *bp ) - (int)( bt->sh ) / 2;
-   bx2 = bx1 + bt->sw - 1;
-   by2 = by1 + bt->sh - 1;
+   bx1 = (int)VX( *bp ) - (int)( tex_sw( bt ) ) / 2;
+   by1 = (int)VY( *bp ) - (int)( tex_sh( bt ) ) / 2;
+   bx2 = bx1 + tex_sw( bt ) - 1;
+   by2 = by1 + tex_sh( bt ) - 1;
 
    /* check if bounding boxes intersect */
    if ( ( bx2 < ax1 ) || ( ax2 < bx1 ) )
@@ -193,14 +193,14 @@ int CollideSprite( const glTexture *at, const int asx, const int asy,
    inter_y1 = MIN( ay2, by2 );
 
    /* real vertical sprite value (flipped) */
-   rasy = at->sy - asy - 1;
-   rbsy = bt->sy - bsy - 1;
+   rasy = tex_sy( at ) - asy - 1;
+   rbsy = tex_sy( bt ) - bsy - 1;
 
    /* set up the base points */
-   abx = asx * (int)( at->sw ) - ax1;
-   aby = rasy * (int)( at->sh ) - ay1;
-   bbx = bsx * (int)( bt->sw ) - bx1;
-   bby = rbsy * (int)( bt->sh ) - by1;
+   abx = asx * (int)( tex_sw( at ) ) - ax1;
+   aby = rasy * (int)( tex_sh( at ) ) - ay1;
+   bbx = bsx * (int)( tex_sw( bt ) ) - bx1;
+   bby = rbsy * (int)( tex_sh( bt ) ) - by1;
 
    for ( y = inter_y0; y <= inter_y1; y++ )
       for ( x = inter_x0; x <= inter_x1; x++ )
@@ -243,8 +243,8 @@ int CollideSpritePolygon( const CollPolyView *at, const vec2 *ap,
 
 #if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
-   if ( bt->trans == NULL ) {
-      WARN( _( "Texture '%s' has no transparency map" ), bt->name );
+   if ( tex_hasTrans( bt ) ) {
+      WARN( _( "Texture '%s' has no transparency map" ), tex_name( bt ) );
       return 0;
    }
 #endif /* DEBUGGING */
@@ -256,10 +256,10 @@ int CollideSpritePolygon( const CollPolyView *at, const vec2 *ap,
    ay2 = (int)VY( *ap ) + (int)( at->ymax );
 
    /* b - cube coordinates */
-   bx1 = (int)VX( *bp ) - (int)( bt->sw ) / 2;
-   by1 = (int)VY( *bp ) - (int)( bt->sh ) / 2;
-   bx2 = bx1 + bt->sw - 1;
-   by2 = by1 + bt->sh - 1;
+   bx1 = (int)VX( *bp ) - (int)( tex_sw( bt ) ) / 2;
+   by1 = (int)VY( *bp ) - (int)( tex_sh( bt ) ) / 2;
+   bx2 = bx1 + tex_sw( bt ) - 1;
+   by2 = by1 + tex_sh( bt ) - 1;
 
    /* check if bounding boxes intersect */
    if ( ( bx2 < ax1 ) || ( ax2 < bx1 ) )
@@ -274,11 +274,11 @@ int CollideSpritePolygon( const CollPolyView *at, const vec2 *ap,
    inter_y1 = MIN( ay2, by2 );
 
    /* real vertical sprite value (flipped) */
-   rbsy = bt->sy - bsy - 1;
+   rbsy = tex_sy( bt ) - bsy - 1;
 
    /* set up the base points */
-   bbx = bsx * (int)( bt->sw ) - bx1;
-   bby = rbsy * (int)( bt->sh ) - by1;
+   bbx = bsx * (int)( tex_sw( bt ) ) - bx1;
+   bby = rbsy * (int)( tex_sh( bt ) ) - by1;
    for ( y = inter_y0; y <= inter_y1; y++ ) {
       for ( x = inter_x0; x <= inter_x1; x++ ) {
          /* compute offsets for surface before pass to TransparentPixel test */
@@ -585,8 +585,8 @@ int CollideLineSprite( const vec2 *ap, double ad, double al,
    vec2   tmp_crash, border[2];
 
    /* Make sure texture has transparency map. */
-   if ( bt->trans == NULL ) {
-      WARN( _( "Texture '%s' has no transparency map" ), bt->name );
+   if ( !tex_hasTrans( bt ) ) {
+      WARN( _( "Texture '%s' has no transparency map" ), tex_name( bt ) );
       return 0;
    }
 
@@ -595,11 +595,11 @@ int CollideLineSprite( const vec2 *ap, double ad, double al,
    ep[1] = ap->y + al * sin( ad );
 
    /* Set up top right corner of the rectangle. */
-   tr[0] = bp->x + bt->sw / 2.;
-   tr[1] = bp->y + bt->sh / 2.;
+   tr[0] = bp->x + tex_sw( bt ) / 2.;
+   tr[1] = bp->y + tex_sh( bt ) / 2.;
    /* Set up bottom left corner of the rectangle. */
-   bl[0] = bp->x - bt->sw / 2.;
-   bl[1] = bp->y - bt->sh / 2.;
+   bl[0] = bp->x - tex_sw( bt ) / 2.;
+   bl[1] = bp->y - tex_sh( bt ) / 2.;
 
    /*
     * Start check for rectangular collisions.
@@ -660,15 +660,16 @@ int CollideLineSprite( const vec2 *ap, double ad, double al,
    v[1] /= mod;
 
    /* real vertical sprite value (flipped) */
-   rbsy = bt->sy - bsy - 1;
+   rbsy = tex_sy( bt ) - bsy - 1;
    /* set up the base points */
-   bbx = bsx * (int)( bt->sw );
-   bby = rbsy * (int)( bt->sh );
+   bbx = bsx * (int)( tex_sw( bt ) );
+   bby = rbsy * (int)( tex_sh( bt ) );
 
    /* We start checking first border until we find collision. */
    x = border[0].x - bl[0] + v[0];
    y = border[0].y - bl[1] + v[1];
-   while ( ( x > 0. ) && ( x < bt->sw ) && ( y > 0. ) && ( y < bt->sh ) ) {
+   while ( ( x > 0. ) && ( x < tex_sw( bt ) ) && ( y > 0. ) &&
+           ( y < tex_sh( bt ) ) ) {
       /* Is non-transparent. */
       if ( !gl_isTrans( bt, bbx + (int)x, bby + (int)y ) ) {
          crash[real_hits].x = x + bl[0];
@@ -683,7 +684,8 @@ int CollideLineSprite( const vec2 *ap, double ad, double al,
    /* Now we check the second border. */
    x = border[1].x - bl[0] - v[0];
    y = border[1].y - bl[1] - v[1];
-   while ( ( x > 0. ) && ( x < bt->sw ) && ( y > 0. ) && ( y < bt->sh ) ) {
+   while ( ( x > 0. ) && ( x < tex_sw( bt ) ) && ( y > 0. ) &&
+           ( y < tex_sh( bt ) ) ) {
       /* Is non-transparent. */
       if ( !gl_isTrans( bt, bbx + (int)x, bby + (int)y ) ) {
          crash[real_hits].x = x + bl[0];
@@ -950,8 +952,8 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture *bt,
 
 #if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
-   if ( bt->trans == NULL ) {
-      WARN( _( "Texture '%s' has no transparency map" ), bt->name );
+   if ( !tex_hasTrans( bt ) ) {
+      WARN( _( "Texture '%s' has no transparency map" ), tex_name( bt ) );
       return 0;
    }
 #endif /* DEBUGGING */
@@ -966,10 +968,10 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture *bt,
    ay2 = acy + r;
 
    /* b - cube coordinates */
-   bx1 = (int)VX( *bp ) - (int)( bt->sw ) / 2;
-   by1 = (int)VY( *bp ) - (int)( bt->sh ) / 2;
-   bx2 = bx1 + bt->sw - 1;
-   by2 = by1 + bt->sh - 1;
+   bx1 = (int)VX( *bp ) - (int)( tex_sw( bt ) ) / 2;
+   by1 = (int)VY( *bp ) - (int)( tex_sh( bt ) ) / 2;
+   bx2 = bx1 + tex_sw( bt ) - 1;
+   by2 = by1 + tex_sh( bt ) - 1;
 
    /* check if bounding boxes intersect */
    if ( ( bx2 < ax1 ) || ( ax2 < bx1 ) )
@@ -984,11 +986,11 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture *bt,
    inter_y1 = MIN( ay2, by2 );
 
    /* real vertical sprite value (flipped) */
-   rbsy = bt->sy - bsy - 1;
+   rbsy = tex_sy( bt ) - bsy - 1;
 
    /* set up the base points */
-   bbx = bsx * (int)( bt->sw ) - bx1;
-   bby = rbsy * (int)( bt->sh ) - by1;
+   bbx = bsx * (int)( tex_sw( bt ) ) - bx1;
+   bby = rbsy * (int)( tex_sh( bt ) ) - by1;
    for ( int y = inter_y0; y <= inter_y1; y++ ) {
       for ( int x = inter_x0; x <= inter_x1; x++ ) {
          /* compute offsets for surface before pass to TransparentPixel test */

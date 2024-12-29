@@ -35,34 +35,8 @@
    ( 1 << 5 ) /**< Clamp image border to transparency. */
 #define OPENGL_TEX_NOTSRGB ( 1 << 6 ) /**< Texture is not in SRGB format. */
 
-/**
- * @brief Abstraction for rendering sprite sheets.
- *
- * The basic unit all the graphic rendering works with.
- */
-typedef struct glTexture_ {
-   char *name; /**< name of the graphic */
-
-   /* dimensions */
-   double w; /**< Real width of the image. */
-   double h; /**< Real height of the image. */
-
-   /* sprites */
-   double sx;  /**< Number of sprites on the x axis. */
-   double sy;  /**< Number of sprites on the y axis. */
-   double sw;  /**< Width of a sprite. */
-   double sh;  /**< Height of a sprite. */
-   double srw; /**< Sprite render width - equivalent to sw/w. */
-   double srh; /**< Sprite render height - equivalent to sh/h. */
-
-   /* data */
-   GLuint   texture; /**< the opengl texture itself */
-   uint8_t *trans;   /**< maps the transparency */
-   double   vmax;    /**< Maximum value for SDF textures. */
-
-   /* properties */
-   uint8_t flags; /**< flags used for texture properties */
-} glTexture;
+struct glTexture;
+typedef struct glTexture glTexture;
 
 /*
  * Init/exit.
@@ -111,3 +85,21 @@ int         gl_isTrans( const glTexture *t, const int x, const int y );
 void        gl_getSpriteFromDir( int *x, int *y, int sx, int sy, double dir );
 glTexture **gl_copyTexArray( glTexture **tex );
 glTexture **gl_addTexArray( glTexture **tex, glTexture *t );
+
+/* Transition getters. */
+const char  *tex_name( const glTexture *tex );
+double       tex_w( const glTexture *tex );
+double       tex_h( const glTexture *tex );
+double       tex_sw( const glTexture *tex );
+double       tex_sh( const glTexture *tex );
+double       tex_sx( const glTexture *tex );
+double       tex_sy( const glTexture *tex );
+double       tex_srw( const glTexture *tex );
+double       tex_srh( const glTexture *tex );
+int          tex_isSDF( const glTexture *tex );
+int          tex_hasTrans( const glTexture *tex );
+GLuint       tex_tex( const glTexture *tex );
+unsigned int tex_flags( const glTexture *tex );
+double       tex_vmax( const glTexture *tex );
+void         tex_setTex( glTexture *tex, GLuint texture );
+void         tex_setVFLIP( glTexture *tex, int flip );

@@ -230,16 +230,16 @@ static int gfxL_renderTex( lua_State *L )
 
    /* Some safety checking. */
 #if DEBUGGING
-   if ( sx < 0 || sx >= tex->sx )
+   if ( sx < 0 || sx >= tex_sx( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (X "
                             "position) sprite: %d > %d." ),
-                         tex->name, sx + 1, tex->sx );
-   if ( sy < 0 || sy >= tex->sy )
+                         tex_name( tex ), sx + 1, tex_sx( tex ) );
+   if ( sy < 0 || sy >= tex_sy( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (Y "
                             "position) sprite: %d > %d." ),
-                         tex->name, sy + 1, tex->sy );
+                         tex_name( tex ), sy + 1, tex_sy( tex ) );
 #endif /* DEBUGGING */
 
    /* Render. */
@@ -290,16 +290,16 @@ static int gfxL_renderTexScale( lua_State *L )
 
    /* Some safety checking. */
 #if DEBUGGING
-   if ( sx >= tex->sx )
+   if ( sx >= tex_sx( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (X "
                             "position) sprite: %d > %d." ),
-                         tex->name, sx + 1, tex->sx );
-   if ( sx >= tex->sx )
+                         tex_name( tex ), sx + 1, tex_sx( tex ) );
+   if ( sx >= tex_sx( tex ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (Y "
                             "position) sprite: %d > %d." ),
-                         tex->name, sy + 1, tex->sy );
+                         tex_name( tex ), sy + 1, tex_sy( tex ) );
 #endif /* DEBUGGING */
 
    /* Render. */
@@ -360,25 +360,26 @@ static int gfxL_renderTexRaw( lua_State *L )
 
    /* Some safety checking. */
 #if DEBUGGING
-   if ( sx >= t->sx )
+   if ( sx >= tex_sx( t ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (X "
                             "position) sprite: %d > %d." ),
-                         t->name, sx + 1, t->sx );
-   if ( sx >= t->sx )
+                         tex_name( t ), sx + 1, tex_sx( t ) );
+   if ( sx >= tex_sx( t ) )
       return NLUA_ERROR( L,
                          _( "Texture '%s' trying to render out of bounds (Y "
                             "position) sprite: %d > %d." ),
-                         t->name, sy + 1, t->sy );
+                         tex_name( t ), sy + 1, tex_sy( t ) );
 #endif /* DEBUGGING */
 
    /* Translate as needed. */
-   tx = ( tx * t->sw + t->sw * (double)( sx ) ) / t->w;
-   tw = tw * t->srw;
+   tx = ( tx * tex_sw( t ) + tex_sw( t ) * (double)( sx ) ) / tex_w( t );
+   tw = tw * tex_srw( t );
    if ( tw < 0 )
       tx -= tw;
-   ty = ( ty * t->sh + t->sh * ( t->sy - (double)sy - 1 ) ) / t->h;
-   th = th * t->srh;
+   ty = ( ty * tex_sh( t ) + tex_sh( t ) * ( tex_sy( t ) - (double)sy - 1 ) ) /
+        tex_h( t );
+   th = th * tex_srh( t );
    if ( th < 0 )
       ty -= th;
 
@@ -427,7 +428,7 @@ static int gfxL_renderTexH( lua_State *L )
    }
 
    /* Set the texture(s). */
-   glBindTexture( GL_TEXTURE_2D, t->texture );
+   glBindTexture( GL_TEXTURE_2D, tex_tex( t ) );
    glUniform1i( shader->MainTex, 0 );
    for ( int i = 0; i < array_size( shader->tex ); i++ ) {
       LuaTexture_t *lt = &shader->tex[i];
@@ -1139,8 +1140,8 @@ static int gfxL_screenshot( lua_State *L )
    glBindFramebuffer( GL_READ_FRAMEBUFFER, 0 );
    glBindFramebuffer( GL_DRAW_FRAMEBUFFER, lc->fbo );
    /* We flip it over because that seems to be what love2d API wants. */
-   glBlitFramebuffer( 0, 0, gl_screen.rw, gl_screen.rh, 0, lc->tex->h,
-                      lc->tex->w, 0, GL_COLOR_BUFFER_BIT, GL_NEAREST );
+   glBlitFramebuffer( 0, 0, gl_screen.rw, gl_screen.rh, 0, tex_h( lc->tex ),
+                      tex_w( lc->tex ), 0, GL_COLOR_BUFFER_BIT, GL_NEAREST );
    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
 
    /* Return new or old canvas. */

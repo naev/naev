@@ -246,8 +246,8 @@ void asteroids_update( double dt )
             y  = round( a->sol.pos.y );
             px = round( a->sol.pre.x );
             py = round( a->sol.pre.y );
-            w2 = ceil( a->gfx->sw * 0.5 );
-            h2 = ceil( a->gfx->sh * 0.5 );
+            w2 = ceil( tex_sw( a->gfx ) * 0.5 );
+            h2 = ceil( tex_sh( a->gfx ) * 0.5 );
             qt_insert( &ast->qt, j, MIN( x, px ) - w2, MIN( y, py ) - h2,
                        MAX( x, px ) + w2, MAX( y, py ) + h2 );
          }
@@ -987,8 +987,8 @@ static void asteroid_renderSingle( const Asteroid *a )
    col   = cFontWhite;
    col.a = a->scan_alpha;
    gl_gameToScreenCoords( &nx, &ny, a->sol.pos.x, a->sol.pos.y );
-   gl_printRaw( &gl_smallFont, nx + a->gfx->sw / 2, ny - gl_smallFont.h / 2,
-                &col, -1., _( at->scanned_msg ) );
+   gl_printRaw( &gl_smallFont, nx + tex_sw( a->gfx ) / 2,
+                ny - gl_smallFont.h / 2, &col, -1., _( at->scanned_msg ) );
    /*
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];

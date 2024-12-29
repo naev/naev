@@ -573,7 +573,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          double sx = x + w - 10.;
          double sy = y + h - 10.;
 
-         if ( icon->flags & OPENGL_TEX_SDF )
+         if ( tex_isSDF( icon ) )
             gl_renderSDF( icon, sx, sy, sw, sh, &cWhite, 0., 1. );
          else
             gl_renderScaleAspect( icon, sx, sy, sw, sh, NULL );

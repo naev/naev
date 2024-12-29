@@ -401,7 +401,7 @@ static void gui_renderSpobTarget( void )
          c = &cGreen;
          x = jp->pos.x;
          y = jp->pos.y;
-         r = jumppoint_gfx->sw * 0.5;
+         r = tex_sw( jumppoint_gfx ) * 0.5;
          gui_renderTargetReticles( &shaders.targetspob, x, y, r, 0., c );
       }
    }
@@ -421,7 +421,7 @@ static void gui_renderSpobTarget( void )
 
       x = ast->sol.pos.x;
       y = ast->sol.pos.y;
-      r = ast->gfx->sw * 0.5;
+      r = tex_sw( ast->gfx ) * 0.5;
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
 }
@@ -714,8 +714,8 @@ int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp,
    cw = SCREEN_W / 2;
    ch = SCREEN_H / 2;
    if ( tex != NULL ) {
-      cw += tex->sw / 2;
-      ch += tex->sh / 2;
+      cw += tex_sw( tex ) / 2;
+      ch += tex_sh( tex ) / 2;
    }
 
    if ( ( ABS( *rx ) > cw ) || ( ABS( *ry ) > ch ) )
@@ -1573,7 +1573,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
       return;
 
    /* Default values. */
-   r  = jumppoint_gfx->sw / 2. / res;
+   r  = tex_sw( jumppoint_gfx ) / 2. / res;
    vr = overlay ? jp->mo.radius : MAX( r, 5. );
    if ( overlay ) {
       cx = jp->pos.x / res;

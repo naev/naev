@@ -360,16 +360,18 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       int        sx, sy;
 
       glcomm = gl_newImage( s->gfx_comm, 0 );
-      glcomm->flags &= ~OPENGL_TEX_VFLIP;
+      tex_setVFLIP( glcomm, 0 );
 
-      scale = MIN( size / glcomm->w, size / glcomm->h );
-      w     = scale * glcomm->w;
-      h     = scale * glcomm->h;
+      scale = MIN( size / tex_w( glcomm ), size / tex_h( glcomm ) );
+      w     = scale * tex_w( glcomm );
+      h     = scale * tex_h( glcomm );
       gl_getSpriteFromDir( &sx, &sy, s->sx, s->sy, dir );
-      tx = glcomm->sw * (double)( sx ) / glcomm->w;
-      ty = glcomm->sh * ( glcomm->sy - (double)sy - 1 ) / glcomm->h;
+      tx = tex_sw( glcomm ) * (double)( sx ) / tex_w( glcomm );
+      ty = tex_sh( glcomm ) * ( tex_sy( glcomm ) - (double)sy - 1 ) /
+           tex_h( glcomm );
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
-                        tx, ty, glcomm->srw, glcomm->srh, NULL, 0. );
+                        tx, ty, tex_srw( glcomm ), tex_srh( glcomm ), NULL,
+                        0. );
 
       gl_freeTexture( glcomm );
 
@@ -405,7 +407,7 @@ glTexture *ship_gfxStore( const Ship *s, int size, double dir, double updown,
 
    snprintf( buf, sizeof( buf ), "%s_fbo_gfx_store_%d", s->name, size );
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
-   gltex->flags |= OPENGL_TEX_VFLIP;
+   tex_setVFLIP( gltex, 1 );
 
    return gltex;
 }
@@ -480,11 +482,11 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
 
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->gfx_comm, size );
       glcomm = gl_newImage( s->gfx_comm, 0 );
-      glcomm->flags &= ~OPENGL_TEX_VFLIP;
+      tex_setVFLIP( glcomm, 0 );
 
-      scale = MIN( size / glcomm->w, size / glcomm->h );
-      w     = scale * glcomm->w;
-      h     = scale * glcomm->h;
+      scale = MIN( size / tex_w( glcomm ), size / tex_h( glcomm ) );
+      w     = scale * tex_w( glcomm );
+      h     = scale * tex_h( glcomm );
       gl_renderTexture( glcomm, ( size - w ) * 0.5, ( size - h ) * 0.5, w, h,
                         0., 0., 1., 1., NULL, 0. );
 
@@ -499,7 +501,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    gl_contextUnset();
 
    gltex = gl_rawTexture( buf, tex, fbosize, fbosize );
-   gltex->flags |= OPENGL_TEX_VFLIP;
+   tex_setVFLIP( gltex, 1 );
 
    return gltex;
 }
@@ -735,10 +737,10 @@ int ship_gfxLoad( Ship *s )
 #if 0
 #if DEBUGGING
    if ( ( s->gfx_space != NULL ) &&
-        ( round( s->size ) != round( s->gfx_space->sw ) ) )
+        ( round( s->size ) != round( tex_sw(s->gfx_space)) ) )
       WARN( ( "Mismatch between 'size' and 'gfx_space' sprite size for ship "
               "'%s'! 'size' should be %.0f!" ),
-            s->name, s->gfx_space->sw );
+            s->name, tex_sw(s->gfx_space));
 #endif /* DEBUGGING */
 #endif
 
@@ -1521,20 +1523,21 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
 
       /* Only clear the necessary area. */
       glEnable( GL_SCISSOR_TEST );
-      glScissor( 0, 0, sa->sw / gl_screen.scale + 1,
-                 sa->sh / gl_screen.scale + 1 );
+      glScissor( 0, 0, tex_sw( sa ) / gl_screen.scale + 1,
+                 tex_sh( sa ) / gl_screen.scale + 1 );
       glClear( GL_COLOR_BUFFER_BIT );
       glDisable( GL_SCISSOR_TEST );
 
       /* Texture coords */
-      tx = sa->sw * (double)( sx ) / sa->w;
-      ty = sa->sh * ( sa->sy - (double)sy - 1 ) / sa->h;
+      tx = tex_sw( sa ) * (double)( sx ) / tex_w( sa );
+      ty = tex_sh( sa ) * ( tex_sy( sa ) - (double)sy - 1 ) / tex_h( sa );
 
       tmpm           = gl_view_matrix;
       gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
 
-      gl_renderTextureInterpolate( sb, sa, engine_glow, 0., 0., sa->sw, sa->sh,
-                                   tx, ty, sa->srw, sa->srh, c );
+      gl_renderTextureInterpolate( sb, sa, engine_glow, 0., 0., tex_sw( sa ),
+                                   tex_sh( sa ), tx, ty, tex_srw( sa ),
+                                   tex_srh( sa ), c );
 
       gl_view_matrix = tmpm;
 

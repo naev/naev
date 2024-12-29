@@ -1152,8 +1152,8 @@ static void spfx_renderStack( SPFX *spfx_stack )
          int sx, sy;
 
          /* Simplifies */
-         sx = (int)effect->gfx->sx;
-         sy = (int)effect->gfx->sy;
+         sx = (int)tex_sx( effect->gfx );
+         sy = (int)tex_sy( effect->gfx );
 
          if ( !paused ) { /* don't calculate frame if paused */
             double time =

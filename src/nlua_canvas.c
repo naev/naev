@@ -169,14 +169,15 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    /* Create the texture. */
    SDL_asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
    lc->tex = gl_loadImageData( NULL, w, h, 1, 1, name );
-   lc->tex->flags |=
-      OPENGL_TEX_VFLIP; /* Long story, but love stuff inverts Y axis for
-                           canvases so we have to redo that here for spob
-                           targetting stuff to work properly. */
+   tex_setVFLIP( lc->tex, 1 ); /* Long story, but love stuff inverts Y axis for
+                               canvases so we have to redo that here for spob
+                               targetting stuff to work properly. */
    free( name );
 
    /* Create the frame buffer. */
-   gl_fboCreate( &lc->fbo, &lc->tex->texture, w, h );
+   GLuint texture;
+   gl_fboCreate( &lc->fbo, &texture, w, h );
+   tex_setTex( lc->tex, texture );
 
    return 0;
 }
@@ -226,7 +227,7 @@ static int canvasL_set( lua_State *L )
       }
       gl_screen.current_fbo = lc->fbo;
       glDisable( GL_SCISSOR_TEST );
-      glViewport( 0, 0, lc->tex->w, lc->tex->h );
+      glViewport( 0, 0, tex_w( lc->tex ), tex_h( lc->tex ) );
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
       render_needsReset();
    } else
@@ -245,8 +246,8 @@ static int canvasL_set( lua_State *L )
 static int canvasL_dims( lua_State *L )
 {
    const LuaCanvas_t *lc = luaL_checkcanvas( L, 1 );
-   lua_pushnumber( L, lc->tex->w );
-   lua_pushnumber( L, lc->tex->h );
+   lua_pushnumber( L, tex_w( lc->tex ) );
+   lua_pushnumber( L, tex_h( lc->tex ) );
    return 2;
 }
 

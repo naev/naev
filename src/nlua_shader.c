@@ -392,7 +392,7 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
 
    case GL_SAMPLER_2D:
       tex                   = luaL_checktex( L, idx );
-      ls->tex[u->tex].texid = tex->texture;
+      ls->tex[u->tex].texid = tex_tex( tex );
       break;
 
    default:

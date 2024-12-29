@@ -1145,14 +1145,16 @@ static void sysedit_renderSprite( const glTexture *gfx, double bx, double by,
    /* Selection graphic. */
    if ( selected ) {
       const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
-      gl_renderCircle( bx + x * z, by + y * z, gfx->sw * z * 1.1, &csel, 1 );
+      gl_renderCircle( bx + x * z, by + y * z, tex_sw( gfx ) * z * 1.1, &csel,
+                       1 );
    }
 
    /* Translate coords. */
-   tx = bx + ( x - gfx->sw / 2. ) * z;
-   ty = by + ( y - gfx->sh / 2. ) * z;
+   tx = bx + ( x - tex_sw( gfx ) / 2. ) * z;
+   ty = by + ( y - tex_sh( gfx ) / 2. ) * z;
    /* Blit the spob. */
-   gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw * z, gfx->sh * z, c );
+   gl_renderScaleSprite( gfx, tx, ty, sx, sy, tex_sw( gfx ) * z,
+                         tex_sh( gfx ) * z, c );
 
    /* Display caption. */
    if ( caption != NULL ) {
@@ -1161,7 +1163,7 @@ static void sysedit_renderSprite( const glTexture *gfx, double bx, double by,
          col = &cRed;
       else
          col = c;
-      gl_printMidRaw( &gl_smallFont, gfx->sw * z + 100, tx - 50,
+      gl_printMidRaw( &gl_smallFont, tex_sw( gfx ) * z + 100, tx - 50,
                       ty - gl_smallFont.h - 5, col, -1., caption );
    }
 }
@@ -1292,7 +1294,8 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          };
 
          /* Threshold. */
-         double t = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
+         double t = tex_sw( jumppoint_gfx ) * tex_sh( jumppoint_gfx ) /
+                    4.; /* Radius^2 */
          t *= pow2( 2. * sysedit_zoom );
 
          /* Try to select. */

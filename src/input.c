@@ -1573,8 +1573,8 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom,
       const AsteroidAnchor *field = &cur_system->asteroids[fieid];
       const Asteroid       *ast   = &field->asteroids[astid];
       /* Recover the right gfx */
-      double rast =
-         MAX( MAX( ast->gfx->sw * zoom, minr ), ast->gfx->sh * zoom );
+      double rast = MAX( MAX( tex_sw( ast->gfx ) * zoom, minr ),
+                         tex_sh( ast->gfx ) * zoom );
       double dast = hypotf( ast->sol.pos.x - x, ast->sol.pos.y - y );
       if ( dast > rast )
          astid = -1;

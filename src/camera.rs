@@ -3,6 +3,10 @@ use nalgebra::{Point2, Vector2};
 use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::{LazyLock, Mutex};
 
+// Sound is currently in "screen" coordinates, and doesn't react to ship turning
+// Would probably havne to be relative to heading for accessibility support (when enabled)
+const CAMERA_DIR: f64 = std::f64::consts::FRAC_PI_2;
+
 #[derive(Default, Clone)]
 pub struct Camera {
     pos: Point2<f64>,
@@ -10,19 +14,22 @@ pub struct Camera {
     target: Point2<f64>,
     der: Vector2<f64>,
     vel: Vector2<f64>,
-
+    // For transitions
     fly: bool,
     fly_speed: f64,
+    // For handling zoom
     zoom: f64,
     zoom_target: f64,
     zoom_speed: f64,
     zoom_override: bool,
+    // For pilots
     follow_pilot: c_uint,
 }
 
-static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(Default::default);
+pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(Default::default);
 
 impl Camera {
+    /// Handles updating the camera at every frame
     pub fn update(&mut self, dt: f64) {
         let der = self.pos;
         let old = self.old;
@@ -64,16 +71,10 @@ impl Camera {
             if p == std::ptr::null_mut() {
                 let dx = dt * (old.x - self.pos.x);
                 let dy = dt * (old.y - self.pos.y);
-                naevc::sound_updateListener(
-                    std::f64::consts::FRAC_PI_2,
-                    self.pos.x,
-                    self.pos.y,
-                    dx,
-                    dy,
-                );
+                naevc::sound_updateListener(CAMERA_DIR, self.pos.x, self.pos.y, dx, dy);
             } else {
                 naevc::sound_updateListener(
-                    std::f64::consts::FRAC_PI_2,
+                    CAMERA_DIR,
                     (*p).solid.pos.x,
                     (*p).solid.pos.y,
                     (*p).solid.vel.x,
@@ -393,7 +394,7 @@ pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
         cam.fly_speed = soft_over.into();
     }
 
-    naevc::sound_updateListener(std::f64::consts::FRAC_PI_2, cam.pos.x, cam.pos.y, 0., 0.);
+    naevc::sound_updateListener(CAMERA_DIR, cam.pos.x, cam.pos.y, 0., 0.);
 }
 
 #[no_mangle]
