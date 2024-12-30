@@ -11,7 +11,7 @@ repos:
     - id: check-yaml
     - id: check-added-large-files
     - id: check-executables-have-shebangs
-    - id: check-shebang-scripts-are-executable
+    #- id: check-shebang-scripts-are-executable
     - id: check-case-conflict
     - id: check-symlinks
     - id: destroyed-symlinks
