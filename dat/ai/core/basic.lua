@@ -1021,6 +1021,10 @@ function mine_drill_brake( ast )
       ai.popsubtask()
       return
    end
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
    ai.setasterotarget( ast )
    ai.brake()
    ai.pilot():outfitToggle( mem._o.plasma_drill, true )
@@ -1072,6 +1076,10 @@ end
 
 -- luacheck: globals _killasteroid (AI Task functions passed by name)
 function _killasteroid( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
    local wrange    = ai.getweaprangemin( atk.PRIMARY )
 
    local target = ast:pos()
