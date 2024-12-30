@@ -51,17 +51,17 @@ pub extern "C" fn dtype_raw(
 ) -> c_int {
     match get_c(dtid) {
         Some(dt) => {
-            if shield != std::ptr::null_mut() {
+            if !shield.is_null() {
                 unsafe {
                     *shield = dt.shield_mod;
                 }
             }
-            if armour != std::ptr::null_mut() {
+            if !armour.is_null() {
                 unsafe {
                     *armour = dt.armour_mod;
                 }
             }
-            if knockback != std::ptr::null_mut() {
+            if !knockback.is_null() {
                 unsafe {
                     *knockback = dt.knockback;
                 }
@@ -106,13 +106,13 @@ pub extern "C" fn dtype_calcDamage(
        *knockback = dtype->knock;
      */
     if let Some(dt) = get_c(unsafe { (*dmg).type_ }) {
-        if dshield != std::ptr::null_mut() {
+        if !dshield.is_null() {
             unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb }
         }
-        if darmour != std::ptr::null_mut() {
+        if !darmour.is_null() {
             unsafe { *dshield = dt.armour_mod * (*dmg).damage * absorb }
         }
-        if knockback != std::ptr::null_mut() {
+        if !knockback.is_null() {
             unsafe {
                 *knockback = dt.knockback;
             }

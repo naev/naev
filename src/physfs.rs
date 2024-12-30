@@ -179,13 +179,13 @@ impl Drop for File<'_> {
 pub fn read_dir(path: &str) -> Result<Vec<String>> {
     let c_path = CString::new(path)?;
     let mut list = unsafe { naevc::PHYSFS_enumerateFiles(c_path.as_ptr()) };
-    if list == std::ptr::null_mut() {
+    if list.is_null() {
         return Err(error_as_io_error());
     }
     let listptr = list;
 
     let mut res = vec![];
-    while unsafe { *list } != std::ptr::null_mut() {
+    while !unsafe { *list }.is_null() {
         unsafe {
             let filename = format!("{}/{}", path, CStr::from_ptr(*list).to_str().unwrap());
             res.push(filename);

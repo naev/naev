@@ -38,7 +38,7 @@ impl Camera {
         if self.fly {
             if self.follow_pilot != 0 {
                 p = unsafe { naevc::pilot_get(self.follow_pilot) };
-                if p == std::ptr::null_mut() {
+                if p.is_null() {
                     self.follow_pilot = 0;
                     self.fly = false;
                 } else {
@@ -51,7 +51,7 @@ impl Camera {
             }
         } else if self.follow_pilot != 0 {
             p = unsafe { naevc::pilot_get(self.follow_pilot) };
-            if p == std::ptr::null_mut() {
+            if p.is_null() {
                 self.follow_pilot = 0;
             } else {
                 self.update_pilot(p, dt);
@@ -64,7 +64,7 @@ impl Camera {
         }
 
         unsafe {
-            if p == std::ptr::null_mut() {
+            if p.is_null() {
                 let dx = dt * (old.x - self.pos.x);
                 let dy = dt * (old.y - self.pos.y);
                 naevc::sound_updateListener(CAMERA_DIR, self.pos.x, self.pos.y, dx, dy);
@@ -112,7 +112,7 @@ impl Camera {
 
     fn update_manual_zoom(&mut self, dt: f64) {
         unsafe {
-            if naevc::player.p == std::ptr::null_mut() {
+            if naevc::player.p.is_null() {
                 return;
             }
         }
@@ -187,7 +187,7 @@ impl Camera {
             let stealth = unsafe { (*follow).flags[naevc::PILOT_STEALTH as usize] != 0 };
             if stealth {
                 zfar
-            } else if target == std::ptr::null_mut() {
+            } else if target.is_null() {
                 znear
             } else {
                 let mut pos = {
@@ -246,7 +246,7 @@ impl Camera {
         self.old = pos;
 
         /* Compute bias. */
-        let mut bias = if target != std::ptr::null() {
+        let mut bias = if !target.is_null() {
             let target_pos =
                 unsafe { Point2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
             target_pos - pos
