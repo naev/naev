@@ -99,10 +99,7 @@ impl TextureData {
         }
 
         let tex = Arc::new(TextureData {
-            name: match name {
-                Some(n) => Some(String::from(n)),
-                None => None,
-            },
+            name: name.map(String::from),
             w: w as usize,
             h: h as usize,
             texture,
@@ -111,7 +108,7 @@ impl TextureData {
             vmax: 1.,
         });
 
-        if let Some(_) = name {
+        if name.is_some() {
             textures.push(Arc::downgrade(&tex));
         }
         Ok(tex)
@@ -147,7 +144,7 @@ impl Texture {
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
 
         // Copy necessaryparameters over
-        for param in vec![
+        for param in [
             glow::TEXTURE_WRAP_S,
             glow::TEXTURE_WRAP_T,
             glow::TEXTURE_MIN_FILTER,
@@ -250,7 +247,7 @@ impl TextureBuilder {
         }
     }
 
-    pub fn from_path(mut self, path: &str) -> Self {
+    pub fn path(mut self, path: &str) -> Self {
         self.source = TextureSource::Path(String::from(path));
         self
     }
@@ -487,7 +484,7 @@ pub extern "C" fn gl_newSprite_(
     let flags = Flags::from(cflags);
 
     let mut builder = TextureBuilder::new()
-        .from_path(path.to_str().unwrap())
+        .path(path.to_str().unwrap())
         .sx(sx as usize)
         .sy(sy as usize)
         .srgb(!flags.notsrgb)
