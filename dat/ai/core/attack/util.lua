@@ -23,6 +23,14 @@ mem.atk_pref_range = 5e3 -- Range to prefer to attack from
 9 -> turret seekers
 --]]
 
+atk.PRIMARY = 1
+atk.SECONDARY = 2
+atk.POINTDEFENSE = 3
+atk.FIGHTERBAYS = 4
+atk.TURRETS = 5
+atk.SEEKERS = 6
+atk.SEEKER_TURRETS = 7
+
 function atk.shootall()
    atk.primary()
    atk.secondary()

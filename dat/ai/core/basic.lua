@@ -1033,7 +1033,7 @@ function mine_shoot( ast )
    end
 
    local p         = ai.pilot()
-   local wrange    = atk.primary_range()
+   local wrange    = ai.getweaprangemin( atk.PRIMARY )
    local erange    = 100
    local trange    = math.min( math.max( erange, wrange * 3 / 4 ), wrange )
    local mbd       = ai.minbrakedist()
@@ -1072,7 +1072,7 @@ end
 
 -- luacheck: globals _killasteroid (AI Task functions passed by name)
 function _killasteroid( ast )
-   local wrange    = atk.primary_range()
+   local wrange    = ai.getweaprangemin( atk.PRIMARY )
 
    local target = ast:pos()
    local dir  = ai.face(target)
