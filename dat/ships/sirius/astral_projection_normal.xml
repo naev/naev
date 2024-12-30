@@ -31,8 +31,8 @@
   <cpu>80</cpu>
  </characteristics>
  <slots>
-  <weapon size="Medium" x="10" y="-2" h="0">Astral Cannon</weapon>
-  <weapon size="Medium" x="10" y="2" h="0">Astral Cannon</weapon>
+  <weapon prop="builtin" size="Medium" x="10" y="-2" h="0">Astral Cannon</weapon>
+  <weapon prop="builtin" size="Medium" x="10" y="2" h="0">Astral Cannon</weapon>
   <utility size="Medium"/>
   <utility size="Medium"/>
   <intrinsic>Internal Flow Amplifier</intrinsic>

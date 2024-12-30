@@ -31,8 +31,8 @@
   <cpu>80</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="10" y="-2" h="0">Lesser Astral Cannon</weapon>
-  <weapon size="small" x="10" y="2" h="0">Lesser Astral Cannon</weapon>
+  <weapon prop="builtin" size="small" x="10" y="-2" h="0">Lesser Astral Cannon</weapon>
+  <weapon prop="builtin" size="small" x="10" y="2" h="0">Lesser Astral Cannon</weapon>
   <utility size="small"/>
   <utility size="small"/>
   <intrinsic>Internal Flow Amplifier</intrinsic>
