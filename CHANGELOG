@@ -15,6 +15,10 @@
    * Made miners less bad at mining, their only passion
    * Slim GUI set formation button is no longer clickable when invisible
    * Removed outdated tip from NPC messages
+   * Deployed fighters are always aggressive (for now)
+   * Player can't make own escorts hostile with AoE weapons
+   * Made Za'lek drone weapons builtin
+   * Don't remove builtin weapons when spawning pilots naked
    * Minor typo fixes and translation updates
 
 * 0.12.1

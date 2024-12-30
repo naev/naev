@@ -1539,6 +1539,11 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
 
    /* Player is handled differently. */
    if ( shooter->faction == FACTION_PLAYER ) {
+
+      /* Don't have members of the player's faction aggro them. */
+      if ( p->faction == FACTION_PLAYER )
+         return;
+
       /* Increment damage done to by player. */
       p->player_damage += dmg / ( p->shield_max + p->armour_max );
 

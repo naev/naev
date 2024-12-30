@@ -27,24 +27,27 @@ local function test_autonav ()
    return true
 end
 
-local should_attack_orig = should_attack
-function should_attack( ... )
-   if not test_autonav() then return end
-   return should_attack_orig( ... )
-end
-
-local attacked_orig = attacked
-function attacked( ... )
-   if not test_autonav() then return end
-   return attacked_orig( ... )
-end
-
 local create_orig = create
 function create ()
    create_orig()
    ai.setcredits( 0 )
+   local p = ai.pilot()
    -- So, most escorts should be already equipped from player_fleet.c, so we
    -- don't run equipopt again, and instead want to set up their equipment and
    -- such
-   ai_setup.setup( ai.pilot() )
+   ai_setup.setup( p )
+
+   if p:withPlayer() then
+      local should_attack_orig = should_attack
+      function should_attack( ... )
+         if not test_autonav() then return end
+         return should_attack_orig( ... )
+      end
+
+      local attacked_orig = attacked
+      function attacked( ... )
+         if not test_autonav() then return end
+         return attacked_orig( ... )
+      end
+   end
 end
