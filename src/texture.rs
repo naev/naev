@@ -2,7 +2,6 @@
 use anyhow::Result;
 use glow::*;
 use nalgebra::Vector4;
-use sdl2 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int, c_uint};
@@ -15,7 +14,7 @@ static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 
 pub struct TextureData {
-    path: String,
+    name: Option<String>,
     texture: glow::Texture,
     w: usize,
     h: usize,
@@ -31,100 +30,6 @@ impl Drop for TextureData {
 }
 
 impl TextureData {
-    const SDL_FORMAT: sdl::pixels::PixelFormatEnum = sdl::pixels::PixelFormatEnum::ABGR8888;
-
-    fn new_tex(
-        gl: &glow::Context,
-        path: &str,
-        is_srgb: bool,
-        is_sdf: bool,
-    ) -> Result<(glow::Texture, usize, usize), String> {
-        todo!();
-        /*
-        let texture = unsafe { gl.create_texture()? };
-
-        let imgdata = ndata::read(path).unwrap();
-
-        let rw = sdl2::rwops::RWops::from_bytes(&imgdata)?;
-        let mut surface = rw.load()?;
-        let surfmt = surface.pixel_format_enum();
-        let has_alpha = surfmt.into_masks()?.amask > 0;
-        if surfmt != Self::SDL_FORMAT {
-            surface = surface.convert_format(Self::SDL_FORMAT)?;
-        }
-        let (w, h) = (surface.width(), surface.height());
-
-        if is_sdf {
-            //todo!();
-        }
-
-        let internalformat = match is_srgb {
-            true => match has_alpha {
-                true => glow::SRGB_ALPHA,
-                false => glow::SRGB,
-            },
-            false => match has_alpha {
-                true => glow::RGBA,
-                false => glow::RGB,
-            },
-        };
-        unsafe {
-            gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            // TODO is this pitch correct?
-            gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, surface.pitch().min(8) as i32);
-            surface.with_lock(|data| {
-                let gldata = glow::PixelUnpackData::Slice(Some(data));
-                gl.tex_image_2d(
-                    glow::TEXTURE_2D,
-                    0,
-                    internalformat as i32,
-                    w as i32,
-                    h as i32,
-                    0,
-                    glow::RGBA,
-                    glow::UNSIGNED_BYTE,
-                    gldata,
-                );
-            });
-            gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 4);
-            gl.bind_texture(glow::TEXTURE_2D, None);
-        }
-
-        Ok((texture, w as usize, h as usize))
-        */
-    }
-
-    fn new(gl: &glow::Context, path: &str, is_srgb: bool) -> Result<Arc<Self>> {
-        let mut textures = TEXTURE_DATA.lock().unwrap();
-        for tex in textures.iter() {
-            if let Some(t) = tex.upgrade() {
-                if t.path == path {
-                    return Ok(t);
-                }
-            }
-        }
-
-        let (texture, w, h) =
-            Self::new_tex(gl, path, is_srgb, false).map_err(|e| anyhow::anyhow!(e))?;
-
-        let tex = Arc::new(TextureData {
-            path: String::from(path),
-            w,
-            h,
-            texture,
-            is_srgb,
-            is_sdf: false,
-            vmax: 1.,
-        });
-
-        textures.push(Arc::downgrade(&tex));
-        Ok(tex)
-    }
-
-    fn new_sdf(gl: &glow::Context, path: &str) -> Result<Arc<Self>> {
-        todo!();
-    }
-
     /*
     fn from_path( gl: &glow::Context, path: &str ) -> Result<Arc<Self>> {
         let bytes = ndata::read(path)?;
@@ -142,6 +47,19 @@ impl TextureData {
         name: Option<&str>,
         img: &image::DynamicImage,
     ) -> Result<Arc<Self>> {
+        let mut textures = TEXTURE_DATA.lock().unwrap();
+        if let Some(name) = name {
+            for tex in textures.iter() {
+                if let Some(t) = tex.upgrade() {
+                    if let Some(tname) = &t.name {
+                        if tname == name {
+                            return Ok(t);
+                        }
+                    }
+                }
+            }
+        }
+
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
@@ -180,8 +98,23 @@ impl TextureData {
             gl.bind_texture(glow::TEXTURE_2D, None);
         }
 
-        todo!();
-        //Ok((texture, w as usize, h as usize))
+        let tex = Arc::new(TextureData {
+            name: match name {
+                Some(n) => Some(String::from(n)),
+                None => None,
+            },
+            w: w as usize,
+            h: h as usize,
+            texture,
+            is_srgb,
+            is_sdf: false,
+            vmax: 1.,
+        });
+
+        if let Some(_) = name {
+            textures.push(Arc::downgrade(&tex));
+        }
+        Ok(tex)
     }
 }
 
@@ -276,6 +209,7 @@ impl FilterMode {
 pub enum TextureSource {
     Path(String),
     Data(Vec<u8>),
+    Image(image::DynamicImage),
     None,
 }
 
@@ -408,6 +342,7 @@ impl TextureBuilder {
                 .unwrap();
                 image::DynamicImage::ImageRgba8(buf)
             }
+            TextureSource::Image(img) => img,
             TextureSource::None => todo!(),
         };
 
