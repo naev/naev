@@ -3778,15 +3778,7 @@ Spob *player_load( xmlNodePtr parent )
       difficulty_setLocal( NULL ); /* Sets the default. */
 
    /* Updates the fleet internals. */
-   int l = landed; /* We simulate landing, because it makes the player go over
-                      available limits and closes an exploit where the player
-                      can cheat the cargo limist by using outfits that increase
-                      the limit, accept missions, and then reduce it under the
-                      limit.
-                      TODO do this in a less hack way. */
-   landed = 1;
    pfleet_update();
-   landed = l;
 
    return pnt;
 }
