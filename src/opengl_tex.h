@@ -53,9 +53,6 @@ USE_RESULT glTexture *gl_texExistsOrCreate( const char  *path,
 USE_RESULT glTexture *gl_loadImageData( float *data, int w, int h, int sx,
                                         int sy, const char *name );
 USE_RESULT glTexture *gl_newImage( const char *path, const unsigned int flags );
-USE_RESULT glTexture                       *
-gl_newImageRWops( const char *path, SDL_RWops *rw,
-                                        const unsigned int flags ); /* Does not close the RWops. */
 USE_RESULT glTexture *gl_newSprite( const char *path, const int sx,
                                     const int sy, const unsigned int flags );
 USE_RESULT glTexture *gl_newSpriteRWops( const char *path, SDL_RWops *rw,

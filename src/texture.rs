@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![allow(dead_code, unused_variables)]
 use anyhow::Result;
 use glow::*;
 use nalgebra::Vector4;
@@ -425,6 +425,37 @@ capi!(tex_srh_, srh);
 capi_tex!(tex_vmax_, vmax);
 
 #[no_mangle]
+pub extern "C" fn gl_initTextures_() -> c_int {
+    0
+}
+
+#[no_mangle]
+pub extern "C" fn gl_exitTextures_() {}
+
+#[no_mangle]
+pub extern "C" fn gl_texExistsOrCreate_(
+    path: *const c_char,
+    flags: c_uint,
+    sx: c_int,
+    sy: c_int,
+    created: *mut c_int,
+) -> *mut Texture {
+    todo!();
+}
+
+#[no_mangle]
+pub extern "C" fn gl_loadImageData_(
+    data: *mut f32,
+    w: c_int,
+    h: c_int,
+    sx: c_int,
+    sy: c_int,
+    name: *const c_char,
+) -> *mut Texture {
+    todo!();
+}
+
+#[no_mangle]
 pub extern "C" fn gl_newImage_(cpath: *const c_char, flags: c_uint) -> *mut Texture {
     gl_newSprite_(cpath, 1, 1, flags)
 }
@@ -460,10 +491,31 @@ pub extern "C" fn gl_newSprite_(
 }
 
 #[no_mangle]
+pub extern "C" fn gl_newSpriteRWops_(
+    path: *const c_char,
+    rw: *mut naevc::SDL_RWops,
+    sx: c_int,
+    sy: c_int,
+    flags: c_uint,
+) -> *mut Texture {
+    todo!();
+}
+
+#[no_mangle]
 pub extern "C" fn gl_dupTexture_(ctex: *mut Texture) -> *mut Texture {
     let tex = unsafe { &*ctex };
     unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
     Box::into_raw(Box::new(tex.try_clone().unwrap()))
+}
+
+#[no_mangle]
+pub extern "C" fn gl_rawTexture_(
+    ctex: *mut Texture,
+    tex: naevc::GLuint,
+    w: c_double,
+    h: c_double,
+) -> *mut Texture {
+    todo!();
 }
 
 #[no_mangle]

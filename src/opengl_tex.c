@@ -626,31 +626,6 @@ glTexture *gl_newImage( const char *path, const unsigned int flags )
 }
 
 /**
- * @brief Loads an image as a texture.
- *
- * May not necessarily load the image but use one if it's already open.
- *
- * @note Does not close the SDL_RWops file.
- *
- *    @param path Path name used for checking cache and error reporting.
- *    @param rw SDL_RWops structure to load from.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
- */
-glTexture *gl_newImageRWops( const char *path, SDL_RWops *rw,
-                             const unsigned int flags )
-{
-   int        created;
-   glTexture *t = gl_texExistsOrCreate( path, flags, 1, 1, &created );
-   if ( !created )
-      return t;
-
-   /* Load the image */
-   gl_loadNewImageRWops( t, path, rw, 1, 1, flags );
-   return t;
-}
-
-/**
  * @brief Only loads the image, does not add to stack unlike gl_newImage.
  *
  *    @param tex Texture to load to.
