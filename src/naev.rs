@@ -27,6 +27,7 @@ mod physics;
 mod rng;
 mod slots;
 mod start;
+mod texture;
 mod version;
 
 use crate::gettext::gettext;

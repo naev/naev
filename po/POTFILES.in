@@ -3977,6 +3977,7 @@ src/start.rs
 src/target.h
 src/tech.c
 src/tech.h
+src/texture.rs
 src/threadpool.c
 src/threadpool.h
 src/tk/toolkit_priv.h

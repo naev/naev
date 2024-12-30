@@ -1,11 +1,13 @@
+#![allow(dead_code)]
 use anyhow::Result;
 use glow::*;
-use nalgebra::Vector2;
+use nalgebra::Vector4;
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
+use std::boxed::Box;
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_uint};
-use std::sync::{Arc, LazyLock, Mutex, MutexGuard, OnceLock};
+use std::sync::{Arc, LazyLock, Mutex, MutexGuard, OnceLock, Weak};
 use std::thread::ThreadId;
 
 use crate::{log, ndata};
@@ -202,167 +204,4 @@ pub fn init(sdlvid: &sdl::VideoSubsystem) -> Result<&'static Context> {
     let ctx = Context::new(window, gl_context, gl);
     let _ = CONTEXT.set(ctx);
     Ok(&CONTEXT.get().unwrap())
-}
-
-pub struct Texture {
-    path: String,
-
-    // Dimensions
-    w: usize,
-    h: usize,
-
-    // Sprites
-    sx: usize,
-    sy: usize,
-    sw: f64,
-    sh: f64,
-    srw: f64,
-    srh: f64,
-
-    // Data
-    texture: glow::Texture,
-    alpha: Option<Vec<u8>>,
-    vmax: f64,
-
-    // Properties
-    is_sdf: bool,
-}
-
-static TEXTURES: LazyLock<Mutex<Vec<Arc<Texture>>>> =
-    LazyLock::new(|| Mutex::new(Default::default()));
-
-impl Texture {
-    const SDL_FORMAT: sdl::pixels::PixelFormatEnum = sdl::pixels::PixelFormatEnum::ABGR8888;
-
-    fn new_tex(
-        gl: &glow::Context,
-        path: &str,
-        is_srgb: bool,
-        is_sdf: bool,
-    ) -> Result<(glow::Texture, f64, usize, usize), String> {
-        let texture = unsafe { gl.create_texture()? };
-
-        let imgdata = ndata::read(path).unwrap();
-
-        let rw = sdl2::rwops::RWops::from_bytes(&imgdata)?;
-        let mut surface = rw.load()?;
-        let surfmt = surface.pixel_format_enum();
-        let has_alpha = surfmt.into_masks()?.amask > 0;
-        if surfmt != Self::SDL_FORMAT {
-            surface = surface.convert_format(Self::SDL_FORMAT)?;
-        }
-        let (w, h) = (surface.width(), surface.height());
-
-        unsafe {
-            gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            if naevc::gl_screen.scale != 1. {
-                gl.tex_parameter_i32(
-                    glow::TEXTURE_2D,
-                    glow::TEXTURE_MIN_FILTER,
-                    glow::LINEAR as i32,
-                );
-                gl.tex_parameter_i32(
-                    glow::TEXTURE_2D,
-                    glow::TEXTURE_MAG_FILTER,
-                    glow::LINEAR as i32,
-                );
-            }
-            gl.tex_parameter_i32(glow::TEXTURE_2D, glow::TEXTURE_WRAP_S, glow::REPEAT as i32);
-            gl.tex_parameter_i32(glow::TEXTURE_2D, glow::TEXTURE_WRAP_T, glow::REPEAT as i32);
-        };
-
-        let vmax = 1.;
-        if is_sdf {
-            todo!();
-        } else {
-            unsafe {
-                let internalformat = match is_srgb {
-                    true => match has_alpha {
-                        true => glow::SRGB_ALPHA,
-                        false => glow::SRGB,
-                    },
-                    false => match has_alpha {
-                        true => glow::RGB,
-                        false => glow::RGBA,
-                    },
-                };
-                // TODO is this pitch correct?
-                gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, surface.pitch().min(8) as i32);
-                surface.with_lock(|data| {
-                    let gldata = glow::PixelUnpackData::Slice(Some(data));
-                    gl.tex_image_2d(
-                        glow::TEXTURE_2D,
-                        0,
-                        internalformat as i32,
-                        w as i32,
-                        h as i32,
-                        0,
-                        glow::RGBA,
-                        glow::UNSIGNED_BYTE,
-                        gldata,
-                    );
-                });
-                gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 4);
-            }
-        }
-
-        unsafe {
-            gl.bind_texture(glow::TEXTURE_2D, None);
-        }
-        Ok((texture, vmax, w as usize, h as usize))
-    }
-
-    pub fn from_path(gl: &glow::Context, path: &str, sx: usize, sy: usize) -> Result<Arc<Self>> {
-        let mut textures = TEXTURES.lock().unwrap();
-        for tex in textures.iter() {
-            if tex.path == path && tex.sx == sx && tex.sy == sy {
-                return Ok(tex.clone());
-            }
-        }
-
-        let (texture, vmax, w, h) =
-            Self::new_tex(gl, path, true, false).map_err(|e| anyhow::anyhow!(e))?;
-
-        let sw = (w as f64) / (sx as f64);
-        let sh = (h as f64) / (sy as f64);
-
-        let tex = Arc::new(Texture {
-            path: String::from(path),
-            w,
-            h,
-            sx,
-            sy,
-            sw,
-            sh,
-            srw: sw / (w as f64),
-            srh: sh / (h as f64),
-            texture,
-            alpha: None,
-            vmax,
-            is_sdf: false,
-        });
-
-        textures.push(tex.clone());
-        Ok(tex)
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn gl_newImage_(cpath: *const c_char, flags: c_uint) -> *const naevc::glTexture {
-    let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = CONTEXT.get().unwrap();
-    match Texture::from_path(&ctx.gl, path.to_str().unwrap(), 1, 1) {
-        Ok(tex) => {
-            let ptr = Arc::into_raw(tex) as *const naevc::glTexture;
-            //Arc::increment_strong_count_in(ptr, System);
-            ptr
-        }
-        _ => std::ptr::null_mut(),
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn tex_tex_(ctex: *const naevc::glTexture) -> naevc::GLuint {
-    let tex = unsafe { Arc::from_raw(ctex as *const Texture) };
-    tex.texture.0.into()
 }
