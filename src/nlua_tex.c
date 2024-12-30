@@ -21,8 +21,6 @@
 #include "nluadef.h"
 #include "physics.h"
 
-static int nlua_tex_counter = 0;
-
 /* Helpers. */
 static inline uint32_t get_pixel( SDL_Surface *surface, int x, int y );
 
@@ -181,7 +179,7 @@ static int texL_close( lua_State *L )
  * @usage t = tex.open( "no_sprites.png" )
  * @usage t = tex.open( "spritesheet.png", 6, 6 )
  *
- *    @luatparam string|File|Data path Path, File, or Data to open.
+ *    @luatparam string|File path Path, or File to open.
  *    @luatparam[opt=1] number w Width when Data or optional number of x sprites
  * otherwise.
  *    @luatparam[opt=1] number h Height when Data or optional number of y
@@ -198,43 +196,15 @@ static int texL_new( lua_State *L )
    const char *path;
    glTexture  *tex;
    LuaFile_t  *lf;
-   LuaData_t  *ld;
    int         sx, sy;
    SDL_RWops  *rw;
-   char       *name;
 
    /* Defaults. */
    lf   = NULL;
-   ld   = NULL;
    path = NULL;
 
    /* Get path. */
-   if ( lua_isdata( L, 1 ) ) {
-      int w, h;
-      ld = luaL_checkdata( L, 1 );
-      /* Since we don't know the size we need the width and height separately.
-       */
-      w = luaL_checkinteger( L, 2 );
-      h = luaL_checkinteger( L, 3 );
-      if ( ( w < 0 ) || ( h < 0 ) )
-         return NLUA_ERROR( L, _( "Texture dimensions must be positive" ) );
-      sx = luaL_optinteger( L, 4, 1 );
-      sy = luaL_optinteger( L, 5, 1 );
-      if ( ( sx < 0 ) || ( sy < 0 ) )
-         return NLUA_ERROR( L, _( "Spritesheet dimensions must be positive" ) );
-      if ( ld->type != LUADATA_NUMBER )
-         return NLUA_ERROR( L, _( "Data has invalid type for texture" ) );
-      if ( w * h * ld->elem * 4 != ld->size )
-         return NLUA_ERROR( L,
-                            _( "Texture dimensions don't match data size!" ) );
-      SDL_asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
-      tex = gl_loadImageData( (void *)ld->data, w, h, sx, sy, name );
-      free( name );
-      if ( tex == NULL )
-         return 0;
-      lua_pushtex( L, tex );
-      return 1;
-   } else if ( lua_isfile( L, 1 ) )
+   if ( lua_isfile( L, 1 ) )
       lf = luaL_checkfile( L, 1 );
    else
       path = luaL_checkstring( L, 1 );

@@ -3,7 +3,6 @@ use anyhow::Result;
 use glow::*;
 use nalgebra::Vector4;
 use sdl2 as sdl;
-use sdl2::image::ImageRWops;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int, c_uint};
@@ -40,6 +39,8 @@ impl TextureData {
         is_srgb: bool,
         is_sdf: bool,
     ) -> Result<(glow::Texture, usize, usize), String> {
+        todo!();
+        /*
         let texture = unsafe { gl.create_texture()? };
 
         let imgdata = ndata::read(path).unwrap();
@@ -90,6 +91,7 @@ impl TextureData {
         }
 
         Ok((texture, w as usize, h as usize))
+        */
     }
 
     fn new(gl: &glow::Context, path: &str, is_srgb: bool) -> Result<Arc<Self>> {
@@ -121,6 +123,65 @@ impl TextureData {
 
     fn new_sdf(gl: &glow::Context, path: &str) -> Result<Arc<Self>> {
         todo!();
+    }
+
+    /*
+    fn from_path( gl: &glow::Context, path: &str ) -> Result<Arc<Self>> {
+        let bytes = ndata::read(path)?;
+        TextureData::from_bytes( gl, bytes.as_slice() )
+    }
+
+    fn from_bytes( gl: &glow::Context, bytes: &[u8]) -> Result<Arc<Self>> {
+        let img = image::load_from_memory(bytes)?;
+        TextureData::from_image( gl, &img )
+    }
+    */
+
+    fn from_image(
+        gl: &glow::Context,
+        name: Option<&str>,
+        img: &image::DynamicImage,
+    ) -> Result<Arc<Self>> {
+        let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
+
+        let has_alpha = img.color().has_alpha();
+        let (w, h) = (img.width(), img.height());
+        let imgdata = img.to_rgba8().into_raw();
+
+        let is_srgb = true;
+
+        let internalformat = match is_srgb {
+            true => match has_alpha {
+                true => glow::SRGB_ALPHA,
+                false => glow::SRGB,
+            },
+            false => match has_alpha {
+                true => glow::RGBA,
+                false => glow::RGB,
+            },
+        };
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, Some(texture));
+            // TODO is this pitch correct?
+            //gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, surface.pitch().min(8) as i32);
+            let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
+            gl.tex_image_2d(
+                glow::TEXTURE_2D,
+                0,
+                internalformat as i32,
+                w as i32,
+                h as i32,
+                0,
+                glow::RGBA,
+                glow::UNSIGNED_BYTE,
+                gldata,
+            );
+            //gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 4);
+            gl.bind_texture(glow::TEXTURE_2D, None);
+        }
+
+        todo!();
+        //Ok((texture, w as usize, h as usize))
     }
 }
 
@@ -212,8 +273,15 @@ impl FilterMode {
     }
 }
 
+pub enum TextureSource {
+    Path(String),
+    Data(Vec<u8>),
+    None,
+}
+
 pub struct TextureBuilder {
-    path: Option<String>,
+    name: String,
+    source: TextureSource,
     w: usize,
     h: usize,
     sx: usize,
@@ -229,9 +297,10 @@ pub struct TextureBuilder {
 }
 
 impl TextureBuilder {
-    pub fn new(path: Option<&str>) -> Self {
+    pub fn new() -> Self {
         TextureBuilder {
-            path: path.map(String::from),
+            name: String::default(),
+            source: TextureSource::None,
             w: 0,
             h: 0,
             sx: 1,
@@ -245,6 +314,11 @@ impl TextureBuilder {
             min_filter: FilterMode::Linear,
             mipmaps: false,
         }
+    }
+
+    pub fn from_path(mut self, path: &str) -> Self {
+        self.source = TextureSource::Path(String::from(path));
+        self
     }
 
     pub fn srgb(mut self, enable: bool) -> Self {
@@ -316,59 +390,65 @@ impl TextureBuilder {
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
-        if let Some(path) = &self.path {
-            let texture = match self.is_sdf {
-                true => TextureData::new_sdf(gl, path.as_str()),
-                false => TextureData::new(gl, path.as_str(), self.is_srgb),
-            }?;
-
-            let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
-            unsafe {
-                gl.sampler_parameter_i32(
-                    sampler,
-                    glow::TEXTURE_MIN_FILTER,
-                    self.min_filter.to_gl(),
-                );
-                gl.sampler_parameter_i32(
-                    sampler,
-                    glow::TEXTURE_MAG_FILTER,
-                    self.mag_filter.to_gl(),
-                );
-                if let Some(border) = &self.border_value {
-                    gl.sampler_parameter_f32_slice(
-                        sampler,
-                        glow::TEXTURE_BORDER_COLOR,
-                        border.as_slice(),
-                    );
+        // TODO SDF
+        let img = match self.source {
+            TextureSource::Path(path) => match self.is_sdf {
+                true => todo!(),
+                false => {
+                    let bytes = ndata::read(path.as_str())?;
+                    image::load_from_memory(&bytes)?
                 }
-                gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_gl());
-                gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_gl());
+            },
+            TextureSource::Data(data) => {
+                let buf = image::ImageBuffer::<image::Rgba<u8>, Vec<u8>>::from_raw(
+                    self.w as u32,
+                    self.h as u32,
+                    data,
+                )
+                .unwrap();
+                image::DynamicImage::ImageRgba8(buf)
             }
+            TextureSource::None => todo!(),
+        };
 
-            let (w, h) = (texture.w, texture.h);
-            let (sx, sy) = (self.sx, self.sy);
-            let sw = (w as f64) / (sx as f64);
-            let sh = (h as f64) / (sy as f64);
-            let srw = sw / (w as f64);
-            let srh = sh / (h as f64);
+        let texture = TextureData::from_image(gl, Some("Foo"), &img)?;
 
-            let name = CString::new(path.as_str())?;
-
-            Ok(Texture {
-                path: self.path.unwrap(),
-                name,
-                sx,
-                sy,
-                sw,
-                sh,
-                srw,
-                srh,
-                texture,
-                sampler,
-            })
-        } else {
-            todo!();
+        let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
+        unsafe {
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_MAG_FILTER, self.mag_filter.to_gl());
+            if let Some(border) = &self.border_value {
+                gl.sampler_parameter_f32_slice(
+                    sampler,
+                    glow::TEXTURE_BORDER_COLOR,
+                    border.as_slice(),
+                );
+            }
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_gl());
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_gl());
         }
+
+        let (w, h) = (texture.w, texture.h);
+        let (sx, sy) = (self.sx, self.sy);
+        let sw = (w as f64) / (sx as f64);
+        let sh = (h as f64) / (sy as f64);
+        let srw = sw / (w as f64);
+        let srh = sh / (h as f64);
+
+        let name = CString::new(self.name.as_str())?;
+
+        Ok(Texture {
+            path: self.name.clone(),
+            name,
+            sx,
+            sy,
+            sw,
+            sh,
+            srw,
+            srh,
+            texture,
+            sampler,
+        })
     }
 }
 
@@ -471,7 +551,8 @@ pub extern "C" fn gl_newSprite_(
     let ctx = CONTEXT.get().unwrap();
     let flags = Flags::from(cflags);
 
-    let mut builder = TextureBuilder::new(Some(path.to_str().unwrap()))
+    let mut builder = TextureBuilder::new()
+        .from_path(path.to_str().unwrap())
         .sx(sx as usize)
         .sy(sy as usize)
         .srgb(!flags.notsrgb)
