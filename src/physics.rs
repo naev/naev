@@ -4,7 +4,7 @@ use std::f64::consts::PI;
 pub fn angle_clean(a: f64) -> f64 {
     let mut a = a;
     if a.abs() > 2. * PI {
-        a = a % (2. * PI);
+        a %= 2. * PI;
     }
     if a < 0. {
         a + 2. * PI

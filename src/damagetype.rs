@@ -105,21 +105,18 @@ pub extern "C" fn dtype_calcDamage(
     if ( knockback != NULL )
        *knockback = dtype->knock;
      */
-    match get_c(unsafe { (*dmg).type_ }) {
-        Some(dt) => {
-            if dshield != std::ptr::null_mut() {
-                unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb }
-            }
-            if darmour != std::ptr::null_mut() {
-                unsafe { *dshield = dt.armour_mod * (*dmg).damage * absorb }
-            }
-            if knockback != std::ptr::null_mut() {
-                unsafe {
-                    *knockback = dt.knockback;
-                }
+    if let Some(dt) = get_c(unsafe { (*dmg).type_ }) {
+        if dshield != std::ptr::null_mut() {
+            unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb }
+        }
+        if darmour != std::ptr::null_mut() {
+            unsafe { *dshield = dt.armour_mod * (*dmg).damage * absorb }
+        }
+        if knockback != std::ptr::null_mut() {
+            unsafe {
+                *knockback = dt.knockback;
             }
         }
-        None => (),
     }
 }
 

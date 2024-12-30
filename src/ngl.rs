@@ -1,13 +1,9 @@
 #![allow(dead_code)]
 use anyhow::Result;
 use glow::*;
-use nalgebra::Vector4;
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
-use std::boxed::Box;
-use std::ffi::CStr;
-use std::os::raw::{c_char, c_uint};
-use std::sync::{Arc, LazyLock, Mutex, MutexGuard, OnceLock, Weak};
+use std::sync::{Arc, Mutex, MutexGuard, OnceLock};
 use std::thread::ThreadId;
 
 use crate::{log, ndata};
@@ -53,7 +49,7 @@ impl SafeContext {
         }
     }
 
-    pub fn lock<'a>(&'a self) -> MutexGuard<'a, Context> {
+    pub fn lock(&self) -> MutexGuard<'_, Context> {
         let guard = self.ctx.lock().unwrap();
         guard.window.gl_make_current(&guard.gl_context).unwrap();
         //guard.window.gl_set_context_to_current().unwrap();
@@ -203,5 +199,5 @@ pub fn init(sdlvid: &sdl::VideoSubsystem) -> Result<&'static Context> {
 
     let ctx = Context::new(window, gl_context, gl);
     let _ = CONTEXT.set(ctx);
-    Ok(&CONTEXT.get().unwrap())
+    Ok(CONTEXT.get().unwrap())
 }

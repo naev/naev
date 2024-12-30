@@ -5,12 +5,12 @@ use nalgebra::Vector4;
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::boxed::Box;
+use std::ffi::CStr;
 use std::os::raw::{c_char, c_uint};
-use std::sync::{Arc, LazyLock, Mutex, MutexGuard, OnceLock, Weak};
-use std::thread::ThreadId;
+use std::sync::{Arc, LazyLock, Mutex, Weak};
 
+use crate::ndata;
 use crate::ngl::CONTEXT;
-use crate::{log, ndata};
 
 pub struct TextureData {
     path: String,
@@ -93,13 +93,10 @@ impl TextureData {
     fn new(gl: &glow::Context, path: &str, is_srgb: bool) -> Result<Arc<Self>> {
         let mut textures = TEXTURE_DATA.lock().unwrap();
         for tex in textures.iter() {
-            match tex.upgrade() {
-                Some(t) => {
-                    if t.path == path {
-                        return Ok(t);
-                    }
+            if let Some(t) = tex.upgrade() {
+                if t.path == path {
+                    return Ok(t);
                 }
-                None => (),
             }
         }
 
@@ -159,10 +156,7 @@ pub struct TextureBuilder {
 impl TextureBuilder {
     pub fn new(path: Option<&str>) -> Self {
         TextureBuilder {
-            path: match path {
-                Some(p) => Some(String::from(p)),
-                None => None,
-            },
+            path: path.map(String::from),
             w: 0,
             h: 0,
             sx: 1,

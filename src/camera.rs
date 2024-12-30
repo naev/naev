@@ -42,23 +42,19 @@ impl Camera {
                     self.follow_pilot = 0;
                     self.fly = false;
                 } else {
-                    let pos = unsafe {
-                        Point2::<f64>::new((*p).solid.pos.x.into(), (*p).solid.pos.y.into())
-                    };
+                    let pos = unsafe { Point2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y) };
                     self.update_fly(pos, dt);
                     self.update_pilot_zoom(p, std::ptr::null(), dt);
                 }
             } else {
                 self.update_fly(self.target, dt);
             }
-        } else {
-            if self.follow_pilot != 0 {
-                p = unsafe { naevc::pilot_get(self.follow_pilot) };
-                if p == std::ptr::null_mut() {
-                    self.follow_pilot = 0;
-                } else {
-                    self.update_pilot(p, dt);
-                }
+        } else if self.follow_pilot != 0 {
+            p = unsafe { naevc::pilot_get(self.follow_pilot) };
+            if p == std::ptr::null_mut() {
+                self.follow_pilot = 0;
+            } else {
+                self.update_pilot(p, dt);
             }
         }
 
@@ -191,40 +187,30 @@ impl Camera {
             let stealth = unsafe { (*follow).flags[naevc::PILOT_STEALTH as usize] != 0 };
             if stealth {
                 zfar
+            } else if target == std::ptr::null_mut() {
+                znear
             } else {
-                if target == std::ptr::null_mut() {
-                    znear
-                } else {
-                    let mut pos = {
-                        let mut x = Box::<c_double>::new(0.);
-                        let mut y = Box::<c_double>::new(0.);
-                        unsafe {
-                            naevc::gui_getOffset(x.as_mut(), y.as_mut());
-                        };
-                        Vector2::<f64>::new(*x, *y)
+                let mut pos = {
+                    let mut x = Box::<c_double>::new(0.);
+                    let mut y = Box::<c_double>::new(0.);
+                    unsafe {
+                        naevc::gui_getOffset(x.as_mut(), y.as_mut());
                     };
-                    let target_pos = unsafe {
-                        Point2::<f64>::new(
-                            (*target).solid.pos.x.into(),
-                            (*target).solid.pos.y.into(),
-                        )
-                    };
-                    let follow_pos = unsafe {
-                        Point2::<f64>::new(
-                            (*follow).solid.pos.x.into(),
-                            (*follow).solid.pos.y.into(),
-                        )
-                    };
-                    pos += target_pos - follow_pos;
+                    Vector2::<f64>::new(*x, *y)
+                };
+                let target_pos =
+                    unsafe { Point2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
+                let follow_pos =
+                    unsafe { Point2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
+                pos += target_pos - follow_pos;
 
-                    /* Get distance ratio. */
-                    let size: f64 = unsafe { (*(*target).ship).size }.into();
-                    let w: f64 = screen_w.into();
-                    let h: f64 = screen_h.into();
-                    let dx = (w * 0.5) / (pos.x.abs() + 2. * size);
-                    let dy = (h * 0.5) / (pos.y.abs() + 2. * size);
-                    dx.min(dy)
-                }
+                /* Get distance ratio. */
+                let size: f64 = unsafe { (*(*target).ship).size };
+                let w: f64 = screen_w.into();
+                let h: f64 = screen_h.into();
+                let dx = (w * 0.5) / (pos.x.abs() + 2. * size);
+                let dy = (h * 0.5) / (pos.y.abs() + 2. * size);
+                dx.min(dy)
             }
         };
 
@@ -250,9 +236,7 @@ impl Camera {
         /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
         /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
         let diag2: f64 = 100. * 100.;
-        let pos = unsafe {
-            Point2::<f64>::new((*follow).solid.pos.x.into(), (*follow).solid.pos.y.into())
-        };
+        let pos = unsafe { Point2::<f64>::new((*follow).solid.pos.x, (*follow).solid.pos.y) };
 
         /* Compensate player movement. */
         let mov = pos - self.old;
@@ -263,18 +247,15 @@ impl Camera {
 
         /* Compute bias. */
         let mut bias = if target != std::ptr::null() {
-            let target_pos = unsafe {
-                Point2::<f64>::new((*target).solid.pos.x.into(), (*target).solid.pos.y.into())
-            };
+            let target_pos =
+                unsafe { Point2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
             target_pos - pos
         } else {
             Default::default()
         };
 
         /* Bias towards velocity and facing. */
-        let mut vel = unsafe {
-            Vector2::<f64>::new((*follow).solid.vel.x.into(), (*follow).solid.vel.y.into())
-        };
+        let mut vel = unsafe { Vector2::<f64>::new((*follow).solid.vel.x, (*follow).solid.vel.y) };
         let fdir = unsafe { (*follow).solid.dir };
         let mut dir: f64 = angle_diff(vel.y.atan2(vel.x), fdir);
         dir = (std::f64::consts::PI - dir.abs()) / std::f64::consts::PI;
@@ -317,18 +298,14 @@ pub unsafe extern "C" fn cam_zoomOverride(enable: c_int) {
 #[no_mangle]
 pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.zoom = zoom
-        .clamp(naevc::conf.zoom_far, naevc::conf.zoom_near)
-        .into();
+    cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.zoom_target = zoom
-        .clamp(naevc::conf.zoom_far, naevc::conf.zoom_near)
-        .into();
-    cam.zoom_speed = speed.into();
+    cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+    cam.zoom_speed = speed;
 }
 
 #[no_mangle]
@@ -367,8 +344,8 @@ pub unsafe extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
 #[no_mangle]
 pub unsafe extern "C" fn cam_vel(vx: c_double, vy: c_double) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.vel.x = vx.into();
-    cam.vel.y = vy.into();
+    cam.vel.x = vx;
+    cam.vel.y = vy;
 }
 
 #[no_mangle]
@@ -381,10 +358,10 @@ pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
             let p = naevc::pilot_get(follow);
             let x = (*p).solid.pos.x;
             let y = (*p).solid.pos.y;
-            cam.pos.x = x.into();
-            cam.pos.y = y.into();
-            cam.old.x = x.into();
-            cam.old.y = y.into();
+            cam.pos.x = x;
+            cam.pos.y = y;
+            cam.old.x = x;
+            cam.old.y = y;
         }
         cam.fly = false;
     } else {
@@ -402,16 +379,16 @@ pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c
     let mut cam = CAMERA.lock().unwrap();
     cam.follow_pilot = 0;
     if soft_over == 0 {
-        cam.pos.x = x.into();
-        cam.pos.y = y.into();
-        cam.old.x = x.into();
-        cam.old.y = y.into();
+        cam.pos.x = x;
+        cam.pos.y = y;
+        cam.old.x = x;
+        cam.old.y = y;
         cam.fly = false;
     } else {
-        cam.target.x = x.into();
-        cam.target.y = y.into();
+        cam.target.x = x;
+        cam.target.y = y;
         cam.old.x = cam.pos.x;
-        cam.old.y = cam.old.y;
+        cam.old.y = cam.pos.y;
         cam.fly = true;
         cam.fly_speed = soft_over.into()
     };
