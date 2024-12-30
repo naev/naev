@@ -6,7 +6,7 @@ use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
-use std::os::raw::{c_char, c_double, c_uint};
+use std::os::raw::{c_char, c_double, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, Weak};
 
 use crate::ndata;
@@ -125,20 +125,20 @@ impl TextureData {
 }
 
 pub struct Texture {
-    path: String,
+    pub path: String,
     name: CString, // TODO remove when not needed
 
     // Sprites
-    sx: usize,
-    sy: usize,
-    sw: f64,
-    sh: f64,
-    srw: f64,
-    srh: f64,
+    pub sx: usize,
+    pub sy: usize,
+    pub sw: f64,
+    pub sh: f64,
+    pub srw: f64,
+    pub srh: f64,
 
     // Data
-    texture: Arc<TextureData>,
-    sampler: glow::Sampler,
+    pub texture: Arc<TextureData>,
+    pub sampler: glow::Sampler,
 }
 impl Drop for Texture {
     fn drop(&mut self) {
@@ -146,8 +146,39 @@ impl Drop for Texture {
         unsafe { ctx.gl.delete_sampler(self.sampler) };
     }
 }
+impl Texture {
+    fn try_clone(&self) -> Result<Self> {
+        let ctx = CONTEXT.get().unwrap();
+        let gl = &ctx.gl;
+        let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
 
-impl Texture {}
+        // Copy necessaryparameters over
+        for param in vec![
+            glow::TEXTURE_WRAP_S,
+            glow::TEXTURE_WRAP_T,
+            glow::TEXTURE_MIN_FILTER,
+            glow::TEXTURE_MAG_FILTER,
+        ] {
+            unsafe {
+                let val = gl.get_sampler_parameter_i32(self.sampler, param);
+                gl.sampler_parameter_i32(sampler, param, val);
+            }
+        }
+
+        Ok(Texture {
+            path: self.path.clone(),
+            name: self.name.clone(),
+            sx: self.sx,
+            sy: self.sy,
+            sw: self.sw,
+            sh: self.sh,
+            srw: self.srw,
+            srh: self.srh,
+            texture: self.texture.clone(),
+            sampler,
+        })
+    }
+}
 
 #[derive(Clone, Copy)]
 pub enum AddressMode {
@@ -194,6 +225,7 @@ pub struct TextureBuilder {
     address_v: AddressMode,
     mag_filter: FilterMode,
     min_filter: FilterMode,
+    mipmaps: bool,
 }
 
 impl TextureBuilder {
@@ -211,6 +243,7 @@ impl TextureBuilder {
             address_v: AddressMode::Repeat,
             mag_filter: FilterMode::Linear,
             min_filter: FilterMode::Linear,
+            mipmaps: false,
         }
     }
 
@@ -277,6 +310,11 @@ impl TextureBuilder {
         self.address_mode(AddressMode::ClampToBorder)
     }
 
+    pub fn mipmaps(mut self, enable: bool) -> Self {
+        self.mipmaps = enable;
+        self
+    }
+
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
         if let Some(path) = &self.path {
             let texture = match self.is_sdf {
@@ -334,6 +372,29 @@ impl TextureBuilder {
     }
 }
 
+struct Flags {
+    maptrans: bool,
+    mipmaps: bool,
+    vflip: bool,
+    skipcache: bool,
+    sdf: bool,
+    clamp_alpha: bool,
+    notsrgb: bool,
+}
+impl Flags {
+    fn from(flags: c_uint) -> Self {
+        Flags {
+            maptrans: (flags & naevc::OPENGL_TEX_MAPTRANS) > 0,
+            mipmaps: (flags & naevc::OPENGL_TEX_MIPMAPS) > 0,
+            vflip: (flags & naevc::OPENGL_TEX_VFLIP) > 0,
+            skipcache: (flags & naevc::OPENGL_TEX_SKIPCACHE) > 0,
+            sdf: (flags & naevc::OPENGL_TEX_SDF) > 0,
+            clamp_alpha: (flags & naevc::OPENGL_TEX_CLAMP_ALPHA) > 0,
+            notsrgb: (flags & naevc::OPENGL_TEX_NOTSRGB) > 0,
+        }
+    }
+}
+
 macro_rules! capi_tex {
     ($funcname: ident, $field: tt) => {
         #[no_mangle]
@@ -365,15 +426,44 @@ capi_tex!(tex_vmax_, vmax);
 
 #[no_mangle]
 pub extern "C" fn gl_newImage_(cpath: *const c_char, flags: c_uint) -> *mut Texture {
+    gl_newSprite_(cpath, 1, 1, flags)
+}
+
+#[no_mangle]
+pub extern "C" fn gl_newSprite_(
+    cpath: *const c_char,
+    sx: c_int,
+    sy: c_int,
+    cflags: c_uint,
+) -> *mut Texture {
     let path = unsafe { CStr::from_ptr(cpath) };
     let ctx = CONTEXT.get().unwrap();
-    match TextureBuilder::new(Some(path.to_str().unwrap())).build(&ctx.gl) {
+    let flags = Flags::from(cflags);
+
+    let mut builder = TextureBuilder::new(Some(path.to_str().unwrap()))
+        .sx(sx as usize)
+        .sy(sy as usize)
+        .srgb(!flags.notsrgb)
+        .mipmaps(flags.mipmaps);
+
+    if flags.clamp_alpha {
+        builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
+    }
+
+    match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
         _ => std::ptr::null_mut(),
     }
+}
+
+#[no_mangle]
+pub extern "C" fn gl_dupTexture_(ctex: *mut Texture) -> *mut Texture {
+    let tex = unsafe { &*ctex };
+    unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
+    Box::into_raw(Box::new(tex.try_clone().unwrap()))
 }
 
 #[no_mangle]
@@ -398,4 +488,10 @@ pub extern "C" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
 pub extern "C" fn tex_name_(ctex: *mut Texture) -> *const c_char {
     let tex = unsafe { &*ctex };
     tex.name.as_ptr()
+}
+
+#[no_mangle]
+pub extern "C" fn tex_isSDF_(ctex: *mut Texture) -> c_int {
+    let tex = unsafe { &*ctex };
+    tex.texture.is_sdf as i32
 }
