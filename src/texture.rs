@@ -140,7 +140,24 @@ pub struct Texture {
 
 impl Texture {}
 
-pub enum AddressMode {}
+#[derive(Clone, Copy)]
+pub enum AddressMode {
+    ClampToEdge = 0,
+    Repeat = 1,
+    MirrorRepeat = 2,
+    ClampToBorder = 3,
+}
+
+impl AddressMode {
+    pub fn to_glow(self) -> i32 {
+        (match self {
+            AddressMode::ClampToEdge => glow::CLAMP_TO_EDGE,
+            AddressMode::Repeat => glow::REPEAT,
+            AddressMode::MirrorRepeat => glow::MIRRORED_REPEAT,
+            AddressMode::ClampToBorder => glow::CLAMP_TO_BORDER,
+        }) as i32
+    }
+}
 
 pub struct TextureBuilder {
     path: Option<String>,
@@ -151,6 +168,8 @@ pub struct TextureBuilder {
     is_srgb: bool,
     is_sdf: bool,
     border_value: Option<Vector4<f32>>,
+    address_u: AddressMode,
+    address_v: AddressMode,
 }
 
 impl TextureBuilder {
@@ -164,6 +183,8 @@ impl TextureBuilder {
             is_srgb: true,
             is_sdf: false,
             border_value: None,
+            address_u: AddressMode::Repeat,
+            address_v: AddressMode::Repeat,
         }
     }
 
@@ -197,9 +218,23 @@ impl TextureBuilder {
         self
     }
 
+    pub fn address_mode(self, mode: AddressMode) -> Self {
+        self.address_mode_u(mode).address_mode_v(mode)
+    }
+
+    pub fn address_mode_u(mut self, mode: AddressMode) -> Self {
+        self.address_u = mode;
+        self
+    }
+
+    pub fn address_mode_v(mut self, mode: AddressMode) -> Self {
+        self.address_v = mode;
+        self
+    }
+
     pub fn border(mut self, border_value: Option<Vector4<f32>>) -> Self {
         self.border_value = border_value;
-        self
+        self.address_mode(AddressMode::ClampToBorder)
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
@@ -219,20 +254,9 @@ impl TextureBuilder {
                         glow::TEXTURE_BORDER_COLOR,
                         border.as_slice(),
                     );
-                    gl.sampler_parameter_i32(
-                        sampler,
-                        glow::TEXTURE_WRAP_S,
-                        glow::CLAMP_TO_BORDER as i32,
-                    );
-                    gl.sampler_parameter_i32(
-                        sampler,
-                        glow::TEXTURE_WRAP_T,
-                        glow::CLAMP_TO_BORDER as i32,
-                    );
-                } else {
-                    gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, glow::REPEAT as i32);
-                    gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, glow::REPEAT as i32);
                 }
+                gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_glow());
+                gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_glow());
             }
 
             let (w, h) = (texture.w, texture.h);
