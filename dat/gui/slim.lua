@@ -883,6 +883,8 @@ function render( dt, dt_mod )
       gfx.renderRect( x, y, width, height, col)
       gfx.renderTex( bgs.bar_weapon, x, y )
       gfx.print( true, _("Set formation"), x, y + 8, cols.txt_bar, width, true )
+   else
+      buttons["formation"] = nil
    end
 
    --Warning Light

@@ -12,6 +12,9 @@
    * Made plasma drill much easier to apply to asteroids
    * Don't reset cargo if not space worthy when reloading
    * Truly fix the negative mass exploit
+   * Made miners less bad at mining, their only passion
+   * Slim GUI set formation button is no longer clickable when invisible
+   * Removed outdated tip from NPC messages
    * Minor typo fixes and translation updates
 
 * 0.12.1

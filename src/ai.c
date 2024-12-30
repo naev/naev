@@ -197,17 +197,18 @@ static int aiL_hyperspaceAbort( lua_State *L );
 static int aiL_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
-static int aiL_combat( lua_State *L );         /* combat( number ) */
-static int aiL_settarget( lua_State *L );      /* settarget( number ) */
-static int aiL_weapSet( lua_State *L );        /* weapset( number ) */
-static int aiL_hascannons( lua_State *L );     /* bool hascannons() */
-static int aiL_hasturrets( lua_State *L );     /* bool hasturrets() */
-static int aiL_hasfighterbays( lua_State *L ); /* bool hasfighterbays() */
-static int aiL_hasafterburner( lua_State *L ); /* bool hasafterburner() */
-static int aiL_getenemy( lua_State *L );       /* number getenemy() */
-static int aiL_hostile( lua_State *L );        /* hostile( number ) */
-static int aiL_getweaprange( lua_State *L );   /* number getweaprange() */
-static int aiL_getweapspeed( lua_State *L );   /* number getweapspeed() */
+static int aiL_combat( lua_State *L );          /* combat( number ) */
+static int aiL_settarget( lua_State *L );       /* settarget( number ) */
+static int aiL_weapSet( lua_State *L );         /* weapset( number ) */
+static int aiL_hascannons( lua_State *L );      /* bool hascannons() */
+static int aiL_hasturrets( lua_State *L );      /* bool hasturrets() */
+static int aiL_hasfighterbays( lua_State *L );  /* bool hasfighterbays() */
+static int aiL_hasafterburner( lua_State *L );  /* bool hasafterburner() */
+static int aiL_getenemy( lua_State *L );        /* number getenemy() */
+static int aiL_hostile( lua_State *L );         /* hostile( number ) */
+static int aiL_getweaprangemin( lua_State *L ); /* number getweaprangemin() */
+static int aiL_getweaprange( lua_State *L );    /* number getweaprange() */
+static int aiL_getweapspeed( lua_State *L );    /* number getweapspeed() */
 static int aiL_getweapammo( lua_State *L );
 static int aiL_canboard( lua_State *L ); /* boolean canboard( number ) */
 static int aiL_relsize( lua_State *L );  /* boolean relsize( number ) */
@@ -303,6 +304,7 @@ static const luaL_Reg aiL_methods[] = {
    { "hasafterburner", aiL_hasafterburner },
    { "getenemy", aiL_getenemy },
    { "hostile", aiL_hostile },
+   { "getweaprangemin", aiL_getweaprangemin },
    { "getweaprange", aiL_getweaprange },
    { "getweapspeed", aiL_getweapspeed },
    { "getweapammo", aiL_getweapammo },
@@ -3178,11 +3180,25 @@ static int aiL_hostile( lua_State *L )
 }
 
 /**
- * @brief Gets the range of a weapon.
+ * @brief Gets the minimum range of a weapon set.
  *
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set
  * to get range of, defaults to selected one.
- *    @luatparam[opt=-1] number level Level of weapon set to get range of.
+ *    @luatreturn number The range of the weapon set.
+ * @luafunc getweaprangemin
+ */
+static int aiL_getweaprangemin( lua_State *L )
+{
+   int id = luaL_checkinteger( L, 1 ) - 1;
+   lua_pushnumber( L, pilot_weapSetRangeMin( cur_pilot, id ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the range of a weapon set.
+ *
+ *    @luatparam[opt] number id Optional parameter indicating id of weapon set
+ * to get range of, defaults to selected one.
  *    @luatreturn number The range of the weapon set.
  * @luafunc getweaprange
  */
@@ -3198,7 +3214,6 @@ static int aiL_getweaprange( lua_State *L )
  *
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set
  * to get speed of, defaults to selected one.
- *    @luatparam[opt=-1] number level Level of weapon set to get range of.
  *    @luatreturn number The range of the weapon set.
  * @luafunc getweapspeed
  */
