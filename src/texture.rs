@@ -5,8 +5,8 @@ use nalgebra::Vector4;
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::boxed::Box;
-use std::ffi::CStr;
-use std::os::raw::{c_char, c_uint};
+use std::ffi::{CStr, CString};
+use std::os::raw::{c_char, c_double, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, Weak};
 
 use crate::ndata;
@@ -53,25 +53,21 @@ impl TextureData {
         }
         let (w, h) = (surface.width(), surface.height());
 
-        if is_srgb {
-            todo!();
-        }
-
         if is_sdf {
-            todo!();
+            //todo!();
         }
 
+        let internalformat = match is_srgb {
+            true => match has_alpha {
+                true => glow::SRGB_ALPHA,
+                false => glow::SRGB,
+            },
+            false => match has_alpha {
+                true => glow::RGBA,
+                false => glow::RGB,
+            },
+        };
         unsafe {
-            let internalformat = match is_srgb {
-                true => match has_alpha {
-                    true => glow::SRGB_ALPHA,
-                    false => glow::SRGB,
-                },
-                false => match has_alpha {
-                    true => glow::RGB,
-                    false => glow::RGBA,
-                },
-            };
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
             // TODO is this pitch correct?
             gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, surface.pitch().min(8) as i32);
@@ -130,6 +126,7 @@ impl TextureData {
 
 pub struct Texture {
     path: String,
+    name: CString, // TODO remove when not needed
 
     // Sprites
     sx: usize,
@@ -317,8 +314,11 @@ impl TextureBuilder {
             let srw = sw / (w as f64);
             let srh = sh / (h as f64);
 
+            let name = CString::new(path.as_str())?;
+
             Ok(Texture {
                 path: self.path.unwrap(),
+                name,
                 sx,
                 sy,
                 sw,
@@ -334,27 +334,68 @@ impl TextureBuilder {
     }
 }
 
+macro_rules! capi_tex {
+    ($funcname: ident, $field: tt) => {
+        #[no_mangle]
+        pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
+            let tex = unsafe { &*ctex };
+            tex.texture.$field as f64
+        }
+    };
+}
+macro_rules! capi {
+    ($funcname: ident, $field: tt) => {
+        #[no_mangle]
+        pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
+            let tex = unsafe { &*ctex };
+            tex.$field as f64
+        }
+    };
+}
+
+capi_tex!(tex_w_, w);
+capi_tex!(tex_h_, h);
+capi!(tex_sx_, sx);
+capi!(tex_sy_, sy);
+capi!(tex_sw_, sw);
+capi!(tex_sh_, sh);
+capi!(tex_srw_, srw);
+capi!(tex_srh_, srh);
+capi_tex!(tex_vmax_, vmax);
+
 #[no_mangle]
-pub extern "C" fn gl_newImage_(cpath: *const c_char, flags: c_uint) -> *mut naevc::glTexture {
+pub extern "C" fn gl_newImage_(cpath: *const c_char, flags: c_uint) -> *mut Texture {
     let path = unsafe { CStr::from_ptr(cpath) };
     let ctx = CONTEXT.get().unwrap();
     match TextureBuilder::new(Some(path.to_str().unwrap())).build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex)) as *mut naevc::glTexture
+            Box::into_raw(Box::new(tex))
         }
         _ => std::ptr::null_mut(),
     }
 }
 
 #[no_mangle]
-pub extern "C" fn tex_tex_(ctex: *mut naevc::glTexture) -> naevc::GLuint {
-    let tex = unsafe { Box::from_raw(ctex as *mut Texture) };
+pub extern "C" fn gl_freeTexture_(ctex: *mut Texture) {
+    let _ = unsafe { Box::from_raw(ctex as *mut Texture) };
+    // The texture should get dropped now
+}
+
+#[no_mangle]
+pub extern "C" fn tex_tex_(ctex: *mut Texture) -> naevc::GLuint {
+    let tex = unsafe { &*ctex };
     tex.texture.texture.0.into()
 }
 
 #[no_mangle]
-pub extern "C" fn tex_sampler(ctex: *mut naevc::glTexture) -> naevc::GLuint {
-    let tex = unsafe { Box::from_raw(ctex as *mut Texture) };
+pub extern "C" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
+    let tex = unsafe { &*ctex };
     tex.sampler.0.into()
+}
+
+#[no_mangle]
+pub extern "C" fn tex_name_(ctex: *mut Texture) -> *const c_char {
+    let tex = unsafe { &*ctex };
+    tex.name.as_ptr()
 }
