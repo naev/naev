@@ -261,6 +261,14 @@ impl TextureSource {
         h: usize,
         name: Option<&str>,
     ) -> Result<Arc<TextureData>> {
+        // Try to load from name if possible
+        if let Some(name) = name {
+            if let Some(tex) = TextureData::exists(&name) {
+                return Ok(tex);
+            }
+        }
+
+        // Failed to find in cache, load a new
         Ok(match self {
             TextureSource::Path(path) => {
                 let bytes = ndata::read(path.as_str())?;
@@ -312,13 +320,14 @@ impl TextureBuilder {
         }
     }
 
-    pub fn name(mut self, name: &str) -> Self {
-        self.name = Some(String::from(name));
+    pub fn name(mut self, name: Option<&str>) -> Self {
+        self.name = name.map(String::from);
         self
     }
 
     pub fn path(mut self, path: &str) -> Self {
         self.source = TextureSource::Path(String::from(path));
+        self.name = Some(String::from(path));
         self
     }
 
@@ -407,21 +416,9 @@ impl TextureBuilder {
 
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
         /* TODO handle SDF. */
-        /*
-        if let Some(name) = self.name {
-            TextureData::exists( name )
-        }
-        */
-        let texture = match &self.name {
-            Some(name) => match TextureData::exists(&name) {
-                Some(tex) => tex,
-                None => self
-                    .source
-                    .to_texture_data(gl, self.w, self.h, Some(name))?,
-            },
-            None => self.source.to_texture_data(gl, self.w, self.h, None)?,
-        };
-
+        let texture = self
+            .source
+            .to_texture_data(gl, self.w, self.h, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
@@ -578,7 +575,7 @@ pub extern "C" fn gl_loadImageData(
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
     let mut builder = TextureBuilder::new()
-        .name(name.to_str().unwrap())
+        .name(Some(name.to_str().unwrap()))
         .sx(sx as usize)
         .sy(sy as usize)
         .width(w as usize)
@@ -711,12 +708,27 @@ pub extern "C" fn gl_rawTexture(
     h: c_double,
 ) -> *mut Texture {
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
-    let path = unsafe { CStr::from_ptr(cpath) };
-    let mut builder = TextureBuilder::new().width(w as usize).height(w as usize);
+    let pathname: Option<&str> = {
+        if cpath.is_null() {
+            None
+        } else {
+            let path = unsafe { CStr::from_ptr(cpath) };
+            Some(path.to_str().unwrap())
+        }
+    };
+    let mut builder = TextureBuilder::new()
+        .width(w as usize)
+        .height(w as usize)
+        .name(pathname);
 
-    let pathname = path.to_str().unwrap();
-    builder = match TextureData::exists(pathname) {
-        Some(tex) => builder.texture_data(&tex),
+    builder = match pathname {
+        Some(pathname) => match TextureData::exists(pathname) {
+            Some(tex) => builder.texture_data(&tex),
+            None => {
+                let tex = glow::NativeTexture(std::num::NonZero::new(tex).unwrap());
+                builder.native_texture(tex)
+            }
+        },
         None => {
             let tex = glow::NativeTexture(std::num::NonZero::new(tex).unwrap());
             builder.native_texture(tex)
