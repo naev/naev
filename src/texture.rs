@@ -170,8 +170,8 @@ impl TextureData {
 }
 
 pub struct Texture {
-    pub path: String,
-    name: CString, // TODO remove when not needed
+    pub path: Option<String>,
+    name: Option<CString>, // TODO remove when not needed
 
     // Sprites
     pub sx: usize,
@@ -267,7 +267,7 @@ pub enum TextureSource {
 }
 
 pub struct TextureBuilder {
-    name: String,
+    name: Option<String>,
     source: TextureSource,
     w: usize,
     h: usize,
@@ -286,7 +286,7 @@ pub struct TextureBuilder {
 impl TextureBuilder {
     pub fn new() -> Self {
         TextureBuilder {
-            name: String::default(),
+            name: None,
             source: TextureSource::None,
             w: 0,
             h: 0,
@@ -304,7 +304,7 @@ impl TextureBuilder {
     }
 
     pub fn name(mut self, name: &str) -> Self {
-        self.name = String::from(name);
+        self.name = Some(String::from(name));
         self
     }
 
@@ -404,12 +404,12 @@ impl TextureBuilder {
                     //todo!(), TODO!!!
                     let bytes = ndata::read(path.as_str())?;
                     let img = image::load_from_memory(&bytes)?;
-                    TextureData::from_image(gl, Some(&self.name), &img)?
+                    TextureData::from_image(gl, self.name.as_deref(), &img)?
                 }
                 false => {
                     let bytes = ndata::read(path.as_str())?;
                     let img = image::load_from_memory(&bytes)?;
-                    TextureData::from_image(gl, Some(&self.name), &img)?
+                    TextureData::from_image(gl, self.name.as_deref(), &img)?
                 }
             },
             TextureSource::Data(data) => {
@@ -420,9 +420,9 @@ impl TextureBuilder {
                 )
                 .unwrap();
                 let img = image::DynamicImage::ImageRgba8(buf);
-                TextureData::from_image(gl, Some(&self.name), &img)?
+                TextureData::from_image(gl, self.name.as_deref(), &img)?
             }
-            TextureSource::Image(img) => TextureData::from_image(gl, Some(&self.name), &img)?,
+            TextureSource::Image(img) => TextureData::from_image(gl, self.name.as_deref(), &img)?,
             TextureSource::TextureData(tex) => tex,
             TextureSource::Raw(tex) => Arc::new(TextureData::from_raw(tex, self.w, self.h)?),
             TextureSource::None => Arc::new(TextureData::new(gl, self.w, self.h)?),
@@ -450,11 +450,9 @@ impl TextureBuilder {
         let srw = sw / (w as f64);
         let srh = sh / (h as f64);
 
-        let name = CString::new(self.name.as_str())?;
-
         Ok(Texture {
-            path: self.name.clone(),
-            name,
+            path: self.name.clone().map(String::from),
+            name: self.name.map(|s| CString::new(s.as_str()).unwrap()),
             sx,
             sy,
             sw,
@@ -763,7 +761,10 @@ pub extern "C" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
 #[no_mangle]
 pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
     let tex = unsafe { &*ctex };
-    tex.name.as_ptr()
+    match &tex.name {
+        Some(name) => name.as_ptr(),
+        None => std::ptr::null(),
+    }
 }
 
 #[no_mangle]
