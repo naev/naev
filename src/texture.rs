@@ -2,6 +2,7 @@
 use anyhow::Result;
 use glow::*;
 use nalgebra::Vector4;
+use sdl2 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int, c_uint};
@@ -41,6 +42,66 @@ impl TextureData {
         TextureData::from_image( gl, &img )
     }
     */
+
+    fn new(gl: &glow::Context, w: usize, h: usize) -> Result<Self> {
+        if w == 0 || h == 0 {
+            return Err(anyhow::anyhow!(
+                "Trying to create TextureData without width or height"
+            ));
+        }
+        let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, Some(texture));
+            gl.tex_image_2d(
+                glow::TEXTURE_2D,
+                0,
+                glow::SRGB_ALPHA as i32,
+                w as i32,
+                h as i32,
+                0,
+                glow::RGBA,
+                glow::UNSIGNED_BYTE,
+                glow::PixelUnpackData::Slice(None),
+            );
+            gl.bind_texture(glow::TEXTURE_2D, None);
+        }
+
+        Ok(TextureData {
+            name: None,
+            w,
+            h,
+            texture,
+            is_srgb: true,
+            is_sdf: false,
+            vmax: 1.,
+        })
+    }
+
+    fn exists(name: &str) -> Option<Arc<Self>> {
+        let textures = TEXTURE_DATA.lock().unwrap();
+        for tex in textures.iter() {
+            if let Some(t) = tex.upgrade() {
+                if let Some(tname) = &t.name {
+                    if tname == name {
+                        return Some(t);
+                    }
+                }
+            }
+        }
+        None
+    }
+
+    fn from_raw(raw: glow::NativeTexture, w: usize, h: usize) -> Result<Self> {
+        Ok(TextureData {
+            name: None,
+            w,
+            h,
+            texture: raw,
+            is_srgb: true,
+            is_sdf: false,
+            vmax: 1.,
+        })
+    }
 
     fn from_image(
         gl: &glow::Context,
@@ -207,6 +268,8 @@ pub enum TextureSource {
     Path(String),
     Data(Vec<u8>),
     Image(image::DynamicImage),
+    TextureData(Arc<TextureData>),
+    Raw(glow::NativeTexture),
     None,
 }
 
@@ -247,8 +310,28 @@ impl TextureBuilder {
         }
     }
 
+    pub fn name(mut self, name: &str) -> Self {
+        self.name = String::from(name);
+        self
+    }
+
     pub fn path(mut self, path: &str) -> Self {
         self.source = TextureSource::Path(String::from(path));
+        self
+    }
+
+    pub fn image(mut self, img: &image::DynamicImage) -> Self {
+        self.source = TextureSource::Image(img.clone());
+        self
+    }
+
+    pub fn texture_data(mut self, data: Arc<TextureData>) -> Self {
+        self.source = TextureSource::TextureData(data);
+        self
+    }
+
+    pub fn native_texture(mut self, tex: glow::NativeTexture) -> Self {
+        self.source = TextureSource::Raw(tex);
         self
     }
 
@@ -322,12 +405,13 @@ impl TextureBuilder {
 
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
         // TODO SDF
-        let img = match self.source {
+        let texture = match self.source {
             TextureSource::Path(path) => match self.is_sdf {
                 true => todo!(),
                 false => {
                     let bytes = ndata::read(path.as_str())?;
-                    image::load_from_memory(&bytes)?
+                    let img = image::load_from_memory(&bytes)?;
+                    TextureData::from_image(gl, Some(&self.name), &img)?
                 }
             },
             TextureSource::Data(data) => {
@@ -337,13 +421,14 @@ impl TextureBuilder {
                     data,
                 )
                 .unwrap();
-                image::DynamicImage::ImageRgba8(buf)
+                let img = image::DynamicImage::ImageRgba8(buf);
+                TextureData::from_image(gl, Some(&self.name), &img)?
             }
-            TextureSource::Image(img) => img,
-            TextureSource::None => todo!(),
+            TextureSource::Image(img) => TextureData::from_image(gl, Some(&self.name), &img)?,
+            TextureSource::TextureData(tex) => tex,
+            TextureSource::Raw(tex) => Arc::new(TextureData::from_raw(tex, self.w, self.h)?),
+            TextureSource::None => Arc::new(TextureData::new(gl, self.w, self.h)?),
         };
-
-        let texture = TextureData::from_image(gl, Some("Foo"), &img)?;
 
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
@@ -446,13 +531,48 @@ pub extern "C" fn gl_exitTextures_() {}
 
 #[no_mangle]
 pub extern "C" fn gl_texExistsOrCreate_(
-    path: *const c_char,
-    flags: c_uint,
+    cpath: *const c_char,
+    cflags: c_uint,
     sx: c_int,
     sy: c_int,
     created: *mut c_int,
 ) -> *mut Texture {
-    todo!();
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let flags = Flags::from(cflags);
+    let mut builder = TextureBuilder::new()
+        .sx(sx as usize)
+        .sy(sy as usize)
+        .srgb(!flags.notsrgb)
+        .mipmaps(flags.mipmaps);
+
+    if flags.clamp_alpha {
+        builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
+    }
+
+    let pathname = path.to_str().unwrap();
+    builder = match TextureData::exists(pathname) {
+        Some(tex) => {
+            unsafe {
+                *created = 0;
+            }
+            builder.texture_data(tex)
+        }
+        None => {
+            unsafe {
+                *created = 1;
+            }
+            builder.path(pathname)
+        }
+    };
+
+    let ctx = CONTEXT.get().unwrap();
+    match builder.build(&ctx.gl) {
+        Ok(tex) => {
+            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
+            Box::into_raw(Box::new(tex))
+        }
+        _ => std::ptr::null_mut(),
+    }
 }
 
 #[no_mangle]
@@ -462,9 +582,36 @@ pub extern "C" fn gl_loadImageData_(
     h: c_int,
     sx: c_int,
     sy: c_int,
-    name: *const c_char,
+    cname: *const c_char,
 ) -> *mut Texture {
-    todo!();
+    let name = unsafe { CStr::from_ptr(cname) };
+    let mut builder = TextureBuilder::new()
+        .name(name.to_str().unwrap())
+        .sx(sx as usize)
+        .sy(sy as usize)
+        .width(w as usize)
+        .height(h as usize);
+
+    if !data.is_null() {
+        let rawdata = unsafe { std::slice::from_raw_parts(data, (w * h) as usize) };
+        let buf = image::ImageBuffer::<image::Rgba<f32>, Vec<f32>>::from_raw(
+            w as u32,
+            h as u32,
+            rawdata.to_vec(),
+        )
+        .unwrap();
+        let img = image::DynamicImage::ImageRgba32F(buf);
+        builder = builder.image(&img);
+    }
+
+    let ctx = CONTEXT.get().unwrap();
+    match builder.build(&ctx.gl) {
+        Ok(tex) => {
+            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
+            Box::into_raw(Box::new(tex))
+        }
+        _ => std::ptr::null_mut(),
+    }
 }
 
 #[no_mangle]
@@ -480,7 +627,6 @@ pub extern "C" fn gl_newSprite_(
     cflags: c_uint,
 ) -> *mut Texture {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = CONTEXT.get().unwrap();
     let flags = Flags::from(cflags);
 
     let mut builder = TextureBuilder::new()
@@ -494,6 +640,7 @@ pub extern "C" fn gl_newSprite_(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
+    let ctx = CONTEXT.get().unwrap();
     match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
@@ -505,13 +652,44 @@ pub extern "C" fn gl_newSprite_(
 
 #[no_mangle]
 pub extern "C" fn gl_newSpriteRWops_(
-    path: *const c_char,
+    cpath: *const c_char,
     rw: *mut naevc::SDL_RWops,
     sx: c_int,
     sy: c_int,
-    flags: c_uint,
+    cflags: c_uint,
 ) -> *mut Texture {
-    todo!();
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let flags = Flags::from(cflags);
+    let mut builder = TextureBuilder::new()
+        .sx(sx as usize)
+        .sy(sy as usize)
+        .srgb(!flags.notsrgb)
+        .mipmaps(flags.mipmaps);
+
+    if flags.clamp_alpha {
+        builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
+    }
+
+    let pathname = path.to_str().unwrap();
+    builder = match TextureData::exists(pathname) {
+        Some(tex) => builder.texture_data(tex),
+        None => {
+            let rw = unsafe { sdl::rwops::RWops::from_ll(rw as *mut sdl::sys::SDL_RWops) };
+            let img = image::ImageReader::new(std::io::BufReader::new(rw))
+                .decode()
+                .unwrap();
+            builder.image(&img)
+        }
+    };
+
+    let ctx = CONTEXT.get().unwrap();
+    match builder.build(&ctx.gl) {
+        Ok(tex) => {
+            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
+            Box::into_raw(Box::new(tex))
+        }
+        _ => std::ptr::null_mut(),
+    }
 }
 
 #[no_mangle]
@@ -523,12 +701,31 @@ pub extern "C" fn gl_dupTexture_(ctex: *mut Texture) -> *mut Texture {
 
 #[no_mangle]
 pub extern "C" fn gl_rawTexture_(
-    ctex: *mut Texture,
+    cpath: *mut c_char,
     tex: naevc::GLuint,
     w: c_double,
     h: c_double,
 ) -> *mut Texture {
-    todo!();
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let mut builder = TextureBuilder::new().width(w as usize).height(w as usize);
+
+    let pathname = path.to_str().unwrap();
+    builder = match TextureData::exists(pathname) {
+        Some(tex) => builder.texture_data(tex),
+        None => {
+            let tex = glow::NativeTexture(std::num::NonZero::new(tex).unwrap());
+            builder.native_texture(tex)
+        }
+    };
+
+    let ctx = CONTEXT.get().unwrap();
+    match builder.build(&ctx.gl) {
+        Ok(tex) => {
+            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
+            Box::into_raw(Box::new(tex))
+        }
+        _ => std::ptr::null_mut(),
+    }
 }
 
 #[no_mangle]
