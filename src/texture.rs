@@ -105,7 +105,7 @@ impl TextureData {
 
         let has_alpha = img.color().has_alpha();
         let (w, h) = (img.width(), img.height());
-        let imgdata = img.to_rgba8().into_raw();
+        let imgdata = img.flipv().to_rgba8().into_raw();
 
         let is_srgb = true;
 
@@ -166,6 +166,7 @@ pub struct Texture {
     // Data
     pub texture: Arc<TextureData>,
     pub sampler: glow::Sampler,
+    pub vflip: bool,
 }
 impl Drop for Texture {
     fn drop(&mut self) {
@@ -203,6 +204,7 @@ impl Texture {
             srh: self.srh,
             texture: self.texture.clone(),
             sampler,
+            vflip: self.vflip,
         })
     }
 }
@@ -305,6 +307,7 @@ pub struct TextureBuilder {
     sy: usize,
     is_srgb: bool,
     is_sdf: bool,
+    vflip: bool,
     border_value: Option<Vector4<f32>>,
     address_u: AddressMode,
     address_v: AddressMode,
@@ -330,6 +333,7 @@ impl TextureBuilder {
             mag_filter: FilterMode::Linear,
             min_filter: FilterMode::Linear,
             mipmaps: false,
+            vflip: false,
         }
     }
 
@@ -366,6 +370,11 @@ impl TextureBuilder {
 
     pub fn sdf(mut self, enable: bool) -> Self {
         self.is_sdf = enable;
+        self
+    }
+
+    pub fn vflip(mut self, enable: bool) -> Self {
+        self.vflip = enable;
         self
     }
 
@@ -465,6 +474,7 @@ impl TextureBuilder {
             srh,
             texture,
             sampler,
+            vflip: self.vflip,
         })
     }
 }
@@ -544,6 +554,7 @@ pub extern "C" fn gl_texExistsOrCreate(
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
         .sy(sy as usize)
+        .vflip(flags.vflip)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -643,6 +654,7 @@ pub extern "C" fn gl_newSprite(
         .path(path.to_str().unwrap())
         .sx(sx as usize)
         .sy(sy as usize)
+        .vflip(flags.vflip)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -673,6 +685,7 @@ pub extern "C" fn gl_newSpriteRWops(
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
         .sy(sy as usize)
+        .vflip(flags.vflip)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -793,22 +806,30 @@ pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn gl_isTrans(t: *mut Texture, x: c_int, y: c_int) -> c_int {
+pub extern "C" fn gl_isTrans(ctex: *mut Texture, x: c_int, y: c_int) -> c_int {
     0
 }
 
 #[no_mangle]
-pub extern "C" fn tex_hasTrans(t: *mut Texture) -> c_int {
+pub extern "C" fn tex_hasTrans(ctex: *mut Texture) -> c_int {
     0
 }
 
 #[no_mangle]
-pub extern "C" fn tex_setTex(tex: *mut Texture, texture: naevc::GLuint) {}
+pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {}
 
 #[no_mangle]
-pub extern "C" fn tex_setVFLIP(tex: *mut Texture, flip: c_int) {}
+pub extern "C" fn tex_setVFLIP(ctex: *mut Texture, flip: c_int) {
+    let tex = unsafe { &mut *ctex };
+    tex.vflip = flip != 0;
+}
 
 #[no_mangle]
-pub extern "C" fn tex_flags(tex: *mut Texture) -> c_uint {
-    0
+pub extern "C" fn tex_flags(ctex: *mut Texture) -> c_uint {
+    let tex = unsafe { &*ctex };
+    let mut flags: c_uint = 0;
+    if tex.vflip {
+        flags |= naevc::OPENGL_TEX_VFLIP;
+    }
+    flags
 }

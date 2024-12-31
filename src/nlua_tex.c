@@ -115,7 +115,7 @@ glTexture *luaL_validtex( lua_State *L, int ind, const char *searchpath )
       return gl_dupTexture( luaL_checktex( L, ind ) );
    ndata_getPathDefault( path, sizeof( path ), searchpath,
                          luaL_checkstring( L, ind ) );
-   return gl_newImage( path, 0 );
+   return gl_newImage( path, OPENGL_TEX_VFLIP );
 }
 /**
  * @brief Pushes a texture on the stack.
@@ -243,12 +243,12 @@ static int texL_new( lua_State *L )
 
    /* Push new texture. */
    if ( path != NULL )
-      tex = gl_newSprite( path, sx, sy, 0 );
+      tex = gl_newSprite( path, sx, sy, OPENGL_TEX_VFLIP );
    else {
       rw = PHYSFSRWOPS_openRead( lf->path );
       if ( rw == NULL )
          return NLUA_ERROR( L, "Unable to open '%s'", lf->path );
-      tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
+      tex = gl_newSpriteRWops( lf->path, rw, sx, sy, OPENGL_TEX_VFLIP );
       // SDL_RWclose( rw ); /* cleaned up rust-side now. */
    }
 
