@@ -12,8 +12,10 @@ use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 #[derive(Default)]
 pub struct SlotProperty {
     pub name: CString,
-    pub display: CString,
-    pub description: CString,
+    pub display: String,
+    cdisplay: CString,
+    pub description: String,
+    cdescription: CString,
     pub required: bool,
     pub exclusive: bool,
     pub locked: bool,
@@ -40,8 +42,14 @@ impl SlotProperty {
                 continue;
             }
             match node.tag_name().name().to_lowercase().as_str() {
-                "display" => sp.display = nxml::node_cstring(node)?,
-                "description" => sp.description = nxml::node_cstring(node)?,
+                "display" => {
+                    sp.display = nxml::node_string(node)?;
+                    sp.cdisplay = nxml::node_cstring(node)?;
+                }
+                "description" => {
+                    sp.description = nxml::node_string(node)?;
+                    sp.cdescription = nxml::node_cstring(node)?;
+                }
                 "required" => sp.required = true,
                 "exclusive" => sp.exclusive = true,
                 "locked" => sp.locked = true,
@@ -106,7 +114,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
 #[no_mangle]
 pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
     match get_c(sp) {
-        Some(prop) => prop.display.as_ptr(),
+        Some(prop) => prop.cdisplay.as_ptr(),
         None => std::ptr::null(),
     }
 }
@@ -114,7 +122,7 @@ pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
 #[no_mangle]
 pub extern "C" fn sp_description(sp: c_int) -> *const c_char {
     match get_c(sp) {
-        Some(prop) => prop.description.as_ptr(),
+        Some(prop) => prop.cdescription.as_ptr(),
         None => std::ptr::null(),
     }
 }
