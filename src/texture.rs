@@ -5,11 +5,12 @@ use nalgebra::Vector4;
 use sdl2 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
-use std::os::raw::{c_char, c_double, c_int, c_uint};
+use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, Weak};
 
-use crate::ndata;
 use crate::ngl::CONTEXT;
+use crate::{formatx, warn};
+use crate::{gettext, ndata};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
@@ -407,7 +408,12 @@ impl TextureBuilder {
         // TODO SDF
         let texture = match self.source {
             TextureSource::Path(path) => match self.is_sdf {
-                true => todo!(),
+                true => {
+                    //todo!(), TODO!!!
+                    let bytes = ndata::read(path.as_str())?;
+                    let img = image::load_from_memory(&bytes)?;
+                    TextureData::from_image(gl, Some(&self.name), &img)?
+                }
                 false => {
                     let bytes = ndata::read(path.as_str())?;
                     let img = image::load_from_memory(&bytes)?;
@@ -511,26 +517,26 @@ macro_rules! capi {
     };
 }
 
-capi_tex!(tex_w_, w);
-capi_tex!(tex_h_, h);
-capi!(tex_sx_, sx);
-capi!(tex_sy_, sy);
-capi!(tex_sw_, sw);
-capi!(tex_sh_, sh);
-capi!(tex_srw_, srw);
-capi!(tex_srh_, srh);
-capi_tex!(tex_vmax_, vmax);
+capi_tex!(tex_w, w);
+capi_tex!(tex_h, h);
+capi!(tex_sx, sx);
+capi!(tex_sy, sy);
+capi!(tex_sw, sw);
+capi!(tex_sh, sh);
+capi!(tex_srw, srw);
+capi!(tex_srh, srh);
+capi_tex!(tex_vmax, vmax);
 
 #[no_mangle]
-pub extern "C" fn gl_initTextures_() -> c_int {
+pub extern "C" fn gl_initTextures() -> c_int {
     0
 }
 
 #[no_mangle]
-pub extern "C" fn gl_exitTextures_() {}
+pub extern "C" fn gl_exitTextures() {}
 
 #[no_mangle]
-pub extern "C" fn gl_texExistsOrCreate_(
+pub extern "C" fn gl_texExistsOrCreate(
     cpath: *const c_char,
     cflags: c_uint,
     sx: c_int,
@@ -576,8 +582,8 @@ pub extern "C" fn gl_texExistsOrCreate_(
 }
 
 #[no_mangle]
-pub extern "C" fn gl_loadImageData_(
-    data: *mut f32,
+pub extern "C" fn gl_loadImageData(
+    data: *const c_float,
     w: c_int,
     h: c_int,
     sx: c_int,
@@ -593,13 +599,18 @@ pub extern "C" fn gl_loadImageData_(
         .height(h as usize);
 
     if !data.is_null() {
-        let rawdata = unsafe { std::slice::from_raw_parts(data, (w * h) as usize) };
-        let buf = image::ImageBuffer::<image::Rgba<f32>, Vec<f32>>::from_raw(
+        let rawdata = unsafe { std::slice::from_raw_parts(data, (w * h * 4) as usize) };
+        let buf = match image::ImageBuffer::<image::Rgba<f32>, Vec<f32>>::from_raw(
             w as u32,
             h as u32,
             rawdata.to_vec(),
-        )
-        .unwrap();
+        ) {
+            Some(val) => val,
+            None => {
+                warn!("unable to load image");
+                return std::ptr::null_mut();
+            }
+        };
         let img = image::DynamicImage::ImageRgba32F(buf);
         builder = builder.image(&img);
     }
@@ -610,17 +621,20 @@ pub extern "C" fn gl_loadImageData_(
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
-        _ => std::ptr::null_mut(),
+        _ => {
+            warn!("unable to create texture");
+            std::ptr::null_mut()
+        }
     }
 }
 
 #[no_mangle]
-pub extern "C" fn gl_newImage_(cpath: *const c_char, flags: c_uint) -> *mut Texture {
-    gl_newSprite_(cpath, 1, 1, flags)
+pub extern "C" fn gl_newImage(cpath: *const c_char, flags: c_uint) -> *mut Texture {
+    gl_newSprite(cpath, 1, 1, flags)
 }
 
 #[no_mangle]
-pub extern "C" fn gl_newSprite_(
+pub extern "C" fn gl_newSprite(
     cpath: *const c_char,
     sx: c_int,
     sy: c_int,
@@ -651,13 +665,14 @@ pub extern "C" fn gl_newSprite_(
 }
 
 #[no_mangle]
-pub extern "C" fn gl_newSpriteRWops_(
+pub extern "C" fn gl_newSpriteRWops(
     cpath: *const c_char,
     rw: *mut naevc::SDL_RWops,
     sx: c_int,
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
+    dbg!(cpath);
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     let mut builder = TextureBuilder::new()
@@ -676,6 +691,8 @@ pub extern "C" fn gl_newSpriteRWops_(
         None => {
             let rw = unsafe { sdl::rwops::RWops::from_ll(rw as *mut sdl::sys::SDL_RWops) };
             let img = image::ImageReader::new(std::io::BufReader::new(rw))
+                .with_guessed_format()
+                .unwrap()
                 .decode()
                 .unwrap();
             builder.image(&img)
@@ -693,14 +710,14 @@ pub extern "C" fn gl_newSpriteRWops_(
 }
 
 #[no_mangle]
-pub extern "C" fn gl_dupTexture_(ctex: *mut Texture) -> *mut Texture {
+pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
     let tex = unsafe { &*ctex };
     unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
     Box::into_raw(Box::new(tex.try_clone().unwrap()))
 }
 
 #[no_mangle]
-pub extern "C" fn gl_rawTexture_(
+pub extern "C" fn gl_rawTexture(
     cpath: *mut c_char,
     tex: naevc::GLuint,
     w: c_double,
@@ -729,13 +746,13 @@ pub extern "C" fn gl_rawTexture_(
 }
 
 #[no_mangle]
-pub extern "C" fn gl_freeTexture_(ctex: *mut Texture) {
+pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
     let _ = unsafe { Box::from_raw(ctex as *mut Texture) };
     // The texture should get dropped now
 }
 
 #[no_mangle]
-pub extern "C" fn tex_tex_(ctex: *mut Texture) -> naevc::GLuint {
+pub extern "C" fn tex_tex(ctex: *mut Texture) -> naevc::GLuint {
     let tex = unsafe { &*ctex };
     tex.texture.texture.0.into()
 }
@@ -747,13 +764,34 @@ pub extern "C" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
 }
 
 #[no_mangle]
-pub extern "C" fn tex_name_(ctex: *mut Texture) -> *const c_char {
+pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
     let tex = unsafe { &*ctex };
     tex.name.as_ptr()
 }
 
 #[no_mangle]
-pub extern "C" fn tex_isSDF_(ctex: *mut Texture) -> c_int {
+pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
     let tex = unsafe { &*ctex };
     tex.texture.is_sdf as i32
+}
+
+#[no_mangle]
+pub extern "C" fn gl_isTrans(t: *mut Texture, x: c_int, y: c_int) -> c_int {
+    0
+}
+
+#[no_mangle]
+pub extern "C" fn tex_hasTrans(t: *mut Texture) -> c_int {
+    0
+}
+
+#[no_mangle]
+pub extern "C" fn tex_setTex(tex: *mut Texture, texture: naevc::GLuint) {}
+
+#[no_mangle]
+pub extern "C" fn tex_setVFLIP(tex: *mut Texture, flip: c_int) {}
+
+#[no_mangle]
+pub extern "C" fn tex_flags(tex: *mut Texture) -> c_uint {
+    0
 }

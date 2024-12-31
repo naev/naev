@@ -204,7 +204,34 @@ static int texL_new( lua_State *L )
    path = NULL;
 
    /* Get path. */
-   if ( lua_isfile( L, 1 ) )
+   if ( lua_isdata( L, 1 ) ) {
+      static int nlua_tex_counter = 0;
+      int        w, h;
+      char      *name;
+      LuaData_t *ld = luaL_checkdata( L, 1 );
+      /* Since we don't know the size we need the width and height separately.
+       */
+      w = luaL_checkinteger( L, 2 );
+      h = luaL_checkinteger( L, 3 );
+      if ( ( w < 0 ) || ( h < 0 ) )
+         return NLUA_ERROR( L, _( "Texture dimensions must be positive" ) );
+      sx = luaL_optinteger( L, 4, 1 );
+      sy = luaL_optinteger( L, 5, 1 );
+      if ( ( sx < 0 ) || ( sy < 0 ) )
+         return NLUA_ERROR( L, _( "Spritesheet dimensions must be positive" ) );
+      if ( ld->type != LUADATA_NUMBER )
+         return NLUA_ERROR( L, _( "Data has invalid type for texture" ) );
+      if ( w * h * ld->elem * 4 != ld->size )
+         return NLUA_ERROR( L,
+                            _( "Texture dimensions don't match data size!" ) );
+      SDL_asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
+      tex = gl_loadImageData( (void *)ld->data, w, h, sx, sy, name );
+      free( name );
+      if ( tex == NULL )
+         return 0;
+      lua_pushtex( L, tex );
+      return 1;
+   } else if ( lua_isfile( L, 1 ) )
       lf = luaL_checkfile( L, 1 );
    else
       path = luaL_checkstring( L, 1 );
@@ -222,7 +249,7 @@ static int texL_new( lua_State *L )
       if ( rw == NULL )
          return NLUA_ERROR( L, "Unable to open '%s'", lf->path );
       tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
-      SDL_RWclose( rw );
+      // SDL_RWclose( rw ); /* cleaned up rust-side now. */
    }
 
    /* Failed to load. */
