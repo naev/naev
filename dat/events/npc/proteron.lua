@@ -31,7 +31,7 @@ local msg_lore = {
    _([["We don't have time for fun and games. The whole reason we're so great is because we're more productive than any other society."]]),
    _([["We are superior, so of course we deserve control over the galaxy. It's our destiny."]]),
    _([["The Empire is weak, obsolete. That is why we must replace them."]]),
-   _([["Slaves? Of course we're not slaves. Slaves are beaten and starved. We are in top shape so we can serve our country better."]]),
+   _([["Slaves? Of course we're not slaves. Slaves are beaten and starved. We are in top shape so we can serve our Autarch better."]]),
    _([["I can't believe the Empire continues to allow families. So primitive. Obviously, all this does is make them less productive."]]),
    _([["The exact cause of the Incident is a tightly-kept secret, but the government says it was caused by the Empire's inferiority. I would expect nothing less."]]),
    _([["I came across some heathen a few months back who claimed, get this, that we Proterons were the cause of the Incident! What slanderous nonsense. Being the perfect society we are, of course we would never cause such a massive catastrophe."]]),
