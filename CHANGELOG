@@ -13,6 +13,7 @@
    * Fixed the ship_buy hook refering to the ship sold when trading ships
    * Don't remove builtin weapons when spawning pilots naked
    * lovebiz01: fixed condition allowing it to appear anywhere
+   * dv_goddard: fixed spawning of Silent Death
    * Minor typo fixes and translation updates
 
 * 0.12.1
