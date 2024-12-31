@@ -67,7 +67,8 @@ jobs:
 
       - name: Configure Rust
         run: |
-          rustup default stable-x86_64-unknown-linux-gnu
+          rustup default stable
+          rustup target add x86_64-unknown-linux-gnu
 
       - name: Meson Setup
         id: setup
@@ -170,7 +171,8 @@ jobs:
 
       - name: Configure Rust
         run: |
-          rustup default stable-x86_64-pc-windows-gnu
+          rustup default stable
+          rustup target add x86_64-unknown-linux-gnu
 
       - name: Meson Setup
         id: setup
@@ -270,7 +272,8 @@ jobs:
 
       - name: Configure Rust
         run: |
-          rustup default "stable-$BUILDARCH-apple-darwin"
+          rustup default stable
+          rustup target add "$BUILDARCH-apple-darwin"
 
       - name: Get Source
         uses: actions/download-artifact@v4
@@ -363,7 +366,8 @@ jobs:
 
       - name: Configure Rust
         run: |
-          rustup default stable-x86_64-unknown-linux-gnu
+          rustup default stable
+          rustup target add x86_64-unknown-linux-gnu
 
       - name: Meson Setup
         id: setup
@@ -409,7 +413,8 @@ jobs:
 
       - name: Configure Rust
         run: |
-          rustup default stable-x86_64-unknown-linux-gnu
+          rustup default stable
+          rustup target add x86_64-unknown-linux-gnu
 
       - name: Meson Setup
         run: |
