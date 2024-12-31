@@ -731,7 +731,7 @@ pub extern "C" fn gl_rawTexture(
     };
     let mut builder = TextureBuilder::new()
         .width(w as usize)
-        .height(w as usize)
+        .height(h as usize)
         .name(pathname);
 
     builder = match pathname {

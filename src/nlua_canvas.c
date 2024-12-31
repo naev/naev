@@ -168,16 +168,12 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
 
    /* Create the texture. */
    SDL_asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
-   lc->tex = gl_loadImageData( NULL, w, h, 1, 1, name );
-   tex_setVFLIP( lc->tex, 1 ); /* Long story, but love stuff inverts Y axis for
-                               canvases so we have to redo that here for spob
-                               targetting stuff to work properly. */
-   free( name );
 
    /* Create the frame buffer. */
    GLuint texture;
    gl_fboCreate( &lc->fbo, &texture, w, h );
-   tex_setTex( lc->tex, texture );
+   lc->tex = gl_rawTexture( name, texture, w, h );
+   free( name );
 
    return 0;
 }
