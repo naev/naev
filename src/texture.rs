@@ -102,17 +102,6 @@ impl TextureData {
         img: &image::DynamicImage,
     ) -> Result<Arc<Self>> {
         let mut textures = TEXTURE_DATA.lock().unwrap();
-        if let Some(name) = name {
-            for tex in textures.iter() {
-                if let Some(t) = tex.upgrade() {
-                    if let Some(tname) = &t.name {
-                        if tname == name {
-                            return Ok(t);
-                        }
-                    }
-                }
-            }
-        }
 
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
@@ -259,11 +248,31 @@ impl FilterMode {
 
 pub enum TextureSource {
     Path(String),
-    Data(Vec<u8>),
     Image(image::DynamicImage),
     TextureData(Arc<TextureData>),
     Raw(glow::NativeTexture),
     None,
+}
+impl TextureSource {
+    fn to_texture_data(
+        self,
+        gl: &glow::Context,
+        w: usize,
+        h: usize,
+        name: Option<&str>,
+    ) -> Result<Arc<TextureData>> {
+        Ok(match self {
+            TextureSource::Path(path) => {
+                let bytes = ndata::read(path.as_str())?;
+                let img = image::load_from_memory(&bytes)?;
+                TextureData::from_image(gl, name, &img)?
+            }
+            TextureSource::Image(img) => TextureData::from_image(gl, name, &img)?,
+            TextureSource::TextureData(tex) => tex,
+            TextureSource::Raw(tex) => Arc::new(TextureData::from_raw(tex, w, h)?),
+            TextureSource::None => Arc::new(TextureData::new(gl, w, h)?),
+        })
+    }
 }
 
 pub struct TextureBuilder {
@@ -397,37 +406,17 @@ impl TextureBuilder {
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
-        // TODO SDF
-        let texture = match self.source {
-            TextureSource::Path(path) => match self.is_sdf {
-                true => {
-                    //todo!(), TODO!!!
-                    let bytes = ndata::read(path.as_str())?;
-                    let img = image::load_from_memory(&bytes)?;
-                    TextureData::from_image(gl, self.name.as_deref(), &img)?
-                }
-                false => {
-                    let bytes = ndata::read(path.as_str())?;
-                    let img = image::load_from_memory(&bytes)?;
-                    TextureData::from_image(gl, self.name.as_deref(), &img)?
-                }
-            },
-            TextureSource::Data(data) => {
-                let buf = image::ImageBuffer::<image::Rgba<u8>, Vec<u8>>::from_raw(
-                    self.w as u32,
-                    self.h as u32,
-                    data,
-                )
-                .unwrap();
-                let img = image::DynamicImage::ImageRgba8(buf);
-                TextureData::from_image(gl, self.name.as_deref(), &img)?
-            }
-            TextureSource::Image(img) => TextureData::from_image(gl, self.name.as_deref(), &img)?,
-            TextureSource::TextureData(tex) => tex,
-            TextureSource::Raw(tex) => Arc::new(TextureData::from_raw(tex, self.w, self.h)?),
-            TextureSource::None => Arc::new(TextureData::new(gl, self.w, self.h)?),
-        };
+        /*
+        if let Some(name) = self.name {
+            TextureData::exists( name )
+        }
+        */
 
+        /* TODO handle SDF. */
+
+        let texture = self
+            .source
+            .to_texture_data(gl, self.w, self.h, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
