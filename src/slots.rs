@@ -51,6 +51,7 @@ impl SlotProperty {
                     sp.icon = Some(
                         texture::TextureBuilder::new()
                             .path(&gfxname)
+                            .sdf(true)
                             .build(&ctx.gl)?,
                     );
                 }
