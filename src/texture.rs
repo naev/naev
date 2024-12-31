@@ -747,7 +747,9 @@ pub extern "C" fn gl_rawTexture(
 
 #[no_mangle]
 pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
-    let _ = unsafe { Box::from_raw(ctex as *mut Texture) };
+    if !ctex.is_null() {
+        let _ = unsafe { Box::from_raw(ctex as *mut Texture) };
+    }
     // The texture should get dropped now
 }
 
