@@ -406,17 +406,22 @@ impl TextureBuilder {
     }
 
     pub fn build(self, gl: &glow::Context) -> Result<Texture> {
+        /* TODO handle SDF. */
         /*
         if let Some(name) = self.name {
             TextureData::exists( name )
         }
         */
+        let texture = match &self.name {
+            Some(name) => match TextureData::exists(&name) {
+                Some(tex) => tex,
+                None => self
+                    .source
+                    .to_texture_data(gl, self.w, self.h, Some(name))?,
+            },
+            None => self.source.to_texture_data(gl, self.w, self.h, None)?,
+        };
 
-        /* TODO handle SDF. */
-
-        let texture = self
-            .source
-            .to_texture_data(gl, self.w, self.h, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
