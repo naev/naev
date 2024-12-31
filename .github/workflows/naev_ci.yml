@@ -24,10 +24,6 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Configure Rust
-        run: |
-          rustup default stable-x86_64-unknown-linux-gnu
-
       - name: Package Dist
         run: |
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
