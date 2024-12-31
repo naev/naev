@@ -9,6 +9,7 @@ use crate::{formatx, warn};
 use crate::{ndata, ngl, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
+#[derive(Default)]
 pub struct SlotProperty {
     pub name: CString,
     pub display: CString,
@@ -66,20 +67,6 @@ impl SlotProperty {
 // Implementation of glTexture should be fairly thread safe, so set properties
 unsafe impl Sync for SlotProperty {}
 unsafe impl Send for SlotProperty {}
-impl Default for SlotProperty {
-    fn default() -> Self {
-        SlotProperty {
-            name: CString::default(),
-            display: CString::default(),
-            description: CString::default(),
-            required: false,
-            exclusive: false,
-            locked: false,
-            visible: false,
-            icon: None,
-        }
-    }
-}
 impl Ord for SlotProperty {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         self.name.cmp(&other.name)

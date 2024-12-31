@@ -248,18 +248,15 @@ pub enum TextureSource {
 }
 impl TextureSource {
     fn to_texture_data(
-        self,
+        &self,
         gl: &glow::Context,
         w: usize,
         h: usize,
         name: Option<&str>,
     ) -> Result<Arc<TextureData>> {
-        match self {
-            TextureSource::TextureData(tex) => {
-                // Purpose dropout, don't want to cache again here
-                return Ok(tex);
-            }
-            _ => (),
+        if let TextureSource::TextureData(tex) = self {
+            // Purpose dropout, don't want to cache again here
+            return Ok(tex.clone());
         };
 
         let mut textures = TEXTURE_DATA.lock().unwrap();
@@ -284,8 +281,8 @@ impl TextureSource {
                 let img = image::load_from_memory(&bytes)?;
                 TextureData::from_image(gl, name, &img)?
             }
-            TextureSource::Image(img) => TextureData::from_image(gl, name, &img)?,
-            TextureSource::Raw(tex) => TextureData::from_raw(tex, w, h)?,
+            TextureSource::Image(img) => TextureData::from_image(gl, name, img)?,
+            TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
             TextureSource::None => TextureData::new(gl, w, h)?,
             TextureSource::TextureData(tex) => unreachable!(),
         });
@@ -763,7 +760,7 @@ pub extern "C" fn gl_rawTexture(
 #[no_mangle]
 pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
     if !ctex.is_null() {
-        let _ = unsafe { Box::from_raw(ctex as *mut Texture) };
+        let _ = unsafe { Box::from_raw(ctex) };
     }
     // The texture should get dropped now
 }
