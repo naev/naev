@@ -711,6 +711,9 @@ pub extern "C" fn gl_newSpriteRWops(
 
 #[no_mangle]
 pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
+    if ctex.is_null() {
+        return ctex;
+    }
     let tex = unsafe { &*ctex };
     unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
     Box::into_raw(Box::new(tex.try_clone().unwrap()))
