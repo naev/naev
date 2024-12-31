@@ -32,18 +32,7 @@ impl Drop for TextureData {
 }
 
 impl TextureData {
-    /*
-    fn from_path( gl: &glow::Context, path: &str ) -> Result<Arc<Self>> {
-        let bytes = ndata::read(path)?;
-        TextureData::from_bytes( gl, bytes.as_slice() )
-    }
-
-    fn from_bytes( gl: &glow::Context, bytes: &[u8]) -> Result<Arc<Self>> {
-        let img = image::load_from_memory(bytes)?;
-        TextureData::from_image( gl, &img )
-    }
-    */
-
+    /// Creates a new TextureData of size w x h without any data.
     fn new(gl: &glow::Context, w: usize, h: usize) -> Result<Self> {
         if w == 0 || h == 0 {
             return Err(anyhow::anyhow!(
@@ -78,6 +67,7 @@ impl TextureData {
         })
     }
 
+    /// Checks to see if a TextureData exists.
     fn exists(name: &str) -> Option<Arc<Self>> {
         let textures = TEXTURE_DATA.lock().unwrap();
         for tex in textures.iter() {
@@ -92,6 +82,7 @@ impl TextureData {
         None
     }
 
+    /// Creates a new TextureData from
     fn from_raw(raw: glow::NativeTexture, w: usize, h: usize) -> Result<Self> {
         Ok(TextureData {
             name: None,
@@ -104,6 +95,7 @@ impl TextureData {
         })
     }
 
+    /// Creates a new TextureData from an image wrapper
     fn from_image(
         gl: &glow::Context,
         name: Option<&str>,
@@ -326,8 +318,8 @@ impl TextureBuilder {
         self
     }
 
-    pub fn texture_data(mut self, data: Arc<TextureData>) -> Self {
-        self.source = TextureSource::TextureData(data);
+    pub fn texture_data(mut self, data: &Arc<TextureData>) -> Self {
+        self.source = TextureSource::TextureData(data.clone());
         self
     }
 
@@ -563,7 +555,7 @@ pub extern "C" fn gl_texExistsOrCreate(
             unsafe {
                 *created = 0;
             }
-            builder.texture_data(tex)
+            builder.texture_data(&tex)
         }
         None => {
             unsafe {
@@ -688,7 +680,7 @@ pub extern "C" fn gl_newSpriteRWops(
 
     let pathname = path.to_str().unwrap();
     builder = match TextureData::exists(pathname) {
-        Some(tex) => builder.texture_data(tex),
+        Some(tex) => builder.texture_data(&tex),
         None => {
             let rw = unsafe { sdl::rwops::RWops::from_ll(rw as *mut sdl::sys::SDL_RWops) };
             let img = image::ImageReader::new(std::io::BufReader::new(rw))
@@ -732,7 +724,7 @@ pub extern "C" fn gl_rawTexture(
 
     let pathname = path.to_str().unwrap();
     builder = match TextureData::exists(pathname) {
-        Some(tex) => builder.texture_data(tex),
+        Some(tex) => builder.texture_data(&tex),
         None => {
             let tex = glow::NativeTexture(std::num::NonZero::new(tex).unwrap());
             builder.native_texture(tex)
