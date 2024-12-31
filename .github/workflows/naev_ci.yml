@@ -24,6 +24,10 @@ jobs:
           fetch-depth: 0
           submodules: true
 
+      - name: Configure Rust
+        run: |
+          rustup default stable-x86_64-unknown-linux-gnu
+
       - name: Package Dist
         run: |
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
@@ -64,6 +68,10 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Configure Rust
+        run: |
+          rustup default stable-x86_64-unknown-linux-gnu
 
       - name: Meson Setup
         id: setup
@@ -164,6 +172,10 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+      - name: Configure Rust
+        run: |
+          rustup default stable-x86_64-pc-windows-gnu
+
       - name: Meson Setup
         id: setup
         run: |
@@ -260,6 +272,10 @@ jobs:
             ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
           fi
 
+      - name: Configure Rust
+        run: |
+          rustup default "stable-$BUILDARCH-apple-darwin"
+
       - name: Get Source
         uses: actions/download-artifact@v4
         with:
@@ -349,6 +365,10 @@ jobs:
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
 
+      - name: Configure Rust
+        run: |
+          rustup default stable-x86_64-unknown-linux-gnu
+
       - name: Meson Setup
         id: setup
         run: |
@@ -390,6 +410,10 @@ jobs:
         run: |
           mkdir source
           tar -xf naev-*.tar.xz -C source --strip 1
+
+      - name: Configure Rust
+        run: |
+          rustup default stable-x86_64-unknown-linux-gnu
 
       - name: Meson Setup
         run: |
