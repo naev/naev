@@ -719,10 +719,11 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
    int    speed_num;
 
    /* Calculate ranges. */
-   range_accum = 0.;
-   range_num   = 0;
-   speed_accum = 0.;
-   speed_num   = 0;
+   range_accum   = 0.;
+   range_num     = 0;
+   speed_accum   = 0.;
+   speed_num     = 0;
+   ws->range_min = INFINITY;
 
    for ( int i = 0; i < array_size( ws->slots ); i++ ) {
       PilotOutfitSlot *pos = p->outfits[ws->slots[i].slotid];
@@ -739,6 +740,9 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
          /* Calculate. */
          range_accum += range;
          range_num++;
+
+         /* Add minimum. */
+         ws->range_min = MIN( range, ws->range_min );
       }
 
       /* Get speed. */
@@ -761,6 +765,18 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
       ws->speed = 0;
    else
       ws->speed = speed_accum / (double)speed_num;
+}
+
+/**
+ * @brief Gets the minimum range of the current pilot weapon set.
+ *
+ *    @param p Pilot to get the minimum range of.
+ *    @param id ID of weapon set to get the minimun range of.
+ */
+double pilot_weapSetRangeMin( Pilot *p, int id )
+{
+   PilotWeaponSet *ws = pilot_weapSet( p, id );
+   return ws->range_min;
 }
 
 /**

@@ -212,8 +212,9 @@ typedef struct PilotWeaponSet_ {
    int    inrange; /**< Whether or not to fire only if the target is inrange. */
    int    manual;  /**< Whether or not is manually aiming. */
    int    volley;  /**< Whether or not the weapon set is firing in volleys. */
-   double range;   /**< Average range of the weapon set. */
-   double speed;   /**< Average speed of the weapon set. */
+   double range_min; /**< Minimum range fo the weapon set. */
+   double range;     /**< Average range of the weapon set. */
+   double speed;     /**< Average speed of the weapon set. */
 } PilotWeaponSet;
 
 /**

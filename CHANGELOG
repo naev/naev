@@ -11,6 +11,21 @@
       * Fixed adding commodities to space objects via tech groups
 
 * 0.12.2 (unreleased)
+   * Made plasma drill much easier to apply to asteroids
+   * Don't reset cargo if not space worthy when reloading
+   * Truly fix the negative mass exploit
+   * Made miners less bad at mining, their only passion
+   * Slim GUI set formation button is no longer clickable when invisible
+   * Removed outdated tip from NPC messages
+   * Round faction reputation at hypergates
+   * Hypergates no longer spoil system names for you
+   * Deployed fighters are always aggressive (for now)
+   * Player can't make own escorts hostile with AoE weapons
+   * Made Za'lek drone weapons builtin
+   * Fixed the ship_buy hook refering to the ship sold when trading ships
+   * Don't remove builtin weapons when spawning pilots naked
+   * lovebiz01: fixed condition allowing it to appear anywhere
+   * dv_goddard: fixed spawning of Silent Death
    * Minor typo fixes and translation updates
 
 * 0.12.1

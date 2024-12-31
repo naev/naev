@@ -24,6 +24,7 @@
 
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
+static int asteroidL_tostring( lua_State *L );
 static int asteroidL_getAll( lua_State *L );
 static int asteroidL_get( lua_State *L );
 static int asteroidL_exists( lua_State *L );
@@ -44,6 +45,7 @@ static int asteroidL_materials( lua_State *L );
 
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
+   { "__tostring", asteroidL_tostring },
    { "getAll", asteroidL_getAll },
    { "get", asteroidL_get },
    { "exists", asteroidL_exists },
@@ -197,10 +199,29 @@ int lua_isasteroid( lua_State *L, int ind )
  */
 static int asteroidL_eq( lua_State *L )
 {
-   LuaAsteroid_t *a1, *a2;
-   a1 = luaL_checkasteroid( L, 1 );
-   a2 = luaL_checkasteroid( L, 2 );
+   LuaAsteroid_t *a1 = luaL_checkasteroid( L, 1 );
+   LuaAsteroid_t *a2 = luaL_checkasteroid( L, 2 );
    lua_pushboolean( L, ( memcmp( a1, a2, sizeof( LuaAsteroid_t ) ) == 0 ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the asteroid's current (translated) name or notes it is
+ * inexistent.
+ *
+ * @usage tostring(a)
+ *
+ *    @luatparam Asteroid a Asteroid to convert to string.
+ *    @luatreturn string A string representation of the asteroid.
+ * if not existent.
+ * @luafunc __tostring
+ */
+static int asteroidL_tostring( lua_State *L )
+{
+   char            buf[STRMAX_SHORT];
+   const Asteroid *a = luaL_validasteroid( L, 1 );
+   snprintf( buf, sizeof( buf ), "Asteroid(%s)", a->type->name );
+   lua_pushstring( L, buf );
    return 1;
 }
 

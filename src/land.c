@@ -422,6 +422,8 @@ void misn_regen( void )
       return;
    if ( !land_loaded )
       return;
+   if ( land_spob == NULL )
+      return;
    misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
 }
 /**
@@ -432,6 +434,8 @@ void bar_regen( void )
    if ( !landed )
       return;
    if ( !land_loaded )
+      return;
+   if ( land_spob == NULL )
       return;
    NTracingZone( _ctx, 1 );
    bar_genList( land_getWid( LAND_WINDOW_BAR ) );

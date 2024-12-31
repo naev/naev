@@ -670,7 +670,7 @@ static void shipyard_trade( unsigned int wid, const char *str )
    hparam[3].type   = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_sell", hparam );
    hparam[0].type   = HOOK_PARAM_SHIP;
-   hparam[0].u.ship = ssold;
+   hparam[0].u.ship = ship;
    hparam[1].type   = HOOK_PARAM_BOOL;
    hparam[1].u.b    = 1;
    hparam[2].type   = HOOK_PARAM_SENTINEL;
