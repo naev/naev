@@ -11,6 +11,7 @@
    * Player can't make own escorts hostile with AoE weapons
    * Made Za'lek drone weapons builtin
    * Don't remove builtin weapons when spawning pilots naked
+   * lovebiz01: fixed condition allowing it to appear anywhere
    * Minor typo fixes and translation updates
 
 * 0.12.1
