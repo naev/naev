@@ -5,11 +5,10 @@ use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
 use crate::gettext::gettext;
-use crate::ndata;
 use crate::{formatx, warn};
+use crate::{ndata, ngl, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
-#[derive(Debug, Clone)]
 pub struct SlotProperty {
     pub name: CString,
     pub display: CString,
@@ -18,7 +17,7 @@ pub struct SlotProperty {
     pub exclusive: bool,
     pub locked: bool,
     pub visible: bool,
-    pub icon: *mut naevc::glTexture,
+    pub icon: Option<texture::Texture>,
 }
 impl SlotProperty {
     fn load(filename: &str) -> Result<Self> {
@@ -46,10 +45,15 @@ impl SlotProperty {
                 "exclusive" => sp.exclusive = true,
                 "locked" => sp.locked = true,
                 "visible" => sp.visible = true,
-                "icon" => unsafe {
-                    let gfxname = CString::new(format!("gfx/slots/{}", nxml::node_str(node)?))?;
-                    sp.icon = naevc::gl_newImage(gfxname.as_ptr() as *const c_char, 0)
-                },
+                "icon" => {
+                    let ctx = ngl::CONTEXT.get().unwrap();
+                    let gfxname = format!("gfx/slots/{}", nxml::node_str(node)?);
+                    sp.icon = Some(
+                        texture::TextureBuilder::new()
+                            .path(&gfxname)
+                            .build(&ctx.gl)?,
+                    );
+                }
                 tag => {
                     return nxml_err_node_unknown!("Slot Property", sp.name.to_str()?, tag);
                 }
@@ -71,7 +75,7 @@ impl Default for SlotProperty {
             exclusive: false,
             locked: false,
             visible: false,
-            icon: std::ptr::null_mut(),
+            icon: None,
         }
     }
 }
@@ -154,7 +158,10 @@ pub extern "C" fn sp_exclusive(sp: c_int) -> c_int {
 #[no_mangle]
 pub extern "C" fn sp_icon(sp: c_int) -> *const naevc::glTexture {
     match get_c(sp) {
-        Some(prop) => prop.icon,
+        Some(prop) => match &prop.icon {
+            Some(icon) => icon as *const texture::Texture as *const naevc::glTexture,
+            None => std::ptr::null(),
+        },
         None => std::ptr::null(),
     }
 }
