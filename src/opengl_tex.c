@@ -69,9 +69,10 @@ typedef struct glTexList_ {
    int          sy;    /**< Y sprites */
    unsigned int flags; /**< Flags being used. */
 } glTexList;
+static SDL_mutex *gl_lock = NULL; /**< Lock for OpenGL functions. */
+#if 0
 static glTexList   *texture_list = NULL; /**< Texture list. */
 static SDL_threadID tex_mainthread;
-static SDL_mutex   *gl_lock  = NULL; /**< Lock for OpenGL functions. */
 static SDL_mutex   *tex_lock = NULL; /**< Lock for texture list manipulation. */
 
 /*
@@ -97,17 +98,22 @@ static glTexture *gl_texCreate( const char *path, int sx, int sy,
                                 unsigned int flags );
 static int gl_texAdd( glTexture *tex, int sx, int sy, unsigned int flags );
 static int tex_cmp( const void *p1, const void *p2 );
+#endif
 
 static void tex_ctxSet( void )
 {
+#if 0
    if ( SDL_ThreadID() != tex_mainthread )
       SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+#endif
 }
 
 static void tex_ctxUnset( void )
 {
+#if 0
    if ( SDL_ThreadID() != tex_mainthread )
       SDL_GL_MakeCurrent( gl_screen.window, NULL );
+#endif
 }
 
 void gl_contextSet( void )

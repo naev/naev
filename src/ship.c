@@ -604,6 +604,7 @@ int ship_gfxLoaded( const Ship *s )
  */
 int ship_gfxLoadNeeded( void )
 {
+#if 0
    ThreadQueue *tq = vpool_create();
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
 
@@ -619,6 +620,15 @@ int ship_gfxLoadNeeded( void )
    vpool_cleanup( tq );
 
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+#else
+   for ( int i = 0; i < array_size( ship_stack ); i++ ) {
+      Ship *s = &ship_stack[i];
+      if ( !ship_isFlag( s, SHIP_NEEDSGFX ) )
+         continue;
+      ship_gfxLoad( s );
+      ship_rmFlag( s, SHIP_NEEDSGFX );
+   }
+#endif
    return 0;
 }
 
@@ -1574,7 +1584,6 @@ int ships_load( void )
 #if DEBUGGING
    Uint32 time = SDL_GetTicks();
 #endif /* DEBUGGING */
-   ThreadQueue    *tq       = vpool_create();
    ShipThreadData *shipdata = array_create( ShipThreadData );
 
    /* Validity. */
@@ -1598,6 +1607,8 @@ int ships_load( void )
    }
    array_free( ship_files );
 
+#if 0
+   ThreadQueue    *tq       = vpool_create();
    /* Enqueue the jobs after the data array is done. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for ( int i = 0; i < array_size( shipdata ); i++ )
@@ -1606,6 +1617,10 @@ int ships_load( void )
    vpool_wait( tq );
    vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+#else
+   for ( int i = 0; i < array_size( shipdata ); i++ )
+      ship_parseThread( &shipdata[i] );
+#endif
 
    /* Properly load the data. */
    for ( int i = 0; i < array_size( shipdata ); i++ ) {

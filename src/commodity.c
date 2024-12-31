@@ -498,9 +498,7 @@ static int commodity_parseThread( void *ptr )
    data->ret                 = commodity_parse( &data->com, data->filename );
    /* Render if necessary. */
    if ( naev_shouldRenderLoadscreen() ) {
-      gl_contextSet();
       naev_renderLoadscreen();
-      gl_contextUnset();
    }
    return data->ret;
 }
@@ -515,7 +513,6 @@ int commodity_load( void )
 #if DEBUGGING
    Uint32 time = SDL_GetTicks();
 #endif /* DEBUGGING */
-   ThreadQueue         *tq    = vpool_create();
    CommodityThreadData *cdata = array_create( CommodityThreadData );
    char **commodities         = ndata_listRecursive( COMMODITY_DATA_PATH );
 
@@ -534,6 +531,8 @@ int commodity_load( void )
    }
    array_free( commodities );
 
+#if 0
+   ThreadQueue         *tq    = vpool_create();
    /* Enqueue the jobs after the data array is done. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for ( int i = 0; i < array_size( cdata ); i++ )
@@ -542,6 +541,10 @@ int commodity_load( void )
    vpool_wait( tq );
    vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+#else
+   for ( int i = 0; i < array_size( cdata ); i++ )
+      commodity_parseThread( &cdata[i] );
+#endif
 
    /* Finally load. */
    for ( int i = 0; i < array_size( cdata ); i++ ) {

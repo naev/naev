@@ -543,6 +543,8 @@ pub extern "C" fn gl_texExistsOrCreate(
     sy: c_int,
     created: *mut c_int,
 ) -> *mut Texture {
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     let mut builder = TextureBuilder::new()
@@ -571,7 +573,6 @@ pub extern "C" fn gl_texExistsOrCreate(
         }
     };
 
-    let ctx = CONTEXT.get().unwrap();
     match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
@@ -590,6 +591,7 @@ pub extern "C" fn gl_loadImageData(
     sy: c_int,
     cname: *const c_char,
 ) -> *mut Texture {
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
     let mut builder = TextureBuilder::new()
         .name(name.to_str().unwrap())
@@ -615,7 +617,6 @@ pub extern "C" fn gl_loadImageData(
         builder = builder.image(&img);
     }
 
-    let ctx = CONTEXT.get().unwrap();
     match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
@@ -640,6 +641,7 @@ pub extern "C" fn gl_newSprite(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
 
@@ -654,7 +656,6 @@ pub extern "C" fn gl_newSprite(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let ctx = CONTEXT.get().unwrap();
     match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
@@ -672,7 +673,7 @@ pub extern "C" fn gl_newSpriteRWops(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
-    dbg!(cpath);
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     let mut builder = TextureBuilder::new()
@@ -699,7 +700,6 @@ pub extern "C" fn gl_newSpriteRWops(
         }
     };
 
-    let ctx = CONTEXT.get().unwrap();
     match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
@@ -723,6 +723,7 @@ pub extern "C" fn gl_rawTexture(
     w: c_double,
     h: c_double,
 ) -> *mut Texture {
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let mut builder = TextureBuilder::new().width(w as usize).height(w as usize);
 
@@ -735,7 +736,6 @@ pub extern "C" fn gl_rawTexture(
         }
     };
 
-    let ctx = CONTEXT.get().unwrap();
     match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }

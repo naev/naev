@@ -191,7 +191,8 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
 pub fn load() -> Result<Vec<SlotProperty>> {
     let files = ndata::read_dir("slots/")?;
     let mut sp_data: Vec<SlotProperty> = files
-        .par_iter()
+        //.par_iter() // TODO use multithread when textures are safe again...
+        .iter()
         .filter_map(|filename| match SlotProperty::load(filename.as_str()) {
             Ok(sp) => Some(sp),
             _ => {

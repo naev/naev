@@ -177,6 +177,7 @@ int outfit_gfxStoreLoaded( const Outfit *o )
 
 int outfit_gfxStoreLoadNeeded( void )
 {
+#if 0
    ThreadQueue *tq = vpool_create();
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for ( int i = 0; i < array_size( outfit_stack ); i++ ) {
@@ -189,6 +190,15 @@ int outfit_gfxStoreLoadNeeded( void )
    vpool_wait( tq );
    vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+#else
+   for ( int i = 0; i < array_size( outfit_stack ); i++ ) {
+      Outfit *o = &outfit_stack[i];
+      if ( !outfit_isProp( o, OUTFIT_PROP_NEEDSGFX ) )
+         continue;
+      outfit_gfxStoreLoad( o );
+      outfit_rmProp( o, OUTFIT_PROP_NEEDSGFX );
+   }
+#endif
    return 0;
 }
 
@@ -1468,6 +1478,10 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
    if ( array_size( gfx->polygon.views ) == 0 )
       flags |= OPENGL_TEX_MAPTRANS;
    gfx->tex = xml_parseTexture( node, OUTFIT_GFX_PATH "space/%s", 6, 6, flags );
+   if ( gfx->tex == NULL ) {
+      WARN( "Failed to load texture for %s!", temp->name );
+      return -1;
+   }
    gfx->size = ( tex_sw( gfx->tex ) + tex_sh( gfx->tex ) ) * 0.5;
 
    /* See if there is a collision size, or an override. */
@@ -2979,7 +2993,6 @@ static int outfit_parseThread( void *ptr )
 static int outfit_loadDir( const char *dir )
 {
    char            **outfit_files = ndata_listRecursive( dir );
-   ThreadQueue      *tq           = vpool_create();
    OutfitThreadData *odata        = array_create( OutfitThreadData );
 
    for ( int i = 0; i < array_size( outfit_files ); i++ ) {
@@ -2991,6 +3004,8 @@ static int outfit_loadDir( const char *dir )
    }
    array_free( outfit_files );
 
+#if 0
+   ThreadQueue      *tq           = vpool_create();
    /* Enqueue the jobs after the data array is done. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for ( int i = 0; i < array_size( odata ); i++ )
@@ -2999,6 +3014,10 @@ static int outfit_loadDir( const char *dir )
    vpool_wait( tq );
    vpool_cleanup( tq );
    SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
+#else
+   for ( int i = 0; i < array_size( odata ); i++ )
+      outfit_parseThread( &odata[i] );
+#endif
 
    /* Properly load the data. */
    license_stack = array_create( char * );
