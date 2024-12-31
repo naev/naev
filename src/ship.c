@@ -1410,8 +1410,9 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
 
          /* Now merge to main framebuffer. */
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
-         gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], engine_glow,
-                                          &projection, &tex_mat, &cWhite );
+         gl_renderTextureInterpolateRawH( ship_tex[2], ship_tex[1], 0, 0,
+                                          engine_glow, &projection, &tex_mat,
+                                          &cWhite );
 
          /* Copy depth over. */
          GLint blitsize = scale;
@@ -1486,7 +1487,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
          tex_mat.m[1][1] = -1.;
          tex_mat.m[3][1] = 0.5;
       }
-      gl_renderTextureRawH( ship_tex[1], &projection, &tex_mat, &cWhite );
+      gl_renderTextureRawH( ship_tex[1], 0, &projection, &tex_mat, &cWhite );
    }
 
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );

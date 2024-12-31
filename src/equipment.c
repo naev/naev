@@ -1008,7 +1008,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh,
                             &L_store_const );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   gl_renderTextureRaw( swd->tex, 0, px, py, pw, ph, 0., 0., s / swd->s,
+   gl_renderTextureRaw( swd->tex, 0, 0, px, py, pw, ph, 0., 0., s / swd->s,
                         s / swd->s, NULL, 0. );
 
 #ifdef DEBUGGING

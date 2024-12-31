@@ -96,6 +96,7 @@ double       tex_srh( const glTexture *tex );
 int          tex_isSDF( const glTexture *tex );
 int          tex_hasTrans( const glTexture *tex );
 GLuint       tex_tex( const glTexture *tex );
+GLuint       tex_sampler( const glTexture *tex );
 unsigned int tex_flags( const glTexture *tex );
 double       tex_vmax( const glTexture *tex );
 void         tex_setTex( glTexture *tex, GLuint texture );

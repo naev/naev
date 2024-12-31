@@ -321,13 +321,16 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_renderTextureRawH( GLuint texture, const mat4 *projection,
-                           const mat4 *tex_mat, const glColour *c )
+void gl_renderTextureRawH( GLuint texture, GLuint sampler,
+                           const mat4 *projection, const mat4 *tex_mat,
+                           const glColour *c )
 {
    glUseProgram( shaders.texture.program );
 
    /* Bind the texture. */
    glBindTexture( GL_TEXTURE_2D, texture );
+   if ( sampler > 0 )
+      glBindSampler( 0, sampler );
 
    /* Must have colour for now. */
    if ( c == NULL )
@@ -353,6 +356,9 @@ void gl_renderTextureRawH( GLuint texture, const mat4 *projection,
    gl_checkErr();
 
    glUseProgram( 0 );
+   glBindTexture( GL_TEXTURE_2D, 0 );
+   if ( sampler > 0 )
+      glBindSampler( 0, 0 );
 }
 
 /**
@@ -371,9 +377,10 @@ void gl_renderTextureRawH( GLuint texture, const mat4 *projection,
  *    @param c Colour to use (modifies texture colour).
  *    @param angle Rotation to apply (radians ccw around the center).
  */
-void gl_renderTextureRaw( GLuint texture, uint8_t flags, double x, double y,
-                          double w, double h, double tx, double ty, double tw,
-                          double th, const glColour *c, double angle )
+void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
+                          double x, double y, double w, double h, double tx,
+                          double ty, double tw, double th, const glColour *c,
+                          double angle )
 {
    mat4 projection, tex_mat;
 
@@ -396,7 +403,7 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags, double x, double y,
                 : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   gl_renderTextureRawH( texture, &projection, &tex_mat, c );
+   gl_renderTextureRawH( texture, sampler, &projection, &tex_mat, c );
 }
 
 /**
@@ -418,8 +425,9 @@ void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle )
 {
-   gl_renderTextureRaw( tex_tex( texture ), tex_flags( texture ), x, y, w, h,
-                        tx, ty, tw, th, c, angle );
+   gl_renderTextureRaw( tex_tex( texture ), tex_sampler( texture ),
+                        tex_flags( texture ), x, y, w, h, tx, ty, tw, th, c,
+                        angle );
 }
 
 /**
@@ -508,15 +516,16 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
+void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, GLuint sa,
+                                      GLuint sb, double inter,
                                       const mat4 *projection,
                                       const mat4 *tex_mat, const glColour *c )
 {
    /* Corner cases. */
    if ( inter >= 1. )
-      return gl_renderTextureRawH( ta, projection, tex_mat, c );
+      return gl_renderTextureRawH( ta, sa, projection, tex_mat, c );
    else if ( inter <= 0. )
-      return gl_renderTextureRawH( tb, projection, tex_mat, c );
+      return gl_renderTextureRawH( tb, sb, projection, tex_mat, c );
 
    /* Must have colour for now. */
    if ( c == NULL )
@@ -527,8 +536,12 @@ void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
    /* Bind the textures. */
    glActiveTexture( GL_TEXTURE1 );
    glBindTexture( GL_TEXTURE_2D, tb );
+   if ( sb > 0 )
+      glBindSampler( 1, sb );
    glActiveTexture( GL_TEXTURE0 );
    glBindTexture( GL_TEXTURE_2D, ta );
+   if ( sa > 0 )
+      glBindSampler( 0, sa );
    /* Always end with TEXTURE0 active. */
 
    /* Set the vertex. */
@@ -549,6 +562,11 @@ void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
 
    /* Clear state. */
    glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
+
+   if ( sb > 0 )
+      glBindSampler( 1, 0 );
+   if ( sa > 0 )
+      glBindSampler( 0, 0 );
 
    /* anything failed? */
    gl_checkErr();
@@ -594,8 +612,9 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
                 : mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
-   return gl_renderTextureInterpolateRawH( tex_tex( ta ), tex_tex( tb ), inter,
-                                           &projection, &tex_mat, c );
+   return gl_renderTextureInterpolateRawH( tex_tex( ta ), tex_tex( tb ),
+                                           tex_sampler( ta ), tex_sampler( tb ),
+                                           inter, &projection, &tex_mat, c );
 }
 
 /**

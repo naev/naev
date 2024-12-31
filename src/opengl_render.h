@@ -40,15 +40,18 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
                                double tx, double ty, double tw, double th,
                                const glColour *c, double angle );
 /* blits texture */
-void gl_renderTextureRawH( GLuint texture, const mat4 *projection,
-                           const mat4 *tex_mat, const glColour *c );
-void gl_renderTextureRaw( GLuint texture, uint8_t flags, double x, double y,
-                          double w, double h, double tx, double ty, double tw,
-                          double th, const glColour *c, double angle );
+void gl_renderTextureRawH( GLuint texture, GLuint sampler,
+                           const mat4 *projection, const mat4 *tex_mat,
+                           const glColour *c );
+void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
+                          double x, double y, double w, double h, double tx,
+                          double ty, double tw, double th, const glColour *c,
+                          double angle );
 void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle );
-void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, double inter,
+void gl_renderTextureInterpolateRawH( GLuint ta, GLuint tb, GLuint sa,
+                                      GLuint sb, double inter,
                                       const mat4 *projection,
                                       const mat4 *tex_mat, const glColour *c );
 void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,

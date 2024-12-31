@@ -1655,7 +1655,7 @@ void toolkit_render( double dt )
    /* We can just rendered stored FBO onto the screen. */
    const mat4 ortho = mat4_ortho( 0., 1., 0., 1., 1., -1. );
    const mat4 I     = mat4_identity();
-   gl_renderTextureRawH( gl_screen.fbo_tex[3], &ortho, &I, &cWhite );
+   gl_renderTextureRawH( gl_screen.fbo_tex[3], 0, &ortho, &I, &cWhite );
 
    /* We render only the active window dynamically, otherwise we wouldn't be
     * able to respect the order. However, since the dynamic stuff is also
