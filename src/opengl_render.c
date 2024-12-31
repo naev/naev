@@ -317,6 +317,7 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
+ *    @param sampler Sampler to use.
  *    @param projection Projection matrix tu use.
  *    @param tex_mat Texture matrix to use.
  *    @param c Colour to use (modifies texture colour).
@@ -365,6 +366,7 @@ void gl_renderTextureRawH( GLuint texture, GLuint sampler,
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
+ *    @param sampler Sampler to use.
  *    @param flags Texture flags,.
  *    @param x X position of the texture on the screen. (units pixels)
  *    @param y Y position of the texture on the screen. (units pixels)
@@ -511,6 +513,8 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
  *
  *    @param ta Texture id A to blit.
  *    @param tb Texture id B to blit.
+ *    @param sa Sampler for A.
+ *    @param sb Sampler for B.
  *    @param inter Amount of interpolation to do.
  *    @param projection Projection matrix tu use.
  *    @param tex_mat Texture matrix to use.

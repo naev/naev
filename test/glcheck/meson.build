@@ -14,6 +14,7 @@ endif
 summary('System OpenGL Version', build_gl_version, section: 'Tests')
 
 # glVertexAttribDivisor requires 3.3
+# Sampler Objects require 3.3
 
 if build_gl_version.version_compare('<3.3')
     message('Could not detect OpenGL >= 3.3. Attempting to find software renderer for tests.')
