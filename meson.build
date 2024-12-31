@@ -409,9 +409,14 @@ int main (void) { return 0; }''')
    naev_rlib = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml,
+      output: 'src', # Dummy directory, hope it doesn't error
+      console: true,
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
+   naev_rlib_cp = custom_target( 'cargo-build-cp',
+      depends: [naev_rlib],
       output: 'libnaev.rlib',
       console: true,
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
+      command: [ cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
    naev_rlib_lib = library('libnaev_rlib', naev_rlib)
    # We create naev.rs with naev_rlib as a dependency to force rlib to be
    # compiled first, otherwise meson tries to compile both naev.rs and
