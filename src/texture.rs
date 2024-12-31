@@ -100,9 +100,7 @@ impl TextureData {
         gl: &glow::Context,
         name: Option<&str>,
         img: &image::DynamicImage,
-    ) -> Result<Arc<Self>> {
-        let mut textures = TEXTURE_DATA.lock().unwrap();
-
+    ) -> Result<Self> {
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
@@ -141,7 +139,7 @@ impl TextureData {
             gl.bind_texture(glow::TEXTURE_2D, None);
         }
 
-        let tex = Arc::new(TextureData {
+        Ok(TextureData {
             name: name.map(String::from),
             w: w as usize,
             h: h as usize,
@@ -149,12 +147,7 @@ impl TextureData {
             is_srgb,
             is_sdf: false,
             vmax: 1.,
-        });
-
-        if name.is_some() {
-            textures.push(Arc::downgrade(&tex));
-        }
-        Ok(tex)
+        })
     }
 }
 
@@ -261,25 +254,48 @@ impl TextureSource {
         h: usize,
         name: Option<&str>,
     ) -> Result<Arc<TextureData>> {
+        match self {
+            TextureSource::TextureData(tex) => {
+                // Purpose dropout, don't want to cache again here
+                return Ok(tex);
+            }
+            _ => (),
+        };
+
+        let mut textures = TEXTURE_DATA.lock().unwrap();
+
         // Try to load from name if possible
         if let Some(name) = name {
-            if let Some(tex) = TextureData::exists(&name) {
-                return Ok(tex);
+            for tex in textures.iter() {
+                if let Some(t) = tex.upgrade() {
+                    if let Some(tname) = &t.name {
+                        if tname == name {
+                            return Ok(t);
+                        }
+                    }
+                }
             }
         }
 
         // Failed to find in cache, load a new
-        Ok(match self {
+        let tex = Arc::new(match self {
             TextureSource::Path(path) => {
                 let bytes = ndata::read(path.as_str())?;
                 let img = image::load_from_memory(&bytes)?;
                 TextureData::from_image(gl, name, &img)?
             }
             TextureSource::Image(img) => TextureData::from_image(gl, name, &img)?,
-            TextureSource::TextureData(tex) => tex,
-            TextureSource::Raw(tex) => Arc::new(TextureData::from_raw(tex, w, h)?),
-            TextureSource::None => Arc::new(TextureData::new(gl, w, h)?),
-        })
+            TextureSource::Raw(tex) => TextureData::from_raw(tex, w, h)?,
+            TextureSource::None => TextureData::new(gl, w, h)?,
+            TextureSource::TextureData(tex) => unreachable!(),
+        });
+
+        // Add weak reference to cache
+        if name.is_some() {
+            textures.push(Arc::downgrade(&tex));
+        }
+
+        Ok(tex)
     }
 }
 
