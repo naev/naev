@@ -5,6 +5,8 @@
    * Made miners less bad at mining, their only passion
    * Slim GUI set formation button is no longer clickable when invisible
    * Removed outdated tip from NPC messages
+   * Round faction reputation at hypergates
+   * Hypergates no longer spoil system names for you
    * Deployed fighters are always aggressive (for now)
    * Player can't make own escorts hostile with AoE weapons
    * Made Za'lek drone weapons builtin
