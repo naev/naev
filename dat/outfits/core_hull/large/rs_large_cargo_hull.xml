@@ -13,7 +13,7 @@
   <cpu>-160</cpu>
  </general>
  <specific type="modification">
-  <cargo>600</cargo>
+  <cargo>400</cargo>
   <absorb>68</absorb>
   <armour>1100</armour>
   <cargo_inertia>-10</cargo_inertia>
