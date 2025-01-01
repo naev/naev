@@ -17,6 +17,7 @@
 #include "commodity.h"
 #include "conf.h"
 #include "log.h"
+#include "naev.h"
 #include "ndata.h"
 #include "nxml.h"
 #include "outfit.h"
@@ -253,8 +254,13 @@ int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
 
    /* Save items. */
    s = array_size( grp->items );
-   for ( int i = 0; i < s; i++ )
-      xmlw_elem( writer, "item", "%s", tech_getItemName( &grp->items[i] ) );
+   for ( int i = 0; i < s; i++ ) {
+      xmlw_startElem( writer, "item" );
+      if ( FABS( grp->items[i].price_mod - 1.0 ) > DOUBLE_TOL )
+         xmlw_attr( writer, "price_mod", "%f", grp->items[i].price_mod );
+      xmlw_str( writer, "%s", tech_getItemName( &grp->items[i] ) );
+      xmlw_endElem( writer ); /* "item" */
+   }
 
    xmlw_endElem( writer ); /* "tech" */
 
