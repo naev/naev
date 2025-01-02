@@ -832,16 +832,21 @@ pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
 
 #[no_mangle]
 pub extern "C" fn tex_setVFLIP(ctex: *mut Texture, flip: c_int) {
+    /*
     let tex = unsafe { &mut *ctex };
     tex.flipv = flip != 0;
+    */
 }
 
 #[no_mangle]
 pub extern "C" fn tex_flags(ctex: *mut Texture) -> c_uint {
+    /*
     let tex = unsafe { &*ctex };
     let mut flags: c_uint = 0;
     if tex.flipv {
         flags |= naevc::OPENGL_TEX_VFLIP;
     }
     flags
+    */
+    0
 }

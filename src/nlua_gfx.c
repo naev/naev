@@ -421,9 +421,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if ( shader->VertexTexCoord >= 0 ) {
-      mat4 R = ( tex_flags( t ) & OPENGL_TEX_VFLIP )
-                  ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
-                  : mat4_identity();
+      mat4 R = mat4_ortho( -1., 1., 2., 0., 1., -1. );
       mat4 T;
       mat4_mul( &T, TH, &R );
       gl_uniformMat4( shader->ViewSpaceFromLocal, &T );
