@@ -37,9 +37,14 @@ impl Shader {
         let mut module_string = String::new();
         for line in data.lines() {
             if line.starts_with(Shader::INCLUDE_INSTRUCTION) {
-                for include in line.split_whitespace().skip(1) {
-                    let include_string = Shader::load_file(include)?;
-                    module_string.push_str(&include_string);
+                match line.trim().split("\"").nth(2) {
+                    Some(include) => {
+                        let include_string = Shader::load_file(include)?;
+                        module_string.push_str(&include_string);
+                    }
+                    None => {
+                        return Err(anyhow::anyhow!("#include syntax error"));
+                    }
                 }
             } else {
                 module_string.push_str(line);
@@ -84,15 +89,13 @@ impl Shader {
             gl.attach_shader(program, vertshader);
             gl.attach_shader(program, fragshader);
             gl.link_program(program);
+            gl.delete_shader(vertshader);
+            gl.delete_shader(fragshader);
         }
         if unsafe { !gl.get_program_link_status(program) } {
             let slog = unsafe { gl.get_program_info_log(program) };
             warn!("Failed to link shader: [[\n{}\n]]", slog);
             return Err(anyhow::anyhow!("failed to link shader program"));
-        }
-        unsafe {
-            gl.delete_shader(vertshader);
-            gl.delete_shader(fragshader);
         }
         Ok(program)
     }
