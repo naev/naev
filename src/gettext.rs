@@ -7,6 +7,11 @@ pub fn init() {
     };
 }
 
+#[allow(non_snake_case, dead_code)]
+pub fn N_(s: &str) -> &str {
+    s
+}
+
 //pub fn gettext<T: Into<String>>(msgid: T) -> String {
 pub fn gettext(msg_id: &str) -> &str {
     let msgid = CString::new(msg_id).expect("`msgid` contains an internal 0 byte");
