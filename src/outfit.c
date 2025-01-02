@@ -177,7 +177,7 @@ int outfit_gfxStoreLoaded( const Outfit *o )
 
 int outfit_gfxStoreLoadNeeded( void )
 {
-#if 0
+#if 1
    ThreadQueue *tq = vpool_create();
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for ( int i = 0; i < array_size( outfit_stack ); i++ ) {
@@ -3004,8 +3004,8 @@ static int outfit_loadDir( const char *dir )
    }
    array_free( outfit_files );
 
-#if 0
-   ThreadQueue      *tq           = vpool_create();
+#if 1
+   ThreadQueue *tq = vpool_create();
    /* Enqueue the jobs after the data array is done. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
    for ( int i = 0; i < array_size( odata ); i++ )

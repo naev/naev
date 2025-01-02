@@ -533,14 +533,6 @@ capi!(tex_srh, srh);
 capi_tex!(tex_vmax, vmax);
 
 #[no_mangle]
-pub extern "C" fn gl_initTextures() -> c_int {
-    0
-}
-
-#[no_mangle]
-pub extern "C" fn gl_exitTextures() {}
-
-#[no_mangle]
 pub extern "C" fn gl_texExistsOrCreate(
     cpath: *const c_char,
     cflags: c_uint,
@@ -549,6 +541,10 @@ pub extern "C" fn gl_texExistsOrCreate(
     created: *mut c_int,
 ) -> *mut Texture {
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+
+    unsafe {
+        naevc::gl_contextSet();
+    }
 
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
@@ -579,13 +575,17 @@ pub extern "C" fn gl_texExistsOrCreate(
         }
     };
 
-    match builder.build(&ctx.gl) {
+    let out = match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
         _ => std::ptr::null_mut(),
+    };
+    unsafe {
+        naevc::gl_contextUnset();
     }
+    out
 }
 
 #[no_mangle]
@@ -601,6 +601,10 @@ pub extern "C" fn gl_loadImageData(
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
     let flags = Flags::from(cflags);
+
+    unsafe {
+        naevc::gl_contextSet();
+    }
 
     let mut builder = TextureBuilder::new()
         .name(Some(name.to_str().unwrap()))
@@ -620,6 +624,9 @@ pub extern "C" fn gl_loadImageData(
             Some(val) => val,
             None => {
                 warn!("unable to load image");
+                unsafe {
+                    naevc::gl_contextUnset();
+                }
                 return std::ptr::null_mut();
             }
         };
@@ -627,7 +634,7 @@ pub extern "C" fn gl_loadImageData(
         builder = builder.image(&img);
     }
 
-    match builder.build(&ctx.gl) {
+    let out = match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
@@ -636,7 +643,11 @@ pub extern "C" fn gl_loadImageData(
             warn!("unable to create texture");
             std::ptr::null_mut()
         }
+    };
+    unsafe {
+        naevc::gl_contextUnset();
     }
+    out
 }
 
 #[no_mangle]
@@ -655,6 +666,10 @@ pub extern "C" fn gl_newSprite(
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
 
+    unsafe {
+        naevc::gl_contextSet();
+    }
+
     let mut builder = TextureBuilder::new()
         .path(path.to_str().unwrap())
         .sx(sx as usize)
@@ -667,13 +682,17 @@ pub extern "C" fn gl_newSprite(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    match builder.build(&ctx.gl) {
+    let out = match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
         _ => std::ptr::null_mut(),
+    };
+    unsafe {
+        naevc::gl_contextUnset();
     }
+    out
 }
 
 #[no_mangle]
@@ -687,6 +706,9 @@ pub extern "C" fn gl_newSpriteRWops(
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
+    unsafe {
+        naevc::gl_contextSet();
+    }
 
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
@@ -713,13 +735,17 @@ pub extern "C" fn gl_newSpriteRWops(
         }
     };
 
-    match builder.build(&ctx.gl) {
+    let out = match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
         _ => std::ptr::null_mut(),
+    };
+    unsafe {
+        naevc::gl_contextUnset();
     }
+    out
 }
 
 #[no_mangle]
@@ -727,9 +753,16 @@ pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
     if ctex.is_null() {
         return ctex;
     }
+    unsafe {
+        naevc::gl_contextSet();
+    }
     let tex = unsafe { &*ctex };
     unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-    Box::into_raw(Box::new(tex.try_clone().unwrap()))
+    let out = Box::into_raw(Box::new(tex.try_clone().unwrap()));
+    unsafe {
+        naevc::gl_contextUnset();
+    }
+    out
 }
 
 #[no_mangle]
@@ -740,6 +773,9 @@ pub extern "C" fn gl_rawTexture(
     h: c_double,
 ) -> *mut Texture {
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    unsafe {
+        naevc::gl_contextSet();
+    }
     let pathname: Option<&str> = {
         if cpath.is_null() {
             None
@@ -767,13 +803,17 @@ pub extern "C" fn gl_rawTexture(
         }
     };
 
-    match builder.build(&ctx.gl) {
+    let out = match builder.build(&ctx.gl) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
         _ => std::ptr::null_mut(),
+    };
+    unsafe {
+        naevc::gl_contextUnset();
     }
+    out
 }
 
 #[no_mangle]

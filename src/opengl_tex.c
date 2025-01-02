@@ -69,11 +69,11 @@ typedef struct glTexList_ {
    int          sy;    /**< Y sprites */
    unsigned int flags; /**< Flags being used. */
 } glTexList;
-static SDL_mutex *gl_lock = NULL; /**< Lock for OpenGL functions. */
-#if 0
-static glTexList   *texture_list = NULL; /**< Texture list. */
+static SDL_mutex   *gl_lock = NULL; /**< Lock for OpenGL functions. */
 static SDL_threadID tex_mainthread;
 static SDL_mutex   *tex_lock = NULL; /**< Lock for texture list manipulation. */
+#if 0
+static glTexList   *texture_list = NULL; /**< Texture list. */
 
 /*
  * prototypes
@@ -100,36 +100,45 @@ static int gl_texAdd( glTexture *tex, int sx, int sy, unsigned int flags );
 static int tex_cmp( const void *p1, const void *p2 );
 #endif
 
+int gl_initTextures( void )
+{
+   gl_lock        = SDL_CreateMutex();
+   tex_lock       = SDL_CreateMutex();
+   tex_mainthread = SDL_ThreadID();
+   return 0;
+}
+
+/**
+ * @brief Cleans up the opengl texture subsystem.
+ */
+void gl_exitTextures( void )
+{
+   SDL_DestroyMutex( tex_lock );
+   SDL_DestroyMutex( gl_lock );
+}
+
 static void tex_ctxSet( void )
 {
-#if 0
    if ( SDL_ThreadID() != tex_mainthread )
       SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
-#endif
 }
 
 static void tex_ctxUnset( void )
 {
-#if 0
    if ( SDL_ThreadID() != tex_mainthread )
       SDL_GL_MakeCurrent( gl_screen.window, NULL );
-#endif
 }
 
 void gl_contextSet( void )
 {
-#if 0
    SDL_mutexP( gl_lock );
    tex_ctxSet();
-#endif
 }
 
 void gl_contextUnset( void )
 {
-#if 0
    tex_ctxUnset();
    SDL_mutexV( gl_lock );
-#endif
 }
 
 /**
