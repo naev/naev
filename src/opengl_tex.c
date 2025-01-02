@@ -118,14 +118,18 @@ static void tex_ctxUnset( void )
 
 void gl_contextSet( void )
 {
+#if 0
    SDL_mutexP( gl_lock );
    tex_ctxSet();
+#endif
 }
 
 void gl_contextUnset( void )
 {
+#if 0
    tex_ctxUnset();
    SDL_mutexV( gl_lock );
+#endif
 }
 
 /**

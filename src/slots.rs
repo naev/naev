@@ -5,8 +5,9 @@ use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
 use crate::gettext::gettext;
+use crate::ngl::{SafeContext, CONTEXT};
 use crate::{formatx, warn};
-use crate::{ndata, ngl, texture};
+use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
 #[derive(Default)]
@@ -23,7 +24,7 @@ pub struct SlotProperty {
     pub icon: Option<texture::Texture>,
 }
 impl SlotProperty {
-    fn load(filename: &str) -> Result<Self> {
+    fn load(ctx: &SafeContext, filename: &str) -> Result<Self> {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
@@ -55,13 +56,13 @@ impl SlotProperty {
                 "locked" => sp.locked = true,
                 "visible" => sp.visible = true,
                 "icon" => {
-                    let ctx = ngl::CONTEXT.get().unwrap();
                     let gfxname = format!("gfx/slots/{}", nxml::node_str(node)?);
+                    let nctx = ctx.lock();
                     sp.icon = Some(
                         texture::TextureBuilder::new()
                             .path(&gfxname)
                             .sdf(true)
-                            .build(&ctx.gl)?,
+                            .build(&nctx.gl)?,
                     );
                 }
                 tag => {
@@ -72,9 +73,6 @@ impl SlotProperty {
         Ok(sp)
     }
 }
-// Implementation of glTexture should be fairly thread safe, so set properties
-unsafe impl Sync for SlotProperty {}
-unsafe impl Send for SlotProperty {}
 impl Ord for SlotProperty {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         self.name.cmp(&other.name)
@@ -192,17 +190,19 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
 }
 
 pub fn load() -> Result<Vec<SlotProperty>> {
+    let ctx = SafeContext::new(CONTEXT.get().unwrap());
     let files = ndata::read_dir("slots/")?;
     let mut sp_data: Vec<SlotProperty> = files
-        //.par_iter() // TODO use multithread when textures are safe again...
-        .iter()
-        .filter_map(|filename| match SlotProperty::load(filename.as_str()) {
-            Ok(sp) => Some(sp),
-            _ => {
-                warn!("Unable to load Slot Property '{}'!", filename);
-                None
-            }
-        })
+        .par_iter()
+        .filter_map(
+            |filename| match SlotProperty::load(&ctx, filename.as_str()) {
+                Ok(sp) => Some(sp),
+                _ => {
+                    warn!("Unable to load Slot Property '{}'!", filename);
+                    None
+                }
+            },
+        )
         .collect();
     sp_data.sort();
     Ok(sp_data)

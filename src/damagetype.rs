@@ -11,17 +11,15 @@ use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
 #[no_mangle]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
-    unsafe {
-        let ptr = CStr::from_ptr(name);
-        let name = CString::new(ptr.to_str().unwrap()).unwrap();
-        let query = DamageType {
-            name,
-            ..DamageType::default()
-        };
-        match DAMAGE_TYPES.binary_search(&query) {
-            Ok(i) => (i + 1) as c_int,
-            Err(_) => 0,
-        }
+    let ptr = unsafe { CStr::from_ptr(name) };
+    let name = CString::new(ptr.to_str().unwrap()).unwrap();
+    let query = DamageType {
+        name,
+        ..DamageType::default()
+    };
+    match DAMAGE_TYPES.binary_search(&query) {
+        Ok(i) => (i + 1) as c_int,
+        Err(_) => 0,
     }
 }
 
