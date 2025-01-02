@@ -2,7 +2,7 @@ use formatx::formatx;
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind, Result};
-use std::os::raw::{c_char, c_int, c_void};
+use std::os::raw::{c_char, c_int, c_uint, c_void};
 
 #[link(name = "naev")]
 extern "C" {
@@ -227,6 +227,40 @@ pub fn naev() -> Result<()> {
             // TODO show some simple error message
             return Err(Error::new(ErrorKind::Other, err));
         }
+
+        //Have to set up fonts before rendering anything.
+        let font_prefix = naevc::FONT_PATH_PREFIX as *const u8 as *const i8;
+        let font_default_path = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf");
+        let font_default_path_c = CString::new(font_default_path).unwrap();
+        let font_small_path = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf" );
+        let font_small_path_c = CString::new(font_small_path).unwrap();
+        let font_mono_path =
+            gettext("SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf");
+        let font_mono_path_c = CString::new(font_mono_path).unwrap();
+        naevc::gl_fontInit(
+            &raw mut naevc::gl_defFont as *mut naevc::glFont_s,
+            font_default_path_c.as_ptr(),
+            naevc::conf.font_size_def as c_uint,
+            font_prefix,
+            0,
+        );
+        naevc::gl_fontInit(
+            &raw mut naevc::gl_smallFont as *mut naevc::glFont_s,
+            font_small_path_c.as_ptr(),
+            naevc::conf.font_size_small as c_uint,
+            font_prefix,
+            0,
+        );
+        naevc::gl_fontInit(
+            &raw mut naevc::gl_defFontMono as *mut naevc::glFont_s,
+            font_mono_path_c.as_ptr(),
+            naevc::conf.font_size_def as c_uint,
+            font_prefix,
+            0,
+        );
+
+        // Detect size changes that occurred after window creation.
+        naevc::resize();
     }
 
     unsafe {
