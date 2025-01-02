@@ -44,10 +44,18 @@ function enter ()
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.outfitNum("Heavy Combat Vessel License") > 0)
    local traded_total = var.peek("hypconst_traded_total") or 0
 
+   local explored = 0
+   for k,s in ipairs(system.getAll()) do
+      if s:known() then
+         explored = explored + 1
+      end
+   end
+
    -- Compute some sort of progress value
    local progress = traded_total / 2000 -- Would need 2000 ore delivered to trigger the change by this itself
          + #player.misnDoneList() / 40 -- Needs 40 missions to complete by itself
          + player.wealth() / 50e6 -- Needs 50 million by themselves to trigger event
+         + explored / 300 -- Needs 300 known systems
    -- Finally getting the heavy weapon or vessel license permission gives a large
    if has_license then
       progress = progress + 0.4
