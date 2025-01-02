@@ -504,9 +504,9 @@ static int texL_setFilter( lua_State *L )
    if ( min == 0 || mag == 0 )
       NLUA_INVALID_PARAMETER( L, 2 );
 
-   glBindTexture( GL_TEXTURE_2D, tex_tex( tex ) );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min );
+   GLuint sampler = tex_sampler( tex );
+   glSamplerParameteri( sampler, GL_TEXTURE_MAG_FILTER, mag );
+   glSamplerParameteri( sampler, GL_TEXTURE_MIN_FILTER, min );
    if ( gl_checkErr() )
       NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
@@ -540,10 +540,10 @@ static int texL_setWrap( lua_State *L )
    if ( horiz == 0 || vert == 0 || depth == 0 )
       NLUA_INVALID_PARAMETER( L, 2 );
 
-   glBindTexture( GL_TEXTURE_2D, tex_tex( tex ) );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, vert );
-   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, depth );
+   GLuint sampler = tex_sampler( tex );
+   glSamplerParameteri( sampler, GL_TEXTURE_WRAP_S, horiz );
+   glSamplerParameteri( sampler, GL_TEXTURE_WRAP_T, vert );
+   glSamplerParameteri( sampler, GL_TEXTURE_WRAP_R, depth );
    if ( gl_checkErr() )
       NLUA_ERROR( L, _( "OpenGL Error!" ) );
 

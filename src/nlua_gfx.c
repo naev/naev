@@ -435,7 +435,9 @@ static int gfxL_renderTexH( lua_State *L )
       glActiveTexture( lt->active );
       glBindTexture( GL_TEXTURE_2D, lt->texid );
       glUniform1i( lt->uniform, lt->value );
+      glBindSampler( lt->active - GL_TEXTURE0, tex_sampler( t ) );
    }
+   glBindSampler( 0, tex_sampler( t ) );
    glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
