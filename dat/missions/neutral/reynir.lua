@@ -9,7 +9,8 @@
    if spob.cur():tags().station then
       return false
    end
-   if not require("misn_test").reweight_active() then
+   local mtest = require("misn_test")
+   if not mtest.cargo(true) or not mtest.reweight_active() then
       return false
    end
    local count = 0
