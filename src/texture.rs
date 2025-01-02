@@ -807,16 +807,22 @@ pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
 
 #[no_mangle]
 pub extern "C" fn gl_isTrans(ctex: *mut Texture, x: c_int, y: c_int) -> c_int {
+    // TODO
     0
 }
 
 #[no_mangle]
 pub extern "C" fn tex_hasTrans(ctex: *mut Texture) -> c_int {
+    // TODO
     0
 }
 
 #[no_mangle]
-pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {}
+pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
+    let tex = unsafe { &mut *ctex };
+    let ntex = glow::NativeTexture(std::num::NonZero::new(texture).unwrap());
+    tex.texture = Arc::new(TextureData::from_raw(ntex, tex.texture.w, tex.texture.h).unwrap());
+}
 
 #[no_mangle]
 pub extern "C" fn tex_setVFLIP(ctex: *mut Texture, flip: c_int) {
