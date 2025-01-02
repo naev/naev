@@ -106,6 +106,7 @@ impl TextureData {
         let has_alpha = img.color().has_alpha();
         let (w, h) = (img.width(), img.height());
         let imgdata = img.flipv().to_rgba8().into_raw();
+        //let imgdata = img.to_rgba8().into_raw();
 
         let is_srgb = true;
 
@@ -166,7 +167,7 @@ pub struct Texture {
     // Data
     pub texture: Arc<TextureData>,
     pub sampler: glow::Sampler,
-    pub vflip: bool,
+    pub flipv: bool,
 }
 impl Drop for Texture {
     fn drop(&mut self) {
@@ -204,7 +205,7 @@ impl Texture {
             srh: self.srh,
             texture: self.texture.clone(),
             sampler,
-            vflip: self.vflip,
+            flipv: self.flipv,
         })
     }
 }
@@ -307,7 +308,7 @@ pub struct TextureBuilder {
     sy: usize,
     is_srgb: bool,
     is_sdf: bool,
-    vflip: bool,
+    flipv: bool,
     border_value: Option<Vector4<f32>>,
     address_u: AddressMode,
     address_v: AddressMode,
@@ -333,7 +334,7 @@ impl TextureBuilder {
             mag_filter: FilterMode::Linear,
             min_filter: FilterMode::Linear,
             mipmaps: false,
-            vflip: false,
+            flipv: false,
         }
     }
 
@@ -373,8 +374,8 @@ impl TextureBuilder {
         self
     }
 
-    pub fn vflip(mut self, enable: bool) -> Self {
-        self.vflip = enable;
+    pub fn flipv(mut self, enable: bool) -> Self {
+        self.flipv = enable;
         self
     }
 
@@ -474,7 +475,7 @@ impl TextureBuilder {
             srh,
             texture,
             sampler,
-            vflip: self.vflip,
+            flipv: self.flipv,
         })
     }
 }
@@ -482,7 +483,7 @@ impl TextureBuilder {
 struct Flags {
     maptrans: bool,
     mipmaps: bool,
-    vflip: bool,
+    flipv: bool,
     skipcache: bool,
     sdf: bool,
     clamp_alpha: bool,
@@ -493,7 +494,7 @@ impl Flags {
         Flags {
             maptrans: (flags & naevc::OPENGL_TEX_MAPTRANS) > 0,
             mipmaps: (flags & naevc::OPENGL_TEX_MIPMAPS) > 0,
-            vflip: (flags & naevc::OPENGL_TEX_VFLIP) > 0,
+            flipv: (flags & naevc::OPENGL_TEX_VFLIP) > 0,
             skipcache: (flags & naevc::OPENGL_TEX_SKIPCACHE) > 0,
             sdf: (flags & naevc::OPENGL_TEX_SDF) > 0,
             clamp_alpha: (flags & naevc::OPENGL_TEX_CLAMP_ALPHA) > 0,
@@ -554,7 +555,7 @@ pub extern "C" fn gl_texExistsOrCreate(
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
         .sy(sy as usize)
-        .vflip(flags.vflip)
+        .flipv(flags.flipv)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -595,13 +596,17 @@ pub extern "C" fn gl_loadImageData(
     sx: c_int,
     sy: c_int,
     cname: *const c_char,
+    cflags: c_uint,
 ) -> *mut Texture {
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
+    let flags = Flags::from(cflags);
+
     let mut builder = TextureBuilder::new()
         .name(Some(name.to_str().unwrap()))
         .sx(sx as usize)
         .sy(sy as usize)
+        .flipv(flags.flipv)
         .width(w as usize)
         .height(h as usize);
 
@@ -654,7 +659,7 @@ pub extern "C" fn gl_newSprite(
         .path(path.to_str().unwrap())
         .sx(sx as usize)
         .sy(sy as usize)
-        .vflip(flags.vflip)
+        .flipv(flags.flipv)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -682,10 +687,11 @@ pub extern "C" fn gl_newSpriteRWops(
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
+
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
         .sy(sy as usize)
-        .vflip(flags.vflip)
+        .flipv(flags.flipv)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -827,14 +833,14 @@ pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
 #[no_mangle]
 pub extern "C" fn tex_setVFLIP(ctex: *mut Texture, flip: c_int) {
     let tex = unsafe { &mut *ctex };
-    tex.vflip = flip != 0;
+    tex.flipv = flip != 0;
 }
 
 #[no_mangle]
 pub extern "C" fn tex_flags(ctex: *mut Texture) -> c_uint {
     let tex = unsafe { &*ctex };
     let mut flags: c_uint = 0;
-    if tex.vflip {
+    if tex.flipv {
         flags |= naevc::OPENGL_TEX_VFLIP;
     }
     flags

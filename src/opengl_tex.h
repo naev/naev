@@ -51,7 +51,8 @@ USE_RESULT glTexture *gl_texExistsOrCreate( const char  *path,
                                             unsigned int flags, int sx, int sy,
                                             int *created );
 USE_RESULT glTexture *gl_loadImageData( float *data, int w, int h, int sx,
-                                        int sy, const char *name );
+                                        int sy, const char *name,
+                                        unsigned int flags );
 USE_RESULT glTexture *gl_newImage( const char *path, const unsigned int flags );
 USE_RESULT glTexture *gl_newSprite( const char *path, const int sx,
                                     const int sy, const unsigned int flags );

@@ -225,7 +225,8 @@ static int texL_new( lua_State *L )
          return NLUA_ERROR( L,
                             _( "Texture dimensions don't match data size!" ) );
       SDL_asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
-      tex = gl_loadImageData( (void *)ld->data, w, h, sx, sy, name );
+      tex = gl_loadImageData( (void *)ld->data, w, h, sx, sy, name,
+                              OPENGL_TEX_VFLIP );
       free( name );
       if ( tex == NULL )
          return 0;

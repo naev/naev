@@ -421,7 +421,12 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if ( shader->VertexTexCoord >= 0 ) {
-      gl_uniformMat4( shader->ViewSpaceFromLocal, TH );
+      mat4 R = ( tex_flags( t ) & OPENGL_TEX_VFLIP )
+                  ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                  : mat4_identity();
+      mat4 T;
+      mat4_mul( &T, TH, &R );
+      gl_uniformMat4( shader->ViewSpaceFromLocal, &T );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2,
                                   GL_FLOAT, 0 );
@@ -431,7 +436,7 @@ static int gfxL_renderTexH( lua_State *L )
    glBindTexture( GL_TEXTURE_2D, tex_tex( t ) );
    glUniform1i( shader->MainTex, 0 );
    for ( int i = 0; i < array_size( shader->tex ); i++ ) {
-      LuaTexture_t *lt = &shader->tex[i];
+      const LuaTexture_t *lt = &shader->tex[i];
       glActiveTexture( lt->active );
       glBindTexture( GL_TEXTURE_2D, lt->texid );
       glUniform1i( lt->uniform, lt->value );
