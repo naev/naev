@@ -421,9 +421,8 @@ void gl_renderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle )
 {
-   gl_renderTextureRaw( tex_tex( texture ), tex_sampler( texture ),
-                        tex_flags( texture ), x, y, w, h, tx, ty, tw, th, c,
-                        angle );
+   gl_renderTextureRaw( tex_tex( texture ), tex_sampler( texture ), 0, x, y, w,
+                        h, tx, ty, tw, th, c, angle );
 }
 
 /**

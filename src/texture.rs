@@ -829,24 +829,3 @@ pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
     let ntex = glow::NativeTexture(std::num::NonZero::new(texture).unwrap());
     tex.texture = Arc::new(TextureData::from_raw(ntex, tex.texture.w, tex.texture.h).unwrap());
 }
-
-#[no_mangle]
-pub extern "C" fn tex_setVFLIP(ctex: *mut Texture, flip: c_int) {
-    /*
-    let tex = unsafe { &mut *ctex };
-    tex.flipv = flip != 0;
-    */
-}
-
-#[no_mangle]
-pub extern "C" fn tex_flags(ctex: *mut Texture) -> c_uint {
-    /*
-    let tex = unsafe { &*ctex };
-    let mut flags: c_uint = 0;
-    if tex.flipv {
-        flags |= naevc::OPENGL_TEX_VFLIP;
-    }
-    flags
-    */
-    0
-}
