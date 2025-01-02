@@ -263,6 +263,54 @@ pub fn naev() -> Result<()> {
         naevc::naev_resize();
     }
 
+    // Display the initial load screen.
+    unsafe {
+        naevc::loadscreen_load();
+        let s = CString::new(gettext("Initializing subsystems…")).unwrap();
+        naevc::loadscreen_update(0., s.as_ptr());
+    }
+
+    // OpenAL
+    unsafe {
+        if naevc::conf.nosound != 0 {
+            nlog!(gettext("Sound is disabled!"));
+            naevc::sound_disabled = 1;
+            naevc::music_disabled = 1;
+        }
+        if naevc::sound_init() != 0 {
+            warn!(gettext("Problem setting up sound!"));
+        }
+        let m = CString::new("load").unwrap();
+        naevc::music_choose(m.as_ptr());
+    }
+
+    // Misc Init
+    unsafe {
+        naevc::fps_setPos(
+            15.,
+            (naevc::gl_screen.h - 15 - naevc::gl_defFontMono.h) as f64,
+        );
+
+        // Misc graphics init
+        naevc::render_init();
+        naevc::nebu_init();
+        naevc::gui_init();
+        naevc::toolkit_init();
+        naevc::map_init();
+        naevc::map_system_init();
+        naevc::cond_init();
+        naevc::cli_init();
+
+        // Load game data
+        naevc::load_all();
+
+        // Detect size changes that occurred during load.
+        naevc::naev_resize();
+
+        // Unload load screen.
+        naevc::loadscreen_unload();
+    }
+
     unsafe {
         naev_main();
     };

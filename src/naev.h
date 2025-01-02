@@ -87,3 +87,8 @@ void naev_doRenderLoadscreen( void );
 void naev_renderLoadscreen( void );
 void print_SDLversion( void );
 void window_caption( void );
+void loadscreen_load( void );
+void loadscreen_unload( void );
+void loadscreen_update( double done, const char *msg );
+void load_all( void );
+void unload_all( void );
