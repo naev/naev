@@ -105,8 +105,8 @@ impl TextureData {
 
         let has_alpha = img.color().has_alpha();
         let (w, h) = (img.width(), img.height());
-        let imgdata = img.flipv().to_rgba8().into_raw();
-        //let imgdata = img.to_rgba8().into_raw();
+        //let imgdata = img.flipv().to_rgba8().into_raw();
+        let imgdata = img.to_rgba8().into_raw();
 
         let is_srgb = true;
 

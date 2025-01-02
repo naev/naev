@@ -232,7 +232,7 @@ void gl_renderDepthRaw( GLuint depth, uint8_t flags, double x, double y,
    }
 
    /* Set the texture. */
-   tex_mat = mat4_identity();
+   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderDepthRawH( depth, &projection, &tex_mat );
@@ -303,7 +303,7 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
    }
 
    /* Set the texture. */
-   tex_mat = mat4_identity();
+   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderTextureDepthRawH( texture, depth, &projection, &tex_mat, c );
@@ -396,7 +396,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
    }
 
    /* Set the texture. */
-   tex_mat = mat4_identity();
+   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderTextureRawH( texture, sampler, &projection, &tex_mat, c );
@@ -476,7 +476,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
     * but we have to actually pad the SDF first... */
    sw      = 0.; // 1./w;
    sh      = 0.; // 1./h;
-   tex_mat = mat4_identity();
+   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
    mat4_scale_xy( &tex_mat, tex_srw( texture ) + 2. * sw,
                   tex_srh( texture ) + 2. * sh );
    mat4_translate_xy( &tex_mat, -sw, -sh );
@@ -603,7 +603,7 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 
    projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
-   tex_mat = mat4_identity();
+   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    return gl_renderTextureInterpolateRawH( tex_tex( ta ), tex_tex( tb ),

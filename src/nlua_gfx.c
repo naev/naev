@@ -421,10 +421,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if ( shader->VertexTexCoord >= 0 ) {
-      mat4 R = mat4_ortho( -1., 1., 2., 0., 1., -1. );
-      mat4 T;
-      mat4_mul( &T, TH, &R );
-      gl_uniformMat4( shader->ViewSpaceFromLocal, &T );
+      gl_uniformMat4( shader->ViewSpaceFromLocal, TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2,
                                   GL_FLOAT, 0 );
