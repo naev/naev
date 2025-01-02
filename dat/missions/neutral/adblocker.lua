@@ -3,16 +3,14 @@
 <mission name="Adblocker">
  <unique />
  <chance>10</chance>
- <cond>return require("misn_test").reweight_active()</cond>
+ <cond>
+   local mtest = require("misn_test")
+   if not mtest.cargo(true) or not mtest.reweight_active() then
+      return false
+   end
+   return true
+ </cond>
  <location>Bar</location>
- <faction>Dvaered</faction>
- <faction>Empire</faction>
- <faction>Frontier</faction>
- <faction>Goddard</faction>
- <faction>Independent</faction>
- <faction>Sirius</faction>
- <faction>Soromid</faction>
- <faction>Za'lek</faction>
 </mission>
 --]]
 --[[
