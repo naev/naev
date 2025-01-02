@@ -108,7 +108,7 @@ pub extern "C" fn dtype_calcDamage(
             unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb }
         }
         if !darmour.is_null() {
-            unsafe { *dshield = dt.armour_mod * (*dmg).damage * absorb }
+            unsafe { *darmour = dt.armour_mod * (*dmg).damage * absorb }
         }
         if !knockback.is_null() {
             unsafe {
