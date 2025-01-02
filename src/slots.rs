@@ -93,6 +93,41 @@ impl Eq for SlotProperty {}
 use std::sync::LazyLock;
 static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().unwrap());
 
+#[allow(dead_code)]
+pub fn get(name: CString) -> Result<&'static SlotProperty> {
+    let query = SlotProperty {
+        name,
+        ..SlotProperty::default()
+    };
+    let props = &SLOT_PROPERTIES;
+    match props.binary_search(&query) {
+        Ok(i) => Ok(props.get(i).expect("")),
+        Err(_) => anyhow::bail!(
+            "Slot Property '{name}' not found .",
+            name = query.name.to_str()?
+        ),
+    }
+}
+
+pub fn load() -> Result<Vec<SlotProperty>> {
+    let ctx = SafeContext::new(CONTEXT.get().unwrap());
+    let files = ndata::read_dir("slots/")?;
+    let mut sp_data: Vec<SlotProperty> = files
+        .par_iter()
+        .filter_map(
+            |filename| match SlotProperty::load(&ctx, filename.as_str()) {
+                Ok(sp) => Some(sp),
+                _ => {
+                    warn!("Unable to load Slot Property '{}'!", filename);
+                    None
+                }
+            },
+        )
+        .collect();
+    sp_data.sort();
+    Ok(sp_data)
+}
+
 #[no_mangle]
 pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
@@ -169,41 +204,6 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
 }
 
 // Assume static here, because it doesn't really change after loading
-pub fn get_c(sp: c_int) -> Option<&'static SlotProperty> {
+fn get_c(sp: c_int) -> Option<&'static SlotProperty> {
     SLOT_PROPERTIES.get((sp - 1) as usize)
-}
-
-#[allow(dead_code)]
-pub fn get(name: CString) -> Result<&'static SlotProperty> {
-    let query = SlotProperty {
-        name,
-        ..SlotProperty::default()
-    };
-    let props = &SLOT_PROPERTIES;
-    match props.binary_search(&query) {
-        Ok(i) => Ok(props.get(i).expect("")),
-        Err(_) => anyhow::bail!(
-            "Slot Property '{name}' not found .",
-            name = query.name.to_str()?
-        ),
-    }
-}
-
-pub fn load() -> Result<Vec<SlotProperty>> {
-    let ctx = SafeContext::new(CONTEXT.get().unwrap());
-    let files = ndata::read_dir("slots/")?;
-    let mut sp_data: Vec<SlotProperty> = files
-        .par_iter()
-        .filter_map(
-            |filename| match SlotProperty::load(&ctx, filename.as_str()) {
-                Ok(sp) => Some(sp),
-                _ => {
-                    warn!("Unable to load Slot Property '{}'!", filename);
-                    None
-                }
-            },
-        )
-        .collect();
-    sp_data.sort();
-    Ok(sp_data)
 }
