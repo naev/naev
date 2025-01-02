@@ -260,7 +260,7 @@ pub fn naev() -> Result<()> {
         );
 
         // Detect size changes that occurred after window creation.
-        naevc::resize();
+        naevc::naev_resize();
     }
 
     unsafe {
