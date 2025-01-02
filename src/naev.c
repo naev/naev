@@ -118,17 +118,12 @@ static SDL_mutex   *load_mutex;
 /*
  * prototypes
  */
-/* Loading. */
-static void loadscreen_load( void );
-static void loadscreen_unload( void );
-static void load_all( void );
-static void unload_all( void );
 /* update */
 static void fps_init( void );
 static void update_all( int dohooks );
 /* Misc. */
-static void loadscreen_update( double done, const char *msg );
-void        main_loop( int nested ); /* externed in dialogue.c */
+void loadscreen_update( double done, const char *msg );
+void main_loop( int nested ); /* externed in dialogue.c */
 
 /**
  * @brief Flags naev to quit.
@@ -165,28 +160,11 @@ int naev_main( void )
    /* Start counting things and such. */
    starttime    = SDL_GetTicks();
    SDL_LOOPDONE = SDL_RegisterEvents( 1 );
+   last_t       = SDL_GetPerformanceCounter();
 
    /* Set the configuration. */
    snprintf( conf_file_path, sizeof( conf_file_path ), "%s" CONF_FILE,
              nfile_configPath() );
-
-   /* Have to set up fonts before rendering anything. */
-   // DEBUG("Using '%s' as main font and '%s' as monospace font.",
-   // _(FONT_DEFAULT_PATH), _(FONT_MONOSPACE_PATH));
-   gl_fontInit( &gl_defFont, _( FONT_DEFAULT_PATH ), conf.font_size_def,
-                FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, _( FONT_DEFAULT_PATH ), conf.font_size_small,
-                FONT_PATH_PREFIX, 0 ); /* small font */
-   gl_fontInit( &gl_defFontMono, _( FONT_MONOSPACE_PATH ), conf.font_size_def,
-                FONT_PATH_PREFIX, 0 );
-
-   /* Detect size changes that occurred after window creation. */
-   naev_resize();
-
-   /* Display the load screen. */
-   loadscreen_load();
-   loadscreen_update( 0., _( "Initializing subsystems…" ) );
-   last_t = SDL_GetPerformanceCounter();
 
    /*
     * Input
@@ -209,40 +187,6 @@ int naev_main( void )
             input_setDefault( 1 );
          }
    }
-
-   /*
-    * OpenAL - Sound
-    */
-   if ( conf.nosound ) {
-      LOG( _( "Sound is disabled!" ) );
-      sound_disabled = 1;
-      music_disabled = 1;
-   }
-   if ( sound_init() )
-      WARN( _( "Problem setting up sound!" ) );
-   music_choose( "load" );
-
-   /* FPS stuff. */
-   fps_setPos( 15., (double)( gl_screen.h - 15 - gl_defFontMono.h ) );
-
-   /* Misc graphics init */
-   render_init();
-   nebu_init();       /* Initializes the nebula */
-   gui_init();        /* initializes the GUI graphics */
-   toolkit_init();    /* initializes the toolkit */
-   map_init();        /* initializes the map. */
-   map_system_init(); /* Initialise the solar system map */
-   cond_init();       /* Initialize conditional subsystem. */
-   cli_init();        /* Initialize console. */
-
-   /* Data loading */
-   load_all();
-
-   /* Detect size changes that occurred during load. */
-   naev_resize();
-
-   /* Unload load screen. */
-   loadscreen_unload();
 
    /* Start menu. */
    menu_main();
@@ -509,7 +453,7 @@ void loadscreen_update( double done, const char *msg )
 /**
  * @brief Frees the loading screen.
  */
-static void loadscreen_unload( void )
+void loadscreen_unload( void )
 {
    nlua_freeEnv( load_env );
    SDL_DestroyMutex( load_mutex );

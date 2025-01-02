@@ -3,6 +3,7 @@ use anyhow::Result;
 use glow::*;
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
+use std::ops::Deref;
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock};
 use std::thread::ThreadId;
 
@@ -11,6 +12,7 @@ use crate::{log, ndata};
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 
 pub struct Context {
+    pub sdlvid: sdl::VideoSubsystem,
     pub gl: glow::Context,
     pub window: sdl::video::Window,
     pub gl_context: sdl::video::GLContext,
@@ -21,11 +23,13 @@ unsafe impl Sync for Context {}
 
 impl Context {
     fn new(
+        sdlvid: sdl::VideoSubsystem,
         window: sdl::video::Window,
         gl_context: sdl::video::GLContext,
         gl: glow::Context,
     ) -> Self {
         Context {
+            sdlvid,
             gl,
             window,
             gl_context,
@@ -38,34 +42,48 @@ impl Context {
     }
 }
 
-pub struct SafeContext {
-    ctx: Arc<Mutex<Context>>,
+/// Wrapper for a Context MutexGuard
+pub struct ContextWrap<'sc, 'ctx>(MutexGuard<'sc, &'ctx Context>);
+impl<'sc, 'ctx> ContextWrap<'sc, 'ctx> {
+    fn new(guard: MutexGuard<'sc, &'ctx Context>) -> Self {
+        guard.window.gl_make_current(&guard.gl_context).unwrap();
+        ContextWrap(guard)
+    }
+}
+impl<'ctx> Deref for ContextWrap<'_, 'ctx> {
+    type Target = &'ctx Context;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+impl Drop for ContextWrap<'_, '_> {
+    fn drop(&mut self) {
+        self.0.sdlvid.gl_release_current_context().unwrap();
+    }
 }
 
-impl SafeContext {
-    pub fn new(ctx: Context) -> Self {
+/// Wrapper for thread safe OpenGL context
+pub struct SafeContext<'ctx> {
+    ctx: Arc<Mutex<&'ctx Context>>,
+}
+impl<'ctx> SafeContext<'ctx> {
+    pub fn new(ctx: &'ctx Context) -> Self {
+        ctx.sdlvid.gl_release_current_context().unwrap();
         SafeContext {
             ctx: Arc::new(Mutex::new(ctx)),
         }
     }
-
-    pub fn lock(&self) -> MutexGuard<'_, Context> {
+    pub fn lock(&self) -> ContextWrap<'_, 'ctx> {
         let guard = self.ctx.lock().unwrap();
-        guard.window.gl_make_current(&guard.gl_context).unwrap();
-        //guard.window.gl_set_context_to_current().unwrap();
-        guard
+        ContextWrap::new(guard)
     }
 }
-
-impl Drop for SafeContext {
+impl Drop for SafeContext<'_> {
     fn drop(&mut self) {
         let guard = self.ctx.lock().unwrap();
         guard.window.gl_make_current(&guard.gl_context).unwrap();
-        //guard.window.gl_set_context_to_current().unwrap();
     }
 }
-
-//static CONTEXT: TextureContext =
 
 fn create_context(
     sdlvid: &sdl::VideoSubsystem,
@@ -125,7 +143,7 @@ fn create_context(
     Ok((window, gl_context))
 }
 
-pub fn init(sdlvid: &sdl::VideoSubsystem) -> Result<&'static Context> {
+pub fn init(sdlvid: sdl::VideoSubsystem) -> Result<&'static Context> {
     let (minimize, fsaa, vsync) = unsafe {
         (
             naevc::conf.minimize != 0,
@@ -150,9 +168,9 @@ pub fn init(sdlvid: &sdl::VideoSubsystem) -> Result<&'static Context> {
     // TODO reenable debug mode
     // gl_attr.set_context_flags().debug().set();
 
-    let (window, gl_context) = match create_context(sdlvid, &gl_attr, 4, 6) {
+    let (window, gl_context) = match create_context(&sdlvid, &gl_attr, 4, 6) {
         Ok(v) => v,
-        _ => match create_context(sdlvid, &gl_attr, 3, 3) {
+        _ => match create_context(&sdlvid, &gl_attr, 3, 3) {
             Ok(v) => v,
             _ => anyhow::bail!("Foo"),
         },
@@ -197,7 +215,7 @@ pub fn init(sdlvid: &sdl::VideoSubsystem) -> Result<&'static Context> {
         naevc::gl_screen.multitex_max = gl.get_parameter_i32(glow::MAX_TEXTURE_IMAGE_UNITS);
     }
 
-    let ctx = Context::new(window, gl_context, gl);
+    let ctx = Context::new(sdlvid, window, gl_context, gl);
     let _ = CONTEXT.set(ctx);
     Ok(CONTEXT.get().unwrap())
 }

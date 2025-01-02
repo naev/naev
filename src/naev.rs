@@ -2,7 +2,7 @@ use formatx::formatx;
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind, Result};
-use std::os::raw::{c_char, c_int, c_void};
+use std::os::raw::{c_char, c_int, c_uint, c_void};
 
 #[link(name = "naev")]
 extern "C" {
@@ -218,7 +218,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let _context = ngl::init(&sdlvid).unwrap();
+    let _context = ngl::init(sdlvid).unwrap();
 
     unsafe {
         if naevc::gl_init() != 0 {
@@ -227,6 +227,88 @@ pub fn naev() -> Result<()> {
             // TODO show some simple error message
             return Err(Error::new(ErrorKind::Other, err));
         }
+
+        //Have to set up fonts before rendering anything.
+        let font_prefix = naevc::FONT_PATH_PREFIX as *const u8 as *const i8;
+        let font_default_path = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf");
+        let font_default_path_c = CString::new(font_default_path).unwrap();
+        let font_small_path = gettext("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,IBMPlexSansJP-Medium.otf" );
+        let font_small_path_c = CString::new(font_small_path).unwrap();
+        let font_mono_path =
+            gettext("SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf");
+        let font_mono_path_c = CString::new(font_mono_path).unwrap();
+        naevc::gl_fontInit(
+            &raw mut naevc::gl_defFont as *mut naevc::glFont_s,
+            font_default_path_c.as_ptr(),
+            naevc::conf.font_size_def as c_uint,
+            font_prefix,
+            0,
+        );
+        naevc::gl_fontInit(
+            &raw mut naevc::gl_smallFont as *mut naevc::glFont_s,
+            font_small_path_c.as_ptr(),
+            naevc::conf.font_size_small as c_uint,
+            font_prefix,
+            0,
+        );
+        naevc::gl_fontInit(
+            &raw mut naevc::gl_defFontMono as *mut naevc::glFont_s,
+            font_mono_path_c.as_ptr(),
+            naevc::conf.font_size_def as c_uint,
+            font_prefix,
+            0,
+        );
+
+        // Detect size changes that occurred after window creation.
+        naevc::naev_resize();
+    }
+
+    // Display the initial load screen.
+    unsafe {
+        naevc::loadscreen_load();
+        let s = CString::new(gettext("Initializing subsystems…")).unwrap();
+        naevc::loadscreen_update(0., s.as_ptr());
+    }
+
+    // OpenAL
+    unsafe {
+        if naevc::conf.nosound != 0 {
+            nlog!(gettext("Sound is disabled!"));
+            naevc::sound_disabled = 1;
+            naevc::music_disabled = 1;
+        }
+        if naevc::sound_init() != 0 {
+            warn!(gettext("Problem setting up sound!"));
+        }
+        let m = CString::new("load").unwrap();
+        naevc::music_choose(m.as_ptr());
+    }
+
+    // Misc Init
+    unsafe {
+        naevc::fps_setPos(
+            15.,
+            (naevc::gl_screen.h - 15 - naevc::gl_defFontMono.h) as f64,
+        );
+
+        // Misc graphics init
+        naevc::render_init();
+        naevc::nebu_init();
+        naevc::gui_init();
+        naevc::toolkit_init();
+        naevc::map_init();
+        naevc::map_system_init();
+        naevc::cond_init();
+        naevc::cli_init();
+
+        // Load game data
+        naevc::load_all();
+
+        // Detect size changes that occurred during load.
+        naevc::naev_resize();
+
+        // Unload load screen.
+        naevc::loadscreen_unload();
     }
 
     unsafe {
