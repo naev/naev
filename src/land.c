@@ -1001,7 +1001,8 @@ void land_refuel( void )
       return;
 
    /* No refuel service. */
-   if ( !spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) )
+   if ( ( land_spob == NULL ) ||
+        !spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) )
       return;
 
    player.p->fuel = player.p->fuel_max;
