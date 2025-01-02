@@ -2030,7 +2030,7 @@ int gui_load( const char *name )
    }
 
    /* Recreate land window if landed. */
-   if ( landed ) {
+   if ( landed && land_spob ) {
       land_genWindows( 0 );
       window_lower( land_wid );
    }

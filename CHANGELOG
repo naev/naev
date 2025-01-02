@@ -22,11 +22,13 @@
    * Deployed fighters are always aggressive (for now)
    * Player can't make own escorts hostile with AoE weapons
    * Made Za'lek drone weapons builtin
+   * Modified condition of many neutral missions so they don't appear in the wrong places
    * Fixed the ship_buy hook refering to the ship sold when trading ships
    * Don't remove builtin weapons when spawning pilots naked
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
    * Minor typo fixes and translation updates
+   * Large cargo hulls now match the cargo difference of the small and medium hulls
 
 * 0.12.1
    * Fixed psychic orbs having trails

@@ -11,7 +11,11 @@ local misn_test = {}
 --]]
 function misn_test.cargo( notcomputer )
    -- Has to support normal factions
-   local f = spob.cur():faction()
+   local sc = spob.cur()
+   if sc:tags().restricted then
+      return false -- Restricted places don't offer these missions currently
+   end
+   local f = sc:faction()
    if f then
       local ft = f:tags()
       if ft.generic or ft.misn_cargo then

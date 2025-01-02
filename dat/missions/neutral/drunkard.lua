@@ -6,7 +6,11 @@
  <chance>3</chance>
  <location>Bar</location>
  <cond>
-   return require("misn_test").reweight_active()
+   local mtest = require("misn_test")
+   if not mtest.cargo(true) or not mtest.reweight_active() then
+      return false
+   end
+   return true
  </cond>
  <notes>
   <tier>1</tier>

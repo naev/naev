@@ -5,6 +5,7 @@
  <chance>100</chance>
  <cond>player.misnDone("Za'lek Black Hole 11")</cond>
  <spob>Research Post Sigma-13</spob>
+ <priority>10</priority>
  <notes>
   <campaign>Za'lek Black Hole</campaign>
  </notes>
