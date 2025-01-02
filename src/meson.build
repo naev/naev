@@ -18,6 +18,7 @@ source_rust = files(
    'physfs.rs',
    'physics.rs',
    'rng.rs',
+   'shader.rs',
    'slots.rs',
    'start.rs',
    'texture.rs',

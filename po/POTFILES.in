@@ -3957,6 +3957,7 @@ src/safelanes.c
 src/safelanes.h
 src/save.c
 src/save.h
+src/shader.rs
 src/ship.c
 src/ship.h
 src/shiplog.c

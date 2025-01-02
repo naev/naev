@@ -25,6 +25,7 @@ mod nxml;
 mod physfs;
 mod physics;
 mod rng;
+mod shader;
 mod slots;
 mod start;
 mod texture;
