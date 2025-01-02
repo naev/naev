@@ -1,10 +1,12 @@
 #![allow(dead_code)]
 use anyhow::Result;
 use glow::*;
+use std::ffi::CStr;
+use std::os::raw::c_char;
 
 use crate::gettext::gettext;
 use crate::ndata;
-use crate::ngl::Context;
+use crate::ngl::{Context, CONTEXT};
 use crate::{formatx, warn};
 
 pub enum ShaderType {
@@ -121,4 +123,16 @@ impl Shader {
             program,
         })
     }
+}
+
+#[no_mangle]
+pub extern "C" fn gl_program_vert_frag_(cvert: *const c_char, cfrag: *const c_char) -> u32 {
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let vert = unsafe { CStr::from_ptr(cvert) };
+    let frag = unsafe { CStr::from_ptr(cfrag) };
+    Shader::from_files(&ctx, vert.to_str().unwrap(), frag.to_str().unwrap())
+        .unwrap()
+        .program
+        .0
+        .into()
 }

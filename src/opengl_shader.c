@@ -23,8 +23,7 @@ static char  *gl_shader_loadfile( const char *filename, size_t *size,
 static GLuint gl_shader_compile( GLuint type, const char *buf, GLint length,
                                  const char *filename );
 static int    gl_program_link( GLuint program );
-static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader,
-                               GLuint geometry_shader );
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 static int    gl_log_says_anything( const char *log );
 
 /**
@@ -229,15 +228,9 @@ static int gl_program_link( GLuint program )
    return 0;
 }
 
-GLuint gl_program_vert_frag_geom( const char *vert, const char *frag,
-                                  const char *geom )
-{
-   return gl_program_backend( vert, frag, geom, NULL );
-}
-
 GLuint gl_program_vert_frag( const char *vert, const char *frag )
 {
-   return gl_program_backend( vert, frag, NULL, NULL );
+   return gl_program_backend( vert, frag, NULL );
 }
 
 /**
@@ -249,11 +242,11 @@ GLuint gl_program_vert_frag( const char *vert, const char *frag )
  *    @return The shader compiled program or 0 on failure.
  */
 GLuint gl_program_backend( const char *vertfile, const char *fragfile,
-                           const char *geomfile, const char *prependtext )
+                           const char *prependtext )
 {
    char  *vert_str, *frag_str, prepend[STRMAX];
    size_t vert_size, frag_size;
-   GLuint vertex_shader, fragment_shader, geometry_shader, program;
+   GLuint vertex_shader, fragment_shader, program;
 
    snprintf( prepend, sizeof( prepend ) - 1,
              "#version %d\n\n#define GLSL_VERSION %d\n", gl_screen.glsl,
@@ -276,16 +269,7 @@ GLuint gl_program_backend( const char *vertfile, const char *fragfile,
    free( vert_str );
    free( frag_str );
 
-   if ( geomfile != NULL ) {
-      size_t geom_size;
-      char  *geom_str = gl_shader_loadfile( geomfile, &geom_size, prepend );
-      geometry_shader =
-         gl_shader_compile( GL_GEOMETRY_SHADER, geom_str, geom_size, geomfile );
-      free( geom_str );
-   } else
-      geometry_shader = 0;
-
-   program = gl_program_make( vertex_shader, fragment_shader, geometry_shader );
+   program = gl_program_make( vertex_shader, fragment_shader );
    if ( program == 0 )
       WARN( _( "Failed to link vertex shader '%s' and fragment shader '%s'!" ),
             vertfile, fragfile );
@@ -321,7 +305,7 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size,
    free( fbuf );
 
    /* Link. */
-   return gl_program_make( vertex_shader, fragment_shader, 0 );
+   return gl_program_make( vertex_shader, fragment_shader );
 }
 
 /**
@@ -332,16 +316,13 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size,
  *    @param[opt] geometry_shader Optional geometry shader to amke program from.
  *    @return New shader program or 0 on failure.
  */
-static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader,
-                               GLuint geometry_shader )
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
 {
    GLuint program = 0;
    if ( vertex_shader != 0 && fragment_shader != 0 ) {
       program = glCreateProgram();
       glAttachShader( program, vertex_shader );
       glAttachShader( program, fragment_shader );
-      if ( geometry_shader != 0 )
-         glAttachShader( program, geometry_shader );
 
       if ( gl_program_link( program ) == -1 ) {
          /* Spec specifies 0 as failure value for glCreateProgram() */
@@ -350,8 +331,6 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader,
 
       glDeleteShader( vertex_shader );
       glDeleteShader( fragment_shader );
-      if ( geometry_shader != 0 )
-         glDeleteShader( geometry_shader );
    }
 
    gl_checkErr();
