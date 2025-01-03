@@ -1018,6 +1018,10 @@ function distress_handler( pilot, attacker )
    local pfact   = pilot:faction()
    local afact   = attacker:faction()
    local aifact  = p:faction()
+
+   -- Ignore truly neutral targets
+   if pfact:areNeutral( aifact ) then return end
+
    local p_ally  = aifact:areAllies(pfact)
    local a_ally  = aifact:areAllies(afact)
    local p_enemy = aifact:areEnemies(pfact)

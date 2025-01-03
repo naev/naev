@@ -375,8 +375,8 @@ static int factionL_longname( lua_State *L )
  *
  *    @luatparam Faction f Faction to check against.
  *    @luatparam Faction n Faction to check if is true neutral.
- *    @luatreturn boolean true if they are enemies, false if they aren't.
- * @luafunc areEnemies
+ *    @luatreturn boolean true if they are truely neutral, false if they aren't.
+ * @luafunc areNeutral
  */
 static int factionL_areneutral( lua_State *L )
 {

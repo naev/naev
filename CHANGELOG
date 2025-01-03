@@ -11,6 +11,7 @@
    * Deployed fighters are always aggressive (for now)
    * Player can't make own escorts hostile with AoE weapons
    * Fuel usage is a negative is better stat
+   * Added faction.areNeutral to get true neutral state of factions
    * Ammo can not become negative anymore
    * Made Za'lek drone weapons builtin
    * Be more restrictive on which factions give waste dump missions

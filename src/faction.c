@@ -85,6 +85,9 @@ typedef struct Faction_ {
    /* Allies */
    int *allies; /**< Allies by ID of the faction. */
 
+   /* True neutrals. */
+   int *neutrals; /**< Allies by ID of the faction. */
+
    /* Player information. */
    double player_def; /**< Default player standing. */
    double player;     /**< Standing with player - from -100 to 100 */
@@ -1817,7 +1820,7 @@ static int faction_parseSocial( const char *file )
          continue;
       }
 
-      /* Grab the enemies */
+      /* Grab the enemies. */
       if ( xml_isNode( node, "enemies" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
@@ -1826,6 +1829,20 @@ static int faction_parseSocial( const char *file )
                int fct = faction_get( xml_get( cur ) );
                if ( faction_isFaction( fct ) )
                   array_push_back( &base->enemies, fct );
+            }
+         } while ( xml_nextNode( cur ) );
+         continue;
+      }
+
+      /* Grab the true neutral. */
+      if ( xml_isNode( node, "neutrals" ) ) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "neutral" ) ) {
+               int fct = faction_get( xml_get( cur ) );
+               if ( faction_isFaction( fct ) )
+                  array_push_back( &base->neutrals, fct );
             }
          } while ( xml_nextNode( cur ) );
          continue;
@@ -2471,6 +2488,21 @@ static void faction_computeGrid( void )
 #endif /* DEBUGGING */
          faction_grid[i * n + j] = GRID_ENEMIES;
          faction_grid[j * n + i] = GRID_ENEMIES;
+      }
+      for ( int k = 0; k < array_size( fa->neutrals ); k++ ) {
+         int j = fa->neutrals[k];
+#if DEBUGGING
+         int fij = faction_grid[i * n + j];
+         int fji = faction_grid[j * n + i];
+         if ( ( fij != GRID_NEUTRAL && fij != GRID_NONE ) ||
+              ( fji != GRID_NEUTRAL && fji != GRID_NONE ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' already have a "
+                  "relationship, "
+                  "but trying to set to neutrals!",
+                  faction_stack[i].name, faction_stack[j].name );
+#endif /* DEBUGGING */
+         faction_grid[i * n + j] = GRID_NEUTRAL;
+         faction_grid[j * n + i] = GRID_NEUTRAL;
       }
    }
 }
