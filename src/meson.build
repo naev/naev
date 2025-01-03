@@ -10,7 +10,7 @@ source_rust = files(
    'gettext.rs',
    'linebreak.rs',
    'log.rs',
-   #'model.rs',
+   'model.rs',
    'naev.rs',
    'ndata.rs',
    'nlua.rs',

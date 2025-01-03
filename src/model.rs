@@ -4,7 +4,6 @@ use encase::{ShaderSize, ShaderType};
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Vector3, Vector4};
 use std::rc::Rc;
-use std::sync::Arc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferUsage};
 use crate::ngl::{Context, CONTEXT};
@@ -14,10 +13,10 @@ use crate::texture::{Texture, TextureBuilder};
 
 const MAX_LIGHTS: usize = 7;
 
-fn tex_value(ctx: &Context, value: [u8; 3]) -> Result<Arc<Texture>> {
+fn tex_value(ctx: &Context, value: [u8; 3]) -> Result<Rc<Texture>> {
     let mut img = image::RgbImage::new(1, 1);
     img.put_pixel(0, 0, image::Rgb(value));
-    Ok(Arc::new(
+    Ok(Rc::new(
         TextureBuilder::new()
             .width(1)
             .height(1)
@@ -25,10 +24,10 @@ fn tex_value(ctx: &Context, value: [u8; 3]) -> Result<Arc<Texture>> {
             .build(ctx)?,
     ))
 }
-fn tex_zeros(ctx: &Context) -> Result<Arc<Texture>> {
+fn tex_zeros(ctx: &Context) -> Result<Rc<Texture>> {
     tex_value(ctx, [0, 0, 0])
 }
-fn tex_ones(ctx: &Context) -> Result<Arc<Texture>> {
+fn tex_ones(ctx: &Context) -> Result<Rc<Texture>> {
     tex_value(ctx, [255, 255, 255])
 }
 
@@ -171,15 +170,15 @@ impl GltfShader {
 
 pub struct Material {
     data: MaterialUniform,
-    //shader: Arc<Shader>,
-    diffuse: Arc<Texture>,
+    //shader: Rc<Shader>,
+    diffuse: Rc<Texture>,
 }
 
 impl Material {
     pub fn from_gltf(
         ctx: &Context,
         mat: &gltf::Material,
-        textures: &[Arc<Texture>],
+        textures: &[Rc<Texture>],
     ) -> Result<Self> {
         //let shader = GltfShader::new(ctx);
         let mut data = MaterialUniform::new();
@@ -289,6 +288,7 @@ impl Primitive {
 
         Ok(Primitive {
             uniform: Default::default(),
+            topology,
             vertices,
             indices,
             num_indices: index_data.len() as u32,
@@ -493,10 +493,10 @@ impl Model {
             .map(|buf| load_buffer(&buf, base))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let textures: Vec<Arc<Texture>> = gltf
+        let textures: Vec<Rc<Texture>> = gltf
             .textures()
             .map(|tex| match load_gltf_texture(ctx, &tex, base) {
-                Ok(some) => Ok(Arc::new(some)),
+                Ok(some) => Ok(Rc::new(some)),
                 Err(e) => Err(e),
             })
             .collect::<Result<Vec<_>, _>>()?;
