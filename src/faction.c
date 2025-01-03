@@ -47,6 +47,13 @@
 #define faction_isFlag( fa, f ) ( ( fa )->flags & ( f ) )
 #define faction_isKnown_( fa ) ( ( fa )->flags & ( FACTION_KNOWN ) )
 
+typedef enum FactionGrid {
+   GRID_NONE = 0,
+   GRID_ENEMIES,
+   GRID_ALLIES,
+   GRID_NEUTRAL,
+} FactionGrid;
+
 int faction_player; /**< Player faction identifier. */
 
 /**
@@ -1428,7 +1435,7 @@ int areEnemies( int a, int b )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerEnemy( a );
 
-   return faction_grid[a * faction_mgrid + b] < 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ENEMIES;
 }
 
 /**
@@ -1454,7 +1461,7 @@ int areAllies( int a, int b )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerFriend( a );
 
-   return faction_grid[a * faction_mgrid + b] > 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ALLIES;
 }
 
 int areEnemiesSystem( int a, int b, const StarSystem *sys )
@@ -1473,7 +1480,7 @@ int areEnemiesSystem( int a, int b, const StarSystem *sys )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerEnemySystem( a, sys );
 
-   return faction_grid[a * faction_mgrid + b] < 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ENEMIES;
 }
 
 int areAlliesSystem( int a, int b, const StarSystem *sys )
@@ -1492,7 +1499,7 @@ int areAlliesSystem( int a, int b, const StarSystem *sys )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerFriendSystem( a, sys );
 
-   return faction_grid[a * faction_mgrid + b] > 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ALLIES;
 }
 
 /**
@@ -2410,26 +2417,32 @@ static void faction_computeGrid( void )
       for ( int k = 0; k < array_size( fa->allies ); k++ ) {
          int j = fa->allies[k];
 #if DEBUGGING
-         if ( ( faction_grid[i * n + j] < 0 ) ||
-              ( faction_grid[j * n + i] ) < 0 )
-            WARN( "Incoherent faction grid! '%s' and '%s' are already enemies, "
+         int fij = faction_grid[i * n + j];
+         int fji = faction_grid[j * n + i];
+         if ( ( fij != GRID_ALLIES && fij != GRID_NONE ) ||
+              ( fji != GRID_ALLIES && fji != GRID_NONE ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' already have a "
+                  "relationship, "
                   "but trying to set to allies!",
                   faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
-         faction_grid[i * n + j] = 1;
-         faction_grid[j * n + i] = 1;
+         faction_grid[i * n + j] = GRID_ALLIES;
+         faction_grid[j * n + i] = GRID_ALLIES;
       }
       for ( int k = 0; k < array_size( fa->enemies ); k++ ) {
          int j = fa->enemies[k];
 #if DEBUGGING
-         if ( ( faction_grid[i * n + j] > 0 ) ||
-              ( faction_grid[j * n + i] > 0 ) )
-            WARN( "Incoherent faction grid! '%s' and '%s' are already allies, "
+         int fij = faction_grid[i * n + j];
+         int fji = faction_grid[j * n + i];
+         if ( ( fij != GRID_ENEMIES && fij != GRID_NONE ) ||
+              ( fji != GRID_ENEMIES && fji != GRID_NONE ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' already have a "
+                  "relationship, "
                   "but trying to set to enemies!",
                   faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
-         faction_grid[i * n + j] = -1;
-         faction_grid[j * n + i] = -1;
+         faction_grid[i * n + j] = GRID_ENEMIES;
+         faction_grid[j * n + i] = GRID_ENEMIES;
       }
    }
 }
