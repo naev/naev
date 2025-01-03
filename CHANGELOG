@@ -3,6 +3,7 @@
       * 1 new mission
    * Engine
       * Support for price_mod on tech group commodities
+      * Mission and Event NPC's priority default to the priority of the parent
    * Fixes
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
