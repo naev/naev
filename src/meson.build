@@ -3,12 +3,14 @@
 ####
 source_rust = files(
    'array.rs',
+   'buffer.rs',
    'camera.rs',
    'damagetype.rs',
    'env.rs',
    'gettext.rs',
    'linebreak.rs',
    'log.rs',
+   #'model.rs',
    'naev.rs',
    'ndata.rs',
    'nlua.rs',

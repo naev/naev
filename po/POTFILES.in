@@ -3627,6 +3627,7 @@ src/base64.c
 src/base64.h
 src/board.c
 src/board.h
+src/buffer.rs
 src/camera.c
 src/camera.h
 src/camera.rs

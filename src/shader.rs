@@ -27,7 +27,14 @@ pub struct Shader {
     pub fragname: String,
     pub program: glow::Program,
 }
-
+impl Drop for Shader {
+    fn drop(&mut self) {
+        let ctx = CONTEXT.get().unwrap();
+        unsafe {
+            ctx.gl.delete_program(self.program);
+        }
+    }
+}
 impl Shader {
     fn compile(
         ctx: &Context,
