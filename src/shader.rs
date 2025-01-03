@@ -89,7 +89,6 @@ impl ShaderSource {
 
     fn load_file(path: &str) -> Result<String> {
         let fullpath = format!("{}{}", Self::GLSL_PATH, path);
-        dbg!(&fullpath);
         let rawdata = ndata::read(&fullpath)?;
         let data = std::str::from_utf8(&rawdata)?;
 
