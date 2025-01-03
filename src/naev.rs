@@ -239,21 +239,21 @@ pub fn naev() -> Result<()> {
             gettext("SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf");
         let font_mono_path_c = CString::new(font_mono_path).unwrap();
         naevc::gl_fontInit(
-            &raw mut naevc::gl_defFont as *mut naevc::glFont_s,
+            &raw mut naevc::gl_defFont,
             font_default_path_c.as_ptr(),
             naevc::conf.font_size_def as c_uint,
             font_prefix,
             0,
         );
         naevc::gl_fontInit(
-            &raw mut naevc::gl_smallFont as *mut naevc::glFont_s,
+            &raw mut naevc::gl_smallFont,
             font_small_path_c.as_ptr(),
             naevc::conf.font_size_small as c_uint,
             font_prefix,
             0,
         );
         naevc::gl_fontInit(
-            &raw mut naevc::gl_defFontMono as *mut naevc::glFont_s,
+            &raw mut naevc::gl_defFontMono,
             font_mono_path_c.as_ptr(),
             naevc::conf.font_size_def as c_uint,
             font_prefix,

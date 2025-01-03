@@ -120,8 +120,8 @@ impl ShaderSource {
 
     pub fn to_string(&self) -> Result<String> {
         match self {
-            Self::Path(path) => Self::load_file(&path),
-            Self::Data(data) => Self::preprocess(&data),
+            Self::Path(path) => Self::load_file(path),
+            Self::Data(data) => Self::preprocess(data),
             Self::None => Err(anyhow::anyhow!("no shader source defined!")),
         }
     }
@@ -184,7 +184,7 @@ impl ShaderBuilder {
         let mut prepend = format!("#version {}\n\n#define GLSL_VERSION {}\n", glsl, glsl);
         prepend.push_str("#define HAS_GL_ARB_shader_subroutine 1\n");
 
-        if self.prepend.len() > 0 {
+        if !self.prepend.is_empty() {
             vertdata.insert_str(0, &self.prepend);
             fragdata.insert_str(0, &self.prepend);
         }
@@ -224,7 +224,7 @@ pub extern "C" fn gl_program_backend(
         sb = sb.prepend(prepend.to_str().unwrap());
     }
 
-    sb.build(&ctx).unwrap().program.0.into()
+    sb.build(ctx).unwrap().program.0.into()
 }
 
 #[no_mangle]
@@ -244,7 +244,7 @@ pub extern "C" fn gl_program_vert_frag_string(
     ShaderBuilder::new(None)
         .vert_data(vertdata)
         .frag_data(fragdata)
-        .build(&ctx)
+        .build(ctx)
         .unwrap()
         .program
         .0
