@@ -97,7 +97,7 @@ impl ShaderSource {
         for line in data.lines() {
             let line = line.trim();
             if line.starts_with(ShaderSource::INCLUDE_INSTRUCTION) {
-                match line.trim().split("\"").nth(1) {
+                match line.split("\"").nth(1) {
                     Some(include) => {
                         let include_string = ShaderSource::load_file(include)?;
                         module_string.push_str(&include_string);
