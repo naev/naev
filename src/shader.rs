@@ -7,7 +7,7 @@ use std::os::raw::c_char;
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::ngl::{Context, CONTEXT};
-use crate::{formatx, warn};
+use crate::{formatx, nlog, warn};
 
 pub enum ShaderType {
     Fragment,
@@ -45,6 +45,9 @@ impl Shader {
             gl.compile_shader(shader);
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
+            for (i, line) in source.lines().enumerate() {
+                nlog!("{:04}: {}", i, line);
+            }
             let slog = unsafe { gl.get_shader_info_log(shader) };
             warn!("Failed to compile shader '{}': [[\n{}\n]]", name, slog);
             return Err(anyhow::anyhow!("failed to compile shader program"));
@@ -82,19 +85,24 @@ enum ShaderSource {
 }
 impl ShaderSource {
     const INCLUDE_INSTRUCTION: &str = "#include";
+    const GLSL_PATH: &str = "glsl/";
 
     fn load_file(path: &str) -> Result<String> {
-        let rawdata = ndata::read(path)?;
+        let fullpath = format!("{}{}", Self::GLSL_PATH, path);
+        dbg!(&fullpath);
+        let rawdata = ndata::read(&fullpath)?;
         let data = std::str::from_utf8(&rawdata)?;
 
         // Really simple preprocessor
         let mut module_string = String::new();
         for line in data.lines() {
+            let line = line.trim();
             if line.starts_with(ShaderSource::INCLUDE_INSTRUCTION) {
-                match line.trim().split("\"").nth(2) {
+                match line.trim().split("\"").nth(1) {
                     Some(include) => {
                         let include_string = ShaderSource::load_file(include)?;
                         module_string.push_str(&include_string);
+                        module_string.push('\n');
                     }
                     None => {
                         return Err(anyhow::anyhow!("#include syntax error"));
@@ -152,12 +160,27 @@ impl ShaderBuilder {
         self
     }
 
+    pub fn vert_data(mut self, data: &str) -> Self {
+        self.vert = ShaderSource::Data(String::from(data));
+        self
+    }
+
+    pub fn frag_data(mut self, data: &str) -> Self {
+        self.frag = ShaderSource::Data(String::from(data));
+        self
+    }
+
+    pub fn prepend(mut self, data: &str) -> Self {
+        self.prepend = String::from(data);
+        self
+    }
+
     pub fn build(self, ctx: &Context) -> Result<Shader> {
         let mut vertdata = ShaderSource::to_string(&self.vert)?;
         let mut fragdata = ShaderSource::to_string(&self.frag)?;
 
         let glsl = unsafe { naevc::gl_screen.glsl };
-        let mut prepend = format!("#version {}\n\n#define GLSL_VERSION {}", glsl, glsl);
+        let mut prepend = format!("#version {}\n\n#define GLSL_VERSION {}\n", glsl, glsl);
         prepend.push_str("#define HAS_GL_ARB_shader_subroutine 1\n");
 
         if self.prepend.len() > 0 {
@@ -183,16 +206,22 @@ impl ShaderBuilder {
 }
 
 #[no_mangle]
-pub extern "C" fn gl_program_vert_frag_(cvert: *const c_char, cfrag: *const c_char) -> u32 {
+pub extern "C" fn gl_program_backend(
+    cvert: *const c_char,
+    cfrag: *const c_char,
+    cprepend: *const c_char,
+) -> u32 {
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
-    ShaderBuilder::new(None)
+    let mut sb = ShaderBuilder::new(None)
         .vert_file(vert.to_str().unwrap())
-        .frag_file(frag.to_str().unwrap())
-        .build(&ctx)
-        .unwrap()
-        .program
-        .0
-        .into()
+        .frag_file(frag.to_str().unwrap());
+
+    if !cprepend.is_null() {
+        let prepend = unsafe { CStr::from_ptr(cprepend) };
+        sb = sb.prepend(prepend.to_str().unwrap());
+    }
+
+    sb.build(&ctx).unwrap().program.0.into()
 }

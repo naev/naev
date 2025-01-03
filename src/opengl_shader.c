@@ -241,6 +241,7 @@ GLuint gl_program_vert_frag( const char *vert, const char *frag )
  *    @param[in,opt] geomfile Optional geometry shader name.
  *    @return The shader compiled program or 0 on failure.
  */
+#if 0
 GLuint gl_program_backend( const char *vertfile, const char *fragfile,
                            const char *prependtext )
 {
@@ -276,6 +277,7 @@ GLuint gl_program_backend( const char *vertfile, const char *fragfile,
 
    return program;
 }
+#endif
 
 /**
  * @brief Loads a vertex and fragment shader from strings.
