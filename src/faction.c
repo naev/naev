@@ -1413,6 +1413,34 @@ double faction_reputationMax( int f )
 }
 
 /**
+ * @brief Checks whether two factions are true neutral.
+ *
+ * The player isn't true neutral with anyone.
+ *
+ *    @param a Faction A.
+ *    @param b Faction B.
+ *    @return 1 if A and B are true neutral, 0 otherwise.
+ */
+int areNeutral( int a, int b )
+{
+   /* luckily our factions aren't masochistic */
+   if ( a == b )
+      return 0;
+
+   /* Make sure they're valid. */
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
+      return 0;
+
+   /* player handled separately */
+   if ( a == FACTION_PLAYER )
+      return 0;
+   else if ( b == FACTION_PLAYER )
+      return 0;
+
+   return faction_grid[a * faction_mgrid + b] == GRID_NEUTRAL;
+}
+
+/**
  * @brief Checks whether two factions are enemies.
  *
  *    @param a Faction A.
