@@ -19,6 +19,7 @@
    * Hypergates no longer spoil system names for you
    * Deployed fighters are always aggressive (for now)
    * Player can't make own escorts hostile with AoE weapons
+   * Fual usage is a negative is better stat
    * Made Za'lek drone weapons builtin
    * Modified condition of many neutral missions so they don't appear in the wrong places
    * Fixed the ship_buy hook refering to the ship sold when trading ships
