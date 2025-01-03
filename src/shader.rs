@@ -23,40 +23,12 @@ impl ShaderType {
 }
 
 pub struct Shader {
-    pub vertfile: Option<String>,
-    pub fragfile: Option<String>,
+    pub vertname: String,
+    pub fragname: String,
     pub program: glow::Program,
 }
 
 impl Shader {
-    const INCLUDE_INSTRUCTION: &str = "#include";
-
-    fn load_file(path: &str) -> Result<String> {
-        let rawdata = ndata::read(path)?;
-        let data = std::str::from_utf8(&rawdata)?;
-
-        // Really simple preprocessor
-        let mut module_string = String::new();
-        for line in data.lines() {
-            if line.starts_with(Shader::INCLUDE_INSTRUCTION) {
-                match line.trim().split("\"").nth(2) {
-                    Some(include) => {
-                        let include_string = Shader::load_file(include)?;
-                        module_string.push_str(&include_string);
-                    }
-                    None => {
-                        return Err(anyhow::anyhow!("#include syntax error"));
-                    }
-                }
-            } else {
-                module_string.push_str(line);
-                module_string.push('\n');
-            }
-        }
-
-        Ok(module_string)
-    }
-
     fn compile(
         ctx: &Context,
         shadertype: ShaderType,
@@ -101,25 +73,110 @@ impl Shader {
         }
         Ok(program)
     }
+}
 
-    pub fn from_files(ctx: &Context, vert: &str, frag: &str) -> Result<Self> {
-        let mut vertdata = Shader::load_file(vert)?;
-        let mut fragdata = Shader::load_file(frag)?;
+enum ShaderSource {
+    Path(String),
+    Data(String),
+    None,
+}
+impl ShaderSource {
+    const INCLUDE_INSTRUCTION: &str = "#include";
+
+    fn load_file(path: &str) -> Result<String> {
+        let rawdata = ndata::read(path)?;
+        let data = std::str::from_utf8(&rawdata)?;
+
+        // Really simple preprocessor
+        let mut module_string = String::new();
+        for line in data.lines() {
+            if line.starts_with(ShaderSource::INCLUDE_INSTRUCTION) {
+                match line.trim().split("\"").nth(2) {
+                    Some(include) => {
+                        let include_string = ShaderSource::load_file(include)?;
+                        module_string.push_str(&include_string);
+                    }
+                    None => {
+                        return Err(anyhow::anyhow!("#include syntax error"));
+                    }
+                }
+            } else {
+                module_string.push_str(line);
+                module_string.push('\n');
+            }
+        }
+
+        Ok(module_string)
+    }
+
+    pub fn to_string(&self) -> Result<String> {
+        match self {
+            ShaderSource::Path(path) => ShaderSource::load_file(&path),
+            ShaderSource::Data(data) => Ok(data.clone()),
+            ShaderSource::None => Err(anyhow::anyhow!("no shader source defined!")),
+        }
+    }
+
+    pub fn name(&self) -> String {
+        match self {
+            ShaderSource::Path(path) => path.clone(),
+            ShaderSource::Data(_) => String::from("DATA"),
+            ShaderSource::None => String::from("NONE"),
+        }
+    }
+}
+
+struct ShaderBuilder {
+    name: Option<String>,
+    vert: ShaderSource,
+    frag: ShaderSource,
+    prepend: String,
+}
+impl ShaderBuilder {
+    pub fn new(name: Option<&str>) -> Self {
+        ShaderBuilder {
+            name: name.map(String::from),
+            vert: ShaderSource::None,
+            frag: ShaderSource::None,
+            prepend: Default::default(),
+        }
+    }
+
+    pub fn vert_file(mut self, path: &str) -> Self {
+        self.vert = ShaderSource::Path(String::from(path));
+        self
+    }
+
+    pub fn frag_file(mut self, path: &str) -> Self {
+        self.frag = ShaderSource::Path(String::from(path));
+        self
+    }
+
+    pub fn build(self, ctx: &Context) -> Result<Shader> {
+        let mut vertdata = ShaderSource::to_string(&self.vert)?;
+        let mut fragdata = ShaderSource::to_string(&self.frag)?;
 
         let glsl = unsafe { naevc::gl_screen.glsl };
         let mut prepend = format!("#version {}\n\n#define GLSL_VERSION {}", glsl, glsl);
         prepend.push_str("#define HAS_GL_ARB_shader_subroutine 1\n");
 
+        if self.prepend.len() > 0 {
+            vertdata.insert_str(0, &self.prepend);
+            fragdata.insert_str(0, &self.prepend);
+        }
         vertdata.insert_str(0, &prepend);
         fragdata.insert_str(0, &prepend);
 
-        let vertshader = Shader::compile(ctx, ShaderType::Vertex, vert, &vertdata)?;
-        let fragshader = Shader::compile(ctx, ShaderType::Fragment, frag, &fragdata)?;
+        let vertname = self.vert.name();
+        let fragname = self.frag.name();
+
+        let vertshader = Shader::compile(ctx, ShaderType::Vertex, &vertname, &vertdata)?;
+        let fragshader = Shader::compile(ctx, ShaderType::Fragment, &fragname, &fragdata)?;
         let program = Shader::link(ctx, vertshader, fragshader)?;
 
         Ok(Shader {
-            vertfile: Some(String::from(vert)),
-            fragfile: Some(String::from(frag)),
+            vertname,
+            fragname,
             program,
         })
     }
@@ -130,7 +187,10 @@ pub extern "C" fn gl_program_vert_frag_(cvert: *const c_char, cfrag: *const c_ch
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
-    Shader::from_files(&ctx, vert.to_str().unwrap(), frag.to_str().unwrap())
+    ShaderBuilder::new(None)
+        .vert_file(vert.to_str().unwrap())
+        .frag_file(frag.to_str().unwrap())
+        .build(&ctx)
         .unwrap()
         .program
         .0
