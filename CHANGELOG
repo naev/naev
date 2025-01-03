@@ -7,6 +7,7 @@
    * Removed outdated tip from NPC messages
    * Round faction reputation at hypergates
    * Hypergates no longer spoil system names for you
+   * Fixed description of the Squadron Synchronizer Module
    * Deployed fighters are always aggressive (for now)
    * Player can't make own escorts hostile with AoE weapons
    * Fuel usage is a negative is better stat
