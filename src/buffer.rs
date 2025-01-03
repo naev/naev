@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use anyhow::Result;
 use glow::*;
 
@@ -54,7 +55,7 @@ impl<'a> BufferBuilder<'a> {
         self
     }
 
-    pub fn data_f32(mut self, data: &'a [f32]) -> Self {
+    pub fn data_f32(self, data: &'a [f32]) -> Self {
         self.data(unsafe {
             std::slice::from_raw_parts(
                 data.as_ptr() as *const u8,
