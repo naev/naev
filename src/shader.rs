@@ -87,19 +87,15 @@ impl ShaderSource {
     const INCLUDE_INSTRUCTION: &str = "#include";
     const GLSL_PATH: &str = "glsl/";
 
-    fn load_file(path: &str) -> Result<String> {
-        let fullpath = format!("{}{}", Self::GLSL_PATH, path);
-        let rawdata = ndata::read(&fullpath)?;
-        let data = std::str::from_utf8(&rawdata)?;
-
-        // Really simple preprocessor
+    /// Really simple preprocessor
+    fn preprocess(data: &str) -> Result<String> {
         let mut module_string = String::new();
         for line in data.lines() {
             let line = line.trim();
-            if line.starts_with(ShaderSource::INCLUDE_INSTRUCTION) {
+            if line.starts_with(Self::INCLUDE_INSTRUCTION) {
                 match line.split("\"").nth(1) {
                     Some(include) => {
-                        let include_string = ShaderSource::load_file(include)?;
+                        let include_string = Self::load_file(include)?;
                         module_string.push_str(&include_string);
                         module_string.push('\n');
                     }
@@ -112,23 +108,29 @@ impl ShaderSource {
                 module_string.push('\n');
             }
         }
-
         Ok(module_string)
+    }
+
+    fn load_file(path: &str) -> Result<String> {
+        let fullpath = format!("{}{}", Self::GLSL_PATH, path);
+        let rawdata = ndata::read(&fullpath)?;
+        let data = std::str::from_utf8(&rawdata)?;
+        Self::preprocess(data)
     }
 
     pub fn to_string(&self) -> Result<String> {
         match self {
-            ShaderSource::Path(path) => ShaderSource::load_file(&path),
-            ShaderSource::Data(data) => Ok(data.clone()),
-            ShaderSource::None => Err(anyhow::anyhow!("no shader source defined!")),
+            Self::Path(path) => Self::load_file(&path),
+            Self::Data(data) => Self::preprocess(&data),
+            Self::None => Err(anyhow::anyhow!("no shader source defined!")),
         }
     }
 
     pub fn name(&self) -> String {
         match self {
-            ShaderSource::Path(path) => path.clone(),
-            ShaderSource::Data(_) => String::from("DATA"),
-            ShaderSource::None => String::from("NONE"),
+            Self::Path(path) => path.clone(),
+            Self::Data(_) => String::from("DATA"),
+            Self::None => String::from("NONE"),
         }
     }
 }
@@ -223,4 +225,28 @@ pub extern "C" fn gl_program_backend(
     }
 
     sb.build(&ctx).unwrap().program.0.into()
+}
+
+#[no_mangle]
+pub extern "C" fn gl_program_vert_frag_string(
+    cvert: *const c_char,
+    vert_size: usize,
+    cfrag: *const c_char,
+    frag_size: usize,
+) -> u32 {
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let vertdata =
+        std::str::from_utf8(unsafe { std::slice::from_raw_parts(cvert as *const u8, vert_size) })
+            .unwrap();
+    let fragdata =
+        std::str::from_utf8(unsafe { std::slice::from_raw_parts(cfrag as *const u8, frag_size) })
+            .unwrap();
+    ShaderBuilder::new(None)
+        .vert_data(vertdata)
+        .frag_data(fragdata)
+        .build(&ctx)
+        .unwrap()
+        .program
+        .0
+        .into()
 }

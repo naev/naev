@@ -277,7 +277,6 @@ GLuint gl_program_backend( const char *vertfile, const char *fragfile,
 
    return program;
 }
-#endif
 
 /**
  * @brief Loads a vertex and fragment shader from strings.
@@ -309,6 +308,7 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size,
    /* Link. */
    return gl_program_make( vertex_shader, fragment_shader );
 }
+#endif
 
 /**
  * @brief Makes a shader program from a vertex and fragment shader.

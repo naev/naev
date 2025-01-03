@@ -540,7 +540,6 @@ function graphics.newShader( pixelcode, vertexcode )
    vertexcode = vertexcode or _vertexcode
 
    local prepend = [[
-#version 150
 #define _LOVE
 // Syntax sugar
 #define Image           sampler2D
