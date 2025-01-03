@@ -57,10 +57,7 @@ impl<'a> BufferBuilder<'a> {
 
     pub fn data_f32(self, data: &'a [f32]) -> Self {
         self.data(unsafe {
-            std::slice::from_raw_parts(
-                data.as_ptr() as *const u8,
-                data.len() * std::mem::size_of::<f32>(),
-            )
+            std::slice::from_raw_parts(data.as_ptr() as *const u8, std::mem::size_of_val(data))
         })
     }
 

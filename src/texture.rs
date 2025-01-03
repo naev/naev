@@ -10,7 +10,7 @@ use std::sync::{Arc, LazyLock, Mutex, Weak};
 
 use crate::ngl::CONTEXT;
 use crate::{formatx, warn};
-use crate::{gettext, ndata};
+use crate::{gettext, ndata, ngl};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
@@ -437,7 +437,8 @@ impl TextureBuilder {
         self
     }
 
-    pub fn build(self, gl: &glow::Context) -> Result<Texture> {
+    pub fn build(self, ctx: &ngl::Context) -> Result<Texture> {
+        let gl = &ctx.gl;
         /* TODO handle SDF. */
         let texture = self
             .source
@@ -575,7 +576,7 @@ pub extern "C" fn gl_texExistsOrCreate(
         }
     };
 
-    let out = match builder.build(&ctx.gl) {
+    let out = match builder.build(ctx) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
@@ -634,7 +635,7 @@ pub extern "C" fn gl_loadImageData(
         builder = builder.image(&img);
     }
 
-    let out = match builder.build(&ctx.gl) {
+    let out = match builder.build(ctx) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
@@ -682,7 +683,7 @@ pub extern "C" fn gl_newSprite(
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
 
-    let out = match builder.build(&ctx.gl) {
+    let out = match builder.build(ctx) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
@@ -735,7 +736,7 @@ pub extern "C" fn gl_newSpriteRWops(
         }
     };
 
-    let out = match builder.build(&ctx.gl) {
+    let out = match builder.build(ctx) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
@@ -803,7 +804,7 @@ pub extern "C" fn gl_rawTexture(
         }
     };
 
-    let out = match builder.build(&ctx.gl) {
+    let out = match builder.build(ctx) {
         Ok(tex) => {
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))

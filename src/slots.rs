@@ -62,7 +62,7 @@ impl SlotProperty {
                         texture::TextureBuilder::new()
                             .path(&gfxname)
                             .sdf(true)
-                            .build(&nctx.gl)?,
+                            .build(&nctx)?,
                     );
                 }
                 tag => {
