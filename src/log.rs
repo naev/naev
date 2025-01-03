@@ -11,6 +11,10 @@ pub fn init() {
     };
 }
 
+pub fn elog(msg: &str) {
+    nlog!(msg);
+}
+
 pub fn log(msg: &str) {
     nlog!(msg);
 }
@@ -27,6 +31,13 @@ pub fn warn(msg: &str) {
 macro_rules! nlog {
     ($($arg:tt)*) => {
         println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+    };
+}
+
+#[macro_export]
+macro_rules! nelog {
+    ($($arg:tt)*) => {
+        eprintln!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
