@@ -22,6 +22,7 @@
    * Fuel usage is a negative is better stat
    * Ammo can not become negative anymore
    * Made Za'lek drone weapons builtin
+   * Added the Admonisher ΩIIa for sale
    * Modified condition of many neutral missions so they don't appear in the wrong places
    * Fixed the ship_buy hook refering to the ship sold when trading ships
    * Don't remove builtin weapons when spawning pilots naked
