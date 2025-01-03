@@ -11,7 +11,7 @@
   <gfx_store>cargo_hull_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>400</cargo>
+  <cargo>600</cargo>
   <absorb>52</absorb>
   <armour>1100</armour>
   <cargo_inertia>-25</cargo_inertia>

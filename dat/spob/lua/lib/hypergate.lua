@@ -276,7 +276,7 @@ function hypergate_window ()
       cursys = csys,
       fact = hgfact,
       standing = standing_col..standing.."#0",
-      standing_value = standing_col..tostring(standing_value).."#0",
+      standing_value = standing_col..tostring(math.floor(standing_value+0.5)).."#0",
       costmod = cost_mod_str,
       totalmass = fmt.tonnes(totalmass),
       totalcost = fmt.credits(totalcost),
@@ -298,8 +298,16 @@ function hypergate_window ()
       if not d:known() then
          extramsg = "#r".._("\nThe destination is unknown!").."#0"
       end
-      luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=s}),
-         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?{extramsg}"),{sysname=s,credits=fmt.credits(totalcost),extramsg=extramsg}), function ()
+
+      local sysname
+      if s:known() then
+         sysname = s:name()
+      else
+         sysname = _("Unknown")
+      end
+
+      luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=sysname}),
+         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?{extramsg}"),{sysname=sysname,credits=fmt.credits(totalcost),extramsg=extramsg}), function ()
             if player.credits() > totalcost then
                player.pay(-totalcost)
                target_gate = d

@@ -292,7 +292,7 @@ void player_new( void )
       if ( badname &&
            !dialogue_YesNo(
               _( "Player Name" ),
-              _( "Your chosen name '%s' does not seem be very good. Are you "
+              _( "Your chosen name '%s' does not seem to be very good. Are you "
                  "sure you wish to proceed with this name?" ),
               player.name ) ) {
          player_new();
@@ -1810,7 +1810,7 @@ void player_checkLandAck( void )
       return;
 
    player_rmFlag( PLAYER_LANDACK );
-   player_message( _( "#%c%s>#0 Landing permission revoked." ),
+   player_message( _( "#%c%s>#0 \"Landing permission revoked.\"" ),
                    spob_getColourChar( p ), spob_name( p ) );
 }
 
@@ -3778,15 +3778,7 @@ Spob *player_load( xmlNodePtr parent )
       difficulty_setLocal( NULL ); /* Sets the default. */
 
    /* Updates the fleet internals. */
-   int l = landed; /* We simulate landing, because it makes the player go over
-                      available limits and closes an exploit where the player
-                      can cheat the cargo limist by using outfits that increase
-                      the limit, accept missions, and then reduce it under the
-                      limit.
-                      TODO do this in a less hack way. */
-   landed = 1;
    pfleet_update();
-   landed = l;
 
    return pnt;
 }

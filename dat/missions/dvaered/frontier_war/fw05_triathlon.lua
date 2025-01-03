@@ -212,10 +212,10 @@ function spawnNpcs()
 
             if playerRank == 10 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Dvaered Vendetta")}))
-               player.shipAdd("Dvaered Vendetta", _("You obtained this ship as a reward from Mace Rocket Ballet."))
+               player.shipAdd("Dvaered Vendetta", nil, _("You obtained this ship as a reward from Mace Rocket Ballet."))
             elseif playerRank == 9 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Vendetta")}))
-               player.shipAdd("Vendetta", _("You obtained this ship as a reward from Mace Rocket Ballet."))
+               player.shipAdd("Vendetta", nil, _("You obtained this ship as a reward from Mace Rocket Ballet."))
             elseif playerRank == 8 then
                tk.msg("",fmt.f(_("You receive a {1} and a {2} as a reward."), {_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")}))
                player.outfitAdd("Tricon Zephyr II Engine")

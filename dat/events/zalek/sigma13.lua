@@ -23,7 +23,13 @@ local j1, j2 = jump.get( sys1, sys2 )
 local reward = outfit.get("Antimatter Lance")
 
 function create ()
-   evt.npcAdd( "approach_zach", _("Zach"), zbh.zach.portrait, zbh.zach.description )
+   local priority
+   if not j1:known() or not j2:known() then
+      priority = 3
+   else
+      priority = 10
+   end
+   evt.npcAdd( "approach_zach", _("Zach"), zbh.zach.portrait, zbh.zach.description, priority )
    hook.takeoff( "leave" )
 end
 

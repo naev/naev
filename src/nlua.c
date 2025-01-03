@@ -371,7 +371,7 @@ nlua_env nlua_newEnv( const char *name )
    /* Store in the environment table. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t, e */
    lua_pushvalue( naevL, -2 );                         /* t, e, t */
-   lua_rawseti( naevL, -1, ref );                      /* t, e */
+   lua_rawseti( naevL, -2, ref );                      /* t, e */
    lua_pop( naevL, 1 );                                /* t */
 
    if ( name != NULL ) {
@@ -464,9 +464,8 @@ void nlua_freeEnv( nlua_env env )
 
    /* Remove from the environment table. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, env );       /* t, e */
-   lua_pushnil( naevL );                               /* t, e, n */
-   lua_rawset( naevL, -3 );                            /* t */
+   lua_pushnil( naevL );                               /* t, e */
+   lua_rawseti( naevL, -2, env );                      /* t */
    lua_pop( naevL, 1 );                                /* */
 
    /* Unref. */
@@ -1100,8 +1099,8 @@ void nlua_resize( void )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
    lua_pushnil( naevL );                               /* t, n */
    while ( lua_next( naevL, -2 ) != 0 ) {              /* t, k, v */
-      int env = lua_tointeger( naevL, -1 );            /* t, k, v */
-      lua_getfield( naevL, -2, "__resize" );           /* t, k, v, f */
+      int env = lua_tointeger( naevL, -2 );            /* t, k, v */
+      lua_getfield( naevL, -1, "__resize" );           /* t, k, v, f */
       if ( !lua_isnil( naevL, -1 ) ) {
          lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
          lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */

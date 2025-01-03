@@ -39,6 +39,7 @@ void            pilot_weapSetRm( Pilot *p, int id, const PilotOutfitSlot *o );
 void            pilot_weapSetClear( Pilot *p, int id );
 int    pilot_weapSetInSet( Pilot *p, int id, const PilotOutfitSlot *o );
 int    pilot_weapSetCheck( Pilot *p, int id, const PilotOutfitSlot *o );
+double pilot_weapSetRangeMin( Pilot *p, int id );
 double pilot_weapSetRange( Pilot *p, int id );
 double pilot_weapSetSpeed( Pilot *p, int id );
 double pilot_weapSetAmmo( Pilot *p, int id );

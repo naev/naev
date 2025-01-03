@@ -115,6 +115,14 @@ static int pilot_cargoAddInternal( Pilot *pilot, const Commodity *cargo,
 {
    PilotCommodity *pc;
    int             q = quantity;
+   if ( q < 0 ) {
+      if ( id == 0 )
+         return 0;
+
+      /* We'll warn and clamp to 0 for missions. */
+      WARN( "Trying to add mission cargo with negative quantity! (q=%d)", q );
+      q = 0;
+   }
 
    /* If not mission cargo check to see if already exists. */
    if ( id == 0 ) {
@@ -157,7 +165,6 @@ int pilot_cargoAddRaw( Pilot *pilot, const Commodity *cargo, int quantity,
    pilot->solid.mass += pilot->stats.cargo_inertia * q;
    pilot_updateMass( pilot );
    gui_setGeneric( pilot );
-
    return q;
 }
 

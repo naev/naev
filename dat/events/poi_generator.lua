@@ -58,7 +58,10 @@ function land ()
    npc_image, npc_prt = vni.generic()
    npc_name = _("Tipsy Patron")
    npc_desc = _("You see a tipsy individual who seems like they have something to say.")
-   evt.npcAdd( "approach_npc", npc_name, npc_prt, npc_desc, 9 )
+
+   -- Allow plugins to modify the NPC priority of the POI generator NPC
+   local poi_generator_npc_priority = var.peek("poi_generator_npc_priority") or 9
+   evt.npcAdd( "approach_npc", npc_name, npc_prt, npc_desc, poi_generator_npc_priority )
 end
 
 function approach_npc( npcid )

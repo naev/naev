@@ -422,6 +422,8 @@ void misn_regen( void )
       return;
    if ( !land_loaded )
       return;
+   if ( land_spob == NULL )
+      return;
    misn_genList( land_getWid( LAND_WINDOW_MISSION ) );
 }
 /**
@@ -432,6 +434,8 @@ void bar_regen( void )
    if ( !landed )
       return;
    if ( !land_loaded )
+      return;
+   if ( land_spob == NULL )
       return;
    NTracingZone( _ctx, 1 );
    bar_genList( land_getWid( LAND_WINDOW_BAR ) );
@@ -997,7 +1001,8 @@ void land_refuel( void )
       return;
 
    /* No refuel service. */
-   if ( !spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) )
+   if ( ( land_spob == NULL ) ||
+        !spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) )
       return;
 
    player.p->fuel = player.p->fuel_max;

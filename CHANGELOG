@@ -1,4 +1,55 @@
-* 0.12.0 (unreleased)
+* 0.13.0 (unreleased)
+   * Content
+      * 1 new mission
+   * Engine
+      * Support for price_mod on tech group commodities
+      * Mission and Event NPC's priority default to the priority of the parent
+   * Fixes
+      * Sensor anomalies now appear in the on-screen display
+      * Fixed texture interpolation when alpha is 0 for pixels
+      * Fixed adding commodities to space objects via tech groups
+
+* 0.12.2 (unreleased)
+   * Made plasma drill much easier to apply to asteroids
+   * Don't reset cargo if not space worthy when reloading
+   * Truly fix the negative mass exploit
+   * Made miners less bad at mining, their only passion
+   * Slim GUI set formation button is no longer clickable when invisible
+   * Removed outdated tip from NPC messages
+   * Round faction reputation at hypergates
+   * Hypergates no longer spoil system names for you
+   * Fixed description of the Squadron Synchronizer Module
+   * Deployed fighters are always aggressive (for now)
+   * Player can't make own escorts hostile with AoE weapons
+   * Fuel usage is a negative is better stat
+   * Ammo can not become negative anymore
+   * Made Za'lek drone weapons builtin
+   * Be more restrictive on which factions give waste dump missions
+   * Added the Admonisher ΩIIa for sale
+   * Fixed mass being displayed twice for outfits
+   * Modified condition of many neutral missions so they don't appear in the wrong places
+   * Fixed the ship_buy hook refering to the ship sold when trading ships
+   * Don't remove builtin weapons when spawning pilots naked
+   * lovebiz01: fixed condition allowing it to appear anywhere
+   * dv_goddard: fixed spawning of Silent Death
+   * Minor typo fixes and translation updates
+   * Large cargo hulls now match the cargo difference of the small and medium hulls
+
+* 0.12.1
+   * Fixed psychic orbs having trails
+   * Crop selected spob name if it goes out of bounds in the GUI
+   * Fix obelisk tests not setting properly the primary weapons of the player
+   * Fleet members don't try to investigate, only leaders do
+   * More lenient update checks when updating saves
+   * Pilots should no longer see through stealth when attacked from stealth
+   * Fixed sometimes full map being partially displayed
+   * Don't show the "didn't play in a while" message every time a save is loaded
+   * Difficulty modifiers extend to the player's escorts as well
+   * Boarding bonus affects outfit / ship capture costs
+   * Lowered the cost of capturing ships
+   * Minor typo fixes and translation updates
+
+* 0.12.0
    * Don't play wormhole sound on main menu
    * Don't allow the player to sell unique ships
    * Fixed corner cases where destroyed player ships would not properly be updated
@@ -7,13 +58,23 @@
    * Fleshed out API for player.missions() to be as documentation indicates
    * Fixed some visual aberrations when forcing the player to land or jump
    * Prioritize pilots and other objects over uninhabited planets when clicking
+   * Fixed bug in rehab missions causing them to get stuck
    * Trading in a ship triggers both ship_sell and ship_buy hooks
-   * Disabled Nasin campaign
+   * Disabled Nasin campaign and Defend the System missions
    * Fixed weird commodity global average values
+   * Fixed how Lua environments were being stored and referenced
+   * Can always bribe your way to pirate's clansworlds
    * Fixed weapon sets getting reset on game load
+   * Don't remove hooks on failure, which should make rehab missions a tad more robust
    * Fixed exploit allowing the player to ignore cargo limits
    * Consistently colour the ShipAI messages in the tutorial
+   * Made max_fps actually get respected
+   * Fixed nebula trails on the Virtuosity
+   * Bumped tracy wrap to 0.11.1
+   * fw03_sirius: fixed Lua error
+   * fw05_triathlon: fixed acquired information of ships the player can obtain
    * nelly02: don't have nelly tell you about disable weapons after disabling her ship
+   * Carried fighters don't investigate
    * Minor typo fixes and translation updates
 
 * 0.12.0-beta.3
@@ -105,7 +166,7 @@
          * Direct faction hit changes are shown as messages
          * Your actions will more directly affect ships in the system
       * Significantly increase maximum potential fleet capacity
-      * Excess energy to battery recharge efficiency is now a flat 50% instead of varying based on charge level
+      * Excess energy to battery recharge efficiency is now a flat instead of varying based on charge level
       * Gave the Za'lek sting a slight detection buff
       * Can only have a single patrol mission active at a given time
       * Pirates are less numerous during Chapter 0

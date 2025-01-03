@@ -9,8 +9,8 @@ local articles = {
       Science and technology
    --]]
    {
-      head = N_([[Potential upper hand]]),
-      body = _([[The oppressors should count their days! FLF scientist released a new paper stating more than a few advancements in jamming technology, which could potentially help our brave freedom fighters on their righteous operations against the Red Menace]])
+      head = N_([[Potential Upper Hand]]),
+      body = _([[The oppressors should count their days! FLF scientist released a new paper stating more than a few advancements in jamming technology, which could potentially help our brave freedom fighters on their righteous operations against the Red Menace.]])
    },
    --[[
       Business

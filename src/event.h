@@ -51,6 +51,7 @@ void        event_remove( unsigned int eventid );
 int         event_save( unsigned int eventid );
 const char *event_getData( unsigned int eventid );
 int         event_isUnique( unsigned int eventid );
+int         event_priority( unsigned int eventid );
 
 /*
  * Data.

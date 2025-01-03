@@ -943,8 +943,8 @@ static int misn_osdGet( lua_State *L )
  *    @luatparam string portrait Portrait file name to use for the NPC (from
  * GFX_PATH/portraits/).
  *    @luatparam string desc Description associated to the NPC.
- *    @luatparam[opt=5] number priority Optional priority argument (highest is
- * 0, lowest is 10).
+ *    @luatparam[opt=mission.priority] number priority Optional priority
+ * argument (highest is 0, lowest is 10). Missions default to 5 priority.
  *    @luatparam[opt=nil] string background Background file name to use (from
  * GFX_PATH/portraits/).
  *    @luatreturn number The ID of the NPC to pass to npcRm.
@@ -956,7 +956,7 @@ static int misn_npcAdd( lua_State *L )
    int          priority;
    const char  *func, *name, *desc;
    glTexture   *portrait, *bg;
-   Mission     *cur_mission;
+   Mission     *cur_mission = misn_getFromLua( L );
 
    /* Handle parameters. */
    func     = luaL_checkstring( L, 1 );
@@ -965,13 +965,11 @@ static int misn_npcAdd( lua_State *L )
    desc     = luaL_checkstring( L, 4 );
 
    /* Optional parameters. */
-   priority = luaL_optinteger( L, 5, 5 );
+   priority = luaL_optinteger( L, 5, cur_mission->data->avail.priority );
    if ( !lua_isnoneornil( L, 6 ) )
       bg = luaL_validtex( L, 6, GFX_PATH "portraits/" );
    else
       bg = NULL;
-
-   cur_mission = misn_getFromLua( L );
 
    /* Add npc. */
    id = npc_add_mission( cur_mission->id, func, name, priority, portrait, desc,

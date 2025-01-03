@@ -360,7 +360,8 @@ end
 -- Whether or not the pilot should try to attack an enemy.
 --]]
 function should_attack( enemy, si, aggressor )
-   if not enemy or not enemy:exists() then
+   local p = ai.pilot()
+   if not enemy or not enemy:exists() or not p:inrange(enemy) then
       return false
    end
 
@@ -380,7 +381,6 @@ function should_attack( enemy, si, aggressor )
    end
 
    -- Try to follow the leader behaviour
-   local p = ai.pilot()
    local l = p:leader()
    if l then
       local ltask, ldata = l:task()
@@ -429,7 +429,7 @@ end
 -- Whether or not the pilot should investigate a certain location.
 --]]
 function should_investigate( pos, si )
-   if si.fighting or si.forced or si.noattack then
+   if si.fighting or si.forced or si.noattack or mem.carried or mem.leader() then
       return false
    end
 
@@ -608,8 +608,9 @@ end
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
 function attacked_manual( attacker )
-   -- Ignore hits from dead pilots.
-   if not attacker:exists() then
+   local p = ai.pilot()
+   -- Ignore hits from dead or stealthed pilots.
+   if not attacker:exists() or not p:inrange( attacker ) then
       return
    end
 
@@ -617,7 +618,6 @@ function attacked_manual( attacker )
    local si = _stateinfo( task )
 
    -- Notify that pilot has been attacked before
-   local p = ai.pilot()
    if not mem.attacked then
       mem.attacked = true
       if ai.hasfighterbays() then
@@ -650,8 +650,9 @@ end
 
 -- Required "attacked" function
 function attacked( attacker )
+   local p = ai.pilot()
    -- Ignore hits from dead pilots.
-   if not attacker:exists() then
+   if not attacker:exists() or not p:inrange( attacker ) then
       return
    end
 
@@ -659,7 +660,6 @@ function attacked( attacker )
    local si = _stateinfo( task )
 
    -- Notify that pilot has been attacked before
-   local p = ai.pilot()
    if not mem.attacked then
       mem.attacked = true
       mem.found_illegal = false -- We clear here so the player can't attack and still bribe

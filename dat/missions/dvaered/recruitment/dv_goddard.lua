@@ -80,7 +80,7 @@ function create()
    mem.koalasys  = system.get("Arcturus") -- System of the Koala
    mem.koalosys  = system.get("Mural") -- Origin of the Koala
    mem.sharksys  = system.get("Zacron") -- System of the Shark
-   mem.sharosys  = system.get("Ogat") -- Origin of the Shark
+   mem.sharosys  = system.get("Raelid") -- Origin of the Shark
 
    if not misn.claim({mem.sharksys,mem.koalasys}) then misn.finish(false) end -- Claim
 
@@ -393,6 +393,7 @@ function spreadCommando()
    audio.soundPlay( "target" )
    player.msg("#o".._("Spacewalking commandos in sight.").."#0")
    player.autonavReset(5)
+   mem.koala:setHilight(false)
    mem.gathHook = hook.gather("gather")
 end
 

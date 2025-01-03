@@ -883,6 +883,8 @@ function render( dt, dt_mod )
       gfx.renderRect( x, y, width, height, col)
       gfx.renderTex( bgs.bar_weapon, x, y )
       gfx.print( true, _("Set formation"), x, y + 8, cols.txt_bar, width, true )
+   else
+      buttons["formation"] = nil
    end
 
    --Warning Light
@@ -1166,7 +1168,7 @@ function render( dt, dt_mod )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, cols.txt_std, 63, false )
-      gfx.print( true, nav_spob.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, nav_spob.col )
+      gfx.print( true, nav_spob.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, nav_spob.col, ta_pnt_pane_w-28 )
    end
 
    --Bottom bar

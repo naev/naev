@@ -3395,7 +3395,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
          array_push_back( &pilot->outfits, slot );
          /* We'll ignore non-required outfits if NO_OUTFITS is set. */
          if ( ( !pilot_isFlagRaw( flags, PILOT_NO_OUTFITS ) ||
-                slot->sslot->required ) &&
+                slot->sslot->required || slot->sslot->locked ) &&
               slot->sslot->data != NULL )
             pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
       }
@@ -3758,11 +3758,11 @@ Pilot *pilot_setPlayer( Pilot *after )
    player.p = after;
    pilot_clearTrails( after );
 
-   /* Reset pilot. */
-   pilot_reset( after );
-
    /* Initialize AI as necessary. */
    ai_pinit( after, "player" );
+
+   /* Reset pilot. */
+   pilot_reset( after );
 
    /* Set player flag. */
    pilot_setFlag( after, PILOT_PLAYER );

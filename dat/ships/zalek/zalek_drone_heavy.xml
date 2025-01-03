@@ -35,8 +35,8 @@
   <cpu>68</cpu>
  </characteristics>
  <slots>
-  <weapon size="small" x="15" y="-5" h="2">Orion Lance</weapon>
-  <weapon size="small" x="-12" y="6" h="0">Electron Burst Cannon</weapon>
+  <weapon prop="builtin" size="small" x="15" y="-5" h="2">Orion Lance</weapon>
+  <weapon prop="builtin" size="small" x="-12" y="6" h="0">Electron Burst Cannon</weapon>
   <utility size="small" />
   <utility size="small" />
   <structure size="small" />

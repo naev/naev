@@ -2,10 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Chapter 1">
  <unique />
- <location>enter</location>
+ <location>load</location>
  <chance>100</chance>
  <chapter>0</chapter>
- <priority>0</priority>
+ <priority>99</priority>
 </event>
 --]]
 --[[
@@ -36,14 +36,26 @@ local hypergate_list = {
 }
 
 function create ()
+   hook.enter( "enter" )
+end
+
+function enter ()
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.outfitNum("Heavy Combat Vessel License") > 0)
    local traded_total = var.peek("hypconst_traded_total") or 0
+
+   local explored = 0
+   for k,s in ipairs(system.getAll()) do
+      if s:known() then
+         explored = explored + 1
+      end
+   end
 
    -- Compute some sort of progress value
    local progress = traded_total / 2000 -- Would need 2000 ore delivered to trigger the change by this itself
          + #player.misnDoneList() / 40 -- Needs 40 missions to complete by itself
          + player.wealth() / 50e6 -- Needs 50 million by themselves to trigger event
+         + explored / 300 -- Needs 300 known systems
    -- Finally getting the heavy weapon or vessel license permission gives a large
    if has_license then
       progress = progress + 0.4
@@ -54,12 +66,14 @@ function create ()
       -- Make event happen when player is not in any system with a hypergate
       for k,v in ipairs(system.cur():spobs()) do
          if v:tags().hypergate then
-            evt.finish(false)
+            return false
          end
       end
 
       -- Make sure system isn't claimed, but we don't claim it
-      if not naev.claimTest( system.cur() ) then evt.finish(false) end
+      if not naev.claimTest( system.cur() ) then
+         return false
+      end
 
       -- Sort the hypergates by player standing
       table.sort( hypergate_list, function ( a, b )
@@ -74,7 +88,7 @@ function create ()
          table.insert( claimsys, h:system() )
       end
       if not evt.claim( claimsys ) then
-         evt.finish(false)
+         return false
       end
 
       hook.safe( "cutscene_start" )
@@ -87,8 +101,7 @@ function create ()
 
    end
 
-   -- Finish the event, until next time :)
-   evt.finish(false)
+   -- Until next time :)
 end
 
 local function setHide( state )

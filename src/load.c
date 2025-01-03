@@ -1344,6 +1344,14 @@ static int load_gameInternalHook( void *data )
    player_message( _( "#gWelcome to %s!" ), APPNAME );
    player_message( "#g v%s", naev_version( 0 ) );
 
+   /* We simulate landing, because it makes the player go over
+      available limits and closes an exploit where the player
+      can cheat the cargo limits by using outfits that increase
+      the limit, accept missions, and then reduce it under the
+      limit.
+      TODO do this in a less hack way. */
+   landed = 1;
+
    /* Now begin to load. */
    diff_load( node ); /* Must load first to work properly. */
    unidiff_universeDefer( 0 );
@@ -1384,6 +1392,9 @@ static int load_gameInternalHook( void *data )
 
    /* Create escorts in space. */
    player_addEscorts();
+
+   landed =
+      0; /* TODO remove this hack (causes crash and fails to land otherwise). */
 
    /* Load the GUI. */
    if ( gui_load( gui_pick() ) )
