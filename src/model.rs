@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
+use glow::HasContext;
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Vector3, Vector4};
 use std::rc::Rc;
@@ -214,9 +215,11 @@ impl Material {
 
 pub struct Primitive {
     uniform: PrimitiveUniform,
+    topology: u32,
     vertices: Buffer,
     indices: Buffer,
-    num_indices: u32,
+    num_indices: i32,
+    element_type: u32,
     material: Rc<Material>,
 }
 
@@ -291,7 +294,8 @@ impl Primitive {
             topology,
             vertices,
             indices,
-            num_indices: index_data.len() as u32,
+            element_type: glow::FLOAT,
+            num_indices: index_data.len() as i32,
             material,
         })
     }
@@ -306,7 +310,7 @@ impl Mesh {
         Mesh { primitives }
     }
 
-    pub fn render(&self, transform: &Matrix4<f32>, _ctx: &Context) {
+    pub fn render(&self, transform: &Matrix4<f32>, ctx: &Context) {
         #[rustfmt::skip]
         const OPENGL_TO_WGPU: Matrix4<f32> = Matrix4::new(
             1.0, 0.0, 0.0, 0.0,
@@ -327,6 +331,7 @@ impl Mesh {
                 0.0,    0.0,     0.0,   1.0 )
         };
 
+        let gl = &ctx.gl;
         for p in &self.primitives {
             let new_transform = VIEW * transform;
             let mut data = p.uniform;
@@ -355,6 +360,11 @@ impl Mesh {
             render_pass.set_index_buffer(p.indices.slice(..), wgpu::IndexFormat::Uint32);
             render_pass.draw_indexed(0..p.num_indices, 0, 0..1);
             */
+
+            unsafe {
+                gl.bind_buffer(glow::ARRAY_BUFFER, p.vertices);
+                gl.draw_elements(p.topology, p.num_indices, p.element_type, 0);
+            }
         }
     }
 }
@@ -438,7 +448,6 @@ pub fn load_gltf_texture(
     node: &gltf::texture::Texture,
     base: &std::path::Path,
 ) -> Result<Texture> {
-    let gl = &ctx.gl;
     let sampler = node.sampler();
     let mut tb = TextureBuilder::new();
 
