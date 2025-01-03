@@ -362,7 +362,9 @@ impl Mesh {
             */
 
             unsafe {
-                gl.bind_buffer(glow::ARRAY_BUFFER, p.vertices);
+                gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, Some(p.indices.buffer));
+                gl.bind_buffer(glow::ARRAY_BUFFER, Some(p.vertices.buffer));
+
                 gl.draw_elements(p.topology, p.num_indices, p.element_type, 0);
             }
         }

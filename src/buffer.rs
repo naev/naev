@@ -3,9 +3,10 @@ use anyhow::Result;
 use glow::*;
 
 use crate::ngl::{Context, CONTEXT};
+use crate::{formatx, gettext, warn};
 
 pub struct Buffer {
-    buffer: glow::Buffer,
+    pub buffer: glow::Buffer,
     datalen: usize, // in u8
     usage: BufferUsage,
 }
@@ -81,5 +82,84 @@ impl<'a> BufferBuilder<'a> {
             datalen: self.data.len(),
             usage: self.usage,
         })
+    }
+}
+
+pub struct VertexArray {
+    pub vertex_array: glow::VertexArray,
+}
+impl Drop for VertexArray {
+    fn drop(&mut self) {
+        let ctx = CONTEXT.get().unwrap();
+        unsafe {
+            ctx.gl.delete_vertex_array(self.vertex_array);
+        }
+    }
+}
+
+pub struct VertexArrayBuilder {
+    index: u32,
+    size: i32,      // in data_type units (1 to 4)
+    data_type: u32, // glow::FLOAT and such
+    normalized: bool,
+    stride: i32, // in bytes
+    offset: i32, //
+}
+impl VertexArrayBuilder {
+    pub fn new(self) -> Self {
+        VertexArrayBuilder {
+            index: 0,
+            size: 4,
+            data_type: glow::FLOAT,
+            normalized: false,
+            stride: 0,
+            offset: 0,
+        }
+    }
+
+    pub fn index(mut self, index: u32) -> Self {
+        self.index = index;
+        self
+    }
+
+    pub fn size(mut self, size: i32) -> Self {
+        self.size = size;
+        self
+    }
+
+    pub fn data_type(mut self, data_type: u32) -> Self {
+        self.data_type = data_type;
+        self
+    }
+
+    pub fn normalized(mut self, normalized: bool) -> Self {
+        self.normalized = normalized;
+        self
+    }
+
+    pub fn stride(mut self, stride: i32) -> Self {
+        self.stride = stride;
+        self
+    }
+
+    pub fn build(mut self, ctx: &Context) -> Result<VertexArray> {
+        let gl = &ctx.gl;
+        if self.size < 1 || self.size > 4 {
+            warn!("invalid VertexArray size");
+            self.size = self.size.clamp(1, 4);
+        }
+        let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
+        unsafe {
+            gl.vertex_attrib_pointer_f32(
+                self.index,
+                self.size,
+                self.data_type,
+                self.normalized,
+                self.stride,
+                self.offset,
+            );
+        }
+
+        Ok(VertexArray { vertex_array })
     }
 }
