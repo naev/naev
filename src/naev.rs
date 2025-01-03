@@ -18,7 +18,7 @@ mod env;
 mod gettext;
 mod linebreak;
 mod log;
-//mod model;
+mod model;
 mod ndata;
 mod ngl;
 mod nlua;

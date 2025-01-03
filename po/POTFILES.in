@@ -3766,6 +3766,7 @@ src/menu.h
 src/mission.c
 src/mission.h
 src/mission_markers.h
+src/model.rs
 src/msgcat.c
 src/msgcat.h
 src/music.c

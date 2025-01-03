@@ -142,7 +142,7 @@ impl ShaderSource {
     }
 }
 
-struct ShaderBuilder {
+pub struct ShaderBuilder {
     name: Option<String>,
     vert: ShaderSource,
     frag: ShaderSource,

@@ -18,8 +18,11 @@ sdl2 = { version = "0", features = ["image"] }
 rand = "0"
 glow = "0"
 rayon = "1"
-nalgebra = "0"
 image = "0"
+nalgebra = { version = "0", features = ["bytemuck"]  }
+gltf = { version = "1", features = ["extras", "names", "utils"] }
+bytemuck = { version = "1", features = ["derive"] }
+encase = { version = "0", features = ["nalgebra"] }
 # We support lua51 / luajit and they are ABI compatible, so just point at luajit
 mlua = { version = "0", features = ["luajit"] }
 
