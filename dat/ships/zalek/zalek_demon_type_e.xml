@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship inherits="Za'lek Demon" name="Za'lek Demon Class E">
+ <rarity>1</rarity>
+ <price>3800000</price>
+ <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 60</cond>
+ <condstr>You need at least 50% reputation with House Za'lek.</condstr>
+ <description>This variant of the Za'lek Demon is a departure from the usual Za'lek philosophy of making their drones do everything, and rather makes the missile launchers do everything instead. The idea is this ship hangs back behind escorts and some screening drones and bombards a target with powerful long-range torpedoes. This design philosophy required some re-wiring of the Demon's electronics, making it more effective at handling the lock-on algorithms required for long-range cruise missile usage. However, it also interfered badly with the usual drone command and control systems, reducing their effectiveness. The extra weapon slot and missile system storage also required removing more of the ship's shield emitters and already thin armor.</description>
+ <health>
+  <armour>300</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <slots>
+  <weapon size="large" x="28" y="0" h="5" />
+  <weapon size="large" x="18" y="0" h="5" />
+  <weapon size="medium" prop="fighter_bay"  x="0" y="0" h="5" />
+  <weapon size="medium" x="-30" y="-8" h="3" />
+  <weapon size="medium" x="-30" y="8" h="3" />
+  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines">Unicorp Falcon 1400 Engine</structure>
+  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <armour_mod>-40</armour_mod>
+  <shield_mod>30</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
+  <launch_lockon>-40</launch_lockon>
+  <launch_range>20</launch_range>
+  <fbay_movement>-10</fbay_movement>
+  <fbay_reload>-10</fbay_reload>
+ </stats>
+ <tags>
+  <tag>zalek</tag>
+ </tags>
+</ship>
