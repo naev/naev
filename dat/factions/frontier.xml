@@ -22,6 +22,10 @@
   <enemy>Raven Clan</enemy>
   <enemy>Black Lotus</enemy>
  </enemies>
+ <neutrals>
+  <neutral>FLF</neutral>
+  <neutral>Dvaered</neutral>
+ </neutrals>
  <lane_length_per_presence>400</lane_length_per_presence>
  <lane_base_cost>50</lane_base_cost>
  <tags>
