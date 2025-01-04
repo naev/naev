@@ -213,6 +213,8 @@ impl ShaderBuilder {
     }
 }
 
+use std::mem::ManuallyDrop;
+
 #[no_mangle]
 pub extern "C" fn gl_program_backend(
     cvert: *const c_char,
@@ -231,7 +233,9 @@ pub extern "C" fn gl_program_backend(
         sb = sb.prepend(prepend.to_str().unwrap());
     }
 
-    sb.build(ctx).unwrap().program.0.into()
+    let shader = ManuallyDrop::new(sb.build(ctx).unwrap());
+
+    shader.program.0.into()
 }
 
 #[no_mangle]
@@ -248,12 +252,13 @@ pub extern "C" fn gl_program_vert_frag_string(
     let fragdata =
         std::str::from_utf8(unsafe { std::slice::from_raw_parts(cfrag as *const u8, frag_size) })
             .unwrap();
-    ShaderBuilder::new(None)
-        .vert_data(vertdata)
-        .frag_data(fragdata)
-        .build(ctx)
-        .unwrap()
-        .program
-        .0
-        .into()
+    let shader = ManuallyDrop::new(
+        ShaderBuilder::new(None)
+            .vert_data(vertdata)
+            .frag_data(fragdata)
+            .build(ctx)
+            .unwrap(),
+    );
+
+    shader.program.0.into()
 }
