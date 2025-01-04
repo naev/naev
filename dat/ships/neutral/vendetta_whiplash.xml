@@ -2,7 +2,7 @@
 <ship name="Vendetta Whiplash" inherits="Vendetta">
  <rarity>1</rarity>
  <price>550000</price>
- <description>This Vendetta's weapon mounts look to have been hastily modded to allow for much faster reloading to the point the ship's outdated internal systems could struggle to keep up in combat. </description>
+ <description>This Vendetta's weapon mounts look to have been hastily modded to allow for much faster reloading to the point the ship's outdated internal systems could struggle to keep up in combat.</description>
  <stats>
   <speed_mod>-10</speed_mod>
   <armour_mod>15</armour_mod>
