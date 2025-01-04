@@ -106,6 +106,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/thurion/thurion_taciturnity.xml',
    root / 'dat/ships/thurion/thurion_virtuosity.xml',
    root / 'dat/ships/zalek/zalek_demon.xml',
+   root / 'dat/ships/zalek/zalek_demon_type_iv.xml',
    root / 'dat/ships/zalek/zalek_diablo.xml',
    root / 'dat/ships/zalek/zalek_drone_bomber.xml',
    root / 'dat/ships/zalek/zalek_drone_heavy.xml',
