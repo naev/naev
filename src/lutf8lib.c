@@ -1,4 +1,8 @@
 // clang-format off
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#pragma GCC diagnostic ignored "-Wsign-compare"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 /*
  * From: https://github.com/starwing/luautf8/releases/tag/0.1.6
 
@@ -2247,4 +2251,4 @@ LUALIB_API int luaopen_utf8 (lua_State *L) {
  * win32cc: run='lua.exe test.lua'
  * maccc: run='lua -- test_compat.lua'
  * maccc: flags+='-g --coverage -bundle -undefined dynamic_lookup' output='lua-utf8.so' */
-
+#pragma GCC diagnostic pop
