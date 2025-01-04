@@ -18,6 +18,7 @@
    * Added the Admonisher ΩIIa for sale
    * Fixed mass being displayed twice for outfits
    * Modified condition of many neutral missions so they don't appear in the wrong places
+   * FLF should not cause reputation chains making other factions hostile
    * Fixed the ship_buy hook refering to the ship sold when trading ships
    * Don't remove builtin weapons when spawning pilots naked
    * lovebiz01: fixed condition allowing it to appear anywhere
