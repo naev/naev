@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Vendetta Whiplash">
+ <points>50</points>
+ <base_type>Vendetta</base_type>
+ <gfx size="49">vendetta</gfx>
+  <rarity>1</rarity>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>550000</price>
+ <time_mod>0.9</time_mod>
+ <trail_generator x="3" y="18" h="0">nebula</trail_generator>
+ <trail_generator x="3" y="-18" h="0">nebula</trail_generator>
+ <trail_generator x="-5" y="4" h="0" always_under="1">fire</trail_generator>
+ <trail_generator x="-5" y="-4" h="0" always_under="1">fire</trail_generator>
+ <fabricator>House Dvaered</fabricator>
+ <faction>Independent</faction>
+ <license>Light Combat Vessel</license>
+ <description>This Vendetta's weapon mounts look to have been hastily modded to allow for much faster reloading to the point the ship's outdated internal systems could struggle to keep up in combat. </description>
+ <health>
+  <armour>100</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>4</crew>
+  <mass>140</mass>
+  <fuel_consumption>100</fuel_consumption>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="16" y="-9" h="0" />
+  <weapon size="small" x="16" y="9" h="0" />
+  <weapon size="small" x="13" y="-13" h="0" />
+  <weapon size="small" x="13" y="13" h="0" />
+  <weapon size="small" x="19" y="0" h="-2" />
+  <weapon size="small" x="3" y="0" h="2" />
+  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
+  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <speed_mod>-10</speed_mod>
+  <armour_mod>15</armour_mod>
+  <energy_mod>10</energy_mod>
+  <energy_regen_mod>-25</energy_regen_mod>
+  <cpu_mod>-25</cpu_mod>
+  <fwd_firerate>40</fwd_firerate>
+ </stats>
+</ship>

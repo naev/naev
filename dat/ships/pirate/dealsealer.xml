@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Dealsealer">
+ <points>200</points>
+ <base_type>Dealbreaker</base_type>
+ <gfx size="130">dealbreaker</gfx>
+ <rarity>3</rarity>
+ <sound>engine</sound>
+ <class>Battleship</class>
+ <price>16000000</price>
+ <time_mod>1.4</time_mod>
+ <fabricator>Skull and Bones</fabricator>
+ <faction>Black Lotus</faction>
+ <description>Few people meet a Dealbreaker and survive to tell the tale. Fewer meet a Dealsealer at all. This elusive ship is even more monstrous than the original, trading some of its agility for extra firepower.</description>
+ <health>
+  <armour>1800</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>61</crew>
+  <mass>2300</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>160</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" />
+  <weapon size="large" />
+  <weapon size="large" prop="fighter_bay" />
+  <weapon size="large" prop="fighter_bay" />
+  <weapon size="large" />
+  <weapon size="large" />
+  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
+  <utility size="large" prop="accessory" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+ </slots>
+ <stats>
+  <speed_mod>5</speed_mod>
+  <accel_mod>5</accel_mod>
+  <fwd_damage>10</fwd_damage>
+  <tur_damage>10</tur_damage>
+  <ammo_capacity>25</ammo_capacity>
+  <fbay_capacity>25</fbay_capacity>
+  <ew_hide>-10</ew_hide>
+ </stats>
+</ship>

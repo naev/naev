@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Fuel Hull Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <rarity>6</rarity>
+  <unique />
+  <slot prop="hull">structure</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>48</mass>
+  <price>600000</price>
+  <description>This rather experimental hull plating is designed to help expand the ship's fuel capacity, at the expense of pretty much any worth in combat.</description>
+  <desc_extra>#pDrains fuel on armor damage.#0</desc_extra>
+  <gfx_store>cargo_hull_m.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/fuel_hull_plating.lua</lua>
+  <cargo>4</cargo>
+  <absorb>0</absorb>
+  <armour>20</armour>
+  <fuel_mod>35</fuel_mod>
+ </specific>
+</outfit>
