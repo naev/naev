@@ -1054,7 +1054,7 @@ function distress_handler( pilot, attacker )
       -- as the aggressor and try to kill them. For now, we limit this
       -- behaviour to natural pilots.  detect that.
       local p_m = pilot:memory()
-      if p_m.natural and (not p_m.aggressive or attacker:withPlayer()) then
+      if p_m.natural and not aifact:areNeutral(pfact) and (not p_m.aggressive or attacker:withPlayer()) then
          badguy = attacker
       end
    end
