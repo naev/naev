@@ -1684,8 +1684,9 @@ static int faction_parse( Faction *temp, const char *file )
 #if DEBUGGING
       /* Avoid warnings. */
       if ( xml_isNode( node, "allies" ) || xml_isNode( node, "enemies" ) ||
-           xml_isNode( node, "generator" ) || xml_isNode( node, "standing" ) ||
-           xml_isNode( node, "spawn" ) || xml_isNode( node, "equip" ) )
+           xml_isNode( node, "neutrals" ) || xml_isNode( node, "generator" ) ||
+           xml_isNode( node, "standing" ) || xml_isNode( node, "spawn" ) ||
+           xml_isNode( node, "equip" ) )
          continue;
       WARN( _( "Unknown node '%s' in faction '%s'" ), node->name, temp->name );
 #endif /* DEBUGGING */
@@ -1783,8 +1784,9 @@ static int faction_parseSocial( const char *file )
    assert( base != NULL );
 
    /* Create arrays, not much memory so it doesn't really matter. */
-   base->allies  = array_create( int );
-   base->enemies = array_create( int );
+   base->allies   = array_create( int );
+   base->enemies  = array_create( int );
+   base->neutrals = array_create( int );
 
    /* Parse social stuff. */
    node = parent->xmlChildrenNode;
@@ -2172,6 +2174,7 @@ static void faction_freeOne( Faction *f )
    gl_freeTexture( f->logo );
    array_free( f->allies );
    array_free( f->enemies );
+   array_free( f->neutrals );
    nlua_freeEnv( f->sched_env );
    nlua_freeEnv( f->lua_env );
    if ( !faction_isFlag( f, FACTION_DYNAMIC ) )
