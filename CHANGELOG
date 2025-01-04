@@ -8,6 +8,7 @@
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
+      * Action speed can no longer be negative and disables space worthiness
 
 * 0.12.2 (unreleased)
    * Made plasma drill much easier to apply to asteroids
