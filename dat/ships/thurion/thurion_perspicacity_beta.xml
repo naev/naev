@@ -2,7 +2,7 @@
 <ship name="Thurion Perspicacity Beta" inherits="Thurion Perspicacity">
  <points>25</points>
  <gfx size="45">perspicacity</gfx>
- <rarity>4</rarity>
+ <rarity>5</rarity>
  <class>Scout</class>
  <price>450000</price>
  <time_mod>0.8</time_mod>

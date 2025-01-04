@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Vendetta Whiplash" inherits="Vendetta">
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <price>550000</price>
  <description>This Vendetta's weapon mounts look to have been hastily modded to allow for much faster reloading to the point the ship's outdated internal systems could struggle to keep up in combat.</description>
  <stats>
