@@ -47,6 +47,13 @@
 #define faction_isFlag( fa, f ) ( ( fa )->flags & ( f ) )
 #define faction_isKnown_( fa ) ( ( fa )->flags & ( FACTION_KNOWN ) )
 
+typedef enum FactionGrid {
+   GRID_NONE = 0,
+   GRID_ENEMIES,
+   GRID_ALLIES,
+   GRID_NEUTRAL,
+} FactionGrid;
+
 int faction_player; /**< Player faction identifier. */
 
 /**
@@ -77,6 +84,9 @@ typedef struct Faction_ {
 
    /* Allies */
    int *allies; /**< Allies by ID of the faction. */
+
+   /* True neutrals. */
+   int *neutrals; /**< Allies by ID of the faction. */
 
    /* Player information. */
    double player_def; /**< Default player standing. */
@@ -1406,6 +1416,34 @@ double faction_reputationMax( int f )
 }
 
 /**
+ * @brief Checks whether two factions are true neutral.
+ *
+ * The player isn't true neutral with anyone.
+ *
+ *    @param a Faction A.
+ *    @param b Faction B.
+ *    @return 1 if A and B are true neutral, 0 otherwise.
+ */
+int areNeutral( int a, int b )
+{
+   /* luckily our factions aren't masochistic */
+   if ( a == b )
+      return 0;
+
+   /* Make sure they're valid. */
+   if ( !faction_isFaction( a ) || !faction_isFaction( b ) )
+      return 0;
+
+   /* player handled separately */
+   if ( a == FACTION_PLAYER )
+      return 0;
+   else if ( b == FACTION_PLAYER )
+      return 0;
+
+   return faction_grid[a * faction_mgrid + b] == GRID_NEUTRAL;
+}
+
+/**
  * @brief Checks whether two factions are enemies.
  *
  *    @param a Faction A.
@@ -1428,7 +1466,7 @@ int areEnemies( int a, int b )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerEnemy( a );
 
-   return faction_grid[a * faction_mgrid + b] < 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ENEMIES;
 }
 
 /**
@@ -1454,7 +1492,7 @@ int areAllies( int a, int b )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerFriend( a );
 
-   return faction_grid[a * faction_mgrid + b] > 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ALLIES;
 }
 
 int areEnemiesSystem( int a, int b, const StarSystem *sys )
@@ -1473,7 +1511,7 @@ int areEnemiesSystem( int a, int b, const StarSystem *sys )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerEnemySystem( a, sys );
 
-   return faction_grid[a * faction_mgrid + b] < 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ENEMIES;
 }
 
 int areAlliesSystem( int a, int b, const StarSystem *sys )
@@ -1492,7 +1530,7 @@ int areAlliesSystem( int a, int b, const StarSystem *sys )
    else if ( b == FACTION_PLAYER )
       return faction_isPlayerFriendSystem( a, sys );
 
-   return faction_grid[a * faction_mgrid + b] > 0;
+   return faction_grid[a * faction_mgrid + b] == GRID_ALLIES;
 }
 
 /**
@@ -1646,8 +1684,9 @@ static int faction_parse( Faction *temp, const char *file )
 #if DEBUGGING
       /* Avoid warnings. */
       if ( xml_isNode( node, "allies" ) || xml_isNode( node, "enemies" ) ||
-           xml_isNode( node, "generator" ) || xml_isNode( node, "standing" ) ||
-           xml_isNode( node, "spawn" ) || xml_isNode( node, "equip" ) )
+           xml_isNode( node, "neutrals" ) || xml_isNode( node, "generator" ) ||
+           xml_isNode( node, "standing" ) || xml_isNode( node, "spawn" ) ||
+           xml_isNode( node, "equip" ) )
          continue;
       WARN( _( "Unknown node '%s' in faction '%s'" ), node->name, temp->name );
 #endif /* DEBUGGING */
@@ -1745,8 +1784,9 @@ static int faction_parseSocial( const char *file )
    assert( base != NULL );
 
    /* Create arrays, not much memory so it doesn't really matter. */
-   base->allies  = array_create( int );
-   base->enemies = array_create( int );
+   base->allies   = array_create( int );
+   base->enemies  = array_create( int );
+   base->neutrals = array_create( int );
 
    /* Parse social stuff. */
    node = parent->xmlChildrenNode;
@@ -1782,7 +1822,7 @@ static int faction_parseSocial( const char *file )
          continue;
       }
 
-      /* Grab the enemies */
+      /* Grab the enemies. */
       if ( xml_isNode( node, "enemies" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
@@ -1791,6 +1831,20 @@ static int faction_parseSocial( const char *file )
                int fct = faction_get( xml_get( cur ) );
                if ( faction_isFaction( fct ) )
                   array_push_back( &base->enemies, fct );
+            }
+         } while ( xml_nextNode( cur ) );
+         continue;
+      }
+
+      /* Grab the true neutral. */
+      if ( xml_isNode( node, "neutrals" ) ) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "neutral" ) ) {
+               int fct = faction_get( xml_get( cur ) );
+               if ( faction_isFaction( fct ) )
+                  array_push_back( &base->neutrals, fct );
             }
          } while ( xml_nextNode( cur ) );
          continue;
@@ -2120,6 +2174,7 @@ static void faction_freeOne( Faction *f )
    gl_freeTexture( f->logo );
    array_free( f->allies );
    array_free( f->enemies );
+   array_free( f->neutrals );
    nlua_freeEnv( f->sched_env );
    nlua_freeEnv( f->lua_env );
    if ( !faction_isFlag( f, FACTION_DYNAMIC ) )
@@ -2410,26 +2465,47 @@ static void faction_computeGrid( void )
       for ( int k = 0; k < array_size( fa->allies ); k++ ) {
          int j = fa->allies[k];
 #if DEBUGGING
-         if ( ( faction_grid[i * n + j] < 0 ) ||
-              ( faction_grid[j * n + i] ) < 0 )
-            WARN( "Incoherent faction grid! '%s' and '%s' are already enemies, "
+         int fij = faction_grid[i * n + j];
+         int fji = faction_grid[j * n + i];
+         if ( ( fij != GRID_ALLIES && fij != GRID_NONE ) ||
+              ( fji != GRID_ALLIES && fji != GRID_NONE ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' already have a "
+                  "relationship, "
                   "but trying to set to allies!",
                   faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
-         faction_grid[i * n + j] = 1;
-         faction_grid[j * n + i] = 1;
+         faction_grid[i * n + j] = GRID_ALLIES;
+         faction_grid[j * n + i] = GRID_ALLIES;
       }
       for ( int k = 0; k < array_size( fa->enemies ); k++ ) {
          int j = fa->enemies[k];
 #if DEBUGGING
-         if ( ( faction_grid[i * n + j] > 0 ) ||
-              ( faction_grid[j * n + i] > 0 ) )
-            WARN( "Incoherent faction grid! '%s' and '%s' are already allies, "
+         int fij = faction_grid[i * n + j];
+         int fji = faction_grid[j * n + i];
+         if ( ( fij != GRID_ENEMIES && fij != GRID_NONE ) ||
+              ( fji != GRID_ENEMIES && fji != GRID_NONE ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' already have a "
+                  "relationship, "
                   "but trying to set to enemies!",
                   faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
-         faction_grid[i * n + j] = -1;
-         faction_grid[j * n + i] = -1;
+         faction_grid[i * n + j] = GRID_ENEMIES;
+         faction_grid[j * n + i] = GRID_ENEMIES;
+      }
+      for ( int k = 0; k < array_size( fa->neutrals ); k++ ) {
+         int j = fa->neutrals[k];
+#if DEBUGGING
+         int fij = faction_grid[i * n + j];
+         int fji = faction_grid[j * n + i];
+         if ( ( fij != GRID_NEUTRAL && fij != GRID_NONE ) ||
+              ( fji != GRID_NEUTRAL && fji != GRID_NONE ) )
+            WARN( "Incoherent faction grid! '%s' and '%s' already have a "
+                  "relationship, "
+                  "but trying to set to neutrals!",
+                  faction_stack[i].name, faction_stack[j].name );
+#endif /* DEBUGGING */
+         faction_grid[i * n + j] = GRID_NEUTRAL;
+         faction_grid[j * n + i] = GRID_NEUTRAL;
       }
    }
 }

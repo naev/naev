@@ -90,6 +90,7 @@ void faction_updateGlobal( void );
 
 /* Works with only factions */
 int areEnemies( int a, int b );
+int areNeutral( int a, int b );
 int areAllies( int a, int b );
 int areEnemiesSystem( int a, int b, const StarSystem *sys );
 int areAlliesSystem( int a, int b, const StarSystem *sys );
