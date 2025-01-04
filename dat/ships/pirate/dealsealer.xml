@@ -1,15 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Dealsealer">
- <points>200</points>
- <base_type>Dealbreaker</base_type>
+<ship name="Dealsealer" inherits="Dealbreaker">
  <gfx size="130">dealbreaker</gfx>
  <rarity>3</rarity>
- <sound>engine</sound>
- <class>Battleship</class>
  <price>16000000</price>
- <time_mod>1.4</time_mod>
- <fabricator>Skull and Bones</fabricator>
- <faction>Black Lotus</faction>
  <description>Few people meet a Dealbreaker and survive to tell the tale. Fewer meet a Dealsealer at all. This elusive ship is even more monstrous than the original, trading some of its agility for extra firepower.</description>
  <health>
   <armour>1800</armour>

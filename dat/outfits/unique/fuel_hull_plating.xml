@@ -9,7 +9,7 @@
   <priority>3</priority>
   <mass>48</mass>
   <price>600000</price>
-  <description>This rather experimental hull plating is designed to help expand the ship's fuel capacity, at the expense of any worth in combat.</description>
+  <description>This rather experimental hull plating is designed to help expand the ship's fuel capacity, at the expense of pretty much any worth in combat.</description>
   <desc_extra>#pDrains fuel on armor damage.#0</desc_extra>
   <gfx_store>cargo_hull_m.webp</gfx_store>
  </general>

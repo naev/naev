@@ -1,29 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Thurion Perspicacity Beta">
- <lua>thurion.lua</lua>
+<ship name="Thurion Perspicacity Beta" inherits="Thurion Perspicacity">
  <points>25</points>
- <base_type>Perspicacity</base_type>
  <gfx size="45">perspicacity</gfx>
  <rarity>4</rarity>
- <sound>engine</sound>
  <class>Scout</class>
  <price>450000</price>
  <time_mod>0.8</time_mod>
- <trail_generator x="-8" y="0" h="0">thurion</trail_generator>
- <trail_generator x="-5" y="0" h="0">nebula</trail_generator>
- <trail_generator x="-5" y="-8" h="3">nebula</trail_generator>
- <trail_generator x="-5" y="0" h="15">nebula</trail_generator>
- <trail_generator x="-5" y="8" h="3">nebula</trail_generator>
- <trail_generator x="-5" y="0" h="-15">nebula</trail_generator>
- <fabricator>Thurion Shipyards</fabricator>
- <faction>Thurion</faction>
  <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 25</cond>
  <condstr>You need at least 25% reputation with the Thurion.</condstr>
  <description>This model of the Thurion Perspicacity is even further stripped down, resulting in a much lighter and faster Scout-class spacecraft albeit one less capable in most other areas.</description>
- <health>
-  <armour>50</armour>
-  <armour_regen>0</armour_regen>
- </health>
  <characteristics>
   <crew>1</crew>
   <mass>20</mass>
