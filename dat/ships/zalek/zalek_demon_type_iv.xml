@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship inherits="Za'lek Demon" name="Za'lek Demon Class E">
- <rarity>1</rarity>
+<ship inherits="Za'lek Demon" name="Za'lek Demon Type IV">
+ <rarity>3</rarity>
  <price>3800000</price>
  <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 60</cond>
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>
@@ -38,7 +38,4 @@
   <fbay_movement>-10</fbay_movement>
   <fbay_reload>-10</fbay_reload>
  </stats>
- <tags>
-  <tag>zalek</tag>
- </tags>
 </ship>

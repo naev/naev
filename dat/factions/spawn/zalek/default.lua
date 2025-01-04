@@ -5,7 +5,6 @@ local var = require "shipvariants"
 local sdronelight = ship.get("Za'lek Light Drone")
 local sdronebomber= ship.get("Za'lek Bomber Drone")
 local sdroneheavy = ship.get("Za'lek Heavy Drone")
-local sdemon      = ship.get("Za'lek Demon")
 local sdiablo     = ship.get("Za'lek Diablo")
 local smammon     = ship.get("Za'lek Mammon")
 
@@ -27,7 +26,7 @@ local function spawn_squad ()
    local pilots = scom.doTable( { __doscans=(rnd.rnd() < 0.5) }, {
       { w=0.5, var.zalek_sting },
       { w=0.8, var.zalek_sting, sdroneheavy, sdroneheavy },
-      { sdemon },
+      { var.zalek_demon },
    } )
    return spawn_patrol( pilots ) -- MOAR DRONES
 end
@@ -45,7 +44,7 @@ local function spawn_capship ()
    return scom.doTable( pilots, {
       { w=0.5, sdroneheavy, sdroneheavy, sdronebomber, sdronelight, sdronelight, sdronelight },
       { w=0.8, var.zalek_sting, sdronebomber, sdronebomber },
-      { sdemon, sdroneheavy, sdronebomber, sdronelight, sdronelight },
+      { var.zalek_demon, sdroneheavy, sdronebomber, sdronelight, sdronelight },
    } )
 end
 

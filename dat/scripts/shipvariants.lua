@@ -87,6 +87,10 @@ var.starbridge = _v{
    { w=1,    s=ship.get("Starbridge") },
    { w=0.05, s=ship.get("Starbridge Sigma") },
 }
+var.zalek_demon = _v{
+   { w=1,    s=ship.get("Za'lek Demon") },
+   { w=0.05, s=ship.get("Za'lek Demon Type IV") },
+}
 -- Cruiser
 var.kestrel = _v{
    { w=1,    s=ship.get("Kestrel") },
