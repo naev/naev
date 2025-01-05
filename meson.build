@@ -16,7 +16,7 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow'])
+c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow', '-fno-signed-zeros'])
 add_project_arguments(c_args, language: 'c')
 
 # Filesystem module for copying files
