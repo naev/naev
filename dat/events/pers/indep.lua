@@ -10,8 +10,8 @@ return function ()
    local pers = {
       {
          spawn = function ()
-            local p = pilot.add("Mule", "Trader", nil, _("Trader Drake"), {naked=true, ai="pers"})
-            local c = equipopt.cores.get( p, { class="Destroyer", all="elite" } )
+            local p = pilot.add("Goddard Merchantman", "Trader", nil, _("Trader Drake"), {naked=true, ai="pers"})
+            local c = equipopt.cores.get( p, { all="elite" } )
             equipopt.zalek( p, {cores=c, fighterbay=20} )
             p:cargoAdd( "Nebula Crystals", p:cargoFree() )
             local m = p:memory()
@@ -79,7 +79,7 @@ return function ()
          end
       }, {
          spawn = function ()
-            local p = pilot.add("Za'lek Sting", "Independent", nil, _("Bee"), {naked=true, ai="pers"})
+            local p = pilot.add("Za'lek Sting Type II", "Independent", nil, _("Bee"), {naked=true, ai="pers"})
             p:intrinsicSet( "shield_mod", 50 )
             p:intrinsicSet( "fbay_capacity", 50 )
             p:intrinsicSet( "fbay_reload", 100 )

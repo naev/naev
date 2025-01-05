@@ -1,6 +1,7 @@
 * 0.13.0 (unreleased)
    * Content
       * 1 new mission
+      * 3 new variants
    * Engine
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent

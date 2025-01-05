@@ -34,6 +34,7 @@ var.llama = _v{
 }
 var.gawain = _v{
    { w=1,    s=ship.get("Gawain") },
+   { w=0.05,    s=ship.get("Gawain XY-37") },
 }
 -- Courier
 var.koala = _v{
@@ -97,6 +98,9 @@ var.kestrel = _v{
    { w=0.05, s=ship.get("Kestrel Sigma") },
 }
 -- Battleship
+var.goddard = _v{
+   { w=1,    s=ship.get("Goddard") },
+}
 var.zalek_mephisto = _v{
    { w=1,    s=ship.get("Za'lek Mephisto") },
    { w=0.05, s=ship.get("Za'lek Mephisto Type V") },

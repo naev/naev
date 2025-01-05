@@ -543,7 +543,9 @@ dat/ships/neutral/ancestor.xml
 dat/ships/neutral/ancestor_hg_eagleeye.xml
 dat/ships/neutral/bedivere.xml
 dat/ships/neutral/gawain.xml
+dat/ships/neutral/gawain_xy37.xml
 dat/ships/neutral/goddard.xml
+dat/ships/neutral/goddard_merchant.xml
 dat/ships/neutral/hawking.xml
 dat/ships/neutral/hyena.xml
 dat/ships/neutral/kestrel.xml
@@ -2712,6 +2714,7 @@ dat/unidiff/hypergates_1.xml
 dat/unidiff/hypergates_2.xml
 dat/unidiff/hypergates_3.xml
 dat/unidiff/levo_safe.xml
+dat/unidiff/melendez_dome_xy37.xml
 dat/unidiff/minerva_1.xml
 dat/unidiff/minerva_2.xml
 dat/unidiff/minerva_3.xml
@@ -3551,6 +3554,7 @@ dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
+dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua

@@ -11,7 +11,6 @@ local svigilance  = ship.get("Vigilance")
 local sbedivere   = ship.get("Bedivere")
 local spacifier   = ship.get("Pacifier") -- codespell:ignore spacifier
 local shawking    = ship.get("Hawking")
-local sgoddard    = ship.get("Goddard")
 
 local frontier
 
@@ -87,7 +86,7 @@ local function spawn_bounty_hunter_lrg ()
    return spawn_bounty_hunter{
       var.kestrel,
       shawking,
-      sgoddard,
+      var.goddard,
    }
 end
 
