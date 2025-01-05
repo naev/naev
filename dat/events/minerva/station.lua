@@ -388,7 +388,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          if ti[2][2]=="outfit" then
             player.outfitAdd( ti[1] )
          elseif ti[2][2]=="ship" then
-            player.shipAdd( ti[1] )
+            player.shipAdd( ti[1], nil, fmt.f(_("Gambled for at {pnt} in the {sys} system."), {pnt=spob.cur(), sys=system.cur()} ) )
          else
             error(_("unknown tradein type"))
          end
