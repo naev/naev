@@ -1,6 +1,6 @@
 local scom = require "factions.spawn.lib.common"
+local var = require "shipvariants"
 
-local sshark      = ship.get("Pirate Shark")
 local svendetta   = ship.get("Pirate Vendetta")
 local sancestor   = ship.get("Pirate Ancestor")
 local sphalanx    = ship.get("Pirate Phalanx")
@@ -16,9 +16,9 @@ local table_capship = {
    { w=0.3, skestrel },
    { w=0.5, skestrel, sadmonisher, svendetta, svendetta },
    { w=0.7, szebra, sphalanx, sancestor },
-   { w=0.8, skestrel, sphalanx, svendetta, sancestor, sshark },
-   { w=0.9, skestrel, srhino, sadmonisher, svendetta, sancestor, sshark },
-   { szebra, sadmonisher, svendetta, sancestor, sshark },
+   { w=0.8, skestrel, sphalanx, svendetta, sancestor, var.pirate_shark },
+   { w=0.9, skestrel, srhino, sadmonisher, svendetta, sancestor, var.pirate_shark },
+   { szebra, sadmonisher, svendetta, sancestor, var.pirate_shark },
 }
 
 -- @brief Spawns a capship with escorts.

@@ -391,6 +391,7 @@ dat/outfits/structure/medium_fuel_pod.xml
 dat/outfits/structure/medium_shield_booster.xml
 dat/outfits/structure/microbond_plating.xml
 dat/outfits/structure/nanobond_plating.xml
+dat/outfits/structure/nanofiber_structures.xml
 dat/outfits/structure/nebular_shielding_prototype.xml
 dat/outfits/structure/plasteel_plating.xml
 dat/outfits/structure/reactor_class_i.xml
@@ -408,6 +409,7 @@ dat/outfits/unique/daphnes_leap.xml
 dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
+dat/outfits/unique/fuelshell_plating.xml
 dat/outfits/unique/hades_torch.xml
 dat/outfits/unique/homebrew_processing_unit.xml
 dat/outfits/unique/pulse_scanner.xml
@@ -570,11 +572,13 @@ dat/ships/neutral/starbridge.xml
 dat/ships/neutral/starbridge_sigma.xml
 dat/ships/neutral/tristan.xml
 dat/ships/neutral/vendetta.xml
+dat/ships/neutral/vendetta_whiplash.xml
 dat/ships/neutral/vigilance.xml
 dat/ships/neutral/zebra.xml
 dat/ships/pirate/dealbreaker.xml
 dat/ships/pirate/pirate_admonisher.xml
 dat/ships/pirate/pirate_ancestor.xml
+dat/ships/pirate/pirate_blue_shark.xml
 dat/ships/pirate/pirate_hyena.xml
 dat/ships/pirate/pirate_kestrel.xml
 dat/ships/pirate/pirate_kestrel_yuris_kiss.xml
@@ -614,6 +618,7 @@ dat/ships/thurion/thurion_apprehension.xml
 dat/ships/thurion/thurion_certitude.xml
 dat/ships/thurion/thurion_ingenuity.xml
 dat/ships/thurion/thurion_perspicacity.xml
+dat/ships/thurion/thurion_perspicacity_beta.xml
 dat/ships/thurion/thurion_scintillation.xml
 dat/ships/thurion/thurion_taciturnity.xml
 dat/ships/thurion/thurion_virtuosity.xml
@@ -3336,6 +3341,7 @@ dat/outfits/unique/bioship_pheromone_emitter.lua
 dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
+dat/outfits/unique/fuelshell_plating.lua
 dat/outfits/unique/poi_data.lua
 dat/outfits/unique/pulse_scanner.lua
 dat/outfits/unique/squadron_synchronizer_module.lua

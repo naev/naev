@@ -305,7 +305,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
       {"Railgun", {1000, "outfit"}},
       {"Grave Lance", {1200, "outfit"}},
       {"Fuzzy Dice", {5000, "outfit"}},
-      {"Admonisher", {7000, "ship"}},
+      {"Vendetta Whiplash", {7000, "ship"}},
    }
    local tradein_item = nil
    local handler = function (idx)
