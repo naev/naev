@@ -172,13 +172,39 @@ int pilot_shipLExplodeUpdate( Pilot *p, double dt )
       return 0;
    oldmem = pilot_shipLmem( p );
 
-   /* Set up the function: explode_update( p ) */
+   /* Set up the function: explode_update( p, dt ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_explode_update ); /* f */
    lua_pushpilot( naevL, p->id );                /* f, p */
    lua_pushnumber( naevL, dt );                  /* f, p, dt */
    if ( nlua_pcall( p->ship->lua_env, 2, 0 ) ) { /* */
       shipLRunWarning( p, p->ship, "explode_update",
                        lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      pilot_shipLunmem( p, oldmem );
+      return -1;
+   }
+   pilot_shipLunmem( p, oldmem );
+   return 0;
+}
+
+/**
+ * @brief Runs the hook Updates the pilot onshootany Lua stuff.
+ *
+ *    @param p Pilot to set up memory for.
+ *    @return 0 on success.
+ */
+int pilot_shipLOnshootany( Pilot *p )
+{
+   int oldmem;
+   if ( p->ship->lua_onshootany == LUA_NOREF )
+      return 0;
+   oldmem = pilot_shipLmem( p );
+
+   /* Set up the function: onshootany( p ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_onshootany ); /* f */
+   lua_pushpilot( naevL, p->id );                                    /* f, p */
+   if ( nlua_pcall( p->ship->lua_env, 1, 0 ) ) {                     /* */
+      shipLRunWarning( p, p->ship, "onshootany", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       pilot_shipLunmem( p, oldmem );
       return -1;
