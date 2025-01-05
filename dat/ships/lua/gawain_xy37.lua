@@ -6,7 +6,8 @@ end
 
 function update( p, _dt )
    local s = p:shield()
-   local bonus = (1-s) * 50
+   local bonus = (100-s) * 0.5
+   print( s, bonus, mem.last )
    local last = mem.last or 1
    if last ~= s then
       p:shippropSet{ -- Should overwrit
