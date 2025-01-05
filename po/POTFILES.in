@@ -2560,7 +2560,9 @@ dat/tech/crappy_core_systems.xml
 dat/tech/criminal_outfits.xml
 dat/tech/dvaered_elite_outfits.xml
 dat/tech/dvaered_military_outfits.xml
-dat/tech/dvaered_military_ships.xml
+dat/tech/dvaered_ships_large.xml
+dat/tech/dvaered_ships_medium.xml
+dat/tech/dvaered_ships_small.xml
 dat/tech/empire_elite_outfits.xml
 dat/tech/empire_military_outfits.xml
 dat/tech/empire_ships_large.xml
