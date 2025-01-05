@@ -4,6 +4,7 @@
       * 6 new variants
       * 2 new outfits
    * Engine
+      * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
    * Fixes

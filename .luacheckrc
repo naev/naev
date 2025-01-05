@@ -237,6 +237,7 @@ stds.API_pilotship = {globals={
    "update",
    "explode_init",
    "explode_update",
+   "onshootany",
    "mem", -- Automatically created using nlua_setenv().
 }}
 stds.API_mem = {globals={
