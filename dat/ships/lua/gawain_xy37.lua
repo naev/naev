@@ -1,7 +1,7 @@
 local fmt = require "format"
 
 function descextra( _p, _s )
-   return fmt.f(_("Gains action speed and lowers time constant the lower shields are, to a maximum of a {bonus}% bonus."), {bonus=50})
+   return "#b"..fmt.f(_("Gains action speed and lowers time constant the lower shields are, to a maximum of a {bonus}% bonus."), {bonus=50}).."#0"
 end
 
 function update( p, _dt )

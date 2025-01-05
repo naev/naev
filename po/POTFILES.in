@@ -3575,6 +3575,7 @@ dat/ships/lua/sirius_providence.lua
 dat/ships/lua/sirius_shaman.lua
 dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
+dat/ships/lua/vendetta_whiplash.lua
 dat/ships/lua/zalek.lua
 dat/ships/lua/zalek_mephisto_type_v.lua
 dat/snd/music.lua

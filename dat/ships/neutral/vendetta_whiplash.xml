@@ -1,14 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Vendetta Whiplash" inherits="Vendetta">
+ <lua>vendetta_whiplash.lua</lua>
  <rarity>2</rarity>
  <price>550000</price>
  <description>This Vendetta's weapon mounts look to have been hastily modded to allow for much faster reloading to the point the ship's outdated internal systems could struggle to keep up in combat.</description>
  <stats>
-  <speed_mod>-10</speed_mod>
   <armour_mod>15</armour_mod>
   <energy_mod>10</energy_mod>
-  <energy_regen_mod>-25</energy_regen_mod>
-  <cpu_mod>-25</cpu_mod>
-  <fwd_firerate>40</fwd_firerate>
+  <fwd_firerate>-20</fwd_firerate>
  </stats>
 </ship>
