@@ -1,12 +1,12 @@
 local fmt = require "format"
 
-update_dt = 1 -- Run once per second
+update_dt = 0.5 -- Run once per second
 
 local BONUS_INC = 10
 local BONUS_MAX = 70
 
 function descextra( _p )
-   return "#o"..fmt.f(_("Shooting any weapon increases fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per second."),
+   return "#o"..fmt.f(_("Shooting any weapon increases fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per half a second."),
       {inc=BONUS_INC, max=BONUS_MAX}).."#0"
 end
 
@@ -18,9 +18,15 @@ end
 function update( p )
    if mem.shot then
       mem.shot = false
-   elseif mem.bonus > 0 then
-      p:shippropReset()
-      mem.bonus = 0
+   elseif mem.bonus >= 0 then
+      -- Be nice and ramp down, although twice as fast
+      mem.bonus = mem.bonus - 2 * BONUS_INC
+      if mem.bonus > 0 then
+         p:shippropSet( "fwd_firerate", mem.bonus )
+      else
+         p:shippropReset()
+         mem.bonus = -10 -- we start at -10 or it'll always start at 1 stack
+      end
    end
 end
 
