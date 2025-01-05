@@ -6,7 +6,7 @@ local BONUS_INC = 20
 local BONUS_MAX = 80
 
 function descextra( _p )
-   return "#o"..fmt.f(_("Shooting any weapon increases fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per second"),
+   return "#o"..fmt.f(_("Shooting any weapon increases cannon fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per second"),
       {inc=BONUS_INC, max=BONUS_MAX}).."#0"
 end
 
