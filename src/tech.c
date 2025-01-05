@@ -342,8 +342,12 @@ static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
                      name, tech->name );
          } else
             itm = NULL;
-         xmlr_attr_float_def( node, "chance", itm->chance, -1. );
-         xmlr_attr_float_def( node, "price_mod", itm->price_mod, 1. );
+
+         /* Don't crash. */
+         if ( itm != NULL ) {
+            xmlr_attr_float_def( node, "chance", itm->chance, -1. );
+            xmlr_attr_float_def( node, "price_mod", itm->price_mod, 1. );
+         }
          free( buf );
          continue;
       }
