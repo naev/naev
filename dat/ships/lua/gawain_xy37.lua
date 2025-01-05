@@ -9,7 +9,7 @@ function update( p, _dt )
    local bonus = (100-s) * 0.5
    local last = mem.last or 1
    if last ~= s then
-      p:shippropSet{ -- Should overwrit
+      p:shippropSet{ -- Should overwrite existing values
          ["time_speedup"]=bonus,
          ["time_mod"]=-bonus,
       }
