@@ -1,20 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Perspicacity Beta" inherits="Thurion Perspicacity">
- <points>25</points>
- <gfx size="45">perspicacity</gfx>
+ <gfx size="50">perspicacity</gfx>
  <rarity>5</rarity>
  <class>Scout</class>
- <price>450000</price>
+ <price>530000</price>
  <time_mod>0.8</time_mod>
- <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 25</cond>
- <condstr>You need at least 25% reputation with the Thurion.</condstr>
- <description>This model of the Thurion Perspicacity is even further stripped down, resulting in a much lighter and faster Scout-class spacecraft albeit one less capable in most other areas.</description>
+ <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 30</cond>
+ <condstr>You need at least 30% reputation with the Thurion.</condstr>
+ <description>Originally designed as a fast scout ship, the lack of usability quickly led to the redesign as a more capable interceptor. The Perspicacity Beta is the last version before the redesign. It is incapable of supporting weapons due to its small size. However, it can boast an incredible speed boost and slightly more nebula hardening.</description>
  <characteristics>
   <crew>1</crew>
   <mass>20</mass>
   <fuel>400</fuel>
   <fuel_consumption>100</fuel_consumption>
-  <cargo>0</cargo>
+  <cargo>10</cargo>
  </characteristics>
  <slots>
   <utility size="small" prop="systems">Unicorp PT-16 Core System</utility>
@@ -29,7 +28,7 @@
  </slots>
  <stats>
   <ew_hide>-20</ew_hide>
-  <nebu_absorb>5</nebu_absorb>
+  <nebu_absorb>50</nebu_absorb>
   <speed_mod>25</speed_mod>
   <turn_mod>25</turn_mod>
   <accel_mod>20</accel_mod>

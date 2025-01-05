@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Blue Shark" inherits="Pirate Shark">
+ <gfx size="54">shark_pirate_blue</gfx>
  <rarity>3</rarity>
- <price>360000</price>
+ <price>390000</price>
  <description>As any good pirate would know, you can hardly pillage a ship if you blow it to pieces. This variant of the Pirate Shark has been additionally refitted to aid in disabling targets.</description>
  <stats>
   <speed_mod>5</speed_mod>

@@ -19,7 +19,7 @@
  <faction>Thurion</faction>
  <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 20</cond>
  <condstr>You need at least 20% reputation with the Thurion.</condstr>
- <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
+ <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms. Due to their small size, they use a special nebula-hardened frame, giving them much needed resistance to the nebula volatility.</description>
  <health>
   <armour>50</armour>
   <armour_regen>0</armour_regen>
@@ -46,6 +46,6 @@
  <stats>
   <cpu_mod>10</cpu_mod>
   <ew_hide>-25</ew_hide>
-  <nebu_absorb>15</nebu_absorb>
+  <nebu_absorb>40</nebu_absorb>
  </stats>
 </ship>
