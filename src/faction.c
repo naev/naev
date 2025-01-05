@@ -1135,8 +1135,10 @@ double faction_reputation( int f )
       const Faction *fac = &faction_stack[f];
       if ( faction_isFlag( fac, FACTION_REPOVERRIDE ) )
          return fac->override;
-      else
-         return round( fac->player );
+      else {
+         return round( fac->player ) + 0.; // With IEC 60559 floating-point,
+                                           // this should convert -0. to +0.
+      }
    }
    WARN( _( "Faction id '%d' is invalid." ), f );
    return -1000.;
