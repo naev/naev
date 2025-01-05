@@ -4860,7 +4860,7 @@ static int pilotL_getArmour( lua_State *L )
       lua_pushnumber( L, p->armour );
    else
       lua_pushnumber(
-         L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 1. );
+         L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 100. );
    return 1;
 }
 
@@ -4885,7 +4885,7 @@ static int pilotL_getShield( lua_State *L )
       lua_pushnumber( L, p->shield );
    else
       lua_pushnumber(
-         L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 1. );
+         L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 100. );
    return 1;
 }
 
