@@ -4860,12 +4860,13 @@ static int pilotL_getArmour( lua_State *L )
       lua_pushnumber( L, p->armour );
    else
       lua_pushnumber(
-         L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 0. );
+         L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 1. );
    return 1;
 }
 
 /**
- * @brief Gets the pilot's shield.
+ * @brief Gets the pilot's shield. If no shields, it returns 1. in relative
+ * mode.
  *
  * @usage shield = p:shield()
  *
@@ -4884,7 +4885,7 @@ static int pilotL_getShield( lua_State *L )
       lua_pushnumber( L, p->shield );
    else
       lua_pushnumber(
-         L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 0. );
+         L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 1. );
    return 1;
 }
 
