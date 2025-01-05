@@ -1,12 +1,12 @@
 local fmt = require "format"
 
-update_dt = 0.5 -- Run once per second
+update_dt = 1 -- Run once per second
 
-local BONUS_INC = 10
-local BONUS_MAX = 70
+local BONUS_INC = 20
+local BONUS_MAX = 80
 
 function descextra( _p )
-   return "#o"..fmt.f(_("Shooting any weapon increases fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per half a second."),
+   return "#o"..fmt.f(_("Shooting any weapon increases fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per second"),
       {inc=BONUS_INC, max=BONUS_MAX}).."#0"
 end
 
