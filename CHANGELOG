@@ -1,7 +1,7 @@
 * 0.13.0 (unreleased)
    * Content
       * 1 new mission
-      * 6 new variants
+      * 6 new ship variants
       * 2 new outfits
    * Engine
       * Ship Lua scripting supports "onshootany" now
