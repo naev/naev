@@ -414,7 +414,7 @@ local function board_capture ()
       end
       factionmsg = fmt.f(_(" Capturing the ship will lower your reputation with {fct} by {amount} (current standing is {current})."),
          {fct=fct, amount=fmt.number(math.abs(fcthittest)), current=rep})
-      if rep+fcthittest < 0 then
+      if rep >= 0 and rep+fcthittest < 0 then
          factionmsg = fmt.f(_([[{msg} This action will make you hostile with {fct}!]]),
             {msg=factionmsg, fct=fct})
       end
