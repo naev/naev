@@ -1068,6 +1068,8 @@ void faction_setReputation( int f, double value )
       return;
    }
    faction = &faction_stack[f];
+   value   = CLAMP( -100., 100.,
+                    value ); /* Gets reset by applying threshold otherwise. */
 
    /* In case of a dynamic faction, we just overwrite. */
    if ( faction_isFlag( faction, FACTION_DYNAMIC ) ) {
@@ -1100,27 +1102,22 @@ void faction_setReputation( int f, double value )
    }
 
    /* Run hook if necessary. */
-   if ( !faction_isFlag( faction, FACTION_DYNAMIC ) ) {
-      HookParam hparam[7];
-      hparam[0].type  = HOOK_PARAM_FACTION;
-      hparam[0].u.lf  = f;
-      hparam[1].type  = HOOK_PARAM_NIL;
-      hparam[2].type  = HOOK_PARAM_NUMBER;
-      hparam[2].u.num = mod;
-      hparam[3].type  = HOOK_PARAM_STRING;
-      hparam[3].u.str = "script";
-      hparam[4].type  = HOOK_PARAM_NUMBER;
-      hparam[4].u.num = 0;
-      hparam[5].type  = HOOK_PARAM_NIL;
-      hparam[6].type  = HOOK_PARAM_SENTINEL;
-      hooks_runParam( "standing", hparam );
+   HookParam hparam[7];
+   hparam[0].type  = HOOK_PARAM_FACTION;
+   hparam[0].u.lf  = f;
+   hparam[1].type  = HOOK_PARAM_NIL;
+   hparam[2].type  = HOOK_PARAM_NUMBER;
+   hparam[2].u.num = mod;
+   hparam[3].type  = HOOK_PARAM_STRING;
+   hparam[3].u.str = "script";
+   hparam[4].type  = HOOK_PARAM_NUMBER;
+   hparam[4].u.num = 0;
+   hparam[5].type  = HOOK_PARAM_NIL;
+   hparam[6].type  = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "standing", hparam );
 
-      /* Sanitize just in case. */
-      faction_sanitizePlayer( faction );
-
-      /* Tell space the faction changed. */
-      space_factionChange();
-   }
+   /* Tell space the faction changed. */
+   space_factionChange();
 }
 
 /**
@@ -1949,7 +1946,8 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
          /* Update local presence. */
          srep = system_getFactionPresence( qsys, f );
          if ( srep != NULL )
-            srep->local = CLAMP( rep - n * th, rep + n * th, srep->local );
+            srep->local = CLAMP( MAX( rep - n * th, -100 ),
+                                 MIN( rep + n * th, 100 ), srep->local );
 
          /* Propagate to next systems. */
          for ( int j = 0; j < array_size( qsys->jumps ); j++ ) {

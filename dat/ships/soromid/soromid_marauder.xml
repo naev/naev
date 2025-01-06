@@ -14,7 +14,7 @@
  <fabricator>Soromid</fabricator>
  <faction>Soromid</faction>
  <license>Light Combat Vessel</license>
- <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 30</cond>
+ <cond>require("buyrep")("Soromid", 30)</cond>
  <condstr>You need at least 30% reputation with the Soromid.</condstr>
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
  <health>

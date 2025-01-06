@@ -18,7 +18,7 @@
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
  <license>Heavy Combat Vessel</license>
- <cond>math.floor(system.cur():reputation("Empire")+0.5) &gt;= 60</cond>
+ <cond>require("buyrep")("Empire", 60)</cond>
  <condstr>You need at least 60% reputation with the Empire.</condstr>
  <description>This military grade version of the Hawking is mostly identical in function to a standard Hawking, but with slightly better armour, shields, and heat dissipation.</description>
  <health>

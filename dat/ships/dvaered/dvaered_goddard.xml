@@ -18,7 +18,7 @@
  <fabricator>House Goddard</fabricator>
  <faction>Dvaered</faction>
  <license>Heavy Combat Vessel</license>
- <cond>math.floor(system.cur():reputation("Dvaered")+0.5) &gt;= 70</cond>
+ <cond>require("buyrep")("Dvaered", 70)</cond>
  <condstr>You need at least 70% reputation with House Dvaered.</condstr>
  <description>Once upon a time, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents and, after the establishment of House Dvaered, the Empire ceded the license for the ageing vessel to them. Today, House Dvaered is House Goddard's biggest client and this Dvaered military grade version has been adapted to the needs of the Dvaered Warlords, which means better armour and forwards weapon damage at the cost of increased mass.</description>
  <health>

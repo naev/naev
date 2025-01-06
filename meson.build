@@ -8,7 +8,7 @@ project('naev', 'c',
    ],
    meson_version: '>=1.4.0')
 
-copyright_year = 2024
+copyright_year = 2025
 forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://github.com/naev/naev/issues'
