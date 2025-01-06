@@ -18,6 +18,7 @@
    * Added the Admonisher ΩIIa for sale
    * Reputation can't go above +100 or below -100
    * Made ship buying reputation requirements more lax, using maximum of local and global reputation
+   * Fix overlay map not updating after obtaining map while open
    * Stealth Discovered Speed should be Stealth Discovered Rate
    * Fixed mass being displayed twice for outfits
    * Don't have player.teleport break the game while the player is landing
