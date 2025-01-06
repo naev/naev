@@ -16,6 +16,7 @@
    * Made Za'lek drone weapons builtin
    * Be more restrictive on which factions give waste dump missions
    * Added the Admonisher ΩIIa for sale
+   * Reputation can't go above +100 or below -100
    * Made ship buying reputation requirements more lax, using maximum of local and global reputation
    * Stealth Discovered Speed should be Stealth Discovered Rate
    * Fixed mass being displayed twice for outfits
