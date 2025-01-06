@@ -25,6 +25,7 @@
    * FLF should not cause reputation chains making other factions hostile
    * Fixed the ship_buy hook refering to the ship sold when trading ships
    * Don't remove builtin weapons when spawning pilots naked
+   * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
    * Minor typo fixes and translation updates
