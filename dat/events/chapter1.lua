@@ -39,6 +39,7 @@ function create ()
    hook.enter( "enter" )
 end
 
+local claimed = false
 function enter ()
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.outfitNum("Heavy Combat Vessel License") > 0)
@@ -83,12 +84,15 @@ function enter ()
       end )
 
       -- Let us claim the systems
-      local claimsys = {}
-      for k,h in ipairs(hypergate_list) do
-         table.insert( claimsys, h:system() )
-      end
-      if not evt.claim( claimsys ) then
-         return false
+      if not claimed then
+         local claimsys = {}
+         for k,h in ipairs(hypergate_list) do
+            table.insert( claimsys, h:system() )
+         end
+         if not evt.claim( claimsys ) then
+            return false
+         end
+         claimed = true
       end
 
       hook.safe( "cutscene_start" )
