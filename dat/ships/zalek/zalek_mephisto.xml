@@ -14,7 +14,7 @@
  <fabricator>Za'lek Fabricators</fabricator>
  <faction>Za'lek</faction>
  <license>Heavy Combat Vessel</license>
- <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 70</cond>
+ <cond>require("buyrep")("Za'lek", 70)</cond>
  <condstr>You need at least 70% reputation with House Za'lek.</condstr>
  <description>A mighty ship, the Mephisto has grand energy and shielding management, and its shields allow it to shrug off a lot of abuse. A core of these ships can reduce even powerful fleets to slag in short order.</description>
  <health>

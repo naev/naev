@@ -14,7 +14,7 @@
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
  <license>Heavy Combat Vessel</license>
- <cond>math.floor(system.cur():reputation("Sirius")+0.5) &gt;= 70</cond>
+ <cond>require("buyrep")("Sirius", 70)</cond>
  <condstr>You need at least 70% reputation with House Sirius.</condstr>
  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is seldom surpassed in either prestige or military might.</description>
  <health>

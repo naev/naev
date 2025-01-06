@@ -3366,6 +3366,7 @@ dat/scan.lua
 dat/scripts/bioship.lua
 dat/scripts/bioship/intrinsics.lua
 dat/scripts/bioship/skills.lua
+dat/scripts/buyrep.lua
 dat/scripts/cinema.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua

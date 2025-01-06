@@ -16,7 +16,7 @@
  <fabricator>Za'lek Fabricators</fabricator>
  <faction>Za'lek</faction>
  <license>Medium Combat Vessel</license>
- <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 50</cond>
+ <cond>require("buyrep")("Za'lek", 50)</cond>
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>
  <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers and it has poor armour, like all Za'lek ships, but this comes as little consolation to the Za'lek's enemies.</description>
  <health>
