@@ -2404,6 +2404,8 @@ static int playerL_teleport( lua_State *L )
          L, _( "Can not teleport the player while they are boarded!" ) );
    pnt = NULL;
 
+   pilot_rmFlag( player.p, PILOT_LANDING );
+
    /* Get a system. */
    if ( lua_issystem( L, 1 ) ) {
       const StarSystem *sys = luaL_validsystem( L, 1 );
