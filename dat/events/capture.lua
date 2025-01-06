@@ -215,16 +215,17 @@ function jumpout ()
 end
 
 function enter ()
-   local p
+   local spawn = nil
    if outsys then
-      local j = jump.get( system.cur(), outsys )
-      p = pilot.add( mem.ship, faction.player(), j )
-      outsys = nil
+      spawn = jump.get( system.cur(), outsys )
    elseif mem.spb then
-      p = pilot.add( mem.ship, faction.player(), mem.spb )
-      mem.spb = nil
-   else
-      error(_("Unable to determine how to generate captured ship!"))
+      spawn = mem.spb
    end
+   if not spawn then
+      spawn = player.pos() + vec2.newP( 100+rnd.rnd(20), rnd.angle() )
+   end
+   outsys = nil
+   mem.spb = nil
+   local p = pilot.add( mem.ship, faction.player(), spawn, mem.name, {naked=true, ai="capture"} )
    setup_pilot( p )
 end
