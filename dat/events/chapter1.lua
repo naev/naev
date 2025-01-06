@@ -40,7 +40,10 @@ function create ()
 end
 
 local claimed = false
+local done = false
 function enter ()
+   if done then return end
+
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.outfitNum("Heavy Combat Vessel License") > 0)
    local traded_total = var.peek("hypconst_traded_total") or 0
@@ -608,6 +611,7 @@ function cutscene_nebu_fade ()
    lmusic.stop()
 
    -- Return to system and restore camera
+   done = true -- To stop the enter hook from rerunning
    player.teleport( origsys, false, true )
    camera.set( nil, true )
    camera.setZoom() -- Reset zoom
