@@ -37,6 +37,7 @@ function create ()
    ai.setcredits( rnd.rnd(price/80, price/30) )
 
    mem.formation = merc_formations[ rnd.rnd(1,#merc_formations) ]
+   mem.whiteknight = rnd.rnd() > 0.5 -- Not always white knight
 
    -- Finish up creation
    create_post()

@@ -6805,6 +6805,16 @@ static int pilotL_distress( lua_State *L )
    Pilot        *p           = luaL_validpilot( L, 1 );
    Pilot        *attacker    = luaL_validpilot( L, 2 );
    Pilot *const *pilot_stack = pilot_getAll();
+
+   /* Check if spob is in range. */
+   for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
+      Spob *spb = cur_system->spobs[i];
+      if ( spob_hasService( spb, SPOB_SERVICE_INHABITED ) &&
+           pilot_inRangeSpob( p, i ) ) {
+         spob_distress( spb, p, attacker );
+      }
+   }
+
    /* Now we must check to see if a pilot is in range. */
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *pi = pilot_stack[i];
