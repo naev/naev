@@ -1148,8 +1148,8 @@ function render( dt, dt_mod )
          gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
-      local x1, y1 = vec2.get(nav_spob.pos)
-      local x2, y2 = vec2.get(player.pos())
+      local x1, y1 = nav_spob.pos:get()
+      local x2, y2 = player.pos():get()
       local ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.

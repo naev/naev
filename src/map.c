@@ -3139,6 +3139,7 @@ int map_map( const Outfit *map )
    for ( int i = 0; i < array_size( map->u.map->jumps ); i++ )
       jp_setFlag( map->u.map->jumps[i], JP_KNOWN );
 
+   ovr_refresh();
    return 1;
 }
 
@@ -3199,6 +3200,8 @@ int localmap_map( const Outfit *lmap )
       if ( mod * p->hide <= detect )
          spob_setKnown( p );
    }
+
+   ovr_refresh();
    return 0;
 }
 
