@@ -8,6 +8,7 @@ use crate::{formatx, gettext, warn};
 pub struct Buffer {
     pub buffer: glow::Buffer,
     datalen: usize, // in u8
+    target: BufferTarget,
     usage: BufferUsage,
 }
 impl Drop for Buffer {
@@ -34,16 +35,36 @@ impl BufferUsage {
     }
 }
 
+pub enum BufferTarget {
+    Array,
+    Uniform,
+}
+impl BufferTarget {
+    pub fn to_gl(&self) -> u32 {
+        match self {
+            Self::Array => glow::ARRAY_BUFFER,
+            Self::Uniform => glow::UNIFORM_BUFFER,
+        }
+    }
+}
+
 pub struct BufferBuilder<'a> {
+    target: BufferTarget,
     usage: BufferUsage,
     data: &'a [u8],
 }
 impl<'a> BufferBuilder<'a> {
     pub fn new() -> Self {
         BufferBuilder {
+            target: BufferTarget::Array,
             usage: BufferUsage::Stream,
             data: Default::default(),
         }
+    }
+
+    pub fn target(mut self, target: BufferTarget) -> Self {
+        self.target = target;
+        self
     }
 
     pub fn usage(mut self, usage: BufferUsage) -> Self {
@@ -71,15 +92,17 @@ impl<'a> BufferBuilder<'a> {
 
         let buffer = unsafe { gl.create_buffer().map_err(|e| anyhow::anyhow!(e))? };
 
+        let target = self.target.to_gl();
         unsafe {
-            gl.bind_buffer(glow::ARRAY_BUFFER, Some(buffer));
-            gl.buffer_data_u8_slice(glow::ARRAY_BUFFER, self.data, self.usage.to_gl());
-            gl.bind_buffer(glow::ARRAY_BUFFER, None);
+            gl.bind_buffer(target, Some(buffer));
+            gl.buffer_data_u8_slice(target, self.data, self.usage.to_gl());
+            gl.bind_buffer(target, None);
         }
 
         Ok(Buffer {
             buffer,
             datalen: self.data.len(),
+            target: self.target,
             usage: self.usage,
         })
     }
