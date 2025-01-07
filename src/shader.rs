@@ -7,7 +7,7 @@ use std::os::raw::c_char;
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::ngl::{Context, CONTEXT};
-use crate::{formatx, nelog, warn};
+use crate::{einfo, formatx, warn};
 
 pub enum ShaderType {
     Fragment,
@@ -53,7 +53,7 @@ impl Shader {
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
             for (i, line) in source.lines().enumerate() {
-                nelog!("{:04}: {}", i, line);
+                einfo!("{:04}: {}", i, line);
             }
             let slog = unsafe { gl.get_shader_info_log(shader) };
             warn!("Failed to compile shader '{}': [[\n{}\n]]", name, slog);

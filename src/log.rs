@@ -2,7 +2,7 @@
 #![allow(dead_code)]
 
 use crate::gettext::gettext;
-use crate::{debug, nlog, warn};
+use crate::{debug, einfo, info, warn};
 use formatx::formatx;
 
 pub fn init() {
@@ -11,12 +11,12 @@ pub fn init() {
     };
 }
 
-pub fn elog(msg: &str) {
-    nlog!(msg);
+pub fn einfo(msg: &str) {
+    einfo!(msg);
 }
 
-pub fn log(msg: &str) {
-    nlog!(msg);
+pub fn info(msg: &str) {
+    info!(msg);
 }
 
 pub fn debug(msg: &str) {
@@ -28,14 +28,14 @@ pub fn warn(msg: &str) {
 }
 
 #[macro_export]
-macro_rules! nlog {
+macro_rules! info {
     ($($arg:tt)*) => {
         println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
 #[macro_export]
-macro_rules! nelog {
+macro_rules! einfo {
     ($($arg:tt)*) => {
         eprintln!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };

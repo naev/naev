@@ -87,11 +87,11 @@ pub fn naev() -> Result<()> {
     gettext::init();
 
     /* Print the version */
-    log::log(&version::VERSION_HUMAN);
+    log::info(&version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
             true => {
-                nlog!("AppImage detected. Running from: {}", &env::ENV.appdir)
+                info!("AppImage detected. Running from: {}", &env::ENV.appdir)
             }
             false => debug!("AppImage not detected."),
         }
@@ -164,9 +164,9 @@ pub fn naev() -> Result<()> {
         naevc::log_redirect();
         naevc::ndata_setupReadDirs();
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
-        nlog!(gettext("Loaded configuration: {}"), conf_file_path);
+        info!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();
-        nlog!(gettext("Read locations, searched in order:"));
+        info!(gettext("Read locations, searched in order:"));
         for p in {
             let mut out: Vec<&str> = Vec::new();
             let mut i = 0;
@@ -181,7 +181,7 @@ pub fn naev() -> Result<()> {
             }
             out
         } {
-            nlog!("    {}", p);
+            info!("    {}", p);
         }
         naevc::PHYSFS_freeList(search_path as *mut c_void);
 
@@ -190,7 +190,7 @@ pub fn naev() -> Result<()> {
             gettext("Cache location: {}"),
             cptr_to_cstr(naevc::nfile_cachePath())
         );
-        nlog!(
+        info!(
             gettext("Write location: {}\n"),
             cptr_to_cstr(naevc::PHYSFS_getWriteDir())
         );
@@ -210,14 +210,14 @@ pub fn naev() -> Result<()> {
             // TODO show some simple error message
             return Err(Error::new(ErrorKind::Other, err));
         }
-        nlog!(
+        info!(
             " {}\n",
             CStr::from_ptr(naevc::start_name()).to_str().unwrap()
         );
 
         /* Display the SDL version. */
         naevc::print_SDLversion();
-        nlog!("");
+        info!("");
     }
 
     /* Set up OpenGL. */
@@ -276,7 +276,7 @@ pub fn naev() -> Result<()> {
     // OpenAL
     unsafe {
         if naevc::conf.nosound != 0 {
-            nlog!(gettext("Sound is disabled!"));
+            info!(gettext("Sound is disabled!"));
             naevc::sound_disabled = 1;
             naevc::music_disabled = 1;
         }
