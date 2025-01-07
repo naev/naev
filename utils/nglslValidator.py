@@ -40,7 +40,7 @@ def preprocess( shader, shadertype ):
                 ispp = True
 
     # Love shaders need some additional voodoo
-    prepend = "#version 150 core\n"
+    prepend = "#version 330 core\n"
     if ispp: # special post-processing shaders
         prepend += """
 uniform sampler2D MainTex;
