@@ -12,7 +12,7 @@ use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
 #[derive(Default)]
 pub struct SlotProperty {
-    pub name: CString,
+    pub name: String,
     pub display: String,
     cdisplay: CString,
     pub description: String,
@@ -28,12 +28,12 @@ impl SlotProperty {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
-        let name = CString::new(match root.attribute("name") {
+        let name = String::from(match root.attribute("name") {
             Some(n) => n,
             None => {
                 return nxml_err_attr_missing!("Slot Property", "name");
             }
-        })?;
+        });
         let mut sp = SlotProperty {
             name,
             ..SlotProperty::default()
@@ -66,7 +66,7 @@ impl SlotProperty {
                     );
                 }
                 tag => {
-                    return nxml_err_node_unknown!("Slot Property", sp.name.to_str()?, tag);
+                    return nxml_err_node_unknown!("Slot Property", &sp.name, tag);
                 }
             }
         }
@@ -94,7 +94,7 @@ use std::sync::LazyLock;
 static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().unwrap());
 
 #[allow(dead_code)]
-pub fn get(name: CString) -> Result<&'static SlotProperty> {
+pub fn get(name: String) -> Result<&'static SlotProperty> {
     let query = SlotProperty {
         name,
         ..SlotProperty::default()
@@ -102,10 +102,7 @@ pub fn get(name: CString) -> Result<&'static SlotProperty> {
     let props = &SLOT_PROPERTIES;
     match props.binary_search(&query) {
         Ok(i) => Ok(props.get(i).expect("")),
-        Err(_) => anyhow::bail!(
-            "Slot Property '{name}' not found .",
-            name = query.name.to_str()?
-        ),
+        Err(_) => anyhow::bail!("Slot Property '{name}' not found .", name = &query.name,),
     }
 }
 
@@ -132,7 +129,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
 pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
         let ptr = CStr::from_ptr(name);
-        let name = CString::new(ptr.to_str().unwrap()).unwrap();
+        let name = ptr.to_str().unwrap().to_owned();
         let query = SlotProperty {
             name,
             ..SlotProperty::default()
