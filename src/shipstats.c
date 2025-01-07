@@ -100,8 +100,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TURN_MOD, turn_mod, N_( "Turn" ) ),
    D__ELEM( SS_TYPE_D_ACCEL_MOD, accel_mod, N_( "Accel" ) ),
    D__ELEM( SS_TYPE_D_CARGO_MOD, cargo_mod, N_( "Cargo Space" ) ),
-   D__ELEM( SS_TYPE_D_FUEL_MOD, fuel_mod, N_( "Fuel Cpacity" ) ),
-   D__ELEM( SS_TYPE_D_FUEL_USAGE_MOD, fuel_usage_mod, N_( "Fuel Usage" ) ),
+   D__ELEM( SS_TYPE_D_FUEL_MOD, fuel_mod, N_( "Fuel Capacity" ) ),
+   DI_ELEM( SS_TYPE_D_FUEL_USAGE_MOD, fuel_usage_mod, N_( "Fuel Usage" ) ),
    D__ELEM( SS_TYPE_D_ARMOUR_MOD, armour_mod, N_( "Armour Strength" ) ),
    D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD, armour_regen_mod,
             N_( "Armour Regeneration" ) ),
@@ -127,7 +127,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_EW_TRACK, ew_track, N_( "Tracking" ) ),
    D__ELEM( SS_TYPE_D_EW_JUMPDETECT, ew_jump_detect, N_( "Jump Detection" ) ),
    DI_ELEM( SS_TYPE_D_EW_STEALTH_TIMER, ew_stealth_timer,
-            N_( "Stealth Discovered Speed" ) ),
+            N_( "Stealth Discovered Rate" ) ),
    DI_ELEM( SS_TYPE_D_EW_SCANNED_TIME, ew_scanned_time, N_( "Scanned Speed" ) ),
 
    D__ELEM( SS_TYPE_D_WEAPON_RANGE, weapon_range, N_( "Weapon Range" ) ),
@@ -195,7 +195,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME, cooldown_time,
             N_( "Ship Cooldown Time" ) ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE, jump_distance, N_( "Jump Distance" ) ),
-   DI_ELEM( SS_TYPE_D_JUMP_WARMUP, jump_warmup, N_( "Jump Warmup" ) ),
+   DI_ELEM( SS_TYPE_D_JUMP_WARMUP, jump_warmup, N_( "Jump Warm-up" ) ),
    D__ELEM( SS_TYPE_D_MINING_BONUS, mining_bonus, N_( "Mining Bonus" ) ),
 
    A__ELEM( SS_TYPE_A_ACCEL, accel, N_( "Accel" ), _UNIT_ACCEL ),

@@ -16,7 +16,7 @@
  <trail_generator x="-20" y="20" h="10">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
- <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 50</cond>
+ <cond>require("buyrep")("Thurion", 50)</cond>
  <condstr>You need at least 50% reputation with the Thurion.</condstr>
  <description>The Thurion Apprehension is a defense-focused light destroyer. High mobility paired with advanced electronic defenses make it difficult for enemies to detect the ship, let alone attempt to lock onto it.</description>
  <health>

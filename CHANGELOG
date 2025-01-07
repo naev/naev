@@ -3,12 +3,17 @@
    * Use instancing instead of geometry shaders for space dust
    * Content
       * 1 new mission
+      * 6 new ship variants
+      * 2 new outfits
    * Engine
+      * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
+      * Mission and Event NPC's priority default to the priority of the parent
    * Fixes
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
+      * Action speed can no longer be negative and disables space worthiness
 
 * 0.12.2 (unreleased)
    * Made plasma drill much easier to apply to asteroids
@@ -19,12 +24,28 @@
    * Removed outdated tip from NPC messages
    * Round faction reputation at hypergates
    * Hypergates no longer spoil system names for you
+   * Fixed description of the Squadron Synchronizer Module
    * Deployed fighters are always aggressive (for now)
    * Player can't make own escorts hostile with AoE weapons
+   * Fuel usage is a negative is better stat
+   * Added faction.areNeutral to get true neutral state of factions
+   * Ammo can not become negative anymore
    * Made Za'lek drone weapons builtin
+   * Be more restrictive on which factions give waste dump missions
+   * Added the Admonisher ΩIIa for sale
+   * Reputation can't go above +100 or below -100
+   * Made ship buying reputation requirements more lax, using maximum of local and global reputation
+   * Fix overlay map not updating after obtaining map while open
+   * Stealth Discovered Speed should be Stealth Discovered Rate
+   * Fixed mass being displayed twice for outfits
+   * Don't have player.teleport break the game while the player is landing
    * Modified condition of many neutral missions so they don't appear in the wrong places
+   * Dvaered ships are now also sold in more accessible locations
+   * FLF should not cause reputation chains making other factions hostile
    * Fixed the ship_buy hook refering to the ship sold when trading ships
+   * Fixed captured ships having inconsistent load outs and not spawning near the pilot
    * Don't remove builtin weapons when spawning pilots naked
+   * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
    * Minor typo fixes and translation updates

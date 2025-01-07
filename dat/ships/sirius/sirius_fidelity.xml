@@ -13,7 +13,7 @@
  <license>Light Combat Vessel</license>
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
- <cond>math.floor(system.cur():reputation("Sirius")+0.5) &gt;= 20</cond>
+ <cond>require("buyrep")("Sirius", 20)</cond>
  <condstr>You need at least 20% reputation with House Sirius.</condstr>
  <description>The Fidelity is the interceptor of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
  <health>

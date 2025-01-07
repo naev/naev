@@ -1,7 +1,7 @@
 local scom = require "factions.spawn.lib.common"
+local var = require "shipvariants"
 
 local shyena      = ship.get("Pirate Hyena")
-local sshark      = ship.get("Pirate Shark")
 local svendetta   = ship.get("Pirate Vendetta")
 local sancestor   = ship.get("Pirate Ancestor")
 local sadmonisher = ship.get("Pirate Admonisher")
@@ -22,17 +22,17 @@ local table_loner_strong = {
 }
 local table_squad = {
    { w=0.3, svendetta, sancestor, sancestor, shyena },
-   { w=0.5, svendetta, sancestor, sshark, shyena },
-   { w=0.6, srevenant, sshark, shyena },
-   { w=0.75, srevenant, svendetta, sshark },
-   { w=0.9, sadmonisher, svendetta, sshark, shyena },
-   { sstarbridge, sshark, sshark },
+   { w=0.5, svendetta, sancestor, var.pirate_shark, shyena },
+   { w=0.6, srevenant, var.pirate_shark, shyena },
+   { w=0.75, srevenant, svendetta, var.pirate_shark },
+   { w=0.9, sadmonisher, svendetta, var.pirate_shark, shyena },
+   { sstarbridge, var.pirate_shark, var.pirate_shark },
 }
 local table_capship = {
    { w=0.3, skestrel },
-   { w=0.6, skestrel, sadmonisher, svendetta, sshark },
-   { w=0.9, skestrel, srevenant, svendetta, sancestor, sshark },
-   { skestrel, srevenant, sadmonisher, svendetta, sancestor, sshark },
+   { w=0.6, skestrel, sadmonisher, svendetta, var.pirate_shark },
+   { w=0.9, skestrel, srevenant, svendetta, sancestor, var.pirate_shark },
+   { skestrel, srevenant, sadmonisher, svendetta, sancestor, var.pirate_shark },
 }
 
 local function spawn_loner_strong ()

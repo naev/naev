@@ -165,6 +165,17 @@ int event_isUnique( unsigned int eventid )
 }
 
 /**
+ * @brief Gets the priority of an event.
+ */
+int event_priority( unsigned int eventid )
+{
+   const Event_t *ev = event_get( eventid );
+   if ( ev == NULL )
+      return 5;
+   return event_data[ev->data].priority;
+}
+
+/**
  * @brief Generates a new event ID.
  */
 static unsigned int event_genID( void )

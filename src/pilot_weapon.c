@@ -21,8 +21,8 @@
 #include "log.h"
 #include "nlua_pilotoutfit.h"
 #include "pilot.h"
+#include "pilot_ship.h"
 #include "player.h"
-// #include "player_autonav.h"
 #include "sound.h"
 #include "spfx.h"
 #include "weapon.h"
@@ -370,8 +370,10 @@ void pilot_weapSetUpdate( Pilot *p )
          pilot_cooldownEnd( p, NULL );
 
       /* Trigger onshoot after stealth gets broken. */
-      if ( nweap > 0 )
+      if ( nweap > 0 ) {
+         pilot_shipLOnshootany( p );
          pilot_outfitLOnshootany( p );
+      }
    }
 }
 

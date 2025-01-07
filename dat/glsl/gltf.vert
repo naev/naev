@@ -16,10 +16,10 @@ uniform mat4 u_model;
 uniform mat3 u_normal;
 uniform int u_nlights;
 
-in vec3 vertex;
-in vec3 vertex_normal;
-in vec2 vertex_tex0;
-in vec2 vertex_tex1;
+layout(location = 0) in vec3 vertex;
+layout(location = 1) in vec3 vertex_normal;
+layout(location = 2) in vec2 vertex_tex0;
+layout(location = 3) in vec2 vertex_tex1;
 out vec3 position;
 out vec3 shadow[MAX_LIGHTS];
 out vec3 normal;

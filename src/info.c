@@ -426,8 +426,9 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof( str ) - l, "\n%d / %d %s", cargo_used,
                    cargo_total, UNIT_MASS );
    l += scnprintf( &str[l], sizeof( str ) - l, "%s", "\n\n" );
-   l += scnprintf( &str[l], sizeof( str ) - l, _( "%.1f hours" ),
-                   player.time_played / 3600. );
+   l += scnprintf(
+      &str[l], sizeof( str ) - l, _( "%s hours" ),
+      num2strU( round( 10. * player.time_played / 3600. ) / 10., 1 ) );
    l += scnprintf( &str[l], sizeof( str ) - l, "\n%s",
                    num2strU( (double)player.death_counter, 0 ) );
    l += scnprintf( &str[l], sizeof( str ) - l, "\n%s",

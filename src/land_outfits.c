@@ -774,17 +774,7 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
  */
 int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
 {
-   int    p;
-   double mass;
-
-   /* Compute total mass of launcher and ammo if necessary. */
-   mass = o->mass;
-   if ( outfit_isLauncher( o ) )
-      mass += outfit_amount( o ) * o->u.lau.ammo_mass;
-   else if ( outfit_isFighterBay( o ) )
-      mass += outfit_amount( o ) * o->u.bay.ship_mass;
-
-   p = outfit_getNameWithClass( o, buf, n );
+   int p = outfit_getNameWithClass( o, buf, n );
    p += scnprintf( &buf[p], n - p, "\n" );
    if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
       p += scnprintf( &buf[p], n - p, "#o%s#0\n", _( "Unique" ) );
@@ -795,11 +785,6 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
       p += scnprintf( &buf[p], n - p, "#o%s#0\n",
                       _( sp_display( o->slot.spid ) ) );
    p += scnprintf( &buf[p], n - p, "%s", pilot_outfitSummary( plt, o, 0 ) );
-   if ( ( o->mass > 0. ) && ( p < n ) ) {
-      char buf_mass[ECON_MASS_STRLEN];
-      tonnes2str( buf_mass, (int)round( mass ) );
-      scnprintf( &buf[p], n - p, "\n%s", buf_mass );
-   }
    return 0;
 }
 

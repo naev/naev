@@ -1,5 +1,5 @@
 project('naev', ['c','rust'],
-   version : '0.12.1',
+   version : '0.13.0-alpha.1',
    default_options : [
       'optimization=g',
       'c_std=gnu11',
@@ -9,7 +9,7 @@ project('naev', ['c','rust'],
    ],
    meson_version: '>=1.4.0')
 
-copyright_year = 2024
+copyright_year = 2025
 forced_fallbacks = get_option('force_fallback_for')
 
 issue_address = 'https://github.com/naev/naev/issues'
@@ -17,7 +17,7 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow'])
+c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow', '-fno-signed-zeros'])
 add_project_arguments(c_args, language: 'c')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)

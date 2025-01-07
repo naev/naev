@@ -2231,8 +2231,9 @@ void equipment_updateShips( unsigned int wid, const char *str )
       for ( int i = 0; i < SHIP_CLASS_TOTAL; i++ )
          destroyed += ps->ships_destroyed[i];
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
-      l += scnprintf( &buf[l], sizeof( buf ) - l, _( "%s hours" ),
-                      num2strU( ps->time_played / 3600., 1 ) );
+      l += scnprintf(
+         &buf[l], sizeof( buf ) - l, _( "%s hours" ),
+         num2strU( round( 10. * ps->time_played / 3600. ) / 10., 1 ) );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                       num2strU( ps->jumped_times, 0 ) );
       l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",

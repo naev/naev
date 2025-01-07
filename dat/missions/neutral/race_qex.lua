@@ -346,7 +346,9 @@ They hand you one of those fake oversized cheques for the audience, and then a c
          vn.na(fmt.reward(reward_outfit).."\n"..fmt.reward(reward))
          vn.func( function ()
             player.outfitAdd( reward_outfit )
+            diff.apply("melendez_dome_xy37")
          end )
+         vn.na(_([[After the formalities finish, a Nexus Engineer comes up to you, nervous and stuttering, "I-I-i love the way you fly! Me and some o-other engineers were thinking you mi-might want to try our prototype. I've g-given you access at the shipyard to check it out.". They quickly scuttle away before you can ask anything else. You wonder what the prototype is.]]))
       else
          vn.na(fmt.reward(reward))
       end

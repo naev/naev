@@ -195,6 +195,7 @@ typedef struct Ship_ {
    int    lua_update;         /**< Run periodically. */
    int    lua_explode_init;   /**< Run when starting explosion. */
    int    lua_explode_update; /**< Run when exploding. */
+   int    lua_onshootany;     /**< Run when any weapon is shot. */
 } Ship;
 
 /*

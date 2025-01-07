@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Vendetta Whiplash" inherits="Vendetta">
+ <lua>vendetta_whiplash.lua</lua>
+ <rarity>2</rarity>
+ <price>550000</price>
+ <description>The Vendetta's great flaw is trying to provide a consistent weapon system, requiring the ship's system to perform equally at maximum and minimum weapon load. By doing away with such a constraint, the true power of the vendetta's 6-slot weapon mounts can shine. The Vendetta Whiplash uses a "just in time" weapon profiling system that allows it to dynamically adjust based on the current weapon load. While this does mean the weapon systems take longer to start up, once they are up and running, the firepower is unmatched by any ship of the same size.</description>
+ <stats>
+  <armour_mod>15</armour_mod>
+  <energy_mod>20</energy_mod>
+  <fwd_firerate>-20</fwd_firerate>
+ </stats>
+</ship>

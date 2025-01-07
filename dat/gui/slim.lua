@@ -5,6 +5,7 @@ local flow = require "ships.lua.lib.flow"
 local fmt = require "format"
 local formation = require "formation"
 local playerform = require "playerform"
+local love = require "love"
 local lf = require "love.filesystem"
 local lg = require "love.graphics"
 local love_shaders = require "love_shaders"
@@ -39,6 +40,8 @@ local scan_icon, scandone_icon
 
 local time_global = 0
 function create()
+   love.origin()
+
    time_global = 0
 
    --Get player
@@ -266,6 +269,14 @@ function create()
    ta_fact_x = ta_pane_x + 122
    ta_fact_y = ta_pane_y + 122
 
+   --Targeted warning light
+   ta_warning_x = ta_pane_x + 82
+   ta_warning_y = ta_pane_y + 110
+
+   -- Cargo light
+   ta_cargo_x = ta_pane_x + 138
+   ta_cargo_y = ta_pane_y + 110
+
    --Small Shield Bar
    local x_shield_sm = ta_pane_x + 13
    local y_shield_sm = ta_pane_y + 71
@@ -304,14 +315,6 @@ function create()
           6, -- Tracking icon Y
       }
    }
-
-   --Targeted warning light
-   ta_warning_x = ta_pane_x + 82
-   ta_warning_y = ta_pane_y + 110
-
-   -- Cargo light
-   ta_cargo_x = ta_pane_x + 138
-   ta_cargo_y = ta_pane_y + 110
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
@@ -1145,8 +1148,8 @@ function render( dt, dt_mod )
          gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
-      local x1, y1 = vec2.get(nav_spob.pos)
-      local x2, y2 = vec2.get(player.pos())
+      local x1, y1 = nav_spob.pos:get()
+      local x2, y2 = player.pos():get()
       local ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.

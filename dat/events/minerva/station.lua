@@ -305,7 +305,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
       {"Railgun", {1000, "outfit"}},
       {"Grave Lance", {1200, "outfit"}},
       {"Fuzzy Dice", {5000, "outfit"}},
-      {"Admonisher", {7000, "ship"}},
+      {"Vendetta Whiplash", {7000, "ship"}},
    }
    local tradein_item = nil
    local handler = function (idx)
@@ -388,7 +388,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          if ti[2][2]=="outfit" then
             player.outfitAdd( ti[1] )
          elseif ti[2][2]=="ship" then
-            player.shipAdd( ti[1] )
+            player.shipAdd( ti[1], nil, fmt.f(_("You gambled for at {pnt} in the {sys} system."), {pnt=spob.cur(), sys=system.cur()} ) )
          else
             error(_("unknown tradein type"))
          end

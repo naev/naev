@@ -14,6 +14,13 @@ local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
 
+local function updater0130( _did0120, _did0110, _did0100, _did090 )
+   -- Newly added diff
+   if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
+      diff.apply( "melendez_dome_xy37" )
+   end
+end
+
 -- Runs on saves older than 0.11.0
 local function updater0120( did0110, did0100, did090 )
    -- Have to apply diff to lower pirates if necessary
@@ -262,7 +269,7 @@ function create ()
    local _game_version, save_version = naev.version()
    local didupdate = false
 
-   local did090, did0100, did0110
+   local did090, did0100, did0110, did0120
    -- Run on saves older than 0.9.0
    if not save_version or naev.versionTest( save_version, "0.9.0-0" ) < 0 then
       updater090()
@@ -285,6 +292,12 @@ function create ()
    if not save_version or (naev.versionTest( save_version, "0.12.0-0") < 0) then
       updater0120( did0110, did0100, did090 )
       didupdate = true
+      did0120 = true
+   end
+   -- Run on saves older than 0.13.0
+   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.1") < 0) then
+      updater0130( did0120, did0110, did0100, did090 )
+      --didupdate = true
    end
 
    -- Note that games before 0.10.0 will have lastplayed set days from the unix epoch

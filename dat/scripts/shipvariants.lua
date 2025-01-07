@@ -34,6 +34,7 @@ var.llama = _v{
 }
 var.gawain = _v{
    { w=1,    s=ship.get("Gawain") },
+   { w=0.05,    s=ship.get("Gawain XY-37") },
 }
 -- Courier
 var.koala = _v{
@@ -62,7 +63,15 @@ var.shark = _v{
    { w=1,    s=ship.get("Shark") },
    { w=0.05, s=ship.get("Shark ΨIIIa") },
 }
+var.pirate_shark = _v{
+   { w=1,    s=ship.get("Pirate Shark") },
+   { w=0.05, s=ship.get("Pirate Blue Shark") },
+}
 -- Fighter
+var.vendetta = _v{
+   { w=1,    s=ship.get("Vendetta") },
+   { w=0.05, s=ship.get("Vendetta Whiplash") },
+}
 var.empire_lancelot = _v{
    { w=1,    s=ship.get("Empire Lancelot") },
    { w=0.05, s=ship.get("Empire Lancelot Golden Efreeti") },
@@ -87,12 +96,23 @@ var.starbridge = _v{
    { w=1,    s=ship.get("Starbridge") },
    { w=0.05, s=ship.get("Starbridge Sigma") },
 }
+var.zalek_demon = _v{
+   { w=1,    s=ship.get("Za'lek Demon") },
+   { w=0.05, s=ship.get("Za'lek Demon Type IV") },
+}
 -- Cruiser
 var.kestrel = _v{
    { w=1,    s=ship.get("Kestrel") },
    { w=0.05, s=ship.get("Kestrel Sigma") },
 }
+var.pirate_kestrel = _v{
+   { w=1,    s=ship.get("Pirate Kestrel") },
+   { w=0.05, s=ship.get("Pirate Kestrel Yuri's Kiss") },
+}
 -- Battleship
+var.goddard = _v{
+   { w=1,    s=ship.get("Goddard") },
+}
 var.zalek_mephisto = _v{
    { w=1,    s=ship.get("Za'lek Mephisto") },
    { w=0.05, s=ship.get("Za'lek Mephisto Type V") },

@@ -391,6 +391,7 @@ dat/outfits/structure/medium_fuel_pod.xml
 dat/outfits/structure/medium_shield_booster.xml
 dat/outfits/structure/microbond_plating.xml
 dat/outfits/structure/nanobond_plating.xml
+dat/outfits/structure/nanofiber_structures.xml
 dat/outfits/structure/nebular_shielding_prototype.xml
 dat/outfits/structure/plasteel_plating.xml
 dat/outfits/structure/reactor_class_i.xml
@@ -408,6 +409,7 @@ dat/outfits/unique/daphnes_leap.xml
 dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
+dat/outfits/unique/fuelshell_plating.xml
 dat/outfits/unique/hades_torch.xml
 dat/outfits/unique/homebrew_processing_unit.xml
 dat/outfits/unique/pulse_scanner.xml
@@ -543,7 +545,9 @@ dat/ships/neutral/ancestor.xml
 dat/ships/neutral/ancestor_hg_eagleeye.xml
 dat/ships/neutral/bedivere.xml
 dat/ships/neutral/gawain.xml
+dat/ships/neutral/gawain_xy37.xml
 dat/ships/neutral/goddard.xml
+dat/ships/neutral/goddard_merchant.xml
 dat/ships/neutral/hawking.xml
 dat/ships/neutral/hyena.xml
 dat/ships/neutral/kestrel.xml
@@ -568,11 +572,13 @@ dat/ships/neutral/starbridge.xml
 dat/ships/neutral/starbridge_sigma.xml
 dat/ships/neutral/tristan.xml
 dat/ships/neutral/vendetta.xml
+dat/ships/neutral/vendetta_whiplash.xml
 dat/ships/neutral/vigilance.xml
 dat/ships/neutral/zebra.xml
 dat/ships/pirate/dealbreaker.xml
 dat/ships/pirate/pirate_admonisher.xml
 dat/ships/pirate/pirate_ancestor.xml
+dat/ships/pirate/pirate_blue_shark.xml
 dat/ships/pirate/pirate_hyena.xml
 dat/ships/pirate/pirate_kestrel.xml
 dat/ships/pirate/pirate_kestrel_yuris_kiss.xml
@@ -612,10 +618,12 @@ dat/ships/thurion/thurion_apprehension.xml
 dat/ships/thurion/thurion_certitude.xml
 dat/ships/thurion/thurion_ingenuity.xml
 dat/ships/thurion/thurion_perspicacity.xml
+dat/ships/thurion/thurion_perspicacity_beta.xml
 dat/ships/thurion/thurion_scintillation.xml
 dat/ships/thurion/thurion_taciturnity.xml
 dat/ships/thurion/thurion_virtuosity.xml
 dat/ships/zalek/zalek_demon.xml
+dat/ships/zalek/zalek_demon_type_iv.xml
 dat/ships/zalek/zalek_diablo.xml
 dat/ships/zalek/zalek_drone_bomber.xml
 dat/ships/zalek/zalek_drone_heavy.xml
@@ -2559,7 +2567,9 @@ dat/tech/crappy_core_systems.xml
 dat/tech/criminal_outfits.xml
 dat/tech/dvaered_elite_outfits.xml
 dat/tech/dvaered_military_outfits.xml
-dat/tech/dvaered_military_ships.xml
+dat/tech/dvaered_ships_large.xml
+dat/tech/dvaered_ships_medium.xml
+dat/tech/dvaered_ships_small.xml
 dat/tech/empire_elite_outfits.xml
 dat/tech/empire_military_outfits.xml
 dat/tech/empire_ships_large.xml
@@ -2709,6 +2719,7 @@ dat/unidiff/hypergates_1.xml
 dat/unidiff/hypergates_2.xml
 dat/unidiff/hypergates_3.xml
 dat/unidiff/levo_safe.xml
+dat/unidiff/melendez_dome_xy37.xml
 dat/unidiff/minerva_1.xml
 dat/unidiff/minerva_2.xml
 dat/unidiff/minerva_3.xml
@@ -2943,6 +2954,7 @@ dat/events/pers/minerva.lua
 dat/events/pers/pirate.lua
 dat/events/pers/sirius.lua
 dat/events/pers/soromid.lua
+dat/events/pers/thurion.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
@@ -3330,8 +3342,10 @@ dat/outfits/unique/bioship_pheromone_emitter.lua
 dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
+dat/outfits/unique/fuelshell_plating.lua
 dat/outfits/unique/poi_data.lua
 dat/outfits/unique/pulse_scanner.lua
+dat/outfits/unique/squadron_synchronizer_module.lua
 dat/outfits/unique/valkyrie_beam.lua
 dat/outfits/unique/zd5_guardian_unit.lua
 dat/outfits/utility/berserk_chip.lua
@@ -3365,6 +3379,7 @@ dat/scan.lua
 dat/scripts/bioship.lua
 dat/scripts/bioship/intrinsics.lua
 dat/scripts/bioship/skills.lua
+dat/scripts/buyrep.lua
 dat/scripts/cinema.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
@@ -3547,6 +3562,7 @@ dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
+dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua
@@ -3561,6 +3577,7 @@ dat/ships/lua/sirius_providence.lua
 dat/ships/lua/sirius_shaman.lua
 dat/ships/lua/soromid.lua
 dat/ships/lua/thurion.lua
+dat/ships/lua/vendetta_whiplash.lua
 dat/ships/lua/zalek.lua
 dat/ships/lua/zalek_mephisto_type_v.lua
 dat/snd/music.lua

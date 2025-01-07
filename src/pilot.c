@@ -1183,7 +1183,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
    double d;
 
    /* Broadcast the message. */
-   if ( msg[0] != '\0' )
+   if ( ( msg != NULL ) && ( msg[0] != '\0' ) )
       pilot_broadcast( p, msg, 0 );
 
    /* Use the victim's target if the attacker is unknown. */

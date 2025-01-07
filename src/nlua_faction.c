@@ -33,6 +33,7 @@ static int factionL_eq( lua_State *L );
 static int factionL_name( lua_State *L );
 static int factionL_nameRaw( lua_State *L );
 static int factionL_longname( lua_State *L );
+static int factionL_areneutral( lua_State *L );
 static int factionL_areenemies( lua_State *L );
 static int factionL_areallies( lua_State *L );
 static int factionL_usesHiddenJumps( lua_State *L );
@@ -76,6 +77,7 @@ static const luaL_Reg faction_methods[] = {
    { "name", factionL_name },
    { "nameRaw", factionL_nameRaw },
    { "longname", factionL_longname },
+   { "areNeutral", factionL_areneutral },
    { "areEnemies", factionL_areenemies },
    { "areAllies", factionL_areallies },
    { "hit", factionL_hit },
@@ -368,6 +370,23 @@ static int factionL_longname( lua_State *L )
 }
 
 /**
+ * @brief Checks to see if two factions are truly neutral with respect to each
+ * other.
+ *
+ *    @luatparam Faction f Faction to check against.
+ *    @luatparam Faction n Faction to check if is true neutral.
+ *    @luatreturn boolean true if they are truely neutral, false if they aren't.
+ * @luafunc areNeutral
+ */
+static int factionL_areneutral( lua_State *L )
+{
+   int f  = luaL_validfaction( L, 1 );
+   int ff = luaL_validfaction( L, 2 );
+   lua_pushboolean( L, areNeutral( f, ff ) );
+   return 1;
+}
+
+/**
  * @brief Checks to see if f is an enemy of e.
  *
  * @usage if f:areEnemies( faction.get( "Dvaered" ) ) then
@@ -376,7 +395,7 @@ static int factionL_longname( lua_State *L )
  *    @luatparam Faction e Faction to check if is an enemy.
  *    @luatparam[opt] System sys System to check to see if they are enemies in.
  * Mainly for when comparing to the player's faction.
- *    @luatreturn string true if they are enemies, false if they aren't.
+ *    @luatreturn boolean true if they are enemies, false if they aren't.
  * @luafunc areEnemies
  */
 static int factionL_areenemies( lua_State *L )

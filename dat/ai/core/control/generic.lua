@@ -1018,6 +1018,10 @@ function distress_handler( pilot, attacker )
    local pfact   = pilot:faction()
    local afact   = attacker:faction()
    local aifact  = p:faction()
+
+   -- Ignore truly neutral targets
+   if pfact:areNeutral( aifact ) then return end
+
    local p_ally  = aifact:areAllies(pfact)
    local a_ally  = aifact:areAllies(afact)
    local p_enemy = aifact:areEnemies(pfact)
@@ -1050,7 +1054,7 @@ function distress_handler( pilot, attacker )
       -- as the aggressor and try to kill them. For now, we limit this
       -- behaviour to natural pilots.  detect that.
       local p_m = pilot:memory()
-      if p_m.natural and (not p_m.aggressive or attacker:withPlayer()) then
+      if p_m.natural and not aifact:areNeutral(pfact) and (not p_m.aggressive or attacker:withPlayer()) then
          badguy = attacker
       end
    end

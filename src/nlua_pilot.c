@@ -4860,12 +4860,13 @@ static int pilotL_getArmour( lua_State *L )
       lua_pushnumber( L, p->armour );
    else
       lua_pushnumber(
-         L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 0. );
+         L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 100. );
    return 1;
 }
 
 /**
- * @brief Gets the pilot's shield.
+ * @brief Gets the pilot's shield. If no shields, it returns 1. in relative
+ * mode.
  *
  * @usage shield = p:shield()
  *
@@ -4884,7 +4885,7 @@ static int pilotL_getShield( lua_State *L )
       lua_pushnumber( L, p->shield );
    else
       lua_pushnumber(
-         L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 0. );
+         L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 100. );
    return 1;
 }
 
@@ -6804,6 +6805,16 @@ static int pilotL_distress( lua_State *L )
    Pilot        *p           = luaL_validpilot( L, 1 );
    Pilot        *attacker    = luaL_validpilot( L, 2 );
    Pilot *const *pilot_stack = pilot_getAll();
+
+   /* Check if spob is in range. */
+   for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
+      Spob *spb = cur_system->spobs[i];
+      if ( spob_hasService( spb, SPOB_SERVICE_INHABITED ) &&
+           pilot_inRangeSpob( p, i ) ) {
+         spob_distress( spb, p, attacker );
+      }
+   }
+
    /* Now we must check to see if a pilot is in range. */
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *pi = pilot_stack[i];

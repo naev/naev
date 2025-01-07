@@ -632,6 +632,8 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->accel < 0, _( "!! Insufficient Accel" ) );
    SPACEWORTHY_CHECK( p->speed < 0, _( "!! Insufficient Speed" ) );
    SPACEWORTHY_CHECK( p->turn < 0, _( "!! Insufficient Turn" ) );
+   SPACEWORTHY_CHECK( p->stats.time_speedup <= 0.,
+                      _( "!! Defies Laws of Physics" ) );
 
    /* Health. */
    SPACEWORTHY_CHECK( p->armour < 0., _( "!! Insufficient Armour" ) );
@@ -652,6 +654,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
                       _( "!! Insufficient Free Cargo Space" ) );
    SPACEWORTHY_CHECK( p->crew < 0, _( "!! Insufficient Crew" ) );
    SPACEWORTHY_CHECK( pilot_massFactor( p ) < 0.05, ( "!! Too Heavy" ) );
+   SPACEWORTHY_CHECK( p->solid.mass <= 0., _( "!! Defies Laws of Physics" ) );
 
    /* No need to mess with the string. */
    if ( buf == NULL )
@@ -857,9 +860,9 @@ int pilot_maxAmmoO( const Pilot *p, const Outfit *o )
    if ( o == NULL )
       return 0;
    else if ( outfit_isLauncher( o ) )
-      max = round( (double)o->u.lau.amount * p->stats.ammo_capacity );
+      max = MAX( 0, round( (double)o->u.lau.amount * p->stats.ammo_capacity ) );
    else if ( outfit_isFighterBay( o ) )
-      max = round( (double)o->u.bay.amount * p->stats.fbay_capacity );
+      max = MAX( 0, round( (double)o->u.bay.amount * p->stats.fbay_capacity ) );
    else
       max = 0;
    return max;
@@ -1152,6 +1155,9 @@ void pilot_calcStats( Pilot *pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
+
+   /* Some sanity checks. */
+   pilot->stats.time_speedup = MAX( pilot->stats.time_speedup, 0. );
 
    /* Deployed fighters with no mothership take damage over time. */
    if ( pilot_isFlag( pilot, PILOT_CARRIER_DIED ) ) {
