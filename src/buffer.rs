@@ -8,8 +8,32 @@ use crate::{formatx, gettext, warn};
 pub struct Buffer {
     pub buffer: glow::Buffer,
     datalen: usize, // in u8
-    target: BufferTarget,
-    usage: BufferUsage,
+    target: u32,
+    usage: u32,
+}
+impl Buffer {
+    pub fn write(&self, ctx: &Context, data: &[u8]) -> Result<()> {
+        if data.len() != self.datalen {
+            anyhow::bail!("buffer data length mismatch!");
+        }
+        let gl = &ctx.gl;
+        unsafe {
+            gl.bind_buffer(self.target, Some(self.buffer));
+            gl.buffer_data_u8_slice(self.target, data, self.usage);
+            gl.bind_buffer(self.target, None);
+        }
+        Ok(())
+    }
+    pub fn bind(&self, gl: &glow::Context) {
+        unsafe {
+            gl.bind_buffer(self.target, Some(self.buffer));
+        }
+    }
+    pub fn unbind(&self, gl: &glow::Context) {
+        unsafe {
+            gl.bind_buffer(self.target, None);
+        }
+    }
 }
 impl Drop for Buffer {
     fn drop(&mut self) {
@@ -93,17 +117,27 @@ impl<'a> BufferBuilder<'a> {
         let buffer = unsafe { gl.create_buffer().map_err(|e| anyhow::anyhow!(e))? };
 
         let target = self.target.to_gl();
+        let usage = self.usage.to_gl();
         unsafe {
             gl.bind_buffer(target, Some(buffer));
-            gl.buffer_data_u8_slice(target, self.data, self.usage.to_gl());
+            gl.buffer_data_u8_slice(target, self.data, usage);
             gl.bind_buffer(target, None);
         }
+
+        /*
+        let size = match self.target {
+            BufferTarget::Uniform => {
+                unsafe{ gl.get_active_uniform_block_parameter_i32( shader.program, buffer, glow::UNIFORM_BLOCK_DATA_SIZE ) as usize }
+            },
+            _ => 0,
+        };
+        */
 
         Ok(Buffer {
             buffer,
             datalen: self.data.len(),
-            target: self.target,
-            usage: self.usage,
+            target: target,
+            usage: usage,
         })
     }
 }

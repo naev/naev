@@ -6,7 +6,7 @@ use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Vector3, Vector4};
 use std::rc::Rc;
 
-use crate::buffer::{Buffer, BufferBuilder, BufferUsage};
+use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
 use crate::ngl::{Context, CONTEXT};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
@@ -45,7 +45,8 @@ pub struct Vertex {
 #[derive(Debug, Copy, Clone, Default, ShaderType)]
 pub struct PrimitiveUniform {
     view: Matrix4<f32>,
-    norm: Matrix3<f32>,
+    normal: Matrix3<f32>,
+    shadow: [Matrix4<f32>; MAX_LIGHTS],
 }
 
 impl PrimitiveUniform {
@@ -71,8 +72,12 @@ pub struct MaterialUniform {
     roughness_factor: f32,
     blend: i32,
     diffuse_texcoord: u32,
+    metallic_texcoord: u32,
+    emissive_texcoord: u32,
     normal_texcoord: u32,
+    occlusion_texcoord: u32,
     has_normal: u32,
+    normal_scale: u32,
 }
 
 impl MaterialUniform {
@@ -92,17 +97,16 @@ impl MaterialUniform {
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default, ShaderType)]
 pub struct LightUniform {
+    sun: u32,
     position: Vector3<f32>,
     colour: Vector3<f32>,
     intensity: f32,
-    sun: u32,
 }
 
 #[repr(C)]
 #[derive(Debug, Clone, Default, ShaderType)]
 pub struct LightingUniform {
     ambient: Vector3<f32>,
-    intensity: f32,
     nlights: u32,
     //#[size(runtime)]
     //lights: Vec<LightUniform>,
@@ -119,7 +123,6 @@ impl LightingUniform {
     pub fn default() -> Self {
         LightingUniform {
             ambient: Vector3::new(0.0, 0.0, 0.0),
-            intensity: 1.0,
             nlights: 2,
             lights: [
                 // Key Light
@@ -155,23 +158,85 @@ impl LightingUniform {
     }
 }
 
-pub struct GltfShader {
+pub struct ModelShader {
     shader: Shader,
+    vertex: u32,
+    primitive_uniform: u32,
+    material_uniform: u32,
+    lighting_uniform: u32,
+    tex_diffuse: glow::UniformLocation,
+    tex_metallic: glow::UniformLocation,
+    tex_emissive: glow::UniformLocation,
+    tex_normal: glow::UniformLocation,
+    tex_occlusion: glow::UniformLocation,
 }
-impl GltfShader {
+impl ModelShader {
+    fn get_attrib(gl: &glow::Context, shader: &Shader, name: &str) -> Result<u32> {
+        match unsafe { gl.get_attrib_location(shader.program, name) } {
+            Some(idx) => Ok(idx),
+            None => {
+                anyhow::bail!("Model shader does not have '{}' attrib!", name);
+            }
+        }
+    }
+    fn get_uniform(
+        gl: &glow::Context,
+        shader: &Shader,
+        name: &str,
+    ) -> Result<glow::UniformLocation> {
+        match unsafe { gl.get_uniform_location(shader.program, name) } {
+            Some(idx) => Ok(idx),
+            None => {
+                anyhow::bail!("Model shader does not have '{}' uniform!", name);
+            }
+        }
+    }
+    fn get_uniform_block(gl: &glow::Context, shader: &Shader, name: &str) -> Result<u32> {
+        match unsafe { gl.get_uniform_block_index(shader.program, name) } {
+            Some(idx) => Ok(idx),
+            None => {
+                anyhow::bail!("Model shader does not have '{}' uniform block!", name);
+            }
+        }
+    }
+
     pub fn new(ctx: &Context) -> Result<Self> {
+        let gl = &ctx.gl;
         let shader = ShaderBuilder::new(Some("PBR Shader"))
-            .vert_file("gltf.vert")
-            .frag_file("gltf_pbr.frag")
+            .vert_file("material_pbr.vert")
+            .frag_file("material_pbr.frag")
             .build(ctx)?;
 
-        Ok(GltfShader { shader })
+        let vertex = Self::get_attrib(gl, &shader, "vertex")?;
+
+        let primitive_uniform = Self::get_uniform_block(gl, &shader, "Primitive")?;
+        let material_uniform = Self::get_uniform_block(gl, &shader, "Material")?;
+        let lighting_uniform = Self::get_uniform_block(gl, &shader, "Lighting")?;
+
+        let tex_diffuse = Self::get_uniform(gl, &shader, "baseColour_tex")?;
+        let tex_metallic = Self::get_uniform(gl, &shader, "metallic_tex")?;
+        let tex_emissive = Self::get_uniform(gl, &shader, "emissive_tex")?;
+        let tex_normal = Self::get_uniform(gl, &shader, "normal_tex")?;
+        let tex_occlusion = Self::get_uniform(gl, &shader, "occlusion_tex")?;
+
+        Ok(ModelShader {
+            shader,
+            vertex,
+            primitive_uniform,
+            material_uniform,
+            lighting_uniform,
+            tex_diffuse,
+            tex_metallic,
+            tex_emissive,
+            tex_normal,
+            tex_occlusion,
+        })
     }
 }
 
 pub struct Material {
-    data: MaterialUniform,
-    //shader: Rc<Shader>,
+    uniform_data: MaterialUniform,
+    uniform_buffer: Buffer,
     diffuse: Rc<Texture>,
 }
 
@@ -181,7 +246,6 @@ impl Material {
         mat: &gltf::Material,
         textures: &[Rc<Texture>],
     ) -> Result<Self> {
-        //let shader = GltfShader::new(ctx);
         let mut data = MaterialUniform::new();
 
         let pbr = mat.pbr_metallic_roughness();
@@ -204,17 +268,23 @@ impl Material {
         };
 
         let data_raw = data.buffer()?;
+        let uniform_buffer = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(data.buffer()?.into_inner().as_slice())
+            .build(ctx)?;
 
         Ok(Material {
-            data,
-            //shader,
+            uniform_data: data,
+            uniform_buffer,
             diffuse,
         })
     }
 }
 
 pub struct Primitive {
-    uniform: PrimitiveUniform,
+    uniform_data: PrimitiveUniform,
+    uniform_buffer: Buffer,
     topology: u32,
     vertices: Buffer,
     indices: Buffer,
@@ -288,9 +358,16 @@ impl Primitive {
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&index_data))
             .build(ctx)?;
+        let uniform_data = PrimitiveUniform::default();
+        let uniform_buffer = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(uniform_data.buffer()?.into_inner().as_slice())
+            .build(ctx)?;
 
         Ok(Primitive {
-            uniform: Default::default(),
+            uniform_data,
+            uniform_buffer,
             topology,
             vertices,
             indices,
@@ -310,7 +387,12 @@ impl Mesh {
         Mesh { primitives }
     }
 
-    pub fn render(&self, transform: &Matrix4<f32>, ctx: &Context) {
+    pub fn render(
+        &self,
+        shader: &ModelShader,
+        transform: &Matrix4<f32>,
+        ctx: &Context,
+    ) -> Result<()> {
         #[rustfmt::skip]
         const OPENGL_TO_WGPU: Matrix4<f32> = Matrix4::new(
             1.0, 0.0, 0.0, 0.0,
@@ -333,25 +415,19 @@ impl Mesh {
 
         let gl = &ctx.gl;
         for p in &self.primitives {
+            // Update the primitive uniform
             let new_transform = VIEW * transform;
-            let mut data = p.uniform;
+            let mut data = p.uniform_data;
             data.view = OPENGL_TO_WGPU * new_transform;
-            data.norm = new_transform
+            data.normal = new_transform
                 .fixed_resize::<3, 3>(0.0)
                 .try_inverse()
                 .unwrap()
                 .transpose();
+            p.uniform_buffer
+                .write(ctx, data.buffer()?.into_inner().as_slice())?;
 
             /*
-            match data.buffer() {
-                Ok(buffer) => {
-                    renderer
-                        .queue
-                        .write_buffer(&p.buffer, 0, buffer.into_inner().as_slice());
-                }
-                Err(_) => (),
-            }
-
             render_pass.set_pipeline(&p.render_pipeline);
             render_pass.set_bind_group(0, lighting_bind, &[]);
             render_pass.set_bind_group(1, &p.material.bind, &[]);
@@ -361,13 +437,32 @@ impl Mesh {
             render_pass.draw_indexed(0..p.num_indices, 0, 0..1);
             */
 
+            let m = &p.material;
+
+            // Render
             unsafe {
                 gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, Some(p.indices.buffer));
                 gl.bind_buffer(glow::ARRAY_BUFFER, Some(p.vertices.buffer));
+                gl.enable_vertex_attrib_array(shader.vertex);
+
+                p.uniform_buffer.bind(gl);
+                gl.bind_buffer_base(
+                    glow::UNIFORM_BUFFER,
+                    shader.primitive_uniform,
+                    Some(p.uniform_buffer.buffer),
+                );
+
+                m.uniform_buffer.bind(gl);
+                gl.bind_buffer_base(
+                    glow::UNIFORM_BUFFER,
+                    shader.material_uniform,
+                    Some(p.uniform_buffer.buffer),
+                );
 
                 gl.draw_elements(p.topology, p.num_indices, p.element_type, 0);
             }
         }
+        Ok(())
     }
 }
 
@@ -398,14 +493,20 @@ impl Node {
         })
     }
 
-    pub fn render(&mut self, transform: &Matrix4<f32>, ctx: &Context) {
+    pub fn render(
+        &mut self,
+        shader: &ModelShader,
+        transform: &Matrix4<f32>,
+        ctx: &Context,
+    ) -> Result<()> {
         let new_transform = self.transform * transform;
         if let Some(mesh) = &self.mesh {
-            mesh.render(&new_transform, ctx);
+            mesh.render(shader, &new_transform, ctx)?;
         }
         for child in &mut self.children {
-            child.render(&new_transform, ctx);
+            child.render(shader, &new_transform, ctx)?;
         }
+        Ok(())
     }
 }
 
@@ -423,16 +524,23 @@ impl Scene {
         Ok(Scene { nodes })
     }
 
-    pub fn render(&mut self, transform: &Matrix4<f32>, ctx: &Context) {
+    pub fn render(
+        &mut self,
+        shader: &ModelShader,
+        transform: &Matrix4<f32>,
+        ctx: &Context,
+    ) -> Result<()> {
         for node in &mut self.nodes {
-            node.render(transform, ctx);
+            node.render(shader, transform, ctx)?;
         }
+        Ok(())
     }
 }
 
 pub struct Model {
     scenes: Vec<Scene>,
     //lighting_buffer: Buffer,
+    shader: ModelShader,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -539,12 +647,33 @@ impl Model {
             .map(|scene| Scene::from_gltf(&scene, &meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
-        Ok(Model { scenes })
+        let shader = ModelShader::new(ctx)?;
+        Ok(Model { scenes, shader })
     }
 
-    pub fn render(&mut self, transform: &Matrix4<f32>, ctx: &Context) {
-        for s in &mut self.scenes {
-            s.render(transform, ctx);
+    pub fn render(&mut self, transform: &Matrix4<f32>, ctx: &Context) -> Result<()> {
+        // TODO Update lighting.
+        let gl = &ctx.gl;
+
+        // Set up
+        unsafe {
+            gl.use_program(Some(self.shader.shader.program));
         }
+
+        // TODO shadow pass
+
+        // Mesh pass
+        for s in &mut self.scenes {
+            s.render(&self.shader, transform, ctx)?;
+        }
+
+        // Clean up
+        unsafe {
+            gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
+            gl.bind_buffer(glow::ARRAY_BUFFER, None);
+            gl.use_program(None);
+        }
+
+        Ok(())
     }
 }
