@@ -60,7 +60,7 @@ in vec2 tex_coord1;
 in vec3 position;
 in vec3 shadow[MAX_LIGHTS];
 in vec3 normal;
-out vec4 colour_out;
+layout(location = 0) out vec4 colour_out;
 
 float pow5( float x ) {
    float x2 = x * x;
