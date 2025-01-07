@@ -77,7 +77,7 @@ pub struct MaterialUniform {
     normal_texcoord: u32,
     occlusion_texcoord: u32,
     has_normal: u32,
-    normal_scale: u32,
+    normal_scale: f32,
 }
 
 impl MaterialUniform {
@@ -179,13 +179,21 @@ impl ModelShader {
             }
         }
     }
-    fn get_uniform(
+    fn get_uniform_tex(
         gl: &glow::Context,
         shader: &Shader,
         name: &str,
+        default: i32,
     ) -> Result<glow::UniformLocation> {
         match unsafe { gl.get_uniform_location(shader.program, name) } {
-            Some(idx) => Ok(idx),
+            Some(idx) => {
+                unsafe {
+                    shader.use_program(gl);
+                    gl.uniform_1_i32(Some(&idx), default);
+                    gl.use_program(None);
+                }
+                Ok(idx)
+            }
             None => {
                 anyhow::bail!("Model shader does not have '{}' uniform!", name);
             }
@@ -213,11 +221,11 @@ impl ModelShader {
         let material_uniform = Self::get_uniform_block(gl, &shader, "Material")?;
         let lighting_uniform = Self::get_uniform_block(gl, &shader, "Lighting")?;
 
-        let tex_diffuse = Self::get_uniform(gl, &shader, "baseColour_tex")?;
-        let tex_metallic = Self::get_uniform(gl, &shader, "metallic_tex")?;
-        let tex_emissive = Self::get_uniform(gl, &shader, "emissive_tex")?;
-        let tex_normal = Self::get_uniform(gl, &shader, "normal_tex")?;
-        let tex_occlusion = Self::get_uniform(gl, &shader, "occlusion_tex")?;
+        let tex_diffuse = Self::get_uniform_tex(gl, &shader, "baseColour_tex", 0)?;
+        let tex_metallic = Self::get_uniform_tex(gl, &shader, "metallic_tex", 1)?;
+        let tex_emissive = Self::get_uniform_tex(gl, &shader, "emissive_tex", 2)?;
+        let tex_normal = Self::get_uniform_tex(gl, &shader, "normal_tex", 3)?;
+        let tex_occlusion = Self::get_uniform_tex(gl, &shader, "occlusion_tex", 4)?;
 
         Ok(ModelShader {
             shader,
@@ -238,6 +246,12 @@ pub struct Material {
     uniform_data: MaterialUniform,
     uniform_buffer: Buffer,
     diffuse: Rc<Texture>,
+    metallic: Rc<Texture>,
+    emissive: Rc<Texture>,
+    normalmap: Rc<Texture>,
+    ambientocclusion: Rc<Texture>,
+    blend: bool,
+    double_sided: bool,
 }
 
 impl Material {
@@ -266,11 +280,40 @@ impl Material {
             }
             None => tex_ones(ctx)?,
         };
+        let metallic = match pbr.metallic_roughness_texture() {
+            Some(info) => {
+                data.metallic_texcoord = info.tex_coord();
+                textures[info.texture().index()].clone()
+            }
+            None => tex_ones(ctx)?,
+        };
+        let emissive = match mat.emissive_texture() {
+            Some(info) => {
+                data.emissive_texcoord = info.tex_coord();
+                textures[info.texture().index()].clone()
+            }
+            None => tex_zeros(ctx)?,
+        };
+        let normalmap = match mat.normal_texture() {
+            Some(info) => {
+                data.normal_texcoord = info.tex_coord();
+                data.normal_scale = info.scale();
+                textures[info.texture().index()].clone()
+            }
+            None => tex_zeros(ctx)?,
+        };
+        let ambientocclusion = match mat.occlusion_texture() {
+            Some(info) => {
+                // TODO strength?
+                data.occlusion_texcoord = info.tex_coord();
+                textures[info.texture().index()].clone()
+            }
+            None => tex_ones(ctx)?,
+        };
 
-        let data_raw = data.buffer()?;
         let uniform_buffer = BufferBuilder::new()
             .target(BufferTarget::Uniform)
-            .usage(BufferUsage::Dynamic)
+            .usage(BufferUsage::Static)
             .data(data.buffer()?.into_inner().as_slice())
             .build(ctx)?;
 
@@ -278,6 +321,12 @@ impl Material {
             uniform_data: data,
             uniform_buffer,
             diffuse,
+            metallic,
+            emissive,
+            normalmap,
+            ambientocclusion,
+            blend: data.blend != 0,
+            double_sided: mat.double_sided(),
         })
     }
 }
@@ -337,8 +386,6 @@ impl Primitive {
             Some(idx) => materials[idx].clone(),
             None => todo!(),
         };
-
-        //let buffer_data = uniform.buffer()?;
 
         let topology = match prim.mode() {
             gltf::mesh::Mode::Points => glow::POINTS,
@@ -427,16 +474,6 @@ impl Mesh {
             p.uniform_buffer
                 .write(ctx, data.buffer()?.into_inner().as_slice())?;
 
-            /*
-            render_pass.set_pipeline(&p.render_pipeline);
-            render_pass.set_bind_group(0, lighting_bind, &[]);
-            render_pass.set_bind_group(1, &p.material.bind, &[]);
-            render_pass.set_bind_group(2, &p.bind, &[]);
-            render_pass.set_vertex_buffer(0, p.vertices.slice(..));
-            render_pass.set_index_buffer(p.indices.slice(..), wgpu::IndexFormat::Uint32);
-            render_pass.draw_indexed(0..p.num_indices, 0, 0..1);
-            */
-
             let m = &p.material;
 
             // Render
@@ -445,13 +482,13 @@ impl Mesh {
                 gl.bind_buffer(glow::ARRAY_BUFFER, Some(p.vertices.buffer));
                 gl.enable_vertex_attrib_array(shader.vertex);
 
+                // Uniforms
                 p.uniform_buffer.bind(gl);
                 gl.bind_buffer_base(
                     glow::UNIFORM_BUFFER,
                     shader.primitive_uniform,
                     Some(p.uniform_buffer.buffer),
                 );
-
                 m.uniform_buffer.bind(gl);
                 gl.bind_buffer_base(
                     glow::UNIFORM_BUFFER,
@@ -459,7 +496,33 @@ impl Mesh {
                     Some(p.uniform_buffer.buffer),
                 );
 
+                // Textures
+                gl.active_texture(glow::TEXTURE1);
+                m.metallic.bind(gl);
+                gl.active_texture(glow::TEXTURE2);
+                m.emissive.bind(gl);
+                gl.active_texture(glow::TEXTURE3);
+                m.normalmap.bind(gl);
+                gl.active_texture(glow::TEXTURE4);
+                m.ambientocclusion.bind(gl);
+                gl.active_texture(glow::TEXTURE0); // Have to end on TEXTURE0
+                m.diffuse.bind(gl);
+
+                if m.double_sided {
+                    gl.disable(glow::CULL_FACE);
+                }
+                if m.blend {
+                    gl.depth_mask(false);
+                }
+
                 gl.draw_elements(p.topology, p.num_indices, p.element_type, 0);
+
+                if m.double_sided {
+                    gl.enable(glow::CULL_FACE);
+                }
+                if m.blend {
+                    gl.depth_mask(true);
+                }
             }
         }
         Ok(())
@@ -539,7 +602,7 @@ impl Scene {
 
 pub struct Model {
     scenes: Vec<Scene>,
-    //lighting_buffer: Buffer,
+    lighting_buffer: Buffer,
     shader: ModelShader,
 }
 
@@ -648,17 +711,43 @@ impl Model {
             .collect::<Result<Vec<_>, _>>()?;
 
         let shader = ModelShader::new(ctx)?;
-        Ok(Model { scenes, shader })
+
+        let lighting_data = LightingUniform::default();
+        let lighting_buffer = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(lighting_data.buffer()?.into_inner().as_slice())
+            .build(ctx)?;
+
+        Ok(Model {
+            scenes,
+            lighting_buffer,
+            shader,
+        })
     }
 
-    pub fn render(&mut self, transform: &Matrix4<f32>, ctx: &Context) -> Result<()> {
-        // TODO Update lighting.
+    pub fn render(
+        &mut self,
+        ctx: &Context,
+        lighting: &LightingUniform,
+        transform: &Matrix4<f32>,
+    ) -> Result<()> {
         let gl = &ctx.gl;
 
-        // Set up
+        // Update lighting
+        self.lighting_buffer
+            .write(ctx, lighting.buffer()?.into_inner().as_slice())?;
+        self.lighting_buffer.bind(&ctx.gl);
         unsafe {
-            gl.use_program(Some(self.shader.shader.program));
-        }
+            gl.bind_buffer_base(
+                glow::UNIFORM_BUFFER,
+                self.shader.lighting_uniform,
+                Some(self.lighting_buffer.buffer),
+            );
+        };
+
+        // Set up
+        self.shader.shader.use_program(gl);
 
         // TODO shadow pass
 
@@ -669,6 +758,7 @@ impl Model {
 
         // Clean up
         unsafe {
+            gl.disable_vertex_attrib_array(self.shader.vertex);
             gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
             gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.use_program(None);

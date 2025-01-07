@@ -176,7 +176,7 @@ impl Drop for Texture {
     }
 }
 impl Texture {
-    fn try_clone(&self) -> Result<Self> {
+    pub fn try_clone(&self) -> Result<Self> {
         let ctx = CONTEXT.get().unwrap();
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
@@ -207,6 +207,12 @@ impl Texture {
             sampler,
             flipv: self.flipv,
         })
+    }
+
+    pub fn bind(&self, gl: &glow::Context) {
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, Some(self.texture.texture));
+        }
     }
 }
 

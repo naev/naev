@@ -83,6 +83,12 @@ impl Shader {
         }
         Ok(program)
     }
+
+    pub fn use_program(&self, gl: &glow::Context) {
+        unsafe {
+            gl.use_program(Some(self.program));
+        }
+    }
 }
 
 enum ShaderSource {
