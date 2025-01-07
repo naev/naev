@@ -468,8 +468,8 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       /* Render the model. */
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-      gltf_renderScene( gl_screen.fbo[2], s->gfx_3d, s->gfx_3d->scene_body, &H,
-                        t, rendersize, &L );
+      gltf_renderScene( gl_screen.fbo[2], s->gfx_3d,
+                        gltf_sceneBody( s->gfx_3d ), &H, t, rendersize, &L );
       glBindFramebuffer( GL_READ_FRAMEBUFFER, gl_screen.fbo[2] );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
       glBlitFramebuffer( 0, 0, rendersize, rendersize, 0, fbosize, fbosize, 0,
@@ -512,7 +512,7 @@ int ship_gfxAnimated( const Ship *s )
 {
    if ( s->gfx_3d == NULL )
       return 0;
-   return ( s->gfx_3d->nanimations > 0 );
+   return ( gltf_numAnimations( s->gfx_3d ) > 0 );
 }
 
 /**
@@ -655,17 +655,24 @@ int ship_gfxLoad( Ship *s )
    /* Load the 3d model */
    snprintf( str, sizeof( str ), SHIP_3DGFX_PATH "%s/%s.gltf", base_path, buf );
    if ( PHYSFS_exists( str ) ) {
+      const GltfTrail *trails;
+      const GltfMount *mounts;
+      int              ntrails;
+      int              nmounts;
+
       // DEBUG( "Found 3D graphics for '%s' at '%s'!", s->name, str );
       s->gfx_3d = gltf_loadFromFile( str );
+      trails    = gltf_trails( s->gfx_3d, &ntrails );
+      mounts    = gltf_mounts( s->gfx_3d, &nmounts );
 
       /* Replace trails if applicable. */
-      if ( array_size( s->gfx_3d->trails ) > 0 ) {
+      if ( ntrails > 0 ) {
          array_erase( &s->trail_emitters, array_begin( s->trail_emitters ),
                       array_end( s->trail_emitters ) );
          ship_setFlag( s, SHIP_3DTRAILS );
 
-         for ( int i = 0; i < array_size( s->gfx_3d->trails ); i++ ) {
-            GltfTrail       *t = &s->gfx_3d->trails[i];
+         for ( int i = 0; i < ntrails; i++ ) {
+            const GltfTrail *t = &trails[i];
             ShipTrailEmitter trail;
 
             /* New trail. */
@@ -680,20 +687,17 @@ int ship_gfxLoad( Ship *s )
       }
 
       /* Replace mount points if applicable. */
-      if ( array_size( s->gfx_3d->mounts ) > 0 ) {
-         int n = array_size( s->gfx_3d->mounts );
-
+      if ( nmounts > 0 ) {
          ship_setFlag( s, SHIP_3DMOUNTS );
-         if ( n < array_size( s->outfit_weapon ) )
+         if ( nmounts < array_size( s->outfit_weapon ) )
             WARN( _( "Number of 3D weapon mounts from GLTF file for ship '%s' "
                      "is less than the "
                      "number of ship weapons! Got %d, expected at least %d." ),
-                  s->name, n, array_size( s->outfit_weapon ) );
+                  s->name, nmounts, array_size( s->outfit_weapon ) );
 
          for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
             ShipMount *sm = &s->outfit_weapon[i].mount;
-            vec3_copy( &sm->pos,
-                       &s->gfx_3d->mounts[i % n].pos ); /* Loop over. */
+            vec3_copy( &sm->pos, &mounts[i % nmounts].pos ); /* Loop over. */
             vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
          }
       }
@@ -1387,10 +1391,11 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
    mat4_scale_xy( &tex_mat, scale / ship_fbos, scale / ship_fbos );
 
    /* Actually render. */
-   if ( ( engine_glow > 0. ) && ( obj->scene_engine >= 0 ) ) {
+   int scene_body   = gltf_sceneBody( obj );
+   int scene_engine = gltf_sceneEngine( obj );
+   if ( ( engine_glow > 0. ) && ( scene_engine >= 0 ) ) {
       if ( engine_glow >= 1. ) {
-         gltf_renderScene( ship_fbo[0], obj, obj->scene_engine, H, t, scale,
-                           L );
+         gltf_renderScene( ship_fbo[0], obj, scene_engine, H, t, scale, L );
       } else {
          /* More scissors on the remaining ship fbos. */
          glEnable( GL_SCISSOR_TEST );
@@ -1401,9 +1406,8 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
          glDisable( GL_SCISSOR_TEST );
 
          /* First render separately. */
-         gltf_renderScene( ship_fbo[1], obj, obj->scene_body, H, t, scale, L );
-         gltf_renderScene( ship_fbo[2], obj, obj->scene_engine, H, t, scale,
-                           L );
+         gltf_renderScene( ship_fbo[1], obj, scene_body, H, t, scale, L );
+         gltf_renderScene( ship_fbo[2], obj, scene_engine, H, t, scale, L );
 
          /* Now merge to main framebuffer. */
          glBindFramebuffer( GL_FRAMEBUFFER, ship_fbo[0] );
@@ -1422,7 +1426,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
           * framebuffer in the gui. */
       }
    } else
-      gltf_renderScene( ship_fbo[0], obj, obj->scene_body, H, t, scale, L );
+      gltf_renderScene( ship_fbo[0], obj, scene_body, H, t, scale, L );
 
    /*
     * First do sharpen pass.
