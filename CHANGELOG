@@ -32,6 +32,7 @@
    * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
+   * minerva missions: fixed a ship not spawning correctly
    * Minor typo fixes and translation updates
    * Large cargo hulls now match the cargo difference of the small and medium hulls
 
