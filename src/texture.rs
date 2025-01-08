@@ -6,7 +6,7 @@ use sdl2 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
-use std::sync::{Arc, LazyLock, Mutex, Weak};
+use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::ngl::CONTEXT;
 use crate::{formatx, warn};
@@ -71,6 +71,14 @@ impl TextureData {
     /// Checks to see if a TextureData exists.
     fn exists(name: &str) -> Option<Arc<Self>> {
         let textures = TEXTURE_DATA.lock().unwrap();
+        Self::exists_textures(name, &textures)
+    }
+
+    /// Checks to see if a TextureData exists.
+    fn exists_textures(
+        name: &str,
+        textures: &MutexGuard<'_, Vec<Weak<TextureData>>>,
+    ) -> Option<Arc<Self>> {
         for tex in textures.iter() {
             if let Some(t) = tex.upgrade() {
                 if let Some(tname) = &t.name {
@@ -273,14 +281,8 @@ impl TextureSource {
 
         // Try to load from name if possible
         if let Some(name) = name {
-            for tex in textures.iter() {
-                if let Some(t) = tex.upgrade() {
-                    if let Some(tname) = &t.name {
-                        if tname == name {
-                            return Ok(t);
-                        }
-                    }
-                }
+            if let Some(t) = TextureData::exists_textures(&name, &textures) {
+                return Ok(t);
             }
         }
 
