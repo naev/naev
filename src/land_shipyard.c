@@ -867,6 +867,12 @@ static void shipyard_renderSlotsOver( double bx, double by, double bw,
                      _( slotSize( slot->slot.size ) ),
                      outfit_slotTypeColourFont( &slot->slot ),
                      _( slotName( slot->slot.type ) ) );
+   if ( slot->exclusive && ( pos < (int)sizeof( alt ) ) )
+      pos += scnprintf( &alt[pos], sizeof( alt ) - pos, "#o%s#0",
+                        _( "\n[exclusive]" ) );
+   if ( slot->locked && ( pos < (int)sizeof( alt ) ) )
+      pos += scnprintf( &alt[pos], sizeof( alt ) - pos, "#r%s#0",
+                        _( "\n[locked]" ) );
 
    /* Draw the alt stuff. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
