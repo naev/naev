@@ -4,6 +4,8 @@ use encase::{ShaderSize, ShaderType};
 use glow::HasContext;
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Vector3, Vector4};
+use std::ffi::CStr;
+use std::os::raw::{c_char, c_int};
 use std::rc::Rc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
@@ -616,7 +618,7 @@ fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec
     }
 }
 
-pub fn load_gltf_texture(
+fn load_gltf_texture(
     ctx: &Context,
     node: &gltf::texture::Texture,
     base: &std::path::Path,
@@ -765,5 +767,47 @@ impl Model {
         }
 
         Ok(())
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let model = Model::from_path(&ctx, path.to_str().unwrap()).unwrap();
+    Box::into_raw(Box::new(model))
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_free_(model: *mut Model) {
+    let _ = unsafe { Box::from_raw(model) }; // should drop
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_render_(
+    fb: naevc::GLuint,
+    model: *mut Model,
+    transform: *const Matrix4<f32>,
+    time: f32,
+    size: f64,
+) {
+    gltf_renderScene_(fb, model, 0, transform, time, size)
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_renderScene_(
+    fb: naevc::GLuint,
+    model: *mut Model,
+    scene: c_int,
+    transform: *const Matrix4<f32>,
+    time: f32,
+    size: f64,
+) {
+    let model = unsafe { &mut *model };
+    let transform = unsafe { &*transform };
+    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    //let lighting = LightingUniform::default();
+    if let Some(scene) = model.scenes.get_mut(scene as usize) {
+        let _ = scene.render(&model.shader, transform, ctx);
     }
 }
