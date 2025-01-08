@@ -6,6 +6,7 @@ use std::os::raw::{c_char, c_int};
 
 use crate::gettext::gettext;
 use crate::ngl::{SafeContext, CONTEXT};
+use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
@@ -95,14 +96,10 @@ static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().un
 
 #[allow(dead_code)]
 pub fn get(name: String) -> Result<&'static SlotProperty> {
-    let query = SlotProperty {
-        name,
-        ..SlotProperty::default()
-    };
     let props = &SLOT_PROPERTIES;
-    match props.binary_search(&query) {
+    match binary_search_by_key_ref(&props, &name, |sp: &SlotProperty| &sp.name) {
         Ok(i) => Ok(props.get(i).expect("")),
-        Err(_) => anyhow::bail!("Slot Property '{name}' not found .", name = &query.name,),
+        Err(_) => anyhow::bail!("Slot Property '{name}' not found .", name = &name,),
     }
 }
 
@@ -121,7 +118,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
             },
         )
         .collect();
-    sp_data.sort();
+    sort_by_key_ref(&mut sp_data, |sp: &SlotProperty| &sp.name);
     Ok(sp_data)
 }
 

@@ -31,6 +31,7 @@ mod shader;
 mod slots;
 mod start;
 mod texture;
+mod utils;
 mod version;
 
 use crate::gettext::gettext;
