@@ -576,6 +576,7 @@ impl Node {
 }
 
 pub struct Scene {
+    name: Option<String>,
     nodes: Vec<Node>,
 }
 
@@ -585,8 +586,8 @@ impl Scene {
             .nodes()
             .map(|node| Node::from_gltf(&node, meshes))
             .collect::<Result<Vec<_>, _>>()?;
-
-        Ok(Scene { nodes })
+        let name = scene.name().map(|s| s.to_owned());
+        Ok(Scene { nodes, name })
     }
 
     pub fn render(
