@@ -218,9 +218,17 @@ impl Texture {
         })
     }
 
-    pub fn bind(&self, gl: &glow::Context) {
+    pub fn bind(&self, gl: &glow::Context, idx: u32) {
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(self.texture.texture));
+            gl.bind_sampler(idx, Some(self.sampler));
+        }
+    }
+
+    pub fn unbind(gl: &glow::Context) {
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, None);
+            gl.bind_sampler(0, None); // TODO handle index?
         }
     }
 }

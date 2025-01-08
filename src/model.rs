@@ -500,15 +500,15 @@ impl Mesh {
 
                 // Textures
                 gl.active_texture(glow::TEXTURE1);
-                m.metallic.bind(gl);
+                m.metallic.bind(gl, 1);
                 gl.active_texture(glow::TEXTURE2);
-                m.emissive.bind(gl);
+                m.emissive.bind(gl, 2);
                 gl.active_texture(glow::TEXTURE3);
-                m.normalmap.bind(gl);
+                m.normalmap.bind(gl, 3);
                 gl.active_texture(glow::TEXTURE4);
-                m.ambientocclusion.bind(gl);
+                m.ambientocclusion.bind(gl, 4);
                 gl.active_texture(glow::TEXTURE0); // Have to end on TEXTURE0
-                m.diffuse.bind(gl);
+                m.diffuse.bind(gl, 0);
 
                 if m.double_sided {
                     gl.disable(glow::CULL_FACE);
