@@ -6,18 +6,15 @@ use std::os::raw::{c_char, c_int};
 
 use crate::gettext::gettext;
 use crate::ndata;
+use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
 #[no_mangle]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
-    let name = CString::new(ptr.to_str().unwrap()).unwrap();
-    let query = DamageType {
-        name,
-        ..DamageType::default()
-    };
-    match DAMAGE_TYPES.binary_search(&query) {
+    let name = ptr.to_str().unwrap().to_owned();
+    match binary_search_by_key_ref(&DAMAGE_TYPES, &name, |dt: &DamageType| &dt.name) {
         Ok(i) => (i + 1) as c_int,
         Err(_) => 0,
     }
@@ -34,7 +31,7 @@ pub extern "C" fn dtype_damageTypeToStr(dtid: c_int) -> *const c_char {
     match get_c(dtid) {
         Some(dt) => match &dt.display {
             Some(d) => d.as_ptr(),
-            None => dt.name.as_ptr(),
+            None => dt.cname.as_ptr(),
         },
         None => std::ptr::null(),
     }
@@ -120,7 +117,8 @@ pub extern "C" fn dtype_calcDamage(
 
 #[derive(Debug, Clone)]
 pub struct DamageType {
-    name: CString,
+    name: String,
+    cname: CString,
     display: Option<CString>,
     shield_mod: f64,
     armour_mod: f64,
@@ -133,18 +131,20 @@ impl DamageType {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
-        let name = CString::new(match root.attribute("name") {
+        let name = String::from(match root.attribute("name") {
             Some(n) => n,
             None => {
                 return nxml_err_attr_missing!("Damage Type", "name");
             }
-        })?;
+        });
+        let cname = CString::new(name.clone())?;
         let display = match root.attribute("display") {
             Some(n) => Some(CString::new(n)?),
             None => None,
         };
         let mut dt = DamageType {
             name,
+            cname,
             display,
             ..DamageType::default()
         };
@@ -157,7 +157,7 @@ impl DamageType {
                 "armour" => dt.armour_mod = nxml::node_f64(node)?,
                 "knockback" => dt.knockback = nxml::node_f64(node)?,
                 tag => {
-                    return nxml_err_node_unknown!("Damage Type", dt.name.to_str()?, tag);
+                    return nxml_err_node_unknown!("Damage Type", &dt.name, tag);
                 }
             }
         }
@@ -168,7 +168,8 @@ impl DamageType {
 impl Default for DamageType {
     fn default() -> Self {
         DamageType {
-            name: CString::default(),
+            name: String::default(),
+            cname: CString::default(),
             display: None,
             shield_mod: 1.0,
             armour_mod: 1.0,
@@ -176,6 +177,7 @@ impl Default for DamageType {
         }
     }
 }
+/*
 impl Ord for DamageType {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         self.name.cmp(&other.name)
@@ -192,6 +194,7 @@ impl PartialEq for DamageType {
     }
 }
 impl Eq for DamageType {}
+*/
 
 use std::sync::LazyLock;
 static DAMAGE_TYPES: LazyLock<Vec<DamageType>> = LazyLock::new(|| load().unwrap());
@@ -208,6 +211,6 @@ pub fn load() -> Result<Vec<DamageType>> {
             }
         })
         .collect();
-    dt_data.sort();
+    sort_by_key_ref(&mut dt_data, |dt: &DamageType| &dt.name);
     Ok(dt_data)
 }
