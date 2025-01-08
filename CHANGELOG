@@ -42,6 +42,7 @@
    * FLF should not cause reputation chains making other factions hostile
    * Fixed the ship_buy hook refering to the ship sold when trading ships
    * Fixed captured ships having inconsistent load outs and not spawning near the pilot
+   * Fixed zebra losing cylinders when thrusting
    * Don't remove builtin weapons when spawning pilots naked
    * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
