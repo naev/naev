@@ -28,6 +28,7 @@ impl Drop for TextureData {
     fn drop(&mut self) {
         let ctx = CONTEXT.get().unwrap();
         unsafe { ctx.gl.delete_texture(self.texture) };
+        // TODO remove from TEXTURE_DATA ideally...
     }
 }
 
