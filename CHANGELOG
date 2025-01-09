@@ -32,9 +32,10 @@
    * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
+   * harjas_vengeance: avoid certain system to make the mission easier to do.
    * minerva missions: fixed a ship not spawning correctly
-   * Minor typo fixes and translation updates
    * Large cargo hulls now match the cargo difference of the small and medium hulls
+   * Minor typo fixes and translation updates
 
 * 0.12.1
    * Fixed psychic orbs having trails
