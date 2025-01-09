@@ -1019,43 +1019,64 @@ function distress_handler( pilot, attacker )
    local afact   = attacker:faction()
    local aifact  = p:faction()
 
-   -- Ignore truly neutral targets
-   if pfact:areNeutral( aifact ) then return end
-
    local p_ally  = aifact:areAllies(pfact)
    local a_ally  = aifact:areAllies(afact)
    local p_enemy = aifact:areEnemies(pfact)
    local a_enemy = aifact:areEnemies(afact)
+   local p_player = pilot:withPlayer()
+   local a_player = attacker:withPlayer()
 
+   --[[
+   Who is the badguy table. Columns refer to attacker, rows to pilot being attacked.
+
+                    attacker
+   pilot     ally    neutral      enemy           player
+            ------------------------------------------
+   ally      nil     attacker     attacker        attacker
+   neutral   nil      nil         attacker        whiteknight
+   enemy    pilot    pilot        50/50           according to standing
+   player   pilot     nil    according to standing    nil
+   --]]
    local badguy
-   -- Victim is ally
-   if p_ally and not pilot:withPlayer() then
-      -- When your allies are fighting, stay out of it.
-      if a_ally then
-         return
-      end
-      -- Victim is an ally, but the attacker isn't.
-      badguy = attacker
-   -- Victim isn't an ally. Attack the victim if the attacker is our ally.
-   elseif a_ally and not attacker:withPlayer() then
-      badguy = pilot
-   elseif p_enemy then
-      -- If they're both enemies, may as well let them destroy each other.
-      if a_enemy then
-         return
-      end
-      badguy = pilot
-   elseif a_enemy then
-      badguy = attacker
-   -- We'll be nice and go after the aggressor if the victim is peaceful.
-   elseif mem.whiteknight then
-      -- In some cases, like wanted pirates in bounty missions, they will be
-      -- labelled as neutral and this can cause nearby NPCs to view the player
-      -- as the aggressor and try to kill them. For now, we limit this
-      -- behaviour to natural pilots.  detect that.
-      local p_m = pilot:memory()
-      if p_m.natural and not aifact:areNeutral(pfact) and (not p_m.aggressive or attacker:withPlayer()) then
+   -- Case player is attacker
+   if a_player then
+      if p_ally then
          badguy = attacker
+      elseif p_enemy then
+         if a_ally then
+            badguy = pilot
+         elseif a_enemy then
+            badguy = (rnd.rnd() < 0.5) and attacker or pilot
+         else
+            badguy = pilot
+         end
+      else -- neutral
+         if mem.whiteknight then
+            local p_m = pilot:memory()
+            if p_m.natural and not aifact:areNeutral(pfact) then
+               badguy = attacker
+            end
+         end
+      end
+   -- Case attackr is ally
+   elseif a_ally then
+      if p_enemy or p_player then
+         badguy = pilot
+      end
+   -- Case attacker is enemy
+   elseif a_enemy then
+      if p_ally then
+         badguy = attacker
+      elseif p_enemy then
+         badguy = (rnd.rnd() < 0.5) and attacker or pilot
+      else -- neutral
+         badguy = attacker
+      end
+   else -- neutral
+      if p_ally then
+         badguy = attacker
+      elseif p_enemy then
+         badguy = pilot
       end
    end
 
