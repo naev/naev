@@ -645,7 +645,7 @@ impl Scene {
 
 pub struct Model {
     scenes: Vec<Scene>,
-    shader: Rc<ModelShader>,
+    shader: Arc<ModelShader>,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -706,6 +706,9 @@ fn load_gltf_texture(
     tb.build(ctx)
 }
 
+use std::sync::{Arc, OnceLock};
+static SHADER: OnceLock<Arc<ModelShader>> = OnceLock::new();
+
 impl Model {
     pub fn from_path(ctx: &Context, path: &str) -> Result<Self> {
         use std::path::Path;
@@ -752,9 +755,13 @@ impl Model {
             .map(|scene| Scene::from_gltf(&scene, &meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let shader = Rc::new(ModelShader::new(ctx)?);
+        //let shader = Rc::new(ModelShader::new(ctx)?);
+        let shader = SHADER.get_or_init(|| Arc::new(ModelShader::new(ctx).unwrap()));
 
-        Ok(Model { scenes, shader })
+        Ok(Model {
+            scenes,
+            shader: shader.clone(),
+        })
     }
 
     pub fn render(
