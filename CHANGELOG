@@ -15,6 +15,9 @@
       * Fixed adding commodities to space objects via tech groups
       * Action speed can no longer be negative and disables space worthiness
 
+* 0.12.3
+   * Reworked aggressivity on distress signals to be more consistent
+
 * 0.12.2
    * Made plasma drill much easier to apply to asteroids
    * Don't reset cargo if not space worthy when reloading
