@@ -162,6 +162,7 @@ impl LightingUniform {
 
 pub struct ModelShader {
     shader: Shader,
+    lighting_buffer: Buffer,
     vertex: u32,
     primitive_uniform: u32,
     material_uniform: u32,
@@ -229,8 +230,16 @@ impl ModelShader {
         let tex_normal = Self::get_uniform_tex(gl, &shader, "normal_tex", 3)?;
         let tex_occlusion = Self::get_uniform_tex(gl, &shader, "occlusion_tex", 4)?;
 
+        let lighting_data = LightingUniform::default();
+        let lighting_buffer = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(lighting_data.buffer()?.into_inner().as_slice())
+            .build(ctx)?;
+
         Ok(ModelShader {
             shader,
+            lighting_buffer,
             vertex,
             primitive_uniform,
             material_uniform,
@@ -594,19 +603,49 @@ impl Scene {
         &mut self,
         shader: &ModelShader,
         transform: &Matrix4<f32>,
+        lighting: &LightingUniform,
         ctx: &Context,
     ) -> Result<()> {
+        let gl = &ctx.gl;
+
+        // Update lighting
+        shader
+            .lighting_buffer
+            .write(ctx, lighting.buffer()?.into_inner().as_slice())?;
+        shader.lighting_buffer.bind(&ctx.gl);
+        unsafe {
+            gl.bind_buffer_base(
+                glow::UNIFORM_BUFFER,
+                shader.lighting_uniform,
+                Some(shader.lighting_buffer.buffer),
+            );
+        };
+
+        // Set up
+        shader.shader.use_program(gl);
+
+        // TODO shadow pass
+
+        // Mesh pass
         for node in &mut self.nodes {
             node.render(shader, transform, ctx)?;
         }
+
+        // Clean up
+        unsafe {
+            gl.disable_vertex_attrib_array(shader.vertex);
+            gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
+            gl.bind_buffer(glow::ARRAY_BUFFER, None);
+            gl.use_program(None);
+        }
+
         Ok(())
     }
 }
 
 pub struct Model {
     scenes: Vec<Scene>,
-    lighting_buffer: Buffer,
-    shader: ModelShader,
+    shader: Rc<ModelShader>,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -713,20 +752,9 @@ impl Model {
             .map(|scene| Scene::from_gltf(&scene, &meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let shader = ModelShader::new(ctx)?;
+        let shader = Rc::new(ModelShader::new(ctx)?);
 
-        let lighting_data = LightingUniform::default();
-        let lighting_buffer = BufferBuilder::new()
-            .target(BufferTarget::Uniform)
-            .usage(BufferUsage::Dynamic)
-            .data(lighting_data.buffer()?.into_inner().as_slice())
-            .build(ctx)?;
-
-        Ok(Model {
-            scenes,
-            lighting_buffer,
-            shader,
-        })
+        Ok(Model { scenes, shader })
     }
 
     pub fn render(
@@ -735,36 +763,8 @@ impl Model {
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        let gl = &ctx.gl;
-
-        // Update lighting
-        self.lighting_buffer
-            .write(ctx, lighting.buffer()?.into_inner().as_slice())?;
-        self.lighting_buffer.bind(&ctx.gl);
-        unsafe {
-            gl.bind_buffer_base(
-                glow::UNIFORM_BUFFER,
-                self.shader.lighting_uniform,
-                Some(self.lighting_buffer.buffer),
-            );
-        };
-
-        // Set up
-        self.shader.shader.use_program(gl);
-
-        // TODO shadow pass
-
-        // Mesh pass
-        for s in &mut self.scenes {
-            s.render(&self.shader, transform, ctx)?;
-        }
-
-        // Clean up
-        unsafe {
-            gl.disable_vertex_attrib_array(self.shader.vertex);
-            gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
-            gl.bind_buffer(glow::ARRAY_BUFFER, None);
-            gl.use_program(None);
+        if let Some(scene) = self.scenes.first_mut() {
+            scene.render(&self.shader, transform, lighting, ctx)?;
         }
 
         Ok(())
