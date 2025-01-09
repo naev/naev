@@ -1,5 +1,5 @@
 ---
-title: "Great House Dvareed"
+title: "Great House Dvaered"
 ---
 <%
 wgtfct = require("naevpedia.lore.faction").init( "Dvaered" )

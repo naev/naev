@@ -33,7 +33,7 @@ mem.misn_state = nil
 local escorts, mainguy -- Non-persistent state
 
 local targetsys = system.get("Provectus Nova")
-local jumpinsys = system.get("Waterhole")
+local jumpinsys = system.get("Goddard")
 local jumpoutsys = system.get("Limbo")
 
 local money_reward = minerva.rewards.kex1
@@ -320,6 +320,8 @@ function mainguy_board ()
 
    -- Permanently disable mainguy
    mainguy:setDisable()
+   mainguy:setVisplayer(false)
+   mainguy:setHilight(false)
 
    -- Message update
    minerva.log.kex(_("You boarded a transport destined for the Minerva CEO, but didn't find anything."))

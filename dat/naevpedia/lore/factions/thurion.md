@@ -75,7 +75,7 @@ Nobody remembered them, and nobody ever found them.
 ### The Incident
 
 Despite flourishing in the shadows, the Thurion were still very limited by the ever present dangers presented by [the Empire](lore/factions/empire) and Great Houses.
-Although it was cataclysmic for most factions, [the Incident](lore/history/incident) provide to be a boon for the Thurion, which were significantly less affected by the radiation and volatility.
+Although it was cataclysmic for most factions, [the Incident](lore/history/incident) proved to be a boon for the Thurion, which were significantly less affected by the radiation and volatility.
 Furthermore, the dangers of Imperial surveillance all but vanished, and they quickly were able to expand into newly destroyed systems and recover their losses.
 Not only that, they were able to assist in saving and uploading many survivors, expanding their ranks.
 
@@ -87,7 +87,7 @@ While the rest of the universe is still oblivious to their presence, they feel l
 The scientists, however, found out about the plan with just enough time left to come up with a plan.
 The system has been quarantined by then.
 Any attempt to flee would be pointless.
-Instead ,they used their resources to build a small bunker inside an asteroid.
+Instead, they used their resources to build a small bunker inside an asteroid.
 Too small for people to survive, the bunker would hold the data of uploaded individuals, a few devices that can run an uploaded human mind (powered down) and the machines necessary for the uploading process as well as documentation of their work.
 They made sure that the bunker is hidden well and hoped the Empire would not notice it.
 There was, however, a traitor who did not want to be uploaded and thought the Empire would let him live in exchange for information on the plan.
