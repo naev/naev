@@ -40,7 +40,7 @@
    * Modified condition of many neutral missions so they don't appear in the wrong places
    * Dvaered ships are now also sold in more accessible locations
    * FLF should not cause reputation chains making other factions hostile
-   * Fixed the ship_buy hook refering to the ship sold when trading ships
+   * Fixed the ship_buy hook referring to the ship sold when trading ships
    * Fixed captured ships having inconsistent load outs and not spawning near the pilot
    * Fixed zebra losing cylinders when thrusting
    * Don't remove builtin weapons when spawning pilots naked
