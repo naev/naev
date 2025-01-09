@@ -48,9 +48,10 @@ end
 -- Remark: the list `detected` contains pilots that no longer exist.
 -- This is normal behaviour as they have been counted
 function cens.testInRange( detected, fact_list )
-   local visibles = player.pilot():getVisible() -- codespell:ignore visibles
+   local pp = player.pilot()
+   local visibles = pp:getVisible() -- codespell:ignore visibles
    for i, p in ipairs(visibles) do -- Has to be visible -- codespell:ignore visibles
-      local _d, s = player.pilot():inrange(p)
+      local _d, s = pp:inrange(p)
       if s then -- Fuzzy not allowed
          if inlist( fact_list, p:faction() ) then -- Has to be in factions list
             if not inlist( detected, p ) then -- Has not to be in pilots list
