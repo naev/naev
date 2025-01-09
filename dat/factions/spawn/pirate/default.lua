@@ -13,8 +13,8 @@ local skestrel    = ship.get("Pirate Kestrel")
 local prefer_fleets, hostile_system
 
 local table_patrol = {
-   { w=0.3, shyena },
-   { w=0.5, var.pirate_shark },
+   { w=0.3, shyena, shyena },
+   { w=0.5, var.pirate_shark, var.pirate_shark },
    { w=0.8, var.pirate_shark, shyena },
    { svendetta, var.pirate_shark, shyena },
 }
@@ -26,8 +26,9 @@ local table_loner_weak = {
    { sphalanx },
 }
 local table_loner_strong = {
-   { w=0.4, srhino },
-   { w=0.7, sadmonisher },
+   { w=0.3, sadmonisher },
+   { w=0.5, sphalanx },
+   { w=0.7, srhino },
    { sstarbridge },
 }
 local table_squad = {
@@ -99,15 +100,15 @@ return function ( t, max, params )
    params.hostile_system = hostile_system
 
    -- Make it harder for large ships to spawn in hostile territory
-   local capship_base = -500
+   local capship_base = -400
    if hostile_system then
-      capship_base = -800
+      capship_base = -600
    end
 
    -- Create weights for spawn table
-   t.patrol       = { f=spawn_patrol, w=max }
-   t.loner_weak   = { f=spawn_loner_weak, w=max }
-   t.loner_strong = { f=spawn_loner_strong, w=math.max(0, -80 + 1.0 * max ) }
-   t.squad        = { f=spawn_squad, w=math.max(0, -120 + 0.80 * max) }
+   t.patrol       = { f=spawn_patrol, w=-50 + 0.5*max }
+   t.loner_weak   = { f=spawn_loner_weak, w=-100 + max }
+   t.loner_strong = { f=spawn_loner_strong, w=max }
+   t.squad        = { f=spawn_squad, w=math.max(0, -80 + 0.80 * max) }
    t.capship      = { f=spawn_capship, w=math.max(0, capship_base + 1.70 * max) }
 end
