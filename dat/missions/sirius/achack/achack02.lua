@@ -39,7 +39,7 @@ local ambushSet -- Forward-declared functions
 -- Mission constants
 local reward = 750e3
 -- This is the route Joanne will take.
-local route = {"Violin Monastery", "Fyruse Monastery", "Inios Monastery", "Tankard Cloister", "Sroolu"}
+local route = {"Violin Monastery", "Fyruse Monastery", "Inios Monastery", "Rionna", "Tankard Cloister", "Sroolu"}
 
 local stoptext = _("You dock with {pnt}, and the spacedock personnel immediately begin to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
 
