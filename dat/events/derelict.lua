@@ -129,6 +129,7 @@ function create ()
    local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.angle() )
    derelict    = pilot.add(dship, "Derelict", pos, p_("ship", "Derelict"), {ai="dummy", naked=true})
+   derelict:outfitRm( "cores" ) -- Must be not-space worthy
    derelict:setDisable()
    derelict:intrinsicSet( "ew_hide", 300 ) -- Much more visible
    hook.pilot(derelict, "board", "board")
