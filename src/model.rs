@@ -12,7 +12,7 @@ use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
 use crate::ngl::{Context, CONTEXT};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
-use crate::texture::{Texture, TextureBuilder};
+use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
 use crate::{formatx, gettext, warn};
 
 const MAX_LIGHTS: usize = 7;
@@ -604,6 +604,7 @@ impl Scene {
 
     pub fn render(
         &mut self,
+        target: &FramebufferTarget,
         shader: &ModelShader,
         transform: &Matrix4<f32>,
         lighting: &LightingUniform,
@@ -625,6 +626,13 @@ impl Scene {
         };
 
         unsafe {
+            gl.enable(glow::BLEND);
+            gl.blend_func_separate(
+                glow::SRC_ALPHA,
+                glow::ONE_MINUS_SRC_ALPHA,
+                glow::ONE,
+                glow::ONE_MINUS_SRC_ALPHA,
+            );
             gl.enable(glow::DEPTH_TEST);
             gl.depth_func(glow::LESS);
         }
@@ -635,10 +643,10 @@ impl Scene {
         shader.shader.use_program(gl);
 
         // Mesh pass
-        //unsafe {
-        //gl.viewport( 0, 0, size, size );
-        //gl.bind_framebuffer( glow::FRAMEBUFFER, fb );
-        //}
+        unsafe {
+            //gl.viewport( 0, 0, size, size );
+            target.bind(ctx);
+        }
         for node in &mut self.nodes {
             node.render(shader, transform, ctx)?;
         }
@@ -780,12 +788,13 @@ impl Model {
 
     pub fn render(
         &mut self,
+        fb: &FramebufferTarget,
         ctx: &Context,
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
         if let Some(scene) = self.scenes.first_mut() {
-            scene.render(&self.shader, transform, lighting, ctx)?;
+            scene.render(fb, &self.shader, transform, lighting, ctx)?;
         }
 
         Ok(())
@@ -921,6 +930,12 @@ pub extern "C" fn gltf_renderScene_(
     let lighting = unsafe { &CLIGHTING };
     if let Some(scene) = model.scenes.get_mut(scene as usize) {
         let transform = ctransform.append_scaling(size as f32);
-        let _ = scene.render(&model.shader, &transform, lighting, ctx);
+        let _ = scene.render(
+            &FramebufferTarget::from_gl(fb, size as usize, size as usize),
+            &model.shader,
+            &transform,
+            lighting,
+            ctx,
+        );
     }
 }

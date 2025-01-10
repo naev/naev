@@ -535,7 +535,38 @@ impl TextureBuilder {
     }
 }
 
-struct Framebuffer {
+pub struct FramebufferC {
+    fb: glow::NativeFramebuffer,
+    w: usize,
+    h: usize,
+}
+pub enum FramebufferTarget {
+    Screen,
+    Framebuffer(Framebuffer),
+    FramebufferC(FramebufferC),
+}
+impl FramebufferTarget {
+    pub fn from_gl(fb: u32, w: usize, h: usize) -> Self {
+        FramebufferTarget::FramebufferC(FramebufferC {
+            fb: glow::NativeFramebuffer(NonZero::new(fb).unwrap()),
+            w,
+            h,
+        })
+    }
+
+    pub fn bind(&self, ctx: &ngl::Context) {
+        let fb = match self {
+            Self::Screen => None,
+            Self::Framebuffer(fb) => Some(fb.framebuffer),
+            Self::FramebufferC(fb) => Some(fb.fb),
+        };
+        unsafe {
+            ctx.gl.bind_framebuffer(glow::FRAMEBUFFER, fb);
+        }
+    }
+}
+
+pub struct Framebuffer {
     framebuffer: glow::Framebuffer,
     pub w: usize,
     pub h: usize,
@@ -556,7 +587,7 @@ impl Framebuffer {
         }
     }
 
-    pub fn ubind(ctx: &ngl::Context) {
+    pub fn unbind(ctx: &ngl::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, None);
