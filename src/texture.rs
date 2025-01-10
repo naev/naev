@@ -5,6 +5,7 @@ use nalgebra::Vector4;
 use sdl2 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
+use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
@@ -14,6 +15,39 @@ use crate::{gettext, ndata, ngl};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
+
+#[derive(Clone, Copy)]
+pub enum TextureFormat {
+    RGB,
+    RGBA,
+    SRGB,
+    SRGBA,
+    Depth,
+}
+impl TextureFormat {
+    pub fn auto(has_alpha: bool, is_srgb: bool) -> i32 {
+        (match is_srgb {
+            true => match has_alpha {
+                true => glow::SRGB_ALPHA,
+                false => glow::SRGB,
+            },
+            false => match has_alpha {
+                true => glow::RGBA,
+                false => glow::RGB,
+            },
+        }) as i32
+    }
+
+    pub fn to_gl(self) -> i32 {
+        (match self {
+            Self::RGB => glow::RGB,
+            Self::RGBA => glow::RGBA,
+            Self::SRGB => glow::SRGB,
+            Self::SRGBA => glow::SRGB_ALPHA,
+            Self::Depth => glow::DEPTH_COMPONENT,
+        }) as i32
+    }
+}
 
 pub struct TextureData {
     name: Option<String>,
@@ -34,7 +68,7 @@ impl Drop for TextureData {
 
 impl TextureData {
     /// Creates a new TextureData of size w x h without any data.
-    fn new(gl: &glow::Context, w: usize, h: usize) -> Result<Self> {
+    fn new(gl: &glow::Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
         if w == 0 || h == 0 {
             return Err(anyhow::anyhow!(
                 "Trying to create TextureData without width or height"
@@ -46,7 +80,7 @@ impl TextureData {
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
-                glow::SRGB_ALPHA as i32,
+                format.to_gl(),
                 w as i32,
                 h as i32,
                 0,
@@ -119,16 +153,7 @@ impl TextureData {
 
         let is_srgb = true;
 
-        let internalformat = match is_srgb {
-            true => match has_alpha {
-                true => glow::SRGB_ALPHA,
-                false => glow::SRGB,
-            },
-            false => match has_alpha {
-                true => glow::RGBA,
-                false => glow::RGB,
-            },
-        };
+        let internalformat = TextureFormat::auto(has_alpha, is_srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
             // TODO is this pitch correct?
@@ -137,7 +162,7 @@ impl TextureData {
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
-                internalformat as i32,
+                internalformat,
                 w as i32,
                 h as i32,
                 0,
@@ -270,7 +295,7 @@ pub enum TextureSource {
     Image(image::DynamicImage),
     TextureData(Arc<TextureData>),
     Raw(glow::NativeTexture),
-    None,
+    Empty(TextureFormat),
 }
 impl TextureSource {
     fn to_texture_data(
@@ -303,7 +328,7 @@ impl TextureSource {
             }
             TextureSource::Image(img) => TextureData::from_image(gl, name, img)?,
             TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
-            TextureSource::None => TextureData::new(gl, w, h)?,
+            TextureSource::Empty(fmt) => TextureData::new(gl, *fmt, w, h)?,
             TextureSource::TextureData(tex) => unreachable!(),
         });
 
@@ -319,6 +344,7 @@ impl TextureSource {
 pub struct TextureBuilder {
     name: Option<String>,
     source: TextureSource,
+    format: TextureFormat,
     w: usize,
     h: usize,
     sx: usize,
@@ -338,7 +364,8 @@ impl TextureBuilder {
     pub fn new() -> Self {
         TextureBuilder {
             name: None,
-            source: TextureSource::None,
+            source: TextureSource::Empty(TextureFormat::SRGBA),
+            format: TextureFormat::SRGBA,
             w: 0,
             h: 0,
             sx: 1,
@@ -363,6 +390,11 @@ impl TextureBuilder {
     pub fn path(mut self, path: &str) -> Self {
         self.source = TextureSource::Path(String::from(path));
         self.name = Some(String::from(path));
+        self
+    }
+
+    pub fn empty(mut self, fmt: TextureFormat) -> Self {
+        self.source = TextureSource::Empty(fmt);
         self
     }
 
@@ -497,6 +529,140 @@ impl TextureBuilder {
         })
     }
 }
+
+struct Framebuffer {
+    framebuffer: glow::Framebuffer,
+    pub w: usize,
+    pub h: usize,
+    pub texture: Texture,
+    pub depth: Option<Texture>,
+}
+impl Drop for Framebuffer {
+    fn drop(&mut self) {
+        unsafe {
+            let ctx = CONTEXT.get().unwrap();
+            unsafe { ctx.gl.delete_framebuffer(self.framebuffer) };
+        }
+    }
+}
+impl Framebuffer {
+    pub fn bind(&self, gl: &glow::Context) {
+        unsafe {
+            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
+        }
+    }
+
+    pub fn ubind(gl: &glow::Context) {
+        unsafe {
+            gl.bind_framebuffer(glow::FRAMEBUFFER, None);
+        }
+    }
+}
+
+struct FramebufferBuilder {
+    w: usize,
+    h: usize,
+    depth: bool,
+}
+
+impl FramebufferBuilder {
+    pub fn new() -> Self {
+        FramebufferBuilder {
+            w: 0,
+            h: 0,
+            depth: false,
+        }
+    }
+
+    pub fn width(mut self, width: usize) -> Self {
+        self.w = width;
+        self
+    }
+
+    pub fn height(mut self, height: usize) -> Self {
+        self.h = height;
+        self
+    }
+
+    pub fn depth(mut self, enable: bool) -> Self {
+        self.depth = enable;
+        self
+    }
+
+    pub fn build(self, ctx: &ngl::Context) -> Result<Framebuffer> {
+        let gl = &ctx.gl;
+
+        let texture = TextureBuilder::new()
+            .empty(TextureFormat::RGBA)
+            .width(self.w)
+            .height(self.h)
+            .filter(FilterMode::Linear)
+            .address_mode(AddressMode::ClampToBorder)
+            .build(ctx)?;
+
+        let framebuffer = unsafe { gl.create_framebuffer().map_err(|e| anyhow::anyhow!(e)) }?;
+        unsafe {
+            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
+            gl.framebuffer_texture_2d(
+                glow::FRAMEBUFFER,
+                glow::COLOR_ATTACHMENT0,
+                glow::TEXTURE_2D,
+                Some(texture.texture.texture),
+                0,
+            );
+        }
+
+        let depth = if self.depth {
+            let depth = TextureBuilder::new()
+                .empty(TextureFormat::Depth)
+                .width(self.w)
+                .height(self.h)
+                .filter(FilterMode::Nearest)
+                .address_mode(AddressMode::ClampToBorder)
+                .build(ctx)?;
+            unsafe {
+                gl.framebuffer_texture_2d(
+                    glow::FRAMEBUFFER,
+                    glow::DEPTH_ATTACHMENT,
+                    glow::TEXTURE_2D,
+                    Some(depth.texture.texture),
+                    0,
+                );
+            }
+            Some(depth)
+        } else {
+            None
+        };
+
+        let status = unsafe { gl.check_framebuffer_status(glow::FRAMEBUFFER) };
+        if status != glow::FRAMEBUFFER_COMPLETE {
+            anyhow::bail!("error setting up framebuffer");
+        }
+
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, None);
+            match naevc::gl_screen.current_fbo {
+                0 => gl.bind_framebuffer(glow::FRAMEBUFFER, None),
+                _ => gl.bind_framebuffer(
+                    glow::FRAMEBUFFER,
+                    Some(glow::NativeFramebuffer(
+                        NonZero::new(naevc::gl_screen.current_fbo).unwrap(),
+                    )),
+                ),
+            }
+        }
+
+        Ok(Framebuffer {
+            framebuffer,
+            w: self.w,
+            h: self.h,
+            texture,
+            depth,
+        })
+    }
+}
+
+// BELOW THIS IS THE C API CODE
 
 struct Flags {
     maptrans: bool,
@@ -811,12 +977,12 @@ pub extern "C" fn gl_rawTexture(
         Some(pathname) => match TextureData::exists(pathname) {
             Some(tex) => builder.texture_data(&tex),
             None => {
-                let tex = glow::NativeTexture(std::num::NonZero::new(tex).unwrap());
+                let tex = glow::NativeTexture(NonZero::new(tex).unwrap());
                 builder.native_texture(tex)
             }
         },
         None => {
-            let tex = glow::NativeTexture(std::num::NonZero::new(tex).unwrap());
+            let tex = glow::NativeTexture(NonZero::new(tex).unwrap());
             builder.native_texture(tex)
         }
     };

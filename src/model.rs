@@ -643,10 +643,10 @@ impl Scene {
         shader.shader.use_program(gl);
 
         // Mesh pass
-        unsafe {
-            //gl.viewport( 0, 0, size, size );
-            //gl.bind_framebuffer( glow::FRAMEBUFFER, fb );
-        }
+        //unsafe {
+        //gl.viewport( 0, 0, size, size );
+        //gl.bind_framebuffer( glow::FRAMEBUFFER, fb );
+        //}
         for node in &mut self.nodes {
             node.render(shader, transform, ctx)?;
         }
@@ -868,7 +868,8 @@ pub extern "C" fn gltf_lightIntensityGet_() -> c_double {
 }
 
 #[no_mangle]
-pub extern "C" fn gltf_lightTransform_(L: *mut naevc::Lighting, H: *const Matrix4<f32>) {
+pub extern "C" fn gltf_lightTransform_(_L: *mut naevc::Lighting, H: *const Matrix4<f32>) {
+    // TODO manipulate L
     unsafe {
         let transform = &*H;
         for i in 0..CLIGHTING.nlights as usize {
@@ -915,9 +916,10 @@ pub extern "C" fn gltf_renderScene_(
     model: *mut Model,
     scene: c_int,
     ctransform: *const Matrix4<f32>,
-    time: f32,
+    _time: f32,
     size: f64,
 ) {
+    // TODO animations
     let model = unsafe { &mut *model };
     let ctransform = match ctransform.is_null() {
         true => &Matrix4::identity(),
