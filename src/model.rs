@@ -708,6 +708,7 @@ impl Scene {
 pub struct Model {
     scenes: Vec<Scene>,
     shader: Arc<ModelShader>,
+    radius: f32,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -817,12 +818,18 @@ impl Model {
             .map(|scene| Scene::from_gltf(&scene, &meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
-        //let shader = Rc::new(ModelShader::new(ctx)?);
         let shader = SHADER.get_or_init(|| Arc::new(ModelShader::new(ctx).unwrap()));
+
+        // Get model radius
+        let mut radius: f32 = 0.;
+        for scene in &scenes {
+            radius = radius.max(scene.radius);
+        }
 
         Ok(Model {
             scenes,
             shader: shader.clone(),
+            radius,
         })
     }
 
