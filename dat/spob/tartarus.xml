@@ -3,12 +3,12 @@
  <pos x="-5198.420582" y="-5218.858043"/>
  <GFX>
   <space>moon-H00.webp</space>
-  <exterior>oceanic.webp</exterior>
+  <exterior>desertic4.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <base>83.333333</base>
-  <bonus>41.666667</bonus>
+  <base>83.330000</base>
+  <bonus>41.660000</bonus>
   <range>2</range>
  </presence>
  <general>

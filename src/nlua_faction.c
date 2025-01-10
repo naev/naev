@@ -547,10 +547,10 @@ static int factionL_reputationDefault( lua_State *L )
 
 /**
  * @brief Overrides the player's faction global standing with a faction. Use
- * sparingly as it overrites local standings.
+ * sparingly as it overrites local standings at all systems.
  *
- *    @luatparam Faction f Faction to set the player's golbal reptation with.
- *    @luatreturn number The value of the reputation to set to.
+ *    @luatparam Faction f Faction to set the player's global reputation with.
+ *    @luatparam number The value of the reputation to set to.
  * @luafunc setReputationGlobal
  */
 static int factionL_setReputationGlobal( lua_State *L )

@@ -1,11 +1,14 @@
 * 0.13.0 (unreleased)
-   * Begin porting to rust
-   * Use instancing instead of geometry shaders for space dust
+   * Gameplay
+      * Made pirates less aggressive
+      * Change pirate spawning so hyenas are less dominant and deadly to new players
    * Content
       * 1 new mission
       * 6 new ship variants
       * 2 new outfits
    * Engine
+      * Begin porting to rust
+      * Use instancing instead of geometry shaders for space dust
       * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
@@ -15,7 +18,14 @@
       * Fixed adding commodities to space objects via tech groups
       * Action speed can no longer be negative and disables space worthiness
 
-* 0.12.2 (unreleased)
+* 0.12.3 (unreleased)
+   * Cannibalize button doesn't overlap with capture anymore
+   * Don't crash if loading a save where the player's current ship doesn't exist
+   * Derelicts are no longer space-worthy
+   * Fixed Tartarus landing graphics
+   * Reworked aggressivity on distress signals to be more consistent
+
+* 0.12.2
    * Made plasma drill much easier to apply to asteroids
    * Don't reset cargo if not space worthy when reloading
    * Truly fix the negative mass exploit
@@ -42,14 +52,17 @@
    * Modified condition of many neutral missions so they don't appear in the wrong places
    * Dvaered ships are now also sold in more accessible locations
    * FLF should not cause reputation chains making other factions hostile
-   * Fixed the ship_buy hook refering to the ship sold when trading ships
+   * Fixed the ship_buy hook referring to the ship sold when trading ships
    * Fixed captured ships having inconsistent load outs and not spawning near the pilot
+   * Fixed zebra losing cylinders when thrusting
    * Don't remove builtin weapons when spawning pilots naked
    * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
-   * Minor typo fixes and translation updates
+   * harjas_vengeance: avoid certain system to make the mission easier to do.
+   * minerva missions: fixed a ship not spawning correctly
    * Large cargo hulls now match the cargo difference of the small and medium hulls
+   * Minor typo fixes and translation updates
 
 * 0.12.1
    * Fixed psychic orbs having trails

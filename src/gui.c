@@ -797,6 +797,7 @@ void gui_render( double dt )
 
    /* Set viewport. */
    gl_viewport( 0., 0., gl_screen.rw, gl_screen.rh );
+   glClear( GL_DEPTH_BUFFER_BIT );
 
    /* Run Lua. */
    if ( gui_env != LUA_NOREF ) {

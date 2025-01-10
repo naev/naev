@@ -2,9 +2,9 @@ require 'ai.pirate'
 
 mem.armour_run    = 40
 mem.careful       = false
-mem.vulnrambo     = 2.0
-mem.vulnattack    = 3.0
-mem.vulnabort     = 5.0
+mem.vulnrambo     = 1.3
+mem.vulnattack    = 1.5
+mem.vulnabort     = 2.1
 mem.stealth       = false
 
 local create_pirate = create

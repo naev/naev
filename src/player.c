@@ -529,7 +529,7 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
    pfleet_update();
 
    /* Update ship list if landed. */
-   if ( landed ) {
+   if ( landed && ( land_spob != NULL ) ) {
       int w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
@@ -691,7 +691,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    player.p->solid.dir = dir;
 
    /* Fill the tank. */
-   if ( landed )
+   if ( landed && ( land_spob != NULL ) )
       land_refuel();
 
    /* Clear targets. */
@@ -758,8 +758,10 @@ credits_t player_shipPrice( const char *shipname, int count_unique )
 
 void player_rmPlayerShip( PlayerShip_t *ps )
 {
-   pilot_rmFlag( ps->p, PILOT_NOFREE );
-   pilot_free( ps->p );
+   if ( ps->p != NULL ) {
+      pilot_rmFlag( ps->p, PILOT_NOFREE );
+      pilot_free( ps->p );
+   }
    ws_free( ps->weapon_sets );
    free( ps->acquired );
 }
@@ -785,7 +787,7 @@ void player_rmShip( const char *shipname )
    }
 
    /* Update ship list if landed. */
-   if ( landed ) {
+   if ( landed && ( land_spob != NULL ) ) {
       int w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
@@ -4032,20 +4034,10 @@ static Spob *player_parse( xmlNodePtr parent )
       pilot_clearFlagsRaw( flags );
       pilot_setFlagRaw( flags, PILOT_PLAYER );
       pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
-      WARN( _( "Player ship does not exist!" ) );
-
-      if ( array_size( player_stack ) == 0 ) {
-         WARN( _( "Player has no other ships, giving starting ship." ) );
-         pilot_create( ship_get( start_ship() ), "MIA", faction_get( "Player" ),
-                       "player", 0., NULL, NULL, flags, 0, 0 );
-      } else {
-         /* Just give player.p a random ship in the stack. */
-         const Pilot *old_ship = player_stack[array_size( player_stack ) - 1].p;
-         pilot_create( old_ship->ship, old_ship->name, faction_get( "Player" ),
-                       "player", 0., NULL, NULL, flags, 0, 0 );
-         player_rmShip( old_ship->name );
-         WARN( _( "Giving player ship '%s'." ), player.p->name );
-      }
+      WARN( _( "Player ship does not exist! Giving starting ship." ) );
+      player_newShip( ship_get( start_ship() ), "MIA", 0,
+                      _( "You acquired this ship through save corruption." ),
+                      1 );
    }
 
    /* Check. */
@@ -4472,7 +4464,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
 
    /* Handle certain 0.10.0-alpha saves where it's possible that... */
-   if ( !is_player && strcmp( name, player.p->name ) == 0 ) {
+   if ( !is_player && ( player.p != NULL ) &&
+        strcmp( name, player.p->name ) == 0 ) {
       DEBUG( _( "Ignoring player-owned ship '%s': duplicate of player's "
                 "current ship." ),
              name );
