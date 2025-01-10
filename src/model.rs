@@ -505,13 +505,13 @@ impl Mesh {
                 gl.enable_vertex_attrib_array(shader.vertex);
 
                 // Uniforms
-                p.uniform_buffer.bind(gl);
+                p.uniform_buffer.bind(ctx);
                 gl.bind_buffer_base(
                     glow::UNIFORM_BUFFER,
                     shader.primitive_uniform,
                     Some(p.uniform_buffer.buffer),
                 );
-                m.uniform_buffer.bind(gl);
+                m.uniform_buffer.bind(ctx);
                 gl.bind_buffer_base(
                     glow::UNIFORM_BUFFER,
                     shader.material_uniform,
@@ -519,11 +519,11 @@ impl Mesh {
                 );
 
                 // Textures
-                m.metallic.bind(gl, 1);
-                m.emissive.bind(gl, 2);
-                m.normalmap.bind(gl, 3);
-                m.ambientocclusion.bind(gl, 4);
-                m.diffuse.bind(gl, 0); // Have to end on TEXTURE0
+                m.metallic.bind(ctx, 1);
+                m.emissive.bind(ctx, 2);
+                m.normalmap.bind(ctx, 3);
+                m.ambientocclusion.bind(ctx, 4);
+                m.diffuse.bind(ctx, 0); // Have to end on TEXTURE0
 
                 if m.double_sided {
                     gl.disable(glow::CULL_FACE);
@@ -618,7 +618,7 @@ impl Scene {
         shader
             .lighting_buffer
             .write(ctx, lighting.buffer()?.into_inner().as_slice())?;
-        shader.lighting_buffer.bind(&ctx.gl);
+        shader.lighting_buffer.bind(ctx);
         unsafe {
             gl.bind_buffer_base(
                 glow::UNIFORM_BUFFER,

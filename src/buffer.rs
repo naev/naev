@@ -2,6 +2,7 @@
 use anyhow::Result;
 use glow::*;
 
+use crate::ngl;
 use crate::ngl::{Context, CONTEXT};
 use crate::{formatx, gettext, warn};
 
@@ -24,12 +25,14 @@ impl Buffer {
         }
         Ok(())
     }
-    pub fn bind(&self, gl: &glow::Context) {
+    pub fn bind(&self, ctx: &ngl::Context) {
+        let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, Some(self.buffer));
         }
     }
-    pub fn unbind(&self, gl: &glow::Context) {
+    pub fn unbind(&self, ctx: &ngl::Context) {
+        let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, None);
         }

@@ -68,7 +68,8 @@ impl Drop for TextureData {
 
 impl TextureData {
     /// Creates a new TextureData of size w x h without any data.
-    fn new(gl: &glow::Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
+    fn new(ctx: &ngl::Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
+        let gl = &ctx.gl;
         if w == 0 || h == 0 {
             return Err(anyhow::anyhow!(
                 "Trying to create TextureData without width or height"
@@ -140,10 +141,11 @@ impl TextureData {
 
     /// Creates a new TextureData from an image wrapper
     fn from_image(
-        gl: &glow::Context,
+        ctx: &ngl::Context,
         name: Option<&str>,
         img: &image::DynamicImage,
     ) -> Result<Self> {
+        let gl = &ctx.gl;
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
@@ -243,7 +245,8 @@ impl Texture {
         })
     }
 
-    pub fn bind(&self, gl: &glow::Context, idx: u32) {
+    pub fn bind(&self, ctx: &ngl::Context, idx: u32) {
+        let gl = &ctx.gl;
         unsafe {
             gl.active_texture(glow::TEXTURE0 + idx);
             gl.bind_texture(glow::TEXTURE_2D, Some(self.texture.texture));
@@ -251,7 +254,8 @@ impl Texture {
         }
     }
 
-    pub fn unbind(gl: &glow::Context) {
+    pub fn unbind(ctx: &ngl::Context) {
+        let gl = &ctx.gl;
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, None);
             gl.bind_sampler(0, None); // TODO handle index?
@@ -301,7 +305,7 @@ pub enum TextureSource {
 impl TextureSource {
     fn to_texture_data(
         &self,
-        gl: &glow::Context,
+        ctx: &ngl::Context,
         w: usize,
         h: usize,
         name: Option<&str>,
@@ -325,11 +329,11 @@ impl TextureSource {
             TextureSource::Path(path) => {
                 let bytes = ndata::read(path.as_str())?;
                 let img = image::load_from_memory(&bytes)?;
-                TextureData::from_image(gl, name, &img)?
+                TextureData::from_image(ctx, name, &img)?
             }
-            TextureSource::Image(img) => TextureData::from_image(gl, name, img)?,
+            TextureSource::Image(img) => TextureData::from_image(ctx, name, img)?,
             TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
-            TextureSource::Empty(fmt) => TextureData::new(gl, *fmt, w, h)?,
+            TextureSource::Empty(fmt) => TextureData::new(ctx, *fmt, w, h)?,
             TextureSource::TextureData(tex) => unreachable!(),
         });
 
@@ -492,7 +496,7 @@ impl TextureBuilder {
         /* TODO handle SDF. */
         let texture = self
             .source
-            .to_texture_data(gl, self.w, self.h, self.name.as_deref())?;
+            .to_texture_data(ctx, self.w, self.h, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
@@ -547,13 +551,15 @@ impl Drop for Framebuffer {
     }
 }
 impl Framebuffer {
-    pub fn bind(&self, gl: &glow::Context) {
+    pub fn bind(&self, ctx: &ngl::Context) {
+        let gl = &ctx.gl;
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
         }
     }
 
-    pub fn ubind(gl: &glow::Context) {
+    pub fn ubind(ctx: &ngl::Context) {
+        let gl = &ctx.gl;
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, None);
         }
