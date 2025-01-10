@@ -265,6 +265,7 @@ static void commodity_exchange_genList( unsigned int wid )
       toolkit_loadImageArrayData( wid, "iarTrade", &idat );
 
    array_free( tech );
+   array_free( prices );
 }
 
 void commodity_exchange_cleanup( void )
