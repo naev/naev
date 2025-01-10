@@ -633,7 +633,7 @@ function board( plt )
       end
    end
    if can_cannibalize() then
-      luatk.newButton( wdw, x, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      luatk.newButton( wdw, x-50, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
       --x = x-100
    end
 
