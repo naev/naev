@@ -1,4 +1,5 @@
 * 0.12.3 (unreleased)
+   * Cannibalize button doesn't overlap with capture anymore
    * Don't crash if loading a save where the player's current ship doesn't exist
    * Reworked aggressivity on distress signals to be more consistent
 
