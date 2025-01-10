@@ -362,6 +362,8 @@ pub struct Primitive {
     num_indices: i32,
     element_type: u32,
     material: Rc<Material>,
+    center: Vector3<f32>,
+    radius: f32,
 }
 
 impl Primitive {
@@ -374,13 +376,21 @@ impl Primitive {
         let mut vertex_data: Vec<Vertex> = vec![];
         let reader = prim.reader(|buf| Some(&buffer_data[buf.index()]));
 
+        let mut center = Vector3::new(0., 0., 0.);
+        let mut radius: f32 = 0.;
         if let Some(pos) = reader.read_positions() {
             pos.for_each(|p| {
+                center += Vector3::from(p);
                 vertex_data.push(Vertex {
                     pos: p,
                     ..Default::default()
                 })
-            })
+            });
+            center /= vertex_data.len() as f32;
+            for vertex in &vertex_data {
+                let vp = Vector3::from(vertex.pos);
+                radius = radius.max((vp - center).magnitude());
+            }
         } else {
             anyhow::bail!("No Position Data!");
         }
@@ -443,6 +453,8 @@ impl Primitive {
             element_type: glow::FLOAT,
             num_indices: index_data.len() as i32,
             material,
+            center,
+            radius,
         })
     }
 }
@@ -570,6 +582,23 @@ impl Node {
         })
     }
 
+    pub fn radius(&self, transform: Matrix4<f32>) -> f32 {
+        let mut radius: f32 = 0.;
+        if let Some(mesh) = &self.mesh {
+            for primitive in &mesh.primitives {
+                // Transform the sphere and use it to compute maximum
+                let pos = primitive.center + transform.column(2).remove_row(3);
+                let scale = (transform[(0, 0)] + transform[(1, 1)] + transform[(2, 2)]) / 3.;
+                let rad = primitive.radius * scale;
+                radius = radius.max(pos.magnitude() + rad);
+            }
+        }
+        for child in &self.children {
+            radius = radius.max(child.radius(transform));
+        }
+        radius
+    }
+
     pub fn render(
         &mut self,
         shader: &ModelShader,
@@ -590,6 +619,7 @@ impl Node {
 pub struct Scene {
     name: Option<String>,
     nodes: Vec<Node>,
+    radius: f32,
 }
 
 impl Scene {
@@ -599,7 +629,17 @@ impl Scene {
             .map(|node| Node::from_gltf(&node, meshes))
             .collect::<Result<Vec<_>, _>>()?;
         let name = scene.name().map(|s| s.to_owned());
-        Ok(Scene { nodes, name })
+
+        let mut radius: f32 = 0.;
+        for node in &nodes {
+            radius = radius.max(node.radius(Matrix4::identity()));
+        }
+
+        Ok(Scene {
+            nodes,
+            name,
+            radius,
+        })
     }
 
     pub fn render(
@@ -643,10 +683,10 @@ impl Scene {
         shader.shader.use_program(gl);
 
         // Mesh pass
-        unsafe {
-            //gl.viewport( 0, 0, size, size );
-            target.bind(ctx);
-        }
+        //unsafe {
+        //gl.viewport( 0, 0, size, size );
+        target.bind(ctx);
+        //}
         for node in &mut self.nodes {
             node.render(shader, transform, ctx)?;
         }
