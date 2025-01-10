@@ -470,9 +470,9 @@ impl Mesh {
 
     pub fn render(
         &self,
+        ctx: &Context,
         shader: &ModelShader,
         transform: &Matrix4<f32>,
-        ctx: &Context,
     ) -> Result<()> {
         #[rustfmt::skip]
         const OPENGL_TO_WGPU: Matrix4<f32> = Matrix4::new(
@@ -601,16 +601,16 @@ impl Node {
 
     pub fn render(
         &mut self,
+        ctx: &Context,
         shader: &ModelShader,
         transform: &Matrix4<f32>,
-        ctx: &Context,
     ) -> Result<()> {
         let new_transform = self.transform * transform;
         if let Some(mesh) = &self.mesh {
-            mesh.render(shader, &new_transform, ctx)?;
+            mesh.render(ctx, shader, &new_transform)?;
         }
         for child in &mut self.children {
-            child.render(shader, &new_transform, ctx)?;
+            child.render(ctx, shader, &new_transform)?;
         }
         Ok(())
     }
@@ -644,11 +644,11 @@ impl Scene {
 
     pub fn render(
         &mut self,
+        ctx: &Context,
         target: &FramebufferTarget,
         shader: &ModelShader,
         transform: &Matrix4<f32>,
         lighting: &LightingUniform,
-        ctx: &Context,
     ) -> Result<()> {
         let gl = &ctx.gl;
 
@@ -688,7 +688,7 @@ impl Scene {
         target.bind(ctx);
         //}
         for node in &mut self.nodes {
-            node.render(shader, transform, ctx)?;
+            node.render(ctx, shader, transform)?;
         }
 
         // Clean up
@@ -835,13 +835,24 @@ impl Model {
 
     pub fn render(
         &mut self,
-        fb: &FramebufferTarget,
         ctx: &Context,
+        fb: &FramebufferTarget,
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        if let Some(scene) = self.scenes.first_mut() {
-            scene.render(fb, &self.shader, transform, lighting, ctx)?;
+        self.render_scene(ctx, fb, 0, lighting, transform)
+    }
+
+    pub fn render_scene(
+        &mut self,
+        ctx: &Context,
+        fb: &FramebufferTarget,
+        sceneid: usize,
+        lighting: &LightingUniform,
+        transform: &Matrix4<f32>,
+    ) -> Result<()> {
+        if let Some(scene) = self.scenes.get_mut(sceneid) {
+            scene.render(ctx, fb, &self.shader, transform, lighting)?;
         }
 
         Ok(())
@@ -975,14 +986,12 @@ pub extern "C" fn gltf_renderScene_(
     };
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
     let lighting = unsafe { &CLIGHTING };
-    if let Some(scene) = model.scenes.get_mut(scene as usize) {
-        let transform = ctransform.append_scaling(size as f32);
-        let _ = scene.render(
-            &FramebufferTarget::from_gl(fb, size as usize, size as usize),
-            &model.shader,
-            &transform,
-            lighting,
-            ctx,
-        );
-    }
+    let transform = ctransform.append_scaling(size as f32);
+    let _ = model.render_scene(
+        ctx,
+        &FramebufferTarget::from_gl(fb, size as usize, size as usize),
+        scene as usize,
+        lighting,
+        &transform,
+    );
 }
