@@ -554,6 +554,14 @@ impl FramebufferTarget {
         })
     }
 
+    pub fn dimensions(&self) -> (usize, usize) {
+        match self {
+            Self::Screen => todo!(),
+            Self::Framebuffer(fb) => (fb.texture.texture.w, fb.texture.texture.h),
+            Self::FramebufferC(fb) => (fb.w, fb.h),
+        }
+    }
+
     pub fn bind(&self, ctx: &ngl::Context) {
         let fb = match self {
             Self::Screen => None,

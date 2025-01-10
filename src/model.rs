@@ -683,10 +683,11 @@ impl Scene {
         shader.shader.use_program(gl);
 
         // Mesh pass
-        //unsafe {
-        //gl.viewport( 0, 0, size, size );
+        unsafe {
+            let (w, h) = target.dimensions();
+            gl.viewport(0, 0, w as i32, h as i32);
+        }
         target.bind(ctx);
-        //}
         for node in &mut self.nodes {
             node.render(ctx, shader, transform)?;
         }
@@ -852,7 +853,8 @@ impl Model {
         transform: &Matrix4<f32>,
     ) -> Result<()> {
         if let Some(scene) = self.scenes.get_mut(sceneid) {
-            scene.render(ctx, fb, &self.shader, transform, lighting)?;
+            let transform = transform.append_scaling(1.0 / self.radius);
+            scene.render(ctx, fb, &self.shader, &transform, lighting)?;
         }
 
         Ok(())
