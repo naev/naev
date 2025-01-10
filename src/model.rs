@@ -3,9 +3,9 @@ use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::HasContext;
 use gltf::Gltf;
-use nalgebra::{Matrix3, Matrix4, Vector3, Vector4};
+use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use std::ffi::CStr;
-use std::os::raw::{c_char, c_int};
+use std::os::raw::{c_char, c_double, c_int};
 use std::rc::Rc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
@@ -13,6 +13,7 @@ use crate::ngl::{Context, CONTEXT};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{Texture, TextureBuilder};
+use crate::{formatx, gettext, warn};
 
 const MAX_LIGHTS: usize = 7;
 
@@ -97,12 +98,22 @@ impl MaterialUniform {
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, Default, ShaderType)]
+#[derive(Debug, Copy, Default, Clone, ShaderType)]
 pub struct LightUniform {
     sun: u32,
     position: Vector3<f32>,
     colour: Vector3<f32>,
     intensity: f32,
+}
+impl LightUniform {
+    pub const fn default() -> Self {
+        LightUniform {
+            sun: 0,
+            position: Vector3::new(0.0, 0.0, 0.0),
+            colour: Vector3::new(0.0, 0.0, 0.0),
+            intensity: 0.0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -122,7 +133,7 @@ impl LightingUniform {
         }
     }
 
-    pub fn default() -> Self {
+    pub const fn default() -> Self {
         LightingUniform {
             ambient: Vector3::new(0.0, 0.0, 0.0),
             nlights: 2,
@@ -621,12 +632,21 @@ impl Scene {
             );
         };
 
-        // Set up
-        shader.shader.use_program(gl);
+        unsafe {
+            gl.enable(glow::DEPTH_TEST);
+            gl.depth_func(glow::LESS);
+        }
 
         // TODO shadow pass
 
+        // Set up
+        shader.shader.use_program(gl);
+
         // Mesh pass
+        unsafe {
+            //gl.viewport( 0, 0, size, size );
+            //gl.bind_framebuffer( glow::FRAMEBUFFER, fb );
+        }
         for node in &mut self.nodes {
             node.render(shader, transform, ctx)?;
         }
@@ -637,6 +657,8 @@ impl Scene {
             gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
             gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.use_program(None);
+            gl.disable(glow::DEPTH_TEST);
+            gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
         }
 
         Ok(())
@@ -778,6 +800,91 @@ impl Model {
     }
 }
 
+/// Just use cglobals for C stuff and hope it doesn't catch on fire :/
+static mut CLIGHTING: LightingUniform = LightingUniform::default();
+static mut CAMBIENT: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
+static mut CINTENSITY: f64 = 1.0;
+
+#[no_mangle]
+pub extern "C" fn gltf_lightReset_() {
+    unsafe {
+        CLIGHTING = LightingUniform::default();
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_lightSet_(idx: c_int, L: *const naevc::Light) -> c_int {
+    let n: usize = 2 + idx as usize;
+    if n >= MAX_LIGHTS {
+        warn!("Trying to set more lights than MAX_LIGHTS allows!");
+        return -1;
+    }
+    unsafe {
+        CLIGHTING.nlights = CLIGHTING.nlights.max((n + 1) as u32);
+        CLIGHTING.lights[n] = LightUniform {
+            sun: (*L).sun as u32,
+            position: Vector3::new(
+                (*L).pos.v[0] as f32,
+                (*L).pos.v[1] as f32,
+                (*L).pos.v[2] as f32,
+            ),
+            colour: Vector3::new(
+                (*L).colour.v[0] as f32,
+                (*L).colour.v[1] as f32,
+                (*L).colour.v[2] as f32,
+            ),
+            intensity: (*L).intensity as f32,
+        }
+    }
+    0
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_lightAmbient_(r: c_double, g: c_double, b: c_double) {
+    unsafe {
+        CLIGHTING.ambient = Vector3::new(r as f32, g as f32, b as f32);
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_lightAmbientGet_(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
+    unsafe {
+        *r = CLIGHTING.ambient.x as f64;
+        *g = CLIGHTING.ambient.y as f64;
+        *b = CLIGHTING.ambient.z as f64;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_lightIntensity_(strength: c_double) {
+    unsafe {
+        CINTENSITY = strength;
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_lightIntensityGet_() -> c_double {
+    unsafe { CINTENSITY }
+}
+
+#[no_mangle]
+pub extern "C" fn gltf_lightTransform_(L: *mut naevc::Lighting, H: *const Matrix4<f32>) {
+    unsafe {
+        let transform = &*H;
+        for i in 0..CLIGHTING.nlights as usize {
+            let mut l = CLIGHTING.lights[i];
+            if l.sun != 0 {
+                l.position = transform.transform_vector(&l.position);
+            } else {
+                l.position = Vector3::from_homogeneous(
+                    transform.transform_point(&Point3::from(l.position)).into(),
+                )
+                .unwrap();
+            }
+        }
+    }
+}
+
 #[no_mangle]
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
@@ -807,15 +914,19 @@ pub extern "C" fn gltf_renderScene_(
     fb: naevc::GLuint,
     model: *mut Model,
     scene: c_int,
-    transform: *const Matrix4<f32>,
+    ctransform: *const Matrix4<f32>,
     time: f32,
     size: f64,
 ) {
     let model = unsafe { &mut *model };
-    let transform = unsafe { &*transform };
+    let ctransform = match ctransform.is_null() {
+        true => &Matrix4::identity(),
+        false => unsafe { &*ctransform },
+    };
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
-    //let lighting = LightingUniform::default();
+    let lighting = unsafe { &CLIGHTING };
     if let Some(scene) = model.scenes.get_mut(scene as usize) {
-        let _ = scene.render(&model.shader, transform, ctx);
+        let transform = ctransform.append_scaling(size as f32);
+        let _ = scene.render(&model.shader, &transform, lighting, ctx);
     }
 }
