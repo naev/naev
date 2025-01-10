@@ -349,6 +349,14 @@ function luaspob.population ()
    return fmt.f(_("roughly {amt}"),{amt=fmt.humanize( mem.spob:population() )})
 end
 
+local function luaspob_cache ()
+   local nc = naev.cache()
+   if nc._luaspob == nil then
+      nc._luaspob = {}
+   end
+   return nc._luaspob
+end
+
 local idata = li.newImageData( 1, 1 )
 idata:setPixel( 0, 0, 0.5, 0.5, 0.5, 1 )
 local img = lg.newImage( idata )
@@ -361,13 +369,13 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    return colour;
 }
 ]]
-local lightshader
 local function light( x, y, r )
-   if not lightshader then
-      lightshader = lg.newShader( pixellight )
+   local nc = luaspob_cache()
+   if not nc.lightshader then
+      nc.lightshader = lg.newShader( pixellight )
    end
 
-   lg.setShader(lightshader)
+   lg.setShader(nc.lightshader)
    lg.draw( img, x, y, 0, r, r )
    lg.setShader()
 end
@@ -382,13 +390,13 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    return colour;
 }
 ]]
-local rectlightshader
 local function rectlight( x, y, w, h, r )
-   if not rectlightshader then
-      rectlightshader = lg.newShader( pixelrectlight )
+   local nc = luaspob_cache()
+   if not nc.rectlightshader then
+      nc.rectlightshader = lg.newShader( pixelrectlight )
    end
 
-   lg.setShader(rectlightshader)
+   lg.setShader(nc.rectlightshader)
    lg.draw( img, x, y, r, w, h )
    lg.setShader()
 end
@@ -402,16 +410,16 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    return mix( colour, u_col, smoothstep(-1.0, 1.0, dot(p,u_vec)) );
 }
 ]]
-local gradshader
 local function gradient( x, y, r, g, b, a )
-   if not gradshader then
-      gradshader = lg.newShader( pixelgrad )
+   local nc = luaspob_cache()
+   if not nc.gradshader then
+      nc.gradshader = lg.newShader( pixelgrad )
    end
 
    local w, h = lg.getDimensions()
-   gradshader:send( "u_col", {r,g,b,a})
-   gradshader:send( "u_vec", {x,y} )
-   lg.setShader(gradshader)
+   nc.gradshader:send( "u_col", {r,g,b,a})
+   nc.gradshader:send( "u_vec", {x,y} )
+   lg.setShader(nc.gradshader)
    lg.draw( img, 0, 0, 0, w, h )
    lg.setShader()
 end
