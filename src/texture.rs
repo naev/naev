@@ -245,6 +245,7 @@ impl Texture {
 
     pub fn bind(&self, gl: &glow::Context, idx: u32) {
         unsafe {
+            gl.active_texture(glow::TEXTURE0 + idx);
             gl.bind_texture(glow::TEXTURE_2D, Some(self.texture.texture));
             gl.bind_sampler(idx, Some(self.sampler));
         }
