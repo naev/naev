@@ -139,8 +139,8 @@ impl<'a> BufferBuilder<'a> {
         Ok(Buffer {
             buffer,
             datalen: self.data.len(),
-            target: target,
-            usage: usage,
+            target,
+            usage,
         })
     }
 }

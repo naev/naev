@@ -319,7 +319,7 @@ impl TextureSource {
 
         // Try to load from name if possible
         if let Some(name) = name {
-            if let Some(t) = TextureData::exists_textures(&name, &textures) {
+            if let Some(t) = TextureData::exists_textures(name, &textures) {
                 return Ok(t);
             }
         }
@@ -544,10 +544,8 @@ struct Framebuffer {
 }
 impl Drop for Framebuffer {
     fn drop(&mut self) {
-        unsafe {
-            let ctx = CONTEXT.get().unwrap();
-            unsafe { ctx.gl.delete_framebuffer(self.framebuffer) };
-        }
+        let ctx = CONTEXT.get().unwrap();
+        unsafe { ctx.gl.delete_framebuffer(self.framebuffer) };
     }
 }
 impl Framebuffer {

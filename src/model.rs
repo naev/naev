@@ -556,10 +556,7 @@ impl Node {
     pub fn from_gltf(node: &gltf::Node, meshes: &[Rc<Mesh>]) -> Result<Self> {
         let transform: Matrix4<f32> = node.transform().matrix().into();
 
-        let mesh = match node.mesh() {
-            Some(mesh) => Some(meshes[mesh.index()].clone()),
-            None => None,
-        };
+        let mesh = node.mesh().map(|mesh| meshes[mesh.index()].clone());
 
         let children: Vec<Node> = node
             .children()
@@ -885,7 +882,7 @@ pub extern "C" fn gltf_lightTransform_(_L: *mut naevc::Lighting, H: *const Matri
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
-    let model = Model::from_path(&ctx, path.to_str().unwrap()).unwrap();
+    let model = Model::from_path(ctx, path.to_str().unwrap()).unwrap();
     Box::into_raw(Box::new(model))
 }
 
