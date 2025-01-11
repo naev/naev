@@ -13,17 +13,20 @@ use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 #[no_mangle]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
-    let name = ptr.to_str().unwrap().to_owned();
-    match binary_search_by_key_ref(&DAMAGE_TYPES, &name, |dt: &DamageType| &dt.name) {
+    let name = ptr.to_str().unwrap();
+    match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
         Ok(i) => (i + 1) as c_int,
-        Err(_) => 0,
+        Err(_) => {
+            warn!("damage type '{}' not found", name);
+            0
+        }
     }
 }
 
 // Assume static here, because it doesn't really change after loading
 #[no_mangle]
 pub fn get_c(dt: c_int) -> Option<&'static DamageType> {
-    DAMAGE_TYPES.get(dt as usize)
+    DAMAGE_TYPES.get((dt - 1) as usize)
 }
 
 #[no_mangle]

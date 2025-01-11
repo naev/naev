@@ -95,8 +95,8 @@ use std::sync::LazyLock;
 static SLOT_PROPERTIES: LazyLock<Vec<SlotProperty>> = LazyLock::new(|| load().unwrap());
 
 #[allow(dead_code)]
-pub fn get(name: String) -> Result<&'static SlotProperty> {
-    match binary_search_by_key_ref(&SLOT_PROPERTIES, &name, |sp: &SlotProperty| &sp.name) {
+pub fn get(name: &str) -> Result<&'static SlotProperty> {
+    match binary_search_by_key_ref(&SLOT_PROPERTIES, name, |sp: &SlotProperty| &sp.name) {
         Ok(i) => Ok(SLOT_PROPERTIES.get(i).expect("")),
         Err(_) => anyhow::bail!("Slot Property '{name}' not found .", name = &name,),
     }
@@ -125,10 +125,13 @@ pub fn load() -> Result<Vec<SlotProperty>> {
 pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
         let ptr = CStr::from_ptr(name);
-        let name = ptr.to_str().unwrap().to_owned();
-        match binary_search_by_key_ref(&SLOT_PROPERTIES, &name, |sp: &SlotProperty| &sp.name) {
+        let name = ptr.to_str().unwrap();
+        match binary_search_by_key_ref(&SLOT_PROPERTIES, name, |sp: &SlotProperty| &sp.name) {
             Ok(i) => (i + 1) as c_int,
-            Err(_) => 0,
+            Err(_) => {
+                warn!("slot property '{}' not found", name);
+                0
+            }
         }
     }
 }
