@@ -3800,6 +3800,7 @@ src/ndata.h
 src/ndata.rs
 src/nebula.c
 src/nebula.h
+src/nebula.rs
 src/news.c
 src/news.h
 src/nfile.c

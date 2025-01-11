@@ -20,6 +20,7 @@ mod linebreak;
 mod log;
 mod model;
 mod ndata;
+mod nebula;
 mod ngl;
 mod nlua;
 mod ntime;
