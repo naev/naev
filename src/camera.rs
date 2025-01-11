@@ -18,7 +18,7 @@ pub struct Camera {
     fly: bool,
     fly_speed: f64,
     // For handling zoom
-    zoom: f64,
+    pub zoom: f64,
     zoom_target: f64,
     zoom_speed: f64,
     zoom_override: bool,
