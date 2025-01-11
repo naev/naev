@@ -157,34 +157,24 @@ impl Drop for VertexArray {
     }
 }
 
-pub struct VertexArrayBuilder {
-    index: u32,
-    size: i32,      // in data_type units (1 to 4)
+pub struct VertexArrayBuffer<'a> {
+    pub buffer: &'a Buffer, // Buffer
+    pub size: i32,          // in data_type units (1 to 4)
+    pub stride: i32,
+    pub offset: i32,
+}
+pub struct VertexArrayBuilder<'a> {
     data_type: u32, // glow::FLOAT and such
     normalized: bool,
-    stride: i32, // in bytes
-    offset: i32, //
+    buffers: &'a [VertexArrayBuffer<'a>],
 }
-impl VertexArrayBuilder {
-    pub fn new(self) -> Self {
+impl<'a> VertexArrayBuilder<'a> {
+    pub fn new() -> Self {
         VertexArrayBuilder {
-            index: 0,
-            size: 4,
             data_type: glow::FLOAT,
             normalized: false,
-            stride: 0,
-            offset: 0,
+            buffers: &[],
         }
-    }
-
-    pub fn index(mut self, index: u32) -> Self {
-        self.index = index;
-        self
-    }
-
-    pub fn size(mut self, size: i32) -> Self {
-        self.size = size;
-        self
     }
 
     pub fn data_type(mut self, data_type: u32) -> Self {
@@ -197,29 +187,34 @@ impl VertexArrayBuilder {
         self
     }
 
-    pub fn stride(mut self, stride: i32) -> Self {
-        self.stride = stride;
+    pub fn buffers(mut self, buffers: &'a [VertexArrayBuffer]) -> Self {
+        self.buffers = buffers;
         self
     }
 
-    pub fn build(mut self, ctx: &Context) -> Result<VertexArray> {
+    pub fn build(self, ctx: &Context) -> Result<VertexArray> {
         let gl = &ctx.gl;
-        if self.size < 1 || self.size > 4 {
-            warn!("invalid VertexArray size");
-            self.size = self.size.clamp(1, 4);
-        }
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
-            gl.vertex_attrib_pointer_f32(
-                self.index,
-                self.size,
-                self.data_type,
-                self.normalized,
-                self.stride,
-                self.offset,
-            );
+            gl.bind_vertex_array(Some(vertex_array));
+            for (idx, buffer) in self.buffers.into_iter().enumerate() {
+                if buffer.size < 1 || buffer.size > 4 {
+                    warn!("invalid VertexArray size");
+                    //    self.size = self.size.clamp(1, 4);
+                }
+                gl.bind_buffer(glow::ARRAY_BUFFER, Some(buffer.buffer.buffer));
+                gl.enable_vertex_attrib_array(idx as u32);
+                gl.vertex_attrib_pointer_f32(
+                    idx as u32,
+                    buffer.size,
+                    self.data_type,
+                    self.normalized,
+                    buffer.stride,
+                    buffer.offset,
+                );
+            }
+            gl.bind_vertex_array(None);
         }
-
         Ok(VertexArray { vertex_array })
     }
 }
