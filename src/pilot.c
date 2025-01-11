@@ -2017,11 +2017,15 @@ void pilot_render( Pilot *p )
                                          gl_screen.nh, NULL );
 
             /* Draw framebuffer with depth on screen. */
+            /* TODO fix this shit. Texture coordinates have to be flipped... */
             gl_renderTextureDepthRaw(
                gl_screen.fbo_tex[2], gl_screen.fbo_depth_tex[2], 0,
                x + ( 1. - scale ) * z * w * 0.5,
                y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z,
-               0, 0, w / (double)gl_screen.nw, h / (double)gl_screen.nh, NULL,
+               // 0, 0, w / (double)gl_screen.nw, h / (double)gl_screen.nh,
+               // NULL,
+               0, h / (double)gl_screen.nh, w / (double)gl_screen.nw,
+               -h / (double)gl_screen.nh, NULL,
                0. ); /* Colour should already be applied. */
          } else {
             gl_renderSpriteInterpolateScale(

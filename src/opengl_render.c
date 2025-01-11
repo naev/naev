@@ -303,7 +303,9 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
    }
 
    /* Set the texture. */
-   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   /* TODO fix this being inconsistent... */
+   // tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   tex_mat = mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderTextureDepthRawH( texture, depth, &projection, &tex_mat, c );

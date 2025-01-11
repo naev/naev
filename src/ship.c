@@ -1521,7 +1521,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
          mat4_rotate( &H, dir + M_PI_2, 0.0, 1.0, 0.0 );
 
       ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, t, c, L,
-                                &H, 1, 0 );
+                                &H, 1, OPENGL_TEX_VFLIP );
       /* Already restore current framebuffer. */
    } else {
       double           tx, ty;
