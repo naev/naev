@@ -23,6 +23,7 @@ impl ShaderType {
 }
 
 pub struct Shader {
+    pub name: String,
     pub vertname: String,
     pub fragname: String,
     pub program: glow::Program,
@@ -87,6 +88,28 @@ impl Shader {
     pub fn use_program(&self, gl: &glow::Context) {
         unsafe {
             gl.use_program(Some(self.program));
+        }
+    }
+
+    pub fn get_attrib(&self, gl: &glow::Context, name: &str) -> Result<u32> {
+        match unsafe { gl.get_attrib_location(self.program, name) } {
+            Some(idx) => Ok(idx),
+            None => {
+                anyhow::bail!("Shader '{}' does not have '{}' attrib!", self.name, name);
+            }
+        }
+    }
+
+    pub fn get_uniform_block(&self, gl: &glow::Context, name: &str) -> Result<u32> {
+        match unsafe { gl.get_uniform_block_index(self.program, name) } {
+            Some(idx) => Ok(idx),
+            None => {
+                anyhow::bail!(
+                    "Shader '{}' does not have '{}' uniform block!",
+                    self.name,
+                    name
+                );
+            }
         }
     }
 }
@@ -210,8 +233,13 @@ impl ShaderBuilder {
         let vertshader = Shader::compile(ctx, ShaderType::Vertex, &vertname, &vertdata)?;
         let fragshader = Shader::compile(ctx, ShaderType::Fragment, &fragname, &fragdata)?;
         let program = Shader::link(ctx, vertshader, fragshader)?;
+        let name = match self.name {
+            Some(name) => name,
+            None => String::from("UNKNOWN"),
+        };
 
         Ok(Shader {
+            name,
             vertname,
             fragname,
             program,

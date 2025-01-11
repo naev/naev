@@ -185,14 +185,6 @@ pub struct ModelShader {
     tex_occlusion: glow::UniformLocation,
 }
 impl ModelShader {
-    fn get_attrib(gl: &glow::Context, shader: &Shader, name: &str) -> Result<u32> {
-        match unsafe { gl.get_attrib_location(shader.program, name) } {
-            Some(idx) => Ok(idx),
-            None => {
-                anyhow::bail!("Model shader does not have '{}' attrib!", name);
-            }
-        }
-    }
     fn get_uniform_tex(
         gl: &glow::Context,
         shader: &Shader,
@@ -213,14 +205,6 @@ impl ModelShader {
             }
         }
     }
-    fn get_uniform_block(gl: &glow::Context, shader: &Shader, name: &str) -> Result<u32> {
-        match unsafe { gl.get_uniform_block_index(shader.program, name) } {
-            Some(idx) => Ok(idx),
-            None => {
-                anyhow::bail!("Model shader does not have '{}' uniform block!", name);
-            }
-        }
-    }
 
     pub fn new(ctx: &Context) -> Result<Self> {
         let gl = &ctx.gl;
@@ -229,11 +213,11 @@ impl ModelShader {
             .frag_file("material_pbr.frag")
             .build(ctx)?;
 
-        let vertex = Self::get_attrib(gl, &shader, "vertex")?;
+        let vertex = shader.get_attrib(gl, "vertex")?;
 
-        let primitive_uniform = Self::get_uniform_block(gl, &shader, "Primitive")?;
-        let material_uniform = Self::get_uniform_block(gl, &shader, "Material")?;
-        let lighting_uniform = Self::get_uniform_block(gl, &shader, "Lighting")?;
+        let primitive_uniform = shader.get_uniform_block(gl, "Primitive")?;
+        let material_uniform = shader.get_uniform_block(gl, "Material")?;
+        let lighting_uniform = shader.get_uniform_block(gl, "Lighting")?;
 
         let tex_diffuse = Self::get_uniform_tex(gl, &shader, "baseColour_tex", 0)?;
         let tex_metallic = Self::get_uniform_tex(gl, &shader, "metallic_tex", 1)?;
