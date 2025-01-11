@@ -625,7 +625,7 @@ impl Framebuffer {
     }
 }
 
-struct FramebufferBuilder {
+pub struct FramebufferBuilder {
     w: usize,
     h: usize,
     depth: bool,
