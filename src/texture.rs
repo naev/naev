@@ -18,10 +18,7 @@ static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 
 pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImage> {
-    let msk = sur
-        .pixel_format_enum()
-        .into_masks()
-        .map_err(|e| anyhow::anyhow!(e))?;
+    //let has_alpha = sur.pixel_format_enum().supports_alpha();
     let sur = sur
         .convert_format(sdl::pixels::PixelFormatEnum::RGBA32)
         .map_err(|e| anyhow::anyhow!(e))?;
