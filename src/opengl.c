@@ -314,7 +314,7 @@ static void GLAPIENTRY gl_debugCallback( GLenum source, GLenum type, GLuint id,
 static int gl_setupAttributes( int fallback )
 {
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, fallback ? 3 : 4 );
-   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 2 : 6 );
+   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 3 : 6 );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK,
                         SDL_GL_CONTEXT_PROFILE_CORE );
    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER,
@@ -634,9 +634,12 @@ int gl_init( unsigned int extra_flags )
       ERR( "%s", buf );
    }
 
-   /* We are interested in 3.1 because it drops all the deprecated stuff. */
-   if ( !GLAD_GL_VERSION_3_2 )
-      WARN( "Naev requires OpenGL %d.%d, but got OpenGL %d.%d!", 3, 2,
+   /* We are interested in 3.3 because it drops all the deprecated stuff and
+    * gives us:
+    * 1. instancing
+    */
+   if ( !GLAD_GL_VERSION_3_3 )
+      WARN( "Naev requires OpenGL %d.%d, but got OpenGL %d.%d!", 3, 3,
             GLVersion.major, GLVersion.minor );
 
    /* Some OpenGL options. */
