@@ -1008,8 +1008,12 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh,
                             &L_store_const );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
-   gl_renderTextureRaw( swd->tex, 0, 0, px, py, pw, ph, 0., 0., s / swd->s,
-                        s / swd->s, NULL, 0. );
+   // This is super hacky and we should fix this...
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, px, py, pw, ph );
+   mat4 tex_mat = mat4_identity();
+   mat4_translate_scale_xy( &tex_mat, 0., s / swd->s, s / swd->s, -s / swd->s );
+   gl_renderTextureRawH( swd->tex, 0, &projection, &tex_mat, NULL );
 
 #ifdef DEBUGGING
    if ( debug_isFlag( DEBUG_MARK_EMITTER ) ) {
