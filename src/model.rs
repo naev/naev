@@ -874,7 +874,7 @@ pub extern "C" fn gltf_lightReset_() {
 }
 
 #[no_mangle]
-pub extern "C" fn gltf_lightSet_(idx: c_int, L: *const naevc::Light) -> c_int {
+pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_int {
     let n: usize = 2 + idx as usize;
     if n >= MAX_LIGHTS {
         warn!("Trying to set more lights than MAX_LIGHTS allows!");
@@ -883,18 +883,18 @@ pub extern "C" fn gltf_lightSet_(idx: c_int, L: *const naevc::Light) -> c_int {
     unsafe {
         CLIGHTING.nlights = CLIGHTING.nlights.max((n + 1) as u32);
         CLIGHTING.lights[n] = LightUniform {
-            sun: (*L).sun as u32,
+            sun: (*light).sun as u32,
             position: Vector3::new(
-                (*L).pos.v[0] as f32,
-                (*L).pos.v[1] as f32,
-                (*L).pos.v[2] as f32,
+                (*light).pos.v[0] as f32,
+                (*light).pos.v[1] as f32,
+                (*light).pos.v[2] as f32,
             ),
             colour: Vector3::new(
-                (*L).colour.v[0] as f32,
-                (*L).colour.v[1] as f32,
-                (*L).colour.v[2] as f32,
+                (*light).colour.v[0] as f32,
+                (*light).colour.v[1] as f32,
+                (*light).colour.v[2] as f32,
             ),
-            intensity: (*L).intensity as f32,
+            intensity: (*light).intensity as f32,
         }
     }
     0
@@ -929,10 +929,13 @@ pub extern "C" fn gltf_lightIntensityGet_() -> c_double {
 }
 
 #[no_mangle]
-pub extern "C" fn gltf_lightTransform_(_L: *mut naevc::Lighting, H: *const Matrix4<f32>) {
+pub extern "C" fn gltf_lightTransform_(
+    _lighting: *mut naevc::Lighting,
+    transform: *const Matrix4<f32>,
+) {
     // TODO manipulate L
     unsafe {
-        let transform = &*H;
+        let transform = &*transform;
         for i in 0..CLIGHTING.nlights as usize {
             let mut l = CLIGHTING.lights[i];
             if l.sun != 0 {
@@ -987,6 +990,7 @@ pub extern "C" fn gltf_renderScene_(
         false => unsafe { &*ctransform },
     };
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    #[allow(static_mut_refs)]
     let lighting = unsafe { &CLIGHTING };
     let transform = ctransform.append_scaling(size as f32);
     let _ = model.render_scene(
