@@ -3,6 +3,7 @@ use anyhow::Result;
 use glow::*;
 use nalgebra::Vector4;
 use sdl2 as sdl;
+use sdl2::image::ImageRWops;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::num::NonZero;
@@ -15,6 +16,22 @@ use crate::{gettext, ndata, ngl};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
+
+pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImage> {
+    let msk = sur
+        .pixel_format_enum()
+        .into_masks()
+        .map_err(|e| anyhow::anyhow!(e))?;
+    let sur = sur
+        .convert_format(sdl::pixels::PixelFormatEnum::RGBA32)
+        .map_err(|e| anyhow::anyhow!(e))?;
+    let (w, h) = sur.size();
+    // TODO this always converts to rgba so we store more memory and such...
+    sur.with_lock(|data| {
+        let buf = image::ImageBuffer::<image::Rgba<u8>, _>::from_vec(w, h, data.to_vec()).unwrap();
+        Ok(image::DynamicImage::ImageRgba8(buf))
+    })
+}
 
 #[derive(Clone, Copy)]
 pub enum TextureFormat {
@@ -158,8 +175,6 @@ impl TextureData {
         let internalformat = TextureFormat::auto(has_alpha, is_srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            // TODO is this pitch correct?
-            //gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, surface.pitch().min(8) as i32);
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
@@ -172,7 +187,6 @@ impl TextureData {
                 glow::UNSIGNED_BYTE,
                 gldata,
             );
-            //gl.pixel_store_i32(glow::UNPACK_ALIGNMENT, 4);
             gl.bind_texture(glow::TEXTURE_2D, None);
         }
 
@@ -327,8 +341,11 @@ impl TextureSource {
         // Failed to find in cache, load a new
         let tex = Arc::new(match self {
             TextureSource::Path(path) => {
-                let bytes = ndata::read(path.as_str())?;
-                let img = image::load_from_memory(&bytes)?;
+                //let bytes = ndata::read(path.as_str())?;
+                //let img = image::load_from_memory(&bytes)?;
+                let rw = ndata::rwops(path.as_str()).map_err(|e| anyhow::anyhow!(e))?;
+                let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
+                let img = surface_to_image(sur)?;
                 TextureData::from_image(ctx, name, &img)?
             }
             TextureSource::Image(img) => TextureData::from_image(ctx, name, img)?,
@@ -954,11 +971,20 @@ pub extern "C" fn gl_newSpriteRWops(
         Some(tex) => builder.texture_data(&tex),
         None => {
             let rw = unsafe { sdl::rwops::RWops::from_ll(rw as *mut sdl::sys::SDL_RWops) };
+            /* TODO support image when it's faster...
             let img = image::ImageReader::new(std::io::BufReader::new(rw))
                 .with_guessed_format()
                 .unwrap()
                 .decode()
                 .unwrap();
+            */
+            let img = match rw.load() {
+                Ok(sur) => surface_to_image(sur).unwrap(),
+                Err(e) => {
+                    warn!("unable to load image '{}': {}", pathname, e);
+                    return std::ptr::null_mut();
+                }
+            };
             builder.image(&img)
         }
     };
