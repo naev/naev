@@ -17,6 +17,7 @@ use crate::{gettext, ndata, ngl};
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
 
+// Temporary hack until image-rs significantly increases performance...
 pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImage> {
     //let has_alpha = sur.pixel_format_enum().supports_alpha();
     let sur = sur
