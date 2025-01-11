@@ -5,8 +5,7 @@ where
     F: Fn(&T) -> &K,
     K: ?Sized + Ord,
 {
-    a.sort_by(|x, y| key(y).cmp(key(x)));
-    //a.sort_by(|x, y| key(x).cmp(key(y)));
+    a.sort_by(|x, y| key(x).cmp(key(y)));
 }
 
 /// Useful to binary search by a reference to a String, which you can't do with
@@ -16,5 +15,5 @@ where
     F: Fn(&T) -> &K,
     K: ?Sized + Ord,
 {
-    a.binary_search_by(|x| b.cmp(key(x)))
+    a.binary_search_by(|x| key(x).cmp(b))
 }
