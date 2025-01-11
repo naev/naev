@@ -119,8 +119,8 @@ Periodically, and when needed, the tribe will gather in councils to decide posit
 The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole.
 
 Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid new humans are raised with a strong focus on putting the community over the individual.
-Such a social education, combined with strong customs, helps keep most friction at a minimum, allowing fast and effective decision making.
-When frictions arise, each tribe tends to have mechanisms for dealing with this, while for inter-tribal issues, duels or competitions are often used to solve issues and foster camaraderie.
+Such a social education, combined with strong customs, helps keep most friction at a minimum, allowing fast and effective decision-making.
+When frictions arise, each tribe tends to have mechanisms for dealing with this, while for intertribal issues, duels or competitions are often used to solve issues and foster camaraderie.
 
 The tribes can consist of a single world or even various star systems.
 Each tribe usually consists of largely similarly modified individuals that are genetically compatible, however, some tribes can consist of various dominant genotypes.

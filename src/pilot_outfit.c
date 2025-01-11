@@ -643,7 +643,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->shield_regen < 0.,
                       _( "!! Insufficient Shield Regeneration" ) );
    SPACEWORTHY_CHECK( p->energy_max < 0., _( "!! Insufficient Energy" ) );
-   SPACEWORTHY_CHECK( ( p->energy_regen <= 0. ) && ( p->energy_max > 0. ),
+   SPACEWORTHY_CHECK( p->energy_regen <= 0.,
                       _( "!! Insufficient Energy Regeneration" ) );
 
    /* Misc. */
