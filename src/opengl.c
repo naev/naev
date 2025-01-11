@@ -472,9 +472,12 @@ int gl_init( void )
       ERR( "%s", buf );
    }
 
-   /* We are interested in 3.1 because it drops all the deprecated stuff. */
-   if ( !GLAD_GL_VERSION_3_2 )
-      WARN( "Naev requires OpenGL %d.%d, but got OpenGL %d.%d!", 3, 2,
+   /* We are interested in 3.3 because it drops all the deprecated stuff and
+    * gives us:
+    * 1. instancing
+    */
+   if ( !GLAD_GL_VERSION_3_3 )
+      WARN( "Naev requires OpenGL %d.%d, but got OpenGL %d.%d!", 3, 3,
             GLVersion.major, GLVersion.minor );
 
    /* Some OpenGL options. */
