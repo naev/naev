@@ -498,7 +498,9 @@ static int commodity_parseThread( void *ptr )
    data->ret                 = commodity_parse( &data->com, data->filename );
    /* Render if necessary. */
    if ( naev_shouldRenderLoadscreen() ) {
+      gl_contextSet();
       naev_renderLoadscreen();
+      gl_contextUnset();
    }
    return data->ret;
 }
