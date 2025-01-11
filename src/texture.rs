@@ -168,7 +168,10 @@ impl TextureData {
         let has_alpha = img.color().has_alpha();
         let (w, h) = (img.width(), img.height());
         //let imgdata = img.flipv().to_rgba8().into_raw();
-        let imgdata = img.to_rgba8().into_raw();
+        let imgdata = match has_alpha {
+            true => img.to_rgba8().into_raw(),
+            false => img.to_rgb8().into_raw(),
+        };
 
         let is_srgb = true;
 
@@ -176,6 +179,10 @@ impl TextureData {
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
+            let fmt = match has_alpha {
+                true => glow::RGBA,
+                false => glow::RGB,
+            };
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
@@ -183,7 +190,7 @@ impl TextureData {
                 w as i32,
                 h as i32,
                 0,
-                glow::RGBA,
+                fmt,
                 glow::UNSIGNED_BYTE,
                 gldata,
             );
