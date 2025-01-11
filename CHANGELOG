@@ -19,9 +19,11 @@
 * 0.12.3 (unreleased)
    * Cannibalize button doesn't overlap with capture anymore
    * Don't crash if loading a save where the player's current ship doesn't exist
+   * Gauss has a reputation requirement
    * Derelicts are no longer space-worthy
    * Fixed Tartarus landing graphics
    * Reworked aggressivity on distress signals to be more consistent
+   * Minor typo fixes and translation updates
 
 * 0.12.2
    * Made plasma drill much easier to apply to asteroids
