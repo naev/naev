@@ -68,6 +68,7 @@ impl NebulaData {
         let mut uniform = NebulaUniform::default();
         uniform.nonuninformity = unsafe { naevc::conf.nebu_nonuniformity } as f32;
         uniform.transform = Matrix4::identity();
+        //uniform.transform = Matrix4::new_orthographic( 0.0, ctx.w, 0.0, ctx.h, -1.0, 1.0 ).append_scaling(100.0);
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
         let buffer = BufferBuilder::new()
@@ -148,7 +149,7 @@ impl NebulaData {
                 Some(self.buffer.buffer),
             );
 
-            ctx.vao_square.bind(ctx);
+            ctx.vao_center.bind(ctx);
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
         VertexArray::unbind(ctx);
@@ -157,15 +158,30 @@ impl NebulaData {
         check_for_gl_error!(&gl, "Rendering Nebula Background");
 
         unsafe {
-            gl.bind_framebuffer(
-                glow::FRAMEBUFFER,
-                std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer),
+            let screen =
+                std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer);
+            gl.bind_framebuffer(glow::READ_FRAMEBUFFER, Some(self.framebuffer.framebuffer));
+            gl.bind_framebuffer(glow::DRAW_FRAMEBUFFER, screen);
+            let (w, h) = (self.framebuffer.w as i32, self.framebuffer.h as i32);
+            gl.blit_framebuffer(
+                0,
+                0,
+                w,
+                h,
+                0,
+                0,
+                ctx.w as i32,
+                ctx.h as i32,
+                glow::COLOR_BUFFER_BIT,
+                glow::LINEAR,
             );
+
+            gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
 
         // Copy over
         //self.framebuffer.texture.draw(ctx, 0.0, 0.0, ctx.w, ctx.h)?;
-        self.framebuffer.texture.draw(ctx, -0.5, -0.5, 1.0, 1.0)?;
+        //self.framebuffer.texture.draw(ctx, -0.5, -0.5, 1.0, 1.0)?;
         Ok(())
     }
 
@@ -190,7 +206,7 @@ impl NebulaData {
                 (1.0, 0.0)
             }
         };
-        self.view = ((1600. - self.density) * modifier + bonus);
+        self.view = (1600. - self.density) * modifier + bonus;
 
         let z = crate::camera::CAMERA.lock().unwrap().zoom as f32;
         self.uniform.horizon = self.view * z / self.scale;
@@ -227,7 +243,7 @@ impl NebulaData {
         self.uniform.volatility = volatility;
         self.uniform.saturation = saturation;
 
-        density > 0.0;
+        //if density > 0.0;
 
         self.update(0.0);
     }

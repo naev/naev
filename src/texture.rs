@@ -637,7 +637,7 @@ impl FramebufferTarget {
 }
 
 pub struct Framebuffer {
-    framebuffer: glow::Framebuffer,
+    pub framebuffer: glow::Framebuffer,
     pub w: usize,
     pub h: usize,
     pub texture: Texture,
