@@ -211,7 +211,7 @@ impl<'a> VertexArrayBuilder<'a> {
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));
-            for (idx, buffer) in self.buffers.into_iter().enumerate() {
+            for (idx, buffer) in self.buffers.iter().enumerate() {
                 if buffer.size < 1 || buffer.size > 4 {
                     warn!("invalid VertexArray size");
                     //    self.size = self.size.clamp(1, 4);

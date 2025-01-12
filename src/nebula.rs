@@ -121,8 +121,8 @@ impl NebulaData {
 
         self.scale = scale;
         self.framebuffer = FramebufferBuilder::new()
-            .width(w as usize)
-            .height(h as usize)
+            .width(w)
+            .height(h)
             .build(ctx)
             .unwrap();
 
@@ -159,7 +159,7 @@ impl NebulaData {
         unsafe {
             gl.bind_framebuffer(
                 glow::FRAMEBUFFER,
-                std::num::NonZero::new(naevc::gl_screen.current_fbo).map(|x| NativeFramebuffer(x)),
+                std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer),
             );
         }
 
@@ -178,7 +178,7 @@ impl NebulaData {
 
     pub fn update(&mut self, dt: f64) {
         let dt = (dt as f32) * self.speed;
-        self.uniform.elapsed += dt as f32;
+        self.uniform.elapsed += dt;
 
         let (modifier, bonus) = unsafe {
             if !naevc::player.p.is_null() {
@@ -190,7 +190,7 @@ impl NebulaData {
                 (1.0, 0.0)
             }
         };
-        self.view = ((1600. - self.density) * modifier + bonus) as f32;
+        self.view = ((1600. - self.density) * modifier + bonus);
 
         let z = crate::camera::CAMERA.lock().unwrap().zoom as f32;
         self.uniform.horizon = self.view * z / self.scale;
@@ -227,7 +227,7 @@ impl NebulaData {
         self.uniform.volatility = volatility;
         self.uniform.saturation = saturation;
 
-        if density > 0.0 {}
+        density > 0.0;
 
         self.update(0.0);
     }
@@ -236,7 +236,7 @@ impl NebulaData {
 use std::sync::{LazyLock, Mutex};
 static NEBULA: LazyLock<Mutex<NebulaData>> = LazyLock::new(|| {
     let ctx = context::CONTEXT.get().unwrap();
-    Mutex::new(NebulaData::new(&ctx).unwrap())
+    Mutex::new(NebulaData::new(ctx).unwrap())
 });
 
 #[no_mangle]
@@ -246,7 +246,7 @@ pub extern "C" fn nebu_init() {}
 pub extern "C" fn nebu_resize() {
     let ctx = context::CONTEXT.get().unwrap();
     let mut neb = NEBULA.lock().unwrap();
-    neb.resize(&ctx);
+    neb.resize(ctx);
 }
 
 #[no_mangle]
@@ -256,14 +256,14 @@ pub extern "C" fn nebu_exit() {}
 pub extern "C" fn nebu_render(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
-    let _ = neb.render(&ctx);
+    let _ = neb.render(ctx);
 }
 
 #[no_mangle]
 pub extern "C" fn nebu_renderOverlay(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
-    neb.render_overlay(&ctx);
+    neb.render_overlay(ctx);
 }
 
 #[no_mangle]
