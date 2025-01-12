@@ -190,14 +190,7 @@ impl Camera {
             } else if target.is_null() {
                 znear
             } else {
-                let mut pos = {
-                    let mut x = Box::<c_double>::new(0.);
-                    let mut y = Box::<c_double>::new(0.);
-                    unsafe {
-                        naevc::gui_getOffset(x.as_mut(), y.as_mut());
-                    };
-                    Vector2::<f64>::new(*x, *y)
-                };
+                let mut pos = Vector2::<f64>::new(0.0, 0.0);
                 let target_pos =
                     unsafe { Point2::<f64>::new((*target).solid.pos.x, (*target).solid.pos.y) };
                 let follow_pos =
