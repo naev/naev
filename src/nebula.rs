@@ -162,7 +162,7 @@ impl NebulaData {
         }
 
         // Copy over
-        //self.framebuffer.texture.draw( ctx, );
+        self.framebuffer.texture.draw(ctx, 0.0, 0.0, ctx.w, ctx.h)?;
         Ok(())
     }
 

@@ -1,6 +1,8 @@
 #![allow(dead_code)]
 use anyhow::Result;
+use encase::{ShaderSize, ShaderType};
 use glow::*;
+use nalgebra::{Matrix4, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
@@ -8,7 +10,8 @@ use std::sync::{Arc, Mutex, MutexGuard, OnceLock};
 use std::thread::ThreadId;
 
 use crate::buffer::{
-    Buffer, BufferBuilder, BufferUsage, VertexArray, VertexArrayBuffer, VertexArrayBuilder,
+    Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
+    VertexArrayBuilder,
 };
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{formatx, warn};
@@ -62,15 +65,40 @@ pub fn check_for_gl_error_impl(gl: &glow::Context, file: &str, line: u32, contex
 
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Default, ShaderType)]
+pub struct TextureUniform {
+    pub texture: Matrix4<f32>,
+    pub transform: Matrix4<f32>,
+    pub colour: Vector4<f32>,
+}
+impl TextureUniform {
+    pub fn new() -> Self {
+        TextureUniform {
+            ..Default::default()
+        }
+    }
+    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
+        let mut buffer =
+            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
+        buffer.write(self)?;
+        Ok(buffer)
+    }
+}
+
 pub struct Context {
     pub sdlvid: sdl::VideoSubsystem,
     pub gl: glow::Context,
     pub window: sdl::video::Window,
     pub gl_context: sdl::video::GLContext,
     main_thread: ThreadId,
+    pub w: f32,
+    pub h: f32,
 
     // Useful "globals"
     pub program_texture: Shader,
+    pub buffer_texture: Buffer,
+    pub uniform_texture: u32,
     pub vbo_square: Buffer,
     pub vao_square: VertexArray,
 }
@@ -263,6 +291,14 @@ impl Context {
             .frag_file("rust_texture.frag")
             .sampler("sampler", 0)
             .build(&gl)?;
+        let uniform = TextureUniform::new();
+        let buffer_texture = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(uniform.buffer()?.into_inner().as_slice())
+            .build(&gl)?;
+        let uniform_texture = program_texture.get_uniform_block(&gl, "TextureData")?;
+
         let vbo_square = BufferBuilder::new()
             .usage(BufferUsage::Static)
             .data_f32(&Self::DATA_SQUARE)
@@ -276,6 +312,7 @@ impl Context {
             }])
             .build(&gl)?;
 
+        let (w, h) = window.size();
         let ctx = Context {
             sdlvid,
             window,
@@ -283,8 +320,12 @@ impl Context {
             gl,
             main_thread: std::thread::current().id(),
             program_texture,
+            buffer_texture,
+            uniform_texture,
             vbo_square,
             vao_square,
+            w: w as f32,
+            h: h as f32,
         };
         let _ = CONTEXT.set(ctx);
         Ok(CONTEXT.get().unwrap())

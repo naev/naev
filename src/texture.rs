@@ -1,7 +1,7 @@
 #![allow(dead_code, unused_variables)]
 use anyhow::Result;
 use glow::*;
-use nalgebra::Vector4;
+use nalgebra::{Matrix4, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::boxed::Box;
@@ -11,7 +11,7 @@ use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::context::CONTEXT;
-use crate::{context, gettext, ndata};
+use crate::{buffer, context, gettext, ndata};
 use crate::{formatx, warn};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
@@ -281,21 +281,42 @@ impl Texture {
         }
     }
 
-    /*
-    pub fn draw( &self, ctx: &context::Context, x: f32, y: f32 ) {
+    pub fn draw(&self, ctx: &context::Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
         let gl = &ctx.gl;
-        ctx.program_texture.use_program( gl );
-        self.bind( ctx, 0 );
-        ctx.vao_square.bind();
+        ctx.program_texture.use_program(gl);
+        self.bind(ctx, 0);
+        ctx.vao_square.bind(ctx);
+
+        let texture: Matrix4<f32> = Matrix4::identity();
+        #[rustfmt::skip]
+        let transform: Matrix4<f32> = Matrix4::new(
+             w,  0.0, 0.0,  x,
+            0.0,  h,  0.0,  y,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0,
+        );
+        let uniform = context::TextureUniform {
+            texture,
+            transform,
+            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        };
+        ctx.buffer_texture
+            .write(ctx, uniform.buffer()?.into_inner().as_slice())?;
+        ctx.buffer_texture.bind(ctx);
 
         unsafe {
-            gl.draw_arrays( glow::TRIANGLE_STRIP, 0, 4 );
+            gl.bind_buffer_base(
+                glow::UNIFORM_BUFFER,
+                ctx.uniform_texture,
+                Some(ctx.buffer_texture.buffer),
+            );
+            gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
 
-        VertexArray::unbind( ctx );
-        self.unbind( ctx );
+        buffer::VertexArray::unbind(ctx);
+        Texture::unbind(ctx);
+        Ok(())
     }
-        */
 }
 
 #[derive(Clone, Copy)]
