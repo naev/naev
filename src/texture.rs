@@ -666,6 +666,8 @@ pub struct FramebufferBuilder {
     w: usize,
     h: usize,
     depth: bool,
+    filter: FilterMode,
+    address_mode: AddressMode,
 }
 
 impl FramebufferBuilder {
@@ -674,6 +676,8 @@ impl FramebufferBuilder {
             w: 0,
             h: 0,
             depth: false,
+            filter: FilterMode::Linear,
+            address_mode: AddressMode::ClampToBorder,
         }
     }
 
@@ -692,6 +696,16 @@ impl FramebufferBuilder {
         self
     }
 
+    pub fn filter(mut self, mode: FilterMode) -> Self {
+        self.filter = mode;
+        self
+    }
+
+    pub fn address_mode(mut self, mode: AddressMode) -> Self {
+        self.address_mode = mode;
+        self
+    }
+
     pub fn build(self, ctx: &context::Context) -> Result<Framebuffer> {
         let gl = &ctx.gl;
 
@@ -699,8 +713,8 @@ impl FramebufferBuilder {
             .empty(TextureFormat::RGBA)
             .width(self.w)
             .height(self.h)
-            .filter(FilterMode::Linear)
-            .address_mode(AddressMode::ClampToBorder)
+            .filter(self.filter)
+            .address_mode(self.address_mode)
             .build(ctx)?;
 
         let framebuffer = unsafe { gl.create_framebuffer().map_err(|e| anyhow::anyhow!(e)) }?;
@@ -720,8 +734,8 @@ impl FramebufferBuilder {
                 .empty(TextureFormat::Depth)
                 .width(self.w)
                 .height(self.h)
-                .filter(FilterMode::Nearest)
-                .address_mode(AddressMode::ClampToBorder)
+                .filter(self.filter)
+                .address_mode(self.address_mode)
                 .build(ctx)?;
             unsafe {
                 gl.framebuffer_texture_2d(
