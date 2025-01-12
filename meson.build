@@ -356,6 +356,13 @@ int main (void) { return 0; }''')
       output: 'naevc.h',
    )
 
+
+# Check for clang compiler
+clang = find_program('clang', required: true)
+if not clang.found()
+   error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
+endif
+
 # Check bindgen version
 bindgen = find_program('bindgen')
 bindgen_version = run_command(bindgen, '--version', check: true).stdout().strip().split()[1]
