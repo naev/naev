@@ -158,8 +158,8 @@ static void commodity_exchange_genList( unsigned int wid )
    iw = 565 + ( w - LAND_WIDTH );
    ih = h - 60;
 
-   double     *prices;
-   Commodity **tech = tech_getCommodity( land_spob->tech, &prices );
+   double     *prices = NULL;
+   Commodity **tech   = tech_getCommodity( land_spob->tech, &prices );
 
    if ( exists ) {
       toolkit_saveImageArrayData( wid, "iarTrade", &idat );

@@ -6,6 +6,7 @@
       * 1 new mission
       * 6 new ship variants
       * 2 new outfits
+      * New portraits
    * Engine
       * Begin porting to rust
       * Use instancing instead of geometry shaders for space dust

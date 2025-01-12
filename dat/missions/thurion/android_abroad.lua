@@ -13,12 +13,10 @@
 --]]
 local fmt = require "format"
 local vn = require "vn"
+local thurion = require "common.thurion"
 local title = _("Android Abroad")
 
 local destspb, destsys = spob.getS("Tenal-P")
--- TODO non-generic portrait?
-local npc_image = "neutral/male1n.webp"
-local npc_portrait = "neutral/male1n.webp"
 
 local cargo_amount = 10
 local reward = 200e3
@@ -26,7 +24,7 @@ local reward = 200e3
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC(_("Odd Individual"), npc_portrait, _("You see a non-uploaded Thurion sitting at the bar."))
+   misn.setNPC(_("Odd Individual"), thurion.liao.portrait, _("You see a non-uploaded Thurion sitting at the bar."))
 end
 
 local talked
@@ -34,8 +32,8 @@ function accept ()
    local accepted = false
    vn.clear()
    vn.scene()
-   local liao = vn.newCharacter( _("Liao"), {image=npc_image} )
-   vn.transition()
+   local liao = vn.newCharacter( thurion.vn_liao() )
+   vn.transition( thurion.liao.transition )
 
    if talked then
       liao(fmt.f(_([["Are you able to help me get to {destspb} in the {destsys} system?"]]),
@@ -75,12 +73,12 @@ Their eyes flicker for a second.
 
    vn.label("decline")
    liao(_([["I'll be waiting if you change your mind."]]))
-   vn.done()
+   vn.done( thurion.liao.transition )
 
    vn.label("nospace")
    vn.na(fmt.f(_([[You need at least {cargo} of free space to accept this mission.]]),
       {cargo=fmt.tonnes(cargo_amount)}))
-   vn.done()
+   vn.done( thurion.liao.transition )
 
    vn.label("accept")
    vn.func( function ()
@@ -91,6 +89,7 @@ Their eyes flicker for a second.
    end )
    liao(_([["We're always glad to have more people support the Thurion and understand our ways. Let me load my things on your ship and let us be on our way."]]))
 
+   vn.done( thurion.liao.transition )
    vn.run()
    talked = true
 
@@ -117,8 +116,8 @@ function land ()
 
    vn.clear()
    vn.scene()
-   local liao = vn.newCharacter( _("Liao"), {image=npc_image} )
-   vn.transition()
+   local liao = vn.newCharacter( thurion.vn_liao() )
+   vn.transition( thurion.liao.transition )
 
    vn.na(fmt.f(_([[You land on the tiny {spb}, and drop off Liao and their equipment.]]),
       {spb=destspb}))
@@ -146,6 +145,7 @@ function land ()
    diff.apply("thurion_espionage")
    faction.hit( "Thurion", 3 )
 
+   vn.done( thurion.liao.transition )
    vn.run()
 
    misn.finish(true)

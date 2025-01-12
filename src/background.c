@@ -205,11 +205,12 @@ void background_renderDust( const double dt )
    glUseProgram( shaders.dust.program );
    gl_uniformMat4( shaders.dust.projection, &projection );
    glUniform2f( shaders.dust.offset_xy, dust_x, dust_y );
-   if ( points )
-      glUniform3f( shaders.dust.dims, m * z, 0., 0. );
-   else {
-      double p = MAX( 0.5, 1. - m / 40. );
-      glUniform3f( shaders.dust.dims, p * z, angle, m );
+   z = 0.5 * z / gl_screen.scale;
+   if ( points ) {
+      glUniform3f( shaders.dust.dims, MAX( 0.5, m * z ), 0., 0. );
+   } else {
+      double p = MAX( 0.5, z ) * MAX( 0.5, ( 1. - m / 40. ) );
+      glUniform3f( shaders.dust.dims, p, angle, m );
    }
    glUniform3f( shaders.dust.screen, w, h, 1. / gl_screen.scale );
    glUniform1i( shaders.dust.use_lines, !points );
@@ -412,17 +413,16 @@ static void background_renderImages( background_image_t *bkg_arr )
 
    /* Render images in order. */
    for ( int i = 0; i < array_size( bkg_arr ); i++ ) {
-      double              cx, cy, x, y, rx, ry, gx, gy, z, m;
+      double              cx, cy, x, y, rx, ry, z, m;
       glColour            col;
       background_image_t *bkg = &bkg_arr[i];
 
       cam_getPos( &cx, &cy );
-      gui_getOffset( &gx, &gy );
       m = bkg->move;
       z = bkg->scale;
       /* Relative coordinates. */
-      rx = ( bkg->x - cx ) * m + gx;
-      ry = ( bkg->y - cy ) * m + gy;
+      rx = ( bkg->x - cx ) * m;
+      ry = ( bkg->y - cy ) * m;
       /* Screen coordinates. */
       y = ry + SCREEN_H / 2. - z * tex_sw( bkg->image ) / 2.;
       x = rx + SCREEN_W / 2. - z * tex_sh( bkg->image ) / 2.;

@@ -257,15 +257,11 @@ void nebu_update( double dt )
 void nebu_renderOverlay( const double dt )
 {
    (void)dt;
-   double gx, gy, z;
 
    NTracingZone( _ctx, 1 );
 
-   /* Get GUI offsets. */
-   gui_getOffset( &gx, &gy );
-
    /* Get zoom. */
-   z = cam_getZoom();
+   double z = cam_getZoom();
 
    /*
     * Renders the puffs

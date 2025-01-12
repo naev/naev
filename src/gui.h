@@ -100,7 +100,6 @@ void        gui_clearViewport( void );
 void        gui_setDefaults( void );
 void        gui_setRadarResolution( double res );
 void        gui_setRadarRel( int mod );
-void        gui_getOffset( double *x, double *y );
 glTexture  *gui_hailIcon( void );
 const char *gui_pick( void );
 int         gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot );

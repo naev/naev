@@ -103,10 +103,6 @@ typedef struct Radar_ {
    10. /**< Steps used to increase/decrease resolution. */
 static Radar gui_radar;
 
-/* needed to render properly */
-static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
-static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
-
 /* messages */
 static const int mesg_max = 128; /**< Maximum messages onscreen */
 static int       mesg_pointer =
@@ -659,10 +655,6 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
    *rx = ( pilot->solid.pos.x - player.p->solid.pos.x ) * z;
    *ry = ( pilot->solid.pos.y - player.p->solid.pos.y ) * z;
 
-   /* Correct for offset. */
-   *rx -= gui_xoff;
-   *ry -= gui_yoff;
-
    /* Get size. */
    w = pilot->ship->size;
    h = pilot->ship->size;
@@ -705,10 +697,6 @@ int gui_onScreenSpob( double *rx, double *ry, const JumpPoint *jp,
       *rx = ( jp->pos.x - player.p->solid.pos.x ) * z;
       *ry = ( jp->pos.y - player.p->solid.pos.y ) * z;
    }
-
-   /* Correct for offset. */
-   *rx -= gui_xoff;
-   *ry -= gui_yoff;
 
    /* Compare dimensions. */
    cw = SCREEN_W / 2;
@@ -2063,10 +2051,6 @@ void gui_cleanup( void )
    /* Reset FPS. */
    fps_setPos( 15., (double)( gl_screen.h - 15 - gl_defFontMono.h ) );
 
-   /* Destroy offset. */
-   gui_xoff = 0.;
-   gui_yoff = 0.;
-
    /* Destroy lua. */
    nlua_freeEnv( gui_env );
    gui_env = LUA_NOREF;
@@ -2149,18 +2133,6 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_setRadarResolution( gui_radar.res );
    player_message( _( "#oRadar set to %.0fx.#0" ), round( gui_radar.res ) );
-}
-
-/**
- * @brief Gets the GUI offset.
- *
- *    @param x X offset.
- *    @param y Y offset.
- */
-void gui_getOffset( double *x, double *y )
-{
-   *x = gui_xoff;
-   *y = gui_yoff;
 }
 
 /**
