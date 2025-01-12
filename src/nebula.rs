@@ -4,9 +4,7 @@ use encase::{ShaderSize, ShaderType};
 use glow::*;
 use nalgebra::Matrix3;
 
-use crate::buffer::{
-    Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuilder,
-};
+use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray};
 use crate::context;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture::{Framebuffer, FramebufferBuilder};
@@ -37,11 +35,11 @@ impl NebulaUniform {
 }
 
 struct NebulaData {
-    hue: f64,
-    density: f64,
+    hue: f32,
+    density: f32,
     view: f32,  // How far the player can see
     dx: f32,    // Length scale (space coords) for tubulence/eddies we draw.
-    speed: f64, // speed of change
+    speed: f32, // speed of change
     scale: f32, // How much to scale nebula
     framebuffer: Framebuffer,
     uniform: NebulaUniform,
@@ -52,7 +50,6 @@ struct NebulaData {
     shader_bg_uniform: u32,
     shader_overlay_vertex: u32,
     shader_overlay_uniform: u32,
-    vertex_array: VertexArray,
 }
 
 impl NebulaData {
@@ -88,15 +85,6 @@ impl NebulaData {
         let shader_overlay_vertex = shader_overlay.get_attrib(gl, "vertex")?;
         let shader_overlay_uniform = shader_bg.get_uniform_block(gl, "nebula_data")?;
 
-        let vertex_array = VertexArrayBuilder::new()
-            .buffers(&[crate::buffer::VertexArrayBuffer {
-                buffer: &buffer,
-                size: 2,
-                stride: 0,
-                offset: 0,
-            }])
-            .build(gl)?;
-
         Ok(NebulaData {
             hue: 0.0,
             density: 0.0,
@@ -113,7 +101,6 @@ impl NebulaData {
             shader_bg_uniform,
             shader_overlay_vertex,
             shader_overlay_uniform,
-            vertex_array,
         })
     }
 
@@ -135,7 +122,7 @@ impl NebulaData {
         //self.uniform.transform =
     }
 
-    pub fn render(&self, ctx: &context::Context) {
+    pub fn render(&self, ctx: &context::Context) -> Result<()> {
         let gl = &ctx.gl;
         self.framebuffer.bind(ctx);
         unsafe {
@@ -143,22 +130,24 @@ impl NebulaData {
         }
 
         self.shader_bg.use_program(gl);
-
+        self.buffer
+            .write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
+        self.buffer.bind(ctx);
         unsafe {
-            self.buffer.bind(ctx);
             gl.bind_buffer_base(
                 glow::UNIFORM_BUFFER,
                 self.shader_bg_uniform,
                 Some(self.buffer.buffer),
             );
-            gl.enable_vertex_attrib_array(self.shader_bg_vertex);
 
+            ctx.vao_square.bind(ctx);
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
-
-            gl.disable_vertex_attrib_array(self.shader_bg_vertex);
         }
+        VertexArray::unbind(ctx);
+        self.buffer.unbind(ctx);
 
         // Copy over
+        Ok(())
     }
 
     pub fn render_overlay(&self, ctx: &context::Context) {
@@ -167,14 +156,14 @@ impl NebulaData {
     }
 
     pub fn update(&mut self, dt: f64) {
-        let dt = dt * self.speed;
+        let dt = (dt as f32) * self.speed;
         self.uniform.elapsed += dt as f32;
 
         let (modifier, bonus) = unsafe {
             if !naevc::player.p.is_null() {
                 (
-                    (*naevc::player.p).stats.ew_detect,
-                    (*naevc::player.p).stats.nebu_visibility,
+                    (*naevc::player.p).stats.ew_detect as f32,
+                    (*naevc::player.p).stats.nebu_visibility as f32,
                 )
             } else {
                 (1.0, 0.0)
@@ -205,7 +194,7 @@ pub fn resize() {
 pub fn render() {
     let neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
-    neb.render(&ctx);
+    let _ = neb.render(&ctx);
 }
 
 pub fn render_overlay() {
