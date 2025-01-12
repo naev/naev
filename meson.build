@@ -358,7 +358,7 @@ int main (void) { return 0; }''')
 
 
 # Check for clang compiler
-clang = find_program('clang', required: true)
+clang = find_program('clang', required: false)
 if not clang.found()
    error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
 endif
@@ -368,15 +368,16 @@ bindgen = find_program('bindgen')
 bindgen_version = run_command(bindgen, '--version', check: true).stdout().strip().split()[1]
 
 bindgen_args = [
-  '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
-  '--override-abi', 'nlua_package_.*=C-unwind'
+   '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;'
 ]
-
 # Handle version-specific arguments
 if bindgen_version.version_compare('>=0.59.0')
   bindgen_args += ['--blocklist-file', '/usr/include/math.h']
 else
   bindgen_args += ['--blacklist-item', '/usr/include/math.h']
+endif
+if bindgen_version.version_compare('>=0.62.0')
+   bindgen_args += ['--override-abi', 'nlua_package_.*=C-unwind']
 endif
 
 # Invoke bindgen to generate Rust bindings
