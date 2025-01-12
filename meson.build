@@ -104,7 +104,7 @@ int main (void) { return 0; }''')
    sdl = dependency('sdl2', version: '>=2.0.26', required: true)
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
-   cmark = dependency('libcmark', required: true, version: '>=0.29.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
+   cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
    yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
 
    # TODO replace nfd with SDL3 native functions when possible
@@ -355,15 +355,32 @@ int main (void) { return 0; }''')
       capture: true,
       output: 'naevc.h',
    )
-   naevcrs = rust.bindgen(
-      input: naevch,
-      output: 'naevc.rs',
-      include_directories: [include_dirs, '.'],
-      dependencies: naev_deps,
-      args: ['--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
-             '--blocklist-file', '/usr/include/math.h',
-             '--override-abi', 'nlua_package_.*=C-unwind'],
-   )
+
+# Check bindgen version
+bindgen = find_program('bindgen')
+bindgen_version = run_command(bindgen, '--version', check: true).stdout().strip().split()[1]
+
+bindgen_args = [
+  '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
+  '--override-abi', 'nlua_package_.*=C-unwind'
+]
+
+# Handle version-specific arguments
+if bindgen_version.version_compare('>=0.59.0')
+  bindgen_args += ['--blocklist-file', '/usr/include/math.h']
+else
+  bindgen_args += ['--blacklist-item', '/usr/include/math.h']
+endif
+
+# Invoke bindgen to generate Rust bindings
+naevcrs = rust.bindgen(
+  input: naevch,
+  output: 'naevc.rs',
+  include_directories: [include_dirs, '.'],
+  dependencies: naev_deps,
+  args: bindgen_args,
+)
+
    copydir = find_program('utils/build/copydir.py')
    naevc_crate = custom_target(
       'naevc crate',
