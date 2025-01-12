@@ -7,7 +7,7 @@ use nalgebra::Matrix3;
 use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuilder,
 };
-use crate::ngl;
+use crate::context;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture::{Framebuffer, FramebufferBuilder};
 
@@ -56,7 +56,7 @@ struct NebulaData {
 }
 
 impl NebulaData {
-    fn new(ctx: &ngl::Context) -> Result<Self> {
+    fn new(ctx: &context::Context) -> Result<Self> {
         let gl = &ctx.gl;
         let (w, h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
         let framebuffer = FramebufferBuilder::new()
@@ -117,7 +117,7 @@ impl NebulaData {
         })
     }
 
-    pub fn resize(&mut self, ctx: &ngl::Context) {
+    pub fn resize(&mut self, ctx: &context::Context) {
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
         let w = (unsafe { naevc::gl_screen.nw as f32 } / scale).round() as usize;
         let h = (unsafe { naevc::gl_screen.nh as f32 } / scale).round() as usize;
@@ -135,7 +135,7 @@ impl NebulaData {
         //self.uniform.transform =
     }
 
-    pub fn render(&self, ctx: &ngl::Context) {
+    pub fn render(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         self.framebuffer.bind(ctx);
         unsafe {
@@ -161,7 +161,7 @@ impl NebulaData {
         // Copy over
     }
 
-    pub fn render_overlay(&self, ctx: &ngl::Context) {
+    pub fn render_overlay(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         self.shader_overlay.use_program(gl);
     }
@@ -192,25 +192,25 @@ impl NebulaData {
 
 use std::sync::{LazyLock, Mutex};
 static NEBULA: LazyLock<Mutex<NebulaData>> = LazyLock::new(|| {
-    let ctx = ngl::CONTEXT.get().unwrap();
+    let ctx = context::CONTEXT.get().unwrap();
     Mutex::new(NebulaData::new(&ctx).unwrap())
 });
 
 pub fn resize() {
-    let ctx = ngl::CONTEXT.get().unwrap();
+    let ctx = context::CONTEXT.get().unwrap();
     let mut neb = NEBULA.lock().unwrap();
     neb.resize(&ctx);
 }
 
 pub fn render() {
     let neb = NEBULA.lock().unwrap();
-    let ctx = ngl::CONTEXT.get().unwrap();
+    let ctx = context::CONTEXT.get().unwrap();
     neb.render(&ctx);
 }
 
 pub fn render_overlay() {
     let neb = NEBULA.lock().unwrap();
-    let ctx = ngl::CONTEXT.get().unwrap();
+    let ctx = context::CONTEXT.get().unwrap();
     neb.render_overlay(&ctx);
 }
 

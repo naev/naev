@@ -13,6 +13,7 @@ extern "C" {
 mod array;
 mod buffer;
 mod camera;
+mod context;
 mod damagetype;
 mod env;
 mod gettext;
@@ -21,7 +22,6 @@ mod log;
 mod model;
 mod ndata;
 mod nebula;
-mod ngl;
 mod nlua;
 mod ntime;
 mod nxml;
@@ -223,7 +223,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let _context = ngl::init(sdlvid).unwrap();
+    let _context = context::init(sdlvid).unwrap();
 
     unsafe {
         if naevc::gl_init() != 0 {

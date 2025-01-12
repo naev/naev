@@ -3667,6 +3667,7 @@ src/conf.c
 src/conf.h
 src/console.c
 src/console.h
+src/context.rs
 src/damagetype.h
 src/damagetype.rs
 src/debris.c
@@ -3805,7 +3806,6 @@ src/news.c
 src/news.h
 src/nfile.c
 src/nfile.h
-src/ngl.rs
 src/nlua.c
 src/nlua.h
 src/nlua.rs

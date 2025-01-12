@@ -2,8 +2,8 @@
 use anyhow::Result;
 use glow::*;
 
-use crate::ngl;
-use crate::ngl::{Context, CONTEXT};
+use crate::context;
+use crate::context::{Context, CONTEXT};
 use crate::{formatx, gettext, warn};
 
 pub struct Buffer {
@@ -25,13 +25,13 @@ impl Buffer {
         }
         Ok(())
     }
-    pub fn bind(&self, ctx: &ngl::Context) {
+    pub fn bind(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, Some(self.buffer));
         }
     }
-    pub fn unbind(&self, ctx: &ngl::Context) {
+    pub fn unbind(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, None);

@@ -9,7 +9,7 @@ use std::os::raw::{c_char, c_double, c_int};
 use std::rc::Rc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
-use crate::ngl::{Context, CONTEXT};
+use crate::context::{Context, CONTEXT};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{FramebufferTarget, Texture, TextureBuilder};

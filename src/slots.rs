@@ -4,8 +4,8 @@ use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
+use crate::context::{SafeContext, CONTEXT};
 use crate::gettext::gettext;
-use crate::ngl::{SafeContext, CONTEXT};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{ndata, texture};

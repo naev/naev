@@ -10,9 +10,9 @@ use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
-use crate::ngl::CONTEXT;
+use crate::context::CONTEXT;
+use crate::{context, gettext, ndata};
 use crate::{formatx, warn};
-use crate::{gettext, ndata, ngl};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
@@ -83,7 +83,7 @@ impl Drop for TextureData {
 
 impl TextureData {
     /// Creates a new TextureData of size w x h without any data.
-    fn new(ctx: &ngl::Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
+    fn new(ctx: &context::Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
         let gl = &ctx.gl;
         if w == 0 || h == 0 {
             return Err(anyhow::anyhow!(
@@ -156,7 +156,7 @@ impl TextureData {
 
     /// Creates a new TextureData from an image wrapper
     fn from_image(
-        ctx: &ngl::Context,
+        ctx: &context::Context,
         name: Option<&str>,
         img: &image::DynamicImage,
     ) -> Result<Self> {
@@ -264,7 +264,7 @@ impl Texture {
         })
     }
 
-    pub fn bind(&self, ctx: &ngl::Context, idx: u32) {
+    pub fn bind(&self, ctx: &context::Context, idx: u32) {
         let gl = &ctx.gl;
         unsafe {
             gl.active_texture(glow::TEXTURE0 + idx);
@@ -273,7 +273,7 @@ impl Texture {
         }
     }
 
-    pub fn unbind(ctx: &ngl::Context) {
+    pub fn unbind(ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, None);
@@ -324,7 +324,7 @@ pub enum TextureSource {
 impl TextureSource {
     fn to_texture_data(
         &self,
-        ctx: &ngl::Context,
+        ctx: &context::Context,
         w: usize,
         h: usize,
         name: Option<&str>,
@@ -513,7 +513,7 @@ impl TextureBuilder {
         self
     }
 
-    pub fn build(self, ctx: &ngl::Context) -> Result<Texture> {
+    pub fn build(self, ctx: &context::Context) -> Result<Texture> {
         let gl = &ctx.gl;
         /* TODO handle SDF. */
         let texture = self
@@ -584,7 +584,7 @@ impl FramebufferTarget {
         }
     }
 
-    pub fn bind(&self, ctx: &ngl::Context) {
+    pub fn bind(&self, ctx: &context::Context) {
         let fb = match self {
             Self::Screen => None,
             Self::Framebuffer(fb) => Some(fb.framebuffer),
@@ -610,14 +610,14 @@ impl Drop for Framebuffer {
     }
 }
 impl Framebuffer {
-    pub fn bind(&self, ctx: &ngl::Context) {
+    pub fn bind(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
         }
     }
 
-    pub fn unbind(ctx: &ngl::Context) {
+    pub fn unbind(ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, None);
@@ -655,7 +655,7 @@ impl FramebufferBuilder {
         self
     }
 
-    pub fn build(self, ctx: &ngl::Context) -> Result<Framebuffer> {
+    pub fn build(self, ctx: &context::Context) -> Result<Framebuffer> {
         let gl = &ctx.gl;
 
         let texture = TextureBuilder::new()
