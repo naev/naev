@@ -205,11 +205,12 @@ void background_renderDust( const double dt )
    glUseProgram( shaders.dust.program );
    gl_uniformMat4( shaders.dust.projection, &projection );
    glUniform2f( shaders.dust.offset_xy, dust_x, dust_y );
-   if ( points )
-      glUniform3f( shaders.dust.dims, m * z, 0., 0. );
-   else {
-      double p = MAX( 0.5, 1. - m / 40. );
-      glUniform3f( shaders.dust.dims, p * z, angle, m );
+   z = 0.5 * z / gl_screen.scale;
+   if ( points ) {
+      glUniform3f( shaders.dust.dims, MAX( 0.5, m * z ), 0., 0. );
+   } else {
+      double p = MAX( 0.5, z ) * MAX( 0.5, ( 1. - m / 40. ) );
+      glUniform3f( shaders.dust.dims, p, angle, m );
    }
    glUniform3f( shaders.dust.screen, w, h, 1. / gl_screen.scale );
    glUniform1i( shaders.dust.use_lines, !points );
