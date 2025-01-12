@@ -101,6 +101,8 @@ pub struct Context {
     pub uniform_texture: u32,
     pub vbo_square: Buffer,
     pub vao_square: VertexArray,
+    pub vbo_center: Buffer,
+    pub vao_center: VertexArray,
 }
 unsafe impl Send for Context {}
 unsafe impl Sync for Context {}
@@ -153,6 +155,11 @@ impl Context {
     const DATA_SQUARE: [f32;8] = [ 0., 0.,
                                    1., 0.,
                                    0., 1.,
+                                   1., 1., ];
+    #[rustfmt::skip]
+    const DATA_CENTER: [f32;8] = [-1.,-1.,
+                                   1.,-1.,
+                                  -1., 1.,
                                    1., 1., ];
 
     fn create_context(
@@ -312,6 +319,19 @@ impl Context {
             }])
             .build(&gl)?;
 
+        let vbo_center = BufferBuilder::new()
+            .usage(BufferUsage::Static)
+            .data_f32(&Self::DATA_CENTER)
+            .build(&gl)?;
+        let vao_center = VertexArrayBuilder::new()
+            .buffers(&[VertexArrayBuffer {
+                buffer: &vbo_center,
+                size: 2,
+                stride: 0,
+                offset: 0,
+            }])
+            .build(&gl)?;
+
         let (w, h) = window.size();
         let ctx = Context {
             sdlvid,
@@ -324,6 +344,8 @@ impl Context {
             uniform_texture,
             vbo_square,
             vao_square,
+            vbo_center,
+            vao_center,
             w: w as f32,
             h: h as f32,
         };
