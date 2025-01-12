@@ -280,6 +280,22 @@ impl Texture {
             gl.bind_sampler(0, None); // TODO handle index?
         }
     }
+
+    /*
+    pub fn draw( &self, ctx: &context::Context, x: f32, y: f32 ) {
+        let gl = &ctx.gl;
+        ctx.program_texture.use_program( gl );
+        self.bind( ctx, 0 );
+        ctx.vao_square.bind();
+
+        unsafe {
+            gl.draw_arrays( glow::TRIANGLE_STRIP, 0, 4 );
+        }
+
+        VertexArray::unbind( ctx );
+        self.unbind( ctx );
+    }
+        */
 }
 
 #[derive(Clone, Copy)]

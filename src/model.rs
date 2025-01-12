@@ -178,11 +178,6 @@ pub struct ModelShader {
     primitive_uniform: u32,
     material_uniform: u32,
     lighting_uniform: u32,
-    tex_diffuse: glow::UniformLocation,
-    tex_metallic: glow::UniformLocation,
-    tex_emissive: glow::UniformLocation,
-    tex_normal: glow::UniformLocation,
-    tex_occlusion: glow::UniformLocation,
 }
 impl ModelShader {
     fn get_uniform_tex(
@@ -211,19 +206,18 @@ impl ModelShader {
         let shader = ShaderBuilder::new(Some("PBR Shader"))
             .vert_file("material_pbr.vert")
             .frag_file("material_pbr.frag")
-            .build(ctx)?;
+            .sampler("baseColour_tex", 0)
+            .sampler("metallic_tex", 1)
+            .sampler("emissive_tex", 2)
+            .sampler("normal_tex", 3)
+            .sampler("occlusion_tex", 4)
+            .build(gl)?;
 
         let vertex = shader.get_attrib(gl, "vertex")?;
 
         let primitive_uniform = shader.get_uniform_block(gl, "Primitive")?;
         let material_uniform = shader.get_uniform_block(gl, "Material")?;
         let lighting_uniform = shader.get_uniform_block(gl, "Lighting")?;
-
-        let tex_diffuse = Self::get_uniform_tex(gl, &shader, "baseColour_tex", 0)?;
-        let tex_metallic = Self::get_uniform_tex(gl, &shader, "metallic_tex", 1)?;
-        let tex_emissive = Self::get_uniform_tex(gl, &shader, "emissive_tex", 2)?;
-        let tex_normal = Self::get_uniform_tex(gl, &shader, "normal_tex", 3)?;
-        let tex_occlusion = Self::get_uniform_tex(gl, &shader, "occlusion_tex", 4)?;
 
         let lighting_data = LightingUniform::default();
         let lighting_buffer = BufferBuilder::new()
@@ -239,11 +233,6 @@ impl ModelShader {
             primitive_uniform,
             material_uniform,
             lighting_uniform,
-            tex_diffuse,
-            tex_metallic,
-            tex_emissive,
-            tex_normal,
-            tex_occlusion,
         })
     }
 }

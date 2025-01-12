@@ -164,6 +164,10 @@ impl VertexArray {
     pub fn unbind(ctx: &context::Context) {
         unsafe {
             ctx.gl.bind_vertex_array(None);
+            // Horrible hack since C-side uses a single VAO for everything
+            ctx.gl.bind_vertex_array(Some(glow::NativeVertexArray(
+                std::num::NonZero::new(naevc::VaoId).unwrap(),
+            )));
         }
     }
 }
@@ -223,6 +227,7 @@ impl<'a> VertexArrayBuilder<'a> {
                     buffer.offset,
                 );
             }
+            gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.bind_vertex_array(None);
         }
         Ok(VertexArray { vertex_array })

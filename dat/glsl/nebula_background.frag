@@ -1,20 +1,24 @@
 #include "lib/nebula.glsl"
 
-uniform float hue;
-uniform float nonuniformity;
-uniform mat4 projection;
-uniform float eddy_scale;
-uniform float time;
-uniform float volatility;
-uniform float saturation;
+layout(std140) uniform NebulaData {
+   float hue;
+   float horizon;
+   float eddy_scale;
+   float elapsed;
+   float nonuniformity;
+   float volatility;
+   float saturation;
+   mat4 transform;
+};
+
 in vec4 base_col;
 out vec4 colour_out;
 
 vec4 nebula_default (void)
 {
-   vec2 rel_pos = gl_FragCoord.xy + projection[3].xy;
+   vec2 rel_pos = gl_FragCoord.xy + transform[3].xy;
    rel_pos /= eddy_scale;
-   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, saturation, volatility, 0.1 );
+   return nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, elapsed, hue, saturation, volatility, 0.1 );
 }
 
 void main (void)

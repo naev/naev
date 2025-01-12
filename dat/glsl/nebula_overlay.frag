@@ -2,11 +2,17 @@
 #include "lib/colour.glsl"
 #include "lib/nebula.glsl"
 
-uniform float hue;
-uniform mat4 projection;
-uniform float horizon;
-uniform float eddy_scale;
-uniform float time;
+layout(std140) uniform NebulaData {
+   float hue;
+   float horizon;
+   float eddy_scale;
+   float elapsed;
+   float nonuniformity;
+   float volatility;
+   float saturation;
+   mat4 transform;
+};
+
 in vec4 base_col;
 out vec4 colour_out;
 
@@ -18,7 +24,7 @@ void main (void)
    vec2 rel_pos;
 
    /* Compute coordinates for the noise */
-   rel_pos = gl_FragCoord.xy + projection[3].xy;
+   rel_pos = gl_FragCoord.xy + transform[3].xy;
    dist = length(rel_pos);
    if (dist > 2.0*horizon) {
       colour_out = base_col;
@@ -26,7 +32,7 @@ void main (void)
    }
 
    uv.xy = rel_pos / eddy_scale;
-   uv.z = time * 0.5;
+   uv.z = elapsed * 0.5;
 
    /* Compute hue as in lib/nebula.glsl. */
    hhue = nebula_hue( hue, uv );

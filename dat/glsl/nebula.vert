@@ -1,12 +1,20 @@
 #include "lib/colour.glsl"
 
-uniform float hue;
-uniform mat4 projection;
-uniform float saturation;
-in vec4 vertex;
+layout(std140) uniform NebulaData {
+   float hue;
+   float horizon;
+   float eddy_scale;
+   float elapsed;
+   float nonuniformity;
+   float volatility;
+   float saturation;
+   mat4 transform;
+};
+
+layout(location = 0) in vec4 vertex;
 out vec4 base_col;
 
 void main(void) {
-   gl_Position = projection * vertex;
+   gl_Position = transform * vertex;
    base_col = vec4( hsv2rgb( vec3(hue, saturation, 0.5*saturation + 0.5) ), 1.0 );
 }

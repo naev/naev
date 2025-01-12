@@ -4,7 +4,7 @@ use glow::*;
 use std::ffi::CStr;
 use std::os::raw::c_char;
 
-use crate::context::{Context, CONTEXT};
+use crate::context::CONTEXT;
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::{einfo, formatx, warn};
@@ -38,12 +38,11 @@ impl Drop for Shader {
 }
 impl Shader {
     fn compile(
-        ctx: &Context,
+        gl: &glow::Context,
         shadertype: ShaderType,
         name: &str,
         source: &str,
     ) -> Result<glow::Shader> {
-        let gl = &ctx.gl;
         let shader = unsafe {
             gl.create_shader(shadertype.to_gl())
                 .map_err(|e| anyhow::anyhow!(e))?
@@ -64,11 +63,10 @@ impl Shader {
     }
 
     fn link(
-        ctx: &Context,
+        gl: &glow::Context,
         vertshader: glow::Shader,
         fragshader: glow::Shader,
     ) -> Result<glow::Program> {
-        let gl = &ctx.gl;
         let program = unsafe { gl.create_program().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
             gl.attach_shader(program, vertshader);
@@ -176,6 +174,7 @@ pub struct ShaderBuilder {
     vert: ShaderSource,
     frag: ShaderSource,
     prepend: String,
+    samplers: Vec<(String, i32)>,
 }
 impl ShaderBuilder {
     pub fn new(name: Option<&str>) -> Self {
@@ -184,6 +183,7 @@ impl ShaderBuilder {
             vert: ShaderSource::None,
             frag: ShaderSource::None,
             prepend: Default::default(),
+            samplers: Vec::new(),
         }
     }
 
@@ -212,7 +212,12 @@ impl ShaderBuilder {
         self
     }
 
-    pub fn build(self, ctx: &Context) -> Result<Shader> {
+    pub fn sampler(mut self, name: &str, idx: i32) -> Self {
+        self.samplers.push((name.to_string(), idx));
+        self
+    }
+
+    pub fn build(self, gl: &glow::Context) -> Result<Shader> {
         let mut vertdata = ShaderSource::to_string(&self.vert)?;
         let mut fragdata = ShaderSource::to_string(&self.frag)?;
 
@@ -230,13 +235,28 @@ impl ShaderBuilder {
         let vertname = self.vert.name();
         let fragname = self.frag.name();
 
-        let vertshader = Shader::compile(ctx, ShaderType::Vertex, &vertname, &vertdata)?;
-        let fragshader = Shader::compile(ctx, ShaderType::Fragment, &fragname, &fragdata)?;
-        let program = Shader::link(ctx, vertshader, fragshader)?;
+        let vertshader = Shader::compile(gl, ShaderType::Vertex, &vertname, &vertdata)?;
+        let fragshader = Shader::compile(gl, ShaderType::Fragment, &fragname, &fragdata)?;
+        let program = Shader::link(gl, vertshader, fragshader)?;
         let name = match self.name {
             Some(name) => name,
             None => String::from("UNKNOWN"),
         };
+
+        unsafe {
+            gl.use_program(Some(program));
+            for (samplername, idx) in self.samplers {
+                match gl.get_uniform_location(program, &samplername) {
+                    Some(uniformid) => {
+                        gl.uniform_1_i32(Some(&uniformid), idx);
+                    }
+                    None => {
+                        anyhow::bail!("shader '{}' does not have sampler '{}'", name, samplername)
+                    }
+                }
+            }
+            gl.use_program(None);
+        }
 
         Ok(Shader {
             name,
@@ -267,7 +287,7 @@ pub extern "C" fn gl_program_backend(
         sb = sb.prepend(prepend.to_str().unwrap());
     }
 
-    let shader = ManuallyDrop::new(sb.build(ctx).unwrap());
+    let shader = ManuallyDrop::new(sb.build(&ctx.gl).unwrap());
 
     shader.program.0.into()
 }
@@ -290,7 +310,7 @@ pub extern "C" fn gl_program_vert_frag_string(
         ShaderBuilder::new(None)
             .vert_data(vertdata)
             .frag_data(fragdata)
-            .build(ctx)
+            .build(&ctx.gl)
             .unwrap(),
     );
 

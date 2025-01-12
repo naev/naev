@@ -99,7 +99,7 @@ source = files(
    'naevpedia.c',
    'naev_version.c',
    'ndata.c',
-   'nebula.c',
+   #'nebula.c',
    'news.c',
    'nfile.c',
    'nlua.c',

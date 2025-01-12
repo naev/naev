@@ -436,13 +436,13 @@ static int gl_setupScaling( void )
    return 0;
 }
 
+GLuint VaoId;
 /**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
 int gl_init( void )
 {
-   GLuint VaoId;
 
    /* Set Vsync. */
    if ( SDL_GL_GetSwapInterval() )
