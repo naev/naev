@@ -67,6 +67,8 @@ impl NebulaData {
 
         let mut uniform = NebulaUniform::default();
         uniform.nonuninformity = unsafe { naevc::conf.nebu_nonuniformity } as f32;
+        uniform.transform = Matrix4::identity();
+        let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
         let buffer = BufferBuilder::new()
             .target(BufferTarget::Uniform)
@@ -96,7 +98,7 @@ impl NebulaData {
             view: 0.0,
             dx: 0.0,
             speed: 0.0,
-            scale: 0.0,
+            scale,
             framebuffer,
             uniform,
             buffer,
@@ -124,7 +126,7 @@ impl NebulaData {
             .build(ctx)
             .unwrap();
 
-        //self.uniform.transform =
+        self.uniform.transform = Matrix4::identity();
     }
 
     pub fn render(&self, ctx: &context::Context) -> Result<()> {
@@ -132,7 +134,7 @@ impl NebulaData {
 
         self.framebuffer.bind(ctx);
         unsafe {
-            gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+            gl.clear(glow::COLOR_BUFFER_BIT);
         }
 
         self.shader_bg.use_program(gl);
@@ -162,7 +164,8 @@ impl NebulaData {
         }
 
         // Copy over
-        self.framebuffer.texture.draw(ctx, 0.0, 0.0, ctx.w, ctx.h)?;
+        //self.framebuffer.texture.draw(ctx, 0.0, 0.0, ctx.w, ctx.h)?;
+        self.framebuffer.texture.draw(ctx, -0.5, -0.5, 1.0, 1.0)?;
         Ok(())
     }
 

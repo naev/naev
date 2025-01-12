@@ -10,6 +10,7 @@ use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
+use crate::check_for_gl_error;
 use crate::context::CONTEXT;
 use crate::{buffer, context, gettext, ndata};
 use crate::{formatx, warn};
@@ -315,6 +316,7 @@ impl Texture {
 
         buffer::VertexArray::unbind(ctx);
         Texture::unbind(ctx);
+        check_for_gl_error!(gl, "Texture::draw");
         Ok(())
     }
 }
