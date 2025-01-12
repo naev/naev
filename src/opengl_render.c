@@ -607,16 +607,15 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 {
-   double cx, cy, gx, gy, z;
+   double cx, cy, z;
 
    /* Get parameters. */
    cam_getPos( &cx, &cy );
    z = cam_getZoom();
-   gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = ( bx - cx ) * z + gx + SCREEN_W * 0.5;
-   *ny = ( by - cy ) * z + gy + SCREEN_H * 0.5;
+   *nx = ( bx - cx ) * z + SCREEN_W * 0.5;
+   *ny = ( by - cy ) * z + SCREEN_H * 0.5;
 }
 
 /**
@@ -627,16 +626,14 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
  */
 mat4 gl_gameToScreenMatrix( mat4 lhs )
 {
-   double cx, cy, gx, gy, z;
+   double cx, cy, z;
    mat4   projection = lhs;
 
    /* Get parameters. */
    cam_getPos( &cx, &cy );
    z = cam_getZoom();
-   gui_getOffset( &gx, &gy );
 
-   mat4_translate_scale_xy( &projection, gx + SCREEN_W * 0.5,
-                            gy + SCREEN_H * 0.5, z, z );
+   mat4_translate_scale_xy( &projection, SCREEN_W * 0.5, SCREEN_H * 0.5, z, z );
    mat4_translate_xy( &projection, -cx, cy );
    return projection;
 }
@@ -651,16 +648,15 @@ mat4 gl_gameToScreenMatrix( mat4 lhs )
  */
 void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
 {
-   double cx, cy, gx, gy, z;
+   double cx, cy, z;
 
    /* Get parameters. */
    cam_getPos( &cx, &cy );
    z = cam_getZoom();
-   gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = ( bx - SCREEN_W * 0.5 - gx ) / z + cx;
-   *ny = ( by - SCREEN_H * 0.5 - gy ) / z + cy;
+   *nx = ( bx - SCREEN_W * 0.5 ) / z + cx;
+   *ny = ( by - SCREEN_H * 0.5 ) / z + cy;
 }
 
 /**

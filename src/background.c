@@ -413,17 +413,16 @@ static void background_renderImages( background_image_t *bkg_arr )
 
    /* Render images in order. */
    for ( int i = 0; i < array_size( bkg_arr ); i++ ) {
-      double              cx, cy, x, y, rx, ry, gx, gy, z, m;
+      double              cx, cy, x, y, rx, ry, z, m;
       glColour            col;
       background_image_t *bkg = &bkg_arr[i];
 
       cam_getPos( &cx, &cy );
-      gui_getOffset( &gx, &gy );
       m = bkg->move;
       z = bkg->scale;
       /* Relative coordinates. */
-      rx = ( bkg->x - cx ) * m + gx;
-      ry = ( bkg->y - cy ) * m + gy;
+      rx = ( bkg->x - cx ) * m;
+      ry = ( bkg->y - cy ) * m;
       /* Screen coordinates. */
       y = ry + SCREEN_H / 2. - z * bkg->image->sw / 2.;
       x = rx + SCREEN_W / 2. - z * bkg->image->sh / 2.;

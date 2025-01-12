@@ -466,9 +466,8 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target,
    } else {
       if ( target != NULL ) {
          /* Get current relative target position. */
-         gui_getOffset( &x, &y );
-         x += target->solid.pos.x - follow->solid.pos.x;
-         y += target->solid.pos.y - follow->solid.pos.y;
+         x = target->solid.pos.x - follow->solid.pos.x;
+         y = target->solid.pos.y - follow->solid.pos.y;
 
          /* Get distance ratio. */
          dx = ( SCREEN_W / 2. ) / ( FABS( x ) + 2. * target->ship->size );
