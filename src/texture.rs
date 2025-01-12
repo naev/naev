@@ -32,6 +32,7 @@ pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImag
     })
 }
 
+#[allow(clippy::upper_case_acronyms)]
 #[derive(Clone, Copy)]
 pub enum TextureFormat {
     RGB,
