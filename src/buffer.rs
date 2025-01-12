@@ -110,9 +110,7 @@ impl<'a> BufferBuilder<'a> {
         })
     }
 
-    pub fn build(self, ctx: &Context) -> Result<Buffer> {
-        let gl = &ctx.gl;
-
+    pub fn build(self, gl: &glow::Context) -> Result<Buffer> {
         if self.data.is_empty() {
             anyhow::bail!("BufferBuilder has no data");
         }
@@ -192,8 +190,7 @@ impl<'a> VertexArrayBuilder<'a> {
         self
     }
 
-    pub fn build(self, ctx: &Context) -> Result<VertexArray> {
-        let gl = &ctx.gl;
+    pub fn build(self, gl: &glow::Context) -> Result<VertexArray> {
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));

@@ -71,7 +71,7 @@ impl NebulaData {
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform.buffer()?.into_inner().as_slice())
-            .build(ctx)?;
+            .build(gl)?;
 
         let shader_bg = ShaderBuilder::new(Some("Nebula Background Shader"))
             .vert_file("nebula.vert")
@@ -95,7 +95,7 @@ impl NebulaData {
                 stride: 0,
                 offset: 0,
             }])
-            .build(ctx)?;
+            .build(gl)?;
 
         Ok(NebulaData {
             hue: 0.0,

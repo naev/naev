@@ -230,7 +230,7 @@ impl ModelShader {
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(lighting_data.buffer()?.into_inner().as_slice())
-            .build(ctx)?;
+            .build(gl)?;
 
         Ok(ModelShader {
             shader,
@@ -266,6 +266,7 @@ impl Material {
         mat: &gltf::Material,
         textures: &[Rc<Texture>],
     ) -> Result<Self> {
+        let gl = &ctx.gl;
         let mut data = MaterialUniform::new();
 
         let pbr = mat.pbr_metallic_roughness();
@@ -321,7 +322,7 @@ impl Material {
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Static)
             .data(data.buffer()?.into_inner().as_slice())
-            .build(ctx)?;
+            .build(gl)?;
 
         Ok(Material {
             uniform_data: data,
@@ -357,6 +358,7 @@ impl Primitive {
         buffer_data: &Vec<Vec<u8>>,
         materials: &[Rc<Material>],
     ) -> Result<Self> {
+        let gl = &ctx.gl;
         let mut vertex_data: Vec<Vertex> = vec![];
         let reader = prim.reader(|buf| Some(&buffer_data[buf.index()]));
 
@@ -416,17 +418,17 @@ impl Primitive {
         let vertices = BufferBuilder::new()
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&vertex_data))
-            .build(ctx)?;
+            .build(gl)?;
         let indices = BufferBuilder::new()
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&index_data))
-            .build(ctx)?;
+            .build(gl)?;
         let uniform_data = PrimitiveUniform::default();
         let uniform_buffer = BufferBuilder::new()
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform_data.buffer()?.into_inner().as_slice())
-            .build(ctx)?;
+            .build(gl)?;
 
         Ok(Primitive {
             uniform_data,

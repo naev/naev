@@ -223,7 +223,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let _context = context::init(sdlvid).unwrap();
+    let _context = context::Context::new(sdlvid).unwrap();
 
     unsafe {
         if naevc::gl_init() != 0 {
