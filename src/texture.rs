@@ -658,16 +658,15 @@ impl Drop for Framebuffer {
 }
 impl Framebuffer {
     pub fn bind(&self, ctx: &context::Context) {
-        let gl = &ctx.gl;
         unsafe {
-            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
+            ctx.gl
+                .bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
         }
     }
 
     pub fn unbind(ctx: &context::Context) {
-        let gl = &ctx.gl;
         unsafe {
-            gl.bind_framebuffer(glow::FRAMEBUFFER, None);
+            ctx.gl.bind_framebuffer(glow::FRAMEBUFFER, None);
         }
     }
 }

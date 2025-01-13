@@ -134,6 +134,7 @@ impl NebulaData {
 
         self.framebuffer.bind(ctx);
         unsafe {
+            gl.clear_color(0.0, 0.0, 0.0, 0.0);
             gl.clear(glow::COLOR_BUFFER_BIT);
         }
 
@@ -176,10 +177,6 @@ impl NebulaData {
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
 
-        // Copy over
-        //self.framebuffer
-        //    .texture
-        //    .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
         check_for_gl_error!(&gl, "Rendering Nebula Background");
         Ok(())
     }
