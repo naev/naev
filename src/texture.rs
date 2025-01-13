@@ -713,7 +713,6 @@ impl FramebufferBuilder {
         let gl = &ctx.gl;
 
         let texture = TextureBuilder::new()
-            .empty(TextureFormat::RGBA)
             .width(self.w)
             .height(self.h)
             .filter(self.filter)
@@ -761,15 +760,10 @@ impl FramebufferBuilder {
 
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, None);
-            match naevc::gl_screen.current_fbo {
-                0 => gl.bind_framebuffer(glow::FRAMEBUFFER, None),
-                _ => gl.bind_framebuffer(
-                    glow::FRAMEBUFFER,
-                    Some(glow::NativeFramebuffer(
-                        NonZero::new(naevc::gl_screen.current_fbo).unwrap(),
-                    )),
-                ),
-            }
+            gl.bind_framebuffer(
+                glow::FRAMEBUFFER,
+                NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
+            );
         }
 
         Ok(Framebuffer {

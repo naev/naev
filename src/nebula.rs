@@ -135,7 +135,7 @@ impl NebulaData {
 
         self.framebuffer.bind(ctx);
         unsafe {
-            gl.clear(glow::COLOR_BUFFER_BIT);
+            gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
         }
 
         self.shader_bg.use_program(gl);
