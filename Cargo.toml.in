@@ -17,13 +17,14 @@ semver = "1"
 sdl2 = { version = "0", features = ["image"] }
 rand = "0"
 glow = "0"
-rayon = "1"
+rayon = "1" # parallel computation
 image = "0"
-palette = "0"
+#etagere = "0" # Texture Atlas generation
+palette = "0" # Colour conversion
 nalgebra = { version = "0", features = ["bytemuck"]  }
 gltf = { version = "1", features = ["extras", "names", "utils"] }
-bytemuck = { version = "1", features = ["derive"] }
-encase = { version = "0", features = ["nalgebra"] }
+bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
+encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 # We support lua51 / luajit and they are ABI compatible, so just point at luajit
 mlua = { version = "0", features = ["luajit"] }
 
