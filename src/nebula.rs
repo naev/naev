@@ -3,6 +3,9 @@ use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
 use nalgebra::Vector2;
+use palette::rgb::Srgb;
+use palette::FromColor;
+use palette::Hsv;
 use std::os::raw::c_double;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray};
@@ -258,7 +261,8 @@ impl NebulaData {
         self.dx = 15e3 / density.powf(1.0 / 3.0);
 
         let saturation = unsafe { naevc::conf.nebu_saturation as f32 };
-        let _value = saturation * 0.5 + 0.5;
+        let value = saturation * 0.5 + 0.5;
+
         /*
         /* Set up ambient colour. */
         col_hsv2rgb( &col, nebu_hue * 360., saturation, value );
@@ -274,6 +278,27 @@ impl NebulaData {
         glUseProgram( shaders.nebula_puff.program );
         glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
          */
+
+        unsafe {
+            // Ambient
+            let col = Srgb::from_color(Hsv::new(360.0 * hue, saturation, value)).into_linear(); // Same as col_hsv2rgb
+            naevc::gltf_lightAmbient(
+                3.0 * col.red as f64,
+                3.0 * col.green as f64,
+                3.0 * col.blue as f64,
+            );
+            naevc::gltf_lightIntensity(0.5);
+
+            // Trails
+            let col =
+                Srgb::from_color(Hsv::new(360.0 * hue, 0.7 * saturation, value)).into_linear();
+            naevc::spfx_setNebulaColour(col.red as f64, col.green as f64, col.blue as f64);
+
+            // Puffs
+            //col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, value );
+            //glUseProgram( shaders.nebula_puff.program );
+            //glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
+        }
 
         self.uniform.hue = hue;
         self.uniform.elapsed = 0.0;

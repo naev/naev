@@ -19,6 +19,7 @@ rand = "0"
 glow = "0"
 rayon = "1"
 image = "0"
+palette = "0"
 nalgebra = { version = "0", features = ["bytemuck"]  }
 gltf = { version = "1", features = ["extras", "names", "utils"] }
 bytemuck = { version = "1", features = ["derive"] }
