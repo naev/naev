@@ -26,7 +26,12 @@ pub struct Camera {
     follow_pilot: c_uint,
 }
 
-pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(Default::default);
+pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(|| {
+    Mutex::new(Camera {
+        zoom: 1.0,
+        ..Default::default()
+    })
+});
 
 impl Camera {
     /// Handles updating the camera at every frame
