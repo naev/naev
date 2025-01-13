@@ -9,7 +9,6 @@ layout(std140) uniform NebulaData {
    float volatility;
    float saturation;
    vec2 camera;
-   mat4 transform;
 };
 
 in vec4 base_col;

@@ -2,7 +2,7 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use nalgebra::{Matrix4, Vector2};
+use nalgebra::Vector2;
 use std::os::raw::c_double;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray};
@@ -24,7 +24,6 @@ struct NebulaUniform {
     volatility: f32,
     saturation: f32,
     camera: Vector2<f32>,
-    transform: Matrix4<f32>,
 }
 impl NebulaUniform {
     pub fn new() -> Self {
@@ -68,7 +67,6 @@ impl NebulaData {
 
         let mut uniform = NebulaUniform::default();
         uniform.nonuninformity = unsafe { naevc::conf.nebu_nonuniformity } as f32;
-        uniform.transform = Matrix4::identity();
         uniform.camera = Vector2::new((w as f32) * 0.5, (h as f32) * 0.5);
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
@@ -128,7 +126,6 @@ impl NebulaData {
             .build(ctx)
             .unwrap();
 
-        self.uniform.transform = Matrix4::identity();
         self.uniform.camera = Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5);
     }
 
