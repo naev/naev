@@ -92,10 +92,13 @@ pub struct Context {
     pub window: sdl::video::Window,
     pub gl_context: sdl::video::GLContext,
     main_thread: ThreadId,
-    pub w: f32,
-    pub h: f32,
+    pub window_width: u32,  // In real pixels
+    pub window_height: u32, // In real pixels
+    pub view_width: f32,    // In scaled pixels
+    pub view_height: f32,   // In scaled pixels
 
     // Useful "globals"
+    pub projection: Matrix4<f32>,
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
     pub uniform_texture: u32,
@@ -332,13 +335,20 @@ impl Context {
             }])
             .build(&gl)?;
 
-        let (w, h) = window.size();
+        let (window_width, window_height) = window.size();
+        let (view_width, view_height) = { (window_width as f32, window_height as f32) };
+        let projection = Matrix4::new_orthographic(0.0, view_width, 0.0, view_height, -1.0, 1.0);
         let ctx = Context {
             sdlvid,
             window,
             gl_context,
             gl,
             main_thread: std::thread::current().id(),
+            window_width,
+            window_height,
+            view_width,
+            view_height,
+            projection,
             program_texture,
             buffer_texture,
             uniform_texture,
@@ -346,8 +356,6 @@ impl Context {
             vao_square,
             vbo_center,
             vao_center,
-            w: w as f32,
-            h: h as f32,
         };
         let _ = CONTEXT.set(ctx);
         Ok(CONTEXT.get().unwrap())

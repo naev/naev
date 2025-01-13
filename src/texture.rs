@@ -291,7 +291,7 @@ impl Texture {
 
         let texture: Matrix4<f32> = Matrix4::identity();
         #[rustfmt::skip]
-        let transform: Matrix4<f32> = Matrix4::new(
+        let transform: Matrix4<f32> = ctx.projection * Matrix4::new(
              w,  0.0, 0.0,  x,
             0.0,  h,  0.0,  y,
             0.0, 0.0, 1.0, 0.0,

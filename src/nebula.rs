@@ -160,6 +160,7 @@ impl NebulaData {
         unsafe {
             let screen =
                 std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer);
+            /*
             gl.bind_framebuffer(glow::READ_FRAMEBUFFER, Some(self.framebuffer.framebuffer));
             gl.bind_framebuffer(glow::DRAW_FRAMEBUFFER, screen);
             let (w, h) = (self.framebuffer.w as i32, self.framebuffer.h as i32);
@@ -170,18 +171,20 @@ impl NebulaData {
                 h,
                 0,
                 0,
-                ctx.w as i32,
-                ctx.h as i32,
+                ctx.window_width,
+                ctx.window_height,
                 glow::COLOR_BUFFER_BIT,
                 glow::LINEAR,
             );
+            */
 
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
 
         // Copy over
-        //self.framebuffer.texture.draw(ctx, 0.0, 0.0, ctx.w, ctx.h)?;
-        //self.framebuffer.texture.draw(ctx, -0.5, -0.5, 1.0, 1.0)?;
+        self.framebuffer
+            .texture
+            .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
         Ok(())
     }
 
