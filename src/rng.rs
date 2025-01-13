@@ -22,6 +22,14 @@ thread_local! {
     static RNG: std::cell::RefCell<rand::rngs::ThreadRng> = std::cell::RefCell::new(rand::thread_rng());
 }
 
+pub fn rngf32() -> f32 {
+    RNG.with_borrow_mut(|x| x.gen::<f32>())
+}
+
+pub fn range(l: i32, h: i32) -> i32 {
+    RNG.with_borrow_mut(|x| x.gen_range(l..h))
+}
+
 /* Taken from probability package. */
 #[allow(clippy::excessive_precision)]
 pub fn normal_inverse(p: f64) -> f64 {
