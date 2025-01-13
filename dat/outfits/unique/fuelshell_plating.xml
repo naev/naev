@@ -15,9 +15,9 @@
  </general>
  <specific type="modification">
   <lua>outfits/unique/fuelshell_plating.lua</lua>
-  <cargo>4</cargo>
+  <cargo>20</cargo>
   <absorb>0</absorb>
-  <armour>20</armour>
-  <fuel_mod>35</fuel_mod>
+  <armour>40</armour>
+  <fuel_mod>50</fuel_mod>
  </specific>
 </outfit>
