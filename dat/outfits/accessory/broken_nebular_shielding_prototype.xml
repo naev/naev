@@ -12,7 +12,6 @@
   <gfx_store>nebula_shielding_prototype.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
-  <stress_dissipation>25</stress_dissipation>
-  <heat_dissipation>25</heat_dissipation>
+  <stress_dissipation>35</stress_dissipation>
  </specific>
 </outfit>

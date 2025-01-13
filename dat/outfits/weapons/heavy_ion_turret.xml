@@ -22,7 +22,6 @@
   <falloff>1000</falloff>
   <gfx_end>ionL-end.png</gfx_end>
   <energy>54</energy>
-  <heatup>60</heatup>
   <trackmin>2000</trackmin>
   <trackmax>8000</trackmax>
   <damage>

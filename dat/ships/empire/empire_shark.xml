@@ -18,7 +18,7 @@
  <license>Light Combat Vessel</license>
  <cond>require("buyrep")("Empire", 20)</cond>
  <condstr>You need at least 20% reputation with the Empire.</condstr>
- <description>The Empire military grade version of the Shark is mostly identical in function to a standard Shark, but with slightly better armour, shields, and heat dissipation. The military-grade materials used also result in the ship being slightly lighter than its generic counterpart.</description>
+ <description>The Empire military grade version of the Shark is mostly identical in function to a standard Shark, but with slightly better armour, and shields. The military-grade materials used also result in the ship being slightly lighter than its generic counterpart.</description>
  <health>
   <armour>40</armour>
   <armour_regen>0</armour_regen>
@@ -47,7 +47,6 @@
  <stats>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <heat_dissipation>15</heat_dissipation>
  </stats>
  <tags>
   <tag>empire</tag>

@@ -20,7 +20,6 @@
   <speed>500</speed>
   <range blowup="armour">1000</range>
   <energy>2.2</energy>
-  <heatup>40</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <damage>

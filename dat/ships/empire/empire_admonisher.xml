@@ -19,7 +19,7 @@
  <license>Medium Combat Vessel</license>
  <cond>require("buyrep")("Empire", 40)</cond>
  <condstr>You need at least 40% reputation with the Empire.</condstr>
- <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
+ <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, and shields.</description>
  <health>
   <armour>240</armour>
   <armour_regen>0</armour_regen>
@@ -52,7 +52,6 @@
  <stats>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <heat_dissipation>15</heat_dissipation>
   <launch_range>20</launch_range>
   <ammo_capacity>25</ammo_capacity>
  </stats>

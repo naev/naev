@@ -122,6 +122,7 @@ local function islucky ()
 end
 
 local event_list = {
+   --[[
    function () -- Overheat
       local pp = player.pilot()
       luaspfx.sfx( false, nil, meow )
@@ -134,6 +135,7 @@ local event_list = {
       player.msg(_("Black cat hair has clogged the radiators and overheated the ship!"), true)
       player.autonavReset()
    end,
+   --]]
    function () -- Temporarily disable
       local pp = player.pilot()
       local dis = pp:disabled()

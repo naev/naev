@@ -3959,8 +3959,6 @@ src/pilot_cargo.h
 src/pilot_ew.c
 src/pilot_ew.h
 src/pilot_flags.h
-src/pilot_heat.c
-src/pilot_heat.h
 src/pilot_hook.c
 src/pilot_hook.h
 src/pilot_outfit.c

@@ -192,7 +192,6 @@ function enter()
       if system.cur() == mem.nextt then
          target = pilot.add( mem.shi:nameRaw(), "Mercenary", mem.previous )
          target:setHealth( mem.arm, mem.sld, mem.str )
-         target:setTemp( mem.tem )
          target:setHilight()
          target:setFaction(fw.fct_warlords())
 
@@ -455,7 +454,6 @@ function baddie_jump( pilot, jump )
       if mem.stage == 1 then -- It's the first one who escapes
          mem.nextt = jump:dest()
          mem.arm, mem.sld, mem.str = pilot:health() -- Store target values
-         mem.tem = pilot:temp()
          mem.shi = pilot:ship()
 
          tk.msg(_("This is not good"), fmt.f(_([[While your sensors lose track of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, {player}, you will jump to {sys} and destroy that ship."]]), {player=player.name(), sys=mem.nextt})) -- TODO: ensure the cleaning doesn't take too long
@@ -560,7 +558,6 @@ function lastOne_jumped( pilot, jump )
    mem.stage = 4
    mem.nextt = jump:dest()
    mem.arm, mem.sld, mem.str = pilot:health()
-   mem.tem = pilot:temp()
    mem.shi = pilot:ship()
 end
 

@@ -1,5 +1,6 @@
 * 0.13.0 (unreleased)
    * Gameplay
+      * Removed heat mechanic (to be readded as a new mechanic in the future)
       * Made pirates less aggressive
       * Change pirate spawning so hyenas are less dominant and deadly to new players
    * Content

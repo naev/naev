@@ -11,7 +11,6 @@
  </general>
  <specific type="modification">
   <launch_lockon>-10</launch_lockon>
-  <tur_heat>-25</tur_heat>
   <tur_firerate>-10</tur_firerate>
  </specific>
 </outfit>

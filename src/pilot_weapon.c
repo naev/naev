@@ -900,8 +900,7 @@ void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
 
    /* Beam duration used. Compensate for the fact its duration might have
     * been shortened by heat. */
-   used = w->outfit->u.bem.duration -
-          w->timer * ( 1. - pilot_heatAccuracyMod( w->heat_T ) );
+   used = w->outfit->u.bem.duration - w->timer;
 
    w->timer    = rate_mod * MAX( w->outfit->u.bem.min_delay,
                                  ( used / w->outfit->u.bem.duration ) *
@@ -1064,8 +1063,9 @@ static int pilot_shootWeaponSetOutfit( Pilot *p, const Outfit *o,
                  ( p->outfits[minh]->u.ammo.quantity < pos->u.ammo.quantity ) )
                minh = i;
          } else {
-            if ( ( minh < 0 ) || ( p->outfits[minh]->heat_T > pos->heat_T ) )
-               minh = i;
+            // TODO some other criteria?
+            // if ( ( minh < 0 ) || ( p->outfits[minh]->heat_T > pos->heat_T ) )
+            minh = i;
          }
       }
 
@@ -1143,7 +1143,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
       energy = outfit_energy( w->outfit ) * energy_mod;
       p->energy -= energy;
-      pilot_heatAddSlot( p, w );
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
          for ( int i = 0; i < w->outfit->u.blt.shots; i++ ) {
             weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
@@ -1211,7 +1210,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
       energy = outfit_energy( w->outfit ) * energy_mod;
       p->energy -= energy;
-      pilot_heatAddSlot( p, w );
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
          for ( int i = 0; i < w->outfit->u.lau.shots; i++ )
             weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
@@ -1639,16 +1637,6 @@ void pilot_afterburn( Pilot *p )
    /* Needs at least enough energy to afterburn fo 0.5 seconds. */
    if ( p->energy < p->afterburner->outfit->u.afb.energy * 0.5 )
       return;
-
-   /* The afterburner only works if its efficiency is high enough. */
-   if ( pilot_heatEfficiencyMod(
-           p->afterburner->heat_T, p->afterburner->outfit->overheat_min,
-           p->afterburner->outfit->overheat_max ) < 0.1 ) {
-      if ( pilot_isPlayer( p ) )
-         player_message( _( "#r%s is overheating!#0" ),
-                         _( p->afterburner->outfit->name ) );
-      return;
-   }
 
    /* Turn it on. */
    if ( p->afterburner->state == PILOT_OUTFIT_OFF ) {

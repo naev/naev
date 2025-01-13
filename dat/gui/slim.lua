@@ -100,7 +100,8 @@ function create()
       end
       return lg.newShader( px )
    end
-   player_pane_t = tex_open( "frame_player_top.png" )
+   --player_pane_t = tex_open( "frame_player_top.png" )
+   player_pane_t = tex_open( "frame_player_top_small.png" )
    player_pane_m = tex_open( "frame_player_middle.webp" )
    player_pane_b = tex_open( "frame_player_bottom.png" )
    target_pane = tex_open( "frame_target.png" )
@@ -205,7 +206,7 @@ function create()
    --Radar
    local radar_w = radar_gfx:dim()
    radar_x = pl_pane_x - radar_w + 24
-   radar_y = pl_pane_y + 31
+   radar_y = pl_pane_y + 31 - 28
    gui.radarInit( false, 124, 124 )
 
    --Shield Bar
@@ -217,7 +218,7 @@ function create()
    bardata = {}
 
    -- Initialize bar data
-   local types = { "shield", "armour", "energy", "speed", "temperature" }
+   local types = { "shield", "armour", "energy", "speed" } --, "temperature" }
    if has_flow then
       table.insert( types, "flow" )
    end
@@ -228,13 +229,13 @@ function create()
          col  = cols[v],
          bg   = bgs[v],
          x = x_shield,
-         y = y_shield - (k-1) * 28,
+         y = y_shield - (k) * 28,
          w = bgw,
          h = bgh
       }
    end
 
-   bars = { "armour", "energy", "speed", "shield" }
+   bars = { "shield", "armour", "energy", "speed" }
 
    --Ammo, heat and ready bars
    bar_weapon_w, bar_weapon_h = bgs.ammo:dim()
@@ -652,7 +653,7 @@ local function render_ammoBar( weap, x, y )
    else
       name = "heat"
       txtcol = cols.txt_bar
-      value = weap.heat
+      value = 0
       track = weap.track
    end
 
@@ -755,7 +756,6 @@ function render( dt, dt_mod )
    armour, shield, stress = pp:health()
    energy = pp:energy()
    speed = pp:vel():mod()
-   local temperature = pp:temp()
    local lockons = pp:lockon()
    local autonav = player.autonav()
    local credits = player.credits()
@@ -844,9 +844,11 @@ function render( dt, dt_mod )
    end
 
    -- Temperature
+   --[[
    txt = round(temperature) .. "K"
    temperature = math.max( math.min( (temperature - 250)/1.75, 100 ), 0 )
    render_bar( bardata['temperature'], temperature, txt, cols.txt_bar )
+   --]]
 
    -- Sirius Flow
    if has_flow then
@@ -914,11 +916,11 @@ function render( dt, dt_mod )
    end
 
    if armour <= 20 then
-      gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
+      gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148-28 )
    elseif shield <= 50 or armour <= 50 then
-      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
+      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148-28 )
    else
-      gfx.renderTex( warnlight5, pl_pane_x + 6, pl_pane_y + 148 )
+      gfx.renderTex( warnlight5, pl_pane_x + 6, pl_pane_y + 148-28 )
    end
 
    if autonav then
@@ -935,9 +937,9 @@ function render( dt, dt_mod )
          local slot_x = screen_w - slot_start_x - i * slot_w
 
          -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat-based somehow!
-         gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.heat ) -- Background (heat)
+         --gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.heat ) -- Background (heat)
          gfx.renderTexRaw( a.icon, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
-         gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.afb ) -- Foreground (heat)
+         --gfx.renderRect( slot_x, slot_y, slot_w, slot_h * a.heat, cols.afb ) -- Foreground (heat)
 
          if a.state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )

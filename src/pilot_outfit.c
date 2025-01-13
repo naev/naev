@@ -323,9 +323,6 @@ int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
    else
       s->flags &= ~PILOTOUTFIT_TOGGLEABLE;
 
-   /* Update heat. */
-   pilot_heatCalcSlot( s );
-
    /* Disable lua for now. */
    s->lua_mem = LUA_NOREF;
    ss_free( s->lua_stats ); /* Just in case. */
@@ -1173,9 +1170,6 @@ void pilot_calcStats( Pilot *pilot )
 
    /* Cargo has to be reset. */
    pilot_cargoCalc( pilot ); /* Calls pilot_updateMass. */
-
-   /* Calculate the heat. */
-   pilot_heatCalc( pilot );
 
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );

@@ -23,7 +23,6 @@
   <falloff>650</falloff>
   <gfx_end>plasma2-end.png</gfx_end>
   <energy>16.5</energy>
-  <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>
