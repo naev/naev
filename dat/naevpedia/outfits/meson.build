@@ -263,7 +263,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/structure/medium_shield_booster.xml',
    root / 'dat/outfits/structure/microbond_plating.xml',
    root / 'dat/outfits/structure/nanobond_plating.xml',
-   root / 'dat/outfits/structure/nanofiber_structures.xml',
+   root / 'dat/outfits/structure/nanofiber_structural_enhancement.xml',
    root / 'dat/outfits/structure/nebular_shielding_prototype.xml',
    root / 'dat/outfits/structure/plasteel_plating.xml',
    root / 'dat/outfits/structure/reactor_class_i.xml',
