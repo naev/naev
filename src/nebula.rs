@@ -139,8 +139,6 @@ impl NebulaData {
         }
 
         self.shader_bg.use_program(gl);
-        self.buffer
-            .write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
         self.buffer.bind(ctx);
         unsafe {
             gl.bind_buffer_base(
@@ -190,8 +188,6 @@ impl NebulaData {
         }
 
         self.shader_overlay.use_program(gl);
-        // Already updated when rendering background
-        //self.buffer.write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
         self.buffer.bind(ctx);
         unsafe {
             gl.bind_buffer_base(
@@ -221,7 +217,7 @@ impl NebulaData {
         Ok(())
     }
 
-    pub fn update(&mut self, dt: f64) {
+    pub fn update(&mut self, ctx: &context::Context, dt: f64) -> Result<()> {
         let dt = (dt as f32) * self.speed;
         self.uniform.elapsed += dt;
 
@@ -241,10 +237,22 @@ impl NebulaData {
         self.uniform.horizon = self.view * z / self.scale;
         self.uniform.eddy_scale = self.dx * z / self.scale;
 
+        // Write updates to uniform buffer
+        self.buffer
+            .write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
+
         // TODO puff updates, maybe can get away with shader magic
+
+        Ok(())
     }
 
-    pub fn setup(&mut self, density: f32, volatility: f32, hue: f32) {
+    pub fn setup(
+        &mut self,
+        ctx: &context::Context,
+        density: f32,
+        volatility: f32,
+        hue: f32,
+    ) -> Result<()> {
         self.density = density;
         self.speed = (2.0 * density + 200.0) / 10e3; // Faster at higher density
         self.dx = 15e3 / density.powf(1.0 / 3.0);
@@ -274,7 +282,7 @@ impl NebulaData {
 
         //if density > 0.0;
 
-        self.update(0.0);
+        self.update(ctx, 0.0)
     }
 }
 
@@ -314,7 +322,8 @@ pub extern "C" fn nebu_renderOverlay(_dt: f64) {
 #[no_mangle]
 pub extern "C" fn nebu_update(dt: f64) {
     let mut neb = NEBULA.lock().unwrap();
-    neb.update(dt);
+    let ctx = context::CONTEXT.get().unwrap();
+    let _ = neb.update(ctx, dt);
 }
 
 #[no_mangle]
@@ -326,7 +335,8 @@ pub extern "C" fn nebu_getSightRadius() -> c_double {
 #[no_mangle]
 pub extern "C" fn nebu_prep(density: c_double, volatility: c_double, hue: c_double) {
     let mut neb = NEBULA.lock().unwrap();
-    neb.setup(density as f32, volatility as f32, hue as f32);
+    let ctx = context::CONTEXT.get().unwrap();
+    let _ = neb.setup(ctx, density as f32, volatility as f32, hue as f32);
 }
 
 #[no_mangle]
