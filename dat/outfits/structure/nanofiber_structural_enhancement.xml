@@ -9,7 +9,7 @@
   <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="modification">
-  <absorption>-3</absorption>
+  <absorb>-3</absorb>
   <armour_mod>-10</armour_mod>
   <mass_mod>-5</mass_mod>
   <cargo_inertia>-10</cargo_inertia>
