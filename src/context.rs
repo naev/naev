@@ -319,6 +319,7 @@ impl Context {
                 size: 2,
                 stride: 0,
                 offset: 0,
+                divisor: 0,
             }])
             .build(&gl)?;
 
@@ -332,6 +333,7 @@ impl Context {
                 size: 2,
                 stride: 0,
                 offset: 0,
+                divisor: 0,
             }])
             .build(&gl)?;
 

@@ -177,6 +177,7 @@ pub struct VertexArrayBuffer<'a> {
     pub size: i32,          // in data_type units (1 to 4)
     pub stride: i32,
     pub offset: i32,
+    pub divisor: u32,
 }
 pub struct VertexArrayBuilder<'a> {
     data_type: u32, // glow::FLOAT and such
@@ -226,6 +227,7 @@ impl<'a> VertexArrayBuilder<'a> {
                     buffer.stride,
                     buffer.offset,
                 );
+                gl.vertex_attrib_divisor(idx as u32, buffer.divisor);
             }
             gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.bind_vertex_array(None);
