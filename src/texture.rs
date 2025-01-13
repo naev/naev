@@ -33,7 +33,7 @@ pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImag
 }
 
 #[allow(clippy::upper_case_acronyms)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub enum TextureFormat {
     RGB,
     RGBA,
@@ -63,6 +63,13 @@ impl TextureFormat {
             Self::SRGBA => glow::SRGB_ALPHA,
             Self::Depth => glow::DEPTH_COMPONENT,
         }) as i32
+    }
+
+    pub fn is_srgb(self) -> bool {
+        match self {
+            Self::RGB | Self::RGBA | Self::Depth => false,
+            Self::SRGB | Self::SRGBA => true,
+        }
     }
 }
 
@@ -114,7 +121,7 @@ impl TextureData {
             w,
             h,
             texture,
-            is_srgb: true,
+            is_srgb: format.is_srgb(),
             is_sdf: false,
             vmax: 1.,
         })
@@ -720,6 +727,7 @@ impl FramebufferBuilder {
             .build(ctx)?;
 
         let framebuffer = unsafe { gl.create_framebuffer().map_err(|e| anyhow::anyhow!(e)) }?;
+        texture.bind(ctx, 0);
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
             gl.framebuffer_texture_2d(
@@ -739,6 +747,7 @@ impl FramebufferBuilder {
                 .filter(self.filter)
                 .address_mode(self.address_mode)
                 .build(ctx)?;
+            depth.bind(ctx, 0);
             unsafe {
                 gl.framebuffer_texture_2d(
                     glow::FRAMEBUFFER,
@@ -759,7 +768,7 @@ impl FramebufferBuilder {
         }
 
         unsafe {
-            gl.bind_texture(glow::TEXTURE_2D, None);
+            Texture::unbind(ctx);
             gl.bind_framebuffer(
                 glow::FRAMEBUFFER,
                 NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
