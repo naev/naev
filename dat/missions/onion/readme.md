@@ -33,7 +33,7 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 5. **onion05:** player is sent get some Empire network plans for something big. Halfway through this is interrupted by a news event where signal is captured, where Trixie is peeled (doxxed). Have to rush to save Trixie, but ends up in failure and their death
 6. **onion06:** emergency conclave in the Nexus regarding Trixie where more tensions flare
 7. **onion07:** l337_b01 asks the player to help them find out who peeled Trixie, and use the Empire network plans recovered before to try to figure how the signal was hacked. Seems to indicate one of notasockpuppet's puppets, but not sure if manipulated. DOG sends a message warning l337_b01 that this is a dangerous path.
-8. **onion08:** l337_b01 ignores the warning and gets the player to try to break into of of notasockpuppets puppets to see if that was the cause, however, gets complicated
+8. **onion08:** l337_b01 ignores the warning and gets the player to try to break into of notasockpuppets puppets to see if that was the cause, however, gets complicated
 9. **onion09:** another tense emergency conclave in the Nexus, l337_b01 gets peeled and have to go save them
 9. **onion10:** Recover the package at Gordon's Exchange
 10. **onion11:** Plant trap signal generator and defend it while l337_b01 captures the signal
