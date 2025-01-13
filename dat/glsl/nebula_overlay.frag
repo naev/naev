@@ -10,21 +10,21 @@ layout(std140) uniform NebulaData {
    float nonuniformity;
    float volatility;
    float saturation;
+   vec2 camera;
    mat4 transform;
 };
 
 in vec4 base_col;
-out vec4 colour_out;
+layout(location = 0) out vec4 colour_out;
 
 void main (void)
 {
    float dist, f, hhue;
    vec3 uv;
    vec4 colour;
-   vec2 rel_pos;
 
    /* Compute coordinates for the noise */
-   rel_pos = gl_FragCoord.xy + transform[3].xy;
+   vec2 rel_pos = gl_FragCoord.xy - camera;
    dist = length(rel_pos);
    if (dist > 2.0*horizon) {
       colour_out = base_col;

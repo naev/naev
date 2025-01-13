@@ -8,11 +8,12 @@ layout(std140) uniform NebulaData {
    float nonuniformity;
    float volatility;
    float saturation;
+   vec2 camera;
    mat4 transform;
 };
 
 in vec4 base_col;
-out vec4 colour_out;
+layout(location = 0) out vec4 colour_out;
 
 vec4 nebula_default (void)
 {

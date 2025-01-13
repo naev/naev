@@ -2,7 +2,7 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use nalgebra::Matrix4;
+use nalgebra::{Matrix4, Vector2};
 use std::os::raw::c_double;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray};
@@ -23,6 +23,7 @@ struct NebulaUniform {
     nonuninformity: f32,
     volatility: f32,
     saturation: f32,
+    camera: Vector2<f32>,
     transform: Matrix4<f32>,
 }
 impl NebulaUniform {
@@ -68,7 +69,7 @@ impl NebulaData {
         let mut uniform = NebulaUniform::default();
         uniform.nonuninformity = unsafe { naevc::conf.nebu_nonuniformity } as f32;
         uniform.transform = Matrix4::identity();
-        //uniform.transform = Matrix4::new_orthographic( 0.0, ctx.w, 0.0, ctx.h, -1.0, 1.0 ).append_scaling(100.0);
+        uniform.camera = Vector2::new((w as f32) * 0.5, (h as f32) * 0.5);
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
         let buffer = BufferBuilder::new()
@@ -128,6 +129,7 @@ impl NebulaData {
             .unwrap();
 
         self.uniform.transform = Matrix4::identity();
+        self.uniform.camera = Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5);
     }
 
     pub fn render(&self, ctx: &context::Context) -> Result<()> {
@@ -135,7 +137,7 @@ impl NebulaData {
 
         self.framebuffer.bind(ctx);
         unsafe {
-            gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
+            gl.clear(glow::COLOR_BUFFER_BIT);
         }
 
         self.shader_bg.use_program(gl);
@@ -155,12 +157,9 @@ impl NebulaData {
         VertexArray::unbind(ctx);
         self.buffer.unbind(ctx);
 
-        check_for_gl_error!(&gl, "Rendering Nebula Background");
-
         unsafe {
             let screen =
                 std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer);
-            /*
             gl.bind_framebuffer(glow::READ_FRAMEBUFFER, Some(self.framebuffer.framebuffer));
             gl.bind_framebuffer(glow::DRAW_FRAMEBUFFER, screen);
             let (w, h) = (self.framebuffer.w as i32, self.framebuffer.h as i32);
@@ -171,13 +170,51 @@ impl NebulaData {
                 h,
                 0,
                 0,
-                ctx.window_width,
-                ctx.window_height,
+                ctx.window_width as i32,
+                ctx.window_height as i32,
                 glow::COLOR_BUFFER_BIT,
                 glow::LINEAR,
             );
-            */
 
+            gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
+        }
+
+        // Copy over
+        //self.framebuffer
+        //    .texture
+        //    .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
+        check_for_gl_error!(&gl, "Rendering Nebula Background");
+        Ok(())
+    }
+
+    pub fn render_overlay(&self, ctx: &context::Context) -> Result<()> {
+        let gl = &ctx.gl;
+
+        self.framebuffer.bind(ctx);
+        unsafe {
+            gl.clear(glow::COLOR_BUFFER_BIT);
+        }
+
+        self.shader_overlay.use_program(gl);
+        // Already updated when rendering background
+        //self.buffer.write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
+        self.buffer.bind(ctx);
+        unsafe {
+            gl.bind_buffer_base(
+                glow::UNIFORM_BUFFER,
+                self.shader_overlay_uniform,
+                Some(self.buffer.buffer),
+            );
+
+            ctx.vao_center.bind(ctx);
+            gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
+        }
+        VertexArray::unbind(ctx);
+        self.buffer.unbind(ctx);
+
+        unsafe {
+            let screen =
+                std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer);
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
 
@@ -185,14 +222,9 @@ impl NebulaData {
         self.framebuffer
             .texture
             .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
-        Ok(())
-    }
-
-    pub fn render_overlay(&self, ctx: &context::Context) {
-        let gl = &ctx.gl;
-        self.shader_overlay.use_program(gl);
 
         check_for_gl_error!(&gl, "Rendering Nebula Overlay");
+        Ok(())
     }
 
     pub fn update(&mut self, dt: f64) {
@@ -282,7 +314,7 @@ pub extern "C" fn nebu_render(_dt: f64) {
 pub extern "C" fn nebu_renderOverlay(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
-    neb.render_overlay(ctx);
+    let _ = neb.render_overlay(ctx);
 }
 
 #[no_mangle]
