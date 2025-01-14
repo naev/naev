@@ -311,14 +311,8 @@ impl Texture {
         };
         ctx.buffer_texture
             .write(ctx, uniform.buffer()?.into_inner().as_slice())?;
-        ctx.buffer_texture.bind(ctx);
-
+        ctx.buffer_texture.bind_base(ctx, ctx.uniform_texture);
         unsafe {
-            gl.bind_buffer_base(
-                glow::UNIFORM_BUFFER,
-                ctx.uniform_texture,
-                Some(ctx.buffer_texture.buffer),
-            );
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
 
