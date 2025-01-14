@@ -45,6 +45,9 @@ impl Buffer {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, None);
+            // TODO why is this necessary? Shouldn't be, but gives issues otherwise
+            // Maybe remove when C code is cleaned up...
+            gl.bind_buffer_base(glow::UNIFORM_BUFFER, 0, None);
         }
     }
 }
