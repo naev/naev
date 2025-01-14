@@ -227,7 +227,7 @@ impl NebulaData {
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(puff_uniform.buffer()?.into_inner().as_slice())
-            .build(&gl)?;
+            .build(gl)?;
 
         check_for_gl_error!(&gl, "Creating NebulaData");
 
@@ -314,7 +314,7 @@ impl NebulaData {
         }
         check_for_gl_error!(&gl, "Rendering Nebula Background");
 
-        self.puffs_bg.render(ctx, &self)
+        self.puffs_bg.render(ctx, self)
     }
 
     pub fn render_overlay(&self, ctx: &context::Context) -> Result<()> {
@@ -347,7 +347,7 @@ impl NebulaData {
 
         check_for_gl_error!(&gl, "Rendering Nebula Overlay");
 
-        self.puffs_fg.render(ctx, &self)
+        self.puffs_fg.render(ctx, self)
     }
 
     pub fn update(&mut self, ctx: &context::Context, dt: f64) -> Result<()> {
