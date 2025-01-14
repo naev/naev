@@ -2,22 +2,26 @@
 
 const float SCALAR = pow(2., 4./3.);
 
-uniform vec3 nebu_col;
-uniform float time;
-uniform vec2 r;
+layout(std140) uniform PuffData {
+   vec2 screen;
+   vec3 offset;
+   vec3 colour;
+   float elapsed;
+};
 
-in vec2 pos;
-out vec4 colour_out;
+in vec2 fragpos;
+in vec2 rand;
+layout(location = 0) out vec4 colour_out;
 
 void main(void) {
-   float a = 1.0-length( pos );
+   float a = 1.0-length( fragpos );
    a = smoothstep( 0.0, 1.0, a );
    if (a<0.0) {
       discard;
       return;
    }
 
-   vec3 uv = vec3( pos+r, time );
+   vec3 uv = vec3( fragpos+rand, elapsed );
    float f, scale;
 
    /* Create the noise */
@@ -27,5 +31,5 @@ void main(void) {
    scale *= SCALAR;
    f += abs( cnoise( uv * scale ) ) / scale;
 
-   colour_out = vec4( nebu_col, a*f );
+   colour_out = vec4( colour, a*f );
 }

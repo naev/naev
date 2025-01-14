@@ -141,13 +141,13 @@ SHADERS = [
 #      attributes = ["vertex"],
 #      uniforms = ["projection", "hue", "nonuniformity", "eddy_scale", "time", "volatility", "saturation"],
 #   ),
-   Shader(
-      name = "nebula_puff",
-      vs_path = "project_pos.vert",
-      fs_path = "nebula_puff.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "nebu_col", "time", "r" ],
-   ),
+#   Shader(
+#      name = "nebula_puff",
+#      vs_path = "project_pos.vert",
+#      fs_path = "nebula_puff.frag",
+#      attributes = ["vertex"],
+#      uniforms = ["projection", "nebu_col", "time", "r" ],
+#   ),
    Shader(
       name = "nebula_map",
       vs_path = "system_map.vert",
