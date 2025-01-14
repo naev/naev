@@ -75,6 +75,7 @@ struct PuffUniform {
     offset: Vector3<f32>,
     colour: Vector3<f32>,
     elapsed: f32,
+    scale: f32,
 }
 impl PuffUniform {
     pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
@@ -228,6 +229,7 @@ impl NebulaData {
 
         let puff_uniform = PuffUniform {
             screen: Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5),
+            scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
             ..Default::default()
         };
         let puff_buffer = BufferBuilder::new()

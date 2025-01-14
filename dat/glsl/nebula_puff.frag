@@ -7,6 +7,7 @@ layout(std140) uniform PuffData {
    vec3 offset;
    vec3 colour;
    float elapsed;
+   float scale;
 };
 
 in vec2 fragpos;

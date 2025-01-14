@@ -5,6 +5,7 @@ layout(std140) uniform PuffData {
    vec3 offset;
    vec3 colour;
    float elapsed;
+   float scale;
 };
 
 layout(location = 0) in vec2 vertex;
@@ -21,8 +22,11 @@ void main(void) {
    float height = data.z;
    float size = data.w * offset.z; // Zoomed
    vec2 center = vertex * vec2(size); // 0-centered pixel-size
-   center += pos - offset.xy * vec2(height); // Translate to correct position
-   center = mod( center, 2.0*(screen + PUFF_BUFFER) ) - screen - PUFF_BUFFER;  // Still centered in [-screen-PUFF_BUFFER, screen+PUFF_BUFFER] range
-   center *= offset.z / screen; // Rescale to [-1,1] range, with PUFF_BUFFER / screen sticking "out"
+   // Translate to correct position
+   center += pos - offset.xy * vec2(height);
+   // Still centered in [-screen-PUFF_BUFFER, screen+PUFF_BUFFER] range
+   center = mod( center, 2.0*(screen + PUFF_BUFFER) ) - screen - PUFF_BUFFER;
+   // Rescale to [-1,1] range, with PUFF_BUFFER / screen sticking "out"
+   center *= scale * offset.z / screen;
    gl_Position = vec4( center, 0.0, 1.0 );
 }
