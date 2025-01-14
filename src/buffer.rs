@@ -175,9 +175,9 @@ impl VertexArray {
 pub struct VertexArrayBuffer<'a> {
     pub buffer: &'a Buffer, // Buffer
     pub size: i32,          // in data_type units (1 to 4)
-    pub stride: i32,
-    pub offset: i32,
-    pub divisor: u32,
+    pub stride: i32,        // in bytes, 0 indicates tightly packed
+    pub offset: i32,        // in bytes
+    pub divisor: u32,       // 0 indicates per vertex, non-zero is advance per instances
 }
 pub struct VertexArrayBuilder<'a> {
     data_type: u32, // glow::FLOAT and such
@@ -210,6 +210,15 @@ impl<'a> VertexArrayBuilder<'a> {
 
     pub fn build(self, gl: &glow::Context) -> Result<VertexArray> {
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
+        /*
+        let data_size = match self.data_type {
+            glow::BYTE | glow::UNSIGNED_BYTE => 1,
+            glow::SHORT | glow::UNSIGNED_SHORT => 2,
+            glow::INT | glow::UNSIGNED_INT | glow::FIXED | glow::FLOAT => 4,
+            glow::DOUBLE => 8,
+            _ => anyhow::bail!("unsupported data type '{:#x}'", self.data_type),
+        };
+        */
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));
             for (idx, buffer) in self.buffers.iter().enumerate() {
