@@ -386,7 +386,9 @@ impl NebulaData {
         let z = cam.zoom as f32;
         self.uniform.horizon = self.view * z / self.scale;
         self.uniform.eddy_scale = self.dx * z / self.scale;
-        self.puff_uniform.offset = Vector3::new(cam.pos.x as f32, cam.pos.y as f32, z);
+        self.puff_uniform.offset.x = cam.pos.x as f32;
+        self.puff_uniform.offset.y = cam.pos.y as f32;
+        self.puff_uniform.offset.z = z;
 
         // Write updates to uniform buffer
         self.buffer
@@ -413,22 +415,6 @@ impl NebulaData {
         let saturation = unsafe { naevc::conf.nebu_saturation as f32 };
         let value = saturation * 0.5 + 0.5;
 
-        /*
-        /* Set up ambient colour. */
-        col_hsv2rgb( &col, nebu_hue * 360., saturation, value );
-        gltf_lightAmbient( 3.0 * col.r, 3.0 * col.g, 3.0 * col.b );
-        gltf_lightIntensity( 0.5 );
-
-        /* Also set the hue for trails */
-        col_hsv2rgb( &col, nebu_hue * 360., 0.7 * conf.nebu_saturation, value );
-        spfx_setNebulaColour( col.r, col.g, col.b );
-
-        /* Also set the hue for puffs. */
-        col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, value );
-        glUseProgram( shaders.nebula_puff.program );
-        glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
-         */
-
         unsafe {
             // Ambient
             let col = Srgb::from_color(Hsv::new(360.0 * hue, saturation, value)).into_linear(); // Same as col_hsv2rgb
@@ -445,6 +431,7 @@ impl NebulaData {
             naevc::spfx_setNebulaColour(col.red as f64, col.green as f64, col.blue as f64);
         }
 
+        // General uniform data
         self.uniform.hue = hue;
         self.uniform.elapsed = 0.0;
         self.uniform.volatility = volatility;
