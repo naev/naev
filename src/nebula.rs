@@ -284,6 +284,8 @@ impl NebulaData {
             .unwrap();
 
         self.uniform.camera = Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5);
+
+        self.puff_uniform.screen = Vector2::new(ctx.view_width, ctx.view_height);
     }
 
     pub fn render(&self, ctx: &context::Context) -> Result<()> {
@@ -366,6 +368,7 @@ impl NebulaData {
     pub fn update(&mut self, ctx: &context::Context, dt: f64) -> Result<()> {
         let dt = (dt as f32) * self.speed;
         self.uniform.elapsed += dt;
+        self.puff_uniform.elapsed += dt;
 
         let (modifier, bonus) = unsafe {
             if !naevc::player.p.is_null() {
@@ -379,15 +382,19 @@ impl NebulaData {
         };
         self.view = (1600. - self.density) * modifier + bonus;
 
-        let z = crate::camera::CAMERA.lock().unwrap().zoom as f32;
+        let cam = crate::camera::CAMERA.lock().unwrap();
+        let z = cam.zoom as f32;
         self.uniform.horizon = self.view * z / self.scale;
         self.uniform.eddy_scale = self.dx * z / self.scale;
+        self.puff_uniform.offset = Vector3::new(cam.pos.x as f32, cam.pos.y as f32, z);
 
         // Write updates to uniform buffer
         self.buffer
             .write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
 
-        // TODO puff updates, maybe can get away with shader magic
+        // Update and writes to puff buffer
+        self.puff_buffer
+            .write(ctx, self.puff_uniform.buffer()?.into_inner().as_slice())?;
 
         Ok(())
     }
@@ -436,11 +443,6 @@ impl NebulaData {
             let col =
                 Srgb::from_color(Hsv::new(360.0 * hue, 0.7 * saturation, value)).into_linear();
             naevc::spfx_setNebulaColour(col.red as f64, col.green as f64, col.blue as f64);
-
-            // Puffs
-            //col_hsv2rgb( &col, nebu_hue * 360., 0.95 * conf.nebu_saturation, value );
-            //glUseProgram( shaders.nebula_puff.program );
-            //glUniform3f( shaders.nebula_puff.nebu_col, col.r, col.g, col.b );
         }
 
         self.uniform.hue = hue;
@@ -448,9 +450,12 @@ impl NebulaData {
         self.uniform.volatility = volatility;
         self.uniform.saturation = saturation;
 
+        // Puffs
         let n = (density / 4.0).round() as usize;
         self.puffs_bg = PuffLayer::new(ctx, n, false)?;
         self.puffs_fg = PuffLayer::new(ctx, n, true)?;
+        let col = Srgb::from_color(Hsv::new(360.0 * hue, 0.95 * saturation, value)).into_linear();
+        self.puff_uniform.colour = Vector3::new(col.red, col.green, col.blue);
 
         self.update(ctx, 0.0)
     }

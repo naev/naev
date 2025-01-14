@@ -9,7 +9,7 @@ const CAMERA_DIR: f64 = std::f64::consts::FRAC_PI_2;
 
 #[derive(Default, Clone)]
 pub struct Camera {
-    pos: Point2<f64>,
+    pub pos: Point2<f64>,
     old: Point2<f64>,
     target: Point2<f64>,
     der: Vector2<f64>,
