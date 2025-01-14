@@ -232,7 +232,7 @@ impl NebulaData {
         };
         let puff_buffer = BufferBuilder::new()
             .target(BufferTarget::Uniform)
-            .usage(BufferUsage::Static)
+            .usage(BufferUsage::Dynamic)
             .data(puff_uniform.buffer()?.into_inner().as_slice())
             .build(&gl)?;
 
