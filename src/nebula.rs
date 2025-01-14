@@ -448,11 +448,10 @@ impl NebulaData {
         self.uniform.volatility = volatility;
         self.uniform.saturation = saturation;
 
-        if density > 0.0 {
-            let n = (density / 4.0).round() as usize;
-            self.puffs_fg = PuffLayer::new(ctx, n, true)?;
-            self.puffs_bg = PuffLayer::new(ctx, n, true)?;
-        }
+        let n = (density / 4.0).round() as usize;
+        self.puffs_bg = PuffLayer::new(ctx, n, false)?;
+        self.puffs_fg = PuffLayer::new(ctx, n, true)?;
+
         self.update(ctx, 0.0)
     }
 }
