@@ -2,19 +2,23 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use nalgebra::Vector2;
+use nalgebra::{Vector2, Vector3};
 use palette::rgb::Srgb;
 use palette::FromColor;
 use palette::Hsv;
 use std::os::raw::c_double;
 
-use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray};
+use crate::buffer::{
+    Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
+    VertexArrayBuilder,
+};
 use crate::check_for_gl_error;
-use crate::context;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture::{Framebuffer, FramebufferBuilder};
+use crate::{context, rng};
 
 pub const DEFAULT_HUE: f64 = 260.0;
+pub const PUFF_BUFFER: f32 = 300.;
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default, ShaderType)]
@@ -29,16 +33,146 @@ struct NebulaUniform {
     camera: Vector2<f32>,
 }
 impl NebulaUniform {
-    pub fn new() -> Self {
-        NebulaUniform {
-            ..Default::default()
-        }
-    }
     pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
         let mut buffer =
             encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
         buffer.write(self)?;
         Ok(buffer)
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, Default, bytemuck::Pod, bytemuck::Zeroable)]
+struct Puff {
+    pos: [f32; 2],
+    height: f32,
+    size: f32,
+    rand: [f32; 2], // Randomness
+}
+impl Puff {
+    fn new(ctx: &context::Context, fg: bool) -> Self {
+        let x = (ctx.view_width + 2.0 * PUFF_BUFFER) * rng::rngf32();
+        let y = (ctx.view_height + 2.0 * PUFF_BUFFER) * rng::rngf32();
+        let rx = rng::rngf32() * 2000.0 - 1000.0;
+        let ry = rng::rngf32() * 2000.0 - 1000.0;
+        let height = 0.2 * rng::rngf32();
+        Self {
+            pos: [x, y],
+            height: 1.0
+                + match fg {
+                    true => height,
+                    false => height.abs(),
+                },
+            size: rng::range(10, 32) as f32,
+            rand: [rx, ry],
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Default, ShaderType)]
+struct PuffUniform {
+    screen: Vector2<f32>,
+    offset: Vector3<f32>,
+    colour: Vector3<f32>,
+    elapsed: f32,
+}
+impl PuffUniform {
+    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
+        let mut buffer =
+            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
+        buffer.write(self)?;
+        Ok(buffer)
+    }
+}
+
+struct PuffLayer {
+    data: Vec<Puff>,
+    buffer: Buffer,
+    vertex_array: VertexArray,
+}
+impl PuffLayer {
+    const ZERO: Puff = Puff {
+        pos: [0.0, 0.0],
+        height: 0.0,
+        size: 0.0,
+        rand: [0.0, 0.0],
+    };
+
+    fn new(ctx: &context::Context, n: usize, fg: bool) -> Result<Self> {
+        let mut data = vec![];
+        for _ in 0..n {
+            data.push(Puff::new(ctx, fg));
+        }
+
+        let puff_size = std::mem::size_of::<Puff>();
+        let buffer = BufferBuilder::new()
+            .usage(BufferUsage::Static)
+            .data(match n {
+                0 => bytemuck::cast_slice(&[Self::ZERO]), // Dummy data
+                _ => bytemuck::cast_slice(&data),
+            })
+            .build(&ctx.gl)?;
+
+        let vertex_array = VertexArrayBuilder::new()
+            .buffers(&[
+                VertexArrayBuffer {
+                    buffer: &ctx.vbo_square,
+                    size: 2,
+                    stride: 0, // tightly packed
+                    offset: 0,
+                    divisor: 0,
+                },
+                VertexArrayBuffer {
+                    buffer: &buffer,
+                    size: 4,
+                    stride: puff_size as i32,
+                    offset: 0,
+                    divisor: 4, // Advances once per instance (aka 4 vertices)
+                },
+                VertexArrayBuffer {
+                    buffer: &buffer,
+                    size: 2,
+                    stride: puff_size as i32,
+                    offset: std::mem::offset_of!(Puff, rand) as i32,
+                    divisor: 4,
+                },
+            ])
+            .build(&ctx.gl)?;
+
+        check_for_gl_error!(&ctx.gl, "Generating Nebula Puffs");
+
+        Ok(PuffLayer {
+            data,
+            buffer,
+            vertex_array,
+        })
+    }
+
+    fn render(&self, ctx: &context::Context, data: &NebulaData) -> Result<()> {
+        let gl = &ctx.gl;
+
+        /*
+        let count = self.data.len();
+
+        data.shader_puff.use_program(gl);
+        self.vertex_array.bind(ctx);
+        data.puff_buffer.bind_base(ctx, 0);
+
+        unsafe {
+            gl.draw_arrays_instanced( glow::TRIANGLE_STRIP,
+                0,
+                4,
+                count as i32,
+            );
+        }
+
+        VertexArray::unbind(ctx);
+        data.puff_buffer.unbind(ctx);
+        */
+
+        check_for_gl_error!(&gl, "Rendering Nebula Puffs");
+        Ok(())
     }
 }
 
@@ -53,10 +187,15 @@ struct NebulaData {
     buffer: Buffer,
     shader_bg: Shader,
     shader_overlay: Shader,
+    shader_puff: Shader,
     shader_bg_vertex: u32,
     shader_bg_uniform: u32,
     shader_overlay_vertex: u32,
     shader_overlay_uniform: u32,
+    puffs_bg: PuffLayer,
+    puffs_fg: PuffLayer,
+    puff_buffer: Buffer,
+    puff_uniform: PuffUniform,
 }
 
 impl NebulaData {
@@ -83,16 +222,26 @@ impl NebulaData {
             .vert_file("nebula.vert")
             .frag_file("nebula_background.frag")
             .build(gl)?;
-
         let shader_overlay = ShaderBuilder::new(Some("Nebula Overlay Shader"))
             .vert_file("nebula.vert")
             .frag_file("nebula_overlay.frag")
+            .build(gl)?;
+        let shader_puff = ShaderBuilder::new(Some("Nebula Puff Shader"))
+            .vert_file("nebula_puff.vert")
+            .frag_file("nebula_puff.frag")
             .build(gl)?;
 
         let shader_bg_vertex = shader_bg.get_attrib(gl, "vertex")?;
         let shader_bg_uniform = shader_bg.get_uniform_block(gl, "NebulaData")?;
         let shader_overlay_vertex = shader_overlay.get_attrib(gl, "vertex")?;
         let shader_overlay_uniform = shader_bg.get_uniform_block(gl, "NebulaData")?;
+
+        let puff_uniform = PuffUniform::default();
+        let puff_buffer = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Static)
+            .data(puff_uniform.buffer()?.into_inner().as_slice())
+            .build(&gl)?;
 
         check_for_gl_error!(&gl, "Creating NebulaData");
 
@@ -107,10 +256,15 @@ impl NebulaData {
             buffer,
             shader_bg,
             shader_overlay,
+            shader_puff,
             shader_bg_vertex,
             shader_bg_uniform,
             shader_overlay_vertex,
             shader_overlay_uniform,
+            puffs_bg: PuffLayer::new(ctx, 0, false)?,
+            puffs_fg: PuffLayer::new(ctx, 0, true)?,
+            puff_buffer,
+            puff_uniform,
         })
     }
 
@@ -142,15 +296,9 @@ impl NebulaData {
         }
 
         self.shader_bg.use_program(gl);
-        self.buffer.bind(ctx);
+        self.buffer.bind_base(ctx, self.shader_bg_uniform);
+        ctx.vao_center.bind(ctx);
         unsafe {
-            gl.bind_buffer_base(
-                glow::UNIFORM_BUFFER,
-                self.shader_bg_uniform,
-                Some(self.buffer.buffer),
-            );
-
-            ctx.vao_center.bind(ctx);
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
         VertexArray::unbind(ctx);
@@ -177,9 +325,9 @@ impl NebulaData {
 
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
-
         check_for_gl_error!(&gl, "Rendering Nebula Background");
-        Ok(())
+
+        self.puffs_bg.render(ctx, &self)
     }
 
     pub fn render_overlay(&self, ctx: &context::Context) -> Result<()> {
@@ -191,15 +339,9 @@ impl NebulaData {
         }
 
         self.shader_overlay.use_program(gl);
-        self.buffer.bind(ctx);
+        self.buffer.bind_base(ctx, self.shader_overlay_uniform);
+        ctx.vao_center.bind(ctx);
         unsafe {
-            gl.bind_buffer_base(
-                glow::UNIFORM_BUFFER,
-                self.shader_overlay_uniform,
-                Some(self.buffer.buffer),
-            );
-
-            ctx.vao_center.bind(ctx);
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
         VertexArray::unbind(ctx);
@@ -217,7 +359,8 @@ impl NebulaData {
             .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
 
         check_for_gl_error!(&gl, "Rendering Nebula Overlay");
-        Ok(())
+
+        self.puffs_fg.render(ctx, &self)
     }
 
     pub fn update(&mut self, ctx: &context::Context, dt: f64) -> Result<()> {
@@ -305,8 +448,11 @@ impl NebulaData {
         self.uniform.volatility = volatility;
         self.uniform.saturation = saturation;
 
-        //if density > 0.0;
-
+        if density > 0.0 {
+            let n = (density / 4.0).round() as usize;
+            self.puffs_fg = PuffLayer::new(ctx, n, true)?;
+            self.puffs_bg = PuffLayer::new(ctx, n, true)?;
+        }
         self.update(ctx, 0.0)
     }
 }
