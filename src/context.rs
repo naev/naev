@@ -339,9 +339,9 @@ impl Context {
         };
         #[rustfmt::skip]
         let projection = Matrix3::new(
-            2.0 / view_width, 0.0, -1.0,
-            0.0, 2.0 / view_height, -1.0,
-            0.0, 0.0, 1.0,
+            2.0/view_width, 0.0,             -1.0,
+            0.0,            2.0/view_height, -1.0,
+            0.0,            0.0,              1.0,
         );
         let ctx = Context {
             sdlvid,
