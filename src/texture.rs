@@ -1,7 +1,7 @@
 #![allow(dead_code, unused_variables)]
 use anyhow::Result;
 use glow::*;
-use nalgebra::{Matrix4, Vector4};
+use nalgebra::{Matrix3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::boxed::Box;
@@ -296,13 +296,12 @@ impl Texture {
         self.bind(ctx, 0);
         ctx.vao_square.bind(ctx);
 
-        let texture: Matrix4<f32> = Matrix4::identity();
+        let texture: Matrix3<f32> = Matrix3::identity();
         #[rustfmt::skip]
-        let transform: Matrix4<f32> = ctx.projection * Matrix4::new(
-             w,  0.0, 0.0,  x,
-            0.0,  h,  0.0,  y,
-            0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 0.0, 1.0,
+        let transform: Matrix3<f32> = ctx.projection * Matrix3::new(
+             w,  0.0,  x,
+            0.0,  h,   y,
+            0.0, 0.0, 1.0,
         );
         let uniform = context::TextureUniform {
             texture,

@@ -2,7 +2,7 @@
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
-use nalgebra::{Matrix4, Vector4};
+use nalgebra::{Matrix3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
@@ -68,8 +68,8 @@ pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default, ShaderType)]
 pub struct TextureUniform {
-    pub texture: Matrix4<f32>,
-    pub transform: Matrix4<f32>,
+    pub texture: Matrix3<f32>,
+    pub transform: Matrix3<f32>,
     pub colour: Vector4<f32>,
 }
 impl TextureUniform {
@@ -94,7 +94,7 @@ pub struct Context {
     pub view_scale: f32,    // In scaling value
 
     // Useful "globals"
-    pub projection: Matrix4<f32>,
+    pub projection: Matrix3<f32>,
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
     pub vbo_square: Buffer,
@@ -337,7 +337,12 @@ impl Context {
             let scale = unsafe { naevc::conf.scalefactor as f32 };
             (w / scale, h / scale, 1.0 / scale)
         };
-        let projection = Matrix4::new_orthographic(0.0, view_width, 0.0, view_height, -1.0, 1.0);
+        #[rustfmt::skip]
+        let projection = Matrix3::new(
+            2.0 / view_width, 0.0, -1.0,
+            0.0, 2.0 / view_height, -1.0,
+            0.0, 0.0, 1.0,
+        );
         let ctx = Context {
             sdlvid,
             window,

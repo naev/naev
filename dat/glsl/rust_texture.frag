@@ -1,6 +1,6 @@
 layout(std140) uniform TextureData {
-   mat4 tex_mat;
-   mat4 transform;
+   mat3 tex_mat;
+   mat3 transform;
    vec4 colour;
 };
 
