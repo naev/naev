@@ -125,14 +125,14 @@ impl PuffLayer {
                     size: 4,
                     stride: puff_size as i32,
                     offset: 0,
-                    divisor: 4, // Advances once per instance (aka 4 vertices)
+                    divisor: 1, // Advances once per instance
                 },
                 VertexArrayBuffer {
                     buffer: &buffer,
                     size: 2,
                     stride: puff_size as i32,
                     offset: std::mem::offset_of!(Puff, rand) as i32,
-                    divisor: 4,
+                    divisor: 1,
                 },
             ])
             .build(&ctx.gl)?;
@@ -150,8 +150,6 @@ impl PuffLayer {
         let gl = &ctx.gl;
 
         let count = self.data.len();
-
-        dbg!(data.puff_uniform);
 
         data.shader_puff.use_program(gl);
         self.vertex_array.bind(ctx);
@@ -218,6 +216,7 @@ impl NebulaData {
             .frag_file("nebula_overlay.frag")
             .build(gl)?;
         let shader_puff = ShaderBuilder::new(Some("Nebula Puff Shader"))
+            .prepend(&format!("const float PUFF_BUFFER = {}f;\n", PUFF_BUFFER))
             .vert_file("nebula_puff.vert")
             .frag_file("nebula_puff.frag")
             .build(gl)?;
