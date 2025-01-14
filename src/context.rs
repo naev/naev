@@ -96,7 +96,6 @@ pub struct Context {
     pub projection: Matrix4<f32>,
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
-    pub uniform_texture: u32,
     pub vbo_square: Buffer,
     pub vao_square: VertexArray,
     pub vbo_center: Buffer,
@@ -302,7 +301,6 @@ impl Context {
             .usage(BufferUsage::Dynamic)
             .data(uniform.buffer()?.into_inner().as_slice())
             .build(&gl)?;
-        let uniform_texture = program_texture.get_uniform_block(&gl, "TextureData")?;
 
         let vbo_square = BufferBuilder::new()
             .usage(BufferUsage::Static)
@@ -333,7 +331,11 @@ impl Context {
             .build(&gl)?;
 
         let (window_width, window_height) = window.size();
-        let (view_width, view_height) = { (window_width as f32, window_height as f32) };
+        let (view_width, view_height) = {
+            let (w, h) = (window_width as f32, window_height as f32);
+            let scale = unsafe { naevc::conf.scalefactor as f32 };
+            (w / scale, h / scale)
+        };
         let projection = Matrix4::new_orthographic(0.0, view_width, 0.0, view_height, -1.0, 1.0);
         let ctx = Context {
             sdlvid,
@@ -348,7 +350,6 @@ impl Context {
             projection,
             program_texture,
             buffer_texture,
-            uniform_texture,
             vbo_square,
             vao_square,
             vbo_center,

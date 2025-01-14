@@ -60,7 +60,7 @@ impl Puff {
                 false => rnd,
             }
         };
-        let size = 5.0 + rng::rngf32() * 11.0; // [5, 16] radius
+        let size = 8.0 + rng::rngf32() * 20.0; // [8, 20] radius
         Self {
             data: [x, y, height, size],
             rand: [rx, ry],
@@ -178,10 +178,6 @@ struct NebulaData {
     shader_bg: Shader,
     shader_overlay: Shader,
     shader_puff: Shader,
-    shader_bg_vertex: u32,
-    shader_bg_uniform: u32,
-    shader_overlay_vertex: u32,
-    shader_overlay_uniform: u32,
     puffs_bg: PuffLayer,
     puffs_fg: PuffLayer,
     puff_buffer: Buffer,
@@ -222,11 +218,6 @@ impl NebulaData {
             .frag_file("nebula_puff.frag")
             .build(gl)?;
 
-        let shader_bg_vertex = shader_bg.get_attrib(gl, "vertex")?;
-        let shader_bg_uniform = shader_bg.get_uniform_block(gl, "NebulaData")?;
-        let shader_overlay_vertex = shader_overlay.get_attrib(gl, "vertex")?;
-        let shader_overlay_uniform = shader_bg.get_uniform_block(gl, "NebulaData")?;
-
         let puff_uniform = PuffUniform {
             screen: Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5),
             scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
@@ -252,10 +243,6 @@ impl NebulaData {
             shader_bg,
             shader_overlay,
             shader_puff,
-            shader_bg_vertex,
-            shader_bg_uniform,
-            shader_overlay_vertex,
-            shader_overlay_uniform,
             puffs_bg: PuffLayer::new(ctx, 0, false)?,
             puffs_fg: PuffLayer::new(ctx, 0, true)?,
             puff_buffer,
@@ -296,7 +283,7 @@ impl NebulaData {
         }
 
         self.shader_bg.use_program(gl);
-        self.buffer.bind_base(ctx, self.shader_bg_uniform);
+        self.buffer.bind_base(ctx, 0);
         ctx.vao_center.bind(ctx);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
@@ -339,7 +326,7 @@ impl NebulaData {
         }
 
         self.shader_overlay.use_program(gl);
-        self.buffer.bind_base(ctx, self.shader_overlay_uniform);
+        self.buffer.bind_base(ctx, 0);
         ctx.vao_center.bind(ctx);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);

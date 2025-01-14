@@ -311,7 +311,7 @@ impl Texture {
         };
         ctx.buffer_texture
             .write(ctx, uniform.buffer()?.into_inner().as_slice())?;
-        ctx.buffer_texture.bind_base(ctx, ctx.uniform_texture);
+        ctx.buffer_texture.bind_base(ctx, 0);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
