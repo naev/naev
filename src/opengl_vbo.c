@@ -226,6 +226,9 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
 {
    const GLvoid *pointer;
 
+   // Horrible hack since C-side uses a single VAO for everything
+   glBindVertexArray( VaoId );
+
    /* Set up. */
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    pointer = BUFFER_OFFSET( offset );
