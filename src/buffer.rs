@@ -25,12 +25,22 @@ impl Buffer {
         }
         Ok(())
     }
+    /// Simply binds the buffer to the context
     pub fn bind(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, Some(self.buffer));
         }
     }
+    /// Binds the buffer and connects it to the uniform in the shader
+    pub fn bind_base(&self, ctx: &context::Context, idx: u32) {
+        let gl = &ctx.gl;
+        unsafe {
+            gl.bind_buffer(self.target, Some(self.buffer));
+            gl.bind_buffer_base(glow::UNIFORM_BUFFER, idx, Some(self.buffer));
+        }
+    }
+    /// Unbinds the buffer
     pub fn unbind(&self, ctx: &context::Context) {
         let gl = &ctx.gl;
         unsafe {
