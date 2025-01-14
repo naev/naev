@@ -44,26 +44,25 @@ impl NebulaUniform {
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, bytemuck::Pod, bytemuck::Zeroable)]
 struct Puff {
-    pos: [f32; 2],
-    height: f32,
-    size: f32,
+    data: [f32; 4],
     rand: [f32; 2], // Randomness
 }
 impl Puff {
     fn new(ctx: &context::Context, fg: bool) -> Self {
-        let x = (ctx.view_width + 2.0 * PUFF_BUFFER) * rng::rngf32();
-        let y = (ctx.view_height + 2.0 * PUFF_BUFFER) * rng::rngf32();
+        let x = (ctx.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+        let y = (ctx.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
         let rx = rng::rngf32() * 2000.0 - 1000.0;
         let ry = rng::rngf32() * 2000.0 - 1000.0;
-        let height = 0.2 * rng::rngf32();
+        let height = {
+            let rnd = (0.2 * rng::rngf32()).abs();
+            1.0 + match fg {
+                true => -rnd,
+                false => rnd,
+            }
+        };
+        let size = 5.0 + rng::rngf32() * 11.0; // [5, 16] radius
         Self {
-            pos: [x, y],
-            height: 1.0
-                + match fg {
-                    true => height,
-                    false => height.abs(),
-                },
-            size: rng::range(10, 32) as f32,
+            data: [x, y, height, size],
             rand: [rx, ry],
         }
     }
@@ -93,9 +92,7 @@ struct PuffLayer {
 }
 impl PuffLayer {
     const ZERO: Puff = Puff {
-        pos: [0.0, 0.0],
-        height: 0.0,
-        size: 0.0,
+        data: [0.0, 0.0, 0.0, 0.0],
         rand: [0.0, 0.0],
     };
 
@@ -117,7 +114,7 @@ impl PuffLayer {
         let vertex_array = VertexArrayBuilder::new()
             .buffers(&[
                 VertexArrayBuffer {
-                    buffer: &ctx.vbo_square,
+                    buffer: &ctx.vbo_center,
                     size: 2,
                     stride: 0, // tightly packed
                     offset: 0,
@@ -152,24 +149,18 @@ impl PuffLayer {
     fn render(&self, ctx: &context::Context, data: &NebulaData) -> Result<()> {
         let gl = &ctx.gl;
 
-        /*
         let count = self.data.len();
+
+        dbg!(data.puff_uniform);
 
         data.shader_puff.use_program(gl);
         self.vertex_array.bind(ctx);
         data.puff_buffer.bind_base(ctx, 0);
-
         unsafe {
-            gl.draw_arrays_instanced( glow::TRIANGLE_STRIP,
-                0,
-                4,
-                count as i32,
-            );
+            gl.draw_arrays_instanced(glow::TRIANGLE_STRIP, 0, 4, count as i32);
         }
-
         VertexArray::unbind(ctx);
         data.puff_buffer.unbind(ctx);
-        */
 
         check_for_gl_error!(&gl, "Rendering Nebula Puffs");
         Ok(())
@@ -236,7 +227,10 @@ impl NebulaData {
         let shader_overlay_vertex = shader_overlay.get_attrib(gl, "vertex")?;
         let shader_overlay_uniform = shader_bg.get_uniform_block(gl, "NebulaData")?;
 
-        let puff_uniform = PuffUniform::default();
+        let puff_uniform = PuffUniform {
+            screen: Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5),
+            ..Default::default()
+        };
         let puff_buffer = BufferBuilder::new()
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Static)
@@ -285,7 +279,10 @@ impl NebulaData {
 
         self.uniform.camera = Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5);
 
-        self.puff_uniform.screen = Vector2::new(ctx.view_width, ctx.view_height);
+        self.puff_uniform.screen = Vector2::new(
+            ctx.view_width + 2.0 * PUFF_BUFFER,
+            ctx.view_height + 2.0 * PUFF_BUFFER,
+        );
     }
 
     pub fn render(&self, ctx: &context::Context) -> Result<()> {
@@ -384,7 +381,7 @@ impl NebulaData {
 
         let cam = crate::camera::CAMERA.lock().unwrap();
         let z = cam.zoom as f32;
-        self.uniform.horizon = self.view * z / self.scale;
+        self.uniform.horizon = self.view * z / self.scale * 100.0;
         self.uniform.eddy_scale = self.dx * z / self.scale;
         self.puff_uniform.offset.x = cam.pos.x as f32;
         self.puff_uniform.offset.y = cam.pos.y as f32;

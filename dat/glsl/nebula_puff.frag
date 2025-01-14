@@ -14,6 +14,7 @@ in vec2 rand;
 layout(location = 0) out vec4 colour_out;
 
 void main(void) {
+#if 0
    float a = 1.0-length( fragpos );
    a = smoothstep( 0.0, 1.0, a );
    if (a<0.0) {
@@ -32,4 +33,6 @@ void main(void) {
    f += abs( cnoise( uv * scale ) ) / scale;
 
    colour_out = vec4( colour, a*f );
+#endif
+   colour_out = vec4(1.0);
 }
