@@ -91,6 +91,7 @@ pub struct Context {
     pub window_height: u32, // In real pixels
     pub view_width: f32,    // In scaled pixels
     pub view_height: f32,   // In scaled pixels
+    pub view_scale: f32,    // In scaling value
 
     // Useful "globals"
     pub projection: Matrix4<f32>,
@@ -331,10 +332,10 @@ impl Context {
             .build(&gl)?;
 
         let (window_width, window_height) = window.size();
-        let (view_width, view_height) = {
+        let (view_width, view_height, view_scale) = {
             let (w, h) = (window_width as f32, window_height as f32);
             let scale = unsafe { naevc::conf.scalefactor as f32 };
-            (w / scale, h / scale)
+            (w / scale, h / scale, 1.0 / scale)
         };
         let projection = Matrix4::new_orthographic(0.0, view_width, 0.0, view_height, -1.0, 1.0);
         let ctx = Context {
@@ -347,6 +348,7 @@ impl Context {
             window_height,
             view_width,
             view_height,
+            view_scale,
             projection,
             program_texture,
             buffer_texture,
