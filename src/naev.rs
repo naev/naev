@@ -27,6 +27,7 @@ mod ntime;
 mod nxml;
 mod physfs;
 mod physics;
+mod render;
 mod rng;
 mod shader;
 mod slots;

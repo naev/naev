@@ -20,6 +20,7 @@ source_rust = files(
    'nxml.rs',
    'physfs.rs',
    'physics.rs',
+   'render.rs',
    'rng.rs',
    'shader.rs',
    'slots.rs',

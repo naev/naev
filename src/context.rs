@@ -1,8 +1,7 @@
 #![allow(dead_code)]
 use anyhow::Result;
-use encase::{ShaderSize, ShaderType};
 use glow::*;
-use nalgebra::{Matrix3, Vector4};
+use nalgebra::Matrix3;
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
@@ -13,6 +12,7 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
+use crate::render::TextureUniform;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{formatx, warn};
 use crate::{gettext, log, ndata};
@@ -64,22 +64,6 @@ pub fn check_for_gl_error_impl(gl: &glow::Context, file: &str, line: u32, contex
 }
 
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
-
-#[repr(C)]
-#[derive(Debug, Copy, Clone, Default, ShaderType)]
-pub struct TextureUniform {
-    pub texture: Matrix3<f32>,
-    pub transform: Matrix3<f32>,
-    pub colour: Vector4<f32>,
-}
-impl TextureUniform {
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
-        let mut buffer =
-            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
-        buffer.write(self)?;
-        Ok(buffer)
-    }
-}
 
 pub struct Context {
     pub sdlvid: sdl::VideoSubsystem,

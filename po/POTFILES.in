@@ -3971,6 +3971,7 @@ src/queue.c
 src/queue.h
 src/render.c
 src/render.h
+src/render.rs
 src/rng.h
 src/rng.rs
 src/safelanes.c

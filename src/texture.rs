@@ -12,7 +12,7 @@ use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::check_for_gl_error;
 use crate::context::CONTEXT;
-use crate::{buffer, context, gettext, ndata};
+use crate::{buffer, context, gettext, ndata, render};
 use crate::{formatx, warn};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
@@ -291,23 +291,25 @@ impl Texture {
     }
 
     pub fn draw(&self, ctx: &context::Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
-        let gl = &ctx.gl;
-        ctx.program_texture.use_program(gl);
-        self.bind(ctx, 0);
-        ctx.vao_square.bind(ctx);
-
-        let texture: Matrix3<f32> = Matrix3::identity();
         #[rustfmt::skip]
         let transform: Matrix3<f32> = ctx.projection * Matrix3::new(
              w,  0.0,  x,
             0.0,  h,   y,
             0.0, 0.0, 1.0,
         );
-        let uniform = context::TextureUniform {
-            texture,
+        let uniform = render::TextureUniform {
             transform,
-            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+            ..Default::default()
         };
+        self.draw_ex(ctx, &uniform)
+    }
+
+    pub fn draw_ex(&self, ctx: &context::Context, uniform: &render::TextureUniform) -> Result<()> {
+        let gl = &ctx.gl;
+        ctx.program_texture.use_program(gl);
+        self.bind(ctx, 0);
+        ctx.vao_square.bind(ctx);
+
         ctx.buffer_texture
             .write(ctx, uniform.buffer()?.into_inner().as_slice())?;
         ctx.buffer_texture.bind_base(ctx, 0);
