@@ -365,7 +365,7 @@ impl NebulaData {
                 (1.0, 0.0)
             }
         };
-        self.view = ((1600. - self.density) * modifier + bonus) * 2.0 * ctx.view_scale;
+        self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * ctx.view_scale;
 
         let cam = crate::camera::CAMERA.lock().unwrap();
         let z = cam.zoom as f32;
@@ -395,7 +395,7 @@ impl NebulaData {
     ) -> Result<()> {
         self.density = density;
         self.speed = (2.0 * density + 200.0) / 10e3; // Faster at higher density
-        self.dx = 15e3 / density.powf(1.0 / 3.0) * ctx.view_scale;
+        self.dx = 25e3 / density.powf(1.0 / 3.0) * ctx.view_scale;
 
         let saturation = unsafe { naevc::conf.nebu_saturation as f32 };
         let value = saturation * 0.5 + 0.5;
