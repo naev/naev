@@ -73,11 +73,6 @@ pub struct TextureUniform {
     pub colour: Vector4<f32>,
 }
 impl TextureUniform {
-    pub fn new() -> Self {
-        TextureUniform {
-            ..Default::default()
-        }
-    }
     pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
         let mut buffer =
             encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
@@ -301,7 +296,7 @@ impl Context {
             .frag_file("rust_texture.frag")
             .sampler("sampler", 0)
             .build(&gl)?;
-        let uniform = TextureUniform::new();
+        let uniform = TextureUniform::default();
         let buffer_texture = BufferBuilder::new()
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
@@ -317,7 +312,7 @@ impl Context {
             .buffers(&[VertexArrayBuffer {
                 buffer: &vbo_square,
                 size: 2,
-                stride: 0,
+                stride: 0, // tightly packed
                 offset: 0,
                 divisor: 0,
             }])
@@ -331,7 +326,7 @@ impl Context {
             .buffers(&[VertexArrayBuffer {
                 buffer: &vbo_center,
                 size: 2,
-                stride: 0,
+                stride: 0, // tightly packed
                 offset: 0,
                 divisor: 0,
             }])
