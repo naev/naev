@@ -92,3 +92,4 @@ void loadscreen_unload( void );
 void loadscreen_update( double done, const char *msg );
 void load_all( void );
 void unload_all( void );
+void fps_init( void );

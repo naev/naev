@@ -119,7 +119,6 @@ static SDL_mutex   *load_mutex;
  * prototypes
  */
 /* update */
-static void fps_init( void );
 static void update_all( int dohooks );
 /* Misc. */
 void loadscreen_update( double done, const char *msg );
@@ -149,8 +148,7 @@ int naev_isQuit( void )
  */
 int naev_main( void )
 {
-   char   conf_file_path[PATH_MAX];
-   Uint32 starttime;
+   char conf_file_path[PATH_MAX];
 
 #ifdef DEBUGGING
    /* Set Debugging flags. */
@@ -158,7 +156,6 @@ int naev_main( void )
 #endif /* DEBUGGING */
 
    /* Start counting things and such. */
-   starttime    = SDL_GetTicks();
    SDL_LOOPDONE = SDL_RegisterEvents( 1 );
    last_t       = SDL_GetPerformanceCounter();
 
@@ -188,29 +185,7 @@ int naev_main( void )
          }
    }
 
-   /* Start menu. */
-   menu_main();
-
-   if ( conf.devmode )
-      LOG( _( "Reached main menu in %.3f s" ),
-           (double)( SDL_GetTicks() - starttime ) / 1000. );
-   else
-      LOG( _( "Reached main menu" ) );
    NTracingMessageL( _( "Reached main menu" ) );
-
-   fps_init(); /* initializes the last_t */
-
-   /*
-    * main loop
-    */
-   SDL_Event event;
-   /* flushes the event loop since I noticed that when the joystick is loaded it
-    * creates button events that results in the player starting out acceling */
-   while ( SDL_PollEvent( &event ) )
-      ;
-
-   /* Show plugin compatibility. */
-   plugin_check();
 
    /* Incomplete translation note (shows once if we pick an incomplete
     * translation based on user's locale). */
@@ -259,6 +234,7 @@ int naev_main( void )
 
    /* primary loop */
    while ( !quit ) {
+      SDL_Event event;
       while ( !quit && SDL_PollEvent( &event ) ) { /* event loop */
          if ( event.type == SDL_QUIT ) {
             SDL_FlushEvent( SDL_QUIT ); /* flush event to prevent it from
@@ -711,7 +687,7 @@ void naev_toggleFullscreen( void )
 /**
  * @brief Initializes the fps engine.
  */
-static void fps_init( void )
+void fps_init( void )
 {
    last_t = SDL_GetPerformanceCounter();
 }

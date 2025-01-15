@@ -110,7 +110,7 @@ pub fn naev() -> Result<()> {
         Ok(s) => s,
         Err(e) => panic!("Unable to initialize SDL Timer: {}", e),
     };
-    let _starttime = sdltime.ticks();
+    let starttime = sdltime.ticks();
 
     unsafe {
         naevc::threadpool_init();
@@ -315,6 +315,52 @@ pub fn naev() -> Result<()> {
 
         // Unload load screen.
         naevc::loadscreen_unload();
+
+        // Joystick
+        if naevc::conf.joystick_ind >= 0 || !naevc::conf.joystick_nam.is_null() {
+            if naevc::joystick_init() != 0 {
+                warn!(gettext("Error initializing joystick input"));
+            }
+            if !naevc::conf.joystick_nam.is_null() {
+                if naevc::joystick_use(naevc::joystick_get(naevc::conf.joystick_nam)) != 0 {
+                    warn!(gettext(
+                        "Failure to open any joystick, falling back to default keybinds"
+                    ));
+                    naevc::input_setDefault(1);
+                }
+            } else if naevc::conf.joystick_ind >= 0 {
+                if naevc::joystick_use(naevc::conf.joystick_ind) != 0 {
+                    warn!(gettext(
+                        "Failure to open any joystick, falling back to default keybinds"
+                    ));
+                    naevc::input_setDefault(1);
+                }
+            }
+        }
+
+        // Start menu
+        naevc::menu_main();
+
+        if naevc::conf.devmode != 0 {
+            info!(
+                gettext("Reached main menu in {:.3f} s"),
+                (sdltime.ticks() - starttime) as f32 / 1000.
+            );
+        } else {
+            info!(gettext("Reached main menu"));
+        }
+        //NTracingMessageL( _( "Reached main menu" ) );
+
+        // Initializes last_t
+        naevc::fps_init();
+
+        // Poll events
+        // Flush events otherwise joystick loading can do weird things.
+        let mut event_pump = sdlctx.event_pump().unwrap();
+        for _ in event_pump.poll_iter() {}
+
+        // Show plugin compatibility.
+        naevc::plugin_check();
     }
 
     unsafe {
