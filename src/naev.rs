@@ -224,7 +224,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let _context = context::Context::new(sdlvid).unwrap();
+    let context = context::Context::new(sdlvid).unwrap();
 
     unsafe {
         if naevc::gl_init() != 0 {
@@ -364,8 +364,24 @@ pub fn naev() -> Result<()> {
     }
 
     unsafe {
-        naev_main();
-    };
+        naevc::naev_main_setup();
+    }
+
+    // Main loop
+    while unsafe { naevc::naev_isQuit() } == 0 {
+        unsafe {
+            naevc::naev_main_events();
+            naevc::main_loop(0);
+
+            // Process clean up messages
+            context.execute_messages();
+        }
+    }
+
+    unsafe {
+        naevc::naev_main_cleanup();
+    }
+
     Ok(())
     /*
     #if SDL_VERSION_ATLEAST( 3, 0, 0 )

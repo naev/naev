@@ -93,3 +93,7 @@ void loadscreen_update( double done, const char *msg );
 void load_all( void );
 void unload_all( void );
 void fps_init( void );
+int  naev_main_events( void );
+int  naev_main_cleanup( void );
+int  naev_main_setup( void );
+void main_loop( int nested );

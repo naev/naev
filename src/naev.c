@@ -122,7 +122,6 @@ static SDL_mutex   *load_mutex;
 static void update_all( int dohooks );
 /* Misc. */
 void loadscreen_update( double done, const char *msg );
-void main_loop( int nested ); /* externed in dialogue.c */
 
 /**
  * @brief Flags naev to quit.
@@ -140,16 +139,9 @@ int naev_isQuit( void )
    return quit;
 }
 
-#ifndef NOMAIN
-/**
- * @brief The entry point of Naev.
- *
- *    @return EXIT_SUCCESS on success.
- */
-int naev_main( void )
+static char conf_file_path[PATH_MAX];
+int         naev_main_setup( void )
 {
-   char conf_file_path[PATH_MAX];
-
 #ifdef DEBUGGING
    /* Set Debugging flags. */
    memset( debug_flags, 0, DEBUG_FLAGS_MAX );
@@ -157,33 +149,10 @@ int naev_main( void )
 
    /* Start counting things and such. */
    SDL_LOOPDONE = SDL_RegisterEvents( 1 );
-   last_t       = SDL_GetPerformanceCounter();
 
    /* Set the configuration. */
    snprintf( conf_file_path, sizeof( conf_file_path ), "%s" CONF_FILE,
              nfile_configPath() );
-
-   /*
-    * Input
-    */
-   if ( ( conf.joystick_ind >= 0 ) || ( conf.joystick_nam != NULL ) ) {
-      if ( joystick_init() )
-         WARN( _( "Error initializing joystick input" ) );
-      if ( conf.joystick_nam !=
-           NULL ) { /* use the joystick name to find a joystick */
-         if ( joystick_use( joystick_get( conf.joystick_nam ) ) ) {
-            WARN( _( "Failure to open any joystick, falling back to default "
-                     "keybinds" ) );
-            input_setDefault( 1 );
-         }
-         free( conf.joystick_nam );
-      } else if ( conf.joystick_ind >= 0 ) /* use a joystick id instead */
-         if ( joystick_use( conf.joystick_ind ) ) {
-            WARN( _( "Failure to open any joystick, falling back to default "
-                     "keybinds" ) );
-            input_setDefault( 1 );
-         }
-   }
 
    NTracingMessageL( _( "Reached main menu" ) );
 
@@ -231,29 +200,37 @@ int naev_main( void )
             " And again, thank you for playing!" ),
          conf.lastversion );
    }
+   return 0;
+}
 
-   /* primary loop */
-   while ( !quit ) {
-      SDL_Event event;
-      while ( !quit && SDL_PollEvent( &event ) ) { /* event loop */
-         if ( event.type == SDL_QUIT ) {
-            SDL_FlushEvent( SDL_QUIT ); /* flush event to prevent it from
-                                           quitting when lagging a bit. */
-            if ( quit || menu_askQuit() ) {
-               quit = 1; /* quit is handled here */
-               break;
-            }
-         } else if ( event.type == SDL_WINDOWEVENT &&
-                     event.window.event == SDL_WINDOWEVENT_RESIZED ) {
-            naev_resize();
-            continue;
+/**
+ * @brief The entry point of Naev.
+ *
+ *    @return EXIT_SUCCESS on success.
+ */
+int naev_main_events( void )
+{
+   SDL_Event event;
+   while ( !quit && SDL_PollEvent( &event ) ) { /* event loop */
+      if ( event.type == SDL_QUIT ) {
+         SDL_FlushEvent( SDL_QUIT ); /* flush event to prevent it from
+                                          quitting when lagging a bit. */
+         if ( quit || menu_askQuit() ) {
+            quit = 1; /* quit is handled here */
+            break;
          }
-         input_handle(
-            &event ); /* handles all the events and player keybinds */
+      } else if ( event.type == SDL_WINDOWEVENT &&
+                  event.window.event == SDL_WINDOWEVENT_RESIZED ) {
+         naev_resize();
+         continue;
       }
-
-      main_loop( 0 );
+      input_handle( &event ); /* handles all the events and player keybinds */
    }
+   return 0;
+}
+
+int naev_main_cleanup( void )
+{
 
    /* Save configuration. */
    conf_saveConfig( conf_file_path );
@@ -313,7 +290,6 @@ int naev_main( void )
    debug_enableLeakSanitizer();
    return 0;
 }
-#endif /* NOMAIN */
 
 /**
  * @brief Loads a loading screen.
