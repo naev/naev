@@ -3,7 +3,7 @@ use anyhow::Result;
 use glow::*;
 
 use crate::context;
-use crate::context::{Context, CONTEXT};
+use crate::context::Context;
 use crate::{formatx, gettext, warn};
 
 pub struct Buffer {
@@ -53,10 +53,10 @@ impl Buffer {
 }
 impl Drop for Buffer {
     fn drop(&mut self) {
-        let ctx = CONTEXT.get().unwrap();
-        unsafe {
-            ctx.gl.delete_buffer(self.buffer);
-        }
+        context::MESSAGE_QUEUE
+            .lock()
+            .unwrap()
+            .push(context::Message::DeleteBuffer(self.buffer));
     }
 }
 
@@ -161,10 +161,10 @@ pub struct VertexArray {
 }
 impl Drop for VertexArray {
     fn drop(&mut self) {
-        let ctx = CONTEXT.get().unwrap();
-        unsafe {
-            ctx.gl.delete_vertex_array(self.vertex_array);
-        }
+        context::MESSAGE_QUEUE
+            .lock()
+            .unwrap()
+            .push(context::Message::DeleteVertexArray(self.vertex_array));
     }
 }
 impl VertexArray {

@@ -63,7 +63,42 @@ pub fn check_for_gl_error_impl(gl: &glow::Context, file: &str, line: u32, contex
     }
 }
 
+#[derive(Clone)]
+pub enum Message {
+    DeleteBuffer(glow::NativeBuffer),
+    DeleteVertexArray(glow::NativeVertexArray),
+    DeleteProgram(glow::NativeProgram),
+    DeleteTexture(glow::NativeTexture),
+    DeleteSampler(glow::NativeSampler),
+    DeleteFramebuffer(glow::NativeFramebuffer),
+}
+impl Message {
+    fn execute(self, ctx: &Context) {
+        match self {
+            Self::DeleteBuffer(buf) => unsafe {
+                ctx.gl.delete_buffer(buf);
+            },
+            Self::DeleteVertexArray(vao) => unsafe {
+                ctx.gl.delete_vertex_array(vao);
+            },
+            Self::DeleteProgram(pgm) => unsafe {
+                ctx.gl.delete_program(pgm);
+            },
+            Self::DeleteTexture(tex) => unsafe {
+                ctx.gl.delete_texture(tex);
+            },
+            Self::DeleteSampler(smp) => unsafe {
+                ctx.gl.delete_sampler(smp);
+            },
+            Self::DeleteFramebuffer(buf) => unsafe {
+                ctx.gl.delete_framebuffer(buf);
+            },
+        }
+    }
+}
+
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
+pub static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
 
 pub struct Context {
     pub sdlvid: sdl::VideoSubsystem,
@@ -352,5 +387,12 @@ impl Context {
 
     fn is_main_thread(&self) -> bool {
         self.main_thread == std::thread::current().id()
+    }
+
+    pub fn execute_messages(&self) {
+        let mut queue = MESSAGE_QUEUE.lock().unwrap();
+        for msg in queue.drain(..) {
+            msg.execute(self);
+        }
     }
 }

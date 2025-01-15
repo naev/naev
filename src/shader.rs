@@ -6,7 +6,7 @@ use std::os::raw::c_char;
 
 use crate::context::CONTEXT;
 use crate::gettext::gettext;
-use crate::ndata;
+use crate::{context, ndata};
 use crate::{einfo, formatx, warn};
 
 pub enum ShaderType {
@@ -30,10 +30,10 @@ pub struct Shader {
 }
 impl Drop for Shader {
     fn drop(&mut self) {
-        let ctx = CONTEXT.get().unwrap();
-        unsafe {
-            ctx.gl.delete_program(self.program);
-        }
+        context::MESSAGE_QUEUE
+            .lock()
+            .unwrap()
+            .push(context::Message::DeleteProgram(self.program));
     }
 }
 impl Shader {

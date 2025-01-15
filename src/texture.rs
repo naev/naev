@@ -84,8 +84,10 @@ pub struct TextureData {
 }
 impl Drop for TextureData {
     fn drop(&mut self) {
-        let ctx = CONTEXT.get().unwrap();
-        unsafe { ctx.gl.delete_texture(self.texture) };
+        context::MESSAGE_QUEUE
+            .lock()
+            .unwrap()
+            .push(context::Message::DeleteTexture(self.texture));
         // TODO remove from TEXTURE_DATA ideally...
     }
 }
@@ -235,8 +237,10 @@ pub struct Texture {
 }
 impl Drop for Texture {
     fn drop(&mut self) {
-        let ctx = CONTEXT.get().unwrap();
-        unsafe { ctx.gl.delete_sampler(self.sampler) };
+        context::MESSAGE_QUEUE
+            .lock()
+            .unwrap()
+            .push(context::Message::DeleteSampler(self.sampler));
     }
 }
 impl Texture {
