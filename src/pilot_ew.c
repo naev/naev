@@ -576,7 +576,8 @@ int pilot_stealth( Pilot *p )
    /* Run hook. */
    const HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 1 };
    pilot_runHookParam( p, PILOT_HOOK_STEALTH, &hparam, 1 );
-   return 1;
+   return pilot_isFlag(
+      p, PILOT_STEALTH ); // Can be manipulated by hooks or the likes
 }
 
 /**
