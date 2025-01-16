@@ -372,10 +372,10 @@ pub fn naev() -> Result<()> {
         unsafe {
             naevc::naev_main_events();
             naevc::main_loop(0);
-
-            // Process clean up messages
-            context.execute_messages();
         }
+
+        // Process clean up messages
+        context.execute_messages();
     }
 
     unsafe {
