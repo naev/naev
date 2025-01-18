@@ -28632,7 +28632,7 @@ msgstr "Такие животные, как ты, не заслуживают ж
 
 #: dat/ai/proteron.lua:21
 msgid "Begone from this universe, inferior scum!"
-msgstr ""
+msgstr "Уйди из этой вселенной, низшая мразь!"
 
 #: dat/ai/proteron.lua:22
 msgid "We will cleanse you and all other scum from this universe!"
