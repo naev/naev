@@ -28360,7 +28360,7 @@ msgstr "Империя будет рада твоей смерти!"
 
 #: dat/ai/empire.lua:22
 msgid "Your head will make a fine gift for the Emperor!"
-msgstr ""
+msgstr "Твоя голова станет прекрасным подарком Императору!"
 
 #: dat/ai/empire.lua:23
 msgid "None survive the wrath of the Emperor!"
