@@ -28376,7 +28376,7 @@ msgstr "Ты не ровня Империи!"
 
 #: dat/ai/empire.lua:29
 msgid "The Empire will have your head!"
-msgstr ""
+msgstr "Империя получит твою голову!"
 
 #: dat/ai/empire.lua:30 dat/ai/flf.lua:22 dat/ai/proteron.lua:31
 #: dat/ai/soromid.lua:35
