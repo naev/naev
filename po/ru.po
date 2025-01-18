@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:41+0000\n"
+"PO-Revision-Date: 2025-01-18 10:42+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28348,7 +28348,7 @@ msgstr "\"Меня не интересуют твои кровавые день�
 
 #: dat/ai/empire.lua:17 dat/ai/proteron.lua:17
 msgid "\"All the money in the world won't save you now!\""
-msgstr ""
+msgstr "\"Тебя теперь не спасут и все деньги в мире!\""
 
 #: dat/ai/empire.lua:20 dat/ai/soromid.lua:23
 msgid "There is no room in this universe for scum like you!"
