@@ -28474,7 +28474,7 @@ msgstr "Из тебя получится отличная мишень для с
 
 #: dat/ai/flf.lua:17
 msgid "Purge the oppressors!"
-msgstr ""
+msgstr "Уничтожить угнетателей!"
 
 #: dat/ai/flf.lua:20
 msgid "You are no match for the FLF."
