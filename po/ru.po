@@ -28527,7 +28527,7 @@ msgstr "Alea iacta est!"
 
 #: dat/ai/frontier_police.lua:19
 msgid "Morituri te salutant!"
-msgstr ""
+msgstr "Morituri te salutant!"
 
 #: dat/ai/frontier_police.lua:21
 msgid "Cave canem!"
