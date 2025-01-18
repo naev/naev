@@ -147,7 +147,7 @@ int tech_load( void )
    for ( int i = 0; i < s; i++ )
       tech_parseFileData( &tech_groups[i] );
 
-      /* Info. */
+   /* Info. */
 #if DEBUGGING
    if ( conf.devmode ) {
       DEBUG( n_( "Loaded %d tech group in %.3f s",
@@ -392,6 +392,7 @@ static tech_item_t *tech_itemGrow( tech_group_t *grp )
       grp->items = array_create( tech_item_t );
    tech_item_t *itm = &array_grow( &grp->items );
    memset( itm, 0, sizeof( tech_item_t ) );
+   itm->price_mod = 1.;
    return itm;
 }
 
@@ -830,7 +831,7 @@ char **tech_getItemNames( const tech_group_t *tech, int *n )
    char **names;
 
    *n = s = array_size( tech->items );
-   names  = malloc( sizeof( char  *) * s );
+   names  = malloc( sizeof( char * ) * s );
 
    for ( int i = 0; i < s; i++ )
       names[i] = strdup( tech_getItemName( &tech->items[i] ) );
@@ -850,7 +851,7 @@ char **tech_getAllItemNames( int *n )
    char **names;
 
    *n = s = array_size( tech_groups );
-   names  = malloc( sizeof( char  *) * s );
+   names  = malloc( sizeof( char * ) * s );
 
    for ( int i = 0; i < s; i++ )
       names[i] = strdup( tech_groups[i].name );
