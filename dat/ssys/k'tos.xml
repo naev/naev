@@ -11,7 +11,7 @@
   <spob>O'rez Palace</spob>
  </spobs>
  <jumps>
-  <jump target="Ksher">
+  <jump target="Mayla">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

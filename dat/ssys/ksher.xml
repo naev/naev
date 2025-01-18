@@ -20,15 +20,15 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="K'tos">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Mayla">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Oxuram">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Radix">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

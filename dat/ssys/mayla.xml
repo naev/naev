@@ -10,6 +10,10 @@
   <spob>Highland</spob>
  </spobs>
  <jumps>
+  <jump target="K'tos">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Ksher">
    <autopos/>
    <hide>1.000000</hide>
