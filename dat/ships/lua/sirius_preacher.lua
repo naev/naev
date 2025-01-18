@@ -17,6 +17,6 @@ function update( p, _dt )
    local f = flow.get( p, mem )
    local mod = math.min( MAXBONUS, math.max( (f-MINFLOW)*BONUS, 0 ) )
    p:shippropSet{
-      shield_regen = mod,
+      shield_regen_mod = mod,
    }
 end
