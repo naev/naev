@@ -28437,7 +28437,7 @@ msgstr "\"А теперь проваливай, пока я не передум�
 #. Settings
 #: dat/ai/empire_refuel.lua:6
 msgid "Empire refuel ship under attack!"
-msgstr ""
+msgstr "Имперский заправщик Атакован!"
 
 #. Broke
 #. Finish up creation
