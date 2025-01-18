@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:34+0000\n"
+"PO-Revision-Date: 2025-01-18 10:35+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28253,7 +28253,7 @@ msgstr "Ты не ровня Двареду!"
 
 #: dat/ai/dvaered.lua:23 dat/ai/frontier_police.lua:22
 msgid "Death awaits you!"
-msgstr ""
+msgstr "Тебя ждет смерть!"
 
 #. Add default to warship
 #. Create function
