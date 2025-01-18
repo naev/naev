@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:32+0000\n"
+"PO-Revision-Date: 2025-01-18 10:33+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28237,7 +28237,7 @@ msgstr "\"Дом Дваред не опустится до уровня обыч
 #: dat/ai/dvaered.lua:17 dat/ai/goddard.lua:18
 #: dat/events/minerva/altercation1.lua:40
 msgid "I shall wash my hull in your blood!"
-msgstr ""
+msgstr "Я омою корпус своего корабля твоей кровью!"
 
 #: dat/ai/dvaered.lua:18 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:19
 msgid "Your head will make a great trophy!"
