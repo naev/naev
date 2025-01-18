@@ -28611,7 +28611,7 @@ msgstr "Я на это не подписывался!"
 #. Set up bribes
 #: dat/ai/mercenary.lua:74
 msgid "\"Your life is worth {credits} to me.\""
-msgstr ""
+msgstr "\"Твоя жизнь стоит для меня {credits}.\""
 
 #: dat/ai/mercenary.lua:75
 msgid "\"Beat it.\""
