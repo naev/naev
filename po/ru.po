@@ -28420,7 +28420,7 @@ msgstr ""
 #. See if can be bribed
 #: dat/ai/empire.lua:107
 msgid "\"For some {credits} I could forget about seeing you.\""
-msgstr ""
+msgstr "\"Всего лишь за {credits} я мог бы забыть о том, что видел тебя.\""
 
 #: dat/ai/empire.lua:108
 msgid "\"Now scram before I change my mind.\""
