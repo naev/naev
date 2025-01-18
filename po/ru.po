@@ -28602,7 +28602,7 @@ msgstr "Я уничтожал корабли вдвое больше твоег�
 
 #: dat/ai/mercenary.lua:21
 msgid "I'll crush you like a grape!"
-msgstr ""
+msgstr "Я раздавлю тебя, как виноградину!"
 
 #: dat/ai/mercenary.lua:22
 msgid "This isn't what I signed up for!"
