@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 13:58+0000\n"
+"PO-Revision-Date: 2025-01-18 14:58+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28636,7 +28636,7 @@ msgstr "Уйди из этой вселенной, низшая мразь!"
 
 #: dat/ai/proteron.lua:22
 msgid "We will cleanse you and all other scum from this universe!"
-msgstr ""
+msgstr "Мы очистим эту вселенную от тебя и всего остального мусора!"
 
 #: dat/ai/proteron.lua:23
 msgid "Enemies of the state will not be tolerated!"
