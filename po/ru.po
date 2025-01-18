@@ -28396,7 +28396,7 @@ msgstr "Империя следит за тобой."
 
 #: dat/ai/empire.lua:55
 msgid "The Emperor sees all."
-msgstr ""
+msgstr "Император видит всё."
 
 #. Set how far they attack
 #. Finish up creation
