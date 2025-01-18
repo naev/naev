@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:37+0000\n"
+"PO-Revision-Date: 2025-01-18 10:39+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28328,7 +28328,7 @@ msgstr "\"Я очень обрадуюсь твоей смерти.\""
 #. Settings
 #: dat/ai/empire.lua:12 dat/ai/mercenary.lua:11 dat/ai/proteron.lua:12
 msgid "\"You won't buy your way out of this one.\""
-msgstr ""
+msgstr "\"От этого ты не откупишься.\""
 
 #: dat/ai/empire.lua:13
 msgid "\"The Empire likes to make examples out of scum like you.\""
