@@ -28628,7 +28628,7 @@ msgstr "\"Нам нравится делать примеры из таких п
 
 #: dat/ai/proteron.lua:20
 msgid "Animals like you don't deserve to live!"
-msgstr ""
+msgstr "Такие животные, как ты, не заслуживают жизни!"
 
 #: dat/ai/proteron.lua:21
 msgid "Begone from this universe, inferior scum!"
