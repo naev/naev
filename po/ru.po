@@ -28352,7 +28352,7 @@ msgstr "\"Тебя теперь не спасут и все деньги в ми
 
 #: dat/ai/empire.lua:20 dat/ai/soromid.lua:23
 msgid "There is no room in this universe for scum like you!"
-msgstr ""
+msgstr "В этой вселенной нет места для таких отбросов, как ты!"
 
 #: dat/ai/empire.lua:21
 msgid "The Empire will enjoy your death!"
