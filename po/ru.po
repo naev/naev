@@ -28368,7 +28368,7 @@ msgstr "Никто не переживет гнев Императора!"
 
 #: dat/ai/empire.lua:24
 msgid "Enjoy your last moments, criminal!"
-msgstr ""
+msgstr "Наслаждайся последними мгновениями своей жизни, уголовник!"
 
 #: dat/ai/empire.lua:28
 msgid "You are no match for the Empire!"
