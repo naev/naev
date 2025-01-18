@@ -28549,7 +28549,7 @@ msgstr ""
 #. Handle bribing
 #: dat/ai/frontier_police.lua:85
 msgid "\"For {credits} I'll let your grievances slide.\""
-msgstr ""
+msgstr "\"За {credits} я забуду все обиды.\""
 
 #: dat/ai/frontier_police.lua:86
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
