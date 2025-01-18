@@ -28531,7 +28531,7 @@ msgstr "Morituri te salutant!"
 
 #: dat/ai/frontier_police.lua:21
 msgid "Cave canem!"
-msgstr ""
+msgstr "Cave canem!"
 
 #. Create function
 #. See if it's a transport ship
