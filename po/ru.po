@@ -28561,7 +28561,7 @@ msgstr "\"Дом Годдард не опустится до уровня обы
 
 #: dat/ai/goddard.lua:20
 msgid "These moments will be your last!"
-msgstr ""
+msgstr "Эти мгновения будут твоими последними!"
 
 #: dat/ai/goddard.lua:21
 msgid "You are a parasite!"
