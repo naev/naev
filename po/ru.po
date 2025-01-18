@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:46+0000\n"
+"PO-Revision-Date: 2025-01-18 10:47+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28392,7 +28392,7 @@ msgstr "Это была роковая ошибка!"
 #. Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
 #: dat/ai/empire.lua:53
 msgid "The Empire is watching you."
-msgstr ""
+msgstr "Империя следит за тобой."
 
 #: dat/ai/empire.lua:55
 msgid "The Emperor sees all."
