@@ -28594,7 +28594,7 @@ msgstr "Это просто бизнес."
 
 #: dat/ai/mercenary.lua:19
 msgid "Your skull will make a great hood ornament."
-msgstr ""
+msgstr "Твой череп станет отличным украшением для капота."
 
 #: dat/ai/mercenary.lua:20
 msgid "I've destroyed ships twice the size of yours!"
