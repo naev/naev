@@ -321,7 +321,7 @@ BioOutfit( "gene_drive.xml.template", {
     "gfx_store":    lerpt(("organic_engine_strong_m1.webp","organic_engine_strong_m2.webp")),
     "accel":        lerp(   80, 100 ),
     "turn":         lerp(   75,  90 ),
-    "speed":        lerp(  225, 275 ),
+    "speed":        lerp(  125, 175 ),
     "fuel":         800,
     "energy_malus": lerp(   15,  15 ),
     "engine_limit": lerp( 1200, 1200 ),
