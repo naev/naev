@@ -10,6 +10,6 @@ luaspob.setup{
       _([["You are not yet welcome at O'rez Palace."]]),
    },
    msg_cantbribe = {
-      _([["The little money you can offer are of no interest to us."]]),
+      _([["The little money you can offer is of no interest to us."]]),
    },
 }
