@@ -28449,7 +28449,7 @@ msgstr "\"Я ухожу отсюда.\""
 #. Override refuel chance
 #: dat/ai/empire_refuel.lua:26
 msgid "\"Sure thing.\""
-msgstr ""
+msgstr "\"Конечно.\""
 
 #. First task : place the ship close to the asteroid
 #. Get a random asteroid in the system (or current mining field)
