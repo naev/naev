@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:40+0000\n"
+"PO-Revision-Date: 2025-01-18 10:41+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28344,7 +28344,7 @@ msgstr ""
 
 #: dat/ai/empire.lua:16 dat/ai/proteron.lua:16
 msgid "\"I'm not interested in your blood money!\""
-msgstr ""
+msgstr "\"Меня не интересуют твои кровавые деньги!\""
 
 #: dat/ai/empire.lua:17 dat/ai/proteron.lua:17
 msgid "\"All the money in the world won't save you now!\""
