@@ -28284,7 +28284,7 @@ msgstr "\"Для тебя я мог бы сделать исключение з�
 #. Settings
 #: dat/ai/dvaered.lua:80 dat/ai/frontier_police.lua:10 dat/ai/soromid.lua:12
 msgid "\"I shall especially enjoy your death.\""
-msgstr ""
+msgstr "\"Я очень обрадуюсь твоей смерти.\""
 
 #. taunts
 #. Only 50% of actually taunting.
