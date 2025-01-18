@@ -28620,7 +28620,7 @@ msgstr "\"Отвали.\""
 #. Communication stuff
 #: dat/ai/miner.lua:39
 msgid "\"I don't want any problems.\""
-msgstr ""
+msgstr "\"Я не хочу никаких проблем.\""
 
 #: dat/ai/proteron.lua:13
 msgid "\"We like to make examples out of scum like you.\""
