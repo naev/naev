@@ -28606,7 +28606,7 @@ msgstr "Я раздавлю тебя, как виноградину!"
 
 #: dat/ai/mercenary.lua:22
 msgid "This isn't what I signed up for!"
-msgstr ""
+msgstr "Я на это не подписывался!"
 
 #. Set up bribes
 #: dat/ai/mercenary.lua:74
