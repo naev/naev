@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 10:49+0000\n"
+"PO-Revision-Date: 2025-01-18 10:50+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28414,6 +28414,8 @@ msgid ""
 "\"I suppose I could spare some fuel for {credits}, but you'll have to do the "
 "paperwork.\""
 msgstr ""
+"\"Полагаю, я мог бы отдать немного топлива за {credits}, но тогда сам "
+"оформишь бумаги.\""
 
 #. See if can be bribed
 #: dat/ai/empire.lua:107
