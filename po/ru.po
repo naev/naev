@@ -28249,7 +28249,7 @@ msgstr "Приготовься к уничтожению!"
 
 #: dat/ai/dvaered.lua:22
 msgid "You're no match for the Dvaered!"
-msgstr ""
+msgstr "Ты не ровня Двареду!"
 
 #: dat/ai/dvaered.lua:23 dat/ai/frontier_police.lua:22
 msgid "Death awaits you!"
