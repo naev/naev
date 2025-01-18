@@ -28511,7 +28511,7 @@ msgstr "\"Таких мерзавцев как ты исправят тольк�
 #. Handle refueling.
 #: dat/ai/flf.lua:84
 msgid "\"I should be able to spare some fuel for {credits}.\""
-msgstr ""
+msgstr "\"Могу передать немного топлива за {credits}.\""
 
 #: dat/ai/flf.lua:86
 msgid "\"I can't spare fuel for you.\""
