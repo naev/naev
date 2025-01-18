@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 11:00+0000\n"
+"PO-Revision-Date: 2025-01-18 13:47+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28519,7 +28519,7 @@ msgstr "\"Я не могу поделиться топливом.\""
 
 #: dat/ai/frontier_police.lua:15
 msgid "\"The Frontier does not lower itself to common scum.\""
-msgstr ""
+msgstr "\"Фронтир не опускается до уровня обычных подонков.\""
 
 #: dat/ai/frontier_police.lua:18
 msgid "Alea iacta est!"
