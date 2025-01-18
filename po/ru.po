@@ -28336,7 +28336,7 @@ msgstr "\"Империя любит показательно наказыват�
 
 #: dat/ai/empire.lua:14 dat/ai/proteron.lua:14
 msgid "\"You've made a huge mistake.\""
-msgstr ""
+msgstr "\"Ты совершил огромную ошибку.\""
 
 #: dat/ai/empire.lua:15 dat/ai/proteron.lua:15
 msgid "\"Bribery carries a harsh penalty, scum.\""
