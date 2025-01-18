@@ -28356,7 +28356,7 @@ msgstr "В этой вселенной нет места для таких от�
 
 #: dat/ai/empire.lua:21
 msgid "The Empire will enjoy your death!"
-msgstr ""
+msgstr "Империя будет рада твоей смерти!"
 
 #: dat/ai/empire.lua:22
 msgid "Your head will make a fine gift for the Emperor!"
