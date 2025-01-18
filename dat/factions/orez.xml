@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="O'rez">
+ <longname>House O'rez</longname>
+ <ai>orez</ai>
+ <colour>aquablue</colour>
+ <player>1</player>
+ <spawn>orez</spawn>
+ <standing>orez</standing>
+ <equip>dvaered</equip>
+ <local_th>5</local_th>
+ <description>While still officially part of House Yetmer-O'rez, to all practical effects, House O'rez is an independent minor house, engaged in a long war with House Yetmer.</description>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Black Lotus</enemy>
+  <enemy>Yetmer</enemy>
+ </enemies>
+ <lane_length_per_presence>300</lane_length_per_presence>
+ <lane_base_cost>50</lane_base_cost>
+ <tags>
+  <tag>minorhouse</tag>
+ </tags>
+</faction>

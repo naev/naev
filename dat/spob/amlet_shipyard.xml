@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Amlet Shipyard">
+ <pos x="-1534.217232" y="-504.937442"/>
+ <GFX>
+  <space>station-shipyard3.webp</space>
+  <exterior>station_scene.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Yetmer</faction>
+  <base>100.000000</base>
+  <bonus>100.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>780000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The first thing you notice about the Amlet Shipyard is the large amount of anti-spacecraft mounts all over the station. The second second is minimal design of the infrastructure, which seems to be designed to maximize ship production with as few additional expenses as possible. This includes not using pressured spacedocks and have many workers operate directly with space suits all over the new ships. The actual pressurized area of the station is minimal, with most workers spending their leisure time in ships parked nearby instead of actually entering the tight station quarters.</description>
+ </general>
+ <tech>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</spob>

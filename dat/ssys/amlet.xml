@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="Sheffield">
+<ssys name="Amlet">
  <general>
   <background>stellarwind</background>
   <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
-  <radius>14000.000000</radius>
+  <radius>15000.000000</radius>
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="8.007649" y="-795.708932"/>
+ <pos x="-21.000000" y="-741.000000"/>
  <spobs>
-  <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
+  <spob>Amlet Shipyard</spob>
+  <spob>Amletia</spob>
+  <spob>Little Polaris</spob>
  </spobs>
  <jumps>
-  <jump target="Amlet">
+  <jump target="Gold">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Volus">
+  <jump target="Sheffield">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Xavier">
+  <jump target="Yetmer-O'rez Highspace">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
- <stats>
-  <fuel_regen>1.000000</fuel_regen>
- </stats>
- <tags>
-  <tag>southstellarwind</tag>
-  <tag>stellarwind</tag>
- </tags>
 </ssys>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Yetmer">
+ <longname>House Yetmer</longname>
+ <ai>yetmer</ai>
+ <colour>gold</colour>
+ <player>1</player>
+ <spawn>yetmer</spawn>
+ <standing>yetmer</standing>
+ <equip>zalek</equip>
+ <local_th>5</local_th>
+ <description>While still officially part of House Yetmer-O'rez, to all practical effects, House Yetmer is an independent minor house, engaged in a long war with House O'rez.</description>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Black Lotus</enemy>
+  <enemy>O'rez</enemy>
+ </enemies>
+ <lane_length_per_presence>300</lane_length_per_presence>
+ <lane_base_cost>50</lane_base_cost>
+ <tags>
+  <tag>minorhouse</tag>
+ </tags>
+</faction>

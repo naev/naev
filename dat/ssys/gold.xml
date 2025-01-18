@@ -8,14 +8,16 @@
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="-58.775825" y="-688.131384"/>
- <spobs/>
+ <pos x="-73.775825" y="-681.131384"/>
+ <spobs>
+  <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
+ </spobs>
  <jumps>
-  <jump target="Fried">
+  <jump target="Amlet">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Sheffield">
+  <jump target="Fried">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
