@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-18 13:57+0000\n"
+"PO-Revision-Date: 2025-01-18 13:58+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28624,7 +28624,7 @@ msgstr "\"Я не хочу никаких проблем.\""
 
 #: dat/ai/proteron.lua:13
 msgid "\"We like to make examples out of scum like you.\""
-msgstr ""
+msgstr "\"Нам нравится делать примеры из таких подонков, как ты.\""
 
 #: dat/ai/proteron.lua:20
 msgid "Animals like you don't deserve to live!"
