@@ -28586,7 +28586,7 @@ msgstr ""
 
 #: dat/ai/mercenary.lua:15
 msgid "Don't take this personally."
-msgstr ""
+msgstr "Не принимай это на свой счет."
 
 #: dat/ai/mercenary.lua:16
 msgid "It's just business."
