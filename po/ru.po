@@ -28582,6 +28582,7 @@ msgstr "\"Я мог бы оказать услугу и заправить ва�
 #: dat/ai/mercenary.lua:12
 msgid "\"I'm afraid you can't make it worth my while.\""
 msgstr ""
+"\"Боюсь, ты не сможешь сделать что либо, что стоило бы траты моего времени.\""
 
 #: dat/ai/mercenary.lua:15
 msgid "Don't take this personally."
