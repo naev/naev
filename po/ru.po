@@ -28266,7 +28266,7 @@ msgstr "Тебя ждет смерть!"
 #. Handle refueling
 #: dat/ai/dvaered.lua:72
 msgid "\"You are not worthy of my attention.\""
-msgstr ""
+msgstr "\"Ты не достоин моего внимания.\""
 
 #: dat/ai/dvaered.lua:75 dat/ai/frontier_police.lua:76
 msgid "\"For you I could make an exception for {credits}.\""
