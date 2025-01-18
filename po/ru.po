@@ -28245,7 +28245,7 @@ msgstr "Твоя голова станет отличным трофеем!"
 
 #: dat/ai/dvaered.lua:21 dat/ai/goddard.lua:17
 msgid "Prepare to face annihilation!"
-msgstr ""
+msgstr "Приготовься к уничтожению!"
 
 #: dat/ai/dvaered.lua:22
 msgid "You're no match for the Dvaered!"
