@@ -28385,7 +28385,7 @@ msgstr "Ты об этом пожалеешь!"
 
 #: dat/ai/empire.lua:31 dat/ai/soromid.lua:36
 msgid "That was a fatal mistake!"
-msgstr ""
+msgstr "Это была роковая ошибка!"
 
 #. See if it's a transport ship
 #. Credits, and other transport-specific stuff
