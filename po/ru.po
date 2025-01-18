@@ -28482,7 +28482,7 @@ msgstr "Ты не ровня ФОФ."
 
 #: dat/ai/flf.lua:21
 msgid "I've killed scum far more dangerous than you."
-msgstr ""
+msgstr "Я убивал мерзавцев гораздо опаснее тебя."
 
 #: dat/ai/flf.lua:23
 msgid "Death to the enemies of the Frontier!"
