@@ -28553,7 +28553,7 @@ msgstr "\"За {credits} я забуду все обиды.\""
 
 #: dat/ai/frontier_police.lua:86
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
-msgstr ""
+msgstr "\"А теперь убирайся с глаз моих и не создавай больше проблем.\""
 
 #: dat/ai/goddard.lua:14
 msgid "\"House Goddard does not lower itself to common scum.\""
