@@ -28656,7 +28656,7 @@ msgstr "Свобода — это рабство!"
 
 #: dat/ai/proteron.lua:29
 msgid "How dare you attack the Proteron?!"
-msgstr ""
+msgstr "Как ты посмел напасть на Протерон?!"
 
 #: dat/ai/proteron.lua:30
 msgid "I will have your head!"
