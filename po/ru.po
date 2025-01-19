@@ -28710,7 +28710,7 @@ msgstr ""
 
 #: dat/ai/proteron.lua:105
 msgid "\"Get lost before I have to dispose of you.\""
-msgstr ""
+msgstr "\"Исчезни, пока мне не пришлось от тебя избавиться.\""
 
 #. No bribe
 #: dat/ai/raven_clan.lua:7
