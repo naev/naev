@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 17:45+0000\n"
+"PO-Revision-Date: 2025-01-19 17:46+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28953,6 +28953,7 @@ msgstr "\"Полагаю, я мог бы продать немного топл�
 #: dat/ai/soromid.lua:107
 msgid "\"For {credits} I'll give you enough time to get out of my sight.\""
 msgstr ""
+"\"За {credits} я дам тебе достаточно времени, чтобы скрыться из видимости.\""
 
 #: dat/ai/soromid.lua:108
 msgid "\"Now get out of my sight.\""
