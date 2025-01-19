@@ -28903,7 +28903,7 @@ msgstr "Наслаждайся последними мгновениями, че
 
 #: dat/ai/soromid.lua:26
 msgid "Time for a little natural selection!"
-msgstr ""
+msgstr "Пришло время для небольшого естественного отбора!"
 
 #: dat/ai/soromid.lua:27
 msgid "Might makes right!"
