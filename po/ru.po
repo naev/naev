@@ -28660,7 +28660,7 @@ msgstr "Как ты посмел напасть на Протерон?!"
 
 #: dat/ai/proteron.lua:30
 msgid "I will have your head!"
-msgstr ""
+msgstr "Я оторву тебе голову!"
 
 #: dat/ai/proteron.lua:32
 msgid "Your fate has been sealed, dissident!"
