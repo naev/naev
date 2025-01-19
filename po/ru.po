@@ -28668,7 +28668,7 @@ msgstr "Твоя судьба решена, диссидент!"
 
 #: dat/ai/proteron.lua:33
 msgid "You will pay for your treason!"
-msgstr ""
+msgstr "Ты заплатишь за свою измену!"
 
 #: dat/ai/proteron.lua:34
 msgid "Die along with the old Empire!"
