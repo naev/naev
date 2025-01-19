@@ -28911,7 +28911,7 @@ msgstr "Кто силён, тот и прав!"
 
 #: dat/ai/soromid.lua:28
 msgid "Embrace your weakness!"
-msgstr ""
+msgstr "Прими свою слабость!"
 
 #: dat/ai/soromid.lua:29
 msgid "Eat hot plasma!"
