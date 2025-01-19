@@ -28805,7 +28805,7 @@ msgstr "\"Мне не нужны твои грязные кредиты.\""
 
 #: dat/ai/sirius.lua:16
 msgid "The universe shall be cleansed of your presence!"
-msgstr ""
+msgstr "Вселенная должна быть очищена от твоего присутствия!"
 
 #: dat/ai/sirius.lua:17
 msgid "Time for some cleansing!"
