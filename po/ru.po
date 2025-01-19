@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 17:21+0000\n"
+"PO-Revision-Date: 2025-01-19 17:22+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28735,7 +28735,7 @@ msgstr "Время для выгодной встречи!"
 
 #: dat/ai/raven_clan.lua:12
 msgid "Prepare for a lesson in the art of the deal!"
-msgstr ""
+msgstr "Приготовьтесь к уроку искусства заключения сделок!"
 
 #: dat/ai/raven_clan.lua:13
 msgid "Prepare to witness the true power of the market!"
