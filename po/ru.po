@@ -28719,7 +28719,7 @@ msgstr "Когти Ворона всегда находят свою цель!"
 
 #: dat/ai/raven_clan.lua:8
 msgid "Prepare for a lesson in resource redistribution!"
-msgstr ""
+msgstr "Приготовься к уроку перераспределения ресурсов!"
 
 #: dat/ai/raven_clan.lua:9
 msgid "Your cargo will fetch a hefty price in the black market!"
