@@ -28854,7 +28854,7 @@ msgstr "Я преодолею это испытание!"
 #. Deal with refueling
 #: dat/ai/sirius.lua:75 dat/ai/sirius.lua:78 dat/ai/zalek.lua:111
 msgid "\"I do not have fuel to spare.\""
-msgstr ""
+msgstr "\"У меня нет лишнего топлива.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:84
