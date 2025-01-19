@@ -28809,7 +28809,7 @@ msgstr "Вселенная должна быть очищена от твоег�
 
 #: dat/ai/sirius.lua:17
 msgid "Time for some cleansing!"
-msgstr ""
+msgstr "Пришло время для очищения!"
 
 #: dat/ai/sirius.lua:18
 msgid "House Sirius has no need of you. Begone!"
