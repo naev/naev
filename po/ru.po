@@ -28759,7 +28759,7 @@ msgstr ""
 
 #: dat/ai/raven_clan.lua:16
 msgid "Your fate is sealed by the Raven's hand!"
-msgstr ""
+msgstr "Твоя судьба решена рукой Ворона!"
 
 #: dat/ai/raven_clan.lua:17
 msgid "The Raven clan will capitalize on your misfortune!"
