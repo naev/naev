@@ -28731,7 +28731,7 @@ msgstr "Ваш драгоценный груз наполнит карманы �
 
 #: dat/ai/raven_clan.lua:11
 msgid "Time for a profitable encounter!"
-msgstr ""
+msgstr "Время для выгодной встречи!"
 
 #: dat/ai/raven_clan.lua:12
 msgid "Prepare for a lesson in the art of the deal!"
