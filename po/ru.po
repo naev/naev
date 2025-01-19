@@ -28672,7 +28672,7 @@ msgstr "Ты заплатишь за свою измену!"
 
 #: dat/ai/proteron.lua:34
 msgid "Die along with the old Empire!"
-msgstr ""
+msgstr "Умри вместе со старой Империей!"
 
 #. Not too many credits.
 #. See if it's a transport ship
