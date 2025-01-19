@@ -28875,7 +28875,7 @@ msgstr "\"Отбраковка такого как ты окажет челов�
 
 #: dat/ai/soromid.lua:16
 msgid "\"We do not consort with vermin.\""
-msgstr ""
+msgstr "\"Мы не общаемся с вредителями.\""
 
 #: dat/ai/soromid.lua:17
 msgid "\"Who do you take us for, the Empire?\""
