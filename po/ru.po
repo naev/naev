@@ -28688,7 +28688,7 @@ msgstr "Протерон следит за тобой."
 #. Deal with refueling
 #: dat/ai/proteron.lua:90
 msgid "\"My fuel isn't for sale.\""
-msgstr ""
+msgstr "\"Мое топливо не продается.\""
 
 #: dat/ai/proteron.lua:93
 msgid "\"Sorry, my fuel isn't for sale.\""
