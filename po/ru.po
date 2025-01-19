@@ -28891,7 +28891,7 @@ msgstr "\"Ты смеешь насмехаться над племенами С�
 
 #: dat/ai/soromid.lua:20
 msgid "\"Your dirty credits will not buy the warriors of Sorom!\""
-msgstr ""
+msgstr "\"Твои грязные кредиты не подкупят воинов Сорома!\""
 
 #: dat/ai/soromid.lua:24
 msgid "Culling you will be doing humanity a service."
