@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 17:19+0000\n"
+"PO-Revision-Date: 2025-01-19 17:20+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28715,7 +28715,7 @@ msgstr "\"Исчезни, пока мне не пришлось от тебя и
 #. No bribe
 #: dat/ai/raven_clan.lua:7
 msgid "The Raven's talons always find their mark!"
-msgstr ""
+msgstr "Когти Ворона всегда находят свою цель!"
 
 #: dat/ai/raven_clan.lua:8
 msgid "Prepare for a lesson in resource redistribution!"
