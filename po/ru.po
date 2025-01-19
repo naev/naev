@@ -28957,7 +28957,7 @@ msgstr ""
 
 #: dat/ai/soromid.lua:108
 msgid "\"Now get out of my sight.\""
-msgstr ""
+msgstr "\"А теперь убирайся с глаз моих.\""
 
 #: dat/ai/thurion.lua:14
 msgid "Vessel under attack! Requesting help!"
