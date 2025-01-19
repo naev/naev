@@ -28779,7 +28779,7 @@ msgstr "Смотрите! Корабль готов к освоению!"
 
 #: dat/ai/raven_clan.lua:21
 msgid "Your demise will be both profitable and satisfying!"
-msgstr ""
+msgstr "Твоя кончина будет и прибыльной, и приятной!"
 
 #. Least aggressive
 #. Decent money
