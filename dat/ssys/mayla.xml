@@ -8,6 +8,8 @@
  <pos x="103.000000" y="-829.000000"/>
  <spobs>
   <spob>Highland</spob>
+  <spob>Mayla I</spob>
+  <spob>Mayla III</spob>
  </spobs>
  <jumps>
   <jump target="K'tos">

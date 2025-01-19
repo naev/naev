@@ -718,6 +718,9 @@ dat/spob/amatiri_ii.xml
 dat/spob/ambre.xml
 dat/spob/amhurst.xml
 dat/spob/amianta.xml
+dat/spob/amlet_i.xml
+dat/spob/amlet_ia.xml
+dat/spob/amlet_ib.xml
 dat/spob/amlet_shipyard.xml
 dat/spob/amletia.xml
 dat/spob/ammu.xml
@@ -1320,6 +1323,8 @@ dat/spob/maus_i.xml
 dat/spob/maus_ii.xml
 dat/spob/maus_iii.xml
 dat/spob/maya.xml
+dat/spob/mayla_i.xml
+dat/spob/mayla_iii.xml
 dat/spob/medenus_observatory.xml
 dat/spob/megala.xml
 dat/spob/megan_station.xml

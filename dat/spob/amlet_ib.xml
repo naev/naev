@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Amlet Ib">
+ <pos x="5154.530813" y="9222.997157"/>
+ <GFX>
+  <space>D01.webp</space>
+  <exterior>uninhabited-rocky-airless-00.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Much more dense than Amlet 1a, this moon of Amlet I has some, but not significant minerals located near the core. There used to be a small mining operation, but it has been long since abandoned given the difficulty of operating in war, and the little yields. Now, most of House Yetmer's resources are obtained through importation or mining operations on Amletia.</description>
+ </general>
+</spob>

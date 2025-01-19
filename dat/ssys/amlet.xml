@@ -10,6 +10,9 @@
  </general>
  <pos x="-21.000000" y="-741.000000"/>
  <spobs>
+  <spob>Amlet I</spob>
+  <spob>Amlet Ia</spob>
+  <spob>Amlet Ib</spob>
   <spob>Amlet Shipyard</spob>
   <spob>Amletia</spob>
   <spob>Little Polaris</spob>
@@ -28,4 +31,15 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>5000.000000</radius>
+   <pos x="2853.742168" y="9653.905412"/>
+  </asteroid>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="3806.027290" y="10105.230858"/>
+  </exclusion>
+ </asteroids>
 </ssys>
