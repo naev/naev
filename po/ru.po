@@ -28829,7 +28829,7 @@ msgstr "Ты совершил смертельную ошибку!"
 
 #: dat/ai/sirius.lua:24
 msgid "You do wrong in your provocations!"
-msgstr ""
+msgstr "Ты напрасно нас провоцируешь!"
 
 #: dat/ai/sirius.lua:25
 msgid "I shall overcome this test!"
