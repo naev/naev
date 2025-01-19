@@ -28746,6 +28746,8 @@ msgid ""
 "Your ship is but another prize in the Raven clan's vast portfolio of illicit "
 "acquisitions!"
 msgstr ""
+"Твой корабль — всего лишь еще один приз в обширном портфолио незаконных "
+"приобретений Клана Ворона!"
 
 #: dat/ai/raven_clan.lua:15
 msgid ""
