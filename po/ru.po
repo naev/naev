@@ -28883,7 +28883,7 @@ msgstr "\"За кого ты нас принимаешь, за Империю?\"
 
 #: dat/ai/soromid.lua:18
 msgid "\"You are against the order of nature!\""
-msgstr ""
+msgstr "\"Ты идёшь против законов природы!\""
 
 #: dat/ai/soromid.lua:19
 msgid "\"You dare make a mockery of the Soromid Tribes?!\""
