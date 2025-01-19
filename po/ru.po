@@ -28899,7 +28899,7 @@ msgstr "Отбраковка такого как ты окажет челове�
 
 #: dat/ai/soromid.lua:25
 msgid "Enjoy your last moments, worm!"
-msgstr ""
+msgstr "Наслаждайся последними мгновениями, червяк!"
 
 #: dat/ai/soromid.lua:26
 msgid "Time for a little natural selection!"
