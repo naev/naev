@@ -28817,7 +28817,7 @@ msgstr "Дом Сириуса в тебе не нуждается. Убирай�
 
 #: dat/ai/sirius.lua:19
 msgid "Prepare to pay for your sins!"
-msgstr ""
+msgstr "Приготовься заплатить за свои грехи!"
 
 #: dat/ai/sirius.lua:22
 msgid "Sirichana protect me!"
