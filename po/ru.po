@@ -28644,7 +28644,7 @@ msgstr "Мы не потерпим врагов государства!"
 
 #: dat/ai/proteron.lua:24
 msgid "Long live the Proteron!"
-msgstr ""
+msgstr "Да здравствует Протерон!"
 
 #: dat/ai/proteron.lua:25
 msgid "War is peace!"
