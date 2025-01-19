@@ -28867,7 +28867,7 @@ msgstr "\"Удручающая трата углерода.\""
 
 #: dat/ai/soromid.lua:14
 msgid "\"Money won't save you from being purged from the gene pool.\""
-msgstr ""
+msgstr "\"Деньги не спасут тебя от искоренения из генофонда.\""
 
 #: dat/ai/soromid.lua:15
 msgid "\"Culling you will be doing humanity a service.\""
