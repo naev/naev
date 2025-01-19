@@ -28692,7 +28692,7 @@ msgstr "\"Мое топливо не продается.\""
 
 #: dat/ai/proteron.lua:93
 msgid "\"Sorry, my fuel isn't for sale.\""
-msgstr ""
+msgstr "\"Извините, мое топливо не продается.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:99
