@@ -28797,7 +28797,7 @@ msgstr ""
 #. Settings
 #: dat/ai/sirius.lua:12
 msgid "\"Your money is of no interest to me.\""
-msgstr ""
+msgstr "\"Ваши деньги меня не интересуют.\""
 
 #: dat/ai/sirius.lua:13
 msgid "\"I have no need of your dirty credits.\""
