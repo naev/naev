@@ -28767,7 +28767,7 @@ msgstr "Клан Ворона извлечет выгоду из твоей не
 
 #: dat/ai/raven_clan.lua:18
 msgid "Consider this a harsh lesson in economics!"
-msgstr ""
+msgstr "Считай это суровым уроком экономики!"
 
 #: dat/ai/raven_clan.lua:19
 msgid "Prepare to be plucked clean by the Raven clan!"
