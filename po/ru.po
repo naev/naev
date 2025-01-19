@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 17:34+0000\n"
+"PO-Revision-Date: 2025-01-19 17:36+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28859,7 +28859,7 @@ msgstr "\"У меня нет лишнего топлива.\""
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:84
 msgid "\"I would be able to refuel your ship for {credits}.\""
-msgstr ""
+msgstr "\"Я смогу заправить ваш корабль за {credits}.\""
 
 #: dat/ai/soromid.lua:13
 msgid "\"Snivelling waste of carbon.\""
