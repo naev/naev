@@ -265,7 +265,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
  */
 void pilot_weapSetUpdate( Pilot *p )
 {
-   int    n, nweap, target_set, breakstealth;
+   int    n, shotweap, target_set, breakstealth;
    double time;
    Target wt;
 
@@ -273,14 +273,15 @@ void pilot_weapSetUpdate( Pilot *p )
       return;
 
    breakstealth         = 0;
+   shotweap             = 0;
    n                    = 0;
-   nweap                = 0;
    target_set           = 0;
    pilotoutfit_modified = 0;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *pos = p->outfits[i];
       const Outfit    *o   = pos->outfit;
       int              volley;
+      int              shot = 0;
       if ( o == NULL )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
@@ -346,14 +347,15 @@ void pilot_weapSetUpdate( Pilot *p )
 
       /* Shoot the weapon of the weaponset. */
       if ( volley )
-         nweap += pilot_shootWeapon( p, pos, &wt, time,
-                                     !( pos->flags & PILOTOUTFIT_MANUAL ) );
+         shot = pilot_shootWeapon( p, pos, &wt, time,
+                                   !( pos->flags & PILOTOUTFIT_MANUAL ) );
       else
-         nweap += pilot_shootWeaponSetOutfit(
+         shot = pilot_shootWeaponSetOutfit(
             p, o, &wt, time, !( pos->flags & PILOTOUTFIT_MANUAL ) );
+      shotweap += shot;
       n++;
 
-      if ( !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
+      if ( shot && !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
          breakstealth = 1;
    }
 
@@ -366,11 +368,11 @@ void pilot_weapSetUpdate( Pilot *p )
          pilot_calcStats( p );
 
       /* Firing stuff aborts active cooldown. */
-      if ( pilot_isFlag( p, PILOT_COOLDOWN ) && ( nweap > 0 ) )
+      if ( pilot_isFlag( p, PILOT_COOLDOWN ) && ( shotweap > 0 ) )
          pilot_cooldownEnd( p, NULL );
 
       /* Trigger onshoot after stealth gets broken. */
-      if ( nweap > 0 )
+      if ( shotweap > 0 )
          pilot_outfitLOnshootany( p );
    }
 }
