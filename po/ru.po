@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 17:17+0000\n"
+"PO-Revision-Date: 2025-01-19 17:18+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28697,7 +28697,7 @@ msgstr "\"Извините, мое топливо не продается.\""
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:99
 msgid "\"I can transfer some fuel for {credits}.\""
-msgstr ""
+msgstr "\"Я могу передать немного топлива за {credits}.\""
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:104
