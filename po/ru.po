@@ -28915,7 +28915,7 @@ msgstr "Прими свою слабость!"
 
 #: dat/ai/soromid.lua:29
 msgid "Eat hot plasma!"
-msgstr ""
+msgstr "Жри горячую плазму!"
 
 #: dat/ai/soromid.lua:32
 msgid "Cunning, but foolish."
