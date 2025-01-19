@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 17:20+0000\n"
+"PO-Revision-Date: 2025-01-19 17:21+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28723,7 +28723,7 @@ msgstr "Приготовься к уроку перераспределения 
 
 #: dat/ai/raven_clan.lua:9
 msgid "Your cargo will fetch a hefty price in the black market!"
-msgstr ""
+msgstr "Ваш груз будет продан на чёрном рынке по высокой цене!"
 
 #: dat/ai/raven_clan.lua:10
 msgid "Your precious cargo will line the pockets of the Raven Clan!"
