@@ -28942,7 +28942,7 @@ msgstr "Добыча, считающая себя хищником!"
 #. Deal with refueling
 #: dat/ai/soromid.lua:89 dat/ai/soromid.lua:92
 msgid "\"The warriors of Sorom are not your personal refueller.\""
-msgstr ""
+msgstr "\"Воины Сорома — не твои личные заправщики.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/soromid.lua:98
