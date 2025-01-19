@@ -177,6 +177,7 @@ function gen_outfits ()
       { "Black Cat",                "Black Cat Doll" },
       { "Terraforming Antlejos 10", "Commemorative Stein" },
       { "DIY Nerds",                "Homebrew Processing Unit" },
+      { "Dvaered Shopping",         "Fancy Key Chain" },
    }
    local event_rewards = {
    }

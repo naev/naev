@@ -372,6 +372,9 @@ function koalaHailed()
    end
 end
 function koalaEscaped()
+   -- Only matters before commandos
+   if mem.misn_state ~= 2 then return end
+
    vntk.msg("",_([[It appears the Siren of Halir did leave the system. Your mission is a failure!]]))
    misn.finish(false)
 end
