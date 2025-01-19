@@ -28923,7 +28923,7 @@ msgstr "Хитро, но глупо."
 
 #: dat/ai/soromid.lua:33
 msgid "Ambush! Defend yourselves!"
-msgstr ""
+msgstr "Засада! Защищайтесь!"
 
 #: dat/ai/soromid.lua:34
 msgid "You should have picked easier prey!"
