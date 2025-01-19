@@ -28727,7 +28727,7 @@ msgstr "Ваш груз будет продан на чёрном рынке п�
 
 #: dat/ai/raven_clan.lua:10
 msgid "Your precious cargo will line the pockets of the Raven Clan!"
-msgstr ""
+msgstr "Ваш драгоценный груз наполнит карманы Клана Ворона!"
 
 #: dat/ai/raven_clan.lua:11
 msgid "Time for a profitable encounter!"
