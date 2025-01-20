@@ -21,6 +21,11 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Perhelion">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
  <asteroids>
   <asteroid>
