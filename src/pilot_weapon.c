@@ -827,7 +827,7 @@ double pilot_weapSetAmmo( Pilot *p, int id )
          nammo++;
       }
    }
-   return ( nammo == 0 ) ? 0. : ammo / (double)nammo;
+   return ( nammo == 0 ) ? 1. : ammo / (double)nammo;
 }
 
 /**
