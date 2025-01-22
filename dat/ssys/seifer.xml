@@ -19,6 +19,7 @@
   </jump>
   <jump target="Teller">
    <pos x="-5181.654740" y="8245.672141"/>
+   <hidden/>
    <hide>0.500000</hide>
   </jump>
  </jumps>

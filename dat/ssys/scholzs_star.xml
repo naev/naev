@@ -18,6 +18,7 @@
   </jump>
   <jump target="Veses">
    <pos x="1860.971187" y="14869.230894"/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

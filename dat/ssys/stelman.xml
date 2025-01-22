@@ -18,6 +18,7 @@
   </jump>
   <jump target="NGC-1317">
    <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Somard">

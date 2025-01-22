@@ -12,5 +12,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-7786">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>
