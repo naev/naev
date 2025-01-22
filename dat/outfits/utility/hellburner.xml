@@ -9,8 +9,6 @@
   <gfx_store>hellburner.webp</gfx_store>
   <limit>afterburner</limit>
   <cpu>0</cpu>
-  <overheat_min>400</overheat_min>
-  <overheat_max>650</overheat_max>
  </general>
  <specific type="afterburner">
   <rumble>0.9</rumble>
@@ -20,6 +18,5 @@
   <speed>45</speed>
   <energy>65</energy>
   <mass_limit>250</mass_limit>
-  <heatup>10</heatup>
  </specific>
 </outfit>

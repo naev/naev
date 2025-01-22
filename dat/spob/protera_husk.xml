@@ -19,8 +19,6 @@
   <services>
    <land/>
    <refuel/>
-   <!--<bar/>-->
-   <!--<outfits/>-->
    <blackmarket/>
    <nomissionspawn/>
   </services>

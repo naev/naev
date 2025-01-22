@@ -36,7 +36,6 @@
 #include "nstring.h"
 #include "nxml.h"
 #include "pilot.h"
-#include "pilot_heat.h"
 #include "pilot_outfit.h"
 #include "ship.h"
 #include "slots.h"
@@ -138,7 +137,6 @@ static os_opts energy_opts     = { N_( "Energy" ), _UNIT_ENERGY, 0, 1, 1, 1 };
 static os_opts power_opts      = { N_( "Power" ), _UNIT_POWER, 0, 0, 1, 1 };
 static os_opts range_opts      = { N_( "Range" ), _UNIT_DISTANCE, 0, 0, 1, 0 };
 static os_opts speed_opts      = { N_( "Speed" ), _UNIT_SPEED, 0, 0, 1, 0 };
-static os_opts heatup_opts     = { N_( "Overheat" ), _UNIT_TIME, 0, 0, 1, 1 };
 static os_opts dispersion_opts = {
    N_( "Dispersion" ), _UNIT_ANGLE, 0, 0, 1, 0 };
 static os_opts swivel_opts   = { N_( "Swivel" ), _UNIT_ANGLE, 0, 0, 1, 0 };
@@ -881,20 +879,6 @@ double outfit_energy( const Outfit *o )
    return -1.;
 }
 /**
- * @brief Gets the outfit's heat generation.
- *    @param o Outfit to get information from.
- */
-double outfit_heat( const Outfit *o )
-{
-   if ( outfit_isBolt( o ) )
-      return o->u.blt.heat;
-   else if ( outfit_isAfterburner( o ) )
-      return o->u.afb.heat;
-   else if ( outfit_isBeam( o ) )
-      return o->u.bem.heat;
-   return -1;
-}
-/**
  * @brief Gets the outfit's cpu usage.
  *    @param o Outfit to get information from.
  */
@@ -1510,7 +1494,6 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr    node;
-   double        C, area;
    double        dshield, darmour, dknockback;
    int           l;
 
@@ -1531,7 +1514,6 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "speed", temp->u.blt.speed );
       xmlr_float( node, "delay", temp->u.blt.delay );
       xmlr_float( node, "energy", temp->u.blt.energy );
-      xmlr_float( node, "heatup", temp->u.blt.heatup );
       xmlr_float( node, "trackmin", temp->u.blt.trackmin );
       xmlr_float( node, "trackmax", temp->u.blt.trackmax );
       xmlr_float( node, "swivel", temp->u.blt.swivel );
@@ -1648,17 +1630,6 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    temp->u.blt.dispersion *= M_PI / 180.;
    if ( outfit_isTurret( temp ) )
       temp->u.blt.swivel = M_PI;
-   /*
-    *         dT Mthermal - Qweap
-    * Hweap = ----------------------
-    *                tweap
-    */
-   C                = pilot_heatCalcOutfitC( temp );
-   area             = pilot_heatCalcOutfitArea( temp );
-   temp->u.blt.heat = ( ( 800. - CONST_SPACE_STAR_TEMP ) * C +
-                        STEEL_HEAT_CONDUCTIVITY *
-                           ( ( 800. - CONST_SPACE_STAR_TEMP ) * area ) ) /
-                      temp->u.blt.heatup * temp->u.blt.delay;
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1711,7 +1682,6 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    }
    l = os_printD( temp->summary_raw, l, temp->u.blt.range, &range_opts );
    l = os_printD( temp->summary_raw, l, temp->u.blt.speed, &speed_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.blt.heatup, &heatup_opts );
    l = os_printD( temp->summary_raw, l, temp->u.blt.dispersion * 180. / M_PI,
                   &dispersion_opts );
    if ( !outfit_isTurret( temp ) )
@@ -1737,7 +1707,6 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.blt.energy == 0., "energy" );
    // MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT( temp->u.blt.falloff > temp->u.blt.range, "falloff" );
-   MELEMENT( temp->u.blt.heatup == 0., "heatup" );
    MELEMENT( ( ( temp->u.blt.swivel > 0. ) || outfit_isTurret( temp ) ) &&
                 ( temp->u.blt.trackmin < 0. ),
              "trackmin" );
@@ -1758,7 +1727,6 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    ShipStatList *ll;
    int           l;
    xmlNodePtr    node;
-   double        C, area;
    double        dshield, darmour, dknockback;
    char         *shader;
 
@@ -1777,7 +1745,6 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "energy", temp->u.bem.energy );
       xmlr_float( node, "duration", temp->u.bem.duration );
       xmlr_float( node, "warmup", temp->u.bem.warmup );
-      xmlr_float( node, "heatup", temp->u.bem.heatup );
       xmlr_float( node, "swivel", temp->u.bem.swivel );
       xmlr_int( node, "mining_rarity", temp->u.bem.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
@@ -1861,15 +1828,6 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.bem.swivel *= M_PI / 180.;
    temp->u.bem.turn *= M_PI / 180.; /* Convert to rad/s. */
-   C    = pilot_heatCalcOutfitC( temp );
-   area = pilot_heatCalcOutfitArea( temp );
-   temp->u.bem.heat =
-      ( ( 800. - CONST_SPACE_STAR_TEMP ) * C +
-        STEEL_HEAT_CONDUCTIVITY *
-           ( ( 800. - CONST_SPACE_STAR_TEMP ) * area ) ) /
-      temp->u.bem.heatup *
-      ( temp->u.bem.delay + temp->u.bem.warmup + temp->u.bem.duration ) /
-      temp->u.bem.delay;
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1895,7 +1853,6 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    l = os_printD_range( temp->summary_raw, l, temp->u.bem.min_delay,
                         temp->u.bem.delay, &cooldown_opts );
    l = os_printD( temp->summary_raw, l, temp->u.bem.range, &range_opts );
-   l = os_printD( temp->summary_raw, l, temp->u.bem.heatup, &heatup_opts );
    if ( !outfit_isTurret( temp ) )
       l = os_printD( temp->summary_raw, l, temp->u.bem.swivel * 180. / M_PI,
                      &swivel_opts );
@@ -1924,7 +1881,6 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.bem.energy == 0., "energy" );
    MELEMENT( temp->cpu == 0., "cpu" );
    MELEMENT( temp->u.bem.dmg.damage == 0, "damage" );
-   MELEMENT( temp->u.bem.heatup == 0., "heatup" );
 #undef MELEMENT
 }
 
@@ -2297,7 +2253,6 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
  */
 static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
 {
-   double     C, area;
    size_t     l;
    xmlNodePtr node = parent->children;
 
@@ -2332,9 +2287,6 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "speed", temp->u.afb.speed );
       xmlr_float( node, "energy", temp->u.afb.energy );
       xmlr_float( node, "mass_limit", temp->u.afb.mass_limit );
-      xmlr_float( node, "heatup", temp->u.afb.heatup );
-      xmlr_float( node, "heat_cap", temp->overheat_max );
-      xmlr_float( node, "heat_base", temp->overheat_min );
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -2366,12 +2318,6 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.afb.accel /= 100.;
    temp->u.afb.speed /= 100.;
-   C                = pilot_heatCalcOutfitC( temp );
-   area             = pilot_heatCalcOutfitArea( temp );
-   temp->u.afb.heat = ( ( 800. - CONST_SPACE_STAR_TEMP ) * C +
-                        STEEL_HEAT_CONDUCTIVITY *
-                           ( ( 800. - CONST_SPACE_STAR_TEMP ) * area ) ) /
-                      temp->u.afb.heatup;
 
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
@@ -2382,7 +2328,6 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    MELEMENT( temp->u.afb.energy == 0., "energy" );
    // MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT( temp->u.afb.mass_limit == 0., "mass_limit" );
-   MELEMENT( temp->u.afb.heatup == 0., "heatup" );
 #undef MELEMENT
 }
 
@@ -2691,8 +2636,6 @@ static int outfit_parse( Outfit *temp, const char *file )
    temp->filename = strdup( file );
 
    /* Defaults. */
-   temp->overheat_min     = 350.;
-   temp->overheat_max     = 500.;
    temp->lua_env          = LUA_NOREF;
    temp->lua_descextra    = LUA_NOREF;
    temp->lua_onadd        = LUA_NOREF;
@@ -2749,8 +2692,6 @@ static int outfit_parse( Outfit *temp, const char *file )
             xmlr_strd( cur, "desc_extra", temp->desc_extra );
             xmlr_strd( cur, "typename", temp->typename );
             xmlr_int( cur, "priority", temp->priority );
-            xmlr_float( cur, "overheat_min", temp->overheat_min );
-            xmlr_float( cur, "overheat_max", temp->overheat_max );
             if ( xml_isNode( cur, "unique" ) ) {
                outfit_setProp( temp, OUTFIT_PROP_UNIQUE );
                continue;

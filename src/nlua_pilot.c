@@ -38,7 +38,6 @@
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "pilot.h"
-#include "pilot_heat.h"
 #include "player.h"
 #include "player_autonav.h"
 #include "rng.h"
@@ -100,7 +99,6 @@ static int pilotL_weapsetAdd( lua_State *L );
 static int pilotL_weapsetAddType( lua_State *L );
 static int pilotL_weapsetRm( lua_State *L );
 static int pilotL_weapsetCleanup( lua_State *L );
-static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_weapsetSetInrange( lua_State *L );
 static int pilotL_weapsetAmmo( lua_State *L );
 static int pilotL_weapsetAuto( lua_State *L );
@@ -117,7 +115,6 @@ static int pilotL_velocity( lua_State *L );
 static int pilotL_isStopped( lua_State *L );
 static int pilotL_dir( lua_State *L );
 static int pilotL_signature( lua_State *L );
-static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
 static int pilotL_accel( lua_State *L );
 static int pilotL_speed( lua_State *L );
@@ -183,7 +180,6 @@ static int pilotL_effectHas( lua_State *L );
 static int pilotL_effectGet( lua_State *L );
 static int pilotL_ai( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
-static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setHealthAbs( lua_State *L );
 static int pilotL_addHealth( lua_State *L );
@@ -297,7 +293,6 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetAddType", pilotL_weapsetAddType },
    { "weapsetRm", pilotL_weapsetRm },
    { "weapsetCleanup", pilotL_weapsetCleanup },
-   { "weapsetHeat", pilotL_weapsetHeat },
    { "weapsetSetInrange", pilotL_weapsetSetInrange },
    { "weapsetAmmo", pilotL_weapsetAmmo },
    { "weapsetAuto", pilotL_weapsetAuto },
@@ -314,7 +309,6 @@ static const luaL_Reg pilotL_methods[] = {
    { "isStopped", pilotL_isStopped },
    { "dir", pilotL_dir },
    { "signature", pilotL_signature },
-   { "temp", pilotL_temp },
    { "mass", pilotL_mass },
    { "accel", pilotL_accel },
    { "speed", pilotL_speed },
@@ -348,7 +342,6 @@ static const luaL_Reg pilotL_methods[] = {
    /* Modify. */
    { "ai", pilotL_ai },
    { "changeAI", pilotL_changeAI },
-   { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
    { "setHealthAbs", pilotL_setHealthAbs },
    { "addHealth", pilotL_addHealth },
@@ -1874,11 +1867,6 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
    lua_pushboolean( L, slot->flags & PILOTOUTFIT_ISON );
    lua_rawset( L, -3 );
 
-   /* Temperature. */
-   lua_pushstring( L, "heat" );
-   lua_pushnumber( L, pilot_heatFirePercent( slot->heat_T ) );
-   lua_rawset( L, -3 );
-
    /* Type. */
    lua_pushstring( L, "type" );
    lua_pushstring( L, outfit_getType( slot->outfit ) );
@@ -1943,8 +1931,7 @@ static int pilotL_autoweap( lua_State *L )
  * </li> <li> in_arc: Whether or not the target is in targeting arc or nil if
  * not applicable. </li>
  * <li> active: Whether or not the weapon is currently active.
- * </li> <li> heat: Heat level of the weapon where 1 is normal and 0 is
- * overheated. </li> <li> type: Type of the weapon. </li> <li> dtype: Damage
+ * </li></li> <li> type: Type of the weapon. </li> <li> dtype: Damage
  * type of the weapon. </li> <li> track: Tracking level of the weapon. </li>
  * </ul>
  *
@@ -2177,84 +2164,6 @@ static int pilotL_weapsetCleanup( lua_State *L )
 }
 
 /**
- * @brief Gets heat information for a weapon set.
- *
- * Heat is a 0-2 value that corresponds to three separate ranges:
- *
- * <ul>
- *  <li>0: Weapon set isn't overheating and has no penalties.</li>
- *  <li>0-1: Weapon set has reduced accuracy.</li>
- *  <li>1-2: Weapon set has full accuracy penalty plus reduced fire rate.</li>
- * </ul>
- *
- * @usage hmean, hpeak = p:weapsetHeat() -- Gets info for all active
- * weapons
- * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
- *
- *    @luatparam Pilot p Pilot to get weapset weapon of.
- *    @luatparam[opt] number id ID of the set to get information of. Defaults to
- * all weapon sets.
- *    @luatreturn number Mean heat.
- *    @luatreturn number Peak heat.
- * @luafunc weapsetHeat
- */
-static int pilotL_weapsetHeat( lua_State *L )
-{
-   Pilot                *p;
-   PilotWeaponSetOutfit *po_list;
-   int                   n, id, all;
-   double                heat, heat_mean, heat_peak, nweapons;
-
-   /* Defaults. */
-   heat_mean = 0.;
-   heat_peak = 0.;
-   nweapons  = 0;
-
-   /* Parse parameters. */
-   id = 0;
-   p  = luaL_validpilot( L, 1 );
-   if ( lua_gettop( L ) > 1 ) {
-      id  = luaL_checkinteger( L, 2 ) - 1;
-      id  = CLAMP( 0, PILOT_WEAPON_SETS, id );
-      all = 0;
-   } else
-      all = 1;
-
-   /* Push set. */
-   po_list = all ? NULL : pilot_weapSetList( p, id );
-   n       = all ? array_size( p->outfits ) : array_size( po_list );
-
-   /* Iterate over weapons. */
-   for ( int i = 0; i < n; i++ ) {
-      /* Get base look ups. */
-      PilotOutfitSlot *slot =
-         all ? p->outfits[i] : p->outfits[po_list[i].slotid];
-      const Outfit *o = slot->outfit;
-      if ( o == NULL )
-         continue;
-
-      /* Must be weapon. */
-      if ( outfit_isMod( o ) || outfit_isAfterburner( o ) )
-         continue;
-
-      nweapons++;
-      heat = pilot_heatFirePercent( slot->heat_T );
-      heat_mean += heat;
-      if ( heat > heat_peak )
-         heat_peak = heat;
-   }
-
-   /* Post-process. */
-   if ( nweapons > 0 )
-      heat_mean /= nweapons;
-
-   lua_pushnumber( L, heat_mean );
-   lua_pushnumber( L, heat_peak );
-
-   return 2;
-}
-
-/**
  * @brief Sets whether a pilot's weapon set does inrange checks.
  *
  *    @luatparam Pilot p Pilot to get weapset weapon of.
@@ -2315,9 +2224,8 @@ static int pilotL_weapsetAuto( lua_State *L )
  * <ul>
  *  <li> outfit: The outfit. </li>
  *  <li> type: Type of the outfit. </li>
- *  <li> active: Whether or not the outfit is active at the current time.
- *  <li> heat: The heat of the outfit's slot. A value between 0 and 1, where 0
- * is fully overheated, and 1 is normal. </li> <li> weapset: The first weapon
+ *  <li> active: Whether or not the outfit is active at the current time.</li>
+ *  <li> weapset: The first weapon
  * set that the outfit appears in, if any. </li> <li> state: State of the
  * outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li> <li>
  * duration: Set only if state is "on". Indicates duration value (0 = just
@@ -2401,13 +2309,6 @@ static int pilotL_actives( lua_State *L )
       /* Type. */
       lua_pushstring( L, "type" );
       lua_pushstring( L, outfit_getType( pos->outfit ) );
-      lua_rawset( L, -3 );
-
-      /* Heat. */
-      lua_pushstring( L, "heat" );
-      lua_pushnumber( L, 1. - pilot_heatEfficiencyMod(
-                                 pos->heat_T, pos->outfit->overheat_min,
-                                 pos->outfit->overheat_max ) );
       lua_rawset( L, -3 );
 
       lua_pushstring( L, "active" );
@@ -2874,22 +2775,6 @@ static int pilotL_dir( lua_State *L )
 {
    const Pilot *p = luaL_validpilot( L, 1 );
    lua_pushnumber( L, p->solid.dir );
-   return 1;
-}
-
-/**
- * @brief Gets the temperature of a pilot.
- *
- * @usage t = p:temp()
- *
- *    @luatparam Pilot p Pilot to get temperature of.
- *    @luatreturn number The pilot's current temperature (in kelvin).
- * @luafunc temp
- */
-static int pilotL_temp( lua_State *L )
-{
-   const Pilot *p = luaL_validpilot( L, 1 );
-   lua_pushnumber( L, p->heat_T );
    return 1;
 }
 
@@ -4475,51 +4360,6 @@ static int pilotL_changeAI( lua_State *L )
    ret = ai_pinit( p, str );
    lua_pushboolean( L, ret );
    return 1;
-}
-
-/**
- * @brief Sets the temperature of a pilot.
- *
- * All temperatures are in Kelvins. Note that temperatures cannot go below the
- * base temperature of the Naev galaxy, which is 250K.
- *
- * @usage p:setTemp( 300, true ) -- Sets ship temperature to 300K, as well as
- * all outfits.
- * @usage p:setTemp( 500, false ) -- Sets ship temperature to 500K, but leaves
- * outfits alone.
- * @usage p:setTemp( 0 ) -- Sets ship temperature to the base temperature, as
- * well as all outfits.
- *
- *    @luatparam Pilot p Pilot to set health of.
- *    @luatparam number temp Value to set temperature to. Values below base
- * temperature will be clamped.
- *    @luatparam[opt=false] boolean noslots Whether slots should also be set to
- * this temperature.
- * @luafunc setTemp
- */
-static int pilotL_setTemp( lua_State *L )
-{
-   Pilot *p;
-   int    setOutfits = 1;
-   double kelvins;
-
-   /* Handle parameters. */
-   p          = luaL_validpilot( L, 1 );
-   kelvins    = luaL_checknumber( L, 2 );
-   setOutfits = !lua_toboolean( L, 3 );
-
-   /* Temperature must not go below base temp. */
-   kelvins = MAX( kelvins, CONST_SPACE_STAR_TEMP );
-
-   /* Handle pilot ship. */
-   p->heat_T = kelvins;
-
-   /* Handle pilot outfits (maybe). */
-   if ( setOutfits )
-      for ( int i = 0; i < array_size( p->outfits ); i++ )
-         p->outfits[i]->heat_T = kelvins;
-
-   return 0;
 }
 
 /**

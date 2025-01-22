@@ -22,7 +22,6 @@
   <falloff>425</falloff>
   <gfx_end>neutron-end.png</gfx_end>
   <energy>25</energy>
-  <heatup>30</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>

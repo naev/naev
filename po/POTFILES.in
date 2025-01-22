@@ -108,6 +108,7 @@ dat/factions/marauder.xml
 dat/factions/mercenary.xml
 dat/factions/miner.xml
 dat/factions/nasin.xml
+dat/factions/orez.xml
 dat/factions/pirate.xml
 dat/factions/proteron.xml
 dat/factions/raven_clan.xml
@@ -118,6 +119,7 @@ dat/factions/thurion.xml
 dat/factions/trader.xml
 dat/factions/traders_society.xml
 dat/factions/wild_ones.xml
+dat/factions/yetmer.xml
 dat/factions/zalek.xml
 dat/map_decorator/blackhole.xml
 dat/map_decorator/dvaered.xml
@@ -391,7 +393,7 @@ dat/outfits/structure/medium_fuel_pod.xml
 dat/outfits/structure/medium_shield_booster.xml
 dat/outfits/structure/microbond_plating.xml
 dat/outfits/structure/nanobond_plating.xml
-dat/outfits/structure/nanofiber_structures.xml
+dat/outfits/structure/nanofiber_structural_enhancement.xml
 dat/outfits/structure/nebular_shielding_prototype.xml
 dat/outfits/structure/plasteel_plating.xml
 dat/outfits/structure/reactor_class_i.xml
@@ -716,6 +718,11 @@ dat/spob/amatiri_ii.xml
 dat/spob/ambre.xml
 dat/spob/amhurst.xml
 dat/spob/amianta.xml
+dat/spob/amlet_i.xml
+dat/spob/amlet_ia.xml
+dat/spob/amlet_ib.xml
+dat/spob/amlet_shipyard.xml
+dat/spob/amletia.xml
 dat/spob/ammu.xml
 dat/spob/amphion.xml
 dat/spob/anarbalis_ii.xml
@@ -977,6 +984,7 @@ dat/spob/euler_iii.xml
 dat/spob/euler_iiia.xml
 dat/spob/euler_iv.xml
 dat/spob/europea.xml
+dat/spob/evergreen.xml
 dat/spob/excelcior.xml
 dat/spob/eye_of_night_i.xml
 dat/spob/eye_of_night_ii.xml
@@ -1108,6 +1116,7 @@ dat/spob/hekaras_iii.xml
 dat/spob/hekaras_iv.xml
 dat/spob/heronus.xml
 dat/spob/heronus_nidus.xml
+dat/spob/highland.xml
 dat/spob/hikatalat.xml
 dat/spob/holly_i.xml
 dat/spob/holly_ii.xml
@@ -1265,6 +1274,7 @@ dat/spob/levo.xml
 dat/spob/limbo_i.xml
 dat/spob/limbo_ii.xml
 dat/spob/lirith.xml
+dat/spob/little_polaris.xml
 dat/spob/little_rock.xml
 dat/spob/long_rock.xml
 dat/spob/longbow_i.xml
@@ -1313,6 +1323,8 @@ dat/spob/maus_i.xml
 dat/spob/maus_ii.xml
 dat/spob/maus_iii.xml
 dat/spob/maya.xml
+dat/spob/mayla_i.xml
+dat/spob/mayla_iii.xml
 dat/spob/medenus_observatory.xml
 dat/spob/megala.xml
 dat/spob/megan_station.xml
@@ -1415,6 +1427,7 @@ dat/spob/ns144.xml
 dat/spob/ns27.xml
 dat/spob/ns42.xml
 dat/spob/ns63.xml
+dat/spob/o'rez_palace.xml
 dat/spob/obelisk_monastery.xml
 dat/spob/oberon.xml
 dat/spob/oberon_i.xml
@@ -1945,6 +1958,7 @@ dat/spob/xavier.xml
 dat/spob/xo4.xml
 dat/spob/yak_nest.xml
 dat/spob/yaroslav_farming_station.xml
+dat/spob/yetmer-o'rez.xml
 dat/spob/yrina.xml
 dat/spob/zaals.xml
 dat/spob/zabween_outpost.xml
@@ -2012,6 +2026,7 @@ dat/spob_virtual/traders_society_local.xml
 dat/spob_virtual/traders_society_unpresence.xml
 dat/spob_virtual/traders_society_unpresence_range1.xml
 dat/spob_virtual/virtual_sindbad.xml
+dat/spob_virtual/yetmer_orez_unpresence.xml
 dat/spob_virtual/zalek_medium.xml
 dat/spob_virtual/zalek_small.xml
 dat/spob_virtual/zalek_unpresence.xml
@@ -2031,6 +2046,7 @@ dat/ssys/altair.xml
 dat/ssys/alteris.xml
 dat/ssys/amaroq.xml
 dat/ssys/amatiri.xml
+dat/ssys/amlet.xml
 dat/ssys/anarbalis.xml
 dat/ssys/andee.xml
 dat/ssys/andres.xml
@@ -2200,6 +2216,7 @@ dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml
 dat/ssys/jommel.xml
+dat/ssys/k'tos.xml
 dat/ssys/kansas.xml
 dat/ssys/karman.xml
 dat/ssys/katami.xml
@@ -2241,6 +2258,7 @@ dat/ssys/maron.xml
 dat/ssys/mason.xml
 dat/ssys/massia.xml
 dat/ssys/maus.xml
+dat/ssys/mayla.xml
 dat/ssys/merisi.xml
 dat/ssys/metsys.xml
 dat/ssys/mida.xml
@@ -2539,6 +2557,7 @@ dat/ssys/wunomi.xml
 dat/ssys/xavier.xml
 dat/ssys/xeric.xml
 dat/ssys/yarn.xml
+dat/ssys/yetmer-o'rez_highspace.xml
 dat/ssys/zacron.xml
 dat/ssys/zalek.xml
 dat/ssys/zemur.xml
@@ -2795,6 +2814,7 @@ dat/ai/lost.lua
 dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
+dat/ai/orez.lua
 dat/ai/pers.lua
 dat/ai/pers_patrol.lua
 dat/ai/pers_pirate.lua
@@ -2813,6 +2833,7 @@ dat/ai/stationary.lua
 dat/ai/thurion.lua
 dat/ai/trader.lua
 dat/ai/wild_ones.lua
+dat/ai/yetmer.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
 dat/autonav.lua
@@ -2918,12 +2939,14 @@ dat/events/news/generic.lua
 dat/events/news/goddard.lua
 dat/events/news/hypergates.lua
 dat/events/news/independent.lua
+dat/events/news/orez.lua
 dat/events/news/pirate.lua
 dat/events/news/proteron.lua
 dat/events/news/sirius.lua
 dat/events/news/soromid.lua
 dat/events/news/thurion.lua
 dat/events/news/trader.lua
+dat/events/news/yetmer.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
 dat/events/npc.lua
@@ -3023,6 +3046,7 @@ dat/factions/spawn/lost/default.lua
 dat/factions/spawn/marauder.lua
 dat/factions/spawn/marauder/default.lua
 dat/factions/spawn/miner.lua
+dat/factions/spawn/orez.lua
 dat/factions/spawn/pirate.lua
 dat/factions/spawn/pirate/default.lua
 dat/factions/spawn/pirate_black_lotus.lua
@@ -3044,6 +3068,8 @@ dat/factions/spawn/trader.lua
 dat/factions/spawn/trader/default.lua
 dat/factions/spawn/traders_society.lua
 dat/factions/spawn/traders_society/default.lua
+dat/factions/spawn/yetmer.lua
+dat/factions/spawn/yetmer/default.lua
 dat/factions/spawn/zalek.lua
 dat/factions/spawn/zalek/default.lua
 dat/factions/standing/dvaered.lua
@@ -3055,6 +3081,7 @@ dat/factions/standing/lib/base.lua
 dat/factions/standing/lib/pirate.lua
 dat/factions/standing/marauder.lua
 dat/factions/standing/nasin.lua
+dat/factions/standing/orez.lua
 dat/factions/standing/pirate.lua
 dat/factions/standing/pirate_black_lotus.lua
 dat/factions/standing/pirate_dreamer_clan.lua
@@ -3066,6 +3093,7 @@ dat/factions/standing/soromid.lua
 dat/factions/standing/static.lua
 dat/factions/standing/thurion.lua
 dat/factions/standing/trader_society.lua
+dat/factions/standing/yetmer.lua
 dat/factions/standing/zalek.lua
 dat/gui/brushed.lua
 dat/gui/legacy.lua
@@ -3446,11 +3474,13 @@ dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
 dat/scripts/factions/goddard.lua
+dat/scripts/factions/orez.lua
 dat/scripts/factions/pirate.lua
 dat/scripts/factions/proteron.lua
 dat/scripts/factions/sirius.lua
 dat/scripts/factions/soromid.lua
 dat/scripts/factions/thurion.lua
+dat/scripts/factions/yetmer.lua
 dat/scripts/factions/zalek.lua
 dat/scripts/fleet.lua
 dat/scripts/format.lua
@@ -3608,6 +3638,7 @@ dat/spob/lua/lib/spob.lua
 dat/spob/lua/lib/wormhole.lua
 dat/spob/lua/lowclass.lua
 dat/spob/lua/maanens_moon.lua
+dat/spob/lua/orez_palace.lua
 dat/spob/lua/pirate_clanworld.lua
 dat/spob/lua/poller_mass.lua
 dat/spob/lua/protera_husk.lua
@@ -3627,6 +3658,7 @@ dat/spob/lua/wormhole_ngc4087.lua
 dat/spob/lua/wormhole_rei.lua
 dat/spob/lua/wormhole_surano.lua
 dat/spob/lua/wormhole_zied.lua
+dat/spob/lua/yetmer_orez.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
 src/SDL_keynames.h
@@ -3943,8 +3975,6 @@ src/pilot_cargo.h
 src/pilot_ew.c
 src/pilot_ew.h
 src/pilot_flags.h
-src/pilot_heat.c
-src/pilot_heat.h
 src/pilot_hook.c
 src/pilot_hook.h
 src/pilot_outfit.c

@@ -21,7 +21,6 @@
   <falloff>850</falloff>
   <gfx_end>laser1S.png</gfx_end>
   <energy>10</energy>
-  <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>
   <swivel>18</swivel>

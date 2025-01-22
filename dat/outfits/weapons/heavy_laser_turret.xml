@@ -22,7 +22,6 @@
   <falloff>1400</falloff>
   <gfx_end>laser2L.png</gfx_end>
   <energy>49</energy>
-  <heatup>75</heatup>
   <trackmin>2400</trackmin>
   <trackmax>9600</trackmax>
   <damage>

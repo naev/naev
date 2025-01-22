@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Little Polaris">
+ <pos x="-4280.455083" y="-4348.186199"/>
+ <GFX>
+  <space>moon-P01.webp</space>
+  <exterior>asteroid.webp</exterior>
+ </GFX>
+ <general>
+  <class>G</class>
+  <population>0</population>
+  <hide>0.600000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Named by Grand Duchess Mayla Yetmer after her childhood vacation home on Polaris Prime due to the similar crystalline mountains. It is said she enjoyed going on long walks in atmospheric suits here alone, to the great chagrin of her entire security staff.
+
+Although Little Polaris has significant resources, the large amounts of natural contaminants make extraction not very cost-effective, so the moratorium on exploitation put in place by Mayla is still respected to this day.</description>
+ </general>
+</spob>

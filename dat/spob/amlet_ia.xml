@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Amlet Ia">
+ <pos x="3745.710118" y="9770.306525"/>
+ <GFX>
+  <space>moon-D01.webp</space>
+  <exterior>uninhabited-rocky-airless-03.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A large chunk of rock orbiting around the gas giant Amlet I. With barely any gravity and no remarkable characteristics, Amlet Ia is mainly ignored by those that travel through the system.</description>
+ </general>
+</spob>

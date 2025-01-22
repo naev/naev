@@ -57,7 +57,6 @@
  <stats>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <heat_dissipation>15</heat_dissipation>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
   <ew_hide>10</ew_hide>

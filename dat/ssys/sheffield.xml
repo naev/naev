@@ -8,14 +8,12 @@
   <spacedust>400</spacedust>
   <interference>30.000000</interference>
  </general>
- <pos x="21.729871" y="-742.320043"/>
- <spobs/>
+ <pos x="8.007649" y="-795.708932"/>
+ <spobs>
+  <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
+ </spobs>
  <jumps>
-  <jump target="Gold">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Urbanus">
+  <jump target="Amlet">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

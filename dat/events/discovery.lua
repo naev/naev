@@ -120,6 +120,16 @@ local system_events = {
       subtitle = _("Any Business is Good Business"),
    },
 }
+local yetmer_orez = {
+      type = "enter",
+      name = "disc_yetmer_orez",
+      title = _("House Yetmer-O'rez"),
+      subtitle = _("Turmoils of Galactic Succession"),
+      func = function()
+         faction.get("Yetmer"):setKnown( true )
+         faction.get("O'rez"):setKnown( true )
+      end
+   }
 -- These trigger for specific factions controlled systems
 local faction_events = {
    ["Za'lek"] = {
@@ -173,6 +183,8 @@ local faction_events = {
       subtitle = _("Do Robots Dream of Electric Sheep?"),
       func = function() faction.get("Collective"):setKnown( true ) end
    },
+   Yetmer = yetmer_orez,
+   ["O'rez"] = yetmer_orez,
 }
 -- Custom events can handle custom triggers such as nebula systems
 --[[

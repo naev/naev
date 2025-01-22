@@ -21,7 +21,6 @@
   <falloff>1500</falloff>
   <gfx_end>ripperM-end.png</gfx_end>
   <energy>1</energy>
-  <heatup>10000</heatup>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>

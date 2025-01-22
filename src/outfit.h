@@ -187,15 +187,11 @@ typedef struct OutfitBoltData_ {
    Damage dmg;     /**< Damage done. */
    double radius;  /**< Explosion radius .*/
 
-   double heatup;     /**< How long it should take for the weapon to heat up
-                         (approx). */
-   double heat;       /**< Heat per shot. */
    double trackmin;   /**< Ewarfare minimal tracking. */
    double trackmax;   /**< Ewarfare maximal (optimal) tracking. */
    double swivel;     /**< Amount of swivel (semiarc in radians of deviation the
                          weapon can correct). */
-   double dispersion; /**< Angle amount to spread particles around independent
-                         of heat. */
+   double dispersion; /**< Angle amount to spread particles around. */
    double speed_dispersion; /**< Dispersion, but for speed. */
    int    shots;            /**< Number of particles shot when fired. */
    int    mining_rarity;    /**< Maximum mining rarity the weapon can mine. */
@@ -223,9 +219,6 @@ typedef struct OutfitBeamData_ {
    double turn;       /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy;     /**< Amount of energy it drains (per second). */
    Damage dmg;        /**< Damage done. */
-   double heatup;     /**< How long it should take for the weapon to heat up
-                         (approx). */
-   double heat;       /**< Heat per second. */
    double swivel;     /**< Amount of swivel (semiarc in radians of deviation the
                          weapon can correct). */
    int mining_rarity; /**< Maximum mining rarity the weapon can mine. */
@@ -259,8 +252,7 @@ typedef struct OutfitLauncherData_ {
    double arc;        /**< Semi-angle of the arc which it will lock on in. */
    double swivel;     /**< Amount of swivel (semiarc in radians of deviation the
                          weapon can correct when launched). */
-   double dispersion; /**< Angle amount to spread particles around independent
-                         of heat. */
+   double dispersion; /**< Angle amount to spread particles around. */
    double speed_dispersion; /**< Dispersion, but for speed. */
    int    shots;            /**< Number of particles shot when fired. */
    int    mining_rarity;    /**< Maximum mining rarity the weapon can mine. */
@@ -320,8 +312,6 @@ typedef struct OutfitAfterburnerData_ {
    double speed;      /**< Percent of speed to increase based on ship base. */
    double energy;     /**< Energy usage while active */
    double mass_limit; /**< Limit at which effectiveness starts to drop. */
-   double heatup;     /**< How long it takes for the afterburner to overheat. */
-   double heat;       /**< Heat per second. */
 } OutfitAfterburnerData;
 
 struct Ship_; /* Bit of a horrible hack to allow us to avoid circular
@@ -397,11 +387,6 @@ typedef struct Outfit_ {
    char       *gfx_store_path; /**< Store graphic path. */
    glTexture  *gfx_store;      /**< Store graphic. */
    glTexture **gfx_overlays;   /**< Array (array.h): Store overlay graphics. */
-
-   /* Heat limits. */
-   double overheat_min; /**< Temperature at which the outfit BEGINS to
-                           overheat(K). */
-   double overheat_max; /**< Temperature at which the outfit overheats (K). */
 
    unsigned int properties; /**< Properties stored bitwise. */
    unsigned int group; /**< Weapon group to use when autoweap is enabled. */
@@ -536,7 +521,6 @@ double           outfit_radius( const Outfit *o );
 double           outfit_delay( const Outfit *o );
 int              outfit_amount( const Outfit *o );
 double           outfit_energy( const Outfit *o );
-double           outfit_heat( const Outfit *o );
 double           outfit_cpu( const Outfit *o );
 double           outfit_range( const Outfit *o );
 double           outfit_speed( const Outfit *o );

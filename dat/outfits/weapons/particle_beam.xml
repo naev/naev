@@ -16,7 +16,6 @@
   <range>350</range>
   <turn>120</turn>
   <energy>10</energy>
-  <heatup>35</heatup>
   <damage>
    <type>energy</type>
    <penetrate>6</penetrate>

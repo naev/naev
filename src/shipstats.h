@@ -91,7 +91,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_FBAY_RELOAD,   /**< Regeneration rate of fighters. */
 
    /* Forward mounts. */
-   SS_TYPE_D_FORWARD_HEAT,              /**< Heat generation for cannons. */
    SS_TYPE_D_FORWARD_DAMAGE,            /**< Damage done by cannons. */
    SS_TYPE_D_FORWARD_FIRERATE,          /**< Firerate of cannons. */
    SS_TYPE_D_FORWARD_ENERGY,            /**< Energy usage of cannons. */
@@ -99,7 +98,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_FORWARD_RANGE,             /**< Weapon range. */
 
    /* Turrets. */
-   SS_TYPE_D_TURRET_HEAT,              /**< Heat generation for turrets. */
    SS_TYPE_D_TURRET_DAMAGE,            /**< Damage done by turrets. */
    SS_TYPE_D_TURRET_TRACKING,          /**< Tracking of turrets. */
    SS_TYPE_D_TURRET_FIRERATE,          /**< Firerate of turrets. */
@@ -108,7 +106,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURRET_RANGE,             /**< Weapon range. */
 
    /* Misc. */
-   SS_TYPE_D_HEAT_DISSIPATION,   /**< Ship heat dissipation. */
    SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
    SS_TYPE_D_CREW,               /**< Ship crew. */
    SS_TYPE_D_MASS,               /**< Ship mass. */
@@ -282,7 +279,6 @@ typedef struct ShipStats_ {
    double ew_scanned_time;  /**< Time to scan. */
 
    /* Military type. */
-   double heat_dissipation;   /**< Global ship dissipation. */
    double stress_dissipation; /**< Global stress dissipation. */
    double crew_mod;           /**< Relative crew modification. */
    double mass_mod;           /**< Relative mass modification. */
@@ -316,7 +312,6 @@ typedef struct ShipStats_ {
    double fbay_reload;   /**< Reload rate of fighters. */
 
    /* Fighter/Corvette type. */
-   double fwd_heat;       /**< Heat of forward mounts. */
    double fwd_damage;     /**< Damage of forward mounts. */
    double fwd_firerate;   /**< Rate of fire of forward mounts. */
    double fwd_energy;     /**< Consumption rate of forward mounts. */
@@ -324,7 +319,6 @@ typedef struct ShipStats_ {
    double fwd_range;      /**< Range of forward mounts. */
 
    /* Destroyer/Cruiser type. */
-   double tur_heat;       /**< Heat of turrets. */
    double tur_damage;     /**< Damage of turrets. */
    double tur_tracking;   /**< Tracking of turrets. */
    double tur_firerate;   /**< Rate of fire of turrets. */

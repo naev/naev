@@ -210,9 +210,45 @@ vni.dvaeredMilitaryMale = get_list( dvaered_mil_m )
 vni.dvaeredMilitaryFemale = get_list( dvaered_mil_f )
 vni.dvaeredMilitary = get_list( dvaered_mil_m, dvaered_mil_f )
 
-vni.soromid = vni.generic
-vni.soromidMale = vni.genericMale
-vni.soromidFemale = vni.genericFemale
+local soromid = {
+   {"soromid/soromid_heavy_civilian_1.webp", "heavy"},
+   {"soromid/soromid_heavy_civilian_2.webp", "heavy"},
+   {"soromid/soromid_heavy_civilian_3.webp", "heavy"},
+   {"soromid/soromid_aquatic_01.webp", "aquatic"},
+   {"soromid/soromid_aquatic_01_v2.webp", "aquatic"},
+   {"soromid/soromid_aquatic_01_v3.webp", "aquatic"},
+   {"soromid/soromid_dark_01.webp", "dark"},
+   {"soromid/soromid_dark_01_v2.webp", "dark"},
+   {"soromid/soromid_dark_01_v3.webp", "dark"},
+}
+local soromid_mil = {
+   {"soromid/soromid_heavy_military_3.webp", "heavy"},
+}
+local function get_soromid( list, species )
+   if species == nil then
+      local p = list[ rnd.rnd(1,#list) ]
+      return p[1], p[1], p[2]
+   end
+   local valid = {}
+   for k,v in ipairs(list) do
+      if v[2]==species then
+         valid[#valid+1] = v
+      end
+   end
+   if #valid==0 then
+      warn(fmt.f("No graphics found for Soromid species '{spc}'",
+         {spc=species}))
+      return vni.generic()
+   end
+   return _get_list( valid )
+end
+
+vni.soromid = function (species)
+   return get_soromid( soromid, species )
+end
+vni.soromidMilitary = function (species)
+   return get_soromid( soromid_mil, species )
+end
 
 vni.zalek = vni.generic
 vni.zalekMale = vni.genericMale

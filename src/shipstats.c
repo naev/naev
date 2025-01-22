@@ -159,7 +159,6 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_FBAY_RATE, fbay_rate, N_( "Fighter Bay Launch Rate" ) ),
    D__ELEM( SS_TYPE_D_FBAY_RELOAD, fbay_reload, N_( "Fighter Reload Rate" ) ),
 
-   DI_ELEM( SS_TYPE_D_FORWARD_HEAT, fwd_heat, N_( "Heat (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE, fwd_damage, N_( "Damage (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate,
             N_( "Fire Rate (Cannon)" ) ),
@@ -169,7 +168,6 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Damage as Disable (Cannon)" ) ),
    D__ELEM( SS_TYPE_D_FORWARD_RANGE, fwd_range, N_( "Weapon Range (Cannon)" ) ),
 
-   DI_ELEM( SS_TYPE_D_TURRET_HEAT, tur_heat, N_( "Heat (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE, tur_damage, N_( "Damage (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_TRACKING, tur_tracking,
             N_( "Tracking (Turret)" ) ),
@@ -181,8 +179,6 @@ static const ShipStatsLookup ss_lookup[] = {
             N_( "Damage as Disable (Turret)" ) ),
    D__ELEM( SS_TYPE_D_TURRET_RANGE, tur_range, N_( "Weapon Range (Turret)" ) ),
 
-   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation,
-            N_( "Heat Dissipation" ) ),
    D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,
             N_( "Stress Dissipation" ) ),
    D__ELEM( SS_TYPE_D_CREW, crew_mod, N_( "Crew" ) ),
@@ -724,10 +720,13 @@ size_t ss_offsetFromType( ShipStatsType type )
  */
 ShipStatsType ss_typeFromName( const char *name )
 {
-   for ( int i = 0; i < SS_TYPE_SENTINEL; i++ )
-      if ( ( ss_lookup[i].name != NULL ) &&
-           ( strcmp( name, ss_lookup[i].name ) == 0 ) )
-         return ss_lookup[i].type;
+   if ( name == NULL )
+      return SS_TYPE_NIL;
+   for ( int i = 0; i < SS_TYPE_SENTINEL; i++ ) {
+      const ShipStatsLookup *lu = &ss_lookup[i];
+      if ( ( lu->name != NULL ) && ( strcmp( name, lu->name ) == 0 ) )
+         return lu->type;
+   }
 
    WARN( _( "ss_typeFromName: No ship stat matching '%s'" ), name );
    return SS_TYPE_NIL;

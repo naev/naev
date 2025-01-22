@@ -205,12 +205,14 @@ function advice ()
       table.insert( adv, msg_hostiles )
    end
 
+   --[=[
    local _hmean, hpeak = pp:weapsetHeat()
    local msg_heat = fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cool down with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")})
    table.insert( adv_rnd, msg_heat )
    if pp:temp() > 300 or hpeak > 0.2 then
       table.insert( adv, msg_heat )
    end
+   --]=]
 
    local msg_asteroids = fmt.f(_([["Asteroid fields can be a good way to make credits. It is simple enough to shoot at asteroids to release minerals and then approach to collect them with your ship's scoop. However, most weapons destroy uncommon and rare materials, and are only suitable for mining common materials. If you want to mine for better materials, you have to use mining-specific weapons or tools such as the {tool1} or {tool2}. You do have to watch out though, as mining is generally a fairly noisy process and can attract unwanted attention."]]),
       {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")})
