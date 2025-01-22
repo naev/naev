@@ -8,6 +8,7 @@
       * 6 new ship variants
       * 2 new outfits
       * New portraits
+      * Significant changes in jumps (hidden and otherwise)
    * Engine
       * Use instancing instead of geometry shaders for space dust
       * Ship Lua scripting supports "onshootany" now
@@ -18,6 +19,7 @@
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
       * Action speed can no longer be negative and disables space worthiness
+      * Don't show OSD frame when not visible
 
 * 0.12.3 (unreleased)
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration

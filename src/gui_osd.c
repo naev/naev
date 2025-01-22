@@ -139,7 +139,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items,
    osd->priority = priority;
    osd->msg      = array_create_size( char *, nitems );
    osd->items    = array_create_size( char **, nitems );
-   osd->titlew   = array_create( char   *);
+   osd->titlew   = array_create( char * );
    osd->hide     = hidden;
    for ( int i = 0; i < nitems; i++ ) {
       array_push_back( &osd->msg, strdup( items[i] ) );
@@ -374,7 +374,7 @@ void osd_render( void )
    int    l;
 
    /* Nothing to render. */
-   if ( osd_list == NULL )
+   if ( ( osd_list == NULL ) || ( osd_rh <= 0. ) )
       return;
 
    NTracingZone( _ctx, 1 );
