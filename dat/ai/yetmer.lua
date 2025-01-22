@@ -3,7 +3,7 @@ local fmt = require "format"
 
 -- Settings
 mem.aggressive    = true
-mem.whiteknight   = false
+mem.whiteknight   = true
 mem.formation     = "echelon_left"
 
 local bribe_no_list = {
