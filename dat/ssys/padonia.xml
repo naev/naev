@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Padonia">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>103.100000</interference>
+  <nebula volatility="4.500000" hue="305.000000">600.000000</nebula>
+ </general>
+ <pos x="766.280221" y="510.970174"/>
+ <spobs/>
+ <jumps>
+  <jump target="Alpha Centauri">
+   <pos x="-14393.703210" y="1261.062171"/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

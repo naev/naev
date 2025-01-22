@@ -12,6 +12,10 @@
   <spob_virtual>Lost Small</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Hopa">
+   <pos x="6538.367228" y="-12192.742473"/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Nirtos">
    <autopos/>
    <hide>1.000000</hide>
