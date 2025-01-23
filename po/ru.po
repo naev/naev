@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-23 07:09+0000\n"
+"PO-Revision-Date: 2025-01-23 07:11+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28995,7 +28995,7 @@ msgstr "Аууууу!"
 
 #: dat/ai/wild_ones.lua:9
 msgid "You stand no chance!"
-msgstr ""
+msgstr "У тебя нет шансов!"
 
 #: dat/ai/wild_ones.lua:10
 msgid "Ye're about to learn why we're the apex predators of the cosmos!"
