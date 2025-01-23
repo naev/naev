@@ -28999,7 +28999,7 @@ msgstr "У тебя нет шансов!"
 
 #: dat/ai/wild_ones.lua:10
 msgid "Ye're about to learn why we're the apex predators of the cosmos!"
-msgstr ""
+msgstr "Сейчас ты узнаешь, почему мы сверххищники космоса!"
 
 #: dat/ai/wild_ones.lua:11
 msgid "You can run, but ye can't hide from the wrath of the Wild Ones!"
