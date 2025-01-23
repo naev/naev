@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-19 18:06+0000\n"
+"PO-Revision-Date: 2025-01-23 07:07+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -28970,7 +28970,7 @@ msgstr ""
 #. "Under attack!" in binary
 #: dat/ai/thurion.lua:22
 msgid "\"The Thurion will not be bribed!\""
-msgstr ""
+msgstr "\"Турион не подкупить!\""
 
 #: dat/ai/thurion.lua:23
 msgid "\"I have no use for your money.\""
