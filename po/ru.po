@@ -28991,7 +28991,7 @@ msgstr "Гррррр!"
 
 #: dat/ai/wild_ones.lua:8
 msgid "Awoooooo!"
-msgstr ""
+msgstr "Аууууу!"
 
 #: dat/ai/wild_ones.lua:9
 msgid "You stand no chance!"
