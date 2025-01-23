@@ -29007,7 +29007,7 @@ msgstr "Ты можешь бежать, но тебе не скрыться от
 
 #: dat/ai/wild_ones.lua:12
 msgid "No mercy for the weak!"
-msgstr ""
+msgstr "Никакой пощады слабым!"
 
 #: dat/ai/wild_ones.lua:13
 msgid "Prepare to be devoured by the Wild Ones!"
