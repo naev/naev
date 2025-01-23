@@ -1535,8 +1535,12 @@ GltfObject *gltf_loadFromFile( const char *filename )
 
    /* Initialize object. */
    obj = cache_get( filename, &new );
-   if ( !new )
+   if ( !new ) {
+      /* Horribly spinlock. TODO fix, but it'll go away with rust... */
+      while ( !obj->loaded )
+         SDL_Delay( 1 );
       return obj;
+   }
 
    /* Set up the gltf path. */
    dirpath = strdup( filename );
@@ -1682,6 +1686,7 @@ GltfObject *gltf_loadFromFile( const char *filename )
 
    cgltf_free( data );
 
+   obj->loaded = 1;
    return obj;
 }
 
@@ -2179,6 +2184,7 @@ static GltfObject *cache_get( const char *filename, int *new )
    const ObjectCache cache = {
       .name = (char *)filename,
    };
+   GltfObject  *obj;
    ObjectCache *hit = bsearch( &cache, obj_cache, array_size( obj_cache ),
                                sizeof( ObjectCache ), cache_cmp );
    if ( hit == NULL ) {
@@ -2193,13 +2199,15 @@ static GltfObject *cache_get( const char *filename, int *new )
       qsort( obj_cache, array_size( obj_cache ), sizeof( ObjectCache ),
              cache_cmp );
       *new = 1;
+      obj  = newcache.obj;
       SDL_mutexV( cache_lock );
-      return newcache.obj;
+      return obj;
    }
    hit->refcount++;
    *new = 0;
+   obj  = hit->obj;
    SDL_mutexV( cache_lock );
-   return hit->obj;
+   return obj;
 }
 
 /**
