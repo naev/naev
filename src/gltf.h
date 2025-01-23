@@ -198,6 +198,7 @@ typedef struct GltfObject {
    /* Useful things used for special cases. */
    GltfTrail *trails; /**< Trails for trail generation. */
    GltfMount *mounts; /**< Mount points fo weapons. */
+   int        loaded; /**< Fully loaded. */
 } GltfObject;
 
 /**
