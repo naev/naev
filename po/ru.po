@@ -28974,7 +28974,7 @@ msgstr "\"Турион не подкупить!\""
 
 #: dat/ai/thurion.lua:23
 msgid "\"I have no use for your money.\""
-msgstr ""
+msgstr "\"Мне твои деньги ни к чему.\""
 
 #: dat/ai/thurion.lua:24
 msgid "\"Credits are no replacement for a good shield.\""
