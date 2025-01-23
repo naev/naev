@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.11.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2024-02-04 01:39+0900\n"
-"PO-Revision-Date: 2025-01-23 07:11+0000\n"
+"PO-Revision-Date: 2025-01-23 07:12+0000\n"
 "Last-Translator: Nikita <tyapin_nikita@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/naev/naev-0-11-x/"
 "ru/>\n"
@@ -29003,7 +29003,7 @@ msgstr "Сейчас ты узнаешь, почему мы сверххищни
 
 #: dat/ai/wild_ones.lua:11
 msgid "You can run, but ye can't hide from the wrath of the Wild Ones!"
-msgstr ""
+msgstr "Ты можешь бежать, но тебе не скрыться от гнева Диких!"
 
 #: dat/ai/wild_ones.lua:12
 msgid "No mercy for the weak!"
