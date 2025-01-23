@@ -10,8 +10,6 @@ local BONUSES = {
    weapon_firerate = 200,
    weapon_damage   = -60,
    weapon_energy   = -70,
-   fwd_heat        = -70,
-   tur_heat        = -70,
 }
 
 function descextra( _p )
