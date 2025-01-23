@@ -28987,7 +28987,7 @@ msgstr "\"Космические торговцы не ведут перегов
 
 #: dat/ai/wild_ones.lua:7
 msgid "Rawwwr!"
-msgstr ""
+msgstr "Гррррр!"
 
 #: dat/ai/wild_ones.lua:8
 msgid "Awoooooo!"
