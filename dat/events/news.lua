@@ -201,7 +201,8 @@ function add_article( my_faction, force )
    -- TODO add weighting?
    local alst = {}
    jointest( alst, articles[ my_faction ] )
-   if my_faction ~= "Generic" and faction.get(my_faction):tags().generic then
+   local tags = faction.get(my_faction):tags()
+   if my_faction ~= "Generic" and (tags.generic or tags.genericnews) then
       jointest( alst, articles[ "Generic" ] )
    end
    if alst == nil or #alst <= 0 then
