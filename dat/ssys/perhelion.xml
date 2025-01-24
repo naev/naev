@@ -11,9 +11,6 @@
   <spob>Perhelion Alpha</spob>
   <spob>Perhelion Beta</spob>
   <spob>Perhelion Gamma</spob>
-  <spob_virtual>Independent All Unpresence</spob_virtual>
-  <spob_virtual>Pirate All Unpresence</spob_virtual>
-  <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Daravon">

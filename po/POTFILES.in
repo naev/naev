@@ -301,6 +301,7 @@ dat/outfits/flow/structure/small_meditation_chamber.xml
 dat/outfits/intrinsic/black_agate_finishing.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
+dat/outfits/intrinsic/hyperdrive_retool.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
 dat/outfits/intrinsic/machiavellian_necessity.xml
 dat/outfits/intrinsic/machiavellian_virtue.xml
@@ -1783,6 +1784,7 @@ dat/spob/taxumi_iiia.xml
 dat/spob/telika_ii.xml
 dat/spob/telika_iii.xml
 dat/spob/tenalp.xml
+dat/spob/tenebros.xml
 dat/spob/tepdania_customs.xml
 dat/spob/tepdania_prime.xml
 dat/spob/tepvin_gamma.xml
@@ -1795,6 +1797,7 @@ dat/spob/thar.xml
 dat/spob/thavma.xml
 dat/spob/the_crucible.xml
 dat/spob/the_frontier_council.xml
+dat/spob/the_knot.xml
 dat/spob/the_stinker.xml
 dat/spob/the_wringer.xml
 dat/spob/theras_ii.xml
@@ -3360,6 +3363,7 @@ dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/intrinsic/black_agate_finishing.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
+dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
