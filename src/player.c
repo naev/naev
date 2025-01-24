@@ -56,6 +56,8 @@
 #include "opengl.h"
 #include "pause.h"
 #include "pilot.h"
+#include "pilot_outfit.h"
+#include "pilot_ship.h"
 #include "player.h"
 #include "player_autonav.h"
 #include "player_fleet.h"
@@ -2170,7 +2172,6 @@ void player_brokeHyperspace( void )
                                  &p->solid.dir, player.p );
 
          /* Run Lua stuff for all persistant pilots. */
-         pilot_outfitLInitAll( p );
          pilot_outfitLOnjumpin( p );
 
          /* Invulnerable delay too. */
@@ -4139,6 +4140,7 @@ static Spob *player_parse( xmlNodePtr parent )
    player.p->solid.dir = 2. * M_PI * RNGF();
 
    /* Initialize outfits. */
+   pilot_shipLInit( player.p );
    pilot_outfitLInitAll( player.p );
 
    /* initialize the system */
