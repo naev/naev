@@ -13,7 +13,7 @@ local FUEL_MEDIUM = 200
 local FUEL_LARGE = 400
 
 local function fuel_from_size( p )
-   local s = p:size()
+   local s = p:ship():size()
    if s<=2 then
       return FUEL_SMALL
    elseif s<=4 then
@@ -37,7 +37,7 @@ function descextra( p, _o )
       end
    end
 
-   local size = (p and p:size()) or -1
+   local size = (p and p:ship():size()) or -1
    local str = addstr( FUEL_LARGE, _("large"), size>4, size<0 ).."\n"
    str = str..addstr( FUEL_MEDIUM, _("medium"), (size>2) and (size<=4), size<0 ).."\n"
    return str..addstr( FUEL_SMALL, _("small"), (size>0) and (size<=2), size<0 )
