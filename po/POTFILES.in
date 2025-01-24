@@ -3602,6 +3602,8 @@ dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua
+dat/ships/lua/pirate.lua
+dat/ships/lua/pirate_revenant.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/sirius_divinity.lua

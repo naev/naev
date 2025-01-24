@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Vendetta">
+ <lua>pirate.lua</lua>
  <points>50</points>
  <base_type>Vendetta</base_type>
  <gfx size="49">vendetta_pirate</gfx>
