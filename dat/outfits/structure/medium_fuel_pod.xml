@@ -10,6 +10,6 @@
   <gfx_store>medium_fuel_pod.webp</gfx_store>
  </general>
  <specific type="modification">
-  <fuel>1200</fuel>
+  <fuel>800</fuel>
  </specific>
 </outfit>
