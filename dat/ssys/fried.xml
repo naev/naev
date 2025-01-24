@@ -2,12 +2,13 @@
 <ssys name="Fried">
  <general>
   <background>stellarwind</background>
+  <map_shader>stellarwind_map.frag</map_shader>
   <features>#bStellar Wind (1 fuel regen)#0</features>
   <radius>17500.000000</radius>
   <spacedust>400</spacedust>
   <interference>45.000000</interference>
  </general>
- <pos x="-154.364899" y="-579.232875"/>
+ <pos x="-91.364899" y="-582.232875"/>
  <spobs>
   <spob>Claudius Mehan</spob>
   <spob>Fried I</spob>
