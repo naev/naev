@@ -9,6 +9,7 @@
    * Gauss has a reputation requirement
    * Derelicts are no longer space-worthy
    * Fixed Tartarus landing graphics
+   * Fried shows the stellar winds on the map
    * Reworked aggressivity on distress signals to be more consistent
    * Try to fix trails not appearing on variant ships
    * dv_goddard: The Siren of Halir no longer fails the mission after you get the commandos
