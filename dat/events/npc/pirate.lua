@@ -105,6 +105,7 @@ local msg_tip = {
    _([["Marauders don't list much to other pirates. If it's too much of a hassle to blast them to bits, you can always pay them to go away."]]),
    _([["Stealth works best when you have a ship equipped for the job. Try to keep your mass low and use stealth improving outfits."]]),
    _([["If you get caught with contraband, you can try to bribe your way out of it. Credits talk!"]]),
+   _([["Nothing like a good ol' Skull and Bones ship to sail with the Stellar Winds! Your fuel will regenerate twice as fast as other ships!"]]),
 }
 
 local fct_wildones = faction.get("Wild Ones")
