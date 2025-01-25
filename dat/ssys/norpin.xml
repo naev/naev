@@ -14,6 +14,11 @@
   <spob_virtual>FLF Small</spob_virtual>
  </spobs>
  <jumps>
+  <jump target="Lynx">
+   <pos x="-7006.347155" y="-26198.862571"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Nougat">
    <autopos/>
    <hide>1.000000</hide>

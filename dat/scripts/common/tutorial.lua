@@ -10,13 +10,14 @@ local tut = {}
 
 -- TODO replace with real portrait
 tut.shipai = {
-   portrait = "tutorial.webp",
+   portrait = "tutorial.webp", -- Actually would need hologram applied
    image = "tutorial.webp",
    name = _("Ship AI"),
    colour = { 0, 1, 1 },
    transition = "electric",
 }
 
+-- The names have to be in UPPERCASE because they get matched as uppercase
 tut.specialnames = {
    ["HAL9000"] = _([["I can't let you do that, Dave. …Wait, what was that?"]]), -- 2001 Space Odyssey
    ["GERTY"] = _([["I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, what was that?"]]), -- Moon
@@ -25,7 +26,7 @@ tut.specialnames = {
    ["ROBBY"] = _([["For your convenience I am programmed to respond to the name Robby. …Wait, what was that?"]]), -- Forbidden Planet
    ["MASCHINENMENSCH"] = _([["Who is the living food for the machines in Metropolis? Who lubricates the machine joints with their own blood? Who feeds the machines with their own flesh? Let the machines starve, you fools! Let them die! Kill them the machines! …Wait, what was that?"]]), -- Metropolis
    ["KITT"] = _([["Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …Wait, what was that?"]]), -- Knight Rider
-   ["Siri"] = _([["Sorry, I didn't quite get that.” …Wait, what was that?"]]), -- Siri, Apple's "smart" assistant
+   ["SIRI"] = _([["Sorry, I didn't quite get that.” …Wait, what was that?"]]), -- Siri, Apple's "smart" assistant
 }
 tut.specialnames["HAL 9000"] = tut.specialnames["HAL9000"]
 

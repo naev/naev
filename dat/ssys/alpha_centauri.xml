@@ -16,6 +16,10 @@
    <pos x="-12804.710552" y="-7398.200960"/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Padonia">
+   <pos x="14198.920186" y="420.050032"/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Veses">
    <pos x="2130.713495" y="14747.322004"/>
    <hide>1.000000</hide>

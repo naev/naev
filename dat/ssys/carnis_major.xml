@@ -7,7 +7,9 @@
   <nolanes/>
  </general>
  <pos x="288.312307" y="-62.237719"/>
- <spobs/>
+ <spobs>
+  <spob>Tenebros</spob>
+ </spobs>
  <jumps>
   <jump target="Carnis Minor">
    <autopos/>

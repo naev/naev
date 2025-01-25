@@ -47,6 +47,8 @@
 #include "ntracing.h"
 #include "nxml.h"
 #include "pilot.h"
+#include "pilot_outfit.h"
+#include "pilot_ship.h"
 #include "player.h"
 #include "queue.h"
 #include "rng.h"
@@ -408,7 +410,7 @@ int spob_addService( Spob *p, int service )
       if ( p->commodities != NULL )
          return 0;
       Commodity **stdList = standard_commodities();
-      p->commodities      = array_create( Commodity      *);
+      p->commodities      = array_create( Commodity * );
       p->commodityPrice   = array_create( CommodityPrice );
       for ( int i = 0; i < array_size( stdList ); i++ )
          spob_addCommodity( p, stdList[i] );
@@ -1758,11 +1760,15 @@ void space_init( const char *sysname, int do_simulate )
    player_messageToggle( 1 );
    if ( player.p != NULL ) {
       Pilot *const *pilot_stack = pilot_getAll();
-      pilot_rmFlag( player.p, PILOT_HIDE );
       for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
          Pilot *p = pilot_stack[i];
-         if ( pilot_isWithPlayer( p ) )
+         if ( pilot_isWithPlayer( p ) ) {
             pilot_rmFlag( p, PILOT_HIDE );
+
+            /* Run Lua stuff. */
+            pilot_shipLInit( p );
+            pilot_outfitLInitAll( p );
+         }
       }
    }
    space_simulating_effects = 1;
@@ -2634,7 +2640,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    /* Build commodities list */
    if ( spob_hasService( spob, SPOB_SERVICE_COMMODITY ) ) {
       spob->commodityPrice = array_create( CommodityPrice );
-      spob->commodities    = array_create( Commodity    *);
+      spob->commodities    = array_create( Commodity * );
 
       /* First, store all the standard commodities and prices. */
       if ( array_size( stdList ) > 0 ) {
@@ -2893,7 +2899,7 @@ int system_rmJump( StarSystem *sys, StarSystem *target )
 static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof( StarSystem ) );
-   sys->spobs         = array_create( Spob         *);
+   sys->spobs         = array_create( Spob * );
    sys->spobs_virtual = array_create( VirtualSpob * );
    sys->spobsid       = array_create( int );
    sys->jumps         = array_create( JumpPoint );
@@ -3293,7 +3299,7 @@ static int system_parse( StarSystem *sys, const char *filename )
 
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         sys->tags      = array_create( char      *);
+         sys->tags      = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {
@@ -3536,7 +3542,7 @@ int space_load( void )
    systems_loading = 1;
 
    /* Create some arrays. */
-   spobname_stack   = array_create( char   *);
+   spobname_stack   = array_create( char * );
    systemname_stack = array_create( char * );
 
    /* Load jump point graphic - must be before systems_load(). */

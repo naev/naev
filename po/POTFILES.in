@@ -301,6 +301,7 @@ dat/outfits/flow/structure/small_meditation_chamber.xml
 dat/outfits/intrinsic/black_agate_finishing.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
+dat/outfits/intrinsic/hyperdrive_retool.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
 dat/outfits/intrinsic/machiavellian_necessity.xml
 dat/outfits/intrinsic/machiavellian_virtue.xml
@@ -1783,6 +1784,7 @@ dat/spob/taxumi_iiia.xml
 dat/spob/telika_ii.xml
 dat/spob/telika_iii.xml
 dat/spob/tenalp.xml
+dat/spob/tenebros.xml
 dat/spob/tepdania_customs.xml
 dat/spob/tepdania_prime.xml
 dat/spob/tepvin_gamma.xml
@@ -1795,6 +1797,7 @@ dat/spob/thar.xml
 dat/spob/thavma.xml
 dat/spob/the_crucible.xml
 dat/spob/the_frontier_council.xml
+dat/spob/the_knot.xml
 dat/spob/the_stinker.xml
 dat/spob/the_wringer.xml
 dat/spob/theras_ii.xml
@@ -2204,6 +2207,7 @@ dat/ssys/herakin.xml
 dat/ssys/herculis.xml
 dat/ssys/hideyoshis_star.xml
 dat/ssys/holly.xml
+dat/ssys/hopa.xml
 dat/ssys/hubfar.xml
 dat/ssys/humdrum.xml
 dat/ssys/hystera.xml
@@ -2383,6 +2387,7 @@ dat/ssys/oriantis.xml
 dat/ssys/orion.xml
 dat/ssys/overture.xml
 dat/ssys/oxuram.xml
+dat/ssys/padonia.xml
 dat/ssys/palejos.xml
 dat/ssys/palin.xml
 dat/ssys/palovi.xml
@@ -3209,6 +3214,7 @@ dat/missions/neutral/foodbiz/deliverlove.lua
 dat/missions/neutral/kidnapped/traffic_00.lua
 dat/missions/neutral/kidnapped/traffic_01.lua
 dat/missions/neutral/majesteka_stowaways.lua
+dat/missions/neutral/mapmaker/mapmaker.lua
 dat/missions/neutral/nebu_satellite.lua
 dat/missions/neutral/new_europe_refugees.lua
 dat/missions/neutral/oldwoman.lua
@@ -3358,6 +3364,7 @@ dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/intrinsic/black_agate_finishing.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
+dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
@@ -3596,6 +3603,7 @@ dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua
 dat/ships/lua/lua_ship_example.lua
+dat/ships/lua/pirate.lua
 dat/ships/lua/scavenger.lua
 dat/ships/lua/sirius.lua
 dat/ships/lua/sirius_divinity.lua

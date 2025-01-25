@@ -3394,7 +3394,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    if ( dslot != NULL )
       dslot->u.ammo.deployed++;
 
-      /* Safety check. */
+   /* Safety check. */
 #ifdef DEBUGGING
    if ( !pilot_isFlagRaw( flags, PILOT_NO_OUTFITS ) ) {
       char message[STRMAX_SHORT];
@@ -4330,10 +4330,10 @@ double pilot_relsize( const Pilot *cur_pilot, const Pilot *p )
  */
 void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
 {
-   double shots, dps = 0., eps = 0.;
+   double dps = 0., eps = 0.;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       const Damage *dmg;
-      double        mod_energy, mod_damage, mod_shots;
+      double        mod_energy, mod_damage, mod_rate;
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )
          continue;
@@ -4341,18 +4341,21 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       case OUTFIT_TYPE_BOLT:
          mod_energy = p->stats.fwd_energy;
          mod_damage = p->stats.fwd_damage;
-         mod_shots  = 1. / p->stats.fwd_firerate * (double)o->u.blt.shots;
+         mod_rate =
+            p->stats.fwd_firerate * (double)o->u.blt.shots / outfit_delay( o );
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
          mod_energy = p->stats.tur_energy;
          mod_damage = p->stats.tur_damage;
-         mod_shots  = 1. / p->stats.tur_firerate * (double)o->u.blt.shots;
+         mod_rate =
+            p->stats.tur_firerate * (double)o->u.blt.shots / outfit_delay( o );
          break;
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          mod_energy = 1.;
          mod_damage = p->stats.launch_damage;
-         mod_shots  = 1. / p->stats.launch_rate * (double)o->u.lau.shots;
+         mod_rate =
+            p->stats.launch_rate * (double)o->u.lau.shots / outfit_delay( o );
          break;
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
@@ -4360,26 +4363,22 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          if ( o->type == OUTFIT_TYPE_BEAM ) {
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
-            mod_shots  = 1. / p->stats.fwd_firerate;
+            mod_rate   = p->stats.fwd_firerate;
          } else {
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
-            mod_shots  = 1. / p->stats.tur_firerate;
+            mod_rate   = p->stats.tur_firerate;
          }
-         shots     = o->u.bem.duration;
-         mod_shots = shots / ( shots + mod_shots * outfit_delay( o ) );
-         dps += mod_shots * mod_damage * outfit_damage( o )->damage;
-         eps += mod_shots * mod_energy * outfit_energy( o );
-         continue;
-
+         mod_rate *=
+            o->u.bem.duration / ( outfit_delay( o ) + o->u.bem.duration );
+         break;
       default:
          continue;
       }
-      shots = 1. / ( mod_shots * outfit_delay( o ) );
 
       dmg = outfit_damage( o );
-      dps += shots * mod_damage * dmg->damage;
-      eps += shots * mod_energy * MAX( outfit_energy( o ), 0. );
+      dps += mod_rate * mod_damage * dmg->damage;
+      eps += mod_rate * mod_energy * MAX( outfit_energy( o ), 0. );
    }
    if ( pdps != NULL )
       *pdps = dps;

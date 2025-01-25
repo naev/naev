@@ -251,6 +251,7 @@ static int jumpL_get( lua_State *L )
       return 2;
    }
 
+   WARN( "No jump found between %s and %s systems", a->name, b->name );
    return 0;
 }
 

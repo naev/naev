@@ -3,11 +3,15 @@
       * Removed heat mechanic (to be readded as a new mechanic in the future)
       * Made pirates less aggressive
       * Change pirate spawning so hyenas are less dominant and deadly to new players
+      * Fuel from outfits has been tweaked a bit
    * Content
-      * 1 new mission
+      * 2 new missions
       * 6 new ship variants
-      * 2 new outfits
+      * 3 new outfits
+      * Two new intertwined minor houses of the Empire
+      * More space objects
       * New portraits
+      * Significant changes in jumps (hidden and otherwise)
    * Engine
       * Begin porting to rust
       * Use instancing instead of geometry shaders for space dust
@@ -19,6 +23,7 @@
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
       * Action speed can no longer be negative and disables space worthiness
+      * Don't show OSD frame when not visible
 
 * 0.12.3 (unreleased)
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
@@ -31,7 +36,9 @@
    * Gauss has a reputation requirement
    * Derelicts are no longer space-worthy
    * Fixed Tartarus landing graphics
+   * Fried now shows the stellar winds on the map
    * Reworked aggressivity on distress signals to be more consistent
+   * Try to fix trails not appearing on variant ships
    * dv_goddard: The Siren of Halir no longer fails the mission after you get the commandos
    * dv_shopping: Fixed not giving the player the Fancy Key Chain
    * Misi will sell the Fancy Key Chain for those affected by the dv_shopping bug

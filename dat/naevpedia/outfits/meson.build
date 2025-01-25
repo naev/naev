@@ -171,6 +171,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/intrinsic/black_agate_finishing.xml',
    root / 'dat/outfits/intrinsic/gauntlet_deluxe.xml',
    root / 'dat/outfits/intrinsic/gauntlet_supreme.xml',
+   root / 'dat/outfits/intrinsic/hyperdrive_retool.xml',
    root / 'dat/outfits/intrinsic/machiavellian_fortune.xml',
    root / 'dat/outfits/intrinsic/machiavellian_necessity.xml',
    root / 'dat/outfits/intrinsic/machiavellian_virtue.xml',

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Hyena">
+ <lua>pirate.lua</lua>
  <points>30</points>
  <base_type>Hyena</base_type>
  <gfx size="44">hyena_pirate</gfx>

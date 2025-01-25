@@ -46,31 +46,35 @@ class Balancer:
         return fields, data
 
     def __dict2xml( self, data, searchpath ):
-        for filename in glob.glob( searchpath ):
-            tree = ET.parse( filename )
-            root = tree.getroot()
-            name = root.get('name')
+        for s in searchpath.split(','):
+            for filename in glob.glob( s, recursive=True ):
+                tree = ET.parse( filename )
+                root = tree.getroot()
+                name = root.get('name')
 
-            # iterate over items
-            for key,val in data[name].items():
-                # skip name and empty cells
-                if key=='name' or val=='':
+                # iterate over items
+                if data.get(name)==None:
                     continue
-                tags = root.findall(key)
-                if len(tags) > 1:
-                    print(f"Found duplicate tag '{key}' in '{val}'. Removing!")
-                    for i in range(1,len(tags)):
-                        root.remove( tags[i] )
-                tag = root.find(key)
-                if tag==None:
-                    # have to add new tag
-                    new_tag = ET.SubElement(root,key)
-                    new_tag.text = val
-                else:
-                    # update existing value
-                    tag.text = val
-            # save the file
-            self.__write_tree( tree, filename )
+
+                for key,val in data[name].items():
+                    # skip name and empty cells
+                    if key=='name' or val=='' or key=='':
+                        continue
+                    tags = root.findall(key)
+                    if len(tags) > 1:
+                        print(f"Found duplicate tag '{key}' in '{val}'. Removing!")
+                        for i in range(1,len(tags)):
+                            root.remove( tags[i] )
+                    tag = root.find(key)
+                    if tag==None:
+                        # have to add new tag
+                        new_tag = ET.SubElement(root,key)
+                        new_tag.text = val
+                    else:
+                        # update existing value
+                        tag.text = val
+                # save the file
+                self.__write_tree( tree, filename )
 
     def __write_tree( self, tree, ofile ):
         # save the file
@@ -130,4 +134,4 @@ if __name__ == '__main__':
         balancer.csv2xml( args.filename )
     else:
         print( 'Reading from XML files to %s!' % args.filename )
-        balancer.xml2csv( args.filename )
+        alancer.xml2csv( args.filename )

@@ -40,3 +40,12 @@ explode_init, explode_update = explib{
       p:cargoJet("all")
    end,
 }
+
+function init( p )
+   -- Bioships get thrice the effect of stellar winds
+   if system.cur():tags().stellarwind then
+      p:shippropSet( "fuel_regen", 2 )
+   else
+      p:shippropSet( "fuel_regen", 0 )
+   end
+end

@@ -9,6 +9,10 @@
  <pos x="-330.146791" y="277.459967"/>
  <spobs/>
  <jumps>
+  <jump target="Brumerebus">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="NGC-4087">
    <autopos/>
    <hide>1.000000</hide>

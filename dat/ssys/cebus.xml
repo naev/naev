@@ -17,6 +17,7 @@
   </jump>
   <jump target="Kruger's Pocket">
    <autopos/>
+   <hidden/>
    <hide>0.300000</hide>
   </jump>
   <jump target="Ross">

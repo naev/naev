@@ -23,6 +23,7 @@
   </jump>
   <jump target="Penn">
    <autopos/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

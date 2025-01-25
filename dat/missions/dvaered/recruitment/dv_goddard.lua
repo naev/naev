@@ -84,7 +84,7 @@ function create()
 
    if not misn.claim({mem.sharksys,mem.koalasys}) then misn.finish(false) end -- Claim
 
-   misn.setNPC( _("Dvaered Soldier"), agentPort, _("This Dvaered soldier may have a task for a private pilot") )
+   misn.setNPC( _("Dvaered Soldier"), agentPort, _("This Dvaered soldier may have a task for a private pilot.") )
 end
 
 function accept()
