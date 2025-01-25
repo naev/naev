@@ -159,13 +159,16 @@ local function update_markers ()
    local desc = _("Explore the vicinity around the following marked systems:")
    for k,t in ipairs(targets) do
       if update_marker_single( t ) then
+         local todiscover, discovered = explored( t.center, t.distance or 5 )
+         local progress = discovered / todiscover
          local sysname
          if t.center:known() then
             sysname = t.center:name()
          else
             sysname = _("Unknown")
          end
-         desc = desc.."\n・"..sysname
+         desc = desc.."\n".. fmt.f(_("・{sysname} ({progress}% explored)"),
+            {sysname=sysname, progress=fmt.number(progress*100)})
          hasrewardleft = true
       end
    end
