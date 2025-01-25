@@ -15,16 +15,16 @@
 /*
  * Prototypes.
  */
-static char  *gl_shader_preprocess( size_t *size, const char *fbuf,
-                                    size_t fbufsize, const char *prepend,
-                                    const char *filename );
-static char  *gl_shader_loadfile( const char *filename, size_t *size,
-                                  const char *prepend );
-static GLuint gl_shader_compile( GLuint type, const char *buf, GLint length,
-                                 const char *filename );
-static int    gl_program_link( GLuint program );
-static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
-static int    gl_log_says_anything( const char *log );
+static char *gl_shader_preprocess( size_t *size, const char *fbuf,
+                                   size_t fbufsize, const char *prepend,
+                                   const char *filename );
+static char *gl_shader_loadfile( const char *filename, size_t *size,
+                                 const char *prepend );
+// static GLuint gl_shader_compile( GLuint type, const char *buf, GLint length,
+//                                  const char *filename );
+// static int    gl_program_link( GLuint program );
+// static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader
+// ); static int    gl_log_says_anything( const char *log );
 
 /**
  * @brief Loads a GLSL file with some simple preprocessing like adding #version
@@ -166,6 +166,12 @@ static char *gl_shader_preprocess( size_t *size, const char *fbuf,
    return buf;
 }
 
+GLuint gl_program_vert_frag( const char *vert, const char *frag )
+{
+   return gl_program_backend( vert, frag, NULL );
+}
+
+#if 0
 /**
  * @brief Open and compile GLSL shader from ndata.
  */
@@ -228,11 +234,6 @@ static int gl_program_link( GLuint program )
    return 0;
 }
 
-GLuint gl_program_vert_frag( const char *vert, const char *frag )
-{
-   return gl_program_backend( vert, frag, NULL );
-}
-
 /**
  * @brief Loads a vertex and fragment shader from files.
  *
@@ -241,7 +242,6 @@ GLuint gl_program_vert_frag( const char *vert, const char *frag )
  *    @param[in,opt] geomfile Optional geometry shader name.
  *    @return The shader compiled program or 0 on failure.
  */
-#if 0
 GLuint gl_program_backend( const char *vertfile, const char *fragfile,
                            const char *prependtext )
 {
@@ -308,7 +308,6 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size,
    /* Link. */
    return gl_program_make( vertex_shader, fragment_shader );
 }
-#endif
 
 /**
  * @brief Makes a shader program from a vertex and fragment shader.
@@ -340,21 +339,6 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
    return program;
 }
 
-void gl_uniformColour( GLint location, const glColour *c )
-{
-   glUniform4f( location, c->r, c->g, c->b, c->a );
-}
-
-void gl_uniformAColour( GLint location, const glColour *c, GLfloat a )
-{
-   glUniform4f( location, c->r, c->g, c->b, a );
-}
-
-void gl_uniformMat4( GLint location, const mat4 *m )
-{
-   glUniformMatrix4fv( location, 1, GL_FALSE, m->ptr );
-}
-
 /**
  * @brief Return true iff the input string has content besides whitespace and
  * non-diagnostic messages we'e seen drivers emit. We log warnings in great
@@ -381,4 +365,20 @@ static int gl_log_says_anything( const char *log )
          return 1;
    }
    return 0;
+}
+#endif
+
+void gl_uniformColour( GLint location, const glColour *c )
+{
+   glUniform4f( location, c->r, c->g, c->b, c->a );
+}
+
+void gl_uniformAColour( GLint location, const glColour *c, GLfloat a )
+{
+   glUniform4f( location, c->r, c->g, c->b, a );
+}
+
+void gl_uniformMat4( GLint location, const mat4 *m )
+{
+   glUniformMatrix4fv( location, 1, GL_FALSE, m->ptr );
 }
