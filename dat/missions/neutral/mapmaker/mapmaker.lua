@@ -16,10 +16,10 @@
 --]]
 
 local fmt = require "format"
---local neu = require 'common.neutral'
 local love_shaders = require "love_shaders"
 local lmisn = require "lmisn"
 local vn = require "vn"
+local lg = require "love.graphics"
 
 local mission_name = _("Mapping the Universe")
 local npc_image = "mapmaker.webp"
@@ -203,8 +203,8 @@ function accept()
       vn.label("final_notice")
       vn.na(_([[They look up right at you, and then go back to the device. After a few seconds they look up again, this time actually seeming to notice you.]]))
       mm(_([["EEP!"
-   They almost drop the holographic device, and clutch at their chest.
-   "Crikes! Almost had my heart jump out my mouth."]]))
+They almost drop the holographic device, and clutch at their chest.
+"Crikes! Almost had my heart jump out my mouth."]]))
       vn.jump("cont04")
 
       vn.label("notice")
@@ -214,8 +214,8 @@ function accept()
 
       vn.label("cont04")
       mm(_([["Hey, wait."
-   They squint at you and adjust their glasses.
-   "You look like a ship pilot!"]]))
+They squint at you and adjust their glasses.
+"You look like a ship pilot!"]]))
       mm(_([["My name is Angel, but everyone calls me Map Maker. I've been working on updating the space maps, but you'd be surprised at what inconsistencies there are between the official Imperial maps from the Great Houses."]]))
       vn.func( function ()
          var.push("mapmaker_met",true)
@@ -248,7 +248,7 @@ They can't hold their excitement and do a little jig as they wonder off.]]))
 
    misn.accept()
    misn.setTitle( mission_name )
-   misn.setReward("???")
+   misn.setReward("Power, and by that I mean Knowledge!")
    misn.osdCreate( mission_name, {
       _("Explore the area around the marked systems."),
    })
@@ -270,6 +270,7 @@ end
 
 local rewards = {}
 local rewardsys = nil
+local rewardnpc
 function land ()
    rewards = {}
    rewardsys = nil
@@ -309,8 +310,8 @@ function land ()
    -- No new rewards, so ignore
    if #rewards<=0 then return end
 
-   local npc_hologram = love_shaders.shaderimage2canvas( love_shaders.hologram(), npc_image )
-   misn.npcAdd( "approach_mm", _("Map Maker"), npc_hologram.t.tex, _("You are receiving a transmission from the Map Maker.") )
+   local npc_hologram = love_shaders.shaderimage2canvas( love_shaders.hologram(), lg.newImage("gfx/portraits/"..npc_image) )
+   rewardnpc = misn.npcAdd( "approach_mm", _("Map Maker"), npc_hologram.t.tex, _("You are receiving a transmission from the Map Maker.") )
 end
 
 local msg_double = {
@@ -339,6 +340,7 @@ function approach_mm ()
 
    mm(fmt.f(_([["Hey, {playername}! I've been tracking the data you sent me, and it looks like there are some interesting hyperspace abnormalities in the data near {sysname}."]]),
       {playername=player.name(), sysname=rewardsys}))
+   shiplog.create( "mapmaker", _("Miscellaneous"), _("Map Maker") )
    for i,jmp in ipairs(rewards) do
       local dst = jmp:dest()
       local src = jmp:system()
@@ -346,18 +348,21 @@ function approach_mm ()
       local knowsrc = src:known()
       if knowdst and knowsrc then
          mm(fmt.f( msg_double[ rnd.rnd(1,#msg_double) ], {src=src, dst=dst}))
+         shiplog.append( "mapmaker", fmt.f(_("You discovered a hidden jump between the {src} and {dst} systems."), {src=src, dst=dst}))
       elseif knowdst then
          mm(fmt.f( msg_single[ rnd.rnd(1,#msg_single) ], {sys=dst}))
+         shiplog.append( "mapmaker", fmt.f(_("You discovered a hidden jump in the {sys} system."), {sys=dst}))
       elseif knowsrc then
          mm(fmt.f( msg_single[ rnd.rnd(1,#msg_single) ], {sys=src}))
+         shiplog.append( "mapmaker", fmt.f(_("You discovered a hidden jump in the {sys} system."), {sys=src}))
       end
    end
+   vn.sfxVictory()
    mm(_([["I've updated your navigation system with the new information! You should check it out!"]]))
    mm(_([["I have to get back to my surveying, I'll catch up with you later!"]]))
 
    vn.done("electric")
    vn.run()
 
-   for i,jmp in ipairs(rewards) do
-   end
+   misn.npcRm( rewardnpc )
 end
