@@ -3214,6 +3214,7 @@ dat/missions/neutral/foodbiz/deliverlove.lua
 dat/missions/neutral/kidnapped/traffic_00.lua
 dat/missions/neutral/kidnapped/traffic_01.lua
 dat/missions/neutral/majesteka_stowaways.lua
+dat/missions/neutral/mapmaker/mapmaker.lua
 dat/missions/neutral/nebu_satellite.lua
 dat/missions/neutral/new_europe_refugees.lua
 dat/missions/neutral/oldwoman.lua
