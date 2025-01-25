@@ -536,6 +536,9 @@ local function renderWeapBar( weapon, x, y )
    local outfit_yoffset = 36
    local name_offset = 17
    local bottom_icon, bottom_icon_w, bottom_icon_h, top_icon_w, top_icon_h, icon, weap_heat, width
+
+   -- No heat anymore
+   weap_heat = 0
    if weapon ~= nil then
       if weapon.left_p ~= nil then
          width = bar_w/2
@@ -546,16 +549,6 @@ local function renderWeapBar( weapon, x, y )
       if weapon.is_outfit then
          icon = weapon.outfit:icon()
          icon_w, icon_h = icon:dim()
-
-         if weapon.type == "Afterburner" then
-            weap_heat = weapon.heat * 2
-         elseif weapon.duration ~= nil then
-            weap_heat = (1-weapon.duration) * 2
-         elseif weapon.cooldown ~= nil then
-            weap_heat = weapon.cooldown * 2
-         else
-            weap_heat = 0
-         end
       else
          if weapon.dtype ~= nil and weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
             top_icon = _G[ "icon_" .. weapon.dtype ]
@@ -577,8 +570,6 @@ local function renderWeapBar( weapon, x, y )
 
          top_icon_w, top_icon_h = top_icon:dim()
          bottom_icon_w, bottom_icon_h = bottom_icon:dim()
-
-         weap_heat = weapon.heat
       end
 
       gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
@@ -703,7 +694,7 @@ function render( _dt )
    armour, shield, stress = pp:health()
    energy = pp:energy()
    fuel = player.fuel() / stats.fuel_max * 100
-   local heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
+   local heat = 0
    local _wset_name, pwset = pp:weapset()
    -- Active sets don't exist anymore
    --local wset_id = string.format( "%d", pp:weapsetActive() )
@@ -855,7 +846,7 @@ function render( _dt )
                update_target()
             end
             local ta_armour, ta_shield, ta_stress = ptarget:health()
-            local ta_heat = math.max( math.min( (ptarget:temp() - 250)/87.5, 2 ), 0 )
+            local ta_heat = 0
             local ta_energy = ptarget:energy()
             local ta_name = ptarget:name()
             gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2 + mod_y, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, -1 )

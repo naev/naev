@@ -23,7 +23,6 @@
   <falloff>1800</falloff>
   <gfx_end>massL-end.png</gfx_end>
   <energy>72</energy>
-  <heatup>50</heatup>
   <trackmin>4000</trackmin>
   <trackmax>12000</trackmax>
   <swivel>22</swivel>

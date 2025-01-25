@@ -17,7 +17,7 @@
  <license>Light Combat Vessel</license>
  <cond>require("buyrep")("Empire", 30)</cond>
  <condstr>You need at least 30% reputation with the Empire.</condstr>
- <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
+ <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, and shields.</description>
  <health>
   <armour>70</armour>
   <armour_regen>0</armour_regen>
@@ -48,7 +48,6 @@
  <stats>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <heat_dissipation>15</heat_dissipation>
  </stats>
  <tags>
   <tag>empire</tag>

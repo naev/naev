@@ -59,7 +59,6 @@
   <armour_mod>20</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_heat>15</fwd_heat>
   <fwd_damage>30</fwd_damage>
   <fwd_energy>15</fwd_energy>
  </stats>

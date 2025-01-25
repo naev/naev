@@ -97,16 +97,16 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
                                 const vec2 *vel, double dir, double time );
 static double weapon_aimTurretStatic( const vec2 *target_pos, const vec2 *pos,
                                       double dir, double swivel );
-static void   weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
-                                 double dir, const vec2 *pos, const vec2 *vel,
+static void   weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
+                                 const vec2 *pos, const vec2 *vel,
                                  const Pilot *parent, double time, int aim );
-static void   weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
-                                 double dir, const vec2 *pos, const vec2 *vel,
+static void   weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
+                                 const vec2 *pos, const vec2 *vel,
                                  const Pilot *parent, double time, int aim );
 static int    weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
-                             double T, double dir, const vec2 *pos,
-                             const vec2 *vel, const Pilot *parent,
-                             const Target *target, double time, int aim );
+                             double dir, const vec2 *pos, const vec2 *vel,
+                             const Pilot *parent, const Target *target,
+                             double time, int aim );
 static double weapon_computeTimes( double rdir, double rx, double ry,
                                    double dvx, double dvy, double pxv,
                                    double vmin, double acc, double *tt );
@@ -511,7 +511,6 @@ static void think_beam( Weapon *w, double dt )
    mod = ( w->outfit->type == OUTFIT_TYPE_BEAM ) ? p->stats.fwd_energy
                                                  : p->stats.tur_energy;
    p->energy -= mod * dt * w->outfit->u.bem.energy * p->stats.weapon_energy;
-   pilot_heatAddSlotTime( p, slot, dt );
    if ( p->energy < 0. ) {
       p->energy = 0.;
       w->timer  = -1;
@@ -704,10 +703,8 @@ void weapons_updateCollide( double dt )
          beamdt =
             dt * p->stats.time_speedup * rate *
             p->stats.weapon_firerate; /* Have to consider time speedup here. */
-         /* Beams don't have inherent accuracy, so we use the
-          * heatAccuracyMod to modulate duration. */
-         w->timer -=
-            beamdt / ( 1. - pilot_heatAccuracyMod( w->mount->heat_T ) );
+         /* Beams don't have inherent accuracy. */
+         w->timer -= beamdt;
          if ( w->timer < 0. ) {
             if ( p != NULL )
                pilot_stopBeam( p, w->mount );
@@ -2338,7 +2335,6 @@ static double weapon_computeTimes( double rdir, double rx, double ry,
  *
  *    @param w Weapon to create bolt specific properties of.
  *    @param outfit Outfit which spawned the weapon.
- *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the slot (absolute).
  *    @param vel Velocity of the slot (absolute).
@@ -2346,12 +2342,12 @@ static double weapon_computeTimes( double rdir, double rx, double ry,
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  */
-static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
-                               double dir, const vec2 *pos, const vec2 *vel,
+static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
+                               const vec2 *pos, const vec2 *vel,
                                const Pilot *parent, double time, int aim )
 {
    vec2             v;
-   double           mass, rdir, acc, m;
+   double           mass, rdir, m;
    const OutfitGFX *gfx;
 
    if ( aim )
@@ -2370,9 +2366,6 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
    if ( outfit->u.blt.dispersion > 0. )
       rdir += RNG_1SIGMA() * outfit->u.blt.dispersion;
 
-   /* Calculate accuracy. */
-   acc = HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
-
    /* Stat modifiers. */
    if ( outfit->type == OUTFIT_TYPE_TURRET_BOLT ) {
       w->dam_mod *= parent->stats.tur_damage * parent->stats.weapon_damage;
@@ -2390,7 +2383,6 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
    w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 
    /* Calculate direction. */
-   rdir += RNG_2SIGMA() * acc;
    rdir = angle_clean( rdir );
 
    mass = 1.; /* Lasers are presumed to have unitary mass, just like the real
@@ -2418,7 +2410,6 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
  *
  *    @param w Weapon to create ammo specific properties of.
  *    @param outfit Outfit which spawned the weapon.
- *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the slot (absolute).
  *    @param vel Velocity of the slot (absolute).
@@ -2426,11 +2417,10 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double T,
  *    @param time Expected flight time.
  *    @param aim Whether or not to aim.
  */
-static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
-                               double dir, const vec2 *pos, const vec2 *vel,
+static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
+                               const vec2 *pos, const vec2 *vel,
                                const Pilot *parent, double time, int aim )
 {
-   (void)T;
    vec2             v;
    double           mass, rdir, m;
    const OutfitGFX *gfx;
@@ -2527,7 +2517,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
  *    @param po Outfit slot which spawned the weapon.
  *    @param ref Reference outfit to use, does not have to be the outfit in the
  * slot, but will default to it if set to NULL.
- *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the slot (absolute).
  *    @param vel Velocity of the slot (absolute).
@@ -2538,9 +2527,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double T,
  *    @return A pointer to the newly created weapon.
  */
 static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
-                          double T, double dir, const vec2 *pos,
-                          const vec2 *vel, const Pilot *parent,
-                          const Target *target, double time, int aim )
+                          double dir, const vec2 *pos, const vec2 *vel,
+                          const Pilot *parent, const Target *target,
+                          double time, int aim )
 {
    double        mass, rdir;
    const Outfit *outfit =
@@ -2586,7 +2575,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    /* Bolts treated together */
    case OUTFIT_TYPE_BOLT:
    case OUTFIT_TYPE_TURRET_BOLT:
-      weapon_createBolt( w, outfit, T, dir, pos, vel, parent, time, aim );
+      weapon_createBolt( w, outfit, dir, pos, vel, parent, time, aim );
       break;
 
    /* Beam weapons are treated together. */
@@ -2654,7 +2643,7 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    /* Treat seekers together. */
    case OUTFIT_TYPE_LAUNCHER:
    case OUTFIT_TYPE_TURRET_LAUNCHER:
-      weapon_createAmmo( w, outfit, T, dir, pos, vel, parent, time, aim );
+      weapon_createAmmo( w, outfit, dir, pos, vel, parent, time, aim );
       break;
 
    /* just dump it where the player is */
@@ -2689,7 +2678,6 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref, double dir,
                     const Target *target, double time, int aim )
 {
    Weapon *w;
-   double  T = po->heat_T;
 
 #if DEBUGGING
    const Outfit *o = ( ref == NULL ) ? po->outfit : ref;
@@ -2700,7 +2688,7 @@ Weapon *weapon_add( PilotOutfitSlot *po, const Outfit *ref, double dir,
 #endif /* DEBUGGING */
 
    w = &array_grow( &weapon_stack );
-   weapon_create( w, po, ref, T, dir, pos, vel, parent, target, time, aim );
+   weapon_create( w, po, ref, dir, pos, vel, parent, target, time, aim );
 
    /* Grow the vertex stuff if needed. */
    weapon_updateVBO();
@@ -2762,7 +2750,7 @@ unsigned int beam_start( PilotOutfitSlot *po, double dir, const vec2 *pos,
    }
 
    w = &array_grow( &weapon_stack );
-   weapon_create( w, po, NULL, 0., dir, pos, vel, parent, target, 0., aim );
+   weapon_create( w, po, NULL, dir, pos, vel, parent, target, 0., aim );
 
    /* Grow the vertex stuff if needed. */
    weapon_updateVBO();

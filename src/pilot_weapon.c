@@ -265,7 +265,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
  */
 void pilot_weapSetUpdate( Pilot *p )
 {
-   int    n, nweap, target_set, breakstealth;
+   int    n, shotweap, target_set, breakstealth;
    double time;
    Target wt;
 
@@ -273,14 +273,15 @@ void pilot_weapSetUpdate( Pilot *p )
       return;
 
    breakstealth         = 0;
+   shotweap             = 0;
    n                    = 0;
-   nweap                = 0;
    target_set           = 0;
    pilotoutfit_modified = 0;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *pos = p->outfits[i];
       const Outfit    *o   = pos->outfit;
       int              volley;
+      int              shot = 0;
       if ( o == NULL )
          continue;
       if ( !( pos->flags & PILOTOUTFIT_TOGGLEABLE ) )
@@ -346,14 +347,15 @@ void pilot_weapSetUpdate( Pilot *p )
 
       /* Shoot the weapon of the weaponset. */
       if ( volley )
-         nweap += pilot_shootWeapon( p, pos, &wt, time,
-                                     !( pos->flags & PILOTOUTFIT_MANUAL ) );
+         shot = pilot_shootWeapon( p, pos, &wt, time,
+                                   !( pos->flags & PILOTOUTFIT_MANUAL ) );
       else
-         nweap += pilot_shootWeaponSetOutfit(
+         shot = pilot_shootWeaponSetOutfit(
             p, o, &wt, time, !( pos->flags & PILOTOUTFIT_MANUAL ) );
+      shotweap += shot;
       n++;
 
-      if ( !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
+      if ( shot && !outfit_isProp( pos->outfit, OUTFIT_PROP_STEALTH_ON ) )
          breakstealth = 1;
    }
 
@@ -366,11 +368,11 @@ void pilot_weapSetUpdate( Pilot *p )
          pilot_calcStats( p );
 
       /* Firing stuff aborts active cooldown. */
-      if ( pilot_isFlag( p, PILOT_COOLDOWN ) && ( nweap > 0 ) )
+      if ( pilot_isFlag( p, PILOT_COOLDOWN ) && ( shotweap > 0 ) )
          pilot_cooldownEnd( p, NULL );
 
       /* Trigger onshoot after stealth gets broken. */
-      if ( nweap > 0 ) {
+      if ( shotweap > 0 ) {
          pilot_shipLOnshootany( p );
          pilot_outfitLOnshootany( p );
       }
@@ -825,7 +827,7 @@ double pilot_weapSetAmmo( Pilot *p, int id )
          nammo++;
       }
    }
-   return ( nammo == 0 ) ? 0. : ammo / (double)nammo;
+   return ( nammo == 0 ) ? 1. : ammo / (double)nammo;
 }
 
 /**
@@ -898,8 +900,7 @@ void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
 
    /* Beam duration used. Compensate for the fact its duration might have
     * been shortened by heat. */
-   used = w->outfit->u.bem.duration -
-          w->timer * ( 1. - pilot_heatAccuracyMod( w->heat_T ) );
+   used = w->outfit->u.bem.duration - w->timer;
 
    w->timer    = rate_mod * MAX( w->outfit->u.bem.min_delay,
                                  ( used / w->outfit->u.bem.duration ) *
@@ -1062,8 +1063,9 @@ static int pilot_shootWeaponSetOutfit( Pilot *p, const Outfit *o,
                  ( p->outfits[minh]->u.ammo.quantity < pos->u.ammo.quantity ) )
                minh = i;
          } else {
-            if ( ( minh < 0 ) || ( p->outfits[minh]->heat_T > pos->heat_T ) )
-               minh = i;
+            // TODO some other criteria?
+            // if ( ( minh < 0 ) || ( p->outfits[minh]->heat_T > pos->heat_T ) )
+            minh = i;
          }
       }
 
@@ -1141,7 +1143,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
       energy = outfit_energy( w->outfit ) * energy_mod;
       p->energy -= energy;
-      pilot_heatAddSlot( p, w );
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
          for ( int i = 0; i < w->outfit->u.blt.shots; i++ ) {
             weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
@@ -1209,7 +1210,6 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
       energy = outfit_energy( w->outfit ) * energy_mod;
       p->energy -= energy;
-      pilot_heatAddSlot( p, w );
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
          for ( int i = 0; i < w->outfit->u.lau.shots; i++ )
             weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
@@ -1637,16 +1637,6 @@ void pilot_afterburn( Pilot *p )
    /* Needs at least enough energy to afterburn fo 0.5 seconds. */
    if ( p->energy < p->afterburner->outfit->u.afb.energy * 0.5 )
       return;
-
-   /* The afterburner only works if its efficiency is high enough. */
-   if ( pilot_heatEfficiencyMod(
-           p->afterburner->heat_T, p->afterburner->outfit->overheat_min,
-           p->afterburner->outfit->overheat_max ) < 0.1 ) {
-      if ( pilot_isPlayer( p ) )
-         player_message( _( "#r%s is overheating!#0" ),
-                         _( p->afterburner->outfit->name ) );
-      return;
-   }
 
    /* Turn it on. */
    if ( p->afterburner->state == PILOT_OUTFIT_OFF ) {

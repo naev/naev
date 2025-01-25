@@ -12,6 +12,7 @@
   <spob>Ksher III</spob>
   <spob>Qoman</spob>
   <spob>Sola</spob>
+  <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Farizel">
@@ -19,11 +20,15 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Mayla">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Oxuram">
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Urbanus">
+  <jump target="Radix">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

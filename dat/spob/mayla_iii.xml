@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Mayla III">
+ <pos x="-1904.196104" y="-9591.920072"/>
+ <GFX>
+  <space>moon-D00.webp</space>
+  <exterior>uninhabited-rocky-yellow-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>B</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>With a highly corrossive atmosphere, Mayla III is not a planet most ships, even with space-hardy hulls, want to make a long stay. You hope it won't stain your ship's hull permanently.</description>
+ </general>
+</spob>

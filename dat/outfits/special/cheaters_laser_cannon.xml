@@ -20,7 +20,6 @@
   <falloff>270</falloff>
   <gfx_end>laser1S.png</gfx_end>
   <energy>1</energy>
-  <heatup>60</heatup>
   <damage>
    <type>energy</type>
    <penetrate>30</penetrate>

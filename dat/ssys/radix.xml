@@ -12,6 +12,7 @@
   <spob>Radix II</spob>
   <spob>Radix III</spob>
   <spob>Stutee</spob>
+  <spob_virtual>Yetmer-O'rez Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Dvaer">
@@ -19,6 +20,14 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Farizel">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="K'tos">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Ksher">
    <autopos/>
    <hide>1.000000</hide>
   </jump>

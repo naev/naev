@@ -354,7 +354,7 @@ function render( dt, dt_mod )
    local armour, shield, stress = pp:health()
    local energy = pp:energy()
    local speed = pp:vel():dist()
-   local heat = pp:temp()
+   local heat = 0
    local fuel = player.fuel()
    local fuel_max = stats.fuel_max
    local jumps = player.jumps()
@@ -379,9 +379,11 @@ function render( dt, dt_mod )
 
          gfx.renderTexRaw( weap_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
 
+         --[[
          if wset[i].heat > 0 then
             gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].heat/2, col_slot_heat ) --Heat
          end
+         --]]
 
          --Cooldown
          local coolinglevel = wset[i].cooldown
@@ -452,7 +454,7 @@ function render( dt, dt_mod )
 
          -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
          --if aset[i].type == "Afterburner" then
-            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
+         --  gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].heat, col_slot_heat ) -- Background (heat)
          --end
 
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
@@ -538,7 +540,7 @@ function render( dt, dt_mod )
 
    --Heat
    txt = round(heat) .. "K"
-   heat = math.max( math.min( (heat - 250)/1.75, 100 ), 0 )
+   heat = 0
    col = col_txt_std
    if heat >= 80. then
       col = col_txt_wrn

@@ -1435,9 +1435,6 @@ void land( Spob *p, int load )
    pilot_rmFlag( player.p, PILOT_COOLDOWN_BRAKE );
    pilot_rmFlag( player.p, PILOT_COOLDOWN );
 
-   /* Resets the player's heat. */
-   pilot_heatReset( player.p );
-
    /* Heal the player so GUI shows player at full everything. */
    pilot_healLanded( player.p );
 

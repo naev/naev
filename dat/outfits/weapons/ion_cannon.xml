@@ -20,7 +20,6 @@
   <falloff>750</falloff>
   <gfx_end>ionM-end.png</gfx_end>
   <energy>8</energy>
-  <heatup>40</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <swivel>22</swivel>

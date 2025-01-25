@@ -31,7 +31,6 @@ mem.aggressive    = false -- Should pilot actively attack enemies?
 mem.defensive     = true -- Should pilot defend itself
 mem.whiteknight   = false -- Should the AI help out independent ships duking it out?
 mem.cooldown      = false -- Whether the pilot is currently cooling down.
-mem.heatthreshold = 0.5 -- Weapon heat to enter cooldown at [0-2 or nil]
 mem.safe_distance = 8000 -- Safe distance from enemies to stop running away
 mem.safe_jump_distance = 300 -- Safe distance from enemies to jump
 mem.land_planet   = true -- Should land on planets?
@@ -820,21 +819,11 @@ function control( dt )
          -- Cooldown preempts everything we haven't explicitly checked for.
          if mem.cooldown then
             return
-         -- If the ship is hot, consider cooling down.
-         elseif p:temp() > 300 then
-            -- Ship is quite hot, better cool down.
-            if p:temp() > 400 then
-               mem.cooldown = true
-               p:setCooldown(true)
-               return
-            -- Cool down if the current weapon set is suffering from >= 20% accuracy loss.
-            -- This equates to a temperature of 560K presently.
-            -- Focus on primaries
-            elseif (p:weapsetHeat(1) > 0.2) then
-               mem.cooldown = true
-               p:setCooldown(true)
-               return
-            end
+         -- Reload if necessary
+         elseif atk.seekers_ammo() <= 0.3 then
+            mem.cooldown = true
+            p:setCooldown(true)
+            return
          end
       end
 
@@ -1168,21 +1157,15 @@ function gen_distress_attacked( attacker )
    mem.distressed = 1
 end
 
--- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
--- This can happen during combat, so mem.heatthreshold should be quite high.
+-- Puts the pilot into cooldown mode if necessary.
 function should_cooldown()
    local p = ai.pilot()
-   local mean = p:weapsetHeat(1) -- Care about primaries
-   local _, pshield = p:health()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
    if mem.tickssincecooldown < 15 then
       return
-   -- The weapons are extremely hot and cooldown should be triggered.
-   -- This did not work before. However now it causes ships to just stop dead and wait for energy regen.
-   -- Not sure this is better...
-   elseif mean > mem.heatthreshold and pshield > 50 then
+   elseif atk.seekers_ammo() <= 0.0 then
       mem.cooldown = true
       p:setCooldown(true)
    end

@@ -100,7 +100,7 @@ function create ()
    hook_done = hook.enter( "done" )
 end
 
-local end_hook
+local end_hook, failed
 function heartbeat ()
    local enemies = player.pilot():getEnemies( drange, nil, true )
    if #enemies > 0 then
@@ -113,9 +113,11 @@ function heartbeat ()
          textoverlay.init( "#r".._("Test Failed").."#0", nil, {length=6})
          end_hook = hook.timer( 6, "cleanup" )
       end
+      failed = true
       hook.timer( 0.1, "heartbeat" )
       return
    end
+   if failed then return end
 
    if player.pos():dist() > 8 * dradius then
       -- All done, so give ability

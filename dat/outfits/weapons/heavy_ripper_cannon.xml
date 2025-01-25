@@ -22,7 +22,6 @@
   <falloff>1400</falloff>
   <gfx_end>ripperM-end.png</gfx_end>
   <energy>42</energy>
-  <heatup>50</heatup>
   <trackmin>1200</trackmin>
   <trackmax>7200</trackmax>
   <swivel>18</swivel>

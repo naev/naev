@@ -22,7 +22,6 @@
   <falloff>1600</falloff>
   <gfx_end>massL-end.png</gfx_end>
   <energy>153</energy>
-  <heatup>60</heatup>
   <trackmin>5000</trackmin>
   <trackmax>20000</trackmax>
   <damage>

@@ -917,8 +917,6 @@ int pilot_brake( Pilot *p, double dt )
  */
 void pilot_cooldown( Pilot *p, int dochecks )
 {
-   double heat_capacity, heat_mean;
-
    /* Brake if necessary. */
    if ( dochecks && !pilot_isStopped( p ) ) {
       pilot_setFlag( p, PILOT_BRAKING );
@@ -941,21 +939,6 @@ void pilot_cooldown( Pilot *p, int dochecks )
    if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
       pilot_calcStats( p );
 
-   /* Calculate the ship's overall heat. */
-   heat_capacity = p->heat_C;
-   heat_mean     = p->heat_T * p->heat_C;
-   for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-      PilotOutfitSlot *o = p->outfits[i];
-      o->heat_start      = o->heat_T;
-      heat_capacity += p->outfits[i]->heat_C;
-      heat_mean += o->heat_T * o->heat_C;
-   }
-
-   /* Paranoia - a negative mean heat will result in NaN cdelay. */
-   heat_mean = MAX( heat_mean, CONST_SPACE_STAR_TEMP );
-
-   heat_mean /= heat_capacity;
-
    /*
     * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.
     *
@@ -966,11 +949,8 @@ void pilot_cooldown( Pilot *p, int dochecks )
     *    450K:  75.6%
     *    500K: 100.0%
     */
-   p->cdelay =
-      ( 5. + sqrt( p->base_mass ) / 2. ) *
-      ( 1. + pow( MAX( heat_mean / CONST_SPACE_STAR_TEMP - 1., 0. ), 1.25 ) );
-   p->ctimer     = p->cdelay * p->stats.cooldown_time;
-   p->heat_start = p->heat_T;
+   p->cdelay = ( 5. + sqrt( p->base_mass ) / 2. );
+   p->ctimer = p->cdelay * p->stats.cooldown_time;
    pilot_setFlag( p, PILOT_COOLDOWN );
 
    /* Run outfit cooldown start hook. */
@@ -1007,7 +987,6 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
 
    /* Cooldown finished naturally, reset heat just in case. */
    if ( p->ctimer < 0. ) {
-      pilot_heatReset( p );
       pilot_fillAmmo( p );
       pilot_outfitLCooldown( p, 1, 1, 0. );
    } else {
@@ -2335,7 +2314,7 @@ void pilot_update( Pilot *pilot, double dt )
 {
    int    cooling, nchg;
    Pilot *target;
-   double a, px, py, vx, vy, Q;
+   double a, px, py, vx, vy;
    Target wt;
 
    /* Modify the dt with speedup. */
@@ -2387,7 +2366,6 @@ void pilot_update( Pilot *pilot, double dt )
    /* Update heat. */
    pilotoutfit_modified = 0;
    a                    = -1.;
-   Q                    = 0.;
    nchg = 0; /* Number of outfits that change state, processed at the end. */
    for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
       PilotOutfitSlot *pos = pilot->outfits[i];
@@ -2400,7 +2378,7 @@ void pilot_update( Pilot *pilot, double dt )
 
       /* Handle firerate timer. */
       if ( pos->timer > 0. )
-         pos->timer -= dt * pilot_heatFireRateMod( pos->heat_T );
+         pos->timer -= dt;
 
       /* Handle reload timer. (Note: this works backwards compared to
        * other timers. This helps to simplify code resetting the timer
@@ -2460,19 +2438,9 @@ void pilot_update( Pilot *pilot, double dt )
          }
       }
 
-      /* Handle heat. */
-      if ( !cooling )
-         Q += pilot_heatUpdateSlot( pilot, pos, dt );
-
       /* Handle lockons. */
       pilot_lockUpdateSlot( pilot, pos, target, &wt, &a, dt );
    }
-
-   /* Global heat. */
-   if ( !cooling )
-      pilot_heatUpdateShip( pilot, Q, dt );
-   else
-      pilot_heatUpdateCooldown( pilot );
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot, dt );
@@ -2759,33 +2727,19 @@ void pilot_update( Pilot *pilot, double dt )
       /* pilot is afterburning */
       if ( pilot_isFlag( pilot, PILOT_AFTERBURNER ) ) {
          const Outfit *afb = pilot->afterburner->outfit;
+         double        efficiency =
+            MIN( 1., afb->u.afb.mass_limit / pilot->solid.mass );
 
-         /* Heat up the afterburner. */
-         pilot_heatAddSlotTime( pilot, pilot->afterburner, dt );
+         if ( pilot->id == PLAYER_ID )
+            spfx_shake( 0.75 * SPFX_SHAKE_DECAY *
+                        dt ); /* shake goes down at quarter speed */
 
-         /* If the afterburner's efficiency is reduced to 0, shut it off. */
-         if ( pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                                       afb->overheat_min,
-                                       afb->overheat_max ) <= 0. )
-            pilot_afterburnOver( pilot );
-         else {
-            double efficiency =
-               pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                                        afb->overheat_min, afb->overheat_max );
-            efficiency = MIN( 1., afb->u.afb.mass_limit / pilot->solid.mass ) *
-                         efficiency;
+         /* Adjust speed. Speed bonus falls as heat rises. */
+         pilot->solid.speed_max =
+            pilot->speed * ( 1. + afb->u.afb.speed * efficiency );
 
-            if ( pilot->id == PLAYER_ID )
-               spfx_shake( 0.75 * SPFX_SHAKE_DECAY *
-                           dt ); /* shake goes down at quarter speed */
-
-            /* Adjust speed. Speed bonus falls as heat rises. */
-            pilot->solid.speed_max =
-               pilot->speed * ( 1. + afb->u.afb.speed * efficiency );
-
-            /* Adjust accel. Thrust bonus falls as heat rises. */
-            pilot_setAccel( pilot, 1. + afb->u.afb.accel * efficiency );
-         }
+         /* Adjust accel. Thrust bonus falls as heat rises. */
+         pilot_setAccel( pilot, 1. + afb->u.afb.accel * efficiency );
       } else
          pilot->solid.speed_max = pilot->speed;
    } else
@@ -3422,9 +3376,6 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    pilot->cargo_free =
       pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
-   /* Initialize heat. */
-   pilot_heatReset( pilot );
-
    /* Set the pilot stats based on their ship and outfits */
    pilot_calcStats( pilot );
 
@@ -3499,9 +3450,6 @@ void pilot_reset( Pilot *pilot )
    /* Clean up flags. */
    for ( int i = PILOT_NOCLEAR + 1; i < PILOT_FLAGS_MAX; i++ )
       pilot->flags[i] = 0;
-
-   /* Initialize heat. */
-   pilot_heatReset( pilot );
 
    /* Set the pilot stats based on their ship and outfits */
    pilot_calcStats( pilot );

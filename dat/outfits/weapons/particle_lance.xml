@@ -14,7 +14,6 @@
   <duration>2</duration>
   <range>350</range>
   <energy>5</energy>
-  <heatup>40</heatup>
   <swivel>22</swivel>
   <damage>
    <type>energy</type>

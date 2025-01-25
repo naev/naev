@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Amlet I">
+ <pos x="4767.992380" y="10415.287472"/>
+ <GFX>
+  <space>I05.webp</space>
+  <exterior>station00.webp</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

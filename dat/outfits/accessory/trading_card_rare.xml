@@ -16,8 +16,7 @@
   <absorb>5</absorb>
   <cooldown_time>-10</cooldown_time>
   <loot_mod>10</loot_mod>
-  <stress_dissipation>10</stress_dissipation>
-  <heat_dissipation>10</heat_dissipation>
+  <stress_dissipation>15</stress_dissipation>
   <ew_hide>-5</ew_hide>
  </specific>
 </outfit>

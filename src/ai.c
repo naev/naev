@@ -3229,7 +3229,7 @@ static int aiL_getweapspeed( lua_State *L )
  *
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set
  * to get ammo of, defaults to selected one.
- *    @luatreturn number The range of the weapon set.
+ *    @luatreturn number The ammo of the weapon set in the [0,1] range.
  * @luafunc getweapammo
  */
 static int aiL_getweapammo( lua_State *L )

@@ -150,12 +150,6 @@ typedef struct PilotOutfitSlot_ {
    int             flags;  /**< Slot flags. */
    ShipOutfitSlot *sslot;  /**< Ship outfit slot. */
 
-   /* Heat. */
-   double heat_T;     /**< Slot temperature. [K] */
-   double heat_C;     /**< Slot heat capacity. [W/K] */
-   double heat_area;  /**< Slot area of contact with ship hull. [m^2] */
-   double heat_start; /**< Slot heat at the beginning of a cooldown period. */
-
    /* Current state. */
    PilotOutfitState state;  /**< State of the outfit. */
    double           stimer; /**< State timer, tracking current state. */
@@ -329,15 +323,8 @@ typedef struct Pilot_ {
    double ew_stealth_timer; /**< Stealth timer. */
 
    /* Heat. */
-   double heat_T; /**< Ship temperature. [K] */
-   double heat_C; /**< Heat capacity of the ship. [W/K] */
-   double
-      heat_emis; /**< Ship epsilon parameter (emissivity). [adimensional 0:1] */
-   double heat_cond;  /**< Ship conductivity parameter. [W/(m*K)] */
-   double heat_area;  /**< Effective heatsink area of the ship. [m^2] */
-   double cdelay;     /**< Duration a full active cooldown takes. */
-   double ctimer;     /**< Remaining cooldown time. */
-   double heat_start; /**< Temperature at the start of a cooldown. */
+   double cdelay; /**< Duration a full active cooldown takes. */
+   double ctimer; /**< Remaining cooldown time. */
 
    /* Ship statistics. */
    ShipStatList *ship_stats; /**< Ship stats set by the Lua ship. Only valid if
@@ -448,7 +435,6 @@ typedef struct Pilot_ {
 /* These depend on Pilot being defined first. */
 #include "pilot_cargo.h"  // IWYU pragma: export
 #include "pilot_ew.h"     // IWYU pragma: export
-#include "pilot_heat.h"   // IWYU pragma: export
 #include "pilot_hook.h"   // IWYU pragma: export
 #include "pilot_outfit.h" // IWYU pragma: export
 #include "pilot_weapon.h" // IWYU pragma: export

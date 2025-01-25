@@ -22,7 +22,6 @@
   <range>700</range>
   <falloff>600</falloff>
   <energy>12</energy>
-  <heatup>35</heatup>
   <trackmin>0</trackmin>
   <trackmax>3000</trackmax>
   <damage>

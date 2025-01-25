@@ -21,7 +21,6 @@
   <range>{range}</range>
   <falloff>{falloff}</falloff>
   <energy>{energy}</energy>
-  <heatup>{heatup}</heatup>
   <trackmin>{trackmin}</trackmin>
   <trackmax>{trackmax}</trackmax>
   {extra}

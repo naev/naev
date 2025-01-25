@@ -1,5 +1,6 @@
 * 0.13.0 (unreleased)
    * Gameplay
+      * Removed heat mechanic (to be readded as a new mechanic in the future)
       * Made pirates less aggressive
       * Change pirate spawning so hyenas are less dominant and deadly to new players
    * Content
@@ -20,12 +21,20 @@
       * Action speed can no longer be negative and disables space worthiness
 
 * 0.12.3 (unreleased)
+   * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
+   * Largus Gene Drive (Nyx) has a max speed of 175, not 275
+   * Tweaked Melendez Mammoth XL and Eagle 6500 top speeds
+   * Fixed not being able to stealth with active point defense
+   * Fixed being able to complete the test of purification after failing
    * Cannibalize button doesn't overlap with capture anymore
    * Don't crash if loading a save where the player's current ship doesn't exist
    * Gauss has a reputation requirement
    * Derelicts are no longer space-worthy
    * Fixed Tartarus landing graphics
    * Reworked aggressivity on distress signals to be more consistent
+   * dv_goddard: The Siren of Halir no longer fails the mission after you get the commandos
+   * dv_shopping: Fixed not giving the player the Fancy Key Chain
+   * Misi will sell the Fancy Key Chain for those affected by the dv_shopping bug
    * Minor typo fixes and translation updates
 
 * 0.12.2

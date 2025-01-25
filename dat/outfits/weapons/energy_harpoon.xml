@@ -21,7 +21,6 @@
   <range>1200</range>
   <falloff>1000</falloff>
   <energy>143</energy>
-  <heatup>50</heatup>
   <trackmin>1200</trackmin>
   <trackmax>7200</trackmax>
   <swivel>22</swivel>

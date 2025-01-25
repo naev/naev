@@ -28,19 +28,6 @@ desc_list["dark"] = {
    _("The new-human seems to be carefully mixing their drink with ultra-sonic screetching."),
 }
 
-local gfx_list = {
-   {"soromid/soromid_heavy_civilian_1.webp", "heavy"},
-   {"soromid/soromid_heavy_civilian_2.webp", "heavy"},
-   {"soromid/soromid_heavy_civilian_3.webp", "heavy"},
-   {"soromid/soromid_heavy_military_3.webp", "heavy"}, -- TODO probably not mix in with the civilians...
-   {"soromid/soromid_aquatic_01.webp", "aquatic"},
-   {"soromid/soromid_aquatic_01_v2.webp", "aquatic"},
-   {"soromid/soromid_aquatic_01_v3.webp", "aquatic"},
-   {"soromid/soromid_dark_01.webp", "dark"},
-   {"soromid/soromid_dark_01_v2.webp", "dark"},
-   {"soromid/soromid_dark_01_v3.webp", "dark"},
-}
-
 local msg_lore = {
    _([["Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"]]),
    _([["Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it."]]),
@@ -117,12 +104,9 @@ return function ()
       local image, prt, civtype
       -- TODO probably use tags to control what portraits get used
       if rnd.rnd() < 0.3 then
-         local srmid = gfx_list[ rnd.rnd(1,#gfx_list) ]
-         prt = srmid[1]
-         civtype = srmid[2]
-         image = prt
+         image, prt, civtype = vni.soromid()
       else
-         image, prt = vni.soromid()
+         image, prt = vni.generic() -- Remove when we have more images
          civtype = "generic"
       end
       -- Soromid use descriptions based on type (or generic)

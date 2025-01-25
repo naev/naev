@@ -9,12 +9,11 @@ local jumpdist = 300
 local cooldown = 3
 local energy = 40
 local sigbonus = -10
-local heat
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
 function descextra( _p, _o )
-   return fmt.f(_([[Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets you blink to the sides. Can only be run once every {cooldown} seconds. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy and generates heat.
+   return fmt.f(_([[Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets you blink to the sides. Can only be run once every {cooldown} seconds. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy.
 Gives a #g{sigbonus}% Signature Range#0 bonus when equipped.]]), {
       jumpdist = jumpdist,
       cooldown = cooldown,
@@ -24,10 +23,6 @@ Gives a #g{sigbonus}% Signature Range#0 bonus when equipped.]]), {
       unit_dist = naev.unit("distance"),
       unit_energy = naev.unit("energy"),
    })
-end
-
-function onload( o )
-   heat = o:heatFor( 20/cooldown ) -- Roughly overheat in 20 secs of continuous usage (more in reality)
 end
 
 function init( p, po )
@@ -64,16 +59,8 @@ local function doblink( p, po, blinkdir )
       return false
    end
 
-   -- Test heat
-   local h = po:heat()
-   if h <= 0 then
-      helper.msgnospam("#r"..fmt.f(_("{outfit} is overheating!"),{outfit=po:outfit()}).."#0")
-      return false
-   end
-
    -- Pay the cost
    p:addEnergy( -energy )
-   po:heatup( heat )
 
    -- Blink!
    local dist = jumpdist
@@ -86,7 +73,7 @@ local function doblink( p, po, blinkdir )
    local pos = p:pos()
    luaspfx.blink( p, pos ) -- Blink afterimage
    p:effectAdd( "Blink" ) -- Cool "blink in" effect
-   p:setPos( pos + vec2.newP( h*dist, p:dir()+blinkdir ) )
+   p:setPos( pos + vec2.newP( dist, p:dir()+blinkdir ) )
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
    po:state("cooldown")
    po:progress(1)
