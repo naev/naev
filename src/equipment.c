@@ -60,17 +60,17 @@ typedef struct ShipWidgetData_ {
    GLuint       tex;
    GLuint       texd;
    double       s;
+   double       dir;
 } ShipWidgetData;
 
 /*
  * equipment stuff
  */
-static CstSlotWidget eq_wgt;                  /**< Equipment widget. */
-static double        equipment_dir      = 0.; /**< Equipment dir. */
-static unsigned int  equipment_lastick  = 0;  /**< Last tick. */
-static unsigned int  equipment_wid      = 0;  /**< Global wid. */
-static int           equipment_creating = 0;  /**< Whether or not creating. */
-static int           ship_mode          = 0;  /**< Ship mode. */
+static CstSlotWidget eq_wgt;                 /**< Equipment widget. */
+static unsigned int  equipment_lastick  = 0; /**< Last tick. */
+static unsigned int  equipment_wid      = 0; /**< Global wid. */
+static int           equipment_creating = 0; /**< Whether or not creating. */
+static int           ship_mode          = 0; /**< Ship mode. */
 static iar_data_t iar_data[OUTFIT_TABS];  /**< Stored image array positions. */
 static Outfit **iar_outfits[OUTFIT_TABS]; /**< Outfits associated with the image
                                              array cells. */
@@ -372,7 +372,6 @@ void equipment_open( unsigned int wid )
 
    /* Safe defaults. */
    equipment_lastick = SDL_GetTicks();
-   equipment_dir     = 0.;
 
    /* Add ammo. */
    equipment_addAmmo();
@@ -959,13 +958,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
 static void equipment_renderShip( double bx, double by, double bw, double bh,
                                   void *data )
 {
-   Pilot                *p;
-   int                   s;
-   double                px, py, pw, ph;
-   vec2                  v;
-   GLint                 fbo;
-   const ShipWidgetData *swd = data;
-   const unsigned int    wid = swd->wid;
+   Pilot             *p;
+   int                s;
+   double             px, py, pw, ph;
+   vec2               v;
+   GLint              fbo;
+   ShipWidgetData    *swd = data;
+   const unsigned int wid = swd->wid;
 
    /* Must have selected ship. */
    if ( eq_wgt.selected == NULL )
@@ -977,13 +976,14 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
       unsigned int tick = SDL_GetTicks();
       double       dt   = (double)( tick - equipment_lastick ) / 1000.;
       equipment_lastick = tick;
-      p->solid.dir += p->turn * dt;
-      if ( p->solid.dir > 2. * M_PI )
-         p->solid.dir = fmod( p->solid.dir, 2. * M_PI );
+      swd->dir += p->turn * dt;
+      if ( swd->dir > 2. * M_PI )
+         swd->dir = fmod( swd->dir, 2. * M_PI );
    } else
       equipment_lastick = SDL_GetTicks();
-   gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy,
-                        p->solid.dir );
+   double tempdir = p->solid.dir;
+   p->solid.dir   = swd->dir;
+   gl_getSpriteFromDir( &p->tsx, &p->tsy, p->ship->sx, p->ship->sy, swd->dir );
 
    s = p->ship->size;
 
@@ -1025,13 +1025,13 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
          if ( fabs( p->tilt ) > DOUBLE_TOL ) {
             mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
             mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
-            mat4_rotate( &H, -p->solid.dir, 0.0, 1.0, 0.0 );
+            mat4_rotate( &H, -swd->dir, 0.0, 1.0, 0.0 );
          } else
-            mat4_rotate( &H, -p->solid.dir + M_PI_2, 0.0, 1.0, 0.0 );
+            mat4_rotate( &H, -swd->dir + M_PI_2, 0.0, 1.0, 0.0 );
          mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
       } else {
-         dircos = cos( equipment_dir );
-         dirsin = sin( equipment_dir );
+         dircos = cos( swd->dir );
+         dirsin = sin( swd->dir );
       }
 
       for ( i = 0; i < array_size( p->ship->trail_emitters ); i++ ) {
@@ -1075,6 +1075,8 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
       gl_renderShader( px + v.x, py + v.y, 7., 7., 0., &shaders.crosshairs,
                        &cRadar_player, 1 );
    }
+
+   p->solid.dir = tempdir;
 }
 
 static void equipment_freeShipData( unsigned int wid, const char *unused )
@@ -1166,7 +1168,7 @@ static int equipment_mouseColumn( unsigned int wid, const SDL_Event *event,
                   /* TODO no freeing. */
                   active   = window_tabWinGetActive( equipment_wid,
                                                      EQUIPMENT_OUTFIT_TAB );
-                  outfits  = array_create( Outfit  *);
+                  outfits  = array_create( Outfit * );
                   noutfits = player_getOutfitsFiltered(
                      (const Outfit ***)&outfits, tabfilters[active],
                      filtertext );
@@ -2257,7 +2259,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
       int             tx, ty, tw, th;
       ImageArrayCell *cells;
       int             ncells  = array_size( ship->outfit_intrinsic );
-      Outfit const  **outfits = (Outfit const **)array_create( Outfit  *);
+      Outfit const  **outfits = (Outfit const **)array_create( Outfit * );
       for ( int i = 0; i < ncells; i++ )
          array_push_back( &outfits, ship->outfit_intrinsic[i].outfit );
 
