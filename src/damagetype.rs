@@ -214,6 +214,12 @@ pub fn load() -> Result<Vec<DamageType>> {
             }
         })
         .collect();
+    // Special type of unmodified damage
+    dt_data.push(DamageType {
+        name: String::from("raw"),
+        cname: CString::new("raw")?,
+        ..Default::default()
+    });
     sort_by_key_ref(&mut dt_data, |dt: &DamageType| &dt.name);
     Ok(dt_data)
 }
