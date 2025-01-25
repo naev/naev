@@ -154,11 +154,11 @@ int nlua_loadGFX( nlua_env env )
 static int gfxL_dim( lua_State *L )
 {
    if ( lua_isboolean( L, 1 ) ) {
-      lua_pushnumber( L, gl_screen.nw );
-      lua_pushnumber( L, gl_screen.nh );
-   } else {
       lua_pushnumber( L, SCREEN_W );
       lua_pushnumber( L, SCREEN_H );
+   } else {
+      lua_pushnumber( L, gl_screen.nw );
+      lua_pushnumber( L, gl_screen.nh );
    }
    lua_pushnumber( L, gl_screen.scale );
    return 3;

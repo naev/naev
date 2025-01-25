@@ -4,6 +4,7 @@
    * Tweaked Melendez Mammoth XL and Eagle 6500 top speeds
    * Fixed not being able to stealth with active point defense
    * Fixed being able to complete the test of purification after failing
+   * Fixed GUI getting weirdly offset in some cases
    * Cannibalize button doesn't overlap with capture anymore
    * Don't crash if loading a save where the player's current ship doesn't exist
    * Gauss has a reputation requirement
