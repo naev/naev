@@ -109,12 +109,16 @@ You escort the old lady to your ship, trying not to listen to her rambling. Perh
    mem.dist_total = car.calculateDistance(system.cur(), spob.cur():pos(), mem.destsys, mem.destplanet)
    mem.complaint = 0
 
-   hook.date(time.new(0, 0, 300), "date")
    hook.land("land")
+   hook.enter( "start_ticks" )
+end
+
+function start_ticks ()
+   hook.timer( 5+10*rnd.rnd(), "tick" )
 end
 
 -- Date hook.
-function date()
+function tick()
    local dist_now = car.calculateDistance(system.cur(), player.pos(), mem.destsys, mem.destplanet)
    local complaint_now = math.floor(((mem.dist_total - dist_now) / mem.dist_total) * #complaints + 0.5)
    if complaint_now > mem.complaint then
@@ -122,6 +126,7 @@ function date()
       vntk.msg(_("Grumblings from the old lady"), complaints[mem.complaint])
    end
    -- Uh... yeah.
+   hook.timer( 5, "tick" )
 end
 
 -- Land hook.
