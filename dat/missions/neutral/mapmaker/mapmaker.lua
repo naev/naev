@@ -135,24 +135,47 @@ local function update_marker_single( t )
    -- Haven't reached final reward
    if progress < 0.8 then
       misn.markerAdd( t.center, "low" )
-      return
+      return true
    end
    -- Not all rewards gotten yet
    for th,rwd in pairs(t.rewards) do
       for i,jmp in ipairs(rwd) do
          if not jmp:known() then
             misn.markerAdd( t.center, "low" )
-            return
+            return true
          end
       end
    end
+   return false
 end
 
 -- Remove all markers and add them if still haven't met 80% reward threshold
 local function update_markers ()
+   local hasrewardleft = false
    misn.markerRm()
+   misn.osdDestroy()
+
+   local desc = _("Explore the vicinity around the following marked systems:")
    for k,t in ipairs(targets) do
-      update_marker_single( t )
+      if update_marker_single( t ) then
+         local sysname
+         if t.center:known() then
+            sysname = t.center:name()
+         else
+            sysname = _("Unknown")
+         end
+         desc = desc.."\n・"..sysname
+         hasrewardleft = true
+      end
+   end
+
+   if hasrewardleft then
+      misn.setDesc(desc)
+      misn.osdCreate( mission_name, {
+         _("Explore the area around the marked systems."),
+      })
+   else
+      misn.setDesc(_("You have explored everything for now."))
    end
 end
 
@@ -248,10 +271,7 @@ They can't hold their excitement and do a little jig as they wonder off.]]))
 
    misn.accept()
    misn.setTitle( mission_name )
-   misn.setReward("Power, and by that I mean Knowledge!")
-   misn.osdCreate( mission_name, {
-      _("Explore the area around the marked systems."),
-   })
+   misn.setReward(_("Power, and by that I mean Knowledge!"))
    update_markers()
 
    hook.discover("discover")
