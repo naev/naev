@@ -525,13 +525,14 @@ control_funcs.inspect_moveto = function ()
       elseif mem.doscans then
          if scans.check_visible( ls ) then
             mem._scan_last = nil
-            ai.poptask()
             if ai.isenemy(ls) then
                if should_attack(ls) then
+                  ai.poptask()
                   ai.pushtask( "attack", ls )
                   return true
                end
             else
+               ai.poptask()
                scans.push( ls )
                return true
             end
