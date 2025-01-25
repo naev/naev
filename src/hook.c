@@ -701,11 +701,12 @@ static void hooks_updateDateExecute( ntime_t change )
       return;
 
    /* Clear creation flags. */
-   for ( Hook *h = hook_list; h != NULL; h = h->next )
+   for ( Hook *h = hook_list; h != NULL; h = h->next ) {
       h->created = 0;
+      if ( h->is_date )
+         h->ran_once = 0;
+   }
 
-   /* On j=0 we increment all timers and try to run, then on j=1 we update the
-    * timers. */
    hook_runningstack++; /* running hooks */
    for ( int j = 1; j >= 0; j-- ) {
       for ( Hook *h = hook_list; h != NULL; h = h->next ) {
@@ -725,13 +726,15 @@ static void hooks_updateDateExecute( ntime_t change )
          if ( h->acc < h->res )
             continue;
 
-         /* Run the timer hook. */
-         hook_run( h, NULL, j );
-         /* Date hooks are not deleted. */
-
          /* Time is modified at the end. */
          if ( j == 0 )
             h->acc %= h->res; /* We'll skip all buggers. */
+         if ( h->ran_once )
+            continue;
+
+         /* Run the date hook. */
+         hook_run( h, NULL, j );
+         /* Date hooks are not deleted. */
       }
    }
    hook_runningstack--; /* not running hooks anymore */

@@ -152,19 +152,19 @@ end
 function land()
    if spob.cur() == mem.destplanet then
       if mem.intime then
-      -- Semi-random message.
-      lmisn.sfxMoney()
-      vntk.msg( _("Successful Delivery"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
-   else
-      -- Semi-random message for being late.
-      lmisn.sfxMoney()
-      vntk.msg( _("Successful Delivery"), fmt.f(cargo_land_slow[rnd.rnd(1, #cargo_land_slow)],
+         -- Semi-random message.
+         lmisn.sfxMoney()
+         vntk.msg( _("Successful Delivery"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(mem.cargo), credits=fmt.credits(mem.reward)}) )
+      else
+         -- Semi-random message for being late.
+         lmisn.sfxMoney()
+         vntk.msg( _("Successful Delivery"), fmt.f(cargo_land_slow[rnd.rnd(1, #cargo_land_slow)],
          {cargo=_(mem.cargo), credits=fmt.credits(mem.reward / 2), reward=fmt.credits(mem.reward)} ) )
-      mem.reward = mem.reward / 2
-   end
-   player.pay(mem.reward)
-   pir.reputationNormalMission(rnd.rnd(2,3))
-   misn.finish(true)
+         mem.reward = mem.reward / 2
+      end
+      player.pay(mem.reward)
+      pir.reputationNormalMission(rnd.rnd(2,3))
+      misn.finish(true)
    end
 end
 
