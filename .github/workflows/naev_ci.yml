@@ -30,8 +30,10 @@ jobs:
           target: "x86_64-unknown-linux-gnu"
           override: true
 
-      - name: Install rust-bindgen
-        run: cargo install bindgen-cli
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
 
       - name: Package Dist
         run: |
@@ -81,8 +83,10 @@ jobs:
           target: "${{ matrix.target }}"
           override: true
 
-      - name: Install rust-bindgen
-        run: cargo install bindgen-cli
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -191,8 +195,10 @@ jobs:
           target: "${{ matrix.target }}"
           override: true
 
-      - name: Install rust-bindgen
-        run: cargo install bindgen-cli
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -297,8 +303,10 @@ jobs:
           target: "${{ matrix.arch }}-apple-darwin"
           override: true
 
-      - name: Install rust-bindgen
-        run: cargo install bindgen-cli
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
 
       - name: Get Source
         uses: actions/download-artifact@v4
@@ -395,8 +403,10 @@ jobs:
           target: "x86_64-unknown-linux-gnu"
           override: true
 
-      - name: Install rust-bindgen
-        run: cargo install bindgen-cli
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
 
       - name: Meson Setup
         id: setup
@@ -446,8 +456,10 @@ jobs:
           target: "x86_64-unknown-linux-gnu"
           override: true
 
-      - name: Install rust-bindgen
-        run: cargo install bindgen-cli
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
 
       - name: Meson Setup
         run: |
