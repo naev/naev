@@ -431,6 +431,12 @@ naevcrs = rust.bindgen(
       cargo_options += ['--release']
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
+
+   target_triplet = get_option('target_triplet')
+   if target_triplet != ''
+      cargo_options += ['--target', target_triplet]
+   endif
+   
    naev_rlib = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml,
