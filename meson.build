@@ -435,7 +435,7 @@ naevcrs = rust.bindgen(
    if target_triplet != ''
       cargo_options += ['--target', target_triplet]
    endif
-   
+
    naev_rlib = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml,
@@ -443,7 +443,7 @@ naevcrs = rust.bindgen(
       output: 'libnaev.rlib',
       console: true,
       #command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / rust_target / '@OUTPUT@', ] )
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
    #naev_rlib_cp = custom_target( 'cargo-build-cp',
    #   depends: [naev_rlib, naevcrs, naevc_crate, naev_clib],
    #   output: 'libnaev.rlib',
@@ -464,7 +464,7 @@ naevcrs = rust.bindgen(
       'naev',
       sources: naev_rs,
       # Have to make sure Rust uses the dependencies from Cargo
-      rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / rust_target / 'deps'],
+      rust_args: ['--extern', 'naev=libnaev.rlib', '-L', 'src' / target_triplet / rust_target / 'deps', '-L', 'src' / rust_target / 'deps'],
       # Also have to pull in the C dependencies
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
