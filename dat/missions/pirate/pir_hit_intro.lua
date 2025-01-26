@@ -152,10 +152,10 @@ They grin.]]),
    hook.jumpout( "jumpout" )
    hook.takeoff( "takeoff" )
    hook.land( "land" )
-   hook.date( time.new( 0, 0, 1e3 ), "date" )
+   hook.date( time.new( 0, 0, 1e3 ), "deadline" )
 end
 
-function date ()
+function deadline ()
    if system.cur() ~= mem.missys and mem.state==1 then
       if time.get() > mem.deadline then
          return lmisn.fail( _("Target got away.") )
