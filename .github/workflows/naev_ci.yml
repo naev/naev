@@ -25,9 +25,11 @@ jobs:
           submodules: true
 
       - name: Configure Rust
-        run: |
-          rustup default stable
-          rustup target add x86_64-unknown-linux-gnu
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: "bindgen-cli"
+          target: "x86_64-unknown-linux-gnu"
+          override: true
 
       - name: Package Dist
         run: |
@@ -52,6 +54,7 @@ jobs:
           - image: naev-steamruntime
             config: linux_steamruntime.ini
             wrap_mode: default
+            target: x86_64-unknown-linux-gnu
 
     runs-on: ubuntu-latest
     container:
@@ -71,10 +74,11 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        run: |
-          rustup default stable
-          rustup target add x86_64-unknown-linux-gnu
-          cargo install bindgen-cli
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: "bindgen-cli"
+          target: "${{ matrix.target }}"
+          override: true
 
       - name: Meson Setup
         id: setup
@@ -159,6 +163,7 @@ jobs:
         include:
           - image: naev-windows
             config: windows_cross_mingw_ucrt64.ini
+            target: x86_64-pc-windows-gnu
 
     runs-on: ubuntu-latest
     container:
@@ -177,9 +182,11 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        run: |
-          rustup default stable
-          rustup target add x86_64-pc-windows-gnu
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: "bindgen-cli"
+          target: "${{ matrix.target }}"
+          override: true
 
       - name: Meson Setup
         id: setup
@@ -279,9 +286,11 @@ jobs:
           fi
 
       - name: Configure Rust
-        run: |
-          rustup default stable
-          rustup target add "$BUILDARCH-apple-darwin"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: "bindgen-cli"
+          target: "${{ matrix.arch }}-apple-darwin"
+          override: true
 
       - name: Get Source
         uses: actions/download-artifact@v4
@@ -373,9 +382,11 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        run: |
-          rustup default stable
-          rustup target add x86_64-unknown-linux-gnu
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: "bindgen-cli"
+          target: "x86_64-unknown-linux-gnu"
+          override: true
 
       - name: Meson Setup
         id: setup
@@ -420,9 +431,11 @@ jobs:
           tar -xf naev-*.tar.xz -C source --strip 1
 
       - name: Configure Rust
-        run: |
-          rustup default stable
-          rustup target add x86_64-unknown-linux-gnu
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: "bindgen-cli"
+          target: "x86_64-unknown-linux-gnu"
+          override: true
 
       - name: Meson Setup
         run: |
