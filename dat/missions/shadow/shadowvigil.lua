@@ -556,7 +556,7 @@ function killDiplomats()
       if j:exists() then
          j:taskClear()
          j:outfitRm("all")
-         j:outfitAdd("Cheater's Ragnarok Beam", 1)
+         j:outfitAdd("Four Winds Ragnarok Beam", 1)
          ai_setup.setup(j)
          j:attack(dvaerplomat)
          j:setHilight(false)

@@ -71,7 +71,9 @@ function accept()
    misn.setReward(_("Unknown"))
    misn.setDesc(fmt.f(_([[You have been summoned to the {sys} system, where the Seiryuu is supposedly waiting for you in orbit around {pnt}.]]), {sys=seirsys, pnt=seirplanet}))
    misn.accept()
-   misn.osdDestroy() -- This is here because setDesc initializes the OSD.
+   misn.osdCreate(_("Dark Shadow"), {
+      fmt.f(_("Go to {sys} system and find the Seiryuu."), {sys=seirsys}),
+   })
 
    mem.stage = 1
 
@@ -298,7 +300,7 @@ function spawnSquads(highlight)
       for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
          k:outfitRm("all")
-         k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
+         k:outfitAdd("Four Winds Laser Cannon", 6) -- Equip these fellas with unfair weaponry
          ai_setup.setup(k)
          k:setNoDisable()
       end
@@ -378,7 +380,7 @@ function spawnGenbu(sys)
    genbu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), sys, _("Genbu") )
    genbu:outfitRm("all")
    genbu:outfitAdd("Heavy Laser Turret", 3)
-   genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
+   genbu:outfitAdd("Four Winds Ragnarok Beam", 3) -- You can't win. Seriously.
    ai_setup.setup(genbu)
    genbu:control()
    genbu:setHilight()
@@ -418,7 +420,7 @@ function spawnInterceptors()
    local inters = fleet.add( 3, "Lancelot", shadow.fct_rogues(), genbu:pos(), _("Four Winds Lancelot") )
    for _, j in ipairs(inters) do
       j:outfitRm("all")
-      j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
+      j:outfitAdd("Four Winds Laser Cannon", 4) -- Equip these fellas with unfair weaponry
       j:outfitAdd("Engine Reroute", 1)
       j:outfitAdd("Improved Stabilizer", 1)
       ai_setup.setup(j)
