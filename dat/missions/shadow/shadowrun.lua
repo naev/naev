@@ -123,7 +123,7 @@ function accept()
    mem.shadowrun = 2
 
    mem.dateres = 500
-   mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+   mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")
    hook.land("land")
    hook.enter("enter")
 end
@@ -219,7 +219,7 @@ function soldier2()
    vn.run()
 end
 
-function date()
+function deadline()
    -- Deadline stuff
    if mem.deadline1 >= time.get() and mem.shadowrun == 2 then
       dateresolution(mem.deadline1)
@@ -244,15 +244,15 @@ function dateresolution(time)
    if time - time.get() < time.new(0, 0, 5000) and mem.dateres > 30 then
       mem.dateres = 30
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")
    elseif time - time.get() < time.new(0, 1, 0) and mem.dateres > 100 then
       mem.dateres = 100
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")
    elseif time - time.get() >= time.new(0, 1, 0) and mem.dateres < 500 then
       mem.dateres = 500
       hook.rm(mem.datehook)
-      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "date")
+      mem.datehook = hook.date(time.new(0, 0, mem.dateres), "deadline")
    end
 end
 

@@ -95,7 +95,7 @@ function accept()
    mem.enterhook = hook.enter("enter")
    mem.enterhook = hook.jumpout("jumpout")
    hook.land("land")
-   hook.date(time.new(0, 2, 0), "date")
+   hook.date(time.new(0, 2, 0), "deadline")
 end
 
 -- Jump-out hook.
@@ -111,7 +111,7 @@ function enter()
 end
 
 -- Date hook.
-function date()
+function deadline()
    if mem.harjatalked then
       return
    end

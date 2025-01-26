@@ -189,10 +189,10 @@ function accept ()
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
    hook.takeoff( "takeoff" )
-   hook.date( time.new( 0, 0, 1e3 ), "date" )
+   hook.date( time.new( 0, 0, 1e3 ), "deadline" )
 end
 
-function date ()
+function deadline ()
    if system.cur() ~= mem.missys then
       if time.get() > mem.deadline then
          return lmisn.fail( _("Target got away.") )
