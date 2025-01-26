@@ -417,7 +417,6 @@ naevcrs = rust.bindgen(
    else
       rust_target = 'release'
    endif
-   cp = find_program('cp')
    cargo = find_program('cargo', version:'>= @0@'.format(msrv))
    cargo_data = configuration_data()
    cargo_data.set_quoted('NAME', meson.project_name())
@@ -444,13 +443,13 @@ naevcrs = rust.bindgen(
       output: 'libnaev.rlib',
       console: true,
       #command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
-      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
+      command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / rust_target / '@OUTPUT@', ] )
    #naev_rlib_cp = custom_target( 'cargo-build-cp',
    #   depends: [naev_rlib, naevcrs, naevc_crate, naev_clib],
    #   output: 'libnaev.rlib',
    #   console: true,
    #   command: [ cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
-   naev_rlib_lib = library('libnaev_rlib', naev_rlib)
+   naev_rlib_lib = library('naev_rlib', naev_rlib)
    # We create naev.rs with naev_rlib as a dependency to force rlib to be
    # compiled first, otherwise meson tries to compile both naev.rs and
    # naev_rlib in parallel and it fails.
@@ -458,7 +457,7 @@ naevcrs = rust.bindgen(
       output: 'naev.rs',
       input: meson.project_source_root() / 'utils' / 'build' / 'naev.rs',
       depends: [naev_rlib],
-      command: [ cp, '@INPUT@', '@OUTPUT@' ] )
+      command: [ copydir, meson.project_build_root(), '@INPUT@', ] )
 
    # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
