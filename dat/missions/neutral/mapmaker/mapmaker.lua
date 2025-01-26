@@ -380,6 +380,7 @@ function approach_mm ()
          mm(fmt.f( msg_single[ rnd.rnd(1,#msg_single) ], {sys=src}))
          shiplog.append( "mapmaker", fmt.f(_("You discovered a hidden jump in the {sys} system."), {sys=src}))
       end
+      jmp:setKnown(true)
    end
    vn.sfxVictory()
    mm(_([["I've updated your navigation system with the new information! You should check it out!"]]))
