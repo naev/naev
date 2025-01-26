@@ -127,7 +127,6 @@ function seiryuuBoard()
       vn.run()
 
       accept2()
-      misn.markerRm()
       mem.stage = 2
    elseif mem.stage == 6 then -- Debriefing
 
