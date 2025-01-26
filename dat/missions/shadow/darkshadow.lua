@@ -41,7 +41,8 @@ local function dest_updated(pnt, sys)
    misn.osdCreate(_("Dark Shadow"), {
       fmt.f(_("Look for Jorek on {pnt} in the {sys} system"), {pnt=pnt, sys=sys}),
    })
-   misn.markerMove(mem.marker, pnt)
+   misn.markerRm()
+   misn.markerAdd( pnt )
 end
 
 function create()
@@ -62,7 +63,6 @@ function create()
    vn.na(_([[The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]))
    vn.run()
 
-   mem.firstmarker = misn.markerAdd(seirsys, "low")
    accept() -- The player automatically accepts this mission.
 end
 
@@ -74,6 +74,7 @@ function accept()
    misn.osdCreate(_("Dark Shadow"), {
       fmt.f(_("Go to {sys} system and find the Seiryuu."), {sys=seirsys}),
    })
+   misn.markerAdd(seirsys, "low")
 
    mem.stage = 1
 
@@ -83,7 +84,6 @@ end
 -- This is the "real" start of the mission. Get yer mission variables here!
 local function accept2()
    mem.tick = {false, false, false, false, false}
-   mem.marker = misn.markerAdd(jorekplanet1, "low")
    dest_updated(jorekplanet1, joreksys1)
    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
    misn.setReward(_("A sum of money."))
@@ -127,7 +127,7 @@ function seiryuuBoard()
       vn.run()
 
       accept2()
-      misn.markerRm(mem.firstmarker)
+      misn.markerRm()
       mem.stage = 2
    elseif mem.stage == 6 then -- Debriefing
 
@@ -174,7 +174,8 @@ function joeBoard()
    local c = commodity.new(N_("Four Winds Informant"), N_("Jorek's informant."))
    misn.cargoAdd(c, 0)
    player.unboard()
-   misn.markerMove(mem.marker, seirsys)
+   misn.markerRm()
+   misn.markerAdd( seirsys )
    misn.osdActive(2)
    mem.stage = 5
 end
@@ -502,6 +503,8 @@ function jorek()
       _("Fetch the Four Winds informant from his ship"),
       fmt.f(_("Return Jorek and the informant to the Seiryuu in the {sys} system"), {sys=seirsys}),
    })
+   misn.markerRm()
+   misn.markerAdd( seirsys )
 
    mem.stage = 4
 end
