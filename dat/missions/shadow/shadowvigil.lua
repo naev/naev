@@ -216,9 +216,8 @@ function enter()
       seiryuu:setHilight(true)
       seiryuu:setVisplayer(true)
       hook.pilot(seiryuu, "board", "board")
-   end
 
-   if system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
+   elseif system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
       -- case enter system where escorts wait
       escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
       for i, j in ipairs(escorts) do
@@ -232,6 +231,18 @@ function enter()
       local rend_point = vec2.new(0,0)
       mem.start_marker = system.markerAdd( rend_point, _("Rendezvous point") )
       mem.proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
+
+   elseif system.cur()==mem.seirsys then -- not escorting.
+      -- case enter system where Seiryuu is
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
+      seiryuu:setInvincible(true)
+      if mem.missend then
+         seiryuu:setActiveBoard(true)
+         seiryuu:setHilight(true)
+         seiryuu:setVisplayer(true)
+         seiryuu:control()
+         hook.pilot(seiryuu, "board", "board")
+      end
    end
 end
 
@@ -373,17 +384,6 @@ function jumpin()
          end
       end
 
-   elseif system.cur()==mem.seirsys then -- not escorting.
-      -- case enter system where Seiryuu is
-      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
-      seiryuu:setInvincible(true)
-      if mem.missend then
-         seiryuu:setActiveBoard(true)
-         seiryuu:setHilight(true)
-         seiryuu:setVisplayer(true)
-         seiryuu:control()
-         hook.pilot(seiryuu, "board", "board")
-      end
    else
       if mem.proxy then
          hook.rm( mem.proxy )
