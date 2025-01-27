@@ -364,21 +364,25 @@ if not clang.found()
 endif
 
 # Check bindgen version
-bindgen = find_program('bindgen')
-bindgen_version = run_command(bindgen, '--version', check: true).stdout().strip().split()[1]
+bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 
 bindgen_args = [
-   '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;'
+   '--override-abi', 'nlua_package_.*=C-unwind', '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;'
 ]
 # Handle version-specific arguments
-if bindgen_version.version_compare('>=0.59.0')
-  bindgen_args += ['--blocklist-file', '/usr/include/math.h']
-else
-  bindgen_args += ['--blacklist-item', '/usr/include/math.h']
-endif
-if bindgen_version.version_compare('>=0.62.0')
-   bindgen_args += ['--override-abi', 'nlua_package_.*=C-unwind']
-endif
+bindgen_blocklist_items = [
+   '__mingw_ldbl_type_t',
+   'FP_INT_.*',
+   'FP_SUBNORMAL*',
+   'FP_NORMAL*',
+   'FP_NAN*',
+   'FP_INFINITE*',
+   'FP_ZERO*'
+]
+
+foreach item : bindgen_blocklist_items
+   bindgen_args += ['--blocklist-item', item]
+endforeach
 
 # Invoke bindgen to generate Rust bindings
 naevcrs = rust.bindgen(
