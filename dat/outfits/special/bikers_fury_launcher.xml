@@ -39,4 +39,7 @@
   <armour>15</armour>
   <absorb>0</absorb>
  </specific>
+ <tags>
+  <tag>noplayer</tag>
+ </tags>
 </outfit>

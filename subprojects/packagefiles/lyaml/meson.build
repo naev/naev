@@ -17,6 +17,7 @@ endif
 # Ideally we would want this fixed upstream
 add_project_arguments('-Wno-unused-parameter', language: 'c')
 add_project_arguments('-Wno-unused-variable', language: 'c')
+add_project_arguments('-Wno-int-conversion', language: 'c')
 
 lyaml_src = files(
     'ext/yaml/yaml.c',
@@ -33,11 +34,11 @@ lyaml_lua = files(
 )
 
 deps = []
-deps += dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
+deps += dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'), default_options: ['c_std=c89'])
 
 useLuaJIT = get_option('luajit')
 if useLuaJIT.disabled() == false
-    lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['luajit=false'])
+    lua = dependency('luajit', fallback: ['luajit'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['c_std=gnu99', 'luajit=false'])
 endif
 summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 if not lua.found()

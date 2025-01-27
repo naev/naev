@@ -31,6 +31,7 @@
    * Tweaked Melendez Mammoth XL and Eagle 6500 top speeds
    * Fixed not being able to stealth with active point defense
    * Fixed being able to complete the test of purification after failing
+   * Fixed GUI getting weirdly offset in some cases
    * Cannibalize button doesn't overlap with capture anymore
    * Don't crash if loading a save where the player's current ship doesn't exist
    * Gauss has a reputation requirement
@@ -42,6 +43,10 @@
    * dv_goddard: The Siren of Halir no longer fails the mission after you get the commandos
    * dv_shopping: Fixed not giving the player the Fancy Key Chain
    * Misi will sell the Fancy Key Chain for those affected by the dv_shopping bug
+   * oldwoman: The old woman complains again
+   * shadowvigil: seiryuu doesn't disappear if you land
+   * darkshadow: four wind fighters can hurt the player
+   * Fixed some date-related mission information not being updated
    * Minor typo fixes and translation updates
 
 * 0.12.2
