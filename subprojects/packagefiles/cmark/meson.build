@@ -2,7 +2,7 @@ project(
     'cmark',
     'c',
     version: '0.31.0',
-    default_options: ['warning_level=3'],
+    default_options: ['c_std=c99', 'warning_level=3'],
     meson_version: '>=0.49.0',
     license: 'BSD-2-Clause',
 )
