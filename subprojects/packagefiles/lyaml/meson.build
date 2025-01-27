@@ -2,7 +2,7 @@ project(
     'lyaml',
     'c',
     version: '6.2.8',
-    default_options: ['warning_level=3'],
+    default_options: ['c_std=c89', 'warning_level=3'],
     meson_version: '>=0.53.0',
     license: 'BSD-2-Clause',
 )
