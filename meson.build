@@ -17,11 +17,17 @@ copyright_holder = 'Naev Dev Team'
 # Tools
 cc = meson.get_compiler('c')
 c_args = cc.get_supported_arguments([
-    '-Wno-pedantic',
-    '-Wshadow',
-    '-fno-signed-zeros',
-    '-D_XOPEN_SOURCE=700'
+   '-Wno-pedantic',
+   '-Wshadow',
+   '-fno-signed-zeros'
 ])
+
+if host_machine.system() == 'linux'
+   c_args += ['-D_XOPEN_SOURCE=700']
+elif host_machine.system() == 'windows'
+   c_args += ['-D_USE_MATH_DEFINES']
+endif
+
 add_project_arguments(c_args, language: 'c')
 
 # Filesystem module for copying files
