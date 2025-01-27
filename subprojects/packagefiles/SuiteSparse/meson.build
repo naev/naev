@@ -1,9 +1,14 @@
-project('SuiteSparse', 'c', version: '7.3.1.beta1')
+project(
+    'SuiteSparse',
+    'c',
+    default_options : ['c_std=c11'],
+    version: '7.3.1.beta1',
+)
 
 cc = meson.get_compiler('c')
 c_args = cc.get_supported_arguments(['-Wno-implicit-const-int-float-conversion', '-Wno-implicit-fallthrough', '-Wno-maybe-uninitialized',
    '-Wno-parentheses', '-Wno-sign-compare', '-Wno-unused-but-set-variable', '-Wno-unused-const-variable', '-Wno-unused-variable',
-   '-Wno-unused-function', '-Wno-unused-parameter'])
+   '-Wno-unused-function', '-Wno-unused-parameter', '-D_XOPEN_SOURCE=700'])
 add_project_arguments(c_args, language: 'c')
 
 # Note to maintainers: after fetching subprojects, you can: cd subprojects/SuiteSparse; git fetch --all --tags; git diff v7.3.0 '**/CMakeLists.txt'
