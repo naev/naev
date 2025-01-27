@@ -2,7 +2,7 @@ project('naev', ['c','rust'],
    version : '0.13.0-alpha.1',
    default_options : [
       'optimization=g',
-      'c_std=gnu11',
+      'c_std=c11',
       'werror=false',
       'warning_level=3',
       'rust_std=2021',
@@ -17,7 +17,12 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow', '-fno-signed-zeros'])
+c_args = cc.get_supported_arguments([
+    '-Wno-pedantic',
+    '-Wshadow',
+    '-fno-signed-zeros',
+    '-D_XOPEN_SOURCE=700'
+])
 add_project_arguments(c_args, language: 'c')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
