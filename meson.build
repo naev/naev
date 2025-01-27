@@ -369,7 +369,7 @@ bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 bindgen_args = [
    '--override-abi', 'nlua_package_.*=C-unwind', '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;'
 ]
-# Handle version-specific arguments
+# Handle issues with bindgen and the math.h header
 bindgen_blocklist_items = [
    '__mingw_ldbl_type_t',
    'FP_INT_.*',
