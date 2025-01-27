@@ -2,7 +2,7 @@ project('naev', 'c',
    version : '0.13.0-alpha.1',
    default_options : [
       'optimization=g',
-      'c_std=c11',
+      'c_std=gnu11',
       'werror=false',
       'warning_level=3',
    ],
@@ -16,12 +16,7 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-c_args = cc.get_supported_arguments([
-    '-Wno-pedantic',
-    '-Wshadow',
-    '-fno-signed-zeros',
-    '-D_XOPEN_SOURCE=700'
-])
+c_args = cc.get_supported_arguments(['-Wno-pedantic', '-Wshadow', '-fno-signed-zeros'])
 add_project_arguments(c_args, language: 'c')
 
 # Filesystem module for copying files
