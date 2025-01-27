@@ -67,8 +67,9 @@ macro_rules! warn {
             eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
-            if cfg!(unix) {
-                nix::sys::signal::raise( nix::sys::signal::Signal::SIGINT ).unwrap();
+            #[cfg(unix)]
+            {
+                nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
             }
         }
     };
