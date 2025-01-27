@@ -17,6 +17,12 @@
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
+
+#if defined( __APPLE__ )
+#define _DARWIN_C_SOURCE /* Use Apple's imlementation. */
+#include <dlfcn.h>
+#endif /* __APPLE__ */
+
 #endif /* DEBUGGING */
 
 #include "naev.h"
@@ -107,7 +113,7 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
          return _( "SIGABRT" );
       }
 
-      /* No suitable code found. */
+   /* No suitable code found. */
 #if HAVE_STRSIGNAL
    return strsignal( sig );
 #else  /* HAVE_STRSIGNAL */
