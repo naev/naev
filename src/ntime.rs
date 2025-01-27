@@ -182,7 +182,7 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
     let cycles = nt.cycles();
     let periods = nt.periods();
     let seconds = nt.seconds();
-    let max = max as c_ulong;
+    let max = max as u64;
     if cycles == 0 && periods == 0 {
         let cmsg = CString::new(gettext("%04d s")).unwrap();
         naevc::snprintf(cstr, max, cmsg.as_ptr().cast(), seconds);

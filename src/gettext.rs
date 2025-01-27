@@ -1,5 +1,4 @@
 use std::ffi::{CStr, CString};
-use std::os::raw::c_ulong;
 
 pub fn init() {
     unsafe {
