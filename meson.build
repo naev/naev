@@ -108,7 +108,7 @@ int main (void) { return 0; }''')
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.29.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
-   yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'))
+   yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'), default_options: ['c_std=c89'])
 
    # TODO replace nfd with SDL3 native functions when possible
    nfd = dependency('nfd', required: false, static: true)
@@ -150,7 +150,7 @@ int main (void) { return 0; }''')
    useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
    if useLuaJIT.disabled() == false
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['luajit=false'])
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT, static: get_option('steamruntime'), default_options: ['c_std=gnu99', 'luajit=false'])
    endif
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
