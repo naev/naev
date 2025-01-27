@@ -125,7 +125,7 @@ int main( int argc, char *argv[] )
    context = SDL_GL_CreateContext( win );
    if (context==NULL) {
       SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-      SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
+      SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
       context = SDL_GL_CreateContext( win );
       assert( context != NULL );
    }
