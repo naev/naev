@@ -178,7 +178,7 @@ jobs:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
         PKG_CONFIG: "x86_64-w64-mingw32ucrt-pkg-config"
-        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/lib/pkgconfig:/tmp/naevBuild/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
+        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
         BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32ucrt/sys-root/mingw --target=x86_64-w64-mingw32ucrt"
     steps:
       - name: Get Source
