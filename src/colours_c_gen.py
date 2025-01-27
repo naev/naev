@@ -141,7 +141,13 @@ def generate_c_file(f):
     write_header(f)
 
     f.write(f"""
+#ifdef _WIN32
 #include <string.h>
+#define strcasecmp _stricmp
+#else
+#include <strings.h>
+#endif
+
 #include "colour.h"
 #include "log.h"
 
