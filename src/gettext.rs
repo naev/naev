@@ -40,7 +40,7 @@ pub fn ngettext<'a>(msg_id: &'a str, msg_id_plural: &'a str, n: i32) -> &'a str 
     unsafe {
         let ptr1 = msgid.as_ptr();
         let ptr2 = msgid_plural.as_ptr();
-        let ptr3 = naevc::gettext_ngettext(ptr1, ptr2, n as c_ulong);
+        let ptr3 = naevc::gettext_ngettext(ptr1, ptr2, n as u64);
         if ptr1 == ptr3 {
             return msg_id;
         } else if ptr2 == ptr3 {
