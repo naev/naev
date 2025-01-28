@@ -423,6 +423,11 @@ jobs:
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
 
+      - name: Meson Compile
+        id: compile
+        run: |
+          meson compile -C build
+
       - name: Meson Test
         id: test
         run: |
