@@ -28,7 +28,6 @@ outfits.standard.weapons = {
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
-   "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
    "Laser Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam",
@@ -66,7 +65,11 @@ outfits.standard.set = outfits.merge{
 
 -- TODO proper elite outfits
 outfits.elite = {}
-outfits.elite.weapons = outfits.standard.weapons
+outfits.elite.weapons = outfits.merge{ {
+   "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+   "TeraCom Mace Launcher",
+   }, outfits.standard.weapons,
+}
 outfits.elite.utility = outfits.merge{ {
    "Unicorp Scrambler", "Unicorp Light Afterburner",
    "Sensor Array", "Unicorp Medium Afterburner",

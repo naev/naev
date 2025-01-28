@@ -648,17 +648,17 @@ function optimize.optimize( p, cores, outfit_list, params )
             table.insert( ar, 1 )
          end
          -- Maximum of slot type
-         if params.max_weap then
+         if params.max_weap and stats.is_weap then
             table.insert( ia, r_weap )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
-         if params.max_util then
+         if params.max_util and stats.is_util then
             table.insert( ia, r_util )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
-         if params.max_stru then
+         if params.max_stru and stats.is_stru then
             table.insert( ia, r_stru )
             table.insert( ja, c )
             table.insert( ar, 1 )
