@@ -2,7 +2,9 @@
 name = @NAME@
 version = @VERSION@
 edition = "2021"
-rust-version = "1.80" # LazyLock
+# 1.80 LazyLock
+# 1.84 New random syntax
+rust-version = "1.84"
 
 [lib]
 path = @PATH@

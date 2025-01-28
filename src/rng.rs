@@ -3,11 +3,11 @@ use std::os::raw::{c_double, c_uint};
 
 #[no_mangle]
 pub unsafe extern "C" fn randint() -> c_uint {
-    RNG.with_borrow_mut(|x| x.gen::<u32>())
+    RNG.with_borrow_mut(|x| x.random::<u32>())
 }
 #[no_mangle]
 pub unsafe extern "C" fn randfp() -> c_double {
-    RNG.with_borrow_mut(|x| x.gen::<f64>())
+    RNG.with_borrow_mut(|x| x.random::<f64>())
 }
 #[no_mangle]
 pub unsafe extern "C" fn Normal(x: c_double) -> c_double {
@@ -19,11 +19,11 @@ pub unsafe extern "C" fn NormalInverse(p: c_double) -> c_double {
 }
 
 thread_local! {
-    static RNG: std::cell::RefCell<rand::rngs::ThreadRng> = std::cell::RefCell::new(rand::thread_rng());
+    static RNG: std::cell::RefCell<rand::rngs::ThreadRng> = std::cell::RefCell::new(rand::rng());
 }
 
 pub fn rngf32() -> f32 {
-    RNG.with_borrow_mut(|x| x.gen::<f32>())
+    RNG.with_borrow_mut(|x| x.random::<f32>())
 }
 
 /*
