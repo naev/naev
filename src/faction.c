@@ -1927,10 +1927,12 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
    }
 #endif /* DEBUGGING */
 
+   Faction    *fct       = &faction_stack[f];
    double      n         = 0;
    double      rep       = srep->local;
    StarSystem *sys_stack = system_getAll();
-   double      th        = faction_stack[f].local_th;
+   double      th        = fct->local_th;
+   int         usehidden = faction_isFlag( fct, FACTION_USESHIDDENJUMPS );
    /* TODO avoid a memory allocation every call. */
    int *done   = array_create( int );
    int *queuea = array_create( int );
@@ -1953,6 +1955,12 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
          for ( int j = 0; j < array_size( qsys->jumps ); j++ ) {
             StarSystem *nsys  = qsys->jumps[j].target;
             int         found = 0;
+
+            /* Don't propagate through hidden jumps if the faction doesn't use
+             * hidden. */
+            if ( jp_isFlag( &sys->jumps[j], JP_HIDDEN ) && !usehidden )
+               continue;
+
             /* Ignore systems already looked at. */
             for ( int k = 0; k < array_size( done ); k++ ) {
                if ( nsys->id == done[k] ) {
