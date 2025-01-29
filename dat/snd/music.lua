@@ -404,6 +404,14 @@ function choose_table.combat ()
 end
 
 function choose( str )
+   if music_off then
+      -- Update situation as necessary (like when forcing player to land with music off)
+      if str then
+         music_situation = str
+      end
+      return
+   end
+
    -- Allow restricting play of music until a song finishes
    if var.peek( "music_wait" ) then
       if tracks_playing() then
