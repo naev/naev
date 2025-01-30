@@ -460,7 +460,7 @@ static void info_openMain( unsigned int wid )
    n   = array_size( lic ) + array_size( inv );
    /* List. */
    if ( n == 0 ) {
-      inventory    = malloc( sizeof( char    *) );
+      inventory    = malloc( sizeof( char * ) );
       inventory[0] = strdup( _( "None" ) );
       n            = 1;
    } else {
@@ -1013,7 +1013,7 @@ static void cargo_genList( unsigned int wid )
    /* List */
    if ( array_size( pclist ) == 0 ) {
       /* No cargo */
-      buf    = malloc( sizeof( char    *) );
+      buf    = malloc( sizeof( char * ) );
       buf[0] = strdup( _( "None" ) );
       nbuf   = 1;
    } else {
@@ -1258,7 +1258,7 @@ static void info_openStandings( unsigned int wid )
 
    /* Gets the faction standings. */
    info_factions = faction_getKnown();
-   str           = malloc( sizeof( char           *) * array_size( info_factions ) );
+   str           = malloc( sizeof( char * ) * array_size( info_factions ) );
    qsort( info_factions, array_size( info_factions ), sizeof( int ),
           factionsSort );
 
@@ -1402,7 +1402,7 @@ static void info_openMissions( unsigned int wid )
    /* Add a checkbox to hide the mission. */
    window_addCheckbox( wid, 300 + 40, 20 + BUTTON_HEIGHT + 10, w - 300 - 60,
                        BUTTON_HEIGHT, "chkHide",
-                       _( "Hide mission on-screen display" ),
+                       _( "Hide mission on-screen display and map markers" ),
                        mission_menu_chk_hide, 0 );
    /* Checkbox to make the mission be top. */
    window_addCheckbox(
@@ -1508,6 +1508,9 @@ static void mission_menu_chk_hide( unsigned int wid, const char *str )
    if ( misn->osd == 0 )
       return;
    misn_osdSetHide( misn, window_checkboxState( wid, str ) );
+
+   /* Update system markers. */
+   mission_sysMark();
 }
 static void mission_menu_chk_priority( unsigned int wid, const char *str )
 {

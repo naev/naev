@@ -120,6 +120,7 @@ You have obtained information about a jump to #bWild Space#0.]]),
    if not accepted then return false end
 
    jmp:setKnown(true)
+   naev.missionStart("Wild Space Marker")
    evt.finish(true)
 end
 

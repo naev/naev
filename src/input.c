@@ -10,6 +10,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include <ctype.h>
+
 #include "input.h"
 
 #include "board.h"

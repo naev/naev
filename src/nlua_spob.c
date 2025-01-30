@@ -9,6 +9,7 @@
 /** @cond */
 #include "naev.h"
 
+#include <ctype.h>
 #include <lauxlib.h>
 /** @endcond */
 

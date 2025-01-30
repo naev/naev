@@ -241,7 +241,6 @@ function wave_round_setup ()
    if not gmods.nohealing then
       pp:setHealth( 100, 100, 0 )
       pp:setEnergy( 100 )
-      pp:setTemp( 0 )
    end
    pp:fillAmmo() -- Have to fill ammo or deployed fighters get "lost"
    -- TODO reset outfit cooldown stuff

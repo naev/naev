@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include "physfs.h"
+#include <ctype.h>
 #include <stdlib.h>
 
 #include "naev.h"
@@ -1131,7 +1132,7 @@ static void player_renderStealthUnderlay( double dt )
    for ( int i = 0; i < array_size( ps ); i++ ) {
       double x, y, r;
       Pilot *t = ps[i];
-      if ( areAllies( player.p->faction, t->faction ) || pilot_isFriendly( t ) )
+      if ( pilot_isFriendly( t ) )
          continue;
       if ( pilot_isDisabled( t ) )
          continue;

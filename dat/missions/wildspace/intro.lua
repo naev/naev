@@ -9,7 +9,6 @@
   <tag>fleetcap_10</tag>
  </tags>
  <notes>
-  <campaign>Taiomi</campaign>
   <tier>2</tier>
   <done_evt name="Welcome to Wild Space" />
  </notes>

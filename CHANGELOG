@@ -19,11 +19,14 @@
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
    * Fixes
+      * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
       * Action speed can no longer be negative and disables space worthiness
       * Don't show OSD frame when not visible
+      * Can't stack Sirius ferry pilgrim missions
+      * Add marker mission to help the player find wild space
 
 * 0.12.3 (unreleased)
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
@@ -46,7 +49,12 @@
    * oldwoman: The old woman complains again
    * shadowvigil: seiryuu doesn't disappear if you land
    * darkshadow: four wind fighters can hurt the player
+   * kex3: made it completable by making it much easier to dodge and have a fairer fight
+   * Fixed stealth circles not appearing on hostile pilots if their faction is friendly
    * Fixed some date-related mission information not being updated
+   * Fixed landing music playing with VN music in some situations
+   * Significantly buffed point defense damage
+   * Story mode gives an additional -50% fuel usage modifier
    * Minor typo fixes and translation updates
 
 * 0.12.2

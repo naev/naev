@@ -158,7 +158,6 @@ function create()
    -- Set up passenger details so player cannot keep trying to get a better outcome
    mem.destpicky = rnd.rnd(1,4)
    mem.shippicky = mem.rank*2 + rnd.rnd(-1,1)
-
 end
 
 local function player_has_sirian_ship()
@@ -167,6 +166,11 @@ end
 
 -- Mission is accepted
 function accept()
+   if player.misnActive("Sirius Pilgrimage Transport") then
+      vntk.msg(_([[Already Transporting]]),_([[You can only accept a single ferry mission at a given time.]]))
+      return
+   end
+
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
    if mem.timelimit < playerbest then
       if not vntk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.

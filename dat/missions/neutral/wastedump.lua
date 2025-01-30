@@ -96,6 +96,7 @@ function accept ()
 
    local c = commodity.new( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids. You hope they don't leak onto your ship.") )
    mem.cid = misn.cargoAdd( c, q )
+   mem.quantity = q
    player.pay( mem.credits )
 
    misn.osdCreate( _("Waste Dump"), {_("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")} )
@@ -127,6 +128,13 @@ function abort ()
       end
       vntk.msg(_("Dirty Deed"), msg)
       player.pay( -fine )
+
+      -- Hit all the presences in the system
+      for fct,val in pairs( system.cur():presences() ) do
+         local fcthit = math.max( (mem.quantity or 0) / 50, 5 )
+         faction.hit( fct, -fcthit, system.cur(), nil, true )
+      end
+
       misn.finish( false )
 
    else
@@ -134,6 +142,12 @@ function abort ()
       vntk.msg(_("Dirty Deed"), txt)
 
       misn.cargoJet( mem.cid )
+
+      -- Hit all the presences in the system
+      for fct,val in pairs( system.cur():presences() ) do
+         local fcthit = math.max( (mem.quantity or 0) / 50, 5 )
+         faction.hit( fct, -fcthit, system.cur(), nil, true )
+      end
 
       -- Make everyone angry
       for i,p in ipairs(pilot.get()) do
@@ -194,7 +208,9 @@ function abort ()
       end
 
       -- No landing, filthy waste dumper!
-      player.landAllow( false, _("Get lost, waste dumping scum! We don't want you here!") )
+      for i,spb in ipairs(system.cur():spobs()) do
+         spb:setHostile(true)
+      end
 
       misn.finish( true )
    end

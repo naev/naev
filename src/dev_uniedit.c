@@ -12,7 +12,9 @@
 #include "naev.h"
 /** @endcond */
 
+#include <ctype.h>
 #include <libgen.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "dev_uniedit.h"
@@ -671,7 +673,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
 
    /* Add virtual spob list. */
    n      = 9; /* Number of special cases. */
-   str    = malloc( sizeof( char    *) * ( array_size( factions ) + n ) );
+   str    = malloc( sizeof( char * ) * ( array_size( factions ) + n ) );
    str[0] = strdup( _( "Default" ) );
    str[1] = strdup( _( "Virtual Spobs" ) );
    str[2] = strdup( _( "System Radius" ) );
@@ -1234,7 +1236,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    else if ( uniedit_viewmode == UNIEDIT_VIEW_TECH ) {
       char     *techlist[256];
       int       ntechs = 0;
-      const int len    = sizeof( techlist ) / sizeof( char    *);
+      const int len    = sizeof( techlist ) / sizeof( char * );
       int       l;
 
       if ( array_size( sys->spobs ) == 0 )
@@ -2120,7 +2122,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found,
    y = -45 - BUTTON_HEIGHT - 20;
 
    if ( n == 0 ) {
-      str    = malloc( sizeof( char    *) );
+      str    = malloc( sizeof( char * ) );
       str[0] = strdup( _( "None" ) );
       n      = 1;
    } else {
@@ -2607,7 +2609,7 @@ static void uniedit_btnEditTags( unsigned int wid, const char *unused )
    /* Generate list of tags. */
    if ( uniedit_tagslist == NULL ) {
       StarSystem *systems_all = system_getAll();
-      uniedit_tagslist        = array_create( char        *);
+      uniedit_tagslist        = array_create( char * );
       for ( int i = 0; i < array_size( systems_all ); i++ ) {
          StarSystem *s = &systems_all[i];
          for ( int j = 0; j < array_size( s->tags ); j++ ) {
@@ -2679,7 +2681,7 @@ static void uniedit_genTagsList( unsigned int wid )
          have[i] = strdup( s->tags[i] );
       empty = 0;
    } else {
-      have      = malloc( sizeof( char      *) );
+      have      = malloc( sizeof( char * ) );
       have[n++] = strdup( _( "None" ) );
       empty     = 1;
    }

@@ -8,6 +8,9 @@
  */
 #include "nxml.h"
 
+#include <ctype.h>
+#include <inttypes.h>
+
 #include "ndata.h"
 
 /**

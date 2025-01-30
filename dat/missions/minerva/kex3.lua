@@ -263,7 +263,10 @@ function enter ()
       end
    end
 
-   if mem.misn_state==1 and system.cur() == targetsys then
+   if mem.misn_state==0 and system.cur() == targetsys then
+      player.landAllow() -- Just allow the player to land
+
+   elseif mem.misn_state==1 and system.cur() == targetsys then
       -- Spawn thugs after the player. Player should likely be going to Dvaer
       spawn_thugs( vec2.new( 15000, 15000 ), true )
       -- Move to next state
@@ -366,14 +369,24 @@ function enter_the_ring ()
    player.shipSwap( player_vendetta, true )
    equipopt.generic( player.pilot(), {
       rnd=0,
-      type_range={Afterburner={min=1}}
+      type_range={Afterburner={min=1}},
+      prefer = {
+         ["TeraCom Mace Launcher"] = 5,
+      },
+      max_same_weap = 4,
    }, "elite" )
    hook.pilot( player.pilot(), "death", "player_death" )
 
    -- Set up Major Malik
    enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
    local pos = vec2.new( -1500, 1500 )
-   pmalik = pilot.add( "Dvaered Vendetta", enemy_faction, pos, _("Major Malik") )
+   pmalik = pilot.add( "Dvaered Vendetta", enemy_faction, pos, _("Major Malik"), {naked=true} )
+   equipopt.dvaered( pmalik, {
+      rnd = 0,
+      launcher = 0.1,
+      max_stru = 1,
+      max_util = 1,
+   } )
    pmalik:setInvincible(true)
    pmalik:setHostile(true)
    pmalik:control(true)
@@ -440,6 +453,8 @@ function malik_taunt ()
 end
 
 function malik_death ()
+   -- Make it so it's much easier to dodge for the player
+   player.pilot():intrinsicSet( "ew_signature", -75 )
    hook.timer( 5, "malik_speech" )
 end
 

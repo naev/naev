@@ -1574,7 +1574,7 @@ function vn.music( filename, params, dontstop )
    else
       vn.func( function ()
          if not dontstop then
-            music.stop()
+            music.stop(true)
             lmusic.stop()
          end
          vn._handle_music = true
@@ -1953,6 +1953,7 @@ function vn.run()
    -- Destroy remaining lmusic stuff if necessary
    if vn._handle_music then
       lmusic.clear()
+      vn._handle_music = false
    end
 end
 

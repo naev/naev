@@ -9,14 +9,19 @@
  */
 
 /** @cond */
+#include <inttypes.h>
 #include <signal.h>
 
 #if DEBUGGING
 #include <backtrace.h>
 
+#ifndef __USE_GNU
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
+#else /* __USE_GNU */
+#include <dlfcn.h>
+#endif /* __USE_GNU */
 
 #if defined( __APPLE__ )
 #define _DARWIN_C_SOURCE /* Use Apple's imlementation. */

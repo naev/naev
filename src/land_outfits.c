@@ -429,7 +429,7 @@ static void outfits_genList( unsigned int wid )
    if ( active == 6 ) {
       /* Show player their owned outfits. */
       const PlayerOutfit_t *po = player_getOutfits();
-      iar_outfits[active]      = array_create( Outfit      *);
+      iar_outfits[active]      = array_create( Outfit * );
       for ( int i = 0; i < array_size( po ); i++ )
          array_push_back( &iar_outfits[active], (Outfit *)po[i].o );
       /* Also add stuff they sold. */
@@ -622,7 +622,7 @@ void outfits_update( unsigned int wid, const char *str )
  */
 void outfits_updateEquipmentOutfits( void )
 {
-   if ( landed && land_doneLoading() ) {
+   if ( landed && ( land_spob != NULL ) && land_doneLoading() ) {
       if ( spob_hasService( land_spob, SPOB_SERVICE_OUTFITS ) ) {
          int ow = land_getWid( LAND_WINDOW_OUTFITS );
          outfits_regenList( ow, NULL );

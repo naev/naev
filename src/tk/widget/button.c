@@ -7,6 +7,7 @@
  * @brief Button widget.
  */
 /** @cond */
+#include <ctype.h>
 #include <stdlib.h>
 /** @endcond */
 
@@ -79,7 +80,7 @@ void window_addButtonKey(
    if ( wdw->focus == -1 ) /* initialize the focus */
       toolkit_nextFocus( wdw );
 
-      /* Check for duplicate key bindings. */
+   /* Check for duplicate key bindings. */
 #if DEBUGGING
    if ( key != 0 ) {
       for ( Widget *wgti = wdw->widgets; wgti != NULL; wgti = wgti->next ) {
