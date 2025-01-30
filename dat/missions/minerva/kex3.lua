@@ -263,7 +263,10 @@ function enter ()
       end
    end
 
-   if mem.misn_state==1 and system.cur() == targetsys then
+   if mem.misn_state==0 and system.cur() == targetsys then
+      player.landAllow() -- Just allow the player to land
+
+   elseif mem.misn_state==1 and system.cur() == targetsys then
       -- Spawn thugs after the player. Player should likely be going to Dvaer
       spawn_thugs( vec2.new( 15000, 15000 ), true )
       -- Move to next state
