@@ -40,6 +40,9 @@ function create ()
       ai.setcredits( rnd.rnd(price/300, price/70) )
    end
 
+   -- Less proper training
+   mem.atk_skill = 0.5 + 0.25*rnd.sigma()
+
    create_post()
 end
 

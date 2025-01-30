@@ -19,6 +19,8 @@ function create ()
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/150, price/50) ) -- Target for crime
 
+   mem.atk_skill = 0.3 + 0.3*rnd.sigma()
+
    create_post()
 end
 

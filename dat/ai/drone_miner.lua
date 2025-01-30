@@ -1,9 +1,10 @@
 require 'ai.core.core'
 
 -- Settings
-mem.control_rate = 0.5 -- Lower control rate
-mem.aggressive = true
-mem.land_planet = false
+mem.control_rate  = 0.5 -- Lower control rate
+mem.aggressive    = true
+mem.land_planet   = false
+mem.atk_skill     = 0.5
 
 function create ()
    create_pre()
