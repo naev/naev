@@ -510,7 +510,7 @@ static void think_beam( Weapon *w, double dt )
    /* Check if pilot has enough energy left to keep beam active. */
    mod = ( w->outfit->type == OUTFIT_TYPE_BEAM ) ? p->stats.fwd_energy
                                                  : p->stats.tur_energy;
-   p->energy -= mod * dt * w->outfit->u.bem.energy * p->stats.weapon_energy;
+   p->energy -= mod * dt * outfit_energy( w->outfit ) * p->stats.weapon_energy;
    if ( p->energy < 0. ) {
       p->energy = 0.;
       w->timer  = -1;
@@ -539,12 +539,12 @@ static void think_beam( Weapon *w, double dt )
       turn_off = 1;
       if ( t != NULL ) {
          if ( vec2_dist( &p->solid.pos, &t->solid.pos ) <=
-              slot->outfit->u.bem.range * w->range_mod )
+              outfit_range( slot->outfit ) * w->range_mod )
             turn_off = 0;
       }
       if ( ast != NULL ) {
          if ( vec2_dist( &p->solid.pos, &ast->sol.pos ) <=
-              slot->outfit->u.bem.range * w->range_mod )
+              outfit_range( slot->outfit ) * w->range_mod )
             turn_off = 0;
       }
 
@@ -562,7 +562,7 @@ static void think_beam( Weapon *w, double dt )
    /* Handle aiming at the target. */
    switch ( w->outfit->type ) {
    case OUTFIT_TYPE_BEAM:
-      if ( w->outfit->u.bem.swivel > 0. )
+      if ( outfit_swivel( w->outfit ) > 0. )
          w->solid.dir =
             weapon_aimTurret( w->outfit, p, &w->target, &w->solid.pos,
                               &p->solid.vel, p->solid.dir, 0. );
@@ -591,10 +591,9 @@ static void think_beam( Weapon *w, double dt )
          diff = angle_diff( w->solid.dir, /* Get angle to target pos */
                             vec2_angle( &w->solid.pos, &t->solid.pos ) );
 
-      weapon_setTurn( w,
-                      p->stats.time_speedup *
-                         CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
-                                10. * diff * w->outfit->u.bem.turn ) );
+      double turn = outfit_turn( w->outfit );
+      weapon_setTurn( w, p->stats.time_speedup *
+                            CLAMP( -turn, turn, 10. * diff * turn ) );
       break;
 
    default:
@@ -773,7 +772,8 @@ static void weapon_renderBeam( Weapon *w, double dt )
 {
    double x, y, z;
    mat4   projection;
-   double range = w->outfit->u.bem.range * w->range_mod;
+   double range = outfit_range( w->outfit ) * w->range_mod;
+   double width = outfit_width( w->outfit );
 
    /* Animation. */
    w->anim += dt;
@@ -790,7 +790,7 @@ static void weapon_renderBeam( Weapon *w, double dt )
    projection = gl_view_matrix;
    mat4_translate_xy( &projection, x, y );
    mat4_rotate2d( &projection, w->solid.dir );
-   mat4_scale_xy( &projection, range * z, w->outfit->u.bem.width * z );
+   mat4_scale_xy( &projection, range * z, width * z );
    mat4_translate_xy( &projection, 0., -0.5 );
 
    /* Set the vertex. */
@@ -800,8 +800,8 @@ static void weapon_renderBeam( Weapon *w, double dt )
 
    /* Set shader uniforms. */
    gl_uniformMat4( shaders.beam.projection, &projection );
-   gl_uniformColour( shaders.beam.colour, &w->outfit->u.bem.colour );
-   glUniform2f( shaders.beam.dimensions, range, w->outfit->u.bem.width );
+   gl_uniformColour( shaders.beam.colour, outfit_colour( w->outfit ) );
+   glUniform2f( shaders.beam.dimensions, range, width );
    glUniform1f( shaders.beam.dt, w->anim );
    glUniform1f( shaders.beam.r, w->r );
 
@@ -1248,9 +1248,9 @@ static void weapon_updateCollide( Weapon *w, double dt )
       }
       wc.gfx     = NULL;
       wc.polygon = NULL;
-      wc.range   = w->outfit->u.bem.width * 0.5; /* Set beam width. */
+      wc.range   = outfit_width( w->outfit ) * 0.5; /* Set beam width. */
       wc.beamrange =
-         w->outfit->u.bem.range * w->range_mod; /* Set beam range. */
+         outfit_range( w->outfit ) * w->range_mod; /* Set beam range. */
 
       /* Determine quadtree location. */
       x1 = round( w->solid.pos.x );
@@ -2357,14 +2357,16 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
       if ( pilot_isPlayer( parent ) && input_mouseIsShown() ) {
          vec2 tv;
          gl_screenToGameCoords( &tv.x, &tv.y, player.mousex, player.mousey );
-         rdir = weapon_aimTurretStatic( &tv, pos, dir, outfit->u.blt.swivel );
+         rdir =
+            weapon_aimTurretStatic( &tv, pos, dir, outfit_swivel( outfit ) );
       } else
          rdir = dir;
    }
 
    /* Disperse as necessary. */
-   if ( outfit->u.blt.dispersion > 0. )
-      rdir += RNG_1SIGMA() * outfit->u.blt.dispersion;
+   double dispersion = outfit_dispersion( outfit );
+   if ( dispersion > 0. )
+      rdir += RNG_1SIGMA() * dispersion;
 
    /* Stat modifiers. */
    if ( outfit->type == OUTFIT_TYPE_TURRET_BOLT ) {
@@ -2387,15 +2389,16 @@ static void weapon_createBolt( Weapon *w, const Outfit *outfit, double dir,
 
    mass = 1.; /* Lasers are presumed to have unitary mass, just like the real
                  world. */
-   v = *vel;
-   m = outfit->u.blt.speed;
-   if ( outfit->u.blt.speed_dispersion > 0. )
-      m += RNG_1SIGMA() * outfit->u.blt.speed_dispersion;
+   v                       = *vel;
+   m                       = outfit_speed( outfit );
+   double speed_dispersion = outfit_speed_dispersion( outfit );
+   if ( speed_dispersion > 0. )
+      m += RNG_1SIGMA() * speed_dispersion;
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   w->timer   = outfit->u.blt.range / outfit->u.blt.speed * w->range_mod;
-   w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
+   w->timer   = outfit_range( outfit ) / outfit_speed( outfit ) * w->range_mod;
+   w->falloff = w->timer - outfit_falloff( outfit ) / outfit_speed( outfit );
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   w->voice = sound_playPos( w->outfit->u.blt.sound, w->solid.pos.x,
+   w->voice = sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
                              w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
 
    /* Set facing direction. */
@@ -2622,10 +2625,10 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
       mass = 1.; /**< Needs a mass. */
       solid_init( &w->solid, mass, rdir, pos, vel, SOLID_UPDATE_EULER );
       w->think = think_beam;
-      w->timer = outfit->u.bem.duration;
+      w->timer = outfit_duration( outfit );
       w->voice =
-         sound_playPos( w->outfit->u.bem.sound, w->solid.pos.x, w->solid.pos.y,
-                        w->solid.vel.x, w->solid.vel.y );
+         sound_playPos( outfit_sound( w->outfit ), w->solid.pos.x,
+                        w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
 
       if ( outfit->type == OUTFIT_TYPE_BEAM ) {
          w->dam_mod *= parent->stats.fwd_damage * parent->stats.weapon_damage;
@@ -2802,8 +2805,8 @@ static void weapon_free( Weapon *w )
    /* Stop playing sound if beam weapon. */
    if ( outfit_isBeam( w->outfit ) ) {
       sound_stop( w->voice );
-      sound_playPos( w->outfit->u.bem.sound_off, w->solid.pos.x, w->solid.pos.y,
-                     w->solid.vel.x, w->solid.vel.y );
+      sound_playPos( outfit_soundOff( w->outfit ), w->solid.pos.x,
+                     w->solid.pos.y, w->solid.vel.x, w->solid.vel.y );
    } else if ( w->target.type == TARGET_PILOT ) {
       Pilot *pilot_target = pilot_get( w->target.u.id );
 

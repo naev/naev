@@ -279,7 +279,7 @@ char **outfit_searchFuzzyCase( const char *name, int *n )
 
    /* Overallocate to maximum. */
    nstack = array_size( outfit_stack );
-   names  = malloc( sizeof( char  *) * nstack );
+   names  = malloc( sizeof( char * ) * nstack );
 
    /* Do fuzzy search. */
    len = 0;
@@ -894,6 +894,24 @@ double outfit_range( const Outfit *o )
 {
    return pilot_outfitRange( NULL, o );
 }
+double outfit_width( const Outfit *o )
+{
+   if ( outfit_isBeam( o ) )
+      return o->u.bem.width;
+   return -1.;
+}
+const glColour *outfit_colour( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return &o->u.bem.colour;
+   return NULL;
+}
+double outfit_falloff( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.falloff;
+   return -1.;
+}
 /**
  * @brief Gets the outfit's speed.
  *    @param o Outfit to get information from.
@@ -902,6 +920,12 @@ double outfit_range( const Outfit *o )
 double outfit_speed( const Outfit *o )
 {
    return pilot_outfitSpeed( NULL, o );
+}
+double outfit_turn( const Outfit *o )
+{
+   if ( outfit_isBeam( o ) )
+      return o->u.bem.turn;
+   return 0.;
 }
 
 /**
@@ -986,6 +1010,8 @@ int outfit_sound( const Outfit *o )
 {
    if ( outfit_isBolt( o ) )
       return o->u.blt.sound;
+   else if ( outfit_isBeam( o ) )
+      return o->u.bem.sound;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.sound;
    return -1.;
@@ -1003,6 +1029,12 @@ int outfit_soundHit( const Outfit *o )
       return o->u.lau.sound_hit;
    return -1.;
 }
+int outfit_soundOff( const Outfit *o )
+{
+   if ( outfit_isBeam( o ) )
+      return o->u.bem.sound_off;
+   return -1.;
+}
 /**
  * @brief Gets the outfit's ammunition mass.
  *    @param o Outfit to get ammunition mass from.
@@ -1016,6 +1048,30 @@ double outfit_ammoMass( const Outfit *o )
       return o->u.bay.ship_mass;
    return -1.;
 }
+int outfit_shots( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.shots;
+   else if ( outfit_isLauncher( o ) )
+      return o->u.lau.shots;
+   return 0;
+}
+double outfit_dispersion( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.dispersion;
+   else if ( outfit_isLauncher( o ) )
+      return o->u.lau.dispersion;
+   return -1.;
+}
+double outfit_speed_dispersion( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.speed_dispersion;
+   else if ( outfit_isLauncher( o ) )
+      return o->u.lau.speed_dispersion;
+   return -1.;
+}
 /**
  * @brief Gets the outfit's duration.
  *    @param o Outfit to get the duration of.
@@ -1023,7 +1079,9 @@ double outfit_ammoMass( const Outfit *o )
  */
 double outfit_duration( const Outfit *o )
 {
-   if ( outfit_isMod( o ) ) {
+   if ( outfit_isBeam( o ) ) {
+      return o->u.bem.duration;
+   } else if ( outfit_isMod( o ) ) {
       if ( o->u.mod.active )
          return o->u.mod.duration;
    } else if ( outfit_isAfterburner( o ) )
@@ -2413,8 +2471,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size = OUTFIT_SLOT_SIZE_NA;
 
    temp->u.map->systems = array_create( StarSystem * );
-   temp->u.map->spobs   = array_create( Spob   *);
-   temp->u.map->jumps   = array_create( JumpPoint   *);
+   temp->u.map->spobs   = array_create( Spob * );
+   temp->u.map->jumps   = array_create( JumpPoint * );
 
    do {
       xml_onlyNodes( node );
@@ -2801,7 +2859,7 @@ static int outfit_parse( Outfit *temp, const char *file )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char     *);
+         temp->tags     = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {

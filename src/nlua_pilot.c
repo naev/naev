@@ -1889,8 +1889,8 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
       lua_pushstring( L, "track" );
       if ( target != NULL )
          lua_pushnumber(
-            L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin,
-                                    slot->outfit->u.blt.trackmax ) );
+            L, pilot_ewWeaponTrack( p, target, outfit_trackmin( slot->outfit ),
+                                    outfit_trackmax( slot->outfit ) ) );
       else
          lua_pushnumber( L, -1 );
       lua_rawset( L, -3 );

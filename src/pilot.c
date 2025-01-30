@@ -4341,21 +4341,21 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       case OUTFIT_TYPE_BOLT:
          mod_energy = p->stats.fwd_energy;
          mod_damage = p->stats.fwd_damage;
-         mod_rate =
-            p->stats.fwd_firerate * (double)o->u.blt.shots / outfit_delay( o );
+         mod_rate   = p->stats.fwd_firerate * (double)outfit_shots( o ) /
+                    outfit_delay( o );
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
          mod_energy = p->stats.tur_energy;
          mod_damage = p->stats.tur_damage;
-         mod_rate =
-            p->stats.tur_firerate * (double)o->u.blt.shots / outfit_delay( o );
+         mod_rate   = p->stats.tur_firerate * (double)outfit_shots( o ) /
+                    outfit_delay( o );
          break;
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          mod_energy = 1.;
          mod_damage = p->stats.launch_damage;
-         mod_rate =
-            p->stats.launch_rate * (double)o->u.lau.shots / outfit_delay( o );
+         mod_rate   = p->stats.launch_rate * (double)outfit_shots( o ) /
+                    outfit_delay( o );
          break;
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
@@ -4369,8 +4369,10 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_damage = p->stats.tur_damage;
             mod_rate   = p->stats.tur_firerate;
          }
-         mod_rate *=
-            o->u.bem.duration / ( outfit_delay( o ) + o->u.bem.duration );
+         {
+            double duration = outfit_duration( o );
+            mod_rate *= duration / ( outfit_delay( o ) + duration );
+         }
          break;
       default:
          continue;

@@ -330,7 +330,7 @@ void pilot_weapSetUpdate( Pilot *p )
          if ( time < 0. )
             continue;
          else if ( outfit_isBolt( o ) ) {
-            if ( pilot_outfitRange( p, o ) / o->u.blt.speed < time )
+            if ( pilot_outfitRange( p, o ) / outfit_speed( o ) < time )
                continue;
          } else if ( outfit_isLauncher( o ) ) {
             if ( o->u.lau.duration * p->stats.launch_range *
@@ -1144,7 +1144,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
       energy = outfit_energy( w->outfit ) * energy_mod;
       p->energy -= energy;
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
-         for ( int i = 0; i < w->outfit->u.blt.shots; i++ ) {
+         for ( int i = 0; i < outfit_shots( w->outfit ); i++ ) {
             weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
          }
       }
