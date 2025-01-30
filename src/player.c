@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include "physfs.h"
+#include <ctype.h>
 #include <stdlib.h>
 
 #include "naev.h"

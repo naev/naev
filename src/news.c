@@ -7,6 +7,7 @@
  * @brief Handles news generation.
  */
 /** @cond */
+#include <inttypes.h>
 #include <stdlib.h>
 
 #include "naev.h"
@@ -126,7 +127,7 @@ int news_init( void )
       news_exit();
 
    news_list     = array_create( news_t );
-   news_lines    = array_create( char    *);
+   news_lines    = array_create( char * );
    news_restores = array_create( glFontRestore );
 
    return 0;

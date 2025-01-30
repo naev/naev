@@ -7,6 +7,8 @@
  * @brief Handles the star system editor.
  */
 /** @cond */
+#include <inttypes.h>
+
 #include "SDL.h"
 #include "physfs.h"
 
@@ -707,7 +709,7 @@ void mapedit_loadMapMenu_open( void )
    }
    /* case there are no files */
    else {
-      names    = malloc( sizeof( char    *) );
+      names    = malloc( sizeof( char * ) );
       names[0] = strdup( "None" );
       n        = 1;
    }
