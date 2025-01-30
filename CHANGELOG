@@ -23,6 +23,7 @@
    * Fixed stealth circles not appearing on hostile pilots if their faction is friendly
    * Fixed some date-related mission information not being updated
    * Fixed landing music playing with VN music in some situations
+   * Story mode gives an additional -50% fuel usage modifier
    * Minor typo fixes and translation updates
 
 * 0.12.2
