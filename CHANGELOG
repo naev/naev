@@ -18,6 +18,7 @@
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
    * Fixes
+      * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups

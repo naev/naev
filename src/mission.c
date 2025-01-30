@@ -622,6 +622,11 @@ void mission_sysMark( void )
       if ( player_missions[i]->id == 0 )
          continue;
 
+      /* Must not be hidden. */
+      if ( misn_osdGetHide( player_missions[i] ) )
+         continue;
+
+      /* Add markers. */
       for ( int j = 0; j < array_size( player_missions[i]->markers ); j++ ) {
          const MissionMarker *m = &player_missions[i]->markers[j];
 
@@ -1082,7 +1087,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char     *);
+         temp->tags     = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {
