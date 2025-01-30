@@ -968,7 +968,8 @@ function create_post ()
    -- Process skill
    if mem.atk_skill < 1 then
       local p = ai.pilot()
-      p:intrinsicSet( "ew_track", -(1-mem.atk_skill) * 80 )
+      -- We assume this is run before anything else, so we replace
+      p:intrinsicSet( "ew_track", -(1-mem.atk_skill) * 80, true )
    end
 end
 
