@@ -29,7 +29,7 @@
   <damage>
    <type>energy</type>
    <penetrate>10</penetrate>
-   <physical>10</physical>
+   <physical>15</physical>
   </damage>
   <pointdefense />
  </specific>

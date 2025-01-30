@@ -29,7 +29,7 @@
   <damage>
    <type>plasma</type>
    <penetrate>0</penetrate>
-   <physical>5</physical>
+   <physical>8</physical>
   </damage>
   <pointdefense />
   <miss_ships />
