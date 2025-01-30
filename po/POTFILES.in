@@ -88,6 +88,7 @@ dat/effects/psychic_divinity.xml
 dat/effects/psychic_orb_off.xml
 dat/effects/psychic_orb_on.xml
 dat/effects/ride_of_the_valkyries.xml
+dat/effects/scary_paint.xml
 dat/effects/shieldaura.xml
 dat/effects/shieldboost.xml
 dat/effects/wormhole_enter.xml
@@ -416,6 +417,7 @@ dat/outfits/unique/fuelshell_plating.xml
 dat/outfits/unique/hades_torch.xml
 dat/outfits/unique/homebrew_processing_unit.xml
 dat/outfits/unique/pulse_scanner.xml
+dat/outfits/unique/scary_paint.xml
 dat/outfits/unique/squadron_synchronizer_module.xml
 dat/outfits/unique/valkyrie_beam.xml
 dat/outfits/unique/veil_of_penelope.xml
@@ -3381,6 +3383,7 @@ dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/fuelshell_plating.lua
 dat/outfits/unique/poi_data.lua
 dat/outfits/unique/pulse_scanner.lua
+dat/outfits/unique/scary_paint.lua
 dat/outfits/unique/squadron_synchronizer_module.lua
 dat/outfits/unique/valkyrie_beam.lua
 dat/outfits/unique/zd5_guardian_unit.lua

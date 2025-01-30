@@ -2,7 +2,7 @@
 <effect name="Paint">
  <description>Ship is painted with scary looking paint.</description>
  <duration>INF</duration>
- <overwrite>paint</overwrite>
+ <overwrite>scary_paint</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
- <shader vertex="effect15x.vert">effects/paint.frag</shader>
+ <shader>effects/scary_paint.frag</shader>
 </effect>

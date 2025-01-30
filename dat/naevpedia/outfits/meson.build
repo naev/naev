@@ -286,6 +286,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/unique/hades_torch.xml',
    root / 'dat/outfits/unique/homebrew_processing_unit.xml',
    root / 'dat/outfits/unique/pulse_scanner.xml',
+   root / 'dat/outfits/unique/scary_paint.xml',
    root / 'dat/outfits/unique/squadron_synchronizer_module.xml',
    root / 'dat/outfits/unique/valkyrie_beam.xml',
    root / 'dat/outfits/unique/veil_of_penelope.xml',
