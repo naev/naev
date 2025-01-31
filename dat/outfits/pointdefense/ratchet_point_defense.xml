@@ -30,7 +30,7 @@
   <damage>
    <type>kinetic</type>
    <penetrate>0</penetrate>
-   <physical>10</physical>
+   <physical>15</physical>
   </damage>
   <radius>30</radius>
   <ai>unguided</ai>

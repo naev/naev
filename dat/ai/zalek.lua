@@ -79,6 +79,7 @@ function create()
 
    -- Set how far they attack
    mem.enemyclose = 3000 + 1000 * ps:size()
+   mem.atk_skill  = 0.75 + 0.25*rnd.sigma()
 
    -- Finish up creation
    create_post()

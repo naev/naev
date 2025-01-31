@@ -5,7 +5,7 @@ local fmt = require "format"
 local dv = require "common.dvaered"
 
 mem.lanes_useneutral = true
-mem.simplecombat = true
+mem.atk_skill = 0
 
 local ads_generic = {
    _("Fly safe, fly Milspec."),

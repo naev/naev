@@ -1131,7 +1131,7 @@ static int weapon_testCollision( const WeaponCollision *wc,
    /* Try to do polygon first. */
    if ( cpol != NULL ) {
       /* Case full polygon on polygon collision. */
-      if ( wc->polygon != NULL )
+      if ( wc->polyview != NULL )
          ret = CollidePolygon( cpol, cpos, wc->polyview, wpos, crash );
       /* GFX on polygon. */
       else if ( ( wc->gfx != NULL ) && ( wc->gfx->tex != NULL ) )
@@ -1144,7 +1144,7 @@ static int weapon_testCollision( const WeaponCollision *wc,
    /* Try to do texture next. */
    else if ( ctex != NULL ) {
       /* GFX on polygon. */
-      if ( wc->polygon != NULL )
+      if ( wc->polyview != NULL )
          ret = CollideSpritePolygon( wc->polyview, wpos, ctex, csx, csy, cpos,
                                      crash );
       /* Case texture on texture collision. */
@@ -1159,7 +1159,7 @@ static int weapon_testCollision( const WeaponCollision *wc,
    /* Finally radius only. */
    else {
       /* GFX on polygon. */
-      if ( wc->polygon != NULL )
+      if ( wc->polyview != NULL )
          ret = CollideSpritePolygon( wc->polyview, wpos, ctex, csx, csy, cpos,
                                      crash );
       /* Case texture on texture collision. */

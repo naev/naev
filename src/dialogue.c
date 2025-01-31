@@ -1018,9 +1018,6 @@ int dialogue_customResize( unsigned int wid, int width, int height )
  */
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
-   Uint64       last_t = SDL_GetPerformanceCounter();
-   const double fps_max =
-      ( conf.fps_max > 0 ) ? 1. / (double)conf.fps_max : fps_min;
    int quit_game = 0;
 
    /* Delay a toolkit iteration. */
@@ -1035,8 +1032,6 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 
    while ( !( *loop_done ) && toolkit_isOpen() && !naev_isQuit() ) {
       SDL_Event event;
-      Uint64    t;
-      double    dt;
 
       /* Loop first so exit condition is checked before next iteration. */
       main_loop( 1 );
@@ -1062,20 +1057,10 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
             &event ); /* handles all the events and player keybinds */
       }
 
-      /* FPS Control. */
-      t      = SDL_GetPerformanceCounter();
-      dt     = (double)( t - last_t ) / (double)SDL_GetPerformanceFrequency();
-      last_t = t;
-      /* Sleep if necessary. */
-      if ( dt < fps_max ) {
-         double delay = fps_max - dt;
-         SDL_Delay( (unsigned int)( delay * 1000. ) );
-      }
-
       /* Update stuff. */
       if ( du != NULL ) {
          /* Run update. */
-         if ( ( *du->update )( dt, du->data ) ) {
+         if ( ( *du->update )( naev_getrealdt(), du->data ) ) {
             /* Hack to override data. */
             window_setData( du->wid, loop_done );
             dialogue_close( du->wid, NULL );

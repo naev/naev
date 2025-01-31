@@ -374,7 +374,6 @@ function spawn_captain_tp ()
 
    p:setHealth( 100, 100 )
    p:setEnergy( 100 )
-   p:setTemp( 0 )
    p:setFuel( true )
 
    p:setHostile()

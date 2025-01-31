@@ -8,6 +8,8 @@
  */
 #include "lvar.h"
 
+#include <inttypes.h>
+
 #include "array.h"
 #include "nlua_time.h"
 #include "nluadef.h"

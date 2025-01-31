@@ -4,6 +4,7 @@ require 'ai.core.misc.distress'
 local fmt = require "format"
 
 mem.lanes_useneutral = true
+mem.atk_skill = 0
 
 local bribe_no_list = {
    _([["Just leave me alone!"]]),

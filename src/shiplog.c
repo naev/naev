@@ -7,6 +7,7 @@
  *
  * @brief Handles a log/journal of the player's playthrough.
  */
+#include <inttypes.h>
 
 #include "shiplog.h"
 
@@ -505,7 +506,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
    ntime_t t     = ntime_get();
 
    if ( includeAll ) {
-      types    = malloc( sizeof( char    *) );
+      types    = malloc( sizeof( char * ) );
       n        = 1;
       types[0] = strdup( _( "All" ) );
    }
@@ -522,7 +523,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
          }
          if ( j == n ) { /*This log type not found, so add.*/
             n++;
-            types        = realloc( types, sizeof( char        *) * n );
+            types        = realloc( types, sizeof( char * ) * n );
             types[n - 1] = strdup( shipLog.typeList[i] );
          }
       }
@@ -552,7 +553,7 @@ void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut,
    ntime_t t = ntime_get();
 
    n     = !!includeAll;
-   logs  = realloc( *logsOut, sizeof( char  *) * n );
+   logs  = realloc( *logsOut, sizeof( char * ) * n );
    logid = realloc( *logIDs, sizeof( int ) * n );
    if ( includeAll ) {
       logs[0]  = strdup( _( "All" ) );
@@ -568,7 +569,7 @@ void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut,
               ( ( type == NULL ) ||
                 ( strcmp( type, shipLog.typeList[i] ) == 0 ) ) ) {
             n++;
-            logs         = realloc( logs, sizeof( char         *) * n );
+            logs         = realloc( logs, sizeof( char * ) * n );
             logs[n - 1]  = strdup( shipLog.nameList[i] );
             logid        = realloc( logid, sizeof( int ) * n );
             logid[n - 1] = shipLog.idList[i];
@@ -680,7 +681,7 @@ void shiplog_listLog( int logid, const char *type, int *nentries,
    if ( ( n == 0 ) && ( incempty != 0 ) ) {
       /*empty list, so add "Empty" */
       n          = 1;
-      entries    = realloc( entries, sizeof( char    *) );
+      entries    = realloc( entries, sizeof( char * ) );
       entries[0] = strdup( _( "Empty" ) );
    }
    *logentries = entries;

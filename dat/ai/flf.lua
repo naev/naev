@@ -36,6 +36,7 @@ function create ()
    mem.ambushclose = 4000 + 1000 * ps:size()
    mem.enemyclose = mem.ambushclose
    mem.stealth = p:flags("stealth")
+   mem.atk_skill = 0.6 + 0.3*rnd.sigma()
 
    -- Finish up creation
    create_post()

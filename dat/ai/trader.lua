@@ -8,7 +8,7 @@ local fmt = require "format"
 mem.aggressive    = false
 mem.formation     = "buffer"
 mem.lanes_useneutral = true
-mem.simplecombat  = true -- Don't do fancy dodging
+mem.atk_skill = 0
 
 function create ()
    create_pre()
@@ -21,6 +21,11 @@ function create ()
 
    -- Try to do normal life as much as possible
    mem.safe_distance = 2000 + 1000 * ps:size()
+
+   -- A bit more skilled if not a transport
+   if not ps:tags().transport then
+      mem.atk_skill  = 0.5 + 0.3*rnd.sigma()
+   end
 
    -- Finish up creation
    create_post()

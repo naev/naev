@@ -62,5 +62,6 @@ function create ()
    create_pre()
    mem.r2 = system.cur():radius()^2
    mem.drifted = true
+   mem.atk_skill = 0.5 + 0.5*rnd.sigma()
    create_post()
 end
