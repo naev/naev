@@ -106,9 +106,9 @@ return function ( t, max, params )
    end
 
    -- Create weights for spawn table
-   t.patrol       = { f=spawn_patrol, w=-50 + 0.5*max }
-   t.loner_weak   = { f=spawn_loner_weak, w=-100 + max }
+   t.patrol       = { f=spawn_patrol, w=math.max(0, -50+1.2*max) }
+   t.loner_weak   = { f=spawn_loner_weak, w=50+0.75*max }
    t.loner_strong = { f=spawn_loner_strong, w=max }
-   t.squad        = { f=spawn_squad, w=math.max(0, -80 + 0.80 * max) }
+   t.squad        = { f=spawn_squad, w=math.max(0, -150 + 1.2 * max) }
    t.capship      = { f=spawn_capship, w=math.max(0, capship_base + 1.70 * max) }
 end
