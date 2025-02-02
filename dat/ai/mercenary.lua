@@ -38,6 +38,7 @@ function create ()
 
    mem.formation = merc_formations[ rnd.rnd(1,#merc_formations) ]
    mem.whiteknight = rnd.rnd() > 0.5 -- Not always white knight
+   mem.atk_skill = 0.5 + 0.5*rnd.sigma()
 
    -- Finish up creation
    create_post()

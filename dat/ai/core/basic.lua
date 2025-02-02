@@ -91,7 +91,7 @@ local function __zigzag ( dir, angle )
 end
 local function __zigzag_run_decide( self, target )
    -- Some AI will not do fancy maneuvers
-   if mem.simplecombat then return false end
+   if mem.atk_skill <= 0.45+0.55*mem.rand then return false end
    -- Try to figure it out
    local relspe = self:speedMax() / target:speedMax()
    return ( self:mass() <= 400
@@ -609,9 +609,11 @@ function _run_hyp( data )
    if jdist > bdist then
 
       local dozigzag = false
-      if enemy:exists() then
-         if __zigzag_run_decide( plt, enemy ) and jdist > 3*bdist then
-            dozigzag = true
+      if mem.atk_skill > 0.5+0.4*mem.rand then
+         if enemy:exists() then
+            if __zigzag_run_decide( plt, enemy ) and jdist > 3*bdist then
+               dozigzag = true
+            end
          end
       end
 

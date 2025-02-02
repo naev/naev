@@ -132,7 +132,7 @@ end
 --]]
 function atk.decide_zz( target, dist )
    -- Some AI will not do fancy maneuvers
-   if mem.simplecombat then return false end
+   if mem.atk_skill <= 0.45+0.55*mem.rand then return false end
    if target:flags("disabled") then return false end -- Don't be fance with disabled ships
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
@@ -343,7 +343,7 @@ end
 
 local function ___atk_g_ranged_dogfight( target, dist )
    local dir
-   if not mem.careful or dist < 3 * atk.primary_range() * mem.atk_approach then
+   if mem.atk_skill <= 0.45+0.55*mem.rand or dist < 3 * atk.primary_range() * mem.atk_approach then
       dir = ai.face(target) -- Normal face the target
    else
       dir = ai.careful_face(target) -- Careful method

@@ -13,12 +13,14 @@ local clean_task, gen_distress, gen_distress_attacked, handle_messages, lead_fle
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
+mem.rand          = 0 -- Random number from current think tick
 mem.atk_changetarget = 2 -- Distance at which target changes
 mem.atk_approach  = 1.4 -- Distance that marks approach
 mem.atk_aim       = 1.0 -- Distance that marks aim
 mem.atk_board     = false -- Whether or not to board the target
 mem.atk_kill      = true -- Whether or not to finish off the target
 mem.atk_minammo   = 0.1 -- Percent of ammo necessary to do ranged attacks
+mem.atk_skill     = 1.0 -- How skilled the pilot is when attacking. 1 is max, 0 is horrible
 mem.vulnattack    = 1.5 -- Vulnerability threshold
 mem.ranged_ammo   = 0 -- How much ammo is left, we initialize to 0 here just in case
 mem.recharge      = false --whether to hold off shooting to avoid running dry of energy
@@ -188,6 +190,7 @@ end
 
 -- Run instead of "control" when under manual control; use should be limited
 function control_manual( dt )
+   mem.rand = rnd.rnd()
    mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
    local task = ai.taskname()
@@ -735,6 +738,7 @@ end
 
 -- Required "control" function
 function control( dt )
+   mem.rand = rnd.rnd()
    mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
 
@@ -947,17 +951,25 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
+   mem.rand       = rnd.rnd()
    mem.scanned    = {} -- must create for each pilot
 
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carried then
-      ai.settimer( 0, rnd.uniform(5.0, 6.0) )
+      ai.settimer( 0, rnd.uniform(5, 6) )
       ai.pushtask("jumpin_wait")
    end
 
    -- Fighters do not give faction hits
    if mem.carried then
       mem.distress_hit = 0.
+   end
+
+   -- Process skill
+   if mem.atk_skill < 1 then
+      local p = ai.pilot()
+      -- We assume this is run before anything else, so we replace
+      p:intrinsicSet( "ew_track", -(1-mem.atk_skill) * 80, true )
    end
 end
 

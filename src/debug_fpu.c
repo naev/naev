@@ -13,6 +13,7 @@
 /** @cond */
 #if HAVE_FENV_H && DEBUGGING
 /* This module uses GNU extensions to enable FPU exceptions. */
+#define _GNU_SOURCE
 #include <fenv.h>
 #endif /* HAVE_FENV_H && DEBUGGING */
 /** @endcond */

@@ -1401,8 +1401,7 @@ static void info_openMissions( unsigned int wid )
 
    /* Add a checkbox to hide the mission. */
    window_addCheckbox( wid, 300 + 40, 20 + BUTTON_HEIGHT + 10, w - 300 - 60,
-                       BUTTON_HEIGHT, "chkHide",
-                       _( "Hide mission on-screen display and map markers" ),
+                       BUTTON_HEIGHT, "chkHide", _( "Hide mission" ),
                        mission_menu_chk_hide, 0 );
    /* Checkbox to make the mission be top. */
    window_addCheckbox(

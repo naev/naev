@@ -136,6 +136,7 @@ function pirate.create ()
    mem.enemyclose = mem.ambushclose
    mem.stealth    = p:flags("stealth") -- Follow however they were spawned
    mem.formation  = pirate.formations[ rnd.rnd(1,#pirate.formations) ]
+   mem.atk_skill  = 0.65 + 0.25*rnd.sigma()
 end
 
 function pirate.playerWorth ()

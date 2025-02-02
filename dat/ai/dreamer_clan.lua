@@ -32,6 +32,7 @@ function create ()
    create_pre()
    pirlib.create()
    mem.ambushclose = mem.ambushclose * 0.85 -- Less aggressive
+   mem.atk_skill = 0.75 + 0.25 * rnd.sigma()
    create_post()
 
    -- Poor

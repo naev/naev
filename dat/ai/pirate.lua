@@ -19,6 +19,8 @@ mem.careful       = true
 function create ()
    create_pre()
    pirlib.create()
+   -- Lower skill than the clans
+   mem.atk_skill  = 0.45 + 0.3*rnd.sigma()
    create_post()
 end
 

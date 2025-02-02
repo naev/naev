@@ -4,6 +4,7 @@
       * Made pirates less aggressive
       * Change pirate spawning so hyenas are less dominant and deadly to new players
       * Fuel from outfits has been tweaked a bit
+      * NPCs now have skill levels that can affect their targetting and fighting ability
    * Content
       * 2 new missions
       * 6 new ship variants
@@ -28,7 +29,7 @@
       * Can't stack Sirius ferry pilgrim missions
       * Add marker mission to help the player find wild space
 
-* 0.12.3 (unreleased)
+* 0.12.3
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
    * Largus Gene Drive (Nyx) has a max speed of 175, not 275
    * Tweaked Melendez Mammoth XL and Eagle 6500 top speeds
