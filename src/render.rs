@@ -26,3 +26,26 @@ impl Default for TextureUniform {
         }
     }
 }
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, ShaderType)]
+pub struct SolidUniform {
+    pub transform: Matrix3<f32>,
+    pub colour: Vector4<f32>,
+}
+impl SolidUniform {
+    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
+        let mut buffer =
+            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
+        buffer.write(self)?;
+        Ok(buffer)
+    }
+}
+impl Default for SolidUniform {
+    fn default() -> Self {
+        SolidUniform {
+            transform: Matrix3::identity(),
+            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        }
+    }
+}

@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use anyhow::Result;
 use glow::*;
-use nalgebra::Matrix3;
+use nalgebra::{Matrix3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
@@ -12,7 +12,7 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::render::TextureUniform;
+use crate::render::{SolidUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{formatx, warn};
 use crate::{gettext, log, ndata};
@@ -116,10 +116,14 @@ pub struct Context {
     pub projection: Matrix3<f32>,
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
+    pub program_solid: Shader,
+    pub buffer_solid: Buffer,
     pub vbo_square: Buffer,
     pub vao_square: VertexArray,
     pub vbo_center: Buffer,
     pub vao_center: VertexArray,
+    pub vbo_triangle: Buffer,
+    pub vao_triangle: VertexArray,
 }
 unsafe impl Send for Context {}
 unsafe impl Sync for Context {}
@@ -178,6 +182,22 @@ impl Context {
                                    1.,-1.,
                                   -1., 1.,
                                    1., 1., ];
+
+    // cos/sin are not constant or we would want
+    //vertex[0]      = 0.5 * cos( 4. * M_PI / 3. );
+    //vertex[1]      = 0.5 * sin( 4. * M_PI / 3. );
+    //vertex[2]      = 0.5 * cos( 0. );
+    //vertex[3]      = 0.5 * sin( 0. );
+    //vertex[4]      = 0.5 * cos( 2. * M_PI / 3. );
+    //vertex[5]      = 0.5 * sin( 2. * M_PI / 3. );
+    //vertex[6]      = vertex[0];
+    //vertex[7]      = vertex[1];
+    #[rustfmt::skip]
+    const DATA_TRIANGLE: [f32;8] = [
+        -0.25, -0.4330127018922192,
+         0.5,   0.0,
+        -0.25,  0.4330127018922192,
+        -0.25, -0.4330127018922192];
 
     fn create_context(
         sdlvid: &sdl::VideoSubsystem,
@@ -310,6 +330,7 @@ impl Context {
         }
 
         // Initialize some useful globals
+        // The texture shader
         let program_texture = ShaderBuilder::new(Some("Texture Shader"))
             .vert_file("rust_texture.vert")
             .frag_file("rust_texture.frag")
@@ -321,7 +342,20 @@ impl Context {
             .usage(BufferUsage::Dynamic)
             .data(uniform.buffer()?.into_inner().as_slice())
             .build(&gl)?;
+        // The solid shader
+        let program_solid = ShaderBuilder::new(Some("Solid Shader"))
+            .vert_file("rust_solid.vert")
+            .frag_file("rust_solid.frag")
+            .sampler("sampler", 0)
+            .build(&gl)?;
+        let uniform = SolidUniform::default();
+        let buffer_solid = BufferBuilder::new()
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(uniform.buffer()?.into_inner().as_slice())
+            .build(&gl)?;
 
+        // Square VBO
         let vbo_square = BufferBuilder::new()
             .usage(BufferUsage::Static)
             .data_f32(&Self::DATA_SQUARE)
@@ -336,6 +370,7 @@ impl Context {
             }])
             .build(&gl)?;
 
+        // Center VBO
         let vbo_center = BufferBuilder::new()
             .usage(BufferUsage::Static)
             .data_f32(&Self::DATA_CENTER)
@@ -343,6 +378,21 @@ impl Context {
         let vao_center = VertexArrayBuilder::new()
             .buffers(&[VertexArrayBuffer {
                 buffer: &vbo_center,
+                size: 2,
+                stride: 0, // tightly packed
+                offset: 0,
+                divisor: 0,
+            }])
+            .build(&gl)?;
+
+        // Triangle VBO
+        let vbo_triangle = BufferBuilder::new()
+            .usage(BufferUsage::Static)
+            .data_f32(&Self::DATA_TRIANGLE)
+            .build(&gl)?;
+        let vao_triangle = VertexArrayBuilder::new()
+            .buffers(&[VertexArrayBuffer {
+                buffer: &vbo_triangle,
                 size: 2,
                 stride: 0, // tightly packed
                 offset: 0,
@@ -376,10 +426,14 @@ impl Context {
             projection,
             program_texture,
             buffer_texture,
+            program_solid,
+            buffer_solid,
             vbo_square,
             vao_square,
             vbo_center,
             vao_center,
+            vbo_triangle,
+            vao_triangle,
         };
         let _ = CONTEXT.set(ctx);
         Ok(CONTEXT.get().unwrap())
@@ -394,5 +448,36 @@ impl Context {
         for msg in queue.drain(..) {
             msg.execute(self);
         }
+    }
+
+    pub fn draw_rect(&self, x: f32, y: f32, w: f32, h: f32, colour: Vector4<f32>) -> Result<()> {
+        #[rustfmt::skip]
+        let transform: Matrix3<f32> = self.projection * Matrix3::new(
+             w,  0.0,  x,
+            0.0,  h,   y,
+            0.0, 0.0, 1.0,
+        );
+        let uniform = SolidUniform {
+            transform,
+            colour,
+            ..Default::default()
+        };
+        self.draw_rect_ex(&uniform)
+    }
+
+    pub fn draw_rect_ex(&self, uniform: &SolidUniform) -> Result<()> {
+        let gl = &self.gl;
+        self.program_solid.use_program(gl);
+        self.vao_square.bind(self);
+
+        self.buffer_solid
+            .write(self, uniform.buffer()?.into_inner().as_slice())?;
+        unsafe {
+            gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
+        }
+
+        VertexArray::unbind(self);
+        check_for_gl_error!(gl, "Context::draw_rect");
+        Ok(())
     }
 }
