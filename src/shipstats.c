@@ -240,7 +240,7 @@ static const ShipStatsLookup ss_lookup[] = {
    B__ELEM( SS_TYPE_B_INSTANT_JUMP, misc_instant_jump, N_( "Instant Jump" ) ),
    B__ELEM( SS_TYPE_B_REVERSE_THRUST, misc_reverse_thrust,
             N_( "Reverse Thrusters" ) ),
-   B__ELEM( SS_TYPE_B_INVINCIBLE, invincible, N_( "Can not be damaged" ) ),
+   B__ELEM( SS_TYPE_B_INVINCIBLE, invincible, N_( "Temporary invincibility" ) ),
 
    /* Sentinel. */
    N__ELEM( SS_TYPE_SENTINEL ) };
