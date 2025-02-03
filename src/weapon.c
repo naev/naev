@@ -935,7 +935,7 @@ static void weapon_render( Weapon *w, double dt )
 static int weapon_checkCanHit( const Weapon *w, const Pilot *p )
 {
    /* Can't hit invincible stuff. */
-   if ( pilot_isFlag( p, PILOT_INVINCIBLE ) )
+   if ( pilot_invincible( p ) )
       return 0;
 
    /* Can't hit hidden stuff. */

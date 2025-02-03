@@ -6474,7 +6474,7 @@ static int pilotL_collisionTest( lua_State *L )
    Pilot *t = luaL_validpilot( L, 2 );
 
    /* Shouldn't be invincible. */
-   if ( pilot_isFlag( t, PILOT_INVINCIBLE ) )
+   if ( pilot_invincible( t ) )
       return 0;
 
    /* Shouldn't be landing or taking off. */
