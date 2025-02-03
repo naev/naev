@@ -173,6 +173,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_B_INSTANT_JUMP,   /**< Do not require brake or chargeup to jump. */
    SS_TYPE_B_REVERSE_THRUST, /**< Ship slows down rather than turning on
                                 reverse. */
+   SS_TYPE_B_INVINCIBLE,     /**< Ship can not be damaged. */
 
    /*
     * End of list.
@@ -353,6 +354,7 @@ typedef struct ShipStats_ {
    double jump_distance; /**< Modifies how far the pilot can jump from the jump
                             point. */
    double jump_warmup;   /**< Modifies the time that is necessary to jump. */
+   int    invincible;    /**< Invincibility. */
 } ShipStats;
 
 /*

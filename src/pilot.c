@@ -4547,5 +4547,5 @@ void pilot_quadtreeParams( int max_elem, int depth )
  */
 int pilot_invincible( const Pilot *p )
 {
-   return pilot_isFlag( p, PILOT_INVINCIBLE );
+   return pilot_isFlag( p, PILOT_INVINCIBLE ) || p->stats.invincible;
 }

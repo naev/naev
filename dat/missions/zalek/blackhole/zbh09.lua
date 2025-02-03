@@ -412,7 +412,7 @@ function heartbeat_ferals ()
       -- Check ending criteria
       for k,p in ipairs(pack) do
          local ps = p:ship():size()
-         if not p:flags("invincible") then
+         if not p:invincible() then
             local pa = p:health()
             if pa < 30 then
                p:setInvincible(true)
@@ -430,7 +430,7 @@ function heartbeat_ferals ()
       nexttime = 0.1
 
       -- End criteria
-      if (naev.ticksGame() - fightstart > 90) or (defeated > 0.5*total) or l:flags("invincible") then
+      if (naev.ticksGame() - fightstart > 90) or (defeated > 0.5*total) or l:invincible() then
          fstate = 10
       end
 
@@ -466,7 +466,7 @@ function heartbeat_ferals ()
       camera.setZoom( 2 )
 
       for k,p in ipairs(pack) do
-         if not p:flags("invincible") then
+         if not p:invincible() then
             p:setInvincible(true)
             p:setHostile(false)
             p:setInvisible(true)
