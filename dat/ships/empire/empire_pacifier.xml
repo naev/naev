@@ -51,6 +51,7 @@
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
   <heat_dissipation>15</heat_dissipation>
+  <fuel>400</fuel>
  </stats>
  <tags>
   <tag>empire</tag>

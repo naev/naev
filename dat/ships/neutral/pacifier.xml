@@ -48,6 +48,7 @@
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
   <heat_dissipation>10</heat_dissipation>
+  <fuel>400</fuel>
  </stats>
  <tags>
   <tag>frontier</tag>
