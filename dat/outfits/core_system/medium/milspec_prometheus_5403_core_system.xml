@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Milspec Prometheus 5403 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>320</mass>
+  <price>400000</price>
+  <description>Milspec's popularity lies in the niche markets it can fill, and the Dvaered are no exception to this. The Prometheus series was conceived for older tech ships still in production and circulation that rely more on their armor for protection, and may have inadequate electronics for modern weapons. The 5403 provides the heaviest power generation needs of any sub-capital systems core, and is generally used only on Dvaered destroyers, or similar sized ships that require a power core strong enough for an extended siege Some bulk freighters will also run these undersized cores on their ship to save space over bulky capital cores, with the 5403 being able to more than adequately meet the needs of its engines and weapons alike, being the only core reasonably capable of performing such a titanic feat for its size.
+</description>
+  <gfx_store>core_system_power_m2.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>320</cpu_max>
+  <energy>2200</energy>
+  <energy_regen>110</energy_regen>
+  <shield>400</shield>
+  <shield_regen>7</shield_regen>
+</specific>
+</outfit>

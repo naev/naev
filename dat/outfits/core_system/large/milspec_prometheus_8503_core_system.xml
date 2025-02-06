@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Milspec Prometheus 8503 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>large</size>
+  <mass>500</mass>
+  <price>2000000</price>
+  <description>Milspec's Prometheus 8503 is commonly seen on Dvaered and Goddard ships, finding its power needs more than adequate for such large vessels. Few non-dvaered ships benefit from this core, although the massive power requirements for large, power-hungry weapons sometimes necessitates a system core of capable of keeping up with the demands of extended combat.</description>
+  <gfx_store>core_system_power_l1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cpu_max>575</cpu_max>
+  <shield>650</shield>
+  <shield_regen>10</shield_regen>
+  <energy>4400</energy>
+  <energy_regen>220</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

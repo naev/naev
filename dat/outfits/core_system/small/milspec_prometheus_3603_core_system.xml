@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Milspec Prometheus 3603 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>48</mass>
+  <price>140000</price>
+  <description>Milspec primarily contracts their Prometheus 3603 cores to House Dvaered, as it fits the CPU and energy needs of their heavy fighters and bombers almost exclusively, and so is generally not found outside of their space, excepting mercenaries or pirates who have need of as much firepower as possible.</description>
+  <gfx_store>core_system_power_s2.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>80</cpu_max>
+  <energy>800</energy>
+  <energy_regen>40</energy_regen>
+  <shield>200</shield>
+  <shield_regen>5</shield_regen>
+ </specific>
+</outfit>

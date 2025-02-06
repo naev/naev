@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Milspec Aegis 8501 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>large</size>
+  <mass>500</mass>
+  <price>2000000</price>
+  <description>Milspec is famous for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Aegis series cores provide immensely effective defenses, with the 8501 being the prized jewel of many a freighter captain, capable of shrugging off marauding hordes of pirates, making them a mere stinging annoyance.</description>
+  <gfx_store>core_system_shield_l1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cpu_max>520</cpu_max>
+  <shield>1100</shield>
+  <shield_regen>22</shield_regen>
+  <energy>2000</energy>
+  <energy_regen>100</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

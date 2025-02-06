@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Milspec Prometheus 4703 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>medium</size>
+  <mass>80</mass>
+  <price>220000</price>
+  <description>Milspec's popularity lies in the niche markets it can fill, and the Dvaered are no exception to this. The Prometheus series was conceived for older tech ships still in production and circulation that rely more on their armor for protection, and may have inadequate electronics for modern weapons. Among these, proponents of the Phalanx swear by the 4703 for its ability to provide an almost inexhaustible supply of energy for its weapon batteries, with its guns often overheating before running out of energy. </description>
+  <gfx_store>core_system_power_m1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cpu_max>260</cpu_max>
+  <energy>1300</energy>
+  <energy_regen>65</energy_regen>
+  <shield>300</shield>
+  <shield_regen>6</shield_regen>
+ </specific>
+</outfit>

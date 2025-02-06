@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Milspec Aegis 5401 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>320</mass>
+  <price>400000</price>
+  <description>Milspec is famous for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Aegis series cores provide immensely effective defenses, with the 5401 being their heaviest subcapital defensive core. Used mostly on destroyers and assault transports that need to withstand heavy fire, the 5401 is highly valued for its ability to provide a complete defense package without the need for supplementary shield generators or rechargers. </description>
+  <gfx_store>core_system_shield_m2.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>300</cpu_max>
+  <energy>900</energy>
+  <energy_regen>45</energy_regen>
+  <shield>900</shield>
+  <shield_regen>18</shield_regen>
+ </specific>
+</outfit>
