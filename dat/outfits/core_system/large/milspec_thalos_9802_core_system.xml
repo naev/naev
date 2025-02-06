@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Thalos 9802 Core System">
  <general>
-  <shortname>M. Thalos 9802 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>1200</mass>
+  <mass>1680</mass>
   <price>3600000</price>
-  <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 9802 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <description>Milspec builds its proprietary Thalos 9802 series exclusively for House Za'lek's capital fleet, giving them carte blanche to fit the most wildly destructive and overtuned weapon systems conceived of by human minds. </description>
   <gfx_store>core_system_cpu_l2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>2800</cpu_max>
-  <energy>3360</energy>
-  <energy_regen>110</energy_regen>
+  <cpu_max>3500</cpu_max>
+  <energy>4800</energy>
+  <energy_regen>240</energy_regen>
   <shield>900</shield>
-  <shield_regen>14</shield_regen>
+  <shield_regen>15</shield_regen>
  </specific>
 </outfit>

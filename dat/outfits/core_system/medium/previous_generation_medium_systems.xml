@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Previous Generation Medium Systems">
  <general>
-  <shortname>Prev. Gen. Medium Systems</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
@@ -13,7 +12,7 @@
  <specific type="modification">
   <cpu_max>180</cpu_max>
   <energy>580</energy>
-  <energy_regen>23</energy_regen>
+  <energy_regen>24</energy_regen>
   <shield>310</shield>
   <shield_regen>7</shield_regen>
  </specific>

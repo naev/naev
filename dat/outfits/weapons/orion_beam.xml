@@ -8,7 +8,7 @@
   <price>93000</price>
   <description>The turret-mounted edition of the Orion Lance offers mid-sized ships exceptional short-duration firepower, a potent deterrent against enemy vessels that dare venture within firing range.</description>
   <gfx_store>orion_beam.webp</gfx_store>
-  <cpu>-50</cpu>
+  <cpu>-60</cpu>
  </general>
  <specific type="turret beam">
   <delay min="1.5">4</delay>

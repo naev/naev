@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Orion 3701 Core System">
  <general>
-  <shortname>M. Orion 3701 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>75</mass>
+  <mass>48</mass>
   <price>210000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3701 core system is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+  <description>Milspec is most well known for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Orion series systems cores are overturned to provide a strong balance between defense and power generation, making them the premier combat system used by the Sirian military. The 3701 series meets the needs of the heaviest of fighters, both for successful mercenaries and Sirius fighters with more demanding power requirements.</description>
   <gfx_store>core_system_refined_s2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>70</cpu_max>
-  <shield>250</shield>
-  <shield_regen>8</shield_regen>
-  <energy>400</energy>
-  <energy_regen>21</energy_regen>
+  <cpu_max>75</cpu_max>
+  <energy>500</energy>
+  <energy_regen>25</energy_regen>
+  <shield>300</shield>
+  <shield_regen>9</shield_regen>
  </specific>
 </outfit>

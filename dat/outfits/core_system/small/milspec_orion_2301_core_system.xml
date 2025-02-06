@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Orion 2301 Core System">
  <general>
-  <shortname>M. Orion 2301 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <mass>14</mass>
+  <mass>12</mass>
   <price>120000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2301 core system is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
+  <description>Milspec is most well known for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Orion series systems cores are overturned to provide a strong balance between defense and power generation, making them the premier combat system used by the Sirian military. The 2301 series is used primarily for patrol ships and bounty hunters, but sees usage in merchants who want access to a little more firepower on a light ship. </description>
   <gfx_store>core_system_refined_s1.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>18</cpu_max>
-  <energy>200</energy>
-  <energy_regen>10</energy_regen>
-  <shield>200</shield>
-  <shield_regen>7</shield_regen>
+  <cpu_max>21</cpu_max>s
+  <energy>250</energy>
+  <energy_regen>13</energy_regen>
+  <shield>250</shield>
+  <shield_regen>8</shield_regen>
  </specific>
 </outfit>

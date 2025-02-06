@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Thalos 8502 Core System">
  <general>
-  <shortname>M. Thalos 8502 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
   <mass>500</mass>
   <price>2000000</price>
-  <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 8502 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <description>Milspec contracts with House Za'lek to provide system cores capable of handling their advanced technology, and this one is no exception. Though technically classified as a light cruiser core, this system can handle the immense strain of managing both extensive drone and fighter commands and capital turret batteries, making it a popular choice for light cruiser pilots who prefer to stay agile while wielding the most advanced weapons they can manage to fit on their ships. </description>
   <gfx_store>core_system_cpu_l1.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>680</cpu_max>
-  <energy>2300</energy>
-  <energy_regen>53</energy_regen>
+  <cpu_max>850</cpu_max>
+  <energy>2750</energy>
+  <energy_regen>137</energy_regen>
   <shield>800</shield>
-  <shield_regen>14</shield_regen>
+  <shield_regen>13</shield_regen>
  </specific>
 </outfit>

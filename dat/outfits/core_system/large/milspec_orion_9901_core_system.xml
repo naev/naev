@@ -1,20 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Orion 9901 Core System">
  <general>
-  <shortname>M. Orion 9901 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>1300</mass>
+  <mass>1680</mass>
   <price>4000000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9901 core system is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+  <description>Milspec is most well known for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Orion series systems cores are overturned to provide a strong balance between defense and power generation, making them the premier combat system used by the elite of House Sirius. Fitted on the Dogma flagship, the 9901 is end-all for extended combat operations, featuring a balanced approach to defense and offense to last the most heavily-armed cruisers through battle. </description>
   <gfx_store>core_system_refined_l2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>2200</cpu_max>
-  <energy>3840</energy>
-  <energy_regen>140</energy_regen>
+  <cpu_max>2800</cpu_max>
+  <energy>4000</energy>
+  <energy_regen>200</energy_regen>
   <shield>1100</shield>
   <shield_regen>18</shield_regen>
  </specific>

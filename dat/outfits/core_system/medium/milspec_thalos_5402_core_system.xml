@@ -1,20 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Thalos 5402 Core System">
  <general>
-  <shortname>M. Thalos 5402 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
   <priority>7</priority>
-  <mass>250</mass>
+  <mass>320</mass>
   <price>400000</price>
-  <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 5402 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <description>Milspec enjoys its monopoly over the premium system core market, and so is inexorably drawn to House Za'lek, who make the highest-performance computers in human space. Partnering with them, they made the most powerful ship-based computer systems in existence in the form of their Thalos series, and are the preferred choice on their military and civilian ships, which are packed full of extremely demanding hardware. The 5402 is used for the heaviest of arsenals on destroyers, who sometimes have such demanding hardware they would have to buy separate co-processors to compensate for the extra load otherwise. The computational power this ship core provides is peerless among sub capital offerings. </description>
   <gfx_store>core_system_cpu_m2.webp</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>420</cpu_max>
-  <energy>1400</energy>
-  <energy_regen>43</energy_regen>
+  <energy>1600</energy>
+  <energy_regen>80</energy_regen>
   <shield>500</shield>
   <shield_regen>9</shield_regen>
  </specific>

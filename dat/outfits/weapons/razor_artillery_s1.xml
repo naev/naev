@@ -27,7 +27,7 @@
   <damage>
    <type>ion</type>
    <penetrate>0</penetrate>
-   <physical>6</physical>
+   <physical>8</physical>
    <disable>4</disable>
   </damage>
  </specific>

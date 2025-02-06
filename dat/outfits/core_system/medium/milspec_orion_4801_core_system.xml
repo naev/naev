@@ -1,19 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Orion 4801 Core System">
  <general>
-  <shortname>M. Orion 4801 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <mass>90</mass>
+  <mass>80</mass>
   <price>330000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 4801 core system is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
+  <description>Milspec is most well known for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Orion series systems cores are overturned to provide a strong balance between defense and power generation, making them the premier combat system used by the elite of the empire. the 4801 series is the mainline standard for corvettes across the Sirius space and beyond, providing the perfect balance of defense, power output, and subsystem control that corvettes need to be competitive and flexible.</description>
   <gfx_store>core_system_refined_m1.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>260</cpu_max>
-  <energy>750</energy>
+  <cpu_max>280</cpu_max>
+  <energy>675</energy>
   <energy_regen>33</energy_regen>
   <shield>450</shield>
   <shield_regen>10</shield_regen>

@@ -5,11 +5,11 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon</license>
-  <mass>24</mass>
+  <mass>36</mass>
   <price>80000</price>
-  <description>The mark 2 plasma turret isn't especially impressive compared to other medium-size turrets, but it is sometimes favoured by corvettes for its unusually low weight compared to its range and damage output.</description>
+  <description>The mark 2 plasma turret is a devastating turret, burning through the armor of all but the most heavily armored capital ships. It is a favorite of bounty hunters and mercenaries everywhere for its ability to burn through entire raiding parties of pirates.</description>
   <gfx_store>plasma_turret2.webp</gfx_store>
-  <cpu>-50</cpu>
+  <cpu>-60</cpu>
  </general>
  <specific type="turret bolt">
   <lua>outfits/weapons/plasma2.lua</lua>
@@ -21,13 +21,13 @@
   <speed>700</speed>
   <range>800</range>
   <falloff>650</falloff>
-  <energy>42</energy>
+  <energy>33</energy>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>
   <damage>
    <type>plasma</type>
-   <penetrate>32</penetrate>
-   <physical>35</physical>
+   <penetrate>10</penetrate>
+   <physical>54</physical>
   </damage>
  </specific>
 </outfit>

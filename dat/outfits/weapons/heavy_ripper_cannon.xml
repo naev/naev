@@ -2,7 +2,7 @@
 <outfit name="Heavy Ripper Cannon">
  <general>
   <slot>weapon</slot>
-  <size>medium</size>
+  <size>large</size>
   <license>Heavy Weapon</license>
   <rarity>1</rarity>
   <mass>16</mass>
@@ -27,7 +27,7 @@
   <swivel>18</swivel>
   <damage>
    <type>energy</type>
-   <penetrate>48</penetrate>
+   <penetrate>60</penetrate>
    <physical>48</physical>
   </damage>
  </specific>

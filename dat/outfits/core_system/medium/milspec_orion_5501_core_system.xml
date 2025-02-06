@@ -1,20 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Orion 5501 Core System">
  <general>
-  <shortname>M. Orion 5501 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
   <priority>7</priority>
-  <mass>270</mass>
+  <mass>320</mass>
   <price>600000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 5501 core system is a high-end solution for medium ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+  <description>Milspec is most well known for producing the most advanced systems cores known, with these premium pieces of technology providing dedicated service, power, and protection. Their Orion series systems cores are overturned to provide a strong balance between defense and power generation, making them the premier combat system used by the elite of House Sirius. The hefty 5501 series is favored for destroyers and other gunships that rely heavily on turrets, allowing for destroyers and corvettes to fit the heaviest sub capital firepower with impunity. </description>
   <gfx_store>core_system_refined_m2.webp</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>360</cpu_max>
-  <energy>1600</energy>
-  <energy_regen>53</energy_regen>
+  <energy>1400</energy>
+  <energy_regen>70</energy_regen>
   <shield>580</shield>
   <shield_regen>12</shield_regen>
  </specific>

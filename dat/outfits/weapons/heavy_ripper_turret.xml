@@ -21,13 +21,13 @@
   <range>2200</range>
   <falloff>1600</falloff>
   <gfx_end>ripperM-end.png</gfx_end>
-  <energy>153</energy>
+  <energy>84</energy>
   <trackmin>3600</trackmin>
   <trackmax>12000</trackmax>
   <damage>
    <type>energy</type>
-   <penetrate>72</penetrate>
-   <physical>76</physical>
+   <penetrate>60</penetrate>
+   <physical>96</physical>
   </damage>
  </specific>
 </outfit>

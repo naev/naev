@@ -21,13 +21,13 @@
   <range>2200</range>
   <falloff>1600</falloff>
   <gfx_end>massL-end.png</gfx_end>
-  <energy>153</energy>
+  <energy>120</energy>
   <trackmin>5000</trackmin>
   <trackmax>20000</trackmax>
   <damage>
    <type>kinetic</type>
-   <penetrate>90</penetrate>
-   <physical>80</physical>
+   <penetrate>72</penetrate>
+   <physical>136</physical>
   </damage>
  </specific>
  <tags>
