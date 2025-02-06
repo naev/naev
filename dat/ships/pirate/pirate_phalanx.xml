@@ -51,9 +51,10 @@
   <accel_mod>-5</accel_mod>
   <cargo_mod>15</cargo_mod>
   <energy_mod>10</energy_mod>
+  <land_delay>-40</land_delay>
   <ew_hide>-10</ew_hide>
   <launch_range>20</launch_range>
-  <ammo_capacity>10</ammo_capacity>
+  <ammo_capacity>100</ammo_capacity>
   <fuel>400</fuel>
  </stats>
  <tags>

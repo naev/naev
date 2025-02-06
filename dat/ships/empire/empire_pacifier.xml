@@ -48,6 +48,7 @@
   <structure size="medium" />
  </slots>
  <stats>
+  <tur_energy>-25</tur_energy>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
   <fuel>400</fuel>

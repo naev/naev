@@ -30,19 +30,19 @@
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="2" />
+  <weapon size="medium" x="0" y="10" h="-2"/>
   <weapon size="medium" x="4" y="5" h="-2" />
   <weapon size="medium" x="4" y="-5" h="-2" />
-  <weapon size="small" x="0" y="10" h="-2" />
-  <weapon size="small" x="0" y="-10" h="-2" />
+  <weapon size="medium" x="0" y="10" h="-2" />
+  <weapon size="medium" x="8" y="0" h="2" />
   <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
-  <utility size="small" />
   <structure size="medium" prop="engines">Nexus Arrow 700 Engine</structure>
   <structure size="medium" prop="hull">Unicorp D-23 Medium Plating</structure>
+  <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -51,12 +51,11 @@
  <stats>
   <cpu_mod>-15</cpu_mod>
   <speed_mod>5</speed_mod>
-  <accel_mod>-20</accel_mod>
   <turn_mod>-20</turn_mod>
   <armour_mod>15</armour_mod>
   <energy_regen_mod>-15</energy_regen_mod>
-  <launch_range>20</launch_range>
-  <ammo_capacity>10</ammo_capacity>
+  <launch_rate>20</launch_rate>
+  <ammo_capacity>100</ammo_capacity>
   <engine_limit_rel>15</engine_limit_rel>
   <fuel>200</fuel>
  </stats>

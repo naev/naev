@@ -42,7 +42,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <cpu_mod>-25</cpu_mod>
+  <cpu_mod>-15</cpu_mod>
   <speed_mod>-10</speed_mod>
   <shield_mod>-10</shield_mod>
   <launch_rate>15</launch_rate>

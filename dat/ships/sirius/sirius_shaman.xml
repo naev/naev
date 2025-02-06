@@ -45,8 +45,7 @@
   <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
-  <speed_mod>-5</speed_mod>
-  <armour_mod>-5</armour_mod>
+  <cooldown_mod>-20</cooldown_mod>
   <launch_rate>10</launch_rate>
   <launch_range>15</launch_range>
   <ammo_capacity>40</ammo_capacity>

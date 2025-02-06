@@ -52,6 +52,7 @@
   <structure size="medium" />
  </slots>
  <stats>
+  <cpu_mod>-15</cpu_mod>
   <speed_mod>-10</speed_mod>
   <armour_mod>20</armour_mod>
   <energy_mod>20</energy_mod>

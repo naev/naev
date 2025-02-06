@@ -21,10 +21,10 @@
  <health>
   <absorb>1</absorb>
   <armour>30</armour>
-  <shield>80</shield>
-  <shield_regen>8</shield_regen>
+  <shield>100</shield>
+  <shield_regen>10</shield_regen>
   <energy>50</energy>
-  <energy_regen>3</energy_regen>
+  <energy_regen>5</energy_regen>
  </health>
  <characteristics>
   <crew>1</crew>

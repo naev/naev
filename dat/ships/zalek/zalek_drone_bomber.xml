@@ -21,8 +21,8 @@
  <health>
   <absorb>2</absorb>
   <armour>30</armour>
-  <shield>100</shield>
-  <shield_regen>8</shield_regen>
+  <shield>120</shield>
+  <shield_regen>12</shield_regen>
   <energy>50</energy>
   <energy_regen>5</energy_regen>
  </health>

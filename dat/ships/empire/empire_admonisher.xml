@@ -19,7 +19,7 @@
  <license>Medium Combat Vessel</license>
  <cond>require("buyrep")("Empire", 40)</cond>
  <condstr>You need at least 40% reputation with the Empire.</condstr>
- <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, and shields.</description>
+ <description>This military grade version of the Admonisher incorporates superior firepower and defenses over the stock version, both in the form of more weapons room and an advanced onboard missile tracking system, allowing for more precise and agile guided weapons to be fired.</description>
  <health>
   <armour>240</armour>
   <armour_regen>0</armour_regen>
@@ -31,11 +31,11 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="0" h="2" />
+  <weapon size="medium" x="-9" y="-5" h="-9" />
   <weapon size="medium" x="4" y="2" h="-5" />
   <weapon size="medium" x="4" y="-2" h="-5" />
-  <weapon size="small" x="-9" y="-5" h="-9" />
-  <weapon size="small" x="-9" y="5" h="-9" />
+  <weapon size="medium" x="-9" y="-5" h="-9" />
+  <weapon size="medium" x="15" y="0" h="2" />
   <utility size="medium" prop="systems">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="medium" />
@@ -52,8 +52,10 @@
  <stats>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <launch_range>20</launch_range>
   <ammo_capacity>25</ammo_capacity>
+  <launch_speed>20</launch_speed>
+  <launch_turn>20</launch_turn>
+  <launch_range>20</launch_range>
  </stats>
  <tags>
   <tag>empire</tag>

@@ -47,9 +47,8 @@
   <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
   <shield_mod>10</shield_mod>
-  <armour_mod>15</armour_mod>
+  <cooldown_mod>-20</cooldown_mod>
   <stress_dissipation>20</stress_dissipation>
  </stats>
  <tags>

@@ -30,8 +30,8 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="8" y="-5" h="-2" />
-  <weapon size="small" x="8" y="5" h="-2" />
+  <weapon size="medium" x="8" y="-5" h="-2" />
+  <weapon size="medium" x="8" y="5" h="-2" />
   <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" />
   <utility size="medium" />

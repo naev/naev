@@ -45,10 +45,12 @@
   <structure size="medium" />
  </slots>
  <stats>
+  <tur_tracking>10</tur_tracking>
   <shield_mod>5</shield_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>5</turn_mod>
   <ew_hide>-5</ew_hide>
+  <tur_tracking>15</tur_tracking>
  </stats>
  <tags>
   <tag>standard</tag>

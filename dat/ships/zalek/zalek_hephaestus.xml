@@ -55,6 +55,7 @@
   <structure size="large" />
  </slots>
  <stats>
+  <ew_detect>60</ew_detect>
   <shield_mod>50</shield_mod>
   <shield_regen_mod>35</shield_regen_mod>
   <fbay_capacity>50</fbay_capacity>

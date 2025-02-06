@@ -52,6 +52,7 @@
   <structure size="large" />
  </slots>
  <stats>
+  <tur_tracking>20</tur_tracking>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
  </stats>

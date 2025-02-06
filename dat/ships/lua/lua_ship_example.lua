@@ -29,7 +29,3 @@ end
 -- Runs in place of update when the pilot is blowing up
 function explode_update( _p, _dt  )
 end
-
---  Runs when the pilot 'p' shoots ANY weapon.
-function onshootany( _p )
-end
