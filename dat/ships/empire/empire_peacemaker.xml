@@ -54,10 +54,13 @@
  </slots>
  <stats>
   <ew_detect>40</ew_detect>
+  <weapon_range>20</weapon_range>
   <turn_mod>-10</turn_mod>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
+  <heat_dissipation>15</heat_dissipation>
   <misc_instant_jump>1</misc_instant_jump>
+  <fbay_capacity>100</fbay_capacity>
  </stats>
  <tags>
   <tag>empire</tag>
