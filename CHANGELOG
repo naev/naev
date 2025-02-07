@@ -30,6 +30,7 @@
 
 * 0.12.4 (unreleased)
    * Gave Pacifier +400 fuel bonus to match description
+   * Made the baron comm event respect system claims
 
 * 0.12.3
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
