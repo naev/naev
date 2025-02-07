@@ -43,7 +43,8 @@ local sys2 = system.get("Ingot")
 
 function create ()
    -- Inclusive claims, so not an issue they overlap with the mission itself
-   if not evt.claim( {sys1, sys2}, true ) then
+   -- Current system is also necessary
+   if not evt.claim( {system.cur(), sys1, sys2}, true ) then
       evt.finish()
    end
 
