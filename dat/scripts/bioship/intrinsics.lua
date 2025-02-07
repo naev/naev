@@ -112,7 +112,7 @@ intrinsics["Soromid Reaver"] = {
       outfit = {
          "Laevum Cerebrum I",
          "Laevis Cortex I",
-         "Laevis Gene Drive I",
+         "Laeviter Gene Drive I",
          "Stinger Organ I",
          "Stinger Organ I",
       },
@@ -315,12 +315,11 @@ intrinsics["Soromid Nyx"] = {
 }
 
 -- Copia (Bulk Freighter) intrinsics
--- TODO differentiate cores from Ira
 intrinsics["Soromid Copia"] = {
    {
       name = _("Innate"),
       outfit = {
-         "Ponderosus Gene Drive I",
+         "Grandis Gene Drive I",
          "Ponderosus Cortex I",
          "Ponderosum Cerebrum I",
          "Tentacle Organ I",
@@ -341,7 +340,7 @@ intrinsics["Soromid Copia"] = {
    },
    {
       name = _("Gene Drive Growth I"),
-      outfit = "Ponderosus Gene Drive II",
+      outfit = "Grandis Gene Drive II",
       slot = "genedrive",
    },
    {
@@ -367,7 +366,7 @@ intrinsics["Soromid Copia"] = {
    },
    {
       name = _("Gene Drive Growth II"),
-      outfit = "Ponderosus Gene Drive III",
+      outfit = "Grandis Gene Drive III",
       slot = "genedrive",
    },
    {
@@ -578,7 +577,7 @@ intrinsics["Soromid Arx"] = {
    {
       name = _("Innate"),
       outfit = {
-         "Immanis Gene Drive I",
+         "Magnus Gene Drive I",
          "Immanis Cortex I",
          "Immane Cerebrum I",
          "Tentacle Organ I",
@@ -599,7 +598,7 @@ intrinsics["Soromid Arx"] = {
    },
    {
       name = _("Gene Drive Growth I"),
-      outfit = "Immanis Gene Drive II",
+      outfit = "Magnus Gene Drive II",
       slot = "genedrive",
    },
    {
@@ -636,7 +635,7 @@ intrinsics["Soromid Arx"] = {
    },
    {
       name = _("Gene Drive Growth II"),
-      outfit = "Immanis Gene Drive III",
+      outfit = "Magnus Gene Drive III",
       slot = "genedrive",
    },
    {
