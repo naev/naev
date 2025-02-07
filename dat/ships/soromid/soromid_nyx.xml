@@ -47,6 +47,8 @@
  <stats>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
+  <turn_mod>10</turn_mod>
+  <accel_mod>10</accel_mod>
  </stats>
  <tags>
   <tag>soromid</tag>

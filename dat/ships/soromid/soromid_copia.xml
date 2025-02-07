@@ -45,16 +45,13 @@
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="bio_engines" name="genedrive">Ponderosus Gene Drive I</structure>
+  <structure size="large" prop="bio_engines" name="genedrive">Grandis Gene Drive I</structure>
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
  </slots>
  <stats>
-  <speed_mod>5</speed_mod>
-  <turn_mod>5</turn_mod>
-  <accel_mod>5</accel_mod>
   <armour_mod>-10</armour_mod>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>

@@ -10,6 +10,6 @@
   <gfx_store>/gfx/misc/icons/rod-of-asclepius.webp</gfx_store>
  </general>
  <specific type="modification">
-  <armour_regen>5</armour_regen>
+  <armour_regen>7</armour_regen>
  </specific>
 </outfit>
