@@ -127,7 +127,7 @@ typename["hull"] = N_("Bioship Shell")
 ##    "energy" :      lerp(   <orion>, ??? ),
 ##    "energy_regen": lerp(   <orion>, ??? ),
 
-params=(0.25,0.625)
+params=(0.25,0.75)
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "small",
@@ -142,18 +142,18 @@ BioOutfit( "weapon.xml.template", {
     "spfx_shield":"ShiS",
     "spfx_armour":"PlaS",
     "lua":      "bioplasma.lua",
-    # -5% delay
-    "delay":    eerp(   0.95*1.2,  0.95*1.4, *params),
+    "delay":    eerp(   1.2,  1.4, *params),
     "speed" :   700,
     "range" :   eerpr(  700,  800, *params),
     "falloff":  eerpr(  600,  650, *params),
-    # -25% energy consumption ( compensation for energy regen loss )
-    "energy":   eerpr(6*0.75, 16.5*0.75, *params),
+    # -30% energy consumption ( compensation for energy regen loss )
+    "energy":   eerpr(6*0.7, 16.5*0.7, *params),
     "trackmin": 0,
     # +20% tracking
     "trackmax": eerpr(0.8*2000,  0.8*3000, *params),
     "penetrate":lerpr(   0,    10, *params),
-    "damage":   eerp( 19.5,    27, *params),
+    # +5% damage
+    "damage":   eerp( 1.05*19.5, 1.05*27, *params),
     "extra":    "<swivel>22</swivel>",
 } ).run( [
     N_("Stinger Organ I"),
@@ -520,7 +520,7 @@ BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "large",
     "price":        lerpr(  1.1e6, 2.2e6 ),
-    "mass":         1150,
+    "mass":         600,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_h.webp",
     "cargo":        lerpr(  55,  68 ),
