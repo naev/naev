@@ -141,7 +141,7 @@ skills.set.stealth = {
       name =_("Silence"),
       tier = 4,
       requires = { "stealth3" },
-      desc = _("Gives a 15% bonus to stealth."),
+      desc = _("Gives a 15% bonus to hide and a 15% stealth bonus."),
       outfit = "Silence",
       icon = "chameleon-glyph.webp",
    },

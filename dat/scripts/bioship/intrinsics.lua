@@ -131,7 +131,7 @@ intrinsics["Soromid Reaver"] = {
    },
    {
       name = _("Gene Drive Growth I"),
-      outfit = "Laevis Gene Drive II",
+      outfit = "Laeviter Gene Drive II",
       slot = "genedrive",
    },
    {

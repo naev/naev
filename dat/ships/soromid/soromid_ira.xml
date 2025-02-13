@@ -22,11 +22,11 @@
  <condstr>You need at least 60% reputation with the Soromid.</condstr>
  <description>The Ira is a purpose-grown cruiser commonly found leading Soromid forces. While its armour is somewhat weak, this rarely saves those met with its devastating barrage.</description>
  <health>
-  <armour>1700</armour>
+  <armour>1650</armour>
  </health>
  <characteristics>
   <crew>35</crew>
-  <mass>1060</mass>
+  <mass>1020</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>110</cargo>
  </characteristics>
