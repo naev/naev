@@ -52,11 +52,12 @@
   <structure size="large" />
  </slots>
  <stats>
+  <ew_detect>40</ew_detect>
   <turn_mod>-10</turn_mod>
   <armour_mod>-40</armour_mod>
   <shield_mod>30</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <stress_dissipation>10</stress_dissipation>
+  <energy_regen_mod>10</energy_regen_mod>
   <fbay_rate>50</fbay_rate>
   <fbay_reload>25</fbay_reload>
  </stats>

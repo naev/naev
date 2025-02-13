@@ -45,7 +45,7 @@
  </slots>
  <stats>
   <shield_mod>10</shield_mod>
-  <armour_mod>10</armour_mod>
+  <cooldown_mod>-10</cooldown_mod>
   <stress_dissipation>20</stress_dissipation>
  </stats>
  <tags>
