@@ -45,6 +45,13 @@ bio_outfits = [
          'laevum_cerebrum_ii.xml',
       ],
    ),
+   custom_target('laeviter_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      input: files('templates/gene_drive.xml.template'),
+      output: [
+         'laeviter_gene_drive_i.xml',
+         'laeviter_gene_drive_ii.xml',
+      ],
+   ),
    custom_target('laevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
       input: files('templates/gene_drive.xml.template'),
       output: [
@@ -120,6 +127,14 @@ bio_outfits = [
          'ponderosum_cerebrum_iii.xml',
       ],
    ),
+   custom_target('grandis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      input: files('templates/gene_drive.xml.template'),
+      output: [
+         'grandis_gene_drive_i.xml',
+         'grandis_gene_drive_ii.xml',
+         'grandis_gene_drive_iii.xml',
+      ],
+   ),
    custom_target('ponderosus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
       input: files('templates/gene_drive.xml.template'),
       output: [
@@ -142,6 +157,14 @@ bio_outfits = [
          'immane_cerebrum_i.xml',
          'immane_cerebrum_ii.xml',
          'immane_cerebrum_iii.xml',
+      ],
+   ),
+   custom_target('magnus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      input: files('templates/gene_drive.xml.template'),
+      output: [
+         'magnus_gene_drive_i.xml',
+         'magnus_gene_drive_ii.xml',
+         'magnus_gene_drive_iii.xml',
       ],
    ),
    custom_target('immanis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
