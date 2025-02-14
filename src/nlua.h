@@ -4,6 +4,7 @@
 #pragma once
 
 /** @cond */
+#include <limits.h>  // IWYU pragma: export
 #include <lauxlib.h> // IWYU pragma: export
 #include <lua.h>     // IWYU pragma: export
 
