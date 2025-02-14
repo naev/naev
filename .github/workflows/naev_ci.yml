@@ -210,6 +210,7 @@ jobs:
               --bindir=bin \
               -Dndata_path=bin \
               --cross-file='source/utils/build/${{ matrix.config }}' \
+              --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
               --wrap-mode=forcefallback \
               -Dinstaller=false \
@@ -328,6 +329,7 @@ jobs:
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
+              --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
               -Dinstaller=false \
               -Drelease=false \
