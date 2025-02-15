@@ -54,7 +54,7 @@
  <stats>
   <accel_mod>-10</accel_mod>
   <shield_mod>15</shield_mod>
-  <armour_mod>15</armour_mod>
+  <cooldown_mod>-15</cooldown_mod>
   <stress_dissipation>20</stress_dissipation>
   <cargo_mod>40</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>

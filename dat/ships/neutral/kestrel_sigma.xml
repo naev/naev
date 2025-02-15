@@ -4,6 +4,7 @@
  <price>6300000</price>
  <description>The Kestrel Sigma features a high-end reflectokinetic hull padding that not only increases the durability of the ship, but also can affect weapon locks and tracking missiles. A significant rework of the internals allow the padding to fit with minimal effects on the ship functionality, although it can affect the local guidance of ordinance systems. The ship is complemented by a secondary shield circuit that slightly boosts shielding capacity. The difficulty of production leading to high failure rates racks up a premium on the final ship's cost.</description>
  <stats>
+  <tur_tracking>15</tur_tracking>
   <shield_mod>15</shield_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>-10</turn_mod>
