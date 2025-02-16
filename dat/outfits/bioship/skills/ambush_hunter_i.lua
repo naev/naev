@@ -2,7 +2,7 @@ notactive = true
 
 local function _update( p, stealthed )
    if mem.stealthed and not stealthed then
-      p:effectAdd( "Ambush Hunter" )
+      p:effectAdd( "Ambush Hunter I" )
    end
    mem.stealthed = stealthed
 end
