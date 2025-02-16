@@ -10,7 +10,6 @@ local skills = {
 -- Needs bite slot
 skills.set.bite = {
    ["bite1"] = {
-      --name = _("Cannibalism I"),
       name = _("Cannibal I"),
       tier = 1,
       shipvar = "cannibal",
@@ -30,12 +29,13 @@ skills.set.bite = {
       icon = "fangs.webp",
    },
    ["bite3"] = {
-      --name = _("Cannibalism II"),
       name = _("Cannibal II"),
       tier = 3,
       requires = { "bite2" },
       shipvar = "cannibal2",
-      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle."),
+      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle. In addition to that, 10% of bitten armour is restored to the ship."),
+      outfit = "Cannibal II",
+      slot = "the_bite",
       icon = "food-chain.webp",
    },
    ["bite4"] = {
@@ -111,7 +111,7 @@ skills.set.move = {
 }
 
 -- Stealth skill tree
--- For up to destroyer
+-- For up to cruiser
 -- Uses intrinsics only
 skills.set.stealth = {
    ["stealth1"] = {
@@ -130,20 +130,28 @@ skills.set.stealth = {
       icon = "hidden.webp",
    },
    ["stealth3"] = {
-      name =_("Ambush Hunter"),
+      name =_("Ambush Hunter I"),
       tier = 3,
       requires = { "stealth2" },
       desc = _("+50% damage with weapons for 10 seconds after destealthing."),
-      outfit = "Ambush Hunter",
+      outfit = "Ambush Hunter I",
       icon = "hidden.webp",
    },
    ["stealth4"] = {
       name =_("Silence"),
       tier = 4,
       requires = { "stealth3" },
-      desc = _("Gives a 15% bonus to hide and a 15% stealth bonus."),
+      desc = _("Gives a 15% bonus to hide. In stealth mode, gives an additional 15% stealth bonus."),
       outfit = "Silence",
       icon = "chameleon-glyph.webp",
+   },
+   ["stealth5"] = {
+      name =_("Ambush Hunter II"),
+      tier = 5,
+      requires = { "stealth4" },
+      desc = _("+30% weapons range for 10 seconds after destealthing."),
+      outfit = "Ambush Hunter II",
+      icon = "hidden.webp",
    },
 }
 
