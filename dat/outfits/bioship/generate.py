@@ -127,12 +127,15 @@ typename["hull"] = N_("Bioship Shell")
 ##    "energy" :      lerp(   <orion>, ??? ),
 ##    "energy_regen": lerp(   <orion>, ??? ),
 
-params=(0.25,0.75)
+
+# Stinger  =>  Plasma Blaster MK1  &  MK2
+extrapol=(0.25,0.75)
+follow=(0.5,1.0)
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "small",
-    "mass":     lerpr(   3, 6, *params),
-    "price" :   lerpr(   19e3, 45e3 , *params),
+    "mass":     eerpr(   3 ,       6 , *follow),
+    "price" :   eerpr(   19e3 , 45e3 , *extrapol),
     "desc":     N_("The Stinger Organ is able to convert energy into hot plasma that is able to eat easily through shield and armour of opposing ships over time. While not an especially powerful offensive organ, it is prized for its reliability."),
     "gfx_store":lerpt(("organic_plasma_s1.webp", "organic_plasma_s2.webp","organic_plasma_s3.webp")),
     "specific": "bolt",
@@ -142,18 +145,15 @@ BioOutfit( "weapon.xml.template", {
     "spfx_shield":"ShiS",
     "spfx_armour":"PlaS",
     "lua":      "bioplasma.lua",
-    "delay":    eerp(   1.2,  1.4, *params),
+    "delay":    eerp(   1.2,  1.4, *follow),
     "speed" :   700,
-    "range" :   eerpr(  700,  800, *params),
-    "falloff":  eerpr(  600,  650, *params),
-    # -30% energy consumption ( compensation for energy regen loss )
-    "energy":   eerpr(6*0.7, 16.5*0.7, *params),
+    "range" :   eerpr(  700,  800, *extrapol),
+    "falloff":  eerpr(  600,  650, *extrapol),
+    "energy":   eerpr(    6, 16.5, *follow),
     "trackmin": 0,
-    # +20% tracking
-    "trackmax": eerpr(0.8*2000,  0.8*3000, *params),
-    "penetrate":lerpr(   0,    10, *params),
-    # +5% damage
-    "damage":   eerp( 1.05*19.5, 1.05*27, *params),
+    "trackmax": eerpr(2000,  3000, *follow),
+    "penetrate":lerpr(   0,    10, *follow),
+    "damage":   eerp(   20,    27, *extrapol),
     "extra":    "<swivel>22</swivel>",
 } ).run( [
     N_("Stinger Organ I"),
@@ -270,6 +270,8 @@ BioOutfit( "gene_drive_melendez.xml.template", {
     N_("Laevis Gene Drive II"),
 ] )
 
+# Talon  =>  Plasma Cannon  &  Plasma Cluster
+# TODO
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "medium",
@@ -425,11 +427,26 @@ BioOutfit( "cortex.xml.template", {
     N_("Largus Cortex III"),
 ] )
 
+# Tentacle Organ  =>  .. complicated ..
+#
+# By examining plasma_turret mk2 and laser_turret mk2, we could guess the following:
+#  - laser has +20% range +20% falloff +20% tackmin/max +12.5% penetrate over plasma +1/16 more costly
+#  - plasma has +40% delay +40% energy +10% damage over laser
+#  - they have same mass and CPU usage
+#  - speed is constant, 800 in the case of plasma.
+#
+# Now we can guess what a heavy plasma turret and turboplasma turret would look like.
+# There only remains to interpolate/extrapolate as we did for stinger.
+
+# heavy plasma=tentacle 2 turboplasma=tentacle 4
+extrapol=(1.0/3.0,1.0)
+extrapol_bias=(1.0/3,1.0)#+1.0/6)
+
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "large",
-    "mass":     36,
-    "price" :   lerpr(   0, 125e3 ),
+    "mass":     eerpr(   36 ,     75 , *extrapol),
+    "price" :   eerpr(  320e3*16/17 , 700e3*16/17 , *extrapol),
     "desc":     N_("The Tentacle Organ has the distinction of being the only fully rotating organic weapon while boasting a fully developed power output that is hard to beat with conventional weaponry found throughout the galaxy. The large globs of hot plasma it launches can corrode through seemingly impregnable armours, seeping into and melting ships from the inside upon contact."),
     "gfx_store":"organic_plasma_t.webp",
     "specific": "turret bolt",
@@ -439,15 +456,23 @@ BioOutfit( "weapon.xml.template", {
     "spfx_shield":"ShiM",
     "spfx_armour":"PlaM",
     "lua":      "bioplasma.lua",
-    "delay":    1.8,
+    "delay":    eerp(   1.4*1.4,  1.4*1.45, *extrapol),
     "speed" :   700,
-    "range" :   lerp( 1800, 2000 ),
-    "falloff":  lerp( 1500, 1800 ),
-    "energy":   lerp(  155, 190 ),
-    "trackmin": lerp( 3000, 4000 ),
-    "trackmax": lerp(16000, 20000 ),
-    "penetrate":lerpr(  70, 100 ),
-    "damage":   lerp(   51,  65 ),
+    #
+    "range" :   eerpr(  1750/1.2,   2400/1.2, *extrapol),
+    "falloff":  eerpr(  1400/1.2,   1800/1.2, *extrapol),
+    "energy":   eerpr(    49*1.4,    174*1.4, *extrapol_bias),
+    "trackmin": eerpr(  2400/1.2,   6000/1.2, *extrapol),
+    "trackmax": eerpr(  9600/1.2,  24000/1.2, *extrapol),
+    "penetrate":lerpr(  62/1.125,   80/1.125, *extrapol),
+    "damage":   eerp(    48*1.1,      70*1.1, *extrapol),
+    #"range" :   lerp( 1800, 2000 ),
+    #"falloff":  lerp( 1500, 1800 ),
+    #"energy":   lerp(  155, 190 ),
+    #"trackmin": lerp( 3000, 4000 ),
+    #"trackmax": lerp(16000, 20000 ),
+    #"penetrate":lerpr(  70, 100 ),
+    #"damage":   lerp(   51,  65 ),
     "extra":    "<swivel>22</swivel>",
 } ).run( [
     N_("Tentacle Organ I"),
@@ -460,15 +485,15 @@ BioOutfit( "weapon.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "large",
-    "price":        lerpr(   3e6 , 3e6 ), # TODO
+    "price":        lerpr(   3e6 , 6e6 ),
     "mass":         lerpr(540,540+(120+120)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l1.webp",
     "cpu":          lerpr( 350, 360 ),
     "shield" :      lerp(  850, 1050 ), # was already 1050
     "shield_regen": lerp(   15,  21 ),  # was 19
-    "energy":       lerp( 2460, 3375 ),
-    "energy_regen": lerp(  66, 135 ),
+    "energy":       lerp( 2460, 3075 ), # was 3375
+    "energy_regen": lerp(  66, 82.5 ),  # was 135
 } ).run( [
     N_("Ponderosum Cerebrum I"),
     N_("Ponderosum Cerebrum II"),
@@ -530,6 +555,7 @@ BioOutfit( "cortex.xml.template", {
     N_("Ponderosus Cortex I"),
     N_("Ponderosus Cortex II"),
     N_("Ponderosus Cortex III"),
+    N_("Ponderosus Cortex IV"),
 ] )
 
 # Immane Cerebrum -> Orion_9901
@@ -543,8 +569,8 @@ BioOutfit( "cerebrum.xml.template", {
     "cpu":          lerpr(1400, 1800 ),
     "shield" :      lerp(  1100, 1200 ),
     "shield_regen": lerp(   18,  22 ),
-    "energy":       lerp( 3840, 5250 ),
-    "energy_regen": lerp(  140, 170 ),
+    "energy":       lerp( 3840, 4800), # was 5250
+    "energy_regen": lerp(  140, 175 ), # was 170
 } ).run( [
     N_("Immane Cerebrum I"),
     N_("Immane Cerebrum II"),
