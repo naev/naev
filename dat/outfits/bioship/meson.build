@@ -149,6 +149,7 @@ bio_outfits = [
          'ponderosus_cortex_i.xml',
          'ponderosus_cortex_ii.xml',
          'ponderosus_cortex_iii.xml',
+         'ponderosus_cortex_iv.xml',
       ],
    ),
    custom_target('immane_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
