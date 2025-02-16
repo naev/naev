@@ -81,7 +81,9 @@ end
 
 --local o_base = outfit.get("The Bite")
 local o_lust = outfit.get("The Bite - Blood Lust")
+local o_can= outfit.get("Cannibal II")
 local o_improved = outfit.get("The Bite - Improved")
+
 function init( p, po )
    turnoff( p, po )
    mem.timer = nil
@@ -93,6 +95,16 @@ function init( p, po )
    local o = po:outfit()
    mem.improved = (o==o_improved)
    mem.lust = mem.improved or (o==o_lust)
+
+   if (o==o_can) or mem.improved or (o==o_lust) then
+      if mem.improved then
+	  mem.regen=0.25
+      else
+	  mem.regen=0.1
+      end
+   else
+      mem.regen=0.0
+   end
 
    if mem.lust then
       mem.duration = 5
@@ -156,9 +168,8 @@ function update( p, po, dt )
             -- TODO better calculation of asteroid mass
             p:knockback( 1000, t:vel(), t:pos(), 0.5 )
             -- Do the healing
-            if mem.improved then
-               local heal = 0.25 * dmg
-               p:addHealth( heal )
+            if not mem.regen==0.0 then
+               p:addHealth( mem.regen * dmg )
             end
             -- Player effects
             mem.spfx_start:rm()
@@ -183,9 +194,8 @@ function update( p, po, dt )
             t:damage( dmg, 0, 100, "kinetic", p )
             t:knockback( p, 0.5 )
             -- Do the healing
-            if mem.improved then
-               local heal = 0.25 * (ta - t:health(true))
-               p:addHealth( heal )
+            if not mem.regen==0.0 then
+               p:addHealth( mem.regen * (ta - t:health(true)) )
             end
             -- Player effects
             mem.spfx_start:rm()
