@@ -4,7 +4,7 @@
  <price>850000</price>
  <cond>require("buyrep")("Empire", 40)</cond>
  <condstr>You need at least 40% reputation with the Empire.</condstr>
- <description>A high-spec bombing focused Lancelot that is most known by the use with the famous Sigma-5 squadron. The Golden Efreeti features a classified targetting system, that while it has significantly lower range than standard variants, it compensates by having much faster locking and agility. The result is an agile ship that is able to engine ships at short distances and quickly switch between targets while depending on missiles and torpedoes.</description>
+ <description>A high-spec bombing focused Lancelot that is most known by the use with the famous Sigma-5 squadron. The Golden Efreeti features a classified targetting system, that while it has significantly lower range than standard variants, it compensates by having much faster locking and agility. The result is an agile ship that is able to engage ships at short distances and quickly switch between targets while depending on missiles and torpedoes.</description>
  <slots>
   <weapon size="medium" x="-3" y="0" h="-2" />
   <weapon size="medium" x="-3" y="3" h="5" />
@@ -25,7 +25,6 @@
  <stats>
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
-  <cpu_mod>-20</cpu_mod>
   <launch_damage>15</launch_damage>
   <launch_range>-50</launch_range>
   <launch_lockon>-50</launch_lockon>

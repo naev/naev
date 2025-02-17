@@ -78,6 +78,10 @@ end
 function update( _p, _po, _dt )
 end
 
+--  Runs when the pilot 'p' shoots ANY weapon.
+function onshootany( _p )
+end
+
 -- When the pilot is out of energy, this function triggers. Note that before
 -- this triggers, 'ontoggle( p, po false, false )' will be run if it exists.
 -- This is especially useful for outfits that can't be toggled, but want to
