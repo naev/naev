@@ -45,6 +45,7 @@
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
+  <utility size="medium" />
   <structure size="large" prop="bio_engines" name="genedrive">Magnus Gene Drive I</structure>
   <structure size="large" prop="bio_hull" name="shell">Immanis Cortex I</structure>
   <structure size="large" />
