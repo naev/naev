@@ -91,12 +91,22 @@ function bioship_pay( amount, _reason )
    if not bioship.playerisbioship() then return end
 
    local pp = player.pilot()
+   local soromid = (player.pilot():ship():faction()==faction.get("Soromid"))
    local stage = pp:shipvarPeek("biostage")
    local maxstage = bioship.maxstage( player.pilot() )
+
    -- Already max level
    if stage >= maxstage then
       return
    end
+
+   local factor
+   if soromid then
+      factor=1.0
+   else
+      factor=0.5
+   end
+
    local exp = pp:shipvarPeek("bioshipexp") or 0
    -- Enough exp for max level
    if bioship.curstage( exp, maxstage ) >= maxstage then
@@ -107,9 +117,9 @@ function bioship_pay( amount, _reason )
    local BREAKPOINT = 500e3
    if amount > BREAKPOINT then
       local div = BREAKPOINT/1e3
-      exp = exp + math.floor( div / math.sqrt(div) * math.sqrt(amount / 1e3) + 0.5 )
+      exp = exp + math.floor( factor * div / math.sqrt(div) * math.sqrt(amount / 1e3) + 0.5 )
    else
-      exp = exp + math.floor( amount / 1e3 )
+      exp = exp + math.floor( factor * amount / 1e3 )
    end
    exp = math.min( exp, bioship.exptostage( maxstage ) )
    pp:shipvarPush("bioshipexp",exp)
