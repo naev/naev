@@ -27,8 +27,8 @@
  </characteristics>
  <slots>
   <weapon size="small" prop="bio_weapon" name="leftweap" x="12" y="0" h="0">Stinger Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" name="middleweap" x="12" y="0" h="0">Stinger Organ I</weapon>
   <weapon size="small" prop="bio_weapon" name="rightweap" x="12" y="0" h="0">Stinger Organ I</weapon>
-  <weapon size="small" x="-3" y="0" h="2" />
   <weapon size="small" x="-3" y="0" h="2" />
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum I</utility>
   <utility size="small" prop="bio_organ" name="adrenal_gland" />

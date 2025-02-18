@@ -115,12 +115,14 @@ intrinsics["Soromid Reaver"] = {
          "Laeviter Gene Drive I",
          "Stinger Organ I",
          "Stinger Organ I",
+         "Stinger Organ I",
       },
       slot = {
          "brain",
          "shell",
          "genedrive",
          "leftweap",
+         "middleweap",
          "rightweap",
       },
    },
@@ -139,9 +141,11 @@ intrinsics["Soromid Reaver"] = {
       outfit = {
          "Stinger Organ II",
          "Stinger Organ II",
+         "Stinger Organ II",
       },
       slot = {
          "rightweap",
+         "middleweap",
          "leftweap",
       },
    },
@@ -155,9 +159,11 @@ intrinsics["Soromid Reaver"] = {
       outfit = {
          "Stinger Organ III",
          "Stinger Organ III",
+         "Stinger Organ III",
       },
       slot = {
          "rightweap",
+         "middleweap",
          "leftweap",
       },
    },
