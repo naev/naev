@@ -3,7 +3,7 @@
  <description>The ship has caught other ships by surprise!</description>
  <duration>10</duration>
  <icon>/gfx/misc/icons/hidden.webp</icon>
- <overwrite>ambush_hunter</overwrite>
+ <overwrite>ambush_hunter_ii</overwrite>
  <buff/>
  <stats>
   <tur_range>30</tur_range>
