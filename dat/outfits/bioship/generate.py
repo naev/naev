@@ -95,10 +95,10 @@ typename["hull"] = N_("Bioship Shell")
 
 
 ## Cortex recipe:
+##    "price":        lerpr(   <S&K>/2, <S&K>),
 ##    "absorb":       lerpr(  <Unicorp>-3, <S&K>-3 ),
 ##    "armour":       lerp(  <Unicorp>, <S&K> )
 ##    "cargo":        lerpr(   <S&K>, (<S&K>+<Unicorp>)/2 ),
-##    "price":        lerpr(   <S&K>/2, <S&K>),
 ##    "mass":         <S&K>,
 ##    "armour":       lerp(   <Unicorp>, <S&K> )
 ##
@@ -112,20 +112,22 @@ typename["hull"] = N_("Bioship Shell")
 ## <ref>-15% are currently really approximate.
 
 ## Cerebrum recipe (small):
-##    "price":        lerpr(  <orion>, <orion>*2 ),
+##    "price":        lerpr(  <orion>, <orion>*1.5 ),
 ##    "mass":         lerpr(  <orion>, <orion>*1.25 ),
 ##    "shield" :      lerp(   <orion>, <orion>*1.25 ),
 ##    "shield_regen": lerp(   <orion>, <orion>*1.25 ),
 ##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
 ##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
+##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
 
 ## Cerebrum recipe (medium/large):
-##    "price":        <orion>+1/2*(<shield_booster>+<shield capacitor>),
-##    "mass":         <orion>+1/2*(<shield_booster>+<shield capacitor>),
+##    "price":        lerpr( <orion> , <orion>+1/2*(<shield_booster>+<shield capacitor>)),
+##    "mass":         lerpr( <orion> , <orion>+1/2*(<shield_booster>+<shield capacitor>)),
 ##    "shield":       lerp( <orion> , <orion>+1/2*<shield capacitor> ),
 ##    "shield_regen": lerp( <orion> , <orion>+1/2*<shield_booster> ),
 ##    "energy" :      lerp(   <orion>, ??? ),
 ##    "energy_regen": lerp(   <orion>, ??? ),
+##    "cpu":          handmade !
 
 
 # Stinger  =>  Plasma Blaster MK1  &  MK2
@@ -165,11 +167,11 @@ BioOutfit( "weapon.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "small",
-    "price":        lerpr(   120e3, 2*120e3 ),
+    "price":        lerpr(   120e3, 1.5*120e3 ),
     "mass":         lerpr(14,14*1.25*0.99999),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_s1.webp",
-    "cpu":          lerpr(   5,   8 ),
+    "cpu":          lerpr(   5,   6 ),
     "shield" :      lerp(  200, 250 ),
     "shield_regen": lerp(    7,   9 ),
     "energy":       lerp(  200, 250 ),
@@ -183,7 +185,7 @@ BioOutfit( "cerebrum.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "small",
-    "price":        lerpr(   67.5e3, 135e3 ),
+    "price":        lerpr(   135e3/2, 135e3 ),
     "mass":         10,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
@@ -202,7 +204,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "small",
-    "price":        lerpr(   65e3, 130e3 ),
+    "price":        lerpr(   130e3/2, 130e3 ),
     "mass":         30,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_t.webp",
@@ -218,7 +220,7 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "small",
-    "price":        lerpr(   210e3, 262.5e3 ),
+    "price":        lerpr(   210e3, 1.5*210e3 ),
     "mass":         lerpr(75,75*1.25),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_s2.webp",
@@ -236,7 +238,7 @@ BioOutfit( "cerebrum.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "small",
-    "price":        lerpr(112.5e3, 225e3 ),
+    "price":        lerpr( 225e3/2, 225e3 ),
     "mass":         20,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
@@ -255,7 +257,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "gene_drive_melendez.xml.template", {
     "typename":     typename["engine"],
     "size":         "small",
-    "price":        lerpr( 47.5e3, 95e3 ),
+    "price":        lerpr( 95e3/2, 95e3 ),
     "mass":         25,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_s1.webp","organic_engine_strong_s2.webp")),
@@ -276,7 +278,7 @@ BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "medium",
     "mass":     16,
-    "price" :   lerpr(   0, 20e3 ),
+    "price" :   lerpr(   10e3, 20e3 ),
     "desc":     N_("The Talon Organ is an enlarged and more powerful version of the Stinger Organ. Like its smaller counterpart, is able to convert energy into hot plasma that is able to eat easily through shield and armour of opposing ships. The hot plasma is able to cling to ship's shields and hulls dealing continuous damage after impact."),
     "gfx_store":"organic_plasma_l.webp",
     "specific": "bolt",
@@ -307,7 +309,7 @@ BioOutfit( "weapon.xml.template", {
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "small",
-    "price":        lerpr( 120e3, 240e3 ),
+    "price":        lerpr( 240e3/2, 240e3 ),
     "mass":         60,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_s.webp",
@@ -323,11 +325,11 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "medium",
-    "price":        lerpr(   (330e3+(185e3+75e3)/2)/2 , 330e3+(185e3+75e3)/2),
+    "price":        lerpr(   330e3 , 330e3+(185e3+75e3)/2),
     "mass":         lerpr(90,90+(56+60)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_m1.webp",
-    "cpu":          lerpr(  80, 100 ),
+    "cpu":          lerpr(  48, 100 ),
     "shield" :      lerp(  450, 550 ),
     "shield_regen": lerp(   10,  13 ),
     "energy":       lerp(  750, 900 ),
@@ -341,7 +343,7 @@ BioOutfit( "cerebrum.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "medium",
-    "price":        lerpr( 180e3, 360e3 ),
+    "price":        lerpr( 360e3/2, 360e3 ),
     "mass":         20,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_m1.webp","organic_engine_fast_m2.webp")),
@@ -361,7 +363,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "medium",
-    "price":        lerpr(  180e3, 360e3 ),
+    "price":        lerpr(  360e3/2, 360e3 ),
     "mass":         140,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_m.webp",
@@ -377,11 +379,11 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "medium",
-    "price":        lerpr(   (600e3+(185e3+75e3)/2)/2 , 600e3+(185e3+75e3)/2),
+    "price":        lerpr(   600e3 , 600e3+(185e3+75e3)/2),
     "mass":         lerpr(270,270+(56+60)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_m2.webp",
-    "cpu":          lerpr( 200, 250 ),
+    "cpu":          lerpr( 100, 200 ),
     "shield" :      lerp(  580, 680 ), # was 700
     "shield_regen": lerp(   12,  15 ), # was 14
     "energy":       lerp( 1600, 1800 ),
@@ -395,7 +397,7 @@ BioOutfit( "cerebrum.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "medium",
-    "price":        lerpr(  337.5e3, 675e3 ),
+    "price":        lerpr(  675e3/2, 675e3 ),
     "mass":         25,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_m1.webp","organic_engine_strong_m2.webp")),
@@ -414,7 +416,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "medium",
-    "price":        lerpr(  320e3, 640e3 ),
+    "price":        lerpr(  640e3/2, 640e3 ),
     "mass":         310,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_l.webp",
@@ -485,11 +487,11 @@ BioOutfit( "weapon.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "large",
-    "price":        lerpr(   3e6 , 6e6 ),
+    "price":        lerpr( 3e6, 3e6+(220e3+260e3)/2),
     "mass":         lerpr(540,540+(120+120)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l1.webp",
-    "cpu":          lerpr( 350, 360 ),
+    "cpu":          lerpr( 100, 200 ),
     "shield" :      lerp(  850, 1050 ), # was already 1050
     "shield_regen": lerp(   15,  21 ),  # was 19
     "energy":       lerp( 2460, 3075 ), # was 3375
@@ -504,7 +506,7 @@ BioOutfit( "cerebrum.xml.template", {
 BioOutfit( "gene_drive_melendez.xml.template", {
     "typename":     typename["engine"],
     "size":         "large",
-    "price":        lerpr(  0.5625e6, 1.125e6 ),
+    "price":        lerpr(  1.125e6/2, 1.125e6 ),
     "mass":         75,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
@@ -524,7 +526,7 @@ BioOutfit( "gene_drive_melendez.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "large",
-    "price":        lerpr(  1.35e6, 2.7e6 ),
+    "price":        lerpr(  2.7e6/2, 2.7e6 ),
     "mass":         60,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
@@ -544,7 +546,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "large",
-    "price":        lerpr(  1.1e6, 2.2e6 ),
+    "price":        lerpr(  2.2e6/2, 2.2e6 ),
     "mass":         600,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_h.webp",
@@ -562,13 +564,13 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "large",
-    "price":        lerpr(   4e6 , 4e6 ),
+    "price":        lerpr(   4e6 , 4e6+(220e3+260e3)/2 ),
     "mass":         lerpr(1300,1300+(120+120)/2), # was 1400
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l2.webp",
-    "cpu":          lerpr(1400, 1800 ),
-    "shield" :      lerp(  1100, 1200 ),
-    "shield_regen": lerp(   18,  22 ),
+    "cpu":          lerpr(370*3, 600*3 ),
+    "shield" :      lerp(  1100, 1300 ),
+    "shield_regen": lerp(   18,  24 ),
     "energy":       lerp( 3840, 4800), # was 5250
     "energy_regen": lerp(  140, 175 ), # was 170
 } ).run( [
@@ -581,7 +583,7 @@ BioOutfit( "cerebrum.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "large",
-    "price":        lerpr(   0.2e6, 0.4e6 ),
+    "price":        lerpr(   0.4e6/2, 0.4e6 ),
     "mass":         65,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
@@ -601,7 +603,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "large",
-    "price":        lerpr(   1.8e6, 3.6e6 ),
+    "price":        lerpr(   3.6e6/2, 3.6e6 ),
     "mass":         80,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
@@ -621,7 +623,7 @@ BioOutfit( "gene_drive.xml.template", {
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "large",
-    "price":        lerpr(   1.45e6, 2.9e6 ),
+    "price":        lerpr(   2.9e6/2, 2.9e6 ),
     "mass":         1250,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_x.webp",
