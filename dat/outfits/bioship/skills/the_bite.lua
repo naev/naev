@@ -81,7 +81,7 @@ end
 
 --local o_base = outfit.get("The Bite")
 local o_lust = outfit.get("The Bite - Blood Lust")
-local o_can= outfit.get("Cannibal II")
+local o_can = outfit.get("The Bite - Cannibal")
 local o_improved = outfit.get("The Bite - Improved")
 
 function init( p, po )
@@ -96,7 +96,7 @@ function init( p, po )
    mem.improved = (o==o_improved)
    mem.lust = mem.improved or (o==o_lust)
 
-   if (o==o_can) or mem.improved or (o==o_lust) then
+   if (o==o_can) or mem.lust then
       if mem.improved then
 	  mem.regen=0.25
       else
@@ -120,6 +120,8 @@ function descextra( p, o )
       local dur = 3
       local improved = (o==o_improved)
       local lust = improved or (o==o_lust)
+      local can = (o==o_can)
+
       if lust then
          dur = 5
       end
@@ -132,7 +134,10 @@ function descextra( p, o )
          return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       elseif lust then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 10% of bitten armour is restored to the ship [Cannibal II]."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      elseif can then
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, 10% of bitten armour is restored to the ship [Cannibal II]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       else
          return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage} damage ({mass})."),

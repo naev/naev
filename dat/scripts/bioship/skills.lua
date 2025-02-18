@@ -34,7 +34,7 @@ skills.set.bite = {
       requires = { "bite2" },
       shipvar = "cannibal2",
       desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle. In addition to that, 10% of bitten armour is restored to the ship."),
-      outfit = "Cannibal II",
+      outfit = "The Bite - Cannibal",
       slot = "the_bite",
       icon = "food-chain.webp",
    },
@@ -117,7 +117,7 @@ skills.set.stealth = {
    ["stealth1"] = {
       name = _("Compound Eyes"),
       tier = 1,
-      desc = _("Gives a +15% detection bonus."),
+      desc = _("Gives a +20% detection bonus."),
       outfit = "Compound Eyes",
       icon = "hunter-eyes.webp",
    },
