@@ -121,12 +121,12 @@ typename["hull"] = N_("Bioship Shell")
 ##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
 
 ## Cerebrum recipe (medium/large):
-##    "price":        lerpr( <orion> , <orion>+1/2*(<shield_booster>+<shield capacitor>)),
-##    "mass":         lerpr( <orion> , <orion>+1/2*(<shield_booster>+<shield capacitor>)),
-##    "shield":       lerp( <orion> , <orion>+1/2*<shield capacitor> ),
-##    "shield_regen": lerp( <orion> , <orion>+1/2*<shield_booster> ),
-##    "energy" :      lerp(   <orion>, ??? ),
-##    "energy_regen": lerp(   <orion>, ??? ),
+##    "price":        lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
+##    "mass":         lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
+##    "shield":       lerp(   <orion>, <orion>+1/2*<shield capacitor> ),
+##    "shield_regen": lerp(   <orion>, <orion>+1/2*<shield_booster> ),
+##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
+##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
 ##    "cpu":          handmade !
 
 
@@ -221,7 +221,7 @@ BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "small",
     "price":        lerpr(   210e3, 1.5*210e3 ),
-    "mass":         lerpr(75,75*1.25),
+    "mass":         lerpr(  75, 75*1.25),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_s2.webp",
     "cpu":          lerpr(  24,  32 ),
@@ -272,13 +272,16 @@ BioOutfit( "gene_drive_melendez.xml.template", {
     N_("Laevis Gene Drive II"),
 ] )
 
-# Talon  =>  Plasma Cannon  &  Plasma Cluster
-# TODO
+# Talon  =>  Plasma Blaster mk2  &  Plasma Cluster
+# We want Talon(0) = Plasma Blaster mk2  and  Talon(3) = Plasma Cluster
+# A few tweaks for keeping Talon almost the same.
+extrapol=(-1.0/3,2.0/3)
+
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "medium",
-    "mass":     16,
-    "price" :   lerpr(   10e3, 20e3 ),
+    "mass" :    eerpr(    6,    16, -1.0/3, 1.0), # have Talon(4) weight as much as a standard med weapon.
+    "price" :   eerpr( 45e3,  95e3, *extrapol),
     "desc":     N_("The Talon Organ is an enlarged and more powerful version of the Stinger Organ. Like its smaller counterpart, is able to convert energy into hot plasma that is able to eat easily through shield and armour of opposing ships. The hot plasma is able to cling to ship's shields and hulls dealing continuous damage after impact."),
     "gfx_store":"organic_plasma_l.webp",
     "specific": "bolt",
@@ -288,15 +291,23 @@ BioOutfit( "weapon.xml.template", {
     "spfx_shield":"ShiS",
     "spfx_armour":"PlaS2",
     "lua":      "bioplasma2.lua",
-    "delay":    1.4,
+    "delay":    eerp(   1.4,  2.2, *extrapol),
     "speed" :   700,
-    "range" :   lerp( 1000, 1400 ),
-    "falloff":  lerp(  900, 1200 ),
-    "energy":   lerp(   46,  58 ),
-    "trackmin": lerp( 1500, 2000 ),
-    "trackmax": lerp( 4500, 6000 ),
-    "penetrate":lerpr(  35,  50 ),
-    "damage":   lerp(   35,  47 ),
+    #
+    "range" :   eerpr(  800,   1200, *extrapol),
+    "falloff":  eerpr(  650,   1000, *extrapol),
+    "energy":   eerpr( 16.5,66*0.75, *extrapol), # -25% compensation for core
+    "trackmin": lerpr(  0,     1000, *extrapol),
+    "trackmax": eerpr(  3000,  5000, *extrapol), # 5000 was 6000
+    "penetrate":lerpr(  10,      42, *extrapol),
+    "damage":   eerp(   27,      68, *extrapol),
+    #"range" :   lerp( 1000, 1400 ),
+    #"falloff":  lerp(  900, 1200 ),
+    #"energy":   lerp(   46,   58 ),
+    #"trackmin": lerp( 1500, 2000 ),
+    #"trackmax": lerp( 4500, 6000 ),
+    #"penetrate":lerpr(  35,   50 ),
+    #"damage":   lerp(   35,   47 ),
     "extra":    "<swivel>22</swivel>",
 } ).run( [
     N_("Talon Organ I"),
@@ -332,8 +343,8 @@ BioOutfit( "cerebrum.xml.template", {
     "cpu":          lerpr(  48, 100 ),
     "shield" :      lerp(  450, 550 ),
     "shield_regen": lerp(   10,  13 ),
-    "energy":       lerp(  750, 900 ),
-    "energy_regen": lerp(   33,  56 ),
+    "energy":       lerp(  750, 938 ),   # was 900
+    "energy_regen": lerp(   33, 41.25 ), # was 56 (-25%)
 } ).run( [
     N_("Mediocre Cerebrum I"),
     N_("Mediocre Cerebrum II"),
@@ -383,11 +394,11 @@ BioOutfit( "cerebrum.xml.template", {
     "mass":         lerpr(270,270+(56+60)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_m2.webp",
-    "cpu":          lerpr( 100, 200 ),
-    "shield" :      lerp(  580, 680 ), # was 700
-    "shield_regen": lerp(   12,  15 ), # was 14
-    "energy":       lerp( 1600, 1800 ),
-    "energy_regen": lerp(   53,  87 ),
+    "cpu":          lerpr( 100,   200 ),
+    "shield" :      lerp(  580,   680 ), # was 700
+    "shield_regen": lerp(   12,    15 ), # was 14
+    "energy":       lerp( 1600,  2000 ), # was 1800
+    "energy_regen": lerp(   53, 66.25 ), # was 87 (-25%)
 } ).run( [
     N_("Largum Cerebrum I"),
     N_("Largum Cerebrum II"),
@@ -468,13 +479,13 @@ BioOutfit( "weapon.xml.template", {
     "trackmax": eerpr(  9600/1.2,  24000/1.2, *extrapol),
     "penetrate":lerpr(  62/1.125,   80/1.125, *extrapol),
     "damage":   eerp(    48*1.1,      70*1.1, *extrapol),
-    #"range" :   lerp( 1800, 2000 ),
-    #"falloff":  lerp( 1500, 1800 ),
-    #"energy":   lerp(  155, 190 ),
-    #"trackmin": lerp( 3000, 4000 ),
+    #"range" :   lerp( 1800,  2000 ),
+    #"falloff":  lerp( 1500,  1800 ),
+    #"energy":   lerp(  155,   190 ),
+    #"trackmin": lerp( 3000,  4000 ),
     #"trackmax": lerp(16000, 20000 ),
-    #"penetrate":lerpr(  70, 100 ),
-    #"damage":   lerp(   51,  65 ),
+    #"penetrate":lerpr(  70,   100 ),
+    #"damage":   lerp(   51,    65 ),
     "extra":    "<swivel>22</swivel>",
 } ).run( [
     N_("Tentacle Organ I"),
@@ -491,11 +502,11 @@ BioOutfit( "cerebrum.xml.template", {
     "mass":         lerpr(540,540+(120+120)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l1.webp",
-    "cpu":          lerpr( 100, 200 ),
+    "cpu":          lerpr( 100,  200 ),
     "shield" :      lerp(  850, 1050 ), # was already 1050
-    "shield_regen": lerp(   15,  21 ),  # was 19
+    "shield_regen": lerp(   15,   21 ), # was 19
     "energy":       lerp( 2460, 3075 ), # was 3375
-    "energy_regen": lerp(  66, 82.5 ),  # was 135
+    "energy_regen": lerp(  66,  82.5 ), # was 135
 } ).run( [
     N_("Ponderosum Cerebrum I"),
     N_("Ponderosum Cerebrum II"),
@@ -587,11 +598,11 @@ BioOutfit( "gene_drive.xml.template", {
     "mass":         65,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
-    "accel":        lerp(   30,  37 ),
-    "turn":         lerp(   35,  45 ),
-    "speed":        lerp(   60,  70 ),
+    "accel":        lerp(   30,   37 ),
+    "turn":         lerp(   35,   45 ),
+    "speed":        lerp(   60,   70 ),
     "fuel":         2800,
-    "energy_malus": lerp(   40,  40 ),
+    "energy_malus": lerp(   40,   40 ),
     "engine_limit": lerp( 6500, 6500 ),
 } ).run( [
     N_("Immanis Gene Drive I"),
@@ -607,11 +618,11 @@ BioOutfit( "gene_drive.xml.template", {
     "mass":         80,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
-    "accel":        lerp(   40,  50 ),
-    "turn":         lerp(   46,  60 ),
-    "speed":        lerp(   70,  80 ),
+    "accel":        lerp(   40,   50 ),
+    "turn":         lerp(   46,   60 ),
+    "speed":        lerp(   70,   80 ),
     "fuel":         2400,
-    "energy_malus": lerp(   56,  56 ),
+    "energy_malus": lerp(   56,   56 ),
     "engine_limit": lerp( 5800 , 5800),
 } ).run( [
     N_("Magnus Gene Drive I"),
@@ -627,8 +638,8 @@ BioOutfit( "cortex.xml.template", {
     "mass":         1250,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_x.webp",
-    "cargo":        lerpr(  80, 120 ),
-    "absorb":       lerpr(  69, 77 ),
+    "cargo":        lerpr(  80,   120 ),
+    "absorb":       lerpr(  69,    77 ),
     "armour":       lerpr( 1700, 2400 )
 } ).run( [
     N_("Immanis Cortex I"),
