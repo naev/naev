@@ -470,31 +470,98 @@ local function can_cannibalize ()
    return false
 end
 
-local function board_cannibalize ()
+local function can_cannibalize_usefully()
+   local pp = player.pilot()
+   local parmour, pshield, pstress = pp:health(true)
+   local ba=board_plt:stats().armour
+
+   if (pp:stats().armour == parmour) then
+      return false
+   elseif (ba<=2) or (ba==3 and player.shipvarPeek("cannibal2")) then
+      return false
+   else
+      return true
+   end
+end
+
+local function _board_cannibalize(spare)
    local armour, shield = board_plt:health(true)
    local cannibal2 = player.shipvarPeek("cannibal2")
 
-   if armour <= 1 then
-      return
-   end
    local bs = board_plt:stats()
 
    local pp = player.pilot()
    local ps = pp:stats()
    local parmour, pshield, pstress = pp:health(true)
 
-   local dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
+   local dmg
+
+   spare=spare and can_cannibalize_usefully()
+
+   if not spare then
+      dmg = armour
+   else
+      -- Just take what you both need and can
+      if cannibal2 then
+         dmg = math.min( (armour-1), (3*(ps.armour-parmour)+1)/2 )
+   else
+      dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
+      end
+   end
+
    if dmg <= 0 then
+      player.msg("THIS should not happen.")
       return
    end
 
    board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
-   local heal_armour = dmg/2
+
+   local left=armour-dmg
+   if left>0 then
+      player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't !"),{lft=fmt.number(left), plt=board_plt}))
+   else
+      player.msg(fmt.f(_("{plt} was destroyed."),{lft=fmt.number(left), plt=board_plt}))
+   end
+
+   local heal_armour
    if cannibal2 then
       heal_armour = dmg*2/3
+   else
+      heal_armour = dmg/2
    end
-   pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-   player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
+
+   if parmour+heal_armour>ps.armour then
+      heal_armour=ps.armour-parmour
+   end
+
+   if heal_armour > 0 then
+      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+      player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
+   end
+
+   local fact=board_plt:faction()
+   local reason
+
+   if left>0 then
+      reason="board"
+   else
+      reason="destroy"
+   end
+
+   local _realhit=fact:hit( -(board_plt:points()), system.cur(), reason )
+   --player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=realhit,fct=fact:name()}).."#0")
+
+   if left<=0 then
+      board_close()
+   end
+end
+
+local function board_cannibalize()
+   _board_cannibalize(true)
+end
+
+local function board_gluttony()
+   _board_cannibalize(false)
 end
 
 local function cargo_list ()
@@ -633,7 +700,12 @@ function board( plt )
       end
    end
    if can_cannibalize() then
-      luatk.newButton( wdw, x-50, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      --player.msg(fmt.f(_("faction {fac} reputation {rep}."),{rep=fmt.number(board_plt:reputation()), fac=board_plt:faction():nameRaw()}))
+      if (board_plt:reputation() <= -30) or not can_cannibalize_usefully() then
+         luatk.newButton( wdw, x, h-20-30, 80, 30, _("Gluttony"), board_gluttony )
+      else
+         luatk.newButton( wdw, x-30, h-20-30, 110, 30, _("Cannibalize"), board_cannibalize )
+      end
       --x = x-100
    end
 
