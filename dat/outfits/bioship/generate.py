@@ -234,7 +234,7 @@ BioOutfit( "cerebrum.xml.template", {
     N_("Laevum Cerebrum II"),
 ] )
 
-# Laeviter Gene Drive  =>  Tricon Zephyr II 
+# Laeviter Gene Drive  =>  Tricon Zephyr II
 BioOutfit( "gene_drive.xml.template", {
     "typename":     typename["engine"],
     "size":         "small",
@@ -253,7 +253,7 @@ BioOutfit( "gene_drive.xml.template", {
     N_("Laeviter Gene Drive II"),
 ] )
 
-# Laevis Gene Drive  =>  Melendez Ox XL 
+# Laevis Gene Drive  =>  Melendez Ox XL
 BioOutfit( "gene_drive_melendez.xml.template", {
     "typename":     typename["engine"],
     "size":         "small",
