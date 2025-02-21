@@ -95,12 +95,12 @@ typename["hull"] = N_("Bioship Shell")
 
 
 ## Cortex recipe:
-##    "price":        lerpr(   <S&K>/2, <S&K>),
-##    "absorb":       lerpr(  <Unicorp>-3, <S&K>-3 ),
-##    "armour":       lerp(  <Unicorp>, <S&K> )
-##    "cargo":        lerpr(   <S&K>, (<S&K>+<Unicorp>)/2 ),
+##    "price":        lerpr(     <S&K>/2 , <S&K>),
+##    "absorb":       lerpr( <Unicorp>-3 , <S&K>-3 ),
+##    "armour":       lerp(    <Unicorp> , <S&K> )
+##    "cargo":        lerpr(       <S&K> , (<S&K>+<Unicorp>)/2 ),
 ##    "mass":         <S&K>,
-##    "armour":       lerp(   <Unicorp>, <S&K> )
+##    "armour":       lerp(    <Unicorp> , <S&K> )
 ##
 
 ## Gene Drive recipe:
@@ -111,23 +111,22 @@ typename["hull"] = N_("Bioship Shell")
 ##    "speed":        lerp(  <ref>-15%, <ref> ),
 ## <ref>-15% are currently really approximate.
 
-## Cerebrum recipe (small):
+## Cerebrum recipe part 1 (small):
 ##    "price":        lerpr(  <orion>, <orion>*1.5 ),
 ##    "mass":         lerpr(  <orion>, <orion>*1.25 ),
 ##    "shield" :      lerp(   <orion>, <orion>*1.25 ),
 ##    "shield_regen": lerp(   <orion>, <orion>*1.25 ),
-##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
-##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
-##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
 
-## Cerebrum recipe (medium/large):
+## Cerebrum recipe part 1 (medium/large):
 ##    "price":        lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
 ##    "mass":         lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
 ##    "shield":       lerp(   <orion>, <orion>+1/2*<shield capacitor> ),
 ##    "shield_regen": lerp(   <orion>, <orion>+1/2*<shield_booster> ),
+
+## Cerebrum recipe part 2:
 ##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
 ##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
-##    "cpu":          handmade !
+##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
 
 
 # Stinger  =>  Plasma Blaster MK1  &  MK2
@@ -168,7 +167,7 @@ BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "small",
     "price":        lerpr(   120e3, 1.5*120e3 ),
-    "mass":         lerpr(14,14*1.25*0.99999),
+    "mass":         lerpr(      14, 14*1.25*0.99999 ),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_s1.webp",
     "cpu":          lerpr(   5,   6 ),
@@ -221,7 +220,7 @@ BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "small",
     "price":        lerpr(   210e3, 1.5*210e3 ),
-    "mass":         lerpr(  75, 75*1.25),
+    "mass":         lerpr(  75, 75*1.25 ),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_s2.webp",
     "cpu":          lerpr(  24,  32 ),
@@ -294,13 +293,13 @@ BioOutfit( "weapon.xml.template", {
     "delay":    eerp(   1.4,  2.2, *extrapol),
     "speed" :   700,
     #
-    "range" :   eerpr(  800,   1200, *extrapol),
-    "falloff":  eerpr(  650,   1000, *extrapol),
-    "energy":   eerpr( 16.5,66*0.75, *extrapol), # -25% compensation for core
-    "trackmin": lerpr(  0,     1000, *extrapol),
-    "trackmax": eerpr(  3000,  5000, *extrapol), # 5000 was 6000
-    "penetrate":lerpr(  10,      42, *extrapol),
-    "damage":   eerp(   27,      68, *extrapol),
+    "range" :   eerpr(  800,    1200, *extrapol),
+    "falloff":  eerpr(  650,    1000, *extrapol),
+    "energy":   eerpr( 16.5, 66*0.75, *extrapol), # -25% compensation for core
+    "trackmin": lerpr(    0,    1000, *extrapol),
+    "trackmax": eerpr( 3000,    5000, *extrapol), # 5000 was 6000
+    "penetrate":lerpr(   10,      42, *extrapol),
+    "damage":   eerp(    27,      68, *extrapol),
     #"range" :   lerp( 1000, 1400 ),
     #"falloff":  lerp(  900, 1200 ),
     #"energy":   lerp(   46,   58 ),
@@ -340,10 +339,10 @@ BioOutfit( "cerebrum.xml.template", {
     "mass":         lerpr(90,90+(56+60)/2),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_m1.webp",
-    "cpu":          lerpr(  48, 100 ),
-    "shield" :      lerp(  450, 550 ),
-    "shield_regen": lerp(   10,  13 ),
-    "energy":       lerp(  750, 938 ),   # was 900
+    "cpu":          lerpr(  48,   100 ),
+    "shield" :      lerp(  450,   550 ),
+    "shield_regen": lerp(   10,    13 ),
+    "energy":       lerp(  750,   938 ), # was 900
     "energy_regen": lerp(   33, 41.25 ), # was 56 (-25%)
 } ).run( [
     N_("Mediocre Cerebrum I"),
@@ -390,8 +389,8 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "medium",
-    "price":        lerpr(   600e3 , 600e3+(185e3+75e3)/2),
-    "mass":         lerpr(270,270+(56+60)/2),
+    "price":        lerpr(   600e3, 600e3+(185e3+75e3)/2 ),
+    "mass":         lerpr(     270,        270+(56+60)/2 ),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_m2.webp",
     "cpu":          lerpr( 100,   200 ),
@@ -412,11 +411,11 @@ BioOutfit( "gene_drive.xml.template", {
     "mass":         25,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_m1.webp","organic_engine_strong_m2.webp")),
-    "accel":        lerp(   80, 100 ),
-    "turn":         lerp(   75,  90 ),
-    "speed":        lerp(  125, 175 ),
+    "accel":        lerp(   80,  100 ),
+    "turn":         lerp(   75,   90 ),
+    "speed":        lerp(  125,  175 ),
     "fuel":         1000,
-    "energy_malus": lerp(   27,  27 ),
+    "energy_malus": lerp(   27,   27 ),
     "engine_limit": lerp( 1240, 1240 ),
 } ).run( [
     N_("Largus Gene Drive I"),
@@ -469,16 +468,16 @@ BioOutfit( "weapon.xml.template", {
     "spfx_shield":"ShiM",
     "spfx_armour":"PlaM",
     "lua":      "bioplasma.lua",
-    "delay":    eerp(   1.4*1.4,  1.4*1.45, *extrapol),
+    "delay":    eerp(    1.4*1.4,  1.4*1.45, *extrapol),
     "speed" :   700,
     #
-    "range" :   eerpr(  1750/1.2,   2400/1.2, *extrapol),
-    "falloff":  eerpr(  1400/1.2,   1800/1.2, *extrapol),
-    "energy":   eerpr(    49*1.4,    174*1.4, *extrapol_bias),
-    "trackmin": eerpr(  2400/1.2,   6000/1.2, *extrapol),
-    "trackmax": eerpr(  9600/1.2,  24000/1.2, *extrapol),
-    "penetrate":lerpr(  62/1.125,   80/1.125, *extrapol),
-    "damage":   eerp(    48*1.1,      70*1.1, *extrapol),
+    "range" :   eerpr(  1750/1.2,  2400/1.2, *extrapol),
+    "falloff":  eerpr(  1400/1.2,  1800/1.2, *extrapol),
+    "energy":   eerpr(    49*1.4,   174*1.4, *extrapol_bias),
+    "trackmin": eerpr(  2400/1.2,  6000/1.2, *extrapol),
+    "trackmax": eerpr(  9600/1.2, 24000/1.2, *extrapol),
+    "penetrate":lerpr(  62/1.125,  80/1.125, *extrapol),
+    "damage":   eerp(    48*1.1,     70*1.1, *extrapol),
     #"range" :   lerp( 1800,  2000 ),
     #"falloff":  lerp( 1500,  1800 ),
     #"energy":   lerp(  155,   190 ),
@@ -498,8 +497,8 @@ BioOutfit( "weapon.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "large",
-    "price":        lerpr( 3e6, 3e6+(220e3+260e3)/2),
-    "mass":         lerpr(540,540+(120+120)/2),
+    "price":        lerpr( 3e6, 3e6+(220e3+260e3)/2 ),
+    "mass":         lerpr( 540,     540+(120+120)/2 ),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l1.webp",
     "cpu":          lerpr( 100,  200 ),
@@ -521,11 +520,11 @@ BioOutfit( "gene_drive_melendez.xml.template", {
     "mass":         75,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
-    "accel":        lerp(   40,  47 ),
-    "turn":         lerp(   42,  50 ),
-    "speed":        lerp(   75,  90 ),
+    "accel":        lerp(   40,   47 ),
+    "turn":         lerp(   42,   50 ),
+    "speed":        lerp(   75,   90 ),
     "fuel":         2800,
-    "energy_malus": lerp(   26,  26 ),
+    "energy_malus": lerp(   26,   26 ),
     "engine_limit": lerp( 3600, 3600 ),
 } ).run( [
     N_("Grandis Gene Drive I"),
@@ -541,11 +540,11 @@ BioOutfit( "gene_drive.xml.template", {
     "mass":         60,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
-    "accel":        lerp(   50,  65 ),
-    "turn":         lerp(   65,  75 ),
+    "accel":        lerp(   50,   65 ),
+    "turn":         lerp(   65,   75 ),
     "speed":        lerp(   95,  115 ),
     "fuel":         2000,
-    "energy_malus": lerp(   32,  32 ),
+    "energy_malus": lerp(   32,   32 ),
     "engine_limit": lerp( 2700, 2700 ),
 } ).run( [
     N_("Ponderosus Gene Drive I"),
@@ -561,8 +560,8 @@ BioOutfit( "cortex.xml.template", {
     "mass":         600,
     "desc":         desc["hull"],
     "gfx_store":    "organic_hull_h.webp",
-    "cargo":        lerpr(  55,  68 ),
-    "absorb":       lerpr(  55,  63 ),
+    "cargo":        lerpr(  55,   68 ),
+    "absorb":       lerpr(  55,   63 ),
     "armour":       lerp( 1200, 1650 ),
 } ).run( [
     N_("Ponderosus Cortex I"),
@@ -575,15 +574,15 @@ BioOutfit( "cortex.xml.template", {
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "large",
-    "price":        lerpr(   4e6 , 4e6+(220e3+260e3)/2 ),
-    "mass":         lerpr(1300,1300+(120+120)/2), # was 1400
+    "price":        lerpr(  4e6, 4e6+(220e3+260e3)/2 ),
+    "mass":         lerpr( 1300,    1300+(120+120)/2 ), # was 1400
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l2.webp",
-    "cpu":          lerpr(370*3, 600*3 ),
-    "shield" :      lerp(  1100, 1300 ),
-    "shield_regen": lerp(   18,  24 ),
-    "energy":       lerp( 3840, 4800), # was 5250
-    "energy_regen": lerp(  140, 175 ), # was 170
+    "cpu":          lerpr( 370*3, 600*3 ),
+    "shield" :      lerp(   1100,  1300 ),
+    "shield_regen": lerp(     18,    24 ),
+    "energy":       lerp(   3840,  4800 ), # was 5250
+    "energy_regen": lerp(    140,   175 ), # was 170
 } ).run( [
     N_("Immane Cerebrum I"),
     N_("Immane Cerebrum II"),
@@ -618,12 +617,12 @@ BioOutfit( "gene_drive.xml.template", {
     "mass":         80,
     "desc":         desc["engine"],
     "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
-    "accel":        lerp(   40,   50 ),
-    "turn":         lerp(   46,   60 ),
-    "speed":        lerp(   70,   80 ),
+    "accel":        lerp(   40,    50 ),
+    "turn":         lerp(   46,    60 ),
+    "speed":        lerp(   70,    80 ),
     "fuel":         2400,
-    "energy_malus": lerp(   56,   56 ),
-    "engine_limit": lerp( 5800 , 5800),
+    "energy_malus": lerp(   56,    56 ),
+    "engine_limit": lerp( 5800 , 5800 ),
 } ).run( [
     N_("Magnus Gene Drive I"),
     N_("Magnus Gene Drive II"),
