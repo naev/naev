@@ -496,6 +496,7 @@ local function _board_cannibalize(spare)
 
    local dmg
 
+   -- Because can't refresh board window, else would be useless.
    spare=spare and can_cannibalize_usefully()
 
    if not spare then
@@ -504,8 +505,8 @@ local function _board_cannibalize(spare)
       -- Just take what you both need and can
       if cannibal2 then
          dmg = math.min( (armour-1), (3*(ps.armour-parmour)+1)/2 )
-   else
-      dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
+      else
+         dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
       end
    end
 
@@ -548,11 +549,13 @@ local function _board_cannibalize(spare)
       reason="destroy"
    end
 
-   local _realhit=fact:hit( -(board_plt:points()), system.cur(), reason )
-   --player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=realhit,fct=fact:name()}).."#0")
+   fact:hit( -(board_plt:points()), system.cur(), reason )
 
    if left<=0 then
       board_close()
+   --else -- Does not work!
+      --board_close()
+      --board(board_plt)
    end
 end
 
@@ -640,8 +643,7 @@ function board_close ()
    end
    board_wdw = nil
 
-   -- Player stole something to make it not spaceworthy, sorry bud, you're
-   -- not waking up.
+   -- Player stole something to make it not spaceworthy, sorry bud, you're not waking up.
    if not board_plt:spaceworthy() then
       board_plt:setDisable(false) -- Permanently disable
    end
@@ -699,22 +701,46 @@ function board( plt )
          btn_capture:setAlt( msg )
       end
    end
+
+   local eat_mode
+
    if can_cannibalize() then
       --player.msg(fmt.f(_("faction {fac} reputation {rep}."),{rep=fmt.number(board_plt:reputation()), fac=board_plt:faction():nameRaw()}))
       if (board_plt:reputation() <= -30) or not can_cannibalize_usefully() then
+         eat_mode=2
          luatk.newButton( wdw, x, h-20-30, 80, 30, _("Gluttony"), board_gluttony )
       else
+         eat_mode=1
          luatk.newButton( wdw, x-30, h-20-30, 110, 30, _("Cannibalize"), board_cannibalize )
       end
       --x = x-100
+   else
+      eat_mode=0
    end
 
    -- Display about faction hits
    local fctmsg
+   local loss=0
+
    if board_fcthit > 0 then
-      local loss = fct:hitTest( -board_fcthit, system.cur(), "board" )
-      fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
-            {fct=fct,fcthit=fmt.number(math.abs(loss))})
+      loss = fct:hitTest( -board_fcthit, system.cur(), "board" )
+   end
+
+   if math.abs(loss) > 0 then
+      local loss_d = fct:hitTest( -board_fcthit, system.cur(), "destroy" )
+
+      local or_eat=""
+      if eat_mode==1 then
+         or_eat="(or cannibalizing) "
+      end
+
+      if eat_mode==0 then
+         fctmsg = fmt.f(_("Looting {oe}anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
+            {oe=or_eat,fct=fct,fcthit=fmt.number(math.abs(loss))})
+      else -- A bit ugly...
+         fctmsg = fmt.f(_("Looting {oe}anything from the ship will lower your reputation with {fct} by {fcthit}, or {h2} if you destroy it, and may anger nearby ships. "),
+            {oe=or_eat,fct=fct,fcthit=fmt.number(math.abs(loss)),h2=fmt.number(math.abs(loss_d))})
+      end
    else
       fctmsg = _("Looting anything from the ship may anger nearby ships.")
    end
