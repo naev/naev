@@ -98,9 +98,9 @@ function init( p, po )
 
    if (o==o_can) or mem.lust then
       if mem.improved then
-	  mem.regen=0.25
+         mem.regen=0.25
       else
-	  mem.regen=0.1
+         mem.regen=0.1
       end
    else
       mem.regen=0.0
