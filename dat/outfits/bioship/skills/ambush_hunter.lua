@@ -1,20 +1,19 @@
 notactive = true
 
-local function _update( p, stealthed )
+function onstealth( p, _po, stealthed )
    if mem.stealthed and not stealthed then
       p:effectAdd( "Ambush Hunter" )
    end
    mem.stealthed = stealthed
 end
 
-function init( p, _po )
+function init( p, po )
    mem.stealthed = p:flags("stealth")
 end
 
-function onstealth( p, _po, stealthed )
-   _update( p, stealthed )
+function land(p,po)
+   -- At least, ship properties lose the effect bonus.
+   -- Still, the icon remains.
+   p:effectRm( "Ambush Hunter" )
 end
 
-function update( p, _po, _dt )
-   _update( p, p:flags("stealth") )
-end

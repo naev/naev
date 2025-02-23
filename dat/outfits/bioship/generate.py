@@ -11,7 +11,7 @@ N_ = lambda text: text
 class Build:
     ''' By default, build everything in-tree. '''
 
-    def read_tempate(self, name):
+    def read_template(self, name):
         return open(f'templates/{name}').read()
 
     def file_names(self, names):
