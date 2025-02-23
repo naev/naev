@@ -11,7 +11,5 @@
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/ambush_hunter_ii.lua</lua>
-  <tur_range>30</tur_range>
-  <fwd_range>30</fwd_range>
  </specific>
 </outfit>
