@@ -307,10 +307,12 @@
 
 <div id="product">
 # if ldoc.description then
-  <h2>$(M(ldoc.description,nil))</h2>
+  <h2>$(ldoc.description)</h2>
 # end
 # if ldoc.full_description then
-  <div id="product_description">$(M(ldoc.full_description,nil))</div>
+  <div id="product_description">
+    $(ldoc.full_description)
+  </div>
 # end
 </div>
 
