@@ -81,7 +81,9 @@ end
 
 --local o_base = outfit.get("The Bite")
 local o_lust = outfit.get("The Bite - Blood Lust")
+local o_can = outfit.get("The Bite - Cannibal")
 local o_improved = outfit.get("The Bite - Improved")
+
 function init( p, po )
    turnoff( p, po )
    mem.timer = nil
@@ -93,6 +95,16 @@ function init( p, po )
    local o = po:outfit()
    mem.improved = (o==o_improved)
    mem.lust = mem.improved or (o==o_lust)
+
+   if (o==o_can) or mem.lust then
+      if mem.improved then
+         mem.regen=0.25
+      else
+         mem.regen=0.1
+      end
+   else
+      mem.regen=0.0
+   end
 
    if mem.lust then
       mem.duration = 5
@@ -108,6 +120,8 @@ function descextra( p, o )
       local dur = 3
       local improved = (o==o_improved)
       local lust = improved or (o==o_lust)
+      local can = (o==o_can)
+
       if lust then
          dur = 5
       end
@@ -120,7 +134,10 @@ function descextra( p, o )
          return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       elseif lust then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 10% of bitten armour is restored to the ship [Cannibal II]."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      elseif can then
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, 10% of bitten armour is restored to the ship [Cannibal II]."),
             {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
       else
          return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage} damage ({mass})."),
@@ -156,9 +173,8 @@ function update( p, po, dt )
             -- TODO better calculation of asteroid mass
             p:knockback( 1000, t:vel(), t:pos(), 0.5 )
             -- Do the healing
-            if mem.improved then
-               local heal = 0.25 * dmg
-               p:addHealth( heal )
+            if not mem.regen==0.0 then
+               p:addHealth( mem.regen * dmg )
             end
             -- Player effects
             mem.spfx_start:rm()
@@ -183,9 +199,8 @@ function update( p, po, dt )
             t:damage( dmg, 0, 100, "kinetic", p )
             t:knockback( p, 0.5 )
             -- Do the healing
-            if mem.improved then
-               local heal = 0.25 * (ta - t:health(true))
-               p:addHealth( heal )
+            if not mem.regen==0.0 then
+               p:addHealth( mem.regen * (ta - t:health(true)) )
             end
             -- Player effects
             mem.spfx_start:rm()
