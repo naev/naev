@@ -62,7 +62,8 @@ dat/difficulty/default.xml
 dat/difficulty/easy_mode.xml
 dat/difficulty/masochist_mode.xml
 dat/difficulty/story_mode.xml
-dat/effects/ambush_hunter.xml
+dat/effects/ambush_hunter_i.xml
+dat/effects/ambush_hunter_ii.xml
 dat/effects/antimatter_taint.xml
 dat/effects/astral_projection.xml
 dat/effects/avatar_of_sirichana.xml
@@ -160,7 +161,8 @@ dat/outfits/bioship/skills/adrenal_gland_i.xml
 dat/outfits/bioship/skills/adrenal_gland_ii.xml
 dat/outfits/bioship/skills/adrenal_gland_iii.xml
 dat/outfits/bioship/skills/adrenaline_hormones.xml
-dat/outfits/bioship/skills/ambush_hunter.xml
+dat/outfits/bioship/skills/ambush_hunter_i.xml
+dat/outfits/bioship/skills/ambush_hunter_ii.xml
 dat/outfits/bioship/skills/bulky_abdomen.xml
 dat/outfits/bioship/skills/cargo_sacs.xml
 dat/outfits/bioship/skills/compound_eyes.xml
@@ -3342,7 +3344,8 @@ dat/naevpedia/lore/faction.lua
 dat/naevpedia/ships/classes.lua
 dat/outfits/accessory/black_cat_doll.lua
 dat/outfits/accessory/rackham_razor.lua
-dat/outfits/bioship/skills/ambush_hunter.lua
+dat/outfits/bioship/skills/ambush_hunter_i.lua
+dat/outfits/bioship/skills/ambush_hunter_ii.lua
 dat/outfits/bioship/skills/bioplasma.lua
 dat/outfits/bioship/skills/bioplasma2.lua
 dat/outfits/bioship/skills/feral_rage_i.lua
