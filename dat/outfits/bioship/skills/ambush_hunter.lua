@@ -7,13 +7,6 @@ function onstealth( p, _po, stealthed )
    mem.stealthed = stealthed
 end
 
-function init( p, po )
+function init( p, _po )
    mem.stealthed = p:flags("stealth")
 end
-
-function land(p,po)
-   -- At least, ship properties lose the effect bonus.
-   -- Still, the icon remains.
-   p:effectRm( "Ambush Hunter" )
-end
-
