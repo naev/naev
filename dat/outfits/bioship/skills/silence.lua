@@ -11,7 +11,7 @@ function update( p, po )
    onstealth( p, po, p:flags("stealth") )
 end
 
-function init( p, po )
+function init( _p, po )
     --po:clear()
     po:set( "ew_hide", -15 )
 end

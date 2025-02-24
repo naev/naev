@@ -462,7 +462,7 @@ local function board_fcthit_apply ( eat )
    local loss = math.floor(-fct:hit( -board_fcthit, system.cur(), "board" ))
    local msg
 
-   if eat==0 then 
+   if eat==0 then
       board_fcthit = 0
       if loss == 0 then
          return
@@ -502,7 +502,7 @@ end
 
 local function can_cannibalize_usefully()
    local pp = player.pilot()
-   local parmour, pshield, pstress = pp:health(true)
+   local parmour, _pshield, _pstress = pp:health(true)
    local ba=board_plt:stats().armour
 
    if (pp:stats().armour == parmour) then
