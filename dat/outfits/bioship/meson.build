@@ -53,7 +53,7 @@ bio_outfits = [
       ],
    ),
    custom_target('laevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_melendez.xml.template'),
       output: [
          'laevis_gene_drive_i.xml',
          'laevis_gene_drive_ii.xml',
@@ -128,7 +128,7 @@ bio_outfits = [
       ],
    ),
    custom_target('grandis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_melendez.xml.template'),
       output: [
          'grandis_gene_drive_i.xml',
          'grandis_gene_drive_ii.xml',
