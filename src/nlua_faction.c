@@ -447,7 +447,7 @@ static int factionL_areallies( lua_State *L )
  *    @luatparam System|nil Whether to make the faction hit local at a system,
  * or global affecting all systems of the faction.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "kill" and
+ * a string to the faction "hit" function. The engine can generate "destroy" and
  * "distress" sources. For missions the default is "script".
  *    @luatparam[opt=false] boolean single Whether or not the hit should affect
  * allies/enemies of the faction getting a hit.
@@ -476,7 +476,7 @@ static int factionL_hit( lua_State *L )
  *    @luatparam System|nil Whether to make the faction hit local at a system,
  * or global.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "kill" and
+ * a string to the faction "hit" function. The engine can generate "destroy" and
  * "distress" sources. For missions the default is "script".
  *    @luatreturn How much the reputation was actually changed after Lua script
  * was run.
@@ -590,7 +590,7 @@ static int factionL_applyLocalThreshold( lua_State *L )
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "kill" and
+ * a string to the faction "hit" function. The engine can generate "destroy" and
  * "distress" sources. For missions the default is "script".
  * @luafunc modPlayer
  */
@@ -614,7 +614,7 @@ static int factionL_modplayer( lua_State *L )
  *    @luatparam Faction f Faction to modify player's standing with.
  *    @luatparam number mod The modifier to modify faction by.
  *    @luatparam[opt="script"] string reason Reason behind it. This is passed as
- * a string to the faction "hit" function. The engine can generate "kill" and
+ * a string to the faction "hit" function. The engine can generate "destroy" and
  * "distress" sources. For missions the default is "script".
  * @luafunc modPlayerSingle
  */
