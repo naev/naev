@@ -960,7 +960,7 @@ double faction_hitTest( int f, const StarSystem *sys, double mod,
  *    @param source Source of the faction modifier.
  *
  *   Possible sources:
- *    - "kill" : Pilot death.
+ *    - "destroy" : Pilot death.
  *    - "distress" : Pilot distress signal.
  *    - "script" : Either a mission or an event.
  */
@@ -998,7 +998,7 @@ void faction_modPlayer( int f, double mod, const char *source )
  *    @param source Source of the faction modifier.
  *
  *   Possible sources:
- *    - "kill" : Pilot death.
+ *    - "destroy" : Pilot death.
  *    - "distress" : Pilot distress signal.
  *    - "script" : Either a mission or an event.
  *

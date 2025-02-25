@@ -295,7 +295,7 @@ BioOutfit( "weapon.xml.template", {
     #
     "range" :   eerpr(  800,    1200, *extrapol),
     "falloff":  eerpr(  650,    1000, *extrapol),
-    "energy":   eerpr( 16.5, 66*0.75, *extrapol), # -25% compensation for core
+    "energy":   eerpr( 16.5,      66, *extrapol),
     "trackmin": lerpr(    0,    1000, *extrapol),
     "trackmax": eerpr( 3000,    5000, *extrapol), # 5000 was 6000
     "penetrate":lerpr(   10,      42, *extrapol),
