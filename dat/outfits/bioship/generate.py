@@ -273,6 +273,8 @@ BioOutfit( "gene_drive_melendez.xml.template", {
 
 # Talon  =>  Plasma Blaster mk2  &  Plasma Cluster
 # We want Talon(0) = Plasma Blaster mk2  and  Talon(3) = Plasma Cluster
+# This way, if we admit PB mk2 is size 2 (fighter size) and PCluster is size 3.5 (medium),
+# then Talon II is size 3, TIII size 3.5 et TIV size 4.
 # A few tweaks for keeping Talon almost the same.
 extrapol=(-1.0/3,2.0/3)
 

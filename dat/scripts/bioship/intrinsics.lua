@@ -665,7 +665,7 @@ intrinsics["Pirate Revenant"] = {
       },
    },
    {
-      name = _("Gene Drive Growth"),
+      name = _("Gene Drive Growth I"),
       outfit = {
          "Mediocris Gene Drive II",
       },
@@ -674,7 +674,7 @@ intrinsics["Pirate Revenant"] = {
       },
    },
    {
-      name = _("Weapon Organ Growth I"),
+      name = _("Weapon Organ Growth"),
       outfit = {
          "Talon Organ II",
          "Talon Organ II",
@@ -685,25 +685,21 @@ intrinsics["Pirate Revenant"] = {
       },
    },
    {
-      name = _("Growth"),
+      name = _("Cerebrum Growth"),
       outfit = {
          "Mediocre Cerebrum II",
-         "Mediocris Gene Drive III",
       },
       slot = {
          "brain",
-         "genedrive",
       },
    },
    {
-      name = _("Weapon Organ Growth II"),
+      name = _("Gene Drive Growth II"),
       outfit = {
-         "Talon Organ III",
-         "Talon Organ III",
+         "Mediocris Gene Drive III",
       },
       slot = {
-         "weap1",
-         "weap2",
+         "genedrive",
       },
    },
 }
