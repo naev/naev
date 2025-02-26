@@ -15,7 +15,7 @@
  <license>Light Combat Vessel</license>
  <cond>require("buyrep")("Soromid", 30)</cond>
  <condstr>You need at least 30% reputation with the Soromid.</condstr>
- <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>
+ <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective fighters in the galaxy.</description>
  <health>
   <armour>75</armour>
  </health>
@@ -27,9 +27,9 @@
  </characteristics>
  <slots>
   <weapon size="small" prop="bio_weapon" name="leftweap" x="12" y="0" h="0">Stinger Organ I</weapon>
+  <weapon size="small" prop="bio_weapon" name="middleweap" x="12" y="0" h="0">Stinger Organ I</weapon>
   <weapon size="small" prop="bio_weapon" name="rightweap" x="12" y="0" h="0">Stinger Organ I</weapon>
-  <weapon size="medium" x="-3" y="0" h="2" />
-  <weapon size="medium" x="-3" y="0" h="2" />
+  <weapon size="small" x="-3" y="0" h="2" />
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum I</utility>
   <utility size="small" prop="bio_organ" name="adrenal_gland" />
   <utility size="small" prop="bio_organ" name="feral_rage" />
@@ -37,7 +37,7 @@
   <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive I</structure>
+  <structure size="small" prop="bio_engines" name="genedrive">Laeviter Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
   <structure size="small" />
   <structure size="small" />
@@ -45,9 +45,12 @@
  <stats>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
+  <turn_mod>10</turn_mod>
+  <accel_mod>10</accel_mod>
  </stats>
  <tags>
   <tag>soromid</tag>
   <tag>bioship</tag>
  </tags>
 </ship>
+

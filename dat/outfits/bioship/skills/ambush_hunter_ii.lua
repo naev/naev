@@ -2,7 +2,7 @@ notactive = true
 
 function onstealth( p, _po, stealthed )
    if mem.stealthed and not stealthed then
-      p:effectAdd( "Ambush Hunter" )
+      p:effectAdd( "Ambush Hunter II" )
    end
    mem.stealthed = stealthed
 end
@@ -10,3 +10,4 @@ end
 function init( p, _po )
    mem.stealthed = p:flags("stealth")
 end
+
