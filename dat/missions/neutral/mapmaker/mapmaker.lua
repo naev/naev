@@ -318,7 +318,17 @@ function land ()
             if th > lastprog and th < progress then
                for i,jmp in ipairs(rwd) do
                   if not jmp:known() and (jmp:dest():known() or jmp:system():known()) then
-                     table.insert( rewards, jmp )
+                     -- Don't add an equivalent jump twice
+                     local found = false
+                     for j,r in ipairs(rewards) do
+                        if jmp==r or jmp==r:reverse() then
+                           found = true
+                           break
+                        end
+                     end
+                     if not found then
+                        table.insert( rewards, jmp )
+                     end
                   end
                end
             end
