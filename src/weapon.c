@@ -1249,9 +1249,10 @@ static void weapon_updateCollide( Weapon *w, double dt )
          }
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
-      wc.gfx     = NULL;
-      wc.polygon = NULL;
-      wc.range   = w->outfit->u.bem.width * 0.5; /* Set beam width. */
+      wc.gfx      = NULL;
+      wc.polygon  = NULL;
+      wc.polyview = NULL;
+      wc.range    = w->outfit->u.bem.width * 0.5; /* Set beam width. */
       wc.beamrange =
          w->outfit->u.bem.range * w->range_mod; /* Set beam range. */
 
@@ -1583,6 +1584,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
    wc.beam      = 0;
    wc.range     = radius;
    wc.polygon   = NULL;
+   wc.polyview  = NULL;
    wc.explosion = 1;
 
    /* Speed of the impact. */
@@ -1660,7 +1662,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
             if ( a->state != ASTEROID_FG )
                continue;
 
-            if ( a->polygon != NULL ) {
+            if ( array_size( a->polygon->views ) > 0 ) {
                CollPolyView rpoly;
                poly_rotate( &rpoly, &a->polygon->views[0], (float)a->ang );
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, &rpoly,
