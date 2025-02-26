@@ -27,7 +27,7 @@
   <damage>
    <type>plasma</type>
    <penetrate>0</penetrate>
-   <physical>19.5</physical>
+   <physical>20</physical>
   </damage>
  </specific>
 </outfit>

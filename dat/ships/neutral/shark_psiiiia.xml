@@ -21,7 +21,7 @@
  <stats>
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
-  <accel_mod>15</accel_mod>
+  <accel_mod>65</accel_mod>
   <ew_detect>20</ew_detect>
   <cooldown_mod>-30</cooldown_mod>
   <jump_delay>-50</jump_delay>
