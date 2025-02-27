@@ -7,10 +7,6 @@ function onstealth( _p, po, stealthed )
    end
 end
 
-function update( p, po )
-   onstealth( p, po, p:flags("stealth") )
-end
-
 function init( _p, po )
     --po:clear()
     po:set( "ew_hide", -15 )

@@ -459,12 +459,12 @@ local function board_fcthit_apply ( eat )
    board_plt:distress( player.pilot() )
 
    local fct = board_plt:faction()
-   local loss = math.floor(-fct:hit( -board_fcthit, system.cur(), "board" ))
+   local loss = -fct:hit( -board_fcthit, system.cur(), "board" )
    local msg
 
    if eat==0 then
       board_fcthit = 0
-      if loss == 0 then
+      if loss <= 0 then
          return
       end
       msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
@@ -474,7 +474,7 @@ local function board_fcthit_apply ( eat )
          msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor. Another cannibalize would destroy it."),
             {eat=fmt.number(eat)})
       else
-         local loss_d = math.floor(-fct:hitTest( -board_fcthit, system.cur(), "destroy" ))
+         local loss_d = -fct:hitTest( -board_fcthit, system.cur(), "destroy" )
          msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor and losing {fcthit} reputation with {fct} for it ! Another cannibalize would destroy it, losing an additional {ld} reputation."),
             {eat=fmt.number(eat),fcthit=fmt.number(loss),fct=fct,ld=fmt.number(loss_d)})
       end
@@ -564,10 +564,10 @@ local function _board_cannibalize(spare)
    if left<=0 then
       local fact=board_plt:faction()
       player.msg(fmt.f(_("{plt} was destroyed."),{lft=fmt.number(left), plt=board_plt}))
-      fact:hit( -(board_plt:points()), system.cur(), "destroy")
+      fact:hit( -board_plt:points(), system.cur(), "destroy")
       board_close()
    else
-      player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't !"),{lft=fmt.number(left), plt=board_plt}))
+      player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
    --   -- Does not work! How to re-build the board window ?
    --   board_close()
    --   board(board_plt)
@@ -722,7 +722,6 @@ function board( plt )
    local eat_mode
 
    if can_cannibalize() then
-      --player.msg(fmt.f(_("faction {fac} reputation {rep}."),{rep=fmt.number(board_plt:reputation()), fac=board_plt:faction():nameRaw()}))
       if (board_plt:reputation() <= -30) or not can_cannibalize_usefully() then
          eat_mode=2
          luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Gluttony"), board_gluttony )
@@ -737,7 +736,7 @@ function board( plt )
 
    local or_eat=""
    if eat_mode==1 then
-      or_eat="(or cannibalizing) "
+      or_eat=_("(or cannibalizing) ")
    end
 
    -- Display about faction hits
@@ -764,13 +763,6 @@ function board( plt )
    end
 
    board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
-
-   --local fh = board_fcthit_txt:height()
-   --local dfh = luatk._deffont:getLineHeight()
-   --if fh > dfh then
-   --   h = h + fh-(30-dfh)
-   --   wdw:resize( w, h )
-   --end
 
    -- Add manage cargo button if applicable
    cargo_btn = luatk.newButton( wdw, w-20-120, 85, 120, 30, _("Manage Cargo"), manage_cargo )

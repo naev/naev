@@ -173,7 +173,7 @@ function update( p, po, dt )
             -- TODO better calculation of asteroid mass
             p:knockback( 1000, t:vel(), t:pos(), 0.5 )
             -- Do the healing
-            if mem.regen~=0.0 then
+            if mem.regen>0 then
                p:addHealth( mem.regen * dmg )
             end
             -- Player effects
@@ -199,7 +199,7 @@ function update( p, po, dt )
             t:damage( dmg, 0, 100, "kinetic", p )
             t:knockback( p, 0.5 )
             -- Do the healing
-            if mem.regen~=0.0 then
+            if mem.regen>0 then
                p:addHealth( mem.regen * (ta - t:health(true)) )
             end
             -- Player effects
