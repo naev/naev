@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<effect name="Ambush Hunter">
+<effect name="Ambush Hunter II">
  <description>The ship has caught other ships by surprise!</description>
  <duration>10</duration>
  <icon>/gfx/misc/icons/hidden.webp</icon>
- <overwrite>ambush_hunter</overwrite>
+ <overwrite>ambush_hunter_ii</overwrite>
  <buff/>
  <stats>
-  <weapon_damage>50</weapon_damage>
+  <tur_range>30</tur_range>
+  <fwd_range>30</fwd_range>
  </stats>
 </effect>

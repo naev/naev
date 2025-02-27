@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Natural Healing II">
+<outfit name="Ambush Hunter I">
  <general>
   <typename>Bioship Organ</typename>
   <slot prop="bio_organ">utility</slot>
@@ -7,9 +7,9 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>/gfx/misc/icons/rod-of-asclepius.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/hidden.webp</gfx_store>
  </general>
  <specific type="modification">
-  <armour_regen>7</armour_regen>
+  <lua>outfits/bioship/skills/ambush_hunter_i.lua</lua>
  </specific>
 </outfit>

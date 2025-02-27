@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Natural Healing II">
+<outfit name="The Bite - Cannibal">
  <general>
   <typename>Bioship Organ</typename>
   <slot prop="bio_organ">utility</slot>
@@ -7,9 +7,11 @@
   <mass>0</mass>
   <price>0</price>
   <description>TODO</description>
-  <gfx_store>/gfx/misc/icons/rod-of-asclepius.webp</gfx_store>
+  <gfx_store>/gfx/misc/icons/delighted.webp</gfx_store>
  </general>
  <specific type="modification">
-  <armour_regen>7</armour_regen>
+  <lua>outfits/bioship/skills/the_bite.lua</lua>
+  <accel>800</accel>
+  <absorb>30</absorb>
  </specific>
 </outfit>

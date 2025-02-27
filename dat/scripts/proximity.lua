@@ -25,7 +25,7 @@ end
 This variant assumes a proximity hook between two ships, and trigger when the anchor ship scans the focus ship (fuzzy detection doesn't trigger).
    @tparam table trigger Contains: "anchor" (destination pilot, defaulting to the player), "focus" (the pilot that's polled for),
                          "funcname" (what to call if "anchor" detects "focus").
-			 --
+   --
    @usage hook.timer(0.5, "proximityScan", {focus = theirpilot, funcname = "function"}) -- Triggers when theirpilot is detected by the player
    @usage hook.timer(0.5, "proximityScan", {anchor = theirpilot, focus = mypilot, funcname = "function"}) -- Triggers when mypilot is detected by theirpilot
 --]]

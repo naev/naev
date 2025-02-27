@@ -7,7 +7,7 @@
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>
- <price>1200000</price>
+ <price>1800000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-16" y="12" h="0">nebula</trail_generator>
  <trail_generator x="-16" y="-12" h="0">nebula</trail_generator>
@@ -17,13 +17,17 @@
  <trail_generator x="-18" y="0" h="-4" always_under="1">pirate_bio</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Wild Ones</faction>
- <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, and there are many stories of pirates that have developed strong bonds with their bioships.</description>
+ <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, and there are many stories of pirates that have developed strong bonds with their bioships.
+
+The total experience the Revenant can get is only half of what its Soromid counterpart can, but it also gains twice less experience.
+An additional medium weapon slot and the possibility to use any armour makes it significantly more flexible.
+ </description>
  <health>
   <armour>170</armour>
  </health>
  <characteristics>
   <crew>12</crew>
-  <mass>130</mass>
+  <mass>165</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>20</cargo>
  </characteristics>
@@ -49,10 +53,10 @@
  </slots>
  <stats>
   <speed_mod>10</speed_mod>
-  <turn_mod>10</turn_mod>
-  <accel_mod>10</accel_mod>
+  <turn_mod>5</turn_mod>
+  <accel_mod>5</accel_mod>
   <cargo_mod>15</cargo_mod>
-  <armour_mod>-15</armour_mod>
+  <armour_mod>-20</armour_mod>
   <ew_hide>-10</ew_hide>
   <fuel>200</fuel>
  </stats>

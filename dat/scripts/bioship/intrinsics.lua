@@ -20,17 +20,17 @@ intrinsics["Soromid Brigand"] = {
       },
    },
    {
-      name = _("Cortex Growth I"),
+      name = _("Cortex Growth"),
       outfit = "Perlevis Cortex II",
       slot = "shell",
    },
    {
-      name = _("Gene Drive Growth I"),
+      name = _("Gene Drive Growth"),
       outfit = "Perlevis Gene Drive II",
       slot = "genedrive",
    },
    {
-      name = _("Weapon Organ Growth I"),
+      name = _("Weapon Organ Growth"),
       outfit = {
          "Stinger Organ II",
          "Stinger Organ II",
@@ -41,7 +41,7 @@ intrinsics["Soromid Brigand"] = {
       },
    },
    {
-      name = _("Cerebrum Growth I"),
+      name = _("Cerebrum Growth"),
       outfit = "Perleve Cerebrum II",
       slot = "brain",
    },
@@ -67,12 +67,12 @@ intrinsics["Soromid Marauder"] = {
       },
    },
    {
-      name = _("Cortex Growth I"),
+      name = _("Cortex Growth"),
       outfit = "Laevis Cortex II",
       slot = "shell",
    },
    {
-      name = _("Gene Drive Growth I"),
+      name = _("Gene Drive Growth"),
       outfit = "Laevis Gene Drive II",
       slot = "genedrive",
    },
@@ -88,7 +88,7 @@ intrinsics["Soromid Marauder"] = {
       },
    },
    {
-      name = _("Cerebrum Growth I"),
+      name = _("Cerebrum Growth"),
       outfit = "Laevum Cerebrum II",
       slot = "brain",
    },
@@ -112,7 +112,8 @@ intrinsics["Soromid Reaver"] = {
       outfit = {
          "Laevum Cerebrum I",
          "Laevis Cortex I",
-         "Laevis Gene Drive I",
+         "Laeviter Gene Drive I",
+         "Stinger Organ I",
          "Stinger Organ I",
          "Stinger Organ I",
       },
@@ -121,17 +122,18 @@ intrinsics["Soromid Reaver"] = {
          "shell",
          "genedrive",
          "leftweap",
+         "middleweap",
          "rightweap",
       },
    },
    {
-      name = _("Cortex Growth I"),
+      name = _("Cortex Growth"),
       outfit = "Laevis Cortex II",
       slot = "shell",
    },
    {
-      name = _("Gene Drive Growth I"),
-      outfit = "Laevis Gene Drive II",
+      name = _("Gene Drive Growth"),
+      outfit = "Laeviter Gene Drive II",
       slot = "genedrive",
    },
    {
@@ -139,14 +141,16 @@ intrinsics["Soromid Reaver"] = {
       outfit = {
          "Stinger Organ II",
          "Stinger Organ II",
+         "Stinger Organ II",
       },
       slot = {
          "rightweap",
+         "middleweap",
          "leftweap",
       },
    },
    {
-      name = _("Cerebrum Growth I"),
+      name = _("Cerebrum Growth"),
       outfit = "Laevum Cerebrum II",
       slot = "brain",
    },
@@ -155,9 +159,11 @@ intrinsics["Soromid Reaver"] = {
       outfit = {
          "Stinger Organ III",
          "Stinger Organ III",
+         "Stinger Organ III",
       },
       slot = {
          "rightweap",
+         "middleweap",
          "leftweap",
       },
    },
@@ -185,7 +191,7 @@ intrinsics["Soromid Odium"] = {
       },
    },
    {
-      name = _("Cortex Growth I"),
+      name = _("Cortex Growth"),
       outfit = "Mediocris Cortex II",
       slot = "shell",
    },
@@ -208,7 +214,7 @@ intrinsics["Soromid Odium"] = {
       },
    },
    {
-      name = _("Cerebrum Growth I"),
+      name = _("Cerebrum Growth"),
       outfit = "Mediocre Cerebrum II",
       slot = "brain",
    },
@@ -259,7 +265,7 @@ intrinsics["Soromid Nyx"] = {
       slot = "shell",
    },
    {
-      name = _("Gene Drive Growth I"),
+      name = _("Gene Drive Growth"),
       outfit = "Largus Gene Drive II",
       slot = "genedrive",
    },
@@ -277,7 +283,7 @@ intrinsics["Soromid Nyx"] = {
       },
    },
    {
-      name = _("Cerebrum Growth I"),
+      name = _("Cerebrum Growth"),
       outfit = "Largum Cerebrum II",
       slot = "brain",
    },
@@ -300,7 +306,7 @@ intrinsics["Soromid Nyx"] = {
       slot = "shell",
    },
    {
-      name = _("Weapon Organ Growth II"),
+      name = _("Weapon Organ Growth III"),
       outfit = {
          "Talon Organ IV",
          "Talon Organ IV",
@@ -315,12 +321,11 @@ intrinsics["Soromid Nyx"] = {
 }
 
 -- Copia (Bulk Freighter) intrinsics
--- TODO differentiate cores from Ira
 intrinsics["Soromid Copia"] = {
    {
       name = _("Innate"),
       outfit = {
-         "Ponderosus Gene Drive I",
+         "Grandis Gene Drive I",
          "Ponderosus Cortex I",
          "Ponderosum Cerebrum I",
          "Tentacle Organ I",
@@ -341,11 +346,16 @@ intrinsics["Soromid Copia"] = {
    },
    {
       name = _("Gene Drive Growth I"),
-      outfit = "Ponderosus Gene Drive II",
+      outfit = "Grandis Gene Drive II",
       slot = "genedrive",
    },
    {
-      name = _("Weapon Organ Growth I"),
+      name = _("Cerebrum Growth I"),
+      outfit = "Ponderosum Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Weapon Organ Growth"),
       outfit = {
          "Tentacle Organ II",
          "Tentacle Organ II",
@@ -354,11 +364,6 @@ intrinsics["Soromid Copia"] = {
          "weap1",
          "weap2",
       },
-   },
-   {
-      name = _("Cerebrum Growth I"),
-      outfit = "Ponderosum Cerebrum II",
-      slot = "brain",
    },
    {
       name = _("Cortex Growth II"),
@@ -367,24 +372,18 @@ intrinsics["Soromid Copia"] = {
    },
    {
       name = _("Gene Drive Growth II"),
-      outfit = "Ponderosus Gene Drive III",
+      outfit = "Grandis Gene Drive III",
       slot = "genedrive",
-   },
-   {
-      name = _("Weapon Organ Growth II"),
-      outfit = {
-         "Tentacle Organ III",
-         "Tentacle Organ III",
-      },
-      slot = {
-         "weap1",
-         "weap2",
-      },
    },
    {
       name = _("Cerebrum Growth II"),
       outfit = "Ponderosum Cerebrum III",
       slot = "brain",
+   },
+   {
+      name = _("Cortex Growth III"),
+      outfit = "Ponderosus Cortex IV",
+      slot = "shell",
    },
 }
 
@@ -422,7 +421,12 @@ intrinsics["Soromid Ira"] = {
       slot = "genedrive",
    },
    {
-      name = _("Weapon Organ Growth I"),
+      name = _("Cerebrum Growth I"),
+      outfit = "Ponderosum Cerebrum II",
+      slot = "brain",
+   },
+   {
+      name = _("Weapon Organ Growth"),
       outfit = {
          "Tentacle Organ II",
          "Tentacle Organ II",
@@ -435,11 +439,6 @@ intrinsics["Soromid Ira"] = {
          "weap3",
          "weap4",
       },
-   },
-   {
-      name = _("Cerebrum Growth I"),
-      outfit = "Ponderosum Cerebrum II",
-      slot = "brain",
    },
    {
       name = _("Cortex Growth II"),
@@ -452,24 +451,14 @@ intrinsics["Soromid Ira"] = {
       slot = "genedrive",
    },
    {
-      name = _("Weapon Organ Growth II"),
-      outfit = {
-         "Tentacle Organ III",
-         "Tentacle Organ III",
-         "Tentacle Organ III",
-         "Tentacle Organ III",
-      },
-      slot = {
-         "weap1",
-         "weap2",
-         "weap3",
-         "weap4",
-      },
-   },
-   {
       name = _("Cerebrum Growth II"),
       outfit = "Ponderosum Cerebrum III",
       slot = "brain",
+   },
+   {
+      name = _("Cortex Growth III"),
+      outfit = "Ponderosus Cortex IV",
+      slot = "shell",
    },
 }
 
@@ -578,7 +567,7 @@ intrinsics["Soromid Arx"] = {
    {
       name = _("Innate"),
       outfit = {
-         "Immanis Gene Drive I",
+         "Magnus Gene Drive I",
          "Immanis Cortex I",
          "Immane Cerebrum I",
          "Tentacle Organ I",
@@ -599,7 +588,7 @@ intrinsics["Soromid Arx"] = {
    },
    {
       name = _("Gene Drive Growth I"),
-      outfit = "Immanis Gene Drive II",
+      outfit = "Magnus Gene Drive II",
       slot = "genedrive",
    },
    {
@@ -636,7 +625,7 @@ intrinsics["Soromid Arx"] = {
    },
    {
       name = _("Gene Drive Growth II"),
-      outfit = "Immanis Gene Drive III",
+      outfit = "Magnus Gene Drive III",
       slot = "genedrive",
    },
    {
@@ -676,7 +665,7 @@ intrinsics["Pirate Revenant"] = {
       },
    },
    {
-      name = _("Growth I"),
+      name = _("Gene Drive Growth I"),
       outfit = {
          "Mediocris Gene Drive II",
       },
@@ -685,7 +674,7 @@ intrinsics["Pirate Revenant"] = {
       },
    },
    {
-      name = _("Weapon Organ Growth I"),
+      name = _("Weapon Organ Growth"),
       outfit = {
          "Talon Organ II",
          "Talon Organ II",
@@ -696,25 +685,21 @@ intrinsics["Pirate Revenant"] = {
       },
    },
    {
-      name = _("Growth II"),
+      name = _("Cerebrum Growth"),
       outfit = {
          "Mediocre Cerebrum II",
-         "Mediocris Gene Drive III",
       },
       slot = {
          "brain",
-         "genedrive",
       },
    },
    {
-      name = _("Weapon Organ Growth II"),
+      name = _("Gene Drive Growth II"),
       outfit = {
-         "Talon Organ III",
-         "Talon Organ III",
+         "Mediocris Gene Drive III",
       },
       slot = {
-         "weap1",
-         "weap2",
+         "genedrive",
       },
    },
 }
