@@ -39,6 +39,7 @@ static int outfitL_mass( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_limit( lua_State *L );
 static int outfitL_icon( lua_State *L );
+static int outfitL_license( lua_State *L );
 static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
 static int outfitL_summary( lua_State *L );
@@ -71,6 +72,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "slot", outfitL_slot },
    { "limit", outfitL_limit },
    { "icon", outfitL_icon },
+   { "license", outfitL_license },
    { "price", outfitL_price },
    { "description", outfitL_description },
    { "summary", outfitL_summary },
@@ -410,7 +412,7 @@ static int outfitL_cpu( lua_State *L )
 static int outfitL_mass( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   lua_pushnumber( L, o->mass );
+   lua_pushnumber( L, outfit_mass( o ) );
    return 1;
 }
 
@@ -471,6 +473,24 @@ static int outfitL_icon( lua_State *L )
    const Outfit *o = luaL_validoutfit( L, 1 );
    outfit_gfxStoreLoad( (Outfit *)o );
    lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the license necessary to purchase an outfit (if applicable).
+ *
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string|nil The name of the license or nil if no license is
+ * necessary.
+ * @luafunc license
+ */
+static int outfitL_license( lua_State *L )
+{
+   const Outfit *o       = luaL_validoutfit( L, 1 );
+   const char   *license = outfit_license( o );
+   if ( license == NULL )
+      return 0;
+   lua_pushstring( L, license );
    return 1;
 }
 

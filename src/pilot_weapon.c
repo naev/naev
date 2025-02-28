@@ -1255,7 +1255,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
                         p->solid.dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
-      p->mass_outfit -= w->outfit->u.bay.ship_mass;
+      p->mass_outfit -= outfit_massAmmo( w->outfit );
       pilot_updateMass( p );
    } else
       WARN( _( "Shooting unknown weapon type: %s" ), w->outfit->name );

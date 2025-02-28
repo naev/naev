@@ -961,11 +961,11 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
    pilot->cpu += outfit_cpu( o );
 
    /* Add mass. */
-   pilot->mass_outfit += o->mass;
+   pilot->mass_outfit += outfit_mass( o );
 
    /* Keep a separate counter for required (core) outfits. */
    if ( sp_required( o->slot.spid ) )
-      pilot->base_mass += o->mass;
+      pilot->base_mass += outfit_mass( o );
 
    /* Add ammo mass. */
    if ( outfit_isLauncher( o ) )

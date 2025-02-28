@@ -894,7 +894,7 @@ int outfit_amount( const Outfit *o )
       return o->u.lau.amount;
    else if ( outfit_isFighterBay( o ) )
       return o->u.bay.amount;
-   return -1;
+   return 0;
 }
 
 /**

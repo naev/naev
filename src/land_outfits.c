@@ -561,11 +561,8 @@ void outfits_update( unsigned int wid, const char *str )
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
 
-   mass = outfit->mass;
-   if ( outfit_isLauncher( outfit ) )
-      mass += outfit_amount( outfit ) * outfit->u.lau.ammo_mass;
-   else if ( outfit_isFighterBay( outfit ) )
-      mass += outfit_amount( outfit ) * outfit->u.bay.ship_mass;
+   mass = outfit_mass( outfit ) +
+          outfit_amount( outfit ) * outfit_massAmmo( outfit );
    tonnes2str( buf_mass, (int)round( mass ) );
 
    outfit_getNameWithClass( outfit, buf, sizeof( buf ) );
@@ -579,15 +576,16 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    ( ( youhave ) != NULL ) ? youhave : buf_credits );
-   if ( outfit->license ) {
-      int meets_reqs = player_hasLicense( outfit->license );
+   if ( outfit_license( outfit ) ) {
+      int meets_reqs = player_hasLicense( outfit_license( outfit ) );
       k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
       if ( blackmarket )
          l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",
                          _( "Not Necessary (Blackmarket)" ) );
       else
-         l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s%s#0",
-                         meets_reqs ? "" : "#r", _( outfit->license ) );
+         l +=
+            scnprintf( &buf[l], sizeof( buf ) - l, "\n%s%s#0",
+                       meets_reqs ? "" : "#r", _( outfit_license( outfit ) ) );
    }
    if ( outfit->cond ) {
       int meets_reqs = 0;
@@ -1007,10 +1005,10 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       failure = 1;
    }
    /* Needs license. */
-   if ( !blackmarket && !player_hasLicense( outfit->license ) ) {
+   if ( !blackmarket && !player_hasLicense( outfit_license( outfit ) ) ) {
       land_errDialogueBuild(
          _( "You need the '%s' license to buy this outfit." ),
-         _( outfit->license ) );
+         _( outfit_license( outfit ) ) );
       failure = 1;
    }
    /* Needs requirements. */

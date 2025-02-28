@@ -635,7 +635,7 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
    size_t l = 0;
    double th;
    int    iw;
-   double mass = outfit->mass;
+   double mass = outfit_mass( outfit );
 
    /* 452 px is the sum of the 128 px outfit image width, its 4 px border,
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
@@ -667,8 +667,9 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s\n", buf_price );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s\n", buf_money );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "%s\n",
-                   ( outfit->license != NULL ) ? _( outfit->license )
-                                               : _( "None" ) );
+                   ( outfit_license( outfit ) != NULL )
+                      ? _( outfit_license( outfit ) )
+                      : _( "None" ) );
 
    window_modifyText( wid, "txtDDesc", buf );
    window_resizeWidget( wid, "txtDescShort", 280, th );
