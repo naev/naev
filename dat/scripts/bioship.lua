@@ -58,7 +58,8 @@ local function _getskills( p )
    if pss <= 3 then
       table.insert( skilllist, "move" )
    end
-   if pss <= 4 or ps:baseType()=='Ira' then
+
+   if pss <= 4 or ps:tags().bioship_skills_stealth then
       table.insert( skilllist, "stealth" )
    end
    local skills = bioskills.get( skilllist )
