@@ -512,6 +512,7 @@ local function can_cannibalize_usefully()
    end
 end
 
+-- forward-declared functions
 local _board_close
 local _board
 
@@ -526,9 +527,6 @@ local function _board_cannibalize(spare)
    local parmour, pshield, pstress = pp:health(true)
 
    local dmg
-
-   -- Because can't refresh board window, else would be useless.
-   spare=spare and can_cannibalize_usefully()
 
    if not spare then
       dmg = armour
