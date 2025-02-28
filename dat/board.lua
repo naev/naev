@@ -503,11 +503,11 @@ end
 local function can_cannibalize_usefully()
    local pp = player.pilot()
    local parmour, _pshield, _pstress = pp:health(true)
-   local ba=board_plt:stats().armour
+   local ba, _shield = board_plt:health(true)
 
    if pp:stats().armour == parmour then
       return false
-   elseif ba<2 then
+   elseif ba<2 then -- We want no less than 1 armour to eat, and will leave no less than 1.
       return false
    else
       return true
