@@ -23,14 +23,14 @@
   <speed>800</speed>
   <range>2200</range>
   <falloff>1750</falloff>
-  <energy>141</energy>
+  <energy>90</energy>
   <trackmin>5000</trackmin>
   <trackmax>20000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>70</penetrate>
-   <physical>31.5</physical>
-   <disable>21</disable>
+   <penetrate>64</penetrate>
+   <physical>68</physical>
+   <disable>17</disable>
   </damage>
  </specific>
  <tags>
