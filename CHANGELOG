@@ -31,6 +31,7 @@
 * 0.12.4 (unreleased)
    * Gave Pacifier +400 fuel bonus to match description
    * Made the baron comm event respect system claims
+   * Shaky swan no longer gets killed by patrols
    * Fixed crash when shooting asteroids with explosive weapons
 
 * 0.12.3
