@@ -567,6 +567,39 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
    return OUTFIT_SLOT_SIZE_NA;
 }
 
+int outfit_isProp( const Outfit *o, unsigned int prop )
+{
+   return o->properties & prop;
+}
+void outfit_setProp( Outfit *o, unsigned int prop )
+{
+   o->properties |= prop;
+}
+void outfit_rmProp( Outfit *o, unsigned int prop )
+{
+   o->properties &= ~prop;
+}
+double outfit_mass( const Outfit *o )
+{
+   return o->mass;
+}
+double outfit_massAmmo( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.ammo_mass;
+   else if ( outfit_isFighterBay( o ) )
+      return o->u.bay.ship_mass;
+   return 0.;
+}
+const char *outfit_license( const Outfit *o )
+{
+   return o->license;
+}
+credits_t outfit_price( const Outfit *o )
+{
+   return o->price;
+}
+
 /**
  * @brief Checks if outfit is an active outfit.
  *    @param o Outfit to check.

@@ -13,12 +13,6 @@
 /*
  * properties
  */
-#define outfit_isProp( o, p )                                                  \
-   ( ( o )->properties & ( p ) ) /**< Checks an outfit for property. */
-#define outfit_setProp( o, p )                                                 \
-   ( ( o )->properties |= ( p ) ) /**< Sets property. */
-#define outfit_rmProp( o, p )                                                  \
-   ( ( o )->properties &= ~( p ) ) /**< Removes property. */
 /* property flags */
 #define OUTFIT_PROP_UNIQUE                                                     \
    ( 1 << 0 ) /**< Unique item (can only have one). Not sellable.*/
@@ -356,10 +350,11 @@ typedef struct OutfitLicenseData_ {
                       NULL). */
 } OutfitLicenseData;
 
+// typedef struct Outfit Outfit;
 /**
  * @brief A ship outfit, depends radically on the type.
  */
-typedef struct Outfit_ {
+typedef struct Outfit {
    char *name;      /**< Name of the outfit. */
    char *typename;  /**< Overrides the base type. */
    char *shortname; /**< Shorter version of the name for GUI and such. */
@@ -459,6 +454,13 @@ const Outfit *outfit_get( const char *name );
 const Outfit *outfit_getW( const char *name );
 const Outfit *outfit_getAll( void );
 int           outfit_compareTech( const void *outfit1, const void *outfit2 );
+int           outfit_isProp( const Outfit *o, unsigned int prop );
+void          outfit_setProp( Outfit *o, unsigned int prop );
+void          outfit_rmProp( Outfit *o, unsigned int prop );
+double        outfit_mass( const Outfit *o );
+double        outfit_massAmmo( const Outfit *o );
+const char   *outfit_license( const Outfit *o );
+credits_t     outfit_price( const Outfit *o );
 /* outfit types */
 int         outfit_isActive( const Outfit *o );
 int         outfit_isToggleable( const Outfit *o );

@@ -720,27 +720,23 @@ static void map_system_array_update( unsigned int wid, const char *str )
    if ( i < 0 )
       return;
    if ( ( strcmp( str, MAPSYS_OUTFITS ) == 0 ) ) {
-      Outfit *outfit = cur_spob_sel_outfits[i];
-      double  mass   = outfit->mass;
+      Outfit     *outfit  = cur_spob_sel_outfits[i];
+      double      mass    = outfit_mass( outfit );
+      const char *license = outfit_license( outfit );
 
       /* new text */
-      price2str( buf_price, outfit->price, player.p->credits, 2 );
-      if ( outfit->license == NULL )
+      price2str( buf_price, outfit_price( outfit ), player.p->credits, 2 );
+      if ( license == NULL )
          buf_license[0] = '\0';
-      else if ( player_hasLicense( outfit->license ) ||
+      else if ( player_hasLicense( license ) ||
                 ( cur_spobObj_sel != NULL &&
                   spob_hasService( cur_spobObj_sel,
                                    SPOB_SERVICE_BLACKMARKET ) ) )
-         strncpy( buf_license, _( outfit->license ),
-                  sizeof( buf_license ) - 1 );
+         strncpy( buf_license, _( license ), sizeof( buf_license ) - 1 );
       else
-         snprintf( buf_license, sizeof( buf_license ), "#r%s#0",
-                   _( outfit->license ) );
+         snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _( license ) );
 
-      if ( outfit_isLauncher( outfit ) )
-         mass += outfit_amount( outfit ) * outfit->u.lau.ammo_mass;
-      else if ( outfit_isFighterBay( outfit ) )
-         mass += outfit_amount( outfit ) * outfit->u.bay.ship_mass;
+      mass += outfit_amount( outfit ) * outfit_massAmmo( outfit );
       snprintf( buf_mass, sizeof( buf_mass ),
                 n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
