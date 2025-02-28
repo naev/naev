@@ -454,34 +454,33 @@ You will still have to escort the ship and land with it to perform the repairs a
       end )
 end
 
+local board_fcthit_txt_msg
 local function board_fcthit_apply ( eat )
    -- Piss off nearby ships
    board_plt:distress( player.pilot() )
 
    local fct = board_plt:faction()
    local loss = -fct:hit( -board_fcthit, system.cur(), "board" )
-   local msg
 
    if eat==0 then
       board_fcthit = 0
       if loss <= 0 then
          return
       end
-      msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
+      board_fcthit_txt_msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
          {fcthit=fmt.number(loss),fct=fct})
    else
       if loss == 0 then
-         msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor. Another cannibalize would destroy it."),
+         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor. Another cannibalize would destroy it."),
             {eat=fmt.number(eat)})
       else
          local loss_d = -fct:hitTest( -board_fcthit, system.cur(), "destroy" )
-         msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor and losing {fcthit} reputation with {fct} for it ! Another cannibalize would destroy it, losing an additional {ld} reputation."),
+         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor and losing {fcthit} reputation with {fct} for it ! Another cannibalize would destroy it, losing an additional {ld} reputation."),
             {eat=fmt.number(eat),fcthit=fmt.number(loss),fct=fct,ld=fmt.number(loss_d)})
       end
       board_fcthit = 0
    end
-   --player.msg( "#r"..msg.."#0" )
-   board_fcthit_txt:set( msg )
+   board_fcthit_txt:set( board_fcthit_txt_msg )
 end
 
 local function can_cannibalize ()
@@ -502,17 +501,19 @@ end
 
 local function can_cannibalize_usefully()
    local pp = player.pilot()
-   local parmour, _pshield, _pstress = pp:health(true)
-   local ba, _shield = board_plt:health(true)
 
-   if pp:stats().armour == parmour then
+   if pp:stats().armour == pp:armour(true) then
       return false
-   elseif ba<2 then -- We want no less than 1 armour to eat, and will leave no less than 1.
+   elseif board_plt:armour(true)<2 then
+      -- We want no less than 1 armour to eat, and will leave no less than 1.
       return false
    else
       return true
    end
 end
+
+local _board_close
+local _board
 
 local function _board_cannibalize(spare)
    local armour, shield = board_plt:health(true)
@@ -568,9 +569,9 @@ local function _board_cannibalize(spare)
       board_close()
    else
       player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
-   --   -- Does not work! How to re-build the board window ?
-   --   board_close()
-   --   board(board_plt)
+      -- Does not work! How to re-build the board window ?
+      _board_close()
+      _board(board_plt)
    end
 end
 
@@ -652,7 +653,7 @@ local function manage_cargo ()
    end )
 end
 
-function board_close ()
+_board_close = function ( plt )
    if board_wdw then
       board_wdw:destroy()
    end
@@ -662,19 +663,14 @@ function board_close ()
    if not board_plt:spaceworthy() then
       board_plt:setDisable(false) -- Permanently disable
    end
+end
 
+function board_close ()
+   _board_close()
    der.sfx.unboard:play()
 end
 
-function board( plt )
-   if not plt:exists() then return end
-
-   if plt:flags("carried") then
-      player.msg( "#r".._("You can not board deployed fighters.").."#0" )
-      return
-   end
-
-   der.sfx.board:play()
+_board = function ( plt )
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
    local lootables = compute_lootables( plt )
@@ -750,19 +746,25 @@ function board( plt )
    if math.abs(loss) > 0 then
       local loss_d = math.floor(-fct:hitTest( -board_fcthit, system.cur(), "destroy" ))
 
-      if eat_mode~=2 then
+      if eat_mode==2 then
+         fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, or {h2} if you destroy it, and may anger nearby ships. "),
+            {fct=fct,fcthit=fmt.number(loss),h2=fmt.number(loss_d)})
+      else
          fctmsg = fmt.f(_("Looting {oe}anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
             {oe=or_eat,fct=fct,fcthit=fmt.number(loss)})
-      else -- A bit ugly...
-         fctmsg = fmt.f(_("Looting {oe}anything from the ship will lower your reputation with {fct} by {fcthit}, or {h2} if you destroy it, and may anger nearby ships. "),
-            {oe=or_eat,fct=fct,fcthit=fmt.number(loss),h2=fmt.number(loss_d)})
       end
    else
       fctmsg = fmt.f(_("Looting {oe}anything from the ship may anger nearby ships."),
          {oe=or_eat})
    end
 
-   board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
+   if board_fcthit_txt_msg then
+      -- If some consequence message had was displayed, re-display it.
+      board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, board_fcthit_txt_msg )
+   else
+      -- Opening the window for the first time
+      board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
+   end
 
    -- Add manage cargo button if applicable
    cargo_btn = luatk.newButton( wdw, w-20-120, 85, 120, 30, _("Manage Cargo"), manage_cargo )
@@ -791,6 +793,19 @@ function board( plt )
 
    wdw:setAccept( board_lootAll )
    wdw:setCancel( board_close )
+end
+
+function board( plt )
+   if not plt:exists() then return end
+
+   if plt:flags("carried") then
+      player.msg( "#r".._("You can not board deployed fighters.").."#0" )
+      return
+   end
+
+   der.sfx.board:play()
+
+   _board( plt )
 
    luatk.run()
 end
