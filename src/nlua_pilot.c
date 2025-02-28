@@ -246,6 +246,7 @@ static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static int pilotL_collisionTest( lua_State *L );
 static int pilotL_damage( lua_State *L );
+static int pilotL_invincible( lua_State *L );
 static int pilotL_kill( lua_State *L );
 static int pilotL_knockback( lua_State *L );
 static int pilotL_distress( lua_State *L );
@@ -452,6 +453,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "choosePoint", pilotL_choosePoint },
    { "collisionTest", pilotL_collisionTest },
    { "damage", pilotL_damage },
+   { "invincible", pilotL_invincible },
    { "kill", pilotL_kill },
    { "knockback", pilotL_knockback },
    { "distress", pilotL_distress },
@@ -6474,7 +6476,7 @@ static int pilotL_collisionTest( lua_State *L )
    Pilot *t = luaL_validpilot( L, 2 );
 
    /* Shouldn't be invincible. */
-   if ( pilot_isFlag( t, PILOT_INVINCIBLE ) )
+   if ( pilot_invincible( t ) )
       return 0;
 
    /* Shouldn't be landing or taking off. */
@@ -6525,6 +6527,20 @@ static int pilotL_damage( lua_State *L )
       weapon_hitAI( p, parent, damage );
 
    lua_pushnumber( L, damage );
+   return 1;
+}
+
+/**
+ * @brief Gets whether or not a pilot is invincible.
+ *
+ *    @luatparam Pilot p Pilot to check to see if is invincible.
+ *    @luatreturn boolean Whether or not the pilot is invincible.
+ * @luafunc invincible
+ */
+static int pilotL_invincible( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushboolean( L, pilot_invincible( p ) );
    return 1;
 }
 

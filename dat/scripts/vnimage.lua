@@ -90,6 +90,9 @@ local neutral_f = {
    {"neutral/female4n.webp"},
    {"neutral/female5n.webp"},
    {"neutral/female6n.webp"},
+   {"neutral/female7n.webp"},
+   {"neutral/female7n_v2.webp"},
+   {"neutral/female7n_v3.webp"},
 }
 vni.genericMale = get_list( neutral_m )
 vni.genericFemale = get_list( neutral_f )

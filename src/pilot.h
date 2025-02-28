@@ -575,3 +575,4 @@ PilotOutfitSlot *pilot_getDockSlot( Pilot *p );
 const IntList   *pilot_collideQuery( int x1, int y1, int x2, int y2 );
 void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 );
 void pilot_quadtreeParams( int max_elem, int depth );
+int  pilot_invincible( const Pilot *p );

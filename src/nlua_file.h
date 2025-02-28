@@ -5,6 +5,8 @@
 
 /** @cond */
 #include "SDL.h"
+
+#include "naev.h"
 /** @endcond */
 
 #include "nlua.h"

@@ -344,7 +344,7 @@ function feral_check ()
    if mem.state==2 then return end
    local jp = jump.get( system.cur(), feraljumpsys )
    for k,p in ipairs(feralpack) do
-      if not p:flags("invincible") then
+      if p:invincible() then
          local pa = p:health()
          if pa < 70 then
             p:setInvincible(true)

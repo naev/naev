@@ -935,7 +935,7 @@ static void weapon_render( Weapon *w, double dt )
 static int weapon_checkCanHit( const Weapon *w, const Pilot *p )
 {
    /* Can't hit invincible stuff. */
-   if ( pilot_isFlag( p, PILOT_INVINCIBLE ) )
+   if ( pilot_invincible( p ) )
       return 0;
 
    /* Can't hit hidden stuff. */
@@ -1246,9 +1246,10 @@ static void weapon_updateCollide( Weapon *w, double dt )
          }
          w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
-      wc.gfx     = NULL;
-      wc.polygon = NULL;
-      wc.range   = outfit_width( w->outfit ) * 0.5; /* Set beam width. */
+      wc.gfx      = NULL;
+      wc.polygon  = NULL;
+      wc.polyview = NULL;
+      wc.range    = outfit_width( w->outfit ) * 0.5; /* Set beam width. */
       wc.beamrange =
          outfit_range( w->outfit ) * w->range_mod; /* Set beam range. */
 
@@ -1580,6 +1581,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
    wc.beam      = 0;
    wc.range     = radius;
    wc.polygon   = NULL;
+   wc.polyview  = NULL;
    wc.explosion = 1;
 
    /* Speed of the impact. */
@@ -1657,7 +1659,7 @@ static void weapon_hitExplode( Weapon *w, const Damage *dmg, double radius,
             if ( a->state != ASTEROID_FG )
                continue;
 
-            if ( a->polygon != NULL ) {
+            if ( array_size( a->polygon->views ) > 0 ) {
                CollPolyView rpoly;
                poly_rotate( &rpoly, &a->polygon->views[0], (float)a->ang );
                coll = weapon_testCollision( &wc, a->gfx, 0, 0, &a->sol, &rpoly,

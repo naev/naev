@@ -438,6 +438,7 @@ int effect_rm( Effect **efxlist, int idx )
       }
    }
    array_erase( efxlist, &e[0], &e[1] );
+   gui_updateEffects();
    return 1;
 }
 
@@ -467,10 +468,14 @@ int effect_rmType( Effect **efxlist, const EffectData *efx, int all )
          }
       }
       array_erase( efxlist, &e[0], &e[1] );
-      if ( !all )
+      if ( !all ) {
+         gui_updateEffects();
          return 1;
+      }
       ret++;
    }
+   if ( ret > 0 )
+      gui_updateEffects();
    return ret;
 }
 
@@ -485,6 +490,7 @@ int effect_rmType( Effect **efxlist, const EffectData *efx, int all )
 void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs,
                            int others )
 {
+   int n = 0;
    for ( int i = array_size( *efxlist ) - 1; i >= 0; i-- ) {
       const Effect *e = &( *efxlist )[i];
 
@@ -513,7 +519,10 @@ void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs,
 
       /* Clear effect. */
       array_erase( efxlist, &e[0], &e[1] );
+      n++;
    }
+   if ( n > 0 )
+      gui_updateEffects();
 }
 
 /**
@@ -537,6 +546,7 @@ void effect_clear( Effect **efxlist )
       }
    }
    array_erase( efxlist, array_begin( *efxlist ), array_end( *efxlist ) );
+   gui_updateEffects();
 }
 
 /**

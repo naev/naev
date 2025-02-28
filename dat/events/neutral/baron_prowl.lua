@@ -24,6 +24,7 @@ function create()
    baronship:control()
    baronship:moveto(pnt:pos() + vec2.new( 500, -500), false, false)
    hook.pilot(baronship, "idle", "idle")
+   hook.enter("enter")
 end
 
 function idle(baronship)
@@ -31,4 +32,9 @@ function idle(baronship)
    baronship:moveto(pnt:pos() + vec2.new(-500,  500), false, false)
    baronship:moveto(pnt:pos() + vec2.new(-500, -500), false, false)
    baronship:moveto(pnt:pos() + vec2.new( 500, -500), false, false)
+end
+
+-- Clear event when entering new system
+function enter()
+   evt.finish()
 end

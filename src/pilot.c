@@ -297,7 +297,7 @@ int pilot_validEnemy( const Pilot *p, const Pilot *target )
       return 0;
 
    /* Shouldn't be invincible. */
-   if ( pilot_isFlag( target, PILOT_INVINCIBLE ) )
+   if ( pilot_invincible( target ) )
       return 0;
 
    /* Shouldn't be landing or taking off. */
@@ -1369,7 +1369,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
    double tdshield, tdarmour;
 
    /* Invincible means no damage. */
-   if ( pilot_isFlag( p, PILOT_INVINCIBLE ) || pilot_isFlag( p, PILOT_HIDE ) ||
+   if ( pilot_invincible( p ) || pilot_isFlag( p, PILOT_HIDE ) ||
         ( ( pshooter != NULL ) && pilot_isWithPlayer( pshooter ) &&
           pilot_isFlag( p, PILOT_INVINC_PLAYER ) ) )
       return 0.;
@@ -4548,4 +4548,12 @@ void pilot_quadtreeParams( int max_elem, int depth )
 {
    qt_max_elem = max_elem;
    qt_depth    = depth;
+}
+
+/**
+ * @brief Checks to see if a pilot is invincible.
+ */
+int pilot_invincible( const Pilot *p )
+{
+   return pilot_isFlag( p, PILOT_INVINCIBLE ) || p->stats.invincible;
 }

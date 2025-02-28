@@ -318,7 +318,17 @@ function land ()
             if th > lastprog and th < progress then
                for i,jmp in ipairs(rwd) do
                   if not jmp:known() and (jmp:dest():known() or jmp:system():known()) then
-                     table.insert( rewards, jmp )
+                     -- Don't add an equivalent jump twice
+                     local found = false
+                     for j,r in ipairs(rewards) do
+                        if jmp==r or jmp==r:reverse() then
+                           found = true
+                           break
+                        end
+                     end
+                     if not found then
+                        table.insert( rewards, jmp )
+                     end
                   end
                end
             end
@@ -340,7 +350,7 @@ end
 
 local msg_double = {
    _([["I've found a hidden jump between the {src} and {dst} systems!"]]),
-   _([["A hidden routes seems to exist between the {src} and {dst} systems!"]]),
+   _([["A hidden route seems to exist between the {src} and {dst} systems!"]]),
    _([["Marvelously, the {src} and {dst} systems seem to be connected by a hidden jump route!"]]),
    _([["Against prior knowledge, it seems like the {src} and {dst} systems are connected!"]]),
    _([["Data analysis proves that there has to be a hidden jump between the {src} and {dst} systems!"]]),

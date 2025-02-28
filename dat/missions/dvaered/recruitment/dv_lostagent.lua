@@ -454,7 +454,8 @@ end
 -- Spawn the Shaky Swan for the player to disable them
 local dhook
 function spawnSwan()
-   mem.swan = pilot.add("Tristan", "FLF", mem.flfoys, _("Shaky Swan"), {ai="mercenary"})
+   local fct = faction.dynAdd( "FLF", "shakyswan", _("FLF"), {clear_allies=true, clear_enemies=true} )
+   mem.swan = pilot.add("Tristan", fct, mem.flfoys, _("Shaky Swan"), {ai="mercenary"})
    mem.swan:setHilight()
    mem.swan:setVisible() -- Not very elegant...
    dhook = hook.pilot(mem.swan,"disable","swanDisabled")
@@ -468,7 +469,7 @@ end
 function swanDisabled()
    mem.swan:setDisable() -- To be sure it won't recover.
    mem.swan:comm(_("What the? Damn!"))
-   faction.hit(faction.get("FLF"), -5) -- Faction loss with the FLF.
+   faction.hit( faction.get("FLF"), -5 ) -- Faction loss with the FLF.
    hook.rm(dhook)
    hook.timer(1.0,"spawnSquad")
    misn.osdActive(2)

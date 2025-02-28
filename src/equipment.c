@@ -430,7 +430,7 @@ void equipment_open( unsigned int wid )
    window_canFocusWidget( wid, "cstMisc", 0 );
 
    /* Spinning ship. */
-   swd      = malloc( sizeof( ShipWidgetData ) );
+   swd      = calloc( 1, sizeof( ShipWidgetData ) );
    swd->wid = wid;
    swd->s   = ship_maxSize() / gl_screen.scale;
    gl_fboCreate( &swd->fbo, &swd->tex, swd->s, swd->s );
