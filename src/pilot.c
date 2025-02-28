@@ -274,7 +274,7 @@ int pilot_canTarget( const Pilot *p )
       return 0;
 
    /* Must not be hidden nor invisible. */
-   if ( pilot_isFlag( p, PILOT_HIDE ) || pilot_invincible( p ) )
+   if ( pilot_isFlag( p, PILOT_HIDE ) || pilot_isFlag( p, PILOT_INVISIBLE ) )
       return 0;
 
    /* Pilot is a valid target. */
