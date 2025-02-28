@@ -8,7 +8,6 @@ function onstealth( _p, po, stealthed )
 end
 
 function init( _p, po )
-    --po:clear()
     po:set( "ew_hide", -15 )
 end
 

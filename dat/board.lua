@@ -505,9 +505,9 @@ local function can_cannibalize_usefully()
    local parmour, _pshield, _pstress = pp:health(true)
    local ba=board_plt:stats().armour
 
-   if (pp:stats().armour == parmour) then
+   if pp:stats().armour == parmour then
       return false
-   elseif (ba<=2) or (ba==3 and player.shipvarPeek("cannibal2")) then
+   elseif ba<2 then
       return false
    else
       return true
