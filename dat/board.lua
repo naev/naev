@@ -569,7 +569,6 @@ local function _board_cannibalize(spare)
       board_close()
    else
       player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
-      -- Does not work! How to re-build the board window ?
       _board_close()
       _board(board_plt)
    end
@@ -839,6 +838,7 @@ function board_lootOne( wgt, nomsg )
       end )
    end
 end
+
 -- Helper function that actually loots
 function board_lootOneDo( wgt, nomsg )
    local looted = false
@@ -913,6 +913,7 @@ function board_lootOneDo( wgt, nomsg )
       local c = l.data
       local cf = player.fleetCargoFree()
       local q = math.min( l.q, cf )
+
       -- Unable to loot anything
       if q <= 0 then
          if not nomsg then
@@ -945,3 +946,4 @@ function board_lootOneDo( wgt, nomsg )
    end
    return looted
 end
+
