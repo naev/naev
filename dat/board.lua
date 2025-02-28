@@ -653,7 +653,7 @@ local function manage_cargo ()
    end )
 end
 
-_board_close = function ( plt )
+_board_close = function ( )
    if board_wdw then
       board_wdw:destroy()
    end
