@@ -346,7 +346,6 @@ impl Context {
         let program_solid = ShaderBuilder::new(Some("Solid Shader"))
             .vert_file("rust_solid.vert")
             .frag_file("rust_solid.frag")
-            .sampler("sampler", 0)
             .build(&gl)?;
         let uniform = SolidUniform::default();
         let buffer_solid = BufferBuilder::new()
