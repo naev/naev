@@ -407,10 +407,12 @@ function enter()
 
             spawnZlkSquadron( jp:pos() , (mem.stage < 8) )
          end
-         if player.chapter()~="0" and system.cur()==system.get("Ruadan") then
+         if system.cur()==system.get("Ruadan") then
             local spo=spob.get("Hypergate Ruadan")
 
-            spawnZlkSquadron( spo:pos() , (mem.stage < 8) )
+            if spo and spo:tags("active") then
+               spawnZlkSquadron( spo:pos() , (mem.stage < 8) )
+            end
          end
       end
 
@@ -431,10 +433,12 @@ function enter()
                spawnEmpSquadron( pos, (mem.stage < 8) )
             end
          end
-         if player.chapter()~="0" and system.cur()==system.get("Gamma Polaris") then
+         if system.cur()==system.get("Gamma Polaris") then
             local spo=spob.get("Hypergate Gamma Polaris")
 
-            spawnEmpSquadron( spo:pos() , (mem.stage < 8) )
+            if spo and spo:tags("active") then
+               spawnEmpSquadron( spo:pos() , (mem.stage < 8) )
+            end
          end
       end
    end
@@ -707,9 +711,11 @@ end
 function rmScanHooks()
    if mem.jpoutHook then
       hook.rm(mem.jpoutHook)
+      mem.jpoutHook=nil
    end
    if mem.landHook then
       hook.rm(mem.landHook)
+      mem.landHook=nil
    end
    rmScanHooksRaw()
 end
