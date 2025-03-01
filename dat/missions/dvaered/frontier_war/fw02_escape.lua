@@ -79,7 +79,7 @@ local zlk_list = { -- Systems with patrols
    system.get("Pultatis"),
    system.get("Stone Table"),
    system.get("Xavier"),
-   system.get("Straight Row")
+   system.get("Straight Row"),
 }
 local zlk_lisj = { -- Index refers to zlk_list
    {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
@@ -92,11 +92,13 @@ local emp_list = {
    system.get("Majesteka"),
    system.get("Tepdania"),
    system.get("Van Maanen"),
+   system.get("Waterhole"),
 }
 local emp_lisj = {
    {system.get("Hubfar")}, -- From Majesteka
    {system.get("Ianella")}, -- From Tepdania
    {system.get("Surano"),system.get("Kruger")}, -- From Van Maanen
+   {system.get("Goddard")}, -- From Water Hole
 }
 
 function create()
