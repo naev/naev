@@ -400,7 +400,8 @@ function enter()
          if mem.firstBloc then
             scanHooks = {}
             mem.jpoutHook = hook.jumpout("rmScanHooks")
-            -- In the case the player successfully uses an hypergate
+            -- In the case the player successfully lands or uses an hypergate.
+            -- Taking off is already managed by the enter hook.
             mem.landHook = hook.land("rmScanHooks")
          end
          for i, j in ipairs(zlk_lisj[mem.index]) do
@@ -710,7 +711,7 @@ function rmScanHooks()
       hook.rm(mem.jpoutHook)
    end
    if mem.landHook then
-      hook.rm(mem.lanHook)
+      hook.rm(mem.landHook)
    end
    rmScanHooksRaw()
 end
