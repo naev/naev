@@ -22,7 +22,7 @@
  </health>
  <characteristics>
   <crew>17</crew>
-  <mass>360</mass>
+  <mass>350</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
@@ -47,6 +47,8 @@
  <stats>
   <armour_mod>-10</armour_mod>
   <ew_hide>-10</ew_hide>
+  <turn_mod>10</turn_mod>
+  <accel_mod>10</accel_mod>
  </stats>
  <tags>
   <tag>soromid</tag>
