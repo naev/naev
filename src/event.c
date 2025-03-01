@@ -498,7 +498,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       /* Tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char     *);
+         temp->tags     = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {

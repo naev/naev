@@ -2683,7 +2683,7 @@ static void sysedit_genTechList( unsigned int wid )
    if ( p->tech != NULL )
       have = tech_getItemNames( p->tech, &n );
    else {
-      have      = malloc( sizeof( char      *) );
+      have      = malloc( sizeof( char * ) );
       have[n++] = strdup( _( "None" ) );
    }
 
@@ -2701,7 +2701,7 @@ static void sysedit_genTechList( unsigned int wid )
             n++;
 
       if ( !n ) {
-         lack      = malloc( sizeof( char      *) );
+         lack      = malloc( sizeof( char * ) );
          lack[n++] = strdup( _( "None" ) );
       } else {
          lack = malloc( sizeof( char * ) * j );
@@ -2890,7 +2890,7 @@ static void sysedit_genTagsList( unsigned int wid )
          have[i] = strdup( p->tags[i] );
       empty = 0;
    } else {
-      have      = malloc( sizeof( char      *) );
+      have      = malloc( sizeof( char * ) );
       have[n++] = strdup( _( "None" ) );
       empty     = 1;
    }
@@ -3035,7 +3035,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
 
    /* Generate factions list. */
    factions = faction_getAll();
-   str      = malloc( sizeof( char      *) * ( array_size( factions ) + 1 ) );
+   str      = malloc( sizeof( char * ) * ( array_size( factions ) + 1 ) );
    str[0]   = strdup( _( "None" ) );
    j        = 1;
    for ( int i = 0; i < array_size( factions ); i++ )

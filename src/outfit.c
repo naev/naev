@@ -269,7 +269,7 @@ char **outfit_searchFuzzyCase( const char *name, int *n )
 
    /* Overallocate to maximum. */
    nstack = array_size( outfit_stack );
-   names  = malloc( sizeof( char  *) * nstack );
+   names  = malloc( sizeof( char * ) * nstack );
 
    /* Do fuzzy search. */
    len = 0;
@@ -2399,8 +2399,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size = OUTFIT_SLOT_SIZE_NA;
 
    temp->u.map->systems = array_create( StarSystem * );
-   temp->u.map->spobs   = array_create( Spob   *);
-   temp->u.map->jumps   = array_create( JumpPoint   *);
+   temp->u.map->spobs   = array_create( Spob * );
+   temp->u.map->jumps   = array_create( JumpPoint * );
 
    do {
       xml_onlyNodes( node );
@@ -2787,7 +2787,7 @@ static int outfit_parse( Outfit *temp, const char *file )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char     *);
+         temp->tags     = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {

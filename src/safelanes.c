@@ -812,7 +812,7 @@ static int safelanes_activateByGradient( const cholmod_dense *Lambda_tilde,
    size_t *lal_bases, lal_base; /**< System si's U and Lambda rows start at
                                    sys_base; its lal rows start at lal_base. */
 
-   lal       = calloc( array_size( faction_stack ), sizeof( cholmod_dense       *) );
+   lal       = calloc( array_size( faction_stack ), sizeof( cholmod_dense * ) );
    lal_bases = calloc( array_size( faction_stack ), sizeof( size_t ) );
    edgeind_opts = array_create( int );
    facind_opts  = array_create_size( int, array_size( faction_stack ) );

@@ -75,7 +75,7 @@ void         window_clearWidgets( unsigned int wid );
 void         window_setParent( unsigned int wid, unsigned int parent );
 unsigned int window_getParent( unsigned int wid );
 void         window_onClose( unsigned int wid,
-                             void ( *fptr )( unsigned int, const char         *) );
+                             void ( *fptr )( unsigned int, const char * ) );
 
 /*
  * data

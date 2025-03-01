@@ -349,8 +349,8 @@ static void opt_gameplay( unsigned int wid )
    /* Game difficulty. */
    difficulty = difficulty_getAll();
    n          = array_size( difficulty );
-   diff_text  = malloc( sizeof( char  *) * n );
-   diff_alt   = malloc( sizeof( char   *) * n );
+   diff_text  = malloc( sizeof( char * ) * n );
+   diff_alt   = malloc( sizeof( char * ) * n );
    p          = 0;
    if ( player.p == NULL )
       difficulty_setLocal( NULL );
@@ -1212,7 +1212,7 @@ static void opt_accessibility( unsigned int wid )
       _( "Rod Monochromacy" ), _( "Cone Monochromacy" ),
    };
    int    ntypes = sizeof( colourblind_types ) / sizeof( colourblind_types[0] );
-   char **types  = malloc( ntypes * sizeof( char  *) );
+   char **types  = malloc( ntypes * sizeof( char * ) );
    for ( int i = 0; i < ntypes; i++ )
       types[i] = strdup( colourblind_types[i] );
 
@@ -1383,7 +1383,7 @@ static void opt_video( unsigned int wid )
       if ( ( mode.w == conf.width ) && ( mode.h == conf.height ) )
          j = 0;
    }
-   res     = malloc( sizeof( char     *) * ( i + j ) );
+   res     = malloc( sizeof( char * ) * ( i + j ) );
    nres    = 0;
    res_def = 0;
    if ( j ) {
@@ -1998,7 +1998,7 @@ static void opt_plugins_regenList( unsigned int wid )
 
    n = array_size( plgs );
    if ( n <= 0 ) {
-      str    = malloc( sizeof( char    *) * 1 );
+      str    = malloc( sizeof( char * ) * 1 );
       str[0] = strdup( _( "No Plugins Found" ) );
       n      = 1;
    } else {

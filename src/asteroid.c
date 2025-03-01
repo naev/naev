@@ -538,7 +538,7 @@ int asteroids_load( void )
 
    /* Load asteroid graphics. */
    asteroid_files = PHYSFS_enumerateFiles( SPOB_GFX_SPACE_PATH "asteroid/" );
-   asteroid_gfx   = array_create( glTexture   *);
+   asteroid_gfx   = array_create( glTexture * );
 
    for ( size_t i = 0; asteroid_files[i] != NULL; i++ ) {
       char file[PATH_MAX];
@@ -620,7 +620,7 @@ static int asttype_load( void )
    for ( int i = 0; i < array_size( asteroid_types ); i++ ) {
       AsteroidType     *at  = &asteroid_types[i];
       AsteroidTypeGroup grp = { .name    = strdup( at->name ),
-                                .types   = array_create( AsteroidType   *),
+                                .types   = array_create( AsteroidType * ),
                                 .weights = array_create( double ),
                                 .wtotal  = 1. };
       array_push_back( &grp.types, at );
@@ -665,7 +665,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
 
    /* Set up the element. */
    memset( at, 0, sizeof( AsteroidType ) );
-   at->gfxs        = array_create( glTexture        *);
+   at->gfxs        = array_create( glTexture * );
    at->polygon     = array_create( CollPoly );
    at->material    = array_create( AsteroidReward );
    at->damage      = 100;
@@ -838,7 +838,7 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
 
    /* Set up the element. */
    memset( ag, 0, sizeof( AsteroidTypeGroup ) );
-   ag->types   = array_create( AsteroidType   *);
+   ag->types   = array_create( AsteroidType * );
    ag->weights = array_create( double );
 
    xmlr_attr_strd( parent, "name", ag->name );
@@ -1020,7 +1020,7 @@ void asteroid_initAnchor( AsteroidAnchor *ast )
 {
    memset( ast, 0, sizeof( AsteroidAnchor ) );
    ast->density  = ASTEROID_DEFAULT_DENSITY;
-   ast->groups   = array_create( AsteroidTypeGroup   *);
+   ast->groups   = array_create( AsteroidTypeGroup * );
    ast->groupsw  = array_create( double );
    ast->radius   = ASTEROID_DEFAULT_RADIUS;
    ast->maxspeed = ASTEROID_DEFAULT_MAXSPEED;

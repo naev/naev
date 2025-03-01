@@ -1312,7 +1312,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       WARN( _( "Ship '%s' has inexistent license requirement '%s'!" ),
             temp->name, temp->license );
 
-      /* Ship XML validator */
+   /* Ship XML validator */
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
    WARN( _( "Ship '%s' missing '%s' element" ), temp->name, s )

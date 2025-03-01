@@ -197,7 +197,7 @@ Mission *misn_getFromLua( lua_State *L )
 void misn_runStart( Mission *misn, const char *func )
 {
    Mission **misnptr;
-   misnptr  = lua_newuserdata( naevL, sizeof( Mission  *) );
+   misnptr  = lua_newuserdata( naevL, sizeof( Mission * ) );
    *misnptr = misn;
    nlua_setenv( naevL, misn->env, "__misn" );
 
@@ -653,7 +653,7 @@ static int misn_accept( lua_State *L )
       cur_mission->accepted = 1; /* Mark as accepted. */
 
       /* Need to change pointer. */
-      misnptr  = lua_newuserdata( L, sizeof( Mission  *) );
+      misnptr  = lua_newuserdata( L, sizeof( Mission * ) );
       *misnptr = cur_mission;
       nlua_setenv( L, cur_mission->env, "__misn" );
    }
