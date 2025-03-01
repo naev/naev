@@ -76,17 +76,15 @@ local dealjump =  system.get("Surano")
 -- Za'lek Blocus
 local zlk_list = { -- Systems with patrols
    system.get("Ruadan"),
-   system.get("Pultatis"),
+   system.get("Provectus Nova"),
    system.get("Sollav"),
    system.get("Xavier"),
-   system.get("Straight Row"),
 }
 local zlk_lisj = { -- Index refers to zlk_list
    {}, -- Special case : hypergate
-   {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
+   {system.get("Goddard"), system.get("Limbo")}, -- from Provectus Nova
    {system.get("Fried"), system.get("Limbo")}, -- from Sollav
    {system.get("Sheffield")}, -- from Xavier
-   {system.get("Nunavut")}, -- from Straight Row
 }
 -- Not Blockaded :
 --  - Nunavut -> Unicorn (hidden)

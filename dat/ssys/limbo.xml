@@ -27,10 +27,6 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Pultatis">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Sollav">
    <autopos/>
    <hide>1.000000</hide>
