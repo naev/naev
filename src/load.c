@@ -657,7 +657,7 @@ void load_loadGameMenu( void )
    }
    /* case there are no players */
    else {
-      names    = malloc( sizeof( char    *) );
+      names    = malloc( sizeof( char * ) );
       names[0] = strdup( _( "None" ) );
       n        = 1;
    }
@@ -760,7 +760,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    }
    /* case there are no files */
    else {
-      names    = malloc( sizeof( char    *) );
+      names    = malloc( sizeof( char * ) );
       names[0] = strdup( _( "None" ) );
       n        = 1;
    }
@@ -1291,7 +1291,7 @@ int load_game( const nsave_t *ns )
    toolkit_closeAll();
    hook_clear();
 
-   data    = malloc( sizeof( const char    *) * 2 );
+   data    = malloc( sizeof( const char * ) * 2 );
    data[0] = file;
    data[1] = version;
    /* If the player isn't loaded, hooks aren't run so we can just go right away.

@@ -357,7 +357,7 @@ int intro_display( const char *text, const char *mus )
    gl_printLineIteratorInit( &iter, &intro_font, "",
                              SCREEN_W - 2 * SIDE_MARGIN - IMAGE_WIDTH );
    (void)gl_printLineIteratorNext( &iter );
-   sb_arr   = calloc( lines_per_screen, sizeof( char   *) );
+   sb_arr   = calloc( lines_per_screen, sizeof( char * ) );
    sb_index = 0;
 
    /* Force the first line to be loaded immediately. */

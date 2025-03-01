@@ -49,6 +49,7 @@ local function _getskills( p )
    local maxtier = 3
    local ps = p:ship()
    local pss = ps:size()
+
    if pss > 4 then
       maxtier = 5
    elseif pss > 2 then
@@ -57,7 +58,8 @@ local function _getskills( p )
    if pss <= 3 then
       table.insert( skilllist, "move" )
    end
-   if pss <= 4 then
+
+   if pss <= 4 or ps:tags().bioship_skills_stealth then
       table.insert( skilllist, "stealth" )
    end
    local skills = bioskills.get( skilllist )

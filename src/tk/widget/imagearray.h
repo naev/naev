@@ -91,6 +91,6 @@ void   toolkit_initImageArrayData( iar_data_t *iar_data );
 int    toolkit_unsetSelection( unsigned int wid, const char *name );
 void   toolkit_setImageArrayAccept( unsigned int wid, const char *name,
                                     void ( *fptr )( unsigned int,
-                                                  const char   *) );
+                                                  const char * ) );
 int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name );
 int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih );

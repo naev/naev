@@ -39,4 +39,4 @@ void   window_faderBounds( unsigned int wid, const char *name, double min,
                            double max );
 double window_getFaderValue( unsigned int wid, const char *name );
 void   window_faderScrollDone( unsigned int wid, const char *name,
-                               void ( *func )( unsigned int, const char   *) );
+                               void ( *func )( unsigned int, const char * ) );

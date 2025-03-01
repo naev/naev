@@ -72,7 +72,7 @@ void event_runStart( unsigned int eventid, const char *func )
       return;
 
    /* Set up event pointer. */
-   evptr  = lua_newuserdata( naevL, sizeof( Event_t  *) );
+   evptr  = lua_newuserdata( naevL, sizeof( Event_t * ) );
    *evptr = ev->id;
    nlua_setenv( naevL, ev->env, "__evt" );
 

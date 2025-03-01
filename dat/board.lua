@@ -454,6 +454,35 @@ You will still have to escort the ship and land with it to perform the repairs a
       end )
 end
 
+local board_fcthit_txt_msg
+local function board_fcthit_apply ( eat )
+   -- Piss off nearby ships
+   board_plt:distress( player.pilot() )
+
+   local fct = board_plt:faction()
+   local loss = -fct:hit( -board_fcthit, system.cur(), "board" )
+
+   if eat==0 then
+      board_fcthit = 0
+      if loss <= 0 then
+         return
+      end
+      board_fcthit_txt_msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
+         {fcthit=fmt.number(loss),fct=fct})
+   else
+      if loss == 0 then
+         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor. Another cannibalize would destroy it."),
+            {eat=fmt.number(eat)})
+      else
+         local loss_d = -fct:hitTest( -board_fcthit, system.cur(), "destroy" )
+         board_fcthit_txt_msg = fmt.f(_("You have cannibalized this ship, gaining {eat} armor and losing {fcthit} reputation with {fct} for it ! Another cannibalize would destroy it, losing an additional {ld} reputation."),
+            {eat=fmt.number(eat),fcthit=fmt.number(loss),fct=fct,ld=fmt.number(loss_d)})
+      end
+      board_fcthit = 0
+   end
+   board_fcthit_txt:set( board_fcthit_txt_msg )
+end
+
 local function can_cannibalize ()
    local pp = player.pilot()
    if pp:ship():tags().cannibal then
@@ -470,31 +499,86 @@ local function can_cannibalize ()
    return false
 end
 
-local function board_cannibalize ()
+local function can_cannibalize_usefully()
+   local pp = player.pilot()
+
+   if pp:stats().armour == pp:armour(true) then
+      return false
+   elseif board_plt:armour(true)<2 then
+      -- We want no less than 1 armour to eat, and will leave no less than 1.
+      return false
+   else
+      return true
+   end
+end
+
+-- forward-declared functions
+local _board_close
+local _board
+
+local function _board_cannibalize(spare)
    local armour, shield = board_plt:health(true)
    local cannibal2 = player.shipvarPeek("cannibal2")
 
-   if armour <= 1 then
-      return
-   end
    local bs = board_plt:stats()
 
    local pp = player.pilot()
    local ps = pp:stats()
    local parmour, pshield, pstress = pp:health(true)
 
-   local dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
-   if dmg <= 0 then
-      return
+   local dmg
+
+   if not spare then
+      dmg = armour
+   else
+      -- Just take what you both need and can
+      if cannibal2 then
+         dmg = math.min( (armour-1), 3*(ps.armour-parmour)/2 )
+      else
+         dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
+      end
    end
 
    board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
-   local heal_armour = dmg/2
+
+   local heal_armour
    if cannibal2 then
       heal_armour = dmg*2/3
+   else
+      heal_armour = dmg/2
    end
-   pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
-   player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
+
+   if parmour+heal_armour>ps.armour then
+      heal_armour=ps.armour-parmour
+   end
+
+   if heal_armour > 0 then
+      pp:setHealth( 100*(parmour+heal_armour)/ps.armour, 100*pshield/ps.shield, pstress )
+      player.msg(fmt.f(_("Your ship cannibalized {armour} armour from {plt}."),{armour=fmt.number(heal_armour), plt=board_plt}))
+      board_fcthit_apply( heal_armour )
+   end
+
+   local left=armour-dmg
+
+   if left<=0 then
+      local fact=board_plt:faction()
+      player.msg(fmt.f(_("{plt} was destroyed."),{plt=board_plt}))
+      fact:hit( -board_plt:points(), system.cur(), "destroy")
+      board_close()
+   else
+      player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
+      -- Regenerate dialogue without replaying sounds
+      _board_close()
+      _board(board_plt)
+   end
+end
+
+local function board_cannibalize()
+   _board_cannibalize(true)
+end
+
+local function board_gluttony()
+   _board_cannibalize(false)
 end
 
 local function cargo_list ()
@@ -510,8 +594,8 @@ local function cargo_list ()
 
    return clist, cnames
 end
-local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
 
+local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
 local function cargo_jettison( cargo, max )
    luatk.msgFader( fmt.f(_("Jettison {cargo}"),{cargo=cargo}),
       fmt.f(_("How many tonnes of {cargo} do you wish to jettison?"),{cargo=cargo}), 1, max, 10, function( val )
@@ -567,30 +651,24 @@ local function manage_cargo ()
    end )
 end
 
-function board_close ()
+_board_close = function ( )
    if board_wdw then
       board_wdw:destroy()
    end
    board_wdw = nil
 
-   -- Player stole something to make it not spaceworthy, sorry bud, you're
-   -- not waking up.
+   -- Player stole something to make it not spaceworthy, sorry bud, you're not waking up.
    if not board_plt:spaceworthy() then
       board_plt:setDisable(false) -- Permanently disable
    end
+end
 
+function board_close ()
+   _board_close()
    der.sfx.unboard:play()
 end
 
-function board( plt )
-   if not plt:exists() then return end
-
-   if plt:flags("carried") then
-      player.msg( "#r".._("You can not board deployed fighters.").."#0" )
-      return
-   end
-
-   der.sfx.board:play()
+_board = function ( plt )
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
    local lootables = compute_lootables( plt )
@@ -611,20 +689,22 @@ function board( plt )
       board_fcthit = 0
    end
 
-   local w, h = 570,350
+   local w, h = 570,375
    local wdw = luatk.newWindow( nil, nil, w, h )
+   local yoff=0
+
    board_wdw = wdw
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
 
    local x = w-20-80
-   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Close"), board_close )
+   luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Close"), board_close )
    x = x-100
-   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot"), board_lootSel )
+   luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Loot"), board_lootSel )
    x = x-100
-   luatk.newButton( wdw, x, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Loot All"), board_lootAll )
    x = x-100
    if can_capture() then
-      local btn_capture = luatk.newButton( wdw, x, h-20-30, 80, 30, _("Capture"), board_capture )
+      local btn_capture = luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Capture"), board_capture )
       x = x-100
       local ok, msg = is_capturable()
       if not ok then
@@ -632,38 +712,68 @@ function board( plt )
          btn_capture:setAlt( msg )
       end
    end
+
+   local eat_mode
+
    if can_cannibalize() then
-      luatk.newButton( wdw, x-50, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+      if (board_plt:reputation() <= -30) or not can_cannibalize_usefully() then
+         eat_mode=2
+         luatk.newButton( wdw, x, h-20-30+yoff, 80, 30, _("Gluttony"), board_gluttony )
+      else
+         eat_mode=1
+         luatk.newButton( wdw, x-30, h-20-30+yoff, 110, 30, _("Cannibalize"), board_cannibalize )
+      end
       --x = x-100
+   else
+      eat_mode=0
+   end
+
+   local or_eat=""
+   if eat_mode==1 then
+      or_eat=_("(or cannibalizing) ")
    end
 
    -- Display about faction hits
    local fctmsg
+   local loss=0
+
    if board_fcthit > 0 then
-      local loss = fct:hitTest( -board_fcthit, system.cur(), "board" )
-      fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
-            {fct=fct,fcthit=fmt.number(math.abs(loss))})
-   else
-      fctmsg = _("Looting anything from the ship may anger nearby ships.")
+      loss = math.floor(-fct:hitTest( -board_fcthit, system.cur(), "board" ))
    end
-   board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
-   local fh = board_fcthit_txt:height()
-   local dfh = luatk._deffont:getLineHeight()
-   if fh > dfh then
-      h = h + fh-(30-dfh)
-      wdw:resize( w, h )
+
+   if math.abs(loss) > 0 then
+      local loss_d = math.floor(-fct:hitTest( -board_fcthit, system.cur(), "destroy" ))
+
+      if eat_mode==2 then
+         fctmsg = fmt.f(_("Looting anything from the ship will lower your reputation with {fct} by {fcthit}, or {h2} if you destroy it, and may anger nearby ships. "),
+            {fct=fct,fcthit=fmt.number(loss),h2=fmt.number(loss_d)})
+      else
+         fctmsg = fmt.f(_("Looting {oe}anything from the ship will lower your reputation with {fct} by {fcthit}, and may anger nearby ships."),
+            {oe=or_eat,fct=fct,fcthit=fmt.number(loss)})
+      end
+   else
+      fctmsg = fmt.f(_("Looting {oe}anything from the ship may anger nearby ships."),
+         {oe=or_eat})
+   end
+
+   if board_fcthit_txt_msg then
+      -- If some consequence message had was displayed, re-display it.
+      board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, board_fcthit_txt_msg )
+   else
+      -- Opening the window for the first time
+      board_fcthit_txt = luatk.newText( wdw, 20, 40, w-40, 20, fctmsg )
    end
 
    -- Add manage cargo button if applicable
-   cargo_btn = luatk.newButton( wdw, w-20-120, 70, 120, 30, _("Manage Cargo"), manage_cargo )
+   cargo_btn = luatk.newButton( wdw, w-20-120, 85, 120, 30, _("Manage Cargo"), manage_cargo )
    if #player.fleetCargoList() <= 0 then
       cargo_btn:disable()
       cargo_btn:setAlt(_("You have no cargo to manage."))
    end
-   board_freespace = luatk.newText( wdw, 20, 80, w-40, 20, "" )
+   board_freespace = luatk.newText( wdw, 20, 95, w-40, 20, "" )
    board_updateFreespace()
 
-   local y = 115
+   local y = 135
    local b = 80
    local m = 10
    local nrows = 2
@@ -681,6 +791,18 @@ function board( plt )
 
    wdw:setAccept( board_lootAll )
    wdw:setCancel( board_close )
+end
+
+function board( plt )
+   if not plt:exists() then return end
+
+   if plt:flags("carried") then
+      player.msg( "#r".._("You can not board deployed fighters.").."#0" )
+      return
+   end
+
+   der.sfx.board:play()
+   _board( plt )
 
    luatk.run()
 end
@@ -700,27 +822,6 @@ function board_fcthit_check( func )
    end
 end
 
-local function board_fcthit_apply ()
-   -- Piss off nearby ships
-   board_plt:distress( player.pilot() )
-
-   if board_fcthit <= 0 then
-      return
-   end
-   local fct = board_plt:faction()
-   local loss = fct:hit( -board_fcthit, system.cur(), "board" )
-   board_fcthit = 0
-   if loss <= 0 then
-      -- No loss actually happened
-      return
-   end
-
-   local msg = fmt.f(_("You have lost {fcthit} reputation with {fct} for looting this ship!"),
-      {fcthit=fmt.number(loss),fct=fct})
-   player.msg( "#r"..msg.."#0" )
-   board_fcthit_txt:set( msg )
-end
-
 -- Frontend to do checks when looting
 local board_lootOneDo
 function board_lootOne( wgt, nomsg )
@@ -735,6 +836,7 @@ function board_lootOne( wgt, nomsg )
       end )
    end
 end
+
 -- Helper function that actually loots
 function board_lootOneDo( wgt, nomsg )
    local looted = false
@@ -748,7 +850,7 @@ function board_lootOneDo( wgt, nomsg )
       looted = true
       clear = true
       player.msg(fmt.f(_("You looted {creds} from {plt}."),{creds=fmt.credits(l.q), plt=board_plt}))
-      board_fcthit_apply()
+      board_fcthit_apply( 0 )
    elseif l.type=="fuel" then
       local pp = player.pilot()
       local ps = pp:stats()
@@ -771,7 +873,7 @@ function board_lootOneDo( wgt, nomsg )
       if l.q <= 0 then
          clear = true
       end
-      board_fcthit_apply()
+      board_fcthit_apply( 0 )
    elseif l.type=="outfit" then
       local o = l.data
       if l.price and l.price > 0 then
@@ -792,7 +894,7 @@ function board_lootOneDo( wgt, nomsg )
             player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o, plt=board_plt}))
             wgt.selected = false
             wgt.loot = nil
-            board_fcthit_apply()
+            board_fcthit_apply( 0 )
          end )
          return false
       end
@@ -804,11 +906,12 @@ function board_lootOneDo( wgt, nomsg )
       looted = true
       clear = true
       player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o, plt=board_plt}))
-      board_fcthit_apply()
+      board_fcthit_apply( 0 )
    elseif l.type=="cargo" then
       local c = l.data
       local cf = player.fleetCargoFree()
       local q = math.min( l.q, cf )
+
       -- Unable to loot anything
       if q <= 0 then
          if not nomsg then
@@ -820,7 +923,7 @@ function board_lootOneDo( wgt, nomsg )
       player.fleetCargoAdd( c, q ) -- We just use the original bonus computed with loot_mod
       player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c, plt=board_plt}))
       board_updateFreespace()
-      board_fcthit_apply()
+      board_fcthit_apply( 0 )
       looted = true
 
       -- Looted all the cargo

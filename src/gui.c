@@ -382,7 +382,7 @@ static void gui_renderSpobTarget( void )
         ( player.p->nav_asteroid < 0 ) )
       return;
 
-      /* Make sure targets are still in range. */
+   /* Make sure targets are still in range. */
 #if 0
    if (!pilot_inRangeSpob( player.p, player.p->nav_spob )) {
       player_targetSpobSet( -1 );

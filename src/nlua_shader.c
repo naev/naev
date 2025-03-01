@@ -212,7 +212,7 @@ static int shaderL_new( lua_State *L )
    if ( shader.program == 0 )
       return NLUA_ERROR( L, _( "shader failed to compile!" ) );
 
-      /* Set up defaults. */
+   /* Set up defaults. */
 #define ATTRIB( name )                                                         \
    shader.name = glGetAttribLocation( shader.program, #name )
 #define UNIFORM( name )                                                        \

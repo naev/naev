@@ -921,7 +921,7 @@ static void misn_genList( unsigned int wid )
         ( j == 0 ) ) { /* no missions. */
       if ( j == 0 )
          free( misn_names );
-      misn_names    = malloc( sizeof( char    *) );
+      misn_names    = malloc( sizeof( char * ) );
       misn_names[0] = strdup( _( "No Missions" ) );
       j             = 1;
    }

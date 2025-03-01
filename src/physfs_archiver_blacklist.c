@@ -284,7 +284,7 @@ int blacklist_init( void )
 
    /* Find the files and match. */
    blk_blacklists = array_create( char * );
-   blk_dirnames   = array_create( char   *);
+   blk_dirnames   = array_create( char * );
    blk_fs         = array_create( BlkFile );
    PHYSFS_enumerate( "", blk_enumerateCallback, NULL );
    qsort( blk_blacklists, array_size( blk_blacklists ), sizeof( char * ),

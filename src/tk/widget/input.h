@@ -40,7 +40,7 @@ const char *window_setInput( unsigned int wid, const char *name,
 void        window_setInputFilter( unsigned int wid, const char *name,
                                    const char *filter );
 void        window_setInputCallback( unsigned int wid, const char *name,
-                                     void ( *fptr )( unsigned int, const char        *) );
+                                     void ( *fptr )( unsigned int, const char * ) );
 
 /* Filter constants. */
 #define INPUT_FILTER_NUMBER                                                    \

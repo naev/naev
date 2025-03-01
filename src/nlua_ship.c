@@ -193,7 +193,7 @@ const Ship *luaL_validship( lua_State *L, int ind )
 const Ship **lua_pushship( lua_State *L, const Ship *ship )
 {
    const Ship **p;
-   p  = (const Ship **)lua_newuserdata( L, sizeof( Ship  *) );
+   p  = (const Ship **)lua_newuserdata( L, sizeof( Ship * ) );
    *p = ship;
    luaL_getmetatable( L, SHIP_METATABLE );
    lua_setmetatable( L, -2 );

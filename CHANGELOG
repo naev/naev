@@ -4,7 +4,8 @@
       * Made pirates less aggressive
       * Change pirate spawning so hyenas are less dominant and deadly to new players
       * Fuel from outfits has been tweaked a bit
-      * NPCs now have skill levels that can affect their targetting and fighting ability
+      * NPCs now have skill levels that can affect their targeting and fighting ability
+      * Bioships have had their skills slightly reworked to be better balanced
    * Content
       * 2 new missions
       * 6 new ship variants
@@ -26,7 +27,7 @@
       * Fixed adding commodities to space objects via tech groups
       * Action speed can no longer be negative and disables space worthiness
       * Don't show OSD frame when not visible
-      * Can't stack Sirius ferry pilgrim missions
+      * Can't stack Sirius ferry pilgrim missions anymore
       * Add marker mission to help the player find wild space
 
 * 0.12.4 (unreleased)
