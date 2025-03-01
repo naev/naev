@@ -194,10 +194,10 @@ impl Context {
     //vertex[7]      = vertex[1];
     #[rustfmt::skip]
     const DATA_TRIANGLE: [f32;8] = [
-        -0.25, -0.4330127018922192,
+        -0.25, -0.433_012_7,
          0.5,   0.0,
-        -0.25,  0.4330127018922192,
-        -0.25, -0.4330127018922192];
+        -0.25,  0.433_012_7,
+        -0.25, -0.433_012_7];
 
     fn create_context(
         sdlvid: &sdl::VideoSubsystem,

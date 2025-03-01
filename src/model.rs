@@ -344,7 +344,7 @@ impl Primitive {
     pub fn from_gltf(
         ctx: &Context,
         prim: &gltf::Primitive,
-        buffer_data: &Vec<Vec<u8>>,
+        buffer_data: &[Vec<u8>],
         materials: &[Rc<Material>],
     ) -> Result<Self> {
         let gl = &ctx.gl;

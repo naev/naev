@@ -332,13 +332,13 @@ pub fn naev() -> Result<()> {
                     ));
                     naevc::input_setDefault(1);
                 }
-            } else if naevc::conf.joystick_ind >= 0 {
-                if naevc::joystick_use(naevc::conf.joystick_ind) != 0 {
-                    warn!(gettext(
-                        "Failure to open any joystick, falling back to default keybinds"
-                    ));
-                    naevc::input_setDefault(1);
-                }
+            } else if naevc::conf.joystick_ind >= 0
+                && naevc::joystick_use(naevc::conf.joystick_ind) != 0
+            {
+                warn!(gettext(
+                    "Failure to open any joystick, falling back to default keybinds"
+                ));
+                naevc::input_setDefault(1);
             }
         }
 

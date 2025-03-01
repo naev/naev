@@ -193,9 +193,11 @@ impl NebulaData {
             .height(h as usize)
             .build(ctx)?;
 
-        let mut uniform = NebulaUniform::default();
-        uniform.nonuninformity = unsafe { naevc::conf.nebu_nonuniformity } as f32;
-        uniform.camera = Vector2::new((w as f32) * 0.5, (h as f32) * 0.5);
+        let uniform = NebulaUniform {
+            nonuninformity: unsafe { naevc::conf.nebu_nonuniformity } as f32,
+            camera: Vector2::new((w as f32) * 0.5, (h as f32) * 0.5),
+            ..Default::default()
+        };
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
         let buffer = BufferBuilder::new()

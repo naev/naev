@@ -588,7 +588,7 @@ impl TextureBuilder {
         let srh = sh / (h as f64);
 
         Ok(Texture {
-            path: self.name.clone().map(String::from),
+            path: self.name.clone(),
             name: self.name.map(|s| CString::new(s.as_str()).unwrap()),
             sx,
             sy,
@@ -608,6 +608,7 @@ pub struct FramebufferC {
     w: usize,
     h: usize,
 }
+#[allow(clippy::large_enum_variant)]
 pub enum FramebufferTarget {
     Screen,
     Framebuffer(Framebuffer),
