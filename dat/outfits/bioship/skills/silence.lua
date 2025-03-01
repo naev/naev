@@ -10,4 +10,3 @@ end
 function init( _p, po )
     po:set( "ew_hide", -15 )
 end
-

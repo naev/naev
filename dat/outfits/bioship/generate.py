@@ -647,5 +647,3 @@ BioOutfit( "cortex.xml.template", {
     N_("Immanis Cortex II"),
     N_("Immanis Cortex III"),
 ] )
-
-

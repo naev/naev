@@ -26,5 +26,3 @@ limited options ( as their main weapon is the builtin cannon ).
 The Arx is a carrier, and has related bonuses.
 
 The Marauder is a bomber, and has related bonuses.
-
-

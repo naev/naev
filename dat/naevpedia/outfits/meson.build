@@ -53,6 +53,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/bioship/skills/silence.xml',
    root / 'dat/outfits/bioship/skills/the_bite.xml',
    root / 'dat/outfits/bioship/skills/the_bite_blood_lust.xml',
+   root / 'dat/outfits/bioship/skills/the_bite_cannibal.xml',
    root / 'dat/outfits/bioship/skills/the_bite_improved.xml',
    root / 'dat/outfits/bioship/skills/tracking_antennae.xml',
    root / 'dat/outfits/bioship/skills/tunnelling_organ.xml',

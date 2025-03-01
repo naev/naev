@@ -562,11 +562,12 @@ local function _board_cannibalize(spare)
 
    if left<=0 then
       local fact=board_plt:faction()
-      player.msg(fmt.f(_("{plt} was destroyed."),{lft=fmt.number(left), plt=board_plt}))
+      player.msg(fmt.f(_("{plt} was destroyed."),{plt=board_plt}))
       fact:hit( -board_plt:points(), system.cur(), "destroy")
       board_close()
    else
       player.msg(fmt.f(_("{plt} was left with {lft} armour. Next time it won't survive!"),{lft=fmt.number(left), plt=board_plt}))
+      -- Regenerate dialogue without replaying sounds
       _board_close()
       _board(board_plt)
    end
@@ -593,8 +594,8 @@ local function cargo_list ()
 
    return clist, cnames
 end
-local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
 
+local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
 local function cargo_jettison( cargo, max )
    luatk.msgFader( fmt.f(_("Jettison {cargo}"),{cargo=cargo}),
       fmt.f(_("How many tonnes of {cargo} do you wish to jettison?"),{cargo=cargo}), 1, max, 10, function( val )
@@ -801,7 +802,6 @@ function board( plt )
    end
 
    der.sfx.board:play()
-
    _board( plt )
 
    luatk.run()
@@ -944,4 +944,3 @@ function board_lootOneDo( wgt, nomsg )
    end
    return looted
 end
-

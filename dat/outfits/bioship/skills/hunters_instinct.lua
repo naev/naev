@@ -10,4 +10,3 @@ end
 function update( p, po )
    onstealth( p, po, p:flags("stealth") )
 end
-

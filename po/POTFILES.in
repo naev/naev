@@ -184,6 +184,7 @@ dat/outfits/bioship/skills/reflective_shell.xml
 dat/outfits/bioship/skills/silence.xml
 dat/outfits/bioship/skills/the_bite.xml
 dat/outfits/bioship/skills/the_bite_blood_lust.xml
+dat/outfits/bioship/skills/the_bite_cannibal.xml
 dat/outfits/bioship/skills/the_bite_improved.xml
 dat/outfits/bioship/skills/tracking_antennae.xml
 dat/outfits/bioship/skills/tunnelling_organ.xml
@@ -3353,6 +3354,7 @@ dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
 dat/outfits/bioship/skills/plasma_burst.lua
 dat/outfits/bioship/skills/reflective_shell.lua
+dat/outfits/bioship/skills/silence.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/flow/abilities/astral_projection.lua

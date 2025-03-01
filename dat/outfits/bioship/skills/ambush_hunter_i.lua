@@ -10,4 +10,3 @@ end
 function init( p, _po )
    mem.stealthed = p:flags("stealth")
 end
-
