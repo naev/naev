@@ -30,7 +30,6 @@
 #include "opengl_render.h"
 
 #include "camera.h"
-#include "gui.h"
 #include "opengl.h"
 
 #define OPENGL_RENDER_VBO_SIZE 256 /**< Size of VBO. */

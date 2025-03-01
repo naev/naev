@@ -14,16 +14,16 @@ pub const LINEBREAK_ALLOWBREAK: u32 = 1;
 pub const LINEBREAK_NOBREAK: u32 = 2;
 pub const LINEBREAK_INSIDEACHAR: u32 = 3;
 pub const LINEBREAK_INDETERMINATE: u32 = 4;
-extern "C" {
+unsafe extern "C" {
     pub static unibreak_version: ::std::os::raw::c_int;
 }
 pub type utf8_t = ::std::os::raw::c_uchar;
 pub type utf16_t = ::std::os::raw::c_ushort;
 pub type utf32_t = ::std::os::raw::c_uint;
-extern "C" {
+unsafe extern "C" {
     pub fn init_linebreak();
 }
-extern "C" {
+unsafe extern "C" {
     pub fn set_linebreaks_utf8(
         s: *const utf8_t,
         len: usize,
@@ -31,7 +31,7 @@ extern "C" {
         brks: *mut ::std::os::raw::c_char,
     );
 }
-extern "C" {
+unsafe extern "C" {
     pub fn set_linebreaks_utf16(
         s: *const utf16_t,
         len: usize,
@@ -39,7 +39,7 @@ extern "C" {
         brks: *mut ::std::os::raw::c_char,
     );
 }
-extern "C" {
+unsafe extern "C" {
     pub fn set_linebreaks_utf32(
         s: *const utf32_t,
         len: usize,
@@ -47,7 +47,7 @@ extern "C" {
         brks: *mut ::std::os::raw::c_char,
     );
 }
-extern "C" {
+unsafe extern "C" {
     pub fn set_linebreaks_utf8_per_code_point(
         s: *const utf8_t,
         len: usize,
@@ -55,7 +55,7 @@ extern "C" {
         brks: *mut ::std::os::raw::c_char,
     ) -> usize;
 }
-extern "C" {
+unsafe extern "C" {
     pub fn set_linebreaks_utf16_per_code_point(
         s: *const utf16_t,
         len: usize,
@@ -63,7 +63,7 @@ extern "C" {
         brks: *mut ::std::os::raw::c_char,
     ) -> usize;
 }
-extern "C" {
+unsafe extern "C" {
     pub fn is_line_breakable(
         char1: utf32_t,
         char2: utf32_t,

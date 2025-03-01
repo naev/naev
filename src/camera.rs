@@ -287,75 +287,85 @@ impl Camera {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_zoomOverride(enable: c_int) {
     let mut cam = CAMERA.lock().unwrap();
     cam.zoom_override = enable != 0;
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+    unsafe {
+        cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+    }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+    unsafe {
+        cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
+    }
     cam.zoom_speed = speed;
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getZoom() -> c_double {
     let cam = CAMERA.lock().unwrap();
     cam.zoom as c_double
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getZoomTarget() -> c_double {
     let cam = CAMERA.lock().unwrap();
     cam.zoom_target as c_double
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
     let cam = CAMERA.lock().unwrap();
-    *x = cam.pos.x as c_double;
-    *y = cam.pos.y as c_double;
+    unsafe {
+        *x = cam.pos.x as c_double;
+        *y = cam.pos.y as c_double;
+    }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getDPos(dx: *mut c_double, dy: *mut c_double) {
     let cam = CAMERA.lock().unwrap();
-    *dx = cam.der.x as c_double;
-    *dy = cam.der.y as c_double;
+    unsafe {
+        *dx = cam.der.x as c_double;
+        *dy = cam.der.y as c_double;
+    }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
     let cam = CAMERA.lock().unwrap();
-    *vx = cam.vel.x as c_double;
-    *vy = cam.vel.y as c_double;
+    unsafe {
+        *vx = cam.vel.x as c_double;
+        *vy = cam.vel.y as c_double;
+    }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_vel(vx: c_double, vy: c_double) {
     let mut cam = CAMERA.lock().unwrap();
     cam.vel.x = vx;
     cam.vel.y = vy;
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
     let mut cam = CAMERA.lock().unwrap();
     cam.follow_pilot = follow;
 
     if soft_over == 0 {
         if follow != 0 {
-            let p = naevc::pilot_get(follow);
-            let x = (*p).solid.pos.x;
-            let y = (*p).solid.pos.y;
+            let p = unsafe { naevc::pilot_get(follow) };
+            let x = unsafe { (*p).solid.pos.x };
+            let y = unsafe { (*p).solid.pos.y };
             cam.pos.x = x;
             cam.pos.y = y;
             cam.old.x = x;
@@ -369,10 +379,12 @@ pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
         cam.fly_speed = soft_over.into();
     }
 
-    naevc::sound_updateListener(CAMERA_DIR, cam.pos.x, cam.pos.y, 0., 0.);
+    unsafe {
+        naevc::sound_updateListener(CAMERA_DIR, cam.pos.x, cam.pos.y, 0., 0.);
+    }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
     let mut cam = CAMERA.lock().unwrap();
     cam.follow_pilot = 0;
@@ -392,13 +404,13 @@ pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c
     };
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getTarget() -> c_uint {
     let cam = CAMERA.lock().unwrap();
     cam.follow_pilot
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_update(dt: c_double) {
     let mut cam = CAMERA.lock().unwrap();
     cam.update(dt);

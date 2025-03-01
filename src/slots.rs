@@ -121,7 +121,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
     Ok(sp_data)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     unsafe {
         let ptr = CStr::from_ptr(name);
@@ -136,7 +136,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
     match get_c(sp) {
         Some(prop) => prop.cdisplay.as_ptr(),
@@ -144,7 +144,7 @@ pub extern "C" fn sp_display(sp: c_int) -> *const c_char {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_description(sp: c_int) -> *const c_char {
     match get_c(sp) {
         Some(prop) => prop.cdescription.as_ptr(),
@@ -152,7 +152,7 @@ pub extern "C" fn sp_description(sp: c_int) -> *const c_char {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_visible(sp: c_int) -> c_int {
     match get_c(sp) {
         Some(prop) => prop.visible as c_int,
@@ -160,7 +160,7 @@ pub extern "C" fn sp_visible(sp: c_int) -> c_int {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_required(sp: c_int) -> c_int {
     match get_c(sp) {
         Some(prop) => prop.required as c_int,
@@ -168,7 +168,7 @@ pub extern "C" fn sp_required(sp: c_int) -> c_int {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_exclusive(sp: c_int) -> c_int {
     match get_c(sp) {
         Some(prop) => prop.exclusive as c_int,
@@ -176,7 +176,7 @@ pub extern "C" fn sp_exclusive(sp: c_int) -> c_int {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_icon(sp: c_int) -> *const naevc::glTexture {
     match get_c(sp) {
         Some(prop) => match &prop.icon {
@@ -187,7 +187,7 @@ pub extern "C" fn sp_icon(sp: c_int) -> *const naevc::glTexture {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sp_locked(sp: c_int) -> c_int {
     match get_c(sp) {
         Some(prop) => prop.locked as c_int,

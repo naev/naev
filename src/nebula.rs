@@ -439,52 +439,52 @@ static NEBULA: LazyLock<Mutex<NebulaData>> = LazyLock::new(|| {
     Mutex::new(NebulaData::new(ctx).unwrap())
 });
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_init() {}
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_resize() {
     let ctx = context::CONTEXT.get().unwrap();
     let mut neb = NEBULA.lock().unwrap();
     neb.resize(ctx);
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_exit() {}
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_render(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
     let _ = neb.render(ctx);
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_renderOverlay(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
     let _ = neb.render_overlay(ctx);
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_update(dt: f64) {
     let mut neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
     let _ = neb.update(ctx, dt);
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_getSightRadius() -> c_double {
     let neb = NEBULA.lock().unwrap();
     neb.view as c_double
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_prep(density: c_double, volatility: c_double, hue: c_double) {
     let mut neb = NEBULA.lock().unwrap();
     let ctx = context::CONTEXT.get().unwrap();
     let _ = neb.setup(ctx, density as f32, volatility as f32, hue as f32);
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn nebu_updateColour() {}

@@ -269,7 +269,7 @@ impl ShaderBuilder {
 
 use std::mem::ManuallyDrop;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_program_backend(
     cvert: *const c_char,
     cfrag: *const c_char,
@@ -292,7 +292,7 @@ pub extern "C" fn gl_program_backend(
     shader.program.0.into()
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_program_vert_frag_string(
     cvert: *const c_char,
     vert_size: usize,

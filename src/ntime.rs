@@ -115,19 +115,19 @@ static TIME: Mutex<NTimeInternal> = Mutex::new(NTimeInternal {
 });
 static ENABLED: Mutex<bool> = Mutex::new(true);
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_update(dt: c_double) {
     update(dt);
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_create(scu: c_int, stp: c_int, stu: c_int) -> NTimeC {
     NTime::new(scu, stp, stu).0
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_get() -> NTimeC {
     get().0
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_getR(
     cycles: *mut c_int,
     periods: *mut c_int,
@@ -136,43 +136,47 @@ pub unsafe extern "C" fn ntime_getR(
 ) {
     let nt = TIME.lock().unwrap();
     let t = nt.time;
-    *cycles = t.cycles();
-    *periods = t.periods();
-    *seconds = t.seconds();
-    *rem = nt.time.remainder() + nt.remainder;
+    unsafe {
+        *cycles = t.cycles();
+        *periods = t.periods();
+        *seconds = t.seconds();
+        *rem = nt.time.remainder() + nt.remainder;
+    }
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_getCycles(t: NTimeC) -> c_int {
     NTime(t).cycles()
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_getPeriods(t: NTimeC) -> c_int {
     NTime(t).periods()
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_getSeconds(t: NTimeC) -> c_int {
     NTime(t).seconds()
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_convertSeconds(t: NTimeC) -> c_double {
     NTime(t).to_seconds()
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_getRemainder(t: NTimeC) -> c_double {
     NTime(t).remainder()
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
     let mut str: [c_char; 64] = [0; 64];
-    ntime_prettyBuf(
-        str.as_mut_ptr(),
-        ::core::mem::size_of::<[c_char; 64]>() as c_ulong as c_int,
-        t,
-        d,
-    );
-    naevc::strdup(str.as_mut_ptr())
+    unsafe {
+        ntime_prettyBuf(
+            str.as_mut_ptr(),
+            ::core::mem::size_of::<[c_char; 64]>() as c_ulong as c_int,
+            t,
+            d,
+        );
+        naevc::strdup(str.as_mut_ptr())
+    }
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, d: c_int) {
     let nt = if t == 0 {
         TIME.lock().unwrap().time
@@ -185,49 +189,55 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
     let max = max as u64;
     if cycles == 0 && periods == 0 {
         let cmsg = CString::new(gettext("%04d s")).unwrap();
-        naevc::snprintf(cstr, max, cmsg.as_ptr().cast(), seconds);
+        unsafe {
+            naevc::snprintf(cstr, max, cmsg.as_ptr().cast(), seconds);
+        }
     } else if cycles == 0 || d == 0 {
         let cmsg = CString::new(gettext("%.*f p")).unwrap();
-        naevc::snprintf(
-            cstr,
-            max,
-            cmsg.as_ptr().cast(),
-            d,
-            periods as c_double + 0.0001 * seconds as c_double,
-        );
+        unsafe {
+            naevc::snprintf(
+                cstr,
+                max,
+                cmsg.as_ptr().cast(),
+                d,
+                periods as c_double + 0.0001 * seconds as c_double,
+            );
+        }
     } else {
         let cmsg = CString::new(gettext("UST %d:%.*f")).unwrap();
-        naevc::snprintf(
-            cstr,
-            max,
-            cmsg.as_ptr().cast(),
-            cycles,
-            d,
-            periods as c_double + 0.0001 * seconds as c_double,
-        );
+        unsafe {
+            naevc::snprintf(
+                cstr,
+                max,
+                cmsg.as_ptr().cast(),
+                cycles,
+                d,
+                periods as c_double + 0.0001 * seconds as c_double,
+            );
+        }
     };
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_set(t: NTimeC) {
     set(NTime(t));
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_setR(cycles: c_int, periods: c_int, seconds: c_int, rem: c_double) {
     set_remainder(NTime::new(cycles, periods, seconds), rem);
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_inc(tc: NTimeC) {
     inc(NTime(tc));
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_allowUpdate(enable: c_int) {
     allow_update(enable != 0);
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_incLagged(t: NTimeC) {
     inc_queue(NTime(t));
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn ntime_refresh() {
     refresh();
 }

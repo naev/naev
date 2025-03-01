@@ -10,7 +10,7 @@ use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
@@ -24,12 +24,12 @@ pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
 }
 
 // Assume static here, because it doesn't really change after loading
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn get_c(dt: c_int) -> Option<&'static DamageType> {
     DAMAGE_TYPES.get((dt - 1) as usize)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn dtype_damageTypeToStr(dtid: c_int) -> *const c_char {
     match get_c(dtid) {
         Some(dt) => match &dt.display {
@@ -40,7 +40,7 @@ pub extern "C" fn dtype_damageTypeToStr(dtid: c_int) -> *const c_char {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn dtype_raw(
     dtid: c_int,
     shield: *mut f64,
@@ -70,7 +70,7 @@ pub extern "C" fn dtype_raw(
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn dtype_calcDamage(
     dshield: *mut f64,
     darmour: *mut f64,

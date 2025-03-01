@@ -148,7 +148,7 @@ pub fn start() -> &'static StartData {
 
 macro_rules! start_c_func_str {
     ($funcname: ident, $field: ident) => {
-        #[no_mangle]
+        #[unsafe(no_mangle)]
         pub extern "C" fn $funcname() -> *const c_char {
             match START.$field.is_empty() {
                 true => std::ptr::null_mut(),
@@ -169,22 +169,22 @@ start_c_func_str!(start_chapter, chapter);
 start_c_func_str!(start_spob_lua_default, spob_lua_default);
 start_c_func_str!(start_dtype_default, dtype_default);
 start_c_func_str!(start_local_map_default, local_map_default);
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn start_credits() -> i64 {
     START.credits
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn start_date() -> NTimeC {
     START.date.into()
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn start_position(x: *mut f64, y: *mut f64) {
     unsafe {
         *x = START.pos_x;
         *y = START.pos_y;
     }
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn start_load() -> c_int {
     let _ = START;
     0

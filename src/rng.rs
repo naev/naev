@@ -1,19 +1,19 @@
 use rand::Rng;
 use std::os::raw::{c_double, c_uint};
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn randint() -> c_uint {
     RNG.with_borrow_mut(|x| x.random::<u32>())
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn randfp() -> c_double {
     RNG.with_borrow_mut(|x| x.random::<f64>())
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn Normal(x: c_double) -> c_double {
     normal(x)
 }
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn NormalInverse(p: c_double) -> c_double {
     normal_inverse(p) as c_double
 }

@@ -57,7 +57,7 @@ fn parse_cstr(ver: *const c_char) -> Result<semver::Version, semver::Error> {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn naev_versionCompare(version: *const c_char) -> c_int {
     let ver = match parse_cstr(version) {
         Ok(v) => v,
@@ -66,7 +66,7 @@ pub extern "C" fn naev_versionCompare(version: *const c_char) -> c_int {
     compare_versions(&VERSION, &ver)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn naev_versionCompareTarget(
     version: *const c_char,
     target: *const c_char,

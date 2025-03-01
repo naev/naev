@@ -5,7 +5,7 @@ use std::io::{Error, ErrorKind, Result};
 use std::os::raw::{c_char, c_int, c_uint, c_void};
 
 #[link(name = "naev")]
-extern "C" {
+unsafe extern "C" {
     /// Main function in C
     pub fn naev_main() -> c_int;
 }
@@ -44,7 +44,7 @@ use std::sync::atomic::AtomicBool;
 static _QUIT: AtomicBool = AtomicBool::new(false);
 
 unsafe fn cptr_to_cstr<'a>(s: *const c_char) -> &'a str {
-    CStr::from_ptr(s).to_str().unwrap()
+    unsafe { CStr::from_ptr(s).to_str().unwrap() }
 }
 
 pub fn naev() -> Result<()> {
@@ -65,7 +65,9 @@ pub fn naev() -> Result<()> {
         // Set AMD_DEBUG environment variable before initializing OpenGL to
         // workaround driver bug. TODO remove around 0.14.0 or when fixed (maybe changing
         // backend?).
-        std::env::set_var("AMD_DEBUG", "nooptvariant");
+        unsafe {
+            std::env::set_var("AMD_DEBUG", "nooptvariant");
+        }
     }
 
     /* Start up PHYSFS. */
@@ -119,7 +121,9 @@ pub fn naev() -> Result<()> {
 
     if cfg!(unix) {
         /* Set window class and name. */
-        std::env::set_var("SDL_VIDEO_X11_WMCLASS", APPNAME);
+        unsafe {
+            std::env::set_var("SDL_VIDEO_X11_WMCLASS", APPNAME);
+        }
     }
 
     let sdlvid = match sdlctx.video() {

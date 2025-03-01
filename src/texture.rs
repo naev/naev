@@ -810,7 +810,7 @@ impl Flags {
 
 macro_rules! capi_tex {
     ($funcname: ident, $field: tt) => {
-        #[no_mangle]
+        #[unsafe(no_mangle)]
         pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
             let tex = unsafe { &*ctex };
             tex.texture.$field as f64
@@ -819,7 +819,7 @@ macro_rules! capi_tex {
 }
 macro_rules! capi {
     ($funcname: ident, $field: tt) => {
-        #[no_mangle]
+        #[unsafe(no_mangle)]
         pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
             let tex = unsafe { &*ctex };
             tex.$field as f64
@@ -837,7 +837,7 @@ capi!(tex_srw, srw);
 capi!(tex_srh, srh);
 capi_tex!(tex_vmax, vmax);
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_texExistsOrCreate(
     cpath: *const c_char,
     cflags: c_uint,
@@ -893,7 +893,7 @@ pub extern "C" fn gl_texExistsOrCreate(
     out
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_loadImageData(
     data: *const c_float,
     w: c_int,
@@ -955,12 +955,12 @@ pub extern "C" fn gl_loadImageData(
     out
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_newImage(cpath: *const c_char, flags: c_uint) -> *mut Texture {
     gl_newSprite(cpath, 1, 1, flags)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_newSprite(
     cpath: *const c_char,
     sx: c_int,
@@ -1000,7 +1000,7 @@ pub extern "C" fn gl_newSprite(
     out
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_newSpriteRWops(
     cpath: *const c_char,
     rw: *mut naevc::SDL_RWops,
@@ -1062,7 +1062,7 @@ pub extern "C" fn gl_newSpriteRWops(
     out
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
     if ctex.is_null() {
         return ctex;
@@ -1079,7 +1079,7 @@ pub extern "C" fn gl_dupTexture(ctex: *mut Texture) -> *mut Texture {
     out
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_rawTexture(
     cpath: *mut c_char,
     tex: naevc::GLuint,
@@ -1130,7 +1130,7 @@ pub extern "C" fn gl_rawTexture(
     out
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
     if !ctex.is_null() {
         let _ = unsafe { Box::from_raw(ctex) };
@@ -1138,19 +1138,19 @@ pub extern "C" fn gl_freeTexture(ctex: *mut Texture) {
     // The texture should get dropped now
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn tex_tex(ctex: *mut Texture) -> naevc::GLuint {
     let tex = unsafe { &*ctex };
     tex.texture.texture.0.into()
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn tex_sampler(ctex: *mut Texture) -> naevc::GLuint {
     let tex = unsafe { &*ctex };
     tex.sampler.0.into()
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
     let tex = unsafe { &*ctex };
     match &tex.name {
@@ -1159,25 +1159,25 @@ pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
     let tex = unsafe { &*ctex };
     tex.texture.is_sdf as i32
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gl_isTrans(ctex: *mut Texture, x: c_int, y: c_int) -> c_int {
     // TODO
     0
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn tex_hasTrans(ctex: *mut Texture) -> c_int {
     // TODO
     0
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
     let tex = unsafe { &mut *ctex };
     let ntex = glow::NativeTexture(std::num::NonZero::new(texture).unwrap());

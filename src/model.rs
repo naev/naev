@@ -841,14 +841,14 @@ static mut CLIGHTING: LightingUniform = LightingUniform::default();
 static mut CAMBIENT: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
 static mut CINTENSITY: f64 = 1.0;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightReset_() {
     unsafe {
         CLIGHTING = LightingUniform::default();
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_int {
     let n: usize = 2 + idx as usize;
     if n >= MAX_LIGHTS {
@@ -875,14 +875,14 @@ pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_in
     0
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbient_(r: c_double, g: c_double, b: c_double) {
     unsafe {
         CLIGHTING.ambient = Vector3::new(r as f32, g as f32, b as f32);
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbientGet_(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
     unsafe {
         *r = CLIGHTING.ambient.x as f64;
@@ -891,19 +891,19 @@ pub extern "C" fn gltf_lightAmbientGet_(r: *mut c_double, g: *mut c_double, b: *
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensity_(strength: c_double) {
     unsafe {
         CINTENSITY = strength;
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensityGet_() -> c_double {
     unsafe { CINTENSITY }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightTransform_(
     _lighting: *mut naevc::Lighting,
     transform: *const Matrix4<f32>,
@@ -925,7 +925,7 @@ pub extern "C" fn gltf_lightTransform_(
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
     let ctx = CONTEXT.get().unwrap(); /* Lock early. */
@@ -933,12 +933,12 @@ pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     Box::into_raw(Box::new(model))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_free_(model: *mut Model) {
     let _ = unsafe { Box::from_raw(model) }; // should drop
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_render_(
     fb: naevc::GLuint,
     model: *mut Model,
@@ -949,7 +949,7 @@ pub extern "C" fn gltf_render_(
     gltf_renderScene_(fb, model, 0, transform, time, size)
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_renderScene_(
     fb: naevc::GLuint,
     model: *mut Model,
