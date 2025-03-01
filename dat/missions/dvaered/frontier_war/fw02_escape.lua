@@ -76,12 +76,14 @@ local dealjump =  system.get("Surano")
 --]]
 -- Za'lek Blocus
 local zlk_list = { -- Systems with patrols
+   system.get("Ruadan"),
    system.get("Pultatis"),
    system.get("Stone Table"),
    system.get("Xavier"),
    system.get("Straight Row"),
 }
 local zlk_lisj = { -- Index refers to zlk_list
+   {}, -- Special case : hypergate
    {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
    {system.get("Sollav")}, -- from Stone Table
    {system.get("Sheffield")}, -- from Xavier
@@ -89,16 +91,20 @@ local zlk_lisj = { -- Index refers to zlk_list
 }
 -- Empire Blocus
 local emp_list = {
+   system.get("Gamma Polaris"),
    system.get("Majesteka"),
    system.get("Tepdania"),
    system.get("Van Maanen"),
    system.get("Waterhole"),
+   system.get("Hakoi"),
 }
 local emp_lisj = {
+   {}, -- Special case : hypergate
    {system.get("Hubfar")}, -- From Majesteka
    {system.get("Ianella")}, -- From Tepdania
    {system.get("Surano"),system.get("Kruger")}, -- From Van Maanen
    {system.get("Goddard")}, -- From Water Hole
+   {system.get("Ross")}, -- From Hakoi
 }
 
 function create()
@@ -376,11 +382,17 @@ function enter()
          if mem.firstBloc then
             scanHooks = {}
             mem.jpoutHook = hook.jumpout("rmScanHooks")
+            -- TODO: also do something in the case the player successfully uses an hypergate
          end
          for i, j in ipairs(zlk_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
-            local pos = jp:pos()
-            spawnZlkSquadron( pos, (mem.stage < 8) )
+
+            spawnZlkSquadron( jp:pos() , (mem.stage < 8) )
+         end
+         if system.cur()==system.get("Ruadan") then
+            local spo=spob.get("Hypergate Ruadan")
+
+            spawnZlkSquadron( spo:pos() , (mem.stage < 8) )
          end
       end
 
@@ -401,8 +413,12 @@ function enter()
                spawnEmpSquadron( pos, (mem.stage < 8) )
             end
          end
-      end
+         if system.cur()==system.get("Gamma Polaris") then
+            local spo=spob.get("Hypergate Gamma Polaris")
 
+            spawnEmpSquadron( spo:pos() , (mem.stage < 8) )
+         end
+      end
    end
 
    mem.lastSys = system.cur()
