@@ -48,7 +48,6 @@ local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-d
 escort_hailed = fw.escort_hailed -- common hooks
 
 -- TODO: add news comments about all this
--- TODO: check that no blockade has been forgotten  ->  Actually... :-)
 
 local hamfr_desc = _("Hamfresser and his team are gathered at a table. The captain drinks from his favourite pink straw while incessantly scanning the room.")
 local hamfr_des2 = _("The captain sits alone at a distant table. He nervously chews his pink straw while waiting for your signal to infiltrate the hospital.")
@@ -78,17 +77,23 @@ local dealjump =  system.get("Surano")
 local zlk_list = { -- Systems with patrols
    system.get("Ruadan"),
    system.get("Pultatis"),
-   system.get("Stone Table"),
+   system.get("Sollav"),
    system.get("Xavier"),
    system.get("Straight Row"),
 }
 local zlk_lisj = { -- Index refers to zlk_list
    {}, -- Special case : hypergate
    {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
-   {system.get("Sollav")}, -- from Stone Table
+   {system.get("Fried"), system.get("Limbo")}, -- from Sollav
    {system.get("Sheffield")}, -- from Xavier
    {system.get("Nunavut")}, -- from Straight Row
 }
+-- Not Blockaded :
+--  - Nunavut -> Unicorn (hidden)
+--  - Wormhole in NGC-13674 (unknown)
+--  - NGC-1098 -> Kretogg (unknown)
+--  - Ganth -> Attaria (the flying clown's trap)
+
 -- Empire Blocus
 local emp_list = {
    system.get("Gamma Polaris"),
@@ -96,7 +101,11 @@ local emp_list = {
    system.get("Tepdania"),
    system.get("Van Maanen"),
    system.get("Waterhole"),
+   system.get("Scorpius"),
    system.get("Hakoi"),
+   system.get("Tepvin"),
+   system.get("Arcturus"),
+   system.get("Wolf"),
 }
 local emp_lisj = {
    {}, -- Special case : hypergate
@@ -104,8 +113,17 @@ local emp_lisj = {
    {system.get("Ianella")}, -- From Tepdania
    {system.get("Surano"),system.get("Kruger")}, -- From Van Maanen
    {system.get("Goddard")}, -- From Water Hole
+   {system.get("Kruger's Pocket")}, -- From Scorpius
    {system.get("Ross")}, -- From Hakoi
+   {system.get("Tau Ceti"),system.get("Santoros")}, -- From Tepvin
+   {system.get("Holly")}, -- From Arcturus
+   {system.get("Chloe")}, -- From Wolf
 }
+-- Not Blockaded :
+--  - Wormhole in NGC-4087 (unknown)
+--  - Pas -> Effetey (hidden)
+--  - Uhriabi -> Qorel (hidden)
+--  - Enegoz -> Qorel (hidden)
 
 function create()
    if spob.cur() == hampla then
@@ -382,14 +400,15 @@ function enter()
          if mem.firstBloc then
             scanHooks = {}
             mem.jpoutHook = hook.jumpout("rmScanHooks")
-            -- TODO: also do something in the case the player successfully uses an hypergate
+            -- In the case the player successfully uses an hypergate
+            mem.landHook = hook.land("rmScanHooks")
          end
          for i, j in ipairs(zlk_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
 
             spawnZlkSquadron( jp:pos() , (mem.stage < 8) )
          end
-         if system.cur()==system.get("Ruadan") then
+         if player.chapter()~="0" and system.cur()==system.get("Ruadan") then
             local spo=spob.get("Hypergate Ruadan")
 
             spawnZlkSquadron( spo:pos() , (mem.stage < 8) )
@@ -413,7 +432,7 @@ function enter()
                spawnEmpSquadron( pos, (mem.stage < 8) )
             end
          end
-         if system.cur()==system.get("Gamma Polaris") then
+         if player.chapter()~="0" and system.cur()==system.get("Gamma Polaris") then
             local spo=spob.get("Hypergate Gamma Polaris")
 
             spawnEmpSquadron( spo:pos() , (mem.stage < 8) )
@@ -687,9 +706,15 @@ end
 
 -- Remove scan hooks
 function rmScanHooks()
+   if mem.jpoutHook then
+      hook.rm(mem.jpoutHook)
+   end
+   if mem.landHook then
+      hook.rm(mem.lanHook)
+   end
    rmScanHooksRaw()
-   hook.rm(mem.jpoutHook)
 end
+
 function rmScanHooksRaw()
    if scanHooks ~= nil then
       for i, j in ipairs(scanHooks) do
