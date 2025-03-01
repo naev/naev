@@ -48,7 +48,7 @@ local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-d
 escort_hailed = fw.escort_hailed -- common hooks
 
 -- TODO: add news comments about all this
--- TODO: check that no blockade has been forgotten
+-- TODO: check that no blockade has been forgotten  ->  Actually... :-)
 
 local hamfr_desc = _("Hamfresser and his team are gathered at a table. The captain drinks from his favourite pink straw while incessantly scanning the room.")
 local hamfr_des2 = _("The captain sits alone at a distant table. He nervously chews his pink straw while waiting for your signal to infiltrate the hospital.")
@@ -79,7 +79,7 @@ local zlk_list = { -- Systems with patrols
    system.get("Pultatis"),
    system.get("Stone Table"),
    system.get("Xavier"),
-   system.get("Straight Row")
+   system.get("Straight Row"),
 }
 local zlk_lisj = { -- Index refers to zlk_list
    {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
@@ -92,11 +92,13 @@ local emp_list = {
    system.get("Majesteka"),
    system.get("Tepdania"),
    system.get("Van Maanen"),
+   system.get("Waterhole"),
 }
 local emp_lisj = {
    {system.get("Hubfar")}, -- From Majesteka
    {system.get("Ianella")}, -- From Tepdania
    {system.get("Surano"),system.get("Kruger")}, -- From Van Maanen
+   {system.get("Goddard")}, -- From Water Hole
 }
 
 function create()
@@ -211,13 +213,19 @@ function land()
    When you tell him the sum you paid, Major Tam squeaks. "Whawhawhat? {price} for a fake transponder! That is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll refund you. We will need extra funding by the Headquarters soon, I am afraid. By the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {price=fmt.credits(fw.pirate_price), credits=fmt.credits(fw.credits_02)}))
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for dubious reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation, that forced you to buy a fake transponder at an outrageous price.") )
-      player.pay(fw.pirate_price)
-      var.push("dv_pirate_debt", true)
+         player.pay(fw.pirate_price)
+         var.push("dv_pirate_debt", true)
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
-         tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. I guess it must have been very hard, and risky, to skirt the Imperial blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
+         if mem.stage==5 then -- Unforeseen solution, Captain Hewhew met.
+            tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. I guess it must have been very hard, and risky, to skirt the Imperial blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
+         else -- Unforeseen solution, Captain Hewhew NOT even met.
+            tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. "I guess it must have been very hard, and risky, to skirt the blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
+  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
+         end
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for obscure reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation, but you managed to survive somehow.") )
       end
+
       player.pay(fw.credits_02)
 
       -- Reset the zlk standing.
@@ -487,12 +495,17 @@ function weNeed2land()
    mem.stage = 3
    tk.msg(_("We are in trouble"), _([[When you finally jump out, Hamfresser reports: "We hit an unexpected situation back there. After we destroyed the androids and got to the jail cell, we saw that there were three other prisoners along with the target, and far more human guards than expected. They blew up our first assault bot, and we had to take them down with the paralysers, but one of the prisoners grabbed a weapon and, for some reason, started to fire on us. Fortunately for me, he just pierced my lung. That is a replaceable part.
    "Then, Tronk paralysed all the prisoners, and we identified and recovered the target. That's why the guy is blue, actually. But in his hurry, Tronk used the extra-strength dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a special medical device to save him. So at our next stop, I'm afraid we will have to steal the device at the spaceport's hospital. It really annoys me as that's the kind of operation that can get ugly very quickly, especially since we're still wanted by the Za'leks, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
-   "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
-   mem.timelimit = time.get() + time.new(0,3,0)
+   "If I may, I'd advise you to land somewhere within a quarter of a period, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
+   -- Note: The most probable system is Pultatis, where the only landable planet has shipyard and outfitter.
+   -- In this case, the final advice is useless. Is it worth managing this case ?
+
+   -- 2500s is easy to do with anything smaller or like a corvette but short enough to feel pressing.
+   mem.timelimit = time.get() + time.new(0,0,2500)
    misn.osdCreate(_("Dvaered Escape"), {
       fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.get())}),
    })
-   mem.datehook = hook.date(time.new(0, 0, 100), "tick")
+   -- Increased tick frequency for dramatic effect.
+   mem.datehook = hook.date(time.new(0, 0, 20), "tick")
 end
 
 function tick()
