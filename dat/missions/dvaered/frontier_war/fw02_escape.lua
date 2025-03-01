@@ -487,12 +487,17 @@ function weNeed2land()
    mem.stage = 3
    tk.msg(_("We are in trouble"), _([[When you finally jump out, Hamfresser reports: "We hit an unexpected situation back there. After we destroyed the androids and got to the jail cell, we saw that there were three other prisoners along with the target, and far more human guards than expected. They blew up our first assault bot, and we had to take them down with the paralysers, but one of the prisoners grabbed a weapon and, for some reason, started to fire on us. Fortunately for me, he just pierced my lung. That is a replaceable part.
    "Then, Tronk paralysed all the prisoners, and we identified and recovered the target. That's why the guy is blue, actually. But in his hurry, Tronk used the extra-strength dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a special medical device to save him. So at our next stop, I'm afraid we will have to steal the device at the spaceport's hospital. It really annoys me as that's the kind of operation that can get ugly very quickly, especially since we're still wanted by the Za'leks, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
-   "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
-   mem.timelimit = time.get() + time.new(0,3,0)
+   "If I may, I'd advise you to land somewhere within a quarter of a period, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
+   -- Note: The most probable system is Pultatis, where the only landable planet has shipyard and outfitter.
+   -- In this case, the final advice is useless. Is it worth managing this case ?
+
+   -- 2500s is easy to do with anything smaller or like a corvette but short enough to feel pressing.
+   mem.timelimit = time.get() + time.new(0,0,2500)
    misn.osdCreate(_("Dvaered Escape"), {
       fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.get())}),
    })
-   mem.datehook = hook.date(time.new(0, 0, 100), "tick")
+   -- Increased tick frequency for dramatic effect.
+   mem.datehook = hook.date(time.new(0, 0, 20), "tick")
 end
 
 function tick()
