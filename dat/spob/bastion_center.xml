@@ -18,6 +18,7 @@
   <services>
    <land/>
    <refuel/>
+   <bar/>
    <missions/>
    <outfits/>
    <shipyard/>
