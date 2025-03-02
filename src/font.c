@@ -1055,7 +1055,7 @@ int gl_printHeightRaw( const glFont *ft_font, const int width,
    double              y = 0.;
 
    /* Check 0 length strings. */
-   if ( text[0] == '\0' )
+   if ( text == NULL || text[0] == '\0' )
       return 0;
 
    if ( ft_font == NULL )
