@@ -28,7 +28,7 @@ local jumpinsys = system.get("Sollav")
 
 local drone1pos = vec2.new(  -2000, -15000 )
 -- HERE should be rather close to jumpin pos.
-local drone2pos = vec2.new( -6000,  -7000 )
+local drone2pos = vec2.new( -10000,  0 )
 
 -- Mission states:
 --  nil: mission not accepted yet

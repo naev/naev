@@ -305,7 +305,7 @@ function start ()
    local fct_zlk = faction.get("Za'lek")
    local fct_dv = faction.get("Dvaered")
    fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
-   Afdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
+   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
    -- Causes a warning because fct_player is the faction of the player. Looks intentional !
    -- TODO Find a way to disable warning.
    if fct_player:areEnemies( fct_zlk ) then
