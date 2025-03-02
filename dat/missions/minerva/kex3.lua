@@ -267,7 +267,7 @@ function enter ()
       player.landAllow() -- Just allow the player to land
 
    elseif mem.misn_state==1 and system.cur() == targetsys then
-      -- Spawn thugs after the player. Player should likely be going to Dvaer
+      -- Spawn thugs after the player. Player is taking off from targetplanet (Trincea) and should likely be going to Dvaer.
       spawn_thugs( vec2.new( 15000, 15000 ), true )
       -- Move to next state
       mem.misn_state = 2
@@ -282,6 +282,13 @@ function enter ()
 end
 
 function thug_heartbeat ()
+
+   if system.cur()~=targetsys and system.cur()~=lastsys then
+      -- The player has jumped out before the thug spawned.
+      -- Should not happen ! TODO: find a way to issue a warning
+      return
+   end
+
    local det, fuz = thug_leader:inrange( player.pilot() )
    if det and fuz then
       -- Start the attack, should be close enough to aggro naturally
@@ -290,7 +297,7 @@ function thug_heartbeat ()
          p:setHostile(true)
       end
       -- Broadcast after hostile
-      thug_leader:broadcast( _("That's the the one!"), true )
+      thug_leader:broadcast( _("That's the one!"), true )
 
       -- Reset autonav just in case
       player.autonavReset( 5 )
