@@ -16,8 +16,8 @@
 
 --[[
    Assassinate a Dvaered Warlord and Za'lek General.
-
 --]]
+
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local vni = require 'vnimage'
@@ -234,7 +234,7 @@ She shakes her head.
 end
 
 local helper_npc, helper_drone
-local meet_pos = vec2.new( -10700, 5500 )
+local meet_pos = vec2.new( -17500, 2500 )
 function enter ()
    -- Must be goal system
    if system.cur() ~= mainsys then
@@ -305,7 +305,9 @@ function start ()
    local fct_zlk = faction.get("Za'lek")
    local fct_dv = faction.get("Dvaered")
    fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
-   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
+   Afdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
+   -- Causes a warning because fct_player is the faction of the player. Looks intentional !
+   -- TODO Find a way to disable warning.
    if fct_player:areEnemies( fct_zlk ) then
       fzlk:dynEnemy( fct_player )
    end
@@ -313,9 +315,9 @@ function start ()
       fdvd:dynEnemy( fct_player )
    end
 
-   -- General goes from Pultatis to Sollav
-   local zl_start = jump.get( csys, "Pultatis" )
-   local zl_target = jump.get( csys, "Sollav" )
+   -- General goes from Provectus Nova to Sollav
+   local zl_start = jump.get( csys, "Provectus Nova" )
+   local zl_target = jump.get( csys, "Fried" )
 
    general = pilot.add( "Za'lek Mephisto", fzlk, zl_start, fmt.f(_("General {zl}"),{zl=zlk_name}) )
    for k,s in ipairs{ "Za'lek Demon", "Za'lek Demon", "Za'lek Sting", "Za'lek Sting", "Za'lek Sting",
