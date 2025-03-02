@@ -65,7 +65,7 @@ local pripla, prisys = spob.getS("Bastion Center") -- Military base where the ca
 local zlkpla, zlksys = spob.getS("House Za'lek Central") -- Target delivery place of the captured person
 local intsys = system.get("Hargen") -- Where the action happens, should be between prisys and zlksys
 local dealsys = system.get("Van Maanen")
-local dealjump =  system.get("Surano")
+local dealjump = system.get("Surano")
 
 --[[
    Blockades are defined from intsys and should limit the player's
@@ -673,6 +673,10 @@ function spawnStrafer()
    strafer:control(true)
    strafer:follow( player.pilot() )
    strafer:setFriendly()
+   -- Why do some ship still attack him ?
+   -- Don't know. Workaround:
+   strafer:setInvincible()
+
    camera.set( strafer, true )
    mem.prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end
