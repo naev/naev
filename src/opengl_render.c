@@ -216,6 +216,7 @@ void gl_renderDepthRaw( GLuint depth, uint8_t flags, double x, double y,
                         double w, double h, double tx, double ty, double tw,
                         double th, double angle )
 {
+   (void)flags;
    mat4 projection, tex_mat;
 
    /* Set the vertex. */
@@ -287,6 +288,7 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
                                double tx, double ty, double tw, double th,
                                const glColour *c, double angle )
 {
+   (void)flags;
    mat4 projection, tex_mat;
 
    /* Set the vertex. */
@@ -381,6 +383,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
                           double ty, double tw, double th, const glColour *c,
                           double angle )
 {
+   (void)flags;
    mat4 projection, tex_mat;
 
    /* Set the vertex. */
