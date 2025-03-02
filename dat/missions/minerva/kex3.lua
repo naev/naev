@@ -268,7 +268,7 @@ function enter ()
 
    elseif mem.misn_state==1 and system.cur() == targetsys then
       -- Spawn thugs after the player. Player is taking off from targetplanet (Trincea) and should likely be going to Dvaer.
-      spawn_thugs( vec2.new( 15000, 15000 ), true )
+      spawn_thugs( vec2.new( 17000, 1000 ), true )
       -- Move to next state
       mem.misn_state = 2
       -- Timer
