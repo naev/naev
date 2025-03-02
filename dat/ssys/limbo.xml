@@ -16,7 +16,7 @@
  </spobs>
  <jumps>
   <jump target="Fried">
-   <pos x="-5870.072165" y="-25177.969685"/>
+   <pos x="-21000" y="-22000"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gammacron">
@@ -24,15 +24,11 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Provectus Nova">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Pultatis">
-   <autopos/>
+   <pos x="-15000" y="9000"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sollav">
-   <autopos/>
+   <pos x="-23500" y="-5500"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

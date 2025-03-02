@@ -95,6 +95,9 @@ function start_spa ()
    if player.evtDone( "Chicken Rendezvous" ) then
       mem.misn_state = 5
       misn.npcRm( mem.npc_spa )
+      misn.osdDestroy()
+      -- A reminder in case the player starts Kex's branch and forgets this was pending.
+      misn.osdCreate( _("Minerva Moles"),{ fmt.f(_("Report back to {pir}."),{pir=minerva.pirate.name}) } )
    end
 end
 

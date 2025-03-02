@@ -26,7 +26,7 @@ local lmisn = require "lmisn"
 local time_needed = 15 -- in seconds
 local reward_amount = minerva.rewards.pirate1
 local mainsys = system.get("Limbo")
-local runawaysys = system.get("Pultatis")
+local runawaysys = system.get("Sollav")
 local thugpos = vec2.new( 6000, -4000 )
 local dronepos = vec2.new( -12000, -12000 )
 

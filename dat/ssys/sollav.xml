@@ -11,6 +11,10 @@
   <spob>Sollav VI</spob>
  </spobs>
  <jumps>
+  <jump target="Pultatis">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Fried">
    <autopos/>
    <hide>1.000000</hide>
