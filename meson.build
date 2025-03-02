@@ -43,7 +43,7 @@ cc = meson.get_compiler('c')
 subdir('utils')
 
 # Version Generation
-version_result = run_command(gen_version, meson.project_version(), check: true)
+version_result = run_command(gen_version, '-v', 'v'+meson.project_version(), check: true)
 version = version_result.stdout().strip()
 meson.add_dist_script(add_to_package, 'dat/VERSION')
 summary('tag', version)

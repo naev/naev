@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import subprocess
 import sys
@@ -20,14 +21,14 @@ def parse_version(version_str):
         logging.error(f"Error parsing version string: {e}")
         return ''
 
-def get_version(source_root):
+def get_version(source_root, version_match):
     version_file = os.path.join(source_root, 'dat', 'VERSION')
     version = ""
 
     if os.path.isdir(os.path.join(source_root, '.git')):
         # In the git repo. Build the tag from git info
         try:
-            git_describe = subprocess.run(['git', '-C', source_root, 'describe', '--tags', '--match', 'v*', '--dirty'], capture_output=True, text=True)
+            git_describe = subprocess.run(['git', '-C', source_root, 'describe', '--tags', '--match', version_match, '--dirty'], capture_output=True, text=True)
             git_output = git_describe.stdout.strip()
             version = parse_version(git_output[1:])
             with open(version_file, 'w') as f:
@@ -45,7 +46,7 @@ def get_version(source_root):
         # Did you clone the repo with --depth=1?
         # Did you download the zip'd repo instead of a release?
         if len(sys.argv) > 1:
-            version = f"{sys.argv[1]}+dev"
+            version = f"{version_match}+dev"
         else:
             version = "0.0.0+dev"
         with open(version_file, 'w') as f:
@@ -54,9 +55,13 @@ def get_version(source_root):
     return version
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-v', '--version-match', type=str, default='v*', help="Tags to match when generating description based on git.")
+    args = ap.parse_args()
+
     source_root = os.getenv('MESON_SOURCE_ROOT')
     if source_root:
-        version = get_version(source_root)
+        version = get_version( source_root, args.version_match )
         logging.info(f"Version retrieved: {version}")
         print(version)
     else:
