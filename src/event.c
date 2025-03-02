@@ -585,7 +585,8 @@ int events_load( void )
    /* Run over events. */
    event_data = array_create_size( EventData, array_size( event_files ) );
    for ( int i = 0; i < array_size( event_files ); i++ ) {
-      event_parseFile( event_files[i], NULL );
+      if ( ndata_matchExt( event_files[i], "lua" ) )
+         event_parseFile( event_files[i], NULL );
       free( event_files[i] );
    }
    array_free( event_files );

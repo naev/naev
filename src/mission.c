@@ -1182,7 +1182,8 @@ int missions_load( void )
    mission_stack =
       array_create_size( MissionData, array_size( mission_files ) );
    for ( int i = 0; i < array_size( mission_files ); i++ ) {
-      mission_parseFile( mission_files[i], NULL );
+      if ( ndata_matchExt( mission_files[i], "lua" ) )
+         mission_parseFile( mission_files[i], NULL );
       free( mission_files[i] );
    }
    array_free( mission_files );
