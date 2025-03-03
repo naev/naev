@@ -1094,6 +1094,10 @@ void land_updateMainTab( void )
          WARN( _( "Outfit '%s' does not exist!" ), LOCAL_MAP_NAME );
          return;
       }
+      if ( !outfit_isLocalMap( o ) ) {
+         WARN( _( "Outfit '%s' is not a local map!" ), LOCAL_MAP_NAME );
+         return;
+      }
    } else
       return;
 
