@@ -18,6 +18,9 @@
    <density>1.300000</density>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="-1500" y="1500" >kex3_Malik</waypoint>
+ </waypoints>
  <tags>
   <tag>spoiler</tag>
  </tags>

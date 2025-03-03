@@ -227,7 +227,7 @@ function enter ()
       local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="baddie_norun"} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
-         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local ppos = pos + vec2.newP( rnd.rnd()*200, rnd.angle() )
          local p = pilot.add( v, fbh, ppos, nil, {naked=true} )
          equipopt.pirate( p )
          if not thug_leader then
@@ -284,7 +284,7 @@ function enter ()
          -- Should be taking off from the Lab
 
          -- Spawn
-         local pos = targetplanet:pos() + vec2.new(2000, 5000)
+         local pos = vec2.add( targetplanet:pos() , 2000, 5000 )
          local p = pilot.add("Za'lek Sting", "Za'lek", pos, minerva.strangelove.name )
          p:setInvincible(true)
          p:setActiveBoard(true)

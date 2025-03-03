@@ -190,7 +190,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local pos = mainspb:pos() + vec2.new( 100+200*rnd.rnd(), rnd.angle() )
+      local pos = mainspb:pos() + vec2.newP( 100+200*rnd.rnd(), rnd.angle() )
       boss = pilot.add( "Empire Hawking", "Empire", pos, nil, {ai="guard"} )
       guards = { boss }
       for k,v in ipairs{"Empire Lancelot", "Empire Lancelot"} do

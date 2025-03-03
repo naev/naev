@@ -21,4 +21,10 @@
  <tags>
   <tag>thenebula</tag>
  </tags>
+ <waypoints>
+  <waypoint x="-15000" y="6800" >maikki1_1</waypoint>
+  <waypoint x="-11000" y="13000" >maikki1_2</waypoint>
+  <waypoint x="-9000" y="7000" >maikki1_3</waypoint>
+  <waypoint x="-6000" y="12000" >maikki1_4</waypoint>
+ </waypoints>
 </ssys>

@@ -26,9 +26,9 @@ local reward_amount = minerva.rewards.pirate2
 local mainsys = system.get("Limbo")
 local jumpinsys = system.get("Sollav")
 
-local drone1pos = vec2.new(  -2000, -15000 )
+local drone1pos = mainsys:waypoints("pirate2_drone1")
 -- HERE should be rather close to jumpin pos.
-local drone2pos = vec2.new( -10000,  0 )
+local drone2pos = mainsys:waypoints("pirate2_drone2")
 
 -- Mission states:
 --  nil: mission not accepted yet
