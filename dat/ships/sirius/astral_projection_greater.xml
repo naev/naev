@@ -31,11 +31,11 @@
   <cpu>80</cpu>
  </characteristics>
  <slots>
-  <weapon prop="builtin" size="medium" x="10" y="-2" h="0">Greater Astral Cannon</weapon>
-  <weapon prop="builtin" size="medium" x="10" y="2" h="0">Greater Astral Cannon</weapon>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <weapon prop="builtin" size="large" x="10" y="-2" h="0">Greater Astral Cannon</weapon>
+  <weapon prop="builtin" size="large" x="10" y="2" h="0">Greater Astral Cannon</weapon>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
   <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
  <stats>
