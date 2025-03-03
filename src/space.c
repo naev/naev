@@ -3296,6 +3296,27 @@ static int system_parse( StarSystem *sys, const char *filename )
          continue;
       }
 
+      if ( xml_isNode( node, "waypoints" ) ) {
+         xmlNodePtr cur = node->children;
+         sys->waypoints = array_create( Waypoint );
+         do {
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "waypoint" ) ) {
+               const char *tmp = xml_get( cur );
+               Waypoint    wp;
+               wp.name = strdup( tmp );
+               xmlr_attr_float( cur, "x", wp.pos.x );
+               xmlr_attr_float( cur, "y", wp.pos.y );
+               if ( tmp != NULL )
+                  array_push_back( &sys->waypoints, wp );
+               continue;
+            }
+            WARN( _( "System '%s' has unknown node in waypoints '%s'." ),
+                  sys->name, cur->name );
+         } while ( xml_nextNode( cur ) );
+         continue;
+      }
+
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
          sys->tags      = array_create( char * );
@@ -3911,6 +3932,10 @@ void space_exit( void )
       array_free( sys->spobs );
       array_free( sys->spobsid );
       array_free( sys->spobs_virtual );
+
+      for ( int j = 0; j < array_size( sys->waypoints ); j++ )
+         free( sys->waypoints[j].name );
+      array_free( sys->waypoints );
 
       for ( int j = 0; j < array_size( sys->tags ); j++ )
          free( sys->tags[j] );

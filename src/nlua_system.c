@@ -56,6 +56,7 @@ static int systemL_markerAdd( lua_State *L );
 static int systemL_markerRm( lua_State *L );
 static int systemL_reputation( lua_State *L );
 static int systemL_setReputation( lua_State *L );
+static int systemL_waypoints( lua_State *L );
 static int systemL_tags( lua_State *L );
 
 static const luaL_Reg system_methods[] = {
@@ -90,6 +91,7 @@ static const luaL_Reg system_methods[] = {
    { "markerRm", systemL_markerRm },
    { "reputation", systemL_reputation },
    { "setReputation", systemL_setReputation },
+   { "waypoints", systemL_waypoints },
    { "tags", systemL_tags },
    { 0, 0 } }; /**< System metatable methods. */
 
@@ -1062,9 +1064,32 @@ static int systemL_setReputation( lua_State *L )
 }
 
 /**
+ * @brief Gets the system waypoints
+ *
+ *    @luatparam System s System to get waypoints of.
+ *    @luatparam[opt=nil] string name Name of the waypoint to get. Returns a
+ * Vec2 if set and a table otherwise.
+ *    @luatreturn table|Vec2 Table of waypoints where the name is the key and
+ * the Vec2 position is the value or a Vec2 position if a string is passed as
+ * the second parameter.
+ * @luafunc waypoints
+ */
+static int systemL_waypoints( lua_State *L )
+{
+   const StarSystem *s = luaL_validsystem( L, 1 );
+   lua_newtable( L );
+   for ( int i = 0; i < array_size( s->waypoints ); i++ ) {
+      const Waypoint *wp = &s->waypoints[i];
+      lua_pushvector( L, wp->pos );
+      lua_setfield( L, -2, wp->name );
+   }
+   return 1;
+}
+
+/**
  * @brief Gets the system tags.
  *
- * @usage if system.cur():tags["fancy"] then -- Has "fancy" tag
+ * @usage if system.cur():tags()["fancy"] then -- Has "fancy" tag
  *
  *    @luatparam System s System to get tags of.
  *    @luatparam[opt=nil] string tag Tag to check if exists.

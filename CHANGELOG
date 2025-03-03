@@ -20,6 +20,8 @@
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
       * Local maps can have a range parameter now
+      * Intrinsic outfits for ships are defined in <intrinsics> instead of <slots> now
+      * Systems can have waypoints that are accessible from missions
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
