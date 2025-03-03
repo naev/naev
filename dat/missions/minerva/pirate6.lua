@@ -295,25 +295,17 @@ function start ()
 
    player.autonavReset( 3 )
 
-   -- Have the helper tal to the player
+   -- Have the helper talk to the player
    helper_npc:setHilight(false)
    helper_npc:comm( _("The targets have entered the system!"), true )
    misn.osdActive(2)
    mem.state = 1
 
-   local fct_player = faction.player()
+   -- Dynamic factions to not make everyone get mad at the player, they inherit the local standings though
    local fct_zlk = faction.get("Za'lek")
    local fct_dv = faction.get("Dvaered")
-   fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
-   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
-   -- Causes a warning because fct_player is the faction of the player. Looks intentional !
-   -- TODO Find a way to disable warning.
-   if fct_player:areEnemies( fct_zlk ) then
-      fzlk:dynEnemy( fct_player )
-   end
-   if fct_player:areEnemies( fct_dv ) then
-      fdvd:dynEnemy( fct_player )
-   end
+   fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true, player=csys:reputation(fct_zlk)} )
+   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true, player=csys:reputation(fct_dv)} )
 
    -- General goes from Provectus Nova to Sollav
    local zl_start = jump.get( csys, "Provectus Nova" )
