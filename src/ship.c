@@ -1219,6 +1219,11 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
                ship_parseSlot( temp, &array_grow( &temp->outfit_weapon ),
                                OUTFIT_SLOT_WEAPON, cur );
             else if ( xml_isNode( cur, "intrinsic" ) ) {
+               /* Deprecated remove in 0.14.0 */
+               WARN(
+                  _( "Ship '%s' using deprecated api for intrinsic outfits. "
+                     "Please define them in <intrinsics> instead of <slots>." ),
+                  temp->name );
                const Outfit *o = outfit_get( xml_get( cur ) );
                if ( o == NULL ) {
                   WARN( _( "Ship '%s' has unknown intrinsic outfit '%s'" ),
@@ -1237,6 +1242,26 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          array_shrink( &temp->outfit_utility );
          array_shrink( &temp->outfit_weapon );
          continue;
+      }
+      if ( xml_isNode( node, "intrinsics" ) ) {
+         xmlNodePtr cur = node->children;
+         do {
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "intrinsic" ) ) {
+               const Outfit *o = outfit_get( xml_get( cur ) );
+               if ( o == NULL ) {
+                  WARN( _( "Ship '%s' has unknown intrinsic outfit '%s'" ),
+                        temp->name, xml_get( cur ) );
+                  continue;
+               }
+               if ( temp->outfit_intrinsic == NULL )
+                  temp->outfit_intrinsic =
+                     (Outfit const **)array_create( Outfit * );
+               array_push_back( &temp->outfit_intrinsic, o );
+            } else
+               WARN( _( "Ship '%s' has unknown intrinsic node '%s'." ),
+                     temp->name, cur->name );
+         } while ( xml_nextNode( cur ) );
       }
 
       /* Parse ship stats. */
