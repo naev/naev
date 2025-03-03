@@ -187,9 +187,9 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
+      -- take the last (should only be one)
       for _i,p in ipairs(mainsys:asteroidFields()) do
          shippos = p.pos
-         break
       end
 
       -- Main ship player has to protect
