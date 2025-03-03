@@ -28,7 +28,7 @@ local reward_amount = minerva.rewards.pirate4
 local mainsys     = system.get("Fried")
 local dvaeredsys  = system.get("Limbo")
 local piratesys   = system.get("Gold")
-local shippos     = mainsys:asteroidFields()[0]:pos()
+local shippos
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -186,6 +186,11 @@ function enter ()
       -- TODO maybe don't clear everything, leave some dvaered and stuff around as an obstacle
       pilot.clear()
       pilot.toggleSpawn(false)
+
+      -- take the last (should only be one)
+      for _i,p in ipairs(mainsys:asteroidFields()) do
+         shippos = p.pos
+      end
 
       -- Main ship player has to protect
       mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, _("Interrogation Ship"), {ai="guard"} )
