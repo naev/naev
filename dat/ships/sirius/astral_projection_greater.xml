@@ -36,8 +36,10 @@
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
-  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
+ <intrinsics>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
+ </intrinsics>
  <stats>
   <stress_dissipation>10000</stress_dissipation>
  </stats>
