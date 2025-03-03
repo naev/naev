@@ -1244,6 +1244,10 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          continue;
       }
       if ( xml_isNode( node, "intrinsics" ) ) {
+         /* Have to reset in case of inheriting ship. */
+         array_free( temp->outfit_intrinsic );
+         temp->outfit_intrinsic = (Outfit const **)array_create( Outfit * );
+
          xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes( cur );
@@ -1254,9 +1258,6 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
                         temp->name, xml_get( cur ) );
                   continue;
                }
-               if ( temp->outfit_intrinsic == NULL )
-                  temp->outfit_intrinsic =
-                     (Outfit const **)array_create( Outfit * );
                array_push_back( &temp->outfit_intrinsic, o );
             } else
                WARN( _( "Ship '%s' has unknown intrinsic node '%s'." ),
