@@ -7,6 +7,7 @@ repos:
   hooks:
     - id: trailing-whitespace
     - id: end-of-file-fixer
+      exclude: po/naevpedia.pot
     - id: check-xml
     - id: check-yaml
     - id: check-added-large-files
