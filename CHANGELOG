@@ -25,6 +25,7 @@
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
+      * Engine glow decay is less ridiculous on ships with really weird acceleration / speed ratios
       * Only try to load missions and events with file names that end in .lua
       * Action speed can no longer be negative and disables space worthiness
       * Don't show OSD frame when not visible
