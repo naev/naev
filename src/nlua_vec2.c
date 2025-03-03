@@ -208,7 +208,7 @@ static int vectorL_new( lua_State *L )
 /**
  * @brief Creates a new vector using polar coordinates.
  *
- * @usage vec2.newP( 1000, 90 ) -- creates a vector at (0,1000)
+ * @usage vec2.newP( 1000, math.pi/2 ) -- creates a vector at (0,1000)
  * @usage vec2.newP() -- creates a vector at (0,0)
  *
  *    @luatparam[opt=0] number m If set, the modulus for the new vector.
