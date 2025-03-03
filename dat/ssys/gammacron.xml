@@ -39,7 +39,7 @@
  <waypoints>
   <waypoint x="-500" y="2000" >pirate5_drone_control1</waypoint>
   <waypoint x="18500" y="9200" >pirate5_drone_control2</waypoint>
-  <waypoint x="5000" y="-17000" >pirate5_hacking_center </waypoint>
+  <waypoint x="5000" y="-17000" >pirate5_hacking_center</waypoint>
   <waypoint x="-5000" y="8000" >pirate5_5_1</waypoint>
   <waypoint x="-9000" y="-5000" >pirate5_5_2</waypoint>
   <waypoint x="0" y="-15000" >pirate5_5_3</waypoint>
