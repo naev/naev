@@ -414,7 +414,7 @@ function enter ()
       -- Scavenger is flying to doeston from arandon (near the middle)
       -- cutscene
       local j = jump.get( cutscenesys, searchsys )
-      local pos = j:pos() + vec2.new(3000,5000)
+      local pos = vec2.add(j:pos() , 3000, 5000)
       local fscav = faction.dynAdd( "Independent", "Scavenger", _("Scavenger") )
       pscavB = pilot.add( "Vendetta", fscav, pos, _("Scavenger Vendetta"), {ai="independent"} )
       pscavB:control()
@@ -429,15 +429,16 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
       -- Have to follow scavengers
+      local wp = stealthsys :waypoints()
       waypoints = {
-         vec2.new( -15000,  8000-1200 ),
-         vec2.new( -11000, 13000 ), -- 7200 dist or 36s
-         vec2.new(  -9000,  7000 ), -- 6400 dist or 32s
-         vec2.new(  -6000, 12000 ), -- 5800 dist or 29s
+         wp["maikki1_1"],
+         wp["maikki1_2"], -- 7200 dist or 36s
+         wp["maikki1_3"], -- 6400 dist or 32s
+         wp["maikki1_4"], -- 5800 dist or 29s
       }
       local pos = waypoints[1]
-      local posA = pos + vec2.new( 100, 80 )
-      local posB = pos + vec2.new( -50, -20 )
+      local posA = vec2.add(pos , 100, 80 )
+      local posB = vec2.add(pos , -50, -20 )
       local fscav = faction.dynAdd( "Independent", "Scavenger", _("Scavenger") )
       pscavA = pilot.add( "Shark", fscav, posA, nil, {ai="independent"} )
       pscavB = pilot.add( "Vendetta", fscav, posB, nil, {ai="independent"} )
@@ -720,7 +721,7 @@ function stealthheartbeat ()
 
          -- Spawn the wreck
          if mem.stealthtarget==4 then
-            pos = waypoints[ #waypoints ] + vec2.new(-10, -50)
+            pos = vec2.add(waypoints[ #waypoints ] , -10, -50)
             wreck = pilot.add( "Rhino", "Derelict", pos, _("Ship Wreck") )
             wreck:setDisable()
             wreck:setInvincible()
