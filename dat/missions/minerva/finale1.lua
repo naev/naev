@@ -164,7 +164,7 @@ function enter ()
          spob.get("Kayel"):pos(),
          jump.get( badsys, "Jade" ):pos(),
       }
-      local waypts= targetsys:waypoints()
+      local waypts= badsys:waypoints()
       local posB = waypts["finale1_B"]
       local routeC = {
          waypts["finale1_C1"],
