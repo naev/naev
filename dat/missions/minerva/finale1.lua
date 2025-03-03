@@ -164,18 +164,19 @@ function enter ()
          spob.get("Kayel"):pos(),
          jump.get( badsys, "Jade" ):pos(),
       }
-      local posB = vec2.new( 1e3, 1.6e3 )
+      local waypts= badsys:waypoints()
+      local posB = waypts["finale1_B"]
       local routeC = {
-         vec2.new( 5e3, 2e3 ),
-         vec2.new( 12e3, 3e3 ),
-         vec2.new( 10e3, 11e3 ),
-         vec2.new( 3e3, 8e3 ),
+         waypts["finale1_C1"],
+         waypts["finale1_C2"],
+         waypts["finale1_C3"],
+         waypts["finale1_C4"],
       }
       local routeD = {
-         vec2.new( 3e3, 2.6e3 ),
-         vec2.new( -7.5e3, 14e3 ),
+         waypts["finale1_D1"],
+         waypts["finale1_D2"],
       }
-      local posE = vec2.new( 18e3, 6e3 )
+      local posE = waypts["finale1_E"]
 
       baddie_ships = {}
       local function fuzz_pos( pos, max_offset )
@@ -242,7 +243,8 @@ function enter ()
       pilot.toggleSpawn(false)
       misn.osdActive( 2 )
 
-      local pos = vec2.new( 5e3, 6e3 )
+      local pos = destsys :waypoints("finale1")
+
       pinkdemon = minerva.pink_demon( pos, {stealth=true} )
       pinkdemon:setFaction( minerva.fct_wildones() ) -- Non-hostile faction
       hook.pilot( pinkdemon, "board", "maikki_board" )
