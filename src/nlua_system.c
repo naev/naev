@@ -1066,6 +1066,9 @@ static int systemL_setReputation( lua_State *L )
 /**
  * @brief Gets the system waypoints
  *
+ * @usage for k,w in pairs(system.cur():waypoints()) do ... end
+ * @usage system.cur():waypoints("waypoint_name")
+ *
  *    @luatparam System s System to get waypoints of.
  *    @luatparam[opt=nil] string name Name of the waypoint to get. Returns a
  * Vec2 if set and a table otherwise.
@@ -1077,6 +1080,19 @@ static int systemL_setReputation( lua_State *L )
 static int systemL_waypoints( lua_State *L )
 {
    const StarSystem *s = luaL_validsystem( L, 1 );
+
+   if ( !lua_isnoneornil( L, 2 ) ) {
+      const char *name = luaL_checkstring( L, 2 );
+      for ( int i = 0; i < array_size( s->waypoints ); i++ ) {
+         const Waypoint *wp = &s->waypoints[i];
+         if ( strcmp( wp->name, name ) == 0 ) {
+            lua_pushvector( L, wp->pos );
+            return 1;
+         }
+      }
+      return 0;
+   }
+
    lua_newtable( L );
    for ( int i = 0; i < array_size( s->waypoints ); i++ ) {
       const Waypoint *wp = &s->waypoints[i];
