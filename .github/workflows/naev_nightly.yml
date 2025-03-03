@@ -20,6 +20,7 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           path: source
           submodules: true

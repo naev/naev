@@ -172,7 +172,7 @@ static void  player_parseShipSlot( xmlNodePtr node, Pilot *ship,
 static int   player_parseShip( xmlNodePtr parent, int is_player );
 static int   player_parseEscorts( xmlNodePtr parent );
 static int   player_parseMetadata( xmlNodePtr parent );
-static void  player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
+static int   player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                                       PilotOutfitSlot *s );
 static int player_runUpdaterScript( const char *type, const char *name, int q );
 static const Outfit *player_tryGetOutfit( const char *name, int q );
@@ -4378,8 +4378,8 @@ static int player_parseMetadata( xmlNodePtr parent )
 /**
  * @brief Adds outfit to pilot if it can.
  */
-static void player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
-                                     PilotOutfitSlot *s )
+static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
+                                    PilotOutfitSlot *s )
 {
    int ret;
 
@@ -4388,7 +4388,7 @@ static void player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                 "'%s', adding to stock." ),
              outfit->name, pilot->name );
       player_addOutfit( outfit, 1 );
-      return;
+      return 0;
    }
 
    ret = pilot_addOutfitRaw( pilot, outfit, s );
@@ -4397,11 +4397,12 @@ static void player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                 "stock." ),
              outfit->name, pilot->name );
       player_addOutfit( outfit, 1 );
-      return;
+      return 0;
    }
 
    /* Update stats. */
    pilot_calcStats( pilot );
+   return 1;
 }
 
 /**
@@ -4411,7 +4412,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
                                   PilotOutfitSlot *slot )
 {
    const Outfit *o;
-   int           q;
+   int           q, ret;
    const char   *name = xml_get( node );
    if ( name == NULL ) {
       WARN( _( "Empty ship slot node found, skipping." ) );
@@ -4422,10 +4423,10 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
    o = player_tryGetOutfit( name, 1 );
    if ( o == NULL )
       return;
-   player_addOutfitToPilot( ship, o, slot );
+   ret = player_addOutfitToPilot( ship, o, slot );
 
    /* Doesn't have ammo. */
-   if ( !outfit_isLauncher( o ) && !outfit_isFighterBay( o ) )
+   if ( !ret || ( !outfit_isLauncher( o ) && !outfit_isFighterBay( o ) ) )
       return;
 
    /* See if has quantity. */
