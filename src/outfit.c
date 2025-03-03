@@ -2502,12 +2502,10 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes( node );
       xmlr_float( node, "spob_detect", temp->u.lmap.spob_detect );
       xmlr_float( node, "jump_detect", temp->u.lmap.jump_detect );
+      xmlr_int( node, "range", temp->u.lmap.range );
       // cppcheck-suppress nullPointerRedundantCheck
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
-
-   temp->u.lmap.spob_detect = pow2( temp->u.lmap.spob_detect );
-   temp->u.lmap.jump_detect = pow2( temp->u.lmap.jump_detect );
 
    /* Set short description. */
    temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );

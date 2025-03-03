@@ -19,6 +19,7 @@
       * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
+      * Local maps can have a range parameter now
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
