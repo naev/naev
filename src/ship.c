@@ -874,6 +874,12 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
    slot->slot.size = base_size;
    slot->slot.type = type;
 
+   /* Make sure default outfit fits slot. */
+   if ( ( slot->data != NULL ) && !outfit_fitsSlot( slot->data, &slot->slot ) )
+      WARN( _( "Ship '%s' has default outfit '%s' which does not fit in the "
+               "slot it is equipped by default." ),
+            temp->name, slot->data->name );
+
    /* Required slots need a default outfit. */
    if ( slot->required && ( slot->data == NULL ) )
       WARN( _( "Ship '%s' has required slot without a default outfit." ),
