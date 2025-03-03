@@ -606,7 +606,7 @@ void faction_addEnemy( int f, int o )
       return;
    }
 
-   /* player cannot be made an enemy this way */
+   /* Player cannot be made an enemy this way */
    if ( f == FACTION_PLAYER ) {
       WARN( _( "%d is the player faction" ), f );
       return;
