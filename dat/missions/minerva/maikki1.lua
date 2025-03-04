@@ -429,7 +429,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
       -- Have to follow scavengers
-      local wp = stealthsys :waypoints()
+      local wp = stealthsys:waypoints()
       waypoints = {
          wp["maikki1_1"],
          wp["maikki1_2"], -- 7200 dist or 36s
