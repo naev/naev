@@ -44,10 +44,10 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="6000" y="-4000" >pirate1_thug</waypoint>
-  <waypoint x="-12000" y="-12000" >pirate1_drone</waypoint>
-  <waypoint x="-17500" y="2500" >pirate6_meet</waypoint>
-  <waypoint x="-2000" y="-15000" >pirate2_drone1</waypoint>
-  <waypoint x="-10000" y="0" >pirate2_drone2</waypoint>
+  <waypoint x="6000" y="-4000">pirate1_thug</waypoint>
+  <waypoint x="-12000" y="-12000">pirate1_drone</waypoint>
+  <waypoint x="-17500" y="2500">pirate6_meet</waypoint>
+  <waypoint x="-2000" y="-15000">pirate2_drone1</waypoint>
+  <waypoint x="-10000" y="0">pirate2_drone2</waypoint>
  </waypoints>
 </ssys>
