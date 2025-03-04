@@ -386,7 +386,7 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.add("Proteron Gauss", "Independent", spob.get("Ulios"):vec2.add(pos(),-400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add("Proteron Gauss", "Independent", vec2.add(spob.get("Ulios"):pos(),-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()

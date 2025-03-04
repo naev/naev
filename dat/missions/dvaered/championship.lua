@@ -231,7 +231,7 @@ function enter()
       opponent:setHostile()
 
       opponent:control()
-      opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
+      opponent:moveto(vec2.add( mispla:pos() , 1000, 1500))
       ai_setup.setup(opponent)
 
       --The TV and the security
@@ -278,7 +278,7 @@ function enter()
       mem.attackhook = hook.pilot( opponent, "attacked", "oppo_attacked" )
 
       --Adding the starting mark
-      local start_pos = mispla:pos() + vec2.new( -1000, -1500)
+      local start_pos = vec2.add( mispla:pos(), -1000, -1500)
       mem.mark = system.markerAdd( start_pos, _("START") )
       mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
