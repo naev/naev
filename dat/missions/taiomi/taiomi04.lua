@@ -113,7 +113,10 @@ function enter ()
    end
 
    -- Create small convoy that tries to leave
-   local pos = vec2.new( 6000, 6000 ) -- Center of asteroid field
+   local pos
+   for _i,p in ipairs(scur:asteroidFields()) do -- Center of last asteroid field
+      pos = p.pos
+   end
    local fct = faction.dynAdd( nil, "shady_miners", _("Shady Miners"), {ai="independent"} )
    local l = pilot.add( "Rhino", fct, pos, _("Shady Miner"), {naked=true} )
    equipopt.pirate( l )
