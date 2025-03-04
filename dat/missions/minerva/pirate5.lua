@@ -334,7 +334,7 @@ function enter ()
    end
 
    -- Main boss, isn't necessary to kill
-   local bosspos = vec2.add(mainsys:waypoints("pirate5_hacking_center") , 67, 109 )
+   local bosspos = pos_hacking_center - vec2.new( -67, -109 )
    main_boss = pilot.add( "Za'lek Mephisto", "Za'lek", bosspos, nil, {naked=true, ai="guard"} )
    all_ships[1] = main_boss
    -- Be nice and give only close-range weapons

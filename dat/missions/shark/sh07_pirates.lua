@@ -246,10 +246,10 @@ function enter ()
 end
 
 function idle(_pilot, pos)  --the Gawain is flying around a random point
-   baddie:moveto(vec2.add(pos ,  800,  800), false, false)
-   baddie:moveto(vec2.add(pos , -800,  800), false, false)
-   baddie:moveto(vec2.add(pos , -800, -800), false, false)
-   baddie:moveto(vec2.add(pos ,  800, -800), false, false)
+   baddie:moveto(pos + vec2.new( 800,  800), false, false)
+   baddie:moveto(pos + vec2.new(-800,  800), false, false)
+   baddie:moveto(pos + vec2.new(-800, -800), false, false)
+   baddie:moveto(pos + vec2.new( 800, -800), false, false)
 end
 
 function attacked()  --the Gawain is going away

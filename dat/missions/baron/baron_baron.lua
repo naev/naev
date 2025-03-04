@@ -71,12 +71,12 @@ end
 function jumpin()
    if mem.talked and system.cur() == sys2 then
       local homepos = spob.get("Ulios"):pos()
-      pinnacle = pilot.add( "Proteron Gauss", "Proteron", vec2.add(homepos , -400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add( "Proteron Gauss", "Proteron", homepos + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(vec2.add(homepos , 400, -400), false)
+      pinnacle:moveto(homepos + vec2.new( 400, -400), false)
       mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
@@ -84,10 +84,10 @@ end
 
 function idle()
    local homepos = spob.get("Ulios"):pos()
-   pinnacle:moveto(vec2.add(homepos , 400,  400), false)
-   pinnacle:moveto(vec2.add(homepos , -400,  400), false)
-   pinnacle:moveto(vec2.add(homepos , -400, -400), false)
-   pinnacle:moveto(vec2.add(homepos ,  400, -400), false)
+   pinnacle:moveto(homepos + vec2.new( 400,  400), false)
+   pinnacle:moveto(homepos + vec2.new(-400,  400), false)
+   pinnacle:moveto(homepos + vec2.new(-400, -400), false)
+   pinnacle:moveto(homepos + vec2.new( 400, -400), false)
 end
 
 function hail()

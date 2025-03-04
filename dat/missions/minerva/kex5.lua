@@ -284,7 +284,7 @@ function enter ()
          -- Should be taking off from the Lab
 
          -- Spawn
-         local pos = vec2.add( targetplanet:pos() , 2000, 5000 )
+         local pos = targetplanet:pos() + vec2.new(2000, 5000)
          local p = pilot.add("Za'lek Sting", "Za'lek", pos, minerva.strangelove.name )
          p:setInvincible(true)
          p:setActiveBoard(true)

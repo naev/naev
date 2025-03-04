@@ -18,20 +18,20 @@ local pnt = spob.get("Ulios")
 
 function create()
    -- TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
-   local baronship = pilot.add( "Proteron Gauss", "Independent", vec2.add(pnt:pos() , -400,-400), _("Pinnacle"), {ai="trader"} )
+   local baronship = pilot.add( "Proteron Gauss", "Independent", pnt:pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
    baronship:setInvincible(true)
    baronship:setFriendly()
    baronship:control()
-   baronship:moveto(vec2.add( pnt:pos() , 500, -500), false, false)
+   baronship:moveto(pnt:pos() + vec2.new( 500, -500), false, false)
    hook.pilot(baronship, "idle", "idle")
    hook.enter("enter")
 end
 
 function idle(baronship)
-   baronship:moveto(vec2.add(pnt:pos() ,  500,  500), false, false)
-   baronship:moveto(vec2.add(pnt:pos() , -500,  500), false, false)
-   baronship:moveto(vec2.add(pnt:pos() , -500, -500), false, false)
-   baronship:moveto(vec2.add(pnt:pos() ,  500, -500), false, false)
+   baronship:moveto(pnt:pos() + vec2.new( 500,  500), false, false)
+   baronship:moveto(pnt:pos() + vec2.new(-500,  500), false, false)
+   baronship:moveto(pnt:pos() + vec2.new(-500, -500), false, false)
+   baronship:moveto(pnt:pos() + vec2.new( 500, -500), false, false)
 end
 
 -- Clear event when entering new system

@@ -189,7 +189,7 @@ end
 -- Enter hook
 function enter()
    if system.cur() == seirsys then
-      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.add( seirplanet:pos(), 300, 300) , _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       seiryuu:control()
       if mem.stage == 1 or mem.stage == 6 then

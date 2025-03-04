@@ -115,7 +115,7 @@ end
 function enter()
    --the system where the player must look for the Hawking
    if system.cur() == mem.missys then
-      hawking = pilot.add("Hawking", "Frontier", vec2.add( mem.mispla:pos(), -400, -400), _("Air Force One"), {ai="trader"} )
+      hawking = pilot.add("Hawking", "Frontier", mem.mispla:pos() + vec2.new(-400,-400), _("Air Force One"), {ai="trader"} )
       hawking:memory().land_planet = false
       hawking:setHilight(true)
       mem.hailhook = hook.pilot(hawking, "hail", "hail")
