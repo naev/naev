@@ -406,6 +406,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
    gl_renderTextureRawH( texture, sampler, &projection, &tex_mat, c );
 }
 
+#if 0
 /**
  * @brief Texture blitting backend.
  *
@@ -428,6 +429,7 @@ void gl_renderTexture( const glTexture *texture, double x, double y, double w,
    gl_renderTextureRaw( tex_tex( texture ), tex_sampler( texture ), 0, x, y, w,
                         h, tx, ty, tw, th, c, angle );
 }
+#endif
 
 /**
  * @brief SDF Texture blitting backend.

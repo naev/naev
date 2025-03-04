@@ -1184,3 +1184,84 @@ pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
     let ntex = glow::NativeTexture(std::num::NonZero::new(texture).unwrap());
     tex.texture = Arc::new(TextureData::from_raw(ntex, tex.texture.w, tex.texture.h).unwrap());
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderTexture(
+    ctex: *mut Texture,
+    x: c_double,
+    y: c_double,
+    w: c_double,
+    h: c_double,
+    tx: c_double,
+    ty: c_double,
+    tw: c_double,
+    th: c_double,
+    c: *mut Vector4<f32>,
+    angle: c_double,
+) {
+    /*
+    let ctx = CONTEXT.get().unwrap();
+    let colour = match c.is_null() {
+        true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        false => unsafe { *c },
+    };
+    #[rustfmt::skip]
+    let transform: Matrix3<f32> = ctx.projection * {
+        if angle.abs() > 1e-5 {
+            let hw = 0.5 * w as f32;
+            let hh = 0.5 * h as f32;
+            let c = angle.cos() as f32;
+            let s = angle.sin() as f32;
+            Matrix3::new(
+                 c,  -s,  -hw * c + hh * s + hw,
+                 s,   c,  -hw * s - hh * c + hh,
+                0.0, 0.0, 1.0,
+            ) *  Matrix3::new(
+                w as f32, 0.0,      x as f32,
+                0.0,      h as f32, y as f32,
+                0.0,      0.0,      1.0,
+            )
+        } else {
+            Matrix3::new(
+                w as f32, 0.0,      x as f32,
+                0.0,      h as f32, y as f32,
+                0.0,      0.0,      1.0,
+            )
+        }
+    };
+    // Our coordinate system rust-side is inverted with respect to Lua and textures
+    #[rustfmt::skip]
+    let texture: Matrix3<f32> = Matrix3::new(
+        tw as f32, 0.0,       tx as f32,
+        0.0,      -th as f32,-ty as f32,
+        0.0,       0.0,       1.0,
+    );
+    let data = render::TextureUniform {
+        texture,
+        transform,
+        colour,
+    };
+
+    let tex = unsafe { &*ctex };
+    let _ = tex.draw_ex(ctx, &data);
+    */
+
+    let tex = unsafe { &*ctex };
+    unsafe {
+        naevc::gl_renderTextureRaw(
+            tex.texture.texture.0.into(),
+            tex.sampler.0.into(),
+            0,
+            x,
+            y,
+            w,
+            h,
+            tx,
+            ty,
+            tw,
+            th,
+            c as *const naevc::glColour,
+            angle,
+        );
+    }
+}
