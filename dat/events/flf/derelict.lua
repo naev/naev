@@ -57,8 +57,8 @@ function create()
    pilot.toggleSpawn(false)
    pilot.clear()
 
-   local posDV = vec2.new(7400, 3000)
-   local posFLF = vec2.new(-10500, -8500)
+   local posDV = vec2.new(7400, 3000) -- not system dependant
+   local posFLF = vec2.new(-10500, -8500) -- not system dependant
 
    shipDV = pilot.add( "Dvaered Vendetta", "Dvaered", posDV, _("Dvaered Patrol"), {ai="dummy"} )
    shipFLF = pilot.add( "Tristan", "FLF", posFLF, _("Frontier Patrol"), {ai="dummy"} )
