@@ -56,22 +56,23 @@ function create ()
 
    scavenger_missing = ((progress > 4) or (progress==4 and taiomi.inprogress())) and progress < 7
 
+   local sys_wayp = system.get("Taiomi"):waypoints()
    -- Scavenger
    if not scavenger_missing then
-      d_scavenger = addDrone( "Drone (Hyena)", vec2.new(500,200), _("Scavenger Drone") )
+      d_scavenger = addDrone( "Drone (Hyena)", sys_wayp["scavenger_drone"], _("Scavenger Drone") )
       d_scavenger:face(pp)
       d_scavenger:setHilight(true)
       hook.pilot( d_scavenger, "hail", "hail_scavenger" )
    end
 
    -- Philosopher
-   d_philosopher = addDrone( "Drone", vec2.new(1000,-500), _("Philosopher Drone") )
+   d_philosopher = addDrone( "Drone", sys_wayp["philosopher_drone"], _("Philosopher Drone") )
    d_philosopher:face(pp)
    d_philosopher:setHilight(true)
    hook.pilot( d_philosopher, "hail", "hail_philosopher" )
 
    -- Worn-out Drone
-   d_elder = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
+   d_elder = addDrone( "Drone", sys_wayp["elder_drone"], _("Worn-out Drone") )
    if var.peek( "taiomi_drone_elder" ) then
       d_elder:rename( _("Elder Drone") )
    end
@@ -83,10 +84,10 @@ function create ()
 
    -- Younglings that follow around the player up until taiomi04
    if progress < 4 and not (progress == 3 and taiomi.inprogress()) then
-      d_young_a = addDrone( "Drone", vec2.new(-1000,0), _("Curious Drone") )
+      d_young_a = addDrone( "Drone", sys_wayp["curious_drone1"], _("Curious Drone") )
       d_young_a:follow(pp)
       hook.pilot( d_young_a, "hail", "hail_youngling" )
-      d_young_b = addDrone( "Drone", vec2.new(-1200,300), _("Curious Drone") )
+      d_young_b = addDrone( "Drone", sys_wayp["curious_drone2"], _("Curious Drone") )
       d_young_b:follow(pp)
       hook.pilot( d_young_b, "hail", "hail_youngling" )
       if var.peek( "taiomi_drone_names", true ) then
