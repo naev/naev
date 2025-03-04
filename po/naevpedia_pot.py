@@ -41,8 +41,12 @@ with open(sys.argv[1],"w") as fout:
         quoted_escaped_line = json.dumps(line, ensure_ascii=False)
         fout.write('#: {}:{}\nmsgid {}\nmsgstr ""\n\n'.format(fn, i+1, quoted_escaped_line))
 
+    # Want reproducible stuff
+    filenames = sys.argv[2:].copy()
+    filenames.sort()
+
     fout.write( HEADER )
-    for fn in sys.argv[2:]:
+    for fn in filenames:
         with open( fn, 'r' ) as f:
             fn = re.sub('.*/dat', 'dat', fn)
             d = f.read()
