@@ -52,8 +52,8 @@ function Bezier:set( curves )
    self.lines = {}
    for k,v in ipairs(curves) do
       for t = 0,1,0.1 do -- only 10 samples
-         local p = cubicBezier( t, v[1], v[1]+v[2], v[4]+v[3], v[4] )
-         table.insert( self.lines, p )
+         local x,y = cubicBezier( t, v[1], v[1]+v[2], v[4]+v[3], v[4] ):get()
+         table.insert( self.lines, vec2.new(x,-y) )
       end
    end
 
