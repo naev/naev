@@ -3185,7 +3185,6 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
 
    /* Set system as known. */
    sys_setFlag( sys, SYSTEM_KNOWN );
-
    mod = 1. / ( 1. + cur_system->interference / 100. );
 
    detect = lmap->u.lmap.jump_detect;
@@ -3194,15 +3193,17 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
       if ( jp_isFlag( jp, JP_EXITONLY ) || jp_isFlag( jp, JP_HIDDEN ) )
          continue;
 
+      /* More checks, we'll only find systems on the other find of a jump if we
+       * find the jump. */
+      if ( mod * jp->hide > detect )
+         continue;
+
       /* Early recursive application, will apply multiple times to the same
        * system, but oh well. */
       ret |= localmap_docheck( lmap, jp->target, range - 1, apply );
       if ( !apply && ret )
          return ret;
 
-      /* More checks. */
-      if ( mod * jp->hide > detect )
-         continue;
       if ( jp_isKnown( jp ) )
          continue;
 
