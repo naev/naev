@@ -22,6 +22,7 @@
       * Local maps can have a range parameter now
       * Intrinsic outfits for ships are defined in <intrinsics> instead of <slots> now
       * Systems can have waypoints that are accessible from missions
+      * Fixed some flickering at the end of ship trails
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
