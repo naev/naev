@@ -16,7 +16,7 @@ local function test( ships, fct, y )
    end )
 
    for k,v in ipairs( ships ) do
-      local p = pilot.add( v, fct, player.pos() + vec2.new( -800+150*k, y+75 ) )
+      local p = pilot.add( v, fct, vec2.add( player.pos() , -800+150*k, y+75 ) )
       p:control()
       table.insert( pilots, p )
    end

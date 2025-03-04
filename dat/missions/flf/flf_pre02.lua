@@ -120,7 +120,7 @@ local function spawnDVReinforcements ()
       y = -dist
    end
 
-   local pos = player.pos() + vec2.new( x, y )
+   local pos = vec2.add( player.pos() , x, y )
    local dv_big_patrol = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
    local reinforcements = fleet.add( 1, dv_big_patrol, "Dvaered", pos, nil, {ai="dvaered_norun"} )
    for i, j in ipairs( reinforcements ) do
@@ -216,7 +216,7 @@ local function spawnFLF ()
       y = -dist
    end
 
-   local pos = player.pos() + vec2.new( x, y )
+   local pos = vec2.add( player.pos() , x, y )
    fleetFLF = fleet.add( 8, {"Vendetta", "Tristan"}, "FLF", pos, nil, {ai="flf_norun"} )
 end
 
