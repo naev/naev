@@ -142,6 +142,7 @@ function accept_m()
    mem.alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
    mem.stage = 1 -- Keeps track of the mission stage
    mem.nextsys = lmisn.getNextSystem(system.cur(), misssys[mem.stage]) -- This variable holds the system the player is supposed to jump to NEXT.
+   -- Will always be the same as rebinasys, right ?
    mem.seirsys = system.cur() -- Remember where the Seiryuu is.
    mem.origin = system.cur() -- The place where the AI ships spawn from.
    mem.chattered = false
@@ -206,17 +207,24 @@ function takeoff()
    end
 end
 
+local function spawn_seiryuu(ready)
+   local where=rebinasys:waypoints("shadowvigil_seiryuu")
+
+   seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), where, _("Seiryuu"), {ai="trader"} )
+   seiryuu:setInvincible(true)
+   if ready then
+      seiryuu:setActiveBoard(true)
+      seiryuu:setHilight(true)
+      seiryuu:setVisplayer(true)
+      seiryuu:control(true)
+      hook.pilot(seiryuu, "board", "board")
+   end
+end
+
 -- Function hooked to jumpin AND takeoff. Handles events that should occur in either case.
 function enter()
    if mem.stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
-      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
-      seiryuu:control(true)
-      seiryuu:setActiveBoard(true)
-      seiryuu:setInvincible(true)
-      seiryuu:setHilight(true)
-      seiryuu:setVisplayer(true)
-      hook.pilot(seiryuu, "board", "board")
-
+      spawn_seiryuu(true)
    elseif system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
       -- case enter system where escorts wait
       escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
@@ -234,15 +242,7 @@ function enter()
 
    elseif system.cur()==mem.seirsys then -- not escorting.
       -- case enter system where Seiryuu is
-      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
-      seiryuu:setInvincible(true)
-      if mem.missend then
-         seiryuu:setActiveBoard(true)
-         seiryuu:setHilight(true)
-         seiryuu:setVisplayer(true)
-         seiryuu:control()
-         hook.pilot(seiryuu, "board", "board")
-      end
+      spawn_seiryuu(mem.missend)
    end
 end
 
