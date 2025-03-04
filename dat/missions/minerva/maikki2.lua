@@ -70,7 +70,7 @@ end
 local eccpnt = "Strangelove Lab"
 local eccdiff = "strangelove"
 local eccsys = system.get( "Westhaven" )
-local eccpos = spob.get(eccpnt):pos() -- Should coincide with "Strangelove Lab"
+local eccpos = spob.get(eccpnt):pos() -- Coincides with "Strangelove Lab"
 
 -- Mission states:
 --  nil: mission not yet accepted

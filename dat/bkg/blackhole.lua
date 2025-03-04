@@ -18,6 +18,7 @@ function background ()
    local sysname = system.cur():nameRaw()
    prng:setSeed( sysname )
 
+   -- Where does that come from ???
    local off = system.cur():pos() - vec2.new( -765, -490 )
    local _m, a = off:polar()
    local scale
