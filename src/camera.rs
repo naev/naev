@@ -29,6 +29,7 @@ pub struct Camera {
 pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(|| {
     Mutex::new(Camera {
         zoom: 1.0,
+        zoom_speed: unsafe { naevc::conf.zoom_speed },
         ..Default::default()
     })
 });
