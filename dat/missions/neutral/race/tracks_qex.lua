@@ -113,33 +113,33 @@ return {
       track = {
          {
             wp["track_tour_1"], -- start near Qex IV
-            vec2.new( -1e3,  3e3 ),
-            vec2.new(  1e3, -1e3 ),
+            vec2.new( -1e3,  3e3 ), -- offset
+            vec2.new(  1e3, -1e3 ), -- offset
             wp["track_tour_2"],
          }, {
             wp["track_tour_2"],
-            vec2.new( -1e3,  1e3 ),
-            vec2.new(  2e3,    0 ),
+            vec2.new( -1e3,  1e3 ), -- offset
+            vec2.new(  2e3,    0 ), -- offset
             wp["track_tour_3"], -- passes by Qex V
          }, {
             wp["track_tour_3"],
-            vec2.new( -6e3,    0 ),
-            vec2.new(  1e3,  1e3 ),
+            vec2.new( -6e3,    0 ), -- offset
+            vec2.new(  1e3,  1e3 ), -- offset
             wp["track_tour_4"], -- circle Qex II
          }, {
             wp["track_tour_4"],
-            vec2.new( -1e3, -1e3 ),
-            vec2.new( -1e3,  1e3 ),
+            vec2.new( -1e3, -1e3 ), -- offset
+            vec2.new( -1e3,  1e3 ), -- offset
             wp["track_tour_5"],
          }, {
             wp["track_tour_5"],
-            vec2.new(  1e3, -1e3 ),
-            vec2.new(    0,  2e3 ),
+            vec2.new(  1e3, -1e3 ), -- offset
+            vec2.new(    0,  2e3 ), -- offset
             wp["track_tour_6"], -- Through asteroid field
          }, {
             wp["track_tour_6"],
-            vec2.new(    0, -4e3 ),
-            vec2.new(  1e3, -3e3 ),
+            vec2.new(    0, -4e3 ), -- offset
+            vec2.new(  1e3, -3e3 ), -- offset
             wp["track_tour_1"],
          }
       },
