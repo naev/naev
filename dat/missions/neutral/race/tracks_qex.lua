@@ -1,7 +1,7 @@
 
 -- Peninsula and Smiling Man are in relative coordinates,
 -- but Kex tour is in absolute coordinates and therefore uses waypoints.
-wp=system.get("Qex"):waypoints()
+local wp=system.get("Qex"):waypoints()
 
 return {
    {
