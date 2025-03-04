@@ -62,19 +62,21 @@ function enter ()
       spawn_pirate( s, mainpos, pirboss )
    end
 
-   local pos1 = vec2.new( -8.5e3, 7e3 )
+   local wp=mainsys:waypoints()
+
+   local pos1 = wp["surano_pirate_1"]
    local boss1 = spawn_pirate( "Pirate Starbridge", pos1 )
    for k,s in ipairs{ "Pirate Admonisher", "Pirate Admonisher", "Pirate Ancestor", "Pirate Vendetta"} do
       spawn_pirate( s, pos1, boss1 )
    end
 
-   local pos2 = vec2.new( 7e3, 9e3 )
+   local pos2 = wp["surano_pirate_2"]
    local boss2 = spawn_pirate( "Pirate Rhino", pos2 )
    for k,s in ipairs{ "Pirate Phalanx", "Pirate Ancestor", "Pirate Ancestor", "Pirate Vendetta"} do
       spawn_pirate( s, pos2, boss2 )
    end
 
-   local pos3 = vec2.new( 2e3, -14e3 )
+   local pos3 = wp["surano_pirate_3"]
    local boss3 = spawn_pirate( "Pirate Starbridge", pos3 )
    for k,s in ipairs{ "Pirate Shark", "Pirate Shark", "Pirate Hyena", "Pirate Hyena", "Pirate Hyena", "Pirate Ancestor", "Pirate Vendetta" } do
       spawn_pirate( s, pos3, boss3 )

@@ -35,4 +35,9 @@
  <tags>
   <tag>thenebula</tag>
  </tags>
+ <waypoints>
+  <waypoint x="-8500" y="7000">surano_pirate_1</waypoint>
+  <waypoint x="7000" y="9000">surano_pirate_2</waypoint>
+  <waypoint x="2000" y="-14000">surano_pirate_3</waypoint>
+ </waypoints>
 </ssys>
