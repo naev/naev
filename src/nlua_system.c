@@ -1090,6 +1090,7 @@ static int systemL_waypoints( lua_State *L )
             return 1;
          }
       }
+      WARN( _( "Waypoint '%s' not found for system '%s'!" ), name, s->name );
       return 0;
    }
 
