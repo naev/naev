@@ -82,7 +82,7 @@ return {
       center = true,
       track = {
          {
-            control_1["ZR_02_01"],
+            control_2["ZR_02_01"],
             vec2.new( 3, -112 ),
             vec2.new( 117, -4 ),
             vec2.new( 945, 236 ),
