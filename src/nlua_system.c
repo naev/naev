@@ -866,7 +866,7 @@ static int systemL_isknown( lua_State *L )
  *    @luatparam System  s System to set known.
  *    @luatparam[opt=false] boolean b Whether or not to set as known.
  *    @luatparam[opt=false] boolean r Whether or not to iterate over the
- * system's spobs and jump points.
+ * system's spobs and jump points and set them as known too.
  * @luafunc setKnown
  */
 static int systemL_setknown( lua_State *L )

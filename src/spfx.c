@@ -780,7 +780,8 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
 {
    GLfloat rel_dt = dt / trail->spec->ttl;
    /* Remove outdated elements. */
-   while ( trail->iread < trail->iwrite && trail_front( trail ).t < rel_dt )
+   while ( trail->iread < trail->iwrite &&
+           trail_front( trail ).t < -TRAIL_UPDATE_DT )
       trail->iread++;
 
    /* Update the other trail point's properties. */
