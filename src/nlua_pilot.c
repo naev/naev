@@ -2845,13 +2845,13 @@ static int pilotL_speed_max( lua_State *L )
  * @brief Gets the turn of a pilot.
  *
  *    @luatparam Pilot p Pilot to get turn of.
- *    @luatreturn number The pilot's current turn (in degrees per second).
+ *    @luatreturn number The pilot's current turn (in radians per second).
  * @luafunc turn
  */
 static int pilotL_turn( lua_State *L )
 {
    const Pilot *p = luaL_validpilot( L, 1 );
-   lua_pushnumber( L, p->turn * 180. / M_PI ); /* TODO use radians. */
+   lua_pushnumber( L, p->turn );
    return 1;
 }
 
