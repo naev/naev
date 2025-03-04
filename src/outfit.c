@@ -935,7 +935,7 @@ double outfit_width( const Outfit *o )
 }
 const glColour *outfit_colour( const Outfit *o )
 {
-   if ( outfit_isBolt( o ) )
+   if ( outfit_isBeam( o ) )
       return &o->u.bem.colour;
    return NULL;
 }
