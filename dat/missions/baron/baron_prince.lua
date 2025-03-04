@@ -386,12 +386,12 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.add("Proteron Gauss", "Independent", vec2.add(spob.get("Ulios"):pos(),-400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add("Proteron Gauss", "Independent", spob.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(vec2.add(spob.get("Ulios"):pos(), 500, -500), false, false)
+      pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
       mem.idlehook = hook.pilot(pinnacle, "idle", "idle")
       mem.hhail = hook.pilot(pinnacle, "hail", "hail")
    elseif mem.artifactA ~= nil or mem.artifactB ~= nil or mem.artifactC ~= nil or mem.artifactReal ~= nil then
@@ -418,10 +418,10 @@ function enter()
 end
 
 function idle()
-   pinnacle:moveto(vec2.add(spob.get("Ulios"):pos() , 500,  500), false)
-   pinnacle:moveto(vec2.add(spob.get("Ulios"):pos() , -500,  500), false)
-   pinnacle:moveto(vec2.add(spob.get("Ulios"):pos() ,-500, -500), false)
-   pinnacle:moveto(vec2.add(spob.get("Ulios"):pos() , 500, -500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new( 500,  500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new(-500,  500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new(-500, -500), false)
+   pinnacle:moveto(spob.get("Ulios"):pos() + vec2.new( 500, -500), false)
 end
 
 function hail()

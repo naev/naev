@@ -276,14 +276,15 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
       local planetpos = pnt:pos()
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos , 200,   0), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos , 130, 130), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos ,   0, 200), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos ,-130, 130), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos ,-200,   0), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos ,-130,-130), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos ,   0,-200), nil, {ai="empire_idle"} )
-      pilot.add( "Empire Pacifier", "Empire", vec2.add(planetpos , 130,-130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(200,0), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,200), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-200,0), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,-130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,-200), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,-130), nil, {ai="empire_idle"} )
+
    end
 
    -- Handle the Seiryuu, the last stop on this mission

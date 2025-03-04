@@ -224,7 +224,7 @@ function jumpin ()
    local offset_ranges = { { -2500, -1500 }, { 1500, 2500 } }
    local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
    local yrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
-   pos = vec2.add ( pos , rnd.rnd( xrange[1], xrange[2] ), rnd.rnd( yrange[1], yrange[2] ) )
+   pos = pos + vec2.new( rnd.rnd( xrange[1], xrange[2] ), rnd.rnd( yrange[1], yrange[2] ) )
    spawn_target( pos )
 end
 
