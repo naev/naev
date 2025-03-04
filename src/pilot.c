@@ -2672,7 +2672,7 @@ void pilot_update( Pilot *pilot, double dt )
 
       /* Engine glow decay. */
       if ( pilot->engine_glow > 0. ) {
-         pilot->engine_glow -= pilot->speed / pilot->accel * dt;
+         pilot->engine_glow -= MAX( 0.5, pilot->accel / pilot->speed ) * dt;
          if ( pilot->engine_glow < 0. )
             pilot->engine_glow = 0.;
       }
@@ -2748,11 +2748,11 @@ void pilot_update( Pilot *pilot, double dt )
    /* Set engine glow. */
    if ( pilot->solid.accel > 0. ) {
       /*pilot->engine_glow += pilot->accel / pilot->speed * dt;*/
-      pilot->engine_glow += pilot->speed / pilot->accel * dt;
+      pilot->engine_glow += pilot->accel / pilot->speed * dt;
       if ( pilot->engine_glow > 1. )
          pilot->engine_glow = 1.;
    } else if ( pilot->engine_glow > 0. ) {
-      pilot->engine_glow -= pilot->speed / pilot->accel * dt;
+      pilot->engine_glow -= MAX( 0.5, pilot->accel / pilot->speed ) * dt;
       if ( pilot->engine_glow < 0. )
          pilot->engine_glow = 0.;
    }

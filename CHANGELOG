@@ -20,11 +20,15 @@
       * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
       * Mission and Event NPC's priority default to the priority of the parent
+      * Local maps can have a range parameter now
+      * Intrinsic outfits for ships are defined in <intrinsics> instead of <slots> now
+      * Systems can have waypoints that are accessible from missions
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
       * Fixed adding commodities to space objects via tech groups
+      * Engine glow decay is less ridiculous on ships with really weird acceleration / speed ratios
       * Only try to load missions and events with file names that end in .lua
       * Action speed can no longer be negative and disables space worthiness
       * Don't show OSD frame when not visible

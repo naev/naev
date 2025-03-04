@@ -267,6 +267,19 @@ int dsys_saveSystem( StarSystem *sys )
       xmlw_endElem( writer ); /* "stats" */
    }
 
+   if ( array_size( sys->waypoints ) > 0 ) {
+      xmlw_startElem( writer, "waypoints" );
+      for ( int i = 0; i < array_size( sys->waypoints ); i++ ) {
+         const Waypoint *wp = &sys->waypoints[i];
+         xmlw_startElem( writer, "waypoint" );
+         xmlw_attr( writer, "x", "%f", wp->pos.x );
+         xmlw_attr( writer, "y", "%f", wp->pos.y );
+         xmlw_str( writer, "%s", wp->name );
+         xmlw_endElem( writer ); /* "waypoint" */
+      }
+      xmlw_endElem( writer ); /* "waypoints" */
+   }
+
    if ( array_size( sys->tags ) > 0 ) {
       xmlw_startElem( writer, "tags" );
       for ( int i = 0; i < array_size( sys->tags ); i++ )

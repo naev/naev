@@ -886,6 +886,12 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
    slot->slot.size = base_size;
    slot->slot.type = type;
 
+   /* Make sure default outfit fits slot. */
+   if ( ( slot->data != NULL ) && !outfit_fitsSlot( slot->data, &slot->slot ) )
+      WARN( _( "Ship '%s' has default outfit '%s' which does not fit in the "
+               "slot it is equipped by default." ),
+            temp->name, slot->data->name );
+
    /* Required slots need a default outfit. */
    if ( slot->required && ( slot->data == NULL ) )
       WARN( _( "Ship '%s' has required slot without a default outfit." ),
@@ -1225,6 +1231,11 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
                ship_parseSlot( temp, &array_grow( &temp->outfit_weapon ),
                                OUTFIT_SLOT_WEAPON, cur );
             else if ( xml_isNode( cur, "intrinsic" ) ) {
+               /* Deprecated remove in 0.14.0 */
+               WARN(
+                  _( "Ship '%s' using deprecated api for intrinsic outfits. "
+                     "Please define them in <intrinsics> instead of <slots>." ),
+                  temp->name );
                const Outfit *o = outfit_get( xml_get( cur ) );
                if ( o == NULL ) {
                   WARN( _( "Ship '%s' has unknown intrinsic outfit '%s'" ),
@@ -1243,6 +1254,27 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          array_shrink( &temp->outfit_utility );
          array_shrink( &temp->outfit_weapon );
          continue;
+      }
+      if ( xml_isNode( node, "intrinsics" ) ) {
+         /* Have to reset in case of inheriting ship. */
+         array_free( temp->outfit_intrinsic );
+         temp->outfit_intrinsic = (Outfit const **)array_create( Outfit * );
+
+         xmlNodePtr cur = node->children;
+         do {
+            xml_onlyNodes( cur );
+            if ( xml_isNode( cur, "intrinsic" ) ) {
+               const Outfit *o = outfit_get( xml_get( cur ) );
+               if ( o == NULL ) {
+                  WARN( _( "Ship '%s' has unknown intrinsic outfit '%s'" ),
+                        temp->name, xml_get( cur ) );
+                  continue;
+               }
+               array_push_back( &temp->outfit_intrinsic, o );
+            } else
+               WARN( _( "Ship '%s' has unknown intrinsic node '%s'." ),
+                     temp->name, cur->name );
+         } while ( xml_nextNode( cur ) );
       }
 
       /* Parse ship stats. */

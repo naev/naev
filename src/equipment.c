@@ -1333,6 +1333,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
       int           ret;
       const Outfit *o = slot->outfit;
 
+      /* Must not be locked. */
+      if ( slot->sslot->locked )
+         return 0;
+
       /* Must be able to remove. */
       if ( pilot_canEquip( eq_wgt.selected->p, slot, NULL ) != NULL )
          return 0;

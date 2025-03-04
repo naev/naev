@@ -3172,37 +3172,75 @@ int map_isUseless( const Outfit *map )
 }
 
 /**
+ * @brief Applies a local map or checks to see if it can be applied.
+ */
+static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
+                             int apply )
+{
+   double detect, mod;
+   int    ret = 0;
+
+   if ( ( sys == NULL ) || ( range < 0 ) )
+      return 0;
+
+   /* Set system as known. */
+   sys_setFlag( sys, SYSTEM_KNOWN );
+
+   mod = 1. / ( 1. + cur_system->interference / 100. );
+
+   detect = lmap->u.lmap.jump_detect;
+   for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
+      JumpPoint *jp = &sys->jumps[i];
+      if ( jp_isFlag( jp, JP_EXITONLY ) || jp_isFlag( jp, JP_HIDDEN ) )
+         continue;
+
+      /* Early recursive application, will apply multiple times to the same
+       * system, but oh well. */
+      ret |= localmap_docheck( lmap, jp->target, range - 1, apply );
+      if ( !apply && ret )
+         return ret;
+
+      /* More checks. */
+      if ( mod * jp->hide > detect )
+         continue;
+      if ( jp_isKnown( jp ) )
+         continue;
+
+      if ( apply ) {
+         ret = 1;
+         jp_setFlag( jp, JP_KNOWN );
+      } else
+         return 1;
+   }
+
+   detect = lmap->u.lmap.spob_detect;
+   for ( int i = 0; i < array_size( sys->spobs ); i++ ) {
+      Spob *p = sys->spobs[i];
+      if ( !spob_hasSystem( p ) )
+         continue;
+      if ( mod * p->hide > detect )
+         continue;
+      if ( spob_isKnown( p ) )
+         continue;
+
+      if ( apply ) {
+         ret = 1;
+         spob_setKnown( p );
+      } else
+         return 1;
+   }
+
+   return ret;
+}
+
+/**
  * @brief Maps a local map.
  */
 int localmap_map( const Outfit *lmap )
 {
-   double detect, mod;
-
-   if ( cur_system == NULL )
-      return 0;
-
-   mod = pow2( 200. / ( cur_system->interference + 200. ) );
-
-   detect = lmap->u.lmap.jump_detect;
-   for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
-      JumpPoint *jp = &cur_system->jumps[i];
-      if ( jp_isFlag( jp, JP_EXITONLY ) || jp_isFlag( jp, JP_HIDDEN ) )
-         continue;
-      if ( mod * jp->hide <= detect )
-         jp_setFlag( jp, JP_KNOWN );
-   }
-
-   detect = lmap->u.lmap.spob_detect;
-   for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
-      Spob *p = cur_system->spobs[i];
-      if ( !spob_hasSystem( p ) )
-         continue;
-      if ( mod * p->hide <= detect )
-         spob_setKnown( p );
-   }
-
+   int ret = localmap_docheck( lmap, cur_system, lmap->u.lmap.range, 1 );
    ovr_refresh();
-   return 0;
+   return ret;
 }
 
 /**
@@ -3211,29 +3249,7 @@ int localmap_map( const Outfit *lmap )
  */
 int localmap_isUseless( const Outfit *lmap )
 {
-   double detect, mod;
-
-   if ( cur_system == NULL )
-      return 1;
-
-   mod = pow2( 200. / ( cur_system->interference + 200. ) );
-
-   detect = lmap->u.lmap.jump_detect;
-   for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
-      const JumpPoint *jp = &cur_system->jumps[i];
-      if ( jp_isFlag( jp, JP_EXITONLY ) || jp_isFlag( jp, JP_HIDDEN ) )
-         continue;
-      if ( ( mod * jp->hide <= detect ) && !jp_isKnown( jp ) )
-         return 0;
-   }
-
-   detect = lmap->u.lmap.spob_detect;
-   for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
-      const Spob *p = cur_system->spobs[i];
-      if ( ( mod * p->hide <= detect ) && !spob_isKnown( p ) )
-         return 0;
-   }
-   return 1;
+   return !localmap_docheck( lmap, cur_system, lmap->u.lmap.range, 0 );
 }
 
 /**

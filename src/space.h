@@ -292,6 +292,14 @@ typedef struct MapShader_ {
 } MapShader;
 
 /**
+ * @brief A system waypoint, useful for missions.
+ */
+typedef struct Waypoint {
+   char *name; /**< Name of the waypoint. */
+   vec2  pos;  /**< Position of the waypoint. */
+} Waypoint;
+
+/**
  * @brief Represents a star system.
  *
  * The star system is the basic setting in Naev.
@@ -357,6 +365,7 @@ struct StarSystem_ {
    CommodityPrice *averagePrice;
 
    /* Misc. */
+   Waypoint     *waypoints;   /**< Star system waypoints. */
    char        **tags;        /**< Star system tags. */
    unsigned int  flags;       /**< flags for system properties */
    ShipStatList *stats;       /**< System stats. */

@@ -48,8 +48,10 @@
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
-  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
+ <intrinsics>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
+ </intrinsics>
  <stats>
   <speed_mod>-10</speed_mod>
   <shield_mod>20</shield_mod>

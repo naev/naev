@@ -423,7 +423,7 @@ end
 -- For approaching a target with velocity, and staying at a radius distance
 local function autonav_approach_vel( pos, vel, radius )
    local pp = player.pilot()
-   local turn = math.rad(pp:turn()) -- TODO probably change the code
+   local turn = pp:turn() -- TODO probably change the code
 
    local rvel = vel - pp:vel()
    local timeFactor = math.pi/turn + rvel:mod() / pp:accel() / 2
@@ -517,7 +517,7 @@ local function autonav_instant_jump_final_approach ()
    -- Estimate the turning time and the running distance.
    local jmpout_dir = -jmp:angle()
    local diff_dir = ((pp:dir() - jmpout_dir) / (2.0 * math.pi) + 0.5) % 1.0 - 0.5
-   local turn_time = math.abs(diff_dir) * 360 / pp:turn()
+   local turn_time = math.abs(diff_dir) / pp:turn()
    local turn_dist = turn_time * vec2.dot( ref_vec, pp_vel )
 
    -- The distance to the position where player can jump out.

@@ -16,8 +16,8 @@
 
 --[[
    Assassinate a Dvaered Warlord and Za'lek General.
-
 --]]
+
 local minerva = require "common.minerva"
 local vn = require 'vn'
 local vni = require 'vnimage'
@@ -234,7 +234,7 @@ She shakes her head.
 end
 
 local helper_npc, helper_drone
-local meet_pos = vec2.new( -10700, 5500 )
+local meet_pos = vec2.new( -17500, 2500 )
 function enter ()
    -- Must be goal system
    if system.cur() ~= mainsys then
@@ -295,27 +295,21 @@ function start ()
 
    player.autonavReset( 3 )
 
-   -- Have the helper tal to the player
+   -- Have the helper talk to the player
    helper_npc:setHilight(false)
    helper_npc:comm( _("The targets have entered the system!"), true )
    misn.osdActive(2)
    mem.state = 1
 
-   local fct_player = faction.player()
+   -- Dynamic factions to not make everyone get mad at the player, they inherit the local standings though
    local fct_zlk = faction.get("Za'lek")
    local fct_dv = faction.get("Dvaered")
-   fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true} )
-   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true} )
-   if fct_player:areEnemies( fct_zlk ) then
-      fzlk:dynEnemy( fct_player )
-   end
-   if fct_player:areEnemies( fct_dv ) then
-      fdvd:dynEnemy( fct_player )
-   end
+   fzlk = faction.dynAdd( fct_zlk, "zlk_minerva", _("Za'lek"), {clear_allies=true, clear_enemies=true, player=csys:reputation(fct_zlk)} )
+   fdvd = faction.dynAdd( fct_dv, "dv_minerva", _("Dvaered"), {clear_allies=true, clear_enemies=true, player=csys:reputation(fct_dv)} )
 
-   -- General goes from Pultatis to Sollav
-   local zl_start = jump.get( csys, "Pultatis" )
-   local zl_target = jump.get( csys, "Sollav" )
+   -- General goes from Provectus Nova to Sollav
+   local zl_start = jump.get( csys, "Provectus Nova" )
+   local zl_target = jump.get( csys, "Fried" )
 
    general = pilot.add( "Za'lek Mephisto", fzlk, zl_start, fmt.f(_("General {zl}"),{zl=zlk_name}) )
    for k,s in ipairs{ "Za'lek Demon", "Za'lek Demon", "Za'lek Sting", "Za'lek Sting", "Za'lek Sting",

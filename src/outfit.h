@@ -333,6 +333,8 @@ typedef struct OutfitMapData_s OutfitMapData_t;
 typedef struct OutfitLocalMapData_ {
    double jump_detect; /**< Ability to detect jumps. */
    double spob_detect; /**< Ability to detect spobs. */
+   int range; /**< Distance at which applied. 0 only applies to current system.
+               */
 } OutfitLocalMapData;
 
 /**

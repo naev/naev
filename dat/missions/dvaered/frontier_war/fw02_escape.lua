@@ -48,7 +48,6 @@ local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-d
 escort_hailed = fw.escort_hailed -- common hooks
 
 -- TODO: add news comments about all this
--- TODO: check that no blockade has been forgotten
 
 local hamfr_desc = _("Hamfresser and his team are gathered at a table. The captain drinks from his favourite pink straw while incessantly scanning the room.")
 local hamfr_des2 = _("The captain sits alone at a distant table. He nervously chews his pink straw while waiting for your signal to infiltrate the hospital.")
@@ -66,7 +65,7 @@ local pripla, prisys = spob.getS("Bastion Center") -- Military base where the ca
 local zlkpla, zlksys = spob.getS("House Za'lek Central") -- Target delivery place of the captured person
 local intsys = system.get("Hargen") -- Where the action happens, should be between prisys and zlksys
 local dealsys = system.get("Van Maanen")
-local dealjump =  system.get("Surano")
+local dealjump = system.get("Surano")
 
 --[[
    Blockades are defined from intsys and should limit the player's
@@ -76,28 +75,53 @@ local dealjump =  system.get("Surano")
 --]]
 -- Za'lek Blocus
 local zlk_list = { -- Systems with patrols
-   system.get("Pultatis"),
-   system.get("Stone Table"),
+   system.get("Ruadan"),
+   system.get("Provectus Nova"),
+   system.get("Sollav"),
    system.get("Xavier"),
-   system.get("Straight Row")
 }
 local zlk_lisj = { -- Index refers to zlk_list
-   {system.get("Provectus Nova"), system.get("Limbo")}, -- from Pultatis
-   {system.get("Sollav")}, -- from Stone Table
+   {}, -- Special case : hypergate
+   {system.get("Goddard"), system.get("Limbo")}, -- from Provectus Nova
+   {system.get("Fried"), system.get("Limbo")}, -- from Sollav
    {system.get("Sheffield")}, -- from Xavier
-   {system.get("Nunavut")}, -- from Straight Row
 }
+-- Not Blockaded :
+--  - Nunavut -> Unicorn (hidden)
+--  - Wormhole in NGC-13674 (unknown)
+--  - NGC-1098 -> Kretogg (unknown)
+--  - Ganth -> Attaria (the flying clown's trap)
+
 -- Empire Blocus
 local emp_list = {
+   system.get("Gamma Polaris"),
    system.get("Majesteka"),
    system.get("Tepdania"),
    system.get("Van Maanen"),
+   system.get("Waterhole"),
+   system.get("Scorpius"),
+   system.get("Hakoi"),
+   system.get("Tepvin"),
+   system.get("Arcturus"),
+   system.get("Wolf"),
 }
 local emp_lisj = {
+   {}, -- Special case : hypergate
    {system.get("Hubfar")}, -- From Majesteka
    {system.get("Ianella")}, -- From Tepdania
    {system.get("Surano"),system.get("Kruger")}, -- From Van Maanen
+   {system.get("Goddard")}, -- From Water Hole
+   {system.get("Kruger's Pocket")}, -- From Scorpius
+   {system.get("Ross")}, -- From Hakoi
+   {system.get("Tau Ceti"),system.get("Santoros")}, -- From Tepvin
+   {system.get("Holly")}, -- From Arcturus
+   {system.get("Chloe")}, -- From Wolf
 }
+-- Not Blockaded :
+--  - Wormhole in NGC-4087 (unknown)
+--  - Pas -> Effetey (hidden)
+--  - Uhriabi -> Qorel (hidden)
+--  - Enegoz -> Qorel (hidden)
 
 function create()
    if spob.cur() == hampla then
@@ -211,13 +235,19 @@ function land()
    When you tell him the sum you paid, Major Tam squeaks. "Whawhawhat? {price} for a fake transponder! That is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll refund you. We will need extra funding by the Headquarters soon, I am afraid. By the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {price=fmt.credits(fw.pirate_price), credits=fmt.credits(fw.credits_02)}))
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for dubious reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation, that forced you to buy a fake transponder at an outrageous price.") )
-      player.pay(fw.pirate_price)
-      var.push("dv_pirate_debt", true)
+         player.pay(fw.pirate_price)
+         var.push("dv_pirate_debt", true)
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
-         tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. I guess it must have been very hard, and risky, to skirt the Imperial blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
+         if mem.stage==5 then -- Unforeseen solution, Captain Hewhew met.
+            tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. I guess it must have been very hard, and risky, to skirt the Imperial blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
+         else -- Unforeseen solution, Captain Hewhew NOT even met.
+            tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major the problems you encountered. "I guess it must have been very hard, and risky, to skirt the blockade, congratulations! Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
+  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
+         end
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for obscure reasons. This executive is likely to help House Dvaered from a diplomatic angle. Many unexpected events happened during this operation, but you managed to survive somehow.") )
       end
+
       player.pay(fw.credits_02)
 
       -- Reset the zlk standing.
@@ -368,11 +398,21 @@ function enter()
          if mem.firstBloc then
             scanHooks = {}
             mem.jpoutHook = hook.jumpout("rmScanHooks")
+            -- In the case the player successfully lands or uses an hypergate.
+            -- Taking off is already managed by the enter hook.
+            mem.landHook = hook.land("rmScanHooks")
          end
          for i, j in ipairs(zlk_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
-            local pos = jp:pos()
-            spawnZlkSquadron( pos, (mem.stage < 8) )
+
+            spawnZlkSquadron( jp:pos() , (mem.stage < 8) )
+         end
+         if system.cur()==system.get("Ruadan") then
+            local spo=spob.get("Hypergate Ruadan")
+
+            if spo and spo:tags("active") then
+               spawnZlkSquadron( spo:pos() , (mem.stage < 8) )
+            end
          end
       end
 
@@ -393,8 +433,14 @@ function enter()
                spawnEmpSquadron( pos, (mem.stage < 8) )
             end
          end
-      end
+         if system.cur()==system.get("Gamma Polaris") then
+            local spo=spob.get("Hypergate Gamma Polaris")
 
+            if spo and spo:tags("active") then
+               spawnEmpSquadron( spo:pos() , (mem.stage < 8) )
+            end
+         end
+      end
    end
 
    mem.lastSys = system.cur()
@@ -487,12 +533,17 @@ function weNeed2land()
    mem.stage = 3
    tk.msg(_("We are in trouble"), _([[When you finally jump out, Hamfresser reports: "We hit an unexpected situation back there. After we destroyed the androids and got to the jail cell, we saw that there were three other prisoners along with the target, and far more human guards than expected. They blew up our first assault bot, and we had to take them down with the paralysers, but one of the prisoners grabbed a weapon and, for some reason, started to fire on us. Fortunately for me, he just pierced my lung. That is a replaceable part.
    "Then, Tronk paralysed all the prisoners, and we identified and recovered the target. That's why the guy is blue, actually. But in his hurry, Tronk used the extra-strength dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a special medical device to save him. So at our next stop, I'm afraid we will have to steal the device at the spaceport's hospital. It really annoys me as that's the kind of operation that can get ugly very quickly, especially since we're still wanted by the Za'leks, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
-   "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
-   mem.timelimit = time.get() + time.new(0,3,0)
+   "If I may, I'd advise you to land somewhere within a quarter of a period, otherwise the VIP is likely to die. Choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship in case we need to escape quickly."]]))
+   -- Note: The most probable system is Pultatis, where the only landable planet has shipyard and outfitter.
+   -- In this case, the final advice is useless. Is it worth managing this case ?
+
+   -- 2500s is easy to do with anything smaller or like a corvette but short enough to feel pressing.
+   mem.timelimit = time.get() + time.new(0,0,2500)
    misn.osdCreate(_("Dvaered Escape"), {
       fmt.f(_("Land anywhere to let Hamfresser steal a medical device. Time left: {time}"), {time=(mem.timelimit - time.get())}),
    })
-   mem.datehook = hook.date(time.new(0, 0, 100), "tick")
+   -- Increased tick frequency for dramatic effect.
+   mem.datehook = hook.date(time.new(0, 0, 20), "tick")
 end
 
 function tick()
@@ -622,6 +673,10 @@ function spawnStrafer()
    strafer:control(true)
    strafer:follow( player.pilot() )
    strafer:setFriendly()
+   -- Why do some ship still attack him ?
+   -- Don't know. Workaround:
+   strafer:setInvincible()
+
    camera.set( strafer, true )
    mem.prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end
@@ -658,9 +713,17 @@ end
 
 -- Remove scan hooks
 function rmScanHooks()
+   if mem.jpoutHook then
+      hook.rm(mem.jpoutHook)
+      mem.jpoutHook=nil
+   end
+   if mem.landHook then
+      hook.rm(mem.landHook)
+      mem.landHook=nil
+   end
    rmScanHooksRaw()
-   hook.rm(mem.jpoutHook)
 end
+
 function rmScanHooksRaw()
    if scanHooks ~= nil then
       for i, j in ipairs(scanHooks) do

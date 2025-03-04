@@ -35,8 +35,10 @@
   <weapon prop="builtin" size="Medium" x="10" y="2" h="0">Astral Cannon</weapon>
   <utility size="Medium"/>
   <utility size="Medium"/>
-  <intrinsic>Internal Flow Amplifier</intrinsic>
  </slots>
+ <intrinsics>
+  <intrinsic>Internal Flow Amplifier</intrinsic>
+ </intrinsics>
  <stats>
   <stress_dissipation>10000</stress_dissipation>
  </stats>
