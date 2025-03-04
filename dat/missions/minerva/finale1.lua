@@ -243,7 +243,7 @@ function enter ()
       pilot.toggleSpawn(false)
       misn.osdActive( 2 )
 
-      local pos = destsys :waypoints("finale1")
+      local pos = destsys:waypoints("finale1")
 
       pinkdemon = minerva.pink_demon( pos, {stealth=true} )
       pinkdemon:setFaction( minerva.fct_wildones() ) -- Non-hostile faction

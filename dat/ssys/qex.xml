@@ -44,4 +44,29 @@
    <pos x="-1073.807776" y="-1189.175553"/>
   </exclusion>
  </asteroids>
+ <waypoints>
+  <waypoint x="-1000" y="3000">track_tour_1_1</waypoint>
+  <waypoint x="1000" y="-1000">track_tour_1_2</waypoint>
+  <waypoint x="2000" y="2000">track_tour_1_3</waypoint>
+
+  <waypoint x="-1000" y="1000">track_tour_2_1</waypoint>
+  <waypoint x="2000" y="0">track_tour_2_2</waypoint>
+  <waypoint x="-1000" y="5000">track_tour_2_3</waypoint>
+
+  <waypoint x="-6000" y="0">track_tour_3_1</waypoint>
+  <waypoint x="1000" y="1000">track_tour_3_2</waypoint>
+  <waypoint x="-8000" y="2000">track_tour_3_3</waypoint>
+
+  <waypoint x="-1000" y="-1000">track_tour_4_1</waypoint>
+  <waypoint x="-1000" y="1000">track_tour_4_2</waypoint>
+  <waypoint x="-8000" y="4000">track_tour_4_3</waypoint>
+
+  <waypoint x="1000" y="-1000">track_tour_5_1</waypoint>
+  <waypoint x="0" y="2000">track_tour_5_2</waypoint>
+  <waypoint x="-1000" y="2000">track_tour_5_3</waypoint>
+
+  <waypoint x="0" y="-4000">track_tour_6_1</waypoint>
+  <waypoint x="1000" y="-3000">track_tour_6_2</waypoint>
+  <waypoint x="5000" y="2000">track_tour_6_3</waypoint>
+ </waypoints>
 </ssys>
