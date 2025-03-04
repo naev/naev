@@ -1263,6 +1263,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
                WARN( _( "Ship '%s' has unknown intrinsic node '%s'." ),
                      temp->name, cur->name );
          } while ( xml_nextNode( cur ) );
+         continue;
       }
 
       /* Parse ship stats. */
