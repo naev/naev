@@ -187,6 +187,7 @@ impl TextureData {
         let internalformat = TextureFormat::auto(has_alpha, is_srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
+            gl.object_label(glow::TEXTURE, texture.0.into(), name);
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
             let fmt = match has_alpha {
                 true => glow::RGBA,
@@ -204,6 +205,7 @@ impl TextureData {
                 gldata,
             );
             gl.bind_texture(glow::TEXTURE_2D, None);
+            check_for_gl_error!(gl, "TextureData::from_image");
         }
 
         Ok(TextureData {
