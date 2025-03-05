@@ -48,6 +48,7 @@ impl Shader {
                 .map_err(|e| anyhow::anyhow!(e))?
         };
         unsafe {
+            gl.object_label(glow::SHADER, shader.0.into(), Some(name));
             gl.shader_source(shader, source);
             gl.compile_shader(shader);
         }
@@ -64,11 +65,13 @@ impl Shader {
 
     fn link(
         gl: &glow::Context,
+        name: &str,
         vertshader: glow::Shader,
         fragshader: glow::Shader,
     ) -> Result<glow::Program> {
         let program = unsafe { gl.create_program().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
+            gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
             gl.attach_shader(program, vertshader);
             gl.attach_shader(program, fragshader);
             gl.link_program(program);
@@ -237,11 +240,11 @@ impl ShaderBuilder {
 
         let vertshader = Shader::compile(gl, ShaderType::Vertex, &vertname, &vertdata)?;
         let fragshader = Shader::compile(gl, ShaderType::Fragment, &fragname, &fragdata)?;
-        let program = Shader::link(gl, vertshader, fragshader)?;
         let name = match self.name {
             Some(name) => name,
-            None => String::from("UNKNOWN"),
+            None => format!("UNKNOWN({}-{})", &vertname, &fragname),
         };
+        let program = Shader::link(gl, &name, vertshader, fragshader)?;
 
         unsafe {
             gl.use_program(Some(program));

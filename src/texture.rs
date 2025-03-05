@@ -116,6 +116,7 @@ impl TextureData {
                 glow::PixelUnpackData::Slice(None),
             );
             gl.bind_texture(glow::TEXTURE_2D, None);
+            check_for_gl_error!(gl, "TextureData::new");
         }
 
         Ok(TextureData {
@@ -250,6 +251,9 @@ impl Texture {
         let ctx = CONTEXT.get().unwrap();
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
+        unsafe {
+            //gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
+        }
 
         // Copy necessaryparameters over
         for param in [
@@ -262,6 +266,9 @@ impl Texture {
                 let val = gl.get_sampler_parameter_i32(self.sampler, param);
                 gl.sampler_parameter_i32(sampler, param, val);
             }
+        }
+        unsafe {
+            check_for_gl_error!(gl, "Texture::try_clone");
         }
 
         Ok(Texture {
@@ -569,6 +576,7 @@ impl TextureBuilder {
             .to_texture_data(ctx, self.w, self.h, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
+            //gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MAG_FILTER, self.mag_filter.to_gl());
             if let Some(border) = &self.border_value {
