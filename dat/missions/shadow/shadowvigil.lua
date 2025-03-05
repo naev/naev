@@ -304,7 +304,7 @@ function jumpin()
          end
       elseif system.cur() == misssys[3] then -- case join up with diplomat
          local dip_point = misssys[3]:waypoints("shadowvigil_diplomat")
-         
+
          diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), dip_point, _("Imperial Diplomat") )
          hook.pilot(diplomat, "death", "diplomatDeath")
          hook.pilot(diplomat, "jump", "diplomatJump")
