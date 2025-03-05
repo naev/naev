@@ -50,6 +50,7 @@ local emp = require "common.empire"
 local misn_base, misn_base_sys = spob.getS("Omega Enclave")
 local misn_target_sys = system.get("Rockbed")
 local misn_flee_sys = system.get("Capricorn")
+local trinity_pos = misn_target_sys:waypoints("ec05_trinity")
 
 -- Non-persistent state
 local drone_reinforcements, paci, trinity
@@ -151,7 +152,7 @@ function enter ( from_sys )
          misn.osdActive(2)
 
          -- Position trinity on the other side of the player
-         trinity = pilot.add( "Empire Hawking", "Empire", vec2.new(-5000, 1500), _("ESS Trinity"), {ai="baddie"} )
+         trinity = pilot.add( "Empire Hawking", "Empire", trinity_pos, _("ESS Trinity"), {ai="baddie"} )
          trinity:setVisplayer()
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile

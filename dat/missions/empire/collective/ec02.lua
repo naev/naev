@@ -112,16 +112,17 @@ function takeoff()
     misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
+    local mts=misn_target_sys
 
-    swarm1 = fleet.add( 1, sml_swarm, "Collective", vec2.new(-11000, 4000), _("Collective Drone") )
+    swarm1 = fleet.add( 1, sml_swarm, "Collective",mts:waypoints("ec02_src1") , _("Collective Drone") )
     swarm1[4]:rename(_("Collective Heavy Drone"))
-    moveSwarm(swarm1, vec2.new(-8000, -7500))
-    swarm2 = fleet.add( 1, sml_swarm, "Collective", vec2.new(1700, 12000), _("Collective Drone") )
+    moveSwarm(swarm1, mts:waypoints("ec02_dst1"))
+    swarm2 = fleet.add( 1, sml_swarm, "Collective",mts:waypoints("ec02_src2") , _("Collective Drone") )
     swarm2[4]:rename(_("Collective Heavy Drone"))
-    moveSwarm(swarm2, vec2.new(7000, -5000))
-    swarm3 = fleet.add( 1, sml_swarm, "Collective", vec2.new(17000, 2500), _("Collective Drone") )
+    moveSwarm(swarm2, mts:waypoints("ec02_dst2"))
+    swarm3 = fleet.add( 1, sml_swarm, "Collective",mts:waypoints("ec02_src3") , _("Collective Drone") )
     swarm3[4]:rename(_("Collective Heavy Drone"))
-    moveSwarm(swarm3, vec2.new(-9500, 13000))
+    moveSwarm(swarm3,mts:waypoints("ec02_dst3") )
 
     local delay = 1.0
     hook.timer(delay, "cameraZoom", {targ = swarm1[1], speed = 5000})

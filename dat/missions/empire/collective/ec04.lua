@@ -77,16 +77,17 @@ function enter()
    local empire_flanking_fleet = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
 
    if system.cur() == misn_target_sys and mem.misn_stage == 0 then
+      local mts=misn_target_sys
       -- Case jumped in before landing
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local fleetpos1 = vec2.new(20500, 2300)
-      local fleetpos2 = vec2.new(20500, 1700)
-      local waypoint1 = vec2.new(7500, 9500)
-      local waypoint2 = vec2.new(7500, -5500)
-      local waypoint12 = vec2.new(1500, 3000)
-      local waypoint22 = vec2.new(1500, -500)
+      local fleetpos1 = misn_target_sys:waypoints("ec04_fleet1")
+      local fleetpos2 = misn_target_sys:waypoints("ec04_fleet2")
+      local waypoint1 = misn_target_sys:waypoints("ec04_wayp1")
+      local waypoint2 = misn_target_sys:waypoints("ec04_wayp2")
+      local waypoint12 = misn_target_sys:waypoints("ec04_wayp12")
+      local waypoint22 = misn_target_sys:waypoints("ec04_wayp22")
 
       fleet1 = fleet.add( 1,  empire_flanking_fleet, "Empire", fleetpos1, nil, {ai="empire_norun"} )
       fleet2 = fleet.add( 1,  empire_flanking_fleet, "Empire", fleetpos2, nil, {ai="empire_norun"} )
