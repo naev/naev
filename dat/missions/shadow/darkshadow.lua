@@ -208,7 +208,7 @@ function enter()
       pilot.toggleSpawn(false)
       player.landAllow(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
-      joepos=joreksys2:waypoints("darkshadow_joe")
+      local joepos=joreksys2:waypoints("darkshadow_joe")
       joe = pilot.add( "Vendetta", shadow.fct_fourwinds(), joepos, _("Four Winds Informant"), {ai="trader"} )
       joe:control()
       joe:setHilight(true)
@@ -273,7 +273,7 @@ function enter()
 end
 
 function spawnSquads(highlight)
-   wp=joreksys2:waypoints()
+   local wp=joreksys2:waypoints()
    -- Start positions for the leaders
    leaderstart = {
       wp["darkshadow_patrol1_start"],
