@@ -289,7 +289,7 @@ function enter()
 
    -- Handle the Seiryuu, the last stop on this mission
    if mem.shadowrun >= 2 and system.cur() == sys2 then
-      local mypos = sys2.waypoints("shadowrun_seiryuu")
+      local mypos = sys2:waypoints("shadowrun_seiryuu")
       seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), mypos , _("Seiryuu"), {ai="trader"} )
 
       seiryuu:setActiveBoard(true)
