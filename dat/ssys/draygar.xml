@@ -27,4 +27,7 @@
  <tags>
   <tag>tradelane</tag>
  </tags>
+ <waypoints>
+  <waypoint x="2000" y="4000">shadowvigil_meetpoint</waypoint>
+ </waypoints>
 </ssys>

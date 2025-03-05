@@ -21,6 +21,6 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="9000" y="3500" >kex2_bloc</waypoint>
+  <waypoint x="9000" y="3500">kex2_bloc</waypoint>
  </waypoints>
 </ssys>

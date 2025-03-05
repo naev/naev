@@ -227,7 +227,8 @@ function enter()
       spawn_seiryuu(true)
    elseif system.cur() == misssys[1] and mem.stage == 1 and mem.missend == false then
       -- case enter system where escorts wait
-      escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
+      local rend_point = misssys[1]:waypoints("shadowvigil_rend")
+      escorts = fleet.add( 3, "Lancelot", shadow.fct_fourwinds(), rend_point, _("Four Winds Escort"), {ai="baddie_norun"} )
       for i, j in ipairs(escorts) do
          if not mem.alive[i] then j:rm() end -- Dead escorts stay dead.
          if j:exists() then
@@ -236,7 +237,6 @@ function enter()
             hook.pilot(j, "death", "escortDeath")
          end
       end
-      local rend_point = vec2.new(0,0)
       mem.start_marker = system.markerAdd( rend_point, _("Rendezvous point") )
       mem.proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
 
@@ -303,7 +303,9 @@ function jumpin()
             end
          end
       elseif system.cur() == misssys[3] then -- case join up with diplomat
-         diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), vec2.new(0, 0), _("Imperial Diplomat") )
+         local dip_point = misssys[3]:waypoints("shadowvigil_diplomat")
+         
+         diplomat = pilot.add( "Gawain", shadow.fct_diplomatic(), dip_point, _("Imperial Diplomat") )
          hook.pilot(diplomat, "death", "diplomatDeath")
          hook.pilot(diplomat, "jump", "diplomatJump")
          diplomat:setSpeedLimit( 130 )
@@ -314,7 +316,7 @@ function jumpin()
          diplomat:setHilight(true)
          diplomat:setVisplayer()
          diplomat:setVisible() -- Hack to make ambushes more reliable.
-         mem.proxy = hook.timer(0.5, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
+         mem.proxy = hook.timer(0.5, "proximity", {location = dip_point, radius = 500, funcname = "escortNext"})
          for i, j in ipairs(escorts) do
             if j:exists() then
                j:follow(diplomat,true) -- Follow the diplomat.
@@ -329,14 +331,15 @@ function jumpin()
                j:follow(diplomat,true) -- Follow the diplomat.
             end
          end
-         dvaerplomat = pilot.add( "Dvaered Vigilance", "Dvaered", vec2.new(2000, 4000) )
+         local meetpoint = misssys[4]:waypoints("shadowvigil_meetpoint")
+         dvaerplomat = pilot.add( "Dvaered Vigilance", "Dvaered", meetpoint )
          dvaerplomat:control()
          dvaerplomat:setHilight(true)
          dvaerplomat:setVisplayer()
          dvaerplomat:setDir(math.pi)
          dvaerplomat:setFaction( shadow.fct_diplomatic() )
          diplomat:setInvincible(true)
-         diplomat:moveto(vec2.new(1850, 4000), true)
+         diplomat:moveto(meetpoint + vec2.new(-150, 0), true)
          mem.diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
       else -- case en route, handle escorts flying to the next system, possibly combat
          for i, j in ipairs(escorts) do
@@ -362,6 +365,7 @@ function jumpin()
                {"Pirate Ancestor", "Pirate Hyena", "Pirate Hyena"},
                {"Pirate Ancestor", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}
             }
+            -- should not be made system-dependent -> keep the absolute (0,0)
             ambush = fleet.add( 1,  ambush_ships[3-mem.jp2go], shadow.fct_pirates(), vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
             mem.kills = 0
             for i, j in ipairs(ambush) do
@@ -512,7 +516,7 @@ end
 -- As soon as the diplomat is at its destination, set up final cutscene.
 function diplomatIdle()
    local mypos = {} -- Relative positions to the Dvaered diplomat.
-   mypos[1] = vec2.new(0, 130)
+   mypos[1] = vec2.new(0, 130)   -- offsets
    mypos[2] = vec2.new(-85, -65)
    mypos[3] = vec2.new(85, -65)
 
