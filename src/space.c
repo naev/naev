@@ -3304,6 +3304,13 @@ static int system_parse( StarSystem *sys, const char *filename )
             if ( xml_isNode( cur, "waypoint" ) ) {
                const char *tmp = xml_get( cur );
                Waypoint    wp;
+               for ( int i = 0; i < array_size( sys->waypoints ); i++ ) {
+                  if ( strcmp( sys->waypoints[i].name, tmp ) == 0 ) {
+                     WARN( _( "System '%s' has duplicate waypoint '%s'!" ),
+                           sys->name, tmp );
+                     break;
+                  }
+               }
                wp.name = strdup( tmp );
                xmlr_attr_float( cur, "x", wp.pos.x );
                xmlr_attr_float( cur, "y", wp.pos.y );
