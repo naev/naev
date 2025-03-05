@@ -38,7 +38,7 @@ local misn_base = spob.get("Omega Enclave")
 local misn_target_sys1 = system.get("C-59")
 local misn_target_sys2 = system.get("C-28")
 local misn_final_sys = system.get("C-00")
-local fleetCpos = misn_target_sys:waypoints("ec06_starfire")
+local fleetCpos = misn_final_sys:waypoints("ec06_starfire")
 
 local droneC, fleetC, fleetE, refesc, refship -- Non-persistent state
 

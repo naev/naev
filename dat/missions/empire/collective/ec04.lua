@@ -77,7 +77,6 @@ function enter()
    local empire_flanking_fleet = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
 
    if system.cur() == misn_target_sys and mem.misn_stage == 0 then
-      local mts=misn_target_sys
       -- Case jumped in before landing
       pilot.clear()
       pilot.toggleSpawn(false)
