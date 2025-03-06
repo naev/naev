@@ -242,7 +242,7 @@ impl ShaderBuilder {
         let fragshader = Shader::compile(gl, ShaderType::Fragment, &fragname, &fragdata)?;
         let name = match self.name {
             Some(name) => name,
-            None => format!("UNKNOWN({}-{})", &vertname, &fragname),
+            None => format!("{}-{}", &vertname, &fragname),
         };
         let program = Shader::link(gl, &name, vertshader, fragshader)?;
 
