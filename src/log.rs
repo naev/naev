@@ -45,6 +45,7 @@ macro_rules! einfo {
 macro_rules! debug {
     ($($arg:tt)*) => {
         if naevc::config::DEBUG {
+            #[cfg(debug_assertions)]
             println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
     };

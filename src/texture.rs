@@ -204,6 +204,7 @@ impl TextureData {
                 glow::UNSIGNED_BYTE,
                 gldata,
             );
+            #[cfg(debug_assertions)]
             gl.object_label(glow::TEXTURE, texture.0.into(), name);
             gl.bind_texture(glow::TEXTURE_2D, None);
             check_for_gl_error!(gl, "TextureData::from_image");
@@ -266,6 +267,7 @@ impl Texture {
         }
         unsafe {
             // Has to be called after it is initialized with any call
+            #[cfg(debug_assertions)]
             gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
         }
         check_for_gl_error!(gl, "Texture::try_clone");
@@ -586,6 +588,7 @@ impl TextureBuilder {
             }
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_gl());
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_gl());
+            #[cfg(debug_assertions)]
             gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
         }
 
@@ -752,6 +755,7 @@ impl FramebufferBuilder {
                 Some(texture.texture.texture),
                 0,
             );
+            #[cfg(debug_assertions)]
             gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
         }
 

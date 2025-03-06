@@ -141,6 +141,7 @@ impl<'a> BufferBuilder<'a> {
         let usage = self.usage.to_gl();
         unsafe {
             gl.bind_buffer(target, Some(buffer));
+            #[cfg(debug_assertions)]
             gl.object_label(glow::BUFFER, buffer.0.into(), self.name);
             gl.buffer_data_u8_slice(target, self.data, usage);
             gl.bind_buffer(target, None);
@@ -245,6 +246,7 @@ impl<'a> VertexArrayBuilder<'a> {
         */
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));
+            #[cfg(debug_assertions)]
             gl.object_label(glow::VERTEX_ARRAY, vertex_array.0.into(), self.name);
             for (idx, buffer) in self.buffers.iter().enumerate() {
                 if buffer.size < 1 || buffer.size > 4 {

@@ -279,8 +279,9 @@ impl Context {
         }
         gl_attr.set_framebuffer_srgb_compatible(true);
         gl_attr.set_context_flags().forward_compatible().set();
-        // TODO reenable debug mode
-        // gl_attr.set_context_flags().debug().set();
+
+        #[cfg(debug_assertions)]
+        gl_attr.set_context_flags().debug().set();
 
         let (window, gl_context) = match Self::create_context(&sdlvid, &gl_attr, 4, 6) {
             Ok(v) => v,

@@ -48,9 +48,10 @@ impl Shader {
                 .map_err(|e| anyhow::anyhow!(e))?
         };
         unsafe {
-            gl.object_label(glow::SHADER, shader.0.into(), Some(name));
             gl.shader_source(shader, source);
             gl.compile_shader(shader);
+            #[cfg(debug_assertions)]
+            gl.object_label(glow::SHADER, shader.0.into(), Some(name));
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
             for (i, line) in source.lines().enumerate() {
@@ -71,12 +72,13 @@ impl Shader {
     ) -> Result<glow::Program> {
         let program = unsafe { gl.create_program().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
-            gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
             gl.attach_shader(program, vertshader);
             gl.attach_shader(program, fragshader);
             gl.link_program(program);
             gl.delete_shader(vertshader);
             gl.delete_shader(fragshader);
+            #[cfg(debug_assertions)]
+            gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
         }
         if unsafe { !gl.get_program_link_status(program) } {
             let slog = unsafe { gl.get_program_info_log(program) };
