@@ -326,7 +326,7 @@ impl Context {
                 }
                 // Notifications about putting stuff in GPU memory, which we want
                 gl.debug_message_control(
-                    glow::DEBUG_SOURCE_API,
+                    glow::DONT_CARE,
                     glow::DONT_CARE,
                     glow::DEBUG_SEVERITY_NOTIFICATION,
                     &[],
