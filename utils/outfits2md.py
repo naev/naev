@@ -14,7 +14,7 @@ def main(args):
       T=ET.parse(args[i]).getroot()
       for t in T.iter():
          try:
-            n=int(t.text)
+            n=float(t.text)
             L[i][t.tag]=t.text
             if t.tag not in done:
                done.add(t.tag)
