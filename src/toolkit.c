@@ -1628,6 +1628,7 @@ void toolkit_render( double dt )
    Window *top = toolkit_getActiveWindow();
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    if ( toolkit_needsRender ) {
       GLuint current_fbo    = gl_screen.current_fbo;
@@ -1666,6 +1667,7 @@ void toolkit_render( double dt )
       window_renderOverlay( top );
    }
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 

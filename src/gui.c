@@ -768,6 +768,7 @@ void gui_render( double dt )
       return;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /*
     * Countdown timers.
@@ -878,6 +879,7 @@ void gui_render( double dt )
    /* Render messages. */
    omsg_render( dt );
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 

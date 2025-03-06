@@ -755,6 +755,7 @@ void ovr_render( double dt )
       return;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /* Have to clear for text. */
    glClear( GL_DEPTH_BUFFER_BIT );
@@ -988,6 +989,7 @@ void ovr_render( double dt )
    /* Render the player. */
    gui_renderPlayer( res, 1 );
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 

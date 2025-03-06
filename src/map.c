@@ -3184,7 +3184,8 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
       return 0;
 
    /* Set system as known. */
-   sys_setFlag( sys, SYSTEM_KNOWN );
+   if ( apply )
+      sys_setFlag( sys, SYSTEM_KNOWN );
    mod = 1. / ( 1. + cur_system->interference / 100. );
 
    detect = lmap->u.lmap.jump_detect;
