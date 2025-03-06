@@ -1768,6 +1768,11 @@ void ships_resize( void )
    for ( int i = 0; i < SHIP_FBO; i++ ) {
       gl_fboCreate( &ship_fbo[i], &ship_tex[i], ship_fbos, ship_fbos );
       gl_fboAddDepth( ship_fbo[i], &ship_texd[i], ship_fbos, ship_fbos );
+
+      /* Names for debugging. */
+      char buf[STRMAX_SHORT];
+      snprintf( buf, sizeof( buf ), "Ship Framebuffer %d", i );
+      glObjectLabel( GL_FRAMEBUFFER, ship_fbo[i], strlen( buf ), buf );
    }
    gl_checkErr();
 }
