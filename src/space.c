@@ -3703,12 +3703,14 @@ void space_render( const double dt )
       return;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    if ( cur_system->nebu_density > 0. )
       nebu_render( dt );
    else
       background_render( dt );
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 
@@ -3723,6 +3725,7 @@ void space_renderOverlay( const double dt )
       return;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /* Render the debris. */
    asteroids_renderOverlay();
@@ -3734,6 +3737,7 @@ void space_renderOverlay( const double dt )
         !menu_isOpen( MENU_EDITORS ) )
       nebu_renderOverlay( dt );
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 
@@ -3747,6 +3751,7 @@ void spobs_render( void )
       return;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /* Render the jumps. */
    for ( int i = 0; i < array_size( cur_system->jumps ); i++ )
@@ -3762,6 +3767,7 @@ void spobs_render( void )
    /* Render gatherable stuff. */
    gatherable_render();
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 

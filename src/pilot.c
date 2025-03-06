@@ -4241,6 +4241,7 @@ void pilots_update( double dt )
 void pilots_render( void )
 {
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
@@ -4253,6 +4254,7 @@ void pilots_render( void )
          pilot_render( p );
    }
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 
@@ -4262,6 +4264,7 @@ void pilots_render( void )
 void pilots_renderOverlay( void )
 {
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
@@ -4274,6 +4277,7 @@ void pilots_renderOverlay( void )
          pilot_renderOverlay( p );
    }
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 

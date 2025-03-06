@@ -1179,6 +1179,7 @@ static void spfx_renderStack( SPFX *spfx_stack )
 void spfx_render( int layer, double dt )
 {
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStartID( layer );
 
    /* get the appropriate layer */
    switch ( layer ) {
@@ -1211,6 +1212,7 @@ void spfx_render( int layer, double dt )
       break;
    }
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 

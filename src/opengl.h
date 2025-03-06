@@ -117,8 +117,21 @@ GLenum gl_stringToBlendFactor( const char *s );
 void   gl_screenshot( const char *filename );
 void   gl_saveFboDepth( GLuint fbo, const char *filename );
 #ifdef DEBUGGING
+#define gl_debugGroupStart()                                                   \
+   glPushDebugGroup( GL_DEBUG_SOURCE_APPLICATION, 0, strlen( __func__ ),       \
+                     __func__ )
+#define gl_debugGroupStartID( id )                                             \
+   glPushDebugGroup( GL_DEBUG_SOURCE_APPLICATION, id, strlen( __func__ ),      \
+                     __func__ )
+#define gl_debugGroupEnd() glPopDebugGroup()
 #define gl_checkErr() gl_checkHandleError( __func__, __LINE__ )
 int gl_checkHandleError( const char *func, int line );
-#else                   /* DEBUGGING */
+#else /* DEBUGGING */
+#define gl_debugGroupStart()                                                   \
+   do {                                                                        \
+   } while ( 0 )
+#define gl_debugGroupEnd()                                                     \
+   do {                                                                        \
+   } while ( 0 )
 #define gl_checkErr() 0 /**< Hack to ignore errors when debugging. */
 #endif                  /* DEBUGGING */
