@@ -7,6 +7,7 @@ uniform float u_elapsed;
 in vec2 tex_coord;
 in vec2 tex_scale;
 out vec4 colour_out;
+in vec2 pos;
 
 void main(void)
 {
@@ -16,7 +17,7 @@ void main(void)
    float c = cos(e);
    float s = sin(e);
    mat2 R = mat2( c, -s, s, c );
-   vec4 onion = texture( u_img, (R*(uv/tex_scale-0.5)+0.5) );
+   vec4 onion = texture( u_img, (R*(pos-0.5)+0.5) );
    if (orig.a+onion.a <= 0.0)
       discard;
 
