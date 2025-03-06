@@ -217,6 +217,15 @@ impl TextureData {
             vmax: 1.,
         })
     }
+
+    fn generate_mipmap(&self, gl: &glow::Context) -> Result<()> {
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, Some(self.texture));
+            gl.generate_mipmap(glow::TEXTURE_2D);
+            gl.bind_texture(glow::TEXTURE_2D, None);
+        }
+        Ok(())
+    }
 }
 
 pub struct Texture {
@@ -235,6 +244,7 @@ pub struct Texture {
     pub texture: Arc<TextureData>,
     pub sampler: glow::Sampler,
     pub flipv: bool,
+    pub mipmaps: bool,
 }
 impl Drop for Texture {
     fn drop(&mut self) {
@@ -280,6 +290,7 @@ impl Texture {
             texture: self.texture.clone(),
             sampler,
             flipv: self.flipv,
+            mipmaps: self.mipmaps,
         })
     }
 
@@ -379,6 +390,7 @@ impl TextureSource {
         ctx: &context::Context,
         w: usize,
         h: usize,
+        mipmaps: bool,
         name: Option<&str>,
     ) -> Result<Arc<TextureData>> {
         if let TextureSource::TextureData(tex) = self {
@@ -396,19 +408,25 @@ impl TextureSource {
         }
 
         // Failed to find in cache, load a new
-        let tex = Arc::new(match self {
-            TextureSource::Path(path) => {
-                //let bytes = ndata::read(path.as_str())?;
-                //let img = image::load_from_memory(&bytes)?;
-                let rw = ndata::rwops(path.as_str()).map_err(|e| anyhow::anyhow!(e))?;
-                let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
-                let img = surface_to_image(sur)?;
-                TextureData::from_image(ctx, name, &img)?
+        let tex = Arc::new({
+            let inner = match self {
+                TextureSource::Path(path) => {
+                    //let bytes = ndata::read(path.as_str())?;
+                    //let img = image::load_from_memory(&bytes)?;
+                    let rw = ndata::rwops(path.as_str()).map_err(|e| anyhow::anyhow!(e))?;
+                    let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
+                    let img = surface_to_image(sur)?;
+                    TextureData::from_image(ctx, name, &img)?
+                }
+                TextureSource::Image(img) => TextureData::from_image(ctx, name, img)?,
+                TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
+                TextureSource::Empty(fmt) => TextureData::new(ctx, *fmt, w, h)?,
+                TextureSource::TextureData(tex) => unreachable!(),
+            };
+            if mipmaps {
+                inner.generate_mipmap(&ctx.gl)?;
             }
-            TextureSource::Image(img) => TextureData::from_image(ctx, name, img)?,
-            TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
-            TextureSource::Empty(fmt) => TextureData::new(ctx, *fmt, w, h)?,
-            TextureSource::TextureData(tex) => unreachable!(),
+            inner
         });
 
         // Add weak reference to cache
@@ -568,9 +586,9 @@ impl TextureBuilder {
     pub fn build(self, ctx: &context::Context) -> Result<Texture> {
         let gl = &ctx.gl;
         /* TODO handle SDF. */
-        let texture = self
-            .source
-            .to_texture_data(ctx, self.w, self.h, self.name.as_deref())?;
+        let texture =
+            self.source
+                .to_texture_data(ctx, self.w, self.h, self.mipmaps, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
@@ -607,6 +625,7 @@ impl TextureBuilder {
             texture,
             sampler,
             flipv: self.flipv,
+            mipmaps: self.mipmaps,
         })
     }
 }
