@@ -89,13 +89,15 @@ impl BufferTarget {
 }
 
 pub struct BufferBuilder<'a> {
+    name: Option<String>,
     target: BufferTarget,
     usage: BufferUsage,
     data: &'a [u8],
 }
 impl<'a> BufferBuilder<'a> {
-    pub fn new() -> Self {
+    pub fn new(name: Option<&str>) -> Self {
         BufferBuilder {
+            name: name.map(String::from),
             target: BufferTarget::Array,
             usage: BufferUsage::Stream,
             data: Default::default(),
@@ -123,6 +125,11 @@ impl<'a> BufferBuilder<'a> {
         })
     }
 
+    pub fn name(mut self, name: Option<&str>) -> Self {
+        self.name = name.map(String::from);
+        self
+    }
+
     pub fn build(self, gl: &glow::Context) -> Result<Buffer> {
         if self.data.is_empty() {
             anyhow::bail!("BufferBuilder has no data");
@@ -134,6 +141,7 @@ impl<'a> BufferBuilder<'a> {
         let usage = self.usage.to_gl();
         unsafe {
             gl.bind_buffer(target, Some(buffer));
+            gl.object_label(glow::BUFFER, buffer.0.into(), self.name);
             gl.buffer_data_u8_slice(target, self.data, usage);
             gl.bind_buffer(target, None);
         }
@@ -189,13 +197,15 @@ pub struct VertexArrayBuffer<'a> {
     pub divisor: u32,       // 0 indicates per vertex, non-zero is advance per instances
 }
 pub struct VertexArrayBuilder<'a> {
+    name: Option<String>,
     data_type: u32, // glow::FLOAT and such
     normalized: bool,
     buffers: &'a [VertexArrayBuffer<'a>],
 }
 impl<'a> VertexArrayBuilder<'a> {
-    pub fn new() -> Self {
+    pub fn new(name: Option<&str>) -> Self {
         VertexArrayBuilder {
+            name: name.map(String::from),
             data_type: glow::FLOAT,
             normalized: false,
             buffers: &[],
@@ -217,6 +227,11 @@ impl<'a> VertexArrayBuilder<'a> {
         self
     }
 
+    pub fn name(mut self, name: Option<&str>) -> Self {
+        self.name = name.map(String::from);
+        self
+    }
+
     pub fn build(self, gl: &glow::Context) -> Result<VertexArray> {
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
         /*
@@ -230,6 +245,7 @@ impl<'a> VertexArrayBuilder<'a> {
         */
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));
+            gl.object_label(glow::VERTEX_ARRAY, vertex_array.0.into(), self.name);
             for (idx, buffer) in self.buffers.iter().enumerate() {
                 if buffer.size < 1 || buffer.size > 4 {
                     warn!("invalid VertexArray size");

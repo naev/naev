@@ -104,7 +104,7 @@ impl PuffLayer {
         }
 
         let puff_size = std::mem::size_of::<Puff>();
-        let buffer = BufferBuilder::new()
+        let buffer = BufferBuilder::new(Some("Nebula Puff Buffer"))
             .usage(BufferUsage::Static)
             .data(match n {
                 0 => bytemuck::cast_slice(&[Self::ZERO]), // Dummy data
@@ -112,7 +112,7 @@ impl PuffLayer {
             })
             .build(&ctx.gl)?;
 
-        let vertex_array = VertexArrayBuilder::new()
+        let vertex_array = VertexArrayBuilder::new(Some("Nebula Puff Vertex Array"))
             .buffers(&[
                 VertexArrayBuffer {
                     buffer: &ctx.vbo_center,
@@ -188,8 +188,7 @@ impl NebulaData {
     fn new(ctx: &context::Context) -> Result<Self> {
         let gl = &ctx.gl;
         let (w, h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
-        let framebuffer = FramebufferBuilder::new()
-            .name(Some("Nebula Framebuffer"))
+        let framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
             .width(w as usize)
             .height(h as usize)
             .build(ctx)?;
@@ -201,7 +200,7 @@ impl NebulaData {
         };
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
-        let buffer = BufferBuilder::new()
+        let buffer = BufferBuilder::new(Some("Nebula Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform.buffer()?.into_inner().as_slice())
@@ -226,7 +225,7 @@ impl NebulaData {
             scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
             ..Default::default()
         };
-        let puff_buffer = BufferBuilder::new()
+        let puff_buffer = BufferBuilder::new(Some("Nebula Puff Uniform Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(puff_uniform.buffer()?.into_inner().as_slice())
@@ -262,8 +261,7 @@ impl NebulaData {
         }
 
         self.scale = scale;
-        self.framebuffer = FramebufferBuilder::new()
-            .name(Some("Nebula Framebuffer"))
+        self.framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
             .width(w)
             .height(h)
             .build(ctx)

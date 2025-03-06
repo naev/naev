@@ -691,9 +691,9 @@ pub struct FramebufferBuilder {
 }
 
 impl FramebufferBuilder {
-    pub fn new() -> Self {
+    pub fn new(name: Option<&str>) -> Self {
         FramebufferBuilder {
-            name: None,
+            name: name.map(String::from),
             w: 0,
             h: 0,
             depth: false,

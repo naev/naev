@@ -337,7 +337,7 @@ impl Context {
             .sampler("sampler", 0)
             .build(&gl)?;
         let uniform = TextureUniform::default();
-        let buffer_texture = BufferBuilder::new()
+        let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform.buffer()?.into_inner().as_slice())
@@ -348,18 +348,18 @@ impl Context {
             .frag_file("rust_solid.frag")
             .build(&gl)?;
         let uniform = SolidUniform::default();
-        let buffer_solid = BufferBuilder::new()
+        let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform.buffer()?.into_inner().as_slice())
             .build(&gl)?;
 
         // Square VBO
-        let vbo_square = BufferBuilder::new()
+        let vbo_square = BufferBuilder::new(Some("Square VBO"))
             .usage(BufferUsage::Static)
             .data_f32(&Self::DATA_SQUARE)
             .build(&gl)?;
-        let vao_square = VertexArrayBuilder::new()
+        let vao_square = VertexArrayBuilder::new(Some("Square Vertex Array"))
             .buffers(&[VertexArrayBuffer {
                 buffer: &vbo_square,
                 size: 2,
@@ -370,11 +370,11 @@ impl Context {
             .build(&gl)?;
 
         // Center VBO
-        let vbo_center = BufferBuilder::new()
+        let vbo_center = BufferBuilder::new(Some("Center VBO"))
             .usage(BufferUsage::Static)
             .data_f32(&Self::DATA_CENTER)
             .build(&gl)?;
-        let vao_center = VertexArrayBuilder::new()
+        let vao_center = VertexArrayBuilder::new(Some("Center Vertex Array"))
             .buffers(&[VertexArrayBuffer {
                 buffer: &vbo_center,
                 size: 2,
@@ -385,11 +385,11 @@ impl Context {
             .build(&gl)?;
 
         // Triangle VBO
-        let vbo_triangle = BufferBuilder::new()
+        let vbo_triangle = BufferBuilder::new(Some("Triangle VBO"))
             .usage(BufferUsage::Static)
             .data_f32(&Self::DATA_TRIANGLE)
             .build(&gl)?;
-        let vao_triangle = VertexArrayBuilder::new()
+        let vao_triangle = VertexArrayBuilder::new(Some("Triangle Vertex Array"))
             .buffers(&[VertexArrayBuffer {
                 buffer: &vbo_triangle,
                 size: 2,

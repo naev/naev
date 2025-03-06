@@ -507,6 +507,8 @@ int gl_init( void )
    /* Modern OpenGL requires at least one VAO */
    glGenVertexArrays( 1, &VaoId );
    glBindVertexArray( VaoId );
+   const char *va_name = "Core Vertex Array";
+   glObjectLabel( GL_VERTEX_ARRAY, VaoId, strlen( va_name ), va_name );
 
    shaders_load();
 

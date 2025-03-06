@@ -220,7 +220,7 @@ impl ModelShader {
         let lighting_uniform = shader.get_uniform_block(gl, "Lighting")?;
 
         let lighting_data = LightingUniform::default();
-        let lighting_buffer = BufferBuilder::new()
+        let lighting_buffer = BufferBuilder::new(Some("PBR Lighting Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(lighting_data.buffer()?.into_inner().as_slice())
@@ -307,7 +307,7 @@ impl Material {
             None => tex_ones(ctx)?,
         };
 
-        let uniform_buffer = BufferBuilder::new()
+        let uniform_buffer = BufferBuilder::new(None)
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Static)
             .data(data.buffer()?.into_inner().as_slice())
@@ -404,16 +404,16 @@ impl Primitive {
             gltf::mesh::Mode::TriangleFan => glow::TRIANGLE_FAN,
         };
 
-        let vertices = BufferBuilder::new()
+        let vertices = BufferBuilder::new(None)
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&vertex_data))
             .build(gl)?;
-        let indices = BufferBuilder::new()
+        let indices = BufferBuilder::new(None)
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&index_data))
             .build(gl)?;
         let uniform_data = PrimitiveUniform::default();
-        let uniform_buffer = BufferBuilder::new()
+        let uniform_buffer = BufferBuilder::new(None)
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform_data.buffer()?.into_inner().as_slice())
