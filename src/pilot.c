@@ -1946,6 +1946,8 @@ void pilot_render( Pilot *p )
    if ( pilot_isFlag( p, PILOT_NORENDER ) )
       return;
 
+   gl_debugGroupStartID( p->id );
+
    /* Transform coordinates. */
    z = cam_getZoom();
    w = p->ship->size;
@@ -2209,6 +2211,8 @@ void pilot_render( Pilot *p )
       }
    }
 #endif /* DEBUGGING */
+
+   gl_debugGroupEnd();
 }
 
 /**
