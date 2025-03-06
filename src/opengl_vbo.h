@@ -24,6 +24,7 @@ gl_vbo *gl_vboCreateStatic( GLsizei size, const void *data );
 /*
  * Modify.
  */
+void gl_vboLabel( gl_vbo *vbo, const char *name );
 void gl_vboData( gl_vbo *vbo, GLsizei size, const void *data );
 void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void *data );
 void *gl_vboMap( gl_vbo *vbo );

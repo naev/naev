@@ -1762,8 +1762,10 @@ int gl_fontInit( glFont *font, const char *fname, const unsigned int h,
    stsh->vbo_vert_data = calloc( 8 * stsh->mvbo, sizeof( GLshort ) );
    stsh->vbo_tex       = gl_vboCreateStatic( sizeof( GLfloat ) * 8 * stsh->mvbo,
                                              stsh->vbo_tex_data );
-   stsh->vbo_vert      = gl_vboCreateStatic( sizeof( GLshort ) * 8 * stsh->mvbo,
-                                             stsh->vbo_vert_data );
+   gl_vboLabel( stsh->vbo_tex, "Font Texture VBO" );
+   stsh->vbo_vert = gl_vboCreateStatic( sizeof( GLshort ) * 8 * stsh->mvbo,
+                                        stsh->vbo_vert_data );
+   gl_vboLabel( stsh->vbo_tex, "Font Vertex VBO" );
 
    return 0;
 }

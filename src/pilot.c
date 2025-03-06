@@ -2136,9 +2136,10 @@ void pilot_render( Pilot *p )
       }
 
       /* Upload to VBO, creating as necessary. */
-      if ( poly_vbo == NULL )
+      if ( poly_vbo == NULL ) {
          poly_vbo = gl_vboCreateDynamic( ndata, data );
-      else
+         gl_vboLabel( poly_vbo, "C Debug Collision Polygon VBO" );
+      } else
          gl_vboData( poly_vbo, ndata, data );
 
       /* Draw. */

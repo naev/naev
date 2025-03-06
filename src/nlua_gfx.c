@@ -589,8 +589,10 @@ static int gfxL_renderLinesH( lua_State *L )
    const mat4     *H = luaL_checktransform( L, 1 );
    const glColour *c = luaL_optcolour( L, 2, &cWhite );
 
-   if ( vbo_lines == NULL )
+   if ( vbo_lines == NULL ) {
       vbo_lines = gl_vboCreateDynamic( 256 * sizeof( GLfloat ) * 2, NULL );
+      gl_vboLabel( vbo_lines, "Lua GFX Line VBO" );
+   }
 
    while ( !lua_isnoneornil( L, i ) ) {
       if ( n >= 256 ) {

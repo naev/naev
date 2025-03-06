@@ -2671,6 +2671,7 @@ int toolkit_init( void )
    toolkit_vboColourOffset = sizeof( GLshort ) * 2 * 31;
    size        = ( sizeof( GLshort ) * 2 + sizeof( GLfloat ) * 4 ) * 31;
    toolkit_vbo = gl_vboCreateStream( size, NULL );
+   gl_vboLabel( toolkit_vbo, "Toolkit VBO" );
 
    /* Disable the cursor. */
    input_mouseHide();

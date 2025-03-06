@@ -1735,6 +1735,7 @@ int gui_init( void )
       vertex[15] = -3.3;
       gui_radar_select_vbo =
          gl_vboCreateStatic( sizeof( GLfloat ) * 16, vertex );
+      gl_vboLabel( gui_radar_select_vbo, "GUI Radar VBO" );
    }
 
    /* OSD */

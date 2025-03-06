@@ -167,8 +167,10 @@ static void weapon_updateVBO( void )
       weapon_vboSize = bufsize;
       size           = sizeof( GLfloat ) * ( 2 + 4 ) * weapon_vboSize;
       weapon_vboData = realloc( weapon_vboData, size );
-      if ( weapon_vbo == NULL )
+      if ( weapon_vbo == NULL ) {
          weapon_vbo = gl_vboCreateStream( size, NULL );
+         gl_vboLabel( weapon_vbo, "Weapon Particle VBO" );
+      }
       gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 }
