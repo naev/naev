@@ -707,6 +707,11 @@ void gl_resize( void )
                     gl_screen.rh );
       gl_fboAddDepth( gl_screen.fbo[i], &gl_screen.fbo_depth_tex[i],
                       gl_screen.rw, gl_screen.rh );
+
+      /* Names for debugging. */
+      char buf[STRMAX_SHORT];
+      snprintf( buf, sizeof( buf ), "Screen Framebuffer %d", i );
+      glObjectLabel( GL_FRAMEBUFFER, gl_screen.fbo[i], strlen( buf ), buf );
    }
 
    gl_checkErr();
