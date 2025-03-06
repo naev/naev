@@ -12,6 +12,7 @@ uniform float u_dir     = 0.0;
 in vec2 tex_coord;
 in vec2 tex_scale;
 out vec4 colour_out;
+out vec2 pos;
 
 void main(void)
 {
@@ -20,7 +21,7 @@ void main(void)
 
    colour_out = vec4( 0.7, 0.7, 0.7, 0.8 );
 
-   float d = sdCircle( uv, 0.5+0.1*sin(u_elapsed) );
+   float d = sdCircle( 2.0*pos-1.0, 0.5+0.1*sin(u_elapsed) );
    vec3 nuv = vec3(2.0 * uv, u_elapsed) + vec3(u_r);
    float n = 0.3*snoise( 1.0 * nuv );
    colour_out.a *= smoothstep( -0.2, 0.2, -d );
