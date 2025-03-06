@@ -14,7 +14,7 @@ use crate::buffer::{
 };
 use crate::render::{SolidUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
-use crate::{formatx, warn};
+use crate::{debug, formatx, warn};
 use crate::{gettext, log, ndata};
 
 #[macro_export]
@@ -60,6 +60,50 @@ pub fn check_for_gl_error_impl(gl: &glow::Context, file: &str, line: u32, contex
                 file, line, context, error_str, error_code,
             ));
         }
+    }
+}
+
+fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
+    let s_source = match source {
+        glow::DEBUG_SOURCE_API => "api",
+        glow::DEBUG_SOURCE_WINDOW_SYSTEM => "window_system",
+        glow::DEBUG_SOURCE_SHADER_COMPILER => "shader_compiler",
+        glow::DEBUG_SOURCE_THIRD_PARTY => "third_party",
+        glow::DEBUG_SOURCE_APPLICATION => "application",
+        glow::DEBUG_SOURCE_OTHER => "other",
+        _ => &format!("{}", source),
+    };
+    let s_type = match msg_type {
+        glow::DEBUG_TYPE_ERROR => "error",
+        glow::DEBUG_TYPE_DEPRECATED_BEHAVIOR => "deprecated_behavior",
+        glow::DEBUG_TYPE_UNDEFINED_BEHAVIOR => "undefined_behavior",
+        glow::DEBUG_TYPE_PORTABILITY => "portability",
+        glow::DEBUG_TYPE_PERFORMANCE => "performance",
+        glow::DEBUG_TYPE_MARKER => "marker",
+        glow::DEBUG_TYPE_PUSH_GROUP => "push_group",
+        glow::DEBUG_TYPE_POP_GROUP => "pop_group",
+        glow::DEBUG_TYPE_OTHER => "other",
+        _ => &format!("{}", msg_type),
+    };
+    let s_id = format!("{}", id);
+    let s_severity = match severity {
+        glow::DEBUG_SEVERITY_LOW => "low",
+        glow::DEBUG_SEVERITY_MEDIUM => "medium",
+        glow::DEBUG_SEVERITY_HIGH => "high",
+        glow::DEBUG_SEVERITY_NOTIFICATION => "notification",
+        _ => &format!("{}", severity),
+    };
+
+    if severity == glow::DEBUG_SEVERITY_LOW {
+        debug!(
+            "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
+            s_source, s_type, s_id, s_severity, msg
+        );
+    } else {
+        warn!(
+            "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
+            s_source, s_type, s_id, s_severity, msg
+        );
     }
 }
 
@@ -290,7 +334,7 @@ impl Context {
                 _ => anyhow::bail!("Foo"),
             },
         };
-        let gl = unsafe {
+        let mut gl = unsafe {
             glow::Context::from_loader_function(|s| sdlvid.gl_get_proc_address(s) as *const _)
         };
 
@@ -305,6 +349,45 @@ impl Context {
         match gl_attr.framebuffer_srgb_compatible() {
             true => (),
             false => log::warn("Unable to set framebuffer to SRGB!"),
+        };
+
+        #[cfg(debug_assertions)]
+        match gl_attr.context_flags().has_debug() {
+            true => unsafe {
+                gl.debug_message_callback(debug_callback);
+                // Don't actually want to see the grou push/pops, it's for RenderDoc
+                gl.debug_message_control(
+                    glow::DEBUG_SOURCE_APPLICATION,
+                    glow::DEBUG_TYPE_PUSH_GROUP,
+                    glow::DONT_CARE,
+                    &[],
+                    false,
+                );
+                gl.debug_message_control(
+                    glow::DEBUG_SOURCE_APPLICATION,
+                    glow::DEBUG_TYPE_POP_GROUP,
+                    glow::DONT_CARE,
+                    &[],
+                    false,
+                );
+                // Notifications about putting stuff in GPU memory, which we want
+                gl.debug_message_control(
+                    glow::DEBUG_SOURCE_API,
+                    glow::DONT_CARE,
+                    glow::DEBUG_SEVERITY_NOTIFICATION,
+                    &[],
+                    false,
+                );
+                // NVIDIA warnings about recompiling shaders, don't think we can do much here
+                gl.debug_message_control(
+                    glow::DEBUG_SOURCE_API,
+                    glow::DEBUG_TYPE_PERFORMANCE,
+                    glow::DONT_CARE,
+                    &[131218],
+                    false,
+                );
+            },
+            false => log::warn("Unable to set OpenGL debug mode!"),
         };
 
         unsafe {
