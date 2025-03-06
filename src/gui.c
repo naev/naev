@@ -559,6 +559,7 @@ static void gui_renderBorder( double dt )
    Pilot *const   *pilot_stack;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /* Get player position. */
    hw = SCREEN_W / 2;
@@ -632,6 +633,7 @@ static void gui_renderBorder( double dt )
       }
    }
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 
