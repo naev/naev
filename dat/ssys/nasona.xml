@@ -22,6 +22,9 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="0" y="0">neburesearch_05_checkpoint</waypoint>
+ </waypoints>
  <tags>
   <tag>thenebula</tag>
   <tag>spoiler</tag>

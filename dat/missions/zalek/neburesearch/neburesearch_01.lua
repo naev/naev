@@ -186,7 +186,8 @@ function jumpin()
       if not mem.ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 6 then
          hook.timer(2.0, "startAmbush")
       elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
-         local ambushers = fleet.add( 1,  {"Pirate Admonisher", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}, "Marauder", vec2.new(0,7500), nil, {ai="baddie_norun"} )
+         local pos = system.cur():waypoints("neburesearch_01_ambush")
+         local ambushers = fleet.add( 1,  {"Pirate Admonisher", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}, "Marauder", pos, nil, {ai="baddie_norun"} )
          for i, j in ipairs(ambushers) do
             j:setHostile()
             j:memory().guardpos = transporter:pos()
@@ -318,9 +319,10 @@ function spawnTransporter()
 end
 
 function startAmbush()
+   -- This happens in an unspecified Dvaered system.
    ships = fleet.add( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Mercenary", spob.get("Onyx Shipyard"):pos() + vec2.new(6000,-3000), nil, {ai="dvaered_norun"} )
    for i, j in ipairs(ships) do
-      j:memory().guardpos = vec2.new(-4000,-16000)
+      j:memory().guardpos = vec2.new(-4000,-16000) -- don't care: will attack soon
 --      j:control(true)
 --      j:moveto(vec2.new(-4000,-12000))
    end
