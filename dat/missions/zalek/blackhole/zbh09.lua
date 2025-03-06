@@ -232,7 +232,7 @@ function enter ()
       else
          ships = { "Kauweke", "Taitamariki", "Taitamariki", "Taitamariki" }
       end
-      local pos = vec2.new( -6000, 3000 ) -- Halfway towards NGC-4771
+      local pos = outsys:waypoints("zbh09_feral") -- Halfway towards NGC-4771
       pack = fleet.add( 1, ships, zbh.feralbioship(), pos )
       for k,p in ipairs(pack) do
          p:rename(_("Feral Bioship"))
