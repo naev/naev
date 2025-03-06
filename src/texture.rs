@@ -372,12 +372,14 @@ impl AddressMode {
 pub enum FilterMode {
     Nearest = 0,
     Linear = 1,
+    MipmapLinear = 2,
 }
 impl FilterMode {
     pub fn to_gl(self) -> i32 {
         (match self {
             FilterMode::Nearest => glow::NEAREST,
             FilterMode::Linear => glow::LINEAR,
+            FilterMode::MipmapLinear => glow::LINEAR_MIPMAP_LINEAR,
         }) as i32
     }
 }
@@ -1064,6 +1066,9 @@ pub extern "C" fn gl_newSpriteRWops(
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
+    if flags.mipmaps {
+        builder = builder.min_filter(FilterMode::MipmapLinear);
+    }
     if flags.clamp_alpha {
         builder = builder.border(Some(Vector4::<f32>::new(0., 0., 0., 0.)));
     }
