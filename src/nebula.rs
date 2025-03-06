@@ -189,6 +189,7 @@ impl NebulaData {
         let gl = &ctx.gl;
         let (w, h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
         let framebuffer = FramebufferBuilder::new()
+            .name(Some("Nebula Framebuffer"))
             .width(w as usize)
             .height(h as usize)
             .build(ctx)?;
@@ -262,6 +263,7 @@ impl NebulaData {
 
         self.scale = scale;
         self.framebuffer = FramebufferBuilder::new()
+            .name(Some("Nebula Framebuffer"))
             .width(w)
             .height(h)
             .build(ctx)

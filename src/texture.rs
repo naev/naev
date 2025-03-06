@@ -682,6 +682,7 @@ impl Framebuffer {
 }
 
 pub struct FramebufferBuilder {
+    name: Option<String>,
     w: usize,
     h: usize,
     depth: bool,
@@ -692,6 +693,7 @@ pub struct FramebufferBuilder {
 impl FramebufferBuilder {
     pub fn new() -> Self {
         FramebufferBuilder {
+            name: None,
             w: 0,
             h: 0,
             depth: false,
@@ -725,6 +727,11 @@ impl FramebufferBuilder {
         self
     }
 
+    pub fn name(mut self, name: Option<&str>) -> Self {
+        self.name = name.map(String::from);
+        self
+    }
+
     pub fn build(self, ctx: &context::Context) -> Result<Framebuffer> {
         let gl = &ctx.gl;
 
@@ -739,6 +746,7 @@ impl FramebufferBuilder {
         texture.bind(ctx, 0);
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
+            gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
             gl.framebuffer_texture_2d(
                 glow::FRAMEBUFFER,
                 glow::COLOR_ATTACHMENT0,
