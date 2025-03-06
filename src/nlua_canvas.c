@@ -177,6 +177,7 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
 
    /* Create the frame buffer. */
    gl_fboCreate( &lc->fbo, &lc->tex->texture, w, h );
+   glObjectLabel( GL_FRAMEBUFFER, lc->fbo, strlen( name ), name );
 
    return 0;
 }
