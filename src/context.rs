@@ -310,21 +310,20 @@ impl Context {
             true => unsafe {
                 gl.enable(glow::DEBUG_OUTPUT);
                 gl.debug_message_callback(debug_callback);
-                // Don't actually want to see the grou push/pops, it's for RenderDoc
-                gl.debug_message_control(
-                    glow::DEBUG_SOURCE_APPLICATION,
+                // Hide stuff that is useful for RenderDoc
+                for msg_type in [
                     glow::DEBUG_TYPE_PUSH_GROUP,
-                    glow::DONT_CARE,
-                    &[],
-                    false,
-                );
-                gl.debug_message_control(
-                    glow::DEBUG_SOURCE_APPLICATION,
                     glow::DEBUG_TYPE_POP_GROUP,
-                    glow::DONT_CARE,
-                    &[],
-                    false,
-                );
+                    glow::DEBUG_TYPE_MARKER,
+                ] {
+                    gl.debug_message_control(
+                        glow::DEBUG_SOURCE_APPLICATION,
+                        msg_type,
+                        glow::DONT_CARE,
+                        &[],
+                        false,
+                    );
+                }
                 // Notifications about putting stuff in GPU memory, which we want
                 gl.debug_message_control(
                     glow::DEBUG_SOURCE_API,
