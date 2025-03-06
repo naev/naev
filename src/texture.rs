@@ -79,6 +79,7 @@ pub struct TextureData {
     h: usize,
     is_srgb: bool,
     is_sdf: bool,
+    mipmaps: bool,
     vmax: f64, // For SDF
 }
 impl Drop for TextureData {
@@ -124,6 +125,7 @@ impl TextureData {
             texture,
             is_srgb: format.is_srgb(),
             is_sdf: false,
+            mipmaps: false,
             vmax: 1.,
         })
     }
@@ -160,6 +162,7 @@ impl TextureData {
             texture: raw,
             is_srgb: true,
             is_sdf: false,
+            mipmaps: false,
             vmax: 1.,
         })
     }
@@ -214,16 +217,18 @@ impl TextureData {
             texture,
             is_srgb,
             is_sdf: false,
+            mipmaps: false,
             vmax: 1.,
         })
     }
 
-    fn generate_mipmap(&self, gl: &glow::Context) -> Result<()> {
+    fn generate_mipmap(&mut self, gl: &glow::Context) -> Result<()> {
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(self.texture));
             gl.generate_mipmap(glow::TEXTURE_2D);
             gl.bind_texture(glow::TEXTURE_2D, None);
         }
+        self.mipmaps = true;
         Ok(())
     }
 }
@@ -409,7 +414,7 @@ impl TextureSource {
 
         // Failed to find in cache, load a new
         let tex = Arc::new({
-            let inner = match self {
+            let mut inner = match self {
                 TextureSource::Path(path) => {
                     //let bytes = ndata::read(path.as_str())?;
                     //let img = image::load_from_memory(&bytes)?;
