@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 def main(args):
    names=['']*len(args)
    L=[dict() for a in args]
-   done=dict()
+   rang=dict()
    acc=[]
 
    for i in range(len(args)):
@@ -16,12 +16,12 @@ def main(args):
          try:
             n=float(t.text)
             L[i][t.tag]=t.text
-            if not done.has_key(t.tag):
-               done[t.tag]=(n,n)
+            if not rang.has_key(t.tag):
+               rang[t.tag]=(n,n)
                acc.append(t.tag)
             else:
-               (mi,ma)=done[t.tag]
-               done[t.tag]=(min(mi,n),max(ma,n))
+               (mi,ma)=rang[t.tag]
+               rang[t.tag]=(min(mi,n),max(ma,n))
          except:
             pass
 
@@ -53,7 +53,7 @@ def main(args):
    print mklin(map(fmt,zip(names,length)))
    print mklin(['-'*n for n in length])
    for r in Res:
-      r=[r[0].replace("_"," ")]+[emph(k,done[r[0]]) for k in r[1:]]
+      r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
       print mklin(map(fmt,zip(r,length)))
 
 if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
