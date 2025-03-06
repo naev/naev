@@ -184,7 +184,6 @@ int gl_checkHandleError( const char *func, int line )
 {
    (void)func;
    (void)line;
-#if !DEBUG_GL
    const char *errstr;
    GLenum      err = glGetError();
 
@@ -215,62 +214,7 @@ int gl_checkHandleError( const char *func, int line )
    }
    WARN( _( "OpenGL error [%s:%d]: %s" ), func, line, errstr );
    return 1;
-#endif /* !DEBUG_GL */
-   return 0;
 }
-
-#if DEBUG_GL
-/**
- * @brief Checks and reports if there's been an error.
- */
-static void GLAPIENTRY gl_debugCallback( GLenum source, GLenum type, GLuint id,
-                                         GLenum severity, GLsizei length,
-                                         const GLchar *message, const void *p )
-{
-   static int errors_seen = 0;
-   (void)source;
-   (void)id;
-   (void)length;
-   (void)p;
-   const char *typestr;
-
-   if ( ++errors_seen == 10 )
-      WARN( _( "Too many OpenGL diagnostics reported! Suppressing further "
-               "reports." ) );
-   if ( errors_seen >= 10 )
-      return;
-
-   switch ( type ) {
-   case GL_DEBUG_TYPE_ERROR:
-      typestr = " GL_DEBUG_TYPE_ERROR";
-      break;
-   case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-      typestr = " GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR";
-      break;
-   case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-      typestr = " GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR";
-      break;
-   case GL_DEBUG_TYPE_PORTABILITY:
-      typestr = " GL_DEBUG_TYPE_PORTABILITY";
-      break;
-   case GL_DEBUG_TYPE_PERFORMANCE:
-      typestr = " GL_DEBUG_TYPE_PERFORMANCE";
-      break;
-   case GL_DEBUG_TYPE_OTHER:
-      typestr = " GL_DEBUG_TYPE_OTHER";
-      break;
-   case GL_DEBUG_TYPE_MARKER:     /* fallthrough */
-   case GL_DEBUG_TYPE_PUSH_GROUP: /* fallthrough */
-   case GL_DEBUG_TYPE_POP_GROUP:  /* fallthrough */
-      return;
-   default:
-      typestr = "";
-   }
-   WARN( _( "[type = 0x%x%s], severity = 0x%x, message = %s backtrace:" ), type,
-         typestr, severity, message );
-   debug_logBacktrace();
-}
-#endif /* DEBUG_GL */
 #endif /* DEBUGGING */
 
 /**
@@ -369,14 +313,6 @@ static int gl_defState( void )
    glEnable(
       GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails &
                            map routes are thin & anti-aliased. */
-#if DEBUG_GL
-   glEnable( GL_DEBUG_OUTPUT ); /* Log errors immediately.. */
-   glDebugMessageCallback( gl_debugCallback, 0 );
-   glDebugMessageControl( GL_DONT_CARE, GL_DEBUG_TYPE_PERFORMANCE, GL_DONT_CARE,
-                          0, NULL, GL_FALSE );
-   glDebugMessageControl( GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DONT_CARE, 0,
-                          NULL, GL_FALSE );
-#endif /* DEBUG_GL */
 
    /* Set the blending/shading model to use. */
    glBlendEquation( GL_FUNC_ADD );

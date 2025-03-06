@@ -10,7 +10,6 @@ use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
-use crate::check_for_gl_error;
 use crate::context::CONTEXT;
 use crate::{buffer, context, gettext, ndata, render};
 use crate::{formatx, warn};
@@ -116,7 +115,6 @@ impl TextureData {
                 glow::PixelUnpackData::Slice(None),
             );
             gl.bind_texture(glow::TEXTURE_2D, None);
-            check_for_gl_error!(gl, "TextureData::new");
         }
 
         Ok(TextureData {
@@ -207,7 +205,6 @@ impl TextureData {
             #[cfg(debug_assertions)]
             gl.object_label(glow::TEXTURE, texture.0.into(), name);
             gl.bind_texture(glow::TEXTURE_2D, None);
-            check_for_gl_error!(gl, "TextureData::from_image");
         }
 
         Ok(TextureData {
@@ -270,7 +267,6 @@ impl Texture {
             #[cfg(debug_assertions)]
             gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
         }
-        check_for_gl_error!(gl, "Texture::try_clone");
 
         Ok(Texture {
             path: self.path.clone(),
@@ -333,7 +329,7 @@ impl Texture {
 
         buffer::VertexArray::unbind(ctx);
         Texture::unbind(ctx);
-        check_for_gl_error!(gl, "Texture::draw");
+
         Ok(())
     }
 }

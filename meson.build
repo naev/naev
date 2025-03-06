@@ -71,7 +71,6 @@ if buildExec.disabled() == false
    naev_deps = []
    debug = get_option('debug')
    debug_arrays = get_option('debug_arrays')
-   debug_gl = get_option('debug_gl')
    tracy = get_option('tracy')
    paranoid = get_option('paranoid')
    # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
@@ -89,14 +88,11 @@ if buildExec.disabled() == false
    app_metadata.set('COPYRIGHT', copyright_holder)
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
-   config_data.set10('DEBUG_GL', debug_gl)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
    summary('Enabled' , debug       , section: 'Debug', bool_yn: true)
    summary('Paranoid', paranoid    , section: 'Debug', bool_yn: true)
    summary('Arrays'  , debug_arrays, section: 'Debug', bool_yn: true)
-   summary('OpenGL'  , debug_gl    , section: 'Debug', bool_yn: true)
-   assert(debug or not debug_gl, 'debug_gl option is only valid for debug builds. Try "meson configure --buildtype=debug" for example.')
 
    # Some OS voodoo TODO these are not very correct, but ported from ncompat.h . Maybe use .system?
    has_posix = host_machine.system()=='darwin' or cc.compiles('''#if !(defined(__unix) || defined(__unix__))

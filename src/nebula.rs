@@ -12,7 +12,6 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::check_for_gl_error;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture::{Framebuffer, FramebufferBuilder};
 use crate::{context, rng};
@@ -138,8 +137,6 @@ impl PuffLayer {
             ])
             .build(&ctx.gl)?;
 
-        check_for_gl_error!(&ctx.gl, "Generating Nebula Puffs");
-
         Ok(PuffLayer {
             data,
             buffer,
@@ -161,7 +158,6 @@ impl PuffLayer {
         VertexArray::unbind(ctx);
         data.puff_buffer.unbind(ctx);
 
-        check_for_gl_error!(&gl, "Rendering Nebula Puffs");
         Ok(())
     }
 }
@@ -230,8 +226,6 @@ impl NebulaData {
             .usage(BufferUsage::Dynamic)
             .data(puff_uniform.buffer()?.into_inner().as_slice())
             .build(gl)?;
-
-        check_for_gl_error!(&gl, "Creating NebulaData");
 
         Ok(NebulaData {
             density: 0.0,
@@ -314,7 +308,6 @@ impl NebulaData {
 
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
-        check_for_gl_error!(&gl, "Rendering Nebula Background");
 
         self.puffs_bg.render(ctx, self)
     }
@@ -346,8 +339,6 @@ impl NebulaData {
         self.framebuffer
             .texture
             .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
-
-        check_for_gl_error!(&gl, "Rendering Nebula Overlay");
 
         self.puffs_fg.render(ctx, self)
     }
