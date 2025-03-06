@@ -188,7 +188,6 @@ impl TextureData {
         let internalformat = TextureFormat::auto(has_alpha, is_srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            gl.object_label(glow::TEXTURE, texture.0.into(), name);
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
             let fmt = match has_alpha {
                 true => glow::RGBA,
@@ -205,6 +204,7 @@ impl TextureData {
                 glow::UNSIGNED_BYTE,
                 gldata,
             );
+            gl.object_label(glow::TEXTURE, texture.0.into(), name);
             gl.bind_texture(glow::TEXTURE_2D, None);
             check_for_gl_error!(gl, "TextureData::from_image");
         }
@@ -251,11 +251,6 @@ impl Texture {
         let ctx = CONTEXT.get().unwrap();
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
-        /*
-        unsafe {
-            gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
-        }
-        */
 
         // Copy necessaryparameters over
         for param in [
@@ -268,6 +263,10 @@ impl Texture {
                 let val = gl.get_sampler_parameter_i32(self.sampler, param);
                 gl.sampler_parameter_i32(sampler, param, val);
             }
+        }
+        unsafe {
+            // Has to be called after it is initialized with any call
+            gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
         }
         check_for_gl_error!(gl, "Texture::try_clone");
 
@@ -576,7 +575,6 @@ impl TextureBuilder {
             .to_texture_data(ctx, self.w, self.h, self.name.as_deref())?;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
-            //gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MAG_FILTER, self.mag_filter.to_gl());
             if let Some(border) = &self.border_value {
@@ -588,6 +586,7 @@ impl TextureBuilder {
             }
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_gl());
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_gl());
+            gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
         }
 
         let (w, h) = (texture.w, texture.h);
@@ -746,7 +745,6 @@ impl FramebufferBuilder {
         texture.bind(ctx, 0);
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
-            gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
             gl.framebuffer_texture_2d(
                 glow::FRAMEBUFFER,
                 glow::COLOR_ATTACHMENT0,
@@ -754,6 +752,7 @@ impl FramebufferBuilder {
                 Some(texture.texture.texture),
                 0,
             );
+            gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
         }
 
         let depth = if self.depth {
