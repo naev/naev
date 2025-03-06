@@ -1626,6 +1626,8 @@ void toolkit_render( double dt )
 {
    (void)dt;
    Window *top = toolkit_getActiveWindow();
+   if ( top == NULL )
+      return;
 
    NTracingZone( _ctx, 1 );
    gl_debugGroupStart();
