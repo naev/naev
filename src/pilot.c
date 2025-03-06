@@ -1887,6 +1887,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
       if ( ed->img != NULL ) {
          glActiveTexture( GL_TEXTURE1 );
          glBindTexture( GL_TEXTURE_2D, tex_tex( ed->img ) );
+         glBindSampler( 1, tex_sampler( ed->img ) );
          glUniform1i( ed->u_img, 1 );
       }
 
@@ -1920,6 +1921,7 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
       if ( ed->img != NULL ) {
          glActiveTexture( GL_TEXTURE1 );
          glBindTexture( GL_TEXTURE_2D, 0 );
+         glBindSampler( 1, 0 );
          glActiveTexture( GL_TEXTURE0 );
       }
 
@@ -2050,6 +2052,7 @@ void pilot_render( Pilot *p )
          if ( ed->img != NULL ) {
             glActiveTexture( GL_TEXTURE1 );
             glBindTexture( GL_TEXTURE_2D, tex_tex( ed->img ) );
+            glBindSampler( 1, tex_sampler( ed->img ) );
             glUniform1i( ed->u_img, 1 );
          }
 
@@ -2086,6 +2089,7 @@ void pilot_render( Pilot *p )
          if ( ed->img != NULL ) {
             glActiveTexture( GL_TEXTURE1 );
             glBindTexture( GL_TEXTURE_2D, 0 );
+            glBindSampler( 1, 0 );
             glActiveTexture( GL_TEXTURE0 );
          }
 
