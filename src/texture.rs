@@ -251,9 +251,11 @@ impl Texture {
         let ctx = CONTEXT.get().unwrap();
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
+        /*
         unsafe {
-            //gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
+            gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
         }
+        */
 
         // Copy necessaryparameters over
         for param in [
@@ -267,9 +269,7 @@ impl Texture {
                 gl.sampler_parameter_i32(sampler, param, val);
             }
         }
-        unsafe {
-            check_for_gl_error!(gl, "Texture::try_clone");
-        }
+        check_for_gl_error!(gl, "Texture::try_clone");
 
         Ok(Texture {
             path: self.path.clone(),
