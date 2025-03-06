@@ -173,6 +173,7 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    GLuint texture;
    gl_fboCreate( &lc->fbo, &texture, w, h );
    lc->tex = gl_rawTexture( name, texture, w, h );
+   glObjectLabel( GL_FRAMEBUFFER, lc->fbo, strlen( name ), name );
    free( name );
 
    return 0;
