@@ -33,6 +33,7 @@
   </asteroid>
  </asteroids>
  <waypoints>
+  <waypoint x="-3000" y="-7000">achack04_bhunters</waypoint>
   <waypoint x="-500" y="-4000">darkshadow_joe</waypoint>
   <waypoint x="-2500" y="-1500">darkshadow_patrol1_start</waypoint>
   <waypoint x="2500" y="1000">darkshadow_patrol2_start</waypoint>
