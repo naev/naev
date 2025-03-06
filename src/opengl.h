@@ -120,11 +120,19 @@ void   gl_saveFboDepth( GLuint fbo, const char *filename );
 #define gl_debugGroupStartID( id )                                             \
    glPushDebugGroup( GL_DEBUG_SOURCE_APPLICATION, id, strlen( __func__ ),      \
                      __func__ )
+#define gl_debugGroupStartName( name )                                         \
+   glPushDebugGroup( GL_DEBUG_SOURCE_APPLICATION, 0, strlen( name ), name )
 #define gl_debugGroupEnd() glPopDebugGroup()
 #define gl_checkErr() gl_checkHandleError( __func__, __LINE__ )
 int gl_checkHandleError( const char *func, int line );
 #else /* DEBUGGING */
 #define gl_debugGroupStart()                                                   \
+   do {                                                                        \
+   } while ( 0 )
+#define gl_debugGroupStartID()                                                 \
+   do {                                                                        \
+   } while ( 0 )
+#define gl_debugGroupStartName()                                               \
    do {                                                                        \
    } while ( 0 )
 #define gl_debugGroupEnd()                                                     \

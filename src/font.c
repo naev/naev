@@ -1350,6 +1350,8 @@ static void gl_fontRenderStartH( const glFontStash *stsh, const mat4 *H,
    double          a, scale;
    const glColour *col;
 
+   gl_debugGroupStart();
+
    outlineR = ( outlineR == -1 ) ? 1 : MAX( outlineR, 0 );
 
    /* Handle colour. */
@@ -1630,6 +1632,7 @@ static void gl_fontRenderEnd( void )
    glUseProgram( 0 );
 
    glDisable( GL_DEPTH_TEST );
+   gl_debugGroupEnd();
 
    /* Check for errors. */
    gl_checkErr();
