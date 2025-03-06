@@ -880,6 +880,7 @@ void asteroids_renderOverlay( void )
    cy -= SCREEN_H / 2.;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /* Render the debris. */
    for ( int j = 0; j < array_size( debris_stack ); j++ ) {
@@ -888,6 +889,7 @@ void asteroids_renderOverlay( void )
          debris_renderSingle( d, cx, cy );
    }
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 
@@ -903,6 +905,7 @@ void asteroids_render( void )
    cy -= SCREEN_H / 2.;
 
    NTracingZone( _ctx, 1 );
+   gl_debugGroupStart();
 
    /* Render the asteroids & debris. */
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
@@ -931,6 +934,7 @@ void asteroids_render( void )
    /* Render gatherable stuff. */
    gatherable_render();
 
+   gl_debugGroupEnd();
    NTracingZoneEnd( _ctx );
 }
 
