@@ -1279,7 +1279,7 @@ pub extern "C" fn gl_renderTexture(
     #[rustfmt::skip]
     let texture: Matrix3<f32> = Matrix3::new(
         tw as f32, 0.0,       tx as f32,
-        0.0,      -th as f32,-ty as f32,
+        0.0,      -th as f32, (th-ty) as f32,
         0.0,       0.0,       1.0,
     );
     let data = render::TextureUniform {
@@ -1290,25 +1290,4 @@ pub extern "C" fn gl_renderTexture(
 
     let tex = unsafe { &*ctex };
     let _ = tex.draw_ex(ctx, &data);
-
-    /*
-    let tex = unsafe { &*ctex };
-    unsafe {
-        naevc::gl_renderTextureRaw(
-            tex.texture.texture.0.into(),
-            tex.sampler.0.into(),
-            0,
-            x,
-            y,
-            w,
-            h,
-            tx,
-            ty,
-            tw,
-            th,
-            c as *const naevc::glColour,
-            angle,
-        );
-    }
-    */
 }
