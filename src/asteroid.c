@@ -1006,6 +1006,9 @@ static void asteroid_renderSingle( const Asteroid *a )
  */
 static void debris_renderSingle( const Debris *d, double cx, double cy )
 {
+   if ( d->alpha <= 0. )
+      return;
+
    const double   scale = 0.5;
    const glColour col   = COL_ALPHA( cInert, d->alpha );
 
