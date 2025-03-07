@@ -5,6 +5,11 @@ import xml.etree.ElementTree as ET
 
 lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide'}
 
+def transpose(M):
+   N=max(map(len,M))
+   M=[t+['']*(N-len(t)) for t in M]
+   return zip(*(tuple(M)))
+
 #launch_reload
 def main(args,gith=False,ter=False):
    names=['']*len(args)
@@ -45,12 +50,6 @@ def main(args,gith=False,ter=False):
    names=['']+names
    length=[4]*len(names) # :--- at least 3 - required
 
-   if not gith:
-      length=[max(n,len(s)) for (n,s) in zip(length,names)]
-
-      for r in Res:
-         length=[max(n,len(s)) for (n,s) in zip(length,r)]
-
    if ter:
       Sep,Lm,Rm,LM,RM='\033[34m|\033[37m',"\033[31m","\033[37m","\033[32m","\033[37m"
       mk_pad =lambda i,n:"\033[34m"+n*'-'+"\033[0m"
@@ -59,6 +58,18 @@ def main(args,gith=False,ter=False):
       Sep,Lm,Rm,LM,RM='|',"_","_","**","**"
       mk_pad =lambda i,n:'-'*(n-1)+('-' if i==0 else ':')
       leng=len
+
+   if ter:
+      head=transpose([s.split(' ') for s in names])
+   else:
+      head=[names]
+
+   if not gith:
+      for r in Res:
+         length=[max(n,len(s)) for (n,s) in zip(length,r)]
+
+      for t in head:
+         length=[max(n,len(s)) for (n,s) in zip(length,t)]
 
    mklin=lambda L:Sep+' '+(' '+Sep+' ').join(L)+' '+Sep
    fmt=lambda (s,n):(n-leng(s))*' '+s
@@ -75,7 +86,8 @@ def main(args,gith=False,ter=False):
       return s
 
    print
-   print mklin(map(fmt,zip(names,length)))
+   for t in head:
+      print mklin(map(fmt,zip(t,length)))
    print mklin([mk_pad(i,n) for i,n in enumerate(length)])
    for r in Res:
       r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
