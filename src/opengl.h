@@ -22,8 +22,6 @@
  * 2: temporary scratch buffer to use as necessary
  * 3: Used by toolkit */
 
-extern GLuint VaoId; // Another ugly hack... Since we don't use VAOs properly
-
 /*
  * Contains info about the opengl screen
  */
