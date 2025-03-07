@@ -5,6 +5,7 @@ use nalgebra::{Matrix3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
+use std::os::raw::c_double;
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock};
 use std::thread::ThreadId;
 
@@ -525,11 +526,26 @@ impl Context {
 
         self.buffer_solid
             .write(self, uniform.buffer()?.into_inner().as_slice())?;
+        self.buffer_solid.bind_base(self, 0);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
-
         VertexArray::unbind(self);
+        self.buffer_solid.unbind(self);
+
         Ok(())
     }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderRect(
+    x: c_double,
+    y: c_double,
+    w: c_double,
+    h: c_double,
+    c: *mut Vector4<f32>,
+) {
+    let ctx = CONTEXT.get().unwrap();
+    let colour = unsafe { *c };
+    let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
 }

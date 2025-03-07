@@ -74,6 +74,7 @@ void gl_endSmoothProgram()
    gl_checkErr();
 }
 
+#if 0
 /**
  * @brief Renders a rectangle.
  *
@@ -91,6 +92,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    gl_renderRectH( &projection, c, 1 );
 }
+#endif
 
 /**
  * @brief Renders a rectangle.

@@ -345,6 +345,7 @@ impl Texture {
 
         Texture::unbind(ctx);
         buffer::VertexArray::unbind(ctx);
+        ctx.buffer_texture.unbind(ctx);
 
         Ok(())
     }
