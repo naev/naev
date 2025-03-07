@@ -134,4 +134,4 @@ if __name__ == '__main__':
         balancer.csv2xml( args.filename )
     else:
         print( 'Reading from XML files to %s!' % args.filename )
-        alancer.xml2csv( args.filename )
+        balancer.xml2csv( args.filename )
