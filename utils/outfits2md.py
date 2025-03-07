@@ -3,18 +3,23 @@
 from sys import argv,stderr
 import xml.etree.ElementTree as ET
 
+lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide'}
 
+#launch_reload
 def main(args,gith=False,ter=False):
    names=['']*len(args)
    L=[dict() for a in args]
    rang=dict()
    acc=[]
 
+   if args==[]:
+      return
+
    for i in range(len(args)):
       T=ET.parse(args[i]).getroot()
       for t in T.iter():
          try:
-            n=abs(float(t.text))
+            n=float(t.text)
             L[i][t.tag]=t.text
             if not rang.has_key(t.tag):
                rang[t.tag]=(n,n)
@@ -31,6 +36,10 @@ def main(args,gith=False,ter=False):
       for e in T.findall("./general/shortname"):
          names[i]=e.text
          break
+
+   for i,(m,M) in rang.iteritems():
+      if i in lower_better:
+         rang[i]=(M,m)
 
    Res=[[k]+[l[k] if k in l else '' for l in L] for k in acc]
    names=['']+names
@@ -59,8 +68,6 @@ def main(args,gith=False,ter=False):
       if s=='':
          return "_"
       elif mi!=ma:
-         if mi<0 and ma<0: #if all are negative, assume the lower the better
-            mi,ma=ma,mi
          if float(s)==mi:
             return Lm+s+Rm
          elif float(s)==ma:
@@ -80,7 +87,7 @@ if __name__ == '__main__':
       print "By default, outputs text aligned markdown table comparing the outfits resp. values."
       print "The options improve your confort in certain use cases:"
       print "  -g  unaligned (therefore smaller) valid github md, for use in posts."
-      print "  -c  colored terminal output."
+      print "  -c  colored terminal output. You can pipe to \"less -RS\" if the table is too wide."
    else:
       gith,ter="-g" in argv[1:],"-c" in argv[1:]
       if gith and ter:
