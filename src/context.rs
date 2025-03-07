@@ -61,6 +61,7 @@ fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str)
     }
 }
 
+#[allow(clippy::enum_variant_names)] // Remove when we add other messages
 #[derive(Clone)]
 pub enum Message {
     DeleteBuffer(glow::NativeBuffer),
@@ -513,11 +514,7 @@ impl Context {
             0.0,  h,   y,
             0.0, 0.0, 1.0,
         );
-        let uniform = SolidUniform {
-            transform,
-            colour,
-            ..Default::default()
-        };
+        let uniform = SolidUniform { transform, colour };
         self.draw_rect_ex(&uniform)
     }
 
