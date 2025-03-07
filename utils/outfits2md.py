@@ -17,11 +17,11 @@ def main(args):
             n=float(t.text)
             L[i][t.tag]=t.text
             if not rang.has_key(t.tag):
-               rang[t.tag]=(n,n)
+               (mi,ma)=(2,2)
                acc.append(t.tag)
             else:
                (mi,ma)=rang[t.tag]
-               rang[t.tag]=(min(mi,n),max(ma,n))
+            rang[t.tag]=(min(mi,n),max(ma,n))
          except:
             pass
 
@@ -51,13 +51,14 @@ def main(args):
       return s
 
    print mklin(map(fmt,zip(names,length)))
-   print mklin(['-'*n for n in length])
+   print mklin(['-'*(n-1)+ ('-' if i==0 else ':') for i,n in enumerate(length)])
    for r in Res:
       r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
       print mklin(map(fmt,zip(r,length)))
 
-if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-   print "usage:",argv[0],'<outfitname1.xml> ...'
-else:
-   main([f for f in argv[1:] if f.endswith(".xml")])
+if __name__ == '__main__':
+   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
+      print "usage:",argv[0],'<outfitname1.xml> ...'
+   else:
+      main([f for f in argv[1:] if f.endswith(".xml")])
 
