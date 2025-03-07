@@ -1260,12 +1260,16 @@ pub extern "C" fn gl_renderTexture(
             let c = angle.cos() as f32;
             let s = angle.sin() as f32;
             Matrix3::new(
-                 c,  -s,  -hw * c + hh * s + hw,
-                 s,   c,  -hw * s - hh * c + hh,
+                1.0, 0.0, x as f32 + hw,
+                0.0, 1.0, y as f32 + hh,
                 0.0, 0.0, 1.0,
-            ) *  Matrix3::new(
-                w as f32, 0.0,      x as f32,
-                0.0,      h as f32, y as f32,
+            ) * Matrix3::new(
+                 c,  -s,  0.0,
+                 s,   c,  0.0,
+                0.0, 0.0, 1.0,
+            ) * Matrix3::new(
+                w as f32, 0.0,      -hw,
+                0.0,      h as f32, -hh,
                 0.0,      0.0,      1.0,
             )
         } else {
