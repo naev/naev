@@ -50,12 +50,12 @@
   <structure size="large" />
  </slots>
  <stats>
+  <cpu_mod>-15</cpu_mod>
   <speed_mod>-15</speed_mod>
   <armour_mod>20</armour_mod>
   <energy_mod>20</energy_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <fwd_damage>20</fwd_damage>
-  <fwd_energy>10</fwd_energy>
+  <tur_tracking>10</tur_tracking>
   <engine_limit_rel>15</engine_limit_rel>
  </stats>
  <tags>
