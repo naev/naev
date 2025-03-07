@@ -150,12 +150,12 @@ impl PuffLayer {
         let count = self.data.len();
 
         data.shader_puff.use_program(gl);
-        self.vertex_array.bind(ctx, 0);
+        self.vertex_array.bind(ctx);
         data.puff_buffer.bind_base(ctx, 0);
         unsafe {
             gl.draw_arrays_instanced(glow::TRIANGLE_STRIP, 0, 4, count as i32);
         }
-        VertexArray::unbind(ctx, 0);
+        VertexArray::unbind(ctx);
         data.puff_buffer.unbind(ctx);
 
         Ok(())
@@ -280,11 +280,11 @@ impl NebulaData {
 
         self.shader_bg.use_program(gl);
         self.buffer.bind_base(ctx, 0);
-        ctx.vao_center.bind(ctx, 0);
+        ctx.vao_center.bind(ctx);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
-        VertexArray::unbind(ctx, 0);
+        VertexArray::unbind(ctx);
         self.buffer.unbind(ctx);
 
         unsafe {
@@ -322,11 +322,11 @@ impl NebulaData {
 
         self.shader_overlay.use_program(gl);
         self.buffer.bind_base(ctx, 0);
-        ctx.vao_center.bind(ctx, 0);
+        ctx.vao_center.bind(ctx);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
-        VertexArray::unbind(ctx, 0);
+        VertexArray::unbind(ctx);
         self.buffer.unbind(ctx);
 
         unsafe {

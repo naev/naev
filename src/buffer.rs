@@ -179,17 +179,15 @@ impl Drop for VertexArray {
     }
 }
 impl VertexArray {
-    pub fn bind(&self, ctx: &context::Context, idx: u32) {
+    pub fn bind(&self, ctx: &context::Context) {
         unsafe {
-            //ctx.gl.enable_vertex_attrib_array(idx);
             ctx.gl.bind_vertex_array(Some(self.vertex_array));
         }
     }
 
-    pub fn unbind(ctx: &context::Context, idx: u32) {
+    pub fn unbind(ctx: &context::Context) {
         unsafe {
             ctx.gl.bind_vertex_array(Some(ctx.vao_core));
-            //ctx.gl.disable_vertex_attrib_array(idx);
         }
     }
 }

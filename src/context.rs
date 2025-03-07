@@ -524,7 +524,7 @@ impl Context {
     pub fn draw_rect_ex(&self, uniform: &SolidUniform) -> Result<()> {
         let gl = &self.gl;
         self.program_solid.use_program(gl);
-        self.vao_square.bind(self, 0);
+        self.vao_square.bind(self);
 
         self.buffer_solid
             .write(self, uniform.buffer()?.into_inner().as_slice())?;
@@ -532,7 +532,7 @@ impl Context {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
 
-        VertexArray::unbind(self, 0);
+        VertexArray::unbind(self);
         Ok(())
     }
 }

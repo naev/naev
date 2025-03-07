@@ -334,7 +334,7 @@ impl Texture {
         let gl = &ctx.gl;
         ctx.program_texture.use_program(gl);
         self.bind(ctx, 0);
-        ctx.vao_square.bind(ctx, 0);
+        ctx.vao_square.bind(ctx);
 
         ctx.buffer_texture
             .write(ctx, uniform.buffer()?.into_inner().as_slice())?;
@@ -344,7 +344,7 @@ impl Texture {
         }
 
         Texture::unbind(ctx);
-        buffer::VertexArray::unbind(ctx, 0);
+        buffer::VertexArray::unbind(ctx);
 
         Ok(())
     }
