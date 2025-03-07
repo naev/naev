@@ -334,7 +334,7 @@ impl Texture {
         let gl = &ctx.gl;
         ctx.program_texture.use_program(gl);
         self.bind(ctx, 0);
-        ctx.vao_square.bind(ctx);
+        ctx.vao_square.bind(ctx, 0);
 
         ctx.buffer_texture
             .write(ctx, uniform.buffer()?.into_inner().as_slice())?;
@@ -343,8 +343,8 @@ impl Texture {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
 
-        buffer::VertexArray::unbind(ctx);
         Texture::unbind(ctx);
+        buffer::VertexArray::unbind(ctx, 0);
 
         Ok(())
     }
@@ -410,6 +410,7 @@ impl TextureSource {
         // Try to load from name if possible
         if let Some(name) = name {
             if let Some(t) = TextureData::exists_textures(name, &textures) {
+                // TODO we would actually have to make sure it has mipmaps if we want them...
                 return Ok(t);
             }
         }
@@ -1245,7 +1246,6 @@ pub extern "C" fn gl_renderTexture(
     c: *mut Vector4<f32>,
     angle: c_double,
 ) {
-    /*
     let ctx = CONTEXT.get().unwrap();
     let colour = match c.is_null() {
         true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
@@ -1290,8 +1290,8 @@ pub extern "C" fn gl_renderTexture(
 
     let tex = unsafe { &*ctex };
     let _ = tex.draw_ex(ctx, &data);
-    */
 
+    /*
     let tex = unsafe { &*ctex };
     unsafe {
         naevc::gl_renderTextureRaw(
@@ -1310,4 +1310,5 @@ pub extern "C" fn gl_renderTexture(
             angle,
         );
     }
+    */
 }
