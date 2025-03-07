@@ -17,11 +17,11 @@ def main(args):
             n=float(t.text)
             L[i][t.tag]=t.text
             if not rang.has_key(t.tag):
-               (mi,ma)=(2,2)
+               rang[t.tag]=(n,n)
                acc.append(t.tag)
             else:
                (mi,ma)=rang[t.tag]
-            rang[t.tag]=(min(mi,n),max(ma,n))
+               rang[t.tag]=(min(mi,n),max(ma,n))
          except:
             pass
 
@@ -34,7 +34,8 @@ def main(args):
 
    Res=[[k]+[l[k] if k in l else '' for l in L] for k in acc]
    names=['']+names
-   length=map(len,names)
+   length=[1]*len(names)
+   length=[max(n,len(s)) for (n,s) in zip(length,names)]
 
    for r in Res:
       length=[max(n,len(s)) for (n,s) in zip(length,r)]
@@ -44,7 +45,9 @@ def main(args):
    lfmt=lambda (s,n):s+(n-len(s))*' '
 
    def emph(s,(mi,ma)):
-      if s!='' and mi!=ma:
+      if s=='':
+         return "_"
+      if mi!=ma:
          if float(s)==mi:
             return "_"+s+"_"
          elif float(s)==ma:
