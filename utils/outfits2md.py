@@ -41,6 +41,7 @@ def main(args):
 
    mklin=lambda L:'| '+' | '.join(L)+' |'
    fmt=lambda (s,n):(n-len(s))*' '+s
+   lfmt=lambda (s,n):s+(n-len(s))*' '
 
    def emph(s,(mi,ma)):
       if s!='' and mi!=ma:
@@ -54,7 +55,7 @@ def main(args):
    print mklin(['-'*(n-1)+ ('-' if i==0 else ':') for i,n in enumerate(length)])
    for r in Res:
       r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
-      print mklin(map(fmt,zip(r,length)))
+      print mklin([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))])
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
