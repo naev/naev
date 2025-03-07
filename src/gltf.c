@@ -1475,9 +1475,6 @@ void gltf_renderScene( GLuint fb, GltfObject *obj, int scene, const mat4 *H,
    if ( scene < 0 )
       return;
 
-   // Horrible hack since C-side uses a single VAO for everything
-   glBindVertexArray( VaoId );
-
    const GLfloat sca    = 1.0 / obj->radius;
    const mat4    Hscale = { .m = { { sca, 0.0, 0.0, 0.0 },
                                    { 0.0, sca, 0.0, 0.0 },

@@ -165,6 +165,8 @@ impl<'a> BufferBuilder<'a> {
     }
 }
 
+// Thin wrapper around vertex arrays, which are containers for the vertex buffer + index buffer
+// state
 pub struct VertexArray {
     pub vertex_array: glow::VertexArray,
 }
@@ -179,15 +181,15 @@ impl Drop for VertexArray {
 impl VertexArray {
     pub fn bind(&self, ctx: &context::Context, idx: u32) {
         unsafe {
-            ctx.gl.enable_vertex_attrib_array(idx);
+            //ctx.gl.enable_vertex_attrib_array(idx);
             ctx.gl.bind_vertex_array(Some(self.vertex_array));
         }
     }
 
     pub fn unbind(ctx: &context::Context, idx: u32) {
         unsafe {
-            ctx.gl.bind_vertex_array(None);
-            ctx.gl.disable_vertex_attrib_array(idx);
+            ctx.gl.bind_vertex_array(Some(ctx.vao_core));
+            //ctx.gl.disable_vertex_attrib_array(idx);
         }
     }
 }
@@ -204,6 +206,7 @@ pub struct VertexArrayBuilder<'a> {
     data_type: u32, // glow::FLOAT and such
     normalized: bool,
     buffers: &'a [VertexArrayBuffer<'a>],
+    indices: Option<&'a Buffer>,
 }
 impl<'a> VertexArrayBuilder<'a> {
     pub fn new(name: Option<&str>) -> Self {
@@ -212,6 +215,7 @@ impl<'a> VertexArrayBuilder<'a> {
             data_type: glow::FLOAT,
             normalized: false,
             buffers: &[],
+            indices: None,
         }
     }
 
@@ -235,21 +239,27 @@ impl<'a> VertexArrayBuilder<'a> {
         self
     }
 
-    pub fn build(self, gl: &glow::Context) -> Result<VertexArray> {
+    pub fn indices(mut self, indices: Option<&'a Buffer>) -> Self {
+        self.indices = indices;
+        self
+    }
+
+    pub fn build(self, ctx: &context::Context) -> Result<VertexArray> {
+        let vao = self.build_gl(&ctx.gl)?;
+        unsafe {
+            ctx.gl.bind_vertex_array(Some(ctx.vao_core)); // Unbind everything AFTER the VAO
+        }
+        Ok(vao)
+    }
+
+    pub fn build_gl(self, gl: &glow::Context) -> Result<VertexArray> {
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
-        /*
-        let data_size = match self.data_type {
-            glow::BYTE | glow::UNSIGNED_BYTE => 1,
-            glow::SHORT | glow::UNSIGNED_SHORT => 2,
-            glow::INT | glow::UNSIGNED_INT | glow::FIXED | glow::FLOAT => 4,
-            glow::DOUBLE => 8,
-            _ => anyhow::bail!("unsupported data type '{:#x}'", self.data_type),
-        };
-        */
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));
             #[cfg(debug_assertions)]
             gl.object_label(glow::VERTEX_ARRAY, vertex_array.0.into(), self.name);
+
+            // Bind Vertex Buffers
             for (idx, buffer) in self.buffers.iter().enumerate() {
                 if buffer.size < 1 || buffer.size > 4 {
                     warn!("invalid VertexArray size");
@@ -267,8 +277,16 @@ impl<'a> VertexArrayBuilder<'a> {
                 );
                 gl.vertex_attrib_divisor(idx as u32, buffer.divisor);
             }
+
+            // Bind Index Buffer
+            if let Some(indices) = self.indices {
+                gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, Some(indices.buffer));
+            }
+
+            // Clean up
+            gl.bind_vertex_array(None); // Unbind everything AFTER the VAO
             gl.bind_buffer(glow::ARRAY_BUFFER, None);
-            gl.bind_vertex_array(None);
+            gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
         }
         Ok(VertexArray { vertex_array })
     }

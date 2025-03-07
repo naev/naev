@@ -135,7 +135,7 @@ impl PuffLayer {
                     divisor: 1,
                 },
             ])
-            .build(&ctx.gl)?;
+            .build(ctx)?;
 
         Ok(PuffLayer {
             data,

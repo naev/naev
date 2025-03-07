@@ -372,7 +372,6 @@ static int gl_setupScaling( void )
    return 0;
 }
 
-GLuint VaoId;
 /**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
@@ -439,12 +438,6 @@ int gl_init( void )
 
    /* Get info about the OpenGL window */
    gl_getGLInfo();
-
-   /* Modern OpenGL requires at least one VAO */
-   glGenVertexArrays( 1, &VaoId );
-   glBindVertexArray( VaoId );
-   const char *va_name = "Core Vertex Array";
-   glObjectLabel( GL_VERTEX_ARRAY, VaoId, strlen( va_name ), va_name );
 
    shaders_load();
 

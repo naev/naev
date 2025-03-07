@@ -122,6 +122,9 @@ pub struct Context {
     pub vao_center: VertexArray,
     pub vbo_triangle: Buffer,
     pub vao_triangle: VertexArray,
+
+    // To be phased out when moved to rust
+    pub vao_core: glow::VertexArray,
 }
 unsafe impl Send for Context {}
 unsafe impl Sync for Context {}
@@ -367,6 +370,18 @@ impl Context {
             naevc::gl_screen.multitex_max = gl.get_parameter_i32(glow::MAX_TEXTURE_IMAGE_UNITS);
         }
 
+        // Modern OpenGL requires at least one VAO and the C code uses the same one
+        let vao_core = unsafe {
+            let vao = gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))?;
+            gl.bind_vertex_array(Some(vao));
+            gl.object_label(
+                glow::VERTEX_ARRAY,
+                vao.0.into(),
+                Some("C Core Vertex Array"),
+            );
+            vao
+        };
+
         // Initialize some useful globals
         // The texture shader
         let program_texture = ShaderBuilder::new(Some("Texture Shader"))
@@ -405,7 +420,7 @@ impl Context {
                 offset: 0,
                 divisor: 0,
             }])
-            .build(&gl)?;
+            .build_gl(&gl)?;
 
         // Center VBO
         let vbo_center = BufferBuilder::new(Some("Center VBO"))
@@ -420,7 +435,7 @@ impl Context {
                 offset: 0,
                 divisor: 0,
             }])
-            .build(&gl)?;
+            .build_gl(&gl)?;
 
         // Triangle VBO
         let vbo_triangle = BufferBuilder::new(Some("Triangle VBO"))
@@ -435,7 +450,7 @@ impl Context {
                 offset: 0,
                 divisor: 0,
             }])
-            .build(&gl)?;
+            .build_gl(&gl)?;
 
         let (window_width, window_height) = window.size();
         let (view_width, view_height, view_scale) = {
@@ -449,6 +464,9 @@ impl Context {
             0.0,            2.0/view_height, -1.0,
             0.0,            0.0,              1.0,
         );
+        unsafe {
+            gl.bind_vertex_array(Some(vao_core)); // Set default C VAO
+        }
         let ctx = Context {
             sdlvid,
             window,
@@ -471,6 +489,7 @@ impl Context {
             vao_center,
             vbo_triangle,
             vao_triangle,
+            vao_core,
         };
         let _ = CONTEXT.set(ctx);
         Ok(CONTEXT.get().unwrap())
