@@ -33,6 +33,7 @@
  </jumps>
  <waypoints>
   <waypoint x="-10000" y="8700">ant07_PUAAA_protesters</waypoint>
+  <waypoint x="0" y="0">ant08_PUAAA_protesters</waypoint>
   <waypoint x="0" y="-2000">ant07_PUAAA_patrol1</waypoint>
   <waypoint x="-4000" y="4000">ant07_PUAAA_patrol2</waypoint>
   <waypoint x="-8000" y="2000">ant07_PUAAA_patrol3</waypoint>
