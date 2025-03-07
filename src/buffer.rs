@@ -141,9 +141,9 @@ impl<'a> BufferBuilder<'a> {
         let usage = self.usage.to_gl();
         unsafe {
             gl.bind_buffer(target, Some(buffer));
+            gl.buffer_data_u8_slice(target, self.data, usage);
             #[cfg(debug_assertions)]
             gl.object_label(glow::BUFFER, buffer.0.into(), self.name);
-            gl.buffer_data_u8_slice(target, self.data, usage);
             gl.bind_buffer(target, None);
         }
 
