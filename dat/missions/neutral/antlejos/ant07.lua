@@ -127,11 +127,11 @@ end
 function enter ()
    if mem.state==0 and system.cur()==mainsys then
       local where=mainsys:waypoints("ant07_PUAAA_protesters_back")
-      spawn_protesters( , {"Lancelot", "Shark", "Shark"} )
+      spawn_protesters( where , {"Lancelot", "Shark", "Shark"} )
 
    elseif mem.state==1 and system.cur()==mainsys then
       local where=mainsys:waypoints("ant07_PUAAA_protesters_forth")
-      spawn_protesters( , {"Admonisher", "Hyena", "Hyena"} )
+      spawn_protesters( where , {"Admonisher", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
       local where=retsys:waypoints("ant07_PUAAA_protesters")
