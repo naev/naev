@@ -395,7 +395,7 @@ impl Context {
         let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(uniform.buffer()?.into_inner().as_slice())
+            .data(&uniform.buffer()?)
             .build(&gl)?;
         // The solid shader
         let program_solid = ShaderBuilder::new(Some("Solid Shader"))
@@ -406,7 +406,7 @@ impl Context {
         let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(uniform.buffer()?.into_inner().as_slice())
+            .data(&uniform.buffer()?)
             .build(&gl)?;
 
         // Square VBO
@@ -524,8 +524,7 @@ impl Context {
         self.program_solid.use_program(gl);
         self.vao_square.bind(self);
 
-        self.buffer_solid
-            .write(self, uniform.buffer()?.into_inner().as_slice())?;
+        self.buffer_solid.write(self, &uniform.buffer()?)?;
         self.buffer_solid.bind_base(self, 0);
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);

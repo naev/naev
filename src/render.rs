@@ -10,11 +10,11 @@ pub struct TextureUniform {
     pub colour: Vector4<f32>,
 }
 impl TextureUniform {
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
+    pub fn buffer(&self) -> Result<Vec<u8>> {
         let mut buffer =
             encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
         buffer.write(self)?;
-        Ok(buffer)
+        Ok(buffer.into_inner())
     }
 }
 impl Default for TextureUniform {
@@ -34,11 +34,11 @@ pub struct SolidUniform {
     pub colour: Vector4<f32>,
 }
 impl SolidUniform {
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
+    pub fn buffer(&self) -> Result<Vec<u8>> {
         let mut buffer =
             encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
         buffer.write(self)?;
-        Ok(buffer)
+        Ok(buffer.into_inner())
     }
 }
 impl Default for SolidUniform {
