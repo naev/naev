@@ -232,7 +232,6 @@ function autonav_system ()
       autonav_set( autonav_jump_approach )
    end
 end
-
 --[[
 Autonav to a spob, potentially trying to land
 --]]
@@ -659,6 +658,7 @@ function autonav_plt_follow ()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
          if follow_jump then
+            print "lost (jump) && follow_jump"
             local pp = player.pilot()
             if not jmp:known() or jmp:exitonly() then
                player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=get_pilot_name(plt)}).."#0")
@@ -667,13 +667,27 @@ function autonav_plt_follow ()
             end
             pp:navJumpSet( jmp )
             autonav_system()
+         elseif brake_pos then
+            print "lost (jump) && !follow_jump && brake_pos"
+            autonav_pos(plt:navJump():pos())
          else
+            print "lost (jump) && !follow_jump && !brake_pos"
             autonav_end()
          end
          return
       elseif plt:flags("landing") then
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
-         autonav_end()
+         if follow_jump then
+            -- does not work: have the autonav message : "landing on ..." but that does not happen.
+            print "lost (landing) && follow_jump"
+            autonav_spob( plt:navSpob(), true)
+         elseif brake_pos then
+            print "lost (landing) && !follow_jump && brake_pos"
+            autonav_pos(plt:navSpob():pos())
+         else
+            print "lost (landing) && !follow_jump && brake_pos"
+            autonav_end()
+         end
          return
       end
       inrng, target_known = player.pilot():inrange( plt )
