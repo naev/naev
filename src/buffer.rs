@@ -14,6 +14,7 @@ pub struct Buffer {
 }
 impl Buffer {
     pub fn write(&self, ctx: &Context, data: &[u8]) -> Result<()> {
+        #[cfg(debug_assertions)]
         if data.len() != self.datalen {
             anyhow::bail!("buffer data length mismatch!");
         }
@@ -39,6 +40,20 @@ impl Buffer {
             gl.bind_buffer(self.target, Some(self.buffer));
             gl.bind_buffer_base(glow::UNIFORM_BUFFER, idx, Some(self.buffer));
         }
+    }
+    /// Simplification for write + binding
+    pub fn bind_write_base(&self, ctx: &context::Context, data: &[u8], idx: u32) -> Result<()> {
+        #[cfg(debug_assertions)]
+        if data.len() != self.datalen {
+            anyhow::bail!("buffer data length mismatch!");
+        }
+        let gl = &ctx.gl;
+        unsafe {
+            gl.bind_buffer(self.target, Some(self.buffer));
+            gl.buffer_data_u8_slice(self.target, data, self.usage);
+            gl.bind_buffer_base(glow::UNIFORM_BUFFER, idx, Some(self.buffer));
+        }
+        Ok(())
     }
     /// Unbinds the buffer
     pub fn unbind(&self, ctx: &context::Context) {

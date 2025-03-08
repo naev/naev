@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+use crate::render::Uniform;
 use anyhow::Result;
 use glow::*;
 use nalgebra::{Matrix3, Vector4};
@@ -524,8 +525,8 @@ impl Context {
         self.program_solid.use_program(gl);
         self.vao_square.bind(self);
 
-        self.buffer_solid.write(self, &uniform.buffer()?)?;
-        self.buffer_solid.bind_base(self, 0);
+        self.buffer_solid
+            .bind_write_base(self, &uniform.buffer()?, 0)?;
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }

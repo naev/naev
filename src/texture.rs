@@ -1,4 +1,5 @@
 #![allow(dead_code, unused_variables)]
+use crate::render::Uniform;
 use anyhow::Result;
 use glow::*;
 use nalgebra::{Matrix3, Vector4};
@@ -336,8 +337,8 @@ impl Texture {
         self.bind(ctx, 0);
         ctx.vao_square.bind(ctx);
 
-        ctx.buffer_texture.write(ctx, &uniform.buffer()?)?;
-        ctx.buffer_texture.bind_base(ctx, 0);
+        ctx.buffer_texture
+            .bind_write_base(ctx, &uniform.buffer()?, 0)?;
         unsafe {
             gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
