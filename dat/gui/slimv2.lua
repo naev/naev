@@ -51,7 +51,7 @@ function create()
    --Get sizes
    screen_w, screen_h = gfx.dim()
    deffont_h = gfx.fontSize()
-   gui.viewport( 0, 0, screen_w, screen_h )
+   --gui.viewport( 0, 0, screen_w, screen_h )
 
    -- Bar structures
    bars.armour = {}

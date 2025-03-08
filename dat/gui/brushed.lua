@@ -214,7 +214,7 @@ function create()
    tbar_left_w, tbar_left_h = top_bar_left:dim()
    tbar_right_w, tbar_right_h = top_bar_right:dim()
 
-   gui.viewport( 0, 0, screen_w, screen_h )
+   --gui.viewport( 0, 0, screen_w, screen_h )
 
    fields_y = tbar_y + 15
    if screen_w <= 1024 + 2*margin then

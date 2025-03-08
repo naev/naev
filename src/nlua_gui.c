@@ -95,6 +95,7 @@ int nlua_loadGUI( nlua_env env )
  */
 static int guiL_viewport( lua_State *L )
 {
+#if 0
    /* Parameters. */
    double x = luaL_checknumber( L, 1 );
    double y = luaL_checknumber( L, 2 );
@@ -103,6 +104,9 @@ static int guiL_viewport( lua_State *L )
 
    /* Set the viewport. */
    gui_setViewport( x, y, w, h );
+   return 0;
+#endif
+   NLUA_DEPRECATED( L, "gui.viewport no longer supported" );
    return 0;
 }
 

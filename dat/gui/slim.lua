@@ -54,7 +54,7 @@ function create()
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
-   gui.viewport( 0, 28, screen_w, screen_h - 28 )
+   --gui.viewport( 0, 28, screen_w, screen_h - 28 )
 
    --Colours
    cols.txt_bar = colour.new( 192/255, 198/255, 217/255 )
@@ -758,7 +758,6 @@ function render( dt, dt_mod )
    speed = pp:vel():mod()
    local lockons = pp:lockon()
    local autonav = player.autonav()
-   local credits = player.credits()
    update_wset() -- Ugly.
 
    --Radar
@@ -1177,8 +1176,10 @@ function render( dt, dt_mod )
    end
 
    --Bottom bar
+   --[=[
    local length = 5
    local fuelstring
+   local credits = player.credits()
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    local jumps = player.jumps()
@@ -1229,6 +1230,7 @@ function render( dt, dt_mod )
       length = length + gfx.printDim( true, _("none") ) + 6
    end
    gfx.print( true, cargofree, length, 6, cols.txt_std )
+   --]=]
 
    lg.setShader( sh )
 end
