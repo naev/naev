@@ -210,7 +210,8 @@ function enter ()
       player.landAllow(false)
 
       local fbaroness = faction.dynAdd( "Mercenary", "Baroness", _("Baroness Eve") )
-      local pos = vec2.new( 9000, 3500 )
+      local pos = targetsys:waypoints("kex2_bloc")
+
       local function addenemy( shipname )
          local p = pilot.add( shipname, fbaroness, pos+vec2.newP( 800*rnd.rnd(), rnd.angle()) )
          p:control()

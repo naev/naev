@@ -126,19 +126,22 @@ end
 
 function enter ()
    if mem.state==0 and system.cur()==mainsys then
-      spawn_protesters( vec2.new( 3000, 4000 ), {"Lancelot", "Shark", "Shark"} )
+      local where=mainsys:waypoints("ant07_PUAAA_protesters_back")
+      spawn_protesters( where , {"Lancelot", "Shark", "Shark"} )
 
    elseif mem.state==1 and system.cur()==mainsys then
-      spawn_protesters( vec2.new( -10000, 8700 ), {"Admonisher", "Hyena", "Hyena"} )
+      local where=mainsys:waypoints("ant07_PUAAA_protesters_forth")
+      spawn_protesters( where , {"Admonisher", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
-      local f = spawn_protesters( vec2.new( -10000, 8700 ), {"Pacifier", "Lancelot", "Lancelot"} )
+      local where=retsys:waypoints("ant07_PUAAA_protesters")
+      local f = spawn_protesters( where , {"Pacifier", "Lancelot", "Lancelot"} )
       for k,p in ipairs(f) do
          p:changeAI( "baddiepatrol" )
          pilotai.patrol( p, {
-            vec2.new(    0, -2000 ),
-            vec2.new( -4000, 4000 ),
-            vec2.new( -8000, 2000 ),
+            retsys:waypoints("ant07_PUAAA_patrol1"),
+            retsys:waypoints("ant07_PUAAA_patrol2"),
+            retsys:waypoints("ant07_PUAAA_patrol3"),
          } )
       end
    end

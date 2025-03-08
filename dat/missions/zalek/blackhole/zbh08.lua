@@ -159,23 +159,23 @@ function enter ()
          j2:pos(),
       }
       local route1 = { -- Around j1
-         vec2.new( -5e3, 13e3 ),
-         vec2.new( 1e3, 9e3 ),
-         vec2.new( 8e3, 13e3 ),
+         atksys:waypoints("zbh08_route1_1"),
+         atksys:waypoints("zbh08_route1_2"),
+         atksys:waypoints("zbh08_route1_3"),
       }
       local route2 = {
-         vec2.new( 13e3, 7e3 ),
-         vec2.new( 0, -7e3 ),
+         atksys:waypoints("zbh08_route2_1"),
+         atksys:waypoints("zbh08_route2_2"),
       }
       local route3 = { -- Around j2
-         vec2.new( 4e3, -9e3 ),
-         vec2.new( 8e3, 2e3 ),
-         vec2.new( 16e3, -5e3 ),
+         atksys:waypoints("zbh08_route3_1"),
+         atksys:waypoints("zbh08_route3_2"),
+         atksys:waypoints("zbh08_route3_3"),
       }
       local route4 = {
-         vec2.new( 11e3, 12e3 ),
-         vec2.new( 0, 0 ),
-         vec2.new( 18e3, -4e3 ),
+         atksys:waypoints("zbh08_route4_1"),
+         atksys:waypoints("zbh08_route4_2"),
+         atksys:waypoints("zbh08_route4_3"),
       }
 
       local fevil = zbh.evilpi()

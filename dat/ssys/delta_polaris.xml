@@ -43,4 +43,7 @@
    <pos x="-841.597055" y="10984.495082"/>
   </exclusion>
  </asteroids>
+ <waypoints>
+  <waypoint x="-18000" y="7000">ant08_PUAAA_protesters</waypoint>
+ </waypoints>
 </ssys>

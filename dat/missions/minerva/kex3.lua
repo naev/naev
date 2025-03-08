@@ -244,7 +244,7 @@ function enter ()
       local fdv = faction.dynAdd( "Dvaered", "dv_thug", _("Dvaered Thug"), {clear_enemies=true, clear_allies=true} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
-         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local ppos = pos + vec2.newP( rnd.rnd()*200, rnd.angle() )
          local p = pilot.add( v, fdv, ppos )
          if not thug_leader then
             thug_leader = p
@@ -268,7 +268,7 @@ function enter ()
 
    elseif mem.misn_state==1 and system.cur() == targetsys then
       -- Spawn thugs after the player. Player is taking off from targetplanet (Trincea) and should likely be going to Dvaer.
-      spawn_thugs( vec2.new( 17000, 1000 ), true )
+      spawn_thugs( targetsys:waypoints("kex3_thugs"), true )
       -- Move to next state
       mem.misn_state = 2
       -- Timer
@@ -386,7 +386,9 @@ function enter_the_ring ()
 
    -- Set up Major Malik
    enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
-   local pos = vec2.new( -1500, 1500 )
+
+   local pos = gauntletsys:waypoints("kex3_Malik")
+
    pmalik = pilot.add( "Dvaered Vendetta", enemy_faction, pos, _("Major Malik"), {naked=true} )
    equipopt.dvaered( pmalik, {
       rnd = 0,
@@ -508,7 +510,7 @@ function player_death ()
 end
 
 function malik_spawn_more ()
-   local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
+   local pos = player.pos() + vec2.newP( 200*rnd.rnd(), rnd.angle() )
    luaspfx.alert( pos, {size=100} )
    hook.timer( 2, "malik_spawn_more_real", pos )
 end
@@ -582,7 +584,7 @@ end
 function maikki_arrives_extra ()
    local mc = minerva.maikkiP.colour
    local col = {mc[1], mc[2], mc[3], 0.3}
-   local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
+   local pos = player.pos() + vec2.newP( 200*rnd.rnd(), rnd.angle() )
    luaspfx.alert( pos, {size=100, col=col} )
    hook.timer( 2, "maikki_arrives_extra_real", pos )
 end

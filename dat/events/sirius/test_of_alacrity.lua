@@ -22,36 +22,34 @@ local markers
 local reward = outfit.get("Feather Drive")
 local obelisk = spob.get("Kal Maro Obelisk")
 
+local wp = system.get("Test of Alacrity"):waypoints()
+
 local track = {
    {
-      vec2.new( 578, 354 ),
-      vec2.new( -2, -86 ),
-      vec2.new( -61, -102 ),
-      vec2.new( 800, 319 ),
-   },
-   {
-      vec2.new( 800, 319 ),
-      vec2.new( 59, 98 ),
-      vec2.new( 43, -121 ),
-      vec2.new( 951, 496 ),
-   },
-   {
-      vec2.new( 951, 496 ),
-      vec2.new( -43, 121 ),
-      vec2.new( 73, 23 ),
-      vec2.new( 552, 696 ),
-   },
-   {
-      vec2.new( 552, 696 ),
-      vec2.new( -186, -90 ),
-      vec2.new( 186, 38 ),
-      vec2.new( 323, 448 ),
-   },
-   {
-      vec2.new( 323, 448 ),
-      vec2.new( -186, -38 ),
-      vec2.new( -82, 19 ),
-      vec2.new( 332, 246 ),
+      wp["alacrity_control_1"],
+      vec2.new( -2, -86 ),    -- offset
+      vec2.new( -61, -102 ),  -- offset
+      wp["alacrity_control_2"],
+   }, {
+      wp["alacrity_control_2"],
+      vec2.new( 59, 98 ),     -- offset
+      vec2.new( 43, -121 ),   -- offset
+      wp["alacrity_control_3"],
+   }, {
+      wp["alacrity_control_3"],
+      vec2.new( -43, 121 ),   -- offset
+      vec2.new( 73, 23 ),     -- offset
+      wp["alacrity_control_4"],
+   }, {
+      wp["alacrity_control_4"],
+      vec2.new( -186, -90 ),  -- offset
+      vec2.new( 186, 38 ),    -- offset
+      wp["alacrity_control_5"],
+   }, {
+      wp["alacrity_control_5"],
+      vec2.new( -186, -38 ),  -- offset
+      vec2.new( -82, 19 ),    -- offset
+      wp["alacrity_control_6"],
    },
 }
 
@@ -82,11 +80,12 @@ function create ()
    srs.weapsets{}
    pp:effectAdd("Astral Projection")
    pp:setDir( math.pi*0.5 )
-   pp:setPos( vec2.new(0,-200) )
+   pp:setPos( wp["alacrity_start"] )
    pp:intrinsicSet( { -- Ship is too fast otherwise
-      accel_mod      = -30,
+      accel_mod      = -20,
       speed_mod      = -30,
       turn_mod       = -30,
+      time_mod       = -10,
    }, true ) -- overwrite all
    pp:control(true)
 

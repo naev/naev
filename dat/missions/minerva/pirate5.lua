@@ -197,10 +197,12 @@ function enter ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
+   local wp=mainsys:waypoints()
+
    -- Main positions
-   local pos_drone_control1 = vec2.new( -500, 2000 )
-   local pos_drone_control2 = vec2.new( 18500, 9200 )
-   local pos_hacking_center = vec2.new( 5000, -17000 )
+   local pos_drone_control1 = wp["pirate5_drone_control1"]
+   local pos_drone_control2 = wp["pirate5_drone_control2"]
+   local pos_hacking_center = wp["pirate5_hacking_center"]
 
    -- Define the routes
    local route0 = {
@@ -224,20 +226,20 @@ function enter ()
       pos_hacking_center,
    }
    local route5 = {
-      vec2.new( -5000, 8000 ),
-      vec2.new( -9000, -5000 ),
-      vec2.new( 0, -15000 ),
-      vec2.new( -9000, -5000 ),
+      wp["pirate5_5_1"],
+      wp["pirate5_5_2"],
+      wp["pirate5_5_3"],
+      wp["pirate5_5_4"],
    }
    local route6 = {
-      vec2.new( -4000, -7400 ),
-      vec2.new( 7500, -5000 ),
-      vec2.new( 15000, -7500 ),
-      vec2.new( 7500, -5000 ),
+      wp["pirate5_6_1"],
+      wp["pirate5_6_2"],
+      wp["pirate5_6_3"],
+      wp["pirate5_6_4"],
    }
    local route7 = {
-      vec2.new( -7000, -7000 ),
-      vec2.new( 11000, -5000 ),
+      wp["pirate5_7_1"],
+      wp["pirate5_7_2"],
       pos_hacking_center,
    }
 
@@ -445,7 +447,7 @@ function drone_control_update ()
    -- Move the boss a bit away
    if main_boss and main_boss:exists() then
       local aimem = main_boss:memory()
-      aimem.guardpos = vec2.new( 4000, -14000 )
+      aimem.guardpos = mainsys:waypoints("pirate5_guard")
    end
 end
 function hacking_center_dead ()

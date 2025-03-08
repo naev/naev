@@ -250,7 +250,7 @@ function wave_round_setup ()
 
    local function addenemies( ships, equipfunc )
       local e = {}
-      local posbase = vec2.new( -1500, 1500 )
+      local posbase = gauntletsys:waypoints("gauntlet_pos_base")
       local boss = nil
       local layout = ships.layout or "cluster"
       local pos = posbase

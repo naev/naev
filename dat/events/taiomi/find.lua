@@ -37,13 +37,14 @@ local dist_detect_jump = 3e3 -- second encounter at jump
 evt_state = 0
 
 function create ()
+   local sys_wayp = system.get("Bastion"):waypoints()
    -- Extra derelicts
    numboarded = 0
    derelicts = {}
    local function addDerelicts( number, shiptype, boardfunc )
-      local pos = vec2.new( 15000, 6000 )
+      local pos = sys_wayp["derelicts"]
       for i = 1,number do
-         local p = pos + vec2.new( 3000*rnd.rnd(), rnd.rnd()*359 )
+         local p = pos + vec2.newP( 3000*rnd.rnd(), rnd.angle() )
          local s = shiptype[ rnd.rnd(1,#shiptype) ]
          local d = pilot.add( s, "Derelict", p, p_("ship", "Derelict") )
          d:setInvincible(true)
@@ -56,7 +57,7 @@ function create ()
    addDerelicts( 5, { "Mule", "Rhino" }, "boardothers" )
 
    -- Main derelict
-   local pos = vec2.new( 12000, 4250 )
+   local pos = sys_wayp["main_derelict"]
    derelict_mule = pilot.add( "Mule", "Derelict", pos, p_("ship", "Derelict") )
    derelict_mule:setInvincible(true)
    derelict_mule:setDisable()

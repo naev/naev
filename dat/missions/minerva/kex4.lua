@@ -284,7 +284,7 @@ function enter ()
       local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="mercenary"} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
-         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local ppos = pos + vec2.newP( rnd.rnd()*200, rnd.angle() )
          local p = pilot.add( v, fbh, ppos, nil, {naked=true} )
          equipopt.pirate( p )
          if not thug_leader then
@@ -326,7 +326,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local pos = targetplanet:pos() + vec2.new( 3000, rnd.rnd()*360 )
+      local pos = targetplanet:pos() + vec2.newP( 3000, rnd.angle() )
       pjie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( pjie, nil, "elite" )
       pjie:setHostile(true)
@@ -349,7 +349,7 @@ function enter ()
       end
       enemies = { pjie }
       for k,v in ipairs(henchmen) do
-         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local ppos = pos + vec2.newP( rnd.rnd()*200, rnd.angle() )
          local p = pilot.add( v, "Independent", ppos, nil, {naked=true, ai="baddie_norun"} )
          equipopt.pirate( p )
          p:setLeader( pjie )

@@ -65,7 +65,7 @@ function enter()
    if system.cur() == mem.destsys and not mem.flfdead and not mem.basefound then
       -- Collect information needed for course calculations
       local spread = 45 -- max degrees off-course for waypoints
-      local basepos = vec2.new(-8700,-3000) -- NOTE: Should be identical to the location in asset.xml!
+      local basepos = spob.get("Sindbad"):pos()
       local jumppos = jump.pos( system.cur(), "Behar" )
 
       -- Calculate course
@@ -191,10 +191,11 @@ end
 -- Fly the FLF ships through their waypoints
 function annai()
    local poss = {}
-   poss[1] = vec2.new(0,70)
-   poss[2] = vec2.new(50, -50)
-   poss[3] = vec2.new(-50, -50)
-   poss[4] = vec2.new(0,120)
+   poss[1] = vec2.new(0,70)      -- offset
+   poss[2] = vec2.new(50, -50)   -- offset
+   poss[3] = vec2.new(-50, -50)  -- offset
+   poss[4] = vec2.new(0,120)     -- offset
+
    local speed = player.pilot():stats().speed_max * 0.9
    for i, p in ipairs(fleetFLF) do
       if p ~= nil and p:exists() then

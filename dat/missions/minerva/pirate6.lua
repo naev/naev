@@ -234,7 +234,9 @@ She shakes her head.
 end
 
 local helper_npc, helper_drone
-local meet_pos = vec2.new( -17500, 2500 )
+
+local meet_pos = mainsys:waypoints("pirate6_meet")
+
 function enter ()
    -- Must be goal system
    if system.cur() ~= mainsys then

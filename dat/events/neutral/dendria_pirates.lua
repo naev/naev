@@ -57,7 +57,7 @@ function enter ()
       return p
    end
 
-   local mainpos = vec2.new( 14e3, 3e3 )
+   local mainpos = mainsys:waypoints("dendria_pirate_mainpos")
    pirboss = spawn_pirate( "Pirate Kestrel", mainpos )
    pirboss:rename(piratename)
    pirboss:setVisplayer(true)

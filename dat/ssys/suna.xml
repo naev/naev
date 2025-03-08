@@ -32,4 +32,18 @@
    <pos x="-1127.793979" y="2126.168977"/>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="-3000" y="-7000">achack04_bhunters</waypoint>
+  <waypoint x="-500" y="-4000">darkshadow_joe</waypoint>
+  <waypoint x="-2500" y="-1500">darkshadow_patrol1_start</waypoint>
+  <waypoint x="2500" y="1000">darkshadow_patrol2_start</waypoint>
+  <waypoint x="-3500" y="-4500">darkshadow_patrol3_start</waypoint>
+  <waypoint x="2500" y="-2500">darkshadow_patrol4_start</waypoint>
+  <waypoint x="-2500" y="-6500">darkshadow_patrol5_start</waypoint>
+  <waypoint x="2500" y="-1000">darkshadow_patrol1_stop</waypoint>
+  <waypoint x="-500" y="1500">darkshadow_patrol2_stop</waypoint>
+  <waypoint x="-4500" y="-1500">darkshadow_patrol3_stop</waypoint>
+  <waypoint x="2000" y="-6000">darkshadow_patrol4_stop</waypoint>
+  <waypoint x="1000" y="-1500">darkshadow_patrol5_stop</waypoint>
+ </waypoints>
 </ssys>

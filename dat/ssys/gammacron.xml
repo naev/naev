@@ -36,4 +36,21 @@
    <pos x="1200.000000" y="4032.000000"/>
   </exclusion>
  </asteroids>
+ <waypoints>
+  <waypoint x="-500" y="2000">pirate5_drone_control1</waypoint>
+  <waypoint x="18500" y="9200">pirate5_drone_control2</waypoint>
+  <waypoint x="5000" y="-17000">pirate5_hacking_center</waypoint>
+  <waypoint x="-5000" y="8000">pirate5_5_1</waypoint>
+  <waypoint x="-9000" y="-5000">pirate5_5_2</waypoint>
+  <waypoint x="0" y="-15000">pirate5_5_3</waypoint>
+  <waypoint x="-9000" y="-5000">pirate5_5_4</waypoint>
+  <waypoint x="-4000" y="-7400">pirate5_6_1</waypoint>
+  <waypoint x="7500" y="-5000">pirate5_6_2</waypoint>
+  <waypoint x="15000" y="-7500">pirate5_6_3</waypoint>
+  <waypoint x="7500" y="-5000">pirate5_6_4</waypoint>
+  <waypoint x="-7000" y="-7000">pirate5_7_1</waypoint>
+  <waypoint x="11000" y="-5000">pirate5_7_2</waypoint>
+  <waypoint x="4000" y="-14000">pirate5_guard</waypoint>
+  <waypoint x="-1500" y="600">shadowrun_seiryuu</waypoint>
+ </waypoints>
 </ssys>

@@ -31,7 +31,7 @@ local smugden, smugsys = spob.getS("Darkshed")
 local startspob, startsys = spob.getS("Arrakis")
 local fightsys = system.get("Gamel")
 local handoffsys = system.get("Bastion")
-local handoffpos = vec2.new( 8e3, 3e3 )
+local handoffpos = handoffsys:waypoints("handoff_pos")
 
 --[[
    0: mission started
@@ -336,10 +336,12 @@ function enter ()
       else
          local fescort = escort_faction()
          local fbaddies = faction.dynAdd( fct, "taiomi_baddies", fct:name() )
+         local fwp=fightsys:waypoints()
+
          fbaddies:dynEnemy( fescort ) -- dynamic faction gives no faction hits, good I guess?
          -- positions chosen so that hopefully the player doesn't fight them all at once
-         local f1 = add_fleet( vec2.new( 3e3, -8e3 ), fbaddies )
-         local f2 = add_fleet( vec2.new( 3e3, 13e3 ), fbaddies )
+         local f1 = add_fleet( fwp["taiomi09_baddies1"], fbaddies )
+         local f2 = add_fleet( fwp["taiomi09_baddies2"], fbaddies )
          for k,v in ipairs(f1) do
             v:hostile()
          end
@@ -347,8 +349,8 @@ function enter ()
             v:hostile()
          end
          local wp = {
-            vec2.new( 6e3, 6e3 ),
-            vec2.new( 13e3, -7e3 ),
+            fwp["taiomi09_wp1"],
+            fwp["taiomi09_wp2"],
          }
          pilotai.patrol( f1[1], wp )
          pilotai.patrol( f2[1], wp )
