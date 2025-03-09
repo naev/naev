@@ -1,6 +1,7 @@
 //use mlua::prelude::*;
 use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
+use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, IntoLua};
 
@@ -145,7 +146,7 @@ fn load_common(lua: &mlua::Lua) -> mlua::Result<mlua::Function> {
 }
 
 impl NLua<'_> {
-    pub fn new() -> NLua<'static> {
+    pub fn new() -> Result<NLua<'static>> {
         let lua = unsafe {
             // TODO get rid of the lua_init() and move entirely to mlua.
             naevc::lua_init();
@@ -156,10 +157,10 @@ impl NLua<'_> {
         //lua.load_std_libs( mlua::StdLib::ALL_SAFE ).unwrap();
 
         // Minor sandboxing
-        sandbox(&lua).unwrap();
+        sandbox(&lua)?;
 
         // Set up gettext stuff
-        open_gettext(&lua).unwrap();
+        open_gettext(&lua)?;
 
         // Load common chunk
         let common = match load_common(&lua) {
@@ -168,11 +169,11 @@ impl NLua<'_> {
         };
 
         // Return it
-        NLua {
+        Ok(NLua {
             lua,
             envs: Vec::new(),
             common,
-        }
+        })
     }
 
     #[allow(dead_code)]

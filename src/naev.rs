@@ -1,8 +1,9 @@
+pub use anyhow;
+use anyhow::{Error, Result};
 use formatx::formatx;
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
-use std::io::{Error, ErrorKind, Result};
-use std::os::raw::{c_char, c_int, c_uint, c_void};
+use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
 
 #[link(name = "naev")]
 unsafe extern "C" {
@@ -76,7 +77,7 @@ pub fn naev() -> Result<()> {
         if naevc::PHYSFS_init(argv0.as_ptr() as *const c_char) == 0 {
             let err = physfs::error_as_io_error();
             println!("{}", err);
-            return Err(Error::new(ErrorKind::Other, err));
+            return Err(Error::new(err));
             /* TODO probably move the error handling to the "real" main, when shit hits the
                 * fan. Below depends on sdl3
             SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
@@ -203,7 +204,7 @@ pub fn naev() -> Result<()> {
         );
     }
 
-    let _lua = nlua::NLua::new();
+    let _lua = nlua::NLua::new()?;
 
     unsafe {
         /* Enable FPU exceptions. */
@@ -215,7 +216,7 @@ pub fn naev() -> Result<()> {
             let err = gettext("Failed to load start data.");
             warn!(err);
             // TODO show some simple error message
-            return Err(Error::new(ErrorKind::Other, err));
+            anyhow::bail!(err);
         }
         info!(
             " {}\n",
@@ -235,7 +236,7 @@ pub fn naev() -> Result<()> {
             let err = gettext("Initializing video output failed, exiting…");
             warn!(err);
             // TODO show some simple error message
-            return Err(Error::new(ErrorKind::Other, err));
+            anyhow::bail!(err);
         }
 
         //Have to set up fonts before rendering anything.
