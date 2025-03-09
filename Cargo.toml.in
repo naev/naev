@@ -29,7 +29,7 @@ gltf = { version = "1", features = ["extras", "names", "utils"] }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 # We support lua51 / luajit and they are ABI compatible, so just point at luajit
-mlua = { version = "0", features = ["luajit"] }
+mlua = { version = "0", features = ["luajit", "anyhow"] }
 
 [target.'cfg(unix)'.dependencies]
 nix = { version="0", features=["signal"] }
