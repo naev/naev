@@ -27,8 +27,8 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-4000" y="-5500">quai_pirate_mainpos</waypoint>
-  <waypoint x="-4000" y="8000">quai_pirate_1</waypoint>
-  <waypoint x="-8500" y="-2000">quai_pirate_2</waypoint>
+  <waypoint x="-4000.000000" y="8000.000000">quai_pirate_1</waypoint>
+  <waypoint x="-8500.000000" y="-2000.000000">quai_pirate_2</waypoint>
+  <waypoint x="-4000.000000" y="-5500.000000">quai_pirate_mainpos</waypoint>
  </waypoints>
 </ssys>

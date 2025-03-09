@@ -16,7 +16,7 @@
  </spobs>
  <jumps>
   <jump target="Fried">
-   <pos x="-21000" y="-22000"/>
+   <pos x="-21000.000000" y="-22000.000000"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Gammacron">
@@ -24,11 +24,11 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Provectus Nova">
-   <pos x="-15000" y="9000"/>
+   <pos x="-15000.000000" y="9000.000000"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Sollav">
-   <pos x="-23500" y="-5500"/>
+   <pos x="-23500.000000" y="-5500.000000"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
@@ -44,10 +44,10 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="6000" y="-4000">pirate1_thug</waypoint>
-  <waypoint x="-12000" y="-12000">pirate1_drone</waypoint>
-  <waypoint x="-17500" y="2500">pirate6_meet</waypoint>
-  <waypoint x="-2000" y="-15000">pirate2_drone1</waypoint>
-  <waypoint x="-10000" y="0">pirate2_drone2</waypoint>
+  <waypoint x="-12000.000000" y="-12000.000000">pirate1_drone</waypoint>
+  <waypoint x="6000.000000" y="-4000.000000">pirate1_thug</waypoint>
+  <waypoint x="-2000.000000" y="-15000.000000">pirate2_drone1</waypoint>
+  <waypoint x="-10000.000000" y="0.000000">pirate2_drone2</waypoint>
+  <waypoint x="-17500.000000" y="2500.000000">pirate6_meet</waypoint>
  </waypoints>
 </ssys>

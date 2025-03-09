@@ -10,16 +10,16 @@
  <pos x="1336.500000" y="-582.500000"/>
  <spobs/>
  <jumps/>
+ <waypoints>
+  <waypoint x="578.000000" y="354.000000">alacrity_control_1</waypoint>
+  <waypoint x="800.000000" y="319.000000">alacrity_control_2</waypoint>
+  <waypoint x="951.000000" y="496.000000">alacrity_control_3</waypoint>
+  <waypoint x="552.000000" y="696.000000">alacrity_control_4</waypoint>
+  <waypoint x="323.000000" y="448.000000">alacrity_control_5</waypoint>
+  <waypoint x="332.000000" y="246.000000">alacrity_control_6</waypoint>
+  <waypoint x="0.000000" y="-200.000000">alacrity_start</waypoint>
+ </waypoints>
  <tags>
   <tag>spoiler</tag>
  </tags>
- <waypoints>
-  <waypoint x="578" y="354">alacrity_control_1</waypoint>
-  <waypoint x="800" y="319">alacrity_control_2</waypoint>
-  <waypoint x="951" y="496">alacrity_control_3</waypoint>
-  <waypoint x="552" y="696">alacrity_control_4</waypoint>
-  <waypoint x="323" y="448">alacrity_control_5</waypoint>
-  <waypoint x="332" y="246">alacrity_control_6</waypoint>
-  <waypoint x="0" y="-200">alacrity_start</waypoint>
- </waypoints>
 </ssys>

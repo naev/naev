@@ -21,6 +21,6 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="14000" y="3000">dendria_pirate_mainpos</waypoint>
+  <waypoint x="14000.000000" y="3000.000000">dendria_pirate_mainpos</waypoint>
  </waypoints>
 </ssys>

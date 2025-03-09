@@ -38,6 +38,6 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="2230" y="-13000">achack02_ambush</waypoint>
+  <waypoint x="2230.000000" y="-13000.000000">achack02_ambush</waypoint>
  </waypoints>
 </ssys>

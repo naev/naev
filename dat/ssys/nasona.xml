@@ -23,7 +23,7 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="0" y="0">neburesearch_05_checkpoint</waypoint>
+  <waypoint x="0.000000" y="0.000000">neburesearch_05_checkpoint</waypoint>
  </waypoints>
  <tags>
   <tag>thenebula</tag>

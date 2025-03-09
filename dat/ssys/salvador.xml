@@ -37,7 +37,7 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="3000" y="4000">ant07_PUAAA_protesters_back</waypoint>
-  <waypoint x="-10000" y="8700">ant07_PUAAA_protesters_forth</waypoint>
+  <waypoint x="3000.000000" y="4000.000000">ant07_PUAAA_protesters_back</waypoint>
+  <waypoint x="-10000.000000" y="8700.000000">ant07_PUAAA_protesters_forth</waypoint>
  </waypoints>
 </ssys>

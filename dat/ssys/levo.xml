@@ -23,7 +23,7 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="-5000" y="5000">levo_pirate_1</waypoint>
-  <waypoint x="-3000" y="-3000">levo_pirate_2</waypoint>
+  <waypoint x="-5000.000000" y="5000.000000">levo_pirate_1</waypoint>
+  <waypoint x="-3000.000000" y="-3000.000000">levo_pirate_2</waypoint>
  </waypoints>
 </ssys>

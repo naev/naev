@@ -34,7 +34,7 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-13000" y="4000">achack02_ambush</waypoint>
+  <waypoint x="-13000.000000" y="4000.000000">achack02_ambush</waypoint>
  </waypoints>
  <tags>
   <tag>tradelane</tag>

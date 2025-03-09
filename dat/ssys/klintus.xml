@@ -26,24 +26,24 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-4000" y="0">ant09_PUAAA_mothership</waypoint>
-  <waypoint x="-14000" y="0">ant09_2_3</waypoint>
-  <waypoint x="-14000" y="6000">ant09_3_1</waypoint>
-  <waypoint x="10000" y="6000">ant09_3_2</waypoint>
-  <waypoint x="10000" y="-6000">ant09_3_3</waypoint>
-  <waypoint x="-14000" y="-6000">ant09_3_4</waypoint>
-  <waypoint x="-10000" y="0">ant09_4_1</waypoint>
-  <waypoint x="-4000" y="4000">ant09_4_2</waypoint>
-  <waypoint x="4000" y="4000">ant09_4_3</waypoint>
-  <waypoint x="4000" y="-4000">ant09_4_4</waypoint>
-  <waypoint x="-4000" y="-4000">ant09_4_5</waypoint>
-  <waypoint x="-14000" y="4000">ant09_5_1</waypoint>
-  <waypoint x="-14000" y="-4000">ant09_5_3</waypoint>
-  <waypoint x="6000" y="-14000">ant09_6_1</waypoint>
-  <waypoint x="6000" y="10000">ant09_6_2</waypoint>
-  <waypoint x="-6000" y="10000">ant09_6_3</waypoint>
-  <waypoint x="-6000" y="-14000">ant09_6_4</waypoint>
-  <waypoint x="-6000" y="-5000">ant09_7_1</waypoint>
-  <waypoint x="-4000" y="4000">ant09_7_2</waypoint>
+  <waypoint x="-14000.000000" y="0.000000">ant09_2_3</waypoint>
+  <waypoint x="-14000.000000" y="6000.000000">ant09_3_1</waypoint>
+  <waypoint x="10000.000000" y="6000.000000">ant09_3_2</waypoint>
+  <waypoint x="10000.000000" y="-6000.000000">ant09_3_3</waypoint>
+  <waypoint x="-14000.000000" y="-6000.000000">ant09_3_4</waypoint>
+  <waypoint x="-10000.000000" y="0.000000">ant09_4_1</waypoint>
+  <waypoint x="-4000.000000" y="4000.000000">ant09_4_2</waypoint>
+  <waypoint x="4000.000000" y="4000.000000">ant09_4_3</waypoint>
+  <waypoint x="4000.000000" y="-4000.000000">ant09_4_4</waypoint>
+  <waypoint x="-4000.000000" y="-4000.000000">ant09_4_5</waypoint>
+  <waypoint x="-14000.000000" y="4000.000000">ant09_5_1</waypoint>
+  <waypoint x="-14000.000000" y="-4000.000000">ant09_5_3</waypoint>
+  <waypoint x="6000.000000" y="-14000.000000">ant09_6_1</waypoint>
+  <waypoint x="6000.000000" y="10000.000000">ant09_6_2</waypoint>
+  <waypoint x="-6000.000000" y="10000.000000">ant09_6_3</waypoint>
+  <waypoint x="-6000.000000" y="-14000.000000">ant09_6_4</waypoint>
+  <waypoint x="-6000.000000" y="-5000.000000">ant09_7_1</waypoint>
+  <waypoint x="-4000.000000" y="4000.000000">ant09_7_2</waypoint>
+  <waypoint x="-4000.000000" y="0.000000">ant09_PUAAA_mothership</waypoint>
  </waypoints>
 </ssys>

@@ -45,6 +45,6 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="11000" y="5000">taiomi05_corpse</waypoint>
+  <waypoint x="11000.000000" y="5000.000000">taiomi05_corpse</waypoint>
  </waypoints>
 </ssys>

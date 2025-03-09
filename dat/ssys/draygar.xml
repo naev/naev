@@ -24,10 +24,10 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="2000.000000" y="4000.000000">shadowvigil_meetpoint</waypoint>
+ </waypoints>
  <tags>
   <tag>tradelane</tag>
  </tags>
- <waypoints>
-  <waypoint x="2000" y="4000">shadowvigil_meetpoint</waypoint>
- </waypoints>
 </ssys>

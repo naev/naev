@@ -33,6 +33,6 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="0" y="-2000">shadowvigil_seiryuu</waypoint>
+  <waypoint x="0.000000" y="-2000.000000">shadowvigil_seiryuu</waypoint>
  </waypoints>
 </ssys>

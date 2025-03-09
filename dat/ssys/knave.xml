@@ -36,6 +36,6 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="-4500" y="4500">ant06_PUAAA_supply_ship</waypoint>
+  <waypoint x="-4500.000000" y="4500.000000">ant06_PUAAA_supply_ship</waypoint>
  </waypoints>
 </ssys>

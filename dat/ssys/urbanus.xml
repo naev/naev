@@ -24,6 +24,6 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="17000" y="1000" >kex3_thugs</waypoint>
+  <waypoint x="17000.000000" y="1000.000000">kex3_thugs</waypoint>
  </waypoints>
 </ssys>

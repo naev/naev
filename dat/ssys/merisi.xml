@@ -24,6 +24,6 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="8000" y="-20000">ec00_target</waypoint>
+  <waypoint x="8000.000000" y="-20000.000000">ec00_target</waypoint>
  </waypoints>
 </ssys>

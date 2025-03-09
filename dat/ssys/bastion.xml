@@ -41,9 +41,9 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="15000" y="6000">derelicts</waypoint>
-  <waypoint x="12000" y="4250">main_derelict</waypoint>
-  <waypoint x="8000" y="3000">handoff_pos</waypoint>
-  <waypoint x="-2500" y="-2000">taiomi05_firstpos</waypoint>
+  <waypoint x="15000.000000" y="6000.000000">derelicts</waypoint>
+  <waypoint x="8000.000000" y="3000.000000">handoff_pos</waypoint>
+  <waypoint x="12000.000000" y="4250.000000">main_derelict</waypoint>
+  <waypoint x="-2500.000000" y="-2000.000000">taiomi05_firstpos</waypoint>
  </waypoints>
 </ssys>

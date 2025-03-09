@@ -44,6 +44,6 @@
   </exclusion>
  </asteroids>
  <waypoints>
-  <waypoint x="-18000" y="7000">ant08_PUAAA_protesters</waypoint>
+  <waypoint x="-18000.000000" y="7000.000000">ant08_PUAAA_protesters</waypoint>
  </waypoints>
 </ssys>

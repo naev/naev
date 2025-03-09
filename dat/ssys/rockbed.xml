@@ -32,6 +32,6 @@
   </jump>
  </jumps>
  <waypoints>
-  <waypoint x="-5000" y="1500">ec05_trinity</waypoint>
+  <waypoint x="-5000.000000" y="1500.000000">ec05_trinity</waypoint>
  </waypoints>
 </ssys>

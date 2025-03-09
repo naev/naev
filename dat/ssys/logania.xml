@@ -27,6 +27,6 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="5000" y="6000" >finale1</waypoint>
+  <waypoint x="5000.000000" y="6000.000000">finale1</waypoint>
  </waypoints>
 </ssys>

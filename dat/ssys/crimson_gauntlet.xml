@@ -19,8 +19,8 @@
   </asteroid>
  </asteroids>
  <waypoints>
-  <waypoint x="-1500" y="1500" >kex3_Malik</waypoint>
-  <waypoint x="-1500" y="1500">gauntlet_pos_base</waypoint>
+  <waypoint x="-1500.000000" y="1500.000000">gauntlet_pos_base</waypoint>
+  <waypoint x="-1500.000000" y="1500.000000">kex3_Malik</waypoint>
  </waypoints>
  <tags>
   <tag>spoiler</tag>
