@@ -10,25 +10,27 @@ local prng = require("prng").new()
 
 local pixelcode = lf.read( "bkg/shaders/blackhole.frag" )
 
+local bhsys = system.get("Anubis Black Hole")
 local blackhole, shader, time, bx, by, sf, move
 local bgstars
 function background ()
    sf = math.max( 1.0, bgshaders.scale_factor_default() * 0.5 )
 
-   local sysname = system.cur():nameRaw()
+   local csys = system.cur();
+   local sysname = csys:nameRaw()
    prng:setSeed( sysname )
 
-   local off = system.cur():pos() - vec2.new( -765, -490 )  -- Where does that come from ???
+   local off = (csys:pos() - bhsys:pos())
    local _m, a = off:polar()
    local scale
 
-   if sysname == "Anubis Black Hole" then
+   if csys==bhsys then
       scale = 8
       off = vec2.new()
       move = 0.01
    else
       scale = 1
-      off = vec2.newP( 4, a )
+      off = vec2.newP( 7, a )
       move = 0.00025
    end
    bx, by = off:get()
