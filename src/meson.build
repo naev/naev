@@ -27,6 +27,7 @@ source_rust = files(
    'start.rs',
    'texture.rs',
    'utils.rs',
+   'vec2.rs',
    'version.rs',
 )
 source = files(

@@ -35,6 +35,7 @@ mod slots;
 mod start;
 mod texture;
 mod utils;
+mod vec2;
 mod version;
 
 use crate::gettext::gettext;
