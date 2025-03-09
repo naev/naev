@@ -292,6 +292,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_endElem( writer ); /* "waypoint" */
       }
       xmlw_endElem( writer ); /* "waypoints" */
+      free( sorted_wp );
    }
 
    if ( array_size( sys->tags ) > 0 ) {
