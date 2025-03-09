@@ -25,6 +25,9 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="0" y="0">ec06_starfire</waypoint>
+ </waypoints>
  <tags>
   <tag>restricted</tag>
  </tags>

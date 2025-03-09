@@ -242,7 +242,8 @@ end
 function jumpin()
    if system.cur()==mem.destsys and mem.stage==stages.killAssociates then
       local bhships = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = fleet.add(1, bhships, achack.fct_thugs(), vec2.new(-3000, -7000), _("Bounty Hunter"))
+      local bhunters_pos=mem.destsys:waypoints("achack04_bhunters")
+      bhfleet = fleet.add(1, bhships, achack.fct_thugs(), bhunters_pos, _("Bounty Hunter"))
       mem.alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()

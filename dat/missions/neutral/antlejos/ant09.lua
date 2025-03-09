@@ -197,7 +197,8 @@ function enter ()
    misn.osdActive(2)
 
    -- Main positions
-   local pos_mothership = vec2.new( -4e3, 0 )
+   local wp = mainsys:waypoints()
+   local pos_mothership = wp["ant09_PUAAA_mothership"]
 
    -- Define the routes
    local route0 = {
@@ -210,36 +211,37 @@ function enter ()
    local route2 = {
       jump.get( mainsys, "Senara" ):pos(),
       jump.get( mainsys, "NGC-3219" ):pos(),
-      vec2.new( -14e3, 0 ),
+      wp["ant09_2_3"],
    }
    local route3 = {
-      vec2.new( -14e3,  6e3 ),
-      vec2.new(  10e3,  6e3 ),
-      vec2.new(  10e3, -6e3 ),
-      vec2.new( -14e3, -6e3 ),
+      wp["ant09_3_1"],
+      wp["ant09_3_2"],
+      wp["ant09_3_3"],
+      wp["ant09_3_4"],
    }
    local route4 = {
-      vec2.new( -10e3,    0 ),
-      vec2.new(  -4e3,  4e3 ),
-      vec2.new(   4e3,  4e3 ),
-      vec2.new(   4e3, -4e3 ),
-      vec2.new(  -4e3, -4e3 ),
+      wp["ant09_4_1"],
+      wp["ant09_4_2"],
+      wp["ant09_4_3"],
+      wp["ant09_4_4"],
+      wp["ant09_4_5"],
    }
    local route5 = {
-      vec2.new(  -14e3, 4e3 ),
+      wp["ant09_5_1"],
       pos_mothership,
-      vec2.new(  -14e3, -4e3 ),
+      wp["ant09_5_3"],
    }
    local route6 = {
-      vec2.new(  6e3, -14e3 ),
-      vec2.new(  6e3,  10e3 ),
-      vec2.new( -6e3,  10e3 ),
-      vec2.new( -6e3, -14e3 ),
+      wp["ant09_6_1"],
+      wp["ant09_6_2"],
+      wp["ant09_6_3"],
+      wp["ant09_6_4"],
    }
    local route7 = {
-      vec2.new( -6e3, -5e3 ),
-      vec2.new( -4e3, 4e3 ),
+      wp["ant09_7_1"],
+      wp["ant09_7_2"],
    }
+   -- TODO: check nil is not in a route
 
    -- Initialize ship stuff
    local puaaa = ant.puaaa()

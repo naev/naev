@@ -144,7 +144,7 @@ end
 
 -- Land hook.
 function land()
-   if spob.cur() == mem.destplanet and mem.joannelanded and mem.stage < 4 then
+   if spob.cur() == mem.destplanet and mem.joannelanded and mem.stage < 5 then
       mem.stage = mem.stage + 1
       mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
       misn.markerMove( mem.mark, mem.destsys )
@@ -153,8 +153,7 @@ function land()
       vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
-
-   elseif spob.cur() == mem.destplanet and mem.joannelanded and mem.stage == 4 then
+   elseif spob.cur() == mem.destplanet and mem.joannelanded and mem.stage == 5 then
       laststop_vn()
       mem.stage = mem.stage + 1
       mem.origin = spob.cur()
@@ -163,12 +162,11 @@ function land()
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
       player.takeoff()
-
-   elseif mem.stage < 4 then
+   elseif mem.stage < 5 then
       vntk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
 
-   elseif mem.stage == 5 and spob.cur() == spob.get("Sroolu") then
+   elseif mem.stage == 6 and spob.cur() == spob.get("Sroolu") then
       misn.markerRm(mem.mark)
 
       vn.clear()
@@ -252,9 +250,10 @@ function enter()
    hook.pilot(joanneship, "death", "joanneDead")
 
    if system.cur() == system.get("Druss") and mem.stage == 3 then
-      ambushSet({"Hyena", "Hyena"}, vec2.new(-12000, 9000))
-   elseif system.cur() == system.get("Humdrum") and mem.stage == 4 then
-      ambushSet({"Vendetta", "Vendetta"}, vec2.new(2230, -15000))
+      ambushSet({"Hyena", "Hyena"}, system.cur():waypoints("achack02_ambush"))
+   elseif system.cur() == system.get("Humdrum") and mem.stage == 5 then
+      -- should be on the road from Modus Manis to An'ku
+      ambushSet({"Vendetta", "Vendetta"}, system.cur():waypoints("achack02_ambush"))
    end
 end
 
@@ -266,7 +265,7 @@ function ambushSet(ships, location)
    for _, j in ipairs(ambush) do
       j:control()
    end
-   hook.timer(0.5, "proximity", {anchor = ambush[1], radius = 3000, funcname = "ambushActivate", focus = joanneship})
+   hook.timer(0.5, "proximity", {anchor = ambush[1], radius = 5000, funcname = "ambushActivate", focus = joanneship})
 end
 
 -- Commences combat once Joanne is close to the ambushers.
@@ -299,10 +298,10 @@ end
 
 -- Load hook. Makes sure the player can't start on military stations.
 function on_load()
-   if mem.stage > 1 and mem.stage < 5 then
+   if mem.stage > 1 and mem.stage < 6 then
       vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
       player.takeoff()
-   elseif mem.stage == 5 then
+   elseif mem.stage == 6 then
       laststop_vn()
       player.takeoff()
    end

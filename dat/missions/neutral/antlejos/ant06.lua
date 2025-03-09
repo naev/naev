@@ -136,7 +136,7 @@ function enter ()
 
    -- Initialize ship stuff
    local puaaa = ant.puaaa()
-   local pos = vec2.new( -4500, 4500 )
+   local pos = mainsys:waypoints("ant06_PUAAA_supply_ship")
 
    local protesters = {}
    supplyship = pilot.add( "Mule", puaaa, pos, _("PUAAA Supply Ship"), {ai="baddiepos"} )

@@ -26,4 +26,7 @@
    <pos x="5366.037186" y="5829.768795"/>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="5000" y="6000" >finale1</waypoint>
+ </waypoints>
 </ssys>

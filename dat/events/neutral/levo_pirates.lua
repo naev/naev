@@ -78,14 +78,16 @@ function enter ()
    spawn_pirate( "Pirate Vendetta", mainpos, pirboss )
    spawn_pirate( "Pirate Hyena", mainpos, pirboss )
 
+   local wp=mainsys:waypoints()
+
    -- On the way to the Spob
-   local pos1 = vec2.new( -5e3, 5e3 )
+   local pos1 = wp["levo_pirate_1"]
    local miniboss1 = spawn_pirate( "Pirate Vendetta", pos1)
    spawn_pirate( "Pirate Hyena", pos1, miniboss1 )
    spawn_pirate( "Pirate Ancestor", pos1, miniboss1 )
 
    -- In the asteroid field
-   local pos2 = vec2.new( -3e3, -3e3 )
+   local pos2 = wp["levo_pirate_2"]
    local miniboss2 = spawn_pirate( "Pirate Rhino", pos2 )
    spawn_pirate( "Pirate Vendetta", pos2, miniboss2 )
 

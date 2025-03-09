@@ -227,7 +227,7 @@ function enter ()
       local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="baddie_norun"} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
-         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local ppos = pos + vec2.newP( rnd.rnd()*200, rnd.angle() )
          local p = pilot.add( v, fbh, ppos, nil, {naked=true} )
          equipopt.pirate( p )
          if not thug_leader then

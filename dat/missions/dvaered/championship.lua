@@ -232,6 +232,7 @@ function enter()
 
       opponent:control()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
+
       ai_setup.setup(opponent)
 
       --The TV and the security

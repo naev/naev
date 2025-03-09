@@ -189,7 +189,7 @@ end
 -- Enter hook
 function enter()
    if system.cur() == seirsys then
-      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
+      seiryuu = pilot.add( "Pirate Kestrel", shadow.fct_fourwinds(), seirplanet:pos() + vec2.new(300, 300) , _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       seiryuu:control()
       if mem.stage == 1 or mem.stage == 6 then
@@ -208,7 +208,8 @@ function enter()
       pilot.toggleSpawn(false)
       player.landAllow(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
-      joe = pilot.add( "Vendetta", shadow.fct_fourwinds(), vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
+      local joepos=joreksys2:waypoints("darkshadow_joe")
+      joe = pilot.add( "Vendetta", shadow.fct_fourwinds(), joepos, _("Four Winds Informant"), {ai="trader"} )
       joe:control()
       joe:setHilight(true)
       joe:setVisplayer()
@@ -272,22 +273,23 @@ function enter()
 end
 
 function spawnSquads(highlight)
+   local wp=joreksys2:waypoints()
    -- Start positions for the leaders
    leaderstart = {
-      vec2.new(-2500, -1500),
-      vec2.new(2500, 1000),
-      vec2.new(-3500, -4500),
-      vec2.new(2500, -2500),
-      vec2.new(-2500, -6500),
+      wp["darkshadow_patrol1_start"],
+      wp["darkshadow_patrol2_start"],
+      wp["darkshadow_patrol3_start"],
+      wp["darkshadow_patrol4_start"],
+      wp["darkshadow_patrol5_start"],
    }
 
    -- Leaders will patrol between their start position and this one
    leaderdest = {
-      vec2.new(2500, -1000),
-      vec2.new(-500, 1500),
-      vec2.new(-4500, -1500),
-      vec2.new(2000, -6000),
-      vec2.new(1000, -1500),
+      wp["darkshadow_patrol1_stop"],
+      wp["darkshadow_patrol2_stop"],
+      wp["darkshadow_patrol3_stop"],
+      wp["darkshadow_patrol4_stop"],
+      wp["darkshadow_patrol5_stop"],
    }
 
    squads = {}

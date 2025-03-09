@@ -24,6 +24,9 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="-6000" y="3000">zbh09_feral</waypoint>
+ </waypoints>
  <stats>
   <shield_mod>-50.000000</shield_mod>
   <shield_regen_mod>-50.000000</shield_regen_mod>
