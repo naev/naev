@@ -1,4 +1,5 @@
 use crate::physics::angle_diff;
+use anyhow::Result;
 use nalgebra::{Point2, Vector2};
 use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::{LazyLock, Mutex};
@@ -415,4 +416,36 @@ pub unsafe extern "C" fn cam_getTarget() -> c_uint {
 pub unsafe extern "C" fn cam_update(dt: c_double) {
     let mut cam = CAMERA.lock().unwrap();
     cam.update(dt);
+}
+
+// Lua API
+pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
+    let globals = lua.globals();
+    let api = lua.create_table()?;
+    api.set(
+        "get",
+        lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
+            let cam = CAMERA.lock().unwrap();
+            Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
+        })?,
+    )?;
+    api.set(
+        "getZoom",
+        lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
+            let cam = CAMERA.lock().unwrap();
+            let (zoom_far, zoom_near) = unsafe { (naevc::conf.zoom_far, naevc::conf.zoom_near) };
+            Ok((1.0 / cam.zoom, 1.0 / zoom_far, 1.0 / zoom_near))
+        })?,
+    )?;
+    api.set(
+        "shake",
+        lua.create_function(|_lua, amplitude: f64| -> mlua::Result<()> {
+            unsafe {
+                naevc::spfx_shake(amplitude);
+            }
+            Ok(())
+        })?,
+    )?;
+    globals.set("camera", api)?;
+    Ok(())
 }
