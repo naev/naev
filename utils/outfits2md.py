@@ -111,4 +111,3 @@ if __name__ == '__main__':
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
       main([f for f in argv[1:] if f.endswith(".xml")],gith,ter)
-
