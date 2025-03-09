@@ -419,6 +419,7 @@ pub unsafe extern "C" fn cam_update(dt: c_double) {
 }
 
 // Lua API
+#[allow(dead_code)]
 pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     let globals = lua.globals();
     let api = lua.create_table()?;
