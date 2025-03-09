@@ -22,7 +22,7 @@
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
 static int vectorL_newP( lua_State *L );
-static int vectorL_copy( lua_State *L ); // Deprecated
+static int vectorL_copy( lua_State *L ); // Deprecated in 0.13
 static int vectorL_clone( lua_State *L );
 static int vectorL_tostring( lua_State *L );
 static int vectorL_add__( lua_State *L );
