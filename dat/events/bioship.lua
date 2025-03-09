@@ -35,6 +35,9 @@ function update_bioship ()
       -- Initialize in the case stage isn't set
       if not stage then
          bioship.setstage( pp, 1 )
+      else
+         -- In case the player's ship got messed up, we reset intrinsics
+         bioship.setstage( pp, stage )
       end
       local caption = _("Bioship")
       if bioship.skillpointsfree(pp) > 0 then
