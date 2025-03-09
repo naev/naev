@@ -25,4 +25,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="-2000.000000" y="3000.000000">taiomi05_fightpos</waypoint>
+  <waypoint x="3000.000000" y="-8000.000000">taiomi09_baddies1</waypoint>
+  <waypoint x="3000.000000" y="13000.000000">taiomi09_baddies2</waypoint>
+  <waypoint x="6000.000000" y="6000.000000">taiomi09_wp1</waypoint>
+  <waypoint x="13000.000000" y="-7000.000000">taiomi09_wp2</waypoint>
+ </waypoints>
 </ssys>

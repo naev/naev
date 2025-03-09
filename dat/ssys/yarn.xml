@@ -31,4 +31,7 @@
    <pos x="0.000000" y="0.000000"/>
   </exclusion>
  </asteroids>
+ <waypoints>
+  <waypoint x="9000.000000" y="3000.000000">ant08_PUAAA_protesters</waypoint>
+ </waypoints>
 </ssys>

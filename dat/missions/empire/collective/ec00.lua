@@ -34,6 +34,7 @@ local emp = require "common.empire"
 local misn_nearby = system.get("Acheron")
 local misn_target = system.get("Merisi")
 local misn_base, misn_base_sys = spob.getS("Omega Enclave")
+local drone_location=misn_target:waypoints("ec00_target")
 
 local p -- Non-persistent state
 
@@ -96,7 +97,7 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
       misn.osdActive(2)
-      hook.timer(0.5, "proximity", {location = vec2.new(8000, -20000), radius = 5000, funcname = "spotdrone"})
+      hook.timer(0.5, "proximity", {location = drone_location, radius = 5000, funcname = "spotdrone"})
    elseif mem.misn_stage == 0 then
       misn.osdActive(1)
    end
@@ -112,7 +113,7 @@ end
 
 
 function spotdrone()
-   p = pilot.add( "Drone", "Collective", vec2.new(8000, -20000), _("Collective Drone"), {ai="scout"} )
+   p = pilot.add( "Drone", "Collective", drone_location, _("Collective Drone"), {ai="scout"} )
    local m = p:memory()
    m.comm_no = _("No response.")
    m.doscans = false

@@ -35,6 +35,7 @@
       * Don't show OSD frame when not visible
       * Can't stack Sirius ferry pilgrim missions anymore
       * Add marker mission to help the player find wild space
+      * Bioships will reset their locked slots when swapping ship and loading
 
 * 0.12.4 (unreleased)
    * Gave Pacifier +400 fuel bonus to match description

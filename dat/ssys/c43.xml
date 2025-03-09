@@ -29,6 +29,20 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="-8000.000000" y="-7500.000000">ec02_dst1</waypoint>
+  <waypoint x="7000.000000" y="-5000.000000">ec02_dst2</waypoint>
+  <waypoint x="-9500.000000" y="13000.000000">ec02_dst3</waypoint>
+  <waypoint x="-11000.000000" y="4000.000000">ec02_src1</waypoint>
+  <waypoint x="1700.000000" y="12000.000000">ec02_src2</waypoint>
+  <waypoint x="17000.000000" y="2500.000000">ec02_src3</waypoint>
+  <waypoint x="20500.000000" y="2300.000000">ec04_fleet1</waypoint>
+  <waypoint x="20500.000000" y="1700.000000">ec04_fleet2</waypoint>
+  <waypoint x="7500.000000" y="9500.000000">ec04_wayp1</waypoint>
+  <waypoint x="1500.000000" y="3000.000000">ec04_wayp12</waypoint>
+  <waypoint x="7500.000000" y="-5500.000000">ec04_wayp2</waypoint>
+  <waypoint x="1500.000000" y="-500.000000">ec04_wayp22</waypoint>
+ </waypoints>
  <tags>
   <tag>restricted</tag>
  </tags>

@@ -31,4 +31,7 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="-5000.000000" y="1500.000000">ec05_trinity</waypoint>
+ </waypoints>
 </ssys>

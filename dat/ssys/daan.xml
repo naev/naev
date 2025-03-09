@@ -28,6 +28,9 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="0.000000" y="7500.000000">neburesearch_01_ambush</waypoint>
+ </waypoints>
  <tags>
   <tag>tradelane</tag>
  </tags>

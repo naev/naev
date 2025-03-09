@@ -220,19 +220,20 @@ end
 
 function enter ()
    if mem.state==1 and system.cur()==atksys1 then
-      spawn_protesters( vec2.new( 9000, 3000 ), {"Lancelot","Lancelot","Shark","Shark"} )
+      spawn_protesters( atksys1:waypoints("ant08_PUAAA_protesters"), {"Lancelot","Lancelot","Shark","Shark"} )
 
    elseif mem.state==1 and system.cur()==atksys2 then
-      spawn_protesters( vec2.new( -18000, 7000 ), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
+      spawn_protesters( atksys2:waypoints("ant08_PUAAA_protesters"), {"Admonisher", "Ancestor", "Hyena", "Hyena"} )
 
    elseif mem.state==1 and system.cur()==retsys then
-      local f = spawn_protesters( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
+      local where=retsys:waypoints("ant08_PUAAA_protesters")
+      local f = spawn_protesters( where , {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
       for k,p in ipairs(f) do
          p:changeAI( "baddiepatrol" )
-         pilotai.patrol( p, {
-            vec2.new(    0, -2000 ),
-            vec2.new( -4000, 4000 ),
-            vec2.new( -8000, 2000 ),
+         pilotai.patrol( p, { -- Yep, we use the same patrol points in the same sys as in ant07
+            retsys:waypoints("ant07_PUAAA_patrol1"),
+            retsys:waypoints("ant07_PUAAA_patrol2"),
+            retsys:waypoints("ant07_PUAAA_patrol3"),
          } )
       end
    end

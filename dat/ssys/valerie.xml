@@ -35,4 +35,9 @@
    <pos x="-8943.395310" y="3776.100242"/>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="20000.000000" y="9500.000000">onion04_1</waypoint>
+  <waypoint x="300.000000" y="-3500.000000">onion04_2</waypoint>
+  <waypoint x="-12000.000000" y="-5000.000000">onion04_3</waypoint>
+ </waypoints>
 </ssys>

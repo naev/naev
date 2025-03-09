@@ -32,4 +32,9 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="0.000000" y="-16000.000000">capricorn_pirate_1</waypoint>
+  <waypoint x="-10000.000000" y="11000.000000">capricorn_pirate_2</waypoint>
+  <waypoint x="13000.000000" y="3000.000000">capricorn_pirate_3</waypoint>
+ </waypoints>
 </ssys>

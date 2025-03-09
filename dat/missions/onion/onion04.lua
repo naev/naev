@@ -587,14 +587,16 @@ function enter ()
          "Shark",
       }
       local baddies1 = fleet.add( 1, ships, fct_baddie(), spob.get("Wellen"):pos() )
+      local wp=targetsys:waypoints()
+
       pilotai.apply( baddies1, function (p)
          p:rename( fmt.f(_("Nexus {ship}"), {ship=p:ship():name()}))
          p:setHostile(true)
       end )
       pilotai.patrol( baddies1, {
-         vec2.new( 20e3, 9500 ),
-         vec2.new( 300, -3500 ),
-         vec2.new( -12e3, -5e3 ),
+         wp["onion04_1"],
+         wp["onion04_2"],
+         wp["onion04_3"],
       } )
 
       -- Player has to run away

@@ -32,4 +32,7 @@
    <pos x="9672.116410" y="2782.389652"/>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="0.000000" y="-2000.000000">shadowvigil_seiryuu</waypoint>
+ </waypoints>
 </ssys>

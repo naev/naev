@@ -73,6 +73,14 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
    return strcmp( jp1->target->name, jp2->target->name );
 }
 
+static int dsys_compWaypoint( const void *ptr1, const void *ptr2 )
+{
+   const Waypoint *wp1, *wp2;
+   wp1 = *(const Waypoint **)ptr1;
+   wp2 = *(const Waypoint **)ptr2;
+   return strcmp( wp1->name, wp2->name );
+}
+
 /**
  * @brief Saves a star system.
  *
@@ -268,9 +276,15 @@ int dsys_saveSystem( StarSystem *sys )
    }
 
    if ( array_size( sys->waypoints ) > 0 ) {
+      Waypoint **sorted_wp =
+         calloc( array_size( sys->waypoints ), sizeof( Waypoint * ) );
+      for ( int i = 0; i < array_size( sys->waypoints ); i++ )
+         sorted_wp[i] = &sys->waypoints[i];
+      qsort( sorted_wp, array_size( sys->waypoints ), sizeof( Waypoint * ),
+             dsys_compWaypoint );
       xmlw_startElem( writer, "waypoints" );
       for ( int i = 0; i < array_size( sys->waypoints ); i++ ) {
-         const Waypoint *wp = &sys->waypoints[i];
+         const Waypoint *wp = sorted_wp[i];
          xmlw_startElem( writer, "waypoint" );
          xmlw_attr( writer, "x", "%f", wp->pos.x );
          xmlw_attr( writer, "y", "%f", wp->pos.y );
@@ -278,6 +292,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_endElem( writer ); /* "waypoint" */
       }
       xmlw_endElem( writer ); /* "waypoints" */
+      free( sorted_wp );
    }
 
    if ( array_size( sys->tags ) > 0 ) {

@@ -39,6 +39,9 @@
    <density>0.300000</density>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="0.000000" y="7500.000000">neburesearch_01_ambush</waypoint>
+ </waypoints>
  <tags>
   <tag>tradelane</tag>
  </tags>

@@ -44,4 +44,7 @@
    <pos x="7348.039986" y="7401.286652"/>
   </exclusion>
  </asteroids>
+ <waypoints>
+  <waypoint x="11000.000000" y="5000.000000">taiomi05_corpse</waypoint>
+ </waypoints>
 </ssys>

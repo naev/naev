@@ -505,7 +505,7 @@ local function autonav_instant_jump_final_approach ()
 
    -- The reference angle is the running direction of player.
    local pp_vel = pp:vel()
-   local ref_vec = vec2.copy(pp_vel):normalize() -- need to copy
+   local ref_vec = vec2.clone(pp_vel):normalize() -- need to copy
 
    local x = vec2.dot( ref_vec, jmp_r_pos )
 

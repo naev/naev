@@ -32,6 +32,11 @@
    <pos x="0.000000" y="0.000000"/>
   </asteroid>
  </asteroids>
+ <waypoints>
+  <waypoint x="-8500.000000" y="7000.000000">surano_pirate_1</waypoint>
+  <waypoint x="7000.000000" y="9000.000000">surano_pirate_2</waypoint>
+  <waypoint x="2000.000000" y="-14000.000000">surano_pirate_3</waypoint>
+ </waypoints>
  <tags>
   <tag>thenebula</tag>
  </tags>

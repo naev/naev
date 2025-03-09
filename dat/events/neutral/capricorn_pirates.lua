@@ -72,19 +72,20 @@ function enter ()
    spawn_pirate( "Pirate Vendetta", mainpos, pirboss )
    spawn_pirate( "Pirate Hyena", mainpos, pirboss )
 
+   local wp=mainsys:waypoints()
    -- On the way to the Spob from the south
-   local pos1 = vec2.new( 0, -16e3 )
+   local pos1 = wp["capricorn_pirate_1"]
    local miniboss1 = spawn_pirate( "Pirate Rhino", pos1)
    spawn_pirate( "Pirate Hyena", pos1, miniboss1 )
    spawn_pirate( "Pirate Ancestor", pos1, miniboss1 )
 
    -- On the way to the spob from the north
-   local pos2 = vec2.new( -10e3, 11e3 )
+   local pos2 = wp["capricorn_pirate_2"]
    local miniboss2 = spawn_pirate( "Pirate Rhino", pos2 )
    spawn_pirate( "Pirate Vendetta", pos2, miniboss2 )
 
    -- Near uninhabited planet
-   local pos3 = vec2.new( 13e3, 3e3 )
+   local pos3 = wp["capricorn_pirate_3"]
    local miniboss3 = spawn_pirate( "Pirate Admonisher", pos3 )
    spawn_pirate( "Pirate Shark", pos3, miniboss3 )
    spawn_pirate( "Pirate Hyena", pos3, miniboss3 )

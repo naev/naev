@@ -18,4 +18,17 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="4000.000000" y="-9000.000000">zbh08_rout000_1</waypoint>
+  <waypoint x="8000.000000" y="2000.000000">zbh08_rout000_2</waypoint>
+  <waypoint x="16000.000000" y="-5000.000000">zbh08_rout000_3</waypoint>
+  <waypoint x="-5000.000000" y="13000.000000">zbh08_route1_1</waypoint>
+  <waypoint x="1000.000000" y="9000.000000">zbh08_route1_2</waypoint>
+  <waypoint x="8000.000000" y="13000.000000">zbh08_route1_3</waypoint>
+  <waypoint x="13000.000000" y="7000.000000">zbh08_route2_1</waypoint>
+  <waypoint x="0.000000" y="-7000.000000">zbh08_route2_2</waypoint>
+  <waypoint x="11000.000000" y="12000.000000">zbh08_route4_1</waypoint>
+  <waypoint x="0.000000" y="0.000000">zbh08_route4_2</waypoint>
+  <waypoint x="18000.000000" y="-4000.000000">zbh08_route4_3</waypoint>
+ </waypoints>
 </ssys>

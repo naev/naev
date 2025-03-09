@@ -20,6 +20,13 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="-1000.000000" y="0.000000">curious_drone1</waypoint>
+  <waypoint x="-1200.000000" y="300.000000">curious_drone2</waypoint>
+  <waypoint x="-500.000000" y="-300.000000">elder_drone</waypoint>
+  <waypoint x="1000.000000" y="-500.000000">philosopher_drone</waypoint>
+  <waypoint x="500.000000" y="200.000000">scavenger_drone</waypoint>
+ </waypoints>
  <tags>
   <tag>spoiler</tag>
  </tags>

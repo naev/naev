@@ -31,4 +31,14 @@
    <hide>0.500000</hide>
   </jump>
  </jumps>
+ <waypoints>
+  <waypoint x="1000.000000" y="1600.000000">finale1_B</waypoint>
+  <waypoint x="5000.000000" y="2000.000000">finale1_C1</waypoint>
+  <waypoint x="12000.000000" y="3000.000000">finale1_C2</waypoint>
+  <waypoint x="10000.000000" y="11000.000000">finale1_C3</waypoint>
+  <waypoint x="3000.000000" y="8000.000000">finale1_C4</waypoint>
+  <waypoint x="3000.000000" y="2600.000000">finale1_D1</waypoint>
+  <waypoint x="-7500.000000" y="14000.000000">finale1_D2</waypoint>
+  <waypoint x="18000.000000" y="6000.000000">finale1_E</waypoint>
+ </waypoints>
 </ssys>
