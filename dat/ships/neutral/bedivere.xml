@@ -40,8 +40,10 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <loot_mod>30</loot_mod>
+  <cpu_mod>-10</cpu_mod>
+  <tur_energy>-20</tur_energy>
   <stress_dissipation>25</stress_dissipation>
+  <loot_mod>30</loot_mod>
  </stats>
  <tags>
   <tag>frontier</tag>

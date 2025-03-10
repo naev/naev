@@ -57,7 +57,7 @@
   <armour_mod>-30</armour_mod>
   <shield_mod>40</shield_mod>
   <shield_regen_mod>30</shield_regen_mod>
-  <stress_dissipation>10</stress_dissipation>
+  <energy_regen_mod>10</energy_regen_mod>
   <fbay_rate>25</fbay_rate>
   <fbay_reload>15</fbay_reload>
   <cargo_mod>40</cargo_mod>
