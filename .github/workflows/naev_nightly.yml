@@ -443,6 +443,14 @@ jobs:
         uses: actions/checkout@v4
         if: ${{ matrix.releasetype == 'github' }}
 
+      - name: Tag Nightly Release
+        uses: rickstaa/action-create-tag@v1
+        if: ${{ matrix.releasetype == 'github' }}
+        with:
+          tag: "nightly"
+          force_push_tag: true
+          message: "Nightly Release"
+
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
