@@ -232,10 +232,11 @@ function autonav_system ()
       autonav_set( autonav_jump_approach )
    end
 end
+
 --[[
 Autonav to a spob, potentially trying to land
 --]]
-function _autonav_spob( spb, tryland, do_uselanes)
+local function _autonav_spob(spb, tryland, do_uselanes)
    autonav_setup()
    target_spb = spb
    local pp = player.pilot()
@@ -659,10 +660,10 @@ function autonav_plt_follow ()
    if plt:exists() then
       if plt:flags("jumpingout") then
          local jmp = plt:navJump()
+         local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
          if follow_land_jump and jmp:known() and not jmp:exitonly() then
-            local pp = player.pilot()
             print "lost (jump) && follow_land_jump"
             pp:navJumpSet( jmp )
             autonav_system()
@@ -679,7 +680,7 @@ function autonav_plt_follow ()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
          if follow_land_jump or brake_pos then
             if follow_land_jump then
-               -- does not work: have the autonav message : "landing on ..." but that does not happen.
+               -- does not work: have the autonav message : "landing on ..." but autonav gets cancelled.
                print "lost (landing) && follow_land_jump"
             else
                print "lost (landing) && !follow_land_jump && brake_pos"
