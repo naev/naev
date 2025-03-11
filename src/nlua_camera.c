@@ -141,7 +141,7 @@ static int camL_get( lua_State *L )
  * @brief Gets the camera position.
  *
  *    @luatreturn Vec2 Position of the camera.
- * @luafunc get
+ * @luafunc pos
  */
 static int camL_pos( lua_State *L )
 {
@@ -196,7 +196,7 @@ static int camL_setZoom( lua_State *L )
  *    @luatreturn number Zoom level of the camera.
  *    @luatreturn number Maximum zoom level of the camera (furthest).
  *    @luatreturn number Minimum zoom level of the camera (closest).
- * @luafunc get
+ * @luafunc getZoom
  */
 static int camL_getZoom( lua_State *L )
 {
