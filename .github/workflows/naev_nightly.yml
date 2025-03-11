@@ -460,6 +460,7 @@ jobs:
           prerelease: true
           preserve_order: true
           generate_release_notes: true
+          tag_name: "nightly"
           name: "Nightly Build"
           files: |
             build/dist/lin64/*.AppImage
