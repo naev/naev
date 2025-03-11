@@ -452,23 +452,20 @@ jobs:
         with:
           path: ${{ github.workspace }}/build/staging
 
-      - name: Create Github Release
+      - name: Build and Upload GitHub Release
         if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
           prerelease: true
-          title: "Nightly Build"
-
-      - name: Build and Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        run: |
-          chmod -R +x build/staging/naev-github-deployment
-          cp -r build/staging/naev-github-deployment/* "$(pwd)"
-          ./GHDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist" -r "nightly"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          preserve_order: true
+          generate_release_notes: true
+          name: "Nightly Build"
+          files: |
+            build/dist/lin64/*.AppImage
+            build/dist/lin64/*.AppImage.zsync
+            build/dist/macos/*.dmg
+            build/dist/win64/*.exe
+            build/dist/*.tar.xz
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
