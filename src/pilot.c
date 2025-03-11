@@ -3041,7 +3041,7 @@ static void pilot_hyperspace( Pilot *p, double dt )
                                _( "Afterburner active: jump aborted." ) );
       } else {
          if ( p->ptimer < 0. ) { /* engines ready */
-            p->ptimer = HYPERSPACE_FLY_DELAY * p->stats.jump_delay;
+            p->ptimer = HYPERSPACE_FLY_DELAY * p->stats.jump_warmup;
             pilot_setFlag( p, PILOT_HYPERSPACE );
             if ( p->id == PLAYER_ID )
                p->timer[0] = -1.;
