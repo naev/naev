@@ -1,4 +1,5 @@
 use crate::physics::angle_diff;
+use crate::vec2::Vec2;
 use anyhow::Result;
 use nalgebra::{Point2, Vector2};
 use std::os::raw::{c_double, c_int, c_uint};
@@ -418,11 +419,45 @@ pub unsafe extern "C" fn cam_update(dt: c_double) {
     cam.update(dt);
 }
 
-// Lua API
-#[allow(dead_code)]
+/// @brief Lua bindings to interact with the Camera.
+///
+/// An example would be:
+/// @code
+/// @endcode
+///
+/// @luamod camera
+#[allow(dead_code, unused_doc_comments)]
 pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     let globals = lua.globals();
     let api = lua.create_table()?;
+    /// @brief Sets the camera.
+    ///
+    /// Make sure to reset camera after using it or we'll run into trouble.
+    ///
+    /// @usage camera.set() -- Resets the camera to the pilot hard.
+    /// @usage camera.set( a_pilot, true ) -- Flies camera over to a_pilot.
+    /// @usage camera.set( vec2.new() ) -- Jumps camera to 0,0
+    ///
+    ///    @luatparam Pilot|Vec2|nil target It will follow pilots around. If nil, it
+    /// follows the player.
+    ///    @luatparam[opt=false] boolean hard_over Indicates that the camera should
+    /// instantly teleport instead of fly over.
+    ///    @luaparam[opt=math.min(2000,distance)] speed Speed at which to fly over if
+    /// hard_over is false.
+    /// @luafunc set
+    api.set(
+        "set",
+        lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
+            let cam = CAMERA.lock().unwrap();
+            Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
+        })?,
+    )?;
+    /// @brief Gets the x/y position and zoom of the camera.
+    ///
+    ///    @luatreturn number X position of the camera.
+    ///    @luatreturn number Y position of the camera.
+    ///    @luatreturn number Zoom level of the camera.
+    /// @luafunc get
     api.set(
         "get",
         lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
@@ -430,6 +465,43 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
             Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
         })?,
     )?;
+    /// @brief Gets the camera position.
+    ///
+    ///    @luatreturn Vec2 Position of the camera.
+    /// @luafunc pos
+    api.set(
+        "pos",
+        lua.create_function(|_lua, ()| -> mlua::Result<Vec2> {
+            let cam = CAMERA.lock().unwrap();
+            Ok(Vec2::new(cam.pos.x, cam.pos.y))
+        })?,
+    )?;
+    /// @brief Sets the camera zoom.
+    ///
+    /// Make sure to reset camera the zoom after using it or we'll run into trouble.
+    ///
+    /// @usage camera.setZoom() -- Resets the camera zoom
+    ///
+    ///    @luatparam number zoom Level of zoom to use (1 would indicate 1 unit = 1
+    /// pixel while 2 would be 1 unit = 2 pixels)
+    ///    @luatparam[opt=false] boolean hard_over Indicates that the camera should
+    /// change the zoom gradually instead of instantly.
+    ///    @luatparam[opt=naev.conf().zoom_speed]  number speed Rate of change to
+    /// use.
+    /// @luafunc setZoom
+    api.set(
+        "setZoom",
+        lua.create_function(|_lua, ()| -> mlua::Result<Vec2> {
+            let cam = CAMERA.lock().unwrap();
+            Ok(Vec2::new(cam.pos.x, cam.pos.y))
+        })?,
+    )?;
+    /// @brief Gets the camera zoom.
+    ///
+    ///    @luatreturn number Zoom level of the camera.
+    ///    @luatreturn number Maximum zoom level of the camera (furthest).
+    ///    @luatreturn number Minimum zoom level of the camera (closest).
+    /// @luafunc getZoom
     api.set(
         "getZoom",
         lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
@@ -438,6 +510,13 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
             Ok((1.0 / cam.zoom, 1.0 / zoom_far, 1.0 / zoom_near))
         })?,
     )?;
+    /// @brief Makes the camera shake.
+    ///
+    /// @usage camera.shake() -- Shakes the camera with amplitude 1.
+    /// @usage camera.shake( 0.5 ) -- Shakes the camera with amplitude .5
+    ///
+    ///    @luatparam number amplitude Amplitude of the shaking.
+    /// @luafunc shake
     api.set(
         "shake",
         lua.create_function(|_lua, amplitude: f64| -> mlua::Result<()> {
