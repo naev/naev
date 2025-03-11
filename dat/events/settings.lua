@@ -14,7 +14,7 @@ local fmt = require "format"
 
 local settings, uselanes_jump, uselanes_spob, uselanes_thr, pick_gui
 local fcthit_hide--, fcthit_hide_secondary
-local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_jump, brake_pos, reset_lockon, include_escorts
+local reset_dist, reset_shield, compr_speed, compr_max, match_fleet, follow_land_jump, brake_pos, reset_lockon, include_escorts
 
 local AUTONAV_MAX_DIST  = 10e3 -- quite a reasonable distance
 local COMPR_SPEED_MIN   = 1e3 -- Old default was 5e3
@@ -44,7 +44,7 @@ function create ()
    compr_max   = var_peek_fix( "autonav_compr_max",   50 )
    reset_lockon = var_peek_fix( "autonav_reset_lockon", true )
    match_fleet = var_peek_fix( "autonav_match_fleet", true )
-   follow_jump = var_peek_fix( "autonav_follow_jump", false )
+   follow_land_jump = var_peek_fix( "autonav_follow_land_jump", false )
    brake_pos   = var_peek_fix( "autonav_brake_pos",   false )
    include_escorts = var_peek_fix( "autonav_include_escorts", true )
 
@@ -54,7 +54,7 @@ end
 
 function settings ()
    local txt_autonav, fad_autonav, txt_compr
-   local chk_include_escorts, chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide--, chk_fcthit_hide_secondary
+   local chk_include_escorts, chk_uselanes_jump, chk_uselanes_spob, chk_match_fleet, chk_follow_land_jump, chk_brake_pos, chk_reset_lockon, chk_fcthit_hide--, chk_fcthit_hide_secondary
 
    local w, h = 600, 650
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -147,7 +147,7 @@ function settings ()
    y = y + 30
    chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with the slowest ship in your fleet"), nil, match_fleet )
    y = y + 30
-   chk_follow_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump to follow pilots"), nil, follow_jump )
+   chk_follow_land_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump and/or land to follow pilots"), nil, follow_land_jump )
    y = y + 30
    chk_brake_pos = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Brake when heading to a position"), nil, brake_pos )
    y = y + 40
@@ -168,7 +168,7 @@ function settings ()
          compr_speed = 5e3
          compr_max = 50
          match_fleet = true
-         follow_jump = false
+         follow_land_jump = false
          brake_pos = false
          reset_lockon = true
          include_escorts = true
@@ -180,7 +180,7 @@ function settings ()
          chk_reset_lockon:set( reset_lockon )
          chk_include_escorts:set( include_escorts )
          chk_match_fleet:set( match_fleet )
-         chk_follow_jump:set( follow_jump )
+         chk_follow_land_jump:set( follow_land_jump )
          chk_brake_pos:set( brake_pos )
          fad_thr:set( uselanes_thr )
          fad_autonav:set( autonav_value )
@@ -194,7 +194,7 @@ function settings ()
          var.push( "autonav_compr_speed", compr_speed )
          var.push( "autonav_compr_max", compr_max )
          var.push( "autonav_match_fleet", match_fleet )
-         var.push( "autonav_follow_jump", follow_jump )
+         var.push( "autonav_follow_land_jump", follow_land_jump )
          var.push( "autonav_brake_pos", brake_pos )
          var.push( "autonav_reset_lockon", reset_lockon )
          var.push( "autonav_include_escorts", include_escorts )
@@ -212,7 +212,7 @@ function settings ()
    uselanes_jump = chk_uselanes_jump:get()
    uselanes_spob = chk_uselanes_spob:get()
    match_fleet = chk_match_fleet:get()
-   follow_jump = chk_follow_jump:get()
+   follow_land_jump = chk_follow_land_jump:get()
    brake_pos = chk_brake_pos:get()
    reset_lockon = chk_reset_lockon:get()
    include_escorts = chk_include_escorts:get()
@@ -226,7 +226,7 @@ function settings ()
    var.push( "autonav_compr_speed", compr_speed )
    var.push( "autonav_compr_max", compr_max )
    var.push( "autonav_match_fleet", match_fleet )
-   var.push( "autonav_follow_jump", follow_jump )
+   var.push( "autonav_follow_land_jump", follow_land_jump )
    var.push( "autonav_brake_pos", brake_pos)
    var.push( "autonav_reset_lockon", reset_lockon )
    var.push( "autonav_include_escorts", include_escorts )
