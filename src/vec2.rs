@@ -182,6 +182,7 @@ impl UserData for Vec2 {
     }
 }
 
+#[allow(dead_code)]
 pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<()> {
     let globals = lua.globals();
     globals.set("vec2", Vec2::new(0.0, 0.0))?;
