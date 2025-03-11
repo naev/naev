@@ -113,6 +113,9 @@ void cli_printCoreString( const char *s, int escape )
    int                 len;
    glPrintLineIterator iter;
 
+   if ( s == NULL )
+      return;
+
    gl_printLineIteratorInit( &iter, cli_font, s, CLI_WIDTH - 40 );
    while ( gl_printLineIteratorNext( &iter ) ) {
       if ( escape ) {
