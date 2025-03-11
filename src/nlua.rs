@@ -3,7 +3,7 @@ use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
 use anyhow::Result;
 use constcat::concat;
-use mlua::{FromLua, IntoLua};
+use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 
 #[allow(dead_code)]
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
@@ -266,14 +266,29 @@ impl NLua<'_> {
 
 #[allow(dead_code)]
 impl LuaEnv<'_> {
-    fn get<V: FromLua>(self, key: impl IntoLua) -> mlua::Result<V> {
+    /// Calls a function with the environment
+    pub fn call<R: FromLuaMulti>(
+        &self,
+        func: &mlua::Function,
+        args: impl IntoLuaMulti,
+    ) -> mlua::Result<R> {
+        func.set_environment(self.table.clone())?;
+        func.call(args)
+    }
+
+    /// Gets a value from the environment
+    pub fn get<V: FromLua>(&self, key: impl IntoLua) -> mlua::Result<V> {
         //let t: mlua::Table = self.rk.into_lua( self.lua )?.into();
         self.table.get(key)
     }
-    fn set(self, key: impl IntoLua, value: impl IntoLua) -> mlua::Result<()> {
+
+    /// Sets a value in the environment
+    pub fn set(&self, key: impl IntoLua, value: impl IntoLua) -> mlua::Result<()> {
         self.table.set(key, value)
     }
-    fn id(self) -> std::os::raw::c_int {
+
+    // Gets the ID
+    fn id(&self) -> std::os::raw::c_int {
         self.rk.id()
     }
 }
