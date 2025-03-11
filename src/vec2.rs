@@ -4,7 +4,7 @@ use std::sync::Arc;
 //use std::os::raw::c_int;
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
-struct Vec2(Vector2<f64>);
+pub struct Vec2(Vector2<f64>);
 
 impl Vec2 {
     pub fn new(x: f64, y: f64) -> Self {
