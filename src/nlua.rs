@@ -12,17 +12,16 @@ const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
 const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
 
 #[allow(dead_code)]
-pub struct LuaEnv<'a> {
-    lua: &'a mlua::Lua,
+pub struct LuaEnv {
     table: mlua::Table,
     rk: mlua::RegistryKey,
 }
 
 #[allow(dead_code)]
-pub struct NLua<'a> {
+pub struct NLua {
     pub lua: mlua::Lua,
     common: Option<mlua::Function>,
-    envs: Vec<LuaEnv<'a>>,
+    envs: Vec<LuaEnv>,
 }
 
 /// Opens the gettext library
@@ -145,8 +144,8 @@ fn load_common(lua: &mlua::Lua) -> mlua::Result<mlua::Function> {
     lua.load(common).into_function()
 }
 
-impl NLua<'_> {
-    pub fn new() -> Result<NLua<'static>> {
+impl NLua {
+    pub fn new() -> Result<NLua> {
         let lua = unsafe {
             // TODO get rid of the lua_init() and move entirely to mlua.
             naevc::lua_init();
@@ -257,7 +256,6 @@ impl NLua<'_> {
         };
 
         Ok(LuaEnv {
-            lua,
             table: t.clone(),
             rk: lua.create_registry_value(t)?,
         })
@@ -265,7 +263,7 @@ impl NLua<'_> {
 }
 
 #[allow(dead_code)]
-impl LuaEnv<'_> {
+impl LuaEnv {
     /// Calls a function with the environment
     pub fn call<R: FromLuaMulti>(
         &self,
