@@ -668,16 +668,17 @@ function autonav_plt_follow ()
          local jmp = plt:navJump()
          local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
-         autonav_reset( 1 )
 
          if follow_land_jump and jmp:known() and not jmp:exitonly() then
             print "lost (jump) && follow_land_jump"
             pp:navJumpSet( jmp )
             autonav_system()
+            autonav_reset(1)
          elseif follow_land_jump or brake_pos then
             print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
             pp:navJumpSet( jmp )
             autonav_pos(plt:navJump():pos())
+            autonav_rampdown( true )
          else
             print "lost (jump) && !follow_land_jump (or can't) && !brake_pos"
             autonav_end()
@@ -685,16 +686,17 @@ function autonav_plt_follow ()
          return
       elseif plt:flags("landing") then
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
-         autonav_reset( 1 )
 
          if follow_land_jump or brake_pos then
             -- TODO: select spob
+            _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
                print "lost (landing) && follow_land_jump"
+               autonav_reset(1)
             else
                print "lost (landing) && !follow_land_jump && brake_pos"
+               autonav_rampdown( true )
             end
-            _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
          else
             print "lost (landing) && !follow_land_jump && !brake_pos"
             autonav_end()
