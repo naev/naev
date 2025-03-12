@@ -48,30 +48,49 @@ if [ "$TARGETS" = "all" ]; then
 fi
 
 IFS=',' read -r -a target_array <<< "$TARGETS"
-# New: Prompt to pull only the required docker images for the selected targets.
-read -r -p "Would you like to pull the required docker images? [Y/n] " answer
-if [[ "$answer" =~ ^[Yy]|^$ ]]; then
-    declare -A uniqueImages
-    for target in "${target_array[@]}"; do
-        case "$target" in
-            source)
-                uniqueImages["ghcr.io/naev/naev-release:latest"]=1
-                ;;
-            linux)
-                uniqueImages["ghcr.io/naev/naev-steamruntime:latest"]=1
-                ;;
-            windows)
-                uniqueImages["ghcr.io/naev/naev-windows:latest"]=1
-                ;;
-            macos)
-                uniqueImages["ghcr.io/naev/naev-macos:latest"]=1
-                ;;
-        esac
-    done
-    for img in "${!uniqueImages[@]}"; do
-        echo "Pulling $img..."
-        docker pull "$img"
-    done
+
+# Determine docker image names based on USE_LOCAL env variable
+if [ "$USE_LOCAL" = "1" ]; then
+    image_source="naev-release"
+    image_linux="naev-steamruntime"
+    image_windows="naev-windows"
+    image_macos="naev-macos"
+    echo "Using local docker images"
+else
+    image_source="ghcr.io/naev/naev-release:latest"
+    image_linux="ghcr.io/naev/naev-steamruntime:latest"
+    image_windows="ghcr.io/naev/naev-windows:latest"
+    image_macos="ghcr.io/naev/naev-macos:latest"
+fi
+
+# Update image pulling block
+if [ "$USE_LOCAL" != "1" ]; then
+    read -r -p "Would you like to pull the required docker images? [Y/n] " answer
+    if [[ "$answer" =~ ^[Yy]|^$ ]]; then
+        declare -A uniqueImages
+        for target in "${target_array[@]}"; do
+            case "$target" in
+                source)
+                    uniqueImages["$image_source"]=1
+                    ;;
+                linux)
+                    uniqueImages["$image_linux"]=1
+                    ;;
+                windows)
+                    uniqueImages["$image_windows"]=1
+                    ;;
+                macos)
+                    uniqueImages["$image_macos"]=1
+                    ;;
+            esac
+        done
+        for img in "${!uniqueImages[@]}"; do
+            echo "Pulling $img..."
+            docker pull "$img"
+        done
+    fi
+else
+    echo "Skipping docker image pull; using local images."
 fi
 
 for target in "${target_array[@]}"; do
@@ -85,7 +104,7 @@ for target in "${target_array[@]}"; do
                 -v "$SOURCEROOT":"${HOME}"/source:Z \
                 -v "$TARGET_BUILD":"${HOME}"/build:Z \
                 -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
-                ghcr.io/naev/naev-release:latest \
+                "$image_source" \
                 bash -c "meson setup ${HOME}/build ${HOME}/source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson dist -C ${HOME}/build --allow-dirty --no-tests --include-subprojects"
             cp -r "$TARGET_BUILD"/meson-dist/naev-*.tar.xz "$BUILDPATH"/output
             ;;
@@ -95,7 +114,7 @@ for target in "${target_array[@]}"; do
                 -v "$SOURCEROOT":"${HOME}"/source:Z \
                 -v "$TARGET_BUILD":"${HOME}"/build:Z \
                 -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
-                ghcr.io/naev/naev-steamruntime:latest \
+                "$image_linux" \
                 bash -c "${HOME}/source/utils/buildAppImage.sh -i -d -s ${HOME}/source -b ${HOME}/build"
             cp -r "$TARGET_BUILD"/dist/* "$BUILDPATH"/output
             ;;
@@ -105,7 +124,7 @@ for target in "${target_array[@]}"; do
                 -v "$SOURCEROOT":"${HOME}"/source:Z \
                 -v "$TARGET_BUILD":"${HOME}"/build:Z \
                 -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
-                ghcr.io/naev/naev-windows:latest \
+                "$image_windows" \
                 bash -c "meson setup ${HOME}/build ${HOME}/source --prefix=\"${HOME}/build/windows\" --bindir=. -Dndata_path=. --cross-file='${HOME}/source/utils/build/windows_cross_mingw_ucrt64.ini' --buildtype=debug --force-fallback-for=glpk,SuiteSparse -Dinstaller=true -Drelease=true -Db_lto=false -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build && meson install -C ${HOME}/build"
             cp -r "$TARGET_BUILD"/dist/* "$BUILDPATH"/output
             ;;
@@ -116,21 +135,21 @@ for target in "${target_array[@]}"; do
                 -v "$SOURCEROOT":"${HOME}"/source:Z \
                 -v "$TARGET_BUILD":"${HOME}"/build:Z \
                 -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
-                ghcr.io/naev/naev-macos:latest \
+                "$image_macos" \
                 bash -c "mkdir -p ${HOME}/build/macos/x86_64 && mkdir -p ${HOME}/build/macos/x86_build && meson setup ${HOME}/build/macos/x86_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_x86.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Db_lto=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/x86_build && meson install -C ${HOME}/build/macos/x86_build && cp -r ${HOME}/build/macos/Naev_x86.app ${HOME}/build/macos/x86_64"
             # Build arm64 target:
             docker run --rm -u "$(id -u):$(id -g)" \
                 -v "$SOURCEROOT":"${HOME}"/source:Z \
                 -v "$TARGET_BUILD":"${HOME}"/build:Z \
                 -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
-                ghcr.io/naev/naev-macos:latest \
+                "$image_macos" \
                 bash -c "mkdir -p ${HOME}/build/macos/arm64 && mkdir -p ${HOME}/build/macos/arm_build && meson setup ${HOME}/build/macos/arm_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_arm.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_aarch64_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Db_lto=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/arm_build && meson install -C ${HOME}/build/macos/arm_build && cp -r ${HOME}/build/macos/Naev_arm.app ${HOME}/build/macos/arm64"
             # Package universal bundle:
             docker run --rm -u "$(id -u):$(id -g)" \
                 -v "$SOURCEROOT":"${HOME}"/source:Z \
                 -v "$TARGET_BUILD":"${HOME}"/build:Z \
                 -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
-                ghcr.io/naev/naev-macos:latest \
+                "$image_macos" \
                 bash -c "${HOME}/source/utils/buildUniversalBundle.sh -d -i ${HOME}/source/extras/macos/dmg_assets -e ${HOME}/source/extras/macos/entitlements.plist -a ${HOME}/build/macos/arm64/Naev.app -x ${HOME}/build/macos/x86_64/Naev.app -b ${HOME}/build/macos"
             ;;
         *)
