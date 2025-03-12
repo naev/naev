@@ -192,6 +192,7 @@ end
 Triggered when a mission or the likes temporarily disables autonav.
 --]]
 function autonav_reset( time )
+   print "autonav_reset"
    resetSpeed()
    autonav_timer = math.max( autonav_timer, time )
 end
@@ -200,6 +201,7 @@ end
 Triggers when autonav is successfully terminated or cleaning up.
 --]]
 function autonav_end ()
+   print "autonav_end"
    resetSpeed()
    player.autonavEnd()
 end
@@ -325,6 +327,7 @@ function autonav_abort( reason )
    else
       player.msg("#r".._("Autonav: aborted!").."#0")
    end
+   print "autonav_abort"
    autonav_end()
 end
 
@@ -479,6 +482,7 @@ function autonav_jump_approach ()
    local pp = player.pilot()
    local jmp = pp:navJump()
    if not jmp then
+      print "no nav jump"
       return autonav_abort()
    end
    local ret = autonav_approach( path[1], true )
@@ -637,7 +641,9 @@ end
 -- Going for the landing approach
 function autonav_spob_land_brake ()
    local ret = ai.brake()
+
    if player.tryLand(false)=="impossible" then
+      print "land impossible"
       return autonav_abort()
    elseif ret then
       -- Reset to good position
@@ -662,6 +668,7 @@ function autonav_plt_follow ()
          local jmp = plt:navJump()
          local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
+         autonav_reset( 1 )
 
          if follow_land_jump and jmp:known() and not jmp:exitonly() then
             print "lost (jump) && follow_land_jump"
@@ -678,9 +685,11 @@ function autonav_plt_follow ()
          return
       elseif plt:flags("landing") then
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
+         autonav_reset( 1 )
+
          if follow_land_jump or brake_pos then
+            -- TODO: select spob
             if follow_land_jump then
-               -- does not work: have the autonav message : "landing on ..." but autonav gets cancelled.
                print "lost (landing) && follow_land_jump"
             else
                print "lost (landing) && !follow_land_jump && brake_pos"
