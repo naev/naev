@@ -80,8 +80,8 @@ cp -v -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 # Move Linux binary and set as executable
 cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
 
-# Temporary? Workaround for OpenAL: copy libopenal.so.1 to Steam staging area
-cp -v "$TEMPPATH"/naev-linux-appdir-x86-64/AppDir/usr/lib/libopenal.so.1 "$STEAMPATH"/content/lin64
+# Temporary? Workaround for OpenAL: extract libopenal.so.1 from appdir and move to deployment location
+tar -Jxf "$TEMPPATH"/naev-linux-appdir-x86-64/naev-appdir.tar.xz --strip-components=3 -C "$STEAMPATH"/content/lin64 "AppDir/usr/lib/libopenal.so.1"
 # Rename original binary for wrapper usage
 mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
 # Create wrapper script to preload OpenAL
