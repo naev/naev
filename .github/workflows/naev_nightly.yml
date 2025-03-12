@@ -438,10 +438,6 @@ jobs:
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
-      - name: Checkout Naev Repository
-        uses: actions/checkout@v4
-        if: ${{ matrix.releasetype == 'github' }}
-
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
@@ -451,6 +447,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: ${{ github.workspace }}/build/staging
+
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v4
+        with:
+          path: build/staging/repo
+        if: ${{ matrix.releasetype == 'github' }}
 
       - name: Build and Upload Github Release
         if: ${{ matrix.releasetype == 'github' }}
