@@ -1,25 +1,54 @@
 #!/usr/bin/env bash
 # =============================================================================
 # This script orchestrates builds for various targets (source, linux, windows, macos)
-# using Docker. It pulls required images, sets up ccache directories, and launches
-# containerized build environments with the necessary privileges.
+# using Docker. It pulls required docker images (or uses local images when specified),
+# sets up ccache directories, and launches containerized build environments.
 #
-# TODO: Integrate the proper entrypoint so that advanced environment setup is performed,
-#       and fix macos builds (they rely on the entrypoint script).
+# Build outputs and temporary files are organized under the specified build root directory.
+#
+# Parameters:
+#   -s <SOURCEROOT> : Path to the source code directory.
+#   -b <BUILDROOT>  : Directory to store build artifacts and outputs.
+#   -t <TARGETS>    : Comma-separated list of targets to build; valid targets include
+#                     "source", "linux", "windows", and "macos". Alternatively, "all" to
+#                     build all targets.
+# Optional:
+#   -d              : Enable debug mode (bash -x) for detailed command output.
+#
+# Additional Environment Variable:
+#   USE_LOCAL       : When set to "1", the script uses local Docker images (e.g., 'naev-steamruntime')
+#                     instead of pulling from the GitHub Container Registry.
+#
+# TODO:
+#   - Integrate a proper entrypoint for advanced environment configuration.
+#   - Fix macos builds which currently depend on an external entrypoint script.
 # =============================================================================
 
 set -e
 
 usage() {
-    echo "usage: $(basename "$0") -s <SOURCEROOT> -b <BUILDROOT> -t <TARGETS>"
-    echo "TARGETS: comma-separated list of: source, linux, windows, macos or 'all'"
+    echo "Usage: $(basename "$0") -s <SOURCEROOT> -b <BUILDROOT> -t <TARGETS> [-d]"
+    echo ""
+    echo "Parameters:"
+    echo "  -s   Path to the source directory containing the code."
+    echo "  -b   Path to the build directory where artifacts and outputs will be stored."
+    echo "  -t   Comma-separated list of build targets. Valid options are:"
+    echo "         source   : Build the source tarball."
+    echo "         linux    : Build the Linux AppImage and generate zsync."
+    echo "         windows  : Build the Windows installer."
+    echo "         macos    : Build the macOS universal DMG (requires additional fixes)."
+    echo "         all      : Build all available targets."
+    echo "  -d   Enable debug mode (bash -x) for detailed command output."
+    echo ""
+    echo "Example:"
+    echo "  $(basename "$0") -s /path/to/source -b /path/to/build -t linux,windows -d"
     exit 1
 }
 
 # Defaults
 TARGETS=""
 
-while getopts s:b:t: OPTION; do
+while getopts s:b:t:d OPTION; do
     case $OPTION in
     s)
         SOURCEROOT="${OPTARG}"
@@ -29,6 +58,9 @@ while getopts s:b:t: OPTION; do
         ;;
     t)
         TARGETS="${OPTARG}"
+        ;;
+    d)
+        set -x
         ;;
     *)
         usage
@@ -44,7 +76,7 @@ mkdir -p "$BUILDPATH"
 
 # If TARGETS is 'all', then set to all targets.
 if [ "$TARGETS" = "all" ]; then
-    TARGETS="source,linux,windows"
+    TARGETS="source,linux,windows,macos"
 fi
 
 IFS=',' read -r -a target_array <<< "$TARGETS"
