@@ -192,7 +192,6 @@ end
 Triggered when a mission or the likes temporarily disables autonav.
 --]]
 function autonav_reset( time )
-   print "autonav_reset"
    resetSpeed()
    autonav_timer = math.max( autonav_timer, time )
 end
@@ -201,7 +200,6 @@ end
 Triggers when autonav is successfully terminated or cleaning up.
 --]]
 function autonav_end ()
-   print "autonav_end"
    resetSpeed()
    player.autonavEnd()
 end
@@ -327,7 +325,6 @@ function autonav_abort( reason )
    else
       player.msg("#r".._("Autonav: aborted!").."#0")
    end
-   print "autonav_abort"
    autonav_end()
 end
 
@@ -688,7 +685,7 @@ function autonav_plt_follow ()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
 
          if follow_land_jump or brake_pos then
-            -- TODO: select spob
+            player.pilot():navSpobSet( plt:navSpob() )
             _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
                print "lost (landing) && follow_land_jump"
