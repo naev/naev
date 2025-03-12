@@ -1,41 +1,34 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# =============================================================================
+# This script orchestrates builds for various targets (source, linux, windows, macos)
+# using Docker. It pulls required images, sets up ccache directories, and launches
+# containerized build environments with the necessary privileges.
+#
+# TODO: Integrate the proper entrypoint so that advanced environment setup is performed,
+#       and fix macos builds (they rely on the entrypoint script).
+# =============================================================================
 
 set -e
 
 usage() {
-    echo "usage: $(basename "$0") [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)"
-    cat <<EOF
-RELEASE SCRIPT FOR NAEV Soon (tm)
-
-This script attempts to compile and build different parts of Naev
-automatically in order to prepare for a new release.
-
-Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)
-
-Output destination is ${BUILDPATH}/dist
-EOF
+    echo "usage: $(basename "$0") -s <SOURCEROOT> -b <BUILDROOT> -t <TARGETS>"
+    echo "TARGETS: comma-separated list of: source, linux, windows, macos or 'all'"
     exit 1
 }
 
 # Defaults
-NIGHTLY="false"
+TARGETS=""
 
-while getopts dns:b:o:r: OPTION "$@"; do
+while getopts s:b:t: OPTION; do
     case $OPTION in
-    d)
-        set -x
-        ;;
-    n)
-        NIGHTLY="true"
-        ;;
     s)
         SOURCEROOT="${OPTARG}"
         ;;
     b)
         BUILDPATH="${OPTARG}"
         ;;
-    r)
-        RUNNER="${OPTARG}"
+    t)
+        TARGETS="${OPTARG}"
         ;;
     *)
         usage
@@ -43,75 +36,105 @@ while getopts dns:b:o:r: OPTION "$@"; do
     esac
 done
 
-if [ -z "$SOURCEROOT" ] || [ -z "$BUILDPATH" ] || [ -z "$RUNNER" ]; then
+if [ -z "$SOURCEROOT" ] || [ -z "$BUILDPATH" ] || [ -z "$TARGETS" ]; then
     usage
 fi
 
+mkdir -p "$BUILDPATH"
 
-function get_version {
-   if [ -f "$SOURCEROOT/dat/VERSION" ]; then
-       VERSION="$(<"$SOURCEROOT/dat/VERSION")"
-       export VERSION
-   else
-       echo "The VERSION file is missing from $SOURCEROOT."
-       exit 1
-   fi
-
-   return 0
-}
-
-function make_appimage {
-   if [[ "$NIGHTLY" == "true" ]]; then
-      sh "$SOURCEROOT/utils/buildAppImage.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH/appimage"
-   else
-      sh "$SOURCEROOT/utils/buildAppImage.sh" -s "$SOURCEROOT" -b "$BUILDPATH/appimage"
-   fi
-}
-
-function make_windows {
-   meson install
-}
-
-function make_macos {
-   meson install
-}
-
-function make_steam {
-   if [[ $RUNNER == "Windows" ]]; then
-      echo "TODO!"
-   elif [[ $RUNNER == "macOS" ]]; then
-      echo "Nothing to do!"
-   elif [[ $RUNNER == "Linux" ]]; then
-      echo "TODO!"
-   else
-      echo "Invalid Runner name, did you pass in runner.os?"
-   fi
-}
-
-function make_itch {
-   if [[ $RUNNER == "Windows" ]]; then
-      echo "TODO!"
-   elif [[ $RUNNER == "macOS" ]]; then
-      echo "Nothing to do!"
-   elif [[ $RUNNER == "Linux" ]]; then
-      echo "TODO!"
-   else
-      echo "Invalid Runner name, did you pass in runner.os?"
-   fi
-}
-
-# Create output dirdectory if necessary
-mkdir -p "$BUILDPATH/dist"
-
-# Build Release stuff
-if [[ $RUNNER == "Windows" ]]; then
-   make_windows
-   make_steam
-elif [[ $RUNNER == "macOS" ]]; then
-   make_macos
-elif [[ $RUNNER == "Linux" ]]; then
-   make_appimage
-   make_steam
-else
-   echo "Invalid Runner name, did you pass in runner.os?"
+# If TARGETS is 'all', then set to all targets.
+if [ "$TARGETS" = "all" ]; then
+    TARGETS="source,linux,windows"
 fi
+
+IFS=',' read -r -a target_array <<< "$TARGETS"
+# New: Prompt to pull only the required docker images for the selected targets.
+read -r -p "Would you like to pull the required docker images? [Y/n] " answer
+if [[ "$answer" =~ ^[Yy]|^$ ]]; then
+    declare -A uniqueImages
+    for target in "${target_array[@]}"; do
+        case "$target" in
+            source)
+                uniqueImages["ghcr.io/naev/naev-release:latest"]=1
+                ;;
+            linux)
+                uniqueImages["ghcr.io/naev/naev-steamruntime:latest"]=1
+                ;;
+            windows)
+                uniqueImages["ghcr.io/naev/naev-windows:latest"]=1
+                ;;
+            macos)
+                uniqueImages["ghcr.io/naev/naev-macos:latest"]=1
+                ;;
+        esac
+    done
+    for img in "${!uniqueImages[@]}"; do
+        echo "Pulling $img..."
+        docker pull "$img"
+    done
+fi
+
+for target in "${target_array[@]}"; do
+    TARGET_BUILD="${BUILDPATH}/${target}"
+    mkdir -p "$TARGET_BUILD"
+    mkdir -p "$BUILDPATH"/output
+    case "$target" in
+        source)
+            echo "Building source tarball..."
+            docker run --rm -u "$(id -u):$(id -g)" \
+                -v "$SOURCEROOT":"${HOME}"/source:Z \
+                -v "$TARGET_BUILD":"${HOME}"/build:Z \
+                -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
+                ghcr.io/naev/naev-release:latest \
+                bash -c "meson setup ${HOME}/build ${HOME}/source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson dist -C ${HOME}/build --allow-dirty --no-tests --include-subprojects"
+            cp -r "$TARGET_BUILD"/meson-dist/naev-*.tar.xz "$BUILDPATH"/output
+            ;;
+        linux)
+            echo "Building Linux AppImage and generating zsync..."
+            docker run --rm -u "$(id -u):$(id -g)" \
+                -v "$SOURCEROOT":"${HOME}"/source:Z \
+                -v "$TARGET_BUILD":"${HOME}"/build:Z \
+                -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
+                ghcr.io/naev/naev-steamruntime:latest \
+                bash -c "${HOME}/source/utils/buildAppImage.sh -i -d -s ${HOME}/source -b ${HOME}/build"
+            cp -r "$TARGET_BUILD"/dist/* "$BUILDPATH"/output
+            ;;
+        windows)
+            echo "Building Windows installer..."
+            docker run --rm -u "$(id -u):$(id -g)" \
+                -v "$SOURCEROOT":"${HOME}"/source:Z \
+                -v "$TARGET_BUILD":"${HOME}"/build:Z \
+                -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
+                ghcr.io/naev/naev-windows:latest \
+                bash -c "meson setup ${HOME}/build ${HOME}/source --prefix=\"${HOME}/build/windows\" --bindir=. -Dndata_path=. --cross-file='${HOME}/source/utils/build/windows_cross_mingw_ucrt64.ini' --buildtype=debug --force-fallback-for=glpk,SuiteSparse -Dinstaller=true -Drelease=true -Db_lto=false -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build && meson install -C ${HOME}/build"
+            cp -r "$TARGET_BUILD"/dist/* "$BUILDPATH"/output
+            ;;
+        macos)
+            echo "Building macOS universal DMG..."
+            # Build x86_64 target:
+            docker run --rm -u "$(id -u):$(id -g)" \
+                -v "$SOURCEROOT":"${HOME}"/source:Z \
+                -v "$TARGET_BUILD":"${HOME}"/build:Z \
+                -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
+                ghcr.io/naev/naev-macos:latest \
+                bash -c "mkdir -p ${HOME}/build/macos/x86_64 && mkdir -p ${HOME}/build/macos/x86_build && meson setup ${HOME}/build/macos/x86_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_x86.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Db_lto=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/x86_build && meson install -C ${HOME}/build/macos/x86_build && cp -r ${HOME}/build/macos/Naev_x86.app ${HOME}/build/macos/x86_64"
+            # Build arm64 target:
+            docker run --rm -u "$(id -u):$(id -g)" \
+                -v "$SOURCEROOT":"${HOME}"/source:Z \
+                -v "$TARGET_BUILD":"${HOME}"/build:Z \
+                -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
+                ghcr.io/naev/naev-macos:latest \
+                bash -c "mkdir -p ${HOME}/build/macos/arm64 && mkdir -p ${HOME}/build/macos/arm_build && meson setup ${HOME}/build/macos/arm_build ${HOME}/source --prefix=\"${HOME}/build/macos/Naev_arm.app\" --bindir=Contents/MacOS -Dndata_path=Contents/Resources --cross-file='${HOME}/source/utils/build/macos_aarch64_cross_osxcross.ini' --buildtype=debug -Dinstaller=false -Drelease=true -Db_lto=true -Dauto_features=enabled -Ddocs_c=disabled -Ddocs_lua=disabled && meson compile -C ${HOME}/build/macos/arm_build && meson install -C ${HOME}/build/macos/arm_build && cp -r ${HOME}/build/macos/Naev_arm.app ${HOME}/build/macos/arm64"
+            # Package universal bundle:
+            docker run --rm -u "$(id -u):$(id -g)" \
+                -v "$SOURCEROOT":"${HOME}"/source:Z \
+                -v "$TARGET_BUILD":"${HOME}"/build:Z \
+                -e CCACHE_DIR="${HOME}"/build/ccache -e CCACHE_TMPDIR="${HOME}"/build/ccache/tmp \
+                ghcr.io/naev/naev-macos:latest \
+                bash -c "${HOME}/source/utils/buildUniversalBundle.sh -d -i ${HOME}/source/extras/macos/dmg_assets -e ${HOME}/source/extras/macos/entitlements.plist -a ${HOME}/build/macos/arm64/Naev.app -x ${HOME}/build/macos/x86_64/Naev.app -b ${HOME}/build/macos"
+            ;;
+        *)
+            echo "Unknown target: $target"
+            ;;
+    esac
+done
