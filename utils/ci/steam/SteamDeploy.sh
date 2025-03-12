@@ -91,6 +91,7 @@ BASEDIR="$(dirname "$(readlink -f "$0")")"
 export LD_PRELOAD="$BASEDIR/libopenal.so.1"
 exec "$BASEDIR/naev" "$@"
 EOF
+chmod +x "$STEAMPATH"/content/lin64/naev
 chmod +x "$STEAMPATH"/content/lin64/naev.x64
 
 # Move macOS bundle to deployment location
