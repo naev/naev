@@ -88,7 +88,7 @@ mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
 cat > "$STEAMPATH"/content/lin64/naev.x64 <<'EOF'
 #!/bin/sh
 BASEDIR="$(dirname "$(readlink -f "$0")")"
-export LD_PRELOAD="$BASEDIR/libopenal.so.1"
+export LD_PRELOAD="$LD_PRELOAD:$BASEDIR/libopenal.so.1"
 exec "$BASEDIR/naev" "$@"
 EOF
 chmod +x "$STEAMPATH"/content/lin64/naev
