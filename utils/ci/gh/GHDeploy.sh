@@ -107,24 +107,26 @@ fi
 
 if [ "$DRYRUN" == "false" ]; then
     # Delete existing release for the current tag if it exists
-    if gh release view "$TAGNAME" >/dev/null 2>&1; then
-        gh release delete "$TAGNAME" --yes
+    if gh release view "$TAGNAME" --repo "$REPONAME" >/dev/null 2>&1; then
+        gh release delete "$TAGNAME" --repo "$REPONAME" --yes
     fi
 
     # For nightly releases, force push the "nightly" tag to HEAD
     if [ "$NIGHTLY" == "true" ]; then
-        git -C build/staging/repo tag -f nightly HEAD
-        git -C build/staging/repo push -f origin nightly
+        pushd build/staging/repo > /dev/null
+        git tag -f nightly HEAD
+        git push -f origin nightly
+        popd > /dev/null
     fi
 
     # Create release for $TAGNAME
     if [ "$NIGHTLY" == "true" ]; then
-        gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes --verify-tag
+        gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes --verify-tag --repo "$REPONAME"
     else
         if [ "$PRERELEASE" == "true" ]; then
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --prerelease --verify-tag
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --prerelease --verify-tag --repo "$REPONAME"
         else
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --verify-tag
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --verify-tag --repo "$REPONAME"
         fi
     fi
 
@@ -143,12 +145,12 @@ elif [ "$DRYRUN" == "true" ]; then
     echo "Would check for and delete existing release for tag: $TAGNAME"
     if [ "$NIGHTLY" == "true" ]; then
         echo "Would force push 'nightly' tag to HEAD: git tag -f nightly HEAD && git push -f origin nightly"
-        echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes --verify-tag"
+        echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes --verify-tag --repo $REPONAME"
     else
         if [ "$PRERELEASE" == "true" ]; then
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --prerelease --verify-tag"
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --prerelease --verify-tag --repo $REPONAME"
         else
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --verify-tag"
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --verify-tag --repo $REPONAME"
         fi
     fi
     # Simulate asset uploads
