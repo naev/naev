@@ -87,8 +87,9 @@ mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
 # Create wrapper script to preload OpenAL
 cat > "$STEAMPATH"/content/lin64/naev.x64 <<'EOF'
 #!/bin/sh
-LD_PRELOAD=./libopenal.so.1
-./naev "${@}"
+BASEDIR="$(dirname "$(readlink -f "$0")")"
+export LD_PRELOAD="$BASEDIR/libopenal.so.1"
+exec "$BASEDIR/naev" "$@"
 EOF
 chmod +x "$STEAMPATH"/content/lin64/naev.x64
 
