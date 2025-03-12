@@ -54,16 +54,10 @@ if [[ -z "$TAGNAME" ]]; then
     exit 1
 fi
 
-if ! [ -x "$(command -v github-assets-uploader)" ]; then
-    echo "You don't have github-assets-uploader in PATH"
+if ! [ -x "$(command -v gh)" ]; then
+    echo "You don't have gh (GitHub CLI) in PATH"
     exit 1
-else
-    GH="github-assets-uploader"
 fi
-
-run_gau () {
-    $GH -retry 5 -logtostderr "$@"
-}
 
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
 
@@ -97,31 +91,51 @@ else
     cp "$TEMPPATH"/naev-soundtrack/naev-*-soundtrack.zip "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip
 fi
 
-# Push builds to github via gh
-#
-# Media types taken from: https://www.iana.org/assignments/media-types/media-types.xhtml
-#
+# Create Release and push builds to github via gh
+# If DRYRUN is set to true, simulate the release creation and upload
 
 if [ "$DRYRUN" == "false" ]; then
-    run_gau -version
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage.zsync -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/macos/naev-"$VERSION"-macos-universal.dmg -mediatype "application/octet-stream" -overwrite
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/win64/naev-"$VERSION"-win64.exe -mediatype "application/vnd.microsoft.portable-executable" -overwrite
-    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
-        run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$VERSION"-soundtrack.zip -mediatype "application/zip" -overwrite
-    fi
-    run_gau -repo "$REPONAME" -tag "$TAGNAME" -token "$GH_TOKEN" -f "$OUTDIR"/dist/naev-"$VERSION"-source.tar.xz -mediatype "application/x-gtar" -overwrite
-elif [ "$DRYRUN" == "true" ]; then
-    run_gau -version
+    # Create release for $TAGNAME
     if [ "$NIGHTLY" == "true" ]; then
-        echo "github nightly upload"
-    elif [ "$PRERELEASE" == "true" ]; then
-        echo "github beta upload"
+        gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes
     else
-        echo "github release upload"
-        echo "github soundtrack upload"
+        if [ "$PRERELEASE" == "true" ]; then
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --prerelease
+        else
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG"
+        fi
     fi
+
+    gh --version
+    gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage" --repo "$REPONAME" --clobber
+    gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync" --repo "$REPONAME" --clobber
+    gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
+    gh release upload "$TAGNAME" "$OUTDIR/win64/naev-${VERSION}-win64.exe" --repo "$REPONAME" --clobber
+    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
+        gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-soundtrack.zip" --repo "$REPONAME" --clobber
+    fi
+    gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-source.tar.xz" --repo "$REPONAME" --clobber
+elif [ "$DRYRUN" == "true" ]; then
+    gh --version
+    # Simulate release creation
+    if [ "$NIGHTLY" == "true" ]; then
+        echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes"
+    else
+        if [ "$PRERELEASE" == "true" ]; then
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --prerelease"
+        else
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG"
+        fi
+    fi
+    # Simulate asset uploads
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage --repo $REPONAME --clobber"
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync --repo $REPONAME --clobber"
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/win64/naev-${VERSION}-win64.exe --repo $REPONAME --clobber"
+    if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
+        echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-soundtrack.zip --repo $REPONAME --clobber"
+    fi
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-source.tar.xz --repo $REPONAME --clobber"
     ls -l -R "$OUTDIR"
 else
     echo "Something went wrong determining which mode to run this script in."
