@@ -54,9 +54,20 @@ if [[ -z "$TAGNAME" ]]; then
     exit 1
 fi
 
+# Check dependencies
 if ! [ -x "$(command -v gh)" ]; then
     echo "You don't have gh (GitHub CLI) in PATH"
     exit 1
+fi
+if ! [ -x "$(command -v git)" ]; then
+    echo "You don't have git in PATH"
+    exit 1
+fi
+
+# Set git configuration from environment variables if provided
+if [ -n "$GIT_USERNAME" ] && [ -n "$GIT_EMAIL" ]; then
+    git config user.name "$GIT_USERNAME"
+    git config user.email "$GIT_EMAIL"
 fi
 
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
@@ -95,14 +106,25 @@ fi
 # If DRYRUN is set to true, simulate the release creation and upload
 
 if [ "$DRYRUN" == "false" ]; then
+    # Delete existing release for the current tag if it exists
+    if gh release view "$TAGNAME" >/dev/null 2>&1; then
+        gh release delete "$TAGNAME" --yes
+    fi
+
+    # For nightly releases, force push the "nightly" tag to HEAD
+    if [ "$NIGHTLY" == "true" ]; then
+        git tag -f nightly HEAD
+        git push -f origin nightly
+    fi
+
     # Create release for $TAGNAME
     if [ "$NIGHTLY" == "true" ]; then
-        gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes
+        gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes --verify-tag
     else
         if [ "$PRERELEASE" == "true" ]; then
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --prerelease
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --prerelease --verify-tag
         else
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG"
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --verify-tag
         fi
     fi
 
@@ -117,14 +139,16 @@ if [ "$DRYRUN" == "false" ]; then
     gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-source.tar.xz" --repo "$REPONAME" --clobber
 elif [ "$DRYRUN" == "true" ]; then
     gh --version
-    # Simulate release creation
+    # Simulate deletion of an existing release for the current tag
+    echo "Would check for and delete existing release for tag: $TAGNAME"
     if [ "$NIGHTLY" == "true" ]; then
-        echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes"
+        echo "Would force push 'nightly' tag to HEAD: git tag -f nightly HEAD && git push -f origin nightly"
+        echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes --verify-tag"
     else
         if [ "$PRERELEASE" == "true" ]; then
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --prerelease"
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --prerelease --verify-tag"
         else
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG"
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --verify-tag"
         fi
     fi
     # Simulate asset uploads
