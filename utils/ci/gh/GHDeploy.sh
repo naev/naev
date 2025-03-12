@@ -66,8 +66,8 @@ fi
 
 # Set git configuration from environment variables if provided
 if [ -n "$GIT_USERNAME" ] && [ -n "$GIT_EMAIL" ]; then
-    git config user.name "$GIT_USERNAME"
-    git config user.email "$GIT_EMAIL"
+    git -C build/staging/repo config user.name "$GIT_USERNAME"
+    git -C build/staging/repo config user.email "$GIT_EMAIL"
 fi
 
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
@@ -113,8 +113,8 @@ if [ "$DRYRUN" == "false" ]; then
 
     # For nightly releases, force push the "nightly" tag to HEAD
     if [ "$NIGHTLY" == "true" ]; then
-        git tag -f nightly HEAD
-        git push -f origin nightly
+        git -C build/staging/repo tag -f nightly HEAD
+        git -C build/staging/repo push -f origin nightly
     fi
 
     # Create release for $TAGNAME
