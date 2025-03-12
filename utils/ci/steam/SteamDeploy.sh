@@ -79,6 +79,19 @@ cp -v -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
 cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
+
+# Temporary? Workaround for OpenAL: extract libopenal.so.1 from appdir and move to deployment location
+tar -Jxf "$TEMPPATH"/naev-linux-appdir-x86-64/naev-appdir.tar.xz --strip-components=3 -C "$STEAMPATH"/content/lin64 "AppDir/usr/lib/libopenal.so.1"
+# Rename original binary for wrapper usage
+mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
+# Create wrapper script to preload OpenAL
+cat > "$STEAMPATH"/content/lin64/naev.x64 <<'EOF'
+#!/bin/sh
+BASEDIR="$(dirname "$(readlink -f "$0")")"
+export LD_PRELOAD="$LD_PRELOAD:$BASEDIR/libopenal.so.1"
+exec "$BASEDIR/naev" "$@"
+EOF
+chmod +x "$STEAMPATH"/content/lin64/naev
 chmod +x "$STEAMPATH"/content/lin64/naev.x64
 
 # Move macOS bundle to deployment location

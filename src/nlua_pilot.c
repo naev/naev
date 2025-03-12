@@ -89,6 +89,7 @@ static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_navSpob( lua_State *L );
+static int pilotL_navSpobSet( lua_State *L );
 static int pilotL_navJump( lua_State *L );
 static int pilotL_navJumpSet( lua_State *L );
 static int pilotL_autoweap( lua_State *L );
@@ -284,6 +285,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
    { "navSpob", pilotL_navSpob },
+   { "navSpobSet", pilotL_navSpobSet },
    { "navJump", pilotL_navJump },
    { "navJumpSet", pilotL_navJumpSet },
    { "autoweap", pilotL_autoweap },
@@ -1706,6 +1708,40 @@ static int pilotL_navSpob( lua_State *L )
 }
 
 /**
+ * @brief Sets the spob target for the pilot.
+ *
+ *    @luatparam Pilot p Pilot to set spob target for.
+ *    @luatparam Spob|nil spb Spob to set as target or nil to disable.
+ * @luafunc navSpobSet
+ */
+static int pilotL_navSpobSet( lua_State *L )
+{
+   Pilot *p      = luaL_validpilot( L, 1 );
+   int    spobid = -1;
+   if ( !lua_isnoneornil( L, 2 ) ) {
+      const Spob *spb     = luaL_validspob( L, 2 );
+      const char *sysname = spob_getSystemName( spb->name );
+      if ( ( sysname == NULL ) || ( system_get( sysname ) != cur_system ) )
+         return NLUA_ERROR( L, _( "Spob not found in current system!" ) );
+
+      for ( int i = 0; i < array_size( cur_system->spobs ); i++ )
+         if ( cur_system->spobs[i] == spb ) {
+            spobid = i;
+            break;
+         }
+      if ( spobid < 0 )
+         return NLUA_ERROR( L, _( "Spob not found in current system!" ) );
+   }
+
+   if ( pilot_isPlayer( p ) )
+      player_targetSpobSet( spobid );
+   else
+      p->nav_spob = spobid;
+
+   return 0;
+}
+
+/**
  * @brief Gets the nav jump target of the pilot.
  *
  *    @luatparam Pilot p Pilot to get nav info of.
@@ -1756,12 +1792,16 @@ static int pilotL_navJumpSet( lua_State *L )
          return NLUA_ERROR( L, _( "Jump destination system not found!" ) );
    }
 
-   if ( pilot_isPlayer( p ) )
-      map_select( cur_system->jumps[jumpid].target, 0 );
-   else
+   if ( pilot_isPlayer( p ) ) {
+      player_targetHyperspaceSet( jumpid, 0 );
+      if ( jumpid < 0 )
+         map_select( NULL, 0 );
+      else
+         map_select( cur_system->jumps[jumpid].target, 0 );
+   } else
       p->nav_hyperspace = jumpid;
 
-   return 1;
+   return 0;
 }
 
 /**
