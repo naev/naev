@@ -1761,12 +1761,16 @@ static int pilotL_navJumpSet( lua_State *L )
          return NLUA_ERROR( L, _( "Jump destination system not found!" ) );
    }
 
-   if ( pilot_isPlayer( p ) )
-      map_select( cur_system->jumps[jumpid].target, 0 );
-   else
+   if ( pilot_isPlayer( p ) ) {
+      player_targetHyperspaceSet( jumpid, 0 );
+      if ( jumpid < 0 )
+         map_select( NULL, 0 );
+      else
+         map_select( cur_system->jumps[jumpid].target, 0 );
+   } else
       p->nav_hyperspace = jumpid;
 
-   return 1;
+   return 0;
 }
 
 /**
