@@ -785,7 +785,7 @@ function autonav_plt_board_approach ()
    if brd=="ok" then
       autonav_end()
    elseif brd~="retry" then
-      autonav_abort("cannot board")
+      autonav_abort(_("cannot board"))
    end
 end
 
