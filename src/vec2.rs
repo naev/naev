@@ -320,21 +320,16 @@ impl UserData for Vec2 {
         /// origin (0,0) if not set.
         ///    @luatreturn number The distance calculated.
         /// @luafunc dist
-        methods.add_method("dist", |_, vec: &Self, val: Value| -> mlua::Result<f64> {
-            match val {
-                Value::UserData(ud) if ud.is::<Self>() => {
-                    let vec2: Vector2<f64> = ud.borrow::<Self>()?.0.into();
-                    Ok((vec.0.x - vec2.x).hypot(vec.0.y - vec2.y))
-                }
-                Value::Nil => Ok(vec.0.x.hypot(vec.0.y)),
-                _ => Err(mlua::Error::BadArgument {
-                    to: Some(String::from("Vec2 | nil")),
-                    pos: 2,
-                    name: Some(String::from("v2")),
-                    cause: Arc::new(mlua::Error::UserDataTypeMismatch),
-                }),
-            }
-        });
+        methods.add_method(
+            "dist",
+            |_, vec: &Self, val: Option<Vec2>| -> mlua::Result<f64> {
+                let d = match val {
+                    Some(vec2) => (vec.0.x - vec2.0.x).hypot(vec.0.y - vec2.0.y),
+                    None => vec.0.x.hypot(vec.0.y),
+                };
+                Ok(d)
+            },
+        );
 
         /// @brief Gets the squared distance from the Vec2 (saves a sqrt())
         ///
@@ -348,21 +343,16 @@ impl UserData for Vec2 {
         /// uses origin (0,0) if not set.
         ///    @luatreturn number The distance calculated.
         /// @luafunc dist2
-        methods.add_method("dist2", |_, vec: &Self, val: Value| -> mlua::Result<f64> {
-            match val {
-                Value::UserData(ud) if ud.is::<Self>() => {
-                    let vec2: Vector2<f64> = ud.borrow::<Self>()?.0.into();
-                    Ok((vec.0.x - vec2.x).powf(2.0) + (vec.0.y - vec2.y).powf(2.0))
-                }
-                Value::Nil => Ok(vec.0.x.powf(2.0) + vec.0.y.powf(2.0)),
-                _ => Err(mlua::Error::BadArgument {
-                    to: Some(String::from("Vec2 | nil")),
-                    pos: 2,
-                    name: Some(String::from("v2")),
-                    cause: Arc::new(mlua::Error::UserDataTypeMismatch),
-                }),
-            }
-        });
+        methods.add_method(
+            "dist2",
+            |_, vec: &Self, val: Option<Vec2>| -> mlua::Result<f64> {
+                let d = match val {
+                    Some(vec2) => (vec.0.x - vec2.0.x).powf(2.0) + (vec.0.y - vec2.0.y).powf(2.0),
+                    None => vec.0.x.powf(2.0) + vec.0.y.powf(2.0),
+                };
+                Ok(d)
+            },
+        );
 
         /// @brief Gets the modulus of the vector.
         ///    @luatparam Vec2 v Vector to get modulus of.
@@ -387,18 +377,10 @@ impl UserData for Vec2 {
         /// @luafunc normalize
         methods.add_method_mut(
             "normalize",
-            |_, vec: &mut Self, val: mlua::Value| -> mlua::Result<Self> {
-                let n = match val {
-                    Value::Number(n) => n,
-                    Value::Nil => 1.,
-                    _ => {
-                        return Err(mlua::Error::BadArgument {
-                            to: Some(String::from("number | nil")),
-                            pos: 2,
-                            name: Some(String::from("n")),
-                            cause: Arc::new(mlua::Error::UserDataTypeMismatch),
-                        })
-                    }
+            |_, vec: &mut Self, n: Option<f64>| -> mlua::Result<Self> {
+                let n = match n {
+                    Some(n) => n,
+                    None => 1.,
                 };
                 let m = n / (vec.0.x.hypot(vec.0.y)).max(1e-6);
                 vec.0.x *= m;
