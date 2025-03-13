@@ -673,7 +673,7 @@ function autonav_plt_follow ()
          if follow_land_jump then
             local fuel, consumption = player.fuel()
             if jmp:known() and not jmp:exitonly() and fuel >=consumption then
-               print "lost (jump) && follow_land_jump"
+               --print "lost (jump) && follow_land_jump"
                pp:navJumpSet( jmp )
                _autonav_system(false)
                autonav_reset(1)
@@ -688,14 +688,15 @@ function autonav_plt_follow ()
                end
                player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping{reason}."),{plt=get_pilot_name(plt),reason=why}).."#0")
                autonav_end()
+            end
          elseif brake_pos then
-            print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
+            --print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
             pp:navJumpSet( jmp )
             autonav_pos(plt:navJump():pos())
             autonav_reset(1)
             --autonav_rampdown( false )
          else
-            print "lost (jump) && !follow_land_jump (or can't) && !brake_pos"
+            --print "lost (jump) && !follow_land_jump (or can't) && !brake_pos"
             autonav_end()
          end
          return
@@ -706,14 +707,14 @@ function autonav_plt_follow ()
             player.pilot():navSpobSet( plt:navSpob() )
             _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
-               print "lost (landing) && follow_land_jump"
+               --print "lost (landing) && follow_land_jump"
                autonav_reset(1)
             else
-               print "lost (landing) && !follow_land_jump && brake_pos"
+               --print "lost (landing) && !follow_land_jump && brake_pos"
                autonav_rampdown( true )
             end
          else
-            print "lost (landing) && !follow_land_jump && !brake_pos"
+            --print "lost (landing) && !follow_land_jump && !brake_pos"
             autonav_end()
          end
          return
