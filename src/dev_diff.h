@@ -5,4 +5,4 @@
 
 #include "unidiff.h"
 
-int ddiff_save( UniHunk_t *diffs, const char *filename );
+int ddiff_save( const UniDiffData_t *data );

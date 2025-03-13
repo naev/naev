@@ -85,10 +85,11 @@ typedef enum UniEditViewMode_ {
 
 extern StarSystem *systems_stack;
 
-int                    uniedit_diffMode  = 0;
-int                    uniedit_diffSaved = 0;
-static UniHunk_t      *uniedit_diff      = NULL;
-static UniEditMode     uniedit_mode      = UNIEDIT_DEFAULT; /**< Editor mode. */
+int                  uniedit_diffMode  = 0;
+int                  uniedit_diffSaved = 0;
+static UniDiffData_t uniedit_diff      = {
+        .name = NULL, .filename = NULL, .hunks = NULL };
+static UniEditMode     uniedit_mode = UNIEDIT_DEFAULT; /**< Editor mode. */
 static UniEditViewMode uniedit_viewmode =
    UNIEDIT_VIEW_DEFAULT;              /**< Editor view mode. */
 static int uniedit_view_faction = -1; /**< Faction currently being viewed. */
@@ -214,7 +215,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
 
    /* Must have no diffs applied. */
    diff_clear();
-   uniedit_diff      = array_create( UniHunk_t );
    uniedit_diffSaved = 1; /* Start OK with empty diffs. */
 
    /* Reset some variables. */
@@ -520,7 +520,7 @@ static void uniedit_save_callback( void *userdata, const char *const *filelist,
    }
 
    /* Actually save it. */
-   ddiff_save( uniedit_diff, filelist[0] );
+   ddiff_save( &uniedit_diff );
    uniedit_diffSaved = 1;
 }
 /*
@@ -2902,15 +2902,17 @@ static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
 static void uniedit_diffClear( void )
 {
    diff_start();
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
-      UniHunk_t *h = &uniedit_diff[i];
+   for ( int i = 0; i < array_size( uniedit_diff.hunks ); i++ ) {
+      UniHunk_t *h = &uniedit_diff.hunks[i];
       diff_revertHunk( h );
       diff_cleanupHunk( h );
    }
    diff_end();
 
-   array_free( uniedit_diff );
-   uniedit_diff = NULL;
+   free( uniedit_diff.name );
+   free( uniedit_diff.filename );
+   array_free( uniedit_diff.hunks );
+   memset( &uniedit_diff, 0, sizeof( uniedit_diff ) );
 }
 
 static int uniedit_diff_cmp( const void *p1, const void *p2 )
@@ -3002,8 +3004,8 @@ void uniedit_diffAdd( UniHunk_t *hunk )
    diff_start();
 
    /* Replace if already same type exists. */
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
-      UniHunk_t *hi = &uniedit_diff[i];
+   for ( int i = 0; i < array_size( uniedit_diff.hunks ); i++ ) {
+      UniHunk_t *hi = &uniedit_diff.hunks[i];
       if ( hi->target.type != hunk->target.type )
          continue;
       if ( strcmp( hi->target.u.name, hunk->target.u.name ) != 0 )
@@ -3043,11 +3045,11 @@ void uniedit_diffAdd( UniHunk_t *hunk )
       WARN( _( "uniedit: failed to patch '%s'" ), diff_hunkName( hunk->type ) );
    diff_end();
 
-   array_push_back( &uniedit_diff, *hunk );
+   array_push_back( &uniedit_diff.hunks, *hunk );
 
    /* Sort, order shouldn't matter, but it will help save in a coherent way. */
-   qsort( uniedit_diff, array_size( uniedit_diff ), sizeof( UniHunk_t ),
-          uniedit_diff_cmp );
+   qsort( uniedit_diff.hunks, array_size( uniedit_diff.hunks ),
+          sizeof( UniHunk_t ), uniedit_diff_cmp );
 }
 
 static void uniedit_diffSsysPos( StarSystem *s, double x, double y )
@@ -3085,15 +3087,15 @@ static void uniedit_diff_regenList( unsigned int wid )
       window_destroyWidget( wid, "lstDiffs" );
    }
 
-   items = malloc( sizeof( char * ) * array_size( uniedit_diff ) );
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
-      const UniHunk_t *hi = &uniedit_diff[i];
+   items = malloc( sizeof( char * ) * array_size( uniedit_diff.hunks ) );
+   for ( int i = 0; i < array_size( uniedit_diff.hunks ); i++ ) {
+      const UniHunk_t *hi = &uniedit_diff.hunks[i];
       SDL_asprintf( &items[i], "%s: %s", hi->target.u.name,
                     diff_hunkName( hi->type ) );
    }
    int y = -30 - 30 - 20;
    window_addList( wid, 20, y, w - 40, h + y - BUTTON_HEIGHT - 40, "lstDiffs",
-                   items, array_size( uniedit_diff ), p, NULL, NULL );
+                   items, array_size( uniedit_diff.hunks ), p, NULL, NULL );
 }
 
 static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
@@ -3151,6 +3153,14 @@ static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
       diff_clear();
       /* Regen list. */
       uniedit_diff_regenList( wid );
+   } else {
+      if ( uniedit_diff.name == NULL )
+         uniedit_diff.name = strdup( "new unidiff" );
+      if ( uniedit_diff.filename == NULL )
+         SDL_asprintf( &uniedit_diff.filename, "%s/unidiff/newunidiff.xml",
+                       conf.dev_data_dir );
+      if ( uniedit_diff.hunks == NULL )
+         uniedit_diff.hunks = array_create( UniHunk_t );
    }
 }
 
@@ -3159,8 +3169,7 @@ static void uniedit_diff_load_callback( void              *userdata,
                                         int                filter )
 {
    (void)filter;
-   unsigned int  wid = *(unsigned int *)userdata;
-   UniDiffData_t data;
+   unsigned int wid = *(unsigned int *)userdata;
 
    if ( filelist == NULL ) {
       WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFileDialog",
@@ -3174,10 +3183,7 @@ static void uniedit_diff_load_callback( void              *userdata,
    /* TODO with SDL3 this can be called from another thread, so we have to make
     * this more robust... */
    uniedit_diffClear();
-   diff_parse( &data, strdup( filelist[0] ) );
-   uniedit_diff = data.hunks;
-   data.hunks   = NULL;
-   diff_freeData( &data );
+   diff_parse( &uniedit_diff, strdup( filelist[0] ) );
 
    /* We're now in diff mode! */
    uniedit_diffMode = 1;
@@ -3185,8 +3191,8 @@ static void uniedit_diff_load_callback( void              *userdata,
 
    /* Apply the patches. */
    diff_start();
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
-      UniHunk_t *hunk = &uniedit_diff[i];
+   for ( int i = 0; i < array_size( uniedit_diff.hunks ); i++ ) {
+      UniHunk_t *hunk = &uniedit_diff.hunks[i];
       diff_patchHunk( hunk );
    }
    diff_end();
@@ -3214,12 +3220,13 @@ static void uniedit_diff_remove( unsigned int wid, const char *unused )
 
    /* Undo hunk. */
    diff_start();
-   diff_revertHunk( &uniedit_diff[p] );
+   diff_revertHunk( &uniedit_diff.hunks[p] );
    diff_end();
 
    /* Free memory. */
-   diff_cleanupHunk( &uniedit_diff[p] );
-   array_erase( &uniedit_diff, &uniedit_diff[p], &uniedit_diff[p + 1] );
+   diff_cleanupHunk( &uniedit_diff.hunks[p] );
+   array_erase( &uniedit_diff.hunks, &uniedit_diff.hunks[p],
+                &uniedit_diff.hunks[p + 1] );
 
    /* Regen list. */
    uniedit_diff_regenList( wid );
