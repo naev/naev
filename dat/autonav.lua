@@ -207,7 +207,7 @@ end
 --[[
 Autonav to a system, destination is in the player's nav
 --]]
-function autonav_system ()
+local function _autonav_system (do_uselanes)
    autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
@@ -219,7 +219,7 @@ function autonav_system ()
    local d = jmp:jumpDist( pp )
    target_pos = pos + (pp:pos()-pos):normalize( math.max(0.75*d, d-50) )
 
-   if uselanes_jump then
+   if do_uselanes then
       lanes.clearCache( pp )
       path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
    else
@@ -231,6 +231,10 @@ function autonav_system ()
    else
       autonav_set( autonav_jump_approach )
    end
+end
+
+function autonav_system ()
+   _autonav_system (uselanes_jump)
 end
 
 --[[
@@ -481,7 +485,6 @@ function autonav_jump_approach ()
    local pp = player.pilot()
    local jmp = pp:navJump()
    if not jmp then
-      print "no nav jump"
       return autonav_abort()
    end
    local ret = autonav_approach( path[1], true )
@@ -642,7 +645,6 @@ function autonav_spob_land_brake ()
    local ret = ai.brake()
 
    if player.tryLand(false)=="impossible" then
-      print "land impossible"
       return autonav_abort()
    elseif ret then
       -- Reset to good position
@@ -671,7 +673,7 @@ function autonav_plt_follow ()
          if follow_land_jump and jmp:known() and not jmp:exitonly() then
             print "lost (jump) && follow_land_jump"
             pp:navJumpSet( jmp )
-            autonav_system()
+            _autonav_system(false)
             autonav_reset(1)
          elseif follow_land_jump or brake_pos then
             print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
