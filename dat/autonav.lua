@@ -321,22 +321,6 @@ function autonav_pos( pos )
 end
 
 --[[
-Autonav was forcibly aborted for a reason or other.
---]]
-function autonav_abort( reason )
-   if reason then
-      player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
-   else
-      player.msg("#r".._("Autonav: aborted!").."#0")
-   end
-   if approach_brake then
-      -- TODO: find a way to brake before ending.
-      --ai.brake(true)
-   end
-   autonav_end()
-end
-
---[[
 tint is the integral of the time in per time units.
 
  tc_mod
@@ -379,6 +363,25 @@ local function autonav_rampdown( count_brake )
    if dtravel > d then
       tc_rampdown = true
       tc_down     = acc
+   end
+end
+
+--[[
+Autonav was forcibly aborted for a reason or other.
+--]]
+function autonav_abort( reason )
+   if reason then
+      player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
+   else
+      player.msg("#r".._("Autonav: aborted!").."#0")
+   end
+   if approach_brake then
+      -- TODO: find a way to brake before ending.
+      autonav_pos_approach_brake ()
+      ---ai.brake(true)
+      --autonav_rampdown( true )
+   else
+      autonav_end()
    end
 end
 
@@ -691,7 +694,7 @@ function autonav_plt_follow ()
                   end
                end
                player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping."),{plt=get_pilot_name(plt)}).."#0")
-               autonav_abort(why)
+               return autonav_abort(why)
             end
          elseif brake_pos then
             --print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
@@ -839,7 +842,7 @@ function autonav_enter ()
       -- Must have fuel to continue
       local fuel, consumption = player.fuel()
       if fuel < consumption then
-         autonav_abort("not enough fuel to continue")
+         autonav_abort(_("not enough fuel to continue"))
          return false
       end
 
