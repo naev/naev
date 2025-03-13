@@ -573,7 +573,7 @@ function autonav_pos_approach_brake ()
    end
 end
 
-function autonav_pos_approach_brake_silent ()
+local function autonav_pos_approach_brake_silent ()
    if _autonav_pos_approach_brake() then
       return autonav_end()
    end
