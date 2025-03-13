@@ -12,6 +12,9 @@
   <spob_virtual_add>Pirate Tiny</spob_virtual_add>
   <spob_virtual_remove>Pirate Small</spob_virtual_remove>
  </system>
+ <system name="Delta Polaris">
+  <spob_virtual_add>Pirate All Unpresence (Range 2)</spob_virtual_add>
+ </system>
  <system name="Euler">
   <spob_virtual_add>Pirate Tiny</spob_virtual_add>
   <spob_virtual_remove>Pirate Small</spob_virtual_remove>

@@ -12,7 +12,7 @@
 #include "array.h"
 #include "nxml.h"
 
-int ddiff_save( UniHunk_t *diffs, const char *filename )
+int ddiff_save( const UniDiffData_t *diff )
 {
    xmlDocPtr        doc;
    xmlTextWriterPtr writer;
@@ -36,11 +36,11 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
    xmlw_startElem( writer, "unidiff" );
 
    /* Attributes. */
-   xmlw_attr( writer, "name", "test diff" );
+   xmlw_attr( writer, "name", "%s", diff->name );
 
    /* Write the bulk of the diff, we assume they are sorted by target. */
-   for ( int i = 0; i < array_size( diffs ); i++ ) {
-      const UniHunk_t *h   = &diffs[i];
+   for ( int i = 0; i < array_size( diff->hunks ); i++ ) {
+      const UniHunk_t *h   = &diff->hunks[i];
       const char      *tag = diff_hunkTag( h->type );
 
       /* Assuming sorted, so we try to group all diffs with same target. */
@@ -108,8 +108,8 @@ int ddiff_save( UniHunk_t *diffs, const char *filename )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   if ( xmlSaveFileEnc( filename, doc, "UTF-8" ) < 0 ) {
-      WARN( "Failed to write '%s'!", filename );
+   if ( xmlSaveFileEnc( diff->filename, doc, "UTF-8" ) < 0 ) {
+      WARN( "Failed to write '%s'!", diff->filename );
       ret = -1;
    }
 
