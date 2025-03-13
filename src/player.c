@@ -2630,12 +2630,17 @@ void player_cooldownBrake( void )
 {
    int stopped;
 
-   if ( pilot_isFlag( player.p, PILOT_TAKEOFF ) )
+   if ( pilot_isFlag( player.p, PILOT_TAKEOFF ) ||
+        pilot_isFlag( player.p, PILOT_LANDING ) )
       return;
 
    /* Not under manual control or disabled. */
    if ( pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
         pilot_isDisabled( player.p ) )
+      return;
+
+   /* Shouldn't be jumping. */
+   if ( pilot_isFlag( player.p, PILOT_HYPERSPACE ) )
       return;
 
    stopped = pilot_isStopped( player.p );
