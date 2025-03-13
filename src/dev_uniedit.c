@@ -536,11 +536,8 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
          { .name = _( "Diff XML file" ), .pattern = "xml" },
          { NULL, NULL },
       };
-      char buf[PATH_MAX];
-      snprintf( buf, sizeof( buf ), "%s/unidiff/newunidiff.xml",
-                conf.dev_data_dir );
       SDL_ShowSaveFileDialog( uniedit_save_callback, NULL, gl_screen.window,
-                              filter, buf );
+                              filter, uniedit_diff.filename );
    } else {
       int ret = 0;
       ret |= dsys_saveAll();
