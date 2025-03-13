@@ -696,7 +696,7 @@ function autonav_plt_follow ()
                local why=nil
                if fuel < consumption then
                   if fuel == 0 then
-                     why="no fuel"
+                     why=_("no fuel")
                   else
                      why=_("not enough fuel")
                   end
