@@ -173,7 +173,7 @@ local function get_pilot_name( plt )
    elseif target_name then
       return target_name
    else
-      return _("Unknown")
+      return "Unknown"
    end
 end
 
@@ -181,7 +181,7 @@ local function get_sys_name( sys )
    if sys:known() then
       return sys:name()
    end
-   return _("Unknown")
+   return "Unknown"
 end
 
 local function get_spob_name( spb )
@@ -281,7 +281,7 @@ function autonav_pilot( plt )
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
       target_name = pltstr
    else
-      pltstr = _("Unknown")
+      pltstr = "Unknown"
       target_name = nil
    end
 
@@ -301,7 +301,7 @@ function autonav_board( plt )
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
       target_name = pltstr
    else
-      pltstr = _("Unknown")
+      pltstr = "Unknown"
       target_name = nil
    end
    player.msg("#o"..fmt.f(_("Autonav: boarding {plt}."),{plt=pltstr}).."#0")
@@ -363,23 +363,6 @@ local function autonav_rampdown( count_brake )
    if dtravel > d then
       tc_rampdown = true
       tc_down     = acc
-   end
-end
-
---[[
-Autonav was forcibly aborted for a reason or other.
---]]
-function autonav_abort( reason )
-   if reason then
-      player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
-   else
-      player.msg("#r".._("Autonav: aborted!").."#0")
-   end
-   if brake_pos then
-      autonav_reset(0)
-      autonav_set( autonav_pos_approach_brake_silent )
-   else
-      autonav_end()
    end
 end
 
@@ -596,6 +579,23 @@ function autonav_pos_approach_brake_silent ()
    end
 end
 
+--[[
+Autonav was forcibly aborted for a reason or other.
+--]]
+function autonav_abort( reason )
+   if reason then
+      player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
+   else
+      player.msg("#r".._("Autonav: aborted!").."#0")
+   end
+   if brake_pos then
+      autonav_reset(0)
+      autonav_set( autonav_pos_approach_brake_silent )
+   else
+      autonav_end()
+   end
+end
+
 -- Approaching a position specified by target_pos
 function autonav_pos_approach ()
    local ret = autonav_approach( target_pos, brake_pos )
@@ -661,7 +661,7 @@ function autonav_spob_land_brake ()
    local ret = ai.brake()
 
    if player.tryLand(false)=="impossible" then
-      return autonav_abort(_("cannot land"))
+      return autonav_abort("cannot land")
    elseif ret then
       -- Reset to good position
       local pp = player.pilot()
@@ -696,9 +696,9 @@ function autonav_plt_follow ()
                local why=nil
                if fuel < consumption then
                   if fuel == 0 then
-                     why=_("no fuel")
+                     why="no fuel"
                   else
-                     why=_("not enough fuel")
+                     why="not enough fuel"
                   end
                end
                player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping."),{plt=get_pilot_name(plt)}).."#0")
@@ -785,7 +785,7 @@ function autonav_plt_board_approach ()
    if brd=="ok" then
       autonav_end()
    elseif brd~="retry" then
-      autonav_abort(_("cannot board"))
+      autonav_abort("cannot board")
    end
 end
 
@@ -845,7 +845,7 @@ function autonav_enter ()
       -- Must have fuel to continue
       local fuel, consumption = player.fuel()
       if fuel < consumption then
-         autonav_abort(_("not enough fuel to continue"))
+         autonav_abort("not enough fuel to continue")
          return false
       end
 
