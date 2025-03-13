@@ -375,11 +375,9 @@ function autonav_abort( reason )
    else
       player.msg("#r".._("Autonav: aborted!").."#0")
    end
-   if approach_brake then
-      -- TODO: find a way to brake before ending.
-      autonav_pos_approach_brake ()
-      ---ai.brake(true)
-      --autonav_rampdown( true )
+   if brake_pos then
+      autonav_reset(0)
+      autonav_set( autonav_pos_approach_brake_silent )
    else
       autonav_end()
    end
@@ -575,15 +573,26 @@ function autonav_jump_brake ()
    end
 end
 
+local function _autonav_pos_approach_brake()
+   if ai.brake() then
+      return true
+   elseif not tc_rampdown then
+      tc_rampdown = true
+      tc_down     = (tc_mod - tc_base) / 3
+   end
+end
+
 -- Brakes at a position
 function autonav_pos_approach_brake ()
-   if ai.brake() then
+   if _autonav_pos_approach_brake() then
       player.msg("#o".._("Autonav: arrived at position.").."#0")
       return autonav_end()
    end
-   if not tc_rampdown then
-      tc_rampdown = true
-      tc_down     = (tc_mod - tc_base) / 3
+end
+
+function autonav_pos_approach_brake_silent ()
+   if _autonav_pos_approach_brake() then
+      return autonav_end()
    end
 end
 
@@ -680,10 +689,9 @@ function autonav_plt_follow ()
          if follow_land_jump then
             local fuel, consumption = player.fuel()
             if jmp:known() and not jmp:exitonly() and fuel >=consumption then
-               --print "lost (jump) && follow_land_jump"
                pp:navJumpSet( jmp )
                _autonav_system(false)
-               autonav_reset(1)
+               autonav_reset(0)
             else
                local why=nil
                if fuel < consumption then
@@ -697,13 +705,11 @@ function autonav_plt_follow ()
                return autonav_abort(why)
             end
          elseif brake_pos then
-            --print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
             pp:navJumpSet( jmp )
             autonav_pos(plt:navJump():pos())
-            autonav_reset(1)
+            autonav_reset(0)
             --autonav_rampdown( false )
          else
-            --print "lost (jump) && !follow_land_jump (or can't) && !brake_pos"
             autonav_end()
          end
          return
@@ -714,14 +720,11 @@ function autonav_plt_follow ()
             player.pilot():navSpobSet( plt:navSpob() )
             _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
-               --print "lost (landing) && follow_land_jump"
-               autonav_reset(1)
+               autonav_reset(0)
             else
-               --print "lost (landing) && !follow_land_jump && brake_pos"
                autonav_rampdown( true )
             end
          else
-            --print "lost (landing) && !follow_land_jump && !brake_pos"
             autonav_end()
          end
          return
