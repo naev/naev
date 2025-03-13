@@ -329,6 +329,10 @@ function autonav_abort( reason )
    else
       player.msg("#r".._("Autonav: aborted!").."#0")
    end
+   if approach_brake then
+      -- TODO: find a way to brake before ending.
+      --ai.brake(true)
+   end
    autonav_end()
 end
 
@@ -645,7 +649,7 @@ function autonav_spob_land_brake ()
    local ret = ai.brake()
 
    if player.tryLand(false)=="impossible" then
-      return autonav_abort()
+      return autonav_abort(_("cannot land"))
    elseif ret then
       -- Reset to good position
       local pp = player.pilot()
@@ -678,16 +682,16 @@ function autonav_plt_follow ()
                _autonav_system(false)
                autonav_reset(1)
             else
-               local why=""
+               local why=nil
                if fuel < consumption then
                   if fuel == 0 then
-                     why=" (#r ".._("no fuel").."#0 #o)"
+                     why=_("no fuel")
                   else
-                     why=" (#r ".._("not enough fuel").."#0 #o)"
+                     why=_("not enough fuel")
                   end
                end
-               player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping{reason}."),{plt=get_pilot_name(plt),reason=why}).."#0")
-               autonav_end()
+               player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping."),{plt=get_pilot_name(plt)}).."#0")
+               autonav_abort(why)
             end
          elseif brake_pos then
             --print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
@@ -775,7 +779,7 @@ function autonav_plt_board_approach ()
    if brd=="ok" then
       autonav_end()
    elseif brd~="retry" then
-      autonav_abort()
+      autonav_abort(_("cannot board"))
    end
 end
 
@@ -835,8 +839,7 @@ function autonav_enter ()
       -- Must have fuel to continue
       local fuel, consumption = player.fuel()
       if fuel < consumption then
-         player.msg("#r".._("Autonav: not enough fuel to continue").."#0")
-         autonav_end()
+         autonav_abort("not enough fuel to continue")
          return false
       end
 
