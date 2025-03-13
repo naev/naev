@@ -10,8 +10,10 @@ def transpose(M):
    M=[t+['']*(N-len(t)) for t in M]
    return zip(*(tuple(M)))
 
+getfloat=lambda s:float(s.split('(')[0])
+
 #launch_reload
-def main(args,gith=False,ter=False):
+def main(args,gith=False,ter=False,noext=False):
    names=['']*len(args)
    L=[dict() for a in args]
    rang=dict()
@@ -24,7 +26,7 @@ def main(args,gith=False,ter=False):
       T=ET.parse(args[i]).getroot()
       for t in T.iter():
          try:
-            n=float(t.text)
+            n=getfloat(t.text)
             L[i][t.tag]=t.text
             if not rang.has_key(t.tag):
                rang[t.tag]=(n,n)
@@ -45,6 +47,8 @@ def main(args,gith=False,ter=False):
    for i,(m,M) in rang.iteritems():
       if i in lower_better:
          rang[i]=(M,m)
+      if noext:
+         rang[i]=(None,None)
 
    Res=[[k]+[l[k] if k in l else '' for l in L] for k in acc]
    names=['']+names
@@ -79,9 +83,9 @@ def main(args,gith=False,ter=False):
       if s=='':
          return "_"
       elif mi!=ma:
-         if float(s)==mi:
+         if getfloat(s)==mi:
             return Lm+s+Rm
-         elif float(s)==ma:
+         elif getfloat(s)==ma:
             return LM+s+RM
       return s
 
@@ -100,14 +104,15 @@ if __name__ == '__main__':
       print "The options improve your confort in certain use cases:"
       print "  -g  unaligned (therefore smaller) valid github md, for use in posts."
       print "  -c  colored terminal output. You can pipe to \"less -RS\" if the table is too wide."
+      print "  -n  no extrema display."
    else:
-      gith,ter="-g" in argv[1:],"-c" in argv[1:]
+      gith,ter,noext="-g" in argv[1:],"-c" in argv[1:],"-n" in argv[1:]
       if gith and ter:
          gith=ter=False
          print >>stderr,"Ignored incompatible -g and -c."
 
-      ign=[f for f in argv[1:] if f not in ["-g","-c"] and not f.endswith(".xml")]
+      ign=[f for f in argv[1:] if f not in ["-g","-c","-n"] and not f.endswith(".xml")]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      main([f for f in argv[1:] if f.endswith(".xml")],gith,ter)
+      main([f for f in argv[1:] if f.endswith(".xml")],gith,ter,noext)
