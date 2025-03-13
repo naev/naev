@@ -7,36 +7,43 @@ import xml.etree.ElementTree as ET
 equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority'}
 
-def merge_elements(s1,s2,f):
-   n1=float(s1)
-   n2=float(s2)
-   return f(n1,n2)
-
 def merge_group(r1,r2,field,func):
    L1={e.tag:e for e in r1.findall(field)}
-   L2={e.tag:e for e in r2.findall(field)}
+   if r2 is None:
+      L2=dict()
+   else:
+      L2={e.tag:e for e in r2.findall(field)}
 
    for t,e in L1.items():
-      f=L2[t] if L2.has_key(t) else ''
+      f=L2[t] if L2.has_key(t) else False
+
       if t in equals:
-         if e.attrib!=f.attrib:
-            print >>stderr,t,":",e.attrib,"!=",f.attrib
-            exit(1)
-         if e.text!=f.text:
-            print >>stderr,t,":",e.text,"!=",f.text
-            exit(1)
+         if f is not False:
+            if e.attrib!=f.attrib:
+               print >>stderr,t,":",e.attrib,"!=",f.attrib
+               exit(1)
+            if e.text!=f.text:
+               print >>stderr,t,":",e.text,"!=",f.text
+               exit(1)
       elif t in take_first:
          pass
       else:
+         rt=f.text if f is not False else ''
          try:
-            e.text=merge_elements(e.text,f.text,func)
+            e.text=func(e.text,rt)
          except:
             print >>stderr,e,"is unmergeable, left as is."
    for t,f in L2.items():
       if not L1.has_key(t):
+         """
+         try:
+            e.text=func('',f.text)
+         except:
+            print >>stderr,e,"is unmergeable, left as is."
+         """
          print >>stderr,"forgot:",t
 
-def main(args,func=lambda f1,f2:str(f1)+','+str(f2)):
+def main(args,func,stkmod):
    names=['']*len(args)
    tags=set([])
    acc=[]
@@ -44,20 +51,24 @@ def main(args,func=lambda f1,f2:str(f1)+','+str(f2)):
    R=[None,None]
    m=[None,None]
 
-   if len(args)!=2:
+   if stkmod:
+      if len(args) not in [1,2]:
+         print >>stderr,"One or two args expected"
+         return 1
+   elif len(args)!=2:
       print >>stderr,"Two args expected"
       return
 
-   for i in range(2):
+   for i in range(len(args)):
       print >>stderr,'<'+args[i].rsplit('/',1)[-1]+'>',
       T[i]=ET.parse(args[i])
       R[i]=T[i].getroot()
       for e in R[i].findall("./general/mass"):
-         m[i]=int(e.text)
+         m[i]=float(e.text.split('(')[0])
          break;
    print >>stderr
 
-   if m[0]>m[1]:
+   if len(args)==2 and m[0]>m[1]:
       print >>stderr,"The first one has more mass, swapping",', '.join(args)
       args[0],args[1]=args[1],args[0]
       T=[T[1],T[0]]
@@ -75,7 +86,9 @@ def fmt(f):
    else:
       return str(f)
 
-def f1(a1,a2):
+def f1(s1,s2):
+   a1=float(s1)
+   a2=float(s2)
    o1=a2-a1
    o2=2*a1-a2
    if o2==0:
@@ -83,36 +96,67 @@ def f1(a1,a2):
    else:
       return fmt(o1)+'('+fmt(o2)+')'
 
-def f2(a1,a2):
+def read_com(s):
+   if s=='':
+      return 0,0
+   elif '(' in s:
+      n,m=tuple(s.split('(',1))
+      m=m.split(')')[0]
+      return float(n),float(m)
+   else:
+      return float(s),0
+
+def rf1(s1,s2):
+   n1,m1=read_com(s1)
+   n2,m2=read_com(s2)
+   return fmt(n1+m1+n2)
+
+def f2(s1,s2):
+   a1=float(s1)
+   a2=float(s2)
    o1=a1
    o2=a2/2
    return fmt(o1)+'('+fmt(o2)+')'
 
+def rf2(s1,s2):
+   n1,m1=read_com(s1)
+   n2,m2=read_com(s2)
+   if s2=='':
+      return fmt(n1)
+   elif s1=='':
+      return fmt(n2)
+   else:
+      return fmt(m1+m2)
+
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=argv[0].split('/')[-1]
-      print "usage (1):",nam,' [-l] <input1.xml> <input2.xml>'
+      print "usage (1):",nam,'[-l] <input1.xml> <input2.xml>'
       print "  Takes two standard outfits, and computes an extended outfit such that when in a main slot,"
       print "  it is eq to <input1.xml>, and stacking two of them gives <input2.xml>."
       print "  The result is sent to stdout."
       print "   -l use the Lone(twinned) variant"
       print
-      print "usage (2):",nam,' -s <main.xml> [<secondary.xml>]'
+      print "usage (2):",nam,'-s [-l] <main.xml> [<secondary.xml>]'
       print "  Takes one or two extended outfits, and computes the result of stacking them (or keeping it alone)."
-      print "  This is \033[1;31mNOT IMPLEMENTED\033[0m (yet)."
+      print "  The result is sent to stdout."
+      print "   -l use the Lone(twinned) variant"
    else:
       ign=[f for f in argv[1:] if f not in ["-s","-l"] and not f.endswith(".xml")]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
       if '-s' in argv[1:]:
-         print >>stderr,"not implemented!"
-         exit(1)
+         if '-l' in argv[1:]:
+            merge_func=rf2
+         else:
+            merge_func=rf1
       else:
          if '-l' in argv[1:]:
             merge_func=f2
          else:
             merge_func=f1
-         main([f for f in argv[1:] if f.endswith(".xml")],merge_func)
-         exit(0)
+
+      main([f for f in argv[1:] if f.endswith(".xml")],merge_func,'-s' in argv[1:])
+      exit(0)
 
