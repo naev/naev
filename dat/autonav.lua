@@ -670,16 +670,30 @@ function autonav_plt_follow ()
          local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
-         if follow_land_jump and jmp:known() and not jmp:exitonly() then
-            print "lost (jump) && follow_land_jump"
-            pp:navJumpSet( jmp )
-            _autonav_system(false)
-            autonav_reset(1)
-         elseif follow_land_jump or brake_pos then
+         if follow_land_jump then
+            local fuel, consumption = player.fuel()
+            if jmp:known() and not jmp:exitonly() and fuel >=consumption then
+               print "lost (jump) && follow_land_jump"
+               pp:navJumpSet( jmp )
+               _autonav_system(false)
+               autonav_reset(1)
+            else
+               local why=""
+               if fuel < consumption then
+                  if fuel == 0 then
+                     why=" (#r ".._("no fuel").."#0 #o)"
+                  else
+                     why=" (#r ".._("not enough fuel").."#0 #o)"
+                  end
+               end
+               player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping{reason}."),{plt=get_pilot_name(plt),reason=why}).."#0")
+               autonav_end()
+         elseif brake_pos then
             print "lost (jump) && !follow_land_jump (or can't) && brake_pos"
             pp:navJumpSet( jmp )
             autonav_pos(plt:navJump():pos())
-            autonav_rampdown( true )
+            autonav_reset(1)
+            --autonav_rampdown( false )
          else
             print "lost (jump) && !follow_land_jump (or can't) && !brake_pos"
             autonav_end()
