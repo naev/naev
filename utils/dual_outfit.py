@@ -31,7 +31,7 @@ def merge_group(r1,r2,field,func):
          try:
             e.text=merge_elements(e.text,f.text,func)
          except:
-            pass
+            print >>stderr,e,"is unmergeable, left as is."
    for t,f in L2.items():
       if not L1.has_key(t):
          print >>stderr,"forgot:",t
@@ -83,28 +83,36 @@ def f1(a1,a2):
    else:
       return fmt(o1)+'('+fmt(o2)+')'
 
+def f2(a1,a2):
+   o1=a1
+   o2=a2/2
+   return fmt(o1)+'('+fmt(o2)+')'
+
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=argv[0].split('/')[-1]
-      print "usage (1):",nam,' <input1.xml> <input2.xml>'
+      print "usage (1):",nam,' [-l] <input1.xml> <input2.xml>'
       print "  Takes two standard outfits, and computes an extended outfit such that when in a main slot,"
       print "  it is eq to <input1.xml>, and stacking two of them gives <input2.xml>."
       print "  The result is sent to stdout."
+      print "   -l use the Lone(twinned) variant"
       print
       print "usage (2):",nam,' -s <main.xml> [<secondary.xml>]'
       print "  Takes one or two extended outfits, and computes the result of stacking them (or keeping it alone)."
-      print "  This is \033[1;31mNOT IMPLEMENTED\033[0m (so far)."
+      print "  This is \033[1;31mNOT IMPLEMENTED\033[0m (yet)."
    else:
-      ign=[f for f in argv[1:] if f not in ["-s"] and not f.endswith(".xml")]
+      ign=[f for f in argv[1:] if f not in ["-s","-l"] and not f.endswith(".xml")]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      merge_func=f1
-      stack='-r' in argv[1:]
-      if stack:
+      if '-s' in argv[1:]:
          print >>stderr,"not implemented!"
          exit(1)
       else:
+         if '-l' in argv[1:]:
+            merge_func=f2
+         else:
+            merge_func=f1
          main([f for f in argv[1:] if f.endswith(".xml")],merge_func)
          exit(0)
 
