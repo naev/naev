@@ -5,6 +5,7 @@
    * Fixed crash when shooting asteroids with explosive weapons
    * Disallow cooling down while jumping
    * Fixed crash with pilot.navJumpSet
+   * Remove all pirate presence within 2 jumps of the starting system
 
 * 0.12.3
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration
