@@ -698,7 +698,7 @@ function autonav_plt_follow ()
                   if fuel == 0 then
                      why="no fuel"
                   else
-                     why="not enough fuel"
+                     why=_("not enough fuel")
                   end
                end
                player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping."),{plt=get_pilot_name(plt)}).."#0")
