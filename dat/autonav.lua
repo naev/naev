@@ -173,7 +173,7 @@ local function get_pilot_name( plt )
    elseif target_name then
       return target_name
    else
-      return "Unknown"
+      return _("Unknown")
    end
 end
 
@@ -181,7 +181,7 @@ local function get_sys_name( sys )
    if sys:known() then
       return sys:name()
    end
-   return "Unknown"
+   return _("Unknown")
 end
 
 local function get_spob_name( spb )
@@ -281,7 +281,7 @@ function autonav_pilot( plt )
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
       target_name = pltstr
    else
-      pltstr = "Unknown"
+      pltstr = _("Unknown")
       target_name = nil
    end
 
@@ -301,7 +301,7 @@ function autonav_board( plt )
       pltstr = "#"..plt:colourChar()..plt:name().."#o"
       target_name = pltstr
    else
-      pltstr = "Unknown"
+      pltstr = _("Unknown")
       target_name = nil
    end
    player.msg("#o"..fmt.f(_("Autonav: boarding {plt}."),{plt=pltstr}).."#0")
