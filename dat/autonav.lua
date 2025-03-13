@@ -305,7 +305,7 @@ function autonav_board( plt )
 end
 
 --[[
-Autonav to a position specified by the plyaer
+Autonav to a position specified by the player
 --]]
 function autonav_pos( pos )
    autonav_setup()
@@ -452,7 +452,9 @@ end
 function autonav_jump_delay ()
    -- Ignore autonav until speed is acceptable
    local pp = player.pilot()
-   if pp:vel():mod() > 1.5 * pp:speedMax() then
+   -- hades torch: speed*1.65
+   -- accel * 1.0/3 goes as speed bonus
+   if pp:vel():mod() > 1.65 * pp:speedMax() + pp:accel()/3.0 then
       return
    end
 
