@@ -661,7 +661,7 @@ function autonav_spob_land_brake ()
    local ret = ai.brake()
 
    if player.tryLand(false)=="impossible" then
-      return autonav_abort("cannot land")
+      return autonav_abort(_("cannot land"))
    elseif ret then
       -- Reset to good position
       local pp = player.pilot()
