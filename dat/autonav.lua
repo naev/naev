@@ -845,7 +845,7 @@ function autonav_enter ()
       -- Must have fuel to continue
       local fuel, consumption = player.fuel()
       if fuel < consumption then
-         autonav_abort("not enough fuel to continue")
+         autonav_abort(_("not enough fuel to continue"))
          return false
       end
 
