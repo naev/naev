@@ -128,9 +128,19 @@ impl UserData for Vec2 {
         ///    @luatparam[opt=x] number y If set, the Y value for the new vector.
         ///    @luatreturn Vec2 The new vector.
         /// @luafunc new
-        methods.add_function("new", |_, (x, y): (f64, f64)| -> mlua::Result<Self> {
-            Ok(Vec2::new(x, y))
-        });
+        methods.add_function(
+            "new",
+            |_, (x, y): (Option<f64>, Option<f64>)| -> mlua::Result<Self> {
+                let v = match x {
+                    Some(x) => match y {
+                        Some(y) => Vec2::new(x, y),
+                        None => Vec2::new(x, x),
+                    },
+                    None => Vec2::new(0.0, 0.0),
+                };
+                Ok(v)
+            },
+        );
 
         /// @brief Creates a new vector using polar coordinates.
         ///
@@ -396,7 +406,7 @@ impl UserData for Vec2 {
 #[allow(dead_code)]
 pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<()> {
     let globals = lua.globals();
-    globals.set("foo", Vec2::new(0.0, 0.0))?;
+    globals.set("foo", lua.create_proxy::<Vec2>()?)?;
     Ok(())
 }
 
