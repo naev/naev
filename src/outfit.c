@@ -523,13 +523,16 @@ char outfit_slotTypeColourFont( const OutfitSlot *os )
 size_t outfit_getNameWithClass( const Outfit *outfit, char *buf, size_t size )
 {
    size_t p = scnprintf( &buf[0], size, "%s", _( outfit->name ) );
-   if ( outfit->slot.type != OUTFIT_SLOT_NA ) {
+   if ( outfit->slot.type != OUTFIT_SLOT_NA )
       p += scnprintf( &buf[p], size - p, _( "\n#%c%s #%c%s #0slot" ),
                       outfit_slotSizeColourFont( &outfit->slot ),
                       _( outfit_slotSize( outfit ) ),
                       outfit_slotTypeColourFont( &outfit->slot ),
                       _( outfit_slotName( outfit ) ) );
-   }
+   if ( outfit->spid_extra != 0 )
+      p += scnprintf( &buf[p], size - p, _( "\nor #%c%s #0slot" ),
+                      outfit_slotTypeColourFont( &outfit->slot ),
+                      _( outfit_slotName( outfit ) ) );
    return p;
 }
 
@@ -1180,12 +1183,14 @@ int outfit_fitsSlot( const Outfit *o, const OutfitSlot *s )
 
    /* Must match slot property. */
    if ( os->spid != 0 )
-      if ( s->spid != os->spid )
+      if ( ( s->spid != os->spid ) &&
+           ( o->spid_extra == 0 || s->spid != o->spid_extra ) )
          return 0;
 
    /* Exclusive only match property. */
    if ( s->exclusive )
-      if ( s->spid != os->spid )
+      if ( ( s->spid != os->spid ) &&
+           ( o->spid_extra == 0 || s->spid != o->spid_extra ) )
          return 0;
 
    /* Must have valid slot size. */
@@ -2731,6 +2736,12 @@ static int outfit_parse( Outfit *temp, const char *file )
                xmlr_attr_strd( cur, "prop", prop );
                if ( prop != NULL )
                   temp->slot.spid = sp_get( prop );
+               free( prop );
+
+               /* Extra property. */
+               xmlr_attr_strd( cur, "prop_extra", prop );
+               if ( prop != NULL )
+                  temp->spid_extra = sp_get( prop );
                free( prop );
                continue;
             } else if ( xml_isNode( cur, "size" ) ) {
