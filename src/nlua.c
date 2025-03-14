@@ -777,8 +777,8 @@ int nlua_errTrace( lua_State *L )
 static int nlua_errTraceInternal( lua_State *L, int idx )
 {
    /* Handle special done case. */
-   const char *str = luaL_checkstring( L, idx );
-   if ( strcmp( str, NLUA_DONE ) == 0 )
+   const char *str = lua_tostring( L, idx );
+   if ( ( str != NULL ) && ( strcmp( str, NLUA_DONE ) == 0 ) )
       return 1;
 
    /* str */
