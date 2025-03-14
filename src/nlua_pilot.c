@@ -1891,28 +1891,24 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
    /* Launcher lockon. */
    if ( is_lau ) {
       double t = slot->u.ammo.lockon_timer;
-      lua_pushstring( L, "lockon" );
       if ( t <= 0. )
          lua_pushnumber( L, 1. );
       else
          lua_pushnumber( L, 1. - ( t / slot->outfit->u.lau.lockon ) );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "lockon" );
 
       /* Is in arc. */
       /* TODO this is broken right now. */
-      lua_pushstring( L, "in_arc" );
       lua_pushboolean( L, slot->u.ammo.in_arc );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "in_arc" );
    }
 
-   lua_pushstring( L, "active" );
    lua_pushboolean( L, slot->flags & PILOTOUTFIT_ISON );
-   lua_rawset( L, -3 );
+   lua_setfield( L, -2, "active" );
 
    /* Type. */
-   lua_pushstring( L, "type" );
    lua_pushstring( L, outfit_getType( slot->outfit ) );
-   lua_rawset( L, -3 );
+   lua_setfield( L, -2, "type" );
 
    /* First weapon set. */
    lua_pushinteger( L, slot->weapset + 1 );
@@ -1921,21 +1917,19 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
    /* Damage type. */
    dmg = outfit_damage( slot->outfit );
    if ( dmg != NULL ) {
-      lua_pushstring( L, "dtype" );
       lua_pushstring( L, dtype_damageTypeToStr( dmg->type ) );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "dtype" );
    }
 
    /* Track. */
    if ( outfit_isBolt( slot->outfit ) ) {
-      lua_pushstring( L, "track" );
       if ( target != NULL )
          lua_pushnumber(
             L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin,
                                     slot->outfit->u.blt.trackmax ) );
       else
          lua_pushnumber( L, -1 );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "track" );
    }
 
    /* Add to table. */
