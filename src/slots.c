@@ -146,6 +146,9 @@ void sp_cleanup( void )
       free( sp->display );
       free( sp->description );
       gl_freeTexture( sp->icon );
+      for ( int j = 0; j < array_size( sp->tags ); j++ )
+         free( sp->tags[j] );
+      array_free( sp->tags );
    }
    array_free( sp_array );
    sp_array = NULL;
