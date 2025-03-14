@@ -23,6 +23,7 @@ pub struct SlotProperty {
     pub locked: bool,
     pub visible: bool,
     pub icon: Option<texture::Texture>,
+    pub tags: Vec<String>,
 }
 impl SlotProperty {
     fn load(ctx: &SafeContext, filename: &str) -> Result<Self> {
@@ -65,6 +66,14 @@ impl SlotProperty {
                             .sdf(true)
                             .build(&nctx)?,
                     );
+                }
+                "tags" => {
+                    for node in node.children() {
+                        if !node.is_element() {
+                            continue;
+                        }
+                        sp.tags.push(node.tag_name().name().to_lowercase());
+                    }
                 }
                 tag => {
                     return nxml_err_node_unknown!("Slot Property", &sp.name, tag);
@@ -192,6 +201,15 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
     match get_c(sp) {
         Some(prop) => prop.locked as c_int,
         None => 0,
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sp_tags(sp: c_int) -> *mut *const c_char {
+    match get_c(sp) {
+        // TODO implement
+        Some(_prop) => std::ptr::null_mut(),
+        None => std::ptr::null_mut(),
     }
 }
 

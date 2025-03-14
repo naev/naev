@@ -3463,6 +3463,7 @@ dat/scripts/common/thurion.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/wildspace.lua
+dat/scripts/common/yetmer.lua
 dat/scripts/common/zalek.lua
 dat/scripts/common/zalek_blackhole.lua
 dat/scripts/common/zalek_physics.lua

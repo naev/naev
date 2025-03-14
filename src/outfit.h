@@ -364,15 +364,16 @@ typedef struct Outfit {
    char *filename;  /**< File data was loaded from. */
 
    /* General specs */
-   OutfitSlot slot;    /**< Slot the outfit fits into. */
-   char      *license; /**< Licenses needed to buy it. */
-   char      *cond;    /**< Conditional Lua string. */
-   char      *condstr; /**< Human readable description of the conditional. */
-   double     mass;    /**< How much weapon capacity is needed. */
-   double     cpu;     /**< CPU usage. */
-   char      *limit;   /**< Name to limit to one per ship (ignored if NULL). */
-   int       *illegalto;  /**< Factions this outfit is illegal to. */
-   char     **illegaltoS; /**< Temporary buffer to set up illegality. */
+   OutfitSlot   slot;       /**< Slot the outfit fits into. */
+   unsigned int spid_extra; /**< Can also fit this slot. */
+   char        *license;    /**< Licenses needed to buy it. */
+   char        *cond;       /**< Conditional Lua string. */
+   char        *condstr; /**< Human readable description of the conditional. */
+   double       mass;    /**< How much weapon capacity is needed. */
+   double       cpu;     /**< CPU usage. */
+   char        *limit; /**< Name to limit to one per ship (ignored if NULL). */
+   int         *illegalto;  /**< Factions this outfit is illegal to. */
+   char       **illegaltoS; /**< Temporary buffer to set up illegality. */
 
    /* Store stuff */
    credits_t price;       /**< Base sell price. */

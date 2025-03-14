@@ -20,6 +20,8 @@ function prefix.prefix( fct )
       return require("common.goddard").prefix
    elseif fct == faction.get("Proteron") then
       return require("common.proteron").prefix
+   elseif fct == faction.get("Yetmer") then
+      return require("common.yetmer").prefix
    elseif inlist( pir.factions, fct ) then
       return pir.prefix( fct )
    end

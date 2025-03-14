@@ -5,7 +5,8 @@
       * Change pirate spawning so hyenas are less dominant and deadly to new players
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
-      * Bioships have had their skills slightly reworked to be better balanced
+      * Bioships have had their skills and modifiers slightly reworked to be better balanced
+      * Improved autonav behaviour when losing a followed ship.
    * Content
       * 2 new missions
       * 6 new ship variants
@@ -25,6 +26,8 @@
       * Systems can have waypoints that are accessible from missions
       * Fixed some flickering at the end of ship trails
       * Diff mode in the editor remembers filenames and diff names
+      * Slots can have tags
+      * Outfits can fit an additional slot property
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display

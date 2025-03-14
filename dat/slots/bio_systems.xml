@@ -6,4 +6,8 @@
  <required/>
  <locked/>
  <icon>bio.png</icon>
+ <tags>
+  <tag>bioship</tag>
+  <tag>core</tag>
+ </tags>
 </slot>

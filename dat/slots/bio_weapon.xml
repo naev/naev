@@ -6,4 +6,7 @@
  <locked/>
  <visible/>
  <icon>bio.png</icon>
+ <tags>
+  <tag>bioship</tag>
+ </tags>
 </slot>

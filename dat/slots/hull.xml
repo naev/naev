@@ -5,4 +5,7 @@
  <exclusive/>
  <required/>
  <icon>hull.png</icon>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </slot>
