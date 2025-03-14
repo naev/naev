@@ -8,7 +8,7 @@ local autonav_spob_approach_brake, autonav_spob_approach, autonav_spob_land_appr
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed, escort_health
-local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_jump, brake_pos, include_escorts
+local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land_jump, brake_pos, include_escorts
 
 -- Some defaults
 autonav_timer = 0
@@ -45,7 +45,7 @@ local function autonav_setup ()
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
    uselanes_thr = var.peek("autonav_uselanes_thr") or 2
    match_fleet = var.peek("autonav_match_fleet")
-   follow_jump = var.peek("autonav_follow_jump")
+   follow_land_jump = var.peek("autonav_follow_jump")
    reset_shield = var.peek("autonav_reset_shield")
    reset_dist = var.peek("autonav_reset_dist")
    brake_pos = var.peek("autonav_brake_pos")
@@ -207,7 +207,7 @@ end
 --[[
 Autonav to a system, destination is in the player's nav
 --]]
-function autonav_system ()
+local function _autonav_system (do_uselanes)
    autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
@@ -219,7 +219,7 @@ function autonav_system ()
    local d = jmp:jumpDist( pp )
    target_pos = pos + (pp:pos()-pos):normalize( math.max(0.75*d, d-50) )
 
-   if uselanes_jump then
+   if do_uselanes then
       lanes.clearCache( pp )
       path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
    else
@@ -233,17 +233,21 @@ function autonav_system ()
    end
 end
 
+function autonav_system ()
+   _autonav_system (uselanes_jump)
+end
+
 --[[
 Autonav to a spob, potentially trying to land
 --]]
-function autonav_spob( spb, tryland )
+local function _autonav_spob(spb, tryland, do_uselanes)
    autonav_setup()
    target_spb = spb
    local pp = player.pilot()
    local pos = spb:pos()
    target_pos = pos + (pp:pos()-pos):normalize( 0.6*spb:radius() )
 
-   if uselanes_spob then
+   if do_uselanes then
       lanes.clearCache( pp )
       path = lanes.getRouteP( pp, target_pos, nil, uselanes_thr )
    else
@@ -259,6 +263,10 @@ function autonav_spob( spb, tryland )
       autonav_set( autonav_spob_approach )
    end
 
+end
+
+function autonav_spob( spb, tryland )
+   _autonav_spob( spb, tryland, uselanes_spob )
 end
 
 --[[
@@ -301,7 +309,7 @@ function autonav_board( plt )
 end
 
 --[[
-Autonav to a position specified by the plyaer
+Autonav to a position specified by the player
 --]]
 function autonav_pos( pos )
    autonav_setup()
@@ -310,18 +318,6 @@ function autonav_pos( pos )
    player.autonavSetPos( pos )
    target_pos = pos
    path = {target_pos}
-end
-
---[[
-Autonav was forcibly aborted for a reason or other.
---]]
-function autonav_abort( reason )
-   if reason then
-      player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
-   else
-      player.msg("#r".._("Autonav: aborted!").."#0")
-   end
-   autonav_end()
 end
 
 --[[
@@ -448,7 +444,9 @@ end
 function autonav_jump_delay ()
    -- Ignore autonav until speed is acceptable
    local pp = player.pilot()
-   if pp:vel():mod() > 1.5 * pp:speedMax() then
+   -- hades torch: speed*1.65
+   -- accel * 1.0/3 goes as speed bonus
+   if pp:vel():mod() > 1.65 * pp:speedMax() + pp:accel()/3.0 then
       return
    end
 
@@ -558,15 +556,43 @@ function autonav_jump_brake ()
    end
 end
 
+local function _autonav_pos_approach_brake()
+   if ai.brake() then
+      return true
+   elseif not tc_rampdown then
+      tc_rampdown = true
+      tc_down     = (tc_mod - tc_base) / 3
+   end
+end
+
 -- Brakes at a position
 function autonav_pos_approach_brake ()
-   if ai.brake() then
+   if _autonav_pos_approach_brake() then
       player.msg("#o".._("Autonav: arrived at position.").."#0")
       return autonav_end()
    end
-   if not tc_rampdown then
-      tc_rampdown = true
-      tc_down     = (tc_mod - tc_base) / 3
+end
+
+local function autonav_pos_approach_brake_silent ()
+   if _autonav_pos_approach_brake() then
+      return autonav_end()
+   end
+end
+
+--[[
+Autonav was forcibly aborted for a reason or other.
+--]]
+function autonav_abort( reason )
+   if reason then
+      player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
+   else
+      player.msg("#r".._("Autonav: aborted!").."#0")
+   end
+   if brake_pos then
+      autonav_reset(0)
+      autonav_set( autonav_pos_approach_brake_silent )
+   else
+      autonav_end()
    end
 end
 
@@ -633,8 +659,9 @@ end
 -- Going for the landing approach
 function autonav_spob_land_brake ()
    local ret = ai.brake()
+
    if player.tryLand(false)=="impossible" then
-      return autonav_abort()
+      return autonav_abort(_("cannot land"))
    elseif ret then
       -- Reset to good position
       local pp = player.pilot()
@@ -656,24 +683,50 @@ function autonav_plt_follow ()
    if plt:exists() then
       if plt:flags("jumpingout") then
          local jmp = plt:navJump()
+         local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
-         if follow_jump then
-            local pp = player.pilot()
-            if not jmp:known() or jmp:exitonly() then
-               player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=get_pilot_name(plt)}).."#0")
-               ai.accel(0)
-               return autonav_end()
+         if follow_land_jump then
+            local fuel, consumption = player.fuel()
+            if jmp:known() and not jmp:exitonly() and fuel >=consumption then
+               pp:navJumpSet( jmp )
+               _autonav_system(false)
+               autonav_reset(0)
+            else
+               local why=nil
+               if fuel < consumption then
+                  if fuel == 0 then
+                     why=_("no fuel")
+                  else
+                     why=_("not enough fuel")
+                  end
+               end
+               player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping."),{plt=get_pilot_name(plt)}).."#0")
+               return autonav_abort(why)
             end
+         elseif brake_pos then
             pp:navJumpSet( jmp )
-            autonav_system()
+            autonav_pos(plt:navJump():pos())
+            autonav_reset(0)
+            --autonav_rampdown( false )
          else
             autonav_end()
          end
          return
       elseif plt:flags("landing") then
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
-         autonav_end()
+
+         if follow_land_jump or brake_pos then
+            player.pilot():navSpobSet( plt:navSpob() )
+            _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
+            if follow_land_jump then
+               autonav_reset(0)
+            else
+               autonav_rampdown( true )
+            end
+         else
+            autonav_end()
+         end
          return
       end
       inrng, target_known = player.pilot():inrange( plt )
@@ -732,7 +785,7 @@ function autonav_plt_board_approach ()
    if brd=="ok" then
       autonav_end()
    elseif brd~="retry" then
-      autonav_abort()
+      autonav_abort(_("cannot board"))
    end
 end
 
@@ -792,8 +845,7 @@ function autonav_enter ()
       -- Must have fuel to continue
       local fuel, consumption = player.fuel()
       if fuel < consumption then
-         player.msg("#r".._("Autonav: not enough fuel to continue").."#0")
-         autonav_end()
+         autonav_abort(_("not enough fuel to continue"))
          return false
       end
 
