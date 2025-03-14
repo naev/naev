@@ -35,17 +35,13 @@ def merge_group(r1,r2,field,func):
             print >>stderr,e,"is unmergeable, left as is."
    for t,f in L2.items():
       if not L1.has_key(t):
-         """
          try:
-            e.text=func('',f.text)
+            f.text=func('',f.text)
+            r1.append(f)
          except:
-            print >>stderr,e,"is unmergeable, left as is."
-         """
-         print >>stderr,"forgot:",t
+            print >>stderr,f,"is unmergeable, left as is."
 
 def main(args,func,stkmod):
-   names=['']*len(args)
-   tags=set([])
    acc=[]
    T=[None,None]
    R=[None,None]
