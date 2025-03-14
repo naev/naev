@@ -32,7 +32,7 @@
  <slots>
   <weapon size="large" x="-6" y="-20" h="-4" />
   <weapon size="large" x="-6" y="20" h="-4" />
-  <weapon size="medium" prop="fighter_bay" x="6" y="0" h="5" />
+  <weapon size="large" x="6" y="0" h="5" />
   <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" />
   <utility size="large" />
