@@ -25,6 +25,7 @@
       * Systems can have waypoints that are accessible from missions
       * Fixed some flickering at the end of ship trails
       * Diff mode in the editor remembers filenames and diff names
+      * Slots can have tags
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display

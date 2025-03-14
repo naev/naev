@@ -31,6 +31,7 @@ typedef struct SlotProperty_s {
    int        locked;      /**< Locked and not modifyable by the player. */
    int        visible;     /**< Visible slot property. */
    glTexture *icon;        /**< Texture to use for the slot. */
+   char     **tags;        /**< Slot tags. */
 } SlotProperty_t;
 
 static SlotProperty_t *sp_array = NULL; /**< Slot property array. */
@@ -99,8 +100,28 @@ int sp_load( void )
             sp->icon = xml_parseTexture( cur, path, 1, 1, OPENGL_TEX_SDF );
             continue;
          }
+         if ( xml_isNode( cur, "tags" ) ) {
+            xmlNodePtr ccur = cur->children;
+            if ( sp->tags != NULL )
+               WARN( _( "Slot Property '%s' has duplicate '%s' node!" ),
+                     sp->name, "tags" );
+            else
+               sp->tags = array_create( char * );
+            do {
+               xml_onlyNodes( ccur );
+               if ( xml_isNode( ccur, "tag" ) ) {
+                  const char *tmp = xml_get( ccur );
+                  if ( tmp != NULL )
+                     array_push_back( &sp->tags, strdup( tmp ) );
+                  continue;
+               }
+               WARN( _( "Spob '%s' has unknown node in tags '%s'." ), sp->name,
+                     ccur->name );
+            } while ( xml_nextNode( ccur ) );
+            continue;
+         }
 
-         WARN( _( "Slot Property '%s' has unknown node '%s'." ), node->name,
+         WARN( _( "Slot Property '%s' has unknown node '%s'." ), sp->name,
                cur->name );
       } while ( xml_nextNode( cur ) );
 
@@ -227,4 +248,14 @@ const glTexture *sp_icon( unsigned int spid )
    if ( sp_check( spid ) )
       return 0;
    return sp_array[spid - 1].icon;
+}
+
+/**
+ * @brief Gets the tags associated with the slot.
+ */
+const char **sp_tags( unsigned int spid )
+{
+   if ( sp_check( spid ) )
+      return NULL;
+   return (const char **)sp_array[spid - 1].tags;
 }

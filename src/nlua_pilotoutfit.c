@@ -169,29 +169,31 @@ static int poL_slot( lua_State *L )
    /* make the slot table and put it in */
    lua_newtable( L );
 
-   lua_pushstring( L, "type" );                 /* key */
    lua_pushstring( L, slotName( slot->type ) ); /* value */
-   lua_rawset( L, -3 );                         /* table[key = value ]*/
+   lua_setfield( L, -2, "type" );               /* table[key = value ]*/
 
-   lua_pushstring( L, "size" ); /* key */
    lua_pushstring( L, slotSize( slot->size ) );
-   lua_rawset( L, -3 ); /* table[key] = value */
+   lua_setfield( L, -2, "size" ); /* table[key] = value */
 
-   lua_pushstring( L, "property" );               /* key */
    lua_pushstring( L, sp_display( slot->spid ) ); /* value */
-   lua_rawset( L, -3 );                           /* table[key] = value */
+   lua_setfield( L, -2, "property" );             /* table[key] = value */
 
-   lua_pushstring( L, "required" );       /* key */
    lua_pushboolean( L, sslot->required ); /* value */
-   lua_rawset( L, -3 );                   /* table[key] = value */
+   lua_setfield( L, -2, "required" );     /* table[key] = value */
 
-   lua_pushstring( L, "exclusive" );       /* key */
    lua_pushboolean( L, sslot->exclusive ); /* value */
-   lua_rawset( L, -3 );                    /* table[key] = value */
+   lua_setfield( L, -2, "exclusive" );     /* table[key] = value */
 
-   lua_pushstring( L, "locked" );       /* key */
    lua_pushboolean( L, sslot->locked ); /* value */
-   lua_rawset( L, -3 );                 /* table[key] = value */
+   lua_setfield( L, -2, "locked" );     /* table[key] = value */
+
+   lua_newtable( L );
+   const char **tags = sp_tags( slot->spid );
+   for ( int t = 0; t < array_size( tags ); t++ ) {
+      lua_pushboolean( L, 1 );
+      lua_setfield( L, -2, tags[t] );
+   }
+   lua_setfield( L, -2, "tags" );
 
    return 1;
 }
