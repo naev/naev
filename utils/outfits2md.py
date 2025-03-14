@@ -10,7 +10,7 @@ def transpose(M):
    M=[t+['']*(N-len(t)) for t in M]
    return zip(*(tuple(M)))
 
-getfloat=lambda s:float(s.split('(')[0])
+getfloat=lambda s:float(s.split('|')[0])
 
 #launch_reload
 def main(args,gith=False,ter=False,noext=False):

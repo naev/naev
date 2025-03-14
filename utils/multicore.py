@@ -85,74 +85,44 @@ def fmt(f):
 def f1(s1,s2):
    a1=float(s1)
    a2=float(s2)
-   o1=a2-a1
-   o2=2*a1-a2
-   if o2==0:
+   o1=a1
+   o2=a2-a1
+   if o2==o1
       return fmt(o1)
    else:
-      return fmt(o1)+'('+fmt(o2)+')'
+      return fmt(o1)+'/'+fmt(o2)
 
 def read_com(s):
    if s=='':
       return 0,0
-   elif '(' in s:
-      n,m=tuple(s.split('(',1))
-      m=m.split(')')[0]
+   elif '/' in s:
+      n,m=tuple(s.split('/',1))
       return float(n),float(m)
    else:
-      return float(s),0
+      return float(s),float(s)
 
 def rf1(s1,s2):
    n1,m1=read_com(s1)
    n2,m2=read_com(s2)
-   return fmt(n1+m1+n2)
-
-def f2(s1,s2):
-   a1=float(s1)
-   a2=float(s2)
-   o1=a1
-   o2=a2/2
-   return fmt(o1)+'('+fmt(o2)+')'
-
-def rf2(s1,s2):
-   n1,m1=read_com(s1)
-   n2,m2=read_com(s2)
-   if s2=='':
-      return fmt(n1)
-   elif s1=='':
-      return fmt(n2)
-   else:
-      return fmt(m1+m2)
+   return fmt(n1+m2)
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=argv[0].split('/')[-1]
-      print "usage (1):",nam,'[-l] <input1.xml> <input2.xml>'
+      print "usage (1):",nam,'<input1.xml> <input2.xml>'
       print "  Takes two standard outfits, and computes an extended outfit such that when in a main slot,"
       print "  it is eq to <input1.xml>, and stacking two of them gives <input2.xml>."
       print "  The result is sent to stdout."
-      print "   -l use the Lone(twinned) variant"
       print
-      print "usage (2):",nam,'-s [-l] <main.xml> [<secondary.xml>]'
+      print "usage (2):",nam,'-s <main.xml> [<secondary.xml>]'
       print "  Takes one or two extended outfits, and computes the result of stacking them (or keeping it alone)."
       print "  The result is sent to stdout."
-      print "   -l use the Lone(twinned) variant"
    else:
       ign=[f for f in argv[1:] if f not in ["-s","-l"] and not f.endswith(".xml")]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      if '-s' in argv[1:]:
-         if '-l' in argv[1:]:
-            merge_func=rf2
-         else:
-            merge_func=rf1
-      else:
-         if '-l' in argv[1:]:
-            merge_func=f2
-         else:
-            merge_func=f1
-
+      merge_func=rf1 if '-s' in argv[1:] else f1
       main([f for f in argv[1:] if f.endswith(".xml")],merge_func,'-s' in argv[1:])
       exit(0)
 
