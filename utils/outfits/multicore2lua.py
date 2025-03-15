@@ -21,17 +21,22 @@ def fmt(f):
 
 def process_group(r,field):
    acc=[]
-   for e in r.findall(field):
+   r=r.find(field)
+   for e in r.iter():
       t=e.tag
+      if t=='name':
+         e.text=e.text.split(' (deprecated)')[-1]
+         continue
+
       try:
          a,b=read_com(e.text)
-         if a==b:
-            e.text=fmt(a)
-         else:
-            acc.append((t,(a,b)))
-            e.remove()
       except:
-         pass
+         continue
+      if a==b:
+         e.text=fmt(a)
+      else:
+         acc.append((t,(a,b)))
+         r.remove(e)
    return acc
 
 
@@ -89,13 +94,14 @@ def main(arg):
    T=ET.parse(stdin)
    R=T.getroot()
 
-   acc+=process_group(R,'./general/')
-   acc+=process_group(R,'./specific/')
+   acc+=process_group(R,'./general')
+   acc+=process_group(R,'./specific')
 
    if acc!=[]:
       for e in R.findall('./specific'):
          el=ET.Element("lua")
-         el.text=arg+".lua"
+         path=arg.split('dat/',1)[-1]
+         el.text=path+".lua"
          e.append(el)
          break
       mklua(arg+".lua",acc)
