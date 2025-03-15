@@ -1,15 +1,37 @@
 #!/usr/bin/python
 
+from os import path
 from sys import argv,stderr
 import xml.etree.ElementTree as ET
-from os import os.path
 
 
 classes={'Courier','Fighter','Bomber','Destroyer','Armoured Transport','Freighter','Battleship','Carrier'}
 # Not obvious
 classes.add('Bulk Freighter')
 
-#TODO: manage inherits in ship fields
+def get_path(s):
+   s=path.dirname(s)
+
+   if s=='':
+      return ''
+   else:
+      return s+path.sep
+
+def nam2fil(s):
+   return s.replace(' ','_').replace('-','').replace("'",'').lower()
+
+# Does not manage circular inheritance. Should not happen.
+def find_class(arg):
+   T=ET.parse(arg)
+   R=T.getroot()
+
+   for e in R.findall('./class'):
+      return e.text
+
+   if R.attrib.has_key('inherits'):
+      return find_class(get_path(arg)+nam2fil(R.attrib['inherits']+".xml"))
+   else:
+      return ''
 
 def main(arg):
    if not arg.endswith('.xml'):
@@ -23,16 +45,13 @@ def main(arg):
       return
 
    ok=False
-   cls=''
-   for e in R.findall('./class'):
-      cls=e.text
-      if e.text in classes:
-         ok=True
+   cls=find_class(arg)
 
-   if not ok:
-      print >>stderr,R.attrib['name'],":","not the right class:",cls
+   if cls not in classes:
+      #print >>stderr,R.attrib['name'],":","not the right class:",cls
       return
 
+   # OK! so far, so good.
    #T.write(arg)
 
 if __name__ == '__main__':

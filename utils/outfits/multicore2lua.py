@@ -13,6 +13,9 @@ def get_path(s):
    else:
       return s+path.sep
 
+def nam2fil(s):
+   return s.replace(' ','_').replace('-','').replace("'",'').lower()
+
 def read_com(s):
    if s=='':
       return 0,0
@@ -126,11 +129,6 @@ def mklua(luanam,L):
    print >>"end"
    """
    fp.close()
-
-def nam2fil(s):
-   out='_'.join(s.split(' '))
-   out=''.join(out.split('-'))
-   return out.lower()
 
 def main(arg):
    acc=[]
