@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 
 equals={'typename','slot','size'}
-take_first={'description','outfit','gfx_store','priority'}
+take_first={'description','outfit','gfx_store','priority','shortname'}
 
 def merge_group(r1,r2,field,func):
    L1={e.tag:e for e in r1.findall(field)}
@@ -87,7 +87,7 @@ def f1(s1,s2):
    a2=float(s2)
    o1=a1
    o2=a2-a1
-   if o2==o1
+   if o2==o1:
       return fmt(o1)
    else:
       return fmt(o1)+'/'+fmt(o2)
