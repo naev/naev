@@ -25,15 +25,21 @@ def process_group(r,field):
    torem=[]
    for e in r.iter():
       t=e.tag
-      try:
-         a,b=read_com(e.text)
-      except:
-         continue
-      if a==b:
-         e.text=fmt(a)
+      if t == 'slot':
+         e.attrib['prop_extra']="systems_secondary"
       else:
-         acc.append((t,(a,b)))
-         torem.append(e)
+         try:
+            a,b=read_com(e.text)
+         except:
+            continue
+
+         if a==b:
+            e.text=fmt(a)
+         elif t == 'price':
+            e.text=fmt(round((a+b)/2,-2))
+         else:
+            acc.append((t,(a,b)))
+            torem.append(e)
 
    for e in torem:
       r.remove(e)
