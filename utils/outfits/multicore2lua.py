@@ -6,10 +6,12 @@ import xml.etree.ElementTree as ET
 
 
 def get_path(s):
-   if '/' in s:
-      return s.rsplit('/',1)[0]+'/'
-   else:
+   s=path.dirname(s)
+
+   if s=='':
       return ''
+   else:
+      return s+path.sep
 
 def read_com(s):
    if s=='':

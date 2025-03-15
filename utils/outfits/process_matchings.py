@@ -1,15 +1,18 @@
 #!/usr/bin/python
 
 import os
+from os import path
 from glob import glob
 from sys import argv,stderr
 
 
 def get_path(s):
-   if '/' in s:
-      return s.rsplit('/',1)[0]+'/'
-   else:
+   s=path.dirname(s)
+
+   if s=='':
       return ''
+   else:
+      return s+path.sep
 
 def longest_prefix_len(s,t):
    count=0
