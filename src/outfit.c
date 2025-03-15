@@ -529,12 +529,6 @@ size_t outfit_getNameWithClass( const Outfit *outfit, char *buf, size_t size )
                       _( outfit_slotSize( outfit ) ),
                       outfit_slotTypeColourFont( &outfit->slot ),
                       _( outfit_slotName( outfit ) ) );
-   if ( outfit->slot.spid != 0 )
-      p += scnprintf( &buf[p], size - p, "\n#o%s#0",
-                      _( sp_display( outfit->slot.spid ) ) );
-   if ( outfit->spid_extra != 0 )
-      p += scnprintf( &buf[p], size - p, "\n#o%s#0",
-                      _( sp_display( outfit->spid_extra ) ) );
    return p;
 }
 
@@ -3090,11 +3084,25 @@ int outfit_load( void )
 
    /* Third pass for descriptions. */
    for ( int i = 0; i < noutfits; i++ ) {
-      Outfit *o = &outfit_stack[i];
+      Outfit *o    = &outfit_stack[i];
+      Outfit *temp = o; /* Needed for SDESC_ADD macro. */
+      int     l    = 0;
+
+      if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
+         SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "", _( "Unique" ) );
+      if ( o->limit != NULL )
+         SDESC_ADD( l, temp, "%s#r%s#0", ( l > 0 ) ? "\n" : "",
+                    _( "Only 1 of type per ship" ) );
+      if ( o->slot.spid != 0 )
+         SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
+                    _( sp_display( o->slot.spid ) ) );
+      if ( o->spid_extra != 0 )
+         SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
+                    _( sp_display( o->spid_extra ) ) );
+
       if ( outfit_isMod( o ) ) {
-         int     l    = 0;
-         Outfit *temp = o; /* Needed for SDESC_ADD macro. */
-         SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
+         SDESC_ADD( l, temp, "%s%s", ( l > 0 ) ? "\n" : "",
+                    _( outfit_getType( temp ) ) );
          if ( temp->u.mod.active ) /* Ignore Lua since it's handled later. */
             SDESC_ADD( l, temp, "\n#o%s#0", _( "Activated Outfit" ) );
          if ( temp->u.mod.active && temp->u.mod.cooldown > 0. )
@@ -3105,7 +3113,6 @@ int outfit_load( void )
       }
       /* We add the ship stats to the description here. */
       if ( o->summary_raw != NULL ) {
-         int l = strlen( o->summary_raw );
          /*l +=*/ss_statsListDesc( o->stats, &o->summary_raw[l],
                                    OUTFIT_SHORTDESC_MAX - l, 1 );
       }
