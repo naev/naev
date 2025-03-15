@@ -40,6 +40,8 @@ def process(path,f1,f2):
    outpath=f1.replace('/core_','/multicores/core_',1).rsplit('/',1)[0]+'/'
    cmd=path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' "'+outpath+'"'
    print cmd
+   print path+"deprecate_outfit.py",f1
+   print path+"deprecate_outfit.py",f2
    
 if __name__=="__main__":
    if len(argv)!=2 or '-h' in argv or '--help' in argv:
@@ -51,6 +53,7 @@ if __name__=="__main__":
       else:
          crt_path=''
 
+      print "#!"
       result = [y for x in os.walk(PATH) for y in glob(os.path.join(x[0], '*.xml'))]
       result.sort()
       result=['']+result+['']
