@@ -37,8 +37,8 @@ def confirm(cand1,cand2):
       return False
 
 def process(path,f1,f2):
-   outname=f1.replace('/core_','/multicores/core_',1)[:-4]
-   cmd=path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' '+outname
+   outpath=f1.replace('/core_','/multicores/core_',1).rsplit('/',1)[0]+'/'
+   cmd=path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' "'+outpath+'"'
    print cmd
    
 if __name__=="__main__":

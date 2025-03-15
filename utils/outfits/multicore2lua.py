@@ -94,8 +94,17 @@ def mklua(luanam,L):
    print >>fp,"end"
    fp.close()
 
+def nam2fil(s):
+   out='_'.join(s.split(' '))
+   out.lower()
+   return out.lower()
+
 def main(arg):
    acc=[]
+   if '/' in arg:
+      path=arg.rsplit('/',1)[0]+'/'
+   else:
+      path=''
 
    T=ET.parse(stdin)
    R=T.getroot()
@@ -104,10 +113,12 @@ def main(arg):
       print >>stderr,"not an outfit :",R.tag
       return 1
 
-   (pre,suf)=R.attrib['name'].rsplit(' (deprecated)',1)
-   if suf.strip()!='':
-      pre=pre+suf
-   R.attrib['name']=pre
+   nam=R.attrib['name'].rsplit(' (deprecated)',1)
+   if len(nam)==1 or nam[1].strip()=='':
+      R.attrib['name']=nam[0]
+
+   nam=nam2fil(R.attrib['name'])
+
 
    acc+=process_group(R,'./general')
    acc+=process_group(R,'./specific')
@@ -115,8 +126,7 @@ def main(arg):
    if acc!=[]:
       for e in R.findall('./specific'):
          el=ET.Element("lua")
-         path=arg.split('dat/',1)[-1]
-         el.text=path+".lua"
+         el.text=path+nam+".lua"
          e.append(el)
          break
       """
@@ -125,19 +135,19 @@ def main(arg):
       el.text=path+".lua"
       R.append(el)
       """
-      mklua(arg+".lua",acc)
+      mklua(path+nam+".lua",acc)
    else:
       print >>stderr,"No composite field found, left as is."
 
-   T.write(arg+".xml")
-   print >>stderr,"<"+arg+".xml"+">"
-
+   output=path+nam+".xml"
+   T.write(output)
+   print >>stderr,"<"+output+">"
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=argv[0].split('/')[-1]
-      print "usage:",nam,'<output_name>'
-      print "  Takes an extended outfit as input on stdin, and computes <output_name>.{xml,lua}."
+      print >>stderr, "usage:",nam,'<output_path>'
+      print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.{xml,lua}."
    else:
       ign=argv[2:]
       if ign!=[]:
