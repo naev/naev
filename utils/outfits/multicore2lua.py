@@ -79,7 +79,11 @@ def mklua(luanam,L):
    print >>fp,"notactive = true"
    print >>fp
    print >>fp,"function init( _p, po )"
+   for (nam,_) in L:
+      print >>fp,ind+"local",nam
+   print >>fp
    print >>fp,ind+"if not po:slot().tags.secondary then"
+
    for (nam,(main,sec)) in L:
       print >>fp,2*ind+nam+"="+fmt(main)
 

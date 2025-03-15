@@ -1,6 +1,13 @@
 notactive = true
 
 function init( _p, po )
+   local mass
+   local cpu_max
+   local energy
+   local energy_regen
+   local shield
+   local shield_regen
+
    if not po:slot().tags.secondary then
       mass=90
       cpu_max=260

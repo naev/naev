@@ -74,7 +74,6 @@ def main(args,func,stkmod):
    merge_group(R[0],R[1],'./specific/',func)
 
    T[0].write(stdout)
-   print >>stderr,"Output sent to <stdout>"
 
 def fmt(f):
    if f==round(f):
