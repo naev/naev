@@ -96,7 +96,7 @@ def mklua(luanam,L):
 
 def nam2fil(s):
    out='_'.join(s.split(' '))
-   out.lower()
+   out=''.join(out.split('-'))
    return out.lower()
 
 def main(arg):
