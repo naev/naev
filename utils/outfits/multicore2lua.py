@@ -22,12 +22,9 @@ def fmt(f):
 def process_group(r,field):
    acc=[]
    r=r.find(field)
+   torem=[]
    for e in r.iter():
       t=e.tag
-      if t=='name':
-         e.text=e.text.split(' (deprecated)')[-1]
-         continue
-
       try:
          a,b=read_com(e.text)
       except:
@@ -36,7 +33,10 @@ def process_group(r,field):
          e.text=fmt(a)
       else:
          acc.append((t,(a,b)))
-         r.remove(e)
+         torem.append(e)
+
+   for e in torem:
+      r.remove(e)
    return acc
 
 
@@ -94,6 +94,15 @@ def main(arg):
    T=ET.parse(stdin)
    R=T.getroot()
 
+   if R.tag!='outfit':
+      print >>stderr,"not an outfit :",R.tag
+      return 1
+
+   (pre,suf)=R.attrib['name'].rsplit(' (deprecated)',1)
+   if suf.strip()!='':
+      pre=pre+suf
+   R.attrib['name']=pre
+
    acc+=process_group(R,'./general')
    acc+=process_group(R,'./specific')
 
@@ -104,6 +113,12 @@ def main(arg):
          el.text=path+".lua"
          e.append(el)
          break
+      """
+      el=ET.Element("lua")
+      path=arg.split('dat/',1)[-1]
+      el.text=path+".lua"
+      R.append(el)
+      """
       mklua(arg+".lua",acc)
    else:
       print >>stderr,"No composite field found, left as is."

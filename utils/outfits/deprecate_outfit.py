@@ -11,7 +11,7 @@ def main(arg):
    print "<"+arg+">","deprecated."
    R=T.getroot()
    if R.tag=="outfit":
-      R.attrib['name']=R.attrib['name'].split(DEPR_STR)[-1]+DEPR_STR
+      R.attrib['name']=R.attrib['name'].split(DEPR_STR,1)[0]+DEPR_STR
    else:
       print >>stderr,"not an outfit:",R.tag
    T.write(arg)
