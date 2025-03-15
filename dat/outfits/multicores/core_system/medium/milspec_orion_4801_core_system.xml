@@ -10,5 +10,5 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>dat/outfits/multicores/core_system/medium/milspec_orion_4801_core_system.lua</lua></specific>
+  <lua>outfits/multicores/core_system/medium/milspec_orion_4801_core_system.lua</lua></specific>
 </outfit>

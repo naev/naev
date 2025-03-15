@@ -130,7 +130,7 @@ def main(arg):
    if acc!=[]:
       for e in R.findall('./specific'):
          el=ET.Element("lua")
-         el.text=path+nam+".lua"
+         el.text=(path+nam+".lua").split('dat/',1)[-1]
          e.append(el)
          break
       """
