@@ -4,8 +4,8 @@
 #pragma once
 
 /** @cond */
-#include <limits.h>  // IWYU pragma: export
 #include <lauxlib.h> // IWYU pragma: export
+#include <limits.h>  // IWYU pragma: export
 #include <lua.h>     // IWYU pragma: export
 
 #include "log.h" // IWYU pragma: export
@@ -78,3 +78,7 @@ int nlua_package_loader_croot( lua_State *L );
 #if DEBUGGING
 void nlua_pushEnvTable( lua_State *L );
 #endif /* DEBUGGING */
+
+// Extra functionality exposed by mlua from newer versions of Lua via rust
+const char *luaL_tolstring( lua_State *L, int idx, size_t *len );
+void luaL_traceback( lua_State *L, lua_State *L1, const char *msg, int level );
