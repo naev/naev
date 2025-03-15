@@ -677,7 +677,7 @@ static int systemL_addGatherable( lua_State *L )
    unsigned int player_only;
    Commodity   *commodity;
    vec2        *pos, *vel;
-   vec2         zero = { .x = 0., .y = 0., .mod = 0., .angle = 0. };
+   vec2         zero = { .x = 0., .y = 0. };
    double       lifelength;
 
    /* Handle parameters. */
