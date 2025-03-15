@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
 
@@ -9,9 +10,6 @@ def get_path(s):
       return s.rsplit('/',1)[0]+'/'
    else:
       return ''
-
-def get_file(s):
-   return s.split('/')[-1]
 
 def read_com(s):
    if s=='':
@@ -175,7 +173,7 @@ def main(arg):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      nam=get_file(argv[0])
+      nam=path.basename(argv[0])
       print >>stderr, "usage:",nam,'<output_path>'
       print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.{xml,lua}."
    else:

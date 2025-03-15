@@ -1,13 +1,11 @@
 #!/usr/bin/python
 
+from os import path
 from sys import argv,stderr
 import xml.etree.ElementTree as ET
 
 
 DEPR_STR=' (deprecated)'
-
-def get_file(s):
-   return s.split('/')[-1]
 
 def main(arg,rev):
    if not arg.endswith('.xml'):
@@ -25,7 +23,7 @@ def main(arg,rev):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      nam=get_file(argv[0])
+      nam=path.basename(argv[0])
       print "usage:",nam,'[-r]','<outfit.xml>'
       print '  Adds "'+DEPR_STR+'"',"to the name of the outfit"
       print '   -r  undo deprecation'
