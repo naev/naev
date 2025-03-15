@@ -1134,6 +1134,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot->cpu += pilot->cpu_max; /* CPU is negative, this just sets it so it's
                                     based off of cpu_max. */
    /* Misc. */
+   pilot->mass_outfit += s->mass;
    pilot->crew = pilot->crew * s->crew_mod + s->crew;
    pilot->fuel_consumption *= s->fuel_usage_mod;
    pilot->fuel_max *= s->fuel_mod;
@@ -1245,10 +1246,10 @@ void pilot_updateMass( Pilot *pilot )
    double factor;
 
    /* Recompute effective mass if something changed. */
-   pilot->solid.mass = MAX( pilot->stats.mass_mod * pilot->ship->mass +
-                               pilot->stats.cargo_inertia * pilot->mass_cargo +
-                               pilot->mass_outfit,
-                            0. );
+   pilot->solid.mass =
+      MAX( pilot->stats.mass_mod * ( pilot->ship->mass + pilot->mass_outfit ) +
+              pilot->stats.cargo_inertia * pilot->mass_cargo,
+           0. );
 
    /* Set and apply limit. */
    factor       = pilot_massFactor( pilot );
