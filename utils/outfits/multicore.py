@@ -7,6 +7,9 @@ import xml.etree.ElementTree as ET
 equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority','shortname'}
 
+def get_file(s):
+   return s.split('/')[-1]
+
 def merge_group(r1,r2,field,func):
    L1={e.tag:e for e in r1.findall(field)}
    if r2 is None:
@@ -56,7 +59,7 @@ def main(args,func,stkmod):
       return
 
    for i in range(len(args)):
-      print >>stderr,'<'+args[i].rsplit('/',1)[-1]+'>',
+      print >>stderr,'<'+get_file(args[i])+'>',
       T[i]=ET.parse(args[i])
       R[i]=T[i].getroot()
       for e in R[i].findall("./general/mass"):
@@ -107,7 +110,7 @@ def rf1(s1,s2):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      nam=argv[0].split('/')[-1]
+      nam=get_file(argv[0])
       print "usage (1):",nam,'<input1.xml> <input2.xml>'
       print "  Takes two standard outfits, and computes an extended outfit such that when in a main slot,"
       print "  it is eq to <input1.xml>, and stacking two of them gives <input2.xml>."

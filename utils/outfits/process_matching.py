@@ -5,6 +5,12 @@ from glob import glob
 from sys import argv,stderr
 
 
+def get_path(s):
+   if '/' in s:
+      return s.rsplit('/',1)[0]+'/'
+   else:
+      return ''
+
 def longest_prefix_len(s,t):
    count=0
    for x,y in zip(s,t):
@@ -37,7 +43,7 @@ def confirm(cand1,cand2):
       return False
 
 def process(path,f1,f2):
-   outpath=f1.replace('/core_','/multicores/core_',1).rsplit('/',1)[0]+'/'
+   outpath=get_path(f1.replace('/core_','/multicores/core_',1))
    cmd="NAM=`"+path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' "'+outpath+'"'+'`'
    print cmd
    print path+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"

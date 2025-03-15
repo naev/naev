@@ -4,6 +4,15 @@ from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
 
 
+def get_path(s):
+   if '/' in s:
+      return s.rsplit('/',1)[0]+'/'
+   else:
+      return ''
+
+def get_file(s):
+   return s.split('/')[-1]
+
 def read_com(s):
    if s=='':
       return 0,0
@@ -125,10 +134,7 @@ def nam2fil(s):
 
 def main(arg):
    acc=[]
-   if '/' in arg:
-      path=arg.rsplit('/',1)[0]+'/'
-   else:
-      path=''
+   path=get_path(arg)
 
    T=ET.parse(stdin)
    R=T.getroot()
@@ -169,7 +175,7 @@ def main(arg):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      nam=argv[0].split('/')[-1]
+      nam=get_file(argv[0])
       print >>stderr, "usage:",nam,'<output_path>'
       print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.{xml,lua}."
    else:

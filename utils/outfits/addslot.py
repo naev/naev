@@ -4,6 +4,9 @@ from sys import argv,stderr
 import xml.etree.ElementTree as ET
 
 
+def get_file(s):
+   return s.split('/')[-1]
+
 classes={'Courier','Fighter','Bomber','Destroyer','Armoured Transport','Freighter','Battleship','Carrier'}
 # Not obvious
 classes.add('Bulk Freighter')
@@ -36,7 +39,7 @@ def main(arg):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      nam=argv[0].split('/')[-1]
+      nam=get_file(argv[0])
       print "usage:",nam,'[-r]','<outfit.xml> ...'
       print "  Adds a new secondary core system slot to the ships given in input, "
       print "  provided they have the right size and don't already have one."
