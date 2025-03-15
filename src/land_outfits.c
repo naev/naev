@@ -784,6 +784,9 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
    if ( o->slot.spid != 0 )
       p += scnprintf( &buf[p], n - p, "#o%s#0\n",
                       _( sp_display( o->slot.spid ) ) );
+   if ( o->spid_extra != 0 )
+      p += scnprintf( &buf[p], n - p, "#o%s#0\n",
+                      _( sp_display( o->spid_extra ) ) );
    p += scnprintf( &buf[p], n - p, "%s", pilot_outfitSummary( plt, o, 0 ) );
    return 0;
 }
