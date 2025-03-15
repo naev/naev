@@ -6,7 +6,9 @@ import xml.etree.ElementTree as ET
 
 classes={'Courier','Fighter','Bomber','Destroyer','Armoured Transport','Freighter','Battleship','Carrier'}
 # Not obvious
-#classes+=['Bulk Freighter']
+classes.add('Bulk Freighter')
+
+#TODO: manage inherits in ship fields
 
 def main(arg):
    if not arg.endswith('.xml'):

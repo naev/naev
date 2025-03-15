@@ -38,11 +38,19 @@ def process_group(r,field):
          elif t == 'price':
             e.text=fmt(round((a+b)/2,-2))
          else:
+            # mixed lua/xml
+            acc.append((t,b-a))
+            e.text=fmt(a)
+            # lua
+            """
             acc.append((t,(a,b)))
             torem.append(e)
-
+            """
+   # lua
+   """
    for e in torem:
       r.remove(e)
+   """
    return acc
 
 
@@ -66,7 +74,6 @@ function descextra( _p, _o )
    end
 
    add_desc( _("Shield Strength"), naev.unit("energy"), SHIELD, PRI_SHIELD )
-
    return desc
 end
 """
@@ -82,6 +89,19 @@ def mklua(luanam,L):
    for (nam,_) in L:
       print >>fp,ind+"local",nam
    print >>fp
+
+   # Mixed xml/lua style
+   print >>fp,ind+"if po:slot().tags.secondary then"
+   for (nam,sec) in L:
+      print >>fp,2*ind+nam+"="+fmt(sec)
+
+   for (nam,_) in L:
+      print >>fp,ind*2+'po:set( "'+nam+'", '+nam+' )'
+   print >>fp,ind+"end"
+   print >>fp,"end"
+
+   # Full lua
+   """
    print >>fp,ind+"if not po:slot().tags.secondary then"
 
    for (nam,(main,sec)) in L:
@@ -92,10 +112,10 @@ def mklua(luanam,L):
       print >>fp,2*ind+nam+"="+fmt(sec)
 
    print >>fp,ind+"end"
-
    for (nam,_) in L:
-      print >>fp,ind+'po:set( "'+nam+'", '+nam+' )'
-   print >>fp,"end"
+      print >>fp,ind*2+'po:set( "'+nam+'", '+nam+' )'
+   print >>"end"
+   """
    fp.close()
 
 def nam2fil(s):
