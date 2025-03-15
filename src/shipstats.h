@@ -144,6 +144,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_DISABLE, /**< Flat disable modifier (acts like normal disable
                          damage). */
    /* Misc. */
+   SS_TYPE_A_MASS,          /**< Ship mass. */
    SS_TYPE_A_CPU_MAX,       /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,  /**< Engine's mass limit. */
    SS_TYPE_A_FUEL_REGEN,    /**< Fuel regeneration. */
@@ -283,6 +284,7 @@ typedef struct ShipStats_ {
    double stress_dissipation; /**< Global stress dissipation. */
    double crew_mod;           /**< Relative crew modification. */
    double mass_mod;           /**< Relative mass modification. */
+   double mass;               /**< Absolute mass. */
 
    /* Weapons. */
    double weapon_range;    /**< Weapon range. */
