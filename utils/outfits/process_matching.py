@@ -38,10 +38,9 @@ def confirm(cand1,cand2):
 
 def process(path,f1,f2):
    outpath=f1.replace('/core_','/multicores/core_',1).rsplit('/',1)[0]+'/'
-   cmd=path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' "'+outpath+'"'
+   cmd="NAM=`"+path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' "'+outpath+'"'+'`'
    print cmd
-   print path+"deprecate_outfit.py",f1
-   print path+"deprecate_outfit.py",f2
+   print path+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
    
 if __name__=="__main__":
    if len(argv)!=2 or '-h' in argv or '--help' in argv:

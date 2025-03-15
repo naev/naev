@@ -118,7 +118,7 @@ def main(arg):
       R.attrib['name']=nam[0]
 
    nam=nam2fil(R.attrib['name'])
-
+   print nam
 
    acc+=process_group(R,'./general')
    acc+=process_group(R,'./specific')
