@@ -1417,20 +1417,11 @@ const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname )
 {
    static char o_summary[STRMAX];
    const char *de = pilot_outfitLDescExtra( p, o );
-   if ( de == NULL ) {
-      if ( withname )
-         snprintf( o_summary, sizeof( o_summary ), "%s\n%s", _( o->name ),
-                   o->summary_raw );
-      else
-         snprintf( o_summary, sizeof( o_summary ), "%s", o->summary_raw );
-   } else {
-      if ( withname )
-         snprintf( o_summary, sizeof( o_summary ), "%s\n%s\n%s", _( o->name ),
-                   o->summary_raw, de );
-      else
-         snprintf( o_summary, sizeof( o_summary ), "%s\n%s", o->summary_raw,
-                   de );
-   }
+   size_t      n  = 0;
+   if ( withname )
+      n += outfit_getNameWithClass( o, &o_summary[n], sizeof( o_summary ) - n );
+   snprintf( &o_summary[n], sizeof( o_summary ) - n, "%s%s",
+             ( n > 0 ) ? "\n" : "", ( de == NULL ) ? o->summary_raw : de );
    return o_summary;
 }
 
