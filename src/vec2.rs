@@ -15,7 +15,7 @@ impl Vec2 {
         let vec = self.0;
         match val {
             Value::UserData(ud) if ud.is::<Self>() => {
-                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0.into();
+                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0;
                 Ok(Vec2::new(vec.x + vec2.x, vec.y + vec2.y))
             }
             Value::Number(n) => Ok(Vec2::new(vec.x + n, vec.y + n)),
@@ -33,7 +33,7 @@ impl Vec2 {
         let vec = self.0;
         match val {
             Value::UserData(ud) if ud.is::<Self>() => {
-                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0.into();
+                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0;
                 Ok(Vec2::new(vec.x - vec2.x, vec.y - vec2.y))
             }
             Value::Number(n) => Ok(Vec2::new(vec.x - n, vec.y - n)),
@@ -51,7 +51,7 @@ impl Vec2 {
         let vec = self.0;
         match val {
             Value::UserData(ud) if ud.is::<Self>() => {
-                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0.into();
+                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0;
                 Ok(Vec2::new(vec.x * vec2.x, vec.y * vec2.y))
             }
             Value::Number(n) => Ok(Vec2::new(vec.x * n, vec.y * n)),
@@ -69,7 +69,7 @@ impl Vec2 {
         let vec = self.0;
         match val {
             Value::UserData(ud) if ud.is::<Self>() => {
-                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0.into();
+                let vec2: Vector2<f64> = ud.borrow::<Self>()?.0;
                 Ok(Vec2::new(vec.x / vec2.x, vec.y / vec2.y))
             }
             Value::Number(n) => Ok(Vec2::new(vec.x / n, vec.y / n)),
@@ -162,7 +162,7 @@ impl UserData for Vec2 {
         ///    @luatreturn Vec2 A clone of v.
         /// @luafunc clone
         methods.add_method("clone", |_, vec: &Self, ()| -> mlua::Result<Self> {
-            Ok(vec.clone())
+            Ok(*vec)
         });
 
         /// @brief Converts a vector to a string.
@@ -388,10 +388,7 @@ impl UserData for Vec2 {
         methods.add_method_mut(
             "normalize",
             |_, vec: &mut Self, n: Option<f64>| -> mlua::Result<Self> {
-                let n = match n {
-                    Some(n) => n,
-                    None => 1.,
-                };
+                let n = n.unwrap_or(1.);
                 let m = n / (vec.0.x.hypot(vec.0.y)).max(1e-6);
                 vec.0.x *= m;
                 vec.0.y *= m;
