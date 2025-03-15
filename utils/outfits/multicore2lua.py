@@ -28,11 +28,60 @@ def process_group(r,field):
          if a==b:
             e.text=fmt(a)
          else:
-            acc.append((e.text,(a,b)))
+            acc.append((t,(a,b)))
             e.remove()
       except:
          pass
    return acc
+
+
+"""
+local fmt = require "format"
+
+function descextra( _p, _o )
+   local desc = ""
+
+   local function add_desc( name, units, base, primary )
+      if primary ~= 0 then
+         desc = desc..fmt.f(_("{name}: {full) ({base}) {units}"), {
+            name=name, units=units, base=base, full=base+primary,
+         })
+      else
+         -- This could be just done in XML though...
+         desc = desc..fmt.f(_("{name}: {full) {units}"), {
+            name=name, units=units, base=base,
+         })
+      end
+   end
+
+   add_desc( _("Shield Strength"), naev.unit("energy"), SHIELD, PRI_SHIELD )
+
+   return desc
+end
+"""
+
+def mklua(luanam,L):
+   print >>stderr,"<"+luanam+">"
+   fp=file(luanam,"w")
+   ind=3*' '
+
+   print >>fp,"notactive = true"
+   print >>fp
+   print >>fp,"function init( _p, po )"
+   print >>fp,ind+"if not po:slot().tags.secondary then"
+   for (nam,(main,sec)) in L:
+      print >>fp,2*ind+nam+"="+fmt(main)
+
+   print >>fp,ind+"else"
+   for (nam,(main,sec)) in L:
+      print >>fp,2*ind+nam+"="+fmt(sec)
+
+   print >>fp,ind+"end"
+
+   for (nam,_) in L:
+      print >>fp,ind+'po:set( "'+nam+'", '+nam+' )'
+   print >>fp,"end"
+   fp.close()
 
 def main(arg):
    acc=[]
@@ -44,12 +93,12 @@ def main(arg):
    acc+=process_group(R,'./specific/')
 
    if acc!=[]:
-      print >>stderr,acc
       for e in R.findall('./specific'):
          el=ET.Element("lua")
          el.text=arg+".lua"
          e.append(el)
          break
+      mklua(arg+".lua",acc)
    else:
       print >>stderr,"No composite field found, left as is."
 
