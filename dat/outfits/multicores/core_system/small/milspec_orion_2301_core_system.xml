@@ -1,0 +1,15 @@
+<outfit name="Milspec Orion 2301 Core System">
+ <general>
+  <shortname>M. Orion 2301 System</shortname>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <size>small</size>
+  <price>105000</price>
+  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2301 core system is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
+  <gfx_store>core_system_refined_s1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <energy>200</energy>
+  <lua>dat/outfits/multicores/core_system/small/milspec_orion_2301_core_system.lua</lua></specific>
+</outfit>
