@@ -36,18 +36,28 @@ def confirm(cand1,cand2):
    except:
       return False
 
+def process(path,f1,f2):
+   outname=f1.replace('/core_','/multicores/core_',1)[:-4]
+   cmd=path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' '+outname
+   print cmd
+   
 if __name__=="__main__":
    if len(argv)!=2 or '-h' in argv or '--help' in argv:
-      print >>stderr,"usage:",argv[0].split('/')[-1],"<path>"
+      print >>stderr,"usage:",argv[0].rsplit('/',1)[-1],"<path>"
    else:
       PATH=argv[1]
+      if '/' in argv[0]:
+         crt_path=argv[0].rsplit('/',1)[0]+'/'
+      else:
+         crt_path=''
+
       result = [y for x in os.walk(PATH) for y in glob(os.path.join(x[0], '*.xml'))]
       result.sort()
       result=['']+result+['']
       for i in range(1,len(result)-2):
          if prefers(result[i],result[i+1],result[i-1]) and prefers(result[i+1],result[i],result[i+2]):
             if confirm(result[i],result[i+1]):
-               print result[i],result[i+1]
+               process(crt_path,result[i],result[i+1])
             else:
                pass
                #print >>stderr,"\033[31mUnconfirmed pair left out\033[0m",result[i],result[i+1]
