@@ -51,8 +51,27 @@ def main(arg):
       #print >>stderr,R.attrib['name'],":","not the right class:",cls
       return
 
-   # OK! so far, so good.
-   #T.write(arg)
+   for S in R.findall("./slots"):
+      count=0
+      next_time=False
+      for r in S:
+         if next_time:
+            if r.attrib['prop']=='system_secondary':
+               #print >>stderr,'already done, bye!'
+               return
+            else:
+               newe = ET.Element('utility')
+               newe.attrib['size']=siz
+               newe.attrib['prop']='system_secondary'
+               S.insert(count,newe)
+               break
+         elif r.tag=='utility' and r.attrib['prop']=='systems':
+            siz=r.attrib["size"]
+            next_time=True
+         count+=1
+      break
+
+   T.write(arg)
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
