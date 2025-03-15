@@ -26,6 +26,9 @@ impl<T: Clone + Sized> Array<T> {
         let size = std::mem::size_of::<T>();
         let array =
             unsafe { naevc::array_from_vec(vec.as_ptr() as *const c_void, size, vec.len()) };
+        if array == std::ptr::null_mut() {
+            anyhow::bail!("Failed to create C Array");
+        }
         Ok(Array(array as *mut T))
     }
     pub fn as_ptr(&self) -> *mut c_void {
@@ -43,7 +46,7 @@ impl<T: Clone> Drop for Array<T> {
 #[derive(Default)]
 pub struct ArrayCString {
     #[allow(dead_code)]
-    data: Vec<CString>,
+    data: Vec<CString>, // just here to store memory for the C strings
     arr: Array<*const c_char>,
 }
 impl ArrayCString {
