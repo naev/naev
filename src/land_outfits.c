@@ -816,7 +816,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
       }
       if ( needsgfx )
          outfit_gfxStoreLoadNeeded();
-      /* Just to be safe, we assume some ships colud potentially be duplicated.
+      /* Just to be safe, we assume some ships could potentially be duplicated.
        */
 
       /* Set alt text. */

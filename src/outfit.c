@@ -529,6 +529,12 @@ size_t outfit_getNameWithClass( const Outfit *outfit, char *buf, size_t size )
                       _( outfit_slotSize( outfit ) ),
                       outfit_slotTypeColourFont( &outfit->slot ),
                       _( outfit_slotName( outfit ) ) );
+   if ( outfit->slot.spid != 0 )
+      p += scnprintf( &buf[p], size - p, "\n#o%s#0",
+                      _( sp_display( outfit->slot.spid ) ) );
+   if ( outfit->spid_extra != 0 )
+      p += scnprintf( &buf[p], size - p, "\n#o%s#0",
+                      _( sp_display( outfit->spid_extra ) ) );
    return p;
 }
 
