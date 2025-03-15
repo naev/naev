@@ -340,8 +340,6 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
          nxml_saveNameAttribute( writer, name, name_len, keynum );
          xmlw_attr( writer, "x", "%.16e", vec->x );
          xmlw_attr( writer, "y", "%.16e", vec->y );
-         xmlw_attr( writer, "mod", "%.16e", vec->mod );
-         xmlw_attr( writer, "angle", "%.16e", vec->angle );
          xmlw_endElem( writer );
          /* key, value */
          break;
@@ -490,8 +488,6 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             vec2 vec;
             xmlr_attr_float( node, "x", vec.x );
             xmlr_attr_float( node, "y", vec.y );
-            xmlr_attr_float( node, "mod", vec.mod );
-            xmlr_attr_float( node, "angle", vec.angle );
             lua_pushvector( L, vec );
          } else {
             /* There are a few types knowingly left out above. Quoting the
