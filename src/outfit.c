@@ -2950,10 +2950,11 @@ static int outfit_loadDir( const char *dir )
    license_stack = array_create( char * );
    for ( int i = 0; i < array_size( odata ); i++ ) {
       OutfitThreadData *od = &odata[i];
-      if ( !od->ret )
+      if ( !od->ret ) {
          array_push_back( &outfit_stack, od->outfit );
-      if ( outfit_isLicense( &od->outfit ) )
-         array_push_back( &license_stack, od->outfit.u.lic.provides );
+         if ( outfit_isLicense( &od->outfit ) )
+            array_push_back( &license_stack, od->outfit.u.lic.provides );
+      }
       free( od->filename );
    }
    array_free( odata );
