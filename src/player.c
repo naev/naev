@@ -3808,6 +3808,7 @@ static int player_runUpdaterStart( void )
    /* Load env if necessary. */
    if ( player_updater_env == LUA_NOREF ) {
       player_updater_env = nlua_newEnv( "updater" );
+      nlua_loadStandard( player_updater_env );
       size_t bufsize;
       char  *buf = ndata_read( SAVE_UPDATER_PATH, &bufsize );
       if ( nlua_dobufenv( player_updater_env, buf, bufsize,
