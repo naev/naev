@@ -7,10 +7,12 @@
 #include <math.h>
 /** @endcond */
 
-#define VX( v ) ( ( v ).x )         /**< Gets the X component of a vector. */
-#define VY( v ) ( ( v ).y )         /**< Gets the Y component of a vector. */
-#define VMOD( v ) ( ( v ).mod )     /**< Gets the modulus of a vector. */
-#define VANGLE( v ) ( ( v ).angle ) /**< Gets the angle of a vector. */
+#define VX( v ) ( ( v ).x ) /**< Gets the X component of a vector. */
+#define VY( v ) ( ( v ).y ) /**< Gets the Y component of a vector. */
+#define VMOD( v )                                                              \
+   ( MOD( VX( v ), VY( v ) ) ) /**< Gets the modulus of a vector. */
+#define VANGLE( v )                                                            \
+   ( ANGLE( VX( v ), VY( v ) ) ) /**< Gets the angle of a vector. */
 
 #define MOD( x, y )                                                            \
    ( hypot(                                                                    \
@@ -43,11 +45,9 @@
  * @brief Represents a 2d vector.
  */
 typedef struct vec2_ {
-   double x;     /**< X cartesian position of the vector. */
-   double y;     /**< Y cartesian position of the vector. */
-   double mod;   /**< Modulus of the vector. */
-   double angle; /**< Angle of the vector. */
-} vec2;          /**< 2 dimensional vector. */
+   double x; /**< X cartesian position of the vector. */
+   double y; /**< Y cartesian position of the vector. */
+} vec2;      /**< 2 dimensional vector. */
 
 /*
  * vector manipulation

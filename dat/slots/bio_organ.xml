@@ -5,4 +5,7 @@
  <exclusive/>
  <locked/>
  <icon>bio.png</icon>
+ <tags>
+  <tag>bioship</tag>
+ </tags>
 </slot>

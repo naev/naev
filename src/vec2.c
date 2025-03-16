@@ -12,10 +12,8 @@
  */
 void vec2_cset( vec2 *v, double x, double y )
 {
-   v->x     = x;
-   v->y     = y;
-   v->mod   = MOD( x, y );
-   v->angle = ANGLE( x, y );
+   v->x = x;
+   v->y = y;
 }
 
 /**
@@ -41,10 +39,8 @@ void vec2_csetmin( vec2 *v, double x, double y )
  */
 void vec2_pset( vec2 *v, double mod, double angle )
 {
-   v->mod   = mod;
-   v->angle = angle;
-   v->x     = v->mod * cos( v->angle );
-   v->y     = v->mod * sin( v->angle );
+   v->x = mod * cos( angle );
+   v->y = mod * sin( angle );
 }
 
 /**
@@ -54,10 +50,8 @@ void vec2_pset( vec2 *v, double mod, double angle )
  */
 void vectnull( vec2 *v )
 {
-   v->x     = 0.;
-   v->y     = 0.;
-   v->mod   = 0.;
-   v->angle = 0.;
+   v->x = 0.;
+   v->y = 0.;
 }
 
 /**
@@ -85,8 +79,6 @@ void vec2_cadd( vec2 *v, double x, double y )
 {
    v->x += x;
    v->y += y;
-   v->mod   = MOD( v->x, v->y );
-   v->angle = ANGLE( v->x, v->y );
 }
 
 /**
@@ -100,8 +92,6 @@ void vec2_padd( vec2 *v, double m, double a )
 {
    v->x += m * cos( a );
    v->y += m * sin( a );
-   v->mod   = MOD( v->x, v->y );
-   v->angle = ANGLE( v->x, v->y );
 }
 
 /**
@@ -116,8 +106,6 @@ void vec2_reflect( vec2 *r, const vec2 *v, const vec2 *n )
    double dot = vec2_dot( v, n );
    r->x       = v->x - ( ( 2. * dot ) * n->x );
    r->y       = v->y - ( ( 2. * dot ) * n->y );
-   r->mod     = MOD( r->x, r->y );
-   r->angle   = ANGLE( r->x, r->y );
 }
 
 /**

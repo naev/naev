@@ -14,3 +14,4 @@ int              sp_required( unsigned int spid );
 int              sp_exclusive( unsigned int spid );
 int              sp_locked( unsigned int spid );
 const glTexture *sp_icon( unsigned int spid );
+const char     **sp_tags( unsigned int spid );

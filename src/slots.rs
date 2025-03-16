@@ -4,6 +4,7 @@ use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
+use crate::array::ArrayCString;
 use crate::context::{SafeContext, CONTEXT};
 use crate::gettext::gettext;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -23,6 +24,8 @@ pub struct SlotProperty {
     pub locked: bool,
     pub visible: bool,
     pub icon: Option<texture::Texture>,
+    pub tags: Vec<String>,
+    ctags: ArrayCString,
 }
 impl SlotProperty {
     fn load(ctx: &SafeContext, filename: &str) -> Result<Self> {
@@ -65,6 +68,16 @@ impl SlotProperty {
                             .sdf(true)
                             .build(&nctx)?,
                     );
+                }
+                "tags" => {
+                    for node in node.children() {
+                        if !node.is_element() {
+                            continue;
+                        }
+                        sp.tags.push(node.tag_name().name().to_lowercase());
+                    }
+                    // Remove when not needed for C interface
+                    sp.ctags = ArrayCString::new(&sp.tags)?;
                 }
                 tag => {
                     return nxml_err_node_unknown!("Slot Property", &sp.name, tag);
@@ -192,6 +205,15 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
     match get_c(sp) {
         Some(prop) => prop.locked as c_int,
         None => 0,
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sp_tags(sp: c_int) -> *mut *const c_char {
+    match get_c(sp) {
+        // TODO implement
+        Some(prop) => prop.ctags.as_ptr(),
+        None => std::ptr::null_mut(),
     }
 }
 

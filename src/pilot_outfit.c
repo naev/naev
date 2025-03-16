@@ -1134,6 +1134,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot->cpu += pilot->cpu_max; /* CPU is negative, this just sets it so it's
                                     based off of cpu_max. */
    /* Misc. */
+   pilot->mass_outfit += s->mass;
    pilot->crew = pilot->crew * s->crew_mod + s->crew;
    pilot->fuel_consumption *= s->fuel_usage_mod;
    pilot->fuel_max *= s->fuel_mod;
@@ -1245,10 +1246,10 @@ void pilot_updateMass( Pilot *pilot )
    double factor;
 
    /* Recompute effective mass if something changed. */
-   pilot->solid.mass = MAX( pilot->stats.mass_mod * pilot->ship->mass +
-                               pilot->stats.cargo_inertia * pilot->mass_cargo +
-                               pilot->mass_outfit,
-                            0. );
+   pilot->solid.mass =
+      MAX( pilot->stats.mass_mod * ( pilot->ship->mass + pilot->mass_outfit ) +
+              pilot->stats.cargo_inertia * pilot->mass_cargo,
+           0. );
 
    /* Set and apply limit. */
    factor       = pilot_massFactor( pilot );
@@ -1416,20 +1417,11 @@ const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname )
 {
    static char o_summary[STRMAX];
    const char *de = pilot_outfitLDescExtra( p, o );
-   if ( de == NULL ) {
-      if ( withname )
-         snprintf( o_summary, sizeof( o_summary ), "%s\n%s", _( o->name ),
-                   o->summary_raw );
-      else
-         snprintf( o_summary, sizeof( o_summary ), "%s", o->summary_raw );
-   } else {
-      if ( withname )
-         snprintf( o_summary, sizeof( o_summary ), "%s\n%s\n%s", _( o->name ),
-                   o->summary_raw, de );
-      else
-         snprintf( o_summary, sizeof( o_summary ), "%s\n%s", o->summary_raw,
-                   de );
-   }
+   size_t      n  = 0;
+   if ( withname )
+      n += outfit_getNameWithClass( o, &o_summary[n], sizeof( o_summary ) - n );
+   snprintf( &o_summary[n], sizeof( o_summary ) - n, "%s%s",
+             ( n > 0 ) ? "\n" : "", ( de == NULL ) ? o->summary_raw : de );
    return o_summary;
 }
 

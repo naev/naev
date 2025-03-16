@@ -121,6 +121,18 @@ int array_size_rust( const void *array )
    return array_size( array );
 }
 
+void *array_from_vec( const void *data, size_t size, size_t len )
+{
+   _private_container *c = nmalloc( sizeof( _private_container ) + size * len );
+#if DEBUG_ARRAYS
+   c->_sentinel = ARRAY_SENTINEL;
+#endif
+   c->_reserved = len;
+   c->_size     = len;
+   memcpy( c->_array, data, size * len );
+   return c->_array;
+}
+
 #if 0
 int main() {
    const int size = 100;

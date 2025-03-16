@@ -117,7 +117,7 @@ impl UserData for Vec2 {
         ///    @luatreturn Vec2 A clone of v.
         /// @luafunc clone
         methods.add_method("clone", |_, vec: &Self, ()| -> mlua::Result<Self> {
-            Ok(vec.clone())
+            Ok(*vec)
         });
 
         /// @brief Converts a vector to a string.
@@ -347,10 +347,7 @@ impl UserData for Vec2 {
         methods.add_method_mut(
             "normalize",
             |_, vec: &mut Self, n: Option<f64>| -> mlua::Result<Self> {
-                let n = match n {
-                    Some(n) => n,
-                    None => 1.,
-                };
+                let n = n.unwrap_or(1.);
                 let m = n / (vec.0.x.hypot(vec.0.y)).max(1e-6);
                 vec.0.x *= m;
                 vec.0.y *= m;
@@ -358,7 +355,70 @@ impl UserData for Vec2 {
             },
         );
 
-        // TODO collision stuff
+        /// @brief Sees if two line segments collide.
+        ///
+        ///    @luatparam Vec2 s1 Start point of the first segment.
+        ///    @luatparam Vec2 e1 End point of the first segment.
+        ///    @luatparam Vec2 s2 Start point of the second segment.
+        ///    @luatparam Vec2 e2 End point of the second segment.
+        ///    @luatreturn integer 0 if they don't collide, 1 if they collide on a point,
+        /// 2 if they are parallel, and 3 if they are coincident.
+        /// @luafunc collideLineLine
+        methods.add_method(
+            "collideLineLine",
+            |_, s1: &Self, (e1, s2, e2): (Self, Self, Self)| -> mlua::Result<(i32, Vec2)> {
+                let mut crash = Vec2::new(0.0, 0.0);
+                let ret = unsafe {
+                    naevc::CollideLineLine(
+                        s1.0.x,
+                        s1.0.y,
+                        e1.0.x,
+                        e1.0.y,
+                        s2.0.x,
+                        s2.0.y,
+                        e2.0.x,
+                        e2.0.y,
+                        &mut crash as *mut Vec2 as *mut naevc::vec2,
+                    )
+                };
+                Ok((ret, crash))
+            },
+        );
+
+        /// @brief Computes the intersection of a line segment and a circle.
+        ///
+        ///    @luatparam Vector center Center of the circle.
+        ///    @luatparam number radius Radius of the circle.
+        ///    @luatparam Vector p1 First point of the line segment.
+        ///    @luatparam Vector p2 Second point of the line segment.
+        ///    @luatreturn Vector|nil First point of collision or nil if no collision.
+        ///    @luatreturn Vector|nil Second point of collision or nil if single-point
+        /// collision.
+        /// @luafunc collideCircleLine
+        methods.add_method(
+            "collideCircleLine",
+            |_,
+             center: &Self,
+             (radius, p1, p2): (f64, Self, Self)|
+             -> mlua::Result<(Option<Vec2>, Option<Vec2>)> {
+                let mut crash = [Vec2::new(0.0, 0.0), Vec2::new(0.0, 0.0)];
+                let ret = unsafe {
+                    naevc::CollideLineCircle(
+                        &p1 as *const Vec2 as *const naevc::vec2,
+                        &p2 as *const Vec2 as *const naevc::vec2,
+                        center as *const Vec2 as *const naevc::vec2,
+                        radius,
+                        &mut crash as *mut Vec2 as *mut naevc::vec2,
+                    )
+                };
+                match ret {
+                    0 => Ok((None, None)),
+                    1 => Ok((Some(crash[0]), None)),
+                    2 => Ok((Some(crash[0]), Some(crash[1]))),
+                    _ => Ok((None, None)),
+                }
+            },
+        );
     }
 }
 

@@ -26,6 +26,8 @@
       * Systems can have waypoints that are accessible from missions
       * Fixed some flickering at the end of ship trails
       * Diff mode in the editor remembers filenames and diff names
+      * Slots can have tags
+      * Outfits can fit an additional slot property
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
@@ -39,6 +41,7 @@
       * Add marker mission to help the player find wild space
       * Bioships will reset their locked slots when swapping ship and loading
       * jump_delay was being applied instead of jump_warmup to the engine warm up animation
+      * Mass modifiers now affect outfit mass too
 
 * 0.12.4 (unreleased)
    * Gave Pacifier +400 fuel bonus to match description

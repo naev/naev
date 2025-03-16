@@ -290,3 +290,27 @@ impl LuaEnv {
         self.rk.id()
     }
 }
+
+// Re-export some newer Lua API to C
+use std::os::raw::{c_char, c_int};
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn luaL_tolstring(
+    L: *mut mlua::lua_State,
+    idx: c_int,
+    len: *mut usize,
+) -> *const c_char {
+    unsafe { mlua::ffi::luaL_tolstring(L, idx, len) }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn luaL_traceback(
+    L: *mut mlua::lua_State,
+    L1: *mut mlua::lua_State,
+    msg: *const c_char,
+    level: c_int,
+) {
+    unsafe { mlua::ffi::luaL_traceback(L, L1, msg, level) }
+}

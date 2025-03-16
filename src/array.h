@@ -190,7 +190,6 @@ ALWAYS_INLINE static inline int array_size( const void *array )
 
    return c1[-1]._size;
 }
-int array_size_rust( const void *array ); /* Helper for rust. */
 /**
  * @brief Returns number of elements reserved.
  *
@@ -231,3 +230,7 @@ int array_size_rust( const void *array ); /* Helper for rust. */
 #define array_copy( basic_type, ptr_array )                                    \
    ( (basic_type *)( _array_copy_helper( sizeof( basic_type ),                 \
                                          (void *)( ptr_array ) ) ) )
+
+/* Helpers for rust */
+int   array_size_rust( const void *array );
+void *array_from_vec( const void *data, size_t size, size_t len );
