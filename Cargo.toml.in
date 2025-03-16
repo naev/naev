@@ -23,6 +23,7 @@ rand = "0"
 glow = "0"
 rayon = "1" # parallel computation
 image = "0"
+static_assertions = "1"
 #etagere = "0" # Texture Atlas generation
 palette = "0" # Colour conversion
 nalgebra = { version = "0", features = ["bytemuck"]  }
