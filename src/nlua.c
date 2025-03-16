@@ -777,13 +777,12 @@ int nlua_errTrace( lua_State *L )
 static int nlua_errTraceInternal( lua_State *L, int idx )
 {
    /* Handle special done case. */
-   const char *str = luaL_tolstring( L, idx, NULL );
-   if ( ( str != NULL ) && ( strcmp( str, NLUA_DONE ) == 0 ) )
+   const char *msg = luaL_tolstring( L, idx, NULL );
+   if ( ( msg != NULL ) && ( strcmp( msg, NLUA_DONE ) == 0 ) )
       return 1;
 
    /* Otherwise obtain traceback. */
-   lua_pushvalue( L, idx );
-   luaL_traceback( L, L, NULL, 1 );
+   luaL_traceback( L, L, msg, 1 );
    lua_remove( L, idx ); /* ret */
    return 1;
 }
