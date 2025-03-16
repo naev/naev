@@ -11,7 +11,7 @@ def main(arg,rev):
    if not arg.endswith('.xml'):
       return
    T=ET.parse(arg)
-   print "<"+arg+">","un-deprecated." if rev else "deprecated."
+   print >>stderr, "<"+arg+">","un-deprecated." if rev else "deprecated."
    R=T.getroot()
    if R.tag=="outfit":
       R.attrib['name']=R.attrib['name'].split(DEPR_STR,1)[0]

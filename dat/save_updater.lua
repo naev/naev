@@ -1,3 +1,16 @@
+
+--[[
+"Milspec Orion 9901 Core System.xml" "Milspec Orion 8601 Core System.xml"
+"Milspec Thalos 9802 Core System.xml" "Milspec Thalos 8502 Core System.xml"
+"Unicorp PT-1750 Core System.xml" "Unicorp PT-440 Core System.xml"
+"Milspec Orion 5501 Core System.xml" "Milspec Orion 4801 Core System.xml"
+"Milspec Thalos 5402 Core System.xml" "Milspec Thalos 4702 Core System.xml"
+"Unicorp PT-310 Core System.xml" "Unicorp PT-200 Core System.xml"
+"Milspec Orion 3701 Core System.xml" "Milspec Orion 2301 Core System.xml"
+"Milspec Thalos 3602 Core System.xml" "Milspec Thalos 2202 Core System.xml"
+"Unicorp PT-68 Core System.xml" "Unicorp PT-16 Core System.xml"
+--]]
+
 --[[
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]

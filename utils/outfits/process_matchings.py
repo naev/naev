@@ -45,11 +45,12 @@ def confirm(cand1,cand2):
    except:
       return False
 
-def process(path,f1,f2):
+def process(thepath,f1,f2):
    outpath=get_path(f1.replace('/core_','/multicores/core_',1))
-   cmd="NAM=`"+path+"multicore.py"+' '+f1+' '+f2+' | '+path+"multicore2lua.py"+' "'+outpath+'"'+'`'
+   print "echo","'"+path.basename(f1),path.basename(f2)+"'"
+   cmd="NAM=`"+thepath+"multicore.py"+' '+f1+' '+f2+' | '+thepath+"multicore2lua.py"+' "'+outpath+'"'+'`'
    print cmd
-   print path+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
+   print thepath+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
    
 if __name__=="__main__":
    if len(argv)!=2 or '-h' in argv or '--help' in argv:
