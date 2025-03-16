@@ -22,8 +22,8 @@
  </characteristics>
  <slots>
   <weapon size="medium" />
-  <utility prop="systems" size="medium">Unicorp PT-310 Core System</utility>
-  <utility prop="system_secondary" size="medium" /><utility prop="accessory" size="medium" />
+  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="system_secondary" size="medium">Unicorp PT-200 Core System</utility><utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>

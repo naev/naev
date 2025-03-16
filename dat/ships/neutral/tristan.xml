@@ -24,8 +24,8 @@
   <weapon size="medium" />
   <weapon size="medium" />
   <weapon size="small" />
-  <utility prop="systems" size="small">Unicorp PT-68 Core System</utility>
-  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
+  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="system_secondary" size="small">Unicorp PT-16 Core System</utility><utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />

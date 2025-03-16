@@ -28,8 +28,8 @@
   <weapon prop="fighter_bay" size="large" />
   <weapon size="large" />
   <weapon size="large" />
-  <utility prop="systems" size="large">Unicorp PT-1750 Core System</utility>
-  <utility prop="system_secondary" size="large" /><utility prop="accessory" size="large" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="system_secondary" size="large">Unicorp PT-440 Core System</utility><utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />

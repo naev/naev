@@ -38,8 +38,8 @@
   <weapon h="0" size="medium" x="41" y="-14" />
   <weapon h="0" size="medium" x="-23" y="14" />
   <weapon h="0" size="medium" x="-23" y="-14" />
-  <utility prop="systems" size="large">Unicorp PT-1750 Core System</utility>
-  <utility prop="system_secondary" size="large" /><utility prop="accessory" size="large" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="system_secondary" size="large">Unicorp PT-440 Core System</utility><utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />

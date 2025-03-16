@@ -35,8 +35,8 @@
   <weapon h="0" size="small" x="13" y="13" />
   <weapon h="-2" size="small" x="19" y="0" />
   <weapon h="2" size="small" x="3" y="0" />
-  <utility prop="systems" size="small">Unicorp PT-68 Core System</utility>
-  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
+  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="system_secondary" size="small">Unicorp PT-16 Core System</utility><utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>

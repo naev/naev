@@ -26,8 +26,8 @@
  <slots>
   <weapon h="0" size="small" x="-10" y="-3" />
   <weapon h="0" size="small" x="-10" y="3" />
-  <utility prop="systems" size="small">Unicorp PT-68 Core System</utility>
-  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
+  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="system_secondary" size="small">Unicorp PT-16 Core System</utility><utility prop="accessory" size="small" />
   <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
