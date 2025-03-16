@@ -66,12 +66,18 @@ if __name__=="__main__":
       result = [y for x in os.walk(PATH) for y in glob(os.path.join(x[0], '*.xml'))]
       result.sort()
       result=['']+result+['']
+      done=set()
       for i in range(1,len(result)-2):
          if prefers(result[i],result[i+1],result[i-1]) and prefers(result[i+1],result[i],result[i+2]):
             if confirm(result[i],result[i+1]):
+               done.add(result[i])
+               done.add(result[i+1])
                process(crt_path,result[i],result[i+1])
             else:
                pass
                #print >>stderr,"\033[31mUnconfirmed pair left out\033[0m",result[i],result[i+1]
+      for alone in result[1:-1]:
+         if alone not in done:
+            process(crt_path,alone,'')
 
 

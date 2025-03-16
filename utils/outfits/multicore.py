@@ -7,17 +7,19 @@ import xml.etree.ElementTree as ET
 
 equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority','shortname'}
-base_acc=['price','mass']
+base_acc={'price','mass'}
 
 def merge_group(r1,r2,field,func,dummy=False):
    L1={e.tag:e for e in r1.findall(field)}
    L2=dict() if r2 is None else {e.tag:e for e in r2.findall(field)}
 
    if r2 is None and dummy:
-      for k in base_acc:
-         if L1.has_key(k):
-            L2[k]=ET.Element(k)
-            L2[k].text=str(float(L1[k].text)*2)
+      for t,e in L1.items():
+         if t in base_acc:
+            L2[t]=ET.Element(t)
+            L2[t].text=str(float(L1[t].text)*2)
+         else:
+            L2[t]=e
 
    for t,e in L1.items():
       f=L2[t] if L2.has_key(t) else False
