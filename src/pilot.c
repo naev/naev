@@ -3362,6 +3362,10 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
          pilot_addOutfitIntrinsicRaw( pilot, ship->outfit_intrinsic[i] );
    }
 
+   /* Initialize outfits if applicable. */
+   if ( pilot->id > 0 )
+      pilot_outfitLInitAll( pilot );
+
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */
    // pilot_weaponAuto( pilot );

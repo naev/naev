@@ -775,16 +775,7 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
 int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
 {
    int p = outfit_getNameWithClass( o, buf, n );
-   p += scnprintf( &buf[p], n - p, "\n" );
-   if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
-      p += scnprintf( &buf[p], n - p, "#o%s#0\n", _( "Unique" ) );
-   if ( o->limit != NULL )
-      p += scnprintf( &buf[p], n - p, "#r%s#0\n",
-                      _( "Only 1 of type per ship" ) );
-   if ( o->slot.spid != 0 )
-      p += scnprintf( &buf[p], n - p, "#o%s#0\n",
-                      _( sp_display( o->slot.spid ) ) );
-   p += scnprintf( &buf[p], n - p, "%s", pilot_outfitSummary( plt, o, 0 ) );
+   p += scnprintf( &buf[p], n - p, "\n%s", pilot_outfitSummary( plt, o, 0 ) );
    return 0;
 }
 
@@ -813,7 +804,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
       }
       if ( needsgfx )
          outfit_gfxStoreLoadNeeded();
-      /* Just to be safe, we assume some ships colud potentially be duplicated.
+      /* Just to be safe, we assume some ships could potentially be duplicated.
        */
 
       /* Set alt text. */

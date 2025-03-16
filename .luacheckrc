@@ -121,6 +121,8 @@ stds.API_land = {globals={"land"}}      -- C function: spob_updateLand
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
 stds.API_scan = {globals={"scan"}}      -- C function: player_scan
 stds.API_save_updater = {globals={
+   "start",                             -- C function: player_runUpdaterStart
+   "finish",                            -- C function: player_runUpdaterFinish
    "license",                           -- C function: player_tryAddLicense
    "outfit",                            -- C function: player_tryGetOutfit
    "ship",                              -- C function: player_tryGetShip
@@ -265,7 +267,7 @@ files["dat/ships/**/*.lua"].std = STANDARD .. GFX .. "+API_pilotship+camera" -- 
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/scan.lua"].std = STANDARD .. TK .. "+API_scan"
 files["dat/rep.lua"].std = STANDARD .. TK .. "+tex+colour+bkg+cli+camera+music+linopt"
-files["dat/save_updater.lua"].std = "API_save_updater"
+files["dat/save_updater.lua"].std = STANDARD .. "+API_save_updater" -- Probably should be limited...
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/**/*.lua"].std = STANDARD .. TK .. "+API_music+music"
 files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+camera+API_spob"

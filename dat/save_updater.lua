@@ -1,6 +1,42 @@
 --[[
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]
+local fmt = require "format"
+local changes_done = {}
+local save_updated
+
+--[[
+   Run before anything is done, so it can be used to store what was changed.
+--]]
+function start ()
+   changes_done = {}
+   save_updated = false
+end
+
+--[[
+   Run after finished propessing. Allows doing additional changes as necessary.
+--]]
+function finish ()
+   if not save_updated then
+      return
+   end
+
+   print( "Save game updated!" )
+   for original,value in pairs(changes_done) do
+      print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+   end
+end
+
+local function apply_change( original, new, q )
+   local value = changes_done[original]
+   if value then
+      value.q = value.q + q
+   else
+      changes_done[original] = { new=new, q=q }
+   end
+   save_updated = true
+   return new
+end
 
 --[[
    The format is ["oldname"] = newvalue where newvalue can either take a string
@@ -14,8 +50,8 @@ local ship_list = {
 --[[--
    Takes an ship name and should return either a new ship name or the amount of credits to give back to the player.
 --]]
-function ship( name )
-   return ship_list[name]
+function ship( name, q )
+   return apply_change( name, ship_list[name], q )
 end
 
 --[[
@@ -607,8 +643,8 @@ local outfit_list = {
 --[[--
    Takes an outfit name and should return either a new outfit name or the amount of credits to give back to the player.
 --]]
-function outfit( name )
-   return outfit_list[name]
+function outfit( name, q )
+   return apply_change( name, outfit_list[name], q )
 end
 
 local license_list = {
@@ -624,6 +660,6 @@ local license_list = {
 --[[--
    Takes a license name and should return either a new license name or the amount of credits to give back to the player.
 --]]
-function license( name )
-   return license_list[name]
+function license( name, q )
+   return apply_change( name, license_list[name], q )
 end
