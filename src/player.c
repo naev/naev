@@ -174,7 +174,11 @@ static int   player_parseEscorts( xmlNodePtr parent );
 static int   player_parseMetadata( xmlNodePtr parent );
 static int   player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                                       PilotOutfitSlot *s );
+/* Updating. */
+static nlua_env player_updater_env = LUA_NOREF;
+static int      player_runUpdaterStart( void );
 static int player_runUpdaterScript( const char *type, const char *name, int q );
+static int player_runUpdaterFinish( void );
 static const Outfit *player_tryGetOutfit( const char *name, int q );
 static const Ship   *player_tryGetShip( const char *name );
 static void          player_tryAddLicense( const char *name );
@@ -193,7 +197,7 @@ static int  preemption = 0; /* Hyperspace target/untarget preemption. */
  * externed
  */
 int   player_save( xmlTextWriterPtr writer ); /* save.c */
-Spob *player_load( xmlNodePtr parent );       /* save.c */
+Spob *player_load( xmlNodePtr parent );       /* load.c */
 
 /**
  * @brief Initializes player stuff.
@@ -3761,6 +3765,10 @@ Spob *player_load( xmlNodePtr parent )
    if ( player_outfits == NULL )
       player_outfits = array_create( PlayerOutfit_t );
 
+   /* Prepare for updating if necessary. */
+   player_runUpdaterStart();
+
+   /* Load the save. */
    node = parent->xmlChildrenNode;
    do {
       if ( xml_isNode( node, "metadata" ) )
@@ -3774,6 +3782,9 @@ Spob *player_load( xmlNodePtr parent )
       else if ( xml_isNode( node, "escorts" ) )
          player_parseEscorts( node );
    } while ( xml_nextNode( node ) );
+
+   /* Post-process if necessary. */
+   player_runUpdaterFinish();
 
    /* Set up meta-data. */
    player.time_since_save = time( NULL );
@@ -3792,23 +3803,8 @@ Spob *player_load( xmlNodePtr parent )
    return pnt;
 }
 
-/**
- * @brief Runs the save updater script, leaving any result on the stack of
- * naevL.
- *
- *    @param type Type of item to translate. Currently "outfit" and "license"
- * are supported.
- *    @param name Name of the inventory item.
- *    @param q Quantity in possession.
- *    @return Stack depth: 1 if player got a translated item back, 0 if they got
- * nothing or just money.
- */
-static int player_runUpdaterScript( const char *type, const char *name, int q )
+static int player_runUpdaterStart( void )
 {
-   static nlua_env player_updater_env = LUA_NOREF;
-
-   player_ran_updater = 1;
-
    /* Load env if necessary. */
    if ( player_updater_env == LUA_NOREF ) {
       player_updater_env = nlua_newEnv( "updater" );
@@ -3826,11 +3822,36 @@ static int player_runUpdaterScript( const char *type, const char *name, int q )
       free( buf );
    }
 
+   /* Run start. */
+   nlua_getenv( naevL, player_updater_env, "start" );
+   if ( nlua_pcall( player_updater_env, 0, 0 ) ) { /* error has occurred */
+      WARN( _( "save_updater: '%s'" ), lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return -1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Runs the save updater script, leaving any result on the stack of
+ * naevL.
+ *
+ *    @param type Type of item to translate. Currently "outfit" and "license"
+ * are supported.
+ *    @param name Name of the inventory item.
+ *    @param q Quantity in possession.
+ *    @return Stack depth: 1 if player got a translated item back, 0 if they got
+ * nothing or just money.
+ */
+static int player_runUpdaterScript( const char *type, const char *name, int q )
+{
+   player_ran_updater = 1;
+
    /* Try to find out equivalent. */
    nlua_getenv( naevL, player_updater_env, type );
    lua_pushstring( naevL, name );
    if ( nlua_pcall( player_updater_env, 1, 1 ) ) { /* error has occurred */
-      WARN( _( "Board: '%s'" ), lua_tostring( naevL, -1 ) );
+      WARN( _( "save_updater: '%s'" ), lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       return 0;
    }
@@ -3841,6 +3862,18 @@ static int player_runUpdaterScript( const char *type, const char *name, int q )
    }
 
    return 1;
+}
+
+static int player_runUpdaterFinish( void )
+{
+   /* Run start. */
+   nlua_getenv( naevL, player_updater_env, "finish" );
+   if ( nlua_pcall( player_updater_env, 0, 0 ) ) { /* error has occurred */
+      WARN( _( "save_updater: '%s'" ), lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return -1;
+   }
+   return 0;
 }
 
 /**

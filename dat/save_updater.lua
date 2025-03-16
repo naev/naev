@@ -1,6 +1,17 @@
 --[[
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]
+--[[
+   Run before anything is done, so it can be used to store what was changed.
+--]]
+function start ()
+end
+
+--[[
+   Run after finished propessing. Allows doing additional changes as necessary.
+--]]
+function finish ()
+end
 
 --[[
    The format is ["oldname"] = newvalue where newvalue can either take a string

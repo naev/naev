@@ -121,6 +121,8 @@ stds.API_land = {globals={"land"}}      -- C function: spob_updateLand
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
 stds.API_scan = {globals={"scan"}}      -- C function: player_scan
 stds.API_save_updater = {globals={
+   "start",                             -- C function: player_runUpdaterStart
+   "finish",                            -- C function: player_runUpdaterFinish
    "license",                           -- C function: player_tryAddLicense
    "outfit",                            -- C function: player_tryGetOutfit
    "ship",                              -- C function: player_tryGetShip
