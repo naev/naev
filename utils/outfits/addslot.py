@@ -9,6 +9,15 @@ classes={'Courier','Fighter','Bomber','Destroyer','Armoured Transport','Freighte
 # Not obvious
 classes.add('Bulk Freighter')
 
+subst={
+   'Unicorp PT-68 Core System':'Unicorp PT-16 Core System',
+   'Unicorp PT-310 Core System':'Unicorp PT-200 Core System',
+   'Unicorp PT-1750 Core System':'Unicorp PT-440 Core System'
+}
+as_is={"Previous Generation Small Systems","Previous Generation Medium Systems","Previous Generation Large Systems","Dummy Systems"}
+for i in subst.itervalues():
+   as_is.add(i)
+
 def get_path(s):
    s=path.dirname(s)
 
@@ -53,27 +62,40 @@ def main(arg):
       return
 
    next_time=False
+   crt=None
+   newdefault=''
    for S in R.findall("./slots"):
       count=0
       for r in S:
          if next_time:
             if r.attrib['prop']=='system_secondary':
                #print >>stderr,'already done, bye!'
-               return
-            else:
-               break
+               crt=r
+            break
          elif r.tag=='utility' and r.attrib.has_key('prop') and r.attrib['prop']=='systems':
             siz=r.attrib["size"]
+            if r.text=='' or r.text in as_is:
+               newdefault=''
+            elif subst.has_key(r.text):
+               newdefault=subst[r.text]
+               r.text=newdefault
+            else:
+               print "Err: unknown outfit",r.text
+               return
             next_time=True
 
          count+=1
       break
 
    if next_time:
-      newe = ET.Element('utility')
-      newe.attrib['size']=siz
-      newe.attrib['prop']='system_secondary'
-      S.insert(count,newe)
+      if crt is None:
+         crt = ET.Element('utility')
+         crt.attrib['size']=siz
+         crt.attrib['prop']='system_secondary'
+         S.insert(count,crt)
+
+      if newdefault!='':
+         crt.text=newdefault
       T.write(arg)
 
 if __name__ == '__main__':
