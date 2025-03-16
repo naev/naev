@@ -34,7 +34,6 @@ function finish ()
       return
    end
 
-   --[[
    local split={
       ["Milspec Orion 9901 Core System"] = true,
       ["Milspec Thalos 9802 Core System"] = true,
@@ -46,21 +45,23 @@ function finish ()
       ["Milspec Thalos 3602 Core System"] = true,
       ["Unicorp PT-68 Core System"] = true,
    }
-   --]]
 
-   --print( "Save game updated!" )
-   print(changes_done)
-   for original,value in pairs(changes_done) do
-      print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+   print( "Save game updated!" )
+   --print(changes_done)
+   for _original,_value in pairs(changes_done) do
+      print("loop!")
+      --print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
       --if split[original] then
       --   player.outfitAdd( value.new, value.q )
       --   print( fmt.f(_("We offer you a free {outf} for your secondary slot."),{outf=value.new}) )
       --   print( fmt.f(_("Your two {outf} together will have the exact same effect as {original} had."),{outf=value.new,original=original}) )
       --end
    end
+   print( "Save game update finished!" )
 end
 
 local function apply_change( original, new, q )
+   print ("apply")
    local value = changes_done[original]
    if value then
       value.q = value.q + q
