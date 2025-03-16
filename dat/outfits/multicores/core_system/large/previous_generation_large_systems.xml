@@ -1,8 +1,8 @@
-<outfit name="Previous Generation Large Systems (deprecated)">
+<outfit name="Previous Generation Large Systems">
  <general>
   <shortname>Prev. Gen. Large Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>large</size>
   <mass>640</mass>
   <price>0</price>
@@ -15,5 +15,5 @@
   <energy_regen>35</energy_regen>
   <shield>500</shield>
   <shield_regen>9</shield_regen>
- </specific>
+ <lua>outfits/multicores/core_system/large/previous_generation_large_systems.lua</lua></specific>
 </outfit>
