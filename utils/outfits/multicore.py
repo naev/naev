@@ -7,13 +7,17 @@ import xml.etree.ElementTree as ET
 
 equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority','shortname'}
+base_acc=['price','mass']
 
-def merge_group(r1,r2,field,func):
+def merge_group(r1,r2,field,func,dummy=False):
    L1={e.tag:e for e in r1.findall(field)}
-   if r2 is None:
-      L2=dict()
-   else:
-      L2={e.tag:e for e in r2.findall(field)}
+   L2=dict() if r2 is None else {e.tag:e for e in r2.findall(field)}
+
+   if r2 is None and dummy:
+      for k in base_acc:
+         if L1.has_key(k):
+            L2[k]=ET.Element(k)
+            L2[k].text=str(float(L1[k].text)*2)
 
    for t,e in L1.items():
       f=L2[t] if L2.has_key(t) else False
@@ -48,13 +52,11 @@ def main(args,func,stkmod):
    R=[None,None]
    m=[None,None]
 
-   if stkmod:
-      if len(args) not in [1,2]:
-         print >>stderr,"One or two args expected"
-         return 1
-   elif len(args)!=2:
-      print >>stderr,"Two args expected"
-      return
+   if len(args) not in [1,2]:
+      print >>stderr,"One or two args expected"
+      return 1
+
+   dummy=not stkmod and len(args)==1
 
    for i in range(len(args)):
       print >>stderr,'<'+path.basename(args[i])+'>',
@@ -71,8 +73,8 @@ def main(args,func,stkmod):
       T=[T[1],T[0]]
       R=[R[1],R[0]]
 
-   merge_group(R[0],R[1],'./general/',func)
-   merge_group(R[0],R[1],'./specific/',func)
+   merge_group(R[0],R[1],'./general/',func,dummy)
+   merge_group(R[0],R[1],'./specific/',func,dummy)
 
    T[0].write(stdout)
 
@@ -84,7 +86,7 @@ def fmt(f):
 
 def f1(s1,s2):
    a1=float(s1)
-   a2=float(s2)
+   a2=float(s2) if s2!='' else 0
    o1=a1
    o2=a2-a1
    if o2==o1:
@@ -109,9 +111,10 @@ def rf1(s1,s2):
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=path.basename(argv[0])
-      print "usage (1):",nam,'<input1.xml> <input2.xml>'
+      print "usage (1):",nam,'<input1.xml> [<input2.xml>]'
       print "  Takes two standard outfits, and computes an extended outfit such that when in a main slot,"
       print "  it is eq to <input1.xml>, and stacking two of them gives <input2.xml>."
+      print "  If <input2.xml> is not provided, the resulting outfit will be useless as a secondary."
       print "  The result is sent to stdout."
       print
       print "usage (2):",nam,'-s <main.xml> [<secondary.xml>]'
