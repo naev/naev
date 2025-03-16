@@ -1038,7 +1038,10 @@ pub extern "C" fn gl_newSprite(
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
-        _ => std::ptr::null_mut(),
+        Err(e) => {
+            warn!("{}", e);
+            std::ptr::null_mut()
+        }
     };
     unsafe {
         naevc::gl_contextUnset();
@@ -1103,7 +1106,10 @@ pub extern "C" fn gl_newSpriteRWops(
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
-        _ => std::ptr::null_mut(),
+        Err(e) => {
+            warn!("{}", e);
+            std::ptr::null_mut()
+        }
     };
     unsafe {
         naevc::gl_contextUnset();
@@ -1171,7 +1177,10 @@ pub extern "C" fn gl_rawTexture(
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
-        _ => std::ptr::null_mut(),
+        Err(e) => {
+            warn!("{}", e);
+            std::ptr::null_mut()
+        }
     };
     unsafe {
         naevc::gl_contextUnset();
