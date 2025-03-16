@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Ancestor">
  <lua>pirate.lua</lua>
  <points>40</points>
@@ -9,9 +8,9 @@
  <class>Bomber</class>
  <price>550000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-2" y="29" h="0">nebula</trail_generator>
- <trail_generator x="-2" y="-29" h="0">nebula</trail_generator>
- <trail_generator x="-10" y="0" h="0">pirate</trail_generator>
+ <trail_generator h="0" x="-2" y="29">nebula</trail_generator>
+ <trail_generator h="0" x="-2" y="-29">nebula</trail_generator>
+ <trail_generator h="0" x="-10" y="0">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Pirate</faction>
  <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targeting systems.</description>
@@ -26,17 +25,17 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="0" />
-  <weapon size="medium" x="8" y="0" h="0" />
-  <weapon size="small" x="-2" y="9" h="-1" />
-  <weapon size="small" x="-2" y="-9" h="-1" />
-  <utility size="small" prop="systems">Previous Generation Small Systems</utility>
-  <utility size="small" prop="accessory" />
+  <weapon h="0" size="medium" x="8" y="0" />
+  <weapon h="0" size="medium" x="8" y="0" />
+  <weapon h="-1" size="small" x="-2" y="9" />
+  <weapon h="-1" size="small" x="-2" y="-9" />
+  <utility prop="systems" size="small">Previous Generation Small Systems</utility>
+  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Beat Up Small Engine</structure>
-  <structure size="small" prop="hull">Patchwork Light Plating</structure>
+  <structure prop="engines" size="small">Beat Up Small Engine</structure>
+  <structure prop="hull" size="small">Patchwork Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

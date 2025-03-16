@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Certitude">
  <lua>thurion.lua</lua>
  <points>200</points>
@@ -9,12 +8,12 @@
  <class>Battleship</class>
  <price>9000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-42" y="11" h="7">thurion</trail_generator>
- <trail_generator x="-42" y="11" h="-8">thurion</trail_generator>
- <trail_generator x="-42" y="-17" h="7">thurion</trail_generator>
- <trail_generator x="-42" y="-17" h="-8">thurion</trail_generator>
- <trail_generator x="-39" y="-25" h="0">nebula</trail_generator>
- <trail_generator x="-39" y="25" h="0">nebula</trail_generator>
+ <trail_generator h="7" x="-42" y="11">thurion</trail_generator>
+ <trail_generator h="-8" x="-42" y="11">thurion</trail_generator>
+ <trail_generator h="7" x="-42" y="-17">thurion</trail_generator>
+ <trail_generator h="-8" x="-42" y="-17">thurion</trail_generator>
+ <trail_generator h="0" x="-39" y="-25">nebula</trail_generator>
+ <trail_generator h="0" x="-39" y="25">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
  <cond>require("buyrep")("Thurion", 70)</cond>
@@ -31,22 +30,22 @@
   <cargo>180</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="39" y="5" h="3" />
-  <weapon size="large" x="39" y="-5" h="3" />
-  <weapon size="large" x="11" y="0" h="7" />
-  <weapon size="large" x="11" y="0" h="-7" />
-  <weapon size="large" prop="fighter_bay" x="-19" y="12" h="9" />
-  <weapon size="large" prop="fighter_bay" x="-19" y="-12" h="9" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon h="3" size="large" x="39" y="5" />
+  <weapon h="3" size="large" x="39" y="-5" />
+  <weapon h="7" size="large" x="11" y="0" />
+  <weapon h="-7" size="large" x="11" y="0" />
+  <weapon h="9" prop="fighter_bay" size="large" x="-19" y="12" />
+  <weapon h="9" prop="fighter_bay" size="large" x="-19" y="-12" />
+  <utility prop="systems" size="large">Unicorp PT-1750 Core System</utility>
+  <utility prop="system_secondary" size="large" /><utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

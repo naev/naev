@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Scintillation">
  <lua>thurion.lua</lua>
  <points>40</points>
@@ -9,11 +8,11 @@
  <class>Bomber</class>
  <price>750000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-10" y="0" h="0">thurion</trail_generator>
- <trail_generator x="-10" y="-30" h="0">nebula</trail_generator>
- <trail_generator x="-9" y="-5" h="10">nebula</trail_generator>
- <trail_generator x="-10" y="30" h="0">nebula</trail_generator>
- <trail_generator x="-9" y="5" h="10">nebula</trail_generator>
+ <trail_generator h="0" x="-10" y="0">thurion</trail_generator>
+ <trail_generator h="0" x="-10" y="-30">nebula</trail_generator>
+ <trail_generator h="10" x="-9" y="-5">nebula</trail_generator>
+ <trail_generator h="0" x="-10" y="30">nebula</trail_generator>
+ <trail_generator h="10" x="-9" y="5">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
  <cond>require("buyrep")("Thurion", 30)</cond>
@@ -31,17 +30,17 @@
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="11" y="-4" h="1" />
-  <weapon size="medium" x="11" y="4" h="1" />
-  <weapon size="small" x="11" y="4" h="1" />
-  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
-  <utility size="small" prop="accessory" />
+  <weapon h="1" size="medium" x="11" y="-4" />
+  <weapon h="1" size="medium" x="11" y="4" />
+  <weapon h="1" size="small" x="11" y="4" />
+  <utility prop="systems" size="small">Unicorp PT-68 Core System</utility>
+  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

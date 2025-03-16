@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Ancestor">
  <points>40</points>
  <base_type>Ancestor</base_type>
@@ -7,9 +6,9 @@
  <class>Bomber</class>
  <price>500000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-2" y="29" h="0">nebula</trail_generator>
- <trail_generator x="-2" y="-29" h="0">nebula</trail_generator>
- <trail_generator x="-10" y="0" h="0">fire</trail_generator>
+ <trail_generator h="0" x="-2" y="29">nebula</trail_generator>
+ <trail_generator h="0" x="-2" y="-29">nebula</trail_generator>
+ <trail_generator h="0" x="-10" y="0">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Independent</faction>
  <license>Light Combat Vessel</license>
@@ -25,17 +24,17 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="0" />
-  <weapon size="medium" x="8" y="0" h="0" />
-  <weapon size="small" x="-2" y="9" h="-1" />
-  <weapon size="small" x="-2" y="-9" h="-1" />
-  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
-  <utility size="small" prop="accessory" />
+  <weapon h="0" size="medium" x="8" y="0" />
+  <weapon h="0" size="medium" x="8" y="0" />
+  <weapon h="-1" size="small" x="-2" y="9" />
+  <weapon h="-1" size="small" x="-2" y="-9" />
+  <utility prop="systems" size="small">Unicorp PT-68 Core System</utility>
+  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

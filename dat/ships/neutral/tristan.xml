@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Tristan">
  <points>35</points>
  <base_type>Tristan</base_type>
@@ -25,13 +24,13 @@
   <weapon size="medium" />
   <weapon size="medium" />
   <weapon size="small" />
-  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
-  <utility size="small" prop="accessory" />
+  <utility prop="systems" size="small">Unicorp PT-68 Core System</utility>
+  <utility prop="system_secondary" size="small" /><utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />
