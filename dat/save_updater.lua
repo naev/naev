@@ -34,24 +34,29 @@ function finish ()
       return
    end
 
+   --[[
    local split={
-      ["Milspec Orion 9901 Core System.xml"] = true,
-      ["Milspec Thalos 9802 Core System.xml"] = true,
-      ["Unicorp PT-1750 Core System.xml"] = true,
-      ["Milspec Orion 5501 Core System.xml"] = true,
-      ["Milspec Thalos 5402 Core System.xml"] = true,
-      ["Unicorp PT-310 Core System.xml"] = true,
-      ["Milspec Orion 3701 Core System.xml"] = true,
-      ["Milspec Thalos 3602 Core System.xml"] = true,
-      ["Unicorp PT-68 Core System.xml"] = true,
+      ["Milspec Orion 9901 Core System"] = true,
+      ["Milspec Thalos 9802 Core System"] = true,
+      ["Unicorp PT-1750 Core System"] = true,
+      ["Milspec Orion 5501 Core System"] = true,
+      ["Milspec Thalos 5402 Core System"] = true,
+      ["Unicorp PT-310 Core System"] = true,
+      ["Milspec Orion 3701 Core System"] = true,
+      ["Milspec Thalos 3602 Core System"] = true,
+      ["Unicorp PT-68 Core System"] = true,
    }
+   --]]
 
-   print( "Save game updated!" )
+   --print( "Save game updated!" )
+   print(changes_done)
    for original,value in pairs(changes_done) do
       print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
-      if split[original] then
-         print( fmt.f(_("We offer you a free {outf} for your secondary slot. (TODO!)"),{outf=value.new}) )
-      end
+      --if split[original] then
+      --   player.outfitAdd(value.new)
+      --   print( fmt.f(_("We offer you a free {outf} for your secondary slot."),{outf=value.new}) )
+      --   print( fmt.f(_("Your two {outf} together will have the exact same effect as {original} had."),{outf=value.new,original=original}) )
+      --end
    end
 end
 
@@ -91,15 +96,15 @@ local outfit_list = {
    -- Multicore transformation.
    -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
    -- See finish() above.
-   ["Milspec Orion 9901 Core System.xml"] = "Milspec Orion 8601 Core System.xml",
-   ["Milspec Thalos 9802 Core System.xml"] = "Milspec Thalos 8502 Core System.xml",
-   ["Unicorp PT-1750 Core System.xml"] = "Unicorp PT-440 Core System.xml",
-   ["Milspec Orion 5501 Core System.xml"] = "Milspec Orion 4801 Core System.xml",
-   ["Milspec Thalos 5402 Core System.xml"] = "Milspec Thalos 4702 Core System.xml",
-   ["Unicorp PT-310 Core System.xml"] = "Unicorp PT-200 Core System.xml",
-   ["Milspec Orion 3701 Core System.xml"] = "Milspec Orion 2301 Core System.xml",
-   ["Milspec Thalos 3602 Core System.xml"] = "Milspec Thalos 2202 Core System.xml",
-   ["Unicorp PT-68 Core System.xml"] = "Unicorp PT-16 Core System.xml",
+   ["Milspec Orion 9901 Core System"] = "Milspec Orion 8601 Core System",
+   ["Milspec Thalos 9802 Core System"] = "Milspec Thalos 8502 Core System",
+   ["Unicorp PT-1750 Core System"] = "Unicorp PT-440 Core System",
+   ["Milspec Orion 5501 Core System"] = "Milspec Orion 4801 Core System",
+   ["Milspec Thalos 5402 Core System"] = "Milspec Thalos 4702 Core System",
+   ["Unicorp PT-310 Core System"] = "Unicorp PT-200 Core System",
+   ["Milspec Orion 3701 Core System"] = "Milspec Orion 2301 Core System",
+   ["Milspec Thalos 3602 Core System"] = "Milspec Thalos 2202 Core System",
+   ["Unicorp PT-68 Core System"] = "Unicorp PT-16 Core System",
    -- Below is a list of changes from 0.11.0 to 0.12.0
    ["Unicorp PT-2200 Core System"] = "Unicorp PT-1750 Core System",
    ["Unicorp PT-500 Core System"] = "Unicorp PT-440 Core System",
