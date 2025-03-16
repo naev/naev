@@ -2095,6 +2095,8 @@ int player_jump( void )
                       _( "You do not have enough fuel to hyperspace jump." ) );
    else {
       player_message( "#o%s", _( "Preparing for hyperspace." ) );
+
+      pilot_afterburnOver( player.p );
       /* Stop acceleration noise. */
       player_accelOver();
 
@@ -2647,6 +2649,7 @@ void player_cooldownBrake( void )
    if ( pilot_isFlag( player.p, PILOT_HYPERSPACE ) )
       return;
 
+   pilot_afterburnOver( player.p );
    stopped = pilot_isStopped( player.p );
    if ( stopped && !pilot_isFlag( player.p, PILOT_COOLDOWN ) )
       pilot_cooldown( player.p, 1 );
