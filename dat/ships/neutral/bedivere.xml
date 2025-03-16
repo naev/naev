@@ -26,7 +26,7 @@
   <weapon size="medium" />
   <weapon size="medium" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="system_secondary" size="medium">Unicorp PT-200 Core System</utility><utility prop="accessory" size="medium" />
+  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility><utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />

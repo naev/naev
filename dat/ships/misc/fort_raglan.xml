@@ -41,7 +41,7 @@
   <weapon h="5" size="large" x="0" y="0" />
   <weapon h="5" size="large" x="0" y="0" />
   <utility prop="systems" size="large">Dummy Systems</utility>
-  <utility prop="system_secondary" size="large" /><structure prop="engines" size="large">Dummy Engine</structure>
+  <utility prop="systems_secondary" size="large" /><structure prop="engines" size="large">Dummy Engine</structure>
   <structure prop="hull" size="large">Dummy Plating</structure>
  </slots>
  <tags>

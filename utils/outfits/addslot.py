@@ -68,7 +68,7 @@ def main(arg):
       count=0
       for r in S:
          if next_time:
-            if r.attrib['prop']=='system_secondary':
+            if r.attrib['prop']=='systems_secondary':
                #print >>stderr,'already done, bye!'
                crt=r
             break
@@ -91,7 +91,7 @@ def main(arg):
       if crt is None:
          crt = ET.Element('utility')
          crt.attrib['size']=siz
-         crt.attrib['prop']='system_secondary'
+         crt.attrib['prop']='systems_secondary'
          S.insert(count,crt)
 
       if newdefault!='':

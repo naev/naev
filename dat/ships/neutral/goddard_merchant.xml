@@ -19,7 +19,7 @@ While contemplating a replacement, the captain realized that she encountered non
   <weapon h="3" size="large" x="-15" y="-25" />
   <weapon h="3" size="large" x="-15" y="25" />
   <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="system_secondary" size="large">Unicorp PT-440 Core System</utility><utility prop="accessory" size="large" />
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility><utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
