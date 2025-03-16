@@ -27,16 +27,31 @@ function start ()
 end
 
 --[[
-   Run after finished propessing. Allows doing additional changes as necessary.
+   Run after finished processing. Allows doing additional changes as necessary.
 --]]
 function finish ()
    if not save_updated then
       return
    end
 
+   local split={
+      ["Milspec Orion 9901 Core System.xml"] = true,
+      ["Milspec Thalos 9802 Core System.xml"] = true,
+      ["Unicorp PT-1750 Core System.xml"] = true,
+      ["Milspec Orion 5501 Core System.xml"] = true,
+      ["Milspec Thalos 5402 Core System.xml"] = true,
+      ["Unicorp PT-310 Core System.xml"] = true,
+      ["Milspec Orion 3701 Core System.xml"] = true,
+      ["Milspec Thalos 3602 Core System.xml"] = true,
+      ["Unicorp PT-68 Core System.xml"] = true,
+   }
+
    print( "Save game updated!" )
    for original,value in pairs(changes_done) do
       print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+      if split[original] then
+         print( fmt.f(_("We offer you a free {outf} for your secondary slot. (TODO!)"),{outf=value.new}) )
+      end
    end
 end
 
@@ -73,6 +88,18 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
+   -- Multicore transformation.
+   -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
+   -- See finish() above.
+   ["Milspec Orion 9901 Core System.xml"] = "Milspec Orion 8601 Core System.xml",
+   ["Milspec Thalos 9802 Core System.xml"] = "Milspec Thalos 8502 Core System.xml",
+   ["Unicorp PT-1750 Core System.xml"] = "Unicorp PT-440 Core System.xml",
+   ["Milspec Orion 5501 Core System.xml"] = "Milspec Orion 4801 Core System.xml",
+   ["Milspec Thalos 5402 Core System.xml"] = "Milspec Thalos 4702 Core System.xml",
+   ["Unicorp PT-310 Core System.xml"] = "Unicorp PT-200 Core System.xml",
+   ["Milspec Orion 3701 Core System.xml"] = "Milspec Orion 2301 Core System.xml",
+   ["Milspec Thalos 3602 Core System.xml"] = "Milspec Thalos 2202 Core System.xml",
+   ["Unicorp PT-68 Core System.xml"] = "Unicorp PT-16 Core System.xml",
    -- Below is a list of changes from 0.11.0 to 0.12.0
    ["Unicorp PT-2200 Core System"] = "Unicorp PT-1750 Core System",
    ["Unicorp PT-500 Core System"] = "Unicorp PT-440 Core System",
