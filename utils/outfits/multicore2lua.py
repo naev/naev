@@ -107,20 +107,28 @@ def mklua(luanam,L):
    for (nam,_) in L:
       print >>fp,"local",nam
 
+   """
+function onremove( _p, po)
+   po:set("nomain",0)
+   po:set("nosec",0)
+end
+
+function onadd( _p, po )
+   if po:slot().tags and po:slot().tags.core then
+      if not po:slot().tags.secondary then
+         po:set("nomain",0)
+         po:set("nosec",1)
+      else
+         po:set("nomain",1)
+         po:set("nosec",0)
+      end
+   else
+      onremove( _p, po)
+   end
+end"""
    print >>fp,"""
 function descextra( _p, po )
    local desc = ""
-
-   local nomain=false
-   local nosec=false
-
-   if po:slot().tags and po:slot().tags.core then
-      if not po:slot().tags.secondary then
-         nosec=true
-      else
-         nomain=true
-      end
-   end
 
    local function _vu( val, unit)
       if val=='_' then
@@ -135,30 +143,41 @@ function descextra( _p, po )
       if grey then
          return "#b"..res..def
       else
-         return "#g"..res..def
+         return res
       end
    end
 
-   local function add_desc( name, units, base, secondary )
+   local function add_desc( name, units, base, secondary, def,no_main,no_sec)
       desc = desc..fmt.f(_("\\n{name}: {bas} / {sec}"), {
-         name=name, units=units, bas=vu(base,units,nomain), sec=vu(secondary,units,nosec)
+         name=name, units=units, bas=vu(base,units,no_main,def), sec=vu(secondary,units,no_sec,def)
       })
    end
+
+   local nomain=false
+   local nosec=false
 """
+   for (nam,(main,sec)) in L:
+      print >>fp,ind+'if po:get( "'+nam+'")=='+fmt(main)+' then'
+      print >>fp,2*ind+'nosec=true'
+      print >>fp,ind+'elseif po:get( "'+nam+'")=='+fmt(sec)+' then'
+      print >>fp,2*ind+'nomain=true'
+      print >>fp,ind+'end'
+      break
+
    for (nam,(main,sec)) in L:
       if units.has_key(nam):
          if nam=="mass":
             defa='"#r"'
             print >>fp,ind+'desc=desc.."#r"'
          else:
-            defa='"#0"'
+            defa='"#g"'
 
          if units[nam]!='':
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa+')'
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa+',','nomain,nosec)'
          else:
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa+')'
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa+',','nomain,nosec)'
          if nam=="mass":
-            print >>fp,ind+'desc=desc.."#0"'
+            print >>fp,ind+'desc=desc.."#g"'
       else:
          print >>stderr,"unknown unit of",repr(nam)
 
@@ -167,27 +186,42 @@ function descextra( _p, po )
 end
 """
    print >>fp,"function init( _p, po )"
-
+   print >>fp,ind+'print(po)'
    if mixed:
       print >>fp,ind+"if po:slot().tags.secondary then"
       for (nam,sec) in L:
          print >>fp,ind*2+'po:set( "'+nam+'", '+fmt(sec)+' )'
       print >>fp,ind+"end"
-      print >>fp,"end"
    else:
-      print >>fp,ind+"if not po:slot().tags.secondary then"
+      print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
+      print >>fp,2*ind+"if not po:slot().tags.secondary then"
       for (nam,(main,sec)) in L:
-         print >>fp,2*ind+nam+"="+fmt(main)
+         print >>fp,3*ind+nam+"="+fmt(main)
 
-      print >>fp,ind+"else"
+      print >>fp,2*ind+'else'
       for (nam,(main,sec)) in L:
-         print >>fp,2*ind+nam+"="+fmt(sec)
-
-      print >>fp,ind+"end"
+         print >>fp,3*ind+nam+"="+fmt(sec)
+      print >>fp,2*ind+"end"
+      print >>fp,ind+'else'
 
       for (nam,_) in L:
-         print >>fp,ind+'po:set( "'+nam+'", '+nam+' )'
-      print >>fp,"end"
+         print >>fp,2*ind+'po:set( "'+nam+'", '+nam+' )'
+
+      for (nam,(main,sec)) in L:
+         print >>fp,2*ind+'po:set( "'+nam+'", -128 )'
+         break
+      print >>fp,ind+"end"
+
+   print >>fp,"end"
+   print >>fp,"""
+function onremove( p, po)
+   init(p,po)
+end
+
+function onadd( p, po )
+   init(p,po)
+end
+"""
 
    fp.close()
 
