@@ -1283,13 +1283,13 @@ int gl_initRender( void )
       sizeof( GLfloat ) * OPENGL_RENDER_VBO_SIZE * ( 2 + 2 );
 
    vertex[0]    = 0.;
-   vertex[1]    = 0.;
+   vertex[1]    = 1.;
    vertex[2]    = 1.;
-   vertex[3]    = 0.;
+   vertex[3]    = 1.;
    vertex[4]    = 0.;
-   vertex[5]    = 1.;
+   vertex[5]    = 0.;
    vertex[6]    = 1.;
-   vertex[7]    = 1.;
+   vertex[7]    = 0.;
    gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
 
    vertex[0]    = -1.;
@@ -1312,7 +1312,7 @@ int gl_initRender( void )
    vertex[7]         = 1.;
    vertex[8]         = 0.;
    vertex[9]         = 0.;
-   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
+   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
 
    vertex[0]  = 0.;
    vertex[1]  = 0.;
