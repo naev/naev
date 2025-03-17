@@ -10,19 +10,30 @@ DEPR_STR=' (deprecated)'
 def main(arg,rev):
    if not arg.endswith('.xml'):
       return
+
    T=ET.parse(arg)
    R=T.getroot()
    if R.tag=="outfit":
-      R.attrib['name']=R.attrib['name'].split(DEPR_STR,1)[0]
-      print >>stderr, '"'+R.attrib['name']+'"',
-      if rev:
-         print >>stderr, "un-deprecated."
+      tmp=R.attrib['name'].split(DEPR_STR,1)
+      didsom=(len(tmp)==2 and tmp[1].strip()=='')
+      if didsom:
+         tmp=tmp[0]
       else:
-         print >>stderr, "deprecated."
+         tmp=R.attrib['name']
+
+      if not rev:
+         didsom=not didsom
+
+      R.attrib['name']=tmp
+      if not rev:
          R.attrib['name']=R.attrib['name']+DEPR_STR
+
+      if didsom:
+         T.write(arg)
+         print '"'+tmp+'"'
    else:
       print >>stderr,"not an outfit:",R.tag
-   T.write(arg)
+
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:

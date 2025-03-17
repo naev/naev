@@ -104,14 +104,23 @@ def mklua(luanam,L):
    print >>fp,"notactive = true\n"
    print >>fp,'local fmt = require "format"\n'
 
-   print >>fp,'local nomain=false'
-   print >>fp,'local nosec=false\n'
    for (nam,_) in L:
       print >>fp,"local",nam
 
    print >>fp,"""
-function descextra( _p, _o )
+function descextra( _p, po )
    local desc = ""
+
+   local nomain=false
+   local nosec=false
+
+   if po:slot().tags and po:slot().tags.core then
+      if not po:slot().tags.secondary then
+         nosec=true
+      else
+         nomain=true
+      end
+   end
 
    local function _vu( val, unit)
       if val=='_' then
@@ -121,12 +130,12 @@ function descextra( _p, _o )
       end
    end
 
-   local function vu( val, unit, grey)
+   local function vu( val, unit, grey, def)
       local res=_vu(val,unit)
       if grey then
-         return "#b"..res.."#0"
+         return "#b"..res..def
       else
-         return res
+         return "#g"..res..def
       end
    end
 
@@ -139,12 +148,15 @@ function descextra( _p, _o )
    for (nam,(main,sec)) in L:
       if units.has_key(nam):
          if nam=="mass":
+            defa='"#r"'
             print >>fp,ind+'desc=desc.."#r"'
+         else:
+            defa='"#0"'
 
          if units[nam]!='':
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'"',')'
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa+')'
          else:
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',')'
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa+')'
          if nam=="mass":
             print >>fp,ind+'desc=desc.."#0"'
       else:
@@ -158,25 +170,16 @@ end
 
    if mixed:
       print >>fp,ind+"if po:slot().tags.secondary then"
-      print >>fp,ind*2+"nosec=true"
       for (nam,sec) in L:
          print >>fp,ind*2+'po:set( "'+nam+'", '+fmt(sec)+' )'
       print >>fp,ind+"end"
       print >>fp,"end"
    else:
-      
-      print >>fp,ind+'nomain=false'
-      print >>fp,ind+'nosec=false'
-
       print >>fp,ind+"if not po:slot().tags.secondary then"
-      print >>fp,ind*2+"""if po:slot().tags.core then
-         nosec=true
-      end"""
       for (nam,(main,sec)) in L:
          print >>fp,2*ind+nam+"="+fmt(main)
 
       print >>fp,ind+"else"
-      print >>fp,ind*2+"nomain=true"
       for (nam,(main,sec)) in L:
          print >>fp,2*ind+nam+"="+fmt(sec)
 
