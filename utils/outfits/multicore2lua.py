@@ -4,6 +4,7 @@ from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
 
+mixed=True
 
 def get_path(s):
    s=path.dirname(s)
@@ -50,19 +51,17 @@ def process_group(r,field):
          elif t == 'price':
             e.text=fmt(round((a+b)/2,-2))
          else:
-            # mixed lua/xml
-            acc.append((t,b-a))
-            e.text=fmt(a)
-            # lua
-            """
-            acc.append((t,(a,b)))
-            torem.append(e)
-            """
-   # lua
-   """
-   for e in torem:
-      r.remove(e)
-   """
+            if mixed:
+               acc.append((t,b-a))
+               e.text=fmt(a)
+            else:
+               acc.append((t,(a,b)))
+               torem.append(e)
+
+   if not mixed:
+      for e in torem:
+         r.remove(e)
+
    return acc
 
 
@@ -98,36 +97,33 @@ def mklua(luanam,L):
    print >>fp,"notactive = true"
    print >>fp
    print >>fp,"function init( _p, po )"
-   for (nam,_) in L:
-      print >>fp,ind+"local",nam
-   print >>fp
 
-   # Mixed xml/lua style
-   print >>fp,ind+"if po:slot().tags.secondary then"
-   for (nam,sec) in L:
-      print >>fp,2*ind+nam+"="+fmt(sec)
+   if mixed:
+      print >>fp,ind+"if po:slot().tags.secondary then"
+      for (nam,sec) in L:
+         print >>fp,ind*2+'po:set( "'+nam+'", '+fmt(sec)+' )'
+      print >>fp,ind+"end"
+      print >>fp,"end"
+   else:
+      for (nam,_) in L:
+         print >>fp,ind+"local",nam
+      print >>fp
 
-   for (nam,_) in L:
-      print >>fp,ind*2+'po:set( "'+nam+'", '+nam+' )'
-   print >>fp,ind+"end"
-   print >>fp,"end"
+      print >>fp,ind+"if not po:slot().tags.secondary then"
 
-   # Full lua
-   """
-   print >>fp,ind+"if not po:slot().tags.secondary then"
+      for (nam,(main,sec)) in L:
+         print >>fp,2*ind+nam+"="+fmt(main)
 
-   for (nam,(main,sec)) in L:
-      print >>fp,2*ind+nam+"="+fmt(main)
+      print >>fp,ind+"else"
+      for (nam,(main,sec)) in L:
+         print >>fp,2*ind+nam+"="+fmt(sec)
 
-   print >>fp,ind+"else"
-   for (nam,(main,sec)) in L:
-      print >>fp,2*ind+nam+"="+fmt(sec)
+      print >>fp,ind+"end"
 
-   print >>fp,ind+"end"
-   for (nam,_) in L:
-      print >>fp,ind*2+'po:set( "'+nam+'", '+nam+' )'
-   print >>"end"
-   """
+      for (nam,_) in L:
+         print >>fp,ind+'po:set( "'+nam+'", '+nam+' )'
+      print >>fp,"end"
+
    fp.close()
 
 def main(arg):
