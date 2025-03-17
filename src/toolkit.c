@@ -60,12 +60,6 @@ const glColour *tab_inactiveB  = &cGrey10; /**< Normal outline colour. */
 const glColour *tab_background = &cBlack;  /**< Dark outline colour. */
 
 /*
- * VBO
- */
-static gl_vbo *toolkit_vbo;             /**< Toolkit VBO. */
-static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
-
-/*
  * static prototypes
  */
 /* input */
@@ -2497,13 +2491,6 @@ void toolkit_resize( void )
  */
 int toolkit_init( void )
 {
-   GLsizei size;
-
-   /* Create the VBO. */
-   toolkit_vboColourOffset = sizeof( GLshort ) * 2 * 31;
-   size        = ( sizeof( GLshort ) * 2 + sizeof( GLfloat ) * 4 ) * 31;
-   toolkit_vbo = gl_vboCreateStream( size, NULL );
-
    /* Disable the cursor. */
    input_mouseHide();
 
@@ -2522,8 +2509,4 @@ void toolkit_exit( void )
       window_cleanup( wdw );
       window_remove( wdw );
    }
-
-   /* Free the VBO. */
-   gl_vboDestroy( toolkit_vbo );
-   toolkit_vbo = NULL;
 }
