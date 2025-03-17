@@ -12,7 +12,7 @@ local function choose_one_table( t )
 end
 
 
-local having_secondary=["Fighter","Bomber","Destroyer","Battleship","Carrier","Courier","Freighter","Armoured Transport","Bulk Freighter"]
+local having_secondary={"Fighter","Bomber","Destroyer","Battleship","Carrier","Courier","Freighter","Armoured Transport","Bulk Freighter"}
 local have_secondary={}
 
 for _i,x in ipairs(having_secondary) do
