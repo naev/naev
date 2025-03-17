@@ -4,7 +4,7 @@ from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
 
-mixed=True
+mixed=False
 
 def get_path(s):
    s=path.dirname(s)

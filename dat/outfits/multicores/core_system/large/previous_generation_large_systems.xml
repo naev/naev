@@ -10,10 +10,5 @@
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>380</cpu_max>
-  <energy>1760</energy>
-  <energy_regen>35</energy_regen>
-  <shield>500</shield>
-  <shield_regen>9</shield_regen>
- <lua>outfits/multicores/core_system/large/previous_generation_large_systems.lua</lua></specific>
+  <lua>outfits/multicores/core_system/large/previous_generation_large_systems.lua</lua></specific>
 </outfit>

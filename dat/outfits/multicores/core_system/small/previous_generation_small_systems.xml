@@ -10,10 +10,5 @@
   <gfx_store>apu.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>10</cpu_max>
-  <energy>100</energy>
-  <energy_regen>5</energy_regen>
-  <shield>110</shield>
-  <shield_regen>4</shield_regen>
- <lua>outfits/multicores/core_system/small/previous_generation_small_systems.lua</lua></specific>
+  <lua>outfits/multicores/core_system/small/previous_generation_small_systems.lua</lua></specific>
 </outfit>
