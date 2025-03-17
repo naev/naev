@@ -65,6 +65,13 @@ SHADERS = [
       uniforms = ["projection", "colour"],
    ),
    Shader(
+      name = "outline",
+      vs_path = "project_pos.vert",
+      fs_path = "outline.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "colour", "border"],
+   ),
+   Shader(
       name = "smooth",
       vs_path = "smooth.vert",
       fs_path = "smooth.frag",

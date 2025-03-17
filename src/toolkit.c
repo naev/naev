@@ -1238,66 +1238,8 @@ static void widget_kill( Widget *wgt )
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
                                const glColour *c )
 {
-   GLshort  tri[5][4];
-   glColour colours[10];
-
-   x -= ( b - thick );
-   w += 2 * ( b - thick );
-   y -= ( b - thick );
-   h += 2 * ( b - thick );
-
-   /* Left-up. */
-   tri[0][0]  = x; /* Inner */
-   tri[0][1]  = y;
-   tri[0][2]  = x - thick; /* Outer */
-   tri[0][3]  = y - thick;
-   colours[0] = *c;
-   colours[1] = *c;
-
-   /* Left-down. */
-   tri[1][0]  = x; /* Inner. */
-   tri[1][1]  = y + h;
-   tri[1][2]  = x - thick; /* Outer. */
-   tri[1][3]  = y + h + thick;
-   colours[2] = *c;
-   colours[3] = *c;
-
-   /* Right-down. */
-   tri[2][0]  = x + w; /* Inner. */
-   tri[2][1]  = y + h;
-   tri[2][2]  = x + w + thick; /* Outer. */
-   tri[2][3]  = y + h + thick;
-   colours[4] = *c;
-   colours[5] = *c;
-
-   /* Right-up. */
-   tri[3][0]  = x + w; /* Inner. */
-   tri[3][1]  = y;
-   tri[3][2]  = x + w + thick; /* Outer. */
-   tri[3][3]  = y - thick;
-   colours[6] = *c;
-   colours[7] = *c;
-
-   /* Left-up. */
-   tri[4][0]  = x; /* Inner */
-   tri[4][1]  = y;
-   tri[4][2]  = x - thick; /* Outer */
-   tri[4][3]  = y - thick;
-   colours[8] = *c;
-   colours[9] = *c;
-
-   /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof( tri ), tri );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
-                  colours );
-
-   gl_beginSmoothProgram( gl_view_matrix );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
-                               GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
-                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
-   gl_endSmoothProgram();
+   // TODO we probably don't need border + thickness...
+   gl_renderRectEmptyThick( x - b, y - b, w + 2 * b, h + 2 * b, thick, c );
 }
 
 /**

@@ -111,6 +111,28 @@ void gl_renderRectEmpty( double x, double y, double w, double h,
    gl_renderRectH( &projection, c, 0 );
 }
 
+void gl_renderRectEmptyThick( double x, double y, double w, double h, double b,
+                              const glColour *c )
+{
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, x, y, w, h );
+
+   glUseProgram( shaders.outline.program );
+   glEnableVertexAttribArray( shaders.outline.vertex );
+   glUniform2f( shaders.outline.border, ( w - 2. * b ) / w,
+                ( h - 2. * b ) / h );
+   gl_uniformColour( shaders.outline.colour, c );
+   gl_uniformMat4( shaders.outline.projection, &projection );
+
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.outline.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   glDisableVertexAttribArray( shaders.outline.vertex );
+   glUseProgram( 0 );
+   gl_checkErr();
+}
+
 /**
  * @brief Renders a rectangle.
  *
