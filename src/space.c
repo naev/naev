@@ -2838,7 +2838,7 @@ int system_addJump( StarSystem *sys, StarSystem *target )
 
 #ifdef DEBUGGING
    for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
-      JumpPoint *jp = &sys->jumps[i];
+      const JumpPoint *jp = &sys->jumps[i];
       if ( jp->targetid != target->id )
          continue;
 
@@ -3464,7 +3464,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
 #ifdef DEBUGGING
    for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
-      JumpPoint *jp = &sys->jumps[i];
+      const JumpPoint *jp = &sys->jumps[i];
       if ( jp->targetid != target->id )
          continue;
 
@@ -3961,6 +3961,8 @@ void space_exit( void )
          asteroid_freeExclude( &sys->astexclude[j] );
       array_free( sys->asteroids );
       array_free( sys->astexclude );
+
+      array_free( sys->averagePrice );
 
       ss_free( sys->stats );
    }
