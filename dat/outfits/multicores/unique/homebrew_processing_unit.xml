@@ -1,9 +1,9 @@
-<outfit name="Homebrew Processing Unit (deprecated)">
+<outfit name="Homebrew Processing Unit">
  <general>
   <rarity>6</rarity>
   <unique />
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>10</mass>
   <price>50000</price>
@@ -12,16 +12,5 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>10</cpu_max>
-  <energy>140</energy>
-  <energy_regen>7</energy_regen>
-  <shield>130</shield>
-  <shield_regen>4</shield_regen>
-  <ew_detect>15</ew_detect>
-  <cooldown_time>-25</cooldown_time>
-  <jump_warmup>-60</jump_warmup>
-  <land_delay>-25</land_delay>
-  <jump_delay>-25</jump_delay>
-  <ew_hide>-20</ew_hide>
- </specific>
+  <lua>outfits/multicores/unique/homebrew_processing_unit.lua</lua></specific>
 </outfit>
