@@ -368,7 +368,8 @@ function cores.get( p, params )
       table.insert( c, co() )
 
       if have_secondary[shipname] then
-         print("TODO!")
+         --This couldn't be that simple..
+         table.insert( c, co() )
       end
    end
    if hulls then
