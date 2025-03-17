@@ -4063,6 +4063,7 @@ src/union_find.c
 src/union_find.h
 src/utf8.c
 src/utf8.h
+src/valgrind.h
 src/vec2.c
 src/vec2.h
 src/vec3.c
