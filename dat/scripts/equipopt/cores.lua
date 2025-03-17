@@ -368,7 +368,6 @@ function cores.get( p, params )
       table.insert( c, co() )
 
       if have_secondary[shipclass] then
-         --This couldn't be that simple..
          table.insert( c, co() )
       end
    end

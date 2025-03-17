@@ -290,8 +290,16 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- cores as necessary
       --p:outfitRm( "cores" )
       -- Put cores
+      local prv
       for k,v in ipairs( cores ) do
-         local q = p:outfitAdd( v, 1, true )
+         local q
+         -- A bit fragile..
+         if v==prv then
+            q = p:outfitAdd( v, 2, true )
+         else
+            q = p:outfitAdd( v, 1, true )
+            prv=v
+         end
          if q < 1 then
             warn(string.format(_("Unable to equip core '%s' on '%s'!"), v, p:name()))
          end
