@@ -59,22 +59,6 @@ void gl_endSolidProgram( void )
    gl_checkErr();
 }
 
-void gl_beginSmoothProgram( mat4 projection )
-{
-   glUseProgram( shaders.smooth.program );
-   glEnableVertexAttribArray( shaders.smooth.vertex );
-   glEnableVertexAttribArray( shaders.smooth.vertex_colour );
-   gl_uniformMat4( shaders.smooth.projection, &projection );
-}
-
-void gl_endSmoothProgram()
-{
-   glDisableVertexAttribArray( shaders.smooth.vertex );
-   glDisableVertexAttribArray( shaders.smooth.vertex_colour );
-   glUseProgram( 0 );
-   gl_checkErr();
-}
-
 /**
  * @brief Renders a rectangle.
  *
@@ -105,6 +89,8 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 void gl_renderRectEmpty( double x, double y, double w, double h,
                          const glColour *c )
 {
+   // TODO probably replace with gl_renderRectEmptyThick as it handles DPI
+   // scaling better
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
@@ -131,6 +117,18 @@ void gl_renderRectEmptyThick( double x, double y, double w, double h, double b,
    glDisableVertexAttribArray( shaders.outline.vertex );
    glUseProgram( 0 );
    gl_checkErr();
+}
+
+void gl_renderRectHalf( double x, double y, double w, double h,
+                        const glColour *c )
+{
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, x, y, w, h );
+   gl_beginSolidProgram( projection, c );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 3 );
+   gl_endSolidProgram();
 }
 
 /**

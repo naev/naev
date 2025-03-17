@@ -72,13 +72,6 @@ SHADERS = [
       uniforms = ["projection", "colour", "border"],
    ),
    Shader(
-      name = "smooth",
-      vs_path = "smooth.vert",
-      fs_path = "smooth.frag",
-      attributes = ["vertex", "vertex_colour"],
-      uniforms = ["projection"],
-   ),
-   Shader(
       name = "texture",
       vs_path = "texture.vert",
       fs_path = "texture.frag",
@@ -164,7 +157,7 @@ SHADERS = [
    ),
    Shader(
       name = "points",
-      vs_path = "smooth.vert",
+      vs_path = "points.vert",
       fs_path = "points.frag",
       attributes = ["vertex", "vertex_colour"],
       uniforms = ["projection"],
