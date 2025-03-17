@@ -383,9 +383,8 @@ static void tab_render( Widget *tab, double bx, double by )
       y += tab->h - TAB_HEIGHT;
 
    /* Draw tab bar background */
-   toolkit_drawRect( x, y, wdw->w - 6., TAB_HEIGHT + 2, &cGrey10, NULL );
-   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT + 2, &cBlack,
-                     NULL );
+   toolkit_drawRect( x, y, wdw->w - 6., TAB_HEIGHT + 2, &cGrey10 );
+   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT + 2, &cBlack );
 
    /* Iterate through tabs */
    x += TAB_HMARGIN;
@@ -394,7 +393,7 @@ static void tab_render( Widget *tab, double bx, double by )
       toolkit_drawRect(
          x, y, tab->dat.tab.namelen[i] + ( TAB_HPADDING * 2 ),
          ( i == tab->dat.tab.active ? TAB_HEIGHT + 2 : TAB_HEIGHT ),
-         ( i == tab->dat.tab.active ? tab_active : tab_inactive ), NULL );
+         ( i == tab->dat.tab.active ? tab_active : tab_inactive ) );
 
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,

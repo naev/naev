@@ -113,11 +113,11 @@ static void fad_render( Widget *fad, double bx, double by )
    kx = tx + ( horizontal ? tw * pos - kw / 2 : ( -kw + tw ) / 2 );
    ky = ty + ( !horizontal ? th * pos - kh / 2 : ( -kh + th ) / 2 );
 
-   toolkit_drawRect( tx, ty, tw, th, toolkit_colLight, NULL );
+   toolkit_drawRect( tx, ty, tw, th, toolkit_colLight );
 
    /* Draw. */
-   toolkit_drawRect( kx, ky, kw, kh, toolkit_colLight, NULL );
-   toolkit_drawOutline( kx + 1, ky, kw - 1, kh - 1, 1., toolkit_colDark, NULL );
+   toolkit_drawRect( kx, ky, kw, kh, toolkit_colLight );
+   toolkit_drawOutline( kx + 1, ky, kw - 1, kh - 1, 1., toolkit_colDark );
 }
 
 /**

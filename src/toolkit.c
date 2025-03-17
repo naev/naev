@@ -1234,10 +1234,9 @@ static void widget_kill( Widget *wgt )
  *    @param b Border width.
  *    @param thick Thickness of the border.
  *    @param c Colour.
- *    @param lc Light colour.
  */
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
-                               const glColour *c, const glColour *lc )
+                               const glColour *c )
 {
    GLshort  tri[5][4];
    glColour colours[10];
@@ -1246,15 +1245,14 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
    w += 2 * ( b - thick );
    y -= ( b - thick );
    h += 2 * ( b - thick );
-   lc = lc ? lc : c;
 
    /* Left-up. */
    tri[0][0]  = x; /* Inner */
    tri[0][1]  = y;
    tri[0][2]  = x - thick; /* Outer */
    tri[0][3]  = y - thick;
-   colours[0] = *lc;
-   colours[1] = *lc;
+   colours[0] = *c;
+   colours[1] = *c;
 
    /* Left-down. */
    tri[1][0]  = x; /* Inner. */
@@ -1277,16 +1275,16 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
    tri[3][1]  = y;
    tri[3][2]  = x + w + thick; /* Outer. */
    tri[3][3]  = y - thick;
-   colours[6] = *lc;
-   colours[7] = *lc;
+   colours[6] = *c;
+   colours[7] = *c;
 
    /* Left-up. */
    tri[4][0]  = x; /* Inner */
    tri[4][1]  = y;
    tri[4][2]  = x - thick; /* Outer */
    tri[4][3]  = y - thick;
-   colours[8] = *lc;
-   colours[9] = *lc;
+   colours[8] = *c;
+   colours[9] = *c;
 
    /* Upload to the VBO. */
    gl_vboSubData( toolkit_vbo, 0, sizeof( tri ), tri );
@@ -1313,47 +1311,10 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b, int thick,
  *    @param h Height.
  *    @param b Border width.
  *    @param c Colour.
- *    @param lc Light colour.
  */
-void toolkit_drawOutline( int x, int y, int w, int h, int b, const glColour *c,
-                          const glColour *lc )
+void toolkit_drawOutline( int x, int y, int w, int h, int b, const glColour *c )
 {
-   GLshort  lines[4][2];
-   glColour colours[4];
-
-   x -= b, w += 2 * b;
-   y -= b, h += 2 * b;
-   lc = lc ? lc : c;
-
-   /* Lines. */
-   lines[0][0] = x; /* left-up */
-   lines[0][1] = y;
-   colours[0]  = *lc;
-
-   lines[1][0] = x; /* left-down */
-   lines[1][1] = y + h;
-   colours[1]  = *c;
-
-   lines[2][0] = x + w; /* right-down */
-   lines[2][1] = y + h;
-   colours[2]  = *c;
-
-   lines[3][0] = x + w; /* right-up */
-   lines[3][1] = y;
-   colours[3]  = *lc;
-
-   /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof( lines ), lines );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
-                  colours );
-
-   gl_beginSmoothProgram( gl_view_matrix );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
-                               GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
-                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_LOOP, 0, 4 );
-   gl_endSmoothProgram();
+   gl_renderRectEmpty( x - b, y - b, w + 2 * b, h + 2 * b, c );
 }
 /**
  * @brief Draws a rectangle.
@@ -1365,45 +1326,10 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b, const glColour *c,
  *    @param w Width.
  *    @param h Height.
  *    @param c Colour.
- *    @param lc Light colour.
  */
-void toolkit_drawRect( int x, int y, int w, int h, const glColour *c,
-                       const glColour *lc )
+void toolkit_drawRect( int x, int y, int w, int h, const glColour *c )
 {
-   GLshort  vertex[4][2];
-   glColour colours[4];
-
-   lc = lc == NULL ? c : lc;
-
-   /* Set up vertices and colours. */
-   vertex[0][0] = x; /* left-up */
-   vertex[0][1] = y;
-   colours[0]   = *c;
-
-   vertex[1][0] = x; /* left-down */
-   vertex[1][1] = y + h;
-   colours[1]   = *lc;
-
-   vertex[2][0] = x + w; /* right-up */
-   vertex[2][1] = y;
-   colours[2]   = *c;
-
-   vertex[3][0] = x + w; /* right-down */
-   vertex[3][1] = y + h;
-   colours[3]   = *lc;
-
-   /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof( vertex ), vertex );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof( colours ),
-                  colours );
-
-   gl_beginSmoothProgram( gl_view_matrix );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2,
-                               GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_colour,
-                               toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-   gl_endSmoothProgram();
+   gl_renderRect( x, y, w, h, c );
 }
 
 /**
@@ -1488,8 +1414,8 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.g = cGrey10.g;
    c2.b = cGrey10.b;
    c2.a = 0.7;
-   toolkit_drawRect( x + 1, y + 1, w + 18, h + 18, &c2, NULL );
-   toolkit_drawRect( x, y, w + 18, h + 18, &c, NULL );
+   toolkit_drawRect( x + 1, y + 1, w + 18, h + 18, &c2 );
+   toolkit_drawRect( x, y, w + 18, h + 18, &c );
    gl_printTextRaw( &gl_smallFont, w, h, x + 9, y + 9, 0, &cFontWhite, -1.,
                     alt );
 }
@@ -1510,17 +1436,16 @@ static void window_renderBorder( const Window *w )
     */
    if ( window_isFlag( w, WINDOW_FULLSCREEN ) ) {
       /* Background. */
-      toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
+      toolkit_drawRect( x, y, w->w, w->h, toolkit_col );
       /* Name. */
       gl_printMidRaw( &gl_defFont, w->w, x, y + w->h - 20., &cFontWhite, -1.,
                       w->displayname );
       return;
    }
 
-   toolkit_drawRect( x, y, w->w, w->h, toolkit_col, NULL );
-   toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark, NULL );
-   toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight,
-                        NULL );
+   toolkit_drawRect( x, y, w->w, w->h, toolkit_col );
+   toolkit_drawOutlineThick( x, y, w->w, w->h, 1, 2, toolkit_colDark );
+   toolkit_drawOutline( x + 3, y + 2, w->w - 5, w->h - 5, 1, toolkit_colLight );
 
    /*
     * render window name
@@ -1560,7 +1485,7 @@ void window_render( Window *w, int top )
          double wy = w->y + wgt->y - 2;
          toolkit_drawOutlineThick(
             wx, wy, wgt->w + 4, wgt->h + 4, 0, 2,
-            ( wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30 ), NULL );
+            ( wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30 ) );
       }
    }
 }
@@ -1611,12 +1536,12 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    double sy;
 
    /* scrollbar background */
-   toolkit_drawRect( x, y, w, h, &cGrey10, NULL );
+   toolkit_drawRect( x, y, w, h, &cGrey10 );
 
    /* Bar itself. */
    sy = y + ( h - 30. ) * ( 1. - pos );
-   toolkit_drawRect( x, sy, w, 30., toolkit_colLight, NULL );
-   toolkit_drawOutline( x + 1, sy, w - 2, 30., 0., toolkit_colDark, NULL );
+   toolkit_drawRect( x, sy, w, 30., toolkit_colLight );
+   toolkit_drawOutline( x + 1, sy, w - 2, 30., 0., toolkit_colDark );
 }
 
 /**
