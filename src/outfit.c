@@ -3041,7 +3041,9 @@ static int outfit_loadDir( const char *dir )
    }
    array_free( outfit_files );
 
-#if 1
+   /* TODO it seems like the C+Rust interface is less thread safe than we could
+    * hope for... Go back to threading when getting back to rust. */
+#if 0
    ThreadQueue *tq = vpool_create();
    /* Enqueue the jobs after the data array is done. */
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
