@@ -37,9 +37,9 @@ function finish ()
    for original,value in pairs(changes_done) do
       print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
       if split[original] then
-      --   player.outfitAdd( value.new, value.q )
-         print( fmt.f(_("   We offer you a free {outf} for your secondary slot."),{outf=value.new}) )
-         print( fmt.f(_("   Your two {outf} together will have the exact same effect as {original} had."),{outf=value.new,original=original}) )
+         print( fmt.f(_("   We offer you a free {outf} for equipping into your secondary slot. [{times}]"),{outf=value.new,times=value.q}) )
+         print( fmt.f(_("   Your two {outf}s together will have the exact same effect as {original} had."),{outf=value.new,original=original}) )
+         player.outfitAdd( value.new, value.q )
       end
    end
    -- became redundant
