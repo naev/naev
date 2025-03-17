@@ -406,6 +406,7 @@ headers = files(
    'unidiff.h',
    'union_find.h',
    'utf8.h',
+   'valgrind.h',
    'vec2.h',
    'vec3.h',
    'weapon.h'
