@@ -65,11 +65,6 @@ ssys["Armoured Transport"] = ssys["Freighter"]
 ssys["Bulk Freighter"] = function ()
    return "Unicorp PT-440 Core System"
 end
--- STANDARD SECONDARY SYSTEMS
-local sssys = {}
-local function Nothing()
-   return
-end
 
 -- STANDARD HULLS
 local shul = {}
