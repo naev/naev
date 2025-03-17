@@ -9,6 +9,7 @@ local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed, escort_health
 local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land_jump, brake_pos, include_escorts
+local follow_pilot_fleet
 
 -- Some defaults
 autonav_timer = 0
@@ -21,6 +22,7 @@ include_escorts = true
 last_shield = 0
 last_armour = 0
 escort_health = {}
+follow_pilot_fleet = {} -- Pilots in the fleet the player is following
 
 --[[
 Common code for setting decent defaults and global variables when starting autonav.
@@ -40,6 +42,7 @@ local function autonav_setup ()
    tc_rampdown = false
    tc_down     = 0
    path        = nil
+   follow_pilot_fleet = {}
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
    uselanes_spob = var.peek("autonav_uselanes_spob") and not stealth
@@ -163,6 +166,13 @@ local function shouldResetSpeed ()
    return false
 end
 
+local setting_target = false
+local function set_pilot_target( plt )
+   setting_target = true
+   player.pilot():setTarget( plt )
+   setting_target = false
+end
+
 local function get_pilot_name( plt )
    local _inrng, target_known
    if plt:exists() then
@@ -269,6 +279,30 @@ function autonav_spob( spb, tryland )
    _autonav_spob( spb, tryland, uselanes_spob )
 end
 
+local function pilot_fleet ( plt )
+   local flt
+
+   -- Check if leader
+   local l = plt:leader()
+   if l ~= nil then
+      -- We'll initialize to leader and get followers, which should include the current pilot
+      flt = { l }
+      for k,v in ipairs( l:followers() ) do
+         table.insert( flt, v )
+      end
+   else
+      -- Assume pilot is going to be the leader
+      flt = { plt }
+   end
+
+   -- Add pilot's followers
+   for k,v in ipairs( plt:followers() ) do
+      table.insert( flt, v )
+   end
+
+   return flt
+end
+
 --[[
 Autonav to follow a target pilot
 --]]
@@ -287,6 +321,9 @@ function autonav_pilot( plt )
 
    player.msg("#o"..fmt.f(_("Autonav: following {plt}."),{plt=pltstr}).."#0")
    autonav_set( autonav_plt_follow )
+
+   -- Get the fleet, we'll try to follow someone in fleet when lost
+   follow_pilot_fleet = pilot_fleet( plt )
 end
 
 --[[
@@ -583,6 +620,9 @@ end
 Autonav was forcibly aborted for a reason or other.
 --]]
 function autonav_abort( reason )
+   -- Horrible hack so setting the target doesn't break autonav
+   if setting_target then return end
+
    if reason then
       player.msg("#r"..fmt.f(_("Autonav: aborted due to '{reason}'!"),{reason=reason}).."#0")
    else
@@ -680,6 +720,7 @@ function autonav_plt_follow ()
    local plt = target_plt
    local target_known = false
    local inrng = false
+
    if plt:exists() then
       if plt:flags("jumpingout") then
          local jmp = plt:navJump()
@@ -689,6 +730,17 @@ function autonav_plt_follow ()
          if follow_land_jump then
             local fuel, consumption = player.fuel()
             if jmp:known() and not jmp:exitonly() and fuel >=consumption then
+
+               -- See if there's someone else in the fleet we can follow now
+               for k,p in ipairs( pilot_fleet( plt ) ) do
+                  if p:exists() and not p:flags("jumpingout") then
+                     set_pilot_target( p )
+                     autonav_pilot( p )
+                     return
+                  end
+               end
+
+               -- Try to follow through jump
                pp:navJumpSet( jmp )
                _autonav_system(false)
                autonav_reset(0)
@@ -717,6 +769,17 @@ function autonav_plt_follow ()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has landed on {spb}."),{plt=get_pilot_name(plt),spb=get_spob_name(plt:navSpob())}).."#0")
 
          if follow_land_jump or brake_pos then
+
+            -- See if there's someone else in the fleet we can follow now
+            for k,p in ipairs( pilot_fleet( plt ) ) do
+               if p:exists() and not p:flags("landing") then
+                  set_pilot_target( p )
+                  autonav_pilot( p )
+                  return
+               end
+            end
+
+            -- Try to follow to land
             player.pilot():navSpobSet( plt:navSpob() )
             _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
@@ -732,9 +795,19 @@ function autonav_plt_follow ()
       inrng, target_known = player.pilot():inrange( plt )
    end
 
-   if not inrng then
+   if not inrng then -- If doesn't exist defaults to false
       local pltstr = get_pilot_name( plt )
       player.msg("#r"..fmt.f(_("Autonav: following target {plt} has been lost."),{plt=pltstr}).."#0")
+
+      -- See if there's someone else in the original fleet we can follow now
+      for k,p in ipairs( follow_pilot_fleet ) do
+         if p:exists() and not p:flags("landing") then
+            set_pilot_target( p )
+            autonav_pilot( p )
+            return
+         end
+      end
+
       ai.accel(0)
       return autonav_end()
    elseif not target_name and target_known then
