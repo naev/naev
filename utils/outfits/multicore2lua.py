@@ -32,6 +32,15 @@ def fmt(f):
    else:
       return str(f)
 
+def sfmt(f):
+   res=fmt(f)
+   if res=="0":
+      return "_"
+   elif res[0]!="-":
+      return "+"+res
+   else:
+      return res;
+
 def process_group(r,field):
    acc=[]
    r=r.find(field)
@@ -64,57 +73,110 @@ def process_group(r,field):
 
    return acc
 
-
-"""
-local fmt = require "format"
-
-function descextra( _p, _o )
-   local desc = ""
-
-   local function add_desc( name, units, base, primary )
-      if primary ~= 0 then
-         desc = desc..fmt.f(_("{name}: {full) ({base}) {units}"), {
-            name=name, units=units, base=base, full=base+primary,
-         })
-      else
-         -- This could be just done in XML though...
-         desc = desc..fmt.f(_("{name}: {full) {units}"), {
-            name=name, units=units, base=base,
-         })
-      end
-   end
-
-   add_desc( _("Shield Strength"), naev.unit("energy"), SHIELD, PRI_SHIELD )
-   return desc
-end
-"""
+names={
+   "priority":"Priority",
+   "mass":"Ship Mass",
+   "cpu_max":"CPU max",
+   "energy":"Energy Capacity",
+   "energy_regen":"Energy Regeneration",
+   "shield":"Shield Capacity",
+   "shield_regen":"Shield Regeneration",
+   "ew_detect":"Detection",
+   "cooldown_time":"Ship Cooldown Time"
+}
+units={
+   "priority":"",
+   "mass":"mass",
+   "cpu_max":"",
+   "energy":"energy",
+   "energy_regen":"",
+   "shield":"energy",
+   "shield_regen":"",
+   "ew_detect":"",
+   "cooldown_time":""
+}
 
 def mklua(luanam,L):
    print >>stderr,"<"+luanam+">"
    fp=file(luanam,"w")
    ind=3*' '
 
-   print >>fp,"notactive = true"
-   print >>fp
+   print >>fp,"notactive = true\n"
+   print >>fp,'local fmt = require "format"\n'
+
+   print >>fp,'local nomain=false'
+   print >>fp,'local nosec=false\n'
+   for (nam,_) in L:
+      print >>fp,"local",nam
+
+   print >>fp,"""
+function descextra( _p, _o )
+   local desc = ""
+
+   local function _vu( val, unit)
+      if val=='_' then
+         return val
+      else
+         return val.." "..unit
+      end
+   end
+
+   local function vu( val, unit, grey)
+      local res=_vu(val,unit)
+      if grey then
+         return "#b"..res.."#0"
+      else
+         return res
+      end
+   end
+
+   local function add_desc( name, units, base, secondary )
+      desc = desc..fmt.f(_("\\n{name}: {bas} / {sec}"), {
+         name=name, units=units, bas=vu(base,units,nomain), sec=vu(secondary,units,nosec)
+      })
+   end
+"""
+   for (nam,(main,sec)) in L:
+      if units.has_key(nam):
+         if nam=="mass":
+            print >>fp,ind+'desc=desc.."#r"'
+
+         if units[nam]!='':
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'"',')'
+         else:
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',')'
+         if nam=="mass":
+            print >>fp,ind+'desc=desc.."#0"'
+      else:
+         print >>stderr,"unknown unit of",repr(nam)
+
+   print >>fp,"""
+   return desc
+end
+"""
    print >>fp,"function init( _p, po )"
 
    if mixed:
       print >>fp,ind+"if po:slot().tags.secondary then"
+      print >>fp,ind*2+"nosec=true"
       for (nam,sec) in L:
          print >>fp,ind*2+'po:set( "'+nam+'", '+fmt(sec)+' )'
       print >>fp,ind+"end"
       print >>fp,"end"
    else:
-      for (nam,_) in L:
-         print >>fp,ind+"local",nam
-      print >>fp
+      
+      print >>fp,ind+'nomain=false'
+      print >>fp,ind+'nosec=false'
 
       print >>fp,ind+"if not po:slot().tags.secondary then"
-
+      print >>fp,ind*2+"""if po:slot().tags.core then
+         nosec=true
+      end"""
       for (nam,(main,sec)) in L:
          print >>fp,2*ind+nam+"="+fmt(main)
 
       print >>fp,ind+"else"
+      print >>fp,ind*2+"nomain=true"
       for (nam,(main,sec)) in L:
          print >>fp,2*ind+nam+"="+fmt(sec)
 
