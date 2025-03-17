@@ -2,7 +2,7 @@
 --[[
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]
---local fmt = require "format"
+local fmt = require "format"
 local changes_done = {}
 local save_updated
 
@@ -22,7 +22,6 @@ function finish ()
       return
    end
 
-   --[[
    local split={
       ["Milspec Orion 9901 Core System"] = true,
       ["Milspec Thalos 9802 Core System"] = true,
@@ -34,24 +33,20 @@ function finish ()
       ["Milspec Thalos 3602 Core System"] = true,
       ["Unicorp PT-68 Core System"] = true,
    }
-   --]]
 
-   print( "Save game updated!" )
-   --print(changes_done)
-   for _original,_value in pairs(changes_done) do
-      print("loop!")
-      --print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
-      --if split[original] then
+   for original,value in pairs(changes_done) do
+      print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+      if split[original] then
       --   player.outfitAdd( value.new, value.q )
-      --   print( fmt.f(_("We offer you a free {outf} for your secondary slot."),{outf=value.new}) )
-      --   print( fmt.f(_("Your two {outf} together will have the exact same effect as {original} had."),{outf=value.new,original=original}) )
-      --end
+         print( fmt.f(_("   We offer you a free {outf} for your secondary slot."),{outf=value.new}) )
+         print( fmt.f(_("   Your two {outf} together will have the exact same effect as {original} had."),{outf=value.new,original=original}) )
+      end
    end
-   print( "Save game update finished!" )
+   -- became redundant
+   --print( "Save game updated!" )
 end
 
 local function apply_change( original, new, q )
-   print ("apply")
    local value = changes_done[original]
    if value then
       value.q = value.q + q
@@ -71,6 +66,7 @@ local ship_list = {
    ["Proteron Derivative"] = "Proteron Dalton",
    ["Proteron Kahan"] = "Proteron Gauss",
 }
+
 --[[--
    Takes an ship name and should return either a new ship name or the amount of credits to give back to the player.
 --]]
@@ -676,6 +672,7 @@ local outfit_list = {
    --]]
    ["Battery"] = "Battery I",
 }
+
 --[[--
    Takes an outfit name and should return either a new outfit name or the amount of credits to give back to the player.
 --]]
