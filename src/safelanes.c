@@ -46,6 +46,7 @@
 #include "conf.h"
 #include "log.h"
 #include "union_find.h"
+#include "valgrind.h"
 
 /*
  * Global parameters.
@@ -304,11 +305,15 @@ void safelanes_recalculate( void )
       return;
 
    safelanes_initStacks();
-   safelanes_initOptimizer();
-   for ( int iters_done = 0; safelanes_buildOneTurn( iters_done ) > 0;
-         iters_done++ )
-      ;
-   safelanes_destroyOptimizer();
+   if ( RUNNING_ON_VALGRIND ) {
+      DEBUG( "Running under Valgrind, safelanes not generated!" );
+   } else {
+      safelanes_initOptimizer();
+      for ( int iters_done = 0; safelanes_buildOneTurn( iters_done ) > 0;
+            iters_done++ )
+         ;
+      safelanes_destroyOptimizer();
+   }
    /* Stacks remain available for queries. */
 #if DEBUGGING
    if ( conf.devmode )

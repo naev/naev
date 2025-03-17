@@ -212,7 +212,7 @@ static int blk_enumerateCallback( void *data, const char *origdir,
             *added = 1;
       }
    } else if ( stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
-      int added;
+      int added = 0;
       PHYSFS_enumerate( path, blk_enumerateCallback, &added );
       if ( added ) {
          BlkFile bf = {

@@ -2259,6 +2259,7 @@ static int pilotL_weapsetAuto( lua_State *L )
  * The active outfits have the following structure: <br />
  * <ul>
  *  <li> outfit: The outfit. </li>
+ *  <li> slot: The slot the outfit is in.</li>
  *  <li> type: Type of the outfit. </li>
  *  <li> active: Whether or not the outfit is active at the current time.</li>
  *  <li> weapset: The first weapon
@@ -2334,28 +2335,27 @@ static int pilotL_actives( lua_State *L )
          continue;
 
       /* Set up for creation. */
-      lua_pushnumber( L, ++k );
       lua_newtable( L );
 
       /* Outfit. */
-      lua_pushstring( L, "outfit" );
       lua_pushoutfit( L, pos->outfit );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "outfit" );
+
+      /* Slot. */
+      lua_pushinteger( L, i + 1 );
+      lua_setfield( L, -2, "slot" );
 
       /* Type. */
-      lua_pushstring( L, "type" );
       lua_pushstring( L, outfit_getType( pos->outfit ) );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "type" );
 
-      lua_pushstring( L, "active" );
       lua_pushboolean( L, pos->flags & PILOTOUTFIT_ISON );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "active" );
 
       /* Find the first weapon set containing the outfit, if any. */
       if ( outfits[i]->weapset != -1 ) {
-         lua_pushstring( L, "weapset" );
          lua_pushnumber( L, outfits[i]->weapset + 1 );
-         lua_rawset( L, -3 );
+         lua_setfield( L, -2, "weapset" );
       }
 
       /* State and timer. */
@@ -2371,9 +2371,8 @@ static int pilotL_actives( lua_State *L )
                        if necessary though. */
          else
             d = pos->progress;
-         lua_pushstring( L, "warmup" );
          lua_pushnumber( L, d );
-         lua_rawset( L, -3 );
+         lua_setfield( L, -2, "warmup" );
          break;
       case PILOT_OUTFIT_ON:
          str = "on";
@@ -2386,9 +2385,8 @@ static int pilotL_actives( lua_State *L )
                d = pos->stimer / d;
          } else
             d = pos->progress;
-         lua_pushstring( L, "duration" );
          lua_pushnumber( L, d );
-         lua_rawset( L, -3 );
+         lua_setfield( L, -2, "duration" );
          break;
       case PILOT_OUTFIT_COOLDOWN:
          str = "cooldown";
@@ -2399,20 +2397,18 @@ static int pilotL_actives( lua_State *L )
                d = pos->stimer / d;
          } else
             d = pos->progress;
-         lua_pushstring( L, "cooldown" );
          lua_pushnumber( L, d );
-         lua_rawset( L, -3 );
+         lua_setfield( L, -2, "cooldown" );
          break;
       default:
          str = "unknown";
          break;
       }
-      lua_pushstring( L, "state" );
       lua_pushstring( L, str );
-      lua_rawset( L, -3 );
+      lua_setfield( L, -2, "state" );
 
       /* Set table in table. */
-      lua_rawset( L, -3 );
+      lua_rawseti( L, -2, ++k );
    }
 
    /* Clean up. */
