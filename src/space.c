@@ -1306,7 +1306,7 @@ JumpPoint *jump_getTarget( const StarSystem *target, const StarSystem *sys )
 {
    for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
       JumpPoint *jp = &sys->jumps[i];
-      if ( jp->target == target )
+      if ( jp->target->id == target->id )
          return jp;
    }
    WARN( _( "Jump point to '%s' not found in %s" ), target->name, sys->name );
