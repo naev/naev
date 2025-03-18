@@ -4,8 +4,6 @@ from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
 
-mixed=False
-
 def get_path(s):
    s=path.dirname(s)
 
@@ -60,16 +58,11 @@ def process_group(r,field):
          elif t == 'price':
             e.text=fmt(round((a+b)/2,-2))
          else:
-            if mixed:
-               acc.append((t,b-a))
-               e.text=fmt(a)
-            else:
-               acc.append((t,(a,b)))
-               torem.append(e)
+            acc.append((t,(a,b)))
+            torem.append(e)
 
-   if not mixed:
-      for e in torem:
-         r.remove(e)
+   for e in torem:
+      r.remove(e)
 
    return acc
 
@@ -103,33 +96,14 @@ def mklua(luanam,L):
 
    print >>fp,"notactive = true\n"
    print >>fp,'local fmt = require "format"\n'
+   print >>fp,'local nomain=false'
+   print >>fp,'local nosec=false'
 
-   for (nam,_) in L:
-      print >>fp,"local",nam
-
-   """
-function onremove( _p, po)
-   po:set("nomain",0)
-   po:set("nosec",0)
-end
-
-function onadd( _p, po )
-   if po:slot().tags and po:slot().tags.core then
-      if not po:slot().tags.secondary then
-         po:set("nomain",0)
-         po:set("nosec",1)
-      else
-         po:set("nomain",1)
-         po:set("nosec",0)
-      end
-   else
-      onremove( _p, po)
-   end
-end"""
    print >>fp,"""
-function descextra( _p, po )
+function descextra( p, po )
    local desc = ""
 
+   print(fmt.f("desc {po}",{po=po}))
    local function _vu( val, unit)
       if val=='_' then
          return val
@@ -147,23 +121,12 @@ function descextra( _p, po )
       end
    end
 
-   local function add_desc( name, units, base, secondary, def,no_main,no_sec)
+   local function add_desc( name, units, base, secondary, def)
       desc = desc..fmt.f(_("\\n{name}: {bas} / {sec}"), {
-         name=name, units=units, bas=vu(base,units,no_main,def), sec=vu(secondary,units,no_sec,def)
+         name=name, units=units, bas=vu(base,units,nomain,def), sec=vu(secondary,units,nosec,def)
       })
    end
-
-   local nomain=false
-   local nosec=false
 """
-   for (nam,(main,sec)) in L:
-      print >>fp,ind+'if po:get( "'+nam+'")=='+fmt(main)+' then'
-      print >>fp,2*ind+'nosec=true'
-      print >>fp,ind+'elseif po:get( "'+nam+'")=='+fmt(sec)+' then'
-      print >>fp,2*ind+'nomain=true'
-      print >>fp,ind+'end'
-      break
-
    for (nam,(main,sec)) in L:
       if units.has_key(nam):
          if nam=="mass":
@@ -173,9 +136,9 @@ function descextra( _p, po )
             defa='"#g"'
 
          if units[nam]!='':
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa+',','nomain,nosec)'
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa,')'
          else:
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa+',','nomain,nosec)'
+            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa,')'
          if nam=="mass":
             print >>fp,ind+'desc=desc.."#g"'
       else:
@@ -185,44 +148,35 @@ function descextra( _p, po )
    return desc
 end
 """
-   print >>fp,"function init( _p, po )"
-   print >>fp,ind+'print(po)'
-   if mixed:
-      print >>fp,ind+"if po:slot().tags.secondary then"
-      for (nam,sec) in L:
-         print >>fp,ind*2+'po:set( "'+nam+'", '+fmt(sec)+' )'
-      print >>fp,ind+"end"
-   else:
-      print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
-      print >>fp,2*ind+"if not po:slot().tags.secondary then"
-      for (nam,(main,sec)) in L:
-         print >>fp,3*ind+nam+"="+fmt(main)
+   print >>fp,"function init(_p, po )"
+   print >>fp,ind+'print(fmt.f("init {po}",{po=po}))'
 
-      print >>fp,2*ind+'else'
-      for (nam,(main,sec)) in L:
-         print >>fp,3*ind+nam+"="+fmt(sec)
-      print >>fp,2*ind+"end"
-      print >>fp,ind+'else'
+   print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
+   for (nam,_) in L:
+      print >>fp,2*ind+"local",nam
 
-      for (nam,_) in L:
-         print >>fp,2*ind+'po:set( "'+nam+'", '+nam+' )'
+   print >>fp,2*ind+"if not po:slot().tags.secondary then"
+   print >>fp,3*ind+'nosec=true'
+   print >>fp,3*ind+'nomain=false'
+   for (nam,(main,sec)) in L:
+      print >>fp,3*ind+nam+"="+fmt(main)
 
-      for (nam,(main,sec)) in L:
-         print >>fp,2*ind+'po:set( "'+nam+'", -128 )'
-         break
-      print >>fp,ind+"end"
+   print >>fp,2*ind+'else'
+   print >>fp,3*ind+'nosec=false'
+   print >>fp,3*ind+'nomain=true'
+   for (nam,(main,sec)) in L:
+      print >>fp,3*ind+nam+"="+fmt(sec)
+   print >>fp,2*ind+"end"
+
+   for (nam,_) in L:
+      print >>fp,2*ind+'po:set( "'+nam+'", '+nam+' )'
+
+   print >>fp,ind+'else'
+   print >>fp,2*ind+'nosec=false'
+   print >>fp,2*ind+'nomain=false'
+   print >>fp,ind+"end"
 
    print >>fp,"end"
-   print >>fp,"""
-function onremove( p, po)
-   init(p,po)
-end
-
-function onadd( p, po )
-   init(p,po)
-end
-"""
-
    fp.close()
 
 def main(arg):
