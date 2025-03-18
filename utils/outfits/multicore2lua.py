@@ -103,8 +103,7 @@ def mklua(luanam,L):
 function descextra( _p, po )
    local desc = ""
 
-   print(fmt.f("desc {po}",{po=po}))
-   local function _vu( val, unit)
+   local function vu( val, unit)
       if val=='_' then
          return val
       else
@@ -112,18 +111,20 @@ function descextra( _p, po )
       end
    end
 
-   local function vu( val, unit, grey, def)
-      local res=_vu(val,unit)
+   local function col( s, grey, def)
       if grey then
-         return "#b"..res..def
+         return "#b"..s..def
       else
-         return res
+         return s
       end
    end
 
    local function add_desc( name, units, base, secondary, def)
-      desc = desc..fmt.f(_("\\n{name}: {bas} / {sec}"), {
-         name=name, units=units, bas=vu(base,units,nomain,def), sec=vu(secondary,units,nosec,def)
+      desc = desc..fmt.f(_("\\n{name}: {bas} {sep} {sec}"), {
+         name=name, units=units,
+         sep=col("/",nomain or nosec,def),
+         bas=col(vu(base,units),nomain,def),
+         sec=col(vu(secondary,units),nosec,def),
       })
    end
 """
@@ -149,8 +150,6 @@ function descextra( _p, po )
 end
 """
    print >>fp,"function init(_p, po )"
-   print >>fp,ind+'print(fmt.f("init {po}",{po=po}))'
-
    print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
    for (nam,_) in L:
       print >>fp,2*ind+"local",nam
