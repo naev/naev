@@ -19,7 +19,7 @@ function descextra( _p, _po )
    desc=add_desc(desc, _("Jump Warm-up"), naev.unit("percent"), "-60", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Landing Time"), naev.unit("percent"), "-25", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Jump Time"), naev.unit("percent"), "-25", "_", "#g", nomain, nosec)
-   desc=add_desc(desc, _("ew_hide"), naev.unit("percent"), "-20", "_", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Detected Range"), naev.unit("percent"), "-20", "_", "#g", nomain, nosec)
 
    return desc
 end

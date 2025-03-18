@@ -43,7 +43,7 @@ names={
    "shield_regen":"Shield Regeneration",
    "ew_detect":"Detection",
    "cooldown_time":"Ship Cooldown Time",
-   "ew_hide":"ew_hide",
+   "ew_hide":"Detected Range",
    "jump_warmup":"Jump Warm-up",
    "land_delay":"Landing Time",
    "jump_delay":"Jump Time"
