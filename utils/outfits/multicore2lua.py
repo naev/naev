@@ -36,7 +36,7 @@ units={
 # From src/shipstats.c
 names={
    "mass":"Ship Mass",
-   "cpu_max":"CPU max",
+   "cpu_max":"CPU Capacity",
    "energy":"Energy Capacity",
    "energy_regen":"Energy Regeneration",
    "shield":"Shield Capacity",

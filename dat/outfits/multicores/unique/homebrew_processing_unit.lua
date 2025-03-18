@@ -9,7 +9,7 @@ function descextra( _p, _po )
    desc=desc.."#r"
    desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+10", "+10", "#r", nomain, nosec)
    desc=desc.."#g"
-   desc=add_desc(desc, _("CPU max"), naev.unit("cpu"), "+10", "_", "#g", nomain, nosec)
+   desc=add_desc(desc, _("CPU Capacity"), naev.unit("cpu"), "+10", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+140", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Energy Regeneration"), naev.unit("power"), "+7", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+130", "_", "#g", nomain, nosec)
