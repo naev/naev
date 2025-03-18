@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 dont_display=set(['priority','rarity'])
+
+# output of naev.unit()
 """
    energy GJ
    angle 
@@ -31,7 +33,7 @@ units={
    "cooldown_time":"percent"
 }
 
-#TODO finish!
+# From src/shipstats.c
 names={
    "mass":"Ship Mass",
    "cpu_max":"CPU max",
@@ -42,9 +44,9 @@ names={
    "ew_detect":"Detection",
    "cooldown_time":"Ship Cooldown Time",
    "ew_hide":"ew_hide",
-   "jump_warmup":"jump_warmup",
-   "land_delay":"land_delay",
-   "jump_delay":"jump_delay"
+   "jump_warmup":"Jump Warm-up",
+   "land_delay":"Landing Time",
+   "jump_delay":"Jump Time"
 }
 
 from os import path
