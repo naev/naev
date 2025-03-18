@@ -6,7 +6,7 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Improved autonav behaviour when losing a followed ship.
+      * Improved autonav behaviour when losing a followed ship
    * Content
       * 2 new missions
       * 6 new ship variants
@@ -15,6 +15,9 @@
       * More space objects
       * New portraits
       * Significant changes in jumps (hidden and otherwise)
+      * Light, medium-heavy and ultraheavy ship now have two core system slots, one main and one secondary.
+        In order to have the effects of light, medium-heavy, ultraheavy core systems (that were removed), you now have to use two smaller core systems.
+        For example : A lancelot that was used with one orion 3?01 will now use two 2301 instead. 
    * Engine
       * Use instancing instead of geometry shaders for space dust
       * Ship Lua scripting supports "onshootany" now

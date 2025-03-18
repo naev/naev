@@ -14,12 +14,12 @@ function descextra( _p, _po )
    desc=add_desc(desc, _("Energy Regeneration"), naev.unit("power"), "+7", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+130", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Shield Regeneration"), naev.unit("power"), "+4", "_", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Detection"), naev.unit("distance"), "+15", "_", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Detection"), naev.unit("percent"), "+15", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Ship Cooldown Time"), naev.unit("percent"), "-25", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Jump Warm-up"), naev.unit("percent"), "-60", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Landing Time"), naev.unit("percent"), "-25", "_", "#g", nomain, nosec)
    desc=add_desc(desc, _("Jump Time"), naev.unit("percent"), "-25", "_", "#g", nomain, nosec)
-   desc=add_desc(desc, _("ew_hide"), naev.unit("distance"), "-20", "_", "#g", nomain, nosec)
+   desc=add_desc(desc, _("ew_hide"), naev.unit("percent"), "-20", "_", "#g", nomain, nosec)
 
    return desc
 end
