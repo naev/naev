@@ -11,7 +11,7 @@ end
 
 local function col( s, grey, def)
    if grey then
-      return "#b"..s..def
+      return "#n"..s..def
    else
       return s
    end
