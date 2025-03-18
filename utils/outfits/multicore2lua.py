@@ -94,40 +94,15 @@ def mklua(luanam,L):
    fp=file(luanam,"w")
    ind=3*' '
 
-   print >>fp,"notactive = true\n"
-   print >>fp,'local fmt = require "format"\n'
-   print >>fp,'local nomain=false'
-   print >>fp,'local nosec=false'
+   print >>fp,"""notactive = true
+local nomain=false
+local nosec=false
+local add_desc=require "outfits.multicores.desc"
 
-   print >>fp,"""
-function descextra( _p, po )
+function descextra( _p, _po )
    local desc = ""
-
-   local function vu( val, unit)
-      if val=='_' then
-         return val
-      else
-         return val.." "..unit
-      end
-   end
-
-   local function col( s, grey, def)
-      if grey then
-         return "#b"..s..def
-      else
-         return s
-      end
-   end
-
-   local function add_desc( name, units, base, secondary, def)
-      desc = desc..fmt.f(_("\\n{name}: {bas} {sep} {sec}"), {
-         name=name, units=units,
-         sep=col("/",nomain or nosec,def),
-         bas=col(vu(base,units),nomain,def),
-         sec=col(vu(secondary,units),nosec,def),
-      })
-   end
 """
+
    for (nam,(main,sec)) in L:
       if units.has_key(nam):
          if nam=="mass":
@@ -137,9 +112,9 @@ function descextra( _p, po )
             defa='"#g"'
 
          if units[nam]!='':
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa,')'
+            print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa+', nomain, nosec)'
          else:
-            print >>fp,ind+'add_desc( _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa,')'
+            print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa+', nomain, nosec)'
          if nam=="mass":
             print >>fp,ind+'desc=desc.."#g"'
       else:

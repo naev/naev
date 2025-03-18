@@ -1,46 +1,19 @@
 notactive = true
-
-local fmt = require "format"
-
 local nomain=false
 local nosec=false
+local add_desc=require "outfits.multicores.desc"
 
-function descextra( _p, po )
+function descextra( _p, _po )
    local desc = ""
 
-   local function vu( val, unit)
-      if val=='_' then
-         return val
-      else
-         return val.." "..unit
-      end
-   end
-
-   local function col( s, grey, def)
-      if grey then
-         return "#b"..s..def
-      else
-         return s
-      end
-   end
-
-   local function add_desc( name, units, base, secondary, def)
-      desc = desc..fmt.f(_("\n{name}: {bas} {sep} {sec}"), {
-         name=name, units=units,
-         sep=col("/",nomain or nosec,def),
-         bas=col(vu(base,units),nomain,def),
-         sec=col(vu(secondary,units),nosec,def),
-      })
-   end
-
    desc=desc.."#r"
-   add_desc( _("Ship Mass"), naev.unit("mass"), "+12"," +58", "#r" )
+   desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+12"," +58", "#r", nomain, nosec)
    desc=desc.."#g"
-   add_desc( _("CPU max"), "", "+24"," +66" , "#g" )
-   add_desc( _("Energy Capacity"), naev.unit("energy"), "+150"," +200", "#g" )
-   add_desc( _("Energy Regeneration"), "", "+8"," +7" , "#g" )
-   add_desc( _("Shield Capacity"), naev.unit("energy"), "+180"," +45", "#g" )
-   add_desc( _("Shield Regeneration"), "", "+6"," +1" , "#g" )
+   desc=add_desc(desc, _("CPU max"), "", "+24"," +66" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+150"," +200", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Regeneration"), "", "+8"," +7" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+180"," +45", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Regeneration"), "", "+6"," +1" , "#g", nomain, nosec)
 
    return desc
 end
