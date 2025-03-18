@@ -100,7 +100,7 @@ def mklua(luanam,L):
    print >>fp,'local nosec=false'
 
    print >>fp,"""
-function descextra( p, po )
+function descextra( _p, po )
    local desc = ""
 
    print(fmt.f("desc {po}",{po=po}))

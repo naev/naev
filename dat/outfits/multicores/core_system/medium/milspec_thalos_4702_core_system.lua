@@ -5,7 +5,7 @@ local fmt = require "format"
 local nomain=false
 local nosec=false
 
-function descextra( p, po )
+function descextra( _p, po )
    local desc = ""
 
    print(fmt.f("desc {po}",{po=po}))
