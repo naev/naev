@@ -9,13 +9,13 @@ function descextra( _p, _po )
    desc=desc.."#r"
    desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+420", "+580", "#r", nomain, nosec)
    desc=desc.."#g"
-   desc=add_desc(desc, _("CPU max"), "", "+440", "+1310" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("CPU max"), naev.unit("cpu"), "+440", "+1310", "#g", nomain, nosec)
    desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+1860", "+940", "#g", nomain, nosec)
    desc=add_desc(desc, _("Energy Regeneration"), naev.unit("power"), "+46", "+51", "#g", nomain, nosec)
    desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+650", "+100", "#g", nomain, nosec)
    desc=add_desc(desc, _("Shield Regeneration"), naev.unit("power"), "+11", "+2", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Detection"), "", "+10", "_" , "#g", nomain, nosec)
-   desc=add_desc(desc, _("Ship Cooldown Time"), "", "-25", "_" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Detection"), naev.unit("distance"), "+10", "_", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Ship Cooldown Time"), naev.unit("percent"), "-25", "_", "#g", nomain, nosec)
 
    return desc
 end

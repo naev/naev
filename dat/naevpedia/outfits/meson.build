@@ -277,7 +277,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/unique/fuel_recycler.xml',
    root / 'dat/outfits/unique/fuelshell_plating.xml',
    root / 'dat/outfits/unique/hades_torch.xml',
-   root / 'dat/outfits/multicores/homebrew_processing_unit.xml',
+   root / 'dat/outfits/multicores/unique/homebrew_processing_unit.xml',
    root / 'dat/outfits/unique/pulse_scanner.xml',
    root / 'dat/outfits/unique/squadron_synchronizer_module.xml',
    root / 'dat/outfits/unique/valkyrie_beam.xml',

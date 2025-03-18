@@ -1,6 +1,37 @@
 #!/usr/bin/python
 
-dont_display=set(['priority'])
+dont_display=set(['priority','rarity'])
+"""
+   energy GJ
+   angle 
+   unit u
+   per_time /sec
+   speed km/s
+   percent %
+   accel
+   rotation /s
+   mass t
+   cpu PFLOP
+   time sec
+   distance km
+power GW
+"""
+units={
+   "mass":"mass",
+   "cpu_max":"cpu",
+   "energy":"energy",
+   "energy_regen":"power",
+   "shield":"energy",
+   "shield_regen":"power",
+   "ew_detect":"distance",
+   "ew_hide":"distance",
+   "jump_warmup":"percent",
+   "land_delay":"percent",
+   "jump_delay":"percent",
+   "cooldown_time":"percent"
+}
+
+#TODO finish!
 names={
    "mass":"Ship Mass",
    "cpu_max":"CPU max",
@@ -9,17 +40,11 @@ names={
    "shield":"Shield Capacity",
    "shield_regen":"Shield Regeneration",
    "ew_detect":"Detection",
-   "cooldown_time":"Ship Cooldown Time"
-}
-units={
-   "mass":"mass",
-   "cpu_max":"",
-   "energy":"energy",
-   "energy_regen":"power",
-   "shield":"energy",
-   "shield_regen":"power",
-   "ew_detect":"",
-   "cooldown_time":""
+   "cooldown_time":"Ship Cooldown Time",
+   "ew_hide":"ew_hide",
+   "jump_warmup":"jump_warmup",
+   "land_delay":"land_delay",
+   "jump_delay":"jump_delay"
 }
 
 from os import path
