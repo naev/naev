@@ -7,13 +7,13 @@ function descextra( _p, _po )
    local desc = ""
 
    desc=desc.."#r"
-   desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+12"," +58", "#r", nomain, nosec)
+   desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+12", "+58", "#r", nomain, nosec)
    desc=desc.."#g"
-   desc=add_desc(desc, _("CPU max"), "", "+24"," +66" , "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+150"," +200", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Regeneration"), "", "+8"," +7" , "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+180"," +45", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Regeneration"), "", "+6"," +1" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("CPU max"), "", "+24", "+66" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+150", "+200", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Regeneration"), "", "+8", "+7" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+180", "+45", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Regeneration"), "", "+6", "+1" , "#g", nomain, nosec)
 
    return desc
 end

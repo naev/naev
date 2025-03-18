@@ -18,12 +18,18 @@ local function col( s, grey, def)
 end
 
 local function _add_desc(desc, name, units, base, secondary, def,nomain,nosec)
-   return desc..fmt.f(_("\n{name}: {bas} {sep} {sec}"), {
-      name=name, units=units,
-      sep=col("/",nomain or nosec,def),
-      bas=col(vu(base,units),nomain,def),
-      sec=col(vu(secondary,units),nosec,def),
-   })
+   if base==secondary then
+      return desc..fmt.f(_("\n{name}: {bas}"), {
+         name=name, bas=vu(base,units)
+      })
+   else
+      return desc..fmt.f(_("\n{name}: {bas} {sep} {sec}"), {
+         name=name,
+         sep=col("/",nomain or nosec,def),
+         bas=col(vu(base,units),nomain,def),
+         sec=col(vu(secondary,units),nosec,def),
+      })
+   end
 end
 
 return _add_desc

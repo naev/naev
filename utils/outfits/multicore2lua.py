@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+dont_display=set(['priority'])
+
 from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
@@ -40,6 +42,7 @@ def sfmt(f):
       return res;
 
 def process_group(r,field):
+   needs_lua=False
    acc=[]
    r=r.find(field)
    torem=[]
@@ -53,21 +56,22 @@ def process_group(r,field):
          except:
             continue
 
-         if a==b:
-            e.text=fmt(a)
-         elif t == 'price':
+         if t == 'price':
             e.text=fmt(round((a+b)/2,-2))
+         elif a==b:
+            e.text=fmt(a)
+            acc.append((t,(a,a)))
          else:
+            needs_lua=True
             acc.append((t,(a,b)))
             torem.append(e)
 
    for e in torem:
       r.remove(e)
 
-   return acc
+   return needs_lua,acc
 
 names={
-   "priority":"Priority",
    "mass":"Ship Mass",
    "cpu_max":"CPU max",
    "energy":"Energy Capacity",
@@ -78,7 +82,6 @@ names={
    "cooldown_time":"Ship Cooldown Time"
 }
 units={
-   "priority":"",
    "mass":"mass",
    "cpu_max":"",
    "energy":"energy",
@@ -104,45 +107,48 @@ function descextra( _p, _po )
 """
 
    for (nam,(main,sec)) in L:
-      if units.has_key(nam):
-         if nam=="mass":
-            defa='"#r"'
-            print >>fp,ind+'desc=desc.."#r"'
-         else:
-            defa='"#g"'
+      if nam not in dont_display:
+         if units.has_key(nam):
+            if nam=="mass":
+               defa='"#r"'
+               print >>fp,ind+'desc=desc.."#r"'
+            else:
+               defa='"#g"'
 
-         if units[nam]!='':
-            print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'","',sfmt(sec)+'",',defa+', nomain, nosec)'
+            if units[nam]!='':
+               print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'", "'+sfmt(sec)+'",',defa+', nomain, nosec)'
+            else:
+               print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), "",', '"'+sfmt(main)+'", "'+sfmt(sec)+'"',',',defa+', nomain, nosec)'
+
+            if nam=="mass":
+               print >>fp,ind+'desc=desc.."#g"'
          else:
-            print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), "",', '"'+sfmt(main)+'","',sfmt(sec)+'"',',',defa+', nomain, nosec)'
-         if nam=="mass":
-            print >>fp,ind+'desc=desc.."#g"'
-      else:
-         print >>stderr,"unknown unit of",repr(nam)
+            print >>stderr,"unknown unit of",repr(nam)
 
    print >>fp,"""
    return desc
 end
 """
+   L2=[(nam,(a,b)) for (nam,(a,b)) in L if a!=b]
    print >>fp,"function init(_p, po )"
    print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
-   for (nam,_) in L:
+   for (nam,_) in L2:
       print >>fp,2*ind+"local",nam
 
    print >>fp,2*ind+"if not po:slot().tags.secondary then"
    print >>fp,3*ind+'nosec=true'
    print >>fp,3*ind+'nomain=false'
-   for (nam,(main,sec)) in L:
+   for (nam,(main,sec)) in L2:
       print >>fp,3*ind+nam+"="+fmt(main)
 
    print >>fp,2*ind+'else'
    print >>fp,3*ind+'nosec=false'
    print >>fp,3*ind+'nomain=true'
-   for (nam,(main,sec)) in L:
+   for (nam,(main,sec)) in L2:
       print >>fp,3*ind+nam+"="+fmt(sec)
    print >>fp,2*ind+"end"
 
-   for (nam,_) in L:
+   for (nam,_) in L2:
       print >>fp,2*ind+'po:set( "'+nam+'", '+nam+' )'
 
    print >>fp,ind+'else'
@@ -171,10 +177,12 @@ def main(arg):
    nam=nam2fil(R.attrib['name'])
    print nam
 
-   acc+=process_group(R,'./general')
-   acc+=process_group(R,'./specific')
+   f1,acc1=process_group(R,'./general')
+   f2,acc2=process_group(R,'./specific')
 
-   if acc!=[]:
+   if f1 or f2:
+      acc=acc1+acc2
+
       for e in R.findall('./specific'):
          el=ET.Element("lua")
          el.text=(path+nam+".lua").split('dat/',1)[-1]
