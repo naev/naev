@@ -1,6 +1,26 @@
 #!/usr/bin/python
 
 dont_display=set(['priority'])
+names={
+   "mass":"Ship Mass",
+   "cpu_max":"CPU max",
+   "energy":"Energy Capacity",
+   "energy_regen":"Energy Regeneration",
+   "shield":"Shield Capacity",
+   "shield_regen":"Shield Regeneration",
+   "ew_detect":"Detection",
+   "cooldown_time":"Ship Cooldown Time"
+}
+units={
+   "mass":"mass",
+   "cpu_max":"",
+   "energy":"energy",
+   "energy_regen":"power",
+   "shield":"energy",
+   "shield_regen":"power",
+   "ew_detect":"",
+   "cooldown_time":""
+}
 
 from os import path
 from sys import argv,stderr,exit,stdin,stdout
@@ -71,26 +91,6 @@ def process_group(r,field):
 
    return needs_lua,acc
 
-names={
-   "mass":"Ship Mass",
-   "cpu_max":"CPU max",
-   "energy":"Energy Capacity",
-   "energy_regen":"Energy Regeneration",
-   "shield":"Shield Capacity",
-   "shield_regen":"Shield Regeneration",
-   "ew_detect":"Detection",
-   "cooldown_time":"Ship Cooldown Time"
-}
-units={
-   "mass":"mass",
-   "cpu_max":"",
-   "energy":"energy",
-   "energy_regen":"",
-   "shield":"energy",
-   "shield_regen":"",
-   "ew_detect":"",
-   "cooldown_time":""
-}
 
 def mklua(luanam,L):
    print >>stderr,"<"+luanam+">"

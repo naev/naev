@@ -11,9 +11,9 @@ function descextra( _p, _po )
    desc=desc.."#g"
    desc=add_desc(desc, _("CPU max"), "", "+260", "+100" , "#g", nomain, nosec)
    desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+750", "+850", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Regeneration"), "", "+33", "+20" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Regeneration"), naev.unit("power"), "+33", "+20", "#g", nomain, nosec)
    desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+450", "+130", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Regeneration"), "", "+10", "+2" , "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Regeneration"), naev.unit("power"), "+10", "+2", "#g", nomain, nosec)
 
    return desc
 end
