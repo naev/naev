@@ -1395,6 +1395,7 @@ static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o,
  *
  *    @param p Pilot to get the outfit description of (or NULL for no pilot).
  *    @param o Outfit to get description of.
+ *    @param pos Pilot outfit slot or NULL if not applicable.
  *    @return The description of the outfit.
  */
 const char *pilot_outfitDescription( const Pilot *p, const Outfit *o,
@@ -1417,6 +1418,7 @@ const char *pilot_outfitDescription( const Pilot *p, const Outfit *o,
  *    @param p Pilot to get the outfit summary of (or NULL for no pilot).
  *    @param o Outfit to get summary of.
  *    @param withname Whether or not to show the name too.
+ *    @param pos Pilot outfit slot or NULL if not applicable.
  *    @return The summary of the outfit.
  */
 const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname,
