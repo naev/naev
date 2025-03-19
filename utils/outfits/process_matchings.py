@@ -48,9 +48,9 @@ def confirm(cand1,cand2):
 def process(thepath,f1,f2):
    outpath=get_path(f1.replace('/core_','/multicore/core_',1))
    #print "echo","'"+path.basename(f1),path.basename(f2)+"'"
-   cmd="NAM=`"+thepath+"outfits2multicore.py"+' '+f1+' '+f2+' | '+thepath+"multicore2lua.py"+' "'+outpath+'"'+'`'
+   cmd="NAM=`"+thepath+"outfits2mvx.py"+' '+f1+' '+f2+' | '+thepath+"mvx2xmllua.py"+' "'+outpath+'"'+'`'
    print cmd
-   print thepath+"outfits2multicore.py"+' '+f1+' '+f2+' > "'+outpath+'$NAM.mvx"'
+   print thepath+"outfits2mvx.py"+' '+f1+' '+f2+' > "'+outpath+'$NAM.mvx"'
    print thepath+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
    
 if __name__=="__main__":
