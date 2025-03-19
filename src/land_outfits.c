@@ -603,7 +603,7 @@ void outfits_update( unsigned int wid, const char *str )
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
-   summary = pilot_outfitSummary( player.p, outfit, 0 );
+   summary = pilot_outfitSummary( player.p, outfit, 0, NULL );
    window_modifyText( wid, "txtDescShort", summary );
    window_moveWidget( wid, "txtDescShort", 20 + iw + 20, -40 - th );
    window_dimWidget( wid, "txtDescShort", &sw, NULL );
@@ -772,10 +772,12 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
 /**
  * @brief Computes the alt text for an outfit.
  */
-int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
+int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt,
+                    PilotOutfitSlot *pos )
 {
    int p = outfit_getNameWithClass( o, buf, n );
-   p += scnprintf( &buf[p], n - p, "\n%s", pilot_outfitSummary( plt, o, 0 ) );
+   p += scnprintf( &buf[p], n - p, "\n%s",
+                   pilot_outfitSummary( plt, o, 0, pos ) );
    return 0;
 }
 
@@ -828,7 +830,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
          col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
 
          /* Short description. */
-         coutfits[i].alt = strdup( pilot_outfitSummary( p, o, 1 ) );
+         coutfits[i].alt = strdup( pilot_outfitSummary( p, o, 1, NULL ) );
 
          /* Slot type. */
          if ( ( strcmp( outfit_slotName( o ), "N/A" ) != 0 ) &&

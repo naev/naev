@@ -645,7 +645,7 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof( buf ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, " %s",
-                   pilot_outfitSummary( player.p, outfit, 0 ) );
+                   pilot_outfitSummary( player.p, outfit, 0, NULL ) );
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
@@ -655,7 +655,7 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
       mass += outfit_amount( outfit ) * outfit->u.bay.ship_mass;
 
    window_modifyText( wid, "txtDescription",
-                      pilot_outfitDescription( player.p, outfit ) );
+                      pilot_outfitDescription( player.p, outfit, NULL ) );
    credits2str( buf_price, outfit->price, 2 );
    credits2str( buf_money, player.p->credits, 2 );
    tonnes2str( buf_mass, (int)round( mass ) );

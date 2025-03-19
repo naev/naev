@@ -934,7 +934,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
    }
 
    /* Get text. */
-   outfit_altText( alt, sizeof( alt ), o, ( p == player.p ) ? p : NULL );
+   outfit_altText( alt, sizeof( alt ), o, ( p == player.p ) ? p : NULL, slot );
 
    /* Display temporary bonuses. */
    if ( slot->lua_mem != LUA_NOREF ) {

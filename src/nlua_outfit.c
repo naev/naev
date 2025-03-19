@@ -504,10 +504,10 @@ static int outfitL_description( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
    if ( lua_ispilot( L, 2 ) )
-      lua_pushstring( L,
-                      pilot_outfitDescription( luaL_validpilot( L, 2 ), o ) );
+      lua_pushstring(
+         L, pilot_outfitDescription( luaL_validpilot( L, 2 ), o, NULL ) );
    else
-      lua_pushstring( L, pilot_outfitDescription( player.p, o ) );
+      lua_pushstring( L, pilot_outfitDescription( player.p, o, NULL ) );
    return 1;
 }
 
@@ -529,9 +529,9 @@ static int outfitL_summary( lua_State *L )
    int           noname = lua_toboolean( L, 3 );
    if ( lua_ispilot( L, 2 ) )
       lua_pushstring(
-         L, pilot_outfitSummary( luaL_validpilot( L, 2 ), o, !noname ) );
+         L, pilot_outfitSummary( luaL_validpilot( L, 2 ), o, !noname, NULL ) );
    else
-      lua_pushstring( L, pilot_outfitSummary( player.p, o, !noname ) );
+      lua_pushstring( L, pilot_outfitSummary( player.p, o, !noname, NULL ) );
    return 1;
 }
 

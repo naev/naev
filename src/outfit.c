@@ -1125,7 +1125,7 @@ const char *outfit_getAmmoAI( const Outfit *o )
  */
 const char *outfit_description( const Outfit *o )
 {
-   return pilot_outfitDescription( NULL, o );
+   return pilot_outfitDescription( NULL, o, NULL );
 }
 
 /**
@@ -1139,7 +1139,7 @@ const char *outfit_description( const Outfit *o )
  */
 const char *outfit_summary( const Outfit *o, int withname )
 {
-   return pilot_outfitSummary( NULL, o, withname );
+   return pilot_outfitSummary( NULL, o, withname, NULL );
 }
 
 /**
