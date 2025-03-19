@@ -404,20 +404,12 @@ local function autonav_rampdown( count_brake )
 end
 
 local function turnoff_afterburner()
-   for i,n in ipairs(player.pilot():actives()) do
+   local pp=player.pilot()
+   for _i,n in ipairs(pp:actives()) do
       -- Why does n:type() not work ?
       -- Why *A*fterburner and not afterburner ?
-      -- The documentation is not clear : (too much or.s)
-      --   activate: boolean Whether or not to activate or deactivate
-      -- Proposition:
-      --   activate: boolean Whether to activate or deactivate
       if n["type"]=="Afterburner" and n["state"]=="on" then
-         player.pilot():outfitToggle( n['slot'] )
-      end
-   end
-   for _i,n in ipairs(player.pilot():actives()) do
-      if n["type"]=="Afterburner" and n["state"]=="on" then
-         print("Toggle failed!")
+         pp:outfitToggle( n['slot'] )
       end
    end
 end
