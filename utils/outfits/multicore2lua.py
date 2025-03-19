@@ -127,7 +127,7 @@ def mklua(luanam,L):
    print >>fp,"""notactive = true
 local nomain=false
 local nosec=false
-local add_desc=require "outfits.multicores.desc"
+local add_desc=require "outfits.multicore.desc"
 
 function descextra( _p, _po )
    local desc = ""

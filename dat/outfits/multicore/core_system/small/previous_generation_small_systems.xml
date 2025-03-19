@@ -1,0 +1,14 @@
+<outfit name="Previous Generation Small Systems">
+ <general>
+  <shortname>Prev. Gen. Small Systems</shortname>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <size>small</size>
+  <mass>18</mass>
+  <price>0</price>
+  <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+  <gfx_store>apu.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/multicore/core_system/small/previous_generation_small_systems.lua</lua></specific>
+</outfit>

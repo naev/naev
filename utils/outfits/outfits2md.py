@@ -10,7 +10,7 @@ def transpose(M):
    M=[t+['']*(N-len(t)) for t in M]
    return zip(*(tuple(M)))
 
-getfloat=lambda s:float(s.split('|')[0])
+getfloat=lambda s:float(s.split('/')[0])
 
 #launch_reload
 def main(args,gith=False,ter=False,noext=False):
@@ -111,8 +111,8 @@ if __name__ == '__main__':
          gith=ter=False
          print >>stderr,"Ignored incompatible -g and -c."
 
-      ign=[f for f in argv[1:] if f not in ["-g","-c","-n"] and not f.endswith(".xml")]
+      ign=[f for f in argv[1:] if f not in ["-g","-c","-n"] and not f.endswith(".xml") and not f.endswith(".mvx")]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      main([f for f in argv[1:] if f.endswith(".xml")],gith,ter,noext)
+      main([f for f in argv[1:] if f.endswith(".xml") or f.endswith(".mvx")],gith,ter,noext)

@@ -1,0 +1,14 @@
+<outfit name="Milspec Thalos 8502 Core System">
+ <general>
+  <shortname>M. Thalos 8502 System</shortname>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <size>large</size>
+  <price>1800000</price>
+  <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 8502 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <gfx_store>core_system_cpu_l1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <lua>outfits/multicore/core_system/large/milspec_thalos_8502_core_system.lua</lua></specific>
+</outfit>

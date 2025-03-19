@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 DEPR_STR=' (deprecated)'
 
 def main(arg,rev):
-   if not arg.endswith('.xml'):
+   if not arg.endswith('.xml') and not arg.endswith('.mvx'):
       return
 
    T=ET.parse(arg)
@@ -45,7 +45,7 @@ if __name__ == '__main__':
       reverse='-r' in argv[1:]
       args=[s for s in argv[1:] if s!='-r']
       if args[1:]!=[]:
-         print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
+         print >>stderr,'Ignored: "'+'", "'.join(args[1:])+'"'
 
       main(args[0],reverse)
 
