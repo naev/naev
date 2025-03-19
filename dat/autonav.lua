@@ -412,7 +412,7 @@ local function turnoff_afterburner()
       -- Proposition:
       --   activate: boolean Whether to activate or deactivate
       if n["type"]=="Afterburner" and n["state"]=="on" then
-         player.pilot():outfitToggle(i)
+         player.pilot():outfitToggle( n['slot'] )
       end
    end
    for _i,n in ipairs(player.pilot():actives()) do
