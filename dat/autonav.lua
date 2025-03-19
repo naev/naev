@@ -10,6 +10,7 @@ local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed, escort_health
 local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land_jump, brake_pos, include_escorts
 local follow_pilot_fleet
+local already_aboff
 
 -- Some defaults
 autonav_timer = 0
@@ -42,6 +43,7 @@ local function autonav_setup ()
    tc_rampdown = false
    tc_down     = 0
    path        = nil
+   already_aboff= false
    follow_pilot_fleet = {}
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
@@ -409,9 +411,14 @@ local function turnoff_afterburner()
       -- Why does n:type() not work ?
       -- Why *A*fterburner and not afterburner ?
       if n["type"]=="Afterburner" and n["state"]=="on" then
-         pp:outfitToggle( n['slot'] )
+         if already_aboff then
+            return autonav_abort(_("Manual commands at approach."))
+         else
+            pp:outfitToggle( n['slot'] )
+         end
       end
    end
+   already_aboff=true
 end
 
 --[[
@@ -446,6 +453,7 @@ local function autonav_approach( pos, count_brakedist )
          end
       end
    end
+
 
    -- Distance left to start breaking
    local dist = d - brakedist
