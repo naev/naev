@@ -24,8 +24,8 @@ end
 
 -- Called to get the extra description of the outfit. This gets appended to the
 -- summary and description, and should be short. The function receives the
--- pilot p if applicable, and the current outfit o. The function should return
--- a translated string.
+-- pilot p if applicable, the current outfit o, and the pilot outfit slot po
+-- (or nil if not applicable). The function should return a translated string.
 function descextra( _p, _o, _po )
    return _("This outfit is very cool.")
 end
