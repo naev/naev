@@ -1,10 +1,23 @@
 notactive = true
-local nomain=false
-local nosec=false
 local add_desc=require "outfits.multicore.desc"
 
-function descextra( _p, _o, _po )
+function descextra( _p, _o, po )
    local desc = ""
+   local nosec
+   local nomain
+
+   if po and po:slot().tags and po:slot().tags.core then
+      if po:slot().tags.secondary then
+         nosec=false
+         nomain=true
+      else
+         nosec=true
+         nomain=false
+      end
+   else
+      nosec=false
+      nomain=false
+   end
 
    local unit_energy= naev.unit("energy")
    local unit_power= naev.unit("power")
@@ -21,6 +34,8 @@ function descextra( _p, _o, _po )
 end
 
 function init(_p, po )
+   local nomain=false
+   local nosec=false
    if po:slot().tags and po:slot().tags.core then
       local cpu_max
       local energy

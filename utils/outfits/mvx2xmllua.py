@@ -125,12 +125,25 @@ def mklua(luanam,L):
    ind=3*' '
 
    print >>fp,"""notactive = true
-local nomain=false
-local nosec=false
 local add_desc=require "outfits.multicore.desc"
 
-function descextra( _p, _o, _po )
+function descextra( _p, _o, po )
    local desc = ""
+   local nosec
+   local nomain
+
+   if po and po:slot().tags and po:slot().tags.core then
+      if po:slot().tags.secondary then
+         nosec=false
+         nomain=true
+      else
+         nosec=true
+         nomain=false
+      end
+   else
+      nosec=false
+      nomain=false
+   end
 """
 
    unit_dont_repeat={"":""}
@@ -175,6 +188,8 @@ end
 """
    L2=[(nam,(a,b)) for (nam,(a,b)) in L if a!=b]
    print >>fp,"function init(_p, po )"
+   print >>fp,ind+"local nomain=false"
+   print >>fp,ind+"local nosec=false"
    print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
    for (nam,_) in L2:
       print >>fp,2*ind+"local",nam
