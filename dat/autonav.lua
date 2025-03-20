@@ -302,6 +302,12 @@ local function pilot_fleet ( plt )
       table.insert( flt, v )
    end
 
+   -- Sort
+   local ppos = player.pos()
+   table.sort( flt, function( a, b )
+      return a:pos():dist2( ppos ) < b:pos():dist2( ppos )
+   end )
+
    return flt
 end
 
