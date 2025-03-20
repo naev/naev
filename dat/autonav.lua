@@ -412,7 +412,7 @@ local function turnoff_afterburner()
       -- Why *A*fterburner and not afterburner ?
       if n["type"]=="Afterburner" and n["state"]=="on" then
          if already_aboff then
-            return autonav_abort(_("Manual commands at approach."))
+            return autonav_abort(_("manual commands at approach"))
          else
             pp:outfitToggle( n['slot'] )
          end
@@ -453,7 +453,6 @@ local function autonav_approach( pos, count_brakedist )
          end
       end
    end
-
 
    -- Distance left to start breaking
    local dist = d - brakedist
