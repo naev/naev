@@ -2345,10 +2345,6 @@ static int pilotL_actives( lua_State *L )
       lua_pushinteger( L, i + 1 );
       lua_setfield( L, -2, "slot" );
 
-      /* Type. */
-      lua_pushstring( L, outfit_getType( pos->outfit ) );
-      lua_setfield( L, -2, "type" );
-
       lua_pushboolean( L, pos->flags & PILOTOUTFIT_ISON );
       lua_setfield( L, -2, "active" );
 
