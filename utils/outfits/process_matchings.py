@@ -50,7 +50,7 @@ def process(thepath,f1,f2):
    #print "echo","'"+path.basename(f1),path.basename(f2)+"'"
    cmd="NAM=`"+thepath+"outfits2mvx.py"+' '+f1+' '+f2+' | '+thepath+"mvx2xmllua.py"+' "'+outpath+'"'+'`'
    print cmd
-   print thepath+"outfits2mvx.py"+' '+f1+' '+f2+' > "'+outpath+'$NAM.mvx"'
+   print 'if test -f "'+outpath+'$NAM.lua" ; then',thepath+"outfits2mvx.py"+' '+f1+' '+f2+' > "'+outpath+'$NAM.mvx";',"fi"
    print thepath+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
    
 if __name__=="__main__":

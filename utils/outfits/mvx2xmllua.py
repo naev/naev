@@ -129,9 +129,24 @@ local nomain=false
 local nosec=false
 local add_desc=require "outfits.multicore.desc"
 
-function descextra( _p, _po )
+function descextra( _p, _o, _po )
    local desc = ""
 """
+
+   unit_dont_repeat={"":""}
+   unit_count={}
+
+   for (nam,_) in L:
+      if nam not in dont_display:
+         if unit_count.has_key(units[nam]):
+            unit_count[units[nam]]+=1
+         else:
+            unit_count[units[nam]]=1
+
+   for nam,count in unit_count.iteritems():
+      if unit_count[nam]>1:
+         unit_dont_repeat[nam]="unit_"+nam
+         print >>fp,ind+"local",unit_dont_repeat[nam]+'= naev.unit("'+nam+'")'
 
    for (nam,(main,sec)) in L:
       if nam not in dont_display:
@@ -142,10 +157,12 @@ function descextra( _p, _po )
             else:
                defa='"#g"'
 
-            if units[nam]!='':
-               print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), naev.unit("'+units[nam]+'"),', '"'+sfmt(main)+'", "'+sfmt(sec)+'",',defa+', nomain, nosec)'
+            if unit_dont_repeat.has_key(units[nam]):
+               unit_nam=unit_dont_repeat[units[nam]]
             else:
-               print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"), "",', '"'+sfmt(main)+'", "'+sfmt(sec)+'"',',',defa+', nomain, nosec)'
+               unit_nam='naev.unit("'+units[nam]+'")'
+
+            print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"),',unit_nam+',', '"'+sfmt(main)+'", "'+sfmt(sec)+'",',defa+', nomain, nosec)'
 
             if nam=="mass":
                print >>fp,ind+'desc=desc.."#g"'

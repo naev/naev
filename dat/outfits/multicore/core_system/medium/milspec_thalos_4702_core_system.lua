@@ -3,17 +3,19 @@ local nomain=false
 local nosec=false
 local add_desc=require "outfits.multicore.desc"
 
-function descextra( _p, _po )
+function descextra( _p, _o, _po )
    local desc = ""
 
+   local unit_energy= naev.unit("energy")
+   local unit_power= naev.unit("power")
    desc=desc.."#r"
    desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+80", "+170", "#r", nomain, nosec)
    desc=desc.."#g"
    desc=add_desc(desc, _("CPU Capacity"), naev.unit("cpu"), "+300", "+120", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Capacity"), naev.unit("energy"), "+675", "+725", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Regeneration"), naev.unit("power"), "+23", "+20", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Capacity"), naev.unit("energy"), "+400", "+100", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Regeneration"), naev.unit("power"), "+8", "+1", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Capacity"), unit_energy, "+675", "+725", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Energy Regeneration"), unit_power, "+23", "+20", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Capacity"), unit_energy, "+400", "+100", "#g", nomain, nosec)
+   desc=add_desc(desc, _("Shield Regeneration"), unit_power, "+8", "+1", "#g", nomain, nosec)
 
    return desc
 end
