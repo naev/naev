@@ -2644,6 +2644,7 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
  * outfit ids.
  *    @luatparam[opt=false] boolean activate Whether to activate or
  * deactivate the outfit.
+ *    @luatreturn boolean Whether or not the outfit successfully toggled.
  * @luafunc outfitToggle
  */
 static int pilotL_outfitToggle( lua_State *L )

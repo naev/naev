@@ -420,7 +420,10 @@ local function turnoff_afterburner()
          if already_aboff then
             return autonav_abort(_("manual commands at approach"))
          else
-            pp:outfitToggle( n.slot )
+            if not pp:outfitToggle( n.slot ) then
+               -- Failed to disable
+               return autonav_abort(_("manual commands at approach"))
+            end
          end
       end
    end
