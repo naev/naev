@@ -124,81 +124,15 @@ def mklua(luanam,L):
    fp=file(luanam,"w")
    ind=3*' '
 
-   print >>fp,"""notactive = true
-local add_desc=require "outfits.multicore.desc"
-local slotflags=require "outfits.multicore.slotflags"
-
-function descextra( _p, _o, po )
-   local desc = ""
-   local nosec
-   local nomain
-
-   nomain,nosec=slotflags(po)
-"""
-
-   unit_dont_repeat={"":""}
-   unit_count={}
-
-   for (nam,_) in L:
-      if nam not in dont_display:
-         if unit_count.has_key(units[nam]):
-            unit_count[units[nam]]+=1
-         else:
-            unit_count[units[nam]]=1
-
-   for nam,count in unit_count.iteritems():
-      if unit_count[nam]>1:
-         unit_dont_repeat[nam]="unit_"+nam
-         print >>fp,ind+"local",unit_dont_repeat[nam]+'= naev.unit("'+nam+'")'
+   print >>fp,'require("outfits.multicore.desc").init{'
 
    for (nam,(main,sec)) in L:
       if nam not in dont_display:
-         if units.has_key(nam):
-            if nam=="mass":
-               defa='"#r"'
-               print >>fp,ind+'desc=desc.."#r"'
-            else:
-               defa='"#g"'
+            print >>fp,ind+'{ "'+nam+'",',
+            print >>fp,fmt(main)+',',
+            print >>fp,fmt(sec)+'},'
 
-            if unit_dont_repeat.has_key(units[nam]):
-               unit_nam=unit_dont_repeat[units[nam]]
-            else:
-               unit_nam='naev.unit("'+units[nam]+'")'
-
-            print >>fp,ind+'desc=add_desc(desc, _("'+names[nam]+'"),',unit_nam+',', '"'+sfmt(main)+'", "'+sfmt(sec)+'",',defa+', nomain, nosec)'
-
-            if nam=="mass":
-               print >>fp,ind+'desc=desc.."#g"'
-         else:
-            print >>stderr,"unknown unit of",repr(nam)
-
-   print >>fp,"""
-   return desc
-end
-"""
-   L2=[(nam,(a,b)) for (nam,(a,b)) in L if a!=b]
-   print >>fp,"function init(_p, po )"
-   print >>fp,ind+"local nomain"
-   print >>fp,ind+"local nosec"
-   print >>fp,ind+"nomain,nosec=slotflags(po)"
-   print >>fp,ind+"if nomain or nosec then"
-   for (nam,_) in L2:
-      print >>fp,2*ind+"local",nam
-
-   print >>fp,2*ind+"if nosec then"
-   for (nam,(main,sec)) in L2:
-      print >>fp,3*ind+nam+"="+fmt(main)
-
-   print >>fp,2*ind+'else'
-   for (nam,(main,sec)) in L2:
-      print >>fp,3*ind+nam+"="+fmt(sec)
-   print >>fp,2*ind+"end"
-
-   for (nam,_) in L2:
-      print >>fp,2*ind+'po:set( "'+nam+'", '+nam+' )'
-
-   print >>fp,ind+"end"
-   print >>fp,"end"
+   print >>fp,"}"
    fp.close()
 
 def main(arg):

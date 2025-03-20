@@ -1,8 +1,10 @@
 
 local fmt = require "format"
+local shipstat = naev.shipstats()
+local multicore = {}
 
 local function vu( val, unit)
-   if val=='_' then
+   if val=='_' or unit == nil or unit == "" then
       return val
    else
       return val.." "..unit
@@ -17,19 +19,100 @@ local function col( s, grey, def)
    end
 end
 
-local function _add_desc(desc, name, units, base, secondary, def,nomain,nosec)
-   if base==secondary then
-      return desc..fmt.f(_("\n{name}: {bas}"), {
-         name=name, bas=vu(base,units)
-      })
+local function sign(n)
+   if n == nil or n=="_" then
+      return 0
    else
-      return desc..fmt.f(_("\n{name}: {bas} {sep} {sec}"), {
-         name=name,
-         sep=col("/",nomain or nosec,def),
-         bas=col(vu(base,units),nomain,def),
-         sec=col(vu(secondary,units),nosec,def),
-      })
+      return n
    end
 end
 
-return _add_desc
+local function add_desc(stat, nomain, nosec )
+   local name = stat.name
+   local base = stat.pri
+   local secondary = stat.sec
+   local units = stat.unit
+
+   local p=sign(base)
+   local s=sign(secondary)
+
+   local def
+   if stat.reverse then
+      def = ((p+s <= 0) and "#g") or "#r"
+   else
+      def = ((p+s >= 0) and "#g") or "#r"
+   end
+
+   local pref="\n".._(name)..": "..def
+
+   if base==secondary then
+      return pref..vu(base,units)
+--      return fmt.f("\n{name}: {bas}", {
+--         name = _(name), bas = vu(base,units)
+--      })
+   else
+      return pref..col( vu(base,units),nomain,def)..col( "/",nomain or nosec,def)..col(vu(secondary,units),nosec, def)
+--      return fmt.f("\n{name}: {bas} {sep} {sec}", {
+--         name = _(name),
+--         sep = col( "/", nomain or nosec, stat),
+--         bas = col( vu(base,units), nomain, stat),
+--         sec = col( vu(secondary,units), nosec, stat),
+--      })
+   end
+end
+
+local function index( tbl, key )
+   for i,v in ipairs(tbl) do
+      if v and v["name"]==key then
+         return i
+      end
+   end
+   return nil
+end
+
+function multicore.init( params )
+   -- Create an easier to use table that references the true ship stats
+   local stats = tcopy( params )
+   for k,s in ipairs(stats) do
+      s.stat = shipstat[ s[1] ]
+      s.index = index( shipstat, s[1] )
+      s.name = s[1]
+      s.pri = s[2]
+      s.sec = s[3]
+   end
+   -- Sort based on shipstat table order
+   table.sort( stats, function ( a, b )
+      return a.index < b.index
+   end )
+
+   -- Set global properties
+   notactive = true
+
+   -- Below define the global functions for the outfit
+   function descextra( _p, _o, po )
+      local nomain, nosec = false, false
+      if po then
+         if po:slot().tags.secondary then
+            nomain = true
+         else
+            nosec = true
+         end
+      end
+
+      local desc = ""
+      for k,s in ipairs(stats) do
+         desc = desc..add_desc( s, nomain, nosec )
+      end
+      return desc
+   end
+
+   function init( _p, po )
+      local secondary = po:slot().tags.secondary
+      for k,s in ipairs(stats) do
+         local val = (secondary and s.sec) or s.pri
+         po:set( s.name, val )
+      end
+   end
+end
+
+return multicore

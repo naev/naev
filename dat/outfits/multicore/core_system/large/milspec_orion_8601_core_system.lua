@@ -1,59 +1,8 @@
-notactive = true
-local add_desc=require "outfits.multicore.desc"
-local slotflags=require "outfits.multicore.slotflags"
-
-function descextra( _p, _o, po )
-   local desc = ""
-   local nosec
-   local nomain
-
-   nomain,nosec=slotflags(po)
-
-   local unit_energy= naev.unit("energy")
-   local unit_power= naev.unit("power")
-   desc=desc.."#r"
-   desc=add_desc(desc, _("Ship Mass"), naev.unit("mass"), "+540", "+760", "#r", nomain, nosec)
-   desc=desc.."#g"
-   desc=add_desc(desc, _("CPU Capacity"), naev.unit("cpu"), "+540", "+1660", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Capacity"), unit_energy, "+2460", "+1380", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Energy Regeneration"), unit_power, "+66", "+74", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Capacity"), unit_energy, "+850", "+250", "#g", nomain, nosec)
-   desc=add_desc(desc, _("Shield Regeneration"), unit_power, "+15", "+3", "#g", nomain, nosec)
-
-   return desc
-end
-
-function init(_p, po )
-   local nomain
-   local nosec
-   nomain,nosec=slotflags(po)
-   if nomain or nosec then
-      local mass
-      local cpu_max
-      local energy
-      local energy_regen
-      local shield
-      local shield_regen
-      if nosec then
-         mass=540
-         cpu_max=540
-         energy=2460
-         energy_regen=66
-         shield=850
-         shield_regen=15
-      else
-         mass=760
-         cpu_max=1660
-         energy=1380
-         energy_regen=74
-         shield=250
-         shield_regen=3
-      end
-      po:set( "mass", mass )
-      po:set( "cpu_max", cpu_max )
-      po:set( "energy", energy )
-      po:set( "energy_regen", energy_regen )
-      po:set( "shield", shield )
-      po:set( "shield_regen", shield_regen )
-   end
-end
+require("outfits.multicore.desc").init{
+   { "mass", 540, 760},
+   { "cpu_max", 540, 1660},
+   { "energy", 2460, 1380},
+   { "energy_regen", 66, 74},
+   { "shield", 850, 250},
+   { "shield_regen", 15, 3},
+}
