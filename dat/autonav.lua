@@ -10,6 +10,7 @@ local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
 local last_shield, last_armour, map_npath, reset_shield, reset_dist, reset_lockon, fleet_speed, game_speed, escort_health
 local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land_jump, brake_pos, include_escorts
 local follow_pilot_fleet
+local already_aboff
 
 -- Some defaults
 autonav_timer = 0
@@ -42,6 +43,7 @@ local function autonav_setup ()
    tc_rampdown = false
    tc_down     = 0
    path        = nil
+   already_aboff= false
    follow_pilot_fleet = {}
    local stealth = pp:flags("stealth")
    uselanes_jump = var.peek("autonav_uselanes_jump") and not stealth
@@ -403,9 +405,24 @@ local function autonav_rampdown( count_brake )
    end
 end
 
+local function turnoff_afterburner()
+   local pp=player.pilot()
+   for _i,n in ipairs(pp:actives()) do
+      -- Why does n:type() not work ?
+      -- Why *A*fterburner and not afterburner ?
+      if n["type"]=="Afterburner" and n["state"]=="on" then
+         if already_aboff then
+            return autonav_abort(_("manual commands at approach"))
+         else
+            pp:outfitToggle( n['slot'] )
+         end
+      end
+   end
+   already_aboff=true
+end
+
 --[[
    For approaching a static target.
-
 --]]
 local function autonav_approach( pos, count_brakedist )
    local pp = player.pilot()
@@ -447,6 +464,7 @@ local function autonav_approach( pos, count_brakedist )
    end
 
    if dist < 0 then
+      turnoff_afterburner()
       ai.accel(0)
       return true, retd
    end
