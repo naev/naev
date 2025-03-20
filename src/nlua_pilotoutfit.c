@@ -202,7 +202,7 @@ static int poL_slot( lua_State *L )
  * @brief Gets the outfit of the PilotOutfit.
  *
  *    @luatparam PilotOutfit po Pilot outfit to get the outfit of.
- *    @luatparam Outfit Outfit corresponding to the Pilot outfit.
+ *    @luatreturn Outfit Outfit corresponding to the Pilot outfit.
  * @luafunc outfit
  */
 static int poL_outfit( lua_State *L )
