@@ -4,10 +4,16 @@ local shipstat = naev.shipstats()
 local multicore = {}
 
 local function vu( val, unit)
-   if val=='_' or unit == nil or unit == "" then
-      return val
+   if val=="_" or val==0 then
+      num="_"
    else
-      return val.." "..unit
+      num=val
+   end
+
+   if num=="_" or unit == nil or unit == "" then
+      return fmt.f("{num}",{num=num})
+   else
+      return fmt.f("{val} {unit}",{val=val,unit=unit})
    end
 end
 
@@ -31,25 +37,22 @@ local function add_desc(stat, nomain, nosec )
    local name = stat.name
    local base = stat.pri
    local secondary = stat.sec
-   local units = stat.unit
+   local units = stat.stat.unit
 
    local p=sign(base)
    local s=sign(secondary)
 
    local def
-   if stat.reverse then
+   if stat.stat.reverse then
       def = ((p+s <= 0) and "#g") or "#r"
    else
       def = ((p+s >= 0) and "#g") or "#r"
    end
 
-   local pref="\n".._(name)..": "..def
+   local pref=fmt.f("\n{def}{name}: ",{def=def,name=_(name)})
 
    if base==secondary then
       return pref..vu(base,units)
---      return fmt.f("\n{name}: {bas}", {
---         name = _(name), bas = vu(base,units)
---      })
    else
       return pref..col( vu(base,units),nomain,def)..col( "/",nomain or nosec,def)..col(vu(secondary,units),nosec, def)
 --      return fmt.f("\n{name}: {bas} {sep} {sec}", {
@@ -73,10 +76,11 @@ end
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
+
    for k,s in ipairs(stats) do
-      s.stat = shipstat[ s[1] ]
       s.index = index( shipstat, s[1] )
-      s.name = s[1]
+      s.stat = shipstat[ s.index ]
+      s.name = s.stat.name
       s.pri = s[2]
       s.sec = s[3]
    end
@@ -100,7 +104,7 @@ function multicore.init( params )
       end
 
       local desc = ""
-      for k,s in ipairs(stats) do
+      for _k,s in ipairs(stats) do
          desc = desc..add_desc( s, nomain, nosec )
       end
       return desc
