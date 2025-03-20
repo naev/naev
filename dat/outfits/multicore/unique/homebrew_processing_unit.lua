@@ -1,23 +1,13 @@
 notactive = true
 local add_desc=require "outfits.multicore.desc"
+local slotflags=require "outfits.multicore.slotflags"
 
 function descextra( _p, _o, po )
    local desc = ""
    local nosec
    local nomain
 
-   if po and po:slot().tags and po:slot().tags.core then
-      if po:slot().tags.secondary then
-         nosec=false
-         nomain=true
-      else
-         nosec=true
-         nomain=false
-      end
-   else
-      nosec=false
-      nomain=false
-   end
+   nomain,nosec=slotflags(po)
 
    local unit_percent= naev.unit("percent")
    local unit_energy= naev.unit("energy")
@@ -41,9 +31,10 @@ function descextra( _p, _o, po )
 end
 
 function init(_p, po )
-   local nomain=false
-   local nosec=false
-   if po:slot().tags and po:slot().tags.core then
+   local nomain
+   local nosec
+   nomain,nosec=slotflags(po)
+   if nomain or nosec then
       local cpu_max
       local energy
       local energy_regen
@@ -55,7 +46,7 @@ function init(_p, po )
       local land_delay
       local jump_delay
       local ew_hide
-      if not po:slot().tags.secondary then
+      if nosec then
          nosec=true
          nomain=false
          cpu_max=10
