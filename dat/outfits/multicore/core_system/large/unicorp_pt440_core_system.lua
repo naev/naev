@@ -40,8 +40,6 @@ function init(_p, po )
       local ew_detect
       local cooldown_time
       if nosec then
-         nosec=true
-         nomain=false
          mass=420
          cpu_max=440
          energy=1860
@@ -51,8 +49,6 @@ function init(_p, po )
          ew_detect=10
          cooldown_time=-25
       else
-         nosec=false
-         nomain=true
          mass=580
          cpu_max=1310
          energy=940

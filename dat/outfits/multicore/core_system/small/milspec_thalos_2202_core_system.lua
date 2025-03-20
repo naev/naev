@@ -35,8 +35,6 @@ function init(_p, po )
       local shield
       local shield_regen
       if nosec then
-         nosec=true
-         nomain=false
          mass=12
          cpu_max=24
          energy=150
@@ -44,8 +42,6 @@ function init(_p, po )
          shield=180
          shield_regen=6
       else
-         nosec=false
-         nomain=true
          mass=58
          cpu_max=66
          energy=200

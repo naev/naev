@@ -186,14 +186,10 @@ end
       print >>fp,2*ind+"local",nam
 
    print >>fp,2*ind+"if nosec then"
-   print >>fp,3*ind+'nosec=true'
-   print >>fp,3*ind+'nomain=false'
    for (nam,(main,sec)) in L2:
       print >>fp,3*ind+nam+"="+fmt(main)
 
    print >>fp,2*ind+'else'
-   print >>fp,3*ind+'nosec=false'
-   print >>fp,3*ind+'nomain=true'
    for (nam,(main,sec)) in L2:
       print >>fp,3*ind+nam+"="+fmt(sec)
    print >>fp,2*ind+"end"

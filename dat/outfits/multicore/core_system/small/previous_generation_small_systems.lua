@@ -34,16 +34,12 @@ function init(_p, po )
       local shield
       local shield_regen
       if nosec then
-         nosec=true
-         nomain=false
          cpu_max=10
          energy=100
          energy_regen=5
          shield=110
          shield_regen=4
       else
-         nosec=false
-         nomain=true
          cpu_max=0
          energy=0
          energy_regen=0

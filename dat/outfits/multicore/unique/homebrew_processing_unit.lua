@@ -47,8 +47,6 @@ function init(_p, po )
       local jump_delay
       local ew_hide
       if nosec then
-         nosec=true
-         nomain=false
          cpu_max=10
          energy=140
          energy_regen=7
@@ -61,8 +59,6 @@ function init(_p, po )
          jump_delay=-25
          ew_hide=-20
       else
-         nosec=false
-         nomain=true
          cpu_max=0
          energy=0
          energy_regen=0
