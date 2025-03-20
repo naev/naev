@@ -7,6 +7,11 @@
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
       * Improved autonav behaviour when losing a followed ship.
+   * Quality of Life
+      * Autonav improvements
+         * Can also be configured to automatically land when following a pilot that lands
+         * Now only jumps or lands after all the pilots in the fleet being followed jump or land
+         * Disables afterburner when getting ready to land or jump
    * Content
       * 2 new missions
       * 6 new ship variants
