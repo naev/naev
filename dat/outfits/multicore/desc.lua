@@ -4,6 +4,7 @@ local shipstat = naev.shipstats()
 local multicore = {}
 
 local function vu( val, unit)
+   local num
    if val=="_" or val==0 then
       num="_"
    else
@@ -37,13 +38,13 @@ local function add_desc(stat, nomain, nosec )
    local name = stat.name
    local base = stat.pri
    local secondary = stat.sec
-   local units = stat.stat.unit
+   local units = stat.stat.unit -- this works
 
    local p=sign(base)
    local s=sign(secondary)
 
    local def
-   if stat.stat.reverse then
+   if stat.stat.reverse then -- this doesn't
       def = ((p+s <= 0) and "#g") or "#r"
    else
       def = ((p+s >= 0) and "#g") or "#r"
