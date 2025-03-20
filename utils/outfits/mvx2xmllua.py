@@ -126,24 +126,14 @@ def mklua(luanam,L):
 
    print >>fp,"""notactive = true
 local add_desc=require "outfits.multicore.desc"
+local slotflags=require "outfits.multicore.slotflags"
 
 function descextra( _p, _o, po )
    local desc = ""
    local nosec
    local nomain
 
-   if po and po:slot().tags and po:slot().tags.core then
-      if po:slot().tags.secondary then
-         nosec=false
-         nomain=true
-      else
-         nosec=true
-         nomain=false
-      end
-   else
-      nosec=false
-      nomain=false
-   end
+   nomain,nosec=slotflags(po)
 """
 
    unit_dont_repeat={"":""}
@@ -188,13 +178,14 @@ end
 """
    L2=[(nam,(a,b)) for (nam,(a,b)) in L if a!=b]
    print >>fp,"function init(_p, po )"
-   print >>fp,ind+"local nomain=false"
-   print >>fp,ind+"local nosec=false"
-   print >>fp,ind+"if po:slot().tags and po:slot().tags.core then"
+   print >>fp,ind+"local nomain"
+   print >>fp,ind+"local nosec"
+   print >>fp,ind+"nomain,nosec=slotflags(po)"
+   print >>fp,ind+"if nomain or nosec then"
    for (nam,_) in L2:
       print >>fp,2*ind+"local",nam
 
-   print >>fp,2*ind+"if not po:slot().tags.secondary then"
+   print >>fp,2*ind+"if nosec then"
    print >>fp,3*ind+'nosec=true'
    print >>fp,3*ind+'nomain=false'
    for (nam,(main,sec)) in L2:
