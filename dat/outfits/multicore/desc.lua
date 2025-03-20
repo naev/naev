@@ -6,15 +6,17 @@ local multicore = {}
 local function vu( val, unit)
    local num
    if val=="_" or val==0 then
-      num="_"
+      num = "_"
+   elseif val>0 then
+      num = "+"..val
    else
-      num=val
+      num = val
    end
 
    if num=="_" or unit == nil or unit == "" then
       return fmt.f("{num}",{num=num})
    else
-      return fmt.f("{val} {unit}",{val=val,unit=unit})
+      return fmt.f("{val} {unit}",{val=num,unit=unit})
    end
 end
 
@@ -35,10 +37,10 @@ local function sign(n)
 end
 
 local function add_desc(stat, nomain, nosec )
-   local name = stat.stat.display
+   local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
-   local units = stat.stat.unit
+   local units = _(stat.stat.unit)
 
    local p=sign(base)
    local s=sign(secondary)
@@ -50,18 +52,16 @@ local function add_desc(stat, nomain, nosec )
       def = ((p+s >= 0) and "#g") or "#r"
    end
 
-   local pref=fmt.f("\n{def}{name}: ",{def=def,name=_(name)})
+   local pref=fmt.f("\n{def}{name}: ",{def=def, name=name})
 
    if base==secondary then
-      return pref..vu(base,units)
+      return pref..vu(base, units)
    else
-      return pref..col( vu(base,units),nomain,def)..col( "/",nomain or nosec,def)..col(vu(secondary,units),nosec, def)
---      return fmt.f("\n{name}: {bas} {sep} {sec}", {
---         name = _(name),
---         sep = col( "/", nomain or nosec, stat),
---         bas = col( vu(base,units), nomain, stat),
---         sec = col( vu(secondary,units), nosec, stat),
---      })
+      return pref..fmt.f("{bas} {sep} {sec}", {
+         bas = col(vu(base, units),nomain, def),
+         sep = col("|", nomain or nosec, def),
+         sec = col(vu(secondary, units),nosec, def),
+      })
    end
 end
 
@@ -106,13 +106,13 @@ function multicore.init( params )
 
       local desc = ""
       for _k,s in ipairs(stats) do
-         desc = desc..add_desc( s, nomain, nosec )
+         desc = desc..add_desc( s, nomain, nosec)
       end
       return desc
    end
 
    function init( _p, po )
-      local secondary = po:slot().tags.secondary
+      local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
       for k,s in ipairs(stats) do
          local val = (secondary and s.sec) or s.pri
          po:set( s.name, val )
