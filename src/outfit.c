@@ -2792,7 +2792,8 @@ static int outfit_parse( Outfit *temp, const char *file )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char * );
+         if ( temp->tags == NULL )
+            temp->tags = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {
