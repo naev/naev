@@ -401,8 +401,9 @@ ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
                                double value, int overwrite, int raw );
 double        ss_statsGet( const ShipStats *s, const char *name );
 double        ss_statsGetRaw( const ShipStats *s, ShipStatsType type );
-int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name,
-                    int internal );
-int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal );
-int ss_statsGetLuaTableList( lua_State *L, const ShipStatList *list,
-                             int internal );
+int  ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name,
+                     int internal );
+int  ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal );
+int  ss_statsGetLuaTableList( lua_State *L, const ShipStatList *list,
+                              int internal );
+void ss_exportLua( lua_State *L );
