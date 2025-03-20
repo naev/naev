@@ -408,13 +408,13 @@ end
 local function turnoff_afterburner()
    local pp=player.pilot()
    for _i,n in ipairs(pp:actives()) do
-      -- Why does n:type() not work ?
-      -- Why *A*fterburner and not afterburner ?
-      if n["type"]=="Afterburner" and n["state"]=="on" then
+      -- All movement outfits will break autonav, however, many movement
+      -- outfits are instant and won't be caught by this polling scheme.
+      if n.outfit:tags().movement and n.state=="on" then
          if already_aboff then
             return autonav_abort(_("manual commands at approach"))
          else
-            pp:outfitToggle( n['slot'] )
+            pp:outfitToggle( n.slot )
          end
       end
    end
