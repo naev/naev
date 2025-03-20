@@ -2260,7 +2260,6 @@ static int pilotL_weapsetAuto( lua_State *L )
  * <ul>
  *  <li> outfit: The outfit. </li>
  *  <li> slot: The slot the outfit is in.</li>
- *  <li> type: Type of the outfit. </li>
  *  <li> active: Whether or not the outfit is active at the current time.</li>
  *  <li> weapset: The first weapon
  * set that the outfit appears in, if any. </li> <li> state: State of the
