@@ -72,6 +72,7 @@ static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
 static int naevL_hasTextInput( lua_State *L );
 static int naevL_setTextInput( lua_State *L );
+static int naevL_shipstats( lua_State *L );
 static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 static int naevL_difficulty( lua_State *L );
@@ -116,6 +117,7 @@ static const luaL_Reg naev_methods[] = {
    { "unpause", naevL_unpause },
    { "hasTextInput", naevL_hasTextInput },
    { "setTextInput", naevL_setTextInput },
+   { "shipstats", naevL_shipstats },
    { "unit", naevL_unit },
    { "quadtreeParams", naevL_quadtreeParams },
    { "difficulty", naevL_difficulty },
@@ -956,6 +958,24 @@ static int naevL_setTextInput( lua_State *L )
       SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE );
    }
    return 0;
+}
+
+/**
+ * @brief Gets the translated string corresponding to an in-game unit.
+ * <ul>
+ *  <li>name: Name of the ship stat.</li>
+ *  <li>display: Untranslated display name of the ship stat, which you use to
+ * show to the player.<li> <li>unit: Untranslated unit name (if applicable,
+ * otherwise nil).</li> <li>inverted: Boolean value whether or not negative is
+ * "better" for the player.</li>
+ * </ul>
+ *    @luatreturn Table with all the ship stats information.
+ * @luafunc shipstats
+ */
+static int naevL_shipstats( lua_State *L )
+{
+   ss_exportLua( L );
+   return 1;
 }
 
 static const char *unittbl[] = {

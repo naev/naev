@@ -72,7 +72,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml',
    root / 'dat/outfits/core_engine/medium/tricon_cyclone_engine.xml',
    root / 'dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml',
-   root / 'dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml',
+   root / 'dat/outfits/core_engine/medium/unicorp_falcon_1400_engine.xml',
    root / 'dat/outfits/core_engine/small/beat_up_small_engine.xml',
    root / 'dat/outfits/core_engine/small/melendez_ox_xl_engine.xml',
    root / 'dat/outfits/core_engine/small/nexus_dart_160_engine.xml',
