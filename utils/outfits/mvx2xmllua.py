@@ -201,11 +201,7 @@ end
    for (nam,_) in L2:
       print >>fp,2*ind+'po:set( "'+nam+'", '+nam+' )'
 
-   print >>fp,ind+'else'
-   print >>fp,2*ind+'nosec=false'
-   print >>fp,2*ind+'nomain=false'
    print >>fp,ind+"end"
-
    print >>fp,"end"
    fp.close()
 

@@ -55,8 +55,5 @@ function init(_p, po )
       po:set( "energy_regen", energy_regen )
       po:set( "shield", shield )
       po:set( "shield_regen", shield_regen )
-   else
-      nosec=false
-      nomain=false
    end
 end

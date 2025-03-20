@@ -86,8 +86,5 @@ function init(_p, po )
       po:set( "land_delay", land_delay )
       po:set( "jump_delay", jump_delay )
       po:set( "ew_hide", ew_hide )
-   else
-      nosec=false
-      nomain=false
    end
 end

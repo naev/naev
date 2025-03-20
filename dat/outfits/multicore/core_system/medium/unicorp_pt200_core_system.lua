@@ -70,8 +70,5 @@ function init(_p, po )
       po:set( "shield_regen", shield_regen )
       po:set( "ew_detect", ew_detect )
       po:set( "cooldown_time", cooldown_time )
-   else
-      nosec=false
-      nomain=false
    end
 end
