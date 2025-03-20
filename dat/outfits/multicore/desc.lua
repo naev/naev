@@ -35,16 +35,16 @@ local function sign(n)
 end
 
 local function add_desc(stat, nomain, nosec )
-   local name = stat.name
+   local name = stat.stat.display
    local base = stat.pri
    local secondary = stat.sec
-   local units = stat.stat.unit -- this works
+   local units = stat.stat.unit
 
    local p=sign(base)
    local s=sign(secondary)
 
    local def
-   if stat.stat.reverse then -- this doesn't
+   if stat.stat.inverted then
       def = ((p+s <= 0) and "#g") or "#r"
    else
       def = ((p+s >= 0) and "#g") or "#r"
