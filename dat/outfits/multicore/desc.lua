@@ -59,7 +59,7 @@ local function add_desc(stat, nomain, nosec )
    else
       return pref..fmt.f("{bas} {sep} {sec}", {
          bas = col(vu(base, units),nomain, def),
-         sep = col("|", nomain or nosec, def),
+         sep = col("/", nomain or nosec, def),
          sec = col(vu(secondary, units),nosec, def),
       })
    end
