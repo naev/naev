@@ -761,18 +761,15 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          c = &cBlack;
 
       x += size + 7.;
-      toolkit_drawRect( x, by, size, size, c, NULL );
+      toolkit_drawRect( x, by, size, size, c );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if ( s[i].required )
-         toolkit_drawTriangle( x, by, x + size, by + size, x, by + size,
-                               &cBrightRed );
+         toolkit_drawRectHalf( x, by, size, size, &cBrightRed );
       else if ( s[i].exclusive )
-         toolkit_drawTriangle( x, by, x + size, by + size, x, by + size,
-                               &cWhite );
+         toolkit_drawRectHalf( x, by, size, size, &cWhite );
       else if ( s[i].slot.spid != 0 )
-         toolkit_drawTriangle( x, by, x + size, by + size, x, by + size,
-                               &cBlack );
+         toolkit_drawRectHalf( x, by, size, size, &cBlack );
 
       gl_renderRectEmpty( x, by, size, size, &cBlack );
 

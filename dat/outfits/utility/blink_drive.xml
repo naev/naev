@@ -13,4 +13,7 @@
  <specific type="modification">
   <lua>outfits/utility/blink_drive.lua</lua>
  </specific>
+ <tags>
+  <tag>movement</tag>
+ </tags>
 </outfit>

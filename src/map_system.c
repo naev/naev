@@ -744,14 +744,14 @@ static void map_system_array_update( unsigned int wid, const char *str )
       l +=
          outfit_getNameWithClass( outfit, &infobuf[l], sizeof( infobuf ) - l );
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "\n%s\n\n",
-                      pilot_outfitDescription( player.p, outfit ) );
+                      pilot_outfitDescription( player.p, outfit, NULL ) );
 
       /* FIXME: The point of this misery is to split desc_short into a 2-column
        * layout. It works poorly, but if we don't do this, check out e.g. the
        * TeraCom Medusa Launcher in a 720p window. */
       char *desc_start = &infobuf[l];
       l += scnprintf( &infobuf[l], sizeof( infobuf ) - l, "%s\n\n",
-                      pilot_outfitSummary( player.p, outfit, 0 ) );
+                      pilot_outfitSummary( player.p, outfit, 0, NULL ) );
       while ( ( desc_start = strchr( desc_start, '\n' ) ) != NULL ) {
          char *tab_pos = desc_start;
          desc_start    = strchr( &tab_pos[1], '\n' );

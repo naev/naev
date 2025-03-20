@@ -296,6 +296,7 @@ static int commodity_parse( Commodity *temp, const char *filename )
    if ( strcmp( (char *)parent->name, XML_COMMODITY_ID ) ) {
       WARN( _( "Malformed %s file: missing root element '%s'" ), filename,
             XML_COMMODITY_ID );
+      xmlFreeDoc( doc );
       return -1;
    }
 
@@ -408,7 +409,6 @@ static int commodity_parse( Commodity *temp, const char *filename )
 #endif
 
    xmlFreeDoc( doc );
-
    return 0;
 }
 

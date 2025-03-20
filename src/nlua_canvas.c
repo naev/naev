@@ -173,11 +173,11 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
       OPENGL_TEX_VFLIP; /* Long story, but love stuff inverts Y axis for
                            canvases so we have to redo that here for spob
                            targetting stuff to work properly. */
-   free( name );
 
    /* Create the frame buffer. */
    gl_fboCreate( &lc->fbo, &lc->tex->texture, w, h );
    glObjectLabel( GL_FRAMEBUFFER, lc->fbo, strlen( name ), name );
+   free( name );
 
    return 0;
 }

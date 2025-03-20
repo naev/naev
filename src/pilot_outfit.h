@@ -18,9 +18,10 @@ typedef enum OutfitKey_ {
 } OutfitKey;
 
 /* Augmentations of normal pilot API. */
-const char *pilot_outfitDescription( const Pilot *pilot, const Outfit *o );
-const char *pilot_outfitSummary( const Pilot *p, const Outfit *o,
-                                 int withname );
+const char *pilot_outfitDescription( const Pilot *pilot, const Outfit *o,
+                                     PilotOutfitSlot *pos );
+const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname,
+                                 PilotOutfitSlot *pos );
 double      pilot_outfitSpeed( const Pilot *p, const Outfit *o );
 double      pilot_outfitRange( const Pilot *p, const Outfit *o );
 

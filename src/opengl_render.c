@@ -59,22 +59,6 @@ void gl_endSolidProgram( void )
    gl_checkErr();
 }
 
-void gl_beginSmoothProgram( mat4 projection )
-{
-   glUseProgram( shaders.smooth.program );
-   glEnableVertexAttribArray( shaders.smooth.vertex );
-   glEnableVertexAttribArray( shaders.smooth.vertex_colour );
-   gl_uniformMat4( shaders.smooth.projection, &projection );
-}
-
-void gl_endSmoothProgram()
-{
-   glDisableVertexAttribArray( shaders.smooth.vertex );
-   glDisableVertexAttribArray( shaders.smooth.vertex_colour );
-   glUseProgram( 0 );
-   gl_checkErr();
-}
-
 /**
  * @brief Renders a rectangle.
  *
@@ -105,10 +89,46 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 void gl_renderRectEmpty( double x, double y, double w, double h,
                          const glColour *c )
 {
+   // TODO probably replace with gl_renderRectEmptyThick as it handles DPI
+   // scaling better
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
 
    gl_renderRectH( &projection, c, 0 );
+}
+
+void gl_renderRectEmptyThick( double x, double y, double w, double h, double b,
+                              const glColour *c )
+{
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, x, y, w, h );
+
+   glUseProgram( shaders.outline.program );
+   glEnableVertexAttribArray( shaders.outline.vertex );
+   glUniform2f( shaders.outline.border, ( w - 2. * b ) / w,
+                ( h - 2. * b ) / h );
+   gl_uniformColour( shaders.outline.colour, c );
+   gl_uniformMat4( shaders.outline.projection, &projection );
+
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.outline.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   glDisableVertexAttribArray( shaders.outline.vertex );
+   glUseProgram( 0 );
+   gl_checkErr();
+}
+
+void gl_renderRectHalf( double x, double y, double w, double h,
+                        const glColour *c )
+{
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, x, y, w, h );
+   gl_beginSolidProgram( projection, c );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 3 );
+   gl_endSolidProgram();
 }
 
 /**
@@ -1263,13 +1283,13 @@ int gl_initRender( void )
       sizeof( GLfloat ) * OPENGL_RENDER_VBO_SIZE * ( 2 + 2 );
 
    vertex[0]    = 0.;
-   vertex[1]    = 0.;
+   vertex[1]    = 1.;
    vertex[2]    = 1.;
-   vertex[3]    = 0.;
+   vertex[3]    = 1.;
    vertex[4]    = 0.;
-   vertex[5]    = 1.;
+   vertex[5]    = 0.;
    vertex[6]    = 1.;
-   vertex[7]    = 1.;
+   vertex[7]    = 0.;
    gl_squareVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
 
    vertex[0]    = -1.;
@@ -1292,7 +1312,7 @@ int gl_initRender( void )
    vertex[7]         = 1.;
    vertex[8]         = 0.;
    vertex[9]         = 0.;
-   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 8, vertex );
+   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof( GLfloat ) * 10, vertex );
 
    vertex[0]  = 0.;
    vertex[1]  = 0.;

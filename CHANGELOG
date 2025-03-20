@@ -6,7 +6,11 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Improved autonav behaviour when losing a followed ship
+   * Quality of Life
+      * Autonav improvements
+         * Can automatically land when following a ship
+         * Improved autonav behaviour when losing a followed ship
+         * Disables afterburner when getting ready to land or jump
    * Content
       * 2 new missions
       * 6 new ship variants
@@ -45,6 +49,7 @@
       * Mass modifiers now affect outfit mass too
 
 * 0.12.4 (unreleased)
+   * More robust jump check to fix crash when creating new systems
    * Gave Pacifier +400 fuel bonus to match description
    * Made the baron comm event respect system claims
    * Shaky swan no longer gets killed by patrols

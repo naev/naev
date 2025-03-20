@@ -1125,7 +1125,7 @@ const char *outfit_getAmmoAI( const Outfit *o )
  */
 const char *outfit_description( const Outfit *o )
 {
-   return pilot_outfitDescription( NULL, o );
+   return pilot_outfitDescription( NULL, o, NULL );
 }
 
 /**
@@ -1139,7 +1139,7 @@ const char *outfit_description( const Outfit *o )
  */
 const char *outfit_summary( const Outfit *o, int withname )
 {
-   return pilot_outfitSummary( NULL, o, withname );
+   return pilot_outfitSummary( NULL, o, withname, NULL );
 }
 
 /**
@@ -2792,7 +2792,8 @@ static int outfit_parse( Outfit *temp, const char *file )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char * );
+         if ( temp->tags == NULL )
+            temp->tags = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {
@@ -2950,10 +2951,11 @@ static int outfit_loadDir( const char *dir )
    license_stack = array_create( char * );
    for ( int i = 0; i < array_size( odata ); i++ ) {
       OutfitThreadData *od = &odata[i];
-      if ( !od->ret )
+      if ( !od->ret ) {
          array_push_back( &outfit_stack, od->outfit );
-      if ( outfit_isLicense( &od->outfit ) )
-         array_push_back( &license_stack, od->outfit.u.lic.provides );
+         if ( outfit_isLicense( &od->outfit ) )
+            array_push_back( &license_stack, od->outfit.u.lic.provides );
+      }
       free( od->filename );
    }
    array_free( odata );

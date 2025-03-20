@@ -116,10 +116,9 @@ static void cst_render( Widget *cst, double bx, double by )
    if ( cst->dat.cst.border ) {
       /* inner outline */
       toolkit_drawOutline( x, y + 1, cst->w + 1, cst->h + 1, 0.,
-                           toolkit_colLight, NULL );
+                           toolkit_colLight );
       /* outer outline */
-      toolkit_drawOutline( x, y, cst->w + 1, cst->h + 1, 1., toolkit_colDark,
-                           NULL );
+      toolkit_drawOutline( x, y, cst->w + 1, cst->h + 1, 1., toolkit_colDark );
    }
 
    if ( cst->dat.cst.clip != 0 )

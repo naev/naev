@@ -7,7 +7,8 @@
 #include "pilot.h"
 #include "tk/widget/imagearray.h"
 
-int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt );
+int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt,
+                    PilotOutfitSlot *pos );
 
 void outfits_open( unsigned int wid, const Outfit **outfits, int blackmarket );
 void outfits_regenList( unsigned int wid, const char *str );

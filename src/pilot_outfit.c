@@ -1352,7 +1352,8 @@ static void pilot_outfitLunmem( nlua_env env, int oldmem )
    luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem );
 }
 
-static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
+static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o,
+                                           PilotOutfitSlot *pos )
 {
    static char descextra[STRMAX];
    const char *de;
@@ -1364,9 +1365,13 @@ static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
    if ( ( p != NULL ) && ( p->id > 0 ) ) /* Needs valid ID. */
       lua_pushpilot( naevL, p->id );     /* f, p */
    else
-      lua_pushnil( naevL );                /* f, p */
-   lua_pushoutfit( naevL, o );             /* f, p, o */
-   if ( nlua_pcall( o->lua_env, 2, 1 ) ) { /* */
+      lua_pushnil( naevL );    /* f, p */
+   lua_pushoutfit( naevL, o ); /* f, p, o */
+   if ( pos == NULL )
+      lua_pushnil( naevL ); /* f, p */
+   else
+      lua_pushpilotoutfit( naevL, pos );   /* f, p, o, pos */
+   if ( nlua_pcall( o->lua_env, 3, 1 ) ) { /* */
       outfitLRunWarning( p, o, "descextra", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       descextra[0] = '\0';
@@ -1390,12 +1395,14 @@ static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
  *
  *    @param p Pilot to get the outfit description of (or NULL for no pilot).
  *    @param o Outfit to get description of.
+ *    @param pos Pilot outfit slot or NULL if not applicable.
  *    @return The description of the outfit.
  */
-const char *pilot_outfitDescription( const Pilot *p, const Outfit *o )
+const char *pilot_outfitDescription( const Pilot *p, const Outfit *o,
+                                     PilotOutfitSlot *pos )
 {
    static char o_description[STRMAX];
-   const char *de = pilot_outfitLDescExtra( p, o );
+   const char *de = pilot_outfitLDescExtra( p, o, pos );
    if ( de == NULL )
       return _( o->desc_raw );
    snprintf( o_description, sizeof( o_description ), "%s\n%s", _( o->desc_raw ),
@@ -1411,12 +1418,14 @@ const char *pilot_outfitDescription( const Pilot *p, const Outfit *o )
  *    @param p Pilot to get the outfit summary of (or NULL for no pilot).
  *    @param o Outfit to get summary of.
  *    @param withname Whether or not to show the name too.
+ *    @param pos Pilot outfit slot or NULL if not applicable.
  *    @return The summary of the outfit.
  */
-const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname )
+const char *pilot_outfitSummary( const Pilot *p, const Outfit *o, int withname,
+                                 PilotOutfitSlot *pos )
 {
    static char o_summary[STRMAX];
-   const char *de = pilot_outfitLDescExtra( p, o );
+   const char *de = pilot_outfitLDescExtra( p, o, pos );
    size_t      n  = 0;
    if ( withname )
       n += outfit_getNameWithClass( o, &o_summary[n], sizeof( o_summary ) - n );

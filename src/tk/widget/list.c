@@ -124,12 +124,12 @@ static void lst_render( Widget *lst, double bx, double by )
     */
    glClear( GL_DEPTH_BUFFER_BIT );
    /* lst bg */
-   toolkit_drawRect( x, y, lst->w, lst->h, &cBlack, NULL );
+   toolkit_drawRect( x, y, lst->w, lst->h, &cBlack );
 
    /* inner outline */
-   toolkit_drawOutline( x, y, lst->w, lst->h, 0., toolkit_colLight, NULL );
+   toolkit_drawOutline( x, y, lst->w, lst->h, 0., toolkit_colLight );
    /* outer outline */
-   toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
+   toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark );
 
    /* Draw scrollbar. */
    if ( lst->dat.lst.height > 0 ) {
@@ -146,7 +146,7 @@ static void lst_render( Widget *lst, double bx, double by )
    ty = y - 1 + lst->h -
         ( 1 + lst->dat.lst.selected - lst->dat.lst.pos ) * CELLHEIGHT;
    if ( ty > y && ty < y + lst->h - CELLHEIGHT )
-      toolkit_drawRect( x + 1, ty, w - 2, CELLHEIGHT, &cGrey30, NULL );
+      toolkit_drawRect( x + 1, ty, w - 2, CELLHEIGHT, &cGrey30 );
 
    /* draw content */
    tx = x + 6.;
