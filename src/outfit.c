@@ -3113,6 +3113,7 @@ int outfit_load( void )
       Outfit *temp = o; /* Needed for SDESC_ADD macro. */
       int     l    = 0;
 
+      /* Write the header here with outfit slot information. */
       if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
          SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "", _( "Unique" ) );
       if ( o->limit != NULL )
@@ -3125,6 +3126,8 @@ int outfit_load( void )
          SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
                     _( sp_display( o->spid_extra ) ) );
 
+      /* Mods get special information added here, since it has to be done
+       * post-Lua. */
       if ( outfit_isMod( o ) ) {
          SDESC_ADD( l, temp, "%s%s", ( l > 0 ) ? "\n" : "",
                     _( outfit_getType( temp ) ) );
@@ -3134,8 +3137,9 @@ int outfit_load( void )
             l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
                            &cooldown_opts );
          l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-         /*l =*/os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+         l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
       }
+
       /* We add the ship stats to the description here. */
       if ( o->summary_raw != NULL ) {
          /*l +=*/ss_statsListDesc( o->stats, &o->summary_raw[l],
