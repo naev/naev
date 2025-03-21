@@ -48,4 +48,3 @@ if __name__ == '__main__':
          print >>stderr,'Ignored: "'+'", "'.join(args[1:])+'"'
 
       main(args[0],reverse)
-

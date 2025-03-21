@@ -52,7 +52,7 @@ def process(thepath,f1,f2):
    print cmd
    print 'if test -f "'+outpath+'$NAM.lua" ; then',thepath+"outfits2mvx.py"+' '+f1+' '+f2+' > "'+outpath+'$NAM.mvx";',"fi"
    print thepath+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
-   
+
 if __name__=="__main__":
    if len(argv)!=2 or '-h' in argv or '--help' in argv:
       print >>stderr,"usage:",argv[0].rsplit('/',1)[-1],"<path>"
@@ -80,5 +80,3 @@ if __name__=="__main__":
       for alone in result[1:-1]:
          if alone not in done:
             process(crt_path,alone,'')
-
-

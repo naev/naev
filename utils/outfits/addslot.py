@@ -108,4 +108,3 @@ if __name__ == '__main__':
    else:
       for arg in argv[1:]:
          main(arg)
-

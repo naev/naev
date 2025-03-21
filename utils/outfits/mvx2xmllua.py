@@ -5,7 +5,7 @@ dont_display=set(['priority','rarity'])
 # output of naev.unit()
 """
    energy GJ
-   angle 
+   angle
    unit u
    per_time /sec
    speed km/s
@@ -190,4 +190,3 @@ if __name__ == '__main__':
 
       main(argv[1])
       exit(0)
-

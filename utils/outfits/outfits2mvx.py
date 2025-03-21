@@ -130,4 +130,3 @@ if __name__ == '__main__':
       merge_func=rf1 if '-s' in argv[1:] else f1
       main([f for f in argv[1:] if f.endswith(".xml")],merge_func,'-s' in argv[1:])
       exit(0)
-
