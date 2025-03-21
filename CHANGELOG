@@ -11,6 +11,7 @@
          * Can automatically land when following a ship
          * Improved autonav behaviour when losing a followed ship
          * Disables afterburner when getting ready to land or jump
+         * Shooting *non-point defense* weapons resets autonav speed up
    * Content
       * 2 new missions
       * 6 new ship variants
