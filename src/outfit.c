@@ -1620,7 +1620,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
       temp->u.blt.swivel = M_PI;
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, p_( "outfitstats", "%s [%s]" ),
               _( outfit_getType( temp ) ),
@@ -1819,7 +1819,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    temp->u.bem.turn *= M_PI / 180.; /* Convert to rad/s. */
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
               _( dtype_damageTypeToStr( temp->u.bem.dmg.type ) ) );
@@ -2060,7 +2060,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    temp->u.lau.resist /= 100.;
 
    /* Short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
               _( dtype_damageTypeToStr( temp->u.lau.dmg.type ) ) );
@@ -2232,8 +2232,11 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
-   /* Modifier outfits are actually done in the third pass... */
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
+   int l             = 0;
+   SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
 }
 
 /**
@@ -2291,7 +2294,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
    SDESC_ADD( l, temp, "\n#o%s#0", _( "Activated Outfit" ) );
@@ -2364,7 +2367,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
             temp->name );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
@@ -2454,7 +2457,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
                      cur->name );
          } while ( xml_nextNode( cur ) );
       } else if ( xml_isNode( node, "short_desc" ) ) {
-         temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+         temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
          snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
                    xml_get( node ) );
       } else if ( xml_isNode( node, "all" ) ) { /* Add everything to the map */
@@ -2478,7 +2481,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
    if ( temp->summary_raw == NULL ) {
       /* Set short description based on type. */
-      temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+      temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
       snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
                 _( outfit_getType( temp ) ) );
    }
@@ -2515,7 +2518,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
              _( outfit_getType( temp ) ) );
 
@@ -2548,7 +2551,7 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
              _( "GUI (Graphical User Interface)" ) );
 
@@ -2585,7 +2588,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
       temp->u.lic.provides = strdup( temp->name );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
              _( outfit_getType( temp ) ) );
 
@@ -3093,25 +3096,16 @@ int outfit_load( void )
                      o->name, "ontoggle" );
          }
          lua_pop( naevL, 1 );
-
-         /* Regenerate the description... TODO not duplicate code... */
-         int l = 0;
-         SDESC_ADD( l, o, "%s", _( outfit_getType( o ) ) );
-         if ( o->u.mod.active )
-            SDESC_ADD( l, o, "\n#o%s#0", _( "Activated Outfit" ) );
-         if ( o->u.mod.active && o->u.mod.cooldown > 0. )
-            l = os_printD( o->summary_raw, l, o->u.mod.cooldown,
-                           &cooldown_opts );
-         l = os_printD( o->summary_raw, l, o->cpu, &cpu_opts );
-         /*l =*/os_printD( o->summary_raw, l, o->mass, &mass_opts );
       }
    }
 
    /* Third pass for descriptions. */
    for ( int i = 0; i < noutfits; i++ ) {
-      Outfit *o    = &outfit_stack[i];
-      Outfit *temp = o; /* Needed for SDESC_ADD macro. */
-      int     l    = 0;
+      Outfit *o            = &outfit_stack[i];
+      Outfit *temp         = o; /* Needed for SDESC_ADD macro. */
+      int     l            = 0;
+      char   *summary_base = o->summary_raw;
+      o->summary_raw       = calloc( OUTFIT_SHORTDESC_MAX, 1 );
 
       /* Write the header here with outfit slot information. */
       if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
@@ -3129,22 +3123,27 @@ int outfit_load( void )
       /* Mods get special information added here, since it has to be done
        * post-Lua. */
       if ( outfit_isMod( o ) ) {
-         SDESC_ADD( l, temp, "%s%s", ( l > 0 ) ? "\n" : "",
-                    _( outfit_getType( temp ) ) );
-         if ( temp->u.mod.active ) /* Ignore Lua since it's handled later. */
-            SDESC_ADD( l, temp, "\n#o%s#0", _( "Activated Outfit" ) );
-         if ( temp->u.mod.active && temp->u.mod.cooldown > 0. )
-            l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
-                           &cooldown_opts );
-         l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-         l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+         if ( temp->u.mod.active ) {
+            SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
+                       _( "Activated Outfit" ) );
+            if ( temp->u.mod.cooldown > 0. )
+               l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
+                              &cooldown_opts );
+         }
+      }
+
+      /* Now add the original one summary. */
+      if ( summary_base != NULL ) {
+         l += scnprintf( &o->summary_raw[l], OUTFIT_SHORTDESC_MAX - l, "%s%s",
+                         ( l > 0 ) ? "\n" : "", summary_base );
       }
 
       /* We add the ship stats to the description here. */
-      if ( o->summary_raw != NULL ) {
+      if ( o->summary_raw != NULL )
          /*l +=*/ss_statsListDesc( o->stats, &o->summary_raw[l],
                                    OUTFIT_SHORTDESC_MAX - l, 1 );
-      }
+
+      free( summary_base );
    }
 
 #ifdef DEBUGGING
