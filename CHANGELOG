@@ -33,6 +33,8 @@
       * Diff mode in the editor remembers filenames and diff names
       * Slots can have tags
       * Outfits can fit an additional slot property
+      * Support for hiding dynamic ship stats from outfits in the equipment support
+      * Outfits support inline Lua definitions
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
