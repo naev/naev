@@ -2260,7 +2260,6 @@ static int pilotL_weapsetAuto( lua_State *L )
  * <ul>
  *  <li> outfit: The outfit. </li>
  *  <li> slot: The slot the outfit is in.</li>
- *  <li> type: Type of the outfit. </li>
  *  <li> active: Whether or not the outfit is active at the current time.</li>
  *  <li> weapset: The first weapon
  * set that the outfit appears in, if any. </li> <li> state: State of the
@@ -2344,10 +2343,6 @@ static int pilotL_actives( lua_State *L )
       /* Slot. */
       lua_pushinteger( L, i + 1 );
       lua_setfield( L, -2, "slot" );
-
-      /* Type. */
-      lua_pushstring( L, outfit_getType( pos->outfit ) );
-      lua_setfield( L, -2, "type" );
 
       lua_pushboolean( L, pos->flags & PILOTOUTFIT_ISON );
       lua_setfield( L, -2, "active" );
@@ -2647,8 +2642,9 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
  *    @luatparam Pilot p Pilot to toggle outfit of.
  *    @luatparam table|integer id ID of the pilot outfit, or table of pilot
  * outfit ids.
- *    @luatparam[opt=false] boolean activate Whether or not to activate or
+ *    @luatparam[opt=false] boolean activate Whether to activate or
  * deactivate the outfit.
+ *    @luatreturn boolean Whether or not the outfit successfully toggled.
  * @luafunc outfitToggle
  */
 static int pilotL_outfitToggle( lua_State *L )

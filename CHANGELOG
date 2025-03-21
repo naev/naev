@@ -6,7 +6,12 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Improved autonav behaviour when losing a followed ship.
+   * Quality of Life
+      * Autonav improvements
+         * Can automatically land when following a ship
+         * Improved autonav behaviour when losing a followed ship
+         * Disables afterburner when getting ready to land or jump
+         * Shooting *non-point defense* weapons resets autonav speed up
    * Content
       * 2 new missions
       * 6 new ship variants
@@ -28,6 +33,8 @@
       * Diff mode in the editor remembers filenames and diff names
       * Slots can have tags
       * Outfits can fit an additional slot property
+      * Support for hiding dynamic ship stats from outfits in the equipment support
+      * Outfits support inline Lua definitions
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
@@ -44,6 +51,7 @@
       * Mass modifiers now affect outfit mass too
 
 * 0.12.4 (unreleased)
+   * More robust jump check to fix crash when creating new systems
    * Gave Pacifier +400 fuel bonus to match description
    * Made the baron comm event respect system claims
    * Shaky swan no longer gets killed by patrols

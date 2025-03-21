@@ -334,13 +334,13 @@ static void btn_render( Widget *btn, double bx, double by )
    }
 
    /* The face of the button, with c being the colour */
-   toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
+   toolkit_drawRect( x, y, btn->w, btn->h, c );
 
    /* inner outline */
-   // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline, NULL );
+   // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline );
 
    /* outer outline */
-   toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1, 2, outline, NULL );
+   toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1, 2, outline );
 
    /* Render inner stuff. */
    if ( btn->dat.btn.cst_render )

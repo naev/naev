@@ -103,7 +103,7 @@ static void inp_render( Widget *inp, double bx, double by )
    y = by + inp->y;
 
    /* main background */
-   toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
+   toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack );
 
    /** Decide what text to draw. */
    if ( ( inp->dat.inp.input[0] == '\0' ) &&
@@ -136,7 +136,7 @@ static void inp_render( Widget *inp, double bx, double by )
          w = inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos );
          toolkit_drawRect( x + 5. + w,
                            y + ( inp->h - inp->dat.inp.font->h - 4. ) / 2., 1.,
-                           inp->dat.inp.font->h + 4., &cGreen, &cGreen );
+                           inp->dat.inp.font->h + 4., &cGreen );
       } else {
          /* Wrap the cursor around if the text is longer than the width of the
           * widget. */
@@ -162,16 +162,15 @@ static void inp_render( Widget *inp, double bx, double by )
          /* Get the actual width now. */
          toolkit_drawRect(
             x + 5. + w, y + inp->h - lines * ( inp->dat.inp.font->h + 5 ) - 3.,
-            1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
+            1., inp->dat.inp.font->h + 4., &cGreen );
       }
    }
 
    /* inner outline */
    /* toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
-         toolkit_colLight, NULL ); */
+         toolkit_colLight ); */
    /* outer outline */
-   toolkit_drawOutline( x - 2, y - 2, inp->w + 4, inp->h + 4, 1., &cGrey20,
-                        NULL );
+   toolkit_drawOutline( x - 2, y - 2, inp->w + 4, inp->h + 4, 1., &cGrey20 );
 }
 
 /**

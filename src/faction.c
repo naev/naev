@@ -1958,7 +1958,7 @@ void faction_applyLocalThreshold( int f, StarSystem *sys )
 
             /* Don't propagate through hidden jumps if the faction doesn't use
              * hidden. */
-            if ( jp_isFlag( &sys->jumps[j], JP_HIDDEN ) && !usehidden )
+            if ( jp_isFlag( &qsys->jumps[j], JP_HIDDEN ) && !usehidden )
                continue;
 
             /* Ignore systems already looked at. */

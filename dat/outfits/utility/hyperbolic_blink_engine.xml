@@ -14,4 +14,7 @@
  <specific type="modification">
   <lua>outfits/utility/hyperbolic_blink_engine.lua</lua>
  </specific>
+ <tags>
+  <tag>movement</tag>
+ </tags>
 </outfit>

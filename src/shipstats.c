@@ -1191,3 +1191,31 @@ int ss_statsGetLuaTableList( lua_State *L, const ShipStatList *list,
    }
    return 0;
 }
+
+/**
+ * @brief Exports the sihp stats to Lua.
+ */
+void ss_exportLua( lua_State *L )
+{
+   lua_newtable( L );
+   for ( ShipStatsType i = 0; i <= SS_TYPE_SENTINEL; i++ ) {
+      const ShipStatsLookup *ss = &ss_lookup[i];
+      lua_newtable( L );
+
+      lua_pushstring( L, ss->name );
+      lua_setfield( L, -2, "name" );
+
+      lua_pushstring( L, ss->display );
+      lua_setfield( L, -2, "display" );
+
+      if ( ss->unit != NULL ) {
+         lua_pushstring( L, ss->unit );
+         lua_setfield( L, -2, "unit" );
+      }
+
+      lua_pushboolean( L, ss->inverted );
+      lua_setfield( L, -2, "inverted" );
+
+      lua_rawseti( L, -2, i + 1 );
+   }
+}

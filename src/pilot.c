@@ -932,12 +932,12 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /* Turn off all weapon sets. */
    pilot_weapSetAIClear( p );
-   pilot_weapSetUpdateOutfitState( p );
 
    /* Disable active outfits. */
    pilotoutfit_modified = 0;
    if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
       pilot_calcStats( p );
+   // pilot_weapSetUpdateOutfitState( p );
 
    /*
     * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.

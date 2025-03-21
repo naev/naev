@@ -556,13 +556,14 @@ local function renderWeapBar( weapon, x, y )
             top_icon = icon_Kinetic
          end
 
-         if weapon.type == "Bolt Cannon" or weapon.type == "Bolt Turret" then
+         local wtype = weapon.outfit:type()
+         if wtype == "Bolt Cannon" or wtype == "Bolt Turret" then
             bottom_icon = icon_projectile
-         elseif weapon.type == "Beam Cannon" or weapon.type == "Beam Turret" then
+         elseif wtype == "Beam Cannon" or wtype == "Beam Turret" then
             bottom_icon = icon_beam
-         elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
+         elseif wtype == "Launcher" or wtype == "Turret Launcher" then
             bottom_icon = icon_missile
-         elseif weapon.type == "Fighter Bay" then
+         elseif wtype == "Fighter Bay" then
             bottom_icon = icon_ship
          else
             bottom_icon = icon_projectile

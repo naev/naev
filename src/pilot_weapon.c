@@ -23,6 +23,7 @@
 #include "pilot.h"
 #include "pilot_ship.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "sound.h"
 #include "spfx.h"
 #include "weapon.h"
@@ -327,7 +328,8 @@ void pilot_weapSetUpdate( Pilot *p )
        * mount point, which might be a bit off. */
       if ( ( pos->flags & PILOTOUTFIT_INRANGE ) && !outfit_isFighterBay( o ) ) {
          /* Check range for different types. */
-         if ( time < 0. )
+         if ( time <= 0. ) /* Beam will have a fly time of INFINITY in range, or
+                              -1. otherwise. */
             continue;
          else if ( outfit_isBolt( o ) ) {
             if ( pilot_outfitRange( p, o ) / outfit_speed( o ) < time )
@@ -1175,6 +1177,9 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
       }
 
       w->timer = w->outfit->u.bem.duration;
+      if ( pilot_isPlayer( p ) &&
+           !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+         player_autonavReset( 1. );
 
       return 1; /* Return early due to custom timer logic. */
    }
@@ -1264,8 +1269,9 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
    w->timer += rate_mod * outfit_delay( w->outfit );
 
    /* Reset autonav if is player. */
-   // if ( pilot_isPlayer( p ) )
-   //    player_autonavReset( 1. );
+   if ( pilot_isPlayer( p ) &&
+        !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
+      player_autonavReset( 1. );
 
    return 1;
 }

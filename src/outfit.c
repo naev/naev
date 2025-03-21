@@ -1226,7 +1226,7 @@ const char *outfit_getAmmoAI( const Outfit *o )
  */
 const char *outfit_description( const Outfit *o )
 {
-   return pilot_outfitDescription( NULL, o );
+   return pilot_outfitDescription( NULL, o, NULL );
 }
 
 /**
@@ -1240,7 +1240,7 @@ const char *outfit_description( const Outfit *o )
  */
 const char *outfit_summary( const Outfit *o, int withname )
 {
-   return pilot_outfitSummary( NULL, o, withname );
+   return pilot_outfitSummary( NULL, o, withname, NULL );
 }
 
 /**
@@ -1614,6 +1614,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
       xmlr_int( node, "shots", temp->u.blt.shots );
       xmlr_int( node, "mining_rarity", temp->u.blt.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "radius" ) ) {
          char *buf;
          temp->u.blt.radius = xml_getFloat( node );
@@ -1724,7 +1725,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
       temp->u.blt.swivel = M_PI;
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, p_( "outfitstats", "%s [%s]" ),
               _( outfit_getType( temp ) ),
@@ -1840,6 +1841,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "swivel", temp->u.bem.swivel );
       xmlr_int( node, "mining_rarity", temp->u.bem.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "pointdefense" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
@@ -1922,7 +1924,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
    temp->u.bem.turn *= M_PI / 180.; /* Convert to rad/s. */
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
               _( dtype_damageTypeToStr( temp->u.bem.dmg.type ) ) );
@@ -2018,6 +2020,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
       xmlr_int( node, "shots", temp->u.lau.shots );
       xmlr_int( node, "mining_rarity", temp->u.lau.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "radius" ) ) {
          char *buf;
          temp->u.lau.radius = xml_getFloat( node );
@@ -2162,7 +2165,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
    temp->u.lau.resist /= 100.;
 
    /* Short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s [%s]", _( outfit_getType( temp ) ),
               _( dtype_damageTypeToStr( temp->u.lau.dmg.type ) ) );
@@ -2308,6 +2311,7 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
 
       xml_onlyNodes( node );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
 
       if ( xml_isNode( node, "active" ) ) {
          xmlr_attr_float( node, "cooldown", temp->u.mod.cooldown );
@@ -2333,8 +2337,11 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
-   /* Modifier outfits are actually done in the third pass... */
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
+   int l             = 0;
+   SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
+   l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
+   l = os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
 }
 
 /**
@@ -2363,6 +2370,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes( node );
       xmlr_float( node, "rumble", temp->u.afb.rumble );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "sound_on" ) ) {
          temp->u.afb.sound_on = sound_get( xml_get( node ) );
          continue;
@@ -2391,7 +2399,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
    SDESC_ADD( l, temp, "\n#o%s#0", _( "Activated Outfit" ) );
@@ -2444,6 +2452,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "ship_mass", temp->u.bay.ship_mass );
       xmlr_int( node, "amount", temp->u.bay.amount );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -2463,7 +2472,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
             temp->name );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    l                 = 0;
    SDESC_ADD( l, temp, "%s", _( outfit_getType( temp ) ) );
    l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
@@ -2553,7 +2562,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
                      cur->name );
          } while ( xml_nextNode( cur ) );
       } else if ( xml_isNode( node, "short_desc" ) ) {
-         temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+         temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
          snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
                    xml_get( node ) );
       } else if ( xml_isNode( node, "all" ) ) { /* Add everything to the map */
@@ -2577,7 +2586,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
    if ( temp->summary_raw == NULL ) {
       /* Set short description based on type. */
-      temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+      temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
       snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
                 _( outfit_getType( temp ) ) );
    }
@@ -2614,7 +2623,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
              _( outfit_getType( temp ) ) );
 
@@ -2647,7 +2656,7 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
    } while ( xml_nextNode( node ) );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
              _( "GUI (Graphical User Interface)" ) );
 
@@ -2684,7 +2693,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
       temp->u.lic.provides = strdup( temp->name );
 
    /* Set short description. */
-   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = calloc( OUTFIT_SHORTDESC_MAX, 1 );
    snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s",
              _( outfit_getType( temp ) ) );
 
@@ -2897,7 +2906,8 @@ static int outfit_parse( Outfit *temp, const char *file )
       /* Parse tags. */
       if ( xml_isNode( node, "tags" ) ) {
          xmlNodePtr cur = node->children;
-         temp->tags     = array_create( char * );
+         if ( temp->tags == NULL )
+            temp->tags = array_create( char * );
          do {
             xml_onlyNodes( cur );
             if ( xml_isNode( cur, "tag" ) ) {
@@ -3111,9 +3121,20 @@ int outfit_load( void )
       if ( o->lua_file == NULL )
          continue;
 
+      /* Can't use both file + inline. */
+      if ( ( o->lua_file != NULL ) && ( o->lua_inline != NULL ) )
+         WARN( _( "Outfit '%s' has both <lua> and <lua_inline> tags!" ),
+               o->name );
+
       nlua_env env;
       size_t   sz;
-      char    *dat = ndata_read( o->lua_file, &sz );
+      char    *dat;
+      if ( o->lua_file != NULL )
+         dat = ndata_read( o->lua_file, &sz );
+      else {
+         dat = o->lua_inline;
+         sz  = strlen( dat );
+      }
       if ( dat == NULL ) {
          WARN( _( "Outfit '%s' failed to read Lua '%s'!" ), o->name,
                o->lua_file );
@@ -3139,7 +3160,8 @@ int outfit_load( void )
          o->lua_env = LUA_NOREF;
          continue;
       }
-      free( dat );
+      if ( o->lua_file != NULL )
+         free( dat );
 
       /* Check functions as necessary. */
       o->lua_descextra   = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
@@ -3170,6 +3192,11 @@ int outfit_load( void )
       o->lua_buy        = nlua_refenvtype( env, "buy", LUA_TFUNCTION );
       o->lua_sell       = nlua_refenvtype( env, "sell", LUA_TFUNCTION );
 
+      nlua_getenv( naevL, env, "hidestats" );
+      if ( lua_toboolean( naevL, -1 ) )
+         outfit_setProp( o, OUTFIT_PROP_HIDESTATS );
+      lua_pop( naevL, 1 );
+
       if ( outfit_isMod( o ) ) {
          nlua_getenv( naevL, env, "notactive" );
          o->u.mod.active = 1;
@@ -3181,26 +3208,18 @@ int outfit_load( void )
                      o->name, "ontoggle" );
          }
          lua_pop( naevL, 1 );
-
-         /* Regenerate the description... TODO not duplicate code... */
-         int l = 0;
-         SDESC_ADD( l, o, "%s", _( outfit_getType( o ) ) );
-         if ( o->u.mod.active )
-            SDESC_ADD( l, o, "\n#o%s#0", _( "Activated Outfit" ) );
-         if ( o->u.mod.active && o->u.mod.cooldown > 0. )
-            l = os_printD( o->summary_raw, l, o->u.mod.cooldown,
-                           &cooldown_opts );
-         l = os_printD( o->summary_raw, l, o->cpu, &cpu_opts );
-         /*l =*/os_printD( o->summary_raw, l, o->mass, &mass_opts );
       }
    }
 
    /* Third pass for descriptions. */
    for ( int i = 0; i < noutfits; i++ ) {
-      Outfit *o    = &outfit_stack[i];
-      Outfit *temp = o; /* Needed for SDESC_ADD macro. */
-      int     l    = 0;
+      Outfit *o            = &outfit_stack[i];
+      Outfit *temp         = o; /* Needed for SDESC_ADD macro. */
+      int     l            = 0;
+      char   *summary_base = o->summary_raw;
+      o->summary_raw       = calloc( OUTFIT_SHORTDESC_MAX, 1 );
 
+      /* Write the header here with outfit slot information. */
       if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
          SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "", _( "Unique" ) );
       if ( o->limit != NULL )
@@ -3213,22 +3232,30 @@ int outfit_load( void )
          SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
                     _( sp_display( o->spid_extra ) ) );
 
+      /* Mods get special information added here, since it has to be done
+       * post-Lua. */
       if ( outfit_isMod( o ) ) {
-         SDESC_ADD( l, temp, "%s%s", ( l > 0 ) ? "\n" : "",
-                    _( outfit_getType( temp ) ) );
-         if ( temp->u.mod.active ) /* Ignore Lua since it's handled later. */
-            SDESC_ADD( l, temp, "\n#o%s#0", _( "Activated Outfit" ) );
-         if ( temp->u.mod.active && temp->u.mod.cooldown > 0. )
-            l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
-                           &cooldown_opts );
-         l = os_printD( temp->summary_raw, l, temp->cpu, &cpu_opts );
-         /*l =*/os_printD( temp->summary_raw, l, temp->mass, &mass_opts );
+         if ( temp->u.mod.active ) {
+            SDESC_ADD( l, temp, "%s#o%s#0", ( l > 0 ) ? "\n" : "",
+                       _( "Activated Outfit" ) );
+            if ( temp->u.mod.cooldown > 0. )
+               l = os_printD( temp->summary_raw, l, temp->u.mod.cooldown,
+                              &cooldown_opts );
+         }
       }
+
+      /* Now add the original one summary. */
+      if ( summary_base != NULL ) {
+         l += scnprintf( &o->summary_raw[l], OUTFIT_SHORTDESC_MAX - l, "%s%s",
+                         ( l > 0 ) ? "\n" : "", summary_base );
+      }
+
       /* We add the ship stats to the description here. */
-      if ( o->summary_raw != NULL ) {
+      if ( o->summary_raw != NULL )
          /*l +=*/ss_statsListDesc( o->stats, &o->summary_raw[l],
                                    OUTFIT_SHORTDESC_MAX - l, 1 );
-      }
+
+      free( summary_base );
    }
 
 #ifdef DEBUGGING
@@ -3448,6 +3475,7 @@ void outfit_free( void )
       nlua_freeEnv( o->lua_env );
       o->lua_env = LUA_NOREF;
       free( o->lua_file );
+      free( o->lua_inline );
 
       /* strings */
       free( o->typename );

@@ -7,7 +7,8 @@
 #include "attributes.h"
 #include "tracy/TracyC.h"
 #include <stdlib.h>
-#define _uninitialized_var( x ) x = *( &( x ) )
+#define _uninitialized_var( x )                                                \
+   x = *( &( x ) ) // Works with Clang but not GCC...
 #define NTracingFrameMark TracyCFrameMark
 #define NTracingFrameMarkStart( name ) TracyCFrameMarkStart( name )
 #define NTracingFrameMarkEnd( name ) TracyCFrameMarkEnd( name )

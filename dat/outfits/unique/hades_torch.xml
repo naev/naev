@@ -25,4 +25,7 @@
   <energy>55</energy>
   <mass_limit>700</mass_limit>
  </specific>
+ <tags>
+  <tag>movement</tag>
+ </tags>
 </outfit>

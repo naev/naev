@@ -17,6 +17,11 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 -- descriptions or prices while not being an active outfit.
 notactive = false
 
+-- The 'hidestats' variable controls whether or not the outfit hides stats that
+-- have been set with po:set() from the equipment interface. By default they
+-- are computed in real time and shown.
+hidestats = false
+
 -- The onload is run once when the outfit Lua is loaded. Useful for setting up
 -- variables. The passed variable is the outfit itself.
 function onload( _o )
@@ -24,9 +29,9 @@ end
 
 -- Called to get the extra description of the outfit. This gets appended to the
 -- summary and description, and should be short. The function receives the
--- pilot p if applicable, and the current outfit o. The function should return
--- a translated string.
-function descextra( _p, _o )
+-- pilot p if applicable, the current outfit o, and the pilot outfit slot po
+-- (or nil if not applicable). The function should return a translated string.
+function descextra( _p, _o, _po )
    return _("This outfit is very cool.")
 end
 

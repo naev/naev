@@ -478,6 +478,8 @@ int intro_display( const char *text, const char *mus )
    } /* while (!stop) */
 
    /* free malloc'd memory. */
+   for ( int i = 0; i < lines_per_screen; i++ )
+      free( sb_arr[i] );
    free( sb_arr );
    gl_freeTexture( side_image.tex );
    gl_freeTexture( transition.tex );

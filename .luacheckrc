@@ -201,6 +201,7 @@ stds.API_music = {globals={
 }}
 stds.API_pilotoutfit = {globals={
    "notactive",
+   "hidestats",
    "price",
    "buy",
    "sell",

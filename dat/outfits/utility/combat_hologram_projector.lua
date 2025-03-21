@@ -5,7 +5,6 @@ local active = 15
 local dist = 3000 -- Distance to possible change target of hostiles
 local hologram = outfit.get("Combat Hologram Projector")
 
-
 local function turnon( p, po )
    -- Make sure pilot has a target
    local t = p:target()

@@ -110,8 +110,6 @@ extern gl_vbo *gl_squareVBO;
 extern gl_vbo *gl_circleVBO;
 void           gl_beginSolidProgram( mat4 projection, const glColour *c );
 void           gl_endSolidProgram( void );
-void           gl_beginSmoothProgram( mat4 projection );
-void           gl_endSmoothProgram( void );
 
 /* Simple Shaders. */
 void gl_renderShader( double x, double y, double w, double h, double r,
@@ -130,8 +128,12 @@ void gl_renderLine( double x1, double y1, double x2, double y2,
 
 /* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
+void gl_renderRectHalf( double x, double y, double w, double h,
+                        const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h,
                          const glColour *c );
+void gl_renderRectEmptyThick( double x, double y, double w, double h, double b,
+                              const glColour *c );
 void gl_renderRectH( const mat4 *H, const glColour *c, int filled );
 
 /* Cross. */
