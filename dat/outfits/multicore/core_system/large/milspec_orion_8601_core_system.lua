@@ -1,4 +1,4 @@
-require("outfits.multicore.desc").init{
+require("outfits.lib.multicore").init{
    { "mass", 540, 760},
    { "cpu_max", 540, 1660},
    { "energy", 2460, 1380},

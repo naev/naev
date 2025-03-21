@@ -3368,6 +3368,7 @@ dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/helper.lua
 dat/outfits/lib/mining_drill.lua
+dat/outfits/lib/multicore.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/multicore/core_system/large/milspec_orion_8601_core_system.lua
 dat/outfits/multicore/core_system/large/milspec_thalos_8502_core_system.lua
@@ -3381,7 +3382,6 @@ dat/outfits/multicore/core_system/small/milspec_orion_2301_core_system.lua
 dat/outfits/multicore/core_system/small/milspec_thalos_2202_core_system.lua
 dat/outfits/multicore/core_system/small/previous_generation_small_systems.lua
 dat/outfits/multicore/core_system/small/unicorp_pt16_core_system.lua
-dat/outfits/multicore/desc.lua
 dat/outfits/multicore/unique/homebrew_processing_unit.lua
 dat/outfits/pointdefense/pointdefense.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
