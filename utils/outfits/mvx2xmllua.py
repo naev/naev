@@ -124,7 +124,7 @@ def mklua(luanam,L):
    fp=file(luanam,"w")
    ind=3*' '
 
-   print >>fp,'require("outfits.multicore.desc").init{'
+   print >>fp,'require("outfits.lib.multicore").init{'
 
    for (nam,(main,sec)) in L:
       if nam not in dont_display:
