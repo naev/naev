@@ -1265,7 +1265,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
    w->timer += rate_mod * outfit_delay( w->outfit );
 
    /* Reset autonav if is player. */
-   if ( pilot_isPlayer( p ) && !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE )
+   if ( pilot_isPlayer( p ) && !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
       player_autonavReset( 1. );
 
    return 1;
