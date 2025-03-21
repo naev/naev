@@ -51,6 +51,7 @@
   <structure size="large" />
  </slots>
  <stats>
+  <weapon_range>30</weapon_range>
   <speed_mod>-10</speed_mod>
   <armour_mod>10</armour_mod>
   <energy_mod>10</energy_mod>
