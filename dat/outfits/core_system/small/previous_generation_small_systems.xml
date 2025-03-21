@@ -10,5 +10,5 @@
   <gfx_store>apu.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/core_system/small/previous_generation_small_systems.lua</lua></specific>
+  <lua>outfits/core_system/small/previous_generation_small_systems.lua</lua></specific>
 </outfit>

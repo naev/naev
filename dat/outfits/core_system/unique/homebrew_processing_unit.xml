@@ -12,5 +12,6 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/unique/homebrew_processing_unit.lua</lua></specific>
+  <lua>outfits/core_system/unique/homebrew_processing_unit.lua</lua>
+ </specific>
 </outfit>

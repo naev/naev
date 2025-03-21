@@ -10,5 +10,5 @@
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/core_system/large/previous_generation_large_systems.lua</lua></specific>
+  <lua>outfits/core_system/large/previous_generation_large_systems.lua</lua></specific>
 </outfit>

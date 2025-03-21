@@ -10,5 +10,5 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/core_system/small/unicorp_pt16_core_system.lua</lua></specific>
+  <lua>outfits/core_system/small/unicorp_pt16_core_system.lua</lua></specific>
 </outfit>

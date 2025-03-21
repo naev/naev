@@ -10,5 +10,5 @@
   <gfx_store>reactor01.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/core_system/medium/previous_generation_medium_systems.lua</lua></specific>
+  <lua>outfits/core_system/medium/previous_generation_medium_systems.lua</lua></specific>
 </outfit>
