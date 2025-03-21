@@ -404,7 +404,8 @@ typedef struct Outfit_ {
    char **tags; /**< Outfit tags. */
 
    /* Lua function references. Set to LUA_NOREF if not used. */
-   char *lua_file; /**< Lua File. */
+   char *lua_file;   /**< Lua File. */
+   char *lua_inline; /**< Inline Lua. */
    nlua_env
       lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_descextra; /**< Run to get the extra description status. */
