@@ -81,7 +81,8 @@ function multicore.init( params )
    end )
 
    -- Set global properties
-   notactive = true
+   notactive = true -- Not an active outfit
+   hidestats = true -- We do hacks to show stats, so hide them
 
    -- Below define the global functions for the outfit
    function descextra( _p, _o, po )

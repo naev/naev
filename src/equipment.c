@@ -937,7 +937,8 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
    outfit_altText( alt, sizeof( alt ), o, ( p == player.p ) ? p : NULL, slot );
 
    /* Display temporary bonuses. */
-   if ( slot->lua_mem != LUA_NOREF ) {
+   if ( ( slot->lua_mem != LUA_NOREF ) &&
+        !outfit_isProp( slot->outfit, OUTFIT_PROP_HIDESTATS ) ) {
       size_t slen = strlen( alt );
       ss_statsListDesc( slot->lua_stats, &alt[slen], sizeof( alt ) - slen, 1 );
    }
