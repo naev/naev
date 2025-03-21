@@ -1509,6 +1509,7 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
       xmlr_int( node, "shots", temp->u.blt.shots );
       xmlr_int( node, "mining_rarity", temp->u.blt.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "radius" ) ) {
          char *buf;
          temp->u.blt.radius = xml_getFloat( node );
@@ -1735,6 +1736,7 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "swivel", temp->u.bem.swivel );
       xmlr_int( node, "mining_rarity", temp->u.bem.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "pointdefense" ) ) {
          outfit_setProp( temp, OUTFIT_PROP_WEAP_POINTDEFENSE );
          continue;
@@ -1913,6 +1915,7 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
       xmlr_int( node, "shots", temp->u.lau.shots );
       xmlr_int( node, "mining_rarity", temp->u.lau.mining_rarity );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "radius" ) ) {
          char *buf;
          temp->u.lau.radius = xml_getFloat( node );
@@ -2203,6 +2206,7 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
 
       xml_onlyNodes( node );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
 
       if ( xml_isNode( node, "active" ) ) {
          xmlr_attr_float( node, "cooldown", temp->u.mod.cooldown );
@@ -2258,6 +2262,7 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes( node );
       xmlr_float( node, "rumble", temp->u.afb.rumble );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
       if ( xml_isNode( node, "sound_on" ) ) {
          temp->u.afb.sound_on = sound_get( xml_get( node ) );
          continue;
@@ -2339,6 +2344,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "ship_mass", temp->u.bay.ship_mass );
       xmlr_int( node, "amount", temp->u.bay.amount );
       xmlr_strd( node, "lua", temp->lua_file );
+      xmlr_strd( node, "lua_inline", temp->lua_inline );
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -3000,9 +3006,20 @@ int outfit_load( void )
       if ( o->lua_file == NULL )
          continue;
 
+      /* Can't use both file + inline. */
+      if ( ( o->lua_file != NULL ) && ( o->lua_inline != NULL ) )
+         WARN( _( "Outfit '%s' has both <lua> and <lua_inline> tags!" ),
+               o->name );
+
       nlua_env env;
       size_t   sz;
-      char    *dat = ndata_read( o->lua_file, &sz );
+      char    *dat;
+      if ( o->lua_file != NULL )
+         dat = ndata_read( o->lua_file, &sz );
+      else {
+         dat = o->lua_inline;
+         sz  = strlen( dat );
+      }
       if ( dat == NULL ) {
          WARN( _( "Outfit '%s' failed to read Lua '%s'!" ), o->name,
                o->lua_file );
@@ -3028,7 +3045,8 @@ int outfit_load( void )
          o->lua_env = LUA_NOREF;
          continue;
       }
-      free( dat );
+      if ( o->lua_file != NULL )
+         free( dat );
 
       /* Check functions as necessary. */
       o->lua_descextra   = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
@@ -3342,6 +3360,7 @@ void outfit_free( void )
       nlua_freeEnv( o->lua_env );
       o->lua_env = LUA_NOREF;
       free( o->lua_file );
+      free( o->lua_inline );
 
       /* strings */
       free( o->typename );
