@@ -248,7 +248,6 @@ dat/outfits/core_system/small/milspec_orion_2301_core_system.xml
 dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml
 dat/outfits/core_system/small/previous_generation_small_systems.xml
 dat/outfits/core_system/small/unicorp_pt16_core_system.xml
-dat/outfits/core_system/unique/homebrew_processing_unit.xml
 dat/outfits/fighter_bays/drone_bay.xml
 dat/outfits/fighter_bays/empire_lancelot_bay.xml
 dat/outfits/fighter_bays/hyena_bay.xml
@@ -409,6 +408,7 @@ dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
 dat/outfits/unique/fuelshell_plating.xml
 dat/outfits/unique/hades_torch.xml
+dat/outfits/unique/homebrew_processing_unit.xml
 dat/outfits/unique/pulse_scanner.xml
 dat/outfits/unique/squadron_synchronizer_module.xml
 dat/outfits/unique/valkyrie_beam.xml
@@ -3361,7 +3361,6 @@ dat/outfits/core_system/small/milspec_orion_2301_core_system.lua
 dat/outfits/core_system/small/milspec_thalos_2202_core_system.lua
 dat/outfits/core_system/small/previous_generation_small_systems.lua
 dat/outfits/core_system/small/unicorp_pt16_core_system.lua
-dat/outfits/core_system/unique/homebrew_processing_unit.lua
 dat/outfits/flow/abilities/astral_projection.lua
 dat/outfits/flow/abilities/avatar_of_sirichana.lua
 dat/outfits/flow/abilities/cleansing_flames.lua
@@ -3390,6 +3389,7 @@ dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/fuelshell_plating.lua
+dat/outfits/unique/homebrew_processing_unit.lua
 dat/outfits/unique/poi_data.lua
 dat/outfits/unique/pulse_scanner.lua
 dat/outfits/unique/squadron_synchronizer_module.lua
