@@ -55,6 +55,9 @@
    ( 1 << 15 ) /**< The outfit needs to load graphics. */
 #define OUTFIT_PROP_STEALTH_ON                                                 \
    ( 1 << 16 ) /**< The outfit does not get turned off by stealth. */
+#define OUTFIT_PROP_HIDESTATS                                                  \
+   ( 1 << 17 ) /**< Hide the outfit shipstats from Lua stuff in the            \
+                  descriptions. */
 
 /* Outfit filter labels. [Doc comments are also translator notes and must
  * precede the #define.] */

@@ -17,6 +17,11 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 -- descriptions or prices while not being an active outfit.
 notactive = false
 
+-- The 'hidestats' variable controls whether or not the outfit hides stats that
+-- have been set with po:set() from the equipment interface. By default they
+-- are computed in real time and shown.
+hidestats = false
+
 -- The onload is run once when the outfit Lua is loaded. Useful for setting up
 -- variables. The passed variable is the outfit itself.
 function onload( _o )

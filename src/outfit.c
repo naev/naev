@@ -3059,6 +3059,11 @@ int outfit_load( void )
       o->lua_buy        = nlua_refenvtype( env, "buy", LUA_TFUNCTION );
       o->lua_sell       = nlua_refenvtype( env, "sell", LUA_TFUNCTION );
 
+      nlua_getenv( naevL, env, "hidestats" );
+      if ( lua_toboolean( naevL, -1 ) )
+         outfit_setProp( o, OUTFIT_PROP_HIDESTATS );
+      lua_pop( naevL, 1 );
+
       if ( outfit_isMod( o ) ) {
          nlua_getenv( naevL, env, "notactive" );
          o->u.mod.active = 1;
