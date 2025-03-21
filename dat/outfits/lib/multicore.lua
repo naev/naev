@@ -3,64 +3,54 @@ local fmt = require "format"
 local shipstat = naev.shipstats()
 local multicore = {}
 
-local function vu( val, unit)
-   local num
-   if val=="_" or val==0 then
-      num = "_"
-   elseif val>0 then
-      num = "+"..val
-   else
-      num = val
+local function valcol( val, inverted )
+   if inverted then
+      val = -val
    end
-
-   if num=="_" or unit == nil or unit == "" then
-      return fmt.f("{num}",{num=num})
+   if val > 0 then
+      return "#g"
+   elseif val < 0 then
+      return "#r"
    else
-      return fmt.f("{val} {unit}",{val=num,unit=unit})
+      return "#n"
    end
 end
 
-local function col( s, grey, def)
+local function stattostr( s, val, grey, unit )
+   local col
    if grey then
-      return "#n"..s..def
+      col = "#n"
    else
-      return s
+      col = valcol( val, s.inverted )
    end
+   local str
+   if val > 0 then
+      str = "+"..fmt.number(val)
+   else
+      str = fmt.number(val)
+   end
+   if unit and s.unit then
+      return col..fmt.f("{val} {unit}", {val=str, unit=_(s.unit)})
+   end
+   return col..str
 end
 
-local function sign(n)
-   if n == nil or n=="_" then
-      return 0
-   else
-      return n
-   end
-end
-
-local function add_desc(stat, nomain, nosec )
+local function add_desc( stat, nomain, nosec )
    local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
-   local units = _(stat.stat.unit)
 
-   local p=sign(base)
-   local s=sign(secondary)
+   local p = base or 0
+   local s = secondary or 0
 
-   local def
-   if stat.stat.inverted then
-      def = ((p+s <= 0) and "#g") or "#r"
+   local col = valcol( p+s, stat.stat.inverted )
+   local pref = col..fmt.f("{name}: ",{name=name})
+   if p==s then
+      return pref..stattostr( stat.stat, base, false, true )
    else
-      def = ((p+s >= 0) and "#g") or "#r"
-   end
-
-   local pref=fmt.f("\n{def}{name}: ",{def=def, name=name})
-
-   if base==secondary then
-      return pref..vu(base, units)
-   else
-      return pref..fmt.f("{bas} {sep} {sec}", {
-         bas = col(vu(base, units),nomain, def),
-         sep = col("/", nomain or nosec, def),
-         sec = col(vu(secondary, units),nosec, def),
+      return pref..fmt.f("{bas} #n/#0 {sec}", {
+         bas = stattostr( stat.stat, p, nomain, false ),
+         sec = stattostr( stat.stat, s, nosec, true ),
       })
    end
 end
@@ -104,9 +94,19 @@ function multicore.init( params )
          end
       end
 
-      local desc = ""
-      for _k,s in ipairs(stats) do
-         desc = desc..add_desc( s, nomain, nosec)
+      local desc
+      if nomain then
+         desc = "#o"..fmt.f(_("Equipped as {type} core"),{type="#y"..p_("core","secondary").."#o"}).."#0"
+      elseif nosec then
+         desc = "#o"..fmt.f(_("Equipped as {type} core"),{type="#r"..p_("core","primary").."#o"}).."#0"
+      else
+         desc = "#n"..fmt.f(_("Properties for {pri} / {sec} slots"),{
+            pri="#r"..p_("core","primary").."#n",
+            sec="#y"..p_("core","secondary").."#n",
+         }).."#0"
+      end
+      for k,s in ipairs(stats) do
+         desc = desc.."\n"..add_desc( s, nomain, nosec )
       end
       return desc
    end
