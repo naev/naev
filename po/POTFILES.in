@@ -3389,7 +3389,6 @@ dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/fuelshell_plating.lua
-dat/outfits/unique/homebrew_processing_unit.lua
 dat/outfits/unique/poi_data.lua
 dat/outfits/unique/pulse_scanner.lua
 dat/outfits/unique/squadron_synchronizer_module.lua
