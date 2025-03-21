@@ -177,6 +177,9 @@ int main( int argc, char **argv )
 
    log_init();
 
+   /* Set up debug signal handlers. */
+   debug_sigInit();
+
    /* Set up PhysicsFS. */
    if ( PHYSFS_init( env.argv0 ) == 0 ) {
       char buf[STRMAX];
@@ -228,9 +231,6 @@ int main( int argc, char **argv )
 
    /* Initialize the threadpool */
    threadpool_init();
-
-   /* Set up debug signal handlers. */
-   debug_sigInit();
 
 #if HAS_UNIX
    /* Set window class and name. */
