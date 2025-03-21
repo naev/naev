@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Rainmaker">
  <points>120</points>
  <base_type>Rainmaker</base_type>
@@ -8,14 +7,14 @@
  <class>Bulk Freighter</class>
  <price>5000000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-52" y="4" h="4" />
- <trail_generator x="-52" y="7" h="1" />
- <trail_generator x="-52" y="-4" h="4" />
- <trail_generator x="-52" y="-7" h="1" />
- <trail_generator x="-44" y="8" h="8">nebula</trail_generator>
- <trail_generator x="-44" y="-8" h="8">nebula</trail_generator>
- <trail_generator x="-44" y="19" h="-2" always_under="1">nebula</trail_generator>
- <trail_generator x="-44" y="-19" h="-2" always_under="1">nebula</trail_generator>
+ <trail_generator h="4" x="-52" y="4" />
+ <trail_generator h="1" x="-52" y="7" />
+ <trail_generator h="4" x="-52" y="-4" />
+ <trail_generator h="1" x="-52" y="-7" />
+ <trail_generator h="8" x="-44" y="8">nebula</trail_generator>
+ <trail_generator h="8" x="-44" y="-8">nebula</trail_generator>
+ <trail_generator always_under="1" h="-2" x="-44" y="19">nebula</trail_generator>
+ <trail_generator always_under="1" h="-2" x="-44" y="-19">nebula</trail_generator>
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
  <license>Large Civilian Vessel</license>
@@ -33,21 +32,22 @@
   <cargo>370</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" x="9" y="14" h="0" />
-  <weapon size="large" prop="fighter_bay" x="9" y="-14" h="0" />
-  <weapon size="medium" x="41" y="14" h="0" />
-  <weapon size="medium" x="41" y="-14" h="0" />
-  <weapon size="medium" x="-23" y="14" h="0" />
-  <weapon size="medium" x="-23" y="-14" h="0" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon h="0" prop="fighter_bay" size="large" x="9" y="14" />
+  <weapon h="0" prop="fighter_bay" size="large" x="9" y="-14" />
+  <weapon h="0" size="medium" x="41" y="14" />
+  <weapon h="0" size="medium" x="41" y="-14" />
+  <weapon h="0" size="medium" x="-23" y="14" />
+  <weapon h="0" size="medium" x="-23" y="-14" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="engines" size="large">Nexus Bolt 3000 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

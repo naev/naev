@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Dummy Systems">
  <general>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>65</mass>
   <price>0</price>

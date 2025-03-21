@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Watson">
  <points>200</points>
  <base_type>Watson</base_type>
@@ -8,12 +7,12 @@
  <class>Carrier</class>
  <price>11000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-48" y="4" h="6">proteron</trail_generator>
- <trail_generator x="-48" y="4" h="-6">proteron</trail_generator>
- <trail_generator x="-48" y="-4" h="6">proteron</trail_generator>
- <trail_generator x="-48" y="-4" h="-6">proteron</trail_generator>
- <trail_generator x="-5" y="22" h="0" always_under="1">nebula</trail_generator>
- <trail_generator x="-5" y="-22" h="0" always_under="1">nebula</trail_generator>
+ <trail_generator h="6" x="-48" y="4">proteron</trail_generator>
+ <trail_generator h="-6" x="-48" y="4">proteron</trail_generator>
+ <trail_generator h="6" x="-48" y="-4">proteron</trail_generator>
+ <trail_generator h="-6" x="-48" y="-4">proteron</trail_generator>
+ <trail_generator always_under="1" h="0" x="-5" y="22">nebula</trail_generator>
+ <trail_generator always_under="1" h="0" x="-5" y="-22">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <faction>Proteron</faction>
  <license>Heavy Combat Vessel</license>
@@ -31,21 +30,22 @@
   <cargo>70</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-9" y="3" h="4" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="3" y="-10" h="2" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="9" y="-10" h="2" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="9" y="10" h="2" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="14" y="-10" h="2" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="14" y="10" h="2" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon h="4" size="large" x="-9" y="3" />
+  <weapon exclusive="1" h="2" prop="fighter_bay" size="large" x="3" y="-10" />
+  <weapon exclusive="1" h="2" prop="fighter_bay" size="large" x="9" y="-10" />
+  <weapon exclusive="1" h="2" prop="fighter_bay" size="large" x="9" y="10" />
+  <weapon exclusive="1" h="2" prop="fighter_bay" size="large" x="14" y="-10" />
+  <weapon exclusive="1" h="2" prop="fighter_bay" size="large" x="14" y="10" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

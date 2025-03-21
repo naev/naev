@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<ship name="Goddard Merchantman" inherits="Goddard">
+<ship inherits="Goddard" name="Goddard Merchantman">
  <gfx size="125" sx="12" sy="12">goddard_merchant</gfx>
  <rarity>2</rarity>
  <price>6850000</price>
@@ -15,19 +14,20 @@ While contemplating a replacement, the captain realized that she encountered non
   <cargo>540</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-10" y="-13" h="2" />
-  <weapon size="large" x="-10" y="13" h="2" />
-  <weapon size="large" x="-15" y="-25" h="3" />
-  <weapon size="large" x="-15" y="25" h="3" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon h="2" size="large" x="-10" y="-13" />
+  <weapon h="2" size="large" x="-10" y="13" />
+  <weapon h="3" size="large" x="-15" y="-25" />
+  <weapon h="3" size="large" x="-15" y="25" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
