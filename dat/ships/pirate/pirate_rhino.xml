@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Rhino">
  <lua>pirate.lua</lua>
  <points>80</points>
@@ -9,11 +8,11 @@
  <class>Armoured Transport</class>
  <price>1450000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-35" y="4" h="10">pirate</trail_generator>
- <trail_generator x="-35" y="4" h="0" always_under="1">pirate</trail_generator>
- <trail_generator x="-35" y="-4" h="10">pirate</trail_generator>
- <trail_generator x="-35" y="-4" h="0" always_under="1">pirate</trail_generator>
- <trail_generator x="-35" y="0" h="5">nebula</trail_generator>
+ <trail_generator h="10" x="-35" y="4">pirate</trail_generator>
+ <trail_generator always_under="1" h="0" x="-35" y="4">pirate</trail_generator>
+ <trail_generator h="10" x="-35" y="-4">pirate</trail_generator>
+ <trail_generator always_under="1" h="0" x="-35" y="-4">pirate</trail_generator>
+ <trail_generator h="5" x="-35" y="0">nebula</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Pirate</faction>
  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
@@ -28,18 +27,18 @@
   <cargo>90</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="25" y="-3" h="4" />
-  <weapon size="large" x="25" y="3" h="4" />
-  <weapon size="medium" prop="fighter_bay" x="-15" y="-3" h="4" />
-  <weapon size="medium" prop="fighter_bay" x="-15" y="3" h="4" />
-  <utility size="medium" prop="systems">Previous Generation Medium Systems</utility>
-  <utility size="medium" prop="accessory" />
+  <weapon h="4" size="large" x="25" y="-3" />
+  <weapon h="4" size="large" x="25" y="3" />
+  <weapon h="4" prop="fighter_bay" size="medium" x="-15" y="-3" />
+  <weapon h="4" prop="fighter_bay" size="medium" x="-15" y="3" />
+  <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
+  <utility prop="systems_secondary" size="medium" /><utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
-  <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+  <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
+  <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

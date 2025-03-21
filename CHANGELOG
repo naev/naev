@@ -20,6 +20,8 @@
       * More space objects
       * New portraits
       * Significant changes in jumps (hidden and otherwise)
+      * Light, medium-heavy and ultraheavy ship now have two core system slots, one main and one secondary
+        Now the effects of light, medium-heavy, and ultra-heavy core systems are obtained by stacking two smaller core systems
    * Engine
       * Use instancing instead of geometry shaders for space dust
       * Ship Lua scripting supports "onshootany" now

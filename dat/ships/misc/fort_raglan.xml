@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Fort Raglan">
  <points>1000</points>
  <base_type>Fort Raglan</base_type>
- <gfx sx="1" sy="1" size="150" polygon="station-battlestation.webp" comm="spob/exterior/station05.webp" noengine="1">/gfx/spob/space/station-battlestation.webp</gfx>
+ <gfx comm="spob/exterior/station05.webp" noengine="1" polygon="station-battlestation.webp" size="150" sx="1" sy="1">/gfx/spob/space/station-battlestation.webp</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
@@ -33,17 +32,17 @@
   <cargo>5000</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <utility size="large" prop="systems">Dummy Systems</utility>
-  <structure size="large" prop="engines">Dummy Engine</structure>
-  <structure size="large" prop="hull">Dummy Plating</structure>
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <weapon h="5" size="large" x="0" y="0" />
+  <utility prop="systems" size="large">Dummy Systems</utility>
+  <utility prop="systems_secondary" size="large" /><structure prop="engines" size="large">Dummy Engine</structure>
+  <structure prop="hull" size="large">Dummy Plating</structure>
  </slots>
  <tags>
   <tag>noplayer</tag>
