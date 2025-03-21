@@ -37,7 +37,8 @@
   <weapon h="2" prop="fighter_bay" size="large" x="-2" y="-12" />
   <weapon h="2" prop="fighter_bay" size="large" x="-2" y="12" />
   <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility><utility prop="accessory" size="large" />
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />

@@ -26,7 +26,8 @@
   <weapon h="-7" size="small" x="11" y="0" />
   <weapon h="3" size="small" x="-5" y="0" />
   <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility><utility prop="accessory" size="small" />
+  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />

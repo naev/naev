@@ -33,7 +33,8 @@
   <weapon h="6" size="large" x="6" y="0" />
   <weapon h="-6" prop="fighter_bay" size="medium" x="8" y="0" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility><utility prop="accessory" size="medium" />
+  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="accessory" size="medium" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
