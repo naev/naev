@@ -22,21 +22,22 @@ function finish ()
       return
    end
 
+   -- Old cores that now use the primary / secondary system (0.13.0)
    local split={
-      ["Milspec Orion 9901 Core System"] = true,
+      ["Milspec Orion 9901 Core System"]  = true,
       ["Milspec Thalos 9802 Core System"] = true,
-      ["Unicorp PT-1750 Core System"] = true,
-      ["Milspec Orion 5501 Core System"] = true,
+      ["Unicorp PT-1750 Core System"]     = true,
+      ["Milspec Orion 5501 Core System"]  = true,
       ["Milspec Thalos 5402 Core System"] = true,
-      ["Unicorp PT-310 Core System"] = true,
-      ["Milspec Orion 3701 Core System"] = true,
+      ["Unicorp PT-310 Core System"]      = true,
+      ["Milspec Orion 3701 Core System"]  = true,
       ["Milspec Thalos 3602 Core System"] = true,
-      ["Unicorp PT-68 Core System"] = true,
+      ["Unicorp PT-68 Core System"]       = true,
    }
 
    for original,value in pairs(changes_done) do
       if split[original] then
-         player.outfitAdd( value.new, value.q )
+         player.outfitAdd( value.new, value.q ) -- Hae to add an additional core to compensate
          print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
       else
          print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
