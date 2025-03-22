@@ -376,13 +376,11 @@ void          ss_free( ShipStatList *ll );
  * Manipulation
  */
 int ss_statsInit( ShipStats *stats );
-int ss_statsMerge( ShipStats *dest, const ShipStats *src );
-int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list );
-int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
-                              double scale );
-int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list );
+int ss_statsMerge( ShipStats *dest, const ShipStats *src, int multiply );
+int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list,
+                           int multiply );
 int ss_statsMergeFromListScale( ShipStats *stats, const ShipStatList *list,
-                                double scale );
+                                double scale, int multiply );
 
 /*
  * Lookup.

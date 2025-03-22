@@ -1290,7 +1290,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          /* Load array. */
          ss_sort( &temp->stats );
          ss_statsInit( &temp->stats_array );
-         ss_statsMergeFromList( &temp->stats_array, temp->stats );
+         ss_statsMergeFromList( &temp->stats_array, temp->stats, 0 );
 
          /* Create description. */
          if ( temp->stats != NULL ) {

@@ -16,6 +16,12 @@
 #include "nstring.h"
 #include "physics.h"
 
+/* Prototypes. */
+static int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list,
+                                int multiply );
+static int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
+                                     double scale, int multiply );
+
 /**
  * @brief The data type.
  */
@@ -527,8 +533,9 @@ int ss_statsInit( ShipStats *stats )
  *
  *    @param dest Destination ship stats.
  *    @param src Source to be merged with destination.
+ *    @param multiply Whether or not to use multiplication for merging.
  */
-int ss_statsMerge( ShipStats *dest, const ShipStats *src )
+int ss_statsMerge( ShipStats *dest, const ShipStats *src, int multiply )
 {
    int          *destint;
    const int    *srcint;
@@ -548,22 +555,25 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
 
       switch ( sl->data ) {
       case SS_DATA_TYPE_DOUBLE:
-         destdbl  = (double *)(void *)&destptr[sl->offset];
-         srcdbl   = (const double *)(const void *)&srcptr[sl->offset];
-         *destdbl = ( *destdbl ) * ( *srcdbl );
+         destdbl = (double *)(void *)&destptr[sl->offset];
+         srcdbl  = (const double *)(const void *)&srcptr[sl->offset];
+         if ( multiply )
+            *destdbl *= *srcdbl;
+         else
+            ss_adjustDoubleStat( destdbl, *srcdbl, sl->inverted );
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
-         destdbl  = (double *)(void *)&destptr[sl->offset];
-         srcdbl   = (const double *)(const void *)&srcptr[sl->offset];
-         *destdbl = ( *destdbl ) + ( *srcdbl );
+         destdbl = (double *)(void *)&destptr[sl->offset];
+         srcdbl  = (const double *)(const void *)&srcptr[sl->offset];
+         *destdbl += *srcdbl;
          break;
 
       case SS_DATA_TYPE_INTEGER:
-         destint  = (int *)&destptr[sl->offset];
-         srcint   = (const int *)&srcptr[sl->offset];
-         *destint = ( *destint ) + ( *srcint );
+         destint = (int *)&destptr[sl->offset];
+         srcint  = (const int *)&srcptr[sl->offset];
+         *destint += *srcint;
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
@@ -582,11 +592,13 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  *
  *    @param stats Stat structure to modify.
  *    @param list Single element to apply.
+ *    @param multiply Whether or not to use multiplication for merging.
  *    @return 0 on success.
  */
-int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list )
+static int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list,
+                                int multiply )
 {
-   return ss_statsMergeSingleScale( stats, list, 1 );
+   return ss_statsMergeSingleScale( stats, list, 1., multiply );
 }
 
 /**
@@ -613,10 +625,11 @@ static void ss_adjustDoubleStat( double *statptr, double adjustment,
  *    @param stats Stat structure to modify.
  *    @param list Single element to apply.
  *    @param scale Scaling factor.
+ *    @param multiply Whether or not to use multiplication for merging.
  *    @return 0 on success.
  */
-int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
-                              double scale )
+static int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
+                                     double scale, int multiply )
 {
    char                  *ptr;
    char                  *fieldptr;
@@ -629,7 +642,10 @@ int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
    case SS_DATA_TYPE_DOUBLE:
       fieldptr = &ptr[sl->offset];
       memcpy( &dbl, &fieldptr, sizeof( double * ) );
-      ss_adjustDoubleStat( dbl, list->d.d * scale, sl->inverted );
+      if ( multiply )
+         *dbl *= list->d.d * scale;
+      else
+         ss_adjustDoubleStat( dbl, list->d.d * scale, sl->inverted );
       break;
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
@@ -659,15 +675,17 @@ int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
  *
  *    @param stats Stats to update.
  *    @param list List to update from.
+ *    @param multiply Whether or not to use multiplication for merging.
  *    @return 0 on success.
  */
-int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list )
+int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list,
+                           int multiply )
 {
    if ( list == NULL )
       return 0;
    int ret = 0;
    for ( const ShipStatList *ll = list; ll != NULL; ll = ll->next )
-      ret |= ss_statsMergeSingle( stats, ll );
+      ret |= ss_statsMergeSingle( stats, ll, multiply );
    return ret;
 }
 
@@ -677,16 +695,17 @@ int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list )
  *    @param stats Stats to update.
  *    @param list List to update from.
  *    @param scale Scaling factor.
+ *    @param multiply Whether or not to use multiplication for merging.
  *    @return 0 on success.
  */
 int ss_statsMergeFromListScale( ShipStats *stats, const ShipStatList *list,
-                                double scale )
+                                double scale, int multiply )
 {
    if ( list == NULL )
       return 0;
    int ret = 0;
    for ( const ShipStatList *ll = list; ll != NULL; ll = ll->next )
-      ret |= ss_statsMergeSingleScale( stats, ll, scale );
+      ret |= ss_statsMergeSingleScale( stats, ll, scale, multiply );
    return ret;
 }
 
