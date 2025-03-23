@@ -434,10 +434,11 @@ static int outfitL_slot( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
    lua_pushstring( L, outfit_slotName( o ) );
-   lua_pushstring( L, outfit_slotSize( o ) );
-   lua_pushstring( L, sp_display( o->slot.spid ) );
-   lua_pushboolean( L, sp_required( o->slot.spid ) );
-   lua_pushboolean( L, sp_exclusive( o->slot.spid ) );
+   lua_pushstring( L, outfit_slotSizeName( o ) );
+   int spid = outfit_slotProperty( o );
+   lua_pushstring( L, sp_display( spid ) );
+   lua_pushboolean( L, sp_required( spid ) );
+   lua_pushboolean( L, sp_exclusive( spid ) );
    return 5;
 }
 
@@ -451,9 +452,10 @@ static int outfitL_slot( lua_State *L )
  */
 static int outfitL_limit( lua_State *L )
 {
-   const Outfit *o = luaL_validoutfit( L, 1 );
-   if ( o->limit ) {
-      lua_pushstring( L, o->limit );
+   const Outfit *o     = luaL_validoutfit( L, 1 );
+   const char   *limit = outfit_limit( o );
+   if ( limit ) {
+      lua_pushstring( L, limit );
       return 1;
    }
    return 0;
@@ -470,9 +472,9 @@ static int outfitL_limit( lua_State *L )
  */
 static int outfitL_icon( lua_State *L )
 {
-   const Outfit *o = luaL_validoutfit( L, 1 );
-   outfit_gfxStoreLoad( (Outfit *)o );
-   lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
+   const Outfit    *o   = luaL_validoutfit( L, 1 );
+   const glTexture *tex = outfit_gfxStore( o );
+   lua_pushtex( L, gl_dupTexture( tex ) );
    return 1;
 }
 
@@ -506,7 +508,7 @@ static int outfitL_license( lua_State *L )
 static int outfitL_price( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   lua_pushnumber( L, o->price );
+   lua_pushnumber( L, outfit_price( o ) );
    return 1;
 }
 
@@ -693,14 +695,14 @@ static int outfitL_weapStats( lua_State *L )
    if ( outfit_isBeam( o ) ) {
       if ( p ) {
          /* Special case due to continuous fire. */
-         if ( o->type == OUTFIT_TYPE_BEAM ) {
-            mod_energy = p->stats.fwd_energy;
-            mod_damage = p->stats.fwd_damage;
-            mod_shots  = 1. / p->stats.fwd_firerate;
-         } else {
+         if ( outfit_isTurret( o ) ) {
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
             mod_shots  = 1. / p->stats.tur_firerate;
+         } else {
+            mod_energy = p->stats.fwd_energy;
+            mod_damage = p->stats.fwd_damage;
+            mod_shots  = 1. / p->stats.fwd_firerate;
          }
       } else {
          mod_energy = 1.;
@@ -728,7 +730,7 @@ static int outfitL_weapStats( lua_State *L )
    }
 
    if ( p ) {
-      switch ( o->type ) {
+      switch ( outfit_type( o ) ) {
       case OUTFIT_TYPE_BOLT:
          mod_energy = p->stats.fwd_energy;
          mod_damage = p->stats.fwd_damage;

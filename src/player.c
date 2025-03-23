@@ -1414,7 +1414,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
    /* Calculate engine sound to use. */
    if ( pilot_isFlag( pplayer, PILOT_AFTERBURNER ) )
-      engsound = pplayer->afterburner->outfit->u.afb.sound;
+      engsound = outfit_afterburnerSound( pplayer->afterburner->outfit );
    else if ( pilot_isFlag( pplayer, PILOT_HYPERSPACE ) )
       engsound = snd_hypEng;
    else if ( pplayer->engine_glow > 0. ) {
@@ -2901,15 +2901,16 @@ int player_outfitOwned( const Outfit *o )
       return 1;
 
    /* Special case license. */
-   if ( outfit_isLicense( o ) && player_hasLicense( o->u.lic.provides ) )
+   if ( outfit_isLicense( o ) &&
+        player_hasLicense( outfit_licenseProvides( o ) ) )
       return 1;
 
    /* Special case GUI. */
-   if ( outfit_isGUI( o ) && player_guiCheck( o->u.gui.gui ) )
+   if ( outfit_isGUI( o ) && player_guiCheck( outfit_gui( o ) ) )
       return 1;
 
    /* Special case intrinsics. */
-   if ( o->slot.type == OUTFIT_SLOT_INTRINSIC )
+   if ( outfit_slotType( o ) == OUTFIT_SLOT_INTRINSIC )
       return pilot_hasIntrinsic( player.p, o );
 
    /* Try to find it. */
@@ -3022,18 +3023,18 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
    /* special case if it's an outfit */
    else if ( outfit_isGUI( o ) ) {
-      player_guiAdd( o->u.gui.gui );
+      player_guiAdd( outfit_gui( o ) );
       return 1; /* Success. */
    }
    /* special case if it's a license. */
    else if ( outfit_isLicense( o ) ) {
-      player_addLicense( o->u.lic.provides );
+      player_addLicense( outfit_licenseProvides( o ) );
       return 1; /* Success. */
    }
    /* intrinsic outfits get added as intinsics. */
-   else if ( o->slot.type == OUTFIT_SLOT_INTRINSIC ) {
+   else if ( outfit_slotType( o ) == OUTFIT_SLOT_INTRINSIC ) {
       int ret;
-      if ( pilot_hasOutfitLimit( player.p, o->limit ) )
+      if ( pilot_hasOutfitLimit( player.p, outfit_limit( o ) ) )
          return 0;
       ret = pilot_addOutfitIntrinsic( player.p, o );
       pilot_calcStats( player.p );
@@ -3066,7 +3067,7 @@ int player_addOutfit( const Outfit *o, int quantity )
  */
 int player_rmOutfit( const Outfit *o, int quantity )
 {
-   if ( o->slot.type == OUTFIT_SLOT_INTRINSIC )
+   if ( outfit_slotType( o ) == OUTFIT_SLOT_INTRINSIC )
       return pilot_rmOutfitIntrinsic( player.p, o );
 
    /* Try to find it. */
@@ -3470,7 +3471,7 @@ int player_save( xmlTextWriterPtr writer )
    for ( int i = 0; i < array_size( player_outfits ); i++ ) {
       xmlw_startElem( writer, "outfit" );
       xmlw_attr( writer, "quantity", "%d", player_outfits[i].q );
-      xmlw_str( writer, "%s", player_outfits[i].o->name );
+      xmlw_str( writer, "%s", outfit_rawname( player_outfits[i].o ) );
       xmlw_endElem( writer ); /* "outfit" */
    }
    xmlw_endElem( writer ); /* "outfits" */
@@ -3537,7 +3538,7 @@ static int player_saveShipSlot( xmlTextWriterPtr       writer,
    xmlw_attr( writer, "slot", "%d", i );
    if ( outfit_isLauncher( o ) || outfit_isFighterBay( o ) )
       xmlw_attr( writer, "quantity", "%d", slot->u.ammo.quantity );
-   xmlw_str( writer, "%s", o->name );
+   xmlw_str( writer, "%s", outfit_name( o ) );
    xmlw_endElem( writer ); /* "outfit" */
 
    return 0;
@@ -4429,7 +4430,7 @@ static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
    if ( !outfit_fitsSlot( outfit, &s->sslot->slot ) ) {
       DEBUG( _( "Outfit '%s' does not fit designated slot on player's pilot "
                 "'%s', adding to stock." ),
-             outfit->name, pilot->name );
+             outfit_name( outfit ), pilot->name );
       player_addOutfit( outfit, 1 );
       return 0;
    }
@@ -4438,7 +4439,7 @@ static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
    if ( ret != 0 ) {
       DEBUG( _( "Outfit '%s' does not fit on player's pilot '%s', adding to "
                 "stock." ),
-             outfit->name, pilot->name );
+             outfit_name( outfit ), pilot->name );
       player_addOutfit( outfit, 1 );
       return 0;
    }
@@ -4666,10 +4667,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             }
             const Outfit *o = player_tryGetOutfit( xml_get( cur ), 1 );
             if ( o != NULL ) {
-               if ( pilot_hasOutfitLimit( ship, o->limit ) )
+               if ( pilot_hasOutfitLimit( ship, outfit_limit( o ) ) )
                   WARN( _( "Player ship '%s' has intrinsic outfit '%s' "
                            "exceeding limits! Removing." ),
-                        ship->name, o->name );
+                        ship->name, outfit_name( o ) );
                else
                   pilot_addOutfitIntrinsic( ship, o );
             }

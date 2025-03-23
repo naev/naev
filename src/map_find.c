@@ -538,18 +538,17 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
 
    /* Do fuzzy search. */
    for ( int i = 0; i < array_size( o ); i++ ) {
-      if ( SDL_strcasestr( _( o[i]->name ), name ) != NULL )
-         array_push_back( &names, o[i]->name );
-      else if ( ( o[i]->typename != NULL ) &&
-                SDL_strcasestr( o[i]->typename, name ) != NULL )
-         array_push_back( &names, o[i]->name );
-      else if ( ( o[i]->condstr != NULL ) &&
-                SDL_strcasestr( o[i]->condstr, name ) != NULL )
-         array_push_back( &names, o[i]->name );
+      if ( SDL_strcasestr( outfit_name( o[i] ), name ) != NULL )
+         array_push_back( &names, (char *)outfit_name( o[i] ) );
+      else if ( SDL_strcasestr( outfit_getType( o[i] ), name ) != NULL )
+         array_push_back( &names, (char *)outfit_name( o[i] ) );
+      else if ( ( outfit_condstr( o[i] ) != NULL ) &&
+                SDL_strcasestr( outfit_condstr( o[i] ), name ) != NULL )
+         array_push_back( &names, (char *)outfit_name( o[i] ) );
       else if ( SDL_strcasestr( outfit_description( o[i] ), name ) != NULL )
-         array_push_back( &names, o[i]->name );
+         array_push_back( &names, (char *)outfit_name( o[i] ) );
       else if ( SDL_strcasestr( outfit_summary( o[i], 0 ), name ) != NULL )
-         array_push_back( &names, o[i]->name );
+         array_push_back( &names, (char *)outfit_name( o[i] ) );
    }
 
    return names;
@@ -641,22 +640,19 @@ static void map_showOutfitDetail( unsigned int wid, const char *wgtname, int x,
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
-   outfit_gfxStoreLoad( (Outfit *)outfit );
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
+   window_modifyImage( wid, "imgOutfit", outfit_gfxStore( outfit ), 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof( buf ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, " %s",
                    pilot_outfitSummary( player.p, outfit, 0, NULL ) );
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
-   if ( outfit_isLauncher( outfit ) )
-      mass += outfit_amount( outfit ) * outfit->u.lau.ammo_mass;
-   else if ( outfit_isFighterBay( outfit ) )
-      mass += outfit_amount( outfit ) * outfit->u.bay.ship_mass;
+   /* Launchers and fighter bays have non-zero ammo mass. */
+   mass += outfit_amount( outfit ) * outfit_ammoMass( outfit );
 
    window_modifyText( wid, "txtDescription",
                       pilot_outfitDescription( player.p, outfit, NULL ) );
-   credits2str( buf_price, outfit->price, 2 );
+   credits2str( buf_price, outfit_price( outfit ), 2 );
    credits2str( buf_money, player.p->credits, 2 );
    tonnes2str( buf_mass, (int)round( mass ) );
 

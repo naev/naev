@@ -3188,7 +3188,7 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
       sys_setFlag( sys, SYSTEM_KNOWN );
    mod = 1. / ( 1. + cur_system->interference / 100. );
 
-   detect = lmap->u.lmap.jump_detect;
+   detect = outfit_lmapJumpDetect( lmap );
    for ( int i = 0; i < array_size( sys->jumps ); i++ ) {
       JumpPoint *jp = &sys->jumps[i];
       if ( jp_isFlag( jp, JP_EXITONLY ) || jp_isFlag( jp, JP_HIDDEN ) )
@@ -3215,7 +3215,7 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
          return 1;
    }
 
-   detect = lmap->u.lmap.spob_detect;
+   detect = outfit_lmapSpobDetect( lmap );
    for ( int i = 0; i < array_size( sys->spobs ); i++ ) {
       Spob *p = sys->spobs[i];
       if ( !spob_hasSystem( p ) )
@@ -3240,7 +3240,7 @@ static int localmap_docheck( const Outfit *lmap, StarSystem *sys, int range,
  */
 int localmap_map( const Outfit *lmap )
 {
-   int ret = localmap_docheck( lmap, cur_system, lmap->u.lmap.range, 1 );
+   int ret = localmap_docheck( lmap, cur_system, outfit_lmapRange( lmap ), 1 );
    ovr_refresh();
    return ret;
 }
@@ -3251,7 +3251,7 @@ int localmap_map( const Outfit *lmap )
  */
 int localmap_isUseless( const Outfit *lmap )
 {
-   return !localmap_docheck( lmap, cur_system, lmap->u.lmap.range, 0 );
+   return !localmap_docheck( lmap, cur_system, outfit_lmapRange( lmap ), 0 );
 }
 
 /**

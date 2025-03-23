@@ -350,6 +350,7 @@ typedef struct OutfitLicenseData_ {
                       NULL). */
 } OutfitLicenseData;
 
+// typedef struct Outfit Outfit;
 /**
  * @brief A ship outfit, depends radically on the type.
  */
@@ -462,31 +463,45 @@ double        outfit_mass( const Outfit *o );
 double        outfit_massAmmo( const Outfit *o );
 const char   *outfit_license( const Outfit *o );
 credits_t     outfit_price( const Outfit *o );
+const char   *outfit_getPrice( const Outfit *outfit, unsigned int q,
+                               credits_t *price, int *canbuy, int *cansell,
+                               char **player_has );
 /* outfit types */
-int         outfit_isActive( const Outfit *o );
-int         outfit_isToggleable( const Outfit *o );
-int         outfit_isWeapon( const Outfit *o );
-int         outfit_isForward( const Outfit *o );
-int         outfit_isBolt( const Outfit *o );
-int         outfit_isBeam( const Outfit *o );
-int         outfit_isLauncher( const Outfit *o );
-int         outfit_isAmmo( const Outfit *o );
-int         outfit_isSeeker( const Outfit *o );
-int         outfit_isTurret( const Outfit *o );
-int         outfit_isMod( const Outfit *o );
-int         outfit_isAfterburner( const Outfit *o );
-int         outfit_isFighterBay( const Outfit *o );
-int         outfit_isMap( const Outfit *o );
-int         outfit_isLocalMap( const Outfit *o );
-int         outfit_isGUI( const Outfit *o );
-int         outfit_isLicense( const Outfit *o );
-int         outfit_isSecondary( const Outfit *o );
-const char *outfit_getType( const Outfit *o );
-const char *outfit_getTypeBroad( const Outfit *o );
-const char *outfit_getAmmoAI( const Outfit *o );
-const char *outfit_description( const Outfit *o );
-const char *outfit_summary( const Outfit *o, int withname );
-const char *outfit_shortname( const Outfit *o );
+int            outfit_isActive( const Outfit *o );
+int            outfit_isToggleable( const Outfit *o );
+int            outfit_isWeapon( const Outfit *o );
+int            outfit_isForward( const Outfit *o );
+int            outfit_isBolt( const Outfit *o );
+int            outfit_isBeam( const Outfit *o );
+int            outfit_isLauncher( const Outfit *o );
+int            outfit_isAmmo( const Outfit *o );
+int            outfit_isSeeker( const Outfit *o );
+int            outfit_isTurret( const Outfit *o );
+int            outfit_isMod( const Outfit *o );
+int            outfit_isAfterburner( const Outfit *o );
+int            outfit_isFighterBay( const Outfit *o );
+int            outfit_isMap( const Outfit *o );
+int            outfit_isLocalMap( const Outfit *o );
+int            outfit_isGUI( const Outfit *o );
+int            outfit_isLicense( const Outfit *o );
+int            outfit_isSecondary( const Outfit *o );
+const char    *outfit_getType( const Outfit *o );
+const char    *outfit_getTypeBroad( const Outfit *o );
+const char    *outfit_getAmmoAI( const Outfit *o );
+const char    *outfit_description( const Outfit *o );
+const char    *outfit_summary( const Outfit *o, int withname );
+const char    *outfit_rawname( const Outfit *o );
+const char    *outfit_name( const Outfit *o );
+const char    *outfit_shortname( const Outfit *o );
+const char    *outfit_cond( const Outfit *o );
+const char    *outfit_condstr( const Outfit *o );
+const char    *outfit_limit( const Outfit *o );
+OutfitType     outfit_type( const Outfit *o );
+OutfitSlotType outfit_slotType( const Outfit *o );
+OutfitSlotSize outfit_slotSize( const Outfit *o );
+int            outfit_slotProperty( const Outfit *o );
+int            outfit_slotExclusive( const Outfit *o );
+int            outfit_rarity( const Outfit *o );
 
 /*
  * Search.
@@ -508,14 +523,15 @@ int outfit_filterOther( const Outfit *o );
  */
 const char     *outfit_slotName( const Outfit *o );
 const char     *slotName( const OutfitSlotType o );
-const char     *outfit_slotSize( const Outfit *o );
+const char     *outfit_slotSizeName( const Outfit *o );
 const char     *slotSize( const OutfitSlotSize o );
-const glColour *outfit_slotSizeColour( const OutfitSlot *os );
-char            outfit_slotSizeColourFont( const OutfitSlot *os );
-char            outfit_slotTypeColourFont( const OutfitSlot *os );
+const glColour *outfit_slotSizeColour( OutfitSlotSize size );
+char            outfit_slotSizeColourFont( OutfitSlotSize size );
+char            outfit_slotTypeColourFont( OutfitSlotType type );
 size_t outfit_getNameWithClass( const Outfit *outfit, char *buf, size_t size );
 OutfitSlotSize   outfit_toSlotSize( const char *s );
 const OutfitGFX *outfit_gfx( const Outfit *o );
+const glTexture *outfit_gfxStore( const Outfit *o );
 const CollPoly  *outfit_plg( const Outfit *o );
 int              outfit_spfxArmour( const Outfit *o );
 int              outfit_spfxShield( const Outfit *o );
@@ -543,6 +559,12 @@ double           outfit_ammoMass( const Outfit *o );
 int              outfit_shots( const Outfit *o );
 double           outfit_dispersion( const Outfit *o );
 double           outfit_speed_dispersion( const Outfit *o );
+const char      *outfit_gui( const Outfit *o );
+const char      *outfit_licenseProvides( const Outfit *o );
+double           outfit_lmapJumpDetect( const Outfit *o );
+double           outfit_lmapSpobDetect( const Outfit *o );
+int              outfit_lmapRange( const Outfit *o );
+int              outfit_afterburnerSound( const Outfit *o );
 /* Active outfits. */
 double outfit_duration( const Outfit *o );
 double outfit_cooldown( const Outfit *o );

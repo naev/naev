@@ -756,7 +756,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw,
          continue;
 
       /* Get the colour. */
-      c = outfit_slotSizeColour( &s[i].slot );
+      c = outfit_slotSizeColour( s[i].slot.size );
       if ( c == NULL )
          c = &cBlack;
 
@@ -860,9 +860,9 @@ static void shipyard_renderSlotsOver( double bx, double by, double bw,
    } else
       pos = 0;
    pos += scnprintf( &alt[pos], sizeof( alt ) - pos, _( "#%c%s #%c%s #0slot" ),
-                     outfit_slotSizeColourFont( &slot->slot ),
+                     outfit_slotSizeColourFont( slot->slot.size ),
                      _( slotSize( slot->slot.size ) ),
-                     outfit_slotTypeColourFont( &slot->slot ),
+                     outfit_slotTypeColourFont( slot->slot.type ),
                      _( slotName( slot->slot.type ) ) );
    if ( slot->exclusive && ( pos < (int)sizeof( alt ) ) )
       pos += scnprintf( &alt[pos], sizeof( alt ) - pos, "#o%s#0",

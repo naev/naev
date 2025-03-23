@@ -37,6 +37,7 @@
 #include "nxml.h"
 #include "pilot.h"
 #include "pilot_outfit.h"
+#include "player.h"
 #include "ship.h"
 #include "slots.h"
 #include "sound.h"
@@ -463,7 +464,7 @@ const char *slotSize( const OutfitSlotSize o )
  *    @param o Outfit to get slot size of.
  *    @return The human readable name of the slot size.
  */
-const char *outfit_slotSize( const Outfit *o )
+const char *outfit_slotSizeName( const Outfit *o )
 {
    return slotSize( o->slot.size );
 }
@@ -471,16 +472,16 @@ const char *outfit_slotSize( const Outfit *o )
 /**
  * @brief Gets the slot size colour for an outfit slot.
  *
- *    @param os Outfit slot to get the slot size colour of.
+ *    @param size Outfit slot to get the slot size colour of.
  *    @return The slot size colour of the outfit slot.
  */
-const glColour *outfit_slotSizeColour( const OutfitSlot *os )
+const glColour *outfit_slotSizeColour( OutfitSlotSize size )
 {
-   if ( os->size == OUTFIT_SLOT_SIZE_HEAVY )
+   if ( size == OUTFIT_SLOT_SIZE_HEAVY )
       return &cOutfitHeavy;
-   else if ( os->size == OUTFIT_SLOT_SIZE_MEDIUM )
+   else if ( size == OUTFIT_SLOT_SIZE_MEDIUM )
       return &cOutfitMedium;
-   else if ( os->size == OUTFIT_SLOT_SIZE_LIGHT )
+   else if ( size == OUTFIT_SLOT_SIZE_LIGHT )
       return &cOutfitLight;
    return NULL;
 }
@@ -489,16 +490,16 @@ const glColour *outfit_slotSizeColour( const OutfitSlot *os )
  * @brief Gets a font colour character that roughly matches an outfit slot size
  * colour.
  *
- *    @param os Outfit slot to get the slot size font colour of.
+ *    @param size Outfit slot to get the slot size font colour of.
  *    @return The slot size font colour of the outfit slot.
  */
-char outfit_slotSizeColourFont( const OutfitSlot *os )
+char outfit_slotSizeColourFont( OutfitSlotSize size )
 {
-   if ( os->size == OUTFIT_SLOT_SIZE_HEAVY )
+   if ( size == OUTFIT_SLOT_SIZE_HEAVY )
       return 'r';
-   else if ( os->size == OUTFIT_SLOT_SIZE_MEDIUM )
+   else if ( size == OUTFIT_SLOT_SIZE_MEDIUM )
       return 'b';
-   else if ( os->size == OUTFIT_SLOT_SIZE_LIGHT )
+   else if ( size == OUTFIT_SLOT_SIZE_LIGHT )
       return 'y';
    return '0';
 }
@@ -507,16 +508,16 @@ char outfit_slotSizeColourFont( const OutfitSlot *os )
  * @brief Gets a font colour character that roughly matches an outfit slot type
  * colour.
  *
- *    @param os Outfit slot to get the slot type font colour of.
+ *    @param type Outfit slot to get the slot type font colour of.
  *    @return The slot type font colour of the outfit slot.
  */
-char outfit_slotTypeColourFont( const OutfitSlot *os )
+char outfit_slotTypeColourFont( OutfitSlotType type )
 {
-   if ( os->type == OUTFIT_SLOT_WEAPON )
+   if ( type == OUTFIT_SLOT_WEAPON )
       return 'p';
-   else if ( os->type == OUTFIT_SLOT_UTILITY )
+   else if ( type == OUTFIT_SLOT_UTILITY )
       return 'g';
-   else if ( os->type == OUTFIT_SLOT_STRUCTURE )
+   else if ( type == OUTFIT_SLOT_STRUCTURE )
       return 'n';
    return '0';
 }
@@ -535,9 +536,9 @@ size_t outfit_getNameWithClass( const Outfit *outfit, char *buf, size_t size )
    size_t p = scnprintf( &buf[0], size, "%s", _( outfit->name ) );
    if ( outfit->slot.type != OUTFIT_SLOT_NA )
       p += scnprintf( &buf[p], size - p, _( "\n#%c%s #%c%s #0slot" ),
-                      outfit_slotSizeColourFont( &outfit->slot ),
-                      _( outfit_slotSize( outfit ) ),
-                      outfit_slotTypeColourFont( &outfit->slot ),
+                      outfit_slotSizeColourFont( outfit->slot.size ),
+                      _( outfit_slotSizeName( outfit ) ),
+                      outfit_slotTypeColourFont( outfit->slot.type ),
                       _( outfit_slotName( outfit ) ) );
    return p;
 }
@@ -597,6 +598,55 @@ const char *outfit_license( const Outfit *o )
 credits_t outfit_price( const Outfit *o )
 {
    return o->price;
+}
+const char *outfit_getPrice( const Outfit *outfit, unsigned int q,
+                             credits_t *price, int *canbuy, int *cansell,
+                             char **player_has )
+{
+   static char pricestr[STRMAX_SHORT];
+   static char youhave[STRMAX_SHORT];
+   if ( outfit->lua_price == LUA_NOREF ) {
+      price2str( pricestr, outfit->price * q, player.p->credits, 2 );
+      *price   = outfit->price * q;
+      *canbuy  = 1;
+      *cansell = 1;
+      if ( player_has != NULL )
+         *player_has = NULL;
+      return pricestr;
+   }
+   const char *str;
+
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_price );
+   lua_pushinteger( naevL, q );
+   if ( nlua_pcall( outfit->lua_env, 1, 4 ) ) { /* */
+      WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name, "price",
+            lua_tostring( naevL, -1 ) );
+      *price   = 0;
+      *canbuy  = 0;
+      *cansell = 0;
+      if ( player_has != NULL )
+         *player_has = NULL;
+      lua_pop( naevL, 1 );
+      return pricestr;
+   }
+
+   str = luaL_checkstring( naevL, -4 );
+   strncpy( pricestr, str, sizeof( pricestr ) - 1 );
+   *price   = 0;
+   *canbuy  = lua_toboolean( naevL, -3 );
+   *cansell = lua_toboolean( naevL, -2 );
+   if ( player_has != NULL ) {
+      str = luaL_optstring( naevL, -1, NULL );
+      if ( str == NULL )
+         *player_has = NULL;
+      else {
+         strncpy( youhave, str, sizeof( youhave ) - 1 );
+         *player_has = youhave;
+      }
+   }
+   lua_pop( naevL, 4 );
+
+   return pricestr;
 }
 
 /**
@@ -800,6 +850,11 @@ const OutfitGFX *outfit_gfx( const Outfit *o )
    else if ( outfit_isLauncher( o ) )
       return &o->u.lau.gfx;
    return NULL;
+}
+const glTexture *outfit_gfxStore( const Outfit *o )
+{
+   outfit_gfxStoreLoad( (Outfit *)o );
+   return o->gfx_store;
 }
 /**
  * @brief Gets the outfit's collision polygon.
@@ -1104,6 +1159,42 @@ double outfit_speed_dispersion( const Outfit *o )
       return o->u.lau.speed_dispersion;
    return 0.;
 }
+const char *outfit_gui( const Outfit *o )
+{
+   if ( outfit_isGUI( o ) )
+      return o->u.gui.gui;
+   return NULL;
+}
+const char *outfit_licenseProvides( const Outfit *o )
+{
+   if ( outfit_isLicense( o ) )
+      return o->u.lic.provides;
+   return NULL;
+}
+double outfit_lmapJumpDetect( const Outfit *o )
+{
+   if ( outfit_isLocalMap( o ) )
+      return o->u.lmap.jump_detect;
+   return 0.;
+}
+double outfit_lmapSpobDetect( const Outfit *o )
+{
+   if ( outfit_isLocalMap( o ) )
+      return o->u.lmap.spob_detect;
+   return 0.;
+}
+int outfit_lmapRange( const Outfit *o )
+{
+   if ( outfit_isLocalMap( o ) )
+      return o->u.lmap.range;
+   return 0.;
+}
+int outfit_afterburnerSound( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.sound;
+   return -1;
+}
 /**
  * @brief Gets the outfit's duration.
  *    @param o Outfit to get the duration of.
@@ -1241,6 +1332,50 @@ const char *outfit_description( const Outfit *o )
 const char *outfit_summary( const Outfit *o, int withname )
 {
    return pilot_outfitSummary( NULL, o, withname, NULL );
+}
+const char *outfit_rawname( const Outfit *o )
+{
+   return o->name;
+}
+const char *outfit_name( const Outfit *o )
+{
+   return _( o->name );
+}
+const char *outfit_cond( const Outfit *o )
+{
+   return o->cond;
+}
+const char *outfit_condstr( const Outfit *o )
+{
+   return _( o->condstr );
+}
+const char *outfit_limit( const Outfit *o )
+{
+   return o->limit;
+}
+OutfitType outfit_type( const Outfit *o )
+{
+   return o->type;
+}
+OutfitSlotType outfit_slotType( const Outfit *o )
+{
+   return o->slot.type;
+}
+OutfitSlotSize outfit_slotSize( const Outfit *o )
+{
+   return o->slot.size;
+}
+int outfit_slotProperty( const Outfit *o )
+{
+   return o->slot.spid;
+}
+int outfit_slotExclusive( const Outfit *o )
+{
+   return o->slot.exclusive;
+}
+int outfit_rarity( const Outfit *o )
+{
+   return o->rarity;
 }
 
 /**

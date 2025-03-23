@@ -168,7 +168,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char *str )
       return;
 
    /* Figure out which slot this stuff fits into */
-   switch ( o->slot.type ) {
+   switch ( outfit_slotType( o ) ) {
    case OUTFIT_SLOT_STRUCTURE:
       slots = eq_wgt.selected->p->outfit_structure;
       break;
@@ -192,7 +192,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char *str )
          continue;
 
       /* Must have valid slot size. */
-      if ( o->slot.size == OUTFIT_SLOT_SIZE_NA )
+      if ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_NA )
          continue;
 
       minimal = i;
@@ -213,7 +213,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char *str )
    }
 
    /* See if limit is applied and swap with shared limit slot. */
-   if ( o->limit != NULL ) {
+   if ( outfit_limit( o ) != NULL ) {
       minimal = n;
       for ( int i = 0; i < n; i++ ) {
          /* Must fit the slot. */
@@ -221,16 +221,17 @@ void equipment_rightClickOutfits( unsigned int wid, const char *str )
             continue;
 
          /* Must have valid slot size. */
-         if ( o->slot.size == OUTFIT_SLOT_SIZE_NA )
+         if ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_NA )
             continue;
 
          /* Must have outfit with limit. */
          if ( ( slots[i].outfit == NULL ) ||
-              ( slots[i].outfit->limit == NULL ) )
+              ( outfit_limit( slots[i].outfit ) == NULL ) )
             continue;
 
          /* Must share a limit to be able to swap. */
-         if ( strcmp( slots[i].outfit->limit, o->limit ) != 0 )
+         if ( strcmp( outfit_limit( slots[i].outfit ), outfit_limit( o ) ) !=
+              0 )
             continue;
 
          minimal = i;
@@ -260,7 +261,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char *str )
          continue;
 
       /* Must have valid slot size. */
-      if ( o->slot.size == OUTFIT_SLOT_SIZE_NA )
+      if ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_NA )
          continue;
 
       /* Search for the smallest slot avaliable. */
@@ -487,7 +488,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       return;
 
    /* Render text. */
-   if ( ( o != NULL ) && ( lst[0].sslot->slot.type == o->slot.type ) )
+   if ( ( o != NULL ) && ( lst[0].sslot->slot.type == outfit_slotType( o ) ) )
       c = &cFontGreen;
    else
       c = &cFontWhite;
@@ -517,7 +518,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          else
             dc = &cFontGrey;
       } else
-         dc = outfit_slotSizeColour( &lst[i].sslot->slot );
+         dc = outfit_slotSizeColour( lst[i].sslot->slot.size );
 
       if ( dc == NULL )
          dc = &cGrey60;
@@ -532,11 +533,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       toolkit_drawRect( x, y, w, h, &bc );
 
       if ( lst[i].outfit != NULL ) {
-         outfit_gfxStoreLoad( (Outfit *)lst[i].outfit );
          /* Draw bugger. */
-         gl_renderScale( lst[i].outfit->gfx_store, x, y, w, h, NULL );
+         gl_renderScale( outfit_gfxStore( lst[i].outfit ), x, y, w, h, NULL );
       } else if ( ( o != NULL ) &&
-                  ( lst[i].sslot->slot.type == o->slot.type ) ) {
+                  ( lst[i].sslot->slot.type == outfit_slotType( o ) ) ) {
          /* Render a thick frame with a yes/no colour, and geometric cue. */
          int ok = ( !lst[i].sslot->locked &&
                     pilot_canEquip( p, &lst[i], o ) == NULL );
@@ -811,7 +811,8 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
                   c       = &cFontGreen;
                }
             } else if ( ( wgt->outfit != NULL ) &&
-                        ( lst->sslot->slot.type == wgt->outfit->slot.type ) ) {
+                        ( lst->sslot->slot.type ==
+                          outfit_slotType( wgt->outfit ) ) ) {
                top = 1;
                display =
                   pilot_canEquip( wgt->selected->p, &lst[i], wgt->outfit );
@@ -916,9 +917,9 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
          pos = 0;
       pos +=
          scnprintf( &alt[pos], sizeof( alt ) - pos, _( "#%c%s #%c%s #0slot" ),
-                    outfit_slotSizeColourFont( &slot->sslot->slot ),
+                    outfit_slotSizeColourFont( slot->sslot->slot.size ),
                     _( slotSize( slot->sslot->slot.size ) ),
-                    outfit_slotTypeColourFont( &slot->sslot->slot ),
+                    outfit_slotTypeColourFont( slot->sslot->slot.type ),
                     _( slotName( slot->sslot->slot.type ) ) );
       if ( slot->sslot->exclusive && ( pos < (int)sizeof( alt ) ) )
          pos +=
@@ -1835,11 +1836,11 @@ static int equipment_filter( const Outfit *o )
       return 0;
 
    case 3:
-      return ( o->slot.size == OUTFIT_SLOT_SIZE_LIGHT );
+      return ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_LIGHT );
    case 4:
-      return ( o->slot.size == OUTFIT_SLOT_SIZE_MEDIUM );
+      return ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_MEDIUM );
    case 5:
-      return ( o->slot.size == OUTFIT_SLOT_SIZE_HEAVY );
+      return ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_HEAVY );
    }
    return 1;
 }

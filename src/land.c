@@ -1033,7 +1033,7 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
       return;
    }
 
-   player_modCredits( -o->price );
+   player_modCredits( -outfit_price( o ) );
    player_addOutfit( o, 1 );
 
    /* Disable the button. */
@@ -1107,7 +1107,7 @@ void land_updateMainTab( void )
    /* Else create it. */
    else {
       /* Buy local map button. */
-      credits2str( cred, o->price, 0 );
+      credits2str( cred, outfit_price( o ), 0 );
       snprintf( buf, sizeof( buf ), _( "Buy Local Map (%s)" ), cred );
       window_addButtonKey( land_windows[0], -20 - LAND_BUTTON_WIDTH - 20, 20,
                            LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap", buf,

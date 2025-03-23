@@ -70,11 +70,8 @@ static void outfits_sell( unsigned int wid, const char *str );
 static int  outfits_getMod( void );
 static void outfits_rmouse( unsigned int wid, const char *widget_name );
 static void outfits_naevpedia( unsigned int wid, const char *str );
-static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
-                                    int *canbuy, int *cansell,
-                                    char **player_has );
-static void        outfit_Popdown( unsigned int wid, const char *str );
-static void        outfits_genList( unsigned int wid );
+static void outfit_Popdown( unsigned int wid, const char *str );
+static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old,
                                int tab );
 static void outfits_onClose( unsigned int wid, const char *str );
@@ -318,11 +315,11 @@ static int outfitLand_filter( const Outfit *o )
       return 0;
 
    case 3:
-      return ( o->slot.size == OUTFIT_SLOT_SIZE_LIGHT );
+      return ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_LIGHT );
    case 4:
-      return ( o->slot.size == OUTFIT_SLOT_SIZE_MEDIUM );
+      return ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_MEDIUM );
    case 5:
-      return ( o->slot.size == OUTFIT_SLOT_SIZE_HEAVY );
+      return ( outfit_slotSize( o ) == OUTFIT_SLOT_SIZE_HEAVY );
    }
    return 1;
 }
@@ -537,17 +534,20 @@ void outfits_update( unsigned int wid, const char *str )
    outfit = iar_outfits[active][i];
 
    /* new image */
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 256, 256 );
+   window_modifyImage( wid, "imgOutfit", outfit_gfxStore( outfit ), 256, 256 );
 
    /* new text */
-   if ( outfit->slot.type == OUTFIT_SLOT_INTRINSIC ) {
-      scnprintf( buf, sizeof( buf ), "%s\n\n#o%s#0", _( outfit->desc_raw ),
+   if ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC ) {
+      scnprintf( buf, sizeof( buf ), "%s\n\n#o%s#0",
+                 pilot_outfitDescription( player.p, outfit, NULL ),
                  _( "This is an intrinsic outfit that will be directly "
                     "equipped on the current ship and can not be moved." ) );
       window_modifyText( wid, "txtDescription", buf );
    } else
-      window_modifyText( wid, "txtDescription", _( outfit->desc_raw ) );
-   buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell, &youhave );
+      window_modifyText( wid, "txtDescription",
+                         pilot_outfitDescription( player.p, outfit, NULL ) );
+   buf_price = outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy,
+                                &cansell, &youhave );
    credits2str( buf_credits, player.p->credits, 2 );
 
    /* gray out sell button */
@@ -587,17 +587,17 @@ void outfits_update( unsigned int wid, const char *str )
             scnprintf( &buf[l], sizeof( buf ) - l, "\n%s%s#0",
                        meets_reqs ? "" : "#r", _( outfit_license( outfit ) ) );
    }
-   if ( outfit->cond ) {
+   if ( outfit_cond( outfit ) ) {
       int meets_reqs = 0;
       if ( land_spob != NULL )
-         meets_reqs = cond_check( outfit->cond );
+         meets_reqs = cond_check( outfit_cond( outfit ) );
       /*k +=*/scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Requires:" ) );
       if ( blackmarket )
          /*l +=*/scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",
                             _( "Not Necessary (Blackmarket)" ) );
       else
          /*l +=*/scnprintf( &buf[l], sizeof( buf ) - l, "\n%s%s#0",
-                            meets_reqs ? "" : "#r", _( outfit->condstr ) );
+                            meets_reqs ? "" : "#r", outfit_condstr( outfit ) );
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
@@ -689,7 +689,7 @@ int outfits_filter( const Outfit **outfits, int                    n,
 
       /* Try to match name somewhere. */
       if ( name != NULL ) {
-         if ( ( SDL_strcasestr( _( o->name ), name ) == NULL ) &&
+         if ( ( SDL_strcasestr( outfit_name( o ), name ) == NULL ) &&
               ( SDL_strcasestr( _( outfit_getType( o ) ), name ) == NULL ) )
             continue;
       }
@@ -716,56 +716,6 @@ static void outfits_naevpedia( unsigned int wid, const char *str )
 /**
  * @brief Returns the price of an outfit (subject to quantity modifier)
  */
-static const char *outfit_getPrice( const Outfit *outfit, credits_t *price,
-                                    int *canbuy, int *cansell,
-                                    char **player_has )
-{
-   static char  pricestr[STRMAX_SHORT];
-   static char  youhave[STRMAX_SHORT];
-   unsigned int q = outfits_getMod();
-   if ( outfit->lua_price == LUA_NOREF ) {
-      price2str( pricestr, outfit->price * q, player.p->credits, 2 );
-      *price   = outfit->price * q;
-      *canbuy  = 1;
-      *cansell = 1;
-      if ( player_has != NULL )
-         *player_has = NULL;
-      return pricestr;
-   }
-   const char *str;
-
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_price );
-   lua_pushinteger( naevL, q );
-   if ( nlua_pcall( outfit->lua_env, 1, 4 ) ) { /* */
-      WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name, "price",
-            lua_tostring( naevL, -1 ) );
-      *price   = 0;
-      *canbuy  = 0;
-      *cansell = 0;
-      if ( player_has != NULL )
-         *player_has = NULL;
-      lua_pop( naevL, 1 );
-      return pricestr;
-   }
-
-   str = luaL_checkstring( naevL, -4 );
-   strncpy( pricestr, str, sizeof( pricestr ) - 1 );
-   *price   = 0;
-   *canbuy  = lua_toboolean( naevL, -3 );
-   *cansell = lua_toboolean( naevL, -2 );
-   if ( player_has != NULL ) {
-      str = luaL_optstring( naevL, -1, NULL );
-      if ( str == NULL )
-         *player_has = NULL;
-      else {
-         strncpy( youhave, str, sizeof( youhave ) - 1 );
-         *player_has = youhave;
-      }
-   }
-   lua_pop( naevL, 4 );
-
-   return pricestr;
-}
 
 /**
  * @brief Computes the alt text for an outfit.
@@ -813,16 +763,16 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
          glTexture      *t;
          const Outfit   *o = outfits[i];
 
-         coutfits[i].image   = gl_dupTexture( o->gfx_store );
+         coutfits[i].image   = gl_dupTexture( outfit_gfxStore( o ) );
          coutfits[i].caption = strdup( outfit_shortname( o ) );
          if ( !store && outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
             coutfits[i].quantity = -1; /* Don't display. */
          else
             coutfits[i].quantity = player_outfitOwned( o );
-         coutfits[i].sloticon = sp_icon( o->slot.spid );
+         coutfits[i].sloticon = sp_icon( outfit_slotProperty( o ) );
 
          /* Background colour. */
-         c = outfit_slotSizeColour( &o->slot );
+         c = outfit_slotSizeColour( outfit_slotSize( o ) );
          if ( c == NULL )
             c = &cBlack;
          col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
@@ -843,8 +793,9 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
 
          /* Layers. */
          coutfits[i].layers = gl_copyTexArray( o->gfx_overlays );
-         if ( o->rarity > 0 ) {
-            t                  = rarity_texture( o->rarity );
+         int rarity         = outfit_rarity( o );
+         if ( rarity > 0 ) {
+            t                  = rarity_texture( rarity );
             coutfits[i].layers = gl_addTexArray( coutfits[i].layers, t );
          }
       }
@@ -936,7 +887,7 @@ int outfit_canBuy( const Outfit *outfit, int wid )
 
    land_errClear();
    failure = 0;
-   outfit_getPrice( outfit, &price, &canbuy, &cansell, NULL );
+   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
 
    /* Special exception for local map. */
    if ( outfit != omap ) {
@@ -964,8 +915,8 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    }
 
    /* Intrinsic. */
-   if ( outfit->slot.type == OUTFIT_SLOT_INTRINSIC ) {
-      if ( pilot_hasOutfitLimit( player.p, outfit->limit ) ) {
+   if ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC ) {
+      if ( pilot_hasOutfitLimit( player.p, outfit_limit( outfit ) ) ) {
          land_errDialogueBuild(
             _( "You can only equip one of this outfit type." ) );
          return 0;
@@ -980,13 +931,13 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       return 0;
    }
    /* GUI already owned */
-   if ( outfit_isGUI( outfit ) && player_guiCheck( outfit->u.gui.gui ) ) {
+   if ( outfit_isGUI( outfit ) && player_guiCheck( outfit_gui( outfit ) ) ) {
       land_errDialogueBuild( _( "You already own this GUI." ) );
       return 0;
    }
    /* Already has license. */
    if ( outfit_isLicense( outfit ) &&
-        player_hasLicense( outfit->u.lic.provides ) ) {
+        player_hasLicense( outfit_licenseProvides( outfit ) ) ) {
       land_errDialogueBuild( _( "You already have this license." ) );
       return 0;
    }
@@ -1005,9 +956,9 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       failure = 1;
    }
    /* Needs requirements. */
-   if ( !blackmarket && ( outfit->cond != NULL ) &&
-        !cond_check( outfit->cond ) ) {
-      land_errDialogueBuild( "%s", _( outfit->condstr ) );
+   if ( !blackmarket && ( outfit_cond( outfit ) != NULL ) &&
+        !cond_check( outfit_cond( outfit ) ) ) {
+      land_errDialogueBuild( "%s", outfit_condstr( outfit ) );
       failure = 1;
    }
    /* Custom condition failed. */
@@ -1053,7 +1004,7 @@ static void outfits_buy( unsigned int wid, const char *str )
    q      = outfits_getMod();
    /* Can only get one unique item. */
    if ( outfit_isProp( outfit, OUTFIT_PROP_UNIQUE ) ||
-        ( outfit->slot.type == OUTFIT_SLOT_INTRINSIC ) ||
+        ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC ) ||
         outfit_isMap( outfit ) || outfit_isLocalMap( outfit ) ||
         outfit_isGUI( outfit ) || outfit_isLicense( outfit ) )
       q = MIN( q, 1 );
@@ -1074,12 +1025,12 @@ static void outfits_buy( unsigned int wid, const char *str )
    }
 
    /* Give dialogue when trying to buy intrinsic. */
-   if ( outfit->slot.type == OUTFIT_SLOT_INTRINSIC )
+   if ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC )
       if ( !dialogue_YesNo(
               _( "Buy Intrinsic Outfit?" ),
               _( "Are you sure you wish to buy '%s'? It will be automatically "
                  "equipped on your current ship '%s'." ),
-              _( outfit->name ), player.p->name ) )
+              outfit_name( outfit ), player.p->name ) )
          return;
 
    /* Try Lua. */
@@ -1087,8 +1038,8 @@ static void outfits_buy( unsigned int wid, const char *str )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_buy );
       lua_pushinteger( naevL, q );
       if ( nlua_pcall( outfit->lua_env, 1, 2 ) ) { /* */
-         WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name,
-               "price", lua_tostring( naevL, -1 ) );
+         WARN( _( "Outfit '%s' failed to run '%s':\n%s" ),
+               outfit_name( outfit ), "price", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
 
@@ -1104,7 +1055,8 @@ static void outfits_buy( unsigned int wid, const char *str )
 
       lua_pop( naevL, 2 );
    } else
-      player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
+      player_modCredits( -outfit_price( outfit ) *
+                         player_addOutfit( outfit, q ) );
 
    /* Actually buy the outfit. */
    outfits_updateEquipmentOutfits();
@@ -1134,7 +1086,7 @@ int outfit_canSell( const Outfit *outfit )
    credits_t price;
 
    land_errClear();
-   outfit_getPrice( outfit, &price, &canbuy, &cansell, NULL );
+   outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
 
    /* Unique item. */
    if ( outfit_isProp( outfit, OUTFIT_PROP_UNIQUE ) ) {
@@ -1203,8 +1155,8 @@ static void outfits_sell( unsigned int wid, const char *str )
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_sell );
       lua_pushinteger( naevL, q );
       if ( nlua_pcall( outfit->lua_env, 1, 2 ) ) { /* */
-         WARN( _( "Outfit '%s' failed to run '%s':\n%s" ), outfit->name,
-               "price", lua_tostring( naevL, -1 ) );
+         WARN( _( "Outfit '%s' failed to run '%s':\n%s" ),
+               outfit_name( outfit ), "price", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
 
@@ -1220,7 +1172,7 @@ static void outfits_sell( unsigned int wid, const char *str )
       lua_pop( naevL, 2 );
    } else {
       q = player_rmOutfit( outfit, q );
-      player_modCredits( outfit->price * q );
+      player_modCredits( outfit_price( outfit ) * q );
    }
 
    outfits_updateEquipmentOutfits();
