@@ -32,7 +32,8 @@ static int stealth_break = 0; /**< Whether or not to break stealth. */
 /*
  * Prototypes.
  */
-static void        pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot );
+static void        pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
+                                        ShipStats *s );
 static const char *outfitkeytostr( OutfitKey key );
 
 /**
@@ -948,10 +949,10 @@ double pilot_outfitRange( const Pilot *p, const Outfit *o )
 /**
  * @brief Computes the stats for a pilot's slot.
  */
-static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
+static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
+                                 ShipStats *s )
 {
    const Outfit *o = slot->outfit;
-   ShipStats    *s = &pilot->stats;
 
    /* Outfit must exist. */
    if ( o == NULL )
@@ -978,7 +979,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
 
    /* Lua mods apply their stats. */
    if ( slot->lua_mem != LUA_NOREF )
-      ss_statsMergeFromList( &pilot->stats, slot->lua_stats );
+      ss_statsMergeFromList( &pilot->stats, slot->lua_stats, 0 );
 
    /* Has update function. */
    if ( o->lua_update != LUA_NOREF )
@@ -991,7 +992,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
            !( slot->state == PILOT_OUTFIT_ON ) )
          return;
       /* Add stats. */
-      ss_statsMergeFromList( s, o->stats );
+      ss_statsMergeFromList( s, o->stats, 0 );
 
    } else if ( outfit_isAfterburner( o ) ) { /* Afterburner */
       /* Active outfits must be on to affect stuff. */
@@ -999,7 +1000,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
            !( slot->state == PILOT_OUTFIT_ON ) )
          return;
       /* Add stats. */
-      ss_statsMergeFromList( s, o->stats );
+      ss_statsMergeFromList( s, o->stats, 0 );
       pilot_setFlag(
          pilot,
          PILOT_AFTERBURNER ); /* We use old school flags for this still... */
@@ -1007,7 +1008,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot )
          pilot->afterburner->outfit->u.afb.energy; /* energy loss */
    } else {
       /* Always add stats for non mod/afterburners. */
-      ss_statsMergeFromList( s, o->stats );
+      ss_statsMergeFromList( s, o->stats, 0 );
    }
 }
 
@@ -1055,31 +1056,45 @@ void pilot_calcStats( Pilot *pilot )
    pilot->energy_regen = pilot->ship->energy_regen;
    /* Misc. */
    pilot->outfitlupdate = 0;
-   /* Stats. */
+   /* Stats.
+    *
+    * In general, stats are applied in two ways:
+    * 1. Stats from same sources are additive if positive, multiplicative if
+    * negative (e.g., ship base stats and ship Lua stats or different outfit
+    * stats).
+    * 2. Stats from different sources are always multiplicative (e.g., ship
+    * stats and outfit stats).
+    */
    s  = &pilot->stats;
    tm = s->time_mod;
-   *s = pilot->ship->stats_array;
 
-   /* Player and escorts gets difficulty applied. */
-   if ( pilot_isWithPlayer( pilot ) )
-      difficulty_apply( s );
+   /* Initialize ship stats (additive). */
+   *s = pilot->ship->stats_array;
+   ss_statsMergeFromList( &pilot->stats, pilot->ship_stats,
+                          0 ); /* From ship Lua if applicable. */
+
+   /* Apply intrinsic stats. */
+   ss_statsMergeFromList( &pilot->stats, pilot->intrinsic_stats, 1 );
 
    /* Now add outfit changes */
+   ShipStats outfit_stats;
+   ss_statsInit( &outfit_stats );
    pilot->mass_outfit = 0.;
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
-      pilot_calcStatsSlot( pilot, &pilot->outfit_intrinsic[i] );
+      pilot_calcStatsSlot( pilot, &pilot->outfit_intrinsic[i], &outfit_stats );
    for ( int i = 0; i < array_size( pilot->outfits ); i++ )
-      pilot_calcStatsSlot( pilot, pilot->outfits[i] );
-
-   /* Merge stats. */
-   ss_statsMergeFromList( &pilot->stats, pilot->ship_stats );
-   ss_statsMergeFromList( &pilot->stats, pilot->intrinsic_stats );
+      pilot_calcStatsSlot( pilot, pilot->outfits[i], &outfit_stats );
+   ss_statsMerge( &pilot->stats, &outfit_stats, 1 );
 
    /* Compute effects. */
    effect_compute( &pilot->stats, pilot->effects );
 
    /* Apply system effects. */
-   ss_statsMergeFromList( &pilot->stats, cur_system->stats );
+   ss_statsMergeFromList( &pilot->stats, cur_system->stats, 1 );
+
+   /* Player and escorts gets difficulty applied. */
+   if ( pilot_isWithPlayer( pilot ) )
+      difficulty_apply( s );
 
    /* Apply stealth malus. */
    if ( pilot_isFlag( pilot, PILOT_STEALTH ) ) {

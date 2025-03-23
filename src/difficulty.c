@@ -216,5 +216,5 @@ char *difficulty_display( const Difficulty *d )
  */
 int difficulty_apply( ShipStats *s )
 {
-   return ss_statsMergeFromList( s, difficulty_current->stats );
+   return ss_statsMergeFromList( s, difficulty_current->stats, 1 );
 }

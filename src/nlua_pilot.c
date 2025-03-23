@@ -4109,7 +4109,7 @@ static int pilotL_intrinsicGet( lua_State *L )
    ShipStats    ss;
    /* TODO get directly the stat from the list. */
    ss_statsInit( &ss );
-   ss_statsMergeFromList( &ss, p->intrinsic_stats );
+   ss_statsMergeFromList( &ss, p->intrinsic_stats, 0 );
    ss_statsGetLua( L, &ss, name, internal );
    return 1;
 }
@@ -4196,7 +4196,7 @@ static int pilotL_shippropGet( lua_State *L )
    ShipStats    ss;
    /* TODO get directly the stat from the list. */
    ss_statsInit( &ss );
-   ss_statsMergeFromList( &ss, p->ship_stats );
+   ss_statsMergeFromList( &ss, p->ship_stats, 0 );
    ss_statsGetLua( L, &ss, name, internal );
    return 1;
 }
