@@ -881,7 +881,7 @@ double outfit_delay( const Outfit *o )
       return o->u.lau.delay;
    else if ( outfit_isFighterBay( o ) )
       return o->u.bay.delay;
-   return -1;
+   return 0.;
 }
 /**
  * @brief Gets the amount an outfit can hold.
@@ -908,7 +908,7 @@ double outfit_energy( const Outfit *o )
       return o->u.bem.energy;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.energy;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's cpu usage.
@@ -930,7 +930,7 @@ double outfit_width( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
       return o->u.bem.width;
-   return -1.;
+   return 0.;
 }
 const glColour *outfit_colour( const Outfit *o )
 {
@@ -973,7 +973,7 @@ double outfit_swivel( const Outfit *o )
       return o->u.lau.swivel;
    else if ( outfit_isBeam( o ) )
       return o->u.bem.swivel;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's animation spin.
@@ -986,7 +986,7 @@ double outfit_spin( const Outfit *o )
       return o->u.blt.gfx.spin;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.gfx.spin;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's minimal tracking.
@@ -1001,7 +1001,7 @@ double outfit_trackmin( const Outfit *o )
       return o->u.lau.trackmin;
    else if ( outfit_isBeam( o ) )
       return 0.;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's minimal tracking.
@@ -1016,7 +1016,7 @@ double outfit_trackmax( const Outfit *o )
       return o->u.lau.trackmax;
    else if ( outfit_isBeam( o ) )
       return 1.;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the maximum rarity the outfit can mine up to.
@@ -1078,7 +1078,7 @@ double outfit_ammoMass( const Outfit *o )
       return o->u.lau.ammo_mass;
    else if ( outfit_isFighterBay( o ) )
       return o->u.bay.ship_mass;
-   return -1.;
+   return 0.;
 }
 int outfit_shots( const Outfit *o )
 {
@@ -1094,7 +1094,7 @@ double outfit_dispersion( const Outfit *o )
       return o->u.blt.dispersion;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.dispersion;
-   return -1.;
+   return 0.;
 }
 double outfit_speed_dispersion( const Outfit *o )
 {
@@ -1102,7 +1102,7 @@ double outfit_speed_dispersion( const Outfit *o )
       return o->u.blt.speed_dispersion;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.speed_dispersion;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's duration.
@@ -1118,7 +1118,7 @@ double outfit_duration( const Outfit *o )
          return o->u.mod.duration;
    } else if ( outfit_isAfterburner( o ) )
       return INFINITY;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's cooldown.
@@ -1132,7 +1132,7 @@ double outfit_cooldown( const Outfit *o )
          return o->u.mod.cooldown;
    } else if ( outfit_isAfterburner( o ) )
       return 0.;
-   return -1.;
+   return 0.;
 }
 
 /**
