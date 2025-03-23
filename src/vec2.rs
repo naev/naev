@@ -1,6 +1,6 @@
 use mlua::{ffi, Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
-use std::os::raw::{c_char, c_int};
+use std::os::raw::{c_char, c_int, c_void};
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 pub struct Vec2(Vector2<f64>);
@@ -426,24 +426,26 @@ impl UserData for Vec2 {
 pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<()> {
     let globals = lua.globals();
     globals.set("vec2", lua.create_proxy::<Vec2>()?)?;
+
+    let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
+        let vec = Vec2::new(x, y);
+        lua.create_any_userdata(vec)
+    })?;
+    lua.set_named_registry_value("push_vector", push_vector)?;
+
+    let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
+        let vec: *mut Vec2 = &mut *ud;
+        Ok(Value::LightUserData(mlua::LightUserData(
+            vec as *mut c_void,
+        )))
+    })?;
+    lua.set_named_registry_value("get_vector", get_vector)?;
     Ok(())
 }
 
 /*
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn nlua_loadVector( env: naevc::nlua_env ) {
-}
-*/
-
-/*
-static VEC2_METATABLE: &[u8; 5] = b"vec2\0";
-
-#[allow(non_snake_case)]
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_tovector( L: *mut mlua::lua_State, ind: c_int ) -> *mut Vec2 {
-    unsafe {
-        ffi::lua_touserdata( L, ind ) as *mut Vec2
-    }
 }
 
 #[allow(non_snake_case)]
@@ -452,7 +454,7 @@ pub unsafe extern "C" fn luaL_checkvector( L: *mut mlua::lua_State, ind: c_int )
     unsafe {
         match lua_isvector( L, ind ) {
             0 => {
-                ffi::luaL_typerror( L, ind, VEC2_METATABLE.as_ptr() as *const c_char );
+                ffi::luaL_typerror( L, ind, c"vec2".as_ptr() as *const c_char );
                 std::ptr::null_mut()
             },
             _ => lua_tovector( L, ind ),
@@ -460,34 +462,36 @@ pub unsafe extern "C" fn luaL_checkvector( L: *mut mlua::lua_State, ind: c_int )
     }
 }
 
-static_assertions::assert_eq_size!( naevc::vec2, Vec2 );
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_pushvector( L: *mut mlua::lua_State, vec: naevc::vec2 ) -> *mut Vec2 {
-    let size = std::mem::size_of::<Vec2>();
+pub unsafe extern "C" fn lua_isvector(L: *mut mlua::lua_State, idx: c_int) -> c_int {
+    unsafe { !lua_tovector(L, idx).is_null() as c_int }
+}
+
+#[allow(non_snake_case)]
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn lua_pushvector(L: *mut mlua::lua_State, vec: naevc::vec2) {
     unsafe {
-        let v: *mut Vec2 = ffi::lua_newuserdata( L, size ) as *mut Vec2;
-        std::ptr::copy_nonoverlapping( &vec as *const naevc::vec2 as *const Vec2, v, size );
-        ffi::luaL_getmetatable( L, VEC2_METATABLE.as_ptr() as *const c_char );
-        ffi::lua_setmetatable( L, -2 );
-        v
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_vector".as_ptr());
+        ffi::lua_pushnumber(L, vec.x );
+        ffi::lua_pushnumber(L, vec.y );
+        ffi::lua_call(L, 2, 1);
     }
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn lua_isvector( L: *mut mlua::lua_State, ind: c_int ) -> c_int {
+pub unsafe extern "C" fn lua_tovector(L: *mut mlua::lua_State, idx: c_int) -> *mut Vec2 {
     unsafe {
-        if ffi::lua_getmetatable( L, ind ) == 0 {
-            return 0;
-        }
-        ffi::lua_getfield( L, ffi::LUA_REGISTRYINDEX, VEC2_METATABLE.as_ptr() as *const c_char );
-        let ret = match ffi::lua_rawequal( L, -1, -2 ) { /* Check metatable. */
-            0 => 0,
-            _ => 1,
+        let idx = ffi::lua_absindex(L, idx);
+        ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"get_vector".as_ptr());
+        ffi::lua_pushvalue(L, idx);
+        let vec = match ffi::lua_pcall(L, 1, 1, 0) {
+            ffi::LUA_OK => ffi::lua_touserdata(L, -1) as *mut Vec2,
+            _ => std::ptr::null_mut(),
         };
-        ffi::lua_pop( L, 2 ); /* remove both metatables */
-        ret
+        ffi::lua_pop(L, 1);
+        vec
     }
 }
 */
