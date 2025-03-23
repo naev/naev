@@ -206,7 +206,6 @@ pub fn naev() -> Result<()> {
     }
 
     let _lua = nlua::NLua::new()?;
-    //vec2::open_vec2( &_lua.lua )?;
 
     unsafe {
         /* Enable FPU exceptions. */

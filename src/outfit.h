@@ -68,11 +68,6 @@
  * tab/column title. */
 #define OUTFIT_LABEL_CORE N_( "#oCore" )
 
-/*
- * Needed because some outfittypes call other outfits.
- */
-struct Outfit_;
-
 /**
  * @brief Different types of existing outfits.
  *
@@ -355,7 +350,6 @@ typedef struct OutfitLicenseData_ {
                       NULL). */
 } OutfitLicenseData;
 
-// typedef struct Outfit Outfit;
 /**
  * @brief A ship outfit, depends radically on the type.
  */
