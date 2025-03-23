@@ -308,17 +308,17 @@ credits_t ship_buyPrice( const Ship *s )
    for ( int i = 0; i < array_size( s->outfit_structure ); i++ ) {
       const Outfit *o = s->outfit_structure[i].data;
       if ( o != NULL )
-         price += o->price;
+         price += outfit_price( o );
    }
    for ( int i = 0; i < array_size( s->outfit_utility ); i++ ) {
       const Outfit *o = s->outfit_utility[i].data;
       if ( o != NULL )
-         price += o->price;
+         price += outfit_price( o );
    }
    for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
       const Outfit *o = s->outfit_weapon[i].data;
       if ( o != NULL )
-         price += o->price;
+         price += outfit_price( o );
    }
 
    return price;
@@ -890,7 +890,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
    if ( ( slot->data != NULL ) && !outfit_fitsSlot( slot->data, &slot->slot ) )
       WARN( _( "Ship '%s' has default outfit '%s' which does not fit in the "
                "slot it is equipped by default." ),
-            temp->name, slot->data->name );
+            temp->name, outfit_name( slot->data ) );
 
    /* Required slots need a default outfit. */
    if ( slot->required && ( slot->data == NULL ) )

@@ -253,9 +253,16 @@ const Outfit *outfit_getW( const char *name )
 /**
  * @brief Gets the array (array.h) of all outfits.
  */
-const Outfit *outfit_getAll( void )
+const Outfit **outfit_getAll( void )
 {
-   return outfit_stack;
+   static Outfit **outfit_array = NULL;
+   if ( outfit_array == NULL ) {
+      size_t n     = array_size( outfit_stack );
+      outfit_array = array_create_size( Outfit *, n );
+      for ( size_t i = 0; i < n; i++ )
+         array_push_back( &outfit_array, &outfit_stack[i] );
+   }
+   return (const Outfit **)outfit_array;
 }
 
 /**
@@ -975,6 +982,8 @@ double outfit_energy( const Outfit *o )
       return o->u.bem.energy;
    else if ( outfit_isLauncher( o ) )
       return o->u.lau.energy;
+   else if ( outfit_isAfterburner( o ) )
+      return o->u.afb.energy;
    return 0.;
 }
 /**
@@ -1201,6 +1210,24 @@ int outfit_lmapRange( const Outfit *o )
       return o->u.lmap.range;
    return 0.;
 }
+StarSystem **outfit_mapSystems( const Outfit *o )
+{
+   if ( outfit_isMap( o ) )
+      return o->u.map->systems;
+   return NULL;
+}
+JumpPoint **outfit_mapJumps( const Outfit *o )
+{
+   if ( outfit_isMap( o ) )
+      return o->u.map->jumps;
+   return NULL;
+}
+Spob **outfit_mapSpobs( const Outfit *o )
+{
+   if ( outfit_isMap( o ) )
+      return o->u.map->spobs;
+   return NULL;
+}
 double outfit_afterburnerMassLimit( const Outfit *o )
 {
    if ( outfit_isAfterburner( o ) )
@@ -1283,6 +1310,12 @@ double outfit_launcherAbsorb( const Outfit *o )
 {
    if ( outfit_isLauncher( o ) )
       return o->u.lau.dmg_absorb;
+   return 0.;
+}
+double outfit_launcherLockon( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.lockon;
    return 0.;
 }
 double outfit_launcherIFLockon( const Outfit *o )

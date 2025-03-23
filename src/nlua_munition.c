@@ -219,7 +219,7 @@ static int munitionL_tostring( lua_State *L )
    LuaMunition *lm = luaL_checkmunition( L, 1 );
    Weapon      *w  = munition_get( lm );
    if ( w != NULL )
-      lua_pushstring( L, _( w->outfit->name ) );
+      lua_pushstring( L, outfit_name( w->outfit ) );
    else
       lua_pushstring( L, "(inexistent munition)" );
    return 1;

@@ -16,3 +16,7 @@ struct OutfitMapData_s {
    JumpPoint  **jumps;   /**< jump points to mark as known. */
    Spob       **spobs;   /**< spobs to mark as known. */
 };
+
+StarSystem **outfit_mapSystems( const Outfit *o );
+JumpPoint  **outfit_mapJumps( const Outfit *o );
+Spob       **outfit_mapSpobs( const Outfit *o );

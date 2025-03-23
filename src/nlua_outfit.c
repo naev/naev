@@ -283,10 +283,10 @@ static int outfitL_exists( lua_State *L )
  */
 static int outfitL_getAll( lua_State *L )
 {
-   const Outfit *outfits = outfit_getAll();
+   const Outfit **outfits = outfit_getAll();
    lua_newtable( L ); /* t */
    for ( int i = 0; i < array_size( outfits ); i++ ) {
-      lua_pushoutfit( L, (Outfit *)&outfits[i] );
+      lua_pushoutfit( L, outfits[i] );
       lua_rawseti( L, -2, i + 1 );
    }
    return 1;
@@ -308,7 +308,7 @@ static int outfitL_getAll( lua_State *L )
 static int outfitL_name( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   lua_pushstring( L, _( o->name ) );
+   lua_pushstring( L, outfit_name( o ) );
    return 1;
 }
 
@@ -328,7 +328,7 @@ static int outfitL_name( lua_State *L )
 static int outfitL_nameRaw( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   lua_pushstring( L, o->name );
+   lua_pushstring( L, outfit_rawname( o ) );
    return 1;
 }
 
@@ -781,9 +781,9 @@ static int outfitL_weapStats( lua_State *L )
    lua_pushnumber( L, outfit_trackmin( o ) );
    lua_pushnumber( L, outfit_trackmax( o ) );
    if ( outfit_isLauncher( o ) ) {
-      lua_pushnumber( L, o->u.lau.lockon );
-      lua_pushnumber( L, o->u.lau.iflockon );
-      lua_pushboolean( L, o->u.lau.ai != AMMO_AI_UNGUIDED );
+      lua_pushnumber( L, outfit_launcherLockon( o ) );
+      lua_pushnumber( L, outfit_launcherIFLockon( o ) );
+      lua_pushboolean( L, outfit_launcherAI( o ) != AMMO_AI_UNGUIDED );
       return 9;
    }
    return 6;

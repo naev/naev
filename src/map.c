@@ -3107,22 +3107,25 @@ StarSystem **map_getJumpPath( StarSystem *sysstart, const vec2 *posstart,
  */
 int map_map( const Outfit *map )
 {
-   for ( int i = 0; i < array_size( map->u.map->systems ); i++ )
-      sys_setFlag( map->u.map->systems[i], SYSTEM_KNOWN );
+   StarSystem **systems = outfit_mapSystems( map );
+   JumpPoint  **jumps   = outfit_mapJumps( map );
+   Spob       **spobs   = outfit_mapSpobs( map );
+   for ( int i = 0; i < array_size( systems ); i++ )
+      sys_setFlag( systems[i], SYSTEM_KNOWN );
 
-   for ( int i = 0; i < array_size( map->u.map->spobs ); i++ ) {
-      Spob *spb = map->u.map->spobs[i];
+   for ( int i = 0; i < array_size( spobs ); i++ ) {
+      Spob *spb = spobs[i];
       spob_setKnown( spb );
 #if DEBUGGING
       const char *sysname = spob_getSystemName( spb->name );
       if ( sysname == NULL )
          WARN( _( "Map '%s' is trying to set spob '%s' as known when it has no "
                   "system!" ),
-               map->name, spb->name );
+               outfit_name( map ), spb->name );
       else {
          int found = 0;
-         for ( int j = 0; j < array_size( map->u.map->systems ); j++ ) {
-            const StarSystem *ss = map->u.map->systems[j];
+         for ( int j = 0; j < array_size( systems ); j++ ) {
+            const StarSystem *ss = systems[j];
             if ( strcmp( ss->name, sysname ) == 0 ) {
                found = 1;
                break;
@@ -3131,13 +3134,13 @@ int map_map( const Outfit *map )
          if ( !found )
             WARN( _( "Map '%s' is trying to set spob '%s' as known when it is "
                      "not in the system list! '%s' is in the '%s' system!" ),
-                  map->name, spb->name, spb->name, sysname );
+                  outfit_name( map ), spb->name, spb->name, sysname );
       }
 #endif /* DEBUGGING */
    }
 
-   for ( int i = 0; i < array_size( map->u.map->jumps ); i++ )
-      jp_setFlag( map->u.map->jumps[i], JP_KNOWN );
+   for ( int i = 0; i < array_size( jumps ); i++ )
+      jp_setFlag( jumps[i], JP_KNOWN );
 
    ovr_refresh();
    return 1;
@@ -3152,20 +3155,24 @@ int map_map( const Outfit *map )
  */
 int map_isUseless( const Outfit *map )
 {
-   for ( int i = 0; i < array_size( map->u.map->systems ); i++ )
-      if ( !sys_isKnown( map->u.map->systems[i] ) )
+   StarSystem **systems = outfit_mapSystems( map );
+   JumpPoint  **jumps   = outfit_mapJumps( map );
+   Spob       **spobs   = outfit_mapSpobs( map );
+
+   for ( int i = 0; i < array_size( systems ); i++ )
+      if ( !sys_isKnown( systems[i] ) )
          return 0;
 
-   for ( int i = 0; i < array_size( map->u.map->spobs ); i++ ) {
-      const Spob *p = map->u.map->spobs[i];
+   for ( int i = 0; i < array_size( spobs ); i++ ) {
+      const Spob *p = spobs[i];
       if ( !spob_hasSystem( p ) )
          continue;
       if ( !spob_isKnown( p ) )
          return 0;
    }
 
-   for ( int i = 0; i < array_size( map->u.map->jumps ); i++ )
-      if ( !jp_isKnown( map->u.map->jumps[i] ) )
+   for ( int i = 0; i < array_size( jumps ); i++ )
+      if ( !jp_isKnown( jumps[i] ) )
          return 0;
 
    return 1;

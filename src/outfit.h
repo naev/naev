@@ -448,23 +448,23 @@ typedef struct Outfit {
 /*
  * Access stuff.
  */
-int           outfit_gfxStoreLoaded( const Outfit *o );
-int           outfit_gfxStoreLoadNeeded( void );
-int           outfit_gfxStoreLoad( Outfit *o );
-const Outfit *outfit_get( const char *name );
-const Outfit *outfit_getW( const char *name );
-const Outfit *outfit_getAll( void );
-int           outfit_compareTech( const void *outfit1, const void *outfit2 );
-int           outfit_isProp( const Outfit *o, unsigned int prop );
-void          outfit_setProp( Outfit *o, unsigned int prop );
-void          outfit_rmProp( Outfit *o, unsigned int prop );
-double        outfit_mass( const Outfit *o );
-double        outfit_massAmmo( const Outfit *o );
-const char   *outfit_license( const Outfit *o );
-credits_t     outfit_price( const Outfit *o );
-const char   *outfit_getPrice( const Outfit *outfit, unsigned int q,
-                               credits_t *price, int *canbuy, int *cansell,
-                               char **player_has );
+int            outfit_gfxStoreLoaded( const Outfit *o );
+int            outfit_gfxStoreLoadNeeded( void );
+int            outfit_gfxStoreLoad( Outfit *o );
+const Outfit  *outfit_get( const char *name );
+const Outfit  *outfit_getW( const char *name );
+const Outfit **outfit_getAll( void );
+int            outfit_compareTech( const void *outfit1, const void *outfit2 );
+int            outfit_isProp( const Outfit *o, unsigned int prop );
+void           outfit_setProp( Outfit *o, unsigned int prop );
+void           outfit_rmProp( Outfit *o, unsigned int prop );
+double         outfit_mass( const Outfit *o );
+double         outfit_massAmmo( const Outfit *o );
+const char    *outfit_license( const Outfit *o );
+credits_t      outfit_price( const Outfit *o );
+const char    *outfit_getPrice( const Outfit *outfit, unsigned int q,
+                                credits_t *price, int *canbuy, int *cansell,
+                                char **player_has );
 /* outfit types */
 int            outfit_isActive( const Outfit *o );
 int            outfit_isToggleable( const Outfit *o );
@@ -585,6 +585,7 @@ double            outfit_launcherArc( const Outfit *o );
 double            outfit_launcherDuration( const Outfit *o );
 double            outfit_launcherArmour( const Outfit *o );
 double            outfit_launcherAbsorb( const Outfit *o );
+double            outfit_launcherLockon( const Outfit *o );
 double            outfit_launcherIFLockon( const Outfit *o );
 const OutfitGFX  *outfit_launcherGFX( const Outfit *o );
 const TrailSpec  *outfit_launcherTrailSpec( const Outfit *o );

@@ -414,7 +414,7 @@ static int playerL_wealth( lua_State *L )
       for ( int i = 0; i < array_size( ps ); i++ )
          wealth += pilot_worth( ps[i].p, 0 );
       for ( int i = 0; i < array_size( po ); i++ )
-         wealth += po[i].q * po[i].o->price;
+         wealth += po[i].q * outfit_price( po[i].o );
    } else
       wealth = 0;
 

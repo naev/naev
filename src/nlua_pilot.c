@@ -1858,7 +1858,8 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
       /* When firing, slot->timer represents the remaining duration. */
       lua_pushstring( L, "charge" );
       if ( has_beamid )
-         lua_pushnumber( L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
+         lua_pushnumber( L,
+                         CLAMP( 0., 1., slot->timer / outfit_duration( o ) ) );
       else
          lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
       lua_rawset( L, -3 );
@@ -1894,7 +1895,8 @@ static int weapsetItem( lua_State *L, int *k, Pilot *p,
       if ( t <= 0. )
          lua_pushnumber( L, 1. );
       else
-         lua_pushnumber( L, 1. - ( t / slot->outfit->u.lau.lockon ) );
+         lua_pushnumber( L,
+                         1. - ( t / outfit_launcherLockon( slot->outfit ) ) );
       lua_setfield( L, -2, "lockon" );
 
       /* Is in arc. */
@@ -2151,7 +2153,7 @@ static int pilotL_weapsetAddType( lua_State *L )
       PilotOutfitSlot *pos = p->outfits[i];
       if ( pos->outfit == NULL )
          continue;
-      if ( ( strcmp( pos->outfit->name, type ) == 0 ) ||
+      if ( ( strcmp( outfit_rawname( pos->outfit ), type ) == 0 ) ||
            ( strcmp( outfit_getType( pos->outfit ), type ) == 0 ) ||
            ( strcmp( outfit_getTypeBroad( pos->outfit ), type ) == 0 ) )
          pilot_weapSetAdd( p, id, pos );
@@ -2361,7 +2363,7 @@ static int pilotL_actives( lua_State *L )
       case PILOT_OUTFIT_WARMUP:
          str = "warmup";
          if ( !outfit_isMod( pos->outfit ) ||
-              pos->outfit->lua_env == LUA_NOREF )
+              outfit_luaEnv( pos->outfit ) == LUA_NOREF )
             d = 1.; /* TODO add warmup stuff to normal active outfits (not sure
                        if necessary though. */
          else
@@ -2372,7 +2374,7 @@ static int pilotL_actives( lua_State *L )
       case PILOT_OUTFIT_ON:
          str = "on";
          if ( !outfit_isMod( pos->outfit ) ||
-              pos->outfit->lua_env == LUA_NOREF ) {
+              outfit_luaEnv( pos->outfit ) == LUA_NOREF ) {
             d = outfit_duration( pos->outfit );
             if ( d == 0. )
                d = 1.;
@@ -2386,7 +2388,7 @@ static int pilotL_actives( lua_State *L )
       case PILOT_OUTFIT_COOLDOWN:
          str = "cooldown";
          if ( !outfit_isMod( pos->outfit ) ||
-              pos->outfit->lua_env == LUA_NOREF ) {
+              outfit_luaEnv( pos->outfit ) == LUA_NOREF ) {
             d = outfit_cooldown( pos->outfit );
             if ( d > 0. && !isinf( pos->stimer ) )
                d = pos->stimer / d;
@@ -2491,7 +2493,7 @@ static int pilotL_outfitsList( lua_State *L )
 
          /* Only match specific type. */
          if ( ( ost != OUTFIT_SLOT_NULL ) &&
-              ( p->outfits[i]->outfit->slot.type != ost ) )
+              ( outfit_slotType( p->outfits[i]->outfit ) != ost ) )
             continue;
 
          /* Skip locked. */
