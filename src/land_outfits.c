@@ -792,7 +792,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits,
          }
 
          /* Layers. */
-         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays );
+         coutfits[i].layers = gl_copyTexArray( outfit_gfxOverlays( o ) );
          int rarity         = outfit_rarity( o );
          if ( rarity > 0 ) {
             t                  = rarity_texture( rarity );
@@ -1034,10 +1034,10 @@ static void outfits_buy( unsigned int wid, const char *str )
          return;
 
    /* Try Lua. */
-   if ( outfit->lua_buy != LUA_NOREF ) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_buy );
+   if ( outfit_luaBuy( outfit ) != LUA_NOREF ) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaBuy( outfit ) );
       lua_pushinteger( naevL, q );
-      if ( nlua_pcall( outfit->lua_env, 1, 2 ) ) { /* */
+      if ( nlua_pcall( outfit_luaEnv( outfit ), 1, 2 ) ) { /* */
          WARN( _( "Outfit '%s' failed to run '%s':\n%s" ),
                outfit_name( outfit ), "price", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -1151,10 +1151,10 @@ static void outfits_sell( unsigned int wid, const char *str )
    }
 
    /* Try Lua. */
-   if ( outfit->lua_sell != LUA_NOREF ) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_sell );
+   if ( outfit_luaSell( outfit ) != LUA_NOREF ) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaSell( outfit ) );
       lua_pushinteger( naevL, q );
-      if ( nlua_pcall( outfit->lua_env, 1, 2 ) ) { /* */
+      if ( nlua_pcall( outfit_luaEnv( outfit ), 1, 2 ) ) { /* */
          WARN( _( "Outfit '%s' failed to run '%s':\n%s" ),
                outfit_name( outfit ), "price", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );

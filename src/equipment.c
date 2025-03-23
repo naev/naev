@@ -1730,9 +1730,10 @@ static void equipment_genShipList( unsigned int wid )
    /* Add player's current ship. */
    cships[0].image   = ship_gfxStore( player.p->ship, 256, 0., 0., 0. );
    cships[0].caption = strdup( player.p->name );
-   cships[0].layers  = gl_copyTexArray( player.p->ship->gfx_overlays );
-   t                 = gl_newImage( OVERLAY_GFX_PATH "active.webp", 0 );
-   cships[0].layers  = gl_addTexArray( cships[0].layers, t );
+   cships[0].layers =
+      gl_copyTexArray( (const glTexture **)player.p->ship->gfx_overlays );
+   t                = gl_newImage( OVERLAY_GFX_PATH "active.webp", 0 );
+   cships[0].layers = gl_addTexArray( cships[0].layers, t );
    if ( player.ps.favourite ) {
       t                = gl_newImage( OVERLAY_GFX_PATH "favourite.webp", 0 );
       cships[0].layers = gl_addTexArray( cships[0].layers, t );
@@ -1749,7 +1750,8 @@ static void equipment_genShipList( unsigned int wid )
       for ( int i = 1; i <= array_size( ps ); i++ ) {
          cships[i].image = ship_gfxStore( ps[i - 1].p->ship, 256, 0., 0., 0. );
          cships[i].caption = strdup( ps[i - 1].p->name );
-         cships[i].layers  = gl_copyTexArray( ps[i - 1].p->ship->gfx_overlays );
+         cships[i].layers  = gl_copyTexArray(
+            (const glTexture **)ps[i - 1].p->ship->gfx_overlays );
          if ( ps[i - 1].favourite ) {
             t = gl_newImage( OVERLAY_GFX_PATH "favourite.webp", 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );

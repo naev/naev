@@ -327,7 +327,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
          break;
       } else if ( lua_isoutfit( L, -1 ) ) {
          const Outfit *o = lua_tooutfit( L, -1 );
-         str             = o->name;
+         str             = outfit_rawname( o );
          if ( str == NULL )
             break;
          nxml_saveData( writer, OUTFIT_METATABLE, name, name_len, str, keynum );

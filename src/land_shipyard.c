@@ -197,7 +197,8 @@ void shipyard_open( unsigned int wid )
       for ( int i = 0; i < nships; i++ ) {
          cships[i].caption = strdup( _( shipyard_list[i]->name ) );
          cships[i].image   = ship_gfxStore( shipyard_list[i], 256, 0., 0., 0. );
-         cships[i].layers  = gl_copyTexArray( shipyard_list[i]->gfx_overlays );
+         cships[i].layers  = gl_copyTexArray(
+            (const glTexture **)shipyard_list[i]->gfx_overlays );
          if ( shipyard_list[i]->rarity > 0 ) {
             glTexture *t     = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, t );

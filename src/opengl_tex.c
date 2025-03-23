@@ -279,7 +279,7 @@ void gl_getSpriteFromDir( int *x, int *y, int sx, int sy, double dir )
 /**
  * @brief Copy a texture array.
  */
-glTexture **gl_copyTexArray( glTexture **tex )
+glTexture **gl_copyTexArray( const glTexture **tex )
 {
    glTexture **t;
    int         n = array_size( tex );

@@ -856,6 +856,10 @@ const glTexture *outfit_gfxStore( const Outfit *o )
    outfit_gfxStoreLoad( (Outfit *)o );
    return o->gfx_store;
 }
+const glTexture **outfit_gfxOverlays( const Outfit *o )
+{
+   return (const glTexture **)o->gfx_overlays;
+}
 /**
  * @brief Gets the outfit's collision polygon.
  *    @param o Outfit to get information from.
@@ -948,6 +952,14 @@ int outfit_amount( const Outfit *o )
       return o->u.lau.amount;
    else if ( outfit_isFighterBay( o ) )
       return o->u.bay.amount;
+   return 0;
+}
+int outfit_reloadTime( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.reload_time;
+   else if ( outfit_isFighterBay( o ) )
+      return o->u.bay.reload_time;
    return 0;
 }
 
@@ -1189,11 +1201,119 @@ int outfit_lmapRange( const Outfit *o )
       return o->u.lmap.range;
    return 0.;
 }
+double outfit_afterburnerMassLimit( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.mass_limit;
+   return 0.;
+}
+double outfit_afterburnerSpeed( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.speed;
+   return 0.;
+}
+double outfit_afterburnerAccel( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.accel;
+   return 0.;
+}
 int outfit_afterburnerSound( const Outfit *o )
 {
    if ( outfit_isAfterburner( o ) )
       return o->u.afb.sound;
    return -1;
+}
+double outfit_launcherSpeed( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.speed;
+   return 0.;
+}
+double outfit_launcherSpeedMax( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.speed_max;
+   return 0.;
+}
+double outfit_launcherTurn( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.turn;
+   return 0.;
+}
+double outfit_launcherAccel( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.accel;
+   return 0.;
+}
+double outfit_launcherResist( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.resist;
+   return 0.;
+}
+OutfitAmmoAI outfit_launcherAI( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.ai;
+   return 0.;
+}
+double outfit_launcherArc( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.arc;
+   return 0.;
+}
+double outfit_launcherDuration( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.duration;
+   return 0.;
+}
+double outfit_launcherArmour( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.armour;
+   return 0.;
+}
+double outfit_launcherAbsorb( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.dmg_absorb;
+   return 0.;
+}
+double outfit_launcherIFLockon( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.iflockon;
+   return 0.;
+}
+const OutfitGFX *outfit_launcherGFX( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return &o->u.lau.gfx;
+   return NULL;
+}
+const TrailSpec *outfit_launcherTrailSpec( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.trail_spec;
+   return NULL;
+}
+double outfit_launcherTrailOffset( const Outfit *o )
+{
+   if ( outfit_isLauncher( o ) )
+      return o->u.lau.trail_x_offset;
+   return 0.;
+}
+GLuint outfit_beamShader( const Outfit *o )
+{
+   if ( outfit_isBeam( o ) )
+      return o->u.bem.shader;
+   return 0;
 }
 /**
  * @brief Gets the outfit's duration.
@@ -1376,6 +1496,26 @@ int outfit_slotExclusive( const Outfit *o )
 int outfit_rarity( const Outfit *o )
 {
    return o->rarity;
+}
+int outfit_luaEnv( const Outfit *o )
+{
+   return o->lua_env;
+}
+int outfit_luaBuy( const Outfit *o )
+{
+   return o->lua_buy;
+}
+int outfit_luaSell( const Outfit *o )
+{
+   return o->lua_sell;
+}
+int outfit_luaOnImpact( const Outfit *o )
+{
+   return o->lua_onimpact;
+}
+int outfit_luaOnMiss( const Outfit *o )
+{
+   return o->lua_onmiss;
 }
 
 /**

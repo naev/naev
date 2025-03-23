@@ -1525,20 +1525,21 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
             ( w->vel.y * ( dam_mod / 9. + w->mass / p->solid.mass / 6. ) ) );
 
    /* On hit weapon effects. */
-   if ( ( outfit != NULL ) && ( outfit->lua_onimpact != LUA_NOREF ) ) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, lua_mem ); /* mem */
-      nlua_setenv( naevL, outfit->lua_env, "mem" );     /* */
+   if ( ( outfit != NULL ) && ( outfit_luaOnImpact( outfit ) != LUA_NOREF ) ) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, lua_mem );     /* mem */
+      nlua_setenv( naevL, outfit_luaEnv( outfit ), "mem" ); /* */
 
       /* Set up the function: onimpact( pshooter, p ) */
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit->lua_onimpact ); /* f */
-      lua_pushpilot( naevL, shooter );                               /* f, p */
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX,
+                   outfit_luaOnImpact( outfit ) ); /* f */
+      lua_pushpilot( naevL, shooter );             /* f, p */
       lua_pushpilot( naevL, p->id );               /* f, p, p  */
       lua_pushvector( naevL, w->pos );             /* f, p, p, x */
       lua_pushvector( naevL, w->vel );             /* f, p, p, x, v */
       lua_pushoutfit( naevL, outfit );             /* f, p, p, x, v, o */
-      if ( nlua_pcall( outfit->lua_env, 5, 0 ) ) { /* */
+      if ( nlua_pcall( outfit_luaEnv( outfit ), 5, 0 ) ) { /* */
          WARN( _( "Pilot '%s''s outfit '%s' -> '%s':\n%s" ), p->name,
-               outfit->name, "onimpact", lua_tostring( naevL, -1 ) );
+               outfit_name( outfit ), "onimpact", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
    }
@@ -2401,21 +2402,21 @@ void pilot_update( Pilot *pilot, double dt )
 
          /* Initial (raw) ammo threshold */
          if ( outfit_isLauncher( pos->outfit ) ) {
-            ammo_threshold = pos->outfit->u.lau.amount;
+            ammo_threshold = outfit_amount( pos->outfit );
             ammo_threshold =
                round( (double)ammo_threshold * pilot->stats.ammo_capacity );
             reload_time =
-               pos->outfit->u.lau.reload_time / pilot->stats.launch_reload;
+               outfit_reloadTime( pos->outfit ) / pilot->stats.launch_reload;
          } else {
             /* if (outfit_isFighterBay( pos->outfit)) { */ /* Commented to shut
                                                             up warning. */
-            ammo_threshold = pos->outfit->u.bay.amount;
+            ammo_threshold = outfit_amount( pos->outfit );
             ammo_threshold =
                round( (double)ammo_threshold * pilot->stats.fbay_capacity );
             /* Adjust for deployed fighters if needed */
             ammo_threshold -= pos->u.ammo.deployed;
             reload_time =
-               pos->outfit->u.bay.reload_time / pilot->stats.fbay_reload;
+               outfit_reloadTime( pos->outfit ) / pilot->stats.fbay_reload;
          }
 
          /* Add to timer. */
@@ -2739,7 +2740,7 @@ void pilot_update( Pilot *pilot, double dt )
       if ( pilot_isFlag( pilot, PILOT_AFTERBURNER ) ) {
          const Outfit *afb = pilot->afterburner->outfit;
          double        efficiency =
-            MIN( 1., afb->u.afb.mass_limit / pilot->solid.mass );
+            MIN( 1., outfit_afterburnerMassLimit( afb ) / pilot->solid.mass );
 
          if ( pilot->id == PLAYER_ID )
             spfx_shake( 0.75 * SPFX_SHAKE_DECAY *
@@ -2747,10 +2748,11 @@ void pilot_update( Pilot *pilot, double dt )
 
          /* Adjust speed. Speed bonus falls as heat rises. */
          pilot->solid.speed_max =
-            pilot->speed * ( 1. + afb->u.afb.speed * efficiency );
+            pilot->speed * ( 1. + outfit_afterburnerSpeed( afb ) * efficiency );
 
          /* Adjust accel. Thrust bonus falls as heat rises. */
-         pilot_setAccel( pilot, 1. + afb->u.afb.accel * efficiency );
+         pilot_setAccel( pilot,
+                         1. + outfit_afterburnerAccel( afb ) * efficiency );
       } else
          pilot->solid.speed_max = pilot->speed;
    } else
@@ -3421,7 +3423,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
          for ( int i = 0; i < array_size( pilot->outfits ); i++ ) {
             if ( pilot->outfits[i]->outfit != NULL )
                DEBUG( _( "   [%d] %s" ), i,
-                      _( pilot->outfits[i]->outfit->name ) );
+                      outfit_name( pilot->outfits[i]->outfit ) );
          }
       }
    }
@@ -4356,7 +4358,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )
          continue;
-      switch ( o->type ) {
+      switch ( outfit_type( o ) ) {
       case OUTFIT_TYPE_BOLT:
          mod_energy = p->stats.fwd_energy;
          mod_damage = p->stats.fwd_damage;
@@ -4379,7 +4381,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
          /* Special case due to continuous fire. */
-         if ( o->type == OUTFIT_TYPE_BEAM ) {
+         if ( outfit_type( o ) == OUTFIT_TYPE_BEAM ) {
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
             mod_rate   = p->stats.fwd_firerate;
@@ -4464,7 +4466,7 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
       if ( !count_unique &&
            outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_UNIQUE ) )
          continue;
-      price += p->outfits[i]->outfit->price;
+      price += outfit_price( p->outfits[i]->outfit );
    }
 
    return price;

@@ -72,10 +72,10 @@ static tech_group_t *tech_groups = NULL;
 /*
  * Prototypes.
  */
-static void  tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech,
-                                   int num );
-static void  tech_freeGroup( tech_group_t *grp );
-static char *tech_getItemName( tech_item_t *item );
+static void        tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech,
+                                         int num );
+static void        tech_freeGroup( tech_group_t *grp );
+static const char *tech_getItemName( tech_item_t *item );
 /* Loading. */
 static tech_item_t *tech_itemGrow( tech_group_t *grp );
 static int          tech_parseFile( tech_group_t *tech, const char *file );
@@ -219,12 +219,12 @@ void tech_groupDestroy( tech_group_t *grp )
 /**
  * @brief Gets an item's name.
  */
-static char *tech_getItemName( tech_item_t *item )
+static const char *tech_getItemName( tech_item_t *item )
 {
    /* Handle type. */
    switch ( item->type ) {
    case TECH_TYPE_OUTFIT:
-      return item->u.outfit->name;
+      return outfit_rawname( item->u.outfit );
    case TECH_TYPE_SHIP:
       return item->u.ship->name;
    case TECH_TYPE_COMMODITY:
