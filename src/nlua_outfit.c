@@ -719,7 +719,7 @@ static int outfitL_weapStats( lua_State *L )
       disable = mod_shots * mod_damage * dmg->disable;
       /* Bolts have energy per hit, while beams are sustained energy, so flip.
        */
-      eps = mod_shots * mod_energy * -outfit_energy( o );
+      eps = mod_shots * mod_energy * outfit_energy( o );
       lua_pushnumber( L, dps );
       lua_pushnumber( L, disable );
       lua_pushnumber( L, eps );
