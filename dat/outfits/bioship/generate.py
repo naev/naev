@@ -11,8 +11,10 @@ sys.path.append( '../utils/' )
 sys.path.append( 'utils/' )
 import outfit
 
+from sys import argv
+
 def get_outfit_dict(nam):
-   o=outfit.outfit("../"+nam)
+   o=outfit.outfit('/'.join(argv[0].split('/')[:-1])+"/../"+nam)
    d=dict()
    for k in o:
       if not k.tag in d:
