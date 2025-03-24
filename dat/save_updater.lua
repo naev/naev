@@ -21,6 +21,8 @@ function finish ()
    if not save_updated then
       return
    end
+   local cache = naev.cache().save_updater
+   cache.split_list = {}
 
    -- Old cores that now use the primary / secondary system (0.13.0)
    local split = {
@@ -41,7 +43,8 @@ function finish ()
          print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
 
          -- Used to inform the updater event that cores probably need some checking
-         naev.cache().save_updater.split_cores = true
+         cache.split_list[value.new] = true
+         cache.split_cores = true
       else
          print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
       end

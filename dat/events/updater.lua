@@ -21,8 +21,52 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       diff.apply( "melendez_dome_xy37" )
    end
 
-   if naev.cache().save_updater.split_cores then
-      -- TODO automatically try to update
+   local cores_cache = naev.cache().save_updater
+   if cores_cache.split_cores then
+      local function update_ship( plt )
+         for oname,i in pairs(cores_cache.split_list) do
+            local o = outfit.get(oname)
+            local _oname, _osize, oslot = o:slot()
+            local osec = o:slotExtra()
+            local olist = plt:outfits()
+            local hasoutfit = false
+            for j,v in ipairs(plt:ship():getSlots()) do
+               if v.property == oslot and olist[j] == o then
+                  hasoutfit = true
+               end
+            end
+            for j,v in ipairs(plt:ship():getSlots()) do
+               if hasoutfit and v.property == osec and not olist[j] then
+                  -- Add outfit
+                  if player.outfitNum(o) > 0 then
+                     if plt:outfitAddSlot( o, j, true, false ) then
+                        player.outfitRm(o,1)
+                     else
+                        warn(fmt.f("Failed to add outfit '{outfit}' to player ship '{name}'!", {outfit=o, name=player.pilot():name()}))
+                     end
+                  end
+               end
+            end
+         end
+      end
+
+      local curship = player.pilot():name()
+      local ships = player.ships()
+      local deployed = {}
+      for k,s in ipairs( ships ) do
+         if s.deployed then
+            table.insert( deployed, s )
+         end
+      end
+      for k,s in ipairs( ships ) do
+         player.shipSwap( s.name, true )
+         update_ship( player.pilot() )
+      end
+      player.shipSwap( curship, true )
+      update_ship( player.pilot() )
+      for k,s in ipairs( deployed ) do
+         player.shipDeploy( s.name, true )
+      end
 
       vn.clear()
       vn.scene()
