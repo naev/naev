@@ -5,6 +5,9 @@ from outfit import outfit
 
 sizes={
    "Za'lek Test Engine":2,
+   "Beat Up Small Engine":1,
+   "Beat Up Medium Engine":3,
+   "Beat Up Large Engine":5,
    'Unicorp Falcon 1400 Engine':4,
    'Tricon Cyclone II Engine':4,
    'Nexus Arrow 700 Engine':3,
@@ -53,7 +56,8 @@ lines={
    'Tricon':'T',
    'Krain':'K',
    'Melendez':'M',
-   "Za'lek":'Z'
+   "Za'lek":'Z',
+   "Beat":'B'
 }
 
 alpha,beta=1.0,0.1
@@ -71,7 +75,7 @@ def ls2vals(line_size):
    (line,size)=line_size
    fullspeed=dec(size)
 
-   if line in ['N','M','Z']:
+   if line in ['N','M','Z','B']:
       fullspeed*=7.0/8.0
 
    r=0.15*pow(2,-((size-1)-2.5)/2.5)
@@ -89,6 +93,9 @@ def ls2vals(line_size):
    elif line=='Z':
       speed*=0.7
       acc*=0.7
+   elif line=='B':
+      speed*=0.55
+      acc*=0.55
 
    turn=speed/5.0+acc/4.0
    return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
