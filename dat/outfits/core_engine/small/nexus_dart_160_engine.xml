@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Dart 160 Engine">
  <general>
   <shortname>N. Dart 160 Engine</shortname>
@@ -15,9 +14,9 @@
   <energy_regen_malus>3</energy_regen_malus>
   <engine_limit>160</engine_limit>
   <fuel>400</fuel>
-  <speed>300</speed>
-  <accel>165</accel>
-  <turn>140</turn>
+  <speed>245</speed>
+  <accel>315</accel>
+  <turn>128</turn>
   <time_mod>-10</time_mod>
  </specific>
 </outfit>

@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Krain Remige Engine">
  <general>
   <shortname>K. Remige Engine</shortname>
@@ -15,8 +14,8 @@
   <energy_regen_malus>26</energy_regen_malus>
   <engine_limit>2400</engine_limit>
   <fuel>2400</fuel>
-  <speed>125</speed>
-  <accel>70</accel>
-  <turn>80</turn>
+  <speed>140</speed>
+  <accel>129</accel>
+  <turn>60</turn>
  </specific>
 </outfit>

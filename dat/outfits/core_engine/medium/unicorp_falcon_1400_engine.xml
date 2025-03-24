@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp Falcon 1400 Engine">
  <general>
   <shortname>U. Falcon 1400 Engine</shortname>
@@ -15,8 +14,8 @@
   <energy_regen_malus>20</energy_regen_malus>
   <engine_limit>1400</engine_limit>
   <fuel>1200</fuel>
-  <speed>150</speed>
+  <speed>177</speed>
   <accel>80</accel>
-  <turn>80</turn>
+  <turn>55</turn>
  </specific>
 </outfit>
