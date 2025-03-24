@@ -9,8 +9,11 @@ def subs(r):
       for s in subs(e):
          yield s
 
+def fmt_a(kv):
+   (key,value)=kv
+   return key+'="'+str(value)+'"'
+
 def output_r(e,fp,ind=0):
-   fmt_a=lambda ((key,value)):key+'="'+str(value)+'"'
    fp.write(' '*ind+'<'+' '.join([e.tag]+map(fmt_a,e.attrib.iteritems()))+'>'+e.text.strip())
    fst=True
    for s in e:
