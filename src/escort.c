@@ -142,36 +142,31 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
    if ( pilot_isFlagRaw( f, PILOT_CARRIED ) ) {
       /* Damage. */
       if ( p->stats.fbay_damage != 1. ) {
+         double mod          = p->stats.fbay_damage;
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_LAUNCH_DAMAGE,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_DAMAGE ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_LAUNCH_DAMAGE, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_FORWARD_DAMAGE,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_DAMAGE ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_FORWARD_DAMAGE, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_TURRET_DAMAGE,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_DAMAGE ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_TURRET_DAMAGE, mod, 0, 1 );
       }
       /* Health. */
       if ( p->stats.fbay_health != 1. ) {
+         double mod          = p->stats.fbay_health;
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_ARMOUR_MOD,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_HEALTH ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_ARMOUR_MOD, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_SHIELD_MOD,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_HEALTH ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_SHIELD_MOD, mod, 0, 1 );
       }
       /* Movement. */
       if ( p->stats.fbay_movement != 1. ) {
+         double mod          = p->stats.fbay_movement;
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_SPEED_MOD,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_MOVEMENT ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_SPEED_MOD, mod, 0, 1 );
+         pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats,
+                                                SS_TYPE_D_TURN_MOD, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_TURN_MOD,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_MOVEMENT ), 0, 1 );
-         pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_ACCEL_MOD,
-            ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_MOVEMENT ), 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_ACCEL_MOD, mod, 0, 1 );
       }
       /* Update stats. */
       pilot_calcStats( pe );

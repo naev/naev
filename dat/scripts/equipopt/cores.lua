@@ -12,6 +12,13 @@ local function choose_one_table( t )
 end
 
 
+local having_secondary={"Fighter","Bomber","Destroyer","Battleship","Carrier","Courier","Freighter","Armoured Transport","Bulk Freighter"}
+local have_secondary={}
+
+for _i,x in ipairs(having_secondary) do
+   have_secondary[x]=true
+end
+
 --[[
       STANDARD CORES
 --]]
@@ -24,39 +31,39 @@ ssys["Interceptor"] = function ()
    return "Unicorp PT-16 Core System"
 end
 ssys["Fighter"] = function ()
-   return "Unicorp PT-68 Core System"
+   return "Unicorp PT-16 Core System"
 end
 ssys["Bomber"] = function ()
-   return "Unicorp PT-68 Core System"
+   return "Unicorp PT-16 Core System"
 end
 ssys["Corvette"] = function ()
    return "Unicorp PT-200 Core System"
 end
 ssys["Destroyer"] = function ()
-   return "Unicorp PT-310 Core System"
+   return "Unicorp PT-200 Core System"
 end
 ssys["Cruiser"] = function ()
    return "Unicorp PT-440 Core System"
 end
 ssys["Battleship"] = function ()
-   return "Unicorp PT-1750 Core System"
+   return "Unicorp PT-440 Core System"
 end
 ssys["Carrier"] = function ()
-   return "Unicorp PT-1750 Core System"
+   return "Unicorp PT-440 Core System"
 end
 -- Civilian
 ssys["Yacht"] = function ()
    return "Unicorp PT-16 Core System"
 end
 ssys["Courier"] = function ()
-   return "Unicorp PT-68 Core System"
+   return "Unicorp PT-16 Core System"
 end
 ssys["Freighter"] = function ()
-   return "Unicorp PT-310 Core System"
+   return "Unicorp PT-200 Core System"
 end
 ssys["Armoured Transport"] = ssys["Freighter"]
 ssys["Bulk Freighter"] = function ()
-   return "Unicorp PT-1750 Core System"
+   return "Unicorp PT-440 Core System"
 end
 
 -- STANDARD HULLS
@@ -166,32 +173,32 @@ esys["Interceptor"] = function ()
    return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
 end
 esys["Fighter"] = function ()
-   return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
+   return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
 end
 esys["Bomber"] = function ()
-   return "Milspec Orion 3701 Core System"
+   return "Milspec Orion 2301 Core System"
 end
 esys["Corvette"] = function ()
    return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
 end
 esys["Destroyer"] = function ()
-   return choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" }
+   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
 end
 esys["Cruiser"] = function ()
    return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
 end
 esys["Battleship"] = function ()
-   return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
 end
 esys["Carrier"] = function ()
-   return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
+   return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
 end
 -- Civilian
 esys["Yacht"] = ssys["Yacht"]
 esys["Courier"] = ssys["Courier"]
 esys["Freighter"] = ssys["Freighter"]
 esys["Armoured Transport"] = function ()
-   return "Milspec Orion 5501 Core System"
+   return "Milspec Orion 4801 Core System"
 end
 esys["Bulk Freighter"] = function ()
    return "Milspec Orion 8601 Core System"
@@ -295,7 +302,7 @@ cores.standard.engines["Starbridge"] = function ()
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
 cores.standard.systems["Proteron Hippocrates"] = function ()
-   return "Milspec Thalos 5402 Core System"
+   return "Milspec Thalos 4702 Core System"
 end
 
 -- Elite exceptions
@@ -359,6 +366,10 @@ function cores.get( p, params )
       local ct = cores[ systems ].systems
       local co = ct[ shipname ] or ct[ shipclass ]
       table.insert( c, co() )
+
+      if have_secondary[shipclass] then
+         table.insert( c, co() )
+      end
    end
    if hulls then
       local ct = cores[ hulls ].hulls

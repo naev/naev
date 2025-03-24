@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Mephisto">
  <lua>zalek.lua</lua>
  <points>200</points>
@@ -9,8 +8,8 @@
  <class>Battleship</class>
  <price>9100000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-40" y="8" h="0">zalek</trail_generator>
- <trail_generator x="-40" y="-8" h="0">zalek</trail_generator>
+ <trail_generator h="0" x="-40" y="8">zalek</trail_generator>
+ <trail_generator h="0" x="-40" y="-8">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <faction>Za'lek</faction>
  <license>Heavy Combat Vessel</license>
@@ -28,22 +27,23 @@
   <cargo>120</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="40" y="0" h="2" />
-  <weapon size="large" x="25" y="0" h="2" />
-  <weapon size="large" x="12" y="-6" h="0" />
-  <weapon size="large" x="12" y="6" h="0" />
-  <weapon size="large" prop="fighter_bay" x="15" y="-6" h="7" />
-  <weapon size="large" prop="fighter_bay" x="15" y="6" h="7" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon h="2" size="large" x="40" y="0" />
+  <weapon h="2" size="large" x="25" y="0" />
+  <weapon h="0" size="large" x="12" y="-6" />
+  <weapon h="0" size="large" x="12" y="6" />
+  <weapon h="7" prop="fighter_bay" size="large" x="15" y="-6" />
+  <weapon h="7" prop="fighter_bay" size="large" x="15" y="6" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

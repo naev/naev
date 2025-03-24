@@ -221,8 +221,9 @@ function spawnNpcs()
                player.outfitAdd("Tricon Zephyr II Engine")
                player.outfitAdd("Emergency Shield Booster")
             elseif playerRank == 7 then
-               tk.msg("",fmt.f(_("You receive a {1} and a {2} as a reward."), {_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")}))
-               player.outfitAdd("Milspec Orion 3701 Core System")
+               tk.msg("",fmt.f(_("You receive two {1}s and a {2} as a reward."), {_("Milspec Orion 2301 Core System"),_("Shield Capacitor I")}))
+               player.outfitAdd("Milspec Orion 2301 Core System")
+               player.outfitAdd("Milspec Orion 2301 Core System")
                player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("S&K Light Combat Plating")}))

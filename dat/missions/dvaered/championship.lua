@@ -204,7 +204,8 @@ function enter()
          bioship.simulate( opponent, bioship.maxstage( opponent ) )
       else
          opponent:outfitAdd("Tricon Zephyr II Engine")
-         opponent:outfitAdd("Milspec Orion 3701 Core System")
+         opponent:outfitAdd("Milspec Orion 2301 Core System")
+         opponent:outfitAdd("Milspec Orion 2301 Core System")
          opponent:outfitAdd("S&K Light Combat Plating")
       end
 

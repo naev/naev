@@ -14,14 +14,75 @@ local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
 
+-- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Newly added diff
    if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
    end
+
+   local cores_cache = naev.cache().save_updater
+   if cores_cache.split_cores then
+      local function update_ship( plt )
+         for oname,i in pairs(cores_cache.split_list) do
+            local o = outfit.get(oname)
+            local _oname, _osize, oslot = o:slot()
+            local osec = o:slotExtra()
+            local olist = plt:outfits()
+            local hasoutfit = false
+            for j,v in ipairs(plt:ship():getSlots()) do
+               if v.property == oslot and olist[j] == o then
+                  hasoutfit = true
+               end
+            end
+            for j,v in ipairs(plt:ship():getSlots()) do
+               if hasoutfit and v.property == osec and not olist[j] then
+                  -- Add outfit
+                  if player.outfitNum(o) > 0 then
+                     if plt:outfitAddSlot( o, j, true, false ) then
+                        player.outfitRm(o,1)
+                     else
+                        warn(fmt.f("Failed to add outfit '{outfit}' to player ship '{name}'!", {outfit=o, name=player.pilot():name()}))
+                     end
+                  end
+               end
+            end
+         end
+      end
+
+      local curship = player.pilot():name()
+      local ships = player.ships()
+      local deployed = {}
+      for k,s in ipairs( ships ) do
+         if s.deployed then
+            table.insert( deployed, s )
+         end
+      end
+      for k,s in ipairs( ships ) do
+         player.shipSwap( s.name, true )
+         update_ship( player.pilot() )
+      end
+      player.shipSwap( curship, true )
+      update_ship( player.pilot() )
+      for k,s in ipairs( deployed ) do
+         player.shipDeploy( s.name, true )
+      end
+
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
+         {shipai=tut.ainame()}))
+      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have gotten additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
+      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double check your ships before taking off!"]]))
+      vn.done( tut.shipai.transition )
+      vn.run()
+   end
+   naev.cache().save_updater = {}
 end
 
--- Runs on saves older than 0.11.0
+-- Runs on saves older than 0.12.0
 local function updater0120( did0110, did0100, did090 )
    -- Have to apply diff to lower pirates if necessary
    if player.chapter()=="0" then
@@ -295,7 +356,7 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.1") < 0) then
+   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.2") < 0) then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end
