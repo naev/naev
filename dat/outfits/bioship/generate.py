@@ -125,7 +125,6 @@ typename["hull"] = N_("Bioship Shell")
 ##    "accel":        lerp(  <ref>-15%, <ref> ),
 ##    "turn":         lerp(  <ref>-15%, <ref> ),
 ##    "speed":        lerp(  <ref>-15%, <ref> ),
-## <ref>-15% are currently really approximate.
 
 ## Cortex recipe:
 ##    "price":        lerpr(     <S&K>/2 , <S&K>),
@@ -161,6 +160,7 @@ typename["hull"] = N_("Bioship Shell")
 # Ponderosus Gene Drive  =>  Tricon Typhoon
 # Immanis Gene Drive  =>  Eagle 6500
 # Magnus Gene Drive  =>  Tricon Typhoon2
+# Grandis Gene Drive  =>  Melendez Mammoth
 for nam,temp,gfx,output_pref,outputs in [
    ("small/tricon_zephyr_engine.xml","gene_drive","fast_s","Perlevis",["I","II"]),
    ("small/tricon_zephyr_ii_engine.xml","gene_drive","fast_s","Laeviter",["I","II"]),
@@ -170,6 +170,7 @@ for nam,temp,gfx,output_pref,outputs in [
    ("large/tricon_typhoon_engine.xml","gene_drive","fast_l","Ponderosus",["I","II","III"]),
    ("large/unicorp_eagle_6500_engine.xml","gene_drive","strong_l","Immanis",["I","II","III"]),
    ("large/tricon_typhoon_ii_engine.xml","gene_drive","strong_l","Magnus",["I","II","III"]),
+   ("large/melendez_mammoth_engine.xml","gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
 ]:
    ref=get_outfit_dict('core_engine/'+nam)
    BioOutfit( temp+".xml.template", {
@@ -187,26 +188,6 @@ for nam,temp,gfx,output_pref,outputs in [
        "engine_limit": ref['engine_limit']
    } ).run( [ N_(output_pref+" Gene Drive "+s) for s in outputs ] )
 
-# Grandis Gene Drive  =>  Melendez Mammoth
-# This one was killed, so we have to use these values.
-BioOutfit( "gene_drive_melendez.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "large",
-    "price":        lerpr(  1.125e6/2, 1.125e6 ),
-    "mass":         75,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
-    "accel":        lerp(   40,   47 ),
-    "turn":         lerp(   42,   50 ),
-    "speed":        lerp(   75,   90 ),
-    "fuel":         2800,
-    "energy_malus": lerp(   26,   26 ),
-    "engine_limit": lerp( 3600, 3600 ),
-} ).run( [
-    N_("Grandis Gene Drive I"),
-    N_("Grandis Gene Drive II"),
-    N_("Grandis Gene Drive III"),
-] )
 
 # Stinger  =>  Plasma Blaster MK1  &  MK2
 extrapol=(0.25,0.75)

@@ -13,6 +13,7 @@ sizes={
    'Tricon Cyclone Engine':3,
    'Krain Remige Engine':5,
    'Melendez Mammoth XL Engine':6,
+   'Melendez Mammoth Engine':5,
    'Unicorp Eagle 6500 Engine':6,
    'Beat Up Large Engine':5,
    'Tricon Typhoon Engine':5,
