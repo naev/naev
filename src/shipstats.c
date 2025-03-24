@@ -1123,14 +1123,6 @@ double ss_statsGet( const ShipStats *s, const char *name )
 }
 
 /**
- * @brief Gets a ship stat value by name.
- */
-double ss_statsGetRaw( const ShipStats *s, ShipStatsType type )
-{
-   return ss_statsGetInternal( s, type, 1 );
-}
-
-/**
  * @brief Gets a ship stat value by name and pushes it to Lua.
  */
 int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name,
