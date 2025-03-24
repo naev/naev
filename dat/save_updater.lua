@@ -1,4 +1,3 @@
-
 --[[
    Script to update outfits and ships from a saved game in the case they don't exist.
 --]]
@@ -12,6 +11,7 @@ local save_updated
 function start ()
    changes_done = {}
    save_updated = false
+   naev.cache().save_updater = {}
 end
 
 --[[
@@ -23,7 +23,7 @@ function finish ()
    end
 
    -- Old cores that now use the primary / secondary system (0.13.0)
-   local split={
+   local split = {
       ["Milspec Orion 9901 Core System"]  = true,
       ["Milspec Thalos 9802 Core System"] = true,
       ["Unicorp PT-1750 Core System"]     = true,
@@ -39,12 +39,13 @@ function finish ()
       if split[original] then
          player.outfitAdd( value.new, value.q ) -- Hae to add an additional core to compensate
          print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
+
+         -- Used to inform the updater event that cores probably need some checking
+         naev.cache().save_updater.split_cores = true
       else
          print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
       end
    end
-   -- became redundant
-   --print( "Save game updated!" )
 end
 
 local function apply_change( original, new, q )

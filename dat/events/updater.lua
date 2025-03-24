@@ -14,14 +14,31 @@ local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
 
+-- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Newly added diff
    if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
    end
+
+   if naev.cache().save_updater.split_cores then
+      -- TODO automatically try to update
+
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
+         {shipai=tut.ainame()}))
+      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have gotten additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
+      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double check your ships before taking off!"]]))
+      vn.done( tut.shipai.transition )
+      vn.run()
+   end
+   naev.cache().save_updater = {}
 end
 
--- Runs on saves older than 0.11.0
+-- Runs on saves older than 0.12.0
 local function updater0120( did0110, did0100, did090 )
    -- Have to apply diff to lower pirates if necessary
    if player.chapter()=="0" then
@@ -295,7 +312,7 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.1") < 0) then
+   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.2") < 0) then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end
