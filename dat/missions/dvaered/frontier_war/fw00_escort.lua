@@ -180,7 +180,8 @@ function spawnTam( origin )
 
    -- TODO switch to equipopt
    majorTam:outfitAdd("S&K Light Combat Plating")
-   majorTam:outfitAdd("Milspec Orion 3701 Core System")
+   majorTam:outfitAdd("Milspec Orion 2301 Core System")
+   majorTam:outfitAdd("Milspec Orion 2301 Core System")
    majorTam:outfitAdd("Tricon Zephyr II Engine")
    majorTam:outfitAdd("Unicorp Light Afterburner")
    --majorTam:outfitAdd("Solar Panel")

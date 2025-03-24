@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Divinity">
  <lua>sirius_divinity.lua</lua>
  <points>200</points>
@@ -9,8 +8,8 @@
  <class>Carrier</class>
  <price>11000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-52" y="5" h="0">sirius</trail_generator>
- <trail_generator x="-52" y="-5" h="0">sirius</trail_generator>
+ <trail_generator h="0" x="-52" y="5">sirius</trail_generator>
+ <trail_generator h="0" x="-52" y="-5">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
  <license>Heavy Combat Vessel</license>
@@ -28,21 +27,22 @@
   <cargo>110</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="20" y="0" h="0" />
-  <weapon size="large" x="20" y="0" h="0" />
-  <weapon size="large" x="-20" y="0" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-20" y="0" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="40" y="0" />
+  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="20" y="0" />
+  <weapon h="0" size="large" x="20" y="0" />
+  <weapon h="0" size="large" x="-20" y="0" />
+  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="-20" y="0" />
+  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="-40" y="0" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

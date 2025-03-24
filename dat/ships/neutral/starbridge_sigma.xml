@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<ship name="Starbridge Sigma" inherits="Starbridge">
+<ship inherits="Starbridge" name="Starbridge Sigma">
  <rarity>2</rarity>
  <price>2300000</price>
  <description>Heavily modified, the Starbridge Sigma boasts the capability of housing fighters in new modified weapon mounts. The increased weapon room is obtained by shrinking the cargo hold and battery capacity. At the same time, the hull has been reinforced and systems interfaced tuned. The resulting ship is a premium variant of the Starbridge capable of holding its own in deep space.</description>
@@ -13,20 +12,21 @@
   <cargo>30</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-20" y="-17" h="2" />
-  <weapon size="large" x="-20" y="17" h="2" />
-  <weapon size="medium" prop="fighter_bay" x="15" y="0" h="3" />
-  <weapon size="medium" prop="fighter_bay" x="20" y="0" h="2" />
-  <weapon size="small" x="4" y="-7" h="1" />
-  <weapon size="small" x="4" y="7" h="1" />
-  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
-  <utility size="medium" prop="accessory" />
+  <weapon h="2" size="large" x="-20" y="-17" />
+  <weapon h="2" size="large" x="-20" y="17" />
+  <weapon h="3" prop="fighter_bay" size="medium" x="15" y="0" />
+  <weapon h="2" prop="fighter_bay" size="medium" x="20" y="0" />
+  <weapon h="1" size="small" x="4" y="-7" />
+  <weapon h="1" size="small" x="4" y="7" />
+  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Krain Patagium Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" size="medium">Krain Patagium Engine</structure>
+  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

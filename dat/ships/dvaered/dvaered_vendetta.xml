@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vendetta">
  <lua>dvaered.lua</lua>
  <points>50</points>
@@ -9,10 +8,10 @@
  <class>Fighter</class>
  <price>450000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="3" y="18" h="0">nebula</trail_generator>
- <trail_generator x="3" y="-18" h="0">nebula</trail_generator>
- <trail_generator x="-5" y="4" h="0" always_under="1">fire</trail_generator>
- <trail_generator x="-5" y="-4" h="0" always_under="1">fire</trail_generator>
+ <trail_generator h="0" x="3" y="18">nebula</trail_generator>
+ <trail_generator h="0" x="3" y="-18">nebula</trail_generator>
+ <trail_generator always_under="1" h="0" x="-5" y="4">fire</trail_generator>
+ <trail_generator always_under="1" h="0" x="-5" y="-4">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Dvaered</faction>
  <license>Light Combat Vessel</license>
@@ -30,18 +29,19 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="16" y="-9" h="0" />
-  <weapon size="small" x="16" y="9" h="0" />
-  <weapon size="small" x="13" y="-13" h="0" />
-  <weapon size="small" x="13" y="13" h="0" />
-  <weapon size="small" x="19" y="0" h="-2" />
-  <weapon size="small" x="3" y="0" h="2" />
-  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
-  <utility size="small" prop="accessory" />
+  <weapon h="0" size="small" x="16" y="-9" />
+  <weapon h="0" size="small" x="16" y="9" />
+  <weapon h="0" size="small" x="13" y="-13" />
+  <weapon h="0" size="small" x="13" y="13" />
+  <weapon h="-2" size="small" x="19" y="0" />
+  <weapon h="2" size="small" x="3" y="0" />
+  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Unicorp Hawk 360 Engine</structure>
-  <structure size="small" prop="hull">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>
