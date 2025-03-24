@@ -376,13 +376,11 @@ void          ss_free( ShipStatList *ll );
  * Manipulation
  */
 int ss_statsInit( ShipStats *stats );
-int ss_statsMerge( ShipStats *dest, const ShipStats *src );
-int ss_statsMergeSingle( ShipStats *stats, const ShipStatList *list );
-int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
-                              double scale );
-int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list );
+int ss_statsMerge( ShipStats *dest, const ShipStats *src, int multiply );
+int ss_statsMergeFromList( ShipStats *stats, const ShipStatList *list,
+                           int multiply );
 int ss_statsMergeFromListScale( ShipStats *stats, const ShipStatList *list,
-                                double scale );
+                                double scale, int multiply );
 
 /*
  * Lookup.
@@ -400,7 +398,6 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite );
 ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
                                double value, int overwrite, int raw );
 double        ss_statsGet( const ShipStats *s, const char *name );
-double        ss_statsGetRaw( const ShipStats *s, ShipStatsType type );
 int  ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name,
                      int internal );
 int  ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal );

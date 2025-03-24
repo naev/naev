@@ -557,10 +557,13 @@ void effect_clear( Effect **efxlist )
  */
 void effect_compute( ShipStats *s, const Effect *efxlist )
 {
+   ShipStats stats;
+   ss_statsInit( &stats );
    for ( int i = 0; i < array_size( efxlist ); i++ ) {
       const Effect *e = &efxlist[i];
-      ss_statsMergeFromListScale( s, e->data->stats, e->strength );
+      ss_statsMergeFromListScale( &stats, e->data->stats, e->strength, 0 );
    }
+   ss_statsMerge( s, &stats, 1 );
 }
 
 /**
