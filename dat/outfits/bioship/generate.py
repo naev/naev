@@ -6,6 +6,9 @@ import math
 N_ = lambda text: text
 
 sys.path.append( '../../../utils/' )
+sys.path.append( '../../utils/' )
+sys.path.append( '../utils/' )
+sys.path.append( 'utils/' )
 import outfit
 
 def get_outfit_dict(nam):
@@ -150,83 +153,30 @@ typename["hull"] = N_("Bioship Shell")
 
 
 # Perlevis Gene Drive  =>  Tricon Zephyr
-ref=get_outfit_dict("core_engine/small/tricon_zephyr_engine.xml")
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "small",
-    "price":        lerpr(  ref['price']/2, ref['price'] ),
-    "mass":         ref['mass'],
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
-    "accel":        lerpr(  0.85*ref['accel'], ref['accel'] ),
-    "speed":        lerpr(  0.85*ref['speed'], ref['speed'] ),
-    "turn":         lerpr(  0.85*ref['turn'], ref['turn'] ),
-    "fuel":         ref['fuel'],
-    "energy_malus": ref['energy_regen_malus'],
-    "engine_limit": ref['engine_limit']
-} ).run( [
-    N_("Perlevis Gene Drive I"),
-    N_("Perlevis Gene Drive II"),
-] )
-
-ref=get_outfit_dict("core_engine/small/tricon_zephyr_ii_engine.xml")
 # Laeviter Gene Drive  =>  Tricon Zephyr II
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "small",
-    "price":        lerpr( 225e3/2, 225e3 ),
-    "mass":         20,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
-    "accel":        lerp(  135, 160 ),
-    "turn":         lerp(  115, 140 ),
-    "speed":        lerp(  240, 290 ),
-    "fuel":         400,
-    "energy_malus": lerp(   12,  12 ),
-    "engine_limit": lerp(  320, 320 ),
-} ).run( [
-    N_("Laeviter Gene Drive I"),
-    N_("Laeviter Gene Drive II"),
-] )
-
 # Laevis Gene Drive  =>  Melendez Ox XL
-BioOutfit( "gene_drive_melendez.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "small",
-    "price":        lerpr( 95e3/2, 95e3 ),
-    "mass":         25,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_strong_s1.webp","organic_engine_strong_s2.webp")),
-    "accel":        lerp(  100, 115 ),
-    "turn":         lerp(   80,  95 ),
-    "speed":        lerp(  190, 225 ),
-    "fuel":         600,
-    "energy_malus": lerp(    7,   7 ),
-    "engine_limit": lerp(  420, 420 ),
-} ).run( [
-    N_("Laevis Gene Drive I"),
-    N_("Laevis Gene Drive II"),
-] )
-
 # Mediocris Gene Drive  =>  Tricon Cyclone
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "medium",
-    "price":        lerpr( 360e3/2, 360e3 ),
-    "mass":         20,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_m1.webp","organic_engine_fast_m2.webp")),
-    "accel":        lerp(  110, 130 ),
-    "turn":         lerp(   90, 115 ),
-    "speed":        lerp(  190, 230 ),
-    "fuel":         800,
-    "energy_malus": lerp(   12,  12 ),
-    "engine_limit": lerp(  630, 630 ),
-} ).run( [
-    N_("Mediocris Gene Drive I"),
-    N_("Mediocris Gene Drive II"),
-    N_("Mediocris Gene Drive III"),
-] )
+for nam,temp,gfx,output_pref,outputs in [
+   ("small/tricon_zephyr_engine.xml","gene_drive","fast_s","Perlevis",["I","II"]),
+   ("small/tricon_zephyr_ii_engine.xml","gene_drive","fast_s","Laeviter",["I","II"]),
+   ("small/melendez_ox_xl_engine.xml","gene_drive_melendez","strong_s","Laevis",["I","II"]),
+   ("medium/tricon_cyclone_engine.xml","gene_drive","fast_m","Mediocris",["I","II","III"]),
+]:
+   ref=get_outfit_dict('core_engine/'+nam)
+   BioOutfit( temp+".xml.template", {
+       "typename":     typename["engine"],
+       "size":         ref["size"],
+       "price":        lerpr(  ref['price']/2, ref['price'] ),
+       "mass":         ref['mass'],
+       "desc":         desc["engine"],
+       "gfx_store":    lerpt(("organic_engine_"+gfx+"1.webp","organic_engine_"+gfx+"2.webp")),
+       "accel":        lerpr(  0.85*ref['accel'], ref['accel'] ),
+       "speed":        lerpr(  0.85*ref['speed'], ref['speed'] ),
+       "turn":         lerpr(  0.85*ref['turn'], ref['turn'] ),
+       "fuel":         ref['fuel'],
+       "energy_malus": ref['energy_regen_malus'],
+       "engine_limit": ref['engine_limit']
+   } ).run( [ N_(output_pref+" Gene Drive "+s) for s in outputs ] )
 
 # Largus Gene Drive  =>  Tricon Cyclone II
 BioOutfit( "gene_drive.xml.template", {
