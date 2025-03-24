@@ -5,16 +5,15 @@ import sys
 import math
 N_ = lambda text: text
 
-sys.path.append( '../../../utils/' )
-sys.path.append( '../../utils/' )
-sys.path.append( '../utils/' )
-sys.path.append( 'utils/' )
+
+script_dir = os.path.dirname( __file__ )
+mymodule_dir = os.path.join( script_dir, '..', '..' , '..' , 'utils' )
+sys.path.append( script_dir )
+sys.path.append( mymodule_dir )
 import outfit
 
-from sys import argv
-
 def get_outfit_dict(nam):
-   o=outfit.outfit('/'.join(argv[0].split('/')[:-1])+"/../"+nam)
+   o=outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam))
    d=dict()
    for k in o:
       if not k.tag in d:
