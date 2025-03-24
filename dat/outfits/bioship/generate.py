@@ -7,7 +7,7 @@ N_ = lambda text: text
 
 
 script_dir = os.path.dirname( __file__ )
-mymodule_dir = os.path.join( script_dir, '..', '..' , '..' , 'utils' )
+mymodule_dir = os.path.join( script_dir, '..', '..' , '..' , 'utils' , 'outfits' )
 sys.path.append( script_dir )
 sys.path.append( mymodule_dir )
 import outfit
