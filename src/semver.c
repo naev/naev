@@ -6,6 +6,7 @@
  */
 
 /** @cond */
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -152,6 +153,10 @@ int semver_parse( const char *str, semver_t *ver )
    int    valid, res;
    size_t len;
    char  *buf;
+
+   /* Strip version prefix, as Naev can leave the 'v' in. */
+   while ( ( str[0] != '\0' ) && !isdigit( str[0] ) )
+      str++;
 
    ver->metadata   = NULL;
    ver->prerelease = NULL;
