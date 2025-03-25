@@ -136,7 +136,7 @@ bio_outfits = [
       ],
    ),
    custom_target('ponderosus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drivei_tricon.xml.template'),
+      input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'ponderosus_gene_drive_i.xml',
          'ponderosus_gene_drive_ii.xml',
