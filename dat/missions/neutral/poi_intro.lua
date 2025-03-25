@@ -35,6 +35,7 @@ States
    1: Land and Nelly appears
    2: Fought off pirate
 --]]
+local reward_outfit = outfit.get("Pulse Scanner")
 
 function create ()
    local syscand = lmisn.getSysAtDistance( nil, 1, 3, function( sys )
@@ -143,7 +144,7 @@ function create ()
    mem.locked = true
 
    -- Mission gets accepted in misnSetup
-   poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
+   poi.misnSetup{ sys=mem.sys, found="found", nooutfit="nooutfit", risk=mem.risk }
 
    misn.osdCreate( _("Sensor Anomaly"), {
       _("Improve your ship's systems"),
@@ -157,6 +158,22 @@ end
 
 function delay_abort ()
    misn.finish(false)
+end
+
+-- luacheck: globals nooutfit (used in POI framework)
+function nooutfit ()
+   hook.timer( 5, "nooutfit_timer" )
+end
+function nooutfit_timer ()
+   vn.clear()
+   vn.scene()
+   local sai = vn.newCharacter( tut.vn_shipai() )
+   vn.transition( tut.shipai.transition )
+   vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
+      {shipai=tut.ainame()}))
+   sai(_([["It seems like the ship's sensors are not sufficient to analyze the sensor anomaly. We'll need something better. The probability of off-the-shelf outfits working is low, the most logical course of action might be to #bconsult other pilots at a nearby bar#0."]]))
+   vn.done( tut.shipai.transition )
+   vn.run()
 end
 
 local npc_nel
@@ -541,7 +558,7 @@ They dematerialize in a hurry.]]),
 end
 
 function board_nelly ()
-   local o = outfit.get("Pulse Scanner")
+   local o = reward_outfit
 
    vn.clear()
    vn.scene()
