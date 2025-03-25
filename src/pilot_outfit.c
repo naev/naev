@@ -533,6 +533,44 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 }
 
 /**
+ * @brief Tries to add an outfit to the first possible free slot on the pilot.
+ */
+int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
+{
+   /* Test special slots first. */
+   for ( int spid = 1; spid >= 0; spid-- ) {
+      /* Try to find the first smallest size it fits into. */
+      for ( OutfitSlotSize size = o->slot.size; size <= OUTFIT_SLOT_SIZE_HEAVY;
+            size++ ) {
+         for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            PilotOutfitSlot *s = p->outfits[i];
+
+            /* Must match special property status. */
+            if ( spid != ( !!s->sslot->slot.spid ) )
+               continue;
+
+            /* Must be correct size. */
+            if ( s->sslot->slot.size != size )
+               continue;
+
+            /* Must not be full already. */
+            if ( s->outfit != NULL )
+               continue;
+
+            /* Test. */
+            if ( !outfit_fitsSlot( o, &s->sslot->slot ) )
+               continue;
+
+            /* Try to add. */
+            if ( pilot_addOutfitRaw( p, o, s ) == 0 )
+               return i;
+         }
+      }
+   }
+   return 0;
+}
+
+/**
  * @brief Removes an outfit from the pilot.
  *
  *    @param pilot Pilot to remove the outfit from.
