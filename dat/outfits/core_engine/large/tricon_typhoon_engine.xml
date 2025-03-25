@@ -17,5 +17,6 @@
   <speed>135</speed>
   <accel>99</accel>
   <turn>51</turn>
+  <time_mod>-20</time_mod>
  </specific>
 </outfit>
