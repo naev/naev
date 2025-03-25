@@ -3535,8 +3535,6 @@ static int player_saveShipSlot( xmlTextWriterPtr       writer,
    const Outfit *o = slot->outfit;
    xmlw_startElem( writer, "outfit" );
    xmlw_attr( writer, "slot", "%d", i );
-   if ( outfit_isLauncher( o ) || outfit_isFighterBay( o ) )
-      xmlw_attr( writer, "quantity", "%d", slot->u.ammo.quantity );
    xmlw_str( writer, "%s", o->name );
    xmlw_endElem( writer ); /* "outfit" */
 
@@ -4455,7 +4453,6 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
                                   PilotOutfitSlot *slot )
 {
    const Outfit *o;
-   int           q, ret;
    const char   *name = xml_get( node );
    if ( name == NULL ) {
       WARN( _( "Empty ship slot node found, skipping." ) );
@@ -4466,16 +4463,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
    o = player_tryGetOutfit( name, 1 );
    if ( o == NULL )
       return;
-   ret = player_addOutfitToPilot( ship, o, slot );
-
-   /* Doesn't have ammo. */
-   if ( !ret || ( !outfit_isLauncher( o ) && !outfit_isFighterBay( o ) ) )
-      return;
-
-   /* See if has quantity. */
-   xmlr_attr_int( node, "quantity", q );
-   if ( q > 0 )
-      pilot_addAmmo( ship, slot, q );
+   player_addOutfitToPilot( ship, o, slot );
 }
 
 /**
@@ -4853,6 +4841,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Set aimLines */
    ship->aimLines = aim_lines;
+
+   /* Fill up ammo. */
+   pilot_fillAmmo( ship );
 
    /* Add it to the stack if it's not what the player is in */
    if ( is_player == 0 )
