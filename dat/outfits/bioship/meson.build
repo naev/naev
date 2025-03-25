@@ -25,7 +25,7 @@ bio_outfits = [
       ],
    ),
    custom_target('perlevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'perlevis_gene_drive_i.xml',
          'perlevis_gene_drive_ii.xml',
@@ -46,7 +46,7 @@ bio_outfits = [
       ],
    ),
    custom_target('laeviter_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'laeviter_gene_drive_i.xml',
          'laeviter_gene_drive_ii.xml',
@@ -83,7 +83,7 @@ bio_outfits = [
       ],
    ),
    custom_target('mediocris_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'mediocris_gene_drive_i.xml',
          'mediocris_gene_drive_ii.xml',
@@ -105,7 +105,7 @@ bio_outfits = [
       ],
    ),
    custom_target('largus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'largus_gene_drive_i.xml',
          'largus_gene_drive_ii.xml',
@@ -136,7 +136,7 @@ bio_outfits = [
       ],
    ),
    custom_target('ponderosus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drivei_tricon.xml.template'),
       output: [
          'ponderosus_gene_drive_i.xml',
          'ponderosus_gene_drive_ii.xml',
@@ -161,7 +161,7 @@ bio_outfits = [
       ],
    ),
    custom_target('magnus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/gene_drive.xml.template'),
+      input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'magnus_gene_drive_i.xml',
          'magnus_gene_drive_ii.xml',
