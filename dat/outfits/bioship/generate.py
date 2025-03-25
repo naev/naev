@@ -162,12 +162,12 @@ typename["hull"] = N_("Bioship Shell")
 # Magnus Gene Drive  =>  Tricon Typhoon2
 # Grandis Gene Drive  =>  Melendez Mammoth
 for nam,temp,gfx,output_pref,outputs in [
-   ("small/tricon_zephyr_engine.xml","gene_drive","fast_s","Perlevis",["I","II"]),
-   ("small/tricon_zephyr_ii_engine.xml","gene_drive","fast_s","Laeviter",["I","II"]),
+   ("small/tricon_zephyr_engine.xml","gene_drive_tricon","fast_s","Perlevis",["I","II"]),
+   ("small/tricon_zephyr_ii_engine.xml","gene_drive_tricon","fast_s","Laeviter",["I","II"]),
    ("small/melendez_ox_xl_engine.xml","gene_drive_melendez","strong_s","Laevis",["I","II"]),
-   ("medium/tricon_cyclone_engine.xml","gene_drive","fast_m","Mediocris",["I","II","III"]),
-   ("medium/tricon_cyclone_ii_engine.xml","gene_drive","strong_m","Largus",["I","II"]),
-   ("large/tricon_typhoon_engine.xml","gene_drive","fast_l","Ponderosus",["I","II","III"]),
+   ("medium/tricon_cyclone_engine.xml","gene_drive_tricon","fast_m","Mediocris",["I","II","III"]),
+   ("medium/tricon_cyclone_ii_engine.xml","gene_drive_tricon","strong_m","Largus",["I","II"]),
+   ("large/tricon_typhoon_engine.xml","gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
    ("large/unicorp_eagle_6500_engine.xml","gene_drive","strong_l","Immanis",["I","II","III"]),
    ("large/tricon_typhoon_ii_engine.xml","gene_drive","strong_l","Magnus",["I","II","III"]),
    ("large/melendez_mammoth_engine.xml","gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
