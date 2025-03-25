@@ -81,7 +81,7 @@ def ls2vals(line_size):
    r=0.15*pow(2,-((size-1)-2.5)/2.5)
 
    if line in ['T','K']:
-      r*=2
+      r*=1.75
    elif line=='M':
       r*=0.7
 
@@ -97,7 +97,7 @@ def ls2vals(line_size):
       speed*=0.55
       acc*=0.55
 
-   turn=speed/5.0+acc/4.0
+   turn=speed/5.0+acc/3.5
    return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
 
 def get_line(o):
