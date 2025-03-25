@@ -24,7 +24,7 @@ skills.set.bite = {
       requires = { "bite1" },
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
-         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +800% accel and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +600% accel and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
       end,
       icon = "fangs.webp",
    },
@@ -94,7 +94,7 @@ skills.set.move = {
       name = _("Wanderer"),
       tier = 3,
       requires = { "move2" },
-      desc = _("Gives a 50% accel bonus."),
+      desc = _("Gives a 30% accel bonus."),
       outfit = "Wanderer",
       icon = "manta-ray.webp",
    },
