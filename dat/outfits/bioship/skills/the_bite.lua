@@ -1,3 +1,6 @@
+
+-- Note: Lunge is adrenal glands effects +50%. In addition, turn modifier.
+
 local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
