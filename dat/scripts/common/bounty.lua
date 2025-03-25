@@ -134,6 +134,7 @@ end
 
 function bounty.accept()
    local b = mem._bounty
+   misn.accept()
 
    update_osd()
 

@@ -116,6 +116,5 @@ function create ()
 end
 
 function accept ()
-   misn.accept()
    bounty.accept()
 end

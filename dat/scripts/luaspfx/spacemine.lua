@@ -41,7 +41,8 @@ local function update( s, dt )
          } )
          s:rm() -- Remove
 
-         -- Notify pilots in range
+         -- Notify pilots in rangea
+         -- TODO make detection affect this
          pilot.msg( nil, pilot.getInrange(10e3), "explosion" )
       end
       return
