@@ -40,6 +40,9 @@ local function update( s, dt )
             dmgtype = "kinetic",
          } )
          s:rm() -- Remove
+
+         -- Notify pilots in range
+         pilot.msg( nil, pilot.getInrange(10e3), "explosion" )
       end
       return
    end

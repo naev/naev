@@ -212,21 +212,25 @@ local function sameFleet( pa, pb )
    return la == lb
 end
 
+-- Try to explore what happened if interested
+local function msg_explore( _p, si, dopush, sender, data )
+   if not dopush or sender==nil or not data or not data:exists() then return false end
+   local ap = data:pos()
+   if should_investigate( ap, si ) then
+      ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
+      ai.pushtask("inspect_moveto", ap )
+      return true
+   end
+   return false
+end
+
 --[[
 Functions to handle different commands that can be received
 --]]
 local message_handler_funcs = {
    -- Case message is being sent from the environment, such as asteroids
-   asteroid = function( _p, si, dopush, sender, data )
-      if not dopush or sender==nil or not data or not data:exists() then return false end
-      local ap = data:pos()
-      if should_investigate( ap, si ) then
-         ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
-         ai.pushtask("inspect_moveto", ap )
-         return true
-      end
-      return false
-   end,
+   asteroid = msg_explore, -- TODO maybe we don't need to distinguish asteroid vs explosion?
+   explosion = msg_explore,
    distress = function( _p, _si, _dopush, sender, data )
       if sender==nil then return false end
       return distress_handler( sender, data )
