@@ -5,6 +5,30 @@ import sys
 import math
 N_ = lambda text: text
 
+
+script_dir = os.path.dirname( __file__ )
+mymodule_dir = os.path.join( script_dir, '..', '..' , '..' , 'utils' , 'outfits' )
+sys.path.append( script_dir )
+sys.path.append( mymodule_dir )
+import outfit
+
+def get_outfit_dict(nam):
+   o=outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam))
+   d=dict()
+   for k in o:
+      if not k.tag in d:
+         d[k.tag]=[]
+      what=k.text
+      try:
+         what=float(what)
+      except:
+         pass
+      d[k.tag].append(what)
+   for k in d:
+      if len(d[k])==1:
+         d[k]=d[k][0]
+   return d
+
 # Based on some XML templates and the specs below, we're going to generate families of outfit XML files.
 # First things first: what are we supposed to be doing?
 
@@ -90,9 +114,17 @@ typename["brain"] = N_("Bioship Brain")
 typename["engine"] = N_("Bioship Gene Drive")
 typename["hull"] = N_("Bioship Shell")
 
+
 ## BioOutfit generation rules.
 ## See comments in this directory's meson.build file: these rules must match the build rules.
 
+
+## Gene Drive recipe:
+## Corresponds (when maxed) to some existing engine <ref> mentionned in the comment.
+##    "price":        lerpr( <ref>/2.0, <ref> ),
+##    "accel":        lerp(  <ref>-15%, <ref> ),
+##    "turn":         lerp(  <ref>-15%, <ref> ),
+##    "speed":        lerp(  <ref>-15%, <ref> ),
 
 ## Cortex recipe:
 ##    "price":        lerpr(     <S&K>/2 , <S&K>),
@@ -101,15 +133,6 @@ typename["hull"] = N_("Bioship Shell")
 ##    "cargo":        lerpr(       <S&K> , (<S&K>+<Unicorp>)/2 ),
 ##    "mass":         <S&K>,
 ##    "armour":       lerp(    <Unicorp> , <S&K> )
-##
-
-## Gene Drive recipe:
-## Corresponds (when maxed) to some existing engine <ref> mentionned in the comment.
-##    "price":        lerpr( <ref>/2.0, <ref> ),
-##    "accel":        lerp(  <ref>-15%, <ref> ),
-##    "turn":         lerp(  <ref>-15%, <ref> ),
-##    "speed":        lerp(  <ref>-15%, <ref> ),
-## <ref>-15% are currently really approximate.
 
 ## Cerebrum recipe part 1 (small):
 ##    "price":        lerpr(  <orion>, <orion>*1.5 ),
@@ -127,6 +150,43 @@ typename["hull"] = N_("Bioship Shell")
 ##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
 ##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
 ##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
+
+
+# Perlevis Gene Drive  =>  Tricon Zephyr
+# Laeviter Gene Drive  =>  Tricon Zephyr II
+# Laevis Gene Drive  =>  Melendez Ox XL
+# Mediocris Gene Drive  =>  Tricon Cyclone
+# Largus Gene Drive  =>  Tricon Cyclone II
+# Ponderosus Gene Drive  =>  Tricon Typhoon
+# Immanis Gene Drive  =>  Eagle 6500
+# Magnus Gene Drive  =>  Tricon Typhoon2
+# Grandis Gene Drive  =>  Melendez Mammoth
+for nam,temp,gfx,output_pref,outputs in [
+   ("small/tricon_zephyr_engine.xml","gene_drive_tricon","fast_s","Perlevis",["I","II"]),
+   ("small/tricon_zephyr_ii_engine.xml","gene_drive_tricon","fast_s","Laeviter",["I","II"]),
+   ("small/melendez_ox_xl_engine.xml","gene_drive_melendez","strong_s","Laevis",["I","II"]),
+   ("medium/tricon_cyclone_engine.xml","gene_drive_tricon","fast_m","Mediocris",["I","II","III"]),
+   ("medium/tricon_cyclone_ii_engine.xml","gene_drive_tricon","strong_m","Largus",["I","II"]),
+   ("large/tricon_typhoon_engine.xml","gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
+   ("large/unicorp_eagle_6500_engine.xml","gene_drive","strong_l","Immanis",["I","II","III"]),
+   ("large/tricon_typhoon_ii_engine.xml","gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
+   ("large/melendez_mammoth_engine.xml","gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
+]:
+   ref=get_outfit_dict('core_engine/'+nam)
+   BioOutfit( temp+".xml.template", {
+       "typename":     typename["engine"],
+       "size":         ref["size"],
+       "price":        lerpr(  ref['price']/2, ref['price'] ),
+       "mass":         ref['mass'],
+       "desc":         desc["engine"],
+       "gfx_store":    lerpt(("organic_engine_"+gfx+"1.webp","organic_engine_"+gfx+"2.webp")),
+       "accel":        lerpr(  0.85*ref['accel'], ref['accel'] ),
+       "speed":        lerpr(  0.85*ref['speed'], ref['speed'] ),
+       "turn":         lerpr(  0.85*ref['turn'], ref['turn'] ),
+       "fuel":         ref['fuel'],
+       "energy_malus": ref['energy_regen_malus'],
+       "engine_limit": ref['engine_limit']
+   } ).run( [ N_(output_pref+" Gene Drive "+s) for s in outputs ] )
 
 
 # Stinger  =>  Plasma Blaster MK1  &  MK2
@@ -180,25 +240,6 @@ BioOutfit( "cerebrum.xml.template", {
     N_("Perleve Cerebrum II"),
 ] )
 
-# Perlevis Gene Drive  =>  Tricon Zephyr
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "small",
-    "price":        lerpr(   135e3/2, 135e3 ),
-    "mass":         10,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
-    "accel":        lerp(  165, 195 ),
-    "turn":         lerp(  130, 160 ),
-    "speed":        lerp(  295, 345 ),
-    "fuel":         300,
-    "energy_malus": lerp(    4,   4 ),
-    "engine_limit": lerp(  140, 140 ),
-} ).run( [
-    N_("Perlevis Gene Drive I"),
-    N_("Perlevis Gene Drive II"),
-] )
-
 # Perlevis Cortex  ==>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -231,44 +272,6 @@ BioOutfit( "cerebrum.xml.template", {
 } ).run( [
     N_("Laevum Cerebrum I"),
     N_("Laevum Cerebrum II"),
-] )
-
-# Laeviter Gene Drive  =>  Tricon Zephyr II
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "small",
-    "price":        lerpr( 225e3/2, 225e3 ),
-    "mass":         20,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_s1.webp","organic_engine_fast_s2.webp")),
-    "accel":        lerp(  135, 160 ),
-    "turn":         lerp(  115, 140 ),
-    "speed":        lerp(  240, 290 ),
-    "fuel":         400,
-    "energy_malus": lerp(   12,  12 ),
-    "engine_limit": lerp(  320, 320 ),
-} ).run( [
-    N_("Laeviter Gene Drive I"),
-    N_("Laeviter Gene Drive II"),
-] )
-
-# Laevis Gene Drive  =>  Melendez Ox XL
-BioOutfit( "gene_drive_melendez.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "small",
-    "price":        lerpr( 95e3/2, 95e3 ),
-    "mass":         25,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_strong_s1.webp","organic_engine_strong_s2.webp")),
-    "accel":        lerp(  100, 115 ),
-    "turn":         lerp(   80,  95 ),
-    "speed":        lerp(  190, 225 ),
-    "fuel":         600,
-    "energy_malus": lerp(    7,   7 ),
-    "engine_limit": lerp(  420, 420 ),
-} ).run( [
-    N_("Laevis Gene Drive I"),
-    N_("Laevis Gene Drive II"),
 ] )
 
 # Talon  =>  Plasma Blaster mk2  &  Plasma Cluster
@@ -351,26 +354,6 @@ BioOutfit( "cerebrum.xml.template", {
     N_("Mediocre Cerebrum II"),
 ] )
 
-# Mediocris Gene Drive  =>  Tricon Cyclone
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "medium",
-    "price":        lerpr( 360e3/2, 360e3 ),
-    "mass":         20,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_m1.webp","organic_engine_fast_m2.webp")),
-    "accel":        lerp(  110, 130 ),
-    "turn":         lerp(   90, 115 ),
-    "speed":        lerp(  190, 230 ),
-    "fuel":         800,
-    "energy_malus": lerp(   12,  12 ),
-    "engine_limit": lerp(  630, 630 ),
-} ).run( [
-    N_("Mediocris Gene Drive I"),
-    N_("Mediocris Gene Drive II"),
-    N_("Mediocris Gene Drive III"),
-] )
-
 # Mediocris Cortex  =>  (1) Unicorp_d23  (2) S&K Medium Combat Plating
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -403,25 +386,6 @@ BioOutfit( "cerebrum.xml.template", {
 } ).run( [
     N_("Largum Cerebrum I"),
     N_("Largum Cerebrum II"),
-] )
-
-# Largus Gene Drive  =>  Tricon Cyclone II
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "medium",
-    "price":        lerpr(  675e3/2, 675e3 ),
-    "mass":         25,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_strong_m1.webp","organic_engine_strong_m2.webp")),
-    "accel":        lerp(   80,  100 ),
-    "turn":         lerp(   75,   90 ),
-    "speed":        lerp(  125,  175 ),
-    "fuel":         1000,
-    "energy_malus": lerp(   27,   27 ),
-    "engine_limit": lerp( 1240, 1240 ),
-} ).run( [
-    N_("Largus Gene Drive I"),
-    N_("Largus Gene Drive II"),
 ] )
 
 # Largus Cortex  =>  (1) Unicorp_d38  (2) S&K Medium-Heavy Combat Plating
@@ -514,46 +478,6 @@ BioOutfit( "cerebrum.xml.template", {
     N_("Ponderosum Cerebrum III"),
 ] )
 
-# Grandis Gene Drive  =>  Melendez Mammoth
-BioOutfit( "gene_drive_melendez.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "large",
-    "price":        lerpr(  1.125e6/2, 1.125e6 ),
-    "mass":         75,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
-    "accel":        lerp(   40,   47 ),
-    "turn":         lerp(   42,   50 ),
-    "speed":        lerp(   75,   90 ),
-    "fuel":         2800,
-    "energy_malus": lerp(   26,   26 ),
-    "engine_limit": lerp( 3600, 3600 ),
-} ).run( [
-    N_("Grandis Gene Drive I"),
-    N_("Grandis Gene Drive II"),
-    N_("Grandis Gene Drive III"),
-] )
-
-# Ponderosus Gene Drive  =>  Tricon Typhoon
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "large",
-    "price":        lerpr(  2.7e6/2, 2.7e6 ),
-    "mass":         60,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_fast_l1.webp","organic_engine_fast_l2.webp")),
-    "accel":        lerp(   50,   65 ),
-    "turn":         lerp(   65,   75 ),
-    "speed":        lerp(   95,  115 ),
-    "fuel":         2000,
-    "energy_malus": lerp(   32,   32 ),
-    "engine_limit": lerp( 2700, 2700 ),
-} ).run( [
-    N_("Ponderosus Gene Drive I"),
-    N_("Ponderosus Gene Drive II"),
-    N_("Ponderosus Gene Drive III"),
-] )
-
 # Ponderosus Cortex  =>  (1) Unicorp_d58  (2) S&K Heavy Combat Plating
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -589,46 +513,6 @@ BioOutfit( "cerebrum.xml.template", {
     N_("Immane Cerebrum I"),
     N_("Immane Cerebrum II"),
     N_("Immane Cerebrum III"),
-] )
-
-# Immanis Gene Drive  =>  Eagle 6500
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "large",
-    "price":        lerpr(   0.4e6/2, 0.4e6 ),
-    "mass":         65,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
-    "accel":        lerp(   30,   37 ),
-    "turn":         lerp(   35,   45 ),
-    "speed":        lerp(   60,   70 ),
-    "fuel":         2800,
-    "energy_malus": lerp(   40,   40 ),
-    "engine_limit": lerp( 6500, 6500 ),
-} ).run( [
-    N_("Immanis Gene Drive I"),
-    N_("Immanis Gene Drive II"),
-    N_("Immanis Gene Drive III"),
-] )
-
-# Magnus Gene Drive  =>  Tricon Typhoon2
-BioOutfit( "gene_drive.xml.template", {
-    "typename":     typename["engine"],
-    "size":         "large",
-    "price":        lerpr(   3.6e6/2, 3.6e6 ),
-    "mass":         80,
-    "desc":         desc["engine"],
-    "gfx_store":    lerpt(("organic_engine_strong_l1.webp","organic_engine_strong_l2.webp")),
-    "accel":        lerp(   40,    50 ),
-    "turn":         lerp(   46,    60 ),
-    "speed":        lerp(   70,    80 ),
-    "fuel":         2400,
-    "energy_malus": lerp(   56,    56 ),
-    "engine_limit": lerp( 5800 , 5800 ),
-} ).run( [
-    N_("Magnus Gene Drive I"),
-    N_("Magnus Gene Drive II"),
-    N_("Magnus Gene Drive III"),
 ] )
 
 # Immanis Cortex  =>  (1) Unicorp_d72  (2) S&K Superheavy Combat Plating

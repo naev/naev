@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Beat Up Medium Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
@@ -13,8 +12,8 @@
   <energy_regen_malus>15</energy_regen_malus>
   <engine_limit>550</engine_limit>
   <fuel>600</fuel>
-  <speed>105</speed>
-  <accel>60</accel>
-  <turn>55</turn>
+  <speed>120</speed>
+  <accel>75</accel>
+  <turn>46</turn>
  </specific>
 </outfit>

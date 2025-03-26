@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Bolt 3000 Engine">
  <general>
   <shortname>N. Bolt 3000 Engine</shortname>
@@ -15,9 +14,9 @@
   <energy_regen_malus>20</energy_regen_malus>
   <engine_limit>3000</engine_limit>
   <fuel>2400</fuel>
-  <speed>100</speed>
-  <accel>57</accel>
-  <turn>65</turn>
+  <speed>130</speed>
+  <accel>43</accel>
+  <turn>38.5</turn>
   <time_mod>-20</time_mod>
  </specific>
 </outfit>

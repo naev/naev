@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Arrow 700 Engine">
  <general>
   <shortname>N. Arrow 700 Engine</shortname>
@@ -15,9 +14,9 @@
   <energy_regen_malus>10</energy_regen_malus>
   <engine_limit>700</engine_limit>
   <fuel>1000</fuel>
-  <speed>200</speed>
-  <accel>115</accel>
-  <turn>100</turn>
+  <speed>220</speed>
+  <accel>137</accel>
+  <turn>83</turn>
   <time_mod>-15</time_mod>
  </specific>
 </outfit>

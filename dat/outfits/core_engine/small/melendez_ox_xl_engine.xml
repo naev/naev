@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Melendez Ox XL Engine">
  <general>
   <shortname>M. Ox XL Engine</shortname>
@@ -15,9 +14,9 @@
   <energy_regen_malus>7</energy_regen_malus>
   <engine_limit>420</engine_limit>
   <fuel>600</fuel>
-  <speed>225</speed>
-  <accel>115</accel>
-  <turn>95</turn>
+  <speed>270</speed>
+  <accel>152</accel>
+  <turn>97</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>

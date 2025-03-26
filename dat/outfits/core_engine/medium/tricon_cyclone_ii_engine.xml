@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Tricon Cyclone II Engine">
  <general>
   <shortname>T. Cyclone II Engine</shortname>
@@ -15,8 +14,9 @@
   <energy_regen_malus>27</energy_regen_malus>
   <engine_limit>1240</engine_limit>
   <fuel>1000</fuel>
-  <speed>175</speed>
-  <accel>100</accel>
-  <turn>90</turn>
+  <speed>180</speed>
+  <accel>160</accel>
+  <turn>82</turn>
+  <time_mod>-15</time_mod>
  </specific>
 </outfit>
