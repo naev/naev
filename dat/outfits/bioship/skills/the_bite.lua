@@ -189,9 +189,11 @@ function update( p, po, dt )
             -- Hit the enemy!
             local dmg = 10*math.sqrt(p:mass())
             local ta
+            if mem.regen>0 then
+               ta = t:health(true)
+            end
             if mem.improved then
                dmg = dmg*1.5
-               ta = t:health(true)
             end
             if mem.lust then
                p:effectAdd( "Blood Lust" )
