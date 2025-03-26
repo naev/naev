@@ -3,6 +3,9 @@
 from sys import argv,stderr
 from outfit import outfit
 
+TURN_CT=0.37
+AG_EXP=0.2
+
 sizes={
    "Za'lek Test Engine":2,
    "Beat Up Small Engine":1,
@@ -97,7 +100,10 @@ def ls2vals(line_size):
       speed*=0.55
       acc*=0.55
 
-   turn=speed/5.0+acc/4.0
+   fullspeed=speed+acc/3.0
+
+   #turn=speed/5.0+acc/4.0
+   turn=TURN_CT*fullspeed*pow(1.0*acc/speed,AG_EXP)
    return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
 
 def get_line(o):
@@ -123,7 +129,7 @@ def get_line_size(o):
       return None
 
 for a in argv[1:]:
-   if a.endswith(".xml") or a.endswith("mvx"):
+   if a.endswith(".xml") or a.endswith(".mvx"):
       o=outfit(a)
       sub=ls2vals(get_line_size(o))
       if sub is not None:
