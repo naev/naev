@@ -97,7 +97,7 @@ def ls2vals(line_size):
       speed*=0.55
       acc*=0.55
 
-   turn=speed/5.0+acc/3.5
+   turn=speed/5.0+acc/4.0
    return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
 
 def get_line(o):
