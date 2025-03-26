@@ -16,7 +16,7 @@
   <fuel>800</fuel>
   <speed>210</speed>
   <accel>275</accel>
-  <turn>120</turn>
+  <turn>110</turn>
   <time_mod>-15</time_mod>
  </specific>
 </outfit>
