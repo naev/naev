@@ -25,13 +25,20 @@ def output_r(e,fp,ind=0):
       fp.write(' '*ind)
    fp.write('</'+e.tag+'>\n')
 
-class outfit():
+class _outfit():
    def __init__(self,fil):
       self.T=ET.parse(fil)
       self.r=self.T.getroot()
 
    def name(self):
       return self.r.attrib['name']
+
+   def shortname(self):
+      try:
+         res=self.to_dict()['shortname']
+      except:
+         res=self.name()
+      return res
 
    def __iter__(self):
       for e in subs(self.r):
@@ -58,6 +65,12 @@ class outfit():
          if len(d[k])==1:
             d[k]=d[k][0]
       return d
+
+def outfit(fil):
+   if fil.endswith(".xml") or fil.endswith('.mvx'):
+      return _outfit(fil)
+   else:
+      return None
 
 if __name__=="__main__":
    from sys import argv
