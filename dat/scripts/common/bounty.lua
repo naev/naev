@@ -66,7 +66,7 @@ local hunters = {}
 local hunter_hits = {}
 local target_ship
 
-function bounty.init( system, targetname, targetship, targetfaction, reward, params )
+function bounty.init( system, targetname, targetship, reward, params )
    params = params or {}
 
    mem._bounty = {}
@@ -74,10 +74,10 @@ function bounty.init( system, targetname, targetship, targetfaction, reward, par
    b.system          = system
    b.targetname      = targetname
    b.targetship      = targetship
-   b.targetfaction   = targetfaction
    b.reward          = reward
    b.reputation      = params.reputation
    -- Other important stuff
+   b.targetfaction   = params.targetfaction
    b.targetfactionfunc = params.targetfactionfunc
    b.payingfaction   = params.payingfaction or faction.get("Independent")
    b.deadline        = params.deadline

@@ -344,7 +344,7 @@ function create ()
    misn.setReward( reward )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
-   bounty.init( missys, pname, pship, nil, reward, {
+   bounty.init( missys, pname, pship, reward, {
       payingfaction     = payingfaction,
       reputation        = reputation,
       targetfactionfunc = "get_faction", -- have to pass by name
