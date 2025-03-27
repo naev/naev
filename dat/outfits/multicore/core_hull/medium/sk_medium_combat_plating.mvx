@@ -10,8 +10,8 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>12</cargo>
-  <absorb>30</absorb>
-  <armour>320</armour>
+  <cargo>12/0</cargo>
+  <absorb>30/0</absorb>
+  <armour>320/0</armour>
  </specific>
 </outfit>

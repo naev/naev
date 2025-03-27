@@ -10,8 +10,8 @@
   <gfx_store>combat_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>4</cargo>
-  <absorb>15</absorb>
-  <armour>110</armour>
+  <cargo>4/0</cargo>
+  <absorb>15/0</absorb>
+  <armour>110/0</armour>
  </specific>
 </outfit>

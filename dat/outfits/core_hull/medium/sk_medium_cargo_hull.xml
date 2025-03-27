@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<outfit name="S&amp;K Medium Cargo Hull">
+<outfit name="S&amp;K Medium Cargo Hull (deprecated)">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>

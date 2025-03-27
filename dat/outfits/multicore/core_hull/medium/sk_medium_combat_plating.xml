@@ -1,7 +1,7 @@
-<outfit name="S&amp;K Medium Combat Plating (deprecated)">
+<outfit name="S&amp;K Medium Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="systems_secondary">structure</slot>
   <size>medium</size>
   <mass>140</mass>
   <price>360000</price>
@@ -10,8 +10,5 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>12</cargo>
-  <absorb>30</absorb>
-  <armour>320</armour>
- </specific>
+  <lua>outfits/multicore/core_hull/medium/sk_medium_combat_plating.lua</lua></specific>
 </outfit>

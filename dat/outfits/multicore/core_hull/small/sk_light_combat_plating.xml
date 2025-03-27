@@ -1,7 +1,7 @@
-<outfit name="S&amp;K Light Combat Plating (deprecated)">
+<outfit name="S&amp;K Light Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="systems_secondary">structure</slot>
   <size>small</size>
   <priority>7</priority>
   <mass>60</mass>
@@ -10,8 +10,5 @@
   <gfx_store>combat_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>4</cargo>
-  <absorb>15</absorb>
-  <armour>110</armour>
- </specific>
+  <lua>outfits/multicore/core_hull/small/sk_light_combat_plating.lua</lua></specific>
 </outfit>

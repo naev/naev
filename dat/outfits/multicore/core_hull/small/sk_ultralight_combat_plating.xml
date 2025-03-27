@@ -1,7 +1,7 @@
-<outfit name="S&amp;K Ultralight Combat Plating (deprecated)">
+<outfit name="S&amp;K Ultralight Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="systems_secondary">structure</slot>
   <size>small</size>
   <mass>30</mass>
   <price>130000</price>
@@ -10,8 +10,5 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>2</cargo>
-  <absorb>5</absorb>
-  <armour>70</armour>
- </specific>
+  <lua>outfits/multicore/core_hull/small/sk_ultralight_combat_plating.lua</lua></specific>
 </outfit>
