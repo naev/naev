@@ -89,7 +89,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.msg_captured    = params.msg_captured or msg_captured_def
    b.msg_shared      = params.msg_shared  or msg_shared_def
    b.msg_gotaway     = params.msg_gotaway or msg_gotaway_def
-   b.msg_eliminated_other_def = params.msg_eliminated_other or msg_eliminated_other_def
+   b.msg_eliminated_other = params.msg_eliminated_other or msg_eliminated_other_def
    b.msg_leftsystem  = params.msg_leftsystem or msg_leftsystem_def
    -- OSD stuff
    b.osd_title       = params.osd_title or osd_title_def
