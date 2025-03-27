@@ -15,7 +15,7 @@
   <engine_limit>160</engine_limit>
   <fuel>400</fuel>
   <speed>245</speed>
-  <accel>315</accel>
+  <accel>630</accel>
   <turn>135</turn>
   <time_mod>-10</time_mod>
  </specific>

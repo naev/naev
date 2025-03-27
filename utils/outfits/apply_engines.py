@@ -6,8 +6,8 @@ from getconst import PHYSICS_SPEED_DAMP
 
 #TODO: use argparse
 
-TURN_CT=0.37
 AG_EXP=0.2
+TURN_CT=0.46
 
 sizes={
    "Za'lek Test Engine":2,
@@ -105,7 +105,7 @@ def ls2vals(line_size):
 
    fullspeed=speed+acc/PHYSICS_SPEED_DAMP
 
-   turn=TURN_CT*fullspeed*pow(1.0*acc/speed,AG_EXP)
+   turn=TURN_CT*fullspeed*pow((acc/PHYSICS_SPEED_DAMP)/speed,AG_EXP)
    return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
 
 def get_line(o):
