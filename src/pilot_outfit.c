@@ -1042,7 +1042,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
       pilot_setFlag(
          pilot,
          PILOT_AFTERBURNER ); /* We use old school flags for this still... */
-      pilot->energy_regen -=
+      pilot->stats.energy_regen_malus +=
          pilot->afterburner->outfit->u.afb.energy; /* energy loss */
    } else {
       /* Always add stats for non mod/afterburners. */

@@ -216,9 +216,10 @@ void misn_runStart( Mission *misn, const char *func )
  */
 int misn_runFunc( const Mission *misn, const char *func, int nargs )
 {
-   int      ret, misn_delete;
-   Mission *cur_mission;
-   nlua_env env;
+   int                ret, misn_delete;
+   Mission           *cur_mission;
+   const MissionData *data = misn->data;
+   nlua_env           env;
 
    /* Check to see if it is accepted first. */
    int isaccepted = misn->accepted;
@@ -227,22 +228,22 @@ int misn_runFunc( const Mission *misn, const char *func, int nargs )
    env = misn->env;
    ret = nlua_pcall( env, nargs, 0 );
 
-   /* The mission can change if accepted. */
-   nlua_getenv( naevL, env, "__misn" );
-   cur_mission = *(Mission **)lua_touserdata( naevL, -1 );
-   lua_pop( naevL, 1 );
-
    if ( ret != 0 ) { /* error has occurred */
       const char *err =
          ( lua_isstring( naevL, -1 ) ) ? lua_tostring( naevL, -1 ) : NULL;
       if ( ( err == NULL ) || ( strcmp( err, NLUA_DONE ) != 0 ) ) {
-         WARN( _( "Mission '%s' -> '%s': %s" ), cur_mission->data->name, func,
+         WARN( _( "Mission '%s' -> '%s': %s" ), data->name, func,
                ( err ) ? err : _( "unknown error" ) );
          ret = -1;
       } else
          ret = 1;
       lua_pop( naevL, 1 );
    }
+
+   /* The mission can change if accepted. */
+   nlua_getenv( naevL, env, "__misn" );
+   cur_mission = *(Mission **)lua_touserdata( naevL, -1 );
+   lua_pop( naevL, 1 );
 
    /* Get delete. */
    nlua_getenv( naevL, env, "__misn_delete" );

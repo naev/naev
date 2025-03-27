@@ -222,11 +222,6 @@ local reason_list = {
    },
 }
 
--- luacheck: globals get_faction
-function get_faction ()
-   return faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
-end
-
 -- Set up the ship, credits, and reputation based on the level.
 local function bounty_setup ()
    local pship, credits, reputation
@@ -344,10 +339,11 @@ function create ()
    misn.setReward( reward )
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
-   bounty.init( missys, pname, pship, nil, reward, {
+   bounty.init( missys, pname, pship, reward, {
       payingfaction     = payingfaction,
       reputation        = reputation,
-      targetfactionfunc = "get_faction", -- have to pass by name
+      targetfaction     = "Pirate",
+      dynamicfaction    = true,
       alive_only        = alive_only,
       osd_objective     = osd_objective,
       deadline          = mem.deadline,
