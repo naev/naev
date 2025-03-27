@@ -1,8 +1,10 @@
 local atk_generic = require "ai.core.attack.generic"
 local libatk = require "ai.core.attack.util"
 local flow = require "ships.lua.lib.flow"
-local PHYSICS_SPEED_DAMP=require "constants".PHYSICS_SPEED_DAMP
-
+local constants=require "constants"
+local PHYSICS_SPEED_DAMP=constants.PHYSICS_SPEED_DAMP
+local BITE_ACCEL_MOD=constants.BITE_ACCEL_MOD
+local BITE_SPEED_MOD=constants.BITE_SPEED_MOD
 
 local atk = {}
 
@@ -94,13 +96,16 @@ function atk.think( target, si, noretarget )
 
       -- The bite
       if mem._o.bite and p:outfitReady( mem._o.bite )then
-         if ai.dir( target ) < math.rad(20) then
+         if ai.dir( target ) < math.rad(30) then
             local dtime = 3
             if mem._o.bite_lust then
                dtime = dtime+2
             end
-            -- TODO make this adapt to the new physics speed damp constant PHYSICS_SPEED_DAMP
-            if ai.dist( target ) < (p:speed() + (p:accel()+800)/PHYSICS_SPEED_DAMP)*dtime then
+
+            if ai.dist( target ) < ( 
+                  p:speed() * (1.0+0.01*BITE_SPEED_MOD) + 
+                  p:accel() * (1.0+0.01*BITE_ACCEL_MOD) / PHYSICS_SPEED_DAMP
+               )*dtime then
                p:outfitToggle( mem._o.bite, true )
             end
          end
