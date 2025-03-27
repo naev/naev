@@ -38,8 +38,8 @@ function mine_bite( ast )
       if mem._o.bite_lust then
          dtime = dtime+2
       end
-      if ai.dist( target ) < ( 
-            p:speed() * (1.0+0.01*BITE_SPEED_MOD) + 
+      if ai.dist( target ) < (
+            p:speed() * (1.0+0.01*BITE_SPEED_MOD) +
             p:accel() * (1.0+0.01*BITE_ACCEL_MOD) / PHYSICS_SPEED_DAMP
          )*dtime then
          p:outfitToggle( mem._o.bite, true )

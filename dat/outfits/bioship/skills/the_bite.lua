@@ -23,9 +23,10 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 
 local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
 local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
+local constants=require "constants"
+
 
 local function turnon( p, po )
-   
    po:clear()
    po:set( "accel_mod", constants.BITE_ACCEL_MOD )
    po:set( "speed_mod", constants.BITE_SPEED_MOD )
@@ -95,8 +96,6 @@ local o_can = outfit.get("The Bite - Cannibal")
 local o_improved = outfit.get("The Bite - Improved")
 
 function init( p, po )
-   constants=require "constants"
-
    turnoff( p, po )
    mem.timer = nil
    po:state("off")
