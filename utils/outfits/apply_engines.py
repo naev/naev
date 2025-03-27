@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 from sys import argv,stderr
 from outfit import outfit
@@ -108,14 +108,14 @@ def ls2vals(line_size):
 
 def get_line(o):
    res=o.name().split(' ')[0]
-   if lines.has_key(res):
+   if res in lines:
       return lines[res]
    else:
       return None
 
 def get_size(o):
    res=o.name()
-   if sizes.has_key(res):
+   if res in sizes:
       return sizes[res]
    else:
       return None
@@ -128,23 +128,31 @@ def get_line_size(o):
    else:
       return None
 
-for a in argv[1:]:
-   if a.endswith(".xml") or a.endswith(".mvx"):
-      o=outfit(a)
-      sub=ls2vals(get_line_size(o))
-      if sub is not None:
-         didit=False
-         acc=[]
-         for i in o:
-            if sub.has_key(i.tag) and i.text!=sub[i.tag]:
-               acc.append((i.tag,i.text,sub[i.tag]))
-               i.text=sub[i.tag]
-               didit=True
-         print >>stderr,a.split('/')[-1]+':',
-         if didit:
-            print >>stderr,', '.join([i+':'+j+'->'+k for i,j,k in acc])
-            fp=file(a,"w")
-            o.write(fp)
-            fp.close()
-         else:
-            print >>stderr,'_'
+if '-h' in argv or '--help' in argv:
+   print("Usage: "+argv[0]+" <file1> <file2> ...")
+   print("Will only process the files in the list that have .xml or .mvx extension.")
+   print("The changes made will be listed onto <stderr>. \"_\" means \"nothing\"")
+   print("If an outfit is not recognized as an engine, it won't even be printed out.")
+   print("\nTypical usage (from naev root dir) :")
+   print("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
+else:
+   for a in argv[1:]:
+      if a.endswith(".xml") or a.endswith(".mvx"):
+         o=outfit(a)
+         sub=ls2vals(get_line_size(o))
+         if sub is not None:
+            didit=False
+            acc=[]
+            for i in o:
+               if i.tag in sub and i.text!=sub[i.tag]:
+                  acc.append((i.tag,i.text,sub[i.tag]))
+                  i.text=sub[i.tag]
+                  didit=True
+            stderr.write(a.split('/')[-1]+': ')
+            if didit:
+               print(', '.join([i+':'+j+'->'+k for i,j,k in acc]),file=stderr)
+               fp=open(a,"w")
+               o.write(fp)
+               fp.close()
+            else:
+               print('_',file=stderr)
