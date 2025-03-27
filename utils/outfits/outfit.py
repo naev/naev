@@ -14,7 +14,7 @@ def fmt_a(kv):
    return key+'="'+str(value)+'"'
 
 def output_r(e,fp,ind=0):
-   fp.write(' '*ind+'<'+' '.join([e.tag]+map(fmt_a,e.attrib.iteritems()))+'>'+e.text.strip())
+   fp.write(' '*ind+'<'+' '.join([e.tag]+[fmt_a(x) for x in e.attrib.items()])+'>'+e.text.strip())
    fst=True
    for s in e:
       if fst:
