@@ -16,9 +16,6 @@
 --[[
 
    Bounty mission to take out a pirate.
-   Can either capture or dead/alive mission.
-
-   Can work with any faction.
 
 --]]
 local fmt = require "format"
@@ -78,6 +75,7 @@ function create ()
    bounty.init( missys, pname, pship, reward, {
       targetfaction     = faction.get("O'rez"),
       payingfaction     = payingfaction,
+      spawnfunc         = "spawn_target",
       reputation        = reputation,
       deadline          = mem.deadline,
    } )
@@ -85,4 +83,13 @@ end
 
 function accept ()
    bounty.accept()
+end
+
+-- luacheck: globals spawn_target
+function spawn_target( lib, _location )
+   local pos = vec2.new( 0, 0 )
+   local target_ship = pilot.add( lib.targetship, lib.targetfaction, pos, lib.targetname )
+   local aimem = target_ship:memory()
+   aimem.loiter = math.huge -- Should make them loiter forever
+   return target_ship
 end

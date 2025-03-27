@@ -82,6 +82,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.payingfaction   = params.payingfaction or faction.get("Independent")
    b.deadline        = params.deadline
    b.alive_only      = params.alive_only
+   b.spawnfunc       = params.spawnfunc
    -- Custom messages (can be tables of messages from which one will be chosen)
    b.msg_subdue      = params.msg_subdue or msg_subdue_def
    b.msg_killed      = params.msg_killed or msg_killed_def
@@ -168,6 +169,7 @@ function _bounty_jumpin ()
       return
    end
 
+   -- Try to find a good location
    local jmp = jump.get( system.cur(), b.last_sys )
    local L = lanes.get( _get_faction(), "non-friendly")
    local m = 3e3 -- margin
@@ -363,10 +365,16 @@ function spawn_bounty( params )
       return
    end
 
+   -- If using a spawn function
+   if b.spawnfunc then
+      target_ship = _G[b.spawnfunc]( b, params )
+   else
+      target_ship = pilot.add( b.targetship, _get_faction(), params, b.targetname )
+      local aimem = target_ship:memory()
+      aimem.loiter = math.huge -- Should make them loiter forever
+   end
+
    misn.osdActive( 2 )
-   target_ship = pilot.add( b.targetship, _get_faction(), params, b.targetname )
-   local aimem = target_ship:memory()
-   aimem.loiter = math.huge -- Should make them loiter forever
    target_ship:setHilight( true )
    hook.pilot( target_ship, "disable", "_bounty_disable" )
    hook.pilot( target_ship, "board", "_bounty_board" )
