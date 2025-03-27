@@ -13,21 +13,7 @@ sys.path.append( mymodule_dir )
 import outfit
 
 def get_outfit_dict(nam):
-   o=outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam))
-   d=dict()
-   for k in o:
-      if not k.tag in d:
-         d[k.tag]=[]
-      what=k.text
-      try:
-         what=float(what)
-      except:
-         pass
-      d[k.tag].append(what)
-   for k in d:
-      if len(d[k])==1:
-         d[k]=d[k][0]
-   return d
+   return outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam)).to_dict()
 
 # Based on some XML templates and the specs below, we're going to generate families of outfit XML files.
 # First things first: what are we supposed to be doing?

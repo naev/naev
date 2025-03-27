@@ -16,7 +16,7 @@
   <fuel>1400</fuel>
   <speed>185</speed>
   <accel>56</accel>
-  <turn>51</turn>
+  <turn>59</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>
