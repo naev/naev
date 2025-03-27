@@ -253,8 +253,9 @@ int nlua_warn( lua_State *L, int idx )
    const char *msg = luaL_checkstring( L, idx );
 #if DEBUGGING
    nlua_errTraceInternal( L, idx );
-   LOGERR( "%s", lua_tostring( L, -1 ) );
-   cli_printCoreString( lua_tostring( L, -1 ), 1 );
+   const char *dbgmsg = lua_tostring( L, -1 );
+   LOGERR( "%s", dbgmsg );
+   cli_printCoreString( dbgmsg, 1 );
    lua_pop( L, 1 );
 #endif /* DEBUGGING */
    WARN( "%s", msg );
@@ -967,9 +968,8 @@ static int nlua_errTraceInternal( lua_State *L, int idx )
       lua_pop( L, 2 );
       return 1;
    }
-   lua_pushvalue( L, -3 );  /* str, debug, traceback, str */
-   lua_pushinteger( L, 2 ); /* str, debug, traceback, str, int */
-   lua_call( L, 2, 1 );     /* str, debug, ret */
+   lua_pushvalue( L, idx ); /* str, debug, traceback, str */
+   lua_call( L, 1, 1 );     /* str, debug, ret */
    lua_remove( L, -2 );     /* str, ret */
    lua_remove( L, -2 );     /* ret */
    return 1;
