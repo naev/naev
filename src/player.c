@@ -3536,11 +3536,8 @@ static int player_saveShipSlot( xmlTextWriterPtr       writer,
    const Outfit *o = slot->outfit;
    xmlw_startElem( writer, "outfit" );
    xmlw_attr( writer, "slot", "%d", i );
-   if ( outfit_isLauncher( o ) || outfit_isFighterBay( o ) )
-      xmlw_attr( writer, "quantity", "%d", slot->u.ammo.quantity );
    xmlw_str( writer, "%s", outfit_name( o ) );
    xmlw_endElem( writer ); /* "outfit" */
-
    return 0;
 }
 
@@ -4425,27 +4422,28 @@ static int player_parseMetadata( xmlNodePtr parent )
 static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                                     PilotOutfitSlot *s )
 {
-   int ret;
+   if ( s->outfit != NULL ) {
+      DEBUG(
+         _( "Outfit '%s' does not fit designated slot '%d' on player's ship "
+            "'%s' as it is already full with '%s'." ),
+         outfit->name, s->id, pilot->name, s->outfit->name );
+      return 0;
+   }
 
    if ( !outfit_fitsSlot( outfit, &s->sslot->slot ) ) {
-      DEBUG( _( "Outfit '%s' does not fit designated slot on player's pilot "
-                "'%s', adding to stock." ),
-             outfit_name( outfit ), pilot->name );
-      player_addOutfit( outfit, 1 );
+      DEBUG(
+         _( "Outfit '%s' does not fit designated slot '%d' on player's ship "
+            "'%s'." ),
+         outfit_name( outfit ), s->id, pilot->name );
       return 0;
    }
 
-   ret = pilot_addOutfitRaw( pilot, outfit, s );
-   if ( ret != 0 ) {
-      DEBUG( _( "Outfit '%s' does not fit on player's pilot '%s', adding to "
-                "stock." ),
-             outfit_name( outfit ), pilot->name );
-      player_addOutfit( outfit, 1 );
+   if ( pilot_addOutfitRaw( pilot, outfit, s ) != 0 ) {
+      DEBUG(
+         _( "Unable to equip outfit '%s' on slot '%d' of player's ship '%s'." ),
+         outfit_name( outfit ), s->id, pilot->name );
       return 0;
    }
-
-   /* Update stats. */
-   pilot_calcStats( pilot );
    return 1;
 }
 
@@ -4456,7 +4454,6 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
                                   PilotOutfitSlot *slot )
 {
    const Outfit *o;
-   int           q, ret;
    const char   *name = xml_get( node );
    if ( name == NULL ) {
       WARN( _( "Empty ship slot node found, skipping." ) );
@@ -4467,16 +4464,18 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
    o = player_tryGetOutfit( name, 1 );
    if ( o == NULL )
       return;
-   ret = player_addOutfitToPilot( ship, o, slot );
-
-   /* Doesn't have ammo. */
-   if ( !ret || ( !outfit_isLauncher( o ) && !outfit_isFighterBay( o ) ) )
-      return;
-
-   /* See if has quantity. */
-   xmlr_attr_int( node, "quantity", q );
-   if ( q > 0 )
-      pilot_addAmmo( ship, slot, q );
+   if ( !player_addOutfitToPilot( ship, o, slot ) ) {
+      int slotid = pilot_addOutfitRawAnySlot( ship, o );
+      if ( slotid == 0 ) {
+         DEBUG( _( "Unable to add Outfit '%s' to any slot of player's ship "
+                   "'%s', adding to stock." ),
+                o->name, ship->name );
+         player_addOutfit( o, 1 );
+      } else
+         DEBUG( _( "Was able to add Outfit '%s' to slot '%d' of player's ship "
+                   "'%s'." ),
+                o->name, slotid, ship->name );
+   }
 }
 
 /**
@@ -4854,6 +4853,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Set aimLines */
    ship->aimLines = aim_lines;
+
+   /* Finish up stats. */
+   pilot_fillAmmo( ship );
+   pilot_calcStats( ship );
 
    /* Add it to the stack if it's not what the player is in */
    if ( is_player == 0 )

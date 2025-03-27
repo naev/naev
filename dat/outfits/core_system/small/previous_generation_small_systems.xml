@@ -1,9 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Previous Generation Small Systems">
  <general>
   <shortname>Prev. Gen. Small Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>18</mass>
   <price>0</price>
@@ -11,10 +10,5 @@
   <gfx_store>apu.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>10</cpu_max>
-  <energy>100</energy>
-  <energy_regen>5</energy_regen>
-  <shield>110</shield>
-  <shield_regen>4</shield_regen>
- </specific>
+  <lua>outfits/core_system/small/previous_generation_small_systems.lua</lua></specific>
 </outfit>

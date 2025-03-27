@@ -306,12 +306,12 @@ int pilot_validEnemy( const Pilot *p, const Pilot *target )
         pilot_isFlag( target, PILOT_NONTARGETABLE ) )
       return 0;
 
-   /* Must be a valid target. */
-   if ( !pilot_validTargetRange( p, target, &inrange ) )
-      return 0;
-
    /* Should either be hostile by faction or by player. */
    if ( !pilot_areEnemies( p, target ) )
+      return 0;
+
+   /* Must be a valid target. */
+   if ( !pilot_validTargetRange( p, target, &inrange ) )
       return 0;
 
    /* Must not be fuzzy. */

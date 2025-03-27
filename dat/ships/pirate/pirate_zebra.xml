@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Zebra">
  <lua>pirate.lua</lua>
  <points>160</points>
@@ -9,14 +8,14 @@
  <class>Carrier</class>
  <price>8000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-46" y="10" h="6">pirate</trail_generator>
- <trail_generator x="-46" y="10" h="-6">pirate</trail_generator>
- <trail_generator x="-46" y="-10" h="6">pirate</trail_generator>
- <trail_generator x="-46" y="-10" h="-6">pirate</trail_generator>
- <trail_generator x="-29" y="27" h="4">nebula</trail_generator>
- <trail_generator x="-29" y="-27" h="4">nebula</trail_generator>
- <trail_generator x="16" y="27" h="-4" always_under="1">nebula</trail_generator>
- <trail_generator x="16" y="-27" h="-4" always_under="1">nebula</trail_generator>
+ <trail_generator h="6" x="-46" y="10">pirate</trail_generator>
+ <trail_generator h="-6" x="-46" y="10">pirate</trail_generator>
+ <trail_generator h="6" x="-46" y="-10">pirate</trail_generator>
+ <trail_generator h="-6" x="-46" y="-10">pirate</trail_generator>
+ <trail_generator h="4" x="-29" y="27">nebula</trail_generator>
+ <trail_generator h="4" x="-29" y="-27">nebula</trail_generator>
+ <trail_generator always_under="1" h="-4" x="16" y="27">nebula</trail_generator>
+ <trail_generator always_under="1" h="-4" x="16" y="-27">nebula</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Raven Clan</faction>
  <description>The Zebra, one of the largest freighters available for independent civilian traders, was refitted by Skull and Bones to serve as carrier. Large portions of the cargo bays were repurposed as hangars, thus the cargo capacity is significantly lower. The pirate version of the Zebra is nevertheless used as freighter occasionally.</description>
@@ -31,21 +30,22 @@
   <cargo>210</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-18" y="20" h="4" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-18" y="-20" h="4" />
-  <weapon size="large" prop="fighter_bay" x="28" y="16" h="-4" />
-  <weapon size="large" prop="fighter_bay" x="28" y="-16" h="-4" />
-  <weapon size="medium" x="26" y="20" h="-4" />
-  <weapon size="medium" x="26" y="20" h="-4" />
-  <utility size="large" prop="systems">Unicorp PT-1750 Core System</utility>
-  <utility size="large" prop="accessory" />
+  <weapon exclusive="1" h="4" prop="fighter_bay" size="large" x="-18" y="20" />
+  <weapon exclusive="1" h="4" prop="fighter_bay" size="large" x="-18" y="-20" />
+  <weapon h="-4" prop="fighter_bay" size="large" x="28" y="16" />
+  <weapon h="-4" prop="fighter_bay" size="large" x="28" y="-16" />
+  <weapon h="-4" size="medium" x="26" y="20" />
+  <weapon h="-4" size="medium" x="26" y="20" />
+  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

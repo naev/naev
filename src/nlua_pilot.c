@@ -4616,7 +4616,8 @@ static int pilotL_setNoBoard( lua_State *L )
 }
 
 /**
- * @brief Sets the ability of the pilot to be disabled.
+ * @brief Sets the ability of the pilot to be disabled. Pilots that can't be
+ * disabled will blow up instead when they would be disabled.
  *
  * No parameter is equivalent to true.
  *

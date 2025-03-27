@@ -150,6 +150,9 @@ function _poi_heartbeat_nooutfit ()
    if player.pos():dist( pos ) < 3e3 then
       -- TODO ship AI message
       player.msg(_("You lack an outfit to scan the sensor anomaly."),true)
+      if mem.poi.nooutfit then
+         _G[ mem.poi.nooutfit ]()
+      end
       return
    end
    timer = hook.timer( 1, "_poi_heartbeat_nooutfit" )
@@ -208,6 +211,7 @@ function poi.misnSetup( params )
    mem.poi = {
       sys      = params.sys,
       found    = params.found,
+      nooutfit = params.nooutfit,
       risk     = params.risk,
       riskstr  = params.riskstr or riskstr( params.risk ),
       rewardstr= params.rewardstr or _("Unknown"),

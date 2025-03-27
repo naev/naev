@@ -643,7 +643,7 @@ static int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
       fieldptr = &ptr[sl->offset];
       memcpy( &dbl, &fieldptr, sizeof( double * ) );
       if ( multiply )
-         *dbl *= list->d.d * scale;
+         *dbl *= 1. + list->d.d * scale;
       else
          ss_adjustDoubleStat( dbl, list->d.d * scale, sl->inverted );
       break;

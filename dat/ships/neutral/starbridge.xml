@@ -1,16 +1,15 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Starbridge">
  <points>80</points>
  <base_type>Starbridge</base_type>
- <gfx sx="10" sy="10" size="80">starbridge</gfx>
+ <gfx size="80" sx="10" sy="10">starbridge</gfx>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1700000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-24" y="-20" h="-4">nebula</trail_generator>
- <trail_generator x="-24" y="20" h="-4">nebula</trail_generator>
- <trail_generator x="-28" y="6" h="5" />
- <trail_generator x="-28" y="-6" h="5" />
+ <trail_generator h="-4" x="-24" y="-20">nebula</trail_generator>
+ <trail_generator h="-4" x="-24" y="20">nebula</trail_generator>
+ <trail_generator h="5" x="-28" y="6" />
+ <trail_generator h="5" x="-28" y="-6" />
  <fabricator>Krain Industries</fabricator>
  <faction>Independent</faction>
  <license>Medium Combat Vessel</license>
@@ -26,20 +25,21 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-20" y="-17" h="2" />
-  <weapon size="large" x="-20" y="17" h="2" />
-  <weapon size="medium" x="15" y="0" h="3" />
-  <weapon size="medium" x="20" y="0" h="2" />
-  <weapon size="small" x="4" y="-7" h="1" />
-  <weapon size="small" x="4" y="7" h="1" />
-  <utility size="medium" prop="systems">Unicorp PT-310 Core System</utility>
-  <utility size="medium" prop="accessory" />
+  <weapon h="2" size="large" x="-20" y="-17" />
+  <weapon h="2" size="large" x="-20" y="17" />
+  <weapon h="3" size="medium" x="15" y="0" />
+  <weapon h="2" size="medium" x="20" y="0" />
+  <weapon h="1" size="small" x="4" y="-7" />
+  <weapon h="1" size="small" x="4" y="7" />
+  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="accessory" size="medium" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines">Krain Patagium Engine</structure>
-  <structure size="medium" prop="hull">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" size="medium">Krain Patagium Engine</structure>
+  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

@@ -37,6 +37,7 @@ static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_mass( lua_State *L );
 static int outfitL_slot( lua_State *L );
+static int outfitL_slotExtra( lua_State *L );
 static int outfitL_limit( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_license( lua_State *L );
@@ -70,6 +71,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "cpu", outfitL_cpu },
    { "mass", outfitL_mass },
    { "slot", outfitL_slot },
+   { "slotExtra", outfitL_slotExtra },
    { "limit", outfitL_limit },
    { "icon", outfitL_icon },
    { "license", outfitL_license },
@@ -425,7 +427,8 @@ static int outfitL_mass( lua_State *L )
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn string Human readable name (in English).
  *    @luatreturn string Human readable size (in English).
- *    @luatreturn string Human readable property (in English).
+ *    @luatreturn string|nil Human readable property (in English) or nil if
+ * none.
  *    @luatreturn boolean Slot is required.
  *    @luatreturn boolean Slot is exclusive.
  * @luafunc slot
@@ -436,10 +439,34 @@ static int outfitL_slot( lua_State *L )
    lua_pushstring( L, outfit_slotName( o ) );
    lua_pushstring( L, outfit_slotSizeName( o ) );
    int spid = outfit_slotProperty( o );
-   lua_pushstring( L, sp_display( spid ) );
-   lua_pushboolean( L, sp_required( spid ) );
-   lua_pushboolean( L, sp_exclusive( spid ) );
+   if ( spid == 0 ) {
+      lua_pushnil( L );
+      lua_pushboolean( L, 0 );
+      lua_pushboolean( L, 0 );
+   } else {
+      lua_pushstring( L, sp_display( o->slot.spid ) );
+      lua_pushboolean( L, sp_required( o->slot.spid ) );
+      lua_pushboolean( L, sp_exclusive( o->slot.spid ) );
+   }
    return 5;
+}
+
+/**
+ * @brief Gets the extra slot property of an outfit (if applicable).
+ *
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string|nil Human readable property (in English) or nil if
+ * none.
+ * @luafunc slot
+ */
+static int outfitL_slotExtra( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit( L, 1 );
+   if ( o->spid_extra == 0 )
+      lua_pushnil( L );
+   else
+      lua_pushstring( L, sp_display( o->spid_extra ) );
+   return 1;
 }
 
 /**

@@ -11,19 +11,43 @@ local save_updated
 function start ()
    changes_done = {}
    save_updated = false
+   naev.cache().save_updater = {}
 end
 
 --[[
-   Run after finished propessing. Allows doing additional changes as necessary.
+   Run after finished processing. Allows doing additional changes as necessary.
 --]]
 function finish ()
    if not save_updated then
       return
    end
+   local cache = naev.cache().save_updater
+   cache.split_list = {}
 
-   print( "Save game updated!" )
+   -- Old cores that now use the primary / secondary system (0.13.0)
+   local split = {
+      ["Milspec Orion 9901 Core System"]  = true,
+      ["Milspec Thalos 9802 Core System"] = true,
+      ["Unicorp PT-1750 Core System"]     = true,
+      ["Milspec Orion 5501 Core System"]  = true,
+      ["Milspec Thalos 5402 Core System"] = true,
+      ["Unicorp PT-310 Core System"]      = true,
+      ["Milspec Orion 3701 Core System"]  = true,
+      ["Milspec Thalos 3602 Core System"] = true,
+      ["Unicorp PT-68 Core System"]       = true,
+   }
+
    for original,value in pairs(changes_done) do
-      print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+      if split[original] then
+         player.outfitAdd( value.new, value.q ) -- Hae to add an additional core to compensate
+         print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
+
+         -- Used to inform the updater event that cores probably need some checking
+         cache.split_list[value.new] = true
+         cache.split_cores = true
+      else
+         print( fmt.f("   {original} => {new} [{q}]", {original=original, new=value.new, q=value.q} ) )
+      end
    end
 end
 
@@ -47,6 +71,7 @@ local ship_list = {
    ["Proteron Derivative"] = "Proteron Dalton",
    ["Proteron Kahan"] = "Proteron Gauss",
 }
+
 --[[--
    Takes an ship name and should return either a new ship name or the amount of credits to give back to the player.
 --]]
@@ -60,6 +85,18 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
+   -- Multicore transformation.
+   -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
+   -- See finish() above.
+   ["Milspec Orion 9901 Core System"] = "Milspec Orion 8601 Core System",
+   ["Milspec Thalos 9802 Core System"] = "Milspec Thalos 8502 Core System",
+   ["Unicorp PT-1750 Core System"] = "Unicorp PT-440 Core System",
+   ["Milspec Orion 5501 Core System"] = "Milspec Orion 4801 Core System",
+   ["Milspec Thalos 5402 Core System"] = "Milspec Thalos 4702 Core System",
+   ["Unicorp PT-310 Core System"] = "Unicorp PT-200 Core System",
+   ["Milspec Orion 3701 Core System"] = "Milspec Orion 2301 Core System",
+   ["Milspec Thalos 3602 Core System"] = "Milspec Thalos 2202 Core System",
+   ["Unicorp PT-68 Core System"] = "Unicorp PT-16 Core System",
    -- Below is a list of changes from 0.11.0 to 0.12.0
    ["Unicorp PT-2200 Core System"] = "Unicorp PT-1750 Core System",
    ["Unicorp PT-500 Core System"] = "Unicorp PT-440 Core System",
@@ -640,6 +677,7 @@ local outfit_list = {
    --]]
    ["Battery"] = "Battery I",
 }
+
 --[[--
    Takes an outfit name and should return either a new outfit name or the amount of credits to give back to the player.
 --]]
