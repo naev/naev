@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from getconst import PHYSICS_SPEED_DAMP
+
 #TODO: use argparse
 
 from outfit import outfit
@@ -29,7 +31,7 @@ accel=lambda a:field(a,'accel')
 speed=lambda a:field(a,'speed')
 turn=lambda a:field(a,'turn')
  
-maxspeed=lambda a:speed(a)+accel(a)/3.0
+maxspeed=lambda a:speed(a)+accel(a)/PHYSICS_SPEED_DAMP
 fullsptime=lambda a:maxspeed(a)/accel(a) if accel(a) else 0.0
 radius=lambda a:round(maxspeed(a)/(turn(a)/180.0*math.pi))
 fullspdist=lambda a:round(maxspeed(a)*fullsptime(a)/2.0)

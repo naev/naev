@@ -2,6 +2,7 @@
 
 from sys import argv,stderr,stdout
 from outfit import outfit
+from getconst import PHYSICS_SPEED_DAMP
 
 #TODO: use argparse
 
@@ -90,7 +91,7 @@ def ls2vals(line_size):
    elif line=='M':
       r*=0.7
 
-   speed,acc=fullspeed*(1.0-r),fullspeed*r*3.0
+   speed,acc=fullspeed*(1.0-r),fullspeed*r*PHYSICS_SPEED_DAMP
 
    if line=='K':
       speed*=1.05
@@ -102,9 +103,8 @@ def ls2vals(line_size):
       speed*=0.55
       acc*=0.55
 
-   fullspeed=speed+acc/3.0
+   fullspeed=speed+acc/PHYSICS_SPEED_DAMP
 
-   #turn=speed/5.0+acc/4.0
    turn=TURN_CT*fullspeed*pow(1.0*acc/speed,AG_EXP)
    return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
 
