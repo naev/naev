@@ -2,6 +2,8 @@
 
 dont_display=set(['priority','rarity'])
 
+#TODO: use argparse
+
 from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET

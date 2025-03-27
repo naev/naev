@@ -3,6 +3,7 @@
 from sys import argv,stderr,stdout
 from outfit import outfit
 
+#TODO: use argparse
 
 TURN_CT=0.37
 AG_EXP=0.2

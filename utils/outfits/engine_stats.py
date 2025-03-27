@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+#TODO: use argparse
+
 from outfit import outfit
 
 from sys import argv,stdout
