@@ -4,6 +4,7 @@
 from os import path
 from sys import argv,stderr
 import xml.etree.ElementTree as ET
+from outfit import nam2fil
 
 
 classes={'Courier','Fighter','Bomber','Destroyer','Armoured Transport','Freighter','Battleship','Carrier'}
@@ -26,9 +27,6 @@ def get_path(s):
       return ''
    else:
       return s+path.sep
-
-def nam2fil(s):
-   return s.replace(' ','_').replace('-','').replace("'",'').lower()
 
 # Does not manage circular inheritance. Should not happen.
 def find_class(arg):

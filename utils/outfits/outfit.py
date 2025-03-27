@@ -3,28 +3,10 @@
 from sys import stdout,stderr
 import xml.etree.ElementTree as ET
 
-
-def subs(r):
-   for e in r:
-      yield e
-      for s in subs(e):
-         yield s
-
-def fmt_a(kv):
-   (key,value)=kv
-   return key+'="'+str(value)+'"'
-
-def output_r(e,fp,ind=0):
-   fp.write(' '*ind+'<'+' '.join([e.tag]+[fmt_a(x) for x in e.attrib.items()])+'>'+e.text.strip())
-   fst=True
-   for s in e:
-      if fst:
-         fp.write('\n')
-         fst=False
-      output_r(s,fp,ind+1)
-   if not fst:
-      fp.write(' '*ind)
-   fp.write('</'+e.tag+'>\n')
+def nam2fil(s):
+   for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
+      s=s.replace(*c)
+   return s.lower()
 
 class _outfit():
    def __init__(self,fil):
@@ -43,10 +25,32 @@ class _outfit():
       return res
 
    def __iter__(self):
-      for e in subs(self.r):
+      def _subs(r):
+         for e in r:
+            yield e
+            for s in _subs(e):
+               yield s
+
+      for e in _subs(self.r):
          yield e
 
    def write(self,fp=stdout):
+      def output_r(e,fp,ind=0):
+         def _fmt_a(kv):
+            (key,value)=kv
+            return key+'="'+str(value)+'"'
+
+         fp.write(' '*ind+'<'+' '.join([e.tag]+[_fmt_a(x) for x in e.attrib.items()])+'>'+e.text.strip())
+         fst=True
+         for s in e:
+            if fst:
+               fp.write('\n')
+               fst=False
+            output_r(s,fp,ind+1)
+         if not fst:
+            fp.write(' '*ind)
+         fp.write('</'+e.tag+'>\n')
+
       output_r(self.r,fp)
 
    def to_dict(self):
@@ -61,8 +65,8 @@ class _outfit():
                if len(what)==1:
                   what=what[0]
             except:
-               pass
-         d[k.tag].append(what)
+                  pass
+            d[k.tag].append(what)
       for k in d:
          if len(d[k])==1:
             d[k]=d[k][0]

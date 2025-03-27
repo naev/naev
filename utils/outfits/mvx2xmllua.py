@@ -8,6 +8,8 @@ from os import path
 from sys import argv,stderr,exit,stdin,stdout
 import xml.etree.ElementTree as ET
 
+from outfit import nam2fil
+
 def get_path(s):
    s=path.dirname(s)
 
@@ -15,9 +17,6 @@ def get_path(s):
       return ''
    else:
       return s+path.sep
-
-def nam2fil(s):
-   return s.replace(' ','_').replace('-','').replace("'",'').lower()
 
 def read_com(s):
    if s=='':
