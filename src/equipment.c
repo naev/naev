@@ -1387,12 +1387,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
          pilot_addOutfitRaw( eq_wgt.selected->p, o, slot );
 
          /* Recalculate stats. */
-         if ( eq_wgt.selected->p->id > 0 )
-            /* TODO there are cases, like outfits that conditionally add stats,
-             * that we would want to actually initialize the Lua. However, the
-             * Lua API requires a pilot to have an ID, so we would need to make
-             * that requirement lax. Maybe add temporary ID or something? */
-            pilot_outfitLInitAll( eq_wgt.selected->p );
+         pilot_outfitLInitAll( eq_wgt.selected->p );
          pilot_calcStats( eq_wgt.selected->p ); /* TODO avoid running twice. */
       }
 
@@ -2037,8 +2032,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
    /* Just in case, turn off outfits and reset stats. */
    effect_clear( &ship->effects );
    pilot_outfitOffAll( ship );
-   if ( ship->id )
-      pilot_outfitLInitAll( ship );
+   pilot_outfitLInitAll( ship );
    pilot_calcStats( ship );
 
    /* Select. */
