@@ -1,5 +1,7 @@
 require 'ai.core.core'
 
+local PHYSICS_SPEED_DAMP=require "constants".PHYSICS_SPEED_DAMP
+
 -- Settings
 mem.armour_run    = 40
 mem.armour_return = 70
@@ -34,7 +36,7 @@ function mine_bite( ast )
          dtime = dtime+2
       end
       -- TODO make this adapt to the new physics speed damp constant PHYSICS_SPEED_DAMP
-      if ai.dist( target ) < (p:speed() + (p:accel()+800)/3)*dtime then
+      if ai.dist( target ) < (p:speed() + (p:accel()+800)/PHYSICS_SPEED_DAMP)*dtime then
          p:outfitToggle( mem._o.bite, true )
       end
    end
