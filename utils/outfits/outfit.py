@@ -40,6 +40,25 @@ class outfit():
    def write(self,fp=stdout):
       output_r(self.r,fp)
 
+   def to_dict(self):
+      d=dict()
+      for k in self:
+         if not k.tag in d:
+            d[k.tag]=[]
+         what=k.text
+         if len(what.split('/'))<=2:
+            try:
+               what=tuple(map(float,what.split('/')))
+               if len(what)==1:
+                  what=what[0]
+            except:
+               pass
+         d[k.tag].append(what)
+      for k in d:
+         if len(d[k])==1:
+            d[k]=d[k][0]
+      return d
+
 if __name__=="__main__":
    from sys import argv
 
