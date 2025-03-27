@@ -47,9 +47,23 @@ local cpos  = (jumpa:pos() + jumpb:pos())*0.5 * 0.7
 local function bounty_setup ()
    local pship, credits, reputation
    -- TODO update when they get their own ships
-   pship = "Hawking"
-   credits = 1e6 + rnd.sigma() * 100e3
-   reputation = 3.5
+   local r = rnd.rnd()
+   if r < 0.2 then
+      pship = "Lancelot"
+      credits = 100e3 + rnd.sigma() * 30e3
+      reputation = 1.5
+      mem.level = 1
+   elseif r < 0.6 then
+      pship = "Admonisher"
+      credits = 500e3 + rnd.sigma() * 80e3
+      reputation = 3
+      mem.level = 2
+   else
+      pship = "Hawking"
+      credits = 1e6 + rnd.sigma() * 100e3
+      reputation = 4.5
+      mem.level = 3
+   end
    return pship, credits, reputation
 end
 
@@ -99,14 +113,39 @@ function spawn_target( lib, _location )
       return (pos+vec2.newP( rnd.rnd()*500, rnd.angle() )) * (1 - 0.2*rnd.rnd())
    end
 
+   -- dynamic faction
+   local fct = faction.dynAdd( targetfaction, "bounty_orez", targetfaction:name(), {clear_enemies=true, clear_allies=true} )
+
    local pos = fuzz( (jumpa:pos() + jumpb:pos())*0.5 )
-   local target_ship = pilot.add( lib.targetship, targetfaction, pos, lib.targetname )
-   pilotai.patrol( target_ship, {
+   local target = pilot.add( lib.targetship, fct, pos, lib.targetname )
+   local escorts = {}
+   if mem.level==1 then
+      for i=1,rnd.rnd(2,4) do
+         local p = pilot.add( "Lancelot", fct, fuzz(pos) )
+         table.insert( escorts, p )
+      end
+   elseif mem.level==2 then
+      for i=1,rnd.rnd(2,5) do
+         local p = pilot.add( ((rnd.rnd() < 0.7) and "Lancelot") or "Admonisher", fct, fuzz(pos) )
+         table.insert( escorts, p )
+      end
+   elseif mem.level==3 then
+      for i=1,rnd.rnd(4,6) do
+         local p = pilot.add( "Lancelot", fct, fuzz(pos) )
+         table.insert( escorts, p )
+      end
+   end
+   for k,p in ipairs(escorts) do
+      p:setHostile()
+      p:setLeader( target )
+   end
+
+   pilotai.patrol( target, {
       fuzz(jumpa:pos()),
       fuzz(jumpb:pos()),
-      fuzz(cpos()),
+      fuzz(cpos),
    } )
-   target_ship:setNoDisable(true)
+   target:setNoDisable(true)
 
-   return target_ship
+   return target
 end
