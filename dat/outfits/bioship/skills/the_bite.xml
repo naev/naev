@@ -11,9 +11,6 @@
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/the_bite.lua</lua>
-  <accel_mod>500</accel_mod>
-  <speed_mod>80</speed_mod>
-  <turn_mod>60</turn_mod>
   <absorb>30</absorb>
  </specific>
 </outfit>

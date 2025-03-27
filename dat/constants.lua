@@ -1,4 +1,6 @@
 return {
    PHYSICS_SPEED_DAMP=6,
+   BITE_ACCEL_MOD=500,
+   BITE_SPEED_MOD=80,
 }
 

@@ -88,10 +88,19 @@ local o_can = outfit.get("The Bite - Cannibal")
 local o_improved = outfit.get("The Bite - Improved")
 
 function init( p, po )
+   constants=require "constants"
+
    turnoff( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications
+
+   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   po:set( "speed_mod", constants.BITE_SPEED_MOD )
+
+   -- This one should disappear after repair
+   po:set( "turn_mod", 60 )
+
    mem.isp = (p == player.pilot())
    oshader:force_off()
 
