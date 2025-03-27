@@ -12,8 +12,6 @@ local lanes = require "ai.core.misc.lanes"
 
 local bounty = {}
 
--- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
-
 local msg_subdue_def = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),
    _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues {plt}."),
@@ -47,15 +45,6 @@ local msg_shared_def = {
    _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]]),
 }
 
--- Mission details
-misn_title = {
-   _("Tiny Dead or Alive Bounty in {sys}"),
-   _("Small Dead or Alive Bounty in {sys}"),
-   _("Moderate Dead or Alive Bounty in {sys}"),
-   _("High Dead or Alive Bounty in {sys}"),
-   _("Dangerous Dead or Alive Bounty in {sys}"),
-}
-
 mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
 
 #nTarget:#0 {pirname} ({shipclass}-class ship)
@@ -77,7 +66,7 @@ local hunters = {}
 local hunter_hits = {}
 local target_ship
 
-function bounty.init( system, targetname, targetship, targetfaction, reward, params )
+function bounty.init( system, targetname, targetship, reward, params )
    params = params or {}
 
    mem._bounty = {}
@@ -85,21 +74,23 @@ function bounty.init( system, targetname, targetship, targetfaction, reward, par
    b.system          = system
    b.targetname      = targetname
    b.targetship      = targetship
-   b.targetfaction   = targetfaction
    b.reward          = reward
    b.reputation      = params.reputation
    -- Other important stuff
+   b.targetfaction   = params.targetfaction
    b.targetfactionfunc = params.targetfactionfunc
    b.payingfaction   = params.payingfaction or faction.get("Independent")
    b.deadline        = params.deadline
    b.alive_only      = params.alive_only
+   b.spawnfunc       = params.spawnfunc
+   b.dynamicfaction  = params.dynamicfaction
    -- Custom messages (can be tables of messages from which one will be chosen)
    b.msg_subdue      = params.msg_subdue or msg_subdue_def
    b.msg_killed      = params.msg_killed or msg_killed_def
    b.msg_captured    = params.msg_captured or msg_captured_def
    b.msg_shared      = params.msg_shared  or msg_shared_def
    b.msg_gotaway     = params.msg_gotaway or msg_gotaway_def
-   b.msg_eliminated_other_def = params.msg_eliminated_other or msg_eliminated_other_def
+   b.msg_eliminated_other = params.msg_eliminated_other or msg_eliminated_other_def
    b.msg_leftsystem  = params.msg_leftsystem or msg_leftsystem_def
    -- OSD stuff
    b.osd_title       = params.osd_title or osd_title_def
@@ -134,6 +125,7 @@ end
 
 function bounty.accept()
    local b = mem._bounty
+   misn.accept()
 
    update_osd()
 
@@ -160,6 +152,19 @@ function _bounty_date ()
    end
 end
 
+-- Adjust pirate faction (used for "alive" bounties)
+local function _get_faction()
+   local b = mem._bounty
+   if b.targetfactionfunc then
+      return _G[b.targetfactionfunc]()
+   elseif b.dynamicfaction then
+      -- Create a dynamic faction
+      local fct = faction.get(b.targetfaction)
+      return faction.dynAdd( fct, "bounty_"..fct:nameRaw(), fct:name(), {clear_enemies=true, clear_allies=true} )
+   end
+   return b.targetfaction
+end
+
 local spawn_bounty
 function _bounty_jumpin ()
    local b = mem._bounty
@@ -169,8 +174,9 @@ function _bounty_jumpin ()
       return
    end
 
+   -- Try to find a good location
    local jmp = jump.get( system.cur(), b.last_sys )
-   local L = lanes.get( get_faction(), "non-friendly")
+   local L = lanes.get( _get_faction(), "non-friendly")
    local m = 3e3 -- margin
    local pos
    if jmp then
@@ -235,7 +241,7 @@ function _bounty_disable ()
 end
 
 -- Succeed the mission, make the player head to a planet for pay
-function succeed ()
+local function _succeed ()
    local b = mem._bounty
 
    b.job_done = true
@@ -252,7 +258,7 @@ function _bounty_board ()
 
    local t = fmt.f( b.msg_subdue[ rnd.rnd( 1, #b.msg_subdue ) ], {plt=b.targetname} )
    vntk.msg( _("Captured Alive"), t )
-   succeed()
+   _succeed()
    b.target_killed = false
    target_ship:setHilight( false )
    target_ship:setDisable() -- Stop it from coming back
@@ -287,7 +293,7 @@ function _bounty_death( _p, attacker )
    end
 
    if attacker and attacker:withPlayer() then
-      succeed()
+      _succeed()
       b.target_killed = true
    else
       local top_hunter = nil
@@ -307,7 +313,7 @@ function _bounty_death( _p, attacker )
       end
 
       if top_hunter == nil or player_hits >= top_hits then
-         succeed()
+         _succeed()
          b.target_killed = true
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          b.hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
@@ -355,16 +361,6 @@ end
 
 -- Set up the ship, credits, and reputation based on the level.
 
--- Adjust pirate faction (used for "alive" bounties)
-local function get_faction()
-   local b = mem._bounty
-
-   if b.targetfactionfunc then
-      return _G[b.targetfactionfunc]()
-   end
-   return b.targetfaction
-end
-
 -- Spawn the ship at the location param.
 function spawn_bounty( params )
    local b = mem._bounty
@@ -374,11 +370,18 @@ function spawn_bounty( params )
       return
    end
 
+   -- If using a spawn function
+   if b.spawnfunc then
+      target_ship = _G[b.spawnfunc]( b, params )
+   else
+      target_ship = pilot.add( b.targetship, _get_faction(), params, b.targetname )
+      local aimem = target_ship:memory()
+      aimem.loiter = math.huge -- Should make them loiter forever
+   end
+
    misn.osdActive( 2 )
-   target_ship = pilot.add( b.targetship, get_faction(), params, b.targetname )
-   local aimem = target_ship:memory()
-   aimem.loiter = math.huge -- Should make them loiter forever
    target_ship:setHilight( true )
+   target_ship:setHostile( true )
    hook.pilot( target_ship, "disable", "_bounty_disable" )
    hook.pilot( target_ship, "board", "_bounty_board" )
    hook.pilot( target_ship, "attacked", "_bounty_attacked" )

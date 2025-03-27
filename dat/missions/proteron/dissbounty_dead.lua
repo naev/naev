@@ -101,7 +101,7 @@ function create ()
    misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive. The dissident may disappear you take too long to reach the {sys} system."), {sys=missys, fct=payingfaction} ) )
    misn.setReward( mem.credits )
 
-   bounty.init( missys, pname, pship, nil, reward, {
+   bounty.init( missys, pname, pship, reward, {
       payingfaction     = payingfaction,
       reputation        = reputation,
       targetfactionfunc = "get_faction", -- have to pass by name
@@ -116,6 +116,5 @@ function create ()
 end
 
 function accept ()
-   misn.accept()
    bounty.accept()
 end

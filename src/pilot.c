@@ -45,7 +45,7 @@
 
 /* ID Generators. */
 static unsigned int pilot_id =
-   PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
+   PILOT_TEMP_ID; /**< Stack of pilot ids to assure uniqueness */
 
 /* stack of pilots */
 static Pilot **pilot_stack =
@@ -306,12 +306,12 @@ int pilot_validEnemy( const Pilot *p, const Pilot *target )
         pilot_isFlag( target, PILOT_NONTARGETABLE ) )
       return 0;
 
-   /* Must be a valid target. */
-   if ( !pilot_validTargetRange( p, target, &inrange ) )
-      return 0;
-
    /* Should either be hostile by faction or by player. */
    if ( !pilot_areEnemies( p, target ) )
+      return 0;
+
+   /* Must be a valid target. */
+   if ( !pilot_validTargetRange( p, target, &inrange ) )
       return 0;
 
    /* Must not be fuzzy. */
@@ -3363,8 +3363,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    }
 
    /* Initialize outfits if applicable. */
-   if ( pilot->id > 0 )
-      pilot_outfitLInitAll( pilot );
+   pilot_outfitLInitAll( pilot );
 
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */

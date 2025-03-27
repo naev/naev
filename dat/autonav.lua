@@ -12,6 +12,9 @@ local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land
 local follow_pilot_fleet
 local already_aboff
 
+-- TODO make this adapt to the new physics speed damp constant PHYSICS_SPEED_DAMP
+local PHYSICS_SPEED_DAMP = 3
+
 -- Some defaults
 autonav_timer = 0
 tc_mod = 0
@@ -396,8 +399,8 @@ local function autonav_rampdown( count_brake )
    local pp = player.pilot()
    -- Compute velocity in "real pixels / second"
    local vel = math.min( pp:speedMax(), pp:vel():mod() ) * game_speed
-   local acc = (tc_mod - tc_base) / 3 -- Acceleration
-   local dtravel = vel * 3 * (tc_mod - 0.5 * 3 * acc)
+   local acc = (tc_mod - tc_base) / PHYSICS_SPEED_DAMP -- Acceleration
+   local dtravel = vel * 3 * (tc_mod - 0.5 * PHYSICS_SPEED_DAMP * acc)
    local bdist, btime = ai.minbrakedist()
    if not count_brake then
       -- Autonav stops at minbrakedist, so this synchronizes it
@@ -510,7 +513,7 @@ function autonav_jump_delay ()
    local pp = player.pilot()
    -- hades torch: speed*1.65
    -- accel * 1.0/3 goes as speed bonus
-   if pp:vel():mod() > 1.65 * pp:speedMax() + pp:accel()/3.0 then
+   if pp:vel():mod() > 1.65 * pp:speedMax() + pp:accel()/PHYSICS_SPEED_DAMP then
       return
    end
 

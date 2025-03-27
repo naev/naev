@@ -643,7 +643,7 @@ static int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
       fieldptr = &ptr[sl->offset];
       memcpy( &dbl, &fieldptr, sizeof( double * ) );
       if ( multiply )
-         *dbl *= list->d.d * scale;
+         *dbl *= 1. + list->d.d * scale;
       else
          ss_adjustDoubleStat( dbl, list->d.d * scale, sl->inverted );
       break;
@@ -1120,6 +1120,14 @@ double ss_statsGet( const ShipStats *s, const char *name )
    }
 
    return ss_statsGetInternal( s, type, 0 );
+}
+
+/**
+ * @brief Gets a ship stat value by name.
+ */
+double ss_statsGetRaw( const ShipStats *s, ShipStatsType type )
+{
+   return ss_statsGetInternal( s, type, 1 );
 }
 
 /**

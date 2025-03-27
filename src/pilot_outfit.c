@@ -533,6 +533,44 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 }
 
 /**
+ * @brief Tries to add an outfit to the first possible free slot on the pilot.
+ */
+int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
+{
+   /* Test special slots first. */
+   for ( int spid = 1; spid >= 0; spid-- ) {
+      /* Try to find the first smallest size it fits into. */
+      for ( OutfitSlotSize size = o->slot.size; size <= OUTFIT_SLOT_SIZE_HEAVY;
+            size++ ) {
+         for ( int i = 0; i < array_size( p->outfits ); i++ ) {
+            PilotOutfitSlot *s = p->outfits[i];
+
+            /* Must match special property status. */
+            if ( spid != ( !!s->sslot->slot.spid ) )
+               continue;
+
+            /* Must be correct size. */
+            if ( s->sslot->slot.size != size )
+               continue;
+
+            /* Must not be full already. */
+            if ( s->outfit != NULL )
+               continue;
+
+            /* Test. */
+            if ( !outfit_fitsSlot( o, &s->sslot->slot ) )
+               continue;
+
+            /* Try to add. */
+            if ( pilot_addOutfitRaw( p, o, s ) == 0 )
+               return i;
+         }
+      }
+   }
+   return 0;
+}
+
+/**
  * @brief Removes an outfit from the pilot.
  *
  *    @param pilot Pilot to remove the outfit from.
@@ -1004,7 +1042,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
       pilot_setFlag(
          pilot,
          PILOT_AFTERBURNER ); /* We use old school flags for this still... */
-      pilot->energy_regen -=
+      pilot->stats.energy_regen_malus +=
          pilot->afterburner->outfit->u.afb.energy; /* energy loss */
    } else {
       /* Always add stats for non mod/afterburners. */
@@ -1188,7 +1226,8 @@ void pilot_calcStats( Pilot *pilot )
    pilot_cargoCalc( pilot ); /* Calls pilot_updateMass. */
 
    /* Update GUI as necessary. */
-   gui_setGeneric( pilot );
+   if ( pilot->id > 0 )
+      gui_setGeneric( pilot );
 
    /* Update weapon set range. */
    pilot_weapSetUpdateStats( pilot );
@@ -1274,11 +1313,11 @@ void pilot_updateMass( Pilot *pilot )
 
    /* limit the maximum speed if limiter is active */
    if ( pilot_isFlag( pilot, PILOT_HASSPEEDLIMIT ) ) {
-      pilot->speed = pilot->speed_limit - pilot->accel / 3.;
+      pilot->speed = pilot->speed_limit - pilot->accel / PHYSICS_SPEED_DAMP;
       /* Speed must never go negative. */
       if ( pilot->speed < 0. ) {
          /* If speed DOES go negative, we have to lower accel. */
-         pilot->accel = 3. * pilot->speed_limit;
+         pilot->accel = PHYSICS_SPEED_DAMP * pilot->speed_limit;
          pilot->speed = 0.;
       }
    }
@@ -1286,7 +1325,7 @@ void pilot_updateMass( Pilot *pilot )
    pilot_ewUpdateStatic( pilot );
 
    /* Update ship stuff. */
-   if ( pilot_isPlayer( pilot ) )
+   if ( ( pilot->id > 0 ) && pilot_isPlayer( pilot ) )
       gui_setShip();
 }
 
@@ -1502,11 +1541,33 @@ double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
  */
 void pilot_outfitLInitAll( Pilot *pilot )
 {
+   /* If no ID, we'll hackily add a temporary pilot and undo the changes. */
+   int     noid = ( pilot->id == 0 );
+   Pilot **ps;
+   Pilot  *ptemp;
+   if ( noid ) {
+      ps    = (Pilot **)pilot_getAll();
+      ptemp = ps[0];
+      ps[0] = pilot;
+      if ( pilot_isPlayer( pilot ) )
+         pilot->id = PLAYER_ID;
+      else
+         pilot->id = PILOT_TEMP_ID;
+   }
+
+   /* Run Lua code here with the fake IDs if necessary. */
    pilotoutfit_modified = 0;
    for ( int i = 0; i < array_size( pilot->outfits ); i++ )
       pilot_outfitLInit( pilot, pilot->outfits[i] );
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
       pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
+
+   /* Some clean up. */
+   if ( noid ) {
+      pilot->id = 0;
+      ps[0]     = ptemp;
+   }
+
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
       /* TODO calcStats computed twice maybe. */

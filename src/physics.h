@@ -11,6 +11,11 @@
 #define SOLID_UPDATE_RK4 0   /**< Default Runge-Kutta 3-4 update. */
 #define SOLID_UPDATE_EULER 1 /**< Simple Euler update. */
 
+#define PHYSICS_SPEED_DAMP                                                     \
+   3. /**< Controls how much acceleration gets added                           \
+        to speed through a penalty on velocity over                            \
+        maximum velocity. */
+
 extern const char _UNIT_TIME[];
 extern const char _UNIT_PER_TIME[];
 extern const char _UNIT_DISTANCE[];

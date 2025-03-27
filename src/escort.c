@@ -142,7 +142,7 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
    if ( pilot_isFlagRaw( f, PILOT_CARRIED ) ) {
       /* Damage. */
       if ( p->stats.fbay_damage != 1. ) {
-         double mod          = p->stats.fbay_damage;
+         double mod = ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_DAMAGE );
          pe->intrinsic_stats = ss_statsSetList(
             pe->intrinsic_stats, SS_TYPE_D_LAUNCH_DAMAGE, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList(
@@ -152,7 +152,7 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       }
       /* Health. */
       if ( p->stats.fbay_health != 1. ) {
-         double mod          = p->stats.fbay_health;
+         double mod = ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_HEALTH );
          pe->intrinsic_stats = ss_statsSetList(
             pe->intrinsic_stats, SS_TYPE_D_ARMOUR_MOD, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList(
@@ -160,7 +160,7 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       }
       /* Movement. */
       if ( p->stats.fbay_movement != 1. ) {
-         double mod          = p->stats.fbay_movement;
+         double mod = ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_MOVEMENT );
          pe->intrinsic_stats = ss_statsSetList(
             pe->intrinsic_stats, SS_TYPE_D_SPEED_MOD, mod, 0, 1 );
          pe->intrinsic_stats = ss_statsSetList( pe->intrinsic_stats,

@@ -742,7 +742,7 @@ static int shipL_getSize( lua_State *L )
  *
  *    @luatparam Ship s Ship to get the path of the graphis of.
  *    @luatreturn string The path to the ship graphics.
- * @luafunc size
+ * @luafunc gfxPath
  */
 static int shipL_gfxPath( lua_State *L )
 {
