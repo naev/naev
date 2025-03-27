@@ -12,7 +12,7 @@ local lanes = require "ai.core.misc.lanes"
 
 local bounty = {}
 
--- luacheck: globals board_fail bounty_setup get_faction misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
+-- luacheck: globals board_fail bounty_setup misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
 
 local msg_subdue_def = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),
@@ -161,6 +161,15 @@ function _bounty_date ()
    end
 end
 
+-- Adjust pirate faction (used for "alive" bounties)
+local function _get_faction()
+   local b = mem._bounty
+   if b.targetfactionfunc then
+      return _G[b.targetfactionfunc]()
+   end
+   return b.targetfaction
+end
+
 local spawn_bounty
 function _bounty_jumpin ()
    local b = mem._bounty
@@ -171,7 +180,7 @@ function _bounty_jumpin ()
    end
 
    local jmp = jump.get( system.cur(), b.last_sys )
-   local L = lanes.get( get_faction(), "non-friendly")
+   local L = lanes.get( _get_faction(), "non-friendly")
    local m = 3e3 -- margin
    local pos
    if jmp then
@@ -356,16 +365,6 @@ end
 
 -- Set up the ship, credits, and reputation based on the level.
 
--- Adjust pirate faction (used for "alive" bounties)
-local function get_faction()
-   local b = mem._bounty
-
-   if b.targetfactionfunc then
-      return _G[b.targetfactionfunc]()
-   end
-   return b.targetfaction
-end
-
 -- Spawn the ship at the location param.
 function spawn_bounty( params )
    local b = mem._bounty
@@ -376,7 +375,7 @@ function spawn_bounty( params )
    end
 
    misn.osdActive( 2 )
-   target_ship = pilot.add( b.targetship, get_faction(), params, b.targetname )
+   target_ship = pilot.add( b.targetship, _get_faction(), params, b.targetname )
    local aimem = target_ship:memory()
    aimem.loiter = math.huge -- Should make them loiter forever
    target_ship:setHilight( true )
