@@ -79,8 +79,9 @@ function create ()
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
    bounty.init( missys, pname, pship, reward, {
-      targetfaction     = targetfaction,
       payingfaction     = payingfaction,
+      targetfaction     = targetfaction,
+      dynamicfaction    = true, -- If not set or false, the player has to be the one to kill it
       spawnfunc         = "spawn_target",
       reputation        = reputation,
       deadline          = mem.deadline,
@@ -105,6 +106,7 @@ function spawn_target( lib, _location )
       fuzz(jumpb:pos()),
       fuzz(cpos()),
    } )
+   target_ship:setNoDisable(true)
 
    return target_ship
 end
