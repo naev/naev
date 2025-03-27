@@ -1,7 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 
-from sys import argv,stderr
+from sys import argv,stderr,stdout
 from outfit import outfit
+
 
 TURN_CT=0.37
 AG_EXP=0.2
@@ -128,13 +129,16 @@ def get_line_size(o):
    else:
       return None
 
+out=lambda x:stdout.write(x+'\n')
+err=lambda x,nnl=False:stderr.write(x+('\n' if not nnl else ''))
+
 if '-h' in argv or '--help' in argv:
-   print("Usage: "+argv[0]+" <file1> <file2> ...")
-   print("Will only process the files in the list that have .xml or .mvx extension.")
-   print("The changes made will be listed onto <stderr>. \"_\" means \"nothing\"")
-   print("If an outfit is not recognized as an engine, it won't even be printed out.")
-   print("\nTypical usage (from naev root dir) :")
-   print("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
+   out("Usage: "+argv[0]+" <file1> <file2> ...")
+   out("Will only process the files in the list that have .xml or .mvx extension.")
+   out("The changes made will be listed onto <stderr>. \"_\" means \"nothing\"")
+   out("If an outfit is not recognized as an engine, it won't even be printed out.")
+   out("\nTypical usage (from naev root dir) :")
+   out("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
 else:
    for a in argv[1:]:
       if a.endswith(".xml") or a.endswith(".mvx"):
@@ -148,11 +152,11 @@ else:
                   acc.append((i.tag,i.text,sub[i.tag]))
                   i.text=sub[i.tag]
                   didit=True
-            stderr.write(a.split('/')[-1]+': ')
+            err(a.split('/')[-1]+': ',nnl=True)
             if didit:
-               print(', '.join([i+':'+j+'->'+k for i,j,k in acc]),file=stderr)
+               err(', '.join([i+':'+j+'->'+k for i,j,k in acc]))
                fp=open(a,"w")
                o.write(fp)
                fp.close()
             else:
-               print('_',file=stderr)
+               err('_')
