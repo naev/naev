@@ -20,6 +20,7 @@
 --]]
 local fmt = require "format"
 local pilotname = require "pilotname"
+local pilotai = require "pilotai"
 local lmisn = require "lmisn"
 local bounty = require "common.bounty"
 
@@ -35,6 +36,13 @@ local misn_desc = _([[An O'rez traitor known as {name} has gained notoriety thro
 #nTime limit:#0 {deadline}
 #nReputation Gained:#0 {fct}]])
 
+local payingfaction = faction.get("Yetmer")
+local targetfaction = faction.get("O'rez")
+local missys = system.get("Yetmer-O'rez Highspace")
+local jumpa = jump.get( missys, system.get("K'tos") )
+local jumpb = jump.get( missys, system.get("Mayla") )
+local cpos  = (jumpa:pos() + jumpb:pos())*0.5 * 0.7
+
 -- Set up the ship, credits, and reputation based on the level.
 local function bounty_setup ()
    local pship, credits, reputation
@@ -46,8 +54,6 @@ local function bounty_setup ()
 end
 
 function create ()
-   local payingfaction = faction.get("Yetmer")
-   local missys = system.get("Yetmer-O'rez Highspace")
    if not misn.claim( missys, true ) then misn.finish( false ) end
 
    -- Pirate details
@@ -73,7 +79,7 @@ function create ()
    misn.setDistance( lmisn.calculateDistance( system.cur(), spob.cur():pos(), missys) )
 
    bounty.init( missys, pname, pship, reward, {
-      targetfaction     = faction.get("O'rez"),
+      targetfaction     = targetfaction,
       payingfaction     = payingfaction,
       spawnfunc         = "spawn_target",
       reputation        = reputation,
@@ -87,9 +93,18 @@ end
 
 -- luacheck: globals spawn_target
 function spawn_target( lib, _location )
-   local pos = vec2.new( 0, 0 )
-   local target_ship = pilot.add( lib.targetship, lib.targetfaction, pos, lib.targetname )
-   local aimem = target_ship:memory()
-   aimem.loiter = math.huge -- Should make them loiter forever
+   -- Fuzzes the position a bit
+   local function fuzz( pos )
+      return (pos+vec2.newP( rnd.rnd()*500, rnd.angle() )) * (1 - 0.2*rnd.rnd())
+   end
+
+   local pos = fuzz( (jumpa:pos() + jumpb:pos())*0.5 )
+   local target_ship = pilot.add( lib.targetship, targetfaction, pos, lib.targetname )
+   pilotai.patrol( target_ship, {
+      fuzz(jumpa:pos()),
+      fuzz(jumpb:pos()),
+      fuzz(cpos()),
+   } )
+
    return target_ship
 end
