@@ -2,6 +2,7 @@
 
 from sys import argv,stderr
 from outfit import outfit
+from functools import cmp_to_key
 
 TURN_CT=0.37
 AG_EXP=0.2
@@ -41,7 +42,7 @@ def fmt(f):
    if f>100.0 and res[-1] in "9146" or f>200.0:
       res=str(int(5.0*round(f/5.0)))
    return res
-      
+
 
 def fmt_t(t):
    if t>=45:
@@ -75,36 +76,45 @@ def ls2vals(line_size):
    if line_size is None:
       return None
 
-   (line,size)=line_size
-   fullspeed=dec(size)
+   (line,size) = line_size
+   fullspeed = dec(size)
 
    if line in ['N','M','Z','B']:
-      fullspeed*=7.0/8.0
+      #print( 7.0/8.0, (dec(size+1) / fullspeed) * 0.5 + 0.5 )
+      #fullspeed *= max( 7.0/8.0, (dec(size+1) / fullspeed) * 0.6 + 0.4 )
+      fullspeed *= 7.0/8.0
 
-   r=0.15*pow(2,-((size-1)-2.5)/2.5)
+   r = 0.15*pow(2,-((size-1)-2.5)/2.5)
 
-   if line in ['T','K']:
-      r*=1.75
+   if line=='T':
+      r *= 1.75
+   elif line=='K':
+      r *= 1.75
    elif line=='M':
-      r*=0.7
+      r *= 0.7
 
-   speed,acc=fullspeed*(1.0-r),fullspeed*r*3.0
+   speed = fullspeed*(1.0-r)
+   accel = fullspeed*r*3.0
 
    if line=='K':
-      speed*=1.05
-      acc*=1.3
+      speed *= 1.05
+      accel *= 1.3
    elif line=='Z':
-      speed*=0.7
-      acc*=0.7
+      speed *= 0.7
+      accel *= 0.7
    elif line=='B':
-      speed*=0.55
-      acc*=0.55
+      speed *= 0.55
+      accel *= 0.55
 
-   fullspeed=speed+acc/3.0
+   fullspeed = speed + accel/3.0
 
    #turn=speed/5.0+acc/4.0
-   turn=TURN_CT*fullspeed*pow(1.0*acc/speed,AG_EXP)
-   return {"speed":fmt(speed),"accel":fmt(acc),"turn":fmt_t(turn)}
+   turn = TURN_CT * fullspeed * pow(1.0*accel/speed,AG_EXP)
+   return {
+           "speed":fmt(speed),
+           "accel":fmt(accel),
+           "turn":fmt_t(turn)
+          }
 
 def get_line(o):
    res=o.name().split(' ')[0]
@@ -136,10 +146,11 @@ if '-h' in argv or '--help' in argv:
    print("\nTypical usage (from naev root dir) :")
    print("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
 else:
+   outfits = []
    for a in argv[1:]:
       if a.endswith(".xml") or a.endswith(".mvx"):
-         o=outfit(a)
-         sub=ls2vals(get_line_size(o))
+         o = outfit(a)
+         sub = ls2vals(get_line_size(o))
          if sub is not None:
             didit=False
             acc=[]
@@ -148,10 +159,10 @@ else:
                   acc.append((i.tag,i.text,sub[i.tag]))
                   i.text=sub[i.tag]
                   didit=True
-            stderr.write(a.split('/')[-1]+': ')
+            stderr.write(o.fil.split('/')[-1]+': ')
             if didit:
                print(', '.join([i+':'+j+'->'+k for i,j,k in acc]),file=stderr)
-               fp=open(a,"w")
+               fp=open(o.fil,"w")
                o.write(fp)
                fp.close()
             else:

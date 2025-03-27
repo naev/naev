@@ -29,6 +29,7 @@ class _outfit():
    def __init__(self,fil):
       self.T=ET.parse(fil)
       self.r=self.T.getroot()
+      self.fil=fil
 
    def name(self):
       return self.r.attrib['name']
@@ -78,4 +79,3 @@ if __name__=="__main__":
    if len(argv)>1:
       O=outfit(argv[1])
       O.write()
-
