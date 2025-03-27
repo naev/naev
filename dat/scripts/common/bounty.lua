@@ -12,8 +12,6 @@ local lanes = require "ai.core.misc.lanes"
 
 local bounty = {}
 
--- luacheck: globals board_fail bounty_setup misn_title pay_capture_text pay_kill_text pilot_death share_text subdue_fail_text subdue_text succeed (shared with derived missions neutral.pirbounty_alive, proteron.dissbounty_dead)
-
 local msg_subdue_def = {
    _("You and your crew infiltrate the ship's pathetic security and subdue {plt}. You transport the pirate to your ship."),
    _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues {plt}."),
@@ -45,15 +43,6 @@ local msg_shared_def = {
    _([["Hey, thanks for the help back there. I don't know if I would have been able to handle {plt} alone! Anyway, since you were such a big help, I have transferred what I think is your fair share of the bounty to your bank account."]]),
    _([["Heh, thanks! I think I would have been able to take out {plt} by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]]),
    _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]]),
-}
-
--- Mission details
-misn_title = {
-   _("Tiny Dead or Alive Bounty in {sys}"),
-   _("Small Dead or Alive Bounty in {sys}"),
-   _("Moderate Dead or Alive Bounty in {sys}"),
-   _("High Dead or Alive Bounty in {sys}"),
-   _("Dangerous Dead or Alive Bounty in {sys}"),
 }
 
 mem.misn_desc = _([[The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship. The pirate may disappear if you take too long to reach the {sys} system.
@@ -245,7 +234,7 @@ function _bounty_disable ()
 end
 
 -- Succeed the mission, make the player head to a planet for pay
-function succeed ()
+local function _succeed ()
    local b = mem._bounty
 
    b.job_done = true
@@ -262,7 +251,7 @@ function _bounty_board ()
 
    local t = fmt.f( b.msg_subdue[ rnd.rnd( 1, #b.msg_subdue ) ], {plt=b.targetname} )
    vntk.msg( _("Captured Alive"), t )
-   succeed()
+   _succeed()
    b.target_killed = false
    target_ship:setHilight( false )
    target_ship:setDisable() -- Stop it from coming back
@@ -297,7 +286,7 @@ function _bounty_death( _p, attacker )
    end
 
    if attacker and attacker:withPlayer() then
-      succeed()
+      _succeed()
       b.target_killed = true
    else
       local top_hunter = nil
@@ -317,7 +306,7 @@ function _bounty_death( _p, attacker )
       end
 
       if top_hunter == nil or player_hits >= top_hits then
-         succeed()
+         _succeed()
          b.target_killed = true
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          b.hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
