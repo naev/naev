@@ -66,7 +66,7 @@ lines={
    "Beat":'B'
 }
 
-alpha,beta=1.0,0.1
+alpha,beta=1.11,0.06
 
 def dec(n):
    if n<=1:
