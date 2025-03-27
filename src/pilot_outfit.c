@@ -1226,7 +1226,8 @@ void pilot_calcStats( Pilot *pilot )
    pilot_cargoCalc( pilot ); /* Calls pilot_updateMass. */
 
    /* Update GUI as necessary. */
-   gui_setGeneric( pilot );
+   if ( pilot->id > 0 )
+      gui_setGeneric( pilot );
 
    /* Update weapon set range. */
    pilot_weapSetUpdateStats( pilot );
@@ -1324,7 +1325,7 @@ void pilot_updateMass( Pilot *pilot )
    pilot_ewUpdateStatic( pilot );
 
    /* Update ship stuff. */
-   if ( pilot_isPlayer( pilot ) )
+   if ( ( pilot->id > 0 ) && pilot_isPlayer( pilot ) )
       gui_setShip();
 }
 
@@ -1540,11 +1541,33 @@ double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
  */
 void pilot_outfitLInitAll( Pilot *pilot )
 {
+   /* If no ID, we'll hackily add a temporary pilot and undo the changes. */
+   int     noid = ( pilot->id == 0 );
+   Pilot **ps;
+   Pilot  *ptemp;
+   if ( noid ) {
+      ps    = (Pilot **)pilot_getAll();
+      ptemp = ps[0];
+      ps[0] = pilot;
+      if ( pilot_isPlayer( pilot ) )
+         pilot->id = PLAYER_ID;
+      else
+         pilot->id = PILOT_TEMP_ID;
+   }
+
+   /* Run Lua code here with the fake IDs if necessary. */
    pilotoutfit_modified = 0;
    for ( int i = 0; i < array_size( pilot->outfits ); i++ )
       pilot_outfitLInit( pilot, pilot->outfits[i] );
    for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
       pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
+
+   /* Some clean up. */
+   if ( noid ) {
+      pilot->id = 0;
+      ps[0]     = ptemp;
+   }
+
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
       /* TODO calcStats computed twice maybe. */
