@@ -12,9 +12,9 @@
 #define SOLID_UPDATE_EULER 1 /**< Simple Euler update. */
 
 #define PHYSICS_SPEED_DAMP                                                     \
-   3. /**< Controls how much acceleration gets added                           \
-        to speed through a penalty on velocity over                            \
-        maximum velocity. */
+   ( 1. / 0.15 ) /**< Controls how much acceleration gets added                \
+            to speed through a penalty on velocity over                        \
+            maximum velocity. */
 
 extern const char _UNIT_TIME[];
 extern const char _UNIT_PER_TIME[];
