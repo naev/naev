@@ -88,9 +88,8 @@ def mklua(L):
 
    return output+'}\n'
 
-def main(arg):
+def main():
    acc=[]
-   path=get_path(arg)
 
    o=outfit(stdin)
    T=o.T
@@ -105,7 +104,6 @@ def main(arg):
       R.attrib['name']=nam[0]
 
    nam=nam2fil(R.attrib['name'])
-   print nam
 
    f1,acc1=process_group(R,'./general')
    f2,acc2=process_group(R,'./specific')
@@ -121,20 +119,18 @@ def main(arg):
    else:
       print >>stderr,"No composite field found, left as is."
 
-   output=path+nam+".xml"
-   o.write(output)
+   print >>stderr,nam
+   o.write(stdout)
    
-   print >>stderr,"<"+output+">"
-
 if __name__ == '__main__':
-   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
+   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)!=1:
       nam=path.basename(argv[0])
       print >>stderr, "usage:",nam,'<output_path>'
-      print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.xml."
+      print >>stderr, "  Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout> and the name the output should have on <stderr>."
    else:
-      ign=argv[2:]
+      ign=argv[1:]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      main(argv[1])
+      main()
       exit(0)
