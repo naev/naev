@@ -34,7 +34,7 @@ class _outfit():
       for e in _subs(self.r):
          yield e
 
-   def write(self,fp=stdout):
+   def write(self,dst=stdout):
       def output_r(e,fp,ind=0):
          def _fmt_a(kv):
             (key,value)=kv
@@ -51,7 +51,19 @@ class _outfit():
             fp.write(' '*ind)
          fp.write('</'+e.tag+'>\n')
 
-      output_r(self.r,fp)
+      closeit=False
+      if dst=="-":
+         dest=stdout
+      elif type(dst)==type("foo"):
+         dest=open(dst,"wt")
+         closeit=True
+      else:
+         dest=dst
+
+      output_r(self.r,dest)
+
+      if closeit:
+         dest.close()
 
    def to_dict(self):
       d=dict()
@@ -73,7 +85,7 @@ class _outfit():
       return d
 
 def outfit(fil):
-   return _outfit(fil) if fil.endswith(".xml") or fil.endswith('.mvx') else None
+   return _outfit(fil) if type(fil)!=type("foo") or fil.endswith(".xml") or fil.endswith('.mvx') else None
 
 if __name__=="__main__":
    from sys import argv

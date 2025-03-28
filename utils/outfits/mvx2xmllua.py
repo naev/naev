@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 dont_display=set(['priority','rarity'])
+from outfit import outfit
 
 #TODO: use argparse
 
@@ -73,28 +74,27 @@ def process_group(r,field):
    return needs_lua,acc
 
 
-def mklua(luanam,L):
-   print >>stderr,"<"+luanam+">"
-   fp=file(luanam,"w")
+def mklua(L):
+   output='\n'
    ind=3*' '
 
-   print >>fp,'require("outfits.lib.multicore").init{'
+   output+='require("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
       if nam not in dont_display:
-         print >>fp,ind+'{ "'+nam+'",',
-         print >>fp,fmt(main)+',',
-         print >>fp,fmt(sec)+'},'
+         output+=ind+'{ "'+nam+'",'+' '
+         output+=fmt(main)+','+' '
+         output+=fmt(sec)+'},'+'\n'
 
-   print >>fp,"}"
-   fp.close()
+   return output+'}\n'
 
 def main(arg):
    acc=[]
    path=get_path(arg)
 
-   T=ET.parse(stdin)
-   R=T.getroot()
+   o=outfit(stdin)
+   T=o.T
+   R=o.r
 
    if R.tag!='outfit':
       print >>stderr,"not an outfit :",R.tag
@@ -114,23 +114,23 @@ def main(arg):
       acc=acc1+acc2
 
       for e in R.findall('./specific'):
-         el=ET.Element("lua")
-         el.text=(path+nam+".lua").split('dat/',1)[-1]
+         el=ET.Element("lua_inline")
+         el.text=mklua(acc)
          e.append(el)
          break
-      mklua(path+nam+".lua",acc)
    else:
       print >>stderr,"No composite field found, left as is."
 
    output=path+nam+".xml"
-   T.write(output)
+   o.write(output)
+   
    print >>stderr,"<"+output+">"
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=path.basename(argv[0])
       print >>stderr, "usage:",nam,'<output_path>'
-      print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.{xml,lua}."
+      print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.xml."
    else:
       ign=argv[2:]
       if ign!=[]:
