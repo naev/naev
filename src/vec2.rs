@@ -1,6 +1,6 @@
-use mlua::{ffi, Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
-use std::os::raw::{c_char, c_int, c_void};
+use std::os::raw::c_void;
 
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 pub struct Vec2(Vector2<f64>);
@@ -444,6 +444,9 @@ pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<()> {
 }
 
 /*
+use mlua::ffi;
+use std::os::raw::{c_char, c_int};
+
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn nlua_loadVector( env: naevc::nlua_env ) {
 }
