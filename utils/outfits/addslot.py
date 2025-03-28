@@ -19,9 +19,14 @@ classes.add('Bulk Freighter')
 #}
 #as_is={"Previous Generation Small Systems","Previous Generation Medium Systems","Previous Generation Large Systems","Dummy Systems"}
 subst={
-   "Unicorp D-72 Heavy Plating":"Unicorp D-58 Heavy Plating"
+   "Unicorp D-72 Heavy Plating":"Unicorp D-58 Heavy Plating",
+   "unicorp_d9_light_plating":"unicorp_d2_light_plating",
+   "unicorp_d38_medium_plating":"unicorp_d23_medium_plating",
+   "sk_light_combat_plating":"sk_ultralight_combat_plating",
+   "sk_mediumheavy_combat_plating":"sk_medium_combat_plating",
+   "sk_superheavy_combat_plating":"sk_heavy_combat_plating",
 }
-as_is={"Dummy Plating","Patchwork Light Plating","Patchwork Medium Plating","Unicorp D-38 Medium Plating","Unicorp D-9 Light Plating"}
+as_is={"Dummy Plating","Patchwork Light Plating","Patchwork Medium Plating"}
 
 for i in subst.itervalues():
    as_is.add(i)
