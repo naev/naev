@@ -47,12 +47,15 @@ def find_class(arg):
    else:
       return ''
 
+from outfit import outfit
+
 def main(arg):
-   if not arg.endswith('.xml'):
+   o=outfit(arg)
+
+   if o is None:
       return
 
-   T=ET.parse(arg)
-   R=T.getroot()
+   T,R=o.T,o.r
 
    if R.tag!="ship":
       #print >>stderr,"not a ship:",R.tag
@@ -81,7 +84,8 @@ def main(arg):
          #elif r.tag=='utility' and r.attrib.has_key('prop') and r.attrib['prop']=='systems':
          elif r.tag=='structure' and r.attrib.has_key('prop') and r.attrib['prop']=='hull':
             siz=r.attrib["size"]
-            txt=r.text.strip()
+            txt=r.text
+            txt=txt.strip()
             if txt=='' or txt in as_is:
                newdefault=''
             elif subst.has_key(txt):
@@ -99,6 +103,7 @@ def main(arg):
          #crt = ET.Element('utility')
          crt = ET.Element('structure')
          crt.attrib['size']=siz
+         crt.text=""
          #crt.attrib['prop']='systems_secondary'
          crt.attrib['prop']='hull_secondary'
          S.insert(count,crt)
@@ -106,10 +111,7 @@ def main(arg):
       if newdefault!='':
          crt.text=newdefault
 
-      fp=open(arg,"wt")
-      T.write(fp)
-      fp.write('\n')
-      fp.close()
+      o.write(arg)
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
