@@ -103,7 +103,6 @@ def main(arg):
          #crt = ET.Element('utility')
          crt = ET.Element('structure')
          crt.attrib['size']=siz
-         crt.text=""
          #crt.attrib['prop']='systems_secondary'
          crt.attrib['prop']='hull_secondary'
          S.insert(count,crt)

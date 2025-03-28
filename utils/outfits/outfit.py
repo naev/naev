@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from sys import stdout,stderr
+
 import xml.etree.ElementTree as ET
 
 def nam2fil(s):
@@ -10,7 +11,12 @@ def nam2fil(s):
 
 class _outfit():
    def __init__(self,fil):
-      self.T=ET.parse(fil)
+      if type(fil)==type(""):
+         fp=open(fil,"rt")
+         self.T=ET.parse(fp)
+         fp.close()
+      else:
+         self.T=ET.parse(fil)
       self.r=self.T.getroot()
       self.fil=fil
 
@@ -36,22 +42,32 @@ class _outfit():
 
    def write(self,dst=stdout):
       def output_r(e,fp,ind=0):
-         andamp=lambda s:s.replace("&","&amp;")
+         andamp=lambda s:s.replace("&","&amp;") if s is not None else ''
          def _fmt_a(kv):
             (key,value)=kv
             return key+'="'+str(andamp(value))+'"'
 
          li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
-         fp.write(' '*ind+'<'+' '.join(li)+'>'+andamp(e.text).rstrip())
-         fst=True
-         for s in e:
-            if fst:
-               fp.write('\n')
-               fst=False
-            output_r(s,fp,ind+1)
-         if not fst:
-            fp.write(' '*ind)
-         fp.write('</'+e.tag+'>\n')
+
+         try:
+            iter(e).next()
+            flag=True
+         except:
+            flag=False
+
+         if e.text is None and not flag:
+            fp.write(' '*ind+'<'+' '.join(li)+' />\n')
+         else:
+            fp.write(' '*ind+'<'+' '.join(li)+'>'+andamp(e.text).rstrip())
+            fst=True
+            for s in e:
+               if fst:
+                  fp.write('\n')
+                  fst=False
+               output_r(s,fp,ind+1)
+            if not fst:
+               fp.write(' '*ind)
+            fp.write('</'+e.tag+'>\n')
 
       closeit=False
       if dst=="-":
