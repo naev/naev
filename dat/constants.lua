@@ -1,5 +1,5 @@
 return {
-   PHYSICS_SPEED_DAMP=1/0.15,
+   PHYSICS_SPEED_DAMP=math.huge,
    BITE_ACCEL_MOD=500,
    BITE_SPEED_MOD=80,
 }

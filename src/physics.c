@@ -8,6 +8,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include "lualib.h"
+
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
@@ -46,6 +48,7 @@ int physics_init( void )
    }
 
    lua_State *L = luaL_newstate();
+   luaL_openlibs( L );
 
    if ( ( luaL_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
       WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( L, -1 ) );
@@ -56,7 +59,6 @@ int physics_init( void )
    lua_getfield( L, -1, "PHYSICS_SPEED_DAMP" );
    PHYSICS_SPEED_DAMP = lua_tonumber( L, -1 );
    lua_pop( L, 1 );
-   DEBUG( "%f", PHYSICS_SPEED_DAMP );
 
    lua_close( L );
    return 0;
