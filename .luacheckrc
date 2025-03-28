@@ -157,6 +157,7 @@ stds.API_spob = {globals={
    "update",   -- C function: space_updateSpob
    "comm",     -- C function: comm_openSpob
    "population", -- C function: space_populationStr
+   "classname", --C function: space_className
    "barbg",    -- C function: npc_getBackground
    "distress", -- C function: spob_spobDistress
 }}

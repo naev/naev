@@ -2145,6 +2145,7 @@ int spob_luaInit( Spob *spob )
    UNREF( spob->lua_update );
    UNREF( spob->lua_comm );
    UNREF( spob->lua_population );
+   UNREF( spob->lua_classname );
    UNREF( spob->lua_barbg );
    UNREF( spob->lua_distress );
    UNREF( spob->lua_mem );
@@ -2171,6 +2172,7 @@ int spob_luaInit( Spob *spob )
    spob->lua_update     = nlua_refenvtype( env, "update", LUA_TFUNCTION );
    spob->lua_comm       = nlua_refenvtype( env, "comm", LUA_TFUNCTION );
    spob->lua_population = nlua_refenvtype( env, "population", LUA_TFUNCTION );
+   spob->lua_classname  = nlua_refenvtype( env, "classname", LUA_TFUNCTION );
    spob->lua_barbg      = nlua_refenvtype( env, "barbg", LUA_TFUNCTION );
    spob->lua_distress   = nlua_refenvtype( env, "distress", LUA_TFUNCTION );
 
@@ -2356,6 +2358,7 @@ static void spob_initDefaults( Spob *spob )
    spob->lua_update     = LUA_NOREF;
    spob->lua_comm       = LUA_NOREF;
    spob->lua_population = LUA_NOREF;
+   spob->lua_classname  = LUA_NOREF;
    spob->lua_barbg      = LUA_NOREF;
    spob->lua_distress   = LUA_NOREF;
 }
@@ -4777,6 +4780,35 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 void space_queueLand( Spob *pnt )
 {
    space_landQueueSpob = pnt;
+}
+
+/**
+ * @brief Gets the long class name of a spob.
+ */
+const char *space_className( const Spob *spb )
+{
+   static char class_str[STRMAX_SHORT];
+
+   if ( spb->lua_classname != LUA_NOREF ) {
+      spob_luaInitMem( spb );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, spb->lua_classname ); /* f */
+      lua_pushstring( naevL, spb->class );
+      if ( nlua_pcall( spb->lua_env, 1, 1 ) ) {
+         WARN( _( "Spob '%s' failed to run '%s':\n%s" ), spb->name, "classname",
+               lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
+         return "";
+      }
+
+      scnprintf( class_str, sizeof( class_str ), "%s",
+                 luaL_checkstring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      return class_str;
+   }
+
+   snprintf( class_str, sizeof( class_str ), _( "%s (%s-class)" ),
+             spob_getClassName( spb->class ), _( spb->class ) );
+   return class_str;
 }
 
 /**
