@@ -42,8 +42,8 @@
   <utility size="medium" />
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">unicorp D-23 Medium Plating</structure>
-  <structure prop="hull_secondary" size="medium">unicorp D-23 Medium Plating</structure>
+  <structure prop="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="medium" />

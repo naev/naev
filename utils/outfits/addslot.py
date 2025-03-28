@@ -20,8 +20,8 @@ classes.add('Bulk Freighter')
 #as_is={"Previous Generation Small Systems","Previous Generation Medium Systems","Previous Generation Large Systems","Dummy Systems"}
 subst={
    "Unicorp D-72 Heavy Plating":"Unicorp D-58 Heavy Plating",
-   "Unicorp D-9 Light Plating":"unicorp D-2 Light Plating",
-   "Unicorp D-38 Medium Plating":"unicorp D-23 Medium Plating",
+   "Unicorp D-9 Light Plating":"Unicorp D-2 Light Plating",
+   "Unicorp D-38 Medium Plating":"Unicorp D-23 Medium Plating",
    "SK Light Combat Plating":"SK Ultralight Combat Plating",
    "SK Mediumheavy Combat Plating":"SK Medium Combat Plating",
    "SK Superheavy Combat Plating":"SK Heavy Combat Plating",
