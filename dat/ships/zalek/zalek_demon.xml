@@ -2,16 +2,16 @@
  <lua>zalek.lua</lua>
  <points>100</points>
  <base_type>Demon</base_type>
- <gfx size="83" sx="12" sy="12">demon</gfx>
+ <gfx sy="12" sx="12" size="83">demon</gfx>
  <rarity>1</rarity>
  <sound pitch="0.76">engine_zalek</sound>
  <class>Destroyer</class>
  <price>2400000</price>
  <time_mod>1.25</time_mod>
- <trail_generator h="0" x="-35" y="20">nebula</trail_generator>
- <trail_generator h="0" x="-10" y="-20">nebula</trail_generator>
- <trail_generator h="0" x="-30" y="8">zalek</trail_generator>
- <trail_generator h="0" x="-30" y="-8">zalek</trail_generator>
+ <trail_generator y="20" h="0" x="-35">nebula</trail_generator>
+ <trail_generator y="-20" h="0" x="-10">nebula</trail_generator>
+ <trail_generator y="8" h="0" x="-30">zalek</trail_generator>
+ <trail_generator y="-8" h="0" x="-30">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <faction>Za'lek</faction>
  <license>Medium Combat Vessel</license>
@@ -29,10 +29,10 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon h="5" size="large" x="28" y="0" />
-  <weapon h="5" size="large" x="18" y="0" />
-  <weapon h="3" prop="fighter_bay" size="medium" x="-30" y="-8" />
-  <weapon h="3" prop="fighter_bay" size="medium" x="-30" y="8" />
+  <weapon y="0" h="5" size="large" x="28" />
+  <weapon y="0" h="5" size="large" x="18" />
+  <weapon y="-8" h="3" prop="fighter_bay" x="-30" size="medium" />
+  <weapon y="8" h="3" prop="fighter_bay" x="-30" size="medium" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
@@ -43,6 +43,7 @@
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
   <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="hull_secondary" size="medium" />
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

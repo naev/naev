@@ -1,19 +1,19 @@
 <ship name="Zebra">
  <points>110</points>
  <base_type>Zebra</base_type>
- <gfx size="120" sx="12" sy="12">zebra</gfx>
+ <gfx sy="12" sx="12" size="120">zebra</gfx>
  <sound>engine</sound>
  <class>Bulk Freighter</class>
  <price>3500000</price>
  <time_mod>1.375</time_mod>
- <trail_generator h="6" x="-46" y="10">melendez</trail_generator>
- <trail_generator h="-6" x="-46" y="10">melendez</trail_generator>
- <trail_generator h="6" x="-46" y="-10">melendez</trail_generator>
- <trail_generator h="-6" x="-46" y="-10">melendez</trail_generator>
- <trail_generator h="4" x="-29" y="27">nebula</trail_generator>
- <trail_generator h="4" x="-29" y="-27">nebula</trail_generator>
- <trail_generator always_under="1" h="-4" x="16" y="27">nebula</trail_generator>
- <trail_generator always_under="1" h="-4" x="16" y="-27">nebula</trail_generator>
+ <trail_generator y="10" h="6" x="-46">melendez</trail_generator>
+ <trail_generator y="10" h="-6" x="-46">melendez</trail_generator>
+ <trail_generator y="-10" h="6" x="-46">melendez</trail_generator>
+ <trail_generator y="-10" h="-6" x="-46">melendez</trail_generator>
+ <trail_generator y="27" h="4" x="-29">nebula</trail_generator>
+ <trail_generator y="-27" h="4" x="-29">nebula</trail_generator>
+ <trail_generator y="27" h="-4" always_under="1" x="16">nebula</trail_generator>
+ <trail_generator y="-27" h="-4" always_under="1" x="16">nebula</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <faction>Independent</faction>
  <license>Large Civilian Vessel</license>
@@ -28,9 +28,9 @@
   <cargo>340</cargo>
  </characteristics>
  <slots>
-  <weapon h="4" prop="fighter_bay" size="large" x="-18" y="22" />
-  <weapon h="4" prop="fighter_bay" size="large" x="-18" y="-22" />
-  <weapon h="-4" size="large" x="28" y="18" />
+  <weapon y="22" h="4" prop="fighter_bay" x="-18" size="large" />
+  <weapon y="-22" h="4" prop="fighter_bay" x="-18" size="large" />
+  <weapon y="18" h="-4" size="large" x="28" />
   <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="accessory" size="large" />
@@ -40,6 +40,7 @@
   <utility size="medium" />
   <structure prop="engines" size="large">Nexus Bolt 3000 Engine</structure>
   <structure prop="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" size="large" />
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

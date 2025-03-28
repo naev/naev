@@ -2,18 +2,18 @@
  <lua>dvaered.lua</lua>
  <points>200</points>
  <base_type>Goddard</base_type>
- <gfx size="125" sx="12" sy="12">goddard_dvaered</gfx>
+ <gfx sy="12" sx="12" size="125">goddard_dvaered</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Battleship</class>
  <price>9200000</price>
  <time_mod>1.4</time_mod>
- <trail_generator h="0" x="-27" y="20">fire</trail_generator>
- <trail_generator h="0" x="-30" y="39">fire</trail_generator>
- <trail_generator h="0" x="-27" y="-20">fire</trail_generator>
- <trail_generator h="0" x="-30" y="-39">fire</trail_generator>
- <trail_generator h="0" x="-24" y="-60">nebula</trail_generator>
- <trail_generator h="0" x="-24" y="60">nebula</trail_generator>
+ <trail_generator y="20" h="0" x="-27">fire</trail_generator>
+ <trail_generator y="39" h="0" x="-30">fire</trail_generator>
+ <trail_generator y="-20" h="0" x="-27">fire</trail_generator>
+ <trail_generator y="-39" h="0" x="-30">fire</trail_generator>
+ <trail_generator y="-60" h="0" x="-24">nebula</trail_generator>
+ <trail_generator y="60" h="0" x="-24">nebula</trail_generator>
  <fabricator>House Goddard</fabricator>
  <faction>Dvaered</faction>
  <license>Heavy Combat Vessel</license>
@@ -31,12 +31,12 @@
   <cargo>140</cargo>
  </characteristics>
  <slots>
-  <weapon h="2" size="large" x="-10" y="-13" />
-  <weapon h="2" size="large" x="-10" y="13" />
-  <weapon h="3" size="large" x="-15" y="-25" />
-  <weapon h="3" size="large" x="-15" y="25" />
-  <weapon h="5" prop="fighter_bay" size="large" x="0" y="0" />
-  <weapon h="5" prop="fighter_bay" size="large" x="-20" y="0" />
+  <weapon y="-13" h="2" size="large" x="-10" />
+  <weapon y="13" h="2" size="large" x="-10" />
+  <weapon y="-25" h="3" size="large" x="-15" />
+  <weapon y="25" h="3" size="large" x="-15" />
+  <weapon y="0" h="5" prop="fighter_bay" x="0" size="large" />
+  <weapon y="0" h="5" prop="fighter_bay" x="-20" size="large" />
   <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="accessory" size="large" />
@@ -46,7 +46,8 @@
   <utility size="large" />
   <utility size="large" />
   <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
-  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

@@ -37,7 +37,8 @@
   <utility size="large" />
   <utility size="medium" />
   <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
-  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

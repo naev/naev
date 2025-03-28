@@ -1,16 +1,16 @@
 <ship name="Rhino">
  <points>60</points>
  <base_type>Rhino</base_type>
- <gfx size="100" sx="10" sy="10">rhino</gfx>
+ <gfx sy="10" sx="10" size="100">rhino</gfx>
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1400000</price>
  <time_mod>1.25</time_mod>
- <trail_generator h="10" x="-35" y="4">melendez</trail_generator>
- <trail_generator always_under="1" h="0" x="-35" y="4">melendez</trail_generator>
- <trail_generator h="10" x="-35" y="-4">melendez</trail_generator>
- <trail_generator always_under="1" h="0" x="-35" y="-4">melendez</trail_generator>
- <trail_generator h="5" x="-35" y="0">nebula</trail_generator>
+ <trail_generator y="4" h="10" x="-35">melendez</trail_generator>
+ <trail_generator y="4" h="0" always_under="1" x="-35">melendez</trail_generator>
+ <trail_generator y="-4" h="10" x="-35">melendez</trail_generator>
+ <trail_generator y="-4" h="0" always_under="1" x="-35">melendez</trail_generator>
+ <trail_generator y="0" h="5" x="-35">nebula</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <faction>Independent</faction>
  <license>Large Civilian Vessel</license>
@@ -26,10 +26,10 @@
   <cargo>150</cargo>
  </characteristics>
  <slots>
-  <weapon h="4" size="large" x="25" y="-3" />
-  <weapon h="4" size="large" x="25" y="3" />
-  <weapon h="4" prop="fighter_bay" size="medium" x="-15" y="-3" />
-  <weapon h="4" prop="fighter_bay" size="medium" x="-15" y="3" />
+  <weapon y="-3" h="4" size="large" x="25" />
+  <weapon y="3" h="4" size="large" x="25" />
+  <weapon y="-3" h="4" prop="fighter_bay" x="-15" size="medium" />
+  <weapon y="3" h="4" prop="fighter_bay" x="-15" size="medium" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
@@ -39,6 +39,7 @@
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
   <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="hull_secondary" size="medium" />
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

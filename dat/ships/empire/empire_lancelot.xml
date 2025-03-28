@@ -7,10 +7,10 @@
  <class>Fighter</class>
  <price>500000</price>
  <time_mod>0.9</time_mod>
- <trail_generator h="-6" x="-13" y="-17">nebula</trail_generator>
- <trail_generator h="-6" x="-13" y="17">nebula</trail_generator>
- <trail_generator h="0" x="-20" y="5" />
- <trail_generator h="0" x="-20" y="-5" />
+ <trail_generator y="-17" h="-6" x="-13">nebula</trail_generator>
+ <trail_generator y="17" h="-6" x="-13">nebula</trail_generator>
+ <trail_generator y="5" h="0" x="-20" />
+ <trail_generator y="-5" h="0" x="-20" />
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
  <license>Light Combat Vessel</license>
@@ -28,10 +28,10 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon h="-2" size="medium" x="-3" y="0" />
-  <weapon h="5" size="small" x="-3" y="3" />
-  <weapon h="5" size="small" x="-3" y="-3" />
-  <weapon h="5" size="small" x="-5" y="0" />
+  <weapon y="0" h="-2" size="medium" x="-3" />
+  <weapon y="3" h="5" size="small" x="-3" />
+  <weapon y="-3" h="5" size="small" x="-3" />
+  <weapon y="0" h="5" size="small" x="-5" />
   <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
@@ -40,6 +40,7 @@
   <utility size="small" />
   <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
   <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
+  <structure prop="hull_secondary" size="small" />
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

@@ -1,7 +1,7 @@
 <ship inherits="Za'lek Demon" name="Za'lek Demon Type IV">
  <rarity>3</rarity>
  <price>3800000</price>
- <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 60</cond>
+ <cond>math.floor(system.cur():reputation("Za'lek")+0.5) >= 60</cond>
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>
  <description>The Za'lek Demon Type IV is a departure from the standard autonomous drone-focused combat philosophy, redesigned to make heavy use of long range weapons such as Za'lek Reaper suicide drones. To achieve this goal, this Demon sports a completely reworked electronics system, with top-notch specially tailoured lock-on algorithms. However, as per the no free lunch theorem, this comes at a cost of a much weaker drone command and control system, and the extra weapon slot and missile system storage required removing more of the ship's shield emitters and already thin armour.</description>
  <health>
@@ -9,11 +9,11 @@
   <armour_regen>0</armour_regen>
  </health>
  <slots>
-  <weapon h="5" size="large" x="28" y="0" />
-  <weapon h="5" size="large" x="18" y="0" />
-  <weapon h="5" prop="fighter_bay" size="medium" x="0" y="0" />
-  <weapon h="3" size="medium" x="-30" y="-8" />
-  <weapon h="3" size="medium" x="-30" y="8" />
+  <weapon y="0" h="5" size="large" x="28" />
+  <weapon y="0" h="5" size="large" x="18" />
+  <weapon y="0" h="5" prop="fighter_bay" x="0" size="medium" />
+  <weapon y="-8" h="3" size="medium" x="-30" />
+  <weapon y="8" h="3" size="medium" x="-30" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
@@ -24,6 +24,7 @@
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
   <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="hull_secondary" size="medium" />
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

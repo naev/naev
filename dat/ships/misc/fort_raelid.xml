@@ -1,7 +1,7 @@
 <ship name="Fort Raelid">
  <points>1000</points>
  <base_type>Fort Raelid</base_type>
- <gfx comm="spob/exterior/station02.webp" noengine="1" polygon="002.webp" size="150" sx="1" sy="1">/gfx/spob/space/002.webp</gfx>
+ <gfx sy="1" sx="1" comm="spob/exterior/station02.webp" polygon="002.webp" noengine="1" size="150">/gfx/spob/space/002.webp</gfx>
  <sound>engine</sound>
  <class display="Station">Battleship</class>
  <price>1</price>
@@ -32,17 +32,19 @@
   <cargo>5000</cargo>
  </characteristics>
  <slots>
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
-  <weapon h="5" size="large" x="0" y="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0" />
   <utility prop="systems" size="large">Dummy Systems</utility>
-  <utility prop="systems_secondary" size="large" /><structure prop="engines" size="large">Dummy Engine</structure>
+  <utility prop="systems_secondary" size="large" />
+  <structure prop="engines" size="large">Dummy Engine</structure>
   <structure prop="hull" size="large">Dummy Plating</structure>
+  <structure prop="hull_secondary" size="large" />
  </slots>
  <tags>
   <tag>noplayer</tag>

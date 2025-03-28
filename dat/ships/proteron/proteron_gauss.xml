@@ -1,16 +1,16 @@
 <ship name="Proteron Gauss">
  <points>90</points>
  <base_type>Gauss</base_type>
- <gfx size="100" sx="10" sy="10">gauss</gfx>
+ <gfx sy="10" sx="10" size="100">gauss</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2200000</price>
  <time_mod>1.1</time_mod>
- <trail_generator h="0" x="-40" y="17">proteron</trail_generator>
- <trail_generator h="0" x="-40" y="-17">proteron</trail_generator>
- <trail_generator h="0" x="-40" y="-5">nebula</trail_generator>
- <trail_generator h="0" x="-40" y="5">nebula</trail_generator>
+ <trail_generator y="17" h="0" x="-40">proteron</trail_generator>
+ <trail_generator y="-17" h="0" x="-40">proteron</trail_generator>
+ <trail_generator y="-5" h="0" x="-40">nebula</trail_generator>
+ <trail_generator y="5" h="0" x="-40">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <faction>Proteron</faction>
  <license>Medium Combat Vessel</license>
@@ -28,10 +28,10 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon h="5" size="large" x="28" y="0" />
-  <weapon h="5" size="large" x="18" y="0" />
-  <weapon h="3" prop="fighter_bay" size="medium" x="-30" y="-8" />
-  <weapon h="3" prop="fighter_bay" size="medium" x="-30" y="8" />
+  <weapon y="0" h="5" size="large" x="28" />
+  <weapon y="0" h="5" size="large" x="18" />
+  <weapon y="-8" h="3" prop="fighter_bay" x="-30" size="medium" />
+  <weapon y="8" h="3" prop="fighter_bay" x="-30" size="medium" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
@@ -41,6 +41,7 @@
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
   <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="hull_secondary" size="medium" />
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

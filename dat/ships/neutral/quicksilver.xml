@@ -1,15 +1,15 @@
 <ship name="Quicksilver">
  <points>40</points>
  <base_type>Quicksilver</base_type>
- <gfx size="70" sx="10" sy="10">quicksilver</gfx>
+ <gfx sy="10" sx="10" size="70">quicksilver</gfx>
  <sound>engine</sound>
  <class>Courier</class>
  <price>510000</price>
  <time_mod>1</time_mod>
- <trail_generator h="-6" x="-8" y="17">nebula</trail_generator>
- <trail_generator h="-6" x="-8" y="-17">nebula</trail_generator>
- <trail_generator h="0" x="-13" y="-3">melendez</trail_generator>
- <trail_generator h="0" x="-13" y="3">melendez</trail_generator>
+ <trail_generator y="17" h="-6" x="-8">nebula</trail_generator>
+ <trail_generator y="-17" h="-6" x="-8">nebula</trail_generator>
+ <trail_generator y="-3" h="0" x="-13">melendez</trail_generator>
+ <trail_generator y="3" h="0" x="-13">melendez</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <faction>Independent</faction>
  <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
@@ -24,8 +24,8 @@
   <cargo>30</cargo>
  </characteristics>
  <slots>
-  <weapon h="0" size="small" x="-10" y="-3" />
-  <weapon h="0" size="small" x="-10" y="3" />
+  <weapon y="-3" h="0" size="small" x="-10" />
+  <weapon y="3" h="0" size="small" x="-10" />
   <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
@@ -34,6 +34,7 @@
   <utility size="small" />
   <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
   <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
+  <structure prop="hull_secondary" size="small" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="small" />

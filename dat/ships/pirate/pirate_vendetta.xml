@@ -8,10 +8,10 @@
  <class>Fighter</class>
  <price>450000</price>
  <time_mod>0.9</time_mod>
- <trail_generator h="0" x="3" y="18">nebula</trail_generator>
- <trail_generator h="0" x="3" y="-18">nebula</trail_generator>
- <trail_generator always_under="1" h="0" x="-5" y="4">pirate</trail_generator>
- <trail_generator always_under="1" h="0" x="-5" y="-4">pirate</trail_generator>
+ <trail_generator y="18" h="0" x="3">nebula</trail_generator>
+ <trail_generator y="-18" h="0" x="3">nebula</trail_generator>
+ <trail_generator y="4" h="0" always_under="1" x="-5">pirate</trail_generator>
+ <trail_generator y="-4" h="0" always_under="1" x="-5">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Pirate</faction>
  <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by some dubious naval technician. The ship ends up being substantially better than the original but every so often the reactor goes nova, destroying the ship. You hope it won't happen to you if you get in one.</description>
@@ -26,18 +26,20 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon h="0" size="small" x="16" y="-9" />
-  <weapon h="0" size="small" x="16" y="9" />
-  <weapon h="0" size="small" x="13" y="-13" />
-  <weapon h="0" size="small" x="13" y="13" />
-  <weapon h="-2" size="small" x="19" y="0" />
-  <weapon h="2" size="small" x="3" y="0" />
+  <weapon y="-9" h="0" size="small" x="16" />
+  <weapon y="9" h="0" size="small" x="16" />
+  <weapon y="-13" h="0" size="small" x="13" />
+  <weapon y="13" h="0" size="small" x="13" />
+  <weapon y="0" h="-2" size="small" x="19" />
+  <weapon y="0" h="2" size="small" x="3" />
   <utility prop="systems" size="small">Previous Generation Small Systems</utility>
-  <utility prop="systems_secondary" size="small" /><utility prop="accessory" size="small" />
+  <utility prop="systems_secondary" size="small" />
+  <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <structure prop="engines" size="small">Beat Up Small Engine</structure>
   <structure prop="hull" size="small">Patchwork Light Plating</structure>
+  <structure prop="hull_secondary" size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>

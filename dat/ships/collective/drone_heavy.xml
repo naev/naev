@@ -2,13 +2,13 @@
  <lua>thurion.lua</lua>
  <points>50</points>
  <base_type>Drone</base_type>
- <gfx size="100" sx="10" sy="10">drone_heavy</gfx>
+ <gfx sy="10" sx="10" size="100">drone_heavy</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class display="Robotic Drone">Fighter</class>
  <price>750000</price>
  <time_mod>1</time_mod>
- <trail_generator h="0" x="-15" y="0" />
+ <trail_generator y="0" h="0" x="-15" />
  <fabricator>Robosys</fabricator>
  <faction>Collective</faction>
  <description>This Collective Heavy Drone has been modified by engineers to support a human pilot.</description>
@@ -23,10 +23,10 @@
   <fuel_consumption>100</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon h="-5" size="medium" x="8" y="1" />
-  <weapon h="-5" size="medium" x="8" y="-1" />
-  <weapon h="-5" size="small" x="5" y="5" />
-  <weapon h="-5" size="small" x="5" y="-5" />
+  <weapon y="1" h="-5" size="medium" x="8" />
+  <weapon y="-1" h="-5" size="medium" x="8" />
+  <weapon y="5" h="-5" size="small" x="5" />
+  <weapon y="-5" h="-5" size="small" x="5" />
   <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
@@ -35,6 +35,7 @@
   <utility size="small" />
   <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
   <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
+  <structure prop="hull_secondary" size="small" />
   <structure size="medium" />
   <structure size="small" />
   <structure size="small" />

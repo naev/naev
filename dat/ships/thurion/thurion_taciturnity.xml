@@ -2,13 +2,13 @@
  <lua>thurion.lua</lua>
  <points>80</points>
  <base_type>Taciturnity</base_type>
- <gfx size="80" sx="10" sy="10">taciturnity</gfx>
+ <gfx sy="10" sx="10" size="80">taciturnity</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
- <trail_generator h="0" x="-20" y="0">thurion</trail_generator>
- <trail_generator h="-13" x="-7" y="23">nebula</trail_generator>
- <trail_generator h="-13" x="-7" y="-23">nebula</trail_generator>
- <trail_generator h="30" x="-7" y="0">nebula</trail_generator>
+ <trail_generator y="0" h="0" x="-20">thurion</trail_generator>
+ <trail_generator y="23" h="-13" x="-7">nebula</trail_generator>
+ <trail_generator y="-23" h="-13" x="-7">nebula</trail_generator>
+ <trail_generator y="0" h="30" x="-7">nebula</trail_generator>
  <class>Armoured Transport</class>
  <price>1600000</price>
  <time_mod>1.25</time_mod>
@@ -29,9 +29,9 @@
   <cargo>100</cargo>
  </characteristics>
  <slots>
-  <weapon h="-4" size="large" x="-6" y="-20" />
-  <weapon h="-4" size="large" x="-6" y="20" />
-  <weapon h="5" prop="fighter_bay" size="medium" x="6" y="0" />
+  <weapon y="-20" h="-4" size="large" x="-6" />
+  <weapon y="20" h="-4" size="large" x="-6" />
+  <weapon y="0" h="5" prop="fighter_bay" x="6" size="medium" />
   <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
@@ -42,6 +42,7 @@
   <utility size="medium" />
   <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
   <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="hull_secondary" size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

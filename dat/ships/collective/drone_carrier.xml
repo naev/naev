@@ -2,16 +2,16 @@
  <lua>thurion.lua</lua>
  <points>160</points>
  <base_type path="Drone_Carrier">Drone Carrier</base_type>
- <gfx size="96" sx="12" sy="12">drone_carrier</gfx>
+ <gfx sy="12" sx="12" size="96">drone_carrier</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class display="Robotic Carrier">Carrier</class>
  <price>6000000</price>
  <time_mod>1.3</time_mod>
- <trail_generator h="0" x="-19" y="29">nebula</trail_generator>
- <trail_generator h="0" x="-19" y="-29">nebula</trail_generator>
- <trail_generator h="0" x="-36" y="10" />
- <trail_generator h="0" x="-36" y="-10" />
+ <trail_generator y="29" h="0" x="-19">nebula</trail_generator>
+ <trail_generator y="-29" h="0" x="-19">nebula</trail_generator>
+ <trail_generator y="10" h="0" x="-36" />
+ <trail_generator y="-10" h="0" x="-36" />
  <fabricator>Robosys</fabricator>
  <faction>Collective</faction>
  <license>Heavy Combat Vessel</license>
@@ -27,12 +27,12 @@
   <cargo>100</cargo>
  </characteristics>
  <slots>
-  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="18" y="17" />
-  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="18" y="-17" />
-  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="26" y="13" />
-  <weapon exclusive="1" h="0" prop="fighter_bay" size="large" x="26" y="-13" />
-  <weapon h="0" prop="fighter_bay" size="medium" x="34" y="9" />
-  <weapon h="0" prop="fighter_bay" size="medium" x="34" y="-9" />
+  <weapon exclusive="1" x="18" y="17" h="0" size="large" prop="fighter_bay" />
+  <weapon exclusive="1" x="18" y="-17" h="0" size="large" prop="fighter_bay" />
+  <weapon exclusive="1" x="26" y="13" h="0" size="large" prop="fighter_bay" />
+  <weapon exclusive="1" x="26" y="-13" h="0" size="large" prop="fighter_bay" />
+  <weapon y="9" h="0" prop="fighter_bay" x="34" size="medium" />
+  <weapon y="-9" h="0" prop="fighter_bay" x="34" size="medium" />
   <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="accessory" size="large" />
@@ -43,6 +43,7 @@
   <utility size="medium" />
   <structure prop="engines" size="large">Nexus Bolt 3000 Engine</structure>
   <structure prop="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" size="large" />
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />
