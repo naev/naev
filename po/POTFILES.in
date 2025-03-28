@@ -2868,6 +2868,7 @@ dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
 dat/common.lua
+dat/constants.lua
 dat/effects/lua/fadeout.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua

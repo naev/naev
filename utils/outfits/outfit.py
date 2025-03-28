@@ -3,6 +3,7 @@
 from sys import stdout,stderr
 import xml.etree.ElementTree as ET
 
+
 def subs(r):
    for e in r:
       yield e
@@ -68,10 +69,7 @@ class _outfit():
       return d
 
 def outfit(fil):
-   if fil.endswith(".xml") or fil.endswith('.mvx'):
-      return _outfit(fil)
-   else:
-      return None
+   return _outfit(fil) if fil.endswith(".xml") or fil.endswith('.mvx') else None
 
 if __name__=="__main__":
    from sys import argv

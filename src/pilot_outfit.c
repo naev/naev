@@ -1313,11 +1313,11 @@ void pilot_updateMass( Pilot *pilot )
 
    /* limit the maximum speed if limiter is active */
    if ( pilot_isFlag( pilot, PILOT_HASSPEEDLIMIT ) ) {
-      pilot->speed = pilot->speed_limit - pilot->accel / 3.;
+      pilot->speed = pilot->speed_limit - pilot->accel / PHYSICS_SPEED_DAMP;
       /* Speed must never go negative. */
       if ( pilot->speed < 0. ) {
          /* If speed DOES go negative, we have to lower accel. */
-         pilot->accel = 3. * pilot->speed_limit;
+         pilot->accel = PHYSICS_SPEED_DAMP * pilot->speed_limit;
          pilot->speed = 0.;
       }
    }

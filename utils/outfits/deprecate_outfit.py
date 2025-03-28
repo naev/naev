@@ -4,6 +4,7 @@ from os import path
 from sys import argv,stderr
 import xml.etree.ElementTree as ET
 
+#TODO: use argparse
 
 DEPR_STR=' (deprecated)'
 

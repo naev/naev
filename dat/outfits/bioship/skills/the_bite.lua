@@ -23,8 +23,14 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 
 local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
 local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
+local constants=require "constants"
+
 
 local function turnon( p, po )
+   po:clear()
+   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   po:set( "speed_mod", constants.BITE_SPEED_MOD )
+
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
@@ -72,6 +78,8 @@ local function turnoff( p, po )
    if not mem.active then
       return false
    end
+   po:clear()
+
    po:state("cooldown")
    po:progress(1)
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
@@ -92,6 +100,7 @@ function init( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications
+
    mem.isp = (p == player.pilot())
    oshader:force_off()
 
