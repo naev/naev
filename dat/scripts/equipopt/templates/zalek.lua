@@ -62,24 +62,28 @@ local zalek_cores = {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
-         choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
+         choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
+         "S&K Medium Combat Plating",
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          "Milspec Orion 8801 Core System",
          "Milspec Orion 8801 Core System",
          choose_one{ "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine" },
-         choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
+         "Unicorp D-58 Heavy Plating",
+         choose_one{ "Unicorp D-58 Heavy Plating", nil },
       } end,
    ["Za'lek Diablo"] = function (_p) return {
          "Milspec Thalos 8502 Core System",
          "Milspec Thalos 8502 Core System",
-         choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
+         "Unicorp D-58 Heavy Plating",
+         choose_one{ "Unicorp D-58 Heavy Plating", nil },
          choose_one{ "Nexus Bolt 6500 Engine", "Melendez Mammoth XL Engine" },
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
          "Milspec Thalos 8502 Core System",
          "Milspec Thalos 8502 Core System",
-         choose_one{ "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating" },
+         choose_one{ "Unicorp D-58 Heavy Plating", "S&K Heavy Combat Plating" }, -- Ideally, should chose twice the same
+         choose_one{ "Unicorp D-58 Heavy Plating", "S&K Heavy Combat Plating" },
          "Melendez Mammoth XL Engine",
       } end,
 }
