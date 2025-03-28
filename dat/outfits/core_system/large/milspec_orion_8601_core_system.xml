@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Orion 8601 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>large</size>
   <price>2000000</price>
   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 8601 core system is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
@@ -10,5 +10,13 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/core_system/large/milspec_orion_8601_core_system.lua</lua></specific>
+  <lua_inline>require("outfits.lib.multicore").init{
+   { "mass", 540, 760},
+   { "cpu_max", 540, 1660},
+   { "energy", 2460, 1380},
+   { "energy_regen", 66, 74},
+   { "shield", 850, 250},
+   { "shield_regen", 15, 3},
+}</lua_inline>
+ </specific>
 </outfit>

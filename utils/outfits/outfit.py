@@ -40,7 +40,8 @@ class _outfit():
             (key,value)=kv
             return key+'="'+str(value)+'"'
 
-         fp.write(' '*ind+'<'+' '.join([e.tag]+[_fmt_a(x) for x in e.attrib.items()])+'>'+e.text.strip())
+         li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
+         fp.write(' '*ind+'<'+' '.join(li)+'>'+e.text.strip())
          fst=True
          for s in e:
             if fst:
