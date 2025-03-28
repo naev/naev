@@ -45,7 +45,7 @@
 
 /* ID Generators. */
 static unsigned int pilot_id =
-   PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
+   PILOT_TEMP_ID; /**< Stack of pilot ids to assure uniqueness */
 
 /* stack of pilots */
 static Pilot **pilot_stack =
@@ -3382,8 +3382,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    }
 
    /* Initialize outfits if applicable. */
-   if ( pilot->id > 0 )
-      pilot_outfitLInitAll( pilot );
+   pilot_outfitLInitAll( pilot );
 
    /* We must set the weapon auto in case some of the outfits had a default
     * weapon equipped. */

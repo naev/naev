@@ -19,6 +19,8 @@
 #include "spfx.h"
 
 #define PLAYER_ID 1 /**< Player pilot ID. */
+#define PILOT_TEMP_ID                                                          \
+   2 /**< Temporary ID for when a non-player pilot is necessary. */
 
 /* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY 3. /**< Time to warm up engine (seconds). */
