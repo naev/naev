@@ -653,6 +653,7 @@ dat/slots/builtin.xml
 dat/slots/engines.xml
 dat/slots/fighter_bay.xml
 dat/slots/hull.xml
+dat/slots/hull_secondary.xml
 dat/slots/systems.xml
 dat/slots/systems_secondary.xml
 dat/spfx/ChakraM.xml
