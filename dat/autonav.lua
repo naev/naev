@@ -12,7 +12,8 @@ local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land
 local follow_pilot_fleet
 local already_aboff
 
-local PHYSICS_SPEED_DAMP=require "constants".PHYSICS_SPEED_DAMP
+-- We'll need the physics constants
+local PHYSICS_SPEED_DAMP = require("constants.lua").PHYSICS_SPEED_DAMP
 
 -- Some defaults
 autonav_timer = 0

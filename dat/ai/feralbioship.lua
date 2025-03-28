@@ -1,9 +1,9 @@
 require 'ai.core.core'
 
-local constants=require "constants"
-local PHYSICS_SPEED_DAMP=constants.PHYSICS_SPEED_DAMP
-local BITE_ACCEL_MOD=constants.BITE_ACCEL_MOD
-local BITE_SPEED_MOD=constants.BITE_SPEED_MOD
+local constants = require "constants"
+local PHYSICS_SPEED_DAMP = constants.PHYSICS_SPEED_DAMP
+local BITE_ACCEL_MOD = constants.BITE_ACCEL_MOD
+local BITE_SPEED_MOD = constants.BITE_SPEED_MOD
 
 -- Settings
 mem.armour_run    = 40

@@ -1,10 +1,11 @@
 local atk_generic = require "ai.core.attack.generic"
 local libatk = require "ai.core.attack.util"
 local flow = require "ships.lua.lib.flow"
-local constants=require "constants"
-local PHYSICS_SPEED_DAMP=constants.PHYSICS_SPEED_DAMP
-local BITE_ACCEL_MOD=constants.BITE_ACCEL_MOD
-local BITE_SPEED_MOD=constants.BITE_SPEED_MOD
+
+local constants = require "constants"
+local PHYSICS_SPEED_DAMP = constants.PHYSICS_SPEED_DAMP
+local BITE_ACCEL_MOD = constants.BITE_ACCEL_MOD
+local BITE_SPEED_MOD = constants.BITE_SPEED_MOD
 
 local atk = {}
 
@@ -101,7 +102,6 @@ function atk.think( target, si, noretarget )
             if mem._o.bite_lust then
                dtime = dtime+2
             end
-
             if ai.dist( target ) < (
                   p:speed() * (1.0+0.01*BITE_SPEED_MOD) +
                   p:accel() * (1.0+0.01*BITE_ACCEL_MOD) / PHYSICS_SPEED_DAMP
