@@ -42,7 +42,7 @@
  <stats>
   <speed_mod>5</speed_mod>
   <turn_mod>25</turn_mod>
-  <accel_mod>75</accel_mod>
+  <accel_mod>35</accel_mod>
   <armour_mod>-50</armour_mod>
  </stats>
  <tags>

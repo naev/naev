@@ -1,3 +1,6 @@
+
+-- Note: Lunge is adrenal glands effects +50%. In addition, turn modifier.
+
 local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
@@ -20,12 +23,31 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 
 local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
 local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
+local constants=require "constants"
+
+
+local function turnoff_afterburner()
+   local pp=player.pilot()
+   for _i,n in ipairs(pp:actives()) do
+      if n.outfit:tags().movement and n.state=="on" then
+         if not pp:outfitToggle( n.slot ) then -- Failed to disable
+            return true
+         end
+      end
+   end
+end
 
 local function turnon( p, po )
+   if turnoff_afterburner() then
+      return false
+   end
+
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
    end
+   po:clear()
+
    -- Needs a target
    local t = p:target()
    mem.isasteroid = false
@@ -39,6 +61,7 @@ local function turnon( p, po )
       end
       mem.isasteroid = true
    end
+
    -- Must be roughly in front
    local tp = t:pos()
    local _m, a = (p:pos()-tp):polar()
@@ -46,6 +69,8 @@ local function turnon( p, po )
       return false
    end
    po:state("on")
+   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   po:set( "speed_mod", constants.BITE_SPEED_MOD )
    po:progress(1)
    mem.timer = mem.duration
    mem.active = true
@@ -69,6 +94,8 @@ local function turnoff( p, po )
    if not mem.active then
       return false
    end
+   po:clear()
+
    po:state("cooldown")
    po:progress(1)
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
@@ -89,6 +116,7 @@ function init( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications
+
    mem.isp = (p == player.pilot())
    oshader:force_off()
 
@@ -189,9 +217,11 @@ function update( p, po, dt )
             -- Hit the enemy!
             local dmg = 10*math.sqrt(p:mass())
             local ta
+            if mem.regen>0 then
+               ta = t:health(true)
+            end
             if mem.improved then
                dmg = dmg*1.5
-               ta = t:health(true)
             end
             if mem.lust then
                p:effectAdd( "Blood Lust" )

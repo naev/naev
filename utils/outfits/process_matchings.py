@@ -5,6 +5,8 @@ from os import path
 from glob import glob
 from sys import argv,stderr
 
+#TODO: use argparse
+
 
 def get_path(s):
    s=path.dirname(s)

@@ -9,6 +9,9 @@ equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority','shortname'}
 base_acc={'price','mass','rarity'}
 
+#TODO: use argparse
+
+
 def merge_group(r1,r2,field,func,dummy=False):
    L1={e.tag:e for e in r1.findall(field)}
    L2=dict() if r2 is None else {e.tag:e for e in r2.findall(field)}

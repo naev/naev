@@ -2,52 +2,7 @@
 
 dont_display=set(['priority','rarity'])
 
-# output of naev.unit()
-"""
-   energy GJ
-   angle
-   unit u
-   per_time /sec
-   speed km/s
-   percent %
-   accel
-   rotation /s
-   mass t
-   cpu PFLOP
-   time sec
-   distance km
-power GW
-"""
-units={
-   "mass":"mass",
-   "cpu_max":"cpu",
-   "energy":"energy",
-   "energy_regen":"power",
-   "shield":"energy",
-   "shield_regen":"power",
-   "ew_detect":"percent",
-   "ew_hide":"percent",
-   "jump_warmup":"percent",
-   "land_delay":"percent",
-   "jump_delay":"percent",
-   "cooldown_time":"percent"
-}
-
-# From src/shipstats.c
-names={
-   "mass":"Ship Mass",
-   "cpu_max":"CPU Capacity",
-   "energy":"Energy Capacity",
-   "energy_regen":"Energy Regeneration",
-   "shield":"Shield Capacity",
-   "shield_regen":"Shield Regeneration",
-   "ew_detect":"Detection",
-   "cooldown_time":"Ship Cooldown Time",
-   "ew_hide":"Detected Range",
-   "jump_warmup":"Jump Warm-up",
-   "land_delay":"Landing Time",
-   "jump_delay":"Jump Time"
-}
+#TODO: use argparse
 
 from os import path
 from sys import argv,stderr,exit,stdin,stdout
@@ -128,9 +83,9 @@ def mklua(luanam,L):
 
    for (nam,(main,sec)) in L:
       if nam not in dont_display:
-            print >>fp,ind+'{ "'+nam+'",',
-            print >>fp,fmt(main)+',',
-            print >>fp,fmt(sec)+'},'
+         print >>fp,ind+'{ "'+nam+'",',
+         print >>fp,fmt(main)+',',
+         print >>fp,fmt(sec)+'},'
 
    print >>fp,"}"
    fp.close()
@@ -164,12 +119,6 @@ def main(arg):
          el.text=(path+nam+".lua").split('dat/',1)[-1]
          e.append(el)
          break
-      """
-      el=ET.Element("lua")
-      path=arg.split('dat/',1)[-1]
-      el.text=path+".lua"
-      R.append(el)
-      """
       mklua(path+nam+".lua",acc)
    else:
       print >>stderr,"No composite field found, left as is."

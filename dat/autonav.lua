@@ -12,8 +12,7 @@ local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land
 local follow_pilot_fleet
 local already_aboff
 
--- TODO make this adapt to the new physics speed damp constant PHYSICS_SPEED_DAMP
-local PHYSICS_SPEED_DAMP = 3
+local PHYSICS_SPEED_DAMP=require "constants".PHYSICS_SPEED_DAMP
 
 -- Some defaults
 autonav_timer = 0
