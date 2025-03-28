@@ -36,12 +36,13 @@ class _outfit():
 
    def write(self,dst=stdout):
       def output_r(e,fp,ind=0):
+         andamp=lambda s:s.replace("&","&amp;")
          def _fmt_a(kv):
             (key,value)=kv
-            return key+'="'+str(value)+'"'
+            return key+'="'+str(andamp(value))+'"'
 
          li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
-         fp.write(' '*ind+'<'+' '.join(li)+'>'+e.text.strip())
+         fp.write(' '*ind+'<'+' '.join(li)+'>'+andamp(e.text).rstrip())
          fst=True
          for s in e:
             if fst:

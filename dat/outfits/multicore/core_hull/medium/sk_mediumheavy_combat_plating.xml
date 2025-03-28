@@ -1,7 +1,7 @@
 <outfit name="S&amp;K Medium-Heavy Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull" prop_extra="systems_secondary">structure</slot>
+  <slot prop_extra="systems_secondary" prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
   <mass>310</mass>
@@ -10,5 +10,12 @@
   <gfx_store>combat_hull_h.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/core_hull/medium/sk_mediumheavy_combat_plating.lua</lua></specific>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 310, 310},
+   { "cargo", 18, 0},
+   { "absorb", 46, 0},
+   { "armour", 660, 0},
+}</lua_inline>
+ </specific>
 </outfit>

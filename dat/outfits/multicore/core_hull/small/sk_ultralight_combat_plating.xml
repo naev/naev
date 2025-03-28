@@ -1,7 +1,7 @@
 <outfit name="S&amp;K Ultralight Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull" prop_extra="systems_secondary">structure</slot>
+  <slot prop_extra="systems_secondary" prop="hull">structure</slot>
   <size>small</size>
   <mass>30</mass>
   <price>130000</price>
@@ -10,5 +10,12 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/multicore/core_hull/small/sk_ultralight_combat_plating.lua</lua></specific>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 30, 30},
+   { "cargo", 2, 0},
+   { "absorb", 5, 0},
+   { "armour", 70, 0},
+}</lua_inline>
+ </specific>
 </outfit>

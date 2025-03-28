@@ -51,7 +51,7 @@ def process_group(r,field):
    for e in r.iter():
       t=e.tag
       if t == 'slot':
-         e.attrib['prop_extra']="systems_secondary"
+         e.set('prop_extra','systems_secondary')
       else:
          try:
             a,b=read_com(e.text)
