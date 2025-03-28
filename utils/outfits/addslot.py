@@ -11,12 +11,18 @@ classes={'Courier','Fighter','Bomber','Destroyer','Armoured Transport','Freighte
 # Not obvious
 classes.add('Bulk Freighter')
 
+
+#subst={
+#   'Unicorp PT-68 Core System':'Unicorp PT-16 Core System',
+#   'Unicorp PT-310 Core System':'Unicorp PT-200 Core System',
+#   'Unicorp PT-1750 Core System':'Unicorp PT-440 Core System'
+#}
+#as_is={"Previous Generation Small Systems","Previous Generation Medium Systems","Previous Generation Large Systems","Dummy Systems"}
 subst={
-   'Unicorp PT-68 Core System':'Unicorp PT-16 Core System',
-   'Unicorp PT-310 Core System':'Unicorp PT-200 Core System',
-   'Unicorp PT-1750 Core System':'Unicorp PT-440 Core System'
+   "Unicorp D-72 Heavy Plating":"Unicorp D-58 Heavy Plating"
 }
-as_is={"Previous Generation Small Systems","Previous Generation Medium Systems","Previous Generation Large Systems","Dummy Systems"}
+as_is={"Dummy Plating","Patchwork Light Plating","Patchwork Medium Plating","Unicorp D-38 Medium Plating","Unicorp D-9 Light Plating"}
+
 for i in subst.itervalues():
    as_is.add(i)
 
@@ -67,43 +73,51 @@ def main(arg):
       count=0
       for r in S:
          if next_time:
-            if r.attrib['prop']=='systems_secondary':
+            #if r.attrib['prop']=='systems_secondary':
+            if r.attrib.has_key('prop') and r.attrib['prop']=='hull_secondary':
                #print >>stderr,'already done, bye!'
                crt=r
             break
-         elif r.tag=='utility' and r.attrib.has_key('prop') and r.attrib['prop']=='systems':
+         #elif r.tag=='utility' and r.attrib.has_key('prop') and r.attrib['prop']=='systems':
+         elif r.tag=='structure' and r.attrib.has_key('prop') and r.attrib['prop']=='hull':
             siz=r.attrib["size"]
-            if r.text=='' or r.text in as_is:
+            txt=r.text.strip()
+            if txt=='' or txt in as_is:
                newdefault=''
-            elif subst.has_key(r.text):
-               newdefault=subst[r.text]
+            elif subst.has_key(txt):
+               newdefault=subst[txt]
                r.text=newdefault
             else:
-               print "Err: unknown outfit",r.text
+               print "Err: unknown outfit",txt,as_is
                return
             next_time=True
-
          count+=1
       break
 
    if next_time:
       if crt is None:
-         crt = ET.Element('utility')
+         #crt = ET.Element('utility')
+         crt = ET.Element('structure')
          crt.attrib['size']=siz
-         crt.attrib['prop']='systems_secondary'
+         #crt.attrib['prop']='systems_secondary'
+         crt.attrib['prop']='hull_secondary'
          S.insert(count,crt)
 
       if newdefault!='':
          crt.text=newdefault
-      T.write(arg)
+
+      fp=open(arg,"wt")
+      T.write(fp)
+      fp.write('\n')
+      fp.close()
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
       nam=path.basename(argv[0])
       print "usage:",nam,'[-r]','<outfit.xml> ...'
-      print "  Adds a new secondary core system slot to the ships given in input, "
+      print "  Adds a new secondary core hull slot to the ships given in input, "
       print "  provided they have the right size and don't already have one."
-      print '   -r  undo deprecation'
    else:
       for arg in argv[1:]:
+         print >>stderr,arg
          main(arg)
