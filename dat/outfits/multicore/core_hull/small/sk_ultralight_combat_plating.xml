@@ -1,7 +1,7 @@
 <outfit name="S&amp;K Ultralight Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop_extra="systems_secondary" prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>
   <mass>30</mass>
   <price>120000</price>
