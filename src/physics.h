@@ -11,10 +11,7 @@
 #define SOLID_UPDATE_RK4 0   /**< Default Runge-Kutta 3-4 update. */
 #define SOLID_UPDATE_EULER 1 /**< Simple Euler update. */
 
-#define PHYSICS_SPEED_DAMP                                                     \
-   3. /**< Controls how much acceleration gets added                           \
-        to speed through a penalty on velocity over                            \
-        maximum velocity. */
+extern double PHYSICS_SPEED_DAMP;
 
 extern const char _UNIT_TIME[];
 extern const char _UNIT_PER_TIME[];
@@ -58,6 +55,8 @@ typedef struct Solid_ {
    double speed_max; /**< Maximum speed. */
    void ( *update )( struct Solid_ *, double ); /**< Update method. */
 } Solid;
+
+int physics_init( void ); /* Initializes some constants. */
 
 /*
  * solid manipulation
