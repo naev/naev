@@ -6,8 +6,8 @@ from getconst import PHYSICS_SPEED_DAMP
 
 #TODO: use argparse
 
-AG_EXP=0.2
-TURN_CT=0.46
+AG_EXP  = 0.2
+TURN_CT = 0.46
 
 sizes={
    "Za'lek Test Engine":2,
@@ -57,61 +57,80 @@ def fmt_t(t):
          return str(res)
 
 lines={
-   'Nexus':'N',
-   'Unicorp':'N',
-   'Tricon':'T',
-   'Krain':'K',
-   'Melendez':'M',
-   "Za'lek":'Z',
-   "Beat":'B'
+   'Nexus'   : 'N',
+   'Unicorp' : 'U',
+   'Tricon'  : 'T',
+   'Krain'   : 'K',
+   'Melendez': 'M',
+   "Za'lek"  : 'Z',
+   "Beat"    : 'B'
 }
 
-alpha,beta=1.11,0.06
+line_stats = {
+    "T" : {
+        "ratio" : 2.0, # 2.0 is double accel vs speed (at size 1)
+        "speed" : 1.0, # 1.0 indicates current speed rank, lower means slower, higher means faster
+        "turn"  : 1.0, # 1.0 means base turn rate, lower is worse, higher is better
+    },
+    "K" : {
+        "ratio" : 1.4, # lower ratio
+        "speed" : 1.1, # higher speed than average
+        "turn"  : 1.0,
+    },
+    "N" : {
+        "ratio" : 1.0,
+        "speed" : 1.0, # Pretty good but slightly slower top speed
+        "turn"  : 0.8,
+    },
+    "M" : {
+        "ratio" : 0.5,
+        "speed" : 1.0,
+        "turn"  : 1.0,
+    },
+    "U" : {
+        "ratio" : 1.0,
+        "speed" : 0.8,
+        "turn"  : 0.8,
+    },
+    "Z" : { # TODO make these change over time the profile via Lua
+        "ratio" : 1.2,
+        "speed" : 0.7,
+        "turn"  : 0.8,
+    },
+    "B" : {
+        "ratio" : 0.8,
+        "speed" : 0.3,
+        "turn"  : 0.6,
+    },
+}
+
+ALPHA, BETA = 1.11, 0.06
 
 def dec(n):
    if n<=1:
       return 400.0
    else:
-      return dec(n-1)/(alpha+beta*(n-1))
+      return dec(n-1)/(ALPHA+BETA*(n-1))
 
 def ls2vals(line_size):
    if line_size is None:
       return None
-
    (line,size) = line_size
-   fullspeed = dec(size)
+   stats = line_stats[line]
 
-   if line in ['N','M','Z','B']:
-      #print( 7.0/8.0, (dec(size+1) / fullspeed) * 0.5 + 0.5 )
-      #fullspeed *= max( 7.0/8.0, (dec(size+1) / fullspeed) * 0.6 + 0.4 )
-      fullspeed *= 7.0/8.0
+   # Modulate full speed based on the speed stat
+   fullspeed = dec( size + 1.0 - stats["speed"])
 
-   r = 0.15*pow(2,-((size-1)-2.5)/2.5)
+   # Proportion of accel vs speed, defaults so that it is 1:1 at size 1.
+   r = 0.5*pow(2,-((size-1)-5)/5) / PHYSICS_SPEED_DAMP
 
-   if line=='T':
-      r *= 1.75
-   elif line=='K':
-      r *= 1.75
-   elif line=='M':
-      r *= 0.7
+   # Modulate ratio based on outfit
+   r *= line_stats[line]["ratio"]
 
    speed = fullspeed*(1.0-r)
    accel = fullspeed*r*PHYSICS_SPEED_DAMP
 
-   if line=='K':
-      speed *= 1.05
-      accel *= 1.3
-   elif line=='Z':
-      speed *= 0.7
-      accel *= 0.7
-   elif line=='B':
-      speed *= 0.55
-      accel *= 0.55
-
-   fullspeed = speed + accel/PHYSICS_SPEED_DAMP
-
-   #turn=speed/5.0+acc/4.0
-   turn = TURN_CT * fullspeed * pow(1.0*accel/speed,AG_EXP)
+   turn = TURN_CT * fullspeed * pow(1.0*accel/speed,AG_EXP) * stats["turn"]
    return {
            "speed":fmt(speed),
            "accel":fmt(accel),
