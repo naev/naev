@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import math
 from sys import argv,stderr,stdout
 from outfit import outfit
 from getconst import PHYSICS_SPEED_DAMP
@@ -106,11 +107,16 @@ line_stats = {
 
 ALPHA, BETA = 1.11, 0.06
 
-def dec(n):
+def dec_i(n):
    if n<=1:
       return 400.0
    else:
-      return dec(n-1)/(ALPHA+BETA*(n-1))
+      return dec_i(n-1)/(ALPHA+BETA*(n-1))
+
+def dec(f):
+   n = math.floor(f)
+   q = f-n
+   return pow(dec_i(n),1-q)*pow(dec_i(n+1),q)
 
 def ls2vals(line_size):
    if line_size is None:
