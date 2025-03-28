@@ -117,7 +117,8 @@ def main():
          e.append(el)
          break
    else:
-      print >>stderr,"No composite field found, left as is."
+      pass
+      #print >>stderr,"No composite field found, left as is."
 
    print >>stderr,nam
    o.write(stdout)
@@ -125,12 +126,8 @@ def main():
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)!=1:
       nam=path.basename(argv[0])
-      print >>stderr, "usage:",nam,'<output_path>'
+      print >>stderr, "usage:",nam
       print >>stderr, "  Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout> and the name the output should have on <stderr>."
    else:
-      ign=argv[1:]
-      if ign!=[]:
-         print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
-
       main()
       exit(0)
