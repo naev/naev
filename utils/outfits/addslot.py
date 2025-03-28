@@ -20,11 +20,11 @@ classes.add('Bulk Freighter')
 #as_is={"Previous Generation Small Systems","Previous Generation Medium Systems","Previous Generation Large Systems","Dummy Systems"}
 subst={
    "Unicorp D-72 Heavy Plating":"Unicorp D-58 Heavy Plating",
-   "unicorp_d9_light_plating":"unicorp_d2_light_plating",
-   "unicorp_d38_medium_plating":"unicorp_d23_medium_plating",
-   "sk_light_combat_plating":"sk_ultralight_combat_plating",
-   "sk_mediumheavy_combat_plating":"sk_medium_combat_plating",
-   "sk_superheavy_combat_plating":"sk_heavy_combat_plating",
+   "Unicorp D-9 Light Plating":"unicorp D-2 Light Plating",
+   "Unicorp D-38 Medium Plating":"unicorp D-23 Medium Plating",
+   "SK Light Combat Plating":"SK Ultralight Combat Plating",
+   "SK Mediumheavy Combat Plating":"SK Medium Combat Plating",
+   "SK Superheavy Combat Plating":"SK Heavy Combat Plating",
 }
 as_is={"Dummy Plating","Patchwork Light Plating","Patchwork Medium Plating"}
 
