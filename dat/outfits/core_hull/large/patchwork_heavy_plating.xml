@@ -1,7 +1,7 @@
-<outfit name="Patchwork Heavy Plating (deprecated)">
+<outfit name="Patchwork Heavy Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>large</size>
   <priority>3</priority>
   <mass>600</mass>
@@ -10,8 +10,12 @@
   <gfx_store>plating_patchwork.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>30</cargo>
-  <absorb>46</absorb>
-  <armour>800</armour>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 600, 600},
+   { "cargo", 30, 0},
+   { "absorb", 46, 0},
+   { "armour", 800, 0},
+}</lua_inline>
  </specific>
 </outfit>

@@ -1,7 +1,7 @@
-<outfit name="Dummy Plating">
+<outfit name="Dummy Plating (deprecated)">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <slot prop="hull">structure</slot>
   <size>small</size>
   <mass>24</mass>
   <price>0</price>

@@ -1,17 +1,20 @@
-<outfit name="S&amp;K Medium Combat Plating (deprecated)">
+<outfit name="S&amp;K Medium Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>
-  <mass>140</mass>
-  <price>360000</price>
+  <price>320000</price>
   <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
   <gfx_store>combat_hull_m.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>12</cargo>
-  <absorb>30</absorb>
-  <armour>320</armour>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 140, 170},
+   { "cargo", 12, 6},
+   { "absorb", 30, 16},
+   { "armour", 320, 340},
+}</lua_inline>
  </specific>
 </outfit>

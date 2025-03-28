@@ -1,17 +1,22 @@
-<outfit name="S&amp;K Ultralight Combat Plating (deprecated)">
+<outfit name="S&amp;K Ultralight Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>
   <mass>30</mass>
-  <price>130000</price>
+  <price>120000</price>
   <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Ultralight Combat Plating configuration is a product made for light fighters and in-system patrol craft, providing optimum protection.</description>
   <gfx_store>combat_hull_t.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
   <cargo>2</cargo>
-  <absorb>5</absorb>
-  <armour>70</armour>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 30, 30},
+   { "cargo", 2, 2},
+   { "absorb", 5, 10},
+   { "armour", 70, 40},
+}</lua_inline>
  </specific>
 </outfit>

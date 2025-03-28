@@ -1,8 +1,8 @@
-<outfit name="Nexus Light Stealth Plating">
+<outfit name="Nexus Light Stealth Plating (deprecated)">
  <general>
   <shortname>N. Light Stealth Plating</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <slot prop="hull">structure</slot>
   <size>small</size>
   <priority>7</priority>
   <mass>50</mass>
@@ -11,13 +11,9 @@
   <gfx_store>stealth_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 50, 50},
-   { "cargo", 7, 0},
-   { "absorb", 3, 0},
-   { "armour", 60, 0},
-   { "ew_hide", -15, 0},
-}</lua_inline>
+  <cargo>7/0</cargo>
+  <absorb>3/0</absorb>
+  <armour>60/0</armour>
+  <ew_hide>-15/0</ew_hide>
  </specific>
 </outfit>

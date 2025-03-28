@@ -1,7 +1,7 @@
-<outfit name="S&amp;K Medium Cargo Hull">
+<outfit name="S&amp;K Medium Cargo Hull (deprecated)">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
   <mass>140</mass>
@@ -10,14 +10,10 @@
   <gfx_store>cargo_hull_m.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 140, 140},
-   { "cargo", 120, 0},
-   { "absorb", 26, 0},
-   { "armour", 180, 0},
-   { "cargo_inertia", -25, 0},
-   { "cargo_mod", 25, 0},
-}</lua_inline>
+  <cargo>120/0</cargo>
+  <absorb>26/0</absorb>
+  <armour>180/0</armour>
+  <cargo_inertia>-25/0</cargo_inertia>
+  <cargo_mod>25/0</cargo_mod>
  </specific>
 </outfit>

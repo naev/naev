@@ -1,8 +1,8 @@
-<outfit name="Nexus Medium Stealth Plating">
+<outfit name="Nexus Medium Stealth Plating (deprecated)">
  <general>
   <shortname>N. Medium Stealth Plating</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <slot prop="hull">structure</slot>
   <size>medium</size>
   <mass>110</mass>
   <price>270000</price>
@@ -11,13 +11,9 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 110, 110},
-   { "cargo", 10, 0},
-   { "absorb", 27, 0},
-   { "armour", 160, 0},
-   { "ew_hide", -15, 0},
-}</lua_inline>
+  <cargo>10/0</cargo>
+  <absorb>27/0</absorb>
+  <armour>160/0</armour>
+  <ew_hide>-15/0</ew_hide>
  </specific>
 </outfit>
