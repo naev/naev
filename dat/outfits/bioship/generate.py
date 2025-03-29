@@ -176,6 +176,255 @@ for nam,temp,gfx,output_pref,outputs in [
    } ).run( [ N_(output_pref+" Gene Drive "+s) for s in outputs ] )
 
 
+##
+# Cortex
+#
+
+## Cortex recipe:
+##    "price":        lerpr(     <S&K>/2 , <S&K>),
+##    "absorb":       lerpr( <Unicorp>-3 , <S&K>-3 ),
+##    "armour":       lerp(    <Unicorp> , <S&K> )
+##    "cargo":        lerpr(       <S&K> , (<S&K>+<Unicorp>)/2 ),
+##    "mass":         <S&K>,
+##    "armour":       lerp(    <Unicorp> , <S&K> )
+
+# Perlevis Cortex  ==>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "small",
+    "price":        lerpr(   130e3/2, 130e3 ),
+    "mass":         30,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_t.webp",
+    "cargo":        lerpr(   2, 6 ),
+    "absorb":       lerpr(   0, 2 ),
+    "armour":       lerp(   50, 70 )
+} ).run( [
+    N_("Perlevis Cortex I"),
+    N_("Perlevis Cortex II"),
+] )
+
+# Laevis Cortex  =>  (1) Unicorp_d9  (2) S&K Light Combat Plating
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "small",
+    "price":        lerpr( 240e3/2, 240e3 ),
+    "mass":         60,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_s.webp",
+    "cargo":        lerpr(   4, 9 ),
+    "absorb":       lerpr(   6, 12 ),
+    "armour":       lerp(   90, 110 )
+} ).run( [
+    N_("Laevis Cortex I"),
+    N_("Laevis Cortex II"),
+] )
+
+# Mediocris Cortex  =>  (1) Unicorp_d23  (2) S&K Medium Combat Plating
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "medium",
+    "price":        lerpr(  360e3/2, 360e3 ),
+    "mass":         140,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_m.webp",
+    "cargo":        lerpr(  12,  19 ),
+    "absorb":       lerpr(  20,  27 ),
+    "armour":       lerp(  220, 320 )
+} ).run( [
+    N_("Mediocris Cortex I"),
+    N_("Mediocris Cortex II")
+] )
+
+# Largus Cortex  =>  (1) Unicorp_d38  (2) S&K Medium-Heavy Combat Plating
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "medium",
+    "price":        lerpr(  640e3/2, 640e3 ),
+    "mass":         310,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_l.webp",
+    "cargo":        lerpr(  18,  34 ),
+    "absorb":       lerpr(  35,  43 ),
+    "armour":       lerp(  470, 660 )
+} ).run( [
+    N_("Largus Cortex I"),
+    N_("Largus Cortex II"),
+    N_("Largus Cortex III"),
+] )
+
+# Ponderosus Cortex  =>  (1) Unicorp_d58  (2) S&K Heavy Combat Plating
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "large",
+    "price":        lerpr(  2.2e6/2, 2.2e6 ),
+    "mass":         600,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_h.webp",
+    "cargo":        lerpr(  55,   68 ),
+    "absorb":       lerpr(  55,   63 ),
+    "armour":       lerp( 1200, 1650 ),
+} ).run( [
+    N_("Ponderosus Cortex I"),
+    N_("Ponderosus Cortex II"),
+    N_("Ponderosus Cortex III"),
+    N_("Ponderosus Cortex IV"),
+] )
+
+# Immanis Cortex  =>  (1) Unicorp_d72  (2) S&K Superheavy Combat Plating
+BioOutfit( "cortex.xml.template", {
+    "typename":     typename["hull"],
+    "size":         "large",
+    "price":        lerpr(   2.9e6/2, 2.9e6 ),
+    "mass":         1250,
+    "desc":         desc["hull"],
+    "gfx_store":    "organic_hull_x.webp",
+    "cargo":        lerpr(  80,   120 ),
+    "absorb":       lerpr(  69,    77 ),
+    "armour":       lerpr( 1700, 2400 )
+} ).run( [
+    N_("Immanis Cortex I"),
+    N_("Immanis Cortex II"),
+    N_("Immanis Cortex III"),
+] )
+
+
+##
+# Cerebrum
+#
+
+## Cerebrum recipe part 1 (small):
+##    "price":        lerpr(  <orion>, <orion>*1.5 ),
+##    "mass":         lerpr(  <orion>, <orion>*1.25 ),
+##    "shield" :      lerp(   <orion>, <orion>*1.25 ),
+##    "shield_regen": lerp(   <orion>, <orion>*1.25 ),
+
+## Cerebrum recipe part 1 (medium/large):
+##    "price":        lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
+##    "mass":         lerpr(  <orion>, <orion>+1/2*(<shield_booster>+<shield capacitor>)),
+##    "shield":       lerp(   <orion>, <orion>+1/2*<shield capacitor> ),
+##    "shield_regen": lerp(   <orion>, <orion>+1/2*<shield_booster> ),
+
+## Cerebrum recipe part 2:
+##    "energy" :      lerp(   <orion>, <orion>*1.25 ),
+##    "energy_regen": lerp(   <orion>, <orion>*1.25 ),
+##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
+
+# Perleve Cerebrum  =>  Orion_2301
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "small",
+    "price":        lerpr(   120e3, 1.5*120e3 ),
+    "mass":         lerpr(      14, 14*1.25*0.99999 ),
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_s1.webp",
+    "cpu":          lerpr(   5,   6 ),
+    "shield" :      lerp(  200, 250 ),
+    "shield_regen": lerp(    7,   9 ),
+    "energy":       lerp(  200, 250 ),
+    "energy_regen": lerp(   10,  13 ), # was 19 (-33%)
+} ).run( [
+    N_("Perleve Cerebrum I"),
+    N_("Perleve Cerebrum II"),
+] )
+
+# Laevum Cerebrum  =>  Orion_3701
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "small",
+    "price":        lerpr(   210e3, 1.5*210e3 ),
+    "mass":         lerpr(  75, 75*1.25 ),
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_s2.webp",
+    "cpu":          lerpr(  24,  32 ),
+    "shield" :      lerp(  250, 312 ), # was 310
+    "shield_regen": lerp(    8,  10 ),
+    "energy":       lerp(  400, 500 ), # was 400
+    "energy_regen": lerp(   21,  26 ), # was 34 (-25%)
+} ).run( [
+    N_("Laevum Cerebrum I"),
+    N_("Laevum Cerebrum II"),
+] )
+
+# Mediocre Cerebrum -> Orion_4801
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "medium",
+    "price":        lerpr(   330e3 , 330e3+(185e3+75e3)/2),
+    "mass":         lerpr(90,90+(56+60)/2),
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_m1.webp",
+    "cpu":          lerpr(  48,   100 ),
+    "shield" :      lerp(  450,   550 ),
+    "shield_regen": lerp(   10,    13 ),
+    "energy":       lerp(  750,   938 ), # was 900
+    "energy_regen": lerp(   33, 41.25 ), # was 56 (-25%)
+} ).run( [
+    N_("Mediocre Cerebrum I"),
+    N_("Mediocre Cerebrum II"),
+] )
+
+# Largum Cerebrum -> Orion_5501
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "medium",
+    "price":        lerpr(   600e3, 600e3+(185e3+75e3)/2 ),
+    "mass":         lerpr(     270,        270+(56+60)/2 ),
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_m2.webp",
+    "cpu":          lerpr( 100,   200 ),
+    "shield" :      lerp(  580,   680 ), # was 700
+    "shield_regen": lerp(   12,    15 ), # was 14
+    "energy":       lerp( 1600,  2000 ), # was 1800
+    "energy_regen": lerp(   53, 66.25 ), # was 87 (-25%)
+} ).run( [
+    N_("Largum Cerebrum I"),
+    N_("Largum Cerebrum II"),
+] )
+
+# Ponderosum Cerebrum -> Orion_8601
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "large",
+    "price":        lerpr( 3e6, 3e6+(220e3+260e3)/2 ),
+    "mass":         lerpr( 540,     540+(120+120)/2 ),
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_l1.webp",
+    "cpu":          lerpr( 100,  200 ),
+    "shield" :      lerp(  850, 1050 ), # was already 1050
+    "shield_regen": lerp(   15,   21 ), # was 19
+    "energy":       lerp( 2460, 3075 ), # was 3375
+    "energy_regen": lerp(  66,  82.5 ), # was 135
+} ).run( [
+    N_("Ponderosum Cerebrum I"),
+    N_("Ponderosum Cerebrum II"),
+    N_("Ponderosum Cerebrum III"),
+] )
+
+# Immane Cerebrum -> Orion_9901
+BioOutfit( "cerebrum.xml.template", {
+    "typename":     typename["brain"],
+    "size":         "large",
+    "price":        lerpr(  4e6, 4e6+(220e3+260e3)/2 ),
+    "mass":         lerpr( 1300,    1300+(120+120)/2 ), # was 1400
+    "desc":         desc["brain"],
+    "gfx_store":    "organic_core_l2.webp",
+    "cpu":          lerpr( 370*3, 600*3 ),
+    "shield" :      lerp(   1100,  1300 ),
+    "shield_regen": lerp(     18,    24 ),
+    "energy":       lerp(   3840,  4800 ), # was 5250
+    "energy_regen": lerp(    140,   175 ), # was 170
+} ).run( [
+    N_("Immane Cerebrum I"),
+    N_("Immane Cerebrum II"),
+    N_("Immane Cerebrum III"),
+] )
+
+
+##
+# Weapons
+#
+
 # Stinger  =>  Plasma Blaster MK1  &  MK2
 extrapol=(0.25,0.75)
 follow=(0.5,1.0)
@@ -207,58 +456,6 @@ BioOutfit( "weapon.xml.template", {
     N_("Stinger Organ I"),
     N_("Stinger Organ II"),
     N_("Stinger Organ III"),
-] )
-
-# Perleve Cerebrum  =>  Orion_2301
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "small",
-    "price":        lerpr(   120e3, 1.5*120e3 ),
-    "mass":         lerpr(      14, 14*1.25*0.99999 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_s1.webp",
-    "cpu":          lerpr(   5,   6 ),
-    "shield" :      lerp(  200, 250 ),
-    "shield_regen": lerp(    7,   9 ),
-    "energy":       lerp(  200, 250 ),
-    "energy_regen": lerp(   10,  13 ), # was 19 (-33%)
-} ).run( [
-    N_("Perleve Cerebrum I"),
-    N_("Perleve Cerebrum II"),
-] )
-
-# Perlevis Cortex  ==>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
-BioOutfit( "cortex.xml.template", {
-    "typename":     typename["hull"],
-    "size":         "small",
-    "price":        lerpr(   130e3/2, 130e3 ),
-    "mass":         30,
-    "desc":         desc["hull"],
-    "gfx_store":    "organic_hull_t.webp",
-    "cargo":        lerpr(   2, 6 ),
-    "absorb":       lerpr(   0, 2 ),
-    "armour":       lerp(   50, 70 )
-} ).run( [
-    N_("Perlevis Cortex I"),
-    N_("Perlevis Cortex II"),
-] )
-
-# Laevum Cerebrum  =>  Orion_3701
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "small",
-    "price":        lerpr(   210e3, 1.5*210e3 ),
-    "mass":         lerpr(  75, 75*1.25 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_s2.webp",
-    "cpu":          lerpr(  24,  32 ),
-    "shield" :      lerp(  250, 312 ), # was 310
-    "shield_regen": lerp(    8,  10 ),
-    "energy":       lerp(  400, 500 ), # was 400
-    "energy_regen": lerp(   21,  26 ), # was 34 (-25%)
-} ).run( [
-    N_("Laevum Cerebrum I"),
-    N_("Laevum Cerebrum II"),
 ] )
 
 # Talon  =>  Plasma Blaster mk2  &  Plasma Cluster
@@ -305,91 +502,6 @@ BioOutfit( "weapon.xml.template", {
     N_("Talon Organ II"),
     N_("Talon Organ III"),
     N_("Talon Organ IV"),
-] )
-
-# Laevis Cortex  =>  (1) Unicorp_d9  (2) S&K Light Combat Plating
-BioOutfit( "cortex.xml.template", {
-    "typename":     typename["hull"],
-    "size":         "small",
-    "price":        lerpr( 240e3/2, 240e3 ),
-    "mass":         60,
-    "desc":         desc["hull"],
-    "gfx_store":    "organic_hull_s.webp",
-    "cargo":        lerpr(   4, 9 ),
-    "absorb":       lerpr(   6, 12 ),
-    "armour":       lerp(   90, 110 )
-} ).run( [
-    N_("Laevis Cortex I"),
-    N_("Laevis Cortex II"),
-] )
-
-# Mediocre Cerebrum -> Orion_4801
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "medium",
-    "price":        lerpr(   330e3 , 330e3+(185e3+75e3)/2),
-    "mass":         lerpr(90,90+(56+60)/2),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_m1.webp",
-    "cpu":          lerpr(  48,   100 ),
-    "shield" :      lerp(  450,   550 ),
-    "shield_regen": lerp(   10,    13 ),
-    "energy":       lerp(  750,   938 ), # was 900
-    "energy_regen": lerp(   33, 41.25 ), # was 56 (-25%)
-} ).run( [
-    N_("Mediocre Cerebrum I"),
-    N_("Mediocre Cerebrum II"),
-] )
-
-# Mediocris Cortex  =>  (1) Unicorp_d23  (2) S&K Medium Combat Plating
-BioOutfit( "cortex.xml.template", {
-    "typename":     typename["hull"],
-    "size":         "medium",
-    "price":        lerpr(  360e3/2, 360e3 ),
-    "mass":         140,
-    "desc":         desc["hull"],
-    "gfx_store":    "organic_hull_m.webp",
-    "cargo":        lerpr(  12,  19 ),
-    "absorb":       lerpr(  20,  27 ),
-    "armour":       lerp(  220, 320 )
-} ).run( [
-    N_("Mediocris Cortex I"),
-    N_("Mediocris Cortex II")
-] )
-
-# Largum Cerebrum -> Orion_5501
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "medium",
-    "price":        lerpr(   600e3, 600e3+(185e3+75e3)/2 ),
-    "mass":         lerpr(     270,        270+(56+60)/2 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_m2.webp",
-    "cpu":          lerpr( 100,   200 ),
-    "shield" :      lerp(  580,   680 ), # was 700
-    "shield_regen": lerp(   12,    15 ), # was 14
-    "energy":       lerp( 1600,  2000 ), # was 1800
-    "energy_regen": lerp(   53, 66.25 ), # was 87 (-25%)
-} ).run( [
-    N_("Largum Cerebrum I"),
-    N_("Largum Cerebrum II"),
-] )
-
-# Largus Cortex  =>  (1) Unicorp_d38  (2) S&K Medium-Heavy Combat Plating
-BioOutfit( "cortex.xml.template", {
-    "typename":     typename["hull"],
-    "size":         "medium",
-    "price":        lerpr(  640e3/2, 640e3 ),
-    "mass":         310,
-    "desc":         desc["hull"],
-    "gfx_store":    "organic_hull_l.webp",
-    "cargo":        lerpr(  18,  34 ),
-    "absorb":       lerpr(  35,  43 ),
-    "armour":       lerp(  470, 660 )
-} ).run( [
-    N_("Largus Cortex I"),
-    N_("Largus Cortex II"),
-    N_("Largus Cortex III"),
 ] )
 
 # Tentacle Organ  =>  .. complicated ..
@@ -446,75 +558,4 @@ BioOutfit( "weapon.xml.template", {
     N_("Tentacle Organ IV")
 ] )
 
-# Ponderosum Cerebrum -> Orion_8601
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "large",
-    "price":        lerpr( 3e6, 3e6+(220e3+260e3)/2 ),
-    "mass":         lerpr( 540,     540+(120+120)/2 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_l1.webp",
-    "cpu":          lerpr( 100,  200 ),
-    "shield" :      lerp(  850, 1050 ), # was already 1050
-    "shield_regen": lerp(   15,   21 ), # was 19
-    "energy":       lerp( 2460, 3075 ), # was 3375
-    "energy_regen": lerp(  66,  82.5 ), # was 135
-} ).run( [
-    N_("Ponderosum Cerebrum I"),
-    N_("Ponderosum Cerebrum II"),
-    N_("Ponderosum Cerebrum III"),
-] )
 
-# Ponderosus Cortex  =>  (1) Unicorp_d58  (2) S&K Heavy Combat Plating
-BioOutfit( "cortex.xml.template", {
-    "typename":     typename["hull"],
-    "size":         "large",
-    "price":        lerpr(  2.2e6/2, 2.2e6 ),
-    "mass":         600,
-    "desc":         desc["hull"],
-    "gfx_store":    "organic_hull_h.webp",
-    "cargo":        lerpr(  55,   68 ),
-    "absorb":       lerpr(  55,   63 ),
-    "armour":       lerp( 1200, 1650 ),
-} ).run( [
-    N_("Ponderosus Cortex I"),
-    N_("Ponderosus Cortex II"),
-    N_("Ponderosus Cortex III"),
-    N_("Ponderosus Cortex IV"),
-] )
-
-# Immane Cerebrum -> Orion_9901
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "large",
-    "price":        lerpr(  4e6, 4e6+(220e3+260e3)/2 ),
-    "mass":         lerpr( 1300,    1300+(120+120)/2 ), # was 1400
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_l2.webp",
-    "cpu":          lerpr( 370*3, 600*3 ),
-    "shield" :      lerp(   1100,  1300 ),
-    "shield_regen": lerp(     18,    24 ),
-    "energy":       lerp(   3840,  4800 ), # was 5250
-    "energy_regen": lerp(    140,   175 ), # was 170
-} ).run( [
-    N_("Immane Cerebrum I"),
-    N_("Immane Cerebrum II"),
-    N_("Immane Cerebrum III"),
-] )
-
-# Immanis Cortex  =>  (1) Unicorp_d72  (2) S&K Superheavy Combat Plating
-BioOutfit( "cortex.xml.template", {
-    "typename":     typename["hull"],
-    "size":         "large",
-    "price":        lerpr(   2.9e6/2, 2.9e6 ),
-    "mass":         1250,
-    "desc":         desc["hull"],
-    "gfx_store":    "organic_hull_x.webp",
-    "cargo":        lerpr(  80,   120 ),
-    "absorb":       lerpr(  69,    77 ),
-    "armour":       lerpr( 1700, 2400 )
-} ).run( [
-    N_("Immanis Cortex I"),
-    N_("Immanis Cortex II"),
-    N_("Immanis Cortex III"),
-] )
