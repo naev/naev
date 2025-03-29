@@ -30,7 +30,7 @@ class _outfit():
          res=self.name()
       return res
 
-   def autostack(self):
+   def autostack(self,doubled=False):
       def text2val(s):
          inp=s.split('/',1)
          try:
@@ -43,7 +43,9 @@ class _outfit():
          res=text2val(e.text)
          if res is not None:
             (a,b)=res
-            e.text=str(a+b)
+            if doubled:
+               a+=b
+            e.text=str(a)
 
    def __iter__(self):
       def _subs(r):
@@ -123,8 +125,8 @@ def outfit(fil):
 if __name__=="__main__":
    from sys import argv
    if len(argv)>1:
-      print "Usage:",argv[0].split('/')[-1]
-      print "  Reads a xml/mvx in input, outputs its input stacked with itself."
+      stderr.write("Usage: "+argv[0].split('/')[-1]+'\n')
+      stderr.write("  Reads a xml/mvx in input, outputs its input stacked with itself.\n")
    else:
       O=outfit(stdin)
       O.autostack()
