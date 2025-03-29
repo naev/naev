@@ -1063,9 +1063,8 @@ void land_updateMainTab( void )
    l += scnprintf( &buf[l], sizeof( buf ) - l, _( "%s (%s system)" ),
                    spob_name( land_spob ), _( cur_system->name ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n" );
-   l +=
-      scnprintf( &buf[l], sizeof( buf ) - l, _( "%s (%s-class)" ),
-                 spob_getClassName( land_spob->class ), _( land_spob->class ) );
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "%s",
+                   space_className( land_spob ) );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    land_spob->presence.faction >= 0
                       ? _( faction_name( land_spob->presence.faction ) )

@@ -10,6 +10,5 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy>200</energy>
   <lua>outfits/core_system/small/milspec_orion_2301_core_system.lua</lua></specific>
 </outfit>
