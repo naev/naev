@@ -231,7 +231,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
       /* Se whether to turn on or off. */
       if ( pos->flags & PILOTOUTFIT_ISON ) {
          /* Weapons are handled separately. */
-         if ( outfit_isWeapon( o ) && ( o->lua_ontoggle == LUA_NOREF ) )
+         if ( outfit_isWeapon( o ) && ( outfit_luaOntoggle( o ) == LUA_NOREF ) )
             continue;
 
          if ( pos->state == PILOT_OUTFIT_OFF ) {
@@ -335,7 +335,7 @@ void pilot_weapSetUpdate( Pilot *p )
             if ( pilot_outfitRange( p, o ) / outfit_speed( o ) < time )
                continue;
          } else if ( outfit_isLauncher( o ) ) {
-            if ( o->u.lau.duration * p->stats.launch_range *
+            if ( outfit_launcherDuration( o ) * p->stats.launch_range *
                     p->stats.weapon_range <
                  time )
                continue;
@@ -572,7 +572,7 @@ const char *pilot_weapSetName( Pilot *p, int id )
       if ( o == NULL )
          base = _( "Empty" );
       else if ( not_same == 0 )
-         base = _( o->name );
+         base = outfit_name( o );
       else if ( has_weap && !has_util && !has_stru )
          base = p_( "weapset", "Weapons" );
       else if ( !has_weap && has_util && !has_stru )
@@ -892,7 +892,7 @@ void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
 
    /* Lua test to stop beam. */
    /*
-      if ((w->outfit->lua_onshoot!= LUA_NOREF) &&
+      if ((outfit_luaOnshoot(w->outfit)!= LUA_NOREF) &&
       !pilot_outfitLOnshoot( p, w, 0 ))
       return;
       */
@@ -902,10 +902,10 @@ void pilot_stopBeam( const Pilot *p, PilotOutfitSlot *w )
 
    /* Beam duration used. Compensate for the fact its duration might have
     * been shortened by heat. */
-   used = w->outfit->u.bem.duration - w->timer;
+   used = outfit_duration( w->outfit ) - w->timer;
 
-   w->timer    = rate_mod * MAX( w->outfit->u.bem.min_delay,
-                                 ( used / w->outfit->u.bem.duration ) *
+   w->timer    = rate_mod * MAX( outfit_beamMinDelay( w->outfit ),
+                                 ( used / outfit_duration( w->outfit ) ) *
                                     outfit_delay( w->outfit ) );
    w->u.beamid = 0;
    w->state    = PILOT_OUTFIT_OFF;
@@ -929,13 +929,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 
    /* Beam weapons */
    if ( outfit_isBeam( o ) ) {
-      double range_mod;
-      if ( o->type == OUTFIT_TYPE_BEAM )
-         range_mod = parent->stats.fwd_range * parent->stats.weapon_range;
-      else
-         range_mod = parent->stats.tur_range * parent->stats.weapon_range;
-
-      if ( dist <= o->u.bem.range * range_mod )
+      if ( dist <= pilot_outfitRange( parent, o ) )
          return INFINITY;
       return -1.; /* Impossible. */
    }
@@ -946,7 +940,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 
    /* Missiles use absolute velocity while bolts and unguided rockets use
     * relative vel */
-   if ( outfit_isLauncher( o ) && o->u.lau.ai != AMMO_AI_UNGUIDED )
+   if ( outfit_isLauncher( o ) && outfit_launcherAI( o ) != AMMO_AI_UNGUIDED )
       vec2_cset( &approach_vector, -vel->x, -vel->y );
    else
       vec2_cset( &approach_vector, VX( parent->solid.vel ) - vel->x,
@@ -1139,7 +1133,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
          return 0;
 
       /* Lua test. */
-      if ( ( aim >= 0 ) && ( w->outfit->lua_onshoot != LUA_NOREF ) &&
+      if ( ( aim >= 0 ) && ( outfit_luaOnshoot( w->outfit ) != LUA_NOREF ) &&
            !pilot_outfitLOnshoot( p, w ) )
          return 0;
 
@@ -1165,7 +1159,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
          return 0;
 
       /* Lua test. */
-      if ( ( aim >= 0 ) && ( w->outfit->lua_onshoot != LUA_NOREF ) &&
+      if ( ( aim >= 0 ) && ( outfit_luaOnshoot( w->outfit ) != LUA_NOREF ) &&
            !pilot_outfitLOnshoot( p, w ) )
          return 0;
 
@@ -1176,7 +1170,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
             beam_start( w, p->solid.dir, &vp, &p->solid.vel, p, target, aim );
       }
 
-      w->timer = w->outfit->u.bem.duration;
+      w->timer = outfit_duration( w->outfit );
       if ( pilot_isPlayer( p ) &&
            !outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) )
          player_autonavReset( 1. );
@@ -1204,19 +1198,20 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
       }
       // if ((w->outfit->u.lau.ai != AMMO_AI_UNGUIDED) &&
       // !((target->type==TARGET_PILOT) || (target->type==TARGET_ASTEROID)))
-      if ( ( w->outfit->u.lau.ai != AMMO_AI_UNGUIDED ) &&
+      if ( ( outfit_launcherAI( w->outfit ) != AMMO_AI_UNGUIDED ) &&
            ( target->type != TARGET_PILOT ) )
          return 0;
 
       /* Lua test. */
-      if ( ( aim >= 0 ) && ( w->outfit->lua_onshoot != LUA_NOREF ) &&
+      if ( ( aim >= 0 ) && ( outfit_luaOnshoot( w->outfit ) != LUA_NOREF ) &&
            !pilot_outfitLOnshoot( p, w ) )
          return 0;
 
       energy = outfit_energy( w->outfit ) * energy_mod;
       p->energy -= energy;
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) ) {
-         for ( int i = 0; i < w->outfit->u.lau.shots; i++ )
+         int n = outfit_shots( w->outfit );
+         for ( int i = 0; i < n; i++ )
             weapon_add( w, NULL, p->solid.dir, &vp, &vv, p, target, time, aim );
       }
 
@@ -1244,7 +1239,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
          return 0;
 
       /* Lua test. */
-      if ( ( aim >= 0 ) && ( w->outfit->lua_onshoot != LUA_NOREF ) &&
+      if ( ( aim >= 0 ) && ( outfit_luaOnshoot( w->outfit ) != LUA_NOREF ) &&
            !pilot_outfitLOnshoot( p, w ) )
          return 0;
 
@@ -1256,14 +1251,14 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 
       /* Create the escort. */
       if ( !outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ) )
-         escort_create( p, w->outfit->u.bay.ship, &vp, &p->solid.vel,
+         escort_create( p, outfit_bayShip( w->outfit ), &vp, &p->solid.vel,
                         p->solid.dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit -= outfit_massAmmo( w->outfit );
       pilot_updateMass( p );
    } else
-      WARN( _( "Shooting unknown weapon type: %s" ), w->outfit->name );
+      WARN( _( "Shooting unknown weapon type: %s" ), outfit_name( w->outfit ) );
 
    /* Reset timer. */
    w->timer += rate_mod * outfit_delay( w->outfit );
@@ -1288,7 +1283,7 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 void pilot_getRateMod( double *rate_mod, double *energy_mod, const Pilot *p,
                        const Outfit *o )
 {
-   switch ( o->type ) {
+   switch ( outfit_type( o ) ) {
    case OUTFIT_TYPE_BOLT:
    case OUTFIT_TYPE_BEAM:
       *rate_mod   = 1. / ( p->stats.fwd_firerate *
@@ -1408,11 +1403,7 @@ void pilot_weaponAuto( Pilot *p )
          continue;
 
       if ( isplayer ) {
-         /* Manually defined group preempts others. */
-         if ( o->group )
-            id = o->group +
-                 2; /* Start counting after primary /secondary weapon sets. */
-         else if ( outfit_isSecondary( o ) )
+         if ( outfit_isSecondary( o ) )
             id = 1; /* Secondary override. */
          /* Bolts and beams. */
          else if ( !outfit_isProp( o, OUTFIT_PROP_WEAP_POINTDEFENSE ) &&
@@ -1509,14 +1500,14 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o, int natural )
       return 0;
 
    if ( outfit_isAfterburner( o->outfit ) ) { /* Afterburners */
-      if ( ( o->outfit->lua_ontoggle != LUA_NOREF ) &&
+      if ( ( outfit_luaOntoggle( o->outfit ) != LUA_NOREF ) &&
            !pilot_outfitLOntoggle( p, o, 0, natural ) )
          return 0;
       o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
       pilot_afterburnOver( p );
 
    } else if ( outfit_isBeam( o->outfit ) ) {
-      if ( ( o->outfit->lua_ontoggle != LUA_NOREF ) &&
+      if ( ( outfit_luaOntoggle( o->outfit ) != LUA_NOREF ) &&
            !pilot_outfitLOntoggle( p, o, 0, natural ) )
          return 0;
       o->flags &= ~PILOTOUTFIT_DYNAMIC_FLAGS;
@@ -1530,7 +1521,7 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o, int natural )
    } else if ( !( o->flags & PILOTOUTFIT_TOGGLEABLE ) )
       /* Case of a mod we can't toggle. */
       return 0;
-   else if ( o->outfit->lua_ontoggle != LUA_NOREF ) {
+   else if ( outfit_luaOntoggle( o->outfit ) != LUA_NOREF ) {
       int ret = pilot_outfitLOntoggle( p, o, 0, natural );
       if ( ret ) {
          if ( outfit_isWeapon( o->outfit ) )
@@ -1563,7 +1554,7 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *pos )
       return 0;
    if ( outfit_isAfterburner( pos->outfit ) )
       pilot_afterburn( p );
-   else if ( pos->outfit->lua_ontoggle != LUA_NOREF ) {
+   else if ( outfit_luaOntoggle( pos->outfit ) != LUA_NOREF ) {
       int ret = pilot_outfitLOntoggle( p, pos, 1, 1 );
       if ( ret && outfit_isWeapon( pos->outfit ) )
          pos->state = PILOT_OUTFIT_ON;
@@ -1641,7 +1632,7 @@ void pilot_afterburn( Pilot *p )
       return;
 
    /* Needs at least enough energy to afterburn fo 0.5 seconds. */
-   if ( p->energy < p->afterburner->outfit->u.afb.energy * 0.5 )
+   if ( p->energy < outfit_energy( p->afterburner->outfit ) * 0.5 )
       return;
 
    /* Turn it on. */
@@ -1655,13 +1646,15 @@ void pilot_afterburn( Pilot *p )
 
       /* @todo Make this part of a more dynamic activated outfit sound system.
        */
-      sound_playPos( p->afterburner->outfit->u.afb.sound_on, p->solid.pos.x,
-                     p->solid.pos.y, p->solid.vel.x, p->solid.vel.y );
+      sound_playPos( outfit_afterburnerSoundOn( p->afterburner->outfit ),
+                     p->solid.pos.x, p->solid.pos.y, p->solid.vel.x,
+                     p->solid.vel.y );
    }
 
    if ( pilot_isPlayer( p ) ) {
       double afb_mod = MIN( 1., pilot_massFactor( player.p ) );
-      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble );
+      spfx_shake( afb_mod *
+                  outfit_afterburnerRumble( player.p->afterburner->outfit ) );
    }
 }
 
@@ -1682,8 +1675,9 @@ void pilot_afterburnOver( Pilot *p )
 
       /* @todo Make this part of a more dynamic activated outfit sound system.
        */
-      sound_playPos( p->afterburner->outfit->u.afb.sound_off, p->solid.pos.x,
-                     p->solid.pos.y, p->solid.vel.x, p->solid.vel.y );
+      sound_playPos( outfit_afterburnerSoundOff( p->afterburner->outfit ),
+                     p->solid.pos.x, p->solid.pos.y, p->solid.vel.x,
+                     p->solid.vel.y );
    }
 }
 

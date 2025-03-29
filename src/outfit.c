@@ -51,6 +51,102 @@
 #define OUTFIT_SHORTDESC_MAX                                                   \
    STRMAX_SHORT /**< Max length of the short description of the outfit. */
 
+#if 0
+/**
+ * @brief A ship outfit, depends radically on the type.
+ */
+typedef struct Outfit {
+   char *name;      /**< Name of the outfit. */
+   char *typename;  /**< Overrides the base type. */
+   char *shortname; /**< Shorter version of the name for GUI and such. */
+   int   rarity;    /**< Rarity of the outfit. */
+   char *filename;  /**< File data was loaded from. */
+
+   /* General specs */
+   OutfitSlot   slot;       /**< Slot the outfit fits into. */
+   unsigned int spid_extra; /**< Can also fit this slot. */
+   char        *license;    /**< Licenses needed to buy it. */
+   char        *cond;       /**< Conditional Lua string. */
+   char        *condstr; /**< Human readable description of the conditional. */
+   double       mass;    /**< How much weapon capacity is needed. */
+   double       cpu;     /**< CPU usage. */
+   char        *limit; /**< Name to limit to one per ship (ignored if NULL). */
+   int         *illegalto;  /**< Factions this outfit is illegal to. */
+   char       **illegaltoS; /**< Temporary buffer to set up illegality. */
+
+   /* Store stuff */
+   credits_t price;       /**< Base sell price. */
+   char     *desc_raw;    /**< Base store description. */
+   char     *summary_raw; /**< Short outfit summary (stored translated). */
+   char     *desc_extra;  /**< Extra description string (if static). */
+   int       priority;    /**< Sort priority, highest first. */
+
+   char       *gfx_store_path; /**< Store graphic path. */
+   glTexture  *gfx_store;      /**< Store graphic. */
+   glTexture **gfx_overlays;   /**< Array (array.h): Store overlay graphics. */
+
+   unsigned int properties; /**< Properties stored bitwise. */
+
+   /* Stats. */
+   ShipStatList *stats; /**< Stat list. */
+
+   /* Tags. */
+   char **tags; /**< Outfit tags. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
+   char *lua_inline; /**< Inline Lua. */
+   nlua_env
+      lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_descextra; /**< Run to get the extra description status. */
+   int
+      lua_onadd; /**< Run when added to a pilot or player swaps to this ship. */
+   int lua_onremove; /**< Run when removed to a pilot or when player swaps away
+                        from this ship. */
+   int lua_init;     /**< Run when pilot enters a system. */
+   int lua_cleanup;  /**< Run when the pilot is erased. */
+   int lua_update;   /**< Run periodically. */
+   int lua_ontoggle; /**< Run when toggled. */
+   int lua_onshoot;  /**< Run when shooting. */
+   int lua_onhit;    /**< Run when pilot takes damage. */
+   int lua_outofenergy;  /**< Run when the pilot runs out of energy. */
+   int lua_onshootany;   /**< Run when pilot shoots ANY weapon. */
+   int lua_onstealth;    /**< Run when pilot toggles stealth. */
+   int lua_onscanned;    /**< Run when the pilot is scanned by another pilot. */
+   int lua_onscan;       /**< Run when the pilot scans another pilot. */
+   int lua_cooldown;     /**< Run when cooldown is started or stopped. */
+   int lua_land;         /**< Run when the player lands. */
+   int lua_takeoff;      /**< Run when the player takes off. */
+   int lua_jumpin;       /**< Run when the player jumps in. */
+   int lua_board;        /**< Run when the player boards a ship. */
+   int lua_keydoubletap; /**< Run when a key is double tapped. */
+   int lua_keyrelease;   /**< Run when a key is released. */
+   /* Weapons only. */
+   int lua_onimpact; /**< Run when weapon hits the enemy. */
+   int lua_onmiss;   /**< Run when weapon particle expires. */
+   /* Independent of slots and pilots. */
+   int lua_price; /**< Determines the "cost" string and whether or not the
+                     player can buy or sell the outfit when available. */
+   int lua_buy;   /**< Run when the outfit is boughten. */
+   int lua_sell;  /**< Run when the outfit is sold. */
+
+   /* Type dependent */
+   OutfitType type; /**< Type of the outfit. */
+   union {
+      OutfitBoltData         blt;  /**< BOLT */
+      OutfitBeamData         bem;  /**< BEAM */
+      OutfitLauncherData     lau;  /**< LAUNCHER */
+      OutfitModificationData mod;  /**< MODIFICATION */
+      OutfitAfterburnerData  afb;  /**< AFTERBURNER */
+      OutfitFighterBayData   bay;  /**< FIGHTER_BAY */
+      OutfitMapData_t       *map;  /**< MAP */
+      OutfitLocalMapData     lmap; /**< LOCALMAP */
+      OutfitGUIData          gui;  /**< GUI */
+      OutfitLicenseData      lic;  /**< LICENSE. */
+   } u;                            /**< Holds the type-based outfit data. */
+} Outfit;
+#endif
+
 /**
  * @brief For threaded loading of outfits.
  */
@@ -1252,6 +1348,24 @@ int outfit_afterburnerSound( const Outfit *o )
       return o->u.afb.sound;
    return -1;
 }
+int outfit_afterburnerSoundOn( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.sound_on;
+   return -1;
+}
+int outfit_afterburnerSoundOff( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.sound_off;
+   return -1;
+}
+double outfit_afterburnerRumble( const Outfit *o )
+{
+   if ( outfit_isAfterburner( o ) )
+      return o->u.afb.rumble;
+   return 0.;
+}
 double outfit_launcherSpeed( const Outfit *o )
 {
    if ( outfit_isLauncher( o ) )
@@ -1342,10 +1456,22 @@ double outfit_launcherTrailOffset( const Outfit *o )
       return o->u.lau.trail_x_offset;
    return 0.;
 }
+const struct Ship_ *outfit_bayShip( const Outfit *o )
+{
+   if ( outfit_isFighterBay( o ) )
+      return o->u.bay.ship;
+   return NULL;
+}
 GLuint outfit_beamShader( const Outfit *o )
 {
    if ( outfit_isBeam( o ) )
       return o->u.bem.shader;
+   return 0;
+}
+double outfit_beamMinDelay( const Outfit *o )
+{
+   if ( outfit_isBeam( o ) )
+      return o->u.bem.min_delay;
    return 0;
 }
 /**
@@ -1534,13 +1660,77 @@ int outfit_luaEnv( const Outfit *o )
 {
    return o->lua_env;
 }
-int outfit_luaBuy( const Outfit *o )
+int outfit_luaInit( const Outfit *o )
 {
-   return o->lua_buy;
+   return o->lua_init;
 }
-int outfit_luaSell( const Outfit *o )
+int outfit_luaCleanup( const Outfit *o )
 {
-   return o->lua_sell;
+   return o->lua_cleanup;
+}
+int outfit_luaUpdate( const Outfit *o )
+{
+   return o->lua_update;
+}
+int outfit_luaOntoggle( const Outfit *o )
+{
+   return o->lua_ontoggle;
+}
+int outfit_luaOnshoot( const Outfit *o )
+{
+   return o->lua_onshoot;
+}
+int outfit_luaOnhit( const Outfit *o )
+{
+   return o->lua_onhit;
+}
+int outfit_luaOutofenergy( const Outfit *o )
+{
+   return o->lua_outofenergy;
+}
+int outfit_luaOnshootany( const Outfit *o )
+{
+   return o->lua_onshootany;
+}
+int outfit_luaOnstealth( const Outfit *o )
+{
+   return o->lua_onstealth;
+}
+int outfit_luaOnscanned( const Outfit *o )
+{
+   return o->lua_onscanned;
+}
+int outfit_luaOnscan( const Outfit *o )
+{
+   return o->lua_onscan;
+}
+int outfit_luaCooldown( const Outfit *o )
+{
+   return o->lua_cooldown;
+}
+int outfit_luaLand( const Outfit *o )
+{
+   return o->lua_land;
+}
+int outfit_luaTakeoff( const Outfit *o )
+{
+   return o->lua_takeoff;
+}
+int outfit_luaJumpin( const Outfit *o )
+{
+   return o->lua_jumpin;
+}
+int outfit_luaBoard( const Outfit *o )
+{
+   return o->lua_board;
+}
+int outfit_luaKeydoubletap( const Outfit *o )
+{
+   return o->lua_keydoubletap;
+}
+int outfit_luaKeyrelease( const Outfit *o )
+{
+   return o->lua_keyrelease;
 }
 int outfit_luaOnImpact( const Outfit *o )
 {
@@ -1549,6 +1739,18 @@ int outfit_luaOnImpact( const Outfit *o )
 int outfit_luaOnMiss( const Outfit *o )
 {
    return o->lua_onmiss;
+}
+int outfit_luaPrice( const Outfit *o )
+{
+   return o->lua_price;
+}
+int outfit_luaBuy( const Outfit *o )
+{
+   return o->lua_buy;
+}
+int outfit_luaSell( const Outfit *o )
+{
+   return o->lua_sell;
 }
 
 /**
@@ -3026,7 +3228,6 @@ static int outfit_parse( Outfit *temp, const char *file )
    xmlNodePtr  node, parent;
    char       *prop;
    const char *cprop;
-   int         group;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
    if ( doc == NULL )
@@ -3247,18 +3448,6 @@ static int outfit_parse( Outfit *temp, const char *file )
             if ( (int)atoi( prop ) )
                outfit_setProp( temp, OUTFIT_PROP_WEAP_SECONDARY );
             free( prop );
-         }
-
-         /* Check for manually-defined group. */
-         xmlr_attr_int_def( node, "group", group, -1 );
-         if ( group != -1 ) {
-            if ( group > PILOT_WEAPON_SETS || group < 1 ) {
-               WARN( _( "Outfit '%s' has group '%d', should be in the 1-%d "
-                        "range" ),
-                     temp->name, group, PILOT_WEAPON_SETS );
-            }
-
-            temp->group = CLAMP( 0, 9, group );
          }
 
          /*

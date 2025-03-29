@@ -4426,7 +4426,7 @@ static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
       DEBUG(
          _( "Outfit '%s' does not fit designated slot '%d' on player's ship "
             "'%s' as it is already full with '%s'." ),
-         outfit->name, s->id, pilot->name, s->outfit->name );
+         outfit_name( outfit ), s->id, pilot->name, outfit_name( s->outfit ) );
       return 0;
    }
 
@@ -4469,12 +4469,12 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
       if ( slotid == 0 ) {
          DEBUG( _( "Unable to add Outfit '%s' to any slot of player's ship "
                    "'%s', adding to stock." ),
-                o->name, ship->name );
+                outfit_name( o ), ship->name );
          player_addOutfit( o, 1 );
       } else
          DEBUG( _( "Was able to add Outfit '%s' to slot '%d' of player's ship "
                    "'%s'." ),
-                o->name, slotid, ship->name );
+                outfit_name( o ), slotid, ship->name );
    }
 }
 
