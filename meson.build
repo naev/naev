@@ -397,6 +397,7 @@ endforeach
 target_triplet = get_option('target_triplet')
 
 # meson doesn't automatically forward the C arguments to bindgen, so we have to do that ourselves...
+# Related issue https://github.com/mesonbuild/meson/issues/13591
 bindgen_cargs = []
 if target_triplet != ''
   bindgen_cargs += ['--target='+target_triplet]
