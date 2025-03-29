@@ -1,4 +1,4 @@
-<outfit name="S&amp;K Large Cargo Hull">
+<outfit name="S&amp;K Large Cargo Hull (deprecated)">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>

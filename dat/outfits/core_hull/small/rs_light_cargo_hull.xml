@@ -1,6 +1,6 @@
 <outfit name="Red Star Light Cargo Hull">
  <general>
-  <shortname>RS. L. Cargo Hull</shortname>
+  <shortname>RS. Light Cargo Hull</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>

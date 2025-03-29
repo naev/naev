@@ -1,6 +1,6 @@
-<outfit name="Red Star Small Cargo Hull">
+<outfit name="Red Star Small Cargo Hull (deprecated)">
  <general>
-  <shortname>RS. Small Cargo Hull</shortname>
+  <shortname>RS. Small Cargo Hull (dep.)</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>

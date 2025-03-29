@@ -14,9 +14,9 @@
  <specific type="modification">
   <cargo>14/6</cargo>
   <absorb>3/7</absorb>
-  <armour>38/22</armour>
-  <cargo_inertia>-6/-4</cargo_inertia>
-  <cargo_mod>8/2</cargo_mod>
+  <armour>60/38</armour>
+  <cargo_inertia>-10/-4</cargo_inertia>
+  <cargo_mod>10/4</cargo_mod>
   <ew_hide>25/0</ew_hide>
   <ew_signature>-25/0</ew_signature>
   <jam_chance>42/0</jam_chance>

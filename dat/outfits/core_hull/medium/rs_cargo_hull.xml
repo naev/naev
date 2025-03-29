@@ -1,25 +1,24 @@
-<outfit name="Red Star Medium Cargo Hull (deprecated)">
+<outfit name="Red Star Cargo Hull">
  <general>
-  <shortname>RS. Medium Cargo Hull (dep.)</shortname>
+  <shortname>RS. Cargo Hull</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
-  <mass>140</mass>
-  <price>360000</price>
+  <price>180000</price>
   <description>The Imperial Red Star is dedicated to relief efforts in areas stricken by war, piracy and disease. Recently developed by the organization is a series of specialized cargo hulls meant to maximize the odds of their supplies and personnel safely arriving where they are needed most. Powered scrambling systems allow medium ships to more effectively weather attacks by guided missiles, especially torpedoes, and compel enemy turrets to track just that little bit slower.</description>
   <gfx_store>rs_hull_m.webp</gfx_store>
  </general>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 140, 140},
+   { "mass", 60, 80},
    { "cpu", -64, 0},
-   { "cargo", 80, 0},
-   { "absorb", 39, 0},
-   { "armour", 180, 0},
-   { "cargo_inertia", -10, 0},
-   { "cargo_mod", 10, 0},
+   { "cargo", 55, 25},
+   { "absorb", 26, 13},
+   { "armour", 85, 95},
+   { "cargo_inertia", -6, -4},
+   { "cargo_mod", 8, 2},
    { "ew_hide", 25, 0},
    { "ew_signature", -25, 0},
    { "jam_chance", 42, 0},

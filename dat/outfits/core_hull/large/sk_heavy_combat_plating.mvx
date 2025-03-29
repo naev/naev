@@ -1,4 +1,4 @@
-<outfit name="S&amp;K Heavy Combat Plating (deprecated)">
+<outfit name="S&amp;K Heavy Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>

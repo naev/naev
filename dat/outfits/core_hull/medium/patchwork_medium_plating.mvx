@@ -1,4 +1,4 @@
-<outfit name="Patchwork Medium Plating (deprecated)">
+<outfit name="Patchwork Medium Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
