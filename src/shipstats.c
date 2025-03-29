@@ -222,6 +222,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_DISABLE, disable, N_( "Disable" ), _UNIT_POWER ),
 
    AI_ELEM( SS_TYPE_A_MASS, mass, N_( "Ship Mass" ), _UNIT_MASS ),
+   A__ELEM( SS_TYPE_A_CPU, cpu, N_( "CPU Usage" ), _UNIT_CPU ),
    A__ELEM( SS_TYPE_A_CPU_MAX, cpu_max, N_( "CPU Capacity" ), _UNIT_CPU ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT, engine_limit, N_( "Engine Mass Limit" ),
             _UNIT_MASS ),
