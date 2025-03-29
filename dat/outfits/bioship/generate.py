@@ -13,8 +13,11 @@ sys.path.append( script_dir )
 sys.path.append( mymodule_dir )
 import outfit
 
-def get_outfit_dict(nam):
-   return outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam)).to_dict()
+def get_outfit_dict(nam,doubled=False):
+   o=outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam))
+   if doubled:
+      o.autostack()
+   return o.to_dict()
 
 # Based on some XML templates and the specs below, we're going to generate families of outfit XML files.
 # First things first: what are we supposed to be doing?
@@ -205,6 +208,7 @@ BioOutfit( "cortex.xml.template", {
 ] )
 
 # Laevis Cortex  =>  (1) Unicorp_d9  (2) S&K Light Combat Plating
+#                =   (1) Unicorp_d2 x2 (2) S&K Ultralight Combat Plating x2
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "small",
@@ -237,6 +241,7 @@ BioOutfit( "cortex.xml.template", {
 ] )
 
 # Largus Cortex  =>  (1) Unicorp_d38  (2) S&K Medium-Heavy Combat Plating
+#                =   (1) Unicorp_d23 x2  (2) S&K Medium Combat Plating x2
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "medium",
@@ -272,6 +277,7 @@ BioOutfit( "cortex.xml.template", {
 ] )
 
 # Immanis Cortex  =>  (1) Unicorp_d72  (2) S&K Superheavy Combat Plating
+#                 =   (1) Unicorp_d58 x2 (2) S&K Heavy Combat Plating x2
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "large",
@@ -322,13 +328,13 @@ BioOutfit( "cerebrum.xml.template", {
     "shield" :      lerp(  200, 250 ),
     "shield_regen": lerp(    7,   9 ),
     "energy":       lerp(  200, 250 ),
-    "energy_regen": lerp(   10,  13 ), # was 19 (-33%)
+    "energy_regen": lerp(   10,  13 ),
 } ).run( [
     N_("Perleve Cerebrum I"),
     N_("Perleve Cerebrum II"),
 ] )
 
-# Laevum Cerebrum  =>  Orion_3701
+# Laevum Cerebrum  =>  Orion_3701 = Orion_2301 x2
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "small",
@@ -337,10 +343,10 @@ BioOutfit( "cerebrum.xml.template", {
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_s2.webp",
     "cpu":          lerpr(  24,  32 ),
-    "shield" :      lerp(  250, 312 ), # was 310
+    "shield" :      lerp(  250, 312 ),
     "shield_regen": lerp(    8,  10 ),
-    "energy":       lerp(  400, 500 ), # was 400
-    "energy_regen": lerp(   21,  26 ), # was 34 (-25%)
+    "energy":       lerp(  400, 500 ),
+    "energy_regen": lerp(   21,  26 ),
 } ).run( [
     N_("Laevum Cerebrum I"),
     N_("Laevum Cerebrum II"),
@@ -357,14 +363,14 @@ BioOutfit( "cerebrum.xml.template", {
     "cpu":          lerpr(  48,   100 ),
     "shield" :      lerp(  450,   550 ),
     "shield_regen": lerp(   10,    13 ),
-    "energy":       lerp(  750,   938 ), # was 900
-    "energy_regen": lerp(   33, 41.25 ), # was 56 (-25%)
+    "energy":       lerp(  750,   938 ),
+    "energy_regen": lerp(   33, 41.25 ),
 } ).run( [
     N_("Mediocre Cerebrum I"),
     N_("Mediocre Cerebrum II"),
 ] )
 
-# Largum Cerebrum -> Orion_5501
+# Largum Cerebrum -> Orion_5501 = Orion_4801 x2
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "medium",
@@ -373,10 +379,10 @@ BioOutfit( "cerebrum.xml.template", {
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_m2.webp",
     "cpu":          lerpr( 100,   200 ),
-    "shield" :      lerp(  580,   680 ), # was 700
-    "shield_regen": lerp(   12,    15 ), # was 14
-    "energy":       lerp( 1600,  2000 ), # was 1800
-    "energy_regen": lerp(   53, 66.25 ), # was 87 (-25%)
+    "shield" :      lerp(  580,   680 ),
+    "shield_regen": lerp(   12,    15 ),
+    "energy":       lerp( 1600,  2000 ),
+    "energy_regen": lerp(   53, 66.25 ),
 } ).run( [
     N_("Largum Cerebrum I"),
     N_("Largum Cerebrum II"),
@@ -391,29 +397,29 @@ BioOutfit( "cerebrum.xml.template", {
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l1.webp",
     "cpu":          lerpr( 100,  200 ),
-    "shield" :      lerp(  850, 1050 ), # was already 1050
-    "shield_regen": lerp(   15,   21 ), # was 19
-    "energy":       lerp( 2460, 3075 ), # was 3375
-    "energy_regen": lerp(  66,  82.5 ), # was 135
+    "shield" :      lerp(  850, 1050 ),
+    "shield_regen": lerp(   15,   21 ),
+    "energy":       lerp( 2460, 3075 ),
+    "energy_regen": lerp(  66,  82.5 ),
 } ).run( [
     N_("Ponderosum Cerebrum I"),
     N_("Ponderosum Cerebrum II"),
     N_("Ponderosum Cerebrum III"),
 ] )
 
-# Immane Cerebrum -> Orion_9901
+# Immane Cerebrum -> Orion_9901 = Orion_8601 x2
 BioOutfit( "cerebrum.xml.template", {
     "typename":     typename["brain"],
     "size":         "large",
     "price":        lerpr(  4e6, 4e6+(220e3+260e3)/2 ),
-    "mass":         lerpr( 1300,    1300+(120+120)/2 ), # was 1400
+    "mass":         lerpr( 1300,    1300+(120+120)/2 ),
     "desc":         desc["brain"],
     "gfx_store":    "organic_core_l2.webp",
     "cpu":          lerpr( 370*3, 600*3 ),
     "shield" :      lerp(   1100,  1300 ),
     "shield_regen": lerp(     18,    24 ),
-    "energy":       lerp(   3840,  4800 ), # was 5250
-    "energy_regen": lerp(    140,   175 ), # was 170
+    "energy":       lerp(   3840,  4800 ),
+    "energy_regen": lerp(    140,   175 ),
 } ).run( [
     N_("Immane Cerebrum I"),
     N_("Immane Cerebrum II"),

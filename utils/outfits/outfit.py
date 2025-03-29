@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from sys import stdout,stderr
+from sys import stdin,stdout,stderr
 
 import xml.etree.ElementTree as ET
 
@@ -29,6 +29,21 @@ class _outfit():
       except:
          res=self.name()
       return res
+
+   def autostack(self):
+      def text2val(s):
+         inp=s.split('/',1)
+         try:
+            inp=[float(x) for x in inp]
+            return (inp[0],inp[-1])
+         except:
+            return None
+
+      for e in self:
+         res=text2val(e.text)
+         if res is not None:
+            (a,b)=res
+            e.text=str(a+b)
 
    def __iter__(self):
       def _subs(r):
@@ -107,7 +122,10 @@ def outfit(fil):
 
 if __name__=="__main__":
    from sys import argv
-
    if len(argv)>1:
-      O=outfit(argv[1])
+      print "Usage:",argv[0].split('/')[-1]
+      print "  Reads a xml/mvx in input, outputs its input stacked with itself."
+   else:
+      O=outfit(stdin)
+      O.autostack()
       O.write()
