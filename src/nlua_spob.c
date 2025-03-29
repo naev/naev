@@ -659,13 +659,13 @@ static int spobL_class( lua_State *L )
  * @usage c = p:classLong()
  *    @luatparam Spob p Spob to get the class of.
  *    @luatreturn string The class of the spob in descriptive form such as
- * "Pelagic".
+ * "Pelagic (O-class)".
  * @luafunc classLong
  */
 static int spobL_classLong( lua_State *L )
 {
    const Spob *p = luaL_validspob( L, 1 );
-   lua_pushstring( L, spob_getClassName( p->class ) );
+   lua_pushstring( L, space_className( p ) );
    return 1;
 }
 

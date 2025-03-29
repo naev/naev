@@ -8,7 +8,11 @@
 #include "naev.h"
 /** @endcond */
 
+#include "lualib.h"
+
 #include "log.h"
+#include "ndata.h"
+#include "nlua.h"
 #include "physics.h"
 
 /**
@@ -28,6 +32,37 @@ const char _UNIT_MASS[]     = N_( "t" );
 const char _UNIT_CPU[]      = N_( "PFLOP" );
 const char _UNIT_UNIT[]     = N_( "u" );
 const char _UNIT_PERCENT[]  = N_( "%" );
+
+double PHYSICS_SPEED_DAMP = 3.; /**< Default before 0.13.0. */
+
+int physics_init( void )
+{
+   const char *file = "constants.lua";
+   char       *buf;
+   size_t      size;
+
+   buf = ndata_read( file, &size );
+   if ( buf == NULL ) {
+      WARN( _( "File '%s' not found!" ), file );
+      return -1;
+   }
+
+   lua_State *L = luaL_newstate();
+   luaL_openlibs( L );
+
+   if ( ( luaL_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
+      WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( L, -1 ) );
+      lua_close( L );
+      return -1;
+   }
+
+   lua_getfield( L, -1, "PHYSICS_SPEED_DAMP" );
+   PHYSICS_SPEED_DAMP = lua_tonumber( L, -1 );
+   lua_pop( L, 1 );
+
+   lua_close( L );
+   return 0;
+}
 
 /**
  * @brief Converts an angle to the [0, 2*M_PI] range.

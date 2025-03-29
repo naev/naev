@@ -37,6 +37,8 @@
       * Outfits can fit an additional slot property
       * Support for hiding dynamic ship stats from outfits in the equipment support
       * Outfits support inline Lua definitions
+      * Engine supports modifying some important constants such as those related to the physics model
+      * Can override long class names of spobs
    * Fixes
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display

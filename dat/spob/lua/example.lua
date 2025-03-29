@@ -3,6 +3,7 @@
    be used to override different core functionality.
 --]]
 local lg = require "love.graphics"
+local fmt = require "format"
 
 --[[
    @brief Run when spob is initialized during loading.
@@ -87,4 +88,18 @@ end
    @brief Run when receiving a distress signal from an attacker against a pilot.
 --]]
 function distress ( _p, _attacker )
+end
+
+--[[
+   @brief Run when getting the population string of the spob.
+--]]
+function population ()
+   return fmt.f(_("roughly {amt}"),{amt=fmt.humanize( 50e3 )})
+end
+
+--[[
+   @brief Run when getting the full length class string of the spob.
+--]]
+function classname ( _baseclass )
+   return _("Pelagic (O-class)")
 end

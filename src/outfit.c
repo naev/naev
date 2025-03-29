@@ -3426,7 +3426,7 @@ int outfit_load( void )
    /* Second pass. */
    for ( int i = 0; i < noutfits; i++ ) {
       Outfit *o = &outfit_stack[i];
-      if ( o->lua_file == NULL )
+      if ( ( o->lua_file == NULL ) && ( o->lua_inline == NULL ) )
          continue;
 
       /* Can't use both file + inline. */

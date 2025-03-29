@@ -173,6 +173,8 @@ typedef struct Spob_ {
    int lua_comm;       /**< Run when player communicates with the spob. */
    int lua_population; /**< Run when getting a string representing the
                           population of the spob. */
+   int lua_classname;  /**< Run when getting a string representing the class of
+                          the spob. */
    int lua_barbg;      /**< Run to generate bar backgrounds as necessary. */
    int lua_distress;   /**< Run when a pilot is distressing in the system. */
 } Spob;
@@ -541,6 +543,7 @@ void        system_setFaction( StarSystem *sys );
 void        space_checkLand( void );
 void        space_factionChange( void );
 void        space_queueLand( Spob *pnt );
+const char *space_className( const Spob *spb );
 const char *space_populationStr( const Spob *spb );
 
 /*

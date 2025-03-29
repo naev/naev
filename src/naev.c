@@ -70,6 +70,7 @@
 #include "options.h"
 #include "outfit.h"
 #include "pause.h"
+#include "physics.h"
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"
@@ -420,6 +421,8 @@ void load_all( void )
    NTracingFrameMarkStart( "load_all" );
 
    int stage = 0;
+
+   physics_init();
 
    /* order is very important as they're interdependent */
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Commodities…" ) );

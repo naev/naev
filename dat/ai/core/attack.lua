@@ -2,6 +2,11 @@ local atk_generic = require "ai.core.attack.generic"
 local libatk = require "ai.core.attack.util"
 local flow = require "ships.lua.lib.flow"
 
+local constants = require "constants"
+local PHYSICS_SPEED_DAMP = constants.PHYSICS_SPEED_DAMP
+local BITE_ACCEL_MOD = constants.BITE_ACCEL_MOD
+local BITE_SPEED_MOD = constants.BITE_SPEED_MOD
+
 local atk = {}
 
 -- [[
@@ -98,7 +103,7 @@ function atk.think( target, si, noretarget )
                dtime = dtime+2
             end
             -- TODO make this adapt to the new physics speed damp constant PHYSICS_SPEED_DAMP
-            if ai.dist( target ) < (p:speed() + (p:accel()+800)/3)*dtime then
+            if ai.dist( target ) < (p:speed() + BITE_SPEED_MOD + (p:accel()+BITE_ACCEL_MOD)/PHYSICS_SPEED_DAMP)*dtime then
                p:outfitToggle( mem._o.bite, true )
             end
          end
