@@ -193,21 +193,29 @@ for nam,temp,gfx,output_pref,outputs in [
 ##    "cargo":        lerpr(       <S&K> , (<S&K>+<Unicorp>)/2 ),
 ##    "mass":         <S&K>,
 ##    "armour":       lerp(    <Unicorp> , <S&K> )
+for pref,nam1,nam2,dbl,gfx,output_pref,outputs in [
+   ("small",  "unicorp_d2_light_plating.mvx",   "sk_ultralight_combat_plating.mvx", False, "t", "Perlevis",   ["I","II"]            ),
+   ("small",  "unicorp_d2_light_plating.mvx",   "sk_ultralight_combat_plating.mvx", True,  "s", "Laevis",     ["I","II"]            ),
+   ("medium", "unicorp_d23_medium_plating.mvx", "sk_medium_combat_plating.mvx",     False, "m", "Mediocris",  ["I","II"]            ),
+   ("medium", "unicorp_d23_medium_plating.mvx", "sk_medium_combat_plating.mvx",     True,  "l", "Largus",     ["I","II","III"]      ),
+   ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_heavy_combat_plating.mvx",      False, "h", "Ponderosus", ["I","II","III","IV"] ),
+   ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_heavy_combat_plating.mvx",      True,  "x", "Immanis",    ["I","II","III"]      ),
+]:
+   ref1=get_outfit_dict('core_hull/'+pref+'/'+nam1,dbl)
+   ref2=get_outfit_dict('core_hull/'+pref+'/'+nam2,dbl)
+   BioOutfit( "cortex.xml.template", {
+      "typename":     typename["hull"],
+      "size":         pref,
+      "price":        lerpr( ref2['price']/2,  ref2['price'] ),
+      "mass":         int(ref2['mass']),
+      "desc":         desc["hull"],
+      "gfx_store":    "organic_hull_"+gfx+".webp",
+      "cargo":        lerpr( ref2['cargo'],    round((ref1['cargo']+ref2['cargo'])/2.0) ),
+      "absorb":       lerpr( ref1["absorb"]-3, ref2['absorb']-3 ),
+      "armour":       lerpr(  ref1['armour'],   ref2['armour'] )
+   } ).run( [ N_(output_pref+" Cortex "+s) for s in outputs ] )
 
-#   (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
-#"t","Perlevis",["I","II"]
-#   (1) Unicorp_d2 x2 (2) S&K Ultralight Combat Plating x2
-#"s","Laevis",["I","II"]
-#   (1) Unicorp_d23  (2) S&K Medium Combat Plating
-#"m","Mediocris"["I","II"]
-#   (1) Unicorp_d23 x2  (2) S&K Medium Combat Plating x2
-#"l","Largus",["I","II","III"]
-#   (1) Unicorp_d58  (2) S&K Heavy Combat Plating
-#"h","Ponderosus",["I","II","III","IV"]
-#   (1) Unicorp_d58 x2 (2) S&K Heavy Combat Plating x2
-#"x","Immanis",["I","II","III"]
-
-
+"""
 # Perlevis Cortex    =>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
@@ -307,7 +315,7 @@ BioOutfit( "cortex.xml.template", {
     N_("Immanis Cortex II"),
     N_("Immanis Cortex III"),
 ] )
-
+"""
 
 ##
 # Cerebrum
