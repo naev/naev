@@ -393,13 +393,24 @@ foreach item : bindgen_blocklist_items
    bindgen_args += ['--blocklist-item', item]
 endforeach
 
+# Target we are cross-compiling for
+target_triplet = get_option('target_triplet')
+
+# meson doesn't automatically forward the C arguments to bindgen, so we have to do that ourselves...
+bindgen_cargs = []
+if target_triplet != ''
+  bindgen_cargs += ['--target='+target_triplet]
+endif
+
 # Invoke bindgen to generate Rust bindings
 naevcrs = rust.bindgen(
   input: naevch,
   output: 'naevc.rs',
   include_directories: [include_dirs, '.'],
   dependencies: naev_deps,
+  language: 'c',
   args: bindgen_args,
+  c_args: bindgen_cargs,
 )
 
    copydir = find_program('utils/build/copydir.py')
@@ -443,8 +454,6 @@ naevcrs = rust.bindgen(
       cargo_options += ['--release']
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
-
-   target_triplet = get_option('target_triplet')
    if target_triplet != ''
       cargo_options += ['--target', target_triplet]
    endif
