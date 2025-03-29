@@ -1,4 +1,4 @@
-<outfit name="S&amp;K Ultralight Combat Plating (deprecated)">
+<outfit name="S&amp;K Ultralight Combat Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>

@@ -1,0 +1,23 @@
+<outfit name="S&amp;K Light Cargo Hull">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>30</mass>
+  <price>60000</price>
+  <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
+  <gfx_store>cargo_hull_s.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 30, 30},
+   { "cargo", 20, 10},
+   { "absorb", 2, 4},
+   { "armour", 35, 20},
+   { "cargo_inertia", -15, -10},
+   { "cargo_mod", 20, 5},
+}</lua_inline>
+ </specific>
+</outfit>
