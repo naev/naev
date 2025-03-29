@@ -1186,6 +1186,8 @@ void pilot_calcStats( Pilot *pilot )
       (int)floor( (float)( pilot->ship->cpu + s->cpu_max ) * s->cpu_mod );
    pilot->cpu += pilot->cpu_max; /* CPU is negative, this just sets it so it's
                                     based off of cpu_max. */
+   pilot->cpu += (int)floor(
+      s->cpu ); /* CPU consumption by outfits. Does not get multiplied. */
    /* Misc. */
    pilot->mass_outfit += s->mass;
    pilot->crew = pilot->crew * s->crew_mod + s->crew;
