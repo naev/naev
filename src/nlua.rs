@@ -304,6 +304,7 @@ pub unsafe extern "C" fn luaL_tolstring(
     unsafe { mlua::ffi::luaL_tolstring(L, idx, len) }
 }
 
+/*
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn luaL_traceback(
@@ -314,3 +315,4 @@ pub unsafe extern "C" fn luaL_traceback(
 ) {
     unsafe { mlua::ffi::luaL_traceback(L, L1, msg, level) }
 }
+*/
