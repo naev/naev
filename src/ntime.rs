@@ -45,38 +45,7 @@ impl From<NTime> for i64 {
 }
 impl std::fmt::Display for NTime {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        let cycles = self.cycles();
-        let periods = self.periods();
-        let seconds = self.seconds();
-        // TODO try to move 2 to variable decimal length, but not that important
-        if cycles == 0 && periods == 0 {
-            write!(
-                f,
-                "{}",
-                formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
-            )
-        } else if cycles == 0 {
-            write!(
-                f,
-                "{}",
-                formatx!(
-                    gettext("{p:.2f} s").to_string(),
-                    p = periods as f64 + 0.0001 * seconds as f64
-                )
-                .unwrap()
-            )
-        } else {
-            write!(
-                f,
-                "{}",
-                formatx!(
-                    gettext("UST {c}:{p:.2f}").to_string(),
-                    c = cycles,
-                    p = periods as f64 + 0.0001 * seconds as f64
-                )
-                .unwrap()
-            )
-        }
+        write!(f, "{}", self.as_string())
     }
 }
 impl NTime {
@@ -105,6 +74,28 @@ impl NTime {
     pub fn to_seconds(self) -> f64 {
         let t = self.0 as f64;
         t / 1_000.
+    }
+    pub fn as_string(self) -> String {
+        let cycles = self.cycles();
+        let periods = self.periods();
+        let seconds = self.seconds();
+        // TODO try to move 2 to variable decimal length, but not that important
+        if cycles == 0 && periods == 0 {
+            formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
+        } else if cycles == 0 {
+            formatx!(
+                gettext("{p:.2f} s").to_string(),
+                p = periods as f64 + 0.0001 * seconds as f64
+            )
+            .unwrap()
+        } else {
+            formatx!(
+                gettext("UST {c}:{p:.2f}").to_string(),
+                c = cycles,
+                p = periods as f64 + 0.0001 * seconds as f64
+            )
+            .unwrap()
+        }
     }
 }
 
