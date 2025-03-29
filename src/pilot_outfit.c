@@ -63,7 +63,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
       return;
 
    /* Check arc. */
-   arc = o->outfit->u.lau.arc;
+   arc = outfit_launcherArc( o->outfit );
    if ( arc > 0. ) {
 
       /* We use an external variable to set and update the angle if necessary.
@@ -92,10 +92,10 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
           * lock, and for the target to try and break the lock. */
          double old = o->u.ammo.lockon_timer;
          /* Limit decay to the lock-on time for this launcher. */
-         max = o->outfit->u.lau.lockon;
+         max = outfit_launcherLockon( o->outfit );
          o->u.ammo.lockon_timer += dt;
          if ( ( old <= 0. ) && ( o->u.ammo.lockon_timer > 0. ) )
-            o->u.ammo.lockon_timer += o->outfit->u.lau.lockon / 2.;
+            o->u.ammo.lockon_timer += max / 2.;
 
          /* Cap at max. */
          if ( o->u.ammo.lockon_timer > max )
@@ -112,12 +112,12 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, Target *wt,
    locked           = ( o->u.ammo.lockon_timer < 0. );
 
    /* Lower timer. When the timer reaches zero, the lock is established. */
-   max = -o->outfit->u.lau.lockon / 3.;
+   max = -outfit_launcherLockon( o->outfit ) / 3.;
    if ( o->u.ammo.lockon_timer > max ) {
       /* Targetting is linear and can't be faster than the time specified (can
        * be slower though). */
-      double mod = pilot_ewWeaponTrack( p, t, o->outfit->u.lau.trackmin,
-                                        o->outfit->u.lau.trackmax );
+      double mod = pilot_ewWeaponTrack( p, t, outfit_trackmin( o->outfit ),
+                                        outfit_trackmax( o->outfit ) );
       if ( p->stats.launch_lockon <= 0. )
          o->u.ammo.lockon_timer = max;
       else
@@ -148,7 +148,7 @@ void pilot_lockClear( Pilot *p )
          continue;
 
       /* Clear timer. */
-      o->u.ammo.lockon_timer = o->outfit->u.lau.lockon;
+      o->u.ammo.lockon_timer = outfit_launcherLockon( o->outfit );
 
       /* Clear arc. */
       o->u.ammo.in_arc = 0;
@@ -354,13 +354,13 @@ int pilot_addOutfitTest( Pilot *pilot, const Outfit *outfit,
       if ( warn )
          WARN( _( "Pilot '%s': trying to add outfit '%s' to slot that already "
                   "has an outfit" ),
-               pilot->name, outfit->name );
+               pilot->name, outfit_name( outfit ) );
       return -1;
    } else if ( ( outfit_cpu( outfit ) < 0 ) &&
                ( pilot->cpu < ABS( outfit_cpu( outfit ) ) ) ) {
       if ( warn )
          WARN( _( "Pilot '%s': Not enough CPU to add outfit '%s'" ),
-               pilot->name, outfit->name );
+               pilot->name, outfit_name( outfit ) );
       return -1;
    } else if ( ( str = pilot_canEquip( pilot, s, outfit ) ) != NULL ) {
       if ( warn )
@@ -540,8 +540,8 @@ int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
    /* Test special slots first. */
    for ( int spid = 1; spid >= 0; spid-- ) {
       /* Try to find the first smallest size it fits into. */
-      for ( OutfitSlotSize size = o->slot.size; size <= OUTFIT_SLOT_SIZE_HEAVY;
-            size++ ) {
+      for ( OutfitSlotSize size = outfit_slotSize( o );
+            size <= OUTFIT_SLOT_SIZE_HEAVY; size++ ) {
          for ( int i = 0; i < array_size( p->outfits ); i++ ) {
             PilotOutfitSlot *s = p->outfits[i];
 
@@ -732,12 +732,14 @@ int pilot_hasOutfitLimit( const Pilot *p, const char *limit )
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )
          continue;
-      if ( ( o->limit != NULL ) && ( strcmp( o->limit, limit ) == 0 ) )
+      if ( ( outfit_limit( o ) != NULL ) &&
+           ( strcmp( outfit_limit( o ), limit ) == 0 ) )
          return 1;
    }
    for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
       const Outfit *o = p->outfit_intrinsic[i].outfit;
-      if ( ( o->limit != NULL ) && ( strcmp( o->limit, limit ) == 0 ) )
+      if ( ( outfit_limit( o ) != NULL ) &&
+           ( strcmp( outfit_limit( o ), limit ) == 0 ) )
          return 1;
    }
    return 0;
@@ -763,7 +765,8 @@ const char *pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s,
       if ( !outfit_fitsSlot( o, &s->sslot->slot ) )
          return _( "Does not fit slot." );
       /* Check outfit limit. */
-      if ( ( o->limit != NULL ) && pilot_hasOutfitLimit( p, o->limit ) )
+      if ( ( outfit_limit( o ) != NULL ) &&
+           pilot_hasOutfitLimit( p, outfit_limit( o ) ) )
          return _( "Already have an outfit of this type installed" );
       /* Check to see if already equipped unique. */
       if ( outfit_isProp( o, OUTFIT_PROP_UNIQUE ) &&
@@ -881,7 +884,7 @@ int pilot_maxAmmo( const Pilot *pilot )
          continue;
       if ( !outfit_isLauncher( outfit ) )
          continue;
-      max += outfit->u.lau.amount;
+      max += outfit_amount( outfit );
    }
    max = round( (double)max * pilot->stats.ammo_capacity );
    return max;
@@ -896,9 +899,11 @@ int pilot_maxAmmoO( const Pilot *p, const Outfit *o )
    if ( o == NULL )
       return 0;
    else if ( outfit_isLauncher( o ) )
-      max = MAX( 0, round( (double)o->u.lau.amount * p->stats.ammo_capacity ) );
+      max =
+         MAX( 0, round( (double)outfit_amount( o ) * p->stats.ammo_capacity ) );
    else if ( outfit_isFighterBay( o ) )
-      max = MAX( 0, round( (double)o->u.bay.amount * p->stats.fbay_capacity ) );
+      max =
+         MAX( 0, round( (double)outfit_amount( o ) * p->stats.fbay_capacity ) );
    else
       max = 0;
    return max;
@@ -935,8 +940,8 @@ void pilot_fillAmmo( Pilot *pilot )
 double pilot_outfitRange( const Pilot *p, const Outfit *o )
 {
    if ( outfit_isBolt( o ) ) {
-      double range =
-         o->u.blt.falloff + ( o->u.blt.range - o->u.blt.falloff ) / 2.;
+      double range = outfit_falloff( o ) +
+                     ( outfit_rangeRaw( o ) - outfit_falloff( o ) ) / 2.;
       if ( p != NULL ) {
          if ( outfit_isTurret( o ) )
             range *= p->stats.tur_range * p->stats.weapon_range;
@@ -945,7 +950,7 @@ double pilot_outfitRange( const Pilot *p, const Outfit *o )
       }
       return range;
    } else if ( outfit_isBeam( o ) ) {
-      double range = o->u.bem.range;
+      double range = outfit_rangeRaw( o );
       if ( p != NULL ) {
          if ( outfit_isTurret( o ) )
             range *= p->stats.tur_range * p->stats.weapon_range;
@@ -954,17 +959,17 @@ double pilot_outfitRange( const Pilot *p, const Outfit *o )
       }
       return range;
    } else if ( outfit_isLauncher( o ) ) {
-      double duration  = o->u.lau.duration;
-      double accel     = o->u.lau.accel;
-      double speed     = o->u.lau.speed;
-      double speed_max = o->u.lau.speed_max;
+      double duration  = outfit_duration( o );
+      double accel     = outfit_launcherAccel( o );
+      double speed     = outfit_launcherSpeed( o );
+      double speed_max = outfit_launcherSpeedMax( o );
       if ( p != NULL ) {
          duration *= p->stats.launch_range * p->stats.weapon_range;
          speed *= p->stats.launch_speed;
          accel *= p->stats.launch_accel;
          speed_max *= p->stats.launch_speed;
       }
-      if ( o->u.lau.accel != 0. ) {
+      if ( outfit_launcherAccel( o ) != 0. ) {
          double speedinc;
          if ( speed >
               0. ) /* Ammo that don't start stopped don't have max speed. */
@@ -1003,14 +1008,11 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
    pilot->mass_outfit += outfit_mass( o );
 
    /* Keep a separate counter for required (core) outfits. */
-   if ( sp_required( o->slot.spid ) )
+   if ( sp_required( outfit_slotProperty( o ) ) )
       pilot->base_mass += outfit_mass( o );
 
    /* Add ammo mass. */
-   if ( outfit_isLauncher( o ) )
-      pilot->mass_outfit += slot->u.ammo.quantity * o->u.lau.ammo_mass;
-   else if ( outfit_isFighterBay( o ) )
-      pilot->mass_outfit += slot->u.ammo.quantity * o->u.bay.ship_mass;
+   pilot->mass_outfit += slot->u.ammo.quantity * outfit_ammoMass( o );
 
    if ( outfit_isAfterburner( o ) ) /* Afterburner */
       pilot->afterburner = slot;    /* Set afterburner */
@@ -1020,7 +1022,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
       ss_statsMergeFromList( &pilot->stats, slot->lua_stats, 0 );
 
    /* Has update function. */
-   if ( o->lua_update != LUA_NOREF )
+   if ( outfit_luaUpdate( o ) != LUA_NOREF )
       pilot->outfitlupdate = 1;
 
    /* Apply modifications. */

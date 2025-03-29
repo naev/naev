@@ -444,9 +444,9 @@ static int outfitL_slot( lua_State *L )
       lua_pushboolean( L, 0 );
       lua_pushboolean( L, 0 );
    } else {
-      lua_pushstring( L, sp_display( o->slot.spid ) );
-      lua_pushboolean( L, sp_required( o->slot.spid ) );
-      lua_pushboolean( L, sp_exclusive( o->slot.spid ) );
+      lua_pushstring( L, sp_display( spid ) );
+      lua_pushboolean( L, sp_required( spid ) );
+      lua_pushboolean( L, sp_exclusive( spid ) );
    }
    return 5;
 }
@@ -461,11 +461,12 @@ static int outfitL_slot( lua_State *L )
  */
 static int outfitL_slotExtra( lua_State *L )
 {
-   const Outfit *o = luaL_validoutfit( L, 1 );
-   if ( o->spid_extra == 0 )
+   const Outfit *o          = luaL_validoutfit( L, 1 );
+   int           spid_extra = outfit_slotPropertyExtra( o );
+   if ( spid_extra == 0 )
       lua_pushnil( L );
    else
-      lua_pushstring( L, sp_display( o->spid_extra ) );
+      lua_pushstring( L, sp_display( spid_extra ) );
    return 1;
 }
 
@@ -684,7 +685,7 @@ static int outfitL_getShipStat( lua_State *L )
    ShipStats     ss;
    const Outfit *o = luaL_validoutfit( L, 1 );
    ss_statsInit( &ss );
-   ss_statsMergeFromList( &ss, o->stats, 0 );
+   ss_statsMergeFromList( &ss, outfit_stats( o ), 0 );
    const char *str      = luaL_optstring( L, 2, NULL );
    int         internal = lua_toboolean( L, 3 );
    ss_statsGetLua( L, &ss, str, internal );
@@ -834,84 +835,88 @@ static int outfitL_weapStats( lua_State *L )
 static int outfitL_specificStats( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
+   const Damage *dmg;
    lua_newtable( L );
-   switch ( o->type ) {
+   switch ( outfit_type( o ) ) {
    case OUTFIT_TYPE_AFTERBURNER:
-      SETFIELD( "accel", o->u.afb.accel );
-      SETFIELD( "speed", o->u.afb.speed );
-      SETFIELD( "energy", o->u.afb.energy );
-      SETFIELD( "mass_limit", o->u.afb.mass_limit );
+      SETFIELD( "accel", outfit_afterburnerAccel( o ) );
+      SETFIELD( "speed", outfit_afterburnerSpeed( o ) );
+      SETFIELD( "energy", outfit_energy( o ) );
+      SETFIELD( "mass_limit", outfit_afterburnerMassLimit( o ) );
       break;
 
    case OUTFIT_TYPE_FIGHTER_BAY:
-      lua_pushship( L, o->u.bay.ship );
+      lua_pushship( L, outfit_bayShip( o ) );
       lua_setfield( L, -2, "ship" );
-      SETFIELD( "delay", o->u.bay.delay );
-      SETFIELDI( "amount", o->u.bay.amount );
-      SETFIELD( "reload_time", o->u.bay.reload_time );
+      SETFIELD( "delay", outfit_delay( o ) );
+      SETFIELDI( "amount", outfit_amount( o ) );
+      SETFIELD( "reload_time", outfit_reloadTime( o ) );
       break;
 
    case OUTFIT_TYPE_TURRET_BOLT:
       SETFIELDB( "isturret", 1 );
       FALLTHROUGH;
    case OUTFIT_TYPE_BOLT:
-      SETFIELD( "delay", o->u.blt.delay );
-      SETFIELD( "speed", o->u.blt.speed );
-      SETFIELD( "range", o->u.blt.range );
-      SETFIELD( "falloff", o->u.blt.falloff );
-      SETFIELD( "energy", o->u.blt.energy );
-      SETFIELD( "trackmin", o->u.blt.trackmin );
-      SETFIELD( "trackmax", o->u.blt.trackmax );
-      SETFIELD( "swivel", o->u.blt.swivel );
+      SETFIELD( "delay", outfit_delay( o ) );
+      SETFIELD( "speed", outfit_speed( o ) );
+      SETFIELD( "range", outfit_range( o ) );
+      SETFIELD( "falloff", outfit_falloff( o ) );
+      SETFIELD( "energy", outfit_energy( o ) );
+      SETFIELD( "trackmin", outfit_trackmin( o ) );
+      SETFIELD( "trackmax", outfit_trackmax( o ) );
+      SETFIELD( "swivel", outfit_swivel( o ) );
       /* Damage stuff. */
-      SETFIELD( "penetration", o->u.blt.dmg.penetration );
-      SETFIELD( "damage", o->u.blt.dmg.damage );
-      SETFIELD( "disable", o->u.blt.dmg.disable );
+      dmg = outfit_damage( o );
+      SETFIELD( "penetration", dmg->penetration );
+      SETFIELD( "damage", dmg->damage );
+      SETFIELD( "disable", dmg->disable );
       break;
 
    case OUTFIT_TYPE_TURRET_BEAM:
       SETFIELDB( "isturret", 1 );
       FALLTHROUGH;
    case OUTFIT_TYPE_BEAM:
-      SETFIELD( "delay", o->u.bem.delay );
-      SETFIELD( "min_delay", o->u.bem.min_delay );
-      SETFIELD( "warmup", o->u.bem.warmup );
-      SETFIELD( "duration", o->u.bem.duration );
-      SETFIELD( "range", o->u.bem.range );
-      SETFIELD( "turn", o->u.bem.turn );
-      SETFIELD( "energy", o->u.bem.energy );
+      SETFIELD( "delay", outfit_delay( o ) );
+      SETFIELD( "min_delay", outfit_beamMinDelay( o ) );
+      SETFIELD( "warmup", outfit_beamWarmup( o ) );
+      SETFIELD( "duration", outfit_duration( o ) );
+      SETFIELD( "range", outfit_range( o ) );
+      SETFIELD( "turn", outfit_turn( o ) );
+      SETFIELD( "energy", outfit_energy( o ) );
       /* Damage stuff. */
-      SETFIELD( "penetration", o->u.bem.dmg.penetration );
-      SETFIELD( "damage", o->u.bem.dmg.damage );
-      SETFIELD( "disable", o->u.bem.dmg.disable );
+      dmg = outfit_damage( o );
+      SETFIELD( "penetration", dmg->penetration );
+      SETFIELD( "damage", dmg->damage );
+      SETFIELD( "disable", dmg->disable );
       break;
 
    case OUTFIT_TYPE_TURRET_LAUNCHER:
       SETFIELDB( "isturret", 1 );
       FALLTHROUGH;
    case OUTFIT_TYPE_LAUNCHER:
-      SETFIELD( "delay", o->u.lau.delay );
-      SETFIELDI( "amount", o->u.lau.amount );
-      SETFIELD( "reload_time", o->u.lau.reload_time );
-      SETFIELD( "lockon", o->u.lau.lockon );
-      SETFIELD( "iflockon", o->u.lau.iflockon );
-      SETFIELD( "trackmin", o->u.lau.trackmin );
-      SETFIELD( "trackmax", o->u.lau.trackmax );
-      SETFIELD( "arc", o->u.lau.arc );
-      SETFIELD( "swivel", o->u.lau.swivel );
+      SETFIELD( "delay", outfit_delay( o ) );
+      SETFIELDI( "amount", outfit_amount( o ) );
+      SETFIELD( "reload_time", outfit_reloadTime( o ) );
+      SETFIELD( "lockon", outfit_launcherLockon( o ) );
+      SETFIELD( "iflockon", outfit_launcherIFLockon( o ) );
+      SETFIELD( "trackmin", outfit_trackmin( o ) );
+      SETFIELD( "trackmax", outfit_trackmax( o ) );
+      SETFIELD( "arc", outfit_launcherArc( o ) );
+      SETFIELD( "swivel", outfit_swivel( o ) );
       /* Ammo stuff. */
-      SETFIELD( "duration", o->u.lau.duration );
-      SETFIELD( "speed", o->u.lau.speed );
-      SETFIELD( "speed_max", o->u.lau.speed_max );
-      SETFIELD( "turn", o->u.lau.turn );
-      SETFIELD( "accel", o->u.lau.accel );
-      SETFIELD( "energy", o->u.lau.energy );
-      SETFIELDB( "seek", o->u.lau.ai != AMMO_AI_UNGUIDED );
-      SETFIELDB( "smart", o->u.lau.ai == AMMO_AI_SMART );
+      SETFIELD( "duration", outfit_duration( o ) );
+      SETFIELD( "speed", outfit_speed( o ) );
+      SETFIELD( "speed_max", outfit_launcherSpeedMax( o ) );
+      SETFIELD( "turn", outfit_launcherTurn( o ) );
+      SETFIELD( "accel", outfit_launcherAccel( o ) );
+      SETFIELD( "energy", outfit_energy( o ) );
+      SETFIELDB( "seek", outfit_launcherAI( o ) != AMMO_AI_UNGUIDED );
+      SETFIELDB( "smart", outfit_launcherAI( o ) == AMMO_AI_SMART );
       /* Damage stuff. */
-      SETFIELD( "penetration", o->u.lau.dmg.penetration );
-      SETFIELD( "damage", o->u.lau.dmg.damage );
-      SETFIELD( "disable", o->u.lau.dmg.disable );
+      dmg = outfit_damage( o );
+      SETFIELD( "penetration", dmg->penetration );
+      SETFIELD( "damage", dmg->damage );
+      SETFIELD( "disable", dmg->disable );
       break;
 
    default:
@@ -932,10 +937,11 @@ static int outfitL_specificStats( lua_State *L )
  */
 static int outfitL_illegality( lua_State *L )
 {
-   const Outfit *o = luaL_validoutfit( L, 1 );
+   const Outfit *o         = luaL_validoutfit( L, 1 );
+   int          *illegalto = outfit_illegalTo( o );
    lua_newtable( L );
-   for ( int i = 0; i < array_size( o->illegalto ); i++ ) {
-      lua_pushfaction( L, o->illegalto[i] );
+   for ( int i = 0; i < array_size( illegalto ); i++ ) {
+      lua_pushfaction( L, illegalto[i] );
       lua_rawseti( L, -2, i + 1 );
    }
    return 1;
@@ -997,5 +1003,5 @@ static int outfitL_known( lua_State *L )
 static int outfitL_tags( lua_State *L )
 {
    const Outfit *o = luaL_validoutfit( L, 1 );
-   return nlua_helperTags( L, 2, o->tags );
+   return nlua_helperTags( L, 2, outfit_tags( o ) );
 }

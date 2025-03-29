@@ -975,6 +975,10 @@ const CollPoly *outfit_plg( const Outfit *o )
       return &o->u.lau.gfx.polygon;
    return NULL;
 }
+const ShipStatList *outfit_stats( const Outfit *o )
+{
+   return o->stats;
+}
 /**
  * @brief Gets the outfit's sound effect.
  *    @param o Outfit to get information from.
@@ -1097,6 +1101,14 @@ double outfit_cpu( const Outfit *o )
 double outfit_range( const Outfit *o )
 {
    return pilot_outfitRange( NULL, o );
+}
+double outfit_rangeRaw( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.range;
+   else if ( outfit_isBeam( o ) )
+      return o->u.bem.range;
+   return 0;
 }
 double outfit_width( const Outfit *o )
 {
@@ -1474,6 +1486,12 @@ double outfit_beamMinDelay( const Outfit *o )
       return o->u.bem.min_delay;
    return 0;
 }
+double outfit_beamWarmup( const Outfit *o )
+{
+   if ( outfit_isBeam( o ) )
+      return o->u.bem.warmup;
+   return 0;
+}
 /**
  * @brief Gets the outfit's duration.
  *    @param o Outfit to get the duration of.
@@ -1647,6 +1665,10 @@ OutfitSlotSize outfit_slotSize( const Outfit *o )
 int outfit_slotProperty( const Outfit *o )
 {
    return o->slot.spid;
+}
+int outfit_slotPropertyExtra( const Outfit *o )
+{
+   return o->spid_extra;
 }
 int outfit_slotExclusive( const Outfit *o )
 {
@@ -3910,6 +3932,10 @@ int outfit_checkIllegal( const Outfit *o, int fct )
    }
    return 0;
 }
+int *outfit_illegalTo( const Outfit *o )
+{
+   return o->illegalto;
+}
 
 /**
  * @brief Checks to see if a license exists.
@@ -4125,4 +4151,9 @@ static int os_printD_rate( char *buffer, int i, double val,
    if ( val_opts->colour )
       i += scnprintf( buffer + i, MAXLEN, "#0" );
    return i;
+}
+
+char **outfit_tags( const Outfit *o )
+{
+   return o->tags;
 }
