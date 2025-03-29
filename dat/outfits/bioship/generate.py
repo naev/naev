@@ -194,7 +194,21 @@ for nam,temp,gfx,output_pref,outputs in [
 ##    "mass":         <S&K>,
 ##    "armour":       lerp(    <Unicorp> , <S&K> )
 
-# Perlevis Cortex  ==>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
+#   (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
+#"t","Perlevis",["I","II"]
+#   (1) Unicorp_d2 x2 (2) S&K Ultralight Combat Plating x2
+#"s","Laevis",["I","II"]
+#   (1) Unicorp_d23  (2) S&K Medium Combat Plating
+#"m","Mediocris"["I","II"]
+#   (1) Unicorp_d23 x2  (2) S&K Medium Combat Plating x2
+#"l","Largus",["I","II","III"]
+#   (1) Unicorp_d58  (2) S&K Heavy Combat Plating
+#"h","Ponderosus",["I","II","III","IV"]
+#   (1) Unicorp_d58 x2 (2) S&K Heavy Combat Plating x2
+#"x","Immanis",["I","II","III"]
+
+
+# Perlevis Cortex    =>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "small",
@@ -210,8 +224,7 @@ BioOutfit( "cortex.xml.template", {
     N_("Perlevis Cortex II"),
 ] )
 
-# Laevis Cortex  =>  (1) Unicorp_d9  (2) S&K Light Combat Plating
-#                =   (1) Unicorp_d2 x2 (2) S&K Ultralight Combat Plating x2
+# Laevis Cortex      =>  (1) Unicorp_d2 x2 (2) S&K Ultralight Combat Plating x2
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "small",
@@ -227,7 +240,7 @@ BioOutfit( "cortex.xml.template", {
     N_("Laevis Cortex II"),
 ] )
 
-# Mediocris Cortex  =>  (1) Unicorp_d23  (2) S&K Medium Combat Plating
+# Mediocris Cortex   =>  (1) Unicorp_d23  (2) S&K Medium Combat Plating
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "medium",
@@ -243,8 +256,7 @@ BioOutfit( "cortex.xml.template", {
     N_("Mediocris Cortex II")
 ] )
 
-# Largus Cortex  =>  (1) Unicorp_d38  (2) S&K Medium-Heavy Combat Plating
-#                =   (1) Unicorp_d23 x2  (2) S&K Medium Combat Plating x2
+# Largus Cortex      =>  (1) Unicorp_d23 x2  (2) S&K Medium Combat Plating x2
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "medium",
@@ -279,8 +291,7 @@ BioOutfit( "cortex.xml.template", {
     N_("Ponderosus Cortex IV"),
 ] )
 
-# Immanis Cortex  =>  (1) Unicorp_d72  (2) S&K Superheavy Combat Plating
-#                 =   (1) Unicorp_d58 x2 (2) S&K Heavy Combat Plating x2
+# Immanis Cortex     =>  (1) Unicorp_d58 x2 (2) S&K Heavy Combat Plating x2
 BioOutfit( "cortex.xml.template", {
     "typename":     typename["hull"],
     "size":         "large",
@@ -347,110 +358,6 @@ for nam,dbl,gfx,output_pref,outputs,cpu in [
       "cpu":            lerpr(*cpu),
    } ).run( [ N_(output_pref+" Cerebrum "+s) for s in outputs ] )
 
-"""
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "small",
-    "price":        lerpr(   120e3, 1.5*120e3 ),
-    "mass":         lerpr(      14, 14*1.25*0.99999 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_s1.webp",
-    "cpu":          lerpr(   5,   6 ),
-    "shield" :      lerp(  200, 250 ),
-    "shield_regen": lerp(    7,   9 ),
-    "energy":       lerp(  200, 250 ),
-    "energy_regen": lerp(   10,  13 ),
-} ).run( [
-    N_("Perleve Cerebrum I"),
-    N_("Perleve Cerebrum II"),
-] )
-
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "small",
-    "price":        lerpr(   210e3, 1.5*210e3 ),
-    "mass":         lerpr(  75, 75*1.25 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_s2.webp",
-    "cpu":          lerpr(  24,  32 ),
-    "shield" :      lerp(  250, 312 ),
-    "shield_regen": lerp(    8,  10 ),
-    "energy":       lerp(  400, 500 ),
-    "energy_regen": lerp(   21,  26 ),
-} ).run( [
-    N_("Laevum Cerebrum I"),
-    N_("Laevum Cerebrum II"),
-] )
-
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "medium",
-    "price":        lerpr(   330e3 , 330e3+(185e3+75e3)/2),
-    "mass":         lerpr(90,90+(56+60)/2),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_m1.webp",
-    "cpu":          lerpr(  48,   100 ),
-    "shield" :      lerp(  450,   550 ),
-    "shield_regen": lerp(   10,    13 ),
-    "energy":       lerp(  750,   938 ),
-    "energy_regen": lerp(   33, 41.25 ),
-} ).run( [
-    N_("Mediocre Cerebrum I"),
-    N_("Mediocre Cerebrum II"),
-] )
-
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "medium",
-    "price":        lerpr(   600e3, 600e3+(185e3+75e3)/2 ),
-    "mass":         lerpr(     270,        270+(56+60)/2 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_m2.webp",
-    "shield" :      lerp(  580,   680 ),
-    "shield_regen": lerp(   12,    15 ),
-    "energy":       lerp( 1600,  2000 ),
-    "energy_regen": lerp(   53, 66.25 ),
-} ).run( [
-    N_("Largum Cerebrum I"),
-    N_("Largum Cerebrum II"),
-] )
-
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "large",
-    "price":        lerpr( 3e6, 3e6+(220e3+260e3)/2 ),
-    "mass":         lerpr( 540,     540+(120+120)/2 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_l1.webp",
-    "cpu":          lerpr( 100,  200 ),
-    "shield" :      lerp(  850, 1050 ),
-    "shield_regen": lerp(   15,   21 ),
-    "energy":       lerp( 2460, 3075 ),
-    "energy_regen": lerp(  66,  82.5 ),
-} ).run( [
-    N_("Ponderosum Cerebrum I"),
-    N_("Ponderosum Cerebrum II"),
-    N_("Ponderosum Cerebrum III"),
-] )
-
-BioOutfit( "cerebrum.xml.template", {
-    "typename":     typename["brain"],
-    "size":         "large",
-    "price":        lerpr(  4e6, 4e6+(220e3+260e3)/2 ),
-    "mass":         lerpr( 1300,    1300+(120+120)/2 ),
-    "desc":         desc["brain"],
-    "gfx_store":    "organic_core_l2.webp",
-    "cpu":          lerpr( 370*3, 600*3 ),
-    "shield" :      lerp(   1100,  1300 ),
-    "shield_regen": lerp(     18,    24 ),
-    "energy":       lerp(   3840,  4800 ),
-    "energy_regen": lerp(    140,   175 ),
-} ).run( [
-    N_("Immane Cerebrum I"),
-    N_("Immane Cerebrum II"),
-    N_("Immane Cerebrum III"),
-] )
-"""
 
 ##
 # Weapons
