@@ -186,16 +186,16 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
     let cycles = nt.cycles();
     let periods = nt.periods();
     let seconds = nt.seconds();
-    let max = max as u64;
+    let max = max as usize;
     if cycles == 0 && periods == 0 {
         let cmsg = CString::new(gettext("%04d s")).unwrap();
         unsafe {
-            naevc::snprintf(cstr, max, cmsg.as_ptr().cast(), seconds);
+            naevc::scnprintf(cstr, max, cmsg.as_ptr().cast(), seconds);
         }
     } else if cycles == 0 || d == 0 {
         let cmsg = CString::new(gettext("%.*f p")).unwrap();
         unsafe {
-            naevc::snprintf(
+            naevc::scnprintf(
                 cstr,
                 max,
                 cmsg.as_ptr().cast(),
@@ -206,7 +206,7 @@ pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTime
     } else {
         let cmsg = CString::new(gettext("UST %d:%.*f")).unwrap();
         unsafe {
-            naevc::snprintf(
+            naevc::scnprintf(
                 cstr,
                 max,
                 cmsg.as_ptr().cast(),
