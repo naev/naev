@@ -61,6 +61,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/core_engine/dummy_engine.xml',
    root / 'dat/outfits/core_engine/large/beat_up_large_engine.xml',
    root / 'dat/outfits/core_engine/large/krain_remige_engine.xml',
+   root / 'dat/outfits/core_engine/large/melendez_mammoth_engine.xml',
    root / 'dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml',
    root / 'dat/outfits/core_engine/large/nexus_bolt_3000_engine.xml',
    root / 'dat/outfits/core_engine/large/tricon_typhoon_engine.xml',
