@@ -4,15 +4,15 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <mass>24/26</mass>
-  <price>16000/14000</price>
+  <mass>25</mass>
+  <price>14500</price>
   <description>Commonly found on civilian vessels, the D-2 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
   <gfx_store>base_hull_t.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
   <cargo>10/4</cargo>
-  <absorb>2/7</absorb>
+  <absorb>3/6</absorb>
   <armour>50/40</armour>
  </specific>
 </outfit>
