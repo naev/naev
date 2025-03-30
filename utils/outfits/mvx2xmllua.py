@@ -3,10 +3,8 @@
 dont_display=set(['priority','rarity'])
 from outfit import outfit
 
-#TODO: use argparse
-
 from os import path
-from sys import argv,stderr,exit,stdin,stdout
+from sys import argv,stderr,stdin,stdout,exit
 import xml.etree.ElementTree as ET
 
 from outfit import nam2fil
@@ -96,7 +94,6 @@ def main():
    R=o.r
 
    if R.tag!='outfit':
-      print >>stderr,"not an outfit :",R.tag
       return 1
 
    nam=R.attrib['name'].rsplit(' (deprecated)',1)
@@ -122,12 +119,16 @@ def main():
 
    print >>stderr,nam
    o.write(stdout)
+   return 0
    
 if __name__ == '__main__':
-   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)!=1:
-      nam=path.basename(argv[0])
-      print >>stderr, "usage:",nam
-      print >>stderr, "  Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout> and the name the output should have on <stderr>."
-   else:
-      main()
-      exit(0)
+   import argparse
+
+   parser = argparse.ArgumentParser(
+      description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
+         The name the output should have is written on <stderr>.
+         If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
+   )
+   parser.parse_args()
+   exit(main())
+
