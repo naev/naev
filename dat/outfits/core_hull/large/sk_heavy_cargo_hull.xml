@@ -4,20 +4,20 @@
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>275</mass>
-  <price>550000</price>
+  <mass>550</mass>
+  <price>1100000</price>
   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
   <gfx_store>cargo_hull_l.webp</gfx_store>
  </general>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 275, 275},
+   { "mass", 550, 550},
    { "cargo", 400, 200},
-   { "absorb", 42, 10},
+   { "absorb", 52, 10},
    { "armour", 800, 300},
-   { "cargo_inertia", -15, -10},
-   { "cargo_mod", 20, 5},
+   { "cargo_inertia", -25, -10},
+   { "cargo_mod", 25, 10},
 }</lua_inline>
  </specific>
 </outfit>

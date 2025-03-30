@@ -15,7 +15,7 @@ require("outfits.lib.multicore").init{
    { "mass", 130, 130},
    { "cargo", 8, 4},
    { "absorb", 12, 6},
-   { "armour", 75, 85},
+   { "armour", 150, 160},
 }</lua_inline>
  </specific>
 </outfit>

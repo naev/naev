@@ -12,13 +12,13 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 60, 80},
+   { "mass", 120, 160},
    { "cpu", -64, 0},
    { "cargo", 55, 25},
    { "absorb", 26, 13},
-   { "armour", 85, 95},
-   { "cargo_inertia", -6, -4},
-   { "cargo_mod", 8, 2},
+   { "armour", 170, 190},
+   { "cargo_inertia", -10, -4},
+   { "cargo_mod", 10, 4},
    { "ew_hide", 25, 0},
    { "ew_signature", -25, 0},
    { "jam_chance", 42, 0},

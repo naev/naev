@@ -1,6 +1,6 @@
 <outfit name="Red Star Light Cargo Hull">
  <general>
-  <shortname>RS. Light Cargo Hull</shortname>
+  <shortname>RS. L. Cargo Hull</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>
@@ -17,9 +17,9 @@ require("outfits.lib.multicore").init{
    { "cpu", -24, 0},
    { "cargo", 14, 6},
    { "absorb", 3, 7},
-   { "armour", 38, 22},
-   { "cargo_inertia", -6, -4},
-   { "cargo_mod", 8, 2},
+   { "armour", 60, 38},
+   { "cargo_inertia", -10, -4},
+   { "cargo_mod", 10, 4},
    { "ew_hide", 25, 0},
    { "ew_signature", -25, 0},
    { "jam_chance", 42, 0},
