@@ -87,7 +87,7 @@ function ambusher()
       baddie:outfitAdd("Razor Artillery S1",2)
       baddie:outfitAdd("Improved Stabilizer")
    else
-      --baddie:outfitAdd("S&K Light Stealth Plating")
+      --baddie:outfitAdd("S&K Ultralight Stealth Plating")
       baddie:outfitAdd("Milspec Thalos 2202 Core System")
       baddie:outfitAdd("Milspec Thalos 2202 Core System")
       baddie:outfitAdd("Tricon Zephyr II Engine")
