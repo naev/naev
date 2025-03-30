@@ -16,7 +16,7 @@ def transpose(M):
 getfloat=lambda s:float(s.split('/')[0])
 
 #launch_reload
-def main(args,gith=False,ter=False,noext=False):
+def main(args,gith=False,ter=False,noext=False,sortit=False):
    names=['']*len(args)
    L=[dict() for a in args]
    rang=dict()
@@ -52,6 +52,13 @@ def main(args,gith=False,ter=False,noext=False):
          rang[i]=(M,m)
       if noext:
          rang[i]=(None,None)
+
+   if sortit:
+      for i,o in enumerate(L):
+         o['name']=names[i]
+      L.sort(key=lambda o:getfloat(o['mass']))
+      for i,o in enumerate(L):
+         names[i]=o['name']
 
    Res=[[k]+[l[k] if k in l else '' for l in L] for k in acc]
    names=['']+names
@@ -102,20 +109,22 @@ def main(args,gith=False,ter=False,noext=False):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print "usage:",argv[0],'[-g|-t] <outfitname1.xml> ...'
+      print "usage:",argv[0],'[-g|-t] [-s] <outfitname1.xml> ...'
       print "By default, outputs text aligned markdown table comparing the outfits resp. values."
       print "The options improve your confort in certain use cases:"
       print "  -g  unaligned (therefore smaller) valid github md, for use in posts."
       print "  -c  colored terminal output. You can pipe to \"less -RS\" if the table is too wide."
       print "  -n  no extrema display."
+      print "If -s option is set, inputs are sorted by increasing mass."
    else:
       gith,ter,noext="-g" in argv[1:],"-c" in argv[1:],"-n" in argv[1:]
       if gith and ter:
          gith=ter=False
          print >>stderr,"Ignored incompatible -g and -c."
+      sortit="-s" in argv[1:]
 
-      ign=[f for f in argv[1:] if f not in ["-g","-c","-n"] and not f.endswith(".xml") and not f.endswith(".mvx")]
+      ign=[f for f in argv[1:] if f not in ["-g","-c","-n","-s"] and not f.endswith(".xml") and not f.endswith(".mvx")]
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      main([f for f in argv[1:] if f.endswith(".xml") or f.endswith(".mvx")],gith,ter,noext)
+      main([f for f in argv[1:] if f.endswith(".xml") or f.endswith(".mvx")],gith,ter,noext,sortit)
