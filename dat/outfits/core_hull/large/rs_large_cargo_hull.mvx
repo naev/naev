@@ -1,28 +1,24 @@
-<outfit name="Red Star Heavy Cargo Hull">
+<outfit name="Red Star Large Cargo Hull">
  <general>
-  <shortname>RS. Heavy Cargo Hull</shortname>
+  <shortname>RS. Large Cargo Hull</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
+  <slot prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
   <mass>550</mass>
   <price>1200000</price>
   <description>The Imperial Red Star is dedicated to relief efforts in areas stricken by war, piracy and disease. Recently developed by the organization is a series of specialized cargo hulls meant to maximize the odds of their supplies and personnel safely arriving where they are needed most. The integrated scrambler systems allow even the largest ships a chance to turn away missiles.</description>
   <gfx_store>rs_hull_l.webp</gfx_store>
+  <cpu>-160/0</cpu>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 550, 550},
-   { "cpu", -160, 0},
-   { "cargo", 270, 130},
-   { "absorb", 56, 12},
-   { "armour", 800, 300},
-   { "cargo_inertia", -10, -4},
-   { "cargo_mod", 10, 4},
-   { "ew_hide", 25, 0},
-   { "ew_signature", -25, 0},
-   { "jam_chance", 42, 0},
-}</lua_inline>
+  <cargo>270/130</cargo>
+  <absorb>56/12</absorb>
+  <armour>800/300</armour>
+  <cargo_inertia>-10/-4</cargo_inertia>
+  <cargo_mod>10/4</cargo_mod>
+  <ew_hide>25/0</ew_hide>
+  <ew_signature>-25/0</ew_signature>
+  <jam_chance>42/0</jam_chance>
  </specific>
 </outfit>

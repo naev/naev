@@ -1,10 +1,10 @@
-<outfit name="S&amp;K Small Cargo Hull (deprecated)">
+<outfit name="S&amp;K Small Cargo Hull">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>
   <priority>7</priority>
-  <mass>60</mass>
+  <mass>30</mass>
   <price>120000</price>
   <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
   <gfx_store>cargo_hull_s.webp</gfx_store>
@@ -12,12 +12,12 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 60, 60},
-   { "cargo", 30, 0},
-   { "absorb", 6, 0},
-   { "armour", 55, 0},
-   { "cargo_inertia", -25, 0},
-   { "cargo_mod", 25, 0},
+   { "mass", 30, 30},
+   { "cargo", 20, 10},
+   { "absorb", 2, 4},
+   { "armour", 55, 35},
+   { "cargo_inertia", -25, -10},
+   { "cargo_mod", 25, 10},
 }</lua_inline>
  </specific>
 </outfit>

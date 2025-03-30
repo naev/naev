@@ -1,11 +1,11 @@
-<outfit name="S&amp;K Cargo Hull">
+<outfit name="S&amp;K Medium Cargo Hull">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>7</priority>
   <mass>120/160</mass>
-  <price>160000</price>
+  <price>320000</price>
   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
   <gfx_store>cargo_hull_m.webp</gfx_store>
  </general>
