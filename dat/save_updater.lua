@@ -26,15 +26,21 @@ function finish ()
 
    -- Old cores that now use the primary / secondary system (0.13.0)
    local split = {
-      ["Milspec Orion 9901 Core System"]  = true,
-      ["Milspec Thalos 9802 Core System"] = true,
-      ["Unicorp PT-1750 Core System"]     = true,
-      ["Milspec Orion 5501 Core System"]  = true,
-      ["Milspec Thalos 5402 Core System"] = true,
-      ["Unicorp PT-310 Core System"]      = true,
-      ["Milspec Orion 3701 Core System"]  = true,
-      ["Milspec Thalos 3602 Core System"] = true,
-      ["Unicorp PT-68 Core System"]       = true,
+      ["Milspec Orion 9901 Core System"]     = true,
+      ["Milspec Thalos 9802 Core System"]    = true,
+      ["Unicorp PT-1750 Core System"]        = true,
+      ["Milspec Orion 5501 Core System"]     = true,
+      ["Milspec Thalos 5402 Core System"]    = true,
+      ["Unicorp PT-310 Core System"]         = true,
+      ["Milspec Orion 3701 Core System"]     = true,
+      ["Milspec Thalos 3602 Core System"]    = true,
+      ["Unicorp PT-68 Core System"]          = true,
+      ["Unicorp D-72 Heavy Plating"]         = true,
+      ["S&amp;K Superheavy Combat Plating"]  =true,
+      ["Unicorp D-38 Medium Plating"]        = true,
+      ["S&amp;K Medium-Heavy Combat Plating"]="S&amp;K Medium Combat Plating",
+      ["Unicorp D-9 Light Plating"]          = true,
+      ["S&amp;K Light Combat Plating"]       = true,
    }
 
    for original,value in pairs(changes_done) do
@@ -88,6 +94,12 @@ local outfit_list = {
    -- Multicore transformation.
    -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
    -- See finish() above.
+   ["Unicorp D-72 Heavy Plating"]="Unicorp D-58 Heavy Plating",
+   ["S&amp;K Superheavy Combat Plating"]=="S&amp;K Heavy Combat Plating",
+   ["Unicorp D-38 Medium Plating"]="Unicorp D-23 Medium Plating",
+   ["S&amp;K Medium-Heavy Combat Plating"]"S&amp;K Medium Combat Plating",
+   ["Unicorp D-9 Light Plating"]="Unicorp D-2 Light Plating",
+   ["S&amp;K Light Combat Plating"]="S&amp;K Ultralight Combat Plating",
    ["Milspec Orion 9901 Core System"] = "Milspec Orion 8601 Core System",
    ["Milspec Thalos 9802 Core System"] = "Milspec Thalos 8502 Core System",
    ["Unicorp PT-1750 Core System"] = "Unicorp PT-440 Core System",
