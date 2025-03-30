@@ -51,7 +51,6 @@
 #define OUTFIT_SHORTDESC_MAX                                                   \
    STRMAX_SHORT /**< Max length of the short description of the outfit. */
 
-#if 0
 /**
  * @brief A ship outfit, depends radically on the type.
  */
@@ -145,7 +144,6 @@ typedef struct Outfit {
       OutfitLicenseData      lic;  /**< LICENSE. */
    } u;                            /**< Holds the type-based outfit data. */
 } Outfit;
-#endif
 
 /**
  * @brief For threaded loading of outfits.
@@ -1492,6 +1490,12 @@ double outfit_beamWarmup( const Outfit *o )
       return o->u.bem.warmup;
    return 0;
 }
+double outfit_boltSpeed( const Outfit *o )
+{
+   if ( outfit_isBolt( o ) )
+      return o->u.blt.speed;
+   return 0;
+}
 /**
  * @brief Gets the outfit's duration.
  *    @param o Outfit to get the duration of.
@@ -1678,9 +1682,33 @@ int outfit_rarity( const Outfit *o )
 {
    return o->rarity;
 }
+char *outfit_descExtra( const Outfit *o )
+{
+   return o->desc_extra;
+}
+char *outfit_descRaw( const Outfit *o )
+{
+   return o->desc_raw;
+}
+char *outfit_summaryRaw( const Outfit *o )
+{
+   return o->summary_raw;
+}
 int outfit_luaEnv( const Outfit *o )
 {
    return o->lua_env;
+}
+int outfit_luaDescextra( const Outfit *o )
+{
+   return o->lua_descextra;
+}
+int outfit_luaOnadd( const Outfit *o )
+{
+   return o->lua_onadd;
+}
+int outfit_luaOnremove( const Outfit *o )
+{
+   return o->lua_onremove;
 }
 int outfit_luaInit( const Outfit *o )
 {
