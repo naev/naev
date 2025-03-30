@@ -4,8 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>
-  <mass>110</mass>
-  <price>270000</price>
+  <price>240000</price>
   <description>Medium-sized ships are usually not in the business of remaining undetected, but Nexus Shipyards have nevertheless developed a hull modification that helps in this area</description>
   <gfx_store>stealth_hull_m.webp</gfx_store>
   <priority>3</priority>
@@ -13,10 +12,10 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 110, 110},
-   { "cargo", 10, 0},
-   { "absorb", 27, 0},
-   { "armour", 160, 0},
+   { "mass", 110, 130},
+   { "cargo", 10, 5},
+   { "absorb", 27, 15},
+   { "armour", 160, 170},
    { "ew_hide", -15, 0},
 }</lua_inline>
  </specific>
