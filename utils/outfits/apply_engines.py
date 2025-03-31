@@ -4,6 +4,7 @@ import math
 from sys import argv,stderr,stdout
 from outfit import outfit
 from getconst import PHYSICS_SPEED_DAMP
+import numpy as np
 
 #TODO: use argparse
 
@@ -122,16 +123,22 @@ def ls2vals(line_size):
    # Modulate full speed based on the speed stat
    fullspeed = dec( size + 1.0 - stats["speed"])
 
-   # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
-   r = STD_R * pow(2,-((size-1)-2.5)/2.5)
+   # Proportion of accel vs speed, defaults so that it is 1:1 at size 1.
+   # Curve decided so that it is 1 at size==1, 0.9 at size==3, and 0.5 at size==6
+   p = np.polyfit( [1,3,6], [1,0.9,0.5], 2 )
+   r = p[0] * (size-1)**2 + p[1] * (size-1) + p[2]
 
    # Modulate ratio based on outfit
    r *= line_stats[line]["ratio"]
 
+   # Correction so that 1 makes it so that the engine has equal speed and accel
+   r = r / (PHYSICS_SPEED_DAMP+r)
+   assert( r >= 0 and r <= 1 )
+
    speed = fullspeed*(1.0-r)
    accel = fullspeed*r*PHYSICS_SPEED_DAMP
 
-   turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP) 
+   turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP)
    return {
            "speed":fmt(speed),
            "accel":fmt(accel),
