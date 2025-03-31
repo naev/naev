@@ -4,12 +4,11 @@ import math
 from sys import argv,stderr,stdout
 from outfit import outfit
 from getconst import PHYSICS_SPEED_DAMP
-import numpy as np
 
 #TODO: use argparse
 
 AG_EXP  = 0.3
-TURN_CT = 0.25
+TURN_CT = 0.50
 STD_R   = 0.15
 
 sizes={
@@ -71,36 +70,36 @@ lines={
 
 line_stats = {
     "T" : {
-        "ratio" : 1.1, # 2.0 is double accel vs speed (at size 1)
+        "ratio" : 2.0, # 2.0 is double accel vs speed (at size 1)
         "speed" : 1.0, # 1.0 indicates current speed rank, lower means slower, higher means faster
     },
     "K" : {
-        "ratio" : 0.8, # lower ratio
-        "speed" : 1.4, # higher speed than average
+        "ratio" : 0.9, # lower ratio
+        "speed" : 1.3, # higher speed than average
     },
     "N" : {
-        "ratio" : 0.7,
+        "ratio" : 1.0,
         "speed" : 0.9, # Pretty good but slightly slower top speed
     },
     "M" : {
-        "ratio" : 0.45,
+        "ratio" : 0.5,
         "speed" : 0.9,
     },
     "U" : {
-        "ratio" : 0.7,
-        "speed" : 0.9,
+        "ratio" : 1.0,
+        "speed" : 0.8,
     },
     "Z" : { # TODO make these change over time the profile via Lua
-        "ratio" : 0.6,
+        "ratio" : 1.2,
         "speed" : 0.7,
     },
     "B" : {
-        "ratio" : 0.5,
-        "speed" : 0.5,
+        "ratio" : 1.0,
+        "speed" : 0.6,
     },
 }
 
-ALPHA, BETA = 1.06, 0.06
+ALPHA, BETA = 1.11, 0.06
 
 def dec_i(n):
    if n<=1:
@@ -121,19 +120,16 @@ def ls2vals(line_size):
    stats = line_stats[line]
 
    # Modulate full speed based on the speed stat
-   fullspeed = dec( size + 1.0 - stats["speed"] )
+   fullspeed = dec( size + 1.0 - stats["speed"])
 
-   # Proportion of accel vs speed, defaults so that it is 1:1 at size 1.
-   # Curve decided so that it is 1 at size==1, 0.9 at size==3, and 0.5 at size==6
-   p = np.polyfit( [1,3,6], [1,0.9,0.5], 2 )
-   r = p[0] * size**2 + p[1] * size + p[2]
+   # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
+   r = STD_R * pow(2,-((size-1)-2.5)/2.5)
 
    # Modulate ratio based on outfit
    r *= line_stats[line]["ratio"]
 
-   accel = fullspeed*r
-   speed = fullspeed - accel/PHYSICS_SPEED_DAMP
-   assert( speed > 0 )
+   speed = fullspeed*(1.0-r)
+   accel = fullspeed*r*PHYSICS_SPEED_DAMP
 
    turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP)
    return {
