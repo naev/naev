@@ -7,8 +7,9 @@ from getconst import PHYSICS_SPEED_DAMP
 
 #TODO: use argparse
 
-AG_EXP  = 0.2
-TURN_CT = 0.46
+AG_EXP  = 0.3
+TURN_CT = 0.50
+STD_R   = 0.15
 
 sizes={
    "Za'lek Test Engine":2,
@@ -71,37 +72,30 @@ line_stats = {
     "T" : {
         "ratio" : 2.0, # 2.0 is double accel vs speed (at size 1)
         "speed" : 1.0, # 1.0 indicates current speed rank, lower means slower, higher means faster
-        "turn"  : 1.0, # 1.0 means base turn rate, lower is worse, higher is better
     },
     "K" : {
-        "ratio" : 1.4, # lower ratio
-        "speed" : 1.1, # higher speed than average
-        "turn"  : 1.0,
+        "ratio" : 0.9, # lower ratio
+        "speed" : 1.3, # higher speed than average
     },
     "N" : {
         "ratio" : 1.0,
-        "speed" : 1.0, # Pretty good but slightly slower top speed
-        "turn"  : 0.8,
+        "speed" : 0.9, # Pretty good but slightly slower top speed
     },
     "M" : {
         "ratio" : 0.5,
-        "speed" : 1.0,
-        "turn"  : 1.0,
+        "speed" : 0.9,
     },
     "U" : {
         "ratio" : 1.0,
         "speed" : 0.8,
-        "turn"  : 0.8,
     },
     "Z" : { # TODO make these change over time the profile via Lua
         "ratio" : 1.2,
         "speed" : 0.7,
-        "turn"  : 0.8,
     },
     "B" : {
-        "ratio" : 0.8,
-        "speed" : 0.3,
-        "turn"  : 0.6,
+        "ratio" : 1.0,
+        "speed" : 0.6,
     },
 }
 
@@ -115,8 +109,9 @@ def dec_i(n):
 
 def dec(f):
    n = math.floor(f)
-   q = f-n
-   return pow(dec_i(n),1-q)*pow(dec_i(n+1),q)
+   q = 1.0*f-n
+   n = int(n)
+   return pow(dec_i(n),1.0-q)*pow(dec_i(n+1),q)
 
 def ls2vals(line_size):
    if line_size is None:
@@ -127,8 +122,8 @@ def ls2vals(line_size):
    # Modulate full speed based on the speed stat
    fullspeed = dec( size + 1.0 - stats["speed"])
 
-   # Proportion of accel vs speed, defaults so that it is 1:1 at size 1.
-   r = 0.5*pow(2,-((size-1)-5)/5) / PHYSICS_SPEED_DAMP
+   # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
+   r = STD_R * pow(2,-((size-1)-2.5)/2.5)
 
    # Modulate ratio based on outfit
    r *= line_stats[line]["ratio"]
@@ -136,7 +131,7 @@ def ls2vals(line_size):
    speed = fullspeed*(1.0-r)
    accel = fullspeed*r*PHYSICS_SPEED_DAMP
 
-   turn = TURN_CT * fullspeed * pow(1.0*accel/speed,AG_EXP) * stats["turn"]
+   turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP) 
    return {
            "speed":fmt(speed),
            "accel":fmt(accel),
