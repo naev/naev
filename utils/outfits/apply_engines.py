@@ -7,8 +7,8 @@ from getconst import PHYSICS_SPEED_DAMP
 
 #TODO: use argparse
 
-AG_EXP  = 0.3
-TURN_CT = 0.50
+AG_EXP  = 0.4
+TURN_CT = 0.40
 STD_R   = 0.15
 
 sizes={
@@ -70,19 +70,19 @@ lines={
 
 line_stats = {
     "T" : {
-        "ratio" : 2.0, # 2.0 is double accel vs speed (at size 1)
+        "ratio" : 1.4, # 2.0 is double accel vs speed (at size 1)
         "speed" : 1.0, # 1.0 indicates current speed rank, lower means slower, higher means faster
     },
     "K" : {
         "ratio" : 0.9, # lower ratio
-        "speed" : 1.3, # higher speed than average
+        "speed" : 1.2, # higher speed than average
     },
     "N" : {
         "ratio" : 1.0,
         "speed" : 0.9, # Pretty good but slightly slower top speed
     },
     "M" : {
-        "ratio" : 0.5,
+        "ratio" : 0.7,
         "speed" : 0.9,
     },
     "U" : {
@@ -90,12 +90,12 @@ line_stats = {
         "speed" : 0.8,
     },
     "Z" : { # TODO make these change over time the profile via Lua
-        "ratio" : 1.2,
+        "ratio" : 1.1,
         "speed" : 0.7,
     },
     "B" : {
         "ratio" : 1.0,
-        "speed" : 0.6,
+        "speed" : 0.7,
     },
 }
 
