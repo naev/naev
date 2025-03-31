@@ -14,9 +14,9 @@
   <energy_regen_malus>26</energy_regen_malus>
   <engine_limit>3600</engine_limit>
   <fuel>2800</fuel>
-  <speed>147</speed>
-  <accel>51</accel>
-  <turn>49</turn>
+  <speed>175</speed>
+  <accel>55</accel>
+  <turn>56</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>
