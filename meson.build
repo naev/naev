@@ -5,7 +5,7 @@ project('naev', ['c','rust'],
       'c_std=c11',
       'werror=false',
       'warning_level=3',
-      'rust_std=2021',
+      'rust_std=2024',
    ],
    meson_version: '>=1.4.0')
 
@@ -373,10 +373,14 @@ if not clang.found()
 endif
 
 # Check bindgen version
+# We'll need https://github.com/rust-lang/rust-bindgen/pull/3124 (should be next version after 0.71.1) to compile without warnings with 2024 rust
 bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 
 bindgen_args = [
-   '--override-abi', 'nlua_package_.*=C-unwind', '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;'
+   '--override-abi', 'nlua_package_.*=C-unwind',
+   '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
+   # Meson before 1.7.0 does not pass rust-edition to bindgen, so instead of bumping up meson version (for now), pass it ourselves
+   '--rust-edition', '2024',
 ]
 # Handle issues with bindgen and the math.h header
 bindgen_blocklist_items = [
