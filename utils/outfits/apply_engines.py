@@ -9,7 +9,7 @@ import numpy as np
 #TODO: use argparse
 
 AG_EXP  = 0.3
-TURN_CT = 0.50
+TURN_CT = 0.25
 STD_R   = 0.15
 
 sizes={
@@ -71,7 +71,7 @@ lines={
 
 line_stats = {
     "T" : {
-        "ratio" : 2.0, # 2.0 is double accel vs speed (at size 1)
+        "ratio" : 1.5, # 2.0 is double accel vs speed (at size 1)
         "speed" : 1.0, # 1.0 indicates current speed rank, lower means slower, higher means faster
     },
     "K" : {
@@ -126,17 +126,14 @@ def ls2vals(line_size):
    # Proportion of accel vs speed, defaults so that it is 1:1 at size 1.
    # Curve decided so that it is 1 at size==1, 0.9 at size==3, and 0.5 at size==6
    p = np.polyfit( [1,3,6], [1,0.9,0.5], 2 )
-   r = p[0] * (size-1)**2 + p[1] * (size-1) + p[2]
+   r = p[0] * size**2 + p[1] * size + p[2]
 
    # Modulate ratio based on outfit
    r *= line_stats[line]["ratio"]
 
-   # Correction so that 1 makes it so that the engine has equal speed and accel
-   r = r / (PHYSICS_SPEED_DAMP+r)
-   assert( r >= 0 and r <= 1 )
-
-   speed = fullspeed*(1.0-r)
-   accel = fullspeed*r*PHYSICS_SPEED_DAMP
+   accel = fullspeed*r
+   speed = fullspeed - accel/PHYSICS_SPEED_DAMP
+   assert( speed > 0 )
 
    turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP)
    return {
