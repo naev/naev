@@ -13,7 +13,7 @@
  <specific type="modification">
   <accel>40</accel>
   <turn>34.5</turn>
-  <speed>102</speed>
+  <speed>103</speed>
   <fuel>2800</fuel>
   <energy_regen_malus>46</energy_regen_malus>
   <engine_limit>6500</engine_limit>

@@ -1,16 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import math
 from sys import argv,stderr,stdout
 from outfit import outfit
 from getconst import PHYSICS_SPEED_DAMP
 
-#TODO: use argparse
+
 
 AG_EXP  = 0.4
 TURN_CT = 0.40
 STD_R   = 0.15
-R_MAG   = 1.8
+R_MAG   = 1.85
 
 sizes={
    "Za'lek Test Engine":2,

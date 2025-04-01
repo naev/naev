@@ -12,8 +12,8 @@
   <energy_regen_malus>15</energy_regen_malus>
   <engine_limit>550</engine_limit>
   <fuel>600</fuel>
-  <speed>200</speed>
-  <accel>160</accel>
+  <speed>198</speed>
+  <accel>162</accel>
   <turn>95</turn>
  </specific>
 </outfit>

@@ -10,7 +10,7 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <accel>65</accel>
+  <accel>64</accel>
   <turn>48</turn>
   <speed>125</speed>
   <fuel>2400</fuel>

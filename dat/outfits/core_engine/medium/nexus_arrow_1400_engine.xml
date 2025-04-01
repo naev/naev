@@ -11,7 +11,7 @@
   <gfx_store>nexus_engine_m.webp</gfx_store>
  </general>
  <specific type="modification">
-  <accel>123</accel>
+  <accel>122</accel>
   <turn>78</turn>
   <speed>180</speed>
   <fuel>1200</fuel>
