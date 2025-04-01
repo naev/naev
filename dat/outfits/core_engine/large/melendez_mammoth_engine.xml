@@ -17,5 +17,7 @@
   <fuel>2800</fuel>
   <energy_regen_malus>22</energy_regen_malus>
   <engine_limit>5500</engine_limit>
+  <land_delay>-25</land_delay>
+  <time_mod>10</time_mod>
  </specific>
 </outfit>

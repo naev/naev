@@ -1,6 +1,6 @@
-<outfit name="Melendez Mammoth Engine">
+<outfit name="Melendez Old Mammoth Engine">
  <general>
-  <shortname>M. Mammoth Engine</shortname>
+  <shortname>M. Old Mammoth Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
@@ -17,7 +17,5 @@
   <speed>143</speed>
   <accel>50</accel>
   <turn>46</turn>
-  <land_delay>-25</land_delay>
-  <time_mod>10</time_mod>
  </specific>
 </outfit>

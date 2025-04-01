@@ -82,7 +82,10 @@ def main():
          sp=" (drift)"
          lw='0.5'
       l='"'+l.replace('_',' ')+sp+'"'
-      return '\t"'+dat+'" using 1:'+str(2*i+2+off)+' w '+w+' t '+l+' linecolor '+str(i+1)+' lw '+lw
+      n=i+1
+      if n>=5:
+         n+=1
+      return '\t"'+dat+'" using 1:'+str(2*i+2+off)+' w '+w+' t '+l+' linecolor '+str(n)+' lw '+lw
 
    fp.write('plot\\\n')
    fp.write(',\\\n'.join([fmt(dat,0,*t) for t in enumerate(lines)]))
