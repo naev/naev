@@ -81,7 +81,7 @@ lines={
 line_stats = {
     "T" : {
         "ratio" : 1.4, # 2.0 is double accel vs speed (at size 1)
-        "speed" : 1.0, # 1.0 indicates current speed rank, lower means slower, higher means faster
+        "speed" : 1.0, # 1.0 indicates current speed rank, 0.0 means next speed rank (size+1); higher means faster
     },
     "K" : {
         "ratio" : 1.0, # lower ratio
@@ -101,11 +101,11 @@ line_stats = {
     },
     "Z" : { # TODO make these change over time the profile via Lua
         "ratio" : 1.1,
-        "speed" : 0.4,
+        "speed" : 0.5,
     },
     "B" : {
-        "ratio" : 0.9,
-        "speed" : 0.4,
+        "ratio" : 0.7,
+        "speed" : 0.3,
     },
 }
 

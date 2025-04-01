@@ -65,7 +65,7 @@ else:
    L=[(a.to_dict(),a.shortname()) for a in map(outfit,argv[1:]) if a is not None]
    L.sort(key=key,reverse=True)
    C=['speed','max speed','accel','fullsp time','fullsp dist','turn','turn radius']
-   N=max([len(n) for (_,n) in L])
+   N=max([0]+[len(n) for (_,n) in L])
    out('| | '+' | '.join(C))
    out('| ---'+(N-2)*' '+len(C)*'| ---    ')
    for k,n in L:
