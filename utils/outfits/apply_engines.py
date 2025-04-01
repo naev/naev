@@ -97,15 +97,15 @@ line_stats = {
     },
     "U" : {
         "ratio" : 1.0,
-        "speed" : 0.7,
+        "speed" : 0.6,
     },
     "Z" : { # TODO make these change over time the profile via Lua
         "ratio" : 1.1,
-        "speed" : 0.65,
+        "speed" : 0.5,
     },
     "B" : {
         "ratio" : 1.0,
-        "speed" : 0.6,
+        "speed" : 0.5,
     },
 }
 
