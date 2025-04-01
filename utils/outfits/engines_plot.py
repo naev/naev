@@ -79,11 +79,11 @@ set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enh
          #w="linespoint" 
          w="lines" 
          sp=""
-         lw='1.0'
+         lw='0.9'
       else:
          w="lines"
          sp=" (drift)"
-         lw='0.6'
+         lw='0.85 dt "-"'
       l='"'+l.replace('_',' ')+sp+'"'
       n=i+1
       if n>=5:
