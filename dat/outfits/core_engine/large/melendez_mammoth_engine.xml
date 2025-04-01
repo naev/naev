@@ -4,20 +4,18 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <priority>7</priority>
   <mass>75</mass>
-  <price>1125000</price>
-  <description>This outfit is now only a prerequisite for an eq bioengine.</description>
+  <price>1100000</price>
+  <description>Melendez's Mammoth can pull incredible amounts of mass. Requiring specialized grav tethers to keep it attached to the ship's hull, it significantly impacts manoeuvrability, though a reasonable top speed can still be maintained. Many bulk freight corporations only turn a profit thanks to the Mammoth line of engines.</description>
   <gfx_store>engine12.webp</gfx_store>
+  <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>26</energy_regen_malus>
-  <engine_limit>3600</engine_limit>
-  <fuel>2800</fuel>
-  <speed>143</speed>
   <accel>50</accel>
   <turn>46</turn>
-  <land_delay>-25</land_delay>
-  <time_mod>10</time_mod>
+  <speed>143</speed>
+  <fuel>2800</fuel>
+  <energy_regen_malus>22</energy_regen_malus>
+  <engine_limit>5500</engine_limit>
  </specific>
 </outfit>

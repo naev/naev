@@ -157,7 +157,7 @@ for nam,temp,gfx,output_pref,outputs in [
    ("large/tricon_typhoon_engine.xml","gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
    ("large/unicorp_eagle_6500_engine.xml","gene_drive","strong_l","Immanis",["I","II","III"]),
    ("large/tricon_typhoon_ii_engine.xml","gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
-   ("large/melendez_mammoth_engine.xml","gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
+   ("large/melendez_old_mammoth_engine.xml","gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
 ]:
    ref=get_outfit_dict('core_engine/'+nam)
    BioOutfit( temp+".xml.template", {
