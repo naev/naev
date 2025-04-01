@@ -20,6 +20,7 @@ sizes={
    'Unicorp Falcon 1400 Engine':4,
    'Tricon Cyclone II Engine':4,
    'Unicorp Falcon 700 Engine':3,
+   'Nexus Arrow 1400 Engine':4,
    'Nexus Arrow 700 Engine':3,
    'Melendez Buffalo XL Engine':4,
    'Beat Up Medium Engine':3,
@@ -33,6 +34,7 @@ sizes={
    'Beat Up Large Engine':5,
    'Tricon Typhoon Engine':5,
    'Tricon Typhoon II Engine':6,
+   'Nexus Bolt 6500 Engine':6,
    'Nexus Bolt 3000 Engine':5,
    'Unicorp Hawk 360 Engine':2,
    'Unicorp Hawk 160 Engine':1,
@@ -41,6 +43,7 @@ sizes={
    "Za'lek Test Engine":2,
    'Tricon Zephyr Engine':1,
    'Tricon Zephyr II Engine':2,
+   'Nexus Dart 360 Engine':2,
    'Nexus Dart 160 Engine':1
 }
 
