@@ -32,11 +32,19 @@ def mkline(line):
       if(o):
          d=o.to_dict()
          acc.append((max_sp(d['speed'],d['accel']),d['speed']))
-   L=list(set(acc))
-   return sorted(L,reverse=True)
-   
+   L=list(sorted(set(acc),reverse=True))
+   pad=[('.','.')]
+
+   if len(L)==2:  # That's Krain!
+      # Complete with padding
+      L=3*pad+L+pad
+   elif len(L)==3:  # That's the Beat up corp. line
+      L=L[0:1]+pad+L[1:2]+pad+L[2:3]+pad
+
+   return L
+
 def main():
-   lines=['unicorp','tricon',"nexus","melendez"]
+   lines=['unicorp','tricon',"nexus","melendez","krain","beat_up"]
 
    bas=os.path.splitext(os.path.basename(__file__))[0]
    bas=os.path.join('.',bas)
@@ -64,9 +72,17 @@ def main():
    """)
 
    def fmt(dat,off,i,l):
-      sp=" (drift)" if off==1 else ""
-      w="linespoint" if off==0 else "lines"
-      return '\t"'+dat+'" using 1:'+str(2*i+2+off)+' w '+w+' t "'+l+sp+'" linecolor '+str(i+1)
+      if off==0:
+         #w="linespoint" 
+         w="lines" 
+         sp=""
+         lw='1.0'
+      else:
+         w="lines"
+         sp=" (drift)"
+         lw='0.5'
+      l='"'+l.replace('_',' ')+sp+'"'
+      return '\t"'+dat+'" using 1:'+str(2*i+2+off)+' w '+w+' t '+l+' linecolor '+str(i+1)+' lw '+lw
 
    fp.write('plot\\\n')
    fp.write(',\\\n'.join([fmt(dat,0,*t) for t in enumerate(lines)]))
