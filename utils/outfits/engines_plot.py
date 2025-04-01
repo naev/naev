@@ -60,15 +60,18 @@ def main():
 
    plt=bas+'.plot'
    fp=open(plt,"wt")
-   fp.write("""#!/usr/bin/gnuplot
-
-   set terminal pngcairo size 900,600 enhanced
-   """)
+   fp.write("""#!/usr/bin/gnuplot\n
+set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enhanced\n""")
    fp.write('set output "'+bas+'.png"\n')
    fp.write("""set key outside
    set termoption dashed
    set logscale y sqrt(sqrt(2))
-   set grid
+   set style line 101 lc rgb '#808080' lt 1 lw 1
+   set border 3 front ls 101
+   set key textcolor rgb '#808080'
+
+   set style line 12 lc rgb '#808080' lt 3 lw 0.8 dt ".."
+   set grid xtics ytics mxtics mytics ls 12
    """)
 
    def fmt(dat,off,i,l):
@@ -80,7 +83,7 @@ def main():
       else:
          w="lines"
          sp=" (drift)"
-         lw='0.5'
+         lw='0.6'
       l='"'+l.replace('_',' ')+sp+'"'
       n=i+1
       if n>=5:
