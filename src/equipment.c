@@ -1007,8 +1007,9 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    s = ceil(
       s / gl_screen.scale ); /* Have to correct for the true rendered size. */
    glGetIntegerv( GL_FRAMEBUFFER_BINDING, &fbo );
-   pilot_renderFramebuffer( p, swd->fbo, gl_screen.nw, gl_screen.nh,
-                            &L_store_const );
+   ship_renderFramebuffer( p->ship, swd->fbo, gl_screen.nw, gl_screen.nh,
+                           swd->dir, 0., 0., p->r, p->tsx, p->tsy, &cWhite,
+                           &L_store_const );
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    // This is super hacky and we should fix this...
    mat4 projection = gl_view_matrix;
@@ -1027,13 +1028,14 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
 
       if ( use_3d ) {
          H = mat4_identity();
+         /*
          // H.m[2][2] = -1.;
          if ( fabs( p->tilt ) > DOUBLE_TOL ) {
             mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
             mat4_rotate( &H, p->tilt, 1.0, 0.0, 0.0 );
             mat4_rotate( &H, -swd->dir, 0.0, 1.0, 0.0 );
-         } else
-            mat4_rotate( &H, -swd->dir + M_PI_2, 0.0, 1.0, 0.0 );
+         } else */
+         mat4_rotate( &H, -swd->dir + M_PI_2, 0.0, 1.0, 0.0 );
          mat4_rotate( &H, -M_PI / 4.0, 1., 0., 0. );
       } else {
          dircos = cos( swd->dir );
