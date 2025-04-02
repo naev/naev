@@ -7,7 +7,8 @@ project('naev', ['c','rust'],
       'warning_level=3',
       'rust_std=2024',
    ],
-   meson_version: '>=1.4.0')
+   # Requires meson 1.7.0 for rust_std=2024
+   meson_version: '>=1.7.0')
 
 copyright_year = 2025
 forced_fallbacks = get_option('force_fallback_for')
@@ -379,8 +380,6 @@ bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 bindgen_args = [
    '--override-abi', 'nlua_package_.*=C-unwind',
    '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
-   # Meson before 1.7.0 does not pass rust-edition to bindgen, so instead of bumping up meson version (for now), pass it ourselves
-   '--rust-edition', '2024',
 ]
 # Handle issues with bindgen and the math.h header
 bindgen_blocklist_items = [
