@@ -27,10 +27,6 @@ local constants=require "constants"
 
 
 local function turnon( p, po )
-   po:clear()
-   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
-   po:set( "speed_mod", constants.BITE_SPEED_MOD )
-
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
@@ -59,6 +55,11 @@ local function turnon( p, po )
    mem.timer = mem.duration
    mem.active = true
    mem.target = t
+
+   -- Apply stats
+   po:clear()
+   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   po:set( "speed_mod", constants.BITE_SPEED_MOD )
 
    p:control(true)
    p:pushtask( "lunge", t )
