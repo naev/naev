@@ -84,8 +84,9 @@ line_stats = {
         "speed_rank_offset" : 0.0, # 0.0 indicates current speed rank, 1.0 means next speed rank (size+1); higher means faster
     },
     "K" : {
-        "ratio" : 1.0,
+        "ratio" : 1.1,
         "speed_rank_offset" : -0.3,
+         "turn" : 1.1
     },
     "N" : {
         "ratio" : 1.0,
@@ -142,6 +143,9 @@ def ls2vals(line_size):
    accel = fullspeed*r*PHYSICS_SPEED_DAMP
 
    turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP)
+   if "turn" in stats:
+      turn*=stats["turn"]
+
    return {
            "speed":fmt(speed),
            "accel":fmt(accel),
