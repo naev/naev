@@ -12,7 +12,7 @@
  </general>
  <specific type="modification">
   <accel>50</accel>
-  <turn>51</turn>
+  <turn>54</turn>
   <speed>145</speed>
   <fuel>2800</fuel>
   <energy_regen_malus>22</energy_regen_malus>
