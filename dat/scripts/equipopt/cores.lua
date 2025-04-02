@@ -150,7 +150,7 @@ seng["Freighter"] = function ()
 end
 seng["Armoured Transport"] = seng["Freighter"]
 seng["Bulk Freighter"] = function ()
-   return "Unicorp Hawk 3000 Engine"
+   return choose_one{ "Unicorp Eagle 3000 Engine", "Melendez Mammoth Engine" }
 end
 
 -- STANDARD SETS
@@ -278,7 +278,7 @@ eeng["Courier"] = seng["Courier"]
 eeng["Freighter"] = seng["Freighter"]
 eeng["Armoured Transport"] = seng["Armoured Transport"]
 eeng["Bulk Freighter"] = function ()
-   return "Melendez Mammoth XL Engine"
+   return "Melendez Mammoth Engine"
 end
 
 -- ELITE SETS
