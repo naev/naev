@@ -53,8 +53,8 @@ sizes={
 def fmt(f):
    res=str(int(round(f)))
 
-   if f>100.0 and res[-1] in "9146" or f>200.0:
-      res=str(int(5.0*round(f/5.0)))
+   #if f>100.0 and res[-1] in "9146" or f>200.0:
+   #   res=str(int(5.0*round(f/5.0)))
    return res
 
 
@@ -81,31 +81,31 @@ lines={
 line_stats = {
     "T" : {
         "ratio" : 1.4, # 2.0 is double accel vs speed (at size 1)
-        "speed" : 1.0, # 1.0 indicates current speed rank, 0.0 means next speed rank (size+1); higher means faster
+        "speed_rank_offset" : 0.0, # 0.0 indicates current speed rank, 1.0 means next speed rank (size+1); higher means faster
     },
     "K" : {
-        "ratio" : 1.0, # lower ratio
-        "speed" : 1.3, # higher speed than average
+        "ratio" : 1.0,
+        "speed_rank_offset" : -0.3,
     },
     "N" : {
         "ratio" : 1.0,
-        "speed" : 0.9, # Pretty good but slightly slower top speed
+        "speed_rank_offset" : +0.11, # Pretty good but slightly slower top speed
     },
     "M" : {
         "ratio" : 0.7,
-        "speed" : 0.9,
+        "speed_rank_offset" : +0.07,
     },
     "U" : {
         "ratio" : 1.0,
-        "speed" : 0.6,
+        "speed_rank_offset" : +0.4,
     },
     "Z" : { # TODO make these change over time the profile via Lua
         "ratio" : 1.1,
-        "speed" : 0.5,
+        "speed_rank_offset" : +0.5,
     },
     "B" : {
         "ratio" : 0.7,
-        "speed" : 0.3,
+        "speed_rank_offset" : +0.7,
     },
 }
 
@@ -129,8 +129,8 @@ def ls2vals(line_size):
    (line,size) = line_size
    stats = line_stats[line]
 
-   # Modulate full speed based on the speed stat
-   fullspeed = dec( size + 1.0 - stats["speed"])
+   # Modulate full speed based on the speed_ranke_offset stat
+   fullspeed = dec( size + stats["speed_rank_offset"])
 
    # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
    r = STD_R * pow(2,-R_MAG*((size-1)-2.5)/5)

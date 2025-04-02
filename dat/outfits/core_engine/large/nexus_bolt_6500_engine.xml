@@ -11,9 +11,9 @@
   <gfx_store>nexus_engine_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <accel>40</accel>
+  <accel>39</accel>
   <turn>34.5</turn>
-  <speed>103</speed>
+  <speed>102</speed>
   <fuel>2800</fuel>
   <energy_regen_malus>46</energy_regen_malus>
   <engine_limit>6500</engine_limit>

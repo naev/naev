@@ -11,9 +11,9 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <accel>143</accel>
-  <turn>97</turn>
-  <speed>235</speed>
+  <accel>144</accel>
+  <turn>98</turn>
+  <speed>236</speed>
   <fuel>1200</fuel>
   <energy_regen_malus>9</energy_regen_malus>
   <engine_limit>800</engine_limit>
