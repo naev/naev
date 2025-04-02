@@ -20,6 +20,7 @@
 #include "array.h"
 #include "camera.h"
 #include "conf.h"
+#include "constants.h"
 #include "font.h"
 #include "gui_omsg.h"
 #include "gui_osd.h"
@@ -987,7 +988,7 @@ void gui_radarRender( double x, double y )
    /* Render the asteroids */
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
       AsteroidAnchor *ast   = &cur_system->asteroids[i];
-      double          range = EW_ASTEROID_DIST *
+      double          range = CTS.EW_ASTEROID_DIST *
                      player.p->stats.ew_detect; /* TODO don't hardcode. */
       int ax, ay, r;
       ax = round( player.p->solid.pos.x );
