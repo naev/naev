@@ -38,7 +38,7 @@ function finish ()
       ["Unicorp D-72 Heavy Plating"]         = true,
       ["S&amp;K Superheavy Combat Plating"]  = true,
       ["Unicorp D-38 Medium Plating"]        = true,
-      ["S&amp;K Medium-Heavy Combat Plating"]="S&amp;K Medium Combat Plating",
+      ["S&amp;K Medium-Heavy Combat Plating"]= true,
       ["Unicorp D-9 Light Plating"]          = true,
       ["S&amp;K Light Combat Plating"]       = true,
       ["Nexus Light Stealth Plating"]        = true,
