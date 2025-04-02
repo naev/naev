@@ -55,7 +55,7 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {
    ["Za'lek Sting"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
-         choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" }
+         choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
       } end,
    ["Za'lek Demon"] = function (_p) return {
