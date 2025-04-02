@@ -55,26 +55,26 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {
    ["Za'lek Sting"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
-         "Tricon Cyclone Engine",
+         choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" }
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
       } end,
    ["Za'lek Demon"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
-         "Tricon Cyclone II Engine",
+         choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" }
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          "Milspec Orion 8801 Core System",
          "Milspec Orion 8801 Core System",
-         choose_one{ "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine" },
+         choose_one{ "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine" },
          choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
       } end,
    ["Za'lek Diablo"] = function (_p) return {
          "Milspec Thalos 8502 Core System",
          "Milspec Thalos 8502 Core System",
          choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
-         choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" },
+         choose_one{ "Nexus Bolt 6500 Engine", "Melendez Mammoth Engine" },
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
          "Milspec Thalos 8502 Core System",
