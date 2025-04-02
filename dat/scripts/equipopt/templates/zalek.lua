@@ -61,7 +61,7 @@ local zalek_cores = {
    ["Za'lek Demon"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
-         choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" }
+         choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
