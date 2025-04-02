@@ -93,7 +93,7 @@ line_stats = {
         "speed_rank_offset" : +0.11, # Pretty good but slightly slower top speed
     },
     "M" : {
-        "ratio" : 0.7,
+        "ratio" : 0.65,
         "speed_rank_offset" : +0.07,
     },
     "U" : {

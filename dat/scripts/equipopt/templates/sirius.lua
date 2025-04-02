@@ -73,7 +73,7 @@ local sirius_params = {
 local sirius_cores = {
    ["Sirius Fidelity"] = function () return {
          "Milspec Orion 2301 Core System",
-         "Tricon Zephyr Engine",
+         "Nexus Dart 160 Engine", -- maybe even melendez ox.
          "S&K Ultralight Combat Plating",
       } end,
 }
