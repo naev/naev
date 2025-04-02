@@ -9,8 +9,8 @@ from getconst import PHYSICS_SPEED_DAMP
 
 AG_EXP  = 0.3
 TURN_CT = 0.43
-STD_R   = 0.15
-R_MAG   = 1.7
+STD_R   = 0.12
+R_MAG   = 1.5
 
 sizes={
    "Za'lek Test Engine":2,
