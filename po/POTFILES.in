@@ -3721,6 +3721,8 @@ src/conf.c
 src/conf.h
 src/console.c
 src/console.h
+src/constants.c
+src/constants.h
 src/context.rs
 src/damagetype.h
 src/damagetype.rs

@@ -13,6 +13,7 @@
 /** @endcond */
 
 #include "array.h"
+#include "constants.h"
 #include "hook.h"
 #include "pilot.h"
 #include "player.h"
@@ -196,8 +197,8 @@ static double pilot_ewJumpPoint( const Pilot *p )
       if ( jp_isFlag( jp, JP_EXITONLY ) || jp_isFlag( jp, JP_HIDDEN ) )
          continue;
       double d2 = vec2_dist2( &jp->pos, &p->solid.pos );
-      if ( d2 <= pow2( EW_JUMP_BONUS_RANGE ) )
-         return MAX( 0.5, sqrt( d2 ) / EW_JUMP_BONUS_RANGE );
+      if ( d2 <= pow2( CTS.EW_JUMP_BONUS_RANGE ) )
+         return MAX( 0.5, sqrt( d2 ) / CTS.EW_JUMP_BONUS_RANGE );
    }
    return 1.;
 }
@@ -302,7 +303,7 @@ int pilot_inRangeSpob( const Pilot *p, int target )
 
    /* Get the spob. */
    pnt   = cur_system->spobs[target];
-   sense = EW_SPOBDETECT_DIST;
+   sense = CTS.EW_SPOBDETECT_DIST;
 
    /* Get distance. */
    d = vec2_dist2( &p->solid.pos, &pnt->pos );
@@ -337,7 +338,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    as = &f->asteroids[ast];
 
    /* TODO something better than this. */
-   sense = EW_ASTEROID_DIST;
+   sense = CTS.EW_ASTEROID_DIST;
 
    /* Get distance. */
    d = vec2_dist2( &p->solid.pos, &as->sol.pos );
@@ -382,7 +383,8 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if ( hide == 0. )
       return 1;
 
-   sense = EW_JUMPDETECT_DIST * p->stats.ew_jump_detect * p->stats.ew_detect;
+   sense =
+      CTS.EW_JUMPDETECT_DIST * p->stats.ew_jump_detect * p->stats.ew_detect;
    /* Handle hidden jumps separately, as they use a special range parameter. */
    if ( jp_isFlag( jp, JP_HIDDEN ) )
       sense *= p->stats.misc_hidden_jump_detect;

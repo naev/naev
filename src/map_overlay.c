@@ -9,6 +9,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "constants.h"
 #include "font.h"
 #include "gui.h"
 #include "input.h"
@@ -858,7 +859,7 @@ void ovr_render( double dt )
    /* Render the asteroids */
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
       AsteroidAnchor *ast   = &cur_system->asteroids[i];
-      double          range = EW_ASTEROID_DIST *
+      double          range = CTS.EW_ASTEROID_DIST *
                      player.p->stats.ew_detect; /* TODO don't hardcode. */
       int ax, ay, r;
       ax = round( player.p->solid.pos.x );
@@ -924,7 +925,7 @@ void ovr_render( double dt )
          if ( !jp_isUsable( jp ) || jp_isFlag( jp, JP_HIDDEN ) )
             continue;
          map_overlayToScreenPos( &x, &y, jp->pos.x, jp->pos.y );
-         r = EW_JUMP_BONUS_RANGE / res;
+         r = CTS.EW_JUMP_BONUS_RANGE / res;
          glUseProgram( shaders.astaura.program );
          gl_renderShader( x, y, r, r, 0., &shaders.astaura, &col, 1 );
       }
