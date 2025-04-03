@@ -50,27 +50,41 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function hypergate.init( spb, params )
+function hypergate.setup( params )
+   -- Hook functions to globals as necessary
+   init     = hypergate.init
+   load     = hypergate.load
+   unload   = hypergate.unload
+   update   = hypergate.update
+   render   = hypergate.render
+   can_land = hypergate.can_land
+   land     = hypergate.land
+
+   -- Set up parameters
    params = params or {}
-   mem.spob = spb
-   mem.destfunc = params.destfunc or hypergate.destinations_default
+   mem.destfunc   = params.destfunc or hypergate.destinations_default
+   mem.basecol    = params.basecol or { 0.2, 0.8, 0.8 }
+   mem.cost_flat  = params.cost_flat or 10e3
+   mem.cost_mass  = params.cost_mass or 50
+   mem.cost_mod   = params.cost_mod or 1
+   mem.tex_path   = params.tex or "hypergate_neutral_activated.webp"
+   mem.tex_mask_path = params.tex_mask or "hypergate_mask.webp"
 end
 
-function hypergate.load( opts )
-   opts = opts or {}
+function hypergate.init( spb )
+   mem.spob = spb
+end
 
+function hypergate.load()
    if mem.tex==nil then
       -- Handle some options
-      mem.basecol = opts.basecol or { 0.2, 0.8, 0.8 }
-      mem.cost_flat = opts.cost_flat or 10e3
-      mem.cost_mass = opts.cost_mass or 50
-      mem.cost_mod = opts.cost_mod or 1
-      if type(opts.cost_mod)=="table" then
-         mem.cost_mod = 1
+      mem._cost_mod = mem.cost_mod
+      if type(mem.cost_mod)=="table" then
+         mem._cost_mod = 1
          local standing = mem.spob:reputation()
-         for k,v in ipairs(opts.cost_mod) do
+         for k,v in ipairs(mem.cost_mod) do
             if standing >= k then
-               mem.cost_mod = v
+               mem._cost_mod = v
                break
             end
          end
@@ -78,10 +92,8 @@ function hypergate.load( opts )
 
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
-      local tex_filename = opts.tex or "hypergate_neutral_activated.webp"
-      local mask_filename = opts.tex_mask or "hypergate_mask.webp"
-      mem.tex  = lg.newImage( prefix..tex_filename )
-      mem.mask = lg.newImage( prefix..mask_filename )
+      mem.tex  = lg.newImage( prefix..mem.tex_path )
+      mem.mask = lg.newImage( prefix..mem.tex_mask_path )
 
       -- Position stuff
       mem.pos = mem.spob:pos()
@@ -255,15 +267,16 @@ function hypergate.window ()
    for k,v in ipairs(pp:followers()) do
       totalmass = totalmass + v:mass()
    end
-   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * mem.cost_mod
+   local cost_mod = mem._cost_mod
+   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * cost_mod
    local hgsys = mem.spob:system()
    local hgfact = mem.spob:faction()
    local standing_value = mem.spob:reputation()
    local standing = hgfact:reputationText( standing_value )
-   local cost_mod_str = tostring(mem.cost_mod*100)
-   if mem.cost_mod < 1 then
+   local cost_mod_str = tostring(cost_mod*100)
+   if cost_mod < 1 then
       cost_mod_str = "#g"..cost_mod_str
-   elseif mem.cost_mod > 1 then
+   elseif cost_mod > 1 then
       cost_mod_str = "#r"..cost_mod_str
    end
    local standing_col = "#N"
