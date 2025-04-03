@@ -74,7 +74,7 @@ local zalek_cores = {
          "Milspec Thalos 8502 Core System",
          "Milspec Thalos 8502 Core System",
          choose_one{ "Unicorp D-58 Heavy Plating", "Unicorp D-72 Heavy Plating" },
-         choose_one{ "Nexus Bolt 6500 Engine", "Melendez Mammoth Engine" },
+         choose_one{ "Nexus Bolt 6500 Engine", "Melendez Mammoth XL Engine" },
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
          "Milspec Thalos 8502 Core System",
