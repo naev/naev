@@ -7,7 +7,7 @@ from getconst import PHYSICS_SPEED_DAMP
 
 
 
-AG_EXP  = 0.3
+AG_EXP  = 0.25
 TURN_CT = 0.43
 STD_R   = 0.12
 R_MAG   = 1.5
