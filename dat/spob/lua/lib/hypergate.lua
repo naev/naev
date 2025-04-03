@@ -16,6 +16,22 @@ local jumpsfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
 
+function hypergate.destinations_default ()
+   local csys = system.cur()
+   local destinations = {}
+   for i,s in ipairs(system.getAll()) do
+      if s ~= csys then
+         for j,sp in ipairs(s:spobs()) do
+            local t = sp:tags()
+            if t.hypergate and t.active then
+               table.insert( destinations, sp )
+            end
+         end
+      end
+   end
+   return destinations
+end
+
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( mem.cvs )
@@ -34,8 +50,10 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function hypergate.init( spb )
+function hypergate.init( spb, params )
+   params = params or {}
    mem.spob = spb
+   mem.destfunc = params.destfunc or hypergate.destinations_default
 end
 
 function hypergate.load( opts )
@@ -112,7 +130,6 @@ function hypergate.can_land ()
    return true, _("The hypergate is active.")
 end
 
-local hypergate_window
 function hypergate.land( _s, p )
    -- Avoid double landing
    if p:shipvarPeek( "hypergate" ) then return end
@@ -120,7 +137,7 @@ function hypergate.land( _s, p )
    if player.pilot() == p then
       -- TODO check if hostile to disallow
 
-      local target = hypergate_window()
+      local target = hypergate.window()
       if target then
          var.push( "hypergate_target", target:nameRaw() )
          naev.cache().hypergate_colour = mem.basecol
@@ -133,7 +150,7 @@ function hypergate.land( _s, p )
    end
 end
 
-function hypergate_window ()
+function hypergate.window ()
    local w = 900
    local h = 600
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -150,21 +167,12 @@ function hypergate_window ()
    shd_jumpgoto.dt = 0
    local shd_selectsys = load_shader( "selectsys.frag" )
    shd_selectsys.dt = 0
-
-   -- Get potential destinations from tags
    local csys = system.cur()
    local cpos = csys:pos()
-   local destinations = {}
-   for i,s in ipairs(system.getAll()) do
-      if s ~= csys then
-         for j,sp in ipairs(s:spobs()) do
-            local t = sp:tags()
-            if t.hypergate and t.active then
-               table.insert( destinations, sp )
-            end
-         end
-      end
-   end
+
+   local destinations = mem.destfunc()
+
+   -- Get potential destinations from tags
    table.sort( destinations, function( a, b ) return a:nameRaw() < b:nameRaw() end )
    local destnames = {}
    for i,d in ipairs(destinations) do
