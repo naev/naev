@@ -75,7 +75,7 @@ local empire_cores = {
    ["Empire Pacifier"] = function () return {
          "Milspec Orion 4801 Core System",
          "Milspec Orion 4801 Core System",
-         choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" }
+         choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
          "S&K Medium-Heavy Combat Plating",
       } end,
    ["Empire Hawking"] = function () return {
