@@ -5439,8 +5439,7 @@ static int pilotL_control( lua_State *L )
    if ( enable ) {
       int isp = pilot_isPlayer( p );
       if ( isp )
-         player_autonavAbort(
-            NULL ); /* Has to be run before setting the flag. */
+         player_restoreControl( PINPUT_MANUALCONTROL, NULL );
       pilot_setFlag( p, PILOT_MANUAL_CONTROL );
       if ( isp )
          ai_pinit( p, "player" );
