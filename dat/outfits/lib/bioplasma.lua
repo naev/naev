@@ -23,6 +23,7 @@ local mapping = {
    ["Corrosion II"] = "corrosion_ii",
 }
 function init( p, _po )
+   if not p or not p:exists() then return end
    for k,o in ipairs(p:outfitsList("intrinsic")) do
       local m = mapping[ o:nameRaw() ]
       if m then

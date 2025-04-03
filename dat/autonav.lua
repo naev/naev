@@ -3,7 +3,7 @@ local lanes = require "ai.core.misc.lanes"
 
 local autonav, target_pos, target_spb, target_plt, target_name, instant_jump
 local autonav_jump_delay, autonav_jump_approach, autonav_jump_brake
-local autonav_pos_approach_brake, autonav_pos_approach
+local autonav_pos_approach_brake, autonav_pos_approach, _autonav_abort
 local autonav_spob_approach_brake, autonav_spob_approach, autonav_spob_land_approach, autonav_spob_land_brake
 local autonav_plt_follow, autonav_plt_board_approach
 local autonav_timer, tc_base, tc_mod, tc_max, tc_rampdown, tc_down
@@ -421,11 +421,11 @@ local function turnoff_afterburner()
       -- outfits are instant and won't be caught by this polling scheme.
       if n.outfit:tags().movement and n.state=="on" then
          if already_aboff then
-            return autonav_abort(_("manual commands at approach"))
+            return _autonav_abort(_("manual commands at approach"))
          else
             if not pp:outfitToggle( n.slot ) then
                -- Failed to disable
-               return autonav_abort(_("manual commands at approach"))
+               return _autonav_abort(_("manual commands at approach"))
             end
          end
       end
@@ -540,7 +540,7 @@ function autonav_jump_approach ()
    local pp = player.pilot()
    local jmp = pp:navJump()
    if not jmp then
-      return autonav_abort()
+      return _autonav_abort()
    end
    local ret = autonav_approach( path[1], true )
    if ret then
@@ -646,10 +646,14 @@ local function autonav_pos_approach_brake_silent ()
    end
 end
 
+function _autonav_abort( reason )
+   autonav_abort( reason, brake_pos )
+end
+
 --[[
 Autonav was forcibly aborted for a reason or other.
 --]]
-function autonav_abort( reason )
+function autonav_abort( reason, dobrake )
    -- Horrible hack so setting the target doesn't break autonav
    if setting_target then return end
 
@@ -658,7 +662,7 @@ function autonav_abort( reason )
    else
       player.msg("#r".._("Autonav: aborted!").."#0")
    end
-   if brake_pos then
+   if dobrake then
       autonav_reset(0)
       autonav_set( autonav_pos_approach_brake_silent )
    else
@@ -731,7 +735,7 @@ function autonav_spob_land_brake ()
    local ret = ai.brake()
 
    if player.tryLand(false)=="impossible" then
-      return autonav_abort(_("cannot land"))
+      return _autonav_abort(_("cannot land"))
    elseif ret then
       -- Reset to good position
       local pp = player.pilot()
@@ -784,7 +788,7 @@ function autonav_plt_follow ()
                   end
                end
                player.msg("#o"..fmt.f(_("Autonav: Could not follow target {plt} by jumping."),{plt=get_pilot_name(plt)}).."#0")
-               return autonav_abort(why)
+               return _autonav_abort(why)
             end
          elseif brake_pos then
             pp:navJumpSet( jmp )
@@ -888,7 +892,7 @@ function autonav_plt_board_approach ()
    if brd=="ok" then
       autonav_end()
    elseif brd~="retry" then
-      autonav_abort(_("cannot board"))
+      _autonav_abort(_("cannot board"))
    end
 end
 
@@ -948,7 +952,7 @@ function autonav_enter ()
       -- Must have fuel to continue
       local fuel, consumption = player.fuel()
       if fuel < consumption then
-         autonav_abort(_("not enough fuel to continue"))
+         _autonav_abort(_("not enough fuel to continue"))
          return false
       end
 

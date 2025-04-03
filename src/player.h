@@ -52,10 +52,11 @@ typedef char PlayerFlags[PLAYER_FLAGS_MAX];
 
 /* Control restoration reasons. */
 enum {
-   PINPUT_NULL,     /**< No specific reason. */
-   PINPUT_MOVEMENT, /**< Player pressed a movement key. */
-   PINPUT_AUTONAV,  /**< Player engaged autonav. */
-   PINPUT_BRAKING   /**< Player engaged auto-braking. */
+   PINPUT_NULL,          /**< No specific reason. */
+   PINPUT_MOVEMENT,      /**< Player pressed a movement key. */
+   PINPUT_AUTONAV,       /**< Player engaged autonav. */
+   PINPUT_BRAKING,       /**< Player engaged auto-braking. */
+   PINPUT_MANUALCONTROL, /**< Player is under manual control. */
 };
 
 /**
