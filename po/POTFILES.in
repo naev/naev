@@ -234,10 +234,10 @@ dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml
 dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml
 dat/outfits/core_hull/medium/sk_medium_combat_plating.xml
 dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml
-dat/outfits/core_hull/small/nexus_light_stealth_plating.xml
 dat/outfits/core_hull/small/patchwork_light_plating.xml
 dat/outfits/core_hull/small/rs_small_cargo_hull.xml
 dat/outfits/core_hull/small/sk_small_cargo_hull.xml
+dat/outfits/core_hull/small/nexus_ultralight_stealth_plating.xml
 dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml
 dat/outfits/core_hull/small/unicorp_d2_light_plating.xml
 dat/outfits/core_system/dummy_systems.xml
