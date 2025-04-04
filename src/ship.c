@@ -1002,8 +1002,12 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 #define STRDUP_( x ) ( ( x == NULL ) ? NULL : strdup( x ) )
 #define ARRAYDUP_( x, y )                                                      \
    do {                                                                        \
-      for ( int i = 0; i < array_size( y ); i++ )                              \
-         array_push_back( &x, y[i] );                                          \
+      for ( int i = 0; i < array_size( y ); i++ ) {                            \
+         ShipOutfitSlot sos = y[i];                                            \
+         if ( sos.name != NULL )                                               \
+            sos.name = strdup( sos.name );                                     \
+         array_push_back( &x, sos );                                           \
+      }                                                                        \
    } while ( 0 )
       Ship  t             = *temp;
       Ship *base          = (Ship *)ship_get( temp->inherits );
