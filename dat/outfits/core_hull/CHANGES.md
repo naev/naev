@@ -6,5 +6,5 @@
  - Nexus Light Stealth Plating becomes 2x Nexus Ultralight Stealth Plating.
  - Nexus Medium Stealth Plating stays as is, and becomes stackable.
  - Nexus Heavy Stealth Plating is new.
- - Patchwork Light/medium/Heavy Plating stay as is.
+ - Patchwork Light/Medium/Heavy Plating stay as is.
 
