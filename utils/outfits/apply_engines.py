@@ -187,19 +187,29 @@ def main(args):
                fp.close()
             else:
                err('_')
+   return 0
+
+def gen_line(lin):
+   print(lin)
+   print('Not Implemented!')
+   return 0
 
 if __name__=="__main__":
-   #TODO
-   #import argparse
-   from sys import argv
+   import argparse
 
-   if '-h' in argv or '--help' in argv:
-      out("Usage: "+argv[0]+" <file1> <file2> ...")
-      out("Will only process the files in the list that have .xml or .mvx extension.")
-      out("The changes made will be listed onto <stderr>. \"_\" means \"nothing\"")
-      out("If an outfit is not recognized as an engine, it won't even be printed out.")
-      out("\nTypical usage (from naev root dir) :")
-      out("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
+   parser = argparse.ArgumentParser(
+      usage=" %(prog)s (-g LINE) | [filename ...]",
+      description="""Will only process the files in the list that have .xml or .mvx extension.
+The changes made will be listed onto <stderr>. \"_\" means \"nothing\"
+If an outfit is not recognized as an engine, it won't even be printed out.
+Typical usage (from naev root dir) :
+\n\t> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`"""
+   )
+   parser.add_argument('-g', '--generate',dest='LINE',type=ascii,help='The generated line name, e.g. Melendez.')
+   parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.')
+   args = parser.parse_args()
+   if args.LINE is not None:
+      exit(gen_line(args.LINE))
    else:
-      main(argv[1:])
+      exit(main(args.filename))
 
