@@ -50,7 +50,7 @@ function inspect( t )
 
    -- Print intrinsics if applicable
    local intrinsics = t:outfitsList("intrinsic")
-   if #intrinsics > 0 then
+   if next(intrinsics) ~= nil then
       print("Intrinsics:")
       for k,v in ipairs(intrinsics) do
          if v then
