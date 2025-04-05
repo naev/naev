@@ -165,22 +165,29 @@ def get_line_size(o):
 out=lambda x:stdout.write(x+'\n')
 err=lambda x,nnl=False:stderr.write(x+('\n' if not nnl else ''))
 
+def apply_ls(o,ls,additional=dict()):
+   sub= ls2vals(ls)
+   if sub is not None:
+      for k,v in additional.items():
+         if k not in sub:
+            sub[k]=v
+      acc=[]
+      for i in o:
+         if i.tag in sub and i.text!=sub[i.tag]:
+            acc.append((i.tag,i.text,sub[i.tag]))
+            i.text=sub[i.tag]
+      return acc
+   return None
+
 def main(args):
    outfits = []
    for a in args:
       o = outfit(a)
       if o is not None:
-         sub = ls2vals(get_line_size(o))
-         if sub is not None:
-            didit=False
-            acc=[]
-            for i in o:
-               if i.tag in sub and i.text!=sub[i.tag]:
-                  acc.append((i.tag,i.text,sub[i.tag]))
-                  i.text=sub[i.tag]
-                  didit=True
+         acc=apply_ls(o,get_line_size(o))
+         if acc is not None:
             err(o.fil.split('/')[-1]+': ',nnl=True)
-            if didit:
+            if acc!=[]:
                err(', '.join([i+':'+j+'->'+k for i,j,k in acc]))
                fp=open(o.fil,"w")
                o.write(fp)
@@ -189,9 +196,35 @@ def main(args):
                err('_')
    return 0
 
+def to_nam(s):
+   #TODO use future outfits.to_nam func
+   return s.replace(' ','_').lower()
+
 def gen_line(lin):
-   print(lin)
-   print('Not Implemented!')
+   import os
+   outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
+   engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.xml')
+   o=outfit(engine_dir)
+   if o is None:
+      err('Dummy engine not found!')
+      return 1
+
+   for i,s in enumerate(["S1","S2","M1","M2","L1","L2"]):
+      siz=i+1
+      nam=lin+" "+s
+      fil=to_nam(nam+'.xml')
+      o.r.attrib['name']=nam
+      acc=apply_ls(o,(lin,siz),{
+         'mass':str(10*siz),
+         'engine_limit':str(125*2**i),
+         'fuel':str(int((siz+3)*100*(2**((i-i%2)/2)))),
+         'description':'TODO'
+      })
+      fp=open(fil,"w")
+      o.write(fp)
+      fp.close()
+      err('<'+fil+'>')
+
    return 0
 
 if __name__=="__main__":
@@ -199,17 +232,18 @@ if __name__=="__main__":
 
    parser = argparse.ArgumentParser(
       usage=" %(prog)s (-g LINE) | [filename ...]",
-      description="""Will only process the files in the list that have .xml or .mvx extension.
-The changes made will be listed onto <stderr>. \"_\" means \"nothing\"
-If an outfit is not recognized as an engine, it won't even be printed out.
-Typical usage (from naev root dir) :
-\n\t> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`"""
-   )
-   parser.add_argument('-g', '--generate',dest='LINE',type=ascii,help='The generated line name, e.g. Melendez.')
-   parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.')
+      formatter_class=argparse.RawTextHelpFormatter,
+      description="The changes made will be listed onto <stderr>: \"_\" means \"nothing\".",
+      epilog="""Examples:
+ > ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`
+ > ./utils/outfits/apply_engines.py -g Krain
+""")
+   parser.add_argument('-g', '--generate',dest='LINE',help='The generated line name, e.g. Melendez.')
+   parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
    if args.LINE is not None:
       exit(gen_line(args.LINE))
    else:
       exit(main(args.filename))
+
 
