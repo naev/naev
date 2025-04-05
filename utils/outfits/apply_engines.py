@@ -1,16 +1,57 @@
 #!/usr/bin/env python3
 
 import math
-from sys import argv,stderr,stdout
+from sys import stderr,stdout
 from outfit import outfit
 from getconst import PHYSICS_SPEED_DAMP
-
 
 
 AG_EXP  = 0.25
 TURN_CT = 0.43
 STD_R   = 0.12
 R_MAG   = 1.5
+
+line_stats = {
+    "Tricon" : {
+        "ratio" : 1.4, # 2.0 is double accel vs speed (at size 1)
+        "speed_rank_offset" : 0.0,  # 0.0 indicates current speed rank
+                                    # 1.0 means next speed rank (size+1);
+                                    # !!! higher means slower
+    },
+    "Krain" : {
+        "ratio" : 1.1,
+        "speed_rank_offset" : -0.3, # Between this size and size-1
+         "turn" : 1.1
+    },
+    "Nexus" : {
+        "ratio" : 1.0,
+        "speed_rank_offset" : +0.11, # Pretty good but slightly slower top speed than Melendez and Tricon
+    },
+    "Melendez" : {
+        "ratio" : 0.65,
+        "speed_rank_offset" : +0.07,
+    },
+    "Unicorp" : {
+        "ratio" : 1.0,
+        "speed_rank_offset" : +0.4,
+    },
+    "Za'lek" : { # TODO make these change over time the profile via Lua
+        "ratio" : 1.1,
+        "speed_rank_offset" : +0.5,
+    },
+    "Beat" : {
+        "ratio" : 0.7,
+        "speed_rank_offset" : +0.7,
+    },
+}
+
+ALPHA, BETA = 1.14, 0.048
+
+def dec_i(n):
+   if n<=1:
+      return 400.0
+   else:
+      return dec_i(n-1)/(ALPHA+BETA*(n-1))
 
 sizes={
    "Za'lek Test Engine":2,
@@ -68,56 +109,6 @@ def fmt_t(t):
       else:
          return str(res)
 
-lines={
-   'Nexus'   : 'N',
-   'Unicorp' : 'U',
-   'Tricon'  : 'T',
-   'Krain'   : 'K',
-   'Melendez': 'M',
-   "Za'lek"  : 'Z',
-   "Beat"    : 'B'
-}
-
-line_stats = {
-    "T" : {
-        "ratio" : 1.4, # 2.0 is double accel vs speed (at size 1)
-        "speed_rank_offset" : 0.0, # 0.0 indicates current speed rank, 1.0 means next speed rank (size+1); higher means faster
-    },
-    "K" : {
-        "ratio" : 1.1,
-        "speed_rank_offset" : -0.3,
-         "turn" : 1.1
-    },
-    "N" : {
-        "ratio" : 1.0,
-        "speed_rank_offset" : +0.11, # Pretty good but slightly slower top speed
-    },
-    "M" : {
-        "ratio" : 0.65,
-        "speed_rank_offset" : +0.07,
-    },
-    "U" : {
-        "ratio" : 1.0,
-        "speed_rank_offset" : +0.4,
-    },
-    "Z" : { # TODO make these change over time the profile via Lua
-        "ratio" : 1.1,
-        "speed_rank_offset" : +0.5,
-    },
-    "B" : {
-        "ratio" : 0.7,
-        "speed_rank_offset" : +0.7,
-    },
-}
-
-ALPHA, BETA = 1.14, 0.048
-
-def dec_i(n):
-   if n<=1:
-      return 400.0
-   else:
-      return dec_i(n-1)/(ALPHA+BETA*(n-1))
-
 def dec(f):
    n = math.floor(f)
    q = 1.0*f-n
@@ -154,10 +145,7 @@ def ls2vals(line_size):
 
 def get_line(o):
    res=o.name().split(' ')[0]
-   if res in lines:
-      return lines[res]
-   else:
-      return None
+   return res if res in line_stats else None
 
 def get_size(o):
    res=o.name()
@@ -177,18 +165,11 @@ def get_line_size(o):
 out=lambda x:stdout.write(x+'\n')
 err=lambda x,nnl=False:stderr.write(x+('\n' if not nnl else ''))
 
-if '-h' in argv or '--help' in argv:
-   out("Usage: "+argv[0]+" <file1> <file2> ...")
-   out("Will only process the files in the list that have .xml or .mvx extension.")
-   out("The changes made will be listed onto <stderr>. \"_\" means \"nothing\"")
-   out("If an outfit is not recognized as an engine, it won't even be printed out.")
-   out("\nTypical usage (from naev root dir) :")
-   out("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
-else:
+def main(args):
    outfits = []
-   for a in argv[1:]:
-      if a.endswith(".xml") or a.endswith(".mvx"):
-         o = outfit(a)
+   for a in args:
+      o = outfit(a)
+      if o is not None:
          sub = ls2vals(get_line_size(o))
          if sub is not None:
             didit=False
@@ -206,3 +187,19 @@ else:
                fp.close()
             else:
                err('_')
+
+if __name__=="__main__":
+   #TODO
+   #import argparse
+   from sys import argv
+
+   if '-h' in argv or '--help' in argv:
+      out("Usage: "+argv[0]+" <file1> <file2> ...")
+      out("Will only process the files in the list that have .xml or .mvx extension.")
+      out("The changes made will be listed onto <stderr>. \"_\" means \"nothing\"")
+      out("If an outfit is not recognized as an engine, it won't even be printed out.")
+      out("\nTypical usage (from naev root dir) :")
+      out("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
+   else:
+      main(argv[1:])
+
