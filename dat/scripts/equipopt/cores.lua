@@ -113,10 +113,10 @@ end
 -- STANDARD ENGINES
 local seng = {}
 seng["Scout"] = function ()
-   return "Nexus Dart 160 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Interceptor"] = function ()
-   return "Nexus Dart 160 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Fighter"] = function ()
    return "Unicorp Hawk 360 Engine"
@@ -125,13 +125,13 @@ seng["Bomber"] = function ()
    return "Unicorp Hawk 360 Engine"
 end
 seng["Corvette"] = function ()
-   return "Nexus Arrow 700 Engine"
+   return "Unicorp Falcon 700 Engine"
 end
 seng["Destroyer"] = function ()
    return "Unicorp Falcon 1400 Engine"
 end
 seng["Cruiser"] = function ()
-   return "Nexus Bolt 3000 Engine"
+   return "Unicorp Eagle 3000 Engine"
 end
 seng["Battleship"] = function ()
    return "Unicorp Eagle 6500 Engine"
@@ -140,7 +140,7 @@ seng["Carrier"] = function ()
    return "Unicorp Eagle 6500 Engine"
 end
 seng["Yacht"] = function ()
-   return "Nexus Dart 160 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Courier"] = function ()
    return "Unicorp Hawk 360 Engine"
@@ -150,7 +150,7 @@ seng["Freighter"] = function ()
 end
 seng["Armoured Transport"] = seng["Freighter"]
 seng["Bulk Freighter"] = function ()
-   return "Nexus Bolt 3000 Engine"
+   return choose_one{ "Unicorp Eagle 3000 Engine", "Melendez Mammoth Engine" }
 end
 
 -- STANDARD SETS
@@ -159,7 +159,6 @@ cores.standard = {
    hulls   = shul,
    engines = seng,
 }
-
 
 --[[
       ELITE CORES
@@ -252,23 +251,24 @@ end
 eeng["Interceptor"] = function ()
    return "Tricon Zephyr Engine"
 end
+
 eeng["Fighter"] = function ()
-   return "Tricon Zephyr II Engine"
+   return choose_one{ "Nexus Dart 360 Engine", "Tricon Zephyr II Engine" }
 end
 eeng["Bomber"] = function ()
-   return "Tricon Zephyr II Engine"
+   return choose_one{ "Nexus Dart 360 Engine", "Melendez Ox XL Engine" }
 end
 eeng["Corvette"] = function ()
-   return "Tricon Cyclone Engine"
+   return choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" }
 end
 eeng["Destroyer"] = function ()
-   return choose_one{ "Tricon Cyclone II Engine", "Melendez Buffalo XL Engine" }
+   return choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" }
 end
 eeng["Cruiser"] = function ()
-   return "Tricon Typhoon Engine"
+   return choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" }
 end
 eeng["Battleship"] = function ()
-   return choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" }
+   return choose_one{ "Tricon Typhoon II Engine", "Nexus Bolt 6500 Engine", "Melendez Mammoth XL Engine" }
 end
 eeng["Carrier"] = function ()
    return "Melendez Mammoth XL Engine"
@@ -278,7 +278,7 @@ eeng["Courier"] = seng["Courier"]
 eeng["Freighter"] = seng["Freighter"]
 eeng["Armoured Transport"] = seng["Armoured Transport"]
 eeng["Bulk Freighter"] = function ()
-   return "Melendez Mammoth XL Engine"
+   return "Melendez Mammoth Engine"
 end
 
 -- ELITE SETS

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 from sys import stdout,stderr
 import xml.etree.ElementTree as ET

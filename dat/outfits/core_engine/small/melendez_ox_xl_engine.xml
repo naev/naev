@@ -12,11 +12,11 @@
  </general>
  <specific type="modification">
   <energy_regen_malus>7</energy_regen_malus>
-  <engine_limit>420</engine_limit>
+  <engine_limit>430</engine_limit>
   <fuel>600</fuel>
-  <speed>330</speed>
-  <accel>153</accel>
-  <turn>120</turn>
+  <speed>296</speed>
+  <accel>159</accel>
+  <turn>138</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>

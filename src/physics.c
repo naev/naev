@@ -33,7 +33,7 @@ const char _UNIT_CPU[]      = N_( "PFLOP" );
 const char _UNIT_UNIT[]     = N_( "u" );
 const char _UNIT_PERCENT[]  = N_( "%" );
 
-double PHYSICS_SPEED_DAMP = 3.; /**< Default before 0.13.0. */
+double PHYSICS_SPEED_DAMP = 4.5; /** 3 was default before 0.13.0. */
 
 int physics_init( void )
 {

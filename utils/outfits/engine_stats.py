@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from getconst import PHYSICS_SPEED_DAMP
 
@@ -36,6 +36,8 @@ fullsptime=lambda a:maxspeed(a)/accel(a) if accel(a) else 0.0
 radius=lambda a:round(maxspeed(a)/(turn(a)/180.0*math.pi))
 fullspdist=lambda a:round(maxspeed(a)*fullsptime(a)/2.0)
 
+turntime=lambda a:180.0/turn(a)
+
 def key(A):
    (a,_)=A
    return (maxspeed(a),accel(a))
@@ -64,8 +66,8 @@ if '-h' in argv or '--help' in argv:
 else:
    L=[(a.to_dict(),a.shortname()) for a in map(outfit,argv[1:]) if a is not None]
    L.sort(key=key,reverse=True)
-   C=['speed','max speed','accel','fullsp time','fullsp dist','turn','turn radius']
-   N=max([len(n) for (_,n) in L])
+   C=['speed','max speed','accel','fullsp (s)','fullsp (km)','turn','turn radius','1/2 turn (s)']
+   N=max([0]+[len(n) for (_,n) in L])
    out('| | '+' | '.join(C))
    out('| ---'+(N-2)*' '+len(C)*'| ---    ')
    for k,n in L:
@@ -73,6 +75,7 @@ else:
          nam=n+(N-len(n))*' '
          acc='| '+nam+l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
          acc+=l(fmt(fullsptime(k)))+l(fmt(fullspdist(k)))+l(turn(k))+l(radius(k))
+         acc+=l(fmt(turntime(k)))
          out(acc)
 
 
