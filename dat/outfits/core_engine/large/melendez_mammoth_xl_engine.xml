@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Melendez Mammoth XL Engine">
  <general>
   <shortname>M. Mammoth XL Engine</shortname>
@@ -15,9 +14,9 @@
   <energy_regen_malus>48</energy_regen_malus>
   <engine_limit>8000</engine_limit>
   <fuel>3200</fuel>
-  <speed>65</speed>
-  <accel>35</accel>
-  <turn>45</turn>
+  <speed>107</speed>
+  <accel>21</accel>
+  <turn>38</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>

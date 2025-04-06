@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Melendez Buffalo XL Engine">
  <general>
   <shortname>M. Buffalo XL Engine</shortname>
@@ -15,9 +14,9 @@
   <energy_regen_malus>22</energy_regen_malus>
   <engine_limit>1600</engine_limit>
   <fuel>1400</fuel>
-  <speed>135</speed>
-  <accel>70</accel>
-  <turn>65</turn>
+  <speed>193</speed>
+  <accel>58</accel>
+  <turn>78</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>

@@ -1,3 +1,6 @@
+
+-- Note: Lunge is adrenal glands effects +50%. In addition, turn modifier.
+
 local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
@@ -20,6 +23,8 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 
 local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
 local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
+local constants=require "constants"
+
 
 local function turnon( p, po )
    -- Still on cooldown
@@ -51,6 +56,11 @@ local function turnon( p, po )
    mem.active = true
    mem.target = t
 
+   -- Apply stats
+   po:clear()
+   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   po:set( "speed_mod", constants.BITE_SPEED_MOD )
+
    p:control(true)
    p:pushtask( "lunge", t )
 
@@ -69,6 +79,8 @@ local function turnoff( p, po )
    if not mem.active then
       return false
    end
+   po:clear()
+
    po:state("cooldown")
    po:progress(1)
    mem.timer = cooldown * p:shipstat("cooldown_mod",true)
@@ -89,6 +101,7 @@ function init( p, po )
    mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications
+
    mem.isp = (p == player.pilot())
    oshader:force_off()
 
@@ -189,9 +202,11 @@ function update( p, po, dt )
             -- Hit the enemy!
             local dmg = 10*math.sqrt(p:mass())
             local ta
+            if mem.regen>0 then
+               ta = t:health(true)
+            end
             if mem.improved then
                dmg = dmg*1.5
-               ta = t:health(true)
             end
             if mem.lust then
                p:effectAdd( "Blood Lust" )
