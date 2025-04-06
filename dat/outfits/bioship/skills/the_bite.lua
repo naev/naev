@@ -38,15 +38,11 @@ local function turnoff_afterburner()
 end
 
 local function turnon( p, po )
-   if turnoff_afterburner() then
-      return false
-   end
 
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
    end
-   po:clear()
 
    -- Needs a target
    local t = p:target()
@@ -68,7 +64,15 @@ local function turnon( p, po )
    if math.abs(math.fmod(p:dir()-a, math.pi*2)) > 30/math.pi then
       return false
    end
+
+   -- Try to turn off afterburner
+   if turnoff_afterburner() then
+      return false
+   end
+
+   -- Set bonuses
    po:state("on")
+   po:clear()
    po:set( "accel_mod", constants.BITE_ACCEL_MOD )
    po:set( "speed_mod", constants.BITE_SPEED_MOD )
    po:progress(1)
