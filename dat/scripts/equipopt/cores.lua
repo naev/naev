@@ -75,35 +75,35 @@ shul["Interceptor"] = function ()
    return "Unicorp D-2 Light Plating"
 end
 shul["Fighter"] = function ()
-   return "Unicorp D-9 Light Plating"
+   return "Unicorp D-2 Light Plating"
 end
 shul["Bomber"] = function ()
-   return "Unicorp D-9 Light Plating"
+   return "Unicorp D-2 Light Plating"
 end
 shul["Corvette"] = function ()
    return "Unicorp D-23 Medium Plating"
 end
 shul["Destroyer"] = function ()
-   return "Unicorp D-38 Medium Plating"
+   return "Unicorp D-23 Medium Plating"
 end
 shul["Cruiser"] = function ()
    return "Unicorp D-58 Heavy Plating"
 end
 shul["Battleship"] = function ()
-   return "Unicorp D-72 Heavy Plating"
+   return "Unicorp D-58 Heavy Plating"
 end
 shul["Carrier"] = function ()
-   return "Unicorp D-72 Heavy Plating"
+   return "Unicorp D-58 Heavy Plating"
 end
 -- Civilian
 shul["Yacht"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
 end
 shul["Courier"] = function ()
-   return choose_one{ "Unicorp D-9 Light Plating", "S&K Small Cargo Hull" }
+   return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
 end
 shul["Freighter"] = function ()
-   return choose_one{ "Unicorp D-38 Medium Plating", "S&K Medium Cargo Hull" }
+   return choose_one{ "Unicorp D-23 Medium Plating", "S&K Medium Cargo Hull" }
 end
 shul["Armoured Transport"] = shul["Freighter"]
 shul["Bulk Freighter"] = function ()
@@ -206,41 +206,50 @@ end
 -- ELITE HULLS
 local ehul = {}
 ehul["Scout"] = function ()
-   return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
+   return choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" }
 end
 ehul["Interceptor"] = function ()
-   return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
+   return choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" }
 end
-ehul["Fighter"] = function ()
-   return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
+ehul["Fighter"] = function (flag)
+   if flag then
+      return "S&K Ultralight Combat Plating"
+   else
+      return choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" }
+   end
 end
-ehul["Bomber"] = function ()
-   return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
-end
+ehul["Bomber"] = ehul["Fighter"]
 ehul["Corvette"] = function ()
    return choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }
 end
 ehul["Destroyer"] = function ()
-   return "S&K Medium-Heavy Combat Plating"
+   return "S&K Medium Combat Plating"
 end
 ehul["Cruiser"] = function ()
    return "S&K Heavy Combat Plating"
 end
 ehul["Battleship"] = function ()
-   return "S&K Superheavy Combat Plating"
+   return "S&K Heavy Combat Plating"
 end
 ehul["Carrier"] = function ()
-   return "S&K Superheavy Combat Plating"
+   return "S&K Heavy Combat Plating"
 end
 -- Civilian
 ehul["Yacht"] = shul["Yacht"]
 ehul["Courier"] = shul["Courier"]
 ehul["Freighter"] = shul["Freighter"]
-ehul["Armoured Transport"] = function ()
-   return choose_one{ "Unicorp D-38 Medium Plating", "Nexus Medium Stealth Plating" }
+ehul["Armoured Transport"] = function (flag)
+   if flag then
+      return "Unicorp D-23 Medium Plating"
+   else
+      return choose_one{ "Unicorp D-23 Medium Plating", "Nexus Medium Stealth Plating" }
+   end
 end
-ehul["Bulk Freighter"] = function ()
-   return "S&K Large Cargo Hull"
+ehul["Bulk Freighter"] = function (flag)
+   if flag then
+      return "Unicorp D-58 Medium Plating"
+   else
+      return "S&K Large Cargo Hull"
 end
 
 -- ELITE ENGINES
@@ -321,8 +330,8 @@ cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
 cores.elite.systems["Gawain"] = function ()
    return choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System" }
 end
-cores.elite.hulls["Gawain"] = function ()
-   return choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating" }
+cores.elite.hulls["Gawain"] = function (flag)
+   return choose_one{ "Unicorp D-2 Light Plating", "Nexus Ultralight Stealth Plating" }
 end
 cores.elite.engines["Gawain"] = function ()
    return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
@@ -375,6 +384,10 @@ function cores.get( p, params )
       local ct = cores[ hulls ].hulls
       local co = ct[ shipname ] or ct[ shipclass ]
       table.insert( c, co() )
+
+      if have_secondary[shipclass] then
+         table.insert( c, co(true) )
+      end
    end
    if engines then
       local ct = cores[ engines ].engines
