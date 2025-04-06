@@ -15,7 +15,7 @@
   <engine_limit>2700</engine_limit>
   <fuel>2000</fuel>
   <speed>140</speed>
-  <accel>88</accel>
+  <accel>78</accel>
   <turn>69</turn>
  </specific>
 </outfit>

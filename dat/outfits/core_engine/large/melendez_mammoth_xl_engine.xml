@@ -15,7 +15,7 @@
   <engine_limit>8000</engine_limit>
   <fuel>3200</fuel>
   <speed>107</speed>
-  <accel>23</accel>
+  <accel>21</accel>
   <turn>38</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
