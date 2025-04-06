@@ -250,6 +250,7 @@ ehul["Bulk Freighter"] = function (flag)
       return "Unicorp D-58 Medium Plating"
    else
       return "S&K Large Cargo Hull"
+   end
 end
 
 -- ELITE ENGINES
