@@ -65,22 +65,26 @@ local dvaered_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local dvaered_cores = { -- Basically elite hulls excluding stealth
    ["Dvaered Vendetta"] = function () return {
-         "S&K Light Combat Plating",
+         "S&K Ultralight Combat Plating",
+         "S&K Ultralight Combat Plating",
       } end,
    ["Dvaered Ancestor"] = function () return {
-         "S&K Light Combat Plating",
+         "S&K Ultralight Combat Plating",
+         "S&K Ultralight Combat Plating",
       } end,
    ["Dvaered Phalanx"] = function () return {
          "S&K Medium Combat Plating",
       } end,
    ["Dvaered Vigilance"] = function () return {
-         "S&K Medium-Heavy Combat Plating",
+         "S&K Medium Combat Plating",
+         "S&K Medium Combat Plating",
       } end,
    ["Dvaered Retribution"] = function () return {
          "S&K Heavy Combat Plating",
       } end,
    ["Dvaered Goddard"] = function () return {
-         "S&K Superheavy Combat Plating",
+         "S&K Heavy Combat Plating",
+         "S&K Heavy Combat Plating",
       } end,
 }
 
@@ -95,7 +99,7 @@ local dvaered_params_overwrite = {
    },
    max_same_stru = 3,
    ew = 0, -- Don't care about electronic warfare
-   min_energy_regen = 1.0, -- Davereds want more energy
+   min_energy_regen = 1.0, -- Dvaereds want more energy
 }
 
 --[[
