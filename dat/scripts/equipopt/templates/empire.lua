@@ -58,29 +58,29 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local empire_cores = {
    ["Empire Shark"] = function () return {
          "Milspec Orion 2301 Core System",
-         "Tricon Zephyr Engine",
+         choose_one{ "Tricon Zephyr Engine", "Nexus Dart 160 Engine", "Melendez Ox Engine" },
          choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" },
       } end,
    ["Empire Lancelot"] = function () return {
          "Milspec Orion 2301 Core System",
          "Milspec Orion 2301 Core System",
-         "Tricon Zephyr II Engine",
+         choose_one{ "Tricon Zephyr II Engine", "Nexus Dart 360 Engine", "Melendez Ox XL Engine" },
          choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" },
       } end,
    ["Empire Admonisher"] = function () return {
          "Milspec Orion 4801 Core System",
-         "Tricon Cyclone Engine",
+         choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
       } end,
    ["Empire Pacifier"] = function () return {
          "Milspec Orion 4801 Core System",
          "Milspec Orion 4801 Core System",
-         "Tricon Cyclone II Engine",
+         choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
          "S&K Medium-Heavy Combat Plating",
       } end,
    ["Empire Hawking"] = function () return {
          "Milspec Orion 8601 Core System",
-         "Tricon Typhoon Engine",
+         choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine"},
          "S&K Heavy Combat Plating",
       } end,
    ["Empire Peacemaker"] = function () return {

@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-#TODO: use argparse
 
 from os import path
 from sys import argv,stderr

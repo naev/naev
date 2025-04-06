@@ -14,8 +14,8 @@
   <rumble>0.7</rumble>
   <sound>afterburner</sound>
   <sound_off>afb_disengage</sound_off>
-  <accel>180</accel>
-  <speed>50</speed>
+  <accel>210</accel>
+  <speed>70</speed>
   <energy>45</energy>
   <mass_limit>300</mass_limit>
  </specific>
