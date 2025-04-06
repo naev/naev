@@ -46,7 +46,7 @@ function inspect( t )
       _disp(prv,acc)
    end
 
-   print("Mass "..tostring(t:mass()).."/"..tostring(t:shipstat('engine_limit')))
+   print(fmt.f("Mass: {mass} / {limit}", {mass=t:mass(), limit=t:shipstat('engine_limit')}))
 
    -- Print intrinsics if applicable
    local intrinsics = t:outfitsList("intrinsic")
