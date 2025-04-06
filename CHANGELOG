@@ -1,4 +1,4 @@
-* 0.12.4 (unreleased)
+* 0.12.4
    * More robust jump check to fix crash when creating new systems
    * Gave Pacifier +400 fuel bonus to match description
    * Made the baron comm event respect system claims
