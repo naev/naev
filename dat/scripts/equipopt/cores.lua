@@ -331,7 +331,7 @@ cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
 cores.elite.systems["Gawain"] = function ()
    return choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System" }
 end
-cores.elite.hulls["Gawain"] = function (flag)
+cores.elite.hulls["Gawain"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "Nexus Ultralight Stealth Plating" }
 end
 cores.elite.engines["Gawain"] = function ()

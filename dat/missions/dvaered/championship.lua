@@ -206,7 +206,8 @@ function enter()
          opponent:outfitAdd("Tricon Zephyr II Engine")
          opponent:outfitAdd("Milspec Orion 2301 Core System")
          opponent:outfitAdd("Milspec Orion 2301 Core System")
-         opponent:outfitAdd("S&K Light Combat Plating")
+         opponent:outfitAdd("S&K Ultralight Combat Plating")
+         opponent:outfitAdd("S&K Ultralight Combat Plating")
       end
 
       -- Equipment

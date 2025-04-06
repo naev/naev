@@ -226,8 +226,9 @@ function spawnNpcs()
                player.outfitAdd("Milspec Orion 2301 Core System")
                player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
-               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("S&K Light Combat Plating")}))
-               player.outfitAdd("S&K Light Combat Plating")
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("S&K Ultralight Combat Plating x2")}))
+               player.outfitAdd("S&K Ultralight Combat Plating")
+               player.outfitAdd("S&K Ultralight Combat Plating")
             elseif playerRank == 5 then
                tk.msg("",_("You receive three Shredders as a reward."))
                player.outfitAdd("Shredder",3)

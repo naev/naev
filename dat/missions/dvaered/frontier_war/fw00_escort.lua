@@ -179,7 +179,8 @@ function spawnTam( origin )
    majorTam:setFaction( fw.fct_dhc() )
 
    -- TODO switch to equipopt
-   majorTam:outfitAdd("S&K Light Combat Plating")
+   majorTam:outfitAdd("S&K Ultralight Combat Plating")
+   majorTam:outfitAdd("S&K Ultralight Combat Plating")
    majorTam:outfitAdd("Milspec Orion 2301 Core System")
    majorTam:outfitAdd("Milspec Orion 2301 Core System")
    majorTam:outfitAdd("Tricon Zephyr II Engine")

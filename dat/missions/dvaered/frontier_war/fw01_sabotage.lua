@@ -234,7 +234,8 @@ end
 -- Equips a Goddard for a duel, with or without repeating railguns
 function equipGoddard( plt, repeating )
    -- TODO switch to equipopt
-   plt:outfitAdd("S&K Superheavy Combat Plating")
+   plt:outfitAdd("S&K Heavy Combat Plating")
+   plt:outfitAdd("S&K Heavy Combat Plating")
    plt:outfitAdd("Melendez Mammoth XL Engine")
    plt:outfitAdd("Milspec Orion 8601 Core System")
    plt:outfitAdd("Milspec Orion 8601 Core System")
