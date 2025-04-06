@@ -26,11 +26,28 @@ local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
 local constants=require "constants"
 
 
+local function turnoff_afterburner()
+   local pp=player.pilot()
+   for _i,n in ipairs(pp:actives()) do
+      if n.outfit:tags().movement and n.state=="on" then
+         if not pp:outfitToggle( n.slot ) then -- Failed to disable
+            return true
+         end
+      end
+   end
+end
+
 local function turnon( p, po )
+   if turnoff_afterburner() then
+      return false
+   end
+
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
    end
+   po:clear()
+
    -- Needs a target
    local t = p:target()
    mem.isasteroid = false
@@ -44,6 +61,7 @@ local function turnon( p, po )
       end
       mem.isasteroid = true
    end
+
    -- Must be roughly in front
    local tp = t:pos()
    local _m, a = (p:pos()-tp):polar()
@@ -51,6 +69,8 @@ local function turnon( p, po )
       return false
    end
    po:state("on")
+   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   po:set( "speed_mod", constants.BITE_SPEED_MOD )
    po:progress(1)
    mem.timer = mem.duration
    mem.active = true
