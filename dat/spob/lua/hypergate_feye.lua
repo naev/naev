@@ -1,22 +1,11 @@
 local hypergate = require "spob.lua.lib.hypergate"
-
-init     = hypergate.init
-
-function load ()
-   return hypergate.load{
-         basecol = { 0.2, 0.8, 0.8 }, -- Soromid
-         cost_mod = {
-            [100] = 0,
-            [70]  = 0.2,
-            [50]  = 0.4,
-            [30]  = 0.8,
-         },
-         tex = "hypergate_soromid_activated.webp",
-      }
-end
-
-unload   = hypergate.unload
-update   = hypergate.update
-render   = hypergate.render
-can_land = hypergate.can_land
-land     = hypergate.land
+hypergate.setup{
+   basecol = { 0.2, 0.8, 0.8 }, -- Soromid
+   cost_mod = {
+      [100] = 0,
+      [70]  = 0.2,
+      [50]  = 0.4,
+      [30]  = 0.8,
+   },
+   tex = "hypergate_soromid_activated.webp",
+}

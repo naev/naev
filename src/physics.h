@@ -11,8 +11,6 @@
 #define SOLID_UPDATE_RK4 0   /**< Default Runge-Kutta 3-4 update. */
 #define SOLID_UPDATE_EULER 1 /**< Simple Euler update. */
 
-extern double PHYSICS_SPEED_DAMP;
-
 extern const char _UNIT_TIME[];
 extern const char _UNIT_PER_TIME[];
 extern const char _UNIT_DISTANCE[];

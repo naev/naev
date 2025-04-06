@@ -16,6 +16,22 @@ local jumpsfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
 
+function hypergate.destinations_default ()
+   local csys = system.cur()
+   local destinations = {}
+   for i,s in ipairs(system.getAll()) do
+      if s ~= csys then
+         for j,sp in ipairs(s:spobs()) do
+            local t = sp:tags()
+            if t.hypergate and t.active then
+               table.insert( destinations, sp )
+            end
+         end
+      end
+   end
+   return destinations
+end
+
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( mem.cvs )
@@ -34,25 +50,41 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
+function hypergate.setup( params )
+   -- Hook functions to globals as necessary
+   init     = hypergate.init
+   load     = hypergate.load
+   unload   = hypergate.unload
+   update   = hypergate.update
+   render   = hypergate.render
+   can_land = hypergate.can_land
+   land     = hypergate.land
+
+   -- Set up parameters
+   params = params or {}
+   mem.destfunc   = params.destfunc or hypergate.destinations_default
+   mem.basecol    = params.basecol or { 0.2, 0.8, 0.8 }
+   mem.cost_flat  = params.cost_flat or 10e3
+   mem.cost_mass  = params.cost_mass or 50
+   mem.cost_mod   = params.cost_mod or 1
+   mem.tex_path   = params.tex or "hypergate_neutral_activated.webp"
+   mem.tex_mask_path = params.tex_mask or "hypergate_mask.webp"
+end
+
 function hypergate.init( spb )
    mem.spob = spb
 end
 
-function hypergate.load( opts )
-   opts = opts or {}
-
+function hypergate.load()
    if mem.tex==nil then
       -- Handle some options
-      mem.basecol = opts.basecol or { 0.2, 0.8, 0.8 }
-      mem.cost_flat = opts.cost_flat or 10e3
-      mem.cost_mass = opts.cost_mass or 50
-      mem.cost_mod = opts.cost_mod or 1
-      if type(opts.cost_mod)=="table" then
-         mem.cost_mod = 1
+      mem._cost_mod = mem.cost_mod
+      if type(mem.cost_mod)=="table" then
+         mem._cost_mod = 1
          local standing = mem.spob:reputation()
-         for k,v in ipairs(opts.cost_mod) do
+         for k,v in ipairs(mem.cost_mod) do
             if standing >= k then
-               mem.cost_mod = v
+               mem._cost_mod = v
                break
             end
          end
@@ -60,10 +92,8 @@ function hypergate.load( opts )
 
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
-      local tex_filename = opts.tex or "hypergate_neutral_activated.webp"
-      local mask_filename = opts.tex_mask or "hypergate_mask.webp"
-      mem.tex  = lg.newImage( prefix..tex_filename )
-      mem.mask = lg.newImage( prefix..mask_filename )
+      mem.tex  = lg.newImage( prefix..mem.tex_path )
+      mem.mask = lg.newImage( prefix..mem.tex_mask_path )
 
       -- Position stuff
       mem.pos = mem.spob:pos()
@@ -112,7 +142,6 @@ function hypergate.can_land ()
    return true, _("The hypergate is active.")
 end
 
-local hypergate_window
 function hypergate.land( _s, p )
    -- Avoid double landing
    if p:shipvarPeek( "hypergate" ) then return end
@@ -120,7 +149,7 @@ function hypergate.land( _s, p )
    if player.pilot() == p then
       -- TODO check if hostile to disallow
 
-      local target = hypergate_window()
+      local target = hypergate.window()
       if target then
          var.push( "hypergate_target", target:nameRaw() )
          naev.cache().hypergate_colour = mem.basecol
@@ -133,7 +162,7 @@ function hypergate.land( _s, p )
    end
 end
 
-function hypergate_window ()
+function hypergate.window ()
    local w = 900
    local h = 600
    local wdw = luatk.newWindow( nil, nil, w, h )
@@ -150,21 +179,12 @@ function hypergate_window ()
    shd_jumpgoto.dt = 0
    local shd_selectsys = load_shader( "selectsys.frag" )
    shd_selectsys.dt = 0
-
-   -- Get potential destinations from tags
    local csys = system.cur()
    local cpos = csys:pos()
-   local destinations = {}
-   for i,s in ipairs(system.getAll()) do
-      if s ~= csys then
-         for j,sp in ipairs(s:spobs()) do
-            local t = sp:tags()
-            if t.hypergate and t.active then
-               table.insert( destinations, sp )
-            end
-         end
-      end
-   end
+
+   local destinations = mem.destfunc()
+
+   -- Get potential destinations from tags
    table.sort( destinations, function( a, b ) return a:nameRaw() < b:nameRaw() end )
    local destnames = {}
    for i,d in ipairs(destinations) do
@@ -247,15 +267,16 @@ function hypergate_window ()
    for k,v in ipairs(pp:followers()) do
       totalmass = totalmass + v:mass()
    end
-   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * mem.cost_mod
+   local cost_mod = mem._cost_mod
+   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * cost_mod
    local hgsys = mem.spob:system()
    local hgfact = mem.spob:faction()
    local standing_value = mem.spob:reputation()
    local standing = hgfact:reputationText( standing_value )
-   local cost_mod_str = tostring(mem.cost_mod*100)
-   if mem.cost_mod < 1 then
+   local cost_mod_str = tostring(cost_mod*100)
+   if cost_mod < 1 then
       cost_mod_str = "#g"..cost_mod_str
-   elseif mem.cost_mod > 1 then
+   elseif cost_mod > 1 then
       cost_mod_str = "#r"..cost_mod_str
    end
    local standing_col = "#N"

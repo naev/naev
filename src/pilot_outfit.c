@@ -11,6 +11,7 @@
 /** @endcond */
 
 #include "array.h"
+#include "constants.h"
 #include "difficulty.h"
 #include "escort.h"
 #include "gui.h"
@@ -1186,6 +1187,8 @@ void pilot_calcStats( Pilot *pilot )
       (int)floor( (float)( pilot->ship->cpu + s->cpu_max ) * s->cpu_mod );
    pilot->cpu += pilot->cpu_max; /* CPU is negative, this just sets it so it's
                                     based off of cpu_max. */
+   pilot->cpu += (int)floor(
+      s->cpu ); /* CPU consumption by outfits. Does not get multiplied. */
    /* Misc. */
    pilot->mass_outfit += s->mass;
    pilot->crew = pilot->crew * s->crew_mod + s->crew;
@@ -1313,11 +1316,11 @@ void pilot_updateMass( Pilot *pilot )
 
    /* limit the maximum speed if limiter is active */
    if ( pilot_isFlag( pilot, PILOT_HASSPEEDLIMIT ) ) {
-      pilot->speed = pilot->speed_limit - pilot->accel / PHYSICS_SPEED_DAMP;
+      pilot->speed = pilot->speed_limit - pilot->accel / CTS.PHYSICS_SPEED_DAMP;
       /* Speed must never go negative. */
       if ( pilot->speed < 0. ) {
          /* If speed DOES go negative, we have to lower accel. */
-         pilot->accel = PHYSICS_SPEED_DAMP * pilot->speed_limit;
+         pilot->accel = CTS.PHYSICS_SPEED_DAMP * pilot->speed_limit;
          pilot->speed = 0.;
       }
    }

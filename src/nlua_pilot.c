@@ -4868,7 +4868,7 @@ static int pilotL_getStats( lua_State *L )
    /* Create table with information. */
    lua_newtable( L );
    /* Core. */
-   PUSH_DOUBLE( L, "cpu", p->cpu );
+   PUSH_INT( L, "cpu", p->cpu );
    PUSH_INT( L, "cpu_max", p->cpu_max );
    PUSH_INT( L, "crew", (int)round( p->crew ) );
    PUSH_INT( L, "fuel", p->fuel );
@@ -5439,8 +5439,7 @@ static int pilotL_control( lua_State *L )
    if ( enable ) {
       int isp = pilot_isPlayer( p );
       if ( isp )
-         player_autonavAbort(
-            NULL ); /* Has to be run before setting the flag. */
+         player_restoreControl( PINPUT_MANUALCONTROL, NULL );
       pilot_setFlag( p, PILOT_MANUAL_CONTROL );
       if ( isp )
          ai_pinit( p, "player" );

@@ -10,6 +10,7 @@
 
 #include "lualib.h"
 
+#include "constants.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
@@ -32,37 +33,6 @@ const char _UNIT_MASS[]     = N_( "t" );
 const char _UNIT_CPU[]      = N_( "PFLOP" );
 const char _UNIT_UNIT[]     = N_( "u" );
 const char _UNIT_PERCENT[]  = N_( "%" );
-
-double PHYSICS_SPEED_DAMP = 4.5; /** 3 was default before 0.13.0. */
-
-int physics_init( void )
-{
-   const char *file = "constants.lua";
-   char       *buf;
-   size_t      size;
-
-   buf = ndata_read( file, &size );
-   if ( buf == NULL ) {
-      WARN( _( "File '%s' not found!" ), file );
-      return -1;
-   }
-
-   lua_State *L = luaL_newstate();
-   luaL_openlibs( L );
-
-   if ( ( luaL_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
-      WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( L, -1 ) );
-      lua_close( L );
-      return -1;
-   }
-
-   lua_getfield( L, -1, "PHYSICS_SPEED_DAMP" );
-   PHYSICS_SPEED_DAMP = lua_tonumber( L, -1 );
-   lua_pop( L, 1 );
-
-   lua_close( L );
-   return 0;
-}
 
 /**
  * @brief Converts an angle to the [0, 2*M_PI] range.
@@ -217,7 +187,7 @@ static void solid_update_rk4( Solid *obj, double dt )
          if ( vmod > obj->speed_max ) {
             /* We limit by applying a force against it. */
             vang = ANGLE( vx, vy ) + M_PI;
-            vmod = PHYSICS_SPEED_DAMP * ( vmod - obj->speed_max );
+            vmod = CTS.PHYSICS_SPEED_DAMP * ( vmod - obj->speed_max );
 
             /* Update accel. */
             ax += vmod * cos( vang );
@@ -261,7 +231,7 @@ static void solid_update_rk4( Solid *obj, double dt )
 double solid_maxspeed( const Solid *s, double speed, double accel )
 {
    (void)s;
-   return speed + accel / PHYSICS_SPEED_DAMP;
+   return speed + accel / CTS.PHYSICS_SPEED_DAMP;
 }
 
 /**

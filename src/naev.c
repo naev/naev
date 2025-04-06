@@ -32,6 +32,7 @@
 #include "cond.h"
 #include "conf.h"
 #include "console.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "debug.h"
 #include "dialogue.h"
@@ -690,7 +691,7 @@ void load_all( void )
    /* We can do fast stuff here. */
    sp_load();
 
-   physics_init();
+   constants_init();
 
    /* order is very important as they're interdependent */
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Commodities…" ) );
