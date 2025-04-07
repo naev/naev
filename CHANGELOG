@@ -60,6 +60,7 @@
       * jump_delay was being applied instead of jump_warmup to the engine warm up animation
       * Mass modifiers now affect outfit mass too
       * Ships will no longer appear tilted in the equipment view
+      * dv_antiflf02: Make the vigilances less pathetic
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems

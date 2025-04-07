@@ -137,11 +137,15 @@ function spawnDV()
       j:setHostile()
       j:setHilight(true)
       j:setVisplayer(true)
-      j:outfitRm("all")
-      j:outfitAdd("Turreted Gauss Gun", 1)
-      j:outfitAdd("Small Shield Booster", 1)
-      ai_setup.setup(j)
       hook.pilot(j, "disable", "disableDV")
+   end
+
+   local ppp = player.pilot():points()
+   if ppp < 100 then
+      local mod = -math.max((100-2*ppp), 90)
+      for k,p in ipairs(fleetDV) do
+         p:intrinsicSet( "weapon_damage", mod )
+      end
    end
 
    hook.timer(0.5, "pollHealth")
