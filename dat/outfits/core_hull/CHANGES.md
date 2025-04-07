@@ -7,3 +7,12 @@
  - Nexus Medium Stealth Plating stays as is, and becomes stackable.
  - Nexus Heavy Stealth Plating is new.
  - Patchwork Light/Medium/Heavy Plating stay as is.
+
+In addition of that, some renaming occurred:
+ - "Nexus Ultralight Stealth Plating"->"Nexus Shadow Plating",
+ - "Nexus Medium Stealth Plating"->"Nexus Ghost Plating",
+ - "Nexus Heavy Stealth Plating"->"Nexus Phantasm Plating",
+ - "S&K Ultralight Combat Plating"->"S&K Skirmish Plating",
+ - "S&K Medium Combat Plating"->"S&K Combat Plating",
+ - "S&K Heavy Combat Plating"->"S&K Battle Plating"
+
