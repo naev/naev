@@ -185,19 +185,19 @@ for nam,temp,gfx,output_pref,outputs in [
 # Cortex
 #
 
-# Perlevis Cortex    =>  (1) Unicorp_d2  (2) S&K Ultralight Combat Plating
-# Laevis Cortex      =>  (1) Unicorp_d2 x2 (2) S&K Ultralight Combat Plating x2
-# Mediocris Cortex   =>  (1) Unicorp_d23  (2) S&K Medium Combat Plating
-# Largus Cortex      =>  (1) Unicorp_d23 x2  (2) S&K Medium Combat Plating x2
-# Ponderosus Cortex  =>  (1) Unicorp_d58  (2) S&K Heavy Combat Plating
-# Immanis Cortex     =>  (1) Unicorp_d58 x2 (2) S&K Heavy Combat Plating x2
+# Perlevis Cortex    =>  (1) Unicorp_d2  (2) S&K Skirmish Plating
+# Laevis Cortex      =>  (1) Unicorp_d2 x2 (2) S&K Skirmish Plating x2
+# Mediocris Cortex   =>  (1) Unicorp_d23  (2) S&K Combat Plating
+# Largus Cortex      =>  (1) Unicorp_d23 x2  (2) S&K Combat Plating x2
+# Ponderosus Cortex  =>  (1) Unicorp_d58  (2) S&K Battle Plating
+# Immanis Cortex     =>  (1) Unicorp_d58 x2 (2) S&K Battle Plating x2
 for pref,nam1,nam2,dbl,gfx,output_pref,outputs in [
-   ("small",  "unicorp_d2_light_plating.mvx",   "sk_ultralight_combat_plating.mvx", False, "t", "Perlevis",   ["I","II"]            ),
-   ("small",  "unicorp_d2_light_plating.mvx",   "sk_ultralight_combat_plating.mvx", True,  "s", "Laevis",     ["I","II"]            ),
-   ("medium", "unicorp_d23_medium_plating.mvx", "sk_medium_combat_plating.mvx",     False, "m", "Mediocris",  ["I","II"]            ),
-   ("medium", "unicorp_d23_medium_plating.mvx", "sk_medium_combat_plating.mvx",     True,  "l", "Largus",     ["I","II","III"]      ),
-   ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_heavy_combat_plating.mvx",      False, "h", "Ponderosus", ["I","II","III","IV"] ),
-   ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_heavy_combat_plating.mvx",      True,  "x", "Immanis",    ["I","II","III"]      ),
+   ("small",  "unicorp_d2_light_plating.mvx",   "sk_skirmish_plating.mvx", False, "t", "Perlevis",   ["I","II"]            ),
+   ("small",  "unicorp_d2_light_plating.mvx",   "sk_skirmish_plating.mvx", True,  "s", "Laevis",     ["I","II"]            ),
+   ("medium", "unicorp_d23_medium_plating.mvx", "sk_combat_plating.mvx",   False, "m", "Mediocris",  ["I","II"]            ),
+   ("medium", "unicorp_d23_medium_plating.mvx", "sk_combat_plating.mvx",   True,  "l", "Largus",     ["I","II","III"]      ),
+   ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_battle_plating.mvx",   False, "h", "Ponderosus", ["I","II","III","IV"] ),
+   ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_battle_plating.mvx",   True,  "x", "Immanis",    ["I","II","III"]      ),
 ]:
    ref1=get_outfit_dict('core_hull/'+pref+'/'+nam1,dbl)
    ref2=get_outfit_dict('core_hull/'+pref+'/'+nam2,dbl)
