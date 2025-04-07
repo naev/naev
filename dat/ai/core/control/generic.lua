@@ -1010,8 +1010,7 @@ function consider_taunt( target, offensive )
    if mem.elapsed - last_taunted > 15 then
       local msg = taunt( target, offensive )
       if msg then
-         --local tgt = target:leader() or target
-         local tgt = target
+         local tgt = target:leader() or target
          ai.pilot():comm( tgt, msg )
       end
       mem._taunted[id] = mem.elapsed
