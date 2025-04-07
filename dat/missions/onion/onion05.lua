@@ -39,6 +39,7 @@ local audio = require "love.audio"
 local brokerspb, brokersys = spob.getS("Wunomi's World")
 local deliverspb, deliversys = spob.getS("Shangris Station")
 local _trixiespb, trixiesys = spob.getS("Ian")
+local backdoorspb, backdoorsys = spob.getS("Marius Enclave")
 
 --local money_reward = onion.rewards.misn05
 
@@ -248,7 +249,7 @@ function land ()
       }
 
       vn.label("03_question")
-      broker(_([["Yes. Nothing complicated for a pilot of your caliber."]]))
+      broker(_([["Yes. Nothing complicated for a pilot of your calibre."]]))
       vn.menu{
          {_([["Sure thing."]]), "03_cont"},
          {_([["What about credits instead?"]]), "03_credits"},
@@ -275,7 +276,7 @@ function land ()
       vn.na(_([[You get back to your ship and two holograms pop up.]]))
       l337(_([["Did you get the manual?"]]))
       vn.na(_([["You explain them your encounter with the Data Broker."]]))
-      trixie(_([["Strange, but to be expected. The Data Broker always prefer weird favours over credits."]]))
+      trixie(_([["Strange, but to be expected. The Data Broker always prefers weird favours over credits."]]))
       l337(_([["Guess there's not much we can do. {player}, it's up to you to do the physical stuff. We'll keep an eye out for when you get back."]]))
       vn.na(_([[Time to deliver.]]))
       vn.done("electric")
@@ -297,10 +298,10 @@ function land ()
    elseif mem.state==STATE_BEATENEMIES and cspb==deliverspb then
       vn.clear()
       vn.scene()
-      local worker = vn.newCharacter( _("Dock Worker"), {image=vni.generic()} )
+      local worker = vn.newCharacter( _("Dockworker"), {image=vni.generic()} )
       vn.transition()
-      vn.na(_([[You arrive to the spacedock and carry the cube to the cargo delivery center, where a weary worker attends to you.]]))
-      worker(_([["Anotehr one of these? Damnit, you playing a prank?"]]))
+      vn.na(_([[You arrive to the spacedock and carry the cube to the cargo delivery centre, where a weary worker attends to you.]]))
+      worker(_([["Another one of these? Damnit, you playing a prank?"]]))
       vn.na(_([[You explain your plight and that you were asked to deliver this here.]]))
       worker(_([["That's quite a pretty cube, but it's junk. I checked and nobody is expecting it, we can't take it."]]))
       vn.menu{
@@ -395,7 +396,7 @@ function land ()
       end )
 
       vn.label("01_datagive")
-      vn.na(_([[The floor opens and a holodrive appears on a small pedastel. You pocket it, and turn to leave, but the door does not open.]]))
+      vn.na(_([[The floor opens and a holodrive appears on a small pedestal. You pocket it, and turn to leave, but the door does not open.]]))
       broker(_([["Some free advice from the Data Broker. Be careful with what you seek. I do not think this manual will be of much use to you."]]))
       vn.na(_([[The door opens and you make your way back to the spaceport.]]))
 
@@ -426,16 +427,43 @@ You detect the shock in their voice.]]))
       vn.jump("02_cont")
 
       vn.label("02_cont")
+      l337(_([["Anyway, quickly plug in the holodrive, I want to see it!"]]))
+      vn.na(_([[You plug it in your ship's console and the hackers quickly help themselves to the data.]]))
+      trixie(_([["Let's see what we have here...
+'confidential, for your eyes only'... boring...
+wow, only 7D cryptographical encodings..."]]))
+      l337(_([["Running me reconstruction cipher..."]]))
+      vn.na(_([[You hear more beeping as it seems they start to make themselves at hope with your ship's computation power.]]))
+      l337(_([["Almost there... aham! That's it!"]]))
+      trixie(_([["Got a lock?"]]))
+      l337(_([["Yup! I think I found an entry point to the backend. It's really old school, I thought it would be port knocking or something, but it's actually a physical backdoor!"]]))
+      -- Pinocles Station incident is where a short circuit of a physical backdoor was crashed into and accidentally vented the station atmosphere killing everyone
+      trixie(_([["Wow! Those should be banned since the Pinocles Station incident."]]))
+      l337(_([["Pinocles Station?"]]))
+      trixie(_([["Physical backdoor short-circuit vented the atmosphere, all dead. Didn't you study your protocols?"]]))
+      l337(_([["Eh heh, I always fall asleep."
+They rub their eyes.
+"Anyway, I found it, right under our eyes!"]]))
+      trixie(_([["Don't keep us waiting, where is it?"]]))
+      l337(fmt.f(_([["It's at the old rickety station of {spb} in the {sys} system. I knew the station was old, but never thought it was that old!"]]),
+         {spb=backdoorspb, sys=backdoorsys}))
+      trixie(_([["You never know with these stations. It could even just be some piece reused from somewhere else."]]))
+      l337(fmt.f(_([["Only one way to find out! {pilot}, onwards to {spb}!"]]),
+         {pilot=pilot.name(), spb=backdoorspb}))
+      trixie([["RáÚÆ Â£Ř§Ů—� ©????╟舐—â€š�Ř§Ů½  æØ¢Ã Ř§Ů© ráÚÆ ????½ æØ¢Ã"]])
+      l337(_([["Looks like the Nexus node is being flaky. Don't worry, she'll be back the moment it stabilizes. We'll get back to you later!"]]))
+      vn.na(_([[It seems like the hackers need your help again...]]))
 
       vn.done("electric")
       vn.run()
 
       misn.osdCreate( title, {
-         "TODO"
+         fmt.f(_([[Go to {spb} ({sys} system)]]),{spb=backdoorspb, sys=backdoorsys}),
       } )
       misn.markerRm()
-      misn.markerAdd( brokerspb )
+      misn.markerAdd( backdoorspb )
       mem.state = STATE_RETURNBROKER
+      hook.jumpin("jumpin")
 
       if mem.carg_id then
          misn.cargoRm( mem.carg_id ) -- Remove cargo
@@ -487,5 +515,26 @@ function bossdead ()
          p:memory().aggressive = false -- No longer aggressive when they run away
          pilotai.hyperspace( p )
       end
+   end
+end
+
+mem.jumped = 0
+function jumpin ()
+   if mem.state == STATE_RETURNBROKER then
+      mem.jumped = mem.jumped+1
+   end
+
+   if mem.jumped > 2 then
+      local l337 = onion.vn_l337b01()
+
+      vn.clear()
+      vn.scene()
+      -- Broker briefing
+      vn.newCharacter( l337 )
+      vn.music( onion.loops.hacker )
+      vn.transition("electric")
+
+      vn.done("electric")
+      vn.run()
    end
 end
