@@ -1,4 +1,4 @@
-<outfit name="S&amp;K Ultralight Combat Plating">
+<outfit name="S&amp;K Skirmish Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>

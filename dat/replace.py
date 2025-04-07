@@ -11,7 +11,7 @@ subs={
    "S&K Heavy Combat Plating":"S&K Battle Plating"
 }
 
-args=[s for s in argv[1:] if s.split('.lua')[-1]=='']
+args=[s for s in argv[1:] if s.split('.lua')[-1]=='' or s.split('.mvx')[-1]=='' or s.split('.xml')[-1]=='']
 args=[s for s in args if s.split('/')[-1]!="save_updater.lua"]
 
 for a in args:

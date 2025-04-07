@@ -1,6 +1,6 @@
-<outfit name="Nexus Heavy Stealth Plating">
+<outfit name="Nexus Phantasm Plating">
  <general>
-  <shortname>N. Heavy Stealth Plating</shortname>
+  <shortname>N. Phantasm Plating</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>

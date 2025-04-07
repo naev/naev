@@ -1,4 +1,4 @@
-<outfit name="S&amp;K Heavy Combat Plating">
+<outfit name="S&amp;K Battle Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>

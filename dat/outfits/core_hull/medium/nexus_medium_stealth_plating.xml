@@ -1,6 +1,6 @@
-<outfit name="Nexus Medium Stealth Plating">
+<outfit name="Nexus Ghost Plating">
  <general>
-  <shortname>N. Medium Stealth Plating</shortname>
+  <shortname>N. Ghost Plating</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>

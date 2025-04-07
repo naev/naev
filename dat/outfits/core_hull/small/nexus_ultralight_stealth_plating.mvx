@@ -1,6 +1,6 @@
-<outfit name="Nexus Ultralight Stealth Plating">
+<outfit name="Nexus Shadow Plating">
  <general>
-  <shortname>N. Ultralight Stealth Plating</shortname>
+  <shortname>N. Shadow Plating</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
