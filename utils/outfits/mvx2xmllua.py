@@ -120,7 +120,7 @@ def main():
    print >>stderr,nam
    o.write(stdout)
    return 0
-   
+
 if __name__ == '__main__':
    import argparse
 
@@ -131,4 +131,3 @@ if __name__ == '__main__':
    )
    parser.parse_args()
    exit(main())
-

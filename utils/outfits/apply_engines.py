@@ -241,5 +241,3 @@ if __name__=="__main__":
       exit(gen_line(args.LINE))
    else:
       exit(main(args.filename))
-
-

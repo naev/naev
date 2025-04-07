@@ -128,4 +128,3 @@ if __name__ == '__main__':
       print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
    main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,args.sort)
-

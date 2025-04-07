@@ -48,6 +48,5 @@ heacy vs light
 -30% ev
 
 bomber vs light
--30% turn 
+-30% turn
 -20% everything else
-

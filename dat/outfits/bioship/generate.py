@@ -400,5 +400,3 @@ BioOutfit( "weapon.xml.template", {
     N_("Tentacle Organ III"),
     N_("Tentacle Organ IV")
 ] )
-
-

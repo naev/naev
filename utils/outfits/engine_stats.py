@@ -20,7 +20,7 @@ def field(a,f):
 
       if type(res)==type((1.0,)):
          res=res[0]
-         
+
       if type(res)==type(1.0):
          return res
    except:
@@ -30,7 +30,7 @@ def field(a,f):
 accel=lambda a:field(a,'accel')
 speed=lambda a:field(a,'speed')
 turn=lambda a:field(a,'turn')
- 
+
 maxspeed=lambda a:speed(a)+accel(a)/PHYSICS_SPEED_DAMP
 fullsptime=lambda a:maxspeed(a)/accel(a) if accel(a) else 0.0
 radius=lambda a:round(maxspeed(a)/(turn(a)/180.0*math.pi))
@@ -77,5 +77,3 @@ else:
          acc+=l(fmt(fullsptime(k)))+l(fmt(fullspdist(k)))+l(turn(k))+l(radius(k))
          acc+=l(fmt(turntime(k)))
          out(acc)
-
-
