@@ -990,8 +990,15 @@ function transportParam ( price )
 end
 
 -- taunts
-function taunt( _target, _offensive )
-   -- Empty stub
+function taunt( target, offensive )
+   -- Taunts if applicable
+   if mem.taunt then
+      -- PERS just use strings
+      if type(mem.taunt)=="string" then
+         return mem.taunt
+      end
+      return mem.taunt( target, offensive )
+   end
 end
 
 -- Lower taunt frequency, at most once per X seconds per target
@@ -1001,7 +1008,12 @@ function consider_taunt( target, offensive )
    local id = target:id()
    local last_taunted = mem._taunted[id] or -100
    if mem.elapsed - last_taunted > 15 then
-      taunt( target, offensive )
+      local msg = taunt( target, offensive )
+      if msg then
+         --local tgt = target:leader() or target
+         local tgt = target
+         ai.pilot():comm( tgt, msg )
+      end
       mem._taunted[id] = mem.elapsed
    end
 end
