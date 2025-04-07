@@ -12,9 +12,9 @@ function init( p, po )
       end
    end
 
-   -- Doubles effect
+   -- effect goes from 3 to 7
    if hasunguided then
-      po:set( "launch_damage", 5 )
+      po:set( "launch_damage", 4 )
    else
       po:clear()
    end
