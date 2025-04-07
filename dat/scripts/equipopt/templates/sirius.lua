@@ -74,7 +74,7 @@ local sirius_cores = {
    ["Sirius Fidelity"] = function () return {
          "Milspec Orion 2301 Core System",
          "Nexus Dart 160 Engine", -- maybe even melendez ox.
-         "S&K Ultralight Combat Plating",
+         "S&K Skirmish Plating",
       } end,
 }
 

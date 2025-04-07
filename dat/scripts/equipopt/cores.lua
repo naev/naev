@@ -206,33 +206,33 @@ end
 -- ELITE HULLS
 local ehul = {}
 ehul["Scout"] = function ()
-   return choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" }
+   return choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" }
 end
 ehul["Interceptor"] = function ()
-   return choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" }
+   return choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" }
 end
 ehul["Fighter"] = function (flag)
    if flag then
-      return "S&K Ultralight Combat Plating"
+      return "S&K Skirmish Plating"
    else
-      return choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" }
+      return choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" }
    end
 end
 ehul["Bomber"] = ehul["Fighter"]
 ehul["Corvette"] = function ()
-   return choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }
+   return choose_one{ "Nexus Ghost Plating", "S&K Combat Plating" }
 end
 ehul["Destroyer"] = function ()
-   return "S&K Medium Combat Plating"
+   return "S&K Combat Plating"
 end
 ehul["Cruiser"] = function ()
-   return "S&K Heavy Combat Plating"
+   return "S&K Battle Plating"
 end
 ehul["Battleship"] = function ()
-   return "S&K Heavy Combat Plating"
+   return "S&K Battle Plating"
 end
 ehul["Carrier"] = function ()
-   return "S&K Heavy Combat Plating"
+   return "S&K Battle Plating"
 end
 -- Civilian
 ehul["Yacht"] = shul["Yacht"]
@@ -242,7 +242,7 @@ ehul["Armoured Transport"] = function (flag)
    if flag then
       return "Unicorp D-23 Medium Plating"
    else
-      return choose_one{ "Unicorp D-23 Medium Plating", "Nexus Medium Stealth Plating" }
+      return choose_one{ "Unicorp D-23 Medium Plating", "Nexus Ghost Plating" }
    end
 end
 ehul["Bulk Freighter"] = function (flag)
@@ -332,7 +332,7 @@ cores.elite.systems["Gawain"] = function ()
    return choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System" }
 end
 cores.elite.hulls["Gawain"] = function ()
-   return choose_one{ "Unicorp D-2 Light Plating", "Nexus Ultralight Stealth Plating" }
+   return choose_one{ "Unicorp D-2 Light Plating", "Nexus Shadow Plating" }
 end
 cores.elite.engines["Gawain"] = function ()
    return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }

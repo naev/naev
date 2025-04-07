@@ -59,38 +59,38 @@ local empire_cores = {
    ["Empire Shark"] = function () return {
          "Milspec Orion 2301 Core System",
          choose_one{ "Tricon Zephyr Engine", "Nexus Dart 160 Engine", "Melendez Ox Engine" },
-         choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" },
+         choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" },
       } end,
    ["Empire Lancelot"] = function () return {
          "Milspec Orion 2301 Core System",
          "Milspec Orion 2301 Core System",
          choose_one{ "Tricon Zephyr II Engine", "Nexus Dart 360 Engine", "Melendez Ox XL Engine" },
-         choose_one{ "Nexus Ultralight Stealth Plating", "S&K Ultralight Combat Plating" },
-         "S&K Ultralight Combat Plating",
+         choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" },
+         "S&K Skirmish Plating",
       } end,
    ["Empire Admonisher"] = function () return {
          "Milspec Orion 4801 Core System",
          choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
-         choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
+         choose_one{ "Nexus Ghost Plating", "S&K Combat Plating" },
       } end,
    ["Empire Pacifier"] = function () return {
          "Milspec Orion 4801 Core System",
          "Milspec Orion 4801 Core System",
          choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
-         choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
-         "S&K Medium Combat Plating",
+         choose_one{ "Nexus Ghost Plating", "S&K Combat Plating" },
+         "S&K Combat Plating",
       } end,
    ["Empire Hawking"] = function () return {
          "Milspec Orion 8601 Core System",
          choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine"},
-         "S&K Heavy Combat Plating",
+         "S&K Battle Plating",
       } end,
    ["Empire Peacemaker"] = function () return {
          "Milspec Orion 8601 Core System",
          "Milspec Orion 8601 Core System",
          "Melendez Mammoth XL Engine",
-         "S&K Heavy Combat Plating",
-         "S&K Heavy Combat Plating",
+         "S&K Battle Plating",
+         "S&K Battle Plating",
       } end,
 }
 

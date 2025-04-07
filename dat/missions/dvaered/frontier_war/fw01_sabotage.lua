@@ -234,8 +234,8 @@ end
 -- Equips a Goddard for a duel, with or without repeating railguns
 function equipGoddard( plt, repeating )
    -- TODO switch to equipopt
-   plt:outfitAdd("S&K Heavy Combat Plating")
-   plt:outfitAdd("S&K Heavy Combat Plating")
+   plt:outfitAdd("S&K Battle Plating")
+   plt:outfitAdd("S&K Battle Plating")
    plt:outfitAdd("Melendez Mammoth XL Engine")
    plt:outfitAdd("Milspec Orion 8601 Core System")
    plt:outfitAdd("Milspec Orion 8601 Core System")
@@ -316,7 +316,7 @@ function spawn_phalanx()
    p:hyperspace( mem.nextsys, true ) -- Go towards Battleaddict's place
 
    -- TODO switch to equipopt
-   p:outfitAdd("S&K Medium Combat Plating")
+   p:outfitAdd("S&K Combat Plating")
    p:outfitAdd("Milspec Orion 4801 Core System")
    p:outfitAdd("Tricon Cyclone Engine")
    p:outfitAdd("Turreted Vulcan Gun", 2)
