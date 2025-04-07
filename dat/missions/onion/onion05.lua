@@ -191,7 +191,9 @@ function land ()
       vn.na(_([[You print a hardcopy of the data you were asked to get, and start to make your way to the location specified by the hackers.]]))
       vn.na(_([[You head to some residential quarters, on the way there you can't help shake the feeling you are getting watched.]]))
       vn.na(_([[Eventually you get to the location and as you approach the door it opens to you, leading you towards a very pristine room with nothing but a chair.]]))
+      vn.scene()
       local broker = vn.newCharacter( _("Data Broker") )
+      vn.transition()
       broker(fmt.f(_([[A voice echoes throughout the room.
 "Have a seat, {player}."]]),
          {player=player.name()}))
@@ -215,6 +217,9 @@ function land ()
 
       vn.label("01_sit")
       vn.na(_([[You sit down in the chair, which is surprisingly comfortable.]]))
+      vn.func( function ()
+         mem.sat_down = true
+      end )
       vn.jump("01_cont")
 
       vn.label("01_cont")
@@ -290,8 +295,6 @@ function land ()
       mem.state = STATE_METBROKER
 
    elseif mem.state==STATE_BEATENEMIES and cspb==deliverspb then
-      misn.cargoRm( mem.carg_id ) -- Remove cargo
-
       vn.clear()
       vn.scene()
       local worker = vn.newCharacter( _("Dock Worker"), {image=vni.generic()} )
@@ -316,6 +319,11 @@ function land ()
       vn.na(_([[Dejected, you take the cube back with you to your ship. Seems like the Data Broker has explaining to do.]]))
       vn.run()
 
+      if not mem.cube_trashed then
+         misn.cargoRm( mem.carg_id ) -- Remove cargo
+         mem.carg_id = nil
+      end
+
       -- Advance internal state
       misn.osdActive(2)
       misn.markerRm()
@@ -329,11 +337,96 @@ function land ()
 
       vn.clear()
       vn.scene()
-      -- Broker briefing
+      local broker = vn.newCharacter( _("Data Broker") )
+      vn.transition()
+      vn.na(_([[You land and head back to the Data Broker's headquarters. You still feel watched on the way there, but it is different than last time.]]))
+      vn.na(_([[When you get to the location, the door discretely opens and you once again find yourself in the room with the chair.]]))
+      broker(fmt.f(_([["Welcome back, {player}.]]),
+         {player=player.name()}))
+      vn.menu( function ()
+         local opts = {
+            {_([["You tried to kill me!"]]), "01_setup"},
+            {_([["What was that all about!"]]), "01_setup"},
+            {_([[Sit down.]]), "01_sit"},
+            {_([[Stand silently.]]), "01_stand"},
+         }
+         if not mem.cube_trashed then
+            table.insert( opts, 1, {_([[Throw the cube.]])}, "01_throw" )
+         end
+         return opts
+      end )
+
+      vn.label("01_throw")
+      vn.func( function ()
+         mem.cube_thrown = true
+      end )
+      vn.na(_([[The cube bounces around before laying still on the ground. After a few seconds, the floor quickly opens around the cube and it disappears from sight.]]))
+      broker(_([["That is not going to get you anywhere."]]))
+      vn.jump("01_setup")
+
+      vn.label("01_setup")
+      broker(_([["It seems like you do not understand the data. I did not try to kill you, I just had you do me a favour by eliminating certain nuisances."]]))
+      broker(_([["The delivery was necessary to set up the conditions for success. And you completed the task most excellently."]]))
+      broker(_([["Here, let me provide you with the data that you require."]]))
+      vn.label("01_data")
+
+      vn.label("01_sit")
+      broker(_([["So it seems you understood our deal. Let me provide you with the data that you required."]]))
+      vn.jump("01_data")
+
+      vn.label("01_stand")
+      if not mem.sat_down then
+         broker(_([["Quite the rebel are we."]]))
+      end
+      broker(_([["It seems like you held your part of the bargain. Let me provide you with the data that you require."]]))
+      vn.jump("01_data")
+
+      vn.label("01_givecube")
+      broker(_([["But first, set the cube down."]]))
+      vn.na(_([[You set the cube on the ground in front of you, and the floor quickly opens under it. Oh well, it was a nice cube.]]))
+      broker(_([["Excellent."]]))
+      vn.jump("01_datagive")
+
+      vn.label("01_data")
+      vn.func( function ()
+         if not mem.cube_thrown and not mem.cube_trashed then
+            vn.jump("01_givecube")
+         end
+      end )
+
+      vn.label("01_datagive")
+      vn.na(_([[The floor opens and a holodrive appears on a small pedastel. You pocket it, and turn to leave, but the door does not open.]]))
+      broker(_([["Some free advice from the Data Broker. Be careful with what you seek. I do not think this manual will be of much use to you."]]))
+      vn.na(_([[The door opens and you make your way back to the spaceport.]]))
+
+      vn.scene()
       vn.newCharacter( l337 )
       vn.newCharacter( trixie )
       vn.music( onion.loops.hacker )
       vn.transition("electric")
+
+      vn.na(_([[You get to your ship and the two familiar holograms appear.]]))
+      trixie(_([["Did you get the..."]]))
+      l337(_([[l337_b01 butts in.
+"Was the Data Broker as cool as he sounds like?"]]))
+      vn.menu{
+         {_([["He's an asshole."]]), "02_asshole"},
+         {_([["Cooler than ice."]]), "02_cool"},
+      }
+
+      vn.label("02_asshole")
+      l337(_([["Whaaat!?"
+You detect the shock in their voice.]]))
+      trixie(_([[Trixie snickers.]]))
+      vn.jump("02_cont")
+
+      vn.label("02_cool")
+      l337(_([["I knew it!"]]))
+      trixie(_([["That's a surprise. I would have expected him to be an asshole."]]))
+      vn.jump("02_cont")
+
+      vn.label("02_cont")
+
       vn.done("electric")
       vn.run()
 
@@ -343,6 +436,11 @@ function land ()
       misn.markerRm()
       misn.markerAdd( brokerspb )
       mem.state = STATE_RETURNBROKER
+
+      if mem.carg_id then
+         misn.cargoRm( mem.carg_id ) -- Remove cargo
+         mem.carg_id = nil
+      end
    end
 end
 
