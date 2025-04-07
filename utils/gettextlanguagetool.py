@@ -26,8 +26,8 @@ let g:ale_languagetool_executable = "/PATH/TO/naev/utils/gettextlint.py"
 
 " Enable the linter by adding it to the defaults
 let g:ale_linters = {
-\  'lua':['languagetool', 'cspell', 'lua_language_server', 'luac', 'luacheck', 'selene'],
-\}
+\\  'lua':['languagetool', 'cspell', 'lua_language_server', 'luac', 'luacheck', 'selene'],
+\\}
 ```
 """
 
