@@ -338,7 +338,7 @@ cores.elite.engines["Gawain"] = function ()
    return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
 end
 cores.elite.systems["Proteron Hippocrates"] = function ()
-   return "Milspec Thalos 5402 Core System"
+   return "Milspec Thalos 4702 Core System"
 end
 
 --[[
