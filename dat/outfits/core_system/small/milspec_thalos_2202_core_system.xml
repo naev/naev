@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Thalos 2202 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>small</size>
   <price>70000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 2202 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
@@ -10,5 +10,13 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/core_system/small/milspec_thalos_2202_core_system.lua</lua></specific>
+  <lua_inline>require("outfits.lib.multicore").init{
+   { "mass", 12, 58},
+   { "cpu_max", 24, 66},
+   { "energy", 150, 200},
+   { "energy_regen", 8, 7},
+   { "shield", 180, 45},
+   { "shield_regen", 6, 1},
+}</lua_inline>
+ </specific>
 </outfit>

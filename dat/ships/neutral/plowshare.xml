@@ -1,7 +1,7 @@
 <ship name="Plowshare">
  <points>50</points>
  <base_type>Plowshare</base_type>
- <gfx size="69" sx="10" sy="10">plowshare</gfx>
+ <gfx sy="10" sx="10" size="69">plowshare</gfx>
  <sound>engine</sound>
  <class>Freighter</class>
  <price>500000</price>
@@ -22,13 +22,14 @@
  </characteristics>
  <slots>
   <weapon size="medium" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

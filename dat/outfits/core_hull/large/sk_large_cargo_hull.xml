@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="S&amp;K Large Cargo Hull">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
   <mass>550</mass>
@@ -11,10 +10,14 @@
   <gfx_store>cargo_hull_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>600</cargo>
-  <absorb>52</absorb>
-  <armour>1100</armour>
-  <cargo_inertia>-25</cargo_inertia>
-  <cargo_mod>25</cargo_mod>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 550, 550},
+   { "cargo", 400, 200},
+   { "absorb", 52, 10},
+   { "armour", 800, 300},
+   { "cargo_inertia", -25, -10},
+   { "cargo_mod", 25, 10},
+}</lua_inline>
  </specific>
 </outfit>

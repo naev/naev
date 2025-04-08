@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Orion 4801 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>medium</size>
   <price>300000</price>
   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 4801 core system is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
@@ -10,5 +10,13 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/core_system/medium/milspec_orion_4801_core_system.lua</lua></specific>
+  <lua_inline>require("outfits.lib.multicore").init{
+   { "mass", 90, 180},
+   { "cpu_max", 260, 100},
+   { "energy", 750, 850},
+   { "energy_regen", 33, 20},
+   { "shield", 450, 130},
+   { "shield_regen", 10, 2},
+}</lua_inline>
+ </specific>
 </outfit>

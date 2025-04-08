@@ -1,34 +1,22 @@
 #!/usr/bin/env python
 
-from sys import stdout,stderr
+from sys import stdin,stdout,stderr
+
 import xml.etree.ElementTree as ET
 
-
-def subs(r):
-   for e in r:
-      yield e
-      for s in subs(e):
-         yield s
-
-def fmt_a(kv):
-   (key,value)=kv
-   return key+'="'+str(value)+'"'
-
-def output_r(e,fp,ind=0):
-   fp.write(' '*ind+'<'+' '.join([e.tag]+[fmt_a(x) for x in e.attrib.items()])+'>'+e.text.strip())
-   fst=True
-   for s in e:
-      if fst:
-         fp.write('\n')
-         fst=False
-      output_r(s,fp,ind+1)
-   if not fst:
-      fp.write(' '*ind)
-   fp.write('</'+e.tag+'>\n')
+def nam2fil(s):
+   for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
+      s=s.replace(*c)
+   return s.lower()
 
 class _outfit():
    def __init__(self,fil):
-      self.T=ET.parse(fil)
+      if type(fil)==type(""):
+         fp=open(fil,"rt")
+         self.T=ET.parse(fp)
+         fp.close()
+      else:
+         self.T=ET.parse(fil)
       self.r=self.T.getroot()
       self.fil=fil
 
@@ -42,12 +30,75 @@ class _outfit():
          res=self.name()
       return res
 
+   def autostack(self,doubled=False):
+      def text2val(s):
+         inp=s.split('/',1)
+         try:
+            inp=[float(x) for x in inp]
+            return (inp[0],inp[-1])
+         except:
+            return None
+
+      for e in self:
+         res=text2val(e.text)
+         if res is not None:
+            (a,b)=res
+            if doubled:
+               a+=b
+            e.text=str(a)
+
    def __iter__(self):
-      for e in subs(self.r):
+      def _subs(r):
+         for e in r:
+            yield e
+            for s in _subs(e):
+               yield s
+
+      for e in _subs(self.r):
          yield e
 
-   def write(self,fp=stdout):
-      output_r(self.r,fp)
+   def write(self,dst=stdout):
+      def output_r(e,fp,ind=0):
+         andamp=lambda s:s.replace("&","&amp;") if s is not None else ''
+         def _fmt_a(kv):
+            (key,value)=kv
+            return key+'="'+str(andamp(value))+'"'
+
+         li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
+
+         try:
+            iter(e).next()
+            flag=True
+         except:
+            flag=False
+
+         if e.text is None and not flag:
+            fp.write(' '*ind+'<'+' '.join(li)+' />\n')
+         else:
+            fp.write(' '*ind+'<'+' '.join(li)+'>'+andamp(e.text).rstrip())
+            fst=True
+            for s in e:
+               if fst:
+                  fp.write('\n')
+                  fst=False
+               output_r(s,fp,ind+1)
+            if not fst:
+               fp.write(' '*ind)
+            fp.write('</'+e.tag+'>\n')
+
+      closeit=False
+      if dst=="-":
+         dest=stdout
+      elif type(dst)==type("foo"):
+         dest=open(dst,"wt")
+         closeit=True
+      else:
+         dest=dst
+
+      output_r(self.r,dest)
+
+      if closeit:
+         dest.close()
 
    def to_dict(self):
       d=dict()
@@ -61,19 +112,22 @@ class _outfit():
                if len(what)==1:
                   what=what[0]
             except:
-               pass
-         d[k.tag].append(what)
+                  pass
+            d[k.tag].append(what)
       for k in d:
          if len(d[k])==1:
             d[k]=d[k][0]
       return d
 
 def outfit(fil):
-   return _outfit(fil) if fil.endswith(".xml") or fil.endswith('.mvx') else None
+   return _outfit(fil) if type(fil)!=type("foo") or fil.endswith(".xml") or fil.endswith('.mvx') else None
 
 if __name__=="__main__":
    from sys import argv
-
    if len(argv)>1:
-      O=outfit(argv[1])
+      stderr.write("Usage: "+argv[0].split('/')[-1]+'\n')
+      stderr.write("  Reads a xml/mvx in input, outputs its input stacked with itself.\n")
+   else:
+      O=outfit(stdin)
+      O.autostack()
       O.write()

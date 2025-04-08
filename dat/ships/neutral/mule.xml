@@ -1,14 +1,14 @@
 <ship name="Mule">
  <points>80</points>
  <base_type>Mule</base_type>
- <gfx size="96" sx="10" sy="10">mule</gfx>
+ <gfx sy="10" sx="10" size="96">mule</gfx>
  <sound>engine</sound>
  <class>Freighter</class>
  <price>900000</price>
  <time_mod>1.25</time_mod>
- <trail_generator h="0" x="-33" y="-13">nebula</trail_generator>
- <trail_generator h="0" x="-33" y="13">nebula</trail_generator>
- <trail_generator h="0" x="-33" y="0">melendez</trail_generator>
+ <trail_generator y="-13" h="0" x="-33">nebula</trail_generator>
+ <trail_generator y="13" h="0" x="-33">nebula</trail_generator>
+ <trail_generator y="0" h="0" x="-33">melendez</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <faction>Independent</faction>
  <license>Large Civilian Vessel</license>
@@ -24,17 +24,18 @@
   <cargo>230</cargo>
  </characteristics>
  <slots>
-  <weapon h="4" prop="fighter_bay" size="medium" x="-15" y="0" />
-  <weapon h="4" prop="fighter_bay" size="medium" x="15" y="0" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <weapon y="0" h="4" prop="fighter_bay" x="-15" size="medium" />
+  <weapon y="0" h="4" prop="fighter_bay" x="15" size="medium" />
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

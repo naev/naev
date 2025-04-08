@@ -1,18 +1,18 @@
 <ship name="Proteron Hippocrates">
  <points>80</points>
  <base_type>Hippocrates</base_type>
- <gfx size="88" sx="10" sy="10">hippocrates</gfx>
+ <gfx sy="10" sx="10" size="88">hippocrates</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1900000</price>
  <time_mod>1.1</time_mod>
- <trail_generator h="0" x="-25" y="8">proteron</trail_generator>
- <trail_generator h="0" x="-25" y="-8">proteron</trail_generator>
- <trail_generator h="0" x="-9" y="20">proteronS</trail_generator>
- <trail_generator h="0" x="-9" y="-20">proteronS</trail_generator>
- <trail_generator h="0" x="2" y="30">nebula</trail_generator>
- <trail_generator h="0" x="2" y="-30">nebula</trail_generator>
+ <trail_generator y="8" h="0" x="-25">proteron</trail_generator>
+ <trail_generator y="-8" h="0" x="-25">proteron</trail_generator>
+ <trail_generator y="20" h="0" x="-9">proteronS</trail_generator>
+ <trail_generator y="-20" h="0" x="-9">proteronS</trail_generator>
+ <trail_generator y="30" h="0" x="2">nebula</trail_generator>
+ <trail_generator y="-30" h="0" x="2">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <faction>Proteron</faction>
  <license>Medium Combat Vessel</license>
@@ -30,20 +30,21 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon exclusive="1" h="3" prop="fighter_bay" size="large" x="7" y="0" />
-  <weapon h="1" prop="fighter_bay" size="medium" x="2" y="20" />
-  <weapon h="1" prop="fighter_bay" size="medium" x="2" y="-20" />
-  <weapon h="0" size="small" x="29" y="3" />
-  <weapon h="0" size="small" x="29" y="-3" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <weapon exclusive="1" x="7" y="0" h="3" size="large" prop="fighter_bay" />
+  <weapon y="20" h="1" prop="fighter_bay" x="2" size="medium" />
+  <weapon y="-20" h="1" prop="fighter_bay" x="2" size="medium" />
+  <weapon y="3" h="0" size="small" x="29" />
+  <weapon y="-3" h="0" size="small" x="29" />
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

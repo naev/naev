@@ -1,14 +1,14 @@
 <ship name="Vigilance">
  <points>90</points>
  <base_type>Vigilance</base_type>
- <gfx size="95" sx="10" sy="10">vigilance</gfx>
+ <gfx sy="10" sx="10" size="95">vigilance</gfx>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2050000</price>
  <time_mod>1.25</time_mod>
- <trail_generator always_under="1" h="0" x="-36" y="0">fire</trail_generator>
- <trail_generator h="-3" x="-30" y="15">nebula</trail_generator>
- <trail_generator h="-3" x="-30" y="-15">nebula</trail_generator>
+ <trail_generator y="0" h="0" always_under="1" x="-36">fire</trail_generator>
+ <trail_generator y="15" h="-3" x="-30">nebula</trail_generator>
+ <trail_generator y="-15" h="-3" x="-30">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Independent</faction>
  <license>Medium Combat Vessel</license>
@@ -24,21 +24,22 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon h="-0" size="large" x="28" y="-3" />
-  <weapon h="-0" size="large" x="28" y="3" />
-  <weapon h="2" size="medium" x="10" y="-3" />
-  <weapon h="2" size="medium" x="10" y="3" />
-  <weapon h="-0" prop="fighter_bay" size="medium" x="-22" y="-8" />
-  <weapon h="-0" prop="fighter_bay" size="medium" x="-22" y="8" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <weapon y="-3" h="-0" size="large" x="28" />
+  <weapon y="3" h="-0" size="large" x="28" />
+  <weapon y="-3" h="2" size="medium" x="10" />
+  <weapon y="3" h="2" size="medium" x="10" />
+  <weapon y="-8" h="-0" prop="fighter_bay" x="-22" size="medium" />
+  <weapon y="8" h="-0" prop="fighter_bay" x="-22" size="medium" />
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="medium" />

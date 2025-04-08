@@ -32,14 +32,14 @@
   <weapon size="large" x="-6" y="0" h="12" />
   <weapon size="medium" prop="fighter_bay" x="-24" y="-8" h="8" />
   <weapon size="medium" prop="fighter_bay" x="-24" y="8" h="8" />
-  <utility size="large" prop="systems">Previous Generation Large Systems</utility>
+  <utility size="large" prop="systems" name="systems">Previous Generation Large Systems</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <structure size="large" prop="engines">Krain Remige Engine</structure>
-  <structure size="large" prop="hull">Patchwork Heavy Plating</structure>
+  <structure size="large" prop="engines" name="engines">Krain Remige Engine</structure>
+  <structure size="large" prop="hull" name="hull">Patchwork Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

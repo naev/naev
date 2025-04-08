@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Patchwork Medium Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>
   <priority>3</priority>
   <mass>130</mass>
@@ -11,8 +10,12 @@
   <gfx_store>plating_patchwork.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>12</cargo>
-  <absorb>18</absorb>
-  <armour>160</armour>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 130, 130},
+   { "cargo", 8, 4},
+   { "absorb", 12, 6},
+   { "armour", 150, 160},
+}</lua_inline>
  </specific>
 </outfit>

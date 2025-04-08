@@ -2,16 +2,16 @@
  <lua>pirate.lua</lua>
  <points>80</points>
  <base_type>Starbridge</base_type>
- <gfx size="80" sx="10" sy="10">starbridge_pirate</gfx>
+ <gfx sy="10" sx="10" size="80">starbridge_pirate</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1850000</price>
  <time_mod>1.25</time_mod>
- <trail_generator h="-4" x="-24" y="-20">nebula</trail_generator>
- <trail_generator h="-4" x="-24" y="20">nebula</trail_generator>
- <trail_generator h="5" x="-28" y="6">pirate</trail_generator>
- <trail_generator h="5" x="-28" y="-6">pirate</trail_generator>
+ <trail_generator y="-20" h="-4" x="-24">nebula</trail_generator>
+ <trail_generator y="20" h="-4" x="-24">nebula</trail_generator>
+ <trail_generator y="6" h="5" x="-28">pirate</trail_generator>
+ <trail_generator y="-6" h="5" x="-28">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Pirate</faction>
  <description>Even though the Starbridge is already a light and fast destroyer, Skull and Bones engineers managed to further improve its speed. Due to its large firepower and relatively high speed, for its ship class, the Starbridge is truly a fearsome sight.</description>
@@ -26,20 +26,22 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon h="2" size="large" x="-20" y="-17" />
-  <weapon h="2" size="large" x="-20" y="17" />
-  <weapon h="3" size="medium" x="15" y="0" />
-  <weapon h="2" size="medium" x="20" y="0" />
-  <weapon h="1" size="small" x="4" y="-7" />
-  <weapon h="1" size="small" x="4" y="7" />
-  <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
-  <utility prop="systems_secondary" size="medium" /><utility prop="accessory" size="medium" />
+  <weapon y="-17" h="2" size="large" x="-20" />
+  <weapon y="17" h="2" size="large" x="-20" />
+  <weapon y="0" h="3" size="medium" x="15" />
+  <weapon y="0" h="2" size="medium" x="20" />
+  <weapon y="-7" h="1" size="small" x="4" />
+  <weapon y="7" h="1" size="small" x="4" />
+  <utility prop="systems" name="systems" size="medium">Previous Generation Medium Systems</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium" />
+  <utility prop="accessory" size="medium" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" size="medium">Krain Patagium Engine</structure>
-  <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Krain Patagium Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Patchwork Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium" />
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

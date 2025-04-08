@@ -1,5 +1,5 @@
 <ship inherits="Goddard" name="Goddard Merchantman">
- <gfx size="125" sx="12" sy="12">goddard_merchant</gfx>
+ <gfx sy="12" sx="12" size="125">goddard_merchant</gfx>
  <rarity>2</rarity>
  <price>6850000</price>
  <description>It all began with an insurance dispute at Manuel Station when a sensor malfunction resulted in a Zebra being damaged beyond repair while delivering a large shipment of gambling chips and bar furniture to Minerva Station. Due to the importance of the cargo job and strict deadline, the insurance provider offered the Zebra captain a used Goddard that had been sold by a retired bounty hunter. The Captain, knowing that a Goddard is worth more than a Zebra, agreed with the idea of later trading it in. The goods would not have fit if it had not been for the idea of filling the fighter bays up to the brim with gambling chips.
@@ -14,20 +14,21 @@ While contemplating a replacement, the captain realized that she encountered non
   <cargo>540</cargo>
  </characteristics>
  <slots>
-  <weapon h="2" size="large" x="-10" y="-13" />
-  <weapon h="2" size="large" x="-10" y="13" />
-  <weapon h="3" size="large" x="-15" y="-25" />
-  <weapon h="3" size="large" x="-15" y="25" />
-  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <weapon y="-13" h="2" size="large" x="-10" />
+  <weapon y="13" h="2" size="large" x="-10" />
+  <weapon y="-25" h="3" size="large" x="-15" />
+  <weapon y="25" h="3" size="large" x="-15" />
+  <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure prop="engines" size="large">Unicorp Eagle 6500 Engine</structure>
-  <structure prop="hull" size="large">Unicorp D-72 Heavy Plating</structure>
+  <structure prop="engines" name="engines" size="large">Unicorp Eagle 6500 Engine</structure>
+  <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

@@ -49,7 +49,7 @@ local function add_desc( stat, nomain, nosec )
       return pref..stattostr( stat.stat, base, false, true )
    else
       return pref..fmt.f("{bas} #n/#0 {sec}", {
-         bas = stattostr( stat.stat, p, nomain, false ),
+         bas = stattostr( stat.stat, p, nomain, nosec),
          sec = stattostr( stat.stat, s, nosec, true ),
       })
    end
