@@ -1,6 +1,6 @@
-<outfit name="Nexus Shadow Plating">
+<outfit name="Nexus Shadow Weave">
  <general>
-  <shortname>N. Shadow Plating</shortname>
+  <shortname>N. Shadow Weave</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
