@@ -56,14 +56,14 @@ local zalek_cores = {
    ["Za'lek Sting"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
-         choose_one{ "Nexus Ghost Weave", "S&K Combat Plating" },
+         choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
       } end,
    ["Za'lek Demon"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
-         choose_one{ "Nexus Ghost Weave", "S&K Combat Plating" },
-         "S&K Combat Plating",
+         choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
+         "S&K Battle Plating",
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          "Milspec Orion 8801 Core System",

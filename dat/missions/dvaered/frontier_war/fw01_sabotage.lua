@@ -316,7 +316,7 @@ function spawn_phalanx()
    p:hyperspace( mem.nextsys, true ) -- Go towards Battleaddict's place
 
    -- TODO switch to equipopt
-   p:outfitAdd("S&K Combat Plating")
+   p:outfitAdd("S&K Battle Plating")
    p:outfitAdd("Milspec Orion 4801 Core System")
    p:outfitAdd("Tricon Cyclone Engine")
    p:outfitAdd("Turreted Vulcan Gun", 2)

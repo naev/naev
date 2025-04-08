@@ -100,7 +100,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/core_hull/medium/nexus_ghost_weave.xml',
    root / 'dat/outfits/core_hull/medium/patchwork_medium_plating.xml',
    root / 'dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml',
-   root / 'dat/outfits/core_hull/medium/sk_combat_plating.xml',
+   root / 'dat/outfits/core_hull/medium/sk_battle_plating.xml',
    root / 'dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml',
    root / 'dat/outfits/core_hull/medium/unicorp_d23_medium_plating.xml',
    root / 'dat/outfits/core_hull/small/nexus_shadow_weave.xml',

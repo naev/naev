@@ -220,10 +220,10 @@ ehul["Fighter"] = function (flag)
 end
 ehul["Bomber"] = ehul["Fighter"]
 ehul["Corvette"] = function ()
-   return choose_one{ "Nexus Ghost Weave", "S&K Combat Plating" }
+   return choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" }
 end
 ehul["Destroyer"] = function ()
-   return "S&K Combat Plating"
+   return "S&K Battle Plating"
 end
 ehul["Cruiser"] = function ()
    return "S&K War Plating"

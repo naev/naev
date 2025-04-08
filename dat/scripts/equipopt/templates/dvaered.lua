@@ -73,11 +73,11 @@ local dvaered_cores = { -- Basically elite hulls excluding stealth
          "S&K Skirmish Plating",
       } end,
    ["Dvaered Phalanx"] = function () return {
-         "S&K Combat Plating",
+         "S&K Battle Plating",
       } end,
    ["Dvaered Vigilance"] = function () return {
-         "S&K Combat Plating",
-         "S&K Combat Plating",
+         "S&K Battle Plating",
+         "S&K Battle Plating",
       } end,
    ["Dvaered Retribution"] = function () return {
          "S&K War Plating",
