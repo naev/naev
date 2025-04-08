@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tech name="Hulls High">
- <item>S&amp;K Ultralight Combat Plating</item>
- <item>Nexus Ultralight Stealth Plating</item>
- <item>S&amp;K Medium Combat Plating</item>
- <item>Nexus Medium Stealth Plating</item>
- <item>S&amp;K Heavy Combat Plating</item>
+ <item>S&amp;K Skirmish Plating</item>
+ <item>Nexus Shadow Plating</item>
+ <item>S&amp;K Combat Plating</item>
+ <item>Nexus Ghost Plating</item>
+ <item>S&amp;K Battle Plating</item>
 </tech>
