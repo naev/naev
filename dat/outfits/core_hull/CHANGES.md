@@ -15,4 +15,3 @@ In addition of that, some renaming occurred:
  - "S&K Ultralight Combat Plating"->"S&K Skirmish Plating",
  - "S&K Medium Combat Plating"->"S&K Combat Plating",
  - "S&K Heavy Combat Plating"->"S&K Battle Plating"
-
