@@ -58,19 +58,17 @@ def process_group(r,field):
 
          if t == 'price':
             e.text=fmt(round((a+b)/2,-2))
-         elif a==b:
-            e.text=fmt(a)
-            acc.append((t,(a,a)))
+         elif t=='priority' and a==b:
+            continue
          else:
-            needs_lua=True
+            if a==b:
+               e.text=fmt(a)
+            else:
+               needs_lua=True
             acc.append((t,(a,b)))
-            torem.append(e)
+            torem.append((r,e))
 
-   for e in torem:
-      r.remove(e)
-
-   return needs_lua,acc
-
+   return needs_lua,acc,torem
 
 def mklua(L):
    output='\n'
@@ -102,10 +100,13 @@ def main():
 
    nam=nam2fil(R.attrib['name'])
 
-   f1,acc1=process_group(R,'./general')
-   f2,acc2=process_group(R,'./specific')
+   f1,acc1,tr1=process_group(R,'./general')
+   f2,acc2,tr2=process_group(R,'./specific')
 
    if f1 or f2:
+      for (r,e) in tr1+tr2:
+         r.remove(e)
+
       acc=acc1+acc2
 
       for e in R.findall('./specific'):
