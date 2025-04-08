@@ -72,9 +72,9 @@ local sirius_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local sirius_cores = {
    ["Sirius Fidelity"] = function () return {
-         "Milspec Orion 2301 Core System",
-         "Nexus Dart 160 Engine", -- maybe even melendez ox.
-         "S&K Skirmish Plating",
+         systems = "Milspec Orion 2301 Core System",
+         engines = "Nexus Dart 160 Engine", -- maybe even melendez ox.
+         hull = "S&K Skirmish Plating",
       } end,
 }
 

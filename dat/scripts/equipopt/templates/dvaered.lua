@@ -65,26 +65,26 @@ local dvaered_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local dvaered_cores = { -- Basically elite hulls excluding stealth
    ["Dvaered Vendetta"] = function () return {
-         "S&K Skirmish Plating",
-         "S&K Skirmish Plating",
+         hull = "S&K Skirmish Plating",
+         hull_secondary = "S&K Skirmish Plating",
       } end,
    ["Dvaered Ancestor"] = function () return {
-         "S&K Skirmish Plating",
-         "S&K Skirmish Plating",
+         hull = "S&K Skirmish Plating",
+         hull_secondary = "S&K Skirmish Plating",
       } end,
    ["Dvaered Phalanx"] = function () return {
-         "S&K Battle Plating",
+         hull = "S&K Battle Plating",
       } end,
    ["Dvaered Vigilance"] = function () return {
-         "S&K Battle Plating",
-         "S&K Battle Plating",
+         hull = "S&K Battle Plating",
+         hull_secondary = "S&K Battle Plating",
       } end,
    ["Dvaered Retribution"] = function () return {
-         "S&K War Plating",
+         hull = "S&K War Plating",
       } end,
    ["Dvaered Goddard"] = function () return {
-         "S&K War Plating",
-         "S&K War Plating",
+         hull = "S&K War Plating",
+         hull_secondary = "S&K War Plating",
       } end,
 }
 

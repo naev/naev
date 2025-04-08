@@ -287,22 +287,17 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Handle cores
    if cores and not pt.nocores then
-      -- Don't actually have to remove cores as it should overwrite default
-      -- cores as necessary
-      --p:outfitRm( "cores" )
-      -- Put cores
-      local prv
-      for k,v in ipairs( cores ) do
-         local q
-         -- A bit fragile..
-         if v==prv then
-            q = p:outfitAdd( v, 2, true )
+      for k,v in pairs( cores ) do
+         -- Maybe remove this debugging check sometime
+         if type(k) ~= "string" then
+            warn(fmt.f(_("Invalid core table with non-string key '{key}' and value '{value}'"),
+               {key=k, value=v}))
          else
-            q = p:outfitAdd( v, 1, true )
-            prv=v
-         end
-         if q < 1 then
-            warn(string.format(_("Unable to equip core '%s' on '%s'!"), v, p:name()))
+            p:outfitRmSlot( k )
+            if not p:outfitAddSlot( v, k, true ) then
+               warn(fmt.f(_("Unable to equip core '{outfit}' on '{pilot}'!"),
+                  {outfit=v, pilot=p}))
+            end
          end
       end
    end

@@ -22,14 +22,14 @@
  </characteristics>
  <slots>
   <weapon size="medium" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-23 Medium Plating</structure>
-  <structure prop="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

@@ -35,16 +35,16 @@
   <weapon y="-20" h="1" prop="fighter_bay" x="2" size="medium" />
   <weapon y="3" h="0" size="small" x="29" />
   <weapon y="-3" h="0" size="small" x="29" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-23 Medium Plating</structure>
-  <structure prop="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

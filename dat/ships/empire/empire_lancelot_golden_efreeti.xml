@@ -9,15 +9,15 @@
   <weapon y="3" h="5" size="medium" x="-3" />
   <weapon y="-3" h="5" size="small" x="-3" />
   <weapon y="0" h="5" size="small" x="-5" />
-  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
-  <structure prop="hull" size="small">Unicorp D-2 Light Plating</structure>
-  <structure prop="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="engines" name="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

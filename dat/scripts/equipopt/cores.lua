@@ -375,25 +375,23 @@ function cores.get( p, params )
    if systems then
       local ct = cores[ systems ].systems
       local co = ct[ shipname ] or ct[ shipclass ]
-      table.insert( c, co() )
-
+      c["systems"] = co()
       if have_secondary[shipclass] then
-         table.insert( c, co() )
+         c["systems_secondary"] = co()
       end
    end
    if hulls then
       local ct = cores[ hulls ].hulls
       local co = ct[ shipname ] or ct[ shipclass ]
-      table.insert( c, co() )
-
+      c["hull"] = co()
       if have_secondary[shipclass] then
-         table.insert( c, co(true) )
+         c["hull_secondary"] = co(true)
       end
    end
    if engines then
       local ct = cores[ engines ].engines
       local co = ct[ shipname ] or ct[ shipclass ]
-      table.insert( c, co() )
+      c["engines"] = co()
    end
 
    return c
