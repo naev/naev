@@ -247,7 +247,7 @@ ehul["Armoured Transport"] = function (flag)
 end
 ehul["Bulk Freighter"] = function (flag)
    if flag then
-      return "Unicorp D-58 Medium Plating"
+      return "Unicorp D-58 Heavy Plating"
    else
       return "S&K Large Cargo Hull"
    end
