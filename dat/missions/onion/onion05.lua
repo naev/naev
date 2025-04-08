@@ -38,10 +38,8 @@ local audio = require "love.audio"
 
 local brokerspb, brokersys = spob.getS("Wunomi's World")
 local deliverspb, deliversys = spob.getS("Shangris Station")
-local _trixiespb, trixiesys = spob.getS("Ian")
+--local trixiespb, trixiesys = spob.getS("Ian")
 local backdoorspb, backdoorsys = spob.getS("Marius Enclave")
-
---local money_reward = onion.rewards.misn05
 
 local title = _("The Great Hack")
 
@@ -53,14 +51,12 @@ local title = _("The Great Hack")
    2. destroyed enemies
    3. delivered to deliverspb
    4. got data from broker
-   5. message about trixie
 --]]
 local STATE_ACCEPTED=0
 local STATE_METBROKER=1
 local STATE_BEATENEMIES=2
 local STATE_BROKERDELIVERY=3
 local STATE_RETURNBROKER=4
---local STATE_TRIXIEMESSAGE=5
 mem.state = STATE_ACCEPTED
 
 -- Create the mission
@@ -68,7 +64,7 @@ function create()
    misn.finish() -- Not ready yet
 
    -- Claims some systems
-   if not misn.claim{ trixiesys, deliversys } then
+   if not misn.claim{  deliversys } then
       return misn.finish(false)
    end
 
@@ -155,7 +151,7 @@ You believe you see the avatar blush.]]))
    hook.land("land")
    hook.enter("enter")
    misn.osdCreate( title, {
-      fmt.f(_([[Visit the Data Broker at {spb} ({sys} system))]]),
+      fmt.f(_([[Visit the Data Broker at {spb} ({sys} system)]]),
          {spb=brokerspb, sys=brokersys}),
    } )
 end
@@ -234,7 +230,7 @@ function land ()
 
       vn.label("02_silly")
       broker(_([[You hear a chuckle.
-"That was just a courtesy, I know you are here for the NEXUS-V4.791829i Manual.]]))
+"That was just a courtesy, I know you are here for the NEXUS-V4.791829i Manual."]]))
       vn.jump("02_manual")
 
       vn.label("02_manual")
@@ -525,16 +521,57 @@ function jumpin ()
    end
 
    if mem.jumped > 2 then
-      local l337 = onion.vn_l337b01()
-
-      vn.clear()
-      vn.scene()
-      -- Broker briefing
-      vn.newCharacter( l337 )
-      vn.music( onion.loops.hacker )
-      vn.transition("electric")
-
-      vn.done("electric")
-      vn.run()
+      hook.timer( 7, "badnews" )
    end
+end
+
+function badnews ()
+   local l337 = onion.vn_l337b01()
+
+   vn.clear()
+   vn.scene()
+   vn.newCharacter( l337 )
+   vn.musicStop() -- Stop all music
+   vn.transition("electric")
+   vn.na(_([[You are suddenly surprised by l337_b01 opening a holo-connection on the distress channel.]]))
+   l337(_([[You hear a loud sobbing.
+"T-T-tt..."
+The wailing continues.]]))
+   vn.menu{
+      {_([["What's wrong?"]]), "01_cont"},
+      {_([["Trixie?"]]), "01_cont"},
+      {_([["Take a deep breath!"]]), "01_cont"},
+   }
+
+   vn.label("01_cont")
+   l337(_([[They inhale deeply, cough a bit, and continue.
+"T-Trixie got peeled!"]]))
+   -- TODO some sad + dramatic music
+   vn.menu{
+      {_([["Whaaaat!?"]]), "02_cont"},
+   }
+
+   vn.label("02_cont")
+   l337(_([["I should have known something was wrong. I thought it was just a fluke of the system, should have run more diagnostic programs. Why did this have to happen!?!"
+You hear a big sob.]]))
+   l337(_([["Trixie, oh Trixie, you are the better and stronger one. I should have been the one peeled, not you. You're the real hacker."
+The words blend into inconsolable yelling and sobbing.]]))
+   vn.menu{
+      {_([["It's not your fault."]]), "03_fault"},
+      {_([["Let's get those bastards."]]), "03_bastards"},
+   }
+
+   vn.label("03_fault")
+   l337(_([[""]]))
+
+   vn.label("03_bastards")
+   l337(_([[""]]))
+
+   vn.done("electric")
+   vn.run()
+
+   onion.log(_([[You helped l337_b01 and Trixie to obtain a manual referencing the long-forgotten Nexus Backbone backdoor from the Data Broker. On the way to the backdoor, l337_b01 informed you that Trixie was peeled, throwing your plans into disarray.]]))
+
+   -- Happy Ending :D
+   misn.finish(true)
 end
