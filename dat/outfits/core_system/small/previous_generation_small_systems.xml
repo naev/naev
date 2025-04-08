@@ -4,13 +4,13 @@
   <typename>Core Systems (System)</typename>
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>small</size>
-  <mass>18</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>apu.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require("outfits.lib.multicore").init{
+  <lua_inline>
+require("outfits.lib.multicore").init{
    { "mass", 18, 18},
    { "cpu_max", 10, 0},
    { "energy", 100, 0},
