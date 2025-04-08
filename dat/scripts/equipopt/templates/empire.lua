@@ -83,14 +83,14 @@ local empire_cores = {
    ["Empire Hawking"] = function () return {
          "Milspec Orion 8601 Core System",
          choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine"},
-         "S&K Battle Plating",
+         "S&K War Plating",
       } end,
    ["Empire Peacemaker"] = function () return {
          "Milspec Orion 8601 Core System",
          "Milspec Orion 8601 Core System",
          "Melendez Mammoth XL Engine",
-         "S&K Battle Plating",
-         "S&K Battle Plating",
+         "S&K War Plating",
+         "S&K War Plating",
       } end,
 }
 

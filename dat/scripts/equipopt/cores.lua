@@ -226,13 +226,13 @@ ehul["Destroyer"] = function ()
    return "S&K Combat Plating"
 end
 ehul["Cruiser"] = function ()
-   return "S&K Battle Plating"
+   return "S&K War Plating"
 end
 ehul["Battleship"] = function ()
-   return "S&K Battle Plating"
+   return "S&K War Plating"
 end
 ehul["Carrier"] = function ()
-   return "S&K Battle Plating"
+   return "S&K War Plating"
 end
 -- Civilian
 ehul["Yacht"] = shul["Yacht"]

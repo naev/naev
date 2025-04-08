@@ -82,8 +82,8 @@ local zalek_cores = {
    ["Za'lek Hephaestus"] = function (_p) return {
          "Milspec Thalos 8502 Core System",
          "Milspec Thalos 8502 Core System",
-         choose_one{ "Unicorp D-58 Heavy Plating", "S&K Battle Plating" }, -- Ideally, should chose twice the same
-         choose_one{ "Unicorp D-58 Heavy Plating", "S&K Battle Plating" },
+         choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" }, -- Ideally, should chose twice the same
+         choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" },
          "Melendez Mammoth XL Engine",
       } end,
 }

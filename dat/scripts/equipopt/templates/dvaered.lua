@@ -80,11 +80,11 @@ local dvaered_cores = { -- Basically elite hulls excluding stealth
          "S&K Combat Plating",
       } end,
    ["Dvaered Retribution"] = function () return {
-         "S&K Battle Plating",
+         "S&K War Plating",
       } end,
    ["Dvaered Goddard"] = function () return {
-         "S&K Battle Plating",
-         "S&K Battle Plating",
+         "S&K War Plating",
+         "S&K War Plating",
       } end,
 }
 
