@@ -74,8 +74,8 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       vn.transition( tut.shipai.transition )
       vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
          {shipai=tut.ainame()}))
-      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have gotten additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
-      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double check your ships before taking off!"]]))
+      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
+      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
       vn.done( tut.shipai.transition )
       vn.run()
    end
@@ -356,7 +356,7 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.2") < 0) then
+   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.3") < 0) then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end
