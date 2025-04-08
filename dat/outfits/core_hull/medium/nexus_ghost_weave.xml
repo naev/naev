@@ -1,6 +1,6 @@
-<outfit name="Nexus Ghost Plating">
+<outfit name="Nexus Ghost Weave">
  <general>
-  <shortname>N. Ghost Plating</shortname>
+  <shortname>N. Ghost Weave</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>medium</size>

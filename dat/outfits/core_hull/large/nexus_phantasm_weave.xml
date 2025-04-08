@@ -1,6 +1,6 @@
-<outfit name="Nexus Phantasm Plating">
+<outfit name="Nexus Phantasm Weave">
  <general>
-  <shortname>N. Phantasm Plating</shortname>
+  <shortname>N. Phantasm Weave</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>large</size>

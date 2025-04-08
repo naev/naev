@@ -59,25 +59,25 @@ local empire_cores = {
    ["Empire Shark"] = function () return {
          "Milspec Orion 2301 Core System",
          choose_one{ "Tricon Zephyr Engine", "Nexus Dart 160 Engine", "Melendez Ox Engine" },
-         choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" },
+         choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" },
       } end,
    ["Empire Lancelot"] = function () return {
          "Milspec Orion 2301 Core System",
          "Milspec Orion 2301 Core System",
          choose_one{ "Tricon Zephyr II Engine", "Nexus Dart 360 Engine", "Melendez Ox XL Engine" },
-         choose_one{ "Nexus Shadow Plating", "S&K Skirmish Plating" },
+         choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" },
          "S&K Skirmish Plating",
       } end,
    ["Empire Admonisher"] = function () return {
          "Milspec Orion 4801 Core System",
          choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
-         choose_one{ "Nexus Ghost Plating", "S&K Combat Plating" },
+         choose_one{ "Nexus Ghost Weave", "S&K Combat Plating" },
       } end,
    ["Empire Pacifier"] = function () return {
          "Milspec Orion 4801 Core System",
          "Milspec Orion 4801 Core System",
          choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
-         choose_one{ "Nexus Ghost Plating", "S&K Combat Plating" },
+         choose_one{ "Nexus Ghost Weave", "S&K Combat Plating" },
          "S&K Combat Plating",
       } end,
    ["Empire Hawking"] = function () return {

@@ -57,7 +57,7 @@ local pirate_params = {
 }
 local pirate_cores = {
    ["Pirate Revenant"] = function ()
-         return {choose_one{ "Nexus Ghost Plating", "S&K Combat Plating" }}
+         return {choose_one{ "Nexus Ghost Weave", "S&K Combat Plating" }}
       end,
    ["Pirate Kestrel"] = function ()
          return { "Krain Remige Engine", "Unicorp PT-440 Core System", "Unicorp D-58 Heavy Plating" }

@@ -102,13 +102,13 @@ local outfit_list = {
    -- Multicore transformation.
    -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
    -- See finish() above.
-   ["Nexus Ultralight Stealth Plating"]   = "Nexus Shadow Plating",
-   ["Nexus Medium Stealth Plating"]       = "Nexus Ghost Plating",
-   ["Nexus Heavy Stealth Plating"]        = "Nexus Phantasm Plating",
+   ["Nexus Ultralight Stealth Plating"]   = "Nexus Shadow Weave",
+   ["Nexus Medium Stealth Plating"]       = "Nexus Ghost Weave",
+   ["Nexus Heavy Stealth Plating"]        = "Nexus Phantasm Weave",
    ["S&K Ultralight Combat Plating"]      = "S&K Skirmish Plating",
    ["S&K Medium Combat Plating"]          = "S&K Combat Plating",
    ["S&K Heavy Combat Plating"]           = "S&K Battle Plating",
-   ["Nexus Light Stealth Plating"]        = "Nexus Shadow Plating",
+   ["Nexus Light Stealth Plating"]        = "Nexus Shadow Weave",
    ["Unicorp D-72 Heavy Plating"]         = "Unicorp D-58 Heavy Plating",
    ["S&K Superheavy Combat Plating"]      = "S&K Battle Plating",
    ["Unicorp D-38 Medium Plating"]        = "Unicorp D-23 Medium Plating",

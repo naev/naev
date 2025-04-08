@@ -114,7 +114,7 @@ special_ships["Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Orion 2301 Core System",
       "Nexus Dart 160 Engine",
-      choose_one{"Nexus Shadow Plating", "S&K Skirmish Plating"},
+      choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"},
       "Neutron Disruptor",
       "Neutron Disruptor",
       "Neutron Disruptor",
@@ -126,7 +126,7 @@ special_ships["Heavy Drone"] = function( p )
    for k,o in ipairs{
       "Milspec Thalos 3602 Core System",
       "Nexus Dart 360 Engine",
-      choose_one{"Nexus Shadow Plating", "S&K Skirmish Plating"},
+      choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"},
       "S&K Skirmish Plating",
       "Shatterer Launcher",
       "Shatterer Launcher",

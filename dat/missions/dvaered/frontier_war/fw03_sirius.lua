@@ -259,7 +259,7 @@ function spawnEscort( origin )
 
       -- Give him nice outfits
       -- TODO switch to equipopt
-      escort[1]:outfitAdd("Nexus Shadow Plating")
+      escort[1]:outfitAdd("Nexus Shadow Weave")
       escort[1]:outfitAdd("S&amp;K Skirmish Plating")
       escort[1]:outfitAdd("Tricon Zephyr Engine")
       escort[1]:outfitAdd("Milspec Orion 2301 Core System")
