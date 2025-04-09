@@ -215,17 +215,10 @@ function approach_guide ()
    vn.menu( function ()
       local opts = {}
       for k,v in ipairs(trades) do
-         local toadd = true
          if v.test and not v.test() then
-            toadd = false
-         end
-         if v.type=="var" and var.peek(v.var) then
-            toadd = false
-         end
-         if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
-            toadd = false
-         end
-         if toadd then
+         elseif v.type=="var" and var.peek(v.var) then
+         elseif v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
+         else
             table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k} )
          end
       end
@@ -244,7 +237,7 @@ Is there anything else you would like to purchase?"]]), {
 
    vn.label("trade_confirm")
    guide( function ()
-      out="Are you sure you want to trade in for the '#w{name}#0'?"
+      local out="Are you sure you want to trade in for the '#w{name}#0'?"
       for k,v in ipairs(trades) do
          if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
             out=out.."\n"..fmt.f("This will remove #w{other}#0.",{other=v.outfit:name()})
