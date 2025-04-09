@@ -4489,6 +4489,15 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
       slot = &slot_array[n];
 
    if ( !player_addOutfitToPilot( ship, o, slot ) ) {
+      /* Try to fall back to slot ID. */
+      if ( slotname != NULL ) {
+         slot = &slot_array[n];
+         if ( player_addOutfitToPilot( ship, o, slot ) ) {
+            free( slotname );
+            return;
+         }
+      }
+
       int slotid = pilot_addOutfitRawAnySlot( ship, o );
       if ( slotid < 0 ) {
          DEBUG( _( "Unable to add Outfit '%s' to any slot of player's ship "
