@@ -238,15 +238,15 @@ Is there anything else you would like to purchase?"]]), {
 
    vn.label("trade_confirm")
    guide( function ()
-      local out=fmt.f(_("Are you sure you want to trade in for the '#w{name}#0'?"),tradein_item)
+      local out=_(fmt.f("Are you sure you want to trade in for the '#w{name}#0'?",tradein_item))
       for k,v in ipairs(trades) do
          if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
-            out=out.."\n\n"..fmt.f(_([[This will #rremove#0:
-"#w{desc}#0"]]),{desc=v.outfit:summary()}).."\n"
+            out=out.."\n\n".._(fmt.f([[This will #rremove#0:
+"#w{desc}#0"]],{desc=v.outfit:summary()})).."\n"
          end
       end
-      return out.."\n"..fmt.f(_([[You will #rget#0:
-"#w{description}#0"]]),tradein_item).."\n"
+      return out.."\n".._(fmt.f([[You will #rget#0:
+"#w{description}#0"]],tradein_item)).."\n"
    end )
    vn.menu{
       {_("Trade"), "trade_consumate"},
