@@ -215,10 +215,11 @@ function approach_guide ()
    vn.menu( function ()
       local opts = {}
       for k,v in ipairs(trades) do
-         if v.test and not v.test() then
-         elseif v.type=="var" and var.peek(v.var) then
-         elseif v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
-         else
+         if not(
+            (v.test and not v.test()) 
+            or (v.type=="var" and var.peek(v.var))
+            or (v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ))
+         ) then
             table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k} )
          end
       end
