@@ -262,7 +262,7 @@ Is there anything else you would like to purchase?"]]), {
       elseif t.type == "intrinsic" then
          for k,v in ipairs(trades) do
             if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
-               player.pilot():outfitRmIntrinsic( v )
+               player.pilot():outfitRmIntrinsic( v.outfit )
             end
          end
          player.pilot():outfitAddIntrinsic( t.outfit )
