@@ -568,7 +568,7 @@ int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
          }
       }
    }
-   return 0;
+   return -1;
 }
 
 /**

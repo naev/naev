@@ -168,7 +168,7 @@ static int   player_parseDoneEvents( xmlNodePtr parent );
 static int   player_parseLicenses( xmlNodePtr parent );
 static int   player_parseInventory( xmlNodePtr parent );
 static void  player_parseShipSlot( xmlNodePtr node, Pilot *ship,
-                                   PilotOutfitSlot *slot );
+                                   PilotOutfitSlot *slot_array );
 static int   player_parseShip( xmlNodePtr parent, int is_player );
 static int   player_parseEscorts( xmlNodePtr parent );
 static int   player_parseMetadata( xmlNodePtr parent );
@@ -3534,7 +3534,12 @@ static int player_saveShipSlot( xmlTextWriterPtr       writer,
 {
    const Outfit *o = slot->outfit;
    xmlw_startElem( writer, "outfit" );
-   xmlw_attr( writer, "slot", "%d", i );
+   /* Intrinsic outfits have negative indices. */
+   if ( i >= 0 ) {
+      xmlw_attr( writer, "slot", "%d", i );
+      if ( slot->sslot->name != NULL )
+         xmlw_attr( writer, "slotname", "%s", slot->sslot->name );
+   }
    xmlw_str( writer, "%s", o->name );
    xmlw_endElem( writer ); /* "outfit" */
 
@@ -3588,7 +3593,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    /* save the outfits */
    xmlw_startElem( writer, "outfits_intrinsic" ); /* Want them to be first. */
    for ( int i = 0; i < array_size( ship->outfit_intrinsic ); i++ )
-      player_saveShipSlot( writer, &ship->outfit_intrinsic[i], i );
+      player_saveShipSlot( writer, &ship->outfit_intrinsic[i], -1 );
    xmlw_endElem( writer ); /* "outfits_intrinsic" */
    xmlw_startElem( writer, "outfits_structure" );
    for ( int i = 0; i < array_size( ship->outfit_structure ); i++ ) {
@@ -4451,22 +4456,50 @@ static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
  * @brief Parses a ship outfit slot.
  */
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
-                                  PilotOutfitSlot *slot )
+                                  PilotOutfitSlot *slot_array )
 {
    const Outfit *o;
    const char   *name = xml_get( node );
+   char         *slotname;
    if ( name == NULL ) {
       WARN( _( "Empty ship slot node found, skipping." ) );
       return;
    }
+   int n;
+   xmlr_attr_int_def( node, "slot", n, -1 );
+   if ( ( n < 0 ) || ( n >= array_size( slot_array ) ) ) {
+      WARN( _( "Outfit slot out of range, not adding." ) );
+      return;
+   }
+   xmlr_attr_strd( node, "slotname", slotname );
 
    /* Add the outfit. */
    o = player_tryGetOutfit( name, 1 );
    if ( o == NULL )
       return;
+
+   PilotOutfitSlot *slot = NULL;
+
+   /* Try to get slot by name. */
+   if ( slotname != NULL )
+      pilot_getSlotByName( ship, slotname );
+
+   /* Default to slot by ID otherwise. */
+   if ( slot == NULL )
+      slot = &slot_array[n];
+
    if ( !player_addOutfitToPilot( ship, o, slot ) ) {
+      /* Try to fall back to slot ID. */
+      if ( slotname != NULL ) {
+         slot = &slot_array[n];
+         if ( player_addOutfitToPilot( ship, o, slot ) ) {
+            free( slotname );
+            return;
+         }
+      }
+
       int slotid = pilot_addOutfitRawAnySlot( ship, o );
-      if ( slotid == 0 ) {
+      if ( slotid < 0 ) {
          DEBUG( _( "Unable to add Outfit '%s' to any slot of player's ship "
                    "'%s', adding to stock." ),
                 o->name, ship->name );
@@ -4476,6 +4509,8 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
                    "'%s'." ),
                 o->name, slotid, ship->name );
    }
+
+   free( slotname );
 }
 
 /**
@@ -4608,52 +4643,34 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       if ( xml_isNode( node, "outfits_structure" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            int n;
             xml_onlyNodes( cur );
             if ( !xml_isNode( cur, "outfit" ) ) {
                WARN( _( "Save has unknown '%s' tag!" ), xml_get( cur ) );
                continue;
             }
-            xmlr_attr_int_def( cur, "slot", n, -1 );
-            if ( ( n < 0 ) || ( n >= array_size( ship->outfit_structure ) ) ) {
-               WARN( _( "Outfit slot out of range, not adding to ship." ) );
-               continue;
-            }
-            player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
+            player_parseShipSlot( cur, ship, ship->outfit_structure );
          } while ( xml_nextNode( cur ) );
          continue;
       } else if ( xml_isNode( node, "outfits_utility" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            int n;
             xml_onlyNodes( cur );
             if ( !xml_isNode( cur, "outfit" ) ) {
                WARN( _( "Save has unknown '%s' tag!" ), xml_get( cur ) );
                continue;
             }
-            xmlr_attr_int_def( cur, "slot", n, -1 );
-            if ( ( n < 0 ) || ( n >= array_size( ship->outfit_utility ) ) ) {
-               WARN( _( "Outfit slot out of range, not adding." ) );
-               continue;
-            }
-            player_parseShipSlot( cur, ship, &ship->outfit_utility[n] );
+            player_parseShipSlot( cur, ship, ship->outfit_utility );
          } while ( xml_nextNode( cur ) );
          continue;
       } else if ( xml_isNode( node, "outfits_weapon" ) ) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
-            int n;
             xml_onlyNodes( cur );
             if ( !xml_isNode( cur, "outfit" ) ) {
                WARN( _( "Save has unknown '%s' tag!" ), xml_get( cur ) );
                continue;
             }
-            xmlr_attr_int_def( cur, "slot", n, -1 );
-            if ( ( n < 0 ) || ( n >= array_size( ship->outfit_weapon ) ) ) {
-               WARN( _( "Outfit slot out of range, not adding." ) );
-               continue;
-            }
-            player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
+            player_parseShipSlot( cur, ship, ship->outfit_weapon );
          } while ( xml_nextNode( cur ) );
          continue;
       } else if ( xml_isNode( node, "outfits_intrinsic" ) ) {

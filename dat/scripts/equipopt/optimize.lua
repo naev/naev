@@ -790,8 +790,9 @@ function optimize.optimize( p, cores, outfit_list, params )
       return false
    end
 
-   -- Fill ammo
+   -- Fill ammo and heal
    p:fillAmmo()
+   p:setHealth( 100, 100, 0 ) -- New cores set health to 0 otherwise
 
    -- Set up useful outfits
    ai_setup.setup(p)
