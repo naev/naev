@@ -204,7 +204,6 @@ function approach_guide ()
       if t.type == "var" then
          tradein_item.description = t.description
       elseif t.type == "intrinsic" then
-         --tradein_item.description = t.outfit:summary().."\n"..t.outfit:description()
          tradein_item.description = t.outfit:summary()
       else
          error(_("unknown tradein type"))
@@ -241,11 +240,11 @@ Is there anything else you would like to purchase?"]]), {
       local out=fmt.f(_("Are you sure you want to trade in for the '#w{name}#0'?"),tradein_item)
       for k,v in ipairs(trades) do
          if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
-            out=out.."\n\n"..fmt.f(_([["This will #rremove#0:"
+            out=out.."\n\n"..fmt.f(_([[This will #rremove#0:"
 #w{desc}#0"]]),{desc=v.outfit:summary()}).."\n"
          end
       end
-      return out.."\n"..fmt.f(_([["You will #rget#0:"
+      return out.."\n"..fmt.f(_([[You will #rget#0:"
 #w{description}#0"]]),tradein_item)
    end )
    vn.menu{
