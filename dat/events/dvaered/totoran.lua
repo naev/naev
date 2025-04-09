@@ -216,11 +216,11 @@ function approach_guide ()
       local opts = {}
       for k,v in ipairs(trades) do
          if not(
-            (v.test and not v.test()) 
+            (v.test and not v.test())
             or (v.type=="var" and var.peek(v.var))
-            or (v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ))
+            or (v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit))
          ) then
-            table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k} )
+            table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k})
          end
       end
       table.insert( opts, {_("Back"), "menu_main"} )
@@ -260,6 +260,11 @@ Is there anything else you would like to purchase?"]]), {
       if t.type == "var" then
          var.push( t.var, true )
       elseif t.type == "intrinsic" then
+         for k,v in ipairs(trades) do
+            if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
+               player.pilot():outfitRmIntrinsic( v )
+            end
+         end
          player.pilot():outfitAddIntrinsic( t.outfit )
       else
          error(_("unknown tradein type"))
