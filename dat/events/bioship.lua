@@ -10,6 +10,7 @@ local fmt = require "format"
 local bioship = require "bioship"
 local textoverlay = require "textoverlay"
 local audio = require 'love.audio'
+local bioskills= require "bioship.skills"
 
 local function bioship_click ()
    bioship.window()
@@ -44,6 +45,23 @@ function update_bioship ()
          caption = caption .. "#r" .. _(" !!") .. "#0"
       end
       infobtn = player.infoButtonRegister( caption, bioship_click )
+
+      -- Some changes can cause the bioship outfits to break (shouldn't anymore
+      -- with slotname saving though), so restore skills if necessary.
+      -- In particular, this was triggered by some of the 0.13.0-alphaX
+      -- pre-releases because they added new slots that would displace the
+      -- bioship skills and cause them not to equip.
+      for i,set in pairs(bioskills.set) do
+         for j,skill in pairs(set) do
+            local svar = skill.shipvar
+            if svar then
+               local enabled = pp:shipvarPeek( svar )
+               if enabled then
+                  bioship.skill_enable( pp, skill )
+               end
+            end
+         end
+      end
    end
 end
 

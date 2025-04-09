@@ -184,6 +184,7 @@ local function skill_enable( p, s )
    s.enabled = true
    return true
 end
+bioship.skill_enable = skill_enable
 
 local _maxstageSize = {
    5, -- interceptor
