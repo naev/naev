@@ -15,5 +15,6 @@
   <fbay_rate>10</fbay_rate>
   <tur_range>5</tur_range>
   <fwd_range>5</fwd_range>
+  <launch_range>5</launch_range>
  </specific>
 </outfit>
