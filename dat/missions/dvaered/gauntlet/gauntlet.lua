@@ -243,7 +243,7 @@ function wave_round_setup ()
       pp:setEnergy( 100 )
    end
    pp:fillAmmo() -- Have to fill ammo or deployed fighters get "lost"
-   -- TODO reset outfit cooldown stuff
+   pp:outfitsReset()
    flow.reset( pp )
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
