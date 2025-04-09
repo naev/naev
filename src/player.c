@@ -4490,7 +4490,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
 
    if ( !player_addOutfitToPilot( ship, o, slot ) ) {
       int slotid = pilot_addOutfitRawAnySlot( ship, o );
-      if ( slotid == 0 ) {
+      if ( slotid < 0 ) {
          DEBUG( _( "Unable to add Outfit '%s' to any slot of player's ship "
                    "'%s', adding to stock." ),
                 o->name, ship->name );
