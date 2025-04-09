@@ -137,11 +137,15 @@ function spawnDV()
       j:setHostile()
       j:setHilight(true)
       j:setVisplayer(true)
-      j:outfitRm("all")
-      j:outfitAdd("Turreted Gauss Gun", 1)
-      j:outfitAdd("Small Shield Booster", 1)
-      ai_setup.setup(j)
       hook.pilot(j, "disable", "disableDV")
+   end
+
+   local ppp = player.pilot():points()
+   if ppp < 100 then
+      local mod = -math.max((100-2*ppp), 90)
+      for k,p in ipairs(fleetDV) do
+         p:intrinsicSet( "weapon_damage", mod )
+      end
    end
 
    hook.timer(0.5, "pollHealth")
@@ -174,8 +178,10 @@ function spawnFLF()
       j:changeAI("dvaered_norun")
       j:setInvincPlayer()
       -- Re-outfit the ships to use disable weapons. Kind of ugly, should probably be handled via AI orders in the future.
+      j:outfitRm("all")
       j:outfitAdd("EMP Grenade Launcher", 3)
       ai_setup.setup(j)
+      j:intrinsicSet( "weapon_damage", 0, true ) -- Clear malus
    end
    local vecFLF = vec2.newP(800, rnd.angle() )
    fleetFLF = fleet.add( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )

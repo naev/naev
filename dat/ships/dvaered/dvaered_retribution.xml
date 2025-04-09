@@ -36,13 +36,13 @@
   <weapon size="large" x="10" y="-24" h="4" />
   <weapon size="large" prop="fighter_bay" x="-45" y="6" h="4" />
   <weapon size="large" prop="fighter_bay" x="-45" y="-6" h="4" />
-  <utility size="large" prop="systems">Unicorp PT-440 Core System</utility>
+  <utility size="large" prop="systems" name="systems">Unicorp PT-440 Core System</utility>
   <utility size="large" prop="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Nexus Bolt 3000 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-58 Heavy Plating</structure>
+  <structure size="large" prop="engines" name="engines">Nexus Bolt 3000 Engine</structure>
+  <structure size="large" prop="hull" name="hull">Unicorp D-58 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

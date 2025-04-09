@@ -199,7 +199,7 @@ function pirate.hail ()
    end
 end
 
-function pirate.taunt( target, offense )
+function pirate.taunt( _target, offense )
    -- some taunts
    local taunts
    if offense then
@@ -207,7 +207,7 @@ function pirate.taunt( target, offense )
    else
       taunts = pirate.taunt_list_defensive
    end
-   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
+   return taunts[ rnd.rnd(1,#taunts) ]
 end
 
 return pirate

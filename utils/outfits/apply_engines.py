@@ -2,7 +2,7 @@
 
 import math
 from sys import stderr,stdout
-from outfit import outfit
+from outfit import outfit,nam2fil
 from getconst import PHYSICS_SPEED_DAMP
 
 
@@ -196,10 +196,6 @@ def main(args):
                err('_')
    return 0
 
-def to_nam(s):
-   #TODO use future outfits.to_nam func
-   return s.replace(' ','_').lower()
-
 def gen_line(lin):
    import os
    outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
@@ -212,7 +208,7 @@ def gen_line(lin):
    for i,s in enumerate(["S1","S2","M1","M2","L1","L2"]):
       siz=i+1
       nam=lin+" "+s
-      fil=to_nam(nam+'.xml')
+      fil=nam2fil(nam+'.xml')
       o.r.attrib['name']=nam
       acc=apply_ls(o,(lin,siz),{
          'mass':str(10*siz),
@@ -245,5 +241,3 @@ if __name__=="__main__":
       exit(gen_line(args.LINE))
    else:
       exit(main(args.filename))
-
-

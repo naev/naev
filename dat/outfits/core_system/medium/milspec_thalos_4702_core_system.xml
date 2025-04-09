@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Thalos 4702 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>medium</size>
   <price>200000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 4702 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
@@ -10,5 +10,14 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua>outfits/core_system/medium/milspec_thalos_4702_core_system.lua</lua></specific>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 80, 170},
+   { "cpu_max", 300, 120},
+   { "energy", 675, 725},
+   { "energy_regen", 23, 20},
+   { "shield", 400, 100},
+   { "shield_regen", 8, 1},
+}</lua_inline>
+ </specific>
 </outfit>

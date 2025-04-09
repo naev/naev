@@ -5,8 +5,6 @@ from os import path
 from glob import glob
 from sys import argv,stderr
 
-#TODO: use argparse
-
 
 def get_path(s):
    s=path.dirname(s)
@@ -48,12 +46,16 @@ def confirm(cand1,cand2):
       return False
 
 def process(thepath,f1,f2):
+   inpath=f1.rsplit('/',1)[0]+'/'
    outpath=get_path(f1.replace('/core_','/multicore/core_',1))
    #print "echo","'"+path.basename(f1),path.basename(f2)+"'"
-   cmd="NAM=`"+thepath+"outfits2mvx.py"+' '+f1+' '+f2+' | '+thepath+"mvx2xmllua.py"+' "'+outpath+'"'+'`'
-   print cmd
-   print 'if test -f "'+outpath+'$NAM.lua" ; then',thepath+"outfits2mvx.py"+' '+f1+' '+f2+' > "'+outpath+'$NAM.mvx";',"fi"
-   print thepath+"deprecate_outfit.py",f1.rsplit('/',1)[0]+'/'+"$NAM"+".xml"
+   cmd1=thepath+"outfits2mvx.py"+' '+f1+' '+f2
+   cmd2=thepath+'mvx2xmllua.py '
+   print 'NAM=`('+cmd1+' 2>/dev/null | '+cmd2+' 1>/dev/null) 2>&1`'
+   print 'if [ "$NAM" != "" ];then echo \\"$NAM\\"'
+   print '\t'+cmd1+' | tee '+outpath+'${NAM}.mvx | '+cmd2+' 2>/dev/null > '+outpath+'${NAM}.xml'
+   print '\t'+thepath+"deprecate_outfit.py",inpath+"${NAM}.xml"
+   print 'fi'
 
 if __name__=="__main__":
    if len(argv)!=2 or '-h' in argv or '--help' in argv:
@@ -68,6 +70,8 @@ if __name__=="__main__":
       print "#!"
       result = [y for x in os.walk(PATH) for y in glob(os.path.join(x[0], '*.xml'))]
       result.sort()
+      result1=[s for s in result if s.find('cargo')==-1]
+      result=result1+[s for s in result if s not in result1]
       result=['']+result+['']
       done=set()
       for i in range(1,len(result)-2):

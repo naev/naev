@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
 dont_display=set(['priority','rarity'])
-
-#TODO: use argparse
+from outfit import outfit
 
 from os import path
-from sys import argv,stderr,exit,stdin,stdout
+from sys import argv,stderr,stdin,stdout,exit
 import xml.etree.ElementTree as ET
+
+from outfit import nam2fil
 
 def get_path(s):
    s=path.dirname(s)
@@ -15,9 +16,6 @@ def get_path(s):
       return ''
    else:
       return s+path.sep
-
-def nam2fil(s):
-   return s.replace(' ','_').replace('-','').replace("'",'').lower()
 
 def read_com(s):
    if s=='':
@@ -51,7 +49,7 @@ def process_group(r,field):
    for e in r.iter():
       t=e.tag
       if t == 'slot':
-         e.attrib['prop_extra']="systems_secondary"
+         e.set('prop_extra',e.attrib['prop']+'_secondary')
       else:
          try:
             a,b=read_com(e.text)
@@ -60,45 +58,40 @@ def process_group(r,field):
 
          if t == 'price':
             e.text=fmt(round((a+b)/2,-2))
-         elif a==b:
-            e.text=fmt(a)
-            acc.append((t,(a,a)))
+         elif t=='priority' and a==b:
+            continue
          else:
-            needs_lua=True
+            if a==b:
+               e.text=fmt(a)
+            else:
+               needs_lua=True
             acc.append((t,(a,b)))
-            torem.append(e)
+            torem.append((r,e))
 
-   for e in torem:
-      r.remove(e)
+   return needs_lua,acc,torem
 
-   return needs_lua,acc
-
-
-def mklua(luanam,L):
-   print >>stderr,"<"+luanam+">"
-   fp=file(luanam,"w")
+def mklua(L):
+   output='\n'
    ind=3*' '
 
-   print >>fp,'require("outfits.lib.multicore").init{'
+   output+='require("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
       if nam not in dont_display:
-         print >>fp,ind+'{ "'+nam+'",',
-         print >>fp,fmt(main)+',',
-         print >>fp,fmt(sec)+'},'
+         output+=ind+'{ "'+nam+'",'+' '
+         output+=fmt(main)+','+' '
+         output+=fmt(sec)+'},'+'\n'
 
-   print >>fp,"}"
-   fp.close()
+   return output+'}\n'
 
-def main(arg):
+def main():
    acc=[]
-   path=get_path(arg)
 
-   T=ET.parse(stdin)
-   R=T.getroot()
+   o=outfit(stdin)
+   T=o.T
+   R=o.r
 
    if R.tag!='outfit':
-      print >>stderr,"not an outfit :",R.tag
       return 1
 
    nam=R.attrib['name'].rsplit(' (deprecated)',1)
@@ -106,36 +99,36 @@ def main(arg):
       R.attrib['name']=nam[0]
 
    nam=nam2fil(R.attrib['name'])
-   print nam
 
-   f1,acc1=process_group(R,'./general')
-   f2,acc2=process_group(R,'./specific')
+   f1,acc1,tr1=process_group(R,'./general')
+   f2,acc2,tr2=process_group(R,'./specific')
 
    if f1 or f2:
+      for (r,e) in tr1+tr2:
+         r.remove(e)
+
       acc=acc1+acc2
 
       for e in R.findall('./specific'):
-         el=ET.Element("lua")
-         el.text=(path+nam+".lua").split('dat/',1)[-1]
+         el=ET.Element("lua_inline")
+         el.text=mklua(acc)
          e.append(el)
          break
-      mklua(path+nam+".lua",acc)
    else:
-      print >>stderr,"No composite field found, left as is."
+      pass
+      #print >>stderr,"No composite field found, left as is."
 
-   output=path+nam+".xml"
-   T.write(output)
-   print >>stderr,"<"+output+">"
+   print >>stderr,nam
+   o.write(stdout)
+   return 0
 
 if __name__ == '__main__':
-   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      nam=path.basename(argv[0])
-      print >>stderr, "usage:",nam,'<output_path>'
-      print >>stderr, "  Takes an extended outfit as input on stdin, and computes <output_name>.{xml,lua}."
-   else:
-      ign=argv[2:]
-      if ign!=[]:
-         print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
+   import argparse
 
-      main(argv[1])
-      exit(0)
+   parser = argparse.ArgumentParser(
+      description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
+         The name the output should have is written on <stderr>.
+         If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
+   )
+   parser.parse_args()
+   exit(main())

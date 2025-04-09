@@ -1,19 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp D-2 Light Plating">
  <general>
   <shortname>U. D-2 Light Plating</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>small</size>
-  <mass>24</mass>
-  <price>16000</price>
+  <price>14500</price>
   <description>Commonly found on civilian vessels, the D-2 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
   <gfx_store>base_hull_t.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>10</cargo>
-  <absorb>2</absorb>
-  <armour>50</armour>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 24, 24},
+   { "cargo", 10, 4},
+   { "absorb", 3, 6},
+   { "armour", 55, 35},
+}</lua_inline>
  </specific>
 </outfit>

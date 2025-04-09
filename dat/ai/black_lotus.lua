@@ -53,9 +53,9 @@ end
 function taunt( target, offense )
    -- Wild ones always taunt
    if rnd.rnd() < 0.6 then
-      ai.pilot():comm(target, taunt_list[ rnd.rnd(1,#taunt_list) ])
+      return taunt_list[ rnd.rnd(1,#taunt_list) ]
    else
       -- Sometimes do a generic taunt
-      pirlib.taunt( target, offense )
+      return pirlib.taunt( target, offense )
    end
 end

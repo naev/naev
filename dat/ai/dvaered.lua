@@ -85,7 +85,7 @@ function hail ()
 end
 
 -- taunts
-function taunt ( target, _offense )
+function taunt( _target, _offense )
    -- Only 50% of actually taunting.
    if rnd.rnd(0,1) == 0 then
       return
@@ -99,5 +99,5 @@ function taunt ( target, _offense )
       taunts = taunt_list_warship
    end
 
-   ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )
+   return taunts[ rnd.rnd(1,#taunts) ]
 end

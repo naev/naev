@@ -6,8 +6,8 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Light, medium-heavy and ultraheavy ship now have two core system slots, one main and one secondary
-         * Effects of light, medium-heavy, and ultra-heavy core systems are obtained by stacking two smaller core systems
+      * Light, medium-heavy and ultraheavy ship now have two core system and hull slots, one main and one secondary
+         * Effects of heavier systems and hulls can be obtained by stacking smaller ones
       * Engines have been reworked to be more coherent and consistent
          * Tricon engines have much higher acceleration to max speed ratio
          * Melendez engines have higher speed, but low acceleration and turn
@@ -60,6 +60,7 @@
       * jump_delay was being applied instead of jump_warmup to the engine warm up animation
       * Mass modifiers now affect outfit mass too
       * Ships will no longer appear tilted in the equipment view
+      * dv_antiflf02: Make the vigilances less pathetic
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems

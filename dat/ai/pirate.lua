@@ -32,5 +32,5 @@ function taunt( target, offense )
       return
    end
 
-   pirlib.taunt( target, offense )
+   return pirlib.taunt( target, offense )
 end

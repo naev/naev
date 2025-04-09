@@ -76,8 +76,8 @@ set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enh
 
    def fmt(dat,off,i,l):
       if off==0:
-         #w="linespoint" 
-         w="lines" 
+         #w="linespoint"
+         w="lines"
          sp=""
          lw='0.9'
       else:
@@ -111,4 +111,3 @@ if __name__=='__main__':
       stderr.write("Produces a plot file, a dat file, and the resulting png where you stand.\n")
    else:
       main()
-
