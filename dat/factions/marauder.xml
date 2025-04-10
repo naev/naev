@@ -12,7 +12,7 @@
  <equip>marauder</equip>
  <local_th>5</local_th>
  <useshiddenjumps/>
- <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked. Even the pirate clans have difficulty in dealing with them. Given the little regard they have to their own lives, they tend to fly ships in dire need of repairs that are not much more than an engine strapped to a tin box with some guns.</description>
+ <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked, despite flying ships that would not be considered space-worthy in civilized areas. Even the pirate clans have difficulty in dealing with them.</description>
  <allies>
  </allies>
  <enemies>
