@@ -38,18 +38,21 @@ function spir.initDirectory( dir, faction, params )
    local postprocess = params.postprocess
    -- Create init function (global)
    _G.create = function ( max )
+      local chapter = player.chapter() or "0"
+      local chapter0 = chapter=="0"
+
       -- Some special properties based on the system
       local handicap = 0
       local total_presence = pir.systemPresence()
-      if total_presence < 150 then
+      if total_presence < ((chapter0 and 150) or 100) then
          handicap = handicap+2
-      elseif total_presence < 300 then
+      elseif total_presence < ((chapter0 and 300) or 200) then
          handicap = handicap+1
       end
       -- Marauders are terribad
       if faction==FMARAUDER then
          handicap = handicap+1
-         if total_presence < 500 and rnd.rnd() < 0.5 then
+         if total_presence < ((chapter0 and 500) or 300) and rnd.rnd() < 0.5 then
             handicap = handicap+1
          end
       end
