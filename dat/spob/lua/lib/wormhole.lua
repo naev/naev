@@ -24,15 +24,33 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function wormhole.init( spb, target, params )
+function wormhole.setup( target, params )
    params = params or {}
-   mem.spob = spb
    mem.target = target
    mem.params = params
+
+   -- Hook up the API
+   init     = wormhole.init
+   load     = wormhole.load
+   unload   = wormhole.unload
+   update   = wormhole.update
+   render   = wormhole.render
+   can_land = wormhole.can_land
+   land     = wormhole.land
+end
+
+function wormhole.init( spb )
+   mem.spob = spb
 end
 
 function wormhole.load ()
-   local _spob, sys = spob.getS( mem.target )
+   if type(mem.target)=='function' then
+      mem._target = mem.target()
+   else
+      mem._target = mem.target
+   end
+
+   local _spob, sys = spob.getS( mem._target )
    if mem.shader==nil then
       -- Load shader
       local col_inner = mem.params.col_inner or {0.2, 0.8, 1.0}
@@ -109,7 +127,7 @@ function wormhole.land( _s, p )
       return
    end
 
-   var.push( "wormhole_target", mem.target )
+   var.push( "wormhole_target", mem._target:nameRaw() )
    naev.eventStart("Wormhole")
 end
 
