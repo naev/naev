@@ -11,11 +11,12 @@ local pp_shaders = require "pp_shaders"
 
 local pixelcode = lf.read( "glsl/love/wormhole_travel.frag" )
 
-local target, shader, r
+local target, colour, shader, r
 local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 function create ()
-
-   target = var.peek("wormhole_target")
+   local nc = naev.cache()
+   target = nc.wormhole_target
+   colour = nc.wormhole_colour or {0.0, 0.8, 1.0}
    if not target then
       warn(_("Wormhole event run with no target!"))
       return
@@ -24,6 +25,7 @@ function create ()
    sfx:play()
 
    shader = pp_shaders.newShader( pixelcode )
+   shader:send( "u_col_outter", colour )
    shader.addPPShader( shader, "final" )
    r = -rnd.rnd()*1000
 end
@@ -45,7 +47,9 @@ function update( _dt, real_dt )
          hook.safe( "wormhole" )
       else
          shader.rmPPShader( shader )
-         var.pop("wormhole_target")
+         local nc = naev.cache()
+         nc.wormhole_target = nil
+         nc.wormhole_colour = nil
          evt.finish()
       end
    end

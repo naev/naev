@@ -10,6 +10,9 @@ local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 
 local s = 256
 
+local COL_INNER   = {0.2, 0.8, 1.0}
+local COL_OUTTER  = {0.0, 0.8, 1.0}
+
 local wormhole = {}
 
 local function update_canvas ()
@@ -53,8 +56,8 @@ function wormhole.load ()
    local _spob, sys = spob.getS( mem._target )
    if mem.shader==nil then
       -- Load shader
-      local col_inner = mem.params.col_inner or {0.2, 0.8, 1.0}
-      local col_outter = mem.params.col_outter or {0.0, 0.8, 1.0}
+      local col_inner = mem.params.col_inner or COL_INNER
+      local col_outter = mem.params.col_outter or COL_OUTTER
       local pcode = string.format( pixelcode,
          col_inner[1], col_inner[2], col_inner[3],
          col_outter[1], col_outter[2], col_outter[3] )
@@ -127,7 +130,9 @@ function wormhole.land( _s, p )
       return
    end
 
-   var.push( "wormhole_target", mem._target:nameRaw() )
+   local nc = naev.cache()
+   nc.wormhole_target = mem._target
+   nc.wormhole_colour = mem.params.col_travel or mem.params.col_outter or COL_OUTTER
    naev.eventStart("Wormhole")
 end
 
