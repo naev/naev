@@ -13,12 +13,36 @@ local tut = require 'common.tutorial'
 local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
+local gauntlet = require 'common.gauntlet'
 
 -- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Newly added diff
    if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
+   end
+
+   local GauntletIntrinsics={outfit.get("Gauntlet Deluxe"),outfit.get("Gauntlet Supreme")}
+   local count=0
+   for _i,o in pairs(GauntletIntrinsics) do
+      for _k,v in ipairs( player.pilot():outfitsList("intrinsic") ) do
+         if v==o then
+            count=count+1
+            break
+         end
+      end
+   end
+   if count>1 then
+      for _i,o in ipairs(GauntletIntrinsics) do
+         if player.pilot():outfitRmIntrinsic( o ) then
+            print(fmt.f("{ship}: {nam} refunded for {ref_str}.",{
+               ship=player.pilot():ship():name(),
+               nam=o:name(),
+               ref_str=totoran.emblems_str(2500),
+            }))
+            gauntlet.emblems_pay(2500)
+         end
+      end
    end
 
    local cores_cache = naev.cache().save_updater
