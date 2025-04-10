@@ -10,6 +10,7 @@
  </general>
  <specific type="modification">
   <armour_mod>7</armour_mod>
+  <armour_regen_mod>5</armour_regen_mod>
   <shield_mod>7</shield_mod>
   <shield_regen_mod>5</shield_regen_mod>
   <energy_mod>7</energy_mod>

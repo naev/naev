@@ -9,9 +9,8 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <launch_rate>5</launch_rate>
-  <fwd_firerate>5</fwd_firerate>
-  <tur_firerate>5</tur_firerate>
+  <weapon_firerate>5</weapon_firerate>
   <fbay_rate>10</fbay_rate>
+  <weapon_range>5</weapon_range>
  </specific>
 </outfit>
