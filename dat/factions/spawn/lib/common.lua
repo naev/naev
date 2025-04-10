@@ -262,6 +262,9 @@ function scom.spawn( pilots )
       if not pfact:known() then
          p:rename(_("Unknown"))
       end
+      if scom._params.postprocess then
+         scom._params.postprocess( p )
+      end
       if params.postprocess then
          params.postprocess( p )
       end

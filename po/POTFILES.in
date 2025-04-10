@@ -297,7 +297,9 @@ dat/outfits/flow/structure/medium_meditation_chamber.xml
 dat/outfits/flow/structure/small_flow_amplifier.xml
 dat/outfits/flow/structure/small_flow_resonator.xml
 dat/outfits/flow/structure/small_meditation_chamber.xml
+dat/outfits/intrinsic/bad_shape.xml
 dat/outfits/intrinsic/black_agate_finishing.xml
+dat/outfits/intrinsic/defective.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
@@ -306,6 +308,7 @@ dat/outfits/intrinsic/machiavellian_necessity.xml
 dat/outfits/intrinsic/machiavellian_virtue.xml
 dat/outfits/intrinsic/port_and_polish.xml
 dat/outfits/intrinsic/wild_space_taint.xml
+dat/outfits/intrinsic/worn_down.xml
 dat/outfits/launchers/convulsion_launcher.xml
 dat/outfits/launchers/electron_burst_cannon.xml
 dat/outfits/launchers/emp_grenade_launcher.xml
