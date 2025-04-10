@@ -22,11 +22,11 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       diff.apply( "melendez_dome_xy37" )
    end
 
-   local function update_gauntlet()
+   local function update_gauntlet(plt)
       local GauntletIntrinsics={outfit.get("Gauntlet Deluxe"),outfit.get("Gauntlet Supreme")}
       local count=0
       for _i,o in pairs(GauntletIntrinsics) do
-         for _k,v in ipairs( player.pilot():outfitsList("intrinsic") ) do
+         for _k,v in ipairs( plt:outfitsList("intrinsic") ) do
             if v==o then
                count=count+1
                break
@@ -35,10 +35,10 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       end
       if count>1 then
          for _i,o in ipairs(GauntletIntrinsics) do
-            if not player.pilot():outfitRmIntrinsic( o ) then
-               print(fmt.f("\t {ship} '{shipname}': {name} refunded for 2500 Crimson Emblems.",{
-                  ship=player.pilot():ship():name(),
-                  shipname=player.pilot():name(),
+            if not plt:outfitRmIntrinsic( o ) then
+               print(fmt.f("\t{ship} '{shipname}': {name} refunded for 2500 Crimson Emblems.",{
+                  ship=plt:ship():name(),
+                  shipname=plt:name(),
                   name=o:name(),
                }))
                gauntlet.emblems_pay(2500)
@@ -50,7 +50,7 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
    local cores_cache = naev.cache().save_updater
    if cores_cache.split_cores then
       local function update_ship( plt )
-         update_gauntlet()
+         update_gauntlet( plt )
          for oname,i in pairs(cores_cache.split_list) do
             local o = outfit.get(oname)
             local _oname, _osize, oslot = o:slot()
