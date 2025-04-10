@@ -33,16 +33,19 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
             for j,v in ipairs(plt:ship():getSlots()) do
                if v.property == oslot and olist[j] == o then
                   hasoutfit = true
+                  break
                end
             end
-            for j,v in ipairs(plt:ship():getSlots()) do
-               if hasoutfit and v.property == osec and not olist[j] then
-                  -- Add outfit
-                  if player.outfitNum(o) > 0 then
-                     if plt:outfitAddSlot( o, j, true, false ) then
-                        player.outfitRm(o,1)
-                     else
-                        warn(fmt.f("Failed to add outfit '{outfit}' to player ship '{name}'!", {outfit=o, name=player.pilot():name()}))
+            if hasoutfit then
+               for j,v in ipairs(plt:ship():getSlots()) do
+                  if v.property == osec and not olist[j] then
+                     -- Add outfit
+                     if player.outfitNum(o) > 0 then
+                        if plt:outfitAddSlot( o, j, true, false ) then
+                           player.outfitRm(o,1)
+                        else
+                           warn(fmt.f("Failed to add outfit '{outfit}' to player ship '{name}'!", {outfit=o, name=player.pilot():name()}))
+                        end
                      end
                   end
                end
