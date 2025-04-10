@@ -62,6 +62,9 @@
       * Ships will no longer appear tilted in the equipment view
       * dv_antiflf02: Make the vigilances less pathetic
 
+* 0.12.5 (unreleased)
+   * Fixed bug causing lower diversity in ship spawning
+
 * 0.12.4
    * More robust jump check to fix crash when creating new systems
    * Gave Pacifier +400 fuel bonus to match description
