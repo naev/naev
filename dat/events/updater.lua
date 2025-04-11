@@ -15,6 +15,27 @@ local fmt = require 'format'
 local luatk = require "luatk"
 local gauntlet = require 'common.gauntlet'
 
+-- Applies a function to all ships
+local function apply_all_ships( func )
+   local curship = player.pilot():name()
+   local ships = player.ships()
+   local deployed = {}
+   for k,s in ipairs( ships ) do
+      if s.deployed then
+         table.insert( deployed, s )
+      end
+   end
+   for k,s in ipairs( ships ) do
+      player.shipSwap( s.name, true )
+      func( player.pilot() )
+   end
+   player.shipSwap( curship, true )
+   func( player.pilot() )
+   for k,s in ipairs( deployed ) do
+      player.shipDeploy( s.name, true )
+   end
+end
+
 -- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Newly added diff
@@ -22,7 +43,10 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       diff.apply( "melendez_dome_xy37" )
    end
 
-   local function update_gauntlet(plt)
+   -- Updates if ships have multiple gauntlet intrinsics set
+   local update_gauntlet = false
+   local gauntlet_refunded = 0
+   apply_all_ships( function ( plt )
       local GauntletIntrinsics={outfit.get("Gauntlet Deluxe"),outfit.get("Gauntlet Supreme")}
       local count=0
       for _i,o in pairs(GauntletIntrinsics) do
@@ -41,16 +65,20 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
                   shipname=plt:name(),
                   name=o:name(),
                }))
+               -- Cost
                gauntlet.emblems_pay(2500)
+               gauntlet_refunded = gauntlet_refunded+2500
+               update_gauntlet = true
             end
          end
       end
-   end
+   end )
 
+   -- Updates if ships had core outfits replaced
    local cores_cache = naev.cache().save_updater
-   if cores_cache.split_cores then
+   local update_cores = cores_cache.split_cores
+   if update_cores then
       local function update_ship( plt )
-         update_gauntlet( plt )
          for oname,i in pairs(cores_cache.split_list) do
             local o = outfit.get(oname)
             local _oname, _osize, oslot = o:slot()
@@ -80,35 +108,33 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
          end
       end
 
-      local curship = player.pilot():name()
-      local ships = player.ships()
-      local deployed = {}
-      for k,s in ipairs( ships ) do
-         if s.deployed then
-            table.insert( deployed, s )
-         end
-      end
-      for k,s in ipairs( ships ) do
-         player.shipSwap( s.name, true )
-         update_ship( player.pilot() )
-      end
-      player.shipSwap( curship, true )
-      update_ship( player.pilot() )
-      for k,s in ipairs( deployed ) do
-         player.shipDeploy( s.name, true )
-      end
+      apply_all_ships( update_ship )
+   end
 
+   if update_cores or update_gauntlet then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
       vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
          {shipai=tut.ainame()}))
-      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
-      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
+      if update_cores then
+         sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
+         sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
+      end
+      if update_gauntlet then
+         if update_cores then
+            sai(_([["Oh, and some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
+         else
+            sai(_([["Oh my. It seems like some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
+         end
+         sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits."]]),
+            {emblems=gauntlet.emblems_str(gauntlet_refunded)}))
+      end
       vn.done( tut.shipai.transition )
       vn.run()
    end
+
    naev.cache().save_updater = {}
 end
 
@@ -244,23 +270,9 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    vn.label("ws_reset")
    vn.func( function ()
-      local curship = player.pilot():name()
-      local ships = player.ships()
-      local deployed = {}
-      for k,s in ipairs( ships ) do
-         if s.deployed then
-            table.insert( deployed, s )
-         end
-      end
-      for k,s in ipairs( ships ) do
-         player.shipSwap( s.name, true )
-         player.pilot():weapsetAuto()
-      end
-      player.shipSwap( curship, true )
-      player.pilot():weapsetAuto()
-      for k,s in ipairs( deployed ) do
-         player.shipDeploy( s.name, true )
-      end
+      apply_all_ships( function( p )
+         p:weapsetAuto()
+      end )
    end )
    sai(_([["I've reset all the weapon sets on all your ships. Hopefully they should be easier to use now!"]]))
    vn.jump("ws_done")
