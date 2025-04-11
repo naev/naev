@@ -130,6 +130,7 @@ function init( p, po )
    oshader:force_off()
 
    local o = po:outfit()
+   --print(fmt.f("init {nam}",{nam=o:name()}))
    mem.improved = (o==o_improved)
    mem.lust = mem.improved or (o==o_lust)
 
@@ -159,6 +160,7 @@ function descextra( p, o )
       local lust = improved or (o==o_lust)
       local can = (o==o_can)
 
+      --print(o:name())
       if lust then
          dur = 5
       end
