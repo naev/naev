@@ -204,7 +204,7 @@ function approach_guide ()
       if t.type == "var" then
          tradein_item.description = t.description
       elseif t.type == "intrinsic" then
-         tradein_item.description = t.outfit:summary().."\n"..t.outfit:description()
+         tradein_item.description = t.outfit:summary()
       else
          error(_("unknown tradein type"))
       end
@@ -214,18 +214,12 @@ function approach_guide ()
    vn.menu( function ()
       local opts = {}
       for k,v in ipairs(trades) do
-         local toadd = true
-         if v.test and not v.test() then
-            toadd = false
-         end
-         if v.type=="var" and var.peek(v.var) then
-            toadd = false
-         end
-         if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
-            toadd = false
-         end
-         if toadd then
-            table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k} )
+         if not(
+            (v.test and not v.test())
+            or (v.type=="var" and var.peek(v.var))
+            or (v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit))
+         ) then
+            table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k})
          end
       end
       table.insert( opts, {_("Back"), "menu_main"} )
@@ -242,10 +236,16 @@ Is there anything else you would like to purchase?"]]), {
    vn.jump("trade_menu_raw")
 
    vn.label("trade_confirm")
-   guide( function () return fmt.f(
-      _([["Are you sure you want to trade in for the '#w{name}#0'? The description is as follows:"
-#w{description}#0"]]),
-      tradein_item)
+   guide( function ()
+      local out=fmt.f(_("Are you sure you want to trade in for the '#w{name}#0'?"),tradein_item)
+      for k,v in ipairs(trades) do
+         if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
+            out=out.."\n\n"..fmt.f(_([[This will #rremove#0:"
+#w{desc}#0"]]),{desc=v.outfit:summary()}).."\n"
+         end
+      end
+      return out.."\n"..fmt.f(_([[You will #rget#0:"
+#w{description}#0"]]),tradein_item)
    end )
    vn.menu{
       {_("Trade"), "trade_consumate"},
@@ -259,6 +259,11 @@ Is there anything else you would like to purchase?"]]), {
       if t.type == "var" then
          var.push( t.var, true )
       elseif t.type == "intrinsic" then
+         for k,v in ipairs(trades) do
+            if v.type=="intrinsic" and hasIntrinsic( player.pilot(), v.outfit ) then
+               player.pilot():outfitRmIntrinsic( v.outfit )
+            end
+         end
          player.pilot():outfitAddIntrinsic( t.outfit )
       else
          error(_("unknown tradein type"))

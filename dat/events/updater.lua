@@ -13,6 +13,7 @@ local tut = require 'common.tutorial'
 local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
+local gauntlet = require 'common.gauntlet'
 
 -- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
@@ -21,9 +22,35 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       diff.apply( "melendez_dome_xy37" )
    end
 
+   local function update_gauntlet(plt)
+      local GauntletIntrinsics={outfit.get("Gauntlet Deluxe"),outfit.get("Gauntlet Supreme")}
+      local count=0
+      for _i,o in pairs(GauntletIntrinsics) do
+         for _k,v in ipairs( plt:outfitsList("intrinsic") ) do
+            if v==o then
+               count=count+1
+               break
+            end
+         end
+      end
+      if count>1 then
+         for _i,o in ipairs(GauntletIntrinsics) do
+            if not plt:outfitRmIntrinsic( o ) then
+               print(fmt.f("\t{ship} '{shipname}': {name} refunded for 2500 Crimson Emblems.",{
+                  ship=plt:ship():name(),
+                  shipname=plt:name(),
+                  name=o:name(),
+               }))
+               gauntlet.emblems_pay(2500)
+            end
+         end
+      end
+   end
+
    local cores_cache = naev.cache().save_updater
    if cores_cache.split_cores then
       local function update_ship( plt )
+         update_gauntlet( plt )
          for oname,i in pairs(cores_cache.split_list) do
             local o = outfit.get(oname)
             local _oname, _osize, oslot = o:slot()
