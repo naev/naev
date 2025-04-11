@@ -3,6 +3,9 @@
 """
 Generates collision polygons from image or gltf files
 
+WARNING: The description below is horribly out of date, please refer to the
+argparse documentation instead which can be printed with --help.
+
 WARNING : this script uses python 3
 For needed dependancies, please see the import section
 
@@ -110,7 +113,7 @@ import xml.etree.ElementTree as ET
 import xml.dom.minidom as pretty
 #from pygltflib import GLTF2
 #import struct
-from stl import mesh
+from stl import mesh # numpy-stl
 import os
 import sys
 import argparse
@@ -843,16 +846,30 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
         plt.show()
         """
 
+class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
+    pass
+
 # Run stuff
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser( description='Wrapper for luacheck that "understands" Naev hooks.' )
-    parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the path(s) to parse. Recurses over .lua files in the case of directories.')
-    parser.add_argument('--outpath', type=str, default="dat/polygon" )
-    parser.add_argument("--use2d", default=True, action=argparse.BooleanOptionalAction )
-    parser.add_argument("--use3d", default=True, action=argparse.BooleanOptionalAction )
-    parser.add_argument("--compare", action=argparse.BooleanOptionalAction )
-    parser.add_argument("--gfxpath", type=str, default="artwork/gfx/" )
-    parser.add_argument("--visualize", type=bool, default=False, action=argparse.BooleanOptionalAction )
+    parser = argparse.ArgumentParser(
+            description = 'Wrapper for luacheck that "understands" Naev hooks.',
+            formatter_class = CustomFormatter,
+            epilog = f"""
+Examples:
+
+# Generate the collision polygons for the Admonisher from the Naev github repo
+{sys.argv[0]} dat/ships/neutral/admonisher.xml
+
+# Generate  the collision polygons for a ship that is fully contained in a plugin at /path/to/plugin
+{sys.argv[0]} --gfxpath /path/to/plugin/gfx/ --outpath /path/to/plugin/polygon/ /path/to/plugin/ships/MyShip.xml
+""")
+    parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the ship XML file(s) to parse. Data is extracted from the ship definition about the sprites and/or 3D models.')
+    parser.add_argument('--outpath', help="Path to output the polygons to.", type=str, default="dat/polygon" )
+    parser.add_argument("--use2d", help="Allows the script to use 2D data (if found). Only used if 3D data is disable or not found.", default=True, action=argparse.BooleanOptionalAction )
+    parser.add_argument("--use3d", help="Allows the script to use 3D data (if found).", default=True, action=argparse.BooleanOptionalAction )
+    parser.add_argument("--compare", help="Computes both 2D and 3D collision polygons and compares the results visually with a plot. Only will process the first ship XML file path.", default=False, action=argparse.BooleanOptionalAction )
+    parser.add_argument("--gfxpath", help="Root path which the artwork graphics are located.", type=str, default="artwork/gfx/" )
+    parser.add_argument("--visualize", help="Whether or not the results should be visualized as a matplotlib animation. Only will process the first ship XML file path", type=bool, default=False, action=argparse.BooleanOptionalAction )
     args, unknown = parser.parse_known_args()
 
     # Comparison mode shows difference between 3D and 2D
