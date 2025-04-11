@@ -81,9 +81,9 @@ local function turnon( p, po )
    mem.target = t
 
    -- Apply stats
-   po:clear()
-   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
-   po:set( "speed_mod", constants.BITE_SPEED_MOD )
+   --po:clear()
+   --po:set( "accel_mod", constants.BITE_ACCEL_MOD )
+   --po:set( "speed_mod", constants.BITE_SPEED_MOD )
 
    p:control(true)
    p:pushtask( "lunge", t )
