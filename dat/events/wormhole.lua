@@ -19,7 +19,7 @@ function create ()
    colour = nc.wormhole_colour or {0.0, 0.8, 1.0}
    if not target then
       warn(_("Wormhole event run with no target!"))
-      return
+      return evt.finish(false)
    end
    hook.update( "update" )
    sfx:play()
