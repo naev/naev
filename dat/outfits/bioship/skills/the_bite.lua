@@ -132,7 +132,6 @@ function init( p, po )
    oshader:force_off()
 
    local o = po:outfit()
-   --print(fmt.f("init {nam}",{nam=o:name()}))
    mem.improved = (o==o_improved)
    mem.lust = mem.improved or (o==o_lust)
 
@@ -155,9 +154,9 @@ end
 
 function descextra( p, o )
    if p then
-      local mass=p:mass()
+      local mass = p:mass()
       local values={
-         dmg = 10*math.sqrt(mass),
+         dmg = 10 * math.sqrt(mass),
          accel_mod = constants.BITE_ACCEL_MOD,
          speed_mod = constants.BITE_SPEED_MOD,
          duration = 3,
@@ -167,7 +166,7 @@ function descextra( p, o )
          bloodlust_dam = 25,
          bloodlust_duration = 10,
       }
-      
+
       local improved = (o==o_improved)
       local lust = improved or (o==o_lust)
       local can = (o==o_can)
@@ -177,17 +176,17 @@ function descextra( p, o )
       end
       if improved then
          values.dmg = values.dmg * 1.5
-         values.heal=25
+         values.heal = 25
       end
       values.dmg= fmt.number(values.dmg)
-      
+
       local des=fmt.f(_(
 [[#gAcceleration: +{accel_mod}%#0
-#gSpeed: +{speed_mod}%#0 
+#gSpeed: +{speed_mod}%#0
 #gDuration: {duration} sec or until the target ship is bitten#0
 #oCooldown: {cooldown} sec.#0
 The ship will lunge at the target enemy and take a huge bite out of it, dealing #g{dmg} damage#0 with its current mass ({mass}).
-]]),values) 
+]]),values)
 
       if improved then
          return des..fmt.f(_("On successful bite, weapon damage is increased by {bloodlust_dam}% for {#gbloodlust_duration} seconds#0 #p[Blood Lust]#0 and {heal}% of bitten armour is restored to the ship #p[Strong Jaws]#0."),values)
