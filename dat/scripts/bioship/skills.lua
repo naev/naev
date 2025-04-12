@@ -28,7 +28,7 @@ skills.set.bite = {
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass ({mass}). Has a {cooldown} second cooldown period."),{
             dmg=dmg, accel_mod=constants.BITE_ACCEL_MOD,
             speed_mod=constants.BITE_SPEED_MOD,
-            absorb=30, duration=15, mass=fmt.tonnes_short(p:mass()), cooldown=15,
+            absorb=30, duration=3, mass=fmt.tonnes_short(p:mass()), cooldown=15,
          })
       end,
       icon = "fangs.webp",
@@ -51,7 +51,7 @@ skills.set.bite = {
       requires = { "bite3" },
       desc = fmt.f(_("Lunge now provides {absorb}% absorb and lunge time increased to {lunge_time} seconds. On successful bite, weapon damage is increased by {weapon_damage}% for {bloodlust_duration} seconds."),{
          lunge_time=5, absorb=50, weapon_damage=25, bloodlust_duration=10,
-      })
+      }),
       outfit = "The Bite - Blood Lust",
       slot = "the_bite",
       icon = "delighted.webp",

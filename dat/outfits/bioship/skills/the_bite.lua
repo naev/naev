@@ -175,7 +175,7 @@ function descextra( p, o )
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass ({mass}). On successful bite, weapon damage is increased by {bloodlust_dam}% for {bloodlust_duration} seconds [Blood Lust] and {heal}% of bitten armour is restored to the ship [Strong Jaws]. Has a {cooldown} second cooldown period."),{
             dmg=dmg, accel_mod=constants.BITE_ACCEL_MOD,
             speed_mod=constants.BITE_SPEED_MOD,
-            absorb=30, duration=15, mass=fmt.tonnes_short(p:mass()),
+            absorb=30, duration=dur, mass=fmt.tonnes_short(p:mass()),
             heal=25, cooldown=15,
             bloodlust_dam=25, bloodlust_duration=10,
          })
@@ -183,7 +183,7 @@ function descextra( p, o )
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass ({mass}). On successful bite, weapon damage is increased by {bloodlust_dam}% for {bloodlust_duration} seconds [Blood Lust] and {heal}% of bitten armour is restored to the ship [Cannibal II]. Has a {cooldown} second cooldown period."),{
             dmg=dmg, accel_mod=constants.BITE_ACCEL_MOD,
             speed_mod=constants.BITE_SPEED_MOD,
-            absorb=30, duration=15, mass=fmt.tonnes_short(p:mass()),
+            absorb=30, duration=dur, mass=fmt.tonnes_short(p:mass()),
             heal=10, cooldown=15,
             bloodlust_dam=25, bloodlust_duration=10,
          })
@@ -191,14 +191,14 @@ function descextra( p, o )
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass ({mass}). On successful bite, {heal}% of bitten armour is restored to the ship [Cannibal II]. Has a {cooldown} second cooldown period."),{
             dmg=dmg, accel_mod=constants.BITE_ACCEL_MOD,
             speed_mod=constants.BITE_SPEED_MOD,
-            absorb=30, duration=15, mass=fmt.tonnes_short(p:mass()),
+            absorb=30, duration=dur, mass=fmt.tonnes_short(p:mass()),
             heal=10, cooldown=15,
          })
       else
          return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass ({mass}). Has a {cooldown} second cooldown period."),{
             dmg=dmg, accel_mod=constants.BITE_ACCEL_MOD,
             speed_mod=constants.BITE_SPEED_MOD,
-            absorb=30, duration=15, mass=fmt.tonnes_short(p:mass()), cooldown=15,
+            absorb=30, duration=dur, mass=fmt.tonnes_short(p:mass()), cooldown=15,
          })
       end
    end
