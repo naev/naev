@@ -31,10 +31,6 @@ local onion = require "common.onion"
 local love_shaders = require "love_shaders"
 local fleet = require "fleet"
 local pilotai = require "pilotai"
---[[
-local lmisn = require "lmisn"
-local audio = require "love.audio"
---]]
 
 local brokerspb, brokersys = spob.getS("Wunomi's World")
 local deliverspb, deliversys = spob.getS("Shangris Station")
@@ -42,7 +38,6 @@ local trixiespb, trixiesys = spob.getS("Ian")
 local backdoorspb, backdoorsys = spob.getS("Marius Enclave")
 
 local title = _("The Great Hack")
-
 
 --[[
    Mission States
