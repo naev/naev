@@ -37,13 +37,13 @@ skills.set.bite = {
       name = _("Cannibal II"),
       tier = 3,
       requires = { "bite2" },
-      shipvar = "cannibal2",
       desc = fmt.f(_("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle. In addition to that, lunge now provides {absorb}% absorb and {heal}% of bitten armour is restored to the ship."),{
             absorb=40, heal=10,
       }),
       outfit = "The Bite - Cannibal",
       slot = "the_bite",
       icon = "food-chain.webp",
+      --shipvar = "cannibal2",
    },
    ["bite4"] = {
       name = _("Blood Lust"),

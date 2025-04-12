@@ -189,7 +189,7 @@ The ship will lunge at the target enemy and take a huge bite out of it, dealing 
 ]]),values)
 
       if improved then
-         return des..fmt.f(_("On successful bite, weapon damage is increased by {bloodlust_dam}% for {#gbloodlust_duration} seconds#0 #p[Blood Lust]#0 and {heal}% of bitten armour is restored to the ship #p[Strong Jaws]#0."),values)
+         return des..fmt.f(_("On successful bite, weapon damage is increased by {bloodlust_dam}% for #g{bloodlust_duration} seconds#0 #p[Blood Lust]#0 and {heal}% of bitten armour is restored to the ship #p[Strong Jaws]#0."),values)
       elseif lust then
          return des..fmt.f(_("On successful bite, weapon damage is increased by #g+{bloodlust_dam}%#0 for #g{bloodlust_duration} seconds#0 #p[Blood Lust]#0 and #g{heal}%#0 of bitten armour is restored to the ship #p[Cannibal II]#0."),values)
       elseif can then
