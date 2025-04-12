@@ -125,10 +125,15 @@ function wormhole.render ()
 end
 
 function wormhole.can_land ()
+   if not mem._target then
+      return false, _("Wormhole has no target!")
+   end
    return true, _("The wormhole seems to be active.")
 end
 
 function wormhole.land( _s, p )
+   if not mem._target then return end
+
    -- Avoid double landing
    if p:shipvarPeek( "wormhole" ) then return end
    p:shipvarPush( "wormhole", true )
