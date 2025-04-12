@@ -46,6 +46,7 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Updates if ships have multiple gauntlet intrinsics set
    local update_gauntlet = false
    local gauntlet_refunded = 0
+   local gauntlet_ships = {}
    apply_all_ships( function ( plt )
       local GauntletIntrinsics={outfit.get("Gauntlet Deluxe"),outfit.get("Gauntlet Supreme")}
       local count=0
@@ -68,6 +69,7 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
                -- Cost
                gauntlet.emblems_pay(2500)
                gauntlet_refunded = gauntlet_refunded+2500
+               table.insert( gauntlet_ships, plt:name() )
                update_gauntlet = true
             end
          end
@@ -128,8 +130,8 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
          else
             sai(_([["Oh my. It seems like some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
          end
-         sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits."]]),
-            {emblems=gauntlet.emblems_str(gauntlet_refunded)}))
+         sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits. In particular, the following ships have been modified: {ships}"]]),
+            {emblems=gauntlet.emblems_str(gauntlet_refunded), ships=fmt.list(gauntlet_ships)}))
       end
       vn.done( tut.shipai.transition )
       vn.run()
