@@ -38,7 +38,7 @@ local audio = require "love.audio"
 
 local brokerspb, brokersys = spob.getS("Wunomi's World")
 local deliverspb, deliversys = spob.getS("Shangris Station")
---local trixiespb, trixiesys = spob.getS("Ian")
+local trixiespb, trixiesys = spob.getS("Ian")
 local backdoorspb, backdoorsys = spob.getS("Marius Enclave")
 
 local title = _("The Great Hack")
@@ -447,7 +447,7 @@ They rub their eyes.
       l337(fmt.f(_([["Only one way to find out! {pilot}, onwards to {spb}!"]]),
          {pilot=pilot.name(), spb=backdoorspb}))
       trixie([["RáÚÆ Â£Ř§Ů—� ©????╟舐—â€š�Ř§Ů½  æØ¢Ã Ř§Ů© ráÚÆ ????½ æØ¢Ã"]])
-      l337(_([["Looks like the Nexus node is being flaky. Don't worry, she'll be back the moment it stabilizes. We'll get back to you later!"]]))
+      l337(_([["Looks like the Nexus relay is being flaky. Don't worry, they should be back the moment it stabilizes. We'll get back to you later!"]]))
       vn.na(_([[It seems like the hackers need your help again...]]))
 
       vn.done("electric")
@@ -558,28 +558,72 @@ You hear a big sob.]]))
 The words blend into inconsolable yelling and sobbing.]]))
    vn.menu{
       {_([["It's not your fault."]]), "03_fault"},
-      {_([["Let's get those bastards."]]), "03_bastards"},
-      {_([["She could be alright still."]]), "03_alright"},
+      {_([["They could be alright still."]]), "03_cont"},
+      {_([[...]]), "03_cont"},
    }
 
    vn.label("03_fault")
-   l337(_([[""]]))
-   vn.jump("03_cont")
-
-   vn.label("03_bastards")
-   l337(_([[""]]))
-   vn.jump("03_cont")
-
-   vn.label("03_alright")
-   l337(_([[""]]))
+   l337(_([["But, Trixie! T-Trixie!!!"
+They wail with abundance of sorrow.]]))
    vn.jump("03_cont")
 
    vn.label("03_cont")
+   -- Message send by SAI
+   vn.na(fmt.f(_([[You notice that a notification pops up on your HUD, apparently regarding a large explosion on {spb} in the {sys} system. This doesn't look good.]]),
+      {spb=trixiespb, sys=trixiesys}))
+   l337(_([["It's over! We're doomed!"
+They cough a bit, choking on their tears.]]))
+   l337(_([["I can't go on without them. Without Trixie..."]]))
+   vn.menu{
+      {_([["We aren't going down without a fight!"]]), "04_cont"},
+      {_([["Trixie wouldn't want it to end like this!"]]), "04_cont"},
+   }
 
+   vn.label("04_cont")
+   l337(_([[They give a big sniffle.
+"You're right. This isn't what Trixie would do."
+You hear the sound of them blowing their nose.]]))
+   l337(_([[There is a deep sigh.
+"Give me one second."
+They cough, probably clearing the tears.]]))
+   l337(fmt.f(_([[You hear a surprisingly clear voice.
+"What, how could I have missed this? I found a stray packed coming from the {sys} relay. Looks like...!!"
+They go silent, and you start receiving a new voice channel.]]),
+      {sys=trixiesys}))
+
+   vn.move( l337, "left" )
+   local msg = vni.soundonly( "00", { pos="right" } )
+   vn.appear( msg )
+   msg(_([["Heyo."
+The voice sounds very old and tired.]]))
+   msg(_([["Glad you found this l337_b01, but I was never hoping you'd hear my real voice like this."]]))
+   msg(_([["I don't have much time, I'm recording this on the go."
+You hear a siren in the background.]]))
+   msg(_([["Shit, they're moving faster than I expected."
+There is a constant sound of loud and furious typing.]]))
+   msg(_([["Since I was dropped offline, I've been trying to trace the freak. They're very good, almost too good."]]))
+   msg(_([["I had my suspicious that this was a fellow technomancer, but I didn't think they'd be so brash. I should have set up a deadman's switch."]]))
+   msg(_([["Oh shit, looks like this is the end of the line."]]))
+   msg(_([["l337_b01, everything is in your hands now."]]))
+   msg(_([["CONNECTION TERMINATED"]]))
+   vn.disappear( msg )
+   vn.move( l337, "center" )
+
+   l337(_([["..."]]))
+   vn.music( onion.loops.hacker )
+   l337(_([["Damnit Trixie, I looked up to you!"
+They take another deep breath.
+"This isn't going to stay like this!"]]))
+   l337(_([["{player}, I can't involve you more. Stay alive."]]))
+
+   vn.scene()
+   vn.transition("electric")
+   vn.na(_([[The connection abruptly cuts off. Is l337_b01 is going to something drastic?]]))
    vn.done("electric")
    vn.run()
 
-   onion.log(_([[You helped l337_b01 and Trixie to obtain a manual referencing the long-forgotten Nexus Backbone backdoor from the Data Broker. On the way to the backdoor, l337_b01 informed you that Trixie was peeled, throwing your plans into disarray.]]))
+   diff.apply("onion05") -- Update Ian
+   onion.log(_([[You helped l337_b01 and Trixie to obtain a manual referencing the long-forgotten Nexus Backbone backdoor from the Data Broker. On the way to the backdoor, l337_b01 informed you that Trixie was peeled, throwing your plans into disarray. l337_b01 looks like they are about to do something potentially drastic.]]))
 
    -- Happy Ending :D
    misn.finish(true)
