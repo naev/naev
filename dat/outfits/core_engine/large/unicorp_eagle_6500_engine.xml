@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp Eagle 6500 Engine">
  <general>
   <shortname>U. Eagle 6500 Engine</shortname>
@@ -15,8 +14,8 @@
   <energy_regen_malus>40</energy_regen_malus>
   <engine_limit>6500</engine_limit>
   <fuel>2800</fuel>
-  <speed>70</speed>
-  <accel>37</accel>
-  <turn>45</turn>
+  <speed>93</speed>
+  <accel>29</accel>
+  <turn>38</turn>
  </specific>
 </outfit>

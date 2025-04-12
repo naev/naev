@@ -4,11 +4,15 @@ local audio = require "love.audio"
 local love_shaders = require "love_shaders"
 local starfield = require "bkg.lib.starfield"
 local luaspfx = require "luaspfx"
+local fmt = require "format"
 
 local pixelcode = lf.read( "spob/lua/glsl/wormhole.frag" )
 local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 
-local s = 256
+-- Default parameters that can be overwritten
+local SIZE = 256
+local COL_INNER   = {0.2, 0.8, 1.0}
+local COL_OUTTER  = {0.0, 0.8, 1.0}
 
 local wormhole = {}
 
@@ -19,24 +23,51 @@ local function update_canvas ()
    lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setColour( 1, 1, 1, 1 )
-   love_shaders.img:draw( 0, 0, 0, s, s )
+   love_shaders.img:draw( 0, 0, 0, mem.size, mem.size )
    lg.setShader( oldshader )
    lg.setCanvas( oldcanvas )
 end
 
-function wormhole.init( spb, target, params )
+function wormhole.setup( target, params )
    params = params or {}
-   mem.spob = spb
-   mem.target = target
+   if type(target)=='function' then
+      mem.target = target
+   else
+      mem.target = spob.get(target)
+   end
    mem.params = params
+   mem.size = params.size or SIZE
+
+   -- Hook up the API
+   init     = wormhole.init
+   load     = wormhole.load
+   unload   = wormhole.unload
+   update   = wormhole.update
+   render   = wormhole.render
+   can_land = wormhole.can_land
+   land     = wormhole.land
+end
+
+function wormhole.init( spb )
+   mem.spob = spb
 end
 
 function wormhole.load ()
-   local _spob, sys = spob.getS( mem.target )
+   if type(mem.target)=='function' then
+      mem._target = spob.get( mem.target() )
+      if mem._target == nil then
+         return warn(fmt.f(_("Wormhole '{spb}' target function failed to return a spob!"),
+            {spb=mem.spob}))
+      end
+   else
+      mem._target = mem.target
+   end
+
+   local sys = mem._target:system()
    if mem.shader==nil then
       -- Load shader
-      local col_inner = mem.params.col_inner or {0.2, 0.8, 1.0}
-      local col_outter = mem.params.col_outter or {0.0, 0.8, 1.0}
+      local col_inner = mem.params.col_inner or COL_INNER
+      local col_outter = mem.params.col_outter or COL_OUTTER
       local pcode = string.format( pixelcode,
          col_inner[1], col_inner[2], col_inner[3],
          col_outter[1], col_outter[2], col_outter[3] )
@@ -47,14 +78,14 @@ function wormhole.load ()
          self:send( "u_time", self._dt )
       end
       mem.pos = mem.spob:pos()
-      mem.pos = mem.pos + vec2.new( -s/2, s/2 )
-      mem.cvs = lg.newCanvas( s, s, {dpiscale=1} )
+      mem.pos = mem.pos + vec2.new( -mem.size/2, mem.size/2 )
+      mem.cvs = lg.newCanvas( mem.size, mem.size, {dpiscale=1} )
 
       -- Set up background texture
       local _nw, _nh, ns = gfx.dim()
       -- TODO have this actually render the real background, not just starfield
       -- so it works properly with Nebulas and other fancy backgrounds
-      starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
+      starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=mem.size*ns }
       mem.shader:send( "u_bgtex", starfield.canvas() )
 
       -- Only play sound if player exists (avoid on menu, etc...)
@@ -69,7 +100,7 @@ function wormhole.load ()
       end
       update_canvas()
    end
-   return mem.cvs.t.tex, s/2
+   return mem.cvs.t.tex, mem.size/2
 end
 
 function wormhole.unload ()
@@ -94,10 +125,15 @@ function wormhole.render ()
 end
 
 function wormhole.can_land ()
+   if not mem._target then
+      return false, _("Wormhole has no target!")
+   end
    return true, _("The wormhole seems to be active.")
 end
 
 function wormhole.land( _s, p )
+   if not mem._target then return end
+
    -- Avoid double landing
    if p:shipvarPeek( "wormhole" ) then return end
    p:shipvarPush( "wormhole", true )
@@ -109,7 +145,9 @@ function wormhole.land( _s, p )
       return
    end
 
-   var.push( "wormhole_target", mem.target )
+   local nc = naev.cache()
+   nc.wormhole_target = mem._target
+   nc.wormhole_colour = mem.params.col_travel or mem.params.col_outter or COL_OUTTER
    naev.eventStart("Wormhole")
 end
 

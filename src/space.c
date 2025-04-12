@@ -1438,6 +1438,7 @@ static void system_scheduler( double dt, int init )
             pilot->presence = lua_tonumber( naevL, -1 );
             pilot->faction_spawn =
                p->faction; /* Save the faction who spawned it. */
+            /*
             if ( pilot->faction != p->faction ) {
                WARN( _( "Lua spawn script for faction '%s' actually spawned a "
                         "'%s' pilot." ),
@@ -1445,6 +1446,7 @@ static void system_scheduler( double dt, int init )
                      faction_name( pilot->faction ) );
                p = system_getFactionPresence( cur_system, pilot->faction );
             }
+            */
             if ( p != NULL )
                p->curUsed += pilot->presence;
             lua_pop( naevL, 2 ); /* tk, k */

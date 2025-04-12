@@ -36,8 +36,8 @@
 #define MAP_DECORATOR_GFX_PATH "gfx/map/"
 #define SHIP_POLYGON_PATH3D                                                    \
    "collision/ship/" /**< Path to ship's collision polygon. */
-#define SHIP_POLYGON_PATH                                                      \
-   "gfx/ship_polygon/" /**< Path to ship's collision polygon. */
+#define SHIP_POLYGON_PATH2D                                                    \
+   "collision/ship2d/" /**< Path to ship's collision polygon. */
 #define OUTFIT_POLYGON_PATH                                                    \
    "gfx/outfit/space_polygon/" /**< Path to outfit collision polygon. */
 #define ASTEROID_POLYGON_PATH                                                  \

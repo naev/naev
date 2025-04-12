@@ -3,8 +3,7 @@
 uniform float u_time = 0.0;
 uniform float u_progress = 0.0;
 uniform int u_invert = 0;
-
-const vec3 col_outter = vec3( 0.0, 0.8, 1.0 );
+uniform vec3 u_col_outter = vec3( 0.0, 0.8, 1.0 );
 
 float fbm2( vec3 x )
 {
@@ -51,5 +50,5 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
    float a = 1.0-smoothstep( 0.7*u_progress, 1.4*u_progress, c );
    if (u_invert!=0)
       a = 1.0 - a;
-   return vec4( mix( texture( tex, texture_coords ).rgb, col_outter, a ), 1.0 );
+   return vec4( mix( texture( tex, texture_coords ).rgb, u_col_outter, a ), 1.0 );
 }

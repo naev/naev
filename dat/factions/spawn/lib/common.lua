@@ -262,6 +262,9 @@ function scom.spawn( pilots )
       if not pfact:known() then
          p:rename(_("Unknown"))
       end
+      if scom._params.postprocess then
+         scom._params.postprocess( p )
+      end
       if params.postprocess then
          params.postprocess( p )
       end
@@ -295,11 +298,11 @@ function scom.doTable( pilots, tbl )
       if w <= lw then
          warn(fmt.f(_("Invalid table for doTable! Weight have to be monotonically incremental and represent threshold for spawning the group.")))
       end
-      if w <= r then
+      if r <= w then
          for i,p in ipairs(t) do
             scom.addPilot( pilots, p )
          end
-         break
+         return pilots
       end
       lw = w
    end

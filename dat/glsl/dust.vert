@@ -34,12 +34,14 @@ void main(void) {
          length_frag = r;
       }
       gl_Position = projection * (center + vec4( M*vec2(p.x, p.y), 0.0, 0.0));
+      // Lower brightness sort of heuristically based on length which starts at roughly 0
+      brightness_frag = brightness / (1.0 + l*0.1);
 
    } else {
       gl_Position = projection * (center + vec4( p.x, p.y, 0.0, 0.0));
       length_frag = 0.0;
+      brightness_frag = brightness;
    }
 
    pos_frag = shape.xy;
-   brightness_frag = brightness;
 }

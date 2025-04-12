@@ -570,6 +570,9 @@ static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
    if ( array_size( temp->polygon.views ) <= 0 )
       flags |= OPENGL_TEX_MAPTRANS;
    temp->gfx_space = gl_newSprite( str, sx, sy, flags );
+   /* 2D graphics will overwrite the size. */
+   temp->size =
+      tex_sw( temp->gfx_space ) * 0.5 + tex_sh( temp->gfx_space ) * 0.5;
    return 0;
 }
 
@@ -772,7 +775,7 @@ static int ship_loadPLG( Ship *temp, const char *buf )
    if ( temp->gfx_3d != NULL )
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH3D, buf );
    else
-      snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH, buf );
+      snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH2D, buf );
 
    /* See if the file does exist. */
    if ( !PHYSFS_exists( file ) ) {
@@ -900,6 +903,51 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot,
    return 0;
 }
 
+static int checkSlotNameDuplicates( const Ship           *temp,
+                                    const ShipOutfitSlot *slot )
+{
+   int ret = 0;
+   if ( slot->name == NULL )
+      return 0;
+   for ( int i = 0; i < array_size( temp->outfit_structure ); i++ ) {
+      const ShipOutfitSlot *so = &temp->outfit_structure[i];
+      if ( slot == so )
+         continue;
+      if ( so->name == NULL )
+         continue;
+      if ( strcmp( so->name, slot->name ) != 0 )
+         continue;
+      WARN( _( "Ship '%s' has duplicated slot name '%s'!" ), temp->name,
+            slot->name );
+      ret = 1;
+   }
+   for ( int i = 0; i < array_size( temp->outfit_utility ); i++ ) {
+      const ShipOutfitSlot *so = &temp->outfit_utility[i];
+      if ( slot == so )
+         continue;
+      if ( so->name == NULL )
+         continue;
+      if ( strcmp( so->name, slot->name ) != 0 )
+         continue;
+      WARN( _( "Ship '%s' has duplicated slot name '%s'!" ), temp->name,
+            slot->name );
+      ret = 1;
+   }
+   for ( int i = 0; i < array_size( temp->outfit_weapon ); i++ ) {
+      const ShipOutfitSlot *so = &temp->outfit_weapon[i];
+      if ( slot == so )
+         continue;
+      if ( so->name == NULL )
+         continue;
+      if ( strcmp( so->name, slot->name ) != 0 )
+         continue;
+      WARN( _( "Ship '%s' has duplicated slot name '%s'!" ), temp->name,
+            slot->name );
+      ret = 1;
+   }
+   return ret;
+}
+
 /**
  * @brief Extracts the in-game ship from an XML node.
  *
@@ -969,8 +1017,12 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 #define STRDUP_( x ) ( ( x == NULL ) ? NULL : strdup( x ) )
 #define ARRAYDUP_( x, y )                                                      \
    do {                                                                        \
-      for ( int i = 0; i < array_size( y ); i++ )                              \
-         array_push_back( &x, y[i] );                                          \
+      for ( int i = 0; i < array_size( y ); i++ ) {                            \
+         ShipOutfitSlot sos = y[i];                                            \
+         if ( sos.name != NULL )                                               \
+            sos.name = strdup( sos.name );                                     \
+         array_push_back( &x, sos );                                           \
+      }                                                                        \
    } while ( 0 )
       Ship  t             = *temp;
       Ship *base          = (Ship *)ship_get( temp->inherits );
@@ -1356,6 +1408,14 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
    if ( temp->license && !outfit_licenseExists( temp->license ) )
       WARN( _( "Ship '%s' has inexistent license requirement '%s'!" ),
             temp->name, temp->license );
+
+   /* Make sure no duplicate slot names. */
+   for ( int i = 0; i < array_size( temp->outfit_structure ); i++ )
+      checkSlotNameDuplicates( temp, &temp->outfit_structure[i] );
+   for ( int i = 0; i < array_size( temp->outfit_utility ); i++ )
+      checkSlotNameDuplicates( temp, &temp->outfit_utility[i] );
+   for ( int i = 0; i < array_size( temp->outfit_weapon ); i++ )
+      checkSlotNameDuplicates( temp, &temp->outfit_weapon[i] );
 
    /* Ship XML validator */
 #define MELEMENT( o, s )                                                       \

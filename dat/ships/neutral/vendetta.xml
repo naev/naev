@@ -6,10 +6,10 @@
  <class>Fighter</class>
  <price>400000</price>
  <time_mod>0.9</time_mod>
- <trail_generator h="0" x="3" y="18">nebula</trail_generator>
- <trail_generator h="0" x="3" y="-18">nebula</trail_generator>
- <trail_generator always_under="1" h="0" x="-5" y="4">fire</trail_generator>
- <trail_generator always_under="1" h="0" x="-5" y="-4">fire</trail_generator>
+ <trail_generator y="18" h="0" x="3">nebula</trail_generator>
+ <trail_generator y="-18" h="0" x="3">nebula</trail_generator>
+ <trail_generator y="4" h="0" always_under="1" x="-5">fire</trail_generator>
+ <trail_generator y="-4" h="0" always_under="1" x="-5">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <faction>Independent</faction>
  <license>Light Combat Vessel</license>
@@ -25,19 +25,20 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon h="0" size="small" x="16" y="-9" />
-  <weapon h="0" size="small" x="16" y="9" />
-  <weapon h="0" size="small" x="13" y="-13" />
-  <weapon h="0" size="small" x="13" y="13" />
-  <weapon h="-2" size="small" x="19" y="0" />
-  <weapon h="2" size="small" x="3" y="0" />
-  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <weapon y="-9" h="0" size="small" x="16" />
+  <weapon y="9" h="0" size="small" x="16" />
+  <weapon y="-13" h="0" size="small" x="13" />
+  <weapon y="13" h="0" size="small" x="13" />
+  <weapon y="0" h="-2" size="small" x="19" />
+  <weapon y="0" h="2" size="small" x="3" />
+  <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
-  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" name="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>

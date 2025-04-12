@@ -33,12 +33,15 @@ function mine_bite( ast )
    local goal = ai.face_accurate( target, vel, 0, angle, mem.Kp, mem.Kd )
 
    local dir  = ai.face(goal)
-   if dir < math.rad(20) then
+   if dir < math.rad(30) then
       local dtime = 3
       if mem._o.bite_lust then
          dtime = dtime+2
       end
-      if ai.dist( target ) < (p:speed() + BITE_SPEED_MOD + (p:accel()+BITE_ACCEL_MOD)/PHYSICS_SPEED_DAMP)*dtime then
+      if ai.dist( target ) < (
+            p:speed() * (1.0+0.01*BITE_SPEED_MOD) +
+            p:accel() * (1.0+0.01*BITE_ACCEL_MOD) / PHYSICS_SPEED_DAMP
+         )*dtime then
          p:outfitToggle( mem._o.bite, true )
       end
    end

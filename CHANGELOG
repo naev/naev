@@ -6,8 +6,12 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Light, medium-heavy and ultraheavy ship now have two core system slots, one main and one secondary
-         * Effects of light, medium-heavy, and ultra-heavy core systems are obtained by stacking two smaller core systems
+      * Light, medium-heavy and ultraheavy ship now have two core system and hull slots, one main and one secondary
+         * Effects of heavier systems and hulls can be obtained by stacking smaller ones
+      * Engines have been reworked to be more coherent and consistent
+         * Tricon engines have much higher acceleration to max speed ratio
+         * Melendez engines have higher speed, but low acceleration and turn
+         * More consistency across lines
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
@@ -24,6 +28,7 @@
       * Significant changes in jumps (hidden and otherwise)
    * Engine
       * Begin porting to rust
+      * Explicitly expose some in-game constants and allow their modifications in plugins
       * Use instancing instead of geometry shaders for space dust
       * Ship Lua scripting supports "onshootany" now
       * Support for price_mod on tech group commodities
@@ -39,7 +44,9 @@
       * Outfits support inline Lua definitions
       * Engine supports modifying some important constants such as those related to the physics model
       * Can override long class names of spobs
+      * Changed how ship statistics are computed: those from same source will be additive, while different sources will be multiplicative
    * Fixes
+      * The Bite turns off afterburner
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
@@ -53,8 +60,13 @@
       * Bioships will reset their locked slots when swapping ship and loading
       * jump_delay was being applied instead of jump_warmup to the engine warm up animation
       * Mass modifiers now affect outfit mass too
+      * Ships will no longer appear tilted in the equipment view
+      * dv_antiflf02: Make the vigilances less pathetic
 
-* 0.12.4 (unreleased)
+* 0.12.5 (unreleased)
+   * Fixed bug causing lower diversity in ship spawning
+
+* 0.12.4
    * More robust jump check to fix crash when creating new systems
    * Gave Pacifier +400 fuel bonus to match description
    * Made the baron comm event respect system claims
@@ -63,6 +75,7 @@
    * Disallow cooling down while jumping
    * Fixed crash with pilot.navJumpSet
    * Remove all pirate presence within 2 jumps of the starting system
+   * Minor typo fixes and translation updates
 
 * 0.12.3
    * Sirius preacher gives +4% shield regeneration, not +4 GW shield regeneration

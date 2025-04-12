@@ -30,20 +30,20 @@
   <weapon size="small" x="15" y="0" h="-3" />
   <weapon size="small" x="15" y="0" h="-3" />
   <weapon size="small" x="0" y="0" h="0" />
-  <utility size="small" prop="systems">Previous Generation Small Systems</utility>
+  <utility size="small" prop="systems" name="systems">Previous Generation Small Systems</utility>
   <utility size="small" prop="accessory" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines">Beat Up Small Engine</structure>
-  <structure size="small" prop="hull">Patchwork Light Plating</structure>
+  <structure size="small" prop="engines" name="engines">Beat Up Small Engine</structure>
+  <structure size="small" prop="hull" name="hull">Patchwork Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
   <turn_mod>20</turn_mod>
-  <accel_mod>70</accel_mod>
+  <accel_mod>30</accel_mod>
   <armour_mod>-50</armour_mod>
   <fwd_firerate>10</fwd_firerate>
   <ew_signature>-10</ew_signature>

@@ -2,20 +2,20 @@
  <lua>zalek.lua</lua>
  <points>110</points>
  <base_type>Mammon</base_type>
- <gfx size="128" sx="12" sy="12">mammon_zalek</gfx>
+ <gfx sy="12" sx="12" size="128">mammon_zalek</gfx>
  <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Bulk Freighter</class>
  <price>4600000</price>
  <time_mod>1.375</time_mod>
- <trail_generator h="0" x="-54" y="14">zalek</trail_generator>
- <trail_generator h="0" x="-54" y="-14">zalek</trail_generator>
- <trail_generator always_under="1" h="-9" x="-20" y="27">zalek</trail_generator>
- <trail_generator always_under="1" h="-9" x="-34" y="27">zalek</trail_generator>
- <trail_generator h="0" x="-48" y="28">nebula</trail_generator>
- <trail_generator h="0" x="-48" y="-26">nebula</trail_generator>
- <trail_generator always_under="1" h="-6" x="18" y="25">nebula</trail_generator>
- <trail_generator always_under="1" h="-6" x="18" y="-25">nebula</trail_generator>
+ <trail_generator y="14" h="0" x="-54">zalek</trail_generator>
+ <trail_generator y="-14" h="0" x="-54">zalek</trail_generator>
+ <trail_generator y="27" h="-9" always_under="1" x="-20">zalek</trail_generator>
+ <trail_generator y="27" h="-9" always_under="1" x="-34">zalek</trail_generator>
+ <trail_generator y="28" h="0" x="-48">nebula</trail_generator>
+ <trail_generator y="-26" h="0" x="-48">nebula</trail_generator>
+ <trail_generator y="25" h="-6" always_under="1" x="18">nebula</trail_generator>
+ <trail_generator y="-25" h="-6" always_under="1" x="18">nebula</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <faction>Za'lek</faction>
  <license>Large Civilian Vessel</license>
@@ -33,21 +33,22 @@
   <cargo>310</cargo>
  </characteristics>
  <slots>
-  <weapon h="4" prop="fighter_bay" size="large" x="18" y="14" />
-  <weapon h="4" prop="fighter_bay" size="large" x="18" y="-14" />
-  <weapon h="0" prop="fighter_bay" size="medium" x="51" y="-14" />
-  <weapon h="0" size="medium" x="56" y="8" />
-  <weapon h="0" size="medium" x="56" y="20" />
-  <utility prop="systems" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
+  <weapon y="14" h="4" prop="fighter_bay" x="18" size="large" />
+  <weapon y="-14" h="4" prop="fighter_bay" x="18" size="large" />
+  <weapon y="-14" h="0" prop="fighter_bay" x="51" size="medium" />
+  <weapon y="8" h="0" size="medium" x="56" />
+  <weapon y="20" h="0" size="medium" x="56" />
+  <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="accessory" size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
-  <structure prop="engines" size="large">Nexus Bolt 3000 Engine</structure>
-  <structure prop="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="engines" name="engines" size="large">Nexus Bolt 3000 Engine</structure>
+  <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="large" />
   <structure size="large" />
   <structure size="large" />
   <structure size="medium" />

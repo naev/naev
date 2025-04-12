@@ -88,6 +88,18 @@ function pilotai.guard( plts, pos )
 end
 
 --[[--
+   Sets the taunt message of the pilot. Which will only be seen if the player is hostile to them _and_ they are targeted and attacked.
+
+      @tparam Pilot|table plts Pilot or pilots to set taunt of.
+      @tparam string|function tauntmsg Message to set as taunt or function that returns message to set as taunt.
+--]]
+function pilotai.setTaunt( plts, tauntmsg )
+   pilotai.apply( plts, function( p )
+      p:memory().taunt = tauntmsg
+   end )
+end
+
+--[[--
    Tries to clear the system by making all the AI pilots go away. Soft alternative to pilot.clear()
 
       @tparam[opt=false] boolean allpilots Whether or not to affect all non-player pilots, or just natural pilots.

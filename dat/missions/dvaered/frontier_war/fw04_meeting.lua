@@ -487,7 +487,7 @@ function equipHyena( p )
    -- TODO switch to equipopt
    p:outfitAdd("Tricon Zephyr Engine")
    p:outfitAdd("Milspec Orion 2301 Core System")
-   p:outfitAdd("S&K Ultralight Combat Plating")
+   p:outfitAdd("S&K Skirmish Plating")
    p:outfitAdd("Gauss Gun",3)
    p:outfitAdd("Improved Stabilizer")
    p:outfitAdd("Hellburner")

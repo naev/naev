@@ -6,9 +6,9 @@
  <class>Courier</class>
  <price>420000</price>
  <time_mod>1</time_mod>
- <trail_generator h="0" x="-4" y="-21">nebula</trail_generator>
- <trail_generator h="0" x="-4" y="21">nebula</trail_generator>
- <trail_generator always_under="1" h="-10" x="-5" y="0">melendez</trail_generator>
+ <trail_generator y="-21" h="0" x="-4">nebula</trail_generator>
+ <trail_generator y="21" h="0" x="-4">nebula</trail_generator>
+ <trail_generator y="0" h="-10" always_under="1" x="-5">melendez</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <faction>Independent</faction>
  <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working looking to turn a profit while making their way across the stars.</description>
@@ -23,16 +23,17 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon h="-7" size="small" x="11" y="0" />
-  <weapon h="3" size="small" x="-5" y="0" />
-  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <weapon y="0" h="-7" size="small" x="11" />
+  <weapon y="0" h="3" size="small" x="-5" />
+  <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
-  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" name="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="small" />

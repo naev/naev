@@ -8,7 +8,7 @@
  <class>Bomber</class>
  <price>525000</price>
  <time_mod>1</time_mod>
- <trail_generator h="0" x="-13" y="0">sirius</trail_generator>
+ <trail_generator y="0" h="0" x="-13">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <faction>Sirius</faction>
  <license>Light Combat Vessel</license>
@@ -26,18 +26,19 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon h="-1" size="medium" x="-2" y="4" />
-  <weapon h="-1" size="medium" x="-2" y="-4" />
-  <weapon h="0" size="small" x="4" y="2" />
-  <weapon h="0" size="small" x="4" y="-2" />
-  <utility prop="systems" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
+  <weapon y="4" h="-1" size="medium" x="-2" />
+  <weapon y="-4" h="-1" size="medium" x="-2" />
+  <weapon y="2" h="0" size="small" x="4" />
+  <weapon y="-2" h="0" size="small" x="4" />
+  <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines" size="small">Unicorp Hawk 360 Engine</structure>
-  <structure prop="hull" size="small">Unicorp D-9 Light Plating</structure>
+  <structure prop="engines" name="engines" size="small">Unicorp Hawk 360 Engine</structure>
+  <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
   <structure size="small" />

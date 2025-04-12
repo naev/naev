@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-from sys import argv,stderr
+from sys import stderr
 import xml.etree.ElementTree as ET
 
 lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide'}
+
 
 def transpose(M):
    N=max(map(len,M))
@@ -13,7 +14,7 @@ def transpose(M):
 getfloat=lambda s:float(s.split('/')[0])
 
 #launch_reload
-def main(args,gith=False,ter=False,noext=False):
+def main(args,gith=False,ter=False,noext=False,sortit=False):
    names=['']*len(args)
    L=[dict() for a in args]
    rang=dict()
@@ -49,6 +50,13 @@ def main(args,gith=False,ter=False,noext=False):
          rang[i]=(M,m)
       if noext:
          rang[i]=(None,None)
+
+   if sortit:
+      for i,o in enumerate(L):
+         o['name']=names[i]
+      L.sort(key=lambda o:getfloat(o['mass']))
+      for i,o in enumerate(L):
+         names[i]=o['name']
 
    Res=[[k]+[l[k] if k in l else '' for l in L] for k in acc]
    names=['']+names
@@ -98,21 +106,25 @@ def main(args,gith=False,ter=False,noext=False):
       print mklin([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))])
 
 if __name__ == '__main__':
-   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print "usage:",argv[0],'[-g|-t] <outfitname1.xml> ...'
-      print "By default, outputs text aligned markdown table comparing the outfits resp. values."
-      print "The options improve your confort in certain use cases:"
-      print "  -g  unaligned (therefore smaller) valid github md, for use in posts."
-      print "  -c  colored terminal output. You can pipe to \"less -RS\" if the table is too wide."
-      print "  -n  no extrema display."
-   else:
-      gith,ter,noext="-g" in argv[1:],"-c" in argv[1:],"-n" in argv[1:]
-      if gith and ter:
-         gith=ter=False
-         print >>stderr,"Ignored incompatible -g and -c."
+   import argparse
 
-      ign=[f for f in argv[1:] if f not in ["-g","-c","-n"] and not f.endswith(".xml") and not f.endswith(".mvx")]
-      if ign!=[]:
-         print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
+   parser = argparse.ArgumentParser(
+      usage=" %(prog)s  [-g|-c] [-n] [-s]  [filename ...]",
+      description="By default, outputs text aligned markdown table comparing the outfits respective values."
+   )
+   parser.add_argument('-g', '--github', action='store_true', help="unaligned (therefore smaller) valid github md, for use in posts.")
+   parser.add_argument('-c', '--color', action='store_true', help="colored terminal output. You can pipe to \"less -RS\" if the table is too wide.")
+   parser.add_argument('-n', '--nomax', action='store_true', help="Do not emphasize min/max values." )
+   parser.add_argument('-s', '--sort', action='store_true', help="inputs are sorted by increasing mass.")
+   parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.')
 
-      main([f for f in argv[1:] if f.endswith(".xml") or f.endswith(".mvx")],gith,ter,noext)
+   args = parser.parse_args()
+   if args.github and args.color:
+      args.github=args.color=False
+      print >>stderr,"Ignored incompatible -g and -c."
+
+   ign=[f for f in args.filename if not f.endswith(".xml") and not f.endswith(".mvx")]
+   if ign!=[]:
+      print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
+
+   main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,args.sort)

@@ -26,9 +26,3 @@ function create ()
    mem.loiter = rnd.rnd(15,20) -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()
 end
-
-function taunt( target, _offense )
-   if mem.taunt then
-      ai.pilot():comm( target, mem.taunt )
-   end
-end

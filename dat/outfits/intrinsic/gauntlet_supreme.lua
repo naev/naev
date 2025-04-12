@@ -1,4 +1,14 @@
+local fmt = require "format"
+
 notactive = true
+
+local DAMAGEBONUS = 4
+local DAMAGETOTAL = 7
+
+function descextra( _p, _o )
+   return "#o"..fmt.f(_([[Additional +{bonus}% damage (for a total of {total}%) when using unguided launchers.]]),
+      {bonus=DAMAGEBONUS, total=DAMAGETOTAL}).."#0"
+end
 
 function init( p, po )
    local hasunguided = false
@@ -12,9 +22,9 @@ function init( p, po )
       end
    end
 
-   -- Doubles effect
+   -- effect goes from 3 to 7
    if hasunguided then
-      po:set( "launch_damage", 5 )
+      po:set( "launch_damage", DAMAGEBONUS )
    else
       po:clear()
    end

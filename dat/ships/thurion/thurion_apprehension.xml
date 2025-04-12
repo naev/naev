@@ -2,17 +2,17 @@
  <lua>thurion.lua</lua>
  <points>90</points>
  <base_type>Apprehension</base_type>
- <gfx size="90" sx="12" sy="12">apprehension</gfx>
+ <gfx sy="12" sx="12" size="90">apprehension</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2300000</price>
  <time_mod>1.25</time_mod>
- <trail_generator h="-5" x="-30" y="9">thurion</trail_generator>
- <trail_generator h="-5" x="-30" y="-9">thurion</trail_generator>
- <trail_generator h="10" x="-30" y="0">thurion</trail_generator>
- <trail_generator h="10" x="-20" y="-20">nebula</trail_generator>
- <trail_generator h="10" x="-20" y="20">nebula</trail_generator>
+ <trail_generator y="9" h="-5" x="-30">thurion</trail_generator>
+ <trail_generator y="-9" h="-5" x="-30">thurion</trail_generator>
+ <trail_generator y="0" h="10" x="-30">thurion</trail_generator>
+ <trail_generator y="-20" h="10" x="-20">nebula</trail_generator>
+ <trail_generator y="20" h="10" x="-20">nebula</trail_generator>
  <fabricator>Thurion Shipyards</fabricator>
  <faction>Thurion</faction>
  <cond>require("buyrep")("Thurion", 50)</cond>
@@ -29,19 +29,20 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon h="4" size="large" x="23" y="0" />
-  <weapon h="6" size="large" x="6" y="0" />
-  <weapon h="-6" prop="fighter_bay" size="medium" x="8" y="0" />
-  <utility prop="systems" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
+  <weapon y="0" h="4" size="large" x="23" />
+  <weapon y="0" h="6" size="large" x="6" />
+  <weapon y="0" h="-6" prop="fighter_bay" x="8" size="medium" />
+  <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
+  <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="accessory" size="medium" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
-  <structure prop="hull" size="medium">Unicorp D-38 Medium Plating</structure>
+  <structure prop="engines" name="engines" size="medium">Unicorp Falcon 1400 Engine</structure>
+  <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
+  <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="medium" />

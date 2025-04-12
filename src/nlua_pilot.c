@@ -38,6 +38,7 @@
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "pilot.h"
+#include "pilot_ship.h"
 #include "player.h"
 #include "player_autonav.h"
 #include "rng.h"
@@ -166,6 +167,7 @@ static int pilotL_outfitAddSlot( lua_State *L );
 static int pilotL_outfitRmSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
+static int pilotL_outfitsReset( lua_State *L );
 static int pilotL_getFuel( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_intrinsicReset( lua_State *L );
@@ -390,6 +392,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfitRmSlot", pilotL_outfitRmSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
+   { "outfitsReset", pilotL_outfitsReset },
    { "fuel", pilotL_getFuel },
    { "setFuel", pilotL_setFuel },
    { "intrinsicReset", pilotL_intrinsicReset },
@@ -3984,8 +3987,23 @@ static int pilotL_outfitRmIntrinsic( lua_State *L )
 {
    Pilot        *p = luaL_validpilot( L, 1 );
    const Outfit *o = luaL_validoutfit( L, 2 );
-   lua_pushboolean( L, pilot_rmOutfitIntrinsic( p, o ) );
+   lua_pushboolean( L, !pilot_rmOutfitIntrinsic( p, o ) );
    return 1;
+}
+
+/**
+ * @brief Resets the pilot's outfit and timers.
+ *
+ *    @luatparam Pilot p Pilot to reset.
+ * @luafunc outfitsReset
+ */
+static int pilotL_outfitsReset( lua_State *L )
+{
+   Pilot *p = luaL_validpilot( L, 1 );
+   pilot_clearTimers( p );
+   pilot_shipLInit( p );
+   pilot_outfitLInitAll( p ); // Reset Lua if applicable
+   return 0;
 }
 
 /**

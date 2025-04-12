@@ -129,7 +129,7 @@ jobs:
 
       - name: Meson Setup
         run: |
-          CC=clang meson setup build source \
+          meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=debug \
               --force-fallback-for=glpk,SuiteSparse \

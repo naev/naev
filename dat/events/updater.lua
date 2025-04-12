@@ -13,6 +13,28 @@ local tut = require 'common.tutorial'
 local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
+local gauntlet = require 'common.gauntlet'
+
+-- Applies a function to all ships
+local function apply_all_ships( func )
+   local curship = player.pilot():name()
+   local ships = player.ships()
+   local deployed = {}
+   for k,s in ipairs( ships ) do
+      if s.deployed then
+         table.insert( deployed, s )
+      end
+   end
+   for k,s in ipairs( ships ) do
+      player.shipSwap( s.name, true )
+      func( player.pilot() )
+   end
+   player.shipSwap( curship, true )
+   func( player.pilot() )
+   for k,s in ipairs( deployed ) do
+      player.shipDeploy( s.name, true )
+   end
+end
 
 -- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
@@ -21,8 +43,43 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       diff.apply( "melendez_dome_xy37" )
    end
 
+   -- Updates if ships have multiple gauntlet intrinsics set
+   local update_gauntlet = false
+   local gauntlet_refunded = 0
+   local gauntlet_ships = {}
+   apply_all_ships( function ( plt )
+      local GauntletIntrinsics={outfit.get("Gauntlet Deluxe"),outfit.get("Gauntlet Supreme")}
+      local count=0
+      for _i,o in pairs(GauntletIntrinsics) do
+         for _k,v in ipairs( plt:outfitsList("intrinsic") ) do
+            if v==o then
+               count=count+1
+               break
+            end
+         end
+      end
+      if count>1 then
+         for _i,o in ipairs(GauntletIntrinsics) do
+            if plt:outfitRmIntrinsic( o ) then
+               print(fmt.f("\t{ship} '{shipname}': {name} refunded for 2500 Crimson Emblems.",{
+                  ship=plt:ship():name(),
+                  shipname=plt:name(),
+                  name=o:name(),
+               }))
+               -- Cost
+               gauntlet.emblems_pay(2500)
+               gauntlet_refunded = gauntlet_refunded+2500
+               table.insert( gauntlet_ships, plt:name() )
+               update_gauntlet = true
+            end
+         end
+      end
+   end )
+
+   -- Updates if ships had core outfits replaced
    local cores_cache = naev.cache().save_updater
-   if cores_cache.split_cores then
+   local update_cores = cores_cache.split_cores
+   if update_cores then
       local function update_ship( plt )
          for oname,i in pairs(cores_cache.split_list) do
             local o = outfit.get(oname)
@@ -33,16 +90,19 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
             for j,v in ipairs(plt:ship():getSlots()) do
                if v.property == oslot and olist[j] == o then
                   hasoutfit = true
+                  break
                end
             end
-            for j,v in ipairs(plt:ship():getSlots()) do
-               if hasoutfit and v.property == osec and not olist[j] then
-                  -- Add outfit
-                  if player.outfitNum(o) > 0 then
-                     if plt:outfitAddSlot( o, j, true, false ) then
-                        player.outfitRm(o,1)
-                     else
-                        warn(fmt.f("Failed to add outfit '{outfit}' to player ship '{name}'!", {outfit=o, name=player.pilot():name()}))
+            if hasoutfit then
+               for j,v in ipairs(plt:ship():getSlots()) do
+                  if v.property == osec and not olist[j] then
+                     -- Add outfit
+                     if player.outfitNum(o) > 0 then
+                        if plt:outfitAddSlot( o, j, true, false ) then
+                           player.outfitRm(o,1)
+                        else
+                           warn(fmt.f("Failed to add outfit '{outfit}' to player ship '{name}'!", {outfit=o, name=player.pilot():name()}))
+                        end
                      end
                   end
                end
@@ -50,35 +110,33 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
          end
       end
 
-      local curship = player.pilot():name()
-      local ships = player.ships()
-      local deployed = {}
-      for k,s in ipairs( ships ) do
-         if s.deployed then
-            table.insert( deployed, s )
-         end
-      end
-      for k,s in ipairs( ships ) do
-         player.shipSwap( s.name, true )
-         update_ship( player.pilot() )
-      end
-      player.shipSwap( curship, true )
-      update_ship( player.pilot() )
-      for k,s in ipairs( deployed ) do
-         player.shipDeploy( s.name, true )
-      end
+      apply_all_ships( update_ship )
+   end
 
+   if update_cores or update_gauntlet then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
       vn.na(fmt.f(_([[Your ship AI {shipai} materializes before you.]]),
          {shipai=tut.ainame()}))
-      sai(_([["Oh my. It seems like the ship designs changed again. Some ships have gotten additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
-      sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double check your ships before taking off!"]]))
+      if update_cores then
+         sai(_([["Oh my. It seems like the ship designs changed again. Some ships have got additional secondary core slots, in which you can equip normal cores. However, the core outfits will have different properties depending on whether they are primary or secondary. Similarly, many core outfits have been discontinued, and for ships with more than one core slot, instead of equipping a larger one, you can equip two to get the same effect as before!"]]))
+         sai(_([["I have tried to automatically update your ships to be similar to before, but some things may have changed. Make sure you double-check your ships before taking off!"]]))
+      end
+      if update_gauntlet then
+         if update_cores then
+            sai(_([["Oh, and some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
+         else
+            sai(_([["Oh my. It seems like some of your ships had more than one upgrade from the Crimson Gauntlet which are now mutually exclusive with each other."]]))
+         end
+         sai(fmt.f(_([["Both of the outfits have been removed, and you have been refunded a total of {emblems} for the cost of the outfits. In particular, the following ships have been modified: {ships}"]]),
+            {emblems=gauntlet.emblems_str(gauntlet_refunded), ships=fmt.list(gauntlet_ships)}))
+      end
       vn.done( tut.shipai.transition )
       vn.run()
    end
+
    naev.cache().save_updater = {}
 end
 
@@ -214,23 +272,9 @@ Many of the new features come with small tutorials in form of missions. I will n
 
    vn.label("ws_reset")
    vn.func( function ()
-      local curship = player.pilot():name()
-      local ships = player.ships()
-      local deployed = {}
-      for k,s in ipairs( ships ) do
-         if s.deployed then
-            table.insert( deployed, s )
-         end
-      end
-      for k,s in ipairs( ships ) do
-         player.shipSwap( s.name, true )
-         player.pilot():weapsetAuto()
-      end
-      player.shipSwap( curship, true )
-      player.pilot():weapsetAuto()
-      for k,s in ipairs( deployed ) do
-         player.shipDeploy( s.name, true )
-      end
+      apply_all_ships( function( p )
+         p:weapsetAuto()
+      end )
    end )
    sai(_([["I've reset all the weapon sets on all your ships. Hopefully they should be easier to use now!"]]))
    vn.jump("ws_done")
@@ -356,7 +400,7 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.2") < 0) then
+   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.4") < 0) then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end

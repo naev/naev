@@ -2,13 +2,21 @@
  <general>
   <shortname>Prev. Gen. Large Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>large</size>
-  <mass>640</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua>outfits/core_system/large/previous_generation_large_systems.lua</lua></specific>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 640, 640},
+   { "cpu_max", 380, 0},
+   { "energy", 1760, 0},
+   { "energy_regen", 35, 0},
+   { "shield", 500, 0},
+   { "shield_regen", 9, 0},
+}</lua_inline>
+ </specific>
 </outfit>

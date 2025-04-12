@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Worn Down">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>This ship is extremely worn down and is barely functional.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>badship</limit>
+ </general>
+ <specific type="modification">
+  <speed_mod>-30</speed_mod>
+  <turn_mod>-30</turn_mod>
+  <accel_mod>-30</accel_mod>
+  <weapon_firerate>-30</weapon_firerate>
+  <weapon_damage>-30</weapon_damage>
+  <weapon_range>-30</weapon_range>
+  <ew_track>-30</ew_track>
+  <armour_mod>-30</armour_mod>
+  <shield_mod>-30</shield_mod>
+  <energy_mod>-30</energy_mod>
+  <shield_regen_mod>-50</shield_regen_mod>
+  <armour_regen_mod>-50</armour_regen_mod>
+  <!-- Disabled until we can equip intrinsic outfits before equipopt. -->
+  <!--<energy_regen_mod>-50</energy_regen_mod>-->
+  <ew_signature>30</ew_signature>
+ </specific>
+</outfit>

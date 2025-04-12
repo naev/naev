@@ -17,6 +17,10 @@ local function valcol( val, inverted )
 end
 
 local function stattostr( s, val, grey, unit )
+   if val == 0 then
+      return "#n."
+   end
+
    local col
    if grey then
       col = "#n"
@@ -31,8 +35,9 @@ local function stattostr( s, val, grey, unit )
    end
    if unit and s.unit then
       return col..fmt.f("{val} {unit}", {val=str, unit=_(s.unit)})
+   else
+      return col..str
    end
-   return col..str
 end
 
 local function add_desc( stat, nomain, nosec )
@@ -43,14 +48,16 @@ local function add_desc( stat, nomain, nosec )
    local p = base or 0
    local s = secondary or 0
 
+   nomain = nomain or p == 0
+   nosec = nosec or s == 0
    local col = valcol( p+s, stat.stat.inverted )
    local pref = col..fmt.f("{name}: ",{name=name})
    if p==s then
       return pref..stattostr( stat.stat, base, false, true )
    else
       return pref..fmt.f("{bas} #n/#0 {sec}", {
-         bas = stattostr( stat.stat, p, nomain, false ),
-         sec = stattostr( stat.stat, s, nosec, true ),
+         bas = stattostr( stat.stat, p, nomain, nosec),
+         sec = stattostr( stat.stat, s, nosec, nomain or not nosec),
       })
    end
 end
