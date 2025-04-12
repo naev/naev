@@ -827,6 +827,9 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
                 maxlen = 8
             pntNplg = polygonFromImg( img, sx, sy, alpha_threshold, minlen, maxlen )
 
+            if outpath != None:
+                outname = f"{outpath}/ship2d/{tag.text}.xml"
+
         # Not generated
         if pntNplg==None:
             print(f"Skipping '{filename}'...")
@@ -862,7 +865,7 @@ Examples:
 {sys.argv[0]} dat/ships/neutral/admonisher.xml
 
 # Generate  the collision polygons for a ship that is fully contained in a plugin at /path/to/plugin
-{sys.argv[0]} --gfxpath /path/to/plugin/gfx/ --outpath /path/to/plugin/polygon/ /path/to/plugin/ships/MyShip.xml
+{sys.argv[0]} --gfxpath /path/to/plugin/gfx/ --outpath /path/to/plugin/collision/ /path/to/plugin/ships/MyShip.xml
 """)
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the ship XML file(s) to parse. Data is extracted from the ship definition about the sprites and/or 3D models.')
     parser.add_argument('--outpath', help="Path to output the polygons to.", type=str, default="dat/polygon" )
