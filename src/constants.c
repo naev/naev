@@ -11,6 +11,7 @@
 
 constants CTS = {
    .PHYSICS_SPEED_DAMP  = 3., /* Default before 0.13.0. */
+   .STEALTH_MIN_DIST    = 1000.,
    .EW_JUMP_BONUS_RANGE = 2500.,
    .EW_ASTEROID_DIST    = 7.5e3,
    .EW_JUMPDETECT_DIST  = 7.5e3,
@@ -47,6 +48,8 @@ int constants_init( void )
    } while ( 0 )
 
    CT_DBL( PHYSICS_SPEED_DAMP );
+   CT_DBL( STEALTH_MIN_DIST );
+
    CT_DBL( EW_JUMP_BONUS_RANGE );
    CT_DBL( EW_ASTEROID_DIST );
    CT_DBL( EW_JUMPDETECT_DIST );
