@@ -143,9 +143,6 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path,
             };
             const char *wht[] = {
                "^events/settings.lua",
-               // These events are useful for doing wormholes and hypergates
-               "^events/hypergate.lua",
-               "^events/wormhole.lua",
                NULL,
             };
             for ( int i = 0; blk[i] != NULL; i++ )
