@@ -45,16 +45,17 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_CARGO_INERTIA, /**< Modifies the effect of cargo_mass. */
 
    /* Electronic warfare. */
-   SS_TYPE_D_EW_HIDE,       /**< Electronic warfare hide modifier. (affects
-                               ew_detection) */
-   SS_TYPE_D_EW_SIGNATURE,  /**< Electronic warfare signature modifier. (affects
-                               ew_signature) */
-   SS_TYPE_D_EW_STEALTH,    /**< Electronic warfare stealth modifier. (affects
-                               ew_stealth) */
-   SS_TYPE_D_EW_DETECT,     /**< Electronic warfare detection modifier. */
-   SS_TYPE_D_EW_TRACK,      /**< Electronic warfare tracking modifier. */
-   SS_TYPE_D_EW_JUMPDETECT, /**< Electronic warfare jump point detection
-                               modifier. */
+   SS_TYPE_D_EW_HIDE,      /**< Electronic warfare hide modifier. (affects
+                              ew_detection) */
+   SS_TYPE_D_EW_SIGNATURE, /**< Electronic warfare signature modifier. (affects
+                              ew_signature) */
+   SS_TYPE_D_EW_STEALTH,   /**< Electronic warfare stealth modifier. (affects
+                              ew_stealth) */
+   SS_TYPE_D_EW_STEALTH_MIN,   /**< Modifier for minimum stealth value. */
+   SS_TYPE_D_EW_DETECT,        /**< Electronic warfare detection modifier. */
+   SS_TYPE_D_EW_TRACK,         /**< Electronic warfare tracking modifier. */
+   SS_TYPE_D_EW_JUMPDETECT,    /**< Electronic warfare jump point detection
+                                  modifier. */
    SS_TYPE_D_EW_STEALTH_TIMER, /**< Electronic warfare stealth timer decrease
                                   speed. */
    SS_TYPE_D_EW_SCANNED_TIME,  /**< Electronic warfare time it takes to get
@@ -272,11 +273,12 @@ typedef struct ShipStats_ {
    double cargo_inertia; /**< Lowers the effect of cargo mass. */
 
    /* Stealth. */
-   double ew_hide;      /**< Electronic warfare hide modifier. */
-   double ew_signature; /**< Electronic warfare signature modifier. */
-   double ew_stealth;   /**< Electronic warfare stealth modifier. */
-   double ew_detect;    /**< Electronic warfare detection modifier. */
-   double ew_track;     /**< Electronic warfare tracking modifier. */
+   double ew_hide;        /**< Electronic warfare hide modifier. */
+   double ew_signature;   /**< Electronic warfare signature modifier. */
+   double ew_stealth;     /**< Electronic warfare stealth modifier. */
+   double ew_stealth_min; /**< Electronic warfare minimum stealth modifier. */
+   double ew_detect;      /**< Electronic warfare detection modifier. */
+   double ew_track;       /**< Electronic warfare tracking modifier. */
    double
       ew_jump_detect; /**< Electronic warfare jump point detection modifier. */
    double ew_stealth_timer; /**< Stealth timer decrease speed. */
