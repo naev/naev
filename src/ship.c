@@ -572,6 +572,8 @@ static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
    if ( array_size( temp->polygon.views ) <= 0 )
       flags |= OPENGL_TEX_MAPTRANS;
    temp->gfx_space = gl_newSprite( str, sx, sy, flags );
+   /* 2D graphics will overwrite the size. */
+   temp->size = temp->gfx_space->sw * 0.5 + temp->gfx_space->sh * 0.5;
    return 0;
 }
 
