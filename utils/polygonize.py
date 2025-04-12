@@ -817,6 +817,7 @@ def polygonify_ship( filename, outpath, gfxpath, use2d=True, use3d=True ):
                 imgpath = f"{gfxpath}/ship/{tag.text.split('_')[0]}/{tag.text}.png"
             sx = int(tag.get("sx")) if tag.get("sx")!=None else 8
             sy = int(tag.get("sy")) if tag.get("sy")!=None else 8
+            sx, sy = sy, sx # Seems like it's flipped :/
             alpha_threshold = 50
             minlen  = 3
             maxlen  = 6
