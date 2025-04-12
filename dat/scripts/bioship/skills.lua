@@ -25,8 +25,10 @@ skills.set.bite = {
       requires = { "bite1" },
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
-         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a {cooldown} second cooldown period."),{dmg=dmg,
-            accel_mod=constants.BITE_ACCEL_MOD,speed_mod=constants.BITE_SPEED_MOD, absorb=30, duration=15, cooldown=15,
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass ({mass}). Has a {cooldown} second cooldown period."),{
+            dmg=dmg, accel_mod=constants.BITE_ACCEL_MOD,
+            speed_mod=constants.BITE_SPEED_MOD,
+            absorb=30, duration=15, mass=fmt.tonnes_short(p:mass()), cooldown=15,
          })
       end,
       icon = "fangs.webp",
@@ -38,7 +40,7 @@ skills.set.bite = {
       shipvar = "cannibal2",
       desc = fmt.f(_("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle. In addition to that, lunge now provides {absorb}% absorb and {heal}% of bitten armour is restored to the ship."),{
             absorb=40, heal=10,
-      })
+      }),
       outfit = "The Bite - Cannibal",
       slot = "the_bite",
       icon = "food-chain.webp",
