@@ -139,11 +139,11 @@ int dpl_saveSpob( const Spob *p )
          }
          xmlw_endElem( writer ); /* "commodities" */
       }
-
-      xmlw_elem( writer, "description", "%s", p->description );
-      if ( spob_hasService( p, SPOB_SERVICE_BAR ) )
-         xmlw_elem( writer, "bar", "%s", p->bar_description );
    }
+   if ( p->description != NULL )
+      xmlw_elem( writer, "description", "%s", p->description );
+   if ( p->bar_description != NULL )
+      xmlw_elem( writer, "bar", "%s", p->bar_description );
    xmlw_endElem( writer ); /* "general" */
 
    /* Tech. */
