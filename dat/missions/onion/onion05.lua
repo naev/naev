@@ -105,7 +105,7 @@ function accept ()
    trixie(_([["Have you been binging on self-help Vnexers again?"]]))
    l337(_([["Err, no? W-Why w-w-would you think that?"O
 You believe you see the avatar blush.]]))
-   trixie(_([["Nevermind... On with it, or I'll do it myself!"]]))
+   trixie(_([["Never mind... On with it, or I'll do it myself!"]]))
    l337(_([["Ahem! So anyway, remember the talk about the Nexus backbone hack?"]]))
    vn.menu{
       {_([["Remind me again."]]), "02_cont"},
@@ -559,13 +559,22 @@ The words blend into inconsolable yelling and sobbing.]]))
    vn.menu{
       {_([["It's not your fault."]]), "03_fault"},
       {_([["Let's get those bastards."]]), "03_bastards"},
+      {_([["She could be alright still."]]), "03_alright"},
    }
 
    vn.label("03_fault")
    l337(_([[""]]))
+   vn.jump("03_cont")
 
    vn.label("03_bastards")
    l337(_([[""]]))
+   vn.jump("03_cont")
+
+   vn.label("03_alright")
+   l337(_([[""]]))
+   vn.jump("03_cont")
+
+   vn.label("03_cont")
 
    vn.done("electric")
    vn.run()
