@@ -3985,7 +3985,7 @@ static int pilotL_outfitRmIntrinsic( lua_State *L )
 {
    Pilot        *p = luaL_validpilot( L, 1 );
    const Outfit *o = luaL_validoutfit( L, 2 );
-   lua_pushboolean( L, pilot_rmOutfitIntrinsic( p, o ) );
+   lua_pushboolean( L, !pilot_rmOutfitIntrinsic( p, o ) );
    return 1;
 }
 

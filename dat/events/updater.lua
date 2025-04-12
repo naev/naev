@@ -60,7 +60,7 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
       end
       if count>1 then
          for _i,o in ipairs(GauntletIntrinsics) do
-            if not plt:outfitRmIntrinsic( o ) then
+            if plt:outfitRmIntrinsic( o ) then
                print(fmt.f("\t{ship} '{shipname}': {name} refunded for 2500 Crimson Emblems.",{
                   ship=plt:ship():name(),
                   shipname=plt:name(),
