@@ -760,7 +760,7 @@ static int ship_loadPLG( Ship *temp, const char *buf )
    if ( temp->gfx_3d != NULL )
       snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH3D, buf );
    else
-      snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH, buf );
+      snprintf( file, sizeof( file ), "%s%s.xml", SHIP_POLYGON_PATH2D, buf );
 
    /* See if the file does exist. */
    if ( !PHYSFS_exists( file ) ) {
