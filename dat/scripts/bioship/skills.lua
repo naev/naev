@@ -13,7 +13,6 @@ skills.set.bite = {
    ["bite1"] = {
       name = _("Cannibal I"),
       tier = 1,
-      shipvar = "cannibal",
       desc = _("The ship is able to cannibalize boarded vessels to restore armour. For every 2 points of armour cannibalized, the ship will gain a single point of armour."),
       icon = "food-chain.webp",
    },
@@ -43,7 +42,6 @@ skills.set.bite = {
       outfit = "The Bite - Cannibal",
       slot = "the_bite",
       icon = "food-chain.webp",
-      shipvar = "cannibal2",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
