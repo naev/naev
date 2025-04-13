@@ -99,6 +99,7 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
+   ["Camouflage Burster"]   = "Stealth Burster",
    -- Multicore transformation.
    -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
    -- See finish() above.

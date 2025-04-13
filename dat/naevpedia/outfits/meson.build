@@ -296,7 +296,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/utility/blink_drive.xml',
    root / 'dat/outfits/utility/boarding_androids_mk1.xml',
    root / 'dat/outfits/utility/boarding_androids_mk2.xml',
-   root / 'dat/outfits/utility/camouflage_burster.xml',
+   root / 'dat/outfits/utility/stealth_burster.xml',
    root / 'dat/outfits/utility/catalytic_energy_drill.xml',
    root / 'dat/outfits/utility/cloaking_device.xml',
    root / 'dat/outfits/utility/combat_hologram_projector.xml',
