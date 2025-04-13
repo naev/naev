@@ -51,16 +51,21 @@ function update_bioship ()
       -- In particular, this was triggered by some of the 0.13.0-alphaX
       -- pre-releases because they added new slots that would displace the
       -- bioship skills and cause them not to equip.
+      -- TODO maybe move this into the updater script or an onload script
+      local playerskills ={}
       for i,set in pairs(bioskills.set) do
          for j,skill in pairs(set) do
-            local svar = skill.shipvar
-            if svar then
-               local enabled = pp:shipvarPeek( svar )
-               if enabled then
-                  bioship.skill_enable( pp, skill )
-               end
+            local svar = "bio_"..j
+            if pp:shipvarPeek( svar ) then
+               table.insert( playerskills, skill )
             end
          end
+      end
+      table.sort( playerskills, function( a, b )
+         return a.tier < b.tier
+      end )
+      for k,skill in ipairs(playerskills) do
+         bioship.skill_enable( pp, skill )
       end
    end
 end
