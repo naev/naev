@@ -264,6 +264,18 @@ local function loaddoc( filename )
    meta._G.table = table
    meta._G.inlist = inlist
    meta._G.naevpedia = naevpedia
+   meta._G.constant = function( name, units )
+      local CTS = require "constants"
+      local value = fmt.number( CTS[name] )
+      if not value then
+         warn(fmt.f(_("Constant '{name} not found!"), {name=name}))
+         return nil
+      end
+      if not units then
+         return value
+      end
+      return fmt.f(_("{constant} {units}"), { constant = value, units = naev.unit(units) } )
+   end
 
    -- Translate line by line
    -- TODO ignore <% %> blocks like the python script does.

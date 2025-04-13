@@ -1261,8 +1261,14 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       }
       if ( xml_isNode( node, "slots" ) ) {
          /* Clean up, just in case. */
+         for ( int i = 0; i < array_size( temp->outfit_structure ); i++ )
+            free( temp->outfit_structure[i].name );
          array_free( temp->outfit_structure );
+         for ( int i = 0; i < array_size( temp->outfit_utility ); i++ )
+            free( temp->outfit_utility[i].name );
          array_free( temp->outfit_utility );
+         for ( int i = 0; i < array_size( temp->outfit_weapon ); i++ )
+            free( temp->outfit_weapon[i].name );
          array_free( temp->outfit_weapon );
          /* Allocate the space. */
          temp->outfit_structure = array_create( ShipOutfitSlot );

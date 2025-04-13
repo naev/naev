@@ -127,7 +127,9 @@ local function skill_disable( p, s, keepvar )
       if slot then
          local sl = slot[k]
          if p:outfitSlot( sl ) == naev.outfit.get(o) then
-            p:outfitRmSlot( sl )
+            if not p:outfitRmSlot( sl ) then
+               warn(fmt.f(_("Failed to remove bioship outfit from slot '{sl}'."),{sl=sl}))
+            end
          end
       else
          p:outfitRmIntrinsic( o )
@@ -136,9 +138,6 @@ local function skill_disable( p, s, keepvar )
    if not keepvar and p == player.pilot() then
       if s.id then
          p:shipvarPop( s.id )
-      end
-      if s.shipvar then
-         p:shipvarPop( s.shipvar )
       end
    end
    if not keepvar then
@@ -167,8 +166,12 @@ local function skill_enable( p, s )
    for k,o in ipairs(outfit) do
       if slot then
          local sl = slot[k]
-         p:outfitRmSlot( sl )
-         p:outfitAddSlot( o, sl, true, true )
+         if p:outfitSlot(sl) and not p:outfitRmSlot(sl) then
+            warn(fmt.f(_("Failed to remove bioship outfit from slot '{sl}'."),{sl=sl}))
+         end
+         if not p:outfitAddSlot( o, sl, true, true ) then
+            warn(fmt.f(_("Failed to add bioship outfit '{outfit}' to slot '{sl}'."),{outfit=o,sl=sl}))
+         end
       else
          p:outfitAddIntrinsic( o )
       end
@@ -176,9 +179,6 @@ local function skill_enable( p, s )
    if p == player.pilot() then
       if s.id then
          p:shipvarPush( s.id, true )
-      end
-      if s.shipvar then
-         p:shipvarPush( s.shipvar, true )
       end
    end
    s.enabled = true

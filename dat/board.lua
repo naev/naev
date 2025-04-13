@@ -488,7 +488,7 @@ local function can_cannibalize ()
    if pp:ship():tags().cannibal then
       return true
    end
-   if player.shipvarPeek("cannibal") then
+   if player.shipvarPeek("bio_bite1") then
       return true
    end
    for _k,o in ipairs(pp:outfitsList("all")) do
@@ -518,7 +518,7 @@ local _board
 
 local function _board_cannibalize(spare)
    local armour, shield = board_plt:health(true)
-   local cannibal2 = player.shipvarPeek("cannibal2")
+   local cannibal2 = player.shipvarPeek("bio_bite2")
 
    local bs = board_plt:stats()
 
@@ -674,7 +674,7 @@ _board = function ( plt )
    local lootables = compute_lootables( plt )
 
    local pp = player.pilot()
-   if player.shipvarPeek("cannibal2") then
+   if player.shipvarPeek("bio_bite2") then
       pp:cooldownCycle()
    end
 

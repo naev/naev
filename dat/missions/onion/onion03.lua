@@ -432,6 +432,9 @@ Quite a fancy way of referring to connecting into a full sensorial holodeck.]]),
    }
 
    vn.label("02_sick")
+   vn.func( function ()
+      var.push( "nexus_sickness", true )
+   end )
    l337er(_([["Ah, the good old Nexus syndrome. You'll get used to it, and after a while, you'll look forward to it. It's not that bad."]]))
    vn.jump("02_cont")
 

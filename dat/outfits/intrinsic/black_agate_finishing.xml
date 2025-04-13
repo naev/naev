@@ -12,6 +12,7 @@
  </general>
  <specific type="modification">
   <lua>outfits/intrinsic/black_agate_finishing.lua</lua>
-  <ew_stealth>-5</ew_stealth>
+  <ew_stealth>-7</ew_stealth>
+  <ew_stealth_min>-7</ew_stealth_min>
  </specific>
 </outfit>

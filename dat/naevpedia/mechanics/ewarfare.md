@@ -22,7 +22,7 @@ This will show you things such as the outfits the ship has and the cargo it is c
 
 Similarly, other ships will scan your ship when targeting it.
 This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions.
-Ships scanning your are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav).
+Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav).
 
 ## Detection and Hiding
 
@@ -33,9 +33,9 @@ Since this value determines the base signature and stealth values of the ship, i
 
 ### Detecting Space Objects and Jumps
 
-For detecting general objects such as jump points or asteroids, the detection distance has a base value of 7,500 km.
+For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( "EW_JUMPDETECT_DIST", "distance" ) %>.
 This distance can be modified by values such as how well hidden the jump is.
-For space objects such as planets or stations the base value is 20,000 km, subject to the individual properties of the object.
+For space objects such as planets or stations the base value is <%= constant( "EW_SPOBDETECT_DIST", "distance" ) %>, subject to the individual properties of the object.
 
 ## Signature and Tracking
 
@@ -63,12 +63,13 @@ The stealth range of a ship is based on 25% of the detection range.
 If there are no ships within the stealth range, the ship will be able to enter stealth mode.
 In stealth mode, the ship will be undetectable, however, it will have its [movement](mechanics/movement) significantly reduced.
 In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%.
+The minimum range of stealth is <%= constant( "STEALTH_MIN_DIST", "distance" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference.
 
 ### Jumping with Stealth
 
 When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points.
 Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point.
-Being within 2,500 units of jump points also lowers the stealth range by 50%, making it significantly easier to stealth.
+Being within <%= constant( "EW_JUMP_BONUS_RANGE", "distance" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth.
 
 ## Scanning
 

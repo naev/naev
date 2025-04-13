@@ -3488,7 +3488,39 @@ msgid "# Autonav"
 msgstr ""
 
 #: dat/naevpedia/mechanics/autonav.md:6
-msgid "TODO"
+msgid "Your ship is equipped with an Automatic Navigation system, usually abbreviated as Autonav."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:7
+msgid "This system allows your ship to automatically go to target locations, land on planets, follow ships, and even fly along routes to far away systems."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:9
+msgid "Autonav can be triggered several different ways, but the main way is by opening the overlay map with the <%= \"#b\"..naev.keyGet(\"overlay\")..\"#0\" %> key, and then right-clicking to go to a location."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:10
+msgid "You can also double-click on a space object such as a planet to land on it, double-click on a jump point to use it, or right-click on a selected pilot to automatically follow them."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:12
+msgid "You can also activate autonav directly from the [star map](mechanics/map) by selecting a system and clicking on the #bAutonav#0 button to go to it."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:14
+msgid "## Settings"
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:16
+msgid "Autonav settings can be modified from the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:17
+msgid "Afterwards, click on the #bsettings#0 button from the main tab."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:19
+msgid "You can control many aspects of the behaviour, such as whether or not you follow pilots that jump or land, whether or not you move along the patrol lanes, or whether you match speed with the slowest ship in your fleet, among other options."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:2
@@ -4077,7 +4109,7 @@ msgid "This is usually not a problem, however, if you are carrying outfits or co
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:25
-msgid "Ships scanning your are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
+msgid "Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:27
@@ -4105,7 +4137,7 @@ msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:36
-msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of 7,500 km."
+msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:37
@@ -4113,7 +4145,7 @@ msgid "This distance can be modified by values such as how well hidden the jump 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:38
-msgid "For space objects such as planets or stations the base value is 20,000 km, subject to the individual properties of the object."
+msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:40
@@ -4200,51 +4232,55 @@ msgstr ""
 msgid "In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:67
+#: dat/naevpedia/mechanics/ewarfare.md:66
+msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:68
 msgid "### Jumping with Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:69
+#: dat/naevpedia/mechanics/ewarfare.md:70
 msgid "When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:70
+#: dat/naevpedia/mechanics/ewarfare.md:71
 msgid "Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:71
-msgid "Being within 2,500 units of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
+#: dat/naevpedia/mechanics/ewarfare.md:72
+msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:73
+#: dat/naevpedia/mechanics/ewarfare.md:74
 msgid "## Scanning"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:75
+#: dat/naevpedia/mechanics/ewarfare.md:76
 msgid "Like the detection range, the scanning time of a ship is determined by its mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:76
+#: dat/naevpedia/mechanics/ewarfare.md:77
 msgid "The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:77
+#: dat/naevpedia/mechanics/ewarfare.md:78
 msgid "This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:79
+#: dat/naevpedia/mechanics/ewarfare.md:80
 msgid "## System Modifiers"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:81
+#: dat/naevpedia/mechanics/ewarfare.md:82
 msgid "System modifiers such as asteroid fields and interference can further affect electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:82
+#: dat/naevpedia/mechanics/ewarfare.md:83
 msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:83
+#: dat/naevpedia/mechanics/ewarfare.md:84
 msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
@@ -5621,7 +5657,7 @@ msgid "There are three types of weapons sets:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:37
-msgid "1. **Default**: .Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
+msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
@@ -5637,7 +5673,7 @@ msgid "You have a total of 12 weapon sets, including primary and secondary, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:42
-msgid "To change the type of a weapon set, select it and then press **Cycle Mode**."
+msgid "To change the type of weapon set, select it and then press **Cycle Mode**."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:43
@@ -9404,7 +9440,39 @@ msgid "# Autonav"
 msgstr ""
 
 #: dat/naevpedia/mechanics/autonav.md:6
-msgid "TODO"
+msgid "Your ship is equipped with an Automatic Navigation system, usually abbreviated as Autonav."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:7
+msgid "This system allows your ship to automatically go to target locations, land on planets, follow ships, and even fly along routes to far away systems."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:9
+msgid "Autonav can be triggered several different ways, but the main way is by opening the overlay map with the <%= \"#b\"..naev.keyGet(\"overlay\")..\"#0\" %> key, and then right-clicking to go to a location."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:10
+msgid "You can also double-click on a space object such as a planet to land on it, double-click on a jump point to use it, or right-click on a selected pilot to automatically follow them."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:12
+msgid "You can also activate autonav directly from the [star map](mechanics/map) by selecting a system and clicking on the #bAutonav#0 button to go to it."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:14
+msgid "## Settings"
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:16
+msgid "Autonav settings can be modified from the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:17
+msgid "Afterwards, click on the #bsettings#0 button from the main tab."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:19
+msgid "You can control many aspects of the behaviour, such as whether or not you follow pilots that jump or land, whether or not you move along the patrol lanes, or whether you match speed with the slowest ship in your fleet, among other options."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:2
@@ -9993,7 +10061,7 @@ msgid "This is usually not a problem, however, if you are carrying outfits or co
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:25
-msgid "Ships scanning your are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
+msgid "Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:27
@@ -10021,7 +10089,7 @@ msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:36
-msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of 7,500 km."
+msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:37
@@ -10029,7 +10097,7 @@ msgid "This distance can be modified by values such as how well hidden the jump 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:38
-msgid "For space objects such as planets or stations the base value is 20,000 km, subject to the individual properties of the object."
+msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:40
@@ -10116,51 +10184,55 @@ msgstr ""
 msgid "In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:67
+#: dat/naevpedia/mechanics/ewarfare.md:66
+msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:68
 msgid "### Jumping with Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:69
+#: dat/naevpedia/mechanics/ewarfare.md:70
 msgid "When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:70
+#: dat/naevpedia/mechanics/ewarfare.md:71
 msgid "Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:71
-msgid "Being within 2,500 units of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
+#: dat/naevpedia/mechanics/ewarfare.md:72
+msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:73
+#: dat/naevpedia/mechanics/ewarfare.md:74
 msgid "## Scanning"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:75
+#: dat/naevpedia/mechanics/ewarfare.md:76
 msgid "Like the detection range, the scanning time of a ship is determined by its mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:76
+#: dat/naevpedia/mechanics/ewarfare.md:77
 msgid "The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:77
+#: dat/naevpedia/mechanics/ewarfare.md:78
 msgid "This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:79
+#: dat/naevpedia/mechanics/ewarfare.md:80
 msgid "## System Modifiers"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:81
+#: dat/naevpedia/mechanics/ewarfare.md:82
 msgid "System modifiers such as asteroid fields and interference can further affect electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:82
+#: dat/naevpedia/mechanics/ewarfare.md:83
 msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:83
+#: dat/naevpedia/mechanics/ewarfare.md:84
 msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
@@ -11537,7 +11609,7 @@ msgid "There are three types of weapons sets:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:37
-msgid "1. **Default**: .Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
+msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
@@ -11553,7 +11625,7 @@ msgid "You have a total of 12 weapon sets, including primary and secondary, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:42
-msgid "To change the type of a weapon set, select it and then press **Cycle Mode**."
+msgid "To change the type of weapon set, select it and then press **Cycle Mode**."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:43
