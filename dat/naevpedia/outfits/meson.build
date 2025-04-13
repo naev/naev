@@ -245,7 +245,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/special/four_winds_laser_cannon.xml',
    root / 'dat/outfits/special/four_winds_ragnarok_beam.xml',
    root / 'dat/outfits/structure/active_plating.xml',
-   root / 'dat/outfits/structure/adaptive_stealth_plating.xml',
+   root / 'dat/outfits/structure/adaptive_camouflage_plating.xml',
    root / 'dat/outfits/structure/auxiliary_processing_unit_i.xml',
    root / 'dat/outfits/structure/auxiliary_processing_unit_ii.xml',
    root / 'dat/outfits/structure/auxiliary_processing_unit_iii.xml',

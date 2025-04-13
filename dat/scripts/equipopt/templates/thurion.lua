@@ -38,7 +38,7 @@ local thurion_outfits = eoutfits.merge{{
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Adaptive Stealth Plating",
+   "Adaptive Camouflage Plating",
    "Small Shield Booster",
 }}
 
