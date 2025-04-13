@@ -1,5 +1,6 @@
 local fmt = require "format"
 local luatk = require "luatk"
+local constants=require "constants"
 
 local skills = {
    set = {},
@@ -24,7 +25,11 @@ skills.set.bite = {
       requires = { "bite1" },
       desc = function( p )
          local dmg = 10*math.sqrt(p:mass())
-         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +600% accel and +30% absorb for 3 seconds or until target ship is bitten. This ship will do {dmg:.0f} damage with its current mass. Has a 15 second cooldown period."),{dmg=dmg})
+         return fmt.f(_("The ship will lunge at the target enemy and take a huge bite out of it. +{accel_mod}% accel, +{speed_mod}% speed and +{absorb}% absorb for {duration} seconds or until target ship is bitten. This ship will do {dmg} damage with its current mass ({mass}). Has a {cooldown} second cooldown period."),{
+            dmg=fmt.number(dmg), accel_mod=constants.BITE_ACCEL_MOD,
+            speed_mod=constants.BITE_SPEED_MOD,
+            absorb=30, duration=3, mass=fmt.tonnes_short(p:mass()), cooldown=15,
+         })
       end,
       icon = "fangs.webp",
    },
@@ -32,17 +37,21 @@ skills.set.bite = {
       name = _("Cannibal II"),
       tier = 3,
       requires = { "bite2" },
-      shipvar = "cannibal2",
-      desc = _("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle. In addition to that, 10% of bitten armour is restored to the ship."),
+      desc = fmt.f(_("Cannibalizing boarded ships will now restore 2 points of armour per 3 points of armour cannibalized, and boarding will cause your ship to perform a full cooldown cycle. In addition to that, lunge now provides {absorb}% absorb and {heal}% of bitten armour is restored to the ship."),{
+            absorb=40, heal=10,
+      }),
       outfit = "The Bite - Cannibal",
       slot = "the_bite",
       icon = "food-chain.webp",
+      shipvar = "cannibal2",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
       tier = 4,
-      requires = {"bite3"},
-      desc = _("Lunge time increased to 5 seconds. On successful bite, weapon damage is increased by 25% for 10 seconds."),
+      requires = { "bite3" },
+      desc = fmt.f(_("Lunge now provides {absorb}% absorb and lunge time increased to {lunge_time} seconds. On successful bite, weapon damage is increased by {weapon_damage}% for {bloodlust_duration} seconds."),{
+         lunge_time=5, absorb=50, weapon_damage=25, bloodlust_duration=10,
+      }),
       outfit = "The Bite - Blood Lust",
       slot = "the_bite",
       icon = "delighted.webp",
@@ -50,8 +59,10 @@ skills.set.bite = {
    ["bite5"] = {
       name = _("Strong Jaws"),
       tier = 5,
-      requires = {"bite4"},
-      desc = _("Bite damage increased by 50%, and 25% of bitten armour is restored to the ship."),
+      requires = { "bite4" },
+      desc = fmt.f(_("Bite damage increased by {bite_damage}%, and {heal}% of bitten armour is restored to the ship."),{
+         bite_damage=50, heal=25,
+      }),
       outfit = "The Bite - Improved",
       slot = "the_bite",
       icon = "gluttonous-smile.webp",

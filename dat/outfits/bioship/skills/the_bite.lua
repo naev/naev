@@ -6,8 +6,9 @@ local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local helper = require "outfits.lib.helper"
+local constants = require "constants"
 
-local cooldown = 15 -- cooldown time in seconds
+local COOLDOWN = 15 -- cooldown time in seconds
 local oshader = osh.new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
@@ -15,7 +16,7 @@ uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
    vec4 colour     = texture( tex, texcoord );
-   float opacity  = clamp( progress, 0.0, 1.0 );
+   float opacity   = clamp( progress, 0.0, 1.0 );
    colour.rgb      = blendSoftLight( colour.rgb, colmod, opacity );
    return colour;
 }
@@ -23,11 +24,9 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 
 local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
 local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
-local constants=require "constants"
-
 
 local function turnoff_afterburner()
-   local pp=player.pilot()
+   local pp = player.pilot()
    for _i,n in ipairs(pp:actives()) do
       if n.outfit:tags().movement and n.state=="on" then
          if not pp:outfitToggle( n.slot ) then -- Failed to disable
@@ -80,11 +79,6 @@ local function turnon( p, po )
    mem.active = true
    mem.target = t
 
-   -- Apply stats
-   po:clear()
-   po:set( "accel_mod", constants.BITE_ACCEL_MOD )
-   po:set( "speed_mod", constants.BITE_SPEED_MOD )
-
    p:control(true)
    p:pushtask( "lunge", t )
 
@@ -107,7 +101,7 @@ local function turnoff( p, po )
 
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
+   mem.timer = COOLDOWN * p:shipstat("cooldown_mod",true)
    mem.active = false
    p:control(false)
    oshader:off()
@@ -153,32 +147,47 @@ end
 function descextra( p, o )
    if p then
       local mass = p:mass()
-      local dmg = 10*math.sqrt(mass)
-      local dur = 3
+      local values={
+         dmg = 10 * math.sqrt(mass),
+         accel_mod = constants.BITE_ACCEL_MOD,
+         speed_mod = constants.BITE_SPEED_MOD,
+         duration = 3,
+         mass = fmt.tonnes_short(mass),
+         heal = 10,
+         cooldown = COOLDOWN,
+         bloodlust_dam = 25,
+         bloodlust_duration = 10,
+      }
+
       local improved = (o==o_improved)
       local lust = improved or (o==o_lust)
       local can = (o==o_can)
 
       if lust then
-         dur = 5
+         values.duration = 5
       end
       if improved then
-         dmg = dmg * 1.5
+         values.dmg = values.dmg * 1.5
+         values.heal = 25
       end
-      dmg = "#o"..fmt.number(dmg).."#0"
+      values.dmg= fmt.number(values.dmg)
+
+      local des=fmt.f(_(
+[[#gAcceleration: +{accel_mod}%#0
+#gSpeed: +{speed_mod}%#0
+#gDuration: {duration} sec or until the target ship is bitten#0
+#oCooldown: {cooldown} sec.#0
+The ship will lunge at the target enemy and take a huge bite out of it, dealing #g{dmg} damage#0 with its current mass ({mass}).
+]]),values)
 
       if improved then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}) [Strong Jaws]. On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
-            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+         return des..fmt.f(_("On successful bite, weapon damage is increased by {bloodlust_dam}% for #g{bloodlust_duration} seconds#0 #p[Blood Lust]#0 and {heal}% of bitten armour is restored to the ship #p[Strong Jaws]#0."),values)
       elseif lust then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 10% of bitten armour is restored to the ship [Cannibal II]."),
-            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+         return des..fmt.f(_("On successful bite, weapon damage is increased by #g+{bloodlust_dam}%#0 for #g{bloodlust_duration} seconds#0 #p[Blood Lust]#0 and #g{heal}%#0 of bitten armour is restored to the ship #p[Cannibal II]#0."),values)
       elseif can then
-         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage} damage ({mass}). On successful bite, 10% of bitten armour is restored to the ship [Cannibal II]."),
-            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+         return des..fmt.f(_("On successful bite, #g{heal}%#0 of bitten armour is restored to the ship #p[Cannibal II]#0"),values)
       else
-         return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage} damage ({mass})."),
-            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+         return des
       end
    end
    return _("Makes the ship lunge at the target to take a bite out of it. Damage is based on ship's mass.")
@@ -254,7 +263,7 @@ function update( p, po, dt )
       end
    else
       oshader:update_cooldown(dt)
-      po:progress( mem.timer / cooldown )
+      po:progress( mem.timer / COOLDOWN )
       if mem.timer < 0 then
          po:state("off")
          mem.timer = nil

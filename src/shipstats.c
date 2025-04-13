@@ -650,6 +650,7 @@ static int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
       else
          ss_adjustDoubleStat( dbl, list->d.d * scale, sl->inverted );
       break;
+
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
    case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
       fieldptr = &ptr[sl->offset];

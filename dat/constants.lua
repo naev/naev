@@ -9,6 +9,8 @@ return {
    EW_SPOBDETECT_DIST   = 20e3, -- Range at which a spob with hide==1 is detected
 
    -- Constants used by Lua scripts
-   BITE_ACCEL_MOD = 500,
-   BITE_SPEED_MOD = 80,
+   --BITE_ACCEL_MOD = 500,
+   --BITE_SPEED_MOD = 80,
+   BITE_ACCEL_MOD = 390, -- like hades_torch
+   BITE_SPEED_MOD = 110, -- like adrenal_glands_ii
 }
