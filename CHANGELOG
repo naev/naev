@@ -47,11 +47,13 @@
       * Outfits support inline Lua definitions
       * Can override long class names of spobs
       * Changed how ship statistics are computed: those from same source will be additive, while different sources will be multiplicative
-      * New ship stats
+      * New ship stats and changes
          * Minimum Stealth Range
          * Absolute Mass
          * Absolute CPU
          * Temporary Invincibility
+         * Detection Range only affects 'Detected at:' range
+         * Ship Visibility that affects detection, signature, and stealth ranges
    * Fixes
       * The Bite turns off afterburner
       * Hiding on screen display information for missions also hides system markers

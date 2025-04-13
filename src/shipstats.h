@@ -45,8 +45,9 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_CARGO_INERTIA, /**< Modifies the effect of cargo_mass. */
 
    /* Electronic warfare. */
-   SS_TYPE_D_EW_HIDE,      /**< Electronic warfare hide modifier. (affects
-                              ew_detection) */
+   SS_TYPE_D_EW_HIDE, /**< Electronic warfare hide modifier. (affects all) */
+   SS_TYPE_D_EW_DETECTED,  /**< Electronic warfare hide modifier. (affects
+                          ew_detection) */
    SS_TYPE_D_EW_SIGNATURE, /**< Electronic warfare signature modifier. (affects
                               ew_signature) */
    SS_TYPE_D_EW_STEALTH,   /**< Electronic warfare stealth modifier. (affects
@@ -274,6 +275,7 @@ typedef struct ShipStats_ {
 
    /* Stealth. */
    double ew_hide;        /**< Electronic warfare hide modifier. */
+   double ew_detected;    /**< Electronic warfare detected modifier. */
    double ew_signature;   /**< Electronic warfare signature modifier. */
    double ew_stealth;     /**< Electronic warfare stealth modifier. */
    double ew_stealth_min; /**< Electronic warfare minimum stealth modifier. */

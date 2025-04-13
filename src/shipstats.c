@@ -126,7 +126,8 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_LAND_DELAY, land_delay, N_( "Landing Time" ) ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA, cargo_inertia, N_( "Cargo Inertia" ) ),
 
-   DI_ELEM( SS_TYPE_D_EW_HIDE, ew_hide, N_( "Detected Range" ) ),
+   DI_ELEM( SS_TYPE_D_EW_HIDE, ew_hide, N_( "Ship Visibility" ) ),
+   DI_ELEM( SS_TYPE_D_EW_DETECTED, ew_detected, N_( "Detected Range" ) ),
    DI_ELEM( SS_TYPE_D_EW_SIGNATURE, ew_signature, N_( "Signature Range" ) ),
    DI_ELEM( SS_TYPE_D_EW_STEALTH, ew_stealth, N_( "Stealth Range" ) ),
    DI_ELEM( SS_TYPE_D_EW_STEALTH_MIN, ew_stealth_min,
