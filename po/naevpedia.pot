@@ -3488,7 +3488,39 @@ msgid "# Autonav"
 msgstr ""
 
 #: dat/naevpedia/mechanics/autonav.md:6
-msgid "TODO"
+msgid "Your ship is equipped with an Automatic Navigation system, usually abbreviated as Autonav."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:7
+msgid "This system allows your ship to automatically go to target locations, land on planets, follow ships, and even fly along routes to far away systems."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:9
+msgid "Autonav can be triggered several different ways, but the main way is by opening the overlay map with the <%= \"#b\"..naev.keyGet(\"overlay\")..\"#0\" %> key, and then right-clicking to go to a location."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:10
+msgid "You can also double-click on a space object such as a planet to land on it, double-click on a jump point to use it, or right-click on a selected pilot to automatically follow them."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:12
+msgid "You can also activate autonav directly from the [star map](mechanics/map) by selecting a system and clicking on the #bAutonav#0 button to go to it."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:14
+msgid "## Settings"
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:16
+msgid "Autonav settings can be modified from the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:17
+msgid "Afterwards, click on the #bsettings#0 button from the main tab."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:19
+msgid "You can control many aspects of the behaviour, such as whether or not you follow pilots that jump or land, whether or not you move along the patrol lanes, or whether you match speed with the slowest ship in your fleet, among other options."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:2
@@ -5625,7 +5657,7 @@ msgid "There are three types of weapons sets:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:37
-msgid "1. **Default**: .Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
+msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
@@ -5641,7 +5673,7 @@ msgid "You have a total of 12 weapon sets, including primary and secondary, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:42
-msgid "To change the type of a weapon set, select it and then press **Cycle Mode**."
+msgid "To change the type of weapon set, select it and then press **Cycle Mode**."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:43
@@ -9408,7 +9440,39 @@ msgid "# Autonav"
 msgstr ""
 
 #: dat/naevpedia/mechanics/autonav.md:6
-msgid "TODO"
+msgid "Your ship is equipped with an Automatic Navigation system, usually abbreviated as Autonav."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:7
+msgid "This system allows your ship to automatically go to target locations, land on planets, follow ships, and even fly along routes to far away systems."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:9
+msgid "Autonav can be triggered several different ways, but the main way is by opening the overlay map with the <%= \"#b\"..naev.keyGet(\"overlay\")..\"#0\" %> key, and then right-clicking to go to a location."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:10
+msgid "You can also double-click on a space object such as a planet to land on it, double-click on a jump point to use it, or right-click on a selected pilot to automatically follow them."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:12
+msgid "You can also activate autonav directly from the [star map](mechanics/map) by selecting a system and clicking on the #bAutonav#0 button to go to it."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:14
+msgid "## Settings"
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:16
+msgid "Autonav settings can be modified from the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:17
+msgid "Afterwards, click on the #bsettings#0 button from the main tab."
+msgstr ""
+
+#: dat/naevpedia/mechanics/autonav.md:19
+msgid "You can control many aspects of the behaviour, such as whether or not you follow pilots that jump or land, whether or not you move along the patrol lanes, or whether you match speed with the slowest ship in your fleet, among other options."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:2
@@ -11545,7 +11609,7 @@ msgid "There are three types of weapons sets:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:37
-msgid "1. **Default**: .Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
+msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
@@ -11561,7 +11625,7 @@ msgid "You have a total of 12 weapon sets, including primary and secondary, and 
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:42
-msgid "To change the type of a weapon set, select it and then press **Cycle Mode**."
+msgid "To change the type of weapon set, select it and then press **Cycle Mode**."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:43
