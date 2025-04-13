@@ -6,8 +6,9 @@ local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local helper = require "outfits.lib.helper"
+local constants = require "constants"
 
-local cooldown = 15 -- cooldown time in seconds
+local COOLDOWN = 15 -- cooldown time in seconds
 local oshader = osh.new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
@@ -15,7 +16,7 @@ uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
    vec4 colour     = texture( tex, texcoord );
-   float opacity  = clamp( progress, 0.0, 1.0 );
+   float opacity   = clamp( progress, 0.0, 1.0 );
    colour.rgb      = blendSoftLight( colour.rgb, colmod, opacity );
    return colour;
 }
@@ -23,11 +24,9 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 
 local sfx_start = audio.newSource( 'snd/sounds/growl1.ogg' )
 local sfx_bite = audio.newSource( 'snd/sounds/crash1.ogg' )
-local constants=require "constants"
-
 
 local function turnoff_afterburner()
-   local pp=player.pilot()
+   local pp = player.pilot()
    for _i,n in ipairs(pp:actives()) do
       if n.outfit:tags().movement and n.state=="on" then
          if not pp:outfitToggle( n.slot ) then -- Failed to disable
@@ -80,13 +79,6 @@ local function turnon( p, po )
    mem.active = true
    mem.target = t
 
-   -- Apply stats
-
-   -- Why repeating these ?
-   --po:clear()
-   --po:set( "accel_mod", constants.BITE_ACCEL_MOD )
-   --po:set( "speed_mod", constants.BITE_SPEED_MOD )
-
    p:control(true)
    p:pushtask( "lunge", t )
 
@@ -109,7 +101,7 @@ local function turnoff( p, po )
 
    po:state("cooldown")
    po:progress(1)
-   mem.timer = cooldown * p:shipstat("cooldown_mod",true)
+   mem.timer = COOLDOWN * p:shipstat("cooldown_mod",true)
    mem.active = false
    p:control(false)
    oshader:off()
@@ -162,7 +154,7 @@ function descextra( p, o )
          duration = 3,
          mass = fmt.tonnes_short(mass),
          heal = 10,
-         cooldown = 15,
+         cooldown = COOLDOWN,
          bloodlust_dam = 25,
          bloodlust_duration = 10,
       }
@@ -271,7 +263,7 @@ function update( p, po, dt )
       end
    else
       oshader:update_cooldown(dt)
-      po:progress( mem.timer / cooldown )
+      po:progress( mem.timer / COOLDOWN )
       if mem.timer < 0 then
          po:state("off")
          mem.timer = nil
