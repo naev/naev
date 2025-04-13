@@ -63,13 +63,13 @@ The stealth range of a ship is based on 25% of the detection range.
 If there are no ships within the stealth range, the ship will be able to enter stealth mode.
 In stealth mode, the ship will be undetectable, however, it will have its [movement](mechanics/movement) significantly reduced.
 In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%.
-The minimum range of stealth is <%= fmt.f(_("{stealth} {units}"), {stealth=fmt.number( require("constants").STEALTH_MIN_DIST ), units=naev.unit("distance")}) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference.
+The minimum range of stealth is <%= constant( "STEALTH_MIN_DIST", "distance" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference.
 
 ### Jumping with Stealth
 
 When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points.
 Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point.
-Being within <%= fmt.f(_("{stealth} {units}"), {stealth=fmt.number( require("constants").EW_JUMP_BONUS_RANGE ), units=naev.unit("distance")}) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth.
+Being within <%= constant( "EW_JUMP_BONUS_RANGE", "distance" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth.
 
 ## Scanning
 

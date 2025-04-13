@@ -4201,7 +4201,7 @@ msgid "In particular, acceleration and turn speed will be reduced by 80%, while 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:66
-msgid "The minimum range of stealth is <%= fmt.f(_(\"{stealth} {units}\"), {stealth=fmt.number( require(\"constants\").STEALTH_MIN_DIST ), units=naev.unit(\"distance\")}) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
+msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:68
@@ -4217,7 +4217,7 @@ msgid "Additionally, when entering a system in stealth mode, the ship will drop 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:72
-msgid "Being within <%= fmt.f(_(\"{stealth} {units}\"), {stealth=fmt.number( require(\"constants\").EW_JUMP_BONUS_RANGE ), units=naev.unit(\"distance\")}) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
+msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:74
@@ -10121,7 +10121,7 @@ msgid "In particular, acceleration and turn speed will be reduced by 80%, while 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:66
-msgid "The minimum range of stealth is <%= fmt.f(_(\"{stealth} {units}\"), {stealth=fmt.number( require(\"constants\").STEALTH_MIN_DIST ), units=naev.unit(\"distance\")}) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
+msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:68
@@ -10137,7 +10137,7 @@ msgid "Additionally, when entering a system in stealth mode, the ship will drop 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:72
-msgid "Being within <%= fmt.f(_(\"{stealth} {units}\"), {stealth=fmt.number( require(\"constants\").EW_JUMP_BONUS_RANGE ), units=naev.unit(\"distance\")}) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
+msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:74
