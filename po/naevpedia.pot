@@ -4105,7 +4105,7 @@ msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:36
-msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of 7,500 km."
+msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:37
@@ -4113,7 +4113,7 @@ msgid "This distance can be modified by values such as how well hidden the jump 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:38
-msgid "For space objects such as planets or stations the base value is 20,000 km, subject to the individual properties of the object."
+msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:40
@@ -10025,7 +10025,7 @@ msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:36
-msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of 7,500 km."
+msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:37
@@ -10033,7 +10033,7 @@ msgid "This distance can be modified by values such as how well hidden the jump 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:38
-msgid "For space objects such as planets or stations the base value is 20,000 km, subject to the individual properties of the object."
+msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:40

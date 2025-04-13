@@ -33,9 +33,9 @@ Since this value determines the base signature and stealth values of the ship, i
 
 ### Detecting Space Objects and Jumps
 
-For detecting general objects such as jump points or asteroids, the detection distance has a base value of 7,500 km.
+For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( "EW_JUMPDETECT_DIST", "distance" ) %>.
 This distance can be modified by values such as how well hidden the jump is.
-For space objects such as planets or stations the base value is 20,000 km, subject to the individual properties of the object.
+For space objects such as planets or stations the base value is <%= constant( "EW_SPOBDETECT_DIST", "distance" ) %>, subject to the individual properties of the object.
 
 ## Signature and Tracking
 
