@@ -169,7 +169,6 @@ local function skill_enable( p, s )
    for k,o in ipairs(outfit) do
       if slot then
          local sl = slot[k]
-         print( sl, o )
          if p:outfitSlot(sl) and not p:outfitRmSlot(sl) then
             warn(fmt.f(_("Failed to remove bioship outfit from slot '{sl}'."),{sl=sl}))
          end
