@@ -129,7 +129,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_EW_HIDE, ew_hide, N_( "Detected Range" ) ),
    DI_ELEM( SS_TYPE_D_EW_SIGNATURE, ew_signature, N_( "Signature Range" ) ),
    DI_ELEM( SS_TYPE_D_EW_STEALTH, ew_stealth, N_( "Stealth Range" ) ),
-   DI_ELEM( SS_TYPE_D_EW_STEALTH, ew_stealth_min,
+   DI_ELEM( SS_TYPE_D_EW_STEALTH_MIN, ew_stealth_min,
             N_( "Minimum Stealth Range" ) ),
    D__ELEM( SS_TYPE_D_EW_DETECT, ew_detect, N_( "Detection" ) ),
    D__ELEM( SS_TYPE_D_EW_TRACK, ew_track, N_( "Tracking" ) ),
