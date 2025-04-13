@@ -43,7 +43,7 @@ skills.set.bite = {
       outfit = "The Bite - Cannibal",
       slot = "the_bite",
       icon = "food-chain.webp",
-      --shipvar = "cannibal2",
+      shipvar = "cannibal2",
    },
    ["bite4"] = {
       name = _("Blood Lust"),
