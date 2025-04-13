@@ -150,7 +150,7 @@ typename["hull"] = N_("Bioship Shell")
 # Mediocris Gene Drive  =>  Tricon Cyclone
 # Largus Gene Drive     =>  Tricon Cyclone II
 # Ponderosus Gene Drive =>  Tricon Typhoon
-# Immanis Gene Drive    =>  Eagle 6500
+# Immanis Gene Drive    =>  Bolt 6500
 # Magnus Gene Drive     =>  Tricon Typhoon2
 # Grandis Gene Drive    =>  Melendez Mammoth
 for nam,temp,gfx,output_pref,outputs in [
