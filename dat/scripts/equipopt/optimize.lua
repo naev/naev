@@ -58,7 +58,7 @@ local goodness_override = {
    -- Hull Coating
    ["Milspec Impacto-Plastic Coating"] = 3,
    ["Photo-Voltaic Nanobot Coating"] = 3,
-   ["Nexus Stealth Coating"] = 3,
+   ["Nexus Concealment Coating"] = 3,
    ["Lattice Thermal Coating"] = 3,
    ["Faraday Tempest Coating"] = 3,
    ["Nebula Resistant Coating"] = 3,

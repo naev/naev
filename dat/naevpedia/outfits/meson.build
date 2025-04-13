@@ -319,7 +319,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/utility/hullcoating/lattice_thermal_coating.xml',
    root / 'dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml',
    root / 'dat/outfits/utility/hullcoating/nebula_resistant_coating.xml',
-   root / 'dat/outfits/utility/hullcoating/nexus_stealth_coating.xml',
+   root / 'dat/outfits/utility/hullcoating/nexus_concealment_coating.xml',
    root / 'dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml',
    root / 'dat/outfits/utility/hyperbolic_blink_engine.xml',
    root / 'dat/outfits/utility/jump_scanner.xml',
