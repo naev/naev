@@ -65,7 +65,7 @@ function finish ()
 
    for original,value in pairs(changes_done) do
       if split[original] then
-         player.outfitAdd( value.new, value.q ) -- Hae to add an additional core to compensate
+         player.outfitAdd( value.new, value.q ) -- Have to add an additional core to compensate
          print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
 
          -- Used to inform the updater event that cores probably need some checking
