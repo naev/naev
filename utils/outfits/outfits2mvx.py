@@ -3,13 +3,11 @@
 from os import path
 from sys import argv,stderr,exit,stdout
 import xml.etree.ElementTree as ET
-
+from outfit import MOBILITY_PARAMS
 
 equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority','shortname'}
 base_acc={'price','mass','rarity'}
-
-#TODO: use argparse
 
 
 def merge_group(r1,r2,field,func,dummy=False):
@@ -40,7 +38,7 @@ def merge_group(r1,r2,field,func,dummy=False):
       else:
          rt=f.text if f is not False else ''
          try:
-            e.text=func(e.text,rt)
+            e.text=func(e.text,rt,e.tag in MOBILITY_PARAMS)
          except:
             print >>stderr,e,"is unmergeable, left as is."
    for t,f in L2.items():
@@ -89,9 +87,11 @@ def fmt(f):
    else:
       return str(f)
 
-def f1(s1,s2):
+def f1(s1,s2,IS_MOB):
    a1=float(s1)
    a2=float(s2) if s2!='' else 0
+   if IS_MOB:
+      a2*=2
    o1=a1
    o2=a2-a1
    if o2==o1:
@@ -108,9 +108,12 @@ def read_com(s):
    else:
       return float(s),float(s)
 
-def rf1(s1,s2):
+def rf1(s1,s2,IS_MOB):
    n1,m1=read_com(s1)
    n2,m2=read_com(s2)
+   res=n1+m2
+   if IS_MOB and s2!='':
+      res/=2.0
    return fmt(n1+m2)
 
 if __name__ == '__main__':

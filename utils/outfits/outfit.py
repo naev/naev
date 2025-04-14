@@ -4,6 +4,8 @@ from sys import stdin,stdout,stderr
 
 import xml.etree.ElementTree as ET
 
+MOBILITY_PARAMS=set(['speed','turn','accel'])
+
 def nam2fil(s):
    for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
       s=s.replace(*c)
@@ -45,6 +47,8 @@ class _outfit():
             (a,b)=res
             if doubled:
                a+=b
+               if e.tag in MOBILITY_PARAMS:
+                  a/=2.0
             e.text=str(a)
 
    def __iter__(self):
