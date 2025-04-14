@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 from sys import stderr
 import xml.etree.ElementTree as ET
@@ -9,7 +9,7 @@ lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax',
 def transpose(M):
    N=max(map(len,M))
    M=[t+['']*(N-len(t)) for t in M]
-   return zip(*(tuple(M)))
+   return list(zip(*(tuple(M))))
 
 getfloat=lambda s:float(s.split('/')[0])
 
@@ -37,7 +37,7 @@ def main(args,gith=False,ter=False,noext=False,sortit=False):
          try:
             n=getfloat(t.text)
             L[i][t.tag]=t.text
-            if not rang.has_key(t.tag):
+            if t.tag not in rang:
                rang[t.tag]=(n,n)
                acc.append(t.tag)
             else:
@@ -53,7 +53,8 @@ def main(args,gith=False,ter=False,noext=False,sortit=False):
          names[i]=e.text
          break
 
-   for i,(m,M) in rang.iteritems():
+   for i,t in rang.items():
+      (m,M)=t
       if i in lower_better:
          rang[i]=(M,m)
       if noext:
@@ -92,10 +93,11 @@ def main(args,gith=False,ter=False,noext=False,sortit=False):
          length=[max(n,len(s)) for (n,s) in zip(length,t)]
 
    mklin=lambda L:Sep+' '+(' '+Sep+' ').join(L)+' '+Sep
-   fmt=lambda (s,n):(n-leng(s))*' '+s
-   lfmt=lambda (s,n):s+(n-leng(s))*' '
+   fmt=lambda t:(t[1]-leng(t[0]))*' '+t[0]
+   lfmt=lambda t:t[0]+(t[1]-leng(t[0]))*' '
 
-   def emph(s,(mi,ma)):
+   def emph(s,m):
+      (mi,ma)=m
       if s=='':
          return "_"
       elif mi!=ma:
@@ -107,11 +109,11 @@ def main(args,gith=False,ter=False,noext=False,sortit=False):
 
    print
    for t in head:
-      print mklin(map(fmt,zip(t,length)))
-   print mklin([mk_pad(i,n) for i,n in enumerate(length)])
+      print(mklin(map(fmt,zip(t,length))))
+   print(mklin([mk_pad(i,n) for i,n in enumerate(length)]))
    for r in Res:
       r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
-      print mklin([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))])
+      print(mklin([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))]))
 
 if __name__ == '__main__':
    import argparse
@@ -130,11 +132,11 @@ if __name__ == '__main__':
    args = parser.parse_args()
    if args.github and args.color:
       args.github=args.color=False
-      print >>stderr,"Ignored incompatible -g and -c."
+      print("Ignored incompatible -g and -c.",file=stderr,flush=True)
 
    ign=[f for f in args.filename if not f.endswith(".xml") and not f.endswith(".mvx")]
    if ign!=[]:
-      print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
+      print('Ignored: "'+'", "'.join(ign)+'"',file=stderr,flush=True)
 
    if args.sort is None and args.sortbymass:
       args.sort=''
@@ -147,6 +149,7 @@ if __name__ == '__main__':
       sortby=args.sort
 
    if sortby:
-      print >>stderr,'sorted by "'+str(sortby)+'"'
+      print('sorted by "'+str(sortby)+'"',file=stderr,flush=True)
 
    main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,sortby)
+
