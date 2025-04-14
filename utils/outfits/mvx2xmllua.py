@@ -7,7 +7,7 @@ from os import path
 from sys import argv,stderr,stdin,stdout,exit
 import xml.etree.ElementTree as ET
 
-from outfit import nam2fil
+from outfit import nam2fil,MOBILITY_PARAMS
 
 def get_path(s):
    s=path.dirname(s)
@@ -72,6 +72,7 @@ def process_group(r,field):
 
 def mklua(L):
    output='\n'
+   mods=''
    ind=3*' '
 
    output+='require("outfits.lib.multicore").init{\n'
@@ -81,8 +82,10 @@ def mklua(L):
          output+=ind+'{ "'+nam+'",'+' '
          output+=fmt(main)+','+' '
          output+=fmt(sec)+'},'+'\n'
+         if nam in MOBILITY_PARAMS:
+            mods+=ind+'{ "'+nam+'_mod", 0, -50},\n'
 
-   return output+'}\n'
+   return output+mods+'}\n'
 
 def main():
    acc=[]
