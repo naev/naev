@@ -23,7 +23,6 @@ bio_outfits = [
         'perleve_cerebrum_i.xml',
         'perleve_cerebrum_ii.xml',
       ],
-      depends: '../core_system/small/milspec_orion_2301_core_system.xml'
    ),
    custom_target('perlevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
       input: files('templates/gene_drive_tricon.xml.template'),
