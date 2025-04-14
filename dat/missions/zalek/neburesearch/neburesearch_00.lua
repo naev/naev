@@ -245,7 +245,7 @@ function beginSecondScan()
    local student = vn.newCharacter( nebu_research.vn_student() )
    vn.transition("fade")
    student(fmt.f(_("You arrive in the {sys} system and Robert Hofer tells you that he will let you know when his scan is complete. This had better not cause another blackout..."),
-	{sys=t_sys[2]}))
+      {sys=t_sys[2]}))
    vn.done()
    vn.run()
    hook.timer(30.0, "endSecondScan")

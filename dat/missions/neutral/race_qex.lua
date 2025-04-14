@@ -31,15 +31,15 @@ local col_past = {1, 0, 1, 0.2}
 local sfx = audio.new("snd/sounds/race_start.ogg")
 
 local function lerp(a, b, t)
-	return a + (b - a) * t
+   return a + (b - a) * t
 end
 
 local function cubicBezier( t, p0, p1, p2, p3 )
-	local l1 = lerp(p0, p1, t)
-	local l2 = lerp(p1, p2, t)
-	local l3 = lerp(p2, p3, t)
-	local l4 = lerp(l1, l2, t)
-	local l5 = lerp(l2, l3, t)
+   local l1 = lerp(p0, p1, t)
+   local l2 = lerp(p1, p2, t)
+   local l3 = lerp(p2, p3, t)
+   local l4 = lerp(l1, l2, t)
+   local l5 = lerp(l2, l3, t)
    return lerp(l4, l5, t)
 end
 

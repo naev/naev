@@ -120,8 +120,8 @@ And please hurry. Someone was sent to assassinate him. I don't have much to give
    local desc = fmt.f(_("Locate the brother in the {1} system, the {2} system, or the {3} system"), mem.targetsys)
    misn.setDesc( desc )
    misn.osdCreate(_("The Lost Brother"), {
-	   desc,
-	   _("Hail the Poppy Seed and board it to reunite the siblings"),
+      desc,
+      _("Hail the Poppy Seed and board it to reunite the siblings"),
    })
    mem.misn_marker = {
       misn.markerAdd( mem.targetsys[1], "low" ),

@@ -131,16 +131,16 @@ function beginbattle()
       mem.stage = 0
       --Give a name to the competitor
       local names = {
-	        _("The Nice Killer"),
-                _("Longship Victory"),
-                _("The Victim"),
-                _("Old Fellow"),
-                _("Angel of Grace"),
-                _("Easy Killer"),
-                _("The Unicorn"),
-                _("The White Knight"),
-                _("Spirit of St Jean"),
-                _("Nec Mergitur") }
+         _("The Nice Killer"),
+         _("Longship Victory"),
+         _("The Victim"),
+         _("Old Fellow"),
+         _("Angel of Grace"),
+         _("Easy Killer"),
+         _("The Unicorn"),
+         _("The White Knight"),
+         _("Spirit of St Jean"),
+         _("Nec Mergitur") }
       local reTry = true
 
       while reTry do  --Re-pick a name while it is in the usedNames list

@@ -292,13 +292,13 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    t:say( function() return fmt.f(
          n_([["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA TOKEN#0."]],
             [["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA TOKENS#0."]], minerva.tokens_get()),
-	    {n=fmt.number(minerva.tokens_get())} ) end )
+         {n=fmt.number(minerva.tokens_get())} ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade" )
    t:say( function() return fmt.f(
          n_([["YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKEN#0 FOR THE FOLLOWING GOODS."]],
             [["YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKENS#0 FOR THE FOLLOWING GOODS."]], minerva.tokens_get()),
-	    {n=fmt.number(minerva.tokens_get())} ) end )
+            {n=fmt.number(minerva.tokens_get())} ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
       {"TeraCom Fury Launcher", {500, "outfit"}},
