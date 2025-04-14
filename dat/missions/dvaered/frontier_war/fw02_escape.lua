@@ -369,12 +369,10 @@ function enter()
 
       -- give him top equipment
       -- TODO switch to equipopt
-      strafer:outfitAdd("S&K Skirmish Plating")
-      strafer:outfitAdd("S&K Skirmish Plating")
-      strafer:outfitAdd("Tricon Zephyr II Engine")
-      --strafer:outfitAdd("Solar Panel")
-      strafer:outfitAdd("Milspec Orion 2301 Core System")
-      strafer:outfitAdd("Milspec Orion 2301 Core System")
+      strafer:outfitAdd("S&K Skirmish Plating",2)
+      strafer:outfitAdd("Tricon Zephyr Engine",2)
+      strafer:outfitAdd("Photo-Voltaic Nanobot Coating")
+      strafer:outfitAdd("Milspec Orion 2301 Core System",2)
       strafer:outfitAdd("Gauss Gun", 3)
       strafer:outfitAdd("Vulcan Gun", 3)
 

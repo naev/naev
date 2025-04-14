@@ -325,7 +325,7 @@ cores.elite.hulls["Kestrel"] = function ()
 end
 cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
 cores.elite.engines["Starbridge"] = function ()
-   return choose_one{ "Tricon Cyclone II Engine", "Krain Patagium Engine" }
+   return choose_one{ "Tricon Cyclone Engine", "Krain Patagium Engine" }
 end
 cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
 cores.elite.systems["Gawain"] = function ()

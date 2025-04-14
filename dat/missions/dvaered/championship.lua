@@ -203,11 +203,9 @@ function enter()
       elseif oppotype == ship.get("Soromid Reaver") then
          bioship.simulate( opponent, bioship.maxstage( opponent ) )
       else
-         opponent:outfitAdd("Tricon Zephyr II Engine")
-         opponent:outfitAdd("Milspec Orion 2301 Core System")
-         opponent:outfitAdd("Milspec Orion 2301 Core System")
-         opponent:outfitAdd("S&K Skirmish Plating")
-         opponent:outfitAdd("S&K Skirmish Plating")
+         opponent:outfitAdd("Tricon Zephyr Engine",2)
+         opponent:outfitAdd("Milspec Orion 2301 Core System",2)
+         opponent:outfitAdd("S&K Skirmish Plating",2)
       end
 
       -- Equipment
