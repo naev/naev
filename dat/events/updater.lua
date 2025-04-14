@@ -69,10 +69,10 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
                -- Cost
                gauntlet.emblems_pay(2500)
                gauntlet_refunded = gauntlet_refunded+2500
-               table.insert( gauntlet_ships, plt:name() )
                update_gauntlet = true
             end
          end
+         table.insert( gauntlet_ships, plt:name() )
       end
    end )
 
