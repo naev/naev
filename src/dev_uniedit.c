@@ -1724,11 +1724,11 @@ static void uniedit_renameSys( void )
             WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
 
          free( oldName );
-         free( sys->filename );
+         // free( sys->filename );
          free( sys->name );
 
-         sys->filename = newName;
-         sys->name     = name;
+         // sys->filename = newName;
+         sys->name = name;
          dsys_saveSystem( sys );
 
          /* TODO probably have to reupdate stack?? */
@@ -1784,7 +1784,7 @@ static void uniedit_newSys( double x, double y )
 
    /* Set filename. */
    char *cleanname = uniedit_nameFilter( sys->name );
-   SDL_asprintf( &sys->filename, "%s.xml", cleanname );
+   SDL_asprintf( &sys->filename, "ssys/%s.xml", cleanname );
    free( cleanname );
 
    /* Select new system. */
