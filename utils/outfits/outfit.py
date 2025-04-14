@@ -4,7 +4,7 @@ from sys import stdin,stdout,stderr
 
 import xml.etree.ElementTree as ET
 
-MOBILITY_PARAMS=set(['speed','turn','accel'])
+MOBILITY_PARAMS={'speed','turn','accel'}
 
 def nam2fil(s):
    for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:

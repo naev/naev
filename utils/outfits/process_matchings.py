@@ -70,8 +70,9 @@ if __name__=="__main__":
       print "#!"
       result = [y for x in os.walk(PATH) for y in glob(os.path.join(x[0], '*.xml'))]
       result.sort()
-      result1=[s for s in result if s.find('cargo')==-1]
-      result=result1+[s for s in result if s not in result1]
+      #result1=[s for s in result if s.find('cargo')==-1]
+      #result=result1+[s for s in result if s not in result1]
+
       result=['']+result+['']
       done=set()
       for i in range(1,len(result)-2):
