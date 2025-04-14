@@ -13,6 +13,14 @@ def transpose(M):
 
 getfloat=lambda s:float(s.split('/')[0])
 
+def keyfunc(s):
+   def key(o):
+      try:
+         return getfloat(o[s])
+      except:
+         return None
+   return key
+
 #launch_reload
 def main(args,gith=False,ter=False,noext=False,sortit=False):
    names=['']*len(args)
@@ -54,7 +62,7 @@ def main(args,gith=False,ter=False,noext=False,sortit=False):
    if sortit:
       for i,o in enumerate(L):
          o['name']=names[i]
-      L.sort(key=lambda o:getfloat(o['mass']))
+      L.sort(key=keyfunc(sortit))
       for i,o in enumerate(L):
          names[i]=o['name']
 
@@ -109,13 +117,14 @@ if __name__ == '__main__':
    import argparse
 
    parser = argparse.ArgumentParser(
-      usage=" %(prog)s  [-g|-c] [-n] [-s]  [filename ...]",
+      usage=" %(prog)s  [-g|-c] [-n] [(-s SORT) | -S]  [filename ...]",
       description="By default, outputs text aligned markdown table comparing the outfits respective values."
    )
    parser.add_argument('-g', '--github', action='store_true', help="unaligned (therefore smaller) valid github md, for use in posts.")
    parser.add_argument('-c', '--color', action='store_true', help="colored terminal output. You can pipe to \"less -RS\" if the table is too wide.")
    parser.add_argument('-n', '--nomax', action='store_true', help="Do not emphasize min/max values." )
-   parser.add_argument('-s', '--sort', action='store_true', help="inputs are sorted by increasing mass.")
+   parser.add_argument('-s', '--sort', help="inputs are sorted by their SORT key (mass if SORT is empty).")
+   parser.add_argument('-S', '--sortbymass', action='store_true', help="Like -s mass." )
    parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.')
 
    args = parser.parse_args()
@@ -127,4 +136,17 @@ if __name__ == '__main__':
    if ign!=[]:
       print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-   main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,args.sort)
+   if args.sort is None and args.sortbymass:
+      args.sort=''
+
+   if args.sort is None:
+      sortby=False
+   elif args.sort=='':
+      sortby='mass'
+   else:
+      sortby=args.sort
+
+   if sortby:
+      print >>stderr,'sorted by "'+str(sortby)+'"'
+
+   main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,sortby)
