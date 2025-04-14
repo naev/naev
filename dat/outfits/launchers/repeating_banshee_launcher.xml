@@ -28,7 +28,7 @@
   <trail_generator x="-10">fire-missile</trail_generator>
   <duration blowup="shield">7</duration>
   <accel>150</accel>
-  <speed>200</speed>
+  <speed>205</speed>
   <damage>
    <type>kinetic</type>
    <penetrate>60</penetrate>
