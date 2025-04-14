@@ -649,6 +649,7 @@ dat/slots/bio_systems.xml
 dat/slots/bio_weapon.xml
 dat/slots/builtin.xml
 dat/slots/engines.xml
+dat/slots/engines_secondary.xml
 dat/slots/fighter_bay.xml
 dat/slots/hull.xml
 dat/slots/hull_secondary.xml
