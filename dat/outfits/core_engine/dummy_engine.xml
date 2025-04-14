@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Dummy Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>small</size>
   <mass>15</mass>
   <price>0</price>

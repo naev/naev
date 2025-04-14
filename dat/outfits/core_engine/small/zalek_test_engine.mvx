@@ -2,26 +2,21 @@
  <general>
   <shortname>Z. Test Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
+  <slot prop="engines">structure</slot>
   <size>small</size>
+  <rarity>1</rarity>
+  <mass>15</mass>
   <price>0</price>
   <description>Built by Za'lek Fabricators, this engine doesn't aim to be an efficient engine. Its goal is to be easily moddable in order to allow Za'lek scientists to test new refrigeration and propulsion systems. These engines are very often modded by students, which makes them unreliable.</description>
   <gfx_store>engine8.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 15, 15},
-   { "accel", 218, 218},
-   { "turn", 144, 144},
-   { "speed", 248, 248},
-   { "fuel", 400, 0},
-   { "energy_regen_malus", 5, 0},
-   { "engine_limit", 300, 0},
-   { "accel_mod", 0, -50},
-   { "turn_mod", 0, -50},
-   { "speed_mod", 0, -50},
-}</lua_inline>
+  <accel>218</accel>
+  <turn>144</turn>
+  <speed>248</speed>
+  <fuel>400/0</fuel>
+  <energy_regen_malus>5/0</energy_regen_malus>
+  <engine_limit>300/0</engine_limit>
  </specific>
 </outfit>

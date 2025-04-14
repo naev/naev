@@ -2,27 +2,21 @@
  <general>
   <shortname>N. Bolt 3000 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
+  <slot prop="engines">structure</slot>
   <size>large</size>
-  <price>600000</price>
+  <mass>60/20</mass>
+  <price>900000/300000</price>
   <description>The Bolt 3000 is a somewhat uncommonly used engine designed for cruisers. Like most Nexus engines, it doesn't excel in speed, but its low power consumption makes it an attractive option for some pilots.</description>
   <gfx_store>nexus_engine_l.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 60, 20},
-   { "energy_regen_malus", 20, 26},
-   { "engine_limit", 3000, 3500},
-   { "fuel", 2400, 400},
-   { "speed", 140, 66},
-   { "accel", 54, 10},
-   { "turn", 61, 23},
-   { "time_mod", -20, 20},
-   { "speed_mod", 0, -50},
-   { "accel_mod", 0, -50},
-   { "turn_mod", 0, -50},
-}</lua_inline>
+  <energy_regen_malus>20/26</energy_regen_malus>
+  <engine_limit>3000/3500</engine_limit>
+  <fuel>2400/400</fuel>
+  <speed>140/66</speed>
+  <accel>54/10</accel>
+  <turn>61/23</turn>
+  <time_mod>-20/20</time_mod>
  </specific>
 </outfit>
