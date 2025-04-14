@@ -42,7 +42,7 @@
   <utility size="medium" />
   <utility size="medium" />
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" size="large" />
+  <structure prop="engines_secondary" name="engines_secondary" size="large" />
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="large" />
   <structure size="large" />
