@@ -18,6 +18,7 @@ bio_outfits = [
       ],
    ),
    custom_target('laeviter_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/small/tricon_zephyr_engine.mvx'),
       input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'laeviter_gene_drive_i.xml',
@@ -25,6 +26,7 @@ bio_outfits = [
       ],
    ),
    custom_target('laevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/small/melendez_ox_engine.mvx'),
       input: files('templates/gene_drive_melendez.xml.template'),
       output: [
          'laevis_gene_drive_i.xml',
@@ -32,6 +34,7 @@ bio_outfits = [
       ],
    ),
    custom_target('mediocris_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/medium/tricon_cyclone_engine.mvx'),
       input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'mediocris_gene_drive_i.xml',
@@ -40,6 +43,7 @@ bio_outfits = [
       ],
    ),
    custom_target('largus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/medium/tricon_cyclone_engine.mvx'),
       input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'largus_gene_drive_i.xml',
@@ -47,6 +51,7 @@ bio_outfits = [
       ],
    ),
    custom_target('ponderosus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/large/tricon_typhoon_engine.mvx'),
       input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'ponderosus_gene_drive_i.xml',
@@ -55,6 +60,7 @@ bio_outfits = [
       ],
    ),
    custom_target('grandis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/large/melendez_old_mammoth_engine.xml'),
       input: files('templates/gene_drive_melendez.xml.template'),
       output: [
          'grandis_gene_drive_i.xml',
@@ -63,6 +69,7 @@ bio_outfits = [
       ],
    ),
    custom_target('magnus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/large/tricon_typhoon_engine.mvx'),
       input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'magnus_gene_drive_i.xml',
@@ -71,6 +78,7 @@ bio_outfits = [
       ],
    ),
    custom_target('immanis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_engine/large/nexus_bolt_3000_engine.mvx'),
       input: files('templates/gene_drive.xml.template'),
       output: [
          'immanis_gene_drive_i.xml',
@@ -79,7 +87,10 @@ bio_outfits = [
       ],
    ),
    custom_target('perlevis_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/small/tricon_zephyr_engine.mvx'),
+      depend_files: [
+         files('../core_hull/small/unicorp_d2_light_plating.mvx'),
+         files('../core_hull/small/sk_skirmish_plating.mvx'),
+      ],
       input: files('templates/cortex.xml.template'),
       output: [
          'perlevis_cortex_i.xml',
@@ -87,6 +98,10 @@ bio_outfits = [
       ],
    ),
    custom_target('laevis_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: [
+         files('../core_hull/small/unicorp_d2_light_plating.mvx'),
+         files('../core_hull/small/sk_skirmish_plating.mvx'),
+      ],
       input: files('templates/cortex.xml.template'),
       output: [
          'laevis_cortex_i.xml',
@@ -94,6 +109,10 @@ bio_outfits = [
       ],
    ),
    custom_target('mediocris_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: [
+         files('../core_hull/medium/unicorp_d23_medium_plating.mvx'),
+         files('../core_hull/medium/sk_battle_plating.mvx'),
+      ],
       input: files('templates/cortex.xml.template'),
       output: [
          'mediocris_cortex_i.xml',
@@ -101,6 +120,10 @@ bio_outfits = [
       ],
    ),
    custom_target('largus_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: [
+         files('../core_hull/medium/unicorp_d23_medium_plating.mvx'),
+         files('../core_hull/medium/sk_battle_plating.mvx'),
+      ],
       input: files('templates/cortex.xml.template'),
       output: [
          'largus_cortex_i.xml',
@@ -109,6 +132,10 @@ bio_outfits = [
       ],
    ),
    custom_target('ponderosus_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: [
+         files('../core_hull/large/unicorp_d58_heavy_plating.mvx'),
+         files('../core_hull/large/sk_war_plating.mvx'),
+      ],
       input: files('templates/cortex.xml.template'),
       output: [
          'ponderosus_cortex_i.xml',
@@ -118,6 +145,10 @@ bio_outfits = [
       ],
    ),
    custom_target('immanis_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: [
+         files('../core_hull/large/unicorp_d58_heavy_plating.mvx'),
+         files('../core_hull/large/sk_war_plating.mvx'),
+      ],
       input: files('templates/cortex.xml.template'),
       output: [
          'immanis_cortex_i.xml',
@@ -134,6 +165,7 @@ bio_outfits = [
       ],
    ),
    custom_target('laevum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_system/small/milspec_orion_2301_core_system.mvx'),
       input: files('templates/cerebrum.xml.template'),
       output: [
          'laevum_cerebrum_i.xml',
@@ -141,6 +173,7 @@ bio_outfits = [
       ],
    ),
    custom_target('mediocre_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_system/medium/milspec_orion_4801_core_system.mvx'),
       input: files('templates/cerebrum.xml.template'),
       output: [
          'mediocre_cerebrum_i.xml',
@@ -148,6 +181,7 @@ bio_outfits = [
       ],
    ),
    custom_target('largum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_system/medium/milspec_orion_4801_core_system.mvx'),
       input: files('templates/cerebrum.xml.template'),
       output: [
          'largum_cerebrum_i.xml',
@@ -155,6 +189,7 @@ bio_outfits = [
       ],
    ),
    custom_target('ponderosum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_system/large/milspec_orion_8601_core_system.mvx'),
       input: files('templates/cerebrum.xml.template'),
       output: [
          'ponderosum_cerebrum_i.xml',
@@ -163,6 +198,7 @@ bio_outfits = [
       ],
    ),
    custom_target('immane_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
+      depend_files: files('../core_system/large/milspec_orion_8601_core_system.mvx'),
       input: files('templates/cerebrum.xml.template'),
       output: [
          'immane_cerebrum_i.xml',
