@@ -119,31 +119,31 @@ seng["Interceptor"] = function ()
    return "Unicorp Hawk 160 Engine"
 end
 seng["Fighter"] = function ()
-   return "Unicorp Hawk 360 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Bomber"] = function ()
-   return "Unicorp Hawk 360 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Corvette"] = function ()
    return "Unicorp Falcon 700 Engine"
 end
 seng["Destroyer"] = function ()
-   return "Unicorp Falcon 1400 Engine"
+   return "Unicorp Falcon 700 Engine"
 end
 seng["Cruiser"] = function ()
    return "Unicorp Eagle 3000 Engine"
 end
 seng["Battleship"] = function ()
-   return "Unicorp Eagle 6500 Engine"
+   return "Unicorp Eagle 3000 Engine"
 end
 seng["Carrier"] = function ()
-   return "Unicorp Eagle 6500 Engine"
+   return "Unicorp Eagle 3000 Engine"
 end
 seng["Yacht"] = function ()
    return "Unicorp Hawk 160 Engine"
 end
 seng["Courier"] = function ()
-   return "Unicorp Hawk 360 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Freighter"] = function ()
    return choose_one{ "Unicorp Falcon 700 Engine", "Melendez Buffalo Engine" }
