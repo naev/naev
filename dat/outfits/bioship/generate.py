@@ -150,9 +150,9 @@ typename["hull"] = N_("Bioship Shell")
 # Mediocris Gene Drive  =>  Tricon Cyclone
 # Largus Gene Drive     =>  Tricon Cyclone x2
 # Ponderosus Gene Drive =>  Tricon Typhoon
-# Immanis Gene Drive    =>  Bolt 3000 x2
-# Magnus Gene Drive     =>  Tricon Typhoon x2
 # Grandis Gene Drive    =>  Melendez Old Mammoth
+# Magnus Gene Drive     =>  Tricon Typhoon x2
+# Immanis Gene Drive    =>  Bolt 3000 x2
 for nam,db,temp,gfx,output_pref,outputs in [
    ("small/tricon_zephyr_engine.mvx",False,"gene_drive_tricon","fast_s","Perlevis",["I","II"]),
    ("small/tricon_zephyr_engine.mvx",True,"gene_drive_tricon","fast_s","Laeviter",["I","II"]),
@@ -160,9 +160,9 @@ for nam,db,temp,gfx,output_pref,outputs in [
    ("medium/tricon_cyclone_engine.mvx",False,"gene_drive_tricon","fast_m","Mediocris",["I","II","III"]),
    ("medium/tricon_cyclone_engine.mvx",True,"gene_drive_tricon","strong_m","Largus",["I","II"]),
    ("large/tricon_typhoon_engine.mvx",False,"gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
-   ("large/nexus_bolt_3000_engine.mvx",True,"gene_drive","strong_l","Immanis",["I","II","III"]),
-   ("large/tricon_typhoon_engine.mvx",True,"gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
    ("large/melendez_old_mammoth_engine.xml",False,"gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
+   ("large/tricon_typhoon_engine.mvx",True,"gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
+   ("large/nexus_bolt_3000_engine.mvx",True,"gene_drive","strong_l","Immanis",["I","II","III"]),
 ]:
    ref=get_outfit_dict('core_engine/'+nam,db)
    BioOutfit( temp+".xml.template", {
