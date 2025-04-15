@@ -11,6 +11,24 @@ def nam2fil(s):
       s=s.replace(*c)
    return s.lower()
 
+def text2val(s):
+   inp=s.split('/',1)
+   try:
+      inp=[float(x) for x in inp]
+      return (inp[0],inp[-1])
+   except:
+      return None
+
+def roundit(f):
+   return int(f) if f==round(f) else f
+
+def andamp(s):
+   return '' if s is None else s.replace("&","&amp;")
+
+def fmt_kv(kv):
+   (key,value)=kv
+   return key+'="'+str(andamp(value))+'"'
+
 class _outfit():
    def __init__(self,fil):
       if type(fil)==type(""):
@@ -25,6 +43,9 @@ class _outfit():
    def name(self):
       return self.r.attrib['name']
 
+   def set_name(self,name):
+      self.r.attrib['name']=name
+
    def shortname(self):
       try:
          res=self.to_dict()['shortname']
@@ -33,14 +54,6 @@ class _outfit():
       return res
 
    def autostack(self,doubled=False):
-      def text2val(s):
-         inp=s.split('/',1)
-         try:
-            inp=[float(x) for x in inp]
-            return (inp[0],inp[-1])
-         except:
-            return None
-
       for e in self:
          res=text2val(e.text)
          if res is not None:
@@ -58,17 +71,11 @@ class _outfit():
             for s in _subs(e):
                yield s
 
-      for e in _subs(self.r):
-         yield e
+      return iter(_subs(self.r))
 
    def write(self,dst=stdout):
       def output_r(e,fp,ind=0):
-         andamp=lambda s:s.replace("&","&amp;") if s is not None else ''
-         def _fmt_a(kv):
-            (key,value)=kv
-            return key+'="'+str(andamp(value))+'"'
-
-         li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
+         li=[e.tag]+[fmt_kv(x) for x in e.attrib.items()]
 
          try:
             iter(e).next()
@@ -93,7 +100,7 @@ class _outfit():
       closeit=False
       if dst=="-":
          dest=stdout
-      elif type(dst)==type("foo"):
+      elif type(dst)==type(""):
          dest=open(dst,"wt")
          closeit=True
       else:
@@ -124,7 +131,11 @@ class _outfit():
       return d
 
 def outfit(fil):
-   return _outfit(fil) if type(fil)!=type("foo") or fil.endswith(".xml") or fil.endswith('.mvx') else None
+   if type(fil)!=type("") or fil.endswith(".xml") or fil.endswith('.mvx'):
+      o=_outfit(fil)
+      if o.r.tag=='outfit':
+         return o
+   return None
 
 if __name__=="__main__":
    from sys import argv

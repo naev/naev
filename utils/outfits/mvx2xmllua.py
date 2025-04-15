@@ -1,36 +1,14 @@
 #!/usr/bin/python
 
-dont_display=set(['priority','rarity'])
-from outfit import outfit
+keep_in_xml=set(['priority','rarity'])
 
-from os import path
 from sys import argv,stderr,stdin,stdout,exit
-import xml.etree.ElementTree as ET
 
-from outfit import nam2fil,MOBILITY_PARAMS
+from outfit import outfit,nam2fil,MOBILITY_PARAMS,text2val,roundit,ET
 
-def get_path(s):
-   s=path.dirname(s)
-
-   if s=='':
-      return ''
-   else:
-      return s+path.sep
-
-def read_com(s):
-   if s=='':
-      return 0,0
-   elif '/' in s:
-      n,m=tuple(s.split('/',1))
-      return float(n),float(m)
-   else:
-      return float(s),float(s)
 
 def fmt(f):
-   if f==round(f):
-      return str(int(f))
-   else:
-      return str(f)
+   return str(roundit(f))
 
 def sfmt(f):
    res=fmt(f)
@@ -41,7 +19,7 @@ def sfmt(f):
    else:
       return res;
 
-def process_group(r,field):
+def _process_group(r,field):
    needs_lua=False
    acc=[]
    r=r.find(field)
@@ -52,7 +30,7 @@ def process_group(r,field):
          e.set('prop_extra',e.attrib['prop']+'_secondary')
       else:
          try:
-            a,b=read_com(e.text)
+            a,b=text2val(e.text)
          except:
             continue
 
@@ -70,15 +48,14 @@ def process_group(r,field):
 
    return needs_lua,acc,torem
 
-def mklua(L):
-   output='\n'
+def _mklua(L):
    mods=''
    ind=3*' '
 
-   output+='require("outfits.lib.multicore").init{\n'
+   output='\nrequire("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
-      if nam not in dont_display:
+      if nam not in keep_in_xml:
          output+=ind+'{ "'+nam+'",'+' '
          output+=fmt(main)+','+' '
          output+=fmt(sec)+'},'+'\n'
@@ -87,49 +64,42 @@ def mklua(L):
 
    return output+mods+'}\n'
 
-def main():
-   acc=[]
+def toxmllua(o):
+   T,R=o.T,o.r
 
-   o=outfit(stdin)
-   T=o.T
-   R=o.r
-
-   if R.tag!='outfit':
-      return 1
-
-   nam=R.attrib['name'].rsplit(' (deprecated)',1)
-   if len(nam)==1 or nam[1].strip()=='':
-      R.attrib['name']=nam[0]
-
-   nam=nam2fil(R.attrib['name'])
-
-   f1,acc1,tr1=process_group(R,'./general')
-   f2,acc2,tr2=process_group(R,'./specific')
+   f1,acc1,tr1=_process_group(R,'./general')
+   f2,acc2,tr2=_process_group(R,'./specific')
 
    if f1 or f2:
       for (r,e) in tr1+tr2:
          r.remove(e)
 
-      acc=acc1+acc2
-
       for e in R.findall('./specific'):
          el=ET.Element("lua_inline")
-         el.text=mklua(acc)
+         el.text=_mklua(acc1+acc2)
          e.append(el)
          break
-   else:
-      pass
-      #print >>stderr,"No composite field found, left as is."
-
-   print >>stderr,nam
-   o.write(stdout)
-   return 0
 
 if __name__ == '__main__':
    import argparse
 
+   def main():
+      o=outfit(stdin)
+      if o is None:
+         return 1
+      else:
+         name=o.name().rsplit(' (deprecated)',1)
+         if len(name)==2 and name[1].strip()=='':
+            o.set_name(name[0])
+         nam=nam2fil(o.name())
+
+         toxmllua(o)
+         print >>stderr,nam
+         o.write(stdout)
+         return 0
+
    parser = argparse.ArgumentParser(
-      description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
+   description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
          The name the output should have is written on <stderr>.
          If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
    )
