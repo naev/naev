@@ -1,0 +1,23 @@
+<outfit name="Milspec Aegis 2201 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
+  <size>small</size>
+  <price>70000</price>
+  <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 2201 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+  <gfx_store>core_system_shield_s1</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 12, 33},
+   { "cpu_max", 36, 14},
+   { "shield", 250, 60},
+   { "shield_regen", 9, 1},
+   { "energy", 500, 200},
+   { "energy_regen", 33, 9},
+   { "ew_hide", 0, 0},
+}</lua_inline>
+ </specific>
+</outfit>

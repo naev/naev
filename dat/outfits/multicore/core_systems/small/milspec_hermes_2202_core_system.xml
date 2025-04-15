@@ -1,0 +1,23 @@
+<outfit name="Milspec Hermes 2202 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
+  <size>small</size>
+  <price>70000</price>
+  <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Hermes 2202 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+  <gfx_store>core_system_cpu_s1</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 12, 33},
+   { "cpu_max", 50, 20},
+   { "shield", 180, 45},
+   { "shield_regen", 6, 1},
+   { "energy", 500, 200},
+   { "energy_regen", 33, 9},
+   { "ew_hide", 0, 0},
+}</lua_inline>
+ </specific>
+</outfit>

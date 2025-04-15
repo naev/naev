@@ -47,7 +47,7 @@ def confirm(cand1,cand2):
 
 def process(thepath,f1,f2):
    inpath=f1.rsplit('/',1)[0]+'/'
-   outpath=get_path(f1.replace('/core_','/multicore/core_',1))
+   outpath=get_path(f1.replace('core_','multicore/core_',1))
    #print "echo","'"+path.basename(f1),path.basename(f2)+"'"
    cmd1=thepath+"outfits2mvx.py"+' '+f1+' '+f2
    cmd2=thepath+'mvx2xmllua.py '
