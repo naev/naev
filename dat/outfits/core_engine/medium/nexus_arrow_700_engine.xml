@@ -19,7 +19,7 @@ require("outfits.lib.multicore").init{
    { "speed", 230, 136},
    { "accel", 141, 37},
    { "turn", 117, 55},
-   { "time_mod", -15, 15},
+   { "time_mod", -15, -2},
    { "speed_mod", 0, -50},
    { "accel_mod", 0, -50},
    { "turn_mod", 0, -50},

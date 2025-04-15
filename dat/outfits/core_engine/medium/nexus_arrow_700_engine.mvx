@@ -17,6 +17,6 @@
   <speed>230/136</speed>
   <accel>141/37</accel>
   <turn>117/55</turn>
-  <time_mod>-15/15</time_mod>
+  <time_mod>-15/-2</time_mod>
  </specific>
 </outfit>
