@@ -19,8 +19,8 @@ require("outfits.lib.multicore").init{
    { "armour", 170, 190},
    { "cargo_inertia", -10, -4},
    { "cargo_mod", 10, 4},
-   { "ew_hide", 25, 0},
-   { "ew_signature", -25, 0},
+   { "ew_detected", 25, 0},
+   { "ew_signature", -10, 0},
    { "jam_chance", 42, 0},
 }</lua_inline>
  </specific>
