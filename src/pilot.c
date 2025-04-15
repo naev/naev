@@ -1295,7 +1295,8 @@ void pilot_rmFriendly( Pilot *p )
  */
 int pilot_getJumps( const Pilot *p )
 {
-   return p->fuel / p->fuel_consumption;
+   return ( p->fuel_consumption <= 0 ) ? 0
+                                       : floor( p->fuel / p->fuel_consumption );
 }
 
 /**

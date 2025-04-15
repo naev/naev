@@ -139,9 +139,6 @@ local function skill_disable( p, s, keepvar )
       if s.id then
          p:shipvarPop( s.id )
       end
-      if s.shipvar then
-         p:shipvarPop( s.shipvar )
-      end
    end
    if not keepvar then
       s.enabled = false
@@ -182,9 +179,6 @@ local function skill_enable( p, s )
    if p == player.pilot() then
       if s.id then
          p:shipvarPush( s.id, true )
-      end
-      if s.shipvar then
-         p:shipvarPush( s.shipvar, true )
       end
    end
    s.enabled = true

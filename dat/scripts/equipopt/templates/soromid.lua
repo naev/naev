@@ -29,7 +29,7 @@ local soromid_outfits = eoutfits.merge{{
    "Targeting Array", "Agility Combat AI",
    "Milspec Jammer", "Emergency Shield Booster",
    "Weapons Ionizer", "Sensor Array",
-   "Bio-Neural Combat AI", "Nexus Stealth Coating",
+   "Bio-Neural Combat AI", "Nexus Concealment Coating",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
    "Reactor Class III",
@@ -56,7 +56,7 @@ local soromid_params_overwrite = {
    -- Prefer to use the Soromid utilities
    prefer = {
       ["Bio-Neural Combat AI"]  = 100,
-      ["Nexus Stealth Coating"] = 100,
+      ["Nexus Concealment Coating"] = 100,
    },
    max_same_stru = 3,
 }
