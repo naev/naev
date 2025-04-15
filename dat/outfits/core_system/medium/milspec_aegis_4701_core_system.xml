@@ -1,5 +1,6 @@
 <outfit name="Milspec Aegis 4701 Core System">
  <general>
+  <shortname>M. Aegis 4701 System</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>medium</size>
@@ -11,13 +12,12 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 80, 100},
-   { "cpu_max", 68, 32},
-   { "shield", 550, 150},
-   { "shield_regen", 13, 1},
-   { "energy", 1200, 400},
-   { "energy_regen", 65, 20},
-   { "ew_hide", 0, 0},
+   { "mass", 80, 160},
+   { "cpu_max", 238, 90},
+   { "shield", 560, 165},
+   { "shield_regen", 12, 3},
+   { "energy", 675, 725},
+   { "energy_regen", 30, 18},
 }</lua_inline>
  </specific>
 </outfit>

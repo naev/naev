@@ -15,7 +15,7 @@
   <energy>525/575</energy>
   <energy_regen>17/19</energy_regen>
   <shield>330/70</shield>
-  <shield_regen>6.5/1</shield_regen>
+  <shield_regen>7/1</shield_regen>
   <ew_detect>10/0</ew_detect>
   <cooldown_time>-25/0</cooldown_time>
  </specific>
