@@ -70,7 +70,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/core_engine/large/unicorp_eagle_3000_engine.xml',
    root / 'dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml',
    root / 'dat/outfits/core_engine/medium/beat_up_medium_engine.xml',
-   root / 'dat/outfits/core_engine/medium/krain_patagium_engine.xml',
+   root / 'dat/outfits/core_engine/medium/krain_patagium_twin_engine.xml',
    root / 'dat/outfits/core_engine/medium/melendez_buffalo_engine.xml',
    root / 'dat/outfits/core_engine/medium/nexus_arrow_1400_engine.xml',
    root / 'dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml',

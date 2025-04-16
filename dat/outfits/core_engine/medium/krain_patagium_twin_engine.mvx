@@ -1,6 +1,6 @@
-<outfit name="Krain Patagium Engine">
+<outfit name="Krain Patagium Twin Engine">
  <general>
-  <shortname>K. Patagium Engine</shortname>
+  <shortname>K. Patagium Twin Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>

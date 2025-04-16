@@ -26,6 +26,7 @@ function finish ()
 
    -- Old cores that now use the primary / secondary system (0.13.0)
    local split = {
+      ["Krain Patagium Engine"]                 = true,
       ["Melendez Mammoth XL Engine"]            = true,
       ["Nexus Bolt 6500 Engine"]                = true,
       ["Tricon Typhoon II Engine"]              = true,
@@ -125,6 +126,7 @@ local outfit_list = {
    -- Multicore transformation (engines).
    -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
    -- See finish() above.
+   ["Krain Patagium Engine"]              = "Krain Patagium Twin Engine",
    ["Melendez Mammoth XL Engine"]         = "Melendez Mammoth Engine",
    ["Nexus Bolt 6500 Engine"]             = "Nexus Bolt 3000 Engine",
    ["Tricon Typhoon II Engine"]           = "Tricon Typhoon Engine",

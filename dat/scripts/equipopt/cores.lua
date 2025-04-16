@@ -308,7 +308,7 @@ cores.standard.engines["Kestrel"] = function ()
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
 cores.standard.engines["Starbridge"] = function ()
-   return choose_one{ "Unicorp Falcon 1400 Engine", "Krain Patagium Engine" }
+   return choose_one{ "Unicorp Falcon 700 Engine", "Krain Patagium Twin Engine" }
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
 cores.standard.systems["Proteron Hippocrates"] = function ()
@@ -325,7 +325,7 @@ cores.elite.hulls["Kestrel"] = function ()
 end
 cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
 cores.elite.engines["Starbridge"] = function ()
-   return choose_one{ "Tricon Cyclone Engine", "Krain Patagium Engine" }
+   return choose_one{ "Tricon Cyclone Engine", "Krain Patagium Twin Engine" }
 end
 cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
 cores.elite.systems["Gawain"] = function ()
@@ -393,7 +393,7 @@ function cores.get( p, params )
       local co = ct[ shipname ] or ct[ shipclass ]
       c["engines"] = co()
       if have_secondary[shipclass] then
-         c["engines"] = co()
+         c["engines_secondary"] = co()
       end
    end
 
