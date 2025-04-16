@@ -10,7 +10,7 @@ function descextra( _p, _o )
       {bonus=DAMAGEBONUS, total=DAMAGETOTAL}).."#0"
 end
 
-function init( p, po )
+local function update_damage( p, po )
    local hasunguided = false
    for k,o in ipairs(p:outfits()) do
       if o and o:typeBroad()=="Launcher" then
@@ -29,3 +29,7 @@ function init( p, po )
       po:clear()
    end
 end
+
+-- Update on outfit change or init
+init = update_damage
+onoutfitchange = update_damage
