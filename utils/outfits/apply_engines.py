@@ -129,7 +129,13 @@ def main(args):
          continue
 
       o = outfit(a)
-      subs=dict([(k,unstackvals(k,v1,sub[1][k])) for k,v1 in sub[0].items()])
+
+      if o.name()=="Krain Remige Engine":
+         subs=dict([(k,v1+'/0') for k,v1 in sub[0].items()])
+      elif o.name()=="Krain Patagium Twin Engine":
+         subs=dict([(k,v2) for k,v2 in sub[1].items()])
+      else:
+         subs=dict([(k,unstackvals(k,v1,sub[1][k])) for k,v1 in sub[0].items()])
 
       if subs is not None:
          acc=apply_ls(subs,o)

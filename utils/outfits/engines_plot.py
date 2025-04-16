@@ -39,13 +39,10 @@ def mkline(line):
          acc.append((max_sp(d['speed'],d['accel']),d['speed']))
 
    L=list(sorted(set(acc),reverse=True))
-   pad=[('.','.')]
 
-   if len(L)==2:  # That's Krain!
+   if len(L)==4:  # That's Krain!
       # Complete with padding
-      L=3*pad+L+pad
-   elif len(L)==3:  # That's the Beat up corp. line
-      L=L[0:1]+pad+L[1:2]+pad+L[2:3]+pad
+      L=L+2*[('.','.')]
 
    return L
 
