@@ -16,7 +16,7 @@
   <speed>147/67</speed>
   <fuel>2800/400</fuel>
   <energy_regen_malus>22/26</energy_regen_malus>
-  <engine_limit>5500/2500</engine_limit>
+  <engine_limit>3800/4200</engine_limit>
   <land_delay>-25/0</land_delay>
   <time_mod>10/0</time_mod>
  </specific>

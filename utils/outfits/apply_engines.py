@@ -71,7 +71,6 @@ sizes={
    'Krain Remige Engine':5,
    'Melendez Mammoth XL Engine':6,
    'Melendez Mammoth Engine':5,
-   'Melendez Old Mammoth Engine':5,
    'Unicorp Eagle 6500 Engine':6,
    'Unicorp Eagle 3000 Engine':5,
    'Beat Up Large Engine':5,

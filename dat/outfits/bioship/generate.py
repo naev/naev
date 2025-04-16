@@ -150,7 +150,7 @@ typename["hull"] = N_("Bioship Shell")
 # Mediocris Gene Drive  =>  Tricon Cyclone
 # Largus Gene Drive     =>  Tricon Cyclone x2
 # Ponderosus Gene Drive =>  Tricon Typhoon
-# Grandis Gene Drive    =>  Melendez Old Mammoth
+# Grandis Gene Drive    =>  Melendez Mammoth
 # Magnus Gene Drive     =>  Tricon Typhoon x2
 # Immanis Gene Drive    =>  Nexus Bolt 3000 x2
 for nam,db,temp,gfx,output_pref,outputs in [
@@ -160,7 +160,7 @@ for nam,db,temp,gfx,output_pref,outputs in [
    ("medium/tricon_cyclone_engine.mvx",False,"gene_drive_tricon","fast_m","Mediocris",["I","II","III"]),
    ("medium/tricon_cyclone_engine.mvx",True,"gene_drive_tricon","strong_m","Largus",["I","II"]),
    ("large/tricon_typhoon_engine.mvx",False,"gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
-   ("large/melendez_old_mammoth_engine.xml",False,"gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
+   ("large/melendez_mammoth_engine.mvx",False,"gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
    ("large/tricon_typhoon_engine.mvx",True,"gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
    ("large/nexus_bolt_3000_engine.mvx",True,"gene_drive","strong_l","Immanis",["I","II","III"]),
 ]:

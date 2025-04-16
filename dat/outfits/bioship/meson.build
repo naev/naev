@@ -60,7 +60,7 @@ bio_outfits = [
       ],
    ),
    custom_target('grandis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/large/melendez_old_mammoth_engine.xml'),
+      depend_files: files('../core_engine/large/melendez_mammoth_engine.mvx'),
       input: files('templates/gene_drive_melendez.xml.template'),
       output: [
          'grandis_gene_drive_i.xml',
