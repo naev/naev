@@ -141,7 +141,7 @@ if __name__=="__main__":
    from sys import argv
    if len(argv)>1:
       stderr.write("Usage: "+argv[0].split('/')[-1]+'\n')
-      stderr.write("  Reads a xml/mvx in input, outputs its input stacked with itself.\n")
+      stderr.write("  Reads a xml/mvx in input, outputs its input taken alone.\n")
    else:
       O=outfit(stdin)
       O.autostack()

@@ -64,7 +64,9 @@ if '-h' in argv or '--help' in argv:
    out("\nTypical usage (from naev root dir) :")
    out("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
 else:
-   L=[(a.to_dict(),a.shortname()) for a in map(outfit,argv[1:]) if a is not None]
+   L=[(outfit(a),fl) for a in argv[1:] for fl in [False,True]]
+   L=[(o,fl,o.autostack(fl)) for (o,fl) in L if o is not None]
+   L=[(o.to_dict(),o.shortname()+(' x2' if fl else '')) for (o,fl,_) in L]
    L.sort(key=key,reverse=True)
    C=['speed','max speed','accel','fullsp (s)','fullsp (km)','turn','turn radius','1/2 turn (s)']
    N=max([0]+[len(n) for (_,n) in L])
