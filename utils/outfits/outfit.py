@@ -33,10 +33,7 @@ def fmt_kv(kv):
    return key+'="'+str(andamp(value))+'"'
 
 def prisec(tag,r1,r2):
-   if r1 is not None:
-      a=r1[0]
-   else:
-      a=0
+   a=r1[0] if r1 is not None else 0
 
    if r2 is not None:
       a+=r2[1]
@@ -161,7 +158,6 @@ def outfit(fil):
       o=_outfit(fil)
       if o.r.tag=='outfit':
          return o
-   return None
 
 if __name__=="__main__":
    from sys import argv

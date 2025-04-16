@@ -2,7 +2,7 @@
 
 import math
 from sys import stderr,stdout
-from outfit import outfit,nam2fil
+from outfit import outfit,nam2fil,fmtval
 from getconst import PHYSICS_SPEED_DAMP
 
 
@@ -91,23 +91,9 @@ sizes={
    'Nexus Dart 160 Engine':1
 }
 
-def fmt(f):
-   res=str(int(round(f)))
-
-   #if f>100.0 and res[-1] in "9146" or f>200.0:
-   #   res=str(int(5.0*round(f/5.0)))
-   return res
-
-
-def fmt_t(t):
-   if t>=45:
-      return fmt(t)
-   else:
-      res=round(2*t)/2.0
-      if res==int(res):
-         return str(int(res))
-      else:
-         return str(res)
+def fmt(t,half=False):
+   red=2 if half and t<45 else 1
+   return fmtval(round(red*t)/float(red))
 
 def dec(f):
    n = math.floor(f)
@@ -116,51 +102,47 @@ def dec(f):
    return pow(dec_i(n),1.0-q)*pow(dec_i(n+1),q)
 
 def ls2vals(line_size):
-   if line_size is None:
-      return None
-   (line,size) = line_size
-   stats = line_stats[line]
+   if line_size is not None:
+      (line,size) = line_size
+      stats = line_stats[line]
 
-   # Modulate full speed based on the speed_ranke_offset stat
-   fullspeed = dec( size + stats["speed_rank_offset"])
+      # Modulate full speed based on the speed_ranke_offset stat
+      fullspeed = dec( size + stats["speed_rank_offset"])
 
-   # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
-   r = STD_R * pow(2,-R_MAG*((size-1)-2.5)/5)
+      # r ranges from 15% / 2 (size 6) to 15% * 2 (size 1)
+      r = STD_R * pow(2,-R_MAG*((size-1)-2.5)/5)
 
-   # Modulate ratio based on outfit
-   r *= line_stats[line]["ratio"]
+      # Modulate ratio based on outfit
+      r *= line_stats[line]["ratio"]
 
-   speed = fullspeed*(1.0-r)
-   accel = fullspeed*r*PHYSICS_SPEED_DAMP
+      speed = fullspeed*(1.0-r)
+      accel = fullspeed*r*PHYSICS_SPEED_DAMP
 
-   turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP)
-   if "turn" in stats:
-      turn*=stats["turn"]
+      turn = TURN_CT * fullspeed * pow(r/STD_R,AG_EXP)
+      if "turn" in stats:
+         turn*=stats["turn"]
 
-   return {
-           "speed":fmt(speed),
-           "accel":fmt(accel),
-           "turn":fmt_t(turn)
-          }
+      return {
+         "speed":fmt(speed),
+         "accel":fmt(accel),
+         "turn":fmt(turn,True)
+      }
 
 def get_line(o):
    res=o.name().split(' ')[0]
-   return res if res in line_stats else None
+   if res in line_stats:
+      return res
 
 def get_size(o):
    res=o.name()
    if res in sizes:
       return sizes[res]
-   else:
-      return None
 
 def get_line_size(o):
    l=get_line(o)
    s=get_size(o)
    if l!=None and s!=None:
       return (l,s)
-   else:
-      return None
 
 out=lambda x:stdout.write(x+'\n')
 err=lambda x,nnl=False:stderr.write(x+('\n' if not nnl else ''))
@@ -177,7 +159,6 @@ def apply_ls(o,ls,additional=dict()):
             acc.append((i.tag,i.text,sub[i.tag]))
             i.text=sub[i.tag]
       return acc
-   return None
 
 def main(args):
    outfits = []
