@@ -3,28 +3,12 @@
 from os import path
 from sys import argv,stderr,exit,stdout
 import xml.etree.ElementTree as ET
-from outfit import roundit,rprisec,stackvals
+from outfit import roundit,stackvals,unstackvals
 
 equals={'typename','slot','size'}
 take_first={'description','outfit','gfx_store','priority','shortname'}
 base_acc={'price','mass','rarity'}
 
-
-def fmt(f):
-   return str(roundit(f))
-
-def f1(tag,s1,s2):
-   a1=float(s1)
-   a2=float(s2) if s2!='' else 0
-
-   o1,o2=rprisec(tag,a1,a2)
-   if o2==o1:
-      return fmt(o1)
-   else:
-      return fmt(o1)+'/'+fmt(o2)
-
-def rf1(tag,s1,s2):
-   return fmt(stackvals(tag,s1,s2))
 
 if __name__ == '__main__':
    def merge_group(r1,r2,field,func,dummy=False):
@@ -35,7 +19,7 @@ if __name__ == '__main__':
          for t,e in L1.items():
             if t in base_acc:
                L2[t]=ET.Element(t)
-               L2[t].text=str(float(L1[t].text)*2)
+               L2[t].text=str(roundit(float(L1[t].text)*2))
             else:
                L2[t]=e
 
@@ -68,8 +52,7 @@ if __name__ == '__main__':
 
    def main(args,func,stkmod):
       acc=[]
-      T=[None,None]
-      R=[None,None]
+      T,R=[None,None],[None,None]
       m=[None,None]
 
       if len(args) not in [1,2]:
@@ -84,14 +67,13 @@ if __name__ == '__main__':
          R[i]=T[i].getroot()
          for e in R[i].findall("./general/mass"):
             m[i]=float(e.text.split('(')[0])
-            break;
+            break
       print >>stderr
 
       if len(args)==2 and m[0]>m[1]:
          print >>stderr,"The first one has more mass, swapping",', '.join(args)
          args[0],args[1]=args[1],args[0]
-         T=[T[1],T[0]]
-         R=[R[1],R[0]]
+         T,R=[T[1],T[0]],[R[1],R[0]]
 
       merge_group(R[0],R[1],'./general/',func,dummy)
       merge_group(R[0],R[1],'./specific/',func,dummy)
@@ -114,6 +96,6 @@ if __name__ == '__main__':
       if ign!=[]:
          print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
 
-      merge_func=rf1 if '-s' in argv[1:] else f1
+      merge_func=stackvals if '-s' in argv[1:] else unstackvals
       main([f for f in argv[1:] if f.endswith(".xml")],merge_func,'-s' in argv[1:])
       exit(0)

@@ -22,6 +22,9 @@ def text2val(s):
 def roundit(f):
    return int(f) if f==round(f) else f
 
+def fmtval(v):
+   return str(roundit(v))
+
 def andamp(s):
    return '' if s is None else s.replace("&","&amp;")
 
@@ -42,13 +45,20 @@ def prisec(tag,r1,r2):
 
    return roundit(a)
 
-def rprisec(tag,v1,v2):
+def stackvals(tag,text1,text2):
+   return str(roundit(prisec(tag,text2val(text1),text2val(text2))))
+
+def r_prisec(tag,v1,v2):
    if tag in MOBILITY_PARAMS:
       v2*=2
    return v1,v2-v1
 
-def stackvals(tag,text1,text2):
-   return str(prisec(tag,text2val(text1),text2val(text2)))
+def unstackvals(tag,text1,text2):
+   o1,o2=r_prisec(tag,float(text1),0 if text2=='' else float(text2))
+   if o2==o1:
+      return fmtval(o1)
+   else:
+      return fmtval(o1)+'/'+fmtval(o2)
 
 class _outfit():
    def __init__(self,fil):
