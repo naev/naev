@@ -1647,7 +1647,7 @@ static void outfitLOutfitChange( const Pilot *pilot, PilotOutfitSlot *po,
    (void)data;
    int oldmem;
 
-   if ( po->outfit->lua_outofenergy == LUA_NOREF )
+   if ( po->outfit->lua_onoutfitchange == LUA_NOREF )
       return;
 
    nlua_env env = po->outfit->lua_env;
