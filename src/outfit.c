@@ -2630,33 +2630,34 @@ static int outfit_parse( Outfit *temp, const char *file )
    temp->filename = strdup( file );
 
    /* Defaults. */
-   temp->lua_env          = LUA_NOREF;
-   temp->lua_descextra    = LUA_NOREF;
-   temp->lua_onadd        = LUA_NOREF;
-   temp->lua_onremove     = LUA_NOREF;
-   temp->lua_init         = LUA_NOREF;
-   temp->lua_cleanup      = LUA_NOREF;
-   temp->lua_update       = LUA_NOREF;
-   temp->lua_ontoggle     = LUA_NOREF;
-   temp->lua_onshoot      = LUA_NOREF;
-   temp->lua_onhit        = LUA_NOREF;
-   temp->lua_outofenergy  = LUA_NOREF;
-   temp->lua_onshootany   = LUA_NOREF;
-   temp->lua_onstealth    = LUA_NOREF;
-   temp->lua_onscanned    = LUA_NOREF;
-   temp->lua_onscan       = LUA_NOREF;
-   temp->lua_cooldown     = LUA_NOREF;
-   temp->lua_land         = LUA_NOREF;
-   temp->lua_takeoff      = LUA_NOREF;
-   temp->lua_jumpin       = LUA_NOREF;
-   temp->lua_board        = LUA_NOREF;
-   temp->lua_keydoubletap = LUA_NOREF;
-   temp->lua_keyrelease   = LUA_NOREF;
-   temp->lua_onimpact     = LUA_NOREF;
-   temp->lua_onmiss       = LUA_NOREF;
-   temp->lua_price        = LUA_NOREF;
-   temp->lua_buy          = LUA_NOREF;
-   temp->lua_sell         = LUA_NOREF;
+   temp->lua_env            = LUA_NOREF;
+   temp->lua_descextra      = LUA_NOREF;
+   temp->lua_onadd          = LUA_NOREF;
+   temp->lua_onremove       = LUA_NOREF;
+   temp->lua_onoutfitchange = LUA_NOREF;
+   temp->lua_init           = LUA_NOREF;
+   temp->lua_cleanup        = LUA_NOREF;
+   temp->lua_update         = LUA_NOREF;
+   temp->lua_ontoggle       = LUA_NOREF;
+   temp->lua_onshoot        = LUA_NOREF;
+   temp->lua_onhit          = LUA_NOREF;
+   temp->lua_outofenergy    = LUA_NOREF;
+   temp->lua_onshootany     = LUA_NOREF;
+   temp->lua_onstealth      = LUA_NOREF;
+   temp->lua_onscanned      = LUA_NOREF;
+   temp->lua_onscan         = LUA_NOREF;
+   temp->lua_cooldown       = LUA_NOREF;
+   temp->lua_land           = LUA_NOREF;
+   temp->lua_takeoff        = LUA_NOREF;
+   temp->lua_jumpin         = LUA_NOREF;
+   temp->lua_board          = LUA_NOREF;
+   temp->lua_keydoubletap   = LUA_NOREF;
+   temp->lua_keyrelease     = LUA_NOREF;
+   temp->lua_onimpact       = LUA_NOREF;
+   temp->lua_onmiss         = LUA_NOREF;
+   temp->lua_price          = LUA_NOREF;
+   temp->lua_buy            = LUA_NOREF;
+   temp->lua_sell           = LUA_NOREF;
 
    xmlr_attr_strd( parent, "name", temp->name );
    if ( temp->name == NULL )
@@ -3052,9 +3053,11 @@ int outfit_load( void )
          free( dat );
 
       /* Check functions as necessary. */
-      o->lua_descextra   = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
-      o->lua_onadd       = nlua_refenvtype( env, "onadd", LUA_TFUNCTION );
-      o->lua_onremove    = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+      o->lua_descextra = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
+      o->lua_onadd     = nlua_refenvtype( env, "onadd", LUA_TFUNCTION );
+      o->lua_onremove  = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+      o->lua_onoutfitchange =
+         nlua_refenvtype( env, "onoutfitchange", LUA_TFUNCTION );
       o->lua_init        = nlua_refenvtype( env, "init", LUA_TFUNCTION );
       o->lua_cleanup     = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
       o->lua_update      = nlua_refenvtype( env, "update", LUA_TFUNCTION );

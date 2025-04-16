@@ -217,6 +217,7 @@ stds.API_pilotoutfit = {globals={
    "onmiss",
    "onload",
    "onremove",
+   "onoutfitchange",
    "onscan",
    "onscanned",
    "onshootany",

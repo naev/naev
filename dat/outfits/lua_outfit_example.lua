@@ -78,6 +78,10 @@ end
 function onremove( _p, _po )
 end
 
+-- The function is run when any outfit is changed on the pilot
+function onoutfitchange( _p, _po )
+end
+
 -- The update function is run periodically every 1/3 seconds
 -- 'dt' is the time elapsed since last time run in seconds
 function update( _p, _po, _dt )
