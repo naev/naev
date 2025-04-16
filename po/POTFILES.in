@@ -376,7 +376,7 @@ dat/outfits/special/bikers_fury_launcher.xml
 dat/outfits/special/four_winds_laser_cannon.xml
 dat/outfits/special/four_winds_ragnarok_beam.xml
 dat/outfits/structure/active_plating.xml
-dat/outfits/structure/adaptive_stealth_plating.xml
+dat/outfits/structure/adaptive_camouflage_plating.xml
 dat/outfits/structure/auxiliary_processing_unit_i.xml
 dat/outfits/structure/auxiliary_processing_unit_ii.xml
 dat/outfits/structure/auxiliary_processing_unit_iii.xml
@@ -427,7 +427,6 @@ dat/outfits/utility/berserk_chip.xml
 dat/outfits/utility/blink_drive.xml
 dat/outfits/utility/boarding_androids_mk1.xml
 dat/outfits/utility/boarding_androids_mk2.xml
-dat/outfits/utility/camouflage_burster.xml
 dat/outfits/utility/catalytic_energy_drill.xml
 dat/outfits/utility/cloaking_device.xml
 dat/outfits/utility/combat_hologram_projector.xml
@@ -450,7 +449,7 @@ dat/outfits/utility/hullcoating/faraday_tempest_coating.xml
 dat/outfits/utility/hullcoating/lattice_thermal_coating.xml
 dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml
 dat/outfits/utility/hullcoating/nebula_resistant_coating.xml
-dat/outfits/utility/hullcoating/nexus_stealth_coating.xml
+dat/outfits/utility/hullcoating/nexus_concealment_coating.xml
 dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml
 dat/outfits/utility/hyperbolic_blink_engine.xml
 dat/outfits/utility/jump_scanner.xml
@@ -461,6 +460,7 @@ dat/outfits/utility/neural_accelerator_interface.xml
 dat/outfits/utility/sensor_array.xml
 dat/outfits/utility/sk_heavy_plasma_drill.xml
 dat/outfits/utility/sk_plasma_drill.xml
+dat/outfits/utility/stealth_burster.xml
 dat/outfits/utility/targeting_array.xml
 dat/outfits/utility/targeting_conduit.xml
 dat/outfits/utility/unicorp_jammer.xml
@@ -3398,7 +3398,6 @@ dat/outfits/unique/valkyrie_beam.lua
 dat/outfits/unique/zd5_guardian_unit.lua
 dat/outfits/utility/berserk_chip.lua
 dat/outfits/utility/blink_drive.lua
-dat/outfits/utility/camouflage_burster.lua
 dat/outfits/utility/catalytic_energy_drill.lua
 dat/outfits/utility/cloaking_device.lua
 dat/outfits/utility/combat_hologram_projector.lua
@@ -3412,6 +3411,7 @@ dat/outfits/utility/low_radiation_sensor_modulator.lua
 dat/outfits/utility/neural_accelerator_interface.lua
 dat/outfits/utility/sk_heavy_plasma_drill.lua
 dat/outfits/utility/sk_plasma_drill.lua
+dat/outfits/utility/stealth_burster.lua
 dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua

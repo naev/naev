@@ -164,10 +164,7 @@ int dpl_saveSpob( const Spob *p )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   char path[PATH_MAX];
-   snprintf( path, sizeof( path ), "%s", p->filename );
-   const char *filename = basename( path );
-   SDL_asprintf( &file, "%s/spob/%s", conf.dev_data_dir, filename );
+   SDL_asprintf( &file, "%s/%s", conf.dev_data_dir, p->filename );
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( "Failed to write '%s'!", file );
       ret = -1;

@@ -309,10 +309,7 @@ int dsys_saveSystem( StarSystem *sys )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   char path[PATH_MAX];
-   snprintf( path, sizeof( path ), "%s", sys->filename );
-   const char *filename = basename( path );
-   SDL_asprintf( &file, "%s/ssys/%s", conf.dev_data_dir, filename );
+   SDL_asprintf( &file, "%s/%s", conf.dev_data_dir, sys->filename );
    if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
       WARN( "Failed writing '%s'!", file );
       ret = -1;

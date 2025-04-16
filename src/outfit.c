@@ -98,19 +98,20 @@ typedef struct Outfit {
    nlua_env
       lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_descextra; /**< Run to get the extra description status. */
-   int
-      lua_onadd; /**< Run when added to a pilot or player swaps to this ship. */
-   int lua_onremove; /**< Run when removed to a pilot or when player swaps away
-                        from this ship. */
-   int lua_init;     /**< Run when pilot enters a system. */
-   int lua_cleanup;  /**< Run when the pilot is erased. */
-   int lua_update;   /**< Run periodically. */
-   int lua_ontoggle; /**< Run when toggled. */
-   int lua_onshoot;  /**< Run when shooting. */
-   int lua_onhit;    /**< Run when pilot takes damage. */
-   int lua_outofenergy;  /**< Run when the pilot runs out of energy. */
-   int lua_onshootany;   /**< Run when pilot shoots ANY weapon. */
-   int lua_onstealth;    /**< Run when pilot toggles stealth. */
+   int lua_onadd; /**< Run when added to a pilot or player adds this outfit. */
+   int lua_onremove; /**< Run when removed to a pilot or when player removes
+                                                this outfit. */
+   int lua_onoutfitchange; /**< Run when any outfit is changed on the ship (not
+                                                             just this one. */
+   int lua_init;           /**< Run when pilot enters a system. */
+   int lua_cleanup;        /**< Run when the pilot is erased. */
+   int lua_update;         /**< Run periodically. */
+   int lua_ontoggle;       /**< Run when toggled. */
+   int lua_onshoot;        /**< Run when shooting. */
+   int lua_onhit;          /**< Run when pilot takes damage. */
+   int lua_outofenergy;    /**< Run when the pilot runs out of energy. */
+   int lua_onshootany;     /**< Run when pilot shoots ANY weapon. */
+   int lua_onstealth;      /**< Run when pilot toggles stealth. */
    int lua_onscanned;    /**< Run when the pilot is scanned by another pilot. */
    int lua_onscan;       /**< Run when the pilot scans another pilot. */
    int lua_cooldown;     /**< Run when cooldown is started or stopped. */
@@ -1710,6 +1711,10 @@ int outfit_luaOnremove( const Outfit *o )
 {
    return o->lua_onremove;
 }
+int outfit_luaOnoutfitchange( const Outfit *o )
+{
+   return o->lua_onoutfitchange;
+}
 int outfit_luaInit( const Outfit *o )
 {
    return o->lua_init;
@@ -3294,33 +3299,34 @@ static int outfit_parse( Outfit *temp, const char *file )
    temp->filename = strdup( file );
 
    /* Defaults. */
-   temp->lua_env          = LUA_NOREF;
-   temp->lua_descextra    = LUA_NOREF;
-   temp->lua_onadd        = LUA_NOREF;
-   temp->lua_onremove     = LUA_NOREF;
-   temp->lua_init         = LUA_NOREF;
-   temp->lua_cleanup      = LUA_NOREF;
-   temp->lua_update       = LUA_NOREF;
-   temp->lua_ontoggle     = LUA_NOREF;
-   temp->lua_onshoot      = LUA_NOREF;
-   temp->lua_onhit        = LUA_NOREF;
-   temp->lua_outofenergy  = LUA_NOREF;
-   temp->lua_onshootany   = LUA_NOREF;
-   temp->lua_onstealth    = LUA_NOREF;
-   temp->lua_onscanned    = LUA_NOREF;
-   temp->lua_onscan       = LUA_NOREF;
-   temp->lua_cooldown     = LUA_NOREF;
-   temp->lua_land         = LUA_NOREF;
-   temp->lua_takeoff      = LUA_NOREF;
-   temp->lua_jumpin       = LUA_NOREF;
-   temp->lua_board        = LUA_NOREF;
-   temp->lua_keydoubletap = LUA_NOREF;
-   temp->lua_keyrelease   = LUA_NOREF;
-   temp->lua_onimpact     = LUA_NOREF;
-   temp->lua_onmiss       = LUA_NOREF;
-   temp->lua_price        = LUA_NOREF;
-   temp->lua_buy          = LUA_NOREF;
-   temp->lua_sell         = LUA_NOREF;
+   temp->lua_env            = LUA_NOREF;
+   temp->lua_descextra      = LUA_NOREF;
+   temp->lua_onadd          = LUA_NOREF;
+   temp->lua_onremove       = LUA_NOREF;
+   temp->lua_onoutfitchange = LUA_NOREF;
+   temp->lua_init           = LUA_NOREF;
+   temp->lua_cleanup        = LUA_NOREF;
+   temp->lua_update         = LUA_NOREF;
+   temp->lua_ontoggle       = LUA_NOREF;
+   temp->lua_onshoot        = LUA_NOREF;
+   temp->lua_onhit          = LUA_NOREF;
+   temp->lua_outofenergy    = LUA_NOREF;
+   temp->lua_onshootany     = LUA_NOREF;
+   temp->lua_onstealth      = LUA_NOREF;
+   temp->lua_onscanned      = LUA_NOREF;
+   temp->lua_onscan         = LUA_NOREF;
+   temp->lua_cooldown       = LUA_NOREF;
+   temp->lua_land           = LUA_NOREF;
+   temp->lua_takeoff        = LUA_NOREF;
+   temp->lua_jumpin         = LUA_NOREF;
+   temp->lua_board          = LUA_NOREF;
+   temp->lua_keydoubletap   = LUA_NOREF;
+   temp->lua_keyrelease     = LUA_NOREF;
+   temp->lua_onimpact       = LUA_NOREF;
+   temp->lua_onmiss         = LUA_NOREF;
+   temp->lua_price          = LUA_NOREF;
+   temp->lua_buy            = LUA_NOREF;
+   temp->lua_sell           = LUA_NOREF;
 
    xmlr_attr_strd( parent, "name", temp->name );
    if ( temp->name == NULL )
@@ -3711,9 +3717,11 @@ int outfit_load( void )
          free( dat );
 
       /* Check functions as necessary. */
-      o->lua_descextra   = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
-      o->lua_onadd       = nlua_refenvtype( env, "onadd", LUA_TFUNCTION );
-      o->lua_onremove    = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+      o->lua_descextra = nlua_refenvtype( env, "descextra", LUA_TFUNCTION );
+      o->lua_onadd     = nlua_refenvtype( env, "onadd", LUA_TFUNCTION );
+      o->lua_onremove  = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+      o->lua_onoutfitchange =
+         nlua_refenvtype( env, "onoutfitchange", LUA_TFUNCTION );
       o->lua_init        = nlua_refenvtype( env, "init", LUA_TFUNCTION );
       o->lua_cleanup     = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
       o->lua_update      = nlua_refenvtype( env, "update", LUA_TFUNCTION );

@@ -3368,6 +3368,9 @@ static int system_parse( StarSystem *sys, const char *filename )
    if ( sys->map_shader != NULL )
       sys->ms = mapshader_get( sys->map_shader );
 
+   /* Save the filename. */
+   sys->filename = strdup( filename );
+
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
    WARN( _( "Star System '%s' missing '%s' element" ), sys->name, s )

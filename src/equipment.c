@@ -2057,7 +2057,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
    spaceworthy =
       !pilot_reportSpaceworthy( ship, errorReport, sizeof( errorReport ) );
 
-   jumps = floor( ship->fuel_max / ship->fuel_consumption );
+   jumps = pilot_getJumps( ship );
 
    /* Get acquired text length. */
    x        = 20 + sw + 20 + 180 + 10;

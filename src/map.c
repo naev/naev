@@ -542,7 +542,7 @@ static void map_update_autonav( unsigned int wid )
    char        buf[STRMAX];
    StarSystem *sys;
    int         autonav, th;
-   int         jumps = floor( player.p->fuel / player.p->fuel_consumption );
+   int         jumps = pilot_getJumps( player.p );
    int         p     = 0;
    int         rw    = RCOL_HEADER_W;
    p += scnprintf( &buf[p], sizeof( buf ) - p, "#n%s#0", _( "Fuel: " ) );

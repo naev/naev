@@ -417,6 +417,7 @@ int outfit_luaEnv( const Outfit *o );
 int outfit_luaDescextra( const Outfit *o );
 int outfit_luaOnadd( const Outfit *o );
 int outfit_luaOnremove( const Outfit *o );
+int outfit_luaOnoutfitchange( const Outfit *o );
 int outfit_luaInit( const Outfit *o );
 int outfit_luaCleanup( const Outfit *o );
 int outfit_luaUpdate( const Outfit *o );

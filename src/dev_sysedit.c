@@ -494,7 +494,7 @@ static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
 
    /* Set filename. */
    char *cleanname = uniedit_nameFilter( p->name );
-   SDL_asprintf( &p->filename, "%s.xml", cleanname );
+   SDL_asprintf( &p->filename, "spob/%s.xml", cleanname );
    free( cleanname );
 
    /* Base spob data off another. */
@@ -684,11 +684,11 @@ static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 
          /* Clean up. */
          free( oldName );
-         free( p->filename );
+         // free( p->filename );
 
          /* Replace name in stack. */
          spob_rename( p, name );
-         p->filename = newName;
+         // p->filename = newName;
 
          dsys_saveSystem( sysedit_sys );
          dpl_saveSpob( p );
