@@ -4,7 +4,7 @@ from sys import stdin,stdout,stderr
 
 import xml.etree.ElementTree as ET
 
-MOBILITY_PARAMS={'speed','turn','accel'}
+MOBILITY_PARAMS={'speed','turn','accel','thrust'}
 
 def nam2fil(s):
    for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
@@ -28,6 +28,27 @@ def andamp(s):
 def fmt_kv(kv):
    (key,value)=kv
    return key+'="'+str(andamp(value))+'"'
+
+def prisec(tag,r1,r2):
+   if r1 is not None:
+      a=r1[0]
+   else:
+      a=0
+
+   if r2 is not None:
+      a+=r2[1]
+      if tag in MOBILITY_PARAMS:
+         a/=2.0
+
+   return roundit(a)
+
+def rprisec(tag,v1,v2):
+   if tag in MOBILITY_PARAMS:
+      v2*=2
+   return v1,v2-v1
+
+def stackvals(tag,text1,text2):
+   return str(prisec(tag,text2val(text1),text2val(text2)))
 
 class _outfit():
    def __init__(self,fil):
@@ -57,12 +78,7 @@ class _outfit():
       for e in self:
          res=text2val(e.text)
          if res is not None:
-            (a,b)=res
-            if doubled:
-               a+=b
-               if e.tag in MOBILITY_PARAMS:
-                  a/=2.0
-            e.text=str(a)
+            e.text=str(prisec(e.tag,res,res if doubled else None))
 
    def __iter__(self):
       def _subs(r):
