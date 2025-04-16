@@ -3,8 +3,7 @@
 from sys import stderr
 import xml.etree.ElementTree as ET
 
-lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide'}
-
+lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide','launch_reload'}
 
 def transpose(M):
    N=max(map(len,M))
@@ -21,7 +20,6 @@ def keyfunc(s):
          return None
    return key
 
-#launch_reload
 def main(args,gith=False,ter=False,noext=False,sortit=False):
    names=['']*len(args)
    L=[dict() for a in args]
