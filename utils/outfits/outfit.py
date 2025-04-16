@@ -80,6 +80,14 @@ class _outfit():
       except:
          res=self.name()
       return res
+   def size(self,doubled=False):
+      try:
+         res=self.to_dict()['size']
+         for i,k in enumerate(['small','medium','large']):
+            if res==k:
+               return 2*i+(2 if doubled else 1)
+      except:
+         pass
 
    def autostack(self,doubled=False):
       for e in self:
