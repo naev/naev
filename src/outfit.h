@@ -409,19 +409,20 @@ typedef struct Outfit_ {
    nlua_env
       lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_descextra; /**< Run to get the extra description status. */
-   int
-      lua_onadd; /**< Run when added to a pilot or player swaps to this ship. */
-   int lua_onremove; /**< Run when removed to a pilot or when player swaps away
-                        from this ship. */
-   int lua_init;     /**< Run when pilot enters a system. */
-   int lua_cleanup;  /**< Run when the pilot is erased. */
-   int lua_update;   /**< Run periodically. */
-   int lua_ontoggle; /**< Run when toggled. */
-   int lua_onshoot;  /**< Run when shooting. */
-   int lua_onhit;    /**< Run when pilot takes damage. */
-   int lua_outofenergy;  /**< Run when the pilot runs out of energy. */
-   int lua_onshootany;   /**< Run when pilot shoots ANY weapon. */
-   int lua_onstealth;    /**< Run when pilot toggles stealth. */
+   int lua_onadd; /**< Run when added to a pilot or player adds this outfit. */
+   int lua_onremove; /**< Run when removed to a pilot or when player removes
+                        this outfit. */
+   int lua_onoutfitchange; /**< Run when any outfit is changed on the ship (not
+                              just this one. */
+   int lua_init;           /**< Run when pilot enters a system. */
+   int lua_cleanup;        /**< Run when the pilot is erased. */
+   int lua_update;         /**< Run periodically. */
+   int lua_ontoggle;       /**< Run when toggled. */
+   int lua_onshoot;        /**< Run when shooting. */
+   int lua_onhit;          /**< Run when pilot takes damage. */
+   int lua_outofenergy;    /**< Run when the pilot runs out of energy. */
+   int lua_onshootany;     /**< Run when pilot shoots ANY weapon. */
+   int lua_onstealth;      /**< Run when pilot toggles stealth. */
    int lua_onscanned;    /**< Run when the pilot is scanned by another pilot. */
    int lua_onscan;       /**< Run when the pilot scans another pilot. */
    int lua_cooldown;     /**< Run when cooldown is started or stopped. */

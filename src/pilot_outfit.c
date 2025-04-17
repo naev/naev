@@ -332,6 +332,7 @@ int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
 
    /* Initialize if active thingy if necessary. */
    pilot_outfitLAdd( pilot, s );
+   pilot_outfitLOutfitChange( pilot );
 
    return 0;
 }
@@ -495,6 +496,7 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 
    /* Run remove hook if necessary. */
    pilot_outfitLRemove( pilot, s );
+   pilot_outfitLOutfitChange( pilot );
 
    /* Decrement counters if necessary. */
    if ( s->outfit != NULL ) {
@@ -1637,6 +1639,40 @@ int pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po )
    }
    pilot_outfitLunmem( po->outfit->lua_env, oldmem );
    return 1;
+}
+
+static void outfitLOutfitChange( const Pilot *pilot, PilotOutfitSlot *po,
+                                 const void *data )
+{
+   (void)data;
+   int oldmem;
+
+   if ( po->outfit->lua_onoutfitchange == LUA_NOREF )
+      return;
+
+   nlua_env env = po->outfit->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: outofenergy( p, po ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX,
+                po->outfit->lua_onoutfitchange ); /* f */
+   lua_pushpilot( naevL, pilot->id );             /* f, p */
+   lua_pushpilotoutfit( naevL, po );              /* f, p, po */
+   if ( nlua_pcall( env, 2, 0 ) ) {               /* */
+      outfitLRunWarning( pilot, po->outfit, "onoutfitchange",
+                         lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+
+void pilot_outfitLOutfitChange( Pilot *pilot )
+{
+   NTracingZone( _ctx, 1 );
+   pilot_outfitLRun( pilot, outfitLOutfitChange, NULL );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
