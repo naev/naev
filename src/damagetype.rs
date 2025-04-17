@@ -16,8 +16,8 @@ pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
     let name = ptr.to_str().unwrap();
     match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
         Ok(i) => (i + 1) as c_int,
-        Err(_) => {
-            warn!("damage type '{}' not found", name);
+        Err(e) => {
+            warn!("damage type '{}' not found: {}", name, e);
             0
         }
     }

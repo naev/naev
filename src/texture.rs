@@ -990,8 +990,8 @@ pub extern "C" fn gl_loadImageData(
             unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
             Box::into_raw(Box::new(tex))
         }
-        _ => {
-            warn!("unable to create texture");
+        Err(e) => {
+            warn!("unable to create texture: {}", e);
             std::ptr::null_mut()
         }
     };
