@@ -121,7 +121,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()
         .filter_map(|filename| {
-            if !filename.ends_with("xml") {
+            if !filename.ends_with(".xml") {
                 return None;
             }
             match SlotProperty::load(&ctx, filename.as_str()) {

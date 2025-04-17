@@ -207,7 +207,7 @@ pub fn load() -> Result<Vec<DamageType>> {
     let mut dt_data: Vec<DamageType> = files
         .par_iter()
         .filter_map(|filename| {
-            if !filename.ends_with("xml") {
+            if !filename.ends_with(".xml") {
                 return None;
             }
             match DamageType::load(filename.as_str()) {
