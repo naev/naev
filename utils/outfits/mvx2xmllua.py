@@ -78,8 +78,8 @@ def toxmllua(o,update_lua):
          el=ET.Element("lua_inline")
          el.text=_mklua(acc1+acc2)
          if update_lua:
-            el.text+='init = require "'+update_lua+'"\n'
-            el.text+='onoutfitchange = require "'+update_lua+'"\n'
+            el.text+='init = require "outfits.lib.'+update_lua+'"\n'
+            el.text+='onoutfitchange = require "outfits.lib.'+update_lua+'"\n'
          e.append(el)
          break
 

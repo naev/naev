@@ -23,7 +23,7 @@ require("outfits.lib.multicore").init{
    { "accel_mod", 0, -50},
    { "turn_mod", 0, -50},
 }
-init = require "alone"
-onoutfitchange = require "alone"</lua_inline>
+init = require "outfits.lib.alone"
+onoutfitchange = require "outfits.lib.alone"</lua_inline>
  </specific>
 </outfit>
