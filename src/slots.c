@@ -55,6 +55,11 @@ int sp_load( void )
       xmlNodePtr      node, cur;
       xmlDocPtr       doc;
 
+      if ( !ndata_matchExt( sp_files[i], "xml" ) ) {
+         free( sp_files[i] );
+         continue;
+      }
+
       /* Load and read the data. */
       doc = xml_parsePhysFS( sp_files[i] );
       if ( doc == NULL )
