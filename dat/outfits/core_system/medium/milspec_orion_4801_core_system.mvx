@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Orion 4801 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>medium</size>
   <mass>90/180</mass>
   <price>330000/270000</price>

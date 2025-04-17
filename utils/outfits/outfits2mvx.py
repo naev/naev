@@ -34,6 +34,7 @@ if __name__ == '__main__':
                if e.text!=f.text:
                   print >>stderr,t,":",e.text,"!=",f.text
                   exit(1)
+               e.set('prop_extra',e.attrib['prop']+'_secondary')
          elif t in take_first:
             pass
          else:

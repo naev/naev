@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Mammoth Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>large</size>
   <mass>75/25</mass>
   <price>1100000/400000</price>

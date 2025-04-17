@@ -2,7 +2,7 @@
  <general>
   <shortname>RS. Medium Cargo Hull</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
   <size>medium</size>
   <priority>7</priority>
   <mass>120/160</mass>

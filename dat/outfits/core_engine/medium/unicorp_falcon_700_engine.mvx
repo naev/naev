@@ -2,7 +2,7 @@
  <general>
   <shortname>U. Falcon 700 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>medium</size>
   <mass>16/4</mass>
   <price>40000/35000</price>

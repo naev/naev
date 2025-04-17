@@ -26,25 +26,22 @@ def _process_group(r,field):
    torem=[]
    for e in r.iter():
       t=e.tag
-      if t == 'slot':
-         e.set('prop_extra',e.attrib['prop']+'_secondary')
-      else:
-         try:
-            a,b=text2val(e.text)
-         except:
-            continue
+      try:
+         a,b=text2val(e.text)
+      except:
+         continue
 
-         if t == 'price':
-            e.text=fmt(round((a+b)/2,-2))
-         elif t=='priority' and a==b:
-            continue
+      if t == 'price':
+         e.text=fmt(round((a+b)/2,-2))
+      elif t=='priority' and a==b:
+         continue
+      else:
+         if a==b:
+            e.text=fmt(a)
          else:
-            if a==b:
-               e.text=fmt(a)
-            else:
-               needs_lua=True
-            acc.append((t,(a,b)))
-            torem.append((r,e))
+            needs_lua=True
+         acc.append((t,(a,b)))
+         torem.append((r,e))
 
    return needs_lua,acc,torem
 

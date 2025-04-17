@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Aegis 8501 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>large</size>
   <mass>500/700</mass>
   <price>2100000/700000</price>

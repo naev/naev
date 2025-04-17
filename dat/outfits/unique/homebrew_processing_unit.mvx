@@ -3,7 +3,7 @@
   <rarity>6</rarity>
   <unique />
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>10</mass>
   <price>50000</price>

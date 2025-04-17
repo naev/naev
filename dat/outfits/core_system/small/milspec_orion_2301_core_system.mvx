@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Orion 2301 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>14/61</mass>
   <price>120000/90000</price>

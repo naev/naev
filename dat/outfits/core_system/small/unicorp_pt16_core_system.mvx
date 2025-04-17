@@ -2,7 +2,7 @@
  <general>
   <shortname>U. PT-16 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>8/57</mass>
   <price>20000/15000</price>

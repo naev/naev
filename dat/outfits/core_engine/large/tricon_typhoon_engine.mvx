@@ -2,7 +2,7 @@
  <general>
   <shortname>T. Typhoon Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>large</size>
   <mass>60/20</mass>
   <price>2700000/900000</price>

@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Prometheus 2203 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>12/58</mass>
   <price>80000/60000</price>

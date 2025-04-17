@@ -1,7 +1,7 @@
 <outfit name="Unicorp Hawk 160 Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>small</size>
   <mass>6/14</mass>
   <price>15000/10000</price>

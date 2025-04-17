@@ -2,7 +2,7 @@
  <general>
   <shortname>Z. Test Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>small</size>
   <rarity>1</rarity>
   <mass>15</mass>

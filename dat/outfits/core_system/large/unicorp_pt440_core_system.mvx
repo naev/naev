@@ -2,7 +2,7 @@
  <general>
   <shortname>U. PT-440 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>large</size>
   <mass>420/580</mass>
   <price>500000/150000</price>

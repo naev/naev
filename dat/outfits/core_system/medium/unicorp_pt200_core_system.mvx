@@ -2,7 +2,7 @@
  <general>
   <shortname>U. PT-200 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>medium</size>
   <mass>70/140</mass>
   <price>55000/45000</price>

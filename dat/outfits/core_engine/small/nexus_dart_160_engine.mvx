@@ -2,7 +2,7 @@
  <general>
   <shortname>N. Dart 160 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>small</size>
   <mass>10/14</mass>
   <price>45000/30000</price>

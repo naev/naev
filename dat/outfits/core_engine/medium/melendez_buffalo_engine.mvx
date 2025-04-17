@@ -2,7 +2,7 @@
  <general>
   <shortname>M. Buffalo Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>medium</size>
   <mass>24/6</mass>
   <price>150000/130000</price>

@@ -2,7 +2,7 @@
  <general>
   <shortname>Prev. Gen. Small Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>18/60</mass>
   <price>0</price>

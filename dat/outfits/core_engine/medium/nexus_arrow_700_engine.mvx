@@ -2,7 +2,7 @@
  <general>
   <shortname>N. Arrow 700 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>medium</size>
   <mass>20/5</mass>
   <price>120000/105000</price>
