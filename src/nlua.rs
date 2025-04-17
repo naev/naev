@@ -1,7 +1,6 @@
 //use mlua::prelude::*;
 use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
-use crate::{formatx, warn};
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
@@ -303,7 +302,6 @@ pub fn init() -> Result<()> {
 }
 
 // Re-export some newer Lua API to C
-use std::ffi::CStr;
 use std::os::raw::{c_char, c_int};
 
 #[allow(non_snake_case)]
@@ -330,6 +328,9 @@ pub unsafe extern "C" fn luaL_traceback(
 */
 
 /*
+use std::ffi::CStr;
+use crate::{formatx, warn};
+
 // C API
 #[unsafe(no_mangle)]
 pub extern "C" fn nlua_newEnv( name: *const c_char ) -> *mut LuaEnv {
