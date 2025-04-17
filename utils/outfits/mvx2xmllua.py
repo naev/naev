@@ -52,6 +52,9 @@ def _mklua(L):
    mods=''
    ind=3*' '
 
+   if L==[]:
+      return '\n'
+
    output='\nrequire("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
@@ -70,7 +73,11 @@ def toxmllua(o,update_lua):
    f1,acc1,tr1=_process_group(R,'./general')
    f2,acc2,tr2=_process_group(R,'./specific')
 
-   if f1 or f2:
+   if (not f1) and (not f2):
+      tr1=tr2=[]
+      acc1=acc2=[]
+
+   if f1 or f2 or update_lua:
       for (r,e) in tr1+tr2:
          r.remove(e)
 

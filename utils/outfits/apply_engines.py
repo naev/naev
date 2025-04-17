@@ -131,7 +131,7 @@ def main(args):
       o = outfit(a)
 
       if o.name()=="Krain Remige Engine":
-         subs=dict([(k,v1+'/0') for k,v1 in sub[0].items()])
+         subs=dict([(k,v1) for k,v1 in sub[0].items()])
       elif o.name()=="Krain Patagium Twin Engine":
          subs=dict([(k,v2) for k,v2 in sub[1].items()])
       else:

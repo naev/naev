@@ -11,8 +11,8 @@ return function ( p, po )
             end
          end
          if slot then
-            local o = outfitSlot (p, slot)
-            if po:outfitRmSlot(p,'engines_secondary') then
+            local o = s:outfitSlot (p, slot)
+            if o:outfitRmSlot(p,'engines_secondary') then
                print 'You cannot do that.'
             end
          end
