@@ -45,7 +45,7 @@ def _process_group(r,field):
 
    return needs_lua,acc,torem
 
-def _mklua(L):
+def _mklua(L,has_sec=True):
    mods=''
    ind=3*' '
 
@@ -59,38 +59,36 @@ def _mklua(L):
          output+=ind+'{ "'+nam+'",'+' '
          output+=fmt(main)+','+' '
          output+=fmt(sec)+'},'+'\n'
-         if nam in MOBILITY_PARAMS:
+         if has_sec and nam in MOBILITY_PARAMS:
             mods+=ind+'{ "'+nam+'_mod", 0, -50},\n'
 
    return output+mods+'}\n'
 
-def toxmllua(o,update_lua):
+def toxmllua(o,update_lua,fake_dual):
    T,R=o.T,o.r
 
    f1,acc1,tr1=_process_group(R,'./general')
    f2,acc2,tr2=_process_group(R,'./specific')
 
-   if (not f1) and (not f2):
+   if (not f1) and (not f2) and (not fake_dual):
       tr1=tr2=[]
       acc1=acc2=[]
 
-   if f1 or f2 or update_lua:
+   if f1 or f2 or update_lua or fake_dual:
       for (r,e) in tr1+tr2:
          r.remove(e)
 
       for e in R.findall('./specific'):
          el=ET.Element("lua_inline")
-         el.text=_mklua(acc1+acc2)
+         el.text=_mklua(acc1+acc2,not fake_dual)
          if update_lua:
-            el.text+='init = require "outfits.lib.'+update_lua+'"\n'
-            el.text+='onoutfitchange = require "outfits.lib.'+update_lua+'"\n'
+            el.text+='require "outfits.lib.'+update_lua+'"\n'
          e.append(el)
          break
-
 if __name__ == '__main__':
    import argparse
 
-   def main(update_lua=False):
+   def main(update_lua,fake_dual):
       o=outfit(stdin)
       if o is None:
          return 1
@@ -100,7 +98,7 @@ if __name__ == '__main__':
             o.set_name(name[0])
          nam=nam2fil(o.name())
 
-         toxmllua(o,update_lua)
+         toxmllua(o,update_lua,fake_dual)
          print >>stderr,nam
          o.write(stdout)
          return 0
@@ -112,4 +110,4 @@ if __name__ == '__main__':
    )
    parser.add_argument('lua_module', nargs='?', help='The name of a lua module returning update function.')
    args=parser.parse_args()
-   exit(main(args.lua_module))
+   exit(main(args.lua_module,args.lua_module!=None))

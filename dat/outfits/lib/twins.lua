@@ -1,9 +1,9 @@
 
-return function ( p, po )
+function onoutfitchange( p, po )
    if p and po then
       local count = 0
       local mismatch = false
-      for k,o in ipairs(p:outfits()) do
+      for _k,o in ipairs(p:outfits()) do
          if o and o:type() == "Core Systems (Engine)" then
             if o:nameRaw() == po:outfit():nameRaw() then
                count = count+1

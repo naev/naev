@@ -1,15 +1,14 @@
 
-return function ( p, _po )
-   if p and _po then
-      local o = p:outfitSlot ('engines_secondary')
-      if o then
-         print "Remige is Unhappy."
-         -- That triggers an infinite loop:
-         --if p:outfitRmSlot('engines_secondary') then
-         --   print('You cannot do that.')
-         --end
-      else
-         print "Remige is Happy."
+local fmt = require "format"
+
+function onoutfitchange( p, po )
+   if p and po then
+      local o = p:outfitSlot('engines_secondary')
+      if o and p:outfitRmSlot('engines_secondary') and p==player.pilot() then
+         player.outfitAdd(o)
+         print(fmt.f("{name} was removed as {myself} refuses its presence.",{
+            name=o:nameRaw(),myself=po:outfit():nameRaw()
+         }))
       end
    end
 end
