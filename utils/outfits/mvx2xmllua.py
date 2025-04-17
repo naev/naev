@@ -64,7 +64,7 @@ def _mklua(L):
 
    return output+mods+'}\n'
 
-def toxmllua(o):
+def toxmllua(o,update_lua):
    T,R=o.T,o.r
 
    f1,acc1,tr1=_process_group(R,'./general')
@@ -77,13 +77,16 @@ def toxmllua(o):
       for e in R.findall('./specific'):
          el=ET.Element("lua_inline")
          el.text=_mklua(acc1+acc2)
+         if update_lua:
+            el.text+='init = require "'+update_lua+'"\n'
+            el.text+='onoutfitchange = require "'+update_lua+'"\n'
          e.append(el)
          break
 
 if __name__ == '__main__':
    import argparse
 
-   def main():
+   def main(update_lua=False):
       o=outfit(stdin)
       if o is None:
          return 1
@@ -93,7 +96,7 @@ if __name__ == '__main__':
             o.set_name(name[0])
          nam=nam2fil(o.name())
 
-         toxmllua(o)
+         toxmllua(o,update_lua)
          print >>stderr,nam
          o.write(stdout)
          return 0
@@ -103,5 +106,6 @@ if __name__ == '__main__':
          The name the output should have is written on <stderr>.
          If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
    )
-   parser.parse_args()
-   exit(main())
+   parser.add_argument('lua_module', nargs='?', help='The name of a lua module returning update function.')
+   args=parser.parse_args()
+   exit(main(args.lua_module))
