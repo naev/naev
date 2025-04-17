@@ -15,7 +15,7 @@ typedef int LuaFaction;
 /*
  * Load the space library.
  */
-int nlua_loadFaction( nlua_env env );
+int nlua_loadFaction( nlua_env *env );
 
 /*
  * Faction operations

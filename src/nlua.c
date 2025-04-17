@@ -51,8 +51,13 @@
 #include "nluadef.h"
 #include "nstring.h"
 
-lua_State *naevL         = NULL;      /**< Global Naev Lua state. */
-nlua_env   __NLUA_CURENV = LUA_NOREF; /**< Current environment. */
+typedef struct nlua_env {
+   int ref; /**< Registry table. */
+   int dup; /**< Duplicated? */
+} nlua_env;
+
+lua_State *naevL         = NULL; /**< Global Naev Lua state. */
+nlua_env  *__NLUA_CURENV = NULL; /**< Current environment. */
 static char
    *common_script; /**< Common script to run when creating environments. */
 static size_t common_sz; /**< Common script size. */
@@ -164,7 +169,8 @@ void lua_clearCache( void )
  *    @param name Name to use in error messages.
  *    @return 0 on success.
  */
-int nlua_dobufenv( nlua_env env, const char *buff, size_t sz, const char *name )
+int nlua_dobufenv( nlua_env *env, const char *buff, size_t sz,
+                   const char *name )
 {
    int ret;
 #if DEBUGGING
@@ -194,7 +200,7 @@ int nlua_dobufenv( nlua_env env, const char *buff, size_t sz, const char *name )
  *    @param env Lua environment.
  *    @param filename Filename of Lua script.
  */
-int nlua_dofileenv( nlua_env env, const char *filename )
+int nlua_dofileenv( nlua_env *env, const char *filename )
 {
    if ( luaL_loadfile( naevL, filename ) != 0 )
       return -1;
@@ -210,7 +216,7 @@ int nlua_dofileenv( nlua_env env, const char *filename )
  *    @param chunk Chunk to run.
  *    @return 0 on success.
  */
-int nlua_dochunkenv( nlua_env env, int chunk, const char *name )
+int nlua_dochunkenv( nlua_env *env, int chunk, const char *name )
 {
    (void)name;
    int ret;
@@ -237,24 +243,24 @@ void nlua_pushEnvTable( lua_State *L )
  *
  * An "environment" is a table used with setfenv for sandboxing.
  */
-nlua_env nlua_newEnv( const char *name )
+nlua_env *nlua_newEnv( const char *name )
 {
-   nlua_env ref;
+   nlua_env *env = calloc( 1, sizeof( nlua_env ) );
 
    /* Create new table and register it. */
-   lua_newtable( naevL );                      /* t */
-   lua_pushvalue( naevL, -1 );                 /* t, t */
-   ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* t */
+   lua_newtable( naevL );                           /* t */
+   lua_pushvalue( naevL, -1 );                      /* t, t */
+   env->ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* t */
 
    /* Store in the environment table. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t, e */
    lua_pushvalue( naevL, -2 );                         /* t, e, t */
-   lua_rawseti( naevL, -2, ref );                      /* t, e */
+   lua_rawseti( naevL, -2, env->ref );                 /* t, e */
    lua_pop( naevL, 1 );                                /* t */
 
    if ( name != NULL ) {
       lua_pushstring( naevL, name );
-      nlua_setenv( naevL, ref, "__name" );
+      nlua_setenv( naevL, env, "__name" );
    }
 
    /* Metatable */
@@ -271,10 +277,10 @@ nlua_env nlua_newEnv( const char *name )
    /* Set up paths.
     * "package.path" to look in the data.
     * "package.cpath" unset */
-   nlua_getenv( naevL, ref, "package" );       /* t, t, p */
+   nlua_getenv( naevL, env, "package" );       /* t, t, p */
    lua_newtable( naevL );                      /* t, t, p, t */
    lua_pushvalue( naevL, -1 );                 /* t, t, p, t, t */
-   nlua_setenv( naevL, ref, NLUA_LOAD_TABLE ); /* t, t, p, t */
+   nlua_setenv( naevL, env, NLUA_LOAD_TABLE ); /* t, t, p, t */
    lua_setfield( naevL, -2, "loaded" );        /* t, t, p */
    lua_newtable( naevL );                      /* t, t, p, t */
    lua_setfield( naevL, -2, "preload" );       /* t, t, p */
@@ -312,7 +318,7 @@ nlua_env nlua_newEnv( const char *name )
    if ( common_script != NULL ) {
       if ( luaL_loadbuffer( naevL, common_script, common_sz,
                             LUA_COMMON_PATH ) == 0 ) {
-         if ( nlua_pcall( ref, 0, 0 ) != 0 ) {
+         if ( nlua_pcall( env, 0, 0 ) != 0 ) {
             WARN( _( "Failed to run '%s':\n%s" ), LUA_COMMON_PATH,
                   lua_tostring( naevL, -1 ) );
             lua_pop( naevL, 1 );
@@ -325,7 +331,16 @@ nlua_env nlua_newEnv( const char *name )
    }
 
    lua_pop( naevL, 1 ); /* t */
-   return ref;
+   return env;
+}
+
+nlua_env *nlua_dupEnv( nlua_env *env )
+{
+   nlua_env *newenv = calloc( 1, sizeof( nlua_env ) );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, env->ref );
+   newenv->ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
+   newenv->dup = 1;
+   return newenv;
 }
 
 /*
@@ -333,21 +348,23 @@ nlua_env nlua_newEnv( const char *name )
  *
  *    @param env Environment to free.
  */
-void nlua_freeEnv( nlua_env env )
+void nlua_freeEnv( nlua_env *env )
 {
    if ( naevL == NULL )
       return;
-   if ( env == LUA_NOREF )
+   if ( ( env == NULL ) || ( env->ref == LUA_NOREF ) )
       return;
 
    /* Remove from the environment table. */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
-   lua_pushnil( naevL );                               /* t, e */
-   lua_rawseti( naevL, -2, env );                      /* t */
-   lua_pop( naevL, 1 );                                /* */
+   if ( env->dup == 0 ) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
+      lua_pushnil( naevL );                               /* t, e */
+      lua_rawseti( naevL, -2, env->ref );                 /* t */
+      lua_pop( naevL, 1 );                                /* */
+   }
 
    /* Unref. */
-   luaL_unref( naevL, LUA_REGISTRYINDEX, env );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, env->ref );
 }
 
 /*
@@ -355,9 +372,9 @@ void nlua_freeEnv( nlua_env env )
  *
  *    @param env Environment.
  */
-void nlua_pushenv( lua_State *L, nlua_env env )
+void nlua_pushenv( lua_State *L, nlua_env *env )
 {
-   lua_rawgeti( L, LUA_REGISTRYINDEX, env );
+   lua_rawgeti( L, LUA_REGISTRYINDEX, env->ref );
 }
 
 /*
@@ -368,7 +385,7 @@ void nlua_pushenv( lua_State *L, nlua_env env )
  *    @param env Environment.
  *    @param name Name of variable.
  */
-void nlua_getenv( lua_State *L, nlua_env env, const char *name )
+void nlua_getenv( lua_State *L, nlua_env *env, const char *name )
 {
    nlua_pushenv( L, env );      /* env */
    lua_getfield( L, -1, name ); /* env, value */
@@ -383,7 +400,7 @@ void nlua_getenv( lua_State *L, nlua_env env, const char *name )
  *    @param env Environment.
  *    @param name Name of variable.
  */
-void nlua_setenv( lua_State *L, nlua_env env, const char *name )
+void nlua_setenv( lua_State *L, nlua_env *env, const char *name )
 {
    /* value */
    nlua_pushenv( L, env );      /* value, env */
@@ -402,7 +419,7 @@ void nlua_setenv( lua_State *L, nlua_env env, const char *name )
  *    @param l Array of functions to register.
  *    @param metatable Library will be used as metatable (so register __index).
  */
-void nlua_register( nlua_env env, const char *libname, const luaL_Reg *l,
+void nlua_register( nlua_env *env, const char *libname, const luaL_Reg *l,
                     int metatable )
 {
    if ( luaL_newmetatable( naevL, libname ) ) {
@@ -738,7 +755,7 @@ static int nlua_require( lua_State *L )
  *    @param env Environment.
  *    @return 0 on success.
  */
-int nlua_loadStandard( nlua_env env )
+int nlua_loadStandard( nlua_env *env )
 {
    int r = 0;
    r |= nlua_loadNaev( env );
@@ -795,9 +812,10 @@ static int nlua_errTraceInternal( lua_State *L, int idx )
  *    @param nargs Number of arguments to pass.
  *    @param nresults Number of return values to take.
  */
-int nlua_pcall( nlua_env env, int nargs, int nresults )
+int nlua_pcall( nlua_env *env, int nargs, int nresults )
 {
-   int errf, ret, prev_env;
+   int       errf, ret;
+   nlua_env *prev_env;
 
 #if DEBUGGING
    errf = lua_gettop( naevL ) - nargs;
@@ -839,7 +857,7 @@ int nlua_pcall( nlua_env env, int nargs, int nresults )
  *    @param name Name of the global to get.
  *    @return LUA_NOREF if no global found, reference otherwise.
  */
-int nlua_refenv( nlua_env env, const char *name )
+int nlua_refenv( nlua_env *env, const char *name )
 {
    nlua_getenv( naevL, env, name );
    if ( !lua_isnil( naevL, -1 ) )
@@ -857,7 +875,7 @@ int nlua_refenv( nlua_env env, const char *name )
  *    @param type Type to match, e.g., LUA_TFUNCTION.
  *    @return LUA_NOREF if no global found, reference otherwise.
  */
-int nlua_refenvtype( nlua_env env, const char *name, int type )
+int nlua_refenvtype( nlua_env *env, const char *name, int type )
 {
    nlua_getenv( naevL, env, name );
    if ( lua_type( naevL, -1 ) == type )
@@ -937,12 +955,15 @@ void nlua_resize( void )
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
    lua_pushnil( naevL );                               /* t, n */
    while ( lua_next( naevL, -2 ) != 0 ) {              /* t, k, v */
-      int env = lua_tointeger( naevL, -2 );            /* t, k, v */
-      lua_getfield( naevL, -1, "__resize" );           /* t, k, v, f */
+      int      ref = lua_tointeger( naevL, -2 );       /* t, k, v */
+      nlua_env env = {
+         .ref = ref,
+      };
+      lua_getfield( naevL, -1, "__resize" ); /* t, k, v, f */
       if ( !lua_isnil( naevL, -1 ) ) {
          lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
          lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */
-         nlua_pcall( env, 2, 0 );            /* t, k, v */
+         nlua_pcall( &env, 2, 0 );           /* t, k, v */
          lua_pop( naevL, 1 );                /* t, k */
       } else
          lua_pop( naevL, 2 ); /* t, k */

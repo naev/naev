@@ -266,7 +266,7 @@ static const luaL_Reg playerL_methods[] = {
  * @brief Loads the player Lua library.
  *    @param env Lua environment.
  */
-int nlua_loadPlayer( nlua_env env )
+int nlua_loadPlayer( nlua_env *env )
 {
    nlua_register( env, "player", playerL_methods, 0 );
    return 0;

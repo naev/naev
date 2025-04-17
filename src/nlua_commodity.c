@@ -67,7 +67,7 @@ static const luaL_Reg commodityL_methods[] = {
  *    @param env Environment to load commodity library into.
  *    @return 0 on success.
  */
-int nlua_loadCommodity( nlua_env env )
+int nlua_loadCommodity( nlua_env *env )
 {
    nlua_register( env, COMMODITY_METATABLE, commodityL_methods, 1 );
    return 0;

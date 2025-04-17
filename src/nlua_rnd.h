@@ -5,4 +5,4 @@
 
 #include "nlua.h"
 
-int nlua_loadRnd( nlua_env env );
+int nlua_loadRnd( nlua_env *env );

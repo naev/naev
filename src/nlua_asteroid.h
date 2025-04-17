@@ -16,7 +16,7 @@ typedef struct LuaAsteroid_s {
 /*
  * Asteroid library.
  */
-int nlua_loadAsteroid( nlua_env env );
+int nlua_loadAsteroid( nlua_env *env );
 
 /*
  * Asteroid operations.

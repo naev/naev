@@ -15,7 +15,7 @@
 /*
  * Library loading
  */
-int nlua_loadOutfit( nlua_env env );
+int nlua_loadOutfit( nlua_env *env );
 
 /*
  * Outfit operations

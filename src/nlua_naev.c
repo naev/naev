@@ -133,7 +133,7 @@ static const luaL_Reg naev_methods[] = {
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadNaev( nlua_env env )
+int nlua_loadNaev( nlua_env *env )
 {
    nlua_register( env, "naev", naev_methods, 0 );
 

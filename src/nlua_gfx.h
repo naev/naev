@@ -8,4 +8,4 @@
 /*
  * Library loading
  */
-int nlua_loadGFX( nlua_env env );
+int nlua_loadGFX( nlua_env *env );

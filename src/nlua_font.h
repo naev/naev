@@ -11,7 +11,7 @@
 /*
  * Library loading
  */
-int nlua_loadFont( nlua_env env );
+int nlua_loadFont( nlua_env *env );
 
 /*
  * Font operations

@@ -29,35 +29,37 @@
 #define nluaL_optarg( L, ind, def, checkfunc )                                 \
    ( lua_isnoneornil( L, ind ) ? ( def ) : checkfunc( L, ind ) )
 
-typedef int       nlua_env;
+typedef struct nlua_env nlua_env;
+// typedef int       nlua_env;
 extern lua_State *naevL;
-extern nlua_env   __NLUA_CURENV;
+extern nlua_env  *__NLUA_CURENV;
 
 /*
  * standard Lua stuff wrappers
  */
-void     lua_init( void );
-void     lua_exit( void );
-int      nlua_warn( lua_State *L, int idx );
-void     lua_clearCache( void );
-nlua_env nlua_newEnv( const char *name );
-void     nlua_freeEnv( nlua_env env );
-void     nlua_pushenv( lua_State *L, nlua_env env );
-void     nlua_setenv( lua_State *L, nlua_env env, const char *name );
-void     nlua_getenv( lua_State *L, nlua_env env, const char *name );
-void     nlua_register( nlua_env env, const char *libname, const luaL_Reg *l,
-                        int metatable );
-int      nlua_dobufenv( nlua_env env, const char *buff, size_t sz,
-                        const char *name );
-int      nlua_dofileenv( nlua_env env, const char *filename );
-int      nlua_dochunkenv( nlua_env env, int chunk, const char *name );
-int      nlua_loadStandard( nlua_env env );
-int      nlua_errTrace( lua_State *L );
-int      nlua_pcall( nlua_env env, int nargs, int nresults );
-int      nlua_refenv( nlua_env env, const char *name );
-int      nlua_refenvtype( nlua_env env, const char *name, int type );
-int      nlua_reffield( int objref, const char *name );
-void     nlua_dumpstack( lua_State *L );
+void      lua_init( void );
+void      lua_exit( void );
+int       nlua_warn( lua_State *L, int idx );
+void      lua_clearCache( void );
+nlua_env *nlua_newEnv( const char *name );
+nlua_env *nlua_dupEnv( nlua_env *env );
+void      nlua_freeEnv( nlua_env *env );
+void      nlua_pushenv( lua_State *L, nlua_env *env );
+void      nlua_setenv( lua_State *L, nlua_env *env, const char *name );
+void      nlua_getenv( lua_State *L, nlua_env *env, const char *name );
+void      nlua_register( nlua_env *env, const char *libname, const luaL_Reg *l,
+                         int metatable );
+int       nlua_dobufenv( nlua_env *env, const char *buff, size_t sz,
+                         const char *name );
+int       nlua_dofileenv( nlua_env *env, const char *filename );
+int       nlua_dochunkenv( nlua_env *env, int chunk, const char *name );
+int       nlua_loadStandard( nlua_env *env );
+int       nlua_errTrace( lua_State *L );
+int       nlua_pcall( nlua_env *env, int nargs, int nresults );
+int       nlua_refenv( nlua_env *env, const char *name );
+int       nlua_refenvtype( nlua_env *env, const char *name, int type );
+int       nlua_reffield( int objref, const char *name );
+void      nlua_dumpstack( lua_State *L );
 
 /* Reference stuff. */
 int  nlua_ref( lua_State *L, int idx );

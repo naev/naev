@@ -51,7 +51,7 @@ static const luaL_Reg transformL_methods[] = {
  *    @param env Environment to load transform library into.
  *    @return 0 on success.
  */
-int nlua_loadTransform( nlua_env env )
+int nlua_loadTransform( nlua_env *env )
 {
    nlua_register( env, TRANSFORM_METATABLE, transformL_methods, 1 );
    return 0;

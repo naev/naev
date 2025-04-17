@@ -84,7 +84,7 @@ static const luaL_Reg vector_methods[] = {
  *    @param env Environment to load the vector metatable into.
  *    @return 0 on success.
  */
-int nlua_loadVector( nlua_env env )
+int nlua_loadVector( nlua_env *env )
 {
    nlua_register( env, VECTOR_METATABLE, vector_methods, 1 );
    return 0;

@@ -21,7 +21,7 @@ typedef struct LuaCanvas_s {
 /*
  * Library loading
  */
-int nlua_loadCanvas( nlua_env env );
+int nlua_loadCanvas( nlua_env *env );
 
 /* Basic operations. */
 LuaCanvas_t *lua_tocanvas( lua_State *L, int ind );

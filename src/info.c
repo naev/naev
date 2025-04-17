@@ -64,7 +64,7 @@ typedef struct InfoButton_s {
    char *button;   /**< Button widget name. */
    int   priority; /**< Button priority. */
    /* Lua stuff .*/
-   nlua_env    env;  /**< Runtime environment. */
+   nlua_env   *env;  /**< Runtime environment. */
    int         func; /**< Function to call. */
    SDL_Keycode key;  /**< Hotkey (or SDLK_UNKNOWN==0 if none). */
 } InfoButton_t;

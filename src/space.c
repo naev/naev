@@ -76,7 +76,7 @@ static const double spob_aa_scale = 2.;
 
 typedef struct spob_lua_file_s {
    const char *filename; /**< Name of the spob Lua file. */
-   nlua_env    env;      /**< Lua environment. */
+   nlua_env   *env;      /**< Lua environment. */
    int         lua_mem;  /**< Global memory. */
 } spob_lua_file;
 
@@ -157,9 +157,9 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt );
 /* Map shaders. */
 static const MapShader *mapshader_get( const char *name );
 /* Lua stuff. */
-static int      spob_lua_cmp( const void *a, const void *b );
-static nlua_env spob_lua_get( int *mem, const char *filename );
-static void     spob_lua_free( spob_lua_file *lf );
+static int       spob_lua_cmp( const void *a, const void *b );
+static nlua_env *spob_lua_get( int *mem, const char *filename );
+static void      spob_lua_free( spob_lua_file *lf );
 
 /**
  * @brief Gets the (English) name for a service code.
@@ -1336,7 +1336,7 @@ static void system_scheduler( double dt, int init )
    /* Go through all the factions and reduce the timer. */
    for ( int i = 0; i < array_size( cur_system->presence ); i++ ) {
       int             n;
-      nlua_env        env;
+      nlua_env       *env;
       SystemPresence *p = &cur_system->presence[i];
       if ( p->value <= 0. )
          continue;
@@ -1344,7 +1344,7 @@ static void system_scheduler( double dt, int init )
       env = faction_getScheduler( p->faction );
 
       /* Must have a valid scheduler. */
-      if ( env == LUA_NOREF )
+      if ( env == NULL )
          continue;
 
       /* Spawning is disabled for this faction. */
@@ -2137,7 +2137,7 @@ int spob_luaInit( Spob *spob )
          ( x ) = LUA_NOREF;                                                    \
       }                                                                        \
    } while ( 0 )
-   spob->lua_env = LUA_NOREF; /* Just a pointer to some Lua index. */
+   spob->lua_env = NULL; /* Just a pointer to some Lua index. */
    UNREF( spob->lua_init );
    UNREF( spob->lua_load );
    UNREF( spob->lua_unload );
@@ -2158,8 +2158,8 @@ int spob_luaInit( Spob *spob )
       return 0;
 
    /* Try to get the environment, will create a new one as necessary. */
-   nlua_env env = spob_lua_get( &mem, spob->lua_file );
-   if ( env == LUA_NOREF )
+   nlua_env *env = spob_lua_get( &mem, spob->lua_file );
+   if ( env == NULL )
       return -1;
 
    spob->lua_env = env;
@@ -2351,7 +2351,7 @@ static void spob_initDefaults( Spob *spob )
    spob->presence.faction = -1;
    spob->marker_scale     = 1.; /* Default scale. */
    /* Lua stuff. */
-   spob->lua_env        = LUA_NOREF;
+   spob->lua_env        = NULL;
    spob->lua_init       = LUA_NOREF;
    spob->lua_load       = LUA_NOREF;
    spob->lua_unload     = LUA_NOREF;
@@ -4732,7 +4732,7 @@ int system_hasSpob( const StarSystem *sys )
  */
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
-   nlua_env env;
+   nlua_env *env;
 
    /* Ignore dynamic factions. */
    if ( faction_isDynamic( faction ) )
@@ -4923,7 +4923,7 @@ static int spob_lua_cmp( const void *a, const void *b )
    return strcmp( la->filename, lb->filename );
 }
 
-static nlua_env spob_lua_get( int *mem, const char *filename )
+static nlua_env *spob_lua_get( int *mem, const char *filename )
 {
    size_t              sz;
    char               *dat;
@@ -4943,10 +4943,10 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
    dat = ndata_read( filename, &sz );
    if ( dat == NULL ) {
       WARN( _( "Failed to read spob Lua '%s'!" ), filename );
-      return LUA_NOREF;
+      return NULL;
    }
 
-   nlua_env env = nlua_newEnv( filename );
+   nlua_env *env = nlua_newEnv( filename );
    nlua_loadStandard( env );
    nlua_loadGFX( env );
    nlua_loadCamera( env );
@@ -4973,7 +4973,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
       n = array_size( spob_lua_stack );
       array_erase( &spob_lua_stack, &spob_lua_stack[n - 1],
                    &spob_lua_stack[n] );
-      return LUA_NOREF;
+      return NULL;
    }
    free( dat );
 

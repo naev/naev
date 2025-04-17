@@ -1386,7 +1386,7 @@ static void outfitLRunWarning( const Pilot *p, const Outfit *o,
 /**
  * @brief Sets up the outfit memory for a slot.
  */
-static int pilot_outfitLmem( PilotOutfitSlot *po, nlua_env env )
+static int pilot_outfitLmem( PilotOutfitSlot *po, nlua_env *env )
 {
    int oldmem;
    /* Create the memory if necessary and initialize stats. */
@@ -1406,7 +1406,7 @@ static int pilot_outfitLmem( PilotOutfitSlot *po, nlua_env env )
 /**
  * @brief Cleans up the outfit memory for a slot.
  */
-static void pilot_outfitLunmem( nlua_env env, int oldmem )
+static void pilot_outfitLunmem( nlua_env *env, int oldmem )
 {
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem );
    nlua_setenv( naevL, env, "mem" ); /* pm */
@@ -1655,7 +1655,7 @@ static void outfitLOutfitChange( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOnoutfitchange( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -1689,17 +1689,17 @@ void pilot_outfitLOutfitChange( Pilot *pilot )
  */
 int pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po )
 {
-   int      lua_oinit, oldmem;
-   nlua_env lua_env;
+   int       lua_oinit, oldmem;
+   nlua_env *lua_env;
 
    if ( po->outfit == NULL )
       return 0;
 
-   if ( outfit_luaEnv( po->outfit ) == LUA_NOREF )
+   lua_env = outfit_luaEnv( po->outfit );
+   if ( lua_env == NULL )
       return 0;
 
    lua_oinit = outfit_luaInit( po->outfit );
-   lua_env   = outfit_luaEnv( po->outfit );
 
    /* Create the memory if necessary and initialize stats. */
    oldmem = pilot_outfitLmem( po, lua_env );
@@ -1731,7 +1731,7 @@ static void outfitLUpdate( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaUpdate( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* The data. */
    dt = *(double *)data;
@@ -1777,7 +1777,7 @@ static void outfitLOutofenergy( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOutofenergy( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -1820,7 +1820,7 @@ static void outfitLOnhit( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOnhit( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Data. */
    odat     = (const struct OnhitData *)data;
@@ -1875,8 +1875,8 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,
 int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
                            int natural )
 {
-   nlua_env env = outfit_luaEnv( po->outfit );
-   int      ret, oldmem;
+   nlua_env *env = outfit_luaEnv( po->outfit );
+   int       ret, oldmem;
    pilotoutfit_modified = 0;
 
    /* Set the memory. */
@@ -1913,8 +1913,8 @@ int pilot_outfitLOntoggle( const Pilot *pilot, PilotOutfitSlot *po, int on,
  */
 int pilot_outfitLOnshoot( const Pilot *pilot, PilotOutfitSlot *po )
 {
-   nlua_env env = outfit_luaEnv( po->outfit );
-   int      ret, oldmem;
+   nlua_env *env = outfit_luaEnv( po->outfit );
+   int       ret, oldmem;
    pilotoutfit_modified = 0;
 
    /* Set the memory. */
@@ -1956,7 +1956,7 @@ static void outfitLCooldown( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaCooldown( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    cdat    = (const struct CooldownData *)data;
    done    = cdat->done;
@@ -2007,7 +2007,7 @@ static void outfitLOnshootany( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOnshootany( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2042,7 +2042,7 @@ static void outfitLOnstealth( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOnstealth( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2081,7 +2081,7 @@ static void outfitLOnscan( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOnscan( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2117,8 +2117,8 @@ static void outfitLOnscanned( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaOnscanned( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
-   scanner      = (const Pilot *)data;
+   nlua_env *env = outfit_luaEnv( po->outfit );
+   scanner       = (const Pilot *)data;
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2155,7 +2155,7 @@ static void outfitLOnland( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaLand( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2189,7 +2189,7 @@ static void outfitLOntakeoff( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaTakeoff( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2224,7 +2224,7 @@ static void outfitLOnjumpin( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaJumpin( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2259,8 +2259,8 @@ static void outfitLOnboard( const Pilot *pilot, PilotOutfitSlot *po,
    if ( outfit_luaBoard( po->outfit ) == LUA_NOREF )
       return;
 
-   nlua_env env = outfit_luaEnv( po->outfit );
-   target       = (const Pilot *)data;
+   nlua_env *env = outfit_luaEnv( po->outfit );
+   target        = (const Pilot *)data;
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2311,7 +2311,7 @@ static void outfitLOnkeydoubletap( const Pilot *pilot, PilotOutfitSlot *po,
       return;
    key = *( (const OutfitKey *)data );
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2353,7 +2353,7 @@ static void outfitLOnkeyrelease( const Pilot *pilot, PilotOutfitSlot *po,
       return;
    key = *( (const OutfitKey *)data );
 
-   nlua_env env = outfit_luaEnv( po->outfit );
+   nlua_env *env = outfit_luaEnv( po->outfit );
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2397,7 +2397,7 @@ void pilot_outfitLCleanup( Pilot *pilot )
       if ( po->lua_mem == LUA_NOREF )
          continue;
 
-      nlua_env env = outfit_luaEnv( po->outfit );
+      nlua_env *env = outfit_luaEnv( po->outfit );
 
       /* Set the memory. */
       oldmem = pilot_outfitLmem( po, env );

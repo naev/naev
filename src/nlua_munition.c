@@ -69,7 +69,7 @@ static const luaL_Reg munitionL_methods[] = {
  *    @param env Environment to load library into.
  *    @return 0 on success.
  */
-int nlua_loadMunition( nlua_env env )
+int nlua_loadMunition( nlua_env *env )
 {
    nlua_register( env, MUNITION_METATABLE, munitionL_methods, 1 );
 

@@ -14,7 +14,7 @@ extern int pilotoutfit_modified;
 /*
  * Library loading
  */
-int nlua_loadPilotOutfit( nlua_env env );
+int nlua_loadPilotOutfit( nlua_env *env );
 
 /*
  * Outfit operations

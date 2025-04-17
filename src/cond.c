@@ -15,14 +15,14 @@
 #include "log.h"
 #include "nlua.h"
 
-static nlua_env cond_env = LUA_NOREF; /** Conditional Lua env. */
+static nlua_env *cond_env = NULL; /** Conditional Lua env. */
 
 /**
  * @brief Initializes the conditional subsystem.
  */
 int cond_init( void )
 {
-   if ( cond_env != LUA_NOREF )
+   if ( cond_env != NULL )
       return 0;
 
    cond_env = nlua_newEnv( "cond" );
@@ -40,7 +40,7 @@ int cond_init( void )
 void cond_exit( void )
 {
    nlua_freeEnv( cond_env );
-   cond_env = LUA_NOREF;
+   cond_env = NULL;
 }
 
 /**

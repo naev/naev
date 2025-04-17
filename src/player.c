@@ -84,7 +84,7 @@ static credits_t player_payback = 0; /**< Temporary hack for when creating. */
 static int   player_ran_updater = 0; /**< Temporary hack for when creating. */
 static char *player_message_noland =
    NULL; /**< No landing message (when PLAYER_NOLAND is set). */
-static nlua_env scan_env = LUA_NOREF; /**< Scanning script. */
+static nlua_env *scan_env = NULL; /**< Scanning script. */
 
 /*
  * Licenses.
@@ -175,8 +175,8 @@ static int   player_parseMetadata( xmlNodePtr parent );
 static int   player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
                                       PilotOutfitSlot *s );
 /* Updating. */
-static nlua_env player_updater_env = LUA_NOREF;
-static int      player_runUpdaterStart( void );
+static nlua_env *player_updater_env = NULL;
+static int       player_runUpdaterStart( void );
 static int player_runUpdaterScript( const char *type, const char *name, int q );
 static int player_runUpdaterFinish( void );
 static const Outfit *player_tryGetOutfit( const char *name, int q );
@@ -2578,7 +2578,7 @@ void player_scan( void )
    }
 
    /* Have to lead scirpt. */
-   if ( scan_env == LUA_NOREF ) {
+   if ( scan_env == NULL ) {
       scan_env = nlua_newEnv( "scanner" );
       nlua_loadStandard( scan_env );
       nlua_loadTk( scan_env );
@@ -3812,7 +3812,7 @@ Spob *player_load( xmlNodePtr parent )
 static int player_runUpdaterStart( void )
 {
    /* Load env if necessary. */
-   if ( player_updater_env == LUA_NOREF ) {
+   if ( player_updater_env == NULL ) {
       player_updater_env = nlua_newEnv( "updater" );
       nlua_loadStandard( player_updater_env );
       size_t bufsize;

@@ -98,7 +98,7 @@ static const luaL_Reg outfitL_methods[] = {
  *    @param env Environment to load outfit library into.
  *    @return 0 on success.
  */
-int nlua_loadOutfit( nlua_env env )
+int nlua_loadOutfit( nlua_env *env )
 {
    nlua_register( env, OUTFIT_METATABLE, outfitL_methods, 1 );
    return 0;

@@ -45,7 +45,7 @@ static const luaL_Reg cameraL_methods[] = {
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadCamera( nlua_env env )
+int nlua_loadCamera( nlua_env *env )
 {
    nlua_register( env, "camera", cameraL_methods, 0 );
    return 0;

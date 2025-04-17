@@ -111,8 +111,8 @@ static double fps_y   = -15.;     /**< FPS Y position. */
 const double  fps_min = 1. / 10.; /**< New collisions allow larger fps_min. */
 double        elapsed_time_mod = 0.; /**< Elapsed modified time. */
 
-static nlua_env load_env =
-   LUA_NOREF; /**< Environment for displaying load messages and stuff. */
+static nlua_env *load_env =
+   NULL; /**< Environment for displaying load messages and stuff. */
 static int          load_force_render = 0;
 static unsigned int load_last_render  = 0;
 static SDL_mutex   *load_mutex;

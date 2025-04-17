@@ -8,4 +8,4 @@
 /*
  * Lua control
  */
-int nlua_loadMusic( nlua_env env );
+int nlua_loadMusic( nlua_env *env );

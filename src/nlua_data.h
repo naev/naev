@@ -24,7 +24,7 @@ typedef struct LuaData_s {
 /*
  * Library loading
  */
-int nlua_loadData( nlua_env env );
+int nlua_loadData( nlua_env *env );
 
 /* Basic operations. */
 LuaData_t *lua_todata( lua_State *L, int ind );

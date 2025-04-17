@@ -110,7 +110,7 @@ static int spfx_cmp( const void *p1, const void *p2 )
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadSpfx( nlua_env env )
+int nlua_loadSpfx( nlua_env *env )
 {
    nlua_register( env, SPFX_METATABLE, spfxL_methods, 1 );
    return 0;

@@ -6,4 +6,4 @@
 #include "nlua.h"
 
 /* individual library stuff */
-int nlua_loadDiff( nlua_env env );
+int nlua_loadDiff( nlua_env *env );

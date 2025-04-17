@@ -10,4 +10,4 @@ int  var_checkflag( const char *str );
 void var_cleanup( void );
 
 /* individual library stuff */
-int nlua_loadVar( nlua_env env );
+int nlua_loadVar( nlua_env *env );

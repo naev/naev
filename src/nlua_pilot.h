@@ -26,7 +26,7 @@ typedef unsigned int LuaPilot; /**< Wrapper for a Pilot. */
 /*
  * Library loading
  */
-int nlua_loadPilot( nlua_env env );
+int nlua_loadPilot( nlua_env *env );
 
 /*
  * Pilot operations

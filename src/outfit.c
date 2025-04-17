@@ -95,7 +95,7 @@ typedef struct Outfit {
    /* Lua function references. Set to LUA_NOREF if not used. */
    char *lua_file;   /**< Lua File. */
    char *lua_inline; /**< Inline Lua. */
-   nlua_env
+   nlua_env *
       lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_descextra; /**< Run to get the extra description status. */
    int lua_onadd; /**< Run when added to a pilot or player adds this outfit. */
@@ -780,7 +780,7 @@ int outfit_isToggleable( const Outfit *o )
       return 0;
 
    /* Special case it is lua-based and not toggleable. */
-   if ( outfit_isMod( o ) && ( o->lua_env != LUA_NOREF ) &&
+   if ( outfit_isMod( o ) && ( o->lua_env != NULL ) &&
         ( o->lua_ontoggle == LUA_NOREF ) )
       return 0;
 
@@ -1695,7 +1695,7 @@ char *outfit_summaryRaw( const Outfit *o )
 {
    return o->summary_raw;
 }
-int outfit_luaEnv( const Outfit *o )
+nlua_env *outfit_luaEnv( const Outfit *o )
 {
    return o->lua_env;
 }
@@ -3299,7 +3299,7 @@ static int outfit_parse( Outfit *temp, const char *file )
    temp->filename = strdup( file );
 
    /* Defaults. */
-   temp->lua_env            = LUA_NOREF;
+   temp->lua_env            = NULL;
    temp->lua_descextra      = LUA_NOREF;
    temp->lua_onadd          = LUA_NOREF;
    temp->lua_onremove       = LUA_NOREF;
@@ -3679,9 +3679,9 @@ int outfit_load( void )
          WARN( _( "Outfit '%s' has both <lua> and <lua_inline> tags!" ),
                o->name );
 
-      nlua_env env;
-      size_t   sz;
-      char    *dat;
+      nlua_env *env;
+      size_t    sz;
+      char     *dat;
       if ( o->lua_file != NULL )
          dat = ndata_read( o->lua_file, &sz );
       else {
@@ -3710,7 +3710,7 @@ int outfit_load( void )
          lua_pop( naevL, 1 );
          nlua_freeEnv( o->lua_env );
          free( dat );
-         o->lua_env = LUA_NOREF;
+         o->lua_env = NULL;
          continue;
       }
       if ( o->lua_file != NULL )
@@ -3881,7 +3881,7 @@ int outfit_loadPost( void )
       }
 
       /* Handle initializing module stuff. */
-      if ( o->lua_env != LUA_NOREF ) {
+      if ( o->lua_env != NULL ) {
          nlua_getenv( naevL, o->lua_env, "onload" );
          if ( lua_isnil( naevL, -1 ) )
             lua_pop( naevL, 1 );
@@ -4032,7 +4032,7 @@ void outfit_free( void )
 
       /* Lua. */
       nlua_freeEnv( o->lua_env );
-      o->lua_env = LUA_NOREF;
+      o->lua_env = NULL;
       free( o->lua_file );
       free( o->lua_inline );
 

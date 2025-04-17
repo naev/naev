@@ -61,9 +61,9 @@ static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 /**
  * @brief Backgrounds.
  */
-static nlua_env bkg_cur_env = LUA_NOREF; /**< Current Lua state. */
-static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
-static int bkg_L_renderbg   = LUA_NOREF; /**< Background rendering function. */
+static nlua_env *bkg_cur_env = NULL;      /**< Current Lua state. */
+static nlua_env *bkg_def_env = NULL;      /**< Default Lua state. */
+static int bkg_L_renderbg    = LUA_NOREF; /**< Background rendering function. */
 static int bkg_L_rendermg = LUA_NOREF; /**< Middleground rendering function. */
 static int bkg_L_renderfg = LUA_NOREF; /**< Foreground rendering function. */
 static int bkg_L_renderov = LUA_NOREF; /**< Overlay rendering function. */
@@ -81,10 +81,10 @@ static GLfloat      dust_y         = 0.;   /**< Star Y movement. */
 /*
  * Prototypes.
  */
-static void     background_renderImages( background_image_t *bkg_arr );
-static nlua_env background_create( const char *path );
-static void     background_clearCurrent( void );
-static void     background_clearImgArr( background_image_t **arr );
+static void      background_renderImages( background_image_t *bkg_arr );
+static nlua_env *background_create( const char *path );
+static void      background_clearCurrent( void );
+static void      background_clearImgArr( background_image_t **arr );
 /* Sorting. */
 static int  bkg_compare( const void *p1, const void *p2 );
 static void bkg_sort( background_image_t *arr );
@@ -459,12 +459,12 @@ static void background_renderImages( background_image_t *bkg_arr )
 /**
  * @brief Creates a background Lua state from a script.
  */
-static nlua_env background_create( const char *name )
+static nlua_env *background_create( const char *name )
 {
-   size_t   bufsize;
-   char     path[PATH_MAX];
-   char    *buf;
-   nlua_env env;
+   size_t    bufsize;
+   char      path[PATH_MAX];
+   char     *buf;
+   nlua_env *env;
 
    /* Create file name. */
    snprintf( path, sizeof( path ), BACKGROUND_PATH "%s.lua", name );
@@ -483,7 +483,7 @@ static nlua_env background_create( const char *name )
    if ( buf == NULL ) {
       WARN( _( "Background script '%s' not found." ), path );
       nlua_freeEnv( env );
-      return LUA_NOREF;
+      return NULL;
    }
 
    /* Load file. */
@@ -494,7 +494,7 @@ static nlua_env background_create( const char *name )
             path, lua_tostring( naevL, -1 ) );
       free( buf );
       nlua_freeEnv( env );
-      return LUA_NOREF;
+      return NULL;
    }
    free( buf );
 
@@ -516,8 +516,8 @@ int background_init( void )
  */
 int background_load( const char *name )
 {
-   int      ret;
-   nlua_env env;
+   int       ret;
+   nlua_env *env;
 
    NTracingZone( _ctx, 1 );
 
@@ -533,7 +533,7 @@ int background_load( const char *name )
 
    /* Comfort. */
    env = bkg_cur_env;
-   if ( env == LUA_NOREF ) {
+   if ( env == NULL ) {
       NTracingZoneEnd( _ctx );
       return -1;
    }
@@ -567,7 +567,7 @@ static void background_clearCurrent( void )
 {
    if ( bkg_cur_env != bkg_def_env )
       nlua_freeEnv( bkg_cur_env );
-   bkg_cur_env = LUA_NOREF;
+   bkg_cur_env = NULL;
 
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
    luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_rendermg );
@@ -619,7 +619,7 @@ void background_free( void )
    /* Free the Lua. */
    background_clear();
    nlua_freeEnv( bkg_def_env );
-   bkg_def_env = LUA_NOREF;
+   bkg_def_env = NULL;
 
    /* Free the images. */
    array_free( bkg_image_arr_ft );
@@ -629,7 +629,7 @@ void background_free( void )
 
    /* Free the Lua. */
    nlua_freeEnv( bkg_cur_env );
-   bkg_cur_env = LUA_NOREF;
+   bkg_cur_env = NULL;
 
    gl_vboDestroy( dust_vertexVBO );
    dust_vertexVBO = NULL;

@@ -19,7 +19,7 @@
 #include "nlua_tex.h"
 #include "nlua_tk.h"
 
-static nlua_env naevpedia_env = LUA_NOREF; /**< Naevpedia environment. */
+static nlua_env *naevpedia_env = NULL; /**< Naevpedia environment. */
 
 /**
  * @brief Try to open naevpedia path.
@@ -29,7 +29,7 @@ int naevpedia_open( const char *path )
    char buf[STRMAX_SHORT];
    int  status;
 
-   if ( naevpedia_env == LUA_NOREF ) {
+   if ( naevpedia_env == NULL ) {
       naevpedia_env = nlua_newEnv( "naevpedia" );
       nlua_loadStandard( naevpedia_env );
       nlua_loadTex( naevpedia_env );

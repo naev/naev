@@ -16,7 +16,7 @@ typedef int LuaSpob;
 /*
  * Load the Space Object (Spob) library.
  */
-int nlua_loadSpob( nlua_env env );
+int nlua_loadSpob( nlua_env *env );
 
 /*
  * Spob operations.

@@ -49,7 +49,7 @@ static const luaL_Reg news_methods[] = {
  *    @param env Environment to load news library into.
  *    @return 0 on success.
  */
-int nlua_loadNews( nlua_env env )
+int nlua_loadNews( nlua_env *env )
 {
    nlua_register( env, NEWS_METATABLE, news_methods, 1 );
    return 0; /* No error */

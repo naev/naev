@@ -8,4 +8,4 @@
 /*
  * Library loading
  */
-int nlua_loadBackground( nlua_env env );
+int nlua_loadBackground( nlua_env *env );

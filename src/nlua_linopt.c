@@ -70,7 +70,7 @@ static const luaL_Reg linoptL_methods[] = {
  *    @param env Environment to load linopt library into.
  *    @return 0 on success.
  */
-int nlua_loadLinOpt( nlua_env env )
+int nlua_loadLinOpt( nlua_env *env )
 {
    nlua_register( env, LINOPT_METATABLE, linoptL_methods, 1 );
    return 0;

@@ -65,7 +65,7 @@ static const luaL_Reg jump_methods[] = {
  *    @param env Environment to load jump library into.
  *    @return 0 on success.
  */
-int nlua_loadJump( nlua_env env )
+int nlua_loadJump( nlua_env *env )
 {
    nlua_register( env, JUMP_METATABLE, jump_methods, 1 );
    return 0; /* No error */

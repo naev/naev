@@ -55,7 +55,7 @@ static const luaL_Reg guiL_methods[] = {
  *    @param env Environment to load GUI library into.
  *    @return 0 on success.
  */
-int nlua_loadGUI( nlua_env env )
+int nlua_loadGUI( nlua_env *env )
 {
    /* Register the values */
    nlua_register( env, "gui", guiL_methods, 0 );

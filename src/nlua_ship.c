@@ -114,7 +114,7 @@ static const luaL_Reg shipL_methods[] = {
  *    @param env Environment to load ship library into.
  *    @return 0 on success.
  */
-int nlua_loadShip( nlua_env env )
+int nlua_loadShip( nlua_env *env )
 {
    nlua_register( env, SHIP_METATABLE, shipL_methods, 1 );
    return 0;

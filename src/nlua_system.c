@@ -101,7 +101,7 @@ static const luaL_Reg system_methods[] = {
  *    @param env Environment to load system library into.
  *    @return 0 on success.
  */
-int nlua_loadSystem( nlua_env env )
+int nlua_loadSystem( nlua_env *env )
 {
    nlua_register( env, SYSTEM_METATABLE, system_methods, 1 );
    return 0; /* No error */

@@ -122,7 +122,7 @@ static unsigned int hookL_generic( lua_State *L, const char *stack, double ms,
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadHook( nlua_env env )
+int nlua_loadHook( nlua_env *env )
 {
    nlua_register( env, "hook", hookL_methods, 0 );
    return 0;
@@ -177,7 +177,7 @@ static int hookL_rm( lua_State *L )
  */
 static int hookL_setarg( unsigned int hook, int ind )
 {
-   nlua_env env = hook_env( hook );
+   nlua_env *env = hook_env( hook );
 
    /* Create if necessary the actual hook argument table. */
    nlua_getenv( naevL, env, "mem" );           /* t */
@@ -200,9 +200,9 @@ static int hookL_setarg( unsigned int hook, int ind )
  */
 void hookL_unsetarg( unsigned int hook )
 {
-   nlua_env env = hook_env( hook );
+   nlua_env *env = hook_env( hook );
 
-   if ( env == LUA_NOREF )
+   if ( env == NULL )
       return;
 
    nlua_getenv( naevL, env, "mem" );        /* t */
@@ -223,9 +223,9 @@ void hookL_unsetarg( unsigned int hook )
  */
 int hookL_getarg( unsigned int hook )
 {
-   nlua_env env = hook_env( hook );
+   nlua_env *env = hook_env( hook );
 
-   if ( env == LUA_NOREF )
+   if ( env == NULL )
       return 0;
 
    nlua_getenv( naevL, env, "mem" );        /* t */

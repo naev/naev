@@ -116,7 +116,7 @@ static const luaL_Reg faction_methods[] = {
  *    @param env Environment to load faction library into.
  *    @return 0 on success.
  */
-int nlua_loadFaction( nlua_env env )
+int nlua_loadFaction( nlua_env *env )
 {
    nlua_register( env, FACTION_METATABLE, faction_methods, 1 );
    return 0; /* No error */

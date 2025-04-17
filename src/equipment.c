@@ -74,8 +74,8 @@ static int           ship_mode          = 0; /**< Ship mode. */
 static iar_data_t iar_data[OUTFIT_TABS];  /**< Stored image array positions. */
 static Outfit **iar_outfits[OUTFIT_TABS]; /**< Outfits associated with the image
                                              array cells. */
-static nlua_env autoequip_env        = LUA_NOREF; /* Autoequip env. */
-static int      equipment_outfitMode = 0; /**< Outfit mode for filtering. */
+static nlua_env *autoequip_env        = NULL;
+static int       equipment_outfitMode = 0; /**< Outfit mode for filtering. */
 
 /*
  * prototypes
@@ -2635,7 +2635,7 @@ static void equipment_autoequipShip( unsigned int wid, const char *str )
    }
 
    /* Create the environment */
-   if ( autoequip_env == LUA_NOREF ) {
+   if ( autoequip_env == NULL ) {
       /* Read File. */
       size_t bufsize;
       char  *buf = ndata_read( file, &bufsize );

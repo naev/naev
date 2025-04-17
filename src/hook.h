@@ -76,9 +76,9 @@ int          hook_hasMisnParent( unsigned int parent );
 int          hook_hasEventParent( unsigned int parent );
 
 /* pilot hook. Weird dependencies don't let us put it into pilot_hook.h */
-int      pilot_runHookParam( Pilot *p, int hook_type, const HookParam *param,
-                             int nparam );
-nlua_env hook_env( unsigned int hook );
+int       pilot_runHookParam( Pilot *p, int hook_type, const HookParam *param,
+                              int nparam );
+nlua_env *hook_env( unsigned int hook );
 
 /*
  * run hooks

@@ -45,8 +45,8 @@
 /*
  * Global stuff.
  */
-static nlua_env   cli_env    = LUA_NOREF; /**< Lua CLI env. */
-static lua_State *cli_thread = NULL;      /**< REPL coroutine's thread */
+static nlua_env  *cli_env    = NULL;
+static lua_State *cli_thread = NULL; /**< REPL coroutine's thread */
 static int        cli_thread_ref =
    LUA_NOREF;                   /**< Reference keeping cli_thread alive */
 static glFont *cli_font = NULL; /**< CLI font to use. */
@@ -212,7 +212,7 @@ static int cli_script( lua_State *L )
    lua_clearCache();
 
    /* Reset loaded buffer. */
-   if ( cli_env != LUA_NOREF ) {
+   if ( cli_env != NULL ) {
       /* We can't just clear the table with a new one, because this is actually
        * pointing to package.loaded, and we want to keep the table pointer
        * valid. */
@@ -253,7 +253,7 @@ static void cli_addMessage( const char *msg )
 {
    char *buf;
    /* Not initialized. */
-   if ( cli_env == LUA_NOREF )
+   if ( cli_env == NULL )
       return;
    buf                       = strdup( ( msg != NULL ) ? msg : "" );
    array_grow( &cli_buffer ) = buf;
@@ -270,7 +270,7 @@ static void cli_addMessageMax( const char *msg, const int l )
 {
    char *buf;
    /* Not initialized. */
-   if ( cli_env == LUA_NOREF )
+   if ( cli_env == NULL )
       return;
    buf                       = strndup( ( msg != NULL ) ? msg : "", l );
    array_grow( &cli_buffer ) = buf;
@@ -452,7 +452,7 @@ static int cli_initLua( void )
    int    status;
    size_t blen;
    /* Already loaded. */
-   if ( cli_env != LUA_NOREF )
+   if ( cli_env != NULL )
       return 0;
 
    /* Create the state. */
@@ -552,8 +552,9 @@ void cli_exit( void )
    /* Destroy the state. */
    luaL_unref( naevL, LUA_REGISTRYINDEX, cli_thread_ref );
    nlua_freeEnv( cli_env );
-   cli_thread = NULL;
-   cli_env = cli_thread_ref = LUA_NOREF;
+   cli_thread     = NULL;
+   cli_env        = NULL;
+   cli_thread_ref = LUA_NOREF;
 
    gl_freeFont( cli_font );
    free( cli_font );
@@ -687,7 +688,7 @@ void cli_open( void )
    int          line_height;
 
    /* Lazy loading. */
-   if ( cli_env == LUA_NOREF )
+   if ( cli_env == NULL )
       if ( cli_init() )
          return;
 

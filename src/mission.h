@@ -117,7 +117,7 @@ typedef struct Mission_ {
    /* Claims. */
    Claim_t *claims; /**< System claims. */
 
-   nlua_env env; /**< The environment of the running Lua code. */
+   nlua_env *env; /**< The environment of the running Lua code. */
 } Mission;
 
 /*

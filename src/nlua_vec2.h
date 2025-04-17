@@ -15,7 +15,7 @@
 /*
  * Vector library.
  */
-int nlua_loadVector( nlua_env env );
+int nlua_loadVector( nlua_env *env );
 
 /*
  * Vector operations.

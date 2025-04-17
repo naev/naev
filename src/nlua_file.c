@@ -60,7 +60,7 @@ static const luaL_Reg fileL_methods[] = {
  *    @param env Environment to load file library into.
  *    @return 0 on success.
  */
-int nlua_loadFile( nlua_env env )
+int nlua_loadFile( nlua_env *env )
 {
    nlua_register( env, FILE_METATABLE, fileL_methods, 1 );
    return 0;

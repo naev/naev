@@ -37,11 +37,11 @@ typedef struct Task_ {
  * @brief Basic AI profile.
  */
 typedef struct AI_Profile_ {
-   char    *name;          /**< Name of the profile. */
-   nlua_env env;           /**< Associated Lua Environment. */
-   double   control_rate;  /**< Control rate of the AI. */
-   int      lua_mem;       /**< Initial memory state. */
-   int      ref_control;   /**< Profile control reference function. */
+   char     *name;         /**< Name of the profile. */
+   nlua_env *env;          /**< Associated Lua Environment. */
+   double    control_rate; /**< Control rate of the AI. */
+   int       lua_mem;      /**< Initial memory state. */
+   int       ref_control;  /**< Profile control reference function. */
    int ref_control_manual; /**< Profile manual control reference function. */
    int ref_refuel;         /**< Profile refuel reference function. */
    int ref_create; /**< Run when pilot is created (or initialized in the case of
@@ -71,7 +71,7 @@ AI_Profile *ai_getProfile( const char *name );
  */
 int  ai_load( void );
 void ai_exit( void );
-int  nlua_loadAI( nlua_env env );
+int  nlua_loadAI( nlua_env *env );
 
 /*
  * Init, destruction.

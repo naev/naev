@@ -17,7 +17,7 @@
 /*
  * Library loading
  */
-int nlua_loadTransform( nlua_env env );
+int nlua_loadTransform( nlua_env *env );
 
 /*
  * Transform operations

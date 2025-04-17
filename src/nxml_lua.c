@@ -369,7 +369,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
  *    @param writer XML Writer to use.
  *    @return 0 on success.
  */
-int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
+int nxml_persistLua( nlua_env *env, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
@@ -523,7 +523,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
  *    @param parent Node containing all the Lua persisted data.
  *    @return 0 on success.
  */
-int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
+int nxml_unpersistLua( nlua_env *env, xmlNodePtr parent )
 {
    int ret;
 

@@ -16,4 +16,4 @@ int      event_runFunc( unsigned int eventid, const char *func, int nargs );
 int      event_run( unsigned int eventid, const char *func );
 
 /* individual library stuff */
-int nlua_loadEvt( nlua_env env );
+int nlua_loadEvt( nlua_env *env );

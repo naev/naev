@@ -40,7 +40,7 @@ static const luaL_Reg fontL_methods[] = {
  *    @param env Environment to load font library into.
  *    @return 0 on success.
  */
-int nlua_loadFont( nlua_env env )
+int nlua_loadFont( nlua_env *env )
 {
    nlua_register( env, FONT_METATABLE, fontL_methods, 1 );
    return 0;

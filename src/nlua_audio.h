@@ -53,7 +53,7 @@ typedef struct LuaAudio_s {
 /*
  * Library loading
  */
-int nlua_loadAudio( nlua_env env );
+int nlua_loadAudio( nlua_env *env );
 
 /* Basic operations. */
 LuaAudio_t *lua_toaudio( lua_State *L, int ind );

@@ -49,7 +49,7 @@ static const luaL_Reg music_methods[] = {
  *    @param env Lua environment to load the music functions into.
  *    @return 0 on success.
  */
-int nlua_loadMusic( nlua_env env )
+int nlua_loadMusic( nlua_env *env )
 {
    nlua_register( env, "music", music_methods, 0 );
    return 0;

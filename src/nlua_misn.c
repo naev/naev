@@ -114,7 +114,7 @@ static const luaL_Reg misn_methods[] = {
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int misn_loadLibs( nlua_env env )
+int misn_loadLibs( nlua_env *env )
 {
    nlua_loadStandard( env );
    nlua_loadMisn( env );
@@ -133,7 +133,7 @@ int misn_loadLibs( nlua_env env )
  * @brief Loads the mission Lua library.
  *    @param env Lua environment.
  */
-int nlua_loadMisn( nlua_env env )
+int nlua_loadMisn( nlua_env *env )
 {
    nlua_register( env, "misn", misn_methods, 0 );
    return 0;
@@ -219,7 +219,7 @@ int misn_runFunc( const Mission *misn, const char *func, int nargs )
    int                ret, misn_delete;
    Mission           *cur_mission;
    const MissionData *data = misn->data;
-   nlua_env           env;
+   nlua_env          *env;
 
    /* Check to see if it is accepted first. */
    int isaccepted = misn->accepted;
@@ -648,7 +648,7 @@ static int misn_accept( lua_State *L )
       Mission **misnptr;
       *new_misn = *cur_mission;
       memset( cur_mission, 0, sizeof( Mission ) );
-      cur_mission->env      = LUA_NOREF;
+      cur_mission->env      = NULL;
       cur_mission->accepted = 1; /* Propagated to the mission computer. */
       cur_mission           = new_misn;
       cur_mission->accepted = 1; /* Mark as accepted. */

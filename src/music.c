@@ -40,15 +40,15 @@ static int music_runchoose =
 /*
  * global music lua
  */
-static nlua_env music_env        = LUA_NOREF; /**< The Lua music control env. */
-static int      music_lua_update = LUA_NOREF;
-static int      music_lua_choose = LUA_NOREF;
-static int      music_lua_play   = LUA_NOREF;
-static int      music_lua_stop   = LUA_NOREF;
-static int      music_lua_pause  = LUA_NOREF;
-static int      music_lua_resume = LUA_NOREF;
-static int      music_lua_info   = LUA_NOREF;
-static int      music_lua_volume = LUA_NOREF;
+static nlua_env *music_env        = NULL; /**< The Lua music control env. */
+static int       music_lua_update = LUA_NOREF;
+static int       music_lua_choose = LUA_NOREF;
+static int       music_lua_play   = LUA_NOREF;
+static int       music_lua_stop   = LUA_NOREF;
+static int       music_lua_pause  = LUA_NOREF;
+static int       music_lua_resume = LUA_NOREF;
+static int       music_lua_info   = LUA_NOREF;
+static int       music_lua_volume = LUA_NOREF;
 
 /* functions */
 static int music_runLua( const char *situation );
@@ -365,7 +365,7 @@ static int music_luaInit( void )
    if ( music_disabled )
       return 0;
 
-   if ( music_env != LUA_NOREF )
+   if ( music_env != NULL )
       music_luaQuit();
 
    /* Reset the environment. */
@@ -406,7 +406,7 @@ static void music_luaQuit( void )
       return;
 
    nlua_freeEnv( music_env );
-   music_env        = LUA_NOREF;
+   music_env        = NULL;
    music_lua_choose = LUA_NOREF;
    music_lua_update = LUA_NOREF;
    music_lua_play   = LUA_NOREF;

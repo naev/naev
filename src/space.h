@@ -159,13 +159,13 @@ typedef struct Spob_ {
    int           markers;   /**< Markers enabled on the spob. */
 
    /* Lua stuff. */
-   char    *lua_file_raw; /**< Raw Lua File name for saving purposes. */
-   char    *lua_file;     /**< Lua File. */
-   nlua_env lua_env;      /**< Lua environment. */
-   int      lua_mem;      /**< Memory of the current instance. */
-   int      lua_init;     /**< Run when initializing the spob. */
-   int      lua_load;     /**< Run when player enters system. */
-   int      lua_unload;   /**< Run when player exits system. */
+   char     *lua_file_raw; /**< Raw Lua File name for saving purposes. */
+   char     *lua_file;     /**< Lua File. */
+   nlua_env *lua_env;      /**< Lua environment. */
+   int       lua_mem;      /**< Memory of the current instance. */
+   int       lua_init;     /**< Run when initializing the spob. */
+   int       lua_load;     /**< Run when player enters system. */
+   int       lua_unload;   /**< Run when player exits system. */
    int lua_can_land;   /**< Checks to see if the player can land on the spob. */
    int lua_land;       /**< Run when a pilot "lands". */
    int lua_render;     /**< Run when rendering. */

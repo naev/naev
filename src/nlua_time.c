@@ -53,7 +53,7 @@ static const luaL_Reg time_methods[] = { { "new", timeL_new },
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadTime( nlua_env env )
+int nlua_loadTime( nlua_env *env )
 {
    nlua_register( env, TIME_METATABLE, time_methods, 1 );
    return 0; /* No error */

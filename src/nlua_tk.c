@@ -32,7 +32,7 @@
 #define TK_CUSTOMDONE "__customDone"
 typedef struct custom_functions_s {
    lua_State *L;    /**< Assosciated Lua state. */
-   nlua_env   env;  /**< Associated environment. */
+   nlua_env  *env;  /**< Associated environment registry key. */
    int        done; /**< Whether or not it is done. */
    /* Function references. */
    int update;
@@ -95,7 +95,7 @@ static const luaL_Reg tkL_methods[] = {
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadTk( nlua_env env )
+int nlua_loadTk( nlua_env *env )
 {
    nlua_register( env, "tk", tkL_methods, 0 );
    nlua_loadCol( env );
@@ -425,7 +425,7 @@ static void cust_cleanup( void *data )
    luaL_unref( L, LUA_REGISTRYINDEX, cf->mouse );
    luaL_unref( L, LUA_REGISTRYINDEX, cf->resize );
    luaL_unref( L, LUA_REGISTRYINDEX, cf->textinput );
-   luaL_unref( L, LUA_REGISTRYINDEX, cf->env );
+   nlua_freeEnv( cf->env );
    free( cf );
 }
 
@@ -461,9 +461,8 @@ static int tkL_custom( lua_State *L )
    ;
 
    /* Set up custom function pointers. */
-   cf->L = L;
-   nlua_pushenv( L, __NLUA_CURENV );           /* e */
-   cf->env = luaL_ref( L, LUA_REGISTRYINDEX ); /* */
+   cf->L   = L;
+   cf->env = nlua_dupEnv( __NLUA_CURENV );
 #define GETFUNC( address, pos )                                                \
    do {                                                                        \
       lua_pushvalue( L, ( pos ) );                                             \

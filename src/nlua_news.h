@@ -15,4 +15,4 @@ typedef int LuaNews_t;
 /*
  * Load the system library.
  */
-int nlua_loadNews( nlua_env env );
+int nlua_loadNews( nlua_env *env );

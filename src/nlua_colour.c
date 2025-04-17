@@ -54,7 +54,7 @@ static const luaL_Reg colL_methods[] = {
  *    @param env Environment to load colour library into.
  *    @return 0 on success.
  */
-int nlua_loadCol( nlua_env env )
+int nlua_loadCol( nlua_env *env )
 {
    nlua_register( env, COL_METATABLE, colL_methods, 1 );
    return 0;

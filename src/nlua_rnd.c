@@ -40,7 +40,7 @@ static const luaL_Reg rnd_methods[] = { { "rnd", rndL_int },
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadRnd( nlua_env env )
+int nlua_loadRnd( nlua_env *env )
 {
    nlua_register( env, "rnd", rnd_methods, 0 );
    return 0;

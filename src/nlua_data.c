@@ -48,7 +48,7 @@ static const luaL_Reg dataL_methods[] = {
  *    @param env Environment to load data library into.
  *    @return 0 on success.
  */
-int nlua_loadData( nlua_env env )
+int nlua_loadData( nlua_env *env )
 {
    nlua_register( env, DATA_METATABLE, dataL_methods, 1 );
    return 0;

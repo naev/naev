@@ -43,7 +43,7 @@ static const luaL_Reg canvasL_methods[] = {
  *    @param env Environment to load canvas library into.
  *    @return 0 on success.
  */
-int nlua_loadCanvas( nlua_env env )
+int nlua_loadCanvas( nlua_env *env )
 {
    nlua_register( env, CANVAS_METATABLE, canvasL_methods, 1 );
    return 0;

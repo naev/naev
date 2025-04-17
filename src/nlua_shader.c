@@ -51,7 +51,7 @@ static int           shaderL_sendHelper( lua_State *L, int ignore_missing );
  *    @param env Environment to load shader library into.
  *    @return 0 on success.
  */
-int nlua_loadShader( nlua_env env )
+int nlua_loadShader( nlua_env *env )
 {
    nlua_register( env, SHADER_METATABLE, shaderL_methods, 1 );
    return 0;

@@ -21,7 +21,7 @@ static const luaL_Reg cli_methods[] = { { 0, 0 } }; /**< CLI Lua methods. */
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadCLI( nlua_env env )
+int nlua_loadCLI( nlua_env *env )
 {
    nlua_register( env, "cli", cli_methods, 0 );
    return 0;

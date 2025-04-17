@@ -69,7 +69,7 @@ static int effect_parse( EffectData *efx, const char *file )
    memset( efx, 0, sizeof( EffectData ) );
    efx->duration   = -1.;
    efx->priority   = 5;
-   efx->lua_env    = LUA_NOREF;
+   efx->lua_env    = NULL;
    efx->lua_add    = LUA_NOREF;
    efx->lua_extend = LUA_NOREF;
    efx->lua_remove = LUA_NOREF;
@@ -127,7 +127,7 @@ static int effect_parse( EffectData *efx, const char *file )
          continue;
       }
       if ( xml_isNode( node, "lua" ) ) {
-         nlua_env    env;
+         nlua_env   *env;
          size_t      sz;
          const char *filename = xml_get( node );
          char       *dat      = ndata_read( filename, &sz );

@@ -54,7 +54,7 @@ static const luaL_Reg texL_methods[] = {
  *    @param env Environment to load texture library into.
  *    @return 0 on success.
  */
-int nlua_loadTex( nlua_env env )
+int nlua_loadTex( nlua_env *env )
 {
    nlua_register( env, TEX_METATABLE, texL_methods, 1 );
    return 0;

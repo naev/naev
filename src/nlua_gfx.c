@@ -109,7 +109,7 @@ static const luaL_Reg gfxL_methods[] = {
  *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadGFX( nlua_env env )
+int nlua_loadGFX( nlua_env *env )
 {
    /* Register the values */
    nlua_register( env, "gfx", gfxL_methods, 0 );

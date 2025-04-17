@@ -71,7 +71,7 @@ static const luaL_Reg asteroidL_methods[] = {
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadAsteroid( nlua_env env )
+int nlua_loadAsteroid( nlua_env *env )
 {
    nlua_register( env, ASTEROID_METATABLE, asteroidL_methods, 1 );
    return 0;

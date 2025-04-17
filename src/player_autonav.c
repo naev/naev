@@ -30,18 +30,18 @@
 #include "space.h"
 #include "toolkit.h"
 
-static nlua_env autonav_env = LUA_NOREF; /**< Autonav environment. */
-static int      func_system = LUA_NOREF;
-static int      func_spob   = LUA_NOREF;
-static int      func_pilot  = LUA_NOREF;
-static int      func_board  = LUA_NOREF;
-static int      func_pos    = LUA_NOREF;
-static int      func_reset  = LUA_NOREF;
-static int      func_end    = LUA_NOREF;
-static int      func_abort  = LUA_NOREF;
-static int      func_think  = LUA_NOREF;
-static int      func_update = LUA_NOREF;
-static int      func_enter  = LUA_NOREF;
+static nlua_env *autonav_env = NULL; /**< Autonav environment. */
+static int       func_system = LUA_NOREF;
+static int       func_spob   = LUA_NOREF;
+static int       func_pilot  = LUA_NOREF;
+static int       func_board  = LUA_NOREF;
+static int       func_pos    = LUA_NOREF;
+static int       func_reset  = LUA_NOREF;
+static int       func_end    = LUA_NOREF;
+static int       func_abort  = LUA_NOREF;
+static int       func_think  = LUA_NOREF;
+static int       func_update = LUA_NOREF;
+static int       func_enter  = LUA_NOREF;
 
 /*
  * Prototypes.
@@ -53,7 +53,7 @@ static int player_autonavSetup( void );
  */
 int player_autonavInit( void )
 {
-   nlua_env env = nlua_newEnv( AUTONAV_PATH );
+   nlua_env *env = nlua_newEnv( AUTONAV_PATH );
    nlua_loadStandard( env );
    nlua_loadAI( env );
 

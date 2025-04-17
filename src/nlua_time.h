@@ -11,7 +11,7 @@
 /*
  * Library stuff.
  */
-int nlua_loadTime( nlua_env env );
+int nlua_loadTime( nlua_env *env );
 
 /*
  * Time operations.

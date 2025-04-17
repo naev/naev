@@ -7,4 +7,4 @@
 #include "shiplog.h"
 
 /* individual library stuff */
-int nlua_loadShiplog( nlua_env env );
+int nlua_loadShiplog( nlua_env *env );

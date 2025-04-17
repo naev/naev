@@ -186,7 +186,7 @@ typedef struct Ship_ {
 
    /* Lua function references. Set to LUA_NOREF if not used. */
    char *lua_file; /**< Lua File. */
-   nlua_env
+   nlua_env *
       lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    double lua_dt;             /**< Update rate for Lua update script. */
    int    lua_descextra;      /**< Run when obtaining description. */

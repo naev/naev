@@ -12,7 +12,7 @@
 typedef struct Event_s {
    unsigned int id;     /**< Event ID. */
    int          data;   /**< EventData parent. */
-   nlua_env     env;    /**< The environment of the running Lua code. */
+   nlua_env    *env;    /**< The environment of the running Lua code. */
    int          save;   /**< Whether or not it should be saved. */
    Claim_t     *claims; /**< Event claims. */
 } Event_t;

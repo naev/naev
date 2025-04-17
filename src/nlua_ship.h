@@ -11,7 +11,7 @@
 /*
  * Library loading
  */
-int nlua_loadShip( nlua_env env );
+int nlua_loadShip( nlua_env *env );
 
 /*
  * Ship operations

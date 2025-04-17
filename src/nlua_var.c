@@ -42,7 +42,7 @@ static const luaL_Reg var_methods[] = {
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadVar( nlua_env env )
+int nlua_loadVar( nlua_env *env )
 {
    nlua_register( env, "var", var_methods, 0 );
    return 0;

@@ -106,16 +106,16 @@
 /*
  * all the AI profiles
  */
-static AI_Profile *profiles  = NULL;      /**< Array of AI_Profiles loaded. */
-static nlua_env    equip_env = LUA_NOREF; /**< Equipment enviornment. */
-static IntList     ai_qtquery;            /**< Quadtree query. */
+static AI_Profile *profiles  = NULL; /**< Array of AI_Profiles loaded. */
+static nlua_env   *equip_env = NULL; /**< Equipment enviornment. */
+static IntList     ai_qtquery;       /**< Quadtree query. */
 static double ai_dt = 0.; /**< Current update tick, useful in some cases. **/
 
 /*
  * prototypes
  */
 /* Internal C routines */
-static void ai_run( nlua_env env, int nargs );
+static void ai_run( nlua_env *env, int nargs );
 static int  ai_loadProfile( AI_Profile *prof, const char *filename );
 static int  ai_setMemory( void );
 static void ai_create( Pilot *pilot );
@@ -394,8 +394,8 @@ Task *ai_curTask( Pilot *pilot )
  */
 static int ai_setMemory( void )
 {
-   int      oldmem;
-   nlua_env env = cur_pilot->ai->env;
+   int       oldmem;
+   nlua_env *env = cur_pilot->ai->env;
 
    nlua_getenv( naevL, env, "mem" );              /* oldmem */
    oldmem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
@@ -425,7 +425,7 @@ AIMemory ai_setPilot( Pilot *p )
  */
 void ai_unsetPilot( AIMemory oldmem )
 {
-   nlua_env env = cur_pilot->ai->env;
+   nlua_env *env = cur_pilot->ai->env;
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, oldmem.mem );
    nlua_setenv( naevL, env, "mem" ); /* pm */
    luaL_unref( naevL, LUA_REGISTRYINDEX, oldmem.mem );
@@ -471,7 +471,7 @@ void ai_thinkApply( Pilot *p )
  *    @param[in] env Lua env to run function in.
  *    @param[in] nargs Number of arguments to run.
  */
-static void ai_run( nlua_env env, int nargs )
+static void ai_run( nlua_env *env, int nargs )
 {
    if ( nlua_pcall( env, nargs, 0 ) ) { /* error has occurred */
       WARN( _( "Pilot '%s' ai '%s' error: %s" ), cur_pilot->name,
@@ -681,7 +681,7 @@ static int ai_loadEquip( void )
    return 0;
 }
 
-int nlua_loadAI( nlua_env env )
+int nlua_loadAI( nlua_env *env )
 {
    nlua_register( env, "ai", aiL_methods, 0 );
    return 0;
@@ -698,7 +698,7 @@ static int ai_loadProfile( AI_Profile *prof, const char *filename )
 {
    char       *buf     = NULL;
    size_t      bufsize = 0;
-   nlua_env    env;
+   nlua_env   *env;
    size_t      len;
    const char *str;
 
@@ -794,7 +794,7 @@ void ai_exit( void )
 
    /* Free equipment Lua. */
    nlua_freeEnv( equip_env );
-   equip_env = LUA_NOREF;
+   equip_env = NULL;
 
    /* Clean up query stuff. */
    il_destroy( &ai_qtquery );
@@ -809,9 +809,9 @@ void ai_exit( void )
  */
 void ai_think( Pilot *pilot, double dt, int dotask )
 {
-   nlua_env env;
-   AIMemory oldmem;
-   Task    *t;
+   nlua_env *env;
+   AIMemory  oldmem;
+   Task     *t;
 
    /* Must have AI. */
    if ( pilot->ai == NULL )
@@ -1135,10 +1135,10 @@ static void ai_create( Pilot *pilot )
    if ( !pilot_isFlag( pilot, PILOT_NO_OUTFITS ) &&
         !pilot_isFlag( pilot, PILOT_NO_EQUIP ) &&
         ( aiL_status == AI_STATUS_CREATE ) ) {
-      nlua_env env  = equip_env;
-      char    *func = "equip_generic";
+      nlua_env *env  = equip_env;
+      char     *func = "equip_generic";
 
-      if ( faction_getEquipper( pilot->faction ) != LUA_NOREF ) {
+      if ( faction_getEquipper( pilot->faction ) != NULL ) {
          env  = faction_getEquipper( pilot->faction );
          func = "equip";
       }

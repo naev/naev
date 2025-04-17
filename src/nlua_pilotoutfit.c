@@ -53,7 +53,7 @@ static const luaL_Reg poL_methods[] = {
  *    @param env Environment to load pilot outfit library into.
  *    @return 0 on success.
  */
-int nlua_loadPilotOutfit( nlua_env env )
+int nlua_loadPilotOutfit( nlua_env *env )
 {
    nlua_register( env, PILOTOUTFIT_METATABLE, poL_methods, 1 );
    return 0;

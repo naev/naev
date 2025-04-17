@@ -27,7 +27,7 @@ static const luaL_Reg safelanesL_methods[] = {
  *    @param env Lua enviornment.
  *    @return 0 on success.
  */
-int nlua_loadSafelanes( nlua_env env )
+int nlua_loadSafelanes( nlua_env *env )
 {
    nlua_register( env, "safelanes", safelanesL_methods, 0 );
    return 0;

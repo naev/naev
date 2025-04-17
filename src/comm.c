@@ -24,10 +24,10 @@
 #define GRAPHIC_WIDTH 256  /**< Width of graphic. */
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
-static Spob    *comm_spob      = NULL;      /**< Spob currently talking to. */
-static int      comm_commClose = 0;         /**< Close comm when done. */
-static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
-static int      comm_open      = 0;
+static Spob     *comm_spob      = NULL; /**< Spob currently talking to. */
+static int       comm_commClose = 0;    /**< Close comm when done. */
+static nlua_env *comm_env       = NULL; /**< Comm Lua env. */
+static int       comm_open      = 0;
 
 /*
  * Prototypes.
@@ -144,7 +144,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Set up environment first time. */
-   if ( comm_env == LUA_NOREF ) {
+   if ( comm_env == NULL ) {
       comm_env = nlua_newEnv( "comm" );
       nlua_loadStandard( comm_env );
 

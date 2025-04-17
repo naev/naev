@@ -30,7 +30,7 @@ static const luaL_Reg bkgL_methods[] = { { "clear", bkgL_clear },
  *    @param env Environment to load graphics library into.
  *    @return 0 on success.
  */
-int nlua_loadBackground( nlua_env env )
+int nlua_loadBackground( nlua_env *env )
 {
    nlua_register( env, "bkg", bkgL_methods, 0 );
    return 0;

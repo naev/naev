@@ -11,7 +11,7 @@
 #include "nlua.h"
 #include "shiplog.h"
 
-int        shiplog_loadShiplog( nlua_env env );
+int        shiplog_loadShiplog( nlua_env *env );
 static int shiplog_createLog( lua_State *L );
 static int shiplog_appendLog( lua_State *L );
 
@@ -27,7 +27,7 @@ static const luaL_Reg shiplog_methods[] = {
  * @brief Loads the mission Lua library.
  *    @param env Lua environment.
  */
-int nlua_loadShiplog( nlua_env env )
+int nlua_loadShiplog( nlua_env *env )
 {
    nlua_register( env, "shiplog", shiplog_methods, 0 );
    return 0;

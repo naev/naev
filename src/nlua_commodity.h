@@ -13,7 +13,7 @@
 /*
  * Library loading
  */
-int nlua_loadCommodity( nlua_env env );
+int nlua_loadCommodity( nlua_env *env );
 
 /*
  * Commodity operations

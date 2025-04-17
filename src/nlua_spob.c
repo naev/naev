@@ -121,7 +121,7 @@ static const luaL_Reg spob_methods[] = {
  *    @param env Environment to load spob library into.
  *    @return 0 on success.
  */
-int nlua_loadSpob( nlua_env env )
+int nlua_loadSpob( nlua_env *env )
 {
    nlua_register( env, SPOB_METATABLE, spob_methods, 1 );
    return 0; /* No error */

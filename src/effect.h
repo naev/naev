@@ -37,10 +37,10 @@ typedef struct EffectData_ {
    GLuint     u_img;
    glTexture *img; /**< Image that can be additionally provided. */
    /* Lua. */
-   nlua_env lua_env;    /**< Lua environment. */
-   int      lua_add;    /**< Effect has been added to a pilot. */
-   int      lua_extend; /**< Effect has been extended. */
-   int      lua_remove; /**< Effect has been removed from a pilot. */
+   nlua_env *lua_env;    /**< Lua environment. */
+   int       lua_add;    /**< Effect has been added to a pilot. */
+   int       lua_extend; /**< Effect has been extended. */
+   int       lua_remove; /**< Effect has been removed from a pilot. */
 } EffectData;
 
 /**

@@ -6,4 +6,4 @@
 #include "nlua.h"
 
 /* individual library stuff */
-int nlua_loadPlayer( nlua_env env );
+int nlua_loadPlayer( nlua_env *env );

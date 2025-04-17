@@ -71,9 +71,9 @@ extern unsigned int land_wid; /**< From land.c */
 /**
  * GUI Lua stuff.
  */
-static nlua_env gui_env      = LUA_NOREF; /**< Current GUI Lua environment. */
-static int      gui_L_mclick = 0;         /**< Use mouse click callback. */
-static int      gui_L_mmove  = 0;         /**< Use mouse movement callback. */
+static nlua_env *gui_env      = NULL; /**< Current GUI Lua environment. */
+static int       gui_L_mclick = 0;    /**< Use mouse click callback. */
+static int       gui_L_mmove  = 0;    /**< Use mouse movement callback. */
 
 /**
  * Cropping.
@@ -792,7 +792,7 @@ void gui_render( double dt )
    glClear( GL_DEPTH_BUFFER_BIT );
 
    /* Run Lua. */
-   if ( gui_env != LUA_NOREF ) {
+   if ( gui_env != NULL ) {
       if ( gui_prepFunc( gui_lua_render, "render" ) == 0 ) {
          lua_pushnumber( naevL, dt );
          lua_pushnumber( naevL, dt_mod );
@@ -1766,7 +1766,7 @@ int gui_init( void )
 static int gui_doFunc( int func_ref, const char *func_name )
 {
    int ret;
-   if ( gui_env == LUA_NOREF )
+   if ( gui_env == NULL )
       return -1;
 
    ret = gui_prepFunc( func_ref, func_name );
@@ -1786,7 +1786,7 @@ static int gui_prepFunc( int func_ref, const char *func_name )
 {
    (void)func_name;
 #if DEBUGGING
-   if ( gui_env == LUA_NOREF ) {
+   if ( gui_env == NULL ) {
       WARN( _( "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!" ),
             gui_name, func_name );
       return -1;
@@ -1839,7 +1839,7 @@ static int gui_runFunc( const char *func, int nargs, int nret )
  */
 void gui_reload( void )
 {
-   if ( gui_env == LUA_NOREF )
+   if ( gui_env == NULL )
       return;
 
    gui_load( gui_pick() );
@@ -1907,7 +1907,7 @@ void gui_updateEffects( void )
  */
 void gui_setGeneric( const Pilot *pilot )
 {
-   if ( gui_env == LUA_NOREF )
+   if ( gui_env == NULL )
       return;
 
    if ( player_isFlag( PLAYER_DESTROYED ) || player_isFlag( PLAYER_CREATING ) ||
@@ -1978,7 +1978,7 @@ int gui_load( const char *name )
 
    /* Clean up. */
    nlua_freeEnv( gui_env );
-   gui_env = LUA_NOREF;
+   gui_env = NULL;
 
    /* Create Lua state. */
    gui_env = nlua_newEnv( name );
@@ -1994,7 +1994,7 @@ int gui_load( const char *name )
                "Most likely Lua file has improper syntax, please check" ),
             path, lua_tostring( naevL, -1 ) );
       nlua_freeEnv( gui_env );
-      gui_env = LUA_NOREF;
+      gui_env = NULL;
       free( buf );
       return -1;
    }
@@ -2021,7 +2021,7 @@ int gui_load( const char *name )
    /* Run create function. */
    if ( gui_doFunc( gui_lua_create, "create" ) ) {
       nlua_freeEnv( gui_env );
-      gui_env = LUA_NOREF;
+      gui_env = NULL;
    }
 
    /* Recreate land window if landed. */
@@ -2059,7 +2059,7 @@ void gui_cleanup( void )
 
    /* Destroy lua. */
    nlua_freeEnv( gui_env );
-   gui_env = LUA_NOREF;
+   gui_env = NULL;
 
    /* OMSG */
    omsg_position( SCREEN_W / 2., SCREEN_H * 2. / 3., SCREEN_W * 2. / 3. );

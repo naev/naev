@@ -56,7 +56,7 @@ typedef struct LuaShader_s {
 /*
  * Library loading
  */
-int nlua_loadShader( nlua_env env );
+int nlua_loadShader( nlua_env *env );
 
 /*
  * Shader operations

@@ -16,7 +16,7 @@ typedef int LuaSystem;
 /*
  * Load the system library.
  */
-int nlua_loadSystem( nlua_env env );
+int nlua_loadSystem( nlua_env *env );
 
 /*
  * System operations.

@@ -117,8 +117,8 @@ static char *errorlist_ptr;
 /*
  * Rescue.
  */
-static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
-static void     land_stranded( void );
+static nlua_env *rescue_env = NULL; /**< Rescue Lua env. */
+static void      land_stranded( void );
 
 /*
  * prototypes
@@ -1914,7 +1914,7 @@ static void land_stranded( void )
    if ( !PHYSFS_exists( RESCUE_PATH ) )
       return;
 
-   if ( rescue_env == LUA_NOREF ) {
+   if ( rescue_env == NULL ) {
       char  *buf;
       size_t bufsize;
 
@@ -1987,7 +1987,7 @@ void land_cleanup( void )
 
    /* Clean up rescue Lua. */
    nlua_freeEnv( rescue_env );
-   rescue_env = LUA_NOREF;
+   rescue_env = NULL;
 
    /* Deselect stuff. */
    equipment_slotDeselect( NULL );

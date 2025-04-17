@@ -31,7 +31,7 @@ static const luaL_Reg diffL_methods[] = {
  *    @param env Lua enviornment.
  *    @return 0 on success.
  */
-int nlua_loadDiff( nlua_env env )
+int nlua_loadDiff( nlua_env *env )
 {
    nlua_register( env, "diff", diffL_methods, 0 );
    return 0;

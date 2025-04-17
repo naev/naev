@@ -11,7 +11,7 @@
 /*
  * Library loading
  */
-int nlua_loadTex( nlua_env );
+int nlua_loadTex( nlua_env *env );
 
 /*
  * Texture operations

@@ -8,4 +8,4 @@
 /*
  * Library loading
  */
-int nlua_loadCamera( nlua_env env );
+int nlua_loadCamera( nlua_env *env );

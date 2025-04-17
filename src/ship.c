@@ -989,7 +989,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       temp->trail_emitters = array_create( ShipTrailEmitter );
 
       /* Lua defaults. */
-      temp->lua_env            = LUA_NOREF;
+      temp->lua_env            = NULL;
       temp->lua_descextra      = LUA_NOREF;
       temp->lua_init           = LUA_NOREF;
       temp->lua_cleanup        = LUA_NOREF;
@@ -1761,9 +1761,9 @@ int ships_load( void )
       if ( s->lua_file == NULL )
          continue;
 
-      nlua_env env;
-      size_t   sz;
-      char    *dat = ndata_read( s->lua_file, &sz );
+      nlua_env *env;
+      size_t    sz;
+      char     *dat = ndata_read( s->lua_file, &sz );
       if ( dat == NULL ) {
          WARN( _( "Ship '%s' failed to read Lua '%s'!" ), s->name,
                s->lua_file );
@@ -1784,7 +1784,7 @@ int ships_load( void )
          lua_pop( naevL, 1 );
          nlua_freeEnv( s->lua_env );
          free( dat );
-         s->lua_env = LUA_NOREF;
+         s->lua_env = NULL;
          continue;
       }
       free( dat );
@@ -1935,7 +1935,7 @@ void ships_free( void )
 
       /* Free Lua. */
       nlua_freeEnv( s->lua_env );
-      s->lua_env = LUA_NOREF;
+      s->lua_env = NULL;
       free( s->lua_file );
    }
 

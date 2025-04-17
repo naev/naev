@@ -269,7 +269,7 @@ static int audioL_isState( lua_State *L, ALenum state )
  *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadAudio( nlua_env env )
+int nlua_loadAudio( nlua_env *env )
 {
    nlua_register( env, AUDIO_METATABLE, audioL_methods, 1 );
    return 0;

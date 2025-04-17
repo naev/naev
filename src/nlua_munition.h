@@ -22,7 +22,7 @@ typedef struct LuaMunition_ {
 /*
  * Library loading
  */
-int nlua_loadMunition( nlua_env env );
+int nlua_loadMunition( nlua_env *env );
 
 /*
  * Munition operations

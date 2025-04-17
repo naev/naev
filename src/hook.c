@@ -1066,14 +1066,14 @@ static Hook *hook_get( unsigned int id )
 /**
  * @brief Gets the lua env for a hook.
  */
-nlua_env hook_env( unsigned int hook )
+nlua_env *hook_env( unsigned int hook )
 {
    Mission *misn;
    Event_t *evt;
 
    Hook *h = hook_get( hook );
    if ( h == NULL )
-      return LUA_NOREF;
+      return NULL;
 
    switch ( h->type ) {
    case HOOK_TYPE_MISN:
@@ -1090,7 +1090,7 @@ nlua_env hook_env( unsigned int hook )
       break;
    }
 
-   return LUA_NOREF;
+   return NULL;
 }
 
 /**

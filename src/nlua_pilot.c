@@ -478,7 +478,7 @@ static const luaL_Reg pilotL_methods[] = {
  *    @param env Environment to load library into.
  *    @return 0 on success.
  */
-int nlua_loadPilot( nlua_env env )
+int nlua_loadPilot( nlua_env *env )
 {
    nlua_register( env, PILOT_METATABLE, pilotL_methods, 1 );
 
@@ -2366,7 +2366,7 @@ static int pilotL_actives( lua_State *L )
       case PILOT_OUTFIT_WARMUP:
          str = "warmup";
          if ( !outfit_isMod( pos->outfit ) ||
-              outfit_luaEnv( pos->outfit ) == LUA_NOREF )
+              outfit_luaEnv( pos->outfit ) == NULL )
             d = 1.; /* TODO add warmup stuff to normal active outfits (not sure
                        if necessary though. */
          else
@@ -2377,7 +2377,7 @@ static int pilotL_actives( lua_State *L )
       case PILOT_OUTFIT_ON:
          str = "on";
          if ( !outfit_isMod( pos->outfit ) ||
-              outfit_luaEnv( pos->outfit ) == LUA_NOREF ) {
+              outfit_luaEnv( pos->outfit ) == NULL ) {
             d = outfit_duration( pos->outfit );
             if ( d == 0. )
                d = 1.;
@@ -2391,7 +2391,7 @@ static int pilotL_actives( lua_State *L )
       case PILOT_OUTFIT_COOLDOWN:
          str = "cooldown";
          if ( !outfit_isMod( pos->outfit ) ||
-              outfit_luaEnv( pos->outfit ) == LUA_NOREF ) {
+              outfit_luaEnv( pos->outfit ) == NULL ) {
             d = outfit_cooldown( pos->outfit );
             if ( d > 0. && !isinf( pos->stimer ) )
                d = pos->stimer / d;
@@ -4166,7 +4166,7 @@ static int pilotL_shippropSet( lua_State *L )
    const char *name;
    double      value;
 
-   if ( p->ship->lua_env == LUA_NOREF )
+   if ( p->ship->lua_env == NULL )
       return NLUA_ERROR( L,
                          _( "Trying to set ship property of pilot '%s' flying "
                             "ship '%s' with no ship Lua enabled!" ),

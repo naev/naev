@@ -19,7 +19,7 @@ typedef struct LuaJump_s {
 /*
  * Load the jump library.
  */
-int nlua_loadJump( nlua_env env );
+int nlua_loadJump( nlua_env *env );
 
 /*
  * Jump operations.
