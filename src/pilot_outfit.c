@@ -1354,6 +1354,25 @@ static void pilot_outfitLRun( Pilot *p,
                                                     const void      *data ),
                               const void *data )
 {
+   /* If no ID, we'll hackily add a temporary pilot and undo the changes. */
+   int     noid = ( p->id == 0 );
+   Pilot **ps;
+   Pilot  *ptemp = NULL;
+   if ( noid ) {
+      ps = (Pilot **)pilot_getAll();
+      /* If array is empty we have to add a new pilot. */
+      if ( array_size( ps ) <= 0 ) {
+         array_push_back( &ps, p );
+      } else {
+         ptemp = ps[0];
+         ps[0] = p;
+      }
+      if ( pilot_isPlayer( p ) )
+         p->id = PLAYER_ID;
+      else
+         p->id = PILOT_TEMP_ID;
+   }
+
    pilotoutfit_modified = 0;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *po = p->outfits[i];
@@ -1367,6 +1386,16 @@ static void pilot_outfitLRun( Pilot *p,
          continue;
       func( p, po, data );
    }
+
+   /* Some clean up. */
+   if ( noid ) {
+      p->id = 0;
+      if ( ptemp == NULL )
+         array_erase( &ps, &ps[0], &ps[1] );
+      else
+         ps[0] = ptemp;
+   }
+
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
       /* TODO pilot_calcStats can be called twice here. */
@@ -1539,6 +1568,44 @@ double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
    return -1.;
 }
 
+static void outfitLInit( const Pilot *pilot, PilotOutfitSlot *po,
+                         const void *data )
+{
+   (void)data;
+   int      lua_oinit, oldmem;
+   nlua_env lua_env;
+
+   if ( po->outfit == NULL )
+      return;
+
+   if ( po->outfit->lua_env == LUA_NOREF )
+      return;
+
+   lua_oinit = po->outfit->lua_init;
+   lua_env   = po->outfit->lua_env;
+
+   /* Create the memory if necessary and initialize stats. */
+   oldmem = pilot_outfitLmem( po, lua_env );
+
+   if ( lua_oinit == LUA_NOREF ) {
+      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
+      return;
+   }
+
+   /* Set up the function: init( p, po ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, lua_oinit ); /* f */
+   lua_pushpilot( naevL, pilot->id );                  /* f, p */
+   lua_pushpilotoutfit( naevL, po );                   /* f, p, po */
+   if ( nlua_pcall( lua_env, 2, 0 ) ) {                /* */
+      outfitLRunWarning( pilot, po->outfit, "init", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
+      return;
+   }
+   pilot_outfitLunmem( po->outfit->lua_env, oldmem );
+   return;
+}
+
 /**
  * @brief Runs the pilot's Lua outfits init script.
  *
@@ -1546,39 +1613,9 @@ double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
  */
 void pilot_outfitLInitAll( Pilot *pilot )
 {
-   /* If no ID, we'll hackily add a temporary pilot and undo the changes. */
-   int     noid = ( pilot->id == 0 );
-   Pilot **ps;
-   Pilot  *ptemp;
-   if ( noid ) {
-      ps    = (Pilot **)pilot_getAll();
-      ptemp = ps[0];
-      ps[0] = pilot;
-      if ( pilot_isPlayer( pilot ) )
-         pilot->id = PLAYER_ID;
-      else
-         pilot->id = PILOT_TEMP_ID;
-   }
-
-   /* Run Lua code here with the fake IDs if necessary. */
-   pilotoutfit_modified = 0;
-   for ( int i = 0; i < array_size( pilot->outfits ); i++ )
-      pilot_outfitLInit( pilot, pilot->outfits[i] );
-   for ( int i = 0; i < array_size( pilot->outfit_intrinsic ); i++ )
-      pilot_outfitLInit( pilot, &pilot->outfit_intrinsic[i] );
-
-   /* Some clean up. */
-   if ( noid ) {
-      pilot->id = 0;
-      ps[0]     = ptemp;
-   }
-
-   /* Recalculate if anything changed. */
-   if ( pilotoutfit_modified ) {
-      /* TODO calcStats computed twice maybe. */
-      pilot_weapSetUpdateOutfitState( pilot );
-      pilot_calcStats( pilot );
-   }
+   NTracingZone( _ctx, 1 );
+   pilot_outfitLRun( pilot, outfitLInit, NULL );
+   NTracingZoneEnd( _ctx );
 }
 
 /**
@@ -1680,42 +1717,10 @@ void pilot_outfitLOutfitChange( Pilot *pilot )
  *
  *    @param pilot Pilot to run Lua outfits for.
  *    @param po Pilot outfit to check.
- *    @return 0 if nothing was done, 1 if script was run, and -1 on error.
  */
-int pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po )
+void pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po )
 {
-   int      lua_oinit, oldmem;
-   nlua_env lua_env;
-
-   if ( po->outfit == NULL )
-      return 0;
-
-   if ( po->outfit->lua_env == LUA_NOREF )
-      return 0;
-
-   lua_oinit = po->outfit->lua_init;
-   lua_env   = po->outfit->lua_env;
-
-   /* Create the memory if necessary and initialize stats. */
-   oldmem = pilot_outfitLmem( po, lua_env );
-
-   if ( lua_oinit == LUA_NOREF ) {
-      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
-      return 0;
-   }
-
-   /* Set up the function: init( p, po ) */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, lua_oinit ); /* f */
-   lua_pushpilot( naevL, pilot->id );                  /* f, p */
-   lua_pushpilotoutfit( naevL, po );                   /* f, p, po */
-   if ( nlua_pcall( lua_env, 2, 0 ) ) {                /* */
-      outfitLRunWarning( pilot, po->outfit, "init", lua_tostring( naevL, -1 ) );
-      lua_pop( naevL, 1 );
-      pilot_outfitLunmem( po->outfit->lua_env, oldmem );
-      return -1;
-   }
-   pilot_outfitLunmem( po->outfit->lua_env, oldmem );
-   return 1;
+   outfitLInit( pilot, po, NULL );
 }
 
 static void outfitLUpdate( const Pilot *pilot, PilotOutfitSlot *po,
