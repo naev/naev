@@ -452,7 +452,9 @@ static int threadpool_handler( void *data )
 
       /* Start a new thread and increment the thread counter */
       if ( newthread ) {
-         SDL_CreateThread( threadpool_worker, "threadpool_worker", threadarg );
+         SDL_Thread *th = SDL_CreateThread( threadpool_worker,
+                                            "threadpool_worker", threadarg );
+         SDL_DetachThread( th );
          nrunning += 1;
       }
    }
@@ -485,11 +487,13 @@ int threadpool_init( void )
    global_queue = tq_create();
 
    /* Initialize the threadpool handler. */
-   if ( SDL_CreateThread( threadpool_handler, "threadpool_handler", NULL ) ==
-        NULL ) {
+   SDL_Thread *th =
+      SDL_CreateThread( threadpool_handler, "threadpool_handler", NULL );
+   if ( th == NULL ) {
       ERR( _( "Threadpool init failed: %s" ), SDL_GetError() );
       return -1;
    }
+   SDL_DetachThread( th );
 
    return 0;
 }
