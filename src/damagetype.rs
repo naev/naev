@@ -206,11 +206,16 @@ pub fn load() -> Result<Vec<DamageType>> {
     let files = ndata::read_dir("damagetype/")?;
     let mut dt_data: Vec<DamageType> = files
         .par_iter()
-        .filter_map(|filename| match DamageType::load(filename.as_str()) {
-            Ok(dt) => Some(dt),
-            _ => {
-                warn!("Unable to load Damage Type '{}'!", filename);
-                None
+        .filter_map(|filename| {
+            if !filename.ends_with("xml") {
+                return None;
+            }
+            match DamageType::load(filename.as_str()) {
+                Ok(dt) => Some(dt),
+                _ => {
+                    warn!("Unable to load Damage Type '{}'!", filename);
+                    None
+                }
             }
         })
         .collect();
