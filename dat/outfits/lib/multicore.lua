@@ -144,12 +144,12 @@ function multicore.init( params )
       end
    end
 
-   local function toggle_multicore(p,po,onoff)
+   function toggle_multicore(p,po,onoff)
       multicore_on=onoff
       init(p,po)
    end
 
-   local function set_multicore_notice(notice)
+   function set_multicore_notice(notice)
       multicore_notice = notice
    end
 end
