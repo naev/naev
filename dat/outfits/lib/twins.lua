@@ -1,11 +1,13 @@
 
 return function ( p, po )
-   if false and p and po then
+   if p and po then
       local count = 0
       local mismatch = false
       for k,o in ipairs(p:outfits()) do
          if o and o:type() == "Core Systems (Engine)" then
-            if o:name() == po:name() then
+            name1=o:nameRaw()
+            name2=po:outfit():nameRaw()
+            if o:nameRaw() == po:outfit():nameRaw() then
                count = count+1
             else
                mismatch = true
@@ -13,9 +15,9 @@ return function ( p, po )
          end
       end
       if count == 2 and not mismatch then
-         print ("Ok")
+         print ("Twins are happy")
       else
-         print ("Not ok")
+         print ("Twin is unhappy")
       end
    end
 end
