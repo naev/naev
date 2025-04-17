@@ -2,7 +2,7 @@
  <general>
   <shortname>K. Remige Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
+  <slot prop="engines">structure</slot>
   <size>large</size>
   <mass>40</mass>
   <price>2400000</price>
