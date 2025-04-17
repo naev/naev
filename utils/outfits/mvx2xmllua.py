@@ -70,7 +70,7 @@ def toxmllua(o,update_lua,fake_dual):
    f1,acc1,tr1=_process_group(R,'./general')
    f2,acc2,tr2=_process_group(R,'./specific')
 
-   if (not f1) and (not f2) and (not fake_dual):
+   if (not f1) and (not f2) and (not update_lua):
       tr1=tr2=[]
       acc1=acc2=[]
 
@@ -110,4 +110,4 @@ if __name__ == '__main__':
    )
    parser.add_argument('lua_module', nargs='?', help='The name of a lua module returning update function.')
    args=parser.parse_args()
-   exit(main(args.lua_module,args.lua_module!=None))
+   exit(main(args.lua_module,args.lua_module=='alone'))

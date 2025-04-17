@@ -12,10 +12,13 @@ function onoutfitchange( p, po )
             end
          end
       end
-      if count == 2 and not mismatch then
-         print ("Twins are happy")
+      local ok = (count == 2 and not mismatch)
+      if ok then
+         print ("Twins are together thus happy.")
       else
-         print ("Twin is unhappy")
+         print ("Alone twin is unhappy.")
       end
+      toggle_multicore(p,po,ok)
    end
 end
+

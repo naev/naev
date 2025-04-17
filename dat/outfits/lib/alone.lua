@@ -1,6 +1,8 @@
 
 local fmt = require "format"
 
+set_multicore_notice("This outfit only works alone")
+
 function onoutfitchange( p, po )
    if p and po then
       local o = p:outfitSlot('engines_secondary')
@@ -12,3 +14,4 @@ function onoutfitchange( p, po )
       end
    end
 end
+
