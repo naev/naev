@@ -205,7 +205,8 @@ pub fn naev() -> Result<()> {
         );
     }
 
-    let _lua = nlua::NLua::new()?;
+    nlua::init()?;
+    //let _lua = nlua::NLua::new()?;
 
     unsafe {
         /* Enable FPU exceptions. */

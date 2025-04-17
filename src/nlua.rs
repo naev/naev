@@ -23,6 +23,9 @@ pub struct NLua {
     common: Option<mlua::Function>,
     envs: Vec<LuaEnv>,
 }
+// Got to remove this when we can...
+unsafe impl Sync for NLua {}
+unsafe impl Send for NLua {}
 
 /// Opens the gettext library
 fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
@@ -291,6 +294,13 @@ impl LuaEnv {
     }
 }
 
+use std::sync::{LazyLock, Mutex};
+static NLUA: LazyLock<Mutex<NLua>> = LazyLock::new(|| Mutex::new(NLua::new().unwrap()));
+pub fn init() -> Result<()> {
+    let _unused = NLUA.lock();
+    Ok(())
+}
+
 // Re-export some newer Lua API to C
 use std::os::raw::{c_char, c_int};
 
@@ -316,3 +326,8 @@ pub unsafe extern "C" fn luaL_traceback(
     unsafe { mlua::ffi::luaL_traceback(L, L1, msg, level) }
 }
 */
+
+// C API
+pub struct CNluaEnv {
+    lua: mlua::Lua,
+}
