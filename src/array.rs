@@ -26,7 +26,7 @@ impl<T: Clone + Sized> Array<T> {
         let size = std::mem::size_of::<T>();
         let array =
             unsafe { naevc::array_from_vec(vec.as_ptr() as *const c_void, size, vec.len()) };
-        if array == std::ptr::null_mut() {
+        if array.is_null() {
             anyhow::bail!("Failed to create C Array");
         }
         Ok(Array(array as *mut T))
