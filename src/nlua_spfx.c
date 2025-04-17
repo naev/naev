@@ -329,14 +329,6 @@ static int spfxL_new( lua_State *L )
    ls.render_mg = LUA_NOREF;
    ls.render_fg = LUA_NOREF;
    ls.remove    = LUA_NOREF;
-#if 0
-   nlua_pushenv( L, __NLUA_CURENV );
-#if DEBUGGING
-   if (__NLUA_CURENV == LUA_NOREF)
-      WARN(_("Trying to create Lua SPFX from no environment!"));
-#endif /* DEBUGGING */
-   ls.env = luaL_ref( naevL, LUA_REGISTRYINDEX );
-#endif
 
    /* Functions. */
    if ( !lua_isnoneornil( L, 2 ) )

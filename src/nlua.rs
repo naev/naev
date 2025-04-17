@@ -1,6 +1,7 @@
 //use mlua::prelude::*;
 use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
+use crate::{formatx, warn};
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
@@ -302,6 +303,7 @@ pub fn init() -> Result<()> {
 }
 
 // Re-export some newer Lua API to C
+use std::ffi::CStr;
 use std::os::raw::{c_char, c_int};
 
 #[allow(non_snake_case)]
@@ -327,7 +329,88 @@ pub unsafe extern "C" fn luaL_traceback(
 }
 */
 
+/*
 // C API
-pub struct CNluaEnv {
-    lua: mlua::Lua,
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_newEnv( name: *const c_char ) -> *mut LuaEnv {
+    let ptr = unsafe { CStr::from_ptr(name) };
+    let name = ptr.to_str().unwrap();
+    let mut lua = NLUA.lock().unwrap();
+    match lua.new_env(name) {
+        Ok(env) => Box::into_raw( Box::new( env ) ),
+        Err(e) => {
+            warn!("unable to create Lua environment: {}", e);
+            std::ptr::null_mut()
+        }
+    }
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_dupEnv( env: *mut LuaEnv ) -> *mut LuaEnv {
+    if env.is_null() {
+        return env;
+    }
+    let env = unsafe { &*env };
+    let t = &env.table;
+    let lua = &NLUA.lock().unwrap();
+    let newenv = LuaEnv {
+        table: t.clone(),
+        rk: lua.lua.create_registry_value(t).unwrap(),
+    };
+    Box::into_raw(Box::new(newenv))
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_freeEnv( env: *mut LuaEnv ) {
+    if !env.is_null() {
+        let _ = unsafe{ Box::from_raw(env) };
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_dobufenv( env: *mut LuaEnv, buf: *const c_char, sz: usize, name: *const c_char ) -> c_int {
+    if env.is_null() {
+        return -1;
+    }
+    let buf = unsafe { std::str::from_utf8_unchecked(std::slice::from_raw_parts( buf as *const u8, sz)) };
+    let nameptr = unsafe { CStr::from_ptr(name) };
+    let name = nameptr.to_str().unwrap();
+    let env = unsafe { &*env };
+
+    let lua = &NLUA.lock().unwrap();
+    let chunk = lua.lua.load(buf)
+        .set_name( name )
+        .set_environment( env.table.clone() );
+    match chunk.exec() {
+        Ok(()) => 0,
+        Err(e) => {
+            warn!("{}",e);
+            -1
+        },
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_dofileenv( env: *mut LuaEnv, filename: *const c_char ) -> c_int {
+    if env.is_null() {
+        return -1;
+    }
+    let nameptr = unsafe { CStr::from_ptr(filename) };
+    let filename = nameptr.to_str().unwrap();
+    let data = ndata::read( filename ).unwrap();
+    let buf = std::str::from_utf8( &data ).unwrap();
+    let env = unsafe { &*env };
+
+    let lua = &NLUA.lock().unwrap();
+    let chunk = lua.lua.load(buf)
+        .set_name( filename )
+        .set_environment( env.table.clone() );
+    match chunk.exec() {
+        Ok(()) => 0,
+        Err(e) => {
+            warn!("{}",e);
+            -1
+        },
+    }
+}
+*/
