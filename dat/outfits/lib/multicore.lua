@@ -44,16 +44,22 @@ local function add_desc( stat, nomain, nosec )
    local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
+   local off = nomain and nosec
 
    local p = base or 0
    local s = secondary or 0
 
    nomain = nomain or p == 0
    nosec = nosec or s == 0
-   local col = valcol( p+s, stat.stat.inverted )
+   local col
+   if off then
+      col="#n"
+   else
+      col=valcol( p+s, stat.stat.inverted )
+   end
    local pref = col..fmt.f("{name}: ",{name=name})
    if p==s then
-      return pref..stattostr( stat.stat, base, false, true )
+      return pref..stattostr( stat.stat, base, off, true )
    else
       return pref..fmt.f("{bas} #n/#0 {sec}", {
          bas = stattostr( stat.stat, p, nomain, nosec),
@@ -127,40 +133,37 @@ function multicore.init( params )
       end
 
       local averaged=false
-      for k,s in ipairs(stats) do
-         averaged = averaged or averaging_mod( s )
+      if multicore_off~=true then
+         for k,s in ipairs(stats) do
+            averaged = averaged or averaging_mod( s )
+         end
       end
       for k,s in ipairs(stats) do
          if not averaging_mod( s ) then
-            desc = desc.."\n"..add_desc( s, nomain, nosec )
+            local off=multicore_off and (nosec or nomain) and s.name~="mass"
+            desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
             if averaged and nomain and (not nosec) and averaged_val(s.name) then
-               desc = desc.."   #o(averaged with#0 #rpri#0#o)#0"
+               desc = desc.."   #o(avg with#0 #rpri#0#o)#0"
             end
          end
       end
       if po and multicore_off ~= nil then
+         desc = desc .. "\n#bWorking Status: #0"
          if multicore_off==false then
-            desc = desc .. "\n#bThis outfit is currently#0 #gON#0"
+            desc = desc .. "#grunning#0"
          else
-            desc = desc .. "\n#bThis outfit is currently#0 #rOFF#0"
+            desc = desc .. "#rHALTED#0"
          end
       end
       return desc
    end
 
    function init( _p, po )
-      if not multicore_off then
-         --print "init on"
-         local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
-         for k,s in ipairs(stats) do
-            local val = (secondary and s.sec) or s.pri
-            po:set( s.name, val )
-         end
-      else
-         --print "init off"
-         po:clear()
-         for k,s in ipairs(stats) do
-            po:set( s.name, 0 )
+      local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
+      po:clear()
+      for k,s in ipairs(stats) do
+         if multicore_off~=true or s.name=='mass' then
+            po:set( s.name, (secondary and s.sec) or s.pri )
          end
       end
    end

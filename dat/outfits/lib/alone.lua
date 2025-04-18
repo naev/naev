@@ -3,7 +3,7 @@ local fmt = require "format"
 
 local prvdesc=descextra
 descextra=function ( p, o, po)
-   return prvdesc( p, o, po) .. "\n#b".."This outfit only works alone".."#0"
+   return prvdesc( p, o, po) .. "\n#b".."This outfit only works alone.".."#0"
 end
 
 function onoutfitchange( p, po )

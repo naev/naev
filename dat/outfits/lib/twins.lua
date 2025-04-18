@@ -1,7 +1,7 @@
 
 local prvdesc=descextra
 descextra=function ( p, o, po)
-   return prvdesc( p, o, po) .. "\n#b".."This outfit only works with a twin".."#0"
+   return prvdesc( p, o, po) .. "\n#bThis outfit only works with a twin.#0"
 end
 
 function onoutfitchange( p, po )
