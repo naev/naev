@@ -108,37 +108,45 @@ def apply_ls(sub,o,additional=dict()):
             i.text=sub[i.tag]
       return acc
 
+def mk_subs(a):
+   sub=[]
+   for doubled in [False,True]:
+      o = outfit(a)
+
+      if o is None:
+         break
+
+      line = get_line(o)
+      if line is None:
+         break
+
+      o.autostack(doubled)
+      sub.append(ls2vals(line,o.size(doubled)))
+
+   if sub==[]:
+      return None
+
+   return {k:(v1,sub[-1][k]) for k,v1 in sub[0].items()}
+
 def main(args):
    outfits = []
    for a in args:
-      sub=[]
-      for doubled in [False,True]:
-         o = outfit(a)
+      sub=mk_subs(a)
 
-         if o is None:
-            break
-
-         line = get_line(o)
-         if line is None:
-            break
-
-         o.autostack(doubled)
-         sub.append(ls2vals(line,o.size(doubled)))
-
-      if sub == []:
+      if sub == None:
          continue
 
       o = outfit(a)
 
       if o.name() in ["Krain Remige Engine","Za'lek Test Engine"]:
-         subs=dict([(k,v1) for k,v1 in sub[0].items()])
+         sub={k:v[0] for k,v1 in sub.items()}
       elif o.name()=="Krain Patagium Twin Engine":
-         subs=dict([(k,v2) for k,v2 in sub[1].items()])
+         sub={k:v[1] for k,v1 in sub.items()}
       else:
-         subs=dict([(k,unstackvals(k,v1,sub[1][k])) for k,v1 in sub[0].items()])
+         sub={k:unstackvals(k,v[0],v[1]) for k,v in sub.items()}
 
-      if subs is not None:
-         acc=apply_ls(subs,o)
+      if sub is not None:
+         acc=apply_ls(sub,o)
          if acc is not None:
             err(o.fil.split('/')[-1]+': ',nnl=True)
             if acc!=[]:
@@ -159,17 +167,20 @@ def gen_line(lin):
       err('Dummy engine not found!')
       return 1
 
-   for i,s in enumerate(["S1","S2","M1","M2","L1","L2"]):
-      siz=i+1
+   for i,s in enumerate(["Small","Medium","Large"]):
       nam=lin+" "+s
-      fil=nam2fil(nam+'.xml')
+      fil=nam2fil(nam+'.mvx')
       o.r.attrib['name']=nam
-      acc=apply_ls(o,(lin,siz),{
-         'mass':str(10*siz),
-         'engine_limit':str(125*2**i),
-         'fuel':str(int((siz+3)*100*(2**((i-i%2)/2)))),
-         'description':'TODO'
-      })
+
+      sized_params=lambda n,s:{
+         'mass':str(10*n),
+         'engine_limit':str(125*2*int(n)),
+         'fuel':str(int((n+4)*100*(2**(int(n)/2)))),
+      }
+      additionnal={k:(sized_params(2*i+1)[k],sized_params(2*i+1+1)[k]) for k in sized_params(2*1+1)}
+      additionnal['description']='TODO'
+      
+      acc=apply_ls(mk_subs(a),o,additionnal)
       fp=open(fil,"w")
       o.write(fp)
       fp.close()
