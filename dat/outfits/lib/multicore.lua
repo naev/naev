@@ -62,6 +62,17 @@ local function add_desc( stat, nomain, nosec )
    end
 end
 
+local function averaged_val( name )
+   return (name=="speed" or name=='accel' or name=='turn')
+end
+
+local function averaging_mod( s )
+   local suff='_mod'
+   return s.pri==0 and s.sec==-50 and
+      (s.name):sub(#s.name-#suff+1,#s.name)==suff and
+      averaged_val( (s.name):sub(0,#s.name-#suff) )
+end
+
 local function index( tbl, key )
    for i,v in ipairs(tbl) do
       if v and v["name"]==key then
@@ -74,7 +85,7 @@ end
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
-   local multicore_on = true
+   local multicore_off = nil
 
    for k,s in ipairs(stats) do
       s.index = index( shipstat, s[1] )
@@ -114,17 +125,31 @@ function multicore.init( params )
             sec="#y"..p_("core","secondary").."#n",
          }).."#0"
       end
+
+      local averaged=false
       for k,s in ipairs(stats) do
-         desc = desc.."\n"..add_desc( s, nomain, nosec )
+         averaged = averaged or averaging_mod( s )
       end
-      if multicore_on==false then
-         desc = desc .. "\n#bThis outfit is currently OFF#0"
+      for k,s in ipairs(stats) do
+         if not averaging_mod( s ) then
+            desc = desc.."\n"..add_desc( s, nomain, nosec )
+            if averaged and nomain and (not nosec) and averaged_val(s.name) then
+               desc = desc.."   #o(averaged with#0 #rpri#0#o)#0"
+            end
+         end
+      end
+      if po and multicore_off ~= nil then
+         if multicore_off==false then
+            desc = desc .. "\n#bThis outfit is currently#0 #gON#0"
+         else
+            desc = desc .. "\n#bThis outfit is currently#0 #rOFF#0"
+         end
       end
       return desc
    end
 
    function init( _p, po )
-      if multicore_on == true then
+      if not multicore_off then
          --print "init on"
          local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
          for k,s in ipairs(stats) do
@@ -140,8 +165,12 @@ function multicore.init( params )
       end
    end
 
-   function ontoggle( p, po, on)
-      multicore_on = on
+   function setworkingstatus( p, po, on)
+      if on==nil then
+         multicore_off = nil
+      else
+         multicore_off = not on
+      end
       init(p,po)
    end
 end

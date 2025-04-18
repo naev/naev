@@ -1,4 +1,9 @@
 
+local prvdesc=descextra
+descextra=function ( p, o, po)
+   return prvdesc( p, o, po) .. "\n#b".."This outfit only works with a twin".."#0"
+end
+
 function onoutfitchange( p, po )
    if p and po then
       local count = 0
@@ -15,11 +20,10 @@ function onoutfitchange( p, po )
       local ok = (count == 2 and mismatch~=true)
       if ok then
          print ("Twins are together thus happy.")
-         ontoggle( p, po, true)
       else
          print ("Alone twin is unhappy.")
-         ontoggle( p, po, false)
       end
+      setworkingstatus( p, po, ok)
    end
 end
 
