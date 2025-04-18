@@ -132,7 +132,7 @@ class _outfit():
       if dst=="-":
          dest=stdout
       elif type(dst)==type(""):
-         dest=open(dst,"wt")
+         dest=open(dst,"w")
          closeit=True
       else:
          dest=dst

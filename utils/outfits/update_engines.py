@@ -88,8 +88,8 @@ def ls2vals(line,size):
       "turn":fmt(turn,True)
    }
 
-def get_line(o):
-   res=o.name().split(' ')[0]
+def get_line(name):
+   res=name.split(' ')[0]
    if res in line_stats:
       return res
 
@@ -108,7 +108,7 @@ def apply_ls(sub,o,additional=dict()):
             i.text=sub[i.tag]
       return acc
 
-def mk_subs(a):
+def mk_subs(a,name=None):
    sub=[]
    for doubled in [False,True]:
       o = outfit(a)
@@ -116,7 +116,10 @@ def mk_subs(a):
       if o is None:
          break
 
-      line = get_line(o)
+      if name is None:
+         name=o.name()
+
+      line = get_line(name)
       if line is None:
          break
 
@@ -151,9 +154,7 @@ def main(args):
             err(o.fil.split('/')[-1]+': ',nnl=True)
             if acc!=[]:
                err(', '.join([i+':'+j+'->'+k for i,j,k in acc]))
-               fp=open(o.fil,"w")
-               o.write(fp)
-               fp.close()
+               o.write(o.fil)
             else:
                err('_')
    return 0
@@ -161,29 +162,33 @@ def main(args):
 def gen_line(lin):
    import os
    outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
-   engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.xml')
-   o=outfit(engine_dir)
-   if o is None:
-      err('Dummy engine not found!')
-      return 1
-
+   engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.mvx')
    for i,s in enumerate(["Small","Medium","Large"]):
-      nam=lin+" "+s
-      fil=nam2fil(nam+'.mvx')
-      o.r.attrib['name']=nam
+      engine=engine_dir.replace('small',s.lower())
+      o=outfit(engine)
 
-      sized_params=lambda n,s:{
+      if o is None:
+         err('Dummy engine not found!')
+         return 1
+
+      nam=lin+" "+s+" Engine"
+      o.set_name(nam)
+      fil=nam2fil(nam+'.mvx')
+
+      sized_params=lambda n:{
          'mass':str(10*n),
-         'engine_limit':str(125*2*int(n)),
-         'fuel':str(int((n+4)*100*(2**(int(n)/2)))),
+         'fuel':str(int((n+4)*100*(2**int((n-1)/2)))),
       }
-      additionnal={k:(sized_params(2*i+1)[k],sized_params(2*i+1+1)[k]) for k in sized_params(2*1+1)}
-      additionnal['description']='TODO'
+      additional={k:(sized_params(2*i+1)[k],sized_params(2*i+1+1)[k]) for k in sized_params(2*1+1)}
+      additional={k:unstackvals(k,v[0],v[1]) for k,v in additional.items()}
+      additional['description']='"TODO"'
+      additional['engine_limit']=str(175*4**i)
+      additional['price']=str(12500*3**i)
+      additional['energy_regen_malus']=str(5*2**i)
       
-      acc=apply_ls(mk_subs(a),o,additionnal)
-      fp=open(fil,"w")
-      o.write(fp)
-      fp.close()
+      subs={k:unstackvals(k,v[0],v[1]) for k,v in mk_subs(engine,nam).items()}
+      acc=apply_ls(subs,o,additional)
+      o.write(fil)
       err('<'+fil+'>')
 
    return 0
