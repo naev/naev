@@ -17,13 +17,14 @@ function onoutfitchange( p, po )
             end
          end
       end
-      local ok = (count == 2 and mismatch~=true)
-      if ok then
-         print ("Twins are together thus happy.")
-      else
-         print ("Alone twin is unhappy.")
-      end
-      setworkingstatus( p, po, ok)
+      setworkingstatus( p, po, count == 2 and mismatch~=true)
    end
+end
+
+local oldinit=init
+
+init=function( p, po)
+   init=oldinit
+   onoutfitchange( p, po)
 end
 
