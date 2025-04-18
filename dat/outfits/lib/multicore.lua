@@ -74,8 +74,7 @@ end
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
-   local multicore_on=true
-   local multicore_notice=nil
+   local multicore_on = true
 
    for k,s in ipairs(stats) do
       s.index = index( shipstat, s[1] )
@@ -121,14 +120,11 @@ function multicore.init( params )
       if multicore_on==false then
          desc = desc .. "\n#bThis outfit is currently OFF#0"
       end
-      if multicore_notice then
-         desc = desc .. "\n#b"..multicore_notice.."#0"
-      end
       return desc
    end
 
    function init( _p, po )
-      if multicore_on==true then
+      if multicore_on == true then
          --print "init on"
          local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
          for k,s in ipairs(stats) do
@@ -144,13 +140,14 @@ function multicore.init( params )
       end
    end
 
-   function toggle_multicore(p,po,onoff)
-      multicore_on=onoff
+   function turnon( p, po)
+      multicore_on = true
       init(p,po)
    end
 
-   function set_multicore_notice(notice)
-      multicore_notice = notice
+   function turnoff( p, po)
+      multicore_on = false
+      init(p,po)
    end
 end
 
