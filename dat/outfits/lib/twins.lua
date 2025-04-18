@@ -15,10 +15,10 @@ function onoutfitchange( p, po )
       local ok = (count == 2 and mismatch~=true)
       if ok then
          print ("Twins are together thus happy.")
-         turnon( p, po)
+         ontoggle( p, po, true)
       else
          print ("Alone twin is unhappy.")
-         turnoff( p, po)
+         ontoggle( p, po, false)
       end
    end
 end

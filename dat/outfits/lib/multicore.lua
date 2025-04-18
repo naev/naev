@@ -140,13 +140,8 @@ function multicore.init( params )
       end
    end
 
-   function turnon( p, po)
-      multicore_on = true
-      init(p,po)
-   end
-
-   function turnoff( p, po)
-      multicore_on = false
+   function ontoggle( p, po, on)
+      multicore_on = on
       init(p,po)
    end
 end
