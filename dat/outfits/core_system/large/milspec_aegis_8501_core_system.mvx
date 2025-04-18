@@ -5,7 +5,7 @@
   <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>large</size>
   <mass>500/700</mass>
-  <price>2100000/700000</price>
+  <price>1400000</price>
   <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 8501 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_shield_l1.webp</gfx_store>
   <priority>3</priority>

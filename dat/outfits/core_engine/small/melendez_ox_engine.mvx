@@ -5,7 +5,7 @@
   <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>small</size>
   <mass>10/15</mass>
-  <price>55000/40000</price>
+  <price>47500</price>
   <description>A powerful engine for its size, though not a particularly manoeuvrable one. The Ox enables small vessels to haul more cargo or weapons without resorting to larger and more power-hungry models.</description>
   <gfx_store>engine1.webp</gfx_store>
   <priority>3</priority>
