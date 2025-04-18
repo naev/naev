@@ -13,35 +13,35 @@ R_MAG   = 1.5
 
 line_stats = {
     "Tricon" : {
-        "ratio" : 1.4, # 2.0 is double accel vs speed (at size 1)
-        "speed_rank_offset" : 0.0,  # 0.0 indicates current speed rank
-                                    # 1.0 means next speed rank (size+1);
-                                    # !!! higher means slower
+        "speed_rank_offset" : 0.0,     # 0.0 indicates current speed rank
+                                       # 1.0 means next speed rank (size+1);
+                                       # !!! higher means slower
+        "ratio" : 1.4,
     },
     "Krain" : {
+        "speed_rank_offset" : -0.3,    # Between this size and size-1
         "ratio" : 1.1,
-        "speed_rank_offset" : -0.3, # Between this size and size-1
-         "turn" : 1.1
+        "turn" : 1.1
     },
     "Nexus" : {
+        "speed_rank_offset" : +0.11,   # Pretty good but slightly slower top speed than Melendez and Tricon
         "ratio" : 1.0,
-        "speed_rank_offset" : +0.11, # Pretty good but slightly slower top speed than Melendez and Tricon
     },
     "Melendez" : {
-        "ratio" : 0.65,
         "speed_rank_offset" : +0.07,
+        "ratio" : 0.65,
     },
     "Unicorp" : {
-        "ratio" : 1.0,
         "speed_rank_offset" : +0.4,
+        "ratio" : 1.0,
     },
     "Za'lek" : { # TODO make these change over time the profile via Lua
-        "ratio" : 1.1,
         "speed_rank_offset" : +0.5,
+        "ratio" : 1.1,
     },
     "Beat" : {
-        "ratio" : 0.7,
         "speed_rank_offset" : +0.7,
+        "ratio" : 0.7,
     },
 }
 
@@ -142,9 +142,9 @@ def main(args):
       o = outfit(a)
 
       if o.name() in ["Krain Remige Engine","Za'lek Test Engine"]:
-         sub={k:v[0] for k,v1 in sub.items()}
+         sub={k:v[0] for k,v in sub.items()}
       elif o.name()=="Krain Patagium Twin Engine":
-         sub={k:v[1] for k,v1 in sub.items()}
+         sub={k:v[1] for k,v in sub.items()}
       else:
          sub={k:unstackvals(k,v[0],v[1]) for k,v in sub.items()}
 
@@ -159,10 +159,25 @@ def main(args):
                err('_')
    return 0
 
-def gen_line(lin):
+def gen_line(params):
    import os
    outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
    engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.mvx')
+
+   #usage=" %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...)",
+   lin=params[0]
+   try:
+      params=list(map(float,params[1:]))
+   except:
+      err('Generation parameters should be floats: '+', '.join(map(repr,params[1:])))
+      return 1
+   
+   if lin not in line_stats:
+      line_stats[lin]={"speed_rank_offset":0,"ratio":1}
+   
+   line_stats[lin].update(zip(["speed_rank_offset","ratio","turn"],params))
+   print(line_stats[lin])
+
    for i,s in enumerate(["Small","Medium","Large"]):
       engine=engine_dir.replace('small',s.lower())
       o=outfit(engine)
@@ -197,17 +212,30 @@ if __name__=="__main__":
    import argparse
 
    parser = argparse.ArgumentParser(
-      usage=" %(prog)s (-g LINE) | [filename ...]",
+      usage=" %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...) | -h",
       formatter_class=argparse.RawTextHelpFormatter,
       description="The changes made will be listed onto <stderr>: \"_\" means \"nothing\".",
       epilog="""Examples:
- > ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`
- > ./utils/outfits/apply_engines.py -g Krain
+  Standard usage:
+   > ./utils/outfits/update_engines.py `find dat/outfits/core_engine/ | grep mvx`
+
+  Generate a line called Krain with same params as Krain:
+   > ./utils/outfits/update_engines.py -g Krain
+  Generate a line called Melendez with same params as Melendez *but with speed_rank_offset=0.5*:
+   > ./utils/outfits/update_engines.py -g Melendez 0.5
+  Generate a brand new line called Zednelem with with speed_rank_offset=0.5 and default 1.0 ratio:
+   > ./utils/outfits/update_engines.py -g Zednelem 0.5
+  Generate a brand new line called Zednelem with with speed_rank_offset=0.5 and 1.2 ratio:
+   > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2
 """)
-   parser.add_argument('-g', '--generate',dest='LINE',help='The generated line name, e.g. Melendez.')
-   parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.\nIf not valid, will not even be printed out.')
+   parser.add_argument('-n', '--nomax', action='store_true', help="Do not emphasize min/max values." )
+   parser.add_argument('-g', '--generate',action='store_true', help='line_name ex: "Melendez" or "Zednelem".')
+   parser.add_argument('args', nargs='+', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
-   if args.LINE is not None:
-      exit(gen_line(args.LINE))
+   if args.generate:
+      if args.args[4:]!=[]:
+         err('Ignored: '+', '.join([repr(a) for a in args.args[4:]]))
+         args.args=args.args[:4]
+      exit(gen_line(args.args))
    else:
-      exit(main(args.filename))
+      exit(main(args.args))
