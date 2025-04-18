@@ -10,9 +10,9 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 100, 100},
-   { "energy_regen_malus", 28, 0},
-   { "engine_limit", 2500, 0},
+   { "mass", 100, 30},
+   { "energy_regen_malus", 28, 28},
+   { "engine_limit", 2500, 2900},
    { "fuel", 1600, 0},
    { "speed", 119, 51},
    { "accel", 31, 5},
