@@ -498,7 +498,6 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 
    /* Run remove hook if necessary. */
    pilot_outfitLRemove( pilot, s );
-   pilot_outfitLOutfitChange( pilot );
 
    /* Decrement counters if necessary. */
    if ( s->outfit != NULL ) {
@@ -533,6 +532,9 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
    /* Clean up stats. */
    ss_free( s->lua_stats );
    s->lua_stats = NULL;
+
+   /* Outfit changed. */
+   pilot_outfitLOutfitChange( pilot );
 
    return ret;
 }
