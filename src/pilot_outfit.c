@@ -10,6 +10,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include "SDL_atomic.h"
+
 #include "array.h"
 #include "constants.h"
 #include "difficulty.h"
@@ -496,7 +498,6 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 
    /* Run remove hook if necessary. */
    pilot_outfitLRemove( pilot, s );
-   pilot_outfitLOutfitChange( pilot );
 
    /* Decrement counters if necessary. */
    if ( s->outfit != NULL ) {
@@ -531,6 +532,9 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
    /* Clean up stats. */
    ss_free( s->lua_stats );
    s->lua_stats = NULL;
+
+   /* Outfit changed. */
+   pilot_outfitLOutfitChange( pilot );
 
    return ret;
 }
@@ -1711,9 +1715,18 @@ static void outfitLOutfitChange( const Pilot *pilot, PilotOutfitSlot *po,
 
 void pilot_outfitLOutfitChange( Pilot *pilot )
 {
+   static SDL_atomic_t changing_outfit = {
+      .value = 0,
+   };
+
+   if ( SDL_AtomicCAS( &changing_outfit, 0, 1 ) == SDL_FALSE )
+      return;
+
    NTracingZone( _ctx, 1 );
    pilot_outfitLRun( pilot, outfitLOutfitChange, NULL );
    NTracingZoneEnd( _ctx );
+
+   SDL_AtomicSet( &changing_outfit, 0 );
 }
 
 /**
