@@ -160,6 +160,7 @@ static int pilotL_cooldownCycle( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
+static int pilotL_outfitHasSlot( lua_State *L );
 static int pilotL_outfitAdd( lua_State *L );
 static int pilotL_outfitRm( lua_State *L );
 static int pilotL_outfitSlot( lua_State *L );
@@ -385,6 +386,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "broadcast", pilotL_broadcast },
    { "comm", pilotL_comm },
    /* Outfits. */
+   { "outfitHasSlot", pilotL_outfitHasSlot },
    { "outfitAdd", pilotL_outfitAdd },
    { "outfitRm", pilotL_outfitRm },
    { "outfitSlot", pilotL_outfitSlot },
@@ -3641,6 +3643,22 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s,
       gui_setShip();
 
    return 1;
+}
+
+/**
+ * @brief Checks to see if a pilot has a specific named slot.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam string name Name of the slot to check.
+ *    @luatreturn boolean true if the slot exists, false otherwise.
+ * @luafunc outfitHasSlot
+ */
+static int pilotL_outfitHasSlot( lua_State *L )
+{
+   Pilot      *p    = luaL_validpilot( L, 1 );
+   const char *name = luaL_checkstring( L, 2 );
+   lua_pushboolean( L, pilot_getSlotByName( p, name ) != NULL );
+   return 0;
 }
 
 /**
