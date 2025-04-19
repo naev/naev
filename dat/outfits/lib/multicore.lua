@@ -73,15 +73,12 @@ local needs_avg = {
    turn = true,
    accel = true,
 }
-local function averaged_val( name )
-   return needs_avg[name]
-end
 
 local function averaging_mod( s )
    local suff='_mod'
    return s.pri==0 and s.sec==-50 and
       (s.name):sub(#s.name-#suff+1,#s.name)==suff and
-      averaged_val( (s.name):sub(0,#s.name-#suff) )
+      needs_avg[ (s.name):sub(0,#s.name-#suff) ]
 end
 
 local function index( tbl, key )
@@ -147,7 +144,7 @@ function multicore.init( params )
          if not averaging_mod( s ) then
             local off=multicore_off and (nosec or nomain) and s.name~="mass"
             desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
-            if averaged and nomain and (not nosec) and averaged_val(s.name) then
+            if averaged and nomain and (not nosec) and needs_avg[s.name] then
                desc = desc.."   #o(avg with#0 #rpri#0#o)#0"
             end
          end
