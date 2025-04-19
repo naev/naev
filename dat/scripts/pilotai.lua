@@ -100,6 +100,23 @@ function pilotai.setTaunt( plts, tauntmsg )
 end
 
 --[[--
+   Sets the no communication message of a pilot.
+
+      @tparam Pilot|table plts Pilot or pilots to set taunt of.
+      @tparam boolean state Whether or not to enable or disable the no communication.
+      @tparam string msg Message to use if comm is set to disabled.
+--]]
+function pilotai.setNoComm( plts, state, msg )
+   pilotai.apply( plts, function( p )
+      if state then
+         p:memory().comm_no = msg or _("No response.")
+      else
+         p:memory().comm_no = nil
+      end
+   end )
+end
+
+--[[--
    Tries to clear the system by making all the AI pilots go away. Soft alternative to pilot.clear()
 
       @tparam[opt=false] boolean allpilots Whether or not to affect all non-player pilots, or just natural pilots.
