@@ -12,8 +12,8 @@ function onoutfitchange( p, po )
       if o and p:outfitRmSlot(slotname) and p==player.pilot() then
          player.outfitAdd(o)
          --print(fmt.f("{name} was removed as {myself} refuses its presence.",{
-            name=o:nameRaw(),myself=po:outfit():nameRaw()
-         }))
+         --   name=o:nameRaw(),myself=po:outfit():nameRaw()
+         --}))
       end
    end
 end
