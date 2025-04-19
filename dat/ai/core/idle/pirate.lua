@@ -203,6 +203,9 @@ function backoff( target )
       ai.poptask()
       return
    end
+
+   -- Shoot turret if applicable
+   __shoot_turret() -- luacheck: globals __shoot_turret
 end
 
 control_funcs.ambush_moveto = function ()
