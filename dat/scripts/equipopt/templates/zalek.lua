@@ -66,8 +66,8 @@ local zalek_cores = {
          hull_secondary = "S&K Battle Plating",
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
-         systems = "Milspec Orion 8801 Core System",
-         systems_secondary = "Milspec Orion 8801 Core System",
+         systems = "Milspec Orion 8601 Core System",
+         systems_secondary = "Milspec Orion 8601 Core System",
          engines = choose_one{ "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine" },
          hull = "Unicorp D-58 Heavy Plating",
          hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "Dummy Plating" },

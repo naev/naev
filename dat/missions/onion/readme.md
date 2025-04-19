@@ -12,8 +12,8 @@ Meddle with the Onion Society, an eclectic group of the Nexus denizens and hacke
 * **Requirements:** Chapter 1
 * **Main Location:** None
 * **Notable Characters:**
-   * l337_b01: white hat hacker, also designs script kiddie software. Is in a wheelchair due to a brain disease
-   * Trixie: white hat hacker, has a day job as an Imperial bureaucrat
+   * l337_b01: white-hat hacker, also designs script kiddie software. Is in a wheelchair due to a brain disease
+   * Trixie: white-hat hacker, has a day job as an Imperial bureaucrat
    * underworlder: infiltrated Imperial agent trying to subvert organization and also catch Trixie
    * DOG: one of the original Project Thurion researchers that is uploaded
    * notasockpuppet: puppet master with large botnet. A Za'lek postdocs side project
