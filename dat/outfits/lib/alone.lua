@@ -1,5 +1,5 @@
 
-local fmt = require "format"
+--local fmt = require "format"
 
 local prvdesc=descextra
 descextra=function ( p, o, po)
@@ -7,7 +7,7 @@ descextra=function ( p, o, po)
 end
 local slotname = 'engines_secondary'
 function onoutfitchange( p, po )
-   if p and po then
+   if p and po and p:outfitHasSlot(slotname) then
       local o = p:outfitSlot(slotname)
       if o and p:outfitRmSlot(slotname) and p==player.pilot() then
          player.outfitAdd(o)
