@@ -170,16 +170,16 @@ jobs:
       matrix:
         include:
           - image: naev-windows
-            config: windows_cross_mingw_ucrt64.ini
+            config: windows_cross_mingw.ini
             target: x86_64-pc-windows-gnu
 
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/${{ matrix.image }}:latest"
       env:
-        PKG_CONFIG: "x86_64-w64-mingw32ucrt-pkg-config"
-        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32ucrt/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
-        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32ucrt/sys-root/mingw --target=x86_64-w64-mingw32ucrt"
+        PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
+        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
+        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
     steps:
       - name: Get Source
         uses: actions/download-artifact@v4
@@ -272,7 +272,7 @@ jobs:
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "12.0"
+            deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
