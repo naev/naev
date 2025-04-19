@@ -75,15 +75,17 @@ static LuaCache_t *lua_cache = NULL;
 /*
  * prototypes
  */
-static int        nlua_require( lua_State *L );
+// static int        nlua_require( lua_State *L );
 static lua_State *nlua_newState( void ); /* creates a new state */
 static int        nlua_loadBasic( lua_State *L );
 static int        lua_cache_cmp( const void *p1, const void *p2 );
 static int        nlua_errTraceInternal( lua_State *L, int idx );
 
+#if 0
 static const lua_CFunction loaders[] = {
    nlua_package_preload, nlua_package_loader_lua, nlua_package_loader_c,
    NULL }; /**< Our loaders. */
+#endif
 
 /**
  * @brief Handles what to do when Lua panics.
@@ -237,145 +239,6 @@ void nlua_pushEnvTable( lua_State *L )
    lua_rawgeti( L, LUA_REGISTRYINDEX, nlua_envs );
 }
 #endif /* DEBUGGING */
-
-/*
- * @brief Create an new environment in global Lua state.
- *
- * An "environment" is a table used with setfenv for sandboxing.
- */
-nlua_env *nlua_newEnv( const char *name )
-{
-   nlua_env *env = calloc( 1, sizeof( nlua_env ) );
-
-   /* Create new table and register it. */
-   lua_newtable( naevL );                           /* t */
-   lua_pushvalue( naevL, -1 );                      /* t, t */
-   env->ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* t */
-
-   /* Store in the environment table. */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t, e */
-   lua_pushvalue( naevL, -2 );                         /* t, e, t */
-   lua_rawseti( naevL, -2, env->ref );                 /* t, e */
-   lua_pop( naevL, 1 );                                /* t */
-
-   if ( name != NULL ) {
-      lua_pushstring( naevL, name );
-      nlua_setenv( naevL, env, "__name" );
-   }
-
-   /* Metatable */
-   lua_newtable( naevL );                    /* t, m */
-   lua_pushvalue( naevL, LUA_GLOBALSINDEX ); /* t, m, g */
-   lua_setfield( naevL, -2, "__index" );     /* t, m */
-   lua_setmetatable( naevL, -2 );            /* t */
-
-   /* Replace require() function with one that considers fenv */
-   lua_pushvalue( naevL, -1 );                 /* t, t, */
-   lua_pushcclosure( naevL, nlua_require, 1 ); /* t, t, c */
-   lua_setfield( naevL, -2, "require" );       /* t, t */
-
-   /* Set up paths.
-    * "package.path" to look in the data.
-    * "package.cpath" unset */
-   nlua_getenv( naevL, env, "package" );       /* t, t, p */
-   lua_newtable( naevL );                      /* t, t, p, t */
-   lua_pushvalue( naevL, -1 );                 /* t, t, p, t, t */
-   nlua_setenv( naevL, env, NLUA_LOAD_TABLE ); /* t, t, p, t */
-   lua_setfield( naevL, -2, "loaded" );        /* t, t, p */
-   lua_newtable( naevL );                      /* t, t, p, t */
-   lua_setfield( naevL, -2, "preload" );       /* t, t, p */
-   lua_pushstring( naevL, "?.lua;" LUA_INCLUDE_PATH "?.lua" ); /* t, t, p, s */
-   lua_setfield( naevL, -2, "path" );                          /* t, t, p */
-   lua_pushstring( naevL, "" );                                /* t, t, p, s */
-   lua_setfield( naevL, -2, "cpath" );                         /* t, t, p */
-   lua_getfield( naevL, -1, "loaders" );                       /* t, t, p, l */
-   for ( int i = 0; loaders[i] != NULL; i++ ) {
-      lua_pushcfunction( naevL, loaders[i] ); /* t, t, p, l, f */
-      lua_rawseti( naevL, -2, i + 1 );        /* t, t, p, l */
-   }
-   lua_pop( naevL, 2 ); /* t, t */
-
-   /* The global table _G should refer back to the environment. */
-   lua_pushvalue( naevL, -1 );      /* t, t, t */
-   lua_setfield( naevL, -2, "_G" ); /* t, t */
-
-   /* Push if naev is built with debugging. */
-#if DEBUGGING
-   lua_pushboolean( naevL, 1 );              /* t, t, b */
-   lua_setfield( naevL, -2, "__debugging" ); /* t, t, */
-#endif                                       /* DEBUGGING */
-
-   /* Set up naev namespace. */
-   lua_newtable( naevL );             /* t, t, n */
-   lua_setfield( naevL, -2, "naev" ); /* t, t */
-
-   /* Run common script. */
-   if ( conf.loaded && common_script == NULL ) {
-      common_script = ndata_read( LUA_COMMON_PATH, &common_sz );
-      if ( common_script == NULL )
-         WARN( _( "Unable to load common script '%s'!" ), LUA_COMMON_PATH );
-   }
-   if ( common_script != NULL ) {
-      if ( luaL_loadbuffer( naevL, common_script, common_sz,
-                            LUA_COMMON_PATH ) == 0 ) {
-         if ( nlua_pcall( env, 0, 0 ) != 0 ) {
-            WARN( _( "Failed to run '%s':\n%s" ), LUA_COMMON_PATH,
-                  lua_tostring( naevL, -1 ) );
-            lua_pop( naevL, 1 );
-         }
-      } else {
-         WARN( _( "Failed to load '%s':\n%s" ), LUA_COMMON_PATH,
-               lua_tostring( naevL, -1 ) );
-         lua_pop( naevL, 1 );
-      }
-   }
-
-   lua_pop( naevL, 1 ); /* t */
-   return env;
-}
-
-nlua_env *nlua_dupEnv( nlua_env *env )
-{
-   nlua_env *newenv = calloc( 1, sizeof( nlua_env ) );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, env->ref );
-   newenv->ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
-   newenv->dup = 1;
-   return newenv;
-}
-
-/*
- * @brief Frees an environment created with nlua_newEnv()
- *
- *    @param env Environment to free.
- */
-void nlua_freeEnv( nlua_env *env )
-{
-   if ( naevL == NULL )
-      return;
-   if ( ( env == NULL ) || ( env->ref == LUA_NOREF ) )
-      return;
-
-   /* Remove from the environment table. */
-   if ( env->dup == 0 ) {
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
-      lua_pushnil( naevL );                               /* t, e */
-      lua_rawseti( naevL, -2, env->ref );                 /* t */
-      lua_pop( naevL, 1 );                                /* */
-   }
-
-   /* Unref. */
-   luaL_unref( naevL, LUA_REGISTRYINDEX, env->ref );
-}
-
-/*
- * @brief Push environment table to stack
- *
- *    @param env Environment.
- */
-void nlua_pushenv( lua_State *L, nlua_env *env )
-{
-   lua_rawgeti( L, LUA_REGISTRYINDEX, env->ref );
-}
 
 /*
  * @brief Gets variable from environment and pushes it to stack
@@ -637,91 +500,6 @@ int nlua_package_loader_c( lua_State *L )
       lua_pushcfunction( L, luaopen_yaml );
    else
       lua_pushnil( L );
-   return 1;
-}
-
-/**
- * @brief include( string module )
- *
- * Loads a module into the current Lua state from inside the data file.
- *
- *    @param L Lua Environment to load modules into.
- *    @return The return value of the chunk, or true.
- */
-static int nlua_require( lua_State *L )
-{
-   const char *filename = luaL_checkstring( L, 1 );
-
-   /* Environment table to load module into */
-   int envtab = lua_upvalueindex( 1 );
-
-   /* Check to see if already included. */
-   // lua_getglobal( L, NLUA_LOAD_TABLE ); /* t */
-   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
-   if ( !lua_isnil( L, -1 ) ) {
-      lua_getfield( L, -1, filename ); /* t, f */
-      /* Already included. */
-      if ( !lua_isnil( L, -1 ) ) {
-         lua_remove( L, -2 ); /* val */
-         return 1;
-      }
-      lua_pop( L, 2 ); /* */
-   } else
-      luaL_error( L, _( "_LOADED must be a table" ) );
-
-   lua_getglobal( L, "package" ); /* p */
-   if ( !lua_istable( L, -1 ) )
-      luaL_error( L, _( "package must be a table" ) );
-   lua_getfield( L, -1, "loaders" ); /* p, l */
-   lua_remove( L, -2 );              /* l */
-   if ( !lua_istable( L, -1 ) )
-      luaL_error( L, _( "package.loaders must be a table" ) );
-   lua_pushliteral( L, "" ); /* l, str */ /* error message accumulator */
-   for ( int i = 1;; i++ ) {
-      lua_rawgeti( L, -2, i ); /* l, str, i */ /* get a loader */
-      if ( lua_isnil( L, -1 ) )
-         luaL_error( L, _( "module '%s' not found:%s" ), filename,
-                     lua_tostring( L, -2 ) );
-      lua_pushstring( L, filename );       /* l, str, i, f */
-      lua_call( L, 1, 1 ); /* l, str, r */ /* call it */
-      if ( lua_isfunction( L, -1 ) )       /* did it find module? */
-         break;                            /* module loaded successfully */
-      else if ( lua_isstring( L, -1 ) )    /* loader returned error message? */
-         lua_concat( L, 2 ); /* l, str */  /* accumulate it */
-      else
-         lua_pop( L, 1 ); /* l, str */
-   }
-   lua_remove( L, -2 ); /* l, r */
-   lua_remove( L, -2 ); /* r */
-
-   /* Set the environment for the call. */
-   /* TODO this is wrong when using setfenv Lua-side... */
-   lua_pushvalue( L, envtab ); /* r, e */
-   lua_setfenv( L, -2 );       /* r */
-
-   /* run the buffer */
-   lua_pushstring( L, filename ); /* pass name as first parameter */
-#if 0
-   if (lua_pcall(L, 1, 1, 0) != 0) {
-      /* will push the current error from the dobuffer */
-      lua_error(L);
-      return 1;
-   }
-#endif
-   lua_call( L, 1, 1 ); /* val */
-
-   /* Mark as loaded. */
-   if ( lua_isnil( L, -1 ) ) {
-      lua_pop( L, 1 );
-      lua_pushboolean( L, 1 );
-   }
-   // lua_getglobal( L,NLUA_LOAD_TABLE ); /* val, t */
-   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* val, t */
-   lua_pushvalue( L, -2 );                     /* val, t, val */
-   lua_setfield( L, -2, filename );            /* val, t */
-   lua_pop( L, 1 );                            /* val */
-
-   /* cleanup, success */
    return 1;
 }
 
@@ -996,3 +774,228 @@ int nlua_helperTags( lua_State *L, int idx, char *const *tags )
       return 1;
    }
 }
+
+#if 0
+/**
+ * @brief include( string module )
+ *
+ * Loads a module into the current Lua state from inside the data file.
+ *
+ *    @param L Lua Environment to load modules into.
+ *    @return The return value of the chunk, or true.
+ */
+static int nlua_require( lua_State *L )
+{
+   const char *filename = luaL_checkstring( L, 1 );
+
+   /* Environment table to load module into */
+   int envtab = lua_upvalueindex( 1 );
+
+   /* Check to see if already included. */
+   // lua_getglobal( L, NLUA_LOAD_TABLE ); /* t */
+   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
+   if ( !lua_isnil( L, -1 ) ) {
+      lua_getfield( L, -1, filename ); /* t, f */
+      /* Already included. */
+      if ( !lua_isnil( L, -1 ) ) {
+         lua_remove( L, -2 ); /* val */
+         return 1;
+      }
+      lua_pop( L, 2 ); /* */
+   } else
+      luaL_error( L, _( "_LOADED must be a table" ) );
+
+   lua_getglobal( L, "package" ); /* p */
+   if ( !lua_istable( L, -1 ) )
+      luaL_error( L, _( "package must be a table" ) );
+   lua_getfield( L, -1, "loaders" ); /* p, l */
+   lua_remove( L, -2 );              /* l */
+   if ( !lua_istable( L, -1 ) )
+      luaL_error( L, _( "package.loaders must be a table" ) );
+   lua_pushliteral( L, "" ); /* l, str */ /* error message accumulator */
+   for ( int i = 1;; i++ ) {
+      lua_rawgeti( L, -2, i ); /* l, str, i */ /* get a loader */
+      if ( lua_isnil( L, -1 ) )
+         luaL_error( L, _( "module '%s' not found:%s" ), filename,
+                     lua_tostring( L, -2 ) );
+      lua_pushstring( L, filename );       /* l, str, i, f */
+      lua_call( L, 1, 1 ); /* l, str, r */ /* call it */
+      if ( lua_isfunction( L, -1 ) )       /* did it find module? */
+         break;                            /* module loaded successfully */
+      else if ( lua_isstring( L, -1 ) )    /* loader returned error message? */
+         lua_concat( L, 2 ); /* l, str */  /* accumulate it */
+      else
+         lua_pop( L, 1 ); /* l, str */
+   }
+   lua_remove( L, -2 ); /* l, r */
+   lua_remove( L, -2 ); /* r */
+
+   /* Set the environment for the call. */
+   /* TODO this is wrong when using setfenv Lua-side... */
+   lua_pushvalue( L, envtab ); /* r, e */
+   lua_setfenv( L, -2 );       /* r */
+
+   /* run the buffer */
+   lua_pushstring( L, filename ); /* pass name as first parameter */
+#if 0
+   if (lua_pcall(L, 1, 1, 0) != 0) {
+      /* will push the current error from the dobuffer */
+      lua_error(L);
+      return 1;
+   }
+#endif
+   lua_call( L, 1, 1 ); /* val */
+
+   /* Mark as loaded. */
+   if ( lua_isnil( L, -1 ) ) {
+      lua_pop( L, 1 );
+      lua_pushboolean( L, 1 );
+   }
+   // lua_getglobal( L,NLUA_LOAD_TABLE ); /* val, t */
+   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* val, t */
+   lua_pushvalue( L, -2 );                     /* val, t, val */
+   lua_setfield( L, -2, filename );            /* val, t */
+   lua_pop( L, 1 );                            /* val */
+
+   /* cleanup, success */
+   return 1;
+}
+/*
+ * @brief Create an new environment in global Lua state.
+ *
+ * An "environment" is a table used with setfenv for sandboxing.
+ */
+nlua_env *nlua_newEnv( const char *name )
+{
+   nlua_env *env = calloc( 1, sizeof( nlua_env ) );
+
+   /* Create new table and register it. */
+   lua_newtable( naevL );                           /* t */
+   lua_pushvalue( naevL, -1 );                      /* t, t */
+   env->ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* t */
+
+   /* Store in the environment table. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t, e */
+   lua_pushvalue( naevL, -2 );                         /* t, e, t */
+   lua_rawseti( naevL, -2, env->ref );                 /* t, e */
+   lua_pop( naevL, 1 );                                /* t */
+
+   if ( name != NULL ) {
+      lua_pushstring( naevL, name );
+      nlua_setenv( naevL, env, "__name" );
+   }
+
+   /* Metatable */
+   lua_newtable( naevL );                    /* t, m */
+   lua_pushvalue( naevL, LUA_GLOBALSINDEX ); /* t, m, g */
+   lua_setfield( naevL, -2, "__index" );     /* t, m */
+   lua_setmetatable( naevL, -2 );            /* t */
+
+   /* Replace require() function with one that considers fenv */
+   lua_pushvalue( naevL, -1 );                 /* t, t, */
+   lua_pushcclosure( naevL, nlua_require, 1 ); /* t, t, c */
+   lua_setfield( naevL, -2, "require" );       /* t, t */
+
+   /* Set up paths.
+    * "package.path" to look in the data.
+    * "package.cpath" unset */
+   nlua_getenv( naevL, env, "package" );       /* t, t, p */
+   lua_newtable( naevL );                      /* t, t, p, t */
+   lua_pushvalue( naevL, -1 );                 /* t, t, p, t, t */
+   nlua_setenv( naevL, env, NLUA_LOAD_TABLE ); /* t, t, p, t */
+   lua_setfield( naevL, -2, "loaded" );        /* t, t, p */
+   lua_newtable( naevL );                      /* t, t, p, t */
+   lua_setfield( naevL, -2, "preload" );       /* t, t, p */
+   lua_pushstring( naevL, "?.lua;" LUA_INCLUDE_PATH "?.lua" ); /* t, t, p, s */
+   lua_setfield( naevL, -2, "path" );                          /* t, t, p */
+   lua_pushstring( naevL, "" );                                /* t, t, p, s */
+   lua_setfield( naevL, -2, "cpath" );                         /* t, t, p */
+   lua_getfield( naevL, -1, "loaders" );                       /* t, t, p, l */
+   for ( int i = 0; loaders[i] != NULL; i++ ) {
+      lua_pushcfunction( naevL, loaders[i] ); /* t, t, p, l, f */
+      lua_rawseti( naevL, -2, i + 1 );        /* t, t, p, l */
+   }
+   lua_pop( naevL, 2 ); /* t, t */
+
+   /* The global table _G should refer back to the environment. */
+   lua_pushvalue( naevL, -1 );      /* t, t, t */
+   lua_setfield( naevL, -2, "_G" ); /* t, t */
+
+   /* Push if naev is built with debugging. */
+#if DEBUGGING
+   lua_pushboolean( naevL, 1 );              /* t, t, b */
+   lua_setfield( naevL, -2, "__debugging" ); /* t, t, */
+#endif /* DEBUGGING */
+
+   /* Set up naev namespace. */
+   lua_newtable( naevL );             /* t, t, n */
+   lua_setfield( naevL, -2, "naev" ); /* t, t */
+
+   /* Run common script. */
+   if ( conf.loaded && common_script == NULL ) {
+      common_script = ndata_read( LUA_COMMON_PATH, &common_sz );
+      if ( common_script == NULL )
+         WARN( _( "Unable to load common script '%s'!" ), LUA_COMMON_PATH );
+   }
+   if ( common_script != NULL ) {
+      if ( luaL_loadbuffer( naevL, common_script, common_sz,
+                            LUA_COMMON_PATH ) == 0 ) {
+         if ( nlua_pcall( env, 0, 0 ) != 0 ) {
+            WARN( _( "Failed to run '%s':\n%s" ), LUA_COMMON_PATH,
+                  lua_tostring( naevL, -1 ) );
+            lua_pop( naevL, 1 );
+         }
+      } else {
+         WARN( _( "Failed to load '%s':\n%s" ), LUA_COMMON_PATH,
+               lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
+      }
+   }
+
+   lua_pop( naevL, 1 ); /* t */
+   return env;
+}
+
+nlua_env *nlua_dupEnv( nlua_env *env )
+{
+   nlua_env *newenv = calloc( 1, sizeof( nlua_env ) );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, env->ref );
+   newenv->ref = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
+   newenv->dup = 1;
+   return newenv;
+}
+
+/*
+ * @brief Frees an environment created with nlua_newEnv()
+ *
+ *    @param env Environment to free.
+ */
+void nlua_freeEnv( nlua_env *env )
+{
+   if ( naevL == NULL )
+      return;
+   if ( ( env == NULL ) || ( env->ref == LUA_NOREF ) )
+      return;
+
+   /* Remove from the environment table. */
+   if ( env->dup == 0 ) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
+      lua_pushnil( naevL );                               /* t, e */
+      lua_rawseti( naevL, -2, env->ref );                 /* t */
+      lua_pop( naevL, 1 );                                /* */
+   }
+
+   /* Unref. */
+   luaL_unref( naevL, LUA_REGISTRYINDEX, env->ref );
+}
+
+/*
+ * @brief Push environment table to stack
+ *
+ *    @param env Environment.
+ */
+void nlua_pushenv( lua_State *L, nlua_env *env )
+{
+   lua_rawgeti( L, LUA_REGISTRYINDEX, env->ref );
+}
+#endif
