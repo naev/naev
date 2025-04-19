@@ -147,7 +147,7 @@ jobs:
       matrix:
         include:
           - image: naev-windows
-            config: windows_cross_mingw_ucrt64.ini
+            config: windows_cross_mingw.ini
 
     runs-on: ubuntu-latest
     container:
@@ -176,7 +176,7 @@ jobs:
               --wrap-mode=forcefallback \
               -Dinstaller=false \
               -Drelease=false \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
@@ -233,7 +233,7 @@ jobs:
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "12.0"
+            deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
