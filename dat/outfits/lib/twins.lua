@@ -21,10 +21,23 @@ function onoutfitchange( p, po )
    end
 end
 
-local oldinit=init
-
-init=function( p, po)
-   init=oldinit
+local old_init = init
+init=function ( p, po)
+   init=old_init
    onoutfitchange( p, po)
+end
+
+local old_onadd=onadd
+onadd=function( p, po)
+   if p and po then
+      if old_onadd then
+         old_onadd( p, po)
+      end
+      if not p:outfitHasSlot('engines_secondary') then
+         if p:outfitRmSlot('engines') and p==player.pilot() then
+            player.outfitAdd(po:outfit())
+         end
+      end
+   end
 end
 
