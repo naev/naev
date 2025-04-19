@@ -62,7 +62,7 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks'):
     # Now we have a "dylibs" list, where some entries may be "@rpath/" relative,
     # and we have a "rpaths" list, where some entries may be "@loader_path/" relative.
 
-    change_cmd = ['llvm-install-name-tool']
+    change_cmd = [host_program('install_name_tool')]
     if bin_dst.endswith('/naev'):
         change_cmd.extend(['-add_rpath', '@executable_path/../Frameworks'])
     if bin_dst.endswith('.dylib'):
