@@ -3,15 +3,15 @@ local fmt = require "format"
 
 local prvdesc=descextra
 descextra=function ( p, o, po)
-   return prvdesc( p, o, po) .. "\n#b".."This outfit only works alone.".."#0"
+   return prvdesc( p, o, po) .. "\n#b".._("This outfit only works when no other engines are equipped.").."#0"
 end
-
+local slotname = 'engines_secondary'
 function onoutfitchange( p, po )
    if p and po then
-      local o = p:outfitSlot('engines_secondary')
-      if o and p:outfitRmSlot('engines_secondary') and p==player.pilot() then
+      local o = p:outfitSlot(slotname)
+      if o and p:outfitRmSlot(slotname) and p==player.pilot() then
          player.outfitAdd(o)
-         print(fmt.f("{name} was removed as {myself} refuses its presence.",{
+         --print(fmt.f("{name} was removed as {myself} refuses its presence.",{
             name=o:nameRaw(),myself=po:outfit():nameRaw()
          }))
       end

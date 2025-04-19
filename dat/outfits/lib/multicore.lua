@@ -68,8 +68,13 @@ local function add_desc( stat, nomain, nosec )
    end
 end
 
+local needs_avg = {
+   speed = true,
+   turn = true,
+   accel = true,
+}
 local function averaged_val( name )
-   return (name=="speed" or name=='accel' or name=='turn')
+   return needs_avg[name]
 end
 
 local function averaging_mod( s )
