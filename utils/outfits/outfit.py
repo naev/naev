@@ -4,10 +4,58 @@ from sys import stdin,stdout,stderr
 
 import xml.etree.ElementTree as ET
 
+MOBILITY_PARAMS={'speed','turn','accel','thrust'}
+
 def nam2fil(s):
    for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
       s=s.replace(*c)
    return s.lower()
+
+def text2val(s):
+   inp=s.split('/',1)
+   try:
+      inp=[float(x) for x in inp]
+      return (inp[0],inp[-1])
+   except:
+      return None
+
+def roundit(f):
+   return int(f) if f==round(f) else f
+
+def fmtval(v):
+   return str(roundit(v))
+
+def andamp(s):
+   return '' if s is None else s.replace("&","&amp;")
+
+def fmt_kv(kv):
+   (key,value)=kv
+   return key+'="'+str(andamp(value))+'"'
+
+def prisec(tag,r1,r2):
+   a=r1[0] if r1 is not None else 0
+
+   if r2 is not None:
+      a+=r2[1]
+      if tag in MOBILITY_PARAMS:
+         a/=2.0
+
+   return roundit(a)
+
+def stackvals(tag,text1,text2):
+   return str(roundit(prisec(tag,text2val(text1),text2val(text2))))
+
+def r_prisec(tag,v1,v2):
+   if tag in MOBILITY_PARAMS:
+      v2*=2
+   return v1,v2-v1
+
+def unstackvals(tag,text1,text2):
+   o1,o2=r_prisec(tag,float(text1),0 if text2=='' else float(text2))
+   if o2==o1:
+      return fmtval(o1)
+   else:
+      return fmtval(o1)+'/'+fmtval(o2)
 
 class _outfit():
    def __init__(self,fil):
@@ -23,29 +71,29 @@ class _outfit():
    def name(self):
       return self.r.attrib['name']
 
+   def set_name(self,name):
+      self.r.attrib['name']=name
+
    def shortname(self):
       try:
          res=self.to_dict()['shortname']
       except:
          res=self.name()
       return res
+   def size(self,doubled=False):
+      try:
+         res=self.to_dict()['size']
+         for i,k in enumerate(['small','medium','large']):
+            if res==k:
+               return 2*i+(2 if doubled else 1)
+      except:
+         pass
 
    def autostack(self,doubled=False):
-      def text2val(s):
-         inp=s.split('/',1)
-         try:
-            inp=[float(x) for x in inp]
-            return (inp[0],inp[-1])
-         except:
-            return None
-
       for e in self:
          res=text2val(e.text)
          if res is not None:
-            (a,b)=res
-            if doubled:
-               a+=b
-            e.text=str(a)
+            e.text=str(prisec(e.tag,res,res if doubled else None))
 
    def __iter__(self):
       def _subs(r):
@@ -54,17 +102,11 @@ class _outfit():
             for s in _subs(e):
                yield s
 
-      for e in _subs(self.r):
-         yield e
+      return iter(_subs(self.r))
 
    def write(self,dst=stdout):
       def output_r(e,fp,ind=0):
-         andamp=lambda s:s.replace("&","&amp;") if s is not None else ''
-         def _fmt_a(kv):
-            (key,value)=kv
-            return key+'="'+str(andamp(value))+'"'
-
-         li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
+         li=[e.tag]+[fmt_kv(x) for x in e.attrib.items()]
 
          try:
             iter(e).next()
@@ -89,8 +131,8 @@ class _outfit():
       closeit=False
       if dst=="-":
          dest=stdout
-      elif type(dst)==type("foo"):
-         dest=open(dst,"wt")
+      elif type(dst)==type(""):
+         dest=open(dst,"w")
          closeit=True
       else:
          dest=dst
@@ -120,13 +162,16 @@ class _outfit():
       return d
 
 def outfit(fil):
-   return _outfit(fil) if type(fil)!=type("foo") or fil.endswith(".xml") or fil.endswith('.mvx') else None
+   if type(fil)!=type("") or fil.endswith(".xml") or fil.endswith('.mvx'):
+      o=_outfit(fil)
+      if o.r.tag=='outfit':
+         return o
 
 if __name__=="__main__":
    from sys import argv
    if len(argv)>1:
       stderr.write("Usage: "+argv[0].split('/')[-1]+'\n')
-      stderr.write("  Reads a xml/mvx in input, outputs its input stacked with itself.\n")
+      stderr.write("  Reads a xml/mvx in input, outputs its input taken alone.\n")
    else:
       O=outfit(stdin)
       O.autostack()

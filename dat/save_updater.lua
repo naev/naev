@@ -26,34 +26,54 @@ function finish ()
 
    -- Old cores that now use the primary / secondary system (0.13.0)
    local split = {
-      ["Milspec Orion 9901 Core System"]     = true,
-      ["Milspec Thalos 9802 Core System"]    = true,
-      ["Unicorp PT-1750 Core System"]        = true,
-      ["Milspec Orion 5501 Core System"]     = true,
-      ["Milspec Thalos 5402 Core System"]    = true,
-      ["Unicorp PT-310 Core System"]         = true,
-      ["Milspec Orion 3701 Core System"]     = true,
-      ["Milspec Thalos 3602 Core System"]    = true,
-      ["Unicorp PT-68 Core System"]          = true,
-      ["Unicorp D-72 Heavy Plating"]         = true,
-      ["S&K Superheavy Combat Plating"]      = true,
-      ["Unicorp D-38 Medium Plating"]        = true,
-      ["S&K Medium-Heavy Combat Plating"]    = true,
-      ["Unicorp D-9 Light Plating"]          = true,
-      ["S&K Light Combat Plating"]           = true,
-      ["Nexus Light Stealth Plating"]        = true,
+      ["Krain Patagium Engine"]                 = true,
+      ["Melendez Mammoth XL Engine"]            = true,
+      ["Nexus Bolt 6500 Engine"]                = true,
+      ["Tricon Typhoon II Engine"]              = true,
+      ["Unicorp Eagle 6500 Engine"]             = true,
+      ["Melendez Buffalo XL Engine"]            = true,
+      ["Nexus Arrow 1400 Engine"]               = true,
+      ["Tricon Cyclone II Engine"]              = true,
+      ["Unicorp Falcon 1400 Engine"]            = true,
+      ["Melendez Ox XL Engine"]                 = true,
+      ["Nexus Dart 360 Engine"]                 = true,
+      ["Tricon Zephyr II Engine"]               = true,
+      ["Unicorp Hawk 360 Engine"]               = true,
+      ["Milspec Orion 9901 Core System"]        = true,
+      ["Milspec Thalos 9802 Core System"]       = true,
+      ["Unicorp PT-1750 Core System"]           = true,
+      ["Milspec Orion 5501 Core System"]        = true,
+      ["Milspec Thalos 5402 Core System"]       = true,
+      ["Unicorp PT-310 Core System"]            = true,
+      ["Milspec Orion 3701 Core System"]        = true,
+      ["Milspec Thalos 3602 Core System"]       = true,
+      ["Unicorp PT-68 Core System"]             = true,
+      ["Unicorp D-72 Heavy Plating"]            = true,
+      ["S&K Superheavy Combat Plating"]         = true,
+      ["Unicorp D-38 Medium Plating"]           = true,
+      ["S&K Medium-Heavy Combat Plating"]       = true,
+      ["Unicorp D-9 Light Plating"]             = true,
+      ["S&K Light Combat Plating"]              = true,
+      ["Nexus Light Stealth Plating"]           = true,
       -- Updates for even older cores from 0.11.0 to 0.12.0
-      ["Unicorp PT-2200 Core System"]        = true,
-      ["Unicorp PT-500 Core System"]         = true,
+      ["Unicorp PT-2200 Core System"]           = true,
+      ["Unicorp PT-500 Core System"]            = true,
       -- Updates for even older cores from 0.10.0 to 0.11.0
-      ["Unicorp D-68 Heavy Plating"]         = true,
-      ["Unicorp D-24 Medium Plating"]        = true,
-      ["Unicorp D-4 Light Plating"]          = true,
+      ["Unicorp D-68 Heavy Plating"]            = true,
+      ["Unicorp D-24 Medium Plating"]           = true,
+      ["Unicorp D-4 Light Plating"]             = true,
+      -- Updates for even older cores from 0.8.2 to 0.9.0
+      ["Milspec Prometheus 9803 Core System"]   = true,
+      ["Milspec Prometheus 5403 Core System"]   = true,
+      ["Milspec Prometheus 3603 Core System"]   = true,
+      ["Milspec Aegis 9801 Core System"]        = true,
+      ["Milspec Aegis 5401 Core System"]        = true,
+      ["Milspec Aegis 3601 Core System"]        = true,
    }
 
    for original,value in pairs(changes_done) do
       if split[original] then
-         player.outfitAdd( value.new, value.q ) -- Hae to add an additional core to compensate
+         player.outfitAdd( value.new, value.q ) -- Have to add an additional core to compensate
          print( fmt.f("   {original} => {new} x2 [{q}]", {original=original, new=value.new, q=value.q} ) )
 
          -- Used to inform the updater event that cores probably need some checking
@@ -99,18 +119,38 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
-   ["Adaptive Stealth Plating"]   = "Adaptive Camouflage Plating",
-   ["Nexus Stealth Coating"]   = "Nexus Concealment Coating",
-   ["Camouflage Burster"]   = "Stealth Burster",
-   -- Multicore transformation.
+   ["Adaptive Stealth Plating"]           = "Adaptive Camouflage Plating",
+   ["Nexus Stealth Coating"]              = "Nexus Concealment Coating",
+   ["Camouflage Burster"]                 = "Stealth Burster",
+
+   -- Multicore transformation (engines).
    -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
    -- See finish() above.
+   ["Krain Patagium Engine"]              = "Krain Patagium Twin Engine",
+   ["Melendez Mammoth XL Engine"]         = "Melendez Mammoth Engine",
+   ["Nexus Bolt 6500 Engine"]             = "Nexus Bolt 3000 Engine",
+   ["Tricon Typhoon II Engine"]           = "Tricon Typhoon Engine",
+   ["Unicorp Eagle 6500 Engine"]          = "Unicorp Eagle 3000 Engine",
+   ["Melendez Buffalo XL Engine"]         = "Melendez Buffalo Engine",
+   ["Nexus Arrow 1400 Engine"]            = "Nexus Arrow 700 Engine",
+   ["Tricon Cyclone II Engine"]           = "Tricon Cyclone Engine",
+   ["Unicorp Falcon 1400 Engine"]         = "Unicorp Falcon 700 Engine",
+   ["Melendez Ox XL Engine"]              = "Melendez Ox Engine",
+   ["Nexus Dart 360 Engine"]              = "Nexus Dart 160 Engine",
+   ["Tricon Zephyr II Engine"]            = "Tricon Zephyr Engine",
+   ["Unicorp Hawk 360 Engine"]            = "Unicorp Hawk 160 Engine",
+
+   -- Just renamings
    ["Nexus Ultralight Stealth Plating"]   = "Nexus Shadow Weave",
    ["Nexus Medium Stealth Plating"]       = "Nexus Ghost Weave",
    ["Nexus Heavy Stealth Plating"]        = "Nexus Phantasm Weave",
    ["S&K Ultralight Combat Plating"]      = "S&K Skirmish Plating",
    ["S&K Medium Combat Plating"]          = "S&K Battle Plating",
    ["S&K Heavy Combat Plating"]           = "S&K War Plating",
+
+   -- Multicore transformation (hulls).
+   -- Each core in the left is split in 2 cores the right, one in the main core slot, the other one on the secondary core slot.
+   -- See finish() above.
    ["Nexus Light Stealth Plating"]        = "Nexus Shadow Weave",
    ["Unicorp D-72 Heavy Plating"]         = "Unicorp D-58 Heavy Plating",
    ["S&K Superheavy Combat Plating"]      = "S&K War Plating",
@@ -127,9 +167,11 @@ local outfit_list = {
    ["Milspec Orion 3701 Core System"]     = "Milspec Orion 2301 Core System",
    ["Milspec Thalos 3602 Core System"]    = "Milspec Thalos 2202 Core System",
    ["Unicorp PT-68 Core System"]          = "Unicorp PT-16 Core System",
+
    -- Below is a list of changes from 0.11.0 to 0.12.0
    ["Unicorp PT-2200 Core System"]        = "Unicorp PT-440 Core System",
    ["Unicorp PT-500 Core System"]         = "Unicorp PT-440 Core System",
+
    -- Below is a list of changes from 0.10.0 to 0.11.0
    ["Unicorp D-68 Heavy Plating"]         = "Unicorp D-72 Heavy Plating",
    ["Unicorp D-48 Heavy Plating"]         = "Unicorp D-58 Heavy Plating",
@@ -149,32 +191,34 @@ local outfit_list = {
    ["Tesla Cannon"]                       = 780e3,
    ["Heavy Razor Turret"]                 = "Disruptor Battery S2",
    ["Fidelity Bay"]                       = "Sirius Fidelity Bay",
+
    -- Below is a list of changes from 0.9.0 to 0.10.0
-   ["Drone Fighter Bay"] = "Drone Bay",
-   ["Empire Lancelot Fighter Bay"] = "Empire Lancelot Bay",
-   --["Fidelity Fighter Bay"] = "Fidelity Bay",
-   ["Hyena Fighter Dock"] = "Hyena Bay",
-   ["Hyena Fighter Bay"] = "Hyena Dock",
-   ["Lancelot Fighter Bay"] = "Lancelot Bay",
-   ["Pirate Hyena Fighter Dock"] = "Pirate Hyena Bay",
-   ["Pirate Hyena Fighter Bay"] = "Pirate Hyena Dock",
-   ["Proteron Derivative Bay"] = "Proteron Dalton Bay",
-   ["Proteron Derivative Fighter Bay"] = "Proteron Dalton Bay",
-   ["Soromid Brigand Fighter Bay"] = "Soromid Brigand Bay",
-   ["Thurion Perspicacity Fighter Dock"] = "Thurion Perspicacity Bay",
-   ["Thurion Perspicacity Fighter Bay"] = "Thurion Perspicacity Dock",
-   ["Za'lek Bomber Drone Fighter Dock"] = "Za'lek Bomber Drone Bay",
-   ["Za'lek Bomber Drone Fighter Bay"] = "Za'lek Bomber Drone Mini Bay",
-   ["Za'lek Heavy Drone Fighter Dock"] = "Za'lek Heavy Drone Bay",
-   ["Za'lek Heavy Drone Fighter Bay"] = "Za'lek Heavy Drone Mini Bay",
-   ["Za'lek Light Drone Fighter Dock"] = "Za'lek Light Drone Bay",
-   ["Za'lek Light Drone Fighter Bay"] = "Za'lek Light Drone Mini Bay",
-   ["Unicorp Banshee Launcher"] = 35e3,
-   ["Unicorp Mace Launcher"] = 19e3,
-   ["Unicorp Fury Launcher"] = 65e3,
-   ["Unicorp Headhunter Launcher"] = 70e3,
-   ["Unicorp Medusa Launcher"] = 73e3,
-   ["Unicorp Vengeance Launcher"] = 78e3,
+   ["Drone Fighter Bay"]                  = "Drone Bay",
+   ["Empire Lancelot Fighter Bay"]        = "Empire Lancelot Bay",
+   --["Fidelity Fighter Bay"]             = "Fidelity Bay",
+   ["Hyena Fighter Dock"]                 = "Hyena Bay",
+   ["Hyena Fighter Bay"]                  = "Hyena Dock",
+   ["Lancelot Fighter Bay"]               = "Lancelot Bay",
+   ["Pirate Hyena Fighter Dock"]          = "Pirate Hyena Bay",
+   ["Pirate Hyena Fighter Bay"]           = "Pirate Hyena Dock",
+   ["Proteron Derivative Bay"]            = "Proteron Dalton Bay",
+   ["Proteron Derivative Fighter Bay"]    = "Proteron Dalton Bay",
+   ["Soromid Brigand Fighter Bay"]        = "Soromid Brigand Bay",
+   ["Thurion Perspicacity Fighter Dock"]  = "Thurion Perspicacity Bay",
+   ["Thurion Perspicacity Fighter Bay"]   = "Thurion Perspicacity Dock",
+   ["Za'lek Bomber Drone Fighter Dock"]   = "Za'lek Bomber Drone Bay",
+   ["Za'lek Bomber Drone Fighter Bay"]    = "Za'lek Bomber Drone Mini Bay",
+   ["Za'lek Heavy Drone Fighter Dock"]    = "Za'lek Heavy Drone Bay",
+   ["Za'lek Heavy Drone Fighter Bay"]     = "Za'lek Heavy Drone Mini Bay",
+   ["Za'lek Light Drone Fighter Dock"]    = "Za'lek Light Drone Bay",
+   ["Za'lek Light Drone Fighter Bay"]     = "Za'lek Light Drone Mini Bay",
+   ["Unicorp Banshee Launcher"]           = 35e3,
+   ["Unicorp Mace Launcher"]              = 19e3,
+   ["Unicorp Fury Launcher"]              = 65e3,
+   ["Unicorp Headhunter Launcher"]        = 70e3,
+   ["Unicorp Medusa Launcher"]            = 73e3,
+   ["Unicorp Vengeance Launcher"]         = 78e3,
+
    -- Below are the 0.9.x naming scheme and prices
    ["BioPlasma Claw Stage 1"] = 8500,
    ["BioPlasma Claw Stage 2"] = 10600,
@@ -338,6 +382,7 @@ local outfit_list = {
    ["Ultralight Shell Stage 1"] = 65000,
    ["Ultralight Shell Stage 2"] = 97500,
    ["Ultralight Shell Stage X"] = 130000,
+
    -- Below are the 0.8.x naming scheme and prices
    ["BioPlasma Organ Stage 1"] = 18000,
    ["BioPlasma Organ Stage 2"] = 18000,
@@ -475,6 +520,7 @@ local outfit_list = {
    ["Ultralight Bioship Shell Stage 1"] = 65000,
    ["Ultralight Bioship Shell Stage 2"] = 65000,
    ["Ultralight Bioship Shell Stage X"] = 65000,
+
    -- Below is a list of changes from 0.8.2 to 0.9.0
    ["Unicorp PT-1000 Core System"] = "Unicorp PT-1750 Core System", -- Modified for 0.12.0
    ["Unicorp PT-900 Core System"] = "Unicorp PT-440 Core System", -- Modified for 0.12.0
@@ -523,24 +569,18 @@ local outfit_list = {
    ["Nexus Bolt 4500 Engine"] = "Nexus Bolt 3000 Engine",
    ["Nexus Arrow 550 Engine"] = "Nexus Arrow 700 Engine",
    ["Nexus Arrow 1200 Engine"] = "Nexus Arrow 1400 Engine",
-   ["Milspec Prometheus 9803 Core System"] = "Milspec Thalos 8502 Core System",
-   ["Milspec Prometheus 8503 Core System"] = "Milspec Thalos 8502 Core System",
-   ["Milspec Prometheus 5403 Core System"] = "Milspec Thalos 4702 Core System",
-   ["Milspec Prometheus 4703 Core System"] = "Milspec Thalos 4702 Core System",
-   ["Milspec Prometheus 3603 Core System"] = "Milspec Thalos 2202 Core System",
-   ["Milspec Prometheus 2203 Core System"] = "Milspec Thalos 2202 Core System",
+   ["Milspec Prometheus 9803 Core System"] = "Milspec Prometheus 8503 Core System",
+   ["Milspec Prometheus 5403 Core System"] = "Milspec Prometheus 4703 Core System",
+   ["Milspec Prometheus 3603 Core System"] = "Milspec Prometheus 2203 Core System",
    ["Milspec Hermes 9802 Core System"] = "Milspec Orion 8601 Core System",
    ["Milspec Hermes 8502 Core System"] = "Milspec Orion 8601 Core System",
    ["Milspec Hermes 5402 Core System"] = "Milspec Orion 4801 Core System",
    ["Milspec Hermes 4702 Core System"] = "Milspec Orion 4801 Core System",
    ["Milspec Hermes 3602 Core System"] = "Milspec Orion 2301 Core System",
    ["Milspec Hermes 2202 Core System"] = "Milspec Orion 2301 Core System",
-   ["Milspec Aegis 9801 Core System"] = "Milspec Thalos 8502 Core System",
-   ["Milspec Aegis 8501 Core System"] = "Milspec Thalos 8502 Core System",
-   ["Milspec Aegis 5401 Core System"] = "Milspec Thalos 4702 Core System",
-   ["Milspec Aegis 4701 Core System"] = "Milspec Thalos 4702 Core System",
-   ["Milspec Aegis 3601 Core System"] = "Milspec Thalos 2202 Core System",
-   ["Milspec Aegis 2201 Core System"] = "Milspec Thalos 2202 Core System",
+   ["Milspec Aegis 9801 Core System"] = "Milspec Aegis 8501 Core System",
+   ["Milspec Aegis 5401 Core System"] = "Milspec Aegis 4701 Core System",
+   ["Milspec Aegis 3601 Core System"] = "Milspec Aegis 2201 Core System",
    ["Mass Driver MK3"] = "Mass Driver",
    ["Mass Driver MK2"] = "Mass Driver",
    ["Mass Driver MK1"] = "Mass Driver",

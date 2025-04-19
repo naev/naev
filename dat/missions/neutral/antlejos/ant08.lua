@@ -158,8 +158,7 @@ local firstcreate = true
 -- luacheck: globals miner_create
 function miner_create( p )
    p:setFaction( fct_miner() )
-   p:outfitAdd( "Laser Turret MK1" )
-   p:outfitAdd( "Laser Turret MK1" )
+   p:outfitAdd( "Laser Turret MK1",2)
    ai_setup.setup(p)
    if firstcreate then
       hook.timer( 10, "miner_salute", p )

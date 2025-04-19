@@ -1,0 +1,23 @@
+<outfit name="Milspec Prometheus 4703 Core System">
+ <general>
+  <shortname>M. Prometheus 4703 System</shortname>
+  <typename>Core Systems (System)</typename>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
+  <size>medium</size>
+  <price>200000</price>
+  <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Prometheus 4703 boasts a heavy duty power generator as well as considerable shielding and subsystem control. Fly safe, fly Milspec.</description>
+  <gfx_store>core_system_power_m1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 80, 160},
+   { "cpu_max", 238, 90},
+   { "shield", 405, 120},
+   { "shield_regen", 9, 2},
+   { "energy", 950, 1050},
+   { "energy_regen", 95, 25},
+}</lua_inline>
+ </specific>
+</outfit>

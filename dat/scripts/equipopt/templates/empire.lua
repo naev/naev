@@ -64,7 +64,7 @@ local empire_cores = {
    ["Empire Lancelot"] = function () return {
          systems = "Milspec Orion 2301 Core System",
          systems_secondary = "Milspec Orion 2301 Core System",
-         engines = choose_one{ "Tricon Zephyr II Engine", "Nexus Dart 360 Engine", "Melendez Ox XL Engine" },
+         engines = choose_one{ "Tricon Zephyr Engine", "Nexus Dart 160 Engine", "Melendez Ox Engine" },
          hull = choose_one{ "Nexus Shadow Weave", "S&K Skirmish Plating" },
          hull_secondary = "S&K Skirmish Plating",
       } end,
@@ -76,7 +76,7 @@ local empire_cores = {
    ["Empire Pacifier"] = function () return {
          systems = "Milspec Orion 4801 Core System",
          systems_secondary = "Milspec Orion 4801 Core System",
-         engines = choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
+         engines = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          hull = choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
          hull_secondary = "S&K Battle Plating",
       } end,
@@ -88,7 +88,7 @@ local empire_cores = {
    ["Empire Peacemaker"] = function () return {
          systems = "Milspec Orion 8601 Core System",
          systems_secondary = "Milspec Orion 8601 Core System",
-         engines = "Melendez Mammoth XL Engine",
+         engines = "Melendez Mammoth Engine",
          hull = "S&K War Plating",
          hull_secondary = "S&K War Plating",
       } end,

@@ -2,10 +2,10 @@
  <general>
   <shortname>M. Thalos 4702 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>medium</size>
-  <mass>80/170</mass>
-  <price>220000/180000</price>
+  <mass>80/160</mass>
+  <price>200000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 4702 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_m1.webp</gfx_store>
   <priority>3</priority>
@@ -13,8 +13,8 @@
  <specific type="modification">
   <cpu_max>300/120</cpu_max>
   <energy>675/725</energy>
-  <energy_regen>23/20</energy_regen>
-  <shield>400/100</shield>
-  <shield_regen>8/1</shield_regen>
+  <energy_regen>30/18</energy_regen>
+  <shield>405/120</shield>
+  <shield_regen>9/2</shield_regen>
  </specific>
 </outfit>

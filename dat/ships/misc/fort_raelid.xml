@@ -43,6 +43,7 @@
   <utility prop="systems" name="systems" size="large">Dummy Systems</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large" />
   <structure prop="engines" name="engines" size="large">Dummy Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="large" />
   <structure prop="hull" name="hull" size="large">Dummy Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="large" />
  </slots>

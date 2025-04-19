@@ -4,18 +4,22 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <mass>40</mass>
   <price>2400000</price>
   <description>The Remige was developed by Krain Industries exclusively for their flagship cruiser, the Kestrel. Optimized for the Kestrel's needs, the Remige delivers performance exceeding most other cruiser engines in every respect, though its tuning renders it ill-suited to heavier vessels.</description>
   <gfx_store>krain_remige_engine.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>26</energy_regen_malus>
-  <engine_limit>2400</engine_limit>
-  <fuel>2400</fuel>
-  <speed>157</speed>
-  <accel>67</accel>
-  <turn>78</turn>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 40, 40},
+   { "energy_regen_malus", 26, 26},
+   { "engine_limit", 2400, 2400},
+   { "fuel", 2400, 2400},
+   { "speed", 157, 157},
+   { "accel", 67, 67},
+   { "turn", 78, 78},
+}
+require "outfits.lib.alone"</lua_inline>
  </specific>
 </outfit>

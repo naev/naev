@@ -5,7 +5,7 @@ local greeting = {
    _("Independent news from the independent frontier."),
 }
 local articles = {
-	--[[
+   --[[
       Science and technology
    --]]
    {

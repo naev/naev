@@ -217,18 +217,16 @@ function spawnNpcs()
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Vendetta")}))
                player.shipAdd("Vendetta", nil, _("You obtained this ship as a reward from Mace Rocket Ballet."))
             elseif playerRank == 8 then
-               tk.msg("",fmt.f(_("You receive a {1} and a {2} as a reward."), {_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")}))
-               player.outfitAdd("Tricon Zephyr II Engine")
+               tk.msg("",fmt.f(_("You receive a {1} x2 and a {2} as a reward."), {_("Tricon Zephyr Engine"),_("Emergency Shield Booster")}))
+               player.outfitAdd("Tricon Zephyr Engine",2)
                player.outfitAdd("Emergency Shield Booster")
             elseif playerRank == 7 then
                tk.msg("",fmt.f(_("You receive two {1}s and a {2} as a reward."), {_("Milspec Orion 2301 Core System"),_("Shield Capacitor I")}))
-               player.outfitAdd("Milspec Orion 2301 Core System")
-               player.outfitAdd("Milspec Orion 2301 Core System")
+               player.outfitAdd("Milspec Orion 2301 Core System",2)
                player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("S&K Skirmish Plating x2")}))
-               player.outfitAdd("S&K Skirmish Plating")
-               player.outfitAdd("S&K Skirmish Plating")
+               player.outfitAdd("S&K Skirmish Plating",2)
             elseif playerRank == 5 then
                tk.msg("",_("You receive three Shredders as a reward."))
                player.outfitAdd("Shredder",3)

@@ -31,7 +31,7 @@
   <duration blowup="armour">45</duration>
   <accel>55</accel>
   <turn>20</turn>
-  <speed_max>140</speed_max>
+  <speed_max>160</speed_max>
   <resist>100</resist>
   <damage>
    <type>kinetic</type>

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+
+lines=['unicorp','tricon',"nexus","melendez","krain","beat_up"]
+
+
 import os
 script_dir = os.path.dirname( __file__ )
 util_dir = script_dir
@@ -17,7 +21,7 @@ import outfit
 
 def iter_line(line):
    for d in ['small','medium','large']:
-      for i in glob(os.path.join( engine_dir, d , line+'*.xml')):
+      for i in glob(os.path.join( engine_dir, d , line+'*.mvx')):
          yield i
 
 def max_sp(sp,ac):
@@ -28,24 +32,21 @@ def max_sp(sp,ac):
 def mkline(line):
    acc=[]
    for f in iter_line(line):
-      o=outfit.outfit(f)
-      if(o):
+      for fl in [False,True]:
+         o=outfit.outfit(f)
+         o.autostack(fl)
          d=o.to_dict()
          acc.append((max_sp(d['speed'],d['accel']),d['speed']))
-   L=list(sorted(set(acc),reverse=True))
-   pad=[('.','.')]
 
-   if len(L)==2:  # That's Krain!
+   L=list(sorted(set(acc),reverse=True))
+
+   if len(L)==4:  # That's Krain!
       # Complete with padding
-      L=3*pad+L+pad
-   elif len(L)==3:  # That's the Beat up corp. line
-      L=L[0:1]+pad+L[1:2]+pad+L[2:3]+pad
+      L=L+2*[('.','.')]
 
    return L
 
 def main():
-   lines=['unicorp','tricon',"nexus","melendez","krain","beat_up"]
-
    bas=os.path.splitext(os.path.basename(__file__))[0]
    bas=os.path.join('.',bas)
    dat=bas+'.dat'

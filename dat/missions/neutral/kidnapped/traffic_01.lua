@@ -120,8 +120,8 @@ And please hurry. Someone was sent to assassinate him. I don't have much to give
    local desc = fmt.f(_("Locate the brother in the {1} system, the {2} system, or the {3} system"), mem.targetsys)
    misn.setDesc( desc )
    misn.osdCreate(_("The Lost Brother"), {
-	   desc,
-	   _("Hail the Poppy Seed and board it to reunite the siblings"),
+      desc,
+      _("Hail the Poppy Seed and board it to reunite the siblings"),
    })
    mem.misn_marker = {
       misn.markerAdd( mem.targetsys[1], "low" ),
@@ -187,8 +187,7 @@ function sys_enter ()
       hook.timer( 3.0, "do_msg2" )
       broship = pilot.add( "Gawain", "Independent", mem.bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader", naked=true} ) -- fast Gawain
       broship:outfitAdd("Unicorp D-2 Light Plating")
-      broship:outfitAdd("Unicorp PT-16 Core System")
-      broship:outfitAdd("Unicorp PT-16 Core System")
+      broship:outfitAdd("Unicorp PT-16 Core System",2)
       broship:outfitAdd("Tricon Zephyr Engine")
       broship:setHealth(100,100)
       broship:setEnergy(100)

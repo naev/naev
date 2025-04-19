@@ -145,26 +145,26 @@ typename["hull"] = N_("Bioship Shell")
 ##    "cpu":          handmade ! (because builtin weapons have no CPU requirements)
 
 # Perlevis Gene Drive   =>  Tricon Zephyr
-# Laeviter Gene Drive   =>  Tricon Zephyr II
-# Laevis Gene Drive     =>  Melendez Ox XL
+# Laeviter Gene Drive   =>  Tricon Zephyr x2
+# Laevis Gene Drive     =>  Melendez Ox x2
 # Mediocris Gene Drive  =>  Tricon Cyclone
-# Largus Gene Drive     =>  Tricon Cyclone II
+# Largus Gene Drive     =>  Tricon Cyclone x2
 # Ponderosus Gene Drive =>  Tricon Typhoon
-# Immanis Gene Drive    =>  Bolt 6500
-# Magnus Gene Drive     =>  Tricon Typhoon2
 # Grandis Gene Drive    =>  Melendez Mammoth
-for nam,temp,gfx,output_pref,outputs in [
-   ("small/tricon_zephyr_engine.xml","gene_drive_tricon","fast_s","Perlevis",["I","II"]),
-   ("small/tricon_zephyr_ii_engine.xml","gene_drive_tricon","fast_s","Laeviter",["I","II"]),
-   ("small/melendez_ox_xl_engine.xml","gene_drive_melendez","strong_s","Laevis",["I","II"]),
-   ("medium/tricon_cyclone_engine.xml","gene_drive_tricon","fast_m","Mediocris",["I","II","III"]),
-   ("medium/tricon_cyclone_ii_engine.xml","gene_drive_tricon","strong_m","Largus",["I","II"]),
-   ("large/tricon_typhoon_engine.xml","gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
-   ("large/nexus_bolt_6500_engine.xml","gene_drive","strong_l","Immanis",["I","II","III"]),
-   ("large/tricon_typhoon_ii_engine.xml","gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
-   ("large/melendez_old_mammoth_engine.xml","gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
+# Magnus Gene Drive     =>  Tricon Typhoon x2
+# Immanis Gene Drive    =>  Nexus Bolt 3000 x2
+for nam,db,temp,gfx,output_pref,outputs in [
+   ("small/tricon_zephyr_engine.mvx",False,"gene_drive_tricon","fast_s","Perlevis",["I","II"]),
+   ("small/tricon_zephyr_engine.mvx",True,"gene_drive_tricon","fast_s","Laeviter",["I","II"]),
+   ("small/melendez_ox_engine.mvx",True,"gene_drive_melendez","strong_s","Laevis",["I","II"]),
+   ("medium/tricon_cyclone_engine.mvx",False,"gene_drive_tricon","fast_m","Mediocris",["I","II","III"]),
+   ("medium/tricon_cyclone_engine.mvx",True,"gene_drive_tricon","strong_m","Largus",["I","II"]),
+   ("large/tricon_typhoon_engine.mvx",False,"gene_drive_tricon","fast_l","Ponderosus",["I","II","III"]),
+   ("large/melendez_mammoth_engine.mvx",False,"gene_drive_melendez","strong_l","Grandis",["I","II","III"]),
+   ("large/tricon_typhoon_engine.mvx",True,"gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
+   ("large/nexus_bolt_3000_engine.mvx",True,"gene_drive","strong_l","Immanis",["I","II","III"]),
 ]:
-   ref=get_outfit_dict('core_engine/'+nam)
+   ref=get_outfit_dict('core_engine/'+nam,db)
    BioOutfit( temp+".xml.template", {
        "typename":     typename["engine"],
        "size":         ref["size"],
@@ -185,12 +185,12 @@ for nam,temp,gfx,output_pref,outputs in [
 # Cortex
 #
 
-# Perlevis Cortex    =>  (1) Unicorp_d2  (2) S&K Skirmish Plating
-# Laevis Cortex      =>  (1) Unicorp_d2 x2 (2) S&K Skirmish Plating x2
-# Mediocris Cortex   =>  (1) Unicorp_d23  (2) S&K Battle Plating
+# Perlevis Cortex    =>  (1) Unicorp_d2      (2) S&K Skirmish Plating
+# Laevis Cortex      =>  (1) Unicorp_d2 x2   (2) S&K Skirmish Plating x2
+# Mediocris Cortex   =>  (1) Unicorp_d23     (2) S&K Battle Plating
 # Largus Cortex      =>  (1) Unicorp_d23 x2  (2) S&K Battle Plating x2
-# Ponderosus Cortex  =>  (1) Unicorp_d58  (2) S&K War Plating
-# Immanis Cortex     =>  (1) Unicorp_d58 x2 (2) S&K War Plating x2
+# Ponderosus Cortex  =>  (1) Unicorp_d58     (2) S&K War Plating
+# Immanis Cortex     =>  (1) Unicorp_d58 x2  (2) S&K War Plating x2
 for pref,nam1,nam2,dbl,gfx,output_pref,outputs in [
    ("small",  "unicorp_d2_light_plating.mvx",   "sk_skirmish_plating.mvx", False, "t", "Perlevis",   ["I","II"]            ),
    ("small",  "unicorp_d2_light_plating.mvx",   "sk_skirmish_plating.mvx", True,  "s", "Laevis",     ["I","II"]            ),
@@ -219,11 +219,11 @@ for pref,nam1,nam2,dbl,gfx,output_pref,outputs in [
 #
 
 # Perleve Cerebrum    =>  Orion_2301
-# Laevum Cerebrum     =>  Orion_3701 = Orion_2301 x2
+# Laevum Cerebrum     =>  Orion_2301 x2
 # Mediocre Cerebrum   =>  Orion_4801
-# Largum Cerebrum     =>  Orion_5501 = Orion_4801 x2
+# Largum Cerebrum     =>  Orion_4801 x2
 # Ponderosum Cerebrum =>  Orion_8601
-# Immane Cerebrum     =>  Orion_9901 = Orion_8601 x2
+# Immane Cerebrum     =>  Orion_8601 x2
 for nam,dbl,gfx,output_pref,outputs,cpu in [
    ("small/milspec_orion_2301_core_system.mvx",  False, "s1","Perleve",["I","II"],          (     5,     6 )),
    ("small/milspec_orion_2301_core_system.mvx",   True, "s2","Laevum",["I","II"],           (    24,    32 )),
