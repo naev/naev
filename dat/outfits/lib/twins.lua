@@ -33,11 +33,12 @@ onadd=function( p, po)
       if old_onadd then
          old_onadd( p, po)
       end
-      if not p:outfitHasSlot('engines_secondary') then
-         if p:outfitRmSlot('engines') and p==player.pilot() then
-            player.outfitAdd(po:outfit())
-         end
-      end
+      print (p)
+      --if not p:outfitHasSlot('engines_secondary') then
+      --   if p:outfitRmSlot('engines') and p==player.pilot() then
+      --      player.outfitAdd(po:outfit())
+      --   end
+      --end
    end
 end
 
