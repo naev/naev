@@ -5,6 +5,25 @@ local atk = require "ai.core.attack.util"
 -- Keep generic as backup
 local idle_generic = idle
 
+-- TODO not duplicate function from ai/core/basic.lua
+local function shoot_turret( target )
+   -- Target must exist
+   if not target or not target:exists() then
+      return
+   end
+
+   -- Point defense and Fighters
+   atk.fb_and_pd()
+
+   -- Shoot the target
+   ai.hostile(target)
+   ai.settarget(target)
+   -- See if we have some turret to use
+   if ai.hasturrets() then
+      atk.turrets()
+   end
+end
+
 -- Get a nearby enemy using pirate heuristics
 local function __getenemy ()
    local p, d = atk.preferred_enemy( nil, true )
@@ -203,6 +222,9 @@ function backoff( target )
       ai.poptask()
       return
    end
+
+   -- Shoot turret if applicable
+   shoot_turret()
 end
 
 control_funcs.ambush_moveto = function ()

@@ -246,7 +246,7 @@ jobs:
               --prefix="$(pwd)"/build/windows \
               --bindir=. \
               -Dndata_path=. \
-              --cross-file='source/utils/build/windows_cross_mingw_ucrt64.ini' \
+              --cross-file='source/utils/build/windows_cross_mingw.ini' \
               --buildtype=debug \
               --force-fallback-for=glpk,SuiteSparse \
               -Dinstaller=true \
@@ -284,7 +284,7 @@ jobs:
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "12.0"
+            deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest

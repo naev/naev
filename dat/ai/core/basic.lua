@@ -822,11 +822,16 @@ function _hyp_jump_follow( jump )
       if l:flags("jumpingout") then
          _hyp_jump( jump )
       else
-         -- Stop and wait just to get ready to hyperspace
-         ai.brake()
-         if ai.isstopped() and not ai.canHyperspace() then
-            -- Drifted away or whatever, so pop and go back
-            ai.popsubtask()
+         if not ai.isstopped() then
+            -- Stop and wait just to get ready to hyperspace
+            ai.brake()
+         else
+            ai.stop()
+            ai.face( jump:angle() )
+            if not ai.canHyperspace() then
+               -- Drifted away or whatever, so pop and go back
+               ai.popsubtask()
+            end
          end
       end
    else

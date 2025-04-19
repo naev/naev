@@ -60,7 +60,7 @@ void pilot_ewScanStart( Pilot *p )
 
    /* Player did bad stuff and is getting scanned. */
    if ( pilot_isPlayer( target ) && pilot_hasIllegal( target, p->faction ) )
-      player_autonavResetSpeed();
+      player_autonavReset( 1. );
 
    /* Scan time. */
    p->scantimer = pilot_ewScanTime( p );
@@ -514,7 +514,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
 
       /* Stop autonav if pilots are nearby. */
       if ( close > 0 )
-         player_autonavResetSpeed();
+         player_autonavReset( 0. );
    } else
       n = pilot_ewStealthGetNearby( p, &mod, NULL, &isplayer );
 

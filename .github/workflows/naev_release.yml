@@ -251,17 +251,18 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Meson Setup
+        # We disable b_lto here because it messes with backtraces on windows
         run: |
           meson setup build source \
               --prefix="$(pwd)"/build/windows \
               --bindir=. \
               -Dndata_path=. \
-              --cross-file='source/utils/build/windows_cross_mingw_ucrt64.ini' \
+              --cross-file='source/utils/build/windows_cross_mingw.ini' \
               --buildtype=release \
               --force-fallback-for=glpk,SuiteSparse \
               -Dinstaller=true \
               -Drelease=true \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
@@ -294,7 +295,7 @@ jobs:
             config: macos_cross_osxcross.ini
           - image: naev-macos
             arch: aarch64
-            deploymenttarget: "12.0"
+            deploymenttarget: "13.0"
             config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
