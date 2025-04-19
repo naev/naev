@@ -428,7 +428,8 @@ function timer_pirate( fpir )
          p:setHostile()
          p:setHilight()
          p:setVisplayer()
-         p:intrinsicSet( "fwd_damage", -75 )
+         p:intrinsicSet( "weapon_damage", -50 )
+         p:outfitAddIntrinsic( "Worn Down" )
          local aimem = p:memory()
          aimem.allowbribe = true
          aimem.bribe_base = 100
