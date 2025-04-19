@@ -157,6 +157,7 @@ function enter ()
    phost:setInvincible(true)
    phost:setVisplayer(true)
    phost:setHilight(true)
+   phost:outfitAddIntrinsic( "Worn Down" )
 
    -- Disable comm
    pilotai.setNoComm( {pdis, phost}, true )
