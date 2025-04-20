@@ -1593,7 +1593,8 @@ void equipment_addAmmo( void )
    pilot_fillAmmo( p );
 
    /* Notify GUI of modification. */
-   gui_setShip();
+   if ( ( p->id > 0 ) && pilot_isPlayer( p ) && ( p->ai != NULL ) )
+      gui_setShip();
 }
 
 /**
