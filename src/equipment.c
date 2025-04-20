@@ -1418,7 +1418,8 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
    pilot_weaponSafe( eq_wgt.selected->p );
 
    /* Notify GUI of modification. */
-   gui_setShip();
+   if ( ( p->id > 0 ) && pilot_isPlayer( p ) && ( p->ai != NULL ) )
+      gui_setShip();
 
    return 0;
 }
@@ -2604,7 +2605,8 @@ static void equipment_unequipShip( unsigned int wid, const char *str )
    pilot_weaponSafe( ship );
 
    /* Notify GUI of modification. */
-   gui_setShip();
+   if ( ( ship->id > 0 ) && pilot_isPlayer( ship ) && ( ship->ai != NULL ) )
+      gui_setShip();
 }
 
 /**
