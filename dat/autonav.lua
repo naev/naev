@@ -754,11 +754,11 @@ function autonav_plt_follow ()
    local plt = target_plt
    local target_known = false
    local inrng = false
+   local pp = player.pilot()
 
    if plt:exists() then
       if plt:flags("jumpingout") then
          local jmp = plt:navJump()
-         local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
          if follow_land_jump then
@@ -814,7 +814,7 @@ function autonav_plt_follow ()
             end
 
             -- Try to follow to land
-            player.pilot():navSpobSet( plt:navSpob() )
+            pp:navSpobSet( plt:navSpob() )
             _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
                autonav_reset(0)
@@ -826,7 +826,7 @@ function autonav_plt_follow ()
          end
          return
       end
-      inrng, target_known = player.pilot():inrange( plt )
+      inrng, target_known = pp:inrange( plt )
    end
 
    if not inrng then -- If doesn't exist defaults to false
@@ -835,7 +835,7 @@ function autonav_plt_follow ()
 
       -- See if there's someone else in the original fleet we can follow now
       for k,p in ipairs( follow_pilot_fleet ) do
-         if p:exists() and not p:flags("landing") then
+         if p:exists() and not p:flags("landing") and pp:inrange(p) then
             set_pilot_target( p )
             autonav_pilot( p )
             return
@@ -848,7 +848,6 @@ function autonav_plt_follow ()
       target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
-   local pp = player.pilot()
    local canboard = plt:flags("disabled") or plt:flags("boardable")
    local radius
    if canboard then
