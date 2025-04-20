@@ -850,9 +850,15 @@ function autonav_plt_follow ()
 
    local pp = player.pilot()
    local canboard = plt:flags("disabled") or plt:flags("boardable")
-   local radius = math.max( 100, 1.5*(pp:radius()+plt:radius()) )
+   local radius
    if canboard then
       radius = 0
+   elseif pp:flags("stealth") then
+      -- Follow with the same range that stops stealth (see pilot_ewStealthGetNearby)
+      local stealthrange = 1.5 * pp:stealthRange() * plt:shipstat( "ew_detect", true )
+      radius = pp:radius()+plt:radius()+stealthrange
+   else
+      radius = math.max( 100, 1.5*(pp:radius()+plt:radius()) )
    end
    local pos = plt:pos()
    autonav_approach_vel( pos, plt:vel(), radius )
