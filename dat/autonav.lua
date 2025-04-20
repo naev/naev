@@ -54,7 +54,7 @@ local function autonav_setup ()
    uselanes_thr = var.peek("autonav_uselanes_thr") or 2
    match_fleet = var.peek("autonav_match_fleet")
    follow_land_jump = var.peek("autonav_follow_jump")
-   reset_shield = var.peek("autonav_reset_shield")
+   reset_shield = var.peek("autonav_reset_shield") * 100 -- Has to be in percent
    reset_dist = var.peek("autonav_reset_dist")
    brake_pos = var.peek("autonav_brake_pos")
    reset_lockon = var.peek("autonav_reset_lockon")
