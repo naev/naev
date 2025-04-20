@@ -33,18 +33,12 @@ onadd=function( p, po)
       if old_onadd then
          old_onadd( p, po)
       end
-      if not p:outfitHasSlot('engines') then
-         print("\27[30;1moutfitHasSlot wrongly returned False.\27[0m")
-      else
-         print("\27[1moutfitHasSlot has returned True! Hurray!\27[0m")
-      end
-      --[[
       if not p:outfitHasSlot('engines_secondary') then
+         local o=po:outfit()
          if p:outfitRmSlot('engines') and p==player.pilot() then
-            player.outfitAdd(po:outfit())
+            player.outfitAdd(o)
          end
       end
-      ]]
    end
 end
 
