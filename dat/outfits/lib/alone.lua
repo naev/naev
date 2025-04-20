@@ -3,11 +3,13 @@
 
 local prvdesc=descextra
 descextra=function ( p, o, po)
-   return prvdesc( p, o, po) .. "\n#b".._("This outfit only works when no other engines are equipped.").."#0"
+   return prvdesc( p, o, po) .. "\n#b".._("This outfit prevents other engines from being equipped.").."#0"
 end
+
 local slotname = 'engines_secondary'
 function onoutfitchange( p, po )
    if p and po and p:outfitHasSlot(slotname) then
+      print("\27[1moutfitHasSlot has returned True! Hurray!\27[0m")
       local o = p:outfitSlot(slotname)
       if o and p:outfitRmSlot(slotname) and p==player.pilot() then
          player.outfitAdd(o)
