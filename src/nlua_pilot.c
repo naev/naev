@@ -3674,7 +3674,7 @@ static int pilotL_outfitHasSlot( lua_State *L )
    Pilot      *p    = luaL_validpilot( L, 1 );
    const char *name = luaL_checkstring( L, 2 );
    lua_pushboolean( L, pilot_getSlotByName( p, name ) != NULL );
-   return 0;
+   return 1;
 }
 
 /**
