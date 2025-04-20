@@ -68,11 +68,8 @@ local pirate_cores = {
              hull = "Unicorp D-58 Heavy Plating" }
       end,
    ["Pirate Starbridge"] = function (p)
-         return ecores.get( p, {
-            engines=choose_one{ "Nexus Arrow 700 Engine", "Krain Patagium Twin Engine", },
-            systems=pirate_class, 
-            hulls=pirate_class
-         } )
+         local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class } )
+         c.engines = choose_one{ "Nexus Arrow 1400 Engine", "Krain Patagium Engine", }
          return c
       end,
 }
