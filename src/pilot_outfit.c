@@ -1235,7 +1235,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot_cargoCalc( pilot ); /* Calls pilot_updateMass. */
 
    /* Update GUI as necessary. */
-   if ( pilot->id > 0 )
+   if ( ( pilot->id > 0 ) && pilot_isPlayer( pilot ) && ( pilot->ai != NULL ) )
       gui_setGeneric( pilot );
 
    /* Update weapon set range. */
@@ -1334,7 +1334,7 @@ void pilot_updateMass( Pilot *pilot )
    pilot_ewUpdateStatic( pilot );
 
    /* Update ship stuff. */
-   if ( ( pilot->id > 0 ) && pilot_isPlayer( pilot ) )
+   if ( ( pilot->id > 0 ) && pilot_isPlayer( pilot ) && ( pilot->ai != NULL ) )
       gui_setShip();
 }
 
