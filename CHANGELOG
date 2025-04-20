@@ -1,6 +1,7 @@
 * 0.12.5 (unreleased)
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
+   * Fixed AI spamming afterburners in an unhealthy way
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems
