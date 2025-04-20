@@ -21,6 +21,7 @@ def sfmt(f):
 
 def _process_group(r,field):
    needs_lua=False
+   is_engine=False
    acc=[]
    r=r.find(field)
    torem=[]
@@ -29,6 +30,8 @@ def _process_group(r,field):
       try:
          a,b=text2val(e.text)
       except:
+         if t == 'slot' and e.attrib['prop']=='engines':
+            is_engine=True
          continue
 
       if t == 'price':
@@ -43,9 +46,9 @@ def _process_group(r,field):
          acc.append((t,(a,b)))
          torem.append((r,e))
 
-   return needs_lua,acc,torem
+   return needs_lua,acc,torem,is_engine
 
-def _mklua(L,has_sec=True):
+def _mklua(L,dual_eng=True):
    mods=''
    ind=3*' '
 
@@ -59,7 +62,7 @@ def _mklua(L,has_sec=True):
          output+=ind+'{ "'+nam+'",'+' '
          output+=fmt(main)+','+' '
          output+=fmt(sec)+'},'+'\n'
-         if has_sec and nam in MOBILITY_PARAMS:
+         if dual_eng and nam in MOBILITY_PARAMS:
             mods+=ind+'{ "'+nam+'_mod", 0, -50},\n'
 
    return output+mods+'}\n'
@@ -67,24 +70,25 @@ def _mklua(L,has_sec=True):
 def toxmllua(o,update_lua,fake_dual):
    T,R=o.T,o.r
 
-   f1,acc1,tr1=_process_group(R,'./general')
-   f2,acc2,tr2=_process_group(R,'./specific')
+   f1,acc1,tr1,e1=_process_group(R,'./general')
+   f2,acc2,tr2,e2=_process_group(R,'./specific')
 
    if (not f1) and (not f2) and (not update_lua):
       tr1=tr2=[]
       acc1=acc2=[]
 
-   if f1 or f2 or update_lua or fake_dual:
+   if f1 or f2 or update_lua or fake_dual or e1 or e2:
       for (r,e) in tr1+tr2:
          r.remove(e)
 
       for e in R.findall('./specific'):
          el=ET.Element("lua_inline")
-         el.text=_mklua(acc1+acc2,not fake_dual)
+         el.text=_mklua(acc1+acc2,not fake_dual and (e1 or e2))
          if update_lua:
             el.text+='require "outfits.lib.'+update_lua+'"\n'
          e.append(el)
          break
+
 if __name__ == '__main__':
    import argparse
 

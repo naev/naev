@@ -3,7 +3,7 @@
 local slotname = 'engines_secondary'
 local prvdesc = descextra
 descextra=function ( p, o, po)
-   out=prvdesc( p, o, po)
+   local out=prvdesc( p, o, po)
    if p and po and po:slot() and po:slot().tags and not p:outfitHasSlot(slotname) then
       return out
    else
