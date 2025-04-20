@@ -12,7 +12,7 @@
  <specific type="modification">
   <cpu_max>180/90</cpu_max>
   <energy>480/510</energy>
-  <energy_regen>11/12</energy_regen>
+  <energy_regen>23/12</energy_regen>
   <shield>310/100</shield>
   <shield_regen>6/0</shield_regen>
  </specific>
