@@ -19,9 +19,9 @@ require("outfits.lib.multicore").init{
    { "speed", 140, 68},
    { "accel", 78, 14},
    { "turn", 69, 25},
-   { "speed_mod", 0, -50},
-   { "accel_mod", 0, -50},
-   { "turn_mod", 0, -50},
 }</lua_inline>
  </specific>
+ <tag>
+  <tag />
+ </tag>
 </outfit>

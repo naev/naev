@@ -62,8 +62,6 @@ def _mklua(L,dual_eng=True):
          output+=ind+'{ "'+nam+'",'+' '
          output+=fmt(main)+','+' '
          output+=fmt(sec)+'},'+'\n'
-         if dual_eng and nam in MOBILITY_PARAMS:
-            mods+=ind+'{ "'+nam+'_mod", 0, -50},\n'
 
    return output+mods+'}\n'
 
@@ -88,6 +86,13 @@ def toxmllua(o,update_lua,fake_dual):
             el.text+='require "outfits.lib.'+update_lua+'"\n'
          e.append(el)
          break
+
+      if e1 or e2:
+         e=ET.Element('tag')
+         f=ET.Element('tag')
+         e.append(f)
+         R.append(e)
+
 
 if __name__ == '__main__':
    import argparse

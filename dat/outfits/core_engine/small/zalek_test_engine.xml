@@ -4,24 +4,23 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
+  <rarity>1</rarity>
+  <mass>15</mass>
   <price>0</price>
   <description>Built by Za'lek Fabricators, this engine doesn't aim to be an efficient engine. Its goal is to be easily moddable in order to allow Za'lek scientists to test new refrigeration and propulsion systems. These engines are very often modded by students, which makes them unreliable.</description>
   <gfx_store>engine8.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 15, 15},
-   { "accel", 326, 326},
-   { "turn", 184, 184},
-   { "speed", 286, 286},
-   { "fuel", 400, 400},
-   { "energy_regen_malus", 5, 5},
-   { "engine_limit", 300, 300},
-   { "accel_mod", 0, -50},
-   { "turn_mod", 0, -50},
-   { "speed_mod", 0, -50},
-}</lua_inline>
+  <accel>326</accel>
+  <turn>184</turn>
+  <speed>286</speed>
+  <fuel>400</fuel>
+  <energy_regen_malus>5</energy_regen_malus>
+  <engine_limit>300</engine_limit>
+  <lua_inline></lua_inline>
  </specific>
+ <tag>
+  <tag />
+ </tag>
 </outfit>

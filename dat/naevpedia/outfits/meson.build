@@ -162,6 +162,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/intrinsic/bad_shape.xml',
    root / 'dat/outfits/intrinsic/black_agate_finishing.xml',
    root / 'dat/outfits/intrinsic/defective.xml',
+   root / 'dat/outfits/intrinsic/engine_combinator.xml',
    root / 'dat/outfits/intrinsic/gauntlet_deluxe.xml',
    root / 'dat/outfits/intrinsic/gauntlet_supreme.xml',
    root / 'dat/outfits/intrinsic/hyperdrive_retool.xml',

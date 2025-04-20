@@ -22,4 +22,7 @@ require("outfits.lib.multicore").init{
 }
 require "outfits.lib.alone"</lua_inline>
  </specific>
+ <tag>
+  <tag />
+ </tag>
 </outfit>

@@ -21,9 +21,9 @@ require("outfits.lib.multicore").init{
    { "engine_limit", 200, 230},
    { "land_delay", -25, 0},
    { "time_mod", 10, 0},
-   { "accel_mod", 0, -50},
-   { "turn_mod", 0, -50},
-   { "speed_mod", 0, -50},
 }</lua_inline>
  </specific>
+ <tag>
+  <tag />
+ </tag>
 </outfit>
