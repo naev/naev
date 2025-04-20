@@ -1349,6 +1349,45 @@ int pilot_slotIsToggleable( const PilotOutfitSlot *o )
    return ( o->flags & PILOTOUTFIT_TOGGLEABLE );
 }
 
+typedef struct PilotTemp {
+   int     noid;
+   Pilot  *ptemp;
+   Pilot **ps;
+} PilotTemp;
+
+static PilotTemp temp_setup( Pilot *p )
+{
+   PilotTemp tmp;
+   tmp.noid  = ( p->id == 0 );
+   tmp.ptemp = NULL;
+   if ( tmp.noid ) {
+      tmp.ps = (Pilot **)pilot_getAll();
+      /* If array is empty we have to add a new pilot. */
+      if ( array_size( tmp.ps ) <= 0 ) {
+         array_push_back( &tmp.ps, p );
+      } else {
+         tmp.ptemp = tmp.ps[0];
+         tmp.ps[0] = p;
+      }
+      if ( pilot_isPlayer( p ) )
+         p->id = PLAYER_ID;
+      else
+         p->id = PILOT_TEMP_ID;
+   }
+   return tmp;
+}
+
+static void temp_cleanup( PilotTemp tmp, Pilot *p )
+{
+   if ( tmp.noid ) {
+      p->id = 0;
+      if ( tmp.ptemp == NULL )
+         array_erase( &tmp.ps, &tmp.ps[0], &tmp.ps[1] );
+      else
+         tmp.ps[0] = tmp.ptemp;
+   }
+}
+
 /**
  * @brief Wrapper that does all the work for us.
  */
@@ -1359,23 +1398,7 @@ static void pilot_outfitLRun( Pilot *p,
                               const void *data )
 {
    /* If no ID, we'll hackily add a temporary pilot and undo the changes. */
-   int     noid = ( p->id == 0 );
-   Pilot **ps;
-   Pilot  *ptemp = NULL;
-   if ( noid ) {
-      ps = (Pilot **)pilot_getAll();
-      /* If array is empty we have to add a new pilot. */
-      if ( array_size( ps ) <= 0 ) {
-         array_push_back( &ps, p );
-      } else {
-         ptemp = ps[0];
-         ps[0] = p;
-      }
-      if ( pilot_isPlayer( p ) )
-         p->id = PLAYER_ID;
-      else
-         p->id = PILOT_TEMP_ID;
-   }
+   PilotTemp tmp = temp_setup( p );
 
    pilotoutfit_modified = 0;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
@@ -1392,13 +1415,7 @@ static void pilot_outfitLRun( Pilot *p,
    }
 
    /* Some clean up. */
-   if ( noid ) {
-      p->id = 0;
-      if ( ptemp == NULL )
-         array_erase( &ps, &ps[0], &ps[1] );
-      else
-         ps[0] = ptemp;
-   }
+   temp_cleanup( tmp, p );
 
    /* Recalculate if anything changed. */
    if ( pilotoutfit_modified ) {
@@ -1626,7 +1643,7 @@ void pilot_outfitLInitAll( Pilot *pilot )
 /**
  * @brief Outfit is added to a ship.
  */
-int pilot_outfitLAdd( const Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
 {
    int           oldmem;
    const Outfit *o = po->outfit;
@@ -1635,6 +1652,8 @@ int pilot_outfitLAdd( const Pilot *pilot, PilotOutfitSlot *po )
       return 0;
    if ( o->lua_onadd == LUA_NOREF )
       return 0;
+
+   PilotTemp tmp = temp_setup( pilot );
 
    /* Create the memory if necessary and initialize stats. */
    oldmem = pilot_outfitLmem( po, o->lua_env );
@@ -1650,13 +1669,15 @@ int pilot_outfitLAdd( const Pilot *pilot, PilotOutfitSlot *po )
       return -1;
    }
    pilot_outfitLunmem( o->lua_env, oldmem );
+
+   temp_cleanup( tmp, pilot );
    return 1;
 }
 
 /**
  * @brief Outfit is removed froma ship.
  */
-int pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po )
+int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
 {
    int           oldmem;
    const Outfit *o = po->outfit;
@@ -1665,6 +1686,8 @@ int pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po )
       return 0;
    if ( o->lua_onremove == LUA_NOREF )
       return 0;
+
+   PilotTemp tmp = temp_setup( pilot );
 
    /* Create the memory if necessary and initialize stats. */
    oldmem = pilot_outfitLmem( po, o->lua_env );
@@ -1680,6 +1703,8 @@ int pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po )
       return -1;
    }
    pilot_outfitLunmem( o->lua_env, oldmem );
+
+   temp_cleanup( tmp, pilot );
    return 1;
 }
 
@@ -1732,9 +1757,12 @@ void pilot_outfitLOutfitChange( Pilot *pilot )
  *    @param pilot Pilot to run Lua outfits for.
  *    @param po Pilot outfit to check.
  */
-void pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po )
+void pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
 {
+   /* Have to make sure the pilot is valid in the single case. */
+   PilotTemp tmp = temp_setup( pilot );
    outfitLInit( pilot, po, NULL );
+   temp_cleanup( tmp, pilot );
 }
 
 static void outfitLUpdate( const Pilot *pilot, PilotOutfitSlot *po,

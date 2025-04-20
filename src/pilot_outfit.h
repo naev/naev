@@ -77,11 +77,11 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v );
 
 /* Lua outfit stuff. */
 int  pilot_slotIsToggleable( const PilotOutfitSlot *o );
-int  pilot_outfitLAdd( const Pilot *pilot, PilotOutfitSlot *po );
-int  pilot_outfitLRemove( const Pilot *pilot, PilotOutfitSlot *po );
+int  pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po );
+int  pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po );
 void pilot_outfitLOutfitChange( Pilot *pilot );
 void pilot_outfitLInitAll( Pilot *pilot );
-void pilot_outfitLInit( const Pilot *pilot, PilotOutfitSlot *po );
+void pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po );
 void pilot_outfitLUpdate( Pilot *pilot, double dt );
 void pilot_outfitLOutfofenergy( Pilot *pilot );
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield,
