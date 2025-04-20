@@ -20,7 +20,7 @@
   <engine_limit>300</engine_limit>
   <lua_inline></lua_inline>
  </specific>
- <tag>
+ <tags>
   <tag />
- </tag>
+ </tags>
 </outfit>
