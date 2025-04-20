@@ -183,6 +183,16 @@ function backoff( target )
    local dir = ai.face( target, true )
    ai.accel()
 
+   -- When out of range pop task
+   if ai.dist2( target ) > math.pow(tdist,2) then
+      -- Turn off afterburner if applicable
+      if mem._o and mem._o.afterburner then
+         p:outfitToggle( mem._o.afterburner, false )
+      end
+      ai.poptask()
+      return
+   end
+
    -- Handle outfits that help get away
    if mem._o and dir < math.rad(25) then
       if mem._o.afterburner and p:energy() > 30 then
@@ -192,16 +202,6 @@ function backoff( target )
       elseif mem._o.blink_engine then
          p:outfitToggle( mem._o.blink_engine, true )
       end
-   end
-
-   -- When out of range pop task
-   if ai.dist2( target ) > math.pow(tdist,2) then
-      -- Turn off afterburner if applicable
-      if mem._o and mem._o.afterburner then
-         p:outfitToggle( mem._o.afterburner, false )
-      end
-      ai.poptask()
-      return
    end
 end
 
