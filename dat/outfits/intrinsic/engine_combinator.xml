@@ -7,6 +7,7 @@
   <description>This gives the net combined effect of the engines, as they are averaged.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <rarity>0</rarity>
+  <limit>engine_combinator</limit>
  </general>
  <specific type="modification">
   <lua>outfits/intrinsic/engine_combinator.lua</lua>

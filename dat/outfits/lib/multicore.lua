@@ -90,6 +90,58 @@ local function index( tbl, key )
    return nil
 end
 
+local function is_engine( po )
+   if po then
+      local o=po:outfit()
+
+      return o and o:tags() and o:tags().engine 
+   end
+end
+
+local function is_secondary( po )
+   return po and po:slot() and po:slot().tags and po:slot().tags.secondary
+end
+
+--[[ sign:
+    -1 for remove
+     0 for update
+     1 for add
+--]]
+local function engine_combinator_needs_update( p, po, sign )
+   local sm = p:shipMemory()
+   local found
+
+   sm._stk = sm._stk or {}
+   for i,v in ipairs(sm._stk) do
+      if v == po then
+         found=i
+         break
+      end
+   end
+   if sign == -1 then
+      if found then
+         sm._stk.remove(found)
+      else
+         return false
+      end
+   else
+      if found then
+         if sign == 1 then
+            return false
+         end
+      else
+         table.insert(sm._stk,0,po)
+      end
+   end
+   return true
+end
+
+local function engine_combinator_refresh( p )
+   -- Because <limit> does not work as expected
+   p:outfitRmIntrinsic(outfit.get("Engine Combinator"))
+   p:outfitAddIntrinsic(outfit.get("Engine Combinator"))
+end
+
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
@@ -115,17 +167,6 @@ function multicore.init( params )
    -- Set global properties
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
-
-   local function is_engine( p )
-      if p and p.tags and p.tags.engine then
-         print("engine detected")
-      end
-      return p and p.tags and p.tags.engine
-   end
-
-   local function is_secondary( po )
-      return po and po:slot() and po:slot().tags and po:slot().tags.secondary
-   end
 
    -- Below define the global functions for the outfit
    function descextra( _p, _o, po )
@@ -177,16 +218,19 @@ function multicore.init( params )
    end
 
    local function changed( p, po, delta, delta_c )
-      if is_engine(p) then
-         local sm= p:shipMemory()
+      if is_engine(po) then
+         local sm = p:shipMemory()
          local secondary = is_secondary( po )
 
-         sm._engine_count = (sm._engine_count or 0) + delta
-         for k,s in ipairs(stats) do
-            if multicore_off~=true and needs_avg[s.name] then
-               local val=(secondary and s.sec) or s.pri
-               sm.__index["_"..s.name] = (sm.__index["_"..s.name] or 0) + (val * delta_c)
+         if engine_combinator_needs_update( p , po, delta ) then
+            sm._engine_count = (sm._engine_count or 0) + delta
+            for k,s in ipairs(stats) do
+               if multicore_off~=true and needs_avg[s.name] then
+                  local val = (secondary and s.sec) or s.pri
+                  sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
+               end
             end
+            engine_combinator_refresh( p )
          end
       end
    end
@@ -203,9 +247,9 @@ function multicore.init( params )
       changed( p, po, -onoff_mul(), -1)
    end
 
-   local function working_status_changed( p, po)
+   local function update_stats( p, po)
       local secondary = is_secondary( po )
-      local ie=is_engine(p)
+      local ie=is_engine( po )
 
       po:clear()
       for k,s in ipairs(stats) do
@@ -220,8 +264,8 @@ function multicore.init( params )
    end
 
    function init( p, po )
-      onadd( p, po )
-      working_status_changed( p, po)
+      update_stats( p, po)
+      changed( p, po, 0, 1)
    end
 
    function setworkingstatus( p, po, on)
@@ -233,7 +277,12 @@ function multicore.init( params )
          multicore_off = not on
       end
       if (before and not multicore_off) or (not before and multicore_off) then
-         working_status_changed( p, po)
+         update_stats( p, po)
+         if multicore_off then
+            changed( p, po, 0, -1)
+         else
+            changed( p, po, 0, 1)
+         end
       end
    end
 end
