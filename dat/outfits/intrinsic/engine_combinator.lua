@@ -1,7 +1,7 @@
 
 local fmt = require "format"
 
-descextra=function ( _p, _o, _po)
+descextra=function ( p, _o, _po)
    local sm = p:shipMemory()
    local count = sm._engine_count
 

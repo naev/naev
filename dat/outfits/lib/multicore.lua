@@ -93,6 +93,11 @@ end
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
+
+   -- possible values:
+   --  - false -> status running
+   --  - true -> status halted
+   --  - nil -> no status (always running)
    local multicore_off = nil
 
    for k,s in ipairs(stats) do
@@ -111,15 +116,22 @@ function multicore.init( params )
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
 
-   local function is_engine(p)
+   local function is_engine( p )
+      if p and p.tags and p.tags.engine then
+         print("engine detected")
+      end
       return p and p.tags and p.tags.engine
+   end
+
+   local function is_secondary( po )
+      return po and po:slot() and po:slot().tags and po:slot().tags.secondary
    end
 
    -- Below define the global functions for the outfit
    function descextra( _p, _o, po )
       local nomain, nosec = false, false
       if po then
-         if po:slot().tags.secondary then
+         if is_secondary( po ) then
             nomain = true
          else
             nosec = true
@@ -167,11 +179,13 @@ function multicore.init( params )
    local function changed( p, po, delta, delta_c )
       if is_engine(p) then
          local sm= p:shipMemory()
+         local secondary = is_secondary( po )
+
          sm._engine_count = (sm._engine_count or 0) + delta
          for k,s in ipairs(stats) do
             if multicore_off~=true and needs_avg[s.name] then
                local val=(secondary and s.sec) or s.pri
-               sm.__index["_"..s.name] = (sm.__index["_"..s.name] or 0) + val
+               sm.__index["_"..s.name] = (sm.__index["_"..s.name] or 0) + (val * delta_c)
             end
          end
       end
@@ -190,7 +204,7 @@ function multicore.init( params )
    end
 
    local function working_status_changed( p, po)
-      local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
+      local secondary = is_secondary( po )
       local ie=is_engine(p)
 
       po:clear()
@@ -211,16 +225,14 @@ function multicore.init( params )
    end
 
    function setworkingstatus( p, po, on)
-      bef = multicore_off
+      local before = multicore_off
+
       if on==nil then
          multicore_off = nil
       else
          multicore_off = not on
       end
-      if
-         (bef and not multicore_off) or
-         (not bef and multicore_off)
-      then
+      if (before and not multicore_off) or (not before and multicore_off) then
          working_status_changed( p, po)
       end
    end

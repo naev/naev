@@ -9,6 +9,9 @@
   <gfx_store>engine12.webp</gfx_store>
   <priority>3</priority>
  </general>
+ <tags>
+  <tag>engine</tag>
+ </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -23,7 +26,4 @@ require("outfits.lib.multicore").init{
    { "time_mod", 10, 0},
 }</lua_inline>
  </specific>
- <tags>
-  <tag />
- </tags>
 </outfit>

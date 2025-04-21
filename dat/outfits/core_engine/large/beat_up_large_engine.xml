@@ -7,6 +7,9 @@
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
   <gfx_store>engine11.webp</gfx_store>
  </general>
+ <tags>
+  <tag>engine</tag>
+ </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -19,7 +22,4 @@ require("outfits.lib.multicore").init{
    { "turn", 46, 16},
 }</lua_inline>
  </specific>
- <tags>
-  <tag />
- </tags>
 </outfit>

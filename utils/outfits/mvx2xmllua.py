@@ -88,9 +88,14 @@ def toxmllua(o,update_lua,fake_dual):
          break
 
       if e1 or e2:
-         e=ET.Element('tags')
-         f=ET.Element('tag')
-         e.append(f)
+         # remove specific
+         R.remove(e)
+         t=ET.Element('tags')
+         ts=ET.Element('tag')
+         ts.text='engine'
+         t.append(ts)
+         R.append(t)
+         # reinsert specific
          R.append(e)
 
 

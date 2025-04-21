@@ -8,6 +8,9 @@
   <gfx_store>unicorp_engine_l.webp</gfx_store>
   <priority>3</priority>
  </general>
+ <tags>
+  <tag>engine</tag>
+ </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -20,7 +23,4 @@ require("outfits.lib.multicore").init{
    { "engine_limit", 3000, 3500},
 }</lua_inline>
  </specific>
- <tags>
-  <tag />
- </tags>
 </outfit>

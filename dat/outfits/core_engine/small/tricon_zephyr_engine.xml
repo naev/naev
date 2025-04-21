@@ -9,6 +9,9 @@
   <gfx_store>engine9.webp</gfx_store>
   <priority>3</priority>
  </general>
+ <tags>
+  <tag>engine</tag>
+ </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -21,7 +24,4 @@ require("outfits.lib.multicore").init{
    { "turn", 213, 127},
 }</lua_inline>
  </specific>
- <tags>
-  <tag />
- </tags>
 </outfit>
