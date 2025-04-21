@@ -1358,6 +1358,13 @@ typedef struct PilotTemp {
 static PilotTemp temp_setup( Pilot *p )
 {
    PilotTemp tmp;
+   if ( p == NULL ) {
+      tmp.noid  = 0;
+      tmp.ptemp = NULL;
+      tmp.ps    = NULL;
+      return tmp;
+   }
+
    tmp.noid  = ( p->id == 0 );
    tmp.ptemp = NULL;
    if ( tmp.noid ) {
@@ -1379,6 +1386,8 @@ static PilotTemp temp_setup( Pilot *p )
 
 static void temp_cleanup( PilotTemp tmp, Pilot *p )
 {
+   if ( p == NULL )
+      return;
    if ( tmp.noid ) {
       p->id = 0;
       if ( tmp.ptemp == NULL )
@@ -1469,6 +1478,8 @@ static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o,
    if ( o->lua_descextra == LUA_NOREF )
       return ( o->desc_extra != NULL ) ? _( o->desc_extra ) : NULL;
 
+   PilotTemp tmp = temp_setup( (Pilot *)p );
+
    /* Set up the function: init( p, po ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, o->lua_descextra ); /* f */
    if ( ( p != NULL ) && ( p->id > 0 ) ) /* Needs valid ID. */
@@ -1484,16 +1495,19 @@ static const char *pilot_outfitLDescExtra( const Pilot *p, const Outfit *o,
       outfitLRunWarning( p, o, "descextra", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
       descextra[0] = '\0';
+      temp_cleanup( tmp, (Pilot *)p );
       return descextra;
    }
    /* Case no return we just pass nothing. */
    if ( lua_isnoneornil( naevL, -1 ) ) {
       lua_pop( naevL, 1 );
+      temp_cleanup( tmp, (Pilot *)p );
       return NULL;
    }
    de = luaL_checkstring( naevL, -1 );
    strncpy( descextra, de, sizeof( descextra ) - 1 );
    lua_pop( naevL, 1 );
+   temp_cleanup( tmp, (Pilot *)p );
    return descextra;
 }
 
