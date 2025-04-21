@@ -1427,8 +1427,8 @@ static void pilot_outfitLRun( Pilot *p,
 static void outfitLRunWarning( const Pilot *p, const Outfit *o,
                                const char *name, const char *error )
 {
-   WARN( _( "Pilot '%s''s outfit '%s' -> '%s':\n%s" ), p->name, o->name, name,
-         error );
+   WARN( _( "Pilot '%s''s outfit '%s' -> '%s':\n%s" ),
+         ( p == NULL ) ? "(NULL)" : p->name, o->name, name, error );
 }
 
 /**
