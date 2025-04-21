@@ -17,14 +17,12 @@ descextra=function ( p, _o, _po)
    local sm = p:shipMemory()
    local count = sm._engine_count or 0
 
-   if sm._engine_count == 0 then
+   if count == 0 then
       return "No engine equipped."
    end
 
-   local out = "Engines equipped:" .. count .. "\n"
+   local out = "#bEngines equipped:#0 #g" .. count .. "#0\n"
    if count>0 then
-      -- temporary workaround
-      count = count * 2
       for s,_ in pairs(needs_avg) do
          out = out .. "#g" .. s .. ": " .. fmt.number(sm["_"..s]/count) .. "#0\n"
       end
@@ -43,26 +41,29 @@ function onadd( p, po )
    end
 
    local intrinsics = p:outfitsList("intrinsic")
+   local ocount = 0
    if intrinsics then
       for _,v in ipairs(intrinsics) do
          if v == o then
-            p:outfitRmIntrinsic(v)
-            break
+            ocount = ocount + 1
+            if ocount > 1 then
+               p:outfitRmIntrinsic(v)
+            end
          end
       end
    end
 
    local sm = p:shipMemory()
-   local count = sm._engine_count
+   local count = sm._engine_count or 0
 
    po:clear()
-   if count and count~=0 then
-      local acc=""
+   if count>0 then
+      --local acc=""
       for s,_ in pairs(needs_avg) do
-         po:set(s,sm["_"..s]/count)
-         acc = acc .. fmt.f("  {k} {v}",{k=s,v=fmt.number(sm["_"..s]/count)})
+         po:set(s,(sm["_"..s] or 0)/count)
+         --acc = acc .. fmt.f("  {k} {v}",{k=s,v=fmt.number(sm["_"..s]/count)})
       end
-      print(acc)
+      --print(acc)
    end
 end
 

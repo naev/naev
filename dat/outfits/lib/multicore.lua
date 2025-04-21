@@ -102,6 +102,38 @@ local function is_secondary( po )
    return po and po:slot() and po:slot().tags and po:slot().tags.secondary
 end
 
+local function mf(v)
+   if v == nil then
+      return "nil"
+   elseif v == true then
+      return "true"
+   elseif v == false then
+      return "false"
+   else
+      return "???"
+   end
+end
+
+local function strstk( p)
+   local acc = ""
+   if p then
+      local sm = p:shipMemory()
+
+      if sm then
+         for i,v in pairs(sm._stk) do
+            local t=i:outfit()
+            if t then
+               t=t:nameRaw()
+            else
+               t='nil'
+            end
+            acc=acc.." "..t..":"..mf(v)
+         end
+      end
+   end
+   return acc
+end
+
 --[[ sign:
     -1 for remove
      0 for update
@@ -113,24 +145,26 @@ local function engine_combinator_needs_update( p, po, sign )
 
    sm._stk = sm._stk or {}
    for i,v in ipairs(sm._stk) do
-      if v == po then
-         found=i
-         break
-      end
+      print (">"..v)
    end
+
+   found = (sm._stk[po] == true)
+
    if sign == -1 then
       if found then
-         sm._stk.remove(found)
+         sm._stk[po] = nil
+         print("<<"..strstk(p).." \\ "..po:outfit():nameRaw())
       else
          return false
       end
    else
       if found then
-         if sign == 1 then
-            return false
-         end
+         --if sign == 1 then
+         return false
+         --end
       else
-         table.insert(sm._stk,0,po)
+         print(">> "..strstk(p).." + "..po:outfit():nameRaw())
+         sm._stk[po] = true
       end
    end
    return true
@@ -148,7 +182,7 @@ function multicore.init( params )
    --  - false -> status running
    --  - true -> status halted
    --  - nil -> no status (always running)
-   local multicore_off = nil
+   local multicore_off = true
 
    for k,s in ipairs(stats) do
       s.index = index( shipstat, s[1] )
@@ -164,7 +198,7 @@ function multicore.init( params )
 
    -- Set global properties
    notactive = true -- Not an active outfit
-   hidestats = true -- We do hacks to show stats, so hide them
+   --hidestats = true -- We do hacks to show stats, so hide them
 
    -- Below define the global functions for the outfit
    function descextra( _p, _o, po )
@@ -197,14 +231,14 @@ function multicore.init( params )
       end
       for k,s in ipairs(stats) do
          if not averaging_mod( s ) then
-            local off=multicore_off and (nosec or nomain) and s.name~="mass"
+            local off = multicore_off and (nosec or nomain) and s.name~="mass"
             desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
             if averaged and nomain and (not nosec) and needs_avg[s.name] then
                desc = desc.."   #o(avg with#0 #rpri#0#o)#0"
             end
          end
       end
-      if po and multicore_off ~= nil then
+      if po and (multicore_off ~= nil) then
          desc = desc .. "\n#bWorking Status: #0"
          if multicore_off==false then
             desc = desc .. "#grunning#0"
@@ -215,6 +249,10 @@ function multicore.init( params )
       return desc
    end
 
+   local function onoff_mul()
+      return ((multicore_off~=true) and 1) or -1
+   end
+
    local function changed( p, po, delta, delta_c )
       if is_engine(po) then
          local sm = p:shipMemory()
@@ -223,36 +261,26 @@ function multicore.init( params )
          if engine_combinator_needs_update( p , po, delta ) then
             sm._engine_count = (sm._engine_count or 0) + delta
             for k,s in ipairs(stats) do
-               if multicore_off~=true and needs_avg[s.name] then
+               if (multicore_off~=true) and needs_avg[s.name] then
                   local val = (secondary and s.sec) or s.pri
                   sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
                end
             end
             engine_combinator_refresh( p )
          end
+         return true
       end
-   end
-
-   local function onoff_mul()
-      return (multicore_off~=true and 1) or 0
-   end
-
-   function onadd( p, po )
-      changed( p, po, onoff_mul(), 1)
-   end
-
-   function onremove( p, po )
-      changed( p, po, -onoff_mul(), -1)
+      return false
    end
 
    local function update_stats( po)
       local secondary = is_secondary( po )
-      local ie=is_engine( po )
+      local ie = is_engine( po )
 
       po:clear()
       for k,s in ipairs(stats) do
-         if multicore_off~=true or s.name=='mass' then
-            local val=(secondary and s.sec) or s.pri
+         if multicore_off ~= true or s.name == 'mass' then
+            local val = (secondary and s.sec) or s.pri
 
             if not (ie and needs_avg[s.name]) then
                po:set( s.name, val )
@@ -261,28 +289,53 @@ function multicore.init( params )
       end
    end
 
-   function init( p, po )
-      update_stats( po)
-      changed( p, po, 0, 1)
-   end
-
-   function setworkingstatus( p, po, on)
+   function setworkingstatus( p, po, on, flag)
       local before = multicore_off
 
-      if on==nil then
+      if on == nil then
          multicore_off = nil
       else
          multicore_off = not on
       end
-      if (before and not multicore_off) or (not before and multicore_off) then
-         update_stats( po)
-         if multicore_off then
-            changed( p, po, 0, -1)
+      if before~=multicore_off then
+         print(" status  " .. mf(before) .. " -> " .. mf(multicore_off))
+      end
+      if (before and (not multicore_off or multicore_off == nil)) or (not before and multicore_off) then
+         if flag ~= nil then
+            flag = 1
          else
-            changed( p, po, 0, 1)
+            flag = 0
+         end
+         update_stats( po)
+         if changed( p, po, flag, onoff_mul()) then
+            return true
          end
       end
+      return false
    end
+
+   function init( p, po )
+      if p and po then
+         --print ("init "..mf(multicore_off))
+         setworkingstatus( p, po, nil, true)
+      end
+   end
+
+   function onadd( p, po )
+      if p and po then
+         --print ("onadd "..mf(multicore_off))
+         setworkingstatus( p, po, nil, true)
+      end
+   end
+
+   function onremove( p, po )
+      if p and po then
+         --print ("remove "..mf(multicore_off))
+         setworkingstatus( p, po, false, true)
+         changed( p, po, -1, 0)
+      end
+   end
+
 end
 
 return multicore
