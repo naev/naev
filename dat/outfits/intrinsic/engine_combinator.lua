@@ -20,11 +20,8 @@ descextra=function ( p, _o, _po)
    if sm._engine_count == 0 then
       return "No engine equipped."
    end
-      
-   local sm = p:shipMemory()
-   local out=""
 
-   out = "Engines equipped:" .. count .. "\n"
+   local out = "Engines equipped:" .. count .. "\n"
    if count>0 then
       -- temporary workaround
       count = count * 6

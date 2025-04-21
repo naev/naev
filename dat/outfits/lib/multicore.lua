@@ -94,7 +94,7 @@ local function is_engine( po )
    if po then
       local o=po:outfit()
 
-      return o and o:tags() and o:tags().engine 
+      return o and o:tags() and o:tags().engine
    end
 end
 
@@ -247,7 +247,7 @@ function multicore.init( params )
       changed( p, po, -onoff_mul(), -1)
    end
 
-   local function update_stats( p, po)
+   local function update_stats( po)
       local secondary = is_secondary( po )
       local ie=is_engine( po )
 
@@ -264,7 +264,7 @@ function multicore.init( params )
    end
 
    function init( p, po )
-      update_stats( p, po)
+      update_stats( po)
       changed( p, po, 0, 1)
    end
 
@@ -277,7 +277,7 @@ function multicore.init( params )
          multicore_off = not on
       end
       if (before and not multicore_off) or (not before and multicore_off) then
-         update_stats( p, po)
+         update_stats( po)
          if multicore_off then
             changed( p, po, 0, -1)
          else
