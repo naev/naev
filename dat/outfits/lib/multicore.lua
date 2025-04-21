@@ -137,8 +137,6 @@ local function engine_combinator_needs_update( p, po, sign )
 end
 
 local function engine_combinator_refresh( p )
-   -- Because <limit> does not work as expected
-   p:outfitRmIntrinsic(outfit.get("Engine Combinator"))
    p:outfitAddIntrinsic(outfit.get("Engine Combinator"))
 end
 

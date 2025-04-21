@@ -24,7 +24,7 @@ descextra=function ( p, _o, _po)
    local out = "Engines equipped:" .. count .. "\n"
    if count>0 then
       -- temporary workaround
-      count = count * 6
+      count = count * 2
       for s,_ in pairs(needs_avg) do
          out = out .. "#g" .. s .. ": " .. fmt.number(sm["_"..s]/count) .. "#0\n"
       end
@@ -33,8 +33,23 @@ descextra=function ( p, _o, _po)
 end
 
 function onadd( p, po )
-   if not p then
+   if not p or not po then
       return
+   end
+
+   local o = po:outfit()
+   if not o then
+      return
+   end
+
+   local intrinsics = p:outfitsList("intrinsic")
+   if intrinsics then
+      for _,v in ipairs(intrinsics) do
+         if v == o then
+            p:outfitRmIntrinsic(v)
+            break
+         end
+      end
    end
 
    local sm = p:shipMemory()
@@ -42,10 +57,12 @@ function onadd( p, po )
 
    po:clear()
    if count and count~=0 then
-      for i,s in ipairs(needs_avg) do
+      local acc=""
+      for s,_ in pairs(needs_avg) do
          po:set(s,sm["_"..s]/count)
-         print("{k} {v}",{k=s,v=sm["_"..s]/count})
+         acc = acc .. fmt.f("  {k} {v}",{k=s,v=fmt.number(sm["_"..s]/count)})
       end
+      print(acc)
    end
 end
 
