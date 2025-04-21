@@ -111,6 +111,10 @@ function multicore.init( params )
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
 
+   local function is_engine(p)
+      return p and p.tags and p.tags.engine
+   end
+
    -- Below define the global functions for the outfit
    function descextra( _p, _o, po )
       local nomain, nosec = false, false
@@ -160,23 +164,65 @@ function multicore.init( params )
       return desc
    end
 
-   function init( _p, po )
-      local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
-      po:clear()
-      for k,s in ipairs(stats) do
-         if multicore_off~=true or s.name=='mass' then
-            po:set( s.name, (secondary and s.sec) or s.pri )
+   local function changed( p, po, delta, delta_c )
+      if is_engine(p) then
+         local sm= p:shipMemory()
+         sm._engine_count = (sm._engine_count or 0) + delta
+         for k,s in ipairs(stats) do
+            if multicore_off~=true and needs_avg[s.name] then
+               local val=(secondary and s.sec) or s.pri
+               sm.__index["_"..s.name] = (sm.__index["_"..s.name] or 0) + val
+            end
          end
       end
    end
 
+   local function onoff_mul()
+      return (multicore_off~=true and 1) or 0
+   end
+
+   function onadd( p, po )
+      changed( p, po, onoff_mul(), 1)
+   end
+
+   function onremove( p, po )
+      changed( p, po, -onoff_mul(), -1)
+   end
+
+   local function working_status_changed( p, po)
+      local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
+      local ie=is_engine(p)
+
+      po:clear()
+      for k,s in ipairs(stats) do
+         if multicore_off~=true or s.name=='mass' then
+            local val=(secondary and s.sec) or s.pri
+
+            if not (ie and needs_avg[s.name]) then
+               po:set( s.name, val )
+            end
+         end
+      end
+   end
+
+   function init( p, po )
+      onadd( p, po )
+      working_status_changed( p, po)
+   end
+
    function setworkingstatus( p, po, on)
+      bef = multicore_off
       if on==nil then
          multicore_off = nil
       else
          multicore_off = not on
       end
-      init(p,po)
+      if
+         (bef and not multicore_off) or
+         (not bef and multicore_off)
+      then
+         working_status_changed( p, po)
+      end
    end
 end
 

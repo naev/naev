@@ -1,9 +1,8 @@
 
 local fmt = require "format"
 
-descextra=function ( p, o, po)
+descextra=function ( _p, _o, _po)
    local sm = p:shipMemory()
-   
    local count = sm._engine_count
 
    if not count then
