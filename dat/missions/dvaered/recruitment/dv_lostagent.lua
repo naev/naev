@@ -86,6 +86,7 @@ function accept()
    vn.clear()
    vn.scene()
    local sol = vn.newCharacter( _("Dvaered Soldier"), { image=portrait.getFullPath(port) } )
+   vn.transition( )
    local doaccept = false
 
    local std = faction.reputationGlobal("Dvaered")
@@ -97,7 +98,6 @@ You need at least {needed} standing with House Dvaered to do this mission (you h
       vn.done()
    end
 
-   vn.transition( )
    sol(fmt.f(_([[I am glad to meet you, citizen {player}. Please let me introduce myself: I am...]]), {player=player.name()}))
    sol(_("Hem... Hehe..."))
    sol(_([[Actually, I am not authorized to tell you my rank nor my name or the service I am working for. Anyway, I am an employee of the High Command and we need you for a transport task.]]))
