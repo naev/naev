@@ -16,10 +16,10 @@ descextra=function ( p, _o, _po)
 
    local out
    if count == 0 then
-      out = "No engine equipped\n"
+      out = "#oNo engine equipped#0\n"
       count = 1
    else
-      out = "#bEngines equipped:#0 #g" .. count .. "#0\n"
+      out = "#oEngines equipped:#0 #g" .. count .. "#0\n"
    end
    for _,s in ipairs(mobility_params) do
       if sm["_"..s] then

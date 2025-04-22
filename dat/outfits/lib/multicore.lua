@@ -102,17 +102,9 @@ local function is_secondary( po )
    return po and po:slot() and po:slot().tags and po:slot().tags.secondary
 end
 
-local function mf(v)
-   if v == nil then
-      return "nil"
-   elseif v == true then
-      return "true"
-   elseif v == false then
-      return "false"
-   else
-      return "???"
-   end
-end
+
+--[[
+mf=tostring
 
 local function strstk( p)
    local acc = ""
@@ -127,12 +119,12 @@ local function strstk( p)
    end
    return acc
 end
-
---[[ sign:
-    -1 for remove
-     0 for update
-     1 for add
 --]]
+
+-- sign:
+--  -1 for remove
+--   0 for update
+--   1 for add
 local function engine_combinator_needs_update( p, po, sign )
    local sm = p:shipMemory()
    local found
@@ -182,7 +174,7 @@ function multicore.init( params )
 
    -- Set global properties
    notactive = true -- Not an active outfit
-   --hidestats = true -- We do hacks to show stats, so hide them
+   hidestats = true -- We do hacks to show stats, so hide them
 
    -- Below define the global functions for the outfit
    function descextra( _p, _o, po )
@@ -268,7 +260,7 @@ function multicore.init( params )
    end
 
    -- nil: non-togglable  false: off  true: on
-   local function workingstatus_change( p, po, on)
+   local function workingstatus_change( _p, _po, on)
       local before = multicore_off
 
       if on == nil then
@@ -276,9 +268,9 @@ function multicore.init( params )
       else
          multicore_off = not on
       end
-      if before~=multicore_off then
-         --print(" " .. mf(before) .. " -> " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-      end
+      --if before~=multicore_off then
+      --   print(" " .. mf(before) .. " -> " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
+      --end
       return (before and (not multicore_off or multicore_off == nil)) or (not before and multicore_off)
    end
 
