@@ -380,7 +380,7 @@ bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 bindgen_args = [
    '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
    '--override-abi', 'nlua_package_.*=C-unwind',
-   '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
+   '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes, unsafe_op_in_unsafe_fn)]\npub mod config;',
 
 ]
 # Handle issues with bindgen and the math.h header
