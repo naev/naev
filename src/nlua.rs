@@ -157,14 +157,6 @@ impl NLua {
         math_table.set("mod", mlua::Nil)?; /* Get rid of math.mod */
 
         unsafe {
-            /*
-            globals.set(
-                "require",
-                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-                    naevc::nlua_require,
-                ))?,
-            )?;
-            */
             globals.set(
                 "print",
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
