@@ -199,19 +199,12 @@ function multicore.init( params )
          }).."#0"
       end
 
-      local averaged=false
-      if multicore_off~=true then
-         for k,s in ipairs(stats) do
-            averaged = averaged or averaging_mod( s )
-         end
-      end
+      local averaged=is_engine( po )
       for k,s in ipairs(stats) do
-         if not averaging_mod( s ) then
-            local off = multicore_off and (nosec or nomain) and s.name~="mass"
-            desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
-            if averaged and nomain and (not nosec) and needs_avg[s.name] then
-               desc = desc.."   #o(avg with#0 #rpri#0#o)#0"
-            end
+         local off = multicore_off and (nosec or nomain) and s.name~="mass"
+         desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
+         if averaged and nomain and (not nosec) and needs_avg[s.name] then
+            desc = desc.."  #o[avg with#0 #rpri#0#o]#0"
          end
       end
       if po and (multicore_off ~= nil) then
