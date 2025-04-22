@@ -74,13 +74,6 @@ local needs_avg = {
    speed = true,
 }
 
-local function averaging_mod( s )
-   local suff='_mod'
-   return s.pri==0 and s.sec==-50 and
-      (s.name):sub(#s.name-#suff+1,#s.name)==suff and
-      needs_avg[ (s.name):sub(0,#s.name-#suff) ]
-end
-
 local function index( tbl, key )
    for i,v in ipairs(tbl) do
       if v and v["name"]==key then
