@@ -112,7 +112,7 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
          return _( "SIGABRT" );
       }
 
-      /* No suitable code found. */
+   /* No suitable code found. */
 #if HAVE_STRSIGNAL
    return strsignal( sig );
 #else  /* HAVE_STRSIGNAL */

@@ -171,8 +171,8 @@ int CollideSprite( const glTexture *at, const int asx, const int asy,
    /* a - cube coordinates */
    ax1 = (int)VX( *ap ) - (int)( tex_sw( at ) ) / 2;
    ay1 = (int)VY( *ap ) - (int)( tex_sh( at ) ) / 2;
-   ax2 = ax1 + (int)( tex_sw( at ) ) - 1;
-   ay2 = ay1 + (int)( tex_sh( at ) ) - 1;
+   ax2 = ax1 + (int)(tex_sw( at ))-1;
+   ay2 = ay1 + (int)(tex_sh( at ))-1;
 
    /* b - cube coordinates */
    bx1 = (int)VX( *bp ) - (int)( tex_sw( bt ) ) / 2;
@@ -197,10 +197,10 @@ int CollideSprite( const glTexture *at, const int asx, const int asy,
    rbsy = tex_sy( bt ) - bsy - 1;
 
    /* set up the base points */
-   abx = asx * (int)( tex_sw( at ) ) - ax1;
-   aby = rasy * (int)( tex_sh( at ) ) - ay1;
-   bbx = bsx * (int)( tex_sw( bt ) ) - bx1;
-   bby = rbsy * (int)( tex_sh( bt ) ) - by1;
+   abx = asx * (int)(tex_sw( at ))-ax1;
+   aby = rasy * (int)(tex_sh( at ))-ay1;
+   bbx = bsx * (int)(tex_sw( bt ))-bx1;
+   bby = rbsy * (int)(tex_sh( bt ))-by1;
 
    for ( y = inter_y0; y <= inter_y1; y++ )
       for ( x = inter_x0; x <= inter_x1; x++ )
@@ -277,8 +277,8 @@ int CollideSpritePolygon( const CollPolyView *at, const vec2 *ap,
    rbsy = tex_sy( bt ) - bsy - 1;
 
    /* set up the base points */
-   bbx = bsx * (int)( tex_sw( bt ) ) - bx1;
-   bby = rbsy * (int)( tex_sh( bt ) ) - by1;
+   bbx = bsx * (int)(tex_sw( bt ))-bx1;
+   bby = rbsy * (int)(tex_sh( bt ))-by1;
    for ( y = inter_y0; y <= inter_y1; y++ ) {
       for ( x = inter_x0; x <= inter_x1; x++ ) {
          /* compute offsets for surface before pass to TransparentPixel test */
@@ -989,8 +989,8 @@ int CollideCircleSprite( const vec2 *ap, double ar, const glTexture *bt,
    rbsy = tex_sy( bt ) - bsy - 1;
 
    /* set up the base points */
-   bbx = bsx * (int)( tex_sw( bt ) ) - bx1;
-   bby = rbsy * (int)( tex_sh( bt ) ) - by1;
+   bbx = bsx * (int)(tex_sw( bt ))-bx1;
+   bby = rbsy * (int)(tex_sh( bt ))-by1;
    for ( int y = inter_y0; y <= inter_y1; y++ ) {
       for ( int x = inter_x0; x <= inter_x1; x++ ) {
          /* compute offsets for surface before pass to TransparentPixel test */

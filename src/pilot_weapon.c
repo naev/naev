@@ -1558,8 +1558,7 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *pos )
       if ( ret )
          pos->state = PILOT_OUTFIT_ON;
       return ret;
-   }
-   else if ( outfit_luaOntoggle( pos->outfit ) != LUA_NOREF ) {
+   } else if ( outfit_luaOntoggle( pos->outfit ) != LUA_NOREF ) {
       int ret = pilot_outfitLOntoggle( p, pos, 1, 1 );
       if ( ret && outfit_isWeapon( pos->outfit ) )
          pos->state = PILOT_OUTFIT_ON;
