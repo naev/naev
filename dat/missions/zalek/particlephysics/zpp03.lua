@@ -23,6 +23,7 @@ local vn = require "vn"
 local fmt = require "format"
 local zpp = require "common.zalek_physics"
 local sokoban = require "minigames.sokoban"
+local pilotai = require "pilotai"
 
 local reward = zpp.rewards.zpp03
 local mainpnt, mainsys = spob.getS("Katar I")
@@ -156,6 +157,10 @@ function enter ()
    phost:setInvincible(true)
    phost:setVisplayer(true)
    phost:setHilight(true)
+   phost:outfitAddIntrinsic( "Worn Down" )
+
+   -- Disable comm
+   pilotai.setNoComm( {pdis, phost}, true )
 
    hook.timer( 5, "heartbeat" )
 end

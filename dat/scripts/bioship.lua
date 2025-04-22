@@ -124,7 +124,7 @@ local function skill_disable( p, s, keepvar )
       warn(fmt.f(_("Number of outfits doesn't match number of slots for skill '{skill}'"),{skill=s.displayname}))
    end
    for k,o in ipairs(outfit) do
-      if slot then
+      if slot and p:outfitHasSlot(slot[k]) then
          local sl = slot[k]
          if p:outfitSlot( sl ) == naev.outfit.get(o) then
             if not p:outfitRmSlot( sl ) then
@@ -144,6 +144,7 @@ local function skill_disable( p, s, keepvar )
       s.enabled = false
    end
 end
+bioship.skill_disable = skill_disable
 
 local function skill_enable( p, s )
    local outfit = s.outfit or {}
@@ -164,7 +165,7 @@ local function skill_enable( p, s )
       skill_disable( p, s._replaces, true )
    end
    for k,o in ipairs(outfit) do
-      if slot then
+      if slot and p:outfitHasSlot(slot[k]) then
          local sl = slot[k]
          if p:outfitSlot(sl) and not p:outfitRmSlot(sl) then
             warn(fmt.f(_("Failed to remove bioship outfit from slot '{sl}'."),{sl=sl}))

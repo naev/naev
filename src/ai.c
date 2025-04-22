@@ -236,6 +236,7 @@ static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
 static int aiL_shoot_indicator( lua_State *L );     /* get shoot indicator */
 static int aiL_set_shoot_indicator( lua_State *L ); /* set shoot indicator */
 static int aiL_stealth( lua_State *L );
+static int aiL_outfitOffAll( lua_State *L );
 
 static const luaL_Reg aiL_methods[] = {
    /* tasks */
@@ -329,6 +330,7 @@ static const luaL_Reg aiL_methods[] = {
    { "shoot_indicator", aiL_shoot_indicator },
    { "set_shoot_indicator", aiL_set_shoot_indicator },
    { "stealth", aiL_stealth },
+   { "outfitOffAll", aiL_outfitOffAll },
    { 0, 0 } /* end */
 }; /**< Lua AI Function table. */
 
@@ -829,8 +831,10 @@ void ai_think( Pilot *pilot, double dt, int dotask )
     * the weapon sets every frame, so that the AI has to redo them over and
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
     * TODO fix. */
-   /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
+
+   /* Mark weapon sets as off, and the AI will activate as necessary. */
    if ( !pilot_isPlayer( cur_pilot ) )
+      /* Turn off HOLD groups. */
       pilot_weapSetAIClear( cur_pilot );
 
    /* Get current task. */
@@ -865,16 +869,6 @@ void ai_think( Pilot *pilot, double dt, int dotask )
       ai_unsetPilot( oldmem );
       NTracingZoneEnd( _ctx );
       return;
-   }
-
-   /* Mark weapon sets as off, and the AI will activate as necessary. */
-   if ( !pilot_isPlayer( cur_pilot ) ) {
-      /* Turn off HOLD groups. */
-      for ( int i = 0; i < PILOT_WEAPON_SETS; i++ )
-         cur_pilot->weapon_sets[i].active = 0;
-      /* Now untoggle the rest. */
-      for ( int i = 0; i < array_size( cur_pilot->outfits ); i++ )
-         cur_pilot->outfits[i]->flags &= ~( PILOTOUTFIT_ISON_TOGGLE );
    }
 
    /* pilot has a currently running task */
@@ -1321,6 +1315,7 @@ static int ai_tasktarget( lua_State *L, const Task *t )
 static int aiL_pushtask( lua_State *L )
 {
    ai_createTask( L, 0 );
+   aiL_outfitOffAll( L );
    return 0;
 }
 /**
@@ -1339,6 +1334,7 @@ static int aiL_poptask( lua_State *L )
       return 0;
    }
    t->done = 1;
+   aiL_outfitOffAll( L );
    return 0;
 }
 
@@ -3481,6 +3477,20 @@ static int aiL_stealth( lua_State *L )
    lua_pushboolean( L, pilot_stealth( cur_pilot ) );
    return 1;
 }
+/**
+ * @brief Tries to turn off all outfits.
+ *
+ * @luafunc outfitOffAll
+ */
+static int aiL_outfitOffAll( lua_State *L )
+{
+   (void)L;
+   for ( int i = 0; i < array_size( cur_pilot->outfits ); i++ )
+      cur_pilot->outfits[i]->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
+   pilot_weapSetUpdateOutfitState( cur_pilot );
+   return 0;
+}
+
 /**
  * @}
  */

@@ -175,7 +175,7 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
    int non, noff;
    int breakstealth;
 
-   /* First pass to remove all dynamic flags. */
+   /* First pass to remove all hold flags, as we recompute it. */
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       PilotOutfitSlot *pos = p->outfits[i];
       pos->flags &= ~PILOTOUTFIT_ISON_HOLD;
@@ -195,12 +195,13 @@ void pilot_weapSetUpdateOutfitState( Pilot *p )
       if ( p->advweap && ( ws->type == WEAPSET_TYPE_TOGGLE ) )
          continue;
 
-      /* Keep on toggling on. */
+      /* Time to mark as on. */
       for ( int j = 0; j < array_size( ws->slots ); j++ ) {
          PilotOutfitSlot *pos = p->outfits[ws->slots[j].slotid];
          if ( pos->outfit == NULL )
             continue;
-         pos->flags &= ~( PILOTOUTFIT_ISON_TOGGLE );
+         /* If held, we clear the toggle. */
+         pos->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
          pos->flags |= PILOTOUTFIT_ISON_HOLD;
          if ( ws->volley )
             pos->flags |= PILOTOUTFIT_VOLLEY;
@@ -1552,8 +1553,12 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *pos )
 {
    if ( pos->outfit == NULL )
       return 0;
-   if ( outfit_isAfterburner( pos->outfit ) )
-      pilot_afterburn( p );
+   if ( outfit_isAfterburner( pos->outfit ) ) {
+      int ret = pilot_afterburn( p );
+      if ( ret )
+         pos->state = PILOT_OUTFIT_ON;
+      return ret;
+   }
    else if ( outfit_luaOntoggle( pos->outfit ) != LUA_NOREF ) {
       int ret = pilot_outfitLOntoggle( p, pos, 1, 1 );
       if ( ret && outfit_isWeapon( pos->outfit ) )
@@ -1612,28 +1617,28 @@ int pilot_outfitOffAllStealth( Pilot *p )
 /**
  * @brief Activate the afterburner.
  */
-void pilot_afterburn( Pilot *p )
+int pilot_afterburn( Pilot *p )
 {
    if ( p == NULL )
-      return;
+      return 0;
 
    if ( pilot_isFlag( p, PILOT_HYP_PREP ) ||
         pilot_isFlag( p, PILOT_HYPERSPACE ) ||
         pilot_isFlag( p, PILOT_LANDING ) || pilot_isFlag( p, PILOT_TAKEOFF ) ||
         pilot_isDisabled( p ) || pilot_isFlag( p, PILOT_COOLDOWN ) )
-      return;
+      return 0;
 
    /* Not under manual control if is player. */
    if ( pilot_isFlag( p, PILOT_MANUAL_CONTROL ) && pilot_isPlayer( p ) )
-      return;
+      return 0;
 
    /** @todo fancy effect? */
    if ( p->afterburner == NULL )
-      return;
+      return 0;
 
    /* Needs at least enough energy to afterburn fo 0.5 seconds. */
    if ( p->energy < outfit_energy( p->afterburner->outfit ) * 0.5 )
-      return;
+      return 0;
 
    /* Turn it on. */
    if ( p->afterburner->state == PILOT_OUTFIT_OFF ) {
@@ -1656,6 +1661,7 @@ void pilot_afterburn( Pilot *p )
       spfx_shake( afb_mod *
                   outfit_afterburnerRumble( player.p->afterburner->outfit ) );
    }
+   return 1;
 }
 
 /**

@@ -5,6 +5,25 @@ local atk = require "ai.core.attack.util"
 -- Keep generic as backup
 local idle_generic = idle
 
+-- TODO not duplicate function from ai/core/basic.lua
+local function shoot_turret( target )
+   -- Target must exist
+   if not target or not target:exists() then
+      return
+   end
+
+   -- Point defense and Fighters
+   atk.fb_and_pd()
+
+   -- Shoot the target
+   ai.hostile(target)
+   ai.settarget(target)
+   -- See if we have some turret to use
+   if ai.hasturrets() then
+      atk.turrets()
+   end
+end
+
 -- Get a nearby enemy using pirate heuristics
 local function __getenemy ()
    local p, d = atk.preferred_enemy( nil, true )
@@ -183,6 +202,16 @@ function backoff( target )
    local dir = ai.face( target, true )
    ai.accel()
 
+   -- When out of range pop task
+   if ai.dist2( target ) > math.pow(tdist,2) then
+      -- Turn off afterburner if applicable
+      if mem._o and mem._o.afterburner then
+         p:outfitToggle( mem._o.afterburner, false )
+      end
+      ai.poptask()
+      return
+   end
+
    -- Handle outfits that help get away
    if mem._o and dir < math.rad(25) then
       if mem._o.afterburner and p:energy() > 30 then
@@ -194,15 +223,8 @@ function backoff( target )
       end
    end
 
-   -- When out of range pop task
-   if ai.dist2( target ) > math.pow(tdist,2) then
-      -- Turn off afterburner if applicable
-      if mem._o and mem._o.afterburner then
-         p:outfitToggle( mem._o.afterburner, false )
-      end
-      ai.poptask()
-      return
-   end
+   -- Shoot turret if applicable
+   shoot_turret()
 end
 
 control_funcs.ambush_moveto = function ()

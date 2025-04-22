@@ -193,7 +193,7 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
        */
       if ( NULL != transition->tex ) {
          /* Scrolling is happening faster than fading... */
-         WARN( _( "Intro scrolling too fast!" ) );
+         // WARN( _( "Intro scrolling too fast!" ) );
          gl_freeTexture( transition->tex );
       }
       load_image( transition, img_file );
