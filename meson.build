@@ -380,6 +380,9 @@ bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 bindgen_args = [
    '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
    '--override-abi', 'nlua_package_.*=C-unwind',
+   '--override-abi', 'cli_print=C-unwind',
+   '--override-abi', 'cli_printRaw=C-unwind',
+   '--override-abi', 'cli_warn=C-unwind',
    '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
 
 ]

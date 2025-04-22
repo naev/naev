@@ -60,8 +60,8 @@ lua_State *naevL         = NULL; /**< Global Naev Lua state. */
 nlua_env  *__NLUA_CURENV = NULL; /**< Current environment. */
 static char
    *common_script; /**< Common script to run when creating environments. */
-static size_t common_sz; /**< Common script size. */
-static int    nlua_envs = LUA_NOREF;
+// static size_t common_sz; /**< Common script size. */
+static int nlua_envs = LUA_NOREF;
 
 /**
  * @brief Cache structure for loading chunks.
@@ -93,11 +93,13 @@ static const lua_CFunction loaders[] = {
  * By default it uses exit( EXIT_FAILURE );, but we want to generate a backtrace
  * or let gdb catch it if possible.
  */
+/*
 static int nlua_panic( lua_State *L )
 {
    ERR( _( "LUA PANIC: %s" ), lua_tostring( L, -1 ) );
    return 0;
 }
+*/
 
 /*
  * @brief Initializes the global Lua state.
@@ -112,7 +114,7 @@ void lua_init( void )
    nlua_envs = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
    /* Better clean up. */
-   lua_atpanic( naevL, nlua_panic );
+   // lua_atpanic( naevL, nlua_panic );
 
    /* Initialize the caches. */
    lua_cache = array_create( LuaCache_t );
@@ -313,29 +315,6 @@ static lua_State *nlua_newState( void )
       return NULL;
    }
    return L;
-}
-
-/**
- * @brief Loads specially modified basic stuff.
- *
- *    @param L Lua State to load the basic stuff into.
- *    @return 0 on success.
- */
-static int nlua_loadBasic( lua_State *L )
-{
-   luaL_openlibs( L );
-
-   /* Override built-ins to use Naev for I/O. */
-   // lua_register( L, "loadstring", luaB_loadstring );
-   lua_register( L, "print", cli_print );
-   lua_register( L, "printRaw", cli_printRaw );
-   lua_register( L, "warn", cli_warn );
-
-   /* TODO not sure why this nil is needed, but stack is unbalanced otherwise...
-    */
-   lua_pushnil( L );
-
-   return 0;
 }
 
 /**
@@ -612,9 +591,20 @@ int nlua_pcall( nlua_env *env, int nargs, int nresults )
    prev_env      = __NLUA_CURENV;
    __NLUA_CURENV = env;
 
+   /* Have to bypass metamethods. */
+   lua_pushstring( naevL, "_ENV" );
    nlua_pushenv( naevL, env );
-   lua_setfenv( naevL, -2 - nargs );
+   lua_rawset( naevL, LUA_GLOBALSINDEX );
    ret = lua_pcall( naevL, nargs, nresults, errf );
+#if DEBUGGING
+   /* Disable environment so it gives errors if trying to run without it. */
+   lua_pushstring( naevL, "_ENV" );
+   if ( prev_env == NULL )
+      lua_pushnil( naevL );
+   else
+      nlua_pushenv( naevL, prev_env );
+   lua_rawset( naevL, LUA_GLOBALSINDEX );
+#endif
 
    __NLUA_CURENV = prev_env;
 
@@ -999,3 +989,26 @@ void nlua_pushenv( lua_State *L, nlua_env *env )
    lua_rawgeti( L, LUA_REGISTRYINDEX, env->ref );
 }
 #endif
+
+/**
+ * @brief Loads specially modified basic stuff.
+ *
+ *    @param L Lua State to load the basic stuff into.
+ *    @return 0 on success.
+ */
+static int nlua_loadBasic( lua_State *L )
+{
+   luaL_openlibs( L );
+
+   /* Override built-ins to use Naev for I/O. */
+   // lua_register( L, "loadstring", luaB_loadstring );
+   lua_register( L, "print", cli_print );
+   lua_register( L, "printRaw", cli_printRaw );
+   lua_register( L, "warn", cli_warn );
+
+   /* TODO not sure why this nil is needed, but stack is unbalanced otherwise...
+    */
+   lua_pushnil( L );
+
+   return 0;
+}

@@ -11,6 +11,13 @@ const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of 
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
 const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
 
+/// Variable we use for Lua environments
+const ENV: &str = "_ENV";
+
+// For black magic
+type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
+type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
+
 #[allow(dead_code)]
 pub struct LuaEnv {
     table: mlua::Table,
@@ -19,10 +26,14 @@ pub struct LuaEnv {
 
 #[allow(dead_code)]
 pub struct NLua {
+    /// The true Lua environment (to rule them all)
     pub lua: mlua::Lua,
-    common: Option<mlua::Function>,
-    envs: Vec<LuaEnv>,
+    /// Our globals, these can be masked but not removed
+    globals: mlua::Table,
+    /// The metatable for environments, just defaults to our globals
+    env_mt: mlua::Table,
     clua: *mut mlua::lua_State, // TODO remove when we can
+    envs: Vec<LuaEnv>,
 }
 // Got to remove this when we can...
 unsafe impl Sync for NLua {}
@@ -142,12 +153,6 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
     )))
 }
 
-fn load_common(lua: &mlua::Lua) -> mlua::Result<mlua::Function> {
-    let data = ndata::read(LUA_COMMON_PATH)?;
-    let common = std::str::from_utf8(&data)?;
-    lua.load(common).into_function()
-}
-
 impl NLua {
     pub fn new() -> Result<NLua> {
         let lua = unsafe {
@@ -156,7 +161,7 @@ impl NLua {
             mlua::Lua::init_from_ptr(naevc::naevL as *mut mlua::lua_State)
         };
 
-        // Load base libraries
+        // Load base libraries NOT SUFFICIENT
         //lua.load_std_libs( mlua::StdLib::ALL_SAFE ).unwrap();
 
         // Minor sandboxing
@@ -165,35 +170,106 @@ impl NLua {
         // Set up gettext stuff
         open_gettext(&lua)?;
 
+        // Add some mor functions.
+        let globals = lua.globals();
+        globals.set("require", lua.create_function(require)?)?;
+        unsafe {
+            globals.set(
+                "print",
+                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                    naevc::cli_print,
+                ))?,
+            )?;
+            globals.set(
+                "printRaw",
+                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                    naevc::cli_printRaw,
+                ))?,
+            )?;
+            globals.set(
+                "warn",
+                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                    naevc::cli_warn,
+                ))?,
+            )?;
+        }
+
         // Load common chunk
-        let common = match load_common(&lua) {
-            Ok(chunk) => Some(chunk),
-            _ => None,
-        };
+        let common_data = ndata::read(LUA_COMMON_PATH)?;
+        lua.load(std::str::from_utf8(&common_data)?).exec()?;
+
+        // Swap the global table with an empty one, returning the global one
+        let globals: mlua::Table = unsafe {
+            lua.exec_raw((), |state| {
+                mlua::ffi::lua_pushvalue(state, mlua::ffi::LUA_GLOBALSINDEX);
+                mlua::ffi::lua_newtable(state);
+                mlua::ffi::lua_replace(state, mlua::ffi::LUA_GLOBALSINDEX);
+            })
+        }?;
+
+        // Set globals to be truly read only (should only be possible if the user is being bad)
+        let globals_mt = lua.create_table()?;
+        globals_mt.set(
+            "__newindex",
+            lua.create_function(|_, ()| -> mlua::Result<()> {
+                Err(mlua::Error::RuntimeError(String::from(
+                    "globals are read only",
+                )))
+            })?,
+        )?;
+        globals.set_metatable(Some(globals_mt));
+
+        // Our new globals should be usable now
+        let wrapped = lua.globals();
+        let wrapped_mt = lua.create_table()?;
+        wrapped_mt.set(
+            "__index",
+            lua.create_function(
+                |lua, (t, k): (mlua::Table, mlua::Value)| -> mlua::Result<mlua::Value> {
+                    let env_str = lua.create_string(ENV)?;
+                    match k == mlua::Value::String(env_str) {
+                        true => t.raw_get(k),
+                        false => {
+                            let e: mlua::Table = t.raw_get(ENV)?;
+                            e.get(k)
+                        }
+                    }
+                },
+            )?,
+        )?;
+        wrapped_mt.set(
+            "__newindex",
+            lua.create_function(
+                |_, (t, k, v): (mlua::Table, mlua::Value, mlua::Value)| -> mlua::Result<()> {
+                    let e: mlua::Table = t.raw_get(ENV)?;
+                    e.set(k, v)
+                },
+            )?,
+        )?;
+        wrapped.set_metatable(Some(wrapped_mt));
+
+        let env_mt = lua.create_table()?;
+        env_mt.set("__index", globals.clone())?;
 
         // Return it
         Ok(NLua {
             lua,
+            globals,
+            env_mt,
             envs: Vec::new(),
-            common,
             clua: unsafe { naevc::naevL as *mut mlua::lua_State },
         })
     }
 
     #[allow(dead_code)]
-    pub fn new_env(&mut self, name: &str) -> mlua::Result<LuaEnv> {
+    pub fn environment_new(&mut self, name: &str) -> mlua::Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
 
         t.set("__name", name)?;
 
         // Metatable
-        let m = lua.create_table()?;
-        m.set("__index", lua.globals())?;
-        t.set_metatable(Some(m));
-
-        // Replace require.
-        t.set("require", lua.create_function(require)?)?;
+        t.set_metatable(Some(self.env_mt.clone()));
 
         // Set up paths.
         // "package.path" to look in the data.
@@ -230,8 +306,6 @@ impl NLua {
         )?;
         // TODO reimplement in rust...
         unsafe {
-            type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
-            type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
             loaders.push(
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
                     naevc::nlua_package_loader_lua,
@@ -254,31 +328,26 @@ impl NLua {
         // Set up naev namespace. */
         t.set("naev", lua.create_table()?)?;
 
-        // Load common script
-        if let Some(common) = &self.common {
-            common.set_environment(t.clone())?;
-            common.call::<()>(())?;
-        };
-
         Ok(LuaEnv {
             table: t.clone(),
             rk: lua.create_registry_value(t)?,
         })
     }
+
+    /// Calls a function with the environment
+    pub fn environment_call<R: FromLuaMulti>(
+        &self,
+        env: &LuaEnv,
+        func: &mlua::Function,
+        args: impl IntoLuaMulti,
+    ) -> mlua::Result<R> {
+        self.lua.globals().raw_set(ENV, env.table.clone())?;
+        func.call(args)
+    }
 }
 
 #[allow(dead_code)]
 impl LuaEnv {
-    /// Calls a function with the environment
-    pub fn call<R: FromLuaMulti>(
-        &self,
-        func: &mlua::Function,
-        args: impl IntoLuaMulti,
-    ) -> mlua::Result<R> {
-        func.set_environment(self.table.clone())?;
-        func.call(args)
-    }
-
     /// Gets a value from the environment
     pub fn get<V: FromLua>(&self, key: impl IntoLua) -> mlua::Result<V> {
         //let t: mlua::Table = self.rk.into_lua( self.lua )?.into();
@@ -345,7 +414,7 @@ pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut CLuaEnv {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
     let mut lua = NLUA.lock().unwrap();
-    match lua.new_env(name) {
+    match lua.environment_new(name) {
         Ok(env) => Box::into_raw(Box::new(CLuaEnv { env, lua: lua.clua })),
         Err(e) => {
             warn!("unable to create Lua environment: {}", e);
