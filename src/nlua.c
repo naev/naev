@@ -596,15 +596,12 @@ int nlua_pcall( nlua_env *env, int nargs, int nresults )
    nlua_pushenv( naevL, env );
    lua_rawset( naevL, LUA_GLOBALSINDEX );
    ret = lua_pcall( naevL, nargs, nresults, errf );
-#if DEBUGGING
-   /* Disable environment so it gives errors if trying to run without it. */
    lua_pushstring( naevL, "_ENV" );
    if ( prev_env == NULL )
       lua_pushnil( naevL );
    else
       nlua_pushenv( naevL, prev_env );
    lua_rawset( naevL, LUA_GLOBALSINDEX );
-#endif
 
    __NLUA_CURENV = prev_env;
 
