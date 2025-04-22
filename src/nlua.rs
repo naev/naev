@@ -340,6 +340,7 @@ impl NLua {
         })
     }
 
+    #[allow(dead_code)]
     /// Calls a function with the environment
     pub fn environment_call<R: FromLuaMulti>(
         &self,
@@ -409,19 +410,14 @@ pub unsafe extern "C" fn luaL_traceback(
 use crate::{formatx, warn};
 use std::ffi::CStr;
 
-pub struct CLuaEnv {
-    env: LuaEnv,
-    lua: *mut mlua::lua_State,
-}
-
 // C API
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut CLuaEnv {
+pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
     let mut lua = NLUA.lock().unwrap();
     match lua.environment_new(name) {
-        Ok(env) => Box::into_raw(Box::new(CLuaEnv { env, lua: lua.clua })),
+        Ok(env) => Box::into_raw(Box::new(env)),
         Err(e) => {
             warn!("unable to create Lua environment: {}", e);
             std::ptr::null_mut()
@@ -430,25 +426,22 @@ pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut CLuaEnv {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_dupEnv(env: *mut CLuaEnv) -> *mut CLuaEnv {
+pub extern "C" fn nlua_dupEnv(env: *mut LuaEnv) -> *mut LuaEnv {
     if env.is_null() {
         return env;
     }
     let env = unsafe { &*env };
-    let t = &env.env.table;
+    let t = &env.table;
     let lua = &NLUA.lock().unwrap();
-    let newenv = CLuaEnv {
-        env: LuaEnv {
-            table: t.clone(),
-            rk: lua.lua.create_registry_value(t).unwrap(),
-        },
-        lua: lua.clua,
+    let newenv = LuaEnv {
+        table: t.clone(),
+        rk: lua.lua.create_registry_value(t).unwrap(),
     };
     Box::into_raw(Box::new(newenv))
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_freeEnv(env: *mut CLuaEnv) {
+pub extern "C" fn nlua_freeEnv(env: *mut LuaEnv) {
     if !env.is_null() {
         let _ = unsafe { Box::from_raw(env) };
     }
@@ -456,7 +449,7 @@ pub extern "C" fn nlua_freeEnv(env: *mut CLuaEnv) {
 
 /*
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_dobufenv( env: *mut CLuaEnv, buf: *const c_char, sz: usize, name: *const c_char ) -> c_int {
+pub extern "C" fn nlua_dobufenv( env: *mut LuaEnv, buf: *const c_char, sz: usize, name: *const c_char ) -> c_int {
     if env.is_null() {
         return -1;
     }
@@ -468,7 +461,7 @@ pub extern "C" fn nlua_dobufenv( env: *mut CLuaEnv, buf: *const c_char, sz: usiz
     let lua = &NLUA.lock().unwrap();
     let chunk = lua.lua.load(buf)
         .set_name( name )
-        .set_environment( env.env.table.clone() );
+        .set_environment( env.table.clone() );
     match chunk.exec() {
         Ok(()) => 0,
         Err(e) => {
@@ -480,9 +473,9 @@ pub extern "C" fn nlua_dobufenv( env: *mut CLuaEnv, buf: *const c_char, sz: usiz
 */
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *mut CLuaEnv) {
+pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *mut LuaEnv) {
     let env = unsafe { &*env };
     unsafe {
-        mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, env.env.rk.id().into());
+        mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, env.rk.id().into());
     }
 }
