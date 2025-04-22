@@ -765,6 +765,7 @@ int nlua_helperTags( lua_State *L, int idx, char *const *tags )
    }
 }
 
+#if 0
 /**
  * @brief include( string module )
  *
@@ -773,7 +774,7 @@ int nlua_helperTags( lua_State *L, int idx, char *const *tags )
  *    @param L Lua Environment to load modules into.
  *    @return The return value of the chunk, or true.
  */
-int nlua_require( lua_State *L )
+static int nlua_require( lua_State *L )
 {
    const char *filename = luaL_checkstring( L, 1 );
 
@@ -842,7 +843,6 @@ int nlua_require( lua_State *L )
    return 1;
 }
 
-#if 0
 /*
  * @brief Create an new environment in global Lua state.
  *

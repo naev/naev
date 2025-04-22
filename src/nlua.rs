@@ -121,7 +121,7 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
 
     // Try to see if already loaded in the environment
     let loaded: mlua::Table = globals.get(NLUA_LOAD_TABLE)?;
-    match loaded.get::<mlua::Value>(filename.clone())? {
+    match loaded.get::<mlua::Value>(&filename)? {
         mlua::Nil => (),
         module => return Ok(module),
     }
@@ -131,13 +131,13 @@ fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value>
     let loaders: mlua::Table = package.get("loaders")?;
     let mut errmsg = String::new();
     for f in loaders.sequence_values::<mlua::Function>() {
-        match f?.call::<mlua::Value>(filename.clone())? {
+        match f?.call::<mlua::Value>(&filename)? {
             mlua::Value::Function(mf) => {
-                let mut ret = mf.call::<mlua::Value>(filename)?;
+                let mut ret = mf.call::<mlua::Value>(&filename)?;
                 if ret == mlua::Value::Nil {
                     ret = mlua::Value::Boolean(true);
                 }
-                loaded.set("filename", mf.clone())?;
+                loaded.set(filename, &ret)?;
                 return Ok(ret);
             }
             mlua::Value::String(s) => errmsg.push_str(&s.to_str()?),
@@ -172,14 +172,16 @@ impl NLua {
 
         // Add some mor functions.
         let globals = lua.globals();
-        //globals.set("require", lua.create_function(require)?)?;
+        globals.set("require", lua.create_function(require)?)?;
         unsafe {
+            /*
             globals.set(
                 "require",
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
                     naevc::nlua_require,
                 ))?,
             )?;
+            */
             globals.set(
                 "print",
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
