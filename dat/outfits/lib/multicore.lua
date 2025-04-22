@@ -140,35 +140,22 @@ local function engine_combinator_needs_update( p, po, sign )
    sm._stk = sm._stk or {}
 
    found = (sm._stk[po:id()] == true)
+   --print(" [" .. strstk(p) .. " ] . " .. fmt.number(po:id()) .. " " .. fmt.number(sign))
 
    if sign == -1 then
       if found then
-         print(" [" .. strstk(p) .. " ] \\ " .. fmt.number(po:id()))
          sm._stk[po:id()] = nil
-      else
-         return false
       end
+      return found
+   elseif found then
+      return sign == 0
+   elseif sign == 0 then
+      print("Trying to update a non-equipped engine.")
+      return false
    else
-      if found then
-         if sign == 1 then
-            return false
-         else
-            print(" [" .. strstk(p) .. " ] upd " .. fmt.number(po:id()))
-         end
-      else
-         print(" [" .. strstk(p) .. " ] + " .. fmt.number(po:id()))
-         if sign == 0 then
-            print("Trying to update a new engine.")
-         else
-            sm._stk[po:id()] = true
-         end
-      end
+      sm._stk[po:id()] = true
+      return true
    end
-   return true
-end
-
-local function engine_combinator_refresh( p )
-   p:outfitAddIntrinsic(outfit.get("Engine Combinator"))
 end
 
 function multicore.init( params )
@@ -246,28 +233,22 @@ function multicore.init( params )
       return desc
    end
 
-   local function onoff_mul()
-      return ((multicore_off~=true) and 1) or -1
+   local function engine_combinator_refresh( p, po, delta, delta_c )
+      local secondary = is_secondary( po )
+      local sm=p:shipMemory()
+
+      sm._engine_count = (sm._engine_count or 0) + delta
+      for k,s in ipairs(stats) do
+         if (multicore_off~=true) and needs_avg[s.name] then
+            local val = (secondary and s.sec) or s.pri
+            sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
+         end
+      end
+      p:outfitAddIntrinsic(outfit.get("Engine Combinator"))
    end
 
-   local function changed( p, po, delta, delta_c )
-      if is_engine(po) then
-         local sm = p:shipMemory()
-         local secondary = is_secondary( po )
-
-         if engine_combinator_needs_update( p , po, delta ) then
-            sm._engine_count = (sm._engine_count or 0) + delta
-            for k,s in ipairs(stats) do
-               if (multicore_off~=true) and needs_avg[s.name] then
-                  local val = (secondary and s.sec) or s.pri
-                  sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
-               end
-            end
-            engine_combinator_refresh( p )
-         end
-         return true
-      end
-      return false
+   local function onoff_mul()
+      return ((multicore_off~=true) and 1) or -1
    end
 
    local function update_stats( po)
@@ -286,7 +267,8 @@ function multicore.init( params )
       end
    end
 
-   function setworkingstatus( p, po, on, flag)
+   -- nil: non-togglable  false: off  true: on
+   local function workingstatus_change( p, po, on)
       local before = multicore_off
 
       if on == nil then
@@ -295,40 +277,63 @@ function multicore.init( params )
          multicore_off = not on
       end
       if before~=multicore_off then
-         print(" " .. mf(before) .. " -> " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
+         --print(" " .. mf(before) .. " -> " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
       end
-      if (before and (not multicore_off or multicore_off == nil)) or (not before and multicore_off) then
-         if flag then
-            flag = onoff_mul()
-         else
-            flag = 0
+      return (before and (not multicore_off or multicore_off == nil)) or (not before and multicore_off)
+   end
+
+   local function equip( p, po, sign)
+      local ssign
+
+      if sign == -1 then
+         if not workingstatus_change( p, po, false) then
+            ssign = 0
          end
-         update_stats( po)
-         if changed( p, po, flag, onoff_mul()) then
-            return true
-         end
+      else
+         workingstatus_change( p, po, nil)
+         ssign = sign
       end
-      return false
+      if is_engine(po) and  engine_combinator_needs_update( p , po, sign ) then
+         engine_combinator_refresh( p, po, sign, ssign )
+      end
+      update_stats( po)
    end
 
    function init( p, po )
       if p and po then
-         --print ("init "..mf(multicore_off))
-         setworkingstatus( p, po, nil, true)
+         --print ("init " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
+         equip( p, po, 1)
       end
    end
 
    function onadd( p, po )
       if p and po then
-         print ("onadd " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-         setworkingstatus( p, po, nil, true)
+         --print ("onadd " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
+         equip( p, po, 1)
       end
    end
 
    function onremove( p, po )
       if p and po then
-         print ("onremove " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-         setworkingstatus( p, po, false, true)
+         --print ("onremove " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
+         equip( p, po, -1)
+      end
+   end
+
+   function setworkingstatus(  p, po, on)
+      local doit
+      if is_engine(po) then
+         -- we can check this is still equipped
+         doit = engine_combinator_needs_update( p , po, 0)
+      else
+         doit = true
+      end
+
+      if doit and workingstatus_change( p, po, on) then
+         if is_engine(po) then
+            engine_combinator_refresh( p, po, 0, onoff_mul())
+         end
+         update_stats( po)
       end
    end
 
