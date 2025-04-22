@@ -12,6 +12,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include <ctype.h>
 #include <libgen.h>
 #include <unistd.h>
 
@@ -339,11 +340,11 @@ static void uniedit_saveDirectoryChoose( void              *data,
 {
    (void)data;
    (void)filter;
-   if ( filelist == NULL ) {
+   if (filelist == NULL) {
       WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFolderDialog",
             SDL_GetError() );
       return;
-   } else if ( filelist[0] == NULL ) {
+   } else if (filelist[0] == NULL) {
       /* Cancelled by user.  */
       return;
    }
@@ -356,17 +357,17 @@ void uniedit_saveError( void )
 {
    const char *datadir =
       ( conf.dev_data_dir == NULL ) ? "[NULL]" : conf.dev_data_dir;
-   if ( !dialogue_YesNo( _( "Unable to Save Data!" ),
-                         _( "There has been an error saving data from the "
-                            "editor! Please check "
-                            "the error logs or open the console for more "
-                            "information. You likely "
-                            "have the wrong path set."
-                            "\n\n"
-                            "The current data directory is '#b%s#0'"
-                            "\n"
-                            "Do you wish to choose a new directory?" ),
-                         datadir ) )
+   if (!dialogue_YesNo( _( "Unable to Save Data!" ),
+                        _( "There has been an error saving data from the "
+                           "editor! Please check "
+                           "the error logs or open the console for more "
+                           "information. You likely "
+                           "have the wrong path set."
+                           "\n\n"
+                           "The current data directory is '#b%s#0'"
+                           "\n"
+                           "Do you wish to choose a new directory?" ),
+                        datadir ))
       return;
    SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
                              gl_screen.window, conf.dev_data_dir, 0 );
@@ -375,16 +376,16 @@ void uniedit_saveError( void )
 static int uniedit_saveTestDirectory( const char *path )
 {
    char buf[PATH_MAX];
-   if ( nfile_dirExists( path ) )
+   if (nfile_dirExists( path ))
       return 0;
-   if ( !nfile_dirMakeExist( path ) )
+   if (!nfile_dirMakeExist( path ))
       return -1;
    snprintf( buf, sizeof( buf ), "%s/.naevtestpath", path );
-   if ( !nfile_touch( path ) )
+   if (!nfile_touch( path ))
       return -1;
-   if ( !remove( buf ) )
+   if (!remove( buf ))
       return -1;
-   if ( !rmdir( path ) )
+   if (!rmdir( path ))
       return -1;
    return 0;
 }
@@ -392,14 +393,14 @@ static int uniedit_saveTestDirectory( const char *path )
 static void uniedit_saveTest( void )
 {
    char buf[PATH_MAX];
-   if ( conf.dev_data_dir == NULL ) {
-      if ( !dialogue_YesNoRaw(
-              _( "Invalid Save Directory" ),
-              _( "Data directory is not set. Do you wish to choose a directory "
-                 "to save files with the editor to? You will be unable to save "
-                 "until it is set."
-                 "\n\n"
-                 "Do you wish to choose a new directory?" ) ) )
+   if (conf.dev_data_dir == NULL) {
+      if (!dialogue_YesNoRaw(
+             _( "Invalid Save Directory" ),
+             _( "Data directory is not set. Do you wish to choose a directory "
+                "to save files with the editor to? You will be unable to save "
+                "until it is set."
+                "\n\n"
+                "Do you wish to choose a new directory?" ) ))
          return;
       SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
                                 gl_screen.window, conf.dev_data_dir, 0 );
@@ -407,22 +408,22 @@ static void uniedit_saveTest( void )
    }
 
    snprintf( buf, sizeof( buf ), "%s/ssys/", conf.dev_data_dir );
-   if ( uniedit_saveTestDirectory( buf ) )
+   if (uniedit_saveTestDirectory( buf ))
       goto failed;
    snprintf( buf, sizeof( buf ), "%s/spob/", conf.dev_data_dir );
-   if ( uniedit_saveTestDirectory( buf ) )
+   if (uniedit_saveTestDirectory( buf ))
       goto failed;
 
    return;
 failed:
-   if ( !dialogue_YesNo( _( "Invalid Save Directory" ),
-                         _( "The writing directory for the editor does not "
-                            "seem to exist. Maybe the path is wrong?\n"
-                            "\n"
-                            "The current data directory is '#b%s#0'"
-                            "\n"
-                            "Do you wish to choose a new directory?" ),
-                         conf.dev_data_dir ) )
+   if (!dialogue_YesNo( _( "Invalid Save Directory" ),
+                        _( "The writing directory for the editor does not "
+                           "seem to exist. Maybe the path is wrong?\n"
+                           "\n"
+                           "The current data directory is '#b%s#0'"
+                           "\n"
+                           "Do you wish to choose a new directory?" ),
+                        conf.dev_data_dir ))
       return;
    SDL_ShowOpenFolderDialog( uniedit_saveDirectoryChoose, NULL,
                              gl_screen.window, conf.dev_data_dir, 0 );
@@ -438,16 +439,16 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
    (void)isrepeat;
    int n;
 
-   switch ( key ) {
+   switch (key) {
    /* Mode changes. */
    case SDLK_ESCAPE:
       uniedit_mode = UNIEDIT_DEFAULT;
       return 1;
 
    case SDLK_a:
-      if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) ) {
+      if (mod & ( KMOD_LCTRL | KMOD_RCTRL )) {
          uniedit_deselect();
-         for ( int i = 0; i < array_size( systems_stack ); i++ )
+         for (int i = 0; i < array_size( systems_stack ); i++)
             uniedit_selectAdd( &systems_stack[i] );
          return 1;
       }
@@ -455,11 +456,11 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
 
    case SDLK_r:
       n = array_size( uniedit_sys );
-      if ( n > 1 ) {
+      if (n > 1) {
          uniedit_mode      = UNIEDIT_ROTATE;
          uniedit_rotate    = 0.; /* Initialize rotation. */
          uniedit_rotate_cx = uniedit_rotate_cy = 0.;
-         for ( int i = 0; i < n; i++ ) {
+         for (int i = 0; i < n; i++) {
             uniedit_rotate_cx += uniedit_sys[i]->pos.x;
             uniedit_rotate_cy += uniedit_sys[i]->pos.y;
          }
@@ -478,12 +479,12 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
  */
 static void uniedit_close( unsigned int wid, const char *wgt )
 {
-   if ( uniedit_diffMode && !uniedit_diffSaved ) {
-      if ( !dialogue_YesNoRaw(
-              _( "#rUnsaved Progress" ),
-              _( "You have #runsaved changes#0 to the universe diff. Are you "
-                 "sure you wish to close the editor and #rlose all your "
-                 "changes#0?" ) ) )
+   if (uniedit_diffMode && !uniedit_diffSaved) {
+      if (!dialogue_YesNoRaw(
+             _( "#rUnsaved Progress" ),
+             _( "You have #runsaved changes#0 to the universe diff. Are you "
+                "sure you wish to close the editor and #rlose all your "
+                "changes#0?" ) ))
          return;
    }
 
@@ -508,11 +509,11 @@ static void uniedit_save_callback( void *userdata, const char *const *filelist,
    (void)userdata;
    (void)filter;
 
-   if ( filelist == NULL ) {
+   if (filelist == NULL) {
       WARN( _( "Error calling %s: %s" ), "SDL_ShowSaveFileDialog",
             SDL_GetError() );
       return;
-   } else if ( filelist[0] == NULL ) {
+   } else if (filelist[0] == NULL) {
       /* Cancelled by user.  */
       return;
    }
@@ -529,7 +530,7 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
    (void)wid_unused;
    (void)unused;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       const SDL_DialogFileFilter filter[] = {
          { .name = _( "Diff XML file" ), .pattern = "xml" },
          { NULL, NULL },
@@ -543,7 +544,7 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
       int ret = 0;
       ret |= dsys_saveAll();
       ret |= dpl_saveAll();
-      if ( ret )
+      if (ret)
          uniedit_saveError();
    }
 }
@@ -589,11 +590,11 @@ static void uniedit_options_setpath_callback( void              *userdata,
    unsigned int wid = *(unsigned int *)userdata;
    char         buf[STRMAX_SHORT];
 
-   if ( filelist == NULL ) {
+   if (filelist == NULL) {
       WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFolderDialog",
             SDL_GetError() );
       return;
-   } else if ( filelist[0] == NULL ) {
+   } else if (filelist[0] == NULL) {
       /* Cancelled by user.  */
       return;
    }
@@ -621,9 +622,9 @@ static void uniedit_options_close( unsigned int wid, const char *unused )
 static int factionGenerates( int f, int tocheck, double *w )
 {
    const FactionGenerator *fg = faction_generators( f );
-   for ( int i = 0; i < array_size( fg ); i++ ) {
-      if ( fg[i].id == tocheck ) {
-         if ( w != NULL )
+   for (int i = 0; i < array_size( fg ); i++) {
+      if (fg[i].id == tocheck) {
+         if (w != NULL)
             *w = fg[i].weight;
          return 1;
       }
@@ -647,20 +648,20 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    /* Find usable factions. */
    factions = faction_getAll();
    spobs    = spob_getAll();
-   for ( int i = 0; i < array_size( factions ); i++ ) {
+   for (int i = 0; i < array_size( factions ); i++) {
       int f       = factions[i];
       int hasfact = 0;
-      for ( int j = 0; j < array_size( spobs ); j++ ) {
+      for (int j = 0; j < array_size( spobs ); j++) {
          Spob *p = &spobs[j];
-         if ( ( p->presence.faction != f ) &&
-              !factionGenerates( p->presence.faction, f, NULL ) )
+         if (( p->presence.faction != f ) &&
+             !factionGenerates( p->presence.faction, f, NULL ))
             continue;
-         if ( p->presence.base == 0. && p->presence.bonus == 0. )
+         if (p->presence.base == 0. && p->presence.bonus == 0.)
             continue;
          hasfact = 1;
          break;
       }
-      if ( !hasfact )
+      if (!hasfact)
          factions[i] = -1;
    }
 
@@ -671,7 +672,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
 
    /* Add virtual spob list. */
    n      = 9; /* Number of special cases. */
-   str    = malloc( sizeof( char    *) * ( array_size( factions ) + n ) );
+   str    = malloc( sizeof( char * ) * ( array_size( factions ) + n ) );
    str[0] = strdup( _( "Default" ) );
    str[1] = strdup( _( "Virtual Spobs" ) );
    str[2] = strdup( _( "System Radius" ) );
@@ -682,9 +683,9 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    str[7] = strdup( _( "Tech" ) );
    str[8] = strdup( _( "Sum of Presences" ) );
    k      = n;
-   for ( int i = 0; i < array_size( factions ); i++ ) {
+   for (int i = 0; i < array_size( factions ); i++) {
       int f = factions[i];
-      if ( f >= 0 )
+      if (f >= 0)
          str[k++] = strdup(
             faction_name( f ) ); /* Not translating so we can use faction_get */
    }
@@ -736,7 +737,7 @@ static void uniedit_btnOpen( unsigned int wid_unused, const char *unused )
    (void)wid_unused;
    (void)unused;
 
-   if ( array_size( uniedit_sys ) != 1 )
+   if (array_size( uniedit_sys ) != 1)
       return;
 
    sysedit_open( uniedit_sys[0] );
@@ -775,7 +776,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    c.b = col->b;
    c.a = 0.5;
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr, presence;
       StarSystem *sys = system_getIndex( i );
 
@@ -799,7 +800,7 @@ static void uniedit_renderVirtualSpobs( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
 
@@ -819,7 +820,7 @@ static void uniedit_renderRadius( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
 
@@ -838,11 +839,11 @@ static void uniedit_renderNolanes( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
 
-      if ( !sys_isFlag( sys, SYSTEM_NOLANES ) )
+      if (!sys_isFlag( sys, SYSTEM_NOLANES ))
          continue;
 
       tx = x + sys->pos.x * uniedit_zoom;
@@ -860,11 +861,11 @@ static void uniedit_renderBackground( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
 
-      if ( sys->background == NULL )
+      if (sys->background == NULL)
          continue;
 
       tx = x + sys->pos.x * uniedit_zoom;
@@ -882,12 +883,12 @@ static void uniedit_renderAsteroids( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys     = system_getIndex( i );
       double      density = sys->asteroid_density;
 
-      if ( density <= 0. )
+      if (density <= 0.)
          continue;
 
       tx = x + sys->pos.x * uniedit_zoom;
@@ -904,7 +905,7 @@ static void uniedit_renderInterference( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
 
@@ -923,18 +924,18 @@ static void uniedit_renderTech( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys     = system_getIndex( i );
       int         hastech = 0;
 
-      for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
-         if ( sys->spobs[j]->tech != NULL ) {
+      for (int j = 0; j < array_size( sys->spobs ); j++) {
+         if (sys->spobs[j]->tech != NULL) {
             hastech = 1;
             break;
          }
       }
-      if ( !hastech )
+      if (!hastech)
          continue;
 
       tx = x + sys->pos.x * uniedit_zoom;
@@ -951,12 +952,12 @@ static void uniedit_renderPresenceSum( double x, double y, double r )
 {
    const glColour c = { .r = 1., .g = 1., .b = 1., .a = 0.3 };
 
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       double      tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
 
       double total = 0.;
-      for ( int j = 0; j < array_size( sys->presence ); j++ )
+      for (int j = 0; j < array_size( sys->presence ); j++)
          total += MAX( 0., sys->presence[j].value );
 
       tx = x + sys->pos.x * uniedit_zoom;
@@ -979,7 +980,7 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x,
    gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Render faction disks. */
-   switch ( uniedit_viewmode ) {
+   switch (uniedit_viewmode) {
    case UNIEDIT_VIEW_DEFAULT:
       map_renderDecorators( x, y, zoom, 1, 1. );
       map_renderFactionDisks( x, y, zoom, r, 1, 1. );
@@ -1019,7 +1020,7 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x,
       break;
 
    case UNIEDIT_VIEW_PRESENCE:
-      if ( uniedit_view_faction >= 0 )
+      if (uniedit_view_faction >= 0)
          uniedit_renderFactionDisks( x, y, r );
       break;
    }
@@ -1055,7 +1056,7 @@ static void uniedit_render( double bx, double by, double w, double h,
    uniedit_renderMap( bx, by, w, h, x, y, uniedit_zoom, r );
 
    /* Render the selected system selections. */
-   for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_sys ); i++) {
       StarSystem *sys = uniedit_sys[i];
       glUseProgram( shaders.selectspob.program );
       glUniform1f( shaders.selectspob.dt, uniedit_dt );
@@ -1067,9 +1068,9 @@ static void uniedit_render( double bx, double by, double w, double h,
 
 static char getValCol( double val )
 {
-   if ( val > 0. )
+   if (val > 0.)
       return 'g';
-   else if ( val < 0. )
+   else if (val < 0.)
       return 'r';
    return '0';
 }
@@ -1078,10 +1079,9 @@ static int getPresenceVal( int f, const SpobPresence *ap, double *base,
 {
    int    gf = 0;
    double w;
-   if ( ( ap->faction != f ) &&
-        !( gf = factionGenerates( ap->faction, f, &w ) ) )
+   if (( ap->faction != f ) && !( gf = factionGenerates( ap->faction, f, &w ) ))
       return 0;
-   if ( gf == 0 ) {
+   if (gf == 0) {
       *base  = ap->base;
       *bonus = ap->bonus;
    } else {
@@ -1118,7 +1118,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
              my );
 
    /* Select drag stuff. */
-   if ( uniedit_dragSel ) {
+   if (uniedit_dragSel) {
       double         l, r, b, t, rx, ry;
       const glColour col = { .r = 0.2, .g = 0.2, .b = 0.8, .a = 0.5 };
 
@@ -1136,46 +1136,46 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Don't cover up stuff if possible. */
-   if ( ( x > SCREEN_W - 130 ) || ( y < 60 ) )
+   if (( x > SCREEN_W - 130 ) || ( y < 60 ))
       return;
 
-   if ( uniedit_mode == UNIEDIT_NEWSYS ) {
+   if (uniedit_mode == UNIEDIT_NEWSYS) {
       toolkit_drawAltText( x, y, _( "Click to add a new system" ) );
       return;
-   } else if ( uniedit_mode == UNIEDIT_JUMP ) {
+   } else if (uniedit_mode == UNIEDIT_JUMP) {
       toolkit_drawAltText( x, y, _( "Click to toggle jump route" ) );
       return;
-   } else if ( uniedit_viewmode == UNIEDIT_VIEW_DEFAULT )
+   } else if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
       return;
 
    /* Find mouse over system. */
    mousesys = NULL;
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
       sys = system_getIndex( i );
       sx  = sys->pos.x;
       sy  = sys->pos.y;
-      if ( ( pow2( sx - mx ) + pow2( sy - my ) ) >
-           pow2( UNIEDIT_CLICK_THRESHOLD ) )
+      if (( pow2( sx - mx ) + pow2( sy - my ) ) >
+          pow2( UNIEDIT_CLICK_THRESHOLD ))
          continue;
       mousesys = sys;
       break;
    }
-   if ( mousesys == NULL )
+   if (mousesys == NULL)
       return;
    sys = mousesys;
    sx  = sys->pos.x;
    sy  = sys->pos.y;
 
    /* Handle virtual spob viewer. */
-   if ( uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS ) {
+   if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS) {
       int l;
 
-      if ( array_size( sys->spobs_virtual ) == 0 )
+      if (array_size( sys->spobs_virtual ) == 0)
          return;
 
       /* Count spobs. */
       l = 0;
-      for ( int j = 0; j < array_size( sys->spobs_virtual ); j++ ) {
+      for (int j = 0; j < array_size( sys->spobs_virtual ); j++) {
          const VirtualSpob *va = sys->spobs_virtual[j];
          l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
                          ( l > 0 ) ? "\n" : "", va->name );
@@ -1186,7 +1186,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle radius view. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_RADIUS ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_RADIUS) {
       scnprintf( &buf[0], sizeof( buf ), _( "System Radius: %s" ),
                  num2strU( sys->radius, 0 ) );
       toolkit_drawAltText( x, y, buf );
@@ -1194,8 +1194,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle background. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_BACKGROUND ) {
-      if ( sys->background != NULL ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_BACKGROUND) {
+      if (sys->background != NULL) {
          scnprintf( &buf[0], sizeof( buf ), _( "Background: %s" ),
                     sys->background );
          toolkit_drawAltText( x, y, buf );
@@ -1204,14 +1204,14 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle asteroids. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_ASTEROIDS ) {
-      if ( array_size( sys->asteroids ) > 0 ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_ASTEROIDS) {
+      if (array_size( sys->asteroids ) > 0) {
          int l = 0;
          l     = scnprintf( &buf[l], sizeof( buf ) - l, _( "Density: %g" ),
                             sys->asteroid_density );
-         for ( int i = 0; i < array_size( sys->asteroids ); i++ ) {
+         for (int i = 0; i < array_size( sys->asteroids ); i++) {
             AsteroidAnchor *ast = &sys->asteroids[i];
-            for ( int j = 0; j < array_size( ast->groups ); j++ )
+            for (int j = 0; j < array_size( ast->groups ); j++)
                l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
                                ( l > 0 ) ? "\n" : "", ast->groups[j]->name );
          }
@@ -1221,8 +1221,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle interference. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_INTERFERENCE ) {
-      if ( sys->interference > 0. ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_INTERFERENCE) {
+      if (sys->interference > 0.) {
          scnprintf( &buf[0], sizeof( buf ), _( "Interference: %.0f%%" ),
                     sys->interference );
          toolkit_drawAltText( x, y, buf );
@@ -1231,36 +1231,36 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle tech radius. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_TECH ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_TECH) {
       char     *techlist[256];
       int       ntechs = 0;
-      const int len    = sizeof( techlist ) / sizeof( char    *);
+      const int len    = sizeof( techlist ) / sizeof( char * );
       int       l;
 
-      if ( array_size( sys->spobs ) == 0 )
+      if (array_size( sys->spobs ) == 0)
          return;
 
       /* Count spobs. */
       l = 0;
-      for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
+      for (int j = 0; j < array_size( sys->spobs ); j++) {
          const Spob *spob = sys->spobs[j];
          int         n;
          char      **techs;
-         if ( spob->tech == NULL )
+         if (spob->tech == NULL)
             continue;
          techs = tech_getItemNames( spob->tech, &n );
-         for ( int k = 0; ( k < n ) && ( ntechs < len - 1 ); k++ )
+         for (int k = 0; ( k < n ) && ( ntechs < len - 1 ); k++)
             techlist[ntechs++] = techs[k];
          free( techs );
       }
       qsort( techlist, ntechs, sizeof( char * ), strsort );
-      for ( int k = 0; k < ntechs; k++ ) {
-         if ( ( k > 0 ) && ( strcmp( techlist[k - 1], techlist[k] ) == 0 ) )
+      for (int k = 0; k < ntechs; k++) {
+         if (( k > 0 ) && ( strcmp( techlist[k - 1], techlist[k] ) == 0 ))
             continue;
          l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
                          ( l > 0 ) ? "\n" : "", techlist[k] );
       }
-      for ( int k = 0; k < ntechs; k++ )
+      for (int k = 0; k < ntechs; k++)
          free( techlist[k] );
 
       toolkit_drawAltText( x, y, buf );
@@ -1268,21 +1268,21 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle presence sum. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_PRESENCE_SUM ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE_SUM) {
       int l;
 
-      if ( array_size( sys->presence ) == 0 )
+      if (array_size( sys->presence ) == 0)
          return;
 
       value = 0.;
-      for ( int j = 0; j < array_size( sys->presence ); j++ )
+      for (int j = 0; j < array_size( sys->presence ); j++)
          value += MAX( sys->presence[j].value, 0. );
 
       /* Count spobs. */
       l = scnprintf( buf, sizeof( buf ), _( "Total: %.0f" ), value );
-      for ( int j = 0; j < array_size( sys->presence ); j++ ) {
+      for (int j = 0; j < array_size( sys->presence ); j++) {
          sp = &sys->presence[j];
-         if ( sp->value <= 0. )
+         if (sp->value <= 0.)
             continue;
          l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s: %.0f = %.0f + %.0f",
                          faction_name( sp->faction ), sp->value, sp->base,
@@ -1293,10 +1293,10 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
    }
 
    /* Handle presence mode. */
-   else if ( uniedit_viewmode == UNIEDIT_VIEW_PRESENCE ) {
+   else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) {
       int l;
       int f = uniedit_view_faction;
-      if ( f < 0 )
+      if (f < 0)
          return;
 
       /* Total presence. */
@@ -1307,18 +1307,18 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
          bonus, system_name( sys ), faction_name( f ) );
 
       /* Local presence sources. */
-      for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
+      for (int j = 0; j < array_size( sys->spobs ); j++) {
          Spob *spob = sys->spobs[j];
-         if ( !getPresenceVal( f, &spob->presence, &base, &bonus ) )
+         if (!getPresenceVal( f, &spob->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof( buf ) - l,
                          "\n#%c%.0f#0 (#%c%+.0f#0) [%s]", getValCol( base ),
                          base, getValCol( bonus ), bonus, spob_name( spob ) );
       }
-      for ( int j = 0; j < array_size( sys->spobs_virtual ); j++ ) {
+      for (int j = 0; j < array_size( sys->spobs_virtual ); j++) {
          const VirtualSpob *va = sys->spobs_virtual[j];
-         for ( int p = 0; p < array_size( va->presences ); p++ ) {
-            if ( !getPresenceVal( f, &va->presences[p], &base, &bonus ) )
+         for (int p = 0; p < array_size( va->presences ); p++) {
+            if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof( buf ) - l,
                             "\n#%c%.0f#0 (#%c%+.0f#0) [%s]", getValCol( base ),
@@ -1327,21 +1327,21 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh,
       }
 
       /* Find neighbours if possible. */
-      for ( int k = 0; k < array_size( sys->jumps ); k++ ) {
+      for (int k = 0; k < array_size( sys->jumps ); k++) {
          cur = sys->jumps[k].target;
-         for ( int j = 0; j < array_size( cur->spobs ); j++ ) {
+         for (int j = 0; j < array_size( cur->spobs ); j++) {
             Spob *spob = cur->spobs[j];
-            if ( !getPresenceVal( f, &spob->presence, &base, &bonus ) )
+            if (!getPresenceVal( f, &spob->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof( buf ) - l,
                             "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                             getValCol( base ), base * 0.5, getValCol( bonus ),
                             bonus * 0.5, spob_name( spob ), _( cur->name ) );
          }
-         for ( int j = 0; j < array_size( cur->spobs_virtual ); j++ ) {
+         for (int j = 0; j < array_size( cur->spobs_virtual ); j++) {
             const VirtualSpob *va = cur->spobs_virtual[j];
-            for ( int p = 0; p < array_size( va->presences ); p++ ) {
-               if ( !getPresenceVal( f, &va->presences[p], &base, &bonus ) )
+            for (int p = 0; p < array_size( va->presences ); p++) {
+               if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
                   continue;
                l +=
                   scnprintf( &buf[l], sizeof( buf ) - l,
@@ -1383,23 +1383,23 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
    /* Handle modifiers. */
    mod = SDL_GetModState();
 
-   switch ( event->type ) {
+   switch (event->type) {
 
    case SDL_MOUSEWHEEL:
       /* Must be in bounds. */
-      if ( ( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ) )
+      if (( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ))
          return 0;
 
-      if ( event->wheel.y > 0 )
+      if (event->wheel.y > 0)
          uniedit_buttonZoom( 0, "btnZoomIn" );
-      else if ( event->wheel.y < 0 )
+      else if (event->wheel.y < 0)
          uniedit_buttonZoom( 0, "btnZoomOut" );
 
       return 1;
 
    case SDL_MOUSEBUTTONDOWN:
       /* Must be in bounds. */
-      if ( ( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ) )
+      if (( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ))
          return 0;
       window_setFocus( wid, "cstSysEdit" );
       lastClick         = uniedit_lastClick;
@@ -1412,13 +1412,13 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       my /= uniedit_zoom;
 
       /* Finish rotation. */
-      if ( uniedit_mode == UNIEDIT_ROTATE ) {
+      if (uniedit_mode == UNIEDIT_ROTATE) {
          uniedit_mode = UNIEDIT_DEFAULT;
          return 1;
       }
 
       /* Create new system if applicable. */
-      if ( uniedit_mode == UNIEDIT_NEWSYS ) {
+      if (uniedit_mode == UNIEDIT_NEWSYS) {
          uniedit_newSys( mx, my );
          uniedit_mode = UNIEDIT_DEFAULT;
          return 1;
@@ -1426,17 +1426,17 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
       /* Find clicked system. */
       clickedsys = NULL;
-      for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+      for (int i = 0; i < array_size( systems_stack ); i++) {
          StarSystem *sys = system_getIndex( i );
-         if ( ( pow2( mx - sys->pos.x ) + pow2( my - sys->pos.y ) ) >
-              pow2( UNIEDIT_CLICK_THRESHOLD ) )
+         if (( pow2( mx - sys->pos.x ) + pow2( my - sys->pos.y ) ) >
+             pow2( UNIEDIT_CLICK_THRESHOLD ))
             continue;
          clickedsys = sys;
          break;
       }
 
       /* Set jump if applicable. */
-      if ( clickedsys != NULL && uniedit_mode == UNIEDIT_JUMP ) {
+      if (clickedsys != NULL && uniedit_mode == UNIEDIT_JUMP) {
          uniedit_toggleJump( clickedsys );
          uniedit_mode = UNIEDIT_DEFAULT;
          return 1;
@@ -1444,9 +1444,9 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
       /* See if it is selected. */
       inselection = 0;
-      if ( clickedsys != NULL ) {
-         for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
-            if ( uniedit_sys[i] != clickedsys )
+      if (clickedsys != NULL) {
+         for (int i = 0; i < array_size( uniedit_sys ); i++) {
+            if (uniedit_sys[i] != clickedsys)
                continue;
             inselection = 1;
             break;
@@ -1454,10 +1454,9 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
 
       /* Handle double click. */
-      if ( clickedsys != NULL && inselection &&
-           array_size( uniedit_sys ) == 1 ) {
-         if ( ( SDL_GetTicks() - lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD ) &&
-              ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD ) ) {
+      if (clickedsys != NULL && inselection && array_size( uniedit_sys ) == 1) {
+         if (( SDL_GetTicks() - lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD ) &&
+             ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD )) {
             sysedit_open( uniedit_sys[0] );
             uniedit_drag    = 0;
             uniedit_dragSys = 0;
@@ -1467,11 +1466,11 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
 
       /* Clicked on selected system. */
-      if ( ( clickedsys != NULL ) && inselection ) {
+      if (( clickedsys != NULL ) && inselection) {
          uniedit_dragSys = 1;
          uniedit_tsys    = clickedsys;
          /* Check modifier. */
-         if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) )
+         if (mod & ( KMOD_LCTRL | KMOD_RCTRL ))
             uniedit_tadd = 0;
          else
             uniedit_tadd = -1;
@@ -1480,9 +1479,9 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
 
       /* Clicked on non-selected system. */
-      if ( clickedsys != NULL ) {
+      if (clickedsys != NULL) {
          /* Add the system if not selected. */
-         if ( !( mod & ( KMOD_LCTRL | KMOD_RCTRL ) ) )
+         if (!( mod & ( KMOD_LCTRL | KMOD_RCTRL ) ))
             uniedit_deselect();
          uniedit_selectAdd( clickedsys );
          uniedit_tsys = NULL;
@@ -1492,8 +1491,8 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       /* Start dragging. */
       uniedit_moved = 0;
       uniedit_tsys  = NULL;
-      if ( mod & ( KMOD_LCTRL | KMOD_RCTRL | KMOD_LSHIFT | KMOD_RSHIFT ) ) {
-         if ( mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) )
+      if (mod & ( KMOD_LCTRL | KMOD_RCTRL | KMOD_LSHIFT | KMOD_RSHIFT )) {
+         if (mod & ( KMOD_LSHIFT | KMOD_RSHIFT ))
             uniedit_deselect();
          uniedit_dragSel  = 1;
          uniedit_dragSelX = mx;
@@ -1506,21 +1505,21 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       break;
 
    case SDL_MOUSEBUTTONUP:
-      if ( uniedit_drag ) {
-         if ( ( SDL_GetTicks() - uniedit_lastClick < UNIEDIT_DRAG_THRESHOLD ) &&
-              ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD ) ) {
-            if ( uniedit_tsys == NULL )
+      if (uniedit_drag) {
+         if (( SDL_GetTicks() - uniedit_lastClick < UNIEDIT_DRAG_THRESHOLD ) &&
+             ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD )) {
+            if (uniedit_tsys == NULL)
                uniedit_deselect();
             else
                uniedit_selectAdd( uniedit_tsys );
          }
          uniedit_drag = 0;
       }
-      if ( uniedit_dragSys ) {
-         if ( ( SDL_GetTicks() - uniedit_lastClick < UNIEDIT_DRAG_THRESHOLD ) &&
-              ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD ) &&
-              ( uniedit_tsys != NULL ) ) {
-            if ( uniedit_tadd == 0 )
+      if (uniedit_dragSys) {
+         if (( SDL_GetTicks() - uniedit_lastClick < UNIEDIT_DRAG_THRESHOLD ) &&
+             ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD ) &&
+             ( uniedit_tsys != NULL )) {
+            if (uniedit_tadd == 0)
                uniedit_selectRm( uniedit_tsys );
             else {
                uniedit_deselect();
@@ -1528,15 +1527,15 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
             }
          }
          uniedit_dragSys = 0;
-         if ( conf.devautosave ) {
+         if (conf.devautosave) {
             int ret = 0;
-            for ( int i = 0; i < array_size( uniedit_sys ); i++ )
+            for (int i = 0; i < array_size( uniedit_sys ); i++)
                ret |= dsys_saveSystem( uniedit_sys[i] );
-            if ( ret )
+            if (ret)
                uniedit_saveError();
          }
       }
-      if ( uniedit_dragSel ) {
+      if (uniedit_dragSel) {
          double l, r, b, t;
 
          /* Selecting star system */
@@ -1551,11 +1550,11 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          b = MIN( uniedit_dragSelY, my );
          t = MAX( uniedit_dragSelY, my );
 
-         for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+         for (int i = 0; i < array_size( systems_stack ); i++) {
             StarSystem *sys = &systems_stack[i];
             double      x   = sys->pos.x;
             double      y   = sys->pos.y;
-            if ( ( x >= l ) && ( x <= r ) && ( y >= b ) && ( y <= t ) )
+            if (( x >= l ) && ( x <= r ) && ( y >= b ) && ( y <= t ))
                uniedit_selectAdd( sys );
          }
 
@@ -1569,7 +1568,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       uniedit_my = my;
 
       /* Handle rotation. */
-      if ( uniedit_mode == UNIEDIT_ROTATE ) {
+      if (uniedit_mode == UNIEDIT_ROTATE) {
          double a1, a2, amod;
          double cx = mx - w / 2. + uniedit_xpos;
          double cy = my - h / 2. + uniedit_ypos;
@@ -1583,7 +1582,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          a2   = atan2( cy, cx );
          amod = a1 - a2;
          uniedit_rotate += amod;
-         for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+         for (int i = 0; i < array_size( uniedit_sys ); i++) {
             StarSystem *s  = uniedit_sys[i];
             double      sx = s->pos.x - uniedit_rotate_cx;
             double      sy = s->pos.y - uniedit_rotate_cy;
@@ -1595,18 +1594,17 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
 
       /* Handle dragging. */
-      if ( uniedit_drag ) {
+      if (uniedit_drag) {
          /* axis is inverted */
          uniedit_xpos -= rx;
          uniedit_ypos += ry;
 
          /* Update mouse movement. */
          uniedit_moved += ABS( rx ) + ABS( ry );
-      } else if ( uniedit_dragSys && ( array_size( uniedit_sys ) > 0 ) ) {
-         if ( ( uniedit_moved > UNIEDIT_MOVE_THRESHOLD ) ||
-              ( SDL_GetTicks() - uniedit_lastClick >
-                UNIEDIT_DRAG_THRESHOLD ) ) {
-            for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+      } else if (uniedit_dragSys && ( array_size( uniedit_sys ) > 0 )) {
+         if (( uniedit_moved > UNIEDIT_MOVE_THRESHOLD ) ||
+             ( SDL_GetTicks() - uniedit_lastClick > UNIEDIT_DRAG_THRESHOLD )) {
+            for (int i = 0; i < array_size( uniedit_sys ); i++) {
                StarSystem *s = uniedit_sys[i];
                uniedit_diffSsysPos( s, s->pos.x + rx / uniedit_zoom,
                                     s->pos.y - ry / uniedit_zoom );
@@ -1630,8 +1628,8 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 static int uniedit_checkName( const char *name )
 {
    /* Avoid name collisions. */
-   for ( int i = 0; i < array_size( systems_stack ); i++ ) {
-      if ( strcmp( name, system_getIndex( i )->name ) == 0 ) {
+   for (int i = 0; i < array_size( systems_stack ); i++) {
+      if (strcmp( name, system_getIndex( i )->name ) == 0) {
          dialogue_alert( _( "The Star System '%s' already exists!" ), name );
          return 1;
       }
@@ -1648,13 +1646,13 @@ char *uniedit_nameFilter( const char *name )
    size_t   i   = 0;
    size_t   j   = 0;
    uint32_t c;
-   while ( ( c = u8_nextchar( name, &i ) ) ) {
-      if ( isascii( c ) ) {
-         if ( ( c == ' ' ) || ( c == '/' ) || ( c == '\\' ) || ( c == ':' ) ||
-              ( c == '.' ) ) {
+   while (( c = u8_nextchar( name, &i ) )) {
+      if (isascii( c )) {
+         if (( c == ' ' ) || ( c == '/' ) || ( c == '\\' ) || ( c == ':' ) ||
+             ( c == '.' )) {
             size_t o = u8_offset( name, j );
             out[o]   = '_';
-         } else if ( isupper( c ) ) {
+         } else if (isupper( c )) {
             size_t o = u8_offset( name, j );
             out[o]   = tolower( c );
          }
@@ -1670,13 +1668,13 @@ char *uniedit_nameFilter( const char *name )
 static void uniedit_renameSys( void )
 {
    int cancelall_prompt = 0;
-   for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_sys ); i++) {
       char       *name, *oldName, *newName;
       const char *prompt;
       StarSystem *sys = uniedit_sys[i];
 
       /* Get name. */
-      if ( uniedit_diffMode )
+      if (uniedit_diffMode)
          prompt = _( "What do you want to rename #r%s#0?\n\n#rNote:#0 this "
                      "will only change the display name of the system." );
       else
@@ -1686,25 +1684,25 @@ static void uniedit_renameSys( void )
                              system_name( sys ) );
 
       /* Keep current name. */
-      if ( name == NULL ) {
-         if ( !cancelall_prompt && ( i < array_size( uniedit_sys ) ) ) {
-            if ( dialogue_YesNoRaw( _( "Cancel batch renaming?" ),
-                                    _( "Do you want to cancel renaming all "
-                                       "selected star systems?" ) ) )
+      if (name == NULL) {
+         if (!cancelall_prompt && ( i < array_size( uniedit_sys ) )) {
+            if (dialogue_YesNoRaw( _( "Cancel batch renaming?" ),
+                                   _( "Do you want to cancel renaming all "
+                                      "selected star systems?" ) ))
                break;
             cancelall_prompt = 1;
          }
          continue;
       }
 
-      if ( uniedit_diffMode ) {
+      if (uniedit_diffMode) {
          uniedit_diffCreateSysStr( sys, HUNK_TYPE_SSYS_DISPLAYNAME,
                                    name ); /* Name is already allocated. */
       } else {
          char *filtered;
 
          /* Try again. */
-         if ( uniedit_checkName( name ) ) {
+         if (uniedit_checkName( name )) {
             free( name );
             i--;
             continue;
@@ -1721,7 +1719,7 @@ static void uniedit_renameSys( void )
                        filtered );
          free( filtered );
 
-         if ( rename( oldName, newName ) )
+         if (rename( oldName, newName ))
             WARN( _( "Failed to rename '%s' to '%s'!" ), oldName, newName );
 
          free( oldName );
@@ -1735,7 +1733,7 @@ static void uniedit_renameSys( void )
          /* TODO probably have to reupdate stack?? */
 
          /* Re-save adjacent systems. */
-         for ( int j = 0; j < array_size( sys->jumps ); j++ )
+         for (int j = 0; j < array_size( sys->jumps ); j++)
             dsys_saveSystem( sys->jumps[j].target );
       }
    }
@@ -1752,7 +1750,7 @@ static void uniedit_newSys( double x, double y )
    char       *name;
    StarSystem *sys;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       dialogue_alertRaw(
          ( "Adding new systems is not supported in diff mode!" ) );
       return;
@@ -1763,13 +1761,13 @@ static void uniedit_newSys( double x, double y )
                              _( "What do you want to name the new system?" ) );
 
    /* Abort. */
-   if ( name == NULL ) {
+   if (name == NULL) {
       dialogue_alertRaw( _( "Star System creation aborted!" ) );
       return;
    }
 
    /* Make sure there is no collision. */
-   if ( uniedit_checkName( name ) ) {
+   if (uniedit_checkName( name )) {
       free( name );
       uniedit_newSys( x, y );
       return;
@@ -1792,8 +1790,8 @@ static void uniedit_newSys( double x, double y )
    uniedit_deselect();
    uniedit_selectAdd( sys );
 
-   if ( conf.devautosave ) {
-      if ( dsys_saveSystem( sys ) )
+   if (conf.devautosave) {
+      if (dsys_saveSystem( sys ))
          uniedit_saveError();
    }
 }
@@ -1803,16 +1801,16 @@ static void uniedit_newSys( double x, double y )
  */
 static void uniedit_toggleJump( StarSystem *sys )
 {
-   for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_sys ); i++) {
       int         rm   = 0;
       StarSystem *isys = uniedit_sys[i];
-      for ( int j = 0; j < array_size( isys->jumps ); j++ ) {
+      for (int j = 0; j < array_size( isys->jumps ); j++) {
          StarSystem *target = isys->jumps[j].target;
          /* Target already exists, remove. */
-         if ( target == sys ) {
+         if (target == sys) {
             rm = 1;
 
-            if ( uniedit_diffMode ) {
+            if (uniedit_diffMode) {
                uniedit_diffCreateSysStr( isys, HUNK_TYPE_JUMP_REMOVE,
                                          strdup( sys->name ) );
             } else {
@@ -1824,8 +1822,8 @@ static void uniedit_toggleJump( StarSystem *sys )
          }
       }
       /* Target doesn't exist, add. */
-      if ( !rm ) {
-         if ( uniedit_diffMode ) {
+      if (!rm) {
+         if (uniedit_diffMode) {
             uniedit_diffCreateSysStr( isys, HUNK_TYPE_JUMP_ADD,
                                       strdup( sys->name ) );
          } else {
@@ -1835,20 +1833,20 @@ static void uniedit_toggleJump( StarSystem *sys )
       }
    }
 
-   if ( !uniedit_diffMode ) {
+   if (!uniedit_diffMode) {
       /* Reconstruct jumps just in case. */
       systems_reconstructJumps();
       /* Reconstruct universe presences. */
       space_reconstructPresences();
       safelanes_recalculate();
 
-      if ( conf.devautosave ) {
+      if (conf.devautosave) {
          int ret = dsys_saveSystem( sys );
-         for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+         for (int i = 0; i < array_size( uniedit_sys ); i++) {
             StarSystem *isys = uniedit_sys[i];
             ret |= dsys_saveSystem( isys );
          }
-         if ( ret )
+         if (ret)
             uniedit_saveError();
       }
    }
@@ -1879,7 +1877,7 @@ static void uniedit_deselect( void )
  */
 static void uniedit_selectAdd( StarSystem *sys )
 {
-   if ( uniedit_sys == NULL )
+   if (uniedit_sys == NULL)
       uniedit_sys = array_create( StarSystem * );
 
    array_push_back( &uniedit_sys, sys );
@@ -1890,7 +1888,7 @@ static void uniedit_selectAdd( StarSystem *sys )
    /* Enable buttons again. */
    window_enableButton( uniedit_wid, "btnJump" );
    window_enableButton( uniedit_wid, "btnEdit" );
-   if ( array_size( uniedit_sys ) == 1 )
+   if (array_size( uniedit_sys ) == 1)
       window_enableButton( uniedit_wid, "btnOpen" );
    else
       window_disableButton( uniedit_wid, "btnOpen" );
@@ -1901,11 +1899,11 @@ static void uniedit_selectAdd( StarSystem *sys )
  */
 static void uniedit_selectRm( StarSystem *sys )
 {
-   for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
-      if ( uniedit_sys[i] == sys ) {
+   for (int i = 0; i < array_size( uniedit_sys ); i++) {
+      if (uniedit_sys[i] == sys) {
          array_erase( &uniedit_sys, &uniedit_sys[i], &uniedit_sys[i + 1] );
          uniedit_selectText();
-         if ( array_size( uniedit_sys ) == 1 )
+         if (array_size( uniedit_sys ) == 1)
             window_enableButton( uniedit_wid, "btnOpen" );
          else
             window_disableButton( uniedit_wid, "btnOpen" );
@@ -1925,28 +1923,28 @@ void uniedit_selectText( void )
    char buf[STRMAX];
 
    l = 0;
-   for ( int i = 0; i < array_size( uniedit_sys ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_sys ); i++) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s", uniedit_sys[i]->name,
                       ( i == array_size( uniedit_sys ) - 1 ) ? "" : ", " );
    }
 
-   if ( l == 0 )
+   if (l == 0)
       uniedit_deselect();
    else {
       window_modifyText( uniedit_wid, "txtSelected", buf );
 
       /* Presence text. */
-      if ( array_size( uniedit_sys ) == 1 ) {
+      if (array_size( uniedit_sys ) == 1) {
          StarSystem *sys = uniedit_sys[0];
 
          buf[0] = '\0';
          l      = 0;
-         if ( sys->nebu_density > 0. )
+         if (sys->nebu_density > 0.)
             l += scnprintf( &buf[l], sizeof( buf ) - l,
                             _( "%.0f Density\n%.1f Volatility\n%.0f Hue" ),
                             sys->nebu_density, sys->nebu_volatility,
                             sys->nebu_hue * 360. );
-         if ( sys->interference > 0. )
+         if (sys->interference > 0.)
             /*l +=*/scnprintf( &buf[l], sizeof( buf ) - l,
                                _( "%s%.1f Interference" ),
                                ( l > 0 ) ? "\n" : "", sys->interference );
@@ -1981,11 +1979,11 @@ static void uniedit_buttonZoom( unsigned int wid, const char *str )
    uniedit_ypos /= uniedit_zoom;
 
    /* Apply zoom. */
-   if ( strcmp( str, "btnZoomIn" ) == 0 ) {
+   if (strcmp( str, "btnZoomIn" ) == 0) {
       uniedit_zoom *= UNIEDIT_ZOOM_STEP;
       uniedit_zoom =
          MIN( pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MAX ), uniedit_zoom );
-   } else if ( strcmp( str, "btnZoomOut" ) == 0 ) {
+   } else if (strcmp( str, "btnZoomOut" ) == 0) {
       uniedit_zoom /= UNIEDIT_ZOOM_STEP;
       uniedit_zoom =
          MAX( pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN ), uniedit_zoom );
@@ -2058,18 +2056,18 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    n     = 0;
 
    /* Add spobs to the found table. */
-   for ( int i = 0; i < nspobs; i++ ) {
+   for (int i = 0; i < nspobs; i++) {
       /* Spob must be real. */
       Spob *spob = spob_get( spobs[i] );
-      if ( spob == NULL )
+      if (spob == NULL)
          continue;
 
       const char *sysname = spob_getSystemName( spobs[i] );
-      if ( sysname == NULL )
+      if (sysname == NULL)
          continue;
 
       StarSystem *sys = system_get( sysname );
-      if ( sys == NULL )
+      if (sys == NULL)
          continue;
 
       /* Set some values. */
@@ -2084,7 +2082,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    free( spobs );
 
    /* Add systems to the found table. */
-   for ( int i = 0; i < nsystems; i++ ) {
+   for (int i = 0; i < nsystems; i++) {
       StarSystem *sys = system_get( systems[i] );
 
       /* Set some values. */
@@ -2114,20 +2112,20 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found,
    char **str;
 
    /* Destroy if exists. */
-   if ( widget_exists( wid, "lstResults" ) )
+   if (widget_exists( wid, "lstResults" ))
       window_destroyWidget( wid, "lstResults" );
 
    y = -45 - BUTTON_HEIGHT - 20;
 
-   if ( n == 0 ) {
-      str    = malloc( sizeof( char    *) );
+   if (n == 0) {
+      str    = malloc( sizeof( char * ) );
       str[0] = strdup( _( "None" ) );
       n      = 1;
    } else {
       qsort( found, n, sizeof( map_find_t ), uniedit_sortCompare );
 
       str = malloc( sizeof( char * ) * n );
-      for ( int i = 0; i < n; i++ )
+      for (int i = 0; i < n; i++)
          str[i] = strdup( found[i].display );
    }
 
@@ -2160,13 +2158,13 @@ static void uniedit_centerSystem( unsigned int wid, const char *unused )
    int         pos;
 
    /* Make sure it's valid. */
-   if ( found_ncur == 0 || found_cur == NULL )
+   if (found_ncur == 0 || found_cur == NULL)
       return;
 
    pos = toolkit_getListPos( wid, "lstResults" );
    sys = found_cur[pos].sys;
 
-   if ( sys == NULL )
+   if (sys == NULL)
       return;
 
    /* Center. */
@@ -2198,7 +2196,7 @@ static void uniedit_editSys( void )
    StarSystem  *sys;
 
    /* Must have a system. */
-   if ( array_size( uniedit_sys ) == 0 )
+   if (array_size( uniedit_sys ) == 0)
       return;
    sys = uniedit_sys[0];
 
@@ -2292,7 +2290,7 @@ static void uniedit_editSys( void )
    x = 20;
    y -= gl_defFont.h + 15;
    l = scnprintf( buf, sizeof( buf ), "#n%s#0", _( "Tags: " ) );
-   for ( int i = 0; i < array_size( sys->tags ); i++ )
+   for (int i = 0; i < array_size( sys->tags ); i++)
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
                       ( i == 0 ) ? "" : ", ", sys->tags[i] );
    window_addText( wid, x, y, UNIEDIT_EDIT_WIDTH - 40, 20, 0, "txtTags", NULL,
@@ -2327,7 +2325,7 @@ static void uniedit_editGenList( unsigned int wid )
    int         y, h, has_spobs;
 
    /* Destroy if exists. */
-   if ( widget_exists( wid, "lstSpobs" ) )
+   if (widget_exists( wid, "lstSpobs" ))
       window_destroyWidget( wid, "lstSpobs" );
 
    y = -180;
@@ -2340,9 +2338,9 @@ static void uniedit_editGenList( unsigned int wid )
    /* Generate list. */
    j   = 0;
    str = malloc( sizeof( char * ) * ( n + 1 ) );
-   if ( has_spobs ) {
+   if (has_spobs) {
       /* Virtual spob button. */
-      for ( int i = 0; i < n; i++ ) {
+      for (int i = 0; i < n; i++) {
          const VirtualSpob *va = sys->spobs_virtual[i];
          str[j++]              = strdup( va->name );
       }
@@ -2356,15 +2354,15 @@ static void uniedit_editGenList( unsigned int wid )
    y -= h + 20;
 
    /* Add buttons if needed. */
-   if ( !widget_exists( wid, "btnRmSpob" ) )
+   if (!widget_exists( wid, "btnRmSpob" ))
       window_addButton( wid, -20, y + 3, BUTTON_WIDTH, BUTTON_HEIGHT,
                         "btnRmSpob", _( "Remove" ), uniedit_btnEditRmSpob );
-   if ( !widget_exists( wid, "btnAddSpob" ) )
+   if (!widget_exists( wid, "btnAddSpob" ))
       window_addButton( wid, -20 - ( 20 + BUTTON_WIDTH ), y + 3, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnAddSpob", _( "Add" ),
                         uniedit_btnEditAddSpob );
 
-   if ( !widget_exists( wid, "btnEditTags" ) )
+   if (!widget_exists( wid, "btnEditTags" ))
       window_addButton( wid, -20 - ( 20 + BUTTON_WIDTH ) * 2, y + 3,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnEditTags",
                         _( "Edit Tags" ), uniedit_btnEditTags );
@@ -2386,8 +2384,8 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 
    /* Changes in radius need to scale the system spob positions. */
    scale = atof( window_getInput( wid, "inpRadius" ) ) / sys->radius;
-   if ( fabs( scale - 1. ) > 1e-5 ) {
-      if ( uniedit_diffMode )
+   if (fabs( scale - 1. ) > 1e-5) {
+      if (uniedit_diffMode)
          dialogue_alertRaw(
             _( "Changing system radius not supported in diff mode!" ) );
       else
@@ -2395,37 +2393,37 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    }
 
    data = atoi( window_getInput( wid, "inpDust" ) );
-   if ( data != sys->spacedust ) {
-      if ( uniedit_diffMode )
+   if (data != sys->spacedust) {
+      if (uniedit_diffMode)
          uniedit_diffCreateSysInt( sys, HUNK_TYPE_SSYS_DUST, data );
       else
          sys->spacedust = data;
    }
    fdata = atof( window_getInput( wid, "inpInterference" ) );
-   if ( fabs( sys->interference - fdata ) > 1e-5 ) {
-      if ( uniedit_diffMode )
+   if (fabs( sys->interference - fdata ) > 1e-5) {
+      if (uniedit_diffMode)
          uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_INTERFERENCE, fdata );
       else
          sys->interference = fdata;
    }
    fdata = atof( window_getInput( wid, "inpNebula" ) );
-   if ( fabs( sys->nebu_density - fdata ) > 1e-5 ) {
-      if ( uniedit_diffMode )
+   if (fabs( sys->nebu_density - fdata ) > 1e-5) {
+      if (uniedit_diffMode)
          uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_NEBU_DENSITY, fdata );
       else
          sys->nebu_density = fdata;
    }
    fdata = atof( window_getInput( wid, "inpVolatility" ) );
-   if ( fabs( sys->nebu_volatility - fdata ) > 1e-5 ) {
-      if ( uniedit_diffMode )
+   if (fabs( sys->nebu_volatility - fdata ) > 1e-5) {
+      if (uniedit_diffMode)
          uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_NEBU_VOLATILITY,
                                      fdata );
       else
          sys->nebu_volatility = fdata;
    }
    fdata = atof( window_getInput( wid, "inpHue" ) ) / 360.;
-   if ( fabs( sys->nebu_hue - fdata ) > 1e-5 ) {
-      if ( uniedit_diffMode )
+   if (fabs( sys->nebu_hue - fdata ) > 1e-5) {
+      if (uniedit_diffMode)
          uniedit_diffCreateSysFloat( sys, HUNK_TYPE_SSYS_NEBU_HUE, fdata );
       else
          sys->nebu_hue = fdata;
@@ -2433,11 +2431,11 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
 
    /* Reset trails if necessary. */
    Pilot *const *plt_stack = pilot_getAll();
-   for ( int i = 0; i < array_size( plt_stack ); i++ )
+   for (int i = 0; i < array_size( plt_stack ); i++)
       pilot_clearTrails( plt_stack[i] );
 
    /* Only update when not doing diffs. */
-   if ( !uniedit_diffMode ) {
+   if (!uniedit_diffMode) {
       /* Reconstruct universe presences. */
       space_reconstructPresences();
       safelanes_recalculate();
@@ -2446,8 +2444,8 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    /* Text might need changing. */
    uniedit_selectText();
 
-   if ( conf.devautosave ) {
-      if ( dsys_saveSystem( uniedit_sys[0] ) )
+   if (conf.devautosave) {
+      if (dsys_saveSystem( uniedit_sys[0] ))
          uniedit_saveError();
    }
 
@@ -2465,16 +2463,16 @@ static void uniedit_btnEditRmSpob( unsigned int wid, const char *unused )
    const char *selected = toolkit_getList( wid, "lstSpobs" );
 
    /* Make sure it's valid. */
-   if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
+   if (( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ))
       return;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_VSPOB_REMOVE,
                                 strdup( selected ) );
    } else {
       /* Remove the spob. */
       int ret = system_rmVirtualSpob( uniedit_sys[0], selected );
-      if ( ret != 0 ) {
+      if (ret != 0) {
          dialogue_alert( _( "Failed to remove virtual spob '%s'!" ), selected );
          return;
       }
@@ -2501,7 +2499,7 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 
    /* Get all spobs. */
    va = virtualspob_getAll();
-   if ( array_size( va ) == 0 ) {
+   if (array_size( va ) == 0) {
       dialogue_alert( _( "No virtual spobs to add! Please add virtual spobs to "
                          "the '%s' directory first." ),
                       VIRTUALSPOB_DATA_PATH );
@@ -2515,7 +2513,7 @@ static void uniedit_btnEditAddSpob( unsigned int parent, const char *unused )
 
    /* Add virtual spob list. */
    str = malloc( sizeof( char * ) * array_size( va ) );
-   for ( int i = 0; i < array_size( va ); i++ )
+   for (int i = 0; i < array_size( va ); i++)
       str[i] = strdup( va[i].name );
    h = UNIEDIT_EDIT_HEIGHT - 60 - ( BUTTON_HEIGHT + 20 );
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH - 40, h, "lstSpobs", str,
@@ -2540,16 +2538,16 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
 
    /* Get selection. */
    selected = toolkit_getList( wid, "lstSpobs" );
-   if ( selected == NULL )
+   if (selected == NULL)
       return;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_VSPOB_ADD,
                                 strdup( selected ) );
    } else {
       /* Add virtual presence. */
       int ret = system_addVirtualSpob( uniedit_sys[0], selected );
-      if ( ret != 0 ) {
+      if (ret != 0) {
          dialogue_alert( _( "Failed to add virtual spob '%s'!" ), selected );
          return;
       }
@@ -2558,8 +2556,8 @@ static void uniedit_btnEditAddSpobAdd( unsigned int wid, const char *unused )
       space_reconstructPresences();
       economy_execQueued();
 
-      if ( conf.devautosave ) {
-         if ( dsys_saveSystem( uniedit_sys[0] ) )
+      if (conf.devautosave) {
+         if (dsys_saveSystem( uniedit_sys[0] ))
             uniedit_saveError();
       }
    }
@@ -2605,20 +2603,20 @@ static void uniedit_btnEditTags( unsigned int wid, const char *unused )
                      _( "New Tag" ), uniedit_btnNewTag );
 
    /* Generate list of tags. */
-   if ( uniedit_tagslist == NULL ) {
+   if (uniedit_tagslist == NULL) {
       StarSystem *systems_all = system_getAll();
-      uniedit_tagslist        = array_create( char        *);
-      for ( int i = 0; i < array_size( systems_all ); i++ ) {
+      uniedit_tagslist        = array_create( char * );
+      for (int i = 0; i < array_size( systems_all ); i++) {
          StarSystem *s = &systems_all[i];
-         for ( int j = 0; j < array_size( s->tags ); j++ ) {
+         for (int j = 0; j < array_size( s->tags ); j++) {
             const char *t     = s->tags[j];
             int         found = 0;
-            for ( int k = 0; k < array_size( uniedit_tagslist ); k++ )
-               if ( strcmp( uniedit_tagslist[k], t ) == 0 ) {
+            for (int k = 0; k < array_size( uniedit_tagslist ); k++)
+               if (strcmp( uniedit_tagslist[k], t ) == 0) {
                   found = 1;
                   break;
                }
-            if ( !found )
+            if (!found)
                array_push_back( &uniedit_tagslist, strdup( t ) );
          }
       }
@@ -2637,7 +2635,7 @@ static void uniedit_btnTagsClose( unsigned int wid, const char *unused )
    char        buf[STRMAX_SHORT];
    StarSystem *s = uniedit_sys[0];
    int         l = scnprintf( buf, sizeof( buf ), "#n%s#0", _( "Tags: " ) );
-   for ( int i = 0; i < array_size( s->tags ); i++ )
+   for (int i = 0; i < array_size( s->tags ); i++)
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s",
                       ( ( i > 0 ) ? ", " : "" ), s->tags[i] );
    window_modifyText( uniedit_widEdit, "txtTags", buf );
@@ -2657,8 +2655,8 @@ static void uniedit_genTagsList( unsigned int wid )
    hpos = lpos = -1;
 
    /* Destroy if exists. */
-   if ( widget_exists( wid, "lstTagsHave" ) &&
-        widget_exists( wid, "lstTagsLacked" ) ) {
+   if (widget_exists( wid, "lstTagsHave" ) &&
+       widget_exists( wid, "lstTagsLacked" )) {
       hpos = toolkit_getListPos( wid, "lstTagsHave" );
       lpos = toolkit_getListPos( wid, "lstTagsLacked" );
       window_destroyWidget( wid, "lstTagsHave" );
@@ -2673,13 +2671,13 @@ static void uniedit_genTagsList( unsigned int wid )
 
    /* Get all the techs the spob has. */
    n = array_size( s->tags );
-   if ( n > 0 ) {
+   if (n > 0) {
       have = malloc( n * sizeof( char * ) );
-      for ( int i = 0; i < n; i++ )
+      for (int i = 0; i < n; i++)
          have[i] = strdup( s->tags[i] );
       empty = 0;
    } else {
-      have      = malloc( sizeof( char      *) );
+      have      = malloc( sizeof( char * ) );
       have[n++] = strdup( _( "None" ) );
       empty     = 1;
    }
@@ -2692,18 +2690,18 @@ static void uniedit_genTagsList( unsigned int wid )
    /* Omit the techs that the spob already has from the list.  */
    n    = 0;
    lack = malloc( array_size( uniedit_tagslist ) * sizeof( char * ) );
-   for ( int i = 0; i < array_size( uniedit_tagslist ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_tagslist ); i++) {
       const char *t = uniedit_tagslist[i];
-      if ( empty )
+      if (empty)
          lack[n++] = strdup( t );
       else {
          int found = 0;
-         for ( int j = 0; j < array_size( s->tags ); j++ )
-            if ( strcmp( s->tags[j], t ) == 0 ) {
+         for (int j = 0; j < array_size( s->tags ); j++)
+            if (strcmp( s->tags[j], t ) == 0) {
                found = 1;
                break;
             }
-         if ( !found )
+         if (!found)
             lack[n++] = strdup( t );
       }
    }
@@ -2713,7 +2711,7 @@ static void uniedit_genTagsList( unsigned int wid )
                    uniedit_btnAddTag );
 
    /* Restore positions. */
-   if ( hpos != -1 && lpos != -1 ) {
+   if (hpos != -1 && lpos != -1) {
       toolkit_setListPos( wid, "lstTagsHave", hpos );
       toolkit_setListPos( wid, "lstTagsLacked", lpos );
    }
@@ -2726,15 +2724,15 @@ static void uniedit_btnAddTag( unsigned int wid, const char *unused )
 {
    (void)unused;
    const char *selected = toolkit_getList( wid, "lstTagsLacked" );
-   if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
+   if (( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ))
       return;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_SSYS_TAG_ADD,
                                 strdup( selected ) );
    } else {
       StarSystem *s = uniedit_sys[0];
-      if ( s->tags == NULL )
+      if (s->tags == NULL)
          s->tags = array_create( char * );
       array_push_back( &s->tags, strdup( selected ) );
    }
@@ -2750,19 +2748,19 @@ static void uniedit_btnRmTag( unsigned int wid, const char *unused )
 {
    (void)unused;
    const char *selected = toolkit_getList( wid, "lstTagsHave" );
-   if ( ( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ) )
+   if (( selected == NULL ) || ( strcmp( selected, _( "None" ) ) == 0 ))
       return;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_SSYS_TAG_REMOVE,
                                 strdup( selected ) );
    } else {
       int         i;
       StarSystem *s = uniedit_sys[0];
-      for ( i = 0; i < array_size( s->tags ); i++ )
-         if ( strcmp( selected, s->tags[i] ) == 0 )
+      for (i = 0; i < array_size( s->tags ); i++)
+         if (strcmp( selected, s->tags[i] ) == 0)
             break;
-      if ( i >= array_size( s->tags ) )
+      if (i >= array_size( s->tags ))
          return;
       free( s->tags[i] );
       array_erase( &s->tags, &s->tags[i], &s->tags[i + 1] );
@@ -2781,15 +2779,15 @@ static void uniedit_btnNewTag( unsigned int wid, const char *unused )
    char *tag =
       dialogue_input( _( "Add New System Tag" ), 1, 128,
                       _( "Please write the new tag to add to the system." ) );
-   if ( tag == NULL )
+   if (tag == NULL)
       return;
 
-   if ( uniedit_diffMode ) {
+   if (uniedit_diffMode) {
       uniedit_diffCreateSysStr( uniedit_sys[0], HUNK_TYPE_SSYS_TAG_ADD,
                                 strdup( tag ) );
    } else {
       StarSystem *s = uniedit_sys[0];
-      if ( s->tags == NULL )
+      if (s->tags == NULL)
          s->tags = array_create( char * );
       array_push_back( &s->tags, tag ); /* tag gets freed later. */
    }
@@ -2830,39 +2828,39 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
    /* Check default. */
    pos                  = toolkit_getListPos( wid, "lstViewModes" );
    uniedit_view_faction = -1;
-   if ( pos == 0 ) {
+   if (pos == 0) {
       uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
       window_close( wid, unused );
       return;
-   } else if ( pos == 1 ) {
+   } else if (pos == 1) {
       uniedit_viewmode = UNIEDIT_VIEW_VIRTUALSPOBS;
       window_close( wid, unused );
       return;
-   } else if ( pos == 2 ) {
+   } else if (pos == 2) {
       uniedit_viewmode = UNIEDIT_VIEW_RADIUS;
       window_close( wid, unused );
       return;
-   } else if ( pos == 3 ) {
+   } else if (pos == 3) {
       uniedit_viewmode = UNIEDIT_VIEW_NOLANES;
       window_close( wid, unused );
       return;
-   } else if ( pos == 4 ) {
+   } else if (pos == 4) {
       uniedit_viewmode = UNIEDIT_VIEW_BACKGROUND;
       window_close( wid, unused );
       return;
-   } else if ( pos == 5 ) {
+   } else if (pos == 5) {
       uniedit_viewmode = UNIEDIT_VIEW_ASTEROIDS;
       window_close( wid, unused );
       return;
-   } else if ( pos == 6 ) {
+   } else if (pos == 6) {
       uniedit_viewmode = UNIEDIT_VIEW_INTERFERENCE;
       window_close( wid, unused );
       return;
-   } else if ( pos == 7 ) {
+   } else if (pos == 7) {
       uniedit_viewmode = UNIEDIT_VIEW_TECH;
       window_close( wid, unused );
       return;
-   } else if ( pos == 8 ) {
+   } else if (pos == 8) {
       uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
       window_close( wid, unused );
       return;
@@ -2870,7 +2868,7 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 
    /* Get selection. */
    selected = toolkit_getList( wid, "lstViewModes" );
-   if ( selected == NULL )
+   if (selected == NULL)
       return;
 
    uniedit_viewmode     = UNIEDIT_VIEW_PRESENCE;
@@ -2884,13 +2882,13 @@ static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
 {
    int         s   = window_checkboxState( wid, wgtname );
    StarSystem *sys = uniedit_sys[0];
-   if ( uniedit_diffMode ) {
-      if ( s )
+   if (uniedit_diffMode) {
+      if (s)
          uniedit_diffCreateSysNone( sys, HUNK_TYPE_SSYS_NOLANES_ADD );
       else
          uniedit_diffCreateSysNone( sys, HUNK_TYPE_SSYS_NOLANES_REMOVE );
    } else {
-      if ( s )
+      if (s)
          sys_setFlag( sys, SYSTEM_NOLANES );
       else
          sys_rmFlag( sys, SYSTEM_NOLANES );
@@ -2900,7 +2898,7 @@ static void uniedit_chkNolanes( unsigned int wid, const char *wgtname )
 static void uniedit_diffClear( void )
 {
    diff_start();
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_diff ); i++) {
       UniHunk_t *h = &uniedit_diff[i];
       diff_revertHunk( h );
       diff_cleanupHunk( h );
@@ -2916,11 +2914,11 @@ static int uniedit_diff_cmp( const void *p1, const void *p2 )
    const UniHunk_t *h1  = p1;
    const UniHunk_t *h2  = p2;
    int              ret = h1->target.type - h2->target.type;
-   if ( ret )
+   if (ret)
       return ret;
    /* Should be same type. */
    ret = strcmp( h1->target.u.name, h2->target.u.name );
-   if ( ret )
+   if (ret)
       return ret;
    return h1->type -
           h2->type; /* Should not overlap with same target and type. */
@@ -3000,27 +2998,27 @@ void uniedit_diffAdd( UniHunk_t *hunk )
    diff_start();
 
    /* Replace if already same type exists. */
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_diff ); i++) {
       UniHunk_t *hi = &uniedit_diff[i];
-      if ( hi->target.type != hunk->target.type )
+      if (hi->target.type != hunk->target.type)
          continue;
-      if ( strcmp( hi->target.u.name, hunk->target.u.name ) != 0 )
+      if (strcmp( hi->target.u.name, hunk->target.u.name ) != 0)
          continue;
-      if ( hi->type != hunk->type )
+      if (hi->type != hunk->type)
          continue;
-      if ( array_size( hi->attr ) != array_size( hunk->attr ) )
+      if (array_size( hi->attr ) != array_size( hunk->attr ))
          continue;
-      if ( ( hi->attr != NULL ) && ( hunk->attr != NULL ) ) {
-         for ( int j = 0; j < array_size( hi->attr ); j++ ) {
+      if (( hi->attr != NULL ) && ( hunk->attr != NULL )) {
+         for (int j = 0; j < array_size( hi->attr ); j++) {
             int found = 0;
-            for ( int k = 0; k < array_size( hunk->attr ); k++ ) {
-               if ( ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ||
-                    ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ) {
+            for (int k = 0; k < array_size( hunk->attr ); k++) {
+               if (( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 ) ||
+                   ( strcmp( hi->attr[j].name, hunk->attr[k].name ) == 0 )) {
                   found = 1;
                   break;
                }
             }
-            if ( !found )
+            if (!found)
                continue;
          }
       }
@@ -3028,7 +3026,7 @@ void uniedit_diffAdd( UniHunk_t *hunk )
       /* Have to revert the old one and then patch. */
       diff_revertHunk( hi );
       diff_cleanupHunk( hi );
-      if ( diff_patchHunk( hunk ) )
+      if (diff_patchHunk( hunk ))
          WARN( _( "uniedit: failed to patch '%s'" ),
                diff_hunkName( hunk->type ) );
       diff_end();
@@ -3037,7 +3035,7 @@ void uniedit_diffAdd( UniHunk_t *hunk )
    }
 
    /* Patch the hunk. */
-   if ( diff_patchHunk( hunk ) )
+   if (diff_patchHunk( hunk ))
       WARN( _( "uniedit: failed to patch '%s'" ), diff_hunkName( hunk->type ) );
    diff_end();
 
@@ -3052,7 +3050,7 @@ static void uniedit_diffSsysPos( StarSystem *s, double x, double y )
 {
    UniHunk_t hunk;
 
-   if ( !uniedit_diffMode ) {
+   if (!uniedit_diffMode) {
       s->pos.x = x;
       s->pos.y = y;
       return;
@@ -3078,13 +3076,13 @@ static void uniedit_diff_regenList( unsigned int wid )
    int    p = 0;
 
    window_dimWindow( wid, &w, &h );
-   if ( widget_exists( wid, "lstDiffs" ) ) {
+   if (widget_exists( wid, "lstDiffs" )) {
       p = toolkit_getListPos( wid, "lstDiffs" );
       window_destroyWidget( wid, "lstDiffs" );
    }
 
    items = malloc( sizeof( char * ) * array_size( uniedit_diff ) );
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_diff ); i++) {
       const UniHunk_t *hi = &uniedit_diff[i];
       SDL_asprintf( &items[i], "%s: %s", hi->target.u.name,
                     diff_hunkName( hi->type ) );
@@ -3133,18 +3131,18 @@ static void uniedit_diffEditor( unsigned int wid_unused, const char *unused )
 
 static void uniedit_diff_toggle( unsigned int wid, const char *wgt )
 {
-   if ( uniedit_diffMode && !uniedit_diffSaved ) {
-      if ( !dialogue_YesNoRaw(
-              _( "#rUnsaved Progress" ),
-              _( "You have #runsaved changes#0 to the universe diff. Are you "
-                 "sure you wish to disable diff mode and #rlose all your "
-                 "changes#0?" ) ) ) {
+   if (uniedit_diffMode && !uniedit_diffSaved) {
+      if (!dialogue_YesNoRaw(
+             _( "#rUnsaved Progress" ),
+             _( "You have #runsaved changes#0 to the universe diff. Are you "
+                "sure you wish to disable diff mode and #rlose all your "
+                "changes#0?" ) )) {
          window_checkboxSet( wid, wgt, 1 );
          return;
       }
    }
    uniedit_diffMode = window_checkboxState( wid, wgt );
-   if ( !uniedit_diffMode ) {
+   if (!uniedit_diffMode) {
       uniedit_diffClear();
       diff_clear();
       /* Regen list. */
@@ -3160,11 +3158,11 @@ static void uniedit_diff_load_callback( void              *userdata,
    unsigned int  wid = *(unsigned int *)userdata;
    UniDiffData_t data;
 
-   if ( filelist == NULL ) {
+   if (filelist == NULL) {
       WARN( _( "Error calling %s: %s" ), "SDL_ShowOpenFileDialog",
             SDL_GetError() );
       return;
-   } else if ( filelist[0] == NULL ) {
+   } else if (filelist[0] == NULL) {
       /* Cancelled by user.  */
       return;
    }
@@ -3183,7 +3181,7 @@ static void uniedit_diff_load_callback( void              *userdata,
 
    /* Apply the patches. */
    diff_start();
-   for ( int i = 0; i < array_size( uniedit_diff ); i++ ) {
+   for (int i = 0; i < array_size( uniedit_diff ); i++) {
       UniHunk_t *hunk = &uniedit_diff[i];
       diff_patchHunk( hunk );
    }
