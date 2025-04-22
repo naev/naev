@@ -765,7 +765,6 @@ int nlua_helperTags( lua_State *L, int idx, char *const *tags )
    }
 }
 
-#if 0
 /**
  * @brief include( string module )
  *
@@ -774,16 +773,13 @@ int nlua_helperTags( lua_State *L, int idx, char *const *tags )
  *    @param L Lua Environment to load modules into.
  *    @return The return value of the chunk, or true.
  */
-static int nlua_require( lua_State *L )
+int nlua_require( lua_State *L )
 {
    const char *filename = luaL_checkstring( L, 1 );
 
-   /* Environment table to load module into */
-   int envtab = lua_upvalueindex( 1 );
-
    /* Check to see if already included. */
    // lua_getglobal( L, NLUA_LOAD_TABLE ); /* t */
-   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
+   lua_getglobal( L, NLUA_LOAD_TABLE ); /* t */
    if ( !lua_isnil( L, -1 ) ) {
       lua_getfield( L, -1, filename ); /* t, f */
       /* Already included. */
@@ -820,11 +816,6 @@ static int nlua_require( lua_State *L )
    lua_remove( L, -2 ); /* l, r */
    lua_remove( L, -2 ); /* r */
 
-   /* Set the environment for the call. */
-   /* TODO this is wrong when using setfenv Lua-side... */
-   lua_pushvalue( L, envtab ); /* r, e */
-   lua_setfenv( L, -2 );       /* r */
-
    /* run the buffer */
    lua_pushstring( L, filename ); /* pass name as first parameter */
 #if 0
@@ -842,14 +833,16 @@ static int nlua_require( lua_State *L )
       lua_pushboolean( L, 1 );
    }
    // lua_getglobal( L,NLUA_LOAD_TABLE ); /* val, t */
-   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* val, t */
-   lua_pushvalue( L, -2 );                     /* val, t, val */
-   lua_setfield( L, -2, filename );            /* val, t */
-   lua_pop( L, 1 );                            /* val */
+   lua_getglobal( L, NLUA_LOAD_TABLE ); /* val, t */
+   lua_pushvalue( L, -2 );              /* val, t, val */
+   lua_setfield( L, -2, filename );     /* val, t */
+   lua_pop( L, 1 );                     /* val */
 
    /* cleanup, success */
    return 1;
 }
+
+#if 0
 /*
  * @brief Create an new environment in global Lua state.
  *

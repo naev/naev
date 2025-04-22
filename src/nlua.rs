@@ -172,8 +172,14 @@ impl NLua {
 
         // Add some mor functions.
         let globals = lua.globals();
-        globals.set("require", lua.create_function(require)?)?;
+        //globals.set("require", lua.create_function(require)?)?;
         unsafe {
+            globals.set(
+                "require",
+                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                    naevc::nlua_require,
+                ))?,
+            )?;
             globals.set(
                 "print",
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(

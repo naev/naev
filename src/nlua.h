@@ -60,6 +60,7 @@ int       nlua_refenv( nlua_env *env, const char *name );
 int       nlua_refenvtype( nlua_env *env, const char *name, int type );
 int       nlua_reffield( int objref, const char *name );
 void      nlua_dumpstack( lua_State *L );
+int       nlua_require( lua_State *L );
 
 /* Reference stuff. */
 int  nlua_ref( lua_State *L, int idx );

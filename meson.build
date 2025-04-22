@@ -383,6 +383,7 @@ bindgen_args = [
    '--override-abi', 'cli_print=C-unwind',
    '--override-abi', 'cli_printRaw=C-unwind',
    '--override-abi', 'cli_warn=C-unwind',
+   '--override-abi', 'nlua_require=C-unwind',
    '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes)]\npub mod config;',
 
 ]
