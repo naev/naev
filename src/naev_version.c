@@ -27,8 +27,8 @@ static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 const char *naev_version( int long_version )
 {
    /* Set up the long version. */
-   if (long_version) {
-      if (version_human[0] == '\0')
+   if ( long_version ) {
+      if ( version_human[0] == '\0' )
          snprintf( version_human, sizeof( version_human ),
                    " " APPNAME " v%s%s - %s", VERSION,
 #ifdef DEBUGGING
