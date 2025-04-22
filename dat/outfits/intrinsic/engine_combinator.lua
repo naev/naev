@@ -1,11 +1,8 @@
 
 notactive = true -- Doesn't become active
 
-local needs_avg = {
-   speed = true,
-   turn = true,
-   accel = true,
-}
+-- in order
+local mobility_params = {"accel","turn","speed"}
 
 local fmt = require "format"
 
@@ -17,13 +14,15 @@ descextra=function ( p, _o, _po)
    local sm = p:shipMemory()
    local count = sm._engine_count or 0
 
+   local out
    if count == 0 then
-      return "No engine equipped."
+      out = "No engine equipped\n"
+      count = 1
+   else
+      out = "#bEngines equipped:#0 #g" .. count .. "#0\n"
    end
-
-   local out = "#bEngines equipped:#0 #g" .. count .. "#0\n"
-   if count>0 then
-      for s,_ in pairs(needs_avg) do
+   for _,s in ipairs(mobility_params) do
+      if sm["_"..s] then
          out = out .. "#g" .. s .. ": " .. fmt.number(sm["_"..s]/count) .. "#0\n"
       end
    end
@@ -58,12 +57,13 @@ function onadd( p, po )
 
    po:clear()
    if count>0 then
-      --local acc=""
-      for s,_ in pairs(needs_avg) do
-         po:set(s,(sm["_"..s] or 0)/count)
-         --acc = acc .. fmt.f("  {k} {v}",{k=s,v=fmt.number(sm["_"..s]/count)})
+      for _,s in ipairs(mobility_params) do
+         po:set(s, (sm["_"..s] or 0)/count)
       end
-      --print(acc)
+   else
+      for _,s in ipairs(mobility_params) do
+         sm["_"..s] = nil
+      end
    end
 end
 

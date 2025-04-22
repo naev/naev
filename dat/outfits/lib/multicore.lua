@@ -69,9 +69,9 @@ local function add_desc( stat, nomain, nosec )
 end
 
 local needs_avg = {
-   speed = true,
-   turn = true,
    accel = true,
+   turn = true,
+   speed = true,
 }
 
 local function averaging_mod( s )
@@ -121,13 +121,7 @@ local function strstk( p)
 
       if sm then
          for i,v in pairs(sm._stk) do
-            local t=i:outfit()
-            if t then
-               t=t:nameRaw()
-            else
-               t='nil'
-            end
-            acc=acc.." "..t..":"..mf(v)
+            acc = acc .. " " .. fmt.number(i)
          end
       end
    end
@@ -144,27 +138,30 @@ local function engine_combinator_needs_update( p, po, sign )
    local found
 
    sm._stk = sm._stk or {}
-   for i,v in ipairs(sm._stk) do
-      print (">"..v)
-   end
 
-   found = (sm._stk[po] == true)
+   found = (sm._stk[po:id()] == true)
 
    if sign == -1 then
       if found then
-         sm._stk[po] = nil
-         print("<<"..strstk(p).." \\ "..po:outfit():nameRaw())
+         print(" [" .. strstk(p) .. " ] \\ " .. fmt.number(po:id()))
+         sm._stk[po:id()] = nil
       else
          return false
       end
    else
       if found then
-         --if sign == 1 then
-         return false
-         --end
+         if sign == 1 then
+            return false
+         else
+            print(" [" .. strstk(p) .. " ] upd " .. fmt.number(po:id()))
+         end
       else
-         print(">> "..strstk(p).." + "..po:outfit():nameRaw())
-         sm._stk[po] = true
+         print(" [" .. strstk(p) .. " ] + " .. fmt.number(po:id()))
+         if sign == 0 then
+            print("Trying to update a new engine.")
+         else
+            sm._stk[po:id()] = true
+         end
       end
    end
    return true
@@ -298,11 +295,11 @@ function multicore.init( params )
          multicore_off = not on
       end
       if before~=multicore_off then
-         print(" status  " .. mf(before) .. " -> " .. mf(multicore_off))
+         print(" " .. mf(before) .. " -> " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
       end
       if (before and (not multicore_off or multicore_off == nil)) or (not before and multicore_off) then
-         if flag ~= nil then
-            flag = 1
+         if flag then
+            flag = onoff_mul()
          else
             flag = 0
          end
@@ -323,16 +320,15 @@ function multicore.init( params )
 
    function onadd( p, po )
       if p and po then
-         --print ("onadd "..mf(multicore_off))
+         print ("onadd " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
          setworkingstatus( p, po, nil, true)
       end
    end
 
    function onremove( p, po )
       if p and po then
-         --print ("remove "..mf(multicore_off))
+         print ("onremove " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
          setworkingstatus( p, po, false, true)
-         changed( p, po, -1, 0)
       end
    end
 
