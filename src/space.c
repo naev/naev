@@ -3921,9 +3921,6 @@ void space_exit( void )
       /* commodities */
       array_free( spb->commodities );
       array_free( spb->commodityPrice );
-
-      /* Lua. */
-      nlua_freeEnv( spb->lua_env );
    }
    array_free( spob_stack );
 
