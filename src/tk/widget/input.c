@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include <assert.h>
+#include <ctype.h>
 #include <stdlib.h>
 /** @endcond */
 
@@ -51,7 +52,7 @@ void window_addInput( unsigned int wid, const int x, const int y, /* position */
 {
    Window *wdw = window_wget( wid );
    Widget *wgt = window_newWidget( wdw, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* generic */
@@ -105,8 +106,8 @@ static void inp_render( Widget *inp, double bx, double by )
    toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
 
    /** Decide what text to draw. */
-   if ( ( inp->dat.inp.input[0] == '\0' ) &&
-        ( inp->dat.inp.empty_text != NULL ) ) {
+   if (( inp->dat.inp.input[0] == '\0' ) &&
+       ( inp->dat.inp.empty_text != NULL )) {
       str = inp->dat.inp.empty_text;
       col = &cFontGrey;
    } else {
@@ -115,7 +116,7 @@ static void inp_render( Widget *inp, double bx, double by )
    }
 
    /* Draw text. */
-   if ( inp->dat.inp.oneline ) {
+   if (inp->dat.inp.oneline) {
       /* center vertically, print whatever text fits regardless of word
        * boundaries. */
       ty = y + ( inp->h - inp->dat.inp.font->h ) / 2.;
@@ -130,8 +131,8 @@ static void inp_render( Widget *inp, double bx, double by )
    }
 
    /* Draw cursor. */
-   if ( wgt_isFlag( inp, WGT_FLAG_FOCUSED ) ) {
-      if ( inp->dat.inp.oneline ) {
+   if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
+      if (inp->dat.inp.oneline) {
          w = inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos );
          toolkit_drawRect( x + 5. + w,
                            y + ( inp->h - inp->dat.inp.font->h - 4. ) / 2., 1.,
@@ -146,14 +147,14 @@ static void inp_render( Widget *inp, double bx, double by )
          s     = 0;
          do {
             p += w;
-            if ( ( s != 0 ) && ( ( str[p] == '\n' ) || ( str[p] == ' ' ) ) )
+            if (( s != 0 ) && ( ( str[p] == '\n' ) || ( str[p] == ' ' ) ))
                p++;
             s = 1;
             w = inp_rangeFromWidth( inp, p, -1 );
             lines += 1;
-            if ( str[p + w] == '\0' )
+            if (str[p + w] == '\0')
                break;
-         } while ( p + w < inp->dat.inp.pos );
+         } while (p + w < inp->dat.inp.pos);
 
          /* On the final line, no word-wrap is possible. */
          w = inp_rangeToWidth( inp, p, inp->dat.inp.pos );
@@ -185,10 +186,10 @@ static int inp_text( Widget *inp, const char *buf )
    uint32_t ch;
    size_t   i   = 0;
    int      ret = 0;
-   while ( ( ch = u8_nextchar( buf, &i ) ) )
+   while (( ch = u8_nextchar( buf, &i ) ))
       ret |= inp_addKey( inp, ch );
 
-   if ( ret && inp->dat.inp.fptr != NULL )
+   if (ret && inp->dat.inp.fptr != NULL)
       inp->dat.inp.fptr( inp->wdw, inp->name );
 
    return ret;
@@ -207,20 +208,20 @@ static int inp_addKey( Widget *inp, uint32_t ch )
    char   buf[8];
 
    /* Check to see if is in filter to ignore. */
-   if ( inp->dat.inp.filter != NULL ) {
+   if (inp->dat.inp.filter != NULL) {
       uint32_t c;
       size_t   i = 0;
-      while ( ( c = u8_nextchar( inp->dat.inp.filter, &i ) ) )
-         if ( c == ch )
+      while (( c = u8_nextchar( inp->dat.inp.filter, &i ) ))
+         if (c == ch)
             return 1; /* Ignored. */
    }
 
    /* TODO make this properly escape the font colour codes. */
-   if ( ch == FONT_COLOUR_CODE )
+   if (ch == FONT_COLOUR_CODE)
       return 1;
 
    /* Make sure it's not full. */
-   if ( u8_strlen( inp->dat.inp.input ) >= inp->dat.inp.char_max - 1 )
+   if (u8_strlen( inp->dat.inp.input ) >= inp->dat.inp.char_max - 1)
       return 1;
 
    /* Render back to utf8. */
@@ -230,7 +231,7 @@ static int inp_addKey( Widget *inp, uint32_t ch )
    memmove( &inp->dat.inp.input[inp->dat.inp.pos + len],
             &inp->dat.inp.input[inp->dat.inp.pos],
             inp->dat.inp.byte_max - 1 - inp->dat.inp.pos - len );
-   for ( size_t i = 0; i < len; i++ )
+   for (size_t i = 0; i < len; i++)
       inp->dat.inp.input[inp->dat.inp.pos++] = buf[i];
    assert( inp->dat.inp.input[inp->dat.inp.byte_max - 1] == '\0' );
 
@@ -268,50 +269,50 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    /*
     * Handle arrow keys.
     */
-   if ( ( key == SDLK_LEFT ) || ( key == SDLK_RIGHT ) || ( key == SDLK_UP ) ||
-        ( key == SDLK_DOWN ) ) {
+   if (( key == SDLK_LEFT ) || ( key == SDLK_RIGHT ) || ( key == SDLK_UP ) ||
+       ( key == SDLK_DOWN )) {
       /* Move pointer. */
-      if ( key == SDLK_LEFT ) {
-         if ( inp->dat.inp.pos > 0 ) {
-            if ( mod & KMOD_CTRL ) {
+      if (key == SDLK_LEFT) {
+         if (inp->dat.inp.pos > 0) {
+            if (mod & KMOD_CTRL) {
                /* We want to position the cursor at the start of the previous or
                 * current word. */
                /* Begin by skipping all breakers. */
                while (
                   inp->dat.inp.pos > 0 &&
-                  inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] ) ) {
+                  inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] )) {
                   u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
                }
                /* Now skip until we encounter a breaker (or SOL). */
                while (
                   inp->dat.inp.pos > 0 &&
-                  !inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] ) ) {
+                  !inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] )) {
                   u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
                }
             } else
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
          }
-      } else if ( key == SDLK_RIGHT ) {
+      } else if (key == SDLK_RIGHT) {
          size_t len = strlen( inp->dat.inp.input );
-         if ( inp->dat.inp.pos < len ) {
-            if ( mod & KMOD_CTRL ) {
+         if (inp->dat.inp.pos < len) {
+            if (mod & KMOD_CTRL) {
                /* We want to position the cursor at the start of the next word.
                 */
                /* Begin by skipping all non-breakers. */
-               while ( !inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos] ) &&
-                       ( inp->dat.inp.pos < len ) ) {
+               while (!inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos] ) &&
+                      ( inp->dat.inp.pos < len )) {
                   u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
                }
                /* Now skip until we encounter a non-breaker (or EOL). */
-               while ( inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos] ) &&
-                       ( inp->dat.inp.pos < len ) ) {
+               while (inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos] ) &&
+                      ( inp->dat.inp.pos < len )) {
                   u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
                }
             } else
                u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
          }
-      } else if ( key == SDLK_UP || key == SDLK_DOWN ) {
-         if ( inp->dat.inp.oneline )
+      } else if (key == SDLK_UP || key == SDLK_DOWN) {
+         if (inp->dat.inp.oneline)
             return 0;
 
          /* Keep a running list of the 3 most recent line-start positions found.
@@ -324,24 +325,24 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
             curr_line_start = next_line_start;
             line_end =
                curr_line_start + inp_rangeFromWidth( inp, curr_line_start, -1 );
-            if ( inp->dat.inp.input[line_end] == '\0' )
+            if (inp->dat.inp.input[line_end] == '\0')
                next_line_start = SIZE_MAX;
-            else if ( isspace( inp->dat.inp.input[line_end] ) )
+            else if (isspace( inp->dat.inp.input[line_end] ))
                next_line_start = line_end + 1;
             else
                next_line_start = line_end;
-         } while ( line_end < inp->dat.inp.pos );
+         } while (line_end < inp->dat.inp.pos);
 
          w = inp_rangeToWidth( inp, curr_line_start, inp->dat.inp.pos );
 
          /* Extreme cases: moving to start/end of the whole input. */
-         if ( key == SDLK_UP && curr_line_start == 0 )
+         if (key == SDLK_UP && curr_line_start == 0)
             inp->dat.inp.pos = 0;
-         else if ( key == SDLK_DOWN && next_line_start == SIZE_MAX )
+         else if (key == SDLK_DOWN && next_line_start == SIZE_MAX)
             inp->dat.inp.pos = strlen( inp->dat.inp.input );
          /* Main cases: aim for the same width into the target line. ISSUE: this
           * logic skews left. */
-         else if ( key == SDLK_UP )
+         else if (key == SDLK_UP)
             inp->dat.inp.pos =
                prev_line_start + inp_rangeFromWidth( inp, prev_line_start, w );
          else
@@ -354,39 +355,37 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    }
 
    /* Don't use, but don't eat, either. */
-   if ( ( key == SDLK_TAB ) || ( key == SDLK_ESCAPE ) )
+   if (( key == SDLK_TAB ) || ( key == SDLK_ESCAPE ))
       return 0;
 
    /* Eat everything else that isn't usable. Om nom. */
    /* Only catch some keys. */
-   if ( ( key != SDLK_BACKSPACE ) && ( key != SDLK_DELETE ) &&
-        ( key != SDLK_RETURN ) && ( key != SDLK_KP_ENTER ) &&
-        ( key != SDLK_HOME ) && ( key != SDLK_END ) && ( key != SDLK_PAGEUP ) &&
-        ( key != SDLK_PAGEDOWN ) )
+   if (( key != SDLK_BACKSPACE ) && ( key != SDLK_DELETE ) &&
+       ( key != SDLK_RETURN ) && ( key != SDLK_KP_ENTER ) &&
+       ( key != SDLK_HOME ) && ( key != SDLK_END ) && ( key != SDLK_PAGEUP ) &&
+       ( key != SDLK_PAGEDOWN ))
       return 1; /* SDL2 uses TextInput and should eat most keys. Om nom. */
 
    /* backspace -> delete text */
-   if ( key == SDLK_BACKSPACE ) {
-      if ( inp->dat.inp.pos <= 0 )
+   if (key == SDLK_BACKSPACE) {
+      if (inp->dat.inp.pos <= 0)
          return 1; /* We still catch the event. */
 
       /* We want to move inp->dat.inp.pos backward and delete all characters
        * caught between it and curpos at the end. */
       size_t curpos = inp->dat.inp.pos;
-      if ( inp->dat.inp.pos > 0 ) {
-         if ( mod & KMOD_CTRL ) {
+      if (inp->dat.inp.pos > 0) {
+         if (mod & KMOD_CTRL) {
             /* We want to delete up to the start of the previous or current
              * word. */
             /* Begin by skipping all breakers. */
-            while (
-               inp->dat.inp.pos > 0 &&
-               inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] ) ) {
+            while (inp->dat.inp.pos > 0 &&
+                   inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] )) {
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
             }
             /* Now skip until we encounter a breaker (or SOL). */
-            while (
-               inp->dat.inp.pos > 0 &&
-               !inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] ) ) {
+            while (inp->dat.inp.pos > 0 &&
+                   !inp_isBreaker( inp->dat.inp.input[inp->dat.inp.pos - 1] )) {
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
             }
          } else {
@@ -400,28 +399,28 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
                                  inp->dat.inp.pos] == '\0' );
 
       inp_clampView( inp );
-      if ( inp->dat.inp.fptr != NULL )
+      if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
       return 1;
    }
    /* delete -> delete text */
-   else if ( key == SDLK_DELETE ) {
+   else if (key == SDLK_DELETE) {
       size_t len = (int)strlen( inp->dat.inp.input );
       /* We want to move curpos forward and delete all characters caught between
        * it and inp->dat.inp.pos at the end. */
       size_t curpos = inp->dat.inp.pos;
-      if ( inp->dat.inp.pos < len ) {
-         if ( mod & KMOD_CTRL ) {
+      if (inp->dat.inp.pos < len) {
+         if (mod & KMOD_CTRL) {
             /* We want to delete up until the start of the next word. */
             /* Begin by skipping all non-breakers. */
-            while ( !inp_isBreaker( inp->dat.inp.input[curpos] ) &&
-                    ( curpos < len ) ) {
+            while (!inp_isBreaker( inp->dat.inp.input[curpos] ) &&
+                   ( curpos < len )) {
                u8_inc( inp->dat.inp.input, &curpos );
             }
             /* Now skip until we encounter a non-breaker (or EOL). */
-            while ( inp_isBreaker( inp->dat.inp.input[curpos] ) &&
-                    ( curpos < len ) ) {
+            while (inp_isBreaker( inp->dat.inp.input[curpos] ) &&
+                   ( curpos < len )) {
                u8_inc( inp->dat.inp.input, &curpos );
             }
          } else {
@@ -435,20 +434,20 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
                                  inp->dat.inp.pos] == '\0' );
 
       inp_clampView( inp );
-      if ( inp->dat.inp.fptr != NULL )
+      if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
       return 1;
    }
    /* home -> move to start */
-   else if ( key == SDLK_HOME ) {
+   else if (key == SDLK_HOME) {
       inp->dat.inp.pos = 0;
       inp_clampView( inp );
 
       return 1;
    }
    /* end -> move to end */
-   else if ( key == SDLK_END ) {
+   else if (key == SDLK_END) {
       inp->dat.inp.pos = strlen( inp->dat.inp.input );
       inp_clampView( inp );
 
@@ -456,12 +455,11 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    }
 
    /* in limits. */
-   else if ( key == SDLK_RETURN || key == SDLK_KP_ENTER ) {
-      if ( inp->dat.inp.oneline )
+   else if (key == SDLK_RETURN || key == SDLK_KP_ENTER) {
+      if (inp->dat.inp.oneline)
          return 0; /* Enter does not work in one-liners. */
       /* Empty. */
-      if ( u8_strlen( inp->dat.inp.input ) >=
-           (size_t)inp->dat.inp.char_max - 2 )
+      if (u8_strlen( inp->dat.inp.input ) >= (size_t)inp->dat.inp.char_max - 2)
          return 1;
 
       memmove( &inp->dat.inp.input[inp->dat.inp.pos + 1],
@@ -470,7 +468,7 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
       inp->dat.inp.input[inp->dat.inp.pos++] = '\n';
       assert( inp->dat.inp.input[inp->dat.inp.byte_max - 1] == '\0' );
 
-      if ( inp->dat.inp.fptr != NULL )
+      if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
       return 1;
@@ -494,14 +492,14 @@ static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
    int  w;
    char c = '\0';
 
-   if ( end_pos >= 0 ) {
-      if ( end_pos <= start_pos )
+   if (end_pos >= 0) {
+      if (end_pos <= start_pos)
          return 0;
       c                           = inp->dat.inp.input[inp->dat.inp.pos];
       inp->dat.inp.input[end_pos] = '\0';
    }
    w = gl_printWidthRaw( inp->dat.inp.font, &inp->dat.inp.input[start_pos] );
-   if ( end_pos >= 0 )
+   if (end_pos >= 0)
       inp->dat.inp.input[end_pos] = c;
    return w;
 }
@@ -537,23 +535,23 @@ static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
 static void inp_clampView( Widget *inp )
 {
    /* @todo Handle multiline input widgets. */
-   if ( !inp->dat.inp.oneline )
+   if (!inp->dat.inp.oneline)
       return;
 
    /* If the cursor is behind the view, shift the view backwards. */
-   if ( inp->dat.inp.view > inp->dat.inp.pos )
+   if (inp->dat.inp.view > inp->dat.inp.pos)
       inp->dat.inp.view = inp->dat.inp.pos;
 
    /* Shift the view right until the cursor is visible. */
-   while ( inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos ) >
-           inp->w - 10 )
+   while (inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos ) >
+          inp->w - 10)
       u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
 
    /* If possible, shift the view left without hiding text on the right. */
-   while ( inp->dat.inp.view > 0 ) {
+   while (inp->dat.inp.view > 0) {
       size_t v = inp->dat.inp.view;
       u8_dec( inp->dat.inp.input, &v );
-      if ( inp_rangeToWidth( inp, v, -1 ) > inp->w - 10 )
+      if (inp_rangeToWidth( inp, v, -1 ) > inp->w - 10)
          break;
       inp->dat.inp.view = v;
    }
@@ -582,7 +580,7 @@ const char *window_getInput( unsigned int wid, const char *name )
    Widget *wgt = window_getwgt( wid, name );
 
    /* Check the type. */
-   if ( wgt == NULL || wgt->type != WIDGET_INPUT )
+   if (wgt == NULL || wgt->type != WIDGET_INPUT)
       ERR( "Trying to get input from non-input widget '%s'.", name );
 
    /* Get the value. */
@@ -601,11 +599,11 @@ const char *window_setInput( unsigned int wid, const char *name,
                              const char *msg )
 {
    Widget *wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return NULL;
 
    /* Check the type. */
-   if ( wgt->type != WIDGET_INPUT ) {
+   if (wgt->type != WIDGET_INPUT) {
       WARN( "Trying to set input on non-input widget '%s'.", name );
       return NULL;
    }
@@ -616,15 +614,15 @@ const char *window_setInput( unsigned int wid, const char *name,
    wgt->dat.inp.view = 0;
 
    /* Set the message. */
-   if ( msg != NULL ) {
+   if (msg != NULL) {
       uint32_t ch;
       size_t   i = 0;
-      while ( ( ch = u8_nextchar( msg, &i ) ) )
+      while (( ch = u8_nextchar( msg, &i ) ))
          inp_addKey( wgt, ch );
    }
 
    /* Get the value. */
-   if ( wgt->dat.inp.fptr != NULL )
+   if (wgt->dat.inp.fptr != NULL)
       wgt->dat.inp.fptr( wid, name );
 
    return wgt->dat.inp.input;
@@ -641,17 +639,17 @@ const char *window_setInput( unsigned int wid, const char *name,
 void inp_setEmptyText( unsigned int wid, const char *name, const char *str )
 {
    Widget *wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* Check the type. */
-   if ( wgt->type != WIDGET_INPUT ) {
+   if (wgt->type != WIDGET_INPUT) {
       WARN( "Trying to set input filter on non-input widget '%s'.", name );
       return;
    }
 
    free( wgt->dat.inp.empty_text );
-   if ( str != NULL )
+   if (str != NULL)
       wgt->dat.inp.empty_text = strdup( str );
    else
       wgt->dat.inp.empty_text = NULL;
@@ -670,11 +668,11 @@ void window_setInputFilter( unsigned int wid, const char *name,
                             const char *filter )
 {
    Widget *wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* Check the type. */
-   if ( wgt->type != WIDGET_INPUT ) {
+   if (wgt->type != WIDGET_INPUT) {
       WARN( "Trying to set input filter on non-input widget '%s'.", name );
       return;
    }
@@ -694,11 +692,11 @@ void window_setInputCallback( unsigned int wid, const char *name,
                               void ( *fptr )( unsigned int, const char * ) )
 {
    Widget *wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* Check the type. */
-   if ( wgt->type != WIDGET_INPUT ) {
+   if (wgt->type != WIDGET_INPUT) {
       WARN( "Trying to set callback on non-input widget '%s'.", name );
       return;
    }

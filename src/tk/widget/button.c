@@ -7,6 +7,7 @@
  * @brief Button widget.
  */
 /** @cond */
+#include <ctype.h>
 #include <stdlib.h>
 /** @endcond */
 
@@ -46,7 +47,7 @@ void window_addButtonKey(
 {
    Window *wdw = window_wget( wid );
    Widget *wgt = window_newWidget( wdw, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* generic */
@@ -61,7 +62,7 @@ void window_addButtonKey(
    wgt->dat.btn.display  = ( display != NULL ) ? strdup( display ) : NULL;
    wgt->dat.btn.disabled = 0; /* initially enabled */
    wgt->dat.btn.fptr     = call;
-   if ( key != 0 ) {
+   if (key != 0) {
       wgt->dat.btn.key = key;
       btn_updateHotkey( wgt );
    }
@@ -71,31 +72,31 @@ void window_addButtonKey(
    wgt->h = (double)h;
    toolkit_setPos( wdw, wgt, x, y );
 
-   if ( wgt->dat.btn.fptr == NULL ) { /* Disable if function is NULL. */
+   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
       wgt->dat.btn.disabled = 1;
       wgt_rmFlag( wgt, WGT_FLAG_CANFOCUS );
    }
 
-   if ( wdw->focus == -1 ) /* initialize the focus */
+   if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
 
-      /* Check for duplicate key bindings. */
+   /* Check for duplicate key bindings. */
 #if DEBUGGING
-   if ( key != 0 ) {
-      for ( Widget *wgti = wdw->widgets; wgti != NULL; wgti = wgti->next ) {
-         if ( wgti->id == wgt->id )
+   if (key != 0) {
+      for (Widget *wgti = wdw->widgets; wgti != NULL; wgti = wgti->next) {
+         if (wgti->id == wgt->id)
             continue;
 
-         if ( wgt_isFlag( wgti, WGT_FLAG_KILL ) )
+         if (wgt_isFlag( wgti, WGT_FLAG_KILL ))
             continue;
 
-         if ( wgti->type != WIDGET_BUTTON )
+         if (wgti->type != WIDGET_BUTTON)
             continue;
 
-         if ( wgti->dat.btn.key == 0 )
+         if (wgti->dat.btn.key == 0)
             continue;
 
-         if ( wgti->dat.btn.key == key )
+         if (wgti->dat.btn.key == key)
             WARN( "Duplicate key binding detected for button widget '%s'! "
                   "Overlaps with '%s'!",
                   wgt->name, wgti->name );
@@ -133,11 +134,11 @@ void window_addButton( unsigned int wid, const int x, const int y, const int w,
 static Widget *btn_get( unsigned int wid, const char *name )
 {
    Widget *wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return NULL;
 
    /* Check type. */
-   if ( wgt->type != WIDGET_BUTTON ) {
+   if (wgt->type != WIDGET_BUTTON) {
       DEBUG( "Widget '%s' isn't a button", name );
       return NULL;
    }
@@ -158,7 +159,7 @@ void window_disableButton( unsigned int wid, const char *name )
 
    /* Get the widget. */
    wgt = btn_get( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* Disable button. */
@@ -178,7 +179,7 @@ void window_disableButton( unsigned int wid, const char *name )
 void window_disableButtonSoft( unsigned int wid, const char *name )
 {
    Widget *wgt = btn_get( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    wgt->dat.btn.softdisable = 1;
@@ -194,7 +195,7 @@ void window_disableButtonSoft( unsigned int wid, const char *name )
 void window_enableButton( unsigned int wid, const char *name )
 {
    Widget *wgt = btn_get( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    /* Enable button. */
@@ -213,13 +214,13 @@ void window_buttonCaption( unsigned int wid, const char *name,
                            const char *display )
 {
    Widget *wgt = btn_get( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    free( wgt->dat.btn.display );
    wgt->dat.btn.display = ( display != NULL ) ? strdup( display ) : NULL;
 
-   if ( wgt->dat.btn.key != 0 )
+   if (wgt->dat.btn.key != 0)
       btn_updateHotkey( wgt );
 }
 
@@ -233,28 +234,28 @@ static void btn_updateHotkey( Widget *btn )
    const char *keyname;
    int         match;
 
-   if ( btn->dat.btn.display == NULL )
+   if (btn->dat.btn.display == NULL)
       return;
 
    keyname = SDL_GetKeyName( btn->dat.btn.key );
-   if ( strlen( keyname ) != 1 ) /* Only interested in single chars. */
+   if (strlen( keyname ) != 1) /* Only interested in single chars. */
       return;
 
    target = keyname[0];
-   if ( !isalnum( target ) ) /* We filter to alpha numeric characters. */
+   if (!isalnum( target )) /* We filter to alpha numeric characters. */
       return;
    target = tolower( target );
 
    /* Find first occurence in string. */
    display = btn->dat.btn.display;
    match   = -1;
-   for ( size_t i = 0; i < strlen( display ); i++ ) {
-      if ( tolower( display[i] ) == target ) {
+   for (size_t i = 0; i < strlen( display ); i++) {
+      if (tolower( display[i] ) == target) {
          match = i;
          break;
       }
    }
-   if ( match < 0 )
+   if (match < 0)
       return;
    target         = display[match]; /* Store character, can be uppercase. */
    display[match] = '\0';           /* Cuts the string into two. */
@@ -281,15 +282,15 @@ static int btn_key( Widget *btn, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
    (void)mod;
 
    /* Ignore repeats. */
-   if ( isrepeat )
+   if (isrepeat)
       return 0;
 
    /* Don't grab disabled events. Soft-disabling falls through. */
-   if ( ( btn->dat.btn.disabled ) && ( !btn->dat.btn.softdisable ) )
+   if (( btn->dat.btn.disabled ) && ( !btn->dat.btn.softdisable ))
       return 0;
 
-   if ( key == SDLK_RETURN || key == SDLK_KP_ENTER )
-      if ( btn->dat.btn.fptr != NULL ) {
+   if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
+      if (btn->dat.btn.fptr != NULL) {
          ( *btn->dat.btn.fptr )( btn->wdw, btn->name );
          return 1;
       }
@@ -312,14 +313,14 @@ static void btn_render( Widget *btn, double bx, double by )
    y = by + btn->y;
 
    /* set the colours */
-   if ( btn->dat.btn.disabled ) {
+   if (btn->dat.btn.disabled) {
       c       = &cGrey20; // cGrey20 is also the background colour
       fc      = &cGrey50; // Enabled text is cFontGrey 0.7; a little lighter
       outline = &cGrey15; // Slightly darker than the background
    } else {
       fc      = &cFontGrey;
       outline = &cGrey15;
-      switch ( btn->status ) {
+      switch (btn->status) {
       case WIDGET_STATUS_MOUSEOVER:
          c = &cGrey30;
          break;
@@ -342,7 +343,7 @@ static void btn_render( Widget *btn, double bx, double by )
    toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1, 2, outline, NULL );
 
    /* Render inner stuff. */
-   if ( btn->dat.btn.cst_render )
+   if (btn->dat.btn.cst_render)
       btn->dat.btn.cst_render( bx + btn->x, by + btn->y, btn->w, btn->h, fc );
    else
       gl_printMidRaw( &gl_smallFont, (int)btn->w, bx + btn->x,
@@ -381,7 +382,7 @@ void window_buttonCustomRender( unsigned int wid, const char *name,
                                                 const glColour * ) )
 {
    Widget *wgt = btn_get( wid, name );
-   if ( wgt == NULL )
+   if (wgt == NULL)
       return;
 
    wgt->dat.btn.cst_render = func;

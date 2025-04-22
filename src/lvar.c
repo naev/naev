@@ -6,6 +6,8 @@
  *
  * @brief Lua Variables
  */
+#include <inttypes.h>
+
 #include "lvar.h"
 
 #include "array.h"
@@ -39,7 +41,7 @@ static int lvar_cmp( const void *p1, const void *p2 )
 lvar *lvar_get( const lvar *arr, const char *str )
 {
    const lvar mv = { .name = (char *)str };
-   if ( arr == NULL )
+   if (arr == NULL)
       return NULL;
    return bsearch( &mv, arr, array_size( arr ), sizeof( lvar ), lvar_cmp );
 }
@@ -53,7 +55,7 @@ lvar *lvar_get( const lvar *arr, const char *str )
  */
 int lvar_push( lua_State *L, const lvar *v )
 {
-   switch ( v->type ) {
+   switch (v->type) {
    case LVAR_NIL:
       lua_pushnil( L );
       break;
@@ -86,18 +88,18 @@ lvar lvar_tovar( lua_State *L, const char *name, int idx )
    lvar var;
 
    /* Store appropriate data */
-   if ( lua_isnil( L, idx ) )
+   if (lua_isnil( L, idx ))
       var.type = LVAR_NIL;
-   else if ( lua_istime( L, idx ) ) {
+   else if (lua_istime( L, idx )) {
       var.type   = LVAR_TIME;
       var.d.time = luaL_validtime( L, idx );
-   } else if ( lua_type( L, idx ) == LUA_TNUMBER ) {
+   } else if (lua_type( L, idx ) == LUA_TNUMBER) {
       var.type  = LVAR_NUM;
       var.d.num = (double)lua_tonumber( L, idx );
-   } else if ( lua_isboolean( L, idx ) ) {
+   } else if (lua_isboolean( L, idx )) {
       var.type = LVAR_BOOL;
       var.d.b  = lua_toboolean( L, idx );
-   } else if ( lua_type( L, idx ) == LUA_TSTRING ) {
+   } else if (lua_type( L, idx ) == LUA_TSTRING) {
       var.type  = LVAR_STR;
       var.d.str = strdup( lua_tostring( L, idx ) );
    } else {
@@ -120,7 +122,7 @@ lvar lvar_tovar( lua_State *L, const char *name, int idx )
  */
 static void lvar_free( lvar *var )
 {
-   switch ( var->type ) {
+   switch (var->type) {
    case LVAR_STR:
       free( var->d.str );
       var->d.str = NULL;
@@ -142,7 +144,7 @@ static void lvar_free( lvar *var )
  */
 void lvar_freeArray( lvar *arr )
 {
-   for ( int i = 0; i < array_size( arr ); i++ )
+   for (int i = 0; i < array_size( arr ); i++)
       lvar_free( &arr[i] );
    array_free( arr );
 }
@@ -159,7 +161,7 @@ int lvar_addArray( lvar **arr, const lvar *new_var, int sort )
 {
    /* Avoid Duplicates. */
    lvar *mv = lvar_get( *arr, new_var->name );
-   if ( mv != NULL ) {
+   if (mv != NULL) {
       lvar_free( mv );
       *mv = *new_var;
       return 0;
@@ -170,7 +172,7 @@ int lvar_addArray( lvar **arr, const lvar *new_var, int sort )
    *mv = *new_var;
 
    /* Sort if necessary. */
-   if ( sort )
+   if (sort)
       qsort( *arr, array_size( *arr ), sizeof( lvar ), lvar_cmp );
 
    return 0;
@@ -197,13 +199,13 @@ void lvar_rmArray( lvar **arr, lvar *rm_var )
  */
 int lvar_save( const lvar *arr, xmlTextWriterPtr writer )
 {
-   for ( int i = 0; i < array_size( arr ); i++ ) {
+   for (int i = 0; i < array_size( arr ); i++) {
       const lvar *v = &arr[i];
       xmlw_startElem( writer, "var" );
 
       xmlw_attr( writer, "name", "%s", v->name );
 
-      switch ( v->type ) {
+      switch (v->type) {
       case LVAR_NIL:
          xmlw_attr( writer, "type", "nil" );
          break;
@@ -242,7 +244,7 @@ lvar *lvar_load( xmlNodePtr parent )
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes( node );
-      if ( !xml_isNode( node, "var" ) ) {
+      if (!xml_isNode( node, "var" )) {
          WARN( _( "Lua Var stack has unknown node '%s'!" ), xml_get( node ) );
          continue;
       }
@@ -250,18 +252,18 @@ lvar *lvar_load( xmlNodePtr parent )
       char *str;
       xmlr_attr_strd( node, "name", var.name );
       xmlr_attr_strd( node, "type", str );
-      if ( strcmp( str, "nil" ) == 0 )
+      if (strcmp( str, "nil" ) == 0)
          var.type = LVAR_NIL;
-      else if ( strcmp( str, "num" ) == 0 ) {
+      else if (strcmp( str, "num" ) == 0) {
          var.type  = LVAR_NUM;
          var.d.num = xml_getFloat( node );
-      } else if ( strcmp( str, "bool" ) == 0 ) {
+      } else if (strcmp( str, "bool" ) == 0) {
          var.type = LVAR_BOOL;
          var.d.b  = xml_getInt( node );
-      } else if ( strcmp( str, "str" ) == 0 ) {
+      } else if (strcmp( str, "str" ) == 0) {
          var.type  = LVAR_STR;
          var.d.str = xml_getStrd( node );
-      } else if ( strcmp( str, "time" ) == 0 ) {
+      } else if (strcmp( str, "time" ) == 0) {
          var.type   = LVAR_TIME;
          var.d.time = xml_getLong( node );
       } else { /* super error checking */
@@ -272,7 +274,7 @@ lvar *lvar_load( xmlNodePtr parent )
       }
       free( str );
       lvar_addArray( &arr, &var, 0 );
-   } while ( xml_nextNode( node ) );
+   } while (xml_nextNode( node ));
    qsort( arr, array_size( arr ), sizeof( lvar ), lvar_cmp );
 
    return arr;

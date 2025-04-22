@@ -9,6 +9,7 @@
 /** @cond */
 #include "SDL.h"
 #include "physfs.h"
+#include <inttypes.h>
 
 #include "naev.h"
 /** @endcond */
@@ -333,7 +334,7 @@ static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
    (void)mod;
    (void)isrepeat;
 
-   switch ( key ) {
+   switch (key) {
    /* Mode changes. */
    case SDLK_ESCAPE:
       mapedit_close( wid, "Close" );
@@ -412,7 +413,7 @@ static void mapedit_render( double bx, double by, double w, double h,
    uniedit_renderMap( bx, by, w, h, x, y, mapedit_zoom, r );
 
    /* Render the selected system selections. */
-   for ( int i = 0; i < mapedit_nsys; i++ ) {
+   for (int i = 0; i < mapedit_nsys; i++) {
       StarSystem *sys = mapedit_sys[i];
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
                        y + sys->pos.y * mapedit_zoom, 1.8 * r, &cRed, 0 );
@@ -421,7 +422,7 @@ static void mapedit_render( double bx, double by, double w, double h,
    }
 
    /* Render last clicked system */
-   if ( mapedit_iLastClickedSystem != 0 ) {
+   if (mapedit_iLastClickedSystem != 0) {
       StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom,
                        y + sys->pos.y * mapedit_zoom, 2.4 * r, &cBlue, 0 );
@@ -452,28 +453,28 @@ static int mapedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
    (void)data;
    const double t = 15. * 15.; /* threshold */
 
-   switch ( event->type ) {
+   switch (event->type) {
    case SDL_MOUSEWHEEL:
       /* Must be in bounds. */
-      if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
+      if (( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ))
          return 0;
-      if ( event->wheel.y > 0 )
+      if (event->wheel.y > 0)
          mapedit_buttonZoom( 0, "btnZoomIn" );
-      else if ( event->wheel.y < 0 )
+      else if (event->wheel.y < 0)
          mapedit_buttonZoom( 0, "btnZoomOut" );
       return 1;
 
    case SDL_MOUSEBUTTONDOWN:
       /* Must be in bounds. */
-      if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
+      if (( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ))
          return 0;
       window_setFocus( wid, "cstSysEdit" );
 
       /* Zooming */
-      if ( event->button.button == SDL_BUTTON_X1 ) {
+      if (event->button.button == SDL_BUTTON_X1) {
          mapedit_buttonZoom( 0, "btnZoomIn" );
          return 1;
-      } else if ( event->button.button == SDL_BUTTON_X2 ) {
+      } else if (event->button.button == SDL_BUTTON_X2) {
          mapedit_buttonZoom( 0, "btnZoomOut" );
          return 1;
       }
@@ -483,7 +484,7 @@ static int mapedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          mx -= w / 2 - mapedit_xpos;
          my -= h / 2 - mapedit_ypos;
 
-         for ( int i = 0; i < array_size( systems_stack ); i++ ) {
+         for (int i = 0; i < array_size( systems_stack ); i++) {
             double      x, y;
             StarSystem *sys = system_getIndex( i );
 
@@ -491,16 +492,16 @@ static int mapedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
             x = sys->pos.x * mapedit_zoom;
             y = sys->pos.y * mapedit_zoom;
 
-            if ( ( pow2( mx - x ) + pow2( my - y ) ) < t ) {
+            if (( pow2( mx - x ) + pow2( my - y ) ) < t) {
                int found = 0;
 
                /* Set last clicked system */
                mapedit_iLastClickedSystem = i;
 
                /* Try to find in selected systems. */
-               for ( int j = 0; j < mapedit_nsys; j++ ) {
+               for (int j = 0; j < mapedit_nsys; j++) {
                   /* Must match. */
-                  if ( mapedit_sys[j] == sys ) {
+                  if (mapedit_sys[j] == sys) {
                      found = 1;
                      break;
                   } else
@@ -508,7 +509,7 @@ static int mapedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
                }
 
                /* Toggle system selection. */
-               if ( found )
+               if (found)
                   mapedit_selectRm( sys );
                else
                   mapedit_selectAdd( sys );
@@ -534,7 +535,7 @@ static int mapedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       mapedit_my = my;
 
       /* Handle dragging. */
-      if ( mapedit_drag ) {
+      if (mapedit_drag) {
          /* axis is inverted */
          mapedit_xpos -= xr;
          mapedit_ypos += yr;
@@ -553,7 +554,7 @@ static int mapedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
  */
 static void mapedit_deselect( void )
 {
-   if ( mapedit_nsys > 0 )
+   if (mapedit_nsys > 0)
       free( mapedit_sys );
    mapedit_sys  = NULL;
    mapedit_nsys = 0;
@@ -570,12 +571,12 @@ static void mapedit_deselect( void )
 static void mapedit_selectAdd( StarSystem *sys )
 {
    /* Workaround for BUG found in memory allocation */
-   if ( mapedit_nsys == 100 )
+   if (mapedit_nsys == 100)
       return;
 
    /* Allocate if needed. */
-   if ( mapedit_msys < mapedit_nsys + 1 ) {
-      if ( mapedit_msys == 0 )
+   if (mapedit_msys < mapedit_nsys + 1) {
+      if (mapedit_msys == 0)
          mapedit_msys = 1;
       mapedit_msys *= 2;
       mapedit_sys =
@@ -595,8 +596,8 @@ static void mapedit_selectAdd( StarSystem *sys )
  */
 static void mapedit_selectRm( StarSystem *sys )
 {
-   for ( int i = 0; i < mapedit_nsys; i++ ) {
-      if ( mapedit_sys[i] == sys ) {
+   for (int i = 0; i < mapedit_nsys; i++) {
+      if (mapedit_sys[i] == sys) {
          mapedit_nsys--;
          memmove( &mapedit_sys[i], &mapedit_sys[i + 1],
                   sizeof( StarSystem * ) * ( mapedit_nsys - i ) );
@@ -616,12 +617,12 @@ void mapedit_selectText( void )
 
    /* Built list of all selected systems names */
    l = 0;
-   for ( int i = 0; i < mapedit_nsys; i++ ) {
+   for (int i = 0; i < mapedit_nsys; i++) {
       l += scnprintf( &buf[l], sizeof( buf ) - l, "%s%s", mapedit_sys[i]->name,
                       ( i == mapedit_nsys - 1 ) ? "" : ", " );
    }
 
-   if ( l == 0 )
+   if (l == 0)
       /* Change display to reflect that no system is selected */
       mapedit_deselect();
    else {
@@ -633,7 +634,7 @@ void mapedit_selectText( void )
       window_modifyText( mapedit_wid, "txtCurrentNumSystems", buf );
 
       /* Compute and display presence text. */
-      if ( mapedit_iLastClickedSystem != 0 ) {
+      if (mapedit_iLastClickedSystem != 0) {
          StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
          map_updateFactionPresence( mapedit_wid, "txtPresence", sys, 1 );
          snprintf( &buf[0], sizeof( buf ), _( "Presence (%s)" ), sys->name );
@@ -660,11 +661,11 @@ static void mapedit_buttonZoom( unsigned int wid, const char *str )
    mapedit_ypos /= mapedit_zoom;
 
    /* Apply zoom. */
-   if ( strcmp( str, "btnZoomIn" ) == 0 ) {
+   if (strcmp( str, "btnZoomIn" ) == 0) {
       mapedit_zoom *= MAPEDIT_ZOOM_STEP;
       mapedit_zoom =
          MIN( pow( MAPEDIT_ZOOM_STEP, MAPEDIT_ZOOM_MAX ), mapedit_zoom );
-   } else if ( strcmp( str, "btnZoomOut" ) == 0 ) {
+   } else if (strcmp( str, "btnZoomOut" ) == 0) {
       mapedit_zoom /= MAPEDIT_ZOOM_STEP;
       mapedit_zoom =
          MAX( pow( MAPEDIT_ZOOM_STEP, MAPEDIT_ZOOM_MIN ), mapedit_zoom );
@@ -698,16 +699,16 @@ void mapedit_loadMapMenu_open( void )
 
    /* Load the maps */
    n = array_size( mapList );
-   if ( n > 0 ) {
+   if (n > 0) {
       names = malloc( sizeof( char * ) * n );
-      for ( int i = 0; i < n; i++ ) {
+      for (int i = 0; i < n; i++) {
          mapOutfitsList_t *ns = &mapList[i];
          names[i]             = strdup( ns->mapName );
       }
    }
    /* case there are no files */
    else {
-      names    = malloc( sizeof( char    *) );
+      names    = malloc( sizeof( char * ) );
       names[0] = strdup( "None" );
       n        = 1;
    }
@@ -747,7 +748,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str )
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
-   if ( strcmp( save, "None" ) == 0 )
+   if (strcmp( save, "None" ) == 0)
       return;
 
    /* Get position. */
@@ -798,7 +799,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
-   if ( strcmp( save, "None" ) == 0 )
+   if (strcmp( save, "None" ) == 0)
       return;
 
    /* Reset defaults. */
@@ -818,13 +819,13 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
 
    /* Get first node, normally "outfit" */
    node = doc->xmlChildrenNode;
-   if ( node == NULL ) {
+   if (node == NULL) {
       free( file );
       xmlFreeDoc( doc );
       return;
    }
 
-   if ( !xml_isNode( node, "outfit" ) ) {
+   if (!xml_isNode( node, "outfit" )) {
       free( file );
       xmlFreeDoc( doc );
       return;
@@ -832,7 +833,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
 
    /* Get "name" property from the "outfit" node */
    xmlr_attr_strd( node, "name", name );
-   if ( strcmp( ns->mapName, name ) != 0 ) {
+   if (strcmp( ns->mapName, name ) != 0) {
       free( name );
       free( file );
       xmlFreeDoc( doc );
@@ -847,12 +848,12 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
    do {
       xml_onlyNodes( node );
 
-      if ( !xml_isNode( node, "specific" ) )
+      if (!xml_isNode( node, "specific" ))
          continue;
 
       /* Break out of the loop, either with a correct outfitType or not */
       break;
-   } while ( xml_nextNode( node ) );
+   } while (xml_nextNode( node ));
 
    mapedit_deselect();
 
@@ -861,7 +862,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
    do {
       xml_onlyNodes( node );
 
-      if ( !xml_isNode( node, "sys" ) )
+      if (!xml_isNode( node, "sys" ))
          continue;
 
       /* Display "name" property from "sys" node and increment number of systems
@@ -870,21 +871,21 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
 
       /* Find system */
       found = 0;
-      for ( i = 0; i < array_size( systems_stack ); i++ ) {
+      for (i = 0; i < array_size( systems_stack ); i++) {
          sys          = system_getIndex( i );
          compareLimit = strlen( systemName );
-         if ( strncmp( systemName, sys->name, compareLimit ) == 0 ) {
+         if (strncmp( systemName, sys->name, compareLimit ) == 0) {
             found = 1;
             break;
          }
       }
 
       /* If system exists, select it */
-      if ( found )
+      if (found)
          mapedit_selectAdd( sys );
       free( systemName );
       systemName = NULL;
-   } while ( xml_nextNode( node ) );
+   } while (xml_nextNode( node ));
 
    mapedit_setGlobalLoadedInfos( ns );
 
@@ -910,7 +911,7 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
    ns.price       = atoll( window_getInput( wdw, "inpPrice" ) );
    ns.rarity      = atoi( window_getInput( wdw, "inpRarity" ) );
 
-   if ( mapedit_saveMap( mapedit_sys, &ns ) )
+   if (mapedit_saveMap( mapedit_sys, &ns ))
       uniedit_saveError();
 
    free( ns.fileName );
@@ -962,7 +963,7 @@ static int mapedit_mapsList_refresh( void )
 
    map_files  = PHYSFS_enumerateFiles( MAP_DATA_PATH );
    newMapItem = NULL;
-   for ( size_t i = 0; map_files[i] != NULL; i++ ) {
+   for (size_t i = 0; map_files[i] != NULL; i++) {
       char     *description = NULL;
       char     *gfx_store   = NULL;
       credits_t price       = 1000;
@@ -971,20 +972,20 @@ static int mapedit_mapsList_refresh( void )
       SDL_asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
-      if ( doc == NULL ) {
+      if (doc == NULL) {
          free( file );
          continue;
       }
 
       /* Get first node, normally "outfit" */
       node = doc->xmlChildrenNode;
-      if ( node == NULL ) {
+      if (node == NULL) {
          free( file );
          xmlFreeDoc( doc );
          return -1;
       }
 
-      if ( !xml_isNode( node, "outfit" ) ) {
+      if (!xml_isNode( node, "outfit" )) {
          free( file );
          xmlFreeDoc( doc );
          return -1;
@@ -999,8 +1000,8 @@ static int mapedit_mapsList_refresh( void )
          is_map = 0;
          xml_onlyNodes( node );
 
-         if ( !xml_isNode( node, "specific" ) ) {
-            if ( xml_isNode( node, "general" ) ) {
+         if (!xml_isNode( node, "specific" )) {
+            if (xml_isNode( node, "general" )) {
                cur = node->children;
                do {
                   xml_onlyNodes( cur );
@@ -1008,7 +1009,7 @@ static int mapedit_mapsList_refresh( void )
                   xmlr_long( cur, "price", price );
                   xmlr_int( cur, "rarity", rarity );
                   xmlr_str( cur, "gfx_store", gfx_store );
-               } while ( xml_nextNode( cur ) );
+               } while (xml_nextNode( cur ));
             }
             continue;
          }
@@ -1020,10 +1021,10 @@ static int mapedit_mapsList_refresh( void )
 
          /* Break out of the loop, either with a map or not */
          break;
-      } while ( xml_nextNode( node ) );
+      } while (xml_nextNode( node ));
 
       /* If it's not a map, we don't care. */
-      if ( !is_map ) {
+      if (!is_map) {
          free( name );
          free( file );
          xmlFreeDoc( doc );
@@ -1035,16 +1036,16 @@ static int mapedit_mapsList_refresh( void )
       node     = node->xmlChildrenNode;
       do {
          xml_onlyNodes( node );
-         if ( !xml_isNode( node, "sys" ) )
+         if (!xml_isNode( node, "sys" ))
             continue;
 
          /* Display "name" property from "sys" node and increment number of
           * systems found */
          nSystems++;
-      } while ( xml_nextNode( node ) );
+      } while (xml_nextNode( node ));
 
       /* If the map is a regular one, then load it into the list */
-      if ( nSystems > 0 ) {
+      if (nSystems > 0) {
          newMapItem             = &array_grow( &mapList );
          newMapItem->numSystems = nSystems;
          newMapItem->fileName   = strdup( map_files[i] );
@@ -1076,7 +1077,7 @@ static int mapedit_mapsList_refresh( void )
 static void mapsList_free( void )
 {
    unsigned int n = array_size( mapList );
-   for ( unsigned int i = 0; i < n; i++ ) {
+   for (unsigned int i = 0; i < n; i++) {
       free( mapList[i].fileName );
       free( mapList[i].mapName );
       free( mapList[i].description );
@@ -1101,14 +1102,14 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
    char            *file;
    int              ret = 0;
 
-   if ( conf.dev_data_dir == NULL ) {
+   if (conf.dev_data_dir == NULL) {
       WARN( _( "%s is not set!" ), "conf.dev_data_dir" );
       return -1;
    }
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc( &doc, 0 );
-   if ( writer == NULL ) {
+   if (writer == NULL) {
       WARN( _( "testXmlwriterDoc: Error creating the xml writer" ) );
       return -1;
    }
@@ -1137,22 +1138,22 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
 
    /* Iterate over all selected systems. Save said systems and any NORMAL jumps
     * they might share. */
-   for ( int i = 0; i < ns->numSystems; i++ ) {
+   for (int i = 0; i < ns->numSystems; i++) {
       StarSystem *s = uniedit_sys[i];
       xmlw_startElem( writer, "sys" );
       xmlw_attr( writer, "name", "%s", s->name );
 
       /* Iterate jumps and see if they lead to any other systems in our array.
        */
-      for ( int j = 0; j < array_size( s->jumps ); j++ ) {
+      for (int j = 0; j < array_size( s->jumps ); j++) {
          /* Ignore hidden and exit-only jumps. */
-         if ( jp_isFlag( &s->jumps[j], JP_EXITONLY ) )
+         if (jp_isFlag( &s->jumps[j], JP_EXITONLY ))
             continue;
-         if ( !mapedit_hidden && jp_isFlag( &s->jumps[j], JP_HIDDEN ) )
+         if (!mapedit_hidden && jp_isFlag( &s->jumps[j], JP_HIDDEN ))
             continue;
          /* This is a normal jump. */
-         for ( int k = 0; k < ns->numSystems; k++ ) {
-            if ( s->jumps[j].target == uniedit_sys[k] ) {
+         for (int k = 0; k < ns->numSystems; k++) {
+            if (s->jumps[j].target == uniedit_sys[k]) {
                xmlw_elem( writer, "jump", "%s", uniedit_sys[k]->name );
                break;
             }
@@ -1160,8 +1161,8 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
       }
 
       /* Iterate spobs and add them */
-      if ( !mapedit_nospob )
-         for ( int j = 0; j < array_size( s->spobs ); j++ )
+      if (!mapedit_nospob)
+         for (int j = 0; j < array_size( s->spobs ); j++)
             xmlw_elem( writer, "spob", "%s", s->spobs[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */
@@ -1176,7 +1177,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t *ns )
 
    /* Actually write data */
    SDL_asprintf( &file, "%s/outfits/maps/%s", conf.dev_data_dir, ns->fileName );
-   if ( xmlSaveFileEnc( file, doc, "UTF-8" ) < 0 ) {
+   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0) {
       WARN( _( "Failed writing '%s'!" ), file );
       ret = -1;
    }

@@ -7,6 +7,7 @@
  * Handles some complex xml parsing.
  */
 #include "nxml.h"
+#include <inttypes.h>
 
 #include "ndata.h"
 
@@ -33,17 +34,17 @@ glTexture *xml_parseTexture( xmlNodePtr node, const char *path, int defsx,
 
    /* Get graphic to load. */
    buf = xml_get( node );
-   if ( buf == NULL )
+   if (buf == NULL)
       return NULL;
 
    /* Check for absolute pathe. */
-   if ( ( buf[0] == '/' ) || ( path == NULL ) )
+   if (( buf[0] == '/' ) || ( path == NULL ))
       snprintf( filename, sizeof( filename ), "%s", buf );
    else
       snprintf( filename, sizeof( filename ), path, buf );
 
    /* Load the graphic. */
-   if ( ( sx == 1 ) && ( sy == 1 ) )
+   if (( sx == 1 ) && ( sy == 1 ))
       tex = gl_newImage( filename, flags );
    else
       tex = gl_newSprite( filename, sx, sy, flags );
@@ -75,17 +76,17 @@ xmlDocPtr xml_parsePhysFS( const char *filename )
    /* @TODO: Don't slurp?
     * Can we directly create an InputStream backed by PHYSFS_*, or use SAX? */
    buf = ndata_read( filename, &bufsize );
-   if ( buf == NULL ) {
+   if (buf == NULL) {
       WARN( _( "Unable to read data from '%s'" ), filename );
       return NULL;
    }
    /* Empty file, we ignore these. */
-   if ( bufsize == 0 ) {
+   if (bufsize == 0) {
       free( buf );
       return NULL;
    }
    doc = xmlParseMemory( buf, bufsize );
-   if ( doc == NULL )
+   if (doc == NULL)
       WARN( _( "Unable to parse document '%s'" ), filename );
    free( buf );
    return doc;
