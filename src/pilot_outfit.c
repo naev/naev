@@ -10,8 +10,6 @@
 #include "naev.h"
 /** @endcond */
 
-#include "SDL_atomic.h"
-
 #include "array.h"
 #include "constants.h"
 #include "difficulty.h"
@@ -1751,18 +1749,20 @@ static void outfitLOutfitChange( const Pilot *pilot, PilotOutfitSlot *po,
 
 void pilot_outfitLOutfitChange( Pilot *pilot )
 {
-   static SDL_atomic_t changing_outfit = {
-      .value = 0,
-   };
+   static int changing_outfit =
+      0; /* No need for atomic, since lua state is shared. */
 
-   if ( SDL_AtomicCAS( &changing_outfit, 0, 1 ) == SDL_FALSE )
+   if ( changing_outfit > 3 ) {
+      WARN( "Too many nested 'onoutfitchange', skipping." );
       return;
+   }
+   changing_outfit++;
 
    NTracingZone( _ctx, 1 );
    pilot_outfitLRun( pilot, outfitLOutfitChange, NULL );
    NTracingZoneEnd( _ctx );
 
-   SDL_AtomicSet( &changing_outfit, 0 );
+   changing_outfit--;
 }
 
 /**
