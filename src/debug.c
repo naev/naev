@@ -9,6 +9,7 @@
  */
 
 /** @cond */
+#include <inttypes.h>
 #include <signal.h>
 
 #if DEBUGGING
@@ -39,8 +40,8 @@ DebugFlags                     debug_flags;
  */
 const char *debug_sigCodeToStr( int sig, int sig_code )
 {
-   if ( sig == SIGFPE )
-      switch ( sig_code ) {
+   if (sig == SIGFPE)
+      switch (sig_code) {
 #ifdef SI_USER
       case SI_USER:
          return _( "SIGFPE (raised by program)" );
@@ -80,8 +81,8 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
       default:
          return _( "SIGFPE" );
       }
-   else if ( sig == SIGSEGV )
-      switch ( sig_code ) {
+   else if (sig == SIGSEGV)
+      switch (sig_code) {
 #ifdef SI_USER
       case SI_USER:
          return _( "SIGSEGV (raised by program)" );
@@ -97,8 +98,8 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
       default:
          return _( "SIGSEGV" );
       }
-   else if ( sig == SIGABRT )
-      switch ( sig_code ) {
+   else if (sig == SIGABRT)
+      switch (sig_code) {
 #ifdef SI_USER
       case SI_USER:
          return _( "SIGABRT (raised by program)" );
@@ -107,7 +108,7 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
          return _( "SIGABRT" );
       }
 
-      /* No suitable code found. */
+   /* No suitable code found. */
 #if HAVE_STRSIGNAL
    return strsignal( sig );
 #else  /* HAVE_STRSIGNAL */
@@ -177,7 +178,7 @@ static int debug_backtrace_full_callback( void *data, uintptr_t pc,
 {
    FrameInfo fi = {
       .data = data, .pc = pc, .file = file, .line = line, .func = func };
-   if ( pc != 0 && ~pc != 0 )
+   if (pc != 0 && ~pc != 0)
       backtrace_syminfo( debug_bs, pc, debug_backtrace_syminfo_callback,
                          debug_backtrace_error_callback, &fi );
 
@@ -276,15 +277,15 @@ void debug_sigInit( void )
    sigemptyset( &sa.sa_mask );
 
    sigaction( SIGSEGV, &sa, &so );
-   if ( so.sa_handler == SIG_IGN )
+   if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGSEGV" );
    sigaction( SIGABRT, &sa, &so );
-   if ( so.sa_handler == SIG_IGN )
+   if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGABRT" );
 
    sa.sa_sigaction = debug_sigHandlerWarn;
    sigaction( SIGFPE, &sa, &so );
-   if ( so.sa_handler == SIG_IGN )
+   if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGFPE" );
 #else  /* HAVE_SIGACTION */
    signal( SIGSEGV, debug_sigHandler );
