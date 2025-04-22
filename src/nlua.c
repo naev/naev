@@ -77,9 +77,9 @@ static LuaCache_t *lua_cache = NULL;
  */
 // static int        nlua_require( lua_State *L );
 static lua_State *nlua_newState( void ); /* creates a new state */
-static int        nlua_loadBasic( lua_State *L );
-static int        lua_cache_cmp( const void *p1, const void *p2 );
-static int        nlua_errTraceInternal( lua_State *L, int idx );
+// static int        nlua_loadBasic( lua_State *L );
+static int lua_cache_cmp( const void *p1, const void *p2 );
+static int nlua_errTraceInternal( lua_State *L, int idx );
 
 #if 0
 static const lua_CFunction loaders[] = {
@@ -107,7 +107,7 @@ static int nlua_panic( lua_State *L )
 void lua_init( void )
 {
    naevL = nlua_newState();
-   nlua_loadBasic( naevL );
+   // nlua_loadBasic( naevL );
 
    /* Environment table. */
    lua_newtable( naevL );
@@ -981,7 +981,6 @@ void nlua_pushenv( lua_State *L, nlua_env *env )
 {
    lua_rawgeti( L, LUA_REGISTRYINDEX, env->ref );
 }
-#endif
 
 /**
  * @brief Loads specially modified basic stuff.
@@ -1005,3 +1004,4 @@ static int nlua_loadBasic( lua_State *L )
 
    return 0;
 }
+#endif

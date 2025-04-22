@@ -115,11 +115,13 @@ impl NLua {
         let lua = unsafe {
             // TODO get rid of the lua_init() and move entirely to mlua.
             naevc::lua_init();
-            mlua::Lua::init_from_ptr(naevc::naevL as *mut mlua::lua_State)
+            let state = naevc::naevL as *mut mlua::lua_State;
+            mlua::ffi::luaopen_base(state); // Needed for ipairs and friends
+            mlua::Lua::init_from_ptr(state)
         };
 
         // Load base libraries NOT SUFFICIENT
-        //lua.load_std_libs( mlua::StdLib::ALL_SAFE ).unwrap();
+        lua.load_std_libs(mlua::StdLib::ALL_SAFE).unwrap();
 
         // Set up gettext stuff
         open_gettext(&lua)?;
