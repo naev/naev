@@ -249,7 +249,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/structure/battery_iv.xml',
    root / 'dat/outfits/structure/biometal_armour.xml',
    root / 'dat/outfits/structure/engine_reroute.xml',
-   root / 'dat/outfits/intrinsic/engines_combinator.xml',
+   root / 'dat/outfits/structure/engines_combinator.xml',
    root / 'dat/outfits/structure/improved_stabilizer.xml',
    root / 'dat/outfits/structure/large_cargo_pod.xml',
    root / 'dat/outfits/structure/large_fuel_pod.xml',
