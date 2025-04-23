@@ -4443,7 +4443,7 @@ static int player_addOutfitToPilot( Pilot *pilot, const Outfit *outfit,
       return 0;
    }
 
-   if ( pilot_addOutfitRaw( pilot, outfit, s ) != 0 ) {
+   if ( pilot_addOutfitRawNoLua( pilot, outfit, s ) != 0 ) {
       DEBUG(
          _( "Unable to equip outfit '%s' on slot '%d' of player's ship '%s'." ),
          outfit->name, s->id, pilot->name );
@@ -4498,7 +4498,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship,
          }
       }
 
-      int slotid = pilot_addOutfitRawAnySlot( ship, o );
+      int slotid = pilot_addOutfitRawAnySlotNoLua( ship, o );
       if ( slotid < 0 ) {
          DEBUG( _( "Unable to add Outfit '%s' to any slot of player's ship "
                    "'%s', adding to stock." ),
@@ -4722,6 +4722,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       }
       // WARN(_("Save has unknown '%s' tag!"),xml_get(node));
    } while ( xml_nextNode( node ) );
+
+   /* Run Lua afterwards. */
+   for ( int i = 0; i < array_size( ship->outfits ); i++ )
+      pilot_outfitLAdd( ship, ship->outfits[i] );
+   pilot_outfitLOutfitChange( ship );
 
    /* Update stats. */
    pilot_calcStats( ship );

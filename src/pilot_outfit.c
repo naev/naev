@@ -284,6 +284,21 @@ int pilot_hasDeployed( const Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
 {
+   pilot_addOutfitRawNoLua( pilot, outfit, s );
+
+   /* Initialize if active thingy if necessary. */
+   pilot_outfitLAdd( pilot, s );
+   pilot_outfitLOutfitChange( pilot );
+
+   return 0;
+}
+
+/**
+ * @brief Same as pilot_addOutfitRaw, but without running Lua.
+ */
+int pilot_addOutfitRawNoLua( Pilot *pilot, const Outfit *outfit,
+                             PilotOutfitSlot *s )
+{
    /* Set the outfit. */
    s->flags  = 0;
    s->state  = PILOT_OUTFIT_OFF;
@@ -329,10 +344,6 @@ int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
    s->lua_mem = LUA_NOREF;
    ss_free( s->lua_stats ); /* Just in case. */
    s->lua_stats = NULL;
-
-   /* Initialize if active thingy if necessary. */
-   pilot_outfitLAdd( pilot, s );
-   pilot_outfitLOutfitChange( pilot );
 
    return 0;
 }
@@ -540,7 +551,7 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 /**
  * @brief Tries to add an outfit to the first possible free slot on the pilot.
  */
-int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
+int pilot_addOutfitRawAnySlotNoLua( Pilot *p, const Outfit *o )
 {
    /* Test special slots first. */
    for ( int spid = 1; spid >= 0; spid-- ) {
@@ -567,7 +578,7 @@ int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
                continue;
 
             /* Try to add. */
-            if ( pilot_addOutfitRaw( p, o, s ) == 0 )
+            if ( pilot_addOutfitRawNoLua( p, o, s ) == 0 )
                return i;
          }
       }
