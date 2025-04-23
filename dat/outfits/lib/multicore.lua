@@ -74,6 +74,13 @@ local needs_avg = {
    speed = true,
 }
 
+local needs_decl = {
+   accel = true,
+   turn = true,
+   speed = true,
+   engine_limit =true
+}
+
 local function index( tbl, key )
    for i,v in ipairs(tbl) do
       if v and v["name"]==key then
@@ -99,63 +106,51 @@ local function is_secondary( po )
    return po and po:slot() and po:slot().tags and po:slot().tags.secondary
 end
 
-
---[[
-mf=tostring
-
-local function strstk( p)
-   local acc = ""
-   if p then
-      local sm = p:shipMemory()
-
-      if sm then
-         for i,v in pairs(sm._stk) do
-            acc = acc .. " " .. fmt.number(i)
-         end
-      end
-   end
-   return acc
-end
---]]
-
 -- sign:
 --  -1 for remove
 --   0 for update
 --   1 for add
-local function engines_combinator_needs_update( p, po, sign )
+local function update_engines_combinator_if_needed( p, po, sign, t )
    local sm = p:shipMemory()
-   local found
+   local id=po:id()
+   local changed=false
+   local bef
 
-   sm._stk = sm._stk or {}
-
-   found = (sm._stk[po:id()] == true)
-   --print(" [" .. strstk(p) .. " ] . " .. fmt.number(po:id()) .. " " .. fmt.number(sign))
+   sm._engines_combinator = sm._engines_combinator or {}
 
    if sign == -1 then
-      if found then
-         sm._stk[po:id()] = nil
+      if sm._engine_combinator then
+         changed = (sm._engines_combinator[id] ~= nil)
+         sm._engines_combinator[id]=nil
       end
-      return found
-   elseif found then
-      return sign == 0
-   elseif sign == 0 then
-      print("Trying to update a non-equipped engine.")
-      return false
    else
-      sm._stk[po:id()] = true
-      return true
+      sm._engine_combinator = sm._engine_combinator or {}
+      changed = (sign==1) and (sm._engines_combinator[id] == nil)
+
+      --[[
+      if not changed and (sign == 1) then
+         print "Trying to add an already existing engine -> updating"
+      end
+      if changed and (sign == 0) then
+         print "Trying to update a non-existing engine -> adding"
+      end
+      --]]
+
+      sm._engines_combinator[id] = sm._engines_combinator[id] or {}
+      for k,v in pairs(t) do
+         bef = sm._engines_combinator[id][k]
+         sm._engines_combinator[id][k] = v
+         changed = changed or (bef ~= v)
+      end
+   end
+   if changed then
+      p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
    end
 end
 
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
-
-   -- possible values:
-   --  - false -> status running
-   --  - true -> status halted
-   --  - nil -> no status (always running)
-   local multicore_off = true
 
    for k,s in ipairs(stats) do
       s.index = index( shipstat, s[1] )
@@ -196,7 +191,7 @@ function multicore.init( params )
          }).."#0"
       end
 
-      local averaged=is_engine( po )
+      local averaged = is_engine( po )
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name~="mass"
          desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
@@ -204,6 +199,7 @@ function multicore.init( params )
             desc = desc.."  #o[avg with#0 #rpri#0#o]#0"
          end
       end
+      --[[
       if po and (multicore_off ~= nil) then
          desc = desc .. "\n#bWorking Status: #0"
          if multicore_off==false then
@@ -212,25 +208,23 @@ function multicore.init( params )
             desc = desc .. "#rHALTED#0"
          end
       end
+      --]]
       return desc
    end
 
-   local function engines_combinator_refresh( p, po, delta, delta_c )
-      local secondary = is_secondary( po )
-      local sm=p:shipMemory()
-
-      sm._engine_count = (sm._engine_count or 0) + delta
-      for k,s in ipairs(stats) do
-         if (multicore_off~=true) and needs_avg[s.name] then
-            local val = (secondary and s.sec) or s.pri
-            sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
+   local function engines_combinator_refresh( p, po, sign )
+      local t
+      if sign~=-1 then
+         t={}
+         local secondary = is_secondary( po )
+         for k,s in ipairs(stats) do
+            if needs_decl[s.name] then
+               local val = (s and ((secondary and s.sec) or s.pri)) or 0
+               t[s.name] = val
+            end
          end
       end
-      p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
-   end
-
-   local function onoff_mul()
-      return ((multicore_off~=true) and 1) or -1
+      return update_engines_combinator_if_needed( p, po, sign, t )
    end
 
    local function update_stats( p, po)
@@ -249,36 +243,13 @@ function multicore.init( params )
       end
    end
 
-   -- nil: non-togglable  false: off  true: on
-   local function workingstatus_change( _p, _po, on)
-      local before = multicore_off
-
-      if on == nil then
-         multicore_off = nil
-      else
-         multicore_off = not on
-      end
-      --if before~=multicore_off then
-      --   print(" " .. mf(before) .. " -> " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-      --end
-      return (before and (not multicore_off or multicore_off == nil)) or (not before and multicore_off)
-   end
-
    local function equip( p, po, sign)
-      local ssign
-
-      if sign == -1 then
-         if not workingstatus_change( p, po, false) then
-            ssign = 0
-         end
-      else
-         workingstatus_change( p, po, nil)
-         ssign = sign
-      end
-      if is_engine(po) and is_multiengine( p ) and  engines_combinator_needs_update( p , po, sign ) then
-         engines_combinator_refresh( p, po, sign, ssign )
+      local res = true
+      if is_engine(po) and is_multiengine( p ) then
+         res = res and engines_combinator_refresh( p, po, sign )
       end
       update_stats( p, po)
+      return res
    end
 
    function init( p, po )
@@ -303,20 +274,6 @@ function multicore.init( params )
    end
 
    function setworkingstatus( p, po, on)
-      local doit
-      if is_engine(po) and is_multiengine(p) then
-         -- we can check this is still equipped
-         doit = engines_combinator_needs_update( p , po, 0)
-      else
-         doit = true
-      end
-
-      if doit and workingstatus_change( p, po, on) then
-         if is_engine(po) and is_multiengine(p) then
-            engines_combinator_refresh( p, po, 0, onoff_mul())
-         end
-         update_stats( p, po)
-      end
    end
 
 end

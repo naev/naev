@@ -12,22 +12,22 @@ descextra=function ( p, _o, _po)
    end
 
    local sm = p:shipMemory()
-   local count = sm and sm._engine_count or 0
-
-   local out
-   if count == 0 then
-      out = "#o".._("No engine equipped").."#0\n"
-      count = 1
-   else
-      out = "#o"..fmt.f(_("Engines equipped: {count}"), {count = "#g"..fmt.number(count).."#0"}).."#0\n"
-   end
-   --[[
-   for _,s in ipairs(mobility_params) do
-      if sm["_"..s] then
-         out = out .. "#g" .. s .. ": " .. fmt.number(sm["_"..s]/count) .. "#0\n"
+   local dat= ((sm and sm._engines_combinator) or {})
+   local count=0
+   for _,v in pairs(dat) do
+      if v['engine_limit'] then
+         count = count + 1
       end
    end
-   --]]
+
+   local out=""
+   if count == 0 then
+      out = "#o".._("No engine equipped").."#0\n"
+   else
+      for i,v in pairs(dat) do
+         out = out .. "[" .. tostring(i) .. "] : " .. fmt.number(v['part']) .."%\n"
+      end
+   end
    return out
 end
 
@@ -42,16 +42,32 @@ function onadd( p, po )
    end
 
    local sm = p:shipMemory()
-   local count = sm._engine_count or 0
-
-   po:clear()
-   if count>0 then
-      for _,s in ipairs(mobility_params) do
-         po:set(s, (sm["_"..s] or 0)/count)
+   local data = ((sm and sm._engines_combinator) or {})
+   local count = 0
+   for k,v in pairs(data) do
+      if v['engine_limit'] then
+         count = count + 1
       end
-   else
-      for _,s in ipairs(mobility_params) do
-         sm["_"..s] = nil
+   end
+   po:clear()
+
+   if count>0 then
+      local den=0
+
+      for _k,v in pairs(data) do
+         den = den + (v['engine_limit'] or 0)
+      end
+      if den>0 then
+         for k,v in pairs(data) do
+            p:shipMemory()._engines_combinator[k]['part']=(100*(v['engine_limit'] or 0))/den
+         end
+         for _,s in ipairs(mobility_params) do
+            local acc=0
+            for _k,v in pairs(data) do
+               acc = acc + (v[s] or 0) * (v['engine_limit'] or 0)
+            end
+            po:set(s, acc / den )
+         end
       end
    end
 end
