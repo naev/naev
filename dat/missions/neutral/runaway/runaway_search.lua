@@ -221,6 +221,7 @@ function land ()
          vn.na(fmt.reward(reward))
       else
          local father = vn.newCharacter( npc_name, {image=npc_image} )
+         vn.transition()
 
          father(_([[You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. "For your troubles."]]))
 

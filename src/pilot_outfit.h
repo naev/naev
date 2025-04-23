@@ -28,10 +28,12 @@ double      pilot_outfitRange( const Pilot *p, const Outfit *o );
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit,
                         PilotOutfitSlot *s );
+int pilot_addOutfitRawNoLua( Pilot *pilot, const Outfit *outfit,
+                             PilotOutfitSlot *s );
 int pilot_addOutfitTest( Pilot *pilot, const Outfit *outfit,
                          const PilotOutfitSlot *s, int warn );
 int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s );
-int pilot_addOutfitRawAnySlot( Pilot *pilot, const Outfit *outfit );
+int pilot_addOutfitRawAnySlotNoLua( Pilot *pilot, const Outfit *outfit );
 
 /* Changes with checks. */
 int pilot_addOutfit( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s );

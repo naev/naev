@@ -10,8 +10,6 @@
 #include "naev.h"
 /** @endcond */
 
-#include "SDL_atomic.h"
-
 #include "array.h"
 #include "constants.h"
 #include "difficulty.h"
@@ -286,6 +284,21 @@ int pilot_hasDeployed( const Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
 {
+   pilot_addOutfitRawNoLua( pilot, outfit, s );
+
+   /* Initialize if active thingy if necessary. */
+   pilot_outfitLAdd( pilot, s );
+   pilot_outfitLOutfitChange( pilot );
+
+   return 0;
+}
+
+/**
+ * @brief Same as pilot_addOutfitRaw, but without running Lua.
+ */
+int pilot_addOutfitRawNoLua( Pilot *pilot, const Outfit *outfit,
+                             PilotOutfitSlot *s )
+{
    /* Set the outfit. */
    s->flags  = 0;
    s->state  = PILOT_OUTFIT_OFF;
@@ -331,10 +344,6 @@ int pilot_addOutfitRaw( Pilot *pilot, const Outfit *outfit, PilotOutfitSlot *s )
    s->lua_mem = LUA_NOREF;
    ss_free( s->lua_stats ); /* Just in case. */
    s->lua_stats = NULL;
-
-   /* Initialize if active thingy if necessary. */
-   pilot_outfitLAdd( pilot, s );
-   pilot_outfitLOutfitChange( pilot );
 
    return 0;
 }
@@ -542,7 +551,7 @@ int pilot_rmOutfitRaw( Pilot *pilot, PilotOutfitSlot *s )
 /**
  * @brief Tries to add an outfit to the first possible free slot on the pilot.
  */
-int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
+int pilot_addOutfitRawAnySlotNoLua( Pilot *p, const Outfit *o )
 {
    /* Test special slots first. */
    for ( int spid = 1; spid >= 0; spid-- ) {
@@ -569,7 +578,7 @@ int pilot_addOutfitRawAnySlot( Pilot *p, const Outfit *o )
                continue;
 
             /* Try to add. */
-            if ( pilot_addOutfitRaw( p, o, s ) == 0 )
+            if ( pilot_addOutfitRawNoLua( p, o, s ) == 0 )
                return i;
          }
       }
@@ -1753,18 +1762,20 @@ static void outfitLOutfitChange( const Pilot *pilot, PilotOutfitSlot *po,
 
 void pilot_outfitLOutfitChange( Pilot *pilot )
 {
-   static SDL_atomic_t changing_outfit = {
-      .value = 0,
-   };
+   static int changing_outfit =
+      0; /* No need for atomic, since lua state is shared. */
 
-   if ( SDL_AtomicCAS( &changing_outfit, 0, 1 ) == SDL_FALSE )
+   if ( changing_outfit > 3 ) {
+      WARN( "Too many nested 'onoutfitchange', skipping." );
       return;
+   }
+   changing_outfit++;
 
    NTracingZone( _ctx, 1 );
    pilot_outfitLRun( pilot, outfitLOutfitChange, NULL );
    NTracingZoneEnd( _ctx );
 
-   SDL_AtomicSet( &changing_outfit, 0 );
+   changing_outfit--;
 }
 
 /**
