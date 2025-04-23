@@ -12,7 +12,7 @@ descextra=function ( p, _o, _po)
    end
 
    local sm = p:shipMemory()
-   local count = sm._engine_count or 0
+   local count = sm and sm._engine_count or 0
 
    local out
    if count == 0 then
@@ -41,13 +41,21 @@ function onadd( p, po )
 
    local intrinsics = p:outfitsList("intrinsic")
    local ocount = 0
+   local last = 0
    if intrinsics then
       for _,v in ipairs(intrinsics) do
          if v == o then
+            last = last + 1
+         end
+      end
+      for _,v in ipairs(intrinsics) do
+         if v == o then
             ocount = ocount + 1
-            if ocount > 1 then
-               p:outfitRmIntrinsic(v)
+            if ocount == last then
+               break
             end
+            p:outfitRmIntrinsic(v)
+            print ("Removed Engine Combinator in excess.")
          end
       end
    end

@@ -222,6 +222,7 @@ function multicore.init( params )
             sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
          end
       end
+      p:outfitRmIntrinsic(outfit.get("Engine Combinator"))
       p:outfitAddIntrinsic(outfit.get("Engine Combinator"))
    end
 
