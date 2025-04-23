@@ -1,13 +1,12 @@
 //use mlua::prelude::*;
 use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
+use crate::{formatx, warn};
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 
-#[allow(dead_code)]
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
-#[allow(dead_code)]
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
 const LUA_COMMON_PATH: &str = "common.lua"; // Common Lua functions.
 
@@ -18,22 +17,31 @@ const ENV: &str = "_ENV";
 type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
 type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
 
-#[allow(dead_code)]
 pub struct LuaEnv {
     table: mlua::Table,
-    rk: mlua::RegistryKey,
+    rk: mlua::RegistryKey, // Needed for C API, remove later
+}
+impl Drop for LuaEnv {
+    // TODO something more robust here perhaps
+    fn drop(&mut self) {
+        let lua = NLUA.lock().unwrap();
+        let _ = lua.envs.set(self.rk.id(), mlua::Value::Nil);
+    }
 }
 
-#[allow(dead_code)]
 pub struct NLua {
     /// The true Lua environment (to rule them all)
     pub lua: mlua::Lua,
     /// Our globals, these can be masked but not removed
+    #[allow(dead_code)]
     globals: mlua::Table,
     /// The metatable for environments, just defaults to our globals
     env_mt: mlua::Table,
-    clua: *mut mlua::lua_State, // TODO remove when we can
-    envs: Vec<LuaEnv>,
+    // TODO remove below when we can
+    #[allow(dead_code)]
+    clua: *mut mlua::lua_State,
+    envs: mlua::Table,
+    envs_rk: mlua::RegistryKey,
 }
 // Got to remove this when we can...
 unsafe impl Sync for NLua {}
@@ -72,7 +80,6 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     Ok(())
 }
 
-#[allow(dead_code)]
 fn require(lua: &mlua::Lua, filename: mlua::String) -> mlua::Result<mlua::Value> {
     let globals = lua.globals();
 
@@ -236,17 +243,19 @@ impl NLua {
         let env_mt = lua.create_table()?;
         env_mt.set("__index", globals.clone())?;
 
+        let envs = lua.create_table()?;
+
         // Return it
         Ok(NLua {
-            lua,
             globals,
             env_mt,
-            envs: Vec::new(),
             clua: unsafe { naevc::naevL as *mut mlua::lua_State },
+            envs: envs.clone(),
+            envs_rk: lua.create_registry_value(envs)?,
+            lua,
         })
     }
 
-    #[allow(dead_code)]
     pub fn environment_new(&mut self, name: &str) -> mlua::Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
@@ -313,22 +322,50 @@ impl NLua {
         // Set up naev namespace. */
         t.set("naev", lua.create_table()?)?;
 
-        Ok(LuaEnv {
-            table: t.clone(),
-            rk: lua.create_registry_value(t)?,
-        })
+        let rk = lua.create_registry_value(t.clone())?;
+
+        // Store based on ID
+        self.envs.raw_set(rk.id(), t.clone())?;
+
+        Ok(LuaEnv { rk, table: t })
     }
 
-    #[allow(dead_code)]
     /// Calls a function with the environment
     pub fn environment_call<R: FromLuaMulti>(
         &self,
-        env: &LuaEnv,
+        env: mlua::Table,
         func: &mlua::Function,
         args: impl IntoLuaMulti,
     ) -> mlua::Result<R> {
-        self.lua.globals().raw_set(ENV, env.table.clone())?;
-        func.call(args)
+        let globals = self.lua.globals();
+        let prev_env: mlua::Table = globals.raw_get(ENV)?;
+        globals.raw_set(ENV, env)?;
+        let ret = func.call(args);
+        globals.raw_set(ENV, prev_env)?;
+        ret
+    }
+
+    /// Handles resizing
+    pub fn resize(&self, width: i32, height: i32) -> mlua::Result<()> {
+        for pair in self.envs.pairs::<i32, mlua::Table>() {
+            let (_key, value) = pair?;
+            let resize: mlua::Value = value.get("__resize")?;
+            match resize {
+                mlua::Value::Nil => Ok(()),
+                mlua::Value::Function(mf) => {
+                    self.environment_call::<()>(value, &mf, (width, height))
+                }
+                _ => {
+                    let name = value.get::<String>("__name")?;
+                    warn!(
+                        gettext("__resize is not a function or nil for environment '{}'"),
+                        name
+                    );
+                    Ok(())
+                }
+            }?;
+        }
+        Ok(())
     }
 }
 
@@ -386,7 +423,6 @@ pub unsafe extern "C" fn luaL_traceback(
 
 /*
 */
-use crate::{formatx, warn};
 use std::ffi::CStr;
 
 // C API
@@ -426,35 +462,25 @@ pub extern "C" fn nlua_freeEnv(env: *mut LuaEnv) {
     }
 }
 
-/*
-#[unsafe(no_mangle)]
-pub extern "C" fn nlua_dobufenv( env: *mut LuaEnv, buf: *const c_char, sz: usize, name: *const c_char ) -> c_int {
-    if env.is_null() {
-        return -1;
-    }
-    let buf = unsafe { std::str::from_utf8_unchecked(std::slice::from_raw_parts( buf as *const u8, sz)) };
-    let nameptr = unsafe { CStr::from_ptr(name) };
-    let name = nameptr.to_str().unwrap();
-    let env = unsafe { &*env };
-
-    let lua = &NLUA.lock().unwrap();
-    let chunk = lua.lua.load(buf)
-        .set_name( name )
-        .set_environment( env.table.clone() );
-    match chunk.exec() {
-        Ok(()) => 0,
-        Err(e) => {
-            warn!("{}",e);
-            -1
-        },
-    }
-}
-*/
-
 #[unsafe(no_mangle)]
 pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *mut LuaEnv) {
     let env = unsafe { &*env };
     unsafe {
         mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, env.rk.id().into());
     }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_pushEnvTable(lua: *mut mlua::lua_State) {
+    let nlua = NLUA.lock().unwrap();
+    unsafe {
+        mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, nlua.envs_rk.id().into());
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_resize() {
+    let lua = NLUA.lock().unwrap();
+    let (screen_w, screen_h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
+    lua.resize(screen_w, screen_h).unwrap();
 }

@@ -51,17 +51,14 @@
 #include "nluadef.h"
 #include "nstring.h"
 
-typedef struct nlua_env {
-   int ref; /**< Registry table. */
-   int dup; /**< Duplicated? */
-} nlua_env;
+typedef struct nlua_env nlua_env;
 
 lua_State *naevL         = NULL; /**< Global Naev Lua state. */
 nlua_env  *__NLUA_CURENV = NULL; /**< Current environment. */
-static char
-   *common_script; /**< Common script to run when creating environments. */
-// static size_t common_sz; /**< Common script size. */
-static int nlua_envs = LUA_NOREF;
+// static char *common_script; /**< Common script to run when creating
+// environments. */
+//  static size_t common_sz; /**< Common script size. */
+// static int nlua_envs = LUA_NOREF;
 
 /**
  * @brief Cache structure for loading chunks.
@@ -110,8 +107,8 @@ void lua_init( void )
    // nlua_loadBasic( naevL );
 
    /* Environment table. */
-   lua_newtable( naevL );
-   nlua_envs = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   // lua_newtable( naevL );
+   // nlua_envs = luaL_ref( naevL, LUA_REGISTRYINDEX );
 
    /* Better clean up. */
    // lua_atpanic( naevL, nlua_panic );
@@ -129,7 +126,7 @@ void lua_exit( void )
    array_free( lua_cache );
    lua_cache = NULL;
 
-   free( common_script );
+   // free( common_script );
    lua_close( naevL );
    naevL = NULL;
 }
@@ -234,13 +231,6 @@ int nlua_dochunkenv( nlua_env *env, int chunk, const char *name )
 #endif /* DEBUGGING */
    return 0;
 }
-
-#if DEBUGGING
-void nlua_pushEnvTable( lua_State *L )
-{
-   lua_rawgeti( L, LUA_REGISTRYINDEX, nlua_envs );
-}
-#endif /* DEBUGGING */
 
 /*
  * @brief Gets variable from environment and pushes it to stack
@@ -713,30 +703,6 @@ void nlua_unref( lua_State *L, int idx )
 }
 
 /**
- * @brief Propagates a resize event to all the environments forcibly.
- */
-void nlua_resize( void )
-{
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
-   lua_pushnil( naevL );                               /* t, n */
-   while ( lua_next( naevL, -2 ) != 0 ) {              /* t, k, v */
-      int      ref = lua_tointeger( naevL, -2 );       /* t, k, v */
-      nlua_env env = {
-         .ref = ref,
-      };
-      lua_getfield( naevL, -1, "__resize" ); /* t, k, v, f */
-      if ( !lua_isnil( naevL, -1 ) ) {
-         lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
-         lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */
-         nlua_pcall( &env, 2, 0 );           /* t, k, v */
-         lua_pop( naevL, 1 );                /* t, k */
-      } else
-         lua_pop( naevL, 2 ); /* t, k */
-   } /* t */
-   lua_pop( naevL, 1 ); /* */
-}
-
-/**
  * @brief Helper function to deal with tags.
  */
 int nlua_helperTags( lua_State *L, int idx, char *const *tags )
@@ -1000,5 +966,36 @@ static int nlua_loadBasic( lua_State *L )
    lua_pushnil( L );
 
    return 0;
+}
+
+#if DEBUGGING
+void nlua_pushEnvTable( lua_State *L )
+{
+   lua_rawgeti( L, LUA_REGISTRYINDEX, nlua_envs );
+}
+#endif /* DEBUGGING */
+
+/**
+ * @brief Propagates a resize event to all the environments forcibly.
+ */
+void nlua_resize( void )
+{
+//   lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
+   lua_pushnil( naevL );                               /* t, n */
+   while ( lua_next( naevL, -2 ) != 0 ) {              /* t, k, v */
+      int      ref = lua_tointeger( naevL, -2 );       /* t, k, v */
+      nlua_env env = {
+         .ref = ref,
+      };
+      lua_getfield( naevL, -1, "__resize" ); /* t, k, v, f */
+      if ( !lua_isnil( naevL, -1 ) ) {
+         lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
+         lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */
+         nlua_pcall( &env, 2, 0 );           /* t, k, v */
+         lua_pop( naevL, 1 );                /* t, k */
+      } else
+         lua_pop( naevL, 2 ); /* t, k */
+   } /* t */
+   lua_pop( naevL, 1 ); /* */
 }
 #endif
