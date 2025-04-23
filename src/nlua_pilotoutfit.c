@@ -346,9 +346,10 @@ static int poL_set( lua_State *L )
 static int poL_clear( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   if ( po->lua_stats != NULL )
+      pilotoutfit_modified = 1;
    ss_free( po->lua_stats );
-   po->lua_stats        = NULL;
-   pilotoutfit_modified = 1;
+   po->lua_stats = NULL;
    return 0;
 }
 
