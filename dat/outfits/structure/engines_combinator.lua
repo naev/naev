@@ -21,11 +21,13 @@ descextra=function ( p, _o, _po)
    else
       out = "#o"..fmt.f(_("Engines equipped: {count}"), {count = "#g"..fmt.number(count).."#0"}).."#0\n"
    end
+   --[[
    for _,s in ipairs(mobility_params) do
       if sm["_"..s] then
          out = out .. "#g" .. s .. ": " .. fmt.number(sm["_"..s]/count) .. "#0\n"
       end
    end
+   --]]
    return out
 end
 
@@ -37,27 +39,6 @@ function onadd( p, po )
    local o = po:outfit()
    if not o then
       return
-   end
-
-   local intrinsics = p:outfitsList("intrinsic")
-   local ocount = 0
-   local last = 0
-   if intrinsics then
-      for _,v in ipairs(intrinsics) do
-         if v == o then
-            last = last + 1
-         end
-      end
-      for _,v in ipairs(intrinsics) do
-         if v == o then
-            ocount = ocount + 1
-            if ocount == last then
-               break
-            end
-            p:outfitRmIntrinsic(v)
-            print ("Removed Engine Combinator in excess.")
-         end
-      end
    end
 
    local sm = p:shipMemory()

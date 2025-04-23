@@ -37,6 +37,7 @@
   <utility prop="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
+  <structure prop="engines_combinator" name="engines_combinator" size="small">Engines Combinator</structure>
   <structure prop="engines" name="engines" size="small">Beat Up Small Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="small" />
   <structure prop="hull" name="hull" size="small">Patchwork Light Plating</structure>

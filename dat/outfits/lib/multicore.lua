@@ -91,6 +91,10 @@ local function is_engine( po )
    end
 end
 
+local function is_multiengine( p )
+   return p and p:outfitHasSlot("engines_combinator")
+end
+
 local function is_secondary( po )
    return po and po:slot() and po:slot().tags and po:slot().tags.secondary
 end
@@ -118,7 +122,7 @@ end
 --  -1 for remove
 --   0 for update
 --   1 for add
-local function engine_combinator_needs_update( p, po, sign )
+local function engines_combinator_needs_update( p, po, sign )
    local sm = p:shipMemory()
    local found
 
@@ -211,7 +215,7 @@ function multicore.init( params )
       return desc
    end
 
-   local function engine_combinator_refresh( p, po, delta, delta_c )
+   local function engines_combinator_refresh( p, po, delta, delta_c )
       local secondary = is_secondary( po )
       local sm=p:shipMemory()
 
@@ -222,17 +226,16 @@ function multicore.init( params )
             sm["_"..s.name] = (sm["_"..s.name] or 0) + (val * delta_c)
          end
       end
-      p:outfitRmIntrinsic(outfit.get("Engine Combinator"))
-      p:outfitAddIntrinsic(outfit.get("Engine Combinator"))
+      p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
    end
 
    local function onoff_mul()
       return ((multicore_off~=true) and 1) or -1
    end
 
-   local function update_stats( po)
+   local function update_stats( p, po)
       local secondary = is_secondary( po )
-      local ie = is_engine( po )
+      local ie = is_engine( po ) and is_multiengine( p )
 
       po:clear()
       for k,s in ipairs(stats) do
@@ -272,10 +275,10 @@ function multicore.init( params )
          workingstatus_change( p, po, nil)
          ssign = sign
       end
-      if is_engine(po) and  engine_combinator_needs_update( p , po, sign ) then
-         engine_combinator_refresh( p, po, sign, ssign )
+      if is_engine(po) and is_multiengine( p ) and  engines_combinator_needs_update( p , po, sign ) then
+         engines_combinator_refresh( p, po, sign, ssign )
       end
-      update_stats( po)
+      update_stats( p, po)
    end
 
    function init( p, po )
@@ -299,20 +302,20 @@ function multicore.init( params )
       end
    end
 
-   function setworkingstatus(  p, po, on)
+   function setworkingstatus( p, po, on)
       local doit
-      if is_engine(po) then
+      if is_engine(po) and is_multiengine(p) then
          -- we can check this is still equipped
-         doit = engine_combinator_needs_update( p , po, 0)
+         doit = engines_combinator_needs_update( p , po, 0)
       else
          doit = true
       end
 
       if doit and workingstatus_change( p, po, on) then
-         if is_engine(po) then
-            engine_combinator_refresh( p, po, 0, onoff_mul())
+         if is_engine(po) and is_multiengine(p) then
+            engines_combinator_refresh( p, po, 0, onoff_mul())
          end
-         update_stats( po)
+         update_stats( p, po)
       end
    end
 
