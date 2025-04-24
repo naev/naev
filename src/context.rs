@@ -101,20 +101,52 @@ impl Message {
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 pub static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
 
+#[derive(Clone)]
+pub struct Dimensions {
+    pub window_width: u32,  // In real pixels
+    pub window_height: u32, // In real pixels
+    pub view_width: f32,    // In scaled pixels
+    pub view_height: f32,   // In scaled pixels
+    pub view_scale: f32,    // In scaling value
+    pub projection: Matrix3<f32>,
+}
+
+impl Dimensions {
+    pub fn new(window: &sdl::video::Window) -> Self {
+        let (window_width, window_height) = window.size();
+        let (view_width, view_height, view_scale) = {
+            let (w, h) = (window_width as f32, window_height as f32);
+            let scale = unsafe { naevc::conf.scalefactor as f32 };
+            (w / scale, h / scale, 1.0 / scale)
+        };
+        #[rustfmt::skip]
+        let projection = Matrix3::new(
+            2.0/view_width, 0.0,             -1.0,
+            0.0,            2.0/view_height, -1.0,
+            0.0,            0.0,              1.0,
+        );
+
+        Dimensions {
+            window_width,
+            window_height,
+            view_width,
+            view_height,
+            view_scale,
+            projection,
+        }
+    }
+}
+
 pub struct Context {
     pub sdlvid: sdl::VideoSubsystem,
     pub gl: glow::Context,
     pub window: sdl::video::Window,
     pub gl_context: sdl::video::GLContext,
     main_thread: ThreadId,
-    pub window_width: u32,  // In real pixels
-    pub window_height: u32, // In real pixels
-    pub view_width: f32,    // In scaled pixels
-    pub view_height: f32,   // In scaled pixels
-    pub view_scale: f32,    // In scaling value
+    // We should be able to get rid of this mutex when fully moved to Rust
+    pub dimensions: Mutex<Dimensions>,
 
     // Useful "globals"
-    pub projection: Matrix3<f32>,
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
     pub program_solid: Shader,
@@ -463,18 +495,9 @@ impl Context {
             }])
             .build_gl(&gl)?;
 
-        let (window_width, window_height) = window.size();
-        let (view_width, view_height, view_scale) = {
-            let (w, h) = (window_width as f32, window_height as f32);
-            let scale = unsafe { naevc::conf.scalefactor as f32 };
-            (w / scale, h / scale, 1.0 / scale)
-        };
-        #[rustfmt::skip]
-        let projection = Matrix3::new(
-            2.0/view_width, 0.0,             -1.0,
-            0.0,            2.0/view_height, -1.0,
-            0.0,            0.0,              1.0,
-        );
+        // Load up initial dimensions
+        let dimensions = Mutex::new(Dimensions::new(&window));
+
         unsafe {
             gl.bind_vertex_array(Some(vao_core)); // Set default C VAO
         }
@@ -484,12 +507,7 @@ impl Context {
             gl_context,
             gl,
             main_thread: std::thread::current().id(),
-            window_width,
-            window_height,
-            view_width,
-            view_height,
-            view_scale,
-            projection,
+            dimensions,
             program_texture,
             buffer_texture,
             program_solid,
@@ -506,24 +524,8 @@ impl Context {
         Ok(CONTEXT.get().unwrap())
     }
 
-    pub fn resize(&mut self) -> Result<()> {
-        (self.window_width, self.window_height) = self.window.size();
-        (self.view_width, self.view_height, self.view_scale) = {
-            let (w, h) = (self.window_width as f32, self.window_height as f32);
-            let scale = unsafe { naevc::conf.scalefactor as f32 };
-            (w / scale, h / scale, 1.0 / scale)
-        };
-        self.projection = Matrix3::new(
-            2.0 / self.view_width,
-            0.0,
-            -1.0,
-            0.0,
-            2.0 / self.view_height,
-            -1.0,
-            0.0,
-            0.0,
-            1.0,
-        );
+    pub fn resize(&self) -> Result<()> {
+        *self.dimensions.lock().unwrap() = Dimensions::new(&self.window);
         Ok(())
     }
 
@@ -539,8 +541,9 @@ impl Context {
     }
 
     pub fn draw_rect(&self, x: f32, y: f32, w: f32, h: f32, colour: Vector4<f32>) -> Result<()> {
+        let dims = self.dimensions.lock().unwrap();
         #[rustfmt::skip]
-        let transform: Matrix3<f32> = self.projection * Matrix3::new(
+        let transform: Matrix3<f32> = dims.projection * Matrix3::new(
              w,  0.0,  x,
             0.0,  h,   y,
             0.0, 0.0, 1.0,
@@ -582,6 +585,6 @@ pub extern "C" fn gl_renderRect(
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_resize() {
     unsafe { naevc::gl_resize_c() };
-    //let mut ctx = CONTEXT.get().unwrap();
-    //ctx.resize();
+    let ctx = CONTEXT.get().unwrap();
+    let _ = ctx.resize();
 }

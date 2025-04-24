@@ -48,8 +48,9 @@ struct Puff {
 }
 impl Puff {
     fn new(ctx: &context::Context, fg: bool) -> Self {
-        let x = (ctx.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
-        let y = (ctx.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+        let dims = ctx.dimensions.lock().unwrap();
+        let x = (dims.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+        let y = (dims.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
         let rx = rng::rngf32() * 2000.0 - 1000.0;
         let ry = rng::rngf32() * 2000.0 - 1000.0;
         let height = {
@@ -216,8 +217,10 @@ impl NebulaData {
             .frag_file("nebula_puff.frag")
             .build(gl)?;
 
+        let dims = ctx.dimensions.lock().unwrap();
+
         let puff_uniform = PuffUniform {
-            screen: Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5),
+            screen: Vector2::new(dims.view_width * 0.5, dims.view_height * 0.5),
             scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
             ..Default::default()
         };
@@ -261,11 +264,12 @@ impl NebulaData {
             .build(ctx)
             .unwrap();
 
-        self.uniform.camera = Vector2::new(ctx.view_width * 0.5, ctx.view_height * 0.5);
+        let dims = ctx.dimensions.lock().unwrap();
+        self.uniform.camera = Vector2::new(dims.view_width * 0.5, dims.view_height * 0.5);
 
         self.puff_uniform.screen = Vector2::new(
-            ctx.view_width + 2.0 * PUFF_BUFFER,
-            ctx.view_height + 2.0 * PUFF_BUFFER,
+            dims.view_width + 2.0 * PUFF_BUFFER,
+            dims.view_height + 2.0 * PUFF_BUFFER,
         );
     }
 
@@ -287,6 +291,7 @@ impl NebulaData {
         VertexArray::unbind(ctx);
         self.buffer.unbind(ctx);
 
+        let dims = ctx.dimensions.lock().unwrap();
         unsafe {
             let screen =
                 std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer);
@@ -300,8 +305,8 @@ impl NebulaData {
                 h,
                 0,
                 0,
-                ctx.window_width as i32,
-                ctx.window_height as i32,
+                dims.window_width as i32,
+                dims.window_height as i32,
                 glow::COLOR_BUFFER_BIT,
                 glow::LINEAR,
             );
@@ -335,10 +340,12 @@ impl NebulaData {
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
 
+        let dims = ctx.dimensions.lock().unwrap();
+
         // Copy over
         self.framebuffer
             .texture
-            .draw(ctx, 0.0, 0.0, ctx.view_width, ctx.view_height)?;
+            .draw(ctx, 0.0, 0.0, dims.view_width, dims.view_height)?;
 
         self.puffs_fg.render(ctx, self)
     }
@@ -358,7 +365,8 @@ impl NebulaData {
                 (1.0, 0.0)
             }
         };
-        self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * ctx.view_scale;
+        let dims = ctx.dimensions.lock().unwrap();
+        self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * dims.view_scale;
 
         let cam = crate::camera::CAMERA.lock().unwrap();
         let z = cam.zoom as f32;
@@ -386,9 +394,10 @@ impl NebulaData {
         volatility: f32,
         hue: f32,
     ) -> Result<()> {
+        let dims = ctx.dimensions.lock().unwrap();
         self.density = density;
         self.speed = (2.0 * density + 200.0) / 10e3; // Faster at higher density
-        self.dx = 25e3 / density.powf(1.0 / 3.0) * ctx.view_scale;
+        self.dx = 25e3 / density.powf(1.0 / 3.0) * dims.view_scale;
 
         let saturation = unsafe { naevc::conf.nebu_saturation as f32 };
         let value = saturation * 0.5 + 0.5;
