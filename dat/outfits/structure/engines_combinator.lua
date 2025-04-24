@@ -8,7 +8,7 @@ local mobility_params = {"accel","turn","speed"}
 local eml_name
 
 local function mkstat()
-   out = {}
+   local out = {}
    local needs_avg = {}
    for _,k in ipairs(mobility_params) do
       needs_avg[k] = true

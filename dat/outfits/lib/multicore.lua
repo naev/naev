@@ -113,7 +113,7 @@ end
 local function update_engines_combinator_if_needed( p, po, sign, t )
    local sm = p:shipMemory()
    local id=po:id()
-   local changed = _engines_combinator_needs_refresh
+   local changed = sm._engines_combinator_needs_refresh
    local bef
 
    sm._engines_combinator = sm._engines_combinator or {}
@@ -195,6 +195,7 @@ function multicore.init( params )
       end
 
       for k,s in ipairs(stats) do
+         local multicore_off = false
          local off = multicore_off and (nosec or nomain) and s.name~="mass"
          desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
          if averaged and s.name == "engine_limit" then
@@ -233,6 +234,7 @@ function multicore.init( params )
    end
 
    local function update_stats( p, po)
+      local multicore_off = false
       local secondary = is_secondary( po )
       local ie = is_engine( po ) and is_multiengine( p )
 
@@ -278,7 +280,8 @@ function multicore.init( params )
       end
    end
 
-   function setworkingstatus( p, po, on)
+   function setworkingstatus( _p, _po, _on)
+      --TODO
    end
 
 end
