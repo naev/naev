@@ -113,28 +113,19 @@ end
 local function update_engines_combinator_if_needed( p, po, sign, t )
    local sm = p:shipMemory()
    local id=po:id()
-   local changed=false
+   local changed = _engines_combinator_needs_refresh
    local bef
 
    sm._engines_combinator = sm._engines_combinator or {}
 
    if sign == -1 then
       if sm._engine_combinator then
-         changed = (sm._engines_combinator[id] ~= nil)
+         changed = changed or (sm._engines_combinator[id] ~= nil)
          sm._engines_combinator[id]=nil
       end
    else
       sm._engine_combinator = sm._engine_combinator or {}
-      changed = (sign==1) and (sm._engines_combinator[id] == nil)
-
-      --[[
-      if not changed and (sign == 1) then
-         print "Trying to add an already existing engine -> updating"
-      end
-      if changed and (sign == 0) then
-         print "Trying to update a non-existing engine -> adding"
-      end
-      --]]
+      changed = changed or (sign==1) and (sm._engines_combinator[id] == nil)
 
       sm._engines_combinator[id] = sm._engines_combinator[id] or {}
       for k,v in pairs(t) do
@@ -143,6 +134,8 @@ local function update_engines_combinator_if_needed( p, po, sign, t )
          changed = changed or (bef ~= v)
       end
    end
+   sm._engines_combinator_needs_refresh = changed
+
    if changed then
       p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
    end
@@ -169,7 +162,7 @@ function multicore.init( params )
    hidestats = true -- We do hacks to show stats, so hide them
 
    -- Below define the global functions for the outfit
-   function descextra( _p, _o, po )
+   function descextra( p, _o, po )
       local nomain, nosec = false, false
       if po then
          if is_secondary( po ) then
@@ -191,12 +184,24 @@ function multicore.init( params )
          }).."#0"
       end
 
-      local averaged = is_engine( po )
+      local averaged = is_engine( po ) and is_multiengine( p )
+      local sm
+      local total
+
+      if averaged then
+         sm = p:shipMemory() and p:shipMemory()._engines_combinator or {}
+         total = p:shipMemory() and p:shipMemory()._engines_combinator_total or {}
+         total = total and total['engine_limit'] or 0
+      end
+
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name~="mass"
          desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
-         if averaged and nomain and (not nosec) and needs_avg[s.name] then
-            desc = desc.."  #o[avg with#0 #rpri#0#o]#0"
+         if averaged and s.name == "engine_limit" then
+            desc = desc .. fmt.f(_("\n\t#o[#0 #y{share}%#0 #oout of {total}#0 #o]#0"),{
+               share = sm[po:id()] and sm[po:id()]['part'] or 0,
+               total=total
+            })
          end
       end
       --[[

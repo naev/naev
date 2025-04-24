@@ -1,10 +1,45 @@
 
 notactive = true -- Doesn't become active
-
--- in order
-local mobility_params = {"accel","turn","speed"}
+hidestats = true -- We do hacks to show stats, so hide them
 
 local fmt = require "format"
+
+local mobility_params = {"accel","turn","speed"}
+local eml_name
+
+local function mkstat()
+   out = {}
+   local needs_avg = {}
+   for _,k in ipairs(mobility_params) do
+      needs_avg[k] = true
+   end
+   for k,s in ipairs(naev.shipstats()) do
+      if needs_avg[s.name] then
+         out[k] = s
+      elseif s.name == "engine_limit" then
+         eml_name = s.display
+      end
+   end
+   return out
+end
+
+local mobility_stats = mkstat()
+
+-- inverted unit name display
+local function adddesc( t, total)
+   local out = ""
+   for _i,k in pairs(mobility_stats) do
+      local name = k['name']
+
+      k['val']=t[name]
+      out = out .. _(fmt.f("\t#g{display} {val} {unit}#0",k))
+      if total then
+         out =out .. "  #y[" .. fmt.number(t[name]*t['engine_limit']/total) .. " " .. k.unit .. "]#0"
+      end
+      out = out .. "\n"
+   end
+   return out
+end
 
 descextra=function ( p, _o, _po)
    if p == nil then
@@ -20,13 +55,19 @@ descextra=function ( p, _o, _po)
       end
    end
 
-   local out=""
+   local out="\n"
    if count == 0 then
       out = "#o".._("No engine equipped").."#0\n"
    else
+      local total = (sm and sm._engines_combinator_total) or {}
       for i,v in pairs(dat) do
-         out = out .. "[" .. tostring(i) .. "] : " .. fmt.number(v['part']) .."%\n"
+         -- Use i+1 to make it work, but should be i
+         local outfit_name = p:outfitGet(i+1):name()
+         out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
+         out = out .. adddesc(v, total['engine_limit'])
       end
+      out = out .. "\n#y[TOTAL]#0\n"
+      out = out .. adddesc(total)
    end
    return out
 end
@@ -42,7 +83,13 @@ function onadd( p, po )
    end
 
    local sm = p:shipMemory()
+
+   if not sm._engines_combinator_needs_refresh then
+      return
+   end
+
    local data = ((sm and sm._engines_combinator) or {})
+
    local count = 0
    for k,v in pairs(data) do
       if v['engine_limit'] then
@@ -50,26 +97,31 @@ function onadd( p, po )
       end
    end
    po:clear()
-
    if count>0 then
       local den=0
+      local comb = ((sm and sm._engines_combinator_total) or {})
+      sm._engines_combinator_total = comb
 
-      for _k,v in pairs(data) do
+      for k,v in pairs(data) do
          den = den + (v['engine_limit'] or 0)
       end
       if den>0 then
+         comb['engine_limit'] = den
          for k,v in pairs(data) do
-            p:shipMemory()._engines_combinator[k]['part']=(100*(v['engine_limit'] or 0))/den
+            data[k]['part'] = math.floor(0.5 + (100*(v['engine_limit'] or 0))/den)
          end
          for _,s in ipairs(mobility_params) do
             local acc=0
             for _k,v in pairs(data) do
                acc = acc + (v[s] or 0) * (v['engine_limit'] or 0)
             end
-            po:set(s, acc / den )
+            local val = math.floor( 0.5 + (acc / den) )
+            comb[s] = val
+            po:set(s, val)
          end
       end
    end
+   sm._engines_combinator_needs_refresh = nil
 end
 
 init=onadd
