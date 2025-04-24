@@ -435,24 +435,21 @@ pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
     naev.set("vec2", proxy)?;
 
     // Only add stuff as necessary
-    match lua.named_registry_value("push_vector")? {
-        mlua::Value::Nil => {
-            dbg!("add");
-            let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
-                let vec = Vec2::new(x, y);
-                lua.create_any_userdata(vec)
-            })?;
-            lua.set_named_registry_value("push_vector", push_vector)?;
+    if let mlua::Value::Nil = lua.named_registry_value("push_vector")? {
+        dbg!("add");
+        let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
+            let vec = Vec2::new(x, y);
+            lua.create_any_userdata(vec)
+        })?;
+        lua.set_named_registry_value("push_vector", push_vector)?;
 
-            let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
-                let vec: *mut Vec2 = &mut *ud;
-                Ok(Value::LightUserData(mlua::LightUserData(
-                    vec as *mut c_void,
-                )))
-            })?;
-            lua.set_named_registry_value("get_vector", get_vector)?;
-        }
-        _ => (),
+        let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
+            let vec: *mut Vec2 = &mut *ud;
+            Ok(Value::LightUserData(mlua::LightUserData(
+                vec as *mut c_void,
+            )))
+        })?;
+        lua.set_named_registry_value("get_vector", get_vector)?;
     }
 
     Ok(())
@@ -465,7 +462,7 @@ use std::os::raw::{c_char, c_int};
 pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
     let lua = NLUA.lock().unwrap();
     let env = unsafe { &*env };
-    match open_vec2(&lua.lua, &env) {
+    match open_vec2(&lua.lua, env) {
         Err(e) => {
             warn!(gettext("Error loading {} library: {}"), "vec2", e);
             -1

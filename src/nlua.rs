@@ -369,22 +369,15 @@ impl NLua {
     }
 }
 
-#[allow(dead_code)]
 impl LuaEnv {
     /// Gets a value from the environment
     pub fn get<V: FromLua>(&self, key: impl IntoLua) -> mlua::Result<V> {
-        //let t: mlua::Table = self.rk.into_lua( self.lua )?.into();
         self.table.get(key)
     }
 
     /// Sets a value in the environment
     pub fn set(&self, key: impl IntoLua, value: impl IntoLua) -> mlua::Result<()> {
         self.table.set(key, value)
-    }
-
-    // Gets the ID
-    fn id(&self) -> std::os::raw::c_int {
-        self.rk.id()
     }
 }
 

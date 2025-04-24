@@ -238,7 +238,7 @@ impl Context {
     pub fn get() -> Result<&'static Self> {
         //CONTEXT.get()?.lock()
         match CONTEXT.get() {
-            Some(ctx) => Ok(&ctx),
+            Some(ctx) => Ok(ctx),
             None => anyhow::bail!("No context"),
         }
     }
