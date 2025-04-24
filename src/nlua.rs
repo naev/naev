@@ -389,7 +389,7 @@ impl LuaEnv {
 }
 
 use std::sync::{LazyLock, Mutex};
-static NLUA: LazyLock<Mutex<NLua>> = LazyLock::new(|| Mutex::new(NLua::new().unwrap()));
+pub static NLUA: LazyLock<Mutex<NLua>> = LazyLock::new(|| Mutex::new(NLua::new().unwrap()));
 pub fn init() -> Result<()> {
     let _unused = NLUA.lock();
     Ok(())

@@ -2,6 +2,11 @@ use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
 use std::os::raw::c_void;
 
+use crate::gettext::gettext;
+use crate::{formatx, warn};
+
+use crate::nlua::{LuaEnv, NLUA};
+
 #[derive(Copy, Clone, derive_more::From, derive_more::Into)]
 pub struct Vec2(Vector2<f64>);
 
@@ -422,45 +427,63 @@ impl UserData for Vec2 {
     }
 }
 
-#[allow(dead_code)]
-pub fn open_vec2(lua: &mlua::Lua) -> anyhow::Result<()> {
-    let globals = lua.globals();
-    globals.set("vec2", lua.create_proxy::<Vec2>()?)?;
+pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
+    let proxy = lua.create_proxy::<Vec2>()?;
+    env.set("vec2", &proxy)?;
+    // Add to the Naev stuff
+    let naev: mlua::Table = env.get("naev")?;
+    naev.set("vec2", proxy)?;
 
-    let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
-        let vec = Vec2::new(x, y);
-        lua.create_any_userdata(vec)
-    })?;
-    lua.set_named_registry_value("push_vector", push_vector)?;
+    // Only add stuff as necessary
+    match lua.named_registry_value("push_vector")? {
+        mlua::Value::Nil => {
+            dbg!("add");
+            let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
+                let vec = Vec2::new(x, y);
+                lua.create_any_userdata(vec)
+            })?;
+            lua.set_named_registry_value("push_vector", push_vector)?;
 
-    let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
-        let vec: *mut Vec2 = &mut *ud;
-        Ok(Value::LightUserData(mlua::LightUserData(
-            vec as *mut c_void,
-        )))
-    })?;
-    lua.set_named_registry_value("get_vector", get_vector)?;
+            let get_vector = lua.create_function(|_, mut ud: mlua::UserDataRefMut<Vec2>| {
+                let vec: *mut Vec2 = &mut *ud;
+                Ok(Value::LightUserData(mlua::LightUserData(
+                    vec as *mut c_void,
+                )))
+            })?;
+            lua.set_named_registry_value("get_vector", get_vector)?;
+        }
+        _ => (),
+    }
+
     Ok(())
 }
 
-/*
 use mlua::ffi;
 use std::os::raw::{c_char, c_int};
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn nlua_loadVector( env: naevc::nlua_env ) {
+pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
+    let lua = NLUA.lock().unwrap();
+    let env = unsafe { &*env };
+    match open_vec2(&lua.lua, &env) {
+        Err(e) => {
+            warn!(gettext("Error loading {} library: {}"), "vec2", e);
+            -1
+        }
+        _ => 0,
+    }
 }
 
 #[allow(non_snake_case)]
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn luaL_checkvector( L: *mut mlua::lua_State, ind: c_int ) -> *mut Vec2 {
+pub unsafe extern "C" fn luaL_checkvector(L: *mut mlua::lua_State, ind: c_int) -> *mut Vec2 {
     unsafe {
-        match lua_isvector( L, ind ) {
+        match lua_isvector(L, ind) {
             0 => {
-                ffi::luaL_typerror( L, ind, c"vec2".as_ptr() as *const c_char );
+                ffi::luaL_typerror(L, ind, c"vec2".as_ptr() as *const c_char);
                 std::ptr::null_mut()
-            },
-            _ => lua_tovector( L, ind ),
+            }
+            _ => lua_tovector(L, ind),
         }
     }
 }
@@ -476,8 +499,8 @@ pub unsafe extern "C" fn lua_isvector(L: *mut mlua::lua_State, idx: c_int) -> c_
 pub unsafe extern "C" fn lua_pushvector(L: *mut mlua::lua_State, vec: naevc::vec2) {
     unsafe {
         ffi::lua_getfield(L, ffi::LUA_REGISTRYINDEX, c"push_vector".as_ptr());
-        ffi::lua_pushnumber(L, vec.x );
-        ffi::lua_pushnumber(L, vec.y );
+        ffi::lua_pushnumber(L, vec.x);
+        ffi::lua_pushnumber(L, vec.y);
         ffi::lua_call(L, 2, 1);
     }
 }
@@ -497,4 +520,5 @@ pub unsafe extern "C" fn lua_tovector(L: *mut mlua::lua_State, idx: c_int) -> *m
         vec
     }
 }
+/*
 */

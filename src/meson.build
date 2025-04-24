@@ -213,7 +213,6 @@ nlua_source = files(
    'nlua_tk.c',
    'nlua_transform.c',
    'nlua_var.c',
-   'nlua_vec2.c'
 )
 
 sdf_source = files('distance_field.c', 'edtaa3func.c')
