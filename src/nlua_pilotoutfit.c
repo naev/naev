@@ -163,7 +163,7 @@ int lua_ispilotoutfit( lua_State *L, int ind )
 static int poL_id( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
-   lua_pushinteger( L, po->id );
+   lua_pushinteger( L, po->id + 1 );
    return 1;
 }
 
