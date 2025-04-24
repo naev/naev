@@ -9,7 +9,7 @@ use std::os::raw::{c_char, c_double, c_int};
 use std::rc::Rc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
-use crate::context::{Context, CONTEXT};
+use crate::context::Context;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
@@ -928,7 +928,7 @@ pub extern "C" fn gltf_lightTransform_(
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     let model = Model::from_path(ctx, path.to_str().unwrap()).unwrap();
     Box::into_raw(Box::new(model))
 }
@@ -964,7 +964,7 @@ pub extern "C" fn gltf_renderScene_(
         true => &Matrix4::identity(),
         false => unsafe { &*ctransform },
     };
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     #[allow(static_mut_refs)]
     let lighting = unsafe { &CLIGHTING };
     let transform = ctransform.append_scaling(size as f32);

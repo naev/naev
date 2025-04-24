@@ -4,7 +4,7 @@ use glow::*;
 use std::ffi::CStr;
 use std::os::raw::c_char;
 
-use crate::context::CONTEXT;
+use crate::context::Context;
 use crate::gettext::gettext;
 use crate::{context, ndata};
 use crate::{einfo, formatx, warn};
@@ -280,7 +280,7 @@ pub extern "C" fn gl_program_backend(
     cfrag: *const c_char,
     cprepend: *const c_char,
 ) -> u32 {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     let vert = unsafe { CStr::from_ptr(cvert) };
     let frag = unsafe { CStr::from_ptr(cfrag) };
     let mut sb = ShaderBuilder::new(None)
@@ -304,7 +304,7 @@ pub extern "C" fn gl_program_vert_frag_string(
     cfrag: *const c_char,
     frag_size: usize,
 ) -> u32 {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     let vertdata =
         std::str::from_utf8(unsafe { std::slice::from_raw_parts(cvert as *const u8, vert_size) })
             .unwrap();
