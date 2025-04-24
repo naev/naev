@@ -11,7 +11,7 @@ use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
-use crate::context::CONTEXT;
+use crate::context::Context;
 use crate::{buffer, context, gettext, ndata, render};
 use crate::{formatx, warn};
 
@@ -262,7 +262,7 @@ impl Drop for Texture {
 }
 impl Texture {
     pub fn try_clone(&self) -> Result<Self> {
-        let ctx = CONTEXT.get().unwrap();
+        let ctx = Context::get().unwrap();
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
 
@@ -688,7 +688,7 @@ pub struct Framebuffer {
 }
 impl Drop for Framebuffer {
     fn drop(&mut self) {
-        let ctx = CONTEXT.get().unwrap();
+        let ctx = Context::get().unwrap();
         unsafe { ctx.gl.delete_framebuffer(self.framebuffer) };
     }
 }
@@ -891,7 +891,7 @@ pub extern "C" fn gl_texExistsOrCreate(
     sy: c_int,
     created: *mut c_int,
 ) -> *mut Texture {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
 
     unsafe {
         naevc::gl_contextSet();
@@ -949,7 +949,7 @@ pub extern "C" fn gl_loadImageData(
     cname: *const c_char,
     cflags: c_uint,
 ) -> *mut Texture {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
     let flags = Flags::from(cflags);
 
@@ -1013,7 +1013,7 @@ pub extern "C" fn gl_newSprite(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
 
@@ -1057,7 +1057,7 @@ pub extern "C" fn gl_newSpriteRWops(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     unsafe {
@@ -1141,7 +1141,7 @@ pub extern "C" fn gl_rawTexture(
     w: c_double,
     h: c_double,
 ) -> *mut Texture {
-    let ctx = CONTEXT.get().unwrap(); /* Lock early. */
+    let ctx = Context::get().unwrap(); /* Lock early. */
     unsafe {
         naevc::gl_contextSet();
     }
@@ -1256,7 +1256,7 @@ pub extern "C" fn gl_renderTexture(
     c: *mut Vector4<f32>,
     angle: c_double,
 ) {
-    let ctx = CONTEXT.get().unwrap();
+    let ctx = Context::get().unwrap();
     let colour = match c.is_null() {
         true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
         false => unsafe { *c },

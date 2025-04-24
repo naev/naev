@@ -459,7 +459,7 @@ int gl_init( void )
 /**
  * @brief Handles a window resize and resets gl_screen parameters.
  */
-void gl_resize( void )
+void gl_resize_c( void )
 {
    gl_setupScaling();
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );

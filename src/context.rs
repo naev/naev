@@ -203,6 +203,14 @@ impl Context {
         -0.25,  0.433_012_7,
         -0.25, -0.433_012_7];
 
+    pub fn get() -> Result<&'static Self> {
+        //CONTEXT.get()?.lock()
+        match CONTEXT.get() {
+            Some(ctx) => Ok(&ctx),
+            None => anyhow::bail!("No context"),
+        }
+    }
+
     fn create_context(
         sdlvid: &sdl::VideoSubsystem,
         gl_attr: &sdl::video::gl_attr::GLAttr,
@@ -498,6 +506,27 @@ impl Context {
         Ok(CONTEXT.get().unwrap())
     }
 
+    pub fn resize(&mut self) -> Result<()> {
+        (self.window_width, self.window_height) = self.window.size();
+        (self.view_width, self.view_height, self.view_scale) = {
+            let (w, h) = (self.window_width as f32, self.window_height as f32);
+            let scale = unsafe { naevc::conf.scalefactor as f32 };
+            (w / scale, h / scale, 1.0 / scale)
+        };
+        self.projection = Matrix3::new(
+            2.0 / self.view_width,
+            0.0,
+            -1.0,
+            0.0,
+            2.0 / self.view_height,
+            -1.0,
+            0.0,
+            0.0,
+            1.0,
+        );
+        Ok(())
+    }
+
     fn is_main_thread(&self) -> bool {
         self.main_thread == std::thread::current().id()
     }
@@ -545,7 +574,14 @@ pub extern "C" fn gl_renderRect(
     h: c_double,
     c: *mut Vector4<f32>,
 ) {
-    let ctx = CONTEXT.get().unwrap();
+    let ctx = Context::get().unwrap();
     let colour = unsafe { *c };
     let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_resize() {
+    unsafe { naevc::gl_resize_c() };
+    //let mut ctx = CONTEXT.get().unwrap();
+    //ctx.resize();
 }

@@ -90,6 +90,7 @@ extern mat4 gl_view_matrix;
 int  gl_init( void );
 void gl_exit( void );
 void gl_resize( void );
+void gl_resize_c( void );
 
 /*
  * Viewport.
