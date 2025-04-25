@@ -160,6 +160,7 @@ end
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy( params )
+   local eml_unit
 
    for k,s in ipairs(stats) do
       s.index = index( shipstat, s[1] )
@@ -167,6 +168,9 @@ function multicore.init( params )
       s.name = s.stat.name
       s.pri = s[2]
       s.sec = s[3]
+      if s.name == 'engine_limit' then
+         eml_unit = s.stat.unit
+      end
    end
    -- Sort based on shipstat table order
    table.sort( stats, function ( a, b )
@@ -176,6 +180,7 @@ function multicore.init( params )
    -- Set global properties
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
+
 
    -- Below define the global functions for the outfit
    function descextra( p, _o, po )
@@ -201,23 +206,30 @@ function multicore.init( params )
       end
 
       local averaged = is_engine( po ) and is_multiengine( p )
-      local sm
-      local total
+      local multicore_off = p and po and marked_n( p, po:id() )
+      local sm = (p:shipMemory() and p:shipMemory()[engines_comb_dir]) or {}
+      local total = (p:shipMemory() and p:shipMemory()[engines_comb_dir.."_total"]) or {}
+      local totaleml = (total and total["engine_limit"]) or 0
 
       if averaged then
-         sm = p:shipMemory() and p:shipMemory()[engines_comb_dir] or {}
-         total = p:shipMemory() and p:shipMemory()[engines_comb_dir.."_total"] or {}
-         total = total and total['engine_limit'] or 0
+         if multicore_off~=true then
+            desc = desc .. fmt.f(_("\n#oLoad Factor:#0 #y{share}%#0 #o({eml} {t} out of {total} {t} )#0"),{
+               share = (sm[po:id()] and sm[po:id()]["part"]) or 0,
+               eml = (sm[po:id()] and sm[po:id()]["engine_limit"]) or 0,
+               total = totaleml,
+               t = eml_unit
+            })
+         end
       end
 
-      local multicore_off = p and po and marked_n( p, po:id() )
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name~="mass"
          desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
-         if averaged and s.name == "engine_limit" then
-            desc = desc .. fmt.f(_("\n\t#o[#0 #y{share}%#0 #oout of {total}#0 #o]#0"),{
+         if averaged and s.name == "engine_limit" and multicore_off~=true then
+            desc = desc .. fmt.f(_("\n\t#o[#0 #y{share}%#0 #oout of {total} {t}#0 #o]#0"),{
                share = sm[po:id()] and sm[po:id()]['part'] or 0,
-               total=total
+               total = totaleml,
+               t = eml_unit
             })
          end
       end
