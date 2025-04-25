@@ -27,6 +27,7 @@
 int pilotoutfit_modified = 0;
 
 /* Pilot outfit metatable methods. */
+static int poL_id( lua_State *L );
 static int poL_slot( lua_State *L );
 static int poL_outfit( lua_State *L );
 static int poL_state( lua_State *L );
@@ -37,6 +38,7 @@ static int poL_munition( lua_State *L );
 static int poL_shoot( lua_State *L );
 
 static const luaL_Reg poL_methods[] = {
+   { "id", poL_id },
    { "slot", poL_slot },
    { "outfit", poL_outfit },
    { "state", poL_state },
@@ -149,6 +151,20 @@ int lua_ispilotoutfit( lua_State *L, int ind )
 
    lua_pop( L, 2 ); /* remove both metatables */
    return ret;
+}
+
+/**
+ * @brief Gets the ID of an outfit slot.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to get ID of.
+ *    @luatreturn integer The corresponding ID.
+ * @luafunc id
+ */
+static int poL_id( lua_State *L )
+{
+   PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   lua_pushinteger( L, po->id + 1 );
+   return 1;
 }
 
 /**
@@ -330,9 +346,10 @@ static int poL_set( lua_State *L )
 static int poL_clear( lua_State *L )
 {
    PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   if ( po->lua_stats != NULL )
+      pilotoutfit_modified = 1;
    ss_free( po->lua_stats );
-   po->lua_stats        = NULL;
-   pilotoutfit_modified = 1;
+   po->lua_stats = NULL;
    return 0;
 }
 

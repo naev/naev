@@ -934,7 +934,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw,
    }
 
    /* Get text. */
-   outfit_altText( alt, sizeof( alt ), o, ( p == player.p ) ? p : NULL, slot );
+   outfit_altText( alt, sizeof( alt ), o, p, slot );
 
    /* Display temporary bonuses. */
    if ( ( slot->lua_mem != LUA_NOREF ) &&
@@ -1418,7 +1418,8 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
    pilot_weaponSafe( eq_wgt.selected->p );
 
    /* Notify GUI of modification. */
-   gui_setShip();
+   if ( ( p->id > 0 ) && pilot_isPlayer( p ) && ( p->ai != NULL ) )
+      gui_setShip();
 
    return 0;
 }
@@ -1593,7 +1594,8 @@ void equipment_addAmmo( void )
    pilot_fillAmmo( p );
 
    /* Notify GUI of modification. */
-   gui_setShip();
+   if ( ( p->id > 0 ) && pilot_isPlayer( p ) && ( p->ai != NULL ) )
+      gui_setShip();
 }
 
 /**
@@ -2603,7 +2605,8 @@ static void equipment_unequipShip( unsigned int wid, const char *str )
    pilot_weaponSafe( ship );
 
    /* Notify GUI of modification. */
-   gui_setShip();
+   if ( ( ship->id > 0 ) && pilot_isPlayer( ship ) && ( ship->ai != NULL ) )
+      gui_setShip();
 }
 
 /**

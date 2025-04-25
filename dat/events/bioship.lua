@@ -59,8 +59,11 @@ function update_bioship ()
             if pp:shipvarPeek( svar ) then
                table.insert( playerskills, skill )
             end
+            -- Clear everything for now
+            bioship.skill_disable( pp, skill )
          end
       end
+      -- Sort to make sure it is OK
       table.sort( playerskills, function( a, b )
          return a.tier < b.tier
       end )

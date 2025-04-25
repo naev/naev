@@ -117,6 +117,7 @@ static int pilotL_velocity( lua_State *L );
 static int pilotL_isStopped( lua_State *L );
 static int pilotL_dir( lua_State *L );
 static int pilotL_signature( lua_State *L );
+static int pilotL_stealthRange( lua_State *L );
 static int pilotL_mass( lua_State *L );
 static int pilotL_accel( lua_State *L );
 static int pilotL_speed( lua_State *L );
@@ -315,6 +316,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "isStopped", pilotL_isStopped },
    { "dir", pilotL_dir },
    { "signature", pilotL_signature },
+   { "stealthRange", pilotL_stealthRange },
    { "mass", pilotL_mass },
    { "accel", pilotL_accel },
    { "speed", pilotL_speed },
@@ -2633,13 +2635,14 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
         ( !activate && ( po->state != PILOT_OUTFIT_ON ) ) )
       return 0;
 
+   int ret = po->flags & PILOTOUTFIT_ISON_TOGGLE;
    if ( activate ) {
-      int ret = pilot_outfitOn( p, po );
-      if ( ret )
-         po->flags |= PILOTOUTFIT_ISON_TOGGLE;
+      po->flags |= PILOTOUTFIT_ISON_TOGGLE;
       return ret;
-   } else
-      return pilot_outfitOff( p, po, 1 );
+   } else {
+      po->flags &= PILOTOUTFIT_ISON_TOGGLE;
+      return !ret;
+   }
 }
 /**
  * @brief Toggles an outfit.
@@ -2674,12 +2677,8 @@ static int pilotL_outfitToggle( lua_State *L )
       n = outfitToggle( L, p, luaL_checkinteger( L, 2 ) - 1, activate );
 
    /* See if we have to do updates. */
-   if ( n > 0 && pilot_isFlag( p, PILOT_STEALTH ) )
-      pilot_destealth( p ); /* pilot_destealth should run calcStats already. */
-   else if ( n > 0 || pilotoutfit_modified ) {
+   if ( n > 0 )
       pilot_weapSetUpdateOutfitState( p );
-      pilot_calcStats( p );
-   }
 
    lua_pushboolean( L, n );
    return 1;
@@ -2780,7 +2779,7 @@ static int pilotL_isStopped( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's signature.
+ * @brief Gets the pilot's signature range.
  *
  * @usage d = p:signature()
  *
@@ -2792,6 +2791,20 @@ static int pilotL_signature( lua_State *L )
 {
    const Pilot *p = luaL_validpilot( L, 1 );
    lua_pushnumber( L, p->ew_signature );
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's stealth range.
+ *
+ *    @luatparam Pilot p Pilot to get the stealth range of.
+ *    @luatreturn number The pilot's current stealth range value.
+ * @luafunc stealthRange
+ */
+static int pilotL_stealthRange( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   lua_pushnumber( L, p->ew_stealth );
    return 1;
 }
 
@@ -3658,7 +3671,7 @@ static int pilotL_outfitHasSlot( lua_State *L )
    Pilot      *p    = luaL_validpilot( L, 1 );
    const char *name = luaL_checkstring( L, 2 );
    lua_pushboolean( L, pilot_getSlotByName( p, name ) != NULL );
-   return 0;
+   return 1;
 }
 
 /**

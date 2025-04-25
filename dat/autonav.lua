@@ -54,7 +54,7 @@ local function autonav_setup ()
    uselanes_thr = var.peek("autonav_uselanes_thr") or 2
    match_fleet = var.peek("autonav_match_fleet")
    follow_land_jump = var.peek("autonav_follow_jump")
-   reset_shield = var.peek("autonav_reset_shield")
+   reset_shield = var.peek("autonav_reset_shield") * 100 -- Has to be in percent
    reset_dist = var.peek("autonav_reset_dist")
    brake_pos = var.peek("autonav_brake_pos")
    reset_lockon = var.peek("autonav_reset_lockon")
@@ -754,11 +754,11 @@ function autonav_plt_follow ()
    local plt = target_plt
    local target_known = false
    local inrng = false
+   local pp = player.pilot()
 
    if plt:exists() then
       if plt:flags("jumpingout") then
          local jmp = plt:navJump()
-         local pp = player.pilot()
          player.msg("#o"..fmt.f(_("Autonav: following target {plt} has jumped to {sys}."),{plt=get_pilot_name(plt),sys=get_sys_name(jmp:dest())}).."#0")
 
          if follow_land_jump then
@@ -814,7 +814,7 @@ function autonav_plt_follow ()
             end
 
             -- Try to follow to land
-            player.pilot():navSpobSet( plt:navSpob() )
+            pp:navSpobSet( plt:navSpob() )
             _autonav_spob( plt:navSpob(), follow_land_jump, false) -- do it without following lanes
             if follow_land_jump then
                autonav_reset(0)
@@ -826,7 +826,7 @@ function autonav_plt_follow ()
          end
          return
       end
-      inrng, target_known = player.pilot():inrange( plt )
+      inrng, target_known = pp:inrange( plt )
    end
 
    if not inrng then -- If doesn't exist defaults to false
@@ -835,7 +835,7 @@ function autonav_plt_follow ()
 
       -- See if there's someone else in the original fleet we can follow now
       for k,p in ipairs( follow_pilot_fleet ) do
-         if p:exists() and not p:flags("landing") then
+         if p:exists() and not p:flags("landing") and pp:inrange(p) then
             set_pilot_target( p )
             autonav_pilot( p )
             return
@@ -848,11 +848,16 @@ function autonav_plt_follow ()
       target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
-   local pp = player.pilot()
    local canboard = plt:flags("disabled") or plt:flags("boardable")
-   local radius = math.max( 100, 1.5*(pp:radius()+plt:radius()) )
+   local radius
    if canboard then
       radius = 0
+   elseif pp:flags("stealth") then
+      -- Follow with the same range that stops stealth (see pilot_ewStealthGetNearby)
+      local stealthrange = 1.5 * pp:stealthRange() * plt:shipstat( "ew_detect", true )
+      radius = pp:radius()+plt:radius()+stealthrange
+   else
+      radius = math.max( 100, 1.5*(pp:radius()+plt:radius()) )
    end
    local pos = plt:pos()
    autonav_approach_vel( pos, plt:vel(), radius )
