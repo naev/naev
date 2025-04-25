@@ -38,7 +38,7 @@ mlua = { version = "0", features = ["luajit", "anyhow"] }
 [target.'cfg(windows)'.dependencies]
 # When cross-compiling on windows, it doesn't find luajit, so we have to compile it ourselves
 # This is not linked to at the end, just makes compilation longer
-mlua = { version = "0", features = ["luajit", "anyhow", "vendored"] }
+mlua = { version = "0", features = ["luajit", "anyhow"] }
 
 [target.'cfg(unix)'.dependencies]
 nix = { version="0", features=["signal"] }
