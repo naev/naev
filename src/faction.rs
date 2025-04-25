@@ -5,11 +5,13 @@ use nalgebra::Vector3;
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind};
+use std::sync::Mutex;
 
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
 use crate::gettext::gettext;
 use crate::nlua::LuaEnv;
+use crate::nlua::{NLua, NLUA};
 use crate::{formatx, warn};
 use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
@@ -106,12 +108,62 @@ pub struct Faction {
 }
 unsafe impl Sync for Faction {}
 unsafe impl Send for Faction {}
-
 impl Faction {
+    fn init_lua(&self, lua: &NLua) -> Result<()> {
+        if let Some(env) = &self.equip_env {
+            let path = format!("factions/equip/{}.lua", self.script_equip);
+            let data = ndata::read(&path)?;
+            let func = lua
+                .lua
+                .load(std::str::from_utf8(&data)?)
+                .set_name(path)
+                .into_function()?;
+            lua.environment_call::<()>(env.table.clone(), &func, ())?;
+        }
+        if let Some(env) = &self.sched_env {
+            let path = format!("factions/spawn/{}.lua", self.script_spawn);
+            let data = ndata::read(&path)?;
+            let func = lua
+                .lua
+                .load(std::str::from_utf8(&data)?)
+                .set_name(path)
+                .into_function()?;
+            lua.environment_call::<()>(env.table.clone(), &func, ())?;
+        }
+        Ok(())
+    }
+}
+
+#[derive(Default)]
+struct FactionSocial {
+    enemies: Vec<i32>,
+    allies: Vec<i32>,
+    neutrals: Vec<i32>,
+}
+impl FactionSocial {
+    pub fn new(fct: &FactionLoad, factions: &Vec<FactionLoad>) -> Self {
+        let social = FactionSocial::default();
+        social
+    }
+}
+
+#[derive(Debug, Default)]
+struct FactionLoad {
+    /// Base data
+    data: Faction,
+
+    // Relationships
+    enemies: Vec<String>,
+    allies: Vec<String>,
+    neutrals: Vec<String>,
+}
+impl FactionLoad {
     /// Loads the elementary faction stuff, does not fill out information dependent on other
     /// factions
-    fn load(ctx: &SafeContext, filename: &str) -> Result<Self> {
-        let mut fct = Faction::default();
+    fn new(ctx: &SafeContext, lua: &Mutex<NLua>, filename: &str) -> Result<Self> {
+        let mut fctload = FactionLoad::default();
+        let fct = &mut fctload.data;
+
         // TODO use default_field_values when stabilized
         // https://github.com/rust-lang/rust/issues/132162
         fct.local_th = 10.;
@@ -182,7 +234,29 @@ impl Faction {
             }
         }
 
-        Ok(fct)
+        // Initaialize Lua scripts
+        {
+            let mut lua = lua.lock().unwrap();
+            if !fct.script_spawn.is_empty() {
+                fct.sched_env = Some(lua.environment_new(&fct.script_spawn)?);
+            }
+            if !fct.script_spawn.is_empty() {
+                fct.equip_env = Some(lua.environment_new(&fct.script_spawn)?);
+            }
+        }
+
+        Ok(fctload)
+    }
+
+    fn apply_social(&mut self, social: FactionSocial) {
+        let fct = &mut self.data;
+        fct.enemies = social.enemies;
+        fct.allies = social.allies;
+        fct.neutrals = social.neutrals;
+    }
+
+    fn to_faction(self) -> Faction {
+        self.data
     }
 }
 
@@ -193,13 +267,15 @@ pub static GENERATORS: OnceLock<Vec<Generator>> = OnceLock::new();
 pub fn load() -> Result<()> {
     let ctx = SafeContext::new(Context::get().unwrap());
     let files = ndata::read_dir("factions/")?;
-    let mut factions: Vec<Faction> = files
+
+    // First pass: set up factions
+    let mut factionload: Vec<FactionLoad> = files
         .par_iter()
         .filter_map(|filename| {
             if !filename.ends_with(".xml") {
                 return None;
             }
-            match Faction::load(&ctx, filename.as_str()) {
+            match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 _ => {
                     warn!("Unable to load Faction '{}'!", filename);
@@ -209,8 +285,44 @@ pub fn load() -> Result<()> {
         })
         .collect();
 
+    // Second pass: set allies/enemies
+    let factionsocial: Vec<FactionSocial> = factionload
+        .par_iter()
+        .map(|fct| FactionSocial::new(fct, &factionload))
+        .collect();
+    for (id, social) in factionsocial.into_iter().enumerate() {
+        factionload[id].apply_social(social);
+    }
+
+    // Convert to factions
+    let mut factions: Vec<Faction> = factionload
+        .into_iter()
+        .map(|fctload| fctload.to_faction())
+        .collect();
+
+    // Add Player
+    factions.push(Faction {
+        name: String::from("Player"),
+        cname: CString::new("Player")?,
+        f_static: true,
+        f_invisible: true,
+        ..Default::default()
+    });
+
     FACTIONS.set(factions).unwrap();
     GENERATORS.set(vec![]).unwrap();
+
+    // Compute grid
+
+    Ok(())
+}
+
+pub fn load_post() -> Result<()> {
+    // Third pass: initialize Lua
+    let lua = NLUA.lock().unwrap();
+    for fct in FACTIONS.get().unwrap() {
+        fct.init_lua(&lua)?;
+    }
     Ok(())
 }
 

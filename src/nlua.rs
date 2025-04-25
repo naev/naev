@@ -19,7 +19,7 @@ type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
 
 #[derive(Debug)]
 pub struct LuaEnv {
-    table: mlua::Table,
+    pub table: mlua::Table,
     rk: mlua::RegistryKey, // Needed for C API, remove later
 }
 impl Drop for LuaEnv {
