@@ -1,3 +1,5 @@
+#![allow(dead_code, unused_variables, unused_imports)]
+
 use anyhow::Result;
 use nalgebra::Vector3;
 
@@ -103,8 +105,8 @@ pub fn get(name: &str) -> Option<&'static Faction> {
 use std::os::raw::{c_int};
 
 #[unsafe(no_mangle)]
-pub extern "C" fn faction_isFaction( f: c_int) {
-    match f < 0 || f >= Factions.get().unwrap().len() {
+pub extern "C" fn faction_isFaction( f: c_int ) -> c_int {
+    match f < 0 || (f >= FACTIONS.get().unwrap().len() as c_int ){
         true => 0,
         false => 1,
     }
