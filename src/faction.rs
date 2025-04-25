@@ -35,12 +35,11 @@ impl Generator {
     fn new(factions: &Vec<FactionLoad>, names: &Vec<String>, weights: &Vec<f32>) -> Vec<Self> {
         let mut generator: Vec<Generator> = vec![];
         for (name, weight) in names.iter().zip(weights.iter()) {
-            match FactionLoad::get(factions, name) {
-                Some(id) => generator.push(Generator {
+            if let Some(id) = FactionLoad::get(factions, name) {
+                generator.push(Generator {
                     id,
                     weight: *weight,
-                }),
-                None => (),
+                })
             }
         }
         generator
@@ -161,21 +160,18 @@ impl FactionSocial {
     pub fn new(fct: &FactionLoad, factions: &Vec<FactionLoad>) -> Self {
         let mut social = FactionSocial::default();
         for name in &fct.enemies {
-            match FactionLoad::get(factions, name) {
-                Some(f) => social.enemies.push(f),
-                None => (),
+            if let Some(f) = FactionLoad::get(factions, name) {
+                social.enemies.push(f)
             };
         }
         for name in &fct.allies {
-            match FactionLoad::get(factions, name) {
-                Some(f) => social.allies.push(f),
-                None => (),
+            if let Some(f) = FactionLoad::get(factions, name) {
+                social.allies.push(f)
             };
         }
         for name in &fct.neutrals {
-            match FactionLoad::get(factions, name) {
-                Some(f) => social.neutrals.push(f),
-                None => (),
+            if let Some(f) = FactionLoad::get(factions, name) {
+                social.neutrals.push(f)
             };
         }
         social

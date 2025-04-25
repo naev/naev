@@ -13,7 +13,7 @@ use crate::context::Context;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
-use crate::{formatx, gettext, warn};
+use crate::{gettext, warn};
 
 const MAX_LIGHTS: usize = 7;
 

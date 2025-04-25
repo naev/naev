@@ -1,14 +1,13 @@
 use anyhow::Result;
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
-use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
 use crate::gettext::gettext;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use crate::{formatx, warn};
+use crate::warn;
 use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 

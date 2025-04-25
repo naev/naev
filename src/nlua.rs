@@ -1,7 +1,7 @@
 //use mlua::prelude::*;
 use crate::gettext::{gettext, ngettext, pgettext};
 use crate::ndata;
-use crate::{formatx, warn};
+use crate::warn;
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};

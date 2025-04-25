@@ -16,7 +16,7 @@ use crate::buffer::{
 };
 use crate::render::{SolidUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
-use crate::{debug, formatx, warn};
+use crate::{debug, warn};
 use crate::{gettext, log, ndata};
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {

@@ -12,8 +12,8 @@ use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::context::Context;
+use crate::warn;
 use crate::{buffer, context, gettext, ndata, render};
-use crate::{formatx, warn};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));

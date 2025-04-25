@@ -3,7 +3,7 @@ use nalgebra::Vector2;
 use std::os::raw::c_void;
 
 use crate::gettext::gettext;
-use crate::{formatx, warn};
+use crate::warn;
 
 use crate::nlua::{LuaEnv, NLUA};
 

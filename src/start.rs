@@ -1,4 +1,3 @@
-use crate::gettext::gettext;
 use crate::ndata;
 use crate::ntime::{NTime, NTimeC};
 use crate::nxml_warn_node_unknown;

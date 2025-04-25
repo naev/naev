@@ -3,7 +3,6 @@
 
 use crate::gettext::gettext;
 use crate::{debug, einfo, info, warn};
-use formatx::formatx;
 
 pub fn init() {
     unsafe {
@@ -30,14 +29,14 @@ pub fn warn(msg: &str) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        println!("{}",&formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
 #[macro_export]
 macro_rules! einfo {
     ($($arg:tt)*) => {
-        eprintln!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        eprintln!("{}",&formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
@@ -46,7 +45,7 @@ macro_rules! debug {
     ($($arg:tt)*) => {
         if naevc::config::DEBUG {
             #[cfg(debug_assertions)]
-            println!("{}",&formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+            println!("{}",&formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
     };
 }
@@ -62,7 +61,7 @@ macro_rules! warn {
             eprintln!("{}WARNING {}:{}: {}",
                 std::backtrace::Backtrace::force_capture(),
                 file!(), line!(),
-                &formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+                &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
         if nw==1000 {
             eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));

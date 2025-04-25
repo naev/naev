@@ -1,13 +1,12 @@
 use anyhow::Result;
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
-use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use crate::{formatx, warn};
+use crate::warn;
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 #[unsafe(no_mangle)]

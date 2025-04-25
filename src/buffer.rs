@@ -4,7 +4,7 @@ use glow::*;
 
 use crate::context;
 use crate::context::Context;
-use crate::{formatx, gettext, warn};
+use crate::{gettext, warn};
 
 pub struct Buffer {
     pub buffer: glow::Buffer,
