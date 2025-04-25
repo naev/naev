@@ -117,10 +117,17 @@ int main (void) { return 0; }''')
    cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
    yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'), default_options: ['c_std=c89'])
 
+   # Due to linking quirks with Windows, lets avoid static linking nfd for now
+   if host_machine.system() in ['windows', 'darwin']
+      static_nfd = false
+   else
+      static_nfd = true
+   endif
+
    # TODO replace nfd with SDL3 native functions when possible
-   nfd = dependency('nfd', required: false, static: true)
+   nfd = dependency('nfd', required: false, static: static_nfd)
    if not nfd.found()
-      nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: true)
+      nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: static_nfd)
    endif
 
    libxml2 = dependency('libxml-2.0', required: false)
@@ -490,6 +497,13 @@ naevcrs = rust.bindgen(
       depends: [naev_rlib],
       command: [ copydir, meson.project_build_root(), '@INPUT@', ] )
 
+   # Lets make sure that we only enable export_dynamic if we aren't using macos or windows
+   if host_machine.system() in ['windows', 'darwin']
+      use_export_dynamic = false
+   else
+      use_export_dynamic = get_option('debug')
+   endif
+
    # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
       'naev',
@@ -499,7 +513,7 @@ naevcrs = rust.bindgen(
       # Also have to pull in the C dependencies
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
-      export_dynamic: get_option('debug'),
+      export_dynamic: use_export_dynamic,
       install: true)
 
    # Naevlua is unused and unsupported with rust for now.
