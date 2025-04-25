@@ -1638,7 +1638,7 @@ static int faction_parse( Faction *temp, const char *file )
             WARN( _( "Faction '%s' has duplicate 'logo' tag." ), temp->name );
             continue;
          }
-         snprintf( buf, sizeof( buf ), FACTION_LOGO_PATH "%s.webp",
+         snprintf( buf, sizeof( buf ), FACTION_LOGO_PATH "%s",
                    xml_get( node ) );
          temp->logo = gl_newImage( buf, 0 );
          continue;
