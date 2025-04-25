@@ -4,7 +4,7 @@
   <slot prop="engines_combinator">structure</slot>
   <size>variable</size>
   <description>This gives the net combined effect of the engines, as they are averaged.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>/gfx/slots/engines.png</gfx_store>
  </general>
  <specific type="modification">
   <lua>outfits/structure/engines_combinator.lua</lua>

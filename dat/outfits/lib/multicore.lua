@@ -106,6 +106,32 @@ local function is_secondary( po )
    return po and po:slot() and po:slot().tags and po:slot().tags.secondary
 end
 
+local function marked_n( p, n )
+   local ptr = p:shipMemory()
+   for _i,k in ipairs({"_engines_combinator",n,'status'}) do
+      ptr = (ptr or {})[k]
+   end
+   return ptr
+end
+
+local function mark_n( p, n, what )
+   local ptr = p:shipMemory() or {}
+   local prv
+   for i,k in ipairs({"_engines_combinator",n,'status'}) do
+      if i > 1 then
+         ptr[prv] = ptr[prv] or {}
+         ptr = ptr[prv]
+      end
+      prv = k
+   end
+   local bef = ptr[prv]
+   ptr[prv] = what
+   p:shipMemory()._engines_combinator_needs_refresh = (bef ~= what)
+   --if p:shipMemory()._engines_combinator_needs_refresh then
+   --   print(fmt.f("{b}->{w}",{b=tostring(bef),w=tostring(what)}))
+   --end
+end
+
 -- sign:
 --  -1 for remove
 --   0 for update
@@ -119,16 +145,16 @@ local function update_engines_combinator_if_needed( p, po, sign, t )
    sm._engines_combinator = sm._engines_combinator or {}
 
    if sign == -1 then
-      if sm._engine_combinator then
+      if sm._engines_combinator then
          changed = changed or (sm._engines_combinator[id] ~= nil)
          sm._engines_combinator[id]=nil
       end
    else
-      sm._engine_combinator = sm._engine_combinator or {}
+      sm._engines_combinator = sm._engines_combinator or {}
       changed = changed or (sign==1) and (sm._engines_combinator[id] == nil)
 
       sm._engines_combinator[id] = sm._engines_combinator[id] or {}
-      for k,v in pairs(t) do
+      for k,v in pairs(t or {}) do
          bef = sm._engines_combinator[id][k]
          sm._engines_combinator[id][k] = v
          changed = changed or (bef ~= v)
@@ -137,6 +163,7 @@ local function update_engines_combinator_if_needed( p, po, sign, t )
    sm._engines_combinator_needs_refresh = changed
 
    if changed then
+      --print("update!")
       p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
    end
 end
@@ -194,8 +221,8 @@ function multicore.init( params )
          total = total and total['engine_limit'] or 0
       end
 
+      local multicore_off = p and po and marked_n( p, po:id() )
       for k,s in ipairs(stats) do
-         local multicore_off = false
          local off = multicore_off and (nosec or nomain) and s.name~="mass"
          desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
          if averaged and s.name == "engine_limit" then
@@ -205,16 +232,15 @@ function multicore.init( params )
             })
          end
       end
-      --[[
-      if po and (multicore_off ~= nil) then
+
+      if multicore_off ~= nil then
          desc = desc .. "\n#bWorking Status: #0"
-         if multicore_off==false then
+         if multicore_off == false then
             desc = desc .. "#grunning#0"
          else
             desc = desc .. "#rHALTED#0"
          end
       end
-      --]]
       return desc
    end
 
@@ -234,7 +260,7 @@ function multicore.init( params )
    end
 
    local function update_stats( p, po)
-      local multicore_off = false
+      local multicore_off = p and po and marked_n( p, po:id() )
       local secondary = is_secondary( po )
       local ie = is_engine( po ) and is_multiengine( p )
 
@@ -251,37 +277,40 @@ function multicore.init( params )
    end
 
    local function equip( p, po, sign)
-      local res = true
-      if is_engine(po) and is_multiengine( p ) then
-         res = res and engines_combinator_refresh( p, po, sign )
+      if p and po then
+         local res = true
+         if is_engine(po) and is_multiengine( p ) then
+            res = res and engines_combinator_refresh( p, po, sign )
+         end
+         update_stats( p, po)
+         return res
       end
-      update_stats( p, po)
-      return res
    end
 
    function init( p, po )
-      if p and po then
-         --print ("init " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-         equip( p, po, 1)
-      end
+      equip( p, po, 1)
    end
 
-   function onadd( p, po )
-      if p and po then
-         --print ("onadd " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-         equip( p, po, 1)
-      end
-   end
+   onadd = init
 
    function onremove( p, po )
-      if p and po then
-         --print ("onremove " .. mf(multicore_off) .. " [" .. fmt.number(po:id()) .. "]")
-         equip( p, po, -1)
-      end
+      equip( p, po, -1)
    end
 
-   function setworkingstatus( _p, _po, _on)
-      --TODO
+   function setworkingstatus( p, po, on)
+      if p and po then
+         local off
+         if on == nil then
+            off = nil
+         else
+            off = not on
+         end
+         mark_n( p, po:id(), off )
+         if update_engines_combinator_if_needed( p, po, 0, t ) then
+            print(fmt.f("{id} {stat}",{id=po:id(),stat=off}))
+            update_stats( p, po)
+         end
+      end
    end
 
 end

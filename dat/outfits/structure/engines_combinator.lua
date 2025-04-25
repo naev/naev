@@ -47,24 +47,27 @@ descextra=function ( p, _o, _po)
    end
 
    local sm = p:shipMemory()
-   local dat= ((sm and sm._engines_combinator) or {})
-   local count=0
-   for _,v in pairs(dat) do
-      if v['engine_limit'] then
+   local dat = ((sm and sm._engines_combinator) or {})
+   local count = 0
+   for i,v in pairs(dat) do
+      if v['engine_limit'] and v['status']~=true then
          count = count + 1
       end
    end
 
    local out="\n"
    if count == 0 then
-      out = "#o".._("No engine equipped").."#0\n"
+      out = "#o".._("No active engine equipped").."#0\n"
    else
       local total = (sm and sm._engines_combinator_total) or {}
       for i,v in pairs(dat) do
-         -- Use i+1 to make it work, but should be i
-         local outfit_name = p:outfitGet(i+1):name()
-         out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
-         out = out .. adddesc(v, total['engine_limit'])
+         local outfit_name = p:outfitGet(i):name()
+         if v['engine_limit'] and v['status']~=true then
+            out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
+            out = out .. adddesc(v, total['engine_limit'])
+         else
+            out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
+         end
       end
       out = out .. "\n#y[TOTAL]#0\n"
       out = out .. adddesc(total)
@@ -85,35 +88,47 @@ function onadd( p, po )
    local sm = p:shipMemory()
 
    if not sm._engines_combinator_needs_refresh then
+      --print ("Unneeded refresh")
       return
    end
 
    local data = ((sm and sm._engines_combinator) or {})
+   local dataon = {} -- the subset of if that is active
+   local comb = ((sm and sm._engines_combinator_total) or {})
+   sm._engines_combinator_total = comb
 
-   local count = 0
    for k,v in pairs(data) do
-      if v['engine_limit'] then
-         count = count + 1
+      if v['engine_limit'] and v['status']~=true then
+         dataon[k] = v
       end
    end
+
+   for _,s in ipairs(mobility_params) do
+      comb[s] = 0
+   end
+   comb['engine_limit'] = 0
+
+   local count = 0
+   for k,v in pairs(dataon) do
+      count = count + 1
+   end
+
    po:clear()
    if count>0 then
       local den=0
-      local comb = ((sm and sm._engines_combinator_total) or {})
-      sm._engines_combinator_total = comb
 
-      for k,v in pairs(data) do
-         den = den + (v['engine_limit'] or 0)
+      for k,v in pairs(dataon) do
+         den = den + v['engine_limit']
       end
-      if den>0 then
+      if den > 0 then
          comb['engine_limit'] = den
-         for k,v in pairs(data) do
-            data[k]['part'] = math.floor(0.5 + (100*(v['engine_limit'] or 0))/den)
+         for k,v in pairs(dataon) do
+            data[k]['part'] = math.floor(0.5 + (100*v['engine_limit'])/den)
          end
          for _,s in ipairs(mobility_params) do
-            local acc=0
-            for _k,v in pairs(data) do
-               acc = acc + (v[s] or 0) * (v['engine_limit'] or 0)
+            local acc = 0
+            for _k,v in pairs(dataon) do
+               acc = acc + (v[s] or 0) * v['engine_limit']
             end
             local val = math.floor( 0.5 + (acc / den) )
             comb[s] = val
