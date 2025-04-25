@@ -60,7 +60,7 @@ impl SlotProperty {
                 "locked" => sp.locked = true,
                 "visible" => sp.visible = true,
                 "icon" => {
-                    let gfxname = format!("gfx/slots/{}", nxml::node_str(node)?);
+                    let gfxname = nxml::node_texturepath(node, "gfx/slots/")?;
                     let nctx = ctx.lock();
                     sp.icon = Some(
                         texture::TextureBuilder::new()

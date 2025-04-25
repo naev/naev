@@ -63,6 +63,18 @@ pub fn node_cstring(node: Node) -> Result<CString> {
     Ok(CString::new(node_str(node)?)?)
 }
 
+pub fn node_f32(node: Node) -> Result<f32> {
+    Ok(node_str(node)?.parse::<f32>()?)
+}
+
 pub fn node_f64(node: Node) -> Result<f64> {
     Ok(node_str(node)?.parse::<f64>()?)
+}
+
+pub fn node_texturepath(node: Node, default: &str) -> Result<String> {
+    let path = node_string(node)?;
+    Ok(match path.starts_with('/') {
+        true => path,
+        false => format!("{}{}", default, path),
+    })
 }
