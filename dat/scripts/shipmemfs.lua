@@ -94,8 +94,8 @@ Example usage
   speed : 222
 --]]
 
-function smfs.init(p)
-   local smfs_pilot = p
+function smfs.init(pil)
+   local smfs_pilot = pil
 
    if smfs_pilot == nil then
       smfs_pilot = player.pilot()
@@ -164,7 +164,7 @@ function smfs.init(p)
             smfs.path = v
             return true
          else
-            print('Not a valid dir.')
+            print(' Not a valid dir.')
             return false
          end
       else
@@ -174,7 +174,6 @@ function smfs.init(p)
             for str in string.gmatch(v, "([^/]*)") do
                if str == '' then
                   if fst then
-                     jump = true
                      table.insert(l, '/')
                   end
                elseif str == ".." then
@@ -193,7 +192,7 @@ function smfs.init(p)
             smfs.path = _cd( l, true)
             return true
          else
-            print('Cannot enter "' .. strl(l) .. '"')
+            print(' Cannot enter "' .. strl(l) .. '"')
             return false
          end
       end
@@ -248,7 +247,7 @@ function smfs.init(p)
    smfs.find(nil,true)
 end
 
-if inspect ~= nil then
+if inspect then
    smfs.init(player.pilot():target() or player.pilot())
 end
 
