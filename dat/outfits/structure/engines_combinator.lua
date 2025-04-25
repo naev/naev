@@ -1,8 +1,11 @@
 
+local fmt = require "format"
+
 notactive = true -- Doesn't become active
 hidestats = true -- We do hacks to show stats, so hide them
 
-local fmt = require "format"
+
+local engines_comb_dir = "_ec"
 
 local mobility_params = {"accel","turn","speed"}
 local eml_name
@@ -47,10 +50,10 @@ descextra=function ( p, _o, _po)
    end
 
    local sm = p:shipMemory()
-   local dat = ((sm and sm._engines_combinator) or {})
+   local dat = ((sm and sm[engines_comb_dir]) or {})
    local count = 0
    for i,v in pairs(dat) do
-      if v['engine_limit'] and v['status']~=true then
+      if v['engine_limit'] and v['halted']~=true then
          count = count + 1
       end
    end
@@ -59,10 +62,10 @@ descextra=function ( p, _o, _po)
    if count == 0 then
       out = "#o".._("No active engine equipped").."#0\n"
    else
-      local total = (sm and sm._engines_combinator_total) or {}
+      local total = (sm and sm[engines_comb_dir.."_total"]) or {}
       for i,v in pairs(dat) do
          local outfit_name = p:outfitGet(i):name()
-         if v['engine_limit'] and v['status']~=true then
+         if v['engine_limit'] and v['halted']~=true then
             out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
             out = out .. adddesc(v, total['engine_limit'])
          else
@@ -87,18 +90,18 @@ function onadd( p, po )
 
    local sm = p:shipMemory()
 
-   if not sm._engines_combinator_needs_refresh then
+   if not sm[engines_comb_dir.."_needs_refresh"] then
       --print ("Unneeded refresh")
       return
    end
 
-   local data = ((sm and sm._engines_combinator) or {})
+   local data = ((sm and sm[engines_comb_dir]) or {})
    local dataon = {} -- the subset of if that is active
-   local comb = ((sm and sm._engines_combinator_total) or {})
-   sm._engines_combinator_total = comb
+   local comb = ((sm and sm[engines_comb_dir.."_total"]) or {})
+   sm[engines_comb_dir.."_total"] = comb
 
    for k,v in pairs(data) do
-      if v['engine_limit'] and v['status']~=true then
+      if v['engine_limit'] and v['halted']~=true then
          dataon[k] = v
       end
    end
@@ -136,7 +139,7 @@ function onadd( p, po )
          end
       end
    end
-   sm._engines_combinator_needs_refresh = nil
+   sm[engines_comb_dir.."_needs_refresh"]= nil
 end
 
 init=onadd

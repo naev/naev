@@ -2,7 +2,6 @@
  <general>
   <typename>Core Systems (Engines Combinator)</typename>
   <slot prop="engines_combinator">structure</slot>
-  <size>variable</size>
   <description>This gives the net combined effect of the engines, as they are averaged.</description>
   <gfx_store>/gfx/slots/engines.png</gfx_store>
  </general>

@@ -1,7 +1,9 @@
 
+local smfs = require "shipmemfs"
 local fmt = require "format"
 local shipstat = naev.shipstats()
 local multicore = {}
+local engines_comb_dir = "_ec"
 
 local function valcol( val, inverted )
    if inverted then
@@ -107,29 +109,16 @@ local function is_secondary( po )
 end
 
 local function marked_n( p, n )
-   local ptr = p:shipMemory()
-   for _i,k in ipairs({"_engines_combinator",n,'status'}) do
-      ptr = (ptr or {})[k]
-   end
-   return ptr
+   return smfs.read( p, {"_ec",n,'halted'})
 end
 
 local function mark_n( p, n, what )
-   local ptr = p:shipMemory() or {}
-   local prv
-   for i,k in ipairs({"_engines_combinator",n,'status'}) do
-      if i > 1 then
-         ptr[prv] = ptr[prv] or {}
-         ptr = ptr[prv]
-      end
-      prv = k
+   local res = smfs.write( p, {"_ec",n,'halted'}, what)
+
+   if res == nil then -- could not write
+      print "Oh-oh"
    end
-   local bef = ptr[prv]
-   ptr[prv] = what
-   p:shipMemory()._engines_combinator_needs_refresh = (bef ~= what)
-   --if p:shipMemory()._engines_combinator_needs_refresh then
-   --   print(fmt.f("{b}->{w}",{b=tostring(bef),w=tostring(what)}))
-   --end
+   p:shipMemory()[engines_comb_dir.."_needs_refresh"] = res
 end
 
 -- sign:
@@ -138,29 +127,29 @@ end
 --   1 for add
 local function update_engines_combinator_if_needed( p, po, sign, t )
    local sm = p:shipMemory()
-   local id=po:id()
-   local changed = sm._engines_combinator_needs_refresh
+   local id = po:id()
+   local changed = sm[engines_comb_dir.."_needs_refresh"]
    local bef
 
-   sm._engines_combinator = sm._engines_combinator or {}
+   sm[engines_comb_dir] = sm[engines_comb_dir] or {}
 
    if sign == -1 then
-      if sm._engines_combinator then
-         changed = changed or (sm._engines_combinator[id] ~= nil)
-         sm._engines_combinator[id]=nil
+      if sm[engines_comb_dir] then
+         changed = changed or (sm[engines_comb_dir][id] ~= nil)
+         sm[engines_comb_dir][id] = nil
       end
    else
-      sm._engines_combinator = sm._engines_combinator or {}
-      changed = changed or (sign==1) and (sm._engines_combinator[id] == nil)
+      sm[engines_comb_dir] = sm[engines_comb_dir] or {}
+      changed = changed or (sign==1) and (sm[engines_comb_dir][id] == nil)
 
-      sm._engines_combinator[id] = sm._engines_combinator[id] or {}
+      sm[engines_comb_dir][id] = sm[engines_comb_dir][id] or {}
       for k,v in pairs(t or {}) do
-         bef = sm._engines_combinator[id][k]
-         sm._engines_combinator[id][k] = v
+         bef = sm[engines_comb_dir][id][k]
+         sm[engines_comb_dir][id][k] = v
          changed = changed or (bef ~= v)
       end
    end
-   sm._engines_combinator_needs_refresh = changed
+   sm[engines_comb_dir.."_needs_refresh"] = changed
 
    if changed then
       --print("update!")
@@ -216,8 +205,8 @@ function multicore.init( params )
       local total
 
       if averaged then
-         sm = p:shipMemory() and p:shipMemory()._engines_combinator or {}
-         total = p:shipMemory() and p:shipMemory()._engines_combinator_total or {}
+         sm = p:shipMemory() and p:shipMemory()[engines_comb_dir] or {}
+         total = p:shipMemory() and p:shipMemory()[engines_comb_dir.."_total"] or {}
          total = total and total['engine_limit'] or 0
       end
 
@@ -306,8 +295,8 @@ function multicore.init( params )
             off = not on
          end
          mark_n( p, po:id(), off )
-         if update_engines_combinator_if_needed( p, po, 0, t ) then
-            print(fmt.f("{id} {stat}",{id=po:id(),stat=off}))
+         if update_engines_combinator_if_needed( p, po, 0, nil ) then
+            print(fmt.f("{id} {stat}",{ id = po:id(), stat = off}))
             update_stats( p, po)
          end
       end
