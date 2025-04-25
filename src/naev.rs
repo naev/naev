@@ -17,6 +17,7 @@ mod camera;
 mod context;
 mod damagetype;
 mod env;
+mod faction;
 mod gettext;
 mod linebreak;
 mod log;

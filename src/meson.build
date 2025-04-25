@@ -8,6 +8,7 @@ source_rust = files(
    'context.rs',
    'damagetype.rs',
    'env.rs',
+   'faction.rs',
    'gettext.rs',
    'linebreak.rs',
    'log.rs',

@@ -3769,6 +3769,7 @@ src/explosion.c
 src/explosion.h
 src/faction.c
 src/faction.h
+src/faction.rs
 src/font.c
 src/font.h
 src/gatherable.c
