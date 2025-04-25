@@ -8,7 +8,7 @@ use crate::gettext::gettext;
 use crate::ndata;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
-use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
+use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
@@ -159,9 +159,7 @@ impl DamageType {
                 "shield" => dt.shield_mod = nxml::node_f64(node)?,
                 "armour" => dt.armour_mod = nxml::node_f64(node)?,
                 "knockback" => dt.knockback = nxml::node_f64(node)?,
-                tag => {
-                    return nxml_err_node_unknown!("Damage Type", &dt.name, tag);
-                }
+                tag => nxml_warn_node_unknown!("Damage Type", &dt.name, tag),
             }
         }
         Ok(dt)

@@ -1,10 +1,9 @@
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::ntime::{NTime, NTimeC};
-use crate::nxml_err_node_unknown;
+use crate::nxml_warn_node_unknown;
 use anyhow::Result;
 use std::ffi::CString;
-use std::io::{Error, ErrorKind};
 use std::os::raw::{c_char, c_int};
 
 use crate::nxml;
@@ -95,22 +94,16 @@ impl StartData {
                                         "y" => {
                                             start.pos_y = nxml::node_str(ccnode)?.parse()?;
                                         }
-                                        tag => {
-                                            return nxml_err_node_unknown!(
-                                                "Start/player/system",
-                                                start.name.to_str()?,
-                                                tag
-                                            );
-                                        }
+                                        tag => nxml_warn_node_unknown!(
+                                            "Start/player/system",
+                                            start.name.to_str()?,
+                                            tag
+                                        ),
                                     }
                                 }
                             }
                             tag => {
-                                return nxml_err_node_unknown!(
-                                    "Start/player",
-                                    start.name.to_str()?,
-                                    tag
-                                );
+                                nxml_warn_node_unknown!("Start/player", start.name.to_str()?, tag)
                             }
                         };
                     }
@@ -130,9 +123,7 @@ impl StartData {
                 "local_map_default" => {
                     start.local_map_default = nxml::node_cstring(node)?;
                 }
-                tag => {
-                    return nxml_err_node_unknown!("Start", start.name.to_str()?, tag);
-                }
+                tag => nxml_warn_node_unknown!("Start", start.name.to_str()?, tag),
             };
         }
         Ok(start)

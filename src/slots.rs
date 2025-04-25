@@ -10,7 +10,7 @@ use crate::gettext::gettext;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{ndata, texture};
-use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
+use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 #[derive(Default)]
 pub struct SlotProperty {
@@ -79,9 +79,7 @@ impl SlotProperty {
                     // Remove when not needed for C interface
                     sp.ctags = ArrayCString::new(&sp.tags)?;
                 }
-                tag => {
-                    return nxml_err_node_unknown!("Slot Property", &sp.name, tag);
-                }
+                tag => nxml_warn_node_unknown!("Slot Property", &sp.name, tag),
             }
         }
         Ok(sp)

@@ -15,7 +15,7 @@ use crate::nlua::{NLua, NLUA};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{ndata, texture};
-use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
+use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 enum Grid {
     NONE,
@@ -319,9 +319,7 @@ impl FactionLoad {
                 }
 
                 // Case we missed everything
-                tag => {
-                    return nxml_err_node_unknown!("Faction", &fct.name, tag);
-                }
+                tag => nxml_warn_node_unknown!("Faction", &fct.name, tag),
             }
         }
 
@@ -363,15 +361,16 @@ pub fn load() -> Result<()> {
 
     // First pass: set up factions
     let mut factionload: Vec<FactionLoad> = files
-        .par_iter()
+        //.par_iter()
+        .iter()
         .filter_map(|filename| {
             if !filename.ends_with(".xml") {
                 return None;
             }
             match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
                 Ok(sp) => Some(sp),
-                _ => {
-                    warn!("Unable to load Faction '{}'!", filename);
+                Err(e) => {
+                    warn!("Unable to load Faction '{}': {}", filename, e);
                     None
                 }
             }
@@ -392,7 +391,8 @@ pub fn load() -> Result<()> {
 
     // Second pass: set allies/enemies and generators
     let factionsocial: Vec<FactionSocial> = factionload
-        .par_iter()
+        //.par_iter()
+        .iter()
         .map(|fct| FactionSocial::new(fct, &factionload))
         .collect();
     for (id, social) in factionsocial.into_iter().enumerate() {
@@ -401,7 +401,8 @@ pub fn load() -> Result<()> {
 
     // Third pass: set faction generators
     let factiongenerator: Vec<Vec<Generator>> = factionload
-        .par_iter()
+        //.par_iter()
+        .iter()
         .map(|fct| Generator::new(&factionload, &fct.generator_name, &fct.generator_weight))
         .collect();
     for (id, generator) in factiongenerator.into_iter().enumerate() {
