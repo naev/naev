@@ -12,6 +12,7 @@ use crate::context::{Context, SafeContext};
 use crate::gettext::gettext;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
+use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_err_node_unknown};
@@ -26,18 +27,28 @@ enum Grid {
 #[derive(Debug)]
 pub struct Generator {
     /// Generator ID
-    id: i32,
+    id: usize,
     /// Weight modifier
     weight: f32,
 }
-
-#[derive(Debug)]
-pub struct FactionLua {
-    lua_env: LuaEnv,
-    lua_hit: mlua::Function,
-    lua_hit_test: mlua::Function,
-    lua_text_rank: mlua::Function,
-    lua_text_broad: mlua::Function,
+impl Generator {
+    fn new(factions: &Vec<FactionLoad>, names: &Vec<String>, weights: &Vec<f32>) -> Vec<Self> {
+        let mut generator: Vec<Generator> = vec![];
+        for (name, weight) in names.iter().zip(weights.iter()) {
+            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
+                &fctload.data.name
+            }) {
+                Ok(id) => generator.push(Generator {
+                    id,
+                    weight: *weight,
+                }),
+                Err(_) => {
+                    warn!("Faction not found!");
+                }
+            }
+        }
+        generator
+    }
 }
 
 #[derive(Debug, Default)]
@@ -61,9 +72,9 @@ pub struct Faction {
     pub colour: Vector3<f32>,
 
     // Relationships
-    enemies: Vec<i32>,
-    allies: Vec<i32>,
-    neutrals: Vec<i32>,
+    enemies: Vec<usize>,
+    allies: Vec<usize>,
+    neutrals: Vec<usize>,
 
     // Player stuff
     pub player_def: f32,
@@ -75,7 +86,7 @@ pub struct Faction {
 
     // Behaviour
     friendly_at: f32,
-    lua: Option<FactionLua>,
+    lua_env: Option<LuaEnv>,
 
     // Equipping
     equip_env: Option<LuaEnv>,
@@ -130,19 +141,59 @@ impl Faction {
                 .into_function()?;
             lua.environment_call::<()>(env.table.clone(), &func, ())?;
         }
+        if let Some(env) = &self.lua_env {
+            let path = format!("factions/standing/{}.lua", self.script_standing);
+            let data = ndata::read(&path)?;
+            let func = lua
+                .lua
+                .load(std::str::from_utf8(&data)?)
+                .set_name(path)
+                .into_function()?;
+            lua.environment_call::<()>(env.table.clone(), &func, ())?;
+        }
         Ok(())
     }
 }
 
 #[derive(Default)]
 struct FactionSocial {
-    enemies: Vec<i32>,
-    allies: Vec<i32>,
-    neutrals: Vec<i32>,
+    enemies: Vec<usize>,
+    allies: Vec<usize>,
+    neutrals: Vec<usize>,
 }
 impl FactionSocial {
     pub fn new(fct: &FactionLoad, factions: &Vec<FactionLoad>) -> Self {
-        let social = FactionSocial::default();
+        let mut social = FactionSocial::default();
+        for name in &fct.enemies {
+            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
+                &fctload.data.name
+            }) {
+                Ok(f) => social.enemies.push(f),
+                Err(_) => {
+                    warn!("Faction not found!");
+                }
+            };
+        }
+        for name in &fct.allies {
+            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
+                &fctload.data.name
+            }) {
+                Ok(f) => social.allies.push(f),
+                Err(_) => {
+                    warn!("Faction not found!");
+                }
+            };
+        }
+        for name in &fct.neutrals {
+            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
+                &fctload.data.name
+            }) {
+                Ok(f) => social.neutrals.push(f),
+                Err(_) => {
+                    warn!("Faction not found!");
+                }
+            };
+        }
         social
     }
 }
@@ -151,6 +202,10 @@ impl FactionSocial {
 struct FactionLoad {
     /// Base data
     data: Faction,
+
+    // Generators
+    generator_name: Vec<String>,
+    generator_weight: Vec<f32>,
 
     // Relationships
     enemies: Vec<String>,
@@ -228,6 +283,42 @@ impl FactionLoad {
                     // Remove when not needed for C interface
                     fct.ctags = ArrayCString::new(&fct.tags)?;
                 }
+                // Temporary scaoffolding stuff
+                "allies" => {
+                    for node in node.children() {
+                        if !node.is_element() {
+                            continue;
+                        }
+                        fctload.allies.push(String::from(node.tag_name().name()));
+                    }
+                }
+                "enemies" => {
+                    for node in node.children() {
+                        if !node.is_element() {
+                            continue;
+                        }
+                        fctload.enemies.push(String::from(node.tag_name().name()));
+                    }
+                }
+                "neutrals" => {
+                    for node in node.children() {
+                        if !node.is_element() {
+                            continue;
+                        }
+                        fctload.neutrals.push(String::from(node.tag_name().name()));
+                    }
+                }
+                "generator" => {
+                    fctload.generator_name.push(nxml::node_string(node)?);
+                    fctload
+                        .generator_weight
+                        .push(match node.attribute("weight") {
+                            Some(str) => str.parse::<f32>()?,
+                            None => 1.0,
+                        });
+                }
+
+                // Case we missed everything
                 tag => {
                     return nxml_err_node_unknown!("Faction", &fct.name, tag);
                 }
@@ -240,8 +331,11 @@ impl FactionLoad {
             if !fct.script_spawn.is_empty() {
                 fct.sched_env = Some(lua.environment_new(&fct.script_spawn)?);
             }
-            if !fct.script_spawn.is_empty() {
-                fct.equip_env = Some(lua.environment_new(&fct.script_spawn)?);
+            if !fct.script_equip.is_empty() {
+                fct.equip_env = Some(lua.environment_new(&fct.script_equip)?);
+            }
+            if !fct.script_standing.is_empty() {
+                fct.lua_env = Some(lua.environment_new(&fct.script_standing)?);
             }
         }
 
@@ -262,7 +356,6 @@ impl FactionLoad {
 
 use std::sync::OnceLock;
 pub static FACTIONS: OnceLock<Vec<Faction>> = OnceLock::new();
-pub static GENERATORS: OnceLock<Vec<Generator>> = OnceLock::new();
 
 pub fn load() -> Result<()> {
     let ctx = SafeContext::new(Context::get().unwrap());
@@ -284,8 +377,20 @@ pub fn load() -> Result<()> {
             }
         })
         .collect();
+    // Add Player before sorting
+    factionload.push(FactionLoad {
+        data: Faction {
+            name: String::from("Player"),
+            cname: CString::new("Player")?,
+            f_static: true,
+            f_invisible: true,
+            ..Default::default()
+        },
+        ..Default::default()
+    });
+    sort_by_key_ref(&mut factionload, |fctload: &FactionLoad| &fctload.data.name);
 
-    // Second pass: set allies/enemies
+    // Second pass: set allies/enemies and generators
     let factionsocial: Vec<FactionSocial> = factionload
         .par_iter()
         .map(|fct| FactionSocial::new(fct, &factionload))
@@ -294,23 +399,22 @@ pub fn load() -> Result<()> {
         factionload[id].apply_social(social);
     }
 
+    // Third pass: set faction generators
+    let factiongenerator: Vec<Vec<Generator>> = factionload
+        .par_iter()
+        .map(|fct| Generator::new(&factionload, &fct.generator_name, &fct.generator_weight))
+        .collect();
+    for (id, generator) in factiongenerator.into_iter().enumerate() {
+        factionload[id].data.generators = generator;
+    }
+
     // Convert to factions
-    let mut factions: Vec<Faction> = factionload
+    let factions: Vec<Faction> = factionload
         .into_iter()
         .map(|fctload| fctload.to_faction())
         .collect();
 
-    // Add Player
-    factions.push(Faction {
-        name: String::from("Player"),
-        cname: CString::new("Player")?,
-        f_static: true,
-        f_invisible: true,
-        ..Default::default()
-    });
-
     FACTIONS.set(factions).unwrap();
-    GENERATORS.set(vec![]).unwrap();
 
     // Compute grid
 
@@ -318,7 +422,7 @@ pub fn load() -> Result<()> {
 }
 
 pub fn load_post() -> Result<()> {
-    // Third pass: initialize Lua
+    // Last pass: initialize Lua
     let lua = NLUA.lock().unwrap();
     for fct in FACTIONS.get().unwrap() {
         fct.init_lua(&lua)?;
