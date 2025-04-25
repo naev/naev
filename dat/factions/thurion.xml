@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Thurion">
  <ai>thurion</ai>
- <logo>thurion</logo>
+ <logo>thurion.webp</logo>
  <colour>grey50</colour>
  <player>1</player>
  <spawn>thurion</spawn>

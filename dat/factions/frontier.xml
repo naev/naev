@@ -2,7 +2,7 @@
 <faction name="Frontier">
  <ai>frontier_police</ai>
  <known />
- <logo>frontier</logo>
+ <logo>frontier.webp</logo>
  <longname>Frontier Alliance</longname>
  <player>3</player>
  <colour>yellow</colour>

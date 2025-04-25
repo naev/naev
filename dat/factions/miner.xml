@@ -2,7 +2,7 @@
 <faction name="Miner">
  <mapname>Independent</mapname>
  <ai>miner</ai>
- <logo>miner</logo>
+ <logo>miner.webp</logo>
  <static />
  <invisible />
  <known />

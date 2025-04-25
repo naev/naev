@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="FLF">
  <ai>flf</ai>
- <logo>flf</logo>
+ <logo>flf.webp</logo>
  <longname>Frontier Liberation Front</longname>
  <player>0</player>
  <colour>yellow</colour>

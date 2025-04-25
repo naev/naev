@@ -2,7 +2,7 @@
 <faction name="Pirate">
  <ai>pirate</ai>
  <known />
- <logo>pirate</logo>
+ <logo>pirate.webp</logo>
  <longname>Galactic Space Pirates</longname>
  <player>-20</player>
  <colour>red</colour>

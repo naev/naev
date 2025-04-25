@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Traders Society">
  <ai>trader</ai>
- <logo>trader</logo>
+ <logo>trader.webp</logo>
  <longname>Space Traders Society</longname>
  <player>3</player>
  <colour>blue</colour>

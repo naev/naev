@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Dreamer Clan">
  <ai>dreamer_clan</ai>
- <logo>dreamerclan</logo>
+ <logo>dreamerclan.webp</logo>
  <longname>Dreamer Pirate Clan</longname>
  <player>-10</player>
  <colour>red</colour>

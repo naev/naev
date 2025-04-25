@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Raven Clan">
  <ai>raven_clan</ai>
- <logo>ravenclan</logo>
+ <logo>ravenclan.webp</logo>
  <longname>Raven Pirate Clan</longname>
  <player>-20</player>
  <colour>red</colour>

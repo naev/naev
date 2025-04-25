@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faction name="Wild Ones">
  <ai>wild_ones</ai>
- <logo>wildones</logo>
+ <logo>wildones.webp</logo>
  <longname>Wild Ones Pirate Clan</longname>
  <player>-40</player>
  <colour>red</colour>

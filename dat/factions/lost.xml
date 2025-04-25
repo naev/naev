@@ -3,7 +3,7 @@
  <mapname>Lost</mapname>
  <ai>lost</ai>
  <static />
- <logo>marauder</logo>
+ <logo>marauder.webp</logo>
  <player>-100</player>
  <colour>red</colour>
  <spawn>lost</spawn>
