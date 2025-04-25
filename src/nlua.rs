@@ -323,11 +323,11 @@ impl NLua {
         // Set up naev namespace. */
         t.set("naev", lua.create_table()?)?;
 
-        let rk = lua.create_registry_value(t.clone())?;
-
         // Store based on ID
+        let rk = lua.create_registry_value(t.clone())?;
         self.envs.raw_set(rk.id(), t.clone())?;
 
+        // Environment is all set
         Ok(LuaEnv { rk, table: t })
     }
 
