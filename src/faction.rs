@@ -48,7 +48,7 @@ impl Generator {
 }
 
 #[derive(Debug, Default)]
-pub struct Faction {
+pub struct FactionData {
     id: usize,
     pub name: String,
     pub longname: Option<String>,
@@ -113,9 +113,9 @@ pub struct Faction {
     cdescription: CString,
     ctags: ArrayCString,
 }
-unsafe impl Sync for Faction {}
-unsafe impl Send for Faction {}
-impl Faction {
+unsafe impl Sync for FactionData {}
+unsafe impl Send for FactionData {}
+impl FactionData {
     fn init_lua(&self, lua: &NLua) -> Result<()> {
         if let Some(env) = &self.equip_env {
             let path = format!("factions/equip/{}.lua", self.script_equip);
@@ -185,7 +185,7 @@ impl FactionSocial {
 #[derive(Debug, Default)]
 struct FactionLoad {
     /// Base data
-    data: Faction,
+    data: FactionData,
 
     // Generators
     generator_name: Vec<String>,
@@ -332,7 +332,7 @@ impl FactionLoad {
         fct.neutrals = social.neutrals;
     }
 
-    fn to_faction(self) -> Faction {
+    fn to_data(self) -> FactionData {
         self.data
     }
 
@@ -349,9 +349,9 @@ impl FactionLoad {
 
 use std::sync::OnceLock;
 /// Static factions that are never modified after creation
-pub static FACTIONS: OnceLock<Vec<Faction>> = OnceLock::new();
+pub static FACTIONS: OnceLock<Vec<FactionData>> = OnceLock::new();
 /// Dynamic factions that can be added and removed during gameplay
-pub static DYNAMICS: Mutex<Vec<Faction>> = Mutex::new(vec![]);
+//pub static DYNAMICS: Mutex<Vec<Faction>> = Mutex::new(vec![]);
 
 pub fn load() -> Result<()> {
     let ctx = SafeContext::new(Context::get().unwrap());
@@ -376,7 +376,7 @@ pub fn load() -> Result<()> {
         .collect();
     // Add Player before sorting
     factionload.push(FactionLoad {
-        data: Faction {
+        data: FactionData {
             name: String::from("Player"),
             cname: CString::new("Player")?,
             f_static: true,
@@ -409,9 +409,9 @@ pub fn load() -> Result<()> {
     }
 
     // Convert to factions
-    let factions: Vec<Faction> = factionload
+    let factions: Vec<FactionData> = factionload
         .into_iter()
-        .map(|fctload| fctload.to_faction())
+        .map(|fctload| fctload.to_data())
         .collect();
 
     FACTIONS.set(factions).unwrap();
@@ -430,9 +430,9 @@ pub fn load_post() -> Result<()> {
     Ok(())
 }
 
-pub fn get(name: &str) -> Option<&'static Faction> {
+pub fn get(name: &str) -> Option<&'static FactionData> {
     let factions = FACTIONS.get().unwrap();
-    match binary_search_by_key_ref(factions, name, |fct: &Faction| &fct.name) {
+    match binary_search_by_key_ref(factions, name, |fct: &FactionData| &fct.name) {
         Ok(id) => Some(&factions[id]),
         Err(_) => {
             warn!("Faction '{}' not found!", name);
