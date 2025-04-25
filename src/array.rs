@@ -63,3 +63,8 @@ impl ArrayCString {
         self.arr.as_ptr() as *mut *const c_char
     }
 }
+impl std::fmt::Debug for ArrayCString {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+        write!(f, "ArrayCString")
+    }
+}
