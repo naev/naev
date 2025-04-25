@@ -49,7 +49,7 @@ impl Generator {
 
 #[derive(Debug, Default)]
 pub struct Faction {
-    id: u32,
+    id: usize,
     pub name: String,
     pub longname: Option<String>,
     pub displayname: Option<String>,
@@ -348,7 +348,10 @@ impl FactionLoad {
 }
 
 use std::sync::OnceLock;
+/// Static factions that are never modified after creation
 pub static FACTIONS: OnceLock<Vec<Faction>> = OnceLock::new();
+/// Dynamic factions that can be added and removed during gameplay
+pub static DYNAMICS: Mutex<Vec<Faction>> = Mutex::new(vec![]);
 
 pub fn load() -> Result<()> {
     let ctx = SafeContext::new(Context::get().unwrap());
@@ -402,6 +405,7 @@ pub fn load() -> Result<()> {
         .collect();
     for (id, generator) in factiongenerator.into_iter().enumerate() {
         factionload[id].data.generators = generator;
+        factionload[id].data.id = id; // Also set the ID here
     }
 
     // Convert to factions
@@ -427,7 +431,14 @@ pub fn load_post() -> Result<()> {
 }
 
 pub fn get(name: &str) -> Option<&'static Faction> {
-    None
+    let factions = FACTIONS.get().unwrap();
+    match binary_search_by_key_ref(factions, name, |fct: &Faction| &fct.name) {
+        Ok(id) => Some(&factions[id]),
+        Err(_) => {
+            warn!("Faction '{}' not found!", name);
+            None
+        }
+    }
 }
 
 // Here be C API
