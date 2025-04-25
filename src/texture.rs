@@ -73,6 +73,7 @@ impl TextureFormat {
     }
 }
 
+#[derive(Debug)]
 pub struct TextureData {
     name: Option<String>,
     texture: glow::Texture,
@@ -234,6 +235,7 @@ impl TextureData {
     }
 }
 
+#[derive(Debug)]
 pub struct Texture {
     pub path: Option<String>,
     name: Option<CString>, // TODO remove when not needed

@@ -17,6 +17,7 @@ const ENV: &str = "_ENV";
 type CFunctionNaev = unsafe extern "C-unwind" fn(*mut naevc::lua_State) -> i32;
 type CFunctionMLua = unsafe extern "C-unwind" fn(*mut mlua::lua_State) -> i32;
 
+#[derive(Debug)]
 pub struct LuaEnv {
     table: mlua::Table,
     rk: mlua::RegistryKey, // Needed for C API, remove later
