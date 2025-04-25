@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Hunter's Instinct">
+ <general>
+  <typename>Bioship Organ</typename>
+  <slot prop="bio_organ">utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>/gfx/misc/icons/hidden.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/bioship/skills/hunters_instinct.lua</lua>
+  <speed_mod>40</speed_mod>
+ </specific>
+</outfit>
