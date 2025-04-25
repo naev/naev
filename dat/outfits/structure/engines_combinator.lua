@@ -1,4 +1,5 @@
 
+local smfs = require "shipmemfs"
 local fmt = require "format"
 
 notactive = true -- Doesn't become active
@@ -46,11 +47,11 @@ end
 
 descextra=function ( p, _o, _po)
    if p == nil then
-      return "Can't see it due to the descextra p==nil bug."
+      return "Can't see it due to the descextra p == nil bug."
    end
 
    local sm = p:shipMemory()
-   local dat = ((sm and sm[engines_comb_dir]) or {})
+   local dat = smfs.read( p, {engines_comb_dir})
    local count = 0
    for i,v in pairs(dat) do
       if v['engine_limit'] and v['halted']~=true then
@@ -65,11 +66,13 @@ descextra=function ( p, _o, _po)
       local total = (sm and sm[engines_comb_dir.."_total"]) or {}
       for i,v in pairs(dat) do
          local outfit_name = p:outfitGet(i):name()
-         if v['engine_limit'] and v['halted']~=true then
-            out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
+         local engine_number = i - po:id()
+
+         if v['engine_limit'] and v['halted'] ~= true then
+            out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
             out = out .. adddesc(v, total['engine_limit'])
          else
-            out = out .. "#g[" .. tostring(i) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
+            out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
          end
       end
       out = out .. "\n#y[TOTAL]#0\n"
@@ -101,7 +104,7 @@ function onadd( p, po )
    sm[engines_comb_dir.."_total"] = comb
 
    for k,v in pairs(data) do
-      if v['engine_limit'] and v['halted']~=true then
+      if v['engine_limit'] and v['halted'] ~= true then
          dataon[k] = v
       end
    end
@@ -139,7 +142,7 @@ function onadd( p, po )
          end
       end
    end
-   sm[engines_comb_dir.."_needs_refresh"]= nil
+   sm[engines_comb_dir.."_needs_refresh"] = nil
 end
 
 init=onadd

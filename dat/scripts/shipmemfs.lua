@@ -6,7 +6,17 @@ function smfs.read( p, path )
    for _i,k in ipairs(path) do
       ptr = (ptr or {})[k]
    end
-   return ptr
+   if type(ptr) == 'table' then
+      local t = {}
+      for k,v in pairs(ptr) do
+         if k~= '_parent_' then
+            t[k] = v
+         end
+      end
+      return t
+   else
+      return ptr
+   end
 end
 
 function smfs.write( p, path, value )

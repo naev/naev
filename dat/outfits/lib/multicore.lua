@@ -60,7 +60,7 @@ local function add_desc( stat, nomain, nosec )
       col=valcol( p+s, stat.stat.inverted )
    end
    local pref = col..fmt.f("{name}: ",{name=name})
-   if p==s then
+   if p == s then
       return pref..stattostr( stat.stat, base, off, true )
    else
       return pref..fmt.f("{bas} #n/#0 {sec}", {
@@ -85,7 +85,7 @@ local needs_decl = {
 
 local function index( tbl, key )
    for i,v in ipairs(tbl) do
-      if v and v["name"]==key then
+      if v and v["name"] == key then
          return i
       end
    end
@@ -109,16 +109,17 @@ local function is_secondary( po )
 end
 
 local function marked_n( p, n )
-   return smfs.read( p, {"_ec",n,'halted'})
+   return smfs.read( p, {engines_comb_dir,n,'halted'})
 end
 
 local function mark_n( p, n, what )
-   local res = smfs.write( p, {"_ec",n,'halted'}, what)
+   local res = smfs.write( p, {engines_comb_dir,n,'halted'}, what)
 
    if res == nil then -- could not write
-      print "Oh-oh"
+      warn("Oh-oh")
+   else
+      p:shipMemory()[engines_comb_dir.."_needs_refresh"] = p:shipMemory()[engines_comb_dir.."_needs_refresh"] or res
    end
-   p:shipMemory()[engines_comb_dir.."_needs_refresh"] = res
 end
 
 -- sign:
@@ -152,8 +153,10 @@ local function update_engines_combinator_if_needed( p, po, sign, t )
    sm[engines_comb_dir.."_needs_refresh"] = changed
 
    if changed then
-      --print("update!")
       p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
+      return true
+   else
+      return false
    end
 end
 
@@ -308,7 +311,6 @@ function multicore.init( params )
          end
          mark_n( p, po:id(), off )
          if update_engines_combinator_if_needed( p, po, 0, nil ) then
-            print(fmt.f("{id} {stat}",{ id = po:id(), stat = off}))
             update_stats( p, po)
          end
       end
