@@ -18,10 +18,10 @@ use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 enum Grid {
-    NONE,
-    ENEMIES,
-    ALLIES,
-    NEUTRAL,
+    None,
+    Enemies,
+    Allies,
+    Neutral,
 }
 
 #[derive(Debug)]
@@ -32,7 +32,7 @@ pub struct Generator {
     weight: f32,
 }
 impl Generator {
-    fn new(factions: &Vec<FactionLoad>, names: &Vec<String>, weights: &Vec<f32>) -> Vec<Self> {
+    fn new(factions: &[FactionLoad], names: &[String], weights: &[f32]) -> Vec<Self> {
         let mut generator: Vec<Generator> = vec![];
         for (name, weight) in names.iter().zip(weights.iter()) {
             if let Some(id) = FactionLoad::get(factions, name) {
@@ -157,7 +157,7 @@ struct FactionSocial {
     neutrals: Vec<usize>,
 }
 impl FactionSocial {
-    pub fn new(fct: &FactionLoad, factions: &Vec<FactionLoad>) -> Self {
+    pub fn new(fct: &FactionLoad, factions: &[FactionLoad]) -> Self {
         let mut social = FactionSocial::default();
         for name in &fct.enemies {
             if let Some(f) = FactionLoad::get(factions, name) {
@@ -328,11 +328,11 @@ impl FactionLoad {
         fct.neutrals = social.neutrals;
     }
 
-    fn to_data(self) -> FactionData {
+    fn into_data(self) -> FactionData {
         self.data
     }
 
-    fn get(factions: &Vec<FactionLoad>, name: &str) -> Option<usize> {
+    fn get(factions: &[FactionLoad], name: &str) -> Option<usize> {
         match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| &fctload.data.name) {
             Ok(id) => Some(id),
             Err(_) => {
@@ -407,7 +407,7 @@ pub fn load() -> Result<()> {
     // Convert to factions
     let factions: Vec<FactionData> = factionload
         .into_iter()
-        .map(|fctload| fctload.to_data())
+        .map(|fctload| fctload.into_data())
         .collect();
 
     FACTIONS.set(factions).unwrap();
