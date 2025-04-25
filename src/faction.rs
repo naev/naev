@@ -35,16 +35,12 @@ impl Generator {
     fn new(factions: &Vec<FactionLoad>, names: &Vec<String>, weights: &Vec<f32>) -> Vec<Self> {
         let mut generator: Vec<Generator> = vec![];
         for (name, weight) in names.iter().zip(weights.iter()) {
-            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
-                &fctload.data.name
-            }) {
-                Ok(id) => generator.push(Generator {
+            match FactionLoad::get(factions, name) {
+                Some(id) => generator.push(Generator {
                     id,
                     weight: *weight,
                 }),
-                Err(_) => {
-                    warn!("Faction not found!");
-                }
+                None => (),
             }
         }
         generator
@@ -165,33 +161,21 @@ impl FactionSocial {
     pub fn new(fct: &FactionLoad, factions: &Vec<FactionLoad>) -> Self {
         let mut social = FactionSocial::default();
         for name in &fct.enemies {
-            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
-                &fctload.data.name
-            }) {
-                Ok(f) => social.enemies.push(f),
-                Err(_) => {
-                    warn!("Faction not found!");
-                }
+            match FactionLoad::get(factions, name) {
+                Some(f) => social.enemies.push(f),
+                None => (),
             };
         }
         for name in &fct.allies {
-            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
-                &fctload.data.name
-            }) {
-                Ok(f) => social.allies.push(f),
-                Err(_) => {
-                    warn!("Faction not found!");
-                }
+            match FactionLoad::get(factions, name) {
+                Some(f) => social.allies.push(f),
+                None => (),
             };
         }
         for name in &fct.neutrals {
-            match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| {
-                &fctload.data.name
-            }) {
-                Ok(f) => social.neutrals.push(f),
-                Err(_) => {
-                    warn!("Faction not found!");
-                }
+            match FactionLoad::get(factions, name) {
+                Some(f) => social.neutrals.push(f),
+                None => (),
             };
         }
         social
@@ -261,6 +245,7 @@ impl FactionLoad {
                 "lane_length_per_presence" => fct.lane_length_per_presence = nxml::node_f32(node)?,
                 "lane_base_cost" => fct.lane_base_cost = nxml::node_f32(node)?,
                 // TODO COLOUR
+                "colour" => continue,
                 "logo" => {
                     let gfxname = nxml::node_texturepath(node, "gfx/logo/")?;
                     let nctx = ctx.lock();
@@ -289,7 +274,7 @@ impl FactionLoad {
                         if !node.is_element() {
                             continue;
                         }
-                        fctload.allies.push(String::from(node.tag_name().name()));
+                        fctload.allies.push(nxml::node_string(node)?);
                     }
                 }
                 "enemies" => {
@@ -297,7 +282,7 @@ impl FactionLoad {
                         if !node.is_element() {
                             continue;
                         }
-                        fctload.enemies.push(String::from(node.tag_name().name()));
+                        fctload.enemies.push(nxml::node_string(node)?);
                     }
                 }
                 "neutrals" => {
@@ -305,7 +290,7 @@ impl FactionLoad {
                         if !node.is_element() {
                             continue;
                         }
-                        fctload.neutrals.push(String::from(node.tag_name().name()));
+                        fctload.neutrals.push(nxml::node_string(node)?);
                     }
                 }
                 "generator" => {
@@ -349,6 +334,16 @@ impl FactionLoad {
 
     fn to_faction(self) -> Faction {
         self.data
+    }
+
+    fn get(factions: &Vec<FactionLoad>, name: &str) -> Option<usize> {
+        match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| &fctload.data.name) {
+            Ok(id) => Some(id),
+            Err(_) => {
+                warn!("Faction '{}' not found during loading!", name);
+                None
+            }
+        }
     }
 }
 
