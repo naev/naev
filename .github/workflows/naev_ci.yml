@@ -218,7 +218,7 @@ jobs:
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
-              --wrap-mode=forcefallback \
+              --wrap-mode=nopromote \
               -Dinstaller=false \
               -Drelease=false \
               -Db_lto=false \
