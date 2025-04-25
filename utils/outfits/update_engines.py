@@ -140,13 +140,20 @@ def main(args):
          continue
 
       o = outfit(a)
+      t = o.to_dict()['engine_limit']
+      if type(t)==type(()):
+         (eml1,eml2)=t
+      else:
+         eml1=eml2=t
+
+      eml1,eml2=float(eml1),float(eml2)
 
       if o.name() in ["Krain Remige Engine","Za'lek Test Engine"]:
          sub={k:v[0] for k,v in sub.items()}
       elif o.name()=="Krain Patagium Twin Engine":
          sub={k:v[1] for k,v in sub.items()}
       else:
-         sub={k:unstackvals(k,v[0],v[1]) for k,v in sub.items()}
+         sub={k:unstackvals(k,v[0],v[1],eml1,eml2) for k,v in sub.items()}
 
       if sub is not None:
          acc=apply_ls(sub,o)
@@ -195,13 +202,13 @@ def gen_line(params):
          'fuel':str(int((n+4)*100*(2**int((n-1)/2)))),
       }
       additional={k:(sized_params(2*i+1)[k],sized_params(2*i+1+1)[k]) for k in sized_params(2*1+1)}
-      additional={k:unstackvals(k,v[0],v[1]) for k,v in additional.items()}
+      additional={k:unstackvals(k,v[0],v[1],eml1,eml2) for k,v in additional.items()}
       additional['description']='"TODO"'
       additional['engine_limit']=str(175*4**i)
       additional['price']=str(12500*3**i)
       additional['energy_regen_malus']=str(5*2**i)
       
-      subs={k:unstackvals(k,v[0],v[1]) for k,v in mk_subs(engine,nam).items()}
+      subs={k:unstackvals(k,v[0],v[1],1.0,1.0) for k,v in mk_subs(engine,nam).items()}
       acc=apply_ls(subs,o,additional)
       o.write(fil)
       err('<'+fil+'>')

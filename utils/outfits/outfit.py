@@ -12,8 +12,8 @@ def nam2fil(s):
    return s.lower()
 
 def text2val(s):
-   inp=s.split('/',1)
    try:
+      inp=s.split('/',1)
       inp=[float(x) for x in inp]
       return (inp[0],inp[-1])
    except:
@@ -32,26 +32,28 @@ def fmt_kv(kv):
    (key,value)=kv
    return key+'="'+str(andamp(value))+'"'
 
-def prisec(tag,r1,r2):
+def prisec(tag,r1,r2,eml1,eml2):
    a=r1[0] if r1 is not None else 0
 
    if r2 is not None:
-      a+=r2[1]
       if tag in MOBILITY_PARAMS:
-         a/=2.0
+         a=(a*eml1+r2[1]*eml2)/(eml1+eml2)
+      else:
+         a+=r2[1]
 
    return roundit(a)
 
-def stackvals(tag,text1,text2):
-   return str(roundit(prisec(tag,text2val(text1),text2val(text2))))
+def stackvals(tag,text1,text2,eml1,eml2):
+   return str(roundit(prisec(tag,text2val(text1),text2val(text2),eml1,eml2)))
 
-def r_prisec(tag,v1,v2):
+def r_prisec(tag,v1,v2,eml1,eml2):
    if tag in MOBILITY_PARAMS:
-      v2*=2
-   return v1,v2-v1
+      return v1,round((v2*(eml1+eml2) - eml1*v1)/float(eml2))
+   else:
+      return v1,v2-v1
 
-def unstackvals(tag,text1,text2):
-   o1,o2=r_prisec(tag,float(text1),0 if text2=='' else float(text2))
+def unstackvals(tag,text1,text2,eml1,eml2):
+   o1,o2=r_prisec(tag,float(text1),0 if text2=='' else float(text2),eml1,eml2)
    if o2==o1:
       return fmtval(o1)
    else:
@@ -90,10 +92,23 @@ class _outfit():
          pass
 
    def autostack(self,doubled=False):
+      if doubled:
+         try:
+            res=self.to_dict()['engine_limit']
+            if type(res)==type(()):
+               (eml1,eml2)=res
+            else:
+               eml1=eml2=res
+         except:
+            eml1,eml2=None,None
+
       for e in self:
          res=text2val(e.text)
          if res is not None:
-            e.text=str(prisec(e.tag,res,res if doubled else None))
+            if doubled:
+               e.text=str(prisec(e.tag,res,res,eml1,eml2))
+            else:
+               e.text=str(prisec(e.tag,res,None,1,1))
 
    def __iter__(self):
       def _subs(r):
