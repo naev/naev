@@ -88,7 +88,7 @@ impl Deref for DataWrapper {
     fn deref(&self) -> &<Self as Deref>::Target {
         match self {
             Self::Static(d) => d,
-            Self::Dynamic(d) => &d,
+            Self::Dynamic(d) => d,
         }
     }
 }
