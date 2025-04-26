@@ -5,7 +5,8 @@ use nalgebra::Vector3;
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
 use std::io::{Error, ErrorKind};
-use std::sync::Mutex;
+use std::ops::Deref;
+use std::sync::{Arc, Mutex, MutexGuard};
 
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
@@ -22,6 +23,63 @@ enum Grid {
     Enemies,
     Allies,
     Neutral,
+}
+
+pub fn get(name: &str) -> Option<&'static FactionData> {
+    let factions = FACTIONS.get().unwrap();
+    match binary_search_by_key_ref(factions, name, |fct: &FactionData| &fct.name) {
+        Ok(id) => Some(&factions[id]),
+        Err(_) => {
+            warn!("Faction '{}' not found!", name);
+            None
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Faction {
+    pub player: f32,
+    pub player_override: Option<f32>,
+    data: DataWrapper,
+}
+impl Faction {
+    pub fn is_dynamic(&self) -> bool {
+        match &self.data {
+            DataWrapper::Static(_) => false,
+            DataWrapper::Dynamic(_) => true,
+        }
+    }
+    pub fn data(&self) -> RefOrGuard<'_, FactionData> {
+        self.data.lock()
+    }
+}
+
+/// Wrapper for both Dynamic and Static factions
+#[derive(Debug)]
+enum DataWrapper {
+    Static(FactionData),
+    Dynamic(Arc<Mutex<FactionData>>),
+}
+impl DataWrapper {
+    fn lock(&self) -> RefOrGuard<'_, FactionData> {
+        match &self {
+            Self::Static(d) => RefOrGuard::Ref(&d),
+            Self::Dynamic(d) => RefOrGuard::Guard(d.lock().unwrap()),
+        }
+    }
+}
+pub enum RefOrGuard<'a, FactionData> {
+    Ref(&'a FactionData),
+    Guard(MutexGuard<'a, FactionData>),
+}
+impl Deref for RefOrGuard<'_, FactionData> {
+    type Target = FactionData;
+    fn deref(&self) -> &<Self as Deref>::Target {
+        match self {
+            RefOrGuard::Ref(d) => d,
+            RefOrGuard::Guard(d) => d.deref(),
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -73,8 +131,6 @@ pub struct FactionData {
 
     // Player stuff
     pub player_def: f32,
-    pub player: f32,
-    pub player_override: f32,
 
     // Scheduler
     sched_env: Option<LuaEnv>,
@@ -99,7 +155,6 @@ pub struct FactionData {
     pub f_known: bool,
     pub f_dynamic: bool,
     pub f_useshiddenjumps: bool,
-    pub f_repoverride: bool,
 
     // Tags
     pub tags: Vec<String>,
@@ -347,7 +402,7 @@ use std::sync::OnceLock;
 /// Static factions that are never modified after creation
 pub static FACTIONS: OnceLock<Vec<FactionData>> = OnceLock::new();
 /// Dynamic factions that can be added and removed during gameplay
-//pub static DYNAMICS: Mutex<Vec<Faction>> = Mutex::new(vec![]);
+pub static DYNAMICS: Mutex<Vec<Arc<Mutex<Faction>>>> = Mutex::new(vec![]);
 
 pub fn load() -> Result<()> {
     let ctx = SafeContext::new(Context::get().unwrap());
@@ -424,17 +479,6 @@ pub fn load_post() -> Result<()> {
         fct.init_lua(&lua)?;
     }
     Ok(())
-}
-
-pub fn get(name: &str) -> Option<&'static FactionData> {
-    let factions = FACTIONS.get().unwrap();
-    match binary_search_by_key_ref(factions, name, |fct: &FactionData| &fct.name) {
-        Ok(id) => Some(&factions[id]),
-        Err(_) => {
-            warn!("Faction '{}' not found!", name);
-            None
-        }
-    }
 }
 
 // Here be C API
