@@ -109,11 +109,11 @@ local function is_secondary( po )
 end
 
 local function marked_n( p, n )
-   return smfs.read( p, {engines_comb_dir,n,'halted'})
+   return smfs.readfile( p, {engines_comb_dir,n,'halted'})
 end
 
 local function mark_n( p, n, what )
-   local res = smfs.write( p, {engines_comb_dir,n,'halted'}, what)
+   local res = smfs.writefile( p, {engines_comb_dir,n,'halted'}, what)
 
    if res == nil then -- could not write
       warn("Oh-oh")
