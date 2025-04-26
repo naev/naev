@@ -45,13 +45,12 @@ local function adddesc( t, total)
    return out
 end
 
-descextra=function ( p, _o, _po)
+descextra=function ( p, _o, po)
    if p == nil then
       return "Can't see it due to the descextra p == nil bug."
    end
 
-   local sm = p:shipMemory()
-   local dat = smfs.read( p, {engines_comb_dir})
+   local dat = smfs.dir(smfs.read( p, {engines_comb_dir}))
    local count = 0
    for i,v in pairs(dat) do
       if v['engine_limit'] and v['halted']~=true then
@@ -63,10 +62,10 @@ descextra=function ( p, _o, _po)
    if count == 0 then
       out = "#o".._("No active engine equipped").."#0\n"
    else
-      local total = (sm and sm[engines_comb_dir.."_total"]) or {}
+      local total = smfs.dir(smfs.read( p, {engines_comb_dir.."_total"}))
       for i,v in pairs(dat) do
          local outfit_name = p:outfitGet(i):name()
-         local engine_number = i - po:id()
+         local engine_number = i - ((po and po:id()) or 0)
 
          if v['engine_limit'] and v['halted'] ~= true then
             out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
@@ -93,17 +92,17 @@ function onadd( p, po )
 
    local sm = p:shipMemory()
 
-   if not sm[engines_comb_dir.."_needs_refresh"] then
+   if not smfs.read( p, {engines_comb_dir.."_needs_refresh"}) then
       --print ("Unneeded refresh")
       return
    end
 
-   local data = ((sm and sm[engines_comb_dir]) or {})
+   local data = smfs.read(p, {engines_comb_dir})
    local dataon = {} -- the subset of if that is active
    local comb = ((sm and sm[engines_comb_dir.."_total"]) or {})
    sm[engines_comb_dir.."_total"] = comb
 
-   for k,v in pairs(data) do
+   for k,v in pairs(smfs.dir(data)) do
       if v['engine_limit'] and v['halted'] ~= true then
          dataon[k] = v
       end

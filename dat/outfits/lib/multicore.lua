@@ -20,7 +20,7 @@ end
 
 local function stattostr( s, val, grey, unit )
    if val == 0 then
-      return "#n."
+      return "#n-"
    end
 
    local col
@@ -54,7 +54,7 @@ local function add_desc( stat, nomain, nosec )
    nomain = nomain or p == 0
    nosec = nosec or s == 0
    local col
-   if off then
+   if off or (nomain and nosec) then
       col="#n"
    else
       col=valcol( p+s, stat.stat.inverted )

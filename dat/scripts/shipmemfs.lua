@@ -1,19 +1,30 @@
 
 local smfs = {}
 
+function smfs.dir( ptr )
+   ptr = (type(ptr) == 'table' and ptr) or {}
+   local t = {}
+   for k,v in pairs(ptr) do
+      if k~= '_parent_' then
+         t[k] = v
+      end
+   end
+   return t
+end
+
 function smfs.read( p, path )
    local ptr = p and p:shipMemory() or {}
    for _i,k in ipairs(path) do
       ptr = (ptr or {})[k]
    end
+   return ptr
+end
+
+function smfs.get( p, path )
+   local ptr = smfs.read( p, path)
+
    if type(ptr) == 'table' then
-      local t = {}
-      for k,v in pairs(ptr) do
-         if k~= '_parent_' then
-            t[k] = v
-         end
-      end
-      return t
+      return smfs.dir(ptr)
    else
       return ptr
    end
