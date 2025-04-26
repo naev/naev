@@ -20,6 +20,7 @@ def text2val(s):
       return None
 
 def roundit(f):
+   f = round(f*2.0)/2.0
    return int(f) if f==round(f) else f
 
 def fmtval(v):

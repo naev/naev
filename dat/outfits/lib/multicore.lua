@@ -20,7 +20,7 @@ end
 
 local function stattostr( s, val, grey, unit )
    if val == 0 then
-      return "#n-"
+      return "#n0" -- Correct people bad taste HERE.
    end
 
    local col

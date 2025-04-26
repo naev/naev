@@ -85,8 +85,6 @@ function onadd( p, po )
       return
    end
 
-   local o = po:outfit()
-
    if not smfs.readfile( p, {engines_comb_dir.."_needs_refresh"}) then
       --print ("Unneeded refresh")
       return

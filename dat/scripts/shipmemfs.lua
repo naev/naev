@@ -360,7 +360,7 @@ function smfs.init(pil)
                if type(v) == 'table' then
                   local pref2 = pref .. tostring(k) .. "/"
                   if cd_silent(k) then
-                     local res = smfs.find(pref2, hide)
+                     local res = smfs.find(pref2)
                      if res == 0 then
                         print(pref2)
                      end
