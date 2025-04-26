@@ -1900,7 +1900,8 @@ void faction_updateSingle( int f )
          n++;
       }
    }
-   faction_stack[f].player = v / (double)n;
+   if ( n >= 0 )
+      faction_stack[f].player = v / (double)n;
 }
 
 /**
