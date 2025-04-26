@@ -4,9 +4,8 @@ use anyhow::Result;
 use nalgebra::Vector3;
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
-use std::io::{Error, ErrorKind};
 use std::ops::Deref;
-use std::sync::{Arc, Mutex, MutexGuard};
+use std::sync::Mutex;
 
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
@@ -17,6 +16,7 @@ use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::{formatx, warn};
 use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use thunderdome::{Arena, Index};
 
 enum Grid {
     None,
@@ -25,14 +25,40 @@ enum Grid {
     Neutral,
 }
 
-pub fn get(name: &str) -> Option<&'static FactionData> {
-    let factions = FACTIONS.get().unwrap();
-    match binary_search_by_key_ref(factions, name, |fct: &FactionData| &fct.name) {
-        Ok(id) => Some(&factions[id]),
-        Err(_) => {
-            warn!("Faction '{}' not found!", name);
-            None
+/// Full faction data
+pub static FACTIONS: Mutex<Arena<Faction>> = Mutex::new(Arena::new());
+
+pub struct FactionID {
+    id: Index,
+}
+impl FactionID {
+    pub fn new(name: &str) -> Option<FactionID> {
+        let factions = FACTIONS.lock().unwrap();
+        for fctid in factions.iter() {
+            let (id, fct) = fctid;
+            if fct.data.name == name {
+                return Some(FactionID { id });
+            }
         }
+        None
+    }
+
+    pub fn call<F, R>(&self, f: F) -> R
+    where
+        F: Fn(&Faction) -> R,
+    {
+        let factions = FACTIONS.lock().unwrap();
+        let fct = factions.get(self.id).unwrap();
+        f(fct)
+    }
+
+    pub fn call_mut<F, R>(&self, f: F) -> R
+    where
+        F: Fn(&mut Faction) -> R,
+    {
+        let mut factions = FACTIONS.lock().unwrap();
+        let fct = factions.get_mut(self.id).unwrap();
+        f(fct)
     }
 }
 
@@ -40,7 +66,7 @@ pub fn get(name: &str) -> Option<&'static FactionData> {
 pub struct Faction {
     pub player: f32,
     pub player_override: Option<f32>,
-    data: DataWrapper,
+    pub data: DataWrapper,
 }
 impl Faction {
     pub fn is_dynamic(&self) -> bool {
@@ -49,35 +75,20 @@ impl Faction {
             DataWrapper::Dynamic(_) => true,
         }
     }
-    pub fn data(&self) -> RefOrGuard<'_, FactionData> {
-        self.data.lock()
-    }
 }
 
 /// Wrapper for both Dynamic and Static factions
 #[derive(Debug)]
-enum DataWrapper {
-    Static(FactionData),
-    Dynamic(Arc<Mutex<FactionData>>),
+pub enum DataWrapper {
+    Static(&'static FactionData),
+    Dynamic(FactionData),
 }
-impl DataWrapper {
-    fn lock(&self) -> RefOrGuard<'_, FactionData> {
-        match &self {
-            Self::Static(d) => RefOrGuard::Ref(&d),
-            Self::Dynamic(d) => RefOrGuard::Guard(d.lock().unwrap()),
-        }
-    }
-}
-pub enum RefOrGuard<'a, FactionData> {
-    Ref(&'a FactionData),
-    Guard(MutexGuard<'a, FactionData>),
-}
-impl Deref for RefOrGuard<'_, FactionData> {
+impl Deref for DataWrapper {
     type Target = FactionData;
     fn deref(&self) -> &<Self as Deref>::Target {
         match self {
-            RefOrGuard::Ref(d) => d,
-            RefOrGuard::Guard(d) => d.deref(),
+            Self::Static(d) => d,
+            Self::Dynamic(d) => &d,
         }
     }
 }
@@ -400,9 +411,7 @@ impl FactionLoad {
 
 use std::sync::OnceLock;
 /// Static factions that are never modified after creation
-pub static FACTIONS: OnceLock<Vec<FactionData>> = OnceLock::new();
-/// Dynamic factions that can be added and removed during gameplay
-pub static DYNAMICS: Mutex<Vec<Arc<Mutex<Faction>>>> = Mutex::new(vec![]);
+pub static FACTIONDATA: OnceLock<Vec<FactionData>> = OnceLock::new();
 
 pub fn load() -> Result<()> {
     let ctx = SafeContext::new(Context::get().unwrap());
@@ -465,7 +474,18 @@ pub fn load() -> Result<()> {
         .map(|fctload| fctload.into_data())
         .collect();
 
-    FACTIONS.set(factions).unwrap();
+    // Save the data
+    FACTIONDATA.set(factions).unwrap();
+
+    // Populate the arena with the static factions
+    let mut factions = FACTIONS.lock().unwrap();
+    for fct in FACTIONDATA.get().unwrap() {
+        let _ = factions.insert(Faction {
+            player: fct.player_def,
+            player_override: None,
+            data: DataWrapper::Static(fct),
+        });
+    }
 
     // Compute grid
 
@@ -475,7 +495,7 @@ pub fn load() -> Result<()> {
 pub fn load_post() -> Result<()> {
     // Last pass: initialize Lua
     let lua = NLUA.lock().unwrap();
-    for fct in FACTIONS.get().unwrap() {
+    for fct in FACTIONDATA.get().unwrap() {
         fct.init_lua(&lua)?;
     }
     Ok(())
@@ -487,9 +507,9 @@ use std::os::raw::{c_int};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn faction_isFaction( f: c_int ) -> c_int {
-    match f < 0 || (f >= FACTIONS.get().unwrap().len() as c_int ){
-        true => 0,
-        false => 1,
+    match FACTIONS.lock().unwrap().contains_slot( f as u32 ) {
+        Some(_) => 1,
+        None => 0,
     }
 }
 */

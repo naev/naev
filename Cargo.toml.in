@@ -30,6 +30,7 @@ nalgebra = { version = "0", features = ["bytemuck"]  }
 gltf = { version = "1", features = ["extras", "names", "utils"] }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
+thunderdome = "0"
 
 [target.'cfg(not(windows))'.dependencies]
 # We support lua51 / luajit and they are ABI compatible, so just point at luajit
