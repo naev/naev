@@ -118,7 +118,10 @@ local function mark_n( p, n, what )
    if res == nil then -- could not write
       warn("Oh-oh")
    else
-      p:shipMemory()[engines_comb_dir.."_needs_refresh"] = p:shipMemory()[engines_comb_dir.."_needs_refresh"] or res
+      local function f(crt)
+         return crt or res
+      end
+      smfs.updatefile( p, {engines_comb_dir .. "_needs_refresh"}, f)
    end
 end
 
@@ -127,30 +130,25 @@ end
 --   0 for update
 --   1 for add
 local function update_engines_combinator_if_needed( p, po, sign, t )
-   local sm = p:shipMemory()
    local id = po:id()
-   local changed = sm[engines_comb_dir.."_needs_refresh"]
+   local changed = smfs.readfile( p, {engines_comb_dir .. "_needs_refresh"})
+   local comb = smfs.checkdir( p, {engines_comb_dir} )
    local bef
 
-   sm[engines_comb_dir] = sm[engines_comb_dir] or {}
-
    if sign == -1 then
-      if sm[engines_comb_dir] then
-         changed = changed or (sm[engines_comb_dir][id] ~= nil)
-         sm[engines_comb_dir][id] = nil
-      end
+      changed = changed or comb[id] ~= nil
+      comb[id] = nil
    else
-      sm[engines_comb_dir] = sm[engines_comb_dir] or {}
-      changed = changed or (sign==1) and (sm[engines_comb_dir][id] == nil)
+      local combid = smfs.checkdir( p, {engines_comb_dir, id} )
+      changed = changed or ((sign == 1) and (comb[id] == nil))
 
-      sm[engines_comb_dir][id] = sm[engines_comb_dir][id] or {}
       for k,v in pairs(t or {}) do
-         bef = sm[engines_comb_dir][id][k]
-         sm[engines_comb_dir][id][k] = v
+         bef = combid[k]
+         combid[k] = v
          changed = changed or (bef ~= v)
       end
    end
-   sm[engines_comb_dir.."_needs_refresh"] = changed
+   smfs.writefile( p, {engines_comb_dir .. "_needs_refresh"}, changed)
 
    if changed then
       p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
@@ -210,8 +208,8 @@ function multicore.init( params )
 
       local averaged = is_engine( po ) and is_multiengine( p )
       local multicore_off = p and po and marked_n( p, po:id() )
-      local sm = (p:shipMemory() and p:shipMemory()[engines_comb_dir]) or {}
-      local total = (p:shipMemory() and p:shipMemory()[engines_comb_dir.."_total"]) or {}
+      local sm = smfs.readdir( p, {engines_comb_dir} )
+      local total = smfs.readdir( p, {engines_comb_dir.."_total"} )
       local totaleml = (total and total["engine_limit"]) or 0
 
       if averaged then

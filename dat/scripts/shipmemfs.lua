@@ -113,14 +113,14 @@ end
 -- Input:
 --  - a player p
 --  - a itable describing the path to the file
---  - a file content (a non-table value)
+--  - a function mapping crt file content to new file content
 -- Returns:
 --  - a boolean indicating whether something changed
 --  - or nil if invalid shipmem or empty path (therefore no filename)
 -- Side - effect
 --  - Any missing dir is created on the way.
 --  - The file is created if it does not exist.
-function smfs.writefile( p, path, value )
+function smfs.updatefile( p, path, f )
    local tmp = {}
    local fil = nil
 
@@ -141,11 +141,28 @@ function smfs.writefile( p, path, value )
       return nil
    else
       local bef = ptr[fil]
+      local value = f(bef)
       ptr[fil] = value
       return (bef ~= value)
    end
 end
 
+-- Input:
+--  - a player p
+--  - a itable describing the path to the file
+--  - a file content (a non-table value)
+-- Returns:
+--  - a boolean indicating whether something changed
+--  - or nil if invalid shipmem or empty path (therefore no filename)
+-- Side - effect
+--  - Any missing dir is created on the way.
+--  - The file is created if it does not exist.
+function smfs.writefile( p, path, value )
+   local function f(_in)
+      return value
+   end
+   return smfs.updatefile( p, path, f )
+end
 
 --[[
 
