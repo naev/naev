@@ -33,7 +33,7 @@ int constants_init( void )
    lua_State *L = luaL_newstate();
    luaL_openlibs( L );
 
-   if ( ( luaL_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
+   if ( ( nlua_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
       WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( L, -1 ) );
       lua_close( L );
       return -1;

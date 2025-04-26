@@ -231,7 +231,7 @@ static int cli_script( lua_State *L )
 
    /* Do the file from PHYSFS. */
    buf = ndata_read( fname, &blen );
-   if ( luaL_loadbuffer( L, buf, blen, fname ) != 0 )
+   if ( nlua_loadbuffer( L, buf, blen, fname ) != 0 )
       lua_error( L );
    free( buf );
 
@@ -628,7 +628,7 @@ static void cli_input( unsigned int wid, const char *unused )
       if ( !cli_firstline )      /* o \n s */
          lua_concat( naevL, 3 ); /* s */
 
-      status = luaL_loadbuffer( naevL, lua_tostring( naevL, -1 ),
+      status = nlua_loadbuffer( naevL, lua_tostring( naevL, -1 ),
                                 lua_strlen( naevL, -1 ), "=cli" );
 
       /* String isn't proper Lua yet. */
