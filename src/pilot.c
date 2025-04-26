@@ -827,7 +827,8 @@ void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
 double pilot_face( Pilot *p, double dir, double dt )
 {
    double diff = angle_diff( p->solid.dir, dir );
-   double turn = CLAMP( -1., 1., diff / ( p->turn * dt ) );
+   double turn =
+      ( p->turn <= 0. ) ? 0. : CLAMP( -1., 1., diff / ( p->turn * dt ) );
    pilot_setTurn( p, turn );
    return diff;
 }
