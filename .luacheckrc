@@ -226,7 +226,6 @@ stds.API_pilotoutfit = {globals={
    "onhold",
    "onshoot",
    "outofenergy",
-   "setworkingstatus",
    "takeoff",
    "jumpin",
    "board",

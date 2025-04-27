@@ -1,4 +1,6 @@
 
+mc = require("outfits/lib/multicore")
+
 local prvdesc=descextra
 descextra=function ( p, o, po)
    return prvdesc( p, o, po).."\n#b".._("This outfit only works when two are equipped at the same time.").."#0"
@@ -17,7 +19,7 @@ function onoutfitchange( p, po )
             end
          end
       end
-      setworkingstatus( p, po, count == 2 and mismatch~=true)
+      mc.setworkingstatus( p, po, count == 2 and mismatch~=true)
    end
 end
 

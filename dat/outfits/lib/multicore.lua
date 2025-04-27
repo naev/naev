@@ -121,7 +121,7 @@ local function mark_n( p, n, what )
       local function f(crt)
          return crt or res
       end
-      smfs.updatefile( p, {engines_comb_dir .. "_needs_refresh"}, f)
+      return smfs.updatefile( p, {engines_comb_dir .. "_needs_refresh"}, f)
    end
 end
 
@@ -300,21 +300,22 @@ function multicore.init( params )
       equip( p, po, -1)
    end
 
-   function setworkingstatus( p, po, on)
-      if p and po then
-         local off
-         if on == nil then
-            off = nil
-         else
-            off = not on
-         end
-         mark_n( p, po:id(), off )
-         if update_engines_combinator_if_needed( p, po, 0, nil ) then
-            update_stats( p, po)
-         end
+end
+
+function multicore.setworkingstatus( p, po, on)
+   if p and po then
+      local id = po:id()
+      local off
+
+      if on == nil then
+         off = nil
+      else
+         off = not on
+      end
+      if mark_n( p, id, off ) then
+         p:outfitInitSlot(id)
       end
    end
-
 end
 
 return multicore
