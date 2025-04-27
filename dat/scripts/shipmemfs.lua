@@ -31,7 +31,7 @@ function smfs.checkdir( p, path )
 --  - a table of the dir contents.
 --
 -- Side - effect:
---  - the returned table is a *copy* (therefore you can brake the original)
+--  - the returned table is a *copy* (therefore you can break the original)
 --  - the return table does not have '_parent_':.. entry contrary to the original table,
 --    that may contain one.
 function smfs.listdir( ptr )
