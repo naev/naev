@@ -5,12 +5,16 @@ local shipstat = naev.shipstats()
 local multicore = {}
 local engines_comb_dir = "_ec"
 
-local function valcol( val, inverted )
+local function valcol( val, inverted, gy )
    if inverted then
       val = -val
    end
    if val > 0 then
-      return "#g"
+      if gy then
+         return "#b"
+      else
+         return "#g"
+      end
    elseif val < 0 then
       return "#r"
    else
@@ -18,7 +22,7 @@ local function valcol( val, inverted )
    end
 end
 
-local function stattostr( s, val, grey, unit )
+local function stattostr( s, val, grey, unit, gy)
    if val == 0 then
       return "#n0" -- Correct people bad taste HERE.
    end
@@ -27,7 +31,7 @@ local function stattostr( s, val, grey, unit )
    if grey then
       col = "#n"
    else
-      col = valcol( val, s.inverted )
+      col = valcol( val, s.inverted, gy)
    end
    local str
    if val > 0 then
@@ -42,7 +46,7 @@ local function stattostr( s, val, grey, unit )
    end
 end
 
-local function add_desc( stat, nomain, nosec )
+local function add_desc( stat, nomain, nosec, gy )
    local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
@@ -57,15 +61,15 @@ local function add_desc( stat, nomain, nosec )
    if off or (nomain and nosec) then
       col="#n"
    else
-      col=valcol( p+s, stat.stat.inverted )
+      col=valcol( p+s, stat.stat.inverted, gy)
    end
-   local pref = col..fmt.f("{name}: ",{name=name})
+   local pref = col .. fmt.f("{name}: ",{name=name})
    if p == s then
-      return pref..stattostr( stat.stat, base, off, true )
+      return pref .. stattostr( stat.stat, base, off, true, gy)
    else
-      return pref..fmt.f("{bas} #n/#0 {sec}", {
-         bas = stattostr( stat.stat, p, nomain, nosec),
-         sec = stattostr( stat.stat, s, nosec, nomain or not nosec),
+      return pref .. fmt.f("{bas} #n/#0 {sec}", {
+         bas = stattostr( stat.stat, p, nomain, nosec, gy),
+         sec = stattostr( stat.stat, s, nosec, nomain or not nosec, gy),
       })
    end
 end
@@ -214,38 +218,37 @@ function multicore.init( params )
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
-         desc = desc .. "\n" .. add_desc( s, nomain or off, nosec or off )
+         desc = desc .. "\n" .. add_desc( s, nomain or off, nosec or off, averaged and needs_avg[s.name] )
       end
 
       if multicore_off ~= nil then
          local status
          if multicore_off == false then
-            status = "#g".._("running").."#0"
+            status = "#g" .. _("running") .. "#0"
          else
-            status = "#r".._("HALTED").."#0"
+            status = "#r" .. _("HALTED") .. "#0"
          end
-         desc = desc .. "\n#b"..fmt.f(_("Working Status: {status}"), {status=status})
+         desc = desc .. "\n#o" .. fmt.f(_("Working Status: {status}"), {status=status})
       end
 
       if averaged and multicore_off~=true then
+         local share = (smid and smid["part"]) or 0
          desc = desc .. "\n\n"
-         desc = desc .. fmt.f(_("#oLoad Factor:#0 #y{share}%#0 #o(#g{eml} {t}#0 #oout of#0 #g{total} {t}#0 #o)#0\n"),{
-            share = (smid and smid["part"]) or 0,
+         desc = desc .. fmt.f(_("#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
             eml = (smid and smid["engine_limit"]) or 0,
-            total = totaleml,
-            t = eml_unit
+            total = totaleml, share = share, t = eml_unit
          })
          for k,s in ipairs(stats) do
             if needs_avg[s.name] then
-               desc = desc .. fmt.f(_("#g{display}: +{val} {unit}#0"),{
-                  display = s.stat.display, unit = s.stat.unit, val = smid[s.name]
+               desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
+                  display = s.stat.display, unit = s.stat.unit, 
+                  val = fmt.number(smid[s.name] )
                })
-               if total then
-                  desc = desc .. "  #y[+" .. fmt.number(smid[s.name]*smid['engine_limit']/totaleml) .. " " .. s.stat.unit .. "]#0"
-               end
-               desc = desc .. "\n"
+               desc = desc .. "  #y=>#0  #g+" .. fmt.number(smid[s.name]*share/100) .. " " .. s.stat.unit
+               desc = desc .. "#0\n"
             end
          end
+         --desc= desc .. "#bb#gg#nn#oo#pp#rr#ww#yy"
       end
       return desc
    end

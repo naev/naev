@@ -54,7 +54,7 @@ descextra=function ( p, _o, po)
 
    local count = 0
    for i,v in pairs(dat) do
-      if v['engine_limit'] and v['halted']~=true then
+      if i ~= 'needs_refresh' and v['engine_limit'] and v['halted']~=true then
          count = count + 1
       end
    end
@@ -65,14 +65,16 @@ descextra=function ( p, _o, po)
    else
       local total = smfs.readdir( p, {engines_comb_dir.."_total"} )
       for i,v in pairs(dat) do
-         local outfit_name = p:outfitGet(i):name()
-         local engine_number = i - ((po and po:id()) or 0)
+         if i ~= 'needs_refresh' then 
+            local outfit_name = p:outfitGet(i):name()
+            local engine_number = i - ((po and po:id()) or 0)
 
-         if v['engine_limit'] and v['halted'] ~= true then
-            out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
-            out = out .. adddesc(v, total['engine_limit'])
-         else
-            out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
+            if v['engine_limit'] and v['halted'] ~= true then
+               out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
+               out = out .. adddesc(v, total['engine_limit'])
+            else
+               out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
+            end
          end
       end
       out = out .. "\n#y[TOTAL]#0\n"
