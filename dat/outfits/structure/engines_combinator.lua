@@ -46,11 +46,12 @@ local function adddesc( t, total)
 end
 
 descextra=function ( p, _o, po)
-   if p == nil then
+   local dat = p and smfs.readdir( p, {engines_comb_dir} )
+
+   if dat == nil then
       return "This outfit is not supposed to be off its slot."
    end
 
-   local dat = smfs.readdir( p, {engines_comb_dir} )
    local count = 0
    for i,v in pairs(dat) do
       if v['engine_limit'] and v['halted']~=true then
@@ -80,7 +81,7 @@ descextra=function ( p, _o, po)
    return out
 end
 
-function onadd( p, po )
+function init( p, po )
    if not p or not po or not po:outfit() then
       return
    end
@@ -88,6 +89,8 @@ function onadd( p, po )
    if not smfs.readfile( p, {engines_comb_dir.."_needs_refresh"}) then
       --print ("Unneeded refresh")
       return
+   --else
+   --   print ("Needed refresh")
    end
 
    local data = smfs.checkdir( p, {engines_comb_dir} )
@@ -136,5 +139,4 @@ function onadd( p, po )
    smfs.writefile( p, {engines_comb_dir.."_needs_refresh"}, nil)
 end
 
-init=onadd
 

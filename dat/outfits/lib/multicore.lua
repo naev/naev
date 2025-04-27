@@ -151,7 +151,7 @@ local function update_engines_combinator_if_needed( p, po, sign, t )
    smfs.writefile( p, {engines_comb_dir .. "_needs_refresh"}, changed)
 
    if changed then
-      p:outfitAddSlot(outfit.get("Engines Combinator"),"engines_combinator")
+      p:outfitInitSlot("engines_combinator")
       return true
    else
       return false
