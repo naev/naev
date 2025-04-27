@@ -36,7 +36,7 @@ local function adddesc( t, total)
       local name = k['name']
 
       k['val']=t[name]
-      out = out .. _(fmt.f("\t#g{display} {val} {unit}#0",k))
+      out = out .. fmt.f(_("\t#g{display} {val} {unit}#0"),k)
       if total then
          out =out .. "  #y[" .. fmt.number(t[name]*t['engine_limit']/total) .. " " .. k.unit .. "]#0"
       end
