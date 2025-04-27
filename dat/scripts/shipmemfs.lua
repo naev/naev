@@ -57,16 +57,14 @@ end
 --  - Any non-existing dir on the way is created.
 --
 function smfs.checkdir( p, path )
-   if (p and p:shipMemory()) == nil then
-      return nil
-   end
+   local ptr = p and p:shipMemory()
 
-   local ptr = p:shipMemory()
-   local prv
-   for i,k in ipairs(path) do
-      prv = k
-      ptr[prv] = ptr[prv] or {}
-      ptr = ptr[prv]
+   if ptr ~= nil then
+      for i,k in ipairs(path) do
+         local prv = k
+         ptr[prv] = ptr[prv] or {}
+         ptr = ptr[prv]
+      end
    end
    return ptr
 end
@@ -177,20 +175,16 @@ end
   _ec_needs_refresh : false
 
 > fs.find()
-  _ec/
-  _ec/2/
   _ec/2/engine_limit : 630
   _ec/2/accel : 203
   _ec/2/turn : 131
   _ec/2/part : 100
   _ec/2/speed : 222
-  _ec/3/
   _ec/3/engine_limit : 475
   _ec/3/halted : true
   _ec/3/turn : 108
   _ec/3/accel : 109
   _ec/3/speed : 201
-  _ec_total/
   _ec_total/engine_limit : 630
   _ec_total/turn : 131
   _ec_total/accel : 203

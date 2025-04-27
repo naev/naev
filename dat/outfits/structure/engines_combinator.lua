@@ -47,7 +47,7 @@ end
 
 descextra=function ( p, _o, po)
    if p == nil then
-      return "Can't see it due to the descextra p == nil bug."
+      return "This outfit is not supposed to be off its slot."
    end
 
    local dat = smfs.readdir( p, {engines_comb_dir} )
