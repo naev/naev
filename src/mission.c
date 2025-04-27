@@ -1291,7 +1291,7 @@ static int mission_parseFile( const char *file, MissionData *temp )
 
    /* Load the chunk. */
    int ret =
-      luaL_loadbuffer( naevL, temp->lua, strlen( temp->lua ), temp->name );
+      nlua_loadbuffer( naevL, temp->lua, strlen( temp->lua ), temp->name );
    if ( ret == LUA_ERRSYNTAX )
       WARN( _( "Mission Lua '%s' syntax error: %s" ), file,
             lua_tostring( naevL, -1 ) );

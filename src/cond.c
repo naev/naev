@@ -63,7 +63,7 @@ int cond_compile( const char *cond )
       lua_pushstring( naevL, cond );
       lua_concat( naevL, 2 );
    }
-   ret = luaL_loadbuffer( naevL, lua_tostring( naevL, -1 ),
+   ret = nlua_loadbuffer( naevL, lua_tostring( naevL, -1 ),
                           lua_strlen( naevL, -1 ), "Lua Conditional" );
    switch ( ret ) {
    case LUA_ERRSYNTAX:

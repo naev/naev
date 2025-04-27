@@ -790,6 +790,12 @@ static void spfx_trail_update( Trail_spfx *trail, double dt )
       double      mod         = dt * trail_point->t * trail->spec->accel_mod;
       trail_point->x += trail_point->dx * mod;
       trail_point->y += trail_point->dy * mod;
+      if ( ( trail_point->mode != MODE_IDLE ) &&
+           ( trail->spec->accel_base > 0. ) ) {
+         mod = dt * trail_point->t / ( trail_point->dx + trail_point->dy );
+         trail_point->x += trail->spec->accel_base * mod * trail_point->dx;
+         trail_point->y += trail->spec->accel_base * mod * trail_point->dy;
+      }
       trail_point->t -= rel_dt;
    }
 
@@ -1291,6 +1297,8 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
          tc->nebula = xml_getInt( node );
       else if ( xml_isNode( node, "accel_mod" ) )
          tc->accel_mod = xml_getFloat( node );
+      else if ( xml_isNode( node, "accel_base" ) )
+         tc->accel_base = xml_getFloat( node );
       else {
          int i;
          for ( i = 0; i < MODE_MAX; i++ )
