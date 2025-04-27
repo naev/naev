@@ -29,8 +29,9 @@ end
 
 -- Called to get the extra description of the outfit. This gets appended to the
 -- summary and description, and should be short. The function receives the
--- pilot p if applicable, the current outfit o, and the pilot outfit slot po
--- (or nil if not applicable). The function should return a translated string.
+-- pilot p if applicable (or nil otherwise), the current outfit o, and the
+-- pilot outfit slot po (or nil if not applicable). The function should return
+-- a translated string.
 function descextra( _p, _o, _po )
    return _("This outfit is very cool.")
 end
@@ -71,18 +72,21 @@ function init( _p, _po )
 end
 
 -- The function is run when the outfit is added to the pilot
+-- This function is run _AFTER_ the outfit is added, so the po struct is still valid.
 function onadd( _p, _po )
 end
 
--- The function is run when the outfit is removed from the pilot
+-- The function is run when the outfit is removed from the pilot.
+-- This function is run _BEFORE_ the outfit is removed, so the po struct is still valid.
 function onremove( _p, _po )
 end
 
 -- The function is run when any outfit is changed on the pilot
+-- This is guaranteed to be run _AFTER_ onadd and onremove functions are called.
 function onoutfitchange( _p, _po )
 end
 
--- The update function is run periodically every 1/3 seconds
+-- The update function is run periodically every 1/10 seconds
 -- 'dt' is the time elapsed since last time run in seconds
 function update( _p, _po, _dt )
 end
@@ -143,6 +147,7 @@ function takeoff( _p, _po )
 end
 
 -- Triggered when pilot jumps in (player only)
+-- Run AFTER the player is in the new system.
 function jumpin( _p, _po )
 end
 
@@ -160,20 +165,26 @@ end
 
 --[[
    Below are WEAPONS ONLY. However, they can be triggered by munitions,
-   which share the memory with the ORIGINAL spawning outfit.
+   which share the environment with the ORIGINAL spawning outfit, not necessarily
+   the true outfit. So if you create a "Laser MK1" munition from a new outfit
+   called "NewOutfit", it would use the environment of "NewOutfit", and not "Laser
+   MK1".
 
    Note that these are calculated with particles.
 --]]
+
 -- Triggered when the weapon is about to shoot and can be used to control
 -- whether or not it should be able to shoot. By returning true, it'll start
 -- firing the weapon, while returning false will block in from shooting.
 function onshoot( _p, _po )
    return false
 end
+
 -- Triggered when a particle shot by p impacts the target. p may not exist if
 -- the pilot that shot the weapon ceased to exist.
 function onimpact( _p, _target, _pos, _vel, _o )
 end
+
 --- Triggered when a particle times out without hitting a target. p may not
 --exist if the pilot that shot the weapon ceased to exist.
 function onmiss( _p, _pos, _vel, _o )
