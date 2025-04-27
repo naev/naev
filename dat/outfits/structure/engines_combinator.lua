@@ -46,7 +46,7 @@ local function adddesc( t, total)
 end
 
 descextra=function ( p, _o, po)
-   local dat = p and smfs.readdir( p, {engines_comb_dir} )
+   local dat = p and smfs.readdir( p, {engines_comb_dir, 'engines'} )
 
    if dat == nil then
       return "This outfit is not supposed to be off its slot."
@@ -54,7 +54,7 @@ descextra=function ( p, _o, po)
 
    local count = 0
    for i,v in pairs(dat) do
-      if i ~= 'needs_refresh' and v['engine_limit'] and v['halted']~=true then
+      if v['engine_limit'] and v['halted']~=true then
          count = count + 1
       end
    end
@@ -63,18 +63,16 @@ descextra=function ( p, _o, po)
    if count == 0 then
       out = "#o".._("No active engine equipped").."#0\n"
    else
-      local total = smfs.readdir( p, {engines_comb_dir.."_total"} )
+      local total = smfs.readdir( p, {engines_comb_dir, "total"} )
       for i,v in pairs(dat) do
-         if i ~= 'needs_refresh' then 
-            local outfit_name = p:outfitGet(i):name()
-            local engine_number = i - ((po and po:id()) or 0)
+         local outfit_name = p:outfitGet(i):name()
+         local engine_number = i - ((po and po:id()) or 0)
 
-            if v['engine_limit'] and v['halted'] ~= true then
-               out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
-               out = out .. adddesc(v, total['engine_limit'])
-            else
-               out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
-            end
+         if v['engine_limit'] and v['halted'] ~= true then
+            out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #y" .. fmt.number(v['part']) .."%#0 of " .. eml_name .."\n"
+            out = out .. adddesc(v, total['engine_limit'])
+         else
+            out = out .. "#g[" .. tostring(engine_number) .. "]#0 " .. outfit_name .. " : #rHALTED#0\n"
          end
       end
       out = out .. "\n#y[TOTAL]#0\n"
@@ -95,12 +93,12 @@ function init( p, po )
    --   print ("Needed refresh")
    end
 
-   local data = smfs.checkdir( p, {engines_comb_dir} )
+   local data = smfs.checkdir( p, {engines_comb_dir, 'engines'} )
    local dataon = {} -- the subset of if that is active
-   local comb = smfs.checkdir( p, {engines_comb_dir.."_total"} )
+   local comb = smfs.checkdir( p, {engines_comb_dir, "total"} )
 
    for k,v in pairs(smfs.listdir(data)) do
-      if k ~= 'needs_refresh' and v['engine_limit'] and v['halted'] ~= true then
+      if v['engine_limit'] and v['halted'] ~= true then
          dataon[k] = v
       end
    end

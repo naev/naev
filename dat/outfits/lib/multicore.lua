@@ -114,11 +114,11 @@ local function is_secondary( po )
 end
 
 local function marked_n( p, n )
-   return smfs.readfile( p, {engines_comb_dir,n,'halted'})
+   return smfs.readfile( p, {engines_comb_dir, 'engines', n, 'halted'})
 end
 
 local function mark_n( p, n, what )
-   local res = smfs.writefile( p, {engines_comb_dir,n,'halted'}, what)
+   local res = smfs.writefile( p, {engines_comb_dir, 'engines', n, 'halted'}, what)
 
    if res == nil then -- could not write
       warn("Oh-oh")
@@ -137,14 +137,14 @@ end
 local function update_engines_combinator_if_needed( p, po, sign, t )
    local id = po:id()
    local changed = smfs.readfile( p, {engines_comb_dir, "needs_refresh"})
-   local comb = smfs.checkdir( p, {engines_comb_dir} )
+   local comb = smfs.checkdir( p, {engines_comb_dir, 'engines'} )
    local bef
 
    if sign == -1 then
       changed = changed or comb[id] ~= nil
       comb[id] = nil
    else
-      local combid = smfs.checkdir( p, {engines_comb_dir, id} )
+      local combid = smfs.checkdir( p, {engines_comb_dir, 'engines', id} )
       changed = changed or ((sign == 1) and (comb[id] == nil))
 
       for k,v in pairs(t or {}) do
@@ -211,8 +211,8 @@ function multicore.init( params )
       local averaged = is_engine( po ) and is_multiengine( p )
       local id = po and po:id()
       local multicore_off = p and po and marked_n( p, id )
-      local smid = po and smfs.readdir( p, {engines_comb_dir, id} )
-      local total = smfs.readdir( p, {engines_comb_dir.."_total"} )
+      local smid = po and smfs.readdir( p, {engines_comb_dir, 'engines', id} )
+      local total = smfs.readdir( p, {engines_comb_dir,"total"} )
       local totaleml = (total and total["engine_limit"]) or 0
 
 
@@ -241,7 +241,7 @@ function multicore.init( params )
          for k,s in ipairs(stats) do
             if needs_avg[s.name] then
                desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
-                  display = s.stat.display, unit = s.stat.unit, 
+                  display = s.stat.display, unit = s.stat.unit,
                   val = fmt.number(smid[s.name] )
                })
                desc = desc .. "  #y=>#0  #g+" .. fmt.number(smid[s.name]*share/100) .. " " .. s.stat.unit
