@@ -208,15 +208,15 @@ function multicore.init( params )
 
       local averaged = is_engine( po ) and is_multiengine( p )
       local multicore_off = p and po and marked_n( p, po:id() )
-      local sm = smfs.readdir( p, {engines_comb_dir} )
+      local smid = po and smfs.readdir( p, {engines_comb_dir, po:id()} )
       local total = smfs.readdir( p, {engines_comb_dir.."_total"} )
       local totaleml = (total and total["engine_limit"]) or 0
 
       if averaged then
          if multicore_off~=true then
             desc = desc .. fmt.f(_("\n#oLoad Factor:#0 #y{share}%#0 #o({eml} {t} out of {total} {t} )#0"),{
-               share = (sm[po:id()] and sm[po:id()]["part"]) or 0,
-               eml = (sm[po:id()] and sm[po:id()]["engine_limit"]) or 0,
+               share = (smid and smid["part"]) or 0,
+               eml = (smid and smid["engine_limit"]) or 0,
                total = totaleml,
                t = eml_unit
             })
@@ -224,11 +224,11 @@ function multicore.init( params )
       end
 
       for k,s in ipairs(stats) do
-         local off = multicore_off and (nosec or nomain) and s.name~="mass"
-         desc = desc.."\n"..add_desc( s, nomain or off, nosec or off )
-         if averaged and s.name == "engine_limit" and multicore_off~=true then
+         local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
+         desc = desc .. "\n" .. add_desc( s, nomain or off, nosec or off )
+         if averaged and s.name == "engine_limit" and multicore_off ~= true then
             desc = desc .. fmt.f(_("\n\t#o[#0 #y{share}%#0 #oout of {total} {t}#0 #o]#0"),{
-               share = sm[po:id()] and sm[po:id()]['part'] or 0,
+               share = (smid and smid["part"]) or 0,
                total = totaleml,
                t = eml_unit
             })
@@ -238,9 +238,9 @@ function multicore.init( params )
       if multicore_off ~= nil then
          local status
          if multicore_off == false then
-            status = desc .. "#g".._("running").."#0"
+            status = "#g".._("running").."#0"
          else
-            status = desc .. "#r".._("HALTED").."#0"
+            status = "#r".._("HALTED").."#0"
          end
          desc = desc .. "\n#b"..fmt.f(_("Working Status: {status}"), {status=status})
       end
