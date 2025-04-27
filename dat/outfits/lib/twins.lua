@@ -25,7 +25,7 @@ local old_init = init
 init=function ( p, po)
    init=old_init
    onoutfitchange( p, po)
-   old_init()
+   old_init( p, po )
 end
 
 local old_onadd=onadd

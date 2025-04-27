@@ -236,12 +236,13 @@ function multicore.init( params )
       end
 
       if multicore_off ~= nil then
-         desc = desc .. "\n#bWorking Status: #0"
+         local status
          if multicore_off == false then
-            desc = desc .. "#grunning#0"
+            status = desc .. "#g".._("running").."#0"
          else
-            desc = desc .. "#rHALTED#0"
+            status = desc .. "#r".._("HALTED").."#0"
          end
+         desc = desc .. "\n#b"..fmt.f(_("Working Status: {status}"), {status=status})
       end
       return desc
    end
