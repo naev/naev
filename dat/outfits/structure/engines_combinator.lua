@@ -86,7 +86,7 @@ function init( p, po )
       return
    end
 
-   if not smfs.readfile( p, {engines_comb_dir.."_needs_refresh"}) then
+   if not smfs.readfile( p, {engines_comb_dir, "needs_refresh"}) then
       --print ("Unneeded refresh")
       return
    --else
@@ -98,7 +98,7 @@ function init( p, po )
    local comb = smfs.checkdir( p, {engines_comb_dir.."_total"} )
 
    for k,v in pairs(smfs.listdir(data)) do
-      if v['engine_limit'] and v['halted'] ~= true then
+      if k ~= 'needs_refresh' and v['engine_limit'] and v['halted'] ~= true then
          dataon[k] = v
       end
    end
@@ -136,7 +136,7 @@ function init( p, po )
          end
       end
    end
-   smfs.writefile( p, {engines_comb_dir.."_needs_refresh"}, nil)
+   smfs.writefile( p, {engines_comb_dir, "needs_refresh"}, nil)
 end
 
 

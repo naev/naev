@@ -1,5 +1,5 @@
 
-mc = require("outfits/lib/multicore")
+local mc = require("outfits/lib/multicore")
 
 local prvdesc=descextra
 descextra=function ( p, o, po)

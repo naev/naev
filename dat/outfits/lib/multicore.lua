@@ -36,9 +36,9 @@ local function stattostr( s, val, grey, unit )
       str = fmt.number(val)
    end
    if unit and s.unit then
-      return col..fmt.f("{val} {unit}", {val=str, unit=_(s.unit)})
+      return col .. fmt.f("{val} {unit}", {val=str, unit=_(s.unit)})
    else
-      return col..str
+      return col .. str
    end
 end
 
@@ -94,9 +94,9 @@ end
 
 local function is_engine( po )
    if po then
-      local o=po:outfit()
-
-      return o and o:tags() and o:tags().engine
+      local o = po:outfit()
+      local tags = o and o:tags()
+      return tags and tags.engine
    end
 end
 
@@ -105,7 +105,8 @@ local function is_multiengine( p )
 end
 
 local function is_secondary( po )
-   return po and po:slot() and po:slot().tags and po:slot().tags.secondary
+   local ps =po and po:slot()
+   return ps and ps.tags and ps.tags.secondary
 end
 
 local function marked_n( p, n )
@@ -121,7 +122,7 @@ local function mark_n( p, n, what )
       local function f(crt)
          return crt or res
       end
-      return smfs.updatefile( p, {engines_comb_dir .. "_needs_refresh"}, f)
+      return smfs.updatefile( p, {engines_comb_dir, "needs_refresh"}, f)
    end
 end
 
@@ -131,7 +132,7 @@ end
 --   1 for add
 local function update_engines_combinator_if_needed( p, po, sign, t )
    local id = po:id()
-   local changed = smfs.readfile( p, {engines_comb_dir .. "_needs_refresh"})
+   local changed = smfs.readfile( p, {engines_comb_dir, "needs_refresh"})
    local comb = smfs.checkdir( p, {engines_comb_dir} )
    local bef
 
@@ -148,14 +149,12 @@ local function update_engines_combinator_if_needed( p, po, sign, t )
          changed = changed or (bef ~= v)
       end
    end
-   smfs.writefile( p, {engines_comb_dir .. "_needs_refresh"}, changed)
+   smfs.writefile( p, {engines_comb_dir, "needs_refresh"}, changed)
 
    if changed then
       p:outfitInitSlot("engines_combinator")
-      return true
-   else
-      return false
    end
+   return changed
 end
 
 function multicore.init( params )
@@ -167,8 +166,7 @@ function multicore.init( params )
       s.index = index( shipstat, s[1] )
       s.stat = shipstat[ s.index ]
       s.name = s.stat.name
-      s.pri = s[2]
-      s.sec = s[3]
+      s.pri, s.sec = s[2], s[3]
       if s.name == 'engine_limit' then
          eml_unit = s.stat.unit
       end
@@ -207,32 +205,16 @@ function multicore.init( params )
       end
 
       local averaged = is_engine( po ) and is_multiengine( p )
-      local multicore_off = p and po and marked_n( p, po:id() )
-      local smid = po and smfs.readdir( p, {engines_comb_dir, po:id()} )
+      local id = po and po:id()
+      local multicore_off = p and po and marked_n( p, id )
+      local smid = po and smfs.readdir( p, {engines_comb_dir, id} )
       local total = smfs.readdir( p, {engines_comb_dir.."_total"} )
       local totaleml = (total and total["engine_limit"]) or 0
 
-      if averaged then
-         if multicore_off~=true then
-            desc = desc .. fmt.f(_("\n#oLoad Factor:#0 #y{share}%#0 #o({eml} {t} out of {total} {t} )#0"),{
-               share = (smid and smid["part"]) or 0,
-               eml = (smid and smid["engine_limit"]) or 0,
-               total = totaleml,
-               t = eml_unit
-            })
-         end
-      end
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
          desc = desc .. "\n" .. add_desc( s, nomain or off, nosec or off )
-         if averaged and s.name == "engine_limit" and multicore_off ~= true then
-            desc = desc .. fmt.f(_("\n\t#o[#0 #y{share}%#0 #oout of {total} {t}#0 #o]#0"),{
-               share = (smid and smid["part"]) or 0,
-               total = totaleml,
-               t = eml_unit
-            })
-         end
       end
 
       if multicore_off ~= nil then
@@ -243,6 +225,27 @@ function multicore.init( params )
             status = "#r".._("HALTED").."#0"
          end
          desc = desc .. "\n#b"..fmt.f(_("Working Status: {status}"), {status=status})
+      end
+
+      if averaged and multicore_off~=true then
+         desc = desc .. "\n\n"
+         desc = desc .. fmt.f(_("#oLoad Factor:#0 #y{share}%#0 #o(#g{eml} {t}#0 #oout of#0 #g{total} {t}#0 #o)#0\n"),{
+            share = (smid and smid["part"]) or 0,
+            eml = (smid and smid["engine_limit"]) or 0,
+            total = totaleml,
+            t = eml_unit
+         })
+         for k,s in ipairs(stats) do
+            if needs_avg[s.name] then
+               desc = desc .. fmt.f(_("#g{display}: +{val} {unit}#0"),{
+                  display = s.stat.display, unit = s.stat.unit, val = smid[s.name]
+               })
+               if total then
+                  desc = desc .. "  #y[+" .. fmt.number(smid[s.name]*smid['engine_limit']/totaleml) .. " " .. s.stat.unit .. "]#0"
+               end
+               desc = desc .. "\n"
+            end
+         end
       end
       return desc
    end
