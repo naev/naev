@@ -10,11 +10,13 @@ repos:
       exclude: po/naevpedia.pot
     - id: check-xml
     - id: check-yaml
+    - id: check-toml
     - id: check-added-large-files
     - id: check-executables-have-shebangs
     - id: check-shebang-scripts-are-executable
     - id: check-case-conflict
     - id: check-symlinks
+    - id: check-illegal-windows-names
     - id: destroyed-symlinks
     - id: detect-private-key
     - id: mixed-line-ending

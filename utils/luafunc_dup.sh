@@ -13,4 +13,3 @@ for arg in "$@" ; do
       res=1
    fi
 done
-
