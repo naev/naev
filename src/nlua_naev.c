@@ -869,7 +869,7 @@ static int naevL_menuSmall( lua_State *L )
  * @brief Checks to see if the game is paused.
  *
  *    @luatreturn boolean Whether or not the game is currently paused.
- * @luafunc pause
+ * @luafunc isPaused
  */
 static int naevL_isPaused( lua_State *L )
 {

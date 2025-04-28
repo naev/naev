@@ -70,9 +70,13 @@ The hologram slightly flickers.
 
    vn.label("explain")
    sai(_([["I hope you are not offended, I was able to record the protocol last time you joined, and should be able to run the connections synchronously to join like before."]]))
+   sai(_([["I've done some modifications so that your presence to be less noticeable, but it is likely you will be noticed."]]))
    vn.jump("menu")
 
    vn.label("accept")
+   vn.func( function ()
+      accepted = true
+   end )
    vn.scene()
    local bg_cyberspace = love_shaders.shader2canvas( love_shaders.cyberspace() )
    vn.setBackground( function ()
@@ -82,7 +86,7 @@ The hologram slightly flickers.
    vn.transition("fadeup")
    vn.na(_([[You accept and strap into a full sensorial holodeck. Once again you are thrust into an uncanny feeling as you plunge into the Nexus.]]))
    if var.peek( "nexus_sickness" ) then
-      vn.na(_([[At least this time you seem to have much less Nexus syndrome effects.]]))
+      vn.na(_([[At least this time you seem to be much less affected by the Nexus syndrome.]]))
    end
 
    vn.scene()
@@ -90,16 +94,19 @@ The hologram slightly flickers.
    local l337 = vn.newCharacter( onion.vn_nexus_l337b01{pos=1*offset} )
    local underworlder = vn.newCharacter( onion.vn_nexus_underworlder{pos=2*offset, flip=true} )
    local puppet = vn.newCharacter( onion.vn_nexus_notasockpuppet{pos=3*offset, flip=true} )
-   -- Trixie would be here, but we keep it empty on purpose
+   -- Trixie would be at 4*offset, but we keep it empty on purpose
    local dog = vn.newCharacter( onion.vn_nexus_dog{pos=5*offset, flip=false} )
    local lonewolf4 = vn.newCharacter( onion.vn_nexus_lonewolf4{pos=6*offset, flip=false} )
    vn.music( onion.loops.circus )
    vn.transition()
-   l337(_([[]]))
-   underworlder(_([[]]))
-   puppet(_([[]]))
-   dog(_([[]]))
-   lonewolf4(_([[]]))
+   vn.na(_([[You join what seems like an already started Conclave.]]))
+   l337(_([["And that's it? TRIXIE WAS DAMN PEELED, YOU HEARTLESS BASTARDS!"]]))
+   puppet(_([["Oh please, just because your protégé screwed up, it's no need to cause a scene. They weren't even a keyholder!"]]))
+   lonewolf4(_([["Trixie's untimely demised is another grave misfortune, yet another in this cosmic tragedy. We shall spare some tears, but the Onion Society shall persist, such as it always has, in defiance of annihilation."]]))
+   dog(_([["..."]]))
+   l337(_([["You MONSTERS! All you think about is power!"]]))
+   underworlder(_([["And is it not the pursuit of power that has brought us all here? That has joined us together since the Sublime Seven? You speak to us as if we were different, yet you were quick enough to abandon v3c70r"]]))
+   puppet(_([[""]]))
 
    vn.done("electric")
    vn.run()

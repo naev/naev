@@ -52,6 +52,8 @@ void      nlua_register( nlua_env *env, const char *libname, const luaL_Reg *l,
 int       nlua_dobufenv( nlua_env *env, const char *buff, size_t sz,
                          const char *name );
 int       nlua_dofileenv( nlua_env *env, const char *filename );
+int       nlua_loadbuffer( lua_State *L, const char *buff, size_t sz,
+                           const char *name );
 int       nlua_dochunkenv( nlua_env *env, int chunk, const char *name );
 int       nlua_loadStandard( nlua_env *env );
 int       nlua_errTrace( lua_State *L );

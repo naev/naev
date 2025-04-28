@@ -693,7 +693,7 @@ static int event_parseFile( const char *file, EventData *temp )
    }
 
    /* Check to see if syntax is valid. */
-   ret = luaL_loadbuffer( naevL, temp->lua, strlen( temp->lua ), temp->name );
+   ret = nlua_loadbuffer( naevL, temp->lua, strlen( temp->lua ), temp->name );
    if ( ret == LUA_ERRSYNTAX )
       WARN( _( "Event Lua '%s' syntax error: %s" ), file,
             lua_tostring( naevL, -1 ) );

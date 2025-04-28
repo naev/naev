@@ -827,7 +827,8 @@ void pilot_collideQueryIL( IntList *il, int x1, int y1, int x2, int y2 )
 double pilot_face( Pilot *p, double dir, double dt )
 {
    double diff = angle_diff( p->solid.dir, dir );
-   double turn = CLAMP( -1., 1., diff / ( p->turn * dt ) );
+   double turn =
+      ( p->turn <= 0. ) ? 0. : CLAMP( -1., 1., diff / ( p->turn * dt ) );
    pilot_setTurn( p, turn );
    return diff;
 }
@@ -3357,6 +3358,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    /* Allocate outfit memory. */
    pilot->outfits = array_create( PilotOutfitSlot * );
    /* First pass copy data. */
+   int added = 0;
    for ( int i = 0; i < 3; i++ ) {
       *pilot_list_ptr[i] =
          array_create_size( PilotOutfitSlot, array_size( ship_list[i] ) );
@@ -3370,8 +3372,10 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
          /* We'll ignore non-required outfits if NO_OUTFITS is set. */
          if ( ( !pilot_isFlagRaw( flags, PILOT_NO_OUTFITS ) ||
                 slot->sslot->required || slot->sslot->locked ) &&
-              slot->sslot->data != NULL )
-            pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
+              slot->sslot->data != NULL ) {
+            pilot_addOutfitRawNoLua( pilot, slot->sslot->data, slot );
+            added++;
+         }
       }
    }
    array_shrink( &pilot->outfits );
@@ -3380,6 +3384,12 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    if ( !pilot_isFlagRaw( flags, PILOT_NO_OUTFITS ) ) {
       for ( int i = 0; i < array_size( ship->outfit_intrinsic ); i++ )
          pilot_addOutfitIntrinsicRaw( pilot, ship->outfit_intrinsic[i] );
+   }
+
+   if ( added ) {
+      for ( int i = 0; i < array_size( pilot->outfits ); i++ )
+         pilot_outfitLAdd( pilot, pilot->outfits[i] );
+      pilot_outfitLOutfitChange( pilot );
    }
 
    /* Initialize outfits if applicable. */

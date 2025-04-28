@@ -21,6 +21,7 @@
 /** @endcond */
 
 #include "debug.h"
+#include "log.h"
 
 /**
  * @brief Enables FPU exceptions. Artificially limited to Linux until link

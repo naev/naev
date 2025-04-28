@@ -256,7 +256,7 @@ static int outfitL_get( lua_State *L )
  *
  *    @luatparam string s Raw (untranslated) name of the outfit to get.
  *    @luatreturn Outfit|nil The outfit matching name or nil if not found
- * @luafunc get
+ * @luafunc exists
  */
 static int outfitL_exists( lua_State *L )
 {
@@ -457,7 +457,7 @@ static int outfitL_slot( lua_State *L )
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn string|nil Human readable property (in English) or nil if
  * none.
- * @luafunc slot
+ * @luafunc slotExtra
  */
 static int outfitL_slotExtra( lua_State *L )
 {

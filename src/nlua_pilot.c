@@ -167,6 +167,7 @@ static int pilotL_outfitRm( lua_State *L );
 static int pilotL_outfitSlot( lua_State *L );
 static int pilotL_outfitAddSlot( lua_State *L );
 static int pilotL_outfitRmSlot( lua_State *L );
+static int pilotL_outfitInitSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
 static int pilotL_outfitsReset( lua_State *L );
@@ -394,6 +395,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfitSlot", pilotL_outfitSlot },
    { "outfitAddSlot", pilotL_outfitAddSlot },
    { "outfitRmSlot", pilotL_outfitRmSlot },
+   { "outfitInitSlot", pilotL_outfitInitSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
    { "outfitsReset", pilotL_outfitsReset },
@@ -2149,7 +2151,7 @@ static int pilotL_weapsetAdd( lua_State *L )
  *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
  *    @luatparam string|integer slot Slot to add to weapon set. Can be passed by
  * either id or name.
- * @luafunc weapsetAdd
+ * @luafunc weapsetAddType
  */
 static int pilotL_weapsetAddType( lua_State *L )
 {
@@ -2964,7 +2966,7 @@ static int pilotL_areAllies( lua_State *L )
 }
 
 /**
- * @brief Checks the pilot's spaceworthiness
+ * @brief Checks the pilot's spaceworthiness.
  *
  * Message can be non-null even if spaceworthy.
  *
@@ -3355,7 +3357,7 @@ static int pilotL_setInvisible( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set norender status of.
  *    @luatparam boolean state State to set norender.
- * @luafunc setInvisible
+ * @luafunc setNoRender
  */
 static int pilotL_setNoRender( lua_State *L )
 {
@@ -3419,7 +3421,7 @@ static int pilotL_setHilight( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set bribed status of.
  *    @luatparam[opt=true] boolean state State to set bribed.
- * @luafunc setHilight
+ * @luafunc setBribed
  */
 static int pilotL_setBribed( lua_State *L )
 {
@@ -3976,6 +3978,28 @@ static int pilotL_outfitRmSlot( lua_State *L )
 }
 
 /**
+ * @brief Makes an outfit run its initialization script.
+ *
+ *    @luatparam Pilot p Pilot to initialize outfit.
+ *    @luatparam string|integer slot Slot to initialize. Can be passed as a
+ * slot name (string) or slot id (integer).
+ * @luafunc outfitInitSlot
+ */
+static int pilotL_outfitInitSlot( lua_State *L )
+{
+   /* Get parameters. */
+   Pilot           *p = luaL_validpilot( L, 1 );
+   PilotOutfitSlot *s = luaL_checkslot( L, p, 2 );
+   if ( s == NULL )
+      return 0;
+   if ( s->outfit == NULL )
+      return 0;
+
+   pilot_outfitLInit( p, s );
+   return 0;
+}
+
+/**
  * @brief Adds an intrinsic outfit to the pilot.
  *
  * Intrinsic outfits are outfits that are associated with a ship, but not their
@@ -4511,7 +4535,7 @@ static int pilotL_setHealth( lua_State *L )
  * absolute value
  *    @luatparam[opt=current stress] number stress Value to set stress (disable
  * damage) to, in absolute value.
- * @luafunc setHealth
+ * @luafunc setHealthAbs
  */
 static int pilotL_setHealthAbs( lua_State *L )
 {
@@ -5240,7 +5264,7 @@ static int pilotL_getColour( lua_State *L )
  *    @luatparam Pilot p Pilot to get the colour of.
  *    @luatreturn string Character representing the pilot's colour for use with
  * specila printing characters.
- * @luafunc colour
+ * @luafunc colourChar
  */
 static int pilotL_colourChar( lua_State *L )
 {
@@ -5538,7 +5562,7 @@ static int pilotL_memory( lua_State *L )
  * The resulting table is indexable and mutable.
  *
  *    @luatparam Pilot p Pilot to get ship memory of.
- * @luafunc memory
+ * @luafunc shipMemory
  */
 static int pilotL_shipmemory( lua_State *L )
 {

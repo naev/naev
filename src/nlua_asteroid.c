@@ -432,7 +432,7 @@ static int asteroidL_state( lua_State *L )
  *    @luatparam Asteroid a Asteroid to set state of.
  *    @luatparam string s State to set. Has to be one of "FG", "XB", "BX",
  * "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
- * @luafunc state
+ * @luafunc setState
  */
 static int asteroidL_setState( lua_State *L )
 {
@@ -597,7 +597,7 @@ static int asteroidL_armour( lua_State *L )
  *    @luatparam Asteroid a Asteroid to set armour of.
  *    @luatparam number Amount to set the armour to (negative values will
  * explode it).
- * @luafunc setTimer
+ * @luafunc setArmour
  */
 static int asteroidL_setArmour( lua_State *L )
 {

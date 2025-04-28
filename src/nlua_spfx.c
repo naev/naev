@@ -521,7 +521,7 @@ static int spfxL_setVel( lua_State *L )
  *
  *    @luatparam spfx s Spfx to get sound effect of.
  *    @luatreturn audio Sound effect of the spfx.
- * @luafunc vel
+ * @luafunc sfx
  */
 static int spfxL_sfx( lua_State *L )
 {

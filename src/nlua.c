@@ -210,6 +210,24 @@ int nlua_dofileenv( nlua_env *env, const char *filename )
    return 0;
 }
 
+int nlua_loadbuffer( lua_State *L, const char *buff, size_t sz,
+                     const char *name )
+{
+#if DEBUGGING
+   /* We don't really want to do this, but Lua seems to trigger all sorts of
+    * FPE exceptions on a daily basis.
+    * TODO get rid of if possible. */
+   if ( conf.fpu_except )
+      debug_disableFPUExcept();
+#endif /* DEBUGGING */
+   int ret = luaL_loadbuffer( L, buff, sz, name );
+#if DEBUGGING
+   if ( conf.fpu_except )
+      debug_enableFPUExcept();
+#endif /* DEBUGGING */
+   return ret;
+}
+
 /*
  * @brief Run code from chunk in Lua environment.
  *

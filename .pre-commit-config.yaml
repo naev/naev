@@ -10,11 +10,13 @@ repos:
       exclude: po/naevpedia.pot
     - id: check-xml
     - id: check-yaml
+    - id: check-toml
     - id: check-added-large-files
     - id: check-executables-have-shebangs
     #- id: check-shebang-scripts-are-executable
     - id: check-case-conflict
     - id: check-symlinks
+    - id: check-illegal-windows-names
     - id: destroyed-symlinks
     - id: detect-private-key
     - id: mixed-line-ending
@@ -34,8 +36,20 @@ repos:
       args: ["--ignore-words", ".codespellignore" ]
       additional_dependencies:
         - tomli
+- repo: https://github.com/shssoichiro/oxipng
+  rev: v9.1.5
+  hooks:
+    - id: oxipng
+      args: ["-o", "4", "--strip", "safe", "--alpha"]
+      types: [png]
 - repo: local
   hooks:
+    - id: luafunc_dup
+      name: duplicate @luafunc entry detector
+      entry: utils/luafunc_dup.sh
+      files: '^src/nlua_*.c'
+      types: [c]
+      language: script
     - id: nluacheck
       name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py
@@ -65,11 +79,6 @@ repos:
       language: script
       files: dat/(ships|outfits)/.*.xml$
       pass_filenames: false
-    - id: optipng
-      name: PNG Optimizer
-      entry: optipng
-      types: [png]
-      language: system
     - id: clang-format
       name: Clang formatter
       entry: clang-format -i

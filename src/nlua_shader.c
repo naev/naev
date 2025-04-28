@@ -321,7 +321,7 @@ static int shaderL_send( lua_State *L )
  *
  *    @luatparam Shader shader Shader to send uniform to.
  *    @luatparam string name Name of the uniform.
- * @luafunc send
+ * @luafunc sendRaw
  */
 static int shaderL_sendRaw( lua_State *L )
 {

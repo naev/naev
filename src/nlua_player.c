@@ -1113,7 +1113,7 @@ static int playerL_takeoff( lua_State *L )
  *    @luatparam boolean noisy Whether or not to do player messages.
  *    @luatreturn string Status of the boarding attempt. Can be "impossible",
  * "retry", "ok", or "error".
- * @luafunc tryBoard
+ * @luafunc tryLand
  */
 static int playerL_tryLand( lua_State *L )
 {
@@ -2333,7 +2333,7 @@ static int playerL_inventoryAdd( lua_State *L )
  *    @luatparam string name The name of the item to remove.
  *    @luatparam integer quantity The amount of the item to remove.
  *    @luatreturn integer The amount of the item removed.
- * @luafunc inventoryAdd
+ * @luafunc inventoryRm
  */
 static int playerL_inventoryRm( lua_State *L )
 {
@@ -2351,7 +2351,7 @@ static int playerL_inventoryRm( lua_State *L )
  *
  *    @luatparam string name The name of the item to check.
  *    @luatreturn integer The amount of the item the player has (0 if none).
- * @luafunc inventoryAdd
+ * @luafunc inventoryOwned
  */
 static int playerL_inventoryOwned( lua_State *L )
 {
