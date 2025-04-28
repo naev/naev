@@ -2149,7 +2149,7 @@ static int pilotL_weapsetAdd( lua_State *L )
  *    @luatparam integer id ID of the weapon set as shown in game (from 0 to 9).
  *    @luatparam string|integer slot Slot to add to weapon set. Can be passed by
  * either id or name.
- * @luafunc weapsetAdd
+ * @luafunc weapsetAddType
  */
 static int pilotL_weapsetAddType( lua_State *L )
 {
@@ -3355,7 +3355,7 @@ static int pilotL_setInvisible( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set norender status of.
  *    @luatparam boolean state State to set norender.
- * @luafunc setInvisible
+ * @luafunc setNoRender
  */
 static int pilotL_setNoRender( lua_State *L )
 {
@@ -3419,7 +3419,7 @@ static int pilotL_setHilight( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set bribed status of.
  *    @luatparam[opt=true] boolean state State to set bribed.
- * @luafunc setHilight
+ * @luafunc setBribed
  */
 static int pilotL_setBribed( lua_State *L )
 {
@@ -4533,7 +4533,7 @@ static int pilotL_setHealth( lua_State *L )
  * absolute value
  *    @luatparam[opt=current stress] number stress Value to set stress (disable
  * damage) to, in absolute value.
- * @luafunc setHealth
+ * @luafunc setHealthAbs
  */
 static int pilotL_setHealthAbs( lua_State *L )
 {
@@ -5262,7 +5262,7 @@ static int pilotL_getColour( lua_State *L )
  *    @luatparam Pilot p Pilot to get the colour of.
  *    @luatreturn string Character representing the pilot's colour for use with
  * specila printing characters.
- * @luafunc colour
+ * @luafunc colourChar
  */
 static int pilotL_colourChar( lua_State *L )
 {
