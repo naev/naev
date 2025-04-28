@@ -480,7 +480,7 @@ static int factionL_hit( lua_State *L )
  * "distress" sources. For missions the default is "script".
  *    @luatreturn How much the reputation was actually changed after Lua script
  * was run.
- * @luafunc hit
+ * @luafunc hitTest
  */
 static int factionL_hitTest( lua_State *L )
 {

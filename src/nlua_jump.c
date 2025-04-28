@@ -437,7 +437,7 @@ static int jumpL_dest( lua_State *L )
  *    @luatparam Jump j Jump to get the jump distance of.
  *    @luatparam Pilot p Pilot to get information for.
  *    @luatreturn number The distance from the jump at which the pilot can jump.
- * @luafunc dest
+ * @luafunc jumpDist
  */
 static int jumpL_jumpDist( lua_State *L )
 {
