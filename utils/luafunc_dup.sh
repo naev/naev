@@ -5,7 +5,7 @@ res=0
 trap 'rm -f $LST ; exit $res' EXIT
 
 for arg in $@ ; do
-   grep '^ \* @luafunc' $arg | sort | uniq -c | grep -v "^ *1" > $LST
+   grep '^ \* @luafunc' $arg | sort | uniq -c | grep -v "^ *1 " > $LST
 
    if [ -s "$LST" ] ; then
       echo "$arg:"
