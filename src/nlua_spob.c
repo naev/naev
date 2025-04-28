@@ -720,7 +720,7 @@ static int spobL_services( lua_State *L )
  * @usage if p:flags()["nomissionspawn"] then -- Spob doesn't spawn missions
  *    @luatparam Spob p Spob to get the services of.
  *    @luatreturn table Table containing all the services.
- * @luafunc services
+ * @luafunc flags
  */
 static int spobL_flags( lua_State *L )
 {

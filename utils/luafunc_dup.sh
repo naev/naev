@@ -8,7 +8,7 @@ grep '^ \* @luafunc' $1 | sort > $TMP
 sort -u $TMP | diff $TMP - | sort -u - | grep '<' | cut '-d<' -f2- > $LST
 
 if [ -s "$LST" ] ; then
-   echo "Duplicates in $1:"
+   echo "$1:"
    cat $LST
    exit 1
 fi

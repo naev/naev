@@ -316,7 +316,7 @@ static int transformL_rotate2d( lua_State *L )
  *    @luatparam number nearVal value.
  *    @luatparam number farVal value.
  *    @luatreturn Transform A new transformation.
- * @luafunc translate
+ * @luafunc ortho
  */
 static int transformL_ortho( lua_State *L )
 {

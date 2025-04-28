@@ -929,7 +929,7 @@ static int systemL_hidden( lua_State *L )
  *
  *    @luatparam System s System to check if the player knows.
  *    @luatparam boolean hide Whether or not to hide the system.
- * @luafunc hidden
+ * @luafunc setHidden
  */
 static int systemL_setHidden( lua_State *L )
 {
