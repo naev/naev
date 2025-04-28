@@ -5560,7 +5560,7 @@ static int pilotL_memory( lua_State *L )
  * The resulting table is indexable and mutable.
  *
  *    @luatparam Pilot p Pilot to get ship memory of.
- * @luafunc memory
+ * @luafunc shipMemory
  */
 static int pilotL_shipmemory( lua_State *L )
 {
