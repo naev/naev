@@ -19,10 +19,11 @@ end
 
 -- luacheck: globals inspect
 function inspect( t )
-   t = t or player.pilot():target()
+   t = t or player.pilot():target() or player.pilot()
+
    --print(fmt.f("Pilot: {pilot}", {pilot = t}))
    print(fmt.f("AI: {ainame}", {ainame = t:ainame()}))
-   print(fmt.f("Task: {taskname}", {taskname = t:taskname()}))
+   print(fmt.f("Task: {taskname}", {taskname = t:taskname() or "N/A"}))
 
    -- Print outfits if applicable
    local outfits = t:outfits()
@@ -46,7 +47,8 @@ function inspect( t )
       _disp(prv,acc)
    end
 
-   print(fmt.f("Mass: {mass} / {limit}", {mass=t:mass(), limit=t:shipstat('engine_limit')}))
+   print(fmt.f("Mass: {mass} / {limit}",  {mass = t:mass(), limit = t:shipstat('engine_limit')}))
+   print(fmt.f("Speed: {vel} / {spmax}",  {vel = t:vel():dist(), spmax = t:speedMax()}))
 
    -- Print intrinsics if applicable
    local intrinsics = t:outfitsList("intrinsic")
