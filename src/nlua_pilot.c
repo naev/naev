@@ -2964,7 +2964,7 @@ static int pilotL_areAllies( lua_State *L )
 }
 
 /**
- * @brief Checks the pilot's spaceworthiness
+ * @brief Checks the pilot's spaceworthiness.
  *
  * Message can be non-null even if spaceworthy.
  *
