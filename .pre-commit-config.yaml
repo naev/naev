@@ -39,7 +39,7 @@ repos:
     - id: luafunc_dup
       name: duplicate @luafunc entry detector
       entry: utils/luafunc_dup.sh
-      files: '^src/nlua_'
+      files: '^src/nlua_*.c'
       types: [c]
       language: script
     - id: nluacheck

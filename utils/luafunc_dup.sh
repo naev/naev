@@ -2,13 +2,17 @@
 
 TMP=`tempfile`
 LST=`tempfile`
-trap 'rm -f $TMP $LST' EXIT
+res=0
+trap 'rm -f $TMP $LST ; exit $res' EXIT
 
-grep '^ \* @luafunc' $1 | sort > $TMP
-sort -u $TMP | diff $TMP - | sort -u - | grep '<' | cut '-d<' -f2- > $LST
+for arg in $@ ; do
+   grep '^ \* @luafunc' $arg | sort > $TMP
+   sort -u $TMP | diff $TMP - | sort -u - | grep '<' | cut '-d<' -f2- > $LST
 
-if [ -s "$LST" ] ; then
-   echo "$1:"
-   cat $LST
-   exit 1
-fi
+   if [ -s "$LST" ] ; then
+      echo "$arg:"
+      cat $LST
+      res=1
+   fi
+done
+
