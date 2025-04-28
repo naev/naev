@@ -64,13 +64,13 @@ function inspect( t )
    -- See if anything seems wrong
    local spaceworthy, reason = t:spaceworthy()
    if not spaceworthy then
-      print("#r"..fmt.f("Not spaceworthy because of: {reason}", {reason = reason}).."#0")
+      print(fmt.f("Not spaceworthy because of: {reason}", {reason = reason}))
    end
    local stats = t:stats()
    if stats.cpu < 0 then
-      print("#r"..fmt.f("Has {cpu} CPU remaining!", {cpu = stats.cpu} ).."#0")
+      print(fmt.f("Has {cpu} CPU remaining!", {cpu = stats.cpu} ))
    end
    if stats.fuel < 0 then
-      print("#r"..fmt.f("Has {fuel} fuel!", {fuel = stats.fuel} ).."#0")
+      print(fmt.f("Has {fuel} fuel!", {fuel = stats.fuel} ))
    end
 end
