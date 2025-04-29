@@ -193,49 +193,44 @@ function multicore.init( params )
       return desc
    end
 
-   local function engines_combinator_refresh( p, po, sign )
-      local t
-      if sign~=-1 then
-         t={}
-         local secondary = is_secondary(po)
-         for k,s in ipairs(stats) do
-            if multiengines.is_param[s.name] then
-               local val = (s and ((secondary and s.sec) or s.pri)) or 0
-               t[s.name] = val
-            end
-         end
-      end
-      if multiengines.decl_engine_stats(p, po, sign, t) then
-         p:outfitInitSlot("engines")
-         return true
-      else
-         return false
-      end
-   end
-
-   local function update_stats( p, po)
-      local multicore_off = halted_n(p, po and po:id())
-      local secondary = is_secondary(po)
-      local ie = is_multiengine(p, po)
-
-      po:clear()
-      for k,s in ipairs(stats) do
-         if multicore_off ~= true or s.name == 'mass' then
-            local val = (secondary and s.sec) or s.pri
-
-            if not (ie and is_mobility[s.name]) then
-               po:set(s.name, val)
-            end
-         end
-      end
-   end
-
    local function equip(p, po, sign)
       if p and po then
-         if is_multiengine(p, po) then
-            engines_combinator_refresh(p, po, sign)
+         local ie = is_multiengine(p, po)
+         local secondary = is_secondary(po)
+
+         --po:clear()
+         if ie then
+            local t
+            if sign~=-1 then
+               t={}
+               for k,s in ipairs(stats) do
+                  if multiengines.is_param[s.name] then
+                     local val = (s and ((secondary and s.sec) or s.pri)) or 0
+                     t[s.name] = val
+                  end
+               end
+            end
+            if multiengines.decl_engine_stats(p, po, sign, t) then
+               -- prevent self-calling
+               if is_secondary(po) then
+                  p:outfitInitSlot("engines")
+               else
+                  multiengines.refresh( p, po )
+               end
+            end
          end
-         update_stats(p, po)
+
+         local multicore_off = halted_n(p, po and po:id())
+
+         for k,s in ipairs(stats) do
+            if multicore_off ~= true or s.name == 'mass' then
+               local val = (secondary and s.sec) or s.pri
+
+               if not (ie and is_mobility[s.name]) then
+                  po:set(s.name, val)
+               end
+            end
+         end
       end
    end
 
@@ -244,16 +239,12 @@ function multicore.init( params )
    end
 
    function init( p, po )
-      if(multiengines.lock( p )) then
-         onadd( p, po)
-         multiengines.unlock( p )
-      end
+      onadd( p, po )
    end
 
    function onremove( p, po )
       equip(p, po, -1)
    end
-
 end
 
 function multicore.setworkingstatus( p, po, on)
@@ -267,7 +258,7 @@ function multicore.setworkingstatus( p, po, on)
          off = not on
       end
       if multiengines.halt_n(p, id, off) then
-         p:outfitInitSlot(id)
+         p:outfitInitSlot("engines")
       end
    end
 end

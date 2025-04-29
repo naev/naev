@@ -44,11 +44,9 @@ function multiengines.refresh( p, po )
    end
 
    if not smfs.readfile(p, {multiengines_dir, "needs_refresh"}) then
-      --print ("Unneeded refresh")
       return
-   --else
-   --   print ("Needed refresh")
    end
+   po:clear()
 
    local data = smfs.checkdir(p, {multiengines_dir, 'engines'})
    local dataon = {} -- the subset of if that is active
@@ -79,7 +77,7 @@ function multiengines.refresh( p, po )
          for k,v in pairs(dataon) do
             data[k]['part'] = math.floor(0.5 + (100*v['engine_limit'])/den)
          end
-         for _,s in ipairs(multiengines.mobility_params) do
+         for _i,s in ipairs(multiengines.mobility_params) do
             local acc = 0
             for _k,v in pairs(dataon) do
                acc = acc + (v[s] or 0) * v['engine_limit']
@@ -107,14 +105,6 @@ function multiengines.halt_n( p, n, what )
             return crt or res
          end)
    end
-end
-
-function multiengines.lock( p )
-   return smfs.writefile(p, {multiengines_dir, "lock"}, true)
-end
-
-function multiengines.unlock( p )
-   smfs.writefile(p, {multiengines_dir, "lock"}, nil)
 end
 
 -- sign:
