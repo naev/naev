@@ -27,7 +27,7 @@ for k,s in ipairs(naev.shipstats()) do
 end
 
 function multiengines.total( p )
-   return smfs.readdir(p, {multiengines_dir,"total"})
+   return smfs.readdir(p, {multiengines_dir, "total"})
 end
 
 function multiengines.stats( p )
@@ -46,6 +46,7 @@ function multiengines.refresh( p, po )
    if not smfs.readfile(p, {multiengines_dir, "needs_refresh"}) then
       return
    end
+
    po:clear()
 
    local data = smfs.checkdir(p, {multiengines_dir, 'engines'})
@@ -69,7 +70,7 @@ function multiengines.refresh( p, po )
    if count>0 then
       local den=0
 
-      for k,v in pairs(dataon) do
+      for _k,v in pairs(dataon) do
          den = den + v['engine_limit']
       end
       if den > 0 then

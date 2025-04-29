@@ -110,6 +110,8 @@ end
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
+   local pri_en_stats = {}
+   local sec_en_stats = {}
    local eml_unit
 
    for k,s in ipairs(stats) do
@@ -119,6 +121,10 @@ function multicore.init( params )
       s.pri, s.sec = s[2], s[3]
       if s.name == 'engine_limit' then
          eml_unit = s.stat.unit
+      end
+      if multiengines.is_param[s.name] then
+         pri_en_stats[s.name] = s.pri
+         sec_en_stats[s.name] = s.sec
       end
    end
    -- Sort based on shipstat table order
@@ -158,7 +164,7 @@ function multicore.init( params )
       local id = po and po:id()
       local multicore_off = halted_n(p, id)
       local smid = multiengines.engine_stats(p, id)
-      local total = multiengines.total()
+      local total = multiengines.total(p)
       local totaleml = (total and total["engine_limit"]) or 0
 
       for k,s in ipairs(stats) do
@@ -200,15 +206,9 @@ function multicore.init( params )
 
          --po:clear()
          if ie then
-            local t
+            local t={}
             if sign~=-1 then
-               t={}
-               for k,s in ipairs(stats) do
-                  if multiengines.is_param[s.name] then
-                     local val = (s and ((secondary and s.sec) or s.pri)) or 0
-                     t[s.name] = val
-                  end
-               end
+               t = (secondary and sec_en_stats) or pri_en_stats
             end
             if multiengines.decl_engine_stats(p, po, sign, t) then
                -- prevent self-calling
