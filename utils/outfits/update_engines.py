@@ -202,7 +202,7 @@ def gen_line(params):
          'fuel':str(int((n+4)*100*(2**int((n-1)/2)))),
       }
       additional={k:(sized_params(2*i+1)[k],sized_params(2*i+1+1)[k]) for k in sized_params(2*1+1)}
-      additional={k:unstackvals(k,v[0],v[1],eml1,eml2) for k,v in additional.items()}
+      additional={k:unstackvals(k,v[0],v[1],1,1) for k,v in additional.items()}
       additional['description']='"TODO"'
       additional['engine_limit']=str(175*4**i)
       additional['price']=str(12500*3**i)
