@@ -86,11 +86,11 @@ end
 --  - or nil if not
 --
 function smfs.readdir( p, path )
-   local res = smfs_read( p, path)
+   local res = smfs_read(p, path)
    if res == nil then
       return nil
    else
-      return smfs.listdir( res )
+      return smfs.listdir(res)
    end
 end
 
@@ -133,7 +133,7 @@ function smfs.updatefile( p, path, f )
       return nil
    end
 
-   local ptr = smfs.checkdir( p, tmp )
+   local ptr = smfs.checkdir(p, tmp)
 
    if ptr == nil then
       return nil
@@ -156,10 +156,9 @@ end
 --  - Any missing dir is created on the way.
 --  - The file is created if it does not exist.
 function smfs.writefile( p, path, value )
-   local function f(_in)
-      return value
-   end
-   return smfs.updatefile( p, path, f )
+   return smfs.updatefile(p, path, function ( _in )
+         return value
+      end)
 end
 
 --[[
@@ -316,7 +315,7 @@ function smfs.init(pil)
             table.insert(l, v)
          end
 
-         local res = _cd( l )
+         local res = _cd(l)
          if res then
             smfs.path = _cd( l, true)
             return true
@@ -328,7 +327,7 @@ function smfs.init(pil)
    end
 
    function smfs.cd( v )
-      local res = cd_silent( v )
+      local res = cd_silent(v)
       if res then
          smfs.pwd()
       end

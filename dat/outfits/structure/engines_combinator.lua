@@ -11,7 +11,7 @@ hidestats = true -- We do hacks to show stats, so hide them
 
 
 -- inverted unit name display
-local function adddesc( t, total)
+local function adddesc ( t, total)
    local out = ""
    for _i,k in pairs(mobility_stats) do
       local name = k['name']
@@ -26,8 +26,8 @@ local function adddesc( t, total)
    return out
 end
 
-descextra = function ( p, _o, po)
-   local dat = multiengines.stats( p )
+descextra = function ( p, _o, po )
+   local dat = multiengines.stats(p)
 
    if dat == nil then
       return "This outfit is not supposed to be off its slot."

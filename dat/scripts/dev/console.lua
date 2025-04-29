@@ -7,7 +7,7 @@ A sort of useful scripts that will be loaded right away in the console, allowing
 --]]
 local fmt = require "format"
 
-local function _disp(v,mul)
+local function _disp( v, mul )
    if v~=nil then
       local mul_str=""
       if mul>1 then
@@ -68,9 +68,9 @@ function inspect( t )
    end
    local stats = t:stats()
    if stats.cpu < 0 then
-      print(fmt.f("Has {cpu} CPU remaining!", {cpu = stats.cpu} ))
+      print(fmt.f("Has {cpu} CPU remaining!", {cpu = stats.cpu}))
    end
    if stats.fuel < 0 then
-      print(fmt.f("Has {fuel} fuel!", {fuel = stats.fuel} ))
+      print(fmt.f("Has {fuel} fuel!", {fuel = stats.fuel}))
    end
 end
