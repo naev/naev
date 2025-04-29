@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Tenebros Station">
+ <display>Abandoned Station</display>
+ <pos x="-11229.358884" y="-2381.719840"/>
+ <GFX>
+  <space>station-ring1.webp</space>
+  <exterior>station_scene.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Derelict</faction>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>The station seems completely abandoned, without only mild traces of radiation from the Incident. Whatever happened here, it seems like it happened before. You wander around the haunted station for a while before you give up and return for your ship.</description>
+  <commodities/>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+  <tag>nonews</tag>
+  <tag>nonpc</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>
