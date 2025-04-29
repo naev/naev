@@ -38,7 +38,6 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines_combinator" name="engines_combinator" size="medium">Engines Combinator</structure>
   <structure prop="engines" name="engines" size="medium">Beat Up Medium Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="medium" />
   <structure prop="hull" name="hull" size="medium">Patchwork Medium Plating</structure>

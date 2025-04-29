@@ -41,7 +41,6 @@
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines_combinator" name="engines_combinator" size="medium">Engines Combinator</structure>
   <structure prop="engines" name="engines" size="medium">Unicorp Falcon 700 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="medium">Unicorp Falcon 700 Engine</structure>
   <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>

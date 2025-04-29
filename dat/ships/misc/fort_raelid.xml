@@ -42,7 +42,6 @@
   <weapon y="0" h="5" size="large" x="0" />
   <utility prop="systems" name="systems" size="large">Dummy Systems</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large" />
-  <structure prop="engines_combinator" name="engines_combinator" size="large">Engines Combinator</structure>
   <structure prop="engines" name="engines" size="large">Dummy Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="large" />
   <structure prop="hull" name="hull" size="large">Dummy Plating</structure>

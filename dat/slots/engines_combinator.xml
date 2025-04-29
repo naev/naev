@@ -1,7 +1,0 @@
-<slot name="engines_combinator">
- <display>Engines Combinator</display>
- <description>This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core system to function.</description>
- <exclusive/>
- <locked/>
- <icon>engines.png</icon>
-</slot>

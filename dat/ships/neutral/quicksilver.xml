@@ -32,7 +32,6 @@
   <utility size="medium" />
   <utility size="small" />
   <utility size="small" />
-  <structure prop="engines_combinator" name="engines_combinator" size="small">Engines Combinator</structure>
   <structure prop="engines" name="engines" size="small">Unicorp Hawk 160 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="small">Unicorp Hawk 160 Engine</structure>
   <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
