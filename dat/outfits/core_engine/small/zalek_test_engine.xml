@@ -11,9 +11,6 @@
   <gfx_store>engine8.webp</gfx_store>
   <priority>3</priority>
  </general>
- <tags>
-  <tag>engine</tag>
- </tags>
  <specific type="modification">
   <accel>326</accel>
   <turn>184</turn>

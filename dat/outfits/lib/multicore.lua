@@ -86,21 +86,25 @@ local function index( tbl, key )
    return nil
 end
 
-local function is_engine( po )
-   if po then
-      local o = po:outfit()
-      local tags = o and o:tags()
-      return tags and tags.engine
-   end
-end
-
-local function is_multiengine( p )
-   return p and p:outfitHasSlot("engines_combinator")
+local function is_secondary_slot( ps )
+   return ps and ps.tags and ps.tags.secondary
 end
 
 local function is_secondary( po )
-   local ps =po and po:slot()
-   return ps and ps.tags and ps.tags.secondary
+   return po and is_secondary_slot(po:slot())
+end
+
+local function is_engine( sl )
+   return sl and sl.tags and sl.tags.engines
+end
+
+local function is_multiengine( p, po )
+   local sh = p and p:ship()
+   sh = sh and sh:getSlots()
+   local n = po and po:id()
+   local sl = sh and n and sh[n]
+
+   return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
 function multicore.init( params )
@@ -150,7 +154,7 @@ function multicore.init( params )
          }).."#0"
       end
 
-      local averaged = is_engine( po ) and is_multiengine( p )
+      local averaged = is_multiengine(p, po)
       local id = po and po:id()
       local multicore_off = halted_n( p, id )
       local smid = multiengines.engine_stats( p, id )
@@ -216,9 +220,9 @@ function multicore.init( params )
    end
 
    local function update_stats( p, po)
-      local multicore_off = halted_n( p, po:id() )
+      local multicore_off = halted_n( p, po and po:id() )
       local secondary = is_secondary( po )
-      local ie = is_engine( po ) and is_multiengine( p )
+      local ie = is_multiengine(p, po)
 
       po:clear()
       for k,s in ipairs(stats) do
@@ -235,7 +239,7 @@ function multicore.init( params )
    local function equip( p, po, sign)
       if p and po then
          local res = true
-         if is_engine(po) and is_multiengine( p ) then
+         if is_multiengine(p, po) then
             res = res and engines_combinator_refresh( p, po, sign )
          end
          update_stats( p, po)

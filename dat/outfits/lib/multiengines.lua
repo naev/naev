@@ -3,7 +3,7 @@ local smfs = require "shipmemfs"
 
 local multiengines_dir = "_ec"
 
-multiengines = {
+local multiengines = {
    mobility_params = {"accel", "turn", "speed"},
    is_mobility = {},
    is_param = {},

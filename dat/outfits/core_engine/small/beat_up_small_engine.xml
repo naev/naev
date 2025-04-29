@@ -7,9 +7,6 @@
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
   <gfx_store>engine15.webp</gfx_store>
  </general>
- <tags>
-  <tag>engine</tag>
- </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -17,9 +14,9 @@ require("outfits.lib.multicore").init{
    { "energy_regen_malus", 4, 8},
    { "engine_limit", 100, 120},
    { "fuel", 200, 100},
-   { "speed", 304, 210},
-   { "accel", 200, 66},
-   { "turn", 159, 87},
+   { "speed", 304, 218},
+   { "accel", 200, 77},
+   { "turn", 159, 93},
 }</lua_inline>
  </specific>
 </outfit>

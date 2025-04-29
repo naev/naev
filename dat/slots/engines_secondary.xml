@@ -6,6 +6,7 @@
  <icon>engines.png</icon>
  <tags>
   <tag>core</tag>
+  <tag>engines</tag>
   <tag>secondary</tag>
  </tags>
 </slot>

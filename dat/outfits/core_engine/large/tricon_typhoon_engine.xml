@@ -9,9 +9,6 @@
   <gfx_store>engine2.webp</gfx_store>
   <priority>3</priority>
  </general>
- <tags>
-  <tag>engine</tag>
- </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -19,9 +16,9 @@ require("outfits.lib.multicore").init{
    { "energy_regen_malus", 32, 24},
    { "engine_limit", 2700, 3100},
    { "fuel", 2000, 400},
-   { "speed", 140, 68},
-   { "accel", 78, 14},
-   { "turn", 69, 25},
+   { "speed", 140, 73},
+   { "accel", 78, 18},
+   { "turn", 69, 28},
 }</lua_inline>
  </specific>
 </outfit>

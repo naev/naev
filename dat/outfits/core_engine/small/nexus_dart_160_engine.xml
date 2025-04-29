@@ -9,9 +9,6 @@
   <gfx_store>nexus_engine_s.webp</gfx_store>
   <priority>3</priority>
  </general>
- <tags>
-  <tag>engine</tag>
- </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
@@ -19,9 +16,9 @@ require("outfits.lib.multicore").init{
    { "energy_regen_malus", 3, 7},
    { "engine_limit", 160, 200},
    { "fuel", 400, 100},
-   { "speed", 313, 237},
-   { "accel", 317, 115},
-   { "turn", 192, 114},
+   { "speed", 313, 245},
+   { "accel", 317, 135},
+   { "turn", 192, 122},
    { "time_mod", -10, -2},
 }</lua_inline>
  </specific>

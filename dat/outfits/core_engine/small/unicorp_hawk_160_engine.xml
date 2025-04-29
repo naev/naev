@@ -8,16 +8,13 @@
   <gfx_store>unicorp_engine_s.webp</gfx_store>
   <priority>3</priority>
  </general>
- <tags>
-  <tag>engine</tag>
- </tags>
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
    { "mass", 6, 14},
-   { "accel", 301, 105},
-   { "turn", 183, 105},
-   { "speed", 298, 220},
+   { "accel", 301, 125},
+   { "turn", 183, 113},
+   { "speed", 298, 228},
    { "fuel", 400, 100},
    { "energy_regen_malus", 3, 4},
    { "engine_limit", 160, 200},
