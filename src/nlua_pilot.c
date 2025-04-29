@@ -3682,6 +3682,9 @@ static int pilotL_outfitHasSlot( lua_State *L )
  * This by default tries to add them to the first empty or defaultly equipped
  * slot. Will not overwrite existing non-default outfits.
  *
+ * This will also not add outfits to locked slots. Please use outfitAddSlot for
+ * that.
+ *
  * @usage added = p:outfitAdd( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
@@ -3720,6 +3723,10 @@ static int pilotL_outfitAdd( lua_State *L )
       /* Must still have to add outfit. */
       if ( q <= 0 )
          break;
+
+      /* Ignore locked. */
+      if ( s->sslot->locked )
+         continue;
 
       /* Do tests and try to add. */
       ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
