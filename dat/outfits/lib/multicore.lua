@@ -112,15 +112,15 @@ function multicore.init( params )
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
-   local eml_unit
 
    for k,s in ipairs(stats) do
       s.index = index(shipstat, s[1])
       s.stat = shipstat[ s.index ]
       s.name = s.stat.name
       s.pri, s.sec = s[2], s[3]
-      if s.name == 'engine_limit' then
-         eml_unit = s.stat.unit
+      -- force engine_limit to be last in order
+      if s.name == "engine_limit" then
+         s.index = #shipstat + 1
       end
       if multiengines.is_param[s.name] then
          pri_en_stats[s.name] = s.pri
@@ -186,7 +186,7 @@ function multicore.init( params )
          local share = (smid and smid["part"]) or 0
          desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
             eml = (smid and smid["engine_limit"]) or 0,
-            total = totaleml, share = share, t = eml_unit
+            total = totaleml, share = share, t = multiengines.eml_stat.unit
          })
          for k,s in ipairs(stats) do
             if is_mobility[s.name] then
