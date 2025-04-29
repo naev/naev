@@ -48,7 +48,7 @@ function inspect( t )
    end
 
    print(fmt.f("Mass: {mass} / {limit}",  {mass = t:mass(), limit = t:shipstat('engine_limit')}))
-   print(fmt.f("Speed: {vel} / {spmax}",  {vel = t:vel():dist(), spmax = t:speedMax()}))
+   print(fmt.f("Speed: {vel} / {spmax}",  {vel = fmt.number(t:vel():dist()), spmax = fmt.number(t:speedMax())}))
 
    -- Print intrinsics if applicable
    local intrinsics = t:outfitsList("intrinsic")

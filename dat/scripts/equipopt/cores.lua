@@ -393,7 +393,7 @@ function cores.get( p, params )
       local co = ct[ shipname ] or ct[ shipclass ]
       c["engines"] = co()
       if have_secondary[shipclass] then
-         c["engines_secondary"] = co()
+         c["engines_secondary"] = c["engines"]
       end
    end
 
