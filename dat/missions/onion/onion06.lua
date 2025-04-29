@@ -124,6 +124,23 @@ The hologram slightly flickers.
    puppet(_([[notasockpuppet seems to be enjoying this.]]))
    dog(_([[...]]))
    lonewolf4(_([["Lo, each accusation is but the echo of one's own sin. You speak as though you are special, as though you are different, but hesitated not to kill everyone, including keeper v3c70r on Tenebros Station to save your own hide! Wolf forgets not!"]]))
+   l337(_([["THAT'S NOT... Not... not..."
+Their voice fades out.]]))
+   lonewolf4(_([["Thou canst not deny the weight of this evidence! Thou hast slain v3c70r as thou hast now slain Trixie, and seekest to lay the blame at mine own feet, that thou might further thy own wicked designs!"]]))
+   l337(_([[...]]))
+   lonewolf4(_([["Behold ye all! Silence! They offer no rebuttal for their exposed sins! Perhaps the peeling of DEADBEEF was also of thy doing!"]]))
+   l337(_([[The name DEADBEEF seems to resonate in l337_b01.
+"YOU! YOU DON'T KNOW ANYTHING! GO TO HELL!"]]))
+   vn.disappear( l337 )
+   vn.na(_([[l337_b01 drops the connection.]]))
+   -- TODO music goes back to normal, maybe calmer?
+   lonewolf4(_([["And thus truth exposed."]]))
+   lonewolf4(_([[They suddenly focus their gaze on you.
+"And what do we have here?"]]))
+
+   vn.scene()
+   vn.transition("fadedown")
+   vn.na(_([[You abruptly drop out of the Nexus. Ugh, and there goes your last meal with it.]]))
 
    vn.done("electric")
    vn.run()

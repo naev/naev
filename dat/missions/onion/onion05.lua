@@ -604,7 +604,7 @@ There is a constant sound of loud and furious typing.]]))
 "*SCRITCH* my suspicious that this was a fellow technomancer, but I didn't think they'd be so brash."]]))
    msg(_([["Oh shit, looks like this is the end of the line."]]))
    msg(_([[The tone in the voice changes, almost nostalgic.
-"l337_b01, everything is in your hands now."]]))
+"l337_b01, everything is in your hands now. Like old times... I'll be waiting with v3c70r and DEADBEEF..."]]))
    msg(_([["CONNECTION TERMINATED"]]))
    vn.disappear( msg )
    vn.move( l337, "center" )
