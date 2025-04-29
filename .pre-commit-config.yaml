@@ -40,7 +40,7 @@ repos:
   rev: v9.1.5
   hooks:
     - id: oxipng
-      args: ["-o", "4", "--strip", "safe", "--alpha"]
+      args: ["-o", "max", "--strip", "safe", "--alpha"]
       types: [png]
 - repo: local
   hooks:
