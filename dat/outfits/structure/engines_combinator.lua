@@ -1,33 +1,14 @@
 
-local smfs = require "shipmemfs"
 local fmt = require "format"
+local multiengines = require "outfits/lib/multiengines"
+
+local mobility_stats = multiengines.mobility_stats
+local eml_name = multiengines.eml_stat.display
+
 
 notactive = true -- Doesn't become active
 hidestats = true -- We do hacks to show stats, so hide them
 
-
-local engines_comb_dir = "_ec"
-
-local mobility_params = {"accel","turn","speed"}
-local eml_name
-
-local function mkstat()
-   local out = {}
-   local needs_avg = {}
-   for _,k in ipairs(mobility_params) do
-      needs_avg[k] = true
-   end
-   for k,s in ipairs(naev.shipstats()) do
-      if needs_avg[s.name] then
-         out[k] = s
-      elseif s.name == "engine_limit" then
-         eml_name = s.display
-      end
-   end
-   return out
-end
-
-local mobility_stats = mkstat()
 
 -- inverted unit name display
 local function adddesc( t, total)
@@ -45,8 +26,8 @@ local function adddesc( t, total)
    return out
 end
 
-descextra=function ( p, _o, po)
-   local dat = p and smfs.readdir( p, {engines_comb_dir, 'engines'} )
+descextra = function ( p, _o, po)
+   local dat = multiengines.stats( p )
 
    if dat == nil then
       return "This outfit is not supposed to be off its slot."
@@ -63,7 +44,7 @@ descextra=function ( p, _o, po)
    if count == 0 then
       out = "#o".._("No active engine equipped").."#0\n"
    else
-      local total = smfs.readdir( p, {engines_comb_dir, "total"} )
+      local total = multiengines.total(p)
       for i,v in pairs(dat) do
          local outfit_name = p:outfitGet(i):name()
          local engine_number = i - ((po and po:id()) or 0)
@@ -81,62 +62,5 @@ descextra=function ( p, _o, po)
    return out
 end
 
-function init( p, po )
-   if not p or not po or not po:outfit() then
-      return
-   end
-
-   if not smfs.readfile( p, {engines_comb_dir, "needs_refresh"}) then
-      --print ("Unneeded refresh")
-      return
-   --else
-   --   print ("Needed refresh")
-   end
-
-   local data = smfs.checkdir( p, {engines_comb_dir, 'engines'} )
-   local dataon = {} -- the subset of if that is active
-   local comb = smfs.checkdir( p, {engines_comb_dir, "total"} )
-
-   for k,v in pairs(smfs.listdir(data)) do
-      if v['engine_limit'] and v['halted'] ~= true then
-         dataon[k] = v
-      end
-   end
-
-   for _,s in ipairs(mobility_params) do
-      comb[s] = 0
-   end
-   comb['engine_limit'] = 0
-
-   local count = 0
-   for k,v in pairs(dataon) do
-      count = count + 1
-   end
-
-   po:clear()
-   if count>0 then
-      local den=0
-
-      for k,v in pairs(dataon) do
-         den = den + v['engine_limit']
-      end
-      if den > 0 then
-         comb['engine_limit'] = den
-         for k,v in pairs(dataon) do
-            data[k]['part'] = math.floor(0.5 + (100*v['engine_limit'])/den)
-         end
-         for _,s in ipairs(mobility_params) do
-            local acc = 0
-            for _k,v in pairs(dataon) do
-               acc = acc + (v[s] or 0) * v['engine_limit']
-            end
-            local val = math.floor( 0.5 + (acc / den) )
-            comb[s] = val
-            po:set(s, val)
-         end
-      end
-   end
-   smfs.writefile( p, {engines_comb_dir, "needs_refresh"}, nil)
-end
-
+init = multiengines.refresh
 

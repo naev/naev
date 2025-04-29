@@ -1,16 +1,21 @@
 
-local smfs = require "shipmemfs"
-local fmt = require "format"
-local shipstat = naev.shipstats()
 local multicore = {}
-local engines_comb_dir = "_ec"
 
-local function valcol( val, inverted, gy )
+local shipstat = naev.shipstats()
+
+local fmt = require "format"
+
+local multiengines = require "outfits/lib/multiengines"
+local is_mobility = multiengines.is_mobility
+local halted_n = multiengines.halted_n
+
+
+local function valcol( val, inverted, gb )
    if inverted then
       val = -val
    end
    if val > 0 then
-      if gy then
+      if gb then
          return "#b"
       else
          return "#g"
@@ -22,16 +27,15 @@ local function valcol( val, inverted, gy )
    end
 end
 
-local function stattostr( s, val, grey, unit, gy)
+local function stattostr( s, val, grey, unit, gb)
    if val == 0 then
       return "#n0" -- Correct people bad taste HERE.
    end
-
    local col
    if grey then
       col = "#n"
    else
-      col = valcol( val, s.inverted, gy)
+      col = valcol( val, s.inverted, gb)
    end
    local str
    if val > 0 then
@@ -40,13 +44,12 @@ local function stattostr( s, val, grey, unit, gy)
       str = fmt.number(val)
    end
    if unit and s.unit then
-      return col .. fmt.f("{val} {unit}", {val=str, unit=_(s.unit)})
-   else
-      return col .. str
+      str = str .. " " .. _(s.unit)
    end
+   return col .. str
 end
 
-local function add_desc( stat, nomain, nosec, gy )
+local function add_desc( stat, nomain, nosec, gb )
    local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
@@ -61,31 +64,18 @@ local function add_desc( stat, nomain, nosec, gy )
    if off or (nomain and nosec) then
       col="#n"
    else
-      col=valcol( p+s, stat.stat.inverted, gy)
+      col=valcol( p+s, stat.stat.inverted, gb)
    end
    local pref = col .. fmt.f("{name}: ",{name=name})
    if p == s then
-      return pref .. stattostr( stat.stat, base, off, true, gy)
+      return pref .. stattostr( stat.stat, base, off, true, gb)
    else
       return pref .. fmt.f("{bas} #n/#0 {sec}", {
-         bas = stattostr( stat.stat, p, nomain, nosec, gy),
-         sec = stattostr( stat.stat, s, nosec, nomain or not nosec, gy),
+         bas = stattostr( stat.stat, p, nomain, nosec, gb),
+         sec = stattostr( stat.stat, s, nosec, nomain or not nosec, gb),
       })
    end
 end
-
-local needs_avg = {
-   accel = true,
-   turn = true,
-   speed = true,
-}
-
-local needs_decl = {
-   accel = true,
-   turn = true,
-   speed = true,
-   engine_limit =true
-}
 
 local function index( tbl, key )
    for i,v in ipairs(tbl) do
@@ -111,54 +101,6 @@ end
 local function is_secondary( po )
    local ps =po and po:slot()
    return ps and ps.tags and ps.tags.secondary
-end
-
-local function marked_n( p, n )
-   return smfs.readfile( p, {engines_comb_dir, 'engines', n, 'halted'})
-end
-
-local function mark_n( p, n, what )
-   local res = smfs.writefile( p, {engines_comb_dir, 'engines', n, 'halted'}, what)
-
-   if res == nil then -- could not write
-      warn("Oh-oh")
-   else
-      local function f(crt)
-         return crt or res
-      end
-      return smfs.updatefile( p, {engines_comb_dir, "needs_refresh"}, f)
-   end
-end
-
--- sign:
---  -1 for remove
---   0 for update
---   1 for add
-local function update_engines_combinator_if_needed( p, po, sign, t )
-   local id = po:id()
-   local changed = smfs.readfile( p, {engines_comb_dir, "needs_refresh"})
-   local comb = smfs.checkdir( p, {engines_comb_dir, 'engines'} )
-   local bef
-
-   if sign == -1 then
-      changed = changed or comb[id] ~= nil
-      comb[id] = nil
-   else
-      local combid = smfs.checkdir( p, {engines_comb_dir, 'engines', id} )
-      changed = changed or ((sign == 1) and (comb[id] == nil))
-
-      for k,v in pairs(t or {}) do
-         bef = combid[k]
-         combid[k] = v
-         changed = changed or (bef ~= v)
-      end
-   end
-   smfs.writefile( p, {engines_comb_dir, "needs_refresh"}, changed)
-
-   if changed then
-      p:outfitInitSlot("engines_combinator")
-   end
-   return changed
 end
 
 function multicore.init( params )
@@ -210,15 +152,15 @@ function multicore.init( params )
 
       local averaged = is_engine( po ) and is_multiengine( p )
       local id = po and po:id()
-      local multicore_off = p and po and marked_n( p, id )
-      local smid = po and smfs.readdir( p, {engines_comb_dir, 'engines', id} )
-      local total = smfs.readdir( p, {engines_comb_dir,"total"} )
+      local multicore_off = halted_n( p, id )
+      local smid = multiengines.engine_stats( p, id )
+      local total = multiengines.total()
       local totaleml = (total and total["engine_limit"]) or 0
 
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
-         desc = desc .. "\n" .. add_desc( s, nomain or off, nosec or off, averaged and needs_avg[s.name] )
+         desc = desc .. "\n" .. add_desc( s, nomain or off, nosec or off, averaged and is_mobility[s.name] )
       end
 
       if multicore_off ~= nil then
@@ -239,7 +181,7 @@ function multicore.init( params )
             total = totaleml, share = share, t = eml_unit
          })
          for k,s in ipairs(stats) do
-            if needs_avg[s.name] then
+            if is_mobility[s.name] then
                desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
                   display = s.stat.display, unit = s.stat.unit,
                   val = fmt.number(smid[s.name] )
@@ -259,17 +201,22 @@ function multicore.init( params )
          t={}
          local secondary = is_secondary( po )
          for k,s in ipairs(stats) do
-            if needs_decl[s.name] then
+            if multiengines.is_param[s.name] then
                local val = (s and ((secondary and s.sec) or s.pri)) or 0
                t[s.name] = val
             end
          end
       end
-      return update_engines_combinator_if_needed( p, po, sign, t )
+      if multiengines.decl_engine_stats( p, po, sign, t ) then
+         p:outfitInitSlot("engines_combinator")
+         return true
+      else
+         return false
+      end
    end
 
    local function update_stats( p, po)
-      local multicore_off = p and po and marked_n( p, po:id() )
+      local multicore_off = halted_n( p, po:id() )
       local secondary = is_secondary( po )
       local ie = is_engine( po ) and is_multiengine( p )
 
@@ -278,7 +225,7 @@ function multicore.init( params )
          if multicore_off ~= true or s.name == 'mass' then
             local val = (secondary and s.sec) or s.pri
 
-            if not (ie and needs_avg[s.name]) then
+            if not (ie and is_mobility[s.name]) then
                po:set( s.name, val )
             end
          end
@@ -318,7 +265,7 @@ function multicore.setworkingstatus( p, po, on)
       else
          off = not on
       end
-      if mark_n( p, id, off ) then
+      if multiengines.halt_n( p, id, off ) then
          p:outfitInitSlot(id)
       end
    end
