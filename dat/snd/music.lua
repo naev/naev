@@ -206,7 +206,9 @@ function choose_table.land ()
    end
 
    -- Standard to do it based on type of planet
-   if class == "M" then
+   if pnt:tags().ruined then
+      music_list = { "landing_sinister.ogg" }
+   elseif class == "M" then
       music_list = { "agriculture.ogg" }
    elseif class == "O" then
       music_list = { "ocean.ogg" }
