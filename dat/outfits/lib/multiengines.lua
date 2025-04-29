@@ -109,6 +109,14 @@ function multiengines.halt_n( p, n, what )
    end
 end
 
+function multiengines.lock( p )
+   return smfs.writefile(p, {multiengines_dir, "lock"}, true)
+end
+
+function multiengines.unlock( p )
+   smfs.writefile(p, {multiengines_dir, "lock"}, nil)
+end
+
 -- sign:
 --  -1 for remove
 --   0 for update

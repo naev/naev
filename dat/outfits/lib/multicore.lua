@@ -206,7 +206,7 @@ function multicore.init( params )
          end
       end
       if multiengines.decl_engine_stats(p, po, sign, t) then
-         p:outfitInitSlot("engines_combinator")
+         p:outfitInitSlot("engines")
          return true
       else
          return false
@@ -239,11 +239,16 @@ function multicore.init( params )
       end
    end
 
-   function init( p, po )
+   function onadd( p, po )
       equip(p, po, 1)
    end
 
-   onadd = init
+   function init( p, po )
+      if(multiengines.lock( p )) then
+         onadd( p, po)
+         multiengines.unlock( p )
+      end
+   end
 
    function onremove( p, po )
       equip(p, po, -1)
