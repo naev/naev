@@ -46,7 +46,7 @@ repos:
   hooks:
     - id: check_luadoc_func
       name: check @lua.. not used outside @luafunc
-      entry: utils/check_luadoc_func.sh
+      entry: utils/check_luadoc_funcs.sh
       files: '^src/nlua_*.c'
       types: [c]
       language: script
