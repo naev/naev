@@ -61,10 +61,4 @@ sed -n                                                                        \
    }
    /@/ {
       print $0, "\n"
-   }' |                                                                       \
-# Sort it
-sed ':a;N;$!ba;s/\n--/\\n--/g' | grep -v "^$" |                               \
-sed 's/^\(.*\)\(@function .*\)$/z\2\1\2/' |                                   \
-sed '/\(@module\)\|\(@function\)/! s/^\(.*\)$/zzz\1/' | sort --stable -d |    \
-sed 's/\\n--/\n--/g' | sed 's/^z@function .*$//' | sed 's/^zzz$//g'           \
-> "$2"
+   }' > "$2"
