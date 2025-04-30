@@ -1,4 +1,5 @@
 not_luadoc = true
+sort = true
 title = "Naev Lua API"
 project = "Naev Lua API"
 description = "Naev Lua API"
