@@ -121,7 +121,7 @@ local function return_message( dat, ret)
    if dat then
       dat.ret = ret
    else
-      warn("message returning impossible")
+      warn("impossible to return message")
    end
 end
 
@@ -181,9 +181,9 @@ function multicore.init( params )
 
       local averaged = is_multiengine(p, po)
       local id = po and po:id()
-      local multicore_off = halted_n(p, id)
-      local smid = multiengines.engine_stats(p, id)
-      local total = multiengines.total(p)
+      local multicore_off = halted_n(gathered_data, id)
+      local smid = multiengines.engine_stats(gathered_data, id)
+      local total = multiengines.total(gathered_data)
       local totaleml = (total and total["engine_limit"]) or 0
 
       for k,s in ipairs(stats) do
@@ -210,8 +210,8 @@ function multicore.init( params )
          for k,s in ipairs(stats) do
             if is_mobility[s.name] then
                desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
-                  display = s.stat.display, unit = s.stat.unit, val = fmt.number(smid[s.name]) })
-               desc = desc .. "  #y=>#0  #g+" .. fmt.number(smid[s.name]*share/100) .. " " .. s.stat.unit .. "#0\n"
+                  display = s.stat.display, unit = s.stat.unit, val = fmt.number(smid[s.name] or 0) })
+               desc = desc .. "  #y=>#0  #g+" .. fmt.number((smid[s.name] or 0)*share/100) .. " " .. s.stat.unit .. "#0\n"
             end
          end
       end
@@ -234,26 +234,29 @@ function multicore.init( params )
             if secondary then
                -- spontaneous self-declaration
                send_message( p, "engines", "here", {id=po:id(), sign=sign, t=my_params(p, po)})
+               send_message( p, "engines", "done", dat )
             else
                local sh = p:ship()
                local sh = sh and sh:getSlots()
+               local myself = po:id()
 
                for n,o in ipairs(p:outfits()) do
-                  if is_engine(sh[n]) and o then
+                  if is_engine(sh[n]) then
                      -- declaration on n's behalf
-                     local res = send_message( p, n, "please")
+                     local res = send_message( p, n, "pliz")
                      if res then
-                        send_message( p, "engines", "here", res)
-                     else
+                        --send_message( p, "engines", "here", {id=n, sign=1, t=res})
+                        multiengines.decl_engine_stats(gathered_data, n, sign, res)
+                     elseif o ~= false then
                         warn('no response from "' .. tostring(o) .. '"')
                      end
                   end
                end
+               multiengines.refresh(gathered_data, po)
             end
-            send_message( p, "engines", "done", dat )
          end
 
-         local multicore_off = halted_n(p, po and po:id())
+         local multicore_off = halted_n(gathered_data, po and po:id())
 
          for k,s in ipairs(stats) do
             if multicore_off ~= true or s.name == 'mass' then
@@ -283,14 +286,20 @@ function multicore.init( params )
       elseif not is_multiengine(p, po) then
          warn("message on non-multiengine slot")
       else
-         if msg == "please" then
+         if msg == "pliz" then
             return return_message( dat, my_params(p, po))
          elseif is_secondary(po) then
             warn('message "'.. msg ..'" send to secondary (ignored)')
+         elseif msg == "halt" then
+            if multiengines.halt_n(gathered_data, mydat.id, mydat.off) then
+               send_message( p, "engines", "done")
+            end
          elseif msg == "here" then
-            multiengines.decl_engine_stats(p, mydat.id, mydat.sign, mydat.t)
+            multiengines.decl_engine_stats(gathered_data, mydat.id, mydat.sign, mydat.t)
          elseif msg == "done" then
-            multiengines.refresh( p, po )
+            multiengines.refresh(gathered_data, po)
+         elseif msg == "wtf?" then
+            return return_message(dat, gathered_data)
          else
             warn('Unknown message: "' .. msg .. '"')
          end
@@ -312,10 +321,9 @@ function multicore.setworkingstatus( p, po, on)
       else
          off = not on
       end
-      if multiengines.halt_n(p, id, off) then
-         send_message( p, "engines", "done")
-      end
+      send_message( p, "engines", "halt", {id=id, off=off})
    end
 end
+
 
 return multicore

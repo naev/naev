@@ -1,5 +1,7 @@
 
 --[[
+Tiny File System
+
 This module contains:
  1. tfs API
  2. tfs Console Interface
@@ -12,9 +14,8 @@ local tfs = {}
 ## 1. tfs API
 
 The following functions can't alter the fs (read only and don't return fs mutables):
- - function tfs.listdir( ptr )
- - function tfs.readdir( p, path )
- - function tfs.readfile( p, path )
+ - function tfs.readdir( ptr, path )
+ - function tfs.readfile( ppr, path )
 
 The following function may create dirs and will change the file value if any:
 function tfs.writefile( p, path, value )
@@ -25,28 +26,7 @@ function tfs.checkdir( p, path )
 --]]
 
 -- Input:
---  - a dir ( a table in some shipMemory structure )
---
--- Returns:
---  - a table of the dir contents.
---
--- Side - effect:
---  - the returned table is a *copy* (therefore you can break the original)
---  - the return table does not have '_parent_':.. entry contrary to the original table,
---    that may contain one.
-function tfs.listdir( ptr )
-   ptr = (type(ptr) == 'table' and ptr) or {}
-   local t = {}
-   for k,v in pairs(ptr) do
-      if k~= '_parent_' then
-         t[k] = v
-      end
-   end
-   return t
-end
-
--- Input:
---  - a player p
+--  - a root
 --  - a itable describing the path
 --
 -- Returns:
@@ -56,51 +36,54 @@ end
 -- Side - effect:
 --  - Any non-existing dir on the way is created.
 --
-function tfs.checkdir( p, path )
-   local ptr = p and p:shipMemory()
-
+function tfs.checkdir( ptr, path )
    if ptr ~= nil then
       for i,k in ipairs(path) do
-         local prv = k
-         ptr[prv] = ptr[prv] or {}
-         ptr = ptr[prv]
+         ptr[k] = ptr[k] or {}
+         ptr = ptr[k]
       end
    end
    return ptr
 end
 
-local function tfs_read( p, path )
-   local ptr = p and p:shipMemory() or {}
-   for _i,k in ipairs(path) do
+local function tfs_read( ptr, path )
+   for _i,k in ipairs(path or {}) do
       ptr = (ptr or {})[k]
    end
    return ptr
 end
 
 -- Input:
---  - a player p
+--  - a pointer ptr
 --  - a itable describing the path
 --
 -- Returns:
 --  - a table of the dir contents if it exists.
 --  - or nil if not
 --
-function tfs.readdir( p, path )
-   local res = tfs_read(p, path)
+function tfs.readdir( ptr, path )
+   local res = tfs_read(ptr, path)
    if res == nil then
       return nil
    else
-      return tfs.listdir(res)
+      ptr = (type(res) == 'table' and res) or {}
+      local t = {}
+      for k,v in pairs(ptr) do
+         if k~= '_parent_' then
+            t[k] = v
+         end
+      end
+      return t
    end
 end
 
 -- Input:
---  - a player p
+--  - a ptr
 --  - a itable describing the path to the file
 --      ( a file is just a k,v pair in some dir *where v not a table* )
 --      ( k is the file name, v is the file content )
-function tfs.readfile( p, path )
-   local res = tfs_read( p, path)
+function tfs.readfile( ptr, path )
+   local res = tfs_read( ptr, path)
    if type(res) == 'table' then
       return nil  -- this is not a file
    else
@@ -109,7 +92,7 @@ function tfs.readfile( p, path )
 end
 
 -- Input:
---  - a player p
+--  - a ptr
 --  - a itable describing the path to the file
 --  - a function mapping crt file content to new file content
 -- Returns:
@@ -118,7 +101,7 @@ end
 -- Side - effect
 --  - Any missing dir is created on the way.
 --  - The file is created if it does not exist.
-function tfs.updatefile( p, path, f )
+function tfs.updatefile( ptr, path, f )
    local tmp = {}
    local fil = nil
 
@@ -133,7 +116,7 @@ function tfs.updatefile( p, path, f )
       return nil
    end
 
-   local ptr = tfs.checkdir(p, tmp)
+   local ptr = tfs.checkdir(ptr, tmp)
 
    if ptr == nil then
       return nil
@@ -146,7 +129,7 @@ function tfs.updatefile( p, path, f )
 end
 
 -- Input:
---  - a player p
+--  - a ptr
 --  - a itable describing the path to the file
 --  - a file content (a non-table value)
 -- Returns:
@@ -155,8 +138,8 @@ end
 -- Side - effect
 --  - Any missing dir is created on the way.
 --  - The file is created if it does not exist.
-function tfs.writefile( p, path, value )
-   return tfs.updatefile(p, path, function ( _in )
+function tfs.writefile( ptr, path, value )
+   return tfs.updatefile(ptr, path, function ( _in )
          return value
       end)
 end
@@ -165,15 +148,15 @@ end
 
 ## 2. tfs Console Interface ( Example usage )
 
-> fs = require("shipmemfs")
-  Inited shipmemfs with pilot "aze"
+> fs = require("tfs")
+  Inited tfs with pilot "aze"'s main engine mem.
 
 > fs.ls()
   _ec/
   _ec_total/
   _ec_needs_refresh : false
 
-> fs.find()
+> fs.fd()
   _ec/2/engine_limit : 630
   _ec/2/accel : 203
   _ec/2/turn : 131
@@ -226,21 +209,30 @@ end
 --]]
 
 function tfs.init(pil)
-   local tfs_pilot = pil
-
-   if tfs_pilot == nil then
-      tfs_pilot = player.pilot()
+   if pil == nil then
+      pil = player.pilot():target() or player.pilot()
    end
 
-   print('  Inited shipmemfs with pilot "' .. tfs_pilot:name() .. '"')
+   if type(pil) == type(player.pilot()) then
+      if pil:outfitHasSlot('engines_secondary') then
+         print('  Inited tfs with pilot "' .. pil:name() .. '"'.."'s main engine mem.")
+         local tmp = { dat={} }
+         pil:outfitMessageSlot('engines','wtf?',tmp)
+         tfs.root = tmp.ret
+      else
+         print('  Did not Init tfs with pilot main engine mem (don\'t have secondary)')
+      end
+   else
+      print('  Inited tfs with custom ptr "' .. tostring(pil) .. '"')
+      tfs.root = pil
+   end
 
-   tfs.root = tfs_pilot:shipMemory()
    tfs.path = tfs.root
 
    local function _pwd( t )
       local p = t._parent_
       if p == nil then
-         return '/'
+         return '@' .. tostring(tfs.root) .. ':/'
       else
          for v,k in pairs(p) do
             if k == t then
@@ -286,15 +278,20 @@ function tfs.init(pil)
       return acc .. '}'
    end
 
-   local function cd_silent( v )
+   local function cd_silent( v, force )
       if type(v) == 'table' then
-         if v and (v['_parent_'] or v == tfs.root) then
-            tfs.path = v
-            return true
-         else
-            print(' Not a valid dir.')
-            return false
+         if v then
+            if (v['_parent_'] or v == tfs.root) then
+               tfs.path = v
+               return true
+            elseif force then
+               s.root = v
+               tfs.path = v
+               return true
+            end
          end
+         print(' Not a valid dir.')
+         return false
       else
          local l = {}
          if type(v) == 'string' then
@@ -358,7 +355,7 @@ function tfs.init(pil)
    end
    markall()
 
-   function tfs.find( pref )
+   function tfs.fd( pref )
       local count = 0
       if pref == nil then
          pref = "  "
@@ -370,7 +367,7 @@ function tfs.init(pil)
                if type(v) == 'table' then
                   local pref2 = pref .. tostring(k) .. "/"
                   if cd_silent(k) then
-                     local res = tfs.find(pref2)
+                     local res = tfs.fd(pref2)
                      if res == 0 then
                         print(pref2)
                      end
@@ -388,7 +385,7 @@ function tfs.init(pil)
 end
 
 if _G['inspect'] ~= nil then
-   tfs.init(player.pilot():target() or player.pilot())
+   tfs.init()
 end
 
 return tfs
