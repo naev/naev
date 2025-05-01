@@ -25,7 +25,8 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure prop="engines" name="engines" size="medium">Krain Patagium Engine</structure>
+  <structure prop="engines" name="engines" size="medium">Krain Patagium Twin Engine</structure>
+  <structure prop="engines_secondary" name="engines_secondary" size="medium">Krain Patagium Twin Engine</structure>
   <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure size="medium" />

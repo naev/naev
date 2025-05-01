@@ -2,18 +2,18 @@
  <general>
   <shortname>Prev. Gen. Large Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>large</size>
-  <mass>640</mass>
+  <mass>640/800</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>380/0</cpu_max>
-  <energy>1760/0</energy>
-  <energy_regen>35/0</energy_regen>
-  <shield>500/0</shield>
-  <shield_regen>9/0</shield_regen>
+  <cpu_max>380/1100</cpu_max>
+  <energy>1760/800</energy>
+  <energy_regen>35/40</energy_regen>
+  <shield>500/150</shield>
+  <shield_regen>9/1</shield_regen>
  </specific>
 </outfit>

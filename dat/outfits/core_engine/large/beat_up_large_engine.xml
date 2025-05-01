@@ -1,19 +1,22 @@
 <outfit name="Beat Up Large Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
-  <mass>100</mass>
   <price>0</price>
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
   <gfx_store>engine11.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_regen_malus>28</energy_regen_malus>
-  <engine_limit>2500</engine_limit>
-  <fuel>1600</fuel>
-  <speed>119</speed>
-  <accel>31</accel>
-  <turn>46</turn>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 100, 30},
+   { "energy_regen_malus", 28, 28},
+   { "engine_limit", 2500, 2900},
+   { "fuel", 1600, 0},
+   { "speed", 119, 56},
+   { "accel", 31, 7},
+   { "turn", 46, 18},
+}</lua_inline>
  </specific>
 </outfit>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tech name="Engines High">
- <item>Krain Patagium Engine</item>
+ <item>Krain Patagium Twin Engine</item>
  <item>Tricon Zephyr Engine</item>
- <item>Tricon Zephyr II Engine</item>
  <item>Tricon Cyclone Engine</item>
- <item>Tricon Cyclone II Engine</item>
  <item>Krain Remige Engine</item>
  <item>Tricon Typhoon Engine</item>
- <item>Tricon Typhoon II Engine</item>
+ <item>Nexus Bolt 3000 Engine</item>
+ <item>Nexus Arrow 700 Engine</item>
+ <item>Nexus Dart 160 Engine</item>
 </tech>

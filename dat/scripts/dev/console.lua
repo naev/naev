@@ -7,7 +7,7 @@ A sort of useful scripts that will be loaded right away in the console, allowing
 --]]
 local fmt = require "format"
 
-local function _disp(v,mul)
+local function _disp( v, mul )
    if v~=nil then
       local mul_str=""
       if mul>1 then
@@ -19,10 +19,11 @@ end
 
 -- luacheck: globals inspect
 function inspect( t )
-   t = t or player.pilot():target()
+   t = t or player.pilot():target() or player.pilot()
+
    --print(fmt.f("Pilot: {pilot}", {pilot = t}))
    print(fmt.f("AI: {ainame}", {ainame = t:ainame()}))
-   print(fmt.f("Task: {taskname}", {taskname = t:taskname()}))
+   print(fmt.f("Task: {taskname}", {taskname = t:taskname() or "N/A"}))
 
    -- Print outfits if applicable
    local outfits = t:outfits()
@@ -46,7 +47,8 @@ function inspect( t )
       _disp(prv,acc)
    end
 
-   print(fmt.f("Mass: {mass} / {limit}", {mass=t:mass(), limit=t:shipstat('engine_limit')}))
+   print(fmt.f("Mass: {mass} / {limit}",  {mass = t:mass(), limit = t:shipstat('engine_limit')}))
+   print(fmt.f("Speed: {vel} / {spmax}",  {vel = fmt.number(t:vel():dist()), spmax = fmt.number(t:speedMax())}))
 
    -- Print intrinsics if applicable
    local intrinsics = t:outfitsList("intrinsic")
@@ -62,13 +64,13 @@ function inspect( t )
    -- See if anything seems wrong
    local spaceworthy, reason = t:spaceworthy()
    if not spaceworthy then
-      print("#r"..fmt.f("Not spaceworthy because of: {reason}", {reason = reason}).."#0")
+      print(fmt.f("Not spaceworthy because of: {reason}", {reason = reason}))
    end
    local stats = t:stats()
    if stats.cpu < 0 then
-      print("#r"..fmt.f("Has {cpu} CPU remaining!", {cpu = stats.cpu} ).."#0")
+      print(fmt.f("Has {cpu} CPU remaining!", {cpu = stats.cpu}))
    end
    if stats.fuel < 0 then
-      print("#r"..fmt.f("Has {fuel} fuel!", {fuel = stats.fuel} ).."#0")
+      print(fmt.f("Has {fuel} fuel!", {fuel = stats.fuel}))
    end
 end

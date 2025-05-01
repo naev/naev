@@ -1,20 +1,24 @@
 <outfit name="Unicorp Hawk 160 Engine">
  <general>
+  <shortname>U. Hawk 160 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>small</size>
-  <mass>6</mass>
-  <price>15000</price>
+  <price>12500</price>
   <description>The Hawk 160 is a low-budget, general-purpose engine many civilians use to propel their ships. It's not particularly effective, but it's a lightweight engine with low energy demands, making it a solid choice for small vessels.</description>
   <gfx_store>unicorp_engine_s.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <accel>301</accel>
-  <turn>183</turn>
-  <speed>298</speed>
-  <fuel>400</fuel>
-  <energy_regen_malus>3</energy_regen_malus>
-  <engine_limit>160</engine_limit>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 6, 14},
+   { "accel", 301, 125},
+   { "turn", 183, 113},
+   { "speed", 298, 228},
+   { "fuel", 400, 100},
+   { "energy_regen_malus", 3, 4},
+   { "engine_limit", 160, 200},
+}</lua_inline>
  </specific>
 </outfit>

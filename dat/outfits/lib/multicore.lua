@@ -1,14 +1,25 @@
 
-local fmt = require "format"
-local shipstat = naev.shipstats()
 local multicore = {}
 
-local function valcol( val, inverted )
+local shipstat = naev.shipstats()
+
+local fmt = require "format"
+
+local multiengines = require "outfits/lib/multiengines"
+local is_mobility = multiengines.is_mobility
+local halted_n = multiengines.halted_n
+
+
+local function valcol( val, inverted, gb )
    if inverted then
       val = -val
    end
    if val > 0 then
-      return "#g"
+      if gb then
+         return "#b"
+      else
+         return "#g"
+      end
    elseif val < 0 then
       return "#r"
    else
@@ -16,16 +27,15 @@ local function valcol( val, inverted )
    end
 end
 
-local function stattostr( s, val, grey, unit )
+local function stattostr( s, val, grey, unit, gb)
    if val == 0 then
-      return "#n."
+      return "#n0" -- Correct people bad taste HERE.
    end
-
    local col
    if grey then
       col = "#n"
    else
-      col = valcol( val, s.inverted )
+      col = valcol(val, s.inverted, gb)
    end
    local str
    if val > 0 then
@@ -34,68 +44,104 @@ local function stattostr( s, val, grey, unit )
       str = fmt.number(val)
    end
    if unit and s.unit then
-      return col..fmt.f("{val} {unit}", {val=str, unit=_(s.unit)})
-   else
-      return col..str
+      str = str .. " " .. _(s.unit)
    end
+   return col .. str
 end
 
-local function add_desc( stat, nomain, nosec )
+local function add_desc( stat, nomain, nosec, gb )
    local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
+   local off = nomain and nosec
 
    local p = base or 0
    local s = secondary or 0
 
    nomain = nomain or p == 0
    nosec = nosec or s == 0
-   local col = valcol( p+s, stat.stat.inverted )
-   local pref = col..fmt.f("{name}: ",{name=name})
-   if p==s then
-      return pref..stattostr( stat.stat, base, false, true )
+   local col
+   if off or (nomain and nosec) then
+      col="#n"
    else
-      return pref..fmt.f("{bas} #n/#0 {sec}", {
-         bas = stattostr( stat.stat, p, nomain, nosec),
-         sec = stattostr( stat.stat, s, nosec, nomain or not nosec),
+      col=valcol(p+s, stat.stat.inverted, gb)
+   end
+   local pref = col .. fmt.f("{name}: ",{name=name})
+   if p == s then
+      return pref .. stattostr(stat.stat, base, off, true, gb)
+   else
+      return pref .. fmt.f("{bas} #n/#0 {sec}", {
+         bas = stattostr(stat.stat, p, nomain, nosec, gb),
+         sec = stattostr(stat.stat, s, nosec, nomain or not nosec, gb),
       })
    end
 end
 
 local function index( tbl, key )
    for i,v in ipairs(tbl) do
-      if v and v["name"]==key then
+      if v and v["name"] == key then
          return i
       end
    end
    return nil
 end
 
+local function is_secondary_slot( ps )
+   return ps and ps.tags and ps.tags.secondary
+end
+
+local function is_secondary( po )
+   return po and is_secondary_slot(po:slot())
+end
+
+local function is_engine( sl )
+   return sl and sl.tags and sl.tags.engines
+end
+
+local function is_multiengine( p, po )
+   local sh = p and p:ship()
+   sh = sh and sh:getSlots()
+   local n = po and po:id()
+   local sl = sh and n and sh[n]
+
+   return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
+end
+
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
-   local stats = tcopy( params )
+   local stats = tcopy(params)
+   local pri_en_stats = {}
+   local sec_en_stats = {}
 
    for k,s in ipairs(stats) do
-      s.index = index( shipstat, s[1] )
+      s.index = index(shipstat, s[1])
       s.stat = shipstat[ s.index ]
       s.name = s.stat.name
-      s.pri = s[2]
-      s.sec = s[3]
+      s.pri, s.sec = s[2], s[3]
+      -- force engine_limit to be last in order
+      if s.name == "engine_limit" then
+         s.index = #shipstat + 1
+      end
+      if multiengines.is_param[s.name] then
+         pri_en_stats[s.name] = s.pri
+         sec_en_stats[s.name] = s.sec
+      end
    end
    -- Sort based on shipstat table order
-   table.sort( stats, function ( a, b )
+   table.sort(stats, function ( a, b )
       return a.index < b.index
-   end )
+   end)
 
    -- Set global properties
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
 
+
    -- Below define the global functions for the outfit
-   function descextra( _p, _o, po )
+   function descextra( p, _o, po )
       local nomain, nosec = false, false
       if po then
-         if po:slot().tags.secondary then
+         if is_secondary(po) then
             nomain = true
          else
             nosec = true
@@ -113,17 +159,106 @@ function multicore.init( params )
             sec="#y"..p_("core","secondary").."#n",
          }).."#0"
       end
+
+      local averaged = is_multiengine(p, po)
+      local id = po and po:id()
+      local multicore_off = halted_n(p, id)
+      local smid = multiengines.engine_stats(p, id)
+      local total = multiengines.total(p)
+      local totaleml = (total and total["engine_limit"]) or 0
+
       for k,s in ipairs(stats) do
-         desc = desc.."\n"..add_desc( s, nomain, nosec )
+         local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
+         desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name])
+      end
+
+      if multicore_off ~= nil then
+         local status
+         if multicore_off == false then
+            status = "#g" .. _("running") .. "#0"
+         else
+            status = "#r" .. _("HALTED") .. "#0"
+         end
+         desc = desc .. "\n#o" .. fmt.f(_("Working Status: {status}"), {status=status})
+      end
+
+      if averaged and multicore_off ~= true then
+         local share = (smid and smid["part"]) or 0
+         desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
+            eml = (smid and smid["engine_limit"]) or 0,
+            total = totaleml, share = share, t = multiengines.eml_stat.unit
+         })
+         for k,s in ipairs(stats) do
+            if is_mobility[s.name] then
+               desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
+                  display = s.stat.display, unit = s.stat.unit, val = fmt.number(smid[s.name]) })
+               desc = desc .. "  #y=>#0  #g+" .. fmt.number(smid[s.name]*share/100) .. " " .. s.stat.unit .. "#0\n"
+            end
+         end
       end
       return desc
    end
 
-   function init( _p, po )
-      local secondary = po and po:slot() and po:slot().tags and po:slot().tags.secondary
-      for k,s in ipairs(stats) do
-         local val = (secondary and s.sec) or s.pri
-         po:set( s.name, val )
+   local function equip(p, po, sign)
+      if p and po then
+         local ie = is_multiengine(p, po)
+         local secondary = is_secondary(po)
+
+         --po:clear()
+         if ie then
+            local t={}
+            if sign~=-1 then
+               t = (secondary and sec_en_stats) or pri_en_stats
+            end
+            if multiengines.decl_engine_stats(p, po, sign, t) then
+               -- prevent self-calling
+               if is_secondary(po) then
+                  p:outfitInitSlot("engines")
+               else
+                  multiengines.refresh( p, po )
+               end
+            end
+         end
+
+         local multicore_off = halted_n(p, po and po:id())
+
+         for k,s in ipairs(stats) do
+            if multicore_off ~= true or s.name == 'mass' then
+               local val = (secondary and s.sec) or s.pri
+
+               if not (ie and is_mobility[s.name]) then
+                  po:set(s.name, val)
+               end
+            end
+         end
+      end
+   end
+
+   function onadd( p, po )
+      equip(p, po, 1)
+   end
+
+   function init( p, po )
+      onadd( p, po )
+   end
+
+   function onremove( p, po )
+      equip(p, po, -1)
+   end
+end
+
+function multicore.setworkingstatus( p, po, on)
+   if p and po then
+      local id = po:id()
+      local off
+
+      if on == nil then
+         off = nil
+      else
+         off = not on
+      end
+      if multiengines.halt_n(p, id, off) then
+         p:outfitInitSlot("engines")
       end
    end
 end

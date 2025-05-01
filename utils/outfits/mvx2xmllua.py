@@ -1,36 +1,14 @@
 #!/usr/bin/python
 
-dont_display=set(['priority','rarity'])
-from outfit import outfit
+keep_in_xml=set(['priority','rarity'])
 
-from os import path
 from sys import argv,stderr,stdin,stdout,exit
-import xml.etree.ElementTree as ET
 
-from outfit import nam2fil
+from outfit import outfit,nam2fil,MOBILITY_PARAMS,text2val,roundit,ET
 
-def get_path(s):
-   s=path.dirname(s)
-
-   if s=='':
-      return ''
-   else:
-      return s+path.sep
-
-def read_com(s):
-   if s=='':
-      return 0,0
-   elif '/' in s:
-      n,m=tuple(s.split('/',1))
-      return float(n),float(m)
-   else:
-      return float(s),float(s)
 
 def fmt(f):
-   if f==round(f):
-      return str(int(f))
-   else:
-      return str(f)
+   return str(roundit(f))
 
 def sfmt(f):
    res=fmt(f)
@@ -41,94 +19,97 @@ def sfmt(f):
    else:
       return res;
 
-def process_group(r,field):
+def _process_group(r,field):
    needs_lua=False
+   is_engine=False
    acc=[]
    r=r.find(field)
    torem=[]
    for e in r.iter():
       t=e.tag
-      if t == 'slot':
-         e.set('prop_extra',e.attrib['prop']+'_secondary')
+      try:
+         a,b=text2val(e.text)
+      except:
+         if t == 'slot' and e.attrib['prop']=='engines':
+            is_engine=True
+         continue
+
+      if t == 'price':
+         e.text=fmt(round((a+b)/2,-2))
+      elif t=='priority' and a==b:
+         continue
       else:
-         try:
-            a,b=read_com(e.text)
-         except:
-            continue
-
-         if t == 'price':
-            e.text=fmt(round((a+b)/2,-2))
-         elif t=='priority' and a==b:
-            continue
+         if a==b:
+            e.text=fmt(a)
          else:
-            if a==b:
-               e.text=fmt(a)
-            else:
-               needs_lua=True
-            acc.append((t,(a,b)))
-            torem.append((r,e))
+            needs_lua=True
+         acc.append((t,(a,b)))
+         torem.append((r,e))
 
-   return needs_lua,acc,torem
+   return needs_lua,acc,torem,is_engine
 
-def mklua(L):
-   output='\n'
+def _mklua(L,dual_eng=True):
+   mods=''
    ind=3*' '
 
-   output+='require("outfits.lib.multicore").init{\n'
+   if L==[]:
+      return '\n'
+
+   output='\nrequire("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
-      if nam not in dont_display:
+      if nam not in keep_in_xml:
          output+=ind+'{ "'+nam+'",'+' '
          output+=fmt(main)+','+' '
          output+=fmt(sec)+'},'+'\n'
 
-   return output+'}\n'
+   return output+mods+'}\n'
 
-def main():
-   acc=[]
+def toxmllua(o,update_lua,fake_dual):
+   T,R=o.T,o.r
 
-   o=outfit(stdin)
-   T=o.T
-   R=o.r
+   f1,acc1,tr1,e1=_process_group(R,'./general')
+   f2,acc2,tr2,e2=_process_group(R,'./specific')
 
-   if R.tag!='outfit':
-      return 1
+   if (not f1) and (not f2) and (not update_lua):
+      tr1=tr2=[]
+      acc1=acc2=[]
 
-   nam=R.attrib['name'].rsplit(' (deprecated)',1)
-   if len(nam)==1 or nam[1].strip()=='':
-      R.attrib['name']=nam[0]
-
-   nam=nam2fil(R.attrib['name'])
-
-   f1,acc1,tr1=process_group(R,'./general')
-   f2,acc2,tr2=process_group(R,'./specific')
-
-   if f1 or f2:
+   if f1 or f2 or update_lua or fake_dual or e1 or e2:
       for (r,e) in tr1+tr2:
          r.remove(e)
 
-      acc=acc1+acc2
-
       for e in R.findall('./specific'):
          el=ET.Element("lua_inline")
-         el.text=mklua(acc)
+         el.text=_mklua(acc1+acc2,not fake_dual and (e1 or e2))
+         if update_lua:
+            el.text+='require "outfits.lib.'+update_lua+'"\n'
          e.append(el)
          break
-   else:
-      pass
-      #print >>stderr,"No composite field found, left as is."
-
-   print >>stderr,nam
-   o.write(stdout)
-   return 0
 
 if __name__ == '__main__':
    import argparse
 
+   def main(update_lua,fake_dual):
+      o=outfit(stdin)
+      if o is None:
+         return 1
+      else:
+         name=o.name().rsplit(' (deprecated)',1)
+         if len(name)==2 and name[1].strip()=='':
+            o.set_name(name[0])
+         nam=nam2fil(o.name())
+
+         toxmllua(o,update_lua,fake_dual)
+         print >>stderr,nam
+         o.write(stdout)
+         return 0
+
    parser = argparse.ArgumentParser(
-      description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
+   description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
          The name the output should have is written on <stderr>.
          If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
    )
-   parser.parse_args()
-   exit(main())
+   parser.add_argument('lua_module', nargs='?', help='The name of a lua module returning update function.')
+   args=parser.parse_args()
+   exit(main(args.lua_module,args.lua_module=='alone'))

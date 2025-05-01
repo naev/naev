@@ -2,22 +2,25 @@
  <general>
   <shortname>M. Ox Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>small</size>
-  <mass>10</mass>
-  <price>55000</price>
+  <price>47500</price>
   <description>A powerful engine for its size, though not a particularly manoeuvrable one. The Ox enables small vessels to haul more cargo or weapons without resorting to larger and more power-hungry models.</description>
   <gfx_store>engine1.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <accel>207</accel>
-  <turn>174</turn>
-  <speed>343</speed>
-  <fuel>500</fuel>
-  <energy_regen_malus>3</energy_regen_malus>
-  <engine_limit>200</engine_limit>
-  <land_delay>-25</land_delay>
-  <time_mod>10</time_mod>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 10, 15},
+   { "accel", 207, 84},
+   { "turn", 174, 107},
+   { "speed", 343, 255},
+   { "fuel", 500, 100},
+   { "energy_regen_malus", 3, 4},
+   { "engine_limit", 200, 230},
+   { "land_delay", -25, 0},
+   { "time_mod", 10, 0},
+}</lua_inline>
  </specific>
 </outfit>

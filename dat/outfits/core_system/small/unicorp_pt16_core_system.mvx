@@ -2,10 +2,10 @@
  <general>
   <shortname>U. PT-16 System</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>small</size>
   <mass>8/57</mass>
-  <price>20000/15000</price>
+  <price>17500</price>
   <description>The PT-16 is a modest but to-spec core system offering reasonable, all-round performance for small vessels.</description>
   <gfx_store>core_system_basic_s1.webp</gfx_store>
   <priority>3</priority>
