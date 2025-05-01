@@ -1,5 +1,6 @@
 <outfit name="Unicorp Eagle 3000 Engine">
  <general>
+  <shortname>U. Eagle 3000 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
