@@ -156,6 +156,10 @@ function multicore.init( params )
    hidestats = true -- We do hacks to show stats, so hide them
 
 
+   local function my_params(po, sign)
+      return sign ~=-1 and ( (is_secondary(po) and sec_en_stats) or pri_en_stats ) or {}
+   end
+
    -- Below define the global functions for the outfit
    function descextra( p, _o, po )
       local nomain, nosec = false, false
@@ -180,11 +184,6 @@ function multicore.init( params )
       end
 
       local averaged = is_multiengine(p, po)
-      local id = po and po:id()
-      local multicore_off = halted_n(gathered_data, id)
-      local smid = multiengines.engine_stats(gathered_data, id)
-      local total = multiengines.total(gathered_data)
-      local totaleml = (total and total["engine_limit"]) or 0
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
@@ -201,7 +200,12 @@ function multicore.init( params )
          desc = desc .. "\n#o" .. fmt.f(_("Working Status: {status}"), {status=status})
       end
 
-      if averaged and multicore_off ~= true then
+      local id = po and po:id()
+      if averaged and multicore_off ~= true and id then
+         local multicore_off = halted_n(gathered_data, id)
+         local smid = multiengines.engine_stats(gathered_data, id)
+         local total = multiengines.total(gathered_data)
+         local totaleml = (total and total["engine_limit"]) or 0
          local share = (smid and smid["part"]) or 0
          desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
             eml = (smid and smid["engine_limit"]) or 0,
@@ -218,12 +222,6 @@ function multicore.init( params )
       return desc
    end
 
-   local function my_params(p, po)
-      local t=sign ~=-1 and ( (is_secondary(po) and sec_en_stats) or pri_en_stats ) or {}
-      t.id = po:id()
-      return t
-   end
-
    local function equip(p, po, sign)
       if p and po then
          local ie = is_multiengine(p, po)
@@ -233,12 +231,11 @@ function multicore.init( params )
          if ie then
             if secondary then
                -- spontaneous self-declaration
-               send_message( p, "engines", "here", {id=po:id(), sign=sign, t=my_params(p, po)})
-               send_message( p, "engines", "done", dat )
+               send_message( p, "engines", "here", {id=po:id(), sign=sign, t=my_params(po, sign)})
+               send_message( p, "engines", "done")
             else
                local sh = p:ship()
-               local sh = sh and sh:getSlots()
-               local myself = po:id()
+               sh = sh and sh:getSlots()
 
                for n,o in ipairs(p:outfits()) do
                   if is_engine(sh[n]) then
@@ -274,12 +271,10 @@ function multicore.init( params )
       equip(p, po, 1)
    end
 
-   function init( p, po )
-      onadd( p, po )
-   end
+   init = onadd
 
    function message( p, po, msg, dat )
-      mydat = receive_message( dat )
+      local mydat = receive_message( dat )
 
       if not p or not po then
          warn("message on nil p/po")
@@ -287,7 +282,7 @@ function multicore.init( params )
          warn("message on non-multiengine slot")
       else
          if msg == "pliz" then
-            return return_message( dat, my_params(p, po))
+            return return_message( dat, my_params(po, 1))
          elseif is_secondary(po) then
             warn('message "'.. msg ..'" send to secondary (ignored)')
          elseif msg == "halt" then

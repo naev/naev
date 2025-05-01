@@ -116,7 +116,7 @@ function tfs.updatefile( ptr, path, f )
       return nil
    end
 
-   local ptr = tfs.checkdir(ptr, tmp)
+   ptr = tfs.checkdir(ptr, tmp)
 
    if ptr == nil then
       return nil
@@ -285,7 +285,7 @@ function tfs.init(pil)
                tfs.path = v
                return true
             elseif force then
-               s.root = v
+               tfs.root = v
                tfs.path = v
                return true
             end
@@ -323,14 +323,13 @@ function tfs.init(pil)
       end
    end
 
-   function tfs.cd( v )
-      local res = cd_silent(v)
+   function tfs.cd( v, force )
+      local res = cd_silent(v, force)
       if res then
          tfs.pwd()
       end
       return res
    end
-
    function tfs.ls( )
       if type(tfs.path) == 'table' then
          for k,v in pairs(tfs.path) do
