@@ -1,5 +1,6 @@
 <outfit name="Unicorp Hawk 160 Engine">
  <general>
+  <shortname>U. Hawk 160 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines" prop_extra="engines_secondary">structure</slot>
   <size>small</size>
