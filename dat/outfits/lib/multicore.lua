@@ -211,12 +211,7 @@ function multicore.init( params )
                t = (secondary and sec_en_stats) or pri_en_stats
             end
             if multiengines.decl_engine_stats(p, po, sign, t) then
-               -- prevent self-calling
-               if is_secondary(po) then
-                  p:outfitInitSlot("engines")
-               else
-                  multiengines.refresh( p, po )
-               end
+               p:outfitMessageSlot("engines",tostring(po:id()))
             end
          end
 
@@ -242,6 +237,18 @@ function multicore.init( params )
       onadd( p, po )
    end
 
+   function message( p, po, _msg, _data )
+      if not p or not po then
+         print("! message on nil p/po")
+      elseif not is_multiengine(p, po) then
+         print("! message on non-multiengine slot")
+      elseif is_secondary(po) then
+         print("! message on non-multiengine slot")
+      else
+         multiengines.refresh( p, po )
+      end
+   end
+
    function onremove( p, po )
       equip(p, po, -1)
    end
@@ -258,7 +265,7 @@ function multicore.setworkingstatus( p, po, on)
          off = not on
       end
       if multiengines.halt_n(p, id, off) then
-         p:outfitInitSlot("engines")
+         p:outfitMessageSlot("engines",tostring(po:id()))
       end
    end
 end
