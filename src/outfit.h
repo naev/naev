@@ -432,6 +432,7 @@ typedef struct Outfit_ {
    int lua_board;        /**< Run when the player boards a ship. */
    int lua_keydoubletap; /**< Run when a key is double tapped. */
    int lua_keyrelease;   /**< Run when a key is released. */
+   int lua_message;      /**< Run when a message is received by an outfit. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */

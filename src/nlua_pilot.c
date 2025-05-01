@@ -168,6 +168,7 @@ static int pilotL_outfitSlot( lua_State *L );
 static int pilotL_outfitAddSlot( lua_State *L );
 static int pilotL_outfitRmSlot( lua_State *L );
 static int pilotL_outfitInitSlot( lua_State *L );
+static int pilotL_outfitMessageSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
 static int pilotL_outfitsReset( lua_State *L );
@@ -396,6 +397,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfitAddSlot", pilotL_outfitAddSlot },
    { "outfitRmSlot", pilotL_outfitRmSlot },
    { "outfitInitSlot", pilotL_outfitInitSlot },
+   { "outfitMessageSlot", pilotL_outfitMessageSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
    { "outfitsReset", pilotL_outfitsReset },
@@ -4001,6 +4003,32 @@ static int pilotL_outfitInitSlot( lua_State *L )
       return 0;
 
    pilot_outfitLInit( p, s );
+   return 0;
+}
+
+/**
+ * @brief Makes an outfit run its initialization script.
+ *
+ *    @luatparam Pilot p Pilot to initialize outfit.
+ *    @luatparam string|integer slot Slot to initialize. Can be passed as a
+ * slot name (string) or slot id (integer).
+ *    @luatparam string type Type of message.
+ *    @luaparam[opt] data Data to send with message.
+ * @luafunc outfitMessageSlot
+ */
+static int pilotL_outfitMessageSlot( lua_State *L )
+{
+   /* Get parameters. */
+   Pilot           *p = luaL_validpilot( L, 1 );
+   PilotOutfitSlot *s = luaL_checkslot( L, p, 2 );
+   if ( s == NULL )
+      return 0;
+   if ( s->outfit == NULL )
+      return 0;
+
+   const char  *type = luaL_checkstring( L, 3 );
+   unsigned int data = lua_gettop( L ) > 3 ? 4 : 0;
+   pilot_outfitLMessage( p, s, type, data );
    return 0;
 }
 

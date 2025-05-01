@@ -2468,3 +2468,29 @@ void pilot_outfitLCleanup( Pilot *pilot )
    }
    /* Pilot gets cleaned up so no need to recalculate stats. */
 }
+
+void pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
+                           unsigned int data )
+{
+   int           oldmem;
+   const Outfit *o = po->outfit;
+   if ( o->lua_message == LUA_NOREF )
+      return;
+
+   nlua_env env = o->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, o->lua_message ); /* f */
+   lua_pushpilot( naevL, pilot->id );                       /* f, p */
+   lua_pushpilotoutfit( naevL, po );                        /* f, p, po */
+   lua_pushstring( naevL, msg );
+   lua_pushvalue( naevL, data );
+   if ( nlua_pcall( env, 4, 0 ) ) { /* */
+      outfitLRunWarning( pilot, o, "message", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+   }
+   pilot_outfitLunmem( env, oldmem );
+}

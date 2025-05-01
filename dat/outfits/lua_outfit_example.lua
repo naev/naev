@@ -163,6 +163,10 @@ end
 function keyrelease( _p, _po, _key )
 end
 
+-- Triggered when the outfit receives a message from some source.
+function message( _p, _po, _msg, _data )
+end
+
 --[[
    Below are WEAPONS ONLY. However, they can be triggered by munitions,
    which share the environment with the ORIGINAL spawning outfit, not necessarily
