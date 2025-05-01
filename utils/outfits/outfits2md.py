@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 from sys import stderr
-import xml.etree.ElementTree as ET
-
-lower_better={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide','launch_reload'}
+from outfit import outfit
+from outfit import LOWER_BETTER
 
 def transpose(M):
    N=max(map(len,M))
@@ -20,40 +19,54 @@ def keyfunc(s):
          return None
    return key
 
-def main(args,gith=False,ter=False,noext=False,sortit=False):
+def main(args,gith=False,ter=False,noext=False,sortit=False,comb=False):
+   if args==[]:
+      return 0
+
+   if comb:
+      for i in args:
+         if '+' in i:
+            stderr.write('"+" incompatible with -C option\n')
+            return 1
+      args=[i+'+'+j for i in args for j in args]
+
    names=['']*len(args)
    L=[dict() for a in args]
    rang=dict()
    acc=[]
 
-   if args==[]:
-      return
-
    for i in range(len(args)):
-      T=ET.parse(args[i]).getroot()
-      for t in T.iter():
-         try:
-            n=getfloat(t.text)
-            L[i][t.tag]=t.text
-            if t.tag not in rang:
-               rang[t.tag]=(n,n)
-               acc.append(t.tag)
-            else:
-               (mi,ma)=rang[t.tag]
-               rang[t.tag]=(min(mi,n),max(ma,n))
-         except:
-            pass
+      if len(args[i].split('+'))==2:
+         o,o2=args[i].split('+')
+         o,o2=outfit(o.strip()),outfit(o2.strip())
+         o.stack(o2)
+      else:
+         o=outfit(args[i])
 
-      if 'name' in T.attrib:
-         names[i]=T.attrib['name']
+      d=o.to_dict()
+      for k,v in d.items():
+         if type(v) == type((1.0,)):
+            (val,_)=v
+            s=str(int(v[0]))+'/'+str(int(v[1]))
+         elif type(v) == type(1.0):
+            val=v
+            s=str(int(v))
+         else:
+            continue
 
-      for e in T.findall("./general/shortname"):
-         names[i]=e.text
-         break
+         L[i][k]=s
+         if k not in rang:
+            rang[k]=(val,val)
+            acc.append(k)
+         else:
+            (mi,ma)=rang[k]
+            rang[k]=(min(mi,val),max(ma,val))
+
+      names[i]=o.shortname()
 
    for i,t in rang.items():
       (m,M)=t
-      if i in lower_better:
+      if i in LOWER_BETTER:
          rang[i]=(M,m)
       if noext:
          rang[i]=(None,None)
@@ -112,6 +125,7 @@ def main(args,gith=False,ter=False,noext=False,sortit=False):
    for r in Res:
       r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
       print(mklin([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))]))
+   return 0
 
 if __name__ == '__main__':
    import argparse
@@ -125,6 +139,7 @@ if __name__ == '__main__':
    parser.add_argument('-n', '--nomax', action='store_true', help="Do not emphasize min/max values." )
    parser.add_argument('-s', '--sort', help="inputs are sorted by their SORT key (mass if SORT is empty).")
    parser.add_argument('-S', '--sortbymass', action='store_true', help="Like -s mass." )
+   parser.add_argument('-C', '--combinations', action='store_true', help="Does all the combinations." )
    parser.add_argument('filename', nargs='*', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.')
 
    args = parser.parse_args()
@@ -149,5 +164,5 @@ if __name__ == '__main__':
    if sortby:
       print('sorted by "'+str(sortby)+'"',file=stderr,flush=True)
 
-   main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,sortby)
+   main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,sortby,args.combinations)
 

@@ -5,11 +5,18 @@ from sys import stdin,stdout,stderr
 import xml.etree.ElementTree as ET
 
 MOBILITY_PARAMS={'speed','turn','accel','thrust'}
+LOWER_BETTER={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide','launch_reload'}
 
 def nam2fil(s):
    for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
       s=s.replace(*c)
    return s.lower()
+
+def shorten(s):
+   for w in s.split(' '):
+      if w[1:2]!='.':
+         return w
+   return s
 
 def text2val(s):
    try:
@@ -68,6 +75,7 @@ class _outfit():
          fp.close()
       else:
          self.T=ET.parse(fil)
+      self.short=False
       self.r=self.T.getroot()
       self.fil=fil
 
@@ -78,11 +86,15 @@ class _outfit():
       self.r.attrib['name']=name
 
    def shortname(self):
+      if self.short:
+         return self.short
       try:
          res=self.to_dict()['shortname']
       except:
          res=self.name()
+      self.short=res
       return res
+
    def size(self,doubled=False):
       try:
          res=self.to_dict()['size']
@@ -92,16 +104,54 @@ class _outfit():
       except:
          pass
 
+   def eml(self):
+      try:
+         res=self.to_dict()['engine_limit']
+      except:
+         res=None
+      return res
+      
+   def stack(self,other):
+      if self.shortname() == other.shortname():
+         self.short=self.shortname()+' x2'
+      else:
+         self.short=shorten(self.shortname())+' + '+shorten(other.shortname())
+      res = self.eml()
+      if type(res)==type(()):
+            (eml1,_)=res
+      else:
+         eml1=res
+
+      res=other.eml()
+      if type(res)==type(()):
+         (_,eml2)=res
+      else:
+         eml2=res
+
+      sec = other.to_dict()
+
+      for e in self:
+         res=text2val(e.text)
+         try:
+            res2=sec[e.tag]
+            if type(res2)==type(1.0):
+               res2=(res2,res2)
+         except:
+            res2=None
+
+         if res is not None:
+            e.text=str(prisec(e.tag,res,res2,eml1,eml2))
+
    def autostack(self,doubled=False):
       if doubled:
-         try:
-            res=self.to_dict()['engine_limit']
-            if type(res)==type(()):
-               (eml1,eml2)=res
-            else:
-               eml1=eml2=res
-         except:
-            eml1,eml2=None,None
+         self.short=self.shortname()+' x2'
+         eml=self.eml()
+         if type(eml)==type(()):
+            (eml1,eml2)=eml
+         else:
+            eml1=eml2=eml
+      else:
+         self.short=self.shortname()+' alone'
 
       for e in self:
          res=text2val(e.text)
