@@ -4007,10 +4007,10 @@ static int pilotL_outfitInitSlot( lua_State *L )
 }
 
 /**
- * @brief Makes an outfit run its initialization script.
+ * @brief Sends a message to an outfit.
  *
- *    @luatparam Pilot p Pilot to initialize outfit.
- *    @luatparam string|integer slot Slot to initialize. Can be passed as a
+ *    @luatparam Pilot p Pilot which outfit is sent a message to.
+ *    @luatparam string|integer slot Slot to send a message to. Can be passed as a
  * slot name (string) or slot id (integer).
  *    @luatparam string type Type of message.
  *    @luaparam[opt] data Data to send with message.
