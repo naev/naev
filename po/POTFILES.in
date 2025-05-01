@@ -3374,10 +3374,13 @@ dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
+dat/outfits/lib/alone.lua
 dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/helper.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lib/multicore.lua
+dat/outfits/lib/multiengines.lua
+dat/outfits/lib/twins.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/pointdefense/pointdefense.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
@@ -3592,6 +3595,7 @@ dat/scripts/prng.lua
 dat/scripts/prob.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
+dat/scripts/shipmemfs.lua
 dat/scripts/shipvariants.lua
 dat/scripts/strmess.lua
 dat/scripts/swapship.lua

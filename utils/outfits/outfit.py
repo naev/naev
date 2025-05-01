@@ -110,7 +110,7 @@ class _outfit():
       except:
          res=None
       return res
-      
+
    def stack(self,other):
       if self.shortname() == other.shortname():
          self.short=self.shortname()+' x2'

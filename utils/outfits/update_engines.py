@@ -178,10 +178,10 @@ def gen_line(params):
    except:
       err('Generation parameters should be floats: '+', '.join(map(repr,params[1:])))
       return 1
-   
+
    if lin not in line_stats:
       line_stats[lin]={"speed_rank_offset":0,"ratio":1}
-   
+
    line_stats[lin].update(zip(["speed_rank_offset","ratio","turn"],params))
    print(line_stats[lin])
 
@@ -207,7 +207,7 @@ def gen_line(params):
       additional['engine_limit']=str(175*4**i)
       additional['price']=str(12500*3**i)
       additional['energy_regen_malus']=str(5*2**i)
-      
+
       subs={k:unstackvals(k,v[0],v[1],1.0,1.0) for k,v in mk_subs(engine,nam).items()}
       acc=apply_ls(subs,o,additional)
       o.write(fil)

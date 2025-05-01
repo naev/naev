@@ -165,4 +165,3 @@ if __name__ == '__main__':
       print('sorted by "'+str(sortby)+'"',file=stderr,flush=True)
 
    main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,sortby,args.combinations)
-

@@ -23,4 +23,3 @@ function onoutfitchange( p, po )
       end
    end
 end
-

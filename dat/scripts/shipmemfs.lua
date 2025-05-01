@@ -392,4 +392,3 @@ if _G['inspect'] ~= nil then
 end
 
 return smfs
-
