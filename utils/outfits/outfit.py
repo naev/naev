@@ -123,12 +123,23 @@ class _outfit():
          eml1=res
 
       res=other.eml()
+      sec = other.to_dict()
+
+
+      for e in self:
+         if e.tag=='specific':
+            d=self.to_dict()
+            for missing in sec:
+               if missing not in d:
+                  el = ET.Element(missing)
+                  el.text='0'
+                  e.append(el)
+            break
+
       if type(res)==type(()):
          (_,eml2)=res
       else:
          eml2=res
-
-      sec = other.to_dict()
 
       for e in self:
          res=text2val(e.text)
