@@ -21,8 +21,7 @@
  * Prototypes.
  */
 /* Static */
-static int escort_command( const Pilot *parent, const char *cmd,
-                           unsigned int index );
+static int escort_command( const Pilot *parent, const char *cmd, int index );
 
 /**
  * @brief Adds an escort to the escort list of a pilot.
@@ -275,8 +274,7 @@ int escort_clearDeployed( Pilot *p, int slot )
  *    @param idx Lua index of argument or 0.
  *    @return 0 on success, 1 if no orders given.
  */
-static int escort_command( const Pilot *parent, const char *cmd,
-                           unsigned int idx )
+static int escort_command( const Pilot *parent, const char *cmd, int idx )
 {
    if ( array_size( parent->escorts ) == 0 )
       return 1;
@@ -338,7 +336,7 @@ int escorts_attack( Pilot *parent )
  */
 int escorts_hold( const Pilot *parent )
 {
-   int ret = escort_command( parent, "e_hold", 0 );
+   int ret = escort_command( parent, "e_hold", LUA_NOREF );
    if ( ( ret == 0 ) && ( parent == player.p ) )
       player_message( _( "#gEscorts: #0Holding formation." ) );
    return ret;
@@ -351,7 +349,7 @@ int escorts_hold( const Pilot *parent )
  */
 int escorts_return( const Pilot *parent )
 {
-   int ret = escort_command( parent, "e_return", 0 );
+   int ret = escort_command( parent, "e_return", LUA_NOREF );
    if ( ( ret == 0 ) && ( parent == player.p ) )
       player_message( _( "#gEscorts: #0Returning to ship." ) );
    return ret;
@@ -364,7 +362,7 @@ int escorts_return( const Pilot *parent )
  */
 int escorts_clear( const Pilot *parent )
 {
-   int ret = escort_command( parent, "e_clear", 0 );
+   int ret = escort_command( parent, "e_clear", LUA_NOREF );
    if ( ( ret == 0 ) && ( parent == player.p ) )
       player_message( _( "#gEscorts: #0Clearing orders." ) );
    return ret;
@@ -402,13 +400,13 @@ int escort_playerCommand( const Pilot *e )
    choice = dialogue_runChoice();
    if ( choice != NULL ) {
       if ( strcmp( choice, opts[0] ) == 0 ) { /* Hold position */
-         pilot_msg( player.p, e, "e_hold", 0 );
+         pilot_msg( player.p, e, "e_hold", LUA_NOREF );
          ret = 0;
       } else if ( strcmp( choice, opts[1] ) == 0 ) { /* Return to ship */
-         pilot_msg( player.p, e, "e_return", 0 );
+         pilot_msg( player.p, e, "e_return", LUA_NOREF );
          ret = 0;
       } else if ( strcmp( choice, opts[2] ) == 0 ) { /* Clear orders */
-         pilot_msg( player.p, e, "e_clear", 0 );
+         pilot_msg( player.p, e, "e_clear", LUA_NOREF );
          ret = 0;
       }
    }

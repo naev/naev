@@ -4026,8 +4026,8 @@ static int pilotL_outfitMessageSlot( lua_State *L )
    if ( s->outfit == NULL )
       return 0;
 
-   const char  *type = luaL_checkstring( L, 3 );
-   unsigned int data = lua_gettop( L ) > 3 ? 4 : 0;
+   const char *type = luaL_checkstring( L, 3 );
+   int         data = lua_gettop( L ) > 3 ? 4 : LUA_NOREF;
    pilot_outfitLMessage( p, s, type, data );
    return 0;
 }
@@ -6351,16 +6351,14 @@ static int pilotL_hailPlayer( lua_State *L )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot       *p;
-   const char  *type;
-   unsigned int data;
+   Pilot *p;
 
    if ( lua_isnoneornil( L, 1 ) )
       p = NULL;
    else
       p = luaL_validpilot( L, 1 );
-   type = luaL_checkstring( L, 3 );
-   data = lua_gettop( L ) > 3 ? 4 : 0;
+   const char *type = luaL_checkstring( L, 3 );
+   int         data = lua_gettop( L ) > 3 ? 4 : LUA_NOREF;
 
    if ( !lua_istable( L, 2 ) ) {
       const Pilot *receiver = luaL_validpilot( L, 2 );

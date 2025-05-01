@@ -2470,7 +2470,7 @@ void pilot_outfitLCleanup( Pilot *pilot )
 }
 
 void pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
-                           unsigned int data )
+                           int data )
 {
    int           oldmem;
    const Outfit *o = po->outfit;
@@ -2487,7 +2487,10 @@ void pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
    lua_pushpilot( naevL, pilot->id );                       /* f, p */
    lua_pushpilotoutfit( naevL, po );                        /* f, p, po */
    lua_pushstring( naevL, msg );
-   lua_pushvalue( naevL, data );
+   if ( data == LUA_NOREF )
+      lua_pushnil( naevL );
+   else
+      lua_pushvalue( naevL, data );
    if ( nlua_pcall( env, 4, 0 ) ) { /* */
       outfitLRunWarning( pilot, o, "message", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );

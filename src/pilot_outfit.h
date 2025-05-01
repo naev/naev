@@ -104,4 +104,4 @@ void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key );
 void pilot_outfitLOnkeyrelease( Pilot *pilot, OutfitKey key );
 void pilot_outfitLCleanup( Pilot *pilot );
 void pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
-                           unsigned int data );
+                           int data );
