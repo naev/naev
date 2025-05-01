@@ -1,26 +1,26 @@
 
 --[[
 This module contains:
- 1. smfs API
- 2. smfs Console Interface
+ 1. tfs API
+ 2. tfs Console Interface
 --]]
 
 
-local smfs = {}
+local tfs = {}
 
 --[[
-## 1. smfs API
+## 1. tfs API
 
 The following functions can't alter the fs (read only and don't return fs mutables):
- - function smfs.listdir( ptr )
- - function smfs.readdir( p, path )
- - function smfs.readfile( p, path )
+ - function tfs.listdir( ptr )
+ - function tfs.readdir( p, path )
+ - function tfs.readfile( p, path )
 
 The following function may create dirs and will change the file value if any:
-function smfs.writefile( p, path, value )
+function tfs.writefile( p, path, value )
 
 The following function may create dirs and will return the dir, allowing to modify it:
-function smfs.checkdir( p, path )
+function tfs.checkdir( p, path )
 
 --]]
 
@@ -34,7 +34,7 @@ function smfs.checkdir( p, path )
 --  - the returned table is a *copy* (therefore you can break the original)
 --  - the return table does not have '_parent_':.. entry contrary to the original table,
 --    that may contain one.
-function smfs.listdir( ptr )
+function tfs.listdir( ptr )
    ptr = (type(ptr) == 'table' and ptr) or {}
    local t = {}
    for k,v in pairs(ptr) do
@@ -56,7 +56,7 @@ end
 -- Side - effect:
 --  - Any non-existing dir on the way is created.
 --
-function smfs.checkdir( p, path )
+function tfs.checkdir( p, path )
    local ptr = p and p:shipMemory()
 
    if ptr ~= nil then
@@ -69,7 +69,7 @@ function smfs.checkdir( p, path )
    return ptr
 end
 
-local function smfs_read( p, path )
+local function tfs_read( p, path )
    local ptr = p and p:shipMemory() or {}
    for _i,k in ipairs(path) do
       ptr = (ptr or {})[k]
@@ -85,12 +85,12 @@ end
 --  - a table of the dir contents if it exists.
 --  - or nil if not
 --
-function smfs.readdir( p, path )
-   local res = smfs_read(p, path)
+function tfs.readdir( p, path )
+   local res = tfs_read(p, path)
    if res == nil then
       return nil
    else
-      return smfs.listdir(res)
+      return tfs.listdir(res)
    end
 end
 
@@ -99,8 +99,8 @@ end
 --  - a itable describing the path to the file
 --      ( a file is just a k,v pair in some dir *where v not a table* )
 --      ( k is the file name, v is the file content )
-function smfs.readfile( p, path )
-   local res = smfs_read( p, path)
+function tfs.readfile( p, path )
+   local res = tfs_read( p, path)
    if type(res) == 'table' then
       return nil  -- this is not a file
    else
@@ -118,7 +118,7 @@ end
 -- Side - effect
 --  - Any missing dir is created on the way.
 --  - The file is created if it does not exist.
-function smfs.updatefile( p, path, f )
+function tfs.updatefile( p, path, f )
    local tmp = {}
    local fil = nil
 
@@ -133,7 +133,7 @@ function smfs.updatefile( p, path, f )
       return nil
    end
 
-   local ptr = smfs.checkdir(p, tmp)
+   local ptr = tfs.checkdir(p, tmp)
 
    if ptr == nil then
       return nil
@@ -155,15 +155,15 @@ end
 -- Side - effect
 --  - Any missing dir is created on the way.
 --  - The file is created if it does not exist.
-function smfs.writefile( p, path, value )
-   return smfs.updatefile(p, path, function ( _in )
+function tfs.writefile( p, path, value )
+   return tfs.updatefile(p, path, function ( _in )
          return value
       end)
 end
 
 --[[
 
-## 2. smfs Console Interface ( Example usage )
+## 2. tfs Console Interface ( Example usage )
 
 > fs = require("shipmemfs")
   Inited shipmemfs with pilot "aze"
@@ -225,17 +225,17 @@ end
   speed : 222
 --]]
 
-function smfs.init(pil)
-   local smfs_pilot = pil
+function tfs.init(pil)
+   local tfs_pilot = pil
 
-   if smfs_pilot == nil then
-      smfs_pilot = player.pilot()
+   if tfs_pilot == nil then
+      tfs_pilot = player.pilot()
    end
 
-   print('  Inited shipmemfs with pilot "' .. smfs_pilot:name() .. '"')
+   print('  Inited shipmemfs with pilot "' .. tfs_pilot:name() .. '"')
 
-   smfs.root = smfs_pilot:shipMemory()
-   smfs.path = smfs.root
+   tfs.root = tfs_pilot:shipMemory()
+   tfs.path = tfs.root
 
    local function _pwd( t )
       local p = t._parent_
@@ -251,19 +251,19 @@ function smfs.init(pil)
       end
    end
 
-   function smfs.pwd( )
-      print(" " .. _pwd(smfs.path))
+   function tfs.pwd( )
+      print(" " .. _pwd(tfs.path))
    end
 
    local function _cd( v, create )
-      local ptr = smfs.path
+      local ptr = tfs.path
       if create then
          ptr = ptr or {}
       end
 
       for _i,k in ipairs(v) do
          if k == '/' then
-            ptr = smfs.root
+            ptr = tfs.root
          else
             local prv = ptr
             ptr = ptr[k]
@@ -288,8 +288,8 @@ function smfs.init(pil)
 
    local function cd_silent( v )
       if type(v) == 'table' then
-         if v and (v['_parent_'] or v == smfs.root) then
-            smfs.path = v
+         if v and (v['_parent_'] or v == tfs.root) then
+            tfs.path = v
             return true
          else
             print(' Not a valid dir.')
@@ -317,7 +317,7 @@ function smfs.init(pil)
 
          local res = _cd(l)
          if res then
-            smfs.path = _cd( l, true)
+            tfs.path = _cd( l, true)
             return true
          else
             print(' Cannot enter "' .. strl(l) .. '"')
@@ -326,17 +326,17 @@ function smfs.init(pil)
       end
    end
 
-   function smfs.cd( v )
+   function tfs.cd( v )
       local res = cd_silent(v)
       if res then
-         smfs.pwd()
+         tfs.pwd()
       end
       return res
    end
 
-   function smfs.ls( )
-      if type(smfs.path) == 'table' then
-         for k,v in pairs(smfs.path) do
+   function tfs.ls( )
+      if type(tfs.path) == 'table' then
+         for k,v in pairs(tfs.path) do
             if type(v) == 'table' then
                print("  " .. tostring(k) .. "/")
             else
@@ -347,8 +347,8 @@ function smfs.init(pil)
    end
 
    local function markall ( )
-      if type(smfs.path) == 'table' then
-         for k,v in pairs(smfs.path) do
+      if type(tfs.path) == 'table' then
+         for k,v in pairs(tfs.path) do
             if type(v) == 'table' and k ~= "_parent_" and cd_silent(k) then
                markall()
                cd_silent("_parent_")
@@ -358,19 +358,19 @@ function smfs.init(pil)
    end
    markall()
 
-   function smfs.find( pref )
+   function tfs.find( pref )
       local count = 0
       if pref == nil then
          pref = "  "
       end
-      if type(smfs.path) == 'table' then
-         for k,v in pairs(smfs.path) do
+      if type(tfs.path) == 'table' then
+         for k,v in pairs(tfs.path) do
             if k ~= "_parent_" then
                count = count + 1
                if type(v) == 'table' then
                   local pref2 = pref .. tostring(k) .. "/"
                   if cd_silent(k) then
-                     local res = smfs.find(pref2)
+                     local res = tfs.find(pref2)
                      if res == 0 then
                         print(pref2)
                      end
@@ -388,7 +388,7 @@ function smfs.init(pil)
 end
 
 if _G['inspect'] ~= nil then
-   smfs.init(player.pilot():target() or player.pilot())
+   tfs.init(player.pilot():target() or player.pilot())
 end
 
-return smfs
+return tfs

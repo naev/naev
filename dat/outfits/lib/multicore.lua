@@ -107,11 +107,30 @@ local function is_multiengine( p, po )
    return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
+local function send_message( p, slot, msg, dat )
+   local t = {dat = dat, ret = nil }
+   p:outfitMessageSlot(slot, msg, t)
+   return t.ret
+end
+
+local function receive_message( dat )
+   return dat.dat
+end
+
+local function return_message( dat, ret)
+   if dat then
+      dat.ret = ret
+   else
+      warn("message returning impossible")
+   end
+end
+
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
+   local gathered_data = {}
 
    for k,s in ipairs(stats) do
       s.index = index(shipstat, s[1])
@@ -199,6 +218,12 @@ function multicore.init( params )
       return desc
    end
 
+   local function my_params(p, po)
+      local t=sign ~=-1 and ( (is_secondary(po) and sec_en_stats) or pri_en_stats ) or {}
+      t.id = po:id()
+      return t
+   end
+
    local function equip(p, po, sign)
       if p and po then
          local ie = is_multiengine(p, po)
@@ -206,13 +231,26 @@ function multicore.init( params )
 
          --po:clear()
          if ie then
-            local t={}
-            if sign~=-1 then
-               t = (secondary and sec_en_stats) or pri_en_stats
+            if secondary then
+               -- spontaneous self-declaration
+               send_message( p, "engines", "here", {id=po:id(), sign=sign, t=my_params(p, po)})
+            else
+               local sh = p:ship()
+               local sh = sh and sh:getSlots()
+
+               for n,o in ipairs(p:outfits()) do
+                  if is_engine(sh[n]) and o then
+                     -- declaration on n's behalf
+                     local res = send_message( p, n, "please")
+                     if res then
+                        send_message( p, "engines", "here", res)
+                     else
+                        warn('no response from "' .. tostring(o) .. '"')
+                     end
+                  end
+               end
             end
-            if multiengines.decl_engine_stats(p, po, sign, t) then
-               p:outfitMessageSlot("engines",tostring(po:id()))
-            end
+            send_message( p, "engines", "done", dat )
          end
 
          local multicore_off = halted_n(p, po and po:id())
@@ -237,15 +275,25 @@ function multicore.init( params )
       onadd( p, po )
    end
 
-   function message( p, po, _msg, _data )
+   function message( p, po, msg, dat )
+      mydat = receive_message( dat )
+
       if not p or not po then
-         print("! message on nil p/po")
+         warn("message on nil p/po")
       elseif not is_multiengine(p, po) then
-         print("! message on non-multiengine slot")
-      elseif is_secondary(po) then
-         print("! message on non-multiengine slot")
+         warn("message on non-multiengine slot")
       else
-         multiengines.refresh( p, po )
+         if msg == "please" then
+            return return_message( dat, my_params(p, po))
+         elseif is_secondary(po) then
+            warn('message "'.. msg ..'" send to secondary (ignored)')
+         elseif msg == "here" then
+            multiengines.decl_engine_stats(p, mydat.id, mydat.sign, mydat.t)
+         elseif msg == "done" then
+            multiengines.refresh( p, po )
+         else
+            warn('Unknown message: "' .. msg .. '"')
+         end
       end
    end
 
@@ -265,7 +313,7 @@ function multicore.setworkingstatus( p, po, on)
          off = not on
       end
       if multiengines.halt_n(p, id, off) then
-         p:outfitMessageSlot("engines",tostring(po:id()))
+         send_message( p, "engines", "done")
       end
    end
 end

@@ -1,5 +1,5 @@
 
-local smfs = require "shipmemfs"
+local tfs = require "tfs"
 
 local multiengines_dir = "_multiengines"
 
@@ -27,15 +27,15 @@ for k,s in ipairs(naev.shipstats()) do
 end
 
 function multiengines.total( p )
-   return smfs.readdir(p, {multiengines_dir, "total"})
+   return tfs.readdir(p, {multiengines_dir, "total"})
 end
 
 function multiengines.stats( p )
-   return smfs.readdir(p, {multiengines_dir, 'engines'})
+   return tfs.readdir(p, {multiengines_dir, 'engines'})
 end
 
 function multiengines.engine_stats( p, id )
-   return smfs.readdir(p, {multiengines_dir, 'engines', id})
+   return tfs.readdir(p, {multiengines_dir, 'engines', id})
 end
 
 function multiengines.refresh( p, po )
@@ -43,18 +43,18 @@ function multiengines.refresh( p, po )
       return
    end
 
-   if not smfs.readfile(p, {multiengines_dir, "needs_refresh"}) then
+   if not tfs.readfile(p, {multiengines_dir, "needs_refresh"}) then
       return
    end
 
    po:clear()
 
-   local data = smfs.checkdir(p, {multiengines_dir, 'engines'})
+   local data = tfs.checkdir(p, {multiengines_dir, 'engines'})
    local dataon = {} -- the subset of if that is active
-   local comb = smfs.checkdir(p, {multiengines_dir, "total"})
+   local comb = tfs.checkdir(p, {multiengines_dir, "total"})
 
    local count = 0
-   for k,v in pairs(smfs.listdir(data)) do
+   for k,v in pairs(tfs.listdir(data)) do
       if v['engine_limit'] and v['halted'] ~= true then
          dataon[k] = v
          count = count + 1
@@ -89,20 +89,20 @@ function multiengines.refresh( p, po )
          end
       end
    end
-   smfs.writefile(p, {multiengines_dir, "needs_refresh"}, nil)
+   tfs.writefile(p, {multiengines_dir, "needs_refresh"}, nil)
 end
 
 function multiengines.halted_n( p, n )
-   return smfs.readfile(p, {multiengines_dir, 'engines', n, 'halted'})
+   return tfs.readfile(p, {multiengines_dir, 'engines', n, 'halted'})
 end
 
 function multiengines.halt_n( p, n, what )
-   local res = smfs.writefile(p, {multiengines_dir, 'engines', n, 'halted'}, what)
+   local res = tfs.writefile(p, {multiengines_dir, 'engines', n, 'halted'}, what)
 
    if res == nil then -- could not write
       warn("Could not write to shimemfs. (invalid pilot or path)")
    else
-      return smfs.updatefile(p,{multiengines_dir, "needs_refresh"}, function ( crt )
+      return tfs.updatefile(p,{multiengines_dir, "needs_refresh"}, function ( crt )
             return crt or res
          end)
    end
@@ -112,17 +112,16 @@ end
 --  -1 for remove
 --   0 for update
 --   1 for add
-function multiengines.decl_engine_stats( p, po, sign, t )
-   local id = po:id()
-   local changed = smfs.readfile(p, {multiengines_dir, "needs_refresh"})
-   local comb = smfs.checkdir(p, {multiengines_dir, 'engines'})
+function multiengines.decl_engine_stats( p, id, sign, t )
+   local changed = tfs.readfile(p, {multiengines_dir, "needs_refresh"})
+   local comb = tfs.checkdir(p, {multiengines_dir, 'engines'})
    local bef
 
    if sign == -1 then
       changed = changed or comb[id] ~= nil
       comb[id] = nil
    else
-      local combid = smfs.checkdir(p, {multiengines_dir, 'engines', id})
+      local combid = tfs.checkdir(p, {multiengines_dir, 'engines', id})
       changed = changed or ((sign == 1) and (comb[id] == nil))
 
       for k,v in pairs(t or {}) do
@@ -131,7 +130,7 @@ function multiengines.decl_engine_stats( p, po, sign, t )
          changed = changed or (bef ~= v)
       end
    end
-   smfs.writefile(p, {multiengines_dir, "needs_refresh"}, changed)
+   tfs.writefile(p, {multiengines_dir, "needs_refresh"}, changed)
    return changed
 end
 
