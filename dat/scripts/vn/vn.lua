@@ -1648,9 +1648,7 @@ function vn.done( ... )
       vn._update = nil
       if vn._handle_music then
          lmusic.stop()
-         if not music.isPlaying() then
-            music.play()
-         end
+         music.play()
       end
    end )
    vn.transition( ... )
