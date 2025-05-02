@@ -33,6 +33,8 @@ end
 -- Must be defined after sos
 mem.distressmsgfunc = sos
 
+local fct_thurion = faction.exists("Thurion")
+
 function create ()
    create_pre()
 
@@ -56,6 +58,12 @@ function create ()
 end
 
 function hail ()
+   if fct_thurion and not fct_thurion:known() then
+      mem.comm_no = _("No response.")
+   else
+      mem.comm_no = nil
+   end
+
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = rnd.rnd( 1000, 3000 )
