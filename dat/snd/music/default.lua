@@ -29,6 +29,8 @@ return {
          return {
             "ambient1.ogg",
             "ambient3.ogg",
+            "dreamy_homage.ogg",
+            "mellow_suspension.ogg",
          }
       end
       return {
@@ -117,7 +119,9 @@ return {
 
       -- Special conditions that limit
       if tags.ruined then
-         return { "landing_sinister.ogg" }
+         return { "space_emergency.ogg" }
+      elseif tags.prison then
+         return { "pitch_black_pit.ogg" }
       elseif nebu_dens > 0 and tags.station then
          return { "nordic_saxo.ogg" }
       end
@@ -128,7 +132,10 @@ return {
          tmergei( lst, { "meet_the_fish.ogg" } )
       end
       if tags.station then
-         tmergei( lst, { "cosmostation.ogg" } )
+         tmergei( lst, { "cosmostation.ogg", "snabba_labba.ogg" } )
+      end
+      if services.shipyard then
+         tmergei( lst, { "gonna_be_gone.ogg" } )
       end
 
       -- Added based on class
