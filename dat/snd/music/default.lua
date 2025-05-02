@@ -119,11 +119,19 @@ return {
 
       -- Special conditions that limit
       if tags.ruined then
-         return { "space_emergency.ogg" }
+         return {
+            "ruined_suspense.ogg",
+            "dark_orchestra.ogg",
+            "space_emergency.ogg",
+         }
       elseif tags.prison then
-         return { "pitch_black_pit.ogg" }
+         return {
+            "pitch_black_pit.ogg",
+         }
       elseif nebu_dens > 0 and tags.station then
-         return { "nordic_saxo.ogg" }
+         return {
+            "nordic_saxo.ogg",
+         }
       end
 
       -- We'll add stuff here
