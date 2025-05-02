@@ -8,6 +8,7 @@
  */
 /** @cond */
 #include "naev.h"
+#include <ctype.h>
 /** @endcond */
 
 #include <ctype.h>
