@@ -4,6 +4,14 @@
  <unique />
  <chance>10</chance>
  <location>Bar</location>
+ <cond>
+   local c = spob.cur()
+   local f = c:faction()
+   if not f or not f:tags("generic") then
+      return false
+   end
+   return true
+ </cond>
 </mission>
 --]]
 --[[
