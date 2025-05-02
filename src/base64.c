@@ -10,10 +10,11 @@
 #include <string.h>
 /** @endcond */
 
+#include "attributes.h"
 #include "base64.h"
 
 /* encode table - base 64 alphabet as defined by the rfc */
-static const char cb64[64] =
+static const char cb64[64] NONSTRING =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 /* generate decode table at compile time */
 #define B64( _ )                                                               \

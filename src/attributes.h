@@ -13,6 +13,12 @@
 #define USE_RESULT
 #endif
 
+#if __has_attribute( nonstring )
+#define NONSTRING __attribute__( ( nonstring ) )
+#else
+#define NONSTRING
+#endif
+
 // Nullability
 #if __has_attribute( nonnull )
 #define NONNULL( ... ) __attribute__( ( nonnull( __VA_ARGS__ ) ) )
