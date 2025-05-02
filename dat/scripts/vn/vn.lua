@@ -1574,7 +1574,7 @@ function vn.music( filename, params, dontstop )
    else
       vn.func( function ()
          if not dontstop then
-            music.stop(true)
+            music.pause(true)
             lmusic.stop()
          end
          vn._handle_music = true
