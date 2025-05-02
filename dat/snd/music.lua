@@ -55,6 +55,7 @@ end
 loadsongs()
 
 local last_track -- last played track name
+local last_track_type = {} -- Last track by type
 local tracks = {} -- currently playing tracks (including fading)
 local music_off = false -- disabled picking or changing music
 local music_situation -- current running situation
@@ -70,6 +71,11 @@ local function tracks_stop ()
          v.m:stop()
          table.insert( remove, k )
       end
+      -- Mark when it ended
+      local situ = v.situation
+      if situ and last_track_type[situ].name==v.name then
+         last_track_type[situ].elapsed = v.elapsed
+      end
    end
    for k=#remove, 1, -1 do
       table.remove( tracks, k )
@@ -83,6 +89,7 @@ local function tracks_add( name, situation, params )
    end
    music_situation = situation
    last_track = name
+   last_track_type[music_situation] = { name=name }
 
    local name_orig = name
    if string.sub(name, 1, 1) ~= "/" then
@@ -102,7 +109,13 @@ local function tracks_add( name, situation, params )
       delay = params.delay,
       name  = name_orig,
       elapsed = 0,
+      situation = situation,
    }
+   if params.seek then
+      local seek = math.max( params.seek-1, 0 )
+      m:seek( seek )
+      t.elapsed = seek
+   end
    if not params.delay then
       m:play()
    end
@@ -137,6 +150,19 @@ local function tracks_resume ()
          v.m:play()
       end
    end
+end
+
+-- Tries to resume the last played song of the sitution if it is in the lost
+local function tracks_resume_last( newlist, situation )
+   local last = last_track_type[situation]
+   if last and last.elapsed and (last.elapsed > 0) and inlist( newlist, last.name ) then
+      tracks_add( last.name, situation, {
+         fade = 1,
+         seek = last.elapsed,
+      } )
+      return true
+   end
+   return false
 end
 
 --[[--
@@ -339,12 +365,13 @@ function choose_table.ambient ()
 
       -- Make sure it's not already in the list or that we have to stop the
       -- currently playing song.
-      if track then
-         for k,v in pairs(ambient) do
-            if track.name == v then
-               return false
-            end
-         end
+      if track and inlist( ambient, track.name ) then
+         return false
+      end
+
+      -- See if we should resume the last played ambient song
+      if tracks_resume_last( ambient, "ambient" ) then
+         return true
       end
 
       -- Avoid repetition
@@ -398,12 +425,13 @@ function choose_table.combat ()
    -- Make sure it's not already in the list or that we have to stop the
    -- currently playing song.
    local t = tracks_playing()
-   if t then
-      for k,v in pairs(combat) do
-         if t.name == v then
-            return false
-         end
-      end
+   if t and inlist( combat, t.name ) then
+      return false
+   end
+
+   -- See if we should resume the last played combat song
+   if tracks_resume_last( combat, "combat" ) then
+      return true
    end
 
    -- Avoid repetition
