@@ -18,13 +18,12 @@ local factional_songs = {}
 local spob_songs = {}
 local spob_songs_func = {}
 local system_ambient_songs = {}
-local ambient_songs = {}
+local ambient_songs_func = {}
 local loading_songs = {}
 local intro_songs = {}
 local credits_songs = {}
 local factional_combat_songs = {}
-local combat_songs = {}
-local nebula_combat_songs = {}
+local combat_songs_func = {}
 
 local function loadsongs ()
    local modules = {}
@@ -32,27 +31,25 @@ local function loadsongs ()
       local suffix = utf8.sub(v, -4)
       if suffix=='.lua' then
          local t = require( "snd.music."..string.gsub(v,".lua","") )
+         t.priority = t.priority or 5
          table.insert( modules, t )
       end
    end
    table.sort( modules, function( a, b )
-      local pa = a.priority or 5
-      local pb = b.priority or 5
-      return pa < pb
+      return a.priority < b.priority
    end )
    for k,t in ipairs(modules) do
       tmerge( factional_songs, t.factional_songs )
       tmerge( spob_songs, t.spob_songs )
       tmerge( system_ambient_songs, t.system_ambient_songs )
       tmerge( takeoff_songs, t.takeoff_songs )
-      tmerge( ambient_songs, t.ambient_songs )
       tmerge( loading_songs, t.loading_songs )
       tmerge( intro_songs, t.intro_songs )
       tmerge( credits_songs, t.credits_songs )
       tmerge( factional_combat_songs, t.factional_combat_songs )
-      tmerge( combat_songs, t.combat_songs )
-      tmerge( nebula_combat_songs, t.nebula_combat_songs )
       table.insert( spob_songs_func, t.spob_songs_func )
+      table.insert( ambient_songs_func, t.ambient_songs_func )
+      table.insert( combat_songs_func, t.combat_songs_func )
    end
 end
 loadsongs()
@@ -226,7 +223,7 @@ function choose_table.land ()
          break
       end
    end
-   if music_list==nil then
+   if music_list==nil or #music_list <= 0 then
       error(fmt.f(_("No compatible music for spob '{spb}'!"), {spb=pnt}))
    end
 
@@ -262,6 +259,16 @@ local function sys_strongest_faction( sys, combat )
       end
    end
    return strongest
+end
+
+local function neutral_ambient_songs ()
+   for k,f in ipairs( ambient_songs_func ) do
+      local t = f()
+      if t ~= nil then
+         return t
+      end
+   end
+   return {}
 end
 
 -- Save old data
@@ -318,22 +325,16 @@ function choose_table.ambient ()
 
    -- Must be forced
    if force then
-      -- Choose the music, bias by faction first
-      local add_neutral = false
-      local neutral_prob = 0.6
-      if strongest ~= nil and factional_songs[strongest] then
-         ambient = factional_songs[strongest]
-         add_neutral = factional_songs[strongest].add_neutral
-      elseif nebu then
-         ambient = { "ambient1.ogg", "ambient3.ogg" }
-         add_neutral = true
-      else
-         ambient = ambient_songs
-      end
 
-      -- Clobber array with generic songs if allowed.
-      if add_neutral and rnd.rnd() < neutral_prob then
-         ambient = ambient_songs
+      -- Choose the music, bias by faction first
+      if strongest ~= nil and factional_songs[strongest] then
+         if factional_songs[strongest].add_neutral and rnd.rnd() < 0.5 then
+            ambient = neutral_ambient_songs()
+         else
+            ambient = factional_songs[strongest]
+         end
+      else
+         ambient = neutral_ambient_songs()
       end
 
       -- Make sure it's not already in the list or that we have to stop the
@@ -361,6 +362,15 @@ function choose_table.ambient ()
    return false
 end
 
+local function neutral_combat_songs ()
+   for k,f in ipairs( combat_songs_func ) do
+      local t = f()
+      if t ~= nil then
+         return t
+      end
+   end
+   return {}
+end
 
 --[[--
 Chooses battle songs.
@@ -368,26 +378,21 @@ Chooses battle songs.
 function choose_table.combat ()
    -- Get some data about the system
    local sys       = system.cur()
-   local nebu_dens = sys:nebula()
    local combat
 
    local strongest = sys_strongest_faction( sys, true )
 
-   local nebu = nebu_dens > 0
-   if nebu then
-      combat = nebula_combat_songs
-   else
-      combat = combat_songs
-   end
-
    if factional_combat_songs[strongest] then
-      if factional_combat_songs[strongest].add_neutral then
-         for k, v in ipairs( factional_combat_songs[strongest] ) do
-            combat[ #combat + 1 ] = v
-         end
+      if factional_combat_songs[strongest].add_neutral and rnd.rnd() < 0.5 then
+         combat = neutral_combat_songs()
       else
          combat = factional_combat_songs[strongest]
       end
+   else
+      combat = neutral_combat_songs()
+   end
+   if combat==nil or #combat <=0 then
+      error(_("No compatible combat music!"))
    end
 
    -- Make sure it's not already in the list or that we have to stop the

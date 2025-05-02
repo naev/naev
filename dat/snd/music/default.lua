@@ -17,15 +17,40 @@ return {
       "launch3chatstart.ogg",
    },
    -- Neutral ambient songs
-   ambient_songs = {
-      "ambient2.ogg", "mission.ogg",
-      "peace1.ogg", "peace2.ogg", "peace4.ogg", "peace6.ogg",
-      "void_sensor.ogg", "ambiphonic.ogg",
-      "ambient4.ogg", "terminal.ogg", "eureka.ogg",
-      "ambient2_5.ogg", "78pulse.ogg", "therewillbestars.ogg",
-   },
+   ambient_songs_func = function ()
+      local sys = system.cur()
+      local tags = sys:tags()
+      local nebu = sys:nebula() > 0
+      if tags.wildspace then
+         return {
+            "wild_space.ogg",
+         }
+      elseif nebu then
+         return {
+            "ambient1.ogg",
+            "ambient3.ogg",
+         }
+      end
+      return {
+         "ambient2.ogg",
+         "ambient2_5.ogg",
+         "ambient4.ogg",
+         "peace1.ogg",
+         "peace2.ogg",
+         "peace4.ogg",
+         "peace6.ogg",
+         "mission.ogg",
+         "void_sensor.ogg",
+         "ambiphonic.ogg",
+         "terminal.ogg",
+         "eureka.ogg",
+         "78pulse.ogg",
+         "therewillbestars.ogg",
+      }
+   end,
    -- Factional songs. Systems default to songs of dominant factions.
    factional_songs = {
+      -- TODO disco_melody.ogg for dreamer clan
       Collective = { "collective1.ogg", "automat.ogg" },
       Pirate     = { "pirate1_theme1.ogg", "pirates_orchestra.ogg", "ambient4.ogg",
                      "terminal.ogg" },
@@ -36,18 +61,28 @@ return {
       Thurion    = { "motherload.ogg", "dark_city.ogg", "ambient1.ogg", "ambient3.ogg" },
       Proteron   = { "heartofmachine.ogg", "imminent_threat.ogg", "ambient4.ogg" },
    },
-   nebula_combat_songs = {
-      "nebu_battle1.ogg",
-      "nebu_battle2.ogg",
-      "combat1.ogg",
-      "combat2.ogg",
-   },
-   combat_songs = {
-      "combat3.ogg",
-      "combat1.ogg",
-      "combat2.ogg",
-      "vendetta.ogg",
-   },
+   combat_songs_func = function ()
+      local sys = system.cur()
+      local tags = sys:tags()
+      local nebu = sys:nebula() > 0
+      if tags.wildspace then
+         return {
+            "wild_space.ogg"
+         }
+      elseif nebu then
+         return {
+            "nebu_battle1.ogg",
+            "nebu_battle2.ogg",
+         }
+      end
+      return {
+         "combat1.ogg",
+         "combat2.ogg",
+         "combat3.ogg",
+         "vendetta.ogg",
+         "run_under_the_sun.ogg",
+      }
+   end,
    -- Factional combat songs. Defaults to dominant factions.
    factional_combat_songs = {
       Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
@@ -75,23 +110,45 @@ return {
    },
    -- Spob-specific songs.
    spob_songs_func = function( spb )
-      local lst
       local class = spb:class()
+      local tags = spb:tags()
+      local nebu_dens = system:cur():nebula()
+      local services = spb:services()
 
-      -- Standard to do it based on type of planet
-      if spb:tags().ruined then
-         lst = { "landing_sinister.ogg" }
-      elseif class == "M" then
-         lst = { "agriculture.ogg" }
+      -- Special conditions that limit
+      if tags.ruined then
+         return { "landing_sinister.ogg" }
+      elseif nebu_dens > 0 and tags.station then
+         return { "nordic_saxo.ogg" }
+      end
+
+      -- We'll add stuff here
+      local lst = {}
+      if tags.urban then
+         tmergei( lst, { "meet_the_fish.ogg" } )
+      end
+      if tags.station then
+         tmergei( lst, { "cosmostation.ogg" } )
+      end
+
+      -- Added based on class
+      if class == "M" or class=="H" then
+         tmergei( lst, { "agriculture.ogg", "peaceful_world.ogg", "boschs_garden.ogg" } )
       elseif class == "O" then
-         lst = { "ocean.ogg" }
+         tmergei( lst, { "ocean.ogg" } )
       elseif class == "P" then
-         lst = { "snow.ogg" }
-      else
-         if spb:services()["inhabited"] then
-            lst = { "cosmostation.ogg", "upbeat.ogg" }
+         tmergei( lst, { "snow.ogg", "nordic_winter_25_for_25.ogg" } )
+      elseif class=="I" or class=="J" or class=="S" or class=="T" or class=="Y" then
+         tmergei( lst, { "methyl_swamp.ogg" } )
+      end
+
+      -- Nothing add, so try to add something
+      if #lst <= 0 then
+         -- More generic defaults
+         if services.inhabited then
+            tmergei( lst, { "upbeat.ogg" } )
          else
-            lst = { "agriculture.ogg" }
+            tmergei( lst, { "end_of_time.ogg", "the_last_mystery.ogg", "winterstorm_1.ogg" } )
          end
       end
 
