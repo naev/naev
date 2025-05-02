@@ -2,32 +2,26 @@
 local tfs = require "tfs"
 
 local multiengines = {
-   mobility_params = {'accel', 'turn', 'speed'},
+   mobility_params = {'accel', 'turn', 'speed', 'engine_limit'},
    is_mobility = {},
-   is_param = {},
    mobility_stats = {},
-   -- will also have eml_stat
 }
 
-multiengines.is_param['engine_limit'] = true
-
-for _i,k in ipairs(multiengines.mobility_params) do
-   multiengines.is_mobility[k] = true
-   multiengines.is_param[k] = true
+for _k,s in ipairs(multiengines.mobility_params ) do
+   multiengines.is_mobility[s] = true
 end
 
 for k,s in ipairs(naev.shipstats()) do
    if multiengines.is_mobility[s.name] then
-      multiengines.mobility_stats[k] = s
-   elseif multiengines.is_param[s.name] then
-      multiengines.eml_stat = s
+      multiengines.mobility_stats[s.name] = s
    end
 end
 
 function multiengines.engine_stats( root, id )
-   res = tfs.readdir(root, {'engines', id})
+   local res = tfs.readdir(root, {'engines', id})
    if res then
-      res['total'] = tfs.readdir(root, {'total'})['engine_limit']
+      local total = tfs.readdir(root, {'total'})
+      res['total'] = total and total['engine_limit']
    end
    return res
 end
@@ -42,7 +36,6 @@ function multiengines.refresh( root, po, force )
    end
 
    --po:clear()
-
    local data = tfs.checkdir(root, {'engines'})
    local dataon = {} -- the subset of if that is active
    local comb = tfs.checkdir(root, {'total'})
@@ -58,7 +51,6 @@ function multiengines.refresh( root, po, force )
    for _,s in ipairs(multiengines.mobility_params) do
       comb[s] = 0
    end
-   comb['engine_limit'] = 0
 
    if count>0 then
       local den=0
@@ -76,7 +68,12 @@ function multiengines.refresh( root, po, force )
             for _k,v in pairs(dataon) do
                acc = acc + (v[s] or 0) * v['engine_limit']
             end
-            local val = math.floor(0.5 + (acc/den))
+            local val
+            if s == 'engine_limit' then
+               val = den
+            else
+               val = math.floor(0.5 + (acc/den))
+            end
             comb[s] = val
             po:set(s, val)
          end

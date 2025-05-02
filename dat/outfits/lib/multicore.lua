@@ -123,7 +123,7 @@ function multicore.init( params )
       if s.name == "engine_limit" then
          s.index = #shipstat + 1
       end
-      if multiengines.is_param[s.name] then
+      if multiengines.is_mobility[s.name] then
          pri_en_stats[s.name] = s.pri
          sec_en_stats[s.name] = s.sec
       end
@@ -192,10 +192,10 @@ function multicore.init( params )
          local share = smid and smid["part"] or 0
          desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
             eml = (smid and smid["engine_limit"]) or 0,
-            total = totaleml, share = share, t = multiengines.eml_stat.unit
+            total = totaleml, share = share, t = multiengines.mobility_stats['engine_limit'].unit
          })
-         for k,s in ipairs(stats) do
-            if is_mobility[s.name] then
+         for _k,s in ipairs(stats) do
+            if is_mobility[s.name] and s.name~="engine_limit" then
                desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
                   display = s.stat.display, unit = s.stat.unit, val = fmt.number(smid[s.name] or 0) })
                desc = desc .. "  #y=>#0  #g+" .. fmt.number((smid[s.name] or 0)*share/100) .. " " .. s.stat.unit .. "#0\n"
@@ -214,6 +214,7 @@ function multicore.init( params )
          local ie = is_multiengine(p, po)
          local secondary = is_secondary(po)
          local id = po:id()
+         local multicore_off = nil
 
          --po:clear()
          if ie then
@@ -230,9 +231,9 @@ function multicore.init( params )
                end
             end
             p:outfitMessageSlot("engines", "done")
+            local smid = p:outfitMessageSlot("engines", "ask", id)
+            multicore_off = smid and smid['halted']
          end
-
-         local multicore_off = halted_n(gathered_data, id)
 
          for k,s in ipairs(stats) do
             if multicore_off ~= true or s.name == 'mass' then
