@@ -216,7 +216,7 @@ function tfs.init(pil)
    if type(pil) == type(player.pilot()) then
       if pil:outfitHasSlot('engines_secondary') then
          print('  Inited tfs with pilot "' .. pil:name() .. '"'.."'s main engine mem.")
-         tfs.root = pil:outfitMessageSlot('engines','wtf?',tmp)
+         tfs.root = pil:outfitMessageSlot('engines','wtf?')
       else
          print('  Did not Init tfs with pilot main engine mem (don\'t have secondary)')
       end

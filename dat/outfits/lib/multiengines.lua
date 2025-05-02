@@ -31,66 +31,53 @@ function multiengines.refresh( root, po, force )
       return
    end
 
-   if not tfs.readfile(root, {'needs_refresh'}) and not force then
+   if (not force) and (not tfs.readfile(root, {'needs_refresh'})) then
       return
    end
 
-   --po:clear()
    local data = tfs.checkdir(root, {'engines'})
    local dataon = {} -- the subset of if that is active
    local comb = tfs.checkdir(root, {'total'})
 
-   local count = 0
+   for _,s in ipairs(multiengines.mobility_params) do
+      comb[s] = 0
+      po:set(s, 0)
+   end
+
+   local den=0
    for k,v in pairs(tfs.readdir(data)) do
       if v['engine_limit'] and v['halted'] ~= true then
          dataon[k] = v
-         count = count + 1
-      end
-   end
-
-   for _,s in ipairs(multiengines.mobility_params) do
-      comb[s] = 0
-   end
-
-   if count>0 then
-      local den=0
-
-      for _k,v in pairs(dataon) do
          den = den + v['engine_limit']
       end
-      if den > 0 then
-         comb['engine_limit'] = den
-         for k,v in pairs(dataon) do
-            data[k]['part'] = math.floor(0.5 + (100*v['engine_limit'])/den)
+   end
+
+   if den > 0 then
+      comb['engine_limit'] = den
+      for _i,s in ipairs(multiengines.mobility_params) do
+         local acc = 0
+         for _k,v in pairs(dataon) do
+            acc = acc + (v[s] or 0) * v['engine_limit']
          end
-         for _i,s in ipairs(multiengines.mobility_params) do
-            local acc = 0
-            for _k,v in pairs(dataon) do
-               acc = acc + (v[s] or 0) * v['engine_limit']
-            end
-            local val
-            if s == 'engine_limit' then
-               val = den
-            else
-               val = math.floor(0.5 + (acc/den))
-            end
-            comb[s] = val
-            po:set(s, val)
+         local val
+         if s == 'engine_limit' then
+            val = den
+         else
+            val = math.floor(0.5 + (acc/den))
          end
+         comb[s] = val
+         po:set(s, val)
       end
    end
    tfs.writefile(root, {'needs_refresh'}, nil)
-end
-
-function multiengines.halted_n( root, n )
-   return tfs.readfile(root, {'engines', n, 'halted'})
 end
 
 function multiengines.halt_n( root, n, what )
    local res = tfs.writefile(root, {'engines', n, 'halted'}, what)
 
    if res == nil then -- could not write
-      warn('Could not write to shimemfs. (invalid pilot or path)')
+      warn('Could not write to tfs. (invalid pointer or path)')
+   else
       return tfs.updatefile(root,{'needs_refresh'}, function ( crt )
             return crt or res
          end)
