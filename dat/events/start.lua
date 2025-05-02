@@ -62,6 +62,7 @@ function create()
    player.outfitAdd( "GUI - Slim" )
    player.outfitAdd( "GUI - Slimv2" )
    player.outfitAdd( "GUI - Legacy" )
+   player.outfitAdd( "GUI - SlimPlus" )
 
    -- Apply starting unidiff
    diff.apply( "Chapter 0" )
