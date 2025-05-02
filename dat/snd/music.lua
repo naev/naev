@@ -10,11 +10,13 @@ Valid parameters:
 local audio = require "love.audio"
 local utf8 = require "utf8"
 local lf = require "love.filesystem"
+local fmt = require "format"
 
 -- List of songs to use
 local takeoff_songs = {}
 local factional_songs = {}
 local spob_songs = {}
+local spob_songs_func = {}
 local system_ambient_songs = {}
 local ambient_songs = {}
 local loading_songs = {}
@@ -24,10 +26,21 @@ local factional_combat_songs = {}
 local combat_songs = {}
 local nebula_combat_songs = {}
 
-for k,v in ipairs(lf.getDirectoryItems("snd/music")) do
-   local suffix = utf8.sub(v, -4)
-   if suffix=='.lua' then
-      local t = require( "snd.music."..string.gsub(v,".lua","") )
+local function loadsongs ()
+   local modules = {}
+   for k,v in ipairs(lf.getDirectoryItems("snd/music")) do
+      local suffix = utf8.sub(v, -4)
+      if suffix=='.lua' then
+         local t = require( "snd.music."..string.gsub(v,".lua","") )
+         table.insert( modules, t )
+      end
+   end
+   table.sort( modules, function( a, b )
+      local pa = a.priority or 5
+      local pb = b.priority or 5
+      return pa < pb
+   end )
+   for k,t in ipairs(modules) do
       tmerge( factional_songs, t.factional_songs )
       tmerge( spob_songs, t.spob_songs )
       tmerge( system_ambient_songs, t.system_ambient_songs )
@@ -39,8 +52,10 @@ for k,v in ipairs(lf.getDirectoryItems("snd/music")) do
       tmerge( factional_combat_songs, t.factional_combat_songs )
       tmerge( combat_songs, t.combat_songs )
       tmerge( nebula_combat_songs, t.nebula_combat_songs )
+      table.insert( spob_songs_func, t.spob_songs_func )
    end
 end
+loadsongs()
 
 local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
@@ -180,7 +195,6 @@ function choose_table.land ()
       return choose_table.ambient()
    end
    local pnt   = spob.cur()
-   local class = pnt:class()
    local music_list
    local params = {
       delay = 0.8,
@@ -205,21 +219,15 @@ function choose_table.land ()
       end
    end
 
-   -- Standard to do it based on type of planet
-   if pnt:tags().ruined then
-      music_list = { "landing_sinister.ogg" }
-   elseif class == "M" then
-      music_list = { "agriculture.ogg" }
-   elseif class == "O" then
-      music_list = { "ocean.ogg" }
-   elseif class == "P" then
-      music_list = { "snow.ogg" }
-   else
-      if pnt:services()["inhabited"] then
-         music_list = { "cosmostation.ogg", "upbeat.ogg" }
-      else
-         music_list = { "agriculture.ogg" }
+   -- See if some function gives us what we want
+   for k,f in ipairs( spob_songs_func ) do
+      music_list = f( pnt )
+      if music_list ~= nil then
+         break
       end
+   end
+   if music_list==nil then
+      error(fmt.f(_("No compatible music for spob '{spb}'!"), {spb=pnt}))
    end
 
    tracks_add( music_list[ rnd.rnd(1,#music_list) ], "land", params )
