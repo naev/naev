@@ -22,6 +22,7 @@
          * Improved autonav behaviour when losing a followed ship
          * Disables afterburner when getting ready to land or jump
          * Shooting *non-point defense* weapons resets autonav speed up
+      * Combat and ambient music tries to play from where it was last stopped when applicable
    * Content
       * 3 new missions
       * 6 new ship variants
@@ -30,6 +31,7 @@
       * More space objects
       * New portraits
       * Over 20 new songs
+         * More variation in landing and situational music
       * Significant changes in jumps (hidden and otherwise)
    * Engine
       * Engine supports modifying some important constants such as those related to the physics model for use in plugins
