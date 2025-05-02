@@ -8,8 +8,8 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Light, medium-heavy and ultraheavy ship now have two core system and hull slots, one main and one secondary
-         * Effects of heavier systems and hulls can be obtained by stacking smaller ones
+      * Light, medium-heavy and ultraheavy ship now have two core hull/systems/engine slots, one main and one secondary
+         * Effects of heavier cores can be obtained by stacking smaller ones
       * Engines have been reworked to be more coherent and consistent
          * Tricon engines have much higher acceleration to max speed ratio
          * Melendez engines have higher speed, but low acceleration and turn
@@ -26,8 +26,8 @@
    * Content
       * 3 new missions
       * 6 new ship variants
-      * 3 new outfits
-      * Two new intertwined minor houses of the Empire
+      * 3 new outfits and reworked cores
+      * Two new intertwined minor houses of the Empire with new systems and lore
       * More space objects
       * New portraits
       * Over 20 new songs
