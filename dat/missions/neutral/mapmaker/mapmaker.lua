@@ -359,7 +359,7 @@ end
 local msg_double = {
    _([["I've found a hidden jump between the {src} and {dst} systems!"]]),
    _([["A hidden route seems to exist between the {src} and {dst} systems!"]]),
-   _([["Marvelously, the {src} and {dst} systems seem to be connected by a hidden jump route!"]]),
+   _([["Marvellously, the {src} and {dst} systems seem to be connected by a hidden jump route!"]]),
    _([["Against prior knowledge, it seems like the {src} and {dst} systems are connected!"]]),
    _([["Data analysis proves that there has to be a hidden jump between the {src} and {dst} systems!"]]),
 }
