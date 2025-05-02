@@ -1,4 +1,6 @@
 return {
+   -- Priority of the songs here. Lower priority will precede. Defaults to 5 if unspecified.
+   priority = 10,
    loading_songs = {
       "machina.ogg",
    },
@@ -71,6 +73,30 @@ return {
             end
          end,
    },
+   -- Spob-specific songs.
+   spob_songs_func = function( spb )
+      local lst
+      local class = spb:class()
+
+      -- Standard to do it based on type of planet
+      if spb:tags().ruined then
+         lst = { "landing_sinister.ogg" }
+      elseif class == "M" then
+         lst = { "agriculture.ogg" }
+      elseif class == "O" then
+         lst = { "ocean.ogg" }
+      elseif class == "P" then
+         lst = { "snow.ogg" }
+      else
+         if spb:services()["inhabited"] then
+            lst = { "cosmostation.ogg", "upbeat.ogg" }
+         else
+            lst = { "agriculture.ogg" }
+         end
+      end
+
+      return lst
+   end,
    -- System-specific songs. Replace songs for certain systems
    system_ambient_songs = {
       ["Taiomi"] = { "/snd/sounds/songs/inca-spa.ogg" },

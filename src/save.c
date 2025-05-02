@@ -118,7 +118,7 @@ int save_all_with_name( const char *name )
       return 0;
 
    /* Create the writer. */
-   writer = xmlNewTextWriterDoc( &doc, conf.save_compress );
+   writer = xmlNewTextWriterDoc( &doc, 0 );
    if ( writer == NULL )
       goto err_ret;
 

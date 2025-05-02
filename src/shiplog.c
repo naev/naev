@@ -10,6 +10,7 @@
 #include <inttypes.h>
 
 #include "shiplog.h"
+#include <inttypes.h>
 
 /*Hold a single log entry - a double linked list*/
 typedef struct {

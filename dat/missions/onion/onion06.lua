@@ -22,7 +22,7 @@
 --[[
    Onion 06
 
-   Emergency Conclave timeTODO explanation
+   Emergency Conclave Time
 --]]
 local fmt = require "format"
 local vn = require "vn"
@@ -109,7 +109,7 @@ The hologram slightly flickers.
    underworlder(_([["And what would you have us do? Risk everything to save Trixie? We can't afford more losses, only 4 keepers are left. And you know what that means."]]))
    puppet(_([["4 keepers! 4 monster keepers! Ha ha ha"]]))
    lonewolf4(_([["Silence! Begone is the time of buffoonery! Are naught the outcomes of these perilous times decided by the council?"]]))
-   -- TODO music a bit faster + chaotic if possible
+   vn.musicPitch( nil, 1.1 ) -- Music should be faster and more chaotic if possible
    l337(_([["THERE WOULD BE 5 KEEPERS STILL IF WE HAD SAVED TRIXIE!"]]))
    puppet(_([["5 keepers! 5 keepers! Ha ha ha"]]))
    vn.na(_([[lonewolf4 mutters something under their breath and puppet stiffens up.]]))
@@ -119,7 +119,7 @@ The hologram slightly flickers.
    lonewolf4(_([["Shallst thus endure, then it will be up to each one to fond for naught other than themselves. Woe is such an end of the mighty Onion Society!"]]))
    l337(_([["I've had enough of this THEATRICAL BULLSHIT. Why'd you do it lonewolf4, huh? Why!?"]]))
    lonewolf4(_([["What vile thoughts dost thou put forth, wretch?"]]))
-   -- TODO music a bit faster and more chaotic if possible
+   vn.musicPitch( nil, 1.2 ) -- Music should be faster and more chaotic if possible
    l337(_([["After T-Trixie got peeled, I found a packet with audio. YOUR NAME WAS ON IT LONEWOLF4!"]]))
    puppet(_([[notasockpuppet seems to be enjoying this.]]))
    dog(_([[...]]))
@@ -133,16 +133,16 @@ Their voice fades out.]]))
 "YOU! YOU DON'T KNOW ANYTHING! GO TO HELL!"]]))
    vn.disappear( l337 )
    vn.na(_([[l337_b01 drops the connection.]]))
-   -- TODO music goes back to normal, maybe calmer?
    lonewolf4(_([["And thus truth exposed."]]))
    lonewolf4(_([[They suddenly focus their gaze on you.
 "And what do we have here?"]]))
 
    vn.scene()
+   vn.musicStop()
    vn.transition("fadedown")
-   vn.na(_([[You abruptly drop out of the Nexus. Ugh, and there goes your last meal with it.]]))
-
-   vn.done("electric")
+   vn.na(_([[You abruptly are dropped out of the Nexus. Ugh, and there goes your last meal with it.]]))
+   vn.na(_([[That did not go very well, maybe you should follow up on l337_b01 once you feel a bit better.]]))
+   vn.done()
    vn.run()
 
    if not accepted then return end

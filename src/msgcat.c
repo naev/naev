@@ -40,6 +40,7 @@
 /** @endcond */
 
 #include "msgcat.h"
+#include "attributes.h"
 
 
 /* Internal implementations, corresponding to Musl's __pleval and __mo_lookup. */
@@ -257,8 +258,8 @@ static int binop(struct st *st, int op, uint64_t left)
 
 static const char *parseop(struct st *st, const char *s)
 {
-	static const char opch[11] = "|&=!><+-*%/";
-	static const char opch2[6] = "|&====";
+	static const char opch[11] NONSTRING = "|&=!><+-*%/";
+	static const char opch2[6] NONSTRING = "|&====";
 	int i;
 	for (i=0; i<11; i++)
 		if (*s == opch[i]) {
