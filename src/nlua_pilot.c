@@ -4007,13 +4007,15 @@ static int pilotL_outfitInitSlot( lua_State *L )
 }
 
 /**
- * @brief Makes an outfit run its initialization script.
+ * @brief Sends a message to an outfit.
  *
- *    @luatparam Pilot p Pilot to initialize outfit.
- *    @luatparam string|integer slot Slot to initialize. Can be passed as a
+ *    @luatparam Pilot p Pilot to send message to outfit.
+ *    @luatparam string|integer slot Slot to send message to. Can be passed as a
  * slot name (string) or slot id (integer).
  *    @luatparam string type Type of message.
  *    @luaparam[opt] data Data to send with message.
+ *    @luareturn The return value of the `message` function run on the outfit or
+ * nil if not applicable.
  * @luafunc outfitMessageSlot
  */
 static int pilotL_outfitMessageSlot( lua_State *L )
@@ -4028,8 +4030,7 @@ static int pilotL_outfitMessageSlot( lua_State *L )
 
    const char *type = luaL_checkstring( L, 3 );
    int         data = lua_gettop( L ) > 3 ? 4 : LUA_NOREF;
-   pilot_outfitLMessage( p, s, type, data );
-   return 0;
+   return pilot_outfitLMessage( p, s, type, data );
 }
 
 /**
