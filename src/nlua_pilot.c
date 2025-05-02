@@ -168,6 +168,7 @@ static int pilotL_outfitSlot( lua_State *L );
 static int pilotL_outfitAddSlot( lua_State *L );
 static int pilotL_outfitRmSlot( lua_State *L );
 static int pilotL_outfitInitSlot( lua_State *L );
+static int pilotL_outfitMessageSlot( lua_State *L );
 static int pilotL_outfitAddIntrinsic( lua_State *L );
 static int pilotL_outfitRmIntrinsic( lua_State *L );
 static int pilotL_outfitsReset( lua_State *L );
@@ -396,6 +397,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "outfitAddSlot", pilotL_outfitAddSlot },
    { "outfitRmSlot", pilotL_outfitRmSlot },
    { "outfitInitSlot", pilotL_outfitInitSlot },
+   { "outfitMessageSlot", pilotL_outfitMessageSlot },
    { "outfitAddIntrinsic", pilotL_outfitAddIntrinsic },
    { "outfitRmIntrinsic", pilotL_outfitRmIntrinsic },
    { "outfitsReset", pilotL_outfitsReset },
@@ -3684,6 +3686,9 @@ static int pilotL_outfitHasSlot( lua_State *L )
  * This by default tries to add them to the first empty or defaultly equipped
  * slot. Will not overwrite existing non-default outfits.
  *
+ * This will also not add outfits to locked slots. Please use outfitAddSlot for
+ * that.
+ *
  * @usage added = p:outfitAdd( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
@@ -3722,6 +3727,10 @@ static int pilotL_outfitAdd( lua_State *L )
       /* Must still have to add outfit. */
       if ( q <= 0 )
          break;
+
+      /* Ignore locked. */
+      if ( s->sslot->locked )
+         continue;
 
       /* Do tests and try to add. */
       ret = pilot_outfitAddSlot( p, o, s, bypass_cpu, bypass_slot );
@@ -3997,6 +4006,33 @@ static int pilotL_outfitInitSlot( lua_State *L )
 
    pilot_outfitLInit( p, s );
    return 0;
+}
+
+/**
+ * @brief Sends a message to an outfit.
+ *
+ *    @luatparam Pilot p Pilot to send message to outfit.
+ *    @luatparam string|integer slot Slot to send message to. Can be passed as a
+ * slot name (string) or slot id (integer).
+ *    @luatparam string type Type of message.
+ *    @luaparam[opt] data Data to send with message.
+ *    @luareturn The return value of the `message` function run on the outfit or
+ * nil if not applicable.
+ * @luafunc outfitMessageSlot
+ */
+static int pilotL_outfitMessageSlot( lua_State *L )
+{
+   /* Get parameters. */
+   Pilot           *p = luaL_validpilot( L, 1 );
+   PilotOutfitSlot *s = luaL_checkslot( L, p, 2 );
+   if ( s == NULL )
+      return 0;
+   if ( s->outfit == NULL )
+      return 0;
+
+   const char *type = luaL_checkstring( L, 3 );
+   int         data = lua_gettop( L ) > 3 ? 4 : LUA_NOREF;
+   return pilot_outfitLMessage( p, s, type, data );
 }
 
 /**
@@ -6318,16 +6354,14 @@ static int pilotL_hailPlayer( lua_State *L )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot       *p;
-   const char  *type;
-   unsigned int data;
+   Pilot *p;
 
    if ( lua_isnoneornil( L, 1 ) )
       p = NULL;
    else
       p = luaL_validpilot( L, 1 );
-   type = luaL_checkstring( L, 3 );
-   data = lua_gettop( L ) > 3 ? 4 : 0;
+   const char *type = luaL_checkstring( L, 3 );
+   int         data = lua_gettop( L ) > 3 ? 4 : LUA_NOREF;
 
    if ( !lua_istable( L, 2 ) ) {
       const Pilot *receiver = luaL_validpilot( L, 2 );

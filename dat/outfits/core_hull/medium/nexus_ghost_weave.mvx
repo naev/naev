@@ -2,7 +2,7 @@
  <general>
   <shortname>N. Ghost Weave</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
   <size>medium</size>
   <mass>110/130</mass>
   <price>240000</price>

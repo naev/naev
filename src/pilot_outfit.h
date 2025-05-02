@@ -103,3 +103,5 @@ void pilot_outfitLOnboard( Pilot *pilot, const Pilot *target );
 void pilot_outfitLOnkeydoubletap( Pilot *pilot, OutfitKey key );
 void pilot_outfitLOnkeyrelease( Pilot *pilot, OutfitKey key );
 void pilot_outfitLCleanup( Pilot *pilot );
+int  pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
+                           int data );

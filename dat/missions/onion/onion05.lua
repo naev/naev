@@ -582,7 +582,7 @@ You hear the sound of them blowing their nose.]]))
 "Give me one second."
 They cough, probably clearing the tears.]]))
    l337(fmt.f(_([[You hear a surprisingly clear voice.
-"What, how could I have missed this? I found a stray packed coming from the {sys} relay. Looks like...!!"
+"What, how could I have missed this? I found a stray packet coming from the {sys} relay. Looks like...!!"
 They go silent, and you start receiving a new voice channel.]]),
       {sys=trixiesys}))
 
@@ -597,9 +597,14 @@ You hear a siren in the background.]]))
    msg(_([["Shit, they're moving faster than I expected."
 There is a constant sound of loud and furious typing.]]))
    msg(_([["Since I was dropped offline, I've been trying to trace the freak. They're very good, almost too good."]]))
-   msg(_([["I had my suspicious that this was a fellow technomancer, but I didn't think they'd be so brash. I should have set up a deadman's switch."]]))
+   -- Modified / hacked part done by underworlder
+   msg(_([[The audio seems to break up.
+"But not *CRACKLE* enough. *HISS* tracked *POP*-nal to *CRACKLE* *SCRATCH* lonewolf4 *HISS* *CRACKLE*"]]))
+   msg(_([[The audio seems to recover.
+"*SCRITCH* my suspicious that this was a fellow technomancer, but I didn't think they'd be so brash."]]))
    msg(_([["Oh shit, looks like this is the end of the line."]]))
-   msg(_([["l337_b01, everything is in your hands now."]]))
+   msg(_([[The tone in the voice changes, almost nostalgic.
+"l337_b01, everything is in your hands now. Like old times... I'll be waiting with v3c70r and DEADBEEF..."]]))
    msg(_([["CONNECTION TERMINATED"]]))
    vn.disappear( msg )
    vn.move( l337, "center" )

@@ -119,34 +119,34 @@ seng["Interceptor"] = function ()
    return "Unicorp Hawk 160 Engine"
 end
 seng["Fighter"] = function ()
-   return "Unicorp Hawk 360 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Bomber"] = function ()
-   return "Unicorp Hawk 360 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Corvette"] = function ()
    return "Unicorp Falcon 700 Engine"
 end
 seng["Destroyer"] = function ()
-   return "Unicorp Falcon 1400 Engine"
+   return "Unicorp Falcon 700 Engine"
 end
 seng["Cruiser"] = function ()
    return "Unicorp Eagle 3000 Engine"
 end
 seng["Battleship"] = function ()
-   return "Unicorp Eagle 6500 Engine"
+   return "Unicorp Eagle 3000 Engine"
 end
 seng["Carrier"] = function ()
-   return "Unicorp Eagle 6500 Engine"
+   return "Unicorp Eagle 3000 Engine"
 end
 seng["Yacht"] = function ()
    return "Unicorp Hawk 160 Engine"
 end
 seng["Courier"] = function ()
-   return "Unicorp Hawk 360 Engine"
+   return "Unicorp Hawk 160 Engine"
 end
 seng["Freighter"] = function ()
-   return choose_one{ "Unicorp Falcon 1400 Engine", "Melendez Buffalo XL Engine" }
+   return choose_one{ "Unicorp Falcon 700 Engine", "Melendez Buffalo Engine" }
 end
 seng["Armoured Transport"] = seng["Freighter"]
 seng["Bulk Freighter"] = function ()
@@ -263,25 +263,25 @@ eeng["Interceptor"] = function ()
 end
 
 eeng["Fighter"] = function ()
-   return choose_one{ "Nexus Dart 360 Engine", "Tricon Zephyr II Engine" }
+   return choose_one{ "Nexus Dart 160 Engine", "Tricon Zephyr Engine" }
 end
 eeng["Bomber"] = function ()
-   return choose_one{ "Nexus Dart 360 Engine", "Melendez Ox XL Engine" }
+   return choose_one{ "Nexus Dart 160 Engine", "Melendez Ox Engine" }
 end
 eeng["Corvette"] = function ()
    return choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" }
 end
 eeng["Destroyer"] = function ()
-   return choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" }
+   return choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" }
 end
 eeng["Cruiser"] = function ()
    return choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" }
 end
 eeng["Battleship"] = function ()
-   return choose_one{ "Tricon Typhoon II Engine", "Nexus Bolt 6500 Engine", "Melendez Mammoth XL Engine" }
+   return choose_one{ "Tricon Typhoon Engine", "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" }
 end
 eeng["Carrier"] = function ()
-   return "Melendez Mammoth XL Engine"
+   return "Melendez Mammoth Engine"
 end
 eeng["Yacht"] = seng["Yacht"]
 eeng["Courier"] = seng["Courier"]
@@ -308,7 +308,7 @@ cores.standard.engines["Kestrel"] = function ()
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
 cores.standard.engines["Starbridge"] = function ()
-   return choose_one{ "Unicorp Falcon 1400 Engine", "Krain Patagium Engine" }
+   return choose_one{ "Unicorp Falcon 700 Engine", "Krain Patagium Twin Engine" }
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
 cores.standard.systems["Proteron Hippocrates"] = function ()
@@ -325,7 +325,7 @@ cores.elite.hulls["Kestrel"] = function ()
 end
 cores.elite.hulls["Pirate Kestrel"] = cores.elite.hulls["Kestrel"]
 cores.elite.engines["Starbridge"] = function ()
-   return choose_one{ "Tricon Cyclone II Engine", "Krain Patagium Engine" }
+   return choose_one{ "Tricon Cyclone Engine", "Krain Patagium Twin Engine" }
 end
 cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
 cores.elite.systems["Gawain"] = function ()
@@ -392,6 +392,9 @@ function cores.get( p, params )
       local ct = cores[ engines ].engines
       local co = ct[ shipname ] or ct[ shipclass ]
       c["engines"] = co()
+      if have_secondary[shipclass] then
+         c["engines_secondary"] = c["engines"]
+      end
    end
 
    return c

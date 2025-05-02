@@ -2,7 +2,7 @@
  <general>
   <shortname>N. Shadow Weave</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
   <size>small</size>
   <priority>7</priority>
   <mass>25</mass>

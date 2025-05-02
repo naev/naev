@@ -2,20 +2,23 @@
  <general>
   <shortname>T. Zephyr Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>small</size>
-  <mass>10</mass>
-  <price>135000</price>
+  <price>112500</price>
   <description>For light vessel pilots who demand unparalleled performance, Tricon's Zephyr is the engine of choice. Its best-in-class handling does come with the caveat of markedly increased power consumption, but those flying with Tricon engines can usually afford the requisite reactor upgrades.</description>
   <gfx_store>engine9.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>4</energy_regen_malus>
-  <engine_limit>140</engine_limit>
-  <fuel>300</fuel>
-  <speed>287</speed>
-  <accel>452</accel>
-  <turn>213</turn>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 10, 10},
+   { "energy_regen_malus", 4, 8},
+   { "engine_limit", 140, 180},
+   { "fuel", 300, 100},
+   { "speed", 287, 237},
+   { "accel", 452, 198},
+   { "turn", 213, 137},
+}</lua_inline>
  </specific>
 </outfit>

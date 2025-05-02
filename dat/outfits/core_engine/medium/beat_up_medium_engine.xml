@@ -1,19 +1,22 @@
 <outfit name="Beat Up Medium Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>medium</size>
-  <mass>30</mass>
   <price>0</price>
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
   <gfx_store>engine3.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_regen_malus>15</energy_regen_malus>
-  <engine_limit>550</engine_limit>
-  <fuel>600</fuel>
-  <speed>207</speed>
-  <accel>85</accel>
-  <turn>92</turn>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 30, 8},
+   { "energy_regen_malus", 15, 20},
+   { "engine_limit", 550, 550},
+   { "fuel", 600, 0},
+   { "speed", 207, 113},
+   { "accel", 85, 21},
+   { "turn", 92, 42},
+}</lua_inline>
  </specific>
 </outfit>

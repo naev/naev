@@ -1,0 +1,25 @@
+<outfit name="Krain Patagium Twin Engine">
+ <general>
+  <shortname>K. Patagium Twin Engine</shortname>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
+  <size>medium</size>
+  <priority>3</priority>
+  <price>55000</price>
+  <description>The Patagium is a destroyer engine developed by Krain Industries to be used in the Starbridge. While its performance exceeds other destroyer engines in terms of maximum speed and manouverability, the engine is not adequate for most other destroyers due to their higher mass.</description>
+  <gfx_store>krain_patagium_engine.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 10, 10},
+   { "energy_regen_malus", 11, 11},
+   { "engine_limit", 475, 475},
+   { "fuel", 800, 200},
+   { "speed", 201, 201},
+   { "accel", 109, 109},
+   { "turn", 108, 108},
+}
+require "outfits.lib.twins"</lua_inline>
+ </specific>
+</outfit>

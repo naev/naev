@@ -61,14 +61,16 @@ local zalek_cores = {
    ["Za'lek Demon"] = function (_p) return {
          systems = choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          systems_secondary = choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
-         engines = choose_one{ "Tricon Cyclone II Engine", "Nexus Arrow 1400 Engine", "Melendez Buffalo XL Engine" },
+         engines = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
+         engines_secondary = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          hull = choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
          hull_secondary = "S&K Battle Plating",
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
          systems = "Milspec Orion 8601 Core System",
          systems_secondary = "Milspec Orion 8601 Core System",
-         engines = choose_one{ "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine" },
+         engines = choose_one{ "Nexus Bolt 3000 Engine", "Tricon Typhoon Engine" },
+         engines_secondary = choose_one{ "Nexus Bolt 3000 Engine", "Tricon Typhoon Engine" },
          hull = "Unicorp D-58 Heavy Plating",
          hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "Dummy Plating" },
       } end,
@@ -77,14 +79,16 @@ local zalek_cores = {
          systems_secondary = "Milspec Thalos 8502 Core System",
          hull = "Unicorp D-58 Heavy Plating",
          hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "Dummy Plating" },
-         engines = choose_one{ "Nexus Bolt 6500 Engine", "Melendez Mammoth XL Engine" },
+         engines = choose_one{ "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" },
+         engines_secondary = choose_one{ "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" },
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
          systems = "Milspec Thalos 8502 Core System",
          systems_secondary = "Milspec Thalos 8502 Core System",
          hull = choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" }, -- Ideally, should chose twice the same
          hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" },
-         engines = "Melendez Mammoth XL Engine",
+         engines = "Melendez Mammoth Engine",
+         engines_secondary = "Melendez Mammoth Engine",
       } end,
 }
 

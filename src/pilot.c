@@ -3133,7 +3133,7 @@ void pilot_hyperspaceAbort( Pilot *p )
       const Pilot *e = pilot_get( p->escorts[i].id );
       if ( e == NULL ) /* Most likely died. */
          continue;
-      pilot_msg( p, e, "hyperspace_abort", 0 );
+      pilot_msg( p, e, "hyperspace_abort", LUA_NOREF );
    }
 }
 
@@ -4512,12 +4512,12 @@ mat4 pilot_local_transform( const Pilot *p )
  *    @param p Pilot to send message
  *    @param receiver Pilot to receive it
  *    @param type Type of message.
- *    @param idx Index of data on lua stack or 0
+ *    @param idx Index of data on lua stack or LUA_NOREF
  */
 void pilot_msg( const Pilot *p, const Pilot *receiver, const char *type,
-                unsigned int idx )
+                int idx )
 {
-   if ( idx != 0 )
+   if ( idx != LUA_NOREF )
       lua_pushvalue( naevL, idx ); /* data */
    else
       lua_pushnil( naevL ); /* data */

@@ -1,7 +1,7 @@
 <outfit name="S&amp;K Skirmish Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
   <size>small</size>
   <mass>30</mass>
   <price>120000</price>

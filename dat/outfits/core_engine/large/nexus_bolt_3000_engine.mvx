@@ -1,0 +1,22 @@
+<outfit name="Nexus Bolt 3000 Engine">
+ <general>
+  <shortname>N. Bolt 3000 Engine</shortname>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
+  <size>large</size>
+  <mass>60/20</mass>
+  <price>600000</price>
+  <description>The Bolt 3000 is a somewhat uncommonly used engine designed for cruisers. Like most Nexus engines, it doesn't excel in speed, but its low power consumption makes it an attractive option for some pilots.</description>
+  <gfx_store>nexus_engine_l.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <energy_regen_malus>20/26</energy_regen_malus>
+  <engine_limit>3000/3500</engine_limit>
+  <fuel>2400/400</fuel>
+  <speed>140/71</speed>
+  <accel>54/13</accel>
+  <turn>61/26</turn>
+  <time_mod>-20/-2</time_mod>
+ </specific>
+</outfit>

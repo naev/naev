@@ -2,18 +2,18 @@
  <general>
   <shortname>Prev. Gen. Medium Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems">utility</slot>
+  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
   <size>medium</size>
-  <mass>100</mass>
+  <mass>100/200</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>reactor01.webp</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>180/0</cpu_max>
-  <energy>580/0</energy>
-  <energy_regen>23/0</energy_regen>
-  <shield>310/0</shield>
-  <shield_regen>7/0</shield_regen>
+  <cpu_max>180/90</cpu_max>
+  <energy>480/510</energy>
+  <energy_regen>23/12</energy_regen>
+  <shield>310/100</shield>
+  <shield_regen>6/0</shield_regen>
  </specific>
 </outfit>

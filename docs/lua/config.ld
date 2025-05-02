@@ -1,4 +1,6 @@
 not_luadoc = true
+sort = true
+sort_modules=true
 title = "Naev Lua API"
 project = "Naev Lua API"
 description = "Naev Lua API"

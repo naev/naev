@@ -1,7 +1,7 @@
 <outfit name="Patchwork Light Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
   <size>small</size>
   <priority>3</priority>
   <mass>30</mass>

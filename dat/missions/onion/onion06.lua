@@ -22,7 +22,7 @@
 --[[
    Onion 06
 
-   Emergency Conclave timeTODO explanation
+   Emergency Conclave Time
 --]]
 local fmt = require "format"
 local vn = require "vn"
@@ -101,14 +101,48 @@ The hologram slightly flickers.
    vn.transition()
    vn.na(_([[You join what seems like an already started Conclave.]]))
    l337(_([["And that's it? TRIXIE WAS DAMN PEELED, YOU HEARTLESS BASTARDS!"]]))
-   puppet(_([["Oh please, just because your protégé screwed up, it's no need to cause a scene. They weren't even a keyholder!"]]))
+   puppet(_([["Oh please, just because your protégé screwed up, it's no need to cause a scene. They weren't even a keeper!"]]))
    lonewolf4(_([["Trixie's untimely demised is another grave misfortune, yet another in this cosmic tragedy. We shall spare some tears, but the Onion Society shall persist, such as it always has, in defiance of annihilation."]]))
    dog(_([["..."]]))
-   l337(_([["You MONSTERS! All you think about is power!"]]))
-   underworlder(_([["And is it not the pursuit of power that has brought us all here? That has joined us together since the Sublime Seven? You speak to us as if we were different, yet you were quick enough to abandon v3c70r"]]))
-   puppet(_([[""]]))
+   l337(_([["You MONSTERS! All you think about is power! We're supposed to be a SOCIETY!"]]))
+   puppet(_([["We're a society of MONSTERS! Ha ha ha"]]))
+   underworlder(_([["And what would you have us do? Risk everything to save Trixie? We can't afford more losses, only 4 keepers are left. And you know what that means."]]))
+   puppet(_([["4 keepers! 4 monster keepers! Ha ha ha"]]))
+   lonewolf4(_([["Silence! Begone is the time of buffoonery! Are naught the outcomes of these perilous times decided by the council?"]]))
+   vn.musicPitch( nil, 1.1 ) -- Music should be faster and more chaotic if possible
+   l337(_([["THERE WOULD BE 5 KEEPERS STILL IF WE HAD SAVED TRIXIE!"]]))
+   puppet(_([["5 keepers! 5 keepers! Ha ha ha"]]))
+   vn.na(_([[lonewolf4 mutters something under their breath and puppet stiffens up.]]))
+   underworlder(_([["C'mon, no rough play in the council."]]))
+   puppet(_([[notasockpuppet flickers back and frowns at lonewolf4.
+"Bad wolf."]]))
+   lonewolf4(_([["Shallst thus endure, then it will be up to each one to fond for naught other than themselves. Woe is such an end of the mighty Onion Society!"]]))
+   l337(_([["I've had enough of this THEATRICAL BULLSHIT. Why'd you do it lonewolf4, huh? Why!?"]]))
+   lonewolf4(_([["What vile thoughts dost thou put forth, wretch?"]]))
+   vn.musicPitch( nil, 1.2 ) -- Music should be faster and more chaotic if possible
+   l337(_([["After T-Trixie got peeled, I found a packet with audio. YOUR NAME WAS ON IT LONEWOLF4!"]]))
+   puppet(_([[notasockpuppet seems to be enjoying this.]]))
+   dog(_([[...]]))
+   lonewolf4(_([["Lo, each accusation is but the echo of one's own sin. You speak as though you are special, as though you are different, but hesitated not to kill everyone, including keeper v3c70r on Tenebros Station to save your own hide! Wolf forgets not!"]]))
+   l337(_([["THAT'S NOT... Not... not..."
+Their voice fades out.]]))
+   lonewolf4(_([["Thou canst not deny the weight of this evidence! Thou hast slain v3c70r as thou hast now slain Trixie, and seekest to lay the blame at mine own feet, that thou might further thy own wicked designs!"]]))
+   l337(_([[...]]))
+   lonewolf4(_([["Behold ye all! Silence! They offer no rebuttal for their exposed sins! Perhaps the peeling of DEADBEEF was also of thy doing!"]]))
+   l337(_([[The name DEADBEEF seems to resonate in l337_b01.
+"YOU! YOU DON'T KNOW ANYTHING! GO TO HELL!"]]))
+   vn.disappear( l337 )
+   vn.na(_([[l337_b01 drops the connection.]]))
+   lonewolf4(_([["And thus truth exposed."]]))
+   lonewolf4(_([[They suddenly focus their gaze on you.
+"And what do we have here?"]]))
 
-   vn.done("electric")
+   vn.scene()
+   vn.musicStop()
+   vn.transition("fadedown")
+   vn.na(_([[You abruptly are dropped out of the Nexus. Ugh, and there goes your last meal with it.]]))
+   vn.na(_([[That did not go very well, maybe you should follow up on l337_b01 once you feel a bit better.]]))
+   vn.done()
    vn.run()
 
    if not accepted then return end

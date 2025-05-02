@@ -455,6 +455,7 @@ static int colL_setalpha( lua_State *L )
  *
  *    @luatparam Colour col Colour to change from linear to gamma.
  *    @luatreturn Colour Modified colour.
+ * @luafunc linearToGamma
  */
 static int colL_linearToGamma( lua_State *L )
 {
@@ -473,6 +474,7 @@ static int colL_linearToGamma( lua_State *L )
  *
  *    @luatparam Colour col Colour to change from gamma corrected to linear.
  *    @luatreturn Colour Modified colour.
+ * @luafunc gammaToLinear
  */
 static int colL_gammaToLinear( lua_State *L )
 {

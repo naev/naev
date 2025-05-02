@@ -130,13 +130,13 @@ function accept()
    if mem.timelimit < playerbest then
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
-	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
+            {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
          return
       end
    elseif system.cur():jumpDist(mem.destsys, false, true) > mem.numjumps then
       if not tk.yesno( _("Unknown route"), fmt.f(
             _("The fastest route to {pnt} is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than {jumps} may cause you to miss the deadline. Accept the mission anyway?"),
-	    {pnt=mem.destplanet, jumps=fmt.jumps(mem.numjumps)} ) ) then
+            {pnt=mem.destplanet, jumps=fmt.jumps(mem.numjumps)} ) ) then
          return
       end
    end

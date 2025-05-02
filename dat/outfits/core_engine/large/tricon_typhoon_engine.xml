@@ -2,20 +2,23 @@
  <general>
   <shortname>T. Typhoon Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
-  <mass>60</mass>
-  <price>2700000</price>
+  <price>1800000</price>
   <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors.</description>
   <gfx_store>engine2.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <energy_regen_malus>32</energy_regen_malus>
-  <engine_limit>2700</engine_limit>
-  <fuel>2000</fuel>
-  <speed>140</speed>
-  <accel>78</accel>
-  <turn>69</turn>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 60, 20},
+   { "energy_regen_malus", 32, 24},
+   { "engine_limit", 2700, 3100},
+   { "fuel", 2000, 400},
+   { "speed", 140, 73},
+   { "accel", 78, 18},
+   { "turn", 69, 28},
+}</lua_inline>
  </specific>
 </outfit>

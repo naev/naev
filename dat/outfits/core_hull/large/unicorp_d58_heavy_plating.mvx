@@ -2,7 +2,7 @@
  <general>
   <shortname>U. D-58 Heavy Plating</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull">structure</slot>
+  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
   <size>large</size>
   <mass>400/550</mass>
   <price>180000</price>

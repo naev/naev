@@ -648,7 +648,7 @@ void spfxL_exit( void )
 /**
  * @brief Updates the spfx.
  *
- *    @luatparam dt Delta tick to use for the update.
+ *    @param dt Delta tick to use for the update.
  */
 void spfxL_update( double dt )
 {

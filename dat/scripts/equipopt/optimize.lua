@@ -467,8 +467,8 @@ function optimize.optimize( p, cores, outfit_list, params )
    local slots = {}
    local slots_w, slots_u, slots_s = {}, {}, {}
    for k,v in ipairs(slots_base) do
-      -- Must be empty
-      if p:outfitSlot(k)==nil then
+      -- Must be empty and not locked
+      if p:outfitSlot(k)==nil and not v.locked then
          local has_outfits = {}
          local outfitpos = {}
          for m,o in ipairs(outfit_list) do
@@ -756,14 +756,13 @@ function optimize.optimize( p, cores, outfit_list, params )
             print_debug( lp, p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          end
 
-         -- Interpret results
+      -- Interpret results by equipping
       else
          c = 1
          for i,s in ipairs(slots) do
             for j,o in ipairs(s.outfits) do
                if x[c] == 1 then
-                  local q = p:outfitAdd( o, 1, true )
-                  if q < 1 then
+                  if not  p:outfitAddSlot( o, s.id, true ) then
                      warn(string.format(_("Unable to equip outfit '%s' on '%s'!"), o,  p:name()))
                   end
                end

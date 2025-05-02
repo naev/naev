@@ -4,10 +4,68 @@ from sys import stdin,stdout,stderr
 
 import xml.etree.ElementTree as ET
 
+MOBILITY_PARAMS={'speed','turn','accel','thrust'}
+LOWER_BETTER={'mass','price','delay','ew_range','falloff','trackmin','trackmax','dispersion','speed_dispersion','energy_regen_malus','ew_stealth','ew_stealth_timer','ew_signature','launch_lockon','launch_calibration','fwd_energy','tur_energy','ew_track','cooldown_time','cargo_inertia','land_delay','jump_delay','delay','reload_time','iflockon','jump_warmup','rumble','ammo_mass','time_mod','ew_hide','launch_reload'}
+
 def nam2fil(s):
    for c in [('Red Star','rs'),(' ','_'),('-',''),("'",''),('&','')]:
       s=s.replace(*c)
    return s.lower()
+
+def shorten(s):
+   for w in s.split(' '):
+      if w[1:2]!='.':
+         return w
+   return s
+
+def text2val(s):
+   try:
+      inp=s.split('/',1)
+      inp=[float(x) for x in inp]
+      return (inp[0],inp[-1])
+   except:
+      return None
+
+def roundit(f):
+   f = round(f*2.0)/2.0
+   return int(f) if f==round(f) else f
+
+def fmtval(v):
+   return str(roundit(v))
+
+def andamp(s):
+   return '' if s is None else s.replace("&","&amp;")
+
+def fmt_kv(kv):
+   (key,value)=kv
+   return key+'="'+str(andamp(value))+'"'
+
+def prisec(tag,r1,r2,eml1,eml2):
+   a=r1[0] if r1 is not None else 0
+
+   if r2 is not None:
+      if tag in MOBILITY_PARAMS:
+         a=(a*eml1+r2[1]*eml2)/(eml1+eml2)
+      else:
+         a+=r2[1]
+
+   return roundit(a)
+
+def stackvals(tag,text1,text2,eml1,eml2):
+   return str(roundit(prisec(tag,text2val(text1),text2val(text2),eml1,eml2)))
+
+def r_prisec(tag,v1,v2,eml1,eml2):
+   if tag in MOBILITY_PARAMS:
+      return v1,round((v2*(eml1+eml2) - eml1*v1)/float(eml2))
+   else:
+      return v1,v2-v1
+
+def unstackvals(tag,text1,text2,eml1,eml2):
+   o1,o2=r_prisec(tag,float(text1),0 if text2=='' else float(text2),eml1,eml2)
+   if o2==o1:
+      return fmtval(o1)
+   else:
+      return fmtval(o1)+'/'+fmtval(o2)
 
 class _outfit():
    def __init__(self,fil):
@@ -17,35 +75,91 @@ class _outfit():
          fp.close()
       else:
          self.T=ET.parse(fil)
+      self.short=False
       self.r=self.T.getroot()
       self.fil=fil
 
    def name(self):
       return self.r.attrib['name']
 
+   def set_name(self,name):
+      self.r.attrib['name']=name
+
    def shortname(self):
+      if self.short:
+         return self.short
       try:
          res=self.to_dict()['shortname']
       except:
          res=self.name()
+      self.short=res
       return res
 
-   def autostack(self,doubled=False):
-      def text2val(s):
-         inp=s.split('/',1)
+   def size(self,doubled=False):
+      try:
+         res=self.to_dict()['size']
+         for i,k in enumerate(['small','medium','large']):
+            if res==k:
+               return 2*i+(2 if doubled else 1)
+      except:
+         pass
+
+   def eml(self):
+      try:
+         res=self.to_dict()['engine_limit']
+      except:
+         res=None
+      return res
+
+   def stack(self,other):
+      if self.shortname() == other.shortname():
+         self.short=self.shortname()+' x2'
+      else:
+         self.short=shorten(self.shortname())+' + '+shorten(other.shortname())
+      res = self.eml()
+      if type(res)==type(()):
+            (eml1,_)=res
+      else:
+         eml1=res
+
+      res=other.eml()
+      if type(res)==type(()):
+         (_,eml2)=res
+      else:
+         eml2=res
+
+      sec = other.to_dict()
+
+      for e in self:
+         res=text2val(e.text)
          try:
-            inp=[float(x) for x in inp]
-            return (inp[0],inp[-1])
+            res2=sec[e.tag]
+            if type(res2)==type(1.0):
+               res2=(res2,res2)
          except:
-            return None
+            res2=None
+
+         if res is not None:
+            e.text=str(prisec(e.tag,res,res2,eml1,eml2))
+
+   def autostack(self,doubled=False):
+      if doubled:
+         self.short=self.shortname()+' x2'
+         eml=self.eml()
+         if type(eml)==type(()):
+            (eml1,eml2)=eml
+         else:
+            eml1=eml2=eml
+      else:
+         self.short=self.shortname()+' alone'
 
       for e in self:
          res=text2val(e.text)
          if res is not None:
-            (a,b)=res
             if doubled:
-               a+=b
-            e.text=str(a)
+               e.text=str(prisec(e.tag,res,res,eml1,eml2))
+            else:
+               e.text=str(prisec(e.tag,res,None,1,1))
 
    def __iter__(self):
       def _subs(r):
@@ -54,17 +168,11 @@ class _outfit():
             for s in _subs(e):
                yield s
 
-      for e in _subs(self.r):
-         yield e
+      return iter(_subs(self.r))
 
    def write(self,dst=stdout):
       def output_r(e,fp,ind=0):
-         andamp=lambda s:s.replace("&","&amp;") if s is not None else ''
-         def _fmt_a(kv):
-            (key,value)=kv
-            return key+'="'+str(andamp(value))+'"'
-
-         li=[e.tag]+[_fmt_a(x) for x in e.attrib.items()]
+         li=[e.tag]+[fmt_kv(x) for x in e.attrib.items()]
 
          try:
             iter(e).next()
@@ -89,8 +197,8 @@ class _outfit():
       closeit=False
       if dst=="-":
          dest=stdout
-      elif type(dst)==type("foo"):
-         dest=open(dst,"wt")
+      elif type(dst)==type(""):
+         dest=open(dst,"w")
          closeit=True
       else:
          dest=dst
@@ -120,13 +228,16 @@ class _outfit():
       return d
 
 def outfit(fil):
-   return _outfit(fil) if type(fil)!=type("foo") or fil.endswith(".xml") or fil.endswith('.mvx') else None
+   if type(fil)!=type("") or fil.endswith(".xml") or fil.endswith('.mvx'):
+      o=_outfit(fil)
+      if o.r.tag=='outfit':
+         return o
 
 if __name__=="__main__":
    from sys import argv
    if len(argv)>1:
       stderr.write("Usage: "+argv[0].split('/')[-1]+'\n')
-      stderr.write("  Reads a xml/mvx in input, outputs its input stacked with itself.\n")
+      stderr.write("  Reads a xml/mvx in input, outputs its input taken alone.\n")
    else:
       O=outfit(stdin)
       O.autostack()

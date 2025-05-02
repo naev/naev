@@ -2,22 +2,25 @@
  <general>
   <shortname>M. Mammoth Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
-  <mass>75</mass>
-  <price>1100000</price>
+  <price>750000</price>
   <description>Melendez's Mammoth can pull incredible amounts of mass. Requiring specialized grav tethers to keep it attached to the ship's hull, it significantly impacts manoeuvrability, though a reasonable top speed can still be maintained. Many bulk freight corporations only turn a profit thanks to the Mammoth line of engines.</description>
   <gfx_store>engine12.webp</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <accel>36</accel>
-  <turn>56</turn>
-  <speed>147</speed>
-  <fuel>2800</fuel>
-  <energy_regen_malus>22</energy_regen_malus>
-  <engine_limit>5500</engine_limit>
-  <land_delay>-25</land_delay>
-  <time_mod>10</time_mod>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 75, 25},
+   { "accel", 36, 7},
+   { "turn", 56, 22},
+   { "speed", 147, 71},
+   { "fuel", 2800, 400},
+   { "energy_regen_malus", 22, 26},
+   { "engine_limit", 3800, 4200},
+   { "land_delay", -25, 0},
+   { "time_mod", 10, 0},
+}</lua_inline>
  </specific>
 </outfit>
