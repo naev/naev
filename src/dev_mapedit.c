@@ -11,6 +11,7 @@
 
 #include "SDL.h"
 #include "physfs.h"
+#include <inttypes.h>
 
 #include "naev.h"
 /** @endcond */

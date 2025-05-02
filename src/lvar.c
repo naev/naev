@@ -6,6 +6,8 @@
  *
  * @brief Lua Variables
  */
+#include <inttypes.h>
+
 #include "lvar.h"
 
 #include <inttypes.h>

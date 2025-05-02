@@ -190,7 +190,6 @@ void conf_setGameplayDefaults( void )
 {
    conf.difficulty        = DIFFICULTY_DEFAULT;
    conf.doubletap_sens    = DOUBLETAP_SENSITIVITY_DEFAULT;
-   conf.save_compress     = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_hide        = MOUSE_HIDE_DEFAULT;
    conf.mouse_accel       = MOUSE_ACCEL_DEFAULT;
    conf.mouse_doubleclick = MOUSE_DOUBLECLICK_TIME;
@@ -438,7 +437,6 @@ int conf_loadConfig( const char *file )
    conf_loadFloat( L, "compression_velocity", conf.compression_velocity );
    conf_loadFloat( L, "compression_mult", conf.compression_mult );
    conf_loadBool( L, "redirect_file", conf.redirect_file );
-   conf_loadBool( L, "save_compress", conf.save_compress );
    conf_loadInt( L, "doubletap_sensitivity", conf.doubletap_sens );
    conf_loadFloat( L, "mouse_hide", conf.mouse_hide );
    conf_loadBool( L, "mouse_fly", conf.mouse_fly );
@@ -1136,10 +1134,6 @@ int conf_saveConfig( const char *file )
    /* Misc. */
    conf_saveComment( _( "Redirects log and error output to files" ) );
    conf_saveBool( "redirect_file", conf.redirect_file );
-   conf_saveEmptyLine();
-
-   conf_saveComment( _( "Enables compression on saved games" ) );
-   conf_saveBool( "save_compress", conf.save_compress );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Doubletap sensitivity (used for double tap accel for "

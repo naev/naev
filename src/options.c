@@ -417,10 +417,6 @@ static void opt_gameplay( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20, "chkMouseAccel",
                        _( "Enable mouse-flying accel control" ), NULL,
                        conf.mouse_accel );
-   y -= 25;
-   window_addCheckbox( wid, x, y, cw, 20, "chkCompress",
-                       _( "Enable saved game compression" ), NULL,
-                       conf.save_compress );
    y -= 40;
    s = _( "Visible Messages" );
    l = gl_printWidthRaw( NULL, s );
@@ -500,10 +496,9 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    if ( ( conf.doubletap_sens != 0 ) != f )
       conf.doubletap_sens = ( f != 0 ) * 250;
 
-   conf.zoom_manual   = window_checkboxState( wid, "chkZoomManual" );
-   conf.mouse_accel   = window_checkboxState( wid, "chkMouseAccel" );
-   conf.mouse_fly     = window_checkboxState( wid, "chkMouseFly" );
-   conf.save_compress = window_checkboxState( wid, "chkCompress" );
+   conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
+   conf.mouse_accel = window_checkboxState( wid, "chkMouseAccel" );
+   conf.mouse_fly   = window_checkboxState( wid, "chkMouseFly" );
 
    /* Get rid of mouse if disabled. */
    if ( !conf.mouse_fly )
@@ -532,7 +527,6 @@ static void opt_gameplayDefaults( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkDoubletap", DOUBLETAP_SENSITIVITY_DEFAULT );
    window_checkboxSet( wid, "chkMouseFly", MOUSE_FLY_DEFAULT );
    window_checkboxSet( wid, "chkMouseAccel", MOUSE_ACCEL_DEFAULT );
-   window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof( vmsg ), "%d", INPUT_MESSAGES_DEFAULT );
@@ -552,7 +546,6 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkDoubletap", conf.doubletap_sens );
    window_checkboxSet( wid, "chkMouseFly", conf.mouse_fly );
    window_checkboxSet( wid, "chkMouseAccel", conf.mouse_accel );
-   window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof( vmsg ), "%d", conf.mesg_visible );

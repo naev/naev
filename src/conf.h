@@ -15,8 +15,6 @@
    250 /**< Default afterburner sensitivity. */
 #define REDIRECT_FILE_DEFAULT                                                  \
    1 /**< Whether output should be redirected to a file. */
-#define SAVE_COMPRESSION_DEFAULT                                               \
-   1 /**< Whether or not saved games should be compressed. */
 #define MOUSE_HIDE_DEFAULT                                                     \
    3. /**< Time (in seconds) to hide mouse when not moved. */
 #define MOUSE_FLY_DEFAULT                                                      \
@@ -184,7 +182,6 @@ typedef struct PlayerConf_s {
    double       compression_velocity; /**< Velocity to compress to. */
    double       compression_mult;     /**< Maximum time multiplier. */
    int          redirect_file;        /**< Redirect output to files. */
-   int          save_compress;        /**< Compress saved game. */
    unsigned int doubletap_sens;       /**< Double tap key sensibility (used for
                                          afterburn and cooldown). */
    double mouse_hide;                 /**< Time to hide mouse. */

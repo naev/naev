@@ -7,6 +7,7 @@
  * Handles some complex xml parsing.
  */
 #include "nxml.h"
+#include <inttypes.h>
 
 #include <ctype.h>
 #include <inttypes.h>
