@@ -107,24 +107,6 @@ local function is_multiengine( p, po )
    return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
-local function send_message( p, slot, msg, dat )
-   local t = {dat = dat, ret = nil }
-   p:outfitMessageSlot(slot, msg, t)
-   return t.ret
-end
-
-local function receive_message( dat )
-   return dat.dat
-end
-
-local function return_message( dat, ret)
-   if dat then
-      dat.ret = ret
-   else
-      warn("impossible to return message")
-   end
-end
-
 function multicore.init( params )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
@@ -156,10 +138,6 @@ function multicore.init( params )
    hidestats = true -- We do hacks to show stats, so hide them
 
 
-   local function my_params(po, sign)
-      return sign ~=-1 and ( (is_secondary(po) and sec_en_stats) or pri_en_stats ) or {}
-   end
-
    -- Below define the global functions for the outfit
    function descextra( p, _o, po )
       local nomain, nosec = false, false
@@ -183,7 +161,16 @@ function multicore.init( params )
          }).."#0"
       end
 
-      local averaged = is_multiengine(p, po)
+      local id = po and po:id()
+      local averaged = id and is_multiengine(p, po)
+      local multicore_off = nil
+      local smid
+
+      if averaged then
+         smid = p:outfitMessageSlot("engines", "ask", id)
+         multicore_off = smid and smid['halted']
+         averaged = smid
+      end
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
@@ -200,13 +187,9 @@ function multicore.init( params )
          desc = desc .. "\n#o" .. fmt.f(_("Working Status: {status}"), {status=status})
       end
 
-      local id = po and po:id()
       if averaged and multicore_off ~= true and id then
-         local multicore_off = halted_n(gathered_data, id)
-         local smid = multiengines.engine_stats(gathered_data, id)
-         local total = multiengines.total(gathered_data)
-         local totaleml = (total and total["engine_limit"]) or 0
-         local share = (smid and smid["part"]) or 0
+         local totaleml = smid and smid['total'] or 0
+         local share = smid and smid["part"] or 0
          desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
             eml = (smid and smid["engine_limit"]) or 0,
             total = totaleml, share = share, t = multiengines.eml_stat.unit
@@ -222,38 +205,34 @@ function multicore.init( params )
       return desc
    end
 
-   local function equip(p, po, sign)
+   local function mystats( po, sign )
+      return (sign ~= -1) and ((is_secondary(po) and sec_en_stats) or pri_en_stats)
+   end
+
+   local function equip(p, po, sign )
       if p and po then
          local ie = is_multiengine(p, po)
          local secondary = is_secondary(po)
+         local id = po:id()
 
          --po:clear()
          if ie then
             if secondary then
-               -- spontaneous self-declaration
-               send_message( p, "engines", "here", {id=po:id(), sign=sign, t=my_params(po, sign)})
-               send_message( p, "engines", "done")
+               p:outfitMessageSlot("engines", "here", {id = id, sign = sign, t = mystats(po,sign)})
             else
                local sh = p:ship()
                sh = sh and sh:getSlots()
 
                for n,o in ipairs(p:outfits()) do
-                  if is_engine(sh[n]) then
-                     -- declaration on n's behalf
-                     local res = send_message( p, n, "pliz")
-                     if res then
-                        --send_message( p, "engines", "here", {id=n, sign=1, t=res})
-                        multiengines.decl_engine_stats(gathered_data, n, sign, res)
-                     elseif o ~= false then
-                        warn('no response from "' .. tostring(o) .. '"')
-                     end
+                  if is_engine(sh[n]) and o then
+                     p:outfitMessageSlot(n, "pliz", sign)
                   end
                end
-               multiengines.refresh(gathered_data, po)
             end
+            p:outfitMessageSlot("engines", "done")
          end
 
-         local multicore_off = halted_n(gathered_data, po and po:id())
+         local multicore_off = halted_n(gathered_data, id)
 
          for k,s in ipairs(stats) do
             if multicore_off ~= true or s.name == 'mass' then
@@ -274,27 +253,27 @@ function multicore.init( params )
    init = onadd
 
    function message( p, po, msg, dat )
-      local mydat = receive_message( dat )
-
       if not p or not po then
          warn("message on nil p/po")
       elseif not is_multiengine(p, po) then
          warn("message on non-multiengine slot")
       else
          if msg == "pliz" then
-            return return_message( dat, my_params(po, 1))
+            p:outfitMessageSlot("engines", "here", { id = po:id(), sign = dat, t = mystats(po, dat) } )
          elseif is_secondary(po) then
             warn('message "'.. msg ..'" send to secondary (ignored)')
          elseif msg == "halt" then
-            if multiengines.halt_n(gathered_data, mydat.id, mydat.off) then
-               send_message( p, "engines", "done")
+            if multiengines.halt_n(gathered_data, dat.id, dat.off) then
+               multiengines.refresh(gathered_data, po)
             end
+         elseif msg == "ask" then
+            return multiengines.engine_stats(gathered_data, dat)
          elseif msg == "here" then
-            multiengines.decl_engine_stats(gathered_data, mydat.id, mydat.sign, mydat.t)
+            multiengines.decl_engine_stats(gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
             multiengines.refresh(gathered_data, po)
          elseif msg == "wtf?" then
-            return return_message(dat, gathered_data)
+            return gathered_data
          else
             warn('Unknown message: "' .. msg .. '"')
          end
@@ -316,7 +295,7 @@ function multicore.setworkingstatus( p, po, on)
       else
          off = not on
       end
-      send_message( p, "engines", "halt", {id=id, off=off})
+      p:outfitMessageSlot("engines", "halt", {id=id, off=off})
    end
 end
 

@@ -24,24 +24,20 @@ for k,s in ipairs(naev.shipstats()) do
    end
 end
 
-function multiengines.total( root )
-   return tfs.readdir(root, {'total'})
-end
-
-function multiengines.stats( root )
-   return tfs.readdir(root, {'engines'})
-end
-
 function multiengines.engine_stats( root, id )
-   return tfs.readdir(root, {'engines', id})
+   res = tfs.readdir(root, {'engines', id})
+   if res then
+      res['total'] = tfs.readdir(root, {'total'})['engine_limit']
+   end
+   return res
 end
 
-function multiengines.refresh( root, po )
+function multiengines.refresh( root, po, force )
    if not root or not po then
       return
    end
 
-   if not tfs.readfile(root, {'needs_refresh'}) then
+   if not tfs.readfile(root, {'needs_refresh'}) and not force then
       return
    end
 
@@ -127,7 +123,7 @@ function multiengines.decl_engine_stats( root, id, sign, t )
       end
    end
    tfs.writefile(root, {'needs_refresh'}, changed)
-   return changed
+   return comb[id]
 end
 
 return multiengines
