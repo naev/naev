@@ -327,7 +327,7 @@ function tfs.init()
 
    function tfs.ls( )
       if tfs.path._parent_ then
-         tfs.shorthand[0] = k
+         tfs.shorthand[0] = tfs.path._parent_
          print("  [0] ../")
       end
       for k,v in ipairs(tfs.path) do
