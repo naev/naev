@@ -14,6 +14,7 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
+use crate::log::warn_err;
 use crate::render::{SolidUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{debug, warn};
@@ -282,7 +283,9 @@ impl Context {
 
         window
             .set_minimum_size(naevc::RESOLUTION_W_MIN, naevc::RESOLUTION_H_MIN)
-            .unwrap_or_else(|_| log::warn("Unable to set minimum window size."));
+            .unwrap_or_else(|err| {
+                warn_err(anyhow::Error::new(err).context("unable to set minimum window size."))
+            });
         let gl_context = match window.gl_create_context() {
             Ok(ctx) => ctx,
             Err(e) => anyhow::bail!("Unable to create OpenGL context: {}", e),
@@ -344,11 +347,13 @@ impl Context {
                 true => 1,
                 false => 0,
             })
-            .unwrap_or_else(|_| log::warn("Unable to set OpenGL swap interval!"));
+            .unwrap_or_else(|err| {
+                warn_err(anyhow::Error::msg(err).context("unable to set OpenGL swap interval"))
+            });
 
         match gl_attr.framebuffer_srgb_compatible() {
             true => (),
-            false => log::warn("Unable to set framebuffer to SRGB!"),
+            false => log::warn("unable to set framebuffer to SRGB!"),
         };
 
         #[cfg(debug_assertions)]
@@ -387,7 +392,7 @@ impl Context {
                     false,
                 );
             },
-            false => log::warn("Unable to set OpenGL debug mode!"),
+            false => log::warn("unable to set OpenGL debug mode!"),
         };
 
         unsafe {
