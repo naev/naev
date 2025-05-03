@@ -12,8 +12,8 @@ use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::context::Context;
-use crate::warn;
 use crate::{buffer, context, gettext, ndata, render};
+use crate::{warn, warn_err};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
@@ -994,7 +994,7 @@ pub extern "C" fn gl_loadImageData(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn!("unable to create texture: {}", e);
+            warn_err!(e, "unable to create texture");
             std::ptr::null_mut()
         }
     };
@@ -1042,7 +1042,7 @@ pub extern "C" fn gl_newSprite(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn!("{}", e);
+            warn_err!(e, "unable to build texture for new sprite");
             std::ptr::null_mut()
         }
     };
@@ -1096,6 +1096,8 @@ pub extern "C" fn gl_newSpriteRWops(
             let img = match rw.load() {
                 Ok(sur) => surface_to_image(sur).unwrap(),
                 Err(e) => {
+                    // SDL2 uses strings as errors...
+                    //warn_err!(e, "unable to load image '{}'", pathname);
                     warn!("unable to load image '{}': {}", pathname, e);
                     return std::ptr::null_mut();
                 }
@@ -1110,7 +1112,7 @@ pub extern "C" fn gl_newSpriteRWops(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn!("{}", e);
+            warn_err!(e, "unable to build texture for new sprite from rwops");
             std::ptr::null_mut()
         }
     };
@@ -1181,7 +1183,7 @@ pub extern "C" fn gl_rawTexture(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn!("{}", e);
+            warn_err!(e, "unable to build texture for raw texture");
             std::ptr::null_mut()
         }
     };

@@ -3,7 +3,7 @@ use nalgebra::Vector2;
 use std::os::raw::c_void;
 
 use crate::gettext::gettext;
-use crate::warn;
+use crate::warn_err;
 
 use crate::nlua::{LuaEnv, NLUA};
 
@@ -463,7 +463,7 @@ pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
     let env = unsafe { &*env };
     match open_vec2(&lua.lua, env) {
         Err(e) => {
-            warn!(gettext("Error loading {} library: {}"), "vec2", e);
+            warn_err!(e, gettext("Error loading '{}' library"), "vec2");
             -1
         }
         _ => 0,

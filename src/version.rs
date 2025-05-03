@@ -1,6 +1,4 @@
-use crate::gettext::gettext;
-use crate::warn;
-use formatx::formatx;
+use anyhow::Result;
 use naevc::config;
 use std::cmp::Ordering;
 use std::ffi::CStr;
@@ -40,21 +38,10 @@ fn compare_versions(vera: &semver::Version, verb: &semver::Version) -> i32 {
     binary_comparison(vera.patch, verb.patch)
 }
 
-fn parse_cstr(ver: *const c_char) -> Result<semver::Version, semver::Error> {
+fn parse_cstr(ver: *const c_char) -> Result<semver::Version> {
     let ptr = unsafe { CStr::from_ptr(ver) };
     let cstr = ptr.to_str().unwrap();
-    match semver::Version::parse(cstr) {
-        Ok(v) => Ok(v),
-        Err(e) => {
-            warn!(&formatx!(
-                gettext("Failed to parse version string '{}': {}"),
-                &cstr,
-                &e
-            )
-            .unwrap());
-            Err(e)
-        }
-    }
+    Ok(semver::Version::parse(cstr)?)
 }
 
 #[unsafe(no_mangle)]

@@ -6,8 +6,8 @@ use std::os::raw::{c_char, c_int};
 use crate::gettext::gettext;
 use crate::ndata;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use crate::warn;
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use crate::{warn, warn_err};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
@@ -15,8 +15,8 @@ pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
     let name = ptr.to_str().unwrap();
     match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
         Ok(i) => (i + 1) as c_int,
-        Err(e) => {
-            warn!("damage type '{}' not found: {}", name, e);
+        Err(_) => {
+            warn!("damage type '{}' not found", name);
             0
         }
     }
@@ -209,8 +209,8 @@ pub fn load() -> Result<Vec<DamageType>> {
             }
             match DamageType::load(filename.as_str()) {
                 Ok(dt) => Some(dt),
-                _ => {
-                    warn!("Unable to load Damage Type '{}'!", filename);
+                Err(err) => {
+                    warn_err!(err, "Unable to load Damage Type '{}'!", filename);
                     None
                 }
             }
