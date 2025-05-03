@@ -396,6 +396,7 @@ struct LoadStage {
     msg: &'static str,
 }
 impl LoadStage {
+    /// Loads data from a Rust function
     fn new<F>(msg: &'static str, f: F) -> LoadStage
     where
         F: Fn() -> Result<()> + 'static,
@@ -406,6 +407,7 @@ impl LoadStage {
         }
     }
 
+    /// Loads data from a C function that gets wrapped
     fn new_c<F>(msg: &'static str, f: F) -> LoadStage
     where
         F: Fn() -> c_int + 'static,
@@ -472,7 +474,7 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
             naevc::safelanes_init()
         }),
         // Run Lua and shit
-        LoadStage::new_c(gettext("Finalizin data…"), || unsafe {
+        LoadStage::new_c(gettext("Finalizing data…"), || unsafe {
             naevc::factions_loadPost()
                 + naevc::difficulty_load()
                 + naevc::background_init()
@@ -488,7 +490,7 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
     // Load
     let nstages: f32 = stages.len() as f32;
     for s in stages {
-        loadscreen_update(env, stage / nstages, s.msg).unwrap_or_else(|err| {
+        loadscreen_update(env, (stage + 1.0) / (nstages + 2.0), s.msg).unwrap_or_else(|err| {
             warn!("{}", err);
         });
         stage += 1.0;
