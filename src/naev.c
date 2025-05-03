@@ -14,7 +14,6 @@
 /** @cond */
 #include "SDL.h"
 #include "SDL_image.h"
-#include "physfsrwops.h"
 
 #include "naev.h"
 
@@ -30,8 +29,6 @@
 #include "cond.h"
 #include "conf.h"
 #include "console.h"
-#include "constants.h"
-#include "damagetype.h"
 #include "debug.h"
 #include "dialogue.h"
 #include "difficulty.h"
@@ -71,20 +68,16 @@
 #include "options.h"
 #include "outfit.h"
 #include "pause.h"
-#include "physics.h"
 #include "pilot.h"
 #include "player.h"
 #include "player_autonav.h"
 #include "plugin.h"
 #include "render.h"
-#include "rng.h"
 #include "safelanes.h"
 #include "ship.h"
-#include "slots.h"
 #include "sound.h"
 #include "space.h"
 #include "spfx.h"
-#include "start.h"
 #include "tech.h"
 #include "toolkit.h"
 #include "unidiff.h"
@@ -414,85 +407,6 @@ void loadscreen_unload( void )
    SDL_DestroyMutex( load_mutex );
 }
 
-/**
- * @brief Loads all the data, makes main() simpler.
- */
-#define LOADING_STAGES 16. /**< Amount of loading stages. */
-void load_all( void )
-{
-   NTracingFrameMarkStart( "load_all" );
-
-   int stage = 0;
-
-   constants_init();
-
-   /* order is very important as they're interdependent */
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Commodities…" ) );
-   commodity_load(); /* dep for space */
-
-   loadscreen_update( ++stage / LOADING_STAGES,
-                      _( "Loading Special Effects…" ) );
-   spfx_load(); /* no dep */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Effects…" ) );
-   effect_load(); /* no dep */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Factions…" ) );
-   factions_load(); /* dep for fleet, space, missions, AI */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Outfits…" ) );
-   outfit_load(); /* dep for ships, factions */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Ships…" ) );
-   ships_load(); /* dep for fleet */
-
-   /* Handle dependent faction/outfit stuff. */
-   outfit_loadPost();
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading AI…" ) );
-   ai_load(); /* dep for fleets */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Techs…" ) );
-   tech_load(); /* dep for space */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading the Universe…" ) );
-   space_load(); /* dep for events/missions */
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Events…" ) );
-   events_load();
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Missions…" ) );
-   missions_load();
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading the UniDiffs…" ) );
-   diff_init();
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Populating Maps…" ) );
-   outfit_mapParse();
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Calculating Patrols…" ) );
-   safelanes_init();
-
-   /* Handled at the end, deals with equip / standing scripts. */
-   factions_loadPost();
-
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Initializing Details…" ) );
-#if DEBUGGING
-   if ( stage > LOADING_STAGES )
-      WARN( _( "Too many loading stages, please increase LOADING_STAGES" ) );
-#endif /* DEBUGGING */
-   difficulty_load();
-   background_init();
-   map_load();
-   map_system_load();
-   space_loadLua();
-   pilots_init();
-   weapon_init();
-   player_init(); /* Initialize player stuff. */
-   loadscreen_update( 1., _( "Loading Completed!" ) );
-
-   NTracingFrameMarkEnd( "load_all" );
-}
 /**
  * @brief Unloads all data, simplifies main().
  */
