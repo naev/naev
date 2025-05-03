@@ -46,10 +46,12 @@ pub static APPNAME: &str = "Naev";
 use std::sync::atomic::AtomicBool;
 static _QUIT: AtomicBool = AtomicBool::new(false);
 
+/// Small wrapper to convert a C char* pointer to CStr
 unsafe fn cptr_to_cstr<'a>(s: *const c_char) -> &'a str {
     unsafe { CStr::from_ptr(s).to_str().unwrap() }
 }
 
+/// Entry Point
 pub fn naev() -> Result<()> {
     /* Load up the argv and argc for the C main. */
     let args: Vec<String> = std::env::args().collect();
@@ -393,6 +395,7 @@ pub fn naev() -> Result<()> {
             */
 }
 
+/// Small wrapper to handle loading
 struct LoadStage {
     f: Box<dyn Fn() -> Result<()>>,
     msg: &'static str,
@@ -492,21 +495,21 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
     let nstages: f32 = stages.len() as f32;
     for s in stages {
         loadscreen_update(env, (stage + 1.0) / (nstages + 2.0), s.msg).unwrap_or_else(|err| {
-            warn!("{}", err);
+            warn_err!(err, "loadscreen failed to update!");
         });
         stage += 1.0;
         (s.f)().unwrap_or_else(|err| {
-            warn!("{}", err);
+            warn_err!(err, "loadscreen update function failed to run!");
         });
     }
 
     loadscreen_update(env, 1.0, gettext("Loading Completed!")).unwrap_or_else(|err| {
-        warn!("{}", err);
+        warn_err!(err, "loadscreen failed to update!");
     });
     Ok(())
 }
 
-fn loadscreen_update(env: &nlua::LuaEnv, done: f32, msg: &str) -> mlua::Result<()> {
+fn loadscreen_update(env: &nlua::LuaEnv, done: f32, msg: &str) -> Result<()> {
     let lua = nlua::NLUA.lock().unwrap();
     let update: mlua::Function = env.get("update")?;
     env.call::<()>(&lua, &update, (done, msg))?;

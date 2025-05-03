@@ -1,8 +1,12 @@
 // Logging tools
 #![allow(dead_code)]
 
+use std::sync::atomic::AtomicU32;
+pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
+pub const WARN_MAX: u32 = 1000;
+
 use crate::gettext::gettext;
-use crate::{debug, einfo, info, warn};
+use crate::{debug, einfo, info, warn, warn_err};
 
 pub fn init() {
     unsafe {
@@ -24,6 +28,10 @@ pub fn debug(msg: &str) {
 
 pub fn warn(msg: &str) {
     warn!(msg);
+}
+
+pub fn warn_err(err: anyhow::Error, msg: &str) {
+    warn_err!(err, msg);
 }
 
 #[macro_export]
@@ -50,21 +58,40 @@ macro_rules! debug {
     };
 }
 
-use std::sync::atomic::AtomicU32;
-pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
-
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
         let nw = $crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
-        if nw <= 1000 {
+        if nw <= $crate::log::WARN_MAX {
             //eprintln!("{}WARNING {}:{}: {}",
             //    std::backtrace::Backtrace::force_capture(),
             eprintln!("WARNING {}:{}: {}",
                 file!(), line!(),
                 &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
-        if nw==1000 {
+        if nw==$crate::log::WARN_MAX {
+            eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
+        }
+        if naevc::config::DEBUG_PARANOID {
+            #[cfg(unix)]
+            {
+                nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
+            }
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! warn_err {
+    ($err:ident, $($arg:tt)*) => {
+        let nw = $crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
+        if nw <= $crate::log::WARN_MAX {
+            eprintln!("{}WARNING {}:{}: {}",
+                $err.backtrace(),
+                file!(), line!(),
+                &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+        }
+        if nw==$crate::log::WARN_MAX {
             eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
