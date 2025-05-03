@@ -1,6 +1,7 @@
 use anyhow::Result;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_void};
+use std::sync::atomic::AtomicPtr;
 
 /// Wrapper to convert C arrays to Vec
 #[allow(dead_code)]
@@ -13,12 +14,10 @@ pub fn to_vec<T: Clone>(array: *mut T) -> Result<Vec<T>> {
 }
 
 /// Small wrapper for working with C arrays
-pub struct Array<T: Clone>(*mut T);
-unsafe impl<T: Clone> Send for Array<T> {}
-unsafe impl<T: Clone> Sync for Array<T> {}
+pub struct Array<T: Clone>(AtomicPtr<T>);
 impl<T: Clone> Default for Array<T> {
     fn default() -> Self {
-        Array(std::ptr::null_mut())
+        Array(AtomicPtr::default())
     }
 }
 impl<T: Clone + Sized> Array<T> {
@@ -29,16 +28,16 @@ impl<T: Clone + Sized> Array<T> {
         if array.is_null() {
             anyhow::bail!("Failed to create C Array");
         }
-        Ok(Array(array as *mut T))
+        Ok(Array(AtomicPtr::new(array as *mut T)))
     }
     pub fn as_ptr(&self) -> *mut c_void {
-        self.0 as *mut c_void
+        self.0.as_ptr() as *mut c_void
     }
 }
 impl<T: Clone> Drop for Array<T> {
     fn drop(&mut self) {
         unsafe {
-            naevc::_array_free_helper(self.0 as *mut c_void);
+            naevc::_array_free_helper(self.0.as_ptr() as *mut c_void);
         }
     }
 }
