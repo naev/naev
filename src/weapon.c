@@ -141,11 +141,12 @@ static void weapon_setTurn( Weapon *w, double turn );
 /**
  * @brief Initializes the weapon stuff.
  */
-void weapon_init( void )
+int weapon_init( void )
 {
    weapon_stack = array_create( Weapon );
    il_create( &weapon_qtquery, 1 );
    il_create( &weapon_qtexp, 1 );
+   return 0;
 }
 
 /**

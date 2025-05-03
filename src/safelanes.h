@@ -33,7 +33,7 @@ typedef struct SafeLane_ {
    double          map_alpha;     /**< Alpha to display on the map. */
 } SafeLane;
 
-void      safelanes_init( void );
+int       safelanes_init( void );
 void      safelanes_destroy( void );
 SafeLane *safelanes_get( int faction, int standing, const StarSystem *system );
 void      safelanes_recalculate( void );

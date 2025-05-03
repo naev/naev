@@ -518,7 +518,7 @@ void         pilot_dead( Pilot *p, unsigned int killer );
 
 /* Init and cleanup. */
 void pilot_stackRemove( Pilot *p );
-void pilots_init( void );
+int  pilots_init( void );
 void pilots_free( void );
 void pilots_clean( int persist );
 void pilots_newSystem( void );

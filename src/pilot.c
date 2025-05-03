@@ -3988,10 +3988,11 @@ void pilot_stackRemove( Pilot *p )
 /**
  * @brief Initializes pilot stuff.
  */
-void pilots_init( void )
+int pilots_init( void )
 {
    pilot_stack = array_create_size( Pilot *, PILOT_SIZE_MIN );
    il_create( &pilot_qtquery, 1 );
+   return 0;
 }
 
 /**

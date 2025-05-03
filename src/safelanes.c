@@ -204,13 +204,14 @@ static inline void array_push_back_edge( Edge **a, int v0, int v1 )
 /**
  * @brief Initializes the safelanes system.
  */
-void safelanes_init( void )
+int safelanes_init( void )
 {
    cholmod_start( &C );
    /* Ideally we would want to recalculate here, but since we load the first
     * save and try to use unidiffs there, we instead defer the safe lane
     * computation to only if necessary after loading save unidiffs. */
    /* safelanes_recalculate(); */
+   return 0;
 }
 
 /**

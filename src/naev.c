@@ -296,7 +296,7 @@ int naev_main_cleanup( void )
 /**
  * @brief Loads a loading screen.
  */
-void loadscreen_load( void )
+nlua_env *loadscreen_load( void )
 {
    int r;
 
@@ -324,9 +324,10 @@ void loadscreen_load( void )
                "Most likely Lua file has improper syntax, please check" ),
             LOADSCREEN_DATA_PATH, lua_tostring( naevL, -1 ) );
       free( buf );
-      return;
+      return NULL;
    }
    free( buf );
+   return load_env;
 }
 
 /**

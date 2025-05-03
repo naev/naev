@@ -30,6 +30,7 @@ impl Drop for LuaEnv {
     }
 }
 
+#[derive(Debug)]
 pub struct NLua {
     /// The true Lua environment (to rule them all)
     pub lua: mlua::Lua,
@@ -257,7 +258,7 @@ impl NLua {
         })
     }
 
-    pub fn environment_new(&mut self, name: &str) -> mlua::Result<LuaEnv> {
+    pub fn environment_new(&mut self, name: &str) -> Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
 
@@ -337,17 +338,19 @@ impl NLua {
         env: mlua::Table,
         func: &mlua::Function,
         args: impl IntoLuaMulti,
-    ) -> mlua::Result<R> {
+    ) -> Result<R> {
         let globals = self.lua.globals();
-        let prev_env: mlua::Table = globals.raw_get(ENV)?;
+        let prev_env: Option<mlua::Table> = globals.raw_get(ENV)?;
         globals.raw_set(ENV, env)?;
         let ret = func.call(args);
-        globals.raw_set(ENV, prev_env)?;
-        ret
+        if let Some(prev_env) = prev_env {
+            globals.raw_set(ENV, prev_env)?;
+        }
+        Ok(ret?)
     }
 
     /// Handles resizing
-    pub fn resize(&self, width: i32, height: i32) -> mlua::Result<()> {
+    pub fn resize(&self, width: i32, height: i32) -> Result<()> {
         for pair in self.envs.pairs::<i32, mlua::Table>() {
             let (_key, value) = pair?;
             let resize: mlua::Value = value.get("__resize")?;
@@ -379,6 +382,16 @@ impl LuaEnv {
     /// Sets a value in the environment
     pub fn set(&self, key: impl IntoLua, value: impl IntoLua) -> mlua::Result<()> {
         self.table.set(key, value)
+    }
+
+    /// Calls a function with the environment
+    pub fn call<R: FromLuaMulti>(
+        &self,
+        lua: &NLua,
+        func: &mlua::Function,
+        args: impl IntoLuaMulti,
+    ) -> Result<R> {
+        lua.environment_call(self.table.clone(), func, args)
     }
 }
 

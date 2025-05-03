@@ -63,6 +63,8 @@
 
 #define DOUBLE_TOL 1e-6
 
+#include "nlua.h"
+
 /*
  * Misc stuff.
  */
@@ -82,18 +84,18 @@ void   naev_quit( void );
 int    naev_isQuit( void );
 double naev_getrealdt( void );
 
-int  naev_shouldRenderLoadscreen( void );
-void naev_doRenderLoadscreen( void );
-void naev_renderLoadscreen( void );
-void print_SDLversion( void );
-void window_caption( void );
-void loadscreen_load( void );
-void loadscreen_unload( void );
-void loadscreen_update( double done, const char *msg );
-void load_all( void );
-void unload_all( void );
-void fps_init( void );
-int  naev_main_events( void );
-int  naev_main_cleanup( void );
-int  naev_main_setup( void );
-void main_loop( int nested );
+int       naev_shouldRenderLoadscreen( void );
+void      naev_doRenderLoadscreen( void );
+void      naev_renderLoadscreen( void );
+void      print_SDLversion( void );
+void      window_caption( void );
+nlua_env *loadscreen_load( void );
+void      loadscreen_unload( void );
+void      loadscreen_update( double done, const char *msg );
+void      load_all( void );
+void      unload_all( void );
+void      fps_init( void );
+int       naev_main_events( void );
+int       naev_main_cleanup( void );
+int       naev_main_setup( void );
+void      main_loop( int nested );

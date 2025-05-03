@@ -97,7 +97,7 @@ int areAlliesSystem( int a, int b, const StarSystem *sys );
 
 /* load/free */
 int  factions_load( void );
-void factions_loadPost( void );
+int  factions_loadPost( void );
 void factions_free( void );
 void factions_reset( void );
 void factions_resetLocal( void );

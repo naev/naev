@@ -232,7 +232,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let context = context::Context::new(sdlvid).unwrap();
+    let context = context::Context::new(sdlvid)?;
 
     unsafe {
         if naevc::gl_init() != 0 {
@@ -278,11 +278,12 @@ pub fn naev() -> Result<()> {
     }
 
     // Display the initial load screen.
-    unsafe {
-        naevc::loadscreen_load();
+    let load_env = unsafe {
+        let env = naevc::loadscreen_load();
         let s = CString::new(gettext("Initializing subsystems…")).unwrap();
         naevc::loadscreen_update(0., s.as_ptr());
-    }
+        &*(env as *const nlua::LuaEnv)
+    };
 
     // OpenAL
     unsafe {
@@ -294,7 +295,7 @@ pub fn naev() -> Result<()> {
         if naevc::sound_init() != 0 {
             warn!(gettext("Problem setting up sound!"));
         }
-        let m = CString::new("load").unwrap();
+        let m = CString::new("load")?;
         naevc::music_choose(m.as_ptr());
     }
 
@@ -305,18 +306,8 @@ pub fn naev() -> Result<()> {
             (naevc::gl_screen.h - 15 - naevc::gl_defFontMono.h) as f64,
         );
 
-        // Misc graphics init
-        naevc::render_init();
-        naevc::nebu_init();
-        naevc::gui_init();
-        naevc::toolkit_init();
-        naevc::map_init();
-        naevc::map_system_init();
-        naevc::cond_init();
-        naevc::cli_init();
-
         // Load game data
-        naevc::load_all();
+        load_all(load_env)?;
 
         // Detect size changes that occurred during load.
         naevc::naev_resize();
@@ -398,4 +389,126 @@ pub fn naev() -> Result<()> {
                                     gl_screen.window );
     #endif
             */
+}
+
+struct LoadStage {
+    f: Box<dyn Fn() -> Result<()>>,
+    msg: &'static str,
+}
+impl LoadStage {
+    fn new<F>(msg: &'static str, f: F) -> LoadStage
+    where
+        F: Fn() -> Result<()> + 'static,
+    {
+        LoadStage {
+            f: Box::new(f),
+            msg,
+        }
+    }
+
+    fn new_c<F>(msg: &'static str, f: F) -> LoadStage
+    where
+        F: Fn() -> c_int + 'static,
+    {
+        LoadStage::new(msg, move || match f() {
+            0 => Ok(()),
+            _ => anyhow::bail!("Loading error!"),
+        })
+    }
+}
+
+fn load_all(env: &nlua::LuaEnv) -> Result<()> {
+    let mut stage: f32 = 0.0;
+
+    unsafe {
+        // Misc init stuff
+        naevc::render_init();
+        naevc::nebu_init();
+        naevc::gui_init();
+        naevc::toolkit_init();
+        naevc::map_init();
+        naevc::map_system_init();
+        naevc::cond_init();
+        naevc::cli_init();
+        naevc::constants_init();
+    }
+
+    let stages: Vec<LoadStage> = vec![
+        LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
+            naevc::commodity_load()
+        }), /* no dep */
+        LoadStage::new_c(gettext("Loading Special Effects…"), || unsafe {
+            naevc::spfx_load()
+        }), /* no dep */
+        LoadStage::new_c(gettext("Loading Effects…"), || unsafe {
+            naevc::effect_load()
+        }), /* no dep */
+        LoadStage::new_c(gettext("Loading Factions…"), || unsafe {
+            naevc::factions_load()
+        }), /* dep for space, missions, AI */
+        LoadStage::new_c(gettext("Loading Outfits…"), || unsafe {
+            naevc::outfit_load()
+        }), /* dep for ships, factions */
+        LoadStage::new_c(gettext("Loading Ships…"), || unsafe {
+            naevc::ships_load() + naevc::outfit_loadPost()
+        }),
+        LoadStage::new_c(gettext("Loading AI…"), || unsafe { naevc::ai_load() }), /* dep for ships, factions */
+        LoadStage::new_c(gettext("Loading Techs…"), || unsafe {
+            naevc::tech_load()
+        }), /* dep for spobs */
+        LoadStage::new_c(gettext("Loading the Universe…"), || unsafe {
+            naevc::space_load()
+        }), /* dep for events / missions */
+        LoadStage::new_c(gettext("Loading Events and Missions…"), || unsafe {
+            naevc::events_load() + naevc::missions_load()
+        }),
+        LoadStage::new_c(gettext("Loading UniDiffs…"), || unsafe {
+            naevc::diff_init()
+        }),
+        LoadStage::new_c(gettext("Populating Maps…"), || unsafe {
+            naevc::outfit_mapParse()
+        }),
+        LoadStage::new_c(gettext("Calculating Patrols…"), || unsafe {
+            naevc::safelanes_init()
+        }),
+        // Run Lua and shit
+        LoadStage::new_c(gettext("Finalizin data…"), || unsafe {
+            naevc::factions_loadPost()
+                + naevc::difficulty_load()
+                + naevc::background_init()
+                + naevc::map_load()
+                + naevc::map_system_load()
+                + naevc::space_loadLua()
+                + naevc::pilots_init()
+                + naevc::weapon_init()
+                + naevc::player_init()
+        }),
+    ];
+
+    // Load
+    let nstages: f32 = stages.len() as f32;
+    for s in stages {
+        loadscreen_update(env, stage / nstages, s.msg).unwrap_or_else(|err| {
+            warn!("{}", err);
+        });
+        stage += 1.0;
+        (s.f)().unwrap_or_else(|err| {
+            warn!("{}", err);
+        });
+    }
+
+    loadscreen_update(env, 1.0, gettext("Loading Completed!")).unwrap_or_else(|err| {
+        warn!("{}", err);
+    });
+    Ok(())
+}
+
+fn loadscreen_update(env: &nlua::LuaEnv, done: f32, msg: &str) -> mlua::Result<()> {
+    let lua = nlua::NLUA.lock().unwrap();
+    let update: mlua::Function = env.get("update")?;
+    env.call::<()>(&lua, &update, (done, msg))?;
+    unsafe {
+        naevc::naev_doRenderLoadscreen();
+    }
+    Ok(())
 }

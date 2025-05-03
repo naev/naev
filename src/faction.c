@@ -2110,7 +2110,7 @@ int factions_load( void )
    return 0;
 }
 
-void factions_loadPost( void )
+int factions_loadPost( void )
 {
    for ( int i = 0; i < array_size( faction_stack ); i++ ) {
       Faction *f = &faction_stack[i];
@@ -2163,6 +2163,7 @@ void factions_loadPost( void )
       if ( ( f->lua_env == NULL ) && !faction_isFlag( f, FACTION_STATIC ) )
          WARN( _( "Faction '%s' has no Lua and isn't static!" ), f->name );
    }
+   return 0;
 }
 
 /**
