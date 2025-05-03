@@ -31,15 +31,7 @@ gltf = { version = "1", features = ["extras", "names", "utils"] }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 thunderdome = "0"
-
-[target.'cfg(not(windows))'.dependencies]
-# We support lua51 / luajit and they are ABI compatible, so just point at luajit
-mlua = { version = "0", features = ["luajit", "anyhow"] }
-
-[target.'cfg(windows)'.dependencies]
-# When cross-compiling on windows, it doesn't find luajit, so we have to compile it ourselves
-# This is not linked to at the end, just makes compilation longer
-mlua = { version = "0", features = ["luajit", "anyhow"] }
+mlua = { version = "0", features = ["luajit", "anyhow", "send"] }
 
 [target.'cfg(unix)'.dependencies]
 nix = { version="0", features=["signal"] }

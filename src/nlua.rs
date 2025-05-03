@@ -40,14 +40,9 @@ pub struct NLua {
     /// The metatable for environments, just defaults to our globals
     env_mt: mlua::Table,
     // TODO remove below when we can
-    #[allow(dead_code)]
-    clua: *mut mlua::lua_State,
     envs: mlua::Table,
     envs_rk: mlua::RegistryKey,
 }
-// Got to remove this when we can...
-unsafe impl Sync for NLua {}
-unsafe impl Send for NLua {}
 
 /// Opens the gettext library
 fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
@@ -251,7 +246,6 @@ impl NLua {
         Ok(NLua {
             globals,
             env_mt,
-            clua: unsafe { naevc::naevL as *mut mlua::lua_State },
             envs: envs.clone(),
             envs_rk: lua.create_registry_value(envs)?,
             lua,

@@ -178,8 +178,6 @@ pub struct FactionData {
     cdescription: CString,
     ctags: ArrayCString,
 }
-unsafe impl Sync for FactionData {}
-unsafe impl Send for FactionData {}
 impl FactionData {
     fn init_lua(&self, lua: &NLua) -> Result<()> {
         if let Some(env) = &self.equip_env {
