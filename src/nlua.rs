@@ -1,10 +1,11 @@
 //use mlua::prelude::*;
-use crate::gettext::{gettext, ngettext, pgettext};
-use crate::ndata;
-use crate::warn;
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
+
+use crate::gettext::{gettext, ngettext, pgettext};
+use crate::{ndata, vec2};
+use crate::{warn, warn_err};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
@@ -387,6 +388,40 @@ impl LuaEnv {
     ) -> Result<R> {
         lua.environment_call(self.table.clone(), func, args)
     }
+
+    pub fn load_standard(&mut self, lua: &NLua) -> Result<()> {
+        vec2::open_vec2(&lua.lua, self)?;
+        let ret = unsafe {
+            let env = self as *mut LuaEnv as *mut naevc::nlua_env;
+            let mut r: c_int = 0;
+            r |= naevc::nlua_loadNaev(env);
+            r |= naevc::nlua_loadVar(env);
+            r |= naevc::nlua_loadSpob(env);
+            r |= naevc::nlua_loadSystem(env);
+            r |= naevc::nlua_loadJump(env);
+            r |= naevc::nlua_loadTime(env);
+            r |= naevc::nlua_loadPlayer(env);
+            r |= naevc::nlua_loadPilot(env);
+            r |= naevc::nlua_loadRnd(env);
+            r |= naevc::nlua_loadDiff(env);
+            r |= naevc::nlua_loadFaction(env);
+            r |= naevc::nlua_loadOutfit(env);
+            r |= naevc::nlua_loadCommodity(env);
+            r |= naevc::nlua_loadNews(env);
+            r |= naevc::nlua_loadShiplog(env);
+            r |= naevc::nlua_loadFile(env);
+            r |= naevc::nlua_loadData(env);
+            r |= naevc::nlua_loadLinOpt(env);
+            r |= naevc::nlua_loadSafelanes(env);
+            r |= naevc::nlua_loadSpfx(env);
+            r |= naevc::nlua_loadAudio(env);
+            r
+        };
+        match ret {
+            0 => Ok(()),
+            _ => anyhow::bail!("unable to load standard libraries!"),
+        }
+    }
 }
 
 use std::sync::{LazyLock, Mutex};
@@ -484,4 +519,20 @@ pub extern "C" fn nlua_resize() {
     let lua = NLUA.lock().unwrap();
     let (screen_w, screen_h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
     lua.resize(screen_w, screen_h).unwrap();
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn nlua_loadStandard(env: *mut LuaEnv) -> c_int {
+    if env.is_null() {
+        return -1;
+    }
+    let nlua = NLUA.lock().unwrap();
+    let env = unsafe { &mut *env };
+    match env.load_standard(&nlua) {
+        Ok(()) => 0,
+        Err(e) => {
+            warn_err!(e);
+            -1
+        }
+    }
 }

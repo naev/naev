@@ -372,13 +372,25 @@ impl FactionLoad {
         {
             let mut lua = lua.lock().unwrap();
             if !fct.script_spawn.is_empty() {
-                fct.sched_env = Some(lua.environment_new(&fct.script_spawn)?);
+                fct.sched_env = Some({
+                    let mut env = lua.environment_new(&fct.script_spawn)?;
+                    env.load_standard(&lua)?;
+                    env
+                });
             }
             if !fct.script_equip.is_empty() {
-                fct.equip_env = Some(lua.environment_new(&fct.script_equip)?);
+                fct.equip_env = Some({
+                    let mut env = lua.environment_new(&fct.script_equip)?;
+                    env.load_standard(&lua)?;
+                    env
+                });
             }
             if !fct.script_standing.is_empty() {
-                fct.lua_env = Some(lua.environment_new(&fct.script_standing)?);
+                fct.lua_env = Some({
+                    let mut env = lua.environment_new(&fct.script_standing)?;
+                    env.load_standard(&lua)?;
+                    env
+                });
             }
         }
 

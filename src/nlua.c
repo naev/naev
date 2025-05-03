@@ -491,65 +491,6 @@ int nlua_package_loader_c( lua_State *L )
 }
 
 /**
- * @brief Loads the standard Naev Lua API.
- *
- * Loads the modules:
- *  - naev
- *  - var
- *  - space
- *    - spob
- *    - system
- *    - jumps
- *  - time
- *  - player
- *  - pilot
- *  - rnd
- *  - diff
- *  - faction
- *  - vec2
- *  - outfit
- *  - commodity
- *
- * Only is missing:
- *  - misn
- *  - tk
- *  - hook
- *  - music
- *  - ai
- *
- *    @param env Environment.
- *    @return 0 on success.
- */
-int nlua_loadStandard( nlua_env *env )
-{
-   int r = 0;
-   r |= nlua_loadNaev( env );
-   r |= nlua_loadVar( env );
-   r |= nlua_loadSpob( env );
-   r |= nlua_loadSystem( env );
-   r |= nlua_loadJump( env );
-   r |= nlua_loadTime( env );
-   r |= nlua_loadPlayer( env );
-   r |= nlua_loadPilot( env );
-   r |= nlua_loadRnd( env );
-   r |= nlua_loadDiff( env );
-   r |= nlua_loadFaction( env );
-   r |= nlua_loadVector( env );
-   r |= nlua_loadOutfit( env );
-   r |= nlua_loadCommodity( env );
-   r |= nlua_loadNews( env );
-   r |= nlua_loadShiplog( env );
-   r |= nlua_loadFile( env );
-   r |= nlua_loadData( env );
-   r |= nlua_loadLinOpt( env );
-   r |= nlua_loadSafelanes( env );
-   r |= nlua_loadSpfx( env );
-   r |= nlua_loadAudio( env );
-
-   return r;
-}
-
-/**
  * @brief Gets a trace from Lua.
  */
 int nlua_errTrace( lua_State *L )
@@ -1015,5 +956,63 @@ void nlua_resize( void )
          lua_pop( naevL, 2 ); /* t, k */
    } /* t */
    lua_pop( naevL, 1 ); /* */
+}
+
+/**
+ * @brief Loads the standard Naev Lua API.
+ *
+ * Loads the modules:
+ *  - naev
+ *  - var
+ *  - space
+ *    - spob
+ *    - system
+ *    - jumps
+ *  - time
+ *  - player
+ *  - pilot
+ *  - rnd
+ *  - diff
+ *  - faction
+ *  - vec2
+ *  - outfit
+ *  - commodity
+ *
+ * Only is missing:
+ *  - misn
+ *  - tk
+ *  - hook
+ *  - music
+ *  - ai
+ *
+ *    @param env Environment.
+ *    @return 0 on success.
+ */
+int nlua_loadStandard( nlua_env *env )
+{
+   int r = 0;
+   r |= nlua_loadNaev( env );
+   r |= nlua_loadVar( env );
+   r |= nlua_loadSpob( env );
+   r |= nlua_loadSystem( env );
+   r |= nlua_loadJump( env );
+   r |= nlua_loadTime( env );
+   r |= nlua_loadPlayer( env );
+   r |= nlua_loadPilot( env );
+   r |= nlua_loadRnd( env );
+   r |= nlua_loadDiff( env );
+   r |= nlua_loadFaction( env );
+   r |= nlua_loadOutfit( env );
+   r |= nlua_loadCommodity( env );
+   r |= nlua_loadNews( env );
+   r |= nlua_loadShiplog( env );
+   r |= nlua_loadFile( env );
+   r |= nlua_loadData( env );
+   r |= nlua_loadLinOpt( env );
+   r |= nlua_loadSafelanes( env );
+   r |= nlua_loadSpfx( env );
+   r |= nlua_loadAudio( env );
+
+   return r;
 }
 #endif
