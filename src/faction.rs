@@ -13,8 +13,8 @@ use crate::gettext::gettext;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
+use crate::{array, ndata, texture};
 use crate::{formatx, warn};
-use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use thunderdome::{Arena, Index};
 
@@ -502,7 +502,7 @@ pub fn load() -> Result<()> {
     Ok(())
 }
 
-pub fn load_post() -> Result<()> {
+pub fn load_lua() -> Result<()> {
     // Last pass: initialize Lua
     let lua = NLUA.lock().unwrap();
     for fct in FACTIONDATA.get().unwrap() {
@@ -512,14 +512,54 @@ pub fn load_post() -> Result<()> {
 }
 
 // Here be C API
-/*
-use std::os::raw::{c_int};
+use std::mem::ManuallyDrop;
+use std::os::raw::{c_char, c_int};
 
 #[unsafe(no_mangle)]
-pub extern "C" fn faction_isFaction( f: c_int ) -> c_int {
-    match FACTIONS.lock().unwrap().contains_slot( f as u32 ) {
+pub extern "C" fn _faction_isFaction(f: c_int) -> c_int {
+    if f < 0 {
+        return 0;
+    }
+    match FACTIONS.lock().unwrap().contains_slot(f as u32) {
         Some(_) => 1,
         None => 0,
     }
 }
-*/
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_exists(name: *const c_char) -> c_int {
+    let ptr = unsafe { CStr::from_ptr(name) };
+    let name = ptr.to_str().unwrap();
+    for fct in FACTIONS.lock().unwrap().iter() {
+        let (key, val) = fct;
+        if name == val.data.name {
+            return key.slot() as c_int;
+        }
+    }
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
+    let ptr = unsafe { CStr::from_ptr(name) };
+    let name = ptr.to_str().unwrap();
+    for fct in FACTIONS.lock().unwrap().iter() {
+        let (key, val) = fct;
+        if name == val.data.name {
+            return key.slot() as c_int;
+        }
+    }
+    warn!(gettext("Faction '{}' not found in stack."), name);
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_getAll() -> *const c_int {
+    let mut fcts: Vec<c_int> = vec![];
+    for fct in FACTIONS.lock().unwrap().iter() {
+        let (key, val) = fct;
+        fcts.push(key.slot() as c_int);
+    }
+    let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
+    arr.as_ptr() as *const c_int
+}
