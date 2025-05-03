@@ -35,7 +35,7 @@ function spir.initDirectory( dir, faction, params )
       return a.p > b.p -- Lower priority gets run later, so it can overwrite
    end )
 
-   local postprocess = params.postprocess
+   local preprocess = params.preprocess
    -- Create init function (global)
    _G.create = function ( max )
       local chapter = player.chapter() or "0"
@@ -52,25 +52,32 @@ function spir.initDirectory( dir, faction, params )
       -- Marauders are terribad
       if faction==FMARAUDER then
          handicap = handicap+1
-         if total_presence < ((chapter0 and 500) or 300) and rnd.rnd() < 0.5 then
-            handicap = handicap+1
-         end
       end
 
       -- Nerf the pilot as necessary
       -- TODO this should be done as preprocessing, and not post-processing,
       -- but pilot.add is not flexible enough and hard to change for now.
-      params.postprocess = function( p )
-         if handicap>=3 then
-            p:outfitAddIntrinsic( HANDICAP3 )
-         elseif handicap==2 then
-            p:outfitAddIntrinsic( HANDICAP2 )
-         elseif handicap==1 then
-            p:outfitAddIntrinsic( HANDICAP1 )
+      params.preprocess = function( pms )
+         pms.intrinsics = pms.intrinsics or {}
+
+         -- Marauders can be further handicapped randomly
+         local hcp = handicap
+         if total_presence < ((chapter0 and 500) or 300) and rnd.rnd() < 0.5 then
+            hcp = hcp+1
          end
-         -- Propagate postprocess if necessary
-         if postprocess then
-            postprocess( p )
+
+         -- Apply as intrinsics
+         if hcp>=3 then
+            table.insert( pms.intrinsics, HANDICAP3 )
+         elseif hcp==2 then
+            table.insert( pms.intrinsics, HANDICAP2 )
+         elseif hcp==1 then
+            table.insert( pms.intrinsics, HANDICAP1 )
+         end
+
+         -- Propagate if necessary
+         if preprocess then
+            preprocess( pms )
          end
       end
 

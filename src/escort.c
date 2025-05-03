@@ -124,7 +124,7 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
 
    /* Create the pilot. */
    pe = pilot_create( ship, NULL, p->faction, "escort", dir, pos, vel, f,
-                      parent, dockslot );
+                      parent, dockslot, NULL );
    pe->parent = parent;
 
    /* Make invincible to player. */

@@ -701,6 +701,7 @@ static int pilotL_add( lua_State *L )
    PilotFlags  flags;
    int         ignore_rules;
    Pilot      *p;
+   Outfit    **intrinsics = NULL;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -805,6 +806,20 @@ static int pilotL_add( lua_State *L )
       if ( lua_toboolean( L, -1 ) )
          pilot_setFlagRaw( flags, PILOT_STEALTH );
       lua_pop( L, 1 );
+
+      lua_getfield( L, 5, "intrinsics" );
+      if ( !lua_isnoneornil( L, -1 ) ) {
+         luaL_checktype( L, -1, LUA_TTABLE );
+         if ( intrinsics == NULL )
+            intrinsics = array_create( Outfit * );
+         lua_pushnil( L );
+         while ( lua_next( L, -2 ) != 0 ) {
+            const Outfit *o = luaL_checkoutfit( L, -1 );
+            array_push_back( &intrinsics, (Outfit *)o );
+            lua_pop( L, 1 );
+         }
+      }
+      lua_pop( L, 1 );
    }
 
    /* Set up velocities and such. */
@@ -817,7 +832,9 @@ static int pilotL_add( lua_State *L )
    a = angle_clean( a );
 
    /* Create the pilot. */
-   p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
+   p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0,
+                     (const Outfit **)intrinsics );
+   array_free( intrinsics );
    lua_pushpilot( L, p->id );
    if ( jump == NULL ) {
       ai_newtask( L, p, "idle_wait", 0, 1 );
