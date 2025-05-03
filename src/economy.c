@@ -223,8 +223,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    }
    commPrice = &p->commodityPrice[i];
    if ( commPrice->cnt > 0 ) {
-      *mean = (credits_t)( commPrice->sum / commPrice->cnt +
-                           0.5 ); /* +0.5 to round*/
+      *mean = (credits_t)round( commPrice->sum / commPrice->cnt );
       *std  = ( sqrt( commPrice->sum2 / commPrice->cnt -
                       ( commPrice->sum * commPrice->sum ) /
                          ( commPrice->cnt * commPrice->cnt ) ) );
@@ -253,9 +252,9 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean,
       if ( ref == NULL )
          return -1;
       int ret = economy_getAveragePrice( ref, mean, std );
-      *mean   = (credits_t)( (double)*mean * com->price_mod + 0.5 );
+      *mean   = (credits_t)round( (double)*mean * com->price_mod );
       *std    = ( *std * com->price_mod );
-      return ( (double)ret * com->price_mod + 0.5 );
+      return round( (double)ret * com->price_mod );
    }
 
    /* Constant price. */
@@ -289,7 +288,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean,
    if ( cnt > 0 ) {
       av /= cnt;
       av2   = sqrt( av2 / cnt - av * av );
-      *mean = (credits_t)( av + 0.5 );
+      *mean = (credits_t)round( av );
       *std  = av2;
    } else {
       WARN( _( "Average price for commodity '%s' not known." ), com->name );
