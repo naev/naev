@@ -305,10 +305,12 @@ pub fn naev() -> Result<()> {
             15.,
             (naevc::gl_screen.h - 15 - naevc::gl_defFontMono.h) as f64,
         );
+    }
 
-        // Load game data
-        load_all(load_env)?;
+    // Load game data
+    load_all(load_env)?;
 
+    unsafe {
         // Detect size changes that occurred during load.
         naevc::naev_resize();
 
@@ -420,8 +422,6 @@ impl LoadStage {
 }
 
 fn load_all(env: &nlua::LuaEnv) -> Result<()> {
-    let mut stage: f32 = 0.0;
-
     unsafe {
         // Misc init stuff
         naevc::render_init();
@@ -487,7 +487,8 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
         }),
     ];
 
-    // Load
+    // Load one by one in order
+    let mut stage: f32 = 0.0;
     let nstages: f32 = stages.len() as f32;
     for s in stages {
         loadscreen_update(env, (stage + 1.0) / (nstages + 2.0), s.msg).unwrap_or_else(|err| {
