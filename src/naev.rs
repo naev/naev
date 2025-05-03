@@ -495,16 +495,16 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
     let nstages: f32 = stages.len() as f32;
     for s in stages {
         loadscreen_update(env, (stage + 1.0) / (nstages + 2.0), s.msg).unwrap_or_else(|err| {
-            warn_err!(err, "loadscreen failed to update!");
+            log::warn_err(err.context("loadscreen failed to update!"));
         });
         stage += 1.0;
         (s.f)().unwrap_or_else(|err| {
-            warn_err!(err, "loadscreen update function failed to run!");
+            log::warn_err(err.context("loadscreen update function failed to run!"));
         });
     }
 
     loadscreen_update(env, 1.0, gettext("Loading Completed!")).unwrap_or_else(|err| {
-        warn_err!(err, "loadscreen failed to update!");
+        log::warn_err(err.context("loadscreen failed to update!"));
     });
     Ok(())
 }

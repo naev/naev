@@ -6,10 +6,11 @@ use std::os::raw::{c_char, c_int};
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
 use crate::gettext::gettext;
+use crate::log::warn_err;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
+use crate::warn;
 use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use crate::{warn, warn_err};
 
 #[derive(Default)]
 pub struct SlotProperty {
@@ -124,7 +125,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
             match SlotProperty::load(&ctx, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 Err(err) => {
-                    warn_err!(err, "Unable to load Slot Property '{}'!", filename);
+                    warn_err(err.context(format!("unable to load Slot Property '{}'!", filename)));
                     None
                 }
             }

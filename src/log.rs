@@ -30,8 +30,8 @@ pub fn warn(msg: &str) {
     warn!(msg);
 }
 
-pub fn warn_err(err: anyhow::Error, msg: &str) {
-    warn_err!(err, msg);
+pub fn warn_err(err: anyhow::Error) {
+    warn_err!(err);
 }
 
 #[macro_export]
@@ -82,16 +82,16 @@ macro_rules! warn {
 
 #[macro_export]
 macro_rules! warn_err {
-    ($err:ident, $($arg:tt)*) => {
-        let nw = $crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
+    ($err:ident) => {
+        let nw = $crate::log::WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
         if nw <= $crate::log::WARN_MAX {
-            eprintln!("{}WARNING {}:{}: {}",
-                $err.backtrace(),
-                file!(), line!(),
-                &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+            eprintln!("WARNING: {:?}", $err);
         }
-        if nw==$crate::log::WARN_MAX {
-            eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
+        if nw == $crate::log::WARN_MAX {
+            eprintln!(
+                "{}",
+                gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
+            );
         }
         if naevc::config::DEBUG_PARANOID {
             #[cfg(unix)]

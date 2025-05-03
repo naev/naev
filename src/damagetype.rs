@@ -4,10 +4,11 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
 use crate::gettext::gettext;
+use crate::log::warn_err;
 use crate::ndata;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
+use crate::warn;
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
-use crate::{warn, warn_err};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
@@ -210,7 +211,7 @@ pub fn load() -> Result<Vec<DamageType>> {
             match DamageType::load(filename.as_str()) {
                 Ok(dt) => Some(dt),
                 Err(err) => {
-                    warn_err!(err, "Unable to load Damage Type '{}'!", filename);
+                    warn_err(err.context(format!("unable to load Damage Type '{}'!", filename)));
                     None
                 }
             }

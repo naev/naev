@@ -12,6 +12,7 @@ use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::context::Context;
+use crate::log::warn_err;
 use crate::{buffer, context, gettext, ndata, render};
 use crate::{warn, warn_err};
 
@@ -994,7 +995,7 @@ pub extern "C" fn gl_loadImageData(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn_err!(e, "unable to create texture");
+            warn_err!(e);
             std::ptr::null_mut()
         }
     };
@@ -1042,7 +1043,7 @@ pub extern "C" fn gl_newSprite(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn_err!(e, "unable to build texture for new sprite");
+            warn_err(e.context("unable to build texture for new sprite"));
             std::ptr::null_mut()
         }
     };
@@ -1112,7 +1113,7 @@ pub extern "C" fn gl_newSpriteRWops(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn_err!(e, "unable to build texture for new sprite from rwops");
+            warn_err(e.context("unable to build texture for new sprite from rwops"));
             std::ptr::null_mut()
         }
     };
@@ -1183,7 +1184,7 @@ pub extern "C" fn gl_rawTexture(
             Box::into_raw(Box::new(tex))
         }
         Err(e) => {
-            warn_err!(e, "unable to build texture for raw texture");
+            warn_err(e.context("unable to build texture for raw texture"));
             std::ptr::null_mut()
         }
     };

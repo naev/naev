@@ -463,7 +463,7 @@ pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
     let env = unsafe { &*env };
     match open_vec2(&lua.lua, env) {
         Err(e) => {
-            warn_err!(e, gettext("Error loading '{}' library"), "vec2");
+            warn_err!(e);
             -1
         }
         _ => 0,
