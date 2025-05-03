@@ -58,8 +58,9 @@ macro_rules! warn {
     ($($arg:tt)*) => {
         let nw = $crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
         if nw <= 1000 {
-            eprintln!("{}WARNING {}:{}: {}",
-                std::backtrace::Backtrace::force_capture(),
+            //eprintln!("{}WARNING {}:{}: {}",
+            //    std::backtrace::Backtrace::force_capture(),
+            eprintln!("WARNING {}:{}: {}",
                 file!(), line!(),
                 &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
