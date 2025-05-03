@@ -190,7 +190,7 @@ impl FactionData {
                 .load(std::str::from_utf8(&data)?)
                 .set_name(path)
                 .into_function()?;
-            lua.environment_call::<()>(env.table.clone(), &func, ())?;
+            env.call::<()>(lua, &func, ())?;
         }
         if let Some(env) = &self.sched_env {
             let path = format!("factions/spawn/{}.lua", self.script_spawn);
@@ -200,7 +200,7 @@ impl FactionData {
                 .load(std::str::from_utf8(&data)?)
                 .set_name(path)
                 .into_function()?;
-            lua.environment_call::<()>(env.table.clone(), &func, ())?;
+            env.call::<()>(lua, &func, ())?;
         }
         if let Some(env) = &self.lua_env {
             let path = format!("factions/standing/{}.lua", self.script_standing);
@@ -210,7 +210,7 @@ impl FactionData {
                 .load(std::str::from_utf8(&data)?)
                 .set_name(path)
                 .into_function()?;
-            lua.environment_call::<()>(env.table.clone(), &func, ())?;
+            env.call::<()>(lua, &func, ())?;
         }
         Ok(())
     }
