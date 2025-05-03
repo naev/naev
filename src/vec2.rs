@@ -436,7 +436,6 @@ pub fn open_vec2(lua: &mlua::Lua, env: &LuaEnv) -> anyhow::Result<()> {
 
     // Only add stuff as necessary
     if let mlua::Value::Nil = lua.named_registry_value("push_vector")? {
-        dbg!("add");
         let push_vector = lua.create_function(|lua, (x, y): (f64, f64)| {
             let vec = Vec2::new(x, y);
             lua.create_any_userdata(vec)
