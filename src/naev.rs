@@ -449,6 +449,7 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
             naevc::effect_load()
         }), /* no dep */
         LoadStage::new_c(gettext("Loading Factions…"), || unsafe {
+            //faction::load().unwrap_or_else( |err| log::warn_err(err) );
             naevc::factions_load()
         }), /* dep for space, missions, AI */
         LoadStage::new_c(gettext("Loading Outfits…"), || unsafe {
@@ -478,6 +479,7 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
         }),
         // Run Lua and shit
         LoadStage::new_c(gettext("Finalizing data…"), || unsafe {
+            //faction::load_lua().unwrap_or_else( |err| log::warn_err(err) );
             naevc::factions_loadPost()
                 + naevc::difficulty_load()
                 + naevc::background_init()
