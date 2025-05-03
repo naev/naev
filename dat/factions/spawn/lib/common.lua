@@ -239,6 +239,9 @@ function scom.spawn( pilots )
       params.stealth = params.stealth or stealth
       params.ai = params.ai or ai
       local pfact = params.faction or fct
+      if scom._params.preprocess then
+         scom._params.preprocess( params )
+      end
       local p = pilot.add( v.ship, pfact, origin, params.name, params )
       local mem = p:memory()
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission

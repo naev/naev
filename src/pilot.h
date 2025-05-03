@@ -504,7 +504,8 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount );
 Pilot       *pilot_create( const Ship *ship, const char *name, int faction,
                            const char *ai, double dir, const vec2 *pos,
                            const vec2 *vel, const PilotFlags flags,
-                           unsigned int dockpilot, int dockslot );
+                           unsigned int dockpilot, int dockslot,
+                           const Outfit **intrinsics );
 Pilot       *pilot_createEmpty( const Ship *ship, const char *name, int faction,
                                 PilotFlags flags );
 unsigned int pilot_clone( const Pilot *p );

@@ -72,7 +72,8 @@ static const double pilot_commFade =
 static void pilot_init( Pilot *dest, const Ship *ship, const char *name,
                         int faction, const double dir, const vec2 *pos,
                         const vec2 *vel, const PilotFlags flags,
-                        unsigned int dockpilot, int dockslot );
+                        unsigned int dockpilot, int dockslot,
+                        const Outfit **intrinsics );
 /* Update. */
 static void pilot_hyperspace( Pilot *pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
@@ -3311,11 +3312,13 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param flags Used for tweaking the pilot.
  *    @param dockpilot The pilot which launched this pilot (0 if N/A).
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
+ *    @param intrinsics Intrinsic outfits to add.
  */
 static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
                         int faction, double dir, const vec2 *pos,
                         const vec2 *vel, const PilotFlags flags,
-                        unsigned int dockpilot, int dockslot )
+                        unsigned int dockpilot, int dockslot,
+                        const Outfit **intrinsics )
 {
    PilotOutfitSlot  *dslot;
    PilotOutfitSlot **pilot_list_ptr[] = {
@@ -3352,8 +3355,7 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
    pilot->fuel = pilot->fuel_max = 1.;     /* ditto fuel */
-   pilot_calcStats( pilot );
-   pilot->stress = 0.; /* No stress. */
+   pilot->stress                 = 0.;     /* No stress. */
 
    /* Allocate outfit memory. */
    pilot->outfits = array_create( PilotOutfitSlot * );
@@ -3386,6 +3388,11 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
          pilot_addOutfitIntrinsicRaw( pilot, ship->outfit_intrinsic[i] );
    }
 
+   /* Add custom intrinsics if applicable. */
+   for ( int i = 0; i < array_size( intrinsics ); i++ )
+      pilot_addOutfitIntrinsicRaw( pilot, intrinsics[i] );
+
+   /* Run Lua if we added shit. */
    if ( added ) {
       for ( int i = 0; i < array_size( pilot->outfits ); i++ )
          pilot_outfitLAdd( pilot, pilot->outfits[i] );
@@ -3538,7 +3545,8 @@ static void pilot_init_trails( Pilot *p )
 Pilot *pilot_create( const Ship *ship, const char *name, int faction,
                      const char *ai, const double dir, const vec2 *pos,
                      const vec2 *vel, const PilotFlags flags,
-                     unsigned int dockpilot, int dockslot )
+                     unsigned int dockpilot, int dockslot,
+                     const Outfit **intrinsics )
 {
    /* Allocate pilot memory. */
    Pilot *p = nmalloc( sizeof( Pilot ) );
@@ -3570,7 +3578,7 @@ Pilot *pilot_create( const Ship *ship, const char *name, int faction,
 
    /* Initialize the pilot. */
    pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot,
-               dockslot );
+               dockslot, intrinsics );
 
    /* Initialize AI if applicable. */
    if ( ai == NULL )
@@ -3614,7 +3622,7 @@ Pilot *pilot_createEmpty( const Ship *ship, const char *name, int faction,
       return 0;
    }
    memset( dyn, 0, sizeof( Pilot ) );
-   pilot_init( dyn, ship, name, faction, 0., NULL, NULL, flags, 0, 0 );
+   pilot_init( dyn, ship, name, faction, 0., NULL, NULL, flags, 0, 0, NULL );
    return dyn;
 }
 
@@ -3647,7 +3655,7 @@ unsigned int pilot_clone( const Pilot *ref )
 
    /* Initialize the pilot. */
    pilot_init( dyn, ref->ship, ref->name, ref->faction, ref->solid.dir,
-               &ref->solid.pos, &ref->solid.vel, pf, 0, 0 );
+               &ref->solid.pos, &ref->solid.vel, pf, 0, 0, NULL );
 
    /* Add outfits over. */
    for ( int i = 0; i < array_size( ref->outfits ); i++ )

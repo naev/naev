@@ -132,9 +132,9 @@ static inline _private_container *_array_private_container( void *a )
  *    @param element Element being pushed to the back.
  */
 #define array_push_back( ptr_array, element )                                  \
-   do                                                                          \
+   do {                                                                        \
       array_grow( ptr_array ) = element;                                       \
-   while ( 0 )
+   } while ( 0 )
 // NOLINTBEGIN(bugprone-sizeof-expression)
 /**
  * @brief Erases elements in interval [first, last).
