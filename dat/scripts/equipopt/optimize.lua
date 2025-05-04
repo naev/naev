@@ -111,10 +111,13 @@ local goodness_special = {
 --]]
 local special_ships = {}
 special_ships["Drone"] = function( p )
+   local sys = outfit.get( "Milspec Orion 2301 Core System" )
+   p:outfitAddSlot( sys, "systems", true )
+   local eng = outfit.get( "Nexus Dart 160 Engine" )
+   p:outfitAddSlot( eng, "engines", true )
+   local hul = outfit.get( choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"} )
+   p:outfitAddSlot( hul, "hull", true )
    for k,o in ipairs{
-      "Milspec Orion 2301 Core System",
-      "Nexus Dart 160 Engine",
-      choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"},
       "Neutron Disruptor",
       "Neutron Disruptor",
       "Neutron Disruptor",
@@ -123,11 +126,17 @@ special_ships["Drone"] = function( p )
    end
 end
 special_ships["Heavy Drone"] = function( p )
+   local sys = outfit.get( "Milspec Thalos 2202 Core System" )
+   p:outfitAddSlot( sys, "systems", true )
+   p:outfitAddSlot( sys, "systems_secondary", true )
+   local eng = outfit.get( "Nexus Dart 160 Engine" )
+   p:outfitAddSlot( eng, "engines", true )
+   p:outfitAddSlot( eng, "engines_secondary", true )
+   local hul = outfit.get( choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"} )
+   p:outfitAddSlot( hul, "hull", true )
+   hul = outfit.get( "S&K Skirmish Plating" )
+   p:outfitAddSlot( hul, "hull_secondary", true )
    for k,o in ipairs{
-      "Milspec Thalos 3602 Core System",
-      "Nexus Dart 360 Engine",
-      choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"},
-      "S&K Skirmish Plating",
       "Shatterer Launcher",
       "Shatterer Launcher",
       "Heavy Neutron Disruptor",
