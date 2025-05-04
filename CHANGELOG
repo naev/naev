@@ -81,7 +81,8 @@
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
    * Fixed AI spamming afterburners in an unhealthy way
-   * Removed support for save game compression as libxml2.14 disable compression by default
+   * Removed support for save game compression as libxml 2.14 disable compression by default
+   * Translation updates
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems
