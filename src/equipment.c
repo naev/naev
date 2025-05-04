@@ -751,7 +751,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh,
                 p->stats.engine_limit - p->solid.mass, p->stats.engine_limit );
 
    y -= h;
-   if ( p->stats.engine_limit > 0. && p->solid.mass > p->stats.engine_limit ) {
+   if ( p->stats.engine_limit > 0. && p->solid.mass > p->stats.engine_limit &&
+        ( p->speed_base > 0. ) ) {
       gl_printMid( &gl_smallFont, w, x, y, &cFontRed,
                    _( "!! %.0f%% Slower !!" ),
                    ( 1. - p->speed / p->speed_base ) * 100 );
