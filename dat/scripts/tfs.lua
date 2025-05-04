@@ -140,6 +140,12 @@ function tfs.writefile( ptr, path, value )
       end)
 end
 
+function tfs.append( ptr, path, value )
+   local res = tfs.checkdir(ptr, path)
+   if res then
+      res[(#res) + 1] = value
+   end
+end
 
 --[[
 ## 2. tfs Console Interface ( Example usage )

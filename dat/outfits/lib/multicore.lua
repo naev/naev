@@ -4,6 +4,7 @@ local multicore = {}
 local shipstat = naev.shipstats()
 
 local fmt = require "format"
+--local tfs = require "tfs"
 
 local multiengines = require "outfits/lib/multiengines"
 local is_mobility = multiengines.is_mobility
@@ -214,8 +215,9 @@ function multicore.init( params )
          local id = po:id()
          local multicore_off = nil
 
-         --po:clear()
+         po:clear()
          if ie then
+            --tfs.append(p:shipMemory(), {"history"}, (sign==-1 and "u" or "") .. 'eq_' .. tostring(po:id()))
             if secondary then
                p:outfitMessageSlot("engines", "here", {id = id, sign = sign, t = mystats(po,sign)})
             else
@@ -257,6 +259,7 @@ function multicore.init( params )
       elseif not is_multiengine(p, po) then
          warn("message on non-multiengine slot")
       else
+         --tfs.append(p:shipMemory(), {"history"}, '>' .. msg .. '_' .. tostring(po:id()))
          if msg == "pliz" then
             p:outfitMessageSlot("engines", "here", { id = po:id(), sign = dat, t = mystats(po, dat) } )
          elseif is_secondary(po) then
@@ -270,7 +273,7 @@ function multicore.init( params )
          elseif msg == "here" then
             multiengines.decl_engine_stats(gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
-            multiengines.refresh(gathered_data, po)
+            multiengines.refresh(gathered_data, po, true)
          elseif msg == "wtf?" then
             return gathered_data
          else
