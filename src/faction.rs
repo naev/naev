@@ -5,7 +5,7 @@ use nalgebra::Vector3;
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
 use std::ops::Deref;
-use std::sync::Mutex;
+use std::sync::{Mutex, RwLock};
 
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
@@ -26,14 +26,14 @@ enum Grid {
 }
 
 /// Full faction data
-pub static FACTIONS: Mutex<Arena<Faction>> = Mutex::new(Arena::new());
+pub static FACTIONS: RwLock<Arena<Faction>> = RwLock::new(Arena::new());
 
 pub struct FactionID {
     id: Index,
 }
 impl FactionID {
     pub fn new(name: &str) -> Option<FactionID> {
-        let factions = FACTIONS.lock().unwrap();
+        let factions = FACTIONS.write().unwrap();
         for fctid in factions.iter() {
             let (id, fct) = fctid;
             if fct.data.name == name {
@@ -43,22 +43,26 @@ impl FactionID {
         None
     }
 
-    pub fn call<F, R>(&self, f: F) -> R
+    pub fn call<F, R>(&self, f: F) -> Result<R>
     where
         F: Fn(&Faction) -> R,
     {
-        let factions = FACTIONS.lock().unwrap();
-        let fct = factions.get(self.id).unwrap();
-        f(fct)
+        let factions = FACTIONS.read().unwrap();
+        match factions.get(self.id) {
+            Some(fct) => Ok(f(fct)),
+            None => anyhow::bail!("faction not found"),
+        }
     }
 
-    pub fn call_mut<F, R>(&self, f: F) -> R
+    pub fn call_mut<F, R>(&self, f: F) -> Result<R>
     where
         F: Fn(&mut Faction) -> R,
     {
-        let mut factions = FACTIONS.lock().unwrap();
-        let fct = factions.get_mut(self.id).unwrap();
-        f(fct)
+        let mut factions = FACTIONS.write().unwrap();
+        match factions.get_mut(self.id) {
+            Some(fct) => Ok(f(fct)),
+            None => anyhow::bail!("faction not found"),
+        }
     }
 }
 
@@ -488,7 +492,7 @@ pub fn load() -> Result<()> {
     FACTIONDATA.set(factions).unwrap();
 
     // Populate the arena with the static factions
-    let mut factions = FACTIONS.lock().unwrap();
+    let mut factions = FACTIONS.write().unwrap();
     for fct in FACTIONDATA.get().unwrap() {
         let _ = factions.insert(Faction {
             player: fct.player_def,
@@ -520,7 +524,7 @@ pub extern "C" fn _faction_isFaction(f: c_int) -> c_int {
     if f < 0 {
         return 0;
     }
-    match FACTIONS.lock().unwrap().contains_slot(f as u32) {
+    match FACTIONS.read().unwrap().contains_slot(f as u32) {
         Some(_) => 1,
         None => 0,
     }
@@ -530,7 +534,7 @@ pub extern "C" fn _faction_isFaction(f: c_int) -> c_int {
 pub extern "C" fn _faction_exists(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
-    for fct in FACTIONS.lock().unwrap().iter() {
+    for fct in FACTIONS.read().unwrap().iter() {
         let (key, val) = fct;
         if name == val.data.name {
             return key.slot() as c_int;
@@ -543,7 +547,7 @@ pub extern "C" fn _faction_exists(name: *const c_char) -> c_int {
 pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
-    for fct in FACTIONS.lock().unwrap().iter() {
+    for fct in FACTIONS.read().unwrap().iter() {
         let (key, val) = fct;
         if name == val.data.name {
             return key.slot() as c_int;
@@ -556,7 +560,7 @@ pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_getAll() -> *const c_int {
     let mut fcts: Vec<c_int> = vec![];
-    for fct in FACTIONS.lock().unwrap().iter() {
+    for fct in FACTIONS.read().unwrap().iter() {
         let (key, val) = fct;
         fcts.push(key.slot() as c_int);
     }
