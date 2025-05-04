@@ -5,59 +5,63 @@
 
 
 import re
-from outfit import outfit,ET
-from sys import argv,exit
+from outfit import outfit, ET
+from sys import argv, exit
 
+
+# everything ont in this list goes to specific intead of general
 general = ['mass']
 
 
-def fmt(n):
-   f = float(n)
-   if round(f) == f:
-      return int(f)
-   else:
-      return f
+def parse_lua_multicore(si):
+   s = re.sub('\n', ' ', si)
 
-def parse_lua_multicore(s):
-   s = re.sub('\s','',s)
-   expr = re.escape('require(\"outfits.lib.multicore\").init{')
-   block = "\\{([^{}]*)\\}"
-   expr = expr+'(('+block+')(,'+block+')*,?'+')\\}'
-   match = re.search(expr,s)
+   name = ' ("|\')([^"\']*)\\1'
+   sep = ' ,'
+   num = ' [1-9][0-9]*(\.[0-9]+)?'
 
-   for t in re.finditer(block, match.group(1)):
-      L = str(t.group(1)).split(',')
-      if L[-1] == '':
-         L = L[:-2]
-      (a,b,c) = tuple(L)
-      yield (eval(a),fmt(b),fmt(c))
+   expr = ' require \( ("|\')outfits.lib.multicore(\\1) \) \. init \{ '
+   block = ' \\{ ((' + name + sep + num + sep + num + ') (' + sep + ')?'+ ' ) \\}'
+   expr = expr + ' ((' + block + ' ) (,' + block + ' )*,? ) \\} '
+   expr = expr.replace(' ', '\s*')
+   match = re.search(expr, s)
+
+   block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+')'+sep+' (?P<sec>'+num+') (' + sep + ' )? \\}'
+   block = block.replace(' ','\s*')
+   L = [t.groupdict() for t in re.finditer(block, match.group(3))]
+   L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
+   return L, si[match.span()[1]:]
 
 def do_it():
    o = outfit(argv[1])
-   d={'general':[],'specific':[]}
-   for t in parse_lua_multicore(o.to_dict()['lua_inline']):
+   d={'general':[], 'specific':[]}
+   fields, li = parse_lua_multicore(o.to_dict()['lua_inline'])
+
+   for t in fields:
       if t[0] in general:
          d['general'].append(t)
       else:
          d['specific'].append(t)
 
    for e in o:
-      if e.tag in ['general','specific']:
-         for (a,b,c) in d[e.tag]:
-            el=ET.Element(a)
-            if b==c:
-               el.text=str(b)
-            else:
-               el.text=str(b)+'/'+str(c)
+      if e.tag in ['general', 'specific']:
+         for (a, b, c) in d[e.tag]:
+            el = ET.Element(a)
+            el.text = str(b)
+            if b!= c:
+               el.text = el.text + '/' + str(c)
             e.append(el)
          if e.tag == 'specific':
-            spe=e
+            spe = e
       elif e.tag == 'lua_inline':
-         spe.remove(e)
+         if li.strip() == '':
+            spe.remove(e)
+         else:
+            e.text = li.strip()
    o.write("-")
 
 if __name__=="__main__":
-   res=0
+   res = 0
    try:
       do_it()
    except:
