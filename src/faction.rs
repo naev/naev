@@ -53,26 +53,40 @@ impl FactionID {
             None => anyhow::bail!("faction not found"),
         }
     }
+}
 
-    pub fn call_mut<F, R>(&self, f: F) -> Result<R>
-    where
-        F: Fn(&mut Faction) -> R,
-    {
-        let mut factions = FACTIONS.write().unwrap();
-        match factions.get_mut(self.id) {
-            Some(fct) => Ok(f(fct)),
-            None => anyhow::bail!("faction not found"),
-        }
-    }
+#[derive(Debug)]
+pub struct Standing {
+    player: f32,
+    p_override: Option<f32>,
 }
 
 #[derive(Debug)]
 pub struct Faction {
-    pub player: f32,
-    pub player_override: Option<f32>,
+    standing: RwLock<Standing>,
     pub data: DataWrapper,
 }
 impl Faction {
+    pub fn player(&self) -> f32 {
+        let standing = self.standing.read().unwrap();
+        match standing.p_override {
+            Some(std) => std,
+            None => standing.player,
+        }
+    }
+
+    pub fn set_player(&self, std: f32) {
+        let mut standing = self.standing.write().unwrap();
+        if standing.p_override.is_none() {
+            standing.player = std;
+        }
+    }
+
+    pub fn set_override(&self, std: Option<f32>) {
+        let mut standing = self.standing.write().unwrap();
+        standing.p_override = std;
+    }
+
     pub fn is_dynamic(&self) -> bool {
         match &self.data {
             DataWrapper::Static(_) => false,
@@ -495,8 +509,10 @@ pub fn load() -> Result<()> {
     let mut factions = FACTIONS.write().unwrap();
     for fct in FACTIONDATA.get().unwrap() {
         let _ = factions.insert(Faction {
-            player: fct.player_def,
-            player_override: None,
+            standing: RwLock::new(Standing {
+                player: fct.player_def,
+                p_override: None,
+            }),
             data: DataWrapper::Static(fct),
         });
     }
