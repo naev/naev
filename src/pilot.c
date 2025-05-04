@@ -3493,6 +3493,7 @@ void pilot_reset( Pilot *pilot )
    pilot->shoot_indicator = 0;
 
    /* Run Lua stuff. */
+   pilot_outfitOffAll( pilot );
    pilot_shipLInit( pilot );
    pilot_outfitLInitAll( pilot );
 }
@@ -4028,7 +4029,8 @@ void pilots_clean( int persist )
     * sorts of Lua stuff. */
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
-      if ( p == player.p && ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
+      if ( pilot_isPlayer( p ) ||
+           ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
          continue;
       /* Stop all outfits. */
       pilot_outfitOffAll( p );
@@ -4040,7 +4042,7 @@ void pilots_clean( int persist )
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       /* move player and persisted pilots to start */
       if ( !pilot_isFlag( pilot_stack[i], PILOT_DELETE ) &&
-           ( pilot_stack[i] == player.p ||
+           ( pilot_isPlayer( pilot_stack[i] ) ||
              ( persist && pilot_isFlag( pilot_stack[i], PILOT_PERSIST ) ) ) ) {
          /* Have to swap the pilots so it gets properly freed. */
          Pilot *p                   = pilot_stack[persist_count];
@@ -4070,6 +4072,10 @@ void pilots_clean( int persist )
       Pilot *p = pilot_stack[i];
       pilot_clearHooks( p );
       ai_cleartasks( p );
+      /* Don't reinit pilots that are persisting. */
+      if ( pilot_isPlayer( p ) ||
+           ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
+         continue;
       ai_init( p );
    }
 
@@ -4310,9 +4316,6 @@ void pilots_renderOverlay( void )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   /* Clear outfits first to not leave some outfits in dangling states. */
-   pilot_outfitOffAll( pilot );
-
    pilot->ptimer   = 0.; /* Pilot timer. */
    pilot->tcontrol = 0.; /* AI control timer. */
    pilot->stimer   = 0.; /* Shield timer. */
