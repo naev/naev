@@ -159,9 +159,16 @@ function comm( plt )
    local p = ccomm.newCharacter( vn, plt )
 
    vn.transition()
+   local msg
    if mem.comm_greet then
-      p( mem.comm_greet )
-   else
+      if type(mem.comm_greet)=="function" then
+         -- Override VN stuff since we want to pass pilot as parameter
+         msg = mem.comm_greet( p )
+      else
+         msg = mem.comm_greet
+      end
+   end
+   if not msg then
       vn.na(fmt.f(_("You open a communication channel with {plt}."), {plt=plt}))
    end
    vn.label("menu")
@@ -216,11 +223,11 @@ function comm( plt )
       end
       if mem.comm_custom then
          for k,v in ipairs(mem.comm_custom) do
-            local msg = v.menu
-            if type(msg)=="function" then
-               msg = msg()
+            local menumsg = v.menu
+            if type(menumsg)=="function" then
+               menumsg = menumsg()
             end
-            if msg then
+            if menumsg then
                table.insert( opts, 1, {msg, "custom_"..tostring(k)} )
             end
          end
