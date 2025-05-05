@@ -1933,6 +1933,33 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
 }
 
 /**
+ * @brief Renders the stealth overlay for the player.
+ */
+static void pilot_renderStealthOverlay( const Pilot *p )
+{
+   double   x, y, r, st, z;
+   glColour col;
+
+   z = cam_getZoom();
+   gl_gameToScreenCoords( &x, &y, p->solid.pos.x, p->solid.pos.y );
+
+   /* Determine the arcs. */
+   st = p->ew_stealth_timer;
+
+   /* We do red to yellow. */
+   col_blend( &col, &cYellow, &cRed, st );
+   col.a = 0.5;
+
+   /* Determine size. */
+   r = 1.2 / 2. * (double)p->ship->size;
+
+   /* Draw the main circle. */
+   glUseProgram( shaders.stealthmarker.program );
+   glUniform1f( shaders.stealthmarker.paramf, st );
+   gl_renderShader( x, y, r * z, r * z, 0., &shaders.stealthmarker, &col, 1 );
+}
+
+/**
  * @brief Renders the pilot.
  *
  *    @param p Pilot to render.
@@ -1988,8 +2015,12 @@ void pilot_render( Pilot *p )
       }
 
       /* Add some transparency if stealthed. TODO better effect */
-      if ( !pilot_isPlayer( p ) && pilot_isFlag( p, PILOT_STEALTH ) )
-         c.a = 0.5;
+      if ( pilot_isFlag( p, PILOT_STEALTH ) ) {
+         if ( pilot_isWithPlayer( p ) )
+            pilot_renderStealthOverlay( p );
+         if ( !pilot_isPlayer( p ) )
+            c.a = 0.5;
+      }
 
       /* Render normally. */
       if ( e == NULL ) {
