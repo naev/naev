@@ -311,6 +311,9 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
    end
 
+   -- Store base outfits, including new cores and such
+   local outfits_base = p:outfits()
+
    -- Global ship stuff
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
@@ -784,8 +787,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- energy, we'll try again with more relaxed energy constraints
       local stn = p:stats()
       if not z or (stn.energy_regen < energygoal and try < 5 and (st.energy_regen - emod*energygoal) > min_energy) then
-         -- TODO let this handle noremove
-         p:outfitRm( "all" )
+         p:outfitsEquip( outfits_base ) -- Should restore initial outfits
          emod = emod * 1.5
          print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
          lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))
