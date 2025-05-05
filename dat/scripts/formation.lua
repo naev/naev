@@ -11,6 +11,10 @@ local function count_classes( pilots )
    return class_count
 end
 
+local function stealth_mod( leader )
+   return (leader:flags("stealth") and 0.5) or 1
+end
+
 local formations = {}
 local keys = {}
 local names = {}
@@ -21,11 +25,12 @@ formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    -- Cross logic. Forms an X.
    local angle = math.pi/4 -- Spokes start rotated at a 45 degree angle.
-   local radius = 100 -- First ship distance.
+   local base = 100 * stealth_mod( leader )
+   local radius = base -- First ship distance.
    for i, p in ipairs(pilots) do
       leader:msg(p, "form_pos", {angle, radius})
       angle = math.fmod(angle + math.pi/2, 2*math.pi) -- Rotate spokes by 90 degrees.
-      radius = 100 * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
+      radius = base * (math.floor(i / 4) + 1) -- Increase the radius every 4 positions.
    end
 end
 
@@ -65,6 +70,7 @@ formations[keys[#keys]] = function (leader)
                   ["Fighter"] = 1,
                   ["Interceptor"] = 1,
                   ["Scout"] = 1 } -- Need to keep track of positions already iterated through.
+   local mod = stealth_mod( leader )
    for i, p in ipairs(pilots) do
       local ship_class = p:ship():class() -- For readability.
       if class_count[ship_class] == 1 then -- If there's only one ship in this specific class...
@@ -73,7 +79,7 @@ formations[keys[#keys]] = function (leader)
          angle = ((count[ship_class]-1)/(class_count[ship_class]-1))*math.pi/2 - math.pi/4 -- ..the angle rotates from -45 degrees to 45 degrees, assigning coordinates at even intervals.
          count[ship_class] = count[ship_class] + 1 --Update the count
       end
-      radius = radii[ship_class] --Assign the radius, defined above.
+      radius = radii[ship_class] * mod --Assign the radius, defined above.
       leader:msg(p, "form_pos", {angle, radius})
    end
 end
@@ -84,11 +90,12 @@ formations[keys[#keys]] = function (leader)
    -- The vee formation forms a v, with the fleader at the apex, and the arms extending in front.
    local pilots = leader:followers()
    local angle = math.pi/4 -- Arms start at a 45 degree angle.
-   local radius = 100 -- First ship distance.
+   local base = 100*stealth_mod( leader )
+   local radius = base -- First ship distance.
    for i, p in ipairs(pilots) do
       leader:msg(p, "form_pos", {angle, radius})
       angle = angle * -1 -- Flip the arms between -45 and 45 degrees.
-      radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
+      radius = base * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
 
@@ -99,12 +106,13 @@ formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    local flip = -1
    local angle
-   local radius = 100 -- First ship distance.
+   local base = 100*stealth_mod( leader )
+   local radius = base -- First ship distance.
    for i, p in ipairs(pilots) do
       angle = (flip * math.pi/4) + math.pi -- Flip the arms between 135 and 225 degrees.
       leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
-      radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
+      radius = base * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
 
@@ -113,14 +121,15 @@ names[#names + 1] = p_("formation", "Echelon Left")
 formations[keys[#keys]] = function (leader)
    --This formation forms a "/", with the fleader in the middle.
    local pilots = leader:followers()
-   local radius = 100
+   local base = 100*stealth_mod( leader )
+   local radius = base
    local flip = -1
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(135 + (90 * flip))  --Flip between 45 degrees and 225 degrees.
       leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
-      radius = 100 * (math.ceil((i+1) / 2)) -- Increase the radius every 2 positions
+      radius = base * (math.ceil((i+1) / 2)) -- Increase the radius every 2 positions
    end
 end
 
@@ -129,14 +138,15 @@ names[#names + 1] = p_("formation", "Echelon Right")
 formations[keys[#keys]] = function (leader)
    --This formation forms a "\", with the fleader in the middle.
    local pilots = leader:followers()
-   local radius = 100
+   local base = 100*stealth_mod( leader )
+   local radius = base
    local flip = 1
    local angle
    for i, p in ipairs(pilots) do
       angle = math.rad(225 + (90 * flip)) --Flip between 315 degrees, and 135 degrees
       leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
-      radius = 100 * (math.ceil((i+1) / 2))
+      radius = base * (math.ceil((i+1) / 2))
    end
 end
 
@@ -145,14 +155,15 @@ names[#names + 1] = p_("formation", "Column")
 formations[keys[#keys]] = function (leader)
    --This formation is a simple "|", with fleader in the middle.
    local pilots = leader:followers()
-   local radius = 100
+   local base = 100*stealth_mod( leader )
+   local radius = base
    local flip = -1
    local angle
    for i, p in ipairs(pilots) do
       angle = math.pi * (1+flip)/2  --flip between 0 degrees and 180 degrees
       leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
-      radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
+      radius = base * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
 end
 
@@ -161,14 +172,15 @@ names[#names + 1] = p_("formation", "Wall")
 formations[keys[#keys]] = function (leader)
    --This formation is a "-", with the fleader in the middle.
    local pilots = leader:followers()
-   local radius = 100
+   local base = 100*stealth_mod( leader )
+   local radius = base
    local flip = -1
    local angle
    for i, p in ipairs(pilots) do
       angle = math.pi + (math.pi/2 * flip) --flip between 90 degrees and 270 degrees
       leader:msg(p, "form_pos", {angle, radius})
       flip = flip * -1
-      radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
+      radius = base * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
 end
 
@@ -176,7 +188,7 @@ keys[#keys + 1] = "fishbone"
 names[#names + 1] = p_("formation", "Fishbone")
 formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
-   local radius = 500
+   local radius = 500*stealth_mod( leader )
    local flip = -1
    local orig_radius = radius
    local angle
@@ -199,7 +211,7 @@ keys[#keys + 1] = "chevron"
 names[#names + 1] = p_("formation", "Chevron")
 formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
-   local radius = 500
+   local radius = 500*stealth_mod( leader )
    local flip = -1
    local orig_radius = radius
    local angle
@@ -224,7 +236,7 @@ formations[keys[#keys]] = function (leader)
    -- Default to circle.
    local pilots = leader:followers()
    local angle = 2*math.pi / #pilots -- The angle between each ship, in radians.
-   local radius = 80 + #pilots * 25 -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
+   local radius = (80 + #pilots * 25) * stealth_mod( leader ) -- Pulling these numbers out of my ass. The point being that more ships mean a bigger circle.
    for i, p in ipairs(pilots) do
       leader:msg(p, "form_pos", {angle * i, radius, "absolute"})
    end
