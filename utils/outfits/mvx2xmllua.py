@@ -103,22 +103,28 @@ def toxmllua(o):
 if __name__ == '__main__':
    import argparse
 
-   def main():
-      o=outfit(stdin)
+   def main(argin,argout):
+      o=outfit(argin)
       if o is None:
          return 1
       else:
          nam=nam2fil(o.name())
 
          toxmllua(o)
-         print >>stderr,nam
-         o.write(stdout)
+         print >>stderr,(nam if argout=="-" else argout)
+         o.write(argout)
          return 0
 
-   parser = argparse.ArgumentParser(
-   description="""Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
-         The name the output should have is written on <stderr>.
-         If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
-   )
-   args=parser.parse_args()
-   exit(main())
+   #parser = argparse.ArgumentParser(
+   #   description=
+   """Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
+            The name the output should have is written on <stderr>.
+            If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
+   #)
+   #args=parser.parse_args()
+   argin, argout = "-","-"
+   if len(argv)>1:
+      argin = argv[1]
+      if len(argv)>2:
+         argout = argv[2]
+   exit(main(argin,argout))

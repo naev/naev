@@ -6,7 +6,7 @@
 
 import re
 from outfit import outfit, ET
-from sys import argv, exit
+from sys import argv, stderr
 
 
 # everything ont in this list goes to specific intead of general
@@ -20,7 +20,7 @@ def parse_lua_multicore(si):
    sep = ' ,'
    num = ' -? [0-9]+(\.[0-9]+)?'
 
-   expr = ' require \( ("|\')outfits.lib.multicore(\\1) \) \. init \{ '
+   expr = ' require \(? ("|\')outfits.lib.multicore(\\1) \)? \. init \{ '
    block = ' \\{ ((' + name + sep + num + sep + num + ') (' + sep + ')?'+ ' ) \\}'
    expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
    expr = expr.replace(' ', '\s*')
@@ -34,8 +34,9 @@ def parse_lua_multicore(si):
    L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
-def do_it():
-   o = outfit(argv[1])
+def do_it(argin,argout):
+   o = outfit(argin)
+   stderr.write(o.name()+'\n')
    d={'general':[], 'specific':[]}
    fields, li = parse_lua_multicore(o.to_dict()['lua_inline'])
 
@@ -60,17 +61,12 @@ def do_it():
             spe.remove(e)
          else:
             e.text = li.strip()
-   o.write("-")
+   o.write(argout)
 
 if __name__=="__main__":
-   res = 0
-   do_it()
-
-   """
-   try:
-      do_it()
-   except:
-      res=1
-   """
-
-   exit(res)
+   argin, argout = "-", "-"
+   if len(argv)>1:
+      argin = argv[1]
+      if len(argv)>2:
+         argout = argv[2]
+   do_it(argin,argout)

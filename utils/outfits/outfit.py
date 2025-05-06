@@ -70,9 +70,13 @@ def unstackvals(tag,text1,text2,eml1,eml2):
 class _outfit():
    def __init__(self,fil):
       if type(fil)==type(""):
-         fp=open(fil,"rt")
+         if fil=="-":
+            fp=stdin
+         else:
+            fp=open(fil,"rt")
          self.T=ET.parse(fp)
-         fp.close()
+         if fp!=stdin:
+            fp.close()
       else:
          self.T=ET.parse(fil)
       self.short=False
@@ -241,10 +245,11 @@ class _outfit():
       return d
 
 def outfit(fil):
-   if type(fil)!=type("") or fil.endswith(".xml") or fil.endswith('.mvx'):
+   if type(fil)!=type("") or fil.endswith(".xml") or fil.endswith('.mvx') or fil=="-":
       o=_outfit(fil)
       if o.r.tag=='outfit':
          return o
+   raise Exception('Invalid outfit "'+str(fil)+'"')
 
 if __name__=="__main__":
    from sys import argv
@@ -252,6 +257,6 @@ if __name__=="__main__":
       stderr.write("Usage: "+argv[0].split('/')[-1]+'\n')
       stderr.write("  Reads a xml/mvx in input, outputs its input taken alone.\n")
    else:
-      O=outfit(stdin)
+      O=outfit("-")
       O.autostack()
       O.write()
