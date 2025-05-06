@@ -3,12 +3,15 @@
  <pos x="-16800.000000" y="5390.000000"/>
  <GFX>
   <space>K00.webp</space>
-  <exterior>mining3.webp</exterior>
+  <exterior>uninhabited-rocky-yellow-04.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <hide>0.800000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Covered in perpetually undulating sand, made dance by endless powerful storms, Merisi I is not a very comfortable stay. There seem to be traces of attempted structures, or maybe crash-wrecked ships within surface, however, it is unlikely that they will every be recoverable. You can not dally too long lest your ship join the others.</description>
  </general>
 </spob>

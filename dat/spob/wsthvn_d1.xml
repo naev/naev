@@ -6,9 +6,12 @@
   <exterior>uninhabited-rocky-airless-00.webp</exterior>
  </GFX>
  <general>
-  <class>D</class>
+  <class>F</class>
   <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Although scanners pick up traces of rare minerals, an impressive layer of unstable regolith and constant micro-meteor impacts, combined with a less than impressive location, have left the source of the minerals intact. Although there have been several proposals regarding the potential mining and terraforming potential, they seem to be more of a pipe dream than something that can be made into reality.</description>
  </general>
 </spob>
