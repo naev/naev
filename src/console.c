@@ -119,6 +119,7 @@ static char *fontcol_toTermEscapeString(const char*s){
       [_CID('y')] = "\e[1;33m"  // yellow
    };
    char*buf;
+   const char*es=seq[_CID('0')];
    int i, wi=0, count=0;
 
    for(i=0; s[i]; i++)
@@ -126,19 +127,17 @@ static char *fontcol_toTermEscapeString(const char*s){
          count++;
 
    buf=calloc(i+count*7+4+1,sizeof(char));
-   for(i=0; s[i]; i++){
-      if(s[i] == FONT_COLOUR_CODE){
-         const char*es=seq[(s[i+1]>='0' && s[i+1]<='z')? _CID(s[i+1]):0];
 
-         if(es){
-            wi+=sprintf(buf+wi,"%s",es);
-            i++;
-            continue;
-         }
-      }
-      buf[wi++]=s[i];
-   }
-   if(wi<i)
+   for(i=0; s[i]; i++)
+      if(s[i] == FONT_COLOUR_CODE &&
+         ((es=seq[(s[i+1]>='0' && s[i+1]<='z')? _CID(s[i+1]):0]))
+      ){
+         wi+=sprintf(buf+wi,"%s",es);
+         i++;
+      }else
+         buf[wi++]=s[i];
+
+   if(es!=seq[_CID('0')])
       sprintf(buf+wi,"%s",seq[_CID('0')]);
 
    return buf;
