@@ -10,12 +10,13 @@
 #include "nlua.h"
 
 constants CTS = {
-   .PHYSICS_SPEED_DAMP  = 3., /* Default before 0.13.0. */
-   .STEALTH_MIN_DIST    = 1000.,
-   .EW_JUMP_BONUS_RANGE = 2500.,
-   .EW_ASTEROID_DIST    = 7.5e3,
-   .EW_JUMPDETECT_DIST  = 7.5e3,
-   .EW_SPOBDETECT_DIST  = 20e3,
+   .PHYSICS_SPEED_DAMP    = 3., /* Default before 0.13.0. */
+   .STEALTH_MIN_DIST      = 1000.,
+   .EW_JUMP_BONUS_RANGE   = 2500.,
+   .EW_ASTEROID_DIST      = 7.5e3,
+   .EW_JUMPDETECT_DIST    = 7.5e3,
+   .EW_SPOBDETECT_DIST    = 20e3,
+   .PILOT_DISABLED_ARMOUR = 0.1, /* 0 before 0.13.0 */
 };
 
 int constants_init( void )
@@ -54,6 +55,8 @@ int constants_init( void )
    CT_DBL( EW_ASTEROID_DIST );
    CT_DBL( EW_JUMPDETECT_DIST );
    CT_DBL( EW_SPOBDETECT_DIST );
+
+   CT_DBL( PILOT_DISABLED_ARMOUR );
 
 #undef CT_DBL
 

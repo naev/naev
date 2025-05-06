@@ -16,6 +16,7 @@
          * More consistency across lines
       * Gauntlet intrinsics are stronger and now mutually exclusive
       * Intrinsics from a certain trader are now stronger
+      * Ships now disabled below a certain armour threshold regardless of stress
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
