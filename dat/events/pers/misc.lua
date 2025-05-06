@@ -38,6 +38,7 @@ return function ()
 
             local mem = plt:memory()
             mem.vulnerability = math.huge -- Less likely to be attacked
+            mem.natural = true -- Can be captured and such
 
             local amount = plt:stats().fuel_consumption
             local reward = rnd.rnd(15e3, 25e3) * amount
