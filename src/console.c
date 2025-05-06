@@ -105,6 +105,45 @@ static char *cli_escapeString( int *len_out, const char *s, int len )
    return buf;
 }
 
+#define _CID(c)   (((int)c)-(int)'0'+1)
+static char *fontcol_toTermEscapeString(const char*s){
+   static const char*const seq[_CID('z')+1] = {
+      [_CID('0')] = "\e[0m",    // default
+      [_CID('b')] = "\e[0;34m", // blue
+      [_CID('g')] = "\e[0;32m", // green
+      [_CID('n')] = "\e[1;30m", // grey
+      [_CID('o')] = "\e[0;33m", // orange -> brown
+      [_CID('p')] = "\e[0;35m", // purple or pink? -> magenta
+      [_CID('r')] = "\e[0;31m", // red
+      [_CID('w')] = "\e[0;37m", // white
+      [_CID('y')] = "\e[1;33m"  // yellow
+   };
+   char*buf;
+   const char*es=seq[_CID('0')];
+   int i, wi=0, count=0;
+
+   for(i=0; s[i]; i++)
+      if(s[i] == FONT_COLOUR_CODE)
+         count++;
+
+   buf=calloc(i+count*7+4+1,sizeof(char));
+
+   for(i=0; s[i]; i++)
+      if(s[i] == FONT_COLOUR_CODE &&
+         ((es=seq[(s[i+1]>='0' && s[i+1]<='z')? _CID(s[i+1]):0]))
+      ){
+         wi+=sprintf(buf+wi,"%s",es);
+         i++;
+      }else
+         buf[wi++]=s[i];
+
+   if(es!=seq[_CID('0')])
+      sprintf(buf+wi,"%s",seq[_CID('0')]);
+
+   return buf;
+}
+#undef _CID
+
 /**
  * @brief Prints a string.
  */
@@ -156,8 +195,12 @@ static int cli_printCore( lua_State *L, int cli_only, int escape )
    }
 
    const char *s = lua_tostring( L, -1 );
-   if ( !cli_only )
-      LOG( "%s", s );
+
+   if ( !cli_only ){
+      char*tolog=fontcol_toTermEscapeString(s);
+      LOG( "%s", tolog );
+      free(tolog);
+   }
    cli_printCoreString( s, escape );
 
    lua_pop( L, 2 ); /* */
@@ -181,7 +224,7 @@ int cli_warn( lua_State *L )
  */
 int cli_print( lua_State *L )
 {
-   return cli_printCore( L, 0, 1 );
+   return cli_printCore( L, 0, 0 );
 }
 
 /**
@@ -191,7 +234,7 @@ int cli_print( lua_State *L )
  */
 int cli_printRaw( lua_State *L )
 {
-   return cli_printCore( L, 1, 0 );
+   return cli_printCore( L, 0, 0 );
 }
 
 /**
