@@ -71,7 +71,6 @@ static char*_noesc(const char*s,int*ne){
    return buf;
 }
 
-static char
 /**
  * @brief va_list version of logprintf and backend.
  */
