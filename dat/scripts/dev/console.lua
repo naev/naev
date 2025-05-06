@@ -22,6 +22,10 @@ function inspect( t )
    t = t or player.pilot():target() or player.pilot()
 
    --print(fmt.f("Pilot: {pilot}", {pilot = t}))
+   local leader = t:leader()
+   if leader then
+      print(fmt.f("Leader: {leader}", {leader = leader}))
+   end
    print(fmt.f("AI: {ainame}", {ainame = t:ainame()}))
    local taskname, subtask = t:taskname()
    print(fmt.f("Task: {taskname}", {taskname = taskname or "N/A"}))
