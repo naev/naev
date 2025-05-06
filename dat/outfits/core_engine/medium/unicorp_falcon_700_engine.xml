@@ -13,9 +13,9 @@
   <lua_inline>
 require("outfits.lib.multicore").init{
    { "mass", 16, 4},
-   { "accel", 131, 33},
-   { "turn", 109, 49},
-   { "speed", 214, 124},
+   { "accel", 130, 32},
+   { "turn", 108, 48},
+   { "speed", 212, 122},
    { "fuel", 1000, 200},
    { "energy_regen_malus", 8, 12},
    { "engine_limit", 700, 700},

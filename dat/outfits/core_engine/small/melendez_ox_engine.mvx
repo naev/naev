@@ -11,12 +11,12 @@
   <mass>10/15</mass>
  </general>
  <specific type="modification">
-  <accel>207/84</accel>
-  <turn>174/107</turn>
-  <speed>343/255</speed>
+  <accel>159/66</accel>
+  <turn>162/100</turn>
+  <speed>355/260</speed>
   <fuel>500/100</fuel>
   <energy_regen_malus>3/4</energy_regen_malus>
-  <engine_limit>200/230</engine_limit>
+  <engine_limit>200/250</engine_limit>
   <land_delay>-25/0</land_delay>
   <time_mod>10/0</time_mod>
  </specific>

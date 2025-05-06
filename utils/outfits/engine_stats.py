@@ -66,7 +66,7 @@ if '-h' in argv or '--help' in argv:
 else:
    L=[(outfit(a),fl) for a in argv[1:] for fl in [False,True]]
    L=[(o,fl,o.autostack(fl)) for (o,fl) in L if o is not None]
-   L=[(o.to_dict(),o.shortname()+(' x2' if fl else '')) for (o,fl,_) in L]
+   L=[(o.to_dict(),o.shortname()) for (o,fl,_) in L]
    L.sort(key=key,reverse=True)
    C=['speed','max speed','accel','fullsp (s)','fullsp (km)','turn','turn radius','1/2 turn (s)']
    N=max([0]+[len(n) for (_,n) in L])

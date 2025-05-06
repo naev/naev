@@ -5,7 +5,7 @@
   <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>medium</size>
   <priority>3</priority>
-  <price>55000</price>
+  <price>550000</price>
   <description>The Patagium is a destroyer engine developed by Krain Industries to be used in the Starbridge. While its performance exceeds other destroyer engines in terms of maximum speed and manouverability, the engine is not adequate for most other destroyers due to their higher mass.</description>
   <gfx_store>krain_patagium_engine.webp</gfx_store>
  </general>
