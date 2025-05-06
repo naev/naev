@@ -2511,16 +2511,21 @@ void player_autohail( void )
       const Pilot *p = pilot_stack[i];
 
       /* Must be hailing. */
-      if ( pilot_isFlag( p, PILOT_HAILING ) ) {
-         /* Try to hail. */
-         pilot_setTarget( player.p, p->id );
-         gui_setTarget();
-         player_hail();
+      if ( !pilot_isFlag( p, PILOT_HAILING ) )
+         continue;
 
-         /* Clear hails if none found. */
-         player_checkHail();
-         return;
-      }
+      /* Must be in range. */
+      if ( !pilot_inRangePilot( player.p, p, NULL ) )
+         continue;
+
+      /* Try to hail. */
+      pilot_setTarget( player.p, p->id );
+      gui_setTarget();
+      player_hail();
+
+      /* Clear hails if none found. */
+      player_checkHail();
+      return;
    }
 
    player_message( "#r%s", _( "You haven't been hailed by any pilots." ) );
