@@ -77,6 +77,8 @@
       * dv_antiflf02: Make the vigilances less pathetic
       * Gauntlet properly resets outfit cooldowns
       * Saves try to save outfits by slot name to be more robust to changes in the future
+      * Player can't stealth while disabled
+      * Getting disabled turns off stealth
 
 * 0.12.5 (unreleased)
    * Fixed bug causing lower diversity in ship spawning

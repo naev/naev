@@ -4867,7 +4867,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
  */
 void player_stealth( void )
 {
-   if ( player.p == NULL )
+   if ( ( player.p == NULL ) || pilot_isFlag( player.p, PILOT_DISABLED ) )
       return;
 
    /* Handle destealth first. */
