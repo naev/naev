@@ -1,12 +1,12 @@
 <outfit name="Beat Up Large Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
-  <mass>100/30</mass>
   <price>0</price>
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
   <gfx_store>engine11.webp</gfx_store>
+  <mass>100/30</mass>
  </general>
  <specific type="modification">
   <energy_regen_malus>28</energy_regen_malus>

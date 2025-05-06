@@ -225,6 +225,8 @@ class _outfit():
          if not k.tag in d:
             d[k.tag]=[]
          what=k.text
+         if what is None:
+            what=''
          if len(what.split('/'))<=2:
             try:
                what=tuple(map(float,what.split('/')))

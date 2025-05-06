@@ -2,13 +2,13 @@
  <general>
   <shortname>T. Typhoon Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>large</size>
-  <mass>60/20</mass>
   <price>1800000</price>
   <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors.</description>
   <gfx_store>engine2.webp</gfx_store>
   <priority>3</priority>
+  <mass>60/20</mass>
  </general>
  <specific type="modification">
   <energy_regen_malus>32/24</energy_regen_malus>

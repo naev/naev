@@ -6,7 +6,7 @@
 
 import re
 from outfit import outfit, ET
-from sys import argv, exit
+from sys import argv, exit, stderr
 
 
 # everything ont in this list goes to specific intead of general
@@ -18,13 +18,17 @@ def parse_lua_multicore(si):
 
    name = ' ("|\')([^"\']*)\\1'
    sep = ' ,'
-   num = ' [1-9][0-9]*(\.[0-9]+)?'
+   num = ' -? [0-9]+(\.[0-9]+)?'
 
    expr = ' require \( ("|\')outfits.lib.multicore(\\1) \) \. init \{ '
    block = ' \\{ ((' + name + sep + num + sep + num + ') (' + sep + ')?'+ ' ) \\}'
-   expr = expr + ' ((' + block + ' ) (,' + block + ' )*,? ) \\} '
+   expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
    expr = expr.replace(' ', '\s*')
    match = re.search(expr, s)
+   if match is None:
+      return [],si
+
+   stderr.write(str(match)+'\n')
 
    block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+')'+sep+' (?P<sec>'+num+') (' + sep + ' )? \\}'
    block = block.replace(' ','\s*')
@@ -62,9 +66,13 @@ def do_it():
 
 if __name__=="__main__":
    res = 0
+   do_it()
+
+   """
    try:
       do_it()
    except:
       res=1
+   """
 
    exit(res)

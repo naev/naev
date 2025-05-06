@@ -2,13 +2,13 @@
  <general>
   <shortname>U. Falcon 700 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>medium</size>
-  <mass>16/4</mass>
   <price>37500</price>
   <description>The Falcon 700 is a low-budget engine for use on corvettes and similarly-sized vessels. Its middling performance relegates it primarily to use on civilians vessels, as few captains are comfortable relying on bargain-priced propulsion systems when engaged in battle.</description>
   <gfx_store>unicorp_engine_m.webp</gfx_store>
   <priority>3</priority>
+  <mass>16/4</mass>
  </general>
  <specific type="modification">
   <accel>131/33</accel>

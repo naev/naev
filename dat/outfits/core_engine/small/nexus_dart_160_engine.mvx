@@ -2,13 +2,13 @@
  <general>
   <shortname>N. Dart 160 Engine</shortname>
   <typename>Core Systems (Engine)</typename>
-  <slot prop="engines" prop_extra="engines_secondary">structure</slot>
+  <slot prop_extra="engines_secondary" prop="engines">structure</slot>
   <size>small</size>
-  <mass>10/14</mass>
   <price>37500</price>
   <description>The Dart 160 is a well-rounded engine for light vessels. While it doesn't excel in speed, it offers good handling and power efficiency for a reasonable price. A very popular engine among civilian and military users alike.</description>
   <gfx_store>nexus_engine_s.webp</gfx_store>
   <priority>3</priority>
+  <mass>10/14</mass>
  </general>
  <specific type="modification">
   <energy_regen_malus>3/7</energy_regen_malus>
