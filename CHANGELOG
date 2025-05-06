@@ -23,6 +23,7 @@
          * Disables afterburner when getting ready to land or jump
          * Shooting *non-point defense* weapons resets autonav speed up
       * Combat and ambient music tries to play from where it was last stopped when applicable
+      * Gave small untargetable time to player when using hypergates and wormholes
    * Content
       * 3 new missions
       * 6 new ship variants
