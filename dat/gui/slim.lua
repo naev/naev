@@ -429,7 +429,7 @@ function update_nav()
          if pntflags.inhabited then
             table.insert( nav_spob.services, N_("Spaceport") )
          else
-            table.insert( nav_spob.services, N_("Landable") )
+            table.insert( nav_spob.services, N_("Land") )
          end
          for k,v in ipairs(services) do
             table.insert( nav_spob.services, pntflags[v] )
