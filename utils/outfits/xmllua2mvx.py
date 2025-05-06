@@ -6,11 +6,11 @@
 
 import re
 from outfit import outfit, ET
-from sys import argv, exit, stderr
+from sys import argv, exit
 
 
 # everything ont in this list goes to specific intead of general
-general = ['mass']
+general = ['mass','cpu']
 
 
 def parse_lua_multicore(si):
@@ -27,8 +27,6 @@ def parse_lua_multicore(si):
    match = re.search(expr, s)
    if match is None:
       return [],si
-
-   stderr.write(str(match)+'\n')
 
    block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+')'+sep+' (?P<sec>'+num+') (' + sep + ' )? \\}'
    block = block.replace(' ','\s*')

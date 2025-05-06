@@ -48,7 +48,7 @@ def _process_group(r,field):
 
    return needs_lua,acc,torem,is_engine
 
-def _mklua(L,dual_eng=True):
+def _mklua(L):
    mods=''
    ind=3*' '
 
@@ -65,42 +65,52 @@ def _mklua(L,dual_eng=True):
 
    return output+mods+'}\n'
 
-def toxmllua(o,update_lua,fake_dual):
+def toxmllua(o):
    T,R=o.T,o.r
 
    f1,acc1,tr1,e1=_process_group(R,'./general')
    f2,acc2,tr2,e2=_process_group(R,'./specific')
 
-   if (not f1) and (not f2) and (not update_lua):
+   found=False
+   for e in R.findall('./specific'):
+      for elt in e:
+         if elt.tag=="lua_inline":
+            found=True
+         break
+      break
+
+   if (not f1) and (not f2) and not found:
       tr1=tr2=[]
       acc1=acc2=[]
 
-   if f1 or f2 or update_lua or fake_dual or e1 or e2:
+   if f1 or f2 or e1 or e2:
       for (r,e) in tr1+tr2:
          r.remove(e)
 
+      el=None
       for e in R.findall('./specific'):
-         el=ET.Element("lua_inline")
-         el.text=_mklua(acc1+acc2,not fake_dual and (e1 or e2))
-         if update_lua:
-            el.text+='require "outfits.lib.'+update_lua+'"\n'
-         e.append(el)
+         for elt in e:
+            if elt.tag=="lua_inline":
+               el=elt
+               break
+         if el is None:
+            el=ET.Element("lua_inline")
+            el.text=''
+            e.append(el)
+         el.text=_mklua(acc1+acc2) + el.text
          break
 
 if __name__ == '__main__':
    import argparse
 
-   def main(update_lua,fake_dual):
+   def main():
       o=outfit(stdin)
       if o is None:
          return 1
       else:
-         name=o.name().rsplit(' (deprecated)',1)
-         if len(name)==2 and name[1].strip()=='':
-            o.set_name(name[0])
          nam=nam2fil(o.name())
 
-         toxmllua(o,update_lua,fake_dual)
+         toxmllua(o)
          print >>stderr,nam
          o.write(stdout)
          return 0
@@ -110,6 +120,5 @@ if __name__ == '__main__':
          The name the output should have is written on <stderr>.
          If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
    )
-   parser.add_argument('lua_module', nargs='?', help='The name of a lua module returning update function.')
    args=parser.parse_args()
-   exit(main(args.lua_module,args.lua_module=='alone'))
+   exit(main())

@@ -2,13 +2,13 @@
  <general>
   <shortname>N. Phantasm Weave</shortname>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>large</size>
-  <mass>450/550</mass>
   <price>1300000</price>
   <description>Though vessels weighing thousands of tonnes can seldom be called stealthy, Schafer &amp; Kane's medium-heavy stealth plating does what it can to reduce sensor signatures, without sacrificing protection.</description>
   <gfx_store>stealth_hull_h.webp</gfx_store>
   <priority>3</priority>
+  <mass>450/550</mass>
  </general>
  <specific type="modification">
   <cargo>50/20</cargo>

@@ -1,13 +1,13 @@
 <outfit name="S&amp;K War Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
-  <slot prop="hull" prop_extra="hull_secondary">structure</slot>
+  <slot prop_extra="hull_secondary" prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>600/650</mass>
   <price>1450000</price>
   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
   <gfx_store>combat_hull_l.webp</gfx_store>
+  <mass>600/650</mass>
  </general>
  <specific type="modification">
   <cargo>55/25</cargo>

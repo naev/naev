@@ -1,13 +1,13 @@
-<outfit name="Previous Generation Small Systems (deprecated)">
+<outfit name="Previous Generation Small Systems">
  <general>
   <shortname>Prev. Gen. Small Systems</shortname>
   <typename>Core Systems (System)</typename>
-  <slot prop="systems" prop_extra="systems_secondary">utility</slot>
+  <slot prop_extra="systems_secondary" prop="systems">utility</slot>
   <size>small</size>
-  <mass>18/60</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>apu.webp</gfx_store>
+  <mass>18/60</mass>
  </general>
  <specific type="modification">
   <cpu_max>10/20</cpu_max>
