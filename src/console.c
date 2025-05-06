@@ -125,7 +125,7 @@ static char *fontcol_toTermEscapeString(const char*s){
       if(s[i] == FONT_COLOUR_CODE)
          count++;
 
-   buf=calloc(i+count*7+1,sizeof(char));
+   buf=calloc(i+count*7+4+1,sizeof(char));
    for(i=0; s[i]; i++){
       if(s[i] == FONT_COLOUR_CODE){
          const char*es=seq[(s[i+1]>='0' && s[i+1]<='z')? _CID(s[i+1]):0];
@@ -138,6 +138,9 @@ static char *fontcol_toTermEscapeString(const char*s){
       }
       buf[wi++]=s[i];
    }
+   if(wi<i)
+      sprintf(buf+wi,"%s",seq[_CID('0')]);
+
    return buf;
 }
 #undef _CID
