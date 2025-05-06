@@ -3,6 +3,8 @@ local fmt = require "format"
 
 local fct = faction.get("Independent")
 
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+
 local function spawn_needs_refuel ()
    local scur = system.cur()
    if scur:tags().restricted then
@@ -34,7 +36,8 @@ return function ()
    if spawn_needs_refuel() then
       table.insert( pers, {
          spawn = function ()
-            local plt = pilot.add("Koala", "Independent", nil, nil, { ai="pers" } )
+            local ship = choose_one{ "Llama", "Schroedinger", "Koala", "Mule" }
+            local plt = pilot.add(ship, "Independent", nil, nil, { ai="pers" } )
 
             local mem = plt:memory()
             mem.vulnerability = math.huge -- Less likely to be attacked
