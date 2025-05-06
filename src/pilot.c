@@ -1624,7 +1624,11 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
       if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
          pilot_calcStats( p );
 
-      pilot_setFlag( p, PILOT_DISABLED ); /* set as disabled */
+      /* Can't stealth when disabled. */
+      pilot_destealth( p );
+
+      /* Mark as disabled. */
+      pilot_setFlag( p, PILOT_DISABLED );
       if ( pilot_isPlayer( p ) )
          player_message( "#r%s", _( "You have been disabled!" ) );
 
