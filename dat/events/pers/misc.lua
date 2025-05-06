@@ -44,7 +44,7 @@ return function ()
             mem.natural = true -- Can be captured and such
 
             local amount = plt:stats().fuel_consumption
-            local reward = rnd.rnd(15e3, 25e3) * amount
+            local reward = rnd.rnd(15e3, 25e3) * amount / 100
 
             local function needs_refuel( p )
                return (not player.pilot():areEnemies(p) and p:fuel() < amount)
@@ -56,27 +56,27 @@ return function ()
             mem.ad = _("Looking for some fuel. Can anyone help?")
             mem.comm_greet = function ( p )
                if needs_refuel( p ) then
-                  fmt.f(_([["I'm in somewhat of a pinch. Could you spare {amount} u of fuel? I'll pay {reward}."]]), {reward=fmt.credits(reward), amount=fmt.number(amount)})
+                  return fmt.f(_([["I'm in somewhat of a pinch. Could you spare {amount} u of fuel? I'll pay {reward}."]]), {reward=fmt.credits(reward), amount=fmt.number(amount)})
                end
             end
             ccomm.customComm( plt, function ( p )
                if needs_refuel( p ) then
                   return _("Offer to Refuel Them")
                end
-            end, function ( vn, p )
-            vn.func( function ()
-               local nc = naev.cache()
-               nc.__refuel = {
-                  p = plt,
-                  reward = reward,
-                  amount = amount,
-               }
-               p:memory().ad = nil -- Stop spamming
-               naev.eventStart("Refuel")
-            end )
-            vn.done()
-         end, "pers" )
-
+               return nil
+            end, function ( vn, _pvn, p )
+               vn.func( function ()
+                  local nc = naev.cache()
+                  nc.__refuel = {
+                     p = p,
+                     reward = reward,
+                     amount = amount,
+                  }
+                  p:memory().ad = nil -- Stop spamming
+                  naev.eventStart("Refuel")
+               end )
+               vn.done()
+            end, "pers" )
          end
       } )
    end

@@ -163,17 +163,19 @@ function comm( plt )
    if mem.comm_greet then
       if type(mem.comm_greet)=="function" then
          -- Override VN stuff since we want to pass pilot as parameter
-         msg = mem.comm_greet( p )
+         msg = mem.comm_greet( plt )
       else
          msg = mem.comm_greet
       end
    end
-   if not msg then
+   if msg ~= nil then
+      p( msg )
+   else
       vn.na(fmt.f(_("You open a communication channel with {plt}."), {plt=plt}))
    end
    vn.label("menu")
    vn.menu( function ()
-      local hostile = plt:hostile()
+      local hostile = player.pilot():areEnemies(plt)
       local opts = {
          {_("Close"), "close"},
       }
@@ -223,12 +225,14 @@ function comm( plt )
       end
       if mem.comm_custom then
          for k,v in ipairs(mem.comm_custom) do
-            local menumsg = v.menu
-            if type(menumsg)=="function" then
-               menumsg = menumsg()
+            local menumsg
+            if type(v.menu)=="function" then
+               menumsg = v.menu( plt )
+            else
+               menumsg = v.menu
             end
-            if menumsg then
-               table.insert( opts, 1, {msg, "custom_"..tostring(k)} )
+            if menumsg ~= nil then
+               table.insert( opts, 1, {menumsg, "custom_"..tostring(k)} )
             end
          end
       end
@@ -241,7 +245,7 @@ function comm( plt )
    if mem.comm_custom then
       for k,v in ipairs(mem.comm_custom) do
          vn.label("custom_"..tostring(k))
-         v.setup( vn, p )
+         v.setup( vn, p, plt )
          vn.jump("menu")
       end
    end
