@@ -196,7 +196,7 @@ static int cli_printCore( lua_State *L, int cli_only, int escape )
 
    if ( !cli_only ){
       char*tolog=fontcol_toTermEscapeString(s);
-      LOG( "%s", s );
+      LOG( "%s", tolog );
       free(tolog);
    }
    cli_printCoreString( s, escape );
