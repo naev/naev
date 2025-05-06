@@ -172,6 +172,11 @@ translate directly with a web interface to your chosen language from Naev's
 [project page](https://hosted.weblate.org/projects/naev/naev/). New languages have to be added
 manually, please open an issue if you want to translate Naev to a new language.
 
+Some translation notes:
+* Do not translate formatting strings. Example: `Hello {player}!` would be translated to Spanish as `Hola {player}!`
+* Do not translate the link part in markdown links. Example: `[mechanics](mechanics)` should be translated as `[TRANSLATION](mechanics)`
+* Use phonetical translations for names of places. Example: the space object `Dust` should be translated phonetically and not semantically. Exceptions to this rule are compound names such as stations, for example `Violin Monastery` should have `Violin` translated phonetically and `Monastery` translated semantically.
+
 ### TRANSLATION FOR DEVELOPERS
 
 Naev's translation is handled with gettext. (It's custom, but C and Lua code can use the conventional `_()` for gettext and

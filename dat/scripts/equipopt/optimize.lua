@@ -111,10 +111,13 @@ local goodness_special = {
 --]]
 local special_ships = {}
 special_ships["Drone"] = function( p )
+   local sys = outfit.get( "Milspec Orion 2301 Core System" )
+   p:outfitAddSlot( sys, "systems", true )
+   local eng = outfit.get( "Nexus Dart 160 Engine" )
+   p:outfitAddSlot( eng, "engines", true )
+   local hul = outfit.get( choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"} )
+   p:outfitAddSlot( hul, "hull", true )
    for k,o in ipairs{
-      "Milspec Orion 2301 Core System",
-      "Nexus Dart 160 Engine",
-      choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"},
       "Neutron Disruptor",
       "Neutron Disruptor",
       "Neutron Disruptor",
@@ -123,11 +126,17 @@ special_ships["Drone"] = function( p )
    end
 end
 special_ships["Heavy Drone"] = function( p )
+   local sys = outfit.get( "Milspec Thalos 2202 Core System" )
+   p:outfitAddSlot( sys, "systems", true )
+   p:outfitAddSlot( sys, "systems_secondary", true )
+   local eng = outfit.get( "Nexus Dart 160 Engine" )
+   p:outfitAddSlot( eng, "engines", true )
+   p:outfitAddSlot( eng, "engines_secondary", true )
+   local hul = outfit.get( choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"} )
+   p:outfitAddSlot( hul, "hull", true )
+   hul = outfit.get( "S&K Skirmish Plating" )
+   p:outfitAddSlot( hul, "hull_secondary", true )
    for k,o in ipairs{
-      "Milspec Thalos 3602 Core System",
-      "Nexus Dart 360 Engine",
-      choose_one{"Nexus Shadow Weave", "S&K Skirmish Plating"},
-      "S&K Skirmish Plating",
       "Shatterer Launcher",
       "Shatterer Launcher",
       "Heavy Neutron Disruptor",
@@ -301,6 +310,9 @@ function optimize.optimize( p, cores, outfit_list, params )
          end
       end
    end
+
+   -- Store base outfits, including new cores and such
+   local outfits_base = p:outfits()
 
    -- Global ship stuff
    local ss = p:shipstat( nil, true ) -- Should include cores!!
@@ -775,8 +787,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- energy, we'll try again with more relaxed energy constraints
       local stn = p:stats()
       if not z or (stn.energy_regen < energygoal and try < 5 and (st.energy_regen - emod*energygoal) > min_energy) then
-         -- TODO let this handle noremove
-         p:outfitRm( "all" )
+         p:outfitsEquip( outfits_base ) -- Should restore initial outfits
          emod = emod * 1.5
          print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
          lp:set_row( 2, "energy_regen", math.max( min_energy, st.energy_regen - emod*energygoal ))

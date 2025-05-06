@@ -58,9 +58,10 @@ function enter ()
       return a.w > b.w
    end )
 
-   -- Value gives a 50% chance of meeting one every 10 minutes of game time
+   -- Value chosen so there is 50% chance every X minutes of game time
    -- (more often with time compression)
-   spawn_chance =  0.034064
+   --spawn_chance =  0.034064 -- 50% chance every 20 ticks (10 minutes)
+   spawn_chance = 0.066967 -- 50% chance every 10 ticks (5 minutes)
    if scur == system.get("Zied") then
       spawn_chance = 0.3
    end

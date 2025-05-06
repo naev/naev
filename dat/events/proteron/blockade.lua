@@ -39,9 +39,10 @@ local function spawn_fleet( pos )
       local leader = plts[1]
       local p = pilot.add( s, "Proteron", pos, nil, {ai="guard"} )
       local aimem = p:memory()
-      aimem.enemyclose    = 10e3
-      aimem.guarddodist   = 10e3
+      aimem.enemyclose  = 10e3
+      aimem.guarddodist = 10e3
       aimem.guardreturndist = 15e3
+      aimem.natural     = true
       if leader then
          p:setLeader( leader )
       end

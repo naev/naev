@@ -26,7 +26,7 @@ function teleport()
 end
 
 function screenshot()
-   player.screenshot()
+   --player.screenshot()
    idx = idx + 1
    if systems[idx] ~= nil then
       hook.safe("teleport")

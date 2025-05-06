@@ -154,7 +154,7 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys,
         commPrice->sysVariation * sin( 2. * M_PI * t / commPrice->sysPeriod ) +
         commPrice->spobVariation *
            sin( 2. * M_PI * t / commPrice->spobPeriod ) );
-   return (credits_t)( price + 0.5 ); /* +0.5 to round */
+   return (credits_t)MAX( 1, round( price ) ); /* +0.5 to round */
 }
 
 /**
@@ -223,8 +223,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    }
    commPrice = &p->commodityPrice[i];
    if ( commPrice->cnt > 0 ) {
-      *mean = (credits_t)( commPrice->sum / commPrice->cnt +
-                           0.5 ); /* +0.5 to round*/
+      *mean = (credits_t)round( commPrice->sum / commPrice->cnt );
       *std  = ( sqrt( commPrice->sum2 / commPrice->cnt -
                       ( commPrice->sum * commPrice->sum ) /
                          ( commPrice->cnt * commPrice->cnt ) ) );
@@ -253,9 +252,9 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean,
       if ( ref == NULL )
          return -1;
       int ret = economy_getAveragePrice( ref, mean, std );
-      *mean   = (credits_t)( (double)*mean * com->price_mod + 0.5 );
+      *mean   = (credits_t)round( (double)*mean * com->price_mod );
       *std    = ( *std * com->price_mod );
-      return ( (double)ret * com->price_mod + 0.5 );
+      return round( (double)ret * com->price_mod );
    }
 
    /* Constant price. */
@@ -289,7 +288,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean,
    if ( cnt > 0 ) {
       av /= cnt;
       av2   = sqrt( av2 / cnt - av * av );
-      *mean = (credits_t)( av + 0.5 );
+      *mean = (credits_t)round( av );
       *std  = av2;
    } else {
       WARN( _( "Average price for commodity '%s' not known." ), com->name );
@@ -981,14 +980,7 @@ void economy_clearKnown( void )
    for ( int i = 0; i < array_size( systems_stack ); i++ ) {
       StarSystem *sys = &systems_stack[i];
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
-         Spob *p = sys->spobs[j];
-         for ( int k = 0; k < array_size( p->commodityPrice ); k++ ) {
-            CommodityPrice *cp = &p->commodityPrice[k];
-            cp->cnt            = 0;
-            cp->sum            = 0;
-            cp->sum2           = 0;
-            cp->updateTime     = 0;
-         }
+         economy_clearSingleSpob( sys->spobs[j] );
       }
    }
    for ( int i = 0; i < array_size( commodity_stack ); i++ )
@@ -1004,8 +996,8 @@ void economy_clearSingleSpob( Spob *p )
    for ( int k = 0; k < array_size( p->commodityPrice ); k++ ) {
       CommodityPrice *cp = &p->commodityPrice[k];
       cp->cnt            = 0;
-      cp->sum            = 0;
-      cp->sum2           = 0;
+      cp->sum            = 0.;
+      cp->sum2           = 0.;
       cp->updateTime     = 0;
    }
 }
@@ -1111,26 +1103,27 @@ int economy_sysSave( xmlTextWriterPtr writer )
          int   doneSpob = 0;
          for ( int k = 0; k < array_size( p->commodities ); k++ ) {
             CommodityPrice *cp = &p->commodityPrice[k];
-            if ( cp->cnt >
-                 0 ) { /* Player has seen this commodity at this location */
-               if ( doneSys == 0 ) {
-                  doneSys = 1;
-                  xmlw_startElem( writer, "system" );
-                  xmlw_attr( writer, "name", "%s", sys->name );
-               }
-               if ( doneSpob == 0 ) {
-                  doneSpob = 1;
-                  xmlw_startElem( writer, "spob" );
-                  xmlw_attr( writer, "name", "%s", p->name );
-               }
-               xmlw_startElem( writer, "commodity" );
-               xmlw_attr( writer, "name", "%s", p->commodities[k]->name );
-               xmlw_attr( writer, "sum", "%f", cp->sum );
-               xmlw_attr( writer, "sum2", "%f", cp->sum2 );
-               xmlw_attr( writer, "cnt", "%d", cp->cnt );
-               xmlw_attr( writer, "time", "%" PRIu64, cp->updateTime );
-               xmlw_endElem( writer ); /* commodity */
+            if ( cp->cnt <= 0 )
+               continue;
+            /* Player has seen this commodity at this location */
+
+            if ( doneSys == 0 ) {
+               doneSys = 1;
+               xmlw_startElem( writer, "system" );
+               xmlw_attr( writer, "name", "%s", sys->name );
             }
+            if ( doneSpob == 0 ) {
+               doneSpob = 1;
+               xmlw_startElem( writer, "spob" );
+               xmlw_attr( writer, "name", "%s", p->name );
+            }
+            xmlw_startElem( writer, "commodity" );
+            xmlw_attr( writer, "name", "%s", p->commodities[k]->name );
+            xmlw_attr( writer, "sum", "%f", cp->sum );
+            xmlw_attr( writer, "sum2", "%f", cp->sum2 );
+            xmlw_attr( writer, "cnt", "%d", cp->cnt );
+            xmlw_attr( writer, "time", "%" PRIu64, cp->updateTime );
+            xmlw_endElem( writer ); /* commodity */
          }
          if ( doneSpob == 1 )
             xmlw_endElem( writer ); /* spob */

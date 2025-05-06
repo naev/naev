@@ -184,7 +184,6 @@ static const Ship   *player_tryGetShip( const char *name );
 static void          player_tryAddLicense( const char *name );
 /* Render. */
 static void player_renderStealthUnderlay( double dt );
-static void player_renderStealthOverlay( double dt );
 static void player_renderAimHelper( double dt );
 /* Misc. */
 static int  player_filterSuitableSpob( Spob *p );
@@ -1078,10 +1077,6 @@ void player_render( double dt )
 
    NTracingZone( _ctx, 1 );
 
-   /* Render stealth overlay. */
-   if ( pilot_isFlag( player.p, PILOT_STEALTH ) )
-      player_renderStealthOverlay( dt );
-
    /* Render the aiming lines. */
    if ( ( player.p->target != PLAYER_ID ) && player.p->aimLines &&
         !pilot_isFlag( player.p, PILOT_HYPERSPACE ) &&
@@ -1151,35 +1146,6 @@ static void player_renderStealthUnderlay( double dt )
          gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
       }
    }
-}
-
-/**
- * @brief Renders the stealth overlay for the player.
- */
-static void player_renderStealthOverlay( double dt )
-{
-   (void)dt;
-   double   x, y, r, st, z;
-   glColour col;
-
-   z = cam_getZoom();
-   gl_gameToScreenCoords( &x, &y, player.p->solid.pos.x,
-                          player.p->solid.pos.y );
-
-   /* Determine the arcs. */
-   st = player.p->ew_stealth_timer;
-
-   /* We do red to yellow. */
-   col_blend( &col, &cYellow, &cRed, st );
-   col.a = 0.5;
-
-   /* Determine size. */
-   r = 1.2 / 2. * (double)player.p->ship->size;
-
-   /* Draw the main circle. */
-   glUseProgram( shaders.stealthmarker.program );
-   glUniform1f( shaders.stealthmarker.paramf, st );
-   gl_renderShader( x, y, r * z, r * z, 0., &shaders.stealthmarker, &col, 1 );
 }
 
 /**
@@ -2545,16 +2511,21 @@ void player_autohail( void )
       const Pilot *p = pilot_stack[i];
 
       /* Must be hailing. */
-      if ( pilot_isFlag( p, PILOT_HAILING ) ) {
-         /* Try to hail. */
-         pilot_setTarget( player.p, p->id );
-         gui_setTarget();
-         player_hail();
+      if ( !pilot_isFlag( p, PILOT_HAILING ) )
+         continue;
 
-         /* Clear hails if none found. */
-         player_checkHail();
-         return;
-      }
+      /* Must be in range. */
+      if ( !pilot_inRangePilot( player.p, p, NULL ) )
+         continue;
+
+      /* Try to hail. */
+      pilot_setTarget( player.p, p->id );
+      gui_setTarget();
+      player_hail();
+
+      /* Clear hails if none found. */
+      player_checkHail();
+      return;
    }
 
    player_message( "#r%s", _( "You haven't been hailed by any pilots." ) );

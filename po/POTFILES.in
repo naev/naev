@@ -2930,6 +2930,7 @@ dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
 dat/events/neutral/quai_pirates.lua
+dat/events/neutral/refuel.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
@@ -2980,6 +2981,7 @@ dat/events/pers/dvaered.lua
 dat/events/pers/empire.lua
 dat/events/pers/indep.lua
 dat/events/pers/minerva.lua
+dat/events/pers/misc.lua
 dat/events/pers/pirate.lua
 dat/events/pers/sirius.lua
 dat/events/pers/soromid.lua

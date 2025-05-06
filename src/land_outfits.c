@@ -890,8 +890,8 @@ int outfit_canBuy( const Outfit *outfit, int wid )
    outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy, &cansell, NULL );
 
    /* Special exception for local map. */
+   int sold = 0;
    if ( outfit != omap ) {
-      int sold = 0;
       /* See if the player previously sold it. */
       for ( int i = 0; i < array_size( outfits_sold ); i++ ) {
          if ( outfits_sold[i].o == outfit ) {
@@ -949,14 +949,15 @@ int outfit_canBuy( const Outfit *outfit, int wid )
       failure = 1;
    }
    /* Needs license. */
-   if ( !blackmarket && !player_hasLicense( outfit_license( outfit ) ) ) {
+   if ( !sold && !blackmarket &&
+        !player_hasLicense( outfit_license( outfit ) ) ) {
       land_errDialogueBuild(
          _( "You need the '%s' license to buy this outfit." ),
          _( outfit_license( outfit ) ) );
       failure = 1;
    }
    /* Needs requirements. */
-   if ( !blackmarket && ( outfit_cond( outfit ) != NULL ) &&
+   if ( !sold && !blackmarket && ( outfit_cond( outfit ) != NULL ) &&
         !cond_check( outfit_cond( outfit ) ) ) {
       land_errDialogueBuild( "%s", outfit_condstr( outfit ) );
       failure = 1;

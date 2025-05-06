@@ -1937,6 +1937,33 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
 }
 
 /**
+ * @brief Renders the stealth overlay for the player.
+ */
+static void pilot_renderStealthOverlay( const Pilot *p )
+{
+   double   x, y, r, st, z;
+   glColour col;
+
+   z = cam_getZoom();
+   gl_gameToScreenCoords( &x, &y, p->solid.pos.x, p->solid.pos.y );
+
+   /* Determine the arcs. */
+   st = p->ew_stealth_timer;
+
+   /* We do red to yellow. */
+   col_blend( &col, &cYellow, &cRed, st );
+   col.a = 0.5;
+
+   /* Determine size. */
+   r = 1.2 / 2. * (double)p->ship->size;
+
+   /* Draw the main circle. */
+   glUseProgram( shaders.stealthmarker.program );
+   glUniform1f( shaders.stealthmarker.paramf, st );
+   gl_renderShader( x, y, r * z, r * z, 0., &shaders.stealthmarker, &col, 1 );
+}
+
+/**
  * @brief Renders the pilot.
  *
  *    @param p Pilot to render.
@@ -1994,8 +2021,12 @@ void pilot_render( Pilot *p )
       }
 
       /* Add some transparency if stealthed. TODO better effect */
-      if ( !pilot_isPlayer( p ) && pilot_isFlag( p, PILOT_STEALTH ) )
-         c.a = 0.5;
+      if ( pilot_isFlag( p, PILOT_STEALTH ) ) {
+         if ( pilot_isWithPlayer( p ) )
+            pilot_renderStealthOverlay( p );
+         if ( !pilot_isPlayer( p ) )
+            c.a = 0.5;
+      }
 
       /* Render normally. */
       if ( e == NULL ) {
@@ -3512,6 +3543,7 @@ void pilot_reset( Pilot *pilot )
    pilot->shoot_indicator = 0;
 
    /* Run Lua stuff. */
+   pilot_outfitOffAll( pilot );
    pilot_shipLInit( pilot );
    pilot_outfitLInitAll( pilot );
 }
@@ -4048,7 +4080,8 @@ void pilots_clean( int persist )
     * sorts of Lua stuff. */
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
-      if ( p == player.p && ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
+      if ( pilot_isPlayer( p ) ||
+           ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
          continue;
       /* Stop all outfits. */
       pilot_outfitOffAll( p );
@@ -4060,7 +4093,7 @@ void pilots_clean( int persist )
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       /* move player and persisted pilots to start */
       if ( !pilot_isFlag( pilot_stack[i], PILOT_DELETE ) &&
-           ( pilot_stack[i] == player.p ||
+           ( pilot_isPlayer( pilot_stack[i] ) ||
              ( persist && pilot_isFlag( pilot_stack[i], PILOT_PERSIST ) ) ) ) {
          /* Have to swap the pilots so it gets properly freed. */
          Pilot *p                   = pilot_stack[persist_count];
@@ -4090,6 +4123,10 @@ void pilots_clean( int persist )
       Pilot *p = pilot_stack[i];
       pilot_clearHooks( p );
       ai_cleartasks( p );
+      /* Don't reinit pilots that are persisting. */
+      if ( pilot_isPlayer( p ) ||
+           ( persist && pilot_isFlag( p, PILOT_PERSIST ) ) )
+         continue;
       ai_init( p );
    }
 
@@ -4330,9 +4367,6 @@ void pilots_renderOverlay( void )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   /* Clear outfits first to not leave some outfits in dangling states. */
-   pilot_outfitOffAll( pilot );
-
    pilot->ptimer   = 0.; /* Pilot timer. */
    pilot->tcontrol = 0.; /* AI control timer. */
    pilot->stimer   = 0.; /* Shield timer. */

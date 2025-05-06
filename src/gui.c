@@ -1223,13 +1223,21 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
    scanning =
       ( pilot_isFlag( p, PILOT_SCANNING ) && ( p->target == PLAYER_ID ) );
 
-   if ( pilot_isFlag( p, PILOT_HILIGHT ) || scanning ) {
+   int hilight;
+   if ( scanning || pilot_isFlag( p, PILOT_HILIGHT ) ||
+        pilot_isFlag( p, PILOT_HAILING ) )
+      hilight = 1;
+   else
+      hilight = 0;
+
+   if ( hilight ) {
       glColour highlighted = cRadar_hilight;
       highlighted.a        = 0.3;
       glUseProgram( shaders.hilight.program );
       glUniform1f( shaders.hilight.dt, animation_dt );
       gl_renderShader( x, y, scale * 2.0, scale * 2.0, 0., &shaders.hilight,
                        &highlighted, 1 );
+      hilight = 1;
    }
 
    glUseProgram( shaders.pilotmarker.program );
@@ -1242,7 +1250,7 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
                  RADAR_BLINK_PILOT, blink_pilot );
 
    /* Draw name. */
-   if ( overlay && pilot_isFlag( p, PILOT_HILIGHT ) ) {
+   if ( overlay && hilight ) {
       /* TODO try to minimize overlap here. */
       gl_printMarkerRaw( &gl_smallFont, x + scale + 5., y - gl_smallFont.h / 2.,
                          col, p->name );
