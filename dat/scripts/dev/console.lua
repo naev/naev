@@ -34,7 +34,7 @@ function inspect( t )
    end
    local taskdata = t:taskdata()
    if taskdata then
-      print(fmt.f("   Data: {data}", {taskdata = taskdata}))
+      print(fmt.f("   Data: {data}", {data = taskdata}))
    end
 
    -- Print outfits if applicable
