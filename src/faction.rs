@@ -1,7 +1,7 @@
 #![allow(dead_code, unused_variables, unused_imports)]
 
 use anyhow::Result;
-use nalgebra::Vector3;
+use nalgebra::{Vector3, Vector4};
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
 use std::ops::Deref;
@@ -10,6 +10,7 @@ use std::sync::{Mutex, RwLock};
 use crate::array::ArrayCString;
 use crate::context::{Context, SafeContext};
 use crate::gettext::gettext;
+use crate::log::warn_err;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -59,6 +60,8 @@ impl FactionID {
 pub struct Standing {
     player: f32,
     p_override: Option<f32>,
+    f_known: bool,
+    f_invisible: bool,
 }
 
 #[derive(Debug)]
@@ -87,7 +90,27 @@ impl Faction {
         standing.p_override = std;
     }
 
-    pub fn is_dynamic(&self) -> bool {
+    pub fn known(&self) -> bool {
+        self.standing.read().unwrap().f_known
+    }
+
+    pub fn set_known(&self, state: bool) {
+        self.standing.write().unwrap().f_known = state;
+    }
+
+    pub fn invisible(&self) -> bool {
+        self.standing.read().unwrap().f_invisible
+    }
+
+    pub fn set_invisible(&self, state: bool) {
+        self.standing.write().unwrap().f_invisible = state;
+    }
+
+    pub fn fixed(&self) -> bool {
+        self.data.f_static
+    }
+
+    pub fn dynamic(&self) -> bool {
         match &self.data {
             DataWrapper::Static(_) => false,
             DataWrapper::Dynamic(_) => true,
@@ -194,7 +217,9 @@ pub struct FactionData {
     cdisplayname: Option<CString>,
     cmapname: Option<CString>,
     cdescription: CString,
+    cai: CString,
     ctags: ArrayCString,
+    ccolour: Vector4<f32>,
 }
 impl FactionData {
     fn init_lua(&self, lua: &NLua) -> Result<()> {
@@ -318,7 +343,10 @@ impl FactionLoad {
                     fct.description = nxml::node_string(node)?;
                     fct.cdescription = nxml::node_cstring(node)?;
                 }
-                "ai" => fct.ai = nxml::node_string(node)?,
+                "ai" => {
+                    fct.ai = nxml::node_string(node)?;
+                    fct.cai = nxml::node_cstring(node)?;
+                }
                 "local_th" => fct.local_th = nxml::node_f32(node)?,
                 "lane_length_per_presence" => fct.lane_length_per_presence = nxml::node_f32(node)?,
                 "lane_base_cost" => fct.lane_base_cost = nxml::node_f32(node)?,
@@ -429,7 +457,7 @@ impl FactionLoad {
     fn get(factions: &[FactionLoad], name: &str) -> Option<usize> {
         match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| &fctload.data.name) {
             Ok(id) => Some(id),
-            Err(_) => {
+            Err(err) => {
                 warn!("Faction '{}' not found during loading!", name);
                 None
             }
@@ -465,8 +493,8 @@ pub fn load() -> Result<()> {
     // Add Player before sorting
     factionload.push(FactionLoad {
         data: FactionData {
-            name: String::from("Player"),
-            cname: CString::new("Player")?,
+            name: String::from("Escort"),
+            cname: CString::new("Escort")?,
             f_static: true,
             f_invisible: true,
             ..Default::default()
@@ -512,6 +540,8 @@ pub fn load() -> Result<()> {
             standing: RwLock::new(Standing {
                 player: fct.player_def,
                 p_override: None,
+                f_known: fct.f_known,
+                f_invisible: fct.f_invisible,
             }),
             data: DataWrapper::Static(fct),
         });
@@ -533,7 +563,7 @@ pub fn load_lua() -> Result<()> {
 
 // Here be C API
 use std::mem::ManuallyDrop;
-use std::os::raw::{c_char, c_int};
+use std::os::raw::{c_char, c_double, c_int};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_isFaction(f: c_int) -> c_int {
@@ -582,4 +612,240 @@ pub extern "C" fn _faction_getAll() -> *const c_int {
     }
     let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
     arr.as_ptr() as *const c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_getAllVisible() -> *const c_int {
+    let mut fcts: Vec<c_int> = vec![];
+    for fct in FACTIONS.read().unwrap().iter() {
+        let (key, val) = fct;
+        if !val.data.f_invisible {
+            fcts.push(key.slot() as c_int);
+        }
+    }
+    let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
+    arr.as_ptr() as *const c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_getKnown() -> *const c_int {
+    let mut fcts: Vec<c_int> = vec![];
+    for fct in FACTIONS.read().unwrap().iter() {
+        let (key, val) = fct;
+        if !val.data.f_invisible && !val.standing.read().unwrap().f_known {
+            fcts.push(key.slot() as c_int);
+        }
+    }
+    let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
+    arr.as_ptr() as *const c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_clearKnown() {
+    for fct in FACTIONS.read().unwrap().iter() {
+        let (key, val) = fct;
+        val.standing.write().unwrap().f_known = val.data.f_known;
+    }
+}
+
+/// Helper function for the C-side
+fn faction_c_call<F, R>(id: c_int, f: F) -> Result<R>
+where
+    F: Fn(&Faction) -> R,
+{
+    let factions = FACTIONS.read().unwrap();
+    match factions.get_by_slot(id.try_into().unwrap()) {
+        Some((_idx, fct)) => Ok(f(fct)),
+        None => anyhow::bail!("faction not found"),
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_isStatic(id: c_int) -> c_int {
+    faction_c_call(id, |fct| match fct.fixed() {
+        true => 1,
+        false => 0,
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        0
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_isInvisible(id: c_int) -> c_int {
+    faction_c_call(id, |fct| match fct.invisible() {
+        true => 1,
+        false => 0,
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        0
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_setInvisible(id: c_int, state: c_int) -> c_int {
+    faction_c_call(id, |fct| {
+        fct.set_invisible(match state {
+            0 => false,
+            _ => true,
+        });
+        0
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        -1
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_isKnown(id: c_int) -> c_int {
+    faction_c_call(id, |fct| match fct.known() {
+        true => 1,
+        false => 0,
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        0
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_setKnown(id: c_int, state: c_int) -> c_int {
+    faction_c_call(id, |fct| {
+        fct.set_known(match state {
+            0 => false,
+            _ => true,
+        });
+        0
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        -1
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_name(id: c_int) -> *const c_char {
+    faction_c_call(id, |fct| {
+        // Not translated on purpose
+        fct.data.cname.as_ptr()
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_shortname(id: c_int) -> *const c_char {
+    faction_c_call(id, |fct| {
+        let ptr = match &fct.data.cdisplayname {
+            Some(name) => name.as_ptr(),
+            None => fct.data.cname.as_ptr(),
+        };
+        unsafe { naevc::gettext_rust(ptr) }
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_longname(id: c_int) -> *const c_char {
+    faction_c_call(id, |fct| {
+        let ptr = match &fct.data.clongname {
+            Some(name) => name.as_ptr(),
+            None => fct.data.cname.as_ptr(),
+        };
+        unsafe { naevc::gettext_rust(ptr) }
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_mapname(id: c_int) -> *const c_char {
+    faction_c_call(id, |fct| {
+        let ptr = match &fct.data.cmapname {
+            Some(name) => name.as_ptr(),
+            None => fct.data.cname.as_ptr(),
+        };
+        unsafe { naevc::gettext_rust(ptr) }
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_description(id: c_int) -> *const c_char {
+    faction_c_call(id, |fct| {
+        let ptr = fct.data.cdescription.as_ptr();
+        unsafe { naevc::gettext_rust(ptr) }
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_default_ai(id: c_int) -> *const c_char {
+    faction_c_call(id, |fct| fct.data.cai.as_ptr()).unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_tags(id: c_int) -> *mut *const c_char {
+    faction_c_call(id, |fct| fct.data.ctags.as_ptr()).unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null_mut()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_lane_length_per_presence(id: c_int) -> c_double {
+    faction_c_call(id, |fct| fct.data.lane_length_per_presence as c_double).unwrap_or_else(|err| {
+        warn_err(err);
+        0.0
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_lane_base_cost(id: c_int) -> c_double {
+    faction_c_call(id, |fct| fct.data.lane_base_cost as c_double).unwrap_or_else(|err| {
+        warn_err(err);
+        0.0
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_logo(id: c_int) -> *const naevc::glTexture {
+    faction_c_call(id, |fct| match &fct.data.logo {
+        Some(logo) => logo as *const texture::Texture as *const naevc::glTexture,
+        None => std::ptr::null(),
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _faction_colour(id: c_int) -> *const naevc::glColour {
+    faction_c_call(id, |fct| {
+        &fct.data.ccolour as *const Vector4<f32> as *const naevc::glColour
+    })
+    .unwrap_or_else(|err| {
+        warn_err(err);
+        std::ptr::null()
+    })
 }
