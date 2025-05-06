@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 keep_in_xml=set(['priority','rarity'])
 
@@ -111,20 +111,19 @@ if __name__ == '__main__':
          nam=nam2fil(o.name())
 
          toxmllua(o)
-         print >>stderr,(nam if argout=="-" else argout)
+         stderr.write((nam if argout=="-" else argout)+'\n')
          o.write(argout)
          return 0
 
-   #parser = argparse.ArgumentParser(
-   #   description=
-   """Takes an extended outfit as input on <stdin>, and produce a xml (potentially with inlined lua) on <stdout>.
-            The name the output should have is written on <stderr>.
-            If the input is invalid, nothing is written on stdout and stderr and non-zero is returned."""
-   #)
-   #args=parser.parse_args()
-   argin, argout = "-","-"
-   if len(argv)>1:
-      argin = argv[1]
-      if len(argv)>2:
-         argout = argv[2]
-   exit(main(argin,argout))
+   parser = argparse.ArgumentParser(
+      description=
+   """Takes an extended outfit as input and outputs a xml (potentially with inlined lua) on output.
+The name the output should have is written on <stderr>.
+If the input is invalid, nothing is written on stdout and stderr and non-zero is returned.
+The special values "-" mean stdin/stdout.
+"""
+   )
+   parser.add_argument('input', nargs='?', default="-")
+   parser.add_argument('output', nargs='?', default="-")
+   args=parser.parse_args()
+   exit(main(args.input,args.output))

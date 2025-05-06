@@ -64,9 +64,17 @@ def do_it(argin,argout):
    o.write(argout)
 
 if __name__=="__main__":
-   argin, argout = "-", "-"
-   if len(argv)>1:
-      argin = argv[1]
-      if len(argv)>2:
-         argout = argv[2]
-   do_it(argin,argout)
+   import argparse
+
+   parser = argparse.ArgumentParser(
+      description=
+   """Takes a xml outfit as input (potentially with inlined lua) and produces a mvx on output.
+The name the output should have is written on <stderr>.
+If the input is invalid, nothing is written on stdout and stderr and non-zero is returned.
+The special values "-" mean stdin/stdout.
+"""
+   )
+   parser.add_argument('input', nargs='?', default="-")
+   parser.add_argument('output', nargs='?', default="-")
+   args=parser.parse_args()
+   do_it(args.input,args.output)
