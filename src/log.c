@@ -53,21 +53,21 @@ static void log_cleanStream( PHYSFS_File **file, const char *fname,
                              const char *filedouble );
 static void log_purge( void );
 
+static char *_noesc( const char *s, int *ne )
+{
+   char *buf = calloc( strlen( s ) + 1, sizeof( char ) );
+   int   wi = 0, inesc = 0;
+   for ( int i = 0; s[i]; i++ )
+      if ( inesc ) {
+         if ( ( s[i] >= 'a' && s[i] <= 'z' ) || ( s[i] >= 'A' && s[i] <= 'Z' ) )
+            inesc = 0;
+      } else if ( s[i] == '\e' ) {
+         inesc = 1;
+      } else
+         buf[wi++] = s[i];
 
-static char*_noesc(const char*s,int*ne){
-   char*buf=calloc(strlen(s)+1,sizeof(char));
-   int wi=0,inesc=0;
-   for(int i=0;s[i];i++)
-      if(inesc){
-         if ((s[i]>='a' && s[i]<='z') || (s[i]>='A' && s[i]<='Z'))
-            inesc=0;
-      }else if(s[i]=='\e'){
-         inesc=1;
-      }else
-         buf[wi++]=s[i];
-
-   buf[wi]= '\0';
-   *ne=wi;
+   buf[wi] = '\0';
+   *ne     = wi;
    return buf;
 }
 
@@ -76,8 +76,8 @@ static char*_noesc(const char*s,int*ne){
  */
 static int slogprintf( FILE *stream, int newline, const char *str, size_t n )
 {
-   int ne;
-   char*strne=_noesc(str,&ne);
+   int   ne;
+   char *strne = _noesc( str, &ne );
 
    /* Append to strfer. */
    if ( copying )
@@ -99,7 +99,7 @@ static int slogprintf( FILE *stream, int newline, const char *str, size_t n )
    n = fprintf( stream, "%s", str );
    if ( newline )
       fflush( stream );
-   free(strne);
+   free( strne );
    return n;
 }
 
