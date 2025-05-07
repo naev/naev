@@ -34,7 +34,8 @@
    -- Make sure not same system as last time
    local lastplanet = var.peek("shiplover_lastplanet")
    if lastplanet then
-      if spob.get(lastplanet):system() == system.cur() then
+      local spb = spob.exists(lastplanet)
+      if spb and (spb:system() == system.cur()) then
          return false
       end
    end
