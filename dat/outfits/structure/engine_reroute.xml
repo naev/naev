@@ -10,7 +10,7 @@
   <gfx_store>reroute.webp</gfx_store>
  </general>
  <specific type="modification">
-  <accel_mod>20</accel_mod>
+  <accel_mod>30</accel_mod>
   <turn_mod>10</turn_mod>
   <energy_regen_mod>-20</energy_regen_mod>
   <energy_mod>-20</energy_mod>
