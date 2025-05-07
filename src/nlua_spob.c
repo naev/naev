@@ -33,6 +33,7 @@
 
 /* Spob metatable methods */
 static int spobL_cur( lua_State *L );
+static int spobL_exists( lua_State *L );
 static int spobL_get( lua_State *L );
 static int spobL_getS( lua_State *L );
 static int spobL_getLandable( lua_State *L );
@@ -74,6 +75,7 @@ static int spobL_tags( lua_State *L );
 
 static const luaL_Reg spob_methods[] = {
    { "cur", spobL_cur },
+   { "exists", spobL_exists },
    { "get", spobL_get },
    { "getS", spobL_getS },
    { "getLandable", spobL_getLandable },
@@ -358,6 +360,24 @@ static int spobL_getBackend( lua_State *L, int system, int landable )
       lua_pushsystem( L, sys );
       return 2;
    }
+   return 1;
+}
+
+/**
+ * @brief Tries to get a spob.
+ *
+ *    @luatparam string name Name of the spob to get.
+ *    @luatreturn Spob The matching spob.
+ * @luafunc exists
+ */
+static int spobL_exists( lua_State *L )
+{
+   const char *name = luaL_checkstring( L, 1 );
+   Spob       *spb  = spob_get( name );
+   if ( spb == NULL )
+      lua_pushnil( L );
+   else
+      lua_pushspob( L, spob_index( spb ) );
    return 1;
 }
 
