@@ -8,10 +8,14 @@
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>0.600000</hide>
   <services>
    <land/>
+   <nocommodities/>
   </services>
+  <tech>
+   <item price_mode="0.1">Neblaze</item>
+  </tech>
   <description>Alsafi II is a barren world that other than some indications of prospection sites looking for mineral, is devoid of anything of interest.</description>
  </general>
 </spob>

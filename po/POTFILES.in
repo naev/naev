@@ -36,6 +36,7 @@ dat/commodities/iron.xml
 dat/commodities/kermite.xml
 dat/commodities/luxury_goods.xml
 dat/commodities/medicine.xml
+dat/commodities/neblaze.xml
 dat/commodities/nebula_crystals.xml
 dat/commodities/neodymium.xml
 dat/commodities/nickel.xml
@@ -2719,6 +2720,7 @@ dat/trails/zalek_missileL.xml
 dat/unidiff/FLF_base.xml
 dat/unidiff/Fury_Station.xml
 dat/unidiff/Thurion_found.xml
+dat/unidiff/alsafi_ii_druglab.xml
 dat/unidiff/antlejosv_1.xml
 dat/unidiff/antlejosv_2.xml
 dat/unidiff/antlejosv_3.xml
@@ -2917,6 +2919,7 @@ dat/events/minerva/spa_propaganda.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
 dat/events/naevpedia.lua
+dat/events/neutral/alsafi_druglab.lua
 dat/events/neutral/animaltrouble.lua
 dat/events/neutral/arandon_station.lua
 dat/events/neutral/baron_comm.lua
