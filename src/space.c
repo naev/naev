@@ -412,8 +412,10 @@ int spob_addService( Spob *p, int service )
       Commodity **stdList = standard_commodities();
       p->commodities      = array_create( Commodity * );
       p->commodityPrice   = array_create( CommodityPrice );
-      for ( int i = 0; i < array_size( stdList ); i++ )
-         spob_addCommodity( p, stdList[i] );
+      if ( !spob_isFlag( p, SPOB_NOCOMMODITIES ) ) {
+         for ( int i = 0; i < array_size( stdList ); i++ )
+            spob_addCommodity( p, stdList[i] );
+      }
       array_free( stdList );
 
       /* Clean up economy status. */
@@ -2521,6 +2523,8 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
                         SPOB_SERVICE_SHIPYARD | SPOB_SERVICE_INHABITED;
                   else if ( xml_isNode( ccur, "nomissionspawn" ) )
                      spob->flags |= SPOB_NOMISNSPAWN;
+                  else if ( xml_isNode( ccur, "nocommodities" ) )
+                     spob->flags |= SPOB_NOCOMMODITIES;
                   else if ( xml_isNode( ccur, "uninhabited" ) )
                      spob->flags |= SPOB_UNINHABITED;
                   else if ( xml_isNode( ccur, "blackmarket" ) )
@@ -2647,7 +2651,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
       spob->commodities    = array_create( Commodity * );
 
       /* First, store all the standard commodities and prices. */
-      if ( array_size( stdList ) > 0 ) {
+      if ( !spob_isFlag( spob, SPOB_NOCOMMODITIES ) ) {
          for ( int i = 0; i < array_size( stdList ); i++ )
             spob_addCommodity( spob, stdList[i] );
       }
