@@ -70,6 +70,8 @@ static int misn_markerRm( lua_State *L );
 static int misn_cargoAdd( lua_State *L );
 static int misn_cargoRm( lua_State *L );
 static int misn_cargoJet( lua_State *L );
+static int misnL_osdHide( lua_State *L );
+static int misnL_osdSetHide( lua_State *L );
 static int misn_osdCreate( lua_State *L );
 static int misn_osdDestroy( lua_State *L );
 static int misn_osdActive( lua_State *L );
@@ -97,6 +99,8 @@ static const luaL_Reg misn_methods[] = {
    { "cargoAdd", misn_cargoAdd },
    { "cargoRm", misn_cargoRm },
    { "cargoJet", misn_cargoJet },
+   { "osdHide", misnL_osdHide },
+   { "osdSetHide", misnL_osdSetHide },
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
@@ -776,6 +780,46 @@ static int misn_cargoJet( lua_State *L )
 
    lua_pushboolean( L, !ret );
    return 1;
+}
+
+/**
+ * @brief Gets the hide status of the mission's OSD.
+ *
+ *    @luatreturn boolean The hide status of the mission's OSD.
+ * @luafunc osdHide
+ */
+static int misnL_osdHide( lua_State *L )
+{
+   Mission *cur_mission = misn_getFromLua( L );
+
+   /* Must be accepted. */
+   if ( !cur_mission->accepted ) {
+      NLUA_WARN( L, _( "Can't create an OSD on an unaccepted mission!" ) );
+      return 0;
+   }
+
+   lua_pushboolean( L, misn_osdGetHide( cur_mission ) );
+   return 1;
+}
+
+/**
+ * @brief Sets the hide status of the mission's OSD.
+ *
+ *    @luatparam boolean status Hide status to set for the mission.
+ * @luafunc osdSetHide
+ */
+static int misnL_osdSetHide( lua_State *L )
+{
+   Mission *cur_mission = misn_getFromLua( L );
+
+   /* Must be accepted. */
+   if ( !cur_mission->accepted ) {
+      NLUA_WARN( L, _( "Can't create an OSD on an unaccepted mission!" ) );
+      return 0;
+   }
+
+   misn_osdSetHide( cur_mission, lua_toboolean( L, 1 ) );
+   return 0;
 }
 
 /**
