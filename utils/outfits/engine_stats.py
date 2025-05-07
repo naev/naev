@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 
-from getconst import PHYSICS_SPEED_DAMP
+#TODO
+# - have properly detect outfits that can't be secondary
+# - Manage Krain restrictions
+# - use differentiated lines like outfits2md
 
-#TODO: use argparse
+from getconst import PHYSICS_SPEED_DAMP
 
 from outfit import outfit
 
-from sys import argv,stdout
+from sys import stdout
 import math
 
 out=lambda x:stdout.write(x+'\n')
@@ -57,25 +60,84 @@ def l(s):
    a,b=tuple(s.split('.',1))
    return ' | '+(3-len(a))*' '+a+m+b+(2-len(b))*' '
 
-if '-h' in argv or '--help' in argv:
-   out("Usage: "+argv[0]+" <file1> <file2> ...")
-   out("Will only process the files in the list that have .xml or .mvx extension.")
-   out("Outputs a MD table with some new derived fields.")
-   out("\nTypical usage (from naev root dir) :")
-   out("> ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`")
-else:
-   L=[(outfit(a),fl) for a in argv[1:] for fl in [False,True]]
-   L=[(o,fl,o.autostack(fl)) for (o,fl) in L if o is not None]
-   L=[(o.to_dict(),o.shortname()) for (o,fl,_) in L]
+def main(args, gith=False, color=False, autostack=False, combine=False):
+   if combine or autostack:
+      for i in args:
+         if i[:2]=='2x' or i[-2:]=='x2':
+            stderr.write('"2x"')
+         elif '+' in i:
+            stderr.write('"+"')
+         else:
+            continue
+         stderr.write(' incompatible with -A/-C options\n')
+         return 1
+   if combine:
+      args=args+[i+'+'+j for i in args for j in args]
+   elif autostack:
+      args=args+['2x'+i for i in args]
+
+   L=[]
+   for i in range(len(args)):
+      if args[i][:2]=='2x' or args[i][-2:]=='x2':
+         args[i]=args[i][2:] if args[i][:2]=='2x' else args[i][:-2]
+         args[i]=args[i]+'+'+args[i]
+
+      if len(args[i].split('+'))==2:
+         o,o2=args[i].split('+')
+         o,o2=outfit(o.strip()),outfit(o2.strip())
+         o.stack(o2)
+      else:
+         o=outfit(args[i])
+      L.append(o)
+
+   L=[(o.to_dict(),o.shortname()) for o in L]
    L.sort(key=key,reverse=True)
-   C=['speed','max speed','accel','fullsp (s)','fullsp (km)','turn','turn radius','1/2 turn (s)']
-   N=max([0]+[len(n) for (_,n) in L])
-   out('| | '+' | '.join(C))
-   out('| ---'+(N-2)*' '+len(C)*'| ---    ')
+
+   greyit=(lambda s:s.replace('|','\033[30;1m|\033[0m')) if color else (lambda s:s)
+   if color:
+      C=['drift \nspeed ','max   \nspeed ','accel \n      ','fullsp\n(s)   ','fullsp\n(km)  ','turn  \n      ','turn  \nradius','half  \nturn (s)']
+   else:
+      C=['dr.sp.','max sp','accel ','fsp(s)','fsp.km',' turn ','radius','1/2 turn (s)']
+   N=max([0]+[len(n) for (_,n) in L]) if not gith else 0
+   if color:
+      C=[tuple(s.split('\n')) for s in C]
+      lin='| '+(N)*' '+' | '+' | '.join([a for (a,b) in C])
+      out(greyit(lin))
+      C=[b for (a,b) in C]
+   out(greyit('| '+(N)*' '+' | '+' | '.join(C)))
+   lin='| ---'+(N-3)*'-'+' '+len(C)*('| ---'+('---' if not gith else '')+' ')
+   if color:
+      lin="\033[30;1m"+lin+"\033[0m"
+   out(lin)
    for k,n in L:
       if accel(k)!=0:
-         nam=n+(N-len(n))*' '
+         nam=n + ((N-len(n))*' ' if not gith else '')
          acc='| '+nam+l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
          acc+=l(fmt(fullsptime(k)))+l(fmt(fullspdist(k)))+l(turn(k))+l(radius(k))
          acc+=l(fmt(turntime(k)))
-         out(acc)
+         if gith:
+            acc=acc.replace('  ',' ').replace('  ',' ')
+         out(greyit(acc))
+
+if __name__ == '__main__':
+   import argparse
+
+   parser = argparse.ArgumentParser(
+      formatter_class=argparse.RawTextHelpFormatter,
+      description="By default, outputs text aligned markdown table comparing the engines respective values, with some new derived fields.",
+      epilog="\n Typical usage (from naev root dir) :\n > ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`"
+   )
+   parser.add_argument('-g', '--github', action='store_true', help="unaligned (therefore smaller) valid github md, for use in posts.")
+   parser.add_argument('-c', '--color', action='store_true', help="colored terminal output. You can pipe to \"less -RS\" if the table is too wide.")
+   parser.add_argument('-A', '--autostack', action='store_true', help="also display x2 outfits")
+   parser.add_argument('-C', '--combinations', action='store_true', help="also display all the combinations." )
+   parser.add_argument('filename', nargs='*', help="""An outfit with ".xml" or ".mvx" extension, else will be ignored.
+Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or suffixed with \'x2\'.""")
+   args = parser.parse_args()
+   if args.autostack and args.combinations:
+      print("-A subsumed by -C",file=stderr,flush=True)
+      args.autostack=False
+
+   main(args.filename,args.github,args.color,args.autostack,args.combinations)
+else:
+   raise Exception("This module is only intended to be used as main.")
