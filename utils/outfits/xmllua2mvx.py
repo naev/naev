@@ -36,7 +36,7 @@ def parse_lua_multicore(si):
 
 def do_it(argin,argout):
    o = outfit(argin)
-   stderr.write(o.name()+'\n')
+   stderr.write('xmllua2mvx: '+o.name()+'\n')
    d={'general':[], 'specific':[]}
    fields, li = parse_lua_multicore(o.to_dict()['lua_inline'])
 

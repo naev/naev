@@ -111,7 +111,7 @@ if __name__ == '__main__':
          nam=nam2fil(o.name())
 
          toxmllua(o)
-         stderr.write((nam if argout=="-" else argout)+'\n')
+         stderr.write('mvx2xmllua'+': '+(nam if argout=="-" else argout)+'\n')
          o.write(argout)
          return 0
 

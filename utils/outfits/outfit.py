@@ -136,7 +136,7 @@ class _outfit():
             for missing in sec:
                if missing not in d:
                   el = ET.Element(missing)
-                  el.text='0'
+                  el.text=''
                   e.append(el)
             break
 

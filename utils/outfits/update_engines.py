@@ -131,6 +131,16 @@ def mk_subs(a,name=None):
 
    return {k:(v1,sub[-1][k]) for k,v1 in sub[0].items()}
 
+import os
+script_dir = os.path.dirname( __file__ )
+mvx2xmllu = os.path.join( script_dir, 'mvx2xmllua.py')
+import subprocess
+def update_xmllua(fil):
+   res=fil.rsplit('.mvx',1)
+   if len(res)==2 and res[1]=='':
+      nam=res[0]+'.xml'
+      subprocess.run([mvx2xmllu, fil, nam])
+
 def main(args):
    outfits = []
    for a in args:
@@ -162,6 +172,7 @@ def main(args):
             if acc!=[]:
                err(', '.join([i+':'+j+'->'+k for i,j,k in acc]))
                o.write(o.fil)
+               update_xmllua(o.fil)
             else:
                err('_')
    return 0
@@ -221,7 +232,8 @@ if __name__=="__main__":
    parser = argparse.ArgumentParser(
       usage=" %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...) | -h",
       formatter_class=argparse.RawTextHelpFormatter,
-      description="The changes made will be listed onto <stderr>: \"_\" means \"nothing\".",
+      description="""The changes made will be listed onto <stderr>: \"_\" means \"nothing\".
+If some mvx files are modified, the related xmllua file will be updated.""",
       epilog="""Examples:
   Standard usage:
    > ./utils/outfits/update_engines.py `find dat/outfits/core_engine/ | grep mvx`
@@ -235,7 +247,6 @@ if __name__=="__main__":
   Generate a brand new line called Zednelem with with speed_rank_offset=0.5 and 1.2 ratio:
    > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2
 """)
-   parser.add_argument('-n', '--nomax', action='store_true', help="Do not emphasize min/max values." )
    parser.add_argument('-g', '--generate',action='store_true', help='line_name ex: "Melendez" or "Zednelem".')
    parser.add_argument('args', nargs='+', help='An outfit with ".xml" or ".mvx" extension, else will be ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
