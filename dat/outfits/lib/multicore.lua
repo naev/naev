@@ -4,7 +4,6 @@ local multicore = {}
 local shipstat = naev.shipstats()
 
 local fmt = require "format"
---local tfs = require "tfs"
 
 local multiengines = require "outfits/lib/multiengines"
 local is_mobility = multiengines.is_mobility
@@ -202,8 +201,17 @@ function multicore.init( params )
          end
       end
 
-      if o and o:slotExtra()==nil then
-         desc = desc .. '\n#bThis outfit can only be equipped as #rprimary#b.#0'
+      if o then
+         local se = o:slotExtra()
+         if se == nil then
+            desc = desc .. '\n#bThis outfit can only be equipped as #rprimary#b.#0'
+         else
+            local _slot_name, _slot_size, slot_prop = o:slot()
+            local i, j = string.find(se, "([^ ]+)")
+            if i ~= 1 or string.sub(se,i,j) ~= slot_prop then
+               desc = desc .. '\n#bThis outfit can only be equipped as #ysecondary#b.#0'
+            end
+         end
       end
       return desc
    end
