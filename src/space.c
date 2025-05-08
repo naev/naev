@@ -2380,7 +2380,6 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    xmlDocPtr    doc;
    xmlNodePtr   node, parent;
    unsigned int flags;
-   Commodity  **comms;
 
    doc = xml_parsePhysFS( filename );
    if ( doc == NULL )
@@ -2396,7 +2395,6 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    /* Set defaults. */
    spob_initDefaults( spob );
    flags = 0;
-   comms = array_create( Commodity * );
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
@@ -2535,20 +2533,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
                      WARN( _( "Spob '%s' has unknown services tag '%s'" ),
                            spob->name, ccur->name );
                } while ( xml_nextNode( ccur ) );
-            }
 
-            else if ( xml_isNode( cur, "commodities" ) ) {
-               xmlNodePtr ccur = cur->children;
-               do {
-                  if ( xml_isNode( ccur, "commodity" ) ) {
-                     /* If the commodity is standard, don't re-add it. */
-                     Commodity *com = commodity_get( xml_get( ccur ) );
-                     if ( commodity_isFlag( com, COMMODITY_FLAG_STANDARD ) )
-                        continue;
-
-                     array_push_back( &comms, com );
-                  }
-               } while ( xml_nextNode( ccur ) );
             } else if ( xml_isNode( cur, "blackmarket" ) ) {
                spob_addService( spob, SPOB_SERVICE_BLACKMARKET );
                continue;
@@ -2656,16 +2641,10 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
             spob_addCommodity( spob, stdList[i] );
       }
 
-      /* Now add extra commodities */
-      for ( int i = 0; i < array_size( comms ); i++ )
-         spob_addCommodity( spob, comms[i] );
-
       /* Shrink to minimum size. */
       array_shrink( &spob->commodities );
       array_shrink( &spob->commodityPrice );
    }
-   /* Free temporary comms list. */
-   array_free( comms );
 
    xmlFreeDoc( doc );
 
