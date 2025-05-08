@@ -13,7 +13,7 @@ genmvx = custom_target('@PLAINNAME@.mvx',
    command : xml2mvx,
    input : '@PLAINNAME@.xml',
    output : '@PLAINNAME@.mvx',
-   arguments : ['@INPUT@', '@OUTPUT@']
+   command : [xml2mvx, '@INPUT@', '@OUTPUT@']
 )
 
 bio_outfits = [
