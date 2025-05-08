@@ -3,7 +3,6 @@
 #TODO
 # - have properly detect outfits that can't be secondary
 # - Manage Krain restrictions
-# - use differentiated lines like outfits2md
 
 from getconst import PHYSICS_SPEED_DAMP
 
@@ -93,21 +92,28 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
    L=[(o.to_dict(),o.shortname()) for o in L]
    L.sort(key=key,reverse=True)
 
-   greyit=(lambda s:s.replace('|','\033[30;1m|\033[0m')) if color else (lambda s:s)
    if color:
-      C=['drift \nspeed ','max   \nspeed ','accel \n      ','fullsp\n(s)   ','fullsp\n(km)  ','turn  \n      ','turn  \nradius','half  \nturn (s)']
+      altgrey='\033[34m'
+      grey='\033[30;1m'
+      greyit=lambda s:s.replace('|',grey+'|\033[0m')
+      C=['drift \nspeed ','max   \nspeed ','accel \n      ','fullsp\n(s)   ','fullsp\n(km)  ','turn  \n(°/s) ','turn  \nradius','1/2turn\n(s)    ']
    else:
       C=['dr.sp.','max sp','accel ','fsp(s)','fsp.km',' turn ','radius','1/2 turn (s)']
    N=max([0]+[len(n) for (_,n) in L]) if not gith else 0
    if color:
       C=[tuple(s.split('\n')) for s in C]
-      lin='| '+(N)*' '+' | '+' | '.join([a for (a,b) in C])
+      lin='  '+(N)*' '+' | '+' | '.join([a for (a,b) in C])
       out(greyit(lin))
       C=[b for (a,b) in C]
-   out(greyit('| '+(N)*' '+' | '+' | '.join(C)))
+   acc='| '+(N)*' '+' | '+' | '.join(C)
+   if color:
+      acc=' '+acc[1:]
+      acc=greyit(acc)
+   out(acc)
    lin='| ---'+(N-3)*'-'+' '+len(C)*('| ---'+('---' if not gith else '')+' ')
    if color:
-      lin="\033[30;1m"+lin+"\033[0m"
+      lin=altgrey+lin+"\033[0m"
+      count=0
    out(lin)
    for k,n in L:
       if accel(k)!=0:
@@ -117,7 +123,13 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
          acc+=l(fmt(turntime(k)))
          if gith:
             acc=acc.replace('  ',' ').replace('  ',' ')
-         out(greyit(acc))
+         elif color:
+            acc=greyit(acc)
+            if (count%4)==3:
+               acc=acc.replace(grey,altgrey)
+               #acc=acc.replace('|','+')
+            count+=1
+         out(acc)
 
 if __name__ == '__main__':
    import argparse

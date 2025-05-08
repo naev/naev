@@ -96,8 +96,8 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
    length=[4]*len(names) # :--- at least 3 - required
 
    if ter:
-      Sep,SepAlt,Lm,Rm,LM,RM='\033[30;1m|\033[0m','\033[30;1m+\033[0m',"\033[31m","\033[37m","\033[32m","\033[37m"
-      mk_pad =lambda i,n:"\033[30;1m"+n*'-'+"\033[0m"
+      Sep,SepAlt,Lm,Rm,LM,RM='\033[30;1m|\033[0m','\033[34m|\033[0m',"\033[31m","\033[37m","\033[32m","\033[37m"
+      mk_pad =lambda i,n:"\033[34m"+n*'-'+"\033[0m"
       leng=lambda x:len(x)- (10 if x!='' and x[0]=='\033' else 0)
    else:
       Sep,SepAlt,Lm,Rm,LM,RM='|','|',"_","_","**","**"
@@ -135,8 +135,11 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
 
    print
    for t in head:
-      print(mklin(map(fmt,zip(t,length))))
-   print(mklin([mk_pad(i,n) for i,n in enumerate(length)]))
+      acc=mklin(map(fmt,zip(t,length)))
+      if ter:
+         acc=' '+acc[len(Sep):]
+      print(acc)
+   print(mklinalt(True)([mk_pad(i,n) for i,n in enumerate(length)]))
 
    count = 0
    for r in Res:
