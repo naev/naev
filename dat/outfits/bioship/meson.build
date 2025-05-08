@@ -8,6 +8,14 @@ bio_dir = ndata_path / 'dat/outfits/bioship'
 #    BioOutfit( "foo.xml.template", {...} ).run( [N_(nice_name_of_output_1), ... ] )
 # We're discussing ideas about how to reduce this duplication. For now, the build rules and generate.py blocks MUST MATCH.
 
+xml2mvx = find_program('utils/outfits/xmllua2mvx.py')
+genmvx = custom_target('@PLAINNAME@.mvx',
+   command : xml2mvx,
+   input : '@PLAINNAME@.xml',
+   output : '@PLAINNAME@.mvx',
+   arguments : ['@INPUT@', '@OUTPUT@']
+)
+
 bio_outfits = [
    custom_target('perlevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
       depend_files: files('../core_engine/small/tricon_zephyr_engine.mvx'),
