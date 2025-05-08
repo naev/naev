@@ -16,8 +16,8 @@ require("outfits.lib.multicore").init{
    { "cpu_max", 16, 47},
    { "shield", 180, 45},
    { "shield_regen", 6, 1},
-   { "energy", 250, 250},
-   { "energy_regen", 12, 12},
+   { "energy", 250},
+   { "energy_regen", 12},
 }</lua_inline>
  </specific>
 </outfit>

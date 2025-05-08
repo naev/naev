@@ -117,7 +117,7 @@ function multicore.init( params )
       s.index = index(shipstat, s[1])
       s.stat = shipstat[ s.index ]
       s.name = s.stat.name
-      s.pri, s.sec = s[2], s[3]
+      s.pri, s.sec = s[2], s[3] or s[2]
       -- force engine_limit to be last in order
       if s.name == "engine_limit" then
          s.index = #shipstat + 1

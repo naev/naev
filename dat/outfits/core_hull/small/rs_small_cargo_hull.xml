@@ -12,7 +12,7 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 28, 28},
+   { "mass", 28},
    { "cpu", -24, 0},
    { "cargo", 14, 6},
    { "absorb", 3, 7},

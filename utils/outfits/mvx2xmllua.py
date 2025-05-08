@@ -36,7 +36,7 @@ def _process_group(r,field):
 
       if t == 'price':
          e.text=fmt(round((a+b)/2,-2))
-      elif t=='priority' and a==b:
+      elif t in keep_in_xml and a==b:
          continue
       else:
          if a==b:
@@ -49,21 +49,21 @@ def _process_group(r,field):
    return needs_lua,acc,torem,is_engine
 
 def _mklua(L):
-   mods=''
-   ind=3*' '
-
    if L==[]:
       return '\n'
 
+   ind=3*' '
    output='\nrequire("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
       if nam not in keep_in_xml:
          output+=ind+'{ "'+nam+'",'+' '
-         output+=fmt(main)+','+' '
-         output+=fmt(sec)+'},'+'\n'
+         output+=fmt(main)
+         if main!=sec:
+            output+=','+' '+fmt(sec)
+         output+='},'+'\n'
 
-   return output+mods+'}\n'
+   return output+'}\n'
 
 def toxmllua(o):
    T,R=o.T,o.r
@@ -79,7 +79,7 @@ def toxmllua(o):
          break
       break
 
-   if (not f1) and (not f2) and not found:
+   if (not f1) and (not e1) and (not f2) and (not e2) and not found:
       tr1=tr2=[]
       acc1=acc2=[]
 

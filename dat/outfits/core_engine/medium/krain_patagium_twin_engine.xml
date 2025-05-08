@@ -12,13 +12,13 @@
  <specific type="modification">
   <lua_inline>
 require("outfits.lib.multicore").init{
-   { "mass", 10, 10},
-   { "energy_regen_malus", 11, 11},
-   { "engine_limit", 475, 475},
+   { "mass", 10},
+   { "energy_regen_malus", 11},
+   { "engine_limit", 475},
    { "fuel", 800, 200},
-   { "speed", 201, 201},
-   { "accel", 109, 109},
-   { "turn", 108, 108},
+   { "speed", 201},
+   { "accel", 109},
+   { "turn", 108},
 }
 require "outfits.lib.twins"</lua_inline>
  </specific>
