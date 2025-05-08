@@ -8,19 +8,22 @@
   <description>This core system is easily recognizable as the work of some amateurs, with sloppy wiring and dangerously exposed internals. However, unlike mass manufactured cores, you can tell that a lot of love and care has gone into developing the unit. While the shield and computation power are less than most similar cores, it has significantly better developed functionality in other areas.</description>
   <gfx_store>core_system_power_s1.webp</gfx_store>
   <priority>3</priority>
-  <mass>10</mass>
  </general>
  <specific type="modification">
-  <cpu_max>10</cpu_max>
-  <energy>140</energy>
-  <energy_regen>7</energy_regen>
-  <shield>130</shield>
-  <shield_regen>4</shield_regen>
-  <ew_detect>15</ew_detect>
-  <cooldown_time>-25</cooldown_time>
-  <jump_warmup>-60</jump_warmup>
-  <land_delay>-25</land_delay>
-  <jump_delay>-25</jump_delay>
-  <ew_hide>-20</ew_hide>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 10},
+   { "cpu_max", 10},
+   { "energy", 140},
+   { "energy_regen", 7},
+   { "shield", 130},
+   { "shield_regen", 4},
+   { "ew_detect", 15},
+   { "cooldown_time", -25},
+   { "jump_warmup", -60},
+   { "land_delay", -25},
+   { "jump_delay", -25},
+   { "ew_hide", -20},
+}</lua_inline>
  </specific>
 </outfit>

@@ -20,8 +20,6 @@ def sfmt(f):
       return res;
 
 def _process_group(r,field):
-   needs_lua=False
-   is_engine=False
    acc=[]
    r=r.find(field)
    torem=[]
@@ -30,8 +28,6 @@ def _process_group(r,field):
       try:
          a,b=text2val(e.text)
       except:
-         if t == 'slot' and e.attrib['prop']=='engines':
-            is_engine=True
          continue
 
       if t == 'price':
@@ -41,17 +37,12 @@ def _process_group(r,field):
       else:
          if a==b:
             e.text=fmt(a)
-         else:
-            needs_lua=True
          acc.append((t,(a,b)))
          torem.append((r,e))
 
-   return needs_lua,acc,torem,is_engine
+   return acc,torem
 
 def _mklua(L):
-   if L==[]:
-      return '\n'
-
    ind=3*' '
    output='\nrequire("outfits.lib.multicore").init{\n'
 
@@ -68,8 +59,8 @@ def _mklua(L):
 def toxmllua(o):
    T,R=o.T,o.r
 
-   f1,acc1,tr1,e1=_process_group(R,'./general')
-   f2,acc2,tr2,e2=_process_group(R,'./specific')
+   acc1,tr1=_process_group(R,'./general')
+   acc2,tr2=_process_group(R,'./specific')
 
    found=False
    for e in R.findall('./specific'):
@@ -79,26 +70,21 @@ def toxmllua(o):
          break
       break
 
-   if (not f1) and (not e1) and (not f2) and (not e2) and not found:
-      tr1=tr2=[]
-      acc1=acc2=[]
+   for (r,e) in tr1+tr2:
+      r.remove(e)
 
-   if f1 or f2 or e1 or e2:
-      for (r,e) in tr1+tr2:
-         r.remove(e)
-
-      el=None
-      for e in R.findall('./specific'):
-         for elt in e:
-            if elt.tag=="lua_inline":
-               el=elt
-               break
-         if el is None:
-            el=ET.Element("lua_inline")
-            el.text=''
-            e.append(el)
-         el.text=_mklua(acc1+acc2) + el.text
-         break
+   el=None
+   for e in R.findall('./specific'):
+      for elt in e:
+         if elt.tag=="lua_inline":
+            el=elt
+            break
+      if el is None:
+         el=ET.Element("lua_inline")
+         el.text=''
+         e.append(el)
+      el.text=_mklua(acc1+acc2) + el.text
+      break
 
 if __name__ == '__main__':
    import argparse

@@ -138,7 +138,7 @@ function multicore.init( params )
 
 
    -- Below define the global functions for the outfit
-   function descextra( p, _o, po )
+   function descextra( p, o, po )
       local nomain, nosec = false, false
       if po then
          if is_secondary(po) then
@@ -200,6 +200,10 @@ function multicore.init( params )
                desc = desc .. "  #y=>#0  #g+" .. fmt.number((smid[s.name] or 0)*share/100) .. " " .. s.stat.unit .. "#0\n"
             end
          end
+      end
+
+      if o and o:slotExtra()==nil then
+         desc = desc .. '\n#bThis outfit can only be equipped as #rprimary#b.#0'
       end
       return desc
    end
