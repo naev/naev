@@ -104,7 +104,7 @@ You see a shady character with clearly bloodshot eyes.]]))
    vn.menu{
       {_([[Shoot to kill.]]), "kill"},
       {_([[Shoot at the roof.]]), "03_roof"},
-      {_([["What do you have here?"]]), "03_what"},
+      {_([["What do you have here?"]]), "04_what"},
    }
 
    vn.label("03_roof")
