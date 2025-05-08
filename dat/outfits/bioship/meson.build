@@ -9,8 +9,7 @@ bio_dir = ndata_path / 'dat/outfits/bioship'
 # We're discussing ideas about how to reduce this duplication. For now, the build rules and generate.py blocks MUST MATCH.
 
 xml2mvx = find_program('../../../utils/outfits/xmllua2mvx.py')
-genmvx = custom_target('@PLAINNAME@.mvx',
-   command : xml2mvx,
+genmvx = custom_target('dummy',
    input : '@PLAINNAME@.xml',
    output : '@PLAINNAME@.mvx',
    command : [xml2mvx, '@INPUT@', '@OUTPUT@']
