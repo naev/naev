@@ -23,6 +23,7 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
    if args==[]:
       return 0
 
+   sec_args=[]
    if comb or autostack:
       for i in args:
          if i[:2]=='2x' or i[-2:]=='x2':
@@ -30,14 +31,16 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
          elif '+' in i:
             stderr.write('"+"')
          else:
+            if outfit(i).can_sec():
+               sec_args.append(i)
             continue
          stderr.write(' incompatible with -A/-C options\n')
          return 1
 
    if comb:
-      args=[i+'+'+j for i in args for j in args]
+      args=[i+'+'+j for i in args for j in sec_args]
    elif autostack:
-      args=args+['2x'+i for i in args]
+      args=args+['2x'+i for i in sec_args]
 
    names=['']*len(args)
    L=[dict() for a in args]

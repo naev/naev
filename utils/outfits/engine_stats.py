@@ -60,6 +60,7 @@ def l(s):
    return ' | '+(3-len(a))*' '+a+m+b+(2-len(b))*' '
 
 def main(args, gith=False, color=False, autostack=False, combine=False):
+   sec_args=[]
    if combine or autostack:
       for i in args:
          if i[:2]=='2x' or i[-2:]=='x2':
@@ -67,13 +68,15 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
          elif '+' in i:
             stderr.write('"+"')
          else:
+            if outfit(i).can_sec():
+               sec_args.append(i)
             continue
          stderr.write(' incompatible with -A/-C options\n')
          return 1
    if combine:
-      args=args+[i+'+'+j for i in args for j in args]
+      args=args+[i+'+'+j for i in args for j in sec_args]
    elif autostack:
-      args=args+['2x'+i for i in args]
+      args=args+['2x'+i for i in sec_args]
 
    L=[]
    for i in range(len(args)):

@@ -69,6 +69,8 @@ def unstackvals(tag,text1,text2,eml1,eml2):
 
 class _outfit():
    def __init__(self,fil):
+      self.sec=None
+
       if type(fil)==type(""):
          if fil=="-":
             fp=stdin
@@ -107,6 +109,14 @@ class _outfit():
                return 2*i+(2 if doubled else 1)
       except:
          pass
+
+   def can_sec(self):
+      if self.sec==None:
+         for k in self:
+            if k.tag=='slot':
+               self.sec='prop_extra' in k.attrib and k.attrib['prop_extra'].find('secondary')!=None
+               break
+      return self.sec
 
    def eml(self):
       try:
