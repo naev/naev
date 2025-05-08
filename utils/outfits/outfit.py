@@ -114,7 +114,7 @@ class _outfit():
       if self.sec==None:
          for k in self:
             if k.tag=='slot':
-               self.sec='prop_extra' in k.attrib and k.attrib['prop_extra'].find('secondary')!=None
+               self.sec='prop_extra' in k.attrib and k.attrib['prop_extra'].find('secondary')!=-1
                break
       return self.sec
 
@@ -124,6 +124,15 @@ class _outfit():
       except:
          res=None
       return res
+
+   def can_alone(self):
+      return self.name().find('Twin')==-1
+
+   def can_stack(self,other):
+      return(
+         (self.name()==other.name() and self.name().find('Twin')!=-1) or
+         (self.name().split(' ')[0]!='Krain' and other.name().split(' ')[0]!='Krain')
+      )
 
    def stack(self,other):
       if self.shortname() == other.shortname():

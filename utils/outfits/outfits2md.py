@@ -42,9 +42,9 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
    elif autostack:
       args=args+['2x'+i for i in sec_args]
 
-   names=['']*len(args)
-   L=[dict() for a in args]
    rang=dict()
+   L=[]
+   names=[]
    acc=[]
 
    for i in range(len(args)):
@@ -55,9 +55,13 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
       if len(args[i].split('+'))==2:
          o,o2=args[i].split('+')
          o,o2=outfit(o.strip()),outfit(o2.strip())
+         if not o.can_stack(o2):
+            continue
          o.stack(o2)
       else:
          o=outfit(args[i])
+         if not o.can_alone():
+            continue
 
       d=o.to_dict()
       for k,v in d.items():
@@ -70,7 +74,7 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
          else:
             continue
 
-         L[i][k]=s
+         d[k]=s
          if k not in rang:
             rang[k]=(val,val)
             acc.append(k)
@@ -78,7 +82,8 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
             (mi,ma)=rang[k]
             rang[k]=(min(mi,val),max(ma,val))
 
-      names[i]=o.shortname()
+      names.append(o.shortname())
+      L.append(d)
 
    for i,t in rang.items():
       (m,M)=t
@@ -147,7 +152,7 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
    count = 0
    for r in Res:
       r=[r[0].replace("_"," ")]+[emph(k,rang[r[0]]) for k in r[1:]]
-      print(mklinalt(count%4==3)([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))]))
+      print(mklinalt(count%3==2)([fmt(x) if i>0 else lfmt(x) for i,x in enumerate(zip(r,length))]))
       count+=1
    return 0
 

@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-#TODO
-# - have properly detect outfits that can't be secondary
-# - Manage Krain restrictions
-
 from getconst import PHYSICS_SPEED_DAMP
 
 from outfit import outfit
@@ -87,9 +83,13 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
       if len(args[i].split('+'))==2:
          o,o2=args[i].split('+')
          o,o2=outfit(o.strip()),outfit(o2.strip())
+         if not o.can_stack(o2):
+            continue
          o.stack(o2)
       else:
          o=outfit(args[i])
+         if not o.can_alone():
+            continue
       L.append(o)
 
    L=[(o.to_dict(),o.shortname()) for o in L]
@@ -128,9 +128,8 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
             acc=acc.replace('  ',' ').replace('  ',' ')
          elif color:
             acc=greyit(acc)
-            if (count%4)==3:
+            if (count%3)==2:
                acc=acc.replace(grey,altgrey)
-               #acc=acc.replace('|','+')
             count+=1
          out(acc)
 
