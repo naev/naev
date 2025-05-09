@@ -1299,13 +1299,14 @@ PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name )
 double pilot_massFactor( const Pilot *pilot )
 {
    double mass = pilot->solid.mass;
-   if ( ( pilot->stats.engine_limit > 0. ) &&
-        ( mass > pilot->stats.engine_limit ) ) {
-      double f =
-         ( mass - pilot->stats.engine_limit ) / pilot->stats.engine_limit;
-      return 1. / ( 1. + f + f + 4. * pow( f, 3. ) );
-   } else if ( pilot->stats.engine_limit <= 0. )
-      return 0.;
+   if ( mass > pilot->stats.engine_limit ) {
+      if ( pilot->stats.engine_limit > 0. ) {
+         double f =
+            ( mass - pilot->stats.engine_limit ) / pilot->stats.engine_limit;
+         return 1. / ( 1. + f + f + 4. * pow( f, 3. ) );
+      } else
+         return 0.;
+   }
    return 1.;
 }
 
