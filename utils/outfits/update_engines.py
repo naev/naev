@@ -19,9 +19,9 @@ line_stats = {
         "ratio" : 1.4,
     },
     "Krain" : {
-        "speed_rank_offset" : -0.3,    # Between this size and size-1
+        "speed_rank_offset" : -0.35,    # Between this size and size-1
         "ratio" : 1.1,
-        "turn" : 1.1
+        "turn" : 1.05
     },
     "Nexus" : {
         "speed_rank_offset" : +0.15,   # Pretty good but slightly slower top speed than Melendez and Tricon
