@@ -19,6 +19,12 @@ def keyfunc(s):
          return None
    return key
 
+def nfmt(n):
+   f=float(n)
+   if f==round(f):
+      f=int(f)
+   return str(f)
+
 def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb=False):
    if args==[]:
       return 0
@@ -67,10 +73,10 @@ def main(args,gith=False,ter=False,noext=False,sortit=False,autostack=False,comb
       for k,v in d.items():
          if type(v) == type((1.0,)):
             (val,_)=v
-            s=str(int(v[0]))+'/'+str(int(v[1]))
+            s=nfmt(v[0])+'/'+nfmt(v[1])
          elif type(v) == type(1.0):
             val=v
-            s=str(int(v))
+            s=nfmt(v)
          else:
             continue
 
@@ -199,3 +205,5 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
       print('sorted by "'+str(sortby)+'"',file=stderr,flush=True)
 
    main([f for f in args.filename if f not in ign],args.github,args.color,args.nomax,sortby,args.autostack,args.combinations)
+else:
+   raise Exception("This module is only intended to be used as main.")
