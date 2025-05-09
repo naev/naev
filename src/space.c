@@ -2518,11 +2518,14 @@ static int spob_parse( Spob *spob, const char *filename )
                      WARN( _( "Spob '%s' has unknown services tag '%s'" ),
                            spob->name, ccur->name );
                } while ( xml_nextNode( ccur ) );
+               continue;
 
             } else if ( xml_isNode( cur, "blackmarket" ) ) {
                spob_addService( spob, SPOB_SERVICE_BLACKMARKET );
                continue;
             }
+            WARN( "Spob '%s' has unknown tag '%s' in <general>", spob->name,
+                  cur->name );
          } while ( xml_nextNode( cur ) );
          continue;
       } else if ( xml_isNode( node, "tech" ) ) {
