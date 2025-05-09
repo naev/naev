@@ -8,10 +8,10 @@
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 2202 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_s1.webp</gfx_store>
   <priority>3</priority>
-  <mass>12/58</mass>
+  <mass>12/43</mass>
  </general>
  <specific type="modification">
-  <cpu_max>24/51</cpu_max>
+  <cpu_max>24/66</cpu_max>
   <energy>180</energy>
   <energy_regen>8</energy_regen>
   <shield>180/45</shield>
