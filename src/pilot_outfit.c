@@ -1182,6 +1182,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot->accel_base *= s->accel_mod;
    pilot->turn_base *= s->turn_mod;
    pilot->speed_base *= s->speed_mod;
+   pilot->solid.aerodynamics = s->speed_mod;
    /* Health. */
    pilot->armour_max *= s->armour_mod;
    pilot->armour_regen *= s->armour_regen_mod;

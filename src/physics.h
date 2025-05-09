@@ -42,15 +42,15 @@ extern const char _UNIT_PERCENT[];
  * @brief Represents a solid in the game.
  */
 typedef struct Solid_ {
-   double mass;      /**< Solid's mass. */
-   double dir;       /**< Direction solid is facing in rad. */
-   double dir_vel;   /**< Velocity at which solid is rotating in rad/s. */
-   vec2   vel;       /**< Velocity of the solid. */
-   vec2   pos;       /**< Position of the solid. */
-   vec2   pre;       /**< Previous position of the solid. For collisions. */
-   double accel;     /**< Relative X acceleration, basically simplified for our
-                        model. */
-   double speed_max; /**< Maximum speed. */
+   double mass;         /**< Solid's mass. */
+   double dir;          /**< Direction solid is facing in rad. */
+   double dir_vel;      /**< Velocity at which solid is rotating in rad/s. */
+   vec2   vel;          /**< Velocity of the solid. */
+   vec2   pos;          /**< Position of the solid. */
+   vec2   pre;          /**< Previous position of the solid. For collisions. */
+   double accel;        /**< Relative X acceleration, basically simplified for our model. */
+   double speed_max;    /**< Maximum *drift* speed. */
+   double aerodynamics; /**< A factor that *divides* the over-the-max opposing force */
    void ( *update )( struct Solid_ *, double ); /**< Update method. */
 } Solid;
 
