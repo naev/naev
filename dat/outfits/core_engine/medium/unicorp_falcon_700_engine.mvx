@@ -12,8 +12,8 @@
  </general>
  <specific type="modification">
   <accel>130/32</accel>
-  <turn>108/48</turn>
-  <speed>212/122</speed>
+  <turn>107/49</turn>
+  <speed>211/121</speed>
   <fuel>1000/200</fuel>
   <energy_regen_malus>8/12</energy_regen_malus>
   <engine_limit>700</engine_limit>

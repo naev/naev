@@ -24,15 +24,15 @@ line_stats = {
         "turn" : 1.1
     },
     "Nexus" : {
-        "speed_rank_offset" : +0.10,   # Pretty good but slightly slower top speed than Melendez and Tricon
+        "speed_rank_offset" : +0.15,   # Pretty good but slightly slower top speed than Melendez and Tricon
         "ratio" : 1.0,
     },
     "Melendez" : {
-        "speed_rank_offset" : +0.08,
+        "speed_rank_offset" : +0.15,
         "ratio" : 0.5,
     },
     "Unicorp" : {
-        "speed_rank_offset" : +0.44,
+        "speed_rank_offset" : +0.45,
         "ratio" : 1.0,
     },
     "Za'lek" : { # TODO make these change over time the profile via Lua

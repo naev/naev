@@ -11,9 +11,9 @@
   <mass>50/15</mass>
  </general>
  <specific type="modification">
-  <accel>49/10</accel>
+  <accel>48/11</accel>
   <turn>55/22</turn>
-  <speed>126/63</speed>
+  <speed>126/61</speed>
   <fuel>2400/400</fuel>
   <energy_regen_malus>18/22</energy_regen_malus>
   <engine_limit>3000/3500</engine_limit>
