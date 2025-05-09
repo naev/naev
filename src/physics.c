@@ -230,7 +230,7 @@ static void solid_update_rk4( Solid *obj, double dt )
  */
 double solid_maxspeed( const Solid *s, double speed, double accel )
 {
-   // Why not using s->speed_max instead of speed ???
+   // s->speed_max can get overwritten to limit speed. Here we want the true max_speed.
    return speed + accel * s->aerodynamics / CTS.PHYSICS_SPEED_DAMP;
 }
 
