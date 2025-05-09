@@ -27,6 +27,7 @@ def field(a,f):
 
 accel=lambda a:field(a,'accel')
 speed=lambda a:field(a,'speed')
+eml=lambda a:field(a,'engine_limit')
 turn=lambda a:field(a,'turn')
 
 maxspeed=lambda a:speed(a)+accel(a)/PHYSICS_SPEED_DAMP
@@ -42,6 +43,10 @@ def key(A):
 
 def fmt(f):
    return round(f,2)
+
+def fmt4(n):
+   s=str(n)
+   return (4-len(s))*' '+' '+s+' '
 
 def l(s):
    if int(s)==s:
@@ -99,9 +104,11 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
       altgrey='\033[34m'
       grey='\033[30;1m'
       greyit=lambda s:s.replace('|',grey+'|\033[0m')
-      C=['drift \nspeed ','max   \nspeed ','accel \n      ','fullsp\n(s)   ','fullsp\n(km)  ','turn  \n(°/s) ','turn  \nradius','1/2turn\n(s)    ']
+      C=['eml   \n(t)   ','drift \nspeed ','max   \nspeed ','accel \n      ','fullsp\n(s)   ','fullsp\n(km)  ','turn  \n(°/s) ','turn  \nradius','1/2turn\n(s)    ']
+   elif gith:
+      C=['eml (t)','drift speed ','max speed','accel','fullsp (s)','fullsp (km)','turn (°/s)','turn radius','1/2turn (s)']
    else:
-      C=['dr.sp.','max sp','accel ','fsp(s)','fsp.km',' turn ','radius','1/2 turn (s)']
+      C=[' eml  ','dr.sp.','max sp','accel ','fsp(s)','fsp.km',' turn ','radius','1/2 turn (s)']
    N=max([0]+[len(n) for (_,n) in L]) if not gith else 0
    if color:
       C=[tuple(s.split('\n')) for s in C]
@@ -121,7 +128,8 @@ def main(args, gith=False, color=False, autostack=False, combine=False):
    for k,n in L:
       if accel(k)!=0:
          nam=n + ((N-len(n))*' ' if not gith else '')
-         acc='| '+nam+l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
+         acc='| '+nam+' | '+fmt4(int(eml(k)))
+         acc+=l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
          acc+=l(fmt(fullsptime(k)))+l(fmt(fullspdist(k)))+l(turn(k))+l(radius(k))
          acc+=l(fmt(turntime(k)))
          if gith:

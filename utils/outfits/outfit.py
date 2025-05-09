@@ -13,10 +13,18 @@ def nam2fil(s):
    return s.lower()
 
 def shorten(s):
-   for w in s.split(' '):
-      if w[1:2]!='.':
-         return w
-   return s
+   L = s.split(' ')
+   while L!=[] and L[0][1:2]=='.':
+      L=L[1:]
+
+   if L==[]:
+      return '???'
+   elif L[0]=='Beat':
+      if L[2]=='Medium':
+         L[2]='Med.'
+      return 'B.'+L[2]
+   else:
+      return L[0]
 
 def text2val(s):
    try:
@@ -98,6 +106,8 @@ class _outfit():
          res=self.to_dict()['shortname']
       except:
          res=self.name()
+      if res.split(' ')[-1]=='Engine':
+         res=' '.join(res.split(' ')[:-1])
       self.short=res
       return res
 
