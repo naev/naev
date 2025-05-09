@@ -194,7 +194,7 @@ function multicore.init( params )
          })
          for _k,s in ipairs(stats) do
             if is_mobility[s.name] and s.name~="engine_limit" then
-               desc = desc .. fmt.f(_("#g{display}:#0 #b+{val} {unit}#0"),{
+               desc = desc .. fmt.f(_("#g{display}: #b+{val} {unit}#0"),{
                   display = s.stat.display, unit = s.stat.unit, val = fmt.number(smid[s.name] or 0) })
                desc = desc .. "  #y=>#0  #g+" .. fmt.number((smid[s.name] or 0)*share/100) .. " " .. s.stat.unit .. "#0\n"
             end
@@ -204,12 +204,12 @@ function multicore.init( params )
       if o then
          local se = o:slotExtra()
          if se == nil then
-            desc = desc .. '\n#bThis outfit can only be equipped as #rprimary#b.#0'
+            desc = desc .. '\n#b'.._('This outfit can only be equipped as #rprimary#b.')..'#0'
          else
             local _slot_name, _slot_size, slot_prop = o:slot()
             local i, j = string.find(se, "([^ ]+)")
             if i ~= 1 or string.sub(se,i,j) ~= slot_prop then
-               desc = desc .. '\n#bThis outfit can only be equipped as #ysecondary#b.#0'
+               desc = desc .. '\n#b'.._('This outfit can only be equipped as #ysecondary#b.')..'#0'
             end
          end
       end
