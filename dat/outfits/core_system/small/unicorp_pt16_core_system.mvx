@@ -8,7 +8,7 @@
   <description>The PT-16 is a modest but to-spec core system offering reasonable, all-round performance for small vessels.</description>
   <gfx_store>core_system_basic_s1.webp</gfx_store>
   <priority>3</priority>
-  <mass>8/57</mass>
+  <mass>8/42</mass>
  </general>
  <specific type="modification">
   <cpu_max>16/52</cpu_max>

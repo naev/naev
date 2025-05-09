@@ -11,7 +11,7 @@
   <mass>12/58</mass>
  </general>
  <specific type="modification">
-  <cpu_max>24/66</cpu_max>
+  <cpu_max>24/51</cpu_max>
   <energy>180</energy>
   <energy_regen>8</energy_regen>
   <shield>180/45</shield>

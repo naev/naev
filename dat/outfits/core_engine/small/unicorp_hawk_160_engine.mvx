@@ -16,6 +16,6 @@
   <speed>296/224</speed>
   <fuel>400/100</fuel>
   <energy_regen_malus>3/4</energy_regen_malus>
-  <engine_limit>160/200</engine_limit>
+  <engine_limit>160/185</engine_limit>
  </specific>
 </outfit>

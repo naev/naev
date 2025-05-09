@@ -16,7 +16,7 @@
   <speed>355/263</speed>
   <fuel>500/100</fuel>
   <energy_regen_malus>3/4</energy_regen_malus>
-  <engine_limit>200/250</engine_limit>
+  <engine_limit>200/235</engine_limit>
   <land_delay>-25/0</land_delay>
   <time_mod>10/0</time_mod>
  </specific>

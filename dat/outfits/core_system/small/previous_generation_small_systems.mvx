@@ -7,7 +7,7 @@
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>apu.webp</gfx_store>
-  <mass>18/60</mass>
+  <mass>18/45</mass>
  </general>
  <specific type="modification">
   <cpu_max>10/20</cpu_max>

@@ -12,7 +12,7 @@
 require("outfits.lib.multicore").init{
    { "mass", 15},
    { "energy_regen_malus", 4, 8},
-   { "engine_limit", 100, 120},
+   { "engine_limit", 100, 105},
    { "fuel", 200, 100},
    { "speed", 304, 218},
    { "accel", 200, 77},

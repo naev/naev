@@ -18,7 +18,7 @@ require("outfits.lib.multicore").init{
    { "speed", 355, 263},
    { "fuel", 500, 100},
    { "energy_regen_malus", 3, 4},
-   { "engine_limit", 200, 250},
+   { "engine_limit", 200, 235},
    { "land_delay", -25, 0},
    { "time_mod", 10, 0},
 }</lua_inline>

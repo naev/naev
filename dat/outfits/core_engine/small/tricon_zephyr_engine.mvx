@@ -12,7 +12,7 @@
  </general>
  <specific type="modification">
   <energy_regen_malus>4/8</energy_regen_malus>
-  <engine_limit>140/180</engine_limit>
+  <engine_limit>140/165</engine_limit>
   <fuel>300/100</fuel>
   <speed>287/237</speed>
   <accel>452/198</accel>
