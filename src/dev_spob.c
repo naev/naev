@@ -128,6 +128,8 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elemEmpty( writer, "uninhabited" );
    if ( spob_isFlag( p, SPOB_NOLANES ) )
       xmlw_elemEmpty( writer, "nolanes" );
+   if ( spob_isFlag( p, SPOB_NOCOMMODITIES ) )
+      xmlw_elemEmpty( writer, "nocommodities" );
    xmlw_endElem( writer ); /* "services" */
    if ( p->description != NULL )
       xmlw_elem( writer, "description", "%s", p->description );
