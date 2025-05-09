@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-keep_in_xml=set(['priority','rarity'])
+keep_in_xml = set(['priority','rarity'])
 
 from sys import argv,stderr,stdin,stdout,exit
 
@@ -11,105 +11,105 @@ def fmt(f):
    return str(roundit(f))
 
 def sfmt(f):
-   res=fmt(f)
-   if res=="0":
+   res = fmt(f)
+   if res == "0":
       return "_"
-   elif res[0]!="-":
+   elif res[0] != "-":
       return "+"+res
    else:
       return res;
 
 def _process_group(r,field):
-   acc=[]
-   r=r.find(field)
-   torem=[]
+   acc = []
+   r = r.find(field)
+   torem = []
    for e in r.iter():
-      t=e.tag
+      t = e.tag
       try:
-         a,b=text2val(e.text)
+         a,b = text2val(e.text)
       except:
          continue
 
       if t == 'price':
-         e.text=fmt(round((a+b)/2,-2))
-      elif t in keep_in_xml and a==b:
+         e.text = fmt(round((a+b)/2,-2))
+      elif t in keep_in_xml and a == b:
          continue
       else:
-         if a==b:
-            e.text=fmt(a)
+         if a == b:
+            e.text = fmt(a)
          acc.append((t,(a,b)))
          torem.append((r,e))
 
    return acc,torem
 
 def _mklua(L):
-   ind=3*' '
-   output='\nrequire("outfits.lib.multicore").init{\n'
+   ind = 3*' '
+   output = '\nrequire("outfits.lib.multicore").init{\n'
 
    for (nam,(main,sec)) in L:
       if nam not in keep_in_xml:
-         output+=ind+'{ "'+nam+'",'+' '
-         output+=fmt(main)
-         if main!=sec:
-            output+=','+' '+fmt(sec)
-         output+='},'+'\n'
+         output += ind+'{ "'+nam+'",'+' '
+         output += fmt(main)
+         if main != sec:
+            output += ','+' '+fmt(sec)
+         output += '},'+'\n'
 
    return output+'}\n'
 
 def toxmllua(o):
-   T,R=o.T,o.r
+   T,R = o.T,o.r
 
-   acc1,tr1=_process_group(R,'./general')
-   acc2,tr2=_process_group(R,'./specific')
+   acc1,tr1 = _process_group(R,'./general')
+   acc2,tr2 = _process_group(R,'./specific')
 
-   found=False
+   found = False
    for e in R.findall('./specific'):
       for elt in e:
-         if elt.tag=="lua_inline":
-            found=True
+         if elt.tag == "lua_inline":
+            found = True
          break
       break
 
    for (r,e) in tr1+tr2:
       r.remove(e)
 
-   el=None
+   el = None
    for e in R.findall('./specific'):
       for elt in e:
-         if elt.tag=="lua_inline":
-            el=elt
+         if elt.tag == "lua_inline":
+            el = elt
             break
       if el is None:
-         el=ET.Element("lua_inline")
-         el.text=''
+         el = ET.Element("lua_inline")
+         el.text = ''
          e.append(el)
-      el.text=_mklua(acc1+acc2) + el.text
+      el.text = _mklua(acc1+acc2) + el.text
       break
 
 if __name__ == '__main__':
    import argparse
 
    def main(argin,argout):
-      o=outfit(argin)
+      o = outfit(argin)
       if o is None:
          return 1
       else:
-         nam=nam2fil(o.name())
+         nam = nam2fil(o.name())
 
          toxmllua(o)
-         stderr.write('mvx2xmllua'+': '+(nam if argout=="-" else argout)+'\n')
+         stderr.write('mvx2xmllua'+': '+(nam if argout == "-" else argout)+'\n')
          o.write(argout)
          return 0
 
    parser = argparse.ArgumentParser(
-      description=
+      description =
    """Takes an extended outfit as input and outputs a xml (potentially with inlined lua) on output.
 The name the output should have is written on <stderr>.
 If the input is invalid, nothing is written on stdout and stderr and non-zero is returned.
 The special values "-" mean stdin/stdout.
 """
    )
-   parser.add_argument('input', nargs='?', default="-")
-   parser.add_argument('output', nargs='?', default="-")
-   args=parser.parse_args()
+   parser.add_argument('input', nargs = '?', default = "-")
+   parser.add_argument('output', nargs = '?', default = "-")
+   args = parser.parse_args()
    exit(main(args.input,args.output))

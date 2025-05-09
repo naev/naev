@@ -33,14 +33,14 @@ def parse_lua_multicore(si):
    L = [t.groupdict() for t in re.finditer(block, match.group(3))]
    for d in L:
       if d['sec'] is None:
-         d['sec']=d['pri']
+         d['sec'] = d['pri']
    L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
 def do_it(argin,argout):
    o = outfit(argin)
    stderr.write('xmllua2mvx: '+o.name()+'\n')
-   d={'general':[], 'specific':[]}
+   d = {'general':[], 'specific':[]}
    fields, li = parse_lua_multicore(o.to_dict()['lua_inline'])
 
    for t in fields:
@@ -54,7 +54,7 @@ def do_it(argin,argout):
          for (a, b, c) in d[e.tag]:
             el = ET.Element(a)
             el.text = str(b)
-            if b!= c:
+            if b != c:
                el.text = el.text + '/' + str(c)
             e.append(el)
          if e.tag == 'specific':
@@ -66,18 +66,18 @@ def do_it(argin,argout):
             e.text = li.strip()
    o.write(argout)
 
-if __name__=="__main__":
+if __name__ == "__main__":
    import argparse
 
    parser = argparse.ArgumentParser(
-      description=
+      description =
    """Takes a xml outfit as input (potentially with inlined lua) and produces a mvx on output.
 The name the output should have is written on <stderr>.
 If the input is invalid, nothing is written on stdout and stderr and non-zero is returned.
 The special values "-" mean stdin/stdout.
 """
    )
-   parser.add_argument('input', nargs='?', default="-")
-   parser.add_argument('output', nargs='?', default="-")
-   args=parser.parse_args()
+   parser.add_argument('input', nargs = '?', default = "-")
+   parser.add_argument('output', nargs = '?', default = "-")
+   args = parser.parse_args()
    do_it(args.input,args.output)

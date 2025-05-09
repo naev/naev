@@ -14,8 +14,8 @@ sys.path.append( mymodule_dir )
 import outfit
 from sys import stderr,exit
 
-def get_outfit_dict(nam,doubled=False):
-   o=outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam))
+def get_outfit_dict(nam,doubled = False):
+   o = outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..',nam))
    if o is None:
       stderr.write('err '+nam)
       exit(1)
@@ -62,22 +62,22 @@ build = MesonBuild(*sys.argv[1:]) if sys.argv[2:3] == ['-o'] else Build()
 def lerpt( t ):
     return lambda x: t[int(math.floor(x*(len(t)*0.99999)))]
 
-def lerp( a, b, ta=0.0, tb=1.0 ):
+def lerp( a, b, ta = 0.0, tb = 1.0 ):
     return lambda x: a + (x-ta) * (b-a) / (tb-ta)
 
-def lerpr( a, b, ta=0.0, tb=1.0 ):
+def lerpr( a, b, ta = 0.0, tb = 1.0 ):
     def f(x):
-        res=int(round(lerp(a,b,ta,tb)(x)))
+        res = int(round(lerp(a,b,ta,tb)(x)))
         return 0 if res<0 else res;
     return f
 
 from math import log,exp
 
 # Does geometric interpolation instead of arithmetic interpolation.
-def eerp( a, b, ta=0.0, tb=1.0 ):
+def eerp( a, b, ta = 0.0, tb = 1.0 ):
     return lambda x: exp(lerp(log(a),log(b),ta,tb)(x))
 
-def eerpr( a, b, ta=0.0, tb=1.0 ):
+def eerpr( a, b, ta = 0.0, tb = 1.0 ):
     return lambda x: int(round(eerp(a,b,ta,tb)(x)))
 
 class BioOutfit:
@@ -89,7 +89,7 @@ class BioOutfit:
     def run(self, names):
         files = build.open_output(names)
         for k, (n, f) in enumerate(zip(names, files)):
-            x = 1 if len(names)==1 else k/(len(names)-1)
+            x = 1 if len(names) == 1 else k/(len(names)-1)
             p = {k: v(x) if callable(v) else v for k, v in self.params.items()}
             p["name"]  = n
             with f:
@@ -164,7 +164,7 @@ for nam,db,temp,gfx,output_pref,outputs in [
    ("large/tricon_typhoon_engine.mvx",True,"gene_drive_tricon","strong_l","Magnus",["I","II","III"]),
    ("large/nexus_bolt_3000_engine.mvx",True,"gene_drive","strong_l","Immanis",["I","II","III"]),
 ]:
-   ref=get_outfit_dict('core_engine/'+nam,db)
+   ref = get_outfit_dict('core_engine/'+nam,db)
    BioOutfit( temp+".xml.template", {
        "typename":     typename["engine"],
        "size":         ref["size"],
@@ -199,8 +199,8 @@ for pref,nam1,nam2,dbl,gfx,output_pref,outputs in [
    ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_war_plating.mvx",      False, "h", "Ponderosus", ["I","II","III","IV"] ),
    ("large",  "unicorp_d58_heavy_plating.mvx",  "sk_war_plating.mvx",      True,  "x", "Immanis",    ["I","II","III"]      ),
 ]:
-   ref1=get_outfit_dict('core_hull/'+pref+'/'+nam1,dbl)
-   ref2=get_outfit_dict('core_hull/'+pref+'/'+nam2,dbl)
+   ref1 = get_outfit_dict('core_hull/'+pref+'/'+nam1,dbl)
+   ref2 = get_outfit_dict('core_hull/'+pref+'/'+nam2,dbl)
    BioOutfit( "cortex.xml.template", {
       "typename":     typename["hull"],
       "size":         pref,
@@ -232,21 +232,21 @@ for nam,dbl,gfx,output_pref,outputs,cpu in [
    ("large/milspec_orion_8601_core_system.mvx",  False, "l1","Ponderosum",["I","II","III"], (   100,   200 )),
    ("large/milspec_orion_8601_core_system.mvx",   True, "l2","Immane",["I","II","III"],     ( 370*3, 600*3 ))
 ]:
-   ref=get_outfit_dict('core_system/'+nam,dbl)
+   ref = get_outfit_dict('core_system/'+nam,dbl)
 
-   if gfx[0]=='s':
-      price=0.5*ref['price']
-      mass=0.25*ref['mass']
-      shield=0.25*ref['shield']
-      shield_regen=0.25*ref['shield_regen']
+   if gfx[0] == 's':
+      price = 0.5*ref['price']
+      mass = 0.25*ref['mass']
+      shield = 0.25*ref['shield']
+      shield_regen = 0.25*ref['shield_regen']
    else:
-      shield_capacitor=get_outfit_dict('structure/shield_capacitor_ii'+('i' if gfx[0]=='l' else '')+'.xml')
-      shield_booster=get_outfit_dict('structure/'+ref['size']+'_shield_booster.xml')
+      shield_capacitor = get_outfit_dict('structure/shield_capacitor_ii'+('i' if gfx[0] ==' l' else '')+'.xml')
+      shield_booster = get_outfit_dict('structure/'+ref['size']+'_shield_booster.xml')
 
-      price=0.5*(shield_booster['price']+shield_capacitor['price'])
-      mass=0.5*(shield_booster['mass']+shield_capacitor['mass'])
-      shield=0.5*shield_capacitor['shield']
-      shield_regen=0.5*shield_booster['shield_regen']
+      price = 0.5*(shield_booster['price']+shield_capacitor['price'])
+      mass = 0.5*(shield_booster['mass']+shield_capacitor['mass'])
+      shield = 0.5*shield_capacitor['shield']
+      shield_regen = 0.5*shield_booster['shield_regen']
 
    BioOutfit( "cerebrum.xml.template", {
       "price":          lerpr(ref['price'],        ref['price']+price),
@@ -269,8 +269,8 @@ for nam,dbl,gfx,output_pref,outputs,cpu in [
 #
 
 # Stinger  =>  Plasma Blaster MK1  &  MK2
-extrapol=(0.25,0.75)
-follow=(0.5,1.0)
+extrapol = (0.25,0.75)
+follow = (0.5,1.0)
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
     "size":     "small",
@@ -306,7 +306,7 @@ BioOutfit( "weapon.xml.template", {
 # This way, if we admit PB mk2 is size 2 (fighter size) and PCluster is size 3.5 (medium),
 # then Talon II is size 3, TIII size 3.5 et TIV size 4.
 # A few tweaks for keeping Talon almost the same.
-extrapol=(-1.0/3,2.0/3)
+extrapol = (-1.0/3,2.0/3)
 
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),
@@ -358,9 +358,9 @@ BioOutfit( "weapon.xml.template", {
 # Now we can guess what a heavy plasma turret and turboplasma turret would look like.
 # There only remains to interpolate/extrapolate as we did for stinger.
 
-# heavy plasma=tentacle 2 turboplasma=tentacle 4
-extrapol=(1.0/3.0,1.0)
-extrapol_bias=(1.0/3,1.0)#+1.0/6)
+# heavy plasma = tentacle 2  turboplasma = tentacle 4
+extrapol = (1.0/3.0,1.0)
+extrapol_bias = (1.0/3,1.0)#+1.0/6)
 
 BioOutfit( "weapon.xml.template", {
     "typename": N_("Bioship Weapon Organ"),

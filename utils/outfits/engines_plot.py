@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-lines=['unicorp','tricon',"nexus","melendez","krain","beat_up"]
+lines = ['unicorp','tricon',"nexus","melendez","krain","beat_up"]
 
 
 import os
@@ -25,42 +25,42 @@ def iter_line(line):
          yield i
 
 def max_sp(sp,ac):
-   sp=float(sp)
-   ac=float(ac)
+   sp = float(sp)
+   ac = float(ac)
    return round(sp+ac/PHYSICS_SPEED_DAMP,2)
 
 def mkline(line):
-   acc=[]
+   acc = []
    for f in iter_line(line):
       for fl in [False,True]:
-         o=outfit.outfit(f)
+         o = outfit.outfit(f)
          o.autostack(fl)
-         d=o.to_dict()
+         d = o.to_dict()
          acc.append((max_sp(d['speed'],d['accel']),d['speed']))
 
-   L=list(sorted(set(acc),reverse=True))
+   L = list(sorted(set(acc),reverse = True))
 
-   if len(L)==4:  # That's Krain!
+   if len(L) == 4:  # That's Krain!
       # Complete with padding
-      L=L+2*[('.','.')]
+      L = L+2*[('.','.')]
 
    return L
 
 def main():
-   bas=os.path.splitext(os.path.basename(__file__))[0]
-   bas=os.path.join('.',bas)
-   dat=bas+'.dat'
-   fp=open(dat,"wt")
+   bas = os.path.splitext(os.path.basename(__file__))[0]
+   bas = os.path.join('.',bas)
+   dat = bas+'.dat'
+   fp = open(dat,"wt")
 
-   pstr=lambda t:str(t[0])+' '+str(t[1])
+   pstr = lambda t:str(t[0])+' '+str(t[1])
    for i,t in enumerate(zip(*tuple(map(mkline,lines)))):
       fp.write(' '.join([str(i+1)]+list(map(pstr,list(t))))+'\n')
 
    fp.close()
    stderr.write('<'+bas+'.dat>\n')
 
-   plt=bas+'.plot'
-   fp=open(plt,"wt")
+   plt = bas+'.plot'
+   fp = open(plt,"wt")
    fp.write("""#!/usr/bin/gnuplot\n
 set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enhanced\n""")
    fp.write('set output "'+bas+'.png"\n')
@@ -76,19 +76,19 @@ set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enh
    """)
 
    def fmt(dat,off,i,l):
-      if off==0:
-         #w="linespoint"
-         w="lines"
-         sp=""
-         lw='0.9'
+      if off == 0:
+         #w = "linespoint"
+         w = "lines"
+         sp = ""
+         lw = '0.9'
       else:
-         w="lines"
-         sp=" (drift)"
-         lw='0.85 dt "-"'
-      l='"'+l.replace('_',' ')+sp+'"'
-      n=i+1
-      if n>=5:
-         n+=1
+         w = "lines"
+         sp = " (drift)"
+         lw = '0.85 dt "-"'
+      l = '"'+l.replace('_',' ')+sp+'"'
+      n = i+1
+      if n >= 5:
+         n += 1
       return '\t"'+dat+'" using 1:'+str(2*i+2+off)+' w '+w+' t '+l+' linecolor '+str(n)+' lw '+lw
 
    fp.write('plot\\\n')
@@ -106,7 +106,7 @@ set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enh
    os.system(plt)
    stderr.write('<'+bas+'.png>\n')
 
-if __name__=='__main__':
+if __name__ == '__main__':
    if len(argv)>1:
       stderr.write("usage: "+os.path.basename(__file__)+"\n")
       stderr.write("Produces a plot file, a dat file, and the resulting png where you stand.\n")
