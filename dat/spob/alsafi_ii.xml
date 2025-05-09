@@ -16,6 +16,6 @@
   <description>Alsafi II is a barren world that other than some indications of prospection sites looking for mineral, is devoid of anything of interest.</description>
  </general>
  <tech>
-  <item price_mod="0.1">Neblaze</item>
+  <item price_mod="0.100000">Neblaze</item>
  </tech>
 </spob>
