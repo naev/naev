@@ -1303,9 +1303,9 @@ double pilot_massFactor( const Pilot *pilot )
       if ( pilot->stats.engine_limit > 0. ){
          double f = ( mass - pilot->stats.engine_limit ) / pilot->stats.engine_limit;
          return 1. / ( 1. + f + f + 4. * pow( f, 3. ) );
-      }else
+      } else
          return 0.;
-   }else
+   } else
       return 1.;
 }
 

@@ -3,12 +3,17 @@
  <pos x="-2939.659716" y="-3642.219900"/>
  <GFX>
   <space>P02.webp</space>
-  <exterior>snow.webp</exterior>
+  <exterior>uninhabited-rocky-airless-01.webp</exterior>
  </GFX>
  <general>
   <class>P</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+   <land/>
+  </services>
+  <description>Although designated as a emergency source of water by House Za'lek, WSTHVN P-1 has never yet had to be used in such ways. It's not clear how the planet developed, but it seems to consist of a small ultra-dense core covered in hundreds of kilometers of ice. Za'lek scientists speculate that the ice is of xtraterrestrial origin, likely accumulated from stray nearby asteroids or some other eccentric phenomena.
+
+Except for the odd PhD student or post-doc coming to try to do research, it is mainly visited by individuals coming from Thaddius Terminals, although it is not entirely clear what they are doing here.</description>
  </general>
 </spob>

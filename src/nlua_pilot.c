@@ -701,6 +701,7 @@ static int pilotL_add( lua_State *L )
    PilotFlags  flags;
    int         ignore_rules;
    Pilot      *p;
+   Outfit    **intrinsics = NULL;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -805,6 +806,20 @@ static int pilotL_add( lua_State *L )
       if ( lua_toboolean( L, -1 ) )
          pilot_setFlagRaw( flags, PILOT_STEALTH );
       lua_pop( L, 1 );
+
+      lua_getfield( L, 5, "intrinsics" );
+      if ( !lua_isnoneornil( L, -1 ) ) {
+         luaL_checktype( L, -1, LUA_TTABLE );
+         if ( intrinsics == NULL )
+            intrinsics = array_create( Outfit * );
+         lua_pushnil( L );
+         while ( lua_next( L, -2 ) != 0 ) {
+            const Outfit *o = luaL_checkoutfit( L, -1 );
+            array_push_back( &intrinsics, (Outfit *)o );
+            lua_pop( L, 1 );
+         }
+      }
+      lua_pop( L, 1 );
    }
 
    /* Set up velocities and such. */
@@ -817,7 +832,9 @@ static int pilotL_add( lua_State *L )
    a = angle_clean( a );
 
    /* Create the pilot. */
-   p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
+   p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0,
+                     (const Outfit **)intrinsics );
+   array_free( intrinsics );
    lua_pushpilot( L, p->id );
    if ( jump == NULL ) {
       ai_newtask( L, p, "idle_wait", 0, 1 );
@@ -2533,6 +2550,7 @@ static int pilotL_outfitsList( lua_State *L )
  *    @luatreturn table Ordered table of outfits. If an outfit is not equipped
  * at slot it sets the value to false.
  * @luafunc outfits
+ * @see outfitsEquip
  */
 static int pilotL_outfits( lua_State *L )
 {
@@ -2551,18 +2569,23 @@ static int pilotL_outfits( lua_State *L )
 /**
  * @brief Equips a pilot with a set of outfits.
  *
+ * Will unequip outfits if the slot is set to false.
+ *
  *    @luatparam Pilot p Pilot to set equipment of.
  *    @luatparam table o Table of outfits to equip the pilot (should be likely
  * taken from pilot.outfits). The key should be the slot id and the value should
- * be the outfit or false if there is no outfit in that slot.
+ * be the outfit or false if there is no outfit in that slot and it should be
+ * removed if necessary.
+ *    @luatparam noremove Whether or not it should not remove outfits if false.
  *    @luatreturn boolean If all the outfits were equipped successfully or not.
  * @luafunc outfitsEquip
  * @see outfits
  */
 static int pilotL_outfitsEquip( lua_State *L )
 {
-   Pilot *p   = luaL_validpilot( L, 1 );
-   int    ret = 0;
+   Pilot *p      = luaL_validpilot( L, 1 );
+   int    remove = !lua_toboolean( L, 3 );
+   int    ret    = 0;
    /* Process outputs. */
    for ( int i = 1;; i++ ) {
       const Outfit    *o;
@@ -2585,16 +2608,21 @@ static int pilotL_outfitsEquip( lua_State *L )
       }
 
       /* No outfit. */
-      if ( !lua_toboolean( L, -1 ) )
+      if ( !lua_toboolean( L, -1 ) ) {
+         if ( remove )
+            ret |= pilot_rmOutfitRaw( p, p->outfits[i - 1] );
          continue;
+      }
 
       o = luaL_validoutfit( L, -1 );
       s = p->outfits[i - 1];
-      ret |= pilot_outfitAddSlot( p, o, s, 1, 1 );
+      ret |= ( pilot_outfitAddSlot( p, o, s, 1, 1 ) <= 0 );
 
       lua_pop( L, 1 );
    }
    lua_pushboolean( L, !ret );
+   /* Calc stats at the end. */
+   pilot_calcStats( p );
    return 1;
 }
 

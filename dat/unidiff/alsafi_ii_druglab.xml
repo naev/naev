@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="Alsafi II Druglab">
+ <spob name="Alsafi II">
+  <description>Alsafi II is a barren world that other than some indications of prospection sites looking for mineral, is devoid of anything of interest, a part from a small one-man druglab operation.</description>
+  <population>1</population>
+  <service_add>commodity</service_add>
+ </spob>
+</unidiff>

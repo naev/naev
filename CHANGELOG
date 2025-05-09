@@ -8,27 +8,32 @@
       * Fuel from outfits has been tweaked a bit
       * NPCs now have skill levels that can affect their targeting and fighting ability
       * Bioships have had their skills and modifiers slightly reworked to be better balanced
-      * Light, medium-heavy and ultraheavy ship now have two core system and hull slots, one main and one secondary
-         * Effects of heavier systems and hulls can be obtained by stacking smaller ones
+      * Light, medium-heavy and ultraheavy ship now have two core hull/systems/engine slots, one main and one secondary
+         * Effects of heavier cores can be obtained by stacking smaller ones
       * Engines have been reworked to be more coherent and consistent
          * Tricon engines have much higher acceleration to max speed ratio
          * Melendez engines have higher speed, but low acceleration and turn
          * More consistency across lines
       * Gauntlet intrinsics are stronger and now mutually exclusive
       * Intrinsics from a certain trader are now stronger
+      * Ships now disabled below a certain armour threshold regardless of stress
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
          * Improved autonav behaviour when losing a followed ship
          * Disables afterburner when getting ready to land or jump
          * Shooting *non-point defense* weapons resets autonav speed up
+      * Combat and ambient music tries to play from where it was last stopped when applicable
+      * Gave small untargetable time to player when using hypergates and wormholes
    * Content
       * 3 new missions
       * 6 new ship variants
-      * 3 new outfits
-      * Two new intertwined minor houses of the Empire
+      * 3 new outfits and reworked cores
+      * Two new intertwined minor houses of the Empire with new systems and lore
       * More space objects
       * New portraits
+      * Over 20 new songs
+         * More variation in landing and situational music
       * Significant changes in jumps (hidden and otherwise)
    * Engine
       * Engine supports modifying some important constants such as those related to the physics model for use in plugins
@@ -73,12 +78,15 @@
       * dv_antiflf02: Make the vigilances less pathetic
       * Gauntlet properly resets outfit cooldowns
       * Saves try to save outfits by slot name to be more robust to changes in the future
+      * Player can't stealth while disabled
+      * Getting disabled turns off stealth
 
 * 0.12.5 (unreleased)
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
    * Fixed AI spamming afterburners in an unhealthy way
-   * Removed support for save game compression as libxml2.14 disable compression by default
+   * Removed support for save game compression as libxml 2.14 disable compression by default
+   * Translation updates
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems

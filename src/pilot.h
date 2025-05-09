@@ -294,16 +294,17 @@ typedef struct Pilot_ {
    double turn_base; /**< Pilot's base turn in rad/s. */
 
    /* Current health */
-   double armour;       /**< Current armour. */
-   double stress;       /**< Current disable damage level. */
-   double shield;       /**< Current shield. */
-   double armour_max;   /**< Maximum armour. */
-   double shield_max;   /**< Maximum shield. */
-   double armour_regen; /**< Armour regeneration rate (per second). */
-   double shield_regen; /**< Shield regeneration rate (per second). */
-   double dmg_absorb;   /**< Ship damage absorption [0:1] with 1 being 100%. */
-   double fuel_max;     /**< Maximum fuel. */
-   double fuel;         /**< Current fuel. */
+   double armour_disabled; /**< Last armour the ship was disabled at. */
+   double armour;          /**< Current armour. */
+   double stress;          /**< Current disable damage level. */
+   double shield;          /**< Current shield. */
+   double armour_max;      /**< Maximum armour. */
+   double shield_max;      /**< Maximum shield. */
+   double armour_regen;    /**< Armour regeneration rate (per second). */
+   double shield_regen;    /**< Shield regeneration rate (per second). */
+   double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
+   double fuel_max;   /**< Maximum fuel. */
+   double fuel;       /**< Current fuel. */
    double fuel_consumption; /**< Fuel consumed per jump. */
 
    /* Energy is handled a bit differently. */
@@ -504,7 +505,8 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount );
 Pilot       *pilot_create( const Ship *ship, const char *name, int faction,
                            const char *ai, double dir, const vec2 *pos,
                            const vec2 *vel, const PilotFlags flags,
-                           unsigned int dockpilot, int dockslot );
+                           unsigned int dockpilot, int dockslot,
+                           const Outfit **intrinsics );
 Pilot       *pilot_createEmpty( const Ship *ship, const char *name, int faction,
                                 PilotFlags flags );
 unsigned int pilot_clone( const Pilot *p );

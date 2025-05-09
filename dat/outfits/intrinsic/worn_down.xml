@@ -25,4 +25,7 @@
   <!--<energy_regen_mod>-50</energy_regen_mod>-->
   <ew_signature>30</ew_signature>
  </specific>
+ <tags>
+  <tag>nosteal</tag>
+ </tags>
 </outfit>

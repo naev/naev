@@ -51,6 +51,8 @@
 #define SPOB_NOLANES ( 1 << 5 )     /**< Spob doesn't connect with lanes. */
 #define SPOB_HOSTILE ( 1 << 6 )     /**< Spob is hostile. */
 #define SPOB_RADIUS ( 1 << 10 )     /**< Spob has radius defined. */
+#define SPOB_NOCOMMODITIES                                                     \
+   ( 1 << 11 ) /**< Spob doesn't have standard commodities. */
 #define spob_isFlag( p, f ) ( ( p )->flags & ( f ) ) /**< Checks spob flag. */
 #define spob_setFlag( p, f )                                                   \
    ( ( p )->flags |= ( f ) ) /**< Sets a spob flag.                            \

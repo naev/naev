@@ -3,12 +3,15 @@
  <pos x="19320.000000" y="490.000000"/>
  <GFX>
   <space>moon-P02.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <exterior>uninhabited-rocky-blue-02.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>B</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>1.800000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>The planet is covered in a thick layer of what was once organic gunk, and has degraded long past its prime. Although it is speculated spontaneous got to the primordial soup stage of evolution, for reasons unclear, some millions of years ago, the planetary core cooled, leading to an unrecoverable mass extinction event. It is now a testament to the fragility of life in the harsh universe.</description>
  </general>
 </spob>

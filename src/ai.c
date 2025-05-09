@@ -1314,6 +1314,10 @@ static int ai_tasktarget( lua_State *L, const Task *t )
  */
 static int aiL_pushtask( lua_State *L )
 {
+   /* Can't push tasks for the non-manually controlled player. */
+   if ( pilot_isPlayer( cur_pilot ) &&
+        !pilot_isFlag( cur_pilot, PILOT_MANUAL_CONTROL ) )
+      return 0;
    ai_createTask( L, 0 );
    aiL_outfitOffAll( L );
    return 0;

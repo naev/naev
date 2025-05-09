@@ -128,18 +128,9 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elemEmpty( writer, "uninhabited" );
    if ( spob_isFlag( p, SPOB_NOLANES ) )
       xmlw_elemEmpty( writer, "nolanes" );
+   if ( spob_isFlag( p, SPOB_NOCOMMODITIES ) )
+      xmlw_elemEmpty( writer, "nocommodities" );
    xmlw_endElem( writer ); /* "services" */
-   if ( spob_hasService( p, SPOB_SERVICE_LAND ) ) {
-      if ( p->presence.faction >= 0 ) {
-         xmlw_startElem( writer, "commodities" );
-         for ( int i = 0; i < array_size( p->commodities ); i++ ) {
-            Commodity *c = p->commodities[i];
-            if ( !commodity_isFlag( c, COMMODITY_FLAG_STANDARD ) )
-               xmlw_elem( writer, "commodity", "%s", c->name );
-         }
-         xmlw_endElem( writer ); /* "commodities" */
-      }
-   }
    if ( p->description != NULL )
       xmlw_elem( writer, "description", "%s", p->description );
    if ( p->bar_description != NULL )

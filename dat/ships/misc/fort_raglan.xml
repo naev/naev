@@ -47,6 +47,9 @@
   <structure prop="hull" name="hull" size="large">Dummy Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="large" />
  </slots>
+ <stats>
+  <engine_limit>9999999</engine_limit>
+ </stats>
  <tags>
   <tag>noplayer</tag>
   <tag>nonaevpedia</tag>

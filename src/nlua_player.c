@@ -2502,13 +2502,20 @@ static int playerL_teleport( lua_State *L )
    Pilot *const *pilot_stack = pilot_getAll();
    for ( int i = 0; i < array_size( pilot_stack ); i++ ) {
       Pilot *p = pilot_stack[i];
-      if ( p->parent == PLAYER_ID ) {
-         memcpy( &p->solid.pos, &player.p->solid.pos, sizeof( vec2 ) );
-         vec2_padd( &p->solid.pos, 200. + 200. * RNGF(), 2. * M_PI * RNGF() );
 
-         /* Clean up trails. */
-         pilot_clearTrails( p );
-      }
+      /* Should include the player themselves. */
+      if ( !pilot_isWithPlayer( p ) )
+         continue;
+
+      memcpy( &p->solid.pos, &player.p->solid.pos, sizeof( vec2 ) );
+      vec2_padd( &p->solid.pos, 200. + 200. * RNGF(), 2. * M_PI * RNGF() );
+
+      /* Clean up trails. */
+      pilot_clearTrails( p );
+
+      /* Some minor invulnerability. */
+      pilot_setFlag( p, PILOT_NONTARGETABLE );
+      p->itimer = PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY;
    }
 
    return 0;

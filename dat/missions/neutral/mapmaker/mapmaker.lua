@@ -4,6 +4,14 @@
  <unique />
  <chance>10</chance>
  <location>Bar</location>
+ <cond>
+   local c = spob.cur()
+   local f = c:faction()
+   if not f or not f:tags("generic") then
+      return false
+   end
+   return true
+ </cond>
 </mission>
 --]]
 --[[
@@ -274,6 +282,7 @@ They can't hold their excitement and do a little jig as they wonder off.]]))
    if not accepted then return end
 
    misn.accept()
+   misn.osdSetHide( true ) -- Hide OSD by default
    misn.setTitle( mission_name )
    misn.setReward(_("Power, and by that I mean Knowledge!"))
    update_markers()
@@ -351,7 +360,7 @@ end
 local msg_double = {
    _([["I've found a hidden jump between the {src} and {dst} systems!"]]),
    _([["A hidden route seems to exist between the {src} and {dst} systems!"]]),
-   _([["Marvelously, the {src} and {dst} systems seem to be connected by a hidden jump route!"]]),
+   _([["Marvellously, the {src} and {dst} systems seem to be connected by a hidden jump route!"]]),
    _([["Against prior knowledge, it seems like the {src} and {dst} systems are connected!"]]),
    _([["Data analysis proves that there has to be a hidden jump between the {src} and {dst} systems!"]]),
 }

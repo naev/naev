@@ -3,12 +3,15 @@
  <pos x="13000.000000" y="2550.000000"/>
  <GFX>
   <space>moon-H01.webp</space>
-  <exterior>desertic.webp</exterior>
+  <exterior>uninhabited-rocky-yellow-02.webp</exterior>
  </GFX>
  <general>
   <class>H</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Although classified as a moon of Fried III, the relationship is more bidirectional that was originally thought, with both planets nearly tidal locked. Over time, much of the gas from Fried III has also come to Fried IIIa, however, due to the significantly lower surface temperature, most of it lays as a fine dust of frozen particles that cover the planet. Due to a thin atmosphere, the surface has relatively little movement, allowing you to clearly see tracks of other ships before you. Although there are more than you expect, it is likely that some are very old, potentially pre-dating the formation of many of the Great Houses of the Empire.</description>
  </general>
 </spob>

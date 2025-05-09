@@ -55,7 +55,15 @@ function create ()
    create_post()
 end
 
+local fct_thurion = faction.exists("Thurion")
 function hail ()
+   local p = ai.pilot()
+   if fct_thurion and p:faction()==fct_thurion and not fct_thurion:known() then
+      mem.comm_no = _("No response.")
+   else
+      mem.comm_no = nil
+   end
+
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = rnd.rnd( 1000, 3000 )
