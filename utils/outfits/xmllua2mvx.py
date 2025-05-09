@@ -41,7 +41,7 @@ def do_it(argin,argout):
    o = outfit(argin)
    stderr.write('xmllua2mvx: '+o.name()+'\n')
    d = {'general':[], 'specific':[]}
-   fields, li = parse_lua_multicore(o.to_dict()['lua_inline'])
+   fields, li = parse_lua_multicore(o.find('lua_inline'))
 
    for t in fields:
       if t[0] in general:

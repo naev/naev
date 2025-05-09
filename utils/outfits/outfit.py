@@ -75,6 +75,18 @@ def unstackvals(tag,text1,text2,eml1,eml2):
    else:
       return fmtval(o1)+'/'+fmtval(o2)
 
+def readval(what):
+   if what is None:
+      what = ''
+   if len(what.split('/')) <= 2:
+      try:
+         what = tuple(map(float,what.split('/')))
+         if len(what) == 1:
+            what = what[0]
+      except:
+            pass
+   return what
+
 class _outfit():
    def __init__(self,fil):
       self.sec = None
@@ -99,13 +111,18 @@ class _outfit():
    def set_name(self,name):
       self.r.attrib['name'] = name
 
+   def find(self,tag):
+      for e in self:
+         if e.tag == tag:
+            return e.text
+
    def shortname(self):
       if self.short:
          return self.short
-      try:
-         res = self.to_dict()['shortname']
-      except:
+      res = self.find('shortname')
+      if res == None:
          res = self.name()
+
       if res.split(' ')[-1] == 'Engine':
          res = ' '.join(res.split(' ')[:-1])
       self.short = res
@@ -113,7 +130,7 @@ class _outfit():
 
    def size(self,doubled = False):
       try:
-         res = self.to_dict()['size']
+         res = self.find('size')
          for i,k in enumerate(['small','medium','large']):
             if res == k:
                return 2*i+(2 if doubled else 1)
@@ -130,7 +147,7 @@ class _outfit():
 
    def eml(self):
       try:
-         res = self.to_dict()['engine_limit']
+         res = readval(self.find('engine_limit'))
       except:
          res = None
       return res
@@ -256,17 +273,8 @@ class _outfit():
       for k in self:
          if not k.tag in d:
             d[k.tag] = []
-         what = k.text
-         if what is None:
-            what = ''
-         if len(what.split('/')) <= 2:
-            try:
-               what = tuple(map(float,what.split('/')))
-               if len(what) == 1:
-                  what = what[0]
-            except:
-                  pass
-            d[k.tag].append(what)
+         what = readval(k.text)
+         d[k.tag].append(what)
       for k in d:
          if len(d[k]) == 1:
             d[k] = d[k][0]
