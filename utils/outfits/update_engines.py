@@ -73,7 +73,7 @@ def ls2vals(line,size):
    r = STD_R * pow(2,-R_MAG*((size-1)-2.5)/5)
 
    # Modulate ratio based on outfit
-   r  *= line_stats[line]["ratio"]
+   r *= line_stats[line]["ratio"]
 
    speed = fullspeed*(1.0-r)
    accel = fullspeed*r*PHYSICS_SPEED_DAMP
