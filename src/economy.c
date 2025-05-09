@@ -605,7 +605,7 @@ void economy_destroy( void )
  *
  *    @param spob The spob to set price on.
  *    @param commodity The commodity to set the price of.
- *    @param commodityPrice Where to write the commodity price to.
+ *    @param[out] commodityPrice Where to write the commodity price to.
  *    @return 0 on success.
  */
 static int economy_calcPrice( Spob *spob, Commodity *commodity,
@@ -618,6 +618,14 @@ static int economy_calcPrice( Spob *spob, Commodity *commodity,
    /* Ignore spobs with no commodity stuff. */
    if ( !spob_hasService( spob, SPOB_SERVICE_COMMODITY ) )
       return 0;
+
+   /* Constant price. */
+   if ( commodity_isFlag( commodity, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
+      commodityPrice->price = commodity->price;
+      commodityPrice->sum   = commodity->price;
+      commodityPrice->sum2  = 0.;
+      return 0;
+   }
 
    /* Check the faction is not NULL.*/
    if ( spob->presence.faction == -1 ) {
