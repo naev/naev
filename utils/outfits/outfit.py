@@ -158,7 +158,6 @@ class _outfit():
       res=other.eml()
       sec = other.to_dict()
 
-
       for e in self:
          if e.tag=='specific':
             d=self.to_dict()
