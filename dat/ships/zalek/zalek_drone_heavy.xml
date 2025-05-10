@@ -45,6 +45,7 @@
  <stats>
   <tur_damage>-20</tur_damage>
   <launch_damage>-20</launch_damage>
+  <engine_limit>300</engine_limit>
  </stats>
  <tags>
   <tag>noplayer</tag>

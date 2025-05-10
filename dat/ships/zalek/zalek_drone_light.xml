@@ -39,6 +39,9 @@
   <utility size="small" />
   <structure size="small" />
  </slots>
+ <stats>
+  <engine_limit>200</engine_limit>
+ </stats>
  <tags>
   <tag>noplayer</tag>
   <tag>noequip</tag>
