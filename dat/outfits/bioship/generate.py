@@ -216,8 +216,8 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
    ('large',  'unicorp_d58_heavy_plating.mvx',  'sk_war_plating.mvx',      False, 'h', 'Ponderosus', ['I', 'II', 'III', 'IV'] ),
    ('large',  'unicorp_d58_heavy_plating.mvx',  'sk_war_plating.mvx',      True,  'x', 'Immanis',    ['I', 'II', 'III']       ),
 ]:
-   ref1 = get_outfit_dict('core_hull/'+pref+'/'+nam1, dbl)
-   ref2 = get_outfit_dict('core_hull/'+pref+'/'+nam2, dbl)
+   ref1 = get_outfit_dict(os.path.join('core_hull',pref,nam1), dbl)
+   ref2 = get_outfit_dict(os.path.join('core_hull',pref,nam2), dbl)
    BioOutfit( 'cortex.xml.template', {
       'typename':     typename['hull'],
       'size':         pref,
