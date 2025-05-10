@@ -10,10 +10,10 @@ from sys import argv, stderr
 
 
 # everything ont in this list goes to specific intead of general
-general = ['mass','cpu']
+general = ['mass', 'cpu']
 
 
-def parse_lua_multicore(si):
+def parse_lua_multicore( si ):
    s = re.sub('\n', ' ', si)
 
    name = ' ("|\')([^"\']*)\\1'
@@ -26,10 +26,10 @@ def parse_lua_multicore(si):
    expr = expr.replace(' ', '\s*')
    match = re.search(expr, s)
    if match is None:
-      return [],si
+      return [], si
 
    block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
-   block = block.replace(' ','\s*')
+   block = block.replace(' ', '\s*')
    L = [t.groupdict() for t in re.finditer(block, match.group(3))]
    for d in L:
       if d['sec'] is None:
@@ -37,7 +37,7 @@ def parse_lua_multicore(si):
    L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
-def do_it(argin,argout):
+def do_it( argin, argout ):
    o = outfit(argin)
    stderr.write('xmllua2mvx: '+o.name()+'\n')
    d = {'general':[], 'specific':[]}
@@ -66,7 +66,7 @@ def do_it(argin,argout):
             e.text = li.strip()
    o.write(argout)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
    import argparse
 
    parser = argparse.ArgumentParser(
@@ -77,7 +77,7 @@ If the input is invalid, nothing is written on stdout and stderr and non-zero is
 The special values "-" mean stdin/stdout.
 """
    )
-   parser.add_argument('input', nargs = '?', default = "-")
-   parser.add_argument('output', nargs = '?', default = "-")
+   parser.add_argument('input', nargs = '?', default = '-')
+   parser.add_argument('output', nargs = '?', default = '-')
    args = parser.parse_args()
-   do_it(args.input,args.output)
+   do_it(args.input, args.output)
