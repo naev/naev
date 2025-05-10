@@ -14,8 +14,25 @@ sys.path.append( mymodule_dir )
 import outfit
 from sys import stderr, exit
 
+from pathlib import Path
+import subprocess
+
+# file exists
+def generate_if_needed(name):
+   xml = name.rsplit('.mvx', 1)
+   if len(xml) != 2 or xml[1] != '':
+      raise Exception('This is not a mvx !')
+   xml = xml[0]+'.xml'
+
+   uptodate = Path(name).is_file() and os.path.getmtime(name) > os.path.getmtime(xml)
+   if not uptodate:
+      subprocess.run([mymodule_dir+'/xmllua2mvx.py', xml, name])
+
 def get_outfit_dict( nam, doubled = False ):
-   o = outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..', nam))
+   nam = os.path.join(os.path.dirname( __file__ ), '..', nam)
+   if nam[-4:] == '.mvx':
+      generate_if_needed(nam)
+   o = outfit.outfit(nam)
    if o is None:
       stderr.write('err '+nam)
       exit(1)
@@ -199,8 +216,8 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
    ('large',  'unicorp_d58_heavy_plating.mvx',  'sk_war_plating.mvx',      False, 'h', 'Ponderosus', ['I', 'II', 'III', 'IV'] ),
    ('large',  'unicorp_d58_heavy_plating.mvx',  'sk_war_plating.mvx',      True,  'x', 'Immanis',    ['I', 'II', 'III']       ),
 ]:
-   ref1 = get_outfit_dict('core_hull/'+pref+'/'+nam1, dbl)
-   ref2 = get_outfit_dict('core_hull/'+pref+'/'+nam2, dbl)
+   ref1 = get_outfit_dict(os.path.join('core_hull',pref,nam1), dbl)
+   ref2 = get_outfit_dict(os.path.join('core_hull',pref,nam2), dbl)
    BioOutfit( 'cortex.xml.template', {
       'typename':     typename['hull'],
       'size':         pref,
