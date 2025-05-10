@@ -23,13 +23,8 @@ def generate_if_needed(name):
    if len(xml) != 2 or xml[1] != '':
       raise Exception('This is not a mvx !')
    xml = xml[0]+'.xml'
-   uptodate = False
 
-   if Path(name).is_file():
-      orig = os.path.getmtime(xml)
-      crt = os.path.getmtime(name)
-      uptodate = crt > orig
-
+   uptodate = Path(name).is_file() and os.path.getmtime(name) > os.path.getmtime(xml)
    if not uptodate:
       subprocess.run([mymodule_dir+'/xmllua2mvx.py', xml, name])
 
