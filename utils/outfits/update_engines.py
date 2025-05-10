@@ -111,10 +111,11 @@ def apply_ls( sub, o, additional = dict() ):
 def mk_subs( a, name = None ):
    sub = []
    for doubled in [False, True]:
-      o = outfit(a)
-
-      if o is None:
-         break
+      try:
+         o = outfit(a)
+      except:
+         stderr.write('Invalid outfit "'+a+'" ignored\n')
+         return None
 
       if name is None:
          name = o.name()
@@ -248,8 +249,10 @@ If some mvx files are modified, the related xmllua file will be updated.""",
    > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2
 """)
    parser.add_argument('-g', '--generate', action = 'store_true', help = 'line_name ex: "Melendez" or "Zednelem".')
-   parser.add_argument('args', nargs = '+', help = 'An outfit with ".xml" or ".mvx" extension, else will be ignored.\nIf not valid, will not even be printed out.')
+   parser.add_argument('args', nargs = '+', help = 'An outfit with ".mvx" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
+
+   args.args = [a for a in args.args if a.endswith('.mvx')]
    if args.generate:
       if args.args[4:] != []:
          err('Ignored: '+', '.join([repr(a) for a in args.args[4:]]))
