@@ -5,7 +5,7 @@ bio_dir = ndata_path / 'dat/outfits/bioship'
 xml2mvx = find_program('../../../utils/outfits/xmllua2mvx.py')
 genmvx = custom_target('dummy',
    input :  files('../core_engine/small/tricon_zephyr_engine.xml'),
-   output : files('../core_engine/small/tricon_zephyr_engine.mvx'),
+   output : '../core_engine/small/tricon_zephyr_engine.mvx',
    command : [xml2mvx, '@INPUT@', '@OUTPUT@']
 )
 
