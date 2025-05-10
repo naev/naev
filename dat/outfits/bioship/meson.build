@@ -2,6 +2,13 @@ gen_bioship = find_program('generate.py')
 bio_cmd = [gen_bioship, '@INPUT@', '-o', '@OUTPUT@']
 bio_dir = ndata_path / 'dat/outfits/bioship'
 
+xml2mvx = find_program('../../../utils/outfits/xmllua2mvx.py')
+genmvx = custom_target('dummy',
+   input :  files('../core_engine/small/tricon_zephyr_engine.xml'),
+   output : files('../core_engine/small/tricon_zephyr_engine.mvx'),
+   command : [xml2mvx, '@INPUT@', '@OUTPUT@']
+)
+
 # Define a target per outfit family. Today, a single "generate.py" script is used. (TODO: Per Discord, we may use more scripts?)
 # The target name (first arg to custom_target()) is arbitrary except for having to be unique.
 # The input/output lists are duplicated, at least for now, in the generate.py blocks like
