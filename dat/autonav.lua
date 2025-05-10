@@ -581,7 +581,7 @@ local function autonav_instant_jump_final_approach ()
 
    -- Estimate the turning time and the running distance.
    local jmpout_dir = -jmp:angle()
-   local diff_dir = ((pp:dir() - jmpout_dir) / (2.0 * math.pi) + 0.5) % 1.0 - 0.5
+   local diff_dir = (((pp:dir() - jmpout_dir) / (2.0 * math.pi) + 0.5) % 1.0 - 0.5) * 2.0 * math.pi
    local turn_time = math.abs(diff_dir) / pp:turn()
    local turn_dist = turn_time * vec2.dot( ref_vec, pp_vel )
 
