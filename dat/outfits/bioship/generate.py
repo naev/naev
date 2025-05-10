@@ -24,9 +24,11 @@ def generate_if_needed(name):
       raise Exception('This is not a mvx !')
    xml = xml[0]+'.xml'
 
-   uptodate = Path(name).is_file() and os.path.getmtime(name) > os.path.getmtime(xml)
+   exists = Path(name).is_file() 
+   uptodate = exists and not os.path.getmtime(name) < os.path.getmtime(xml)
    if not uptodate:
-      stderr.write('"'+name+'" older than "'+xml+'". updating.\n')
+      if exists:
+         stderr.write('"'+os.path.basename(name)+'" older than "'+os.path.basename(xml)+'". updating.\n')
       subprocess.call([mymodule_dir+'/xmllua2mvx.py', xml, name])
 
 def get_outfit_dict( nam, doubled = False ):
