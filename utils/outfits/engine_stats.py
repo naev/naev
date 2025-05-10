@@ -60,7 +60,7 @@ def l(s):
    a,b = tuple(s.split('.',1))
    return ' | '+(3-len(a))*' '+a+m+b+(2-len(b))*' '
 
-def main(args, gith = False, color = False, autostack=False, combine=False, nosort=False):
+def main(args, gith = False, color = False, autostack=False, combine=False, nosort=False, filt=False):
    sec_args = []
    if combine or autostack:
       for i in args:
@@ -98,6 +98,8 @@ def main(args, gith = False, color = False, autostack=False, combine=False, noso
          o,o2 = args[i].split('+')
          o,o2 = outfit(o.strip()),outfit(o2.strip())
          if not o.can_stack(o2):
+            continue
+         if filt and o.size() < o2.size():
             continue
          o.stack(o2)
       else:
@@ -164,13 +166,14 @@ if __name__ == '__main__':
    parser.add_argument('-A', '--autostack', action = 'store_true', help = "also display x2 outfits")
    parser.add_argument('-C', '--combinations', action = 'store_true', help = "also display all the combinations." )
    parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
+   parser.add_argument('-f', '--filter', action = 'store_true', help = "don't do comb where pri is smaller" )
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
 Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or suffixed with \'x2\'.""")
    args = parser.parse_args()
    if args.autostack and args.combinations:
-      print("-A subsumed by -C",file = stderr,flush = True)
+      print("Warning: -A subsumed by -C", file = stderr, flush = True)
       args.autostack = False
 
-   main(args.filename,args.github,args.color,args.autostack,args.combinations,args.no_sort)
+   main(args.filename, args.github, args.color, args.autostack, args.combinations, args.no_sort, args.filter)
 else:
    raise Exception("This module is only intended to be used as main.")
