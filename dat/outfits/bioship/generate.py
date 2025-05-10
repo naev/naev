@@ -14,8 +14,30 @@ sys.path.append( mymodule_dir )
 import outfit
 from sys import stderr, exit
 
+from pathlib import Path
+import subprocess
+
+# file exists
+def generate_if_needed(name):
+   xml = name.rsplit('.mvx', 1)
+   if len(xml) != 2 or xml[1] != '':
+      raise Exception('This is not a mvx !')
+   xml = xml[0]+'.xml'
+   uptodate = False
+
+   if Path(name).is_file():
+      orig = os.path.getmtime(xml)
+      crt = os.path.getmtime(name)
+      uptodate = crt > orig
+
+   if not uptodate:
+      subprocess.run([mymodule_dir+'/xmllua2mvx.py', xml, name])
+
 def get_outfit_dict( nam, doubled = False ):
-   o = outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..', nam))
+   nam = os.path.join(os.path.dirname( __file__ ), '..', nam)
+   if nam[-4:] == '.mvx':
+      generate_if_needed(nam)
+   o = outfit.outfit(nam)
    if o is None:
       stderr.write('err '+nam)
       exit(1)
