@@ -3,7 +3,7 @@ bio_cmd = [gen_bioship, '@INPUT@', '-o', '@OUTPUT@']
 bio_dir = ndata_path / 'dat/outfits/bioship'
 
 xml2mvx = find_program('../../../utils/outfits/xmllua2mvx.py')
-genmvx = custom_target('dummy',
+genmvx = custom_target('tricon_zephyr_engine.mvx',
    input :  files('../core_engine/small/tricon_zephyr_engine.xml'),
    output : 'tricon_zephyr_engine.mvx',
    command : [xml2mvx, '@INPUT@', '@OUTPUT@']
@@ -17,7 +17,7 @@ genmvx = custom_target('dummy',
 
 bio_outfits = [
    custom_target('perlevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('tricon_zephyr_engine.mvx'),
+      depend_files: 'tricon_zephyr_engine.mvx',
       input: files('templates/gene_drive_tricon.xml.template'),
       output: [
          'perlevis_gene_drive_i.xml',
