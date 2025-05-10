@@ -5,7 +5,7 @@ import sys
 import re
 
 script_dir = os.path.dirname( __file__ )
-const_dir = os.path.join( script_dir, '..', '..', 'dat', 'constants.lua' )
+const_dir = os.path.realpath(os.path.join( script_dir, '..', '..', 'dat', 'constants.lua' ))
 
 try:
    with open(const_dir,"rt") as fp:

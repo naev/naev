@@ -8,14 +8,42 @@ N_ = lambda text: text
 
 
 script_dir = os.path.dirname( __file__ )
-mymodule_dir = os.path.join( script_dir, '..', '..', '..', 'utils', 'outfits' )
+mymodule_dir = os.path.realpath(os.path.join(script_dir, '..', '..', '..', 'utils', 'outfits'))
 sys.path.append( script_dir )
 sys.path.append( mymodule_dir )
 import outfit
 from sys import stderr, exit
 
+from pathlib import Path
+import subprocess
+
+def generate_if_needed( name, force = False ):
+   xml = name.rsplit('.mvx', 1)[0]+'.xml'
+   exists = (not force) and Path(name).is_file()
+   uptodate = exists and not os.path.getmtime(name) < os.path.getmtime(xml)
+   if not uptodate:
+      stderr.write(('upd' if exists else 'gener')+'ate "'+os.path.basename(name)+'" from "'+os.path.basename(xml)+'"\n')
+      res = subprocess.run([os.path.join(mymodule_dir, 'xmllua2mvx.py'), xml], capture_output=True).stdout
+      res = res.decode()
+      fp = open(name, 'w')
+      fp.write(res)
+      fp.close()
+   else:
+      fp = open(name, 'r')
+      res = fp.read()
+      fp.close()
+   return res
+
 def get_outfit_dict( nam, doubled = False ):
-   o = outfit.outfit(os.path.join(os.path.dirname( __file__ ), '..', nam))
+   nam = os.path.realpath(os.path.join(os.path.dirname( __file__ ), '..', nam))
+   if nam[-4:] == '.mvx':
+      try:
+         o = outfit.outfit(generate_if_needed(nam), content=True)
+      except:
+         # file was deleted while reading, generate a new one
+         o = outfit.outfit(generate_if_needed(nam, True), content=True)
+   else:
+      o = outfit.outfit(nam)
    if o is None:
       stderr.write('err '+nam)
       exit(1)
@@ -153,18 +181,18 @@ typename['hull'] = N_("Bioship Shell")
 # Grandis Gene Drive    =>  Melendez Mammoth
 # Magnus Gene Drive     =>  Tricon Typhoon x2
 # Immanis Gene Drive    =>  Nexus Bolt 3000 x2
-for nam, db, temp, gfx, output_pref, outputs in [
-   ('small/tricon_zephyr_engine.mvx',     False,   'gene_drive_tricon',    'fast_s',   'Perlevis',    ['I', 'II']          ),
-   ('small/tricon_zephyr_engine.mvx',     True,    'gene_drive_tricon',    'fast_s',   'Laeviter',    ['I', 'II']          ),
-   ('small/melendez_ox_engine.mvx',       True,    'gene_drive_melendez',  'strong_s', 'Laevis',      ['I', 'II']          ),
-   ('medium/tricon_cyclone_engine.mvx',   False,   'gene_drive_tricon',    'fast_m',   'Mediocris',   ['I', 'II', 'III']   ),
-   ('medium/tricon_cyclone_engine.mvx',   True,    'gene_drive_tricon',    'strong_m', 'Largus',      ['I', 'II']          ),
-   ('large/tricon_typhoon_engine.mvx',    False,   'gene_drive_tricon',    'fast_l',   'Ponderosus',  ['I', 'II', 'III']   ),
-   ('large/melendez_mammoth_engine.mvx',  False,   'gene_drive_melendez',  'strong_l', 'Grandis',     ['I', 'II', 'III']   ),
-   ('large/tricon_typhoon_engine.mvx',    True,    'gene_drive_tricon',    'strong_l', 'Magnus',      ['I', 'II', 'III']   ),
-   ('large/nexus_bolt_3000_engine.mvx',   True,    'gene_drive',           'strong_l', 'Immanis',     ['I', 'II', 'III']   ),
+for siz, nam, db, temp, gfx, output_pref, outputs in [
+   ('small', 'tricon_zephyr_engine.mvx',     False,   'gene_drive_tricon',    'fast_s',   'Perlevis',    ['I', 'II']          ),
+   ('small', 'tricon_zephyr_engine.mvx',     True,    'gene_drive_tricon',    'fast_s',   'Laeviter',    ['I', 'II']          ),
+   ('small', 'melendez_ox_engine.mvx',       True,    'gene_drive_melendez',  'strong_s', 'Laevis',      ['I', 'II']          ),
+   ('medium', 'tricon_cyclone_engine.mvx',   False,   'gene_drive_tricon',    'fast_m',   'Mediocris',   ['I', 'II', 'III']   ),
+   ('medium', 'tricon_cyclone_engine.mvx',   True,    'gene_drive_tricon',    'strong_m', 'Largus',      ['I', 'II']          ),
+   ('large', 'tricon_typhoon_engine.mvx',    False,   'gene_drive_tricon',    'fast_l',   'Ponderosus',  ['I', 'II', 'III']   ),
+   ('large', 'melendez_mammoth_engine.mvx',  False,   'gene_drive_melendez',  'strong_l', 'Grandis',     ['I', 'II', 'III']   ),
+   ('large', 'tricon_typhoon_engine.mvx',    True,    'gene_drive_tricon',    'strong_l', 'Magnus',      ['I', 'II', 'III']   ),
+   ('large', 'nexus_bolt_3000_engine.mvx',   True,    'gene_drive',           'strong_l', 'Immanis',     ['I', 'II', 'III']   ),
 ]:
-   ref = get_outfit_dict('core_engine/'+nam, db)
+   ref = get_outfit_dict(os.path.join('core_engine', siz, nam), db)
    BioOutfit( temp+'.xml.template', {
        'typename':     typename['engine'],
        'size':         ref['size'],
@@ -199,8 +227,8 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
    ('large',  'unicorp_d58_heavy_plating.mvx',  'sk_war_plating.mvx',      False, 'h', 'Ponderosus', ['I', 'II', 'III', 'IV'] ),
    ('large',  'unicorp_d58_heavy_plating.mvx',  'sk_war_plating.mvx',      True,  'x', 'Immanis',    ['I', 'II', 'III']       ),
 ]:
-   ref1 = get_outfit_dict('core_hull/'+pref+'/'+nam1, dbl)
-   ref2 = get_outfit_dict('core_hull/'+pref+'/'+nam2, dbl)
+   ref1 = get_outfit_dict(os.path.join('core_hull', pref, nam1), dbl)
+   ref2 = get_outfit_dict(os.path.join('core_hull', pref, nam2), dbl)
    BioOutfit( 'cortex.xml.template', {
       'typename':     typename['hull'],
       'size':         pref,
@@ -224,15 +252,15 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
 # Largum Cerebrum     =>  Orion_4801 x2
 # Ponderosum Cerebrum =>  Orion_8601
 # Immane Cerebrum     =>  Orion_8601 x2
-for nam, dbl, gfx, output_pref, outputs, cpu in [
-   ('small/milspec_orion_2301_core_system.mvx',  False, 's1', 'Perleve',      ['I', 'II'],         (     5,     6 )),
-   ('small/milspec_orion_2301_core_system.mvx',   True, 's2', 'Laevum',       ['I', 'II'],         (    24,    32 )),
-   ('medium/milspec_orion_4801_core_system.mvx', False, 'm1', 'Mediocre',     ['I', 'II'],         (    48,   100 )),
-   ('medium/milspec_orion_4801_core_system.mvx',  True, 'm2', 'Largum',       ['I', 'II'],         (   100,   200 )),
-   ('large/milspec_orion_8601_core_system.mvx',  False, 'l1', 'Ponderosum',   ['I', 'II', 'III'],  (   100,   200 )),
-   ('large/milspec_orion_8601_core_system.mvx',   True, 'l2', 'Immane',       ['I', 'II', 'III'],  ( 370*3, 600*3 ))
+for siz, nam, dbl, gfx, output_pref, outputs, cpu in [
+   ('small','milspec_orion_2301_core_system.mvx',  False, 's1', 'Perleve',    ['I', 'II'],         (     5,     6 )),
+   ('small','milspec_orion_2301_core_system.mvx',   True, 's2', 'Laevum',     ['I', 'II'],         (    24,    32 )),
+   ('medium','milspec_orion_4801_core_system.mvx', False, 'm1', 'Mediocre',   ['I', 'II'],         (    48,   100 )),
+   ('medium','milspec_orion_4801_core_system.mvx',  True, 'm2', 'Largum',     ['I', 'II'],         (   100,   200 )),
+   ('large','milspec_orion_8601_core_system.mvx',  False, 'l1', 'Ponderosum', ['I', 'II', 'III'],  (   100,   200 )),
+   ('large','milspec_orion_8601_core_system.mvx',   True, 'l2', 'Immane',     ['I', 'II', 'III'],  ( 370*3, 600*3 ))
 ]:
-   ref = get_outfit_dict('core_system/'+nam, dbl)
+   ref = get_outfit_dict(os.path.join('core_system', siz, nam), dbl)
 
    if gfx[0] == 's':
       price = 0.5*ref['price']
@@ -240,8 +268,8 @@ for nam, dbl, gfx, output_pref, outputs, cpu in [
       shield = 0.25*ref['shield']
       shield_regen = 0.25*ref['shield_regen']
    else:
-      shield_capacitor = get_outfit_dict('structure/shield_capacitor_ii'+('i' if gfx[0] ==' l' else '')+'.xml')
-      shield_booster = get_outfit_dict('structure/'+ref['size']+'_shield_booster.xml')
+      shield_capacitor = get_outfit_dict(os.path.join('structure', 'shield_capacitor_ii'+('i' if gfx[0] ==' l' else '')+'.xml'))
+      shield_booster = get_outfit_dict(os.path.join('structure', ref['size']+'_shield_booster.xml'))
 
       price = 0.5*(shield_booster['price']+shield_capacitor['price'])
       mass = 0.5*(shield_booster['mass']+shield_capacitor['mass'])
