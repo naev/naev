@@ -60,7 +60,7 @@ def l(s):
    a,b = tuple(s.split('.',1))
    return ' | '+(3-len(a))*' '+a+m+b+(2-len(b))*' '
 
-def main(args, gith = False, color = False, autostack=False, combine=False):
+def main(args, gith = False, color = False, autostack=False, combine=False, nosort=False):
    sec_args = []
    if combine or autostack:
       for i in args:
@@ -74,10 +74,19 @@ def main(args, gith = False, color = False, autostack=False, combine=False):
             continue
          stderr.write(' incompatible with -A/-C options\n')
          return 1
-   if combine:
-      args = args+[i+'+'+j for i in args for j in sec_args]
-   elif autostack:
-      args = args+['2x'+i for i in sec_args]
+
+      if combine:
+         sec_args = set(sec_args)
+         tmp = [t for t in args]
+         for i in range(len(args)):
+            for j in range(i, len(args)):
+               if args[j] in sec_args:
+                  tmp.append(args[i]+'+'+args[j])
+               if i != j and args[i] in sec_args:
+                  tmp.append(args[j]+'+'+args[i])
+         args = tmp
+      elif autostack:
+         args = args+['2x'+i for i in sec_args]
 
    L = []
    for i in range(len(args)):
@@ -98,7 +107,8 @@ def main(args, gith = False, color = False, autostack=False, combine=False):
       L.append(o)
 
    L = [(o.to_dict(),o.shortname()) for o in L]
-   L.sort(key = key,reverse = True)
+   if not nosort:
+      L.sort(key = key,reverse = True)
 
    if color:
       altgrey = '\033[34m'
@@ -153,6 +163,7 @@ if __name__ == '__main__':
    parser.add_argument('-c', '--color', action = 'store_true', help = "colored terminal output. You can pipe to \"less -RS\" if the table is too wide.")
    parser.add_argument('-A', '--autostack', action = 'store_true', help = "also display x2 outfits")
    parser.add_argument('-C', '--combinations', action = 'store_true', help = "also display all the combinations." )
+   parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
 Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or suffixed with \'x2\'.""")
    args = parser.parse_args()
@@ -160,6 +171,6 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
       print("-A subsumed by -C",file = stderr,flush = True)
       args.autostack = False
 
-   main(args.filename,args.github,args.color,args.autostack,args.combinations)
+   main(args.filename,args.github,args.color,args.autostack,args.combinations,args.no_sort)
 else:
    raise Exception("This module is only intended to be used as main.")

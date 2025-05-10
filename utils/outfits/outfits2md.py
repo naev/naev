@@ -43,10 +43,18 @@ def main(args,gith = False,ter = False,noext=False,sortit=False,autostack=False,
          stderr.write(' incompatible with -A/-C options\n')
          return 1
 
-   if comb:
-      args = [i+'+'+j for i in args for j in sec_args]
-   elif autostack:
-      args = args+['2x'+i for i in sec_args]
+      if comb:
+         sec_args = set(sec_args)
+         tmp = [t for t in args]
+         for i in range(len(args)):
+            for j in range(i, len(args)):
+               if args[j] in sec_args:
+                  tmp.append(args[i]+'+'+args[j])
+               if i != j and args[i] in sec_args:
+                  tmp.append(args[j]+'+'+args[i])
+         args = tmp
+      elif autostack:
+         args = args+['2x'+i for i in sec_args]
 
    rang = dict()
    L = []
