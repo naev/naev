@@ -154,8 +154,8 @@ typename['hull'] = N_("Bioship Shell")
 # Magnus Gene Drive     =>  Tricon Typhoon x2
 # Immanis Gene Drive    =>  Nexus Bolt 3000 x2
 for nam, db, temp, gfx, output_pref, outputs in [
-   ('small/tricon_zephyr_engine.mvx',     False,   'gene_drive_tricon',    'fast_s',   'Perlevis',    ['I', 'II']          ),
-   ('small/tricon_zephyr_engine.mvx',     True,    'gene_drive_tricon',    'fast_s',   'Laeviter',    ['I', 'II']          ),
+   ('../bioship/tricon_zephyr_engine.mvx',     False,   'gene_drive_tricon',    'fast_s',   'Perlevis',    ['I', 'II']          ),
+   ('../bioship/tricon_zephyr_engine.mvx',     True,    'gene_drive_tricon',    'fast_s',   'Laeviter',    ['I', 'II']          ),
    ('small/melendez_ox_engine.mvx',       True,    'gene_drive_melendez',  'strong_s', 'Laevis',      ['I', 'II']          ),
    ('medium/tricon_cyclone_engine.mvx',   False,   'gene_drive_tricon',    'fast_m',   'Mediocris',   ['I', 'II', 'III']   ),
    ('medium/tricon_cyclone_engine.mvx',   True,    'gene_drive_tricon',    'strong_m', 'Largus',      ['I', 'II']          ),
