@@ -26,7 +26,7 @@ def generate_if_needed(name):
 
    uptodate = Path(name).is_file() and os.path.getmtime(name) > os.path.getmtime(xml)
    if not uptodate:
-      subprocess.run([mymodule_dir+'/xmllua2mvx.py', xml, name])
+      subprocess.call([mymodule_dir+'/xmllua2mvx.py', xml, name])
 
 def get_outfit_dict( nam, doubled = False ):
    nam = os.path.join(os.path.dirname( __file__ ), '..', nam)
