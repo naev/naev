@@ -187,7 +187,8 @@ static void solid_update_rk4( Solid *obj, double dt )
          if ( vmod > obj->speed_max ) {
             /* We limit by applying a force against it. */
             vang = ANGLE( vx, vy ) + M_PI;
-            vmod = CTS.PHYSICS_SPEED_DAMP/obj->aerodynamics * ( vmod - obj->speed_max );
+            vmod = CTS.PHYSICS_SPEED_DAMP / obj->aerodynamics *
+                   ( vmod - obj->speed_max );
 
             /* Update accel. */
             ax += vmod * cos( vang );
@@ -230,7 +231,8 @@ static void solid_update_rk4( Solid *obj, double dt )
  */
 double solid_maxspeed( const Solid *s, double speed, double accel )
 {
-   // s->speed_max can get overwritten to limit speed. Here we want the true max_speed.
+   // s->speed_max can get overwritten to limit speed. Here we want the true
+   // max_speed.
    return speed + accel * s->aerodynamics / CTS.PHYSICS_SPEED_DAMP;
 }
 
@@ -273,22 +275,23 @@ void solid_init( Solid *dest, double mass, double dir, const vec2 *pos,
    dest->pre = dest->pos; /* Store previous position. */
 
    /* Misc. */
-   dest->speed_max = -1.; /* Negative is invalid. */
+   dest->speed_max    = -1.; /* Negative is invalid. */
    dest->aerodynamics = 1.;
 
    /* Handle update. */
    switch ( update ) {
-      case SOLID_UPDATE_RK4:
-         dest->update = solid_update_rk4;
-         break;
+   case SOLID_UPDATE_RK4:
+      dest->update = solid_update_rk4;
+      break;
 
-      case SOLID_UPDATE_EULER:
-         dest->update = solid_update_euler;
-         break;
+   case SOLID_UPDATE_EULER:
+      dest->update = solid_update_euler;
+      break;
 
-      default:
-         WARN( _( "Solid initialization did not specify correct update function!" ) );
-         dest->update = solid_update_rk4;
-         break;
+   default:
+      WARN(
+         _( "Solid initialization did not specify correct update function!" ) );
+      dest->update = solid_update_rk4;
+      break;
    }
 }

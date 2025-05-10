@@ -3600,12 +3600,12 @@ dat/scripts/prng.lua
 dat/scripts/prob.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
-dat/scripts/shipmemfs.lua
 dat/scripts/shipvariants.lua
 dat/scripts/strmess.lua
 dat/scripts/swapship.lua
 dat/scripts/term.lua
 dat/scripts/textoverlay.lua
+dat/scripts/tfs.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/log.lua

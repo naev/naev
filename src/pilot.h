@@ -267,29 +267,31 @@ typedef struct Pilot_ {
    int presence;      /**< Presence being used by the pilot. */
 
    /* Object characteristics */
-   const Ship  *ship;         /**< ship pilot is flying */
-   Solid        solid;        /**< Associated solid (physics) */
-   double       base_mass;    /**< Ship mass plus core outfit mass. */
-   double       mass_cargo;   /**< Amount of cargo mass added. */
-   double       mass_outfit;  /**< Amount of outfit mass added. */
-   int          tsx;          /**< current sprite x position, calculated on update. */
-   int          tsy;          /**< current sprite y position, calculated on update. */
-   Trail_spfx **trail;        /**< Array of pointers to pilot's trails. */
+   const Ship  *ship;        /**< ship pilot is flying */
+   Solid        solid;       /**< Associated solid (physics) */
+   double       base_mass;   /**< Ship mass plus core outfit mass. */
+   double       mass_cargo;  /**< Amount of cargo mass added. */
+   double       mass_outfit; /**< Amount of outfit mass added. */
+   int          tsx;   /**< current sprite x position, calculated on update. */
+   int          tsy;   /**< current sprite y position, calculated on update. */
+   Trail_spfx **trail; /**< Array of pointers to pilot's trails. */
 
    /* Properties. */
-   int    cpu;       /**< Amount of CPU the pilot has left. */
-   int    cpu_max;   /**< Maximum amount of CPU the pilot has. */
-   double crew;      /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
+   int    cpu;     /**< Amount of CPU the pilot has left. */
+   int    cpu_max; /**< Maximum amount of CPU the pilot has. */
+   double crew; /**< Crew amount the player has (display it as (int)floor(), but
+                   it's analogue. */
    double cap_cargo; /**< Pilot's cargo capacity. */
 
    /* Movement */
-   double accel;        /**< Pilot's acceleration in px/s^2. */
-   double accel_base;   /**< Pilot's base acceleration in px/s^2. */
-   double speed;        /**< Pilot's speed in px/s. */
-   double speed_base;   /**< Pilot's base speed in px/s. */
-   double speed_limit;  /**< Pilot's maximum speed in px/s if limited by lua call. */
-   double turn;         /**< Pilot's turn in rad/s. */
-   double turn_base;    /**< Pilot's base turn in rad/s. */
+   double accel;      /**< Pilot's acceleration in px/s^2. */
+   double accel_base; /**< Pilot's base acceleration in px/s^2. */
+   double speed;      /**< Pilot's speed in px/s. */
+   double speed_base; /**< Pilot's base speed in px/s. */
+   double
+      speed_limit; /**< Pilot's maximum speed in px/s if limited by lua call. */
+   double turn;    /**< Pilot's turn in rad/s. */
+   double turn_base; /**< Pilot's base turn in rad/s. */
 
    /* Current health */
    double armour_disabled; /**< Last armour the ship was disabled at. */
