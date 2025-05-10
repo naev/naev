@@ -18,18 +18,18 @@ def parse_lua_multicore( si ):
 
    name = ' ("|\')([^"\']*)\\1'
    sep = ' ,'
-   num = ' -? [0-9]+(\.[0-9]+)?'
+   num = ' -? [0-9]+(\\.[0-9]+)?'
 
-   expr = ' require \(? ("|\')outfits.lib.multicore(\\1) \)? \. init \{ '
+   expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\{ '
    block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
    expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
-   expr = expr.replace(' ', '\s*')
+   expr = expr.replace(' ', '\\s*')
    match = re.search(expr, s)
    if match is None:
       return [], si
 
    block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
-   block = block.replace(' ', '\s*')
+   block = block.replace(' ', '\\s*')
    L = [t.groupdict() for t in re.finditer(block, match.group(3))]
    for d in L:
       if d['sec'] is None:
