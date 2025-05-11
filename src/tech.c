@@ -967,6 +967,8 @@ Ship **tech_getShipArray( tech_group_t **tech, int num )
  */
 Commodity **tech_getCommodity( const tech_group_t *tech, double **price )
 {
+   if( price!= NULL )
+      *price = NULL;
    if ( tech == NULL )
       return NULL;
 
