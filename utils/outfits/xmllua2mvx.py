@@ -50,9 +50,6 @@ def xmllua2mvx( argin, argout, quiet = False ):
    except:
       return None
 
-   if not quiet:
-      stderr.write('xmllua2mvx: ' + o.name() + '\n')
-
    d = {'general': [], 'specific': []}
    for t in fields:
       if t[0] in general:
@@ -75,6 +72,9 @@ def xmllua2mvx( argin, argout, quiet = False ):
             spe.remove(e)
          else:
             e.text = li.strip()
+   if not quiet:
+      stderr.write('xmllua2mvx: ' + o.name() + '\n')
+
    o.write(argout)
    return o
 
