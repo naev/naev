@@ -172,7 +172,7 @@ function multicore.init( params )
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
-         desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name])
+         desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name] and s.name ~= "engine_limit")
       end
 
       if multicore_off ~= nil then
