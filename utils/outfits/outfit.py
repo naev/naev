@@ -88,21 +88,22 @@ def readval( what ):
    return what
 
 class _outfit():
-   def __init__( self, fil ):
+   def __init__( self, fil, content = False ):
       self.sec = None
 
-      if type(fil) == type(""):
+      if content:
+         self.r = ET.fromstring(fil)
+      elif type(fil) == type(""):
          if fil == '-':
             fp = stdin
          else:
             fp = open(fil, 'rt')
-         self.T = ET.parse(fp)
+         self.r = ET.parse(fp).getroot()
          if fp != stdin:
             fp.close()
       else:
-         self.T = ET.parse(fil)
+         self.r = ET.parse(fil).getroot()
       self.short = False
-      self.r = self.T.getroot()
       self.fil = fil
 
    def name( self ):
@@ -279,12 +280,16 @@ class _outfit():
             d[k] = d[k][0]
       return d
 
-def outfit( fil ):
-   if type(fil) != type('') or fil.endswith('.xml') or fil.endswith('.mvx') or fil == '-':
-      o = _outfit(fil)
+def outfit( fil, content = False ):
+   if content or type(fil) != type('') or fil.endswith('.xml') or fil.endswith('.mvx') or fil == '-':
+      o = _outfit(fil, content)
       if o.r.tag == 'outfit':
          return o
-   raise Exception('Invalid outfit "'+str(fil)+'"')
+
+   if content:
+      raise Exception('Invalid outfit <user-data content>')
+   else:
+      raise Exception('Invalid outfit "'+str(fil)+'"')
 
 if __name__ == '__main__':
    from sys import argv

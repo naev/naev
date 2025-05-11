@@ -27,13 +27,23 @@ def generate_if_needed(name):
    uptodate = exists and not os.path.getmtime(name) < os.path.getmtime(xml)
    if not uptodate:
       stderr.write(('upd' if exists else 'gener')+'ate "'+os.path.basename(name)+'" from "'+os.path.basename(xml)+'"\n')
-      subprocess.call([os.path.join(mymodule_dir, 'xmllua2mvx.py'), xml, name])
+      res = subprocess.run([os.path.join(mymodule_dir, 'xmllua2mvx.py'), xml], capture_output=True).stdout
+      res = res.decode()
+      fp = open(name, 'w')
+      fp.write(res)
+      fp.close()
+   else:
+      fp = open(name, 'r')
+      res = fp.read()
+      fp.close()
+   return res
 
 def get_outfit_dict( nam, doubled = False ):
    nam = os.path.realpath(os.path.join(os.path.dirname( __file__ ), '..', nam))
    if nam[-4:] == '.mvx':
-      generate_if_needed(nam)
-   o = outfit.outfit(nam)
+      o = outfit.outfit(generate_if_needed(nam), content=True)
+   else:
+      o = outfit.outfit(nam)
    if o is None:
       stderr.write('err '+nam)
       exit(1)
