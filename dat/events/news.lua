@@ -33,39 +33,39 @@ local articles = {}
 
 local econ_articles = {
    {
-      head = _("Unfortunate Merchant Goes Bankrupt"),
+      head = N_("Unfortunate Merchant Goes Bankrupt"),
       body = _([[A merchant was forced into bankruptcy due to a badly timed trade of {cargo} on {pnt}. "I thought {credits} per tonne was a good deal, but it turns out I should have waited," the merchant said.]])
    },
    {
-      head = _("Shipping Company Goes Out of Business"),
+      head = N_("Shipping Company Goes Out of Business"),
       body = _([[A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of {cargo} on {pnt} for {credits} per tonne. "It was poor executive decision," one analyst asserts. "Patience is key when trading, and it's clear that the owner of this company didn't have enough of that."]])
    },
    {
-      head = _("Interview with an Economist"),
+      head = N_("Interview with an Economist"),
       body = _([[One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. "We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of {cargo} on {pnt} would reach very accurately; the actual price reached was {credits} per tonne, which we were only off by about 15%. Over time, we hope to lower that margin of error to as little as 2%."]])
    },
    {
-      head = _("Economist Describes Sinusoidal Economic Theory"),
+      head = N_("Economist Describes Sinusoidal Economic Theory"),
       body = _([[A little-known economist discusses a controversial economic theory. "When you look at the trends, it resembles a sine wave. For instance, the price of {cargo} on {pnt} is now {credits} per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately." Other economists disagree, however, attributing these economists' results to chance.]])
    },
    {
-      head = _("Young Pilot Buys Their First Commodity"),
+      head = N_("Young Pilot Buys Their First Commodity"),
       body = _([[A young pilot has bought some {cargo} as a way of breaking into the freelance piloting business. Born and raised on {pnt}, where they bought their first commodity, they spoke with enthusiasm for the new career. "You know, it's real exciting! Even on my home planet the price of {credits} per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started."]])
    },
    {
-      head = _("Corporate Scandal Rips Through the Galaxy"),
+      head = N_("Corporate Scandal Rips Through the Galaxy"),
       body = _([[Economists are attributing the price of {cargo} on {pnt} to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be {credits} per tonne, will go up, down, or remain the same this time.]])
    },
    {
-      head = _("Commodity Trading Likened to Gambling"),
+      head = N_("Commodity Trading Likened to Gambling"),
       body = _([[In a controversial statement, one activist has likened commodity trading to gambling. "It's legalized gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop."]])
    },
    {
-      head = _("Leadership Decision Disrupts Prices"),
+      head = N_("Leadership Decision Disrupts Prices"),
       body = _([[The price of {cargo} was jeopardized on {pnt} today when the local government passed a controversial law, bringing it to {credits} per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.]])
    },
    {
-      head = _("Five Cycle Old Child Starts Commodity Trading"),
+      head = N_("Five Cycle Old Child Starts Commodity Trading"),
       body = _([[A child no more than five cycles old has started commodity trading early, buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a keen interest in the economy and wishes to be a space trader some day. "I bought it for {credits}, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her."]])
    },
 }
@@ -100,10 +100,18 @@ end
 
 -- Return an economy article based on the given commodity, planet object, and number of credits.
 local function get_econ_article( cargo, pnt, credits )
+   -- Avoid duplicates if possible
+   local earticles = {}
+   for k,a in ipairs(econ_articles) do
+      if #news.get(a.head)==0 then
+         table.insert( earticles, a )
+      end
+   end
 
-   local i = rnd.rnd( 1, #econ_articles )
-   local head = econ_articles[i].head
-   local body = fmt.f( econ_articles[i].body, {cargo=cargo, pnt=pnt, credits=fmt.credits(credits)} )
+   -- CHoose the article
+   local i = rnd.rnd( 1, #earticles )
+   local head = earticles[i].head
+   local body = fmt.f( earticles[i].body, {cargo=cargo, pnt=pnt, credits=fmt.credits(credits)} )
 
    return head, body
 end
@@ -257,7 +265,8 @@ function add_econ_article( my_faction )
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
          local head, body = get_econ_article( commod, p, price )
-         news.add( "Generic", head, body, exp, pd, 6 ) -- Slightly lower priority
+         local a = news.add( "Generic", _(head), body, exp, pd, 6 ) -- Slightly lower priority
+         a:bind( head )
          p:recordCommodityPriceAtTime( pd )
          var.push( "news_last_econ_article", time.get():tonumber() )
       end
