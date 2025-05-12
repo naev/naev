@@ -103,7 +103,6 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
          o.stack(o2)
       else:
          o = some_outfit(args[i])
-         print(args[i]+':'+str(o))
          if not o.can_alone():
             continue
       L.append(o)
