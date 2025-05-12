@@ -30,7 +30,6 @@ def _gen_if_needed( xml, force = False ):
    return res
 
 def core_outfit( nam, try_again = False ):
-   print (nam)
    if nam[-4:] == '.xml':
       fail = False
       o = outfit(_gen_if_needed(nam), content = True)

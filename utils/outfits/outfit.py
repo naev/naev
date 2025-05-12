@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from sys import stdin, stdout, stderr
+from sys import stdin, stdout 
 
 import xml.etree.ElementTree as ET
 
