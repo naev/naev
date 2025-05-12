@@ -196,7 +196,7 @@ She takes out a metallic object from her pocket and show it to you. You don't kn
       pir(_([["The Spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If not, we may have to take other measures to ensure success."]]))
    elseif mem.misn_state==3 then
       if not mem.harper_gotticket then
-         pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
+         pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdoin managed to get it instead."]]))
          pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
       else
          vn.jump("trueticket")
@@ -557,6 +557,7 @@ He scoffs at you and closes the transmission.]]))
       var.push("harper_ticket","tokens")
    end )
    vn.na(_("You wire him the tokens and he gives you the digital code that represents the ticket. Looks like you are set."))
+   vn.done("electric")
 
    vn.label("money_sml")
    vn.func( function ()
