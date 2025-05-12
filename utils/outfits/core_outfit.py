@@ -31,15 +31,8 @@ def _gen_if_needed( xml, force = False ):
 
 def core_outfit( nam, try_again = False ):
    if nam[-4:] == '.xml':
-      fail = False
       o = outfit(_gen_if_needed(nam), content = True)
-      try:
-         o = outfit(_gen_if_needed(nam), content = True)
-      except:  # file was deleted while reading, gen a new one
-         fail = True
-         o = None
-
-      if fail and try_again:
+      if o is None and try_again:
          o = outfit(_gen_if_needed(nam, True), content = True)
       if not (o is None):
          o.fil = nam
