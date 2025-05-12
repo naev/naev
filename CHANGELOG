@@ -4,7 +4,7 @@
    * Fixed AI spamming afterburners in an unhealthy way
    * Removed support for save game compression as libxml 2.14 disable compression by default
    * minerva/pirate3: fixed dialogue being weird if paying with tokens
-   * Translation updates
+   * Minor typo fixes and translation updates
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems
