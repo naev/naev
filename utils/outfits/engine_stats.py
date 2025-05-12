@@ -130,7 +130,7 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
       acc = greyitall(acc, False)
    out(acc)
    lin = '| ---' + (N-3)*'-' + ' ' + len(C)*('| ---'+('---' if not gith else '')+' ')
-   out(greyit(alt)(lin))
+   out(greyit(True)(lin))
    count = 0
    for k, n in L:
       if accel(k) != 0:
