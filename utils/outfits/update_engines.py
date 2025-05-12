@@ -239,7 +239,7 @@ if __name__ == '__main__':
 """)
    parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.\nDoes not apply in generate mode.')
    parser.add_argument('-g', '--generate', action = 'store_true', help = 'line_name ex: "Melendez" or "Zednelem".')
-   parser.add_argument('args', nargs = '*', help = 'An outfit with ".mvx" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
+   parser.add_argument('args', nargs = '*', help = 'An outfit with ".xml" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
 
    if args.generate:
