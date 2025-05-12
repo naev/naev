@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from os import path
+from os import path, utime
 from sys import stderr
 from pathlib import Path
 from outfit import outfit
@@ -42,6 +42,10 @@ def some_outfit( nam ):
    o = core_outfit(nam)
    return o if not (o is None) else outfit(nam)
 
-def core_write( fil ):
+def core_write( o, fil ):
    mvx = mvx_nam(fil)
-   subprocess.run([mvx2xml, '-q', fil, mvx])
+   o.write(mvx)
+   subprocess.run([mvx2xml, '-q', mvx, fil])
+   # mark mvx as up to date
+   with open(mvx, 'ab'):
+        utime(mvx, None)
