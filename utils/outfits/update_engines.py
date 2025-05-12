@@ -2,7 +2,8 @@
 
 import math
 from sys import stderr, stdout
-from outfit import outfit, nam2fil, fmtval, unstackvals
+from outfit import nam2fil, fmtval, unstackvals
+from core_outfit import core_outfit, core_write
 from getconst import PHYSICS_SPEED_DAMP
 
 
@@ -112,7 +113,7 @@ def mk_subs( a, name = None ):
    sub = []
    for doubled in [False, True]:
       try:
-         o = outfit(a)
+         o = core_outfit(a)
       except:
          stderr.write('Invalid outfit "'+a+'" ignored\n')
          return None
@@ -132,25 +133,15 @@ def mk_subs( a, name = None ):
 
    return {k:(v1, sub[-1][k]) for k, v1 in sub[0].items()}
 
-import os
-script_dir = os.path.dirname( __file__ )
-mvx2xmllu = os.path.join( script_dir, 'mvx2xmllua.py')
-import subprocess
-def update_xmllua( fil ):
-   res = fil.rsplit('.mvx', 1)
-   if len(res) == 2 and res[1] == '':
-      nam = res[0]+'.xml'
-      subprocess.run([mvx2xmllu, fil, nam])
 
 def main( args ):
    outfits = []
    for a in args:
       sub = mk_subs(a)
-
       if sub == None:
          continue
 
-      o = outfit(a)
+      o = core_outfit(a)
       t = o.to_dict()['engine_limit']
       if type(t) == type(()):
          (eml1, eml2) = t
@@ -172,8 +163,7 @@ def main( args ):
             err(o.fil.split('/')[-1]+': ', nnl = True)
             if acc != []:
                err(', '.join([i+':'+j+'->'+k for i, j, k in acc]))
-               o.write(o.fil)
-               update_xmllua(o.fil)
+               core_write(o.fil)
             else:
                err('_')
    return 0
@@ -233,11 +223,10 @@ if __name__ == '__main__':
    parser = argparse.ArgumentParser(
       usage = " %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...) | -h",
       formatter_class = argparse.RawTextHelpFormatter,
-      description = """The changes made will be listed onto <stderr>: \"_\" means \"nothing\".
-If some mvx files are modified, the related xmllua file will be updated.""",
+      description = 'The changes made will be listed onto <stderr>: \"_\" means \"nothing\".',
       epilog = """Examples:
   Standard usage:
-   > ./utils/outfits/update_engines.py `find dat/outfits/core_engine/ | grep mvx`
+   > ./utils/outfits/update_engines.py `find dat/outfits/core_engine/ | grep xml`
 
   Generate a line called Krain with same params as Krain:
    > ./utils/outfits/update_engines.py -g Krain
@@ -252,7 +241,7 @@ If some mvx files are modified, the related xmllua file will be updated.""",
    parser.add_argument('args', nargs = '+', help = 'An outfit with ".mvx" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
 
-   args.args = [a for a in args.args if a.endswith('.mvx')]
+   args.args = [a for a in args.args if a.endswith('.xml')]
    if args.generate:
       if args.args[4:] != []:
          err('Ignored: '+', '.join([repr(a) for a in args.args[4:]]))
