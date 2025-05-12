@@ -16,7 +16,7 @@ from sys import path, stderr, argv
 path.insert(0, util_dir)
 
 from getconst import PHYSICS_SPEED_DAMP
-import outfit
+from core_outfit import core_outfit
 
 
 def iter_line( line ):
@@ -33,7 +33,7 @@ def mkline( line ):
    acc = []
    for f in iter_line(line):
       for fl in [False, True]:
-         o = outfit.outfit(f)
+         o = core_outfit(f)
          o.autostack(fl)
          d = o.to_dict()
          acc.append((max_sp(d['speed'], d['accel']), d['speed']))

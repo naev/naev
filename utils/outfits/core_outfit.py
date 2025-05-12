@@ -7,8 +7,8 @@ from outfit import outfit
 import subprocess
 
 script_dir = path.dirname(__file__)
-xml2mvx = path.join(script_dir , 'xmllua2mvx.py')
-mvx2xml = path.join( script_dir, 'mvx2xmllua.py')
+xml2mvx = path.join(script_dir, 'xmllua2mvx.py')
+mvx2xml = path.join(script_dir, 'mvx2xmllua.py')
 
 def mvx_nam(xml):
    return path.join(path.dirname(xml), '.' + path.basename(xml)[:-3] + 'mvx')
@@ -18,8 +18,10 @@ def _gen_if_needed( xml, force = False ):
    exists = (not force) and Path(mvx).is_file()
    uptodate = exists and not path.getmtime(mvx) < path.getmtime(xml)
    if not uptodate:
-      stderr.write(('upd' if exists else 'gener') + 'ate "' + path.basename(mvx) + '"\n')
       res = subprocess.run([xml2mvx, xml], capture_output = True).stdout.decode()
+      if res == '':
+         return None
+      stderr.write(('upd' if exists else 'gen') + ' "' + path.basename(mvx) + '"\n')
       with open(mvx, "w") as fp:
          fp.write(res)
    else:
@@ -27,17 +29,26 @@ def _gen_if_needed( xml, force = False ):
          res = fp.read()
    return res
 
-def core_outfit( nam ):
+def core_outfit( nam, try_again = False ):
+   print (nam)
    if nam[-4:] == '.xml':
+      fail = False
+      o = outfit(_gen_if_needed(nam), content = True)
       try:
          o = outfit(_gen_if_needed(nam), content = True)
       except:  # file was deleted while reading, gen a new one
+         fail = True
+         o = None
+
+      if fail and try_again:
          o = outfit(_gen_if_needed(nam, True), content = True)
-      o.fil = nam
-      return o
+      if not (o is None):
+         o.fil = nam
+         return o
 
 def some_outfit( nam ):
-   return core_outfit(nam) or outfit(nam)
+   o = core_outfit(nam)
+   return o if not (o is None) else outfit(nam)
 
 def core_write( fil ):
    mvx = mvx_nam(fil)

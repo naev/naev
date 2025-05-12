@@ -17,7 +17,7 @@ def get_outfit_dict( nam, core = False, doubled = False ):
    nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
    try:
       if core:
-         o = core_outfit(nam)
+         o = core_outfit(nam) #, try_again=True)
       else:
          o = outfit(nam)
    except:
