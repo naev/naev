@@ -27,6 +27,8 @@ def _gen_if_needed( xml, force = False ):
    else:
       with open(mvx, "r") as fp:
          res = fp.read()
+      if res == '':
+         return None
    return res
 
 def core_outfit( nam, try_again = False ):
