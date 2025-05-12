@@ -6,7 +6,7 @@
 
 import re
 from outfit import outfit, ET
-from sys import argv, stderr
+from sys import argv, stderr, exit
 
 
 # everything ont in this list goes to specific intead of general
@@ -38,12 +38,16 @@ def parse_lua_multicore( si ):
    return L, si[match.span()[1]:]
 
 def do_it( argin, argout, quiet = False ):
-   o = outfit(argin)
+   try:
+      o = outfit(argin)
+      fields, li = parse_lua_multicore(o.find('lua_inline'))
+   except:
+      return 1
+
    if not quiet:
       stderr.write('xmllua2mvx: '+o.name()+'\n')
-   d = {'general':[], 'specific':[]}
-   fields, li = parse_lua_multicore(o.find('lua_inline'))
 
+   d = {'general':[], 'specific':[]}
    for t in fields:
       if t[0] in general:
          d['general'].append(t)
@@ -66,6 +70,7 @@ def do_it( argin, argout, quiet = False ):
          else:
             e.text = li.strip()
    o.write(argout)
+   return 0
 
 if __name__ == '__main__':
    import argparse
@@ -82,4 +87,4 @@ The special values "-" mean stdin/stdout.
    parser.add_argument('input', nargs = '?', default = '-')
    parser.add_argument('output', nargs = '?', default = '-')
    args = parser.parse_args()
-   do_it(args.input, args.output, args.quiet)
+   exit(do_it(args.input, args.output, args.quiet))

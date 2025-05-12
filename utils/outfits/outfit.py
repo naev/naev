@@ -281,6 +281,9 @@ class _outfit():
       return d
 
 def outfit( fil, content = False ):
+   if fil is None:
+      return None
+
    if content or type(fil) != type('') or fil.endswith('.xml') or fil.endswith('.mvx') or fil == '-':
       o = _outfit(fil, content)
       if o.r.tag == 'outfit':

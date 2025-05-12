@@ -2,7 +2,7 @@
 
 from getconst import PHYSICS_SPEED_DAMP
 
-from outfit import outfit
+from core_outfit import some_outfit
 
 from sys import stdout
 import math
@@ -68,7 +68,7 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
          elif '+' in i:
             stderr.write('"+"')
          else:
-            if outfit(i).can_sec():
+            if some_outfit(i).can_sec():
                sec_args.append(i)
             continue
          stderr.write(' incompatible with -A/-C options\n')
@@ -95,14 +95,15 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
 
       if len(args[i].split('+')) == 2:
          o, o2 = args[i].split('+')
-         o, o2 = outfit(o.strip()), outfit(o2.strip())
+         o, o2 = some_outfit(o.strip()), some_outfit(o2.strip())
          if not o.can_stack(o2):
             continue
          if filt and o.size() < o2.size():
             continue
          o.stack(o2)
       else:
-         o = outfit(args[i])
+         o = some_outfit(args[i])
+         print(args[i]+':'+str(o))
          if not o.can_alone():
             continue
       L.append(o)
