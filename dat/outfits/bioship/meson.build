@@ -244,7 +244,7 @@ foreach name, data : biooutfits
    endif
 
    bio_outfits += [custom_target( name, command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/' + data['template'] + '.xml.template')
+      input: files('templates/' + data['template'] + '.xml.template'),
       depend_files: depend_files,
       output: data['output'],
    )]

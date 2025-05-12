@@ -181,7 +181,7 @@ if __name__ == '__main__':
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
    parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if the table is too wide.')
    parser.add_argument('-n', '--nomax', action = 'store_true', help = 'Do not emphasize min/max values.' )
-   parser.add_argument('-s', '--sort', help = 'inputs are sorted by their SORT key.')
+   parser.add_argument('-s', '--sort', action = 'store_true', help = 'inputs are sorted by their SORT key.')
    parser.add_argument('-S', '--sortbymass', action = 'store_true', help = 'Like -s mass.' )
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Adds 2x outfits' )
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'Does all the combinations.' )

@@ -56,7 +56,7 @@ def _mklua( L ):
    return output+'}\n'
 
 def toxmllua( o ):
-   T, R = o.T, o.r
+   R = o.r
 
    acc1, tr1 = _process_group(R, './general')
    acc2, tr2 = _process_group(R, './specific')
@@ -88,17 +88,17 @@ def toxmllua( o ):
 if __name__ == '__main__':
    import argparse
 
-   def main( argin, argout ):
+   def main( argin, argout, quiet ):
       o = outfit(argin)
-      if o is None:
-         return 1
-      else:
+      if o is not None:
          nam = nam2fil(o.name())
-
          toxmllua(o)
-         stderr.write('mvx2xmllua: '+(nam if argout == '-' else argout)+'\n')
+         if not quiet:
+            stderr.write('mvx2xmllua: '+(nam if argout == '-' else argout)+'\n')
          o.write(argout)
          return 0
+      else:
+         return 1
 
    parser = argparse.ArgumentParser(
       description =
@@ -110,5 +110,6 @@ The special values "-" mean stdin/stdout.
    )
    parser.add_argument('input', nargs = '?', default = "-")
    parser.add_argument('output', nargs = '?', default = "-")
+   parser.add_argument('-q', '--quiet', action = 'store_true')
    args = parser.parse_args()
-   exit(main(args.input, args.output))
+   exit(main(args.input, args.output, args.quiet))
