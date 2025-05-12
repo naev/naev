@@ -11,7 +11,7 @@ bio_dir = ndata_path / 'dat/outfits/bioship'
 biotmp_weapon = files('templates/weapon.xml.template')
 tritmp = files('templates/gene_drive_tricon.xml.template')
 
-bio_outfits = {
+biooutfits = {
    'perlevis_gene_drive' : {
       'template': tritmp,
       'depend_files' : [ 'core_engine/small/tricon_zephyr_engine.xml' ],
@@ -237,6 +237,7 @@ bio_outfits = {
    },
 }
 
+bio_outfits = []
 foreach name, data : biooutfits
    depend_files = []
    if 'depend_files' in data
