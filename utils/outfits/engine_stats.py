@@ -173,6 +173,7 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
       print('Warning: -A subsumed by -C', file = stderr, flush = True)
       args.autostack = False
 
+   args.filename = [f for f in args.filename if f[-4:] in [".mvx", ".xml"]]
    main(args.filename, args.github, args.color, args.autostack, args.combinations, args.no_sort, args.filter)
 else:
    raise Exception('This module is only intended to be used as main.')
