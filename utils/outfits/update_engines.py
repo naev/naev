@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import math
-from sys import stderr, stdout
+from sys import stderr, stdout, stdin
 from outfit import nam2fil, fmtval, unstackvals
 from core_outfit import core_outfit, core_write
 from getconst import PHYSICS_SPEED_DAMP
@@ -115,6 +115,9 @@ def mk_subs( a, name = None ):
       try:
          o = core_outfit(a)
       except:
+         o = None
+
+      if o is None:
          stderr.write('Invalid outfit "'+a+'" ignored\n')
          return None
 
@@ -163,7 +166,7 @@ def main( args ):
             err(o.fil.split('/')[-1]+': ', nnl = True)
             if acc != []:
                err(', '.join([i+':'+j+'->'+k for i, j, k in acc]))
-               core_write(o.fil)
+               core_write(o, o.fil)
             else:
                err('_')
    return 0
@@ -171,7 +174,7 @@ def main( args ):
 def gen_line( params ):
    import os
    outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
-   engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.mvx')
+   engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.xml')
 
    #usage = " %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...)",
    lin = params[0]
@@ -189,15 +192,15 @@ def gen_line( params ):
 
    for i, s in enumerate(['Small', 'Medium', 'Large']):
       engine = engine_dir.replace('small', s.lower())
-      o = outfit(engine)
+      o = core_outfit(engine)
 
       if o is None:
-         err('Dummy engine not found!')
+         err('Beat up small engine, used as dummy, was not found!')
          return 1
 
       nam = lin+' '+s+' Engine'
       o.set_name(nam)
-      fil = nam2fil(nam+'.mvx')
+      fil = nam2fil(nam+'.xml')
 
       sized_params = lambda n:{
          'mass':str(10*n),
@@ -212,9 +215,8 @@ def gen_line( params ):
 
       subs = {k:unstackvals(k, v[0], v[1], 1.0, 1.0) for k, v in mk_subs(engine, nam).items()}
       acc = apply_ls(subs, o, additional)
-      o.write(fil)
+      core_write( o, fil)
       err('<'+fil+'>')
-
    return 0
 
 if __name__ == '__main__':
@@ -226,9 +228,7 @@ if __name__ == '__main__':
       description = 'The changes made will be listed onto <stderr>: \"_\" means \"nothing\".',
       epilog = """Examples:
   Standard usage:
-   > ./utils/outfits/update_engines.py `find dat/outfits/core_engine/ | grep xml`
-
-  Generate a line called Krain with same params as Krain:
+   > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/update_engines.py -f
    > ./utils/outfits/update_engines.py -g Krain
   Generate a line called Melendez with same params as Melendez *but with speed_rank_offset = 0.5*:
    > ./utils/outfits/update_engines.py -g Melendez 0.5
@@ -237,15 +237,18 @@ if __name__ == '__main__':
   Generate a brand new line called Zednelem with with speed_rank_offset = 0.5 and 1.2 ratio:
    > ./utils/outfits/update_engines.py -g Zednelem 0.5 1.2
 """)
+   parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.\nDoes not apply in generate mode.')
    parser.add_argument('-g', '--generate', action = 'store_true', help = 'line_name ex: "Melendez" or "Zednelem".')
-   parser.add_argument('args', nargs = '+', help = 'An outfit with ".mvx" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
+   parser.add_argument('args', nargs = '*', help = 'An outfit with ".mvx" extension, else will be silently ignored.\nIf not valid, will not even be printed out.')
    args = parser.parse_args()
 
-   args.args = [a for a in args.args if a.endswith('.xml')]
    if args.generate:
       if args.args[4:] != []:
          err('Ignored: '+', '.join([repr(a) for a in args.args[4:]]))
          args.args = args.args[:4]
       exit(gen_line(args.args))
    else:
+      if args.files or args.args == []:
+         args.args += [l.strip() for l in stdin.readlines()]
+      args.args = [a for a in args.args if a.endswith('.xml')]
       exit(main(args.args))
