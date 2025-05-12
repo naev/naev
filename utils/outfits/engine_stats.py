@@ -7,8 +7,8 @@ from core_outfit import some_outfit
 from sys import stdout
 import math
 
-out = lambda x:stdout.write(x+'\n')
 
+out = lambda x: stdout.write(x + '\n')
 def field( a, f ):
    res = 0.0
    try:
@@ -25,16 +25,16 @@ def field( a, f ):
       pass
    return res
 
-accel = lambda a:field(a, 'accel')
-speed = lambda a:field(a, 'speed')
-eml = lambda a:field(a, 'engine_limit')
-turn = lambda a:field(a, 'turn')
+accel =  lambda a: field(a, 'accel')
+speed =  lambda a: field(a, 'speed')
+eml =    lambda a: field(a, 'engine_limit')
+turn =   lambda a: field(a, 'turn')
 
-maxspeed = lambda a:speed(a)+accel(a)/PHYSICS_SPEED_DAMP
-fullsptime = lambda a:maxspeed(a)/accel(a) if accel(a) else 0.0
-radius = lambda a:round(maxspeed(a)/(turn(a)/180.0*math.pi))
-fullspdist = lambda a:round(maxspeed(a)*fullsptime(a)/2.0)
-turntime = lambda a:180.0/turn(a)
+maxspeed =     lambda a: speed(a)+accel(a)/PHYSICS_SPEED_DAMP
+fullsptime =   lambda a: maxspeed(a)/accel(a) if accel(a) else 0.0
+radius =       lambda a: round(maxspeed(a)/(turn(a)/180.0*math.pi))
+fullspdist =   lambda a: round(maxspeed(a)*fullsptime(a)/2.0)
+turntime =     lambda a: 180.0/turn(a)
 
 def key( A ):
    (a, _) = A
@@ -80,9 +80,9 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
          for i in range(len(args)):
             for j in range(i, len(args)):
                if args[j] in sec_args:
-                  tmp.append(args[i]+'+'+args[j])
+                  tmp.append(args[i] + '+' + args[j])
                if i != j and args[i] in sec_args:
-                  tmp.append(args[j]+'+'+args[i])
+                  tmp.append(args[j] + '+' + args[i])
          args = tmp
       elif autostack:
          args = args+['2x'+i for i in sec_args]
@@ -91,14 +91,12 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
    for i in range(len(args)):
       if args[i][:2] == '2x' or args[i][-2:] == 'x2':
          args[i] = args[i][2:] if args[i][:2] == '2x' else args[i][:-2]
-         args[i] = args[i]+'+'+args[i]
+         args[i] = args[i] + '+' + args[i]
 
       if len(args[i].split('+')) == 2:
          o, o2 = args[i].split('+')
          o, o2 = some_outfit(o.strip()), some_outfit(o2.strip())
-         if not o.can_stack(o2):
-            continue
-         if filt and o.size() < o2.size():
+         if (not o.can_stack(o2)) or (filt and o.size() < o2.size()):
             continue
          o.stack(o2)
       else:
@@ -111,31 +109,29 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
    if not nosort:
       L.sort(key = key, reverse = True)
 
+   greyit = lambda alt: lambda s: s
    if color:
-      altgrey = '\033[34m'
-      grey = '\033[30;1m'
-      greyit = lambda s:s.replace('|', grey+'|\033[0m')
+      greyit = lambda alt: lambda s: ('\033[34m' if alt else '\033[30;1m') + s + '\033[0m'
       C = ['eml   \n(t)   ', 'drift \nspeed ', 'max   \nspeed ', 'accel \n      ', 'fullsp\n(s)   ', 'fullsp\n(km)  ', 'turn  \n(°/s) ', 'turn  \nradius', '1/2turn\n(s)    ']
    elif gith:
       C = ['eml (t)', 'drift speed ', 'max speed', 'accel', 'fullsp (s)', 'fullsp (km)', 'turn (°/s)', 'turn radius', '1/2turn (s)']
    else:
       C = [' eml  ', 'dr.sp.', 'max sp', 'accel ', 'fsp(s)', 'fsp.km', ' turn ', 'radius', '1/2 turn (s)']
-   N = max([0]+[len(n) for (_, n) in L]) if not gith else 0
+   greyitall = lambda s,alt: s.replace('|', greyit(alt)('|'))
+   N = max([0] + [len(n) for (_, n) in L]) if not gith else 0
    if color:
       C = [tuple(s.split('\n')) for s in C]
-      lin = '  '+(N)*' '+' | '+' | '.join([a for (a, b) in C])
-      out(greyit(lin))
+      lin = '  '+ N*' ' + ' | ' + ' | '.join([a for (a, b) in C])
+      out(greyitall(lin, False))
       C = [b for (a, b) in C]
-   acc = '| '+(N)*' '+' | '+' | '.join(C)
+   acc = '| ' + N*' ' + ' | ' + ' | '.join(C)
    if color:
-      acc = ' '+acc[1:]
-      acc = greyit(acc)
+      acc = ' ' + acc[1:]
+      acc = greyitall(acc, False)
    out(acc)
-   lin = '| ---'+(N-3)*'-'+' '+len(C)*('| ---'+('---' if not gith else '')+' ')
-   if color:
-      lin = altgrey+lin+'\033[0m'
-      count = 0
-   out(lin)
+   lin = '| ---' + (N-3)*'-' + ' ' + len(C)*('| ---'+('---' if not gith else '')+' ')
+   out(greyit(alt)(lin))
+   count = 0
    for k, n in L:
       if accel(k) != 0:
          nam = n + ((N-len(n))*' ' if not gith else '')
@@ -144,12 +140,9 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
          acc += l(fmt(fullsptime(k)))+l(fmt(fullspdist(k)))+l(turn(k))+l(radius(k))
          acc += l(fmt(turntime(k)))
          if gith:
-            acc = acc.replace('  ', ' ').replace('  ', ' ')
-         elif color:
-            acc = greyit(acc)
-            if (count%3) == 2:
-               acc = acc.replace(grey, altgrey)
-            count += 1
+            acc = acc.replace('   ', ' ').replace('  ', ' ')
+         acc = greyitall(acc, (count%3) == 2)
+         count += 1
          out(acc)
 
 if __name__ == '__main__':
