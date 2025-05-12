@@ -1,19 +1,12 @@
-gen_bioship = find_program('generate.py')
-bio_cmd = [gen_bioship, '@INPUT@', '-o', '@OUTPUT@']
-bio_dir = ndata_path / 'dat/outfits/bioship'
-
 # Define a target per outfit family. Today, a single "generate.py" script is used. (TODO: Per Discord, we may use more scripts?)
 # The target name (first arg to custom_target()) is arbitrary except for having to be unique.
 # The input/output lists are duplicated, at least for now, in the generate.py blocks like
 #    BioOutfit( "foo.xml.template", {...} ).run( [N_(nice_name_of_output_1), ... ] )
 # We're discussing ideas about how to reduce this duplication. For now, the build rules and generate.py blocks MUST MATCH.
 
-biotmp_weapon = files('templates/weapon.xml.template')
-tritmp = files('templates/gene_drive_tricon.xml.template')
-
 biooutfits = {
    'perlevis_gene_drive' : {
-      'template': tritmp,
+      'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/small/tricon_zephyr_engine.xml' ],
       'output' : [
          'perlevis_gene_drive_i.xml',
@@ -21,7 +14,7 @@ biooutfits = {
       ],
    },
    'laeviter_gene_drive' : {
-      'template': tritmp,
+      'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/small/tricon_zephyr_engine.xml' ],
       'output' : [
          'laeviter_gene_drive_i.xml',
@@ -29,7 +22,7 @@ biooutfits = {
       ],
    },
    'laevis_gene_drive' : {
-      'template': files('templates/gene_drive_melendez.xml.template'),
+      'template': 'gene_drive_melendez',
       'depend_files' : [ 'core_engine/small/melendez_ox_engine.xml' ],
       'output' : [
          'laevis_gene_drive_i.xml',
@@ -37,7 +30,7 @@ biooutfits = {
       ],
    },
    'mediocris_gene_drive' : {
-      'template': tritmp,
+      'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/medium/tricon_cyclone_engine.xml' ],
       'output' : [
          'mediocris_gene_drive_i.xml',
@@ -46,7 +39,7 @@ biooutfits = {
       ],
    },
    'largus_gene_drive' : {
-      'template': tritmp,
+      'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/medium/tricon_cyclone_engine.xml' ],
       'output' : [
          'largus_gene_drive_i.xml',
@@ -54,7 +47,7 @@ biooutfits = {
       ],
    },
    'ponderosus_gene_drive' : {
-      'template': tritmp,
+      'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/large/tricon_typhoon_engine.xml' ],
       'output' : [
          'ponderosus_gene_drive_i.xml',
@@ -63,7 +56,7 @@ biooutfits = {
       ],
    },
    'grandis_gene_drive' : {
-      'template': files('templates/gene_drive_melendez.xml.template'),
+      'template': 'gene_drive_melendez',
       'depend_files' : [ 'core_engine/large/melendez_mammoth_engine.xml' ],
       'output' : [
          'grandis_gene_drive_i.xml',
@@ -72,7 +65,7 @@ biooutfits = {
       ],
    },
    'magnus_gene_drive' : {
-      'template': tritmp,
+      'template': 'gene_drive_tricon',
       'depend_files' : [ 'core_engine/large/tricon_typhoon_engine.xml' ],
       'output' : [
          'magnus_gene_drive_i.xml',
@@ -81,7 +74,7 @@ biooutfits = {
       ],
    },
    'immanis_gene_drive' : {
-      'template': files('templates/gene_drive.xml.template'),
+      'template': 'gene_drive',
       'depend_files' : [ 'core_engine/large/nexus_bolt_3000_engine.xml' ],
       'output' : [
          'immanis_gene_drive_i.xml',
@@ -90,7 +83,7 @@ biooutfits = {
       ],
    },
    'perlevis_cortex' : {
-      'template': files('templates/cortex.xml.template'),
+      'template': 'cortex',
       'depend_files' : [
          'core_hull/small/unicorp_d2_light_plating.xml',
          'core_hull/small/sk_skirmish_plating.xml',
@@ -101,7 +94,7 @@ biooutfits = {
       ],
    },
    'laevis_cortex' : {
-      'template': files('templates/cortex.xml.template'),
+      'template': 'cortex',
       'depend_files' : [
          'core_hull/small/unicorp_d2_light_plating.xml',
          'core_hull/small/sk_skirmish_plating.xml',
@@ -112,7 +105,7 @@ biooutfits = {
       ],
    },
    'mediocris_cortex' : {
-      'template': files('templates/cortex.xml.template'),
+      'template': 'cortex',
       'depend_files' : [
          'core_hull/medium/unicorp_d23_medium_plating.xml',
          'core_hull/medium/sk_battle_plating.xml',
@@ -123,7 +116,7 @@ biooutfits = {
       ],
    },
    'largus_cortex' : {
-      'template': files('templates/cortex.xml.template'),
+      'template': 'cortex',
       'depend_files' : [
          'core_hull/medium/unicorp_d23_medium_plating.xml',
          'core_hull/medium/sk_battle_plating.xml',
@@ -135,7 +128,7 @@ biooutfits = {
       ],
    },
    'ponderosus_cortex' : {
-      'template': files('templates/cortex.xml.template'),
+      'template': 'cortex',
       'depend_files' : [
          'core_hull/large/unicorp_d58_heavy_plating.xml',
          'core_hull/large/sk_war_plating.xml',
@@ -148,7 +141,7 @@ biooutfits = {
       ],
    },
    'immanis_cortex' : {
-      'template': files('templates/cortex.xml.template'),
+      'template': 'cortex',
       'depend_files' : [
          'core_hull/large/unicorp_d58_heavy_plating.xml',
          'core_hull/large/sk_war_plating.xml',
@@ -160,7 +153,7 @@ biooutfits = {
       ],
    },
    'perleve_cerebrum' : {
-      'template': files('templates/cerebrum.xml.template'),
+      'template': 'cerebrum',
       'depend_files' : [ 'core_system/small/milspec_orion_2301_core_system.xml' ],
       'output' : [
         'perleve_cerebrum_i.xml',
@@ -168,7 +161,7 @@ biooutfits = {
       ],
    },
    'laevum_cerebrum' : {
-      'template': files('templates/cerebrum.xml.template'),
+      'template': 'cerebrum',
       'depend_files' : [ 'core_system/small/milspec_orion_2301_core_system.xml' ],
       'output' : [
          'laevum_cerebrum_i.xml',
@@ -176,7 +169,7 @@ biooutfits = {
       ],
    },
    'mediocre_cerebrum' : {
-      'template': files('templates/cerebrum.xml.template'),
+      'template': 'cerebrum',
       'depend_files' : [ 'core_system/medium/milspec_orion_4801_core_system.xml' ],
       'output' : [
          'mediocre_cerebrum_i.xml',
@@ -184,7 +177,7 @@ biooutfits = {
       ],
    },
    'largum_cerebrum' : {
-      'template': files('templates/cerebrum.xml.template'),
+      'template': 'cerebrum',
       'depend_files' : [ 'core_system/medium/milspec_orion_4801_core_system.xml' ],
       'output' : [
          'largum_cerebrum_i.xml',
@@ -192,7 +185,7 @@ biooutfits = {
       ],
    },
    'ponderosum_cerebrum' : {
-      'template': files('templates/cerebrum.xml.template'),
+      'template': 'cerebrum',
       'depend_files' : [ 'core_system/large/milspec_orion_8601_core_system.xml' ],
       'output' : [
          'ponderosum_cerebrum_i.xml',
@@ -201,7 +194,7 @@ biooutfits = {
       ],
    },
    'immane_cerebrum' : {
-      'template': files('templates/cerebrum.xml.template'),
+      'template': 'cerebrum',
       'depend_files' : [ 'core_system/large/milspec_orion_8601_core_system.xml' ],
       'output' : [
          'immane_cerebrum_i.xml',
@@ -210,7 +203,7 @@ biooutfits = {
       ],
    },
    'stinger_organ' : {
-      'template': biotmp_weapon,
+      'template': 'weapon',
       'output' : [
         'stinger_organ_i.xml',
         'stinger_organ_ii.xml',
@@ -218,7 +211,7 @@ biooutfits = {
       ],
    },
    'talon_organ' : {
-      'template': biotmp_weapon,
+      'template': 'weapon',
       'output' : [
         'talon_organ_i.xml',
         'talon_organ_ii.xml',
@@ -227,7 +220,7 @@ biooutfits = {
       ],
    },
    'tentacle_organ' : {
-      'template': biotmp_weapon,
+      'template': 'weapon',
       'output' : [
         'tentacle_organ_i.xml',
         'tentacle_organ_ii.xml',
@@ -236,6 +229,10 @@ biooutfits = {
       ],
    },
 }
+
+gen_bioship = find_program('generate.py')
+bio_cmd = [gen_bioship, '@INPUT@', '-o', '@OUTPUT@']
+bio_dir = ndata_path / 'dat/outfits/bioship'
 
 bio_outfits = []
 foreach name, data : biooutfits
@@ -247,7 +244,7 @@ foreach name, data : biooutfits
    endif
 
    bio_outfits += [custom_target( name, command: bio_cmd, install: true, install_dir: bio_dir,
-      input: data['template'],
+      input: files('templates/' + data['template'] + '.xml.template')
       depend_files: depend_files,
       output: data['output'],
    )]
