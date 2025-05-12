@@ -37,9 +37,10 @@ def parse_lua_multicore( si ):
    L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
-def do_it( argin, argout ):
+def do_it( argin, argout, quiet = False ):
    o = outfit(argin)
-   stderr.write('xmllua2mvx: '+o.name()+'\n')
+   if not quiet:
+      stderr.write('xmllua2mvx: '+o.name()+'\n')
    d = {'general':[], 'specific':[]}
    fields, li = parse_lua_multicore(o.find('lua_inline'))
 
@@ -77,7 +78,8 @@ If the input is invalid, nothing is written on stdout and stderr and non-zero is
 The special values "-" mean stdin/stdout.
 """
    )
+   parser.add_argument('-q', '--quiet', action = 'store_true')
    parser.add_argument('input', nargs = '?', default = '-')
    parser.add_argument('output', nargs = '?', default = '-')
    args = parser.parse_args()
-   do_it(args.input, args.output)
+   do_it(args.input, args.output, args.quiet)
