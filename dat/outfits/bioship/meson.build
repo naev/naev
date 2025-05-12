@@ -8,228 +8,246 @@ bio_dir = ndata_path / 'dat/outfits/bioship'
 #    BioOutfit( "foo.xml.template", {...} ).run( [N_(nice_name_of_output_1), ... ] )
 # We're discussing ideas about how to reduce this duplication. For now, the build rules and generate.py blocks MUST MATCH.
 
-bio_outfits = [
-   custom_target('perlevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/small/tricon_zephyr_engine.xml'),
-      input: files('templates/gene_drive_tricon.xml.template'),
-      output: [
+biotmp_weapon = files('templates/weapon.xml.template')
+tritmp = files('templates/gene_drive_tricon.xml.template')
+
+biooutfits = {
+   'perlevis_gene_drive' : {
+      'template': tritmp,
+      'depend_files' : [ 'core_engine/small/tricon_zephyr_engine.xml' ],
+      'output' : [
          'perlevis_gene_drive_i.xml',
          'perlevis_gene_drive_ii.xml',
       ],
-   ),
-   custom_target('laeviter_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/small/tricon_zephyr_engine.xml'),
-      input: files('templates/gene_drive_tricon.xml.template'),
-      output: [
+   },
+   'laeviter_gene_drive' : {
+      'template': tritmp,
+      'depend_files' : [ 'core_engine/small/tricon_zephyr_engine.xml' ],
+      'output' : [
          'laeviter_gene_drive_i.xml',
          'laeviter_gene_drive_ii.xml',
       ],
-   ),
-   custom_target('laevis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/small/melendez_ox_engine.xml'),
-      input: files('templates/gene_drive_melendez.xml.template'),
-      output: [
+   },
+   'laevis_gene_drive' : {
+      'template': files('templates/gene_drive_melendez.xml.template'),
+      'depend_files' : [ 'core_engine/small/melendez_ox_engine.xml' ],
+      'output' : [
          'laevis_gene_drive_i.xml',
          'laevis_gene_drive_ii.xml',
       ],
-   ),
-   custom_target('mediocris_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/medium/tricon_cyclone_engine.xml'),
-      input: files('templates/gene_drive_tricon.xml.template'),
-      output: [
+   },
+   'mediocris_gene_drive' : {
+      'template': tritmp,
+      'depend_files' : [ 'core_engine/medium/tricon_cyclone_engine.xml' ],
+      'output' : [
          'mediocris_gene_drive_i.xml',
          'mediocris_gene_drive_ii.xml',
          'mediocris_gene_drive_iii.xml',
       ],
-   ),
-   custom_target('largus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/medium/tricon_cyclone_engine.xml'),
-      input: files('templates/gene_drive_tricon.xml.template'),
-      output: [
+   },
+   'largus_gene_drive' : {
+      'template': tritmp,
+      'depend_files' : [ 'core_engine/medium/tricon_cyclone_engine.xml' ],
+      'output' : [
          'largus_gene_drive_i.xml',
          'largus_gene_drive_ii.xml',
       ],
-   ),
-   custom_target('ponderosus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/large/tricon_typhoon_engine.xml'),
-      input: files('templates/gene_drive_tricon.xml.template'),
-      output: [
+   },
+   'ponderosus_gene_drive' : {
+      'template': tritmp,
+      'depend_files' : [ 'core_engine/large/tricon_typhoon_engine.xml' ],
+      'output' : [
          'ponderosus_gene_drive_i.xml',
          'ponderosus_gene_drive_ii.xml',
          'ponderosus_gene_drive_iii.xml',
       ],
-   ),
-   custom_target('grandis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/large/melendez_mammoth_engine.xml'),
-      input: files('templates/gene_drive_melendez.xml.template'),
-      output: [
+   },
+   'grandis_gene_drive' : {
+      'template': files('templates/gene_drive_melendez.xml.template'),
+      'depend_files' : [ 'core_engine/large/melendez_mammoth_engine.xml' ],
+      'output' : [
          'grandis_gene_drive_i.xml',
          'grandis_gene_drive_ii.xml',
          'grandis_gene_drive_iii.xml',
       ],
-   ),
-   custom_target('magnus_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/large/tricon_typhoon_engine.xml'),
-      input: files('templates/gene_drive_tricon.xml.template'),
-      output: [
+   },
+   'magnus_gene_drive' : {
+      'template': tritmp,
+      'depend_files' : [ 'core_engine/large/tricon_typhoon_engine.xml' ],
+      'output' : [
          'magnus_gene_drive_i.xml',
          'magnus_gene_drive_ii.xml',
          'magnus_gene_drive_iii.xml',
       ],
-   ),
-   custom_target('immanis_gene_drive', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_engine/large/nexus_bolt_3000_engine.xml'),
-      input: files('templates/gene_drive.xml.template'),
-      output: [
+   },
+   'immanis_gene_drive' : {
+      'template': files('templates/gene_drive.xml.template'),
+      'depend_files' : [ 'core_engine/large/nexus_bolt_3000_engine.xml' ],
+      'output' : [
          'immanis_gene_drive_i.xml',
          'immanis_gene_drive_ii.xml',
          'immanis_gene_drive_iii.xml',
       ],
-   ),
-   custom_target('perlevis_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: [
-         files('../core_hull/small/unicorp_d2_light_plating.xml'),
-         files('../core_hull/small/sk_skirmish_plating.xml'),
+   },
+   'perlevis_cortex' : {
+      'template': files('templates/cortex.xml.template'),
+      'depend_files' : [
+         'core_hull/small/unicorp_d2_light_plating.xml',
+         'core_hull/small/sk_skirmish_plating.xml',
       ],
-      input: files('templates/cortex.xml.template'),
-      output: [
+      'output' : [
          'perlevis_cortex_i.xml',
          'perlevis_cortex_ii.xml',
       ],
-   ),
-   custom_target('laevis_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: [
-         files('../core_hull/small/unicorp_d2_light_plating.xml'),
-         files('../core_hull/small/sk_skirmish_plating.xml'),
+   },
+   'laevis_cortex' : {
+      'template': files('templates/cortex.xml.template'),
+      'depend_files' : [
+         'core_hull/small/unicorp_d2_light_plating.xml',
+         'core_hull/small/sk_skirmish_plating.xml',
       ],
-      input: files('templates/cortex.xml.template'),
-      output: [
+      'output' : [
          'laevis_cortex_i.xml',
          'laevis_cortex_ii.xml',
       ],
-   ),
-   custom_target('mediocris_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: [
-         files('../core_hull/medium/unicorp_d23_medium_plating.xml'),
-         files('../core_hull/medium/sk_battle_plating.xml'),
+   },
+   'mediocris_cortex' : {
+      'template': files('templates/cortex.xml.template'),
+      'depend_files' : [
+         'core_hull/medium/unicorp_d23_medium_plating.xml',
+         'core_hull/medium/sk_battle_plating.xml',
       ],
-      input: files('templates/cortex.xml.template'),
-      output: [
+      'output' : [
          'mediocris_cortex_i.xml',
          'mediocris_cortex_ii.xml',
       ],
-   ),
-   custom_target('largus_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: [
-         files('../core_hull/medium/unicorp_d23_medium_plating.xml'),
-         files('../core_hull/medium/sk_battle_plating.xml'),
+   },
+   'largus_cortex' : {
+      'template': files('templates/cortex.xml.template'),
+      'depend_files' : [
+         'core_hull/medium/unicorp_d23_medium_plating.xml',
+         'core_hull/medium/sk_battle_plating.xml',
       ],
-      input: files('templates/cortex.xml.template'),
-      output: [
+      'output' : [
          'largus_cortex_i.xml',
          'largus_cortex_ii.xml',
          'largus_cortex_iii.xml',
       ],
-   ),
-   custom_target('ponderosus_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: [
-         files('../core_hull/large/unicorp_d58_heavy_plating.xml'),
-         files('../core_hull/large/sk_war_plating.xml'),
+   },
+   'ponderosus_cortex' : {
+      'template': files('templates/cortex.xml.template'),
+      'depend_files' : [
+         'core_hull/large/unicorp_d58_heavy_plating.xml',
+         'core_hull/large/sk_war_plating.xml',
       ],
-      input: files('templates/cortex.xml.template'),
-      output: [
+      'output' : [
          'ponderosus_cortex_i.xml',
          'ponderosus_cortex_ii.xml',
          'ponderosus_cortex_iii.xml',
          'ponderosus_cortex_iv.xml',
       ],
-   ),
-   custom_target('immanis_cortex', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: [
-         files('../core_hull/large/unicorp_d58_heavy_plating.xml'),
-         files('../core_hull/large/sk_war_plating.xml'),
+   },
+   'immanis_cortex' : {
+      'template': files('templates/cortex.xml.template'),
+      'depend_files' : [
+         'core_hull/large/unicorp_d58_heavy_plating.xml',
+         'core_hull/large/sk_war_plating.xml',
       ],
-      input: files('templates/cortex.xml.template'),
-      output: [
+      'output' : [
          'immanis_cortex_i.xml',
          'immanis_cortex_ii.xml',
          'immanis_cortex_iii.xml',
       ],
-   ),
-   custom_target('perleve_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_system/small/milspec_orion_2301_core_system.xml'),
-      input: files('templates/cerebrum.xml.template'),
-      output: [
+   },
+   'perleve_cerebrum' : {
+      'template': files('templates/cerebrum.xml.template'),
+      'depend_files' : [ 'core_system/small/milspec_orion_2301_core_system.xml' ],
+      'output' : [
         'perleve_cerebrum_i.xml',
         'perleve_cerebrum_ii.xml',
       ],
-   ),
-   custom_target('laevum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_system/small/milspec_orion_2301_core_system.xml'),
-      input: files('templates/cerebrum.xml.template'),
-      output: [
+   },
+   'laevum_cerebrum' : {
+      'template': files('templates/cerebrum.xml.template'),
+      'depend_files' : [ 'core_system/small/milspec_orion_2301_core_system.xml' ],
+      'output' : [
          'laevum_cerebrum_i.xml',
          'laevum_cerebrum_ii.xml',
       ],
-   ),
-   custom_target('mediocre_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_system/medium/milspec_orion_4801_core_system.xml'),
-      input: files('templates/cerebrum.xml.template'),
-      output: [
+   },
+   'mediocre_cerebrum' : {
+      'template': files('templates/cerebrum.xml.template'),
+      'depend_files' : [ 'core_system/medium/milspec_orion_4801_core_system.xml' ],
+      'output' : [
          'mediocre_cerebrum_i.xml',
          'mediocre_cerebrum_ii.xml',
       ],
-   ),
-   custom_target('largum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_system/medium/milspec_orion_4801_core_system.xml'),
-      input: files('templates/cerebrum.xml.template'),
-      output: [
+   },
+   'largum_cerebrum' : {
+      'template': files('templates/cerebrum.xml.template'),
+      'depend_files' : [ 'core_system/medium/milspec_orion_4801_core_system.xml' ],
+      'output' : [
          'largum_cerebrum_i.xml',
          'largum_cerebrum_ii.xml',
       ],
-   ),
-   custom_target('ponderosum_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_system/large/milspec_orion_8601_core_system.xml'),
-      input: files('templates/cerebrum.xml.template'),
-      output: [
+   },
+   'ponderosum_cerebrum' : {
+      'template': files('templates/cerebrum.xml.template'),
+      'depend_files' : [ 'core_system/large/milspec_orion_8601_core_system.xml' ],
+      'output' : [
          'ponderosum_cerebrum_i.xml',
          'ponderosum_cerebrum_ii.xml',
          'ponderosum_cerebrum_iii.xml',
       ],
-   ),
-   custom_target('immane_cerebrum', command: bio_cmd, install: true, install_dir: bio_dir,
-      depend_files: files('../core_system/large/milspec_orion_8601_core_system.xml'),
-      input: files('templates/cerebrum.xml.template'),
-      output: [
+   },
+   'immane_cerebrum' : {
+      'template': files('templates/cerebrum.xml.template'),
+      'depend_files' : [ 'core_system/large/milspec_orion_8601_core_system.xml' ],
+      'output' : [
          'immane_cerebrum_i.xml',
          'immane_cerebrum_ii.xml',
          'immane_cerebrum_iii.xml',
       ],
-   ),
-   custom_target('stinger_organ', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/weapon.xml.template'),
-      output: [
+   },
+   'stinger_organ' : {
+      'template': biotmp_weapon,
+      'output' : [
         'stinger_organ_i.xml',
         'stinger_organ_ii.xml',
         'stinger_organ_iii.xml',
       ],
-   ),
-   custom_target('talon_organ', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/weapon.xml.template'),
-      output: [
+   },
+   'talon_organ' : {
+      'template': biotmp_weapon,
+      'output' : [
         'talon_organ_i.xml',
         'talon_organ_ii.xml',
         'talon_organ_iii.xml',
         'talon_organ_iv.xml',
       ],
-   ),
-   custom_target('tentacle_organ', command: bio_cmd, install: true, install_dir: bio_dir,
-      input: files('templates/weapon.xml.template'),
-      output: [
+   },
+   'tentacle_organ' : {
+      'template': biotmp_weapon,
+      'output' : [
         'tentacle_organ_i.xml',
         'tentacle_organ_ii.xml',
         'tentacle_organ_iii.xml',
         'tentacle_organ_iv.xml'
       ],
-   ),
-]
+   },
+}
+
+foreach name, data : biooutfits
+   depend_files = []
+   if 'depend_files' in data
+      foreach df : data['depend_files']
+         depend_files += files( '../' + df )
+      endforeach
+   endif
+
+   bio_outfits += [custom_target( name, command: bio_cmd, install: true, install_dir: bio_dir,
+      input: data['template'],
+      depend_files: depend_files,
+      output: data['output'],
+   )]
+endforeach
