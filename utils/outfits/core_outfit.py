@@ -4,11 +4,9 @@ from os import path, utime
 from sys import stderr
 from pathlib import Path
 from outfit import outfit
-import subprocess
 
 from xmllua2mvx import xmllua2mvx 
-script_dir = path.dirname(__file__)
-mvx2xml = path.join(script_dir, 'mvx2xmllua.py')
+from mvx2xmllua import mvx2xmllua
 
 def mvx_nam(xml):
    return path.join(path.dirname(xml), '.' + path.basename(xml)[:-3] + 'mvx')
@@ -41,7 +39,7 @@ def some_outfit( nam ):
 def core_write( o, fil ):
    mvx = mvx_nam(fil)
    o.write(mvx)
-   subprocess.run([mvx2xml, '-q', mvx, fil])
+   mvx2xmllua(mvx, fil, quiet = True)
    # mark mvx as up to date
    with open(mvx, 'ab'):
       utime(mvx, None)

@@ -85,18 +85,18 @@ def _toxmllua( o ):
       el.text = _mklua(acc1+acc2) + el.text
       break
 
+def mvx2xmllua( argin, argout, quiet ):
+   o = outfit(argin)
+   if o is not None:
+      nam = nam2fil(o.name())
+      _toxmllua(o)
+      if not quiet:
+         stderr.write('mvx2xmllua: '+(nam if argout == '-' else argout)+'\n')
+      o.write(argout)
+   return o
+
 if __name__ == '__main__':
    import argparse
-
-   def mvx2xmllua( argin, argout, quiet ):
-      o = outfit(argin)
-      if o is not None:
-         nam = nam2fil(o.name())
-         _toxmllua(o)
-         if not quiet:
-            stderr.write('mvx2xmllua: '+(nam if argout == '-' else argout)+'\n')
-         o.write(argout)
-      return o
 
    parser = argparse.ArgumentParser(
       description =
@@ -110,5 +110,5 @@ The special values "-" mean stdin/stdout.
    parser.add_argument('output', nargs = '?', default = "-")
    parser.add_argument('-q', '--quiet', action = 'store_true')
    args = parser.parse_args()
-   o = mvx2xmllua(args.input, args.output, args.quiet))
+   o = mvx2xmllua(args.input, args.output, args.quiet)
    exit(1 if o is None else 0)
