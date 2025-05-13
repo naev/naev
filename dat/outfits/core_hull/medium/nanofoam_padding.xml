@@ -6,7 +6,7 @@
   <size>medium</size>
   <price>400000</price>
   <description>Despite its ridiculously low mass and its cloudy texture, this foam is extremely elastic and hard to tear, making it an excellent underlayer for a more rigid armor, making it perfect for ships that can't afford the weight of a regular battle armor underlayer. It comes at a cost, though.</description>
-  <gfx_store>stealth_hull_l.webp</gfx_store>
+  <gfx_store>stealth_hull_h.webp</gfx_store>
   <priority>3</priority>
   <mass>80</mass>
  </general>
