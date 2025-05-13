@@ -22,7 +22,7 @@ def shorten( s ):
    elif L[0] == 'Beat':
       if L[2] == 'Medium':
          L[2] = 'Med.'
-      return 'B. '+L[2]
+      return 'B. ' + L[2]
    else:
       return L[0]
 
@@ -35,7 +35,7 @@ def text2val( s ):
       return None
 
 def roundit( f ):
-   f = round(f*2.0)/2.0
+   f = round(f*2.0) / 2.0
    return int(f) if f == round(f) else f
 
 def fmtval( v ):
@@ -46,7 +46,7 @@ def andamp( s ):
 
 def fmt_kv( kv ):
    (key, value) = kv
-   return key+'="'+str(andamp(value))+'"'
+   return key + '="' + str(andamp(value)) + '"'
 
 def prisec( tag, r1, r2, eml1, eml2 ):
    a = r1[0] if r1 is not None else 0
@@ -73,7 +73,7 @@ def unstackvals( tag, text1, text2, eml1, eml2 ):
    if o2 == o1:
       return fmtval(o1)
    else:
-      return fmtval(o1)+'/'+fmtval(o2)
+      return fmtval(o1) + '/' + fmtval(o2)
 
 def readval( what ):
    if what is None:
@@ -94,13 +94,8 @@ class _outfit():
       if content:
          self.r = ET.fromstring(fil)
       elif type(fil) == type(""):
-         if fil == '-':
-            fp = stdin
-         else:
-            fp = open(fil, 'rt')
-         self.r = ET.parse(fp).getroot()
-         if fp != stdin:
-            fp.close()
+         with stdin if fil == '-' else open(fil, 'rt') as fp:
+            self.r = ET.parse(fp).getroot()
       else:
          self.r = ET.parse(fil).getroot()
       self.short = False
@@ -112,10 +107,10 @@ class _outfit():
    def set_name( self, name ):
       self.r.attrib['name'] = name
 
-   def find( self, tag ):
+   def find( self, tag, el = False ):
       for e in self:
          if e.tag == tag:
-            return e.text
+            return e if el else e.text
 
    def shortname( self ):
       if self.short:
@@ -140,10 +135,8 @@ class _outfit():
 
    def can_sec( self ):
       if self.sec == None:
-         for k in self:
-            if k.tag == 'slot':
-               self.sec = 'prop_extra' in k.attrib and k.attrib['prop_extra'].find('secondary') != -1
-               break
+         k = self.find('slot', True).attrib
+         self.sec = 'prop_extra' in k and k['prop_extra'].find('secondary') != -1
       return self.sec
 
    def eml( self ):
@@ -163,8 +156,10 @@ class _outfit():
       )
 
    def stack( self, other ):
-      if self.shortname() == other.shortname():
-         self.short = self.shortname()+' x2'
+      if other is None:
+         self.short = self.shortname() + ' x1'
+      elif self.shortname() == other.shortname():
+         self.short = self.shortname() + ' x2'
       else:
          self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
       res = self.eml()
@@ -173,54 +168,43 @@ class _outfit():
       else:
          eml1 = res
 
-      res = other.eml()
-      sec = other.to_dict()
-
-      for e in self:
-         if e.tag == 'specific':
-            d = self.to_dict()
-            for missing in sec:
-               if missing not in d:
-                  el = ET.Element(missing)
-                  el.text = ''
-                  e.append(el)
-            break
-
-      if type(res) == type(()):
-         (_, eml2) = res
+      if other is None:
+         eml2 = 0
+         sec = {}
       else:
-         eml2 = res
+         eml2 = other.eml()
+         if type(eml2) == type(()):
+            (_, eml2) = eml2
+         sec = other.to_dict()
+
+      d = self.to_dict()
+      e = self.find('specific', True)
+      if e is not None:
+         for missing in sec:
+            if missing not in d:
+               el = ET.Element(missing)
+               el.text = ''
+               e.append(el)
 
       for e in self:
          res = text2val(e.text)
          try:
             res2 = sec[e.tag]
-            if type(res2) == type(1.0):
-               res2 = (res2, res2)
+            if type(res2) == type(''):
+               res2 = None
+            else:
+               if type(res2) == type([]):
+                  res2 = res2[0]
+               if type(res2) != type(()):
+                  res2 = (res2, res2)
          except:
             res2 = None
 
-         if res is not None:
+         if res is not None or res2 is not None:
             e.text = str(prisec(e.tag, res, res2, eml1, eml2))
 
    def autostack( self, doubled = False ):
-      if doubled:
-         self.short = self.shortname()+' x2'
-         eml = self.eml()
-         if type(eml) == type(()):
-            (eml1, eml2) = eml
-         else:
-            eml1 = eml2 = eml
-      else:
-         self.short = self.shortname()+' x1'
-
-      for e in self:
-         res = text2val(e.text)
-         if res is not None:
-            if doubled:
-               e.text = str(prisec(e.tag, res, res, eml1, eml2))
-            else:
-               e.text = str(prisec(e.tag, res, None, 1, 1))
+      self.stack(self if doubled else None)
 
    def __iter__( self ):
       def _subs( r ):
