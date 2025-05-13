@@ -25,7 +25,8 @@ def nfmt( n ):
       f = int(f)
    return str(f)
 
-def main( args, gith = False, ter = False, noext = False, sortit = False, autostack = False, comb = False ):
+def main( args, gith = False, color = False, ter = False, noext = False,
+      sortit = False, autostack = False, comb = False, good = False ):
    if args == []:
       return 0
 
@@ -69,7 +70,7 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
       if len(args[i].split('+')) == 2:
          o, o2 = args[i].split('+')
          o, o2 = some_outfit(o.strip()), some_outfit(o2.strip())
-         if not o.can_stack(o2):
+         if (not o.can_stack(o2)) or (good and o.size() < o2.size()):
             continue
          o.stack(o2)
       else:
@@ -123,7 +124,7 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
    names = [''] + names
    length = [4] * len(names) # :--- at least 3 - required
 
-   if ter:
+   if color:
       Sep, SepAlt, Lm, Rm, LM, RM = '\033[30;1m|\033[0m', '\033[34m|\033[0m', '\033[31m', '\033[37m', '\033[32m', '\033[37m'
       mk_pad = lambda i, n: '\033[34m' + n*'-' + '\033[0m'
       leng = lambda x: len(x) - (10 if x != '' and x[0]=='\033' else 0)
@@ -132,7 +133,7 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
       mk_pad = lambda i, n: '-'*(n-1)+('-' if i == 0 else ':')
       leng = len
 
-   if ter:
+   if color:
       head = transpose([s.split(' ') for s in names])
    else:
       head = [names]
@@ -161,7 +162,7 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
    print
    for t in head:
       acc = mklin(map(fmt, zip(t, length)))
-      if ter:
+      if color:
          acc = ' '+acc[len(Sep):]
       print(acc)
    print(mklinalt(True)([mk_pad(i, n) for i, n in enumerate(length)]))
@@ -179,24 +180,31 @@ if __name__ == '__main__':
    parser = argparse.ArgumentParser(
       usage = ' %(prog)s  [-g|-c] [-n] [(-s SORT) | -S]  [filename ...]',
       formatter_class = argparse.RawTextHelpFormatter,
-      description = 'By default, outputs text aligned markdown table comparing the outfits respective values.'
+      description = 'By default, outputs text aligned markdown table comparing the outfits respective values.',
+      epilog = '\nTypical usage (from naev root dir) :\n > ./utils/outfits/outfits2md.py dat/outfits/core_system/small/*.xml -C -t | less -RS'
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
-   parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if the table is too wide.')
+   parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if it is too wide.')
+   parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output (TODO: with extended table characters).')
    parser.add_argument('-n', '--nomax', action = 'store_true', help = 'Do not emphasize min/max values.' )
    parser.add_argument('-s', '--sort', action = 'store_true', help = 'inputs are sorted by their SORT key.')
    parser.add_argument('-S', '--sortbymass', action = 'store_true', help = 'Like -s mass.' )
-   parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Adds 2x outfits' )
+   parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Outfits are presented both alone and auto-stacked.')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'Does all the combinations.' )
+   parser.add_argument('-G', '--good', action = 'store_true', help = "good comb. only: don't comb when pri smaller." )
    parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.')
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
-Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\'
-(or \'1x\') or suffixed with \'x2\' (or \'x1\'.""")
+Can also be two outfits separated by \'+\', or an outfit prefixed
+with \'2x\' (or: \'1x\') or suffixed with \'x2\' (or: \'x1\').""")
 
    args = parser.parse_args()
-   if args.github and args.color:
-      args.github = args.color = False
-      print('Ignored incompatible -g and -c.', file = stderr, flush = True)
+   if args.term and args.color:
+      print('Warning: -c subsumed by -t', file = stderr, flush = True)
+
+   if args.github and (args.color or args.term):
+      print('Warning: Ignored conflicting: -g and -' +
+         ('t' if args.term else 'c'), file = stderr, flush = True)
+      args.github = args.color = args.term = False
 
    if args.autostack and args.combinations:
       print('Warning: -A is subsumed by -C', file = stderr, flush = True)
@@ -220,6 +228,8 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\'
    if args.files or args.filename == []:
       args.filename += [l.strip() for l in stdin.readlines()]
 
-   main([f for f in args.filename if f not in ign], args.github, args.color, args.nomax, sortby, args.autostack, args.combinations)
+   main([f for f in args.filename if f not in ign],
+      args.github, args.color or args.term, args.term, args.nomax, sortby,
+      args.autostack, args.combinations, args.good)
 else:
    raise Exception('This module is only intended to be used as main.')

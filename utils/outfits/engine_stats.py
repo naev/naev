@@ -83,7 +83,7 @@ def fmt( f ):
 
 def fmt4( n ):
    s = str(n)
-   return (4-len(s))*' '+' '+s+' '
+   return (4-len(s))*' ' + ' ' + s + ' '
 
 def l( s ):
    if int(s) == s:
@@ -98,7 +98,7 @@ def l( s ):
    return ' | ' + (3-len(a))*' ' + a + m + b + (2-len(b))*' '
 
 def main( args, gith = False, color = False, term = False, autostack = False,
-   combine = False, nosort = False, good_only = False ):
+      combine = False, nosort = False, good_only = False ):
    sec_args = []
    if combine or autostack:
       for i in args:
@@ -183,14 +183,14 @@ if __name__ == '__main__':
    parser = argparse.ArgumentParser(
       formatter_class = argparse.RawTextHelpFormatter,
       description = 'By default, outputs text aligned markdown table comparing the engines respective values, with some new derived fields.',
-      epilog = '\n Typical usage (from naev root dir) :\n > ./utils/outfits/apply_engines.py `find dat/outfits/core_engine/`'
+      epilog = '\nTypical usage (from naev root dir) :\n > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/engines_stats.py'
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
    parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if the table is too wide.')
    parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output with extended table characters.')
-   parser.add_argument('-A', '--autostack', action = 'store_true', help = 'also display x2 outfits')
+   parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Outfits are presented both alone and auto-stacked.')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'also display all the combinations.' )
-   parser.add_argument('-G', '--good', action = 'store_true', help = "good comb. only: don't  comb when pri smaller" )
+   parser.add_argument('-G', '--good', action = 'store_true', help = "good comb. only: don't comb when pri smaller." )
    parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
    parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.')
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
@@ -200,10 +200,10 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
       print('Warning: -c subsumed by -t', file = stderr, flush = True)
 
    if args.github and (args.color or args.term):
-      print('Warning: conflicting: -g and -'+('t' if args.term else 'c')+',',
-         "default output style.",
-         file = stderr, flush = True)
+      print('Warning: Ignored conflicting: -g and -' +
+         ('t' if args.term else 'c'), file = stderr, flush = True)
       args.github = args.color = args.term = False
+
    if args.autostack and args.combinations:
       print('Warning: -A subsumed by -C', file = stderr, flush = True)
       args.autostack = False
