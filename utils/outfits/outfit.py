@@ -8,7 +8,7 @@ MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
 LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'trackmax', 'dispersion', 'speed_dispersion', 'energy_regen_malus', 'ew_stealth', 'ew_stealth_timer', 'ew_signature', 'launch_lockon', 'launch_calibration', 'fwd_energy', 'tur_energy', 'ew_track', 'cooldown_time', 'cargo_inertia', 'land_delay', 'jump_delay', 'delay', 'reload_time', 'iflockon', 'jump_warmup', 'rumble', 'ammo_mass', 'time_mod', 'ew_hide', 'launch_reload'}
 
 def nam2fil( s ):
-   for c in [('Red Star', 'rs'),(' ', '_'),('-', ''),("'", ''),('&', '')]:
+   for c in [('Red Star', 'rs'), (' ', '_'), ('-', ''), ("'", ''), ('&', '')]:
       s = s.replace(*c)
    return s.lower()
 
@@ -212,7 +212,7 @@ class _outfit():
          else:
             eml1 = eml2 = eml
       else:
-         self.short = self.shortname()+' alone'
+         self.short = self.shortname()+' x1'
 
       for e in self:
          res = text2val(e.text)
