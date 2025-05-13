@@ -12,9 +12,6 @@ from sys import argv, stderr, exit
 # everything ont in this list goes to specific intead of general
 general = ['mass', 'cpu']
 
-multicore_re = None
-block_re = None
-
 def numeval(s):
    try:
       return int(s)
@@ -22,28 +19,24 @@ def numeval(s):
       return float(s)
 
 def parse_lua_multicore( si ):
-   global multicore_re
-   if multicore_re is None:
-      name = ' ("|\')([^"\']*)\\1'
-      sep = ' ,'
-      num = ' -? [0-9]+(\\.[0-9]+)?'
+   name = ' ("|\')([^"\']*)\\1'
+   sep = ' ,'
+   num = ' -? [0-9]+(\\.[0-9]+)?'
 
-      expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\{ '
-      block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
-      expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
-      expr = expr.replace(' ', '\\s*')
-      multicore_re = re.compile(expr)
+   expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\{ '
+   block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
+   expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
+   expr = expr.replace(' ', '\\s*')
 
-      block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
-      block = block.replace(' ', '\\s*')
-      block_re = re.compile(block)
+   block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
+   block = block.replace(' ', '\\s*')
 
    s = re.sub('\n', ' ', si)
-   match = multicore_re.search(s)
+   match = re.search(expr, s)
    if match is None:
       return [], si
 
-   L = [t.groupdict() for t in block_re.finditer(match.group(3))]
+   L = [t.groupdict() for t in re.finditer(block, match.group(3))]
    for d in L:
       if d['sec'] is None:
          d['sec'] = d['pri']
