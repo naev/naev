@@ -103,6 +103,7 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
 
       names.append(o.shortname())
       L.append(d)
+   stderr.write('\n')
 
    for i, t in rang.items():
       (m, M) = t

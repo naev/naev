@@ -11,12 +11,12 @@ from mvx2xmllua import mvx2xmllua
 def mvx_nam(xml):
    return path.join(path.dirname(xml), '.' + path.basename(xml)[:-3] + 'mvx')
 
-def _gen_if_needed( xml, force, quiet ):
+def _gen_if_needed( xml, force = False, quiet = False, multicore_only = False ):
    mvx = mvx_nam(xml)
    exists = (not force) and Path(mvx).is_file()
    uptodate = exists and not path.getmtime(mvx) < path.getmtime(xml)
    if not uptodate:
-      return xmllua2mvx(xml, mvx, quiet)
+      return xmllua2mvx(xml, mvx, quiet, multicore_only)
    else:
       return outfit(mvx)
 
@@ -33,8 +33,7 @@ def core_outfit( nam, try_again = False, quiet = False ):
       return o
 
 def some_outfit( nam, quiet = False ):
-   o = core_outfit(nam, quiet)
-   return o if not (o is None) else outfit(nam)
+   return _gen_if_needed( nam, force = False, quiet = quiet, multicore_only = True )
 
 def core_write( o, fil ):
    mvx = mvx_nam(fil)

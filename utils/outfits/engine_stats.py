@@ -63,10 +63,10 @@ def field( a, f ):
       res = 0.0
    return res
 
-accel =  lambda a: field(a, 'accel')
-speed =  lambda a: field(a, 'speed')
-eml =    lambda a: field(a, 'engine_limit')
-turn =   lambda a: field(a, 'turn')
+accel =        lambda a: field(a, 'accel')
+speed =        lambda a: field(a, 'speed')
+eml =          lambda a: field(a, 'engine_limit')
+turn =         lambda a: field(a, 'turn')
 
 maxspeed =     lambda a: speed(a)+accel(a)/PHYSICS_SPEED_DAMP
 fullsptime =   lambda a: maxspeed(a)/accel(a) if accel(a) else 0.0
@@ -144,6 +144,7 @@ def main( args, gith = False, color = False, term = False, autostack = False,
             continue
       L.append(o)
 
+   stderr.write('\n')
    L = [(o.to_dict(), o.shortname()) for o in L]
    if not nosort:
       L.sort(key = key, reverse = True)
