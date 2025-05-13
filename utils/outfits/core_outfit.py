@@ -6,8 +6,8 @@ from pathlib import Path
 from outfit import outfit
 import subprocess
 
+from xmllua2mvx import xmllua2mvx 
 script_dir = path.dirname(__file__)
-xml2mvx = path.join(script_dir, 'xmllua2mvx.py')
 mvx2xml = path.join(script_dir, 'mvx2xmllua.py')
 
 def mvx_nam(xml):
@@ -18,30 +18,21 @@ def _gen_if_needed( xml, force = False ):
    exists = (not force) and Path(mvx).is_file()
    uptodate = exists and not path.getmtime(mvx) < path.getmtime(xml)
    if not uptodate:
-      res = subprocess.run([xml2mvx, xml], capture_output = True).stdout.decode()
-      if res == '':
-         return None
-      stderr.write(('upd' if exists else 'gen') + ' "' + path.basename(mvx) + '"\n')
-      with open(mvx, "w") as fp:
-         fp.write(res)
+      return xmllua2mvx(xml, mvx, quiet = False )
    else:
-      with open(mvx, "r") as fp:
-         res = fp.read()
-      if res == '':
-         return None
-   return res
+      return outfit(mvx)
 
 def core_outfit( nam, try_again = False ):
    if nam[-4:] == '.xml':
       try:
-         o = outfit(_gen_if_needed(nam), content = True)
+         o = _gen_if_needed(nam)
       except:
          o = None
       if o is None and try_again:
-         o = outfit(_gen_if_needed(nam, True), content = True)
+         o = _gen_if_needed(nam, True)
       if not (o is None):
          o.fil = nam
-         return o
+      return o
 
 def some_outfit( nam ):
    o = core_outfit(nam)
