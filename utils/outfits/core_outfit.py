@@ -16,7 +16,7 @@ def _gen_if_needed( xml, force = False ):
    exists = (not force) and Path(mvx).is_file()
    uptodate = exists and not path.getmtime(mvx) < path.getmtime(xml)
    if not uptodate:
-      return xmllua2mvx(xml, mvx, quiet = False )
+      return xmllua2mvx(xml, mvx, quiet = False)
    else:
       return outfit(mvx)
 
