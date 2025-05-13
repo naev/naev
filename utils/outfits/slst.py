@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 
 class Slst(list):
-   def __call__(self, s):
-      for (i,j) in self:
-         if i[0] == '^':
-            s = s.replace(i[1:], j, 1)
-         elif i[-1] == '$':
-            n = s.rfind(i[:-1])
-            if n!=-1:
-               s = s[:n] + j + s[n+len(i)-1:]
+   def __call__(self, st):
+      for T in self:
+         (s,t,c) = ((T)+(None,None))[:3]
+         if t == None:
+            t = ''
+         if c is None:
+            st = st.replace(s, t)
+         elif c<0:
+            st = ((st[::-1]).replace(s[::-1], t[::-1], -c))[::-1]
          else:
-            s = s.replace(i, j)
-      return s
+            st = st.replace(s, t, c)
+      return st
    def __mul__(self, other):
       for i in range(len(self)):
          self[i] = (self[i][0], other(self[i][1]))

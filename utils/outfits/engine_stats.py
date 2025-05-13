@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-from sys import stdout, stdin
+from sys import stdout, stderr, stdin
 import math
 
 from getconst import PHYSICS_SPEED_DAMP
@@ -15,24 +15,30 @@ def line_drawing(gith = False, color = False, term = False):
    head, rule, line, alt_line = Slst([]), Slst([]), Slst([]), Slst([])
 
    if color or term:
-      head += [ ('^|', ' ') ]
-      [a.append(('$', ' |')) for a in [rule, line, alt_line]]
+      head += [ ('|', ' ', 1) ]
+      [a.append(('', ' |', -1)) for a in [rule, line, alt_line]]
       if color:
-         color, alt_color, defc = '\033[30;1m', '\033[34m', '\033[0m'
-         rule += [ ('^', alt_color), ('$', defc) ]
+         color, alt_col, defc = '\033[30;1m', '\033[34m', '\033[0m'
+         rule += [ ('', color, 1), ('', defc, -1) ]
          line += [ ('|', color + '|' + defc) ]
-         alt_line += [ ('|', alt_color + '|' + defc) ]
+         alt_line += [ ('', alt_col, 1), ('', defc, -1) ]
+         #alt_line += [ ('|', (color if term else alt_col) + '|' + defc) ]
       if term:
          rule += [
             ('| -', '|--'), ('- |',  '--|'),
-            ('-|-',  "-\N{BOX DRAWINGS HEAVY VERTICAL AND HORIZONTAL}-" ),
-            ('|-',   "\N{BOX DRAWINGS HEAVY DOWN AND RIGHT}-"           ),
-            ('-|',   "-\N{BOX DRAWINGS HEAVY VERTICAL AND LEFT}"        ),
-            ('^|',   "\N{BOX DRAWINGS HEAVY VERTICAL AND RIGHT}"        ),
-            ('-',    "\N{BOX DRAWINGS HEAVY HORIZONTAL}"                ),
+            ('-|-',  "-\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}-" ),
+            ('|-',   "\N{BOX DRAWINGS LIGHT DOWN AND RIGHT}-"           ),
+            ('-|',   "-\N{BOX DRAWINGS LIGHT VERTICAL AND LEFT}"        ),
+            ('^|',   "\N{BOX DRAWINGS LIGHT VERTICAL AND RIGHT}"        ),
+            ('-',    "\N{BOX DRAWINGS LIGHT HORIZONTAL}"                ),
          ]
          line += [ ('|', "\N{BOX DRAWINGS LIGHT VERTICAL}") ]
-         alt_line += [ ('|', "\N{BOX DRAWINGS HEAVY VERTICAL}") ]
+         alt_line += [
+            #('|', "\N{BOX DRAWINGS LIGHT VERTICAL AND RIGHT}", 1),
+            #('|', "\N{BOX DRAWINGS LIGHT VERTICAL AND LEFT}", -1),
+            #('|', "\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}")
+            ('|', "\N{BOX DRAWINGS LIGHT VERTICAL}")
+         ]
       lines = lambda f: alt_line if f else line
    else:
       if gith:
@@ -43,19 +49,18 @@ def line_drawing(gith = False, color = False, term = False):
    return head, rule, lines
 
 def field( a, f ):
-   res = 0.0
    try:
       res = a[f]
       if type(res) == type([]):
          res = res[0]
 
-      if type(res) == type((1.0,)):
+      if type(res) == type(()):
          res = res[0]
 
-      if type(res) == type(1.0):
-         return res
+      if type(res) == type(""):
+         res = float(res)
    except:
-      pass
+      res = 0.0
    return res
 
 accel =  lambda a: field(a, 'accel')
@@ -153,26 +158,23 @@ def main( args, gith = False, color = False, term = False, autostack = False,
          'fullsp (km)', 'turn (°/s)', 'turn radius', '1/2 turn (s)']
    else:
       C = [' eml  ', 'dr.sp.', 'max sp', 'accel ', 'fsp(s)',
-          'fsp.km', ' turn ', 'radius', '1/2 turn (s)']
+          'fsp.km', ' turn ', 'radius', '1/2turn(s)']
 
-   N = max([0] + [len(n) for (_, n) in L]) if not gith else 0
+   N = max([3] + [len(n) for (_, n) in L])
    C = [s.split('\n') for s in C]
    while [L for L in C if L!=[]] != []:
       lin = '| '+ N*' ' + ' | ' + ' | '.join([(L+[''])[0] for L in C])
       out(head(lin))
       C = [L[1:] for L in C]
 
-   out(rule('| ---' + (N-3)*'-' + len(C)* (' | ---'+('---' if not gith else '')) ))
-   count = 0
-   for k, n in L:
+   out(rule('| ---' + (N-3)*'-' + len(C)*' | ------'))
+   for count, (k, n) in enumerate(L):
       if accel(k) != 0:
-         nam = n + ((N-len(n))*' ' if not gith else '')
-         acc = '| '+nam+' | '+fmt4(int(eml(k)))
-         acc += l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
-         acc += l(fmt(fullsptime(k))) + l(fmt(fullspdist(k))) + l(turn(k))
-         acc += l(radius(k)) + l(fmt(turntime(k)))
-         out(lines((count%3) == 2)(acc))
-         count += 1
+         acc = '| ' + n + (N-len(n))*' ' + ' | '
+         acc += fmt4(int(eml(k))) + l(speed(k)) + l(fmt(maxspeed(k)))
+         acc += l(accel(k)) + l(fmt(fullsptime(k))) + l(fmt(fullspdist(k)))
+         acc += l(turn(k)) + l(radius(k)) + l(fmt(turntime(k)))
+         out( lines ((count%4) == 0) (acc) )
 
 if __name__ == '__main__':
    import argparse
@@ -187,18 +189,23 @@ if __name__ == '__main__':
    parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output with extended table characters.')
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'also display x2 outfits')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'also display all the combinations.' )
-   parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
    parser.add_argument('-G', '--good', action = 'store_true', help = "good comb. only: don't  comb when pri smaller" )
+   parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
    parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.')
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
 Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or suffixed with \'x2\'.""")
    args = parser.parse_args()
+   if args.term and args.color:
+      print('Warning: -c subsumed by -t', file = stderr, flush = True)
+
+   if args.github and (args.color or args.term):
+      print('Warning: conflicting: -g and -'+('t' if args.term else 'c')+',',
+         "default output style.",
+         file = stderr, flush = True)
+      args.github = args.color = args.term = False
    if args.autostack and args.combinations:
       print('Warning: -A subsumed by -C', file = stderr, flush = True)
       args.autostack = False
-
-   if args.term and args.color:
-      print('Warning: -c subsumed by -t', file = stderr, flush = True)
 
    if args.files or args.filename == []:
       args.filename += [l.strip() for l in stdin.readlines()]
