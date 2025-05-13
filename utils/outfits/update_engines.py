@@ -94,8 +94,8 @@ def get_line( name ):
    if res in line_stats:
       return res
 
-out = lambda x:stdout.write(x+'\n')
-err = lambda x, nnl = False:stderr.write(x+('\n' if not nnl else ''))
+out = lambda x: stdout.write(x+'\n')
+err = lambda x, nnl = False: stderr.write(x+('\n' if not nnl else ''))
 
 def apply_ls( sub, o, additional = dict() ):
    if sub is not None:
@@ -202,7 +202,7 @@ def gen_line( params ):
       o.set_name(nam)
       fil = nam2fil(nam+'.xml')
 
-      sized_params = lambda n:{
+      sized_params = lambda n: {
          'mass':str(10*n),
          'fuel':str(int((n+4)*100*(2**int((n-1)/2)))),
       }

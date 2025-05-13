@@ -15,6 +15,12 @@ general = ['mass', 'cpu']
 multicore_re = None
 block_re = None
 
+def numeval(s):
+   try:
+      return int(s)
+   except:
+      return float(s)
+
 def parse_lua_multicore( si ):
    global multicore_re
    if multicore_re is None:
@@ -41,7 +47,7 @@ def parse_lua_multicore( si ):
    for d in L:
       if d['sec'] is None:
          d['sec'] = d['pri']
-   L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
+   L = [(d['name'], numeval(d['pri']), numeval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
 def xmllua2mvx( argin, argout, quiet = False ):

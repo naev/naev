@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sys import stderr
+from sys import stderr, stdin
 from core_outfit import some_outfit
 from outfit import LOWER_BETTER
 
@@ -190,6 +190,7 @@ if __name__ == '__main__':
    parser.add_argument('-S', '--sortbymass', action = 'store_true', help = 'Like -s mass.' )
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Adds 2x outfits' )
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'Does all the combinations.' )
+   parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.')
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
 Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\'
 (or \'1x\') or suffixed with \'x2\' (or \'x1\'.""")
@@ -217,6 +218,9 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\'
 
    if sortby:
       print('sorted by "'+str(sortby)+'"', file = stderr, flush = True)
+
+   if args.files or args.filename == []:
+      args.filename += [l.strip() for l in stdin.readlines()]
 
    main([f for f in args.filename if f not in ign], args.github, args.color, args.nomax, sortby, args.autostack, args.combinations)
 else:

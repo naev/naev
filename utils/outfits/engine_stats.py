@@ -4,7 +4,7 @@ from getconst import PHYSICS_SPEED_DAMP
 
 from core_outfit import some_outfit
 
-from sys import stdout
+from sys import stdout, stdin
 import math
 
 
@@ -59,7 +59,8 @@ def l( s ):
    a, b = tuple(s.split('.', 1))
    return ' | '+(3-len(a))*' '+a+m+b+(2-len(b))*' '
 
-def main( args, gith = False, color = False, autostack=False, combine=False, nosort=False, filt=False ):
+def main( args, gith = False, color = False, autostack = False,
+   combine = False, nosort = False, good_only = False ):
    sec_args = []
    if combine or autostack:
       for i in args:
@@ -96,7 +97,7 @@ def main( args, gith = False, color = False, autostack=False, combine=False, nos
       if len(args[i].split('+')) == 2:
          o, o2 = args[i].split('+')
          o, o2 = some_outfit(o.strip()), some_outfit(o2.strip())
-         if (not o.can_stack(o2)) or (filt and o.size() < o2.size()):
+         if (not o.can_stack(o2)) or (good_only and o.size() < o2.size()):
             continue
          o.stack(o2)
       else:
@@ -158,7 +159,8 @@ if __name__ == '__main__':
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'also display x2 outfits')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'also display all the combinations.' )
    parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
-   parser.add_argument('-f', '--filter', action = 'store_true', help = "don't do comb where pri is smaller" )
+   parser.add_argument('-G', '--good', action = 'store_true', help = "good comb. only: don't  comb when pri smaller" )
+   parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.')
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
 Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or suffixed with \'x2\'.""")
    args = parser.parse_args()
@@ -166,7 +168,9 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
       print('Warning: -A subsumed by -C', file = stderr, flush = True)
       args.autostack = False
 
+   if args.files or args.filename == []:
+      args.filename += [l.strip() for l in stdin.readlines()]
    args.filename = [f for f in args.filename if f[-4:] in [".mvx", ".xml"]]
-   main(args.filename, args.github, args.color, args.autostack, args.combinations, args.no_sort, args.filter)
+   main(args.filename, args.github, args.color, args.autostack, args.combinations, args.no_sort, args.good)
 else:
    raise Exception('This module is only intended to be used as main.')
