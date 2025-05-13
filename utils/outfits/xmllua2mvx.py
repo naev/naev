@@ -12,42 +12,49 @@ from sys import argv, stderr, exit
 # everything ont in this list goes to specific intead of general
 general = ['mass', 'cpu']
 
+multicore_re = None
+block_re = None
 
 def parse_lua_multicore( si ):
+   global multicore_re
+   if multicore_re is None:
+      name = ' ("|\')([^"\']*)\\1'
+      sep = ' ,'
+      num = ' -? [0-9]+(\\.[0-9]+)?'
+
+      expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\{ '
+      block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
+      expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
+      expr = expr.replace(' ', '\\s*')
+      multicore_re = re.compile(expr)
+
+      block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
+      block = block.replace(' ', '\\s*')
+      block_re = re.compile(block)
+
    s = re.sub('\n', ' ', si)
-
-   name = ' ("|\')([^"\']*)\\1'
-   sep = ' ,'
-   num = ' -? [0-9]+(\\.[0-9]+)?'
-
-   expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\{ '
-   block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
-   expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
-   expr = expr.replace(' ', '\\s*')
-   match = re.search(expr, s)
+   match = multicore_re.search(s)
    if match is None:
       return [], si
 
-   block = ' \\{ ("|\')(?P<name>[^"\']*)\\1'+sep+' (?P<pri>'+num+') ('+sep+' (?P<sec>'+num+'))? (' + sep + ' )? \\}'
-   block = block.replace(' ', '\\s*')
-   L = [t.groupdict() for t in re.finditer(block, match.group(3))]
+   L = [t.groupdict() for t in block_re.finditer(match.group(3))]
    for d in L:
       if d['sec'] is None:
          d['sec'] = d['pri']
    L = [(d['name'], eval(d['pri']), eval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
-def do_it( argin, argout, quiet = False ):
+def xmllua2mvx( argin, argout, quiet = False ):
    try:
       o = outfit(argin)
       fields, li = parse_lua_multicore(o.find('lua_inline'))
    except:
-      return 1
+      return None
 
    if not quiet:
-      stderr.write('xmllua2mvx: '+o.name()+'\n')
+      stderr.write('xmllua2mvx: ' + o.name() + '\n')
 
-   d = {'general':[], 'specific':[]}
+   d = {'general': [], 'specific': []}
    for t in fields:
       if t[0] in general:
          d['general'].append(t)
@@ -60,7 +67,7 @@ def do_it( argin, argout, quiet = False ):
             el = ET.Element(a)
             el.text = str(b)
             if b != c:
-               el.text = el.text + '/' + str(c)
+               el.text += '/' + str(c)
             e.append(el)
          if e.tag == 'specific':
             spe = e
@@ -70,7 +77,7 @@ def do_it( argin, argout, quiet = False ):
          else:
             e.text = li.strip()
    o.write(argout)
-   return 0
+   return o
 
 if __name__ == '__main__':
    import argparse
@@ -87,4 +94,5 @@ The special values "-" mean stdin/stdout.
    parser.add_argument('input', nargs = '?', default = '-')
    parser.add_argument('output', nargs = '?', default = '-')
    args = parser.parse_args()
-   exit(do_it(args.input, args.output, args.quiet))
+   o = xmllua2mvx(args.input, args.output, args.quiet)
+   exit(1 if o is None else 0)

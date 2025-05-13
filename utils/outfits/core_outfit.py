@@ -53,4 +53,4 @@ def core_write( o, fil ):
    subprocess.run([mvx2xml, '-q', mvx, fil])
    # mark mvx as up to date
    with open(mvx, 'ab'):
-        utime(mvx, None)
+      utime(mvx, None)
