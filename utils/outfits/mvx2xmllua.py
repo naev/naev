@@ -57,7 +57,6 @@ def _mklua( L ):
 
 def _toxmllua( o ):
    R = o.r
-
    acc1, tr1 = _process_group(R, './general')
    acc2, tr2 = _process_group(R, './specific')
 
@@ -91,7 +90,7 @@ def mvx2xmllua( argin, argout, quiet ):
       nam = nam2fil(o.name())
       _toxmllua(o)
       if not quiet:
-         stderr.write('mvx2xmllua: '+(nam if argout == '-' else argout)+'\n')
+         stderr.write('mvx2xmllua: ' + (nam if argout == '-' else argout) + '\n')
       o.write(argout)
    return o
 

@@ -6,7 +6,7 @@ from outfit import LOWER_BETTER
 
 def transpose( M ):
    N = max(map(len, M))
-   M = [t+['']*(N-len(t)) for t in M]
+   M = [t + ['']*(N-len(t)) for t in M]
    return list(zip(*(tuple(M))))
 
 getfloat = lambda s: float(s.split('/')[0])

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from sys import stdin, stdout 
+from sys import stdin, stdout
 
 import xml.etree.ElementTree as ET
 
@@ -292,4 +292,4 @@ def outfit( fil, content = False ):
    if content:
       raise Exception('Invalid outfit <user-data content>')
    else:
-      raise Exception('Invalid outfit "'+str(fil)+'"')
+      raise Exception('Invalid outfit "' + str(fil) + '"')

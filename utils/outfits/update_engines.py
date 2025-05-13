@@ -229,6 +229,7 @@ if __name__ == '__main__':
       epilog = """Examples:
   Standard usage:
    > find dat/outfits/core_engine/ -name "*.xml" | ./utils/outfits/update_engines.py -f
+  Generate a line called Krain with same params as Krain:
    > ./utils/outfits/update_engines.py -g Krain
   Generate a line called Melendez with same params as Melendez *but with speed_rank_offset = 0.5*:
    > ./utils/outfits/update_engines.py -g Melendez 0.5

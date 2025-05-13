@@ -57,7 +57,7 @@ def l( s ):
    else:
       m = '.'
    a, b = tuple(s.split('.', 1))
-   return ' | '+(3-len(a))*' '+a+m+b+(2-len(b))*' '
+   return ' | ' + (3-len(a))*' ' + a + m + b + (2-len(b))*' '
 
 def main( args, gith = False, color = False, autostack = False,
    combine = False, nosort = False, good_only = False ):
@@ -138,10 +138,10 @@ def main( args, gith = False, color = False, autostack = False,
          nam = n + ((N-len(n))*' ' if not gith else '')
          acc = '| '+nam+' | '+fmt4(int(eml(k)))
          acc += l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
-         acc += l(fmt(fullsptime(k)))+l(fmt(fullspdist(k)))+l(turn(k))+l(radius(k))
-         acc += l(fmt(turntime(k)))
+         acc += l(fmt(fullsptime(k))) + l(fmt(fullspdist(k))) + l(turn(k))
+         acc += l(radius(k)) + l(fmt(turntime(k)))
          if gith:
-            acc = acc.replace('   ', ' ').replace('  ', ' ')
+            acc = acc.replace(7*' ', ' ').replace(3*' ', ' ').replace(2*' ', ' ')
          acc = greyitall(acc, (count%3) == 2)
          count += 1
          out(acc)
