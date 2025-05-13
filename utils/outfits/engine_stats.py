@@ -1,14 +1,47 @@
 #!/usr/bin/env python3
 
-from getconst import PHYSICS_SPEED_DAMP
-
-from core_outfit import some_outfit
 
 from sys import stdout, stdin
 import math
 
+from getconst import PHYSICS_SPEED_DAMP
+from core_outfit import some_outfit
+from slst import Slst
+
 
 out = lambda x: stdout.write(x + '\n')
+
+def line_drawing(gith = False, color = False, term = False):
+   head, rule, line, alt_line = Slst([]), Slst([]), Slst([]), Slst([])
+
+   if color or term:
+      head += [ ('^|', ' ') ]
+      [a.append(('$', ' |')) for a in [rule, line, alt_line]]
+      if color:
+         color, alt_color, defc = '\033[30;1m', '\033[34m', '\033[0m'
+         rule += [ ('^', alt_color), ('$', defc) ]
+         line += [ ('|', color + '|' + defc) ]
+         alt_line += [ ('|', alt_color + '|' + defc) ]
+      if term:
+         rule += [
+            ('| -', '|--'), ('- |',  '--|'),
+            ('-|-',  "-\N{BOX DRAWINGS HEAVY VERTICAL AND HORIZONTAL}-" ),
+            ('|-',   "\N{BOX DRAWINGS HEAVY DOWN AND RIGHT}-"           ),
+            ('-|',   "-\N{BOX DRAWINGS HEAVY VERTICAL AND LEFT}"        ),
+            ('^|',   "\N{BOX DRAWINGS HEAVY VERTICAL AND RIGHT}"        ),
+            ('-',    "\N{BOX DRAWINGS HEAVY HORIZONTAL}"                ),
+         ]
+         line += [ ('|', "\N{BOX DRAWINGS LIGHT VERTICAL}") ]
+         alt_line += [ ('|', "\N{BOX DRAWINGS HEAVY VERTICAL}") ]
+      lines = lambda f: alt_line if f else line
+   else:
+      if gith:
+         rule += [ (7*'-', '-'), (3*'-', '-'), (2*'-', '-'), ('-', '---') ]
+         line += [ (7*' ', ' '), (3*' ', ' '), (2*' ', ' ') ]
+      lines = lambda _: line
+   head += line
+   return head, rule, lines
+
 def field( a, f ):
    res = 0.0
    try:
@@ -59,7 +92,7 @@ def l( s ):
    a, b = tuple(s.split('.', 1))
    return ' | ' + (3-len(a))*' ' + a + m + b + (2-len(b))*' '
 
-def main( args, gith = False, color = False, autostack = False,
+def main( args, gith = False, color = False, term = False, autostack = False,
    combine = False, nosort = False, good_only = False ):
    sec_args = []
    if combine or autostack:
@@ -110,28 +143,26 @@ def main( args, gith = False, color = False, autostack = False,
    if not nosort:
       L.sort(key = key, reverse = True)
 
-   greyit = lambda alt: lambda s: s
+   head, rule, lines = line_drawing(gith, color, term)
    if color:
-      greyit = lambda alt: lambda s: ('\033[34m' if alt else '\033[30;1m') + s + '\033[0m'
-      C = ['eml   \n(t)   ', 'drift \nspeed ', 'max   \nspeed ', 'accel \n      ', 'fullsp\n(s)   ', 'fullsp\n(km)  ', 'turn  \n(°/s) ', 'turn  \nradius', '1/2turn\n(s)    ']
+      C = [ 'eml   \n(t)   ', 'drift \nspeed ', 'max   \nspeed ', 'accel \n      ',
+            'fullsp\n(s)   ', 'fullsp\n(km)  ', 'turn  \n(°/s) ', 'turn  \nradius',
+             '\xbdturn \n(s)   ']
    elif gith:
-      C = ['eml (t)', 'drift speed ', 'max speed', 'accel', 'fullsp (s)', 'fullsp (km)', 'turn (°/s)', 'turn radius', '1/2turn (s)']
+      C = ['eml (t)', 'drift speed ', 'max speed', 'accel', 'fullsp (s)',
+         'fullsp (km)', 'turn (°/s)', 'turn radius', '1/2 turn (s)']
    else:
-      C = [' eml  ', 'dr.sp.', 'max sp', 'accel ', 'fsp(s)', 'fsp.km', ' turn ', 'radius', '1/2 turn (s)']
-   greyitall = lambda s,alt: s.replace('|', greyit(alt)('|'))
+      C = [' eml  ', 'dr.sp.', 'max sp', 'accel ', 'fsp(s)',
+          'fsp.km', ' turn ', 'radius', '1/2 turn (s)']
+
    N = max([0] + [len(n) for (_, n) in L]) if not gith else 0
-   if color:
-      C = [tuple(s.split('\n')) for s in C]
-      lin = '  '+ N*' ' + ' | ' + ' | '.join([a for (a, b) in C])
-      out(greyitall(lin, False))
-      C = [b for (a, b) in C]
-   acc = '| ' + N*' ' + ' | ' + ' | '.join(C)
-   if color:
-      acc = ' ' + acc[1:]
-      acc = greyitall(acc, False)
-   out(acc)
-   lin = '| ---' + (N-3)*'-' + ' ' + len(C)*('| ---'+('---' if not gith else '')+' ')
-   out(greyit(True)(lin))
+   C = [s.split('\n') for s in C]
+   while [L for L in C if L!=[]] != []:
+      lin = '| '+ N*' ' + ' | ' + ' | '.join([(L+[''])[0] for L in C])
+      out(head(lin))
+      C = [L[1:] for L in C]
+
+   out(rule('| ---' + (N-3)*'-' + len(C)* (' | ---'+('---' if not gith else '')) ))
    count = 0
    for k, n in L:
       if accel(k) != 0:
@@ -140,11 +171,8 @@ def main( args, gith = False, color = False, autostack = False,
          acc += l(speed(k))+l(fmt(maxspeed(k)))+l(accel(k))
          acc += l(fmt(fullsptime(k))) + l(fmt(fullspdist(k))) + l(turn(k))
          acc += l(radius(k)) + l(fmt(turntime(k)))
-         if gith:
-            acc = acc.replace(7*' ', ' ').replace(3*' ', ' ').replace(2*' ', ' ')
-         acc = greyitall(acc, (count%3) == 2)
+         out(lines((count%3) == 2)(acc))
          count += 1
-         out(acc)
 
 if __name__ == '__main__':
    import argparse
@@ -156,6 +184,7 @@ if __name__ == '__main__':
    )
    parser.add_argument('-g', '--github', action = 'store_true', help = 'unaligned (therefore smaller) valid github md, for use in posts.')
    parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if the table is too wide.')
+   parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output with extended table characters.')
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'also display x2 outfits')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'also display all the combinations.' )
    parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
@@ -168,9 +197,13 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
       print('Warning: -A subsumed by -C', file = stderr, flush = True)
       args.autostack = False
 
+   if args.term and args.color:
+      print('Warning: -c subsumed by -t', file = stderr, flush = True)
+
    if args.files or args.filename == []:
       args.filename += [l.strip() for l in stdin.readlines()]
    args.filename = [f for f in args.filename if f[-4:] in [".mvx", ".xml"]]
-   main(args.filename, args.github, args.color, args.autostack, args.combinations, args.no_sort, args.good)
+   main(args.filename, args.github, args.color or args.term, args.term,
+      args.autostack, args.combinations, args.no_sort, args.good)
 else:
    raise Exception('This module is only intended to be used as main.')

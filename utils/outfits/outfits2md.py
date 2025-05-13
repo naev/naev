@@ -119,12 +119,12 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
          names[i] = o['name']
 
    Res = [[k]+[l[k] if k in l else '' for l in L] for k in acc]
-   names = ['']+names
-   length = [4]*len(names) # :--- at least 3 - required
+   names = [''] + names
+   length = [4] * len(names) # :--- at least 3 - required
 
    if ter:
       Sep, SepAlt, Lm, Rm, LM, RM = '\033[30;1m|\033[0m', '\033[34m|\033[0m', '\033[31m', '\033[37m', '\033[32m', '\033[37m'
-      mk_pad = lambda i, n: '\033[34m'+n*'-'+'\033[0m'
+      mk_pad = lambda i, n: '\033[34m' + n*'-' + '\033[0m'
       leng = lambda x: len(x) - (10 if x != '' and x[0]=='\033' else 0)
    else:
       Sep, SepAlt, Lm, Rm, LM, RM = '|', '|', '_', '_', '**', '**'
@@ -137,11 +137,8 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
       head = [names]
 
    if not gith:
-      for r in Res:
+      for r in Res + head:
          length = [max(n, len(s)) for (n, s) in zip(length, r)]
-
-      for t in head:
-         length = [max(n, len(s)) for (n, s) in zip(length, t)]
 
    mklinsep = lambda sep: lambda L:sep+' '+(' '+sep+' ').join(L)+' '+sep
    mklinalt = lambda alt: mklinsep(SepAlt) if alt else mklinsep(Sep)
@@ -155,9 +152,9 @@ def main( args, gith = False, ter = False, noext = False, sortit = False, autost
          return '_'
       elif mi != ma:
          if getfloat(s) == mi:
-            return Lm+s+Rm
+            return Lm + s + Rm
          elif getfloat(s) == ma:
-            return LM+s+RM
+            return LM + s + RM
       return s
 
    print
