@@ -207,7 +207,7 @@ function multicore.init( params )
             desc = desc .. '\n#b'.._('This outfit can only be equipped as #rprimary#b.')..'#0'
          else
             local _slot_name, _slot_size, slot_prop = o:slot()
-            if se ~= slot_prop .. ' (Secondary)' then
+            if slot_prop == nil or se ~= slot_prop .. ' (Secondary)' then
                desc = desc .. '\n#b'.._('This outfit can only be equipped as #ysecondary#b.')..'#0'
             end
          end
