@@ -26,7 +26,7 @@ def nfmt( n ):
       f = int(f)
    return str(f)
 
-def main( args, gith = False, color = False, ter = False, noext = False,
+def main( args, gith = False, color = False, term = False, noext = False,
       sortit = False, autostack = False, combine = False, good = False ):
    if args == []:
       return 0
@@ -95,10 +95,26 @@ def main( args, gith = False, color = False, ter = False, noext = False,
    names = [''] + names
    length = [4] * len(names) # :--- at least 3 - required
 
+   termit_rule = lambda s: s
    if color:
       Sep, SepAlt, Lm, Rm, LM, RM = '\033[30;1m|\033[0m', '\033[34m|\033[0m', '\033[31m', '\033[37m', '\033[32m', '\033[37m'
       mk_pad = lambda i, n: '\033[34m' + n*'-' + '\033[0m'
       leng = lambda x: len(x) - (10 if x != '' and x[0]=='\033' else 0)
+      if term:
+         # Could also use it to manage gith and color.
+         from slst import Slst
+         termit = Slst([('|',"\N{BOX DRAWINGS LIGHT VERTICAL}")])
+         (Sep, SepAlt, Lm, Rm, LM, RM) = map(termit, (Sep, SepAlt, Lm, Rm, LM, RM))
+         termit_rule = -termit + [
+            ('\033[34m', ''), ('\033[0m', ''),        # uncolor
+            ('| -', '|--'), ('- |',  '--|'),
+            ('-|-',  "-\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}-" ),
+            ('|-',   "\N{BOX DRAWINGS LIGHT DOWN AND RIGHT}-"           ),
+            ('-|',   "-\N{BOX DRAWINGS LIGHT VERTICAL AND LEFT}"        ),
+            ('^|',   "\N{BOX DRAWINGS LIGHT VERTICAL AND RIGHT}"        ),
+            ('-',    "\N{BOX DRAWINGS LIGHT HORIZONTAL}"                ),
+            ('', '\033[34m', 1), ('', '\033[0m', -1)  # recolor whole line
+         ]
    else:
       Sep, SepAlt, Lm, Rm, LM, RM = '|', '|', '_', '_', '**', '**'
       mk_pad = lambda i, n: '-'*(n-1)+('-' if i == 0 else ':')
@@ -136,7 +152,7 @@ def main( args, gith = False, color = False, ter = False, noext = False,
       if color:
          acc = ' '+acc[len(Sep):]
       print(acc)
-   print(mklinalt(True)([mk_pad(i, n) for i, n in enumerate(length)]))
+   print(termit_rule(mklinalt(True)([mk_pad(i, n) for i, n in enumerate(length)])))
 
    count = 0
    for r in Res:
@@ -191,13 +207,7 @@ with \'2x\' (or: \'1x\') or suffixed with \'x2\' (or: \'x1\').""")
    if ign != []:
       print('Ignored: "'+'", "'.join(ign)+'"', file = stderr, flush = True)
 
-   if args.sort is None and args.sortbymass:
-      args.sort = 'mass'
-
-   if args.sort is None:
-      sortby = False
-   else:
-      sortby = args.sort
+   sortby = args.sort or (args.sortbymass and 'mass') or False
 
    if sortby:
       print('sorted by "'+str(sortby)+'"', file = stderr, flush = True)

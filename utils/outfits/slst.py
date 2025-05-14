@@ -3,9 +3,7 @@
 class Slst(list):
    def __call__(self, st):
       for T in self:
-         (s,t,c) = ((T)+(None,None))[:3]
-         if t == None:
-            t = ''
+         (s,t,c) = (T[0], (T+('',))[1], (T+(None,None))[2])
          if c is None:
             st = st.replace(s, t)
          elif c<0:
@@ -13,6 +11,12 @@ class Slst(list):
          else:
             st = st.replace(s, t, c)
       return st
+
+   __add__= lambda *t: Slst(list.__add__(*t))
    def __mul__(self, other):
-      for i in range(len(self)):
-         self[i] = (self[i][0], other(self[i][1]))
+      return Slst([(self[i][0], other(self[i][1])) for i in range(len(self))])
+   def __neg__(self):
+      return Slst([ ((t+('',))[1], t[0]) + t[2:] for t in reversed(self)])
+   def __repr__(self):
+      return 'Slst('+list.__repr__(self)+')'
+   __str__ = __repr__
