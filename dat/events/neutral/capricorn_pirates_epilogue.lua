@@ -32,7 +32,7 @@ function create ()
 
    vn.na(_([[You land on the newly opened space port which is surprisingly empty.]]))
    vn.na(_([[Expecting to be greeted with open arms, you walk around until you eventually find a lone individual who seems to be mopping the floor.]]))
-   vn.na(_([[You ask him what is going on and explain that you lifted the blockade. He seems unfazed and comments that that's why there were slightly fewer ships than usual coming it before going back to his duties.]]))
+   vn.na(_([[You ask him what is going on and explain that you lifted the blockade. He seems unfazed and comments that that's why there were slightly fewer ships than usual coming in before going back to his duties.]]))
    vn.na(fmt.f(_([[After putting your life in peril for the people of {spb}, it seems like nobody really noticed that the system was blockaded in the first place. Giving up on a potential reward, you head back to your ship.]]),
       {spb=mainspb}))
    vn.run()
