@@ -89,7 +89,7 @@ def readval( what ):
 
 class _outfit():
    def __init__( self, fil, content = False ):
-      self.sec = None
+      self.pri = None
 
       if content:
          self.r = ET.fromstring(fil)
@@ -133,18 +133,19 @@ class _outfit():
       except:
          pass
 
-   def can_sec( self ):
-      if self.sec == None:
+   def can_pri_sec( self ):
+      if self.pri == None:
          k = self.find('slot', True).attrib
+         self.pri = 'prop' in k and k['prop'].find('secondary') == -1
          self.sec = 'prop_extra' in k and k['prop_extra'].find('secondary') != -1
-      return self.sec
+         self.sec = self.sec or 'prop' in k and k['prop'].find('secondary') != -1
+      return self.pri, self.sec
+
+   can_pri = lambda self: self.can_pri_sec()[0]
+   can_sec = lambda self: self.can_pri_sec()[1]
 
    def eml( self ):
-      try:
-         res = readval(self.find('engine_limit'))
-      except:
-         res = None
-      return res
+      return readval(self.find('engine_limit'))
 
    def can_alone( self ):
       return self.name().find('Twin') == -1

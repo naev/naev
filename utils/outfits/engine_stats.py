@@ -5,6 +5,7 @@ from sys import stdout, stderr, stdin
 import math
 
 from getconst import PHYSICS_SPEED_DAMP
+from combine_multi import mk_combine
 from core_outfit import some_outfit
 from slst import Slst
 
@@ -99,49 +100,25 @@ def l( s ):
 
 def main( args, gith = False, color = False, term = False, autostack = False,
       combine = False, nosort = False, good_only = False ):
-   sec_args = []
-   if combine or autostack:
-      for i in args:
-         if i[:2] == '2x' or i[-2:] == 'x2':
-            stderr.write('"2x"')
-         elif '+' in i:
-            stderr.write('"+"')
-         else:
-            if some_outfit(i).can_sec():
-               sec_args.append(i)
-            continue
-         stderr.write(' incompatible with -A/-C options\n')
-         return 1
-
-      if combine:
-         sec_args = set(sec_args)
-         tmp = [t for t in args]
-         for i in range(len(args)):
-            for j in range(i, len(args)):
-               if args[j] in sec_args:
-                  tmp.append(args[i] + '+' + args[j])
-               if i != j and args[i] in sec_args:
-                  tmp.append(args[j] + '+' + args[i])
-         args = tmp
-      elif autostack:
-         args = args+['2x'+i for i in sec_args]
+   args = mk_combine(args, combine, autostack, good_only)
 
    L = []
    for i in range(len(args)):
-      if args[i][:2] == '2x' or args[i][-2:] == 'x2':
-         args[i] = args[i][2:] if args[i][:2] == '2x' else args[i][:-2]
-         args[i] = args[i] + '+' + args[i]
-
       if len(args[i].split('+')) == 2:
          o, o2 = args[i].split('+')
          o, o2 = some_outfit(o.strip()), some_outfit(o2.strip())
-         if (not o.can_stack(o2)) or (good_only and o.size() < o2.size()):
+         if not(o.can_pri() and o2.can_sec() and o.can_stack(o2)):
             continue
          o.stack(o2)
       else:
+         autos = args[i][:2] == '1x' or args[i][-2:] == 'x1'
+         if autos:
+            args[i] = args[i][2:] if args[i][:2] == '1x' else args[i][:-2]
          o = some_outfit(args[i])
-         if not o.can_alone():
-            continue
+         if autos:
+            if not (o.can_pri() and o.can_alone()):
+               continue
+            o.autostack(False)
       L.append(o)
 
    stderr.write('\n')
@@ -190,7 +167,7 @@ if __name__ == '__main__':
    parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output with extended table characters.')
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Outfits are presented both alone and auto-stacked.')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'also display all the combinations.' )
-   parser.add_argument('-G', '--good', action = 'store_true', help = "good comb. only: don't comb when pri smaller." )
+   parser.add_argument('-G', '--good', action = 'store_true', help = "Like -C, but good comb. only: don't comb when pri smaller." )
    parser.add_argument('-N', '--no-sort', action = 'store_true', help = "don't sort wrt. max speed" )
    parser.add_argument('-f', '--files', action = 'store_true', help = 'read file list on stdin. Applies when no args.')
    parser.add_argument('filename', nargs = '*', help = """An outfit with ".xml" or ".mvx" extension, else will be ignored.
@@ -204,14 +181,20 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
          ('t' if args.term else 'c'), file = stderr, flush = True)
       args.github = args.color = args.term = False
 
-   if args.autostack and args.combinations:
-      print('Warning: -A subsumed by -C', file = stderr, flush = True)
+   if args.autostack and args.good:
+      print('Warning: -A is subsumed by -G', file = stderr, flush = True)
       args.autostack = False
+   elif args.autostack and args.combinations:
+      print('Warning: -A is subsumed by -C', file = stderr, flush = True)
+      args.autostack = False
+
+   if args.good and args.combinations:
+      print('Warning: -C is subsumed by -G', file = stderr, flush = True)
 
    if args.files or args.filename == []:
       args.filename += [l.strip() for l in stdin.readlines()]
    args.filename = [f for f in args.filename if f[-4:] in [".mvx", ".xml"]]
    main(args.filename, args.github, args.color or args.term, args.term,
-      args.autostack, args.combinations, args.no_sort, args.good)
+      args.autostack, args.combinations or args.good, args.no_sort, args.good)
 else:
    raise Exception('This module is only intended to be used as main.')
