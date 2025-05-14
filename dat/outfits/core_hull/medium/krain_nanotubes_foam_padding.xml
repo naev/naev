@@ -1,10 +1,10 @@
-<outfit name="Nanofoam Padding">
+<outfit name="Krain Nanotubes Foam Padding">
  <general>
-  <shortname>Nanofoam Padding</shortname>
+  <shortname>K. Nanofoam Padding</shortname>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull_secondary">structure</slot>
   <size>medium</size>
-  <price>400000</price>
+  <price>440000</price>
   <description>Despite its ridiculously low mass and its cloudy texture, this foam is extremely elastic and hard to tear, making it an excellent underlayer for a more rigid armor, making it perfect for ships that can't afford the weight of a regular battle armor underlayer. It comes at a cost, though.</description>
   <gfx_store>stealth_hull_h.webp</gfx_store>
   <priority>3</priority>

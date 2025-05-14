@@ -84,6 +84,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/core_hull/large/sk_large_cargo_hull.xml',
    root / 'dat/outfits/core_hull/large/sk_war_plating.xml',
    root / 'dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml',
+   root / 'dat/outfits/core_hull/medium/krain_nanotubes_foam_padding.xml',
    root / 'dat/outfits/core_hull/medium/nexus_ghost_weave.xml',
    root / 'dat/outfits/core_hull/medium/patchwork_medium_plating.xml',
    root / 'dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml',
