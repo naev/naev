@@ -47,7 +47,7 @@ local function stattostr( s, val, grey, unit, gb)
    return col .. str
 end
 
-local function add_desc( stat, nomain, nosec, gb )
+local function add_desc( stat, nomain, nosec, gb, basic )
    local name = _(stat.stat.display)
    local base = stat.pri
    local secondary = stat.sec
@@ -65,7 +65,7 @@ local function add_desc( stat, nomain, nosec, gb )
       col=valcol(p+s, stat.stat.inverted, gb)
    end
    local pref = col .. fmt.f("{name}: ",{name=name})
-   if p == s then
+   if p == s or basic then
       return pref .. stattostr(stat.stat, base, off, true, gb)
    else
       return pref .. fmt.f("{bas} #n/#0 {sec}", {
@@ -138,6 +138,7 @@ function multicore.init( params )
 
    -- Below define the global functions for the outfit
    function descextra( p, o, po )
+      local basic = var.peek("hide_multi")
       local nomain, nosec = false, false
       if po then
          if is_secondary(po) then
@@ -147,16 +148,19 @@ function multicore.init( params )
          end
       end
 
-      local desc
-      if nomain then
-         desc = "#o"..fmt.f(_("Equipped as {type} core"),{type="#y"..p_("core","secondary").."#o"}).."#0"
-      elseif nosec then
-         desc = "#o"..fmt.f(_("Equipped as {type} core"),{type="#r"..p_("core","primary").."#o"}).."#0"
-      else
-         desc = "#n"..fmt.f(_("Properties for {pri} / {sec} slots"),{
-            pri="#r"..p_("core","primary").."#n",
-            sec="#y"..p_("core","secondary").."#n",
-         }).."#0"
+      local desc = ''
+
+      if not basic then
+         if nomain then
+            desc = desc .. "#o"..fmt.f(_("Equipped as {type} core"),{type="#y"..p_("core","secondary").."#o"}).."#0"
+         elseif nosec then
+            desc = desc .. "#o"..fmt.f(_("Equipped as {type} core"),{type="#r"..p_("core","primary").."#o"}).."#0"
+         else
+            desc = desc .. "#n"..fmt.f(_("Properties for {pri} / {sec} slots"),{
+               pri="#r"..p_("core","primary").."#n",
+               sec="#y"..p_("core","secondary").."#n",
+            }).."#0"
+         end
       end
 
       local id = po and po:id()
@@ -172,7 +176,7 @@ function multicore.init( params )
 
       for k,s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
-         desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name] and s.name ~= "engine_limit")
+         desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name] and s.name ~= "engine_limit", basic)
       end
 
       if multicore_off ~= nil then
@@ -201,7 +205,7 @@ function multicore.init( params )
          end
       end
 
-      if o and o:slotExtra() == nil then
+      if not basic and o and o:slotExtra() == nil then
          local _slot_name, _slot_size, slot_prop = o:slot()
          local msg
          if slot_prop:match" %(Secondary%)$" then
