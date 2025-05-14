@@ -100,29 +100,10 @@ def l( s ):
 
 def main( args, gith = False, color = False, term = False, autostack = False,
       combine = False, nosort = False, good_only = False ):
-   args = mk_combine(args, combine, autostack, good_only)
 
-   L = []
-   for i in range(len(args)):
-      if len(args[i].split('+')) == 2:
-         o, o2 = args[i].split('+')
-         o, o2 = some_outfit(o.strip()), some_outfit(o2.strip())
-         if not(o.can_pri() and o2.can_sec() and o.can_stack(o2)):
-            continue
-         o.stack(o2)
-      else:
-         autos = args[i][:2] == '1x' or args[i][-2:] == 'x1'
-         if autos:
-            args[i] = args[i][2:] if args[i][:2] == '1x' else args[i][:-2]
-         o = some_outfit(args[i])
-         if autos:
-            if not (o.can_pri() and o.can_alone()):
-               continue
-            o.autostack(False)
-      L.append(o)
+   L = [ (o.to_dict(), o.shortname()) for o in mk_combine(args, combine, autostack, good_only) ]
 
    stderr.write('\n')
-   L = [(o.to_dict(), o.shortname()) for o in L]
    if not nosort:
       L.sort(key = key, reverse = True)
 

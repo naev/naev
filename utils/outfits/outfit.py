@@ -156,7 +156,7 @@ class _outfit():
          (self.name().split(' ')[0] != 'Krain' and other.name().split(' ')[0] != 'Krain')
       )
 
-   def stack( self, other ):
+   def stack( self, other = None ):
       if other is None:
          self.short = self.shortname() + ' x1'
       elif self.shortname() == other.shortname():
@@ -203,6 +203,7 @@ class _outfit():
 
          if res is not None or res2 is not None:
             e.text = str(prisec(e.tag, res, res2, eml1, eml2))
+      return self
 
    def autostack( self, doubled = False ):
       self.stack(self if doubled else None)
