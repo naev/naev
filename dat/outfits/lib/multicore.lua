@@ -207,12 +207,13 @@ function multicore.init( params )
 
       if not basic and o and o:slotExtra() == nil then
          local _slot_name, _slot_size, slot_prop = o:slot()
-         local msg
+         local slot_msg
          if slot_prop:match" %(Secondary%)$" then
-            msg = _('This outfit can only be equipped as #ysecondary#b.')
+            slot_msg = '#y' .. _('secondary') .. '#b'
          else
-            msg = _('This outfit can only be equipped as #rprimary#b.')
+            slot_msg = '#r' .. _('primary') .. '#b'
          end
+         local msg = fmt.f(_('This outfit can only be equipped as {slot}.'), {slot=slot_msg})
          desc = desc .. '\n#b' .. msg .. '#0'
       end
       return desc
