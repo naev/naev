@@ -47,6 +47,11 @@ def line_drawing(gith = False, color = False, term = False):
          line += [ (7*' ', ' '), (3*' ', ' '), (2*' ', ' ') ]
       lines = lambda _: line
    head += line
+   if term:
+      head = Slst(head[0:1]) + rule + [
+         ("\N{BOX DRAWINGS LIGHT VERTICAL AND LEFT}","\N{BOX DRAWINGS LIGHT DOWN AND LEFT}"),
+         ("\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}","\N{BOX DRAWINGS LIGHT DOWN AND HORIZONTAL}")
+      ] + line[-1:]
    return head, rule, lines
 
 def field( a, f ):
@@ -112,6 +117,8 @@ def main( args, gith = False, color = False, term = False, autostack = False,
       C = [ 'eml   \n(t)   ', 'drift \nspeed ', 'max   \nspeed ', 'accel \n      ',
             'fullsp\n(s)   ', 'fullsp\n(km)  ', 'turn  \n(°/s) ', 'turn  \nradius',
              '\xbdturn \n(s)   ']
+      if term:
+         C = [len(s.split('\n')[0])*'-' + '\n' + s for s in C]
    elif gith:
       C = ['eml (t)', 'drift speed ', 'max speed', 'accel', 'fullsp (s)',
          'fullsp (km)', 'turn (°/s)', 'turn radius', '1/2 turn (s)']
