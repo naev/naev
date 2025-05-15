@@ -155,11 +155,15 @@ You see a shady character with clearly bloodshot eyes.]]))
    vn.label("the_choice")
    vn.menu{
       {_([[Cut a deal.]]), "05_deal"},
-      {_([[Stop them from making more drugs.]]), "05_stop"},
+      {_([[Stop them from making more drugs.]]), "05_stop_def"},
       {_([[Shoot them and put a stop to this.]]), "kill"},
    }
 
    vn.label("05_stop")
+   dude(_([["I'm not hurting anyone, soul. I just want to leave in peace, be one among the stars, soul."]]))
+   vn.jump("the_choice")
+
+   vn.label("05_stop_def")
    vn.func( function ()
       result = "destroyed"
    end )
