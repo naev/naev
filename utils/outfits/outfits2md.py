@@ -89,7 +89,7 @@ def main( args, gith = False, color = False, term = False, noext = False,
          termit = Slst([('|',"\N{BOX DRAWINGS LIGHT VERTICAL}")])
          (Sep, SepAlt, Lm, Rm, LM, RM) = map(termit, (Sep, SepAlt, Lm, Rm, LM, RM))
          termit_rule = -termit + [
-            ('\033[34m', ''), ('\033[0m', ''),        # uncolor
+            ('\033[34m', ), ('\033[0m', ),            # uncolor
             ('| -', '|--'), ('- |',  '--|'),
             ('-|-',  "-\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}-" ),
             ('|-',   "\N{BOX DRAWINGS LIGHT DOWN AND RIGHT}-"           ),
@@ -129,7 +129,14 @@ def main( args, gith = False, color = False, term = False, noext = False,
             return LM + s + RM
       return s
 
-   print
+   print()
+   if term:
+      toprule = (length[0]+3)*' ' + mklinalt(True)([mk_pad(i, n) for i, n in enumerate(length[1:])])
+      print((termit_rule + [ ('\033[34m', '\033[30;1m'),
+         ("\N{BOX DRAWINGS LIGHT VERTICAL AND LEFT}","\N{BOX DRAWINGS LIGHT DOWN AND LEFT}"),
+         ("\N{BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL}","\N{BOX DRAWINGS LIGHT DOWN AND HORIZONTAL}")
+      ])(toprule))
+
    for t in head:
       acc = mklin(map(fmt, zip(t, length)))
       if color:
