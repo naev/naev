@@ -3,12 +3,15 @@
  <pos x="6710.934095" y="7981.746765"/>
  <GFX>
   <space>moon-C00.webp</space>
-  <exterior>desertic.webp</exterior>
+  <exterior>uninhabited-rocky-green-04.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>C</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Although there are marks of ships visiting the surface, Unicorn II remains mainly pristine. With an eccentric orbit, the conditions on the planetary surface vary drastically depending on the time in the local cycle. Your ship's scanner can pick up an extensive cave system under the surface.</description>
  </general>
 </spob>
