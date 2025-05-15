@@ -154,7 +154,9 @@ return {
       elseif class == "P" then
          tmergei( lst, { "snow.ogg", "nordic_winter_25_for_25.ogg" } )
       elseif class=="I" or class=="J" or class=="S" or class=="T" or class=="Y" then
-         tmergei( lst, { "methyl_swamp.ogg" } )
+         if not services.inhabited then
+            tmergei( lst, { "methyl_swamp.ogg" } )
+         end
       end
 
       -- Nothing add, so try to add something
