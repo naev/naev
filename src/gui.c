@@ -1532,9 +1532,12 @@ void gui_renderSpob( int ind, RadarShape shape, double w, double h, double res,
 
    if ( spob->marker != NULL )
       shd = spob->marker;
-   else if ( spob_hasService( spob, SPOB_SERVICE_LAND ) )
-      shd = &shaders.spobmarker_earth;
-   else
+   else if ( spob_hasService( spob, SPOB_SERVICE_LAND ) ) {
+      if ( spob_hasService( spob, SPOB_SERVICE_INHABITED ) )
+         shd = &shaders.spobmarker_earth;
+      else
+         shd = &shaders.spobmarker_uninhabited;
+   } else
       shd = &shaders.spobmarker_empty;
 
    glUseProgram( shd->program );

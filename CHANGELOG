@@ -25,6 +25,8 @@
          * Shooting *non-point defense* weapons resets autonav speed up
       * Combat and ambient music tries to play from where it was last stopped when applicable
       * Gave small untargetable time to player when using hypergates and wormholes
+      * Ships that are scanning you use a different colour hilight
+      * Landable but uninhabited space objects use a different icon
    * Content
       * 3 new missions
       * 6 new ship variants
