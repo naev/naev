@@ -3,12 +3,11 @@
  <pos x="3663.680133" y="3548.372981"/>
  <GFX>
   <space>moon-O00.webp</space>
-  <exterior>desertic2.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>O</class>
   <population>0</population>
-  <hide>2.000000</hide>
+  <hide>0.500000</hide>
   <services/>
  </general>
 </spob>

@@ -3,12 +3,15 @@
  <pos x="3497.986866" y="3315.613392"/>
  <GFX>
   <space>moon-G00.webp</space>
-  <exterior>desertic4.webp</exterior>
+  <exterior>uninhabited-rocky-airless-01.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>G</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Symm IIIb is a small moon covered in naturally forming crystalline formations. Although the crystals are pretty to look at, they are mainly formed from Silicon and contain nothing but mere traces of more valuable materials.</description>
  </general>
 </spob>
