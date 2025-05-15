@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tech name="All Outfits">
- <item>Krain Nanotubes Foam Padding</item>
- <item>Fuelshell Plating</item>
  <item>Laser Cannon MK1</item>
  <item>Laser Cannon MK2</item>
  <item>Ripper Cannon</item>
@@ -202,12 +200,14 @@
  <item>Nexus Shadow Weave</item>
  <item>Red Star Small Cargo Hull</item>
  <item>S&amp;K Small Cargo Hull</item>
+ <item>Fuelshell Plating</item>
  <item>Patchwork Medium Plating</item>
  <item>Unicorp D-23 Medium Plating</item>
  <item>S&amp;K Battle Plating</item>
  <item>Nexus Ghost Weave</item>
  <item>Red Star Medium Cargo Hull</item>
  <item>S&amp;K Medium Cargo Hull</item>
+ <item>Krain Nanotubes Foam Padding</item>
  <item>Patchwork Heavy Plating</item>
  <item>Unicorp D-58 Heavy Plating</item>
  <item>Red Star Large Cargo Hull</item>

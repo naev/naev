@@ -14,7 +14,7 @@ class Slst(list):
 
    __add__= lambda *t: Slst(list.__add__(*t))
    def __mul__(self, other):
-      return Slst([(self[i][0], other(self[i][1])) for i in range(len(self))])
+      return Slst([ (t[0], other((t+('',))[1])) + t[2:] for t in self])
    def __neg__(self):
       return Slst([ ((t+('',))[1], t[0]) + t[2:] for t in reversed(self)])
    def __repr__(self):

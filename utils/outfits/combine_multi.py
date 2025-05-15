@@ -2,6 +2,7 @@
 
 from core_outfit import some_outfit
 from copy import deepcopy
+from sys import stderr
 
 
 def mk_combine(args, combine, autostack, good):

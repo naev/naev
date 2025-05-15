@@ -47,7 +47,7 @@ def xmllua2mvx( argin, argout, quiet = False, multicore_only = False ):
    try:
       o = outfit(argin)
       t = o.find('lua_inline')
-      fields, li = parse_lua_multicore(t if t is not None else '')
+      fields, li = parse_lua_multicore(t or '')
    except:
       return None
 

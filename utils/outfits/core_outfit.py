@@ -33,7 +33,7 @@ def core_outfit( nam, try_again = False, quiet = False ):
       return o
 
 def some_outfit( nam, quiet = False ):
-   return _gen_if_needed( nam, force = False, quiet = quiet, multicore_only = True )
+   return _gen_if_needed(nam, force = False, quiet = quiet, multicore_only = True)
 
 def core_write( o, fil ):
    mvx = mvx_nam(fil)
