@@ -43,16 +43,15 @@ def parse_lua_multicore( si ):
    L = [(d['name'], numeval(d['pri']), numeval(d['sec'])) for d in L]
    return L, si[match.span()[1]:]
 
-def xmllua2mvx( argin, argout, quiet = False ):
+def xmllua2mvx( argin, argout, quiet = False, multicore_only = False ):
    try:
       o = outfit(argin)
-      fields, li = parse_lua_multicore(o.find('lua_inline'))
+      t = o.find('lua_inline')
+      fields, li = parse_lua_multicore(t or '')
    except:
       return None
 
-   if not quiet:
-      stderr.write('xmllua2mvx: ' + o.name() + '\n')
-
+   o.is_multi = (fields != [])
    d = {'general': [], 'specific': []}
    for t in fields:
       if t[0] in general:
@@ -75,7 +74,10 @@ def xmllua2mvx( argin, argout, quiet = False ):
             spe.remove(e)
          else:
             e.text = li.strip()
-   o.write(argout)
+   if o.is_multi or not multicore_only:
+      if not quiet:
+         stderr.write('xmllua2mvx: ' + o.name() + '\n')
+      o.write(argout)
    return o
 
 if __name__ == '__main__':
