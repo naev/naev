@@ -16,7 +16,7 @@ return function ( mem )
    end
 
    -- Already finished
-   local mvar = var.peek( misnvar )  or 0
+   local mvar = var.peek( misnvar ) or 0
    if mvar >= 3 then
       return
    end
