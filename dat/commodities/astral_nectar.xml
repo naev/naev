@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Astral Nectar</name>
+ <description>Collected from the rare Astral Orchids, it can fetch a pretty price from gourmets.</description>
+ <gfx_store>seaweed.webp</gfx_store>
+ <price>75000</price>
+ <always_can_sell/>
+ <price_constant/>
+</commodity>

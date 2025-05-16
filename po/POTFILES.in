@@ -27,6 +27,7 @@ dat/asteroids/types/silicate_olivine.xml
 dat/asteroids/types/therite.xml
 dat/asteroids/types/vixilium.xml
 dat/asteroids/types/water_clay.xml
+dat/commodities/astral_nectar.xml
 dat/commodities/clay.xml
 dat/commodities/diamond.xml
 dat/commodities/food.xml
@@ -2940,6 +2941,7 @@ dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
 dat/events/neutral/surano_pirates.lua
 dat/events/neutral/travelling_merchant.lua
+dat/events/neutral/unicorn_ii_astral_orchids.lua
 dat/events/news.lua
 dat/events/news/dvaered.lua
 dat/events/news/empire.lua
