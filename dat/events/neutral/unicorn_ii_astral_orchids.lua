@@ -60,6 +60,8 @@ function create ()
    vn.na(_([[You find the entrance to a cave nearby, and start exploring the subterranean world. Eventually, you find an expansive cavern, and your sensors pick up nearby organic matter. Looking carefully, you find some small plants that seem to be flowering, what are tho odds?]]))
    sai(fmt.f(_([["These seem to be {crop}, a rare species that requires specific conditions to thrive, and do rely on chemosynthesis for survival. They are quite rare and highly sought after by gourmets for their nectar."]]),
       {crop="#b".._("Astral Orchids").."#0"}))
+   sai(_([["However, the planet was deemed to be extinct. It is incredible that you were able to find wild ones growing in such a remote location."]]))
+   vn.na(_([[What do you want to do?]]))
    vn.menu{
       {_([[Harvest the Orchids.]]), "02_harvest"},
       {_([[Let them be.]]), "02_leave"},
