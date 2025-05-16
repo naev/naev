@@ -13,12 +13,10 @@ local tut = require "common.tutorial"
 
 local VARNAME = "unicorn_ii_astral_orchids"
 local REGROW_TIME = time.new( 0, 1200, 0 )
-local HARVEST_AMOUNT = 1
+local HARVEST_AMOUNT = 2
 local CROP = commodity.get("Astral Nectar")
 
 function create ()
-   evt.finish(false) -- Not completed yet
-
    local lastpicked = var.peek( VARNAME )
    local canpick = (not lastpicked) or (lastpicked >= time.get() + REGROW_TIME)
 
@@ -32,7 +30,7 @@ function create ()
       vn.done()
       vn.run()
       return evt.finish()
-   elseif lastpicked==nil then
+   elseif lastpicked~=nil then
       -- Skip intro stuff
       vn.transition()
       vn.na(_([[You land and go check on the Astral Orchids you found last time. It seems like they are ready to harvest again.]]))
@@ -60,7 +58,8 @@ function create ()
    vn.na(fmt.f(_([[You don your atmospheric suit and take a weapon with you as you leave your ship, just in case. You head towards the coordinates provided by {ainame}.]]),
       {ainame=tut.ainame()}))
    vn.na(_([[You find the entrance to a cave nearby, and start exploring the subterranean world. Eventually, you find an expansive cavern, and your sensors pick up nearby organic matter. Looking carefully, you find some small plants that seem to be flowering, what are tho odds?]]))
-   sai(_([[TODO]]))
+   sai(fmt.f(_([["These seem to be {crop}, a rare species that requires specific conditions to thrive, and do rely on chemosynthesis for survival. They are quite rare and highly sought after by gourmets for their nectar."]]),
+      {crop="#b".._("Astral Orchids").."#0"}))
    vn.menu{
       {_([[Harvest the Orchids.]]), "02_harvest"},
       {_([[Let them be.]]), "02_leave"},
@@ -77,17 +76,22 @@ function create ()
          return vn.jump("nofit")
       end
       harvested = player.fleetCargoAdd( CROP, HARVEST_AMOUNT )
-      vn.push( VARNAME, time.get() )
+      var.push( VARNAME, time.get() )
+      time.inc( time.new( 0, 1, 0 ) )
    end )
    vn.na( function ()
-      return fmt.f(_([[You carefully {amount} of {crop} and bring it back to your ship. It seems like it'll likely take a while to grow back.]]),
+      return fmt.f(_([[You carefully collect {amount} of {crop} and bring it back to your ship. It seems like it'll likely take a while to grow back.]]),
          {amount=fmt.tonnes(harvested), crop=CROP})
    end )
    vn.done( tut.shipai.transition )
 
    vn.label("nofit")
    vn.na(_([[You realize you don't have the cargo space to fit what you could collect. It looks like you'll have to come back later.]]))
-   vn.done( tut.shipai.transition )
+   if lastpicked==nil then
+      vn.done()
+   else
+      vn.done( tut.shipai.transition )
+   end
 
    vn.run()
 
