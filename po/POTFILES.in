@@ -3229,6 +3229,7 @@ dat/missions/neutral/new_europe_refugees.lua
 dat/missions/neutral/oldwoman.lua
 dat/missions/neutral/patrol.lua
 dat/missions/neutral/poi.lua
+dat/missions/neutral/poi/astral_orchids.lua
 dat/missions/neutral/poi/caretaker.lua
 dat/missions/neutral/poi/data_intro.lua
 dat/missions/neutral/poi/gate_safety.lua
