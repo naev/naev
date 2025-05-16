@@ -5,7 +5,7 @@ from sys import stderr
 from pathlib import Path
 from outfit import outfit
 
-from xmllua2mvx import xmllua2mvx 
+from xmllua2mvx import xmllua2mvx
 from mvx2xmllua import mvx2xmllua
 
 def mvx_nam(xml):

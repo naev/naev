@@ -365,11 +365,11 @@ void input_setDefault( int wasd )
    input_setKeybind( KST_MENU_INFO, KEYBIND_KEYBOARD, SDLK_i, NMOD_NONE );
    input_setKeybind( KST_CONSOLE, KEYBIND_KEYBOARD, SDLK_F2, NMOD_ANY );
 
-   #if __MACOSX__
+#if __MACOSX__
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_META );
-   #else
+#else
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_CTRL );
-   #endif
+#endif
 }
 
 /**

@@ -171,7 +171,8 @@ static int poL_id( lua_State *L )
  * @brief Gets the properties of the outfit slot.
  *
  *    @luatparam PilotOutfit po Pilot outfit to get the outfit of.
- *    @luareturn {size=string, type=string, property=string, required=boolean, exclusive=boolean, locked=boolean} (string in English)
+ *    @luareturn {size=string, type=string, property=string, required=boolean,
+ * exclusive=boolean, locked=boolean} (string in English)
  * @luafunc slot
  */
 static int poL_slot( lua_State *L )
