@@ -53,9 +53,9 @@ function lib.create()
    local ao = mem._astral_orchids
    local lastpicked = var.peek( varname )
    local canpick = (not lastpicked) or (lastpicked >= time.get() + ao.regrow_time)
-   local didpoi = var.peek( "poi_orchids" ) > 0
+   local didpoi = (var.peek( "poi_orchids" ) or 0) > 0
    local orchids_found = 0
-   for k,v in ipairs(player.evtDoneList) do
+   for k,v in ipairs(player.evtDoneList()) do
       if v.tags.astral_orchids then
          orchids_found = orchids_found + 1
       end
@@ -111,10 +111,10 @@ function lib.create()
       vn.na(_([[You walk around, pushing your way through the vegetation, and eventually your scanner picks up some large metal object. You have to dig through the vegetation and eventually find some sort of ancient rusted hatch.]]))
       vn.menu{
          {_([[Open the hatch.]]), "02_open"},
-         {_([[Leave it be.]]), "02_leave"},
+         {_([[Leave it be.]]), "02b_leave"},
       }
 
-      vn.label("02_leave")
+      vn.label("02b_leave")
       vn.na(_([[You leave the hatch and return to your ship. Maybe some things are left unknown.]]))
       vn.done( tut.shipai.transition )
 
