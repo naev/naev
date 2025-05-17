@@ -4,8 +4,9 @@
  <location>land</location>
  <chance>100</chance>
  <spob>Unicorn II</spob>
- <unique />
+ <tags>
+  <tag>astral_orchids</tag>
+ </tags>
 </event>
 --]]
-local ao = require "common.astral_orchids"
-ao.setup( "unicorn_ii_astral_orchids" )
+require("common.astral_orchids").setup()

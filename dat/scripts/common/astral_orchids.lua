@@ -7,15 +7,20 @@ local lib = {}
 local REGROW_TIME = time.new( 0, 1200, 0 )
 local HARVEST_AMOUNT = 2
 local CROP = commodity.get("Astral Nectar")
+lib.SPOBS = {
+   spob.get("Unicorn II"),
+}
+local VARNAMES = {
+   "astral_orchids_unicorn_ii",
+}
 
 -- Assume it's an event
 -- luacheck: globals evt
 
-function lib.setup( varname, params )
+function lib.setup( params )
    params = params or {}
 
    local ao = {}
-   ao.varname = varname
    ao.regrow_time = params.regrow_time or REGROW_TIME
    ao.harvest_amount = params.harvest_amount or HARVEST_AMOUNT
 
@@ -25,9 +30,30 @@ function lib.setup( varname, params )
 end
 
 function lib.create()
+   -- Get the ID of the spob
+   local id = 0
+   for k,v in ipairs(lib.SPOBS) do
+      if v==spob.cur() then
+         id = k
+         break
+      end
+   end
+   if spob==0 then
+      error(fmt.f("Astral Orchid event occurring on unknown spob '{spb}'!",
+         {spb=spob.cur()}))
+   end
+   local varname = VARNAMES[id]
+
    local ao = mem._astral_orchids
-   local lastpicked = var.peek( ao.varname )
+   local lastpicked = var.peek( varname )
    local canpick = (not lastpicked) or (lastpicked >= time.get() + ao.regrow_time)
+   local didpoi = var.peek( "poi_orchids" ) > 0
+   local orchids_found = 0
+   for k,v in ipairs(player.evtDoneList) do
+      if v.tags.astral_orchids then
+         orchids_found = orchids_found + 1
+      end
+   end
 
    vn.clear()
    vn.scene()
@@ -64,12 +90,50 @@ function lib.create()
    vn.done()
 
    vn.label("01_explore")
-   vn.na(fmt.f(_([[You don your atmospheric suit and take a weapon with you as you leave your ship, just in case. You head towards the coordinates provided by {ainame}.]]),
-      {ainame=tut.ainame()}))
-   vn.na(_([[You find the entrance to a cave nearby, and start exploring the subterranean world. Eventually, you find an expansive cavern, and your sensors pick up nearby organic matter. Looking carefully, you find some small plants that seem to be flowering, what are tho odds?]]))
-   sai(fmt.f(_([["These seem to be {crop}, a rare species that requires specific conditions to thrive, and do rely on chemosynthesis for survival. They are quite rare and highly sought after by gourmets for their nectar."]]),
-      {crop="#b".._("Astral Orchids").."#0"}))
-   sai(_([["However, the planet was deemed to be extinct. It is incredible that you were able to find wild ones growing in such a remote location."]]))
+
+   local DONMSG = {
+      fmt.f(_([[You don your atmospheric suit and take a weapon with you as you leave your ship, just in case. You head towards the coordinates provided by {ainame}.]]),
+         {ainame=tut.ainame()}),
+   }
+   vn.na( DONMSG[id] )
+   local FINDMSG = {
+      _([[You find the entrance to a cave nearby, and start exploring the subterranean world. Eventually, you find an expansive cavern, and your sensors pick up nearby organic matter. Looking carefully, you find some small plants that seem to be flowering, what are tho odds?]]),
+   }
+   vn.na( FINDMSG[id] )
+
+   local cropname = "#b".._("Astral Orchids").."#0"
+   local cropmsg = fmt.f(_([["These seem to be {crop}, a rare species that requires specific conditions to thrive, and do rely on chemosynthesis for survival. They are quite rare and highly sought after by gourmets for their nectar."]]),
+         {crop=cropname})
+   if didpoi then
+      if orchids_found > 0 then
+         local left = #lib.SPOBS-(orchids_found+1)
+         if left <= 0 then
+            sai(fmt.f(_([["It looks like you found another cluster of {crop}. This should be the last of the locations that were planted according to the derelict we found."]]),
+               {crop=cropname}))
+         else
+            local spobs_left = {}
+            for k,v in ipairs( lib.SPOBS ) do
+               if v~=spob.cur() and (not var.peek( VARNAMES[k] )) then
+                  table.insert( spobs_left, v )
+               end
+            end
+            sai(fmt.f(_([["It looks like you found another cluster of {crop}. Including this, you have found {num} planted areas. There should be {left} locations left, in particular, {left}."]]),
+               {crop=cropname, num=orchids_found+1, left="#b"..fmt.list(spobs_left).."#0"}))
+         end
+      else
+         sai(cropmsg)
+         sai(fmt.f(_([["However, the plant was deemed to be extinct. This may be related to the derelict we found that mentioned planting Astral Orchids at {locations} systems."]]),
+            {locations=fmt.list(lib.SPOBS)}))
+      end
+   else
+      if orchids_found > 0 then
+         sai(fmt.f(_([["It seems like you found yet another cluster of {crop}, making it a total of {num}. This seems statistically unlikely for a plant deemed extinct. Maybe the different locations are related with a similar underlying cause? I shall revise my databases for additional information."]]),
+            {crop=cropname, num=orchids_found+1}))
+      else
+         sai(cropmsg)
+         sai(_([["However, the plant was deemed to be extinct. It is incredible that you were able to find wild ones growing in such a remote location."]]))
+      end
+   end
    vn.na(_([[What do you want to do?]]))
    vn.menu{
       {_([[Harvest the Orchids.]]), "02_harvest"},
@@ -87,8 +151,8 @@ function lib.create()
          return vn.jump("nofit")
       end
       harvested = player.fleetCargoAdd( CROP, ao.harvest_amount )
-      var.push( ao.varname, time.get() )
-      time.inc( time.new( 0, 1, 0 ) )
+      var.push( varname, time.get() )
+      time.inc( time.new( 0, 1, 0 ) ) -- Small time delay, TODO make visible to the player?
    end )
    vn.na( function ()
       return fmt.f(_([[You carefully collect {amount} of {crop} and bring it back to your ship. It seems like it'll likely take a while to grow back.]]),
@@ -106,7 +170,7 @@ function lib.create()
 
    vn.run()
 
-   evt.finish()
+   evt.finish( harvested > 0 )
 end
 
 return lib

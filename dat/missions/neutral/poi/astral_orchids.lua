@@ -3,6 +3,7 @@ local vn = require "vn"
 local vne = require "vnextras"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
+local ao = require "common.astral_orchids"
 
 local misnvar = "poi_orchids"
 
@@ -23,9 +24,7 @@ return function ( mem )
       type = "function",
       ship = "Llama Voyager",
       func = function ()
-         local SPOBS = rnd.permutation{
-            spob.get("Unicorn II"),
-         }
+         local SPOBS = rnd.permutation( ao.SPOBS )
          local SYSTEMS = {}
          for k,s in ipairs(SPOBS) do
             table.insert( SYSTEMS, s:system() )
