@@ -9,9 +9,11 @@ local HARVEST_AMOUNT = 2
 local CROP = commodity.get("Astral Nectar")
 lib.SPOBS = {
    spob.get("Unicorn II"),
+   spob.get("Chloe I"),
 }
 local VARNAMES = {
    "astral_orchids_unicorn_ii",
+   "astral_orchids_chloe_i",
 }
 
 -- Assume it's an event
@@ -39,7 +41,7 @@ function lib.create()
       end
    end
    if spob==0 then
-      error(fmt.f("Astral Orchid event occurring on unknown spob '{spb}'!",
+      return error(fmt.f("Astral Orchid event occurring on unknown spob '{spb}'!",
          {spb=spob.cur()}))
    end
    local varname = VARNAMES[id]
@@ -79,28 +81,51 @@ function lib.create()
    vn.transition( tut.shipai.transition )
    vn.na(fmt.f(_([[Your ship lands, and you run a preliminary scan, when {ainame} pops up.]]),
       {ainame=tut.ainame()}))
-   sai(_([["I have detected some organic material in a nearby cave which may be of interest. Or not. I lack the statistical priors to estimate your response to such data."]]))
 
-   vn.menu{
-      {_([[Explore the caves.]]), "01_explore"},
-      {_([[Maybe next time.]]), "01_maybenext"},
-   }
+   if id==1 then -- Unicorn II
+      sai(_([["I have detected some organic material in a nearby cave which may be of interest. Or not. I lack the statistical priors to estimate your response to such data."]]))
+
+      vn.menu{
+         {_([[Explore the caves.]]), "01_explore"},
+         {_([[Maybe next time.]]), "01_maybenext"},
+      }
+
+      vn.label("01_explore")
+      vn.na(fmt.f(_([[You don your atmospheric suit and take a weapon with you as you leave your ship, just in case. You head towards the coordinates provided by {ainame}.]]),
+            {ainame=tut.ainame()}))
+      vn.na(_([[You find the entrance to a cave nearby, and start exploring the subterranean world. Eventually, you find an expansive cavern, and your sensors pick up nearby organic matter. Looking carefully, you find some small plants that seem to be flowering, what are tho odds?]]))
+   elseif id==2 then -- Chloe I
+      sai(_([["I have detected an unusual structure nearby that may be of interest."]]))
+      vn.menu{
+         {_([[Explore the structure.]]), "01_explore"},
+         {_([[Maybe next time.]]), "01_maybenext"},
+      }
+
+      vn.label("01_explore")
+      vn.na(fmt.f(_([[You put on an atmosphere suit, pick up a weapon, and head out towards the coordinates provided by {ainame}.]]),
+            {ainame=tut.ainame()}))
+      vn.na(_([[You walk around, pushing your way through the vegetation, and eventually your scanner picks up some large metal object. You have to dig through the vegetation and eventually find some sort of ancient rusted hatch.]]))
+      vn.menu{
+         {_([[Open the hatch.]]), "02_open"},
+         {_([[Leave it be.]]), "02_leave"},
+      }
+
+      vn.label("02_leave")
+      vn.na(_([[You leave the hatch and return to your ship. Maybe some things are left unknown.]]))
+      vn.done( tut.shipai.transition )
+
+      vn.label("02_open")
+      vn.na(_([[It takes quite a bit of effort, but you are eventually able to pry the hatch open. It seems to lead down into a man-made cave.]]))
+      vn.na(_([[You make your way into it, happy to be unobstructed by denser vegetation, and find yourself surrounded by small flowering plants.]]))
+   else
+      return error(fmt.f("No vn text for Astral Orchids event on spob '{spb}'!", {spb=spob.cur()}))
+   end
+   vn.jump("01_cont")
 
    vn.label("01_maybenext")
    vn.done()
 
-   vn.label("01_explore")
-
-   local DONMSG = {
-      fmt.f(_([[You don your atmospheric suit and take a weapon with you as you leave your ship, just in case. You head towards the coordinates provided by {ainame}.]]),
-         {ainame=tut.ainame()}),
-   }
-   vn.na( DONMSG[id] )
-   local FINDMSG = {
-      _([[You find the entrance to a cave nearby, and start exploring the subterranean world. Eventually, you find an expansive cavern, and your sensors pick up nearby organic matter. Looking carefully, you find some small plants that seem to be flowering, what are tho odds?]]),
-   }
-   vn.na( FINDMSG[id] )
-
+   vn.label("01_cont")
    local cropname = "#b".._("Astral Orchids").."#0"
    local cropmsg = fmt.f(_([["These seem to be {crop}, a rare species that requires specific conditions to thrive, and do rely on chemosynthesis for survival. They are quite rare and highly sought after by gourmets for their nectar."]]),
          {crop=cropname})

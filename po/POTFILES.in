@@ -852,6 +852,7 @@ dat/spob/cerberus_outpost.xml
 dat/spob/cetrat.xml
 dat/spob/charcoal.xml
 dat/spob/charred.xml
+dat/spob/chloe_i.xml
 dat/spob/churchill_i.xml
 dat/spob/churchill_ii.xml
 dat/spob/churchill_iia.xml
@@ -2929,6 +2930,7 @@ dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
 dat/events/neutral/capricorn_pirates.lua
 dat/events/neutral/capricorn_pirates_epilogue.lua
+dat/events/neutral/chloe_i_astral_orchids.lua
 dat/events/neutral/dendria_pirates.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
