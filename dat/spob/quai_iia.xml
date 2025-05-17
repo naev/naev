@@ -6,9 +6,12 @@
   <exterior>station00.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>TODO</description>
  </general>
 </spob>
