@@ -2936,6 +2936,7 @@ dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
 dat/events/neutral/majesteka_stowaways.lua
+dat/events/neutral/nougat_ii_astral_orchids.lua
 dat/events/neutral/quai_pirates.lua
 dat/events/neutral/refuel.lua
 dat/events/neutral/shadow_comm.lua

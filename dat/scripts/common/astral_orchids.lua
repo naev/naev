@@ -10,10 +10,12 @@ local CROP = commodity.get("Astral Nectar")
 lib.SPOBS = {
    spob.get("Unicorn II"),
    spob.get("Chloe I"),
+   spob.get("Nougat II"),
 }
 local VARNAMES = {
    "astral_orchids_unicorn_ii",
    "astral_orchids_chloe_i",
+   "astral_orchids_nougat_ii",
 }
 
 -- Assume it's an event
@@ -117,6 +119,18 @@ function lib.create()
       vn.label("02_open")
       vn.na(_([[It takes quite a bit of effort, but you are eventually able to pry the hatch open. It seems to lead down into a man-made cave.]]))
       vn.na(_([[You make your way into it, happy to be unobstructed by denser vegetation, and find yourself surrounded by small flowering plants.]]))
+   elseif id==3 then -- Nougat II
+      sai(_([["There seems to be an anomaly in the planetary surface nearby. You might wish to investigate."]]))
+      vn.menu{
+         {_([[Explore the surface anomaly.]]), "01_explore"},
+         {_([[Maybe next time.]]), "01_maybenext"},
+      }
+
+      vn.label("01_explore")
+      vn.na(fmt.f(_([[You stretch a bit, don your gear, and get ready to head out into the eternal snowstorm that is Nougat II towards the coordinates provided by {ainame}.]]),
+            {ainame=tut.ainame()}))
+      vn.na(_([[You trudge along and eventually find a mount of ice and snow that seems to be mainly hollow. You set your weapon to cook and melt a passage that seems to lead to an interior cavern.]]))
+      vn.na(_([[As you make your way, you notice that the temperature goes up nearly a hundred degrees to something somewhat acceptable. You also notice that there seems to be many small flowering plants nearby.]]))
    else
       return error(fmt.f("No vn text for Astral Orchids event on spob '{spb}'!", {spb=spob.cur()}))
    end
