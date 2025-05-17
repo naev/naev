@@ -11,11 +11,13 @@ lib.SPOBS = {
    spob.get("Unicorn II"),
    spob.get("Chloe I"),
    spob.get("Nougat II"),
+   spob.get("Quai IIb"),
 }
 local VARNAMES = {
    "astral_orchids_unicorn_ii",
    "astral_orchids_chloe_i",
    "astral_orchids_nougat_ii",
+   "astral_orchids_quai_iib",
 }
 
 -- Assume it's an event
@@ -131,6 +133,19 @@ function lib.create()
             {ainame=tut.ainame()}))
       vn.na(_([[You trudge along and eventually find a mount of ice and snow that seems to be mainly hollow. You set your weapon to cook and melt a passage that seems to lead to an interior cavern.]]))
       vn.na(_([[As you make your way, you notice that the temperature goes up nearly a hundred degrees to something somewhat acceptable. You also notice that there seems to be many small flowering plants nearby.]]))
+   elseif id==4 then -- Quai IIb
+      sai(_([["While I admire your faith in this spaceship to land on such a toxic environment, I would like to point out that there seems to be something strange picked up on the sensor nearby. You may be interested in further enjoying the toxic sludge with a stroll to check it out."]]))
+      vn.menu{
+         {_([[Explore the strange area and enjoy a stroll in the toxic sludge.]]), "01_explore"},
+         {_([[Maybe next time.]]), "01_maybenext"},
+      }
+
+      vn.label("01_explore")
+      vn.na(fmt.f(_([[You don your extra-protective atmospheric suit, hope that it survives the local environment, and head off to the coordinates provided by {ainame}.]]),
+            {ainame=tut.ainame()}))
+      vn.na(fmt.f(_([[Eventually you find what seems to be a cave blocked by a large boulder, potentially a few hundred kilograms. Making full use of the low gravity on {spb}, you roll it a bit out of the way and enter the cave, which seems to have been shielded from the toxic sludge.]]),
+         {spb=spob.cur()}))
+      vn.na(_([[You explore around and find that it seems to be covered in lots of cute small flowering plants.]]))
    else
       return error(fmt.f("No vn text for Astral Orchids event on spob '{spb}'!", {spb=spob.cur()}))
    end
