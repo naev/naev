@@ -164,7 +164,7 @@ if __name__ == '__main__':
    parser.add_argument('-c', '--color', action = 'store_true', help = 'colored terminal output. You can pipe to "less -RS" if it is too wide.')
    parser.add_argument('-t', '--term', action = 'store_true', help = 'colored terminal output (TODO: with extended table characters).')
    parser.add_argument('-n', '--nomax', action = 'store_true', help = 'Do not emphasize min/max values.' )
-   parser.add_argument('-s', '--sort', action = 'store_true', help = 'inputs are sorted by their SORT key.')
+   parser.add_argument('-s', '--sort', help = 'inputs are sorted by their SORT key.')
    parser.add_argument('-S', '--sortbymass', action = 'store_true', help = 'Like -s mass.' )
    parser.add_argument('-A', '--autostack', action = 'store_true', help = 'Outfits are presented both alone and auto-stacked.')
    parser.add_argument('-C', '--combinations', action = 'store_true', help = 'Does all the combinations.' )
