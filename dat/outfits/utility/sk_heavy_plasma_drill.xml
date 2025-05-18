@@ -13,7 +13,5 @@
  </general>
  <specific type="modification">
   <lua>outfits/utility/sk_heavy_plasma_drill.lua</lua>
-  <asteroid_scan>350</asteroid_scan>
-  <mining_bonus>80</mining_bonus>
  </specific>
 </outfit>
