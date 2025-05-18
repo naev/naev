@@ -8,7 +8,7 @@
    local f = spob.cur():faction()
    if f then
       local ft = f:tags()
-      if ft.generic or ft.misn_cargo then
+      if ft.generic then
          return require("misn_test").reweight_active()
       end
    end
