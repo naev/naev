@@ -8,7 +8,7 @@ title: History Overview
 <% if faction.get("Proteron"):known() then %>
 1. **Project Proteron** (UST 13:4355)
 <% end %>
-1. **Project Za'lek** (UST 42:6284)
+1. **Project Za'lek** (UST 43:1284)
 <% if faction.get("Proteron"):known() then %>
 1. **Creation of [House Proteron](lore/factions/proteron)** (UST 47)
 <% end %>
@@ -18,7 +18,7 @@ title: History Overview
 <% end %>
 1. **Creation of [House Sirius](lore/factions/sirius)** (UST 97)
 <% if faction.get("Collective"):known() then %>
-1. **Project Collective** (UST 266:7626)
+1. **Project Collective** (UST 267:2626)
 <% end %>
 1. **Dvaered Revolts** (UST 307)
 1. **Sorom Plague** (UST 328)

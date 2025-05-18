@@ -2961,7 +2961,7 @@ msgid "1. **Project Proteron** (UST 13:4355)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:11
-msgid "1. **Project Za'lek** (UST 42:6284)"
+msgid "1. **Project Za'lek** (UST 43:1284)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:13
@@ -2981,7 +2981,7 @@ msgid "1. **Creation of [House Sirius](lore/factions/sirius)** (UST 97)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:21
-msgid "1. **Project Collective** (UST 266:7626)"
+msgid "1. **Project Collective** (UST 267:2626)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:23
@@ -8913,7 +8913,7 @@ msgid "1. **Project Proteron** (UST 13:4355)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:11
-msgid "1. **Project Za'lek** (UST 42:6284)"
+msgid "1. **Project Za'lek** (UST 43:1284)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:13
@@ -8933,7 +8933,7 @@ msgid "1. **Creation of [House Sirius](lore/factions/sirius)** (UST 97)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:21
-msgid "1. **Project Collective** (UST 266:7626)"
+msgid "1. **Project Collective** (UST 267:2626)"
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:23
