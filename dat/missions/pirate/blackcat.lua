@@ -24,6 +24,7 @@ local der = require 'common.derelict'
 local audio = require 'love.audio'
 local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
+local lmisn = require "lmisn"
 
 local cat_image = "blackcat.webp"
 local cat_colour = nil
@@ -108,25 +109,12 @@ It seems like it wants to come back with you. What do you do?]]))
    hook.jumpin("jumpin")
 end
 
-local function islucky ()
-   local pp = player.pilot()
-   if pp:ship():tags().lucky then
-      return true
-   end
-   for k,o in ipairs(pp:outfitsList("all")) do
-      if o:tags().lucky then
-         return true
-      end
-   end
-   return false
-end
-
 local event_list = {
    --[[
    function () -- Overheat
       local pp = player.pilot()
       luaspfx.sfx( false, nil, meow )
-      if islucky() then
+      if lmisn.islucky() then
          player.msg(_("Black cat hair has clogged the radiators but burns up before overheating the ship."), true)
          return
       end
@@ -141,7 +129,7 @@ local event_list = {
       local dis = pp:disabled()
       if dis then return end -- Already disabled
       luaspfx.sfx( false, nil, meow )
-      if islucky() then
+      if lmisn.islucky() then
          player.msg(_("The black cat accidentally hit the ship restart button, but nothing happens."), true)
          return
       end
@@ -153,7 +141,7 @@ local event_list = {
    function () -- Energy discharge
       local pp = player.pilot()
       luaspfx.sfx( false, nil, meow )
-      if islucky() then
+      if lmisn.islucky() then
          player.msg(_("The black cat managed to accidentally disconnect the energy capacitors, but the back up system takes over while you fix it."), true)
          return
       end
