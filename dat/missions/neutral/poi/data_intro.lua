@@ -51,6 +51,15 @@ It sounds like the atmosphere is being vented. You hear some struggling before t
 {reward}]]),
                {reward=fmt.reward(reward)}))
          vn.na(_([[You search the rest of the ship, but there is nothing of interest other than the mummified remains of the pilot. You leave the ship behind.]]))
+         local unknown = poi.data_get_unknown()
+         if unknown > 0 then
+            vn.func( function ()
+               poi.data_take_unknown( unknown )
+               poi.data_add( unknown )
+            end )
+            vn.na(fmt.f(_([[When you get back to your ship, you notice your {cubes} were actually Encrypted Data Matrices! Looks like you had more than you thought.]]),
+               {cubes=poi.data_str_unknown(unknown)}))
+         end
          vn.disappear( sai, tut.shipai.transition )
 
          vn.func( function ()

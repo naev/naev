@@ -11,6 +11,7 @@ local neu = require "common.neutral"
 local vn = require "vn"
 local vnimage = require "vnimage"
 local fmt = require "format"
+local poi = require "common.poi"
 
 local VAR = "alsafi_ii_druglab"
 local KILL_MONEY = 283782
@@ -168,7 +169,27 @@ You see a shady character with clearly bloodshot eyes.]]))
       result = "destroyed"
    end )
    vn.na(_([[You tell them they have to voluntarily stop making drugs, or you'll make sure they won't be able to.]]))
-   vn.na(_([[You watch and make sure they leave with their meagre belongings. Afterwards, you torch the lab to make sure no new drugs can be made on Alsafi II, however, you have the sinking feeling they'll just do it somewhere else, but that's not your problem any more.]]))
+   local got_data = (poi.data_get_gained() > 0)
+   if got_data then
+      vn.na(_([[You watch and make sure they leave with their meagre belongings. As you do a last pass of the lab before getting rid of it, you notice some encrypted data matrices, likely something they didn't need, you take them with you.]]))
+   else
+      vn.na(_([[You watch and make sure they leave with their meagre belongings. As you do a last pass of the lab before getting rid of it, you notice some unknown data cubes, likely something they didn't need, you take them with you.]]))
+   end
+   vn.na(_([[Finally, you torch the lab to make sure no new drugs can be made on Alsafi II, however, you have the sinking feeling they'll just do it somewhere else, but that's not your problem any more.]]))
+   local poi_reward
+   if got_data then
+      poi_reward = poi.data_str(2)
+      vn.na(fmt.reward(poi_reward))
+      vn.func( function ()
+         poi.data_give(2)
+      end )
+   else
+      poi_reward = poi.data_str_unknown(2)
+      vn.na(fmt.reward(poi_reward))
+      vn.func( function ()
+         poi.data_give_unknown(2)
+      end )
+   end
    vn.done()
 
    vn.label("05_deal")
@@ -202,8 +223,8 @@ You see a shady character with clearly bloodshot eyes.]]))
    -- Handle cases
    var.push( VAR, result )
    if result == "destroyed" then
-      neu.addMiscLog(fmt.f(_([[You found an illegal drug lab on {spob}, which you shut down without bloodshed, preventing illegal drugs from flowing out.]]),
-         {spob=spob.cur()}))
+      neu.addMiscLog(fmt.f(_([[You found an illegal drug lab on {spob}, which you shut down without bloodshed, preventing illegal drugs from flowing out. Out of the ordeal, you were able to get {reward}.]]),
+         {spob=spob.cur(), reward=poi_reward}))
    elseif result == "killed" then
       neu.addMiscLog(fmt.f(_([[You found an illegal drug lab on {spob}. You killed the criminal, putting an end to illegal drugs flowing into civilized space.]]),
          {spob=spob.cur()}))
