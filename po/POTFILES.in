@@ -2888,6 +2888,7 @@ dat/events/cache.lua
 dat/events/capture.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/data_matrices.lua
 dat/events/derelict.lua
 dat/events/derelict/blackcat.lua
 dat/events/derelict/poi.lua
