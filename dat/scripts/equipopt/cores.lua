@@ -396,6 +396,11 @@ function cores.get( p, params )
          c["engines_secondary"] = c["engines"]
       end
    end
+   --acc = tostring(s) .. ': {'
+   --for k,v in pairs(c) do
+   --   acc = acc .. ' ' .. tostring(k) .. ':' .. tostring(v)
+   --end
+   --print(acc .. '}')
 
    return c
 end
