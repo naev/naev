@@ -169,27 +169,13 @@ You see a shady character with clearly bloodshot eyes.]]))
       result = "destroyed"
    end )
    vn.na(_([[You tell them they have to voluntarily stop making drugs, or you'll make sure they won't be able to.]]))
-   local got_data = (poi.data_get_gained() > 0)
-   if got_data then
-      vn.na(_([[You watch and make sure they leave with their meagre belongings. As you do a last pass of the lab before getting rid of it, you notice some encrypted data matrices, likely something they didn't need, you take them with you.]]))
-   else
-      vn.na(_([[You watch and make sure they leave with their meagre belongings. As you do a last pass of the lab before getting rid of it, you notice some unknown data cubes, likely something they didn't need, you take them with you.]]))
-   end
+   vn.na(_([[You watch and make sure they leave with their meagre belongings. As you do a last pass of the lab before getting rid of it, you notice some encrypted data matrices, likely something they didn't need, you take them with you.]]))
    vn.na(_([[Finally, you torch the lab to make sure no new drugs can be made on Alsafi II, however, you have the sinking feeling they'll just do it somewhere else, but that's not your problem any more.]]))
-   local poi_reward
-   if got_data then
-      poi_reward = poi.data_str(2)
-      vn.na(fmt.reward(poi_reward))
-      vn.func( function ()
-         poi.data_give(2)
-      end )
-   else
-      poi_reward = poi.data_str_unknown(2)
-      vn.na(fmt.reward(poi_reward))
-      vn.func( function ()
-         poi.data_give_unknown(2)
-      end )
-   end
+   local poi_reward = poi.data_str(2)
+   vn.na(fmt.reward(poi_reward))
+   vn.func( function ()
+      poi.data_give(2)
+   end )
    vn.done()
 
    vn.label("05_deal")

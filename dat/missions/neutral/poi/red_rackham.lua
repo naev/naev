@@ -11,14 +11,10 @@ local reward2 = outfit.get("Rackham's Razor")
 
 return function(mem)
    -- Must be locked
-   if not mem.locked then
-      return
-   end
+   if not mem.locked then return end
 
-   -- Need to have started the poi data stuff
-   if poi.data_get_gained() <= 0 then
-      return
-   end
+   -- Must know data matrices
+   if not poi.data_known() then return end
 
    -- Already finished
    local mvar = var.peek(misnvar) or 0

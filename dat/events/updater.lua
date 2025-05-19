@@ -14,6 +14,7 @@ local vn  = require 'vn'
 local fmt = require 'format'
 local luatk = require "luatk"
 local gauntlet = require 'common.gauntlet'
+local poi = require "common.poi"
 
 -- Applies a function to all ships
 local function apply_all_ships( func )
@@ -41,6 +42,11 @@ local function updater0130( _did0120, _did0110, _did0100, _did090 )
    -- Newly added diff
    if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
+   end
+
+   -- Mark data matrices known if the player has any
+   if poi.data_get_gained() > 0 then
+      poi.data_set_known()
    end
 
    -- Updates if ships have multiple gauntlet intrinsics set
@@ -400,7 +406,7 @@ function create ()
       did0120 = true
    end
    -- Run on saves older than 0.13.0
-   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.6") < 0) then
+   if not save_version or (naev.versionTest( save_version, "0.13.0-alpha.7") < 0) then
       updater0130( did0120, did0110, did0100, did090 )
       --didupdate = true
    end

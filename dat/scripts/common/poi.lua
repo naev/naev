@@ -357,31 +357,19 @@ function poi.data_str( amount )
    return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices",amount),{amount=amount})
 end
 
-local unknown = N_("Unknown Data Cube")
 --[[
-Same as poi.data_str, but for the unknown version.
+Returns true if matrices are known.
+   @treturn boolean Whether or not matrices are known.
 --]]
-function poi.data_str_unknown( amount )
-   return fmt.f(n_("{amount} Unknown Data Cube","{amount} Unknown Data Cubes",amount),{amount=amount})
+function poi.data_known()
+   return var.peek("poi_data_known")~=nil
 end
 
 --[[
-Same as poi.data_give, but for the unknown version.
+Sets matrices as known.
 --]]
-function poi.data_give_unknown( amount )
-   if poi.data_get_gained() > 0 then
-      warn(fmt.f("Giving the player '{cubes}' when they already know about '{matrices}'!",
-         {cubes=unknown, matrices=conduit}))
-   end
-   return player.inventoryAdd( unknown, amount )
-end
-
-function poi.data_get_unknown()
-   return player.inventoryOwned( unknown )
-end
-
-function poi.data_take_unknown( amount )
-   return player.inventoryRm( unknown, amount )
+function poi.data_set_known()
+   var.push("poi_data_known", true)
 end
 
 function poi.board( _p )

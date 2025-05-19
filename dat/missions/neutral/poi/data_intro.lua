@@ -8,11 +8,6 @@ return function ( mem )
    -- Must be locked
    if not mem.locked then return end
 
-   -- Already done
-   if poi.data_get_gained() > 0 then
-      return
-   end
-
    return {
       type = "function",
       ship = "Gawain",
@@ -38,29 +33,28 @@ It sounds like the atmosphere is being vented. You hear some struggling before t
 
          vn.disappear( v01 )
 
-         vn.appear( sai, tut.shipai.transition )
-         sai(_([["That was… interesting. Looking over the systems I've found something. My memory files indicate that it is a Data Matrix. It has some sort of archaic lock I am unable to decrypt. For some reason, I quite well remember them being useful, however, it seems that my files on them have been somewhat damaged… This is fairly odd."]]))
-         vn.menu{
-            {_("Take the Data Matrix."), "cont01"},
-            {_("…"), "cont01"},
-         }
-         vn.label("cont01")
          local reward = poi.data_str(1)
-         sai(fmt.f(_([["It does not seem dangerous, so let us take it with us."
+         if not poi.data_known() then
+            vn.appear( sai, tut.shipai.transition )
+            sai(_([["That was… interesting. Looking over the systems I've found something. My memory files indicate that it is a Data Matrix. It has some sort of archaic lock I am unable to decrypt. For some reason, I quite well remember them being useful, however, it seems that my files on them have been somewhat damaged… This is fairly odd."]]))
+            vn.menu{
+               {_("Take the Data Matrix."), "cont01"},
+               {_("…"), "cont01"},
+            }
+            vn.label("cont01")
+            sai(fmt.f(_([["It does not seem dangerous, so let us take it with us."
 
 {reward}]]),
-               {reward=fmt.reward(reward)}))
-         vn.na(_([[You search the rest of the ship, but there is nothing of interest other than the mummified remains of the pilot. You leave the ship behind.]]))
-         local unknown = poi.data_get_unknown()
-         if unknown > 0 then
+                  {reward=fmt.reward(reward)}))
+            vn.disappear( sai, tut.shipai.transition )
             vn.func( function ()
-               poi.data_take_unknown( unknown )
-               poi.data_add( unknown )
+               poi.data_set_known()
             end )
-            vn.na(fmt.f(_([[When you get back to your ship, you notice your {cubes} were actually Encrypted Data Matrices! Looks like you had more than you thought.]]),
-               {cubes=poi.data_str_unknown(unknown)}))
+            vn.na(_([[You search the rest of the ship, but there is nothing of interest other than the mummified remains of the pilot. You leave the ship behind.]]))
+         else
+            vn.na(fmt.f(_([[You search the rest of the ship, finding {reward} and the mummified remains of the pilot. With nothing left to do, you leave the ship behind.]]),
+               {reward=reward}))
          end
-         vn.disappear( sai, tut.shipai.transition )
 
          vn.func( function ()
             poi.data_give(1)

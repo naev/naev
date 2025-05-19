@@ -10,6 +10,9 @@ return function ( mem )
    -- Must be locked
    if not mem.locked then return end
 
+   -- Must know data matrices
+   if not poi.data_known() then return end
+
    -- Already done
    if var.peek( misnvar ) then
       return
