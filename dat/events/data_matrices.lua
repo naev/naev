@@ -30,7 +30,11 @@ function check_matrices ()
       return
    end
 
-   hook.timer( "delay", rnd.rnd(3,6) )
+   if player.isLanded() then
+      delay()
+   else
+      hook.timer( "delay", rnd.rnd(3,6) )
+   end
 end
 
 function delay ()
