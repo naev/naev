@@ -27,6 +27,7 @@
 local poi = require "common.poi"
 local lf = require "love.filesystem"
 local fmt = require "format"
+local lmisn = require "lmisn"
 
 function create ()
    mem.sys, mem.risk, mem.reward = poi.start()
@@ -64,7 +65,7 @@ function create ()
          {
             type = "credits",
             value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
-            weight = 0.5, -- less likely
+            weight = (lmisn.islucky() and 0.05) or 0.5, -- less likely
          },
       }
       if poi.data_get_gained() > 0 then
