@@ -4,7 +4,7 @@
 #pragma once
 
 #include "nlua.h"
-#include "physics.h"
+#include "vec2.h"
 
 #define VECTOR_METATABLE "vec2" /**< Vector metatable identifier. */
 
