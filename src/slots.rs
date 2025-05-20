@@ -212,7 +212,6 @@ pub extern "C" fn sp_locked(sp: c_int) -> c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn sp_tags(sp: c_int) -> *mut *const c_char {
     match get_c(sp) {
-        // TODO implement
         Some(prop) => prop.ctags.as_ptr(),
         None => std::ptr::null_mut(),
     }

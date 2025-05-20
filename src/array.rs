@@ -46,7 +46,7 @@ impl<T: Clone> Drop for Array<T> {
 pub struct ArrayCString {
     #[allow(dead_code)]
     data: Vec<CString>, // just here to store memory for the C strings
-    arr: Array<*const c_char>,
+    arr: Option<Array<*const c_char>>,
 }
 impl ArrayCString {
     pub fn new(vec: &[String]) -> Result<Self> {
@@ -56,10 +56,16 @@ impl ArrayCString {
             .collect();
         let ptrdata: Vec<*const c_char> = data.iter().map(|s| s.as_ptr()).collect();
         let arr = Array::new(&ptrdata)?;
-        Ok(ArrayCString { data, arr })
+        Ok(ArrayCString {
+            data,
+            arr: Some(arr),
+        })
     }
     pub fn as_ptr(&self) -> *mut *const c_char {
-        self.arr.as_ptr() as *mut *const c_char
+        match &self.arr {
+            Some(arr) => arr.as_ptr() as *mut *const c_char,
+            None => std::ptr::null_mut(),
+        }
     }
 }
 impl std::fmt::Debug for ArrayCString {
