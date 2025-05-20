@@ -6,6 +6,7 @@ mem.aggressive = true
 mem.ad = nil -- Has to be set for them to spam
 mem.adspamdelayalpha = 45
 mem.adspamdelaybeta = 90
+mem.pers = true -- Mark as pers
 
 function create ()
    create_pre()
