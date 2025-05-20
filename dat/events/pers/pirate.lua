@@ -14,7 +14,7 @@ return function ()
    local enemies = 0
    for k,v in pairs(scur:presences()) do
       local f = faction.get(k)
-      if not f.tags().civilian and fpir:areEnemies( f ) then
+      if not f:tags().civilian and fpir:areEnemies( f ) then
          enemies = enemies + v
       end
    end
