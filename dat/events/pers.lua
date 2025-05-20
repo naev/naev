@@ -93,6 +93,12 @@ function pers_death( _p, attacker, pt )
    end
 end
 
+function pers_board( p,pt )
+   if pt.onboard then
+      pt.onboard( p, pt )
+   end
+end
+
 local function spawn_pers ()
    if not pilot.canSpawn() then
       return
@@ -117,9 +123,11 @@ local function spawn_pers ()
                onattack = pp.onattack,
                ondeath = pp.ondeath,
                ondeathany = pp.ondeathany,
+               onboard = pp.onboard,
             }
             hook.pilot( pp, "attacked", "pers_attacked", pt )
             hook.pilot( pp, "death", "pers_death", pt )
+            hook.pilot( pp, "board", "pers_board", pt )
             table.insert( spawned, pt )
          end
 
