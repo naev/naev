@@ -44,6 +44,7 @@
   <launch_rate>10</launch_rate>
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>
+  <engine_limit>250</engine_limit>
  </stats>
  <tags>
   <tag>noplayer</tag>

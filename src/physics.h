@@ -50,7 +50,9 @@ typedef struct Solid_ {
    vec2   pre;       /**< Previous position of the solid. For collisions. */
    double accel;     /**< Relative X acceleration, basically simplified for our
                         model. */
-   double speed_max; /**< Maximum speed. */
+   double speed_max; /**< Maximum *drift* speed. */
+   double aerodynamics; /**< A factor that *divides* the over-the-max opposing
+                           force */
    void ( *update )( struct Solid_ *, double ); /**< Update method. */
 } Solid;
 

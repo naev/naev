@@ -16,6 +16,7 @@
          * More consistency across lines
       * Gauntlet intrinsics are stronger and now mutually exclusive
       * Intrinsics from a certain trader are now stronger
+      * Ships now disabled below a certain armour threshold regardless of stress
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
@@ -23,12 +24,16 @@
          * Disables afterburner when getting ready to land or jump
          * Shooting *non-point defense* weapons resets autonav speed up
       * Combat and ambient music tries to play from where it was last stopped when applicable
+      * Gave small untargetable time to player when using hypergates and wormholes
+      * Ships that are scanning you use a different colour hilight
+      * Landable but uninhabited space objects use a different icon
    * Content
-      * 3 new missions
+      * 5 new missions and events
       * 6 new ship variants
       * 3 new outfits and reworked cores
+      * New sensor anomalies
       * Two new intertwined minor houses of the Empire with new systems and lore
-      * More space objects
+      * More space objects with new things to explore
       * New portraits
       * Over 20 new songs
          * More variation in landing and situational music
@@ -77,13 +82,16 @@
       * dv_antiflf02: Make the vigilances less pathetic
       * Gauntlet properly resets outfit cooldowns
       * Saves try to save outfits by slot name to be more robust to changes in the future
+      * Player can't stealth while disabled
+      * Getting disabled turns off stealth
 
 * 0.12.5 (unreleased)
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
    * Fixed AI spamming afterburners in an unhealthy way
    * Removed support for save game compression as libxml 2.14 disable compression by default
-   * Translation updates
+   * minerva/pirate3: fixed dialogue being weird if paying with tokens
+   * Minor typo fixes and translation updates
 
 * 0.12.4
    * More robust jump check to fix crash when creating new systems

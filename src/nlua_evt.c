@@ -253,7 +253,7 @@ static int evtL_finish( lua_State *L )
    lua_pushboolean( L, 1 );
    nlua_setenv( L, cur_event->env, "__evt_delete" );
 
-   if ( b && event_isUnique( cur_event->id ) )
+   if ( b )
       player_eventFinished( cur_event->data );
 
    lua_pushstring( L, NLUA_DONE );

@@ -128,9 +128,10 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  */
 /* spob load */
 static void spob_initDefaults( Spob *spob );
-static int  spob_parse( Spob *spob, const char *filename, Commodity **stdList );
+static int  spob_parse( Spob *spob, const char *filename );
 static int  space_parseSaveNodes( xmlNodePtr parent, StarSystem *sys );
 static int  spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
+static int  spob_updateCommodities( Spob *spb );
 /* system load */
 static void system_init( StarSystem *sys );
 static int  systems_load( void );
@@ -400,34 +401,26 @@ int spob_addCommodity( Spob *p, Commodity *c )
  */
 int spob_addService( Spob *p, int service )
 {
+   int old_services = p->services;
    p->services |= service;
 
-   if ( service & SPOB_SERVICE_COMMODITY ) {
-      const char *sysname;
-      StarSystem *sys;
-
-      /* Only try to add standard commodities if there aren't any. */
-      if ( p->commodities != NULL )
-         return 0;
-      Commodity **stdList = standard_commodities();
-      p->commodities      = array_create( Commodity * );
-      p->commodityPrice   = array_create( CommodityPrice );
-      for ( int i = 0; i < array_size( stdList ); i++ )
-         spob_addCommodity( p, stdList[i] );
-      array_free( stdList );
+   if ( !( old_services & SPOB_SERVICE_COMMODITY ) &&
+        ( service & SPOB_SERVICE_COMMODITY ) ) {
+      /* Add commodities as necessary. */
+      spob_updateCommodities( p );
 
       /* Clean up economy status. */
       economy_addQueuedUpdate();
       economy_clearSingleSpob( p );
 
       /* Try to figure out the system. */
-      sysname = spob_getSystemName( p->name );
+      const char *sysname = spob_getSystemName( p->name );
       if ( sysname == NULL ) {
          DEBUG( _( "Spob '%s' not in system. Not initializing economy." ),
                 p->name );
          return 0;
       }
-      sys = system_get( sysname );
+      StarSystem *sys = system_get( sysname );
       economy_initialiseSingleSystem( sys, p );
    }
 
@@ -1853,22 +1846,18 @@ const char *spob_name( const Spob *p )
  */
 static int spobs_load( void )
 {
-   char      **spob_files;
-   Commodity **stdList;
+   char **spob_files;
 
    /* Initialize stack if needed. */
    if ( spob_stack == NULL )
       spob_stack = array_create_size( Spob, 256 );
-
-   /* Extract the list of standard commodities. */
-   stdList = standard_commodities();
 
    /* Load XML stuff. */
    spob_files = ndata_listRecursive( SPOB_DATA_PATH );
    for ( int i = 0; i < array_size( spob_files ); i++ ) {
       if ( ndata_matchExt( spob_files[i], "xml" ) ) {
          Spob s;
-         int  ret = spob_parse( &s, spob_files[i], stdList );
+         int  ret = spob_parse( &s, spob_files[i] );
          if ( ret == 0 ) {
             s.id = array_size( spob_stack );
             array_push_back( &spob_stack, s );
@@ -1887,7 +1876,6 @@ static int spobs_load( void )
 
    /* Clean up. */
    array_free( spob_files );
-   array_free( stdList );
 
    return 0;
 }
@@ -2371,15 +2359,13 @@ static void spob_initDefaults( Spob *spob )
  *
  *    @param spob Spob to fill up.
  *    @param filename Name of the file to parse.
- *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
+static int spob_parse( Spob *spob, const char *filename )
 {
    xmlDocPtr    doc;
    xmlNodePtr   node, parent;
    unsigned int flags;
-   Commodity  **comms;
 
    doc = xml_parsePhysFS( filename );
    if ( doc == NULL )
@@ -2395,7 +2381,6 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    /* Set defaults. */
    spob_initDefaults( spob );
    flags = 0;
-   comms = array_create( Commodity * );
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
@@ -2522,6 +2507,8 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
                         SPOB_SERVICE_SHIPYARD | SPOB_SERVICE_INHABITED;
                   else if ( xml_isNode( ccur, "nomissionspawn" ) )
                      spob->flags |= SPOB_NOMISNSPAWN;
+                  else if ( xml_isNode( ccur, "nocommodities" ) )
+                     spob->flags |= SPOB_NOCOMMODITIES;
                   else if ( xml_isNode( ccur, "uninhabited" ) )
                      spob->flags |= SPOB_UNINHABITED;
                   else if ( xml_isNode( ccur, "blackmarket" ) )
@@ -2532,24 +2519,14 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
                      WARN( _( "Spob '%s' has unknown services tag '%s'" ),
                            spob->name, ccur->name );
                } while ( xml_nextNode( ccur ) );
-            }
+               continue;
 
-            else if ( xml_isNode( cur, "commodities" ) ) {
-               xmlNodePtr ccur = cur->children;
-               do {
-                  if ( xml_isNode( ccur, "commodity" ) ) {
-                     /* If the commodity is standard, don't re-add it. */
-                     Commodity *com = commodity_get( xml_get( ccur ) );
-                     if ( commodity_isFlag( com, COMMODITY_FLAG_STANDARD ) )
-                        continue;
-
-                     array_push_back( &comms, com );
-                  }
-               } while ( xml_nextNode( ccur ) );
             } else if ( xml_isNode( cur, "blackmarket" ) ) {
                spob_addService( spob, SPOB_SERVICE_BLACKMARKET );
                continue;
             }
+            WARN( "Spob '%s' has unknown tag '%s' in <general>", spob->name,
+                  cur->name );
          } while ( xml_nextNode( cur ) );
          continue;
       } else if ( xml_isNode( node, "tech" ) ) {
@@ -2642,29 +2619,41 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
          "presence" );*/
 #undef MELEMENT
 
-   /* Build commodities list */
-   if ( spob_hasService( spob, SPOB_SERVICE_COMMODITY ) ) {
-      spob->commodityPrice = array_create( CommodityPrice );
-      spob->commodities    = array_create( Commodity * );
-
-      /* First, store all the standard commodities and prices. */
-      if ( array_size( stdList ) > 0 ) {
-         for ( int i = 0; i < array_size( stdList ); i++ )
-            spob_addCommodity( spob, stdList[i] );
-      }
-
-      /* Now add extra commodities */
-      for ( int i = 0; i < array_size( comms ); i++ )
-         spob_addCommodity( spob, comms[i] );
-
-      /* Shrink to minimum size. */
-      array_shrink( &spob->commodities );
-      array_shrink( &spob->commodityPrice );
-   }
-   /* Free temporary comms list. */
-   array_free( comms );
-
    xmlFreeDoc( doc );
+
+   /* Update commodities as necessary. */
+   spob_updateCommodities( spob );
+
+   return 0;
+}
+
+static int spob_updateCommodities( Spob *spb )
+{
+   if ( !spob_hasService( spb, SPOB_SERVICE_COMMODITY ) )
+      return 0;
+
+   /* Build commodities list */
+   array_free( spb->commodityPrice );
+   array_free( spb->commodities );
+   spb->commodityPrice = array_create( CommodityPrice );
+   spb->commodities    = array_create( Commodity * );
+
+   /* Unique local stuff goes first. */
+   Commodity **tech = tech_getCommodity( spb->tech, NULL );
+   for ( int i = 0; i < array_size( tech ); i++ )
+      spob_addCommodity( spb, tech[i] );
+   array_free( tech );
+
+   /* Generic crud afterwards. */
+   if ( !spob_isFlag( spb, SPOB_NOCOMMODITIES ) ) {
+      Commodity *const *stdList = standard_commodities();
+      for ( int i = 0; i < array_size( stdList ); i++ )
+         spob_addCommodity( spb, stdList[i] );
+   }
+
+   /* Shrink to minimum size. */
+   array_shrink( &spb->commodities );
+   array_shrink( &spb->commodityPrice );
 
    return 0;
 }

@@ -753,6 +753,82 @@ void faction_rmAlly( int f, int o )
 }
 
 /**
+ * @brief Adds an neutral to the faction's neutrals list.
+ *
+ *    @param f The faction to add an neutral to.
+ *    @param o The other faction to make an neutral.
+ */
+void faction_addNeutral( int f, int o )
+{
+   Faction *ff;
+   int     *tmp;
+
+   if ( f == o )
+      return;
+
+   if ( faction_isFaction( f ) )
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN( _( "Faction id '%d' is invalid." ), f );
+      return;
+   }
+
+   if ( !faction_isFaction( o ) ) { /* o is invalid */
+      WARN( _( "Faction id '%d' is invalid." ), o );
+      return;
+   }
+
+   /* player cannot be made an neutral this way */
+   if ( f == FACTION_PLAYER ) {
+      WARN( _( "%d is the player faction" ), f );
+      return;
+   }
+   if ( o == FACTION_PLAYER ) {
+      WARN( _( "%d is the player faction" ), o );
+      return;
+   }
+
+   for ( int i = 0; i < array_size( ff->neutrals ); i++ ) {
+      if ( ff->neutrals[i] == o )
+         return;
+   }
+
+   tmp  = &array_grow( &ff->neutrals );
+   *tmp = o;
+
+   faction_computeGrid();
+}
+
+/**
+ * @brief Removes an neutral from the faction's neutrals list.
+ *
+ *    @param f The faction to remove an neutral from.
+ *    @param o The other faction to remove as an neutral.
+ */
+void faction_rmNeutral( int f, int o )
+{
+   Faction *ff;
+
+   if ( f == o )
+      return;
+
+   if ( faction_isFaction( f ) )
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN( _( "Faction id '%d' is invalid." ), f );
+      return;
+   }
+
+   for ( int i = 0; i < array_size( ff->neutrals ); i++ ) {
+      if ( ff->neutrals[i] == o ) {
+         array_erase( &ff->neutrals, &ff->neutrals[i], &ff->neutrals[i + 1] );
+         faction_computeGrid();
+         return;
+      }
+   }
+}
+
+/**
  * @brief Gets the state associated to the faction scheduler.
  */
 nlua_env *faction_getScheduler( int f )

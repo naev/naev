@@ -20,7 +20,6 @@
    <refuel/>
    <shipyard/>
   </services>
-  <commodities/>
   <description>The first thing you notice about the Amlet Shipyard is the large amount of anti-spacecraft mounts all over the station. The second is the minimal infrastructure, seemingly designed to maximize ship production with as few additional expenses as possible. This includes not using pressured spacedocks, with workers operating on the new ships directly in space suits. The actual pressurized area of the station is minimal, with most workers spending their leisure time in ships parked nearby instead of actually entering the tight station quarters.</description>
  </general>
  <tech>

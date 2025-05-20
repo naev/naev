@@ -1748,6 +1748,8 @@ int diff_patchHunk( UniHunk_t *hunk )
          hunk->o.data = 'A';
       else if ( areEnemies( a, b ) )
          hunk->o.data = 'E';
+      else if ( areNeutral( a, b ) )
+         hunk->o.data = 'N';
       else
          hunk->o.data = 0;
       faction_addEnemy( a, b );
@@ -1763,6 +1765,8 @@ int diff_patchHunk( UniHunk_t *hunk )
          hunk->o.data = 'A';
       else if ( areEnemies( a, b ) )
          hunk->o.data = 'E';
+      else if ( areNeutral( a, b ) )
+         hunk->o.data = 'N';
       else
          hunk->o.data = 0;
       faction_rmAlly( a, b );
@@ -1777,16 +1781,29 @@ int diff_patchHunk( UniHunk_t *hunk )
       if ( b < 0 )
          return -1;
       if ( hunk->o.data == 'A' ) {
+         faction_rmNeutral( a, b );
+         faction_rmNeutral( b, a );
          faction_rmEnemy( a, b );
          faction_rmEnemy( b, a );
          faction_addAlly( a, b );
          faction_addAlly( b, a );
       } else if ( hunk->o.data == 'E' ) {
+         faction_rmNeutral( a, b );
+         faction_rmNeutral( b, a );
          faction_rmAlly( a, b );
          faction_rmAlly( b, a );
          faction_addEnemy( a, b );
          faction_addEnemy( b, a );
+      } else if ( hunk->o.data == 'N' ) {
+         faction_rmAlly( a, b );
+         faction_rmAlly( b, a );
+         faction_rmEnemy( a, b );
+         faction_rmEnemy( b, a );
+         faction_addNeutral( a, b );
+         faction_addNeutral( b, a );
       } else {
+         faction_rmNeutral( a, b );
+         faction_rmNeutral( b, a );
          faction_rmAlly( a, b );
          faction_rmAlly( b, a );
          faction_rmEnemy( a, b );

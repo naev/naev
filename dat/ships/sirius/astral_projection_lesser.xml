@@ -41,6 +41,7 @@
  </intrinsics>
  <stats>
   <stress_dissipation>10000</stress_dissipation>
+  <engine_limit>9999999</engine_limit>
  </stats>
  <tags>
   <tag>noplayer</tag>

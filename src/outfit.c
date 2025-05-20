@@ -497,7 +497,7 @@ int outfit_filterStructure( const Outfit *o )
 
 int outfit_filterCore( const Outfit *o )
 {
-   return sp_required( o->slot.spid );
+   return sp_exclusive( o->slot.spid );
 }
 
 int outfit_filterOther( const Outfit *o )

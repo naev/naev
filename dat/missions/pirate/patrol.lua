@@ -65,7 +65,7 @@ function create ()
 #nPatrol Points:#0 {amount}]])
    if pir.factionIsClan( mem.paying_faction ) then
       -- mem.misn_desc gets fmt.f'd in the main script
-      mem.misn_desc = mem.misn_desc..pir.reputationMessage( mem.paying_faction )
+      mem.misn_desc = mem.misn_desc.."\n"..pir.reputationMessage( mem.paying_faction )
    end
 
    create_original()

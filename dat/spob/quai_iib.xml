@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Quai IIb">
+ <pos x="-4389.220306" y="-7851.559267"/>
+ <GFX>
+  <space>moon-Y00.webp</space>
+  <exterior>uninhabited-rocky-red-04.webp</exterior>
+ </GFX>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>With nearly all the surface covered in an ocean of toxic sludge, there are only few landable areas on Quai IIb. Even the best hull coating doesn't seem like it will last too much if you bury your ship in the sludge. Good thing that there is not much of an atmosphere, so you don't have to worry about the possibility of toxic rain, however, on the downside, the air is heavily contaminated with microparticles that will slowly melt your ship if you dawdle too long.</description>
+ </general>
+</spob>

@@ -152,19 +152,6 @@ function derelict_msg( title, text, log )
    der.addMiscLog( log )
 end
 
-local function islucky ()
-   local pp = player.pilot()
-   if pp:ship():tags().lucky then
-      return true
-   end
-   for k,o in ipairs(pp:outfitsList("all")) do
-      if o:tags().lucky then
-         return true
-      end
-   end
-   return false
-end
-
 function board()
    player.unboard()
 
@@ -175,7 +162,7 @@ function board()
 
    -- Roll for events
    local neuprob, goodprob
-   if islucky() then
+   if lmisn.islucky() then
       goodprob = 0.75
       neuprob = 0.95
    else

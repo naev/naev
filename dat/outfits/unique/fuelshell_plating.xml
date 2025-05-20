@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Fuelshell Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
@@ -7,16 +6,19 @@
   <slot prop="hull">structure</slot>
   <size>small</size>
   <priority>3</priority>
-  <mass>48</mass>
-  <price>600000</price>
+  <price>300000</price>
   <description>An experimental hull design for scout ships that would allow them to significantly increase their travel range by using a porous hull material that can directly store fuel. The novel design allows significantly increasing the fuel reservoirs of any ship without any complicated interventions or structural changes. Although the design was lauded as ahead of its time, it never really gained in popularity to make it into mainline production. It might have to do with turning the entire ship into a tinderbox and leaking fuel when sustaining damage, but who knows?</description>
   <gfx_store>cargo_hull_m.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua>outfits/unique/fuelshell_plating.lua</lua>
-  <cargo>20</cargo>
-  <absorb>0</absorb>
-  <armour>40</armour>
-  <fuel_mod>50</fuel_mod>
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 28},
+   { "cargo", 10, 4},
+   { "absorb", 1},
+   { "armour", 40, 28},
+   { "fuel_mod", 50, 10},
+}
+require 'outfits.unique.fuelshell_plating'</lua_inline>
  </specific>
 </outfit>

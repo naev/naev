@@ -10,8 +10,21 @@ return function ()
       return nil -- Need at least some presence
    end
 
+   local fpir = faction.get("Pirate")
+   local enemies = 0
+   for k,v in pairs(scur:presences()) do
+      local f = faction.get(k)
+      if not f.tags().civilian and fpir:areEnemies( f ) then
+         enemies = enemies + v
+      end
+   end
+
+   -- Few enemies, spawn special ships
+   --if enemies <= 100 then
+   --end
+
    -- Larger ships can be there
-   if pirpres > 50 then
+   if pirpres > 50 and enemies < 600 then
       for k,v in ipairs{
          { -- Anchovy Brothers
             spawn = function ()
@@ -112,7 +125,7 @@ return function ()
    local pres = scur:presences()
 
    local wildones = pres["Wild Ones"] or 0
-   if wildones > 50 then
+   if wildones > 50  and enemies <= 600 then
       for k,v in ipairs{
          {
             spawn = function ()
@@ -135,7 +148,7 @@ return function ()
    end
 
    local ravenclan = pres["Raven Clan"] or 0
-   if ravenclan > 150 then
+   if ravenclan > 150 and enemies < 900 then
       for k,v in ipairs{
          {
             spawn = function ()
@@ -156,7 +169,7 @@ return function ()
    end
 
    local dreamerclan = pres["Dreamer Clan"] or 0
-   if dreamerclan > 100 then
+   if dreamerclan > 100 and enemies <= 700 then
       for k,v in ipairs{
          {
             spawn = function ()
@@ -184,7 +197,7 @@ return function ()
    end
 
    local blacklotus = pres["Black Lotus"] or 0
-   if blacklotus > 50 then
+   if blacklotus > 50 and enemies <= 700 then
       for k,v in ipairs{
          {
             spawn = function ()
@@ -224,7 +237,7 @@ return function ()
          table.insert( pers, v )
       end
    end
-   if blacklotus > 125 then
+   if blacklotus > 125 and enemies <= 1000 then
       for k,v in ipairs{
          {
             spawn = function ()

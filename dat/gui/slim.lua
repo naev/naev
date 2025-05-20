@@ -426,7 +426,11 @@ function update_nav()
          local services = { "refuel", "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( nav_spob.services, N_("Spaceport") )
+         if pntflags.inhabited then
+            table.insert( nav_spob.services, N_("Spaceport") )
+         else
+            table.insert( nav_spob.services, N_("Land") )
+         end
          for k,v in ipairs(services) do
             table.insert( nav_spob.services, pntflags[v] )
          end

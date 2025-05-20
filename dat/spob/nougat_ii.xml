@@ -3,12 +3,15 @@
  <pos x="-2280.000000" y="-5760.000000"/>
  <GFX>
   <space>moon-P02.webp</space>
-  <exterior>forest.webp</exterior>
+  <exterior>uninhabited-rocky-cyan-01.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.300000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Although the outter few kilometers of Nougat II are mainly frozen solid, the core of the planet is still active and very hot. However, most of the planetary mass is a porous ceramic mass that acts as a strong insulator, leading to such drastic temperature differences between the interior and exterior.</description>
  </general>
 </spob>

@@ -27,6 +27,7 @@ dat/asteroids/types/silicate_olivine.xml
 dat/asteroids/types/therite.xml
 dat/asteroids/types/vixilium.xml
 dat/asteroids/types/water_clay.xml
+dat/commodities/astral_nectar.xml
 dat/commodities/clay.xml
 dat/commodities/diamond.xml
 dat/commodities/food.xml
@@ -36,6 +37,7 @@ dat/commodities/iron.xml
 dat/commodities/kermite.xml
 dat/commodities/luxury_goods.xml
 dat/commodities/medicine.xml
+dat/commodities/neblaze.xml
 dat/commodities/nebula_crystals.xml
 dat/commodities/neodymium.xml
 dat/commodities/nickel.xml
@@ -215,6 +217,7 @@ dat/outfits/core_hull/large/rs_large_cargo_hull.xml
 dat/outfits/core_hull/large/sk_large_cargo_hull.xml
 dat/outfits/core_hull/large/sk_war_plating.xml
 dat/outfits/core_hull/large/unicorp_d58_heavy_plating.xml
+dat/outfits/core_hull/medium/krain_nanotubes_foam_padding.xml
 dat/outfits/core_hull/medium/nexus_ghost_weave.xml
 dat/outfits/core_hull/medium/patchwork_medium_plating.xml
 dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml
@@ -849,6 +852,7 @@ dat/spob/cerberus_outpost.xml
 dat/spob/cetrat.xml
 dat/spob/charcoal.xml
 dat/spob/charred.xml
+dat/spob/chloe_i.xml
 dat/spob/churchill_i.xml
 dat/spob/churchill_ii.xml
 dat/spob/churchill_iia.xml
@@ -1569,6 +1573,7 @@ dat/spob/qorellia.xml
 dat/spob/quai_i.xml
 dat/spob/quai_ii.xml
 dat/spob/quai_iia.xml
+dat/spob/quai_iib.xml
 dat/spob/qulam_primus.xml
 dat/spob/racheka.xml
 dat/spob/racheka_secundus.xml
@@ -2719,6 +2724,7 @@ dat/trails/zalek_missileL.xml
 dat/unidiff/FLF_base.xml
 dat/unidiff/Fury_Station.xml
 dat/unidiff/Thurion_found.xml
+dat/unidiff/alsafi_ii_druglab.xml
 dat/unidiff/antlejosv_1.xml
 dat/unidiff/antlejosv_2.xml
 dat/unidiff/antlejosv_3.xml
@@ -2882,6 +2888,7 @@ dat/events/cache.lua
 dat/events/capture.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/data_matrices.lua
 dat/events/derelict.lua
 dat/events/derelict/blackcat.lua
 dat/events/derelict/poi.lua
@@ -2917,8 +2924,13 @@ dat/events/minerva/spa_propaganda.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
 dat/events/naevpedia.lua
+dat/events/neutral/alsafi_druglab.lua
 dat/events/neutral/animaltrouble.lua
 dat/events/neutral/arandon_station.lua
+dat/events/neutral/astral_orchids_chloe_i.lua
+dat/events/neutral/astral_orchids_nougat_ii.lua
+dat/events/neutral/astral_orchids_quai_iib.lua
+dat/events/neutral/astral_orchids_unicorn_ii.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
@@ -3223,6 +3235,7 @@ dat/missions/neutral/new_europe_refugees.lua
 dat/missions/neutral/oldwoman.lua
 dat/missions/neutral/patrol.lua
 dat/missions/neutral/poi.lua
+dat/missions/neutral/poi/astral_orchids.lua
 dat/missions/neutral/poi/caretaker.lua
 dat/missions/neutral/poi/data_intro.lua
 dat/missions/neutral/poi/gate_safety.lua
@@ -3433,6 +3446,7 @@ dat/scripts/class.lua
 dat/scripts/colour.lua
 dat/scripts/common/achack.lua
 dat/scripts/common/antlejos.lua
+dat/scripts/common/astral_orchids.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/bounty.lua
 dat/scripts/common/cargo.lua
@@ -3597,12 +3611,12 @@ dat/scripts/prng.lua
 dat/scripts/prob.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
-dat/scripts/shipmemfs.lua
 dat/scripts/shipvariants.lua
 dat/scripts/strmess.lua
 dat/scripts/swapship.lua
 dat/scripts/term.lua
 dat/scripts/textoverlay.lua
+dat/scripts/tfs.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/log.lua

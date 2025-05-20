@@ -23,6 +23,7 @@ local fmt = require "format"
 local ant = require "common.antlejos"
 local fleet = require "fleet"
 local car = require "common.cargo"
+local pilotai = require "pilotai"
 
 local cargo_name = _("Volunteers and Equipment")
 
@@ -151,7 +152,7 @@ function enter ()
       return
    end
 
-   pilot.clear()
+   pilotai.clear() -- Get rid of those we can
    pilot.toggleSpawn(false)
    attacked = false
 

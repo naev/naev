@@ -6,9 +6,9 @@
   <exterior>aquatic2.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>H</class>
   <population>0</population>
-  <hide>1.000000</hide>
+  <hide>1.200000</hide>
   <services/>
  </general>
 </spob>

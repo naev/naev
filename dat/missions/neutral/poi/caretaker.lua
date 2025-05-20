@@ -11,12 +11,10 @@ return function ( mem )
    if not mem.locked then return end
 
    -- Need to have started the poi data stuff
-   if poi.data_get_gained() <= 0 then
-      return
-   end
+   if not poi.data_known() then return end
 
    -- Already finished
-   local mvar = var.peek( misnvar )  or 0
+   local mvar = var.peek( misnvar ) or 0
    if mvar >= 3 then
       return
    end

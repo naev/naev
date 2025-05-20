@@ -33,6 +33,9 @@
   <cargo>0</cargo>
  </characteristics>
  <slots />
+ <stats>
+  <engine_limit>9999999</engine_limit>
+ </stats>
  <tags>
   <tag>noplayer</tag>
   <tag>nonaevpedia</tag>

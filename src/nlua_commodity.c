@@ -234,14 +234,13 @@ static int commodityL_get( lua_State *L )
 static int commodityL_getStandard( lua_State *L )
 {
    /* Get commodity. */
-   Commodity **standard = standard_commodities();
+   Commodity *const *standard = standard_commodities();
    /* Push. */
    lua_newtable( L );
    for ( int i = 0; i < array_size( standard ); i++ ) {
       lua_pushcommodity( L, standard[i] );
       lua_rawseti( L, -2, i + 1 );
    }
-   array_free( standard );
    return 1;
 }
 

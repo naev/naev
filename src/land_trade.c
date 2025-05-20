@@ -185,6 +185,26 @@ static void commodity_exchange_genList( unsigned int wid )
       array_push_back( &commodity_list, item );
    }
 
+   /* Add spob stuff. */
+   for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
+      Commodity *com = land_spob->commodities[i];
+      /* Ignore if already in the list. */
+      int found = 0;
+      for ( int k = 0; k < array_size( commodity_list ); k++ ) {
+         if ( com == commodity_list[k].com ) {
+            found = 1;
+            break;
+         }
+      }
+      if ( found )
+         continue;
+      CommodityItem item = {
+         .com       = com,
+         .price_mod = 1.,
+      };
+      array_push_back( &commodity_list, item );
+   }
+
    /* Next add local specialties. */
    for ( int i = 0; i < array_size( tech ); i++ ) {
       Commodity *com = tech[i];
@@ -204,26 +224,6 @@ static void commodity_exchange_genList( unsigned int wid )
       CommodityItem item = {
          .com       = com,
          .price_mod = prices[i],
-      };
-      array_push_back( &commodity_list, item );
-   }
-
-   /* Then add default. */
-   for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
-      Commodity *com = land_spob->commodities[i];
-      /* Ignore if already in the list. */
-      int found = 0;
-      for ( int k = 0; k < array_size( commodity_list ); k++ ) {
-         if ( com == commodity_list[k].com ) {
-            found = 1;
-            break;
-         }
-      }
-      if ( found )
-         continue;
-      CommodityItem item = {
-         .com       = com,
-         .price_mod = 1.,
       };
       array_push_back( &commodity_list, item );
    }

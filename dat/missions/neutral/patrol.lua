@@ -86,7 +86,8 @@ function create ()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
          local this_faction = s:presences()[mem.paying_faction:nameRaw()]
-         return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0
+         local enemies = get_enemies(s)
+         return this_faction ~= nil and this_faction > 0 and enemies > 0 and enemies < 700
       end, nil, mem.use_hidden_jumps )
    if get_enemies( system.cur() ) then
       systems[ #systems + 1 ] = system.cur()

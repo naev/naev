@@ -280,6 +280,10 @@ SHADERS = [
       fs_path = "spobmarker_earth.frag",
    ),
    SimpleShader(
+      name = "spobmarker_uninhabited",
+      fs_path = "spobmarker_uninhabited.frag",
+   ),
+   SimpleShader(
       name = "spobmarker_rhombus",
       fs_path = "spobmarker_rhombus.frag",
    ),

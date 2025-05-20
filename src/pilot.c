@@ -19,6 +19,7 @@
 #include "array.h"
 #include "board.h"
 #include "camera.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "debris.h"
 #include "debug.h"
@@ -1587,9 +1588,15 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
  */
 void pilot_updateDisable( Pilot *p, unsigned int shooter )
 {
+   int should_be_disabled =
+      ( ( p->armour <= p->stress ) ||
+        ( !pilot_isPlayer( p ) &&
+          ( p->armour < p->armour_disabled * p->armour_max ) ) );
+
+   /* Disable pilot if they should be disabled. */
    if ( ( !pilot_isFlag( p, PILOT_DISABLED ) ) &&
         ( !pilot_isFlag( p, PILOT_NODISABLE ) || ( p->armour <= 0. ) ) &&
-        ( p->armour <= p->stress ) ) { /* Pilot should be disabled. */
+        should_be_disabled ) {
       HookParam hparam;
 
       /* Cooldown is an active process, so cancel it. */
@@ -1625,7 +1632,11 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
       if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
          pilot_calcStats( p );
 
-      pilot_setFlag( p, PILOT_DISABLED ); /* set as disabled */
+      /* Can't stealth when disabled. */
+      pilot_destealth( p );
+
+      /* Mark as disabled. */
+      pilot_setFlag( p, PILOT_DISABLED );
       if ( pilot_isPlayer( p ) )
          player_message( "#r%s", _( "You have been disabled!" ) );
 
@@ -1638,9 +1649,8 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
       }
       pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam,
                           1 ); /* Already disabled. */
-   } else if ( pilot_isFlag( p, PILOT_DISABLED ) &&
-               ( p->armour >
-                 p->stress ) ) { /* Pilot is disabled, but shouldn't be. */
+   } else if ( pilot_isFlag( p, PILOT_DISABLED ) && !should_be_disabled ) {
+      /* Pilot is disabled, but shouldn't be. */
       pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
       pilot_rmFlag(
          p, PILOT_DISABLED_PERM ); /* Clear perma-disable flag if necessary. */
@@ -2512,6 +2522,9 @@ void pilot_update( Pilot *pilot, double dt )
          pilot_updateDisable( pilot, 0 );
       }
    }
+   /* Make sure to set it as the minimum so the check fails. */
+   pilot->armour_disabled =
+      MIN( pilot->armour / pilot->armour_max, CTS.PILOT_DISABLED_ARMOUR );
 
    /* Damage effect. */
    if ( ( pilot->stats.damage > 0. ) || ( pilot->stats.disable > 0. ) ) {
@@ -3367,7 +3380,8 @@ static void pilot_init( Pilot *pilot, const Ship *ship, const char *name,
    pilot->aimLines     = 0;
    pilot->dockpilot    = dockpilot;
    pilot->parent = dockpilot; /* leader will default to mothership if exists. */
-   pilot->dockslot = dockslot;
+   pilot->dockslot        = dockslot;
+   pilot->armour_disabled = CTS.PILOT_DISABLED_ARMOUR;
 
    /* Basic information. */
    pilot->ship = ship;
@@ -3531,6 +3545,7 @@ void pilot_reset( Pilot *pilot )
 
    /* Heal up. */
    pilot_healLanded( pilot );
+   pilot->armour_disabled = CTS.PILOT_DISABLED_ARMOUR;
 
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */

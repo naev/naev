@@ -4039,9 +4039,9 @@ static int pilotL_outfitInitSlot( lua_State *L )
 /**
  * @brief Sends a message to an outfit.
  *
- *    @luatparam Pilot p Pilot to send message to outfit.
- *    @luatparam string|integer slot Slot to send message to. Can be passed as a
- * slot name (string) or slot id (integer).
+ *    @luatparam Pilot p Pilot containing the outfit to send a message to.
+ *    @luatparam string|integer slot Slot to send a message to. Can be passed as
+ * a slot name (string) or slot id (integer).
  *    @luatparam string type Type of message.
  *    @luaparam[opt] data Data to send with message.
  *    @luareturn The return value of the `message` function run on the outfit or

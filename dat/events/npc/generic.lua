@@ -42,7 +42,7 @@ local msg_lore = {
    _([["Sometimes I look at the stars and wonder… are we the only sentient species in the universe?"]]),
    _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
    _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
-   _([["I used to dream of being a racer at Melendez Station, but my reflexes are just not up to the job."]]),
+   _([["I used to dream of being a racer at Melendez Dome, but my reflexes are just not up to the job."]]),
 }
 
 local msg_cond = {

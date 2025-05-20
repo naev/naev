@@ -2481,6 +2481,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    w->timer = outfit_launcherDuration( w->outfit ) *
               parent->stats.launch_range * parent->stats.weapon_range;
    solid_init( &w->solid, mass, rdir, pos, &v, SOLID_UPDATE_EULER );
+   w->solid.aerodynamics = w->speed_mod;
+
    if ( outfit_launcherAccel( w->outfit ) > 0. ) {
       weapon_setAccel( w, outfit_launcherAccel( w->outfit ) * w->accel_mod );
       /* Limit speed, we only relativize in the case it has accel + initial

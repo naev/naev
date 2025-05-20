@@ -357,6 +357,21 @@ function poi.data_str( amount )
    return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices",amount),{amount=amount})
 end
 
+--[[
+Returns true if matrices are known.
+   @treturn boolean Whether or not matrices are known.
+--]]
+function poi.data_known()
+   return var.peek("poi_data_known")~=nil
+end
+
+--[[
+Sets matrices as known.
+--]]
+function poi.data_set_known()
+   var.push("poi_data_known", true)
+end
+
 function poi.board( _p )
    local failed = false
 

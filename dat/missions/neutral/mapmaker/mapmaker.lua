@@ -282,6 +282,7 @@ They can't hold their excitement and do a little jig as they wonder off.]]))
    if not accepted then return end
 
    misn.accept()
+   misn.osdSetHide( true ) -- Hide OSD by default
    misn.setTitle( mission_name )
    misn.setReward(_("Power, and by that I mean Knowledge!"))
    update_markers()

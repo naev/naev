@@ -1,5 +1,5 @@
 project('naev', ['c', 'rust'],
-   version : '0.13.0-alpha.6',
+   version : '0.13.0-alpha.7',
    default_options : [
       'optimization=g',
       'c_std=c11',
@@ -681,7 +681,7 @@ custom_target(
   build_by_default: true,
   command: [
     luacheckrc_extractor,
-    nlua_source,
+    nlua_source + files('src/nlua_vec2.c'),
     '--output',
     join_paths(meson.current_source_dir(),'utils','@OUTPUT@'),
   ],

@@ -46,6 +46,8 @@ void                    faction_rmEnemy( int f, int o );
 void                    faction_clearAlly( int f );
 void                    faction_addAlly( int f, int o );
 void                    faction_rmAlly( int f, int o );
+void                    faction_addNeutral( int f, int o );
+void                    faction_rmNeutral( int f, int o );
 nlua_env               *faction_getScheduler( int f );
 nlua_env               *faction_getEquipper( int f );
 const glTexture        *faction_logo( int f );

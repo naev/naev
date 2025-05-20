@@ -264,16 +264,20 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
  * @brief Return an array (array.h) of standard commodities. Free with
  * array_free. (Don't free contents.)
  */
-Commodity **standard_commodities( void )
+Commodity *const *standard_commodities( void )
 {
-   int         n   = array_size( commodity_stack );
-   Commodity **com = array_create_size( Commodity *, n );
+   static Commodity **std_comm = NULL;
+   if ( std_comm != NULL )
+      return std_comm;
+
+   int n    = array_size( commodity_stack );
+   std_comm = array_create_size( Commodity *, n );
    for ( int i = 0; i < n; i++ ) {
       Commodity *c = &commodity_stack[i];
       if ( commodity_isFlag( c, COMMODITY_FLAG_STANDARD ) )
-         array_push_back( &com, c );
+         array_push_back( &std_comm, c );
    }
-   return com;
+   return std_comm;
 }
 
 /**

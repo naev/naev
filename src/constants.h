@@ -12,6 +12,8 @@ typedef struct constants {
    double EW_ASTEROID_DIST;
    double EW_JUMPDETECT_DIST;
    double EW_SPOBDETECT_DIST;
+   // Gameplay constants
+   double PILOT_DISABLED_ARMOUR;
 } constants;
 
 extern constants CTS;

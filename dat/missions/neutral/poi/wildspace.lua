@@ -7,9 +7,10 @@ return function ( mem )
    -- Must be locked
    if not mem.locked then return end
 
-   if player.chapter()=="0" then
-      return
-   end
+   if player.chapter()=="0" then return end
+
+   -- Must know data matrices
+   if not poi.data_known() then return end
 
    -- Must be "nearby"
    local sys1 = system.get("Jommel")

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nougat I">
- <pos x="-480.000000" y="10020.000000"/>
+ <pos x="-476.416819" y="10037.915904"/>
  <GFX>
   <space>M09.webp</space>
   <exterior>traderoom.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>M</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>

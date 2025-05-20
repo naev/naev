@@ -174,6 +174,18 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    int             i, k;
    CommodityPrice *commPrice;
 
+   double      price_mod = 1.;
+   double     *prices    = NULL;
+   Commodity **tech      = tech_getCommodity( p->tech, &prices );
+   for ( int j = 0; j < array_size( tech ); j++ ) {
+      if ( tech[j] == com ) {
+         price_mod = prices[j];
+         break;
+      }
+   }
+   array_free( prices );
+   array_free( tech );
+
    if ( com->price_ref != NULL ) {
       const Commodity *ref = commodity_get( com->price_ref );
       if ( ref == NULL )
@@ -181,14 +193,14 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
       int ret = economy_getAverageSpobPrice( ref, p, mean, std );
       if ( !ret )
          return ret;
-      *mean = (credits_t)( (double)*mean * com->price_mod + 0.5 );
+      *mean = (credits_t)( (double)*mean * com->price_mod + 0.5 ) * price_mod;
       *std  = ( *std * com->price_mod );
       return 0;
    }
 
    /* Constant price. */
    if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
-      *mean = com->price;
+      *mean = com->price * price_mod;
       *std  = 0.;
       return 0;
    }
@@ -223,7 +235,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p,
    }
    commPrice = &p->commodityPrice[i];
    if ( commPrice->cnt > 0 ) {
-      *mean = (credits_t)round( commPrice->sum / commPrice->cnt );
+      *mean = (credits_t)round( commPrice->sum / commPrice->cnt * price_mod );
       *std  = ( sqrt( commPrice->sum2 / commPrice->cnt -
                       ( commPrice->sum * commPrice->sum ) /
                          ( commPrice->cnt * commPrice->cnt ) ) );
@@ -605,7 +617,7 @@ void economy_destroy( void )
  *
  *    @param spob The spob to set price on.
  *    @param commodity The commodity to set the price of.
- *    @param commodityPrice Where to write the commodity price to.
+ *    @param[out] commodityPrice Where to write the commodity price to.
  *    @return 0 on success.
  */
 static int economy_calcPrice( Spob *spob, Commodity *commodity,
@@ -618,6 +630,14 @@ static int economy_calcPrice( Spob *spob, Commodity *commodity,
    /* Ignore spobs with no commodity stuff. */
    if ( !spob_hasService( spob, SPOB_SERVICE_COMMODITY ) )
       return 0;
+
+   /* Constant price. */
+   if ( commodity_isFlag( commodity, COMMODITY_FLAG_PRICE_CONSTANT ) ) {
+      commodityPrice->price = commodity->price;
+      commodityPrice->sum   = commodity->price;
+      commodityPrice->sum2  = 0.;
+      return 0;
+   }
 
    /* Check the faction is not NULL.*/
    if ( spob->presence.faction == -1 ) {

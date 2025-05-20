@@ -1,0 +1,21 @@
+<outfit name="Krain Nanotubes Foam Padding">
+ <general>
+  <shortname>K. Nanofoam Padding</shortname>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull_secondary">structure</slot>
+  <size>medium</size>
+  <price>440000</price>
+  <description>Developed by Krain Industries to complement their engine lines, instead of relying on more traditional armour alloys, the Nanofoam Padding uses irregular tessellated nanotube structures to provide resilience against weapon fire. As the nanotubes lack any sort of supporting structure, it becomes necessary to attach them to another hull as an underlayer, where they will provide reactive support upon impact. The foam is extremely elastic and significantly increases the energy needed for ship's plating to lose its cohesion while being extremely lightweight, making it perfect for vessels that can't afford the weight of a regular battle armour underlayer. It does come at a hefty price tag, though.</description>
+  <gfx_store>stealth_hull_h.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <lua_inline>
+require("outfits.lib.multicore").init{
+   { "mass", 80},
+   { "cargo", 5},
+   { "absorb", 12},
+   { "armour", 280},
+}</lua_inline>
+ </specific>
+</outfit>

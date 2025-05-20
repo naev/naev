@@ -394,4 +394,20 @@ function lmisn.fail( reason )
    misn.finish(false)
 end
 
+--[[
+   Returns whether or not the player is lucky.
+--]]
+function lmisn.islucky()
+   local pp = player.pilot()
+   if pp:ship():tags().lucky then
+      return true
+   end
+   for k,o in ipairs(pp:outfitsList("all")) do
+      if o:tags().lucky then
+         return true
+      end
+   end
+   return false
+end
+
 return lmisn
