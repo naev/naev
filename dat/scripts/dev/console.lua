@@ -86,3 +86,6 @@ function inspect( t )
       print(fmt.f("Has {fuel} fuel!", {fuel = stats.fuel}))
    end
 end
+
+-- luacheck: globals pprint
+pprint = require "dev.pprint"
