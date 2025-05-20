@@ -34,13 +34,13 @@ impl<T: Sized> Array<T> {
         Ok(Array(AtomicPtr::new(array as *mut T)))
     }
     pub fn as_ptr(&self) -> *mut c_void {
-        self.0.as_ptr() as *mut c_void
+        self.0.load(std::sync::atomic::Ordering::Relaxed) as *mut c_void
     }
 }
 impl<T> Drop for Array<T> {
     fn drop(&mut self) {
         unsafe {
-            naevc::_array_free_helper(self.0.as_ptr() as *mut c_void);
+            naevc::_array_free_helper(self.as_ptr());
         }
     }
 }
@@ -48,7 +48,7 @@ impl<T> Drop for Array<T> {
 #[derive(Default)]
 pub struct ArrayCString {
     data: Vec<AtomicPtr<c_char>>,
-    arr: Option<Array<AtomicPtr<c_char>>>,
+    arr: Option<Array<*mut c_char>>,
 }
 impl ArrayCString {
     pub fn new(vec: &[String]) -> Result<Self> {
@@ -56,13 +56,13 @@ impl ArrayCString {
             .iter()
             .map(|s| {
                 let cs = CString::new(s.as_str()).unwrap();
-                let ptr = cs.into_raw();
-                AtomicPtr::new(ptr)
+                cs.into_raw()
             })
             .collect();
         let arr = Array::new(&data)?;
+        let ptrdata: Vec<_> = data.iter().map(|s| AtomicPtr::new(*s)).collect();
         Ok(ArrayCString {
-            data,
+            data: ptrdata,
             arr: Some(arr),
         })
     }
