@@ -14,14 +14,17 @@ pub fn to_vec<T: Clone>(array: *mut T) -> Result<Vec<T>> {
 }
 
 /// Small wrapper for working with C arrays
-pub struct Array<T: Clone>(AtomicPtr<T>);
-impl<T: Clone> Default for Array<T> {
+pub struct Array<T>(AtomicPtr<T>);
+impl<T> Default for Array<T> {
     fn default() -> Self {
         Array(AtomicPtr::default())
     }
 }
-impl<T: Clone + Sized> Array<T> {
+impl<T: Sized> Array<T> {
     pub fn new(vec: &[T]) -> Result<Self> {
+        if vec.len() <= 0 {
+            return Ok(Default::default());
+        }
         let size = std::mem::size_of::<T>();
         let array =
             unsafe { naevc::array_from_vec(vec.as_ptr() as *const c_void, size, vec.len()) };
@@ -34,7 +37,7 @@ impl<T: Clone + Sized> Array<T> {
         self.0.as_ptr() as *mut c_void
     }
 }
-impl<T: Clone> Drop for Array<T> {
+impl<T> Drop for Array<T> {
     fn drop(&mut self) {
         unsafe {
             naevc::_array_free_helper(self.0.as_ptr() as *mut c_void);
@@ -44,18 +47,20 @@ impl<T: Clone> Drop for Array<T> {
 
 #[derive(Default)]
 pub struct ArrayCString {
-    #[allow(dead_code)]
-    data: Vec<CString>, // just here to store memory for the C strings
-    arr: Option<Array<*const c_char>>,
+    data: Vec<AtomicPtr<c_char>>,
+    arr: Option<Array<AtomicPtr<c_char>>>,
 }
 impl ArrayCString {
     pub fn new(vec: &[String]) -> Result<Self> {
-        let data: Vec<CString> = vec
+        let data: Vec<_> = vec
             .iter()
-            .map(|s| CString::new(s.as_str()).unwrap())
+            .map(|s| {
+                let cs = CString::new(s.as_str()).unwrap();
+                let ptr = cs.into_raw();
+                AtomicPtr::new(ptr)
+            })
             .collect();
-        let ptrdata: Vec<*const c_char> = data.iter().map(|s| s.as_ptr()).collect();
-        let arr = Array::new(&ptrdata)?;
+        let arr = Array::new(&data)?;
         Ok(ArrayCString {
             data,
             arr: Some(arr),
@@ -71,5 +76,14 @@ impl ArrayCString {
 impl std::fmt::Debug for ArrayCString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
         write!(f, "ArrayCString")
+    }
+}
+impl Drop for ArrayCString {
+    fn drop(&mut self) {
+        for ptr in &self.data {
+            unsafe {
+                let _ = CString::from_raw(ptr.load(std::sync::atomic::Ordering::Relaxed));
+            }
+        }
     }
 }

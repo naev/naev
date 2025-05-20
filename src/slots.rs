@@ -83,7 +83,6 @@ impl SlotProperty {
                     }
                     // Remove when not needed for C interface
                     sp.ctags = ArrayCString::new(&sp.tags)?;
-                    dbg!(&sp.tags);
                 }
                 tag => nxml_warn_node_unknown!("Slot Property", &sp.name, tag),
             }
