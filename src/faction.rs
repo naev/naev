@@ -369,7 +369,12 @@ impl FactionLoad {
                         if !node.is_element() {
                             continue;
                         }
-                        fct.tags.push(node.tag_name().name().to_lowercase());
+                        match node.text() {
+                            Some(t) => {
+                                fct.tags.push(String::from(t));
+                            }
+                            None => (),
+                        }
                     }
                     // Remove when not needed for C interface
                     fct.ctags = ArrayCString::new(&fct.tags)?;
