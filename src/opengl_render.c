@@ -1106,14 +1106,14 @@ void gl_renderScaleAspect( const glTexture *texture, double bx, double by,
 
 /**
  * @brief Blits a texture scaling it to fit a rectangle, but conserves aspect
- * ratio using expensive filtering.
+ * ratio using expensive filtering with the "Magic" Kernel. Should ideally be
+ * cached and not run every frame.
  *
  *    @param texture Texture to blit.
  *    @param bx X position of the texture in screen coordinates.
  *    @param by Y position of the texture in screen coordinates.
  *    @param bw Width to scale to.
  *    @param bh Height to scale to.
- *    @param c Colour to use (modifies texture colour).
  */
 void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
                                 double bw, double bh )
