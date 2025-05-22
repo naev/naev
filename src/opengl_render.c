@@ -1122,6 +1122,8 @@ void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
    double nw, nh;
 
    scale = MIN( bw / texture->w, bh / texture->h );
+   if ( scale < gl_screen.scale )
+      return gl_renderScaleAspect( texture, bx, by, bw, bh, NULL );
 
    nw = scale * texture->w;
    nh = scale * texture->h;
@@ -1139,9 +1141,14 @@ void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.resize.vertex, 0, 2,
                                GL_FLOAT, 0 );
 
+   mat4 tex_mat = ( texture->flags & OPENGL_TEX_VFLIP )
+                     ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                     : mat4_identity();
+
    glUniform1f( shaders.resize.u_scale, scale );
    glUniform1f( shaders.resize.u_radius, 8.0 );
    gl_uniformMat4( shaders.resize.projection, &projection );
+   gl_uniformMat4( shaders.resize.tex_mat, &tex_mat );
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 

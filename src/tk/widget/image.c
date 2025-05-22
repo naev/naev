@@ -42,15 +42,8 @@ void window_addImage( unsigned int wid, const int x, const int y, const int w,
    wgt->render  = img_render;
    wgt->cleanup = img_cleanup;
 
-   double scale = ( image == NULL )
-                     ? -1.0
-                     : MIN( (double)w / image->w, (double)h / image->h );
-   if ( scale < 1.0 )
-      wgt->dat.img.image = gl_resizeTexture( image, scale );
-   else
-      wgt->dat.img.image = gl_dupTexture( image );
+   wgt->dat.img.image   = gl_dupTexture( image );
    wgt->dat.img.border  = border;
-   wgt->dat.img.colour  = cWhite; /* normal colour */
    wgt->dat.img.layers  = NULL;
    wgt->dat.img.nlayers = 0;
 
@@ -83,13 +76,11 @@ static void img_render( Widget *img, double bx, double by )
     * image
     */
    if ( img->dat.img.image != NULL ) {
-      gl_renderScaleAspect( img->dat.img.image, x, y, w, h,
-                            &img->dat.img.colour );
+      gl_renderScaleAspectMagic( img->dat.img.image, x, y, w, h );
    }
    /* Additional layers. */
    for ( i = 0; i < img->dat.img.nlayers; i++ ) {
-      gl_renderScaleAspect( img->dat.img.layers[i], x, y, w, h,
-                            &img->dat.img.colour );
+      gl_renderScaleAspectMagic( img->dat.img.layers[i], x, y, w, h );
    }
 
    if ( img->dat.img.border ) {
@@ -160,14 +151,7 @@ void window_modifyImage( unsigned int wid, char *name, const glTexture *image,
 
    /* Free and set the image. */
    gl_freeTexture( wgt->dat.img.image );
-
-   double scale = ( image == NULL )
-                     ? -1.0
-                     : MIN( (double)w / image->w, (double)h / image->h );
-   if ( scale < 1.0 )
-      wgt->dat.img.image = gl_resizeTexture( image, scale );
-   else
-      wgt->dat.img.image = gl_dupTexture( image );
+   wgt->dat.img.image = gl_dupTexture( image );
 
    /* Adjust size. */
    if ( w >= 0 )
@@ -176,32 +160,6 @@ void window_modifyImage( unsigned int wid, char *name, const glTexture *image,
    if ( h >= 0 )
       wgt->h =
          ( h > 0 ) ? h : ( ( image == NULL ) ? 0 : wgt->dat.img.image->sh );
-}
-
-/**
- * Modifies an existing image's colour.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget to modify image colour of.
- *    @param colour New colour to use.
- */
-void window_imgColour( unsigned int wid, char *name, const glColour *colour )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
-      return;
-
-   /* Check the type. */
-   if ( wgt->type != WIDGET_IMAGE ) {
-      WARN( "Not modifying image on non-image widget '%s'.", name );
-      return;
-   }
-
-   /* Set the colour. */
-   wgt->dat.img.colour = *colour;
 }
 
 /**

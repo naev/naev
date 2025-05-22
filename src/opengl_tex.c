@@ -933,9 +933,14 @@ glTexture *gl_resizeTexture( const glTexture *texture, double scale )
    mat4 projection = mat4_ortho( 0., nw, 0, nh, -1., 1. );
    mat4_scale_xy( &projection, nw, nh );
 
+   mat4 tex_mat = ( texture->flags & OPENGL_TEX_VFLIP )
+                     ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                     : mat4_identity();
+
    glUniform1f( shaders.resize.u_scale, scale );
    glUniform1f( shaders.resize.u_radius, 8.0 );
    gl_uniformMat4( shaders.resize.projection, &projection );
+   gl_uniformMat4( shaders.resize.tex_mat, &tex_mat );
 
    glViewport( 0, 0, nw, nh );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -949,7 +954,6 @@ glTexture *gl_resizeTexture( const glTexture *texture, double scale )
    glDeleteFramebuffers( 1, &fbo );
 
    glTexture *t = gl_rawTexture( NULL, tex, nw, nh );
-   t->flags |= OPENGL_TEX_VFLIP;
    return t;
 }
 

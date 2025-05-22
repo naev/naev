@@ -9,7 +9,7 @@ uniform float u_scale = 0.25; // Amount of scaling being done
 uniform float u_radius = 8.0; /// Radius of the window
 uniform sampler2D tex;
 
-in vec2 pos;
+in vec2 tex_coord;
 out vec4 colour_out;
 
 #if 0
@@ -50,7 +50,7 @@ void main()
    vec2 dims = textureSize( tex, 0 );
    vec2 pixsize = 1.0 / dims;
 
-   vec2 src = pos * dims;
+   vec2 src = tex_coord * dims;
    vec2 startf = src - u_radius;
    vec2 endf = src + u_radius;
    ivec2 start = ivec2( floor(startf) );
