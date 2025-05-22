@@ -916,8 +916,6 @@ glTexture *gl_resizeTexture( const glTexture *texture, double scale )
    if ( scale <= 0.0 )
       return gl_dupTexture( texture );
 
-   DEBUG( "RESIZING: %s", texture->name );
-
    double nw, nh;
    GLuint fbo, tex;
    nw = round( scale * texture->w );
