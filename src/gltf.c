@@ -558,6 +558,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
                               GL_TEXTURE_2D, tex, 0 );
 
       /* Blit to framebuffer. */
+      /* TODO use resizing. */
       glBindFramebuffer( GL_READ_FRAMEBUFFER, fbo );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, downfbo );
       glBlitFramebuffer( 0, 0, surface->w, surface->h, 0, 0, max_tex_size,

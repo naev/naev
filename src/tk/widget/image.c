@@ -39,11 +39,11 @@ void window_addImage( unsigned int wid, const int x, const int y, const int w,
    wgt->type = WIDGET_IMAGE;
 
    /* specific */
-   wgt->render          = img_render;
-   wgt->cleanup         = img_cleanup;
+   wgt->render  = img_render;
+   wgt->cleanup = img_cleanup;
+
    wgt->dat.img.image   = gl_dupTexture( image );
    wgt->dat.img.border  = border;
-   wgt->dat.img.colour  = cWhite; /* normal colour */
    wgt->dat.img.layers  = NULL;
    wgt->dat.img.nlayers = 0;
 
@@ -78,13 +78,11 @@ static void img_render( Widget *img, double bx, double by )
     * image
     */
    if ( img->dat.img.image != NULL ) {
-      gl_renderScaleAspect( img->dat.img.image, x, y, w, h,
-                            &img->dat.img.colour );
+      gl_renderScaleAspectMagic( img->dat.img.image, x, y, w, h );
    }
    /* Additional layers. */
    for ( i = 0; i < img->dat.img.nlayers; i++ ) {
-      gl_renderScaleAspect( img->dat.img.layers[i], x, y, w, h,
-                            &img->dat.img.colour );
+      gl_renderScaleAspectMagic( img->dat.img.layers[i], x, y, w, h );
    }
 
    if ( img->dat.img.border ) {
@@ -166,32 +164,6 @@ void window_modifyImage( unsigned int wid, char *name, const glTexture *image,
       wgt->h = ( h > 0 )
                   ? h
                   : ( ( image == NULL ) ? 0 : tex_sh( wgt->dat.img.image ) );
-}
-
-/**
- * Modifies an existing image's colour.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget to modify image colour of.
- *    @param colour New colour to use.
- */
-void window_imgColour( unsigned int wid, char *name, const glColour *colour )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt( wid, name );
-   if ( wgt == NULL )
-      return;
-
-   /* Check the type. */
-   if ( wgt->type != WIDGET_IMAGE ) {
-      WARN( "Not modifying image on non-image widget '%s'.", name );
-      return;
-   }
-
-   /* Set the colour. */
-   wgt->dat.img.colour = *colour;
 }
 
 /**

@@ -772,6 +772,8 @@ dat/spob/ariadus_vi.xml
 dat/spob/ariadus_via.xml
 dat/spob/ariadus_vib.xml
 dat/spob/ariak.xml
+dat/spob/arietis_b.xml
+dat/spob/arietis_c.xml
 dat/spob/armorhead_i1.xml
 dat/spob/armorhead_i1_b.xml
 dat/spob/arrakis.xml
@@ -2070,6 +2072,7 @@ dat/ssys/arandon.xml
 dat/ssys/arcanis.xml
 dat/ssys/arcturus.xml
 dat/ssys/ariadus.xml
+dat/ssys/arietis.xml
 dat/ssys/armorhead.xml
 dat/ssys/astana.xml
 dat/ssys/atlantis.xml

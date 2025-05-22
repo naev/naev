@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Arietis">
+ <general>
+  <radius>15000.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>48.900000</interference>
+  <nebula volatility="13.200000" hue="2815.000000">375.000000</nebula>
+ </general>
+ <pos x="815.893519" y="-207.467593"/>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Ryder">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Seifer">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

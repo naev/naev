@@ -240,18 +240,18 @@ static void iar_render( Widget *iar, double bx, double by )
                gl_renderStatic( cell->image, xcurs + 5. + offx,
                                 ycurs + gl_smallFont.h + 7. + offy, NULL );
             } else
-               gl_renderScaleAspect( cell->image, xcurs + 5.,
-                                     ycurs + gl_smallFont.h + 7.,
-                                     iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+               gl_renderScaleAspectMagic( cell->image, xcurs + 5.,
+                                          ycurs + gl_smallFont.h + 7.,
+                                          iar->dat.iar.iw, iar->dat.iar.ih );
          }
 
          /* layers */
          for ( int k = 0; k < array_size( cell->layers ); k++ ) {
 
             if ( cell->layers[k] != NULL )
-               gl_renderScaleAspect( cell->layers[k], xcurs + 5.,
-                                     ycurs + gl_smallFont.h + 7.,
-                                     iar->dat.iar.iw, iar->dat.iar.ih, NULL );
+               gl_renderScaleAspectMagic( cell->layers[k], xcurs + 5.,
+                                          ycurs + gl_smallFont.h + 7.,
+                                          iar->dat.iar.iw, iar->dat.iar.ih );
          }
 
          /* caption */

@@ -18,7 +18,6 @@ local KILL_MONEY = 283782
 local DRUG = commodity.get("Neblaze")
 
 function create ()
-   evt.finish(false) -- Not finished yet
    local result
 
    -- TODO give a fixed image if we potentially have them appear again

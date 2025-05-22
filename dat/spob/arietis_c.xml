@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Arietis C">
+ <pos x="2529.478275" y="10161.088205"/>
+ <GFX>
+  <space>Y00.webp</space>
+  <exterior>uninhabited-rocky-magenta-01.webp</exterior>
+ </GFX>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Once a fairly well inhabited M-class planet, the Incident has irradiated the entire atmosphere and surface layer, rendering it completely uninhabitable. The only legacy of human colonization is in the sparse underground structures that have mostly survived the cataclysm.</description>
+ </general>
+</spob>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # This script will download and wrap meson if the current installed version
-# is not at least version 0.55.0 (which meson.build currently requires)
+# is not at least version 1.4.0 (which meson.build currently requires)
 # if you have a newer version of meson in PATH, this wrapper isn't needed,
 # but it will pass commands through all the same.
 #
@@ -66,7 +66,7 @@ def main():
             grab_meson()
         else:
             currentver = subprocess.check_output(["meson", "--version"]).decode().strip()
-            requiredver = "0.55.0"
+            requiredver = "1.4.0"
             if tuple(map(int, currentver.split("."))) >= tuple(map(int, requiredver.split("."))):
                 print(f"Meson version is greater than or equal to {requiredver}")
                 global MESON

@@ -100,6 +100,8 @@ void gl_renderScale( const glTexture *texture, double bx, double by, double bw,
  * pos */
 void gl_renderScaleAspect( const glTexture *texture, double bx, double by,
                            double bw, double bh, const glColour *c );
+void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
+                                double bw, double bh );
 /* blits the entire image, absolute pos */
 void gl_renderStatic( const glTexture *texture, double bx, double by,
                       const glColour *c );

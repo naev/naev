@@ -1005,6 +1005,52 @@ glTexture *gl_dupTexture( const glTexture *texture )
    return NULL;
 }
 
+glTexture *gl_resizeTexture( const glTexture *texture, double scale )
+{
+   if ( scale <= 0.0 )
+      return gl_dupTexture( texture );
+
+   double nw, nh;
+   GLuint fbo, tex;
+   nw = round( scale * texture->w );
+   nh = round( scale * texture->h );
+   gl_fboCreate( &fbo, &tex, nw, nh );
+
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+
+   glUseProgram( shaders.resize.program );
+   glBindTexture( GL_TEXTURE_2D, texture->texture );
+   glEnableVertexAttribArray( shaders.resize.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.resize.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+
+   mat4 projection = mat4_ortho( 0., nw, 0, nh, -1., 1. );
+   mat4_scale_xy( &projection, nw, nh );
+
+   mat4 tex_mat = ( texture->flags & OPENGL_TEX_VFLIP )
+                     ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
+                     : mat4_identity();
+
+   glUniform1f( shaders.resize.u_scale, scale );
+   glUniform1f( shaders.resize.u_radius, 8.0 );
+   gl_uniformMat4( shaders.resize.projection, &projection );
+   gl_uniformMat4( shaders.resize.tex_mat, &tex_mat );
+
+   glViewport( 0, 0, nw, nh );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
+
+   glDisableVertexAttribArray( shaders.resize.vertex );
+   glUseProgram( 0 );
+
+   glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
+
+   glDeleteFramebuffers( 1, &fbo );
+
+   glTexture *t = gl_rawTexture( NULL, tex, nw, nh );
+   return t;
+}
+
 /**
  * @brief Creates a texture from a raw opengl index.
  */

@@ -39,6 +39,10 @@ end
 
 -- Runs on saves older than 0.13.0
 local function updater0130( _did0120, _did0110, _did0100, _did090 )
+   -- TODO stuff we want to add before the release
+   -- 1. Ships autodisabling at low health
+   -- 2. More talk on slots
+
    -- Newly added diff
    if player.outfitNum( outfit.get("Racing Trophy") ) > 0 then
       diff.apply( "melendez_dome_xy37" )
