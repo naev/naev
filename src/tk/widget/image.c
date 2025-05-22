@@ -39,9 +39,16 @@ void window_addImage( unsigned int wid, const int x, const int y, const int w,
    wgt->type = WIDGET_IMAGE;
 
    /* specific */
-   wgt->render          = img_render;
-   wgt->cleanup         = img_cleanup;
-   wgt->dat.img.image   = gl_dupTexture( image );
+   wgt->render  = img_render;
+   wgt->cleanup = img_cleanup;
+
+   double scale = ( image == NULL )
+                     ? -1.0
+                     : MIN( (double)w / image->w, (double)h / image->h );
+   if ( scale < 1.0 )
+      wgt->dat.img.image = gl_resizeTexture( image, scale );
+   else
+      wgt->dat.img.image = gl_dupTexture( image );
    wgt->dat.img.border  = border;
    wgt->dat.img.colour  = cWhite; /* normal colour */
    wgt->dat.img.layers  = NULL;
@@ -153,7 +160,14 @@ void window_modifyImage( unsigned int wid, char *name, const glTexture *image,
 
    /* Free and set the image. */
    gl_freeTexture( wgt->dat.img.image );
-   wgt->dat.img.image = gl_dupTexture( image );
+
+   double scale = ( image == NULL )
+                     ? -1.0
+                     : MIN( (double)w / image->w, (double)h / image->h );
+   if ( scale < 1.0 )
+      wgt->dat.img.image = gl_resizeTexture( image, scale );
+   else
+      wgt->dat.img.image = gl_dupTexture( image );
 
    /* Adjust size. */
    if ( w >= 0 )

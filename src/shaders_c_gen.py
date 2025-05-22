@@ -72,6 +72,13 @@ SHADERS = [
       uniforms = ["projection", "colour", "border"],
    ),
    Shader(
+       name = "resize",
+       vs_path = "project_pos.vert",
+       fs_path = "magic.frag",
+       attributes = ["vertex"],
+       uniforms = ["projection", "tex", "u_scale", "u_radius"],
+   ),
+   Shader(
       name = "texture",
       vs_path = "texture.vert",
       fs_path = "texture.frag",
