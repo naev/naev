@@ -5,28 +5,79 @@ from sys import argv,stderr
 import xml.etree.ElementTree as ET
 
 
-virtual_edges=[('flow','basel',2),('deneb','booster',1.5)]
+anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian', 'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
+
+virtual_edges=[('flow','basel',2,1),('deneb','booster',1.5,1), ('ngc4746','logania',1,1),]
+
+prv = None
+prvj = None
+bhl = 1.0
+for j, i in enumerate(anbh):
+   if prv is None:
+      prv = i
+   else:
+      if prvj is not None:
+         virtual_edges.append(("_"+str(prvj),"_"+str(j),bhl,100))
+      prvj = j
+      virtual_edges.append(('anubis_black_hole',"_"+str(j),bhl,100))
+      virtual_edges.append(("_"+str(j),prv,bhl,100))
+      virtual_edges.append(("_"+str(j),i,bhl,100))
+      prv = None
+
+if not (prv is None):
+   virtual_edges.append((prv,i,bhl,100))
+   virtual_edges.append(("_"+str(prvj),"_"+str(prvj+2),bhl,100))
+   virtual_edges.append(("_"+str(prvj+2),prv,bhl,100))
+   virtual_edges.append(("_"+str(prvj+2),"_"+str(1),bhl,100))
+
+small = [('carnis_minor','carnis_major'), ('gliese','gliese_minor'), ('kruger','krugers_pocket')]
+
 heavy_virtual_edges=[
-   ('nirtos','protera'),
-   #("scholzs_star",'hystera'),('apik','ekta'),('apik','hystera'),("apik",'telika'),
-   ('protera','sagittarius'),("baitas","tasopa"),('tasopa','veses'),('alpha_centauri','tasopa'),('baitas','padonia'),
-   ('ngc1098','nunavut'),('ngc8338','volus'),('tobanna','brumeria'),('rotide','tide'),
+   #('ngc8338','volus'),
+   ('seifer','rei'),
+   ('basel','octantis'),
+   ('sagittarius','baitas'),
+   ("baitas","tasopa"),
+   ('alpha_centauri','tasopa'),('syndania','padonia'),
+   ('veses','protera'),
+   ('syndania','stint'),
+   ('sagittarius','alpha_centauri'),
+   ('protera','scholzs_star'),
+   ('ngc18451','felzen'),
+   ('ngc6057','xeric'),
+   ('kiwi','suna'),
+   ('ngc1098','westhaven'),
+   ('ngc7061','kansas'),
+   ('niger','kyo'),
+   ('willow','palovi'),
+   ('margarita','narousse'),
+   ('porro','modus_manis'),
+   ('suna','vanir'),
+   ('tobanna','brumeria'),('rotide','tide'),
    ('vean','haered'),('nava','flow'),
    ('padonia','basel'),
+   ('ogat','wochii'),
    ('griffin','pastor'),
    ('ngc2948','ngc9017'),
+   ('ngc4131','neexi'),
+   ('c59','c14'),
+   ('c43','c28'),
    ('levo','qellan'),
    ('nixon','gyrios'),
-   ('ngc7078','anubis_black_hole'),
    ('suk','oxuram'),
-   ('syndania','stint'),
    ('defa','taiomi'),('titus','solene'),('titus','diadem'),
    ('pike','kraft'),
    ('undergate','ulysses'),
    ('ngc20489','monogram'),
    ('anrique','adraia'),
    ('andee','chraan'),
-   ('trohem','tepdania')
+   ('trohem','tepdania'),
+   ('ngc14479','zintar'),
+   ('pudas','fried'),
+   ('blunderbuss','darkstone'),
+   ('ekkodu','tarsus'),
+   ('ivella','jommel'),
+   ('starlight_end','possum'),
 ]
 
 
@@ -99,17 +150,28 @@ def main(args,fixed_pos=False):
    print '\tinputscale='+str(fact)
    print '\tnotranslate=true' # don't make upper left at 0,0
    print '\tnode[fixedsize=true,shape=circle,color=white,fillcolor=grey,style="filled"]'
+   reflen = 0.5
    print '\tnode[width=0.5]'
-   print '\tedge[len=1.0]'
+   print '\tedge[len='+str(reflen)+']'
    print '\tedge[weight=100]'
 
    if fixed_pos:
       print '\tnode[pin=true]'
 
+   virt_v = set()
+   for (f,t,l,w) in virtual_edges:
+      virt_v.update({f,t})
+
+   for i in virt_v:
+      if i not in V:
+         print '\t"'+i+'" [label="",style=invis]'
+
    for i in V:
       if E[i]!=[]: # Don't include disconnected systems
-         s='\t"'+i+'" [label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
-         #s='\t"'+i+'" [label=""'
+         s = '\t"'+i+'" [label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
+
+         if i=='sol':
+            s+=';color=red'
          try:
             (x,y)=pos[i]
             s+=';pos="'+str(x)+','+str(y)+'"'
@@ -117,13 +179,18 @@ def main(args,fixed_pos=False):
             pass
          print s+']'
          for dst,hid in E[i]:
-            if i in tl and dst in tl:
-               suff="[style=bold;penwidth=4.0]"
-            elif hid:
-               suff="[style=dotted;pendwidth=2.5]"
-               #suff="[color=red]"
+            if (i,dst) in small or (dst,i) in small:
+               suff=['len='+str(reflen*0.5)+';weight=100']
             else:
-               suff=""
+               suff=[]
+            if i in tl and dst in tl:
+               suff.append("style=bold;penwidth=4.0")
+            elif hid:
+               suff.append("style=dotted;penwidth=2.5")
+            if suff == []:
+               suff = ""
+            else:
+               suff = '['+';'.join(suff)+']'
             oneway=i not in map(lambda (x,y):x,E[dst])
             if oneway:
                print '\t"'+i+'"->"'+dst+'"'+suff
@@ -131,41 +198,15 @@ def main(args,fixed_pos=False):
                print '\t"'+i+'"--"'+dst+'"'+suff
 
    if not fixed_pos:
-      """
-      # Transiticity edges: appears to have no effect. Why ???
-      trans=set()
-
-      for v in V:
-         for i,(a,_h) in enumerate(E[v]):
-            for j in range(i):
-               b,_h2=E[v][j]
-               if a<b:
-                  if(a,b) not in trans:
-                     trans.add((a,b))
-               else:
-                  if(b,a) not in trans:
-                     trans.add((b,a))
-      for v in V:
-         for i,(a,_h) in enumerate(E[v]):
-            if (a,v) in trans:
-               trans.remove((a,v))
-            if (v,a) in trans:
-               trans.remove((v,a))
-            
-      print '\tedge[len=2.0;weight=50]'
-      print '\tedge[style="invis"]'
-      for (u,v) in trans:
-         print '\t"'+u+'"--"'+v+'"'
-      """
-
-      print '\tedge[len=1.0;weight=100]'
+      print '\tedge[len='+str(reflen)+';weight=100]'
       print '\tedge[style="dashed";color=grey;pendwidth=1.5]'
       for (f,t) in heavy_virtual_edges:
-         print '\t"'+f+'"--"'+t+'"'
+         inv = "[style=invis]" if (f in virt_v or t in virt_v) else ""
+         print '\t"'+f+'"--"'+t+'"'+inv
 
-      print '\tedge[weight=1]'
-      for (f,t,l) in virtual_edges:
-         print '\t"'+f+'"--"'+t+'" [len='+str(l)+']'
+      for (f,t,l,w) in virtual_edges:
+         inv = ", style=invis" if (f in virt_v or t in virt_v) else ""
+         print '\t"'+f+'"--"'+t+'" [len='+str(l*reflen)+',weight='+str(w)+inv+']'
 
    print "}"
 
