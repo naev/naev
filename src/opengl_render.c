@@ -1105,6 +1105,52 @@ void gl_renderScaleAspect( const glTexture *texture, double bx, double by,
 }
 
 /**
+ * @brief Blits a texture scaling it to fit a rectangle, but conserves aspect
+ * ratio using expensive filtering.
+ *
+ *    @param texture Texture to blit.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param bw Width to scale to.
+ *    @param bh Height to scale to.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
+                                double bw, double bh )
+{
+   double scale;
+   double nw, nh;
+
+   scale = MIN( bw / texture->w, bh / texture->h );
+
+   nw = scale * texture->w;
+   nh = scale * texture->h;
+
+   bx += ( bw - nw ) * 0.5;
+   by += ( bh - nh ) * 0.5;
+
+   /* Set the vertex. */
+   mat4 projection = gl_view_matrix;
+   mat4_translate_scale_xy( &projection, bx, by, bw, bh );
+
+   glUseProgram( shaders.resize.program );
+   glBindTexture( GL_TEXTURE_2D, texture->texture );
+   glEnableVertexAttribArray( shaders.resize.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.resize.vertex, 0, 2,
+                               GL_FLOAT, 0 );
+
+   glUniform1f( shaders.resize.u_scale, scale );
+   glUniform1f( shaders.resize.u_radius, 8.0 );
+   gl_uniformMat4( shaders.resize.projection, &projection );
+
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   glDisableVertexAttribArray( shaders.resize.vertex );
+   glUseProgram( 0 );
+   gl_checkErr();
+}
+
+/**
  * @brief Blits a texture to a position
  *
  *    @param texture Texture to blit.
