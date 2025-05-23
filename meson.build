@@ -233,20 +233,17 @@ int main (void) { return 0; }''')
 
    naev_deps += blas
 
-   ### Soft deps (required: false)
-
-   # libdl can be used for debugging stack traces. On non-Windows platforms, GLAD relies on dlopen().
-   glad_requires_libdl = not cc.has_header('windows.h')
-   if glad_requires_libdl or debug
-     # TODO maybe use dependency('dl') instead of find_library. Requires meson 0.62, however.
-     # ref: https://mesonbuild.com/Dependencies.html#dl-libdl
-     libdl = cc.find_library('dl', required: false )
-     if libdl.found()
-       naev_deps += libdl
-     elif host_machine.system()=='windows'
-       naev_deps += subproject('dlfcn-win32').get_variable('dl_dep')
-     endif
+   # libdl can be used for debugging stack traces.
+   if host_machine.system()=='windows'
+      # On non-Windows platforms, GLAD relies on dlopen().
+      # Windows doesn't have dlopen, but we can use dlfcn-win32 instead.
+      libdl = dependency('dl', fallback: ['dlfcn-win32', 'dl_dep'], required: true)
+   else
+      libdl = dependency('dl', required: true)
    endif
+   naev_deps += libdl
+
+   ### Soft deps (required: false)
 
    if get_option('debug')
       libbacktrace = cc.find_library('backtrace', has_headers: 'backtrace.h', required: false)
