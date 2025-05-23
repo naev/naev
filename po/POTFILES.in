@@ -2930,6 +2930,7 @@ dat/events/naevpedia.lua
 dat/events/neutral/alsafi_druglab.lua
 dat/events/neutral/animaltrouble.lua
 dat/events/neutral/arandon_station.lua
+dat/events/neutral/arietis_guardian.lua
 dat/events/neutral/astral_orchids_chloe_i.lua
 dat/events/neutral/astral_orchids_nougat_ii.lua
 dat/events/neutral/astral_orchids_quai_iib.lua
