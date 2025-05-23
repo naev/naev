@@ -1,4 +1,5 @@
 local drill = require "outfits.lib.mining_drill"
+hidestats = true
 
 function init( p, po )
    -- Since this outfit is usually off, we use shipstats to forcibly set the
