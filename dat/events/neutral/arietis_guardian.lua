@@ -17,12 +17,11 @@
 local fmt = require 'format'
 local pilotai = require "pilotai"
 local strmess = require "strmess"
+local equipopt = require "equipopt"
 
 local mainspb, mainsys = spob.getS("Arietis C")
 
 function create ()
-   evt.finish(false) -- Disable until follow-up event is finished
-
    if not evt.claim{ mainsys } then
       warn(fmt.f("Unable to claim {sys} system!",{sys=mainsys}))
       return
@@ -50,7 +49,12 @@ function enter ()
    end
 
    -- Spawn the boss
-   boss = pilot.add( "Thurion Apprehension", fct, waypoints[rnd.rnd(1,#waypoints)], _("Guardian of Arietis") )
+   boss = pilot.add( "Thurion Apprehension", fct, waypoints[rnd.rnd(1,#waypoints)], _("Guardian of Arietis"), {ai="baddiepatrol", naked=true} )
+   equipopt.thurion( boss, {
+      type_range = {
+         ["Launcher"] = { max = 0 },
+      },
+   } )
    hook.pilot( boss, "death", "beatboss" )
    hook.pilot( boss, "disable", "beatboss" )
    hook.pilot( boss, "hail", "comm" )
