@@ -694,9 +694,6 @@ void load_all( void )
    constants_init();
 
    /* order is very important as they're interdependent */
-   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Commodities…" ) );
-   commodity_load(); /* dep for space */
-
    loadscreen_update( ++stage / LOADING_STAGES,
                       _( "Loading Special Effects…" ) );
    spfx_load(); /* no dep */
@@ -708,7 +705,10 @@ void load_all( void )
    dtype_load(); /* dep for outfits */
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Factions…" ) );
-   factions_load(); /* dep for fleet, space, missions, AI */
+   factions_load(); /* dep for fleet, space, missions, AI, commodity */
+
+   loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Commodities…" ) );
+   commodity_load(); /* dep for space */
 
    loadscreen_update( ++stage / LOADING_STAGES, _( "Loading Outfits…" ) );
    outfit_load(); /* dep for ships, factions */
