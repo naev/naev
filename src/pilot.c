@@ -4506,13 +4506,19 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
    /* Ship price is base price + outfit prices. */
    credits_t price = ship_basePrice( p->ship );
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-      if ( p->outfits[i]->outfit == NULL )
+      const Outfit *o = p->outfits[i]->outfit;
+      if ( o == NULL )
          continue;
       /* Don't count unique outfits. */
-      if ( !count_unique &&
-           outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_UNIQUE ) )
+      if ( !count_unique && outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
          continue;
-      price += p->outfits[i]->outfit->price;
+      price += o->price;
+   }
+   for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
+      const Outfit *o = p->outfit_intrinsic[i].outfit;
+      if ( !count_unique && outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
+         continue;
+      price += o->price;
    }
 
    return price;
