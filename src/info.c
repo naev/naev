@@ -1024,9 +1024,14 @@ static void cargo_genList( unsigned int wid )
          int             misn = ( pc->id != 0 );
          int illegal          = ( array_size( pc->commodity->illegalto ) > 0 );
 
-         SDL_asprintf( &buf[i], "%s %d%s%s", _( pc->commodity->name ),
-                       pc->quantity, misn ? _( " [#bMission#0]" ) : "",
-                       illegal ? _( " (#rillegal#0)" ) : "" );
+         if ( pc->quantity > 0 )
+            SDL_asprintf( &buf[i], "%s %d%s%s", _( pc->commodity->name ),
+                          pc->quantity, misn ? _( " [#bMission#0]" ) : "",
+                          illegal ? _( " (#rillegal#0)" ) : "" );
+         else
+            SDL_asprintf( &buf[i], "%s%s%s", _( pc->commodity->name ),
+                          misn ? _( " [#bMission#0]" ) : "",
+                          illegal ? _( " (#rillegal#0)" ) : "" );
       }
       nbuf = array_size( pclist );
    }
