@@ -16,7 +16,8 @@ local reward = outfit.get("Prototype Systems T-IVa 'Quickshell'")
 
 function create ()
    local done = false
-   local thurion_known = faction.get("Thurion"):known()
+   local fthurion = faction.get("Thurion")
+   local thurion_known = fthurion:known()
 
    vn.clear()
    vn.scene()
@@ -27,7 +28,11 @@ function create ()
    vn.na(fmt.f(_([[You touch down on {spb}, and {shipai} materializes before you.]]),
       {spb=spob.cur(), shipai=tut.ainame()}))
    if thurion_known then
-      sai(_([["That is quite weird to be attacked by a Thurion ship, maybe related to it seemingly having all its communication protocols garbled. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+      if fthurion:areEnemies( faction.player() ) then
+         sai(_([["Weird to see a Thurion ship here, maybe related to it seemingly having all its communication protocols garbled. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+      else
+         sai(_([["That is quite weird to be attacked by a Thurion ship, maybe related to it seemingly having all its communication protocols garbled. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+      end
    else
       sai(_([["That is quite weird to be attacked by an unknown ship. I was not able to find anything in my database related to it. Curious. It also seemed to be protecting something or interested in this planet. Strange..."]]))
    end
