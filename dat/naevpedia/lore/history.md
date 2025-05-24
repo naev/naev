@@ -14,7 +14,7 @@ title: History Overview
 <% end %>
 1. **Creation of [House Za'lek](lore/factions/zalek)** (UST 72)
 <% if faction.get("Thurion"):known() then %>
-1. **[Project Thurion](lore/factions/thurion)** (UST 84:8324)
+1. **[Project Thurion](lore/factions/thurion)** (UST 85:3324)
 <% end %>
 1. **Creation of [House Sirius](lore/factions/sirius)** (UST 97)
 <% if faction.get("Collective"):known() then %>
