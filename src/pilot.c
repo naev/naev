@@ -2766,7 +2766,8 @@ void pilot_update( Pilot *pilot, double dt )
    if ( !pilot_isFlag( pilot, PILOT_HYPERSPACE ) ) { /* limit the speed */
 
       /* pilot is afterburning */
-      if ( pilot_isFlag( pilot, PILOT_AFTERBURNER ) ) {
+      if ( pilot_isFlag( pilot, PILOT_AFTERBURNER ) &&
+           ( pilot->afterburner != NULL ) ) {
          const Outfit *afb = pilot->afterburner->outfit;
          double        efficiency =
             MIN( 1., afb->u.afb.mass_limit / pilot->solid.mass );
