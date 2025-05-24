@@ -16,6 +16,7 @@ local reward = outfit.get("Prototype Systems T-IVa 'Quickshell'")
 
 function create ()
    local done = false
+   local thurion_known = faction.get("Thurion"):known()
 
    vn.clear()
    vn.scene()
@@ -25,6 +26,11 @@ function create ()
 
    vn.na(fmt.f(_([[You touch down on {spb}, and {shipai} materializes before you.]]),
       {spb=spob.cur(), shipai=tut.ainame()}))
+   if thurion_known then
+      sai(_([["That is quite weird to be attacked by a Thurion ship, although it seemed to have all its communication protocols garbled. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+   else
+      sai(_([["That is quite weird to be attacked by an unknown ship. I was not able to find anything in my database related to it. Curious. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+   end
    sai(_([["I've run a preliminary analysis of the planet and there seems to be some structure uncovered nearby."]]))
    vn.menu{
       {_("Have a look."), "01_look"},
@@ -48,7 +54,7 @@ function create ()
    The last prototype has exceeded expectations in shield regeneration capabilities, this may be the breakthrough we were hoping for. With such incredible results, the Empire shall surely see the power of the clustered sentience interface. Although the shield capacity parameters are suboptimal, that is just a matter of time. It is only a matter of time before Project Thurion because the technological backbone of civilization!]]))
    vne.flashbackTextEnd()
 
-   if faction.get("Thurion"):known() then
+   if thurion_known then
       vn.na(_([[Seems like this place is older than you thought, and also somehow related to the Thurion you met in the Nebula.]]))
    else
       vn.na(_([[Seems like this place is older than you thought, but it's not clear what this Project Thurion is.]]))
