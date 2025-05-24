@@ -27,7 +27,7 @@ function create ()
    vn.na(fmt.f(_([[You touch down on {spb}, and {shipai} materializes before you.]]),
       {spb=spob.cur(), shipai=tut.ainame()}))
    if thurion_known then
-      sai(_([["That is quite weird to be attacked by a Thurion ship, although it seemed to have all its communication protocols garbled. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+      sai(_([["That is quite weird to be attacked by a Thurion ship, maybe related to it seemingly having all its communication protocols garbled. It also seemed to be protecting something or interested in this planet. Strange..."]]))
    else
       sai(_([["That is quite weird to be attacked by an unknown ship. I was not able to find anything in my database related to it. Curious. It also seemed to be protecting something or interested in this planet. Strange..."]]))
    end
