@@ -2232,23 +2232,30 @@ static void map_genModeList( void )
       for ( int j = 0; j < array_size( sys->spobs ); j++ ) {
          Spob *p = sys->spobs[j];
          for ( int k = 0; k < array_size( p->commodities ); k++ ) {
+            Commodity *com = p->commodities[k];
+
             /* Commodity should be known about */
             if ( p->commodityPrice[k].cnt <= 0 )
                continue;
 
             /* Should not have constant price. */
-            if ( commodity_isFlag( p->commodities[k],
-                                   COMMODITY_FLAG_PRICE_CONSTANT ) )
+            if ( commodity_isFlag( com, COMMODITY_FLAG_PRICE_CONSTANT ) )
+               continue;
+
+            if ( com->istemp )
+               continue;
+
+            if ( com->price_ref != NULL )
                continue;
 
             int l;
             /* find out which commodity this is */
             for ( l = 0; l < totGot; l++ ) {
-               if ( p->commodities[k] == commod_known[l] )
+               if ( com == commod_known[l] )
                   break;
             }
             if ( l == totGot ) {
-               commod_known[totGot] = p->commodities[k];
+               commod_known[totGot] = com;
                totGot++;
             }
          }
