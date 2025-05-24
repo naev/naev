@@ -29,12 +29,12 @@ function create ()
       {spb=spob.cur(), shipai=tut.ainame()}))
    if thurion_known then
       if fthurion:areEnemies( faction.player() ) then
-         sai(_([["Quite weird seeing a Thurion ship here, it seemed to have its communication protocols completely garbled. They seem to have been protecting something of interest in this planet. Strange..."]]))
+         sai(_([["Quite weird seeing a Thurion ship here, it seemed to have its communication protocols completely garbled. They seem to have been protecting something of interest on this planet. Strange..."]]))
       else
-         sai(_([["Quite weird being attacked by a Thurion ship here, it seemed to have its communication protocols completely garbled. They seem to have been protecting something of interest in this planet. Strange..."]]))
+         sai(_([["Quite weird being attacked by a Thurion ship here, it seemed to have its communication protocols completely garbled. They seem to have been protecting something of interest on this planet. Strange..."]]))
       end
    else
-      sai(_([["That is quite weird to be attacked by an unknown ship. I was not able to find anything in my database related to it. Curious. It also seemed to be protecting something or interested in this planet. Strange..."]]))
+      sai(_([["That is quite weird to be attacked by an unknown ship. I was not able to find anything in my database related to it. Curious. They seem to have been protecting something of interest on this planet. Strange..."]]))
    end
    sai(_([["I've run a preliminary analysis of the planet and there seems to be some structure uncovered nearby."]]))
    vn.menu{
