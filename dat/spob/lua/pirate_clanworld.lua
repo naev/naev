@@ -4,7 +4,7 @@ local luaspob = require "spob.lua.lib.spob"
 mem.params = {
    bribe_cost = function ()
       local std = mem.spob:reputation()
-      return (mem.std_land - std) * 500 + 1000
+      return math.max( (mem.std_land - std) * 100 * player.pilot():ship():size() + 10e3, 10e3 )
    end,
    std_land = 20,
    std_bribe = -100,
