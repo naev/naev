@@ -193,7 +193,8 @@ end
 
 -- luacheck: globals inspect_attacker
 function inspect_attacker( target )
-   -- TODO launch and deploy fighters to check
+   -- Activate PD and deploy fighters
+   atk.fb_and_pd()
    inspect_moveto( target )
 end
 
