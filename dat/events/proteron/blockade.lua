@@ -83,9 +83,9 @@ function heartbeat( proteron_blockade )
    local pp = player.pilot()
    local spotted = false
    for k,p in ipairs(proteron_blockade) do
-      if p:inrange( pp ) then
+      if p:inrange( pp ) and p:flags("combat") then
          spotted = true
-         if timer < 5 then
+         if timer < 3 then
             timer = timer + 1
             break
          end
