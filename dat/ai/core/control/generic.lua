@@ -102,6 +102,9 @@ local stateinfo = {
       attack   = true,
       noattack = true,
    },
+   inspect_attacker = {
+      fighting = true,
+   },
    return_lane = {
       running  = true,
       noattack = true,
@@ -445,7 +448,7 @@ function should_investigate( pos, si )
       return false
    end
 
-   -- Conmfort
+   -- Comfort
    local ec = mem.enemyclose or math.huge
    local ec2 = ec*ec
 
@@ -552,6 +555,7 @@ control_funcs.inspect_moveto = function ()
    end
    return true
 end
+control_funcs.inspect_attacker = control_funcs.inspect_moveto
 function control_funcs.runaway ()
    local p = ai.pilot()
    if mem.norun or p:leader() ~= nil then
@@ -660,12 +664,22 @@ end
 function attacked( attacker )
    local p = ai.pilot()
    -- Ignore hits from dead pilots.
-   if not attacker:exists() or not p:inrange( attacker ) then
+   if not attacker:exists() then
       return
    end
 
    local task = ai.taskname()
    local si = _stateinfo( task )
+
+   -- See if should investigate
+   if not p:inrange( attacker ) then
+      local ap = attacker:pos()
+      if should_investigate( ap, si ) then
+         ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
+         ai.pushtask("inspect_attacker", ap )
+         return true
+      end
+   end
 
    -- Notify that pilot has been attacked before
    if not mem.attacked then

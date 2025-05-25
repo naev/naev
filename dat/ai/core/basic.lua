@@ -191,6 +191,12 @@ function inspect_moveto( target )
    __moveto_generic( target, dir )
 end
 
+-- luacheck: globals inspect_attacker
+function inspect_attacker( target )
+   -- TODO launch and deploy fighters to check
+   inspect_moveto( target )
+end
+
 
 --[[
 -- Lunges towards the target always accelerating
