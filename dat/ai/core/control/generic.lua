@@ -707,8 +707,13 @@ function attacked( attacker )
       -- Don't use should_investigate here, because it needs to be more aggressive
       if not si.fighting or si.forced or si.noattack then
          local d = ap:dist( p:pos() )
-         ap = ap + vec2.newP( math.max(500, d*0.5)*rnd.rnd(), rnd.angle () )
-         ai.pushtask("inspect_attacker", ap )
+         local fuzz = math.max(500, d*0.5)
+         local target = ap + vec2.newP( fuzz*rnd.rnd(), rnd.angle () )
+         ai.pushtask("inspect_attacker", target )
+
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "l_investigate", ap + vec2.newP(fuzz*rnd.rnd(), rnd.angle()) )
+         end
          return true
       end
       return
