@@ -60,6 +60,7 @@ local osd_title_def  = _("Bounty Hunt")
 local osd_goto_def   = _("Fly to the {sys} system before {time_limit} ({time} remaining)")
 local osd_objective_def = _("Kill or capture {plt}")
 local osd_reward_def = _("Land in {fct} territory to collect your bounty")
+local osd_reward_static_def = _("Land to collect your bounty")
 
 -- Non-persistent state
 local hunters = {}
@@ -71,6 +72,7 @@ function bounty.init( system, targetname, targetship, reward, params )
 
    mem._bounty = {}
    local b = mem._bounty
+   b.curspb          = spob.cur()
    b.system          = system
    b.targetname      = targetname
    b.targetship      = targetship
@@ -96,7 +98,7 @@ function bounty.init( system, targetname, targetship, reward, params )
    b.osd_title       = params.osd_title or osd_title_def
    b.osd_goto        = params.osd_goto or osd_goto_def
    b.osd_objective   = params.osd_objective or osd_objective_def
-   b.osd_reward      = params.osd_reward or osd_reward_def
+   b.osd_reward      = params.osd_reward or ((b.payingfaction:static() and osd_reward_static_def) or osd_reward_def)
 
    -- Set up mission information
    b.marker = misn.markerAdd( b.system, "computer" )
@@ -212,13 +214,19 @@ function _bounty_land ()
    local b = mem._bounty
    if not b.job_done then return end
 
+   local fct = b.payingfaction
+   local spbfct = spob.cur():faction()
    local okspob = false
    -- Matching faction is always OK
-   if spob.cur():faction() == b.payingfaction then
+   if spbfct == fct then
       okspob = true
    -- Special case static factions we look for non-hostiles
-   elseif b.payingfaction:static() and not b.payingfaction:areEnemies(spob.cur():faction()) then
-      okspob = true
+   elseif fct:static() and not fct:areEnemies(spbfct) then
+      if fct:tags().generic then
+         okspob = spbfct:tags().generic
+      else
+         okspob = true
+      end
    end
    if not okspob then return end
 
