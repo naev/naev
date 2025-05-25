@@ -691,6 +691,8 @@ function attacked( attacker )
 
    -- See if should investigate
    if not p:inrange( attacker ) then
+      -- TODO ideally not use the _current_ attacker position, but something
+      -- related to where the weapon was fired from
       local ap = attacker:pos()
       -- Don't use should_investigate here, because it needs to be more aggressive
       if not si.fighting or si.forced or si.noattack then
@@ -898,7 +900,7 @@ function control( dt )
    end
 
    -- Check to see if we want to go back to the lanes
-   if mem.natural and si.fighting and not si.running then
+   if mem.natural and si.fighting and not si.running and not mem.guardpos then
       local lr = mem.enemyclose
       if lr then
          local d, pos = lanes.getDistance2P( p, p:pos() )
