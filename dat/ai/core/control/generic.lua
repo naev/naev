@@ -425,7 +425,7 @@ function should_attack( enemy, si, aggressor )
 
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
-   if mem.natural and lr then
+   if mem.natural and lr and not mem.guardpos then
       local d, _pos = lanes.getDistance2P( p, enemy:pos() )
       if math.huge > d and d > lr*lr then
          return false
@@ -467,7 +467,7 @@ function should_investigate( pos, si )
    end
 
    -- Check to see if we want to go back to the lanes
-   if mem.natural and ec < math.huge then
+   if mem.natural and ec < math.huge and not mem.guardpos then
       local d, _pos = lanes.getDistance2P( ai.pilot(), pos )
       if math.huge > d and d > ec2 then
          return false
@@ -558,7 +558,7 @@ control_funcs.inspect_moveto = function ()
          end
       end
    end
-   if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
+   if mem.natural and not mem.guardpos and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
       ai.poptask()
       return false
    end
@@ -568,6 +568,16 @@ control_funcs.inspect_attacker = function ()
    local p = ai.pilot()
    local target = ai.taskdata()
    if not target then return end
+
+   -- See if there is an enemy to attack
+   local enemy = atk.preferred_enemy( nil, true )
+   if should_attack( enemy, nil, false ) then
+      ai.hostile(enemy) -- Should be done before taunting
+      consider_taunt(enemy, true)
+      ai.poptask()
+      ai.pushtask("attack", enemy)
+      return false
+   end
 
    for k,v in ipairs(p:followers()) do
       p:msg( v, "l_investigate", target + vec2.newP(500*rnd.rnd(), rnd.angle()) )
