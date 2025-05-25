@@ -104,7 +104,6 @@ local stateinfo = {
    },
    inspect_attacker = {
       fighting = true,
-      forced = true,
    },
    return_lane = {
       running  = true,
@@ -299,7 +298,7 @@ local message_handler_funcs = {
       end
       return false
    end,
-   l_inspect = function( p, si, dopush, sender, data )
+   l_investigate = function( p, si, dopush, sender, data )
       if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
       if not si.fighting then -- inspect_attacker is fighting, so it shouldn't duplicate
          ai.pushtask("inspect_attacker", data)
@@ -406,7 +405,7 @@ function should_attack( enemy, si, aggressor )
       local ltask, ldata = l:task()
       local lsi = _stateinfo( ltask )
       if lsi.fighting then
-         if ldata and ldata:exists() then
+         if ldata and ldata.exists and ldata:exists() then
             -- Check to see if the pilot group the leader is fighting is the
             -- same as the current enenmy
             if sameFleet( ldata, enemy ) then
@@ -571,7 +570,7 @@ control_funcs.inspect_attacker = function ()
    if not target then return end
 
    for k,v in ipairs(p:followers()) do
-      p:msg( v, "l_inspect", target )
+      p:msg( v, "l_investigate", target + vec2.newP(500*rnd.rnd(), rnd.angle()) )
    end
    return true
 end
@@ -693,12 +692,14 @@ function attacked( attacker )
    -- See if should investigate
    if not p:inrange( attacker ) then
       local ap = attacker:pos()
-      if should_investigate( ap, si ) then
+      -- Don't use should_investigate here, because it needs to be more aggressive
+      if not si.fighting or si.forced or si.noattack then
          local d = ap:dist( p:pos() )
          ap = ap + vec2.newP( math.max(500, d*0.5)*rnd.rnd(), rnd.angle () )
          ai.pushtask("inspect_attacker", ap )
          return true
       end
+      return
    end
 
    -- Notify that pilot has been attacked before
