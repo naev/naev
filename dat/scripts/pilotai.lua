@@ -82,8 +82,10 @@ function pilotai.guard( plts, pos )
    pilotai.apply( plts, function( p )
       -- TODO try to figure out how to do this without having to change the AI. Probably a special task could handle it
       p:changeAI( "guard" )
-      local m = p:memory()
-      m.guardpos = pos
+      if pos then
+         local m = p:memory()
+         m.guardpos = pos
+      end
    end )
 end
 
