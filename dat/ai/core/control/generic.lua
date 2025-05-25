@@ -104,6 +104,7 @@ local stateinfo = {
    },
    inspect_attacker = {
       fighting = true,
+      forced = true,
    },
    return_lane = {
       running  = true,
@@ -448,7 +449,7 @@ end
 -- Whether or not the pilot should investigate a certain location.
 --]]
 function should_investigate( pos, si )
-   if si.fighting or si.forced or si.noattack or mem.carried or mem.leader() then
+   if si.fighting or si.forced or si.noattack or mem.carried or ai.pilot():leader() then
       return false
    end
 
@@ -572,6 +573,7 @@ control_funcs.inspect_attacker = function ()
    for k,v in ipairs(p:followers()) do
       p:msg( v, "l_inspect", target )
    end
+   return true
 end
 function control_funcs.runaway ()
    local p = ai.pilot()
