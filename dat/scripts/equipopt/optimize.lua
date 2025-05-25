@@ -275,6 +275,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    local sparams = optimize.sparams
    local pm = p:memory()
    pm.equipopt_params = params
+   local rndness = params.rnd
 
    -- Naked ship
    local ps = p:ship()
@@ -312,6 +313,7 @@ function optimize.optimize( p, cores, outfit_list, params )
             return
          end
       end
+      rndness = 0
    end
 
    -- Special case bioships
@@ -646,7 +648,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          local stats = outfit_cache[o]
          local name = string.format("s%d-%s", i, stats.name)
          local slotmod = ((slots.size==stats.size) and 1) or params.mismatch
-         local objf = (1+params.rnd*rnd.sigma()) * stats.goodness * slotmod -- contribution to objective function
+         local objf = (1+rndness*rnd.sigma()) * stats.goodness * slotmod -- contribution to objective function
          lp:set_col( c, name, objf, "binary" ) -- constraints set automatically
          -- CPU constraint
          table.insert( ia, 1 )
