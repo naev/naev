@@ -216,6 +216,9 @@ function _bounty_land ()
 
    local fct = b.payingfaction
    local spbfct = spob.cur():faction()
+   if spbfct == nil then return end
+   if not spob.cur():services().inhabited then return end
+
    local okspob = false
    -- Matching faction is always OK
    if spbfct == fct then

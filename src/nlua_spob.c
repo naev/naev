@@ -136,7 +136,7 @@ int nlua_loadSpob( nlua_env env )
  *
  * @code
  * p,s = spob.get() -- Get current spob and system
- * if p:services()["inhabited"] > 0 then -- spob is inhabited
+ * if p:services()["inhabited"] then -- spob is inhabited
  *    v = p:pos() -- Get the position
  *    -- Do other stuff
  * end
