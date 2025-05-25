@@ -8,7 +8,23 @@ local eparams = require 'equipopt.params'
 local bioship = require 'bioship'
 local ai_setup = require "ai.core.setup"
 local fmt = require "format"
+local lf = require "love.filesystem"
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+
+local fighterbays_data = {}
+for k,v in ipairs(lf.getDirectoryItems("scripts/equipopt/fighterbays")) do
+   local fb = require( "equipopt.fighterbays."..string.gsub(v,".lua","") )()
+   fb.priority = fb.priority or 5
+   table.insert( fighterbays_data, fb )
+end
+table.sort( fighterbays_data, function (a, b)
+   -- Lower priority ru later to overwrite
+   return a.priority > b.priority
+end )
+local fighterbays = {}
+for k,v in ipairs(fighterbays_data) do
+   fighterbays[ v.ship:nameRaw() ] = v
+end
 
 -- Create caches and stuff
 -- Get all the fighter bays and calculate rough dps
@@ -286,6 +302,16 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- Set up useful outfits
       ai_setup.setup(p)
       return true
+   end
+
+   -- Special case fighters, we want consistent equipment when possible
+   if p:flags("carried") then
+      local fb = fighterbays[ ps:nameRaw() ]
+      if fb ~= nil then
+         if fb.equip( p ) then
+            return
+         end
+      end
    end
 
    -- Special case bioships

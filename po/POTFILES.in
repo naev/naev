@@ -3499,6 +3499,7 @@ dat/scripts/dev/pprint.lua
 dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
+dat/scripts/equipopt/fighterbays/pirate_hyena.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
 dat/scripts/equipopt/params.lua
