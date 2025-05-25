@@ -72,6 +72,7 @@ function create ()
    hook.land("cleanup")
 end
 
+local timer = 0
 function heartbeat( proteron_blockade )
    -- If not hostile, ignore
    if not faction.get("Proteron"):areEnemies( faction.player() ) then
@@ -80,14 +81,24 @@ function heartbeat( proteron_blockade )
 
    -- Have the first ship that sees the player broadcast
    local pp = player.pilot()
+   local spotted = false
    for k,p in ipairs(proteron_blockade) do
       if p:inrange( pp ) then
+         spotted = true
+         if timer < 5 then
+            timer = timer + 1
+            break
+         end
          p:broadcast( _("Unknown vessel trying to breach blockade. All ships engage!"), true)
          return
       end
    end
 
-   hook.timer( 0.5, "heartbeat", proteron_blockade )
+   if not spotted then
+      timer = 0
+   end
+
+   hook.timer( 1, "heartbeat", proteron_blockade )
 end
 
 function cleanup ()
