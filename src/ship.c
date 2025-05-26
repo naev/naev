@@ -985,6 +985,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       temp->lua_explode_init   = LUA_NOREF;
       temp->lua_explode_update = LUA_NOREF;
       temp->lua_onshootany     = LUA_NOREF;
+      temp->lua_cooldown       = LUA_NOREF;
 
       /* Get name. */
       xmlr_attr_strd_free( parent, "name", temp->name );
@@ -1783,6 +1784,7 @@ int ships_load( void )
       s->lua_explode_update =
          nlua_refenvtype( env, "explode_update", LUA_TFUNCTION );
       s->lua_onshootany = nlua_refenvtype( env, "onshootany", LUA_TFUNCTION );
+      s->lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
 
       /* We're just going to run the script and paste here for now. */
       if ( s->lua_descextra != LUA_NOREF ) {

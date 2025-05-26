@@ -958,6 +958,7 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /* Run outfit cooldown start hook. */
    pilot_outfitLCooldown( p, 0, 0, p->ctimer );
+   pilot_shipLCooldown( p, 0, 0, p->ctimer );
 }
 
 /**
@@ -992,8 +993,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    if ( p->ctimer < 0. ) {
       pilot_fillAmmo( p );
       pilot_outfitLCooldown( p, 1, 1, 0. );
+      pilot_shipLCooldown( p, 1, 1, 0. );
    } else {
       pilot_outfitLCooldown( p, 1, 0, 0. );
+      pilot_shipLCooldown( p, 1, 0, 0. );
    }
 }
 

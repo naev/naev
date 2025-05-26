@@ -11,3 +11,4 @@ int pilot_shipLUpdate( Pilot *pilot, double dt );
 int pilot_shipLExplodeInit( Pilot *pilot );
 int pilot_shipLExplodeUpdate( Pilot *pilot, double dt );
 int pilot_shipLOnshootany( Pilot *p );
+int pilot_shipLCooldown( Pilot *p, int done, int success, double timer );

@@ -212,3 +212,28 @@ int pilot_shipLOnshootany( Pilot *p )
    pilot_shipLunmem( p, oldmem );
    return 0;
 }
+
+int pilot_shipLCooldown( Pilot *p, int done, int success, double timer )
+{
+   int oldmem;
+   if ( p->ship->lua_cooldown == LUA_NOREF )
+      return 0;
+   oldmem = pilot_shipLmem( p );
+
+   /* Set up the function: cooldown( p ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_cooldown ); /* f */
+   lua_pushpilot( naevL, p->id );                                  /* f, p */
+   lua_pushboolean( naevL, done );
+   if ( done )
+      lua_pushboolean( naevL, success );
+   else
+      lua_pushnumber( naevL, timer );
+   if ( nlua_pcall( p->ship->lua_env, 3, 0 ) ) { /* */
+      shipLRunWarning( p, p->ship, "cooldown", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+      pilot_shipLunmem( p, oldmem );
+      return -1;
+   }
+   pilot_shipLunmem( p, oldmem );
+   return 0;
+}
