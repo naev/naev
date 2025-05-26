@@ -13,7 +13,7 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local fighterbays_data = {}
 for k,v in ipairs(lf.getDirectoryItems("scripts/equipopt/fighterbays")) do
-   local fb = require( "equipopt.fighterbays."..string.gsub(v,".lua","") )()
+   local fb = require( "equipopt.fighterbays."..string.gsub(v,".lua","") )
    fb.priority = fb.priority or 5
    table.insert( fighterbays_data, fb )
 end
