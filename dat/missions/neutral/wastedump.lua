@@ -71,8 +71,8 @@ function create ()
 
    -- Note: this mission makes no system claims
 
-   mem.credits_factor = 500 + 300 * dist
-   mem.credits_mod = 10e3 * rnd.sigma()
+   mem.credits_factor = 300 + 200 * dist
+   mem.credits_mod = 10e3 * (1 + rnd.sigma())
 
    for i,p in ipairs( dest_planets ) do
       misn.markerAdd( p, "computer" )
