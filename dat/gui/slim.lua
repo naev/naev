@@ -1010,7 +1010,7 @@ function render( dt, dt_mod )
          if ta_scanned then
             --Bar Texts
             shi = round(ta_shield) .. "% (" .. round(ta_stats.shield  * ta_shield / 100) .. ")"
-            arm = round(ta_armour) .. "% (" .. round(ta_stats.armour  * ta_armour / 100) .. ")"
+            arm = math.max(1,round(ta_armour)) .. "% (" .. math.max(1,round(ta_stats.armour  * ta_armour / 100)) .. ")"
             ene = round(ta_energy) .. "%"
             if ta_stats.speed_max < 1 then
                spe = round(ta_speed)
