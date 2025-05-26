@@ -12,7 +12,7 @@ return {
             engines = outfit.get("Unicorp Hawk 160 Engine"),
             hull = outfit.get("Unicorp D-2 Light Plating"),
             -- Other outfits
-            outfit.get("Plasma Blaster MK1"),
+            outfit.get("Gauss Gun"),
             outfit.get("Laser Cannon MK1"),
             outfit.get("Ion Cannon"),
             outfit.get("Reactor Class I"),
