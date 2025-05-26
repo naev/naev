@@ -31,7 +31,6 @@ if not (prv is None):
    virtual_edges.append(("_"+str(prvj+2),"_"+str(1),bhl,100))
 
 heavy_virtual_edges=[
-   #('ngc8338','volus'),
    ('seifer','rei'),
    ('basel','octantis'),
    ('sagittarius','baitas'),
@@ -182,11 +181,9 @@ def main(args,fixed_pos=False):
             elif hid:
                suff.extend(['style=dotted','penwidth=2.5'])
 
-            suff = '['+';'.join(suff)+']'
-            if suff == '[]':
-               suff = ""
+            suff = '['+';'.join(suff)+']' if suff!=[] else ""
 
-            oneway=i not in map(lambda t:t[0],E[dst])
+            oneway = i not in map(lambda t:t[0],E[dst])
             edge = '->' if oneway else '--'
             if oneway or i<dst:
                print('\t"'+i+'"'+edge+'"'+dst+'"'+suff)
@@ -212,15 +209,13 @@ if __name__ == '__main__':
       print('Examples:')
       print('  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
       print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
-      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato > after.dot')
+      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato | tee after.dot |  ./utils/dot2sys.py')
       print('  > display before.png after.png')
    else:
-      keep='-k' in argv
-      if keep:
+      if keep := '-k' in argv:
          argv.remove('-k')
 
-      ign=[f for f in argv[1:] if not f.endswith(".xml")]
-      if ign!=[]:
+      if (ign := [f for f in argv[1:] if not f.endswith(".xml")]) != []
          stderr.write('Ignored: "'+'", "'.join(ign)+'"\n')
 
       main([f for f in argv[1:] if f.endswith(".xml")],keep)
