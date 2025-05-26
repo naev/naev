@@ -9,6 +9,11 @@ function cargo.add( p )
       return
    end
 
+   -- Carried fighters don't get commodities
+   if p:flags("carried") then
+      return
+   end
+
    -- Bias towards fewer types
    local ncargo
    local r = rnd.rnd()
