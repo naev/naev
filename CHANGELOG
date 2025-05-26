@@ -64,6 +64,7 @@
          * Temporary Invincibility
          * Detection Range only affects 'Detected at:' range
          * Ship Visibility that affects detection, signature, and stealth ranges
+      * Engine exposes some constants that can be modified by plugins
    * Fixes
       * The Bite turns off afterburner
       * Hiding on screen display information for missions also hides system markers
@@ -85,6 +86,7 @@
       * Saves try to save outfits by slot name to be more robust to changes in the future
       * Player can't stealth while disabled
       * Getting disabled turns off stealth
+      * Carried fighters don't carry commodities
 
 * 0.12.5
    * Fixed bug causing lower diversity in ship spawning
