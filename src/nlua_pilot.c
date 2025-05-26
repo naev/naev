@@ -4835,13 +4835,14 @@ static int pilotL_getHealth( lua_State *L )
    if ( absolute ) {
       lua_pushnumber( L, p->armour );
       lua_pushnumber( L, p->shield );
+      lua_pushnumber( L, p->stress );
    } else {
       lua_pushnumber(
          L, ( p->armour_max > 0. ) ? p->armour / p->armour_max * 100. : 0. );
       lua_pushnumber(
          L, ( p->shield_max > 0. ) ? p->shield / p->shield_max * 100. : 0. );
+      lua_pushnumber( L, MIN( 1., p->stress / p->armour ) * 100. );
    }
-   lua_pushnumber( L, MIN( 1., p->stress / p->armour ) * 100. );
    lua_pushboolean( L, pilot_isDisabled( p ) );
    return 4;
 }
