@@ -3503,6 +3503,7 @@ dat/scripts/equipopt/fighterbays.lua
 dat/scripts/equipopt/fighterbays/pirate_hyena.lua
 dat/scripts/equipopt/fighterbays/proteron_dalton.lua
 dat/scripts/equipopt/fighterbays/sirius_fidelity.lua
+dat/scripts/equipopt/fighterbays/sirius_shaman.lua
 dat/scripts/equipopt/fighterbays/thurion_perspicacity.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
