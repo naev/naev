@@ -1462,7 +1462,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
-         p->stimer = 5. * p->stats.shielddown_mod;
+         p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
          p->sbonus = 3.;
       }
    }
@@ -1479,7 +1479,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
-         p->stimer = 5. * p->stats.shielddown_mod;
+         p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
          p->sbonus = 3.;
       }
 

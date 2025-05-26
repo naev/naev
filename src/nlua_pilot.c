@@ -17,6 +17,7 @@
 #include "ai.h"
 #include "array.h"
 #include "camera.h"
+#include "constants.h"
 #include "damagetype.h"
 #include "escort.h"
 #include "gui.h"
@@ -4566,6 +4567,12 @@ static int pilotL_setHealth( lua_State *L )
    p->shield = s * p->shield_max;
    p->stress = st * p->armour;
 
+   /* If shield is knocked out, make it restart. */
+   if ( p->shield <= 0. ) {
+      p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
+      p->sbonus = 3.;
+   }
+
    /* Clear death hooks if not dead. */
    if ( p->armour > 0. ) {
       pilot_rmFlag( p, PILOT_DISABLED );
@@ -4614,6 +4621,12 @@ static int pilotL_setHealthAbs( lua_State *L )
    p->armour = CLAMP( 0., p->armour_max, a );
    p->shield = CLAMP( 0., p->shield_max, s );
    p->stress = CLAMP( 0., p->armour_max, st );
+
+   /* If shield is knocked out, make it restart. */
+   if ( p->shield <= 0. ) {
+      p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
+      p->sbonus = 3.;
+   }
 
    /* Clear death hooks if not dead. */
    if ( p->armour > 0. ) {
