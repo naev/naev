@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 
 from sys import argv,stderr
@@ -29,8 +29,6 @@ if not (prv is None):
    virtual_edges.append(("_"+str(prvj),"_"+str(prvj+2),bhl,100))
    virtual_edges.append(("_"+str(prvj+2),prv,bhl,100))
    virtual_edges.append(("_"+str(prvj+2),"_"+str(1),bhl,100))
-
-small = [('carnis_minor','carnis_major'), ('gliese','gliese_minor'), ('kruger','krugers_pocket')]
 
 heavy_virtual_edges=[
    #('ngc8338','volus'),
@@ -88,7 +86,7 @@ def xml_files_to_graph(args):
    for i in range(len(args)):
       basename=args[i].rsplit(".xml",1)
       if len(basename)!=2 or basename[1]!='':
-         print >>stderr,"err:",args[i]
+         stderr.write('err: "'+args[i]+'"\n')
          continue
 
       basename=basename[0].rsplit('/',1)[-1]
@@ -98,16 +96,16 @@ def xml_files_to_graph(args):
       try:
          name[-1]=T.attrib['name']
       except:
-         print >>stderr,"no name defined in",basename
+         stderr.write('no name defined in "'+basename+'"\n')
 
       for e in T.findall("pos"):
          try:
             pos.append((basename,(e.attrib['x'],e.attrib['y'])))
          except:
-            print >>stderr,"no position defined in",basename
+            stderr.write('no position defined in "'+basename+'"\n')
 
       for e in T.findall("tags/tag"):
-         if e.text=='tradelane':
+         if e.text == 'tradelane':
             tradelane.add(basename)
             break
 
@@ -121,42 +119,41 @@ def xml_files_to_graph(args):
                acc[-1][-1]=(acc[-1][-1][0],True)
                break
          except:
-            print >>stderr,"no target defined in",args[i],"jump#"+str(count)
+            stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
       count+=1
 
    n2i=lambda x:name2id[x]
-   ids=map(n2i,name)
-   acc=map(lambda L:[(n2i(x),y) for (x,y) in L],acc)
+   ids=list(map(n2i,name))
+   acc=list(map(lambda L:[(n2i(t[0]),t[1]) for t in L],acc))
 
    return dict(zip(ids,name)),dict(zip(ids,acc)),dict(pos),tradelane
 
 
 def main(args,fixed_pos=False):
    V,E,pos,tl=xml_files_to_graph(args)
+   print('graph g{')
+   print('\tepsilon=0.0000001')
+   print('\tmaxiter=1000')
+   #print('\tDamping=0.5')
+   #print('\tmode=ipsep')
 
-   print 'graph g{'
-   print '\tepsilon=0.0000001'
-   print '\tmaxiter=1000'
-   #print '\tDamping=0.5'
-   #print '\tmode=ipsep'
-
-   #1inch=72pt
+   # 1inch=72pt
    if fixed_pos:
-      fact=72*3/2
-      print '\toverlap=true'
+      fact = 72*3/2
+      print('\toverlap=true')
    else:
-      fact=72*4/3
-      print '\toverlap=false'  #'\toverlap=voronoi'
-   print '\tinputscale='+str(fact)
-   print '\tnotranslate=true' # don't make upper left at 0,0
-   print '\tnode[fixedsize=true,shape=circle,color=white,fillcolor=grey,style="filled"]'
+      fact = 72*4/3
+      print('\toverlap=false')  #'\toverlap=voronoi'
+   print('\tinputscale='+str(fact))
+   print('\tnotranslate=true') # don't make upper left at 0,0
+   print('\tnode[fixedsize=true,shape=circle,color=white,fillcolor=grey,style="filled"]')
    reflen = 0.5
-   print '\tnode[width=0.5]'
-   print '\tedge[len='+str(reflen)+']'
-   print '\tedge[weight=100]'
+   print('\tnode[width=0.5]')
+   print('\tedge[len='+str(reflen)+']')
+   print('\tedge[weight=100]')
 
    if fixed_pos:
-      print '\tnode[pin=true]'
+      print('\tnode[pin=true]')
 
    virt_v = set()
    for (f,t,l,w) in virtual_edges:
@@ -164,7 +161,7 @@ def main(args,fixed_pos=False):
 
    for i in virt_v:
       if i not in V:
-         print '\t"'+i+'" [label="",style=invis]'
+         print('\t"'+i+'" [label="",style=invis]')
 
    for i in V:
       if E[i]!=[]: # Don't include disconnected systems
@@ -177,48 +174,46 @@ def main(args,fixed_pos=False):
             s+=';pos="'+str(x)+','+str(y)+'"'
          except:
             pass
-         print s+']'
+         print(s+']')
          for dst,hid in E[i]:
-            if (i,dst) in small or (dst,i) in small:
-               suff=['len='+str(reflen*0.5)+';weight=100']
-            else:
-               suff=[]
+            suff = []
             if i in tl and dst in tl:
-               suff.append("style=bold;penwidth=4.0")
+               suff.extend(['style=bold','penwidth=4.0'])
             elif hid:
-               suff.append("style=dotted;penwidth=2.5")
-            if suff == []:
+               suff.extend(['style=dotted','penwidth=2.5'])
+
+            suff = '['+';'.join(suff)+']'
+            if suff == '[]':
                suff = ""
-            else:
-               suff = '['+';'.join(suff)+']'
-            oneway=i not in map(lambda (x,y):x,E[dst])
-            if oneway:
-               print '\t"'+i+'"->"'+dst+'"'+suff
-            elif i<dst:
-               print '\t"'+i+'"--"'+dst+'"'+suff
+
+            oneway=i not in map(lambda t:t[0],E[dst])
+            edge = '->' if oneway else '--'
+            if oneway or i<dst:
+               print('\t"'+i+'"'+edge+'"'+dst+'"'+suff)
 
    if not fixed_pos:
-      print '\tedge[len='+str(reflen)+';weight=100]'
-      print '\tedge[style="dashed";color=grey;pendwidth=1.5]'
+      print('\tedge[len='+str(reflen)+';weight=100]')
+      print('\tedge[style="dashed";color=grey;pendwidth=1.5]')
       for (f,t) in heavy_virtual_edges:
          inv = "[style=invis]" if (f in virt_v or t in virt_v) else ""
-         print '\t"'+f+'"--"'+t+'"'+inv
+         print('\t"'+f+'"--"'+t+'"'+inv)
 
       for (f,t,l,w) in virtual_edges:
          inv = ", style=invis" if (f in virt_v or t in virt_v) else ""
-         print '\t"'+f+'"--"'+t+'" [len='+str(l*reflen)+',weight='+str(w)+inv+']'
+         print('\t"'+f+'"--"'+t+'" [len='+str(l*reflen)+',weight='+str(w)+inv+']')
 
-   print "}"
+   print("}")
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print "usage:",argv[0],'[-k] <sys1.xml> ...'
-      print 'Outputs the graph in dot format.'
-      print 'If -k is set, the nodes have the keep_position marker.'
-      print 'Examples:'
-      print '  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png'
-      print '  > ./utils/sys2dot.py dat/ssys/*.xml | neato -Tpng > after.png'
-      print '  > display before.png after.png'
+      print("usage:",argv[0],'[-k] <sys1.xml> ...')
+      print('Outputs the graph in dot format.')
+      print('If -k is set, the nodes have the keep_position marker.')
+      print('Examples:')
+      print('  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
+      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
+      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato > after.dot')
+      print('  > display before.png after.png')
    else:
       keep='-k' in argv
       if keep:
@@ -226,7 +221,7 @@ if __name__ == '__main__':
 
       ign=[f for f in argv[1:] if not f.endswith(".xml")]
       if ign!=[]:
-         print >>stderr,'Ignored: "'+'", "'.join(ign)+'"'
+         stderr.write('Ignored: "'+'", "'.join(ign)+'"\n')
 
       main([f for f in argv[1:] if f.endswith(".xml")],keep)
 
