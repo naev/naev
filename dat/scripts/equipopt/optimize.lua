@@ -310,6 +310,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       local fb = fighterbays[ ps:nameRaw() ]
       if fb ~= nil then
          if fb.equip( p ) then
+            ai_setup.setup(p)
             return
          end
       end
