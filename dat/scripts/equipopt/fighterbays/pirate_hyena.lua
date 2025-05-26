@@ -9,7 +9,7 @@ return {
          o = {
             -- Cores
             systems = outfit.get("Unicorp PT-16 Core System"),
-            engines = outfit.get("Nexus Dart 160 Engine"),
+            engines = outfit.get("Unicorp Hawk 160 Engine"),
             hull = outfit.get("Unicorp D-2 Light Plating"),
             -- Other outfits
             outfit.get("Plasma Blaster MK1"),
