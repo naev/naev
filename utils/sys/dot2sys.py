@@ -129,14 +129,23 @@ d['mida'] = d['apik'] + u
 d['ekta'] = d['mida'] - v
 d['akra'] = d['mida'] + u
 
+"""
 from median import median
-
 def rebalance(sys):
    d[sys] = median([s for (s,_) in sysneigh(sys)])
+"""
 
 v = (d['possum']-d['moor'])/3.0
 for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
    d[i] += v
+
+d['taxumi'] += (d['starlight_end']-d['taxumi']) / 3.0
+d['norn'] += (d['pisces_prime']-d['bonanza']) / 3.0
+d['ngc1317'] += (d['ngc1317']-d['stelman']) / 3.0
+d['reptile'] += (d['newmarch']-d['armorhead']) / 6.0
+v = (d['aesir']-d['vanir']) / 4.0
+d['aesir'] += v
+d['vanir'] += v
 
 
 # Smoothen tradelane
