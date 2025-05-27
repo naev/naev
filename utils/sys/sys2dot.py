@@ -84,12 +84,12 @@ heavy_virtual_edges=[
 
 
 def xml_files_to_graph(args):
-   name2id=dict()
-   name,acc,pos,tradelane=[],[],[],set()
+   name2id = dict()
+   name,acc,pos,tradelane = [],[],[],set()
 
    for i in range(len(args)):
-      basename=args[i].rsplit(".xml",1)
-      if len(basename)!=2 or basename[1]!='':
+      basename = args[i].rsplit(".xml",1)
+      if len(basename) != 2 or basename[1] != '':
          stderr.write('err: "'+args[i]+'"\n')
          continue
 
@@ -98,7 +98,7 @@ def xml_files_to_graph(args):
       T=ET.parse(args[i]).getroot()
 
       try:
-         name[-1]=T.attrib['name']
+         name[-1] = T.attrib['name']
       except:
          stderr.write('no name defined in "'+basename+'"\n')
 
@@ -113,9 +113,9 @@ def xml_files_to_graph(args):
             tradelane.add(basename)
             break
 
-      name2id[name[-1]]=basename
+      name2id[name[-1]] = basename
       acc.append([])
-      count=1
+      count = 1
       for e in T.findall("./jumps/jump"):
          try:
             acc[-1].append((e.attrib['target'],False))
@@ -124,11 +124,11 @@ def xml_files_to_graph(args):
                break
          except:
             stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
-      count+=1
+      count += 1
 
-   n2i=lambda x:name2id[x]
-   ids=list(map(n2i,name))
-   acc=list(map(lambda L:[(n2i(t[0]),t[1]) for t in L],acc))
+   n2i = lambda x:name2id[x]
+   ids = list(map(n2i,name))
+   acc = list(map(lambda L:[(n2i(t[0]),t[1]) for t in L],acc))
 
    return dict(zip(ids,name)),dict(zip(ids,acc)),dict(pos),tradelane
 

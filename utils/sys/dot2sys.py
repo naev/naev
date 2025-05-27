@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 from sys import stdin, stderr
+from math import pi
 
-acc = []
+from ssys import vec, sys_fil_ET, sys_fil, sysnam2sys, sysneigh
 
+
+# positions
 d = dict()
-
-from ssys import vec, sys_fil_ET, sys_fil, sysnam2sys
 
 def process( lin ):
    if len(lin.split("--")) != 1:
@@ -101,8 +102,6 @@ for (i,j,q) in small:
    d[j] = (d[j]+a) / 2.0
 
 
-from math import cos, sin, pi
-
 d['syndania'] = vec((d['syndania'][0],d['stint'][1]))
 
 Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star', 'veses', 'alpha_centauri', 'padonia']
@@ -133,16 +132,34 @@ d['akra'] = d['mida'] + u
 from median import median
 
 def rebalance(sys):
-   acc = []
-   o = sys_fil_ET(sys_fil(sys))
-   T = o.getroot()
-   for e in T.findall("./jumps/jump"):
-      acc.append(d[sysnam2sys(e.attrib['target'])])
-   d[sys] = median(acc)
+   d[sys] = median([s for (s,_) in sysneigh(sys)])
 
 v = (d['possum']-d['moor'])/3.0
 for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
    d[i] += v
+
+
+# Smoothen tradelane
+tradelane = set()
+for k in d:
+   if k[0] != '_':
+      T = sys_fil_ET(sys_fil(k)).getroot()
+      for e in T.findall("tags/tag"):
+         if e.text == 'tradelane':
+            tradelane.add(k)
+            break
+
+newp = dict()
+for k in d:
+   if k[0] != '_' and (k in tradelane):
+      tln = [s for (s,_) in sysneigh(k) if (s in tradelane)]
+      if (n := len(tln)) > 1:
+         p = sum([d[s] for s in tln], vec((0,0)))
+         newp[k] = d[k]*(1.0-n*0.125) + p*0.125
+
+for k, v in newp.items():
+   d[k] = v
+
 
 # Apply to ssys/
 
