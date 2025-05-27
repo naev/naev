@@ -3500,10 +3500,13 @@ dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
 dat/scripts/equipopt/fighterbays.lua
+dat/scripts/equipopt/fighterbays/empire_lancelot.lua
+dat/scripts/equipopt/fighterbays/lancelot.lua
 dat/scripts/equipopt/fighterbays/pirate_hyena.lua
 dat/scripts/equipopt/fighterbays/proteron_dalton.lua
 dat/scripts/equipopt/fighterbays/sirius_fidelity.lua
 dat/scripts/equipopt/fighterbays/sirius_shaman.lua
+dat/scripts/equipopt/fighterbays/soromid_brigand.lua
 dat/scripts/equipopt/fighterbays/thurion_perspicacity.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
