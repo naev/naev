@@ -4528,6 +4528,38 @@ static int pilotL_changeAI( lua_State *L )
    return 1;
 }
 
+static void setHealth( Pilot *p, double a, double s, double st )
+{
+   /* Set health. */
+   p->armour = CLAMP( 0., p->armour_max, a );
+   p->shield = CLAMP( 0., p->shield_max, s );
+   p->stress = CLAMP( 0., p->armour_max, st );
+
+   /* If shield is knocked out, make it restart. */
+   if ( p->shield <= 0. ) {
+      p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
+      p->sbonus = 3.;
+   } else {
+      p->stimer = -1.;
+      p->sbonus = 0.;
+   }
+
+   /* Clear death hooks if not dead. */
+   if ( p->armour > 0. ) {
+      pilot_rmFlag( p, PILOT_DISABLED );
+      pilot_rmFlag( p, PILOT_DEAD );
+      pilot_rmFlag( p, PILOT_DEATH_SOUND );
+      pilot_rmFlag( p, PILOT_EXPLODED );
+      pilot_rmFlag( p, PILOT_DELETE );
+      if ( pilot_isPlayer( p ) )
+         player_rmFlag( PLAYER_DESTROYED );
+   }
+   pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
+
+   /* Update disable status. */
+   pilot_updateDisable( p, 0 );
+}
+
 /**
  * @brief Sets the health of a pilot.
  *
@@ -4567,27 +4599,8 @@ static int pilotL_setHealth( lua_State *L )
    p->shield = s * p->shield_max;
    p->stress = st * p->armour;
 
-   /* If shield is knocked out, make it restart. */
-   if ( p->shield <= 0. ) {
-      p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
-      p->sbonus = 3.;
-   }
-
-   /* Clear death hooks if not dead. */
-   if ( p->armour > 0. ) {
-      pilot_rmFlag( p, PILOT_DISABLED );
-      pilot_rmFlag( p, PILOT_DEAD );
-      pilot_rmFlag( p, PILOT_DEATH_SOUND );
-      pilot_rmFlag( p, PILOT_EXPLODED );
-      pilot_rmFlag( p, PILOT_DELETE );
-      if ( pilot_isPlayer( p ) )
-         player_rmFlag( PLAYER_DESTROYED );
-   }
-   pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
-
-   /* Update disable status. */
-   pilot_updateDisable( p, 0 );
-
+   /* Set health. */
+   setHealth( p, a * p->armour_max, s * p->shield_max, st * p->armour_max );
    return 0;
 }
 
@@ -4618,31 +4631,7 @@ static int pilotL_setHealthAbs( lua_State *L )
    st = luaL_optnumber( L, 4, p->stress );
 
    /* Set health. */
-   p->armour = CLAMP( 0., p->armour_max, a );
-   p->shield = CLAMP( 0., p->shield_max, s );
-   p->stress = CLAMP( 0., p->armour_max, st );
-
-   /* If shield is knocked out, make it restart. */
-   if ( p->shield <= 0. ) {
-      p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
-      p->sbonus = 3.;
-   }
-
-   /* Clear death hooks if not dead. */
-   if ( p->armour > 0. ) {
-      pilot_rmFlag( p, PILOT_DISABLED );
-      pilot_rmFlag( p, PILOT_DEAD );
-      pilot_rmFlag( p, PILOT_DEATH_SOUND );
-      pilot_rmFlag( p, PILOT_EXPLODED );
-      pilot_rmFlag( p, PILOT_DELETE );
-      if ( pilot_isPlayer( p ) )
-         player_rmFlag( PLAYER_DESTROYED );
-   }
-   pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
-
-   /* Update disable status. */
-   pilot_updateDisable( p, 0 );
-
+   setHealth( p, a, s, st );
    return 0;
 }
 
