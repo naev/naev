@@ -2503,3 +2503,32 @@ int pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
    pilot_outfitLunmem( env, oldmem );
    return ret;
 }
+
+static void outfitLOndeath( const Pilot *pilot, PilotOutfitSlot *po,
+                            const void *data )
+{
+   (void)data;
+   int           oldmem;
+   const Outfit *o = po->outfit;
+   if ( o->lua_keyrelease == LUA_NOREF )
+      return;
+
+   nlua_env env = o->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, o->lua_ondeath ); /* f */
+   lua_pushpilot( naevL, pilot->id );                       /* f, p */
+   lua_pushpilotoutfit( naevL, po );                        /* f, p, po */
+   if ( nlua_pcall( env, 2, 0 ) ) {                         /* */
+      outfitLRunWarning( pilot, o, "ondeath", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+void pilot_outfitLOndeath( Pilot *pilot )
+{
+   pilot_outfitLRun( pilot, outfitLOndeath, NULL );
+}

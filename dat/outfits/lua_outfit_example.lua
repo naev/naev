@@ -167,6 +167,10 @@ end
 function message( _p, _po, _msg, _data )
 end
 
+-- Run when the pilot is dead and about to start exploding
+function ondeath( _p, _po )
+end
+
 --[[
    Below are WEAPONS ONLY. However, they can be triggered by munitions,
    which share the environment with the ORIGINAL spawning outfit, not necessarily

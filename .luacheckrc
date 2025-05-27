@@ -232,6 +232,7 @@ stds.API_pilotoutfit = {globals={
    "keydoubletap",
    "keyrelease",
    "message",
+   "ondeath",
    "update",
    "mem", -- Automatically created using nlua_setenv().
 }}
