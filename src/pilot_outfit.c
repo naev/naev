@@ -2510,7 +2510,7 @@ static void outfitLOndeath( const Pilot *pilot, PilotOutfitSlot *po,
    (void)data;
    int           oldmem;
    const Outfit *o = po->outfit;
-   if ( o->lua_keyrelease == LUA_NOREF )
+   if ( o->lua_ondeath == LUA_NOREF )
       return;
 
    nlua_env env = o->lua_env;
