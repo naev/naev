@@ -56,6 +56,7 @@ mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 mem.lanes_useneutral = false -- Whether or not to use neutral lanes
 mem.uselanes       = true -- Try to use lanes
+mem.loiter_compensate_vel = true -- Try to compensate velocity when loitering
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
@@ -100,6 +101,9 @@ local stateinfo = {
       fighting = true,
       attack   = true,
       noattack = true,
+   },
+   inspect_attacker = {
+      fighting = true,
    },
    return_lane = {
       running  = true,
@@ -282,6 +286,7 @@ local message_handler_funcs = {
       mem.form_pos = data
       return false
    end,
+   -- Leader is being attacked
    l_attacked = function( p, si, dopush, sender, data )
       if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
       if data and data:exists() then
@@ -290,6 +295,14 @@ local message_handler_funcs = {
             ai.pushtask("attack", data)
             return true
          end
+      end
+      return false
+   end,
+   l_investigate = function( p, si, dopush, sender, data )
+      if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if not si.fighting then -- inspect_attacker is fighting, so it shouldn't duplicate
+         ai.pushtask("inspect_attacker", data)
+         return true
       end
       return false
    end,
@@ -392,7 +405,7 @@ function should_attack( enemy, si, aggressor )
       local ltask, ldata = l:task()
       local lsi = _stateinfo( ltask )
       if lsi.fighting then
-         if ldata and ldata:exists() then
+         if ldata and ldata.exists and ldata:exists() then
             -- Check to see if the pilot group the leader is fighting is the
             -- same as the current enenmy
             if sameFleet( ldata, enemy ) then
@@ -412,7 +425,7 @@ function should_attack( enemy, si, aggressor )
 
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
-   if mem.natural and lr then
+   if mem.natural and lr and not mem.guardpos then
       local d, _pos = lanes.getDistance2P( p, enemy:pos() )
       if math.huge > d and d > lr*lr then
          return false
@@ -435,7 +448,7 @@ end
 -- Whether or not the pilot should investigate a certain location.
 --]]
 function should_investigate( pos, si )
-   if si.fighting or si.forced or si.noattack or mem.carried or mem.leader() then
+   if si.fighting or si.forced or si.noattack or mem.carried or ai.pilot():leader() then
       return false
    end
 
@@ -444,7 +457,7 @@ function should_investigate( pos, si )
       return false
    end
 
-   -- Conmfort
+   -- Comfort
    local ec = mem.enemyclose or math.huge
    local ec2 = ec*ec
 
@@ -454,7 +467,7 @@ function should_investigate( pos, si )
    end
 
    -- Check to see if we want to go back to the lanes
-   if mem.natural and ec < math.huge then
+   if mem.natural and ec < math.huge and not mem.guardpos then
       local d, _pos = lanes.getDistance2P( ai.pilot(), pos )
       if math.huge > d and d > ec2 then
          return false
@@ -545,9 +558,29 @@ control_funcs.inspect_moveto = function ()
          end
       end
    end
-   if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
+   if mem.natural and not mem.guardpos and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
       ai.poptask()
       return false
+   end
+   return true
+end
+control_funcs.inspect_attacker = function ()
+   local p = ai.pilot()
+   local target = ai.taskdata()
+   if not target then return end
+
+   -- See if there is an enemy to attack
+   local enemy = atk.preferred_enemy( nil, true )
+   if should_attack( enemy, nil, false ) then
+      ai.hostile(enemy) -- Should be done before taunting
+      consider_taunt(enemy, true)
+      ai.poptask()
+      ai.pushtask("attack", enemy)
+      return false
+   end
+
+   for k,v in ipairs(p:followers()) do
+      p:msg( v, "l_investigate", target + vec2.newP(500*rnd.rnd(), rnd.angle()) )
    end
    return true
 end
@@ -659,12 +692,32 @@ end
 function attacked( attacker )
    local p = ai.pilot()
    -- Ignore hits from dead pilots.
-   if not attacker:exists() or not p:inrange( attacker ) then
+   if not attacker:exists() then
       return
    end
 
    local task = ai.taskname()
    local si = _stateinfo( task )
+
+   -- See if should investigate
+   if not p:inrange( attacker ) then
+      -- TODO ideally not use the _current_ attacker position, but something
+      -- related to where the weapon was fired from
+      local ap = attacker:pos()
+      -- Don't use should_investigate here, because it needs to be more aggressive
+      if not si.fighting or si.forced or si.noattack then
+         local d = ap:dist( p:pos() )
+         local fuzz = math.max(500, d*0.5)
+         local target = ap + vec2.newP( fuzz*rnd.rnd(), rnd.angle () )
+         ai.pushtask("inspect_attacker", target )
+
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "l_investigate", ap + vec2.newP(fuzz*rnd.rnd(), rnd.angle()) )
+         end
+         return true
+      end
+      return
+   end
 
    -- Notify that pilot has been attacked before
    if not mem.attacked then
@@ -862,7 +915,7 @@ function control( dt )
    end
 
    -- Check to see if we want to go back to the lanes
-   if mem.natural and si.fighting and not si.running then
+   if mem.natural and si.fighting and not si.running and not mem.guardpos then
       local lr = mem.enemyclose
       if lr then
          local d, pos = lanes.getDistance2P( p, p:pos() )

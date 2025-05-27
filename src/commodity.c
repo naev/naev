@@ -351,7 +351,7 @@ static int commodity_parse( Commodity *temp, const char *filename )
                int f = faction_get( xml_get( cur ) );
                array_push_back( &temp->illegalto, f );
             }
-         } while ( xml_nextNode( node ) );
+         } while ( xml_nextNode( cur ) );
          continue;
       }
       xmlr_float( node, "population_modifier", temp->population_modifier );

@@ -12,6 +12,7 @@
   <spob>Santoros I-a</spob>
   <spob>Santoros I-b</spob>
   <spob>Santoros II</spob>
+  <spob_virtual>Trade Lane</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Akodu">
@@ -20,7 +21,7 @@
   </jump>
   <jump target="Holly">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Tepvin">
    <autopos/>

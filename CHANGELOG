@@ -17,6 +17,7 @@
       * Gauntlet intrinsics are stronger and now mutually exclusive
       * Intrinsics from a certain trader are now stronger
       * Ships now disabled below a certain armour threshold regardless of stress
+      * AI is less susceptible to stealth bomber cheese
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
@@ -27,9 +28,10 @@
       * Gave small untargetable time to player when using hypergates and wormholes
       * Ships that are scanning you use a different colour hilight
       * Landable but uninhabited space objects use a different icon
+      * Deployed fighter equipment is no longer random
    * Content
-      * 5 new missions and events
-      * 6 new ship variants
+      * 9 new missions and events
+      * 7 new ship variants
       * 3 new outfits and reworked cores
       * New sensor anomalies
       * Two new intertwined minor houses of the Empire with new systems and lore
@@ -63,6 +65,7 @@
          * Temporary Invincibility
          * Detection Range only affects 'Detected at:' range
          * Ship Visibility that affects detection, signature, and stealth ranges
+      * Engine exposes some constants that can be modified by plugins
    * Fixes
       * The Bite turns off afterburner
       * Hiding on screen display information for missions also hides system markers
@@ -84,8 +87,9 @@
       * Saves try to save outfits by slot name to be more robust to changes in the future
       * Player can't stealth while disabled
       * Getting disabled turns off stealth
+      * Carried fighters don't carry commodities
 
-* 0.12.5 (unreleased)
+* 0.12.5
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
    * Fixed AI spamming afterburners in an unhealthy way

@@ -191,6 +191,13 @@ function inspect_moveto( target )
    __moveto_generic( target, dir )
 end
 
+-- luacheck: globals inspect_attacker
+function inspect_attacker( target )
+   inspect_moveto( target )
+   -- Activate PD and deploy fighters
+   atk.fb_and_pd()
+end
+
 
 --[[
 -- Lunges towards the target always accelerating
@@ -1191,7 +1198,9 @@ end
 --]]
 -- luacheck: globals loiter (AI Task functions passed by name)
 function loiter( target )
-   local dir   = ai.face( target, nil, true )
+   -- So this makes it that when there are a lot of close waypoints, the pilot
+   -- is waggling a lot, by not correcting we get smoother motion
+   local dir   = ai.face( target, nil, mem.loiter_compensate_vel )
    local dist  = ai.dist( target )
    if dist < 200 then
       ai.poptask()
@@ -1204,7 +1213,7 @@ end
 -- Last vertex, so poptask when at brakedistance
 -- luacheck: globals loiter_last (AI Task functions passed by name)
 function loiter_last( target )
-   local dir   = ai.face( target, nil, true )
+   local dir   = ai.face( target, nil, mem.loiter_compensate_vel )
    local dist  = ai.dist( target )
    local bdist = ai.minbrakedist()
    if dist < bdist then

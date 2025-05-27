@@ -958,6 +958,7 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /* Run outfit cooldown start hook. */
    pilot_outfitLCooldown( p, 0, 0, p->ctimer );
+   pilot_shipLCooldown( p, 0, 0, p->ctimer );
 }
 
 /**
@@ -992,8 +993,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    if ( p->ctimer < 0. ) {
       pilot_fillAmmo( p );
       pilot_outfitLCooldown( p, 1, 1, 0. );
+      pilot_shipLCooldown( p, 1, 1, 0. );
    } else {
       pilot_outfitLCooldown( p, 1, 0, 0. );
+      pilot_shipLCooldown( p, 1, 0, 0. );
    }
 }
 
@@ -1459,7 +1462,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
-         p->stimer = 5. * p->stats.shielddown_mod;
+         p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
          p->sbonus = 3.;
       }
    }
@@ -1476,7 +1479,7 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if ( reset ) {
-         p->stimer = 5. * p->stats.shielddown_mod;
+         p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
          p->sbonus = 3.;
       }
 
@@ -2784,7 +2787,8 @@ void pilot_update( Pilot *pilot, double dt )
    if ( !pilot_isFlag( pilot, PILOT_HYPERSPACE ) ) { /* limit the speed */
 
       /* pilot is afterburning */
-      if ( pilot_isFlag( pilot, PILOT_AFTERBURNER ) ) {
+      if ( pilot_isFlag( pilot, PILOT_AFTERBURNER ) &&
+           ( pilot->afterburner != NULL ) ) {
          const Outfit *afb = pilot->afterburner->outfit;
          double        efficiency =
             MIN( 1., outfit_afterburnerMassLimit( afb ) / pilot->solid.mass );
@@ -4528,13 +4532,19 @@ credits_t pilot_worth( const Pilot *p, int count_unique )
    /* Ship price is base price + outfit prices. */
    credits_t price = ship_basePrice( p->ship );
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
-      if ( p->outfits[i]->outfit == NULL )
+      const Outfit *o = p->outfits[i]->outfit;
+      if ( o == NULL )
          continue;
       /* Don't count unique outfits. */
-      if ( !count_unique &&
-           outfit_isProp( p->outfits[i]->outfit, OUTFIT_PROP_UNIQUE ) )
+      if ( !count_unique && outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
          continue;
       price += outfit_price( p->outfits[i]->outfit );
+   }
+   for ( int i = 0; i < array_size( p->outfit_intrinsic ); i++ ) {
+      const Outfit *o = p->outfit_intrinsic[i].outfit;
+      if ( !count_unique && outfit_isProp( o, OUTFIT_PROP_UNIQUE ) )
+         continue;
+      price += outfit_price( o );
    }
 
    return price;

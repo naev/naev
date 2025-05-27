@@ -217,4 +217,49 @@ function strmess.generate( patterns, length )
    return str
 end
 
+local function _numstr( num )
+   local str = ""
+   repeat
+      local rem = num % 2
+      str = rem .. str
+      num = (num-rem) * 0.5
+   until num <= 0
+   return str
+end
+
+--[[--
+Converts a string to its binary representation.
+--]]
+function strmess.tobinary( str, keepspace )
+   if #str <= 0 then
+      return nil
+   end
+
+   local out = ""
+   for i = 1,#str do
+      local c = str:sub(i,i)
+      if keepspace and c==' ' then
+         out = out .. ' '
+      else
+         out = out .. string.format("%08d", _numstr( string.byte( str:sub(i,i))))
+      end
+   end
+   return out
+end
+
+--[[--
+Converts a binary code back to a string.
+--]]
+function strmess.frombinary( bin )
+   if bin % 8 ~= 0 then
+      return error('invalid binary code')
+   end
+
+   local str = ''
+   for i = 1,#bin,8 do
+      str = str .. string.char(tonumber(bin:sub(i,i+7), 2))
+   end
+   return str
+end
+
 return strmess

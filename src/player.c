@@ -2514,9 +2514,15 @@ void player_autohail( void )
       if ( !pilot_isFlag( p, PILOT_HAILING ) )
          continue;
 
+      /* While we want this check, we would then need the pilot hailing the
+       * player to trigger the message + sound when in range, which we don't do
+       * at the moment.
+       * TODO fix when we move to rust. */
       /* Must be in range. */
+      /*
       if ( !pilot_inRangePilot( player.p, p, NULL ) )
          continue;
+      */
 
       /* Try to hail. */
       pilot_setTarget( player.p, p->id );

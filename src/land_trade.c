@@ -349,7 +349,21 @@ void commodity_update( unsigned int wid, const char *str )
 
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtName", _( com->name ) );
-   window_modifyText( wid, "txtDesc", _( com->description ) );
+   l = 0;
+   l += scnprintf( &buf[l], sizeof( buf ) - l, "%s", _( com->description ) );
+   if ( array_size( com->illegalto ) > 0 ) {
+      l += scnprintf( &buf[l], sizeof( buf ) - l, "\n\n%s",
+                      _( "Illegalized by the following factions:\n" ) );
+      for ( int j = 0; j < array_size( com->illegalto ); j++ ) {
+         int f = com->illegalto[j];
+         if ( !faction_isKnown( f ) )
+            continue;
+
+         l += scnprintf( &buf[l], sizeof( buf ) - l, _( "\n   - %s" ),
+                         _( faction_name( f ) ) );
+      }
+   }
+   window_modifyText( wid, "txtDesc", buf );
 
    /* Add relative price. */
    l = 0;

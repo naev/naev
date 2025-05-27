@@ -30,6 +30,14 @@ end
 function explode_update( _p, _dt  )
 end
 
---  Runs when the pilot 'p' shoots ANY weapon.
+-- Runs when the pilot 'p' shoots ANY weapon.
 function onshootany( _p )
+end
+
+-- The cooldown function is triggered when both cooldown starts and when
+-- it ends. The done is a boolean value which indicates whether or not it
+-- finished. In the case done is false, opt will indicate the number of
+-- seconds the cooldown will take. If done is true, then opt will be a
+-- a boolean indicating whether or not it successfully completed.
+function cooldown( _p, _done, _opt )
 end

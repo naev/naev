@@ -51,7 +51,7 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
       Pilot *p = ps->p;
       int    q = pilot_cargoUsed( p ); /* Amount we have to allocate. */
       int f = pfleet_cargoFree() - pilot_cargoFree( p ); /* Real free amount. */
-      if ( f < q ) {
+      if ( ( q > 0 ) && ( f < q ) ) {
          char buf_amount[ECON_MASS_STRLEN], buf_free[ECON_MASS_STRLEN],
             buf_needed[ECON_MASS_STRLEN];
          tonnes2str( buf_amount, q );

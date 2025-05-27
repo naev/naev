@@ -24,7 +24,7 @@
   </jump>
   <jump target="Santoros">
    <autopos/>
-   <hide>1.000000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Tau Prime">
    <autopos/>

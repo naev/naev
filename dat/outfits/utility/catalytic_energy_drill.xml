@@ -13,5 +13,7 @@
  </general>
  <specific type="modification">
   <lua>outfits/utility/catalytic_energy_drill.lua</lua>
+  <asteroid_scan>500</asteroid_scan>
+  <mining_bonus>105</mining_bonus>
  </specific>
 </outfit>

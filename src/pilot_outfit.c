@@ -1035,7 +1035,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
 
    /* Lua mods apply their stats. */
    if ( slot->lua_mem != LUA_NOREF )
-      ss_statsMergeFromList( &pilot->stats, slot->lua_stats, 0 );
+      ss_statsMergeFromList( s, slot->lua_stats, 0 );
 
    /* Has update function. */
    if ( outfit_luaUpdate( o ) != LUA_NOREF )

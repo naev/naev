@@ -8,6 +8,8 @@
  </general>
  <pos x="815.893519" y="-207.467593"/>
  <spobs>
+  <spob>Arietis B</spob>
+  <spob>Arietis C</spob>
   <spob_virtual>Pirate All Unpresence</spob_virtual>
  </spobs>
  <jumps>

@@ -67,11 +67,11 @@ return function ()
          {
             spawn = function ()
                -- ECB stands for Empire Combat Bureaucrat
-               local p = pilot.add("Empire Pacifier", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
+               local p = pilot.add("Empire Pacifier Hoplite", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "fwd_damage", 10 )
                p:intrinsicSet( "shield_mod", 25 )
                equipopt.empire( p, {
-                  turret=0, beam=0, launcher=0,
+                  turret=0, beam=0, fighterbay=0,
                   outfits_add = {"Unicorp Storm Launcher",}
                } )
                local m = p:memory()
@@ -85,6 +85,54 @@ return function ()
                   local e = pilot.add("Empire Lancelot", "Empire", pos, _("ECB Intern") )
                   local em = p:memory()
                   em.comm_no = _([["I don't have the authority to talk to you."]])
+                  e:setVel(vel)
+                  e:setLeader(p)
+               end
+               return p
+            end,
+         },
+         {
+            spawn = function ()
+               -- ECB stands for Empire Combat Bureaucrat
+               local p = pilot.add("Empire Pacifier Hoplite", "Empire", nil, _("ECB Payne"), {naked=true, ai="pers_patrol"})
+               p:intrinsicSet( "tur_damage", 25 )
+               equipopt.empire( p, {
+                  forward=0, beam=0,
+               } )
+               local m = p:memory()
+               m.ad = _("Want to be a Combat Bureaucrat? Apply to your nearest Bureau! Some terms may apply.")
+               m.comm_greet = _([["I sleep well at night on my pile of finished paperwork."]])
+               m.taunt = _("I'll happly fill our your death form!")
+               m.bribe_no = _([["You need to fill in the EB-2781 request for bribing."]])
+               local pos = p:pos()
+               local vel = p:vel()
+               for i=1,3 do
+                  local e = pilot.add("Empire Shark", "Empire", pos, _("ECB Intern") )
+                  local em = p:memory()
+                  em.comm_no = _([["I don't have the authority to talk to you."]])
+                  e:setVel(vel)
+                  e:setLeader(p)
+               end
+               return p
+            end,
+         },
+         {
+            spawn = function ()
+               -- ECB stands for Empire Combat Bureaucrat
+               local p = pilot.add("Empire Pacifier Hoplite", "Empire", nil, _("ECB O'Connor"), {naked=true, ai="pers_patrol"})
+               p:intrinsicSet( "fbay_damage", 25 )
+               equipopt.empire( p, {
+                  beam=0, fighterbay=5,
+               } )
+               local m = p:memory()
+               m.comm_no = _([["Please file an appointment with my secretary."]])
+               m.taunt = _("I'll have my Secretary begin the paperwork for your defunction!")
+               local pos = p:pos()
+               local vel = p:vel()
+               for i=1,1 do
+                  local e = pilot.add("Empire Admonisher", "Empire", pos, _("ECB Secretary") )
+                  local em = p:memory()
+                  em.comm_no = _([["You'll need to schedule an appointment first."]])
                   e:setVel(vel)
                   e:setLeader(p)
                end

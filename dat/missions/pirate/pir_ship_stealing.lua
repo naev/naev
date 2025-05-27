@@ -140,6 +140,8 @@ end
 
 local pir_portrait, pir_image
 function create ()
+   misn.finish() -- TODO remake this mission into something more interesting
+
    mem.reward_faction = pir.systemClanP( system.cur() )
    mem.planet  = random_planet()
    mem.system = mem.planet:system()
