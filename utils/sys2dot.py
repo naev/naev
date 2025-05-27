@@ -75,6 +75,8 @@ heavy_virtual_edges=[
    ('ekkodu','tarsus'),
    ('ivella','jommel'),
    ('starlight_end','possum'),
+   ('ngc8338','unicorn'),
+   ('ngc22375','undergate'),
 ]
 
 
@@ -215,7 +217,7 @@ if __name__ == '__main__':
       if keep := '-k' in argv:
          argv.remove('-k')
 
-      if (ign := [f for f in argv[1:] if not f.endswith(".xml")]) != []
+      if (ign := [f for f in argv[1:] if not f.endswith(".xml")]) != []:
          stderr.write('Ignored: "'+'", "'.join(ign)+'"\n')
 
       main([f for f in argv[1:] if f.endswith(".xml")],keep)

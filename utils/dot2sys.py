@@ -75,7 +75,7 @@ class bb:
 bbox = bb()
 
 for k in d:
-   d[k] *= 4.0/3.0
+   d[k] *= 4.5/3.0
    bbox += d[k]
 
 
@@ -132,11 +132,15 @@ def reb(sys):
       acc.append(e.attrib['target'])
    tot = vec((0,0))
    for i in acc:
-      tot += d[i.lower()]
+      nam = i.lower().replace(' ','_').replace("'",'')
+      tot += d[nam]
    tot *= 1.0/len(acc)
    d[sys] = tot
 
-#reb('moor')
+#reb('cebus')
+
+#v = d['aesria'] - d['vean']
+#d['flow'] = d['vean'] + rotate(v,-pi/3)
 
 
 # Apply to ssys/
@@ -160,7 +164,6 @@ again = bb()
 
 for k in d:
    d[k]-= bbox.mini()
-   d[k]*= (7.0/6.0)
    d[k]+= oldbb.mini()
    again+= d[k]
 
