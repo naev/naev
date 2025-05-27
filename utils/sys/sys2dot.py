@@ -217,7 +217,7 @@ if __name__ == '__main__':
       print('Examples:')
       print('  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
       print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
-      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato | tee after.dot |  ./utils/dot2sys.py')
+      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato | tee after.dot |  ./utils/sys/dot2sys.py')
       print('  > display before.png after.png')
    else:
       if keep := '-k' in argv:

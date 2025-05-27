@@ -1,25 +1,12 @@
 #!/usr/bin/env python3
 
 from sys import stdin, stderr
-import xml.etree.ElementTree as ET
 
 acc = []
 
 d = dict()
 
-class vec(tuple):
-   def __add__(self, other):
-      return vec([x+y for (x,y) in zip (self,other)])
-   def __sub__(self, other):
-      return self+(other*-1.0)
-   def __mul__(self, other):
-      return vec([x*other for x in self])
-   def __div__(self, other):
-      return self*(1.0/other)
-   def __round__(self, dig = 0):
-      return vec([round(x, dig) for x in self])
-   def __str__(self):
-      return str(tuple([int(a) if int(a) == a else a for a in self]))
+from ssys import vec, sys_fil_ET, sys_fil
 
 def process( lin ):
    if len(lin.split("--")) != 1:
@@ -28,7 +15,7 @@ def process( lin ):
    for c in ['\n','\t',3*' ',2*' ']:
       lin = lin.replace(c,' ')
 
-   if (nam := lin.split(' ')[0]) in ['graph','edge','node']:
+   if (nam := lin.split(' ')[0]) in ['graph', 'edge', 'node']:
       return
    pos = lin.split('pos="')[1].split('"')[0].split(",")
    x, y = float(pos[0]), float(pos[1])
@@ -44,10 +31,10 @@ for line in stdin:
 
 # bounding boxes
 class bb:
-   def __init__(self):
-      self.empty=True
+   def __init__( self ):
+      self.empty = True
 
-   def __iadd__(self, t):
+   def __iadd__( self, t ):
       if self.empty:
          (self.maxx, self.maxy) = t
          (self.minx, self.miny) = t
@@ -63,13 +50,13 @@ class bb:
             self.maxy = t[1]
       return self
 
-   def mini(self):
+   def mini( self ):
       return vec((self.minx,self.miny)) if not self.empty else None
 
-   def maxi(self):
+   def maxi( self ):
       return vec((self.maxx,self.maxy)) if not self.empty else None
 
-   def __str__(self):
+   def __str__( self ):
       return "["+str(round(self.mini(), 6))+" "+str(round(self.maxi(), 6))+"]"
 
 
@@ -85,11 +72,10 @@ for k in d:
       nam = k
       if nam[0] == '"':
          nam = nam[1:-1]
-      fp = "dat/ssys/" + nam + ".xml"
-      o = ET.parse(fp)
+      o = sys_fil_ET(sys_fil(nam))
       T = o.getroot()
       for e in T.findall("pos"):
-         oldbb += (float(e.attrib['x']),float(e.attrib['y']))
+         oldbb += (float(e.attrib['x']), float(e.attrib['y']))
          break
 
 again = bb()
@@ -100,6 +86,7 @@ for k in d:
 
 stderr.write(str(oldbb)+"->"+str(bbox)+"\n")
 stderr.write("->"+str(again)+"\n")
+
 
 # Post - processing
 
@@ -128,8 +115,8 @@ d['baitas'] = Scenter + (rotate(v,-8*pi/4)*0.38)
 d['protera'] = Scenter + (rotate(v,-2*pi/4)*0.22)
 d['tasopa'] = Scenter + (rotate(v,-6*pi/4)*0.22)
 
-d['possum']+=(d['starlight_end']-d['possum'])*0.5
-d['starlight_end']+=(d['starlight_end']-d['possum'])*1.5
+d['possum'] += (d['starlight_end']-d['possum'])*0.5
+d['starlight_end'] += (d['starlight_end']-d['possum'])*1.5
 
 v = d['hystera']-d['leporis']
 u = rotate(v,-pi/3)
@@ -141,11 +128,10 @@ d['ekta'] = d['mida'] - v
 d['akra'] = d['ekta'] + v
 
 
+"""
 def reb(sys):
    acc = []
-   fp="dat/ssys/"+sys+".xml"
-   #print(fp)
-   o = ET.parse(fp)
+   o = sys_fil_ET(sys_fil(sys))
    T = o.getroot()
    for e in T.findall("./jumps/jump"):
       acc.append(e.attrib['target'])
@@ -160,8 +146,7 @@ def reb(sys):
 
 #v = d['aesria'] - d['vean']
 #d['flow'] = d['vean'] + rotate(v,-pi/3)
-
-
+"""
 
 # Apply to ssys/
 
@@ -171,13 +156,13 @@ for k in d:
       nam = k
       if nam[0] == '"':
          nam = nam[1:-1]
-      fp = "dat/ssys/" + nam + ".xml"
-      o = ET.parse(fp)
+      nam = sys_fil(nam)
+      o = sys_fil_ET(nam)
       T = o.getroot()
       for e in T.findall("pos"):
          e.set('x', str(d[k][0]))
          e.set('y', str(d[k][1]))
          break
-      o.write(fp)
+      o.write(nam)
 
 
