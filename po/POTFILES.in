@@ -526,6 +526,7 @@ dat/ships/dvaered/dvaered_retribution.xml
 dat/ships/dvaered/dvaered_vendetta.xml
 dat/ships/dvaered/dvaered_vigilance.xml
 dat/ships/empire/empire_admonisher.xml
+dat/ships/empire/empire_admonisher_longbow.xml
 dat/ships/empire/empire_hawking.xml
 dat/ships/empire/empire_lancelot.xml
 dat/ships/empire/empire_lancelot_golden_efreeti.xml
@@ -3646,6 +3647,7 @@ dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
+dat/ships/lua/empire_admonisher_longbow.lua
 dat/ships/lua/empire_pacifier_hoplite.lua
 dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua

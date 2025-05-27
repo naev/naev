@@ -12,6 +12,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/dvaered/dvaered_vendetta.xml',
    root / 'dat/ships/dvaered/dvaered_vigilance.xml',
    root / 'dat/ships/empire/empire_admonisher.xml',
+   root / 'dat/ships/empire/empire_admonisher_longbow.xml',
    root / 'dat/ships/empire/empire_hawking.xml',
    root / 'dat/ships/empire/empire_lancelot.xml',
    root / 'dat/ships/empire/empire_lancelot_golden_efreeti.xml',
