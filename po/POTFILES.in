@@ -538,6 +538,7 @@ dat/ships/empire/empire_shark.xml
 dat/ships/feral_bioship/kauweke.xml
 dat/ships/feral_bioship/nohinohi.xml
 dat/ships/feral_bioship/taitamariki.xml
+dat/ships/misc/escape_pod.xml
 dat/ships/misc/fort_raelid.xml
 dat/ships/misc/fort_raglan.xml
 dat/ships/misc/onewing_goddard.xml
@@ -2815,6 +2816,7 @@ dat/ai/empire.lua
 dat/ai/empire_idle.lua
 dat/ai/empire_norun.lua
 dat/ai/empire_refuel.lua
+dat/ai/escape_pod.lua
 dat/ai/escort.lua
 dat/ai/escort_player.lua
 dat/ai/feralbioship.lua

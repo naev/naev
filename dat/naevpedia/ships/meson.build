@@ -24,6 +24,7 @@ naevpedia_ships_sources = files(
    root / 'dat/ships/feral_bioship/kauweke.xml',
    root / 'dat/ships/feral_bioship/nohinohi.xml',
    root / 'dat/ships/feral_bioship/taitamariki.xml',
+   root / 'dat/ships/misc/escape_pod.xml',
    root / 'dat/ships/misc/fort_raelid.xml',
    root / 'dat/ships/misc/fort_raglan.xml',
    root / 'dat/ships/misc/onewing_goddard.xml',
