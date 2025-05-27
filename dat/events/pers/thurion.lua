@@ -1,4 +1,5 @@
 --local equipopt = require "equipopt"
+local strmess = require "strmess"
 
 return function ()
    local pers = {}
@@ -16,9 +17,9 @@ return function ()
                local p = pilot.add("Thurion Perspicacity Beta", "Thurion", nil, _("Eye of the Hive"), {ai="pers_runaway"})
                local m = p:memory()
                -- TODO have these actually mean something
-               m.greet = "00010110101011011111010100101010010010100101000101100111110100101010001001010101000101010101001110110010"
-               m.taunt = "100101011101101100011010100101101010"
-               m.bribe_no = "100101011101101100011010100101101010"
+               m.greet = strmess.tobinary( "You should not be seeing me.", true )
+               m.taunt = strmess.tobinary( "Bye.", true )
+               m.bribe_no = strmess.tobinary( "Why?", true )
                return p
             end,
          }
