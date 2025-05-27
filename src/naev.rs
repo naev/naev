@@ -439,9 +439,6 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
     }
 
     let stages: Vec<LoadStage> = vec![
-        LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
-            naevc::commodity_load()
-        }), /* no dep */
         LoadStage::new_c(gettext("Loading Special Effects…"), || unsafe {
             naevc::spfx_load()
         }), /* no dep */
@@ -451,7 +448,10 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
         LoadStage::new_c(gettext("Loading Factions…"), || unsafe {
             //faction::load().unwrap_or_else( |err| log::warn_err(err) );
             naevc::factions_load()
-        }), /* dep for space, missions, AI */
+        }), /* dep for space, missions, AI, commodities */
+        LoadStage::new_c(gettext("Loading Commodities…"), || unsafe {
+            naevc::commodity_load()
+        }), /* no dep */
         LoadStage::new_c(gettext("Loading Outfits…"), || unsafe {
             naevc::outfit_load()
         }), /* dep for ships, factions */
