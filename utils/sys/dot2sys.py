@@ -84,8 +84,8 @@ for k in d:
    d[k]+= oldbb.mini()
    again+= d[k]
 
-stderr.write(str(oldbb)+"->"+str(bbox)+"\n")
-stderr.write("->"+str(again)+"\n")
+stderr.write(str(oldbb)+" -> "+str(bbox)+"\n")
+stderr.write(" -> "+str(again)+"\n")
 
 
 # Post - processing
@@ -130,27 +130,19 @@ d['mida'] = d['apik'] + u
 d['ekta'] = d['mida'] - v
 d['akra'] = d['mida'] + u
 
-"""
-def reb(sys):
+from median import median
+
+def rebalance(sys):
    acc = []
    o = sys_fil_ET(sys_fil(sys))
    T = o.getroot()
    for e in T.findall("./jumps/jump"):
-      acc.append(e.attrib['target'])
-   tot = vec((0,0))
-   for i in acc:
-      nam = sysnam2sys(i)
-      tot += d[nam]
-   tot *= 1.0/len(acc)
-   d[sys] = tot
-
-reb('sol')
-"""
+      acc.append(d[sysnam2sys(e.attrib['target'])])
+   d[sys] = median(acc)
 
 v = (d['possum']-d['moor'])/3.0
 for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
    d[i] += v
-
 
 # Apply to ssys/
 
