@@ -709,8 +709,8 @@ int ship_gfxLoad( Ship *s )
    ship_loadPLG( s,
                  ( s->polygon_path != NULL ) ? s->polygon_path : s->gfx_path );
 
-   /* If we have 3D and polygons, we'll ignore the 2D stuff. */
-   if ( ( s->gfx_3d != NULL ) && ( array_size( s->polygon.views ) > 0 ) ) {
+   /* If we have 3D, we'll ignore the 2D stuff. */
+   if ( s->gfx_3d != NULL ) {
       free( base );
       return 0;
    }
