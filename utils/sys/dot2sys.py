@@ -6,7 +6,7 @@ acc = []
 
 d = dict()
 
-from ssys import vec, sys_fil_ET, sys_fil
+from ssys import vec, sys_fil_ET, sys_fil, sysnam2sys
 
 def process( lin ):
    if len(lin.split("--")) != 1:
@@ -90,43 +90,45 @@ stderr.write("->"+str(again)+"\n")
 
 # Post - processing
 
-small = [('carnis_minor','carnis_major'), ('gliese','gliese_minor'), ('kruger','krugers_pocket')]
-for (i,j) in small:
-   a=(d[i]+d[j])*(1.0/2.0)
-   d[i]=(d[i]*3+a*2)*(1.0/5.0)
-   d[j]=(d[j]*3+a*2)*(1.0/5.0)
+small = [
+   ('carnis_minor', 'carnis_major', 0.7),
+   ('gliese', 'gliese_minor', 0.5),
+   ('kruger', 'krugers_pocket', 0.5)
+]
+for (i,j,q) in small:
+   a = d[i]*q + d[j]*(1.0-q)
+   d[i] = (d[i]+a) / 2.0
+   d[j] = (d[j]+a) / 2.0
 
 
 from math import cos, sin, pi
 
-def rotate(v,a):
-   return vec((v[0]*cos(a)-v[1]*sin(a), v[0]*sin(a)+v[1]*cos(a)))
+d['syndania'] = vec((d['syndania'][0],d['stint'][1]))
 
 Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star', 'veses', 'alpha_centauri', 'padonia']
 
 Scenter = (d[Spir[0]]+d[Spir[4]])*(1.0/2.0)
-v = (d[Spir[0]] - Scenter) * 0.7
+v = (d[Spir[0]] - Scenter) * 0.75
 for i,s in enumerate(Spir):
-   rad = pow(1.15,-(i%4))
-   d[s] = Scenter + rotate(v,-i*pi/4)*rad
+   rad = pow(1.25,-(i%4))
+   d[s] = Scenter + v.rotate(-i*pi/4)*rad
 
-d['urillian'] = Scenter + (rotate(v,-4*pi/4)*0.38)
-d['baitas'] = Scenter + (rotate(v,-8*pi/4)*0.38)
-d['protera'] = Scenter + (rotate(v,-2*pi/4)*0.22)
-d['tasopa'] = Scenter + (rotate(v,-6*pi/4)*0.22)
+d['urillian'] = Scenter + (v.rotate(-4.5*pi/4)*pow(1.25,-4.5))
+d['baitas'] = Scenter + (v.rotate(-8.5*pi/4)*pow(1.25,-4.5))
+d['protera'] = Scenter + (v.rotate(-2.5*pi/4)*pow(1.25,-8))
+d['tasopa'] = Scenter + (v.rotate(-6.5*pi/4)*pow(1.25,-8))
 
 d['possum'] += (d['starlight_end']-d['possum'])*0.5
 d['starlight_end'] += (d['starlight_end']-d['possum'])*1.5
 
 v = d['hystera']-d['leporis']
-u = rotate(v,-pi/3)
+u = v.rotate(-pi/3)
 d['korifa'] = d['hystera'] + u
 d['apik'] = d['leporis'] + u
 d['telika'] = d['apik'] - v
 d['mida'] = d['apik'] + u
 d['ekta'] = d['mida'] - v
-d['akra'] = d['ekta'] + v
-
+d['akra'] = d['mida'] + u
 
 """
 def reb(sys):
@@ -137,16 +139,18 @@ def reb(sys):
       acc.append(e.attrib['target'])
    tot = vec((0,0))
    for i in acc:
-      nam = i.lower().replace(' ','_').replace("'",'')
+      nam = sysnam2sys(i)
       tot += d[nam]
    tot *= 1.0/len(acc)
    d[sys] = tot
 
-#reb('cebus')
-
-#v = d['aesria'] - d['vean']
-#d['flow'] = d['vean'] + rotate(v,-pi/3)
+reb('sol')
 """
+
+v = (d['possum']-d['moor'])/3.0
+for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
+   d[i] += v
+
 
 # Apply to ssys/
 

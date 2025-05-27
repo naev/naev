@@ -31,6 +31,7 @@ if not (prv is None):
    virtual_edges.append(("_"+str(prvj+2),"_"+str(1),bhl,100))
 
 heavy_virtual_edges=[
+   ('rauthia','tide'),
    ('seifer','rei'),
    ('basel','octantis'),
    ('sagittarius','baitas'),

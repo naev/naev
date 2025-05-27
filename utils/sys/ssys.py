@@ -45,12 +45,23 @@ def sys_fil( nam ):
 
 import subprocess
 cmd = os.path.realpath(os.path.join( script_dir, '..', 'repair_xml.sh'))
+need_repair = []
+from atexit import register
+
 def sys_fil_ET( name ):
    T = ET.parse(name)
    oldw = T.write
    def write( nam ):
+      global need_repair
       oldw(nam)
-      subprocess.run( [cmd, nam])
+      if need_repair == []:
+         def _repair_ET():
+            global need_repair
+            if need_repair != []:
+               subprocess.run([cmd] + need_repair)
+            need_repair = []
+         register(_repair_ET)
+      need_repair.append(nam)
    T.write = write
    return T
 
