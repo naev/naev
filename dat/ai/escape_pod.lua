@@ -1,13 +1,14 @@
 -- For escape pods, only accelerates
 
-function create ()
-   ai.pushtask( "accel" )
-end
-
 local noop = function () end
-control = noop
+create = noop
 control_manual = noop
 refuel = noop
+
+function control ()
+   if ai.taskname() then return end
+   ai.pushtask( "accel" )
+end
 
 function accel ()
    ai.accel()

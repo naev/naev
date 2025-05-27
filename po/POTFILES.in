@@ -296,6 +296,7 @@ dat/outfits/flow/structure/small_meditation_chamber.xml
 dat/outfits/intrinsic/bad_shape.xml
 dat/outfits/intrinsic/black_agate_finishing.xml
 dat/outfits/intrinsic/defective.xml
+dat/outfits/intrinsic/escape_pod.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
@@ -3395,6 +3396,7 @@ dat/outfits/flow/flow_amplifier.lua
 dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/intrinsic/black_agate_finishing.lua
+dat/outfits/intrinsic/escape_pod.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/port_and_polish.lua
@@ -3651,6 +3653,7 @@ dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
 dat/ships/lua/empire_admonisher_longbow.lua
 dat/ships/lua/empire_pacifier_hoplite.lua
+dat/ships/lua/escape_pod.lua
 dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua

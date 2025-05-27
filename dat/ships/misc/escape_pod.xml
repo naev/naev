@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Escape Pod">
+ <lua>escape_pod.lua</lua>
  <points>1</points>
  <base_type>Escape_Pod</base_type>
  <gfx size="30">escape_pod</gfx>
@@ -11,9 +12,9 @@
  <description>Not meant for the player.</description>
  <mission />
  <movement>
-  <accel>100</accel>
+  <accel>30</accel>
   <turn>0</turn>
-  <speed>200</speed>
+  <speed>300</speed>
  </movement>
  <health>
   <absorb>0</absorb>
@@ -29,7 +30,7 @@
   <crew>1</crew>
   <mass>5</mass>
   <fuel>0</fuel>
-  <fuel_consumption>100</fuel_consumption>
+  <fuel_consumption>1</fuel_consumption>
   <cargo>0</cargo>
  </characteristics>
  <slots />

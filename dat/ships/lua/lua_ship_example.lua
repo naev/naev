@@ -18,7 +18,7 @@ end
 function cleanup( _p )
 end
 
--- Run each frame for the pilot
+-- Run each update_dt ticks of game time for the pilot
 function update( _p, _dt )
 end
 
