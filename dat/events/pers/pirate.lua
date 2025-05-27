@@ -31,6 +31,7 @@ return function ()
                local pos, vel
                local function anchovy_spawn( name, greet, taunt )
                   local p = pilot.add("Pirate Shark", "Pirate", pos, name, {naked=true, ai="pers_pirate"})
+                  p:outfitAddIntrinsic("Escape Pod")
                   equipopt.pirate( p, {
                      outfits_add={"Emergency Stasis Inducer"},
                      prefer={["Emergency Stasis Inducer"] = 100}} )
@@ -65,6 +66,7 @@ return function ()
                local pos, vel
                local function sardine_spawn( name, greet, taunt )
                   local p = pilot.add("Pirate Vendetta", "Pirate", pos, name, {naked=true, ai="pers_pirate"})
+                  p:outfitAddIntrinsic("Escape Pod")
                   equipopt.pirate( p, {
                      outfits_add={"Emergency Stasis Inducer"},
                      prefer={["Emergency Stasis Inducer"] = 100}} )
@@ -105,6 +107,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Kestrel", "Pirate", nil, _("Flying Dutchman"), {naked= true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "shield_mod", 80 )
                p:intrinsicSet( "armour_mod", 60 )
                p:intrinsicSet( "shield_regen_mod", 50 )
@@ -130,6 +133,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Revenant", "Wild Ones", nil, _("The Beast"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.pirate( p, { bioship_stage=6,
                   bioship_skills={
                      "bite1", "bite2", "bite3",
@@ -153,6 +157,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Zebra", "Raven Clan", nil, _("Raven's Talon"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.pirate( p, {fighterbay=5, bolt=0.1} )
                p:intrinsicSet( "fbay_reload", 100 )
                p:intrinsicSet( "fbay_rate", 50 )
@@ -174,6 +179,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Starbridge", "Dreamer Clan", nil, _("Shroomancer"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, {
                   prefer={
                      ["Large Flow Amplifier"] = 100,
@@ -202,6 +208,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Shark", "Black Lotus", nil, _("Feldspar"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, {noflow=true} )
                p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()
@@ -212,6 +219,7 @@ return function ()
          }, {
             spawn = function ()
                local p = pilot.add("Pirate Starbridge", "Black Lotus", nil, _("Lapis Lazuli"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.pirate( p, {
                   launcher = 2,
                   ["Launcher"] = { max=4 },
@@ -225,6 +233,7 @@ return function ()
          }, {
             spawn = function ()
                local p = pilot.add("Pirate Starbridge", "Black Lotus", nil, _("Opal"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.dvaered( p )
                p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()
@@ -242,6 +251,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Kestrel", "Black Lotus", nil, _("Emerald"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.zalek( p, {fighterbay=5} )
                p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()
@@ -252,6 +262,7 @@ return function ()
          }, {
             spawn = function ()
                local p = pilot.add("Pirate Kestrel", "Black Lotus", nil, _("Topaz"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.soromid( p, {fighterbay=5} )
                p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()
@@ -269,6 +280,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Dealbreaker", "Black Lotus", nil, _("Diamond"), {naked=true, ai="pers_pirate"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.pirate( p, {fighterbay=5, beam=0.1} )
                p:intrinsicSet( "shield_mod", 25 )
                local m = p:memory()

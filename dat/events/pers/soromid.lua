@@ -16,6 +16,7 @@ return function ()
             spawn = function ()
                -- Hau = maori unisex name that means wind
                local p = pilot.add("Soromid Arx", "Soromid", nil, _("Elder Hau"), {naked=true, ai="pers"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.soromid( p, { bioship_stage=12,
                      bioship_skills={
                         "bite1","bite2","bite3","bite4","bite5",
@@ -31,6 +32,7 @@ return function ()
             spawn = function ()
                -- Irala = maori unisex name that means god wrestler
                local p = pilot.add("Soromid Odium", "Soromid", nil, _("Witch Doctor Irala"), {naked=true, ai="pers"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.soromid( p, { bioship_stage=8,
                      bioship_skills={
                         "attack1", "attack2", "attack3",

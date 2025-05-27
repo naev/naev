@@ -11,6 +11,7 @@ return function ()
       table.insert( pers, {
          spawn = function ()
             local p = require("common.minerva").pink_demon( nil, {ai="pers_pirate"} )
+            p:outfitAddIntrinsic("Escape Pod")
             local m = p:memory()
             m.taunt = _("Ho ho ho and a bottle of rum!")
             m.comm_greet = _([["What are you doing here?"]])
@@ -23,6 +24,7 @@ return function ()
       table.insert( pers, {
          spawn = function ()
             local p = pilot.add("Dvaered Goddard", "Dvaered", nil, _("Major Malik"), {naked=true, ai="pers_patrol"})
+            p:outfitAddIntrinsic("Escape Pod")
             equipopt.dvaered( p, {
                type_range = {
                   ["Beam Turret"] = { max = 0 },
@@ -53,6 +55,7 @@ return function ()
       table.insert( pers, {
          spawn = function ()
             local p = pilot.add("Za'lek Sting", "Za'lek", nil, _("Dr. Cayne"), {naked=true, ai="pers"} )
+            p:outfitAddIntrinsic("Escape Pod")
             equipopt.zalek( p, {fighterbay=20} )
             p:intrinsicSet( "fbay_reload", 100 ) -- More drones!
             local m = p:memory()

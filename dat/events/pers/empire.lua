@@ -14,6 +14,7 @@ return function ()
       local function executor_spawn( name, ad, taunt )
          return function ()
             local p = pilot.add("Empire Peacemaker", "Empire", nil, name, {naked=true, ai="pers_patrol"})
+            p:outfitAddIntrinsic("Escape Pod")
             equipopt.empire( p, {
                outfits_add={"Executor Shield Aura"},
                prefer={["Executor Shield Aura"] = 100}} )
@@ -68,6 +69,7 @@ return function ()
             spawn = function ()
                -- ECB stands for Empire Combat Bureaucrat
                local p = pilot.add("Empire Pacifier Hoplite", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "fwd_damage", 10 )
                p:intrinsicSet( "shield_mod", 25 )
                equipopt.empire( p, {
@@ -95,6 +97,7 @@ return function ()
             spawn = function ()
                -- ECB stands for Empire Combat Bureaucrat
                local p = pilot.add("Empire Pacifier Hoplite", "Empire", nil, _("ECB Payne"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "tur_damage", 25 )
                equipopt.empire( p, {
                   forward=0, beam=0,
@@ -120,6 +123,7 @@ return function ()
             spawn = function ()
                -- ECB stands for Empire Combat Bureaucrat
                local p = pilot.add("Empire Pacifier Hoplite", "Empire", nil, _("ECB O'Connor"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "fbay_damage", 25 )
                equipopt.empire( p, {
                   beam=0, fighterbay=5,
