@@ -130,7 +130,7 @@ def xml_files_to_graph(args):
    return dict(zip(ids,name)),dict(zip(ids,acc)),dict(pos),tradelane
 
 
-def main(args,fixed_pos=False):
+def main(args, fixed_pos = False):
    V,E,pos,tl=xml_files_to_graph(args)
    print('graph g{')
    print('\tepsilon=0.0000001')
@@ -140,12 +140,13 @@ def main(args,fixed_pos=False):
 
    # 1inch=72pt
    if fixed_pos:
-      fact = 72*3/2
-      print('\toverlap=true')
+      print('\tgraph [overlap=true]')
+      factor = 0.7
    else:
-      fact = 72*4/3
-      print('\toverlap=false')  #'\toverlap=voronoi'
-   print('\tinputscale='+str(fact))
+      print('\tgraph [overlap=false]')  #'\toverlap=voronoi'
+      factor = 0.7
+
+   print('\tinputscale=72')
    print('\tnotranslate=true') # don't make upper left at 0,0
    print('\tnode[fixedsize=true,shape=circle,color=white,fillcolor=grey,style="filled"]')
    reflen = 0.5
@@ -160,21 +161,26 @@ def main(args,fixed_pos=False):
    for (f,t,l,w) in virtual_edges:
       virt_v.update({f,t})
 
-   for i in virt_v:
-      if i not in V:
-         print('\t"'+i+'" [label="",style=invis]')
+   if not fixed_pos:
+      for i in virt_v:
+         if i not in V:
+            print('\t"'+i+'" [label="",style=invis]')
 
    for i in V:
+      if i[0] == "_" and fixed_pos:
+         continue
       if E[i]!=[]: # Don't include disconnected systems
-         s = '\t"'+i+'" [label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
+         s = '\t"'+i+'" ['
+         if i[0]!="_":
+            (x,y) = pos[i]
+            x = round(float(x)*factor, 9)
+            y = round(float(y)*factor, 9)
+            s += 'pos="'+str(x)+','+str(y)+("!" if fixed_pos else "")+'";'
+         s += 'label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
 
          if i=='sol':
             s+=';color=red'
-         try:
-            (x,y)=pos[i]
-            s+=';pos="'+str(x)+','+str(y)+'"'
-         except:
-            pass
+
          print(s+']')
          for dst,hid in E[i]:
             suff = []
@@ -220,6 +226,6 @@ if __name__ == '__main__':
       if (ign := [f for f in argv[1:] if not f.endswith(".xml")]) != []:
          stderr.write('Ignored: "'+'", "'.join(ign)+'"\n')
 
-      main([f for f in argv[1:] if f.endswith(".xml")],keep)
+      main([f for f in argv[1:] if f.endswith(".xml")], keep)
 
 

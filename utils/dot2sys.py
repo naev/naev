@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 from sys import stdin, stderr
+import xml.etree.ElementTree as ET
 
 acc = []
 
-fact = 72*3/2
 d = dict()
 
 class vec(tuple):
@@ -42,6 +42,7 @@ for line in stdin:
       process(acc)
       acc = ''
 
+# bounding boxes
 class bb:
    def __init__(self):
       self.empty=True
@@ -69,15 +70,36 @@ class bb:
       return vec((self.maxx,self.maxy)) if not self.empty else None
 
    def __str__(self):
-      return "["+str(round(self.mini()))+" "+str(round(self.maxi()))+"]"
+      return "["+str(round(self.mini(), 6))+" "+str(round(self.maxi(), 6))+"]"
 
 
 bbox = bb()
 
 for k in d:
-   d[k] *= 4.5/3.0
+   d[k] *= 3.0/2.0
    bbox += d[k]
 
+oldbb = bb()
+for k in d:
+   if k[0]!="_":
+      nam = k
+      if nam[0] == '"':
+         nam = nam[1:-1]
+      fp = "dat/ssys/" + nam + ".xml"
+      o = ET.parse(fp)
+      T = o.getroot()
+      for e in T.findall("pos"):
+         oldbb += (float(e.attrib['x']),float(e.attrib['y']))
+         break
+
+again = bb()
+for k in d:
+   d[k]-= bbox.mini()
+   d[k]+= oldbb.mini()
+   again+= d[k]
+
+stderr.write(str(oldbb)+"->"+str(bbox)+"\n")
+stderr.write("->"+str(again)+"\n")
 
 # Post - processing
 
@@ -119,9 +141,6 @@ d['ekta'] = d['mida'] - v
 d['akra'] = d['ekta'] + v
 
 
-import xml.etree.ElementTree as ET
-
-
 def reb(sys):
    acc = []
    fp="dat/ssys/"+sys+".xml"
@@ -143,34 +162,11 @@ def reb(sys):
 #d['flow'] = d['vean'] + rotate(v,-pi/3)
 
 
+
 # Apply to ssys/
 
-oldbb = bb()
 for k in d:
-   if k[0]!="_":
-      nam = k
-      if nam[0] == '"':
-         nam = nam[1:-1]
-      fp = "dat/ssys/" + nam + ".xml"
-      o = ET.parse(fp)
-      T = o.getroot()
-      for e in T.findall("pos"):
-         oldbb += (float(e.attrib['x']),float(e.attrib['y']))
-         break
-
-stderr.write(str(oldbb)+"->"+str(bbox)+"\n")
-diff = bbox.mini() - oldbb.mini()
-again = bb()
-
-for k in d:
-   d[k]-= bbox.mini()
-   d[k]+= oldbb.mini()
-   again+= d[k]
-
-stderr.write("->"+str(again)+"\n")
-
-for k in d:
-   d[k] = round(d[k],3)
+   d[k] = round(d[k], 9)
    if k[0]!="_":
       nam = k
       if nam[0] == '"':
