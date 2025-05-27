@@ -1,0 +1,17 @@
+<ship inherits="Empire Pacifier" name="Empire Pacifier Hoplite">
+ <lua>empire_pacifier_hoplite.lua</lua>
+ <rarity>3</rarity>
+ <price>3300000</price>
+ <cond>require("buyrep")("Empire", 60)</cond>
+ <condstr>You need at least 60% reputation with the Empire.</condstr>
+ <description>Designed by an Imperial Combat Bureaucrat for personal use, the Pacifier Hoplite was in design limbo for over 50 cycles before it was finally approved and produced by Nexus Shipyards. Sadly, the original Bureaucrat that designed it died before they were ever able to see it completed.
+
+The ship design uses special flash shield capacitors instead of the standard shield arrays, which are able to store significantly more shields, however, they were designed to be single use. With some minor design improvements, it is now possible to recharge them once fully drained, however, it takes a long time for them to naturally recover. The recovery process can be bootstrapped by performing a full cooldown.</description>
+ <desc_extra>Shields start regenerating again upon full cooldown.</desc_extra>
+ <stats>
+  <shield_mod>210</shield_mod>
+  <shield_regen_mod>10</shield_regen_mod>
+  <shielddown_mod>10000</shielddown_mod>
+  <fuel>200</fuel>
+ </stats>
+</ship>

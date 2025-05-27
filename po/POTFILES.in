@@ -530,6 +530,7 @@ dat/ships/empire/empire_hawking.xml
 dat/ships/empire/empire_lancelot.xml
 dat/ships/empire/empire_lancelot_golden_efreeti.xml
 dat/ships/empire/empire_pacifier.xml
+dat/ships/empire/empire_pacifier_hoplite.xml
 dat/ships/empire/empire_peacemaker.xml
 dat/ships/empire/empire_rainmaker.xml
 dat/ships/empire/empire_shark.xml
@@ -3645,6 +3646,7 @@ dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
+dat/ships/lua/empire_pacifier_hoplite.lua
 dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua

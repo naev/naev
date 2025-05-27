@@ -100,6 +100,10 @@ var.zalek_demon = _v{
    { w=1,    s=ship.get("Za'lek Demon") },
    { w=0.05, s=ship.get("Za'lek Demon Type IV") },
 }
+var.empire_pacifier = _v{
+   { w=1,    s=ship.get("Empire Pacifier") },
+   { w=0.05, s=ship.get("Empire Pacifier Hoplite") },
+}
 -- Cruiser
 var.kestrel = _v{
    { w=1,    s=ship.get("Kestrel") },

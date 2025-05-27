@@ -3,7 +3,6 @@ local var = require "shipvariants"
 
 local sshark      = ship.get("Empire Shark")
 local sadmonisher = ship.get("Empire Admonisher")
-local spacifier   = ship.get("Empire Pacifier") -- codespell:ignore spacifier
 local shawking    = ship.get("Empire Hawking")
 local speacemaker = ship.get("Empire Peacemaker")
 local srainmaker  = ship.get("Empire Rainmaker")
@@ -13,7 +12,7 @@ local function spawn_patrol ()
    return scom.doTable( { __doscans = true }, {
       { w=0.5, var.lancelot },
       { w=0.8, var.lancelot, sshark },
-      { spacifier }, -- codespell:ignore spacifier
+      { var.empire_pacifier },
    } )
 end
 
@@ -22,7 +21,7 @@ local function spawn_squad ()
    return scom.doTable( { __doscans = (rnd.rnd() < 0.5) }, {
       { w=0.5, sadmonisher, var.lancelot },
       { w=0.8, sadmonisher, var.lancelot, sshark },
-      { spacifier, var.lancelot, sshark }, -- codespell:ignore spacifier
+      { var.empire_pacifier, var.lancelot, sshark },
    } )
 end
 
@@ -39,7 +38,7 @@ local function spawn_capship ()
    return scom.doTable( pilots, {
       { w=0.5, var.lancelot, var.lancelot, sshark },
       { w=0.8, sadmonisher, var.lancelot },
-      { spacifier, var.lancelot }, -- codespell:ignore spacifier
+      { var.empire_pacifier, var.lancelot },
    } )
 end
 
