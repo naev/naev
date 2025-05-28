@@ -2,12 +2,18 @@
 
 
 from sys import argv,stderr
+from os.path import basename
 import xml.etree.ElementTree as ET
 
 
-anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian', 'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
+anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
+   'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
 
-virtual_edges=[('flow','basel',2,1),('deneb','booster',1.5,1), ('ngc4746','logania',1,1),]
+virtual_edges=[
+   ('flow', 'basel', 2, 1),
+   ('deneb', 'booster', 1.5, 1),
+   ('ngc4746', 'logania', 1, 1),
+]
 
 prv = None
 prvj = None
@@ -17,18 +23,18 @@ for j, i in enumerate(anbh):
       prv = i
    else:
       if prvj is not None:
-         virtual_edges.append(("_"+str(prvj),"_"+str(j),bhl,100))
+         virtual_edges.append(("_"+str(prvj),    "_"+str(j), bhl, 100))
       prvj = j
-      virtual_edges.append(('anubis_black_hole',"_"+str(j),bhl,100))
-      virtual_edges.append(("_"+str(j),prv,bhl,100))
-      virtual_edges.append(("_"+str(j),i,bhl,100))
+      virtual_edges.append(('anubis_black_hole', "_"+str(j), bhl, 100))
+      virtual_edges.append(("_"+str(j),                 prv, bhl, 100))
+      virtual_edges.append(("_"+str(j),                   i, bhl, 100))
       prv = None
 
 if not (prv is None):
-   virtual_edges.append((prv,i,bhl,100))
-   virtual_edges.append(("_"+str(prvj),"_"+str(prvj+2),bhl,100))
-   virtual_edges.append(("_"+str(prvj+2),prv,bhl,100))
-   virtual_edges.append(("_"+str(prvj+2),"_"+str(1),bhl,100))
+   virtual_edges.append((prv,                           i, bhl, 100))
+   virtual_edges.append(("_"+str(prvj),   "_"+str(prvj+2), bhl, 100))
+   virtual_edges.append(("_"+str(prvj+2),             prv, bhl, 100))
+   virtual_edges.append(("_"+str(prvj+2),      "_"+str(1), bhl, 100))
 
 heavy_virtual_edges=[
    ('herakin','duros'),
@@ -88,39 +94,39 @@ def xml_files_to_graph(args):
    name,acc,pos,tradelane = [],[],[],set()
 
    for i in range(len(args)):
-      basename = args[i].rsplit(".xml",1)
-      if len(basename) != 2 or basename[1] != '':
-         stderr.write('err: "'+args[i]+'"\n')
+      bname = basename(args[i]).rsplit(".xml",1)
+      if len(bname) != 2 or bname[1] != '':
+         stderr.write('err: "' + args[i] + '"\n')
          continue
 
-      basename=basename[0].rsplit('/',1)[-1]
-      name.append(basename)
+      bname = bname[0]
+      name.append(bname)
       T=ET.parse(args[i]).getroot()
 
       try:
          name[-1] = T.attrib['name']
       except:
-         stderr.write('no name defined in "'+basename+'"\n')
+         stderr.write('no name defined in "' + bname + '"\n')
 
       for e in T.findall("pos"):
          try:
-            pos.append((basename,(e.attrib['x'],e.attrib['y'])))
+            pos.append((bname,(e.attrib['x'],e.attrib['y'])))
          except:
-            stderr.write('no position defined in "'+basename+'"\n')
+            stderr.write('no position defined in "' + bname + '"\n')
 
       for e in T.findall("tags/tag"):
          if e.text == 'tradelane':
-            tradelane.add(basename)
+            tradelane.add(bname)
             break
 
-      name2id[name[-1]] = basename
+      name2id[name[-1]] = bname
       acc.append([])
       count = 1
       for e in T.findall("./jumps/jump"):
          try:
-            acc[-1].append((e.attrib['target'],False))
+            acc[-1].append((e.attrib['target'], False))
             for f in e.findall("hidden"):
-               acc[-1][-1]=(acc[-1][-1][0],True)
+               acc[-1][-1]=(acc[-1][-1][0], True)
                break
          except:
             stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
@@ -130,11 +136,11 @@ def xml_files_to_graph(args):
    ids = list(map(n2i,name))
    acc = list(map(lambda L:[(n2i(t[0]),t[1]) for t in L],acc))
 
-   return dict(zip(ids,name)),dict(zip(ids,acc)),dict(pos),tradelane
+   return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane
 
 
 def main(args, fixed_pos = False):
-   V,E,pos,tl=xml_files_to_graph(args)
+   V, E, pos, tl = xml_files_to_graph(args)
    print('graph g{')
    print('\tepsilon=0.0000001')
    print('\tmaxiter=1000')
@@ -161,8 +167,8 @@ def main(args, fixed_pos = False):
       print('\tnode[pin=true]')
 
    virt_v = set()
-   for (f,t,l,w) in virtual_edges:
-      virt_v.update({f,t})
+   for (f, t, l, w) in virtual_edges:
+      virt_v.update({f, t})
 
    if not fixed_pos:
       for i in virt_v:
@@ -175,38 +181,38 @@ def main(args, fixed_pos = False):
       if E[i]!=[] or (fixed_pos and i=='zied'): # Don't include disconnected systems
          s = '\t"'+i+'" ['
          if i[0]!="_":
-            (x,y) = pos[i]
+            (x, y) = pos[i]
             x = round(float(x)*factor, 9)
             y = round(float(y)*factor, 9)
             s += 'pos="'+str(x)+','+str(y)+("!" if fixed_pos else "")+'";'
          s += 'label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
 
-         if i=='sol':
-            s+=';color=red'
+         if i == 'sol':
+            s += ';color=red'
 
          print(s+']')
          for dst,hid in E[i]:
             suff = []
             if i in tl and dst in tl:
-               suff.extend(['style=bold','penwidth=4.0'])
+               suff.extend(['style=bold', 'penwidth=4.0'])
             elif hid:
-               suff.extend(['style=dotted','penwidth=2.5'])
+               suff.extend(['style=dotted', 'penwidth=2.5'])
 
-            suff = '['+';'.join(suff)+']' if suff!=[] else ""
+            suff = '[' + ';'.join(suff) + ']' if suff != [] else ""
 
-            oneway = i not in map(lambda t:t[0],E[dst])
+            oneway = i not in map(lambda t:t[0], E[dst])
             edge = '->' if oneway else '--'
             if oneway or i<dst:
-               print('\t"'+i+'"'+edge+'"'+dst+'"'+suff)
+               print('"'.join(['\t', i, edge, dst, suff]))
 
    if not fixed_pos:
       print('\tedge[len='+str(reflen)+';weight=100]')
       print('\tedge[style="dashed";color=grey;pendwidth=1.5]')
-      for (f,t) in heavy_virtual_edges:
+      for (f, t) in heavy_virtual_edges:
          inv = "[style=invis]" if (f in virt_v or t in virt_v) else ""
          print('\t"'+f+'"--"'+t+'"'+inv)
 
-      for (f,t,l,w) in virtual_edges:
+      for (f, t, l, w) in virtual_edges:
          inv = ", style=invis" if (f in virt_v or t in virt_v) else ""
          print('\t"'+f+'"--"'+t+'" [len='+str(l*reflen)+',weight='+str(w)+inv+']')
 
@@ -230,5 +236,4 @@ if __name__ == '__main__':
          stderr.write('Ignored: "'+'", "'.join(ign)+'"\n')
 
       main([f for f in argv[1:] if f.endswith(".xml")], keep)
-
 

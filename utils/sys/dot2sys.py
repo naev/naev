@@ -159,7 +159,9 @@ l = (pos['ngc2601'] - pos['anubis_black_hole']).size()
 v = (pos['ngc2601'] + pos['ngc11935'] - pos['anubis_black_hole']*2.0).normalize()
 pos['zied'] = pos['anubis_black_hole'] + v*l
 
+
 # Smoothen tradelane
+
 tradelane = set()
 for k in pos:
    if k[0] != '_':
@@ -179,6 +181,26 @@ for k in pos:
 
 for k, v in newp.items():
    pos[k] = v
+
+
+# Increase terminal ngc dist to neighbour to at least average edge length.
+
+total = 0.0
+count = 0
+for k in pos:
+   if k[0] != '_':
+      for n in [s for (s, _) in sysneigh(k) if (s in tradelane)]:
+         total += (pos[n]-pos[k]).size()
+         count += 1
+avg = total / count
+
+for k in pos:
+   if k[:3] == 'ngc' and k[3:] not in ['22375', '20489', '4746', '9415']:
+      if len(n := sysneigh(k)) == 1:
+         n = n[0][0]
+         v = pos[k] - pos[n]
+         if v.size() < avg:
+            pos[k] = pos[n] + v.normalize()*avg
 
 
 # Apply to ssys/
