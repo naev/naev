@@ -11,6 +11,7 @@
 local fmt = require 'format'
 local vn = require 'vn'
 local ccomm = require "common.comm"
+local escapepod = require "outfits.lib.escape_pod"
 
 local plt
 local function setup_pilot( p )
@@ -49,6 +50,15 @@ function create ()
       name = plt:name(),
    }
 
+   -- Handle case of escape pod (launch and remove)
+   local ep = outfit.get("Escape Pod")
+   for k,o in ipairs(plt:outfitsList("intrinsic")) do
+      if o==ep then
+         escapepod.launch(plt)
+         plt:outfitRmIntrinsic(o)
+      end
+   end
+
    mem.name = fmt.f(_("Captured {shp}"), {shp=plt:ship():name()} )
    mem.ship = plt:ship()
    mem.outfits = plt:outfits()
@@ -74,6 +84,9 @@ function create ()
    hook.enter( "enter" )
 
    evt.save(true)
+
+   -- Trigger capture hook
+   naev.trigger( "capture", plt )
 end
 
 function plt_death ()

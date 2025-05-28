@@ -15,6 +15,7 @@ return function ()
             spawn = function ()
                -- ZS stands for Za'lek ship
                local p = pilot.add("Za'lek Diablo", "Za'lek", nil, _("ZS Curie"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.zalek( p, {
                   outfits_add={"Emergency Shield Booster"},
                   prefer={["Emergency Shield Booster"] = 100}} )
@@ -28,6 +29,7 @@ return function ()
             spawn = function ()
                -- PI = principal investigator
                local p = pilot.add("Za'lek Diablo", "Za'lek", nil, _("PI Newton"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.zalek( p, {
                   outfits_add={"Neural Accelerator Interface"},
                   prefer={["Neural Accelerator Interface"] = 100}} )
@@ -49,6 +51,7 @@ return function ()
             spawn = function ()
                -- ZHD stands for Za'lek Heavy Drone
                local p = pilot.add("Za'lek Heavy Drone", "Za'lek", nil, _("ZHD-08-5820"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "shield_mod", 100 )
                equipopt.zalek( p )
                local m = p:memory()
@@ -69,6 +72,7 @@ return function ()
             spawn = function ()
                -- Ananka is a female name that apparently stands for countless or infinite, like a postdoc
                local p = pilot.add("Za'lek Sting", "Za'lek", nil, _("Postdoc Ananka"), {naked=true, ai="pers"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.zalek( p, {
                   outfits_add={"Combat Hologram Projector"},
                   prefer={["Combat Hologram Projector"] = 100}} )

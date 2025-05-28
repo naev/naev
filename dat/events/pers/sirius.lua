@@ -15,6 +15,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Sirius Dogma", "Sirius", nil, _("Serra Scion"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, { flow_ability=outfit.get("Avatar of Sirichana") } )
                local m = p:memory()
                m.comm_greet = _([["The Serra Echelon is the pride of House Sirius. As a Scion, I bear the weight of responsibility truthfully."]])
@@ -25,6 +26,7 @@ return function ()
          }, {
             spawn = function ()
                local p = pilot.add("Sirius Preacher", "Sirius", nil, _("Zealot Sri Chatri"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                equipopt.sirius( p, { flow_ability=outfit.get("Avatar of Sirichana") } )
                local m = p:memory()
                m.ad = {

@@ -84,15 +84,18 @@ int pilot_ewScanCheck( const Pilot *p )
  */
 static void pilot_ewUpdate( Pilot *p )
 {
-   double base     = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
+   double base = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
+   /* We enforce detected >= signature >= stealth. */
    p->ew_detection = base * p->stats.ew_detected;
-   p->ew_signature = 0.75 * base * ew_interference * p->stats.ew_signature;
+   p->ew_signature = MIN( p->ew_detection, 0.75 * base * ew_interference *
+                                              p->stats.ew_signature );
    /* For stealth we apply the ew_asteroid and ew_interference bonus outside of
     * the max, so that it can go below 1000 with in-system features. */
    p->ew_stealth =
-      MAX( CTS.STEALTH_MIN_DIST * p->stats.ew_stealth_min,
-           p->ew_mass * p->stats.ew_hide * 0.25 * p->stats.ew_stealth ) *
-      p->ew_asteroid * ew_interference * p->ew_jumppoint;
+      MIN( p->ew_signature,
+           MAX( CTS.STEALTH_MIN_DIST * p->stats.ew_stealth_min,
+                p->ew_mass * p->stats.ew_hide * 0.25 * p->stats.ew_stealth ) *
+              p->ew_asteroid * ew_interference * p->ew_jumppoint );
 }
 
 /**

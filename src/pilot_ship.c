@@ -121,7 +121,7 @@ int pilot_shipLUpdate( Pilot *p, double dt )
    /* Set up the function: update( p ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ship->lua_update ); /* f */
    lua_pushpilot( naevL, p->id );                                /* f, p */
-   lua_pushnumber( naevL, dt );                                  /* f, p, dt */
+   lua_pushnumber( naevL, p->ship->lua_dt );                                  /* f, p, dt */
    if ( nlua_pcall( p->ship->lua_env, 2, 0 ) ) {                 /* */
       shipLRunWarning( p, p->ship, "update", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );

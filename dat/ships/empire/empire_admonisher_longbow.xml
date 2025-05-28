@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship inherits="Empire Admonisher" name="Empire Admonisher Longbow">
+ <lua>empire_admonisher_longbow.lua</lua>
+ <rarity>3</rarity>
+ <price>1850000</price>
+ <cond>require("buyrep")("Empire", 50)</cond>
+ <condstr>You need at least 50% reputation with the Empire.</condstr>
+ <description>Standard Empire Admonishers are fabricated to be able to fit many needs, in a one-size fits all approach. However, there are times when such flexibility can wind up being instead a limitation. The Longbow drastically changes how the Admonisher performs in combat by specializing in long-range attacks. A complete revamp of the aiming circuitry makes it so that the detection capabilities directly translate into increased weapon range. Furthermore, the ship has changed the weapon mounts to allow equipping heavy weapons that are able to make full use of the new long range compatibilities. As a downside, the ship ends up having much more difficulties when trying to deal with enemy interceptors and fighters.</description>
+ <desc_extra>Gains as much weapon range bonus as the ship detection.</desc_extra>
+ <slots>
+  <weapon size="large" x="15" y="0" h="2" />
+  <weapon size="medium" x="4" y="2" h="-5" />
+  <weapon size="medium" x="4" y="-2" h="-5" />
+  <utility size="medium" prop="systems" name="systems">Unicorp PT-200 Core System</utility>
+  <utility size="medium" prop="accessory" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
+  <structure size="medium" prop="engines" name="engines">Unicorp Falcon 700 Engine</structure>
+  <structure size="medium" prop="hull" name="hull">Unicorp D-23 Medium Plating</structure>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <shield_mod>15</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <ew_detect>10</ew_detect>
+  <ew_track>-10</ew_track>
+ </stats>
+</ship>

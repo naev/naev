@@ -296,6 +296,7 @@ dat/outfits/flow/structure/small_meditation_chamber.xml
 dat/outfits/intrinsic/bad_shape.xml
 dat/outfits/intrinsic/black_agate_finishing.xml
 dat/outfits/intrinsic/defective.xml
+dat/outfits/intrinsic/escape_pod.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
@@ -526,6 +527,7 @@ dat/ships/dvaered/dvaered_retribution.xml
 dat/ships/dvaered/dvaered_vendetta.xml
 dat/ships/dvaered/dvaered_vigilance.xml
 dat/ships/empire/empire_admonisher.xml
+dat/ships/empire/empire_admonisher_longbow.xml
 dat/ships/empire/empire_hawking.xml
 dat/ships/empire/empire_lancelot.xml
 dat/ships/empire/empire_lancelot_golden_efreeti.xml
@@ -537,6 +539,7 @@ dat/ships/empire/empire_shark.xml
 dat/ships/feral_bioship/kauweke.xml
 dat/ships/feral_bioship/nohinohi.xml
 dat/ships/feral_bioship/taitamariki.xml
+dat/ships/misc/escape_pod.xml
 dat/ships/misc/fort_raelid.xml
 dat/ships/misc/fort_raglan.xml
 dat/ships/misc/onewing_goddard.xml
@@ -2814,6 +2817,7 @@ dat/ai/empire.lua
 dat/ai/empire_idle.lua
 dat/ai/empire_norun.lua
 dat/ai/empire_refuel.lua
+dat/ai/escape_pod.lua
 dat/ai/escort.lua
 dat/ai/escort_player.lua
 dat/ai/feralbioship.lua
@@ -3392,12 +3396,14 @@ dat/outfits/flow/flow_amplifier.lua
 dat/outfits/flow/structure/flow_resonator.lua
 dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/intrinsic/black_agate_finishing.lua
+dat/outfits/intrinsic/escape_pod.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/alone.lua
 dat/outfits/lib/bioplasma.lua
+dat/outfits/lib/escape_pod.lua
 dat/outfits/lib/helper.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lib/multicore.lua
@@ -3646,7 +3652,9 @@ dat/scripts/vnextras.lua
 dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/ships/lua/dvaered.lua
+dat/ships/lua/empire_admonisher_longbow.lua
 dat/ships/lua/empire_pacifier_hoplite.lua
+dat/ships/lua/escape_pod.lua
 dat/ships/lua/gawain_xy37.lua
 dat/ships/lua/lib/explode.lua
 dat/ships/lua/lib/flow.lua

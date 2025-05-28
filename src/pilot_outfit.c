@@ -705,7 +705,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cargo_free < 0,
                       _( "!! Insufficient Free Cargo Space" ) );
    SPACEWORTHY_CHECK( p->crew < 0, _( "!! Insufficient Crew" ) );
-   SPACEWORTHY_CHECK( pilot_massFactor( p ) < 0.05, ( "!! Too Heavy" ) );
+   SPACEWORTHY_CHECK( pilot_massFactor( p ) < 0.05, _( "!! Too Heavy" ) );
    SPACEWORTHY_CHECK( p->solid.mass <= 0., _( "!! Defies Laws of Physics" ) );
 
    /* No need to mess with the string. */
@@ -2505,4 +2505,33 @@ int pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
    }
    pilot_outfitLunmem( env, oldmem );
    return ret;
+}
+
+static void outfitLOndeath( const Pilot *pilot, PilotOutfitSlot *po,
+                            const void *data )
+{
+   (void)data;
+   int           oldmem;
+   const Outfit *o = po->outfit;
+   if ( outfit_luaOndeath( o ) == LUA_NOREF )
+      return;
+
+   nlua_env *env = outfit_luaEnv( o );
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaOndeath( o ) ); /* f */
+   lua_pushpilot( naevL, pilot->id );                               /* f, p */
+   lua_pushpilotoutfit( naevL, po ); /* f, p, po */
+   if ( nlua_pcall( env, 2, 0 ) ) {  /* */
+      outfitLRunWarning( pilot, o, "ondeath", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+void pilot_outfitLOndeath( Pilot *pilot )
+{
+   pilot_outfitLRun( pilot, outfitLOndeath, NULL );
 }

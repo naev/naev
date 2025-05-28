@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Escape Pod">
+ <lua>escape_pod.lua</lua>
+ <points>1</points>
+ <base_type>Escape_Pod</base_type>
+ <gfx size="30">escape_pod</gfx>
+ <sound>engine</sound>
+ <class display="Escape Pod">Interceptor</class>
+ <price>1</price>
+ <time_mod>1</time_mod>
+ <fabricator>N/A</fabricator>
+ <description>Not meant for the player.</description>
+ <mission />
+ <movement>
+  <accel>30</accel>
+  <turn>0</turn>
+  <speed>300</speed>
+ </movement>
+ <health>
+  <absorb>0</absorb>
+  <shield>0</shield>
+  <armour>1</armour>
+  <energy>0</energy>
+  <shield_regen>0</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>0.001</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>0</cpu>
+  <crew>1</crew>
+  <mass>5</mass>
+  <fuel>0</fuel>
+  <fuel_consumption>1</fuel_consumption>
+  <cargo>0</cargo>
+ </characteristics>
+ <slots />
+ <stats>
+  <engine_limit>100</engine_limit>
+ </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <tag>nonaevpedia</tag>
+ </tags>
+</ship>

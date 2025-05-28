@@ -1726,6 +1726,9 @@ void pilot_dead( Pilot *p, unsigned int killer )
    if ( p->armour > 0. )
       return;
 
+   /* Run Lua hooks. */
+   pilot_outfitLOndeath( p );
+
    if ( p->parent == PLAYER_ID )
       player_message( _( "#rShip under command '%s' was destroyed!#0" ),
                       p->name );

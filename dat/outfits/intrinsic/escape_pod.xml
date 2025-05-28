@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Escape Pod">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>An escape pod that will automatically eject when the ship has taken fatal damage.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>escape_pod</limit>
+ </general>
+ <specific type="modification">
+  <lua>outfits/intrinsic/escape_pod.lua</lua>
+ </specific>
+</outfit>

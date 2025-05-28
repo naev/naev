@@ -64,11 +64,11 @@ local function add_desc( stat, nomain, nosec, gb, basic )
    else
       col=valcol(p+s, stat.stat.inverted, gb)
    end
-   local pref = col .. fmt.f("{name}: ",{name=name})
+   local pref = col .. fmt.f(_("{name}: "),{name=name})
    if p == s or basic then
       return pref .. stattostr(stat.stat, base, off, true, gb)
    else
-      return pref .. fmt.f("{bas} #n/#0 {sec}", {
+      return pref .. fmt.f(_("{bas} #n/#0 {sec}"), {
          bas = stattostr(stat.stat, p, nomain, nosec, gb),
          sec = stattostr(stat.stat, s, nosec, nomain or not nosec, gb),
       })
@@ -194,13 +194,13 @@ function multicore.init( params )
          local share = math.floor(0.5 + (100*smid['engine_limit'])/smid['total'])
          desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
             eml = (smid and smid["engine_limit"]) or 0,
-            total = totaleml, share = share, t = multiengines.mobility_stats['engine_limit'].unit
+            total = totaleml, share = share, t = _(multiengines.mobility_stats['engine_limit'].unit)
          })
          for _k,s in ipairs(stats) do
             if is_mobility[s.name] and s.name~="engine_limit" then
                desc = desc .. fmt.f(_("#g{display}: #b+{val} {unit}#0"),{
-                  display = s.stat.display, unit = s.stat.unit, val = fmt.number(smid[s.name] or 0) })
-               desc = desc .. "  #y=>#0  #g+" .. fmt.number((smid[s.name] or 0)*share/100) .. " " .. s.stat.unit .. "#0\n"
+                  display = _(s.stat.display), unit = _(s.stat.unit), val = fmt.number(smid[s.name] or 0) })
+               desc = desc .. _("  #y=>#0  #g+") .. fmt.number((smid[s.name] or 0)*share/100) .. p_("unit", " ") .. _(s.stat.unit) .. "#0\n"
             end
          end
       end

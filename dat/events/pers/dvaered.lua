@@ -17,6 +17,7 @@ return function ()
                -- Gets bonuses based on how many of their "pack" vendettas are alive
                local npack = 8
                local p = pilot.add("Dvaered Vigilance", "Dvaered", nil, _("Packleader"), {naked=true, ai="pers_patrol"})
+               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "armour_mod", 50*(npack-1) )
                p:intrinsicSet( "absorb", 10*(npack-1) )
                equipopt.dvaered( p, {turret=0} )

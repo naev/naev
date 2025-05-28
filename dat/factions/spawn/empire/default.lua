@@ -2,7 +2,6 @@ local scom = require "factions.spawn.lib.common"
 local var = require "shipvariants"
 
 local sshark      = ship.get("Empire Shark")
-local sadmonisher = ship.get("Empire Admonisher")
 local shawking    = ship.get("Empire Hawking")
 local speacemaker = ship.get("Empire Peacemaker")
 local srainmaker  = ship.get("Empire Rainmaker")
@@ -19,8 +18,8 @@ end
 -- @brief Spawns a medium sized squadron.
 local function spawn_squad ()
    return scom.doTable( { __doscans = (rnd.rnd() < 0.5) }, {
-      { w=0.5, sadmonisher, var.lancelot },
-      { w=0.8, sadmonisher, var.lancelot, sshark },
+      { w=0.5, var.empire_admonisher, var.lancelot },
+      { w=0.8, var.empire_admonisher, var.lancelot, sshark },
       { var.empire_pacifier, var.lancelot, sshark },
    } )
 end
@@ -37,7 +36,7 @@ local function spawn_capship ()
    -- Generate the escorts
    return scom.doTable( pilots, {
       { w=0.5, var.lancelot, var.lancelot, sshark },
-      { w=0.8, sadmonisher, var.lancelot },
+      { w=0.8, var.empire_admonisher, var.lancelot },
       { var.empire_pacifier, var.lancelot },
    } )
 end

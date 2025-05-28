@@ -29,6 +29,7 @@
 typedef struct CommodityItem {
    Commodity *com;
    double     price_mod;
+   int        buyable;
 } CommodityItem;
 
 /*
@@ -40,6 +41,12 @@ static CommodityItem *commodity_list = NULL; /* Array.h */
 
 /* Prototypes. */
 static void commodity_exchange_genList( unsigned int wid );
+static void commodity_exchange_modifiers( unsigned int wid );
+static void commodity_buy( unsigned int wid, const char *str );
+static void commodity_sell( unsigned int wid, const char *str );
+static int  commodity_canBuy( const CommodityItem *com, double price_mod );
+static int  commodity_canSell( const Commodity *com );
+static int  commodity_getMod( void );
 
 static void commodity_exchange_modifiers( unsigned int wid )
 {
@@ -181,6 +188,7 @@ static void commodity_exchange_genList( unsigned int wid )
       CommodityItem item = {
          .com       = (Commodity *)pc->commodity,
          .price_mod = 1.,
+         .buyable   = 0,
       };
       array_push_back( &commodity_list, item );
    }
@@ -192,15 +200,18 @@ static void commodity_exchange_genList( unsigned int wid )
       int found = 0;
       for ( int k = 0; k < array_size( commodity_list ); k++ ) {
          if ( com == commodity_list[k].com ) {
-            found = 1;
+            found = k;
             break;
          }
       }
-      if ( found )
+      if ( found ) {
+         commodity_list[found].buyable = INT_MAX;
          continue;
+      }
       CommodityItem item = {
          .com       = com,
          .price_mod = 1.,
+         .buyable   = INT_MAX,
       };
       array_push_back( &commodity_list, item );
    }
@@ -215,15 +226,18 @@ static void commodity_exchange_genList( unsigned int wid )
             if ( FABS( prices[i] - 1. ) > DOUBLE_TOL )
                commodity_list[k].price_mod =
                   prices[i]; /* Overwrite if necessary. */
-            found = 1;
+            found = k;
             break;
          }
       }
-      if ( found )
+      if ( found ) {
+         commodity_list[found].buyable = INT_MAX;
          continue;
+      }
       CommodityItem item = {
          .com       = com,
          .price_mod = prices[i],
+         .buyable   = INT_MAX,
       };
       array_push_back( &commodity_list, item );
    }
@@ -285,9 +299,10 @@ void commodity_update( unsigned int wid, const char *str )
    char   buf[STRMAX];
    char   buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    size_t l = 0;
-   const Commodity *com;
-   credits_t        mean, globalmean;
-   double           std, globalstd;
+   const CommodityItem *comi;
+   const Commodity     *com;
+   credits_t            mean, globalmean;
+   double               std, globalstd;
    char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
    char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
    char buf_local_price[ECON_CRED_STRLEN];
@@ -312,8 +327,9 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   com              = commodity_list[i].com;
-   double price_mod = commodity_list[i].price_mod;
+   comi             = &commodity_list[i];
+   com              = comi->com;
+   double price_mod = comi->price_mod;
 
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 192, 192 );
@@ -385,7 +401,7 @@ void commodity_update( unsigned int wid, const char *str )
       window_modifyText( wid, "txtDRef", NULL );
 
    /* Button enabling/disabling */
-   if ( commodity_canBuy( com, price_mod ) )
+   if ( commodity_canBuy( comi, price_mod ) )
       window_enableButton( wid, "btnCommodityBuy" );
    else
       window_disableButtonSoft( wid, "btnCommodityBuy" );
@@ -399,16 +415,16 @@ void commodity_update( unsigned int wid, const char *str )
 /**
  * @brief Checks to see if the player can buy a commodity.
  */
-int commodity_canBuy( const Commodity *com, double price_mod )
+static int commodity_canBuy( const CommodityItem *comi, double price_mod )
 {
-   int          failure, incommodities;
+   int          failure;
    unsigned int q, price;
    char         buf[ECON_CRED_STRLEN];
 
    land_errClear();
    failure = 0;
    q       = commodity_getMod();
-   price   = spob_commodityPrice( land_spob, com ) * q * price_mod;
+   price   = spob_commodityPrice( land_spob, comi->com ) * q * price_mod;
 
    if ( !player_hasCredits( price ) ) {
       credits2str( buf, price - player.p->credits, 2 );
@@ -420,15 +436,9 @@ int commodity_canBuy( const Commodity *com, double price_mod )
       failure = 1;
    }
 
-   incommodities = 0;
-   for ( int i = 0; i < array_size( commodity_list ); i++ ) {
-      if ( commodity_list[i].com == com ) {
-         incommodities = 1;
-         break;
-      }
-   }
-   if ( !incommodities ) {
-      land_errDialogueBuild( _( "%s is not sold here!" ), _( com->name ) );
+   if ( comi->buyable <= 0 ) {
+      land_errDialogueBuild( _( "%s is not sold here!" ),
+                             _( comi->com->name ) );
       failure = 1;
    }
 
@@ -438,7 +448,7 @@ int commodity_canBuy( const Commodity *com, double price_mod )
 /**
  * @brief Checks to see if a player can sell a commodity.
  */
-int commodity_canSell( const Commodity *com )
+static int commodity_canSell( const Commodity *com )
 {
    int failure = 0;
    land_errClear();
@@ -454,35 +464,42 @@ int commodity_canSell( const Commodity *com )
  *    @param wid Window buying from.
  *    @param str Unused.
  */
-void commodity_buy( unsigned int wid, const char *str )
+static void commodity_buy( unsigned int wid, const char *str )
 {
    (void)str;
-   int          i;
-   Commodity   *com;
-   unsigned int q;
-   credits_t    price;
-   HookParam    hparam[3];
+   int            i;
+   CommodityItem *comi;
+   Commodity     *com;
+   unsigned int   q;
+   credits_t      price;
+   HookParam      hparam[3];
 
    /* Get selected. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
+   comi  = &commodity_list[i];
    com   = commodity_list[i].com;
    price = spob_commodityPrice( land_spob, com ) * commodity_list[i].price_mod;
 
    /* Check stuff. */
-   if ( !commodity_canBuy( com, commodity_list[i].price_mod ) ) {
+   if ( !commodity_canBuy( comi, commodity_list[i].price_mod ) ) {
       land_errDisplay();
       return;
    }
 
+   /* Make sure the amount is buyable. */
+   q = MIN( q, (unsigned int)comi->buyable );
+
    /* Make the buy. */
    q = pfleet_cargoAdd( com, q );
+   if ( comi->buyable < INT_MAX )
+      comi->buyable -= q;
    com->lastPurchasePrice =
       price; /* To show the player how much they paid for it */
    price *= q;
    player_modCredits( -price );
    commodity_update( wid, NULL );
-   commodity_exchange_genList( wid );
+   // commodity_exchange_genList( wid );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
@@ -499,20 +516,22 @@ void commodity_buy( unsigned int wid, const char *str )
  *    @param wid Window selling commodity from.
  *    @param str Unused.
  */
-void commodity_sell( unsigned int wid, const char *str )
+static void commodity_sell( unsigned int wid, const char *str )
 {
    (void)str;
-   int          i;
-   Commodity   *com;
-   unsigned int q;
-   credits_t    price;
-   HookParam    hparam[3];
+   int            i;
+   CommodityItem *comi;
+   Commodity     *com;
+   unsigned int   q;
+   credits_t      price;
+   HookParam      hparam[3];
 
    /* Get parameters. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = commodity_list[i].com;
-   price = spob_commodityPrice( land_spob, com ) * commodity_list[i].price_mod;
+   comi  = &commodity_list[i];
+   com   = comi->com;
+   price = spob_commodityPrice( land_spob, com ) * comi->price_mod;
 
    /* Check stuff. */
    if ( !commodity_canSell( com ) ) {
@@ -521,14 +540,16 @@ void commodity_sell( unsigned int wid, const char *str )
    }
 
    /* Remove commodity. */
-   q     = pfleet_cargoRm( com, q, 0 );
+   q = pfleet_cargoRm( com, q, 0 );
+   if ( comi->buyable < INT_MAX )
+      comi->buyable += q;
    price = price * (credits_t)q;
    player_modCredits( price );
    if ( pfleet_cargoOwned( com ) == 0 ) /* None left, set purchase price to
                                            zero, in case missions add cargo. */
       com->lastPurchasePrice = 0;
    commodity_update( wid, NULL );
-   commodity_exchange_genList( wid );
+   // commodity_exchange_genList( wid );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
@@ -544,7 +565,7 @@ void commodity_sell( unsigned int wid, const char *str )
  * @brief Gets the current modifier status.
  *    @return The amount modifier when buying or selling commodities.
  */
-int commodity_getMod( void )
+static int commodity_getMod( void )
 {
    SDL_Keymod mods = SDL_GetModState();
    int        q    = 10;
@@ -554,30 +575,5 @@ int commodity_getMod( void )
       q *= 10;
    if ( mods & ( KMOD_LALT | KMOD_RALT ) )
       q = 1;
-
    return q;
-}
-
-/**
- * @brief Renders the commodity buying modifier.
- *    @param bx Base X position to render at.
- *    @param by Base Y position to render at.
- *    @param w Width to render at.
- *    @param h Height to render at.
- *    @param data Unused.
- */
-void commodity_renderMod( double bx, double by, double w, double h, void *data )
-{
-   (void)data;
-   (void)h;
-   int  q;
-   char buf[8];
-
-   q = commodity_getMod();
-   if ( q != commodity_mod ) {
-      // commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
-      commodity_mod = q;
-   }
-   snprintf( buf, sizeof( buf ), "%dx", q );
-   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }

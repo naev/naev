@@ -868,7 +868,7 @@ Examples:
 {sys.argv[0]} --gfxpath /path/to/plugin/gfx/ --outpath /path/to/plugin/collision/ /path/to/plugin/ships/MyShip.xml
 """)
     parser.add_argument('path', metavar='PATH', nargs='+', type=str, help='Name of the ship XML file(s) to parse. Data is extracted from the ship definition about the sprites and/or 3D models.')
-    parser.add_argument('--outpath', help="Path to output the polygons to.", type=str, default="dat/polygon" )
+    parser.add_argument('--outpath', help="Path to output the polygons to.", type=str, default="artwork/collision/" )
     parser.add_argument("--use2d", help="Allows the script to use 2D data (if found). Only used if 3D data is disable or not found.", default=True, action=argparse.BooleanOptionalAction )
     parser.add_argument("--use3d", help="Allows the script to use 3D data (if found).", default=True, action=argparse.BooleanOptionalAction )
     parser.add_argument("--compare", help="Computes both 2D and 3D collision polygons and compares the results visually with a plot. Only will process the first ship XML file path.", default=False, action=argparse.BooleanOptionalAction )

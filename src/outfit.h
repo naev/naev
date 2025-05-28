@@ -437,6 +437,7 @@ int       outfit_luaBoard( const Outfit *o );
 int       outfit_luaKeydoubletap( const Outfit *o );
 int       outfit_luaKeyrelease( const Outfit *o );
 int       outfit_luaMessage( const Outfit *o );
+int       outfit_luaOndeath( const Outfit *o );
 int       outfit_luaOnImpact( const Outfit *o );
 int       outfit_luaOnMiss( const Outfit *o );
 int       outfit_luaPrice( const Outfit *o );

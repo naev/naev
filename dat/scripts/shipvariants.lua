@@ -86,6 +86,10 @@ var.admonisher = _v{
    { w=1,    s=ship.get("Admonisher") },
    { w=0.05, s=ship.get("Admonisher ΩIIa") },
 }
+var.empire_admonisher = _v{
+   { w=1,    s=ship.get("Empire Admonisher") },
+   { w=0.05, s=ship.get("Empire Admonisher Longbow") },
+}
 var.zalek_sting= _v{
    { w=1,    s=ship.get("Za'lek Sting") },
    { w=0.05, s=ship.get("Za'lek Sting Type II") },

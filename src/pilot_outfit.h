@@ -105,3 +105,4 @@ void pilot_outfitLOnkeyrelease( Pilot *pilot, OutfitKey key );
 void pilot_outfitLCleanup( Pilot *pilot );
 int  pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
                            int data );
+void pilot_outfitLOndeath( Pilot *pilot );
