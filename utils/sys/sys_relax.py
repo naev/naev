@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+if __name__ != '__main__':
+   raise Exception('This module is only intended to be used as main.')
+
+
 from sys import argv, exit, stderr
 from os.path import basename
 args = argv[1:]

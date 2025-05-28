@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+if __name__ != '__main__':
+   raise Exception('This module is only intended to be used as main.')
+
+
 from sys import stdin, stderr
 from math import pi
 
@@ -67,25 +71,22 @@ oldbb = bb()
 for k in pos:
    pos[k] *= 3.0/2.0
    bbox += pos[k]
-
    if k[0] != "_":
       nam = k
       if nam[0] == '"':
          nam = nam[1:-1]
-      o = sys_fil_ET(sys_fil(nam))
-      T = o.getroot()
+      T = sys_fil_ET(sys_fil(nam)).getroot()
       for e in T.findall("pos"):
          oldbb += (float(e.attrib['x']), float(e.attrib['y']))
          break
 
 again = bb()
 for k in pos:
-   pos[k] -= bbox.mini()
-   pos[k] += oldbb.mini()
+   pos[k] += oldbb.mini() - bbox.mini()
    again += pos[k]
 
-stderr.write(str(oldbb)+" -> "+str(bbox)+"\n")
-stderr.write(" -> "+str(again)+"\n")
+stderr.write(str(oldbb) + " -> " + str(bbox) + "\n")
+stderr.write(" -> " + str(again) + "\n")
 
 
 # Post - processing
@@ -215,8 +216,7 @@ for k in pos:
          nam = nam[1:-1]
       nam = sys_fil(nam)
       o = sys_fil_ET(nam)
-      T = o.getroot()
-      for e in T.findall("pos"):
+      for e in o.getroot().findall("pos"):
          e.set('x', str(pos[k][0]))
          e.set('y', str(pos[k][1]))
          break

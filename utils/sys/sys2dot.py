@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+if __name__ != '__main__':
+   raise Exception('This module is only intended to be used as main.')
+
 
 from sys import argv,stderr
 from os.path import basename
@@ -37,64 +40,41 @@ if not (prv is None):
    virtual_edges.append(("_"+str(prvj+2),      "_"+str(1), bhl, 100))
 
 heavy_virtual_edges=[
-   ('herakin','duros'),
-   ('rauthia','tide'),
-   ('hekaras','eneguoz'),
-   ('seifer','rei'),
-   ('basel','octantis'),
-   ('sagittarius','baitas'),
+   ('herakin', 'duros'), ('rauthia', 'tide'),
+   ('hekaras', 'eneguoz'), ('seifer', 'rei'),
+   ('basel', 'octantis'), ('sagittarius', 'baitas'),
    ("baitas","tasopa"),
-   ('alpha_centauri','tasopa'),('syndania','padonia'),
-   ('veses','protera'),
-   ('syndania','stint'),
-   ('sagittarius','alpha_centauri'),
-   ('protera','scholzs_star'),
-   ('ngc18451','felzen'),
-   ('ngc6057','xeric'),
-   ('kiwi','suna'),
-   ('ngc1098','westhaven'),
-   ('ngc7061','kansas'),
-   ('niger','kyo'),
-   ('willow','palovi'),
-   ('margarita','narousse'),
-   ('porro','modus_manis'),
-   ('suna','vanir'),
-   ('tobanna','brumeria'),('rotide','tide'),
-   ('vean','haered'),('nava','flow'),
-   ('padonia','basel'),
-   ('ogat','wochii'),
-   ('griffin','pastor'),
-   ('ngc2948','ngc9017'),
-   ('ngc4131','neexi'),
-   ('c59','c14'),
-   ('c43','c28'),
-   ('levo','qellan'),
-   ('nixon','gyrios'),
-   ('suk','oxuram'),
-   ('defa','taiomi'),('titus','solene'),('titus','diadem'),
-   ('pike','kraft'),
-   ('undergate','ulysses'),
-   ('ngc20489','monogram'),
-   ('anrique','adraia'),
-   ('andee','chraan'),
-   ('trohem','tepdania'),
-   ('ngc14479','zintar'),
-   ('pudas','fried'),
-   ('blunderbuss','darkstone'),
-   ('ekkodu','tarsus'),
-   ('ivella','jommel'),
-   ('starlight_end','possum'),
-   ('ngc8338','unicorn'),
-   ('ngc22375','undergate'),
+   ('alpha_centauri', 'tasopa'),('syndania', 'padonia'),
+   ('veses', 'protera'), ('syndania', 'stint'),
+   ('sagittarius', 'alpha_centauri'), ('protera', 'scholzs_star'),
+   ('ngc18451', 'felzen'), ('ngc6057', 'xeric'),
+   ('kiwi', 'suna'), ('ngc1098', 'westhaven'),
+   ('ngc7061', 'kansas'), ('niger', 'kyo'),
+   ('willow', 'palovi'), ('margarita', 'narousse'),
+   ('porro', 'modus_manis'), ('suna', 'vanir'),
+   ('tobanna', 'brumeria'),('rotide', 'tide'),
+   ('vean', 'haered'),('nava', 'flow'),
+   ('padonia', 'basel'), ('ogat', 'wochii'),
+   ('griffin', 'pastor'), ('ngc2948', 'ngc9017'),
+   ('ngc4131', 'neexi'), ('c59', 'c14'),
+   ('c43', 'c28'), ('levo', 'qellan'),
+   ('nixon', 'gyrios'), ('suk', 'oxuram'),
+   ('defa', 'taiomi'), ('titus', 'solene'), ('titus', 'diadem'),
+   ('pike', 'kraft'), ('undergate', 'ulysses'),
+   ('ngc20489', 'monogram'), ('anrique', 'adraia'),
+   ('andee', 'chraan'), ('trohem', 'tepdania'),
+   ('ngc14479', 'zintar'), ('pudas', 'fried'),
+   ('blunderbuss', 'darkstone'), ('ekkodu', 'tarsus'),
+   ('ivella', 'jommel'), ('starlight_end', 'possum'),
+   ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
 ]
-
 
 def xml_files_to_graph(args):
    name2id = dict()
-   name,acc,pos,tradelane = [],[],[],set()
+   name, acc, pos, tradelane = [], [], [], set()
 
    for i in range(len(args)):
-      bname = basename(args[i]).rsplit(".xml",1)
+      bname = basename(args[i]).rsplit(".xml", 1)
       if len(bname) != 2 or bname[1] != '':
          stderr.write('err: "' + args[i] + '"\n')
          continue
@@ -110,7 +90,7 @@ def xml_files_to_graph(args):
 
       for e in T.findall("pos"):
          try:
-            pos.append((bname,(e.attrib['x'],e.attrib['y'])))
+            pos.append((bname, (e.attrib['x'], e.attrib['y'])))
          except:
             stderr.write('no position defined in "' + bname + '"\n')
 
@@ -126,16 +106,15 @@ def xml_files_to_graph(args):
          try:
             acc[-1].append((e.attrib['target'], False))
             for f in e.findall("hidden"):
-               acc[-1][-1]=(acc[-1][-1][0], True)
+               acc[-1][-1] = (acc[-1][-1][0], True)
                break
          except:
             stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
       count += 1
 
    n2i = lambda x:name2id[x]
-   ids = list(map(n2i,name))
-   acc = list(map(lambda L:[(n2i(t[0]),t[1]) for t in L],acc))
-
+   ids = [n2i(x) for x in name]
+   acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
    return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane
 
 
@@ -190,8 +169,8 @@ def main(args, fixed_pos = False):
          if i == 'sol':
             s += ';color=red'
 
-         print(s+']')
-         for dst,hid in E[i]:
+         print(s + ']')
+         for dst, hid in E[i]:
             suff = []
             if i in tl and dst in tl:
                suff.extend(['style=bold', 'penwidth=4.0'])
@@ -206,7 +185,7 @@ def main(args, fixed_pos = False):
                print('"'.join(['\t', i, edge, dst, suff]))
 
    if not fixed_pos:
-      print('\tedge[len='+str(reflen)+';weight=100]')
+      print('\tedge[len=' + str(reflen) + ';weight=100]')
       print('\tedge[style="dashed";color=grey;pendwidth=1.5]')
       for (f, t) in heavy_virtual_edges:
          inv = "[style=invis]" if (f in virt_v or t in virt_v) else ""
@@ -233,7 +212,7 @@ if __name__ == '__main__':
          argv.remove('-k')
 
       if (ign := [f for f in argv[1:] if not f.endswith(".xml")]) != []:
-         stderr.write('Ignored: "'+'", "'.join(ign)+'"\n')
+         stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
 
       main([f for f in argv[1:] if f.endswith(".xml")], keep)
 

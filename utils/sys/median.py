@@ -13,7 +13,7 @@ def median(L):
       count += 1
    pos /= 1.0*count
 
-   for i in range(20):
+   for i in range(10):
       print('pos:'+str(round(pos,4)))
       maxi = 0.0
       for p in L:

@@ -6,21 +6,21 @@ from sys import argv, stderr
 from math import cos, sin, pi, sqrt
 
 import os
-script_dir = os.path.dirname( __file__ )
-PATH = os.path.realpath(os.path.join( script_dir, '..', '..', 'dat', 'ssys'))
+script_dir = os.path.dirname(__file__)
+PATH = os.path.realpath(os.path.join(script_dir, '..', '..', 'dat', 'ssys'))
 
 class vec(tuple):
    def __add__( self, other ):
-      return vec([x+y for (x,y) in zip(self,other)])
+      return vec([x+y for (x, y) in zip(self, other)])
 
    def __sub__( self, other ):
-      return self+(other*-1.0)
+      return self + other*-1.0
 
    def __mul__( self, other ):
       return vec([x*other for x in self])
 
    def __truediv__( self, other ):
-      return self*(1.0/other)
+      return self * (1.0/other)
 
    def __round__( self, dig = 0 ):
       return vec([round(x, dig) for x in self])
@@ -35,18 +35,18 @@ class vec(tuple):
       return sqrt(sum([c*c for c in self]))
 
    def normalize( self ):
-      return self/self.size()
+      return self / self.size()
 
    def to_dict( self ):
       return {'x':self[0], 'y':self[1]}
 
 def sys_fil( nam ):
-   if nam[0] == '"':
+   if nam[0] == '"' and nam[-1]== '"':
       nam = nam[1:-1]
    return os.path.join(PATH, nam + '.xml')
 
 import subprocess
-cmd = os.path.realpath(os.path.join( script_dir, '..', 'repair_xml.sh'))
+cmd = os.path.realpath(os.path.join(script_dir, '..', 'repair_xml.sh'))
 need_repair = []
 from atexit import register
 
@@ -74,29 +74,28 @@ class starmap(dict):
          T = ET.parse(name).getroot()
          for e in T.findall("pos"):
             try:
-               self[key] = vec((float(e.attrib['x']),float(e.attrib['y'])))
+               self[key] = vec((float(e.attrib['x']), float(e.attrib['y'])))
             except:
-               stderr.write('no position defined in "'+basename+'"\n')
+               stderr.write('no position defined in "' + name + '"\n')
                self[key] = None
             break
       return dict.__getitem__(self, key)
 
 def sysnam2sys( nam ):
-   nam = nam.strip().lower()
-   for t in [(' ', '_'), ("'s", "s"), ("'", "\'"),  ('c-', 'c')]:
+   nam = nam.strip()
+   for t in [(' ', '_'), ("'s", "s"), ("'", "\'"),  ('C-', 'C')]:
       nam = nam.replace(*t)
-   return nam
+   return nam.lower()
 
 def sysneigh(sys):
    T = ET.parse(sys_fil(sys)).getroot()
    acc = []
-
    count = 1
    for e in T.findall("./jumps/jump"):
       try:
-         acc.append((sysnam2sys(e.attrib['target']),False))
+         acc.append((sysnam2sys(e.attrib['target']), False))
          for f in e.findall("hidden"):
-            acc[-1]=(acc[-1][0],True)
+            acc[-1]=(acc[-1][0], True)
             break
       except:
          stderr.write('no target defined in "'+sys+'"jump#'+str(count)+'\n')
