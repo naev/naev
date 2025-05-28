@@ -3403,6 +3403,7 @@ dat/outfits/intrinsic/port_and_polish.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/alone.lua
 dat/outfits/lib/bioplasma.lua
+dat/outfits/lib/escape_pod.lua
 dat/outfits/lib/helper.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lib/multicore.lua
