@@ -83,7 +83,7 @@ class starmap(dict):
 
 def sysnam2sys( nam ):
    nam = nam.strip().lower()
-   for t in [(' ','_'), ("'",'')]:
+   for t in [(' ', '_'), ("'s", "s"), ("'", "\'"),  ('c-', 'c')]:
       nam = nam.replace(*t)
    return nam
 
