@@ -44,7 +44,7 @@ A ship's signature range represents how well a ship can avoid being tracked by e
 The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship.
 Ships will be able to identify other ships if they are closer than their signature range, otherwise they will be shown an "Unknown".
 
-Almost all forward weapons have either an amount of swivel, which allows them to aim slightly at the target.
+Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target.
 Furthermore, turret weapons can aim the entire 360° and shoot at ships in any directions.
 Weapons try to compensate for target velocities for accurate shots, however, this is reduced based on the signature range of the target ship.
 In particular, weapons have a minimum tracking range, and maximum tracking range.

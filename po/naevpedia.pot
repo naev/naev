@@ -4169,7 +4169,7 @@ msgid "Ships will be able to identify other ships if they are closer than their 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:47
-msgid "Almost all forward weapons have either an amount of swivel, which allows them to aim slightly at the target."
+msgid "Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:48
@@ -10121,7 +10121,7 @@ msgid "Ships will be able to identify other ships if they are closer than their 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:47
-msgid "Almost all forward weapons have either an amount of swivel, which allows them to aim slightly at the target."
+msgid "Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:48
