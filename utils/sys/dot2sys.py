@@ -116,6 +116,11 @@ pos['baitas']     = Scenter + (v.rotate(-8.5*45)*pow(1.25,-4.5))
 pos['protera']    = Scenter + (v.rotate(-2.5*45)*pow(1.25,-8.0))
 pos['tasopa']     = Scenter + (v.rotate(-6.5*45)*pow(1.25,-8.0))
 
+v = pos['urillian'] - pos['sagittarius']
+for i in Spir + ['urillian', 'baitas', 'protera', 'tasopa']:
+   pos[i] += v
+
+
 def toward(src, dst, q):
    global pos
    pos[src] += (pos[dst]-pos[src]) * q
@@ -170,6 +175,11 @@ v = pos['ngc7533'] - pos['anubis_black_hole']
 v = v.normalize(((v1.size() + v2.size())/2.0))
 pos['ngc7533'] = pos['anubis_black_hole'] + v
 
+pos['nava'] = pos['flow'] + pos['vean'] - pos['aesria']
+
+v = (pos['tempus']-pos['katami']) - (pos['aesria']-pos['flow'])
+for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
+   pos[i] -= v
 
 # Smoothen tradelane
 

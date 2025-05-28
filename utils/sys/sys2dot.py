@@ -40,10 +40,14 @@ if not (prv is None):
    virtual_edges.append(("_"+str(prvj+2),      "_"+str(1), bhl, 100))
 
 heavy_virtual_edges=[
+   ('thirty_stars', 'thorndyke'),
    ('herakin', 'duros'), ('rauthia', 'tide'),
    ('hekaras', 'eneguoz'), ('seifer', 'rei'),
    ('basel', 'octantis'), ('sagittarius', 'baitas'),
-   ("baitas","tasopa"),
+   ('baitas', 'tasopa'),
+   ('percival', 'jommel'), ('basel', 'octantis'),
+   ('flow', 'katami'), ('nava', 'flow'),
+   ('katami', 'eisenhorn'), ('vean', 'basel'),
    ('alpha_centauri', 'tasopa'),('syndania', 'padonia'),
    ('veses', 'protera'), ('syndania', 'stint'),
    ('sagittarius', 'alpha_centauri'), ('protera', 'scholzs_star'),
@@ -53,7 +57,6 @@ heavy_virtual_edges=[
    ('willow', 'palovi'), ('margarita', 'narousse'),
    ('porro', 'modus_manis'), ('suna', 'vanir'),
    ('tobanna', 'brumeria'),('rotide', 'tide'),
-   ('vean', 'haered'),('nava', 'flow'),
    ('padonia', 'basel'), ('ogat', 'wochii'),
    ('griffin', 'pastor'), ('ngc2948', 'ngc9017'),
    ('ngc4131', 'neexi'), ('c59', 'c14'),
