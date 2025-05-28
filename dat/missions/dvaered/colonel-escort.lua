@@ -149,7 +149,7 @@ function accept()
 end
 
 function create_radver ( p ) -- luacheck: globals create_radver
-   p:rename("Radver")
+   p:rename(_("Radver"))
    local ffriendly = factions() -- codespell:ignore ffriendly
    p:setFaction( ffriendly ) -- codespell:ignore ffriendly
 end

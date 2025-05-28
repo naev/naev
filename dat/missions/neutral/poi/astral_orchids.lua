@@ -51,7 +51,8 @@ And to believe that it was driven to extinction so long ago! It was risky, but e
          vne.notebookEnd()
 
          local reward = poi.data_str(1)
-         vn.na(_([[You look around more and also find {reward} tucked away underneath the captain's chair. At least you won't go back empty-handed, although finding the populations of Astral Orchids could be something interesting to pursue...]]))
+         vn.na(fmt.f(_([[You look around more and also find {reward} tucked away underneath the captain's chair. At least you won't go back empty-handed, although finding the populations of Astral Orchids could be something interesting to pursue...]]),
+            {reward=reward}))
          vn.na(fmt.reward(reward))
 
          vn.func( function ()

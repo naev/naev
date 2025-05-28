@@ -171,8 +171,8 @@ function lib.create()
                   table.insert( spobs_left, v )
                end
             end
-            sai(fmt.f(_([["It looks like you found another cluster of {crop}. Including this, you have found {num} planted areas. There should be {left} locations left, in particular, {left}."]]),
-               {crop=cropname, num=orchids_found+1, left="#b"..fmt.list(spobs_left).."#0"}))
+            sai(fmt.f(_([["It looks like you found another cluster of {crop}. Including this, you have found {num} planted areas. There should be {left} locations left, in particular, {spobs_left}."]]),
+               {crop=cropname, num=orchids_found+1, left=#spobs_left, spobs_left="#b"..fmt.list(spobs_left).."#0"}))
          end
       else
          sai(cropmsg)
