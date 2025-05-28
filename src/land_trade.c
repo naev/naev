@@ -29,6 +29,7 @@
 typedef struct CommodityItem {
    Commodity *com;
    double     price_mod;
+   int        buyable;
 } CommodityItem;
 
 /*
@@ -40,6 +41,12 @@ static CommodityItem *commodity_list = NULL; /* Array.h */
 
 /* Prototypes. */
 static void commodity_exchange_genList( unsigned int wid );
+static void commodity_exchange_modifiers( unsigned int wid );
+static void commodity_buy( unsigned int wid, const char *str );
+static void commodity_sell( unsigned int wid, const char *str );
+static int  commodity_canBuy( const Commodity *com, double price_mod );
+static int  commodity_canSell( const Commodity *com );
+static int  commodity_getMod( void );
 
 static void commodity_exchange_modifiers( unsigned int wid )
 {
@@ -181,6 +188,7 @@ static void commodity_exchange_genList( unsigned int wid )
       CommodityItem item = {
          .com       = (Commodity *)pc->commodity,
          .price_mod = 1.,
+         .buyable   = 0,
       };
       array_push_back( &commodity_list, item );
    }
@@ -192,15 +200,18 @@ static void commodity_exchange_genList( unsigned int wid )
       int found = 0;
       for ( int k = 0; k < array_size( commodity_list ); k++ ) {
          if ( com == commodity_list[k].com ) {
-            found = 1;
+            found = k;
             break;
          }
       }
-      if ( found )
+      if ( found ) {
+         commodity_list[found].buyable = INT_MAX;
          continue;
+      }
       CommodityItem item = {
          .com       = com,
          .price_mod = 1.,
+         .buyable   = INT_MAX,
       };
       array_push_back( &commodity_list, item );
    }
@@ -215,15 +226,18 @@ static void commodity_exchange_genList( unsigned int wid )
             if ( FABS( prices[i] - 1. ) > DOUBLE_TOL )
                commodity_list[k].price_mod =
                   prices[i]; /* Overwrite if necessary. */
-            found = 1;
+            found = k;
             break;
          }
       }
-      if ( found )
+      if ( found ) {
+         commodity_list[found].buyable = INT_MAX;
          continue;
+      }
       CommodityItem item = {
          .com       = com,
          .price_mod = prices[i],
+         .buyable   = INT_MAX,
       };
       array_push_back( &commodity_list, item );
    }
@@ -399,7 +413,7 @@ void commodity_update( unsigned int wid, const char *str )
 /**
  * @brief Checks to see if the player can buy a commodity.
  */
-int commodity_canBuy( const Commodity *com, double price_mod )
+static int commodity_canBuy( const Commodity *com, double price_mod )
 {
    int          failure, incommodities;
    unsigned int q, price;
@@ -438,7 +452,7 @@ int commodity_canBuy( const Commodity *com, double price_mod )
 /**
  * @brief Checks to see if a player can sell a commodity.
  */
-int commodity_canSell( const Commodity *com )
+static int commodity_canSell( const Commodity *com )
 {
    int failure = 0;
    land_errClear();
@@ -454,7 +468,7 @@ int commodity_canSell( const Commodity *com )
  *    @param wid Window buying from.
  *    @param str Unused.
  */
-void commodity_buy( unsigned int wid, const char *str )
+static void commodity_buy( unsigned int wid, const char *str )
 {
    (void)str;
    int          i;
@@ -499,7 +513,7 @@ void commodity_buy( unsigned int wid, const char *str )
  *    @param wid Window selling commodity from.
  *    @param str Unused.
  */
-void commodity_sell( unsigned int wid, const char *str )
+static void commodity_sell( unsigned int wid, const char *str )
 {
    (void)str;
    int          i;
@@ -544,7 +558,7 @@ void commodity_sell( unsigned int wid, const char *str )
  * @brief Gets the current modifier status.
  *    @return The amount modifier when buying or selling commodities.
  */
-int commodity_getMod( void )
+static int commodity_getMod( void )
 {
    SDL_Keymod mods = SDL_GetModState();
    int        q    = 10;
@@ -556,28 +570,4 @@ int commodity_getMod( void )
       q = 1;
 
    return q;
-}
-
-/**
- * @brief Renders the commodity buying modifier.
- *    @param bx Base X position to render at.
- *    @param by Base Y position to render at.
- *    @param w Width to render at.
- *    @param h Height to render at.
- *    @param data Unused.
- */
-void commodity_renderMod( double bx, double by, double w, double h, void *data )
-{
-   (void)data;
-   (void)h;
-   int  q;
-   char buf[8];
-
-   q = commodity_getMod();
-   if ( q != commodity_mod ) {
-      // commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
-      commodity_mod = q;
-   }
-   snprintf( buf, sizeof( buf ), "%dx", q );
-   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
