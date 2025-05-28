@@ -40,6 +40,8 @@ if not (prv is None):
    virtual_edges.append(("_"+str(prvj+2),      "_"+str(1), bhl, 100))
 
 heavy_virtual_edges=[
+   #('akodu', 'kenvis'),
+   #('tau_ceti', 'sigur'), ('tepvin', 'carrza'),
    ('thirty_stars', 'thorndyke'),
    ('herakin', 'duros'), ('rauthia', 'tide'),
    ('hekaras', 'eneguoz'), ('seifer', 'rei'),

@@ -116,17 +116,13 @@ pos['baitas']     = Scenter + (v.rotate(-8.5*45)*pow(1.25,-4.5))
 pos['protera']    = Scenter + (v.rotate(-2.5*45)*pow(1.25,-8.0))
 pos['tasopa']     = Scenter + (v.rotate(-6.5*45)*pow(1.25,-8.0))
 
-v = pos['urillian'] - pos['sagittarius']
+v = (pos['urillian'] - pos['sagittarius']) + (pos['haered']-pos['cleai'])/6.0
 for i in Spir + ['urillian', 'baitas', 'protera', 'tasopa']:
    pos[i] += v
-
 
 def toward(src, dst, q):
    global pos
    pos[src] += (pos[dst]-pos[src]) * q
-
-toward('possum', 'starlight_end', 0.5)
-toward('starlight_end', 'possum', -1.5)
 
 v = pos['hystera'] - pos['leporis']
 pos['leporis'] = pos['haered'] + (pos['leporis']-pos['haered']).normalize(v.size())
@@ -141,17 +137,18 @@ pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
 
 
-"""
-from median import median
-def rebalance(sys):
-   pos[sys] = median([s for (s,_) in sysneigh(sys)])
-"""
+#from median import median
+#def rebalance(sys):
+#   pos[sys] = median([s for (s,_) in sysneigh(sys)])
 
-v = (pos['possum']-pos['moor']) / 3.0
-for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
-   pos[i] += v
+#v = (pos['possum']-pos['moor']) / 3.0
+#for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
+#   pos[i] += v
+toward('taxumi', 'starlight_end', 1.0/4.0)
+toward('stint', 'longbow', 1.0/6.0)
+v = pos['treacle'] - pos['taxumi']
+pos['starlight_end'] = (pos['treacle']+pos['taxumi'])/2.0 + v.rotate(-90)/2.0*0.7
 
-toward('taxumi', 'starlight_end', 1.0/3.0)
 toward('ngc1317', 'stelman', -1.0/3.0)
 
 pos['norn'] += (pos['pisces_prime']-pos['bonanza']) / 3.0
@@ -164,16 +161,25 @@ pos['vanir'] += v
 pos['dohriabi'] += (pos['dohriabi']-pos['overture']) / 4.0
 pos['anubis_black_hole'] += (pos['ngc13674']-pos['ngc1562']) / 8.0
 
+v = (pos['octavian'] - pos['copernicus']) / 3.0
+pos['copernicus'] += v
+pos['octavian'] += v
+
 l = (pos['ngc2601'] - pos['anubis_black_hole']).size()
 v = (pos['ngc2601'] + pos['ngc11935'] - pos['anubis_black_hole']*2.0).normalize()
 pos['zied'] = pos['anubis_black_hole'] + v*l
 
 v1 = pos['ngc7078'] - pos['anubis_black_hole']
 v2 = pos['octavian'] - pos['anubis_black_hole']
-v = pos['ngc7533'] - pos['anubis_black_hole']
+#v = pos['ngc7533'] - pos['anubis_black_hole']
+v = v1 + v2
 
 v = v.normalize(((v1.size() + v2.size())/2.0))
 pos['ngc7533'] = pos['anubis_black_hole'] + v
+
+v = pos['ngc5483'] - pos['anubis_black_hole']
+pos['ngc11935'] = pos['anubis_black_hole'] + (pos['ngc11935'] - pos['anubis_black_hole']).normalize(v.size())
+
 
 pos['nava'] = pos['flow'] + pos['vean'] - pos['aesria']
 
