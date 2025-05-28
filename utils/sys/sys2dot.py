@@ -172,7 +172,7 @@ def main(args, fixed_pos = False):
    for i in V:
       if i[0] == "_" and fixed_pos:
          continue
-      if E[i]!=[]: # Don't include disconnected systems
+      if E[i]!=[] or (fixed_pos and i=='zied'): # Don't include disconnected systems
          s = '\t"'+i+'" ['
          if i[0]!="_":
             (x,y) = pos[i]
