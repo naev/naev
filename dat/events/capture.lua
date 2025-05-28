@@ -84,6 +84,9 @@ function create ()
    hook.enter( "enter" )
 
    evt.save(true)
+
+   -- Trigger capture hook
+   naev.trigger( "capture", plt )
 end
 
 function plt_death ()
