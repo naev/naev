@@ -116,7 +116,7 @@ I would like you to specially take the anti-bomber role. For that, I recommend y
    mem.misn_marker = misn.markerAdd( system.cur() )
    mem.misn_state = 0
    misn.osdCreate( _("Dvaered Shopping"), {
-      _("Protect the Dvared cruiser."),
+      _("Protect the Dvaered cruiser."),
       fmt.f(_("Jump to {sys}."), {sys=nextsys} ),
       fmt.f(_("Land on {pnt}."), {pnt=mem.godpnt} ),
    } )
@@ -151,7 +151,7 @@ function enter()
             mem.conv_leader:hyperspace( nextsys )
             misn.osdDestroy()
             misn.osdCreate( _("Dvaered Shopping"), {
-               _("Protect the Dvared cruiser."),
+               _("Protect the Dvaered cruiser."),
                fmt.f(_("Jump to {sys}."), {sys=nextsys} ),
                fmt.f(_("Land on {pnt}."), {pnt=mem.godpnt} ),
             } )
@@ -179,7 +179,7 @@ function enter()
       mem.conv_leader:control()
       mem.conv_leader:hyperspace( target )
       misn.osdCreate( _("Dvaered Shopping"), {
-         _("Protect the Dvared battleship."),
+         _("Protect the Dvaered battleship."),
          fmt.f(_("Jump to {sys}."), {sys=target} ),
       } )
       misn.markerMove( mem.misn_marker, target )
@@ -275,7 +275,7 @@ function escape()
    end
 end
 
--- Add the Dvared fleet
+-- Add the Dvaered fleet
 function DvFleet( cruiser, origin )
    mem.convoy = {}
    local j = 1

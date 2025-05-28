@@ -83,7 +83,7 @@ function create ()
          { N_("Dvaered Ship Census"),
             N_("Information collected about ship movements and activities around Dvaered space.") },
          { N_("Dvaered Economic Data"),
-            N_("Data regarding the poor economic outlook of the Dvared territories, where large lists of military expenses outnumber investment in infrastructure and social services.") },
+            N_("Data regarding the poor economic outlook of the Dvaered territories, where large lists of military expenses outnumber investment in infrastructure and social services.") },
          { N_("Dvaered Security Reports"),
             N_("Detailed reports regarding engagements between different Warlords. You can tell whoever wrote this is a fan of military tactics.") },
       } )
