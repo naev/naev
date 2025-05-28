@@ -5,7 +5,6 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-from math import pi
 
 from ssys import vec, sys_fil_ET, sys_fil, sysnam2sys, sysneigh
 
@@ -24,7 +23,7 @@ def process( lin ):
       return
    position = lin.split('pos="')[1].split('"')[0].split(",")
    x, y = float(position[0]), float(position[1])
-   pos[nam] = vec((x,y))
+   pos[nam] = vec(x, y)
 
 acc = ''
 for line in stdin:
@@ -56,10 +55,10 @@ class bb:
       return self
 
    def mini( self ):
-      return vec((self.minx,self.miny)) if not self.empty else None
+      return vec(self.minx,self.miny) if not self.empty else None
 
    def maxi( self ):
-      return vec((self.maxx,self.maxy)) if not self.empty else None
+      return vec(self.maxx,self.maxy) if not self.empty else None
 
    def __str__( self ):
       return str(round(self.mini()))+":"+str(round(self.maxi()))
@@ -102,7 +101,7 @@ for (i,j,q) in small:
    pos[j] = (pos[j]+a) / 2.0
 
 
-pos['syndania'] = vec((pos['syndania'][0], pos['stint'][1]))
+pos['syndania'] = vec(pos['syndania'][0], pos['stint'][1])
 
 Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star', 'veses', 'alpha_centauri', 'padonia']
 
@@ -110,12 +109,12 @@ Scenter = (pos[Spir[0]]+pos[Spir[4]]) / 2.0
 v = (pos[Spir[0]] - Scenter) * 0.75
 for i,s in enumerate(Spir):
    rad = pow(1.25,-(i%4))
-   pos[s] = Scenter + v.rotate(-i*pi/4)*rad
+   pos[s] = Scenter + v.rotate(-i*45)*rad
 
-pos['urillian'] = Scenter + (v.rotate(-4.5*pi/4)*pow(1.25,-4.5))
-pos['baitas'] = Scenter + (v.rotate(-8.5*pi/4)*pow(1.25,-4.5))
-pos['protera'] = Scenter + (v.rotate(-2.5*pi/4)*pow(1.25,-8))
-pos['tasopa'] = Scenter + (v.rotate(-6.5*pi/4)*pow(1.25,-8))
+pos['urillian']   = Scenter + (v.rotate(-4.5*45)*pow(1.25,-4.5))
+pos['baitas']     = Scenter + (v.rotate(-8.5*45)*pow(1.25,-4.5))
+pos['protera']    = Scenter + (v.rotate(-2.5*45)*pow(1.25,-8.0))
+pos['tasopa']     = Scenter + (v.rotate(-6.5*45)*pow(1.25,-8.0))
 
 def toward(src, dst, q):
    global pos
@@ -125,13 +124,17 @@ toward('possum', 'starlight_end', 0.5)
 toward('starlight_end', 'possum', -1.5)
 
 v = pos['hystera'] - pos['leporis']
-u = v.rotate(-pi/3)
+pos['leporis'] = pos['haered'] + (pos['leporis']-pos['haered']).normalize(v.size())
+pos['hystera'] = pos['leporis'] + v
+
+u = v.rotate(-60)
 pos['korifa'] = pos['hystera'] + u
 pos['apik'] = pos['leporis'] + u
 pos['telika'] = pos['apik'] - v
 pos['mida'] = pos['apik'] + u
 pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
+
 
 """
 from median import median
@@ -160,6 +163,13 @@ l = (pos['ngc2601'] - pos['anubis_black_hole']).size()
 v = (pos['ngc2601'] + pos['ngc11935'] - pos['anubis_black_hole']*2.0).normalize()
 pos['zied'] = pos['anubis_black_hole'] + v*l
 
+v1 = pos['ngc7078'] - pos['anubis_black_hole']
+v2 = pos['octavian'] - pos['anubis_black_hole']
+v = pos['ngc7533'] - pos['anubis_black_hole']
+
+v = v.normalize(((v1.size() + v2.size())/2.0))
+pos['ngc7533'] = pos['anubis_black_hole'] + v
+
 
 # Smoothen tradelane
 
@@ -177,7 +187,7 @@ for k in pos:
    if k[0] != '_' and (k in tradelane):
       tln = [s for (s, _) in sysneigh(k) if (s in tradelane)]
       if (n := len(tln)) > 1:
-         p = sum([pos[s] for s in tln], vec((0,0)))
+         p = sum([pos[s] for s in tln], vec())
          newp[k] = pos[k]*(1.0-n*0.125) + p*0.125
 
 for k, v in newp.items():
@@ -201,7 +211,7 @@ for k in pos:
          n = n[0][0]
          v = pos[k] - pos[n]
          if v.size() < avg:
-            pos[k] = pos[n] + v.normalize()*avg
+            pos[k] = pos[n] + v.normalize(avg)
 
 
 # Apply to ssys/

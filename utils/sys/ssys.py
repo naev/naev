@@ -9,36 +9,46 @@ import os
 script_dir = os.path.dirname(__file__)
 PATH = os.path.realpath(os.path.join(script_dir, '..', '..', 'dat', 'ssys'))
 
-class vec(tuple):
+class _vec(tuple):
    def __add__( self, other ):
-      return vec([x+y for (x, y) in zip(self, other)])
+      return _vec([x+y for (x, y) in zip(self, other)])
 
    def __sub__( self, other ):
       return self + other*-1.0
 
    def __mul__( self, other ):
-      return vec([x*other for x in self])
+      return _vec([x*other for x in self])
 
    def __truediv__( self, other ):
       return self * (1.0/other)
 
    def __round__( self, dig = 0 ):
-      return vec([round(x, dig) for x in self])
+      return _vec([round(x, dig) for x in self])
 
    def __str__( self ):
       return str(tuple([int(a) if int(a) == a else a for a in self]))
 
    def rotate( self, a ):
-      return vec((self[0]*cos(a)-self[1]*sin(a), self[0]*sin(a)+self[1]*cos(a)))
+      a = a/180.0*pi
+      ca, sa = cos(a), sin(a)
+      return _vec((self[0]*ca-self[1]*sa, self[0]*sa+self[1]*ca))
 
    def size( self ):
       return sqrt(sum([c*c for c in self]))
 
-   def normalize( self ):
-      return self / self.size()
+   def normalize( self, new_size = 1.0 ):
+      return self / self.size() * new_size
 
    def to_dict( self ):
       return {'x':self[0], 'y':self[1]}
+
+def vec( *args ):
+   if len(args) == 0:
+      return _vec((0, 0))
+   elif len(args) == 1:
+      return _vec(*args)
+   else:
+      return _vec(args)
 
 def sys_fil( nam ):
    if nam[0] == '"' and nam[-1]== '"':
@@ -74,7 +84,7 @@ class starmap(dict):
          T = ET.parse(name).getroot()
          for e in T.findall("pos"):
             try:
-               self[key] = vec((float(e.attrib['x']), float(e.attrib['y'])))
+               self[key] = _vec(float(e.attrib['x']), float(e.attrib['y']))
             except:
                stderr.write('no position defined in "' + name + '"\n')
                self[key] = None
