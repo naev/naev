@@ -135,7 +135,7 @@ You see a shady character with clearly bloodshot eyes.]]))
    dude(_([["You've got to try this, soul!"]]))
    vn.menu{
       {_([["Just a bit."]]), "05_try"},
-      {_([["No."]]), "05_notry"},
+      {p_("Alsafi Druglab", [["No."]]), "05_notry"},
       {_([["You have got to stop making drugs."]]), "05_stop"},
    }
 
