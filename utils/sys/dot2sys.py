@@ -211,15 +211,12 @@ for k in pos:
 
 # Apply to ssys/
 
-off = (pos['dohriabi']-pos['anubis_black_hole']) / 2.0
+off = (pos['dohriabi'] - pos['anubis_black_hole']) / 2.0
 for k in pos:
    pos[k] += off
    pos[k] = round(pos[k], 9)
    if k[0] != '_':
-      nam = k
-      if nam[0] == '"':
-         nam = nam[1:-1]
-      nam = sys_fil(nam)
+      nam = sys_fil(k)
       o = sys_fil_ET(nam)
       if (e := o.getroot().find('pos')) is not None:
          e.set('x', str(pos[k][0]))

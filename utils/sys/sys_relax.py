@@ -18,5 +18,4 @@ from ssys import starmap, sysnam2sys, sys_fil_ET
 sm = starmap()
 
 for i in args:
-   stderr.write('relax <' + basename(i) + '> (not implemented)\n')
-   pass
+   print(i + ' (not implemented)')

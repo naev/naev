@@ -15,7 +15,7 @@ class _vec(tuple):
       return self + other*-1.0
 
    def _rotate( self, sa, ca ):
-      return _vec((self[0]*ca-self[1]*sa, self[0]*sa+self[1]*ca))
+      return _vec((self[0]*ca - self[1]*sa, self[0]*sa + self[1]*ca))
 
    def __mul__( self, other ):
       if isinstance(other, _vec):
@@ -59,7 +59,8 @@ class _vec(tuple):
       return self / self.size() * new_size
 
    def to_dict( self ):
-      return {'x':self[0], 'y':self[1]}
+      return { 'x': self[0], 'y': self[1] }
+
 
 class transf:
    """
@@ -90,13 +91,13 @@ class transf:
       v2 = v1 * self * other
       return transf(v1, v2)
 
+
 def vec( *args ):
    if len(args) == 0:
-      return _vec((0.0, 0.0))
-   else:
-      if len(args) == 1:
-         args = args[0]
-      return _vec((float(x) for x in args))
+      args = (0, 0)
+   elif len(args) == 1:
+      args = args[0]
+   return _vec((float(x) for x in args))
 
 
 # bounding boxes

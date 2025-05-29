@@ -48,8 +48,8 @@ if __name__ == '__main__':
    if '-f' in args:
       args.remove('-f')
       if len(args) > 1:
-         stderr.write('ignored: '+', '.join(args)+'\n')
-      args = map(lambda x:x.rstrip('\n'), stdin)
+         stderr.write('ignored: ' + ', '.join(args) + '\n')
+      args = map(lambda x: x.rstrip('\n'), stdin)
 
    for i in args:
       if is_empty(i) != rev:

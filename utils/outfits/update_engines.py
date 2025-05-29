@@ -141,7 +141,7 @@ def main( args ):
    outfits = []
    for a in args:
       sub = mk_subs(a)
-      if sub == None:
+      if sub is None:
          continue
 
       o = core_outfit(a)

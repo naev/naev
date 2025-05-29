@@ -28,7 +28,7 @@ def core_outfit( nam, try_again = False, quiet = False ):
          o = None
       if o is None and try_again:
          o = _gen_if_needed(nam, True, quiet)
-      if not (o is None):
+      if o is not None:
          o.fil = nam
       return o
 
