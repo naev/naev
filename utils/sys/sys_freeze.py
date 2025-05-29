@@ -21,17 +21,17 @@ for i in args:
    changed = False
    p = sys_fil_ET(i)
    T = p.getroot()
-   myname = sysnam2sys(T.attrib["name"])
+   myname = sysnam2sys(T.attrib['name'])
 
-   for e in T.findall("general/radius"):
+   for e in T.findall('general/radius'):
       radius = float(e.text)
       break
 
-   for e in T.findall("jumps/jump"):
+   for e in T.findall('jumps/jump'):
       dst = sysnam2sys(e.attrib['target'])
-      for f in e.findall("autopos"):
+      for f in e.findall('autopos'):
          changed = True
-         f.tag = "pos"
+         f.tag = 'pos'
          v = (sm[dst] - sm[myname]).normalize()*radius
          for k, v in v.to_dict().items():
             f.set(k, str(v))

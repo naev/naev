@@ -142,7 +142,7 @@ class starmap(dict):
       if key not in self:
          name = sys_fil(key)
          T = ET.parse(name).getroot()
-         for e in T.findall("pos"):
+         for e in T.findall('pos'):
             try:
                self[key] = _vec(float(e.attrib['x']), float(e.attrib['y']))
             except:
@@ -153,7 +153,7 @@ class starmap(dict):
 
 def sysnam2sys( nam ):
    nam = nam.strip()
-   for t in [(' ', '_'), ("'s", "s"), ("'", "\'"),  ('C-', 'C')]:
+   for t in [(' ', '_'), ("'s", 's'), ("'", "\'"),  ('C-', 'C')]:
       nam = nam.replace(*t)
    return nam.lower()
 
@@ -161,10 +161,10 @@ def sysneigh(sys):
    T = ET.parse(sys_fil(sys)).getroot()
    acc = []
    count = 1
-   for e in T.findall("./jumps/jump"):
+   for e in T.findall('./jumps/jump'):
       try:
          acc.append((sysnam2sys(e.attrib['target']), False))
-         for f in e.findall("hidden"):
+         for f in e.findall('hidden'):
             acc[-1]=(acc[-1][0], True)
             break
       except:

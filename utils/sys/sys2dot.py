@@ -26,18 +26,18 @@ for j, i in enumerate(anbh):
       prv = i
    else:
       if prvj is not None:
-         virtual_edges.append(("_"+str(prvj),    "_"+str(j), bhl, 100))
+         virtual_edges.append(('_'+str(prvj),    '_'+str(j), bhl, 100))
       prvj = j
-      virtual_edges.append(('anubis_black_hole', "_"+str(j), bhl, 100))
-      virtual_edges.append(("_"+str(j),                 prv, bhl, 100))
-      virtual_edges.append(("_"+str(j),                   i, bhl, 100))
+      virtual_edges.append(('anubis_black_hole', '_'+str(j), bhl, 100))
+      virtual_edges.append(('_'+str(j),                 prv, bhl, 100))
+      virtual_edges.append(('_'+str(j),                   i, bhl, 100))
       prv = None
 
 if not (prv is None):
    virtual_edges.append((prv,                           i, bhl, 100))
-   virtual_edges.append(("_"+str(prvj),   "_"+str(prvj+2), bhl, 100))
-   virtual_edges.append(("_"+str(prvj+2),             prv, bhl, 100))
-   virtual_edges.append(("_"+str(prvj+2),      "_"+str(1), bhl, 100))
+   virtual_edges.append(('_'+str(prvj),   '_'+str(prvj+2), bhl, 100))
+   virtual_edges.append(('_'+str(prvj+2),             prv, bhl, 100))
+   virtual_edges.append(('_'+str(prvj+2),      '_'+str(1), bhl, 100))
 
 heavy_virtual_edges=[
    #('akodu', 'kenvis'),
@@ -79,12 +79,12 @@ def xml_files_to_graph(args):
    name, acc, pos, tradelane = [], [], [], set()
 
    for i in range(len(args)):
-      bname = basename(args[i]).rsplit(".xml", 1)
-      if len(bname) != 2 or bname[1] != '':
+      bname = basename(args[i])
+      if bname[-4:] != '.xml':
          stderr.write('err: "' + args[i] + '"\n')
          continue
 
-      bname = bname[0]
+      bname = bname[:-4]
       name.append(bname)
       T=ET.parse(args[i]).getroot()
 
@@ -93,13 +93,13 @@ def xml_files_to_graph(args):
       except:
          stderr.write('no name defined in "' + bname + '"\n')
 
-      for e in T.findall("pos"):
+      for e in T.findall('pos'):
          try:
             pos.append((bname, (e.attrib['x'], e.attrib['y'])))
          except:
             stderr.write('no position defined in "' + bname + '"\n')
 
-      for e in T.findall("tags/tag"):
+      for e in T.findall('tags/tag'):
          if e.text == 'tradelane':
             tradelane.add(bname)
             break
@@ -107,10 +107,10 @@ def xml_files_to_graph(args):
       name2id[name[-1]] = bname
       acc.append([])
       count = 1
-      for e in T.findall("./jumps/jump"):
+      for e in T.findall('./jumps/jump'):
          try:
             acc[-1].append((e.attrib['target'], False))
-            for f in e.findall("hidden"):
+            for f in e.findall('hidden'):
                acc[-1][-1] = (acc[-1][-1][0], True)
                break
          except:
