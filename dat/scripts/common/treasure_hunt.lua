@@ -4,7 +4,7 @@ local love_shaders = require "love_shaders"
 
 local lib = {}
 
-function lib.render( systems, jumps, w, h )
+function lib.render( systems, jumps, w, h, target, names )
    local xmin, xmax, ymin, ymax = math.huge, -math.huge, math.huge, -math.huge
    local b = 30
    for k,s in ipairs(systems) do
@@ -25,15 +25,7 @@ function lib.render( systems, jumps, w, h )
 
    local c = love_shaders.paper( w, h )
    lg.setCanvas( c )
-   lg.setColour( 0, 0, 0, 1 )
-   local r = 10
-   for k,s in ipairs(systems) do
-      local x, y = s:pos():get()
-      lg.circle( "fill",
-         w*(0.5+0.5*(x-cx)*scale),
-         h*(0.5+0.5*(y-cy)*scale),
-         r)
-   end
+   lg.setColour( 0, 0, 0, 0.3 )
    for k,j in ipairs(jumps) do
       local p1 = j:system():pos()
       local x1, y1 = p1:get()
@@ -50,9 +42,60 @@ function lib.render( systems, jumps, w, h )
       lg.rectangle( "fill", -len*0.5, -2, len, 4 )
       lg.pop()
    end
+   lg.setColour( 0.4, 0.4, 0.4, 1 )
+   local r = 10
+   for k,s in ipairs(systems) do
+      local x, y = s:pos():get()
+      lg.circle( "fill",
+         w*(0.5+0.5*(x-cx)*scale),
+         h*(0.5+0.5*(y-cy)*scale),
+         r)
+   end
+   if target then
+      lg.setColour( 0.8, 0.2, 0.3, 0.9 )
+      local x, y = target:pos():get()
+      lg.circle( "fill",
+         w*(0.5+0.5*(x-cx)*scale),
+         h*(0.5+0.5*(y-cy)*scale),
+         r)
+   end
+   lg.setColour( 0.2, 0.2, 1, 1 )
+   for k,s in ipairs(names) do
+      local x, y = s:pos():get()
+      lg.circle( "fill",
+         w*(0.5+0.5*(x-cx)*scale),
+         h*(0.5+0.5*(y-cy)*scale),
+         r)
+   end
+   lg.pop()
+
+   if #names > 0 then
+      local font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
+      for k,s in ipairs(names) do
+         local x, y = s:pos():get()
+         local n = s:name()
+         local maxw = font:getWrap( n, 1e6 )
+         x = w*(0.5+0.5*(x-cx)*scale)
+         y = h-h*(0.5+0.5*(y-cy)*scale)
+         if x+r*1.5 > w-maxw then
+            x = x - maxw - r*1.5
+         else
+            x = x + r*1.5
+         end
+         if y < 20 then
+            y = y + 20
+         elseif y > h-20 then
+            y = y - 20
+         end
+         lg.push()
+            lg.translate( x, y-r*0.75 )
+            lg.rotate( rnd.rnd()-0.5 )
+         lg.printf( s:name(), font, 0, 0, 1e6, "left" )
+         lg.pop()
+      end
+   end
    lg.setCanvas()
 
-   lg.pop()
    return c
 end
 
@@ -71,7 +114,7 @@ end
 function lib.create_map_center( sys, w, h, n )
    n = n or 2
    local systems = lmisn.getSysAtDistance( sys, 0, n )
-   return lib.render( systems, makejumps(systems), w, h )
+   return lib.render( systems, makejumps(systems), w, h, sys )
 end
 
 function lib.create_map_path( sstart, send, w, h, n )
@@ -90,14 +133,13 @@ function lib.create_map_path( sstart, send, w, h, n )
          systems = newsys
       end
    end
-   return lib.render( systems, makejumps(systems), w, h )
+   return lib.render( systems, makejumps(systems), w, h, send, {sstart} )
 end
 
 local function spob_check( p )
    if p:faction() then
       return false
    end
-
    local services = p:services()
    return not services["inhabited"] and services["land"]
 end
