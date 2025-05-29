@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 
-from math import cos, sin, pi, sqrt
+from math import cos, sin, pi, sqrt, asin
+
+
+
+# vec
 
 class _vec(tuple):
    def __add__( self, other ):
@@ -15,20 +19,14 @@ class _vec(tuple):
 
    def __mul__( self, other ):
       if isinstance(other, _vec):
-         """
-         Dot product
-         """
+         # Dot product
          return sum([a*b for (a,b) in zip(self, other)])
       elif isinstance(other, transf):
-         """
-         Apply transformation
-         """
+         # Apply transformation
          sa = other.vec
          return self._rotate(sa, sqrt(1.0 - sa*sa)) * other.fact
       else:
-         """
-         External product
-         """
+         # External product
          return _vec([x*other for x in self])
 
    def __neg__( self ):
@@ -36,9 +34,7 @@ class _vec(tuple):
 
    def __truediv__( self, other ):
       if isinstance(other, _vec):
-         """
-         The transformation that turns other into self.
-         """
+         # The transformation that turns other into self.
          return transf(other, self)
       else:
          return self * (1.0/other)
@@ -53,11 +49,11 @@ class _vec(tuple):
       angle = degrees / 180.0 * pi
       return self._rotate(sin(angle), cos(angle))
 
-   def size_sq( self ):
+   def sq( self ):
       return self*self
 
    def size( self ):
-      return sqrt(self.size_sq())
+      return sqrt(self.sq())
 
    def normalize( self, new_size = 1.0 ):
       return self / self.size() * new_size
@@ -79,17 +75,15 @@ class transf:
       v1 = v1.normalize()
       v2 = v2.normalize()
       self.vec = v1[0]*v2[1] - v1[1]*v2[0]
+
    def __mul__( self, other ):
-      """
-      Application
-      """
+      # Application
       if not isinstance(other, _vec):
          raise Exception('transf only applies to vec')
       return other*self
+
    def __add__( self, other ):
-      """
-      Composition
-      """
+      # Composition
       if not isinstance(other, transf):
          raise Exception('transf only adds with itself')
       v1 = _vec(1.0, 0.0)
@@ -104,7 +98,9 @@ def vec( *args ):
          args = args[0]
       return _vec((float(x) for x in args))
 
+
 # bounding boxes
+
 class bb:
    def __init__( self ):
       self.empty = True
@@ -115,7 +111,7 @@ class bb:
          self.minx > v[0] or self.maxx < v[0] or
          self.miny > v[1] or self.maxy < v[1]
       )
-      
+
    def __iadd__( self, t ):
       if self.empty:
          (self.maxx, self.maxy) = t
@@ -172,4 +168,3 @@ L=[(0.0,0.0), (1.0,1.0), (1.0, 0.0)]
 
 find_hole([vec(*t) for t in L])
 """
-
