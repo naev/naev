@@ -158,8 +158,17 @@ v = (pos['aesir']-pos['vanir']) / 4.0
 pos['aesir'] += v
 pos['vanir'] += v
 
+
+# Anubis BH
+
 pos['dohriabi'] += (pos['dohriabi']-pos['overture']) / 4.0
 pos['anubis_black_hole'] += (pos['ngc13674']-pos['ngc1562']) / 8.0
+
+v1 = pos['anubis_black_hole'] - pos['ngc1292']
+v2 = pos['ngc5483'] + pos['ngc7078'] - pos['ngc1292']*2.0
+t = v1.normalize() / v2.normalize()
+for i in ['ngc5483', 'ngc7078', 'ngc4746']:
+   pos[i] = (pos[i]-pos['ngc1292'])*t + pos['ngc1292']
 
 v = (pos['octavian'] - pos['copernicus']) / 3.0
 pos['copernicus'] += v
@@ -171,7 +180,6 @@ pos['zied'] = pos['anubis_black_hole'] + v*l
 
 v1 = pos['ngc7078'] - pos['anubis_black_hole']
 v2 = pos['octavian'] - pos['anubis_black_hole']
-#v = pos['ngc7533'] - pos['anubis_black_hole']
 v = v1 + v2
 
 v = v.normalize(((v1.size() + v2.size())/2.0))
@@ -180,6 +188,8 @@ pos['ngc7533'] = pos['anubis_black_hole'] + v
 v = pos['ngc5483'] - pos['anubis_black_hole']
 pos['ngc11935'] = pos['anubis_black_hole'] + (pos['ngc11935'] - pos['anubis_black_hole']).normalize(v.size())
 
+
+# 
 
 pos['nava'] = pos['flow'] + pos['vean'] - pos['aesria']
 
