@@ -13,7 +13,7 @@ from geometry import bb
 pos = dict()
 
 def process( lin ):
-   if len(lin.split("--")) != 1:
+   if len(lin.split('--')) != 1:
       return
    lin = lin.strip()
    for c in ['\n', '\t', 3*' ', 2*' ']:
@@ -21,7 +21,7 @@ def process( lin ):
 
    if (nam := lin.split(' ')[0]) in ['graph', 'edge', 'node']:
       return
-   position = lin.split('pos="')[1].split('"')[0].split(",")
+   position = lin.split('pos="')[1].split('"')[0].split(',')
    x, y = float(position[0]), float(position[1])
    pos[nam] = vec(x, y)
 
@@ -39,22 +39,21 @@ oldbb = bb()
 for k in pos:
    pos[k] *= 3.0/2.0
    bbox += pos[k]
-   if k[0] != "_":
+   if k[0] != '_':
       nam = k
       if nam[0] == '"':
          nam = nam[1:-1]
       T = sys_fil_ET(sys_fil(nam)).getroot()
-      for e in T.findall("pos"):
+      if (e := T.find('pos')) is not None:
          oldbb += (float(e.attrib['x']), float(e.attrib['y']))
-         break
 
 again = bb()
 for k in pos:
    pos[k] += oldbb.mini() - bbox.mini()
    again += pos[k]
 
-stderr.write(str(oldbb) + " -> " + str(bbox) + "\n")
-stderr.write(" -> " + str(again) + "\n")
+stderr.write(str(oldbb) + ' -> ' + str(bbox) + '\n')
+stderr.write(' -> ' + str(again) + '\n')
 
 
 # Post - processing
@@ -158,7 +157,7 @@ v = pos['ngc5483'] - pos['anubis_black_hole']
 pos['ngc11935'] = pos['anubis_black_hole'] + (pos['ngc11935'] - pos['anubis_black_hole']).normalize(v.size())
 
 
-# 
+# Thurion space
 
 pos['nava'] = pos['flow'] + pos['vean'] - pos['aesria']
 
@@ -166,13 +165,14 @@ v = (pos['tempus']-pos['katami']) - (pos['aesria']-pos['flow'])
 for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
    pos[i] -= v
 
+
 # Smoothen tradelane
 
 tradelane = set()
 for k in pos:
    if k[0] != '_':
       T = sys_fil_ET(sys_fil(k)).getroot()
-      for e in T.findall("tags/tag"):
+      for e in T.findall('tags/tag'):
          if e.text == 'tradelane':
             tradelane.add(k)
             break
@@ -215,16 +215,13 @@ off = (pos['dohriabi']-pos['anubis_black_hole']) / 2.0
 for k in pos:
    pos[k] += off
    pos[k] = round(pos[k], 9)
-   if k[0] != "_":
+   if k[0] != '_':
       nam = k
       if nam[0] == '"':
          nam = nam[1:-1]
       nam = sys_fil(nam)
       o = sys_fil_ET(nam)
-      for e in o.getroot().findall("pos"):
+      if (e := o.getroot().find('pos')) is not None:
          e.set('x', str(pos[k][0]))
          e.set('y', str(pos[k][1]))
-         break
       o.write(nam)
-
-

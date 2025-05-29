@@ -14,7 +14,7 @@ def is_empty( sys ):
       './spobs/spob',
       './waypoints/waypoint'
    ]:
-      if T.find(i) != None:
+      if T.find(i) is not None:
          # has an object
          return False
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
    if '-f' in args:
       args.remove('-f')
-      if len(args)>1:
+      if len(args) > 1:
          stderr.write('ignored: '+', '.join(args)+'\n')
       args = map(lambda x:x.rstrip('\n'), stdin)
 

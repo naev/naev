@@ -41,13 +41,12 @@ class starmap(dict):
       if key not in self:
          name = sys_fil(key)
          T = ET.parse(name).getroot()
-         for e in T.findall('pos'):
+         if (e := T.find('pos')) is not None:
             try:
                self[key] = _vec(float(e.attrib['x']), float(e.attrib['y']))
             except:
                stderr.write('no position defined in "' + name + '"\n')
                self[key] = None
-            break
       return dict.__getitem__(self, key)
 
 def sysnam2sys( nam ):
@@ -62,10 +61,7 @@ def sysneigh(sys):
    count = 1
    for e in T.findall('./jumps/jump'):
       try:
-         acc.append((sysnam2sys(e.attrib['target']), False))
-         for f in e.findall('hidden'):
-            acc[-1]=(acc[-1][0], True)
-            break
+         acc.append((sysnam2sys(e.attrib['target']), e.find('hidden') is not None))
       except:
          stderr.write('no target defined in "'+sys+'"jump#'+str(count)+'\n')
       count += 1

@@ -135,7 +135,7 @@ class bb:
       return vec(self.maxx,self.maxy) if not self.empty else None
 
    def __str__( self ):
-      return str(round(self.mini()))+":"+str(round(self.maxi()))
+      return str(round(self.mini())) + ':' + str(round(self.maxi()))
 
 
 def find_hole(L):
@@ -148,7 +148,7 @@ def find_hole(L):
    pos /= 1.0*count
 
    for i in range(10):
-      print('pos:'+str(round(pos,4)))
+      print('pos:' + str(round(pos,4)))
       maxi = 0.0
       for p in L:
          l = (pos-p).size()
@@ -157,8 +157,8 @@ def find_hole(L):
 
       acc = vec()
       for p in L:
-         v = p-pos
-         acc += v.normalize(-((maxi/v.size())**2))
+         v = pos - p
+         acc += v.normalize((maxi/v.size())**2)
 
       pos += acc/(2**(i+3))
    return pos

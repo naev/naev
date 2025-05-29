@@ -11,6 +11,7 @@ args = argv[1:]
 if '-h' in args or '--help' in args or args == []:
    stderr.write('usage:  ' + basename(argv[0]) + '  <file1> ..\n')
    stderr.write('  Freezes its input xml ssys files.\n')
+   stderr.write('  The actually modified ssys files are output.\n')
    exit(0)
 
 from ssys import starmap, sysnam2sys, sys_fil_ET
@@ -22,10 +23,7 @@ for i in args:
    p = sys_fil_ET(i)
    T = p.getroot()
    myname = sysnam2sys(T.attrib['name'])
-
-   for e in T.findall('general/radius'):
-      radius = float(e.text)
-      break
+   radius = float(T.find('general/radius').text)
 
    for e in T.findall('jumps/jump'):
       dst = sysnam2sys(e.attrib['target'])
@@ -39,5 +37,5 @@ for i in args:
 
    if changed:
       p.write(i)
-      stderr.write('froze <' + basename(i) + '>\n')
+      print(i)
 
