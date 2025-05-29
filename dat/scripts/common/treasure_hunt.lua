@@ -56,22 +56,77 @@ function lib.render( systems, jumps, w, h )
    return c
 end
 
-function lib.create_map( sys, w, h, n )
+local function makejumps( systems )
    local jumps = {}
-   local systems = lmisn.getSysAtDistance( sys, 0, n )
-   local maxdist = 0
-   local center = sys:pos()
    for k,s in ipairs(systems) do
-      maxdist = math.max( maxdist, s:pos():dist( center ) )
       for i,j in ipairs(s:jumps()) do
-         local r = j:reverse()
-         --if not inlist( jumps, j ) and not inlist( jumps, r ) then
-         if inlist( systems, j:dest() ) and not inlist( jumps, j ) and not inlist( jumps, r ) then
+         if inlist( systems, j:dest() ) and not inlist( jumps, j ) and not inlist( jumps, j:reverse() ) then
             table.insert( jumps, j )
          end
       end
    end
-   return lib.render( systems, jumps, w, h )
+   return jumps
+end
+
+function lib.create_map_center( sys, w, h, n )
+   n = n or 2
+   local systems = lmisn.getSysAtDistance( sys, 0, n )
+   return lib.render( systems, makejumps(systems), w, h )
+end
+
+function lib.create_map_path( sstart, send, w, h, n )
+   n = n or 1
+   local systems = lmisn.getRoute( sstart, send )
+   if n > 0 then
+      for i=1,n do
+         local newsys = tcopy(systems)
+         for k,s in ipairs(systems) do
+            for j,a in ipairs(s:adjacentSystems()) do
+               if not inlist( newsys, a ) then
+                  table.insert( newsys, a )
+               end
+            end
+         end
+         systems = newsys
+      end
+   end
+   return lib.render( systems, makejumps(systems), w, h )
+end
+
+local function spob_check( p )
+   if p:faction() then
+      return false
+   end
+
+   local services = p:services()
+   return not services["inhabited"] and services["land"]
+end
+
+function lib.create_map_and_spob( w, h)
+   local sys = lmisn.getSysAtDistance ( nil, 3, 30, function( s )
+      for k,p in ipairs(s:spobs()) do
+         if spob_check(p) then
+            return true
+         end
+      end
+      return false
+   end )
+   if #sys <= 0 then return end
+   sys = sys[rnd.rnd(1,#sys)]
+   local spb = {}
+   for k,p in ipairs(sys:spobs()) do
+      if spob_check(p) then
+         table.insert(spb,p)
+      end
+   end
+   spb = spb[rnd.rnd(1,#spb)]
+   local candidates = lmisn.getSysAtDistance( sys, 4, 5, function ( _s )
+      return true
+   end )
+   if #candidates <= 0 then return end
+
+   local start = candidates[rnd.rnd(1,#candidates)]
+   return lib.create_map_path( sys, start, w, h ), spb
 end
 
 return lib
