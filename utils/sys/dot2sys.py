@@ -5,8 +5,8 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-
 from ssys import vec, sys_fil_ET, sys_fil, sysnam2sys, sysneigh
+from geometry import bb
 
 
 # positions
@@ -32,37 +32,6 @@ for line in stdin:
    if n != -1:
       process(acc)
       acc = ''
-
-# bounding boxes
-class bb:
-   def __init__( self ):
-      self.empty = True
-
-   def __iadd__( self, t ):
-      if self.empty:
-         (self.maxx, self.maxy) = t
-         (self.minx, self.miny) = t
-         self.empty = False
-      else:
-         if self.minx > t[0]:
-            self.minx = t[0]
-         elif self.maxx < t[0]:
-            self.maxx = t[0]
-         if self.miny > t[1]:
-            self.miny = t[1]
-         elif self.maxy < t[1]:
-            self.maxy = t[1]
-      return self
-
-   def mini( self ):
-      return vec(self.minx,self.miny) if not self.empty else None
-
-   def maxi( self ):
-      return vec(self.maxx,self.maxy) if not self.empty else None
-
-   def __str__( self ):
-      return str(round(self.mini()))+":"+str(round(self.maxi()))
-
 
 bbox = bb()
 oldbb = bb()
@@ -137,9 +106,9 @@ pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
 
 
-#from median import median
+#from geometry import find_hole
 #def rebalance(sys):
-#   pos[sys] = median([s for (s,_) in sysneigh(sys)])
+#   pos[sys] = find_hole([s for (s,_) in sysneigh(sys)])
 
 #v = (pos['possum']-pos['moor']) / 3.0
 #for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
