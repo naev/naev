@@ -2,10 +2,12 @@ local lg = require "love.graphics"
 local lmisn = require "lmisn"
 local love_shaders = require "love_shaders"
 local fmt = require "format"
+local prng = require "prng"
 
 local lib = {}
 
-function lib.render( systems, jumps, w, h, target, names )
+function lib.render( systems, jumps, w, h, target, names, rng )
+   rng = rng or prng.new( rnd.rnd(1,2^30) )
    local xmin, xmax, ymin, ymax = math.huge, -math.huge, math.huge, -math.huge
    local b = 30
    for k,s in ipairs(systems) do
@@ -90,7 +92,7 @@ function lib.render( systems, jumps, w, h, target, names )
          end
          lg.push()
             lg.translate( x, y-r*0.75 )
-            lg.rotate( rnd.rnd()-0.5 )
+            lg.rotate( rng:random()-0.5 )
          lg.printf( s:name(), font, 0, 0, 1e6, "left" )
          lg.pop()
       end
@@ -112,13 +114,13 @@ local function makejumps( systems )
    return jumps
 end
 
-function lib.create_map_center( sys, w, h, n )
+function lib.create_map_center( sys, w, h, n, rng )
    n = n or 2
    local systems = lmisn.getSysAtDistance( sys, 0, n )
-   return lib.render( systems, makejumps(systems), w, h, sys )
+   return lib.render( systems, makejumps(systems), w, h, sys, nil, rng )
 end
 
-function lib.create_map_path( sstart, sgoal, w, h, n )
+function lib.create_map_path( sstart, sgoal, w, h, n, rng )
    n = n or 1
    local systems = lmisn.getRoute( sstart, sgoal )
    if n > 0 then
@@ -134,7 +136,7 @@ function lib.create_map_path( sstart, sgoal, w, h, n )
          systems = newsys
       end
    end
-   return lib.render( systems, makejumps(systems), w, h, sgoal, {sstart} )
+   return lib.render( systems, makejumps(systems), w, h, sgoal, {sstart}, rng )
 end
 
 local function spob_check( p )
@@ -143,6 +145,11 @@ local function spob_check( p )
    end
    local services = p:services()
    return not services["inhabited"] and services["land"]
+end
+
+function lib.create_map( data, w, h )
+   local rng = prng.new( data.seed )
+   return lib.create_map_path( data.start, data.goal, w, h, data.n, rng )
 end
 
 function lib.create_treasure_hunt( center, maxdist )
@@ -169,7 +176,7 @@ function lib.create_treasure_hunt( center, maxdist )
    if #candidates <= 0 then return end
    local start = candidates[rnd.rnd(1,#candidates)]
    local name = fmt.f(_("Near {sys}"),{sys=start})
-   return {spb=spb, goal=goal, start=start, name=name}
+   return {spb=spb, goal=goal, start=start, name=name, seed=rnd.rnd(1,2^30)}
 end
 
 local MISSIONNAME = "Treasure Hunt"

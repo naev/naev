@@ -46,7 +46,7 @@ function load ()
 end
 
 local function gen_map( data )
-   return th.create_map_path( data.start, data.goal, MAP_WIDTH, MAP_HEIGHT )
+   return th.create_map( data, MAP_WIDTH, MAP_HEIGHT )
 end
 
 function view_maps ()
