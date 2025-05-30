@@ -144,8 +144,8 @@ local function spob_check( p )
    return not services["inhabited"] and services["land"]
 end
 
-function lib.create_map_and_spob( w, h)
-   local sys = lmisn.getSysAtDistance ( nil, 3, 30, function( s )
+function lib.create_treasure_hunt( center, maxdist )
+   local sys = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
       for k,p in ipairs(s:spobs()) do
          if spob_check(p) then
             return true
@@ -166,9 +166,23 @@ function lib.create_map_and_spob( w, h)
       return true
    end )
    if #candidates <= 0 then return end
-
    local start = candidates[rnd.rnd(1,#candidates)]
-   return lib.create_map_path( sys, start, w, h ), spb
+   return {spb=spb, sys=sys, start=start}
+end
+
+local MISSIONNAME = "Treasure Hunt"
+function lib.give_map( center, maxdist )
+   maxdist = maxdist or 20
+   local data = lib.create_treasure_hunt( center, maxdist )
+   if not data then
+      warn("Failed to give treasure map!")
+      return false
+   end
+   if not player.misnActive( MISSIONNAME ) then
+      naev.missionStart( MISSIONNAME )
+   end
+   naev.trigger( "treasure_hunt_add", data )
+   return true
 end
 
 return lib
