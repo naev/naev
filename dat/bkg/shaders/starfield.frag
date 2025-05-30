@@ -45,7 +45,7 @@ const mat3 Rz = mat3(
 );
 const mat3 ROT = A * Rx * Ry * Rz;
 const int ITERATIONS = 17;
-const int VOLSTEPS   = 13;
+const int VOLSTEPS   = 9;
 const float SPARSITY = 0.7; /* 0.4 to 0.5 (sparse) */
 const float STEPSIZE = 0.2;
 const float FREQVAR  = 1.8; /* 0.5 to 2.0 */
