@@ -105,10 +105,6 @@ pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
 
 
-#from geometry import find_hole
-#def rebalance(sys):
-#   pos[sys] = find_hole([s for (s,_) in sysneigh(sys)])
-
 #v = (pos['possum']-pos['moor']) / 3.0
 #for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
 #   pos[i] += v
