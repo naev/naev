@@ -144,7 +144,7 @@ local function spob_check( p )
       return false
    end
    local services = p:services()
-   return not services["inhabited"] and services["land"]
+   return (not services["inhabited"]) and services["land"]
 end
 
 function lib.create_map( data, w, h )

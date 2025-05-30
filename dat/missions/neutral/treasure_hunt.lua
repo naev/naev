@@ -145,7 +145,7 @@ function land ()
    local scur = spob.cur()
    local torm = {}
    for k,v in ipairs(mem.maps) do
-      if v.spob==scur then
+      if v.spb==scur then
          if landed( v ) then
             table.insert( torm, k )
          end
