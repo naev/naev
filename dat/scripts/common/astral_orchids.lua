@@ -65,9 +65,16 @@ function lib.create()
    vn.scene()
 
    if not canpick then
+      local pickstatus = (time.get()-lastpicked):tonumber() / ao.regrow_time:tonumber()
       -- Sorry player
       vn.transition()
-      vn.na(_([[You land and go check on the Astral Orchids you found last times. It seems like not enough time has passed for the nectar to regrow.]]))
+      if pickstatus < 0.3 then
+         vn.na(_([[You land and go check on the Astral Orchids you found last times. They are almost the same as you left them last time, with pretty much no nectar.]]))
+      elseif pickstatus < 0.7 then
+         vn.na(_([[You land and go check on the Astral Orchids you found last times. It seems like not enough time has passed for the nectar to fully reform.]]))
+      else
+         vn.na(_([[You land and go check on the Astral Orchids you found last times. They are nearing fullness and you should be able to harvest them in not too long of a time.]]))
+      end
       vn.done()
       vn.run()
       return evt.finish()
