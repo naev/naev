@@ -187,11 +187,15 @@ function lib.give_map( center, maxdist )
       warn("Failed to give treasure map!")
       return false
    end
+   lib.give_map_from( data )
+   return true
+end
+
+function lib.give_map_from( data )
    if not player.misnActive( MISSIONNAME ) then
       naev.missionStart( MISSIONNAME )
    end
    naev.trigger( "treasure_hunt_add", data )
-   return true
 end
 
 function lib.maps_owned()
