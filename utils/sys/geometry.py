@@ -99,7 +99,7 @@ class _transf:
          raise TypeError('transf does not compose with ' + str(type(other)))
 
    def get_angle( self ):
-      return asin(self.vec) + trn * 2.0 * pi
+      return asin(self.vec) + self.trn * 2.0 * pi
 
    def __itruediv__( self, other ):
       if isinstance(other, int):
@@ -119,9 +119,8 @@ def vec( *args ):
       args = args[0]
    return _vec((float(x) for x in args))
 
-id_transf = vec(1, 0) / vec(1, 0)
 def transf():
-   return copy(id_transf)
+   return vec(1, 0) / vec(1, 0)
 
 
 # bounding boxes

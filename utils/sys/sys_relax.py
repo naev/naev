@@ -12,7 +12,7 @@ def sys_relax( sys ):
    T = p.getroot()
    myname = sysnam2sys(T.attrib['name'])
 
-   acc = vec()
+   acc = transf()
    count = 0
 
    for f in T.findall('./jumps/jump'):
@@ -21,23 +21,20 @@ def sys_relax( sys ):
          if 'was_auto' in e.attrib:
             mapv = sm[dst] - sm[myname]
             sysv = vec(float(e.attrib['x']), float(e.attrib['y']))
-            acc += mapv.normalize() - sysv.normalize()
+            acc @= mapv.normalize() / sysv.normalize()
             count += 1
 
    if count>0:
-      ref = acc.rotate(90).normalize()
       acc /= count
-      t = (ref - acc).normalize() / ref
-      #print(t)
+      print(acc)
       # in degrees
       eps = 0.2
-      if t.vec > sin(eps/180.0*pi):
+      if abs(acc.vec) > sin(eps/180.0*pi):
          for e in T.findall('./spobs/spob'):
             spfil = spob_fil(sysnam2sys(e.text))
             p2 = sys_fil_ET(spfil)
             f = p2.getroot().find('pos')
-            sysv = vec(float(f.attrib['x']), float(f.attrib['y']))
-            sysv *= t
+            sysv = acc(vec(float(f.attrib['x']), float(f.attrib['y'])))
             f.set('x', str(sysv[0]))
             f.set('y', str(sysv[1]))
             p2.write(spfil)
@@ -45,8 +42,7 @@ def sys_relax( sys ):
          for i in [ './jumps/jump/pos', './asteroids/asteroid/pos',
             './waypoints/waypoint']:
             for e in T.findall(i):
-               sysv = vec(float(e.attrib['x']), float(e.attrib['y']))
-               sysv *= t
+               sysv = acc(vec(float(e.attrib['x']), float(e.attrib['y'])))
                e.set('x', str(sysv[0]))
                e.set('y', str(sysv[1]))
          p.write(sys)
