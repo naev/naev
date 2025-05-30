@@ -187,4 +187,11 @@ function lib.give_map( center, maxdist )
    return true
 end
 
+function lib.maps_owned()
+   if not player.misnActive( MISSIONNAME ) then
+      return 0
+   end
+   return naev.cache().treasure_maps
+end
+
 return lib

@@ -41,6 +41,7 @@ end
 local btn
 function load ()
    btn = player.infoButtonRegister( _("Treasure Maps"), view_maps )
+   naev.cache().treasure_maps = #mem.maps
 end
 
 local function gen_map( data )
@@ -94,6 +95,7 @@ function view_maps ()
       local mapname, mapid = lst:get()
       luatk.yesno( _("Abandon Map?"), fmt.f(_("Are you sure you want to abandon the map '{mapname}'?"), {mapname=mapname}), function ()
          table.remove( mem.maps, mapid )
+         naev.cache().treasure_maps = #mem.maps
          gen_list()
       end )
    end )
@@ -108,6 +110,7 @@ end
 
 function newmap( data )
    table.insert( mem.maps, data )
+   naev.cache().treasure_maps = #mem.maps
    update_desc()
 end
 
@@ -135,6 +138,7 @@ function land ()
    for i=#torm,1,-1 do
       table.remove( mem.maps, torm[i] )
    end
+   naev.cache().treasure_maps = #mem.maps
 end
 
 function abort ()
