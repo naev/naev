@@ -26,7 +26,7 @@ function lib.render( systems, jumps, w, h, target, names, rng )
       lg.translate( 0, h )
       lg.scale( 1, -1 )
 
-   local c = love_shaders.paper( w, h )
+   local c = love_shaders.paper( w, h, nil, rng )
    lg.setCanvas( c )
    lg.setColour( 0, 0, 0, 0.3 )
    for k,j in ipairs(jumps) do

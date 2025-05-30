@@ -110,12 +110,14 @@ Generates a paper-like image.
 @tparam number width Width of the image to create.
 @tparam number height Height of the image to create.
 @tparam[opt=1] number sharpness How sharp to make the texture look.
+@tparam[opt] PRNG rng Pseudo random number generator or nil to use default.
 @treturn Canvas A apper-like canvas image.
 --]]
-function love_shaders.paper( width, height, sharpness )
+function love_shaders.paper( width, height, sharpness, rng )
+   local r = (rng and rng:random()) or love_math.random()
    sharpness = sharpness or 1
    local pixelcode = string.format(love_file.read( "scripts/love_shaders/paper.frag" ),
-         love_math.random(), sharpness )
+         r, sharpness )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    return love_shaders.shader2canvas( shader, width, height )
 end
