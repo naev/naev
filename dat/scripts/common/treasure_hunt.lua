@@ -118,9 +118,9 @@ function lib.create_map_center( sys, w, h, n )
    return lib.render( systems, makejumps(systems), w, h, sys )
 end
 
-function lib.create_map_path( sstart, send, w, h, n )
+function lib.create_map_path( sstart, sgoal, w, h, n )
    n = n or 1
-   local systems = lmisn.getRoute( sstart, send )
+   local systems = lmisn.getRoute( sstart, sgoal )
    if n > 0 then
       for i=1,n do
          local newsys = tcopy(systems)
@@ -134,7 +134,7 @@ function lib.create_map_path( sstart, send, w, h, n )
          systems = newsys
       end
    end
-   return lib.render( systems, makejumps(systems), w, h, send, {sstart} )
+   return lib.render( systems, makejumps(systems), w, h, sgoal, {sstart} )
 end
 
 local function spob_check( p )
@@ -146,7 +146,7 @@ local function spob_check( p )
 end
 
 function lib.create_treasure_hunt( center, maxdist )
-   local sys = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
+   local goal = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
       for k,p in ipairs(s:spobs()) do
          if spob_check(p) then
             return true
@@ -154,22 +154,22 @@ function lib.create_treasure_hunt( center, maxdist )
       end
       return false
    end )
-   if #sys <= 0 then return end
-   sys = sys[rnd.rnd(1,#sys)]
+   if #goal <= 0 then return end
+   goal = goal[rnd.rnd(1,#goal)]
    local spb = {}
-   for k,p in ipairs(sys:spobs()) do
+   for k,p in ipairs(goal:spobs()) do
       if spob_check(p) then
          table.insert(spb,p)
       end
    end
    spb = spb[rnd.rnd(1,#spb)]
-   local candidates = lmisn.getSysAtDistance( sys, 4, 5, function ( _s )
+   local candidates = lmisn.getSysAtDistance( goal, 4, 5, function ( _s )
       return true
    end )
    if #candidates <= 0 then return end
    local start = candidates[rnd.rnd(1,#candidates)]
    local name = fmt.f(_("Near {sys}"),{sys=start})
-   return {spb=spb, sys=sys, start=start, name=name}
+   return {spb=spb, goal=goal, start=start, name=name}
 end
 
 local MISSIONNAME = "Treasure Hunt"

@@ -46,11 +46,11 @@ function load ()
 end
 
 local function gen_map( data )
-   return th.create_map_path( data.sys, data.start, MAP_WIDTH, MAP_HEIGHT )
+   return th.create_map_path( data.start, data.goal, MAP_WIDTH, MAP_HEIGHT )
 end
 
 function view_maps ()
-   local w, h = 1000, 500
+   local w, h = 1050, 500
    local BUTTON_W, BUTTON_H = 120, 30
 
    local wdw = luatk.newWindow( nil, nil, w, h )
