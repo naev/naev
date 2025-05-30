@@ -23,11 +23,12 @@ class _vec(tuple):
          return sum([a*b for (a,b) in zip(self, other)])
       elif isinstance(other, _transf):
          # Apply transformation
-         sa = other.vec
-         return self._rotate(sa, sqrt(1.0 - sa*sa)) * other.fact
+         return other(self)
       else:
          # External product
          return _vec([x*other for x in self])
+
+   __rmul__ = __mul__
 
    def __neg__( self ):
       return self * -1.0
@@ -67,53 +68,49 @@ class _transf:
    A rotation and a scaling.
    Defined by a pair of vectors (before trans, after trans)
    """
-   def __init__( self, v1, v2 ):
+   def __init__( self, v1, v2, trn = 0 ):
       l1 = v1.size()
-      if v1*v2 < 0:
-         l1 = -l1
-         v1 = -v1
       self.fact = v2.size()/l1
       v1 = v1.normalize()
       v2 = v2.normalize()
       self.vec = v1[0]*v2[1] - v1[1]*v2[0]
+      self.trn = trn
 
    def __str__( self ):
       return str({'fact': self.fact, 'vec': self.vec})
 
-   def __add__( self, other ):
-      # Composition
-      if not isinstance(other, _transf):
-         raise Exception('transf only adds with itself')
-      v1 = _vec((1.0, 0.0))
-      v2 = v1 * self * other
-      return _transf(v1, v2)
+   def __call__( self, other ):
+      sa = self.vec
+      return other._rotate(sa, sqrt(1.0 - sa*sa)) * self.fact
 
-   def __mul__( self, other ):
-      # Application
-      if isinstance(other, _vec):
-         return other*self
-      # Composition
-      elif isinstance(other, _transf):
-         return self*other
-      # external product (pow)
-      elif isinstance(other, int) or isinstance(other, float):
-         if(isinstance(other, int)):
-            other = float(other)
-         raise Exception('transf ext. prod not implemented')
+   def __matmul__( self, other ):
+      if isinstance(other, _transf):
+         # Composition
+         vi = _vec((1, 0))
+         v1 = self(vi)
+         s = v1 * vi
+         vf = other(v1)
+         if s * (other(vi) * vi) > 0 and s * (vf*vi) < 0:
+            trn = 1 if s > 0 else -1
+         else:
+            trn = 0
+         return _transf(vi, vf, self.trn + other.trn + trn)
       else:
-         raise Exception('transf does not multiply with type '+str(type(other)))
+         raise TypeError('transf does not compose with ' + str(type(other)))
+
+   def get_angle( self ):
+      return asin(self.vec) + trn * 2.0 * pi
 
    def __itruediv__( self, other ):
       if isinstance(other, int):
-         if sign := (self.fact < 0):
-            self.fact = -self.fact
-         self.fact = pow(self.fact, 1.0/other)
-         if sign:
-            self.fact = -self.fact
-         self.vec = sin(asin(self.vec) / other)
-         return self
+         out = transf()
+         out.fact = pow(self.fact, 1.0/other)
+         a = self.get_angle() / other
+         out.vec = sin(a)
+         #TODO: compute trn
+         return out
       else:
-         raise Exception('transf does not divide with type '+str(type(other)))
+         raise TypeError('transf does not divide with ' + str(type(other)))
 
 def vec( *args ):
    if len(args) == 0:
@@ -122,8 +119,9 @@ def vec( *args ):
       args = args[0]
    return _vec((float(x) for x in args))
 
+id_transf = vec(1, 0) / vec(1, 0)
 def transf():
-   return vec(1, 0) / vec(1, 0)
+   return copy(id_transf)
 
 
 # bounding boxes
