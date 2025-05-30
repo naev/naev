@@ -6,6 +6,7 @@
 </event>
 --]]
 local pilotai = require "pilotai"
+local fmt = require "format"
 
 local plt, reward, amount
 local shield
@@ -65,6 +66,9 @@ function board ()
    player.pay( reward )
    plt:credits( plt:credits()-reward )
    plt:setFuel( plt:fuel()+amount )
+
+   player.msg(fmt.f("#g".._([[You receive {reward} for {fuel} u of fuel.]]).."#0",
+      {reward=fmt.credits(reward), fuel=fmt.number(amount)}))
 
    -- Done, time to go away
    plt:setActiveBoard(false)
