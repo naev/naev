@@ -56,7 +56,7 @@
   <shield_regen_mod>20</shield_regen_mod>
   <launch_range>20</launch_range>
   <ammo_capacity>25</ammo_capacity>
-  <cpu_mod>10</cpu_mod>
+  <cpu_mod>50</cpu_mod>
   <engine_limit_rel>10</engine_limit_rel>
  </stats>
  <tags>
