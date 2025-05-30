@@ -11,6 +11,7 @@ local luatk = require "luatk"
 local lmap = require "luatk.map"
 local vn = require "vn"
 local fmt = require "format"
+local poi = require "common.poi"
 
 local view_maps
 local MAP_WIDTH = 400
@@ -119,7 +120,23 @@ local function landed( _data )
    vn.scene()
    vn.transition()
 
+   vn.na(fmt.f(_([[You land on {spob} that seems to match the treasure map you have.]]),
+      {spob=spob.cur()}))
+   vn.na(_([[Rerouting all ship power to sensors, you perform a scan of the surrounding area and are able to find a small capsule.]]))
+   local poi_reward = poi.data_str(1)
+   vn.na(fmt.f(_([[You take the capsule aboard and open it up to find {reward}.]]),
+      {reward=poi_reward}))
+   vn.na(fmt.reward(poi_reward))
+   vn.func( function ()
+      poi.data_give(1)
+   end )
+
    vn.run()
+
+   -- Log
+   shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
+   shiplog.append( "treasurehunt", fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
+      {sys=system.cur(), spb=spob.cur(), reward=poi_reward}) )
 
    return true
 end
