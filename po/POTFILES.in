@@ -3270,6 +3270,7 @@ dat/missions/neutral/seek_n_destroy.lua
 dat/missions/neutral/sightseeing.lua
 dat/missions/neutral/spacefamily.lua
 dat/missions/neutral/teenager.lua
+dat/missions/neutral/treasure_hunt.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/onion/onion01.lua
 dat/missions/onion/onion02.lua
