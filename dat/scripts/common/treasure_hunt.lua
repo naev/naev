@@ -1,6 +1,7 @@
 local lg = require "love.graphics"
 local lmisn = require "lmisn"
 local love_shaders = require "love_shaders"
+local fmt = require "format"
 
 local lib = {}
 
@@ -167,7 +168,8 @@ function lib.create_treasure_hunt( center, maxdist )
    end )
    if #candidates <= 0 then return end
    local start = candidates[rnd.rnd(1,#candidates)]
-   return {spb=spb, sys=sys, start=start}
+   local name = fmt.f(_("Near {sys}"),{sys=start})
+   return {spb=spb, sys=sys, start=start, name=name}
 end
 
 local MISSIONNAME = "Treasure Hunt"

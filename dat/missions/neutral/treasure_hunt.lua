@@ -16,8 +16,19 @@ local view_maps
 local MAP_WIDTH = 400
 local MAP_HEIGHT = 400
 
+local function update_desc ()
+   local desc = _([[You have the following treasure maps:]])
+   for k,v in ipairs(mem.maps) do
+      desc = desc.."\n"..fmt.f(_(" * {mapname}"), {mapname=v.name})
+   end
+   misn.setDesc( desc )
+end
+
 function create ()
    misn.accept()
+
+   misn.setTitle(_("Treasure Hunt"))
+   misn.setReward(_("Unknown"))
 
    mem.maps = {}
 
@@ -69,7 +80,7 @@ function view_maps ()
       else
          local maps = {}
          for k,v in ipairs(mem.maps) do
-            table.insert( maps, fmt.f(_("Near {sys}"),{sys=v.start}) )
+            table.insert( maps, v.name )
          end
          lst = luatk.newList( wdw, 20, 20, mw, mh, maps, function( _name, id )
             update( mem.maps[id] )
@@ -97,6 +108,7 @@ end
 
 function newmap( data )
    table.insert( mem.maps, data )
+   update_desc()
 end
 
 local function landed( _data )
