@@ -43,7 +43,7 @@ class starmap(dict):
          T = ET.parse(name).getroot()
          if (e := T.find('pos')) is not None:
             try:
-               self[key] = _vec(float(e.attrib['x']), float(e.attrib['y']))
+               self[key] = vec(float(e.attrib['x']), float(e.attrib['y']))
             except:
                stderr.write('no position defined in "' + name + '"\n')
                self[key] = None

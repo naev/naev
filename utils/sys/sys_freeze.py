@@ -1,26 +1,14 @@
 #!/usr/bin/env python3
 
-if __name__ != '__main__':
-   raise Exception('This module is only intended to be used as main.')
 
 
-from sys import argv, exit, stderr
-from os.path import basename
-args = argv[1:]
-
-if '-h' in args or '--help' in args or args == []:
-   stderr.write('usage:  ' + basename(argv[0]) + '  <file1> ..\n')
-   stderr.write('  Freezes its input xml ssys files.\n')
-   stderr.write('  The actually modified ssys files are output.\n')
-   exit(0)
-
-from ssys import starmap, sysnam2sys, sys_fil_ET
-
+from ssys import sysnam2sys, starmap, sys_fil_ET
 sm = starmap()
 
-for i in args:
+
+def sys_freeze( sys ):
    changed = False
-   p = sys_fil_ET(i)
+   p = sys_fil_ET(sys)
    T = p.getroot()
    myname = sysnam2sys(T.attrib['name'])
    radius = float(T.find('general/radius').text)
@@ -34,8 +22,23 @@ for i in args:
          for k, v in v.to_dict().items():
             f.set(k, str(v))
          f.set('was_auto','true')
-
    if changed:
-      p.write(i)
-      print(i)
+      p.write(sys)
+   return changed
+
+
+if __name__ == '__main__':
+   from sys import argv, exit, stderr
+   from os.path import basename
+   args = argv[1:]
+
+   if '-h' in args or '--help' in args or args == []:
+      stderr.write('usage:  ' + basename(argv[0]) + '  <file1> ..\n')
+      stderr.write('  Freezes its input xml ssys files.\n')
+      stderr.write('  The actually modified ssys files are output.\n')
+      exit(0)
+
+   for i in args:
+      if sys_freeze(i):
+         print(i)
 

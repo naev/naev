@@ -3,7 +3,8 @@
 
 import xml.etree.ElementTree as ET
 
-def is_empty( sys ):
+
+def sys_empty( sys ):
    T = ET.parse(sys).getroot()
 
    if T.find('./general/nolanes') is None:
@@ -30,6 +31,7 @@ def is_empty( sys ):
 
    return True
 
+
 if __name__ == '__main__':
    from sys import argv, exit, stderr, stdin
    from os.path import basename
@@ -52,5 +54,5 @@ if __name__ == '__main__':
       args = map(lambda x: x.rstrip('\n'), stdin)
 
    for i in args:
-      if is_empty(i) != rev:
+      if sys_empty(i) != rev:
          print(i)
