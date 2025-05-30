@@ -1,21 +1,57 @@
 #!/usr/bin/env python3
 
 
-import xml.etree.ElementTree as ET
-from ssys import sysnam2sys, starmap
+from geometry import transf, vec
+from ssys import sysnam2sys, starmap, sys_fil_ET, spob_fil
+from math import sin, pi
 sm = starmap()
 
 
 def sys_relax( sys ):
-   changed = False
-   T = ET.parse(sys).getroot()
+   p = sys_fil_ET(sys)
+   T = p.getroot()
+   myname = sysnam2sys(T.attrib['name'])
 
-   changed = True
-   for e in T.findall('./jumps/jump/pos'):
-      if 'was_auto' in e.attrib:
-         #TODO
-         pass
-   return changed
+   acc = vec()
+   count = 0
+
+   for f in T.findall('./jumps/jump'):
+      dst = sysnam2sys(f.attrib['target'])
+      for e in f.findall('pos'):
+         if 'was_auto' in e.attrib:
+            mapv = sm[dst] - sm[myname]
+            sysv = vec(float(e.attrib['x']), float(e.attrib['y']))
+            acc += mapv.normalize() - sysv.normalize()
+            count += 1
+
+   if count>0:
+      ref = acc.rotate(90).normalize()
+      acc /= count
+      t = (ref - acc).normalize() / ref
+      #print(t)
+      # in degrees
+      eps = 0.2
+      if t.vec > sin(eps/180.0*pi):
+         for e in T.findall('./spobs/spob'):
+            spfil = spob_fil(sysnam2sys(e.text))
+            p2 = sys_fil_ET(spfil)
+            f = p2.getroot().find('pos')
+            sysv = vec(float(f.attrib['x']), float(f.attrib['y']))
+            sysv *= t
+            f.set('x', str(sysv[0]))
+            f.set('y', str(sysv[1]))
+            p2.write(spfil)
+
+         for i in [ './jumps/jump/pos', './asteroids/asteroid/pos',
+            './waypoints/waypoint']:
+            for e in T.findall(i):
+               sysv = vec(float(e.attrib['x']), float(e.attrib['y']))
+               sysv *= t
+               e.set('x', str(sysv[0]))
+               e.set('y', str(sysv[1]))
+         p.write(sys)
+         return True
+   return False
 
 if __name__ == '__main__':
    from sys import argv, exit, stderr

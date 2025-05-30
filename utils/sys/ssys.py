@@ -6,8 +6,14 @@ from sys import argv, stderr
 import os
 script_dir = os.path.dirname(__file__)
 PATH = os.path.realpath(os.path.join(script_dir, '..', '..', 'dat', 'ssys'))
+PATH_SPOB = os.path.realpath(os.path.join(script_dir, '..', '..', 'dat', 'spob'))
 
 from geometry import vec
+
+def spob_fil( nam ):
+   if nam[0] == '"' and nam[-1]== '"':
+      nam = nam[1:-1]
+   return os.path.join(PATH_SPOB, nam + '.xml')
 
 def sys_fil( nam ):
    if nam[0] == '"' and nam[-1]== '"':

@@ -21,7 +21,7 @@ class _vec(tuple):
       if isinstance(other, _vec):
          # Dot product
          return sum([a*b for (a,b) in zip(self, other)])
-      elif isinstance(other, transf):
+      elif isinstance(other, _transf):
          # Apply transformation
          sa = other.vec
          return self._rotate(sa, sqrt(1.0 - sa*sa)) * other.fact
@@ -35,7 +35,7 @@ class _vec(tuple):
    def __truediv__( self, other ):
       if isinstance(other, _vec):
          # The transformation that turns other into self.
-         return transf(other, self)
+         return _transf(other, self)
       else:
          return self * (1.0/other)
 
@@ -62,7 +62,7 @@ class _vec(tuple):
       return { 'x': self[0], 'y': self[1] }
 
 
-class transf:
+class _transf:
    """
    A rotation and a scaling.
    Defined by a pair of vectors (before trans, after trans)
@@ -77,20 +77,43 @@ class transf:
       v2 = v2.normalize()
       self.vec = v1[0]*v2[1] - v1[1]*v2[0]
 
-   def __mul__( self, other ):
-      # Application
-      if not isinstance(other, _vec):
-         raise Exception('transf only applies to vec')
-      return other*self
+   def __str__( self ):
+      return str({'fact': self.fact, 'vec': self.vec})
 
    def __add__( self, other ):
       # Composition
-      if not isinstance(other, transf):
+      if not isinstance(other, _transf):
          raise Exception('transf only adds with itself')
-      v1 = _vec(1.0, 0.0)
+      v1 = _vec((1.0, 0.0))
       v2 = v1 * self * other
-      return transf(v1, v2)
+      return _transf(v1, v2)
 
+   def __mul__( self, other ):
+      # Application
+      if isinstance(other, _vec):
+         return other*self
+      # Composition
+      elif isinstance(other, _transf):
+         return self*other
+      # external product (pow)
+      elif isinstance(other, int) or isinstance(other, float):
+         if(isinstance(other, int)):
+            other = float(other)
+         raise Exception('transf ext. prod not implemented')
+      else:
+         raise Exception('transf does not multiply with type '+str(type(other)))
+
+   def __itruediv__( self, other ):
+      if isinstance(other, int):
+         if sign := (self.fact < 0):
+            self.fact = -self.fact
+         self.fact = pow(self.fact, 1.0/other)
+         if sign:
+            self.fact = -self.fact
+         self.vec = sin(asin(self.vec) / other)
+         return self
+      else:
+         raise Exception('transf does not divide with type '+str(type(other)))
 
 def vec( *args ):
    if len(args) == 0:
@@ -98,6 +121,9 @@ def vec( *args ):
    elif len(args) == 1:
       args = args[0]
    return _vec((float(x) for x in args))
+
+def transf():
+   return vec(1, 0) / vec(1, 0)
 
 
 # bounding boxes
