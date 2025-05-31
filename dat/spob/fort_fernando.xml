@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Fernando">
  <lua>dvaered_mil_restricted.lua</lua>
  <pos x="12376.160912" y="625.892062"/>

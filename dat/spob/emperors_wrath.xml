@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Emperor's Wrath">
  <feature>#pEmpire Homeworld#0</feature>
  <lua>empire_mil_emperors_wrath.lua</lua>

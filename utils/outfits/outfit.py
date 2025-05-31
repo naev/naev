@@ -49,7 +49,7 @@ def fmt_kv( kv ):
    return key + '="' + str(andamp(value)) + '"'
 
 def prisec( tag, r1, r2, eml1, eml2 ):
-   a = r1[0] if r1 is not None else 0
+   a = 0 if r1 is None else r1[0]
 
    if r2 is not None:
       if tag in MOBILITY_PARAMS:
@@ -93,7 +93,7 @@ class _outfit():
 
       if content:
          self.r = ET.fromstring(fil)
-      elif type(fil) == type(""):
+      elif type(fil) == type(''):
          with stdin if fil == '-' else open(fil, 'rt') as fp:
             self.r = ET.parse(fp).getroot()
       else:
@@ -116,7 +116,7 @@ class _outfit():
       if self.short:
          return self.short
       res = self.find('shortname')
-      if res == None:
+      if res is None:
          res = self.name()
 
       if res.split(' ')[-1] == 'Engine':
@@ -134,7 +134,7 @@ class _outfit():
          pass
 
    def can_pri_sec( self ):
-      if self.pri == None:
+      if self.pri is None:
          k = self.find('slot', True).attrib
          self.pri = 'prop' in k and k['prop'].find('secondary') == -1
          self.sec = 'prop_extra' in k and k['prop_extra'].find('secondary') != -1

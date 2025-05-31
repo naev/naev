@@ -5,7 +5,7 @@ class Slst(list):
       for T in self:
          if debug:
             print('"' + st + '"')
-         (s,t,c) = (T[0], (T+('',))[1], (T+(None,None))[2])
+         (s, t, c) = (T[0], (T+('',))[1], (T+(None, None))[2])
          if c is None:
             st = st.replace(s, t)
          elif c<0:
@@ -29,5 +29,5 @@ class Slst(list):
       return Slst([ ((t+('',))[1], t[0]) + t[2:] for t in reversed(self)])
 
    def __repr__(self):
-      return 'Slst('+list.__repr__(self)+')'
+      return 'Slst(' + list.__repr__(self) + ')'
    __str__ = __repr__

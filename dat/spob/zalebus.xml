@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zalebus">
  <lua>highclass.lua</lua>
  <pos x="20717.445102" y="-2844.812770"/>

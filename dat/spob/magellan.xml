@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Magellan">
  <lua>lowclass.lua</lua>
  <pos x="-21235.409585" y="-5683.691180"/>

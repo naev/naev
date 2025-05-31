@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Seanich">
  <lua>lowclass.lua</lua>
  <pos x="18820.828324" y="10428.462646"/>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Edorn">
  <lua>lowclass.lua</lua>
  <pos x="-2980.303255" y="-6266.076282"/>

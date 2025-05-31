@@ -8,7 +8,7 @@ script_dir = os.path.dirname( __file__ )
 const_dir = os.path.realpath(os.path.join( script_dir, '..', '..', 'dat', 'constants.lua' ))
 
 try:
-   with open(const_dir,"rt") as fp:
+   with open(const_dir, 'rt') as fp:
       p = re.compile('PHYSICS_SPEED_DAMP *= *(.*),')
       m = p.search(fp.read())
       s = m.group(1)
@@ -25,4 +25,4 @@ except:
 PHYSICS_SPEED_DAMP = f
 
 if __name__ == '__main__':
-   sys.stderr.write('PHYSICS_SPEED_DAMP = '+str(f)+'\n')
+   sys.stderr.write('PHYSICS_SPEED_DAMP = ' + str(f) + '\n')

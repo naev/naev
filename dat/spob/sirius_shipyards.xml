@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sirius Shipyards">
  <lua>sirius_mil_restricted.lua</lua>
  <pos x="20763.313394" y="4318.029642"/>

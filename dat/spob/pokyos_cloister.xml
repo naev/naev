@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Pokyos Cloister">
  <lua>sirius_mil_restricted.lua</lua>
  <pos x="-5018.249839" y="-3370.638946"/>

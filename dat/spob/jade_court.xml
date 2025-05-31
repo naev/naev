@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jade Court">
  <lua>jadecourt.lua</lua>
  <pos x="-2507.492761" y="-4718.400357"/>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Raptor Nest">
  <lua>soromid_mil_restricted.lua</lua>
  <pos x="-8029.968852" y="14963.118654"/>

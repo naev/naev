@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jomos">
  <lua>highclass.lua</lua>
  <pos x="12956.737140" y="-8615.855896"/>
