@@ -2,7 +2,7 @@
 
 
 from geometry import transf, vec
-from ssys import sysnam2sys, spobnam2spob, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
+from ssys import spobnam2spob, sysnam2sys, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
 from math import sin, pi
 sm = starmap()
 
@@ -30,7 +30,7 @@ def sys_relax( sys ):
       eps = 0.2
       if abs(acc.vec) > sin(eps/180.0*pi):
          for e in T.findall('./spobs/spob'):
-            spfil = spob_fil(sysnam2sys(e.text))
+            spfil = spob_fil(spobnam2spob(e.text))
             p2 = fil_ET(spfil)
             f = p2.getroot().find('pos')
             vec_to_element(f, acc(vec_from_element(f)))

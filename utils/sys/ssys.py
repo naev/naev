@@ -59,7 +59,7 @@ def sysnam2sys( nam ):
 
 def spobnam2spob( nam ):
    nam = nam.strip()
-   for t in [(' ', '_'), ("'", ''), ('-', '')]:
+   for t in [(' ', '_'), ("O'", '\n'), ("'", ''), ('\n', "O'"), ('-', ''), ('&', ''), ('.','')]:
       nam = nam.replace(*t)
    return nam.lower()
 
