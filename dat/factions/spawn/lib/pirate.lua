@@ -82,7 +82,7 @@ function spir.initDirectory( dir, faction, params )
 
       -- Give treasure maps based on chance
       params.postprocess = function( p )
-         local chance = p:ship():size()+1 / 6
+         local chance = p:ship():size()+1 / 8
          if p:faction()==FMARAUDER then
             chance = chance * 0.1
          end
