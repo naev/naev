@@ -40,8 +40,8 @@ if __name__ == '__main__':
    if '-h' in args or '--help' in args or args == []:
       stderr.write('usage:  ' + basename(argv[0]) + '  [-r]  -f | (<file1> ..)\n')
       stderr.write('  Lists the empty sys among its input xml ssys files.\n')
-      stderr.write('  If -f is set, reads the list on stdin.\n')
       stderr.write('  If -r is set, list the non-empty sys.\n')
+      stderr.write('  If -f is set, reads the list on stdin.\n')
       exit(0)
 
    if rev:= '-r' in args:

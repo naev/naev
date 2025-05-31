@@ -6,8 +6,8 @@ DST="$BAS/ssys"
 
 git checkout "$BAS/spob" "$DST"
 
-echo "freeze" >&2
-$SCRIPT_DIR/sys_freeze.py $DST/*.xml > /dev/null
+echo "freeze non-empty:" >&2
+$SCRIPT_DIR/sys_empty.py -r $DST/*.xml | $SCRIPT_DIR/sys_freeze.py -f | wc -l
 echo "gen before graph" >&2
 $SCRIPT_DIR/sys2dot.py $DST/*.xml -k | neato -n2 -Tpng 2>/dev/null > before.png
 echo "gen after graph" >&2
@@ -18,4 +18,3 @@ echo "gen final graph" >&2
 $SCRIPT_DIR/sys2dot.py $DST/*.xml -k | neato -n2 -Tpng 2>/dev/null > final.png
 #echo "relax" >&2
 #$SCRIPT_DIR/sys_relax.py $DST/*.xml > /dev/null
-#$SCRIPT_DIR/sys_unfreeze.sh $DST/*.xml > /dev/null

@@ -26,7 +26,6 @@ def sys_relax( sys ):
 
    if count>0:
       acc /= count
-      print(acc)
       # in degrees
       eps = 0.2
       if abs(acc.vec) > sin(eps/180.0*pi):
