@@ -1,4 +1,5 @@
 local lg = require "love.graphics"
+local lf = require "love.filesystem"
 local lmisn = require "lmisn"
 local love_shaders = require "love_shaders"
 local fmt = require "format"
@@ -6,8 +7,61 @@ local prng = require "prng"
 
 local lib = {}
 
+local BASEPATH = "gfx/misc/treasure_hunt/"
+local gfx
+local function loadgfx_dir( path )
+   local imgs = {}
+   for k,v in ipairs(lf.getDirectoryItems(BASEPATH..path)) do
+      local img = lg.newImage( BASEPATH..path.."/"..v )
+      if img then
+         table.insert( imgs, img )
+      end
+   end
+   return imgs
+end
+
+local function draw_object( obj, x, y, r, rng, rot )
+   local o = obj[ rng:random(1,#obj) ]
+   local s = r/50 -- 100px big images
+   o:draw( x-r, y-r, rot, s, s )
+end
+local function draw_circle( x, y, r, rng )
+   return draw_object( gfx.circle, x, y, r, rng, rng:random()*math.pi*2 )
+end
+local function draw_cross( x, y, r, rng )
+   return draw_object( gfx.cross, x, y, r, rng, rng:random()*0.2 )
+end
+local function draw_triangle( x, y, r, rng )
+   return draw_object( gfx.triangle, x, y, r, rng, rng:random()*0.2 )
+end
+local function draw_line( x1, y1, x2, y2, r, rng )
+   local L = 20
+   local dx, dy = x2-x1, y2-y1
+   local len = math.sqrt(dx^2+dy^2)
+   local ang = math.atan2( dy, dx )
+   local N = math.max( 1, math.floor( (len-2*r) / L + 0.5 ) )
+   local off = (len-N*L)*0.5
+   local sx, sy = L*math.cos(ang), L*math.sin(ang)
+   local x, y = x1+off*math.cos(ang)+0.5*sx, y1+off*math.sin(ang)+0.5*sy
+   for i=1,N do
+      draw_object( gfx.line, x, y, L*0.5, rng, ang )
+      x = x+sx
+      y = y+sy
+   end
+end
+
 function lib.render( systems, jumps, w, h, target, names, rng )
    rng = rng or prng.new( rnd.rnd(1,2^30) )
+
+   if gfx==nil then
+      gfx = {
+         line     = loadgfx_dir("line"),
+         circle   = loadgfx_dir("circle"),
+         cross    = loadgfx_dir("cross"),
+         triangle = loadgfx_dir("triangle"),
+      }
+   end
+
    local xmin, xmax, ymin, ymax = math.huge, -math.huge, math.huge, -math.huge
    local b = 30
    for k,s in ipairs(systems) do
@@ -21,69 +75,48 @@ function lib.render( systems, jumps, w, h, target, names, rng )
    local cy = (ymin+ymax)*0.5
    local scale = 2/math.max( (xmax-xmin), (ymax-ymin) )
 
-   -- Flip Y
-   lg.push()
-      lg.translate( 0, h )
-      lg.scale( 1, -1 )
+   local function pos( x, y )
+      return w*(0.5+0.5*(x-cx)*scale),
+             h-h*(0.5+0.5*(y-cy)*scale)
+   end
 
+   -- Flip Y
    local c = love_shaders.paper( w, h, nil, rng )
    lg.setCanvas( c )
-   lg.setColour( 0, 0, 0, 0.3 )
+   lg.setColour( 0, 0, 0, 1 )
+   local R = 20
    for k,j in ipairs(jumps) do
-      local p1 = j:system():pos()
-      local x1, y1 = p1:get()
-      local p2 = j:dest():pos()
-      local x2, y2 = p2:get()
-      local len, ang = (p2-p1):polar()
-      local x = (0.5+0.5*((x1+x2)*0.5-cx)*scale)*w
-      local y = (0.5+0.5*((y1+y2)*0.5-cy)*scale)*h
-      len = len*scale*w*0.5
-
-      lg.push()
-         lg.translate( x, y )
-         lg.rotate( ang )
-      lg.rectangle( "fill", -len*0.5, -2, len, 4 )
-      lg.pop()
+      local x1, y1 = pos( j:system():pos():get() )
+      local x2, y2 = pos( j:dest():pos():get() )
+      draw_line( x1, y1, x2, y2, R, rng )
    end
-   lg.setColour( 0.4, 0.4, 0.4, 1 )
-   local r = 10
    for k,s in ipairs(systems) do
-      local x, y = s:pos():get()
-      lg.circle( "fill",
-         w*(0.5+0.5*(x-cx)*scale),
-         h*(0.5+0.5*(y-cy)*scale),
-         r)
+      if not inlist( names, s ) and target~=s then
+         local x, y = pos(s:pos():get())
+         draw_circle( x, y, R, rng )
+      end
    end
    if target then
       lg.setColour( 0.8, 0.2, 0.3, 0.9 )
-      local x, y = target:pos():get()
-      lg.circle( "fill",
-         w*(0.5+0.5*(x-cx)*scale),
-         h*(0.5+0.5*(y-cy)*scale),
-         r)
+      local x, y = pos(target:pos():get())
+      draw_cross( x, y, R, rng )
    end
    lg.setColour( 0.2, 0.2, 1, 1 )
    for k,s in ipairs(names) do
-      local x, y = s:pos():get()
-      lg.circle( "fill",
-         w*(0.5+0.5*(x-cx)*scale),
-         h*(0.5+0.5*(y-cy)*scale),
-         r)
+      local x, y = pos(s:pos():get())
+      draw_triangle( x, y, R, rng )
    end
-   lg.pop()
 
    if #names > 0 then
       local font = lg.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
       for k,s in ipairs(names) do
-         local x, y = s:pos():get()
+         local x, y = pos( s:pos():get() )
          local n = s:name()
          local maxw = font:getWrap( n, 1e6 )
-         x = w*(0.5+0.5*(x-cx)*scale)
-         y = h-h*(0.5+0.5*(y-cy)*scale)
-         if x+r*1.5 > w-maxw then
-            x = x - maxw - r*1.5
+         if x+R*1.5 > w-maxw then
+            x = x - maxw - R*1.5
          else
-            x = x + r*1.5
+            x = x + R*1.5
          end
          if y < 20 then
             y = y + 20
@@ -91,7 +124,7 @@ function lib.render( systems, jumps, w, h, target, names, rng )
             y = y - 20
          end
          lg.push()
-            lg.translate( x, y-r*0.75 )
+            lg.translate( x, y-R*0.75 )
             lg.rotate( rng:random()-0.5 )
          lg.printf( s:name(), font, 0, 0, 1e6, "left" )
          lg.pop()
