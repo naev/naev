@@ -144,9 +144,14 @@ local function compute_lootables ( plt )
       local mem = plt:memory()
       local oloot = mem.lootable_outfit
       if oloot then
-         local lo = outfit_loot( oloot )
-         lo.bg = special_col
-         table.insert( lootables, lo )
+         if type(oloot)~="table" then
+            oloot = {oloot}
+         end
+         for k,o in ipairs(oloot) do
+            local lo = outfit_loot( o )
+            lo.bg = special_col
+            table.insert( lootables, lo )
+         end
       end
 
       local ocand = {}
