@@ -5,27 +5,24 @@ import xml.etree.ElementTree as ET
 from sys import argv, stderr
 import os
 script_dir = os.path.dirname(__file__)
-PATH = os.path.realpath(os.path.join(script_dir, '..', '..', 'dat', 'ssys'))
-PATH_SPOB = os.path.realpath(os.path.join(script_dir, '..', '..', 'dat', 'spob'))
+getpath = lambda *x: os.path.realpath(os.path.join(*x))
+PATH = getpath(script_dir, '..', '..', 'dat')
 
 from geometry import vec
 
-def spob_fil( nam ):
-   if nam[0] == '"' and nam[-1]== '"':
-      nam = nam[1:-1]
-   return os.path.join(PATH_SPOB, nam + '.xml')
 
-def sys_fil( nam ):
-   if nam[0] == '"' and nam[-1]== '"':
-      nam = nam[1:-1]
-   return os.path.join(PATH, nam + '.xml')
+rem_q = lambda nam: nam[1:-1] if nam[0] == '"' and nam[-1]== '"' else nam
+_fil =lambda folder: lambda nam : getpath(PATH, folder, rem_q(nam) + '.xml')
+spob_fil = _fil('spob')
+ssys_fil = _fil('ssys')
+
 
 import subprocess
-cmd = os.path.realpath(os.path.join(script_dir, '..', 'repair_xml.sh'))
+cmd = getpath(script_dir, '..', 'repair_xml.sh')
 need_repair = []
 from atexit import register
 
-def sys_fil_ET( name ):
+def fil_ET( name ):
    T = ET.parse(name)
    oldw = T.write
    def write( nam ):
@@ -43,17 +40,16 @@ def sys_fil_ET( name ):
    return T
 
 class starmap(dict):
-   def __getitem__( self, key ):
-      if key not in self:
-         name = sys_fil(key)
-         T = ET.parse(name).getroot()
-         if (e := T.find('pos')) is not None:
-            try:
-               self[key] = vec(float(e.attrib['x']), float(e.attrib['y']))
-            except:
-               stderr.write('no position defined in "' + name + '"\n')
-               self[key] = None
-      return dict.__getitem__(self, key)
+   def __missing__( self, key ):
+      name = ssys_fil(key)
+      T = ET.parse(name).getroot()
+      if (e := T.find('pos')) is not None:
+         try:
+            self[key] = vec(float(e.attrib['x']), float(e.attrib['y']))
+         except:
+            stderr.write('no position defined in "' + name + '"\n')
+            self[key] = None
+      return self[key]
 
 def sysnam2sys( nam ):
    nam = nam.strip()
@@ -61,8 +57,14 @@ def sysnam2sys( nam ):
       nam = nam.replace(*t)
    return nam.lower()
 
+def spobnam2spob( nam ):
+   nam = nam.strip()
+   for t in [(' ', '_'), ("'", ''), ('-', '')]:
+      nam = nam.replace(*t)
+   return nam.lower()
+
 def sysneigh(sys):
-   T = ET.parse(sys_fil(sys)).getroot()
+   T = ET.parse(ssys_fil(sys)).getroot()
    acc = []
    count = 1
    for e in T.findall('./jumps/jump'):

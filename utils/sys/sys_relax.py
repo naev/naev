@@ -2,13 +2,13 @@
 
 
 from geometry import transf, vec
-from ssys import sysnam2sys, starmap, sys_fil_ET, spob_fil
+from ssys import sysnam2sys, spobnam2spob, starmap, fil_ET, spob_fil
 from math import sin, pi
 sm = starmap()
 
 
 def sys_relax( sys ):
-   p = sys_fil_ET(sys)
+   p = fil_ET(sys)
    T = p.getroot()
    myname = sysnam2sys(T.attrib['name'])
 
@@ -32,7 +32,7 @@ def sys_relax( sys ):
       if abs(acc.vec) > sin(eps/180.0*pi):
          for e in T.findall('./spobs/spob'):
             spfil = spob_fil(sysnam2sys(e.text))
-            p2 = sys_fil_ET(spfil)
+            p2 = fil_ET(spfil)
             f = p2.getroot().find('pos')
             sysv = acc(vec(float(f.attrib['x']), float(f.attrib['y'])))
             f.set('x', str(sysv[0]))

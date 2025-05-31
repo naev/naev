@@ -1,9 +1,10 @@
 #!/usr/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DST=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/ssys")
+BAS=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat")
+DST="$BAS/ssys"
 
-git checkout "$DST"
+git checkout "$BAS/spob" "$DST"
 
 echo "freeze" >&2
 $SCRIPT_DIR/sys_freeze.py $DST/*.xml > /dev/null

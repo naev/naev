@@ -2,13 +2,13 @@
 
 
 
-from ssys import sysnam2sys, starmap, sys_fil_ET
+from ssys import sysnam2sys, starmap, fil_ET
 sm = starmap()
 
 
 def sys_freeze( sys ):
    changed = False
-   p = sys_fil_ET(sys)
+   p = fil_ET(sys)
    T = p.getroot()
    myname = sysnam2sys(T.attrib['name'])
    radius = float(T.find('general/radius').text)

@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-from ssys import vec, sys_fil_ET, sys_fil, sysnam2sys, sysneigh
+from ssys import vec, fil_ET, ssys_fil, sysnam2sys, sysneigh
 from geometry import bb
 
 
@@ -43,7 +43,7 @@ for k in pos:
       nam = k
       if nam[0] == '"':
          nam = nam[1:-1]
-      T = sys_fil_ET(sys_fil(nam)).getroot()
+      T = fil_ET(ssys_fil(nam)).getroot()
       if (e := T.find('pos')) is not None:
          oldbb += (float(e.attrib['x']), float(e.attrib['y']))
 
@@ -167,7 +167,7 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
 tradelane = set()
 for k in pos:
    if k[0] != '_':
-      T = sys_fil_ET(sys_fil(k)).getroot()
+      T = fil_ET(ssys_fil(k)).getroot()
       for e in T.findall('tags/tag'):
          if e.text == 'tradelane':
             tradelane.add(k)
@@ -212,8 +212,8 @@ for k in pos:
    pos[k] += off
    pos[k] = round(pos[k], 9)
    if k[0] != '_':
-      nam = sys_fil(k)
-      o = sys_fil_ET(nam)
+      nam = ssys_fil(k)
+      o = fil_ET(nam)
       if (e := o.getroot().find('pos')) is not None:
          e.set('x', str(pos[k][0]))
          e.set('y', str(pos[k][1]))
