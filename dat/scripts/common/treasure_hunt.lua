@@ -185,7 +185,8 @@ function lib.create_map( data, w, h )
    return lib.create_map_path( data.start, data.goal, w, h, data.n, rng )
 end
 
-function lib.create_treasure_hunt( center, maxdist )
+function lib.create_treasure_hunt( center, maxdist, length )
+   length = length or rnd.rnd(4,5)
    maxdist = maxdist or 20
    local goallst = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
       for k,p in ipairs(s:spobs()) do
@@ -206,7 +207,7 @@ function lib.create_treasure_hunt( center, maxdist )
          end
       end
       spb = spb[rnd.rnd(1,#spb)] -- Should exist as we checked when getting goal
-      local candidates = lmisn.getSysAtDistance( goal, 4, 5, function ( _s )
+      local candidates = lmisn.getSysAtDistance( goal, length, length, function ( _s )
          -- TODO maybe add some criteria here to pick a target?
          return true
       end )
