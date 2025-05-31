@@ -187,7 +187,7 @@ end
 
 function lib.create_treasure_hunt( center, maxdist )
    maxdist = maxdist or 20
-   local goal = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
+   local goallst = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
       for k,p in ipairs(s:spobs()) do
          if spob_check(p) then
             return true
@@ -195,22 +195,27 @@ function lib.create_treasure_hunt( center, maxdist )
       end
       return false
    end )
-   if #goal <= 0 then return end
-   goal = goal[rnd.rnd(1,#goal)]
-   local spb = {}
-   for k,p in ipairs(goal:spobs()) do
-      if spob_check(p) then
-         table.insert(spb,p)
+   if #goallst <= 0 then return end
+   -- Try to see if we can find a pair for any of the targets
+   goallst = rnd.permutation(goallst)
+   for i,goal in ipairs(goallst) do
+      local spb = {}
+      for k,p in ipairs(goal:spobs()) do
+         if spob_check(p) then
+            table.insert(spb,p)
+         end
+      end
+      spb = spb[rnd.rnd(1,#spb)] -- Should exist as we checked when getting goal
+      local candidates = lmisn.getSysAtDistance( goal, 4, 5, function ( _s )
+         -- TODO maybe add some criteria here to pick a target?
+         return true
+      end )
+      if #candidates > 0 then
+         local start = candidates[rnd.rnd(1,#candidates)]
+         local name = fmt.f(_("Near {sys}"),{sys=start})
+         return {spb=spb, goal=goal, start=start, name=name, seed=rnd.rnd(1,2^30)}
       end
    end
-   spb = spb[rnd.rnd(1,#spb)]
-   local candidates = lmisn.getSysAtDistance( goal, 4, 5, function ( _s )
-      return true
-   end )
-   if #candidates <= 0 then return end
-   local start = candidates[rnd.rnd(1,#candidates)]
-   local name = fmt.f(_("Near {sys}"),{sys=start})
-   return {spb=spb, goal=goal, start=start, name=name, seed=rnd.rnd(1,2^30)}
 end
 
 local MISSIONNAME = "Treasure Hunt"
