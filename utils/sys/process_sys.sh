@@ -16,5 +16,5 @@ echo "apply after graph" >&2
 $SCRIPT_DIR/dot2sys.py < after.dot
 echo "gen final graph" >&2
 $SCRIPT_DIR/sys2dot.py $DST/*.xml -k | neato -n2 -Tpng 2>/dev/null > final.png
-echo "relax" >&2
-$SCRIPT_DIR/sys_relax.py $DST/*.xml | wc -l
+#echo "relax" >&2
+#$SCRIPT_DIR/sys_relax.py $DST/*.xml | wc -l

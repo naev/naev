@@ -21,7 +21,10 @@ def sys_relax( sys ):
          if 'was_auto' in e.attrib:
             mapv = sm[dst] - sm[myname]
             sysv = vec_from_element(e)
-            acc @= mapv.normalize() / sysv.normalize()
+            t = mapv.normalize() / sysv.normalize()
+            acc @= t
+            #stderr.write(' t='+str(int(t.get_angle()*180/pi)).rjust(4)+'°')
+            #stderr.write(' acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
             count += 1
 
    if count>0:
@@ -29,6 +32,7 @@ def sys_relax( sys ):
       # in degrees
       eps = 0.2
       if abs(acc.vec) > sin(eps/180.0*pi):
+         #stderr.write('final acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
          for e in T.findall('./spobs/spob'):
             spfil = spob_fil(spobnam2spob(e.text))
             p2 = fil_ET(spfil)

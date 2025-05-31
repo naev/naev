@@ -74,14 +74,25 @@ class _transf:
       v1 = v1.normalize()
       v2 = v2.normalize()
       self.vec = v1[0]*v2[1] - v1[1]*v2[0]
+      if self.vec > 1.0:
+         self.vec = 1.0
+      elif self.vec < -1.0:
+         self.vec = -1.0
       self.trn = trn
+      if v1*v2 < 0:
+         if self.vec < 0:
+            self.trn -= 1
+         else:
+            self.trn += 1
+         self.vec = -self.vec
 
    def __str__( self ):
       return str({'fact': self.fact, 'vec': self.vec})
 
    def __call__( self, other ):
       sa = self.vec
-      return other._rotate(sa, sqrt(1.0 - sa*sa)) * self.fact
+      sign = -1 if (self.trn%2 == 1) else 1
+      return other._rotate(sa, sign * sqrt(1.0 - sa*sa)) * self.fact
 
    def __matmul__( self, other ):
       if isinstance(other, _transf):
@@ -91,7 +102,7 @@ class _transf:
          s = v1 * vi
          vf = other(v1)
          if s * (other(vi) * vi) > 0 and s * (vf*vi) < 0:
-            trn = 1 if s > 0 else -1
+            trn = 1 if s >= 0 else -1
          else:
             trn = 0
          return _transf(vi, vf, self.trn + other.trn + trn)
@@ -99,7 +110,7 @@ class _transf:
          raise TypeError('transf does not compose with ' + str(type(other)))
 
    def get_angle( self ):
-      return asin(self.vec) + self.trn * 2.0 * pi
+      return asin(self.vec) + self.trn * pi
 
    def __itruediv__( self, other ):
       if isinstance(other, int):
