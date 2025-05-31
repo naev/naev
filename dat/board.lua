@@ -28,7 +28,7 @@ local LOOTABLES = {
       end
 
       return {
-         image = nil,--lg.newImage(),
+         image = lg.newImage("gfx/misc/treasure_hunt.webp"),
          text = _("Treasure Map"),
          q = 1,
          type = "func",
