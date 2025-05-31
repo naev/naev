@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Emperor's Fist">
  <lua>highclass.lua</lua>
  <pos x="14437.024197" y="4251.607749"/>

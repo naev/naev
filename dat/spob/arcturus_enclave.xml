@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arcturus Enclave">
  <lua>empire_mil_restricted.lua</lua>
  <pos x="11296.801928" y="6891.698934"/>
