@@ -75,3 +75,9 @@ def sysneigh(sys):
       count += 1
    return acc
 
+def vec_from_element( e ):
+   return vec(float(e.attrib['x']), float(e.attrib['y']))
+
+def vec_to_element( e, v ):
+   e.set('x', str(v[0]))
+   e.set('y', str(v[1]))

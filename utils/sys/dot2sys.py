@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-from ssys import vec, fil_ET, ssys_fil, sysnam2sys, sysneigh
+from ssys import vec, fil_ET, ssys_fil, sysnam2sys, sysneigh, vec_from_element, vec_to_element
 from geometry import bb
 
 
@@ -45,7 +45,7 @@ for k in pos:
          nam = nam[1:-1]
       T = fil_ET(ssys_fil(nam)).getroot()
       if (e := T.find('pos')) is not None:
-         oldbb += (float(e.attrib['x']), float(e.attrib['y']))
+         oldbb += vec_from_element(e)
 
 again = bb()
 for k in pos:
@@ -215,6 +215,5 @@ for k in pos:
       nam = ssys_fil(k)
       o = fil_ET(nam)
       if (e := o.getroot().find('pos')) is not None:
-         e.set('x', str(pos[k][0]))
-         e.set('y', str(pos[k][1]))
+         vec_to_element(e, pos[k])
       o.write(nam)

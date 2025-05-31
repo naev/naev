@@ -2,7 +2,7 @@
 
 
 from geometry import transf, vec
-from ssys import sysnam2sys, spobnam2spob, starmap, fil_ET, spob_fil
+from ssys import sysnam2sys, spobnam2spob, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
 from math import sin, pi
 sm = starmap()
 
@@ -20,7 +20,7 @@ def sys_relax( sys ):
       for e in f.findall('pos'):
          if 'was_auto' in e.attrib:
             mapv = sm[dst] - sm[myname]
-            sysv = vec(float(e.attrib['x']), float(e.attrib['y']))
+            sysv = vec_from_element(e)
             acc @= mapv.normalize() / sysv.normalize()
             count += 1
 
@@ -33,17 +33,13 @@ def sys_relax( sys ):
             spfil = spob_fil(sysnam2sys(e.text))
             p2 = fil_ET(spfil)
             f = p2.getroot().find('pos')
-            sysv = acc(vec(float(f.attrib['x']), float(f.attrib['y'])))
-            f.set('x', str(sysv[0]))
-            f.set('y', str(sysv[1]))
+            vec_to_element(f, acc(vec_from_element(f)))
             p2.write(spfil)
 
          for i in [ './jumps/jump/pos', './asteroids/asteroid/pos',
             './waypoints/waypoint']:
             for e in T.findall(i):
-               sysv = acc(vec(float(e.attrib['x']), float(e.attrib['y'])))
-               e.set('x', str(sysv[0]))
-               e.set('y', str(sysv[1]))
+               vec_to_element(e, acc(vec_from_element(e)))
          p.write(sys)
          return True
    return False

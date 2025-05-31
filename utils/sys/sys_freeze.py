@@ -2,7 +2,7 @@
 
 
 
-from ssys import sysnam2sys, starmap, fil_ET
+from ssys import sysnam2sys, starmap, fil_ET, vec_to_element
 sm = starmap()
 
 
@@ -19,8 +19,7 @@ def sys_freeze( sys ):
          changed = True
          f.tag = 'pos'
          v = (sm[dst] - sm[myname]).normalize()*radius
-         for k, v in v.to_dict().items():
-            f.set(k, str(v))
+         vec_to_element(f, v)
          f.set('was_auto','true')
    if changed:
       p.write(sys)
