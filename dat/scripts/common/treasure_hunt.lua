@@ -186,6 +186,7 @@ function lib.create_map( data, w, h )
 end
 
 function lib.create_treasure_hunt( center, maxdist )
+   maxdist = maxdist or 20
    local goal = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
       for k,p in ipairs(s:spobs()) do
          if spob_check(p) then
@@ -214,7 +215,6 @@ end
 
 local MISSIONNAME = "Treasure Hunt"
 function lib.give_map( center, maxdist )
-   maxdist = maxdist or 20
    local data = lib.create_treasure_hunt( center, maxdist )
    if not data then
       warn("Failed to give treasure map!")
