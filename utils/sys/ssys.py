@@ -53,13 +53,14 @@ class starmap(dict):
 
 def sysnam2sys( nam ):
    nam = nam.strip()
-   for t in [(' ', '_'), ("'s", 's'), ("'", "\'"),  ('C-', 'C')]:
+   for t in [(' ', '_'), ("'s", 's'), ('C-', 'C')]:
       nam = nam.replace(*t)
    return nam.lower()
 
 def spobnam2spob( nam ):
    nam = nam.strip()
-   for t in [(' ', '_'), ("O'", '\n'), ("'", ''), ('\n', "O'"), ('-', ''), ('&', ''), ('.','')]:
+   for t in [(' ', '_'), ("O'", '\n'), ("'", ''), ('\n', "O'"), ("-O'", '\n'),
+         ('-', ''), ('\n', "-O'"), ('&', ''), ('.','')]:
       nam = nam.replace(*t)
    return nam.lower()
 
