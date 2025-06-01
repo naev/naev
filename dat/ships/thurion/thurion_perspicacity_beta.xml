@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Perspicacity Beta" inherits="Thurion Perspicacity">
- <rarity>5</rarity>
+ <rarity>4</rarity>
  <class>Scout</class>
  <price>530000</price>
  <time_mod>0.8</time_mod>
