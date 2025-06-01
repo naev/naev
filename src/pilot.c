@@ -1592,7 +1592,7 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
 {
    int should_be_disabled =
       ( ( p->armour <= p->stress ) ||
-        ( !pilot_isPlayer( p ) &&
+        ( !pilot_isWithPlayer( p ) &&
           ( p->armour < p->armour_disabled * p->armour_max ) ) );
 
    /* Disable pilot if they should be disabled. */
