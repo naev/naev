@@ -5,9 +5,9 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon</license>
-  <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 30</cond>
-  <condstr>You need at least 30 reputation with House Za'lek.</condstr>
-  <rarity>2</rarity>
+  <cond>require("buyrep")("Za'lek", 30)</cond>
+  <condstr>You need at least 30% reputation with House Za'lek.</condstr>
+  <rarity>1</rarity>
   <mass>30</mass>
   <price>220000</price>
   <description>The Za'lek began to find conventional missiles and torpedoes to be woefully primitive compared to their miniaturized drone technology. Thus, they began work on kamikaze drone fabricators to replace them. The results have born deadly fruit with the hunter-killer drone. It accelerates towards its target and unleashes its ferromagnetohydraulic payload to deadly effect.</description>

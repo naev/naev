@@ -5,7 +5,9 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon</license>
-  <rarity>2</rarity>
+  <rarity>1</rarity>
+  <cond>require("buyrep")("Dvaered", 30)</cond>
+  <condstr>You need at least 30% reputation with House Dvaered.</condstr>
   <mass>70</mass>
   <price>110000</price>
   <description>Mostly referred by its initials SFC, the Super-Fast Collider is basically a giant Mace rocket used by Dvaered Capships in order to strike distant enemies.</description>

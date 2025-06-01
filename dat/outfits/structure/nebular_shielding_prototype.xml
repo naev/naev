@@ -4,7 +4,7 @@
   <typename>Shield Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
-  <rarity>3</rarity>
+  <rarity>2</rarity>
   <mass>30</mass>
   <price>1200000</price>
   <gfx_store>nebula_shielding_prototype.webp</gfx_store>

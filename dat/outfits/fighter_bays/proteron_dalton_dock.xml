@@ -6,6 +6,8 @@
   <size>medium</size>
   <license>Light Combat Vessel</license>
   <rarity>2</rarity>
+  <cond>require("buyrep")("Proteron", 50)</cond>
+  <condstr>You need at least 50% reputation with the Sovereign Proteron Autarchy.</condstr>
   <mass>85</mass>
   <price>740000</price>
   <gfx_store>dalton_dock.webp</gfx_store>

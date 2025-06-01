@@ -4,7 +4,7 @@
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
-  <rarity>3</rarity>
+  <rarity>2</rarity>
   <mass />
   <price>650000</price>
   <gfx_store>stealth_plating.webp</gfx_store>
@@ -12,7 +12,6 @@
  </general>
  <specific type="modification">
   <ew_hide>-15</ew_hide>
-  <engine_limit_rel>-5</engine_limit_rel>
   <armour_mod>-10</armour_mod>
  </specific>
 </outfit>

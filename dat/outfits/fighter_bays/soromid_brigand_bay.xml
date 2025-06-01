@@ -5,9 +5,9 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel</license>
-  <cond>math.floor(system.cur():reputation("Soromid")+0.5) &gt;= 50</cond>
-  <condstr>You need at least 50 reputation with the Soromid.</condstr>
-  <rarity>2</rarity>
+  <cond>require("buyrep")("Soromid", 50)</cond>
+  <condstr>You need at least 50% reputation with the Soromid.</condstr>
+  <rarity>1</rarity>
   <mass>230</mass>
   <price>1580000</price>
   <gfx_store>soromid_brigand_fighter.webp</gfx_store>
