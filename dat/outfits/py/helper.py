@@ -16,7 +16,7 @@ def mul_i( d, f, v ):
     d[f] = str(round(float(d[f])*v))
 
 def add_i( d, f, v ):
-    d[f] = str(int(d[f])+v)
+    d[f] = str(int(d[f])+int(v))
 
 def mul_f( d, f, v ):
     d[f] = str(float(d[f])*v)

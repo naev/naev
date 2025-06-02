@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from pprint import pprint
 import helper as h
 N_ = lambda text: text
 data = h.read()
@@ -25,6 +24,5 @@ damage = specific['damage']
 h.mul_f(damage, 'disable', 1.2 )
 h.mul_f(damage, 'physical', 1.25 )
 h.mul_i(damage, 'penetrate', 1.15 )
-#pprint(data)
 
 h.write( data )

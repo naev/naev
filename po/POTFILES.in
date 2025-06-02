@@ -4126,3 +4126,4 @@ src/weapon.h
 dat/outfits/bioship/generate.py
 dat/outfits/py/helper.py
 dat/outfits/py/neutralizer.py
+dat/outfits/py/reaver.py
