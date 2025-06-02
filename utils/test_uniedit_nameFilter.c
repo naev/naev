@@ -11,7 +11,7 @@ size_t _parse_it(const char*s){
    if(s[out]=='-' && s[out+1]>='a' && s[out+1]<='z' && 
       (!s[out+2] || s[out+2]=='\n')
    )
-      return out;
+      return out+1;
    else
       return 0;
 }
@@ -26,6 +26,8 @@ char *uniedit_nameFilter( const char *name ){
    for(r = 0; r <= len ; r++)
       if (name[r]==' ')
          out[r] = '_';
+      else if (name[r]>='A' && name[r]<='Z')
+         out[r] = name[r] + ('a'-'A');
       else
          out[r] = name[r];
 
@@ -43,10 +45,9 @@ char *uniedit_nameFilter( const char *name ){
       }else if (out[r]=='-' && out[r+1]>='0' && out[r+1]<='9' )
          {}
       else if (out[r]=='_' && (res = _parse_it(out+r+1))){
-         out[w++] = out[r++];
          memmove(out+w, out+r, res);
          w += res;
-         r += res;
+         r += res + 1 - 1;
       }else
          out[w++] = out[r];
 
