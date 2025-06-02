@@ -55,6 +55,7 @@
 #include "save.h"
 #include "sound.h"
 #include "start.h"
+#include "toolkit.h"
 
 #define PLAYER_CHECK()                                                         \
    if ( player.p == NULL )                                                     \
@@ -107,6 +108,7 @@ static int playerL_tryLand( lua_State *L );
 static int playerL_land( lua_State *L );
 static int playerL_landAllow( lua_State *L );
 static int playerL_landWindow( lua_State *L );
+static int playerL_merchantOutfitName( lua_State *L );
 /* Hail stuff. */
 static int playerL_commOpen( lua_State *L );
 static int playerL_commClose( lua_State *L );
@@ -209,6 +211,7 @@ static const luaL_Reg playerL_methods[] = {
    { "land", playerL_land },
    { "landAllow", playerL_landAllow },
    { "landWindow", playerL_landWindow },
+   { "merchantOutfitName", playerL_merchantOutfitName },
    { "commOpen", playerL_commOpen },
    { "commClose", playerL_commClose },
    { "shipvarPeek", playerL_shipvarPeek },
@@ -1294,6 +1297,29 @@ static int playerL_landWindow( lua_State *L )
    ret = land_setWindow( win );
 
    lua_pushboolean( L, !ret );
+   return 1;
+}
+
+/**
+ * @brief Gets the name name of the merchant outfit if applicable.
+ *
+ *    @luatreturn String Name of the merchant (translated), spob (untranslated),
+ * or nil if not applicable.
+ * @luafunc merchantOutfitName
+ */
+static int playerL_merchantOutfitName( lua_State *L )
+{
+   if ( window_exists( "wdwMerchantOutfit" ) ) {
+      unsigned int wid   = window_get( "wdwMerchantOutfit" );
+      const char  *title = window_getDisplayName( wid );
+      if ( title == NULL )
+         lua_pushnil( L );
+      else
+         lua_pushstring( L, title );
+   } else if ( landed )
+      lua_pushstring( L, land_spob->name );
+   else
+      lua_pushnil( L );
    return 1;
 }
 

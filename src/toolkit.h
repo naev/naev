@@ -53,6 +53,7 @@ int          window_exists( const char *wdwname );
 int          window_existsID( unsigned int wid );
 int          widget_exists( unsigned int wid, const char *wgtname );
 unsigned int window_get( const char *wdwname );
+const char  *window_getDisplayName( unsigned int wid );
 void         window_dimWindow( unsigned int wid, int *w, int *h );
 void         window_posWindow( unsigned int wid, int *x, int *y );
 void  window_dimWidget( unsigned int wid, const char *name, int *w, int *h );
