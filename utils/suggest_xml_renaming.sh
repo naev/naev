@@ -9,7 +9,7 @@ trap 'rm -f $tmp' EXIT
 grep -H -m 1 '^<[a-zA-Z]* name="' $(find $DST -name "*.xml") | tr '[:upper:]' '[:lower:]' |
 sed 's/^\(.*\)\/\([^/]*\)\.xml:.*name=\"\([^"]*\)\".*$/\1\/ \2 \3/' |
 # from now on, we have lines: <path> <filename> <name>
-tee $tmp | cut "-d " -f3- | $SCRIPT_DIR/xml_name.sh |
+tee $tmp | cut "-d " -f3- | $SCRIPT_DIR/xml_name.sed |
 # rebuild lines with modified names
 paste - $tmp '-d ' | cut '-d ' -f-3 | sed 's/^\([^ ]*\)\ \([^ ]*\)\ \([^ ]*\)/\2 \3 \1/' |
 # keep only lines where <filename> != <name>
