@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 from pprint import pprint
 import helper as h
 N_ = lambda text: text
