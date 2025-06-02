@@ -47,4 +47,3 @@ if __name__ == '__main__':
    for i in args:
       if sys_freeze(i):
          print(i)
-

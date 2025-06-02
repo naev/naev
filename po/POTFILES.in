@@ -2062,12 +2062,12 @@ dat/ssys/alteris.xml
 dat/ssys/amaroq.xml
 dat/ssys/amatiri.xml
 dat/ssys/amlet.xml
+dat/ssys/an'ku.xml
 dat/ssys/anarbalis.xml
 dat/ssys/andee.xml
 dat/ssys/andres.xml
 dat/ssys/aneel_azi.xml
 dat/ssys/anger.xml
-dat/ssys/an'ku.xml
 dat/ssys/anrique.xml
 dat/ssys/antares.xml
 dat/ssys/antlejos.xml
@@ -2361,6 +2361,7 @@ dat/ssys/ngc5240.xml
 dat/ssys/ngc5362.xml
 dat/ssys/ngc5483.xml
 dat/ssys/ngc5838.xml
+dat/ssys/ngc5882.xml
 dat/ssys/ngc6057.xml
 dat/ssys/ngc6610.xml
 dat/ssys/ngc6901.xml
@@ -2381,7 +2382,6 @@ dat/ssys/ngc9415.xml
 dat/ssys/ngc9607.xml
 dat/ssys/ngc9654.xml
 dat/ssys/ngc9897.xml
-dat/ssys/ngcg5882.xml
 dat/ssys/niger.xml
 dat/ssys/nirtos.xml
 dat/ssys/nixon.xml
@@ -2576,8 +2576,8 @@ dat/ssys/xavier.xml
 dat/ssys/xeric.xml
 dat/ssys/yarn.xml
 dat/ssys/yetmer-o'rez_highspace.xml
-dat/ssys/zacron.xml
 dat/ssys/za'lek.xml
+dat/ssys/zacron.xml
 dat/ssys/zemur.xml
 dat/ssys/zerantix.xml
 dat/ssys/zied.xml

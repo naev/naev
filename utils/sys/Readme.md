@@ -21,4 +21,3 @@ These are designed to manage the **internal geometry of systems**, that might ge
     - transformations. Obtained by **dividing** vectors: `v1/v2` is the transformation that turns `v2` into `v1`. As expected: `k*v2*(v1/v2) = k*v1`. So multiplying vectors with transf. gives the result of the transformation applied to the vector. Notably, when `v1` and `v2` are normalized (or just have the same size), `v1/v2` is the rotation that turns `v2` into `v1`.
     - bb for bounding box. use += to enlarge the bb with a new element, and `in` to test if inside. Nothing fancy.
  - `ssys.py` everything else.
-

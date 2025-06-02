@@ -218,4 +218,3 @@ if __name__ == '__main__':
          stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
 
       main([f for f in argv[1:] if f.endswith('.xml')], keep)
-
