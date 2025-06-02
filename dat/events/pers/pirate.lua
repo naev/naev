@@ -1,6 +1,14 @@
 local equipopt = require "equipopt"
 local pir = require "common.pirate"
 
+local function add_treasure_map( p )
+   local pm = p:memory()
+   if not pm.lootables then
+      pm.lootables = {}
+   end
+   table.insert( pm.lootables, "treasure_map" )
+end
+
 return function ()
    local pers = {}
 
@@ -44,6 +52,7 @@ return function ()
                   else
                      p:setVel( vel )
                   end
+                  add_treasure_map( p )
                   return p
                end
                local p = {}
@@ -79,6 +88,7 @@ return function ()
                   else
                      p:setVel( vel )
                   end
+                  add_treasure_map( p )
                   return p
                end
                local p = {}
@@ -107,7 +117,7 @@ return function ()
          {
             spawn = function ()
                local p = pilot.add("Pirate Kestrel", "Pirate", nil, _("Flying Dutchman"), {naked= true, ai="pers_pirate"})
-               p:outfitAddIntrinsic("Escape Pod")
+               --p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "shield_mod", 80 )
                p:intrinsicSet( "armour_mod", 60 )
                p:intrinsicSet( "shield_regen_mod", 50 )
@@ -117,6 +127,8 @@ return function ()
                m.comm_greet = _([[You hear the sound of oceans and wild over the communication channel.]])
                m.taunt = nil
                m.bribe_no = _([[The wind is howling over the communication channel.]])
+               -- TODO add higher quality map
+               add_treasure_map( p )
                return p
             end,
          }
@@ -143,6 +155,7 @@ return function ()
                m.comm_greet = _([[You hear a weird sort of growling over the communication channel.]])
                m.taunt = _("Grrrrrrrawwwwwrrrr!")
                m.bribe_no = _([[You hear more weird growling sounds over the communication channel. It doesn't look like they are interested in discussion.]])
+               add_treasure_map( p )
                return p
             end,
          }
@@ -165,6 +178,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["When I get sick of hauling cargo for the Raven Clan, nothing helps me unwind like some good old fashion piracy."]])
                m.taunt = _("Fighters, engage!")
+               add_treasure_map( p )
                return p
             end,
          }
@@ -194,6 +208,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["Did you know that there are over 5,000 types of psychedelic mushrooms grown on Sanchez alone?"]])
                m.taunt = _("You're ruining my vibes, soul!")
+               add_treasure_map( p )
                return p
             end,
          }
@@ -214,6 +229,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["I've been working overtime to get my rank up in the Black Lotus. I won't be the underdog forever!"]])
                m.taunt = _("You're my ticket to a promotion. Die!")
+               add_treasure_map( p )
                return p
             end,
          }, {
@@ -228,6 +244,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["With so many careless merchants flying around, business has never been better. I always like to get my hands dirty."]])
                m.taunt = _("Let me add you to my trophy collection!")
+               add_treasure_map( p )
                return p
             end,
          }, {
@@ -239,6 +256,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["It's hard being a rising star in the Black Lotus. They expect so much from you. Good thing I'm an overachiever."]])
                m.taunt = _("It's my time to shine!")
+               add_treasure_map( p )
                return p
             end,
          }
@@ -257,6 +275,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["Paperwork is such a bore. I escaped from the Empire to join the Black Lotus only to find I have to fill out more and more paperwork as I rise in rank. Maybe I should have joined the Wild Ones instead?"]])
                m.taunt = _("Time for some fun!")
+               add_treasure_map( p )
                return p
             end,
          }, {
@@ -268,6 +287,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _("(ΦωΦ)")
                m.taunt = _([["(｢・ω・)｢"]])
+               add_treasure_map( p )
                return p
             end,
          },
@@ -286,6 +306,7 @@ return function ()
                local m = p:memory()
                m.comm_greet = _([["It's nice being near the top of the pecking order. It's fun to give contradictory orders to your subordinates and see them run around in chaos."]])
                m.taunt = _("Time to snare another bonus!")
+               add_treasure_map( p )
                return p
             end,
          },

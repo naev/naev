@@ -57,7 +57,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
-subdir('dat/outfits/bioship') # Has to be before naevpedia
+subdir('dat/outfits') # Has to be before naevpedia
 subdir('dat/naevpedia')
 subdir('dat/scripts')
 subdir('docs')
@@ -560,7 +560,7 @@ naevcrs = rust.bindgen(
       'zip_overlay',
       command: gen_zip_command,
       output: 'meson_overlay.zip',
-      depends: [authors, gettext_stats] + bio_outfits,
+      depends: [authors, gettext_stats] + bio_outfits + gen_outfits,
       build_by_default: true
    )
 

@@ -472,6 +472,7 @@ dat/outfits/weapons/disruptor_artillery_s1.xml
 dat/outfits/weapons/disruptor_artillery_s2.xml
 dat/outfits/weapons/disruptor_battery_s2.xml
 dat/outfits/weapons/energy_harpoon.xml
+dat/outfits/weapons/flak_gun.xml
 dat/outfits/weapons/gauss_gun.xml
 dat/outfits/weapons/grave_beam.xml
 dat/outfits/weapons/grave_lance.xml
@@ -2061,12 +2062,12 @@ dat/ssys/alteris.xml
 dat/ssys/amaroq.xml
 dat/ssys/amatiri.xml
 dat/ssys/amlet.xml
+dat/ssys/an'ku.xml
 dat/ssys/anarbalis.xml
 dat/ssys/andee.xml
 dat/ssys/andres.xml
 dat/ssys/aneel_azi.xml
 dat/ssys/anger.xml
-dat/ssys/anku.xml
 dat/ssys/anrique.xml
 dat/ssys/antares.xml
 dat/ssys/antlejos.xml
@@ -2360,6 +2361,7 @@ dat/ssys/ngc5240.xml
 dat/ssys/ngc5362.xml
 dat/ssys/ngc5483.xml
 dat/ssys/ngc5838.xml
+dat/ssys/ngc5882.xml
 dat/ssys/ngc6057.xml
 dat/ssys/ngc6610.xml
 dat/ssys/ngc6901.xml
@@ -2380,7 +2382,6 @@ dat/ssys/ngc9415.xml
 dat/ssys/ngc9607.xml
 dat/ssys/ngc9654.xml
 dat/ssys/ngc9897.xml
-dat/ssys/ngcg5882.xml
 dat/ssys/niger.xml
 dat/ssys/nirtos.xml
 dat/ssys/nixon.xml
@@ -2575,8 +2576,8 @@ dat/ssys/xavier.xml
 dat/ssys/xeric.xml
 dat/ssys/yarn.xml
 dat/ssys/yetmer-o'rez_highspace.xml
+dat/ssys/za'lek.xml
 dat/ssys/zacron.xml
-dat/ssys/zalek.xml
 dat/ssys/zemur.xml
 dat/ssys/zerantix.xml
 dat/ssys/zied.xml
@@ -3270,6 +3271,7 @@ dat/missions/neutral/seek_n_destroy.lua
 dat/missions/neutral/sightseeing.lua
 dat/missions/neutral/spacefamily.lua
 dat/missions/neutral/teenager.lua
+dat/missions/neutral/treasure_hunt.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/onion/onion01.lua
 dat/missions/onion/onion02.lua
@@ -3494,6 +3496,7 @@ dat/scripts/common/sirius.lua
 dat/scripts/common/soromid.lua
 dat/scripts/common/taiomi.lua
 dat/scripts/common/thurion.lua
+dat/scripts/common/treasure_hunt.lua
 dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/wildspace.lua
@@ -4144,3 +4147,6 @@ src/version.rs
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py
+dat/outfits/py/helper.py
+dat/outfits/py/neutralizer.py
+dat/outfits/py/reaver.py

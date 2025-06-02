@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sabe">
  <lua>thurion.lua</lua>
  <pos x="5941.192400" y="-4685.152481"/>

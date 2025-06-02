@@ -68,7 +68,7 @@ function create ()
    vn.na(fmt.f(_([[{shipai} keeps going on for a while, you assume they are processing the data, however, since the holoscreen does not seem to be in working condition, you have no choice but to wait until {shipai} explains it to you.]]),
       {shipai=tut.ainame()}))
    sai(_([["That was quite enlightening, yet inconsistent. It must be the damage, but it seems like the system clock is off by almost a few hundred cycles. Most of the logs of the station seem corrupted, however, I was able to recover some interesting data on fleet formations."]]))
-   if player.fleetCapacitySet() <= 0 then
+   if player.fleetCapacity() <= 0 then
       sai(_([["I'm not sure how the information may be useful to us at the current moment, but it may come useful in the near future."]]))
    else
       sai(_([["With this newfound knowledge, it should be possible to control slightly larger fleets under your command."]]))

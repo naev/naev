@@ -36,6 +36,7 @@ function spir.initDirectory( dir, faction, params )
    end )
 
    local preprocess = params.preprocess
+   local postprocess = params.postprocess
    -- Create init function (global)
    _G.create = function ( max )
       local chapter = player.chapter() or "0"
@@ -55,8 +56,6 @@ function spir.initDirectory( dir, faction, params )
       end
 
       -- Nerf the pilot as necessary
-      -- TODO this should be done as preprocessing, and not post-processing,
-      -- but pilot.add is not flexible enough and hard to change for now.
       params.preprocess = function( pms )
          pms.intrinsics = pms.intrinsics or {}
 
@@ -78,6 +77,24 @@ function spir.initDirectory( dir, faction, params )
          -- Propagate if necessary
          if preprocess then
             preprocess( pms )
+         end
+      end
+
+      -- Give treasure maps based on chance
+      params.postprocess = function( p )
+         local chance = p:ship():size()+1 / 8
+         if p:faction()==FMARAUDER then
+            chance = chance * 0.1
+         end
+         if rnd.rnd() < chance then
+            local pm = p:memory()
+            if not pm.lootables then
+               pm.lootables = {}
+            end
+            table.insert( pm.lootables, "treasure_map" )
+         end
+         if postprocess then
+            postprocess(p)
          end
       end
 

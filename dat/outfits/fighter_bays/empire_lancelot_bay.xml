@@ -5,9 +5,9 @@
   <slot prop="fighter_bay">weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel</license>
-  <cond>math.floor(system.cur():reputation("Empire")+0.5) &gt;= 50</cond>
-  <condstr>You need at least 50 reputation with the Empire.</condstr>
-  <rarity>2</rarity>
+  <cond>require("buyrep")("Empire", 50)</cond>
+  <condstr>You need at least 50% reputation with the Empire.</condstr>
+  <rarity>1</rarity>
   <mass>145</mass>
   <price>930000</price>
   <gfx_store>empire_lancelot_fighter.webp</gfx_store>

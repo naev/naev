@@ -40,6 +40,7 @@ local pir = require "common.pirate"
 local vn = require 'vn'
 local lf = require "love.filesystem"
 local lmisn = require "lmisn"
+local th = require "common.treasure_hunt"
 
 local badevent, goodevent, specialevent, neutralevent, derelict_msg -- forward-declared functions
 local derelict -- Non-persistent state
@@ -395,6 +396,18 @@ function goodevent()
          derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and stripped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
          pp:setHealth( 100, shield )
       end )
+   end
+
+   -- See if there can be a treasure hunt map
+   if th.maps_owned() < 3 then
+      -- Make sure to generate it first
+      local data = th.create_treasure_hunt( nil, 10 )
+      if data then
+         table.insert( goodevent_list, function ()
+            derelict_msg(gtitle, _([[You scour the deserted ship, which has been mainly picked clean by others, and when you are about to give up and turn back, you find a small map tucked in between some beams. Probably everyone missed it because it doesn't show up on scans. Looks it leads to someone's cache. Might be worth checking out!]]), fmt.f(_([[You obtained a treasure map on a derelict you found in the {sys} system.]]), {sys=system.cur()}))
+            th.give_map_from( data )
+         end )
+      end
    end
 
    -- Run random good event

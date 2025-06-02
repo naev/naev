@@ -5,9 +5,9 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon</license>
-  <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 40</cond>
-  <condstr>You need at least 40 reputation with House Za'lek.</condstr>
-  <rarity>2</rarity>
+  <cond>require("buyrep")("Za'lek", 40)</cond>
+  <condstr>You need at least 40% reputation with House Za'lek.</condstr>
+  <rarity>1</rarity>
   <mass>57</mass>
   <price>320000</price>
   <description>This weapon stretches the term 'miniaturized drone' nearly to its breaking point. It is effectively a slimmed-down standard drone platform with almost everything replaced in favour of a huge ferromagnetohydraulic bomb. It is the Za'lek's answer to torpedoes from less advanced nations, and an eloquent answer it certainly is.</description>

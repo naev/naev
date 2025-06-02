@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ohon">
  <pos x="1014.526487" y="-9180.435271"/>
  <GFX>
   <space>M07.webp</space>
-  <exterior>lava.webp</exterior>
+  <exterior>oceanic_landing_pads.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666700</base>
-  <bonus>33.333300</bonus>
+  <base>66.660000</base>
+  <bonus>33.330000</bonus>
   <range>2</range>
  </presence>
  <general>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rikaina">
  <lua>thurion_mil_restricted.lua</lua>
  <pos x="-1515.163478" y="6492.321681"/>

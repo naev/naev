@@ -5,12 +5,41 @@ local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local fmt = require 'format'
 local der = require "common.derelict"
+local treasure = require "common.treasure_hunt"
 
 local board_lootOne -- forward-declared function, defined at bottom of file
 local board_fcthit_check
 local loot_mod
 local special_col = {0.7, 0.45, 0.22} -- Dark Gold
 local board_close
+
+-- TODO put this in some file and load it there
+local LOOTABLES = {
+   ["treasure_map"] = function (_plt)
+      -- Don't give more if they have too many
+      if treasure.maps_owned() >= 3 then
+         return nil
+      end
+
+      -- See if we can generate treasure hunt
+      local data = treasure.create_treasure_hunt()
+      if not data then
+         return nil
+      end
+
+      return {
+         image = lg.newImage("gfx/misc/treasure_hunt.webp"),
+         text = _("Treasure Map"),
+         q = 1,
+         type = "func",
+         bg = nil,
+         alt = _("Treasure Map\nA map that likely leads to some treasure!"),
+         data = function ()
+            treasure.give_map_from( data )
+         end
+      }
+   end,
+}
 
 local function slotTypeColour( stype )
    local c
@@ -138,15 +167,34 @@ local function compute_lootables ( plt )
       } )
    end
 
+   local mem = plt:memory()
+   if mem.lootables then
+      for k,v in ipairs(mem.lootables) do
+         local l = LOOTABLES[v]
+         if l then
+            local loot = l(plt)
+            if loot then
+               table.insert( lootables, loot )
+            end
+         else
+            warn(fmt.f("Pilot '{plt}' has unknown lootable '{loot}'!",{plt=plt,loot=l}))
+         end
+      end
+   end
+
    -- Steal outfits before cargo, since they are always considered "special"
    local canstealoutfits = true
    if canstealoutfits then
-      local mem = plt:memory()
       local oloot = mem.lootable_outfit
       if oloot then
-         local lo = outfit_loot( oloot )
-         lo.bg = special_col
-         table.insert( lootables, lo )
+         if type(oloot)~="table" then
+            oloot = {oloot}
+         end
+         for k,o in ipairs(oloot) do
+            local lo = outfit_loot( o )
+            lo.bg = special_col
+            table.insert( lootables, lo )
+         end
       end
 
       local ocand = {}
@@ -931,6 +979,11 @@ function board_lootOneDo( wgt, nomsg )
       if l.q <= 0 then
          clear = true
       end
+   elseif l.type=="func" then
+      l.data()
+      board_fcthit_apply( 0 )
+      looted = true
+      clear = true
    end
 
    -- Clean up

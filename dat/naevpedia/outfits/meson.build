@@ -339,6 +339,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/weapons/disruptor_artillery_s2.xml',
    root / 'dat/outfits/weapons/disruptor_battery_s2.xml',
    root / 'dat/outfits/weapons/energy_harpoon.xml',
+   root / 'dat/outfits/weapons/flak_gun.xml',
    root / 'dat/outfits/weapons/gauss_gun.xml',
    root / 'dat/outfits/weapons/grave_beam.xml',
    root / 'dat/outfits/weapons/grave_lance.xml',

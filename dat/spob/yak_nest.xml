@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Yak Nest">
  <lua>soromid_mil_restricted.lua</lua>
  <pos x="4560.027486" y="-14530.257072"/>

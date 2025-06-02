@@ -42,7 +42,7 @@ local fleets_list = {
       "Dvaered Vendetta",
    },
    ["Soromid"] = {
-      "Soromid Arx",
+      "Soromid Vox",
       "Soromid Nyx",
       "Soromid Nyx",
       "Soromid Marauder",

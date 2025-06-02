@@ -5,9 +5,9 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon</license>
-  <cond>math.floor(system.cur():reputation("Za'lek")+0.5) &gt;= 40</cond>
-  <condstr>You need at least 40 reputation with House Za'lek.</condstr>
-  <rarity>3</rarity>
+  <cond>require("buyrep")("Za'lek", 20)</cond>
+  <condstr>You need at least 20 reputation with House Za'lek.</condstr>
+  <rarity>1</rarity>
   <mass>12</mass>
   <price>40000</price>
   <description>This powerful energy weapon is built to bombard a target from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenceless. It was developed by the Za'lek to be used by their heavier droness to supplement the short range and high damage of their beams.</description>

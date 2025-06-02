@@ -59,7 +59,7 @@ po/naevpedia_pot.py po/naevpedia.pot \
    echo po/credits.pot
    find_files dat xml | deterministic_sort
    ( find_files dat lua; find_files src "[ch]"; find_files src rs) | deterministic_sort
-   echo dat/outfits/bioship/generate.py
+   find_files dat/outfits py | deterministic_sort
 ) | filter_skipped > po/POTFILES.in
 
 if [ "$3" = "--pre-commit" ]; then

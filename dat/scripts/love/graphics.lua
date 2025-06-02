@@ -388,7 +388,9 @@ function graphics.printf( text, ... )
    col = graphics._fgcol
 
    local H = _H( x, y+font.height, 0, 1, 1 )
-   local sx = graphics._T[1].T:get()[1][1] -- X scaling
+   --local sx = graphics._T[1].T:get()[1][1] -- X scaling
+   local sw, sh = graphics._T[1]:transformDim( 1, 0 )
+   local sx = math.sqrt( sw^2 + sh^2 )
    local wrapped = naev.gfx.printfWrap( font.font, text, limit/sx )
 
    local atype

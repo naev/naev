@@ -3,7 +3,9 @@
  <general>
   <shortname>U. Storm L.</shortname>
   <slot>weapon</slot>
-  <rarity>2</rarity>
+  <rarity>1</rarity>
+  <cond>require("buyrep")("Empire", 30)</cond>
+  <condstr>You need at least 30% reputation with the Empire.</condstr>
   <size>small</size>
   <license>Medium Weapon</license>
   <mass>22</mass>
