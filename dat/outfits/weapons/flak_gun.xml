@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Flak Gun">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <mass>22</mass>
+  <price>245000</price>
+  <description>Fires waste debris in a shotgun-like blast that can be useful in taking down small craft or hitting large targets. Not widely used due the tendency to jam and blow up, which has been known to cause hull breaches, fires, and other major issues on the ship. However, this one looks like it is in quite good shape.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-40</cpu>
+  <rarity>2</rarity>
+ </general>
+ <specific type="bolt">
+  <gfx>massM.png</gfx>
+  <sound>mass</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>3.2</delay>
+  <speed>500</speed>
+  <range>1200</range>
+  <falloff>1100</falloff>
+  <gfx_end>massM-end.png</gfx_end>
+  <energy>66</energy>
+  <trackmin>1000</trackmin>
+  <trackmax>5000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>37</penetrate>
+   <physical>9</physical>
+  </damage>
+  <shots>9</shots>
+  <dispersion>5</dispersion>
+  <speed_dispersion>40</speed_dispersion>
+ </specific>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
+</outfit>
