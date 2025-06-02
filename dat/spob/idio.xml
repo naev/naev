@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Idio">
  <lua>lowclass.lua</lua>
  <pos x="-11470.095195" y="14466.673893"/>
