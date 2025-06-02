@@ -19,6 +19,7 @@ h.mul_f(specific, 'delay', 1.05 )
 h.mul_f(specific, 'energy', 1.05 )
 h.mul_f(specific, 'swivel', 1.5 )
 h.mul_i(specific, 'trackmax', 0.8333333333 )
+specific['lua'] = "outfits/lib/matrix_sell.lua"
 
 damage = specific['damage']
 h.mul_f(damage, 'disable', 1.2 )

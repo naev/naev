@@ -12,6 +12,7 @@
   <rarity>2</rarity>
  </general>
  <specific type="bolt">
+  <lua>outfits/lib/matrix_sell.lua</lua>
   <gfx>massM.png</gfx>
   <sound>mass</sound>
   <spfx_shield>ShiS</spfx_shield>
