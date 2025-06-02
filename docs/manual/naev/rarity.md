@@ -3,10 +3,11 @@
 Rarity begins at 0 for normal items. It is modified based on the following rules:
 
 1. Items that are acquired conditionally (such as reputation limits) get +1 rarity.
-2. Easily unlocked or hard to get models get +2 rarity (e.g., Thurion Ships).
-3. Hard to unlock or very hard to get models get +3 rarity.
-4. Extremely hard to acquire models get +4 rarity.
-4. Ship Variants get +2 rarity, unless unlocked or hard to get, then it is +1.
+1. Items that are sold in very specific spobs or not available more generally get +1 rarity.
+1. Easily unlocked or hard to get models get +2 rarity (e.g., Thurion Ships).
+1. Hard to unlock or very hard to get models get +3 rarity.
+1. Extremely hard to acquire models get +4 rarity.
+1. Ship Variants get +2 rarity, unless unlocked or hard to get, then it is +1.
 
 ## Examples
 
