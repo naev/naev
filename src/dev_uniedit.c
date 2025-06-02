@@ -1670,21 +1670,21 @@ char *uniedit_nameFilter( const char *name ){
    // s/&amp;/_and_/g;
    // s/-\([0-9]\)/\1/g;
    // s/_\(i*[vi]i*\)-\([a-z]\)$/_\1\2/;
-   for(r = 0; r < len ; r++)
+   for(r = 0; r < len ; )
       if (strchr("':.()?", out[r]))
-         {}
+         r++;
       else if (!strncmp(out+r, "&amp;", 5)){
          memcpy(out+w, "_and_", 5);
          w += 5;
-         r += 5-1;
+         r += 5;
       }else if (out[r]=='-' && out[r+1]>='0' && out[r+1]<='9' )
-         {}
+         r++;
       else if (out[r]=='_' && (res = _parse_it(out+r+1))){
          memmove(out+w, out+r, res);
          w += res;
-         r += res + 1 - 1;
+         r += res + 1;
       }else
-         out[w++] = out[r];
+         out[w++] = out[r++];
 
    out[w] = '\0';
    len = w;
