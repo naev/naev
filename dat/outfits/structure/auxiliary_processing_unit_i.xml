@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Auxiliary Proccessing Unit I">
+<outfit name="Auxiliary Processing Unit I">
  <general>
   <typename>CPU Modifier</typename>
   <slot>structure</slot>
