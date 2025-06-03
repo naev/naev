@@ -53,6 +53,7 @@ function attacked( p, attacker )
 
    plt:setActiveBoard(false)
    plt:control(false)
+   evt.finish()
 end
 
 function board ()
