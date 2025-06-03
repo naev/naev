@@ -3480,6 +3480,7 @@ dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua
 dat/scripts/common/goddard.lua
+dat/scripts/common/loot.lua
 dat/scripts/common/lucas.lua
 dat/scripts/common/minerva.lua
 dat/scripts/common/nebu_research.lua
