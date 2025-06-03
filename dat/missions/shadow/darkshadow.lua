@@ -427,8 +427,8 @@ function spawnInterceptors()
       j:outfitAdd("Improved Stabilizer", 1)
       ai_setup.setup(j)
       j:setLeader( genbu )
-      j:control()
-      j:attack(player.pilot())
+      --j:control()
+      --j:attack(player.pilot())
    end
    if mem.waves < mem.maxwaves then
       mem.waves = mem.waves + 1

@@ -87,6 +87,7 @@
       * Player can't stealth while disabled
       * Getting disabled turns off stealth
       * Carried fighters don't carry commodities
+      * darkshodw: enemies shouldn't see through stealth
 
 * 0.12.5
    * Fixed bug causing lower diversity in ship spawning
