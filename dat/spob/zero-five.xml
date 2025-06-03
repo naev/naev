@@ -1,0 +1,13 @@
+<spob name="Zero-Five">
+ <pos x="15040.000000" y="10400.000000"/>
+ <GFX>
+  <space>moon-P01.webp</space>
+  <exterior>traderoom.webp</exterior>
+ </GFX>
+ <general>
+  <class>P</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

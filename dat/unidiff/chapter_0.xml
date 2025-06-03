@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="Chapter 0">
+ <system name="Alteris">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Amatiri">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Chraan">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Euler">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Halo">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Jommel">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Limbo">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Massia">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Pellmell">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Tarmak">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <system name="Zacron">
+  <spob_virtual_add>Pirate Tiny</spob_virtual_add>
+  <spob_virtual_remove>Pirate Small</spob_virtual_remove>
+ </system>
+ <spob name="Efferey">
+  <presence_base>100.000000</presence_base>
+  <presence_bonus>25.000000</presence_bonus>
+ </spob>
+ <spob name="Foundation Station">
+  <presence_base>150.000000</presence_base>
+  <presence_bonus>25.000000</presence_bonus>
+ </spob>
+ <spob name="New Haven">
+  <presence_base>250.000000</presence_base>
+  <presence_bonus>25.000000</presence_bonus>
+  <presence_range>4</presence_range>
+ </spob>
+ <spob name="Pirate's Cove">
+  <presence_base>100.000000</presence_base>
+  <presence_bonus>60.000000</presence_bonus>
+ </spob>
+ <spob name="Qorellia">
+  <presence_base>200.000000</presence_base>
+  <presence_bonus>25.000000</presence_bonus>
+  <presence_range>4</presence_range>
+ </spob>
+ <spob name="Sanchez">
+  <presence_base>250.000000</presence_base>
+  <presence_bonus>25.000000</presence_bonus>
+ </spob>
+ <spob name="Warden's End">
+  <presence_base>250.000000</presence_base>
+  <presence_bonus>25.000000</presence_bonus>
+ </spob>
+</unidiff>

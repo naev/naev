@@ -1,0 +1,41 @@
+<ssys name="Yetmer-O'rez Highspace">
+ <general>
+  <radius>19500.000000</radius>
+  <spacedust>400</spacedust>
+  <interference>0.000000</interference>
+  <nolanes/>
+ </general>
+ <pos x="65.893519" y="-776.212963"/>
+ <spobs>
+  <spob>Yetmer-O'rez</spob>
+  <spob_virtual>Dvaered Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+  <spob_virtual>Za'lek Unpresence (Range 1)</spob_virtual>
+ </spobs>
+ <jumps>
+  <jump target="Amlet">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="K'tos">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Mayla">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
+ </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>14000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </asteroid>
+  <exclusion>
+   <radius>10000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </exclusion>
+ </asteroids>
+</ssys>

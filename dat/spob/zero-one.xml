@@ -1,0 +1,13 @@
+<spob name="Zero-One">
+ <pos x="-23680.000000" y="-4400.000000"/>
+ <GFX>
+  <space>moon-G00.webp</space>
+  <exterior>mining5.webp</exterior>
+ </GFX>
+ <general>
+  <class>G</class>
+  <population>0</population>
+  <hide>2.000000</hide>
+  <services/>
+ </general>
+</spob>

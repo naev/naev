@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Za'lek Light Drone">
+ <lua>zalek.lua</lua>
+ <points>26</points>
+ <base_type path="Zalek_Light_Drone">Za'lek Light Drone</base_type>
+ <gfx size="30">zalek_drone_light</gfx>
+ <sound>engine_zalek</sound>
+ <class display="Robotic Interceptor">Interceptor</class>
+ <price>90000</price>
+ <time_mod>0.8</time_mod>
+ <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
+ <trail_generator x="-11" y="0" h="0">zalekXS</trail_generator>
+ <fabricator>Za'lek Robotics</fabricator>
+ <faction>Za'lek</faction>
+ <description>This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be flown by the player.</description>
+ <movement>
+  <accel>230</accel>
+  <speed>450</speed>
+  <turn>200</turn>
+ </movement>
+ <health>
+  <absorb>1</absorb>
+  <armour>30</armour>
+  <shield>80</shield>
+  <shield_regen>8</shield_regen>
+  <energy>50</energy>
+  <energy_regen>3</energy_regen>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>80</mass>
+  <fuel>100</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+  <cpu>10</cpu>
+ </characteristics>
+ <slots>
+  <weapon prop="builtin" size="small" x="10" y="-1" h="-3">Particle Lance</weapon>
+  <utility size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <engine_limit>200</engine_limit>
+ </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <tag>zalek</tag>
+  <tag>drone</tag>
+ </tags>
+</ship>

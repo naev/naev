@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Proteron Unpresence (Range 1)">
+ <presence>
+  <faction>Proteron</faction>
+  <bonus>-100000.000000</bonus>
+  <range>1</range>
+ </presence>
+</spob>

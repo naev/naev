@@ -1,0 +1,30 @@
+<spob name="O'rez Palace">
+ <lua>orez_palace.lua</lua>
+ <pos x="2256.802926" y="2319.240990"/>
+ <GFX>
+  <space>station-fleetbase4.webp</space>
+  <exterior>station05.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>O'rez</faction>
+  <base>200.000000</base>
+  <bonus>0.000000</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>89000</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <description>Originally a vacation home of the Yetmer-O'rez family, the station has been revamped into a military command post, with a large war-room in the center. The station is crowded with military personal coming and going from the constant flux of ships in the shipyard. The installation also has many leisure rooms where idle military personal spend their time playing simple games or socializing with each other. On the surface it seems like everyone is used to the constant warfare House O'rez is involved in.</description>
+  <bar>(null)</bar>
+ </general>
+ <tags>
+  <tag>station</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>

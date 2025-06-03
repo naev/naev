@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Ancestor HG Eagle-Eye" inherits="Ancestor">
+ <rarity>2</rarity>
+ <price>780000</price>
+ <fabricator>House Goddard</fabricator>
+ <description>A product of a special collaboration between House Goddard and House Dvaered, the Ancestor House Goddard Eagle-Eye is a special collectors item. While the outter frame is fabricated by House Dvaered, the internals have been redesigned by House Goddard with a focus on high precision. The resulting is a ship that, although it seems very similar to the original model, performs vastly different. The new targetting system, although still outdated, expands the range of ordinances, while also allowing them to precisely hit their targets for significant damage. The tight tolerances do hamper the resulting launch speed and ammo reserves, the pilot will have to make sure every missile counts.</description>
+ <stats>
+  <cpu_mod>-25</cpu_mod>
+  <speed_mod>-5</speed_mod>
+  <shield_mod>-10</shield_mod>
+  <launch_rate>-30</launch_rate>
+  <launch_range>30</launch_range>
+  <launch_damage>80</launch_damage>
+  <launch_calibration>-50</launch_calibration>
+  <ew_detect>25</ew_detect>
+  <ew_hide>-25</ew_hide>
+  <energy_regen_mod>-20</energy_regen_mod>
+ </stats>
+</ship>

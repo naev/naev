@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<unidiff name="FLF_base">
- <system name="Sigur">
-  <spob_add>Sindbad</spob_add>
-  <spob_virtual_remove>Virtual Sindbad</spob_virtual_remove>
- </system>
-</unidiff>
