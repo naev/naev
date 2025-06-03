@@ -6,10 +6,10 @@ DST=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../dat")
 tmp=$(mktemp)
 trap 'rm -f $tmp' EXIT
 
-grep -H -m 1 '^<[a-zA-Z]* name="' $(find $DST -name "*.xml") | tr '[:upper:]' '[:lower:]' |
+grep -H -m 1 '^<[a-zA-Z]* name="' $(find $DST -name "*.xml") |
 sed 's/^\(.*\)\/\([^/]*\)\.xml:.*name=\"\([^"]*\)\".*$/\1\/ \2 \3/' |
 # from now on, we have lines: <path> <filename> <name>
-tee $tmp | cut "-d " -f3- | $SCRIPT_DIR/xml_name.sed |
+tee $tmp | cut "-d " -f3- | tr '[:upper:]' '[:lower:]' | $SCRIPT_DIR/xml_name.sed |
 # rebuild lines with modified names
 paste - $tmp '-d ' | cut '-d ' -f-3 | sed 's/^\([^ ]*\)\ \([^ ]*\)\ \([^ ]*\)/\2 \3 \1/' |
 # keep only lines where <filename> != <name>
