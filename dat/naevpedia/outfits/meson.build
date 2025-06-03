@@ -180,6 +180,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/launchers/enygma_systems_spearhead_launcher.xml',
    root / 'dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml',
    root / 'dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml',
+   root / 'dat/outfits/launchers/pincushion_battery.xml',
    root / 'dat/outfits/launchers/repeating_banshee_launcher.xml',
    root / 'dat/outfits/launchers/shatterer_launcher.xml',
    root / 'dat/outfits/launchers/space_mine_layer.xml',
