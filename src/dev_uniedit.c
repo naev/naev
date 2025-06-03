@@ -1638,11 +1638,11 @@ static int uniedit_checkName( const char *name )
    return 0;
 }
 
-// s/_\([vi][vi]*\)-\([a-z]\)$/_\1\2/;
+// s/_\([xvi][xvi]*\)-\([a-z]\)$/_\1\2/;
 static size_t _parse_it(const char*s){
    size_t out;
 
-   for(out = 0 ; s[out]=='v' || s[out]=='i'; out++);
+   for(out = 0 ; s[out]=='x' || s[out]=='v' || s[out]=='i'; out++);
    if(s[out]=='-' && s[out+1]>='a' && s[out+1]<='z'
          && (!s[out+2] || s[out+2]=='\n')
    )
@@ -1669,7 +1669,7 @@ char *uniedit_nameFilter( const char *name ){
    // s/["':.()?]//g;
    // s/&amp;/_and_/g;
    // s/-\([0-9]\)/\1/g;
-   // s/_\(i*[vi]i*\)-\([a-z]\)$/_\1\2/;
+   // s/_\([xvi][xvi]*\)-\([a-z]\)$/_\1\2/;
    for(r = 0; r < len ; )
       if (strchr("':.()?", out[r]))
          r++;
