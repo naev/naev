@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# python3
 
 from core_outfit import some_outfit
 from copy import deepcopy
