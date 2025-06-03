@@ -14,7 +14,7 @@ while read -r line; do
    git mv "$path$from" "$path$to" &&
    echo "s/\/$from/\/$to/" >> "$tmp" &&
    echo "/$from"
-done | for i in $(grep -rlf - "$DST"/po "$DST"/dat 2>/dev/null) ; do
+done | grep -rlf - "$DST"/po "$DST"/dat 2>/dev/null | while read -r i; do
    echo "$i" >&2
    sed -f "$tmp" -i "$i"
 done

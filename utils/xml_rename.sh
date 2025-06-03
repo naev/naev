@@ -7,7 +7,7 @@ before=$(basename "$1")
 after=$(basename "$2")
 echo "$before => $after" >&2
 #git mv -i "$1" "$2" &&
-for i in $(grep -rl "$before" $DST/po $DST/dat 2>/dev/null) ; do
-   echo $i
+grep -rl "$before" "$DST/po" "$DST/dat" 2>/dev/null | while read -r i; do
+   echo "$i"
    sed "s/$before/$after/" -i "$i"
 done
