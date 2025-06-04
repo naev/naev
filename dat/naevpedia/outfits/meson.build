@@ -368,6 +368,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/weapons/plasma_blaster_mk2.xml',
    root / 'dat/outfits/weapons/plasma_cannon.xml',
    root / 'dat/outfits/weapons/plasma_cluster_cannon.xml',
+   root / 'dat/outfits/weapons/plasma_eruptor.xml',
    root / 'dat/outfits/weapons/plasma_turret_mk1.xml',
    root / 'dat/outfits/weapons/plasma_turret_mk2.xml',
    root / 'dat/outfits/weapons/ragnarok_beam.xml',
