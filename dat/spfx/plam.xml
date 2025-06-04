@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spfx name="PlaM">
+<spfx name="Pla-M">
  <anim>0.741</anim>
  <shader>
   <vert>project_pos.vert</vert>

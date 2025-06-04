@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<trail name="siriusS" inherits="sirius">
+<trail name="sirius-S" inherits="sirius">
  <thickness>8</thickness>
  <ttl>0.4</ttl>
 </trail>

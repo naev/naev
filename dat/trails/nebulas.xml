@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<trail name="nebulaS" inherits="nebula">
+<trail name="nebula-S" inherits="nebula">
  <thickness>7</thickness>
  <ttl>1.6</ttl>
 </trail>

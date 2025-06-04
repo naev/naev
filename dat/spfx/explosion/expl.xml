@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spfx name="ExpL">
+<spfx name="Exp-L">
  <anim>2</anim>
  <shader>
   <vert>project_pos.vert</vert>

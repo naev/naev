@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spfx name="ChakraS">
+<spfx name="Chakra-S">
  <anim>1.25</anim>
  <shader>
   <vert>project_pos.vert</vert>

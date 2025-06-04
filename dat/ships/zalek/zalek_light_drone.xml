@@ -9,7 +9,7 @@
  <price>90000</price>
  <time_mod>0.8</time_mod>
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
- <trail_generator x="-11" y="0" h="0">zalekXS</trail_generator>
+ <trail_generator x="-11" y="0" h="0">zalek-XS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
  <faction>Za'lek</faction>
  <description>This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be flown by the player.</description>

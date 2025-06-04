@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<trail name="proteronS" inherits="proteron">
+<trail name="proteron-S" inherits="proteron">
  <thickness>3</thickness>
  <ttl>0.25</ttl>
 </trail>
