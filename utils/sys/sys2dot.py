@@ -114,17 +114,20 @@ def main( args, fixed_pos = False, color = False ):
       if i[0] == '_' and fixed_pos:
          continue
       # Don't include disconnected systems
-      if E[i] != [] or (fixed_pos and i=='zied'):
+      if E[i] != [] or fixed_pos:
          s = '\t"'+i+'" ['
          if i[0] != '_':
             (x, y) = pos[i]
             x = round(float(x)*factor, 9)
             y = round(float(y)*factor, 9)
             s += 'pos="'+str(x)+','+str(y)+('!' if fixed_pos else '')+'";'
-         s += 'label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
+         label = V[i]
+         for t in [('-','- '), (' ','\\n'), ('Test\\nof','Test of')]:
+            label = label.replace(*t)
+         s += 'label="' + label + '"'
 
          if color:
-            cols = [int(255.0*(f*0.25+0.75)) for f in colors[i]]
+            cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
             s += ';fillcolor="#'+rgb+'"'
             

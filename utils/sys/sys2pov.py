@@ -66,9 +66,9 @@ def main( args, color = False ):
          dst.write(6*' ' + str(size) + '\n')
 
          if hid:
-            dst.write(6*' ' + 'pigment {color rgb<0.8,0,0>}\n')
+            dst.write(6*' ' + 'pigment {color rgb<0.7,0,0>}\n')
          else:
-            dst.write(6*' ' + 'pigment {color rgb<0.5,0.5,0.5>}\n')
+            dst.write(6*' ' + 'pigment {color rgb<0.3,0.3,0.3>}\n')
          dst.write(3*' ' + '}\n')
    dst.close()
    cmd = ['povray','out.pov']

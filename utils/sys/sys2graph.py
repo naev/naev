@@ -6,22 +6,22 @@ from ssys import nam2base, getpath, PATH
 
 
 faction_color = {
-   None:                (0.3, 0.3, 0.3),
-   'empire':            (0.0, 1.0, 0.0),
-   'zalek':             (0.5, 0.0, 0.0),
-   'dvaered':           (0.5, 0.2, 0.0),
-   'sirius':            (0.0, 0.7, 0.8),
-   'soromid':           (1.0, 0.5, 0.0),
-   'frontier':          (0.9, 0.9, 0.0),
-   'pirate':            (1.0, 0.0, 0.0),
-   'independant':       (0.0, 0.0, 1.0),
-   'proteron':          (1.0, 0.0, 1.0),
-   'thurion':           (0.5, 0.5, 0.5),
-   'collective':        (0.9, 0.9, 0.9),
-   'goddard':           (0.0, 0.1, 1.0),
-   'traders_society':   (0.0, 0.1, 1.0),
-   'orez':              (0.0, 0.4, 0.9),
-   'flf':               (0.9, 0.9, 0.0),
+   None:                (0.25, 0.25, 0.25),
+   'empire':            (0.0,  1.0,  0.0),
+   'zalek':             (0.5,  0.0,  0.0),
+   'dvaered':           (0.5,  0.2,  0.0),
+   'sirius':            (0.0,  0.7,  0.8),
+   'soromid':           (1.0,  0.5,  0.0),
+   'frontier':          (0.9,  0.9,  0.0),
+   'pirate':            (1.0,  0.0,  0.0),
+   'independant':       (0.0,  0.0,  1.0),
+   'proteron':          (1.0,  0.0,  1.0),
+   'thurion':           (0.5,  0.5,  0.5),
+   'collective':        (0.9,  0.9,  0.9),
+   'goddard':           (0.0,  0.1,  1.0),
+   'traders_society':   (0.0,  0.1,  1.0),
+   'orez':              (0.0,  0.4,  0.9),
+   'flf':               (0.9,  0.9,  0.0),
 }
 
 for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
