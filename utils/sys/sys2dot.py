@@ -75,7 +75,7 @@ heavy_virtual_edges=[
 ]
 
 def main( args, fixed_pos = False ):
-   V, E, pos, tl = xml_files_to_graph(args)
+   V, E, pos, tl, _faction = xml_files_to_graph(args)
    print('graph g{')
    print('\tepsilon=0.0000001')
    print('\tmaxiter=1000')

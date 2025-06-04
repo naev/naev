@@ -2,7 +2,8 @@
 # main part: matches func uniedit_nameFilter@dev_uniedit.c
 s/ /_/g;
 s/["':.()?]//g;
-s/&amp;/_and_/g;
+s/&amp;/&/g;
+s/&/_and_/g;
 s/-\([0-9]\)/\1/g;
 s/_\([xvi][xvi]*\)-\([a-z]\)$/_\1\2/;
 s/_-/-/g;
