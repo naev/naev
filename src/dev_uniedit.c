@@ -1670,6 +1670,7 @@ char *uniedit_nameFilter( const char *name )
 
    // s/["':.()?]//g;
    // s/&amp;/_and_/g;
+   // TODO: s/&/_and_/g; (painful)
    // s/-\([0-9]\)/\1/g;
    // s/_\([xvi][xvi]*\)-\([a-z]\)$/_\1\2/;
    for ( r = 0; r < len; )
