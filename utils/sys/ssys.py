@@ -1,11 +1,18 @@
 # python3
 
 
+import os
+import sys
 import xml.etree.ElementTree as ET
 from sys import argv, stderr
-import os
-script_dir = os.path.dirname(__file__)
+
 getpath = lambda *x: os.path.realpath(os.path.join(*x))
+
+script_dir = os.path.dirname(__file__)
+sys.path.append(getpath(script_dir, '..'))
+
+from xml_name import xml_name as nam2base
+
 PATH = getpath(script_dir, '..', '..', 'dat')
 
 from geometry import vec
@@ -50,18 +57,6 @@ class starmap(dict):
             stderr.write('no position defined in "' + name + '"\n')
             self[key] = None
       return self[key]
-
-def nam2base( nam ):
-   nam = nam.strip()
-   for t in [(' ', '_'), ("'", ''), ('&', ''), ('.','')]:
-      nam = nam.replace(*t)
-   s = nam.split('-')
-   acc, s = s[0], s[1:]
-   for sub in s:
-      if not ( (ord(sub[0]) <= ord('9')) and (ord(sub[0]) >= ord('0')) ):
-         acc += '-'
-      acc += sub
-   return acc.lower()
 
 def sysneigh(sys):
    T = ET.parse(ssys_fil(sys)).getroot()
