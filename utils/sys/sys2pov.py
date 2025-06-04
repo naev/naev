@@ -15,7 +15,7 @@ faction_color = {
    'empire':'<0,1,0>',
    'zalek':'<0.5,0,0>',
    'dvaered':'<0.5,0.2,0>',
-   'sirius':'<0.0,0.7,1.0>',
+   'sirius':'<0.0,0.7,0.8>',
    'soromid':'<1.0,0.5,0.0>',
    'frontier':'<1.0,1.0,0.0>',
    'pirate':'<1.0,0.0,0.0>',
@@ -25,9 +25,10 @@ faction_color = {
    'collective' : '<0.9,0.9,0.9>',
    'goddard' : '<0.0,0.1,1.0>',
    'traders_society' : '<0.0,0.1,1.0>',
+   'orez' : '<0.0,0.4,0.9>',
 }
 
-for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus']:
+for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost']:
    faction_color[f] = faction_color['pirate']
 
 def main( args ):
