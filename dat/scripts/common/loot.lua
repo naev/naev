@@ -23,6 +23,7 @@ function lib.tier1_weapon ()
          outfit.get("Neutralizer"),
          outfit.get("Reaver Cannon"),
          outfit.get("Pincushion Battery"),
+         outfit.get("Plasma Eruptor"),
       }
    end
    return tier1_weapon[ rnd.rnd(1,#tier1_nonweapon) ]
