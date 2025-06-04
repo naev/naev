@@ -5,16 +5,38 @@ from os.path import basename
 from ssys import nam2base, getpath, PATH
 
 
-def get_spob_faction(nam):
+faction_color = {
+   None:                (0.3, 0.3, 0.3),
+   'empire':            (0.0, 1.0, 0.0),
+   'zalek':             (0.5, 0.0, 0.0),
+   'dvaered':           (0.5, 0.2, 0.0),
+   'sirius':            (0.0, 0.7, 0.8),
+   'soromid':           (1.0, 0.5, 0.0),
+   'frontier':          (0.9, 0.9, 0.0),
+   'pirate':            (1.0, 0.0, 0.0),
+   'independant':       (0.0, 0.0, 1.0),
+   'proteron':          (1.0, 0.0, 1.0),
+   'thurion':           (0.5, 0.5, 0.5),
+   'collective':        (0.9, 0.9, 0.9),
+   'goddard':           (0.0, 0.1, 1.0),
+   'traders_society':   (0.0, 0.1, 1.0),
+   'orez':              (0.0, 0.4, 0.9),
+   'flf':               (0.9, 0.9, 0.0),
+}
+
+for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
+   faction_color[f] = faction_color['pirate']
+
+def get_spob_faction( nam ):
    T = ET.parse(getpath(PATH, "spob", nam+".xml")).getroot()
    e = T.find("./presence/faction")
-   return e.text if e is not None else None
+   return nam2base(e.text) if e is not None else None
 
 
-# V, E, pos, tradelane, factions = xml_files_to_graph(args)
-def xml_files_to_graph(args):
+# V, E, pos, tradelane, color = xml_files_to_graph(args, use_color)
+def xml_files_to_graph( args, get_colors = False ):
    name2id = dict()
-   name, acc, pos, tradelane, faction = [], [], [], set(), dict()
+   name, acc, pos, tradelane, color = [], [], [], set(), dict()
 
    for i in range(len(args)):
       bname = basename(args[i])
@@ -42,20 +64,22 @@ def xml_files_to_graph(args):
             tradelane.add(bname)
             break
 
-      fact = dict()
-      for e in T.findall('spobs/spob'):
-         if f := get_spob_faction(nam2base(e.text)):
-            f = nam2base(f)
-            if f not in fact:
-               fact[f] = 0
-            fact[f] += 1
+      if get_colors:
+         fact = dict()
+         for e in T.findall('spobs/spob'):
+            if f := get_spob_faction(nam2base(e.text)):
+               if f not in fact:
+                  fact[f] = 0
+               fact[f] += 1
 
-      fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
-      #print(bname + ':' + str(fact))
-      if len(fact)>1 and fact[0][1]=='independant' and fact[0][0] == fact[1][0]:
-         faction[bname] = fact[1][1]
-      else:
-         faction[bname] = (fact+[(None,None)])[0][1]
+         fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
+         if len(fact)>1 and fact[0][1]=='independant' and fact[0][0] == fact[1][0]:
+            fact = fact[1]
+         else:
+            fact = (fact+[(None,None)])[0]
+         if (fact:= fact[1]) not in faction_color:
+            fact = None
+         color[bname] = faction_color[fact]
  
       name2id[name[-1]] = bname
       acc.append([])
@@ -70,5 +94,5 @@ def xml_files_to_graph(args):
    n2i = lambda x:name2id[x]
    ids = [n2i(x) for x in name]
    acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
-   return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane, faction
+   return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane, color
 

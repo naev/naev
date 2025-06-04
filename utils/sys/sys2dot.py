@@ -74,8 +74,8 @@ heavy_virtual_edges=[
    ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
 ]
 
-def main( args, fixed_pos = False ):
-   V, E, pos, tl, _faction = xml_files_to_graph(args)
+def main( args, fixed_pos = False, color = False ):
+   V, E, pos, tl, colors = xml_files_to_graph(args, color)
    print('graph g{')
    print('\tepsilon=0.0000001')
    print('\tmaxiter=1000')
@@ -123,6 +123,11 @@ def main( args, fixed_pos = False ):
             s += 'pos="'+str(x)+','+str(y)+('!' if fixed_pos else '')+'";'
          s += 'label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
 
+         if color:
+            cols = [int(255.0*(f*0.25+0.75)) for f in colors[i]]
+            rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
+            s += ';fillcolor="#'+rgb+'"'
+            
          if i == 'sol':
             s += ';color=red'
 
@@ -156,8 +161,9 @@ def main( args, fixed_pos = False ):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print("usage:",argv[0],'[-k] <sys1.xml> ...')
+      print('usage: ', argv[0], '[-c]', '[-k]', '<sys1.xml>', '...')
       print('Outputs the graph in dot format.')
+      print('If -c is set, use faction colors (slower).')
       print('If -k is set, the nodes have the keep_position marker.')
       print('Examples:')
       print('  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
@@ -168,7 +174,10 @@ if __name__ == '__main__':
       if keep := '-k' in argv:
          argv.remove('-k')
 
+      if color := '-c' in argv:
+         argv.remove('-c')
+
       if (ign := [f for f in argv[1:] if not f.endswith('.xml')]) != []:
          stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
 
-      main([f for f in argv[1:] if f.endswith('.xml')], keep)
+      main([f for f in argv[1:] if f.endswith('.xml')], keep, color)
