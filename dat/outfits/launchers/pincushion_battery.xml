@@ -13,6 +13,7 @@
   <rarity>2</rarity>
  </general>
  <specific type="launcher" secondary="1">
+  <lua>outfits/launchers/pincushion_battery.lua</lua>
   <delay>1.7</delay>
   <reload_time>100</reload_time>
   <amount>12</amount>
@@ -30,9 +31,10 @@
   <trail_generator x="-7">thin</trail_generator>
   <duration blowup="armour">7</duration>
   <accel>700</accel>
-  <turn>80</turn>
+  <turn>100</turn>
   <speed_max>1200</speed_max>
   <resist>10</resist>
+  <shots>5</shots>
   <damage>
    <type>kinetic</type>
    <penetrate>24</penetrate>
@@ -40,6 +42,6 @@
   </damage>
   <armour>5</armour>
   <absorb>0</absorb>
-  <ai>smart</ai>
+  <ai>seek</ai>
  </specific>
 </outfit>
