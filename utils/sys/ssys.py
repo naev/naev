@@ -51,18 +51,17 @@ class starmap(dict):
             self[key] = None
       return self[key]
 
-def sysnam2sys( nam ):
+def nam2base( nam ):
    nam = nam.strip()
-   for t in [(' ', '_'), ("'s", 's'), ('C-', 'C')]:
+   for t in [(' ', '_'), ("'", ''), ('&', ''), ('.','')]:
       nam = nam.replace(*t)
-   return nam.lower()
-
-def spobnam2spob( nam ):
-   nam = nam.strip()
-   for t in [(' ', '_'), ("O'", '\n'), ("'", ''), ('\n', "O'"), ("-O'", '\n'),
-         ('-', ''), ('\n', "-O'"), ('&', ''), ('.','')]:
-      nam = nam.replace(*t)
-   return nam.lower()
+   s = nam.split('-')
+   acc, s = s[0], s[1:]
+   for sub in s:
+      if not ( (ord(sub[0]) <= ord('9')) and (ord(sub[0]) >= ord('0')) ):
+         acc += '-'
+      acc += sub
+   return acc.lower()
 
 def sysneigh(sys):
    T = ET.parse(ssys_fil(sys)).getroot()
@@ -70,9 +69,9 @@ def sysneigh(sys):
    count = 1
    for e in T.findall('./jumps/jump'):
       try:
-         acc.append((sysnam2sys(e.attrib['target']), e.find('hidden') is not None))
+         acc.append((nam2base(e.attrib['target']), e.find('hidden') is not None))
       except:
-         stderr.write('no target defined in "'+sys+'"jump#'+str(count)+'\n')
+         stderr.write('no target defined in "'+sys+'" jump '+str(count)+'\n')
       count += 1
    return acc
 

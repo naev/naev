@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-from ssys import vec, fil_ET, ssys_fil, sysnam2sys, sysneigh, vec_from_element, vec_to_element
+from ssys import vec, fil_ET, ssys_fil, sysneigh, vec_from_element, vec_to_element
 from geometry import bb
 
 
