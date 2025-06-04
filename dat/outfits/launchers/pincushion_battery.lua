@@ -12,7 +12,7 @@ end
 function onshoot( p, po )
    local t = p:target()
    local dir = p:dir()
-   local pos = p:pos()
+   local pos = po:mount( p )
    local vel = p:vel()
 
    local elst = p:getEnemies( RANGE )
