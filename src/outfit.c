@@ -1405,6 +1405,9 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
       return -1;
    }
 
+   if ( gfx->program != 0 || gfx->tex != NULL )
+      WARN( "Reloading gfx for outfit '%s'!", temp->name );
+
    /* Comomn properties. */
    xmlr_attr_float( node, "spin", gfx->spin );
    if ( gfx->spin != 0. )
