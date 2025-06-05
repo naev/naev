@@ -7,27 +7,59 @@ from math import sin, pi
 sm = starmap()
 
 
+def key(v):
+   acc = 0
+   if v[1] < 0:
+      acc += 2
+      v = -v
+   return acc + (2 - v[0])
+
+def mk_p(L):
+   pi = [n for n, _k in sorted(enumerate(L), key = lambda t: (key(t[1]), t[0]))]
+   where = pi.index(0)
+   return pi[where:] + pi[:where]
+
 def sys_relax( sys ):
    p = fil_ET(sys)
    T = p.getroot()
    myname = nam2base(T.attrib['name'])
 
-   acc = transf()
+   mapvs = []
+   sysvs = []
    count = 0
-
    for f in T.findall('./jumps/jump'):
       dst = nam2base(f.attrib['target'])
-      for e in f.findall('pos'):
-         if 'was_auto' in e.attrib:
+      e= f.find('pos')
+      if e is not None and 'was_auto' in e.attrib:
+         mapvs.append((sm[dst] - sm[myname]).normalize())
+         sysvs.append(vec_from_element(e).normalize())
+         count += 1
+
+   if count>0:
+      pi1 = mk_p(mapvs)
+      pi2 = mk_p(sysvs)
+
+      if pi1 == pi2:
+         # same permutation -> evrything is fine
+         pass
+      elif pi1 == pi2[1:] + pi2[:0]:
+         # flipping !
+         stderr.write('"' + sys + '" flipped !\n')
+      else:
+         stderr.write('"' + sys + '" crossed : ')
+         stderr.write(str(pi1) + ' -> ' + str(pi2) + '\n')
+         return False
+
+      acc = transf()
+
+      for mapv, sysv in zip(mapvs, sysvs):
             mapv = sm[dst] - sm[myname]
             sysv = vec_from_element(e)
             t = mapv.normalize() / sysv.normalize()
             acc @= t
             #stderr.write(' t='+str(int(t.get_angle()*180/pi)).rjust(4)+'°')
             #stderr.write(' acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
-            count += 1
 
-   if count>0:
       acc /= count
       # in degrees
       eps = 0.2

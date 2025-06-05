@@ -52,7 +52,7 @@ for k in pos:
    pos[k] += oldbb.mini() - bbox.mini()
    again += pos[k]
 
-stderr.write(str(oldbb) + ' -> ' + str(bbox) + '\n')
+stderr.write(str(oldbb) + ' -> ' + str(bbox))
 stderr.write(' -> ' + str(again) + '\n')
 
 
