@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 
+from os.path import basename
 from geometry import transf, vec
 from ssys import nam2base, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
 from math import sin, pi
@@ -30,52 +31,54 @@ def sys_relax( sys ):
    for f in T.findall('./jumps/jump'):
       dst = nam2base(f.attrib['target'])
       e= f.find('pos')
+      # should we require 'was_auto' ?
       if e is not None and 'was_auto' in e.attrib:
          mapvs.append((sm[dst] - sm[myname]).normalize())
          sysvs.append(vec_from_element(e).normalize())
          count += 1
 
    if count>0:
+      nop = lambda v: v
+      flip = nop
       pi1 = mk_p(mapvs)
       pi2 = mk_p(sysvs)
 
       if pi1 == pi2:
-         # same permutation -> evrything is fine
+         # same permutation -> everything is fine
          pass
-      elif pi1 == pi2[1:] + pi2[:0]:
-         # flipping !
-         stderr.write('"' + sys + '" flipped !\n')
+      elif pi1 == pi2[:1] + pi2[1:][::-1]:
+         stderr.write('\033[32m' + basename(sys) + '" flipped !\033[0m\n')
+         flip = lambda sysv: vec(-sysv[0], sysv[1])
       else:
-         stderr.write('"' + sys + '" crossed : ')
-         stderr.write(str(pi1) + ' -> ' + str(pi2) + '\n')
+         stderr.write('\033[33m' + basename(sys) + '" crossed : ')
+         stderr.write(str(pi1) + ' -> ' + str(pi2) + '\033[0m\n')
          return False
 
       acc = transf()
 
       for mapv, sysv in zip(mapvs, sysvs):
-            mapv = sm[dst] - sm[myname]
-            sysv = vec_from_element(e)
-            t = mapv.normalize() / sysv.normalize()
-            acc @= t
-            #stderr.write(' t='+str(int(t.get_angle()*180/pi)).rjust(4)+'°')
-            #stderr.write(' acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
+         t = mapv.normalize() / sysv.normalize()
+         acc @= t
+         #stderr.write(' t='+str(int(t.get_angle()*180/pi)).rjust(4)+'°')
+         #stderr.write(' acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
 
       acc /= count
       # in degrees
       eps = 0.2
-      if abs(acc.vec) > sin(eps/180.0*pi):
+      if abs(acc.vec) > sin(eps/180.0*pi) or flip != nop:
+         func = lambda x: acc(flip(x))
          #stderr.write('final acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
          for e in T.findall('./spobs/spob'):
             spfil = spob_fil(nam2base(e.text))
             p2 = fil_ET(spfil)
             f = p2.getroot().find('pos')
-            vec_to_element(f, acc(vec_from_element(f)))
+            vec_to_element(f, func(vec_from_element(f)))
             p2.write(spfil)
 
          for i in [ './jumps/jump/pos', './asteroids/asteroid/pos',
             './waypoints/waypoint']:
             for e in T.findall(i):
-               vec_to_element(e, acc(vec_from_element(e)))
+               vec_to_element(e, func(vec_from_element(e)))
          p.write(sys)
          return True
    return False

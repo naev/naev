@@ -4,8 +4,8 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 BAS=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat")
 DST="$BAS/ssys"
 
-#COL=-c
-COL=
+COL=-c
+#COL=
 
 git checkout "$BAS/spob" "$DST"
 
@@ -20,4 +20,4 @@ echo -n "apply after graph " >&2
 echo "gen final graph" >&2
 "$SCRIPT_DIR"/sys2dot.py $COL "$DST"/*.xml -k | neato -n2 -Tpng 2>/dev/null > final.png
 echo "relax" >&2
-"$SCRIPT_DIR"/sys_relax.py "$DST"/*.xml #| wc -l
+"$SCRIPT_DIR"/sys_relax.py "$DST"/*.xml | wc -l
