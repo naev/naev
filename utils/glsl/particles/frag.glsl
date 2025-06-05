@@ -675,10 +675,11 @@ vec4 energy_harpoon( vec2 uv )
 {
    vec4 colour = vec4( 0.95, 0.1, 0.3, 1.0 );
 
+   float fade = min(u_time*4.0,u_fade+0.25)-0.25;
    float n = snoise( uv+vec2(6.0*u_time,u_r) );
 
-   float d = sdRoundedCross( 1.25*uv+0.03*n, 0.25 );
-   float din = sdVesica( uv.yx+0.05*n, 1.0, 0.8 );
+   float d = sdRoundedCross( 1.25*(uv+vec2(0.03*n,0.0)), min(0.25,fade) );
+   float din = sdVesica( uv.yx+vec2(0.05*n,0.0), 1.0, 0.8 );
 
    colour.rgb += pow( smoothstep( 0.0, 0.2, -din ), 2.0 );
    colour.a *= smoothstep( 0.0, 0.2, -d+0.25 );
@@ -764,6 +765,23 @@ vec4 laser_square( vec2 uv )
    return colour;
 }
 
+vec4 laser( vec2 uv )
+{
+   const vec4 COLOUR = vec4( 0.95, 0.1, 0.3, 1.0 );
+   const vec4 COLOUR_FADE = vec4( 0.75, 0.75, 0.1, 1.0 );
+
+   float fade = min(u_time*4.0,u_fade+0.3)-0.3;
+   float n = snoise( 1.5*uv+vec2(2.0*u_time,u_r) );
+
+   float d = sdVesica( uv.yx+vec2(0.0,0.015*n), 2.3, 2.1 );
+
+   vec4 colour = mix( COLOUR_FADE, COLOUR, u_fade );
+   colour.rgb += pow( smoothstep( 0.0, 0.2, -d-0.025 ), 1.5 ) + vec3(0.2)*n;
+   colour.a *= smoothstep( 0.0, 0.2, -d+0.1 );
+
+   return colour;
+}
+
 vec4 ripper_square( vec2 uv )
 {
    const vec4 COLOUR = vec4( 0.1, 0.95, 0.3, 1.0 );
@@ -781,6 +799,26 @@ vec4 ripper_square( vec2 uv )
    vec4 colour = mix( COLOUR_FADE, COLOUR, u_fade );
    colour.rgb += pow( smoothstep( 0.0, 0.2, -din ), 2.0 ) + vec3(0.2)*n;
    colour.a *= smoothstep( 0.0, 0.2, -d+0.3 );
+
+   return colour;
+}
+
+vec4 ripper( vec2 uv )
+{
+   const vec4 COLOUR = vec4( 0.1, 0.95, 0.3, 1.0 );
+   const vec4 COLOUR_FADE = vec4( 0.75, 0.75, 0.1, 1.0 );
+
+   float fade = min(u_time*4.0,u_fade+0.3)-0.3;
+   float n = snoise( uv+vec2(2.0*u_time,u_r) );
+   vec2 offset = vec2( -0.3, 0.0 );
+
+   uv.y = abs(uv.y);
+
+   float d = sdVesica( uv.yx+vec2(0.0,0.015*n)+offset, 2.3, 2.1 );
+
+   vec4 colour = mix( COLOUR_FADE, COLOUR, u_fade );
+   colour.rgb += pow( smoothstep( 0.0, 0.2, -d-0.01 ), 1.5 ) + vec3(0.2)*n;
+   colour.a *= smoothstep( 0.0, 0.2, -d+0.1 );
 
    return colour;
 }
@@ -826,6 +864,37 @@ vec4 reaver_square( vec2 uv )
       colour = blend( col2, col1 );
    return colour;
 }
+vec4 reaver( vec2 uv )
+{
+   const vec4 COLOUR = vec4( 0.1, 0.95, 0.3, 1.0 );
+   const vec4 COLOUR_FADE = vec4( 0.75, 0.75, 0.1, 1.0 );
+
+   float fade = min(u_time*4.0,u_fade+0.3)-0.3;
+   float n1 = snoise( uv+vec2(2.0*u_time,u_r) );
+   float n2 = snoise( uv+vec2(2.0*u_time,u_r+100.0) );
+   float spin = u_time * (2.5 + 1.5*sin(2.0/7.0*u_time + u_r)) + 7.0*u_r;
+   float st = sin(spin);
+   vec2 offset1 = vec2( -0.4, 0.0 ) * st;
+   vec2 offset2 = vec2(  0.4, 0.0 ) * st;
+
+   float d1 = sdVesica( uv.yx+vec2(0.0,0.015*n1)+offset1, 2.3, 2.125 );
+   float d2 = sdVesica( uv.yx+vec2(0.0,0.015*n2)+offset2, 2.3, 2.125 );
+
+   vec4 col1 = mix( COLOUR_FADE, COLOUR, u_fade );
+   col1.rgb += pow( smoothstep( 0.0, 0.2, -d1-0.01 ), 1.5 ) + vec3(0.2)*n1;
+   col1.a *= smoothstep( 0.0, 0.2, -d1+0.1 );
+
+   vec4 col2 = mix( COLOUR_FADE, COLOUR, u_fade );
+   col2.rgb += pow( smoothstep( 0.0, 0.2, -d2-0.01 ), 1.5 ) + vec3(0.2)*n2;
+   col2.a *= smoothstep( 0.0, 0.2, -d2+0.1 );
+
+   vec4 colour;
+   if (cos(spin) < 0.0)
+      colour = blend( col1, col2 );
+   else
+      colour = blend( col2, col1 );
+   return colour;
+}
 
 vec4 eruptor( vec2 uv )
 {
@@ -858,10 +927,13 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = razor( uv_rel );
    //col_out = disruptor( uv_rel );
    //col_out = quantum( uv_rel );
+   //col_out = laser_square( uv_rel );
    //col_out = laser( uv_rel );
-   col_out = ripper_square( uv_rel );
+   //col_out = ripper_square( uv_rel );
+   //col_out = ripper( uv_rel );
    //col_out = reaver_square( uv_rel );
-   //col_out = eruptor_square( uv_rel );
+   col_out = reaver( uv_rel );
+   //col_out = eruptor( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }
