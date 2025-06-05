@@ -12,7 +12,7 @@
   <cpu>-350</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>ripperM.png</gfx>
+  <gfx type="shader" size="10" col_size="8">particles/ripper_cyan.frag</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -20,7 +20,6 @@
   <speed>1200</speed>
   <range>2200</range>
   <falloff>1600</falloff>
-  <gfx_end>ripperM-end.png</gfx_end>
   <energy>153</energy>
   <trackmin>3600</trackmin>
   <trackmax>12000</trackmax>
