@@ -11,11 +11,11 @@
   <cpu>-45</cpu>
  </general>
  <specific type="bolt">
-  <lua>outfits/lib/matrix_sell.lua</lua>
-  <gfx>plasma2.png</gfx>
+  <gfx type="shader" size="20" col_size="17">particles/eruptor.frag</gfx>
+  <lua>outfits/weapons/plasma_eruptor.lua</lua>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>PlaS2</spfx_armour>
+  <spfx_armour>PlaS</spfx_armour>
   <delay>0.1</delay>
   <speed>400</speed>
   <range blowup="armour">1100</range>
@@ -25,7 +25,7 @@
   <swivel>22</swivel>
   <dispersion>5</dispersion>
   <speed_dispersion>10</speed_dispersion>
-  <radius>10</radius>
+  <radius>20</radius>
   <damage>
    <type>plasma</type>
    <penetrate>7</penetrate>

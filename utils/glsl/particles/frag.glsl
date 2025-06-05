@@ -902,8 +902,8 @@ vec4 reaver( vec2 uv )
 
 vec4 eruptor( vec2 uv )
 {
-   const vec3 COLOUR_IN = vec3( 1.2, 0.1, 0.4 );
-   const vec3 COLOUR_OUT = vec3( 1.95, 0.8, 1.95 );
+   const vec3 COLOUR_IN = vec3( 1.0, 0.1, 0.4 );
+   const vec3 COLOUR_OUT = vec3( 1.5, 0.8, 1.5 );
 
    vec2 r = vec2(-u_time*0.25, u_r);
 
@@ -911,8 +911,9 @@ vec4 eruptor( vec2 uv )
    n += snoise( 2.0*(uv + r) )*0.25;
 
    vec4 colour;
-   colour.a = n * max( 0.0, (min(1.0,u_time)-pow(length(uv),1.5)) );
-   colour.rgb = mix( COLOUR_OUT, COLOUR_IN, colour.a*2.0-0.5 );
+   colour.a = n - max( 0.0, pow(length(uv),4.0) ) - smoothstep( 1.0, 0.0, 6.0*u_time);
+   colour.rgb = mix( COLOUR_OUT, COLOUR_IN, colour.a+0.5 );
+   colour.a *= u_fade;
    return colour;
 }
 
@@ -936,8 +937,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = ripper_square( uv_rel );
    //col_out = ripper( uv_rel );
    //col_out = reaver_square( uv_rel );
-   col_out = reaver( uv_rel );
-   //col_out = eruptor( uv_rel );
+   //col_out = reaver( uv_rel );
+   col_out = eruptor( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }

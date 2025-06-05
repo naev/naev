@@ -3451,6 +3451,7 @@ dat/outfits/weapons/antimatter_lance.lua
 dat/outfits/weapons/energy_harpoon.lua
 dat/outfits/weapons/plasma.lua
 dat/outfits/weapons/plasma2.lua
+dat/outfits/weapons/plasma_eruptor.lua
 dat/outfits/weapons/razor.lua
 dat/rep.lua
 dat/rescue.lua
