@@ -27,9 +27,11 @@ def sys_relax( sys ):
 
    mapvs = []
    sysvs = []
+   names = []
    count = 0
    for f in T.findall('./jumps/jump'):
       dst = nam2base(f.attrib['target'])
+      names.append(dst)
       e= f.find('pos')
       # should we require 'was_auto' ?
       if e is not None and 'was_auto' in e.attrib:
@@ -51,7 +53,9 @@ def sys_relax( sys ):
          flip = lambda sysv: vec(-sysv[0], sysv[1])
       else:
          stderr.write('\033[33m' + basename(sys) + '" crossed : ')
-         stderr.write(str(pi1) + ' -> ' + str(pi2) + '\033[0m\n')
+         pi1 = [names[i] for i in pi1]
+         pi2 = [names[i] for i in pi2]
+         stderr.write(', '.join(pi1) + ' -> ' + ', '.join(pi2) + '\033[0m\n')
          return False
 
       acc = transf()
