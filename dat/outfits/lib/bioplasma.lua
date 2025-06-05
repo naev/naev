@@ -9,11 +9,15 @@ damage_mod = damage_mod or 1
 base_duration = base_duration or 5
 
 local damage, penetration, isturret
+local onload_old = onload
 function onload( o )
    local s     = o:specificstats()
    damage      = s.damage * damage_mod
    penetration = s.penetration
    isturret    = s.isturret
+   if onload_old then
+      onload_old( o )
+   end
 end
 
 local mapping = {
