@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 
 
+from sys import stderr
 from geometry import vec
 from math import pi
 import heapq
+import subprocess
 
 
 # [0:2.PI] -> [0,2]
 # max(abs(slope)) = 1
-def cost_func(sys_dirs, sm_dirs):
+def cost_func( sys_dirs, sm_dirs ):
    f = 1.0 / len(sys_dirs)
-   L = [(x.normalize(f), y.normalize(2.0*f)) for x, y in zip(sys_dirs, sm_dirs)]
-   return lambda a: sum([(x.rotate_rad(a)-y).size() for x, y in L]) - 1.0
+   L = [(x.normalize(f), y.normalize(f)) for x, y in zip(sys_dirs, sm_dirs)]
+   return lambda a: sum([(x.rotate_rad(a)-y).size() for x, y in L])
 
-def best(cost, a, b):
+def best( cost, a, b ):
    if b[0] < a[0]:
       a, b = b, a
    return a[1] - ((b[0]-a[0])-(b[1]-a[1])) / 2.0
 
-def _relax_dir(sys_dirs, sm_dirs):
-   eps = 0.00001
-
+def _relax_dir( sys_dirs, sm_dirs, eps = 0.00001 ):
    cost = cost_func(sys_dirs, sm_dirs)
    mi = (0, cost(0))
    points = [mi, (2*pi, mi[1])]
@@ -43,27 +43,14 @@ def _relax_dir(sys_dirs, sm_dirs):
    inter = [(a, b) for (be, a, b) in inter]
    return points, inter, mi
 
-# returns angle(deg), cost (lower better)
-def relax_dir(sys_dirs, sm_dirs):
-   _p, _i, mi = _relax_dir(sys_dirs, sm_dirs)
-   return mi[0]/pi*180.0, mi[1]
+def _debug_relax( p, inter, t, out ):
+   (x, y) = t
+   plot = out + '.plot'
+   dat = out + '.dat'
+   png = out + '.png'
 
-if __name__ == '__main__':
-   from random import random
-   import subprocess
-
-   plot = "out.plot"
-   dat = "out.dat"
-   png = "out.png"
-
-   N = 3
-   sys, sm = [], []
-   for _ in range(N):
-      sys.append(vec(1,0).rotate(360.0 * random()))
-      sm.append(vec(1,0).rotate(360.0 * random()))
-
-   p, inter, (x, y)  = _relax_dir(sys, sm)
-   print("#points "+str(len(p)))
+   stderr.write("\033[30;1m");
+   stderr.write("points: " + str(len(p)) + ' ')
 
    with open(dat, 'wt') as fp:
       for t in p:
@@ -81,3 +68,25 @@ if __name__ == '__main__':
          ''
       ]))
    subprocess.run(['gnuplot', plot])
+   stderr.write('<' + png + '>' + '\033[0m\n')
+
+# returns angle (deg), cost (lower better)
+def relax_dir( sys_dirs, sm_dirs, eps = 0.00001, debug = False ):
+   p, i, mi = _relax_dir(sys_dirs, sm_dirs, eps)
+   if debug:
+      _debug_relax(p, i, mi, out = debug)
+   alpha = mi[0]/pi*180.0
+   if alpha > 180.0:
+      alpha -= 360.0
+   return alpha, mi[1]
+
+if __name__ == '__main__':
+   from random import random
+
+   N = 3
+   sys, sm = [], []
+   for _ in range(N):
+      sys.append(vec(1,0).rotate(360.0 * random()))
+      sm.append(vec(1,0).rotate(360.0 * random()))
+
+   relax_dir( sys, sm, debug = 'out')

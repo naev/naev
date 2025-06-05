@@ -5,6 +5,8 @@ from os.path import basename
 from geometry import transf, vec
 from ssys import nam2base, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
 from math import sin, pi
+from minimize_angle_stretch import relax_dir
+
 sm = starmap()
 
 
@@ -58,20 +60,14 @@ def sys_relax( sys ):
          stderr.write(', '.join(pi1) + ' -> ' + ', '.join(pi2) + '\033[0m\n')
          return False
 
-      acc = transf()
-
-      for mapv, sysv in zip(mapvs, sysvs):
-         t = mapv.normalize() / sysv.normalize()
-         acc @= t
-         #stderr.write(' t='+str(int(t.get_angle()*180/pi)).rjust(4)+'°')
-         #stderr.write(' acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
-
-      acc /= count
-      # in degrees
-      eps = 0.2
-      if abs(acc.vec) > sin(eps/180.0*pi) or flip != nop:
-         func = lambda x: acc(flip(x))
-         #stderr.write('final acc='+str(int(acc.get_angle()*180/pi)).rjust(4)+'°\n')
+      eps = 0.001
+      #HERE
+      out = None
+      #out = sys.replace('.xml','')
+      alpha, _cost = relax_dir([flip(v) for v in sysvs], mapvs, eps = eps/10.0, debug = out)
+      if abs(alpha) > eps or flip != nop:
+         func = lambda x: flip(x).rotate(alpha)
+         #stderr.write('final rot: '+str(int(round(alpha))).rjust(4)+'°\n')
          for e in T.findall('./spobs/spob'):
             spfil = spob_fil(nam2base(e.text))
             p2 = fil_ET(spfil)
