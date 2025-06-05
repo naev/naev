@@ -13,12 +13,12 @@ out vec4 colour_out;
 void main (void)
 {
    vec2 uv = pos;
-   float fade = min(u_time*4.0,u_fade+0.3)-0.3;
+   float fade = min(u_time*6.0,u_fade);
    float n = snoise( 1.5*uv+vec2(2.0*u_time,u_r) );
 
    float d = sdVesica( uv.yx+vec2(0.0,0.015*n), 2.3, 2.1 );
 
    colour_out = mix( COLOUR_FADE, COLOUR, u_fade );
-   colour_out.rgb += pow( smoothstep( 0.0, 0.2, -d-0.025 ), 1.5 ) + vec3(0.2)*n;
-   colour_out.a *= smoothstep( 0.0, 0.2, -d+0.1 );
+   colour_out.rgb += pow( smoothstep( 0.0, 0.1, -d-0.15 ), 2.0 ) + vec3(0.1)*n - 0.1;
+   colour_out.a *= smoothstep( 0.0, 0.2, -d );
 }

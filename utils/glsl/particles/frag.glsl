@@ -768,19 +768,19 @@ vec4 laser_square( vec2 uv )
 vec4 laser( vec2 uv )
 {
    //const vec4 COLOUR = vec4( 0.95, 0.1, 0.3, 1.0 ); // MK1
-   const vec4 COLOUR = vec4( 0.1, 0.95, 0.1, 1.0 ); // MK2
+   //const vec4 COLOUR = vec4( 0.1, 0.95, 0.1, 1.0 ); // MK2
    //const vec4 COLOUR = vec4( 0.1, 0.95, 0.8, 1.0 ); // Heavy Laser
-   //const vec4 COLOUR = vec4( 0.6, 0.1, 0.95, 1.0 ); // Turbolaser
+   const vec4 COLOUR = vec4( 0.6, 0.1, 0.95, 1.0 ); // Turbolaser
    const vec4 COLOUR_FADE = vec4( 0.75, 0.75, 0.1, 1.0 );
 
-   float fade = min(u_time*4.0,u_fade+0.3)-0.3;
+   float fade = min(u_time*6.0,u_fade);
    float n = snoise( 1.5*uv+vec2(2.0*u_time,u_r) );
 
-   float d = sdVesica( uv.yx+vec2(0.0,0.015*n), 2.3, 2.1 );
+   float d = sdVesica( uv.yx+vec2(0.0,0.1*n), 2.3, 2.05+max(0.25*(1.0-fade),0.0) );
 
    vec4 colour = mix( COLOUR_FADE, COLOUR, u_fade );
-   colour.rgb += pow( smoothstep( 0.0, 0.2, -d-0.025 ), 1.5 ) + vec3(0.2)*n;
-   colour.a *= smoothstep( 0.0, 0.2, -d+0.1 );
+   colour.rgb += pow( smoothstep( 0.0, 0.1, -d-0.15 ), 2.0 ) + vec3(0.1)*n - 0.1;
+   colour.a *= smoothstep( 0.0, 0.2, -d );
 
    return colour;
 }
@@ -812,17 +812,17 @@ vec4 ripper( vec2 uv )
    const vec4 COLOUR = vec4( 0.3, 0.95, 0.8, 1.0 ); // Heavy
    const vec4 COLOUR_FADE = vec4( 0.75, 0.75, 0.1, 1.0 );
 
-   float fade = min(u_time*4.0,u_fade+0.3)-0.3;
+   float fade = min(u_time*6.0,u_fade);
    float n = snoise( uv+vec2(2.0*u_time,u_r) );
    vec2 offset = vec2( -0.3, 0.0 );
 
    uv.y = abs(uv.y);
 
-   float d = sdVesica( uv.yx+vec2(0.0,0.015*n)+offset, 2.3, 2.1 );
+   float d = sdVesica( uv.yx+vec2(0.0,0.015*n)+offset, 2.3, 2.05+max(0.25*(1.0-fade),0.0) );
 
    vec4 colour = mix( COLOUR_FADE, COLOUR, u_fade );
-   colour.rgb += pow( smoothstep( 0.0, 0.2, -d-0.01 ), 1.5 ) + vec3(0.2)*n;
-   colour.a *= smoothstep( 0.0, 0.2, -d+0.1 );
+   colour.rgb += pow( smoothstep( 0.0, 0.1, -d-0.15 ), 2.0 ) + vec3(0.1)*n - 0.1;
+   colour.a *= smoothstep( 0.0, 0.2, -d );
 
    return colour;
 }
@@ -934,9 +934,9 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = laser_square( uv_rel );
    //col_out = laser( uv_rel );
    //col_out = ripper_square( uv_rel );
-   col_out = ripper( uv_rel );
+   //col_out = ripper( uv_rel );
    //col_out = reaver_square( uv_rel );
-   //col_out = reaver( uv_rel );
+   col_out = reaver( uv_rel );
    //col_out = eruptor( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
