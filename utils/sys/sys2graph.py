@@ -30,10 +30,6 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
 def get_spob_faction( nam ):
    T = ET.parse(getpath(PATH, "spob", nam+".xml")).getroot()
    e = T.find("./presence/faction")
-   if e is not None:
-      stderr.write(nam+':'+e.text+'\n')
-   else:
-      stderr.write(nam+':_\n')
    return nam2base(e.text) if e is not None else None
 
 
@@ -71,7 +67,6 @@ def xml_files_to_graph( args, get_colors = False ):
       if get_colors:
          fact = dict()
          for e in T.findall('spobs/spob'):
-            stderr.write('['+bname+']')
             if f := get_spob_faction(nam2base(e.text)):
                if f not in fact:
                   fact[f] = 0
