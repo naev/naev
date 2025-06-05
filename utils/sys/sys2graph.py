@@ -14,7 +14,7 @@ faction_color = {
    'soromid':           (0.95, 0.5,  0.0),
    'frontier':          (0.8,  0.8,  0.0),
    'pirate':            (1.0,  0.0,  0.0),
-   'independant':       (0.0,  0.0,  1.0),
+   'independent':       (0.0,  0.0,  1.0),
    'proteron':          (0.9,  0.0,  0.9),
    'thurion':           (0.5,  0.5,  0.5),
    'collective':        (0.8,  0.8,  0.8),
@@ -30,6 +30,10 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
 def get_spob_faction( nam ):
    T = ET.parse(getpath(PATH, "spob", nam+".xml")).getroot()
    e = T.find("./presence/faction")
+   if e is not None:
+      stderr.write(nam+':'+e.text+'\n')
+   else:
+      stderr.write(nam+':_\n')
    return nam2base(e.text) if e is not None else None
 
 
@@ -67,13 +71,14 @@ def xml_files_to_graph( args, get_colors = False ):
       if get_colors:
          fact = dict()
          for e in T.findall('spobs/spob'):
+            stderr.write('['+bname+']')
             if f := get_spob_faction(nam2base(e.text)):
                if f not in fact:
                   fact[f] = 0
                fact[f] += 1
 
          fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
-         if len(fact)>1 and fact[0][1]=='independant' and fact[0][0] == fact[1][0]:
+         if len(fact)>1 and fact[0][1]=='independent' and fact[0][0] == fact[1][0]:
             fact = fact[1]
          else:
             fact = (fact+[(None,None)])[0]

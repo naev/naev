@@ -8,7 +8,7 @@ from math import sin, pi
 sm = starmap()
 
 
-def key(v):
+def _key(v):
    acc = 0
    if v[1] < 0:
       acc += 2
@@ -16,7 +16,7 @@ def key(v):
    return acc + (2 - v[0])
 
 def mk_p(L):
-   pi = [n for n, _k in sorted(enumerate(L), key = lambda t: (key(t[1]), t[0]))]
+   pi = [n for n, _k in sorted(enumerate(L), key = lambda t: (_key(t[1]), t[0]))]
    where = pi.index(0)
    return pi[where:] + pi[:where]
 

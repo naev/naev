@@ -209,12 +209,12 @@ for k in pos:
 
 v = vec(avg, 0) * 0.4
 for f, t, a in [
-   ('beeklo', 'crimson_gauntlet', 120),
-   ('anrique', 'test_of_renewal', 90),
-   ('anarbalis', 'test_of_purification', -60),
-   ('churchill', 'test_of_alacrity', 0),
-   ('ulysses', 'test_of_enlightenment', 135),
-   ('aesir', 'test_of_devotion', 135),
+   ('beeklo',     'crimson_gauntlet',        120),
+   ('anrique',    'test_of_renewal',         90),
+   ('anarbalis',  'test_of_purification',    -60),
+   ('churchill',  'test_of_alacrity',        0),
+   ('ulysses',    'test_of_enlightenment',   135),
+   ('aesir',      'test_of_devotion',        135),
 ]:
    pos[t] = pos[f] + v.rotate(a)
 
