@@ -16,7 +16,7 @@ void main (void)
    float fade = min(u_time*6.0,u_fade);
    float n = snoise( 1.5*uv+vec2(2.0*u_time,u_r) );
 
-   float d = sdVesica( uv.yx+vec2(0.0,0.015*n), 2.3, 2.1 );
+   float d = sdVesica( uv.yx+vec2(0.0,0.1*n), 2.3, 2.05+max(0.25*(1.0-fade),0.0) );
 
    colour_out = mix( COLOUR_FADE, COLOUR, u_fade );
    colour_out.rgb += pow( smoothstep( 0.0, 0.1, -d-0.15 ), 2.0 ) + vec3(0.1)*n - 0.1;
