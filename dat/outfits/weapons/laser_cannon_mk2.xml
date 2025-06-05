@@ -11,7 +11,7 @@
   <cpu>-24</cpu>
   </general>
  <specific type="bolt">
-  <gfx>laser2S.png</gfx>
+  <gfx type="shader" size="8" col_size="5">particles/laser_green.frag</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

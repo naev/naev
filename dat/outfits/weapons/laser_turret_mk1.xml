@@ -11,7 +11,7 @@
   <cpu>-24</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>laser1M.png</gfx>
+  <gfx type="shader" size="7" col_size="5">particles/laser_red.frag</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
