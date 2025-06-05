@@ -46,9 +46,11 @@ class _vec(tuple):
    def __str__( self ):
       return str(tuple([int(a) if int(a) == a else a for a in self]))
 
-   def rotate( self, degrees ):
-      angle = degrees / 180.0 * pi
+   def rotate_rad( self, angle ):
       return self._rotate(sin(angle), cos(angle))
+
+   def rotate( self, degrees ):
+      return self.rotate_rad(degrees / 180.0 * pi)
 
    def sq( self ):
       return self*self
