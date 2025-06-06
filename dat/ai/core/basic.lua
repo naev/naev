@@ -177,6 +177,7 @@ function moveto( target )
 
    -- Need to start braking
    elseif dist < bdist then
+      ai.outfitOffAll()
       ai.pushsubtask("_subbrake")
    end
 end
@@ -451,6 +452,7 @@ function __landgo ( planet )
 
    -- Need to start braking
    elseif dist < bdist then
+      ai.outfitOffAll()
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
    end
@@ -639,12 +641,14 @@ function _run_hyp( data )
          end
       end
    else
+      ai.outfitOffAll()
       if ai.instantJump() then
          ai.pushsubtask( "_hyp_jump", jump )
       else
          ai.pushsubtask( "_hyp_jump", jump )
          ai.pushsubtask("_subbrake")
       end
+      return
    end
 
    -- Hyperbolic blink drives have a distance of 2000
@@ -680,12 +684,9 @@ function _run_landgo( data )
    local plt      = ai.pilot()
 
    if dist < bdist then -- Need to start braking
+      ai.outfitOffAll()
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
-      -- Turn off afterburner just in case
-      if mem._o and mem._o.afterburner then
-         plt:outfitToggle( mem._o.afterburner, false )
-      end
       return -- Don't try to afterburn
 
    else
@@ -803,12 +804,14 @@ function __hyp_approach( target, jumptsk )
       ai.accel()
    -- Need to start braking
    elseif dist < bdist then
+      ai.outfitOffAll()
       if ai.instantJump() then
          ai.pushsubtask(jumptsk, target)
       else
          ai.pushsubtask(jumptsk, target)
          ai.pushsubtask("_subbrake")
       end
+      return
    end
 end
 
@@ -1026,6 +1029,7 @@ function mine_drill( ast )
    if dir < math.rad(10) and mod > mbd then
       ai.accel()
    elseif mod < mbd then
+      ai.outfitOffAll()
       ai.pushsubtask( "mine_drill_brake", ast )
    end
 end
