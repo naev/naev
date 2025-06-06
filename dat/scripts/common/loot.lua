@@ -7,7 +7,7 @@ function lib.tier1_nonweapon ()
       tier1_nonweapon = {
          outfit.get("Emergency Stasis Inducer"),
          outfit.get("Combat Hologram Projector"),
-         outfit.get("Berserk Chip"),
+         --outfit.get("Berserk Chip"),
          outfit.get("Hellburner"),
          outfit.get("Nanofiber Structural Enhancement"),
          outfit.get("Biometal Armour"),
@@ -26,7 +26,7 @@ function lib.tier1_weapon ()
          outfit.get("Plasma Eruptor"),
       }
    end
-   return tier1_weapon[ rnd.rnd(1,#tier1_nonweapon) ]
+   return tier1_weapon[ rnd.rnd(1,#tier1_weapon) ]
 end
 
 function lib.tier1()
