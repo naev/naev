@@ -27,7 +27,6 @@ local proteron_outfits = eoutfits.merge{{
    -- Heavy Structural
    "Battery III", "Shield Capacitor III",
    "Reactor Class III", "Large Shield Booster",
-   "Biometal Armour",
    -- Medium Structural
    "Battery II", "Shield Capacitor II",
    "Reactor Class II", "Medium Shield Booster",
