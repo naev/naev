@@ -2668,14 +2668,12 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
         ( !activate && ( po->state != PILOT_OUTFIT_ON ) ) )
       return 0;
 
-   int ret = po->flags & PILOTOUTFIT_ISON_TOGGLE;
-   if ( activate ) {
+   int flags = po->flags;
+   if ( activate )
       po->flags |= PILOTOUTFIT_ISON_TOGGLE;
-      return ret;
-   } else {
+   else
       po->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
-      return !ret;
-   }
+   return po->flags != flags;
 }
 /**
  * @brief Toggles an outfit.

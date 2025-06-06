@@ -415,7 +415,7 @@ local function autonav_rampdown( count_brake )
 end
 
 local function turnoff_afterburner()
-   local pp=player.pilot()
+   local pp = player.pilot()
    for _i,n in ipairs(pp:actives()) do
       -- All movement outfits will break autonav, however, many movement
       -- outfits are instant and won't be caught by this polling scheme.
@@ -423,14 +423,14 @@ local function turnoff_afterburner()
          if already_aboff then
             return _autonav_abort(_("manual commands at approach"))
          else
-            if not pp:outfitToggle( n.slot ) then
+            if not pp:outfitToggle( n.slot, false ) then
                -- Failed to disable
                return _autonav_abort(_("manual commands at approach"))
             end
          end
       end
    end
-   already_aboff=true
+   already_aboff = true
 end
 
 --[[
