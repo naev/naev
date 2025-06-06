@@ -5,11 +5,12 @@ from os.path import basename
 from ssys import nam2base, getpath, PATH
 
 
+default_col = (0.25, 0.25, 0.25)
 faction_color = {
-   None:                (0.25, 0.25, 0.25),
-   'empire':            (0.0,  0.9,  0.0),
-   'zalek':             (0.5,  0.0,  0.0),
-   'dvaered':           (0.5,  0.2,  0.0),
+   None:                default_col,
+   'empire':            (0.0,  0.85, 0.0),
+   'zalek':             (0.6,  0.0,  0.0),
+   'dvaered':           (0.6,  0.2,  0.0),
    'sirius':            (0.0,  0.7,  0.8),
    'soromid':           (0.95, 0.5,  0.0),
    'frontier':          (0.8,  0.8,  0.0),
