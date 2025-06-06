@@ -14,8 +14,8 @@
   <gfx type="shader" size="20" col_size="13">particles/eruptor.frag</gfx>
   <lua>outfits/weapons/plasma_eruptor.lua</lua>
   <sound>plasma</sound>
-  <spfx_shield>PlaM</spfx_shield>
-  <spfx_armour>PlaM</spfx_armour>
+  <spfx_shield>Pla-M</spfx_shield>
+  <spfx_armour>Pla-M</spfx_armour>
   <delay>0.07</delay>
   <speed>400</speed>
   <range>1100</range>

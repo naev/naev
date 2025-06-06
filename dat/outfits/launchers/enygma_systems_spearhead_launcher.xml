@@ -24,8 +24,8 @@
   <gfx>spearhead.webp</gfx>
   <sound>missile</sound>
   <sound_hit>medexp0</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">14</duration>
   <accel>150</accel>

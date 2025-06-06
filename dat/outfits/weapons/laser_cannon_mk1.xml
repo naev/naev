@@ -12,8 +12,8 @@
  <specific type="bolt">
   <gfx type="shader" size="7" col_size="5">particles/laser_red.frag</gfx>
   <sound>laser</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>0.8</delay>
   <speed>1100</speed>
   <range>900</range>

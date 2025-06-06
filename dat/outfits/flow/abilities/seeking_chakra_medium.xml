@@ -16,8 +16,8 @@
   <gfx type="shader" size="20" col_size="16">particles/chakra.frag</gfx>
   <sound>seeking_chakra</sound>
   <sound_hit>chakra_explosion</sound_hit>
-  <spfx_shield>ChakraS</spfx_shield>
-  <spfx_armour>ChakraS</spfx_armour>
+  <spfx_shield>Chakra-S</spfx_shield>
+  <spfx_armour>Chakra-S</spfx_armour>
   <trail_generator x="-7">sirius_chakra</trail_generator>
   <duration blowup="armour">12</duration>
   <accel>1100</accel>

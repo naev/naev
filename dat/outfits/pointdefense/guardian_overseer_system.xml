@@ -16,8 +16,8 @@
   <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx>ripperM.png</gfx>
   <sound>ripper</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.2</delay>
   <speed>800</speed>
   <range>1000</range>

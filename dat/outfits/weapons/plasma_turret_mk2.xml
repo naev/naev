@@ -15,7 +15,7 @@
   <lua>outfits/weapons/plasma2.lua</lua>
   <gfx>plasma2.png</gfx>
   <sound>plasma</sound>
-  <spfx_shield>ShiS</spfx_shield>
+  <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
   <delay>1.4</delay>
   <speed>700</speed>

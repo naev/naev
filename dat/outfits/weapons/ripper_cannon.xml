@@ -13,8 +13,8 @@
  <specific type="bolt">
   <gfx type="shader" size="8" col_size="6">particles/ripper_green.frag</gfx>
   <sound>ripper</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.2</delay>
   <speed>1200</speed>
   <range>1100</range>

@@ -27,8 +27,8 @@
   <gfx>zalek_reaper.png</gfx>
   <sound>1-second-detachment</sound>
   <sound_hit>lrgexp0</sound_hit>
-  <spfx_shield>ExpL</spfx_shield>
-  <spfx_armour>ExpL</spfx_armour>
+  <spfx_shield>Exp-L</spfx_shield>
+  <spfx_armour>Exp-L</spfx_armour>
   <trail_generator x="-15">zalek-missileL</trail_generator>
   <duration blowup="armour">35</duration>
   <accel>200</accel>

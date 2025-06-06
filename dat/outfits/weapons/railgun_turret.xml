@@ -14,8 +14,8 @@
  <specific type="turret bolt">
   <gfx>massL.png</gfx>
   <sound>mass</sound>
-  <spfx_shield>ShiM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Shi-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <delay>1.7</delay>
   <speed>700</speed>
   <range>2200</range>
