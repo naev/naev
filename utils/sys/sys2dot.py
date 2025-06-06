@@ -4,9 +4,9 @@ if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
 
-from sys import argv,stderr
-from os.path import basename
-import xml.etree.ElementTree as ET
+from sys import argv, stderr
+
+from sys2graph import xml_files_to_graph
 
 
 anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
@@ -74,54 +74,8 @@ heavy_virtual_edges=[
    ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
 ]
 
-def xml_files_to_graph(args):
-   name2id = dict()
-   name, acc, pos, tradelane = [], [], [], set()
-
-   for i in range(len(args)):
-      bname = basename(args[i])
-      if bname[-4:] != '.xml':
-         stderr.write('err: "' + args[i] + '"\n')
-         continue
-
-      bname = bname[:-4]
-      name.append(bname)
-      T=ET.parse(args[i]).getroot()
-
-      try:
-         name[-1] = T.attrib['name']
-      except:
-         stderr.write('no name defined in "' + bname + '"\n')
-
-      try:
-         e = T.find('pos')
-         pos.append((bname, (e.attrib['x'], e.attrib['y'])))
-      except:
-         stderr.write('no position defined in "' + bname + '"\n')
-
-      for e in T.findall('tags/tag'):
-         if e.text == 'tradelane':
-            tradelane.add(bname)
-            break
-
-      name2id[name[-1]] = bname
-      acc.append([])
-      count = 1
-      for e in T.findall('./jumps/jump'):
-         try:
-            acc[-1].append((e.attrib['target'], e.find('hidden') is not None))
-         except:
-            stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
-      count += 1
-
-   n2i = lambda x:name2id[x]
-   ids = [n2i(x) for x in name]
-   acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
-   return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane
-
-
-def main(args, fixed_pos = False):
-   V, E, pos, tl = xml_files_to_graph(args)
+def main( args, fixed_pos = False, color = False ):
+   V, E, pos, tl, colors = xml_files_to_graph(args, color)
    print('graph g{')
    print('\tepsilon=0.0000001')
    print('\tmaxiter=1000')
@@ -160,15 +114,23 @@ def main(args, fixed_pos = False):
       if i[0] == '_' and fixed_pos:
          continue
       # Don't include disconnected systems
-      if E[i] != [] or (fixed_pos and i=='zied'):
+      if E[i] != [] or fixed_pos:
          s = '\t"'+i+'" ['
          if i[0] != '_':
             (x, y) = pos[i]
             x = round(float(x)*factor, 9)
             y = round(float(y)*factor, 9)
             s += 'pos="'+str(x)+','+str(y)+('!' if fixed_pos else '')+'";'
-         s += 'label="'+V[i].replace('-','- ').replace(' ','\\n')+'"'
+         label = V[i]
+         for t in [('-','- '), (' ','\\n'), ('Test\\nof','Test of')]:
+            label = label.replace(*t)
+         s += 'label="' + label + '"'
 
+         if color:
+            cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
+            rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
+            s += ';fillcolor="#'+rgb+'"'
+            
          if i == 'sol':
             s += ';color=red'
 
@@ -202,8 +164,9 @@ def main(args, fixed_pos = False):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print("usage:",argv[0],'[-k] <sys1.xml> ...')
+      print('usage: ', argv[0], '[-c]', '[-k]', '<sys1.xml>', '...')
       print('Outputs the graph in dot format.')
+      print('If -c is set, use faction colors (slower).')
       print('If -k is set, the nodes have the keep_position marker.')
       print('Examples:')
       print('  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
@@ -214,7 +177,10 @@ if __name__ == '__main__':
       if keep := '-k' in argv:
          argv.remove('-k')
 
+      if color := '-c' in argv:
+         argv.remove('-c')
+
       if (ign := [f for f in argv[1:] if not f.endswith('.xml')]) != []:
          stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
 
-      main([f for f in argv[1:] if f.endswith('.xml')], keep)
+      main([f for f in argv[1:] if f.endswith('.xml')], keep, color)

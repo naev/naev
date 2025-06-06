@@ -1,11 +1,18 @@
 # python3
 
 
+import os
+import sys
 import xml.etree.ElementTree as ET
 from sys import argv, stderr
-import os
-script_dir = os.path.dirname(__file__)
+
 getpath = lambda *x: os.path.realpath(os.path.join(*x))
+
+script_dir = os.path.dirname(__file__)
+sys.path.append(getpath(script_dir, '..'))
+
+from xml_name import xml_name as nam2base
+
 PATH = getpath(script_dir, '..', '..', 'dat')
 
 from geometry import vec
@@ -51,28 +58,15 @@ class starmap(dict):
             self[key] = None
       return self[key]
 
-def sysnam2sys( nam ):
-   nam = nam.strip()
-   for t in [(' ', '_'), ("'s", 's'), ('C-', 'C')]:
-      nam = nam.replace(*t)
-   return nam.lower()
-
-def spobnam2spob( nam ):
-   nam = nam.strip()
-   for t in [(' ', '_'), ("O'", '\n'), ("'", ''), ('\n', "O'"), ("-O'", '\n'),
-         ('-', ''), ('\n', "-O'"), ('&', ''), ('.','')]:
-      nam = nam.replace(*t)
-   return nam.lower()
-
 def sysneigh(sys):
    T = ET.parse(ssys_fil(sys)).getroot()
    acc = []
    count = 1
    for e in T.findall('./jumps/jump'):
       try:
-         acc.append((sysnam2sys(e.attrib['target']), e.find('hidden') is not None))
+         acc.append((nam2base(e.attrib['target']), e.find('hidden') is not None))
       except:
-         stderr.write('no target defined in "'+sys+'"jump#'+str(count)+'\n')
+         stderr.write('no target defined in "'+sys+'" jump '+str(count)+'\n')
       count += 1
    return acc
 

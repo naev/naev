@@ -14,8 +14,8 @@
  <specific type="turret bolt">
   <gfx>ionL.png</gfx>
   <sound>ion</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.4</delay>
   <speed>500</speed>
   <range>1300</range>

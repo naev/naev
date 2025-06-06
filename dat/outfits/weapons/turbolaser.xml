@@ -14,8 +14,8 @@
  <specific type="turret bolt">
   <gfx type="shader" size="15" col_size="8">particles/laser_purple.frag</gfx>
   <sound>laser</sound>
-  <spfx_shield>ShiM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Shi-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <delay>1.45</delay>
   <speed>1300</speed>
   <range>2400</range>

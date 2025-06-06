@@ -27,8 +27,8 @@
   <gfx>fury.png</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-7">fire-missileS</trail_generator>
   <duration blowup="armour">3</duration>
   <accel>500</accel>

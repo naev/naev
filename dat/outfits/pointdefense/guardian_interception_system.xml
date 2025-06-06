@@ -16,8 +16,8 @@
   <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx>laser2M.png</gfx>
   <sound>laser</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>0.5</delay>
   <speed>900</speed>
   <range>800</range>

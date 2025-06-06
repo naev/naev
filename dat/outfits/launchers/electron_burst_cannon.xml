@@ -25,8 +25,8 @@
   <gfx>electron.png</gfx>
   <sound>neutron</sound>
   <sound_hit>empexplode</sound_hit>
-  <spfx_shield>EmpS</spfx_shield>
-  <spfx_armour>EmpM</spfx_armour>
+  <spfx_shield>Emp-S</spfx_shield>
+  <spfx_armour>Emp-M</spfx_armour>
   <duration blowup="shield">1</duration>
   <accel>0</accel>
   <speed>1300</speed>

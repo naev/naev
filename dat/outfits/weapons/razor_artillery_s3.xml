@@ -15,8 +15,8 @@
   <gfx type="shader" size="6.6" col_size="6.6">particles/razor_s3.frag</gfx>
   <lua>outfits/weapons/razor.lua</lua>
   <sound>ion</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>0.8</delay>
   <speed>700</speed>
   <range>1300</range>

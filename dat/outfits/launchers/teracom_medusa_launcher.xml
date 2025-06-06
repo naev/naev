@@ -24,8 +24,8 @@
   <gfx>seeker.png</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
-  <spfx_shield>EmpM</spfx_shield>
-  <spfx_armour>EmpM</spfx_armour>
+  <spfx_shield>Emp-M</spfx_shield>
+  <spfx_armour>Emp-M</spfx_armour>
   <trail_generator x="-7">missile</trail_generator>
   <duration blowup="armour">11</duration>
   <accel>200</accel>

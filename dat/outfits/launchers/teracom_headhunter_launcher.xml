@@ -26,8 +26,8 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
   <gfx>headhunter.png</gfx>
   <sound>missile</sound>
   <sound_hit>medexp0</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-7">fire-missile</trail_generator>
   <duration blowup="armour">10.5</duration>
   <accel>200</accel>

@@ -24,8 +24,8 @@
   <gfx>shatterer.webp</gfx>
   <sound>missile</sound>
   <sound_hit>bansheeexp</sound_hit>
-  <spfx_shield>ExpS</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-S</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-7">missile</trail_generator>
   <duration blowup="armour">2</duration>
   <accel>900</accel>

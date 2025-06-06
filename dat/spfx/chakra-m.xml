@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spfx name="ExpL">
- <anim>2</anim>
+<spfx name="Chakra-M">
+ <anim>0.91</anim>
  <shader>
   <vert>project_pos.vert</vert>
-  <frag>explosion.frag</frag>
+  <frag>chakra_exp.frag</frag>
   <size>100</size>
   <uniforms>
-   <u_grain x="0.3125" />
-   <u_speed x="0.5" />
-   <u_steps int="1" x="10" />
+   <u_speed x="1.1" />
+   <u_grain x="1.3" />
   </uniforms>
  </shader>
 </spfx>

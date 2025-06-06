@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-from ssys import vec, fil_ET, ssys_fil, sysnam2sys, sysneigh, vec_from_element, vec_to_element
+from ssys import vec, fil_ET, ssys_fil, sysneigh, vec_from_element, vec_to_element
 from geometry import bb
 
 
@@ -52,7 +52,7 @@ for k in pos:
    pos[k] += oldbb.mini() - bbox.mini()
    again += pos[k]
 
-stderr.write(str(oldbb) + ' -> ' + str(bbox) + '\n')
+stderr.write(str(oldbb) + ' -> ' + str(bbox))
 stderr.write(' -> ' + str(again) + '\n')
 
 
@@ -203,6 +203,20 @@ for k in pos:
          v = pos[k] - pos[n]
          if v.size() < avg:
             pos[k] = pos[n] + v.normalize(avg)
+
+
+# Position virtual systems
+
+v = vec(avg, 0) * 0.4
+for f, t, a in [
+   ('beeklo',     'crimson_gauntlet',        120),
+   ('anrique',    'test_of_renewal',         90),
+   ('anarbalis',  'test_of_purification',    -60),
+   ('churchill',  'test_of_alacrity',        0),
+   ('ulysses',    'test_of_enlightenment',   135),
+   ('aesir',      'test_of_devotion',        135),
+]:
+   pos[t] = pos[f] + v.rotate(a)
 
 
 # Apply to ssys/

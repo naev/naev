@@ -15,8 +15,8 @@
   <lua>outfits/lib/matrix_sell.lua</lua>
   <gfx>massM.png</gfx>
   <sound>mass</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>3.2</delay>
   <speed>500</speed>
   <range>1000</range>
