@@ -571,7 +571,7 @@ function __run_target( target )
 
    -- Outfits for running away
    if mem._o then
-      if mem._o.afterburner and plt:energy() > 30 then
+      if mem._o.afterburner and plt:energy() > 35 then
          plt:outfitToggle( mem._o.afterburner, true )
       elseif mem._o.blink_drive then
          plt:outfitToggle( mem._o.blink_drive, true )
@@ -654,10 +654,11 @@ function _run_hyp( data )
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o then
       if mem._o.afterburner then
+         local e = plt:energy()
          -- Afterburner: activate while far away from jump
-         if jdist > 3 * bdist and plt:energy() > 30 then
+         if jdist > 3 * bdist and e > 35 then
             plt:outfitToggle( mem._o.afterburner, true )
-         else
+         elseif e < 10 then
             plt:outfitToggle( mem._o.afterburner, false )
          end
       end
@@ -718,10 +719,11 @@ function _run_landgo( data )
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o and dir < math.rad(25) then
       if mem._o.afterburner then
+         local e = plt:energy()
          -- Afterburner: activate while far away from jump
-         if dist > 3 * bdist and plt:energy() > 30 then
+         if dist > 3 * bdist and e > 35 then
             plt:outfitToggle( mem._o.afterburner, true )
-         else
+         elseif e < 10 then
             plt:outfitToggle( mem._o.afterburner, false )
          end
       end

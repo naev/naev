@@ -204,11 +204,7 @@ function backoff( target )
 
    -- When out of range pop task
    if ai.dist2( target ) > math.pow(tdist,2) then
-      -- Turn off afterburner if applicable
-      if mem._o and mem._o.afterburner then
-         p:outfitToggle( mem._o.afterburner, false )
-      end
-      ai.poptask()
+      ai.poptask() -- Should turn off outfits like afterburner
       return
    end
 
