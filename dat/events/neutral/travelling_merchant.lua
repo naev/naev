@@ -33,6 +33,7 @@ local fmt = require "format"
 local love_shaders = require 'love_shaders'
 local der = require "common.derelict"
 local poi = require "common.poi"
+local th = require "common.treasure_hunt"
 
 local p, broadcastid, hailed_player, second_hail, timerdelay, broadcast_first -- Non-persistent state
 local gen_outfits -- Forward declaration
@@ -154,6 +155,11 @@ function gen_outfits ()
    -- Wild space
    if faction.get("Lost"):known() then
       table.insert( outfits, "Berserk Chip" )
+   end
+
+   -- Treasure hunt
+   if th.maps_solved() > 0 then
+      table.insert( outfits, "Mystery Outfit" )
    end
 
    -- Bonus for killing executors

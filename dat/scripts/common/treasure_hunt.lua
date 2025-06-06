@@ -250,4 +250,12 @@ function lib.maps_owned()
    return naev.cache().treasure_maps
 end
 
+local PLAYERVAR = "treasure_map_completed"
+function lib.map_completed()
+   var.push( PLAYERVAR, lib.maps_solved()+1 )
+end
+function lib.maps_solved()
+   return var.peek( PLAYERVAR ) or 0
+end
+
 return lib

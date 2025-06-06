@@ -145,6 +145,9 @@ local function landed( data )
 
    vn.run()
 
+   -- Mark as completed
+   th.map_completed()
+
    -- Log
    shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
    shiplog.append( "treasurehunt", fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
