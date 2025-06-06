@@ -12,7 +12,7 @@ from geometry import bb, vec
 
 def main( args, color = False, halo = False ):
    dst = open('out.pov', 'w')
-   V, E, pos, tradelane, colors = xml_files_to_graph(args, color)
+   V, pos, E, tradelane, colors = xml_files_to_graph(args, color)
    b = bb()
 
    for i in V:

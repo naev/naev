@@ -9,37 +9,26 @@ from sys import argv, stderr
 from sys2graph import xml_files_to_graph
 
 
+del_edges = [
+   #('titus', 'vedalus'),
+   #('kelvos', 'mason'),
+   #('khaas', 'diadem'),
+]
+
+del_edges = set(del_edges + [(j, i) for (i, j) in del_edges])
+
 anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
    'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
 
-virtual_edges=[
-   ('flow', 'basel', 2, 1),
-   ('deneb', 'booster', 1.5, 1),
-   ('ngc4746', 'logania', 1, 1),
-]
-
-prv = None
-prvj = None
-bhl = 1.0
-for j, i in enumerate(anbh):
-   if prv is None:
-      prv = i
-   else:
-      if prvj is not None:
-         virtual_edges.append(('_'+str(prvj),    '_'+str(j), bhl, 100))
-      prvj = j
-      virtual_edges.append(('anubis_black_hole', '_'+str(j), bhl, 100))
-      virtual_edges.append(('_'+str(j),                 prv, bhl, 100))
-      virtual_edges.append(('_'+str(j),                   i, bhl, 100))
-      prv = None
-
-if prv is not None:
-   virtual_edges.append((prv,                           i, bhl, 100))
-   virtual_edges.append(('_'+str(prvj),   '_'+str(prvj+2), bhl, 100))
-   virtual_edges.append(('_'+str(prvj+2),             prv, bhl, 100))
-   virtual_edges.append(('_'+str(prvj+2),      '_'+str(1), bhl, 100))
-
-heavy_virtual_edges=[
+# In the form: (from, to, length, visible)
+#  - length is 1 if False, None or missing
+#  - visible is False if missing
+virtual_edges = [
+   #('khaas', 'vedalus', False, True),
+   #('andres', 'mason', False, True),
+   ('flow', 'basel', 2),
+   ('deneb', 'booster', 1.5),
+   ('ngc4746', 'logania'),
    #('akodu', 'kenvis'),
    #('tau_ceti', 'sigur'), ('tepvin', 'carrza'),
    ('thirty_stars', 'thorndyke'),
@@ -74,13 +63,34 @@ heavy_virtual_edges=[
    ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
 ]
 
+prv, prvj  = None, None
+for j, i in enumerate(anbh):
+   if prv is None:
+      prv = i
+   else:
+      if prvj is not None:
+         virtual_edges.append(('_'+str(prvj),    '_'+str(j)))
+      prvj = j
+      virtual_edges.append(('anubis_black_hole', '_'+str(j)))
+      virtual_edges.append(('_'+str(j),                 prv))
+      virtual_edges.append(('_'+str(j),                   i))
+      prv = None
+
+if prv is not None:
+   virtual_edges.append((prv,                           i))
+   virtual_edges.append(('_'+str(prvj),   '_'+str(prvj+2)))
+   virtual_edges.append(('_'+str(prvj+2),             prv))
+   virtual_edges.append(('_'+str(prvj+2),      '_'+str(1)))
+
+virtual_edges = [(t + (False, False))[:4] for t in virtual_edges]
+virtual_edges = [t[:2]+((t[2] or 1.0),)+t[3:] for t in virtual_edges]
+
+
 def main( args, fixed_pos = False, color = False ):
-   V, E, pos, tl, colors = xml_files_to_graph(args, color)
+   V, pos, E, tl, colors = xml_files_to_graph(args, color)
    print('graph g{')
-   print('\tepsilon=0.0000001')
-   print('\tmaxiter=1000')
-   #print('\tDamping=0.5')
-   #print('\tmode=ipsep')
+   print('\tepsilon=0.000001')
+   print('\tmaxiter=2000')
 
    # 1inch=72pt
    if fixed_pos:
@@ -96,14 +106,14 @@ def main( args, fixed_pos = False, color = False ):
    reflen = 0.5
    print('\tnode[width=0.5]')
    print('\tedge[len='+str(reflen)+']')
-   print('\tedge[weight=100]')
 
    if fixed_pos:
       print('\tnode[pin=true]')
 
    virt_v = set()
-   for (f, t, l, w) in virtual_edges:
-      virt_v.update({f, t})
+   for e in virtual_edges:
+      if not e[3]:
+         virt_v.update(set(e[:2]))
 
    if not fixed_pos:
       for i in virt_v:
@@ -136,6 +146,8 @@ def main( args, fixed_pos = False, color = False ):
 
          print(s + ']')
          for dst, hid in E[i]:
+            if (i, dst) in del_edges:
+               continue
             suff = []
             if i in tl and dst in tl:
                suff.extend(['style=bold', 'penwidth=4.0'])
@@ -150,16 +162,19 @@ def main( args, fixed_pos = False, color = False ):
                print('"'.join(['\t', i, edge, dst, suff]))
 
    if not fixed_pos:
-      print('\tedge[len=' + str(reflen) + ';weight=100]')
+      print('\tedge[len=' + str(reflen) + ']')
       print('\tedge[style="dashed";color=grey;pendwidth=1.5]')
-      for (f, t) in heavy_virtual_edges:
-         inv = '[style=invis]' if (f in virt_v or t in virt_v) else ''
-         print('\t"'+f+'"--"'+t+'"'+inv)
+      for (f, t, l, v) in virtual_edges:
+         prop = []
+         if (f in virt_v or t in virt_v) and not v:
+            prop.append('style=invis')
+         if l != 1.0:
+            prop.append('len='+str(l*reflen))
 
-      for (f, t, l, w) in virtual_edges:
-         inv = ', style=invis' if (f in virt_v or t in virt_v) else ''
-         print('\t"'+f+'"--"'+t+'" [len='+str(l*reflen)+',weight='+str(w)+inv+']')
-
+         prop = ','.join(prop)
+         if prop != '':
+            prop = ' [' + prop + ']'
+         print('\t"' + f + '"--"' + t + '"' + prop)
    print('}')
 
 if __name__ == '__main__':

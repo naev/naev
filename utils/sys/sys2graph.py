@@ -95,4 +95,4 @@ def xml_files_to_graph( args, get_colors = False ):
    n2i = lambda x:name2id[x]
    ids = [n2i(x) for x in name]
    acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
-   return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane, color
+   return dict(zip(ids,name)), dict(pos), dict(zip(ids,acc)), tradelane, color
