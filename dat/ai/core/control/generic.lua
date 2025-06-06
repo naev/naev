@@ -119,6 +119,21 @@ local stateinfo = {
       fighting = true,
       noattack = true,
    },
+   runaway_land = {
+      running  = true,
+      fighting = true,
+      noattack = true,
+   },
+   runaway_jump = {
+      running  = true,
+      fighting = true,
+      noattack = true,
+   },
+   runaway_nojump = {
+      running  = true,
+      fighting = true,
+      noattack = true,
+   },
    refuel = {
       noattack = true,
    },
