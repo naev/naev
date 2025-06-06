@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<trail name="missile-L" inherits="default">
+<trail name="fireS" inherits="fire">
  <thickness>4</thickness>
- <ttl>0.13</ttl>
+ <ttl>0.275</ttl>
 </trail>

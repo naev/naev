@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<trail name="soromid-S" inherits="soromid">
+<trail name="fire-missileL" inherits="fire">
  <thickness>5</thickness>
- <ttl>0.75</ttl>
+ <ttl>0.25</ttl>
 </trail>
