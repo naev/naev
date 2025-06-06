@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Treasure Map">
  <general>
-  <typename>Treasure Map</typename>
+  <typename>Map</typename>
   <rarity>2</rarity>
   <slot>none</slot>
   <size>medium</size>
