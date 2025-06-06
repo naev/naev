@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Mystery Outfit">
+ <general>
+  <rarity>2</rarity>
+  <slot>none</slot>
+  <size>medium</size>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A mystery outfit of the finest quality! Guaranteed to be of two star rarity. You will not know what you get until you buy it.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>0</cpu>
+ </general>
+ <specific type="modification">
+  <lua>outfits/misc/mystery_outfit.lua</lua>
+ </specific>
+</outfit>

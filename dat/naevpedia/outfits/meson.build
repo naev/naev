@@ -231,6 +231,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/misc/medium_combat_vessel_license.xml',
    root / 'dat/outfits/misc/medium_weapon_license.xml',
    root / 'dat/outfits/misc/mercenary_license.xml',
+   root / 'dat/outfits/misc/mystery_outfit.xml',
    root / 'dat/outfits/pointdefense/dvaered_flare_battery.xml',
    root / 'dat/outfits/pointdefense/guardian_interception_system.xml',
    root / 'dat/outfits/pointdefense/guardian_overseer_system.xml',
