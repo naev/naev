@@ -1,6 +1,7 @@
 <outfit name="Prototype Systems T-IVa 'Quickshell'">
  <general>
   <unique />
+  <rarity>6</rarity>
   <shortname>P.S. T-IVa 'Qickshell'</shortname>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
