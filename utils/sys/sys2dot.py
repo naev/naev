@@ -130,7 +130,7 @@ def main( args, fixed_pos = False, color = False ):
             cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
             s += ';fillcolor="#'+rgb+'"'
-            
+
          if i == 'sol':
             s += ';color=red'
 

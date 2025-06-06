@@ -14,7 +14,7 @@ def main( args, color = False ):
    dst = open('out.pov', 'w')
    V, E, pos, tradelane, colors = xml_files_to_graph(args, color)
    b = bb()
-   
+
    for i in V:
       pos[i] = vec(pos[i])
       b += pos[i]

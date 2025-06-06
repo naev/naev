@@ -80,7 +80,7 @@ def xml_files_to_graph( args, get_colors = False ):
          if (fact:= fact[1]) not in faction_color:
             fact = None
          color[bname] = faction_color[fact]
- 
+
       name2id[name[-1]] = bname
       acc.append([])
       count = 1
@@ -95,4 +95,3 @@ def xml_files_to_graph( args, get_colors = False ):
    ids = [n2i(x) for x in name]
    acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
    return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane, color
-
