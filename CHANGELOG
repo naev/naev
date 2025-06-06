@@ -67,7 +67,7 @@
          * Ship Visibility that affects detection, signature, and stealth ranges
       * Engine exposes some constants that can be modified by plugins
    * Fixes
-      * The Bite turns off afterburner
+      * The Bite turns off afterburners
       * Hiding on screen display information for missions also hides system markers
       * Sensor anomalies now appear in the on-screen display
       * Fixed texture interpolation when alpha is 0 for pixels
@@ -89,6 +89,8 @@
       * Getting disabled turns off stealth
       * Carried fighters don't carry commodities
       * darkshodw: enemies shouldn't see through stealth
+      * Cryogenic Nanobots no longer restore health to 100% on completing cooldown regardless of damage taken
+      * Improved AI braking skills
 
 * 0.12.5
    * Fixed bug causing lower diversity in ship spawning
