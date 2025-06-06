@@ -23,7 +23,7 @@ void main (void)
    if (colour_out.a <= 0.0)
       discard;
 
-   vec2 uvoff = vec2(1.4*u_time,u_r);
+   vec2 uvoff = vec2(1.4*u_time,u_r*100.0);
    vec2 nuv = uv+uvoff;
    nuv *= 1.5;
    float n = snoise( nuv );

@@ -40,7 +40,7 @@ function ontoggle( _p, _po, on, nat )
    return true
 end
 
-function onshoot( _p, _po, _on )
+function onshoot( _p, _po )
    -- Doesn't fire normally,
    return false
 end

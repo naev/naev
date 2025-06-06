@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Plasma Eruptor">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <mass>28</mass>
+  <price>100000</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-45</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx type="shader" size="20" col_size="13">particles/eruptor.frag</gfx>
+  <lua>outfits/weapons/plasma_eruptor.lua</lua>
+  <sound>plasma</sound>
+  <spfx_shield>PlaM</spfx_shield>
+  <spfx_armour>PlaM</spfx_armour>
+  <delay>0.07</delay>
+  <speed>400</speed>
+  <range>1100</range>
+  <falloff>1000</falloff>
+  <energy>2.2</energy>
+  <trackmin>0</trackmin>
+  <trackmax>4500</trackmax>
+  <swivel>22</swivel>
+  <dispersion>5</dispersion>
+  <speed_dispersion>10</speed_dispersion>
+  <radius>20</radius>
+  <damage>
+   <type>plasma</type>
+   <penetrate>11</penetrate>
+   <physical>2.9</physical>
+  </damage>
+ </specific>
+ <tags>
+  <tag>soromid</tag>
+ </tags>
+</outfit>

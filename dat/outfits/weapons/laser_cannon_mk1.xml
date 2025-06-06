@@ -10,7 +10,7 @@
   <cpu>-5</cpu>
   </general>
  <specific type="bolt">
-  <gfx>laser1S.png</gfx>
+  <gfx type="shader" size="7" col_size="5">particles/laser_red.frag</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

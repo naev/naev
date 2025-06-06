@@ -313,6 +313,7 @@ dat/outfits/launchers/enygma_systems_huntsman_launcher.xml
 dat/outfits/launchers/enygma_systems_spearhead_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml
+dat/outfits/launchers/pincushion_battery.xml
 dat/outfits/launchers/repeating_banshee_launcher.xml
 dat/outfits/launchers/shatterer_launcher.xml
 dat/outfits/launchers/space_mine_layer.xml
@@ -500,6 +501,7 @@ dat/outfits/weapons/plasma_blaster_mk1.xml
 dat/outfits/weapons/plasma_blaster_mk2.xml
 dat/outfits/weapons/plasma_cannon.xml
 dat/outfits/weapons/plasma_cluster_cannon.xml
+dat/outfits/weapons/plasma_eruptor.xml
 dat/outfits/weapons/plasma_turret_mk1.xml
 dat/outfits/weapons/plasma_turret_mk2.xml
 dat/outfits/weapons/ragnarok_beam.xml
@@ -3402,6 +3404,7 @@ dat/outfits/intrinsic/escape_pod.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/hyperdrive_retool.lua
 dat/outfits/intrinsic/port_and_polish.lua
+dat/outfits/launchers/pincushion_battery.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/alone.lua
 dat/outfits/lib/bioplasma.lua
@@ -3448,6 +3451,7 @@ dat/outfits/weapons/antimatter_lance.lua
 dat/outfits/weapons/energy_harpoon.lua
 dat/outfits/weapons/plasma.lua
 dat/outfits/weapons/plasma2.lua
+dat/outfits/weapons/plasma_eruptor.lua
 dat/outfits/weapons/razor.lua
 dat/rep.lua
 dat/rescue.lua
@@ -3478,6 +3482,7 @@ dat/scripts/common/frontier.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua
 dat/scripts/common/goddard.lua
+dat/scripts/common/loot.lua
 dat/scripts/common/lucas.lua
 dat/scripts/common/minerva.lua
 dat/scripts/common/nebu_research.lua
