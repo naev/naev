@@ -49,9 +49,9 @@ void expl_explode( double x, double y, double vx, double vy, double radius,
    if ( exp_s == -1 ) {
       /* TODO This is all horrible and I wish we could either parametrize it or
        * get rid of the hardcoding. */
-      exp_s   = spfx_get( "ExpS" );
-      exp_m   = spfx_get( "ExpM" );
-      exp_l   = spfx_get( "ExpL" );
+      exp_s   = spfx_get( "Exp-S" );
+      exp_m   = spfx_get( "Exp-M" );
+      exp_l   = spfx_get( "Exp-L" );
       exp_200 = spfx_get( "Exp200" );
       exp_300 = spfx_get( "Exp300" );
       exp_400 = spfx_get( "Exp400" );

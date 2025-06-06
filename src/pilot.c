@@ -2614,9 +2614,9 @@ void pilot_update( Pilot *pilot, double dt )
             l = ( pilot->id == PLAYER_ID ) ? SPFX_LAYER_FRONT
                                            : SPFX_LAYER_MIDDLE;
             if ( RNGF() > 0.8 )
-               spfx_add( spfx_get( "ExpM" ), px, py, vx, vy, l );
+               spfx_add( spfx_get( "Exp-M" ), px, py, vx, vy, l );
             else
-               spfx_add( spfx_get( "ExpS" ), px, py, vx, vy, l );
+               spfx_add( spfx_get( "Exp-S" ), px, py, vx, vy, l );
          }
 
          /* completely destroyed with final explosion */
