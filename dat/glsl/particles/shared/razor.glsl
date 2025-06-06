@@ -23,7 +23,7 @@ void main (void)
    if (colour_out.a <= 0.0)
       discard;
 
-   vec2 nuv = uv+vec2(2.0*u_time,u_r);
+   vec2 nuv = uv+vec2(2.0*u_time,u_r*100.0);
    float n = snoise( nuv );
    //n += 0.5*snoise( 2.0*nuv ); // At the sizes we render, probably don't need two octaves...
    colour_out.rgb += smoothstep( 0.3, 1.0, -d ) * (n*0.7+0.3);

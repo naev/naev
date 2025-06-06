@@ -14,7 +14,7 @@ void main (void)
 {
    vec2 uv = pos;
    float fade = min(u_time*6.0,u_fade);
-   float n = snoise( 1.5*uv+vec2(2.0*u_time,u_r) );
+   float n = snoise( 1.5*uv+vec2(2.0*u_time,u_r*100.0) );
 
    float d = sdVesica( uv.yx+vec2(0.0,0.1*n), 2.3, 2.05+max(0.25*(1.0-fade),0.0) );
 

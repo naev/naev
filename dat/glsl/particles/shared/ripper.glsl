@@ -15,7 +15,7 @@ void main (void)
    vec2 uv = pos;
 
    float fade = min(u_time*6.0,u_fade);
-   float n = snoise( uv+vec2(2.0*u_time,u_r) );
+   float n = snoise( uv+vec2(2.0*u_time,u_r*100.0) );
    vec2 offset = vec2( -0.3, 0.0 );
 
    uv.y = abs(uv.y);
