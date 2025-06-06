@@ -2673,7 +2673,7 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
       po->flags |= PILOTOUTFIT_ISON_TOGGLE;
       return ret;
    } else {
-      po->flags &= PILOTOUTFIT_ISON_TOGGLE;
+      po->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
       return !ret;
    }
 }
