@@ -12,7 +12,7 @@ import heapq
 fact = 0.2
 def cost_func( sys_dirs, sm_dirs ):
    f = 1.0 / len(sys_dirs)
-   L = [(x.normalize(f), y.normalize((f+fact))) for x, y in zip(sys_dirs, sm_dirs)]
+   L = [(x.normalize(f), y.normalize((f*(1.0+fact)))) for x, y in zip(sys_dirs, sm_dirs)]
    return lambda a: sum([(x.rotate_rad(a)-y).size() for x, y in L]) - fact
 
 def best( cost, a, b ):
@@ -41,16 +41,22 @@ def _relax_dir( sys_dirs, sm_dirs, eps = 0.00001 ):
 
    points.sort()
    inter = [(a, b) for (be, a, b) in inter]
-   return points, inter, mi
+   return points, inter, mi, cost
 
-def _debug_relax( p, inter, t, out ):
+def _debug_relax( p, inter, t, out, cost ):
    import subprocess
    import tempfile
 
    (x, _y) = t
    plot = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.plot')
    dat = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.dat')
+   dat2 = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '_c.dat')
    png = out + '.png'
+
+   for i in range(500+1):
+      f = 2.0*pi*i/500
+      dat2.write(str(f) + ' ' + str(cost(f)) + ' ' + '\n')
+   dat2.flush()
 
    for t in p:
       dat.write(' '.join(map(str,t)) + '\n')
@@ -63,7 +69,8 @@ def _debug_relax( p, inter, t, out ):
       'set xrange [0:2*' + str(pi) + ']', 'set termoption dashed',
       'set grid',
       'set arrow from ' + str(x) + ', graph 0 to ' + str(x) + ', graph 1 nohead',
-      'plot "' + dat.name + '" using 1:2 w linespoints t "cost(angle)"',
+      'plot "' + dat2.name + '" using 1:2 w lines t "cost(angle)",\\',
+      '     "' + dat.name + '" using 1:2 w linespoints t ""\\',
       ''
    ]))
    plot.flush()
@@ -72,14 +79,14 @@ def _debug_relax( p, inter, t, out ):
 
 # returns angle (deg), cost (lower better)
 def relax_dir( sys_dirs, sm_dirs, eps = 0.00001, debug = False, quiet = False ):
-   p, i, mi = _relax_dir(sys_dirs, sm_dirs, eps)
+   p, i, mi, co = _relax_dir(sys_dirs, sm_dirs, eps)
    if (not quiet) or debug:
       stderr.write(' \033[30;1mpoints: ' + str(len(p)) + ' ')
       stderr.write('badness: ' + str(int(round(mi[1]/2.0*100.0))) + '%\033[0m')
       stderr.write('\n' if not debug else ' ')
 
    if debug:
-      _debug_relax(p, i, mi, debug)
+      _debug_relax(p, i, mi, debug, co)
 
    alpha = mi[0] / pi * 180.0
    if alpha > 180.0:
