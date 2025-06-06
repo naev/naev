@@ -11,7 +11,7 @@ local luatk = require "luatk"
 local lmap = require "luatk.map"
 local vn = require "vn"
 local fmt = require "format"
-local poi = require "common.poi"
+local loot = require "common.loot"
 
 local view_maps
 local MAP_WIDTH = 400
@@ -127,9 +127,10 @@ local function landed( data )
    -- Handle reward
    local reward_str
    if not data.reward then
-      reward_str = poi.data_str(1)
+      local reward = loot.tier1()
+      reward_str = reward
       vn.func( function ()
-         poi.data_give(1)
+         player.outfitAdd(reward)
       end )
    else -- Defaults to Outfits
       reward_str = data.reward
