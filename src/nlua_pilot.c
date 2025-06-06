@@ -4823,7 +4823,8 @@ static int pilotL_setSpeedLimit( lua_State *L )
  * otherwise.
  *    @luatreturn number The shield in % [0:100] if relative or absolute value
  * otherwise.
- *    @luatreturn number The stress in % [0:100].
+ *    @luatreturn number The stress in % [0:100] if relative or absolute value
+ * otherwise.
  *    @luatreturn boolean Indicates if pilot is disabled.
  * @luafunc health
  */

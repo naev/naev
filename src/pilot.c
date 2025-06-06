@@ -944,13 +944,6 @@ void pilot_cooldown( Pilot *p, int dochecks )
 
    /*
     * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.
-    *
-    * Super heat penalty table:
-    *    300K:  13.4%
-    *    350K:  31.8%
-    *    400K:  52.8%
-    *    450K:  75.6%
-    *    500K: 100.0%
     */
    p->cdelay = ( 5. + sqrt( p->base_mass ) / 2. );
    p->ctimer = p->cdelay * p->stats.cooldown_time;
