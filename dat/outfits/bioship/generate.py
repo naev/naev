@@ -323,7 +323,7 @@ BioOutfit( 'weapon.xml.template', {
     'gfx_end':       'plasma2-end.png',
     'sound':         'bioplasma',
     'spfx_shield':   'Shi-S',
-    'spfx_armour':   'PlaS2',
+    'spfx_armour':   'Pla-S2',
     'lua':           'bioplasma2.lua',
     'delay':         eerp(   1.4,  2.2, *extrapol),
     'speed' :        700,

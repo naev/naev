@@ -16,8 +16,8 @@
   <lua>outfits/pointdefense/pointdefense.lua</lua>
   <gfx type="shader" size="10" col_size="10">particles/spittle.frag</gfx>
   <sound>plasma</sound>
-  <spfx_shield>PlaS2</spfx_shield>
-  <spfx_armour>PlaS2</spfx_armour>
+  <spfx_shield>Pla-S2</spfx_shield>
+  <spfx_armour>Pla-S2</spfx_armour>
   <delay>0.8</delay>
   <speed>100</speed>
   <range>900</range>
