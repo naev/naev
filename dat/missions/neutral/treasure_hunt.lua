@@ -115,7 +115,7 @@ function newmap( data )
    update_desc()
 end
 
-local function landed( _data )
+local function landed( data )
    vn.clear()
    vn.scene()
    vn.transition()
@@ -123,20 +123,32 @@ local function landed( _data )
    vn.na(fmt.f(_([[You land on {spob} that seems to match the treasure map you have.]]),
       {spob=spob.cur()}))
    vn.na(_([[Rerouting all ship power to sensors, you perform a scan of the surrounding area and are able to find a small capsule.]]))
-   local poi_reward = poi.data_str(1)
-   vn.na(fmt.f(_([[You take the capsule aboard and open it up to find {reward}.]]),
-      {reward=poi_reward}))
-   vn.na(fmt.reward(poi_reward))
-   vn.func( function ()
-      poi.data_give(1)
-   end )
+
+   -- Handle reward
+   local reward_str
+   if not data.reward then
+      reward_str = poi.data_str(1)
+      vn.func( function ()
+         poi.data_give(1)
+      end )
+   else -- Defaults to Outfits
+      reward_str = data.reward
+      vn.func( function ()
+         player.outfitAdd(data.reward)
+      end )
+   end
+
+   vn.na(fmt.f(_([[You open up the capsule up to find {reward}.
+
+{obtain}]]),
+      {reward=reward_str, obtain=fmt.reward(reward_str)}))
 
    vn.run()
 
    -- Log
    shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
    shiplog.append( "treasurehunt", fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
-      {sys=system.cur(), spb=spob.cur(), reward=poi_reward}) )
+      {sys=system.cur(), spb=spob.cur(), reward=reward_str}) )
 
    return true
 end
