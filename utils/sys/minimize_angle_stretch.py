@@ -44,12 +44,11 @@ def _relax_dir( sys_dirs, sm_dirs, eps = 0.00001 ):
 def _debug_relax( p, inter, t, out ):
    import subprocess
    import tempfile
-   (x, y) = t
-   plot = tempfile.NamedTemporaryFile(mode='w+t', suffix='.plot')
-   dat = tempfile.NamedTemporaryFile(mode='w+t', suffix='.dat')
-   png = out + '.png'
 
-   stderr.write("\033[30;1mpoints: " + str(len(p)) + '\033[0m ')
+   (x, _y) = t
+   plot = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.plot')
+   dat = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.dat')
+   png = out + '.png'
 
    for t in p:
       dat.write(' '.join(map(str,t)) + '\n')
@@ -70,11 +69,17 @@ def _debug_relax( p, inter, t, out ):
    stderr.write('\033[30;1m<' + png + '>' + '\033[0m\n')
 
 # returns angle (deg), cost (lower better)
-def relax_dir( sys_dirs, sm_dirs, eps = 0.00001, debug = False ):
+def relax_dir( sys_dirs, sm_dirs, eps = 0.00001, debug = False, quiet = False ):
    p, i, mi = _relax_dir(sys_dirs, sm_dirs, eps)
+   if (not quiet) or debug:
+      stderr.write(' \033[30;1mpoints: ' + str(len(p)) + ' ')
+      stderr.write('badness: ' + str(int(round(mi[1]/2.0*100.0))) + '%\033[0m')
+      stderr.write('\n' if not debug else ' ')
+
    if debug:
-      _debug_relax(p, i, mi, out = debug)
-   alpha = mi[0]/pi*180.0
+      _debug_relax(p, i, mi, debug)
+
+   alpha = mi[0] / pi * 180.0
    if alpha > 180.0:
       alpha -= 360.0
    return alpha, mi[1]

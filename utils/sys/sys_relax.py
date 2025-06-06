@@ -22,48 +22,54 @@ def mk_p(L):
    where = pi.index(0)
    return pi[where:] + pi[:where]
 
-def sys_relax( sys ):
+def sys_relax( sys, quiet = True ):
    p = fil_ET(sys)
    T = p.getroot()
    myname = nam2base(T.attrib['name'])
 
-   mapvs = []
-   sysvs = []
-   names = []
-   count = 0
+   mapvs, sysvs, names = [], [], []
    for f in T.findall('./jumps/jump'):
       dst = nam2base(f.attrib['target'])
-      names.append(dst)
       e= f.find('pos')
       # should we require 'was_auto' ?
       if e is not None and 'was_auto' in e.attrib:
+         names.append(dst)
          mapvs.append((sm[dst] - sm[myname]).normalize())
          sysvs.append(vec_from_element(e).normalize())
-         count += 1
 
-   if count>0:
+   if names != []:
       nop = lambda v: v
       flip = nop
-      pi1 = mk_p(mapvs)
-      pi2 = mk_p(sysvs)
+      pi1, pi2 = mk_p(mapvs), mk_p(sysvs)
+      # more than max possible cost <= 2.0
+      uf_cost = 3.0
+      eps = 0.0001
 
       if pi1 == pi2:
          # same permutation -> everything is fine
          pass
-      elif pi1 == pi2[:1] + pi2[1:][::-1]:
-         stderr.write('\033[32m' + basename(sys) + '" flipped !\033[0m\n')
-         flip = lambda sysv: vec(-sysv[0], sysv[1])
       else:
-         stderr.write('\033[33m' + basename(sys) + '" crossed : ')
-         pi1 = [names[i] for i in pi1]
-         pi2 = [names[i] for i in pi2]
-         stderr.write(', '.join(pi1) + ' -> ' + ', '.join(pi2) + '\033[0m\n')
-         return False
+         flip = lambda sysv: vec(-sysv[0], sysv[1])
+         if pi1 == pi2[:1] + pi2[1:][::-1]:
+            stderr.write('\033[32m"' + basename(sys) + '" flipped !\033[0m\n')
+         else:
+            stderr.write('\033[33m"' + basename(sys) + '" crossed : ')
+            pi1 = [names[i] for i in pi1]
+            pi2 = [names[i] for i in pi2]
+            stderr.write(', '.join(pi1) + ' -> ' + ', '.join(pi2) + '\033[0m')
+            stderr.write('\n' if not quiet else '')
+            uf_alpha, uf_cost = relax_dir(sysvs, mapvs, eps = eps/10.0, quiet = quiet)
 
-      eps = 0.001
       out = None
       #out = sys.replace('.xml', '')
-      alpha, _cost = relax_dir([flip(v) for v in sysvs], mapvs, eps = eps/10.0, debug = out)
+      alpha, cost = relax_dir([flip(v) for v in sysvs], mapvs, eps = eps/10.0, debug = out, quiet = quiet )
+      if uf_cost < 3.0:
+         if cost > uf_cost:
+            alpha, flip = uf_alpha, nop
+            stderr.write(' \033[33m[better unflipped]\033[0m\n')
+         else:
+            stderr.write(' \033[33m[better flipped]\033[0m\n')
+
       if abs(alpha) > eps or flip != nop:
          func = lambda x: flip(x).rotate(alpha)
          for e in T.findall('./spobs/spob'):
@@ -87,10 +93,14 @@ if __name__ == '__main__':
    args = argv[1:]
 
    if '-h' in args or '--help' in args or args == []:
-      stderr.write('usage:  ' + basename(argv[0]) + '  <file1> ..\n')
+      stderr.write('usage:  ' + basename(argv[0]) + '  [-v]  <file1> ..\n')
       stderr.write('  Relaxes its input xml ssys files.\n')
+      stderr.write('  If -v is set, display information.')
       exit(0)
 
+   if verbose:= '-v' in args:
+      args.remove('-v')
+
    for i in args:
-      if sys_relax(i):
+      if sys_relax(i, quiet = not verbose):
          print(i)
