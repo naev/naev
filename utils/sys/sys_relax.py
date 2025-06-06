@@ -61,13 +61,11 @@ def sys_relax( sys ):
          return False
 
       eps = 0.001
-      #HERE
       out = None
-      #out = sys.replace('.xml','')
+      #out = sys.replace('.xml', '')
       alpha, _cost = relax_dir([flip(v) for v in sysvs], mapvs, eps = eps/10.0, debug = out)
       if abs(alpha) > eps or flip != nop:
          func = lambda x: flip(x).rotate(alpha)
-         #stderr.write('final rot: '+str(int(round(alpha))).rjust(4)+'°\n')
          for e in T.findall('./spobs/spob'):
             spfil = spob_fil(nam2base(e.text))
             p2 = fil_ET(spfil)

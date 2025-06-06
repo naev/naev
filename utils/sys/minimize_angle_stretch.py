@@ -5,8 +5,6 @@ from sys import stderr
 from geometry import vec
 from math import pi
 import heapq
-import subprocess
-
 
 # [0:2.PI] -> [0,2]
 # max(abs(slope)) = 1
@@ -44,31 +42,32 @@ def _relax_dir( sys_dirs, sm_dirs, eps = 0.00001 ):
    return points, inter, mi
 
 def _debug_relax( p, inter, t, out ):
+   import subprocess
+   import tempfile
    (x, y) = t
-   plot = out + '.plot'
-   dat = out + '.dat'
+   plot = tempfile.NamedTemporaryFile(mode='w+t', suffix='.plot')
+   dat = tempfile.NamedTemporaryFile(mode='w+t', suffix='.dat')
    png = out + '.png'
 
-   stderr.write("\033[30;1m");
-   stderr.write("points: " + str(len(p)) + ' ')
+   stderr.write("\033[30;1mpoints: " + str(len(p)) + '\033[0m ')
 
-   with open(dat, 'wt') as fp:
-      for t in p:
-         fp.write(' '.join(map(str,t)) + '\n')
+   for t in p:
+      dat.write(' '.join(map(str,t)) + '\n')
+   dat.flush()
 
-   with open(plot, 'wt') as fp:
-      fp.write('\n'.join([
-         'set terminal pngcairo size 1280,720 enhanced', '',
-         'set output "' + png + '"',
-         'set key outside', 'set yrange [0:2]',
-         'set xrange [0:2*' + str(pi) + ']', 'set termoption dashed',
-         'set grid',
-         'set arrow from ' + str(x) + ', graph 0 to ' + str(x) + ', graph 1 nohead',
-         'plot "' + dat + '" using 1:2 w linespoints t "cost(angle)"',
-         ''
-      ]))
-   subprocess.run(['gnuplot', plot])
-   stderr.write('<' + png + '>' + '\033[0m\n')
+   plot.write('\n'.join([
+      'set terminal pngcairo size 1280,720 enhanced', '',
+      'set output "' + png + '"',
+      'set key outside', 'set yrange [0:2]',
+      'set xrange [0:2*' + str(pi) + ']', 'set termoption dashed',
+      'set grid',
+      'set arrow from ' + str(x) + ', graph 0 to ' + str(x) + ', graph 1 nohead',
+      'plot "' + dat.name + '" using 1:2 w linespoints t "cost(angle)"',
+      ''
+   ]))
+   plot.flush()
+   subprocess.run(['gnuplot', plot.name])
+   stderr.write('\033[30;1m<' + png + '>' + '\033[0m\n')
 
 # returns angle (deg), cost (lower better)
 def relax_dir( sys_dirs, sm_dirs, eps = 0.00001, debug = False ):
