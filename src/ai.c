@@ -2287,7 +2287,7 @@ static int aiL_brake( lua_State *L )
 
    if ( prefer_rev || pilot_brakeCheckReverseThrusters( cur_pilot ) ) {
       dir   = VANGLE( cur_pilot->solid.vel );
-      accel = -PILOT_REVERSE_THRUST;
+      accel = -1.;
    } else {
       dir   = VANGLE( cur_pilot->solid.vel ) + M_PI;
       accel = 1.;
