@@ -11,15 +11,16 @@
   <cpu>-45</cpu>
  </general>
  <specific type="bolt">
-  <gfx type="shader" size="20" col_size="17">particles/eruptor.frag</gfx>
+  <gfx type="shader" size="20" col_size="13">particles/eruptor.frag</gfx>
   <lua>outfits/weapons/plasma_eruptor.lua</lua>
   <sound>plasma</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>PlaS</spfx_armour>
-  <delay>0.1</delay>
+  <spfx_shield>PlaM</spfx_shield>
+  <spfx_armour>PlaM</spfx_armour>
+  <delay>0.07</delay>
   <speed>400</speed>
-  <range blowup="armour">1100</range>
-  <energy>4.1</energy>
+  <range>1100</range>
+  <falloff>1000</falloff>
+  <energy>2.2</energy>
   <trackmin>0</trackmin>
   <trackmax>4500</trackmax>
   <swivel>22</swivel>
@@ -28,8 +29,8 @@
   <radius>20</radius>
   <damage>
    <type>plasma</type>
-   <penetrate>7</penetrate>
-   <physical>4.1</physical>
+   <penetrate>11</penetrate>
+   <physical>2.9</physical>
   </damage>
  </specific>
  <tags>
