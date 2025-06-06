@@ -39,8 +39,7 @@ end
 -- Brakes the ship
 --]]
 function brake ()
-   ai.brake()
-   if ai.isstopped() then
+   if ai.brake() then
       ai.stop()
       ai.poptask()
       return
@@ -53,8 +52,7 @@ end
 --]]
 -- luacheck: globals _subbrake (AI Task functions passed by name)
 function _subbrake ()
-   ai.brake()
-   if ai.isstopped() then
+   if ai.brake() then
       ai.stop()
       ai.popsubtask()
       return
@@ -915,11 +913,8 @@ function _boardstop( target )
       end
    end
 
-   -- Just brake
-   ai.brake()
-
-   -- If stopped try again
-   if ai.isstopped() then
+   -- Just brake and end if stopped
+   if ai.brake() then
       ai.popsubtask()
    end
 end
@@ -986,11 +981,8 @@ function _refuelstop( target )
       return
    end
 
-   -- Just brake
-   ai.brake()
-
-   -- If stopped try again
-   if ai.isstopped() then
+   -- Just brake and end if stopped
+   if ai.brake() then
       ai.popsubtask()
    end
 end
@@ -1242,8 +1234,7 @@ end
 
 
 function stealth( _target )
-   ai.brake()
-   if ai.isstopped() then
+   if ai.brake() then
       ai.stop()
    end
    -- TODO something to try to get them to restealth if failed, maybe move around?
