@@ -22,7 +22,7 @@ def mk_p(L):
    where = pi.index(0)
    return pi[where:] + pi[:where]
 
-def sys_relax( sys, quiet = True ):
+def sys_relax( sys, quiet = True, graph = False ):
    p = fil_ET(sys)
    T = p.getroot()
    myname = nam2base(T.attrib['name'])
@@ -44,6 +44,7 @@ def sys_relax( sys, quiet = True ):
       # more than max possible cost <= 2.0
       uf_cost = 3.0
       eps = 0.0001
+      out = sys.replace('.xml', '') if graph else None
 
       if pi1 == pi2:
          # same permutation -> everything is fine
@@ -58,10 +59,9 @@ def sys_relax( sys, quiet = True ):
             pi2 = [names[i] for i in pi2]
             stderr.write(', '.join(pi1) + ' -> ' + ', '.join(pi2) + '\033[0m')
             stderr.write('\n' if not quiet else '')
-            uf_alpha, uf_cost = relax_dir(sysvs, mapvs, eps = eps/10.0, quiet = quiet)
+            outu = None if out is None else (out+'_u')
+            uf_alpha, uf_cost = relax_dir(sysvs, mapvs, eps = eps/10.0, debug = outu, quiet = quiet)
 
-      out = None
-      #out = sys.replace('.xml', '')
       alpha, cost = relax_dir([flip(v) for v in sysvs], mapvs, eps = eps/10.0, debug = out, quiet = quiet )
       if uf_cost < 3.0:
          if cost > uf_cost:
@@ -93,14 +93,18 @@ if __name__ == '__main__':
    args = argv[1:]
 
    if '-h' in args or '--help' in args or args == []:
-      stderr.write('usage:  ' + basename(argv[0]) + '  [-v]  <file1> ..\n')
+      stderr.write('usage:  ' + basename(argv[0]) + '  [-v|-g]  <file1> ..\n')
       stderr.write('  Relaxes its input xml ssys files.\n')
-      stderr.write('  If -v is set, display information.')
+      stderr.write('  If -v is set, display information.\n')
+      stderr.write('  If -g is set, outputs the cost graph.\n')
       exit(0)
 
    if verbose:= '-v' in args:
       args.remove('-v')
 
+   if graph:= '-g' in args:
+      args.remove('-g')
+
    for i in args:
-      if sys_relax(i, quiet = not verbose):
+      if sys_relax(i, quiet = not verbose, graph = graph):
          print(i)

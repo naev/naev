@@ -8,10 +8,12 @@ import heapq
 
 # [0:2.PI] -> [0,2]
 # max(abs(slope)) = 1
+
+fact = 0.2
 def cost_func( sys_dirs, sm_dirs ):
    f = 1.0 / len(sys_dirs)
-   L = [(x.normalize(f), y.normalize(f)) for x, y in zip(sys_dirs, sm_dirs)]
-   return lambda a: sum([(x.rotate_rad(a)-y).size() for x, y in L])
+   L = [(x.normalize(f), y.normalize((f+fact))) for x, y in zip(sys_dirs, sm_dirs)]
+   return lambda a: sum([(x.rotate_rad(a)-y).size() for x, y in L]) - fact
 
 def best( cost, a, b ):
    if b[0] < a[0]:
