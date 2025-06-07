@@ -159,7 +159,7 @@ local function compute_lootables ( plt )
    local creds = plt:credits()
    if creds > 0 then
       table.insert( lootables, {
-         image = nil,
+         image = lg.newImage("gfx/misc/credits.webp"),
          text = _("Credits"),
          q = math.floor( 0.5 + creds*loot_mod ),
          type = "credits",
