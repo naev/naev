@@ -189,6 +189,12 @@ function lib.create_treasure_hunt( center, maxdist, length )
    length = length or rnd.rnd(4,5)
    maxdist = maxdist or 20
    local goallst = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
+      -- Must not be too volatile
+      local _dens, vol = s:nebula()
+      if vol > 15 then
+         return false
+      end
+      -- Must have landable target spob
       for k,p in ipairs(s:spobs()) do
          if spob_check(p) then
             return true
