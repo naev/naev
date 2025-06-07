@@ -106,10 +106,16 @@ function update( p, po, dt )
                mem.tpilot = true
                mem.badtarget = false
             else
-               -- Default to smallest signature of available targets
-               table.sort( pall, tsort )
-               m = pall[1]
-               mem.target = pall[1]
+               local t = p:target()
+               if inlist( pall, t ) then
+                  -- Prefer target if available
+                  m = t
+               else
+                  -- Default to smallest signature of available targets
+                  table.sort( pall, tsort )
+                  m = pall[1]
+               end
+               mem.target = m
                mem.tpilot = true
                mem.badtarget = true
             end
