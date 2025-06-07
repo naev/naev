@@ -56,9 +56,14 @@ function create()
 end
 
 local function player_has_fast_ship()
-   local stats = player.pilot():stats()
+   local pp = player.pilot()
+   local stats = pp:stats()
    mem.playershipspeed = stats.speed_max
-   return (mem.playershipspeed > 200)
+   if pp:flags("stealth") then
+      -- Horrible approximation. Should be rewritten to use the escort framework
+      mem.playershipspeed = mem.playershipspeed * 2
+   end
+   return (mem.playershipspeed > 150)
 end
 
 function accept()
