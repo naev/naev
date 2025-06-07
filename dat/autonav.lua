@@ -223,7 +223,6 @@ end
 Autonav to a system, destination is in the player's nav
 --]]
 local function _autonav_system (do_uselanes)
-   autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
    player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=get_sys_name(dest)}).."#0")
@@ -249,6 +248,7 @@ local function _autonav_system (do_uselanes)
 end
 
 function autonav_system ()
+   autonav_setup()
    _autonav_system (uselanes_jump)
 end
 
@@ -256,7 +256,6 @@ end
 Autonav to a spob, potentially trying to land
 --]]
 local function _autonav_spob(spb, tryland, do_uselanes)
-   autonav_setup()
    target_spb = spb
    local pp = player.pilot()
    local pos = spb:pos()
@@ -281,6 +280,7 @@ local function _autonav_spob(spb, tryland, do_uselanes)
 end
 
 function autonav_spob( spb, tryland )
+   autonav_setup()
    _autonav_spob( spb, tryland, uselanes_spob )
 end
 
