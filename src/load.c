@@ -1400,6 +1400,9 @@ static int load_gameInternalHook( void *data )
    if ( gui_load( gui_pick() ) )
       gui_load( start_gui() ); /* Failed so use fallback... */
 
+   /* Set loaded, set here so backup doesn't overwrite. */
+   save_loaded = 0;
+
    /* Land the player. */
    land( pnt, 1 );
 
@@ -1432,9 +1435,7 @@ static int load_gameInternalHook( void *data )
       dialogue_alertRaw( buf );
    }
 
-   /* Set loaded. */
    save_loaded = 1;
-
    return 0;
 
 err_doc:

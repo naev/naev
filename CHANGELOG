@@ -30,6 +30,7 @@
       * Ships that are scanning you use a different colour hilight
       * Landable but uninhabited space objects use a different icon
       * Deployed fighter equipment is no longer random
+      * Added support for multiple automatic backups with 5 by default.
    * Content
       * 11 new missions and events
          * Go treasure hunting

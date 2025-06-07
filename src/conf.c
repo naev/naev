@@ -217,6 +217,8 @@ void conf_setVideoDefaults( void )
    int             w, h, f;
    SDL_DisplayMode resolution;
 
+   conf.num_backups = NUM_BACKUPS_DEFAULT;
+
    /* More complex resolution handling. */
    f = 0;
    if ( SDL_GetCurrentDisplayMode( 0, &resolution ) == 0 ) {
@@ -320,6 +322,9 @@ int conf_loadConfig( const char *file )
 
       /* ndata. */
       conf_loadString( lEnv, "data", conf.ndata );
+
+      /* Saves. */
+      conf_loadInt( lEnv, "num_backups", conf.num_backups );
 
       /* Language. */
       conf_loadString( lEnv, "language", conf.language );
@@ -872,6 +877,11 @@ int conf_saveConfig( const char *file )
    conf_saveComment(
       _( "The location of Naev's data pack, usually called 'ndata'" ) );
    conf_saveString( "data", conf.ndata );
+   conf_saveEmptyLine();
+
+   /* OpenGL. */
+   conf_saveComment( _( "Number of save game backups" ) );
+   conf_saveInt( "num_backups", conf.num_backups );
    conf_saveEmptyLine();
 
    /* Language. */

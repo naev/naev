@@ -10,6 +10,7 @@
 /**
  * CONFIGURATION DEFAULTS
  */
+#define NUM_BACKUPS_DEFAULT 5 /**< Number of backups. */
 /* Gameplay options */
 #define DOUBLETAP_SENSITIVITY_DEFAULT                                          \
    250 /**< Default afterburner sensitivity. */
@@ -98,6 +99,9 @@ typedef struct PlayerConf_s {
    /* ndata. */
    char *ndata;    /**< Ndata path to use. */
    char *datapath; /**< Path for user data (saves, screenshots, etc.). */
+
+   /* Saves. */
+   int num_backups; /**< Number of backups. */
 
    /* Language. */
    char *language; /**< Language to use. */
