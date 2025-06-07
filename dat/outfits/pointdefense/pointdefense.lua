@@ -2,6 +2,8 @@ local fmt = require "format"
 local range, range2, hitships, trackmax
 local pd = {}
 
+local SWITCH_TIME = 1 -- Time to try to switch with bad targets
+
 function pd.setTrack( track )
    trackmax = track
 end
@@ -18,7 +20,7 @@ function descextra( _p, _o )
    if not hitships then
       return "#b".._("When on, automatically fires at nearby incoming missiles.").."#0"
    end
-   return "#b"..fmt.f(_("When on, automatically fires at nearby incoming missiles and hostile ships with under {trackmax} {unit} signature.").."#0",
+   return "#b"..fmt.f(_("When on, automatically fires at nearby incoming missiles and hostile ships, prioritizing missiles and then ships with under {trackmax} {unit} signature.").."#0",
       {trackmax=fmt.number(trackmax), unit=naev.unit("distance")})
 end
 
@@ -30,6 +32,8 @@ function init( _p, po )
    end
    mem.target = nil -- current target
    mem.tpilot = false -- whether or not the target is a pilot
+   mem.badtarget = false
+   mem.dt = 0
 end
 
 function ontoggle( _p, _po, on, nat )
@@ -37,6 +41,7 @@ function ontoggle( _p, _po, on, nat )
       return false
    end
    mem.on = on
+   mem.dt = 0
    return true
 end
 
@@ -45,16 +50,23 @@ function onshoot( _p, _po )
    return false
 end
 
-function update( p, po, _dt )
+local function tsort( a, b )
+   return a:signature() < b:signature()
+end
+
+function update( p, po, dt )
    if not mem.on then return end
+
+   mem.dt = mem.dt+dt
 
    local pos = p:pos()
    local m = mem.target
 
    -- Clear target if doesn't exist
-   if not m or not m:exists() or (mem.tpilot and m:flags("disabled")) then
+   if not m or not m:exists() or (mem.tpilot and m:flags("disabled")) or (mem.badtarget and mem.dt > SWITCH_TIME) then
       mem.target = nil
       mem.tpilot = false
+      mem.badtarget = false
       m = nil
    else
       -- Do range check
@@ -62,6 +74,7 @@ function update( p, po, _dt )
       if d2 > range2 then
          mem.target = nil
          mem.tpilot = false
+         mem.badtarget = false
          m = nil
       end
    end
@@ -74,6 +87,7 @@ function update( p, po, _dt )
          m = mall[ rnd.rnd(1,#mall) ] -- Just get a random one
          mem.target = m
          mem.tpilot = false
+         mem.badtarget = false
       end
 
       -- If no current target, shoot at enemies too
@@ -90,6 +104,13 @@ function update( p, po, _dt )
                m = ptarget[ rnd.rnd(1,#mall) ]
                mem.target = m
                mem.tpilot = true
+               mem.badtarget = false
+            else
+               -- Default to smallest signature of available targets
+               table.sort( pall, tsort )
+               mem.target = pall[1]
+               mem.tpilot = true
+               mem.badtarget = true
             end
          end
       end
