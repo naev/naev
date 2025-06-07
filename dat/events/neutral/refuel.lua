@@ -72,6 +72,7 @@ function board ()
       {reward=fmt.credits(reward), fuel=fmt.number(amount)}))
 
    -- Done, time to go away
+   plt:memory().refueled = true -- Stop refueling again
    plt:setActiveBoard(false)
    plt:control(false)
    pilotai.hyperspace( plt )
