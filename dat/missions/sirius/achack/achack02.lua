@@ -144,19 +144,20 @@ end
 
 -- Land hook.
 function land()
-   if spob.cur() == mem.destplanet and mem.joannelanded and mem.stage < 5 then
+   local scur = spob.cur()
+   if scur == mem.destplanet and mem.joannelanded and mem.stage < 5 then
       mem.stage = mem.stage + 1
       mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
       misn.markerMove( mem.mark, mem.destsys )
-      mem.origin = spob.cur()
+      mem.origin = scur
       player.refuel()
-      vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=spob.cur()}))
+      vntk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=scur}))
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
-   elseif spob.cur() == mem.destplanet and mem.joannelanded and mem.stage == 5 then
+   elseif scur == mem.destplanet and mem.joannelanded and mem.stage == 5 then
       laststop_vn()
       mem.stage = mem.stage + 1
-      mem.origin = spob.cur()
+      mem.origin = scur
       mem.destplanet, mem.destsys = spob.getS(route[mem.stage])
       misn.markerMove( mem.mark, mem.destsys )
       mem.joannejumped = true -- She "jumped" into the current system by taking off.
@@ -166,7 +167,7 @@ function land()
       vntk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
 
-   elseif mem.stage == 6 and spob.cur() == spob.get("Sroolu") then
+   elseif mem.stage == 6 and scur == spob.get("Sroolu") then
       misn.markerRm(mem.mark)
 
       vn.clear()
