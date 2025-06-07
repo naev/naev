@@ -35,8 +35,7 @@ virtual_edges = [
    ('herakin', 'duros'), ('rauthia', 'tide'),
    ('hekaras', 'eneguoz'), ('seifer', 'rei'),
    ('basel', 'octantis'), ('sagittarius', 'baitas'),
-   ('baitas', 'tasopa'),
-   ('percival', 'jommel'), ('basel', 'octantis'),
+   ('baitas', 'tasopa'), ('percival', 'jommel'),
    ('flow', 'katami'), ('nava', 'flow'),
    ('katami', 'eisenhorn'), ('vean', 'basel'),
    ('alpha_centauri', 'tasopa'),('syndania', 'padonia'),
@@ -85,6 +84,12 @@ if prv is not None:
 virtual_edges = [(t + (False, False))[:4] for t in virtual_edges]
 virtual_edges = [t[:2]+((t[2] or 1.0),)+t[3:] for t in virtual_edges]
 
+already = set()
+for i in virtual_edges:
+   if i in already:
+      stderr.write(str(i) + ' appears twice in virtual_edges list !\n')
+   else:
+      already.add(i)
 
 def main( args, fixed_pos = False, color = False ):
    V, pos, E, tl, colors = xml_files_to_graph(args, color)
@@ -113,12 +118,12 @@ def main( args, fixed_pos = False, color = False ):
    virt_v = set()
    for e in virtual_edges:
       if not e[3]:
-         virt_v.update(set(e[:2]))
+         virt_v.update(set([x for x in e[:2] if x not in V]))
 
    if not fixed_pos:
-      for i in virt_v:
+      for i in sorted(virt_v):
          if i not in V:
-            print('\t"'+i+'" [label="",style=invis]')
+            print('\t"' + i + '" [label="",style=invis]')
 
    for i in V:
       if i[0] == '_' and fixed_pos:
@@ -146,9 +151,12 @@ def main( args, fixed_pos = False, color = False ):
 
          print(s + ']')
          for dst, hid in E[i]:
-            if (i, dst) in del_edges:
-               continue
             suff = []
+            if (i, dst) in del_edges:
+               if fixed_pos:
+                  suff.append('color="red"')
+               else:
+                  continue
             if i in tl and dst in tl:
                suff.extend(['style=bold', 'penwidth=4.0'])
             elif hid:
@@ -161,20 +169,26 @@ def main( args, fixed_pos = False, color = False ):
             if oneway or i<dst:
                print('"'.join(['\t', i, edge, dst, suff]))
 
-   if not fixed_pos:
-      print('\tedge[len=' + str(reflen) + ']')
-      print('\tedge[style="dashed";color=grey;pendwidth=1.5]')
-      for (f, t, l, v) in virtual_edges:
-         prop = []
-         if (f in virt_v or t in virt_v) and not v:
-            prop.append('style=invis')
-         if l != 1.0:
-            prop.append('len='+str(l*reflen))
+   print('\tedge[len=' + str(reflen) + ']')
+   print('\tedge[style="dashed";color="grey";penwidth=1.5]')
+   for (f, t, l, v) in virtual_edges:
+      prop = []
 
-         prop = ','.join(prop)
-         if prop != '':
-            prop = ' [' + prop + ']'
-         print('\t"' + f + '"--"' + t + '"' + prop)
+      if v:
+         prop.extend(['style="normal"', 'color="green"'])
+      elif not fixed_pos:
+         if f in virt_v or t in virt_v:
+            prop.append('style="invis"')
+      else:
+         continue
+
+      if l != 1.0:
+         prop.append('len='+str(l*reflen))
+
+      prop = ';'.join(prop)
+      if prop != '':
+         prop = ' [' + prop + ']'
+      print('\t"' + f + '"--"' + t + '"' + prop)
    print('}')
 
 if __name__ == '__main__':
