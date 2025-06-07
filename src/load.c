@@ -1063,6 +1063,7 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
 {
    (void)str;
    int wid, pos;
+   int disablesave = *(int *)window_getData( wdw );
 
    wid = window_get( "wdwLoadSnapshotMenu" );
 
@@ -1074,6 +1075,16 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
    /* Check version. */
    if ( load_compatibilityTest( &load_player->saves[pos] ) )
       return;
+
+   /* Disable saving. */
+   if ( disablesave && ( save_loaded != 0 ) ) {
+      if ( !dialogue_YesNoRaw(
+              _( "Exit to Menu?" ),
+              _( "Are you sure you wish to exit to menu right now? The game "
+                 "#rwill not be saved#0 since last time you landed!" ) ) )
+         return;
+      player_setFlag( PLAYER_NOSAVE );
+   }
 
    /* Close menus before loading for proper rendering. */
    load_snapshot_menu_close( wdw, NULL );
