@@ -135,7 +135,7 @@ local function laststop_vn ()
    local joanne = vn.newCharacter( achack.vn_joanne{shader=love_shaders.hologram()})
    vn.transition("electric")
    vn.na(_([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.]]))
-   joanne(fmt.f(_([["That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planetside!"]]),
+   joanne(fmt.f(_([["That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment, of course, but I also want to talk to you for a bit. See you planet-side!"]]),
       {player=player.name()}))
    vn.na(_([[The comm switches off. You prepare to take off and set a course for Sroolu.]]))
    vn.done("electric")
@@ -179,7 +179,7 @@ function land()
       vn.na(_([[You decide to sit down and listen to Joanne's story, not in the last place because you're rather curious yourself.]]))
       joanne(fmt.f(_([["Thank you, {player}," Joanne says, "I appreciate it. Well, I guess I should start at the beginning."]]),
          {player=player.name()}))
-      joanne(_([[She continues. "Several cycles ago, Harja and I were both students at the High Academy on Sinass. It's a very prestigious place among us Sirii, as you may or may not know. It's only one jump away from Mutris itself and... Well, anyway, it's one of the best academies in all of Sirius space, and only the most capable students are allowed to attend. Now, I don't mean to brag, you understand, but even in that environment I was among the top rated students. And, believe it or not, so was Harja. We were in the same study unit, actually.]]))
+      joanne(_([[She continues. "Several cycles ago, Harja and I were both students at the High Academy on Sinass. It's a very prestigious place among us Sirii, as you may or may not know. It's only one jump away from Mutris itself and... Well, anyway, it's one of the best academies in all of Sirius space, and only the most capable students are allowed to attend. Now, I don't mean to brag, you understand, but even in that environment I was among the top-rated students. And, believe it or not, so was Harja. We were in the same study unit, actually.]]))
       joanne(_([["Another thing you should know is that the High Academy offers the very best among its students the chance to advance to the Serra echelon. You're not Sirian so you might not understand, but it's an exceptional honour for those born into the Shaira or Fyrra echelons to rise to a higher echelon. It's extremely valuable to us. So you see, the prospect of being rewarded like that is a very strong motivation for most of the students. It was no different for Harja and myself, since we were both Fyrra echelon."]]))
       joanne(_([["With our abilities, each of us had a good chance of earning the promotion. However, since we were in the same study unit, only one of us could be promoted; only one promotion is awarded per study unit each curriculum. That meant that Harja and I were rivals, but we were good-natured rivals. We each had every intention of winning the promotion through fair competition... Or so I thought."]]))
       joanne(_([["After the final exams had been taken and we were only days away from receiving the results, there was an incident. There had been a security breach in the academy's main computer. Someone had hacked the system and altered the data for the final exams, mine to be exact. My grades had been altered to be straight one hundred percent, in every subject. Can you believe that? Someone had actually tried to make it look like I was cheating. What were they thinking?"]]))
@@ -209,7 +209,7 @@ function enter()
       misn.finish(false)
    end
    if not player_has_fast_ship() then
-      vntk.msg(_("Your ship is to slow!"), _("You need a faster ship to be able to protect Joanne. Your mission is a failure!"))
+      vntk.msg(_("Your ship is too slow!"), _("You need a faster ship to be able to protect Joanne. Your mission is a failure!"))
       misn.finish(false)
    end
 
