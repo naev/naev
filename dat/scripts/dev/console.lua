@@ -89,3 +89,7 @@ end
 
 -- luacheck: globals pprint
 pprint = require "dev.pprint"
+
+-- luacheck: globals dev
+dev = {}
+dev.weapon_test = require "dev.weapon_test"
