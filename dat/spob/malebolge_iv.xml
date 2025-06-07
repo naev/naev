@@ -3,12 +3,15 @@
  <pos x="13118.124000" y="2716.521632"/>
  <GFX>
   <space>moon-A00.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <exterior>uninhabited-rocky-red-04.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A small smouldering planet that not even the most resilient neohuman can survive, Malbolge IV is mainly used for flybys of bioships to try to burn exterior parasites and hull flakes off. Due to the different sensitivities of bioships, some take extreme dislike of such maneuvers and have been known to refuse to collaborate with their captain when repeatedly forced to perform such flybys.</description>
  </general>
 </spob>
