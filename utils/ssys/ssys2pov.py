@@ -6,7 +6,7 @@ if __name__ != '__main__':
 
 from sys import argv, stderr
 
-from sys2graph import xml_files_to_graph, default_col
+from ssys2graph import xml_files_to_graph, default_col
 from geometry import bb, vec
 
 
@@ -90,12 +90,12 @@ def main( args, color = False, halo = False ):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv) < 2:
-      print("usage  ", argv[0], '[-c|-C]', '<sys1.xml> ...')
+      print("usage  ", argv[0], '[-c|-C]', '<ssys1.xml> ...')
       print('  Writes "out.pov". Outputs povray commandline to stdout.')
       print('  If -c is set, use faction colors (slower).')
       print('  If -C is set, use color halos (implies -c).')
       print('examples')
-      print('  > $(./utils/sys/sys2pov.py -c dat/ssys/*.xml)')
+      print('  > $(./utils/ssys/ssys2pov.py -c dat/ssys/*.xml)')
       print('  > display out.png')
    else:
       if color:= '-c' in argv[1:]:

@@ -6,7 +6,7 @@ if __name__ != '__main__':
 
 from sys import argv, stderr
 
-from sys2graph import xml_files_to_graph
+from ssys2graph import xml_files_to_graph
 
 
 del_edges = [
@@ -193,14 +193,14 @@ def main( args, fixed_pos = False, color = False ):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print('usage: ', argv[0], '[-c]', '[-k]', '<sys1.xml>', '...')
+      print('usage: ', argv[0], '[-c]', '[-k]', '<ssys1.xml>', '...')
       print('Outputs the graph in dot format.')
       print('If -c is set, use faction colors (slower).')
       print('If -k is set, the nodes have the keep_position marker.')
       print('Examples:')
-      print('  > ./utils/sys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
-      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
-      print('  > ./utils/sys2dot.py dat/ssys/*.xml | neato | tee after.dot |  ./utils/sys/dot2sys.py')
+      print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
+      print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
+      print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml | neato | tee after.dot |  ./utils/ssys/dot2ssys.py')
       print('  > display before.png after.png')
    else:
       if keep := '-k' in argv:
