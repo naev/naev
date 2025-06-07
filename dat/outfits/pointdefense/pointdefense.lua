@@ -108,6 +108,7 @@ function update( p, po, dt )
             else
                -- Default to smallest signature of available targets
                table.sort( pall, tsort )
+               m = pall[1]
                mem.target = pall[1]
                mem.tpilot = true
                mem.badtarget = true
