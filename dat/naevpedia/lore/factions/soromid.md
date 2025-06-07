@@ -77,7 +77,7 @@ The population of Sorom was drastically diminished, but those who survived found
 With the new gene treatment it had become possible to surpass the limits of the human body, including fertility.
 In only a couple of centuries the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment.
 They altered their appearances and improved on nearly every part of the human design.
-The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as new humans.
+The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as neohumans.
 
 Soon, the Soromid decided that it was time to return to the stars.
 The Imperial blockade had left the system many decades past, so nothing was to stop them.
@@ -118,7 +118,7 @@ The members of the council are not necessarily fixed, and fluidly change over ti
 Periodically, and when needed, the tribe will gather in councils to decide positions on particular issues or proposals, where efforts are made to reach a consensus.
 The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole.
 
-Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid new humans are raised with a strong focus on putting the community over the individual.
+Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid neohumans are raised with a strong focus on putting the community over the individual.
 Such a social education, combined with strong customs, helps keep most friction at a minimum, allowing fast and effective decision-making.
 When frictions arise, each tribe tends to have mechanisms for dealing with this, while for intertribal issues, duels or competitions are often used to solve issues and foster camaraderie.
 

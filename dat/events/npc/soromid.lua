@@ -7,25 +7,25 @@ local msg_combined
 
 local desc_list = {}
 desc_list["generic"] = {
-   _("A new-human civilian is twirling their drink."),
+   _("A neohuman civilian is twirling their drink."),
    _("A genetic-modified individual is idle at the bar."),
-   _("A post-human individual, sitting alone at the bar, lost in contemplation."),
+   _("A neohuman individual, sitting alone at the bar, lost in contemplation."),
 }
 desc_list["heavy"] = {
-   _("A new-human individual, genetically modified for high gravity environments."),
+   _("A neohuman individual, genetically modified for high gravity environments."),
    _("A Soromid individual, biologically engineered to thrive in high gravity."),
-   _("A post-human with heavy gravity traits, enjoying their drink."),
+   _("A neohuman with heavy gravity traits, enjoying their drink."),
 }
 desc_list["aquatic"] = {
-   _("A new human individual with gills and slimy skin."),
+   _("A neohuman individual with gills and slimy skin."),
    _("A Soromid individual that seems suited for aquatic life."),
-   _("The lights highlight the post-human's slimy skin, as they enjoy their drink."),
+   _("The lights highlight the neohuman's slimy skin, as they enjoy their drink."),
 }
 desc_list["dark"] = {
-   _("A new human with large eyes meant for seeing in low light environments."),
-   _("A Soromid post-human that seems to be using sonar to see around."),
+   _("A neohuman with large eyes meant for seeing in low light environments."),
+   _("A Soromid neohuman that seems to be using sonar to see around."),
    _("A pale individual with bat-like ears and eyes."),
-   _("The new-human seems to be carefully mixing their drink with ultra-sonic screetching."),
+   _("The neohuman seems to be carefully mixing their drink with ultra-sonic screetching."),
 }
 
 local msg_lore = {
@@ -43,7 +43,7 @@ local msg_lore = {
    _([["We Soromid are split into tribes, each with their own traditions and customs. Tribes are mainly independent, but  Elder convene with each other periodically to decide what to do with things that affect us all."]]),
    _([["I have no idea how the Great Houses can organize them as they do. How can a single person manage and be in charge of billions and billions of humans? It makes no sense!"]]),
    _([["There are those who wished we had all perished on Sorom, however, the Soromid do not go down without a fight!"]]),
-   _([["We never meant to become new humans, but when you are faced with the annihilation of your people, you have to take decisive action to save as many as you can."]]),
+   _([["We never meant to become neohumans, but when you are faced with the annihilation of your people, you have to take decisive action to save as many as you can."]]),
    _([["We do not easily forget the treatment the Empire gave us during the Great Quarantine. We will make sure that does not happen again."]]),
    _([["We have many stories about the Great Quarantine. It is important to not forget our past as we strive for a better future."]]),
    _([["Some think that making the Soromid inhabit the barely inhabitable is a sign of inferiority to the Great Houses. However, we see it as our pride and accomplishments. Let the Great Houses fight over their few worlds while we live harmonious with nature!"]]),
