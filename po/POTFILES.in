@@ -3516,6 +3516,7 @@ dat/scripts/common/zalek_blackhole.lua
 dat/scripts/common/zalek_physics.lua
 dat/scripts/dev/console.lua
 dat/scripts/dev/pprint.lua
+dat/scripts/dev/weapon_test.lua
 dat/scripts/equipopt.lua
 dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
