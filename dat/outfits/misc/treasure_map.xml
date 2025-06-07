@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Treasure Map">
+ <general>
+  <typename>Map</typename>
+  <rarity>2</rarity>
+  <slot>none</slot>
+  <size>medium</size>
+  <mass>0</mass>
+  <price>125000</price>
+  <description>A treasure map leading to something that could turn out to be useful. However, you won't know what there is until you find it.</description>
+  <gfx_store>/gfx/misc/treasure_hunt.webp</gfx_store>
+  <cpu>0</cpu>
+ </general>
+ <specific type="modification">
+  <lua>outfits/misc/treasure_map.lua</lua>
+ </specific>
+</outfit>

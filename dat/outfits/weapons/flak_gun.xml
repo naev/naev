@@ -12,14 +12,15 @@
   <rarity>2</rarity>
  </general>
  <specific type="bolt">
+  <lua>outfits/lib/matrix_sell.lua</lua>
   <gfx>massM.png</gfx>
   <sound>mass</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>3.2</delay>
   <speed>500</speed>
-  <range>1200</range>
-  <falloff>1100</falloff>
+  <range>1000</range>
+  <falloff>800</falloff>
   <gfx_end>massM-end.png</gfx_end>
   <energy>66</energy>
   <trackmin>1000</trackmin>
@@ -28,11 +29,11 @@
   <damage>
    <type>kinetic</type>
    <penetrate>37</penetrate>
-   <physical>9</physical>
+   <physical>27</physical>
   </damage>
   <shots>9</shots>
-  <dispersion>5</dispersion>
-  <speed_dispersion>40</speed_dispersion>
+  <dispersion>10</dispersion>
+  <speed_dispersion>50</speed_dispersion>
  </specific>
  <tags>
   <tag>dvaered</tag>

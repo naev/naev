@@ -17,8 +17,8 @@
   <lua>outfits/weapons/razor.lua</lua>
   <sound>tesla</sound>
   <sound_hit>bansheeexp</sound_hit>
-  <spfx_shield>ShiM</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-M</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.1</delay>
   <speed>800</speed>
   <range>1850</range>

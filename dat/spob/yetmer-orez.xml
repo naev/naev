@@ -1,0 +1,21 @@
+<spob name="Yetmer-O'rez">
+ <lua>yetmer_orez.lua</lua>
+ <pos x="2896.520056" y="2665.414732"/>
+ <GFX>
+  <space>Y00.webp</space>
+  <exterior>uninhabited-rocky-red-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>TODO</description>
+ </general>
+ <tags>
+  <tag>ruined</tag>
+  <tag>restricted</tag>
+ </tags>
+</spob>

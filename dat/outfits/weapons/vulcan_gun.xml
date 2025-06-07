@@ -14,8 +14,8 @@
   <gfx>gatling.png</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>
-  <spfx_shield>ExpS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Exp-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>0.25</delay>
   <speed>500</speed>
   <range blowup="armour">1100</range>

@@ -9,11 +9,15 @@ damage_mod = damage_mod or 1
 base_duration = base_duration or 5
 
 local damage, penetration, isturret
+local onload_old = onload
 function onload( o )
    local s     = o:specificstats()
    damage      = s.damage * damage_mod
    penetration = s.penetration
    isturret    = s.isturret
+   if onload_old then
+      onload_old( o )
+   end
 end
 
 local mapping = {
@@ -55,6 +59,8 @@ function descextra( p )
          dmg = dmg + 0.5 * dmg * bonus_mod
          dur = dur + 0.5 * dur * bonus_mod
       end
+      dmg = dmg * dur / 5 -- Effect is computed to do 1 damage over 5 seconds, so have to normalize
+
       if map.crippling then -- Learned at 3
          return "#p"..fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and accel by 25% [Paralyzing Plasma], and lowering fire rate by 20% [Crippling Plasma]."),{damage=dmg, duration=dur, corrosion=cor}).."#0"
       elseif map.paralyzing then -- Learned at 2

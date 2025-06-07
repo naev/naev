@@ -11,7 +11,7 @@ local luatk = require "luatk"
 local lmap = require "luatk.map"
 local vn = require "vn"
 local fmt = require "format"
-local poi = require "common.poi"
+local loot = require "common.loot"
 
 local view_maps
 local MAP_WIDTH = 400
@@ -115,7 +115,7 @@ function newmap( data )
    update_desc()
 end
 
-local function landed( _data )
+local function landed( data )
    vn.clear()
    vn.scene()
    vn.transition()
@@ -123,20 +123,36 @@ local function landed( _data )
    vn.na(fmt.f(_([[You land on {spob} that seems to match the treasure map you have.]]),
       {spob=spob.cur()}))
    vn.na(_([[Rerouting all ship power to sensors, you perform a scan of the surrounding area and are able to find a small capsule.]]))
-   local poi_reward = poi.data_str(1)
-   vn.na(fmt.f(_([[You take the capsule aboard and open it up to find {reward}.]]),
-      {reward=poi_reward}))
-   vn.na(fmt.reward(poi_reward))
-   vn.func( function ()
-      poi.data_give(1)
-   end )
+
+   -- Handle reward
+   local reward_str
+   if not data.reward then
+      local reward = loot.tier1()
+      reward_str = reward
+      vn.func( function ()
+         player.outfitAdd(reward)
+      end )
+   else -- Defaults to Outfits
+      reward_str = data.reward
+      vn.func( function ()
+         player.outfitAdd(data.reward)
+      end )
+   end
+
+   vn.na(fmt.f(_([[You open up the capsule up to find {reward}.
+
+{obtain}]]),
+      {reward=reward_str, obtain=fmt.reward(reward_str)}))
 
    vn.run()
+
+   -- Mark as completed
+   th.map_completed()
 
    -- Log
    shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
    shiplog.append( "treasurehunt", fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
-      {sys=system.cur(), spb=spob.cur(), reward=poi_reward}) )
+      {sys=system.cur(), spb=spob.cur(), reward=reward_str}) )
 
    return true
 end

@@ -11,15 +11,14 @@
   <rarity>6</rarity>
  </general>
  <specific type="bolt">
-  <gfx>laser2S.png</gfx>
+  <gfx type="shader" size="9" col_size="6">particles/laser_green.frag</gfx>
   <sound>laser</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>0.6</delay>
   <speed>1100</speed>
   <range>800</range>
   <falloff>650</falloff>
-  <gfx_end>laser1S.png</gfx_end>
   <energy>1</energy>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>

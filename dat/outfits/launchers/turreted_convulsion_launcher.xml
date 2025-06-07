@@ -26,8 +26,8 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
   <gfx>convulsion.png</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp0</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-5">missile</trail_generator>
   <duration blowup="armour">7</duration>
   <accel>700</accel>

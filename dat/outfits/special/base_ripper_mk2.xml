@@ -11,15 +11,14 @@
   <cpu>-12</cpu>
  <rarity>6</rarity></general>
  <specific type="turret bolt">
-  <gfx>ripperM.png</gfx>
+  <gfx type="shader" size="8" col_size="6">particles/ripper_green.frag</gfx>
   <sound>ripper</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1</delay>
   <speed>700</speed>
   <range>1900</range>
   <falloff>1500</falloff>
-  <gfx_end>ripperM-end.png</gfx_end>
   <energy>1</energy>
   <trackmin>1000</trackmin>
   <trackmax>4000</trackmax>

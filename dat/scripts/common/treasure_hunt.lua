@@ -214,7 +214,13 @@ function lib.create_treasure_hunt( center, maxdist, length )
       if #candidates > 0 then
          local start = candidates[rnd.rnd(1,#candidates)]
          local name = fmt.f(_("Near {sys}"),{sys=start})
-         return {spb=spb, goal=goal, start=start, name=name, seed=rnd.rnd(1,2^30)}
+         return {
+            spb=spb,
+            goal=goal,
+            start=start,
+            name=name,
+            seed=rnd.rnd(1,2^30),
+         }
       end
    end
 end
@@ -242,6 +248,14 @@ function lib.maps_owned()
       return 0
    end
    return naev.cache().treasure_maps
+end
+
+local PLAYERVAR = "treasure_map_completed"
+function lib.map_completed()
+   var.push( PLAYERVAR, lib.maps_solved()+1 )
+end
+function lib.maps_solved()
+   return var.peek( PLAYERVAR ) or 0
 end
 
 return lib

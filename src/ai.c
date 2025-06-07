@@ -2275,7 +2275,8 @@ static int aiL_drift_facing( lua_State *L )
 static int aiL_brake( lua_State *L )
 {
    double dir, accel, diff;
-   int    isstopped = pilot_isStopped( cur_pilot );
+   double vel       = VMOD( cur_pilot->solid.vel );
+   int    isstopped = ( vel <= MIN_VEL_ERR );
    int    prefer_rev =
       lua_toboolean( L, 1 ) * cur_pilot->stats.misc_reverse_thrust;
 
@@ -2286,7 +2287,7 @@ static int aiL_brake( lua_State *L )
 
    if ( prefer_rev || pilot_brakeCheckReverseThrusters( cur_pilot ) ) {
       dir   = VANGLE( cur_pilot->solid.vel );
-      accel = -PILOT_REVERSE_THRUST;
+      accel = -1.;
    } else {
       dir   = VANGLE( cur_pilot->solid.vel ) + M_PI;
       accel = 1.;
@@ -2295,7 +2296,8 @@ static int aiL_brake( lua_State *L )
    diff       = angle_diff( cur_pilot->solid.dir, dir );
    pilot_turn = diff / ( cur_pilot->turn * ai_dt );
    if ( ABS( diff ) < MIN_DIR_ERR )
-      pilot_acc = accel;
+      /* Have to weaken the accel or it'll overshoot at low speeds. */
+      pilot_acc = accel * ( vel / ( ai_dt * cur_pilot->accel ) );
    else
       pilot_acc = 0.;
    lua_pushboolean( L, 0 );

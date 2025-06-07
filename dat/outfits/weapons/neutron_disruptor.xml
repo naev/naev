@@ -14,8 +14,8 @@
  <specific type="bolt">
   <gfx>neutron.png</gfx>
   <sound>neutron</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>0.8</delay>
   <speed>800</speed>
   <range>450</range>

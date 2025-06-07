@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# python3
 
 from os import path, utime
 from sys import stderr

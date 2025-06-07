@@ -11,15 +11,14 @@
   <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>laser2M.png</gfx>
+  <gfx type="shader" size="8" col_size="5">particles/laser_green.frag</gfx>
   <sound>laser</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.0</delay>
   <speed>1100</speed>
   <range>1100</range>
   <falloff>950</falloff>
-  <gfx_end>laser1M.png</gfx_end>
   <energy>30</energy>
   <trackmin>1200</trackmin>
   <trackmax>4800</trackmax>

@@ -22,7 +22,7 @@ local empire_outfits = eoutfits.merge{{
    -- Utility
    "Hunting Combat AI", "Photo-Voltaic Nanobot Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Hellburner", "Emergency Shield Booster",
+   "Sensor Array", "Emergency Shield Booster",
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    -- Heavy Structural
    "Battery IV", "Large Fuel Pod", "Battery III", "Reactor Class III",

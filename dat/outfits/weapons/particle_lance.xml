@@ -20,8 +20,8 @@
    <penetrate>0</penetrate>
    <physical>46</physical>
   </damage>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <sound>beam_fuzzy</sound>
   <sound_off>beam_fuzzy_off</sound_off>
   <shader r="1." g="0.35" b="0." a="1." width="10.">beam_fuzzy</shader>

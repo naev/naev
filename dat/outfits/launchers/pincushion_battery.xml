@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Pincushion Battery">
+ <general>
+  <shortname>Pincushion B.</shortname>
+  <shoot_dry/>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <mass>22</mass>
+  <price>290000</price>
+  <description>TODO</description>
+  <desc_extra>Launches 1 missile at the target and 4 additional missiles that will target random nearby enemies.</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-9</cpu>
+  <rarity>2</rarity>
+ </general>
+ <specific type="launcher" secondary="1">
+  <lua>outfits/launchers/pincushion_battery.lua</lua>
+  <delay>3.4</delay>
+  <reload_time>100</reload_time>
+  <amount>10</amount>
+  <lockon>3</lockon>
+  <iflockon>0.3</iflockon>
+  <arc>75</arc>
+  <trackmin>0</trackmin>
+  <trackmax>5000</trackmax>
+  <ammo_mass>0.2</ammo_mass>
+  <gfx>fury.png</gfx>
+  <sound>seeker</sound>
+  <sound_hit>medexp1</sound_hit>
+  <spfx_shield>Exp-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
+  <trail_generator x="-7">thin</trail_generator>
+  <duration blowup="armour">5</duration>
+  <accel>700</accel>
+  <turn>120</turn>
+  <speed_max>1200</speed_max>
+  <resist>10</resist>
+  <shots>5</shots>
+  <damage>
+   <type>kinetic</type>
+   <penetrate>24</penetrate>
+   <physical>60</physical>
+  </damage>
+  <armour>5</armour>
+  <absorb>0</absorb>
+  <ai>seek</ai>
+ </specific>
+</outfit>

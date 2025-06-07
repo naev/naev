@@ -46,9 +46,11 @@ class _vec(tuple):
    def __str__( self ):
       return str(tuple([int(a) if int(a) == a else a for a in self]))
 
-   def rotate( self, degrees ):
-      angle = degrees / 180.0 * pi
+   def rotate_rad( self, angle ):
       return self._rotate(sin(angle), cos(angle))
+
+   def rotate( self, degrees ):
+      return self.rotate_rad(degrees / 180.0 * pi)
 
    def sq( self ):
       return self*self
@@ -163,11 +165,23 @@ class bb:
             self.maxy = t[1]
       return self
 
+   def size( self ):
+      return vec(self.maxx - self.minx, self.maxy - self.miny)
+
+   def __imul__( self, other ):
+      other /= 2.0
+      xd, yd = self.size()
+      self.minx -= xd * other
+      self.maxx += xd * other
+      self.miny -= yd * other
+      self.maxy += yd * other
+      return self
+
    def mini( self ):
-      return vec(self.minx,self.miny) if not self.empty else None
+      return vec(self.minx, self.miny) if not self.empty else None
 
    def maxi( self ):
-      return vec(self.maxx,self.maxy) if not self.empty else None
+      return vec(self.maxx, self.maxy) if not self.empty else None
 
    def __str__( self ):
       return str(round(self.mini())) + ':' + str(round(self.maxi()))

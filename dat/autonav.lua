@@ -223,7 +223,6 @@ end
 Autonav to a system, destination is in the player's nav
 --]]
 local function _autonav_system (do_uselanes)
-   autonav_setup()
    local dest
    dest, map_npath = player.autonavDest()
    player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=get_sys_name(dest)}).."#0")
@@ -249,6 +248,7 @@ local function _autonav_system (do_uselanes)
 end
 
 function autonav_system ()
+   autonav_setup()
    _autonav_system (uselanes_jump)
 end
 
@@ -256,7 +256,6 @@ end
 Autonav to a spob, potentially trying to land
 --]]
 local function _autonav_spob(spb, tryland, do_uselanes)
-   autonav_setup()
    target_spb = spb
    local pp = player.pilot()
    local pos = spb:pos()
@@ -281,6 +280,7 @@ local function _autonav_spob(spb, tryland, do_uselanes)
 end
 
 function autonav_spob( spb, tryland )
+   autonav_setup()
    _autonav_spob( spb, tryland, uselanes_spob )
 end
 
@@ -415,7 +415,7 @@ local function autonav_rampdown( count_brake )
 end
 
 local function turnoff_afterburner()
-   local pp=player.pilot()
+   local pp = player.pilot()
    for _i,n in ipairs(pp:actives()) do
       -- All movement outfits will break autonav, however, many movement
       -- outfits are instant and won't be caught by this polling scheme.
@@ -423,14 +423,14 @@ local function turnoff_afterburner()
          if already_aboff then
             return _autonav_abort(_("manual commands at approach"))
          else
-            if not pp:outfitToggle( n.slot ) then
+            if not pp:outfitToggle( n.slot, false ) then
                -- Failed to disable
                return _autonav_abort(_("manual commands at approach"))
             end
          end
       end
    end
-   already_aboff=true
+   already_aboff = true
 end
 
 --[[

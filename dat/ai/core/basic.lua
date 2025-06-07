@@ -39,8 +39,7 @@ end
 -- Brakes the ship
 --]]
 function brake ()
-   ai.brake()
-   if ai.isstopped() then
+   if ai.brake() then
       ai.stop()
       ai.poptask()
       return
@@ -53,8 +52,7 @@ end
 --]]
 -- luacheck: globals _subbrake (AI Task functions passed by name)
 function _subbrake ()
-   ai.brake()
-   if ai.isstopped() then
+   if ai.brake() then
       ai.stop()
       ai.popsubtask()
       return
@@ -177,6 +175,7 @@ function moveto( target )
 
    -- Need to start braking
    elseif dist < bdist then
+      ai.outfitOffAll()
       ai.pushsubtask("_subbrake")
    end
 end
@@ -451,6 +450,7 @@ function __landgo ( planet )
 
    -- Need to start braking
    elseif dist < bdist then
+      ai.outfitOffAll()
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
    end
@@ -569,7 +569,7 @@ function __run_target( target )
 
    -- Outfits for running away
    if mem._o then
-      if mem._o.afterburner and plt:energy() > 30 then
+      if mem._o.afterburner and plt:energy() > 35 then
          plt:outfitToggle( mem._o.afterburner, true )
       elseif mem._o.blink_drive then
          plt:outfitToggle( mem._o.blink_drive, true )
@@ -639,21 +639,24 @@ function _run_hyp( data )
          end
       end
    else
+      ai.outfitOffAll()
       if ai.instantJump() then
          ai.pushsubtask( "_hyp_jump", jump )
       else
          ai.pushsubtask( "_hyp_jump", jump )
          ai.pushsubtask("_subbrake")
       end
+      return
    end
 
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o then
       if mem._o.afterburner then
+         local e = plt:energy()
          -- Afterburner: activate while far away from jump
-         if jdist > 3 * bdist and plt:energy() > 30 then
+         if jdist > 3 * bdist and e > 35 then
             plt:outfitToggle( mem._o.afterburner, true )
-         else
+         elseif e < 10 then
             plt:outfitToggle( mem._o.afterburner, false )
          end
       end
@@ -680,12 +683,9 @@ function _run_landgo( data )
    local plt      = ai.pilot()
 
    if dist < bdist then -- Need to start braking
+      ai.outfitOffAll()
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
-      -- Turn off afterburner just in case
-      if mem._o and mem._o.afterburner then
-         plt:outfitToggle( mem._o.afterburner, false )
-      end
       return -- Don't try to afterburn
 
    else
@@ -717,10 +717,11 @@ function _run_landgo( data )
    -- Hyperbolic blink drives have a distance of 2000
    if mem._o and dir < math.rad(25) then
       if mem._o.afterburner then
+         local e = plt:energy()
          -- Afterburner: activate while far away from jump
-         if dist > 3 * bdist and plt:energy() > 30 then
+         if dist > 3 * bdist and e > 35 then
             plt:outfitToggle( mem._o.afterburner, true )
-         else
+         elseif e < 10 then
             plt:outfitToggle( mem._o.afterburner, false )
          end
       end
@@ -803,12 +804,14 @@ function __hyp_approach( target, jumptsk )
       ai.accel()
    -- Need to start braking
    elseif dist < bdist then
+      ai.outfitOffAll()
       if ai.instantJump() then
          ai.pushsubtask(jumptsk, target)
       else
          ai.pushsubtask(jumptsk, target)
          ai.pushsubtask("_subbrake")
       end
+      return
    end
 end
 
@@ -910,11 +913,8 @@ function _boardstop( target )
       end
    end
 
-   -- Just brake
-   ai.brake()
-
-   -- If stopped try again
-   if ai.isstopped() then
+   -- Just brake and end if stopped
+   if ai.brake() then
       ai.popsubtask()
    end
 end
@@ -981,11 +981,8 @@ function _refuelstop( target )
       return
    end
 
-   -- Just brake
-   ai.brake()
-
-   -- If stopped try again
-   if ai.isstopped() then
+   -- Just brake and end if stopped
+   if ai.brake() then
       ai.popsubtask()
    end
 end
@@ -1026,6 +1023,7 @@ function mine_drill( ast )
    if dir < math.rad(10) and mod > mbd then
       ai.accel()
    elseif mod < mbd then
+      ai.outfitOffAll()
       ai.pushsubtask( "mine_drill_brake", ast )
    end
 end
@@ -1236,8 +1234,7 @@ end
 
 
 function stealth( _target )
-   ai.brake()
-   if ai.isstopped() then
+   if ai.brake() then
       ai.stop()
    end
    -- TODO something to try to get them to restealth if failed, maybe move around?

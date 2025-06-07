@@ -25,8 +25,8 @@
   <gfx>sfc.webp</gfx>
   <sound>mace</sound>
   <sound_hit>lrgexp0</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="-10">fire-missileS</trail_generator>
   <duration blowup="armour">4</duration>
   <accel>300</accel>

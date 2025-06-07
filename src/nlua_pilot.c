@@ -2670,14 +2670,12 @@ static int outfitToggle( lua_State *L, Pilot *p, int id, int activate )
         ( !activate && ( po->state != PILOT_OUTFIT_ON ) ) )
       return 0;
 
-   int ret = po->flags & PILOTOUTFIT_ISON_TOGGLE;
-   if ( activate ) {
+   int flags = po->flags;
+   if ( activate )
       po->flags |= PILOTOUTFIT_ISON_TOGGLE;
-      return ret;
-   } else {
-      po->flags &= PILOTOUTFIT_ISON_TOGGLE;
-      return !ret;
-   }
+   else
+      po->flags &= ~PILOTOUTFIT_ISON_TOGGLE;
+   return po->flags != flags;
 }
 /**
  * @brief Toggles an outfit.
@@ -4827,7 +4825,8 @@ static int pilotL_setSpeedLimit( lua_State *L )
  * otherwise.
  *    @luatreturn number The shield in % [0:100] if relative or absolute value
  * otherwise.
- *    @luatreturn number The stress in % [0:100].
+ *    @luatreturn number The stress in % [0:100] if relative or absolute value
+ * otherwise.
  *    @luatreturn boolean Indicates if pilot is disabled.
  * @luafunc health
  */

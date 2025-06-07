@@ -21,11 +21,11 @@ local dvaered_outfits = eoutfits.merge{{
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Hellburner", "Emergency Shield Booster",
+   "Sensor Array", "Emergency Shield Booster",
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    -- Heavy Structural
    "Large Fuel Pod", "Battery III", "Reactor Class III",
-   "Shield Capacitor III", "Nanobond Plating", "Biometal Armour",
+   "Shield Capacitor III", "Nanobond Plating",
    -- Medium Structural
    "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
    "Active Plating", "Reactor Class II",

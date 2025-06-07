@@ -79,10 +79,10 @@
  <item>Shield Capacitor II</item>
  <item>Shield Capacitor III</item>
  <item>Shield Capacitor IV</item>
- <item>Auxiliary Proccessing Unit I</item>
- <item>Auxiliary Proccessing Unit II</item>
- <item>Auxiliary Proccessing Unit III</item>
- <item>Auxiliary Proccessing Unit IV</item>
+ <item>Auxiliary Processing Unit I</item>
+ <item>Auxiliary Processing Unit II</item>
+ <item>Auxiliary Processing Unit III</item>
+ <item>Auxiliary Processing Unit IV</item>
  <item>Small Shield Booster</item>
  <item>Medium Shield Booster</item>
  <item>Large Shield Booster</item>
@@ -263,4 +263,9 @@
  <item>Port &amp; Polish</item>
  <item>Black Agate Finishing</item>
  <item>Hyperdrive Retool</item>
+ <item>Flak Gun</item>
+ <item>Neutralizer</item>
+ <item>Reaver Cannon</item>
+ <item>Pincushion Battery</item>
+ <item>Plasma Eruptor</item>
 </tech>

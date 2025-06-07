@@ -13,8 +13,8 @@
   <lua>outfits/flow/astral_projection/astral_cannon.lua</lua>
   <gfx type="shader" size="8" col_size="6">particles/chakra.frag</gfx>
   <sound>ion</sound>
-  <spfx_shield>ChakraXS</spfx_shield>
-  <spfx_armour>ChakraXS</spfx_armour>
+  <spfx_shield>Chakra-XS</spfx_shield>
+  <spfx_armour>Chakra-XS</spfx_armour>
   <delay>0.7</delay>
   <speed>700</speed>
   <range>700</range>

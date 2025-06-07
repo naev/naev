@@ -11,15 +11,14 @@
   <cpu>-100</cpu>
  </general>
  <specific type="bolt">
-  <gfx>ripperS.png</gfx>
+  <gfx type="shader" size="8" col_size="6">particles/ripper_green.frag</gfx>
   <sound>ripper</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.2</delay>
   <speed>1200</speed>
   <range>1100</range>
   <falloff>950</falloff>
-  <gfx_end>ripperS-end.png</gfx_end>
   <energy>30</energy>
   <trackmin>0</trackmin>
   <trackmax>3600</trackmax>

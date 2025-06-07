@@ -26,8 +26,8 @@
   <gfx>empgrenade.png</gfx>
   <sound>grenadefire</sound>
   <sound_hit>grenade</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
-  <spfx_armour>ExpM</spfx_armour>
+  <spfx_shield>Exp-M</spfx_shield>
+  <spfx_armour>Exp-M</spfx_armour>
   <trail_generator x="0">zalek-missile</trail_generator>
   <duration blowup="armour">7</duration>
   <accel>450</accel>

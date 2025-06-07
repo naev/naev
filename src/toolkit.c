@@ -668,6 +668,14 @@ unsigned int window_get( const char *wdwname )
    return last->id;
 }
 
+const char *window_getDisplayName( unsigned int wid )
+{
+   Window *wdw = window_wget( wid );
+   if ( wdw == NULL )
+      return NULL;
+   return wdw->displayname;
+}
+
 /**
  * @brief Creates a window.
  *

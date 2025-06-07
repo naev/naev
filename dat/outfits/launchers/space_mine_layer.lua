@@ -5,10 +5,8 @@ function onload( o )
    ss = o:specificstats()
 end
 
-function onshoot( p, _po, on )
-   if not on then return end
-
-   spacemine( p:pos(), p:vel(), p:faction(), {
+function onshoot( p, po )
+   spacemine( po:mount(p), p:vel(), p:faction(), {
       damage      = ss.damage,
       penetration = ss.penetration,
       trackmax    = ss.trackmin,

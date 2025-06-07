@@ -19,6 +19,13 @@ h.mul_f(specific, 'delay', 2 )
 h.mul_f(specific, 'energy', 2.0 )
 h.mul_f(specific, 'swivel', 1.5 )
 h.mul_i(specific, 'trackmax', 0.8333333333 )
+specific['lua'] = "outfits/lib/matrix_sell.lua"
+specific['gfx'] = {
+    "@type" : "shader",
+    "@size" : "10",
+    "@col_size" : "8",
+    "#text" : "particles/reaver.frag",
+}
 
 damage = specific['damage']
 h.mul_f(damage, 'physical', 2.0 )

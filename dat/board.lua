@@ -6,6 +6,7 @@ local lg = require 'love.graphics'
 local fmt = require 'format'
 local der = require "common.derelict"
 local treasure = require "common.treasure_hunt"
+local treasureloot = require "common.loot"
 
 local board_lootOne -- forward-declared function, defined at bottom of file
 local board_fcthit_check
@@ -27,13 +28,28 @@ local LOOTABLES = {
          return nil
       end
 
+      -- Randomly choose loot and hint it.
+      local reward_type
+      if rnd.rnd() < 0.5 then
+         reward_type = _("weapon outfit")
+         data.reward = treasureloot.tier1_weapon()
+      else
+         reward_type = _("non-weapon outfit")
+         data.reward = treasureloot.tier1_nonweapon()
+      end
+      local reward_str = "\n"..fmt.f(_("Some scribbles indicate you will find a {reward_type}."),
+         {reward_type="#b"..reward_type.."#0"})
+
+      -- Create the lootable entry
       return {
          image = lg.newImage("gfx/misc/treasure_hunt.webp"),
          text = _("Treasure Map"),
          q = 1,
          type = "func",
          bg = nil,
-         alt = _("Treasure Map\nA map that likely leads to some treasure!"),
+         alt = fmt.f(_([[Treasure Map
+A map that likely leads to some treasure!{lootstr}]]),
+            {lootstr=reward_str}),
          data = function ()
             treasure.give_map_from( data )
          end

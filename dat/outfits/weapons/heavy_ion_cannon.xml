@@ -13,8 +13,8 @@
  <specific type="bolt">
   <gfx>ionL.png</gfx>
   <sound>ion</sound>
-  <spfx_shield>ShiS</spfx_shield>
-  <spfx_armour>ExpS</spfx_armour>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
   <delay>1.4</delay>
   <speed>600</speed>
   <range>1750</range>

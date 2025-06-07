@@ -123,6 +123,10 @@ end
    value indicating the amount of credits to refund the player.
 --]]
 local outfit_list = {
+   ["Auxiliary Proccessing Unit I"]       = "Auxiliary Processing Unit I", -- codespell:ignore proccessing
+   ["Auxiliary Proccessing Unit II"]      = "Auxiliary Processing Unit II", -- codespell:ignore proccessing
+   ["Auxiliary Proccessing Unit III"]     = "Auxiliary Processing Unit III", -- codespell:ignore proccessing
+   ["Auxiliary Proccessing Unit IV"]      = "Auxiliary Processing Unit IV", -- codespell:ignore proccessing
    ["Adaptive Stealth Plating"]           = "Adaptive Camouflage Plating",
    ["Nexus Stealth Coating"]              = "Nexus Concealment Coating",
    ["Camouflage Burster"]                 = "Stealth Burster",

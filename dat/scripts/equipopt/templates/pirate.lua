@@ -31,7 +31,7 @@ local pirate_outfits = eoutfits.merge{{
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Hellburner", "Emergency Shield Booster",
+   "Sensor Array", "Emergency Shield Booster",
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    "Scanning Combat AI",
    -- Heavy Structural

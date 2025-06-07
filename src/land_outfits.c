@@ -1161,14 +1161,15 @@ static void outfits_sell( unsigned int wid, const char *str )
          lua_pop( naevL, 1 );
       }
 
-      int bought = lua_toboolean( naevL, -2 );
+      int sold = lua_toboolean( naevL, -2 );
 
-      if ( !bought ) {
+      if ( !sold ) {
          dialogue_alert( "%s", lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 2 );
          return;
       }
       q = luaL_checkinteger( naevL, -1 );
+      q = player_rmOutfit( outfit, q );
 
       lua_pop( naevL, 2 );
    } else {

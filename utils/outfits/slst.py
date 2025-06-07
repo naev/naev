@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# python3
 
 class Slst(list):
    def __call__( self, st, debug = False ):

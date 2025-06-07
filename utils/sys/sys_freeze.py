@@ -2,7 +2,7 @@
 
 
 
-from ssys import sysnam2sys, starmap, fil_ET, vec_to_element
+from ssys import nam2base, starmap, fil_ET, vec_to_element
 sm = starmap()
 
 
@@ -10,11 +10,11 @@ def sys_freeze( sys ):
    changed = False
    p = fil_ET(sys)
    T = p.getroot()
-   myname = sysnam2sys(T.attrib['name'])
+   myname = nam2base(T.attrib['name'])
    radius = float(T.find('general/radius').text)
 
    for e in T.findall('jumps/jump'):
-      dst = sysnam2sys(e.attrib['target'])
+      dst = nam2base(e.attrib['target'])
       for f in e.findall('autopos'):
          changed = True
          f.tag = 'pos'

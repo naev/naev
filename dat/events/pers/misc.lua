@@ -47,6 +47,8 @@ return function ()
             local reward = rnd.rnd(15e3, 25e3) * amount / 100
 
             local function needs_refuel( p )
+               if player.evtActive("Refuel") then return false end
+               if p:memory().refueled then return false end
                return (not player.pilot():areEnemies(p) and p:fuel() < amount)
             end
 

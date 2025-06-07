@@ -36,6 +36,7 @@ static int poL_set( lua_State *L );
 static int poL_clear( lua_State *L );
 static int poL_munition( lua_State *L );
 static int poL_shoot( lua_State *L );
+static int poL_mount( lua_State *L );
 
 static const luaL_Reg poL_methods[] = {
    { "id", poL_id },
@@ -47,6 +48,7 @@ static const luaL_Reg poL_methods[] = {
    { "clear", poL_clear },
    { "munition", poL_munition },
    { "shoot", poL_shoot },
+   { "mount", poL_mount },
    { 0, 0 } }; /**< Pilot outfit metatable methods. */
 
 /**
@@ -501,5 +503,23 @@ static int poL_shoot( lua_State *L )
    ret  = pilot_shootWeapon( p, po, &t, time, -1 );
 
    lua_pushboolean( L, ret );
+   return 1;
+}
+
+/**
+ * @brief Gets the mount position on the ship.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to get mount of.
+ *    @luatparam Pilot p Pilot with the outfit mounted.
+ *    @luatreturn Vec2 Position of the mount.
+ * @luafunc mount
+ */
+static int poL_mount( lua_State *L )
+{
+   PilotOutfitSlot *po = luaL_validpilotoutfit( L, 1 );
+   Pilot           *p  = luaL_validpilot( L, 2 );
+   vec2             pos;
+   pilot_getMount( p, po, &pos );
+   lua_pushvector( L, pos );
    return 1;
 }
