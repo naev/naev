@@ -14,6 +14,9 @@ class _vec(tuple):
    def __sub__( self, other ):
       return self + other*-1.0
 
+   def orth( self ):
+      return _vec((-self[1], self[0]))
+
    def _rotate( self, sa, ca ):
       return _vec((self[0]*ca - self[1]*sa, self[0]*sa + self[1]*ca))
 
@@ -45,6 +48,9 @@ class _vec(tuple):
 
    def __str__( self ):
       return str(tuple([int(a) if int(a) == a else a for a in self]))
+
+   def __repr__( self ):
+      return 'vec' + tuple.__repr__(self)
 
    def rotate_rad( self, angle ):
       return self._rotate(sin(angle), cos(angle))
@@ -136,6 +142,93 @@ def transf():
    return vec(1, 0) / vec(1, 0)
 
 
+# general geometry
+
+class line:
+   def __init__( self, P, v ):
+      self.P = P
+      self.v = v
+
+   def dist( self, P ):
+      u = P - self.P
+      v = self.v
+      u-= (u * v) * v / (v * v)
+      return u.size()
+
+   # use & to call
+   def __and__( self, other ):
+      u = self.v
+      v = other.v.orth()
+      s = u*v
+      if abs(s) < 0.0000001:
+         return None
+      else:
+         return self.P + (other.P - self.P) * v / s * u
+
+   def __str__( self ):
+      return str({'P': self.P, 'v': self.v})
+
+   def __repr__( self ):
+      return 'line' + repr((self.P, self.v))
+
+class circle:
+   # radius = True means infinity, radius = False means <= 0.0
+   def __init__( self, center = vec(), radius = 0.0 ):
+      self.center = center
+      self.radius = radius
+
+   def __str__(self):
+      return str({'center': self.center, 'radius': self.radius})
+
+   def __repr__( self ):
+      return 'circle' + repr((self.center, self.radius))
+
+   def __contains__(self, P):
+      u = P - self.center
+      if self.radius in [False, True]:
+         return radius
+      else:
+         return u * u <= self.radius * self.radius
+
+def inscribed( A, B, C ):
+   la = line( A , (B - A).normalize() + (C - A).normalize() )
+   lb = line( B , (C - B).normalize() + (A - B).normalize() )
+   P = la & lb
+   return circle(P, line(A, B - A).dist(P))
+
+def circumscribed( A, B, C ):
+   la = line ((B + C) / 2.0, (B - C).orth())
+   lb = line ((C + A) / 2.0, (C - A).orth())
+   P = la & lb
+   return circle(P, (A - P).size())
+
+def subsets( S, n ):
+   if len(S) == n or n == 0:
+      yield tuple(S[:n])
+   else:
+      S0, S = S[0], S[1:]
+      for i in subsets(S, n):
+         yield i
+      for i in subsets(S, n-1):
+         yield (S0,) + i
+
+def bounding_circle( L ):
+   def candidates( ):
+      for (i, j) in subsets(L, 2):
+         yield circle((i+j)/2, (i-j).size()/2)
+      for (i, j, k) in subsets(L, 3):
+         yield circumscribed(i, j, k)
+   best = None
+   for c in candidates():
+      if (best is None or best.radius > c.radius):
+         best, prv = c, best
+         for p in L:
+            if p not in c:
+               best = prv
+               break
+   return best
+
+
 # bounding boxes
 
 class bb:
@@ -185,3 +278,16 @@ class bb:
 
    def __str__( self ):
       return str(round(self.mini())) + ':' + str(round(self.maxi()))
+
+
+
+# example
+
+if __name__ == '__main__':
+   A = vec(0, 0)
+   B = vec(1, 0)
+   C = vec(0, 1)
+   print('triangle', A, B, C)
+   print('inscribed', inscribed(A, B, C))
+   print('circumscribed', circumscribed(A, B, C))
+   print('bounding', bounding_circle([A, B, C]))

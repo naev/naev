@@ -22,7 +22,7 @@ def mk_p(L):
    where = pi.index(0)
    return pi[where:] + pi[:where]
 
-def sys_relax( sys, quiet = True, graph = False ):
+def ssys_relax( sys, quiet = True, graph = False ):
    p = fil_ET(sys)
    T = p.getroot()
    myname = nam2base(T.attrib['name'])
@@ -106,5 +106,5 @@ if __name__ == '__main__':
       args.remove('-g')
 
    for i in args:
-      if sys_relax(i, quiet = not verbose, graph = graph):
+      if ssys_relax(i, quiet = not verbose, graph = graph):
          print(i)

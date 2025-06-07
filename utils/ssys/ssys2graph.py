@@ -5,11 +5,12 @@ from os.path import basename
 from ssys import nam2base, getpath, PATH
 
 
+default_col = (0.25, 0.25, 0.25)
 faction_color = {
-   None:                (0.25, 0.25, 0.25),
-   'empire':            (0.0,  0.9,  0.0),
-   'zalek':             (0.5,  0.0,  0.0),
-   'dvaered':           (0.5,  0.2,  0.0),
+   None:                default_col,
+   'empire':            (0.0,  0.85, 0.0),
+   'zalek':             (0.6,  0.0,  0.0),
+   'dvaered':           (0.6,  0.2,  0.0),
    'sirius':            (0.0,  0.7,  0.8),
    'soromid':           (0.95, 0.5,  0.0),
    'frontier':          (0.8,  0.8,  0.0),
@@ -94,4 +95,4 @@ def xml_files_to_graph( args, get_colors = False ):
    n2i = lambda x:name2id[x]
    ids = [n2i(x) for x in name]
    acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
-   return dict(zip(ids,name)), dict(zip(ids,acc)), dict(pos), tradelane, color
+   return dict(zip(ids,name)), dict(pos), dict(zip(ids,acc)), tradelane, color

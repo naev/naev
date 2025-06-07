@@ -7,5 +7,5 @@ if [ "$#" = "0" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 fi
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-"$SCRIPT_DIR/sys_relax.py" "$@"
+"$SCRIPT_DIR/ssys_relax.py" "$@"
 sed -i 's/<pos x=\".*\" was_auto=\"true\"\/>/<autopos\/>/' "$@"

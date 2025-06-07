@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import stdin, stderr
-from ssys import vec, fil_ET, ssys_fil, sysneigh, vec_from_element, vec_to_element
+from ssys import vec, fil_ET, ssys_fil, ssysneigh, vec_from_element, vec_to_element
 from geometry import bb
 
 
@@ -176,7 +176,7 @@ for k in pos:
 newp = dict()
 for k in pos:
    if k[0] != '_' and (k in tradelane):
-      tln = [s for (s, _) in sysneigh(k) if (s in tradelane)]
+      tln = [s for (s, _) in ssysneigh(k) if (s in tradelane)]
       if (n := len(tln)) > 1:
          p = sum([pos[s] for s in tln], vec())
          newp[k] = pos[k]*(1.0-n*0.125) + p*0.125
@@ -191,14 +191,14 @@ total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, _) in sysneigh(k) if (s in tradelane)]:
+      for n in [s for (s, _) in ssysneigh(k) if (s in tradelane)]:
          total += (pos[n]-pos[k]).size()
          count += 1
 avg = total / count
 
 for k in pos:
    if k[:3] == 'ngc' and k[3:] not in ['22375', '20489', '4746', '9415']:
-      if len(n := sysneigh(k)) == 1:
+      if len(n := ssysneigh(k)) == 1:
          n = n[0][0]
          v = pos[k] - pos[n]
          if v.size() < avg:

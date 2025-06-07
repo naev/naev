@@ -6,7 +6,7 @@ from ssys import nam2base, starmap, fil_ET, vec_to_element
 sm = starmap()
 
 
-def sys_freeze( sys ):
+def ssys_freeze( sys ):
    changed = False
    p = fil_ET(sys)
    T = p.getroot()
@@ -45,5 +45,5 @@ if __name__ == '__main__':
       args = map(lambda x: x.rstrip('\n'), stdin)
 
    for i in args:
-      if sys_freeze(i):
+      if ssys_freeze(i):
          print(i)
