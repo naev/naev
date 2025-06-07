@@ -562,7 +562,6 @@ static int cli_initLua( void )
 
    if ( nlua_dobufenv( cli_env, buf, size, file ) ) {
       WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( naevL, -1 ) );
-      lua_close( naevL );
       return -1;
    }
 
