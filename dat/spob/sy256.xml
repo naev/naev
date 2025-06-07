@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="SY-256">
  <lua>thurion.lua</lua>
  <pos x="2503.616129" y="-606.280554"/>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="MGG-1294">
  <pos x="14774.142214" y="-7163.122858"/>
  <GFX>
@@ -5,7 +6,7 @@
   <exterior>aquatic.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>P</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>

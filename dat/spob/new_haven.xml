@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Haven">
  <lua>pirate_clanworld.lua</lua>
  <pos x="-29845.859288" y="4223.363841"/>

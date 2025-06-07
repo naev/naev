@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ferrungir">
  <lua>lowclass.lua</lua>
  <pos x="-5527.157340" y="6055.653934"/>

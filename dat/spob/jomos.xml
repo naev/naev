@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jomos">
  <lua>highclass.lua</lua>
  <pos x="12956.737140" y="-8615.855896"/>
@@ -7,8 +8,8 @@
  </GFX>
  <presence>
   <faction>Sirius</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.660000</base>
+  <bonus>33.330000</bonus>
   <range>2</range>
  </presence>
  <general>

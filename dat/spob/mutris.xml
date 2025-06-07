@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mutris">
  <feature>#pSirius Homeworld#0</feature>
  <lua>sirius_mil_mutris.lua</lua>

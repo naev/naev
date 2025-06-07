@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Protera Husk">
  <lua>protera_husk.lua</lua>
  <pos x="7830.104028" y="-8539.559224"/>

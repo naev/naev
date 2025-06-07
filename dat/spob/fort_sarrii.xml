@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Sarrii">
  <lua>dvaered_mil_restricted.lua</lua>
  <pos x="-2675.964475" y="-6088.010868"/>

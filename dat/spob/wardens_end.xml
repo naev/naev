@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Warden's End">
  <lua>pirate_clanworld.lua</lua>
  <pos x="19365.865907" y="7882.413669"/>

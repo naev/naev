@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Lanze">
  <lua>highclass.lua</lua>
  <pos x="9650.958314" y="5346.852767"/>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Prime">
  <feature>#pZa'lek Homeworld#0</feature>
  <lua>zalek_mil_ruadan.lua</lua>

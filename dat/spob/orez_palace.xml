@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="O'rez Palace">
  <lua>orez_palace.lua</lua>
  <pos x="2256.802926" y="2319.240990"/>

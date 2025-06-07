@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Astana">
  <lua>empire_mil_restricted.lua</lua>
  <pos x="4651.529604" y="5344.310609"/>

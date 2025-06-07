@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Beene">
  <lua>lowclass.lua</lua>
  <pos x="9360.000000" y="-6320.000000"/>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Efferey">
  <lua>pirate_clanworld.lua</lua>
  <pos x="1341.000000" y="967.000000"/>

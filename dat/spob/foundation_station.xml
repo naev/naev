@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Foundation Station">
  <lua>pirate_clanworld.lua</lua>
  <pos x="1941.876493" y="767.371325"/>

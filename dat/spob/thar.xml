@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Thar">
  <lua>lowclass.lua</lua>
  <pos x="950.000000" y="6700.000000"/>

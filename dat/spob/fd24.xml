@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="FD-24">
  <lua>thurion.lua</lua>
  <pos x="546.000000" y="520.000000"/>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Handalier">
  <lua>dvaered_mil_restricted.lua</lua>
  <pos x="-750.438454" y="453.235106"/>

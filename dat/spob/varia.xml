@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Varia">
  <lua>highclass.lua</lua>
  <pos x="-9713.888889" y="-290.555556"/>
