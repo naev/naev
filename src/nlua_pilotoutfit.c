@@ -520,6 +520,8 @@ static int poL_mount( lua_State *L )
    Pilot           *p  = luaL_validpilot( L, 2 );
    vec2             pos;
    pilot_getMount( p, po, &pos );
+   pos.x += p->solid.pos.x;
+   pos.y += p->solid.pos.y;
    lua_pushvector( L, pos );
    return 1;
 }
