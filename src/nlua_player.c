@@ -154,6 +154,7 @@ static int playerL_inventory( lua_State *L );
 static int playerL_inventoryAdd( lua_State *L );
 static int playerL_inventoryRm( lua_State *L );
 static int playerL_inventoryOwned( lua_State *L );
+static int playerL_hasLicense( lua_State *L );
 /* Misc stuff. */
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
@@ -250,6 +251,7 @@ static const luaL_Reg playerL_methods[] = {
    { "inventoryAdd", playerL_inventoryAdd },
    { "inventoryRm", playerL_inventoryRm },
    { "inventoryOwned", playerL_inventoryOwned },
+   { "hasLicense", playerL_hasLicense },
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },
@@ -2386,6 +2388,23 @@ static int playerL_inventoryOwned( lua_State *L )
       lua_pushinteger( L, 0 );
    else
       lua_pushinteger( L, player_inventoryAmount( name ) );
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a player has a license.
+ *
+ *    @luatparam string name The name of the license to check.
+ *    @luatreturn boolean Whether or not the player has the license.
+ * @luafunc hasLicense
+ */
+static int playerL_hasLicense( lua_State *L )
+{
+   const char *name = luaL_checkstring( L, 1 );
+   if ( player.p == NULL )
+      lua_pushboolean( L, 0 );
+   else
+      lua_pushboolean( L, player_hasLicense( name ) );
    return 1;
 }
 
