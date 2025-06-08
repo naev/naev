@@ -562,10 +562,28 @@ static int load_sortCompare( const void *p1, const void *p2 )
    else if ( ns1->compatible && !ns2->compatible )
       return +1;
 
-   /* Search by file modification date. */
-   if ( ns1->modtime > ns2->modtime )
+   /* Make sure back ups are last. */
+   const char *BACKUPNAME = "backup";
+   int b1 = strncmp( ns1->save_name, BACKUPNAME, strlen( BACKUPNAME ) ) == 0;
+   int b2 = strncmp( ns2->save_name, BACKUPNAME, strlen( BACKUPNAME ) ) == 0;
+   if ( b1 && !b2 )
+      return +1;
+   else if ( !b1 && b2 )
       return -1;
-   else if ( ns1->modtime < ns2->modtime )
+
+   /* Sort by file modification date with a resolution of 65.536 seconds or 18.2
+    * hours. */
+   PHYSFS_sint64 t1 = ns1->modtime >> 16;
+   PHYSFS_sint64 t2 = ns2->modtime >> 16;
+   if ( t1 > t2 )
+      return -1;
+   else if ( t1 < t2 )
+      return +1;
+
+   /* Sort by in-game date. */
+   if ( ns1->date > ns2->date )
+      return -1;
+   else if ( ns1->date > ns2->date )
       return +1;
 
    /* Finally sort by name. */

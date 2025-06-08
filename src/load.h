@@ -26,7 +26,7 @@ typedef struct nsave_s {
    char         *save_name;   /** Snapshot name. */
    char         *player_name; /**< Player name. */
    char         *path; /**< File path relative to PhysicsFS write directory. */
-   PHYSFS_sint64 modtime; /**< Last modified time. */
+   PHYSFS_sint64 modtime; /**< Last modified time in seconds from UNIX epoch. */
 
    /* Naev info. */
    char *version; /**< Naev version. */
