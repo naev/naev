@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
 #include <libgen.h>
 #include <math.h>
@@ -35,6 +36,28 @@ static inline float _pot(float xs, float ys, float x, float y){
       return d*d*mul_ct + add_ct;
    else
       return -1.0f / d;
+}
+
+// The derivative of the previous one.
+static inline void accum_f(float*vx,float*vy,float xs, float ys, float x, float y, float m){
+   float dx = xs - x;
+   float dy = ys - y;
+   float d = sqrt(dx*dx + dy*dy);
+   float f;
+
+   dx /= d;
+   dy /= d;
+
+   d *= inv_fact;
+
+   if(d < rad)
+      f = 2.0*d * mul_ct;
+   else
+      f = 1.0f / d*d;
+
+   f *= m;
+   *vx += f * dx;
+   *vy += f * dy;
 }
 
 void output_map(float*map, int w, int h, float fact, float ct){
@@ -163,35 +186,73 @@ void gen_potential(float*lst, size_t nb){
    #undef TO
 }
 
-int potential(){
+void apply_gravity(const float*lst, size_t nb, char**names){
+   for(size_t i=0; i<nb; i++){
+      float x=lst[4*i+0], y=lst[4*i+1];
+      float dx=0.0f, dy=0.0f;
+      for(size_t j=0; j<nb; j++)
+         if(j != i)
+            accum_f(&dx, &dy, lst[4*j+0], lst[4*j+1], x, y, lst[4*j+2]);
+      dx *= 0.1;
+      dy *= 0.1;
+      printf("%s %f %f\n", names[i], x+dx, y+dy);
+   }
+}
+
+int do_it(bool apply){
    char buf[256];
    char*line = NULL;
    size_t n = 0;
    float*lst = NULL;
+   char**names = NULL;
    size_t nb = 0;
 
    while( getline(&line, &n, stdin) != -1 ){
-      if((nb & (nb+1)) == 0)
+      if((nb & (nb+1)) == 0){
          lst = realloc(lst, ((nb<<1)|1)*sizeof(float)*4);
+         if(apply)
+            names = realloc(names, ((nb<<1)|1)*sizeof(char*));
+      }
       sscanf(line, "%s %f %f", buf, lst+(4*nb), lst+(4*nb+1));
       lst[4*nb+2] = 1.0;
+      names[nb] = strdup(buf);
       for(int i=0; weights[i].nam; i++)
          if(!strcmp(weights[i].nam, buf))
             lst[4*nb+2] = weights[i].w;
       nb++;
    }
    free(line);
-
-   gen_potential(lst, nb);
+   if(apply)
+      apply_gravity(lst, nb, names);
+   else
+      gen_potential(lst, nb);
    free(lst);
    return EXIT_SUCCESS;
 }
 
+int usage(char*nam, int ret){
+   fprintf(stderr,"Usage: %s [-a]\n", basename(nam));
+   fprintf(stderr,"  Reads a set of node pos in input.\n");
+   fprintf(stderr,"  If -a is set, applies resulting gravity and outputs the result.\n");
+   fprintf(stderr,"  If not, generates a pgm of the gravity potential.\n");
+   return ret;
+}
 
 int main(int argc, char**argv){
-   if(argc>1){
-      fprintf(stderr,"Usage: %s\n", basename(argv[0]));
-      return strcmp(argv[1], "-c") ? EXIT_FAILURE : EXIT_SUCCESS;
-   }else
-      return potential();
+   char*nam = argv[0];
+   bool apply = false;
+
+   if(argc>1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))){
+      return usage(nam, EXIT_SUCCESS);
+   }
+
+   if(argc>1 && !strcmp(argv[1], "-a")){
+      apply = true;
+      argv++; argc--;
+   }
+
+   if(argc>1 && !strcmp(argv[1], "-a"))
+      return usage(nam, EXIT_FAILURE);
+   else
+      return do_it(apply);
 }

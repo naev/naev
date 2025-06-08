@@ -100,34 +100,62 @@ def xml_files_to_graph( args, get_colors = False ):
    return dict(zip(ids,name)), dict(pos), dict(zip(ids,acc)), tradelane, color
 
 if __name__ == '__main__':
-   from sys import argv, exit, stdout, stderr
+   from sys import argv, exit, stdout, stderr, stdin
    import os
+
+   def do_reading():
+      for arg in os.listdir(PATH):
+         if arg[-4:] != '.xml':
+            continue
+
+         bname = arg[:-4]
+         T = ET.parse(os.path.join(PATH, arg)).getroot()
+         try:
+            name = T.attrib['name']
+         except:
+            stderr.write('no name defined in "' + bname + '"\n')
+         try:
+            e = T.find('pos')
+            x, y = (e.attrib['x'], e.attrib['y'])
+         except:
+            stderr.write('no position defined in "' + bname + '"\n')
+         print(bname, x, y, name)
+
+   def do_writing( scale = 1.0 ):
+      from ssys import fil_ET
+      for l in stdin:
+         try:
+            (n, x, y) = l.strip().split(" ")[:3]
+            name = os.path.join(PATH, n+'.xml')
+            T = fil_ET(name)
+            e = T.getroot().find('pos')
+            x = str(float(x) * scale)
+            y = str(float(y) * scale)
+            e.attrib['x'], e.attrib['y'] = x, y
+            T.write(name)
+         except:
+            continue
+
+   if do_write := ('-w' in argv[1:]):
+      argv.remove('-w')
+      if argv[1:] != []:
+         scale = float(argv.pop(1))
+      else:
+         scale = 1.0
 
    if argv[1:] != []:
       ok = '-h' in argv or '--help' in argv[1:]
       fp = stdout if ok else stderr
-      fp.write('usage:  ' + os.path.basename(argv[0]) + '\n')
+      fp.write('usage:  ' + os.path.basename(argv[0]) + ' [-w [scale]]\n')
       fp.write('  Lists (ssys, x, y, name) for all ssys in dat/ssys.\n')
+      fp.write('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.\n')
       exit(0 if ok else 1)
 
    getpath = lambda *x: os.path.realpath(os.path.join(*x))
    script_dir = os.path.dirname(__file__)
    PATH = getpath(script_dir, '..', '..', 'dat', 'ssys')
 
-   for arg in os.listdir(PATH):
-      if arg[-4:] != '.xml':
-         continue
-
-      bname = arg[:-4]
-      T=ET.parse(os.path.join(PATH,arg)).getroot()
-      try:
-         name = T.attrib['name']
-      except:
-         stderr.write('no name defined in "' + bname + '"\n')
-      try:
-         e = T.find('pos')
-         x, y = (e.attrib['x'], e.attrib['y'])
-      except:
-         stderr.write('no position defined in "' + bname + '"\n')
-      print(bname, x, y, name)
-
+   if do_write:
+      do_writing(scale)
+   else:
+      do_reading()
