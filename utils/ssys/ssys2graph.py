@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 
 from sys import stderr
 import xml.etree.ElementTree as ET
@@ -96,3 +98,36 @@ def xml_files_to_graph( args, get_colors = False ):
    ids = [n2i(x) for x in name]
    acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
    return dict(zip(ids,name)), dict(pos), dict(zip(ids,acc)), tradelane, color
+
+if __name__ == '__main__':
+   from sys import argv, exit, stdout, stderr
+   import os
+
+   if argv[1:] != []:
+      ok = '-h' in argv or '--help' in argv[1:]
+      fp = stdout if ok else stderr
+      fp.write('usage:  ' + os.path.basename(argv[0]) + '\n')
+      fp.write('  Lists (ssys, x, y, name) for all ssys in dat/ssys.\n')
+      exit(0 if ok else 1)
+
+   getpath = lambda *x: os.path.realpath(os.path.join(*x))
+   script_dir = os.path.dirname(__file__)
+   PATH = getpath(script_dir, '..', '..', 'dat', 'ssys')
+
+   for arg in os.listdir(PATH):
+      if arg[-4:] != '.xml':
+         continue
+
+      bname = arg[:-4]
+      T=ET.parse(os.path.join(PATH,arg)).getroot()
+      try:
+         name = T.attrib['name']
+      except:
+         stderr.write('no name defined in "' + bname + '"\n')
+      try:
+         e = T.find('pos')
+         x, y = (e.attrib['x'], e.attrib['y'])
+      except:
+         stderr.write('no position defined in "' + bname + '"\n')
+      print(bname, x, y, name)
+
