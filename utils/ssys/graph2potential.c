@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <libgen.h>
 #include <math.h>
@@ -39,15 +40,18 @@ static inline float _pot(float xs, float ys, float x, float y){
 void output_map(float*map, int w, int h, float fact, float ct){
    char buf[32];
    FILE*fp = fopen("out.pgm", "wb");
-   unsigned char*line;
+   uint8_t *line;
 
-   fwrite(buf, sizeof(char), sprintf(buf, "P5 %d %d 255\n", w, h), fp);
+   fwrite(buf, sizeof(char), sprintf(buf, "P5 %d %d 65535\n", w, h), fp);
 
-   line = calloc((size_t)w, sizeof(char));
+   line = (uint8_t *) calloc((size_t)w, sizeof(uint16_t));
    for(int i=0; i<h; i++){
-      for(int j=0; j<w; j++)
-         line[j] = (unsigned) (255.0 * (fact * map[(h-i-1)*w + j] + ct));
-      fwrite(line, sizeof(char), w, fp);
+      for(int j=0; j<w; j++){
+         const unsigned u = 65535.0 * (fact * map[(h-i-1)*w + j] + ct);
+         line[2*j] = u>>8;
+         line[2*j+1] = u&0xff;
+      }
+      fwrite(line, sizeof(uint16_t), w, fp);
    }
    fclose(fp);
    free(line);
@@ -77,10 +81,10 @@ void gen_potential(float*lst, size_t nb){
    if(minx == maxx || miny == maxy)
       return;
 
-   const int minj = (int) floor(minx);
-   const int maxj = (int)  ceil(maxx);
-   const int mini = (int) floor(miny);
-   const int maxi = (int)  ceil(maxy);
+   const int minj = (int) floor(minx) - 2;
+   const int maxj = (int)  ceil(maxx) + 2;
+   const int mini = (int) floor(miny) - 2;
+   const int maxi = (int)  ceil(maxy) + 2;
 
    #define FROM(num) (mini + (num) * (maxi-mini+1) / PROCESSES)
    #define TO(num)   (FROM((num)+1) - 1)
