@@ -4,6 +4,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 args=("$@")
 if [ "$*" = "" ] ; then
+   args+=("-r")
    args+=("$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../dat")")
 fi
 
