@@ -58,7 +58,7 @@ function car.calculateRoute( missdist, params )
 
    -- Select mission tier.
    local maxtier
-   if player.chapter()=="0" then
+   if player.hasLicense("Large Civilian Vessel") then
       maxtier = 3
    else
       maxtier = 4
