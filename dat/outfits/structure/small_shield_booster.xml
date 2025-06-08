@@ -10,6 +10,7 @@
   <gfx_store>shield.webp</gfx_store>
  </general>
  <specific type="modification">
+  <shield>10</shield>
   <shield_regen>3</shield_regen>
   <energy_regen_malus>5</energy_regen_malus>
  </specific>
