@@ -19,6 +19,7 @@
       * Ships now disabled below a certain armour threshold regardless of stress
       * AI is less susceptible to stealth bomber cheese
       * Point defense now shoots at all ships prioritizing smaller ones after missiles
+      * Cargo delivery missions have increased cargo amounts
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
