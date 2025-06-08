@@ -420,7 +420,7 @@ local function is_capturable ()
       return false, _("You can not capture deployed fighters.")
    end
    local pm = board_plt:memory()
-   if not pm.natural then
+   if not pm.natural and not pm.capturable then
       return false, _("This ship is not capturable.")
    end
    local flttot, fltcur = player.fleetCapacity()
