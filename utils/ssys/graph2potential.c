@@ -55,11 +55,12 @@ void output_map(float*map, int w, int h, float fact, float ct){
 
 void gen_potential(float*lst, size_t nb){
    static float*maps[PROCESSES-1];
+   static int*percent;
+   char buf[32]={[0]='\r'};
    float*map;
    float minx, maxx, miny, maxy;
    size_t n;
    float min_pot = 0.0; // working only with neg potentials
-   int percent = 0;
 
    if(!nb)
       return;
@@ -88,6 +89,11 @@ void gen_potential(float*lst, size_t nb){
 
    int num;
 
+   percent = mmap(NULL, PROCESSES * sizeof(int),
+      PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+   memset(percent, 0, PROCESSES * sizeof(int));
+
    for(num = 0; num < PROCESSES - 1; num++){
       maps[num] = mmap(NULL, (TO(num)-FROM(num)+1) * (maxj-minj+1) * sizeof(float),
          PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
@@ -95,8 +101,14 @@ void gen_potential(float*lst, size_t nb){
       if(fork() == 0){
          for(int i=FROM(num); i<=TO(num); i++){
             const float per = 100 * (i-FROM(num)) / (TO(num)-FROM(num));
-            if(percent != per )
-               fprintf(stderr,"\r%d %2d%%", num,(percent = per));
+            if(percent[num] != per ){
+               int count=1;
+               percent[num] = per;
+               msync(percent+num, sizeof(int), MS_ASYNC);
+               for(int u=0; u<PROCESSES; u++)
+                  count+=sprintf(buf+count," %2d%%", percent[u]);
+               fwrite(buf, sizeof(char), count, stderr);
+            }
 
             for(int j=minj; j<=maxj; j++){
                float f = 0.0f;
@@ -112,8 +124,14 @@ void gen_potential(float*lst, size_t nb){
 
    for(int i=FROM(num); i<=TO(num); i++){
       const float per = 100 * (i-FROM(num)) / (TO(num)-FROM(num));
-      if(percent != per )
-         fprintf(stderr,"\r%d %2d%%", num,(percent = per));
+      if(percent[num] != per ){
+         int count=1;
+         percent[num] = per;
+         msync(percent+num, sizeof(int), MS_ASYNC);
+         for(int u=0; u<PROCESSES; u++)
+            count+=sprintf(buf+count," %2d%%", percent[u]);
+         fwrite(buf, sizeof(char), count, stderr);
+      }
 
       for(int j=minj; j<=maxj; j++){
          float f = 0.0f;
