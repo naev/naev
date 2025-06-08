@@ -6,6 +6,12 @@
 #include <math.h>
 
 
+// defaults to 1.0
+const struct{char*nam;float w;} weights[]={
+   {"anubis_black_hole", 4.5},
+   {NULL}   // Sentinel
+};
+
 const float fact = 25.0f;
 const float rad = 25.0f / fact;
 
@@ -43,6 +49,7 @@ void gen_potential(float*lst, size_t nb){
    size_t n;
    float*map;
    float min_pot = 0.0; // working only with neg potentials
+   int percent = 0;
 
    if(!nb)
       return;
@@ -50,10 +57,10 @@ void gen_potential(float*lst, size_t nb){
    minx = maxx = lst[0];
    miny = maxy = lst[1];
    for(n=1; n<nb; n++){
-      minx = lst[2*n] < minx ?   lst[2*n]:   minx;
-      maxx = lst[2*n] > maxx ?   lst[2*n]:   maxx;
-      miny = lst[2*n+1] < miny ? lst[2*n+1]: miny;
-      maxy = lst[2*n+1] > maxy ? lst[2*n+1]: maxy;
+      minx = lst[3*n] < minx ?   lst[3*n]:   minx;
+      maxx = lst[3*n] > maxx ?   lst[3*n]:   maxx;
+      miny = lst[3*n+1] < miny ? lst[3*n+1]: miny;
+      maxy = lst[3*n+1] > maxy ? lst[3*n+1]: maxy;
    }
 
    if(minx == maxx || miny == maxy)
@@ -67,19 +74,22 @@ void gen_potential(float*lst, size_t nb){
    map = malloc((maxi-mini+1)*(maxj-minj+1)*sizeof(float));
 
    for(int i=mini; i<=maxi; i++){
-      if(!(i&0x1f))
-         fprintf(stderr,"\r%2d%%",100*(i-mini)/(maxi-mini));
+      const int new_per = 100 * (i-mini) / (maxi-mini);
+      if(new_per != percent){
+         percent = new_per;
+         fprintf(stderr,"\r %2d%%", percent);
+      }
       for(int j=minj; j<=maxj; j++){
          float f = 0.0f;
          for(n=0; n<nb; n++)
-           f += _pot(lst[2*n], lst[2*n+1], (float)j, (float)i);
+           f += lst[3*n+2] * _pot(lst[3*n], lst[3*n+1], (float)j, (float)i);
 
          if(f <= min_pot)
             min_pot = f;
          map[(i-mini) * (maxj-minj+1) + (j-minj)] = f;
       }
    }
-   fprintf(stderr,"\r%10s\r", "");
+   fprintf(stderr,"\r%5s\r", "");
    for(int i=0; i<(maxi-mini+1)*(maxj-minj+1) ; i++)
       map[i] = 1.0 + map[i]/(-min_pot);
 
@@ -88,6 +98,7 @@ void gen_potential(float*lst, size_t nb){
 }
 
 int potential(){
+   char buf[256];
    char*line = NULL;
    size_t n = 0;
    float*lst = NULL;
@@ -95,8 +106,12 @@ int potential(){
 
    while( getline(&line, &n, stdin) != -1 ){
       if((nb & (nb+1)) == 0)
-         lst = realloc(lst, ((nb<<1)|1)*sizeof(float)*2);
-      sscanf(line, "%*s %f %f", lst+(2*nb), lst+(2*nb+1));
+         lst = realloc(lst, ((nb<<1)|1)*sizeof(float)*3);
+      sscanf(line, "%s %f %f", buf, lst+(3*nb), lst+(3*nb+1));
+      lst[3*nb+2] = 1.0;
+      for(int i=0; weights[i].nam; i++)
+         if(!strcmp(weights[i].nam, buf))
+            lst[3*nb+2] = weights[i].w;
       nb++;
    }
    free(line);
