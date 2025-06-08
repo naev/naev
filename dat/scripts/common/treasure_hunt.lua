@@ -7,6 +7,8 @@ local prng = require "prng"
 
 local lib = {}
 
+local FALLBACK_SYS = system.get("Goddard")
+
 local BASEPATH = "gfx/misc/treasure_hunt/"
 local gfx
 local function loadgfx_dir( path )
@@ -185,10 +187,7 @@ function lib.create_map( data, w, h )
    return lib.create_map_path( data.start, data.goal, w, h, data.n, rng )
 end
 
-function lib.create_treasure_hunt( center, maxdist, length )
-   length = length or rnd.rnd(4,5)
-   maxdist = maxdist or 20
-   local goallst = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
+local function goodsys( s )
       -- Must not be too volatile
       local _dens, vol = s:nebula()
       if vol > 15 then
@@ -201,8 +200,19 @@ function lib.create_treasure_hunt( center, maxdist, length )
          end
       end
       return false
-   end )
-   if #goallst <= 0 then return end
+end
+
+function lib.create_treasure_hunt( center, maxdist, length )
+   length = length or rnd.rnd(4,5)
+   maxdist = maxdist or 20
+   local goallst = lmisn.getSysAtDistance( center, 0, maxdist, goodsys )
+   if #goallst <= 0 then
+      -- So, at Qorellia it can't find it across hidden jumps, so we use Goddard as a fallback since it's quite centric
+      -- This is a hack until we allow jumps to support tags or something more generic
+      -- TODO fix properly someday
+      goallst = lmisn.getSysAtDistance( FALLBACK_SYS, 0, maxdist, goodsys )
+      if #goallst <= 0 then return end
+   end
    -- Try to see if we can find a pair for any of the targets
    goallst = rnd.permutation(goallst)
    for i,goal in ipairs(goallst) do
