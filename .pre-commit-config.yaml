@@ -59,7 +59,6 @@ repos:
     - id: rem_xml_head
       name: xml_1 @luafunc optional header remover
       entry: utils/rem_xml_head.sh
-      files: ['^dat/ssys/*.xml', '^dat/spob/*.xml', '^dat/spob_virtual/*.xml']
       types: [xml]
       language: script
     - id: nluacheck
