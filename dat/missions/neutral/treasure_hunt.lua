@@ -95,6 +95,10 @@ function view_maps ()
    abandon = luatk.newButton( wdw, w-20-BUTTON_W-10-BUTTON_W, h-20-BUTTON_H, BUTTON_W, BUTTON_H, _("Abandon Map"), function ()
       local mapname, mapid = lst:get()
       luatk.yesno( _("Abandon Map?"), fmt.f(_("Are you sure you want to abandon the map '{mapname}'?"), {mapname=mapname}), function ()
+         local m = mem.maps[mapid]
+         if m.trigger then
+            naev.trigger( m.trigger, true )
+         end
          table.remove( mem.maps, mapid )
          naev.cache().treasure_maps = #mem.maps
          gen_list()
@@ -116,6 +120,10 @@ function newmap( data )
 end
 
 local function landed( data )
+   if data.trigger then
+      return naev.trigger( data.trigger, true )
+   end
+
    vn.clear()
    vn.scene()
    vn.transition()
@@ -175,5 +183,10 @@ function land ()
 end
 
 function abort ()
+   for k,v in ipairs(mem.maps) do
+      if v.trigger then
+         return naev.trigger( v.trigger, true )
+      end
+   end
    player.infoButtonUnregister( btn )
 end
