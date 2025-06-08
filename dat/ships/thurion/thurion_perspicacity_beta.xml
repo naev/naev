@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Perspicacity Beta" inherits="Thurion Perspicacity">
+ <points>20</points>
  <rarity>4</rarity>
  <class>Scout</class>
  <price>530000</price>
  <time_mod>0.8</time_mod>
- <cond>math.floor(system.cur():reputation("Thurion")+0.5) &gt;= 30</cond>
+ <cond>require("buyrep")("Thurion", 30)</cond>
  <condstr>You need at least 30% reputation with the Thurion.</condstr>
  <description>Originally designed as a fast scout ship, the lack of usability quickly led to the redesign as a more capable interceptor. The Perspicacity Beta is the last version before the redesign. It is incapable of supporting weapons due to its small size. However, it can boast an incredible speed boost and slightly more nebula hardening.</description>
  <characteristics>
