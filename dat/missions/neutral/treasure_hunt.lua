@@ -160,8 +160,7 @@ local function landed( data )
    th.map_completed()
 
    -- Log
-   shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
-   shiplog.append( "treasurehunt", fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
+   th.log( fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
       {sys=system.cur(), spb=spob.cur(), reward=reward_str}) )
 
    return true

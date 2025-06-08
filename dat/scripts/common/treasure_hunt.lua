@@ -273,4 +273,9 @@ function lib.maps_solved()
    return var.peek( PLAYERVAR ) or 0
 end
 
+function lib.log( msg )
+   shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
+   shiplog.append( "treasurehunt", msg )
+end
+
 return lib
