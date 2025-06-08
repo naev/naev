@@ -121,7 +121,9 @@ end
 
 local function landed( data )
    if data.trigger then
-      return naev.trigger( data.trigger, true )
+      th.map_completed()
+      naev.trigger( data.trigger, true )
+      return true
    end
 
    vn.clear()
