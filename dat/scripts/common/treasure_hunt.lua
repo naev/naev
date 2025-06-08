@@ -7,8 +7,6 @@ local prng = require "prng"
 
 local lib = {}
 
-local FALLBACK_SYS = system.get("Goddard")
-
 local BASEPATH = "gfx/misc/treasure_hunt/"
 local gfx
 local function loadgfx_dir( path )
@@ -210,6 +208,7 @@ function lib.create_treasure_hunt( center, maxdist, length )
       -- So, at Qorellia it can't find it across hidden jumps, so we use Goddard as a fallback since it's quite centric
       -- This is a hack until we allow jumps to support tags or something more generic
       -- TODO fix properly someday
+      local FALLBACK_SYS = system.get("Goddard")
       goallst = lmisn.getSysAtDistance( FALLBACK_SYS, 0, maxdist, goodsys )
       if #goallst <= 0 then return end
    end
