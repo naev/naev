@@ -113,6 +113,13 @@ end
 --]]
 -- Enters Crimson Gauntlet
 function enter_the_ring ()
+   -- Failed to take off
+   if player.isLanded() then
+      -- Have to add a new mission because we accepted this one
+      naev.missionStart("Crimson Gauntlet")
+      misn.finish(false)
+   end
+
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
    hook.safe( mem.gauntlet_enter ) -- Will defer one frame, hook.enter triggers in the middle of enter_the_ring which is undesirable
    gauntlet.enter_the_ring()
