@@ -5,29 +5,39 @@
 #include <libgen.h>
 #include <math.h>
 
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
 
 // defaults to 1.0
 const struct{char*nam;float w;} weights[]={
-   {"anubis_black_hole", 4.5},
+   {"anubis_black_hole", 5.5},
    {NULL}   // Sentinel
 };
 
-const float fact = 25.0f;
-const float rad = 25.0f / fact;
+#define PROCESSES 4
 
-static float _pot(float xs, float ys, float x, float y){
-   const float dx = x - xs;
-   const float dy = y - ys;
-   const float d = sqrt(dx*dx + dy*dy) / fact;
+const float fact = 30.0f;
+const float rad = 30.0f / fact;
+const float mul_ct = 1.0 / (2.0f*rad*rad*rad);
+const float add_ct = (-3.0/2.0) * rad;
+const float inv_fact = 1.0 / fact;
+
+static inline float _pot(float xs, float ys, float x, float y){
+   const float dx = xs - x;
+   const float dy = ys - y;
+   const float d = sqrt(dx*dx + dy*dy) * inv_fact;
 
    if(d < rad)
-      return d*d*(1.0/(2.0f*rad*rad*rad)) + (-3.0/2.0*rad);
+      return d*d*mul_ct + add_ct;
    else
-      return -1.0f/d;
+      return -1.0f / d;
 }
 
-void output_map(float*map, int w, int h){
-   char buf[1024];
+void output_map(float*map, int w, int h, float fact, float ct){
+   char buf[32];
    FILE*fp = fopen("out.pgm", "wb");
    unsigned char*line;
 
@@ -36,7 +46,7 @@ void output_map(float*map, int w, int h){
    line = calloc((size_t)w, sizeof(char));
    for(int i=0; i<h; i++){
       for(int j=0; j<w; j++)
-         line[j] = (unsigned) (255.0 * map[(h - i -1) * w + j]);
+         line[j] = (unsigned) (255.0 * (fact * map[(h-i-1)*w + j] + ct));
       fwrite(line, sizeof(char), w, fp);
    }
    fclose(fp);
@@ -44,10 +54,10 @@ void output_map(float*map, int w, int h){
 }
 
 void gen_potential(float*lst, size_t nb){
-   float minx, maxx, miny, maxy;
-   int minj, maxj, mini, maxi;
-   size_t n;
+   static float*maps[PROCESSES-1];
    float*map;
+   float minx, maxx, miny, maxy;
+   size_t n;
    float min_pot = 0.0; // working only with neg potentials
    int percent = 0;
 
@@ -57,44 +67,78 @@ void gen_potential(float*lst, size_t nb){
    minx = maxx = lst[0];
    miny = maxy = lst[1];
    for(n=1; n<nb; n++){
-      minx = lst[3*n] < minx ?   lst[3*n]:   minx;
-      maxx = lst[3*n] > maxx ?   lst[3*n]:   maxx;
-      miny = lst[3*n+1] < miny ? lst[3*n+1]: miny;
-      maxy = lst[3*n+1] > maxy ? lst[3*n+1]: maxy;
+      minx = lst[4*n] < minx ?   lst[4*n]:   minx;
+      maxx = lst[4*n] > maxx ?   lst[4*n]:   maxx;
+      miny = lst[4*n+1] < miny ? lst[4*n+1]: miny;
+      maxy = lst[4*n+1] > maxy ? lst[4*n+1]: maxy;
    }
 
    if(minx == maxx || miny == maxy)
       return;
 
-   minj = (int) floor(minx);
-   maxj = (int)  ceil(maxx);
-   mini = (int) floor(miny);
-   maxi = (int)  ceil(maxy);
+   const int minj = (int) floor(minx);
+   const int maxj = (int)  ceil(maxx);
+   const int mini = (int) floor(miny);
+   const int maxi = (int)  ceil(maxy);
+
+   #define FROM(num) (mini + (num) * (maxi-mini+1) / PROCESSES)
+   #define TO(num)   (FROM((num)+1) - 1)
 
    map = malloc((maxi-mini+1)*(maxj-minj+1)*sizeof(float));
 
-   for(int i=mini; i<=maxi; i++){
-      const int new_per = 100 * (i-mini) / (maxi-mini);
-      if(new_per != percent){
-         percent = new_per;
-         fprintf(stderr,"\r %2d%%", percent);
+   int num;
+
+   for(num = 0; num < PROCESSES - 1; num++){
+      maps[num] = mmap(NULL, (TO(num)-FROM(num)+1) * (maxj-minj+1) * sizeof(float),
+         PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+      if(fork() == 0){
+         for(int i=FROM(num); i<=TO(num); i++){
+            const float per = 100 * (i-FROM(num)) / (TO(num)-FROM(num));
+            if(percent != per )
+               fprintf(stderr,"\r%d %2d%%", num,(percent = per));
+
+            for(int j=minj; j<=maxj; j++){
+               float f = 0.0f;
+               for(n=0; n<nb; n++)
+                 f += lst[4*n+2] * _pot(lst[4*n], lst[4*n+1], (float)j, (float)i);
+               maps[num][(i-FROM(num)) * (maxj-minj+1) + (j-minj)] = f;
+            }
+         }
+         msync(maps[num], (TO(num)-FROM(num)+1) * (maxj-minj+1) * sizeof(float), MS_SYNC);
+         exit(EXIT_SUCCESS);
       }
+   }
+
+   for(int i=FROM(num); i<=TO(num); i++){
+      const float per = 100 * (i-FROM(num)) / (TO(num)-FROM(num));
+      if(percent != per )
+         fprintf(stderr,"\r%d %2d%%", num,(percent = per));
+
       for(int j=minj; j<=maxj; j++){
          float f = 0.0f;
          for(n=0; n<nb; n++)
-           f += lst[3*n+2] * _pot(lst[3*n], lst[3*n+1], (float)j, (float)i);
-
-         if(f <= min_pot)
-            min_pot = f;
+           f += lst[4*n+2] * _pot(lst[4*n], lst[4*n+1], (float)j, (float)i);
          map[(i-mini) * (maxj-minj+1) + (j-minj)] = f;
       }
    }
-   fprintf(stderr,"\r%5s\r", "");
-   for(int i=0; i<(maxi-mini+1)*(maxj-minj+1) ; i++)
-      map[i] = 1.0 + map[i]/(-min_pot);
 
-   output_map(map, maxj-minj+1, maxi-mini+1);
+   while(wait(NULL) != -1);
+   fprintf(stderr, "\n");
+   for(num = 0; num < PROCESSES-1; num++){
+      memcpy(map+(FROM(num)-mini)*(maxj-minj+1), maps[num],
+         (TO(num)-FROM(num)+1)*(maxj-minj+1)*sizeof(float));
+      munmap(maps[num], (TO(num)-FROM(num)+1) * (maxj-minj+1) * sizeof(float));
+   }
+
+   for(int i=0; i<(maxi-mini+1)*(maxj-minj+1); i++)
+      if(map[i] <= min_pot)
+         min_pot = map[i];
+
+   output_map(map, maxj-minj+1, maxi-mini+1, -1.0/min_pot, 1.0);
    free(map);
+   #undef FROM
+   #undef TO
 }
 
 int potential(){
@@ -106,12 +150,12 @@ int potential(){
 
    while( getline(&line, &n, stdin) != -1 ){
       if((nb & (nb+1)) == 0)
-         lst = realloc(lst, ((nb<<1)|1)*sizeof(float)*3);
-      sscanf(line, "%s %f %f", buf, lst+(3*nb), lst+(3*nb+1));
-      lst[3*nb+2] = 1.0;
+         lst = realloc(lst, ((nb<<1)|1)*sizeof(float)*4);
+      sscanf(line, "%s %f %f", buf, lst+(4*nb), lst+(4*nb+1));
+      lst[4*nb+2] = 1.0;
       for(int i=0; weights[i].nam; i++)
          if(!strcmp(weights[i].nam, buf))
-            lst[3*nb+2] = weights[i].w;
+            lst[4*nb+2] = weights[i].w;
       nb++;
    }
    free(line);
