@@ -57,7 +57,13 @@ function car.calculateRoute( missdist, params )
    local use_hidden = params.use_hidden
 
    -- Select mission tier.
-   local tier = rnd.rnd(0, 4)
+   local maxtier
+   if player.chapter()=="0" then
+      maxtier = 3
+   else
+      maxtier = 4
+   end
+   local tier = rnd.rnd(0, maxtier)
 
    if missdist == nil then
       -- 70% chance of 0-3 jump distance
