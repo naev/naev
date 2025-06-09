@@ -20,6 +20,7 @@
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
+#include "nlua_vec2.h"
 #include "nstring.h"
 #include "ntracing.h"
 #include "outfit.h"
@@ -2531,4 +2532,49 @@ static void outfitLOndeath( const Pilot *pilot, PilotOutfitSlot *po,
 void pilot_outfitLOndeath( Pilot *pilot )
 {
    pilot_outfitLRun( pilot, outfitLOndeath, NULL );
+}
+
+typedef struct OnanyimpactData {
+   const Pilot  *t;
+   const Solid  *w;
+   const Outfit *o;
+} OnanyimpactData;
+static void outfitLOnanyimpact( const Pilot *pilot, PilotOutfitSlot *po,
+                                const void *data )
+{
+   (void)data;
+   int           oldmem;
+   const Outfit *o = po->outfit;
+   if ( o->lua_onanyimpact == LUA_NOREF )
+      return;
+   const OnanyimpactData *dat = data;
+
+   nlua_env env = o->lua_env;
+
+   /* Set the memory. */
+   oldmem = pilot_outfitLmem( po, env );
+
+   /* Set up the function: takeoff( p, po ) */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, o->lua_onanyimpact ); /* f */
+   lua_pushpilot( naevL, pilot->id );
+   lua_pushpilotoutfit( naevL, po );
+   lua_pushpilot( naevL, dat->t->id );
+   lua_pushvector( naevL, dat->w->pos ); /* f, p, p, x */
+   lua_pushvector( naevL, dat->w->vel ); /* f, p, p, x, v */
+   lua_pushoutfit( naevL, dat->o );      /* f, p, p, x, v, o */
+   if ( nlua_pcall( env, 6, 0 ) ) {      /* */
+      outfitLRunWarning( pilot, o, "ondeath", lua_tostring( naevL, -1 ) );
+      lua_pop( naevL, 1 );
+   }
+   pilot_outfitLunmem( env, oldmem );
+}
+void pilot_outfitLOnanyimpact( Pilot *pilot, Pilot *target, const Solid *w,
+                               const Outfit *o )
+{
+   const OnanyimpactData data = {
+      .t = target,
+      .w = w,
+      .o = o,
+   };
+   pilot_outfitLRun( pilot, outfitLOnanyimpact, &data );
 }

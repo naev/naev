@@ -434,6 +434,7 @@ typedef struct Outfit_ {
    int lua_keyrelease;   /**< Run when a key is released. */
    int lua_message;      /**< Run when a message is received by an outfit. */
    int lua_ondeath;      /**< Run when pilot is killed. */
+   int lua_onanyimpact;  /**< Run when any weapon hits the enemy. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */

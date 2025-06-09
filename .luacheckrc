@@ -213,6 +213,7 @@ stds.API_pilotoutfit = {globals={
    "descextra",
    "onadd",
    "onhit",
+   "onanyimpact",
    "onimpact",
    "onmiss",
    "onload",
