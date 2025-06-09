@@ -39,8 +39,8 @@ def main( args, color = False, halo = False ):
       orthographic
       sky <0,-1,0>
       direction <0,1,0>\n""")
-   dst.write(6*' ' + 'right ' + str(hs[0]) + '*x')
-   dst.write(6*' ' + 'up ' + str(hs[1]) + '*y')
+   dst.write(6*' ' + 'right ' + str(hs[0]) + '*x\n')
+   dst.write(6*' ' + 'up ' + str(hs[1]) + '*y\n')
    dst.write("""      location 100*z
       look_at 0
    }\n""")

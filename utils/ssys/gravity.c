@@ -12,16 +12,16 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#define PROCESSES 4
+#define GRAV_FACT 0.1
+
 // defaults to 1.0
 const struct {
    char *nam;
    float w;
 } weights[] = {
-   { "anubis_black_hole", 5.5 },
-   { NULL } // Sentinel
+   { "anubis_black_hole", 5.5 }, { NULL } // Sentinel
 };
-
-#define PROCESSES 4
 
 const float fact = 30.0f;
 const float _rad = 30.0f;
@@ -60,6 +60,7 @@ static inline void accum_f( float *vx, float *vy, float xs, float ys, float x,
       f = 1.0f / d * d;
 
    f *= m;
+
    *vx += f * dx;
    *vy += f * dy;
 }
@@ -222,8 +223,6 @@ void gen_potential( float *lst, size_t nb, float scale )
 #undef TO
 }
 
-#define GRAV_FACT 0.1
-
 void apply_gravity( const float *lst, const size_t nb, const char **names )
 {
    char buff[512];
@@ -257,12 +256,12 @@ void apply_gravity( const float *lst, const size_t nb, const char **names )
 int do_it( float scale, bool apply )
 {
    char   buf[256];
-   char  *line  = NULL;
-   size_t n     = 0;
    float *lst   = NULL;
    char **names = NULL;
    size_t nb    = 0;
 
+   char  *line = NULL;
+   size_t n    = 0;
    while (getline( &line, &n, stdin ) != -1) {
       if (( nb & ( nb + 1 ) ) == 0) {
          lst = realloc( lst, ( ( nb << 1 ) | 1 ) * sizeof( float ) * 4 );

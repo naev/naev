@@ -58,17 +58,11 @@ class _vec(tuple):
    def rotate( self, degrees ):
       return self.rotate_rad(degrees / 180.0 * pi)
 
-   def sq( self ):
-      return self*self
-
    def size( self ):
-      return sqrt(self.sq())
+      return sqrt(self * self)
 
    def normalize( self, new_size = 1.0 ):
       return self / self.size() * new_size
-
-   def to_dict( self ):
-      return { 'x': self[0], 'y': self[1] }
 
 
 class _transf:
@@ -76,22 +70,16 @@ class _transf:
    A rotation and a scaling.
    Defined by a pair of vectors (before trans, after trans)
    """
-   def __init__( self, v1, v2, trn = 0 ):
+   def __init__( self, v1, v2 ):
       l1 = v1.size()
       self.fact = v2.size()/l1
-      v1 = v1.normalize()
-      v2 = v2.normalize()
+      v1, v2 = v1.normalize(), v2.normalize()
       self.vec = v1[0]*v2[1] - v1[1]*v2[0]
       if self.vec > 1.0:
          self.vec = 1.0
       elif self.vec < -1.0:
          self.vec = -1.0
-      self.trn = trn
       if v1*v2 < 0:
-         if self.vec < 0:
-            self.trn -= 1
-         else:
-            self.trn += 1
          self.vec = -self.vec
 
    def __str__( self ):
@@ -99,37 +87,8 @@ class _transf:
 
    def __call__( self, other ):
       sa = self.vec
-      sign = -1 if (self.trn%2 == 1) else 1
-      return other._rotate(sa, sign * sqrt(1.0 - sa*sa)) * self.fact
+      return other._rotate(sa, sqrt(1.0 - sa*sa)) * self.fact
 
-   def __matmul__( self, other ):
-      if isinstance(other, _transf):
-         # Composition
-         vi = _vec((1, 0))
-         v1 = self(vi)
-         s = v1 * vi
-         vf = other(v1)
-         if s * (other(vi) * vi) > 0 and s * (vf*vi) < 0:
-            trn = 1 if s >= 0 else -1
-         else:
-            trn = 0
-         return _transf(vi, vf, self.trn + other.trn + trn)
-      else:
-         raise TypeError('transf does not compose with ' + str(type(other)))
-
-   def get_angle( self ):
-      return asin(self.vec) + self.trn * pi
-
-   def __itruediv__( self, other ):
-      if isinstance(other, int):
-         out = transf()
-         out.fact = pow(self.fact, 1.0/other)
-         a = self.get_angle() / other
-         out.vec = sin(a)
-         #TODO: compute trn
-         return out
-      else:
-         raise TypeError('transf does not divide with ' + str(type(other)))
 
 def vec( *args ):
    if len(args) == 0:
@@ -149,11 +108,11 @@ class line:
       self.P = P
       self.v = v
 
-   def dist( self, P ):
-      u = P - self.P
+   def __sub__( self, P ):
+      u = self.P - P
       v = self.v
       u-= (u * v) * v / (v * v)
-      return u.size()
+      return u
 
    # use & to call
    def __and__( self, other ):
@@ -165,14 +124,12 @@ class line:
       else:
          return self.P + (other.P - self.P) * v / s * u
 
-   def __str__( self ):
-      return str({'P': self.P, 'v': self.v})
-
    def __repr__( self ):
       return 'line' + repr((self.P, self.v))
 
+   __str__ = __repr__
+
 class circle:
-   # radius = True means infinity, radius = False means <= 0.0
    def __init__( self, center = vec(), radius = 0.0 ):
       self.center = center
       self.radius = radius
@@ -185,16 +142,13 @@ class circle:
 
    def __contains__(self, P):
       u = P - self.center
-      if self.radius in [False, True]:
-         return radius
-      else:
-         return u * u <= self.radius * self.radius
+      return u * u <= self.radius * self.radius
 
 def inscribed( A, B, C ):
    la = line( A , (B - A).normalize() + (C - A).normalize() )
    lb = line( B , (C - B).normalize() + (A - B).normalize() )
    P = la & lb
-   return circle(P, line(A, B - A).dist(P))
+   return circle(P, (line(A, B - A) - P).size())
 
 def circumscribed( A, B, C ):
    la = line ((B + C) / 2.0, (B - C).orth())
