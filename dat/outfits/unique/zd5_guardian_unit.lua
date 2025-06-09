@@ -39,3 +39,7 @@ function onhit( p, po, armour, _shield, _attacker )
       end
    end
 end
+
+function ondeath( p, po )
+   onhit( p, po, 0 )
+end
