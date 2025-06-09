@@ -27,3 +27,7 @@ function onshoot( p, po )
 
    return true
 end
+
+function onimpact( _p, target )
+   target:effectAdd( "Shield Jammed" )
+end

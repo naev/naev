@@ -93,6 +93,7 @@ dat/effects/psychic_orb_on.xml
 dat/effects/ride_of_the_valkyries.xml
 dat/effects/shield_aura.xml
 dat/effects/shield_boost.xml
+dat/effects/shield_jammed.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
 dat/factions/black_lotus.xml

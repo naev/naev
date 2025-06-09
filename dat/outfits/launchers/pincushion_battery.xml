@@ -8,7 +8,7 @@
   <mass>22</mass>
   <price>290000</price>
   <description>TODO</description>
-  <desc_extra>Launches 1 missile at the target and 4 additional missiles that will target random nearby enemies.</desc_extra>
+  <desc_extra>Launches 1 missile at the target and 4 additional missiles that will target random nearby enemies. Lowers shield regeneration by -70% on hit.</desc_extra>
   <gfx_store>placeholder.webp</gfx_store>
   <cpu>-9</cpu>
   <rarity>2</rarity>
@@ -16,8 +16,8 @@
  <specific type="launcher" secondary="1">
   <lua>outfits/launchers/pincushion_battery.lua</lua>
   <delay>3.4</delay>
-  <reload_time>100</reload_time>
-  <amount>10</amount>
+  <reload_time>60</reload_time>
+  <amount>13</amount>
   <lockon>3</lockon>
   <iflockon>0.3</iflockon>
   <arc>75</arc>
