@@ -6,7 +6,7 @@ if __name__ != '__main__':
 
 from sys import argv, stderr
 
-from ssys2graph import xml_files_to_graph, default_col
+from ssys_graph import xml_files_to_graph, default_col
 from geometry import bb, vec
 
 

@@ -124,7 +124,7 @@ if __name__ == '__main__':
    def do_writing( scale = 1.0 ):
       from ssys import fil_ET
       for l in stdin:
-         try:
+         if (line := l.strip()) != '':
             (n, x, y) = l.strip().split(" ")[:3]
             name = os.path.join(PATH, n+'.xml')
             T = fil_ET(name)
@@ -133,8 +133,6 @@ if __name__ == '__main__':
             y = str(float(y) * scale)
             e.attrib['x'], e.attrib['y'] = x, y
             T.write(name)
-         except:
-            continue
 
    if do_write := ('-w' in argv[1:]):
       argv.remove('-w')

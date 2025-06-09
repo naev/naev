@@ -19,7 +19,7 @@ const struct{char*nam;float w;} weights[]={
    {NULL}   // Sentinel
 };
 
-#define PROCESSES 4
+#define PROCESSES 2
 
 const float fact = 30.0f;
 const float rad = 30.0f / fact;
@@ -186,17 +186,35 @@ void gen_potential(float*lst, size_t nb){
    #undef TO
 }
 
-void apply_gravity(const float*lst, size_t nb, char**names){
-   for(size_t i=0; i<nb; i++){
+
+#define GRAV_FACT 0.1
+
+void apply_gravity(const float*lst, const size_t nb, const char**names){
+   char buff[512];
+   int num;
+
+   for(num = 0; num < PROCESSES-1; num++)
+      if(fork() == 0)
+         break;
+
+   #define FROM(num) (((num)*nb) / PROCESSES)
+   for(size_t i = FROM(num); i < FROM(num+1); i++){
       float x=lst[4*i+0], y=lst[4*i+1];
       float dx=0.0f, dy=0.0f;
+      size_t n;
       for(size_t j=0; j<nb; j++)
          if(j != i)
             accum_f(&dx, &dy, lst[4*j+0], lst[4*j+1], x, y, lst[4*j+2]);
-      dx *= 0.1;
-      dy *= 0.1;
-      printf("%s %f %f\n", names[i], x+dx, y+dy);
+      dx *= GRAV_FACT;
+      dy *= GRAV_FACT;
+      n = sprintf(buff, "%s %f %f\n", names[i], x+dx, y+dy);
+      fwrite(buff, sizeof(char), n, stdout);
+      fflush(stdout);
    }
+   #undef FROM
+
+   if(num < PROCESSES-1)
+      exit(EXIT_SUCCESS);
 }
 
 int do_it(bool apply){
@@ -223,7 +241,7 @@ int do_it(bool apply){
    }
    free(line);
    if(apply)
-      apply_gravity(lst, nb, names);
+      apply_gravity(lst, nb, (const char**)names);
    else
       gen_potential(lst, nb);
    free(lst);
@@ -251,7 +269,7 @@ int main(int argc, char**argv){
       argv++; argc--;
    }
 
-   if(argc>1 && !strcmp(argv[1], "-a"))
+   if(argc>1)
       return usage(nam, EXIT_FAILURE);
    else
       return do_it(apply);

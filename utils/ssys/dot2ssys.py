@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 
+
+from sys import stdin, stderr, argv, exit
+from ssys import vec, fil_ET, ssys_fil, ssysneigh, vec_from_element, vec_to_element
+from geometry import bb
+
+
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
-
-from sys import stdin, stderr
-from ssys import vec, fil_ET, ssys_fil, ssysneigh, vec_from_element, vec_to_element
-from geometry import bb
+if argv[1:] != []:
+   stderr.write('usage: '+argv[0]+'\n')
+   stderr.write('  Reads a dot file on stdin, applies a pre-processing,\n')
+   stderr.write('  and then applies it to ssys.\n')
+   exit(0)
 
 
 # positions
