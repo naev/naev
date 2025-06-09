@@ -24,7 +24,7 @@ const struct{char*nam;float w;} weights[]={
 const float fact = 30.0f;
 const float rad = 30.0f / fact;
 const float mul_ct = 1.0 / (2.0f*rad*rad*rad);
-const float add_ct = (-3.0/2.0) * rad;
+const float add_ct = -3.0 / (2.0*rad);
 const float inv_fact = 1.0 / fact;
 
 static inline float _pot(float xs, float ys, float x, float y){
@@ -60,12 +60,14 @@ static inline void accum_f(float*vx,float*vy,float xs, float ys, float x, float 
    *vy += f * dy;
 }
 
-void output_map(float*map, int w, int h, float fact, float ct){
-   char buf[32];
-   FILE*fp = fopen("out.pgm", "wb");
+void output_map(float*map, int w, int h, float fact, float ct, bool head_only){
+   char buf[64];
+   FILE*fp = stdout;
    uint8_t *line;
 
    fwrite(buf, sizeof(char), sprintf(buf, "P5 %d %d 65535\n", w, h), fp);
+   if(head_only)
+      return;
 
    line = (uint8_t *) calloc((size_t)w, sizeof(uint16_t));
    for(int i=0; i<h; i++){
@@ -108,6 +110,13 @@ void gen_potential(float*lst, size_t nb){
    const int maxj = (int)  ceil(maxx) + 2;
    const int mini = (int) floor(miny) - 2;
    const int maxi = (int)  ceil(maxy) + 2;
+
+   if(isatty(1)){
+      fprintf(stderr, "The (binary) pgm should be sent to a terminal.");
+      output_map(NULL, maxj-minj+1, maxi-mini+1, 0.0, 0.0, true);
+      fprintf(stderr, "[...] (truncated here)\n");
+      return;
+   }
 
    #define FROM(num) (mini + (num) * (maxi-mini+1) / PROCESSES)
    #define TO(num)   (FROM((num)+1) - 1)
@@ -180,7 +189,7 @@ void gen_potential(float*lst, size_t nb){
       if(map[i] <= min_pot)
          min_pot = map[i];
 
-   output_map(map, maxj-minj+1, maxi-mini+1, -1.0/min_pot, 1.0);
+   output_map(map, maxj-minj+1, maxi-mini+1, -1.0/min_pot, 1.0, false);
    free(map);
    #undef FROM
    #undef TO
@@ -231,9 +240,10 @@ int do_it(bool apply){
          if(apply)
             names = realloc(names, ((nb<<1)|1)*sizeof(char*));
       }
-      sscanf(line, "%s %f %f", buf, lst+(4*nb), lst+(4*nb+1));
+      sscanf(line, "%255s %f %f", buf, lst+(4*nb), lst+(4*nb+1));
       lst[4*nb+2] = 1.0;
-      names[nb] = strdup(buf);
+      if(apply)
+         names[nb] = strdup(buf);
       for(int i=0; weights[i].nam; i++)
          if(!strcmp(weights[i].nam, buf))
             lst[4*nb+2] = weights[i].w;
@@ -250,9 +260,10 @@ int do_it(bool apply){
 
 int usage(char*nam, int ret){
    fprintf(stderr,"Usage: %s [-a]\n", basename(nam));
-   fprintf(stderr,"  Reads a set of node pos in input.\n");
+   fprintf(stderr,"  Reads a set of node pos in input from standard input.\n");
    fprintf(stderr,"  If -a is set, applies resulting gravity and outputs the result.\n");
-   fprintf(stderr,"  If not, generates a pgm of the gravity potential.\n");
+   fprintf(stderr,"  If not, outputs a pgm of the gravity potential.\n");
+   fprintf(stderr,"  All outputs are sent to standard output.\n");
    return ret;
 }
 
@@ -260,9 +271,8 @@ int main(int argc, char**argv){
    char*nam = argv[0];
    bool apply = false;
 
-   if(argc>1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))){
+   if(argc>1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")))
       return usage(nam, EXIT_SUCCESS);
-   }
 
    if(argc>1 && !strcmp(argv[1], "-a")){
       apply = true;

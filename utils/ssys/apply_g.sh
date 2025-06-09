@@ -14,5 +14,6 @@ repiper() {
    fi
 }
 
-gcc -Wall -Wextra -Ofast utils/ssys/gravity.c -o gravity -lm &&
-./utils/ssys/ssys_graph.py | repiper "$N" ./gravity -a | ./utils/ssys/ssys_graph.py -w "$SCALE"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+gcc -Wall -Wextra -Ofast "$SCRIPT_DIR"/gravity.c -o "$SCRIPT_DIR"/gravity -lm &&
+"$SCRIPT_DIR"/ssys_graph.py | repiper "$N" "$SCRIPT_DIR"/gravity -a | "$SCRIPT_DIR"ssys_graph.py -w "$SCALE"
