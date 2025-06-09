@@ -986,6 +986,8 @@ void gui_radarRender( double x, double y )
                        radar->res, 0 );
 
    /* Render the asteroids */
+   const double render_limit =
+      radar->shape == RADAR_CIRCLE ? radar->w : INFINITY;
    for ( int i = 0; i < array_size( cur_system->asteroids ); i++ ) {
       AsteroidAnchor *ast   = &cur_system->asteroids[i];
       double          range = CTS.EW_ASTEROID_DIST *
@@ -998,7 +1000,8 @@ void gui_radarRender( double x, double y )
                                ay + r );
       for ( int j = 0; j < il_size( &gui_qtquery ); j++ ) {
          const Asteroid *a = &ast->asteroids[il_get( &gui_qtquery, j, 0 )];
-         gui_renderAsteroid( a, radar->w, radar->h, radar->res, 0 );
+         gui_renderAsteroid( a, radar->w, radar->h, radar->res, render_limit,
+                             0 );
       }
    }
 
@@ -1275,10 +1278,12 @@ void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
  *    @param w Width.
  *    @param h Height.
  *    @param res Radar resolution.
+ *    @param render_radius Radar raduis. INFINITY if it's not a circle shape
+ * radar.
  *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
-                         int overlay )
+                         double render_radius, int overlay )
 {
    int             i, j, targeted;
    double          x, y, r, sx, sy;
@@ -1323,6 +1328,11 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
    /* Draw square. */
    px = MAX( x - sx, -w );
    py = MAX( y - sy, -h );
+   r  = ( sx + sy ) / 2.0 + 1.5;
+   if ( isfinite( render_radius ) &&
+        pow2( x ) + pow2( y ) > pow2( render_radius - r ) ) {
+      return;
+   }
 
    targeted =
       ( ( i == player.p->nav_asteroid ) && ( j == player.p->nav_anchor ) );
@@ -1334,7 +1344,6 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
       col = &cGrey70;
 
    // gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), col );
-   r = ( sx + sy ) / 2.0 + 1.5;
    glUseProgram( shaders.asteroidmarker.program );
    gl_renderShader( px, py, r, r, 0., &shaders.asteroidmarker, col, 1 );
 
