@@ -904,6 +904,8 @@ vec4 eruptor( vec2 uv )
 {
    const vec3 COLOUR_IN = vec3( 1.0, 0.1, 0.4 );
    const vec3 COLOUR_OUT = vec3( 1.5, 0.8, 1.5 );
+   //const vec3 COLOUR_START = vec3( 0.6, 1.0, 0.6 );
+   const vec3 COLOUR_START = vec3( 0.2, 0.2, 1.0 );
 
    vec2 r = vec2(-u_time*0.25, u_r);
 
@@ -913,6 +915,7 @@ vec4 eruptor( vec2 uv )
    vec4 colour;
    colour.a = n - max( 0.0, pow(length(uv),4.0) ) - smoothstep( 1.0, 0.0, 6.0*u_time);
    colour.rgb = mix( COLOUR_OUT, COLOUR_IN, colour.a+0.5 );
+   colour.rgb = mix( COLOUR_START, colour.rgb, u_time*1.7 );
    colour.a *= u_fade;
    return colour;
 }
