@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Admonisher ΩIIa" inherits="Admonisher">
  <gfx size="68">admonisher_omegaiia</gfx>
  <rarity>2</rarity>

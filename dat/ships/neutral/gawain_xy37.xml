@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Gawain XY-37" inherits="Gawain">
  <gfx size="56">gawain_xy37</gfx>
  <lua>gawain_xy37.lua</lua>

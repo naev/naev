@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Omega Enclave">
  <lua>empire_mil_omega_station.lua</lua>
  <pos x="-10032.106791" y="7530.403357"/>

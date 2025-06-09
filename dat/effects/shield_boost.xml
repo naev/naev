@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <effect name="Shield Boost">
  <description>Shields are being boosted.</description>
  <duration>8</duration>

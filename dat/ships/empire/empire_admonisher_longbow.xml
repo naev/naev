@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship inherits="Empire Admonisher" name="Empire Admonisher Longbow">
  <lua>empire_admonisher_longbow.lua</lua>
  <rarity>3</rarity>

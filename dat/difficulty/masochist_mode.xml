@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <difficulty name="Masochist Mode">
  <description>Makes the game significantly harder for the player.</description>
  <armour_mod>-25</armour_mod>

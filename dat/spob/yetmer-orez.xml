@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Yetmer-O'rez">
  <lua>yetmer_orez.lua</lua>
  <pos x="2896.520056" y="2665.414732"/>

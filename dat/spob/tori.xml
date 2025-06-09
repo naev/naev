@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tori">
  <lua>highclass.lua</lua>
  <pos x="24881.073332" y="32050.673926"/>

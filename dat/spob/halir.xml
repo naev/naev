@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Halir">
  <lua>lowclass.lua</lua>
  <pos x="-12053.358215" y="-6447.649991"/>

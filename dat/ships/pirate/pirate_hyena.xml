@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Hyena">
  <lua>pirate.lua</lua>
  <points>30</points>

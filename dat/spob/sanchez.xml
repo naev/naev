@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sanchez">
  <lua>pirate_clanworld.lua</lua>
  <pos x="-7331.255945" y="12210.129783"/>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <spob name="Abacus">
  <lua>lowclass.lua</lua>
  <pos x="15843.686373" y="970.564365"/>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <effect name="Shield Jammed">
  <description>Shield regeneration is jammed!</description>
  <duration>6</duration><!-- actually increased due to taint -->
