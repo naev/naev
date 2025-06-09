@@ -56,6 +56,11 @@ repos:
       files: '^src/nlua_*.c'
       types: [c]
       language: script
+    - id: rem_xml_head
+      name: xml_1 @luafunc optional header remover
+      entry: utils/rem_xml_head.sh
+      types: [xml]
+      language: script
     - id: nluacheck
       name: wrapper for luacheck that understands Naev hooks
       entry: utils/nluacheck.py

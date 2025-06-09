@@ -4,7 +4,7 @@
 import xml.etree.ElementTree as ET
 
 
-def sys_empty( sys ):
+def ssys_empty( sys ):
    T = ET.parse(sys).getroot()
 
    if T.find('./general/nolanes') is None:
@@ -39,8 +39,8 @@ if __name__ == '__main__':
 
    if '-h' in args or '--help' in args or args == []:
       stderr.write('usage:  ' + basename(argv[0]) + '  [-r]  -f | (<file1> ..)\n')
-      stderr.write('  Lists the empty sys among its input xml ssys files.\n')
-      stderr.write('  If -r is set, list the non-empty sys.\n')
+      stderr.write('  Lists the empty ssys among its input xml ssys files.\n')
+      stderr.write('  If -r is set, list the non-empty ssys.\n')
       stderr.write('  If -f is set, reads the list on stdin.\n')
       exit(0)
 
@@ -54,5 +54,5 @@ if __name__ == '__main__':
       args = map(lambda x: x.rstrip('\n'), stdin)
 
    for i in args:
-      if sys_empty(i) != rev:
+      if ssys_empty(i) != rev:
          print(i)
