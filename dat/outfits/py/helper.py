@@ -41,6 +41,7 @@ def get_outfit_dict( name, core = False ):
 
 def to_multicore_lua( ref, pri_only = True ):
     out = 'require("outfits.lib.multicore").init{'
+    # We operate under the assumption that dictionaries are ordered in python now
     specific = False
     for r in ref:
         if not specific:
