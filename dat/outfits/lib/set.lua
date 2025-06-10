@@ -13,7 +13,7 @@ BONUSES = {
       stats = {
          ["weapon_dmg"] : 25,
       },
-      func = function ( p, po )
+      func = function ( p, po, on )
          -- Do something not about stats
       end,
    },
@@ -26,16 +26,13 @@ local fmt = require "format"
 local SETNAME = ""
 local OUTFITS = {}
 local BONUSES = {}
-local NACTIVE = 0
-local DESCRIPTION = ""
 local HASSTATS = false
-local active_stats = {}
 
-local function desc ()
+local function desc()
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
    for n,b in pairs(BONUSES) do
       d = d.."\n"
-      if n >= NACTIVE then
+      if mem and mem.nactive >= n then
          d = d.."#g"
       else
          d = d.."#n"
@@ -61,20 +58,23 @@ local function set_init( p, po )
       end
    end
    local f = #found
-   NACTIVE = f
+   mem.nactive = f
 
    -- Compute the active stats
-   active_stats = {}
+   mem.active_stats = {}
    for k,b in pairs(BONUSES) do
       if f >= k and b.stats then
          for n,s in pairs(b.stats) do
-            active_stats = (active_stats[n] or 0) + s
+            mem.active_stats = (mem.active_stats[n] or 0) + s
          end
+      end
+      if b.func then
+         b.func( p, po, f >= k )
       end
    end
 
    -- Apply the active stats
-   for k,s in pairs(active_stats) do
+   for k,s in pairs(mem.active_stats) do
       po:set( k, s )
    end
 
@@ -90,7 +90,7 @@ end
 local function set_changed( p, po )
    local id = po:id()
    for k,o in ipairs(p:outfits()) do
-      if o and k<id then
+      if o and k<id and inlist( OUTFITS, o ) then
          p:outfitMessageSlot( k, "set_changed" )
          return
       end
@@ -112,7 +112,6 @@ function lib.init( setname, outfits, bonuses )
    OUTFITS = outfits
    BONUSES = bonuses
    HASSTATS = hasstats()
-   DESCRIPTION = desc()
 
    local descextra_old = descextra
    function descextra( p, o, po )
@@ -120,7 +119,7 @@ function lib.init( setname, outfits, bonuses )
       if descextra_old then
          d = d..descextra_old( p, o, po ).."\n"
       end
-      d = d..DESCRIPTION
+      d = d..desc()
       return d
    end
 
@@ -133,6 +132,8 @@ function lib.init( setname, outfits, bonuses )
 
    local onadd_old = onadd
    function onadd( p, po )
+      mem.nactive = 0
+      mem.active_stats = {}
       if onadd_old then
          onadd_old( p, po )
       elseif HASSTATS then
@@ -158,8 +159,7 @@ function lib.init( setname, outfits, bonuses )
          set_init( p, po )
          return
       elseif msg=="set_active" then
-         NACTIVE = dat
-         DESCRIPTION = desc()
+         mem.nactive = dat
          return
       end
       -- Non-consumed messages are passed

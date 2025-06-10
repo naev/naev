@@ -11,6 +11,11 @@ customoutfits = {
      'input'  : 'weapons/heavy_ripper_cannon.xml',
      'output' : 'reaver_cannon.xml',
    },
+  'corsair_systems' : {
+     'command': 'corsair_systems.py',
+     'input'  : 'core_system/medium/unicorp_pt200_core_system.xml',
+     'output' : 'corsair_systems.xml',
+   },
 }
 
 gen_outfits = []
