@@ -57,7 +57,7 @@ repos:
       types: [c]
       language: script
     - id: rem_xml_head
-      name: xml_1 @luafunc optional header remover
+      name: Remove necessary XML 1.0 headers
       entry: utils/rem_xml_head.sh
       files: dat/.*\.xml$
       types: [xml]
