@@ -39,8 +39,8 @@ def get_outfit_dict( name, core = False ):
       raise Exception('Could not read "' + path.basename(name) + '"')
    return o.to_dict()
 
-def to_multicore_lua( ref, pri_only = True ):
-    out = 'require("outfits.lib.multicore").init{'
+def to_multicore_lua( ref, pri_only = True, setfunc = "nil" ):
+    out = 'require("outfits.lib.multicore").init({'
     # We operate under the assumption that dictionaries are ordered in python now
     specific = False
     for r in ref:
@@ -53,5 +53,5 @@ def to_multicore_lua( ref, pri_only = True ):
                 out += f'\n   {{"{r}", {v[0]}, {v[1]} }},'
             else:
                 out += f'\n   {{"{r}", {v[0]} }},'
-    out += '\n}'
+    out += f'\n}}, {setfunc})'
     return out

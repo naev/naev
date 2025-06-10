@@ -26,7 +26,6 @@ local fmt = require "format"
 local SETNAME = ""
 local OUTFITS = {}
 local BONUSES = {}
-local HASSTATS = false
 
 local function desc()
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
@@ -73,11 +72,6 @@ local function set_init( p, po )
       end
    end
 
-   -- Apply the active stats
-   for k,s in pairs(mem.active_stats) do
-      po:set( k, s )
-   end
-
    -- Message the other outfits
    for k,i in ipairs(set_outfits) do
       if i~=id then
@@ -98,20 +92,17 @@ local function set_changed( p, po )
    set_init( p, po )
 end
 
-local function hasstats ()
-   for k,b in pairs(BONUSES) do
-      if b.stats then
-         return true
-      end
+function lib.set( _p, po )
+   -- Apply the active stats
+   for k,s in pairs(mem.active_stats) do
+      po:set( k, s )
    end
-   return false
 end
 
 function lib.init( setname, outfits, bonuses )
    SETNAME = setname
    OUTFITS = outfits
    BONUSES = bonuses
-   HASSTATS = hasstats()
 
    local descextra_old = descextra
    function descextra( p, o, po )
@@ -130,26 +121,12 @@ function lib.init( setname, outfits, bonuses )
       end
    end
 
-   local onadd_old = onadd
-   function onadd( p, po )
-      mem.nactive = 0
-      mem.active_stats = {}
-      if onadd_old then
-         onadd_old( p, po )
-      elseif HASSTATS then
-         po:clear()
-      end
+   local onoutfitchange_old = onoutfitchange
+   function onoutfitchange( p, po )
       set_changed( p, po )
-   end
-
-   local onremove_old = onremove
-   function onremove( p, po )
-      if onremove_old then
-         onremove_old( p, po )
-      elseif HASSTATS then
-         po:clear()
+      if onoutfitchange_old then
+         onoutfitchange_old( p, po )
       end
-      set_changed( p, po )
    end
 
    local message_old = message

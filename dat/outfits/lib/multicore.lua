@@ -105,12 +105,14 @@ local function is_multiengine( p, po )
    return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
-function multicore.init( params )
+local SETFUNC
+function multicore.init( params, setfunc )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
    local gathered_data = {}
+   SETFUNC = setfunc
 
    for k,s in ipairs(stats) do
       s.index = index(shipstat, s[1])
@@ -135,8 +137,8 @@ function multicore.init( params )
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
 
-
    -- Below define the global functions for the outfit
+   local descextra_old = descextra
    function descextra( p, o, po )
       local basic = var.peek("hide_multi")
       local nomain, nosec = false, false
@@ -216,6 +218,9 @@ function multicore.init( params )
          local msg = fmt.f(_('This outfit can only be equipped as {slot}.'), {slot=slot_msg})
          desc = desc .. '\n#b' .. msg .. '#0'
       end
+      if descextra_old then
+         desc = desc.."\n"..descextra_old( p, o, po )
+      end
       return desc
    end
 
@@ -223,7 +228,7 @@ function multicore.init( params )
       return (sign ~= -1) and ((is_secondary(po) and sec_en_stats) or pri_en_stats)
    end
 
-   local function equip(p, po, sign )
+   local function equip( p, po, sign )
       if p and po then
          local ie = is_multiengine(p, po)
          local secondary = is_secondary(po)
@@ -259,15 +264,31 @@ function multicore.init( params )
                end
             end
          end
+
+         -- Apply a set function if applicable
+         if SETFUNC then
+            SETFUNC( p, po )
+         end
       end
    end
 
+   local onadd_old = onadd
    function onadd( p, po )
       equip(p, po, 1)
+      if onadd_old then
+         onadd_old( p, po )
+      end
    end
 
-   init = onadd
+   local init_old = init
+   function init( p, po )
+      equip(p, po, 1)
+      if init_old then
+         init_old( p, po )
+      end
+   end
 
+   local message_old = message
    function message( p, po, msg, dat )
       if not p or not po then
          warn("message on nil p/po")
@@ -295,10 +316,18 @@ function multicore.init( params )
             warn('Unknown message: "' .. msg .. '"')
          end
       end
+
+      if message_old then
+         message_old( p, po, msg, dat )
+      end
    end
 
+   local onremove_old = onremove
    function onremove( p, po )
       equip(p, po, -1)
+      if onremove_old then
+         onremove_old( p, po )
+      end
    end
 end
 
