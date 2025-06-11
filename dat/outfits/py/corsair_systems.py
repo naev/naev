@@ -32,7 +32,8 @@ set.init( _("{setname}"),
             print( p, po, on )
         end,
     }},
-    }}
+    }},
+    true
 )
 """
 specific['lua_inline'] = lua

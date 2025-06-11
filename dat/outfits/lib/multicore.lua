@@ -266,8 +266,10 @@ function multicore.init( params, setfunc )
          end
 
          -- Deferred setting of stats
-         po:clear()
-         multicore.set( p, po )
+         if not SETFUNC then
+            po:clear()
+            multicore.set( p, po )
+         end
       end
    end
 
@@ -326,6 +328,17 @@ function multicore.init( params, setfunc )
       equip(p, po, -1)
       if onremove_old then
          onremove_old( p, po )
+      end
+   end
+
+   -- We'll use broader than onadd and onremove here
+   if SETFUNC then
+      local onoutfitchange_old = onoutfitchange
+      function onoutfitchange( p, po )
+         multicore.set( p, po )
+         if onoutfitchange_old then
+            onoutfitchange_old( p, po )
+         end
       end
    end
 end

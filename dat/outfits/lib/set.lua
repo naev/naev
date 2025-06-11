@@ -26,19 +26,20 @@ local fmt = require "format"
 local SETNAME = ""
 local OUTFITS = {}
 local BONUSES = {}
+local NOSET = false
 
 local function count_active( p )
-   local set_outfits = {} -- Ids of outfits in the set
    local found = {} -- Unique outfits found
+   local lowest
    for k,o in ipairs(p:outfits()) do
       if o and inlist( OUTFITS, o ) then
+         lowest = lowest or k
          if not inlist( found, o ) then
             table.insert( found, o )
          end
-         table.insert( set_outfits, k )
       end
    end
-   return found, set_outfits
+   return found, lowest
 end
 
 local function desc()
@@ -59,44 +60,31 @@ local function desc()
 end
 
 local function set_init( p, po )
-   local id = po:id()
-
    -- See how many of the set are found
-   local found, set_outfits = count_active( p )
+   local found, lowest = count_active( p )
    local f = #found
    mem.nactive = f
 
-   -- Compute the active stats
+   -- Compute the active stats if it is the lowest id
+   local ismain = (lowest==po:id())
    mem.active_stats = {}
    for k,b in pairs(BONUSES) do
-      if f >= k and b.stats then
+      if ismain and f >= k and b.stats then
          for n,s in pairs(b.stats) do
             mem.active_stats = (mem.active_stats[n] or 0) + s
          end
       end
+
+      -- Run function if applicable, but will be false for all but primary
       if b.func then
-         b.func( p, po, f >= k )
+         b.func( p, po, ismain and (f >= k) )
       end
    end
 
-   -- Message the other outfits
-   for k,i in ipairs(set_outfits) do
-      if i~=id then
-         p:outfitMessageSlot( i, "set_active", f )
-      end
+   -- If we want to set (e.g., not multicore), we'll set here
+   if not NOSET then
+      lib.set( p, po )
    end
-end
-
--- Send message to lowest id outfit that will handle everything
-local function set_changed( p, po )
-   local id = po:id()
-   for k,o in ipairs(p:outfits()) do
-      if o and k<id and inlist( OUTFITS, o ) then
-         p:outfitMessageSlot( k, "set_changed" )
-         return
-      end
-   end
-   set_init( p, po )
 end
 
 function lib.set( _p, po )
@@ -108,10 +96,11 @@ function lib.set( _p, po )
    end
 end
 
-function lib.init( setname, outfits, bonuses )
+function lib.init( setname, outfits, bonuses, noset )
    SETNAME = setname
    OUTFITS = outfits
    BONUSES = bonuses
+   NOSET = noset
 
    local descextra_old = descextra
    function descextra( p, o, po )
@@ -123,34 +112,11 @@ function lib.init( setname, outfits, bonuses )
       return d
    end
 
-   local init_old = init
-   function init( p, po )
-      if init_old then
-         init_old( p, po )
-      end
-   end
-
    local onoutfitchange_old = onoutfitchange
    function onoutfitchange( p, po )
-      set_changed( p, po )
+      set_init( p, po )
       if onoutfitchange_old then
          onoutfitchange_old( p, po )
-      end
-   end
-
-   local message_old = message
-   function message( p, po, msg, dat )
-      -- Local messages are consumed
-      if msg=="set_changed" then
-         set_init( p, po )
-         return
-      elseif msg=="set_active" then
-         mem.nactive = dat
-         return
-      end
-      -- Non-consumed messages are passed
-      if message_old then
-         message_old( p, po, msg, dat )
       end
    end
 end
