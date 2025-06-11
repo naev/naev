@@ -235,7 +235,7 @@ function multicore.init( params, setfunc )
          local id = po:id()
          local multicore_off = nil
 
-         po:clear()
+         mem.stats = {}
          if ie then
             --tfs.append(p:shipMemory(), {"history"}, (sign==-1 and "u" or "") .. 'eq_' .. tostring(po:id()))
             if secondary then
@@ -260,15 +260,14 @@ function multicore.init( params, setfunc )
                local val = (secondary and s.sec) or s.pri
 
                if not (ie and is_mobility[s.name]) then
-                  po:set(s.name, val)
+                  mem.stats[s.name] = val
                end
             end
          end
 
-         -- Apply a set function if applicable
-         if SETFUNC then
-            SETFUNC( p, po )
-         end
+         -- Deferred setting of stats
+         po:clear()
+         multicore.set( p, po )
       end
    end
 
@@ -328,6 +327,18 @@ function multicore.init( params, setfunc )
       if onremove_old then
          onremove_old( p, po )
       end
+   end
+end
+
+function multicore.set( p, po )
+   if mem.stats then
+      for s,val in pairs(mem.stats) do
+         po:set(s, val)
+      end
+   end
+   -- Apply a set function if applicable
+   if SETFUNC then
+      SETFUNC( p, po )
    end
 end
 
