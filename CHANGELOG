@@ -20,6 +20,8 @@
       * AI is less susceptible to stealth bomber cheese
       * Point defense now shoots at all ships prioritizing smaller ones after missiles
       * Cargo delivery missions have increased cargo amounts
+      * Minimum stealth range also affects detection and signature
+      * Ships can have a minimum cargo-less mass of 50% of the ship base mass
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship

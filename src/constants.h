@@ -7,6 +7,7 @@ typedef struct constants {
    // Physics constants
    double PHYSICS_SPEED_DAMP;
    double STEALTH_MIN_DIST;
+   double SHIP_MIN_MASS;
    // Electronic warfare constants
    double EW_JUMP_BONUS_RANGE;
    double EW_ASTEROID_DIST;

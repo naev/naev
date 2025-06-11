@@ -1323,7 +1323,9 @@ void pilot_updateMass( Pilot *pilot )
 
    /* Recompute effective mass if something changed. */
    pilot->solid.mass =
-      MAX( pilot->stats.mass_mod * ( pilot->ship->mass + pilot->mass_outfit ) +
+      MAX( MAX( pilot->ship->mass * CTS.SHIP_MIN_MASS,
+                pilot->stats.mass_mod *
+                   ( pilot->ship->mass + pilot->mass_outfit ) ) +
               pilot->stats.cargo_inertia * pilot->mass_cargo,
            0. );
 
