@@ -19,17 +19,20 @@
    do {                                                                        \
       _uninitialized_var( ptr );                                               \
       TracyCAlloc( ptr, size )                                                 \
-   } while ( 0 )
+   } while (0)
 #define NTracingFree( ptr )                                                    \
    do {                                                                        \
-      if ( ptr != NULL ) {                                                     \
+      if (ptr != NULL) {                                                       \
          TracyCFree( ptr );                                                    \
       };                                                                       \
-   } while ( 0 )
+   } while (0)
 ALWAYS_INLINE static inline void *nmalloc( size_t size )
 {
    void *ptr = malloc( size );
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
    NTracingAlloc( ptr, size );
+#pragma GCC diagnostic pop
    return ptr;
 }
 ALWAYS_INLINE static inline void nfree( void *ptr )
