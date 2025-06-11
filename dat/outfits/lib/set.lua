@@ -27,11 +27,26 @@ local SETNAME = ""
 local OUTFITS = {}
 local BONUSES = {}
 
+local function count_active( p )
+   local set_outfits = {} -- Ids of outfits in the set
+   local found = {} -- Unique outfits found
+   for k,o in ipairs(p:outfits()) do
+      if o and inlist( OUTFITS, o ) then
+         if not inlist( found, o ) then
+            table.insert( found, o )
+         end
+         table.insert( set_outfits, k )
+      end
+   end
+   return found, set_outfits
+end
+
 local function desc()
+   local p = player.pilot()
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
    for n,b in pairs(BONUSES) do
       d = d.."\n"
-      if mem and mem.nactive >= n then
+      if p:exists() and #count_active( p )>=n then
          d = d.."#g"
       else
          d = d.."#n"
@@ -46,16 +61,7 @@ local function set_init( p, po )
    local id = po:id()
 
    -- See how many of the set are found
-   local set_outfits = {} -- Ids of outfits in the set
-   local found = {} -- Unique outfits found
-   for k,o in ipairs(p:outfits()) do
-      if o and inlist( OUTFITS, o ) then
-         if not inlist( found, o ) then
-            table.insert( found, o )
-         end
-         table.insert( set_outfits, k )
-      end
-   end
+   local found, set_outfits = count_active( p )
    local f = #found
    mem.nactive = f
 
@@ -93,9 +99,11 @@ local function set_changed( p, po )
 end
 
 function lib.set( _p, po )
-   -- Apply the active stats
-   for k,s in pairs(mem.active_stats) do
-      po:set( k, s )
+   if mem.active_stats then
+      -- Apply the active stats
+      for k,s in pairs(mem.active_stats) do
+         po:set( k, s )
+      end
    end
 end
 
