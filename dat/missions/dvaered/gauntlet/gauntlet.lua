@@ -194,9 +194,6 @@ function p_death( p )
    enemy_out( p )
 end
 function player_lost_disable ()
-   hook.safe("player_lost_disable_check")
-end
-function player_lost_disable_check ()
    local pp = player.pilot()
    if not pp:disabled() then
       return
@@ -211,10 +208,6 @@ function player_lost_disable_check ()
    end
 end
 function player_lost ()
-   -- Delay in case something revives the player
-   hook.safe("player_lost_check")
-end
-function player_lost_check ()
    local pp = player.pilot()
    if pp:armour() > 0 then
       -- Something revived the player, ZD-5 Guardian?
