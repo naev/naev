@@ -105,14 +105,12 @@ local function is_multiengine( p, po )
    return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
-local SETFUNC
 function multicore.init( params, setfunc )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
    local gathered_data = {}
-   SETFUNC = setfunc
 
    for k,s in ipairs(stats) do
       s.index = index(shipstat, s[1])
@@ -266,7 +264,7 @@ function multicore.init( params, setfunc )
          end
 
          -- Deferred setting of stats
-         if not SETFUNC then
+         if not setfunc then
             po:clear()
             multicore.set( p, po )
          end
@@ -332,7 +330,7 @@ function multicore.init( params, setfunc )
    end
 
    -- We'll use broader than onadd and onremove here
-   if SETFUNC then
+   if setfunc then
       local onoutfitchange_old = onoutfitchange
       function onoutfitchange( p, po )
          multicore.set( p, po )
@@ -341,17 +339,17 @@ function multicore.init( params, setfunc )
          end
       end
    end
-end
 
-function multicore.set( p, po )
-   if mem.stats then
-      for s,val in pairs(mem.stats) do
-         po:set(s, val)
+   function multicore.set( p, po )
+      if mem.stats then
+         for s,val in pairs(mem.stats) do
+            po:set(s, val)
+         end
       end
-   end
-   -- Apply a set function if applicable
-   if SETFUNC then
-      SETFUNC( p, po )
+      -- Apply a set function if applicable
+      if setfunc then
+         setfunc( p, po )
+      end
    end
 end
 
