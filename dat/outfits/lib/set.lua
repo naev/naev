@@ -43,10 +43,11 @@ end
 
 local function desc()
    local p = player.pilot()
+   local nactive = (p:exists() and #count_active( p )) or 0
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
    for n,b in pairs(BONUSES) do
       d = d.."\n"
-      if p:exists() and #count_active( p )>=n then
+      if nactive>=n then
          d = d.."#g"
       else
          d = d.."#n"
