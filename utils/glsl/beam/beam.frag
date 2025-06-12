@@ -199,6 +199,16 @@ float cnoise(vec2 P)
   return 2.3 * n_xy;
 }
 
+// All components are in the range [0…1], including hue.
+vec3 hsv2rgb( vec3 c )
+{
+   vec4 k = vec4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
+   vec3 p = abs(fract(c.xxx + k.xyz) * 6.0 - k.www);
+   c = c.z * mix(k.xxx, clamp(p - k.xxx, 0.0, 1.0), c.y);
+   c = gammaToLinear(c);
+   return c;
+}
+
 /* k is the sharpness, more k == smoother
  * Good default is 3.0 */
 float smoothbeam( float x, float k )
@@ -446,6 +456,32 @@ vec4 beam_reverse( vec4 color, vec2 pos_tex, vec2 pos_px )
    return color;
 }
 
+BEAM_FUNC_PROTOTYPE
+vec4 beam_rainbow( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   vec2 coords;
+   float m;
+   const float range = 0.3;
+
+   color.rgb = hsv2rgb( vec3( fract(pos_px.x/200.0 - dt), 0.5, 1.0 ) );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
+
+   // Normal beam
+   coords = pos_px / 500.0 + vec2( -3.0*ANIM_SPEED*dt, 0 );
+   m = 1.5 + 0.5*snoise( coords );
+   float a = smoothbeam( pos_tex.y, m );
+   color.rgb = mix( color.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
+   color.a *= a;
+
+   // Do fancy noise effect
+   coords = pos_px * vec2( 0.03, 5.0 ) + vec2( -10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
+   float v = snoise( coords );
+   v = max( 0.0, v-(1.0-range) ) * (2.0/range) - 0.1;
+   color.a += v * (1.0 - smoothstep( 0.0, 0.05, pos_tex.x-0.95 ) );
+
+   return color;
+}
+
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 color_out;
@@ -469,6 +505,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       color_out = beam_fuzzy( color, pos, pos_px );
    else if (type==7)
       color_out = beam_reverse( color, pos, pos_px );
+   else if (type==8)
+      color_out = beam_rainbow( color, pos ,pos_px );
    else
       color_out = beam_default( color, pos, pos_px );
 
