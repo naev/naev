@@ -39,6 +39,7 @@ function multiengines.refresh( root, po, force )
    local dataon = {} -- the subset of if that is active
    local comb = tfs.checkdir(root, {'total'})
 
+   mem.stats = mem.stats or {}
    for _,s in ipairs(multiengines.mobility_params) do
       comb[s] = 0
       --po:set(s, 0)
