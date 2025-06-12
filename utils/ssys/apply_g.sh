@@ -8,9 +8,9 @@ repiper() {
    n="$((n-1))"
    shift;
    if (( n )); then
-      eval "$@" | repiper "$n" "$@"
+      "$@" | repiper "$n" "$@"
    else
-      eval "$@"
+      "$@"
    fi
 }
 
