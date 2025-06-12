@@ -108,6 +108,7 @@ static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_checkHealth( unsigned int wid, const char *str );
+static void opt_checkViewport( unsigned int wid, const char *str );
 static void opt_checkRestart( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -1476,6 +1477,10 @@ static void opt_video( unsigned int wid )
    window_addFader( wid, x + 20, y, cw - 60, 20, "fadMapOverlayOpacity", 0., 1.,
                     conf.map_overlay_opacity, opt_setMapOverlayOpacity );
    opt_setMapOverlayOpacity( wid, "fadMapOverlayOpacity" );
+   y -= 25;
+   window_addCheckbox( wid, x, y, cw, 20, "chkViewport",
+                       _( "Show viewport in radar/overlay" ), opt_checkViewport,
+                       conf.show_viewport );
    y -= 40;
 
    /* GUI */
@@ -1620,6 +1625,15 @@ static void opt_checkHealth( unsigned int wid, const char *str )
 {
    int f           = window_checkboxState( wid, str );
    conf.healthbars = f;
+}
+
+/**
+ * @brief Handles the viewport checkbox.
+ */
+static void opt_checkViewport( unsigned int wid, const char *str )
+{
+   int f              = window_checkboxState( wid, str );
+   conf.show_viewport = f;
 }
 
 /**

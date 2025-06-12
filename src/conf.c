@@ -129,6 +129,7 @@ void conf_setDefaults( void )
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
    conf.big_icons           = BIG_ICONS_DEFAULT;
    conf.always_radar        = 0;
+   conf.show_viewport       = 0;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -408,6 +409,7 @@ int conf_loadConfig( const char *file )
       conf.map_overlay_opacity = CLAMP( 0, 1, conf.map_overlay_opacity );
       conf_loadBool( lEnv, "big_icons", conf.big_icons );
       conf_loadBool( lEnv, "always_radar", conf.always_radar );
+      conf_loadBool( lEnv, "show_viewport", conf.show_viewport );
 
       /* Key repeat. */
       conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
@@ -1092,6 +1094,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _(
       "Always show the radar and don't hide it when the overlay is active." ) );
    conf_saveBool( "always_radar", conf.always_radar );
+   conf_saveComment( _( "Show the viewport in the radar/overlay." ) );
+   conf_saveBool( "show_viewport", conf.show_viewport );
    conf_saveEmptyLine();
 
    /* Key repeat. */
