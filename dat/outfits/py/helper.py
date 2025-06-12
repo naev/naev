@@ -50,7 +50,9 @@ multicore.init({"""
                 specific = True
         else:
             v = ref[r]
-            if not pri_only and len(v) > 1:
+            if type(v)==float:
+                out += f'\n   {{"{r}", {v} }},'
+            elif not pri_only and len(v) > 1:
                 out += f'\n   {{"{r}", {v[0]}, {v[1]} }},'
             else:
                 out += f'\n   {{"{r}", {v[0]} }},'
