@@ -2,8 +2,8 @@
 
 
 from sys import stdin, stderr, argv, exit
-from ssys import vec, fil_ET, ssys_fil, ssysneigh, vec_from_element, vec_to_element
-from geometry import bb
+from ssys_graph import xml_files_to_graph
+from geometry import bb, vec
 
 
 if __name__ != '__main__':
@@ -12,9 +12,8 @@ if __name__ != '__main__':
 if argv[1:] != []:
    stderr.write('usage: ' + argv[0].split('/')[-1] + '\n')
    stderr.write('  Reads a dot file on stdin, applies a pre-processing,\n')
-   stderr.write('  and then applies it to ssys.\n')
+   stderr.write('  and then writes the resulting graph on stdout.\n')
    exit(0)
-
 
 # positions
 pos = dict()
@@ -28,6 +27,9 @@ def process( lin ):
 
    if (nam := lin.split(' ')[0]) in ['graph', 'edge', 'node']:
       return
+
+   if nam[0] == '"' and nam[-1] =='"':
+      nam = nam[1:-1]
    position = lin.split('pos="')[1].split('"')[0].split(',')
    x, y = float(position[0]), float(position[1])
    pos[nam] = vec(x, y)
@@ -43,16 +45,16 @@ for line in stdin:
 bbox = bb()
 oldbb = bb()
 
+_V, oldpos, E, tradelane, _color = xml_files_to_graph()
+
 for k in pos:
    pos[k] *= 3.0/2.0
-   bbox += pos[k]
    if k[0] != '_':
-      nam = k
-      if nam[0] == '"':
-         nam = nam[1:-1]
-      T = fil_ET(ssys_fil(nam)).getroot()
-      if (e := T.find('pos')) is not None:
-         oldbb += vec_from_element(e)
+      bbox += pos[k]
+      if k not in oldpos:
+         stderr.write('"' + k + '" not found in ssys. why ?\n')
+      else:
+         oldbb += oldpos[k]
 
 again = bb()
 for k in pos:
@@ -171,19 +173,10 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
 
 # Smoothen tradelane
 
-tradelane = set()
-for k in pos:
-   if k[0] != '_':
-      T = fil_ET(ssys_fil(k)).getroot()
-      for e in T.findall('tags/tag'):
-         if e.text == 'tradelane':
-            tradelane.add(k)
-            break
-
 newp = dict()
 for k in pos:
    if k[0] != '_' and (k in tradelane):
-      tln = [s for (s, _) in ssysneigh(k) if (s in tradelane)]
+      tln = [s for (s, _) in E[k] if (s in tradelane)]
       if (n := len(tln)) > 1:
          p = sum([pos[s] for s in tln], vec())
          newp[k] = pos[k]*(1.0-n*0.125) + p*0.125
@@ -198,14 +191,14 @@ total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, _) in ssysneigh(k) if (s in tradelane)]:
+      for n in [s for (s, _) in E[k] if (s in tradelane)]:
          total += (pos[n]-pos[k]).size()
          count += 1
 avg = total / count
 
 for k in pos:
    if k[:3] == 'ngc' and k[3:] not in ['22375', '20489', '4746', '9415']:
-      if len(n := ssysneigh(k)) == 1:
+      if len(n := E[k]) == 1:
          n = n[0][0]
          v = pos[k] - pos[n]
          if v.size() < avg:
@@ -229,12 +222,7 @@ for f, t, a in [
 # Apply to ssys/
 
 off = (pos['dohriabi'] - pos['anubis_black_hole']) / 2.0
-for k in pos:
-   pos[k] += off
-   pos[k] = round(pos[k], 9)
+for k, v in pos.items():
    if k[0] != '_':
-      nam = ssys_fil(k)
-      o = fil_ET(nam)
-      if (e := o.getroot().find('pos')) is not None:
-         vec_to_element(e, pos[k])
-      o.write(nam)
+      v = round(v + off, 9)
+      print(k, v[0], v[1])

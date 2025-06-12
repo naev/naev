@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 
+import os
 from sys import stderr
 import xml.etree.ElementTree as ET
-from os.path import basename
 from ssys import nam2base, getpath, PATH
 
 
@@ -31,25 +31,30 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
    faction_color[f] = faction_color['pirate']
 
 def get_spob_faction( nam ):
-   T = ET.parse(getpath(PATH, "spob", nam+".xml")).getroot()
+   T = ET.parse(getpath(PATH, "spob", nam + ".xml")).getroot()
    e = T.find("./presence/faction")
    return nam2base(e.text) if e is not None else None
 
+def all_ssys( args = None ):
+   def gen():
+      if args is None or args == []:
+         path = os.path.join(PATH, 'ssys')
+         for arg in os.listdir(path):
+            yield arg, os.path.join(path, arg)
+      else:
+         for a in args:
+            yield os.path.basename(a), a
+   for a, b in gen():
+      if a[-4:] == '.xml':
+         yield a[:-4], b
 
-# V, E, pos, tradelane, color = xml_files_to_graph(args, use_color)
-def xml_files_to_graph( args, get_colors = False ):
+# Vnames, Vpos, E, tradelane, color = xml_files_to_graph(args, use_color)
+def xml_files_to_graph( args = None, get_colors = False ):
    name2id = dict()
    name, acc, pos, tradelane, color = [], [], [], set(), dict()
-
-   for i in range(len(args)):
-      bname = basename(args[i])
-      if bname[-4:] != '.xml':
-         stderr.write('err: "' + args[i] + '"\n')
-         continue
-
-      bname = bname[:-4]
+   for bname, filename in all_ssys(args):
       name.append(bname)
-      T=ET.parse(args[i]).getroot()
+      T=ET.parse(filename).getroot()
 
       try:
          name[-1] = T.attrib['name']
@@ -91,25 +96,20 @@ def xml_files_to_graph( args, get_colors = False ):
          try:
             acc[-1].append((e.attrib['target'], e.find('hidden') is not None))
          except:
-            stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
+            stderr.write('no target defined in "'+filename+'"jump#'+str(count)+'\n')
       count += 1
 
-   n2i = lambda x:name2id[x]
-   ids = [n2i(x) for x in name]
-   acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
+   ids = [name2id[x] for x in name]
+   acc = [[(name2id[t[0]],t[1]) for t in L] for L in acc]
    return dict(zip(ids,name)), dict(pos), dict(zip(ids,acc)), tradelane, color
+
 
 if __name__ == '__main__':
    from sys import argv, exit, stdout, stderr, stdin
-   import os
 
    def do_reading():
-      for arg in os.listdir(PATH):
-         if arg[-4:] != '.xml':
-            continue
-
-         bname = arg[:-4]
-         T = ET.parse(os.path.join(PATH, arg)).getroot()
+      for bname, filename in all_ssys():
+         T = ET.parse(filename).getroot()
          try:
             name = T.attrib['name']
          except:
@@ -141,11 +141,12 @@ if __name__ == '__main__':
       else:
          scale = 1.0
 
-   if argv[1:] != []:
-      ok = '-h' in argv or '--help' in argv[1:]
-      fp = stdout if ok else stderr
-      fp.write('usage:  ' + os.path.basename(argv[0]) + ' [-w [scale]]\n')
-      fp.write('  Lists (ssys, x, y, name) for all ssys in dat/ssys.\n')
+   help_f = '-h' in argv or '--help' in argv[1:]
+   if help_f or (argv[1:] != [] and do_write):
+      fp = stdout if help_f else stderr
+      fp.write('usage:  ' + os.path.basename(argv[0]) + ' (-w [scale])  |  [<files>..]\n')
+      fp.write('  Lists (ssys, x, y, name) for all ssys in <files.xml>\n')
+      fp.write('  If <files.xml> not provided, uses dat/ssys/*.xml.\n')
       fp.write('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.\n')
       exit(0 if ok else 1)
 
@@ -156,4 +157,4 @@ if __name__ == '__main__':
    if do_write:
       do_writing(scale)
    else:
-      do_reading()
+      do_reading(argv[1:])

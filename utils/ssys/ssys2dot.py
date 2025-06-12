@@ -193,14 +193,13 @@ def main( args, fixed_pos = False, color = False ):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print('usage: ', argv[0], '[-c]', '[-k]', '<ssys1.xml>', '...')
+      print('usage: ', argv[0], '[-c|-C]', '[-k]', '<ssys1.xml>', '...')
       print('Outputs the graph in dot format.')
-      print('If -c is set, use faction colors (slower).')
+      print('If -c or -C is set, use faction colors (slower).')
       print('If -k is set, the nodes have the keep_position marker.')
       print('Examples:')
       print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
       print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
-      print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml | neato | tee after.dot |  ./utils/ssys/dot2ssys.py')
       print('  > display before.png after.png')
    else:
       if keep := '-k' in argv:
@@ -208,6 +207,10 @@ if __name__ == '__main__':
 
       if color := '-c' in argv:
          argv.remove('-c')
+
+      if '-C' in argv:
+         color = True
+         argv.remove('-C')
 
       if (ign := [f for f in argv[1:] if not f.endswith('.xml')]) != []:
          stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
