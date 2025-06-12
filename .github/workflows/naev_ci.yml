@@ -276,10 +276,10 @@ jobs:
             arch: x86_64
             deploymenttarget: "10.13"
             config: macos_cross_osxcross.ini
-          - image: naev-macos
-            arch: aarch64
-            deploymenttarget: "13.0"
-            config: macos_aarch64_cross_osxcross.ini
+          #- image: naev-macos
+          #  arch: aarch64
+          #  deploymenttarget: "13.0"
+          #  config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
     container:
