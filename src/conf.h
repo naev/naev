@@ -162,6 +162,7 @@ typedef struct PlayerConf_s {
    double map_overlay_opacity; /**< Map overlay opacity. */
    int    big_icons;           /**< Use big icons or not. */
    int    always_radar;        /**< Radar is always visible. */
+   int    show_viewport;       /**< Show viewport in the radar/overlay map. */
 
    /* Keyrepeat. */
    unsigned int repeat_delay; /**< Time in ms before start repeating. */

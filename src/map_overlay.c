@@ -980,6 +980,9 @@ void ovr_render( double dt )
       glDisableVertexAttribArray( shaders.stealthoverlay.vertex );
    }
 
+   /* Render the viewport frame */
+   gui_renderViewportFrame( res, INFINITY, 1 );
+
    /* Render markers foreground. */
    ovr_mrkRenderAll( res, 1 );
 

@@ -1005,6 +1005,9 @@ void gui_radarRender( double x, double y )
       }
    }
 
+   /* Render the viewport frame */
+   gui_renderViewportFrame( radar->res, render_limit, 0 );
+
    /* Render the player. */
    gui_renderPlayer( radar->res, 0 );
 
@@ -1350,6 +1353,56 @@ void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
    if ( targeted )
       gui_blink( px, py, MAX( 7., 2.0 * r ), col, RADAR_BLINK_PILOT,
                  blink_pilot );
+}
+
+/**
+ * @brief Renders the viewport frame in the GUI radar.
+ *
+ *    @param res Radar resolution.
+ *    @param render_radius Radar raduis. INFINITY if it's not a circle shape
+ * radar.
+ *    @param overlay Whether to render onto the overlay.
+ */
+void gui_renderViewportFrame( double res, double render_radius, int overlay )
+{
+   if ( !conf.show_viewport ) {
+      return;
+   }
+
+   const double z =
+      cam_getZoom() * res * ( overlay ? 1.0 : 1.0 / gl_screen.scale );
+   const double vp_corner_x = SCREEN_W / 2.0 / z;
+   const double vp_corner_y = SCREEN_H / 2.0 / z;
+   if ( isfinite( render_radius ) &&
+        pow2( vp_corner_x ) + pow2( vp_corner_y ) > pow2( render_radius ) ) {
+      return;
+   }
+
+   double cx = 0.0;
+   double cy = 0.0;
+   if ( overlay ) {
+      /* overlay */
+      cam_getPos( &cx, &cy );
+      cx /= res;
+      cy /= res;
+      double ox, oy;
+      ovr_center( &ox, &oy );
+      cx += ox;
+      cy += oy;
+   }
+   const double right_angle = M_PI / 2.0;
+   glUseProgram( shaders.viewport_frame.program );
+   gl_renderShader( cx, cy - vp_corner_y, vp_corner_x, 1.0, 0.,
+                    &shaders.viewport_frame, &cRadar_viewport, 1 );
+   glUseProgram( shaders.viewport_frame.program );
+   gl_renderShader( cx + vp_corner_x, cy, vp_corner_y, 1.0, right_angle,
+                    &shaders.viewport_frame, &cRadar_viewport, 1 );
+   glUseProgram( shaders.viewport_frame.program );
+   gl_renderShader( cx, cy + vp_corner_y, vp_corner_x, 1.0, 0.,
+                    &shaders.viewport_frame, &cRadar_viewport, 1 );
+   glUseProgram( shaders.viewport_frame.program );
+   gl_renderShader( cx - vp_corner_x, cy, vp_corner_y, 1.0, right_angle,
+                    &shaders.viewport_frame, &cRadar_viewport, 1 );
 }
 
 /**

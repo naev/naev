@@ -410,6 +410,10 @@ SHADERS = [
       name = "shop_bg",
       fs_path = "shop_bg.frag",
    ),
+   SimpleShader(
+      name = "viewport_frame",
+      fs_path = "viewport_frame.frag",
+   ),
 ]
 SHADERS.sort()
 
