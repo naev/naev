@@ -11,7 +11,7 @@ BONUSES = {
    [2] = {
       desc = _("Foo"),
       stats = {
-         ["weapon_dmg"] : 25,
+         ["weapon_dmg"] = 25,
       },
       func = function ( p, po, on )
          -- Do something not about stats
@@ -46,15 +46,19 @@ local function desc()
    local p = player.pilot()
    local nactive = (p:exists() and #count_active( p )) or 0
    local d = fmt.f(_("Set {setname}:"), {setname=SETNAME})
-   for n,b in pairs(BONUSES) do
-      d = d.."\n"
-      if nactive>=n then
-         d = d.."#g"
-      else
-         d = d.."#n"
+   -- Assume a max of 5-piece sets, reasonable I think
+   for n=1,5 do
+      local b = BONUSES[n]
+      if b then
+         d = d.."\n"
+         if nactive>=n then
+            d = d.."#g"
+         else
+            d = d.."#n"
+         end
+         d = d..fmt.f(n_([[({n}-piece) {desc}]], [[({n}-pieces) {desc}]], n ),
+            {n=n, desc=b.desc}).."#0"
       end
-      d = d..fmt.f(n_([[({n}-piece) {desc}]], [[({n}-pieces) {desc}]], n ),
-         {n=n, desc=b.desc}).."#0"
    end
    return d
 end

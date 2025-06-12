@@ -6,6 +6,12 @@ function lib.init( set )
          --outfit.get("Corsair Hull"),
          --outfit.get("Corsair Engines"),
       }, {
+         [2] = {
+            desc = _("-10% Stealth Range"),
+            stats = {
+               ["ew_stealth"] = -10,
+            },
+         },
          [3] = {
             desc = _("+33% Action Speed for 10 seconds after leaving stealth."),
             func = function (_p, _po, on)
