@@ -18,23 +18,10 @@ specific = o['specific']
 ref = h.get_outfit_dict( h.INPUT, True )
 del ref['cooldown_time']
 ref['ew_detect'] = (ref['ew_detect'][0]+5.0,)
-setname = N_("Corsair")
-desc1 = N_("TODO")
 lua = f"""
 local set = require("outfits.lib.set")
 {h.to_multicore_lua( ref, True, "set.set" )}
-set.init( _("{setname}"),
-    {{ outfit.get("Corsair Systems"), }},
-    {{
-    [1] = {{
-        desc = _("{desc1}"),
-        func = function ( p, po, on )
-            print( p, po, on )
-        end,
-    }},
-    }},
-    true
-)
+require("outfits.core_sets.corsair_systems").init( multicore, set )
 """
 specific['lua_inline'] = lua
 
