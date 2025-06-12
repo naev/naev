@@ -212,7 +212,7 @@ SpacesInLineCommentPrefix:
   Maximum: -1
 SpacesInParens: Custom
 SpacesInParensOptions:
-  InConditionalStatements: false
+  InConditionalStatements: true
   InCStyleCasts: false
   InEmptyParentheses: false
   Other: true

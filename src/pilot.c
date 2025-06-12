@@ -2502,8 +2502,8 @@ void pilot_update( Pilot *pilot, double dt )
       pilot->stress = MAX( pilot->stress, 0 );
    } else if ( !pilot_isFlag(
                   pilot,
-                  PILOT_DISABLED_PERM ) ) { /* Case pilot is disabled (but not
-                                               permanently so). */
+                  PILOT_DISABLED_PERM ) ) { /* Case pilot is disabled (but
+                                               not permanently so). */
       pilot->dtimer_accum += dt;
       if ( pilot->dtimer_accum >= pilot->dtimer ) {
          pilot->stress       = 0.;
