@@ -375,7 +375,7 @@ local function wave_compute_score ()
       bonus = bonus + b
    end
    local s = pp:ship()
-   local c = s:class()
+   local c = _(s:class())
    local civ = s:tags().civilian
    if mem.wave_category == "skirmisher" then
       local SIZES = {
