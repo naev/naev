@@ -74,8 +74,9 @@ class _vec(tuple):
 
    def normalize( self, new_size = 1.0 ):
       if (size:= self.size()) < EPSILON:
-         size = 1.0
-      return self / size * new_size
+         return self
+      else:
+         return self / size * new_size
 
 
 class _transf:
@@ -187,8 +188,8 @@ class segment:
    def points( self ):
       return set([self.A, self.B])
 
-   # !!! only test whether C between the lines orth to (A B) though resp A and B
-   # If you want A, B, C to be colnear, you have to do the test yourself.
+   # !!! only test whether C strictly between the lines orth to (A B) though resp A and B
+   # If you want A, B, C to be colinear, you have to do the test yourself.
    def __contains__( self, C ):
       u = self.B - self.A
       return ((C-self.A)*u) * ((C-self.B)*u) < - EPSILON
