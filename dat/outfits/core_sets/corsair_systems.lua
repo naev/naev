@@ -26,7 +26,7 @@ function lib.init( multicore, set )
          onstealth_old( p, po, stealthed )
       end
       po:clear()
-      multicore.set()
+      multicore.set( p, po )
       if stealthed then
          po:set("shield_regen", SHIELD_REGEN)
          po:set("energy_regen", ENERGY_REGEN)

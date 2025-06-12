@@ -75,7 +75,7 @@ local function set_init( p, po )
    for k,b in pairs(BONUSES) do
       if ismain and f >= k and b.stats then
          for n,s in pairs(b.stats) do
-            mem.active_stats = (mem.active_stats[n] or 0) + s
+            mem.active_stats[n] = (mem.active_stats[n] or 0) + s
          end
       end
 

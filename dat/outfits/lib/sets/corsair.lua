@@ -3,8 +3,8 @@ local lib = {}
 function lib.init( set )
    set.init( _("Corsair"), {
          outfit.get("Corsair Systems"),
-         --outfit.get("Corsair Hull"),
-         --outfit.get("Corsair Engines"),
+         outfit.get("Corsair Hull Plating"),
+         outfit.get("Corsair Engine"),
       }, {
          [2] = {
             desc = _("-10% Stealth Range"),

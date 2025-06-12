@@ -25,7 +25,7 @@ function lib.init( multicore, set )
          onstealth_old( p, po, stealthed )
       end
       po:clear()
-      multicore.set()
+      multicore.set( p, po )
       if stealthed then
          po:set("speed_mod", SPEED_MOD)
       end
