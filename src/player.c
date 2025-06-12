@@ -85,6 +85,7 @@ static int   player_ran_updater = 0; /**< Temporary hack for when creating. */
 static char *player_message_noland =
    NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 static nlua_env scan_env = LUA_NOREF; /**< Scanning script. */
+extern int      save_loaded;          /**< From save.c */
 
 /*
  * Licenses.
@@ -383,6 +384,9 @@ void player_new( void )
 
    /* Load the GUI. */
    gui_load( gui_pick() );
+
+   /* Mark it as loaded. */
+   save_loaded = 1;
 }
 
 /**
