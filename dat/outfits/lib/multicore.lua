@@ -105,12 +105,14 @@ local function is_multiengine( p, po )
    return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
+local SETFUNC
 function multicore.init( params, setfunc )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
    local gathered_data = {}
+   SETFUNC = setfunc
 
    for k,s in ipairs(stats) do
       s.index = index(shipstat, s[1])
@@ -301,7 +303,7 @@ function multicore.init( params, setfunc )
             warn('message "'.. msg ..'" send to secondary (ignored)')
          elseif msg == "halt" then
             if multiengines.halt_n(gathered_data, dat.id, dat.off) then
-               multiengines.refresh(gathered_data, po)
+               multiengines.refresh(gathered_data, po, false)
             end
          elseif msg == "ask" then
             return multiengines.engine_stats(gathered_data, dat)
@@ -333,23 +335,23 @@ function multicore.init( params, setfunc )
    if setfunc then
       local onoutfitchange_old = onoutfitchange
       function onoutfitchange( p, po )
-         multicore.set( p, po )
          if onoutfitchange_old then
             onoutfitchange_old( p, po )
          end
+         multicore.set( p, po )
       end
    end
+end
 
-   function multicore.set( p, po )
-      if mem.stats then
-         for s,val in pairs(mem.stats) do
-            po:set(s, val)
-         end
+function multicore.set( p, po )
+   if mem.stats then
+      for s,val in pairs(mem.stats) do
+         po:set(s, val)
       end
-      -- Apply a set function if applicable
-      if setfunc then
-         setfunc( p, po )
-      end
+   end
+   -- Apply a set function if applicable
+   if SETFUNC then
+      SETFUNC( p, po )
    end
 end
 
