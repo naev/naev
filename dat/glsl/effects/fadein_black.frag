@@ -11,6 +11,6 @@ out vec4 colour_out;
 void main(void) {
    vec2 uv = tex_coord;
    colour_out = texture( u_tex, uv );
-   float progress = u_elapsed / LENGTH;
+   float progress = min( 1.0, u_elapsed / LENGTH );
    colour_out.rgb = mix( vec3(0.0), colour_out.rgb, progress );
 }
