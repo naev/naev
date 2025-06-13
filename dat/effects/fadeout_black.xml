@@ -1,0 +1,8 @@
+<effect name="Fade-Out Black">
+ <description>Black!</description>
+ <duration>3</duration>
+ <overwrite>fadeout</overwrite>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <shader>effects/fadeout_black.frag</shader>
+ <priority>0</priority>
+</effect>
