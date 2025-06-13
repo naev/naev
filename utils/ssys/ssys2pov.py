@@ -4,16 +4,29 @@ if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
 
-from sys import argv, stderr
+from sys import argv, stdin, stderr, exit
 
 from ssys_graph import xml_files_to_graph, default_col
 from geometry import bb, vec
 
 
-def main( args, color = False, halo = False ):
+def main( args, pos = None, color = False, halo = False ):
    dst = open('out.pov', 'w')
-   V, pos, E, tradelane, colors = xml_files_to_graph(args, color)
+
+   def write_pov(s, indent = -1):
+      if isinstance(s, list):
+         for sub in s:
+            write_pov(sub, indent+1)
+      elif s.strip() == '':
+         dst.write('\n')
+      else:
+         dst.write(3*indent*' ' + str(s) + '\n')
+
+   V, _pos, E, tradelane, colors = xml_files_to_graph(args, color)
    b = bb()
+
+   if pos is None:
+      pos = _pos
 
    for i in V:
       pos[i] = vec(pos[i])
@@ -28,76 +41,76 @@ def main( args, color = False, halo = False ):
       pos[i] -= C
       pos[i] = -pos[i]
 
-   dst.write("""
-   #version 3.7;
-   global_settings{
-      assumed_gamma 1.6
-      ambient_light 5.0
-   }
-
-   camera {
-      orthographic
-      sky <0,-1,0>
-      direction <0,1,0>\n""")
-   dst.write(6*' ' + 'right ' + str(hs[0]) + '*x\n')
-   dst.write(6*' ' + 'up ' + str(hs[1]) + '*y\n')
-   dst.write("""      location 100*z
-      look_at 0
-   }\n""")
-
+   write_pov([ '',
+      '#version 3.7;',
+      'global_settings{', [
+         'assumed_gamma 1.6',
+         'ambient_light 5.0',
+      ], '}',
+      '',
+      'camera {', [
+         'orthographic',
+         'sky <0,-1,0>',
+         'direction <0,1,0>',
+         'right ' + str(hs[0]) + '*x',
+         'up ' + str(hs[1]) + '*y',
+         'location 100*z',
+         'look_at 0',
+      ], '}',
+      '',
+   ])
    for i in V:
-      if i not in colors:
-         col = (0.5,0.5,0.5)
-      else:
-         col = colors[i]
-      dst.write(3*' ' + 'sphere{\n')
-      dst.write(6*' ' + '<' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 0>,\n')
-      dst.write(6*' ' + '9.0\n')
-      dst.write(6*' ' + 'pigment {color rgb<' + ','.join(map(str,col)) + '>}\n')
-      dst.write(3*' ' + '}\n')
+      col = (0.5,0.5,0.5) if i not in colors else colors[i]
+      write_pov([ 'sphere{', [
+         '<' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 0>,',
+         '9.0',
+         'pigment {color rgb<' + ','.join(map(str,col)) + '>}',
+      ], '}', '' ])
 
       if halo and col != default_col:
-         dst.write(3*' ' + 'cylinder{\n')
-         dst.write(6*' ' + '<0,0,-1>,\n')
-         dst.write(6*' ' + '<0,0,0>,\n')
-         dst.write(6*' ' + '0.7\n')
-         dst.write(6*' ' + 'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>][1.0, rgbt<')
-         dst.write(','.join(map(str,col)) + ',0>]}}\n')
-         dst.write(6*' ' + 'scale 11*3\n')
-         dst.write(6*' ' + 'translate <' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 3>\n')
-         dst.write(3*' ' + '}\n')
+         write_pov([ 'cylinder{', [
+            '<0,0,-1>,',
+            '<0,0,0>,',
+            '0.7',
+            'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>]' +
+               '[1.0, rgbt<' + ','.join(map(str,col)) + ',0>]}}',
+            'scale 11*3',
+            'translate <' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 3>',
+         ], '}', ''])
       for dstsys, hid in E[i]:
-         dst.write(3*' ' + 'cylinder{\n')
-         dst.write(6*' ' + '<' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 0>,\n')
          other = (pos[i] + pos[dstsys]) / 2.0
-         dst.write(6*' ' + '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,\n')
-         if i in tradelane and dstsys in tradelane:
-            size = 2.9
-         else:
-            size = 1.35
-         dst.write(6*' ' + str(size) + '\n')
+         write_pov([ 'cylinder{', [
+            '<' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 0>,',
+            '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',
+            str(2.9 if i in tradelane and dstsys in tradelane else 1.35),
+            'pigment {color rgb<' + ('0.5,0,0' if hid else '0.3,0.3,0.3') + '>}',
+         ], '}', '' ])
 
-         if hid:
-            dst.write(6*' ' + 'pigment {color rgb<0.5,0,0>}\n')
-         else:
-            dst.write(6*' ' + 'pigment {color rgb<0.3,0.3,0.3>}\n')
-         dst.write(3*' ' + '}\n')
    dst.close()
-   cmd = ['povray','out.pov']
+
    base = 1080
-   cmd += ['+W' + str(base*ratio), '+H' + str(int(base)), '+A0.1', '+AM2', '+R4', '+BM2']
+   cmd = [
+      'povray', 'out.pov',
+      '+W' + str(int(base*ratio)), '+H' + str(base),
+      '+A0.1', '+AM2', '+R4', '+BM2'
+   ]
    print(' '.join(cmd))
 
 if __name__ == '__main__':
-   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv) < 2:
-      print("usage  ", argv[0], '[-c|-C]', '<ssys1.xml> ...')
+   if '-h' in argv[1:] or '--help' in argv[1:]:
+      print("usage  ", argv[0], '[-g]', '[-c|-C]', '[<ssys1.xml> ..]')
       print('  Writes "out.pov". Outputs povray commandline to stdout.')
+      print('  If -g is set, use the positions from graph read on stdin.')
       print('  If -c is set, use faction colors (slower).')
       print('  If -C is set, use color halos (implies -c).')
+      print('  Is <ssys.xml> not provided, uses dat/ssys/*.xml.')
       print('examples')
       print('  > $(./utils/ssys/ssys2pov.py -c dat/ssys/*.xml)')
       print('  > display out.png')
    else:
+      if input_g := '-g' in argv[1:]:
+         argv.remove('-g')
+
       if color:= '-c' in argv[1:]:
          argv.remove('-c')
 
@@ -105,7 +118,27 @@ if __name__ == '__main__':
          argv.remove('-C')
          color = True
 
-      if (ign := [f for f in argv[1:] if not f.endswith('.xml')]) != []:
-         stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
+      if input_g:
+         pos = dict()
+         for line in stdin:
+            if (lin := line.strip()) == '':
+               continue
+            try:
+               nam, x, y = tuple(lin.split(' ')[:3])
+               x, y = float(x), float(y)
+            except:
+               stderr.write('Invalid line in input: "' + lin +'"\n')
+               exit(-1)
+            pos[nam] = (x, y)
+      else:
+         pos = None
 
-      main([f for f in argv[1:] if f.endswith('.xml')], color, halo)
+      args = argv[1:]
+      if (ign := [f for f in args if not f.endswith('.xml')]) != []:
+         stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
+         args = [ f for f in args if f not in ign ]
+         if args == []:
+            stderr.write('No valid input selected. Bye!\n')
+            exit(1)
+
+      main(args, pos, color, halo)

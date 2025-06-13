@@ -25,3 +25,7 @@ echo -n "gen colored sys map... " >&2
 cmd=$(./utils/ssys/ssys2pov.py -C dat/ssys/*.xml) && $cmd 2>/dev/null && mv -v out.png map_fin.png
 echo "relax ssys" >&2
 "$SCRIPT_DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l
+echo -n "apply gravity -> colored sys map... " >&2
+
+cmd=$( ./utils/ssys/apply_g.sh | ./utils/ssys/ssys2pov.py -g -C dat/ssys/*.xml) &&
+$cmd 2>/dev/null && mv -v out.png map_fin_g.png

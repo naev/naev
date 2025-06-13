@@ -2,7 +2,7 @@
 
 
 import os
-from sys import stderr
+from sys import stderr, exit
 import xml.etree.ElementTree as ET
 from ssys import nam2base, getpath, PATH
 
@@ -107,8 +107,8 @@ def xml_files_to_graph( args = None, get_colors = False ):
 if __name__ == '__main__':
    from sys import argv, exit, stdout, stderr, stdin
 
-   def do_reading():
-      for bname, filename in all_ssys():
+   def do_reading(args):
+      for bname, filename in all_ssys(args):
          T = ET.parse(filename).getroot()
          try:
             name = T.attrib['name']
@@ -121,40 +121,54 @@ if __name__ == '__main__':
             stderr.write('no position defined in "' + bname + '"\n')
          print(bname, x, y, name)
 
-   def do_writing( scale = 1.0 ):
-      from ssys import fil_ET
+   def _read_stdin_and_scale(scale):
       for l in stdin:
          if (line := l.strip()) != '':
-            (n, x, y) = l.strip().split(" ")[:3]
-            name = os.path.join(PATH, n+'.xml')
-            T = fil_ET(name)
-            e = T.getroot().find('pos')
+            (n, x, y, r) = (l.strip().split(' ',4) + [''])[:4]
             x = str(float(x) * scale)
             y = str(float(y) * scale)
-            e.attrib['x'], e.attrib['y'] = x, y
-            T.write(name)
+            yield n, x, y, r
+
+   def do_writing( scale = 1.0 ):
+      from ssys import fil_ET
+      for n, x, y, _ in _read_stdin_and_scale(scale):
+         name = os.path.join(PATH, 'ssys', n + '.xml')
+         T = fil_ET(name)
+         e = T.getroot().find('pos')
+         e.attrib['x'], e.attrib['y'] = x, y
+         T.write(name)
+
+   def do_scaling( scale = 1.0 ):
+      for t in _read_stdin_and_scale(scale):
+         print(' '.join(t).strip())
 
    if do_write := ('-w' in argv[1:]):
       argv.remove('-w')
-      if argv[1:] != []:
-         scale = float(argv.pop(1))
-      else:
-         scale = 1.0
+      scale = 1.0
+
+   if do_scale := ('-s' in argv[1:]):
+      index = argv.index('-s')
+      argv.pop(index)
+      try:
+         scale = float(argv.pop(index))
+      except:
+         stderr.write('Error: expected <scale> after -s.\n')
+         exit(1)
 
    help_f = '-h' in argv or '--help' in argv[1:]
    if help_f or (argv[1:] != [] and do_write):
       fp = stdout if help_f else stderr
-      fp.write('usage:  ' + os.path.basename(argv[0]) + ' (-w [scale])  |  [<files>..]\n')
+      fp.write('usage:  ' + os.path.basename(argv[0]) + ' (-s <scale>) | -w | [<files>..]\n')
       fp.write('  Lists (ssys, x, y, name) for all ssys in <files.xml>\n')
       fp.write('  If <files.xml> not provided, uses dat/ssys/*.xml.\n')
+      fp.write('  If -s is set, reads (ssys, x, y, ...) on stdin, rescales it with <scale>\n')
+      fp.write('  and, unless -w is set, outputs the result on stdout.\n')
       fp.write('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.\n')
       exit(0 if ok else 1)
 
-   getpath = lambda *x: os.path.realpath(os.path.join(*x))
-   script_dir = os.path.dirname(__file__)
-   PATH = getpath(script_dir, '..', '..', 'dat', 'ssys')
-
    if do_write:
       do_writing(scale)
+   elif do_scale:
+      do_scaling(scale)
    else:
       do_reading(argv[1:])
