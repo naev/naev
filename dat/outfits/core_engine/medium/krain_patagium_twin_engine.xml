@@ -11,7 +11,8 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require("outfits.lib.multicore").init{
+local mc = require "outfits.lib.multicore"
+mc.init{
    { "mass", 10},
    { "energy_regen_malus", 11},
    { "engine_limit", 475},
@@ -20,6 +21,7 @@ require("outfits.lib.multicore").init{
    { "accel", 110},
    { "turn", 104},
 }
-require "outfits.lib.twins"</lua_inline>
+require("outfits.lib.twins").init( mc )
+  </lua_inline>
  </specific>
 </outfit>
