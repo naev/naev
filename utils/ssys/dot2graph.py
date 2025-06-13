@@ -130,9 +130,14 @@ for s in ['maron', 'machea']:
 pos['machea'] = pos['maron'] + (pos['machea']-pos['maron']).rotate(30)
 pos['cleai'] = (pos['haered']+pos['maron']) / 2.0
 
-for s in ['leporis', 'hystera', 'korifa', 'apik', 'telika', 'mida', 'ekta', 'akra']:
+proteron = ['leporis', 'hystera', 'korifa', 'apik', 'telika', 'mida', 'ekta', 'akra']
+for s in proteron:
    pos[s] = pos['haered'] + (pos[s]-pos['haered']).rotate(-30)
 
+u = pos['haered']-pos['cleai']
+v = u.rotate(-75)-u
+for s in proteron + ['haered', 'cleai']:
+   pos[s] += v
 
 #v = (pos['possum']-pos['moor']) / 3.0
 #for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:

@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-N=8
-RESCALE=1.4
+N=10
+RESCALE=1.7
 
 repiper() {
    local -i n="$1";
