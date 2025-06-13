@@ -16,37 +16,35 @@ if argv[1:] != []:
    exit(0)
 
 # positions
-pos = dict()
 
-def process( lin ):
-   if len(lin.split('--')) != 1:
-      return
-   lin = lin.strip()
-   for c in ['\n', '\t', 3*' ', 2*' ']:
-      lin = lin.replace(c, ' ')
+def input_blocks(it):
+   acc = ''
+   for line in it:
+      n = line.find(']')
+      acc += line[:n]
+      if n != -1:
+         for c in ['\n', '\t', 3*' ', 2*' ']:
+            acc = acc.replace(c, ' ')
+         yield acc.strip()
+         acc = ''
+
+pos = dict()
+for lin in input_blocks(stdin):
+   if lin.find('--') != -1:
+      continue
 
    if (nam := lin.split(' ')[0]) in ['graph', 'edge', 'node']:
-      return
+      continue
 
    if nam[0] == '"' and nam[-1] =='"':
       nam = nam[1:-1]
-   position = lin.split('pos="')[1].split('"')[0].split(',')
+   position = lin.split('pos="', 1)[1]
+   position = position[:position.find('"')].split(',')
    x, y = float(position[0]), float(position[1])
    pos[nam] = vec(x, y)
 
-acc = ''
-for line in stdin:
-   n = line.find(']')
-   acc += line[:n]
-   if n != -1:
-      process(acc)
-      acc = ''
-
-bbox = bb()
-oldbb = bb()
-
 _V, oldpos, E, tradelane, _color = xml_files_to_graph()
-
+bbox, oldbb = bb(), bb()
 for k in pos:
    pos[k] *= 3.0/2.0
    if k[0] != '_':
@@ -61,9 +59,7 @@ for k in pos:
    pos[k] += oldbb.mini() - bbox.mini()
    again += pos[k]
 
-stderr.write(str(oldbb) + ' -> ' + str(bbox))
-stderr.write(' -> ' + str(again) + '\n')
-
+stderr.write(' -> '.join([str(oldbb), str(bbox), str(again)]) + '\n')
 
 # Post - processing
 
@@ -80,10 +76,13 @@ for (i,j,q) in small:
 
 pos['syndania'] = vec(pos['syndania'][0], pos['stint'][1])
 
-Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star', 'veses', 'alpha_centauri', 'padonia']
+Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star',
+   'veses', 'alpha_centauri', 'padonia']
 
-Scenter = (pos[Spir[0]]+pos[Spir[4]]) / 2.0
+Scenter = (pos[Spir[0]] + pos[Spir[4]]) / 2.0
 v = (pos[Spir[0]] - Scenter) * 0.75
+v = v.rotate(-50)
+Scenter = (pos['scholzs_star'] + Scenter) / 2.0 + v.size()/4.0*vec(0,1)
 for i,s in enumerate(Spir):
    rad = pow(1.25,-(i%4))
    pos[s] = Scenter + v.rotate(-i*45)*rad
@@ -101,8 +100,15 @@ def toward(src, dst, q):
    global pos
    pos[src] += (pos[dst]-pos[src]) * q
 
+toward('syndania', 'jommel', 1.0/4.0)
+#toward('scholzs_star', 'haered', 1.0/4.0)
+
+length = (pos['haered']-pos['cleai']).size()
+haered = pos['haered']
+pos['haered'] = pos['cleai'] + (pos['haered']-pos['cleai']).rotate(60)
+
 v = pos['hystera'] - pos['leporis']
-pos['leporis'] = pos['haered'] + (pos['leporis']-pos['haered']).normalize(v.size())
+pos['leporis'] = pos['haered'] + (pos['leporis']-haered).normalize(v.size())
 pos['hystera'] = pos['leporis'] + v
 
 u = v.rotate(-60)

@@ -23,11 +23,10 @@ def main( args, pos = None, color = False, halo = False ):
          dst.write(3*indent*' ' + str(s) + '\n')
 
    V, _pos, E, tradelane, colors = xml_files_to_graph(args, color)
-   b = bb()
-
    if pos is None:
       pos = _pos
 
+   b = bb()
    for i in V:
       pos[i] = vec(pos[i])
       b += pos[i]
@@ -136,7 +135,7 @@ if __name__ == '__main__':
       args = argv[1:]
       if (ign := [f for f in args if not f.endswith('.xml')]) != []:
          stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
-         args = [ f for f in args if f not in ign ]
+         args = [f for f in args if f not in ign]
          if args == []:
             stderr.write('No valid input selected. Bye!\n')
             exit(1)

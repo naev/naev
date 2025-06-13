@@ -11,14 +11,14 @@ from minimize_angle_stretch import relax_dir
 sm = starmap()
 
 
-def _key(v):
+def _key( v ):
    acc = 0
    if v[1] < 0:
       acc += 2
       v = -v
    return acc + (2 - v[0])
 
-def mk_p(L):
+def mk_p( L ):
    pi = [n for n, _k in sorted(enumerate(L), key = lambda t: (_key(t[1]), t[0]))]
    where = pi.index(0)
    return pi[where:] + pi[:where]
@@ -88,8 +88,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
             vec_to_element(f, func(vec_from_element(f)))
             p2.write(spfil)
 
-         for i in [ './jumps/jump/pos', './asteroids/asteroid/pos',
-            './waypoints/waypoint']:
+         for i in ['./jumps/jump/pos', './asteroids/asteroid/pos', './waypoints/waypoint']:
             for e in T.findall(i):
                vec_to_element(e, func(vec_from_element(e)))
          p.write(sys)
@@ -134,7 +133,6 @@ if __name__ == '__main__':
                   print(ssys)
                   stdout.flush()
          exit(0)
-
    try:
       while wait() != -1:
          pass

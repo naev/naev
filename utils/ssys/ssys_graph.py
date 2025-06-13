@@ -33,7 +33,7 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
 def get_spob_faction( nam ):
    T = ET.parse(getpath(PATH, "spob", nam + ".xml")).getroot()
    e = T.find("./presence/faction")
-   return nam2base(e.text) if e is not None else None
+   return None if e is None else nam2base(e.text)
 
 def all_ssys( args = None ):
    def gen():
@@ -157,13 +157,13 @@ if __name__ == '__main__':
 
    help_f = '-h' in argv or '--help' in argv[1:]
    if help_f or (argv[1:] != [] and do_write):
-      fp = stdout if help_f else stderr
-      fp.write('usage:  ' + os.path.basename(argv[0]) + ' (-s <scale>) | -w | [<files>..]\n')
-      fp.write('  Lists (ssys, x, y, name) for all ssys in <files.xml>\n')
-      fp.write('  If <files.xml> not provided, uses dat/ssys/*.xml.\n')
-      fp.write('  If -s is set, reads (ssys, x, y, ...) on stdin, rescales it with <scale>\n')
-      fp.write('  and, unless -w is set, outputs the result on stdout.\n')
-      fp.write('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.\n')
+      msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
+      msg('usage:  ' + os.path.basename(argv[0]) + ' (-s <scale> [-w]) | -w | [<files>..]')
+      msg('  Lists (ssys, x, y, name) for all ssys in <files.xml>')
+      msg('  If <files.xml> not provided, uses dat/ssys/*.xml.')
+      msg('  If -s is set, reads (ssys, x, y, ...) on stdin, rescales it')
+      msg('  with <scale> and, unless -w is set, outputs the result on stdout.')
+      msg('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.')
       exit(0 if ok else 1)
 
    if do_write:

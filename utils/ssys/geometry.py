@@ -3,7 +3,7 @@
 
 from math import cos, sin, pi, sqrt, asin
 
-EPSILON = 0.0000001
+EPS = 0.0000001
 
 
 # vec
@@ -61,7 +61,7 @@ class _vec(tuple):
          return False
       else:
          d = self - other
-         return d*d < EPSILON*EPSILON
+         return d*d < EPS*EPS
 
    def rotate_rad( self, angle ):
       return self._rotate(sin(angle), cos(angle))
@@ -73,7 +73,7 @@ class _vec(tuple):
       return sqrt(self * self)
 
    def normalize( self, new_size = 1.0 ):
-      if (size:= self.size()) < EPSILON:
+      if (size:= self.size()) < EPS:
          return self
       else:
          return self / size * new_size
@@ -137,7 +137,7 @@ class line:
          u = self.v
          v = other.v.orth()
          s = u*v
-         if abs(s) < EPSILON:
+         if abs(s) < EPS:
             return None
          else:
             return self.P + (other.P - self.P) * v / s * u
@@ -153,7 +153,7 @@ class line:
             return []
          else:
             v = u.orth().normalize() * sqrt(other.radius*other.radius - u*u)
-            if v.size() < EPSILON:
+            if v.size() < EPS:
                return [cl]
             else:
                return [cl - v, cl + v]
@@ -166,7 +166,7 @@ class line:
    __str__ = __repr__
 
 class segment:
-   def __init__( self, A, B):
+   def __init__( self, A, B ):
       self.A, self.B = A, B
 
    def line( self ):
@@ -188,11 +188,12 @@ class segment:
    def points( self ):
       return set([self.A, self.B])
 
-   # !!! only test whether C strictly between the lines orth to (A B) though resp A and B
-   # If you want A, B, C to be colinear, you have to do the test yourself.
+   # !!! only test whether C strictly between
+   # the lines orth to (A B) though resp A and B.
+   # If you also want A, B, C to be colinear, you have to do the test separately.
    def __contains__( self, C ):
       u = self.B - self.A
-      return ((C-self.A)*u) * ((C-self.B)*u) < - EPSILON
+      return ((C-self.A)*u) * ((C-self.B)*u) < - EPS
 
    def closest( self, P ):
       H = self.line().closest(P);
@@ -222,16 +223,16 @@ class circle:
       if not isinstance(other, circle):
          return False
       d = self.radius - other.radius
-      return self.center == other.center and d*d < EPSILON*EPSILON
+      return self.center == other.center and d*d < EPS*EPS
 
    def __contains__( self, P ):
       u = P - self.center
-      epsilon = -EPSILON if self.strict else +EPSILON
+      epsilon = -EPS if self.strict else +EPS
       return u * u <= self.radius * self.radius * (1.0 + epsilon)
 
 def inscribed( A, B, C ):
-   la = line( A , (B - A).normalize() + (C - A).normalize() )
-   lb = line( B , (C - B).normalize() + (A - B).normalize() )
+   la = line(A , (B - A).normalize() + (C - A).normalize())
+   lb = line(B , (C - B).normalize() + (A - B).normalize())
    P = la & lb
    return circle(P, (line(A, B - A) - P).size())
 
@@ -275,7 +276,7 @@ def bounding_circle( L ):
    return best
 
 def acute_T(A, B, C):
-   return (B-A)*(B-C)>=0.0-EPSILON and (C-B)*(C-A)>=0.0-EPSILON and (A-C)*(A-B)>=0.0-EPSILON
+   return (B-A)*(B-C)>=0.0-EPS and (C-B)*(C-A)>=0.0-EPS and (A-C)*(A-B)>=0.0-EPS
 
 def interstices( edges, vertices = [], povfp = None ):
    S = [segment(*t) for t in edges]
@@ -298,7 +299,7 @@ def interstices( edges, vertices = [], povfp = None ):
          for P in set(L).difference(t1.points(), t2.points()):
             u = l1.v * (P-I) * l1.v
             v = l2.v * (P-I) * l2.v
-            if u*u < EPSILON or v*v < EPSILON:
+            if u*u < EPS or v*v < EPS:
                continue
             O = I + u.normalize() + v.normalize()
             UC = circle(O, (l1 - O).size())
@@ -469,10 +470,11 @@ if __name__ == '__main__':
       fp.write('torus{ ' + str(C.radius) + ', 0.002 ')
       fp.write('rotate 90*x ' + 'translate '+point_it(C.center))
       fp.write('pigment{color ' + c + '}}\n')
-   ran=lambda: random()-0.5
+
+   ranv = lambda: vec(random()-0.5, random()-0.5)
 
    W, H = 3, 2
-   Pols = [[[vec(ran(), ran()) for _ in range(4)] for _j in range(W)] for _i in range(H)]
+   Pols = [[[ranv() for _ in range(4)] for _ in range(W)] for _ in range(H)]
    Pols[0][0] = [0.35*vec(*t) for t in [
       (-0.96,-1), (0.91,-1), (1.02,1),
       (0.2,-0.52), (0.35,-0.54), (0.01, 1.0), (-0.33,-0.51), (-0.43,-0.5),
@@ -506,7 +508,5 @@ if __name__ == '__main__':
 
    povfp.flush()
    run(['povray', '+W1280', '+H720', '+A0.1', '+AM2', '+R3', '+J',
-      '+I' + povfp.name,
-      '+O' + getpath(script_dir, 'geometry.png')
-   ])
+      '+I' + povfp.name, '+O' + getpath(script_dir, 'geometry.png') ])
    povfp.close()
