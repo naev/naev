@@ -22,6 +22,7 @@ typedef struct EffectData_ {
    double        duration; /**< Max duration of the effect. */
    unsigned int  flags;    /**< Flags. */
    ShipStatList *stats;    /**< Actual effect. */
+   int           damaging; /**< Effect does damage. */
    /* Visuals. */
    glTexture *icon; /**< Effect icon texture. */
    GLuint     program;
@@ -47,13 +48,14 @@ typedef struct EffectData_ {
  * @brief Pilot ship effect.
  */
 typedef struct Effect_ {
-   const EffectData *data;     /**< Base data of the effect. */
-   unsigned int      parent;   /**< Pilot it is being applied to. */
-   double            timer;    /**< Time left on the effect. */
-   double            duration; /**< Duration of this effect. */
-   double            strength; /**< Scales the effect. */
-   double            r;        /**< Random number. */
-   double            elapsed;  /**< Total elapsed time. */
+   const EffectData *data;       /**< Base data of the effect. */
+   unsigned int      parent;     /**< Pilot it is being applied to. */
+   unsigned int      applicator; /**< Pllot that applied the effect. */
+   double            timer;      /**< Time left on the effect. */
+   double            duration;   /**< Duration of this effect. */
+   double            strength;   /**< Scales the effect. */
+   double            r;          /**< Random number. */
+   double            elapsed;    /**< Total elapsed time. */
 } Effect;
 
 /*
@@ -68,7 +70,7 @@ const EffectData *effect_get( const char *name );
  */
 int  effect_update( Effect **efxlist, double dt );
 int  effect_add( Effect **efxlist, const EffectData *efx, double duration,
-                 double strength, unsigned int parent );
+                 double strength, unsigned int parent, unsigned int applicator );
 int  effect_rm( Effect **efxlist, int idx );
 int  effect_rmType( Effect **efxlist, const EffectData *efx, int all );
 void effect_clearSpecific( Effect **efxlist, int debuffs, int buffs,

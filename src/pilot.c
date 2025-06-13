@@ -2517,12 +2517,21 @@ void pilot_update( Pilot *pilot, double dt )
 
    /* Damage effect. */
    if ( ( pilot->stats.damage > 0. ) || ( pilot->stats.disable > 0. ) ) {
+      Pilot *applicator = NULL;
+      for ( int i = 0; i < array_size( pilot->effects ); i++ ) {
+         const Effect *e = &pilot->effects[i];
+         if ( e->data->damaging ) {
+            applicator = pilot_get( e->applicator );
+            if ( applicator )
+               break;
+         }
+      }
       Damage dmg;
       dmg.type        = dtype_get( "raw" );
       dmg.damage      = pilot->stats.damage * dt;
       dmg.penetration = 1.; /* Full penetration. */
       dmg.disable     = pilot->stats.disable * dt;
-      pilot_hit( pilot, NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
+      pilot_hit( pilot, NULL, applicator, &dmg, NULL, LUA_NOREF, 0 );
    }
 
    /* Handle takeoff/landing. */
