@@ -30,6 +30,7 @@ local equipopt = require "equipopt"
 local vn = require 'vn'
 local ccomm = require "common.comm"
 local lmisn = require "lmisn"
+local pilotai = require "pilotai"
 
 local adm1, lance1, lance2 -- Non-persistent state
 local spwn_police -- Forward-declared functions
@@ -283,14 +284,13 @@ function spwn_police () -- Get called to Waterhole
    }
 
    -- Re-outfit the ships to use disable weapons.
-   equipopt.empire( lance1, eparams )
-   equipopt.empire( lance2, eparams )
-   equipopt.empire( adm1, eparams )
-
-   -- Hostile
-   lance1:setHostile(true)
-   lance2:setHostile(true)
-   adm1:setHostile(true)
+   for k,p in ipairs{ adm1, lance1, lance2 } do
+      equipopt.empire( p, eparams )
+      p:setHostile(true)
+      pilotai.guard( p, player.pos() )
+   end
+   lance1:setLeader( adm1 )
+   lance2:setLeader( adm1 )
 end
 -- move to the player ship
 
