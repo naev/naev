@@ -7,7 +7,7 @@
  <player>2</player>
  <spawn>goddard</spawn>
  <standing>goddard</standing>
- <equip>empire</equip>
+ <equip>generic</equip>
  <local_th>5</local_th>
  <description>House Goddard is a minor house wedged between the Empire and Dvaered. They are one of the main fabricators of ships for the Dvaered.</description>
  <generator weight="0.5">Independent</generator>
