@@ -2958,6 +2958,7 @@ dat/events/neutral/capricorn_pirates.lua
 dat/events/neutral/capricorn_pirates_epilogue.lua
 dat/events/neutral/dendria_pirates.lua
 dat/events/neutral/edergast_pirate_ambush.lua
+dat/events/neutral/haven_curse.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
