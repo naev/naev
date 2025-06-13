@@ -69,6 +69,7 @@ dat/effects/ambush_hunter_ii.xml
 dat/effects/antimatter_taint.xml
 dat/effects/astral_projection.xml
 dat/effects/avatar_of_sirichana.xml
+dat/effects/black.xml
 dat/effects/blink.xml
 dat/effects/bloodlust.xml
 dat/effects/chakra_burn.xml
@@ -77,6 +78,7 @@ dat/effects/corsair.xml
 dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
+dat/effects/fadein_black.xml
 dat/effects/fadeout.xml
 dat/effects/feather_drive.xml
 dat/effects/feral_rage_i.xml

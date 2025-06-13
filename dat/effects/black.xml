@@ -1,0 +1,8 @@
+<effect name="Black">
+ <description>Black!</description>
+ <duration>INF</duration>
+ <overwrite>black</overwrite>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <shader>effects/black.frag</shader>
+ <priority>0</priority>
+</effect>
