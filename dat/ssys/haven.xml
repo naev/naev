@@ -9,6 +9,7 @@
  <pos x="33.937578" y="468.570007"/>
  <spobs>
   <spob>Haven</spob>
+  <spob>Old Man Jack</spob>
   <spob_virtual>Miner Small</spob_virtual>
  </spobs>
  <jumps>
@@ -44,6 +45,7 @@
   </exclusion>
  </asteroids>
  <waypoints>
+  <waypoint x="0.000000" y="-7000.000000">haven_curse_spawn</waypoint>
   <waypoint x="11000.000000" y="5000.000000">taiomi05_corpse</waypoint>
  </waypoints>
 </ssys>
