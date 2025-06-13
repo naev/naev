@@ -12,15 +12,15 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define PROCESSES 4
-#define GRAV_FACT 0.1
+#define THREADS 4
+#define GRAV_FACT 0.1f
 
 // defaults to 1.0
 const struct {
    char *nam;
    float w;
 } weights[] = {
-   {"anubis_black_hole", 5.5}, {NULL} // Sentinel
+   {"anubis_black_hole", 5.5f}, {NULL} // Sentinel
 };
 
 const float fact = 30.0f;
@@ -55,7 +55,7 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
    d *= inv_fact;
 
    if (d < rad)
-      f = 2.0 * d * mul_ct;
+      f = 2.0f * d * mul_ct;
    else
       f = 1.0f / d * d;
 
@@ -65,20 +65,23 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
    *vy += f * dy;
 }
 
-void output_map(float *map, int w, int h, float fact, float ct, bool head_only)
+void output_map_header(FILE *fp, int w, int h)
 {
-   char     buf[64];
-   FILE    *fp = stdout;
+   char b[64];
+
+   fwrite(b, sizeof(char), snprintf(b, 63, "P5 %d %d 65535\n", w, h), fp);
+}
+
+void output_map(FILE *fp, float *map, int w, int h, float fact, float ct)
+{
    uint8_t *line;
 
-   fwrite(buf, sizeof(char), sprintf(buf, "P5 %d %d 65535\n", w, h), fp);
-   if (head_only)
-      return;
+   output_map_header(fp, w, h);
 
-   line = (uint8_t *) calloc((size_t) w, sizeof(uint16_t));
+   line = (uint8_t *) calloc((size_t) w, 2 * sizeof(uint8_t));
    for (int i = 0; i < h; i++) {
       for (int j = 0; j < w; j++) {
-         const unsigned u = 65535.0 * (fact * map[(h - i - 1) * w + j] + ct);
+         const unsigned u = 65535.0f * (fact * map[(h - i - 1) * w + j] + ct);
          line[2 * j]      = u >> 8;
          line[2 * j + 1]  = u & 0xff;
       }
@@ -90,7 +93,7 @@ void output_map(float *map, int w, int h, float fact, float ct, bool head_only)
 
 void gen_potential(float *lst, size_t nb, float scale)
 {
-   static float *maps[PROCESSES - 1];
+   static float *maps[THREADS - 1];
    static int   *percent;
    char          buf[32] = {[0] = '\r'};
    float        *map;
@@ -122,39 +125,41 @@ void gen_potential(float *lst, size_t nb, float scale)
    const int maxj = (int) ceil(maxx) + 2;
    const int mini = (int) floor(miny) - 2;
    const int maxi = (int) ceil(maxy) + 2;
+   const int w    = maxj - minj + 1;
+   const int h    = maxi - mini + 1;
 
    if (isatty(1)) {
       fprintf(stderr, "The (binary) pgm should be sent to a terminal.");
-      output_map(NULL, maxj - minj + 1, maxi - mini + 1, 0.0, 0.0, true);
+      output_map_header(stdout, w, h);
       fprintf(stderr, "[...] (truncated here)\n");
       return;
    }
 
-#define FROM(num) (mini + (num) * (maxi - mini + 1) / PROCESSES)
-#define TO(num) (FROM((num) + 1) - 1)
+#define FROM(num) (mini + (num) * h / THREADS)
 
-   map = malloc((maxi - mini + 1) * (maxj - minj + 1) * sizeof(float));
+   map = malloc(w * h * sizeof(float));
 
    int num;
 
-   percent = mmap(NULL, PROCESSES * sizeof(int), PROT_READ | PROT_WRITE,
+   percent = mmap(NULL, THREADS * sizeof(int), PROT_READ | PROT_WRITE,
                   MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
-   memset(percent, 0, PROCESSES * sizeof(int));
+   memset(percent, 0, THREADS * sizeof(int));
 
-   for (num = 0; num < PROCESSES - 1; num++) {
-      maps[num] = mmap(
-         NULL, (TO(num) - FROM(num) + 1) * (maxj - minj + 1) * sizeof(float),
-         PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+   for (num = 0; num < THREADS - 1; num++) {
+      maps[num] =
+         mmap(NULL, (FROM(num + 1) - FROM(num)) * w * sizeof(float),
+              PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
       if (fork() == 0) {
-         for (int i = FROM(num); i <= TO(num); i++) {
-            const int per = 100 * (i - FROM(num)) / (TO(num) - FROM(num));
+         for (int i = FROM(num); i < FROM(num + 1); i++) {
+            const int per =
+               100 * (i + 1 - FROM(num)) / (FROM(num + 1) - FROM(num));
             if (percent[num] != per) {
                int count    = 1;
                percent[num] = per;
                msync(percent + num, sizeof(int), MS_ASYNC);
-               for (int u = 0; u < PROCESSES; u++)
+               for (int u = 0; u < THREADS; u++)
                   count += sprintf(buf + count, " %2d%%", percent[u]);
                fwrite(buf, sizeof(char), count, stderr);
             }
@@ -164,68 +169,65 @@ void gen_potential(float *lst, size_t nb, float scale)
                for (n = 0; n < nb; n++)
                   f += lst[4 * n + 2] *
                        _pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
-               maps[num][(i - FROM(num)) * (maxj - minj + 1) + (j - minj)] = f;
+               maps[num][(i - FROM(num)) * w + (j - minj)] = f;
             }
          }
-         msync(maps[num],
-               (TO(num) - FROM(num) + 1) * (maxj - minj + 1) * sizeof(float),
+         msync(maps[num], (FROM(num + 1) - FROM(num)) * w * sizeof(float),
                MS_SYNC);
          exit(EXIT_SUCCESS);
       }
    }
 
-   for (int i = FROM(num); i <= TO(num); i++) {
-      const float per = 100 * (i - FROM(num)) / (TO(num) - FROM(num));
+   for (int i = FROM(num); i < FROM(num + 1); i++) {
+      const int per = 100 * (i + 1 - FROM(num)) / (FROM(num + 1) - FROM(num));
       if (percent[num] != per) {
          int count    = 1;
          percent[num] = per;
          msync(percent + num, sizeof(int), MS_ASYNC);
-         for (int u = 0; u < PROCESSES; u++)
+         for (int u = 0; u < THREADS; u++)
             count += sprintf(buf + count, " %2d%%", percent[u]);
          fwrite(buf, sizeof(char), count, stderr);
       }
 
       for (int j = minj; j <= maxj; j++) {
-         float f = 0.0f;
+         float acc = 0.0f;
          for (n = 0; n < nb; n++)
-            f += lst[4 * n + 2] *
-                 _pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
-         map[(i - mini) * (maxj - minj + 1) + (j - minj)] = f;
+            acc += lst[4 * n + 2] *
+                   _pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
+         map[(i - mini) * w + (j - minj)] = acc;
       }
    }
 
    while (wait(NULL) != -1)
       ;
    fprintf(stderr, "\n");
-   for (num = 0; num < PROCESSES - 1; num++) {
-      memcpy(map + (FROM(num) - mini) * (maxj - minj + 1), maps[num],
-             (TO(num) - FROM(num) + 1) * (maxj - minj + 1) * sizeof(float));
-      munmap(maps[num],
-             (TO(num) - FROM(num) + 1) * (maxj - minj + 1) * sizeof(float));
+   for (num = 0; num < THREADS - 1; num++) {
+      const size_t siz = (FROM(num + 1) - FROM(num)) * w * sizeof(float);
+      memcpy(map + (FROM(num) - mini) * w, maps[num], siz);
+      munmap(maps[num], siz);
    }
 
-   for (int i = 0; i < (maxi - mini + 1) * (maxj - minj + 1); i++)
+   for (int i = 0; i < w * h; i++)
       if (map[i] <= min_pot)
          min_pot = map[i];
 
-   output_map(map, maxj - minj + 1, maxi - mini + 1, -1.0 / min_pot, 1.0,
-              false);
+   output_map(stdout, map, w, h, -1.0f / min_pot, 1.0f);
    free(map);
 #undef FROM
-#undef TO
 }
 
-void apply_gravity(const float *lst, const size_t nb, const char **names)
+void apply_gravity(const float *lst, const size_t nb, const char **nam)
 {
    char buff[512];
    int  num;
 
-   for (num = 0; num < PROCESSES - 1; num++)
+   for (num = 0; num < THREADS - 1; num++)
       if (fork() == 0)
          break;
 
-#define FROM(num) (((num) * nb) / PROCESSES)
+#define FROM(num) (((num) * nb) / THREADS)
    for (size_t i = FROM(num); i < FROM(num + 1); i++) {
+#undef FROM
       float  x = lst[4 * i + 0], y = lst[4 * i + 1];
       float  dx = 0.0f, dy = 0.0f;
       size_t n;
@@ -235,22 +237,21 @@ void apply_gravity(const float *lst, const size_t nb, const char **names)
                     lst[4 * j + 2]);
       dx *= GRAV_FACT;
       dy *= GRAV_FACT;
-      n = sprintf(buff, "%s %f %f\n", names[i], x + dx, y + dy);
+      n = snprintf(buff, 511, "%s %f %f\n", nam[i], x + dx, y + dy);
       fwrite(buff, sizeof(char), n, stdout);
       fflush(stdout);
    }
-#undef FROM
 
-   if (num < PROCESSES - 1)
+   if (num < THREADS - 1)
       exit(EXIT_SUCCESS);
 }
 
-int do_it(float scale, bool apply)
+int do_it(const float scale, const bool apply)
 {
    char   buf[256];
-   float *lst   = NULL;
-   char **names = NULL;
-   size_t nb    = 0;
+   float *lst = NULL;
+   char **nam = NULL;
+   size_t nb  = 0;
 
    char  *line = NULL;
    size_t n    = 0;
@@ -258,16 +259,17 @@ int do_it(float scale, bool apply)
       if ((nb & (nb + 1)) == 0) {
          lst = realloc(lst, ((nb << 1) | 1) * sizeof(float) * 4);
          if (apply)
-            names = realloc(names, ((nb << 1) | 1) * sizeof(char *));
+            nam = realloc(nam, ((nb << 1) | 1) * sizeof(char *));
       }
-      if (sscanf(line, "%255s %f %f", buf, lst + (4 * nb),
-                 lst + (4 * nb + 1)) == 3) {
-         lst[4 * nb + 2] = 1.0;
+
+      float *const dst = lst + 4 * nb;
+      if (3 == sscanf(line, "%255s %f %f", buf, dst, dst + 1)) {
          if (apply)
-            names[nb] = strdup(buf);
+            nam[nb] = strdup(buf);
+         dst[2] = 1.0;
          for (int i = 0; weights[i].nam; i++)
             if (!strcmp(weights[i].nam, buf))
-               lst[4 * nb + 2] = weights[i].w;
+               dst[2] = weights[i].w;
          nb++;
       } else if (line[0] != '\0' && line[0] != '\n') {
          const int n = strlen(line);
@@ -281,13 +283,16 @@ int do_it(float scale, bool apply)
 
    // HERE
    rad      = _rad * scale / fact;
-   mul_ct   = 1.0 / (2.0f * rad * rad * rad);
-   add_ct   = -3.0 / (2.0 * rad);
-   inv_fact = 1.0 / fact;
+   mul_ct   = 1.0f / (2.0f * rad * rad * rad);
+   add_ct   = -3.0f / (2.0f * rad);
+   inv_fact = 1.0f / fact;
 
-   if (apply)
-      apply_gravity(lst, nb, (const char **) names);
-   else
+   if (apply) {
+      apply_gravity(lst, nb, (const char **) nam);
+      for (size_t i = 0; i < nb; i++)
+         free(nam[i]);
+      free(nam);
+   } else
       gen_potential(lst, nb, scale);
    free(lst);
    return EXIT_SUCCESS;
@@ -322,7 +327,7 @@ int main(int argc, char **argv)
    if (argc > 1 && !strcmp(argv[1], "-s")) {
       if (apply)
          return usage(nam, EXIT_FAILURE);
-      if (argc < 3 || sscanf(argv[2], "%f", &scale) != 1) {
+      else if (argc < 3 || sscanf(argv[2], "%f", &scale) != 1) {
          fprintf(stderr, "float expected, found \"%s\".\n", argv[2]);
          return usage(nam, EXIT_FAILURE);
       }
@@ -330,11 +335,11 @@ int main(int argc, char **argv)
       argc -= 2;
    }
 
-   if (argc > 1 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")))
-      return usage(nam, EXIT_SUCCESS);
-
    if (argc > 1)
-      return usage(nam, EXIT_FAILURE);
+      if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))
+         return usage(nam, EXIT_SUCCESS);
+      else
+         return usage(nam, EXIT_FAILURE);
    else
       return do_it(scale, apply);
 }

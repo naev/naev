@@ -53,7 +53,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
          try_flipped, try_unflipped = (len(pi1) == 2), True
       else:
          if pi1 == pi2[:1] + pi2[1:][::-1]:
-            wrn += [('2', 'flipped')]
+            wrn += [('2', '[flipped]')]
             try_flipped, try_unflipped = True, False
          else:
             pi1 = [names[i] for i in pi1]
@@ -78,16 +78,16 @@ def ssys_relax( sys, quiet = True, graph = False ):
 
       if try_flipped and try_unflipped:
          op = 'unflipped' if flip is nop else 'flipped'
-         col = '3' if len(pi1) > 2 else '2'
-         if op == "flipped" or col == 3:
+         col = '3' if (len(pi1) > 2) else '2'
+         if op == 'flipped' or col == '3':
             wrn += [(col, '[better ' + op + ']')]
 
       if cost > 0.5:
-         wrn += [('3', 'badness ' + str((int)((100*cost)/2)) + '%')]
+         wrn += [('3', '[badness ' + str((int)((100*cost)/2)) + '%]')]
 
       if wrn != []:
          wrn[0] = (wrn[0][0], '"' + basename(sys) + '": ' + wrn[0][1])
-         stderr.write(''.join(['\033[3'+str(i)+'m' + j + '\033[0m\n' for i, j in wrn]))
+         stderr.write(' '.join(['\033[3'+str(i)+'m' + j + '\033[0m' for i, j in wrn]) + '\n')
          stderr.flush()
 
       if abs(alpha) > eps or flip != nop:
