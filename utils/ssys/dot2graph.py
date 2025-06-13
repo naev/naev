@@ -3,7 +3,7 @@
 
 from sys import stdin, stderr, argv, exit
 from ssys_graph import xml_files_to_graph
-from geometry import bb, vec
+from geometry import bb, vec, segment
 
 
 if __name__ != '__main__':
@@ -108,6 +108,7 @@ haered = pos['haered']
 pos['haered'] = pos['cleai'] + (pos['haered']-pos['cleai']).rotate(60)
 
 v = pos['hystera'] - pos['leporis']
+v = v.rotate(-60)
 pos['leporis'] = pos['haered'] + (pos['leporis']-haered).normalize(v.size())
 pos['hystera'] = pos['leporis'] + v
 
@@ -118,6 +119,19 @@ pos['telika'] = pos['apik'] - v
 pos['mida'] = pos['apik'] + u
 pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
+
+L = segment(pos['haered'], pos['south_bell']).line()
+pos['cleai'] += (L - pos['cleai'])
+L = segment(pos['cleai'], pos['south_bell']).line()
+for s in ['maron', 'machea']:
+   # mirror it across L
+   pos[s] = pos[s] + 2.0*(L - pos[s])
+
+pos['machea'] = pos['maron'] + (pos['machea']-pos['maron']).rotate(30)
+pos['cleai'] = (pos['haered']+pos['maron']) / 2.0
+
+for s in ['leporis', 'hystera', 'korifa', 'apik', 'telika', 'mida', 'ekta', 'akra']:
+   pos[s] = pos['haered'] + (pos[s]-pos['haered']).rotate(-30)
 
 
 #v = (pos['possum']-pos['moor']) / 3.0
