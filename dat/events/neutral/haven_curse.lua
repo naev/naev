@@ -132,7 +132,7 @@ function heartbeat ()
             if spin_elapsed > math.pi * 6 then
                local p = pilot.add( "Pirate Hyena", fct, pos, _("Suspicious Derelict"), {naked=true} )
                p:setHealth( 37, 0 )
-               p:setDisable(true)
+               p:setDisable()
                p:effectAdd("Fade-In")
                p:setHilight()
                p:setVisplayer()
@@ -362,7 +362,7 @@ function update( dt )
             boss_stage = boss_stage + 1
          else
             -- Player won
-            boss:setDisable(true)
+            boss:setDisable()
             boss:setInvincible(true)
             -- Get rid of followers
             for k,f in ipairs(boss:followers()) do
