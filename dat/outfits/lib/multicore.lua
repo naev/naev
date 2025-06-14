@@ -270,6 +270,8 @@ function multicore.init( params, setfunc )
             multicore.set( p, po )
          end
       end
+
+      return multicore
    end
 
    local onadd_old = onadd
