@@ -37,7 +37,7 @@ static void *get_proc( const char *namez );
 #include <windows.h>
 static HMODULE libGL;
 
-typedef void *( APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE )( const char * );
+typedef void *(APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)( const char * );
 static PFNWGLGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
 
 #ifdef _MSC_VER
@@ -85,7 +85,7 @@ static void close_gl( void )
 static void *libGL;
 
 #if !defined( __APPLE__ ) && !defined( __HAIKU__ )
-typedef void *( APIENTRYP PFNGLXGETPROCADDRESSPROC_PRIVATE )( const char * );
+typedef void *(APIENTRYP PFNGLXGETPROCADDRESSPROC_PRIVATE)( const char * );
 static PFNGLXGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
 #endif
 

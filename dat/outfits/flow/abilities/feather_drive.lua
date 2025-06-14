@@ -122,7 +122,7 @@ function ontoggle( p, po, on )
       if col1 then
          col2 = col2 or col1
          local col = (col1+col2)*0.5
-         t:effectAdd("Chakra Corruption")
+         t:effectAdd("Chakra Corruption", nil, nil, p)
          chakraexp( col, p:vel(), tr )
          local e = t:energy(true)
          local d = math.min( mem.drain, e )

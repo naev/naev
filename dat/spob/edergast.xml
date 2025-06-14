@@ -2,12 +2,17 @@
  <pos x="2770.000000" y="2280.000000"/>
  <GFX>
   <space>P04.webp</space>
-  <exterior>snow.webp</exterior>
+  <exterior>uninhabited-rocky-blue-02.webp</exterior>
  </GFX>
  <general>
   <class>P</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+   <land/>
+  </services>
+  <description>A beautiful glaciated planet consisting mainly of frozen carbon compounds. It is speculated that it potentially may have had life many millions of cycles ago, however, some cataclysmic event led to a drastic temperature drop, where it now keeps an average yearly temperature of about 30 to 40 kelvins depending on the cycle.
+
+Although it used to be popular with tourists for its natural beauty, since the Incident, it is hardly visited at all. This is likely exacerbated by the fact by the Nebula giving hte planet a more sinister and eerie glow.</description>
  </general>
 </spob>

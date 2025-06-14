@@ -980,8 +980,8 @@ Commodity **tech_getCommodity( const tech_group_t *tech, double **price )
 
    /* Sort. */
    if ( ( c != NULL ) &&
-        ( price == NULL ) ) /* Don't sort when asking for price, or pricelist
-                               desyncs... */
+        ( price == NULL ) ) /* Don't sort when asking for price,
+                               or pricelist desyncs... */
       qsort( c, array_size( c ), sizeof( Commodity * ), commodity_compareTech );
 
    if ( price != NULL )

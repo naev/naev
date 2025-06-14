@@ -1,0 +1,10 @@
+<effect name="Corsair">
+ <description>Corsair set bonus.</description>
+ <duration>13.33333333333</duration>
+ <icon>/gfx/misc/icons/hidden.webp</icon>
+ <overwrite>corsair_set</overwrite>
+ <buff/>
+ <stats>
+  <time_speedup>33</time_speedup>
+ </stats>
+</effect>

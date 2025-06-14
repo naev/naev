@@ -13,6 +13,7 @@ end
 function init( p, po )
    mem.active = false
    po:state( "off" )
+   po:clear()
    mem.pl = pilotToLevel( p )
    mem.nearby = 0
 end
@@ -34,12 +35,11 @@ function update( p, po, _dt )
          -- Add extra bonus
          if n > 1 then
             n = n-1
-            po:set( "fwd_damage", n*bonus )
-            po:set( "tur_damage", n*bonus )
-            po:set( "launch_damage", n*bonus )
+            po:set( "weapon_damage", n*bonus )
          end
       else
          po:state( "off" )
+         po:clear()
       end
       mem.nearby = n
    end

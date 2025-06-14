@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <slot name="engines">
  <display>Engines</display>
  <description>This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core system to function.</description>

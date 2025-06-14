@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <effect name="Paralyzing Plasma">
  <description>Plasma is slowing the ship down!</description>
  <duration>7.5</duration>

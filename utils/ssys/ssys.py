@@ -58,7 +58,7 @@ class starmap(dict):
             self[key] = None
       return self[key]
 
-def sysneigh(sys):
+def ssysneigh( sys ):
    T = ET.parse(ssys_fil(sys)).getroot()
    acc = []
    count = 1

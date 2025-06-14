@@ -1976,7 +1976,7 @@ msgid "They altered their appearances and improved on nearly every part of the h
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:78
-msgid "The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as new humans."
+msgid "The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as neohumans."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:80
@@ -2104,7 +2104,7 @@ msgid "The same structure of councils happens at a larger scale, where instead o
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:119
-msgid "Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid new humans are raised with a strong focus on putting the community over the individual."
+msgid "Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid neohumans are raised with a strong focus on putting the community over the individual."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:120
@@ -7799,7 +7799,7 @@ msgid "They altered their appearances and improved on nearly every part of the h
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:78
-msgid "The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as new humans."
+msgid "The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as neohumans."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:80
@@ -7927,7 +7927,7 @@ msgid "The same structure of councils happens at a larger scale, where instead o
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:119
-msgid "Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid new humans are raised with a strong focus on putting the community over the individual."
+msgid "Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid neohumans are raised with a strong focus on putting the community over the individual."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:120

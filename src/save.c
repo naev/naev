@@ -96,6 +96,9 @@ static int save_data( xmlTextWriterPtr writer )
  */
 int save_all( void )
 {
+   /* Don't actually save if we are loading the game still. */
+   if ( save_loaded == 0 )
+      return 0;
    return save_all_with_name( "autosave" );
 }
 
@@ -171,18 +174,26 @@ int save_all_with_name( const char *name )
    }
 
    /* Back up old saved game. */
-   if ( !strcmp( name, "autosave" ) ) {
-      if ( !save_loaded ) {
-         char backup[PATH_MAX];
-         snprintf( file, sizeof( file ), "saves/%s/autosave.ns", player.name );
-         snprintf( backup, sizeof( backup ), "saves/%s/backup.ns",
-                   player.name );
+   if ( strcmp( name, "autosave" ) == 0 ) {
+      char backup[PATH_MAX];
+      // for (int i=0; i<conf.num_backups-1; i++) {
+      for ( int i = conf.num_backups - 1; i > 0; i-- ) {
+         snprintf( file, sizeof( file ), "saves/%s/backup%d.ns", player.name,
+                   i );
+         snprintf( backup, sizeof( backup ), "saves/%s/backup%d.ns",
+                   player.name, i + 1 );
          if ( ndata_copyIfExists( file, backup ) < 0 ) {
             WARN( _( "Aborting save…" ) );
             goto err_writer;
          }
       }
-      save_loaded = 0;
+      snprintf( file, sizeof( file ), "saves/%s/autosave.ns", player.name );
+      snprintf( backup, sizeof( backup ), "saves/%s/backup%d.ns", player.name,
+                1 );
+      if ( ndata_copyIfExists( file, backup ) < 0 ) {
+         WARN( _( "Aborting save…" ) );
+         goto err_writer;
+      }
    }
 
    /* Critical section, if crashes here player's game gets corrupted.

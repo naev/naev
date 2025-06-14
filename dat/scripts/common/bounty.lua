@@ -388,6 +388,7 @@ function spawn_bounty( params )
       target_ship = pilot.add( b.targetship, _get_faction(), params, b.targetname )
       local aimem = target_ship:memory()
       aimem.loiter = math.huge -- Should make them loiter forever
+      aimem.capturable = true
    end
 
    misn.osdActive( 2 )

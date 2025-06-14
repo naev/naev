@@ -29,7 +29,10 @@
 ALWAYS_INLINE static inline void *nmalloc( size_t size )
 {
    void *ptr = malloc( size );
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
    NTracingAlloc( ptr, size );
+#pragma GCC diagnostic pop
    return ptr;
 }
 ALWAYS_INLINE static inline void nfree( void *ptr )

@@ -44,6 +44,11 @@ function create ()
    mem.outfitsnaked = nc.capture_pilot.outfitsnaked
    nc.capture_pilot = nil
 
+   -- Free the followers!
+   for k,f in ipairs(plt:followers()) do
+      f:setLeader()
+   end
+
    -- Original data
    mem.o = {
       faction = plt:faction(),

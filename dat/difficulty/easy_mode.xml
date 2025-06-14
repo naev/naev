@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <difficulty name="Easy Mode">
  <description>Makes the game easier for the player, without trivializing most things.</description>
  <armour_mod>50</armour_mod>

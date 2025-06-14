@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Mephisto Type V" inherits="Za'lek Mephisto">
  <lua>zalek_mephisto_type_v.lua</lua>
  <price>13400000</price>

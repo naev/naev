@@ -240,10 +240,12 @@ Is there anything else you would like to purchase?"]]), {
    guide( function ()
       local pp = player.pilot()
       local out=fmt.f(_("Are you sure you want to trade in for the '#w{name}#0'?"),tradein_item)
-      for k,v in ipairs(trades) do
-         if v.type=="intrinsic" and hasIntrinsic( pp, v.outfit ) then
-            out=out.."\n\n"..fmt.f(_([[This will #rremove#0:"
+      if tradein_item.type=="intrinsic" then
+         for k,v in ipairs(trades) do
+            if v.type=="intrinsic" and hasIntrinsic( pp, v.outfit ) then
+               out=out.."\n\n"..fmt.f(_([[This will #rremove#0:"
 #w{desc}#0"]]),{desc=v.outfit:summary()}).."\n"
+            end
          end
       end
       return out.."\n"..fmt.f(_([[You will #rget#0:"

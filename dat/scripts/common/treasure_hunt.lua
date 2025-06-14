@@ -172,7 +172,7 @@ function lib.create_map_path( sstart, sgoal, w, h, n, rng )
    return lib.render( systems, makejumps(systems), w, h, sgoal, {sstart}, rng )
 end
 
-local function spob_check( p )
+function lib.good_spob( p )
    if p:faction() then
       return false
    end
@@ -185,24 +185,39 @@ function lib.create_map( data, w, h )
    return lib.create_map_path( data.start, data.goal, w, h, data.n, rng )
 end
 
+function lib.good_sys( s )
+   -- Must not be too volatile
+   local _dens, vol = s:nebula()
+   if vol > 15 then
+      return false
+   end
+   -- Must have landable target spob
+   for k,p in ipairs(s:spobs()) do
+      if lib.good_spob(p) then
+         return true
+      end
+   end
+   return false
+end
+
 function lib.create_treasure_hunt( center, maxdist, length )
    length = length or rnd.rnd(4,5)
    maxdist = maxdist or 20
-   local goallst = lmisn.getSysAtDistance( center, 0, maxdist, function( s )
-      for k,p in ipairs(s:spobs()) do
-         if spob_check(p) then
-            return true
-         end
-      end
-      return false
-   end )
-   if #goallst <= 0 then return end
+   local goallst = lmisn.getSysAtDistance( center, 0, maxdist, lib.good_sys )
+   if #goallst <= 0 then
+      -- So, at Qorellia it can't find it across hidden jumps, so we use Goddard as a fallback since it's quite centric
+      -- This is a hack until we allow jumps to support tags or something more generic
+      -- TODO fix properly someday
+      local FALLBACK_SYS = system.get("Goddard")
+      goallst = lmisn.getSysAtDistance( FALLBACK_SYS, 0, maxdist, lib.good_sys )
+      if #goallst <= 0 then return end
+   end
    -- Try to see if we can find a pair for any of the targets
    goallst = rnd.permutation(goallst)
    for i,goal in ipairs(goallst) do
       local spb = {}
       for k,p in ipairs(goal:spobs()) do
-         if spob_check(p) then
+         if lib.good_spob(p) then
             table.insert(spb,p)
          end
       end
@@ -215,11 +230,11 @@ function lib.create_treasure_hunt( center, maxdist, length )
          local start = candidates[rnd.rnd(1,#candidates)]
          local name = fmt.f(_("Near {sys}"),{sys=start})
          return {
-            spb=spb,
-            goal=goal,
-            start=start,
-            name=name,
-            seed=rnd.rnd(1,2^30),
+            spb   = spb,
+            goal  = goal,
+            start = start,
+            name  = name,
+            seed  = rnd.rnd(1,2^30),
          }
       end
    end
@@ -256,6 +271,11 @@ function lib.map_completed()
 end
 function lib.maps_solved()
    return var.peek( PLAYERVAR ) or 0
+end
+
+function lib.log( msg )
+   shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
+   shiplog.append( "treasurehunt", msg )
 end
 
 return lib

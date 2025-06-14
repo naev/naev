@@ -95,6 +95,10 @@ function view_maps ()
    abandon = luatk.newButton( wdw, w-20-BUTTON_W-10-BUTTON_W, h-20-BUTTON_H, BUTTON_W, BUTTON_H, _("Abandon Map"), function ()
       local mapname, mapid = lst:get()
       luatk.yesno( _("Abandon Map?"), fmt.f(_("Are you sure you want to abandon the map '{mapname}'?"), {mapname=mapname}), function ()
+         local m = mem.maps[mapid]
+         if m.trigger then
+            naev.trigger( m.trigger, true )
+         end
          table.remove( mem.maps, mapid )
          naev.cache().treasure_maps = #mem.maps
          gen_list()
@@ -116,6 +120,12 @@ function newmap( data )
 end
 
 local function landed( data )
+   if data.trigger then
+      th.map_completed()
+      naev.trigger( data.trigger, true )
+      return true
+   end
+
    vn.clear()
    vn.scene()
    vn.transition()
@@ -150,8 +160,7 @@ local function landed( data )
    th.map_completed()
 
    -- Log
-   shiplog.create( "treasurehunt", _("Treasure Hunt"), _("Neutral") )
-   shiplog.append( "treasurehunt", fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
+   th.log( fmt.f(_([[You followed a treasure map to {spb} in the {sys} system and found {reward}.]]),
       {sys=system.cur(), spb=spob.cur(), reward=reward_str}) )
 
    return true
@@ -175,5 +184,10 @@ function land ()
 end
 
 function abort ()
+   for k,v in ipairs(mem.maps) do
+      if v.trigger then
+         return naev.trigger( v.trigger, true )
+      end
+   end
    player.infoButtonUnregister( btn )
 end

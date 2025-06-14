@@ -1,4 +1,3 @@
-
 local multicore = {}
 
 local shipstat = naev.shipstats()
@@ -105,12 +104,14 @@ local function is_multiengine( p, po )
    return is_engine(sl) and (is_secondary_slot(sl) or is_engine(sh[n+1]))
 end
 
-function multicore.init( params )
+local SETFUNC
+function multicore.init( params, setfunc )
    -- Create an easier to use table that references the true ship stats
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
    local gathered_data = {}
+   SETFUNC = setfunc
 
    for k,s in ipairs(stats) do
       s.index = index(shipstat, s[1])
@@ -135,8 +136,8 @@ function multicore.init( params )
    notactive = true -- Not an active outfit
    hidestats = true -- We do hacks to show stats, so hide them
 
-
    -- Below define the global functions for the outfit
+   local descextra_old = descextra
    function descextra( p, o, po )
       local basic = var.peek("hide_multi")
       local nomain, nosec = false, false
@@ -216,6 +217,9 @@ function multicore.init( params )
          local msg = fmt.f(_('This outfit can only be equipped as {slot}.'), {slot=slot_msg})
          desc = desc .. '\n#b' .. msg .. '#0'
       end
+      if descextra_old then
+         desc = desc.."\n"..descextra_old( p, o, po )
+      end
       return desc
    end
 
@@ -223,14 +227,14 @@ function multicore.init( params )
       return (sign ~= -1) and ((is_secondary(po) and sec_en_stats) or pri_en_stats)
    end
 
-   local function equip(p, po, sign )
+   local function equip( p, po, sign )
       if p and po then
          local ie = is_multiengine(p, po)
          local secondary = is_secondary(po)
          local id = po:id()
          local multicore_off = nil
 
-         po:clear()
+         mem.stats = {}
          if ie then
             --tfs.append(p:shipMemory(), {"history"}, (sign==-1 and "u" or "") .. 'eq_' .. tostring(po:id()))
             if secondary then
@@ -255,19 +259,36 @@ function multicore.init( params )
                local val = (secondary and s.sec) or s.pri
 
                if not (ie and is_mobility[s.name]) then
-                  po:set(s.name, val)
+                  mem.stats[s.name] = val
                end
             end
+         end
+
+         -- Deferred setting of stats
+         if not setfunc then
+            po:clear()
+            multicore.set( p, po )
          end
       end
    end
 
+   local onadd_old = onadd
    function onadd( p, po )
       equip(p, po, 1)
+      if onadd_old then
+         onadd_old( p, po )
+      end
    end
 
-   init = onadd
+   local init_old = init
+   function init( p, po )
+      equip(p, po, 1)
+      if init_old then
+         init_old( p, po )
+      end
+   end
 
+   local message_old = message
    function message( p, po, msg, dat )
       if not p or not po then
          warn("message on nil p/po")
@@ -281,7 +302,9 @@ function multicore.init( params )
             warn('message "'.. msg ..'" send to secondary (ignored)')
          elseif msg == "halt" then
             if multiengines.halt_n(gathered_data, dat.id, dat.off) then
-               multiengines.refresh(gathered_data, po)
+               multiengines.refresh(gathered_data, po, false)
+               po:clear()
+               multicore.set( p, po )
             end
          elseif msg == "ask" then
             return multiengines.engine_stats(gathered_data, dat)
@@ -289,20 +312,55 @@ function multicore.init( params )
             multiengines.decl_engine_stats(gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
             multiengines.refresh(gathered_data, po, true)
+            po:clear()
+            multicore.set( p, po )
          elseif msg == "wtf?" then
             return gathered_data
          else
             warn('Unknown message: "' .. msg .. '"')
          end
       end
+
+      if message_old then
+         message_old( p, po, msg, dat )
+      end
    end
 
+   local onremove_old = onremove
    function onremove( p, po )
       equip(p, po, -1)
+      if onremove_old then
+         onremove_old( p, po )
+      end
+   end
+
+   -- We'll use broader than onadd and onremove here
+   if setfunc then
+      local onoutfitchange_old = onoutfitchange
+      function onoutfitchange( p, po )
+         if onoutfitchange_old then
+            onoutfitchange_old( p, po )
+         end
+         multicore.set( p, po )
+      end
+   end
+
+   return multicore
+end
+
+function multicore.set( p, po )
+   if mem.stats then
+      for s,val in pairs(mem.stats) do
+         po:set(s, val)
+      end
+   end
+   -- Apply a set function if applicable
+   if SETFUNC then
+      SETFUNC( p, po )
    end
 end
 
-function multicore.setworkingstatus( p, po, on)
+function multicore.setworkingstatus( p, po, on )
    if p and po then
       local id = po:id()
       local off
@@ -315,6 +373,5 @@ function multicore.setworkingstatus( p, po, on)
       p:outfitMessageSlot("engines", "halt", {id=id, off=off})
    end
 end
-
 
 return multicore

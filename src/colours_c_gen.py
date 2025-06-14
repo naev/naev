@@ -104,6 +104,7 @@ COLOURS = [
     Colour( "Radar_weap",       0.8, 0.2, 0.2 ),
     Colour( "Radar_hilight",    0.6, 1.0, 1.0 ),
     Colour( "Radar_scanning",   1.0, 1.0, 0.6 ),
+    Colour( "Radar_viewport",   1.0, 1.0, 1.0, 0.5 ),
     # Health
     Colour( "Shield",       0.2, 0.2, 0.8 ),
     Colour( "Armour",       0.5, 0.5, 0.5 ),

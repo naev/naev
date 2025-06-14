@@ -130,6 +130,7 @@ void conf_setDefaults( void )
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
    conf.big_icons           = BIG_ICONS_DEFAULT;
    conf.always_radar        = 0;
+   conf.show_viewport       = 0;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -217,6 +218,8 @@ void conf_setVideoDefaults( void )
 {
    int             w, h, f;
    SDL_DisplayMode resolution;
+
+   conf.num_backups = NUM_BACKUPS_DEFAULT;
 
    /* More complex resolution handling. */
    f = 0;
@@ -881,6 +884,11 @@ int conf_saveConfig( const char *file )
    conf_saveString( "data", conf.ndata );
    conf_saveEmptyLine();
 
+   /* OpenGL. */
+   conf_saveComment( _( "Number of save game backups" ) );
+   conf_saveInt( "num_backups", conf.num_backups );
+   conf_saveEmptyLine();
+
    /* Language. */
    conf_saveComment(
       _( "Language to use. Set to the two character identifier to the language "
@@ -1089,6 +1097,8 @@ int conf_saveConfig( const char *file )
    conf_saveComment( _(
       "Always show the radar and don't hide it when the overlay is active." ) );
    conf_saveBool( "always_radar", conf.always_radar );
+   conf_saveComment( _( "Show the viewport in the radar/overlay." ) );
+   conf_saveBool( "show_viewport", conf.show_viewport );
    conf_saveEmptyLine();
 
    /* Key repeat. */

@@ -12,6 +12,7 @@
 constants CTS = {
    .PHYSICS_SPEED_DAMP     = 3., /* Default before 0.13.0. */
    .STEALTH_MIN_DIST       = 1000.,
+   .SHIP_MIN_MASS          = 0.5, /* 0 before 0.13.0 */
    .EW_JUMP_BONUS_RANGE    = 2500.,
    .EW_ASTEROID_DIST       = 7.5e3,
    .EW_JUMPDETECT_DIST     = 7.5e3,
@@ -51,6 +52,7 @@ int constants_init( void )
 
    CT_DBL( PHYSICS_SPEED_DAMP );
    CT_DBL( STEALTH_MIN_DIST );
+   CT_DBL( SHIP_MIN_MASS );
 
    CT_DBL( EW_JUMP_BONUS_RANGE );
    CT_DBL( EW_ASTEROID_DIST );

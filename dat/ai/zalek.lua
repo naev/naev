@@ -19,6 +19,12 @@ local bribe_no_list = {
    _([["While I admire the spirit of it, testing my patience is suicide, NOT science."]])
 }
 
+local bribe_no_list_drone = {
+   _([["INSUFFICIENT PERMISSIONS TO TERMINATE COMBAT PROTOCOLS."]]),
+   _([["INVALID USER CREDENTIALS."]]),
+   function () return fmt.f(_([["'{player}' IS NOT IN THE SUDOERS FILE. THIS INCIDENT WILL BE REPORTED."]]),{player=player.name()}) end,
+}
+
 local taunt_list_offensive = {
    _("Move drones in to engage. Cook this clown!"),
    _("Say hello to my little friends!"),
@@ -109,12 +115,20 @@ function hail ()
    local standing = p:reputation()
    mem.refuel = mem.refuel_base
    if standing < -10 then
-      mem.refuel_no = _([["I do not have fuel to spare."]])
+      if mem.isdrone then
+         mem.refuel_no = _([["INSUFFICIENT PERMISSIONS FOR REFUEL."]])
+      else
+         mem.refuel_no = _([["I do not have fuel to spare."]])
+      end
    else
       mem.refuel = mem.refuel * 0.6
    end
    -- Most likely no chance to refuel
-   mem.refuel_msg = fmt.f( _([["I will agree to refuel your ship for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
+   if mem.isdrone then
+      mem.refuel_msg = fmt.f( _([["INSERT {credits} TO COMMENCE REFUELLING OPERATIONS."]]), {credits=fmt.credits(mem.refuel)} )
+   else
+      mem.refuel_msg = fmt.f( _([["I will agree to refuel your ship for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
+   end
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
@@ -122,10 +136,19 @@ function hail ()
          (standing > -20 and mem.bribe_rng > 0.8) or
          (standing > -50 and mem.bribe_rng > 0.6) or
          (rnd.rnd() > 0.4))) then
-      mem.bribe_prompt = fmt.f(_([["We will agree to end the battle for {credits}."]]), {credits=fmt.credits(mem.bribe)} )
-      mem.bribe_paid = _([["Temporarily stopping fire."]])
+      if mem.isdrone then
+         mem.bribe_prompt = fmt.f(_([["INSERT {credits} TO CEASE HOSTILITIES."]]), {credits=fmt.credits(mem.bribe)} )
+         mem.bribe_paid = _([["PEACE PROTOCOL INITIATED."]])
+      else
+         mem.bribe_prompt = fmt.f(_([["We will agree to end the battle for {credits}."]]), {credits=fmt.credits(mem.bribe)} )
+         mem.bribe_paid = _([["Temporarily stopping fire."]])
+      end
    else
-      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+      if mem.isdrone then
+         mem.bribe_no = bribe_no_list_drone[ rnd.rnd(1,#bribe_no_list_drone) ]
+      else
+         mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+      end
    end
 end
 

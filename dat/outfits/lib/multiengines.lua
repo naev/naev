@@ -1,4 +1,3 @@
-
 local tfs = require "tfs"
 
 local multiengines = {
@@ -39,9 +38,11 @@ function multiengines.refresh( root, po, force )
    local dataon = {} -- the subset of if that is active
    local comb = tfs.checkdir(root, {'total'})
 
+   mem.stats = mem.stats or {}
    for _,s in ipairs(multiengines.mobility_params) do
       comb[s] = 0
-      po:set(s, 0)
+      --po:set(s, 0)
+      mem.stats[s] = 0
    end
 
    local den=0
@@ -66,7 +67,8 @@ function multiengines.refresh( root, po, force )
             val = math.floor(0.5 + (acc/den))
          end
          comb[s] = val
-         po:set(s, val)
+         --po:set(s, val)
+         mem.stats[s] = val
       end
    end
    tfs.writefile(root, {'needs_refresh'}, nil)

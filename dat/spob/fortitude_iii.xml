@@ -2,12 +2,15 @@
  <pos x="6021.653926" y="-12361.377812"/>
  <GFX>
   <space>P04.webp</space>
-  <exterior>snow.webp</exterior>
+  <exterior>uninhabited-rocky-airless-00.webp</exterior>
  </GFX>
  <general>
   <class>P</class>
   <population>0</population>
   <hide>1.000000</hide>
-  <services/>
+  <services>
+   <land/>
+  </services>
+  <description>With an icy surface several dozen kilometers deep, Fortitude III provides all the water necessary to run Omega Enclave. Originally planned to house the military presence in the system, the general extreme cold combined with sudden flash floods due to the eccentric orbit forced the Imperial Bureaucrats to scrap those plans. Your sensors do, however, seem to pick up some sort of installations buried deep beneath the surface, but they do not seem very accessible at the current time.</description>
  </general>
 </spob>

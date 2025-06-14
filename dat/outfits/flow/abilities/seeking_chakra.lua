@@ -94,6 +94,6 @@ function ontoggle( p, po, on )
    return true
 end
 
-function onimpact( _p, target )
-   target:effectAdd( "Chakra Corruption", mem.duration, mem.strength )
+function onimpact( p, target )
+   target:effectAdd( "Chakra Corruption", mem.duration, mem.strength, p )
 end

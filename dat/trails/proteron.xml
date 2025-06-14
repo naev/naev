@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <trail name="proteron">
  <shader>trail/split.frag</shader>
  <thickness>6</thickness>

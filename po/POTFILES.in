@@ -69,14 +69,19 @@ dat/effects/ambush_hunter_ii.xml
 dat/effects/antimatter_taint.xml
 dat/effects/astral_projection.xml
 dat/effects/avatar_of_sirichana.xml
+dat/effects/black.xml
 dat/effects/blink.xml
 dat/effects/bloodlust.xml
 dat/effects/chakra_burn.xml
 dat/effects/chakra_corruption.xml
+dat/effects/corsair.xml
 dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
+dat/effects/fadein_black.xml
 dat/effects/fadeout.xml
+dat/effects/fadeout_black.xml
+dat/effects/fadeout_norender.xml
 dat/effects/feather_drive.xml
 dat/effects/feral_rage_i.xml
 dat/effects/fractured_reality.xml
@@ -93,6 +98,7 @@ dat/effects/psychic_orb_on.xml
 dat/effects/ride_of_the_valkyries.xml
 dat/effects/shield_aura.xml
 dat/effects/shield_boost.xml
+dat/effects/shield_jammed.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
 dat/factions/black_lotus.xml
@@ -2894,6 +2900,7 @@ dat/comm.lua
 dat/common.lua
 dat/constants.lua
 dat/effects/lua/fadeout.lua
+dat/effects/lua/fadeout_norender.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
@@ -2953,6 +2960,8 @@ dat/events/neutral/baron_prowl.lua
 dat/events/neutral/capricorn_pirates.lua
 dat/events/neutral/capricorn_pirates_epilogue.lua
 dat/events/neutral/dendria_pirates.lua
+dat/events/neutral/edergast_pirate_ambush.lua
+dat/events/neutral/haven_curse.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua
@@ -3390,6 +3399,9 @@ dat/outfits/bioship/skills/reflective_shell.lua
 dat/outfits/bioship/skills/silence.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
+dat/outfits/core_sets/corsair_engine.lua
+dat/outfits/core_sets/corsair_hull.lua
+dat/outfits/core_sets/corsair_systems.lua
 dat/outfits/flow/abilities/astral_projection.lua
 dat/outfits/flow/abilities/avatar_of_sirichana.lua
 dat/outfits/flow/abilities/cleansing_flames.lua
@@ -3416,6 +3428,8 @@ dat/outfits/lib/matrix_sell.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lib/multicore.lua
 dat/outfits/lib/multiengines.lua
+dat/outfits/lib/set.lua
+dat/outfits/lib/sets/corsair.lua
 dat/outfits/lib/twins.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/misc/mystery_outfit.lua
@@ -4158,6 +4172,9 @@ src/version.rs
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py
+dat/outfits/py/corsair_engine.py
+dat/outfits/py/corsair_hull.py
+dat/outfits/py/corsair_systems.py
 dat/outfits/py/helper.py
 dat/outfits/py/neutralizer.py
 dat/outfits/py/reaver.py

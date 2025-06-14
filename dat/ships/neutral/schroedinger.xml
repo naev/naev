@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Schroedinger">
  <points>20</points>
  <base_type>Schroedinger</base_type>
@@ -49,5 +48,6 @@
  </stats>
  <tags>
   <tag>standard</tag>
+  <tag>civilian</tag>
  </tags>
 </ship>

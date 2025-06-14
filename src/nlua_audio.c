@@ -1022,7 +1022,8 @@ static int audioL_getDuration( lua_State *L )
  *    @luatparam Audio source Source to set volume of.
  *    @luatparam number vol Volume to set the source to with 0.0 being silent
  * and 1.0 being full volume.
- *    @luatparam boolean ignorevol Don't modify volume based on master.
+ *    @luatparam[opt=false] boolean ignorevol Don't modify volume based on
+ * master.
  * @luafunc setVolume
  */
 static int audioL_setVolume( lua_State *L )

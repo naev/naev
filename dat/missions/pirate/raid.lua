@@ -288,11 +288,13 @@ function spawn_convoy ()
       p:cargoAdd( mem.misn_cargo, math.floor((0.8+0.2*rnd.rnd())*p:cargoFree()) )
       hook.pilot( p, "board", "convoy_board" )
       hook.pilot( p, "attacked", "convoy_attacked" )
+      p:memory().capturable = true
    end
    sescorts = flt.add( 1, eships, fconvoy, mem.convoy_enter, nil, {ai="mercenary"} )
    for _k,p in ipairs(sescorts) do
       p:setLeader( sconvoy[1] )
       hook.pilot( p, "attacked", "convoy_attacked" )
+      p:memory().capturable = true
    end
    -- Only slow down leader, or it can be faster than other guys
    sconvoy[1]:intrinsicSet( "speed_mod", -33 )

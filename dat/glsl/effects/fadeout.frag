@@ -1,4 +1,3 @@
-#include "lib/simplex.glsl"
 uniform sampler2D u_tex;
 
 uniform float u_timer   = 0.0;

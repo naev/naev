@@ -562,10 +562,28 @@ static int load_sortCompare( const void *p1, const void *p2 )
    else if ( ns1->compatible && !ns2->compatible )
       return +1;
 
-   /* Search by file modification date. */
-   if ( ns1->modtime > ns2->modtime )
+   /* Make sure back ups are last. */
+   const char *BACKUPNAME = "backup";
+   int b1 = strncmp( ns1->save_name, BACKUPNAME, strlen( BACKUPNAME ) ) == 0;
+   int b2 = strncmp( ns2->save_name, BACKUPNAME, strlen( BACKUPNAME ) ) == 0;
+   if ( b1 && !b2 )
+      return +1;
+   else if ( !b1 && b2 )
       return -1;
-   else if ( ns1->modtime < ns2->modtime )
+
+   /* Sort by file modification date with a resolution of 65.536 seconds or 18.2
+    * hours. */
+   PHYSFS_sint64 t1 = ns1->modtime >> 16;
+   PHYSFS_sint64 t2 = ns2->modtime >> 16;
+   if ( t1 > t2 )
+      return -1;
+   else if ( t1 < t2 )
+      return +1;
+
+   /* Sort by in-game date. */
+   if ( ns1->date > ns2->date )
+      return -1;
+   else if ( ns1->date > ns2->date )
       return +1;
 
    /* Finally sort by name. */
@@ -1063,6 +1081,7 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
 {
    (void)str;
    int wid, pos;
+   int disablesave = *(int *)window_getData( wdw );
 
    wid = window_get( "wdwLoadSnapshotMenu" );
 
@@ -1074,6 +1093,16 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
    /* Check version. */
    if ( load_compatibilityTest( &load_player->saves[pos] ) )
       return;
+
+   /* Disable saving. */
+   if ( disablesave && ( save_loaded != 0 ) ) {
+      if ( !dialogue_YesNoRaw(
+              _( "Exit to Menu?" ),
+              _( "Are you sure you wish to exit to menu right now? The game "
+                 "#rwill not be saved#0 since last time you landed!" ) ) )
+         return;
+      player_setFlag( PLAYER_NOSAVE );
+   }
 
    /* Close menus before loading for proper rendering. */
    load_snapshot_menu_close( wdw, NULL );
@@ -1400,6 +1429,9 @@ static int load_gameInternalHook( void *data )
    if ( gui_load( gui_pick() ) )
       gui_load( start_gui() ); /* Failed so use fallback... */
 
+   /* Set loaded, set here so backup doesn't overwrite. */
+   save_loaded = 0;
+
    /* Land the player. */
    land( pnt, 1 );
 
@@ -1432,9 +1464,7 @@ static int load_gameInternalHook( void *data )
       dialogue_alertRaw( buf );
    }
 
-   /* Set loaded. */
    save_loaded = 1;
-
    return 0;
 
 err_doc:

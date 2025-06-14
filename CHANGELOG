@@ -19,6 +19,10 @@
       * Ships now disabled below a certain armour threshold regardless of stress
       * AI is less susceptible to stealth bomber cheese
       * Point defense now shoots at all ships prioritizing smaller ones after missiles
+      * Cargo delivery missions have increased cargo amounts
+      * Minimum stealth range also affects detection and signature
+      * Ships can have a minimum cargo-less mass of 50% of the ship base mass
+      * Damage over time effects now can cause faction loss and other effects
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
@@ -30,6 +34,8 @@
       * Ships that are scanning you use a different colour hilight
       * Landable but uninhabited space objects use a different icon
       * Deployed fighter equipment is no longer random
+      * Added support for multiple automatic backups with 5 by default
+      * Game will prompt if exiting the game when save data loss can occur
    * Content
       * 11 new missions and events
          * Go treasure hunting
@@ -93,6 +99,7 @@
       * darkshodw: enemies shouldn't see through stealth
       * Cryogenic Nanobots no longer restore health to 100% on completing cooldown regardless of damage taken
       * Improved AI braking skills
+      * Game will not save in certain cases like loading the game and immediately being forced to take off by a load hook
 
 * 0.12.5
    * Fixed bug causing lower diversity in ship spawning
@@ -176,7 +183,7 @@
    * Fixed pilot.distress() not sending signals to spobs
    * lovebiz01: fixed condition allowing it to appear anywhere
    * dv_goddard: fixed spawning of Silent Death
-   * harjas_vengeance: avoid certain system to make the mission easier to do.
+   * harjas_vengeance: avoid certain system to make the mission easier to do
    * minerva missions: fixed a ship not spawning correctly
    * Large cargo hulls now match the cargo difference of the small and medium hulls
    * Minor typo fixes and translation updates

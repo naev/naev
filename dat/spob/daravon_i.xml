@@ -2,12 +2,15 @@
  <pos x="-9800.000000" y="-10950.000000"/>
  <GFX>
   <space>moon-C00.webp</space>
-  <exterior>station03.webp</exterior>
+  <exterior>uninhabited-rocky-airless-03.webp</exterior>
  </GFX>
  <general>
   <class>C</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A fairly standard large chunk of regolith, it is only notable for Eclipsed Citadel performing both training and weapon exercises on the planet surface. Although it is not officially off limits to civilians, it is highly recommended to not overstay your welcome lest your ship turns into the new cadets training target.</description>
  </general>
 </spob>

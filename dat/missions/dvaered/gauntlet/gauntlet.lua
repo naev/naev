@@ -113,6 +113,13 @@ end
 --]]
 -- Enters Crimson Gauntlet
 function enter_the_ring ()
+   -- Failed to take off
+   if player.isLanded() then
+      -- Have to add a new mission because we accepted this one
+      naev.missionStart("Crimson Gauntlet")
+      misn.finish(false)
+   end
+
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
    hook.safe( mem.gauntlet_enter ) -- Will defer one frame, hook.enter triggers in the middle of enter_the_ring which is undesirable
    gauntlet.enter_the_ring()
@@ -188,6 +195,9 @@ function p_death( p )
 end
 function player_lost_disable ()
    local pp = player.pilot()
+   if not pp:disabled() then
+      return
+   end
    player.cinematics( true )
    pp:setInvincible( true )
    pp:setInvisible( true )
@@ -198,8 +208,12 @@ function player_lost_disable ()
    end
 end
 function player_lost ()
-   hook.rm( mem.pp_hook_disable )
    local pp = player.pilot()
+   if pp:armour() > 0 then
+      -- Something revived the player, ZD-5 Guardian?
+      return
+   end
+   hook.rm( mem.pp_hook_disable )
    pp:setHealth( 100, 100 ) -- Heal up to avoid game over if necessary
    pp:setHide( true )
    pp:setInvincible( true )
@@ -360,18 +374,24 @@ local function wave_compute_score ()
       table.insert( str, h .. string.format(s,b) )
       bonus = bonus + b
    end
-   local c = pp:ship():class()
+   local s = pp:ship()
+   local c = _(s:class())
+   local civ = s:tags().civilian
    if mem.wave_category == "skirmisher" then
-      if c=="Corvette" then
-         newbonus( _("Corvette %d%%"), -20 )
-      elseif c=="Destroyer" then
-         newbonus( _("Destroyer %d%%"), -40 )
-      elseif c=="Cruiser" then
-         newbonus( _("Cruiser %d%%"), -80 )
-      elseif c=="Carrier" then
-         newbonus( _("Carrier %d%%"), -90 )
-      elseif c=="Battleship" then
-         newbonus( _("Battleship %d%%"), -90 )
+      local SIZES = {
+         [1] = 10,
+       --[2] = 0,
+         [3] = -20,
+         [4] = -40,
+         [5] = -80,
+         [6] = -90,
+      }
+      local b = SIZES[pp:ship():size()]
+      if civ then
+         b = (b or 0) + 10
+      end
+      if b then
+         newbonus( fmt.f(_("{class} %d%%"), {class=c} ), b )
       end
       if elapsed < 15 then
          newbonus( _("Fast Clear (<15s) %d%%"), 25 )
@@ -379,18 +399,20 @@ local function wave_compute_score ()
          newbonus( _("Slow Clear (>90s) %d%%"), -25 )
       end
    elseif mem.wave_category == "warrior" then
-      if c=="Fighter" then
-         newbonus( _("Fighter %d%%"), 100 )
-      elseif c=="Bomber" then
-         newbonus( _("Bomber %d%%"), 100 )
-      elseif c=="Corvette" then
-         newbonus( _("Corvette %d%%"), 25 )
-      elseif c=="Cruiser" then
-         newbonus( _("Cruiser %d%%"), -20 )
-      elseif c=="Carrier" then
-         newbonus( _("Carrier %d%%"), -30 )
-      elseif c=="Battleship" then
-         newbonus( _("Battleship %d%%"), -30 )
+      local SIZES = {
+         [1] = 150,
+         [2] = 100,
+         [3] = 25,
+       --[4] = 0,
+         [5] = -20,
+         [6] = -30,
+      }
+      local b = SIZES[pp:ship():size()]
+      if civ then
+         b = (b or 0) + 25
+      end
+      if b then
+         newbonus( fmt.f(_("{class} %d%%"), {class=c} ), b )
       end
       if elapsed < 25 then
          newbonus( _("Fast Clear (<25s) %d%%"), 25 )
@@ -398,16 +420,20 @@ local function wave_compute_score ()
          newbonus( _("Slow Clear (>120s) %d%%"), -25 )
       end
    elseif mem.wave_category == "warlord" then
-      if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
-         newbonus( _("Fighter %d%%"), 500 )
-      elseif c=="Bomber" then
-         newbonus( _("Bomber %d%%"), 400 )
-      elseif c=="Corvette" then
-         newbonus( _("Corvette %d%%"), 100 )
-      elseif c=="Destroyer" then
-         newbonus( _("Destroyer %d%%"), 50 )
-      elseif c=="Cruiser" then
-         newbonus( _("Cruiser %d%%"), 25 )
+      local SIZES = {
+         [1] = 700,
+         [2] = 500,
+         [3] = 100,
+         [4] = 50,
+         [5] = 25,
+       --[6] = 0,
+      }
+      local b = SIZES[pp:ship():size()]
+      if civ then
+         b = (b or 0) + 50
+      end
+      if b then
+         newbonus( fmt.f(_("{class} %d%%"), {class=c} ), b )
       end
       if elapsed < 40 then
          newbonus( _("Fast Clear (<40s) %d%%"), 25 )

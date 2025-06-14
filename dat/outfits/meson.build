@@ -11,6 +11,21 @@ customoutfits = {
      'input'  : 'weapons/heavy_ripper_cannon.xml',
      'output' : 'reaver_cannon.xml',
    },
+  'corsair_systems' : {
+     'command': 'corsair_systems.py',
+     'input'  : 'core_system/medium/unicorp_pt200_core_system.xml',
+     'output' : 'corsair_systems.xml',
+   },
+  'corsair_hull' : {
+     'command': 'corsair_hull.py',
+     'input'  : 'core_hull/medium/nexus_ghost_weave.xml',
+     'output' : 'corsair_hull_plating.xml',
+   },
+  'corsair_engine' : {
+     'command': 'corsair_engine.py',
+     'input'  : 'core_engine/medium/nexus_arrow_700_engine.xml',
+     'output' : 'corsair_engine.xml',
+   },
 }
 
 gen_outfits = []

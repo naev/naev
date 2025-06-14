@@ -171,6 +171,11 @@ end
 function ondeath( _p, _po )
 end
 
+-- Run when any particle shot by p impacts the target. Unlike onimpact, p is
+-- guaranteed to exist.
+function onanyimpact( _p, _po, _target, _pos, _vel, _o )
+end
+
 --[[
    Below are WEAPONS ONLY. However, they can be triggered by munitions,
    which share the environment with the ORIGINAL spawning outfit, not necessarily

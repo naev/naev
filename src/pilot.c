@@ -1544,6 +1544,10 @@ double pilot_hit( Pilot *p, const Solid *w, const Pilot *pshooter,
       }
    }
 
+   /* Run if the shooter hasn't died. */
+   if ( pshooter != NULL )
+      pilot_outfitLOnanyimpact( (Pilot *)pshooter, p, w, outfit );
+
    /* On hit Lua outfits activate. */
    pilot_outfitLOnhit( p, tdarmour, tdshield, shooter );
 
@@ -1721,6 +1725,10 @@ void pilot_dead( Pilot *p, unsigned int killer )
 
    /* Run Lua hooks. */
    pilot_outfitLOndeath( p );
+
+   /* Last regenerate check. */
+   if ( p->armour > 0. )
+      return;
 
    if ( p->parent == PLAYER_ID )
       player_message( _( "#rShip under command '%s' was destroyed!#0" ),
@@ -2512,8 +2520,8 @@ void pilot_update( Pilot *pilot, double dt )
       pilot->stress = MAX( pilot->stress, 0 );
    } else if ( !pilot_isFlag(
                   pilot,
-                  PILOT_DISABLED_PERM ) ) { /* Case pilot is disabled (but not
-                                               permanently so). */
+                  PILOT_DISABLED_PERM ) ) { /* Case pilot is disabled (but
+                                               not permanently so). */
       pilot->dtimer_accum += dt;
       if ( pilot->dtimer_accum >= pilot->dtimer ) {
          pilot->stress       = 0.;
@@ -2527,12 +2535,21 @@ void pilot_update( Pilot *pilot, double dt )
 
    /* Damage effect. */
    if ( ( pilot->stats.damage > 0. ) || ( pilot->stats.disable > 0. ) ) {
+      Pilot *applicator = NULL;
+      for ( int i = 0; i < array_size( pilot->effects ); i++ ) {
+         const Effect *e = &pilot->effects[i];
+         if ( e->data->damaging ) {
+            applicator = pilot_get( e->applicator );
+            if ( applicator )
+               break;
+         }
+      }
       Damage dmg;
       dmg.type        = dtype_get( "raw" );
       dmg.damage      = pilot->stats.damage * dt;
       dmg.penetration = 1.; /* Full penetration. */
       dmg.disable     = pilot->stats.disable * dt;
-      pilot_hit( pilot, NULL, NULL, &dmg, NULL, LUA_NOREF, 0 );
+      pilot_hit( pilot, NULL, applicator, &dmg, NULL, LUA_NOREF, 0 );
    }
 
    /* Handle takeoff/landing. */

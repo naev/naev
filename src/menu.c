@@ -65,6 +65,7 @@ int bg_needs_reset = 1;    /**< Whether or not it needs a reset. */
 
 static glTexture *main_naevLogo        = NULL; /**< Naev Logo texture. */
 static int        menu_small_allowsave = 1;    /** Can save with small menu. */
+extern int        save_loaded;                 /**< From save.c */
 
 /*
  * prototypes
@@ -187,7 +188,7 @@ void menu_main( void )
    toolkit_closeAll();
 
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
-   gui_cleanup();
+   player_cleanup();
    player_soundStop(); /* Stop sound. */
    player_resetSpeed();
    render_postprocessCleanup();
@@ -524,16 +525,14 @@ static int menu_small_exit_hook( void *unused )
    (void)unused;
    unsigned int wid;
 
+   /* Disable saving. */
+   if ( !menu_small_allowsave )
+      player_setFlag( PLAYER_NOSAVE );
+
    /* Still stuck in a dialogue, so we have to do another hook pass. */
    if ( dialogue_isOpen() ) {
       hook_addFunc( menu_small_exit_hook, NULL, "safe" );
       return 0;
-   }
-
-   /* if landed we must save anyways */
-   if ( landed && land_canSave() ) {
-      save_all();
-      land_cleanup();
    }
 
    /* Close info menu if open. */
@@ -565,7 +564,8 @@ static void menu_small_exit( unsigned int wid, const char *str )
    (void)wid;
    (void)str;
 
-   if ( !menu_small_allowsave && landed && land_canSave() ) {
+   if ( !menu_small_allowsave && landed && land_canSave() &&
+        ( save_loaded != 0 ) ) {
       if ( !dialogue_YesNoRaw(
               _( "Exit to Menu?" ),
               _( "Are you sure you wish to exit to menu right now? The game "

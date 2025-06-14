@@ -2874,6 +2874,36 @@ void weapon_clear( void )
 }
 
 /**
+ * @brief Jams all weapons tracking the target pilot.
+ */
+void weapon_jamPilot( const Pilot *p )
+{
+   /* Don't forget to stop the sounds. */
+   for ( int i = 0; i < array_size( weapon_stack ); i++ ) {
+      Weapon *w = &weapon_stack[i];
+      if ( !outfit_isLauncher( w->outfit ) )
+         continue;
+      Target *t = &w->target;
+      if ( ( t->type == TARGET_PILOT ) && ( t->u.id == p->id ) ) {
+         double r = RNGF();
+         if ( r < 0.4 ) {
+            w->timer  = -1.; /* Should blow up. */
+            w->status = WEAPON_STATUS_JAMMED;
+         } else if ( r < 0.7 ) {
+            w->status = WEAPON_STATUS_JAMMED;
+            weapon_setTurn( w, outfit_launcherTurn( w->outfit ) * w->turn_mod *
+                                  ( ( RNGF() > 0.5 ) ? -1.0 : 1.0 ) );
+         } else {
+            w->status = WEAPON_STATUS_JAMMED;
+            weapon_setTurn( w, 0. );
+            weapon_setAccel( w,
+                             outfit_launcherAccel( w->outfit ) * w->accel_mod );
+         }
+      }
+   }
+}
+
+/**
  * @brief Destroys all the weapons and frees it all.
  */
 void weapon_exit( void )

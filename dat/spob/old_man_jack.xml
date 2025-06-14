@@ -1,13 +1,18 @@
 <spob name="Old Man Jack">
- <pos x="-6320.000000" y="15040.000000"/>
+ <pos x="2305.156313" y="-8636.090529"/>
  <GFX>
   <space>G02.webp</space>
-  <exterior>mining5.webp</exterior>
+  <exterior>uninhabited-rocky-red-04.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>G</class>
   <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <hide>0.800000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Named after the famous pirate Jack, who was known to get in drunk fights with other pirates at Haven. Instead of leading to a good 'ol brawl, would say nothing, get it as if to go to the loo, and end up stealing the offenders ship, crash landing on a nearby planet, called Haven III at the time, and use the escape pod to get back to the Haven bar for the second round of drinks. To this day, nobody ever knows how he pulled it off while barely being able to walk in a straight line, even flying an entire Pirate Kestrel by himself.
+
+After a long and successful career, he was able to retire as an old man on Haven, however, his retirement was cut short with the demise of Haven. Some survivors said he did not hesitate to run into the fray, headfirst in a stolen Pirate Kestrel to by time as non-combatants fled.</description>
  </general>
 </spob>

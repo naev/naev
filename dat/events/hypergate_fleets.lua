@@ -98,7 +98,7 @@ function create ()
       m.waypoints = wp
       --m.doscans = true
       m.loiter = math.huge
-      m.natural = true -- so the player can capture
+      m.capturable = true -- so the player can capture
    end
 
    -- Event finishes when leaving system

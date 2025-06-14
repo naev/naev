@@ -34,10 +34,14 @@ endif
 
 add_project_arguments(c_args, language: 'c')
 
-# Python module checks (For AUTHORS generation and soundtrack generation)
+# Filesystem module for copying files
+fs = import('fs')
+
+# Python module checks (For AUTHORS generation, soundtrack generation and outfit variant generation)
 python_module = import('python')
 python = python_module.find_installation('python3', required: true)
 pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true)
+xmltodict = python_module.find_installation('python3', modules: ['xmltodict'], required: true)
 mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false)
 
 subdir('utils')

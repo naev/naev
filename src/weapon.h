@@ -124,4 +124,5 @@ void weapons_render( const WeaponLayer layer, double dt );
 int  weapon_init( void );
 void weapon_newSystem( void );
 void weapon_clear( void );
+void weapon_jamPilot( const Pilot *p );
 void weapon_exit( void );

@@ -5,7 +5,7 @@
  <gfx sy="10" sx="10" size="100">drone_heavy</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
- <class display="Robotic Drone">Fighter</class>
+ <class display="Robotic Fighter">Fighter</class>
  <price>750000</price>
  <time_mod>1</time_mod>
  <trail_generator y="0" h="0" x="-15" />

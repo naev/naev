@@ -32,7 +32,7 @@ function descextra( p, _o )
    else
       size = 0
    end
-   local s = "#y".._([[Creates a rolling wave of cleaning flames that purify debuffs from allies while applying weak chakra corruption and damage over time to hostile ships within range.]]).."#0"
+   local s = "#y".._([[Creates a rolling wave of cleaning flames that purify debuffs from allies while applying weak chakra corruption and damage over time to hostile ships within range. All incoming munitions are also jammed.]]).."#0"
    for i=1,3 do
       local cost, damage, range, cooldown = getStats( nil, i )
       local pfx = flow.prefix(i)
@@ -75,6 +75,7 @@ function ontoggle( p, po, on )
       flow.dec( p, mem.flow_cost )
 
       spfxflames( p:pos(), p:vel(), mem.range, { parent=p, damage=mem.dmg} )
+      p:jamLockons()
 
       mem.timer = mem.cooldown * p:shipstat("cooldown_mod",true)
       po:state("cooldown")

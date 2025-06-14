@@ -76,7 +76,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
 void gui_renderPilot( const Pilot *p, RadarShape shape, double w, double h,
                       double res, int overlay );
 void gui_renderAsteroid( const Asteroid *a, double w, double h, double res,
-                         int overlay );
+                         double render_radius, int overlay );
+void gui_renderViewportFrame( double res, double render_radius, int overlay );
 void gui_renderPlayer( double res, int overlay );
 
 /*

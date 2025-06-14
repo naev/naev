@@ -159,7 +159,7 @@ local function compute_lootables ( plt )
    local creds = plt:credits()
    if creds > 0 then
       table.insert( lootables, {
-         image = nil,
+         image = lg.newImage("gfx/misc/credits.webp"),
          text = _("Credits"),
          q = math.floor( 0.5 + creds*loot_mod ),
          type = "credits",
@@ -420,7 +420,7 @@ local function is_capturable ()
       return false, _("You can not capture deployed fighters.")
    end
    local pm = board_plt:memory()
-   if not pm.natural then
+   if not pm.natural and not pm.capturable then
       return false, _("This ship is not capturable.")
    end
    local flttot, fltcur = player.fleetCapacity()

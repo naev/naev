@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Shark ΨIIIa" inherits="Shark">
+ <points>20</points>
  <rarity>2</rarity>
  <price>290000</price>
  <class>Scout</class>

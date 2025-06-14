@@ -1107,7 +1107,7 @@ GLAPI PFNGLGETFLOATVPROC glad_glGetFloatv;
 typedef void( APIENTRYP PFNGLGETINTEGERVPROC )( GLenum pname, GLint *data );
 GLAPI PFNGLGETINTEGERVPROC glad_glGetIntegerv;
 #define glGetIntegerv glad_glGetIntegerv
-typedef const GLubyte *( APIENTRYP PFNGLGETSTRINGPROC )( GLenum name );
+typedef const GLubyte *(APIENTRYP PFNGLGETSTRINGPROC)( GLenum name );
 GLAPI PFNGLGETSTRINGPROC glad_glGetString;
 #define glGetString glad_glGetString
 typedef void( APIENTRYP PFNGLGETTEXIMAGEPROC )( GLenum target, GLint level,
@@ -1396,7 +1396,7 @@ typedef void( APIENTRYP PFNGLGETBUFFERSUBDATAPROC )( GLenum     target,
                                                      void      *data );
 GLAPI PFNGLGETBUFFERSUBDATAPROC glad_glGetBufferSubData;
 #define glGetBufferSubData glad_glGetBufferSubData
-typedef void *( APIENTRYP PFNGLMAPBUFFERPROC )( GLenum target, GLenum access );
+typedef void *(APIENTRYP PFNGLMAPBUFFERPROC)( GLenum target, GLenum access );
 GLAPI PFNGLMAPBUFFERPROC glad_glMapBuffer;
 #define glMapBuffer glad_glMapBuffer
 typedef GLboolean( APIENTRYP PFNGLUNMAPBUFFERPROC )( GLenum target );
@@ -2085,8 +2085,8 @@ typedef void( APIENTRYP PFNGLCLEARBUFFERFIPROC )( GLenum  buffer,
                                                   GLint   stencil );
 GLAPI PFNGLCLEARBUFFERFIPROC glad_glClearBufferfi;
 #define glClearBufferfi glad_glClearBufferfi
-typedef const GLubyte *( APIENTRYP PFNGLGETSTRINGIPROC )( GLenum name,
-                                                          GLuint index );
+typedef const GLubyte *(APIENTRYP PFNGLGETSTRINGIPROC)( GLenum name,
+                                                        GLuint index );
 GLAPI PFNGLGETSTRINGIPROC glad_glGetStringi;
 #define glGetStringi glad_glGetStringi
 typedef GLboolean( APIENTRYP PFNGLISRENDERBUFFERPROC )( GLuint renderbuffer );
@@ -2181,10 +2181,10 @@ typedef void( APIENTRYP PFNGLFRAMEBUFFERTEXTURELAYERPROC )(
    GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer );
 GLAPI PFNGLFRAMEBUFFERTEXTURELAYERPROC glad_glFramebufferTextureLayer;
 #define glFramebufferTextureLayer glad_glFramebufferTextureLayer
-typedef void *( APIENTRYP PFNGLMAPBUFFERRANGEPROC )( GLenum     target,
-                                                     GLintptr   offset,
-                                                     GLsizeiptr length,
-                                                     GLbitfield access );
+typedef void *(APIENTRYP PFNGLMAPBUFFERRANGEPROC)( GLenum     target,
+                                                   GLintptr   offset,
+                                                   GLsizeiptr length,
+                                                   GLbitfield access );
 GLAPI PFNGLMAPBUFFERRANGEPROC glad_glMapBufferRange;
 #define glMapBufferRange glad_glMapBufferRange
 typedef void( APIENTRYP PFNGLFLUSHMAPPEDBUFFERRANGEPROC )( GLenum     target,

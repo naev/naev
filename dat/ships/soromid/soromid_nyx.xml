@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Nyx">
  <lua>soromid.lua</lua>
  <points>90</points>
@@ -22,7 +21,7 @@
  </health>
  <characteristics>
   <crew>17</crew>
-  <mass>350</mass>
+  <mass>300</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>

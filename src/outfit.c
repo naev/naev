@@ -123,6 +123,7 @@ typedef struct Outfit {
    int lua_keyrelease;   /**< Run when a key is released. */
    int lua_message;      /**< Run when an outfit receives a message via Lua. */
    int lua_ondeath;      /**< Run when pilot is killed. */
+   int lua_onanyimpact;  /**< Run when any weapon hits the enemy. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */
@@ -1797,6 +1798,10 @@ int outfit_luaOndeath( const Outfit *o )
 {
    return o->lua_ondeath;
 }
+int outfit_luaOnanyimpact( const Outfit *o )
+{
+   return o->lua_onanyimpact;
+}
 int outfit_luaOnImpact( const Outfit *o )
 {
    return o->lua_onimpact;
@@ -3337,6 +3342,7 @@ static int outfit_parse( Outfit *temp, const char *file )
    temp->lua_keyrelease     = LUA_NOREF;
    temp->lua_message        = LUA_NOREF;
    temp->lua_ondeath        = LUA_NOREF;
+   temp->lua_onanyimpact    = LUA_NOREF;
    temp->lua_onimpact       = LUA_NOREF;
    temp->lua_onmiss         = LUA_NOREF;
    temp->lua_price          = LUA_NOREF;
@@ -3755,14 +3761,15 @@ int outfit_load( void )
       o->lua_board       = nlua_refenvtype( env, "board", LUA_TFUNCTION );
       o->lua_keydoubletap =
          nlua_refenvtype( env, "keydoubletap", LUA_TFUNCTION );
-      o->lua_keyrelease = nlua_refenvtype( env, "keyrelease", LUA_TFUNCTION );
-      o->lua_message    = nlua_refenvtype( env, "message", LUA_TFUNCTION );
-      o->lua_ondeath    = nlua_refenvtype( env, "ondeath", LUA_TFUNCTION );
-      o->lua_onimpact   = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
-      o->lua_onmiss     = nlua_refenvtype( env, "onmiss", LUA_TFUNCTION );
-      o->lua_price      = nlua_refenvtype( env, "price", LUA_TFUNCTION );
-      o->lua_buy        = nlua_refenvtype( env, "buy", LUA_TFUNCTION );
-      o->lua_sell       = nlua_refenvtype( env, "sell", LUA_TFUNCTION );
+      o->lua_keyrelease  = nlua_refenvtype( env, "keyrelease", LUA_TFUNCTION );
+      o->lua_message     = nlua_refenvtype( env, "message", LUA_TFUNCTION );
+      o->lua_ondeath     = nlua_refenvtype( env, "ondeath", LUA_TFUNCTION );
+      o->lua_onanyimpact = nlua_refenvtype( env, "onanyimpact", LUA_TFUNCTION );
+      o->lua_onimpact    = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
+      o->lua_onmiss      = nlua_refenvtype( env, "onmiss", LUA_TFUNCTION );
+      o->lua_price       = nlua_refenvtype( env, "price", LUA_TFUNCTION );
+      o->lua_buy         = nlua_refenvtype( env, "buy", LUA_TFUNCTION );
+      o->lua_sell        = nlua_refenvtype( env, "sell", LUA_TFUNCTION );
 
       nlua_getenv( naevL, env, "hidestats" );
       if ( lua_toboolean( naevL, -1 ) )

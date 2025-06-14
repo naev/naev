@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Medium Shield Booster">
  <general>
   <typename>Shield Booster</typename>
@@ -10,6 +9,7 @@
   <gfx_store>shield.webp</gfx_store>
  </general>
  <specific type="modification">
+  <shield>20</shield>
   <shield_regen>6</shield_regen>
   <energy_regen_malus>12</energy_regen_malus>
  </specific>

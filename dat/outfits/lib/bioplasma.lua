@@ -89,19 +89,19 @@ function onimpact( p, target )
 
    if mem.corrosion_ii then
       dur = dur + dur * bonus_mod
-      target:effectAdd( effect_name, dur, dmg )
-      target:effectAdd( "Paralyzing Plasma", dur )
-      target:effectAdd( "Crippling Plasma", dur )
+      target:effectAdd( effect_name, dur, dmg, p )
+      target:effectAdd( "Paralyzing Plasma", dur, nil, p )
+      target:effectAdd( "Crippling Plasma", dur, nil, p )
    elseif mem.corrosion_i then
       dur = dur + 0.5 * dur * bonus_mod
-      target:effectAdd( effect_name, dur, dmg )
+      target:effectAdd( effect_name, dur, dmg, p )
       if mem.paralyzing then
-         target:effectAdd( "Paralyzing Plasma", dur )
+         target:effectAdd( "Paralyzing Plasma", dur, nil, p )
       end
       if mem.crippling then
-         target:effectAdd( "Crippling Plasma", dur )
+         target:effectAdd( "Crippling Plasma", dur, nil, p )
       end
    else
-      target:effectAdd( effect_name, dur, dmg )
+      target:effectAdd( effect_name, dur, dmg, p )
    end
 end

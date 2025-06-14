@@ -42,7 +42,7 @@ local function spawn_fleet( pos )
       aimem.enemyclose  = 10e3
       aimem.guarddodist = 10e3
       aimem.guardreturndist = 15e3
-      aimem.natural     = true
+      aimem.capturable  = true
       if leader then
          p:setLeader( leader )
       end
