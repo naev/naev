@@ -71,7 +71,7 @@ function heartbeat ()
          else
             spin_elapsed = spin_elapsed + diff
             spin_last = a
-            if spin_elapsed > 0 then --math.pi * 6 then
+            if spin_elapsed > math.pi * 6 then
                local p = pilot.add( "Pirate Hyena", "Derelict", pos, _("Mysterious Derelict"), {naked=true} )
                p:setHealth( 37, 0 )
                p:setDisable(true)
@@ -112,11 +112,13 @@ local boss
 local fade_factor = 0
 local fade_growth = 1/9
 function spawn_final ()
+   boss:setPos( player.pos() + vec2.newP( 1000, rnd.angle() ) )
    fade_factor = 0
    fade_growth = 0
    boss:effectRm("Black")
    boss:effectAdd("Fade-In Black")
    boss:control(false)
+   boss:face( player.pilot() )
    boss:setHostile(true)
    boss:setInvisible(false)
    shader.rmPPShader( noise_shader )
@@ -125,15 +127,18 @@ function spawn_final ()
    boss_music = audio.new( "snd/music/blackmoor_tides.ogg", "stream" )
    boss_music:play()
    boss_music:setLooping(true)
+   camera.setZoom()
 end
 
 function spawn_flash2 ()
+   boss:setPos( player.pos() + vec2.newP( 400, rnd.angle() ) )
    fade_factor = 0
    fade_growth = 1
    hook.timer( 3, "spawn_final" )
 end
 
 function spawn_flash1 ()
+   boss:setPos( player.pos() + vec2.newP( 300, rnd.angle() ) )
    fade_factor = 0
    fade_growth = 3
    hook.timer( 3, "spawn_flash2" )
@@ -146,7 +151,8 @@ function spawn_start3 ()
    shader.addPPShader( noise_shader )
    hook.timer( 1, "spawn_flash1" )
 
-   local p = pilot.add( "Pirate Kestrel", "Marauder", pos, _("Defiance"), {ai="baddie", naked=true} )
+   local bpos = player.pos() + vec2.newP( 200, rnd.angle() )
+   local p = pilot.add( "Pirate Kestrel", "Marauder", bpos, _("Defiance"), {ai="baddie", naked=true} )
    p:control()
    p:setInvisible( true )
    p:setNoDeath()
@@ -155,7 +161,7 @@ function spawn_start3 ()
    p:intrinsicSet( "armour_mod", 60 )
    p:intrinsicSet( "shield_regen_mod", 50 )
    p:intrinsicSet( "tur_damage", 25 )
-   p:intrinsicSet( "fbay_rate", 500 )
+   p:intrinsicSet( "fbay_rate", 100 )
    p:intrinsicSet( "fbay_capacity", 100 )
    equipopt.pirate( p, {
       fighterbay = 10,
@@ -194,6 +200,7 @@ local function spawn_start ()
    fade_factor = 0
    fade_growth = 1/9
    music.stop(true)
+   camera.setZoom(2)
 end
 
 function fade ()
@@ -204,18 +211,21 @@ function fade ()
    end
 end
 
+local boss_won = false
 local boss_stage = 0
+local boss_adds = {}
 function update( dt )
    fade_factor = math.min( 1, fade_factor + dt * fade_growth )
+   if boss_won then return end
    if boss and boss:exists() then
       if boss:shield() <= 0 or boss:disabled() then
          if boss_stage < 2 then
             local bpos = boss:pos()
-            boss:setHealth( 100-35*boss_stage, 100 )
+            boss:setHealth( 100-35*(boss_stage+1), 100 )
             luaspfx.blink( boss, bpos )
             boss:effectAdd("Blink")
             boss:outfitRm("all")
-            local ships
+            local ships = {}
             if boss_stage==0 then
                ships = {
                   "Pirate Shark",
@@ -225,6 +235,7 @@ function update( dt )
                equipopt.pirate( boss, {
                   beam = 10,
                   turret = 10,
+                  fighterbay = 0,
                } ) -- So intrinsics affect
             elseif boss_stage==1 then
                ships = {
@@ -234,6 +245,7 @@ function update( dt )
                }
                equipopt.pirate( boss, {
                   launcher = 10,
+                  fighterbay = 0,
                } ) -- So intrinsics affect
             end
             -- "Launch" some new fighters that sort of "pop" out
@@ -243,24 +255,29 @@ function update( dt )
                p:setLeader(boss)
                local a = rnd.angle()
                p:setDir( a )
-               p:setVel( vec2.newP( 500, a ) )
+               p:setVel( vec2.newP( 200, a ) )
                p:effectAdd( "Fade-In" )
+               table.insert( boss_adds, p )
             end
             -- Behind player
             boss:setPos( player.pos() + vec2.newP( 2000, player.pilot():dir()+math.pi ) )
+            boss_stage = boss_stage + 1
          else
             -- Player won
             boss:setDisable(true)
-            boss:setInvisible(true)
+            boss:setInvincible(true)
             -- Get rid of followers
             for k,f in ipairs(boss:followers()) do
                if f:exists() then
                   f:effectAdd( "Fade-Out" )
+                  f:intrinsicSet( "weapon_damage", -1000 ) -- To not kill player
                end
             end
+            munition.clear() -- So the player doesn't die
             hook.pilot( boss, "board", "boss_board" )
             pilot.toggleSpawn(true)
             hook.update("music_fadeout")
+            boss_won = true
          end
       end
    end
