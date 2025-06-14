@@ -371,7 +371,7 @@ function update( dt )
                   f:intrinsicSet( "weapon_damage", -1000 ) -- To not kill player
                end
             end
-            munition.clear() -- So the player doesn't die
+            player.pilot():jamLockons() -- So the player shouldn't die
             hook.pilot( boss, "board", "boss_board" )
             pilot.toggleSpawn(true)
             hook.update("music_fadeout")
