@@ -213,6 +213,10 @@ function spawn_flash1 ()
    hook.timer( 3, "spawn_flash2" )
 end
 
+local pd_outfits = {
+   outfit.get("Guardian Overseer System"),
+}
+
 function spawn_start3 ()
    fade_factor = 3/3
    shader.rmPPShader( noise_shader )
@@ -238,8 +242,11 @@ function spawn_start3 ()
    p:intrinsicSet( "fbay_movement", 50 )
    p:intrinsicSet( "fbay_reload", 200 )
    p:intrinsicSet( "jam_chance", 50 )
+   p:intrinsicSet( "cpu_max", 200 )
    equipopt.pirate( p, {
       fighterbay = 10,
+      prefer = { ["Guardian Overseer System"] = 100, },
+      outfits_add = pd_outfits,
    } ) -- So intrinsics affect
    local m = p:memory()
    m.comm_greet = _([[You hear the sound of oceans and wild over the communication channel.]])
@@ -334,6 +341,8 @@ function update( dt )
                   beam = 10,
                   turret = 10,
                   fighterbay = 0,
+                  prefer = { ["Guardian Overseer System"] = 100, },
+                  outfits_add = pd_outfits,
                } ) -- So intrinsics affect
                radius = 1000
             elseif boss_stage==1 then
@@ -345,6 +354,8 @@ function update( dt )
                equipopt.pirate( boss, {
                   launcher = 10,
                   fighterbay = 0,
+                  prefer = { ["Guardian Overseer System"] = 100, },
+                  outfits_add = pd_outfits,
                } ) -- So intrinsics affect
                radius = 2000
             end
