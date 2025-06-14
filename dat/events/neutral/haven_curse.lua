@@ -180,8 +180,27 @@ function spawn_start3 ()
    m.comm_greet = _([[You hear the sound of oceans and wild over the communication channel.]])
    m.taunt = nil
    m.bribe_no = _([[The wind is howling over the communication channel.]])
-
+   hook.pilot( p, "attacked", "boss_attacked" )
    boss = p
+end
+
+-- To avoid stealth nuke spam cheese, the boss will blink and clear lockons
+-- when taking damage with no visible enemies
+function boss_attacked( _b, attacker )
+   if attacker:withPlayer() then
+      for k,p in ipairs(boss:getVisible( 6e3 )) do
+         if boss:areEnemies( p ) then
+            return
+         end
+      end
+      if #boss:getEnemies( 3e3 ) > 0 then return end
+      -- No nearby enemies
+      local bpos = boss:pos()
+      luaspfx.blink( boss, bpos )
+      boss:jamLockons()
+      boss:effectAdd("Blink")
+      boss:setPos( player.pos() + vec2.newP( 1500, player.pilot():dir()+math.pi ) )
+   end
 end
 
 function spawn_start2 ()
