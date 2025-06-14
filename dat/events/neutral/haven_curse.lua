@@ -33,15 +33,11 @@ end
 
 local noise_shader
 local spin_start, spin_last
-local spin_elapsed, spin_msg = 0, 0
+local spin_elapsed = 0
 local function spin_reset ()
-   if spin_msg > 0 then
-      player.msg(_("The static abruptly stops."))
-   end
    spin_start     = nil
    spin_last      = nil
    spin_elapsed   = 0
-   spin_msg       = 0
    if noise_shader then
       shader.rmPPShader( noise_shader )
       noise_shader = nil
@@ -115,12 +111,12 @@ local fade_factor = 0
 local fade_growth = 1/9
 function spawn_final ()
    boss:setPos( player.pos() + vec2.newP( 1000, rnd.angle() ) )
+   boss:setDir( rnd.angle() )
    fade_factor = 0
    fade_growth = 0
    boss:effectRm("Black")
    boss:effectAdd("Fade-In Black")
    boss:control(false)
-   boss:face( player.pilot() )
    boss:setHostile(true)
    boss:setInvisible(false)
    shader.rmPPShader( noise_shader )
@@ -134,6 +130,7 @@ end
 
 function spawn_flash2 ()
    boss:setPos( player.pos() + vec2.newP( 400, rnd.angle() ) )
+   boss:setDir( rnd.angle() )
    fade_factor = 0
    fade_growth = 1
    hook.timer( 3, "spawn_final" )
@@ -141,6 +138,7 @@ end
 
 function spawn_flash1 ()
    boss:setPos( player.pos() + vec2.newP( 300, rnd.angle() ) )
+   boss:setDir( rnd.angle() )
    fade_factor = 0
    fade_growth = 3
    hook.timer( 3, "spawn_flash2" )
