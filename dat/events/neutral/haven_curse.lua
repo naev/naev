@@ -171,6 +171,7 @@ function spawn_start3 ()
    p:intrinsicSet( "absorb", 20 )
    p:intrinsicSet( "fbay_rate", 100 )
    p:intrinsicSet( "fbay_capacity", 100 )
+   p:intrinsicSet( "fbay_movement", 50 )
    p:intrinsicSet( "jam_chance", 50 )
    equipopt.pirate( p, {
       fighterbay = 10,
@@ -236,6 +237,7 @@ function update( dt )
             boss:effectAdd("Blink")
             boss:outfitRm("all")
             local ships = {}
+            local radius
             if boss_stage==0 then
                ships = {
                   "Pirate Shark",
@@ -247,6 +249,7 @@ function update( dt )
                   turret = 10,
                   fighterbay = 0,
                } ) -- So intrinsics affect
+               radius = 1000
             elseif boss_stage==1 then
                ships = {
                   "Pirate Admonisher",
@@ -257,6 +260,7 @@ function update( dt )
                   launcher = 10,
                   fighterbay = 0,
                } ) -- So intrinsics affect
+               radius = 2000
             end
             -- "Launch" some new fighters that sort of "pop" out
             for i,s in ipairs(ships) do
@@ -270,7 +274,7 @@ function update( dt )
                table.insert( boss_adds, p )
             end
             -- Behind player
-            boss:setPos( player.pos() + vec2.newP( 2000, player.pilot():dir()+math.pi ) )
+            boss:setPos( player.pos() + vec2.newP( radius, player.pilot():dir()+math.pi ) )
             boss_stage = boss_stage + 1
          else
             -- Player won
