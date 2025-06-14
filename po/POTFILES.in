@@ -81,6 +81,7 @@ dat/effects/fadein.xml
 dat/effects/fadein_black.xml
 dat/effects/fadeout.xml
 dat/effects/fadeout_black.xml
+dat/effects/fadeout_norender.xml
 dat/effects/feather_drive.xml
 dat/effects/feral_rage_i.xml
 dat/effects/fractured_reality.xml
@@ -2899,6 +2900,7 @@ dat/comm.lua
 dat/common.lua
 dat/constants.lua
 dat/effects/lua/fadeout.lua
+dat/effects/lua/fadeout_norender.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
