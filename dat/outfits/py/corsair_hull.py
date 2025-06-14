@@ -21,7 +21,7 @@ ref['ew_stealth_timer'] = (-10,)
 lua = f"""
 local set = require("outfits.lib.set")
 {h.to_multicore_lua( ref, True, "set.set" )}
-require("outfits.core_sets.corsair_hull").init( multicore, set )
+require("outfits.core_sets.corsair_hull").init()
 """
 specific['lua_inline'] = lua
 

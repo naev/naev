@@ -21,7 +21,7 @@ ref['ew_detect'] = (ref['ew_detect'][0]+5.0,)
 lua = f"""
 local set = require("outfits.lib.set")
 {h.to_multicore_lua( ref, True, "set.set" )}
-require("outfits.core_sets.corsair_systems").init( multicore, set )
+require("outfits.core_sets.corsair_systems").init()
 """
 specific['lua_inline'] = lua
 

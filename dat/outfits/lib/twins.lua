@@ -1,6 +1,8 @@
+local mc = require "outfits.lib/multicore"
+
 local lib = {}
 
-function lib.init( mc )
+function lib.init()
    local prvdesc=descextra
    descextra=function ( p, o, po)
       return prvdesc( p, o, po).."\n#b".._("This outfit only works when two are equipped at the same time.").."#0"

@@ -1,13 +1,14 @@
 local fmt = require "format"
 local corsair = require "outfits.lib.sets.corsair"
+local multicore = require "outfits.lib.multicore"
 
 -- Core bonuses
 local SPEED_MOD = 25
 
 local lib = {}
 
-function lib.init( multicore, set )
-   corsair.init( set )
+function lib.init ()
+   corsair.init()
 
    local descextra_old = descextra
    function descextra( p, o, po )

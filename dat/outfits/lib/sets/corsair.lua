@@ -1,6 +1,8 @@
+local set = require "outfits.lib.set"
+
 local lib = {}
 
-function lib.init( set )
+function lib.init ()
    set.init( _("Corsair"), {
          outfit.get("Corsair Systems"),
          outfit.get("Corsair Hull Plating"),
