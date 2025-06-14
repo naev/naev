@@ -270,8 +270,6 @@ function multicore.init( params, setfunc )
             multicore.set( p, po )
          end
       end
-
-      return multicore
    end
 
    local onadd_old = onadd
@@ -346,6 +344,8 @@ function multicore.init( params, setfunc )
          multicore.set( p, po )
       end
    end
+
+   return multicore
 end
 
 function multicore.set( p, po )
@@ -373,6 +373,5 @@ function multicore.setworkingstatus( p, po, on )
       p:outfitMessageSlot("engines", "halt", {id=id, off=off})
    end
 end
-
 
 return multicore
