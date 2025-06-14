@@ -20,6 +20,7 @@ local spb, sys = spob.getS("Old Man Jack")
 local pos = sys:waypoints("haven_curse_spawn")
 
 function create ()
+   evt.finish(false) -- disabled for now
    if not evt.claim( sys, true ) then return evt.finish(false) end
 
    hook.timer( 1, "heartbeat" )
