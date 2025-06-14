@@ -4,11 +4,5 @@ function add( p )
 end
 
 function remove( p )
-   if player.pilot()~=p then -- and p:exists() then
-p:rm()
-      p:setNoRender()
-   else
-      p:setInvincible(false)
-      p:setInvisible(false)
-   end
+   p:setNoRender()
 end
