@@ -4,7 +4,6 @@
  <location>enter</location>
  <chance>100</chance>
  <system>Haven</system>
- <unique />
 </event>
 --]]
 local pp_shaders = require 'pp_shaders'
@@ -15,9 +14,12 @@ local equipopt = require "equipopt"
 local luaspfx = require "luaspfx"
 local vn = require "vn"
 local fmt = require "format"
+local der = require 'common.derelict'
 
 local spb, sys = spob.getS("Old Man Jack")
 local pos = sys:waypoints("haven_curse_spawn")
+
+local REWARD1 = outfit.get("Corsair Systems")
 
 local ghost, ghost_waypoints
 local ghost_pos = 1
@@ -134,7 +136,7 @@ function heartbeat ()
                p:effectAdd("Fade-In")
                p:setHilight()
                p:setVisplayer()
-               hook.pilot( p, "exploded", "der_destroyed" )
+               hook.pilot( p, "attacked", "der_attacked" )
                hook.pilot( p, "board", "der_boarded" )
                if noise_shader then
                   shader.rmPPShader( noise_shader )
@@ -392,16 +394,35 @@ function music_fadeout( dt )
    end
 end
 
-function der_destroyed ()
+function der_attacked ()
+   derelict:setHealth(100,100)
+   derelict:effectAdd("Fade-Out")
    spawn_start()
 end
 
 function der_boarded ()
-   player.unboard()
-   derelict:setInvisible(true)
-   derelict:effectAdd("Fade-Out")
-   player.msg(_([[The ship seems to disappear as you board it.]]))
-   spawn_start()
+   if player.outfitNum(REWARD1) > 0 then
+      derelict:effectAdd("Fade-Out")
+      spawn_start()
+      return
+   end
+
+   vn.reset()
+   vn.scene()
+   vn.sfx( der.sfx.board )
+   vn.transition()
+   vn.na(_([[You board the suspicious derelict, not entirely sure how it appeared here. It has weird markings you haven't seen before on the hull.]]))
+   vn.na(fmt.f(_([[You enter the ship, expecting a crowded {ship} interior, but instead find the interior is completely stripped empty, including even the interior walls. However, what is more puzzling, is there seems to be medium ship systems jammed in the middle. It almost looks like it wants to be taken with you.]]),
+      {ship=derelict:ship()}))
+   vn.na(_([[Obligingly, you extract the systems through the cockpit after you release the canopy, and bring it aboard your ship.]]))
+   vn.func( function ()
+      player.outfitAdd(REWARD1)
+   end )
+   vn.sfxEerie()
+   vn.na(fmt.reward(REWARD1))
+   vn.na(_([[You leave the derelict with a feeling that something bad will happen if you mess with it further.]]))
+   vn.sfx( der.sfx.unboard )
+   vn.run()
 end
 
 function boss_board ()
@@ -409,9 +430,14 @@ function boss_board ()
 
    vn.reset()
    vn.scene()
+   vn.sfx( der.sfx.board )
+   local voice = vn.newCharacter( _("Voice"), {colour={0.8, 0.2, 0.2}} )
    vn.transition()
-   vn.na(fmt.f(_([[Against your better judgement, you board the mysterious {shipname}.]]),
+   vn.na(fmt.f(_([[Against your better judgement, you board the mysterious {shipname}. It is covered with strange markings you don't identify.]]),
       {shipname=boss:name()}))
+   vn.na(_([[From the moment you enter the ship, you feel something is amiss, and a throbbing pain starts at the back of your head.]]))
+   voice(_([[]]))
+   vn.sfx( der.sfx.unboard )
    vn.run()
 
    spb:landDeny(false)
