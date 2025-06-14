@@ -34,10 +34,12 @@ end
 local noise_shader
 local spin_start, spin_last
 local spin_elapsed = 0
+local shader_level = 0
 local function spin_reset ()
    spin_start     = nil
    spin_last      = nil
    spin_elapsed   = 0
+   shader_level   = 0
    if noise_shader then
       shader.rmPPShader( noise_shader )
       noise_shader = nil
@@ -56,7 +58,7 @@ local derelict
 function heartbeat ()
    local v = spb:pos()-player.pos()
    local d, a = v:polar()
-   if d > spb:radius() and d < 1000 then
+   if d > spb:radius()*0.8 and d < 1000 then
       if not spin_start then
          spin_start  = a
          spin_last   = a
@@ -85,16 +87,18 @@ function heartbeat ()
                pilotai.clear()
                pilot.toggleSpawn(false)
                return -- done
-            elseif spin_elapsed > math.pi * 4 then
+            elseif spin_elapsed > math.pi * 4 and shader_level < 2 then
                if noise_shader then
                   shader.rmPPShader( noise_shader )
                end
                noise_shader = pp_shaders.corruption( 1.0 )
                shader.addPPShader( noise_shader )
+               shader_level = 2
                -- TODO sound
-            elseif spin_elapsed > math.pi * 2 then
+            elseif spin_elapsed > math.pi * 2 and shader_level < 1 then
                noise_shader = pp_shaders.corruption( 0.5 )
                shader.addPPShader( noise_shader )
+               shader_level = 1
                -- TODO sound
             end
          end
