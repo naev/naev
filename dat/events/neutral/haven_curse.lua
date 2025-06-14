@@ -166,6 +166,7 @@ function spawn_start3 ()
    p:intrinsicSet( "shield_mod", 100 )
    p:intrinsicSet( "armour_mod", 100 )
    p:intrinsicSet( "shield_regen_mod", 50 )
+   p:intrinsicSet( "absorb", 20 )
    p:intrinsicSet( "fbay_rate", 100 )
    p:intrinsicSet( "fbay_capacity", 100 )
    equipopt.pirate( p, {
