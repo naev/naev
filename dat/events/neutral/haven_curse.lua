@@ -126,7 +126,8 @@ function spawn_final ()
    shader.rmPPShader( noise_shader )
 
    -- Proper boss music
-   boss_music = audio.new( "snd/music/blackmoor_tides.ogg", "stream" )
+   boss_music = audio.new( "snd/music/blackmoor_tides.ogg" )
+   --boss_music = audio.new( "snd/music/blackmoor_tides.ogg", "stream" )
    boss_music:play()
    boss_music:setLooping(true)
    camera.setZoom()
