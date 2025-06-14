@@ -173,6 +173,10 @@ function heartbeat ()
    hook.timer( 0.1, "heartbeat" )
 end
 
+
+local pd_outfits = {
+   outfit.get("Guardian Overseer System"),
+}
 local boss_music
 local boss
 local fade_factor = 0
@@ -187,6 +191,12 @@ function spawn_final ()
    boss:control(false)
    boss:setHostile(true)
    boss:setInvisible(false)
+   -- Have to equip here or they shoot during the cutscene
+   equipopt.pirate( boss, {
+      fighterbay = 10,
+      prefer = { ["Guardian Overseer System"] = 100, },
+      outfits_add = pd_outfits,
+   } ) -- So intrinsics affect
    shader.rmPPShader( noise_shader )
 
    -- Proper boss music
@@ -212,10 +222,6 @@ function spawn_flash1 ()
    fade_growth = 3
    hook.timer( 3, "spawn_flash2" )
 end
-
-local pd_outfits = {
-   outfit.get("Guardian Overseer System"),
-}
 
 function spawn_start3 ()
    fade_factor = 3/3
@@ -243,11 +249,7 @@ function spawn_start3 ()
    p:intrinsicSet( "fbay_reload", 200 )
    p:intrinsicSet( "jam_chance", 50 )
    p:intrinsicSet( "cpu_max", 200 )
-   equipopt.pirate( p, {
-      fighterbay = 10,
-      prefer = { ["Guardian Overseer System"] = 100, },
-      outfits_add = pd_outfits,
-   } ) -- So intrinsics affect
+   p:intrinsicSet( "energy_regen_mod", 50 )
    local m = p:memory()
    m.comm_greet = _([[You hear the sound of oceans and wild over the communication channel.]])
    m.taunt = nil
