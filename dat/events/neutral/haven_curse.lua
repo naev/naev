@@ -20,6 +20,7 @@ local spb, sys = spob.getS("Old Man Jack")
 local pos = sys:waypoints("haven_curse_spawn")
 
 local REWARD1 = outfit.get("Corsair Systems")
+--local REWARD2 = "TODO"
 
 local ghost, ghost_waypoints
 local ghost_pos = 1
@@ -231,10 +232,11 @@ function spawn_start3 ()
    p:intrinsicSet( "shield_mod", 100 )
    p:intrinsicSet( "armour_mod", 100 )
    p:intrinsicSet( "shield_regen_mod", 50 )
-   p:intrinsicSet( "absorb", 20 )
+   p:intrinsicSet( "absorb", 50 )
    p:intrinsicSet( "fbay_rate", 100 )
    p:intrinsicSet( "fbay_capacity", 100 )
    p:intrinsicSet( "fbay_movement", 50 )
+   p:intrinsicSet( "fbay_reload", 200 )
    p:intrinsicSet( "jam_chance", 50 )
    equipopt.pirate( p, {
       fighterbay = 10,
@@ -401,6 +403,8 @@ function der_attacked ()
 end
 
 function der_boarded ()
+   player.unboard()
+
    if player.outfitNum(REWARD1) > 0 then
       derelict:effectAdd("Fade-Out")
       spawn_start()
@@ -440,6 +444,7 @@ function boss_board ()
    vn.sfx( der.sfx.unboard )
    vn.run()
 
+   boss:effectAdd("Fade-Out")
    spb:landDeny(false)
    evt.finish(true)
 end
