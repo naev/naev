@@ -72,11 +72,12 @@ function heartbeat ()
             spin_elapsed = spin_elapsed + diff
             spin_last = a
             if spin_elapsed > math.pi * 6 then
-               local p = pilot.add( "Pirate Hyena", "Derelict", pos, _("Mysterious Derelict"), {naked=true} )
+               local p = pilot.add( "Pirate Hyena", "Derelict", pos, _("Suspicious Derelict"), {naked=true} )
                p:setHealth( 37, 0 )
                p:setDisable(true)
                p:effectAdd("Fade-In")
                p:setHilight()
+               p:setVisplayer()
                hook.pilot( p, "exploded", "der_destroyed" )
                hook.pilot( p, "board", "der_boarded" )
                if noise_shader then
