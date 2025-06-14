@@ -110,16 +110,19 @@ if __name__ == '__main__':
    def do_reading(args):
       for bname, filename in all_ssys(args):
          T = ET.parse(filename).getroot()
+         """
          try:
             name = T.attrib['name']
          except:
             stderr.write('no name defined in "' + bname + '"\n')
+         """
          try:
             e = T.find('pos')
             x, y = (e.attrib['x'], e.attrib['y'])
          except:
             stderr.write('no position defined in "' + bname + '"\n')
-         print(bname, x, y, name)
+         #print(bname, x, y, name)
+         print(bname, x, y)
 
    def _read_stdin_and_scale(scale):
       for l in stdin:

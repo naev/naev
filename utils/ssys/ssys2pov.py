@@ -23,10 +23,13 @@ def main( args, pos = None, color = False, halo = False ):
          dst.write(3*indent*' ' + str(s) + '\n')
 
    V, _pos, E, tradelane, colors = xml_files_to_graph(args, color)
-   if pos is None:
+   if pos is None or pos == {}:
       pos = _pos
+   else:
+      V = {k: v for k, v in V.items() if k in pos}
 
    b = bb()
+
    for i in V:
       pos[i] = vec(pos[i])
       b += pos[i]
@@ -99,6 +102,8 @@ if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:]:
       print("usage  ", argv[0], '[-g]', '[-c|-C]', '[<ssys1.xml> ..]')
       print('  Writes "out.pov". Outputs povray commandline to stdout.')
+      print('  If -g is set, use the positions from graph read on stdin.')
+      print('  If -g is set but no pos in input, uses dat/ssys/*.xml.')
       print('  If -g is set, use the positions from graph read on stdin.')
       print('  If -c is set, use faction colors (slower).')
       print('  If -C is set, use color halos (implies -c).')

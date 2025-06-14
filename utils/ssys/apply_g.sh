@@ -20,6 +20,6 @@ if [ ! -f "$SCRIPT_DIR"/gravity ] || [ ! "$SCRIPT_DIR"/gravity -nt "$SCRIPT_DIR"
    gcc -Wall -Wextra -Ofast "$SCRIPT_DIR"/gravity.c -o "$SCRIPT_DIR"/gravity -lm || exit 1
 fi
 
-"$SCRIPT_DIR"/ssys_graph.py |
+"$SCRIPT_DIR"/ssys_pos.sh |
 repiper "$N" "$SCRIPT_DIR"/gravity -a |
 "$SCRIPT_DIR"/ssys_graph.py -s "$RESCALE"
