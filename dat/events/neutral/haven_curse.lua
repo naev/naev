@@ -19,12 +19,65 @@ local fmt = require "format"
 local spb, sys = spob.getS("Old Man Jack")
 local pos = sys:waypoints("haven_curse_spawn")
 
+local ghost, ghost_waypoints
+local ghost_pos = 1
+local ghost_off = false
+function ghost_idle ()
+   ghost_pos = (ghost_pos % #ghost_waypoints) + 1
+   ghost:moveto( ghost_waypoints[ghost_pos], false, false )
+end
+
+local fct
 function create ()
-   evt.finish(false) -- disabled for now
+   if not var.peek("testing") then evt.finish(false) end
    if not evt.claim( sys, true ) then return evt.finish(false) end
+
+   fct = faction.dynAdd( "Marauder", "Haven Ghost", _("Marauder"), {clear_enemies=true, clear_allies=true} )
 
    hook.timer( 1, "heartbeat" )
    hook.enter("finish")
+
+   ghost_waypoints = {}
+   local center = spb:pos()
+   local N = 30
+   for i = 1,N do
+      table.insert( ghost_waypoints, center + vec2.newP( 500, 2*math.pi / N * (i-1) ) )
+   end
+   ghost = pilot.add("Pirate Hyena", fct, ghost_waypoints[#ghost_waypoints], _("Suspicious Pirate Hyena") )
+   ghost:setNoDeath()
+   ghost:setNoDisable()
+   ghost:control(true)
+   ghost:intrinsicSet( "speed_mod", -80 )
+   ghost:intrinsicSet( "accel_mod", -80 )
+   hook.pilot( ghost, "idle", "ghost_idle" )
+   hook.pilot( ghost, "hail", "ghost_hailed" )
+   hook.pilot( ghost, "attacked", "ghost_messed" )
+   ghost_idle()
+   ghost:setNoRender(true)
+   ghost:setInvisible(true)
+   hook.timer( 10, "ghost_back" )
+end
+
+function ghost_messed ()
+   if not ghost:flags("invisible") then
+      ghost:effectAdd( "Fade-Out Norender" )
+      hook.timer( 5+5*rnd.rnd(), "ghost_back" )
+   end
+end
+
+function ghost_hailed ()
+   player.commClose()
+   ghost_messed()
+end
+
+function ghost_back ()
+   if not ghost:exists() or ghost_off then return end
+   if ghost:effectHas("Fade-In") then return end
+   ghost:setHealth(100,100)
+   ghost:setNoRender(false)
+   ghost:setInvisible(false)
+   ghost:effectAdd("Fade-In")
+   hook.timer( 10+10*rnd.rnd(), "ghost_messed" )
 end
 
 function finish ()
@@ -43,6 +96,10 @@ local function spin_reset ()
    if noise_shader then
       shader.rmPPShader( noise_shader )
       noise_shader = nil
+   end
+   if ghost_off then
+      ghost_back()
+      ghost_off = false
    end
 end
 local function angle_diff( ref, a )
@@ -71,7 +128,7 @@ function heartbeat ()
             spin_elapsed = spin_elapsed + diff
             spin_last = a
             if spin_elapsed > math.pi * 6 then
-               local p = pilot.add( "Pirate Hyena", "Derelict", pos, _("Suspicious Derelict"), {naked=true} )
+               local p = pilot.add( "Pirate Hyena", fct, pos, _("Suspicious Derelict"), {naked=true} )
                p:setHealth( 37, 0 )
                p:setDisable(true)
                p:effectAdd("Fade-In")
@@ -94,6 +151,10 @@ function heartbeat ()
                noise_shader = pp_shaders.corruption( 1.0 )
                shader.addPPShader( noise_shader )
                shader_level = 2
+               if not ghost_off then
+                  ghost_off = true
+                  ghost_messed()
+               end
                -- TODO sound
             elseif spin_elapsed > math.pi * 2 and shader_level < 1 then
                noise_shader = pp_shaders.corruption( 0.5 )
@@ -157,7 +218,7 @@ function spawn_start3 ()
    hook.timer( 1, "spawn_flash1" )
 
    local bpos = player.pos() + vec2.newP( 200, rnd.angle() )
-   local p = pilot.add( "Pirate Kestrel", "Marauder", bpos, _("Defiance"), {ai="baddie", naked=true} )
+   local p = pilot.add( "Pirate Kestrel", fct, bpos, _("Defiance"), {ai="baddie", naked=true} )
    p:control()
    p:setInvisible( true )
    p:setNoDeath()
@@ -230,6 +291,8 @@ local function spawn_start ()
    fade_growth = 1/9
    music.stop(true)
    camera.setZoom(2)
+   ghost_off = true
+   ghost_messed()
 end
 
 function fade ()
@@ -283,7 +346,7 @@ function update( dt )
             end
             -- "Launch" some new fighters that sort of "pop" out
             for i,s in ipairs(ships) do
-               local p = pilot.add( s, "Marauder", boss:pos() )
+               local p = pilot.add( s, fct, boss:pos() )
                p:setHostile(true)
                p:setLeader(boss)
                local a = rnd.angle()
