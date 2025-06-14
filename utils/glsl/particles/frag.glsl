@@ -809,7 +809,8 @@ vec4 ripper_square( vec2 uv )
 vec4 ripper( vec2 uv )
 {
    //const vec4 COLOUR = vec4( 0.1, 0.95, 0.3, 1.0 ); // Default
-   const vec4 COLOUR = vec4( 0.3, 0.95, 0.8, 1.0 ); // Heavy
+   //const vec4 COLOUR = vec4( 0.3, 0.95, 0.8, 1.0 ); // Heavy
+   const vec4 COLOUR = vec4( 0.3, 0.3, 0.95, 1.0 ); // Point Defense
    const vec4 COLOUR_FADE = vec4( 0.75, 0.75, 0.1, 1.0 );
 
    float fade = min(u_time*6.0,u_fade);
@@ -938,10 +939,10 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = laser_square( uv_rel );
    //col_out = laser( uv_rel );
    //col_out = ripper_square( uv_rel );
-   //col_out = ripper( uv_rel );
+   col_out = ripper( uv_rel );
    //col_out = reaver_square( uv_rel );
    //col_out = reaver( uv_rel );
-   col_out = eruptor( uv_rel );
+   //col_out = eruptor( uv_rel );
 
    return mix( bg(uv), col_out, clamp(col_out.a, 0.0, 1.0) );
 }
