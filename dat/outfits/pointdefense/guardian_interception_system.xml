@@ -13,7 +13,7 @@
  </general>
  <specific type="turret bolt">
   <lua>outfits/pointdefense/pointdefense.lua</lua>
-  <gfx>laser2M.png</gfx>
+  <gfx type="shader" size="8" col_size="5">particles/laser_blue.frag</gfx>
   <sound>laser</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
