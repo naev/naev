@@ -28,6 +28,7 @@
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_hook.h"
+#include "nlua_munition.h"
 #include "nlua_music.h"
 #include "nlua_spob.h"
 #include "nlua_system.h"
@@ -128,6 +129,7 @@ int misn_loadLibs( nlua_env env )
    nlua_loadBackground( env );
    nlua_loadMusic( env );
    nlua_loadTk( env );
+   nlua_loadMunition( env );
    return 0;
 }
 /*

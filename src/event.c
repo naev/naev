@@ -33,6 +33,7 @@
 #include "nlua_camera.h"
 #include "nlua_evt.h"
 #include "nlua_hook.h"
+#include "nlua_munition.h"
 #include "nlua_music.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
@@ -226,6 +227,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadBackground( ev->env );
    nlua_loadMusic( ev->env );
    nlua_loadTk( ev->env );
+   nlua_loadMunition( ev->env );
 
    /* Create the "mem" table for persistence. */
    lua_newtable( naevL );
