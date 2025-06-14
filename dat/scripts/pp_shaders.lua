@@ -47,16 +47,16 @@ function pp_shaders.corruption( strength )
 
 uniform float u_time;
 
-const int    fps     = 15;
+const float  fps     = 1.0 / 15.0;
 const float strength = %f;
 
 vec4 effect( sampler2D tex, vec2 uv, vec2 px ) {
-   float time = u_time - mod( u_time, 1.0 / float(fps) );
+   float time = u_time - mod( u_time, fps );
    float glitchStep = mix(4.0, 32.0, random(vec2(time)));
    vec4 screenColour = texture( tex, uv );
    uv.x = round(uv.x * glitchStep ) / glitchStep;
    vec4 glitchColour = texture( tex, uv );
-   return mix(screenColour, glitchColour, vec4(0.03*strength));
+   return mix(screenColour, glitchColour, vec4(0.03 * strength));
 }
    ]], strength )
    return pp_shaders.newShader( pixelcode )
