@@ -486,6 +486,16 @@ void nlua_freeEnv( nlua_env env )
    if ( env == LUA_NOREF )
       return;
 
+   /* Run gc script if applicable when removing env. */
+   nlua_getenv( naevL, env, "__gc" );
+   if ( !lua_isnil( naevL, -1 ) ) {
+      if ( nlua_pcall( env, 0, 0 ) != 0 ) {
+         WARN( "Error when running Lua __gc: %s", lua_tostring( naevL, -1 ) );
+         lua_pop( naevL, 1 );
+      }
+   } else
+      lua_pop( naevL, 1 );
+
    /* Remove from the environment table. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, nlua_envs ); /* t */
    lua_pushnil( naevL );                               /* t, e */

@@ -26,6 +26,7 @@ ignore = {"21./_.*", "213", "231/_.*"}
 stds.Basic={
    globals={
       "__resize", -- Can be defined to handle when a resize event happens
+      "__gc", -- Can be defined for garbage collection on env destruction
       "_LOADED", -- NLUA_LOAD_TABLE
    },
    read_globals={
