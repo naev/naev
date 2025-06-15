@@ -18,8 +18,7 @@ PATH = getpath(script_dir, '..', '..', 'dat')
 from geometry import vec
 
 
-rem_q = lambda nam: nam[1:-1] if nam[0] == '"' and nam[-1]== '"' else nam
-_fil =lambda folder: lambda nam : getpath(PATH, folder, rem_q(nam) + '.xml')
+_fil =lambda folder: lambda nam : getpath(PATH, folder, nam + '.xml')
 spob_fil = _fil('spob')
 ssys_fil = _fil('ssys')
 

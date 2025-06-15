@@ -5,7 +5,8 @@ These are designed to change the star map by **changing systems position**.
  - `process_ssys.sh` The main. Currently used for tests. Performs several steps:
     - Calls `ssys2dot.py` to extract systems information and turn it into a dot file. At this point, the **pre-processing** occurs: some invisible edges are added to enforce desired properties.
     - Calls `neato` to compute the graph layout.
-    - Calls `dot2ssys.py` to extract layout information for the graph and modify ssys accordingly. At this point, the **post-processing** occurs: some geometrical transformations are applied : compute the wild space layout, enforce co-circularity of some points around Anubis BH, rotate some parts, get twin systems closer, etc.
+    - Calls `dot2graph.py` to extract layout information from the dot input and outputs the resulting graph. At this point, the **post-processing** occurs: some geometrical transformations are applied : compute the wild space layout, enforce co-circularity of some points around Anubis BH, rotate some parts, get twin systems closer, etc.
+   - Calls `ssysgraph.py -w` to apply the new graph coordinates to the `ssys/*.xml` files. `ssysgraph.py` with no option, reads to `ssys/*.xml` files and outputs a graph, while `ssysgraph.py -w` does the opposite.
 
 ### ssys process tools
 These are designed to manage the **internal geometry of systems**, that might get affected by the position changes. (because autojumps move when the systems move)
