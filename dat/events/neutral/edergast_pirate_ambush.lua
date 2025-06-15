@@ -19,7 +19,7 @@ local poi = require "common.poi"
 local SPB, SYS = spob.getS("Edergast")
 
 function create ()
-   evt.finish(false) -- disabled for now
+   if not var.peek("testing") then evt.finish(false) end -- disable for now
    if not evt.claim( SYS ) then return evt.finish() end
 
    local ambush = false
@@ -37,14 +37,14 @@ function create ()
    vn.done()
 
    vn.label("01_investigate")
-   vn.na(fmt.f(_([[You get out your gear and go to check out the site. Eventually you find what seems to be some sort of small construction made of an industrial shipping container. You approach when suddenly you are interrupted by {shipai}.]]),
-      {shipai=tut.ainame()}))
-
    local sai = tut.vn_shipai()
    vn.appear( sai, tut.shipai.transition )
+   vn.na(fmt.f(_([[You get out your gear and go to check out the site. Eventually you find what seems to be some sort of small construction made of an industrial shipping container. You approach when suddenly you are interrupted by {shipai}.]]),
+      {shipai=tut.ainame()}))
    sai(_([["I hate to bother you on your nature excursion, however, it seems like a signal was emitted from the planet and the ships sensors pick up incoming hostile ships. You may want to consider returning."]]))
    vn.disappear( sai, tut.shipai.transition )
    vn.na(_([[You haul your ass back to your ship, and quickly ascend your way outside the gravitational pull. As you catch your breath, you notice hostiles coming in hot. Time to take evasive manoeuvres.]]))
+   vn.func( function () ambush = true end )
    vn.done( tut.shipai.transition )
    vn.run()
 
@@ -57,6 +57,7 @@ function create ()
    player.takeoff()
 end
 
+local done = false
 local pirates
 function enter ()
    if system.cur() ~= SYS then evt.finish(false) end
@@ -81,10 +82,22 @@ function enter ()
    -- Don't want to allow landing again
    SPB:landDeny(true,_("You can not land while being ambushed."))
 
-   hook.timer( 5, "" )
+   hook.timer( 5, "pir_yarr" )
+   done = false
+end
+
+function pir_yarr ()
+   for k,p in ipairs(pirates) do
+      if p:exists() then
+         p:broadcast(_("Yarr! Get the snoop!"))
+         return
+      end
+   end
 end
 
 function pir_check ()
+   if done then return end
+
    for k,p in ipairs(pirates) do
       if p:exists() and (not p:disabled()) then
          return
@@ -98,6 +111,7 @@ function pir_check ()
    hook.rm( mem.hook_enter )
    evt.save() -- We'll track it saved
    pilot.toggleSpawn(true) -- Spawn again
+   done = true
 end
 
 function land ()
@@ -108,6 +122,7 @@ function land ()
 
    vn.reset()
    vn.scene()
+   vn.transition()
    if mem.gave_map_once then
       vn.na(_([[You return to the pirate lair.]]))
    else
@@ -121,7 +136,7 @@ function land ()
          poi.data_give(MATRIX_AMOUNT)
       end )
    end
-   vn.na(_([[Do you wish to make a copy of the treasure map again?]]))
+   vn.na(_([[Do you wish to make a copy of the treasure map?]]))
    vn.menu{
       {_("Make a copy."), "copy"},
       {_("Maybe later."), "nocopy"},
@@ -145,11 +160,11 @@ function land ()
 
    -- Set up hook
    if not mem.cust_hook then
-      mem.cust_hook  = hook.custom( "edergast_pirate_ambush_found" )
+      mem.cust_hook  = hook.custom( "edergast_pirate_ambush_found", "edergast_pirate_ambush_found" )
    end
 
    -- Give map
-   local goallst = lmisn.getSysAtDistance( SYS, 10, 15, th.good_sys )
+   local goallst = lmisn.getSysAtDistance( SYS, 8, 11, th.good_sys )
    local goal = goallst[ rnd.rnd(1,#goallst) ]
    local spb = {}
    for k,p in ipairs(goal:spobs()) do
@@ -161,7 +176,7 @@ function land ()
    local name = fmt.f(_("Map from {spb}"), {spb=SPB})
    mem.gave_map = true
    mem.gave_map_once = true
-   return {
+   th.give_map_from{
       spb   = spb,
       goal  = goal,
       start = SYS,
