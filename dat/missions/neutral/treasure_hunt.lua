@@ -108,8 +108,7 @@ function view_maps ()
    luatk.run()
 
    if #mem.maps <= 0 then
-      abort()
-      misn.finish(true)
+      hook.safe("cleanup")
    end
 end
 
@@ -190,4 +189,9 @@ function abort ()
       end
    end
    player.infoButtonUnregister( btn )
+end
+
+function cleanup ()
+   abort()
+   misn.finish(false)
 end
