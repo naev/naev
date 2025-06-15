@@ -2278,6 +2278,9 @@ void space_gfxLoad( StarSystem *sys )
  */
 void space_gfxUnload( StarSystem *sys )
 {
+   if ( sys == NULL )
+      return;
+
    for ( int i = 0; i < array_size( sys->spobs ); i++ ) {
       Spob *spob = sys->spobs[i];
 
