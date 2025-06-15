@@ -59,14 +59,13 @@ end
 --  - or nil if not
 function tfs.readdir( ptr, path )
    local res = tfs_read(ptr, path)
-   if res == nil then
+   if type(res) ~= 'table' then
       return nil
    else
-      ptr = (type(res) == 'table' and res) or {}
       local t = {}
-      for k, v in pairs(ptr) do
+      for k, v in pairs(res) do
          if k~= '_parent_' then
-            t[k] = v
+            t[k] = tfs.readdir(v) or v
          end
       end
       return t
