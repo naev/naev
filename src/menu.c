@@ -188,10 +188,11 @@ void menu_main( void )
    toolkit_closeAll();
 
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
-   gui_cleanup();
+   player_cleanup();
    player_soundStop(); /* Stop sound. */
    player_resetSpeed();
    render_postprocessCleanup();
+   space_gfxUnload( cur_system ); /* Should stop wormhole sound and such. */
 
    /* Play load music. */
    music_choose( "load" );

@@ -31,5 +31,5 @@ function onimpact( p, target )
       dmg = dmg * mod
    end
 
-   target:effectAdd( "Ionization", duration, dmg )
+   target:effectAdd( "Ionization", duration, dmg, p )
 end

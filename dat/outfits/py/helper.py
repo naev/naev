@@ -40,8 +40,7 @@ def get_outfit_dict( name, core = False ):
    return o.to_dict()
 
 def to_multicore_lua( ref, pri_only = True, setfunc = "nil" ):
-    out = """local multicore = require("outfits.lib.multicore")
-multicore.init({"""
+    out = """local multicore = require("outfits.lib.multicore").init({"""
     # We operate under the assumption that dictionaries are ordered in python now
     specific = False
     for r in ref:

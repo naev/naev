@@ -1,4 +1,3 @@
-
 local multicore = {}
 
 local shipstat = naev.shipstats()
@@ -304,6 +303,8 @@ function multicore.init( params, setfunc )
          elseif msg == "halt" then
             if multiengines.halt_n(gathered_data, dat.id, dat.off) then
                multiengines.refresh(gathered_data, po, false)
+               po:clear()
+               multicore.set( p, po )
             end
          elseif msg == "ask" then
             return multiengines.engine_stats(gathered_data, dat)
@@ -311,6 +312,8 @@ function multicore.init( params, setfunc )
             multiengines.decl_engine_stats(gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
             multiengines.refresh(gathered_data, po, true)
+            po:clear()
+            multicore.set( p, po )
          elseif msg == "wtf?" then
             return gathered_data
          else
@@ -341,6 +344,8 @@ function multicore.init( params, setfunc )
          multicore.set( p, po )
       end
    end
+
+   return multicore
 end
 
 function multicore.set( p, po )
@@ -355,7 +360,7 @@ function multicore.set( p, po )
    end
 end
 
-function multicore.setworkingstatus( p, po, on)
+function multicore.setworkingstatus( p, po, on )
    if p and po then
       local id = po:id()
       local off
@@ -368,6 +373,5 @@ function multicore.setworkingstatus( p, po, on)
       p:outfitMessageSlot("engines", "halt", {id=id, off=off})
    end
 end
-
 
 return multicore

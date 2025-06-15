@@ -176,6 +176,15 @@ static int effect_parse( EffectData *efx, const char *file )
       WARN( _( "Effect '%s' has unknown node '%s'" ), efx->name, node->name );
    } while ( xml_nextNode( node ) );
 
+   /* See if it is damaging. */
+   efx->damaging = 0;
+   if ( ( efx->stats != NULL ) && ( efx->flags & EFFECT_DEBUFF ) ) {
+      ShipStats stats;
+      ss_statsInit( &stats );
+      ss_statsMergeFromList( &stats, efx->stats, 1 );
+      efx->damaging = ( stats.damage > 0. ) || ( stats.disable > 0. );
+   }
+
 #define MELEMENT( o, s )                                                       \
    if ( o )                                                                    \
    WARN( _( "Effect '%s' missing/invalid '%s' element" ), efx->name,           \
@@ -317,10 +326,11 @@ int effect_update( Effect **efxlist, double dt )
  *    @param duration Duration of the effect or set to negative for default.
  *    @param strength Scaling strength of the effect.
  *    @param parent Pilot the effect is being added to.
+ *    @param applicator Pilot applying the effect or 0 if none.
  *    @return 0 on success.
  */
 int effect_add( Effect **efxlist, const EffectData *efx, double duration,
-                double strength, unsigned int parent )
+                double strength, unsigned int parent, unsigned int applicator )
 {
    Effect *e         = NULL;
    int     overwrite = 0;
@@ -375,11 +385,12 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration,
       e->elapsed = 0.; /* Don't 0. when overwriting. */
       e->r       = RNGF();
    }
-   e->data     = efx;
-   e->duration = duration;
-   e->timer    = e->duration;
-   e->strength = strength;
-   e->parent   = parent;
+   e->data       = efx;
+   e->duration   = duration;
+   e->timer      = e->duration;
+   e->strength   = strength;
+   e->parent     = parent;
+   e->applicator = applicator;
 
    /* Run Lua if necessary. */
    if ( overwrite ) {

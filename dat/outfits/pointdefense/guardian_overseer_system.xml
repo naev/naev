@@ -13,7 +13,7 @@
  </general>
  <specific type="turret bolt">
   <lua>outfits/pointdefense/pointdefense.lua</lua>
-  <gfx>ripperM.png</gfx>
+  <gfx type="shader" size="10" col_size="8">particles/ripper_blue.frag</gfx>
   <sound>ripper</sound>
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>

@@ -203,6 +203,7 @@ static int pilotL_getShield( lua_State *L );
 static int pilotL_getStress( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
+static int pilotL_jamLockons( lua_State *L );
 static int pilotL_getStats( lua_State *L );
 static int pilotL_getShipStat( lua_State *L );
 static int pilotL_getDetectedDistance( lua_State *L );
@@ -337,6 +338,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "stress", pilotL_getStress },
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
+   { "jamLockons", pilotL_jamLockons },
    { "stats", pilotL_getStats },
    { "shipstat", pilotL_getShipStat },
    { "detectedDistance", pilotL_getDetectedDistance },
@@ -4369,6 +4371,7 @@ static int pilotL_effectClear( lua_State *L )
  *    @luatparam[opt=-1] duration Duration of the effect or set to negative to
  * be default.
  *    @luatparam[opt=1] scale Scaling factor.
+ *    @luatparam[opt] Pilot Pilot applying the effect.
  *    @luatreturn boolean Whether or not the effect was successfully added.
  * @luafunc effectAdd
  */
@@ -4379,8 +4382,11 @@ static int pilotL_effectAdd( lua_State *L )
    double            duration   = luaL_optnumber( L, 3, -1. );
    double            scale      = luaL_optnumber( L, 4, 1. );
    const EffectData *efx        = effect_get( effectname );
+   LuaPilot          applicator = 0;
+   if ( !lua_isnoneornil( L, 5 ) )
+      applicator = luaL_checkpilot( L, 5 );
    if ( efx != NULL ) {
-      if ( !effect_add( &p->effects, efx, duration, scale, p->id ) )
+      if ( !effect_add( &p->effects, efx, duration, scale, p->id, applicator ) )
          pilot_calcStats( p );
       lua_pushboolean( L, 1 );
    } else
@@ -4958,6 +4964,19 @@ static int pilotL_getLockon( lua_State *L )
    const Pilot *p = luaL_validpilot( L, 1 );
    lua_pushnumber( L, p->lockons );
    return 1;
+}
+
+/**
+ * @brief Jams all the lockons on the pilot.
+ *
+ *    @luatparam Pilot p Pilot to jam all lockons targetting.
+ * @luafunc jamLockons
+ */
+static int pilotL_jamLockons( lua_State *L )
+{
+   const Pilot *p = luaL_validpilot( L, 1 );
+   weapon_jamPilot( p );
+   return 0;
 }
 
 #define PUSH_DOUBLE( L, name, value )                                          \

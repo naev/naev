@@ -1096,6 +1096,9 @@ function distress_handler( pilot, attacker )
    -- Make sure pilot is setting their target properly
    if pilot == attacker then return end
 
+   -- Player's faction ignores distress calls
+   if pilot:withPlayer() then return end
+
    -- Ignore please of help when bribed by the attacker
    if ai.isbribed(attacker) then return end
 

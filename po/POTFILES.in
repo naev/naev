@@ -69,6 +69,7 @@ dat/effects/ambush_hunter_ii.xml
 dat/effects/antimatter_taint.xml
 dat/effects/astral_projection.xml
 dat/effects/avatar_of_sirichana.xml
+dat/effects/black.xml
 dat/effects/blink.xml
 dat/effects/bloodlust.xml
 dat/effects/chakra_burn.xml
@@ -77,7 +78,10 @@ dat/effects/corsair.xml
 dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
 dat/effects/fadein.xml
+dat/effects/fadein_black.xml
 dat/effects/fadeout.xml
+dat/effects/fadeout_black.xml
+dat/effects/fadeout_norender.xml
 dat/effects/feather_drive.xml
 dat/effects/feral_rage_i.xml
 dat/effects/fractured_reality.xml
@@ -2896,6 +2900,7 @@ dat/comm.lua
 dat/common.lua
 dat/constants.lua
 dat/effects/lua/fadeout.lua
+dat/effects/lua/fadeout_norender.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/effects/lua/wormhole_exit.lua
@@ -2956,6 +2961,7 @@ dat/events/neutral/capricorn_pirates.lua
 dat/events/neutral/capricorn_pirates_epilogue.lua
 dat/events/neutral/dendria_pirates.lua
 dat/events/neutral/edergast_pirate_ambush.lua
+dat/events/neutral/haven_curse.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/levo_pirates.lua
 dat/events/neutral/levo_pirates_epilogue.lua

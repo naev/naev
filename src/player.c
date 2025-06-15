@@ -915,6 +915,9 @@ void player_cleanup( void )
    /* Clean up. */
    memset( &player, 0, sizeof( Player_t ) );
    player_setFlag( PLAYER_CREATING );
+
+   /* Purge the Lua. */
+   lua_gc( naevL, LUA_GCCOLLECT, 0 );
 }
 
 static int player_soundReserved =

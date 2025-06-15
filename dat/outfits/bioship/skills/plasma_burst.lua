@@ -27,9 +27,9 @@ local function activate( p, po )
       t:damage( damage, 0, penetration, "plasma", p )
       t:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
       -- Nasty effects
-      t:effectAdd( "Plasma Burn", dur, dmg )
-      t:effectAdd( "Paralyzing Plasma", dur )
-      t:effectAdd( "Crippling Plasma", dur )
+      t:effectAdd( "Plasma Burn", dur, dmg, p )
+      t:effectAdd( "Paralyzing Plasma", dur, nil, p )
+      t:effectAdd( "Crippling Plasma", dur, nil, p )
    end
 
    if mem.isp then

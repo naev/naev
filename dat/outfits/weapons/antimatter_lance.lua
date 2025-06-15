@@ -1,3 +1,3 @@
-function onimpact( _p, target )
-   target:effectAdd( "Antimatter Taint" )
+function onimpact( p, target )
+   target:effectAdd( "Antimatter Taint", nil, nil, p )
 end

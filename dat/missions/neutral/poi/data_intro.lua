@@ -4,9 +4,15 @@ local vni = require "vnimage"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
 
+local misnvar = "poi_data_intro"
+
 return function ( mem )
    -- Must be locked
    if not mem.locked then return end
+
+   if var.peek( misnvar ) then
+      return
+   end
 
    return {
       type = "function",
@@ -57,6 +63,7 @@ It sounds like the atmosphere is being vented. You hear some struggling before t
          end
 
          vn.func( function ()
+            var.push( misnvar, true )
             poi.data_give(1)
             poi.log(fmt.f(_([[You found a derelict ship in the {sys} system and were able to recover {reward}.]]),
                {sys=mem.sys, reward=reward}))

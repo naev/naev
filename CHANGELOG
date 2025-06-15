@@ -22,6 +22,7 @@
       * Cargo delivery missions have increased cargo amounts
       * Minimum stealth range also affects detection and signature
       * Ships can have a minimum cargo-less mass of 50% of the ship base mass
+      * Damage over time effects now can cause faction loss and other effects
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship

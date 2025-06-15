@@ -1,5 +1,6 @@
 local fmt = require "format"
 local corsair = require "outfits.lib.sets.corsair"
+local multicore = require "outfits.lib.multicore"
 
 -- Core bonuses
 local SHIELD_REGEN = 5
@@ -7,8 +8,8 @@ local ENERGY_REGEN = 16
 
 local lib = {}
 
-function lib.init( multicore, set )
-   corsair.init( set )
+function lib.init ()
+   corsair.init()
 
    local descextra_old = descextra
    function descextra( p, o, po )
