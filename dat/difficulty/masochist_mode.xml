@@ -1,10 +1,12 @@
 <difficulty name="Masochist Mode">
- <description>Makes the game significantly harder for the player.</description>
- <armour_mod>-25</armour_mod>
- <shield_mod>-25</shield_mod>
- <energy_mod>-25</energy_mod>
+ <description>An extra challenging difficulty mode for elite players.</description>
+ <armour_mod>-70</armour_mod>
+ <shield_mod>-70</shield_mod>
+ <energy_mod>-40</energy_mod>
  <accel_mod>-5</accel_mod>
  <speed_mod>-5</speed_mod>
  <turn_mod>-5</turn_mod>
- <weapon_damage>-10</weapon_damage>
+ <weapon_damage>-25</weapon_damage>
+ <time_mod>5</time_mod>
+ <time_speedup>-5</time_speedup>
 </difficulty>
