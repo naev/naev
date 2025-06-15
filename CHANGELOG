@@ -23,6 +23,7 @@
       * Minimum stealth range also affects detection and signature
       * Ships can have a minimum cargo-less mass of 50% of the ship base mass
       * Damage over time effects now can cause faction loss and other effects
+      * New harder difficulty
    * Quality of Life
       * Autonav improvements
          * Can automatically land when following a ship
@@ -37,7 +38,7 @@
       * Added support for multiple automatic backups with 5 by default
       * Game will prompt if exiting the game when save data loss can occur
    * Content
-      * 11 new missions and events
+      * 12 new missions and events
          * Go treasure hunting
       * 8 new ship variants
       * 8 new outfits and reworked cores
@@ -48,6 +49,7 @@
       * Over 20 new songs
          * More variation in landing and situational music
       * Significant changes in jumps (hidden and otherwise)
+      * Reworked the visuals for some weapons using shaders
    * Engine
       * Engine supports modifying some important constants such as those related to the physics model for use in plugins
       * Use instancing instead of geometry shaders for space dust
