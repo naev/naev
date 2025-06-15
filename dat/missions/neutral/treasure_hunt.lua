@@ -90,7 +90,6 @@ function view_maps ()
          update( mem.maps[1] )
       end
    end
-   gen_list()
 
    abandon = luatk.newButton( wdw, w-20-BUTTON_W-10-BUTTON_W, h-20-BUTTON_H, BUTTON_W, BUTTON_H, _("Abandon Map"), function ()
       local mapname, mapid = lst:get()
@@ -104,6 +103,7 @@ function view_maps ()
          gen_list()
       end )
    end )
+   gen_list()
 
    luatk.run()
 
