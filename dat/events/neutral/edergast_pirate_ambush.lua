@@ -177,8 +177,7 @@ function edergast_pirate_ambush_found( aborted )
       return
    end
 
-   -- TODO better reward
-   local REWARD = outfit.get("Berserk Chip")
+   local REWARD = outfit.get("Corsair Hull Plating")
 
    vn.reset()
    vn.scene()
