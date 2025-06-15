@@ -1,5 +1,5 @@
-<difficulty name="Masochist Mode">
- <description>An extra challenging difficulty mode for players wanting a masochistic challenge.</description>
+<difficulty name="Nightmare Mode">
+ <description>An extra challenging difficulty mode for players wanting an extreme challenge.</description>
  <armour_mod>-70</armour_mod>
  <shield_mod>-70</shield_mod>
  <energy_mod>-40</energy_mod>
