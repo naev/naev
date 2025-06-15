@@ -3604,6 +3604,7 @@ dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/blink.lua
 dat/scripts/luaspfx/chakra_explosion.lua
 dat/scripts/luaspfx/cleansing_flames.lua
+dat/scripts/luaspfx/corsair.lua
 dat/scripts/luaspfx/emp.lua
 dat/scripts/luaspfx/emp_blast.lua
 dat/scripts/luaspfx/explosion.lua
