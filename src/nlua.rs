@@ -27,6 +27,31 @@ impl Drop for LuaEnv {
     // TODO something more robust here perhaps
     fn drop(&mut self) {
         let lua = NLUA.lock().unwrap();
+
+        // Try to run the __gc function if available
+        match self.get("__gc") {
+            Ok(mlua::Nil) => (),
+            Ok(mlua::Value::Function(func)) => match self.call(&lua, &func, ()) {
+                Ok(()) => (),
+                Err(e) => {
+                    warn!("Error calling Lua enviroment __gc function: {}", e);
+                }
+            },
+            Err(e) => {
+                warn!("Error getting Lua environment __gc function: {}", e);
+            }
+            _ => {
+                let name = match self.get::<String>("__name") {
+                    Ok(s) => s,
+                    Err(e) => {
+                        warn!("environment __name not set: {}", e);
+                        String::from("unknown")
+                    }
+                };
+                warn!("__gc is not a function or nil for environment '{}'", name);
+            }
+        }
+
         let _ = lua.envs.set(self.rk.id(), mlua::Value::Nil);
     }
 }

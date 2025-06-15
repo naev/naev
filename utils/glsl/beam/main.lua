@@ -146,6 +146,12 @@ function love.load()
          colour = { 1.0, 0.0, 1.0, 1 },
          type = 7,
       },
+      {
+         name = "Rainbow Beam",
+         h = 16,
+         colour = { 1.0, 1.0, 1.0, 1.0 },
+         type = 8,
+      },
    }
    beams = beamtypes
    love.graphics.setBackgroundColor( 0.2, 0.2, 0.2, 1.0 )

@@ -206,6 +206,13 @@ function spawn_final ()
    boss_music:setLooping(true)
    camera.setZoom()
 end
+function __gc ()
+   -- TODO this _shouldn't_ be necessary, but it seems like even if the Lua
+   -- environment is destroyed, for some reason, the boss_music variable
+   -- doesn't get garbage collected so it gets stuck playing music until the
+   -- mission is rerun. Might be related to all the caching we do...
+   boss_music = nil
+end
 
 function spawn_flash2 ()
    boss:setPos( player.pos() + vec2.newP( 400, rnd.angle() ) )

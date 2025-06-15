@@ -3176,8 +3176,16 @@ static int aiL_getenemy( lua_State *L )
 static int aiL_hostile( lua_State *L )
 {
    const Pilot *p = luaL_validpilot( L, 1 );
-   if ( pilot_isWithPlayer( p ) )
+   if ( pilot_isWithPlayer( p ) ) {
+#if DEBUGGING
+      if ( pilot_isWithPlayer( cur_pilot ) ) {
+         WARN( "Pilot escort '%s' trying to turn hostile towards player!",
+               cur_pilot->name );
+         return 0;
+      }
+#endif /* DEBUGGING */
       pilot_setHostile( cur_pilot );
+   }
    return 0;
 }
 
