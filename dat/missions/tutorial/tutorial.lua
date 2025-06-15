@@ -67,7 +67,11 @@ They stare at you for a few seconds.
          end
          vn.jump("noname")
       end )
-   end )
+   end, {
+      blacklist = {
+         ["\n"] = true, -- Mess up formatting
+      },
+   })
    vn.label("specialname")
    sai( function () return tut.specialnames[ string.upper(ainame) ] end )
 
