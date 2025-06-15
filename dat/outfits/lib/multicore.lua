@@ -243,7 +243,7 @@ function multicore.init( params, setfunc )
 
          mem.stats = {}
          if ie then
-            if BDG then
+            if DBG then
                tfs.append(p:shipMemory(), {"history"}, (sign==-1 and "u" or "") .. 'eq_' .. tostring(po:id()))
             end
             if secondary then
@@ -304,7 +304,7 @@ function multicore.init( params, setfunc )
       elseif not is_multiengine(p, po) then
          warn("message on non-multiengine slot")
       else
-         if BDG then
+         if DBG then
             tfs.append(p:shipMemory(), {"history"}, '>' .. msg .. '_' .. tostring(po:id()))
          end
          if msg == "pliz" then
