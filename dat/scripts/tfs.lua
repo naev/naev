@@ -53,6 +53,8 @@
   ...
 --]]
 
+local tfs = {}
+
 function tfs.init()
    tfs.root = {}
    tfs.path = tfs.root
