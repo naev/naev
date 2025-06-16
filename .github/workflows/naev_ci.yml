@@ -432,7 +432,7 @@ jobs:
               --buildtype=debug \
               --wrap-mode=forcefallback \
               -Dinstaller=false \
-              -Db_lto=false \
+              -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
