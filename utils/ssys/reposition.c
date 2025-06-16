@@ -1,5 +1,6 @@
 
 #include <libgen.h>
+#include <limits.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -12,9 +13,12 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define THREADS 1
+#define THREADS 2
+#define SAMP 100
 
 #include <glib.h>
+
+const float ssys_fallscale = 1.5f;
 
 // defaults to 1.0
 const struct {
@@ -24,25 +28,104 @@ const struct {
    {"anubis_black_hole", 5.5f}, {NULL} // Sentinel
 };
 
-/* pgm output*/
-void output_map(FILE *fp, float *map, int w, int h, float fact, float ct)
+#define INIT_RANGE {FLT_MAX, FLT_MIN}
+static inline void update_range(float *r, const float v)
 {
+   r[0] = (v < r[0]) ? v : r[0];
+   r[1] = (v > r[1]) ? v : r[1];
+}
+
+void output_ppm(const char *basnam, float *map, int w, int h)
+{
+   size_t len      = strlen(basnam) + 4;
+   char  *filename = calloc(len + 1, sizeof(char));
+   snprintf(filename, len + 1, "%s.ppm", basnam);
+   FILE *fp         = fopen(filename, "wb");
+   float mran[3][2] = {INIT_RANGE, INIT_RANGE, INIT_RANGE};
+
+   for (int i = 0; i < w * h; i++)
+      for (int k = 0; k < 3; k++)
+         if (map[3 * i + k] != 0.0f)
+            update_range(mran[k], map[3 * i + k]);
+
    uint8_t *line;
    char     b[64];
-   fwrite(b, sizeof(char), snprintf(b, 63, "P5 %d %d 65535\n", w, h), fp);
 
-   line = (uint8_t *) calloc((size_t) w, 2 * sizeof(uint8_t));
+   fwrite(b, sizeof(char), snprintf(b, 63, "P6 %d %d 65535\n", w, h), fp);
+   line = (uint8_t *) calloc((size_t) w, 2 * 3 * sizeof(uint8_t));
    for (int i = 0; i < h; i++) {
       for (int j = 0; j < w; j++) {
-         const unsigned u = 65535.0f * (fact * map[(h - i - 1) * w + j] + ct);
-         line[2 * j]      = u >> 8;
-         line[2 * j + 1]  = u & 0xff;
+         float norm[3] = {0.0f, 0.0f, 0.0f};
+         for (int k = 0; k < 3; k++) {
+            const float sample = map[3 * ((h - i - 1) * w + j) + k];
+            if (sample != 0.0f)
+               norm[k] = (sample - mran[k][0]) / (mran[k][1] - mran[k][0]);
+
+            // gamma
+            norm[k] *= norm[k];
+            if (k == 2 && norm[2] <= 0.5f)
+               norm[2] = norm[0];
+
+            const unsigned u          = 65535.0f * norm[k];
+            line[2 * (3 * j + k)]     = u >> 8;
+            line[2 * (3 * j + k) + 1] = u & 0xff;
+         }
       }
-      fwrite(line, sizeof(uint16_t), w, fp);
+      fwrite(line, 2 * 3 * sizeof(uint8_t), w, fp);
    }
-   fclose(fp);
    free(line);
+   fclose(fp);
+   free(filename);
 }
+
+/* geometry*/
+static inline void vcpy(float *vdst, const float *vsrc)
+{
+   vdst[0] = vsrc[0];
+   vdst[1] = vsrc[1];
+}
+
+static inline void vdif(float *vdst, const float *vsrc1, const float *vsrc2)
+{
+   vdst[0] = vsrc1[0] - vsrc2[0];
+   vdst[1] = vsrc1[1] - vsrc2[1];
+}
+
+static inline float scal(const float *v1, const float *v2)
+{
+   return v1[0] * v2[0] + v1[1] * v2[1];
+}
+
+static inline float dist_sq(const float *v1, const float *v2)
+{
+   float tmp[2];
+   vdif(tmp, v1, v2);
+   return scal(tmp, tmp);
+}
+
+struct s_bbox {
+   float x[2];
+   float y[2];
+};
+
+static void update_bb(struct s_bbox *b, const float v[2])
+{
+   update_range(b->x, v[0]);
+   update_range(b->y, v[1]);
+}
+
+struct point_list {
+   float (*lst)[2];
+   int nb;
+};
+
+struct lin_list {
+   struct {
+      float pt[2];
+      float u[2];
+   }  *lst;
+   int nb;
+};
 
 struct s_ssys {
    struct sys {
@@ -58,14 +141,224 @@ struct s_ssys {
    int  njumps;
 };
 
-void gen_map_reposition(struct s_ssys *map, bool ignore_alone, bool gen_map,
-                        bool only)
+static float edge_stretch_score(const float *neigh, int n_neigh,
+                                const float v[2], float radius)
+{
+   // S(x) =
+   //   a*x^2         if x <= radius
+   //   x+c           if radius <= x
+   const float a = 1.0f / (2.0f * radius);
+   const float c = -radius / 2.0f;
+
+   float acc = 0.0;
+   for (int i = 0; i < n_neigh; i++) {
+      const float d = sqrt(dist_sq(neigh + 2 * i, v));
+
+      if (d < radius)
+         acc += a * d * d;
+      else
+         acc += d + c;
+   }
+
+   return acc / n_neigh;
+}
+
+static float sys_overlap_score(const float *lst, int n, const float v[2],
+                               float radius, float falloff)
+{
+   // S(x) =
+   //   S0 - x         if x <= radius
+   //   a(x-falloff)^2 if radius <= x <= falloff with
+   //   0              if x >= falloff
+   // with C1-continuity.
+   const float a   = 0.5f / (falloff - radius); // Can be Nan
+   const float S0  = (radius + falloff) / 2.0f;
+   float       acc = 0.0f;
+
+   for (int i = 0; i < n; i++) {
+      const float sq = dist_sq(lst + 2 * i, v);
+
+      if (sq <= falloff * falloff) {
+         const float dist = sqrt(sq);
+         if (dist <= radius)
+            acc += S0 - dist;
+         else {
+            const float bef_fall = falloff - dist;
+            acc += a * bef_fall * bef_fall;
+         }
+      }
+   }
+   return acc;
+}
+
+static int _compar(const void *a, const void *b)
+{
+   return *((int *) a) - *((int *) b);
+}
+
+static int in_place_rem_duplicates(int *lst, int n)
+{
+   int w = 1;
+   qsort((void *) lst, n, sizeof(int), _compar);
+   for (int i = 1; i < n; i++)
+      if (lst[i] != lst[w - 1])
+         lst[w++] = lst[i];
+   // lst = realloc(lst, w, sizeof(int));
+   return w;
+}
+
+static float *poscpy(int n, const int *lst, const struct s_ssys *map,
+                     const char *nam, bool quiet)
+{
+   float *dst = malloc(n * 2 * sizeof(float));
+
+   for (int i = 0; i < n; i++)
+      vcpy(dst + 2 * i, map->sys[lst[i]].v);
+
+   if (!quiet) {
+      fprintf(stderr, "\e[033;1m%s:\e[0m", nam);
+      for (int i = 0; i < n; i++)
+         fprintf(stderr, " %s", map->sys_nam[lst[i]]);
+      fprintf(stderr, "\n");
+   }
+   return dst;
+}
+
+int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool quiet,
+                   bool ppm)
+{
+   struct s_bbox bb = {.x = INIT_RANGE, .y = INIT_RANGE};
+   int          *id_neigh;
+   float        *neigh;
+   int           n_neigh  = 0;
+   float         edge_len = 0.0f;
+   float        *around;
+   int          *id_around;
+   int           n_around = 0;
+
+   for (int i = 0; i < map->njumps; i++)
+      edge_len += sqrt(dist_sq(map->sys[map->jumps[2 * i]].v,
+                               map->sys[map->jumps[2 * i + 1]].v));
+
+   edge_len /= map->njumps;
+   const float ssys_radius  = 2.0 * edge_len / 3.0;
+   const float ssys_falloff = ssys_fallscale * ssys_radius;
+   // fprintf(stderr, "sys rad %f\n", ssys_radius);
+
+   for (int i = 0; i < 2 * map->njumps; i++)
+      if (map->jumps[i] == ssys)
+         n_neigh++;
+
+   if (!n_neigh) {
+      vcpy(dst, map->sys[ssys].v);
+      return 1;
+   }
+
+   id_neigh = calloc(n_neigh, sizeof(int));
+   n_neigh  = 0;
+   for (int i = 0; i < map->njumps; i++) {
+      int n = 2 * i;
+
+      if (map->jumps[n] == ssys)
+         n = n ^ 1;
+      if (map->jumps[n ^ 1] == ssys)
+         id_neigh[n_neigh++] = map->jumps[n];
+   }
+   n_neigh = in_place_rem_duplicates(id_neigh, n_neigh);
+   if (!quiet)
+      fprintf(stderr, "\e[033;1m[%s]\e[0m\n", map->sys_nam[ssys]);
+   neigh = poscpy(n_neigh, id_neigh, map, "neigh", quiet);
+   for (int i = 0; i < n_neigh; i++)
+      update_bb(&bb, neigh + 2 * i);
+
+   // fprintf(stderr, "bb [%f %f] x [%f %f]\n", bb.x[0], bb.x[1], bb.y[0],
+   // bb.y[1]);
+
+   float ul[2] = {bb.x[0], bb.y[0]};
+   // bounding circle of the bounding square (because bounding circle not impl)
+   float center[2] = {(bb.x[0] + bb.x[1]) / 2.0, (bb.y[0] + bb.y[1]) / 2.0};
+   float sqrad     = dist_sq(center, ul);
+   float rad       = sqrt(sqrad);
+
+   if (rad < edge_len) {
+      rad   = edge_len;
+      sqrad = rad * rad;
+   }
+
+   float UL[2] = {center[0] - rad, center[1] - rad};
+   float LR[2] = {center[0] + rad, center[1] + rad};
+
+   float best[2]    = {center[0], center[1]};
+   float best_score = FLT_MAX;
+   int   best_id    = 0;
+
+   id_around    = calloc(map->nsys, sizeof(int));
+   float max_sq = rad + ssys_falloff;
+   max_sq *= max_sq;
+
+   for (int i = 0; i < map->nsys; i++)
+      if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq)
+         id_around[n_around++] = i;
+   around = poscpy(n_around, id_around, map, "around", quiet);
+
+   // Iterate over points of the circle
+   float  v[2];
+   float *samples = malloc(SAMP * SAMP * 3 * sizeof(float));
+   for (int i = 0; i < SAMP; i++) {
+      v[0] = (1.0 * i / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
+      for (int j = 0; j < SAMP; j++) {
+         v[1] = (1.0 * j / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
+         if (dist_sq(center, v) <= sqrad) {
+            const float score_es =
+               edge_stretch_score(neigh, n_neigh, v, ssys_radius);
+            const float score_so = sys_overlap_score(around, n_around, v,
+                                                     ssys_radius, ssys_falloff);
+            const float score    = 0.25 * score_es + score_so;
+            samples[3 * (i * SAMP + j) + 0] = score_es;
+            samples[3 * (i * SAMP + j) + 1] = score_so;
+            samples[3 * (i * SAMP + j) + 2] = 1.0f;
+            if (score < best_score) {
+               vcpy(best, v);
+               best_score = score;
+               best_id    = i * SAMP + j;
+            }
+         } else
+            for (int k = 0; k < 3; k++)
+               samples[3 * (i * SAMP + j) + k] = 0.0f;
+      }
+   }
+   if (ppm) {
+      samples[3 * best_id + 0] = 0.0f;
+      samples[3 * best_id + 1] = 0.0f;
+      samples[3 * best_id + 2] = 2.0f;
+      output_ppm(map->sys_nam[ssys], samples, SAMP, SAMP);
+   }
+
+   vcpy(dst, best);
+
+   free(samples);
+   free(id_neigh);
+   free(neigh);
+   free(around);
+   free(id_around);
+
+   return 0;
+}
+
+void gen_map_reposition(struct s_ssys *map, bool quiet, bool gen_map, bool only,
+                        float ratio)
 {
    char buff[512];
    int  num;
 
-   (void) only;
-   (void) ignore_alone;
+   if (!only)
+      for (int i = map->nosys; i < map->nsys; i++) {
+         const size_t n = snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
+                                   map->sys[i].v[0], map->sys[i].v[1]);
+
+         fwrite(buff, sizeof(char), n, stdout);
+         fflush(stdout);
+      }
 
    for (num = 0; num < THREADS - 1; num++)
       if (fork() == 0)
@@ -73,48 +366,54 @@ void gen_map_reposition(struct s_ssys *map, bool ignore_alone, bool gen_map,
 
    for (int i = num; i < map->nosys; i += THREADS)
       if (map->sys[i].w != 0.0f) {
-         const float *v = map->sys[i].v;
-         const size_t n =
-            snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i], v[0], v[1]);
-         fwrite(buff, sizeof(char), n, stdout);
-         fflush(stdout);
+         float v[2];
+
+         if (reposition_sys(v, map, i, quiet, gen_map)) {
+            if (!quiet)
+               fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
+         } else {
+            const size_t n =
+               snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
+                        (v[0] + ratio * map->sys[i].v[0]) / (1.0 + ratio),
+                        (v[1] + ratio * map->sys[i].v[1]) / (1.0 + ratio));
+            fwrite(buff, sizeof(char), n, stdout);
+            fflush(stdout);
+         }
       }
 
    if (num < THREADS - 1)
       exit(EXIT_SUCCESS);
-
-   if (gen_map)
-      fprintf(stderr, "\e[31m! gen_map not implemented.\e[0m\n");
 }
 
-static size_t ssys_num(GHashTable *h, char *s, struct s_ssys *map,
+static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
                        const float *src, bool upd)
 {
    size_t this = (size_t) g_hash_table_lookup(h, s);
 
    if (!this) {
+      char *str = strdup(s);
+
       if ((map->nsys & (map->nsys + 1)) == 0) {
          const size_t new_siz = (map->nsys << 1) | 3;
          map->sys             = realloc(map->sys, new_siz * sizeof(struct sys));
          map->sys_nam         = realloc(map->sys_nam, new_siz * sizeof(char *));
       }
       upd                       = true;
-      map->sys_nam[map->nsys++] = strdup(s);
+      map->sys_nam[map->nsys++] = str;
       this                      = map->nsys;
-      g_hash_table_insert(h, (void *) s, (void *) this);
+      g_hash_table_insert(h, (void *) str, (void *) this);
    }
    this --;
    if (upd) {
-      map->sys[this].v[0] = src[0];
-      map->sys[this].v[1] = src[1];
-      map->sys[this].w    = 0.0;
+      vcpy(map->sys[this].v, src);
+      map->sys[this].w = 0.0;
    }
    return this;
 }
 
 /* main */
-int do_it(char **onam, int n_onam, const bool ign_alone, const bool gen_map,
-          const bool only)
+int do_it(char **onam, int n_onam, const bool gen_map, const bool only,
+          float weight)
 {
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
    struct s_ssys map     = {0};
@@ -152,10 +451,11 @@ int do_it(char **onam, int n_onam, const bool ign_alone, const bool gen_map,
    }
    free(line);
 
+   const bool quiet = !map.nosys;
    if (!map.nosys)
       map.nosys = map.nsys;
 
-   gen_map_reposition(&map, ign_alone, gen_map, only);
+   gen_map_reposition(&map, quiet, gen_map, only, weight);
 
    for (int i = 0; i < map.nsys; i++)
       free(map.sys_nam[i]);
@@ -165,9 +465,10 @@ int do_it(char **onam, int n_onam, const bool ign_alone, const bool gen_map,
    return EXIT_SUCCESS;
 }
 
-int usage(char *nam, int ret)
+int usage(char *nam, int ret, float w)
 {
-   fprintf(stderr, "Usage:  %s  [-o] [-p] [<names>...]\n", basename(nam));
+   fprintf(stderr, "Usage:  %s  [-o] [-p] [-w<weight>] [<names>...]\n",
+           basename(nam));
    fprintf(stderr, "  Reads a set of node pos in input from standard input.\n");
    fprintf(stderr,
            "  Applies repositioning to <names> and outputs the result.\n");
@@ -177,7 +478,11 @@ int usage(char *nam, int ret)
                    "\".xml\" is used.");
    fprintf(stderr, "  If -o is set, only output processed systems.\n");
    fprintf(stderr,
-           "  If -p is set, outputs a pgm for each processed system.\n");
+           "  If -p is set, outputs a ppm for each processed system.\n");
+   fprintf(stderr,
+           "  If <weight> is set (positive), outputs values in the form:\n");
+   fprintf(stderr, "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n");
+   fprintf(stderr, "  If not specified, <weight> defaults to %f.\n", w);
    return ret;
 }
 
@@ -192,8 +497,10 @@ int main(int argc, char **argv)
    bool  processed_only = false;
    bool  gen_map        = false;
 
-   int fst_opt     = 1;
-   int fst_non_opt = 1;
+   int   fst_opt     = 1;
+   int   fst_non_opt = 1;
+   float weight      = 2.0f;
+
    for (int i = 1; i < argc; i++)
       if (argv[i][0] == '-') {
          char *swp           = argv[fst_non_opt];
@@ -205,8 +512,8 @@ int main(int argc, char **argv)
 
    if (fst_non_opt > fst_opt &&
        (!strcmp(argv[fst_opt], "-h") || !strcmp(argv[fst_opt], "--help")))
-      return usage(nam,
-                   fst_opt == fst_non_opt + 1 ? EXIT_SUCCESS : EXIT_FAILURE);
+      return usage(
+         nam, fst_opt == fst_non_opt + 1 ? EXIT_SUCCESS : EXIT_FAILURE, weight);
 
    if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-o")) {
       processed_only = true;
@@ -215,6 +522,16 @@ int main(int argc, char **argv)
 
    if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-p")) {
       gen_map = true;
+      fst_opt++;
+   }
+
+   if (fst_non_opt > fst_opt && !strncmp(argv[fst_opt], "-w", 2)) {
+      if (sscanf(argv[fst_opt], "-w%f", &weight) != 1)
+         return usage(nam, EXIT_FAILURE, weight);
+      if (weight < 0.0f) {
+         fprintf(stderr, "<weight> is supposed to be positive.\n");
+         return EXIT_FAILURE;
+      }
       fst_opt++;
    }
 
@@ -228,9 +545,9 @@ int main(int argc, char **argv)
          if (!strcmp(where, ".xml"))
             *where = '\0';
          else
-            return usage(nam, EXIT_FAILURE);
+            return usage(nam, EXIT_FAILURE, weight);
       }
    }
-   return do_it(argv + fst_non_opt, argc - fst_non_opt, true, gen_map,
-                processed_only);
+   return do_it(argv + fst_non_opt, argc - fst_non_opt, gen_map, processed_only,
+                weight);
 }
