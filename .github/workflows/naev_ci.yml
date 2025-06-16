@@ -430,7 +430,6 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
-              --wrap-mode=forcefallback \
               -Dinstaller=false \
               -Db_lto=true \
               -Dauto_features=enabled \
