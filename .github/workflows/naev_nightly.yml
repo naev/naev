@@ -281,10 +281,10 @@ jobs:
             arch: x86_64
             deploymenttarget: "10.13"
             config: macos_cross_osxcross.ini
-          - image: naev-macos
-            arch: aarch64
-            deploymenttarget: "13.0"
-            config: macos_aarch64_cross_osxcross.ini
+#          - image: naev-macos
+#            arch: aarch64
+#            deploymenttarget: "13.0"
+#            config: macos_aarch64_cross_osxcross.ini
 
     runs-on: ubuntu-latest
     defaults:
@@ -392,18 +392,19 @@ jobs:
         with:
           name: naev-macos-x86_64
 
-      - name: Get ARM64 macOS Bundle
-        uses: actions/download-artifact@v4
-        with:
-          name: naev-macos-aarch64
+#      - name: Get ARM64 macOS Bundle
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: naev-macos-aarch64
 
       - name: Package Universal Bundle
         run: |
               mkdir -p arm64 x86_64
               chmod +x buildUniversalBundle.sh
-              unzip naev-macos-aarch64.zip -d arm64
+              #unzip naev-macos-aarch64.zip -d arm64
               unzip naev-macos-x86_64.zip -d x86_64
-              ./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
+              #./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
+              ./buildUniversalBundle.sh -m x86_64 -d -i ./dmg_assets -e ./entitlements.plist -x ./x86_64 -b ./build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

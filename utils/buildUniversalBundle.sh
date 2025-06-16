@@ -4,6 +4,9 @@
 #
 # Pass in [-d] -i <DMGASSETSPATH> (Override location of dmg_assets folder) -e <ENTITLEMENTPLISTPATH> (Override location of entitlements.plist file) -a <ARM64BUNDLEPATH> (Override location of ARM64 Naev.app bundle path) -x <X8664BUNDLEPATH> (Override location of x86_64 Naev.app bundle path) -b <BUILDPATH> (Override location of build directory if wanted)
 
+# Pass in -m (expected: universal, x86_64, or arm64) to build a bundle for a specific architecture.
+# If no -m is passed, it defaults to universal.
+
 # Output destination is ${WORKPATH}/dist
 
 set -e
@@ -13,8 +16,9 @@ ARM64BUNDLEPATH="$(pwd)/arm64"
 X8664BUNDLEPATH="$(pwd)/x86_64"
 ENTITLEMENTPLISTPATH="$(pwd)/entitlements.plist"
 DMGASSETSPATH="$(pwd)/dmg_assets"
+MODE="universal"  # default build mode
 
-while getopts di:e:a:x:b: OPTION "$@"; do
+while getopts di:e:a:x:b:m: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -33,6 +37,9 @@ while getopts di:e:a:x:b: OPTION "$@"; do
         ;;
     b)
         BUILDPATH="${OPTARG}"
+        ;;
+    m)
+        MODE="${OPTARG}"
         ;;
     *)
         ;;
@@ -146,31 +153,75 @@ fatten_binaries(){
     lipo "$BUILDPATH/naev.x86_64/naev" "$BUILDPATH/naev.arm64/naev" -create -output "$BUILDPATH/naev.Universal/naev"
 }
 
+# New helper for x86_64-only libraries
+fatten_x86_64_libraries(){
+    mkdir -p "$BUILDPATH"/Frameworks.x86_64
+    for f in "$X8664BUNDLEPATH"/Naev.app/Contents/Frameworks/*
+    do
+        echo "Copying x86_64 library $(basename "$f")"
+        cp "$f" "$BUILDPATH/Frameworks.x86_64/"
+    done
+}
+
+# New helper for arm64-only libraries
+fatten_arm64_libraries(){
+    mkdir -p "$BUILDPATH"/Frameworks.arm64
+    for f in "$ARM64BUNDLEPATH"/Naev.app/Contents/Frameworks/*
+    do
+        echo "Copying arm64 library $(basename "$f")"
+        cp "$f" "$BUILDPATH/Frameworks.arm64/"
+    done
+}
+
 sign_bundle(){
     rcodesign sign -v -e "$ENTITLEMENTPLISTPATH" "$BUILDPATH/Naev.app"
 }
 
 build_bundle(){
-    # Create placeholder app bundle
-    cp -r "$ARM64BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
-    rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
-    rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
-    # Remove bogus installed data
-    rm -rf "$BUILDPATH"/Naev.app/include
-    rm -rf "$BUILDPATH"/Naev.app/lib
-    # Clean out Frameworks
-    rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
-
-    # Deploy Universal and extra ARM64 libraries
-    fatten_libraries
-    cp "$BUILDPATH"/Frameworks.Universal/* "$BUILDPATH/Naev.app/Contents/Frameworks"
-
-    # Deploy Universal Naev binary.
-    fatten_binaries
-    cp "$BUILDPATH/naev.Universal/naev" "$BUILDPATH/Naev.app/Contents/MacOS"
-
-    # Sign Universal bundle
-    sign_bundle
+    # Create placeholder app bundle based on selected mode
+    if [ "$MODE" = "x86_64" ]; then
+        cp -r "$X8664BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
+        rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
+        rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
+        # Remove bogus installed data
+        rm -rf "$BUILDPATH"/Naev.app/include
+        rm -rf "$BUILDPATH"/Naev.app/lib
+        # Clean out Frameworks
+        rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
+        fatten_x86_64_libraries
+        cp "$BUILDPATH"/Frameworks.x86_64/* "$BUILDPATH/Naev.app/Contents/Frameworks"
+        echo "Deploying x86_64 binary"
+        cp "$X8664BUNDLEPATH/Naev.app/Contents/MacOS/naev" "$BUILDPATH/Naev.app/Contents/MacOS"
+        sign_bundle
+    elif [ "$MODE" = "arm64" ]; then
+        cp -r "$ARM64BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
+        rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
+        rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
+        # Remove bogus installed data
+        rm -rf "$BUILDPATH"/Naev.app/include
+        rm -rf "$BUILDPATH"/Naev.app/lib
+        # Clean out Frameworks
+        rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
+        fatten_arm64_libraries
+        cp "$BUILDPATH"/Frameworks.arm64/* "$BUILDPATH/Naev.app/Contents/Frameworks"
+        echo "Deploying arm64 binary"
+        cp "$ARM64BUNDLEPATH/Naev.app/Contents/MacOS/naev" "$BUILDPATH/Naev.app/Contents/MacOS"
+        sign_bundle
+    else  # universal build
+        cp -r "$ARM64BUNDLEPATH/Naev.app" "$BUILDPATH/Naev.app"
+        rm "$BUILDPATH"/Naev.app/Contents/MacOS/naev
+        rm -rf "$BUILDPATH"/Naev.app/Contents/MacOS/naev.dSYM
+        # Remove bogus installed data
+        rm -rf "$BUILDPATH"/Naev.app/include
+        rm -rf "$BUILDPATH"/Naev.app/lib
+        # Clean out Frameworks
+        rm "$BUILDPATH"/Naev.app/Contents/Frameworks/*
+        fatten_libraries
+        cp "$BUILDPATH"/Frameworks.Universal/* "$BUILDPATH/Naev.app/Contents/Frameworks"
+        fatten_binaries
+        cp "$BUILDPATH/naev.Universal/naev" "$BUILDPATH/Naev.app/Contents/MacOS"
+        sign_bundle
+    fi
 }
 
 zip_bundle(){
