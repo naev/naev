@@ -112,7 +112,6 @@ function multicore.init( params, setfunc )
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
-   local gathered_data = {}
    SETFUNC = setfunc
 
    for k, s in ipairs(stats) do
@@ -299,6 +298,7 @@ function multicore.init( params, setfunc )
 
    local message_old = message
    function message( p, po, msg, dat )
+      mem.gathered_data = mem.gathered_data or {}
       if not p or not po then
          warn("message on nil p/po")
       elseif not is_multiengine(p, po) then
@@ -312,21 +312,21 @@ function multicore.init( params, setfunc )
          elseif is_secondary(po) then
             warn('message "'.. msg ..'" send to secondary (ignored)')
          elseif msg == "halt" then
-            if multiengines.halt_n(gathered_data, dat.id, dat.off) then
-               multiengines.refresh(gathered_data, po, false)
+            if multiengines.halt_n(mem.gathered_data, dat.id, dat.off) then
+               multiengines.refresh(mem.gathered_data, po, false)
                po:clear()
                multicore.set(p, po)
             end
          elseif msg == "ask" then
-            return multiengines.engine_stats(gathered_data, dat)
+            return multiengines.engine_stats(mem.gathered_data, dat)
          elseif msg == "here" then
-            multiengines.decl_engine_stats(gathered_data, dat.id, dat.sign, dat.t)
+            multiengines.decl_engine_stats(mem.gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
-            multiengines.refresh(gathered_data, po, true)
+            multiengines.refresh(mem.gathered_data, po, true)
             po:clear()
             multicore.set(p, po)
          elseif msg == "wtf?" then
-            return gathered_data
+            return mem.gathered_data
          else
             warn('Unknown message: "' .. msg .. '"')
          end
