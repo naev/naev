@@ -1,12 +1,19 @@
+local fmt = require "format"
+
 notactive = true
 
 -- Global constant variables for the outfit
-local range = 2000
-local bonus = 10
+local RANGE = 3500
+local BONUS = 10
 
 -- Only care about fighting classes
 local function pilotToLevel( p )
    return p:ship():size()
+end
+
+function descextra( _p, _o, _po )
+   return fmt.f(_([[{bonus}% additional damage for each hostile ship of same class or higher within {range} distance. Range is affected by detection bonus.]]),
+      {bonus=BONUS, range=RANGE})
 end
 
 -- Init function run on creation
@@ -20,7 +27,7 @@ end
 
 function update( p, po, _dt )
    local mod = p:shipstat("ew_detect",true)
-   local h = p:getEnemies(range*mod) -- Only consider visible ships
+   local h = p:getEnemies(RANGE*mod) -- Only consider visible ships
    local n = 0
    for k,v in ipairs(h) do
       local l = pilotToLevel( v )
@@ -35,7 +42,7 @@ function update( p, po, _dt )
          -- Add extra bonus
          if n > 1 then
             n = n-1
-            po:set( "weapon_damage", n*bonus )
+            po:set( "weapon_damage", n*BONUS )
          end
       else
          po:state( "off" )
