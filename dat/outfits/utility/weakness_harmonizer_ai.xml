@@ -13,5 +13,6 @@
   </general>
  <specific type="modification">
   <lua>outfits/utility/weakness_harmonizer_ai.lua</lua>
+  <weapon_damage>10</weapon_damage>
  </specific>
 </outfit>
