@@ -6,6 +6,6 @@ function onstealth( _p, po, stealthed )
    end
 end
 
-function update( p, po )
+function init( p, po )
    onstealth( p, po, p:flags("stealth") )
 end
