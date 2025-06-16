@@ -6,7 +6,7 @@ local multiengines = {
    mobility_stats = {},
 }
 
-for _k,s in ipairs(multiengines.mobility_params ) do
+for _k,s in ipairs(multiengines.mobility_params) do
    multiengines.is_mobility[s] = true
 end
 
@@ -80,7 +80,7 @@ function multiengines.halt_n( root, n, what )
    if res == nil then -- could not write
       warn('Could not write to tfs. (invalid pointer or path)')
    else
-      return tfs.updatefile(root,{'needs_refresh'}, function ( crt )
+      return tfs.updatefile(root, {'needs_refresh'}, function ( crt )
             return crt or res
          end)
    end

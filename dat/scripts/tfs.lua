@@ -35,7 +35,7 @@ function tfs.checkdir( p, path )
 --  - Any non-existing dir on the way is created.
 function tfs.checkdir( ptr, path )
    if ptr ~= nil then
-      for i,k in ipairs(path) do
+      for i, k in ipairs(path) do
          ptr[k] = ptr[k] or {}
          ptr = ptr[k]
       end
@@ -44,7 +44,7 @@ function tfs.checkdir( ptr, path )
 end
 
 local function tfs_read( ptr, path )
-   for _i,k in ipairs(path or {}) do
+   for _i, k in ipairs(path or {}) do
       ptr = (ptr or {})[k]
    end
    return ptr
@@ -59,14 +59,13 @@ end
 --  - or nil if not
 function tfs.readdir( ptr, path )
    local res = tfs_read(ptr, path)
-   if res == nil then
+   if type(res) ~= 'table' then
       return nil
    else
-      ptr = (type(res) == 'table' and res) or {}
       local t = {}
-      for k,v in pairs(ptr) do
+      for k, v in pairs(res) do
          if k~= '_parent_' then
-            t[k] = v
+            t[k] = tfs.readdir(v) or v
          end
       end
       return t
@@ -76,7 +75,7 @@ end
 -- Input:
 --  - a ptr
 --  - a itable describing the path to the file
---      ( a file is just a k,v pair in some dir *where v not a table* )
+--      ( a file is just a k, v pair in some dir *where v not a table* )
 --      ( k is the file name, v is the file content )
 function tfs.readfile( ptr, path )
    local res = tfs_read(ptr, path)
@@ -101,7 +100,7 @@ function tfs.updatefile( ptr, path, f )
    local tmp = {}
    local fil = nil
 
-   for i,v in ipairs(path) do
+   for i, v in ipairs(path) do
       if i < #path then
          tmp[i] = v
       else
@@ -187,7 +186,7 @@ end
 > fs.cd(player.pilot():outfits())
  Not a valid dir.
 
-> fs.mnt(player.pilot():outfits(),"outfits")
+> fs.mnt(player.pilot():outfits(), "outfits")
  mounted table:_0x40abbb00 at /outfits
 
 > fs.cd('outfits')
@@ -209,7 +208,7 @@ function tfs.init()
    local function _cd( v, create )
       local ptr = tfs.path or (create and {}) or nil
 
-      for _i,k in ipairs(v) do
+      for _i, k in ipairs(v) do
          if k == '/' then
             ptr = tfs.root
          else
@@ -255,7 +254,7 @@ function tfs.init()
    end
 
    local function _markall( )
-      for k,v in pairs(tfs.path) do
+      for k, v in pairs(tfs.path) do
          if type(v) == 'table' and v['_parent_'] == nil and _cd_silent(k) then
             _markall()
             _cd_silent("_parent_")
@@ -304,7 +303,7 @@ function tfs.init()
          _cd_silent(name)
          tfs.mnt(pil:shipMemory(), 'shipmem')
          if pil:outfitHasSlot('engines_secondary') then
-            tfs.mnt(pil:outfitMessageSlot('engines','wtf?'), 'mengine')
+            tfs.mnt(pil:outfitMessageSlot('engines', 'wtf?'), 'mengine')
          end
          _cd_silent('_parent_')
          return name
@@ -336,7 +335,7 @@ function tfs.init()
          tfs.shorthand[0] = tfs.path._parent_
          print("  [0] ../")
       end
-      for k,v in ipairs(tfs.path) do
+      for k, v in ipairs(tfs.path) do
          if type(v) == 'table' then
             print("  [.] " .. tostring(k) .. "/")
          else
@@ -344,7 +343,7 @@ function tfs.init()
          end
       end
       local count = #(tfs.path)
-      for k,v in pairs(tfs.path) do
+      for k, v in pairs(tfs.path) do
          if not (type(k) == type(1) and k>=1 and k<= #(tfs.path)) and k ~= "_parent_" then
             if type(v) == 'table' then
                count = count + 1
@@ -361,7 +360,7 @@ function tfs.init()
       pref = pref or "  "
       local count = 0
 
-      for k,v in pairs(tfs.path) do
+      for k, v in pairs(tfs.path) do
          if k ~= "_parent_" and k~= "_dev_" then
             if type(v) == 'table' then
                local pref2 = pref .. (v['_dev_'] == nil and "" or "*") .. tostring(k) .. "/"
