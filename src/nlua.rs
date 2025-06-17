@@ -300,6 +300,7 @@ impl NLua {
         package.set("cpath", "")?;
         let loaders: mlua::Table = package.get("loaders")?;
         loaders.push(
+            // Pure Rust Optional libraries
             lua.create_function(|lua, name: String| -> mlua::Result<mlua::Value> {
                 match name.as_str() {
                     "ryaml" => Ok(mlua::Value::Function(lua.create_function(

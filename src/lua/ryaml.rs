@@ -1,3 +1,7 @@
+// Originally from https://github.com/khvzak/lua-ryaml
+// Forked to https://github.com/bobbens/lua-ryaml to use serde-yaml2 and PR opened upstream
+// We use the later with minor modifications so we can embed it
+
 use mlua::{Error, ExternalError, Function, Lua, LuaSerdeExt, Nil, Result, Table, Value};
 
 /// Decodes input value (must be a string) that represents a yaml document to a Lua value
