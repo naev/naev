@@ -1,7 +1,7 @@
 use anyhow::Result;
 use roxmltree::Node;
 use std::ffi::CString;
-use std::io::{Error, ErrorKind};
+use std::io::Error;
 
 #[macro_export]
 macro_rules! nxml_err_attr_missing {
@@ -53,8 +53,7 @@ macro_rules! nxml_warn_attr_missing {
 pub fn node_str<'a>(node: Node<'a, 'a>) -> Result<&'a str> {
     match node.text() {
         Some(t) => Ok(t),
-        None => Err(Error::new(
-            ErrorKind::Other,
+        None => Err(Error::other(
             format!(
                 "Node '{node}' has invalid text!",
                 node = node.tag_name().name()

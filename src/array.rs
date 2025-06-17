@@ -22,7 +22,7 @@ impl<T> Default for Array<T> {
 }
 impl<T: Sized> Array<T> {
     pub fn new(vec: &[T]) -> Result<Self> {
-        if vec.len() <= 0 {
+        if vec.is_empty() {
             return Ok(Default::default());
         }
         let size = std::mem::size_of::<T>();

@@ -34,7 +34,7 @@ pub struct FactionID {
 }
 impl FactionID {
     pub fn new(name: &str) -> Option<FactionID> {
-        let factions = FACTIONS.write().unwrap();
+        let factions = FACTIONS.read().unwrap();
         for fctid in factions.iter() {
             let (id, fct) = fctid;
             if fct.data.name == name {
@@ -369,11 +369,8 @@ impl FactionLoad {
                         if !node.is_element() {
                             continue;
                         }
-                        match node.text() {
-                            Some(t) => {
-                                fct.tags.push(String::from(t));
-                            }
-                            None => (),
+                        if let Some(t) = node.text() {
+                            fct.tags.push(String::from(t));
                         }
                     }
                     // Remove when not needed for C interface
@@ -692,10 +689,7 @@ pub extern "C" fn _faction_isInvisible(id: c_int) -> c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_setInvisible(id: c_int, state: c_int) -> c_int {
     faction_c_call(id, |fct| {
-        fct.set_invisible(match state {
-            0 => false,
-            _ => true,
-        });
+        fct.set_invisible(!matches!(state, 0));
         0
     })
     .unwrap_or_else(|err| {
@@ -719,10 +713,7 @@ pub extern "C" fn _faction_isKnown(id: c_int) -> c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_setKnown(id: c_int, state: c_int) -> c_int {
     faction_c_call(id, |fct| {
-        fct.set_known(match state {
-            0 => false,
-            _ => true,
-        });
+        fct.set_known(!matches!(state, 0));
         0
     })
     .unwrap_or_else(|err| {

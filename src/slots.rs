@@ -74,11 +74,8 @@ impl SlotProperty {
                         if !node.is_element() {
                             continue;
                         }
-                        match node.text() {
-                            Some(t) => {
-                                sp.tags.push(String::from(t));
-                            }
-                            None => (),
+                        if let Some(t) = node.text() {
+                            sp.tags.push(String::from(t));
                         }
                     }
                     // Remove when not needed for C interface

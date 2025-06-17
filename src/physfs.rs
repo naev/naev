@@ -2,7 +2,7 @@
  * same file and writing + reading/writing with multiple threads. */
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
-use std::io::{Error, ErrorKind, Read, Result, Seek, SeekFrom, Write};
+use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
 use std::mem;
 use std::os::raw::c_void;
 
@@ -14,13 +14,10 @@ pub fn error_as_io_error() -> Error {
             naevc::PHYSFS_getLastErrorCode(),
         ))
     };
-    Error::new(
-        ErrorKind::Other,
-        format!(
-            "PhysicsFS Error: `{}`",
-            cerrstr.to_str().unwrap_or("Unknown")
-        ),
-    )
+    Error::other(format!(
+        "PhysicsFS Error: `{}`",
+        cerrstr.to_str().unwrap_or("Unknown")
+    ))
 }
 
 /// Possible ways to open a file.
