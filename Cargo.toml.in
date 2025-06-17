@@ -31,7 +31,8 @@ gltf = { version = "1", features = ["extras", "names", "utils"] }
 bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 thunderdome = "0"
-mlua = { version = "0", features = ["luajit", "anyhow", "send"] }
+mlua = { version = "0", features = ["luajit", "anyhow", "send", "serialize"] }
+serde_yaml2 = "0.1"
 parking_lot = "0"
 
 [target.'cfg(unix)'.dependencies]

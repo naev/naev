@@ -3626,7 +3626,6 @@ dat/scripts/luatk/luatk.lua
 dat/scripts/luatk/main.lua
 dat/scripts/luatk/map.lua
 dat/scripts/luatk/markdown.lua
-dat/scripts/lyaml.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/chuckaluck.lua
 dat/scripts/minigames/flip.lua
@@ -3887,13 +3886,13 @@ src/load.h
 src/log.c
 src/log.h
 src/log.rs
+src/lua/ryaml.rs
 src/lua_enet.c
 src/lua_enet.h
 src/lutf8lib.c
 src/lutf8lib.h
 src/lvar.c
 src/lvar.h
-src/lyaml.h
 src/map.c
 src/map.h
 src/mapData.h

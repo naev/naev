@@ -767,6 +767,25 @@ msgstr ""
 msgid "Galactic Space Pirates"
 msgstr ""
 
+#: 標準入力:7
+msgid "???"
+msgstr ""
+
+#: 標準入力:12
+msgid "Black Lotus"
+msgstr ""
+
+#: 標準入力:13
+msgid "Wild Ones"
+msgstr ""
+
+#: 標準入力:14
+msgid "Raven Clan"
+msgstr ""
+
+#: 標準入力:15
+msgid "Dreamer Clan"
+msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:6
 msgid "<widget wgtfct />"
@@ -2704,6 +2723,9 @@ msgstr ""
 msgid "Great House Za'lek"
 msgstr ""
 
+#: 標準入力:7
+msgid "(Currently Noona Sanderaite)"
+msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:5
 msgid "<widget wgtfct />"
@@ -5332,6 +5354,113 @@ msgstr ""
 msgid "Universal Synchronized Time (UST)"
 msgstr ""
 
+#: 標準入力:5
+msgid "UST unit"
+msgstr ""
+
+#: 標準入力:5
+msgid "Abbreviation"
+msgstr ""
+
+#: 標準入力:5
+msgid "Length of Time"
+msgstr ""
+
+#: 標準入力:5
+msgid "Equal to (in Earth time)"
+msgstr ""
+
+#: 標準入力:5
+msgid "Used like"
+msgstr ""
+
+#: 標準入力:6
+msgid "Seconds"
+msgstr ""
+
+#: 標準入力:6
+msgid "\"s\""
+msgstr ""
+
+#: 標準入力:6
+msgid "1 Earth second"
+msgstr ""
+
+#: 標準入力:6
+msgid "1 second"
+msgstr ""
+
+#: 標準入力:7
+msgid "Hectoeconds"
+msgstr ""
+
+#: 標準入力:7 標準入力:9 標準入力:10
+msgid "N/A"
+msgstr ""
+
+#: 標準入力:7
+msgid "100 seconds"
+msgstr ""
+
+#: 標準入力:7
+msgid "1 minute and 40 seconds"
+msgstr ""
+
+#: 標準入力:7
+msgid "Minutes"
+msgstr ""
+
+#: 標準入力:8
+msgid "Periods"
+msgstr ""
+
+#: 標準入力:8
+msgid "\"p\""
+msgstr ""
+
+#: 標準入力:8
+msgid "10,000 seconds"
+msgstr ""
+
+#: 標準入力:8
+msgid "2 hours and 47 minutes"
+msgstr ""
+
+#: 標準入力:8
+msgid "Hours"
+msgstr ""
+
+#: 標準入力:9
+msgid "Decaperiods"
+msgstr ""
+
+#: 標準入力:9
+msgid "10 periods"
+msgstr ""
+
+#: 標準入力:9
+msgid "28 hours"
+msgstr ""
+
+#: 標準入力:9
+msgid "Days"
+msgstr ""
+
+#: 標準入力:10
+msgid "Cycles"
+msgstr ""
+
+#: 標準入力:10
+msgid "5,000 periods"
+msgstr ""
+
+#: 標準入力:10
+msgid "579 days"
+msgstr ""
+
+#: 標準入力:10
+msgid "Years"
+msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:4
 msgid "# Universal Synchronized Time (UST)"
@@ -6590,6 +6719,25 @@ msgstr ""
 msgid "Galactic Space Pirates"
 msgstr ""
 
+#: 標準入力:7
+msgid "???"
+msgstr ""
+
+#: 標準入力:12
+msgid "Black Lotus"
+msgstr ""
+
+#: 標準入力:13
+msgid "Wild Ones"
+msgstr ""
+
+#: 標準入力:14
+msgid "Raven Clan"
+msgstr ""
+
+#: 標準入力:15
+msgid "Dreamer Clan"
+msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:6
 msgid "<widget wgtfct />"
@@ -8527,6 +8675,9 @@ msgstr ""
 msgid "Great House Za'lek"
 msgstr ""
 
+#: 標準入力:7
+msgid "(Currently Noona Sanderaite)"
+msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:5
 msgid "<widget wgtfct />"
@@ -11155,6 +11306,113 @@ msgstr ""
 msgid "Universal Synchronized Time (UST)"
 msgstr ""
 
+#: 標準入力:5
+msgid "UST unit"
+msgstr ""
+
+#: 標準入力:5
+msgid "Abbreviation"
+msgstr ""
+
+#: 標準入力:5
+msgid "Length of Time"
+msgstr ""
+
+#: 標準入力:5
+msgid "Equal to (in Earth time)"
+msgstr ""
+
+#: 標準入力:5
+msgid "Used like"
+msgstr ""
+
+#: 標準入力:6
+msgid "Seconds"
+msgstr ""
+
+#: 標準入力:6
+msgid "\"s\""
+msgstr ""
+
+#: 標準入力:6
+msgid "1 Earth second"
+msgstr ""
+
+#: 標準入力:6
+msgid "1 second"
+msgstr ""
+
+#: 標準入力:7
+msgid "Hectoeconds"
+msgstr ""
+
+#: 標準入力:7 標準入力:9 標準入力:10
+msgid "N/A"
+msgstr ""
+
+#: 標準入力:7
+msgid "100 seconds"
+msgstr ""
+
+#: 標準入力:7
+msgid "1 minute and 40 seconds"
+msgstr ""
+
+#: 標準入力:7
+msgid "Minutes"
+msgstr ""
+
+#: 標準入力:8
+msgid "Periods"
+msgstr ""
+
+#: 標準入力:8
+msgid "\"p\""
+msgstr ""
+
+#: 標準入力:8
+msgid "10,000 seconds"
+msgstr ""
+
+#: 標準入力:8
+msgid "2 hours and 47 minutes"
+msgstr ""
+
+#: 標準入力:8
+msgid "Hours"
+msgstr ""
+
+#: 標準入力:9
+msgid "Decaperiods"
+msgstr ""
+
+#: 標準入力:9
+msgid "10 periods"
+msgstr ""
+
+#: 標準入力:9
+msgid "28 hours"
+msgstr ""
+
+#: 標準入力:9
+msgid "Days"
+msgstr ""
+
+#: 標準入力:10
+msgid "Cycles"
+msgstr ""
+
+#: 標準入力:10
+msgid "5,000 periods"
+msgstr ""
+
+#: 標準入力:10
+msgid "579 days"
+msgstr ""
+
+#: 標準入力:10
+msgid "Years"
+msgstr ""
 
 #: dat/naevpedia/mechanics/time.md:4
 msgid "# Universal Synchronized Time (UST)"

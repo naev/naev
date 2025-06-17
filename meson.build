@@ -119,7 +119,6 @@ int main (void) { return 0; }''')
    sdl_image = dependency('SDL2_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
-   yaml = dependency('yaml-0.1', required: true, version: '>=0.2.5', fallback: ['libyaml', 'yaml_dep'], static: get_option('steamruntime'), default_options: ['c_std=c89'])
 
    # Due to linking quirks with Windows, lets avoid static linking nfd for now
    if host_machine.system() in ['windows', 'darwin']
@@ -151,7 +150,6 @@ int main (void) { return 0; }''')
 
    naev_deps += [
       cmark,
-      yaml,
       enet,
       dependency('freetype2', required: true),
       libunibreak,
@@ -178,10 +176,6 @@ int main (void) { return 0; }''')
    endif
 
    naev_deps += [lua]
-
-   # Lua Libraries
-   lyaml = subproject('lyaml').get_variable('lyaml_dep')
-   naev_deps += [lyaml]
 
    # Linear Algebra
    use_system_glpk = ('glpk' not in forced_fallbacks and 'forcefallback' != get_option('wrap_mode'))
@@ -611,7 +605,7 @@ naevcrs = rust.bindgen(
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build', 'scripts/lyaml/meson.build', ],
+      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build' ],
       exclude_directories: 'outfits/bioship/templates',
    )
 

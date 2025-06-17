@@ -1,5 +1,5 @@
 local cmark = require "cmark"
-local lyaml = require "lyaml"
+local ryaml = require "ryaml"
 local lf = require "love.filesystem"
 local luatk = require 'luatk'
 local md = require "luatk.markdown"
@@ -107,7 +107,7 @@ local function extractmetadata( entry, s )
    end
    if utf8.find( s, "---\n", 1, true )==1 then
       local es, ee = utf8.find( s, "---\n", 4, true )
-      meta = tmerge( meta, lyaml.load( utf8.sub( s, 4, es-1 ) ) )
+      meta = tmerge( meta, ryaml.load( utf8.sub( s, 4, es-1 ) ) )
       s = utf8.sub( s, ee+1 )
    end
    -- Post-processing

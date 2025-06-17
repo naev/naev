@@ -4,6 +4,7 @@ use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 
 use crate::gettext::{gettext, ngettext, pgettext};
+use crate::lua::ryaml;
 use crate::{ndata, vec2};
 use crate::{warn, warn_err};
 
@@ -298,6 +299,16 @@ impl NLua {
         package.set("path", concat!("?.lua;", LUA_INCLUDE_PATH, "?.lua"))?;
         package.set("cpath", "")?;
         let loaders: mlua::Table = package.get("loaders")?;
+        loaders.push(
+            lua.create_function(|lua, name: String| -> mlua::Result<mlua::Value> {
+                match name.as_str() {
+                    "ryaml" => Ok(mlua::Value::Function(lua.create_function(
+                        |lua, ()| -> mlua::Result<mlua::Table> { ryaml::ryaml_safe(lua) },
+                    )?)),
+                    _ => Ok(mlua::Value::Nil),
+                }
+            })?,
+        )?;
         loaders.push(
             lua.create_function(|lua, name: String| -> mlua::Result<mlua::Value> {
                 let globals = lua.globals();

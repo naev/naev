@@ -38,6 +38,9 @@ mod texture;
 mod utils;
 mod vec2;
 mod version;
+mod lua {
+    pub mod ryaml;
+}
 
 use crate::gettext::gettext;
 
