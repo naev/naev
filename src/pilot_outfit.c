@@ -1686,20 +1686,22 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
 
    PilotTemp tmp = temp_setup( pilot );
 
+   nlua_env *env = outfit_luaEnv( o );
+
    /* Create the memory if necessary and initialize stats. */
-   oldmem = pilot_outfitLmem( po, outfit_luaEnv( o ) );
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaOnadd( o ) ); /* f */
    lua_pushpilot( naevL, pilot->id );                             /* f, p */
    lua_pushpilotoutfit( naevL, po );                              /* f, p, po */
-   if ( nlua_pcall( outfit_luaEnv( o ), 2, 0 ) ) {                /* */
+   if ( nlua_pcall( env, 2, 0 ) ) {                               /* */
       outfitLRunWarning( pilot, o, "onadd", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
-      pilot_outfitLunmem( outfit_luaEnv( o ), oldmem );
+      pilot_outfitLunmem( env, oldmem );
       return -1;
    }
-   pilot_outfitLunmem( outfit_luaEnv( o ), oldmem );
+   pilot_outfitLunmem( env, oldmem );
 
    temp_cleanup( tmp, pilot );
    return 1;
@@ -1720,20 +1722,22 @@ int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
 
    PilotTemp tmp = temp_setup( pilot );
 
+   nlua_env *env = outfit_luaEnv( po->outfit );
+
    /* Create the memory if necessary and initialize stats. */
-   oldmem = pilot_outfitLmem( po, outfit_luaEnv( o ) );
+   oldmem = pilot_outfitLmem( po, env );
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, outfit_luaOnremove( o ) ); /* f */
    lua_pushpilot( naevL, pilot->id );                                /* f, p */
-   lua_pushpilotoutfit( naevL, po );               /* f, p, po */
-   if ( nlua_pcall( outfit_luaEnv( o ), 2, 0 ) ) { /* */
+   lua_pushpilotoutfit( naevL, po ); /* f, p, po */
+   if ( nlua_pcall( env, 2, 0 ) ) {  /* */
       outfitLRunWarning( pilot, o, "onremove", lua_tostring( naevL, -1 ) );
       lua_pop( naevL, 1 );
-      pilot_outfitLunmem( outfit_luaEnv( o ), oldmem );
+      pilot_outfitLunmem( env, oldmem );
       return -1;
    }
-   pilot_outfitLunmem( outfit_luaEnv( o ), oldmem );
+   pilot_outfitLunmem( env, oldmem );
 
    temp_cleanup( tmp, pilot );
    return 1;

@@ -1864,9 +1864,12 @@ void input_handle( SDL_Event *event )
          evt.type        = SDL_TEXTINPUT;
          size_t   i      = 0;
          uint32_t ch;
+         Uint32   timestamp = SDL_GetTicks();
          while ( ( ch = u8_nextchar( txt, &i ) ) ) {
-            size_t e         = u8_wc_toutf8( evt.text.text, ch );
-            evt.text.text[e] = '\0';
+            size_t e           = u8_wc_toutf8( evt.text.text, ch );
+            evt.text.text[e]   = '\0';
+            evt.text.timestamp = timestamp;
+            evt.text.windowID  = 0;
             SDL_PushEvent( &evt );
          }
          return;

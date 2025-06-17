@@ -1,0 +1,12 @@
+<difficulty name="Nightmare Mode">
+ <description>An extra challenging difficulty mode for players wanting an extreme challenge.</description>
+ <armour_mod>-70</armour_mod>
+ <shield_mod>-70</shield_mod>
+ <energy_mod>-40</energy_mod>
+ <accel_mod>-5</accel_mod>
+ <speed_mod>-5</speed_mod>
+ <turn_mod>-5</turn_mod>
+ <weapon_damage>-25</weapon_damage>
+ <time_mod>5</time_mod>
+ <time_speedup>-5</time_speedup>
+</difficulty>

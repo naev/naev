@@ -90,7 +90,6 @@ function view_maps ()
          update( mem.maps[1] )
       end
    end
-   gen_list()
 
    abandon = luatk.newButton( wdw, w-20-BUTTON_W-10-BUTTON_W, h-20-BUTTON_H, BUTTON_W, BUTTON_H, _("Abandon Map"), function ()
       local mapname, mapid = lst:get()
@@ -104,12 +103,12 @@ function view_maps ()
          gen_list()
       end )
    end )
+   gen_list()
 
    luatk.run()
 
    if #mem.maps <= 0 then
-      abort()
-      misn.finish(true)
+      hook.safe("cleanup")
    end
 end
 
@@ -190,4 +189,9 @@ function abort ()
       end
    end
    player.infoButtonUnregister( btn )
+end
+
+function cleanup ()
+   abort()
+   misn.finish(false)
 end

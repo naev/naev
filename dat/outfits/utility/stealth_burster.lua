@@ -59,7 +59,6 @@ function init( p, po )
    turnoff( p, po )
    mem.timer = nil
    po:state("off")
-   po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
 end
 

@@ -4,7 +4,9 @@ local shipstat = naev.shipstats()
 
 local fmt = require "format"
 
+local DBG = false
 local multiengines = require "outfits/lib/multiengines"
+local tfs = multiengines.tfs
 local is_mobility = multiengines.is_mobility
 
 local function valcol( val, inverted, gb )
@@ -24,7 +26,7 @@ local function valcol( val, inverted, gb )
    end
 end
 
-local function stattostr( s, val, grey, unit, gb)
+local function stattostr( s, val, grey, unit, gb )
    if val == 0 then
       return "#n0" -- Correct people bad taste HERE.
    end
@@ -36,7 +38,7 @@ local function stattostr( s, val, grey, unit, gb)
    end
    local str
    if val > 0 then
-      str = "+"..fmt.number(val)
+      str = "+" .. fmt.number(val)
    else
       str = fmt.number(val)
    end
@@ -59,11 +61,11 @@ local function add_desc( stat, nomain, nosec, gb, basic )
    nosec = nosec or s == 0
    local col
    if off or (nomain and nosec) then
-      col="#n"
+      col = "#n"
    else
-      col=valcol(p+s, stat.stat.inverted, gb)
+      col = valcol(p+s, stat.stat.inverted, gb)
    end
-   local pref = col .. fmt.f(_("{name}: "),{name=name})
+   local pref = col .. fmt.f(_("{name}: "), {name=name})
    if p == s or basic then
       return pref .. stattostr(stat.stat, base, off, true, gb)
    else
@@ -75,7 +77,7 @@ local function add_desc( stat, nomain, nosec, gb, basic )
 end
 
 local function index( tbl, key )
-   for i,v in ipairs(tbl) do
+   for i, v in ipairs(tbl) do
       if v and v["name"] == key then
          return i
       end
@@ -110,10 +112,9 @@ function multicore.init( params, setfunc )
    local stats = tcopy(params)
    local pri_en_stats = {}
    local sec_en_stats = {}
-   local gathered_data = {}
    SETFUNC = setfunc
 
-   for k,s in ipairs(stats) do
+   for k, s in ipairs(stats) do
       s.index = index(shipstat, s[1])
       s.stat = shipstat[ s.index ]
       s.name = s.stat.name
@@ -153,14 +154,16 @@ function multicore.init( params, setfunc )
 
       if not basic then
          if nomain then
-            desc = desc .. "#o"..fmt.f(_("Equipped as {type} core"),{type="#y"..p_("core","secondary").."#o"}).."#0"
+            desc = desc .. "#o" .. fmt.f(_("Equipped as {type} core"),
+               {type="#y"..p_("core", "secondary").."#o"}) .. "#0"
          elseif nosec then
-            desc = desc .. "#o"..fmt.f(_("Equipped as {type} core"),{type="#r"..p_("core","primary").."#o"}).."#0"
+            desc = desc .. "#o" .. fmt.f(_("Equipped as {type} core"),
+               {type="#r"..p_("core", "primary").."#o"}) .. "#0"
          else
-            desc = desc .. "#n"..fmt.f(_("Properties for {pri} / {sec} slots"),{
-               pri="#r"..p_("core","primary").."#n",
-               sec="#y"..p_("core","secondary").."#n",
-            }).."#0"
+            desc = desc .. "#n" .. fmt.f(_("Properties for {pri} / {sec} slots"), {
+               pri= "#r" .. p_("core", "primary") .. "#n",
+               sec= "#y" .. p_("core", "secondary") .. "#n",
+            }) .. "#0"
          end
       end
 
@@ -175,7 +178,7 @@ function multicore.init( params, setfunc )
          averaged = smid
       end
 
-      for k,s in ipairs(stats) do
+      for k, s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
          desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name] and s.name ~= "engine_limit", basic)
       end
@@ -193,13 +196,16 @@ function multicore.init( params, setfunc )
       if averaged and multicore_off ~= true and id then
          local totaleml = smid and smid['total'] or 0
          local share = math.floor(0.5 + (100*smid['engine_limit'])/smid['total'])
-         desc = desc .. fmt.f(_("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),{
-            eml = (smid and smid["engine_limit"]) or 0,
-            total = totaleml, share = share, t = _(multiengines.mobility_stats['engine_limit'].unit)
-         })
-         for _k,s in ipairs(stats) do
+         desc = desc .. fmt.f(
+            _("\n\n#oLoad Factor: #y{share}%#0  #o(#g{eml} {t}#0 #o/#0 #g{total} {t}#0 #o)#0\n"),
+            {
+               eml = (smid and smid["engine_limit"]) or 0,
+               total = totaleml, share = share, t = _(multiengines.mobility_stats['engine_limit'].unit)
+            }
+         )
+         for _k, s in ipairs(stats) do
             if is_mobility[s.name] and s.name~="engine_limit" then
-               desc = desc .. fmt.f(_("#g{display}: #b+{val} {unit}#0"),{
+               desc = desc .. fmt.f(_("#g{display}: #b+{val} {unit}#0"), {
                   display = _(s.stat.display), unit = _(s.stat.unit), val = fmt.number(smid[s.name] or 0) })
                desc = desc .. _("  #y=>#0  #g+") .. fmt.number((smid[s.name] or 0)*share/100) .. p_("unit", " ") .. _(s.stat.unit) .. "#0\n"
             end
@@ -218,7 +224,7 @@ function multicore.init( params, setfunc )
          desc = desc .. '\n#b' .. msg .. '#0'
       end
       if descextra_old then
-         desc = desc.."\n"..descextra_old( p, o, po )
+         desc = desc.. '\n' .. descextra_old(p, o, po)
       end
       return desc
    end
@@ -236,14 +242,16 @@ function multicore.init( params, setfunc )
 
          mem.stats = {}
          if ie then
-            --tfs.append(p:shipMemory(), {"history"}, (sign==-1 and "u" or "") .. 'eq_' .. tostring(po:id()))
+            if DBG then
+               tfs.append(p:shipMemory(), {"history"}, (sign==-1 and "u" or "") .. 'eq_' .. tostring(po:id()))
+            end
             if secondary then
-               p:outfitMessageSlot("engines", "here", {id = id, sign = sign, t = mystats(po,sign)})
+               p:outfitMessageSlot("engines", "here", {id = id, sign = sign, t = mystats(po, sign)})
             else
                local sh = p:ship()
                sh = sh and sh:getSlots()
 
-               for n,o in ipairs(p:outfits()) do
+               for n, o in ipairs(p:outfits()) do
                   if is_engine(sh[n]) and o then
                      p:outfitMessageSlot(n, "pliz", sign)
                   end
@@ -254,7 +262,7 @@ function multicore.init( params, setfunc )
             multicore_off = smid and smid['halted']
          end
 
-         for k,s in ipairs(stats) do
+         for k, s in ipairs(stats) do
             if multicore_off ~= true or s.name == 'mass' then
                local val = (secondary and s.sec) or s.pri
 
@@ -267,7 +275,7 @@ function multicore.init( params, setfunc )
          -- Deferred setting of stats
          if not setfunc then
             po:clear()
-            multicore.set( p, po )
+            multicore.set(p, po)
          end
       end
    end
@@ -276,7 +284,7 @@ function multicore.init( params, setfunc )
    function onadd( p, po )
       equip(p, po, 1)
       if onadd_old then
-         onadd_old( p, po )
+         onadd_old(p, po)
       end
    end
 
@@ -284,45 +292,48 @@ function multicore.init( params, setfunc )
    function init( p, po )
       equip(p, po, 1)
       if init_old then
-         init_old( p, po )
+         init_old(p, po)
       end
    end
 
    local message_old = message
    function message( p, po, msg, dat )
+      mem.gathered_data = mem.gathered_data or {}
       if not p or not po then
          warn("message on nil p/po")
       elseif not is_multiengine(p, po) then
          warn("message on non-multiengine slot")
       else
-         --tfs.append(p:shipMemory(), {"history"}, '>' .. msg .. '_' .. tostring(po:id()))
+         if DBG then
+            tfs.append(p:shipMemory(), {"history"}, '>' .. msg .. '_' .. tostring(po:id()))
+         end
          if msg == "pliz" then
-            p:outfitMessageSlot("engines", "here", { id = po:id(), sign = dat, t = mystats(po, dat) } )
+            p:outfitMessageSlot("engines", "here", {id = po:id(), sign = dat, t = mystats(po, dat)})
          elseif is_secondary(po) then
             warn('message "'.. msg ..'" send to secondary (ignored)')
          elseif msg == "halt" then
-            if multiengines.halt_n(gathered_data, dat.id, dat.off) then
-               multiengines.refresh(gathered_data, po, false)
+            if multiengines.halt_n(mem.gathered_data, dat.id, dat.off) then
+               multiengines.refresh(mem.gathered_data, po, false)
                po:clear()
-               multicore.set( p, po )
+               multicore.set(p, po)
             end
          elseif msg == "ask" then
-            return multiengines.engine_stats(gathered_data, dat)
+            return multiengines.engine_stats(mem.gathered_data, dat)
          elseif msg == "here" then
-            multiengines.decl_engine_stats(gathered_data, dat.id, dat.sign, dat.t)
+            multiengines.decl_engine_stats(mem.gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
-            multiengines.refresh(gathered_data, po, true)
+            multiengines.refresh(mem.gathered_data, po, true)
             po:clear()
-            multicore.set( p, po )
+            multicore.set(p, po)
          elseif msg == "wtf?" then
-            return gathered_data
+            return mem.gathered_data
          else
             warn('Unknown message: "' .. msg .. '"')
          end
       end
 
       if message_old then
-         message_old( p, po, msg, dat )
+         message_old(p, po, msg, dat)
       end
    end
 
@@ -330,7 +341,7 @@ function multicore.init( params, setfunc )
    function onremove( p, po )
       equip(p, po, -1)
       if onremove_old then
-         onremove_old( p, po )
+         onremove_old(p, po)
       end
    end
 
@@ -339,9 +350,9 @@ function multicore.init( params, setfunc )
       local onoutfitchange_old = onoutfitchange
       function onoutfitchange( p, po )
          if onoutfitchange_old then
-            onoutfitchange_old( p, po )
+            onoutfitchange_old(p, po)
          end
-         multicore.set( p, po )
+         multicore.set(p, po)
       end
    end
 
@@ -350,13 +361,13 @@ end
 
 function multicore.set( p, po )
    if mem.stats then
-      for s,val in pairs(mem.stats) do
+      for s, val in pairs(mem.stats) do
          po:set(s, val)
       end
    end
    -- Apply a set function if applicable
    if SETFUNC then
-      SETFUNC( p, po )
+      SETFUNC(p, po)
    end
 end
 
