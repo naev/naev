@@ -166,6 +166,12 @@ jobs:
           name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
           path: ${{ github.workspace }}/appImageBuildLog.txt
 
+      - name: Upload Test AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-appimage
+          path: ${{ github.workspace }}/appImageBuild/dist/*.AppImage
+
   "Windows_Compile_Naev":
     needs: "Package_Source"
 
