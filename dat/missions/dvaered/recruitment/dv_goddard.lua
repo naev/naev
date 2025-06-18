@@ -392,12 +392,25 @@ function spreadCommando()
    local vel = mem.koala:vel()
    local poC = mem.koala:pos() - vel/vel:mod() * 10
    mem.mrk = system.markerAdd( poC, _("Commandos") )
-   system.addGatherable( _cargo(), 1, poC, vel*0.5, 3600, true ) -- Spawn the commando (player-only gatherable) just behind the Koala
+   mem.commandosVelocity = vel*0.5
+   mem.commandosInitialPosition = poC
+   mem.commandosTimer = 0
+   system.addGatherable( _cargo(), 1, mem.commandosInitialPosition, mem.commandosVelocity, 3600, true ) -- Spawn the commando (player-only gatherable) just behind the Koala
+   hook.timer( 3, "updateMarkerPosition" )
    audio.soundPlay( "target" )
    player.msg("#o".._("Spacewalking commandos in sight.").."#0")
    player.autonavReset(5)
    mem.koala:setHilight(false)
    mem.gathHook = hook.gather("gather")
+end
+
+function updateMarkerPosition()
+   if mem.misn_state < 3 then
+      system.markerRm( mem.mrk )
+      mem.commandosTimer = mem.commandosTimer + 3
+      mem.mrk = system.markerAdd( mem.commandosInitialPosition + mem.commandosVelocity * mem.commandosTimer, _("Commandos") )
+      hook.timer( 3, "updateMarkerPosition" )
+   end
 end
 
 -- Player gathers the commandos
