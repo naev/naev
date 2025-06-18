@@ -254,7 +254,7 @@ void gl_renderDepthRaw( GLuint depth, uint8_t flags, double x, double y,
    }
 
    /* Set the texture. */
-   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   tex_mat = mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderDepthRawH( depth, &projection, &tex_mat );
@@ -326,8 +326,6 @@ void gl_renderTextureDepthRaw( GLuint texture, GLuint depth, uint8_t flags,
    }
 
    /* Set the texture. */
-   /* TODO fix this being inconsistent... */
-   // tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
    tex_mat = mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
@@ -422,7 +420,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
    }
 
    /* Set the texture. */
-   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   tex_mat = mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    gl_renderTextureRawH( texture, sampler, &projection, &tex_mat, c );
@@ -444,7 +442,7 @@ void gl_renderTextureRaw( GLuint texture, GLuint sampler, uint8_t flags,
  *    @param c Colour to use (modifies texture colour).
  *    @param angle Rotation to apply (radians ccw around the center).
  */
-void gl_renderTexture( const glTexture *texture, double x, double y, double w,
+void gl_/enderTexture( const glTexture *texture, double x, double y, double w,
                        double h, double tx, double ty, double tw, double th,
                        const glColour *c, double angle )
 {
@@ -503,7 +501,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
     * but we have to actually pad the SDF first... */
    sw      = 0.; // 1./w;
    sh      = 0.; // 1./h;
-   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   tex_mat = mat4_identity();
    mat4_scale_xy( &tex_mat, tex_srw( texture ) + 2. * sw,
                   tex_srh( texture ) + 2. * sh );
    mat4_translate_xy( &tex_mat, -sw, -sh );
@@ -630,7 +628,7 @@ void gl_renderTextureInterpolate( const glTexture *ta, const glTexture *tb,
 
    projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, x, y, w, h );
-   tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   tex_mat = mat4_identity();
    mat4_translate_scale_xy( &tex_mat, tx, ty, tw, th );
 
    return gl_renderTextureInterpolateRawH( tex_tex( ta ), tex_tex( tb ),
@@ -1171,7 +1169,7 @@ void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.resize.vertex, 0, 2,
                                GL_FLOAT, 0 );
 
-   mat4 tex_mat = mat4_ortho( -1., 1., 2., 0., 1., -1. );
+   mat4 tex_mat = mat4_identity();
 
    glUniform1f( shaders.resize.u_scale, scale );
    glUniform1f( shaders.resize.u_radius, 8.0 );

@@ -225,8 +225,7 @@ static int texL_new( lua_State *L )
          return NLUA_ERROR( L,
                             _( "Texture dimensions don't match data size!" ) );
       SDL_asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
-      tex = gl_loadImageData( (void *)ld->data, w, h, sx, sy, name,
-                              OPENGL_TEX_VFLIP );
+      tex = gl_loadImageData( (void *)ld->data, w, h, sx, sy, name, 0 );
       free( name );
       if ( tex == NULL )
          return 0;
@@ -244,12 +243,12 @@ static int texL_new( lua_State *L )
 
    /* Push new texture. */
    if ( path != NULL )
-      tex = gl_newSprite( path, sx, sy, OPENGL_TEX_VFLIP );
+      tex = gl_newSprite( path, sx, sy, 0 );
    else {
       rw = PHYSFSRWOPS_openRead( lf->path );
       if ( rw == NULL )
          return NLUA_ERROR( L, "Unable to open '%s'", lf->path );
-      tex = gl_newSpriteRWops( lf->path, rw, sx, sy, OPENGL_TEX_VFLIP );
+      tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
       // SDL_RWclose( rw ); /* cleaned up rust-side now. */
    }
 

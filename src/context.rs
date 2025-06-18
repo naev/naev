@@ -112,6 +112,15 @@ pub struct Dimensions {
     pub projection: Matrix3<f32>,
 }
 
+#[rustfmt::skip]
+fn ortho3( left: f32, right: f32, bottom: f32, top: f32 ) -> Matrix3<f32> {
+    Matrix3::new(
+        2.0/(right-left), 0.0,              -(right+left)/(right-left),
+        0.0,              2.0/(top-bottom), -(top+bottom)/(top-bottom),
+        0.0,              0.0,              1.0,
+    )
+}
+
 impl Dimensions {
     pub fn new(window: &sdl::video::Window) -> Self {
         let (window_width, window_height) = window.size();
@@ -120,12 +129,7 @@ impl Dimensions {
             let scale = unsafe { naevc::conf.scalefactor as f32 };
             (w / scale, h / scale, 1.0 / scale)
         };
-        #[rustfmt::skip]
-        let projection = Matrix3::new(
-            2.0/view_width, 0.0,             -1.0,
-            0.0,            2.0/view_height, -1.0,
-            0.0,            0.0,              1.0,
-        );
+        let projection = ortho3(0.0, view_width, view_height, 0.0);
 
         Dimensions {
             window_width,

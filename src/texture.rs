@@ -183,8 +183,8 @@ impl TextureData {
         let (w, h) = (img.width(), img.height());
         //let imgdata = img.flipv().to_rgba8().into_raw();
         let imgdata = match has_alpha {
-            true => img.to_rgba8().into_raw(),
-            false => img.to_rgb8().into_raw(),
+            true => img.flipv().to_rgba8().into_raw(),
+            false => img.flipv().to_rgb8().into_raw(),
         };
 
         let is_srgb = true;
@@ -1300,7 +1300,7 @@ pub extern "C" fn gl_renderTexture(
     #[rustfmt::skip]
     let texture: Matrix3<f32> = Matrix3::new(
         tw as f32, 0.0,       tx as f32,
-        0.0,      -th as f32, (th-ty) as f32,
+        0.0,      th as f32, ty as f32,
         0.0,       0.0,       1.0,
     );
     let data = render::TextureUniform {

@@ -19,13 +19,8 @@
  *
  * Absolute:
  *  * Everything is drawn in "screen coordinates".
- *  * (0., 0.) is bottom left.
- *  * (SCREEN_W, SCREEN_H) is top right.
- *
- * Note that the game actually uses a third type of coordinates for when using
- *  raw commands.  In this third type, the (0.,0.) is actually in middle of the
- *  screen.  (-SCREEN_W/2.,-SCREEN_H/2.) is bottom left and
- *  (+SCREEN_W/2.,+SCREEN_H/2.) is top right.
+ *  * (0., 0.) is top left.
+ *  * (SCREEN_W, SCREEN_H) is bottom right.
  */
 /** @cond */
 #include "SDL.h"
@@ -500,8 +495,8 @@ void gl_viewport( int x, int y, int w, int h )
 {
    mat4 proj = mat4_ortho( 0.,           /* Left edge. */
                            gl_screen.nw, /* Right edge. */
-                           0.,           /* Bottom edge. */
-                           gl_screen.nh, /* Top edge. */
+                           gl_screen.nh, /* Bottom edge. */
+                           0.,           /* Top edge. */
                            -1.,          /* near */
                            1. );         /* far */
 

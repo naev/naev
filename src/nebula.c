@@ -199,7 +199,7 @@ static void nebu_blitFBO( void )
       return;
 
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
-   const mat4 ortho = mat4_ortho( 0, 1, 0, 1, 1, -1 );
+   const mat4 ortho = mat4_ortho( 0, 1, 1, 0, 1, -1 );
    const mat4 I     = mat4_identity();
    gl_renderTextureRawH( nebu_tex, 0, &ortho, &I, &cWhite );
 }

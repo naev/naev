@@ -29,7 +29,7 @@ local function _H( x, y, r, sx, sy )
       -- Rendering to canvas
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
-      H = naev.transform.ortho( 0, cw, 0, ch, 1, -1 )
+      H = naev.transform.ortho( 0, cw, ch, 0, 1, -1 )
       local cs = 1/graphics._canvas.t.s
       H = H:scale( cs, cs )
    else
@@ -162,7 +162,7 @@ function graphics.Image:draw( ... )
    if canvas then
       s1 = canvas.w
       s2 = canvas.h
-      s3 = -1.0
+      s3 = 1.0
       s4 = love.h
    else
       s1 = love.w
@@ -217,8 +217,8 @@ end
 --]]
 function graphics.origin()
    local nw, nh = naev.gfx.dim()
-   local nx = -love.x
-   local ny = love.h+love.y-nh
+   local nx = love.x
+   local ny = love.y
    graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, 1, -1 )
    graphics._T = { love_math.newTransform() }
 end
@@ -578,7 +578,6 @@ out vec4 colour_out;
 
 vec2 love_getPixelCoord() {
    vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
-   uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
    return uv;
 }
 
@@ -602,9 +601,8 @@ vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
-    VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
     VaryingTexCoord  = ViewSpaceFromLocal * VaryingTexCoord;
-    VaryingColour     = ConstantColour;
+    VaryingColour    = ConstantColour;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
     VaryingPosition  = love_Position.xy;
 }

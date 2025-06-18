@@ -968,7 +968,7 @@ void ovr_render( double dt )
 
       /* Set shader uniforms. */
       gl_uniformColour( shaders.stealthoverlay.colour, &cWhite );
-      const mat4 ortho = mat4_ortho( 0., 1., 0., 1., 1., -1. );
+      const mat4 ortho = mat4_ortho( 0., 1., 1., 0., 1., -1. );
       const mat4 I     = mat4_identity();
       gl_uniformMat4( shaders.stealthoverlay.projection, &ortho );
       gl_uniformMat4( shaders.stealthoverlay.tex_mat, &I );

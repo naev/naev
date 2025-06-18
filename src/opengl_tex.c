@@ -1024,12 +1024,10 @@ glTexture *gl_resizeTexture( const glTexture *texture, double scale )
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.resize.vertex, 0, 2,
                                GL_FLOAT, 0 );
 
-   mat4 projection = mat4_ortho( 0., nw, 0, nh, -1., 1. );
+   mat4 projection = mat4_ortho( 0., nw, nh, 0, -1., 1. );
    mat4_scale_xy( &projection, nw, nh );
 
-   mat4 tex_mat = ( texture->flags & OPENGL_TEX_VFLIP )
-                     ? mat4_ortho( -1., 1., 2., 0., 1., -1. )
-                     : mat4_identity();
+   mat4 tex_mat = mat4_identity();
 
    glUniform1f( shaders.resize.u_scale, scale );
    glUniform1f( shaders.resize.u_radius, 8.0 );
