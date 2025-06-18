@@ -74,10 +74,7 @@ void nlua_resize( void );
 int nlua_helperTags( lua_State *L, int idx, char *const *tags );
 
 /* Loaders. */
-int nlua_package_preload( lua_State *L );
 int nlua_package_loader_lua( lua_State *L );
-int nlua_package_loader_c( lua_State *L );
-int nlua_package_loader_croot( lua_State *L );
 
 #if DEBUGGING
 void nlua_pushEnvTable( lua_State *L );

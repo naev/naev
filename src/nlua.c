@@ -465,29 +465,6 @@ int nlua_package_loader_lua( lua_State *L )
 }
 
 /**
- * @brief load( string module ) -- searcher function to replace
- * package.loaders[3] (Lua 5.1), i.e., for C modules.
- *
- *    @param L Lua Environment.
- *    @return Stack depth (1), and on the stack: a loader function, a string
- * explaining there is none, or nil (no explanation).
- */
-int nlua_package_loader_c( lua_State *L )
-{
-   const char *name = luaL_checkstring( L, 1 );
-   /* Hardcoded libraries only: we DO NOT honor package.cpath. */
-   if ( strcmp( name, "utf8" ) == 0 )
-      lua_pushcfunction( L, luaopen_utf8 );
-   else if ( strcmp( name, "enet" ) == 0 && conf.lua_enet )
-      lua_pushcfunction( L, luaopen_enet );
-   else if ( strcmp( name, "cmark" ) == 0 )
-      lua_pushcfunction( L, luaopen_cmark );
-   else
-      lua_pushnil( L );
-   return 1;
-}
-
-/**
  * @brief Gets a trace from Lua.
  */
 int nlua_errTrace( lua_State *L )

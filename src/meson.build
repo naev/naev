@@ -296,6 +296,7 @@ headers = files(
    'land_trade.h',
    'load.h',
    'log.h',
+   'lua_enet.h',
    'lutf8lib.h',
    'lvar.h',
    'map.h',

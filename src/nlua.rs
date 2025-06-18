@@ -306,6 +306,30 @@ impl NLua {
                     "ryaml" => Ok(mlua::Value::Function(lua.create_function(
                         |lua, ()| -> mlua::Result<mlua::Table> { ryaml::ryaml_safe(lua) },
                     )?)),
+                    "utf8" => unsafe {
+                        Ok(mlua::Value::Function(lua.create_c_function(
+                            std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                                naevc::luaopen_utf8,
+                            ),
+                        )?))
+                    },
+                    "cmark" => unsafe {
+                        Ok(mlua::Value::Function(lua.create_c_function(
+                            std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                                naevc::luaopen_cmark,
+                            ),
+                        )?))
+                    },
+                    "enet" => match unsafe { naevc::conf.lua_enet } {
+                        0 => Ok(mlua::Value::Nil),
+                        _ => unsafe {
+                            Ok(mlua::Value::Function(lua.create_c_function(
+                                std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
+                                    naevc::luaopen_enet,
+                                ),
+                            )?))
+                        },
+                    },
                     _ => Ok(mlua::Value::Nil),
                 }
             })?,
@@ -337,11 +361,6 @@ impl NLua {
             loaders.push(
                 lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
                     naevc::nlua_package_loader_lua,
-                ))?,
-            )?;
-            loaders.push(
-                lua.create_c_function(std::mem::transmute::<CFunctionNaev, CFunctionMLua>(
-                    naevc::nlua_package_loader_c,
                 ))?,
             )?;
         }
