@@ -1,4 +1,4 @@
-local tfs = require "tfs"
+local tfs = require "tfs_api"
 
 local multiengines = {
    mobility_params = {'accel', 'turn', 'speed', 'engine_limit'},
