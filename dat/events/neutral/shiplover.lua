@@ -218,7 +218,7 @@ function create ()
    -- Increase the difficulty as progresses
    local difficulty = 1
    local cash_reward = 10e3
-   if nwon >= 5 then
+   if nwon >= 5 and nwon <= 10 then
       difficulty = 2
       cash_reward = 25e3
    elseif nwon > 10 then
