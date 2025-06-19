@@ -78,7 +78,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
                                       double fw, double fh, double engine_glow,
                                       double t, const glColour *c,
                                       const Lighting *L, const mat4 *H,
-                                      int blit, unsigned int flags );
+                                      int blit );
 
 /**
  * @brief Compares two ship pointers for qsort.
@@ -352,7 +352,7 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, glow,
-                                t, &cWhite, &L, &H, 0, 0 );
+                                t, &cWhite, &L, &H, 0 );
       /* Already restore current framebuffer. */
    } else if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
@@ -1608,7 +1608,7 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
          mat4_rotate( &H, dir + M_PI_2, 0.0, 1.0, 0.0 );
 
       ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, t, c, L,
-                                &H, 1, OPENGL_TEX_VFLIP );
+                                &H, 1 );
       /* Already restore current framebuffer. */
    } else {
       double           tx, ty;
