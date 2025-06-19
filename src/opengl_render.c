@@ -658,26 +658,6 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 }
 
 /**
- * @brief Return a transformation which converts in-game coordinates to screen
- * coordinates.
- *
- *    @param lhs Matrix to multiply by the conversion matrix.
- */
-mat4 gl_gameToScreenMatrix( mat4 lhs )
-{
-   double cx, cy, z;
-   mat4   projection = lhs;
-
-   /* Get parameters. */
-   cam_getPos( &cx, &cy );
-   z = cam_getZoom();
-
-   mat4_translate_scale_xy( &projection, SCREEN_W * 0.5, SCREEN_H * 0.5, z, z );
-   mat4_translate_xy( &projection, -cx, cy );
-   return projection;
-}
-
-/**
  * @brief Converts screen coordinates to in-game coordinates.
  *
  *    @param[out] nx New in-game X coord.
