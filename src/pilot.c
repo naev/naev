@@ -1924,9 +1924,8 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh,
       gl_uniformMat4( ed->projection, &projection );
 
       tex_mat = mat4_identity();
-      mat4_translate_scale_xy( &tex_mat, 0., h / (double)gl_screen.nh,
-                               w / (double)gl_screen.nw,
-                               -h / (double)gl_screen.nh );
+      mat4_translate_scale_xy( &tex_mat, 0., 0., w / (double)gl_screen.nw,
+                               h / (double)gl_screen.nh );
       gl_uniformMat4( ed->tex_mat, &tex_mat );
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, 1. );
@@ -2060,8 +2059,7 @@ void pilot_render( Pilot *p )
                y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z,
                // 0, 0, w / (double)gl_screen.nw, h / (double)gl_screen.nh,
                // NULL,
-               0, h / (double)gl_screen.nh, w / (double)gl_screen.nw,
-               -h / (double)gl_screen.nh, NULL,
+               0., 0., w / (double)gl_screen.nw, h / (double)gl_screen.nh, NULL,
                0. ); /* Colour should already be applied. */
          } else {
             gl_renderSpriteInterpolateScale(
@@ -2094,8 +2092,7 @@ void pilot_render( Pilot *p )
          gl_renderDepthRaw(
             gl_screen.fbo_depth_tex[2], 0, x + ( 1. - scale ) * z * w * 0.5,
             y + ( 1. - scale ) * z * h * 0.5, w * scale * z, h * scale * z, 0,
-            h / (double)gl_screen.nh, w / (double)gl_screen.nw,
-            -h / (double)gl_screen.nh, 0. );
+            0., w / (double)gl_screen.nw, h / (double)gl_screen.nh, 0. );
 
          /* Go to the shader now. */
          glUseProgram( ed->program );
@@ -2123,9 +2120,8 @@ void pilot_render( Pilot *p )
          gl_uniformMat4( ed->projection, &projection );
 
          tex_mat = mat4_identity();
-         mat4_translate_scale_xy( &tex_mat, 0., h / (double)gl_screen.nh,
-                                  w / (double)gl_screen.nw,
-                                  -h / (double)gl_screen.nh );
+         mat4_translate_scale_xy( &tex_mat, 0., 0., w / (double)gl_screen.nw,
+                                  h / (double)gl_screen.nh );
          gl_uniformMat4( ed->tex_mat, &tex_mat );
 
          glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );

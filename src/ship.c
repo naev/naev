@@ -1567,27 +1567,14 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
       GLint sout = ceil( size / gl_screen.scale ) + 1;
       glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[1] );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
-      if ( flags & OPENGL_TEX_VFLIP ) {
-         glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0,
-                            GL_COLOR_BUFFER_BIT, GL_LINEAR );
-         /* Depth can only use NEAREST filtering. */
-         glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
-         glBlitFramebuffer( 0, 0, sin, sin, 0, sout, sout, 0,
-                            GL_DEPTH_BUFFER_BIT, GL_NEAREST );
-      } else {
-         glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout,
-                            GL_COLOR_BUFFER_BIT, GL_LINEAR );
-         glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
-         glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout,
-                            GL_DEPTH_BUFFER_BIT, GL_NEAREST );
-      }
+      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_COLOR_BUFFER_BIT,
+                         GL_LINEAR );
+      glBindFramebuffer( GL_READ_FRAMEBUFFER, ship_fbo[0] );
+      glBlitFramebuffer( 0, 0, sin, sin, 0, 0, sout, sout, GL_DEPTH_BUFFER_BIT,
+                         GL_NEAREST );
    } else {
       glBindFramebuffer( GL_FRAMEBUFFER, fbo );
       tex_mat = mat4_identity();
-      if ( flags & OPENGL_TEX_VFLIP ) {
-         tex_mat.m[1][1] = -1.;
-         tex_mat.m[3][1] = 0.5;
-      }
       gl_renderTextureRawH( ship_tex[1], 0, &projection, &tex_mat, &cWhite );
    }
 

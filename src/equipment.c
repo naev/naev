@@ -1016,7 +1016,7 @@ static void equipment_renderShip( double bx, double by, double bw, double bh,
    mat4 projection = gl_view_matrix;
    mat4_translate_scale_xy( &projection, px, py, pw, ph );
    mat4 tex_mat = mat4_identity();
-   mat4_translate_scale_xy( &tex_mat, 0., s / swd->s, s / swd->s, -s / swd->s );
+   mat4_translate_scale_xy( &tex_mat, 0., 0., s / swd->s, s / swd->s );
    gl_renderTextureRawH( swd->tex, 0, &projection, &tex_mat, NULL );
 
 #ifdef DEBUGGING

@@ -985,9 +985,9 @@ function render( dt, dt_mod )
             --Render target graphic
             ptarget:renderTo( ptarget_cvs )
             if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
-               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, -1)
+               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, 1)
             else
-               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2, ptarget_gfx_w, ptarget_gfx_h, 1, 1, 0, 0, 1, -1)
+               gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2, ptarget_gfx_w, ptarget_gfx_h, 1, 1, 0, 0, 1, 1)
             end
          else
             --Render ?
