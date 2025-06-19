@@ -309,7 +309,7 @@ static int tex_cmp( const void *p1, const void *p2 )
 {
    const glTexList   *t1        = (const glTexList *)p1;
    const glTexList   *t2        = (const glTexList *)p2;
-   const unsigned int testflags = OPENGL_TEX_SDF | OPENGL_TEX_VFLIP |
+   const unsigned int testflags = OPENGL_TEX_SDF |
                                   OPENGL_TEX_MAPTRANS | OPENGL_TEX_NOTSRGB;
    int ret = strcmp( t1->path, t2->path );
    if ( ret != 0 )
@@ -773,7 +773,6 @@ static int gl_loadNewImageRWops( glTexture *tex, const char *path,
 
    surface = IMG_Load_RW( rw, 0 );
 
-   flags |= OPENGL_TEX_VFLIP;
    if ( surface == NULL ) {
       WARN( _( "'%s' could not be opened" ), path );
       return -1;
@@ -1188,12 +1187,5 @@ void tex_setTex( glTexture *tex, GLuint texture )
 unsigned int tex_flags( const glTexture *tex )
 {
    return tex->flags;
-}
-void tex_setVFLIP( glTexture *tex, int flip )
-{
-   if ( flip )
-      tex->flags |= OPENGL_TEX_VFLIP;
-   else
-      tex->flags &= ~OPENGL_TEX_VFLIP;
 }
 #endif

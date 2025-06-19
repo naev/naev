@@ -24,16 +24,13 @@
  */
 #define OPENGL_TEX_MAPTRANS ( 1 << 0 ) /**< Create a transparency map. */
 #define OPENGL_TEX_MIPMAPS ( 1 << 1 )  /**< Creates mipmaps. */
-#define OPENGL_TEX_VFLIP                                                       \
-   ( 1 << 2 ) /**< Assume loaded from an image (where positive y means down).  \
-               */
 #define OPENGL_TEX_SKIPCACHE                                                   \
-   ( 1 << 3 ) /**< Skip caching checks and create new texture. */
+   ( 1 << 2 ) /**< Skip caching checks and create new texture. */
 #define OPENGL_TEX_SDF                                                         \
-   ( 1 << 4 ) /**< Convert to an SDF. Only the alpha channel gets used. */
+   ( 1 << 3 ) /**< Convert to an SDF. Only the alpha channel gets used. */
 #define OPENGL_TEX_CLAMP_ALPHA                                                 \
-   ( 1 << 5 ) /**< Clamp image border to transparency. */
-#define OPENGL_TEX_NOTSRGB ( 1 << 6 ) /**< Texture is not in SRGB format. */
+   ( 1 << 4 ) /**< Clamp image border to transparency. */
+#define OPENGL_TEX_NOTSRGB ( 1 << 5 ) /**< Texture is not in SRGB format. */
 
 struct glTexture;
 typedef struct glTexture glTexture;

@@ -838,7 +838,6 @@ impl FramebufferBuilder {
 struct Flags {
     maptrans: bool,
     mipmaps: bool,
-    flipv: bool,
     skipcache: bool,
     sdf: bool,
     clamp_alpha: bool,
@@ -849,7 +848,6 @@ impl Flags {
         Flags {
             maptrans: (flags & naevc::OPENGL_TEX_MAPTRANS) > 0,
             mipmaps: (flags & naevc::OPENGL_TEX_MIPMAPS) > 0,
-            flipv: (flags & naevc::OPENGL_TEX_VFLIP) > 0,
             skipcache: (flags & naevc::OPENGL_TEX_SKIPCACHE) > 0,
             sdf: (flags & naevc::OPENGL_TEX_SDF) > 0,
             clamp_alpha: (flags & naevc::OPENGL_TEX_CLAMP_ALPHA) > 0,
@@ -906,7 +904,6 @@ pub extern "C" fn gl_texExistsOrCreate(
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
         .sy(sy as usize)
-        .flipv(flags.flipv)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -965,7 +962,6 @@ pub extern "C" fn gl_loadImageData(
         .name(Some(name.to_str().unwrap()))
         .sx(sx as usize)
         .sy(sy as usize)
-        .flipv(flags.flipv)
         .width(w as usize)
         .height(h as usize);
 
@@ -1029,7 +1025,6 @@ pub extern "C" fn gl_newSprite(
         .path(path.to_str().unwrap())
         .sx(sx as usize)
         .sy(sy as usize)
-        .flipv(flags.flipv)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 
@@ -1071,7 +1066,6 @@ pub extern "C" fn gl_newSpriteRWops(
     let mut builder = TextureBuilder::new()
         .sx(sx as usize)
         .sy(sy as usize)
-        .flipv(flags.flipv)
         .srgb(!flags.notsrgb)
         .mipmaps(flags.mipmaps);
 

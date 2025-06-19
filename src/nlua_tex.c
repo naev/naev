@@ -115,7 +115,7 @@ glTexture *luaL_validtex( lua_State *L, int ind, const char *searchpath )
       return gl_dupTexture( luaL_checktex( L, ind ) );
    ndata_getPathDefault( path, sizeof( path ), searchpath,
                          luaL_checkstring( L, ind ) );
-   return gl_newImage( path, OPENGL_TEX_VFLIP );
+   return gl_newImage( path, 0 );
 }
 /**
  * @brief Pushes a texture on the stack.
