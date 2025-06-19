@@ -39,7 +39,7 @@ Development Manual](https://naev.org/devmanual/) (WIP).
 
 Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
-* rust
+* rust 2024
 * bindgen
 * SDL2
 * libxml2

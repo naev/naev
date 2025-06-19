@@ -166,6 +166,7 @@ pub struct Context {
     // To be phased out when moved to rust
     pub vao_core: glow::VertexArray,
 }
+// Not actually safe, to fix someday... T_T
 unsafe impl Sync for Context {}
 unsafe impl Send for Context {}
 
@@ -211,8 +212,6 @@ impl Drop for SafeContext<'_> {
         guard.window.gl_make_current(&guard.gl_context).unwrap();
     }
 }
-unsafe impl Sync for SafeContext<'_> {}
-unsafe impl Send for SafeContext<'_> {}
 
 impl Context {
     #[rustfmt::skip]
