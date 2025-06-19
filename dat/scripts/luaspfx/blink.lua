@@ -22,7 +22,7 @@ local function render( sp, x, y, z )
    local old_shader = lg.getShader()
    lg.setShader( blink_shader )
    -- We have to flip the y axis
-   c:draw( x-c.w*s*0.5, y+c.h*s*0.5, 0, s, -s )
+   c:draw( x-c.w*s*0.5, y-c.h*s*0.5, 0, s, s )
    lg.setShader( old_shader )
 end
 

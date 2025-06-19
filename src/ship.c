@@ -472,7 +472,7 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
                         gltf_sceneBody( s->gfx_3d ), &H, t, rendersize, &L );
       glBindFramebuffer( GL_READ_FRAMEBUFFER, gl_screen.fbo[2] );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
-      glBlitFramebuffer( 0, 0, rendersize, rendersize, 0, fbosize, fbosize, 0,
+      glBlitFramebuffer( 0, 0, rendersize, rendersize, 0, 0, fbosize, fbosize,
                          GL_COLOR_BUFFER_BIT, GL_LINEAR );
    } else if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
@@ -1468,7 +1468,7 @@ static void ship_renderFramebuffer3D( const Ship *s, GLuint fbo, double size,
                                       double fw, double fh, double engine_glow,
                                       double t, const glColour *c,
                                       const Lighting *L, const mat4 *H,
-                                      int blit, unsigned int flags )
+                                      int blit )
 {
    double      scale = ship_aa_scale * size;
    GltfObject *obj   = s->gfx_3d;
