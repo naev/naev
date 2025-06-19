@@ -129,7 +129,7 @@ impl Dimensions {
             let scale = unsafe { naevc::conf.scalefactor as f32 };
             (w / scale, h / scale, 1.0 / scale)
         };
-        let projection = ortho3(0.0, view_width, view_height, 0.0);
+        let projection = ortho3(0.0, view_width, 0.0, view_height);
 
         Dimensions {
             window_width,

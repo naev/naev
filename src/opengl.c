@@ -495,8 +495,8 @@ void gl_viewport( int x, int y, int w, int h )
 {
    mat4 proj = mat4_ortho( 0.,           /* Left edge. */
                            gl_screen.nw, /* Right edge. */
-                           gl_screen.nh, /* Bottom edge. */
-                           0.,           /* Top edge. */
+                           0.,           /* Bottom edge. */
+                           gl_screen.nh, /* Top edge. */
                            -1.,          /* near */
                            1. );         /* far */
 
