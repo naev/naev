@@ -191,6 +191,7 @@ impl Drop for ContextGuard<'_, '_> {
 }
 
 /// Wrapper for thread safe OpenGL context
+#[derive(Clone)]
 pub struct SafeContext<'ctx> {
     ctx: Arc<Mutex<&'ctx Context>>,
 }
@@ -210,6 +211,33 @@ impl Drop for SafeContext<'_> {
     fn drop(&mut self) {
         let guard = self.ctx.lock().unwrap();
         guard.window.gl_make_current(&guard.gl_context).unwrap();
+    }
+}
+
+pub enum ContextWrapperGuard<'a> {
+    Context(&'a Context),
+    Safe(ContextGuard<'a, 'a>),
+}
+impl<'a> Deref for ContextWrapperGuard<'a> {
+    type Target = &'a Context;
+    fn deref(&self) -> &Self::Target {
+        match self {
+            Self::Context(ctx) => ctx,
+            Self::Safe(sctx) => sctx,
+        }
+    }
+}
+#[derive(Clone)]
+pub enum ContextWrapper<'a> {
+    Context(&'a Context),
+    Safe(SafeContext<'a>),
+}
+impl<'a> ContextWrapper<'a> {
+    pub fn lock(&'a self) -> ContextWrapperGuard<'a> {
+        match self {
+            Self::Context(ctx) => ContextWrapperGuard::Context(ctx),
+            Self::Safe(sctx) => ContextWrapperGuard::Safe(sctx.lock()),
+        }
     }
 }
 

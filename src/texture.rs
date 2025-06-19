@@ -449,6 +449,66 @@ impl TextureSource {
 
         Ok(tex)
     }
+    fn to_texture_data_safe<'a>(
+        &self,
+        sctx: &'a context::ContextWrapper<'a>,
+        w: usize,
+        h: usize,
+        mipmaps: bool,
+        name: Option<&str>,
+    ) -> Result<Arc<TextureData>> {
+        if let TextureSource::TextureData(tex) = self {
+            // Purpose dropout, don't want to cache again here
+            return Ok(tex.clone());
+        };
+
+        let mut textures = TEXTURE_DATA.lock().unwrap();
+
+        // Try to load from name if possible
+        if let Some(name) = name {
+            if let Some(t) = TextureData::exists_textures(name, &textures) {
+                // TODO we would actually have to make sure it has mipmaps if we want them...
+                return Ok(t);
+            }
+        }
+
+        // Failed to find in cache, load a new
+        let tex = Arc::new({
+            let mut inner = match self {
+                TextureSource::Path(path) => {
+                    //let bytes = ndata::read(path.as_str())?;
+                    //let img = image::load_from_memory(&bytes)?;
+                    let rw = ndata::rwops(path.as_str()).map_err(|e| anyhow::anyhow!(e))?;
+                    let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
+                    let img = surface_to_image(sur)?;
+                    let ctx = &sctx.lock();
+                    TextureData::from_image(ctx, name, &img)?
+                }
+                TextureSource::Image(img) => {
+                    let ctx = &sctx.lock();
+                    TextureData::from_image(ctx, name, img)?
+                }
+                TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
+                TextureSource::Empty(fmt) => {
+                    let ctx = &sctx.lock();
+                    TextureData::new(ctx, *fmt, w, h)?
+                }
+                TextureSource::TextureData(tex) => unreachable!(),
+            };
+            if mipmaps {
+                let ctx = &sctx.lock();
+                inner.generate_mipmap(&ctx.gl)?;
+            }
+            inner
+        });
+
+        // Add weak reference to cache
+        if name.is_some() {
+            textures.push(Arc::downgrade(&tex));
+        }
+
+        Ok(tex)
+    }
 }
 
 pub struct TextureBuilder {
@@ -602,6 +662,58 @@ impl TextureBuilder {
         let texture =
             self.source
                 .to_texture_data(ctx, self.w, self.h, self.mipmaps, self.name.as_deref())?;
+        let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
+        unsafe {
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_MAG_FILTER, self.mag_filter.to_gl());
+            if let Some(border) = &self.border_value {
+                gl.sampler_parameter_f32_slice(
+                    sampler,
+                    glow::TEXTURE_BORDER_COLOR,
+                    border.as_slice(),
+                );
+            }
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_gl());
+            gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_gl());
+            #[cfg(debug_assertions)]
+            gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
+        }
+
+        let (w, h) = (texture.w, texture.h);
+        let (sx, sy) = (self.sx, self.sy);
+        let sw = (w as f64) / (sx as f64);
+        let sh = (h as f64) / (sy as f64);
+        let srw = sw / (w as f64);
+        let srh = sh / (h as f64);
+
+        Ok(Texture {
+            path: self.name.clone(),
+            name: self.name.map(|s| CString::new(s.as_str()).unwrap()),
+            sx,
+            sy,
+            sw,
+            sh,
+            srw,
+            srh,
+            texture,
+            sampler,
+            flipv: self.flipv,
+            mipmaps: self.mipmaps,
+        })
+    }
+
+    pub fn build_safe<'a>(self, sctx: &'a context::ContextWrapper<'a>) -> Result<Texture> {
+        /* TODO handle SDF. */
+        let texture = self.source.to_texture_data_safe(
+            sctx,
+            self.w,
+            self.h,
+            self.mipmaps,
+            self.name.as_deref(),
+        )?;
+
+        let ctx = &sctx.lock();
+        let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         unsafe {
             gl.sampler_parameter_i32(sampler, glow::TEXTURE_MIN_FILTER, self.min_filter.to_gl());
