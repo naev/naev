@@ -352,7 +352,7 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, glow,
-                                t, &cWhite, &L, &H, 0, OPENGL_TEX_VFLIP );
+                                t, &cWhite, &L, &H, 0, 0 );
       /* Already restore current framebuffer. */
    } else if ( s->gfx_comm != NULL ) {
       glTexture *glcomm;
@@ -565,7 +565,7 @@ int ship_size( const Ship *s )
  */
 static int ship_loadSpaceImage( Ship *temp, const char *str, int sx, int sy )
 {
-   unsigned int flags = OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP;
+   unsigned int flags = OPENGL_TEX_MIPMAPS;
    /* If no collision polygon, we use transparency mapping. */
    if ( array_size( temp->polygon.views ) <= 0 )
       flags |= OPENGL_TEX_MAPTRANS;

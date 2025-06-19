@@ -895,8 +895,7 @@ static void preview_render( double x, double y, double w, double h, void *data )
       ship_renderGfxStore( p->fbo, shipyard_selected, SHIP_GFX_SIZE, p->dir,
                            p->updown, 0. );
 
-   gl_renderTextureRaw( p->tex, 0, OPENGL_TEX_VFLIP, x, y, w, h, 0., 0., 1., 1.,
-                        NULL, 0. );
+   gl_renderTextureRaw( p->tex, 0, 0, x, y, w, h, 0., 0., 1., 1., NULL, 0. );
 }
 
 static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
