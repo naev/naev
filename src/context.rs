@@ -171,20 +171,20 @@ unsafe impl Sync for Context {}
 unsafe impl Send for Context {}
 
 /// Wrapper for a Context MutexGuard
-pub struct ContextWrap<'sc, 'ctx>(MutexGuard<'sc, &'ctx Context>);
-impl<'sc, 'ctx> ContextWrap<'sc, 'ctx> {
+pub struct ContextGuard<'sc, 'ctx>(MutexGuard<'sc, &'ctx Context>);
+impl<'sc, 'ctx> ContextGuard<'sc, 'ctx> {
     fn new(guard: MutexGuard<'sc, &'ctx Context>) -> Self {
         guard.window.gl_make_current(&guard.gl_context).unwrap();
-        ContextWrap(guard)
+        ContextGuard(guard)
     }
 }
-impl<'ctx> Deref for ContextWrap<'_, 'ctx> {
+impl<'ctx> Deref for ContextGuard<'_, 'ctx> {
     type Target = &'ctx Context;
     fn deref(&self) -> &Self::Target {
         &self.0
     }
 }
-impl Drop for ContextWrap<'_, '_> {
+impl Drop for ContextGuard<'_, '_> {
     fn drop(&mut self) {
         self.0.sdlvid.gl_release_current_context().unwrap();
     }
@@ -201,9 +201,9 @@ impl<'ctx> SafeContext<'ctx> {
             ctx: Arc::new(Mutex::new(ctx)),
         }
     }
-    pub fn lock(&self) -> ContextWrap<'_, 'ctx> {
+    pub fn lock(&self) -> ContextGuard<'_, 'ctx> {
         let guard = self.ctx.lock().unwrap();
-        ContextWrap::new(guard)
+        ContextGuard::new(guard)
     }
 }
 impl Drop for SafeContext<'_> {
