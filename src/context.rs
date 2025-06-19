@@ -240,6 +240,16 @@ impl<'a> ContextWrapper<'a> {
         }
     }
 }
+impl<'a> From<&'a Context> for ContextWrapper<'a> {
+    fn from(ctx: &'a Context) -> Self {
+        Self::Context(ctx)
+    }
+}
+impl<'a> From<SafeContext<'a>> for ContextWrapper<'a> {
+    fn from(ctx: SafeContext<'a>) -> Self {
+        Self::Safe(ctx)
+    }
+}
 
 impl Context {
     #[rustfmt::skip]
