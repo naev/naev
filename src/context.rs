@@ -214,12 +214,12 @@ impl Drop for SafeContext<'_> {
     }
 }
 
-pub enum ContextWrapperGuard<'a> {
-    Context(&'a Context),
-    Safe(ContextGuard<'a, 'a>),
+pub enum ContextWrapperGuard<'sc, 'ctx> {
+    Context(&'ctx Context),
+    Safe(ContextGuard<'sc, 'ctx>),
 }
-impl<'a> Deref for ContextWrapperGuard<'a> {
-    type Target = &'a Context;
+impl<'ctx> Deref for ContextWrapperGuard<'_, 'ctx> {
+    type Target = &'ctx Context;
     fn deref(&self) -> &Self::Target {
         match self {
             Self::Context(ctx) => ctx,
@@ -228,25 +228,25 @@ impl<'a> Deref for ContextWrapperGuard<'a> {
     }
 }
 #[derive(Clone)]
-pub enum ContextWrapper<'a> {
-    Context(&'a Context),
-    Safe(SafeContext<'a>),
+pub enum ContextWrapper<'ctx> {
+    Context(&'ctx Context),
+    Safe(SafeContext<'ctx>),
 }
-impl<'a> ContextWrapper<'a> {
-    pub fn lock(&'a self) -> ContextWrapperGuard<'a> {
+impl<'ctx> ContextWrapper<'ctx> {
+    pub fn lock(&self) -> ContextWrapperGuard<'_, 'ctx> {
         match self {
             Self::Context(ctx) => ContextWrapperGuard::Context(ctx),
             Self::Safe(sctx) => ContextWrapperGuard::Safe(sctx.lock()),
         }
     }
 }
-impl<'a> From<&'a Context> for ContextWrapper<'a> {
-    fn from(ctx: &'a Context) -> Self {
+impl<'ctx> From<&'ctx Context> for ContextWrapper<'ctx> {
+    fn from(ctx: &'ctx Context) -> Self {
         Self::Context(ctx)
     }
 }
-impl<'a> From<SafeContext<'a>> for ContextWrapper<'a> {
-    fn from(ctx: SafeContext<'a>) -> Self {
+impl<'ctx> From<SafeContext<'ctx>> for ContextWrapper<'ctx> {
+    fn from(ctx: SafeContext<'ctx>) -> Self {
         Self::Safe(ctx)
     }
 }

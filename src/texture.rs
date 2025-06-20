@@ -449,9 +449,9 @@ impl TextureSource {
 
         Ok(tex)
     }
-    fn to_texture_data_safe<'a>(
+    fn to_texture_data_safe(
         &self,
-        sctx: &'a context::ContextWrapper<'a>,
+        sctx: &context::ContextWrapper,
         w: usize,
         h: usize,
         mipmaps: bool,
@@ -702,7 +702,7 @@ impl TextureBuilder {
         })
     }
 
-    pub fn build_safe<'a>(self, sctx: &'a context::ContextWrapper<'a>) -> Result<Texture> {
+    pub fn build_safe(self, sctx: &context::ContextWrapper) -> Result<Texture> {
         /* TODO handle SDF. */
         let texture = self.source.to_texture_data_safe(
             sctx,

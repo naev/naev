@@ -4,7 +4,7 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
 use crate::array::ArrayCString;
-use crate::context::{Context, SafeContext};
+use crate::context::{Context, ContextWrapper, SafeContext};
 use crate::gettext::gettext;
 use crate::log::warn_err;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -28,7 +28,7 @@ pub struct SlotProperty {
     ctags: ArrayCString,
 }
 impl SlotProperty {
-    fn load(ctx: &SafeContext, filename: &str) -> Result<Self> {
+    fn load(ctx: &ContextWrapper, filename: &str) -> Result<Self> {
         let data = ndata::read(filename)?;
         let doc = roxmltree::Document::parse(std::str::from_utf8(&data)?)?;
         let root = doc.root_element();
@@ -61,12 +61,11 @@ impl SlotProperty {
                 "visible" => sp.visible = true,
                 "icon" => {
                     let gfxname = nxml::node_texturepath(node, "gfx/slots/")?;
-                    let nctx = ctx.lock();
                     sp.icon = Some(
                         texture::TextureBuilder::new()
                             .path(&gfxname)
                             .sdf(true)
-                            .build(&nctx)?,
+                            .build_safe(ctx)?,
                     );
                 }
                 "tags" => {
@@ -116,7 +115,7 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 }
 
 pub fn load() -> Result<Vec<SlotProperty>> {
-    let ctx = SafeContext::new(Context::get().unwrap());
+    let ctx: ContextWrapper = SafeContext::new(Context::get().unwrap()).into();
     let files = ndata::read_dir("slots/")?;
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()
