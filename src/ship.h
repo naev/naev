@@ -94,7 +94,7 @@ typedef struct ShipTrailEmitter_ {
 /**
  * @brief Represents a space ship.
  */
-typedef struct Ship_ {
+typedef struct Ship {
    void *rawdata;   /**< Raw data trick. */
    char *inherits;  /**< Ship from which it is inheriting values. */
    char *name;      /**< Ship name. */
@@ -211,7 +211,7 @@ void ships_free( void );
 const Ship *ship_get( const char *name );
 const Ship *ship_getW( const char *name );
 const char *ship_existsCase( const char *name );
-const Ship *ship_getAll( void );
+Ship       *ship_getAll( void );
 const char *ship_class( const Ship *s );
 const char *ship_classDisplay( const Ship *s );
 const char *ship_classToString( ShipClass class );

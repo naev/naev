@@ -306,19 +306,19 @@ typedef struct OutfitAfterburnerData_ {
    double mass_limit; /**< Limit at which effectiveness starts to drop. */
 } OutfitAfterburnerData;
 
-struct Ship_; /* Bit of a horrible hack to allow us to avoid circular
+struct Ship; /* Bit of a horrible hack to allow us to avoid circular
                  definitions. */
 /**
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char               *shipname;    /**< Name of the ships to use as ammo. */
-   const struct Ship_ *ship;        /**< Ship to use as ammo. */
-   double              ship_mass;   /**< Mass of a fighter. */
-   double              delay;       /**< Delay between launches. */
-   int                 amount;      /**< Amount of ammo it can store. */
-   double              reload_time; /**< Time it takes to reload 1 ammo. */
-   int                 sound;       /**< Sound to use when launching. */
+   char              *shipname;    /**< Name of the ships to use as ammo. */
+   const struct Ship *ship;        /**< Ship to use as ammo. */
+   double             ship_mass;   /**< Mass of a fighter. */
+   double             delay;       /**< Delay between launches. */
+   int                amount;      /**< Amount of ammo it can store. */
+   double             reload_time; /**< Time it takes to reload 1 ammo. */
+   int                sound;       /**< Sound to use when launching. */
 } OutfitFighterBayData;
 
 /* Forward declaration */
@@ -532,7 +532,7 @@ double              outfit_launcherIFLockon( const Outfit *o );
 const OutfitGFX    *outfit_launcherGFX( const Outfit *o );
 const TrailSpec    *outfit_launcherTrailSpec( const Outfit *o );
 double              outfit_launcherTrailOffset( const Outfit *o );
-const struct Ship_ *outfit_bayShip( const Outfit *o );
+const struct Ship  *outfit_bayShip( const Outfit *o );
 GLuint              outfit_beamShader( const Outfit *o );
 double              outfit_beamMinDelay( const Outfit *o );
 double              outfit_beamWarmup( const Outfit *o );

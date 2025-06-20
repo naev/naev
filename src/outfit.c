@@ -1470,7 +1470,7 @@ double outfit_launcherTrailOffset( const Outfit *o )
       return o->u.lau.trail_x_offset;
    return 0.;
 }
-const struct Ship_ *outfit_bayShip( const Outfit *o )
+const struct Ship *outfit_bayShip( const Outfit *o )
 {
    if ( outfit_isFighterBay( o ) )
       return o->u.bay.ship;

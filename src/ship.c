@@ -131,7 +131,7 @@ const char *ship_existsCase( const char *name )
 /**
  * @brief Gets the array (array.h) of all ships.
  */
-const Ship *ship_getAll( void )
+Ship *ship_getAll( void )
 {
    return ship_stack;
 }
