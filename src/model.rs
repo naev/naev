@@ -697,7 +697,8 @@ fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec
     match buf.source() {
         gltf::buffer::Source::Uri(uri) => {
             let filename = base.join(uri);
-            Ok(std::fs::read(filename.as_path().to_str().unwrap())?)
+            //Ok(std::fs::read(filename.as_path().to_str().unwrap())?)
+            Ok(ndata::read(filename.as_path().to_str().unwrap())?)
         }
         gltf::buffer::Source::Bin => todo!(),
     }
