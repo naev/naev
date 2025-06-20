@@ -63,20 +63,25 @@ def main( args, pos = None, color = False, halo = False ):
    ])
    for i in V:
       col = (0.5,0.5,0.5) if i not in colors else colors[i]
-      write_pov([ 'sphere{', [
-         '<' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 0>,',
-         '9.0',
-         'pigment {color rgb<' + ','.join(map(str,col)) + '>}',
-      ], '}', '' ])
+      if not (i == 'sol' and halo):
+         write_pov([ 'sphere{', [
+            '<' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 0>,',
+            '9.0',
+            'pigment {color rgb<' + ','.join(map(str, col)) + '>}',
+         ], '}', '' ])
+
+      if i == 'sol':
+         col = (0.3,  0.0,  1.2)
 
       if halo and col != default_col:
+         radius = '9' if i == 'sol' else '3'
          write_pov([ 'cylinder{', [
             '<0,0,-1>,',
             '<0,0,0>,',
             '0.7',
             'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>]' +
                '[1.0, rgbt<' + ','.join(map(str,col)) + ',0>]}}',
-            'scale 11*3',
+            'scale 11*' + radius,
             'translate <' + str(pos[i][0]) + ', ' + str(pos[i][1]) + ', 3>',
          ], '}', ''])
       for dstsys, hid in E[i]:
