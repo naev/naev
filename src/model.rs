@@ -9,7 +9,7 @@ use std::os::raw::{c_char, c_double, c_int};
 use std::rc::Rc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
-use crate::context::Context;
+use crate::context::{Context, ContextWrapper};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
@@ -17,7 +17,7 @@ use crate::{gettext, warn};
 
 const MAX_LIGHTS: usize = 7;
 
-fn tex_value(ctx: &Context, value: [u8; 3]) -> Result<Rc<Texture>> {
+fn tex_value(ctx: &ContextWrapper, value: [u8; 3]) -> Result<Rc<Texture>> {
     let mut img = image::RgbImage::new(1, 1);
     img.put_pixel(0, 0, image::Rgb(value));
     Ok(Rc::new(
@@ -25,13 +25,13 @@ fn tex_value(ctx: &Context, value: [u8; 3]) -> Result<Rc<Texture>> {
             .width(1)
             .height(1)
             .image(&img.into())
-            .build(ctx)?,
+            .build_wrap(ctx)?,
     ))
 }
-fn tex_zeros(ctx: &Context) -> Result<Rc<Texture>> {
+fn tex_zeros(ctx: &ContextWrapper) -> Result<Rc<Texture>> {
     tex_value(ctx, [0, 0, 0])
 }
-fn tex_ones(ctx: &Context) -> Result<Rc<Texture>> {
+fn tex_ones(ctx: &ContextWrapper) -> Result<Rc<Texture>> {
     tex_value(ctx, [255, 255, 255])
 }
 
@@ -201,8 +201,9 @@ impl ModelShader {
         }
     }
 
-    pub fn new(ctx: &Context) -> Result<Self> {
-        let gl = &ctx.gl;
+    pub fn new(ctx: &ContextWrapper) -> Result<Self> {
+        let lctx = ctx.lock();
+        let gl = &lctx.gl;
         let shader = ShaderBuilder::new(Some("PBR Shader"))
             .vert_file("material_pbr.vert")
             .frag_file("material_pbr.frag")
@@ -251,11 +252,10 @@ pub struct Material {
 
 impl Material {
     pub fn from_gltf(
-        ctx: &Context,
+        ctx: &ContextWrapper,
         mat: &gltf::Material,
         textures: &[Rc<Texture>],
     ) -> Result<Self> {
-        let gl = &ctx.gl;
         let mut data = MaterialUniform::new();
 
         let pbr = mat.pbr_metallic_roughness();
@@ -307,11 +307,15 @@ impl Material {
             None => tex_ones(ctx)?,
         };
 
-        let uniform_buffer = BufferBuilder::new(None)
-            .target(BufferTarget::Uniform)
-            .usage(BufferUsage::Static)
-            .data(data.buffer()?.into_inner().as_slice())
-            .build(gl)?;
+        let uniform_buffer = {
+            let lctx = ctx.lock();
+            let gl = &lctx.gl;
+            BufferBuilder::new(None)
+                .target(BufferTarget::Uniform)
+                .usage(BufferUsage::Static)
+                .data(data.buffer()?.into_inner().as_slice())
+                .build(gl)?
+        };
 
         Ok(Material {
             uniform_data: data,
@@ -342,12 +346,11 @@ pub struct Primitive {
 
 impl Primitive {
     pub fn from_gltf(
-        ctx: &Context,
+        ctx: &ContextWrapper,
         prim: &gltf::Primitive,
         buffer_data: &[Vec<u8>],
         materials: &[Rc<Material>],
     ) -> Result<Self> {
-        let gl = &ctx.gl;
         let mut vertex_data: Vec<Vertex> = vec![];
         let reader = prim.reader(|buf| Some(&buffer_data[buf.index()]));
 
@@ -404,6 +407,8 @@ impl Primitive {
             gltf::mesh::Mode::TriangleFan => glow::TRIANGLE_FAN,
         };
 
+        let lctx = ctx.lock();
+        let gl = &lctx.gl;
         let vertices = BufferBuilder::new(None)
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&vertex_data))
@@ -439,7 +444,7 @@ pub struct Mesh {
 }
 
 impl Mesh {
-    pub fn new(_ctx: &Context, primitives: Vec<Primitive>) -> Self {
+    pub fn new(_ctx: &ContextWrapper, primitives: Vec<Primitive>) -> Self {
         Mesh { primitives }
     }
 
@@ -698,7 +703,7 @@ fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec
 }
 
 fn load_gltf_texture(
-    ctx: &Context,
+    ctx: &ContextWrapper,
     node: &gltf::texture::Texture,
     base: &std::path::Path,
 ) -> Result<Texture> {
@@ -742,14 +747,14 @@ fn load_gltf_texture(
         gltf::texture::WrappingMode::Repeat => texture::AddressMode::Repeat,
     });
 
-    tb.build(ctx)
+    tb.build_wrap(ctx)
 }
 
 use std::sync::{Arc, OnceLock};
 static SHADER: OnceLock<Arc<ModelShader>> = OnceLock::new();
 
 impl Model {
-    pub fn from_path(ctx: &Context, path: &str) -> Result<Self> {
+    pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
         use std::path::Path;
         let gltf = Gltf::open(path)?;
         let base = Path::new(path).parent().unwrap();
@@ -928,8 +933,9 @@ pub extern "C" fn gltf_lightTransform_(
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get().unwrap(); /* Lock early. */
-    let model = Model::from_path(ctx, path.to_str().unwrap()).unwrap();
+    let ctx = Context::get().unwrap();
+    let wctx: ContextWrapper = ctx.into();
+    let model = Model::from_path(&wctx, path.to_str().unwrap()).unwrap();
     Box::into_raw(Box::new(model))
 }
 
