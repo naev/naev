@@ -10,6 +10,7 @@ use std::rc::Rc;
 
 use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
 use crate::context::{Context, ContextWrapper};
+use crate::ndata;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
@@ -756,7 +757,7 @@ static SHADER: OnceLock<Arc<ModelShader>> = OnceLock::new();
 impl Model {
     pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
         use std::path::Path;
-        let gltf = Gltf::open(path)?;
+        let gltf = Gltf::from_reader(ndata::open(path)?)?;
         let base = Path::new(path).parent().unwrap();
 
         let buffer_data: Vec<Vec<u8>> = gltf

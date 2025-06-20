@@ -19,3 +19,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
 pub fn rwops(path: &str) -> Result<sdl::rwops::RWops> {
     physfs::rwops(path, physfs::Mode::Read)
 }
+
+pub fn open(path: &str) -> Result<physfs::File> {
+    physfs::File::open(path, physfs::Mode::Read)
+}
