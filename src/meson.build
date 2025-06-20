@@ -24,6 +24,7 @@ source_rust = files(
    'render.rs',
    'rng.rs',
    'shader.rs',
+   'ship.rs',
    'slots.rs',
    'start.rs',
    'texture.rs',

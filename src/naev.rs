@@ -32,6 +32,7 @@ mod physics;
 mod render;
 mod rng;
 mod shader;
+mod ship;
 mod slots;
 mod start;
 mod texture;

@@ -4109,6 +4109,7 @@ src/semver.c
 src/shader.rs
 src/ship.c
 src/ship.h
+src/ship.rs
 src/shiplog.c
 src/shiplog.h
 src/shipstats.c

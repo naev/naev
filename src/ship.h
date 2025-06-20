@@ -108,8 +108,8 @@ typedef struct Ship {
    int faction;      /**< Dominant faction of the ship. */
    int
       points; /**< Number of points the ship costs (used for presence et al.) */
-   int rarity; /**< Rarity. */
-   int flags;  /**< Ship flags. */
+   int          rarity; /**< Rarity. */
+   unsigned int flags;  /**< Ship flags. */
 
    /* store stuff */
    credits_t price;   /**< Cost to buy. */
