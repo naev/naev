@@ -65,7 +65,7 @@ impl SlotProperty {
                         texture::TextureBuilder::new()
                             .path(&gfxname)
                             .sdf(true)
-                            .build_safe(ctx)?,
+                            .build_wrap(ctx)?,
                     );
                 }
                 "tags" => {
