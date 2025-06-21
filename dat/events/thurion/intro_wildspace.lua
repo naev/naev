@@ -23,6 +23,7 @@ local thn = require "common.thurion" -- codespell:ignore thn
 local landspb, landsys = spob.getS("FD-24")
 local fthurion = faction.get("Thurion")
 
+local timersys
 function create ()
    if not evt.claim( system.cur() ) then evt.finish(false) end
 
@@ -30,6 +31,7 @@ function create ()
    pilot.toggleSpawn(false)
 
    hook.timer(15, "timer")
+   timersys = system.cur()
    hook.enter("enter")
 
    -- Is saved until done
@@ -37,6 +39,9 @@ function create ()
 end
 
 function timer ()
+   -- So system tour doesn't trigger it
+   if timersys ~= system.cur() then evt.finish(false) end
+
    vn.clear()
    vn.scene()
    vn.transition()
