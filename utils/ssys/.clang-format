@@ -121,7 +121,7 @@ IncludeIsMainRegex: (Test)?$
 IncludeIsMainSourceRegex: ""
 IndentAccessModifiers: false
 IndentCaseBlocks: false
-IndentCaseLabels: false
+IndentCaseLabels: true
 IndentExternBlock: AfterExternBlock
 IndentGotoLabels: true
 IndentPPDirectives: None
@@ -180,7 +180,7 @@ ShortNamespaceLines: 1
 SortIncludes: CaseSensitive
 SortJavaStaticImport: Before
 SortUsingDeclarations: LexicographicNumeric
-SpaceAfterCStyleCast: false
+SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: true
 SpaceAroundPointerQualifiers: Default
@@ -210,12 +210,13 @@ SpacesInContainerLiterals: true
 SpacesInLineCommentPrefix:
   Minimum: 1
   Maximum: -1
-SpacesInParens: Custom
+SpacesInParens: Never
 SpacesInParensOptions:
-  InConditionalStatements: true
+  ExceptDoubleParentheses: true
+  InConditionalStatements: false
   InCStyleCasts: false
   InEmptyParentheses: false
-  Other: true
+  Other: false
 SpacesInSquareBrackets: false
 Standard: Latest
 StatementAttributeLikeMacros:
