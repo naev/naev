@@ -4,7 +4,7 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
 use crate::array::ArrayCString;
-use crate::context::{Context, ContextWrapper, SafeContext};
+use crate::context::{Context, ContextWrapper};
 use crate::gettext::gettext;
 use crate::log::warn_err;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -115,7 +115,7 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 }
 
 pub fn load() -> Result<Vec<SlotProperty>> {
-    let ctx: ContextWrapper = SafeContext::new(Context::get().unwrap()).into();
+    let ctx = Context::get().unwrap().as_safe_wrap();
     let files = ndata::read_dir("slots/")?;
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()

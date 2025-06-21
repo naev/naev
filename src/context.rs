@@ -206,6 +206,9 @@ impl<'ctx> SafeContext<'ctx> {
         let guard = self.ctx.lock().unwrap();
         ContextGuard::new(guard)
     }
+    pub fn into_wrap(self) -> ContextWrapper<'ctx> {
+        ContextWrapper::Safe(self)
+    }
 }
 impl Drop for SafeContext<'_> {
     fn drop(&mut self) {
@@ -285,6 +288,18 @@ impl Context {
             Some(ctx) => Ok(ctx),
             None => anyhow::bail!("No context"),
         }
+    }
+
+    pub fn as_safe_wrap(&self) -> ContextWrapper {
+        self.as_safe().into_wrap()
+    }
+
+    pub fn as_safe(&self) -> SafeContext {
+        SafeContext::new(self)
+    }
+
+    pub fn as_wrap(&self) -> ContextWrapper {
+        ContextWrapper::Context(&self)
     }
 
     fn create_context(
