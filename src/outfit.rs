@@ -27,7 +27,6 @@ fn get_mut() -> &'static mut [OutfitWrapper] {
 #[unsafe(no_mangle)]
 pub extern "C" fn outfit_gfxStoreLoadNeeded() {
     let ctx = Context::get().unwrap().as_safe_wrap();
-
     get_mut().par_iter_mut().for_each(|ptr| {
         let o = &mut ptr.0;
         if o.properties & naevc::OUTFIT_PROP_NEEDSGFX == 0 {
