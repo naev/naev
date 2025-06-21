@@ -5,6 +5,20 @@ use crate::physfs;
 
 pub const GFX_PATH: &str = "gfx/";
 
+pub fn simplify_path(path: &str) -> Result<String> {
+    let mut out: Vec<&str> = Vec::new();
+    for s in path.split("/") {
+        match s {
+            "" | "." => continue,
+            ".." => {
+                out.pop();
+            }
+            _ => out.push(s),
+        }
+    }
+    Ok(out.join("/"))
+}
+
 pub fn read(path: &str) -> Result<Vec<u8>> {
     let mut f = physfs::File::open(path, physfs::Mode::Read)?;
     let mut out: Vec<u8> = vec![0; f.len()? as usize];

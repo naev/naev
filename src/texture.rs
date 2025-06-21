@@ -426,7 +426,8 @@ impl TextureSource {
                 TextureSource::Path(path) => {
                     //let bytes = ndata::read(path.as_str())?;
                     //let img = image::load_from_memory(&bytes)?;
-                    let rw = ndata::rwops(path.as_str()).map_err(|e| anyhow::anyhow!(e))?;
+                    let cpath = ndata::simplify_path(&path)?;
+                    let rw = ndata::rwops(&cpath).map_err(|e| anyhow::anyhow!(e))?;
                     let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
                     let img = surface_to_image(sur)?;
                     let ctx = &sctx.lock();

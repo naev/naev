@@ -197,17 +197,17 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
 }
 
 pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
-    unsafe {
+    let raw = unsafe {
         let c_filename = CString::new(filename)?;
-        let raw = match mode {
+        match mode {
             Mode::Append => naevc::PHYSFSRWOPS_openAppend(c_filename.as_ptr()),
             Mode::Read => naevc::PHYSFSRWOPS_openRead(c_filename.as_ptr()),
             Mode::Write => naevc::PHYSFSRWOPS_openWrite(c_filename.as_ptr()),
-        };
-        if raw.is_null() {
-            Err(error_as_io_error())
-        } else {
-            Ok(sdl::rwops::RWops::from_ll(raw as *mut sdl::sys::SDL_RWops))
         }
+    };
+    if raw.is_null() {
+        Err(error_as_io_error())
+    } else {
+        Ok(unsafe { sdl::rwops::RWops::from_ll(raw as *mut sdl::sys::SDL_RWops) })
     }
 }
