@@ -1,4 +1,5 @@
 use sdl2 as sdl;
+use std::ffi::CString;
 use std::io::{Read, Result};
 
 use crate::physfs;
@@ -36,4 +37,49 @@ pub fn rwops(path: &str) -> Result<sdl::rwops::RWops> {
 
 pub fn open(path: &str) -> Result<physfs::File> {
     physfs::File::open(path, physfs::Mode::Read)
+}
+
+pub enum FileType {
+    Regular,
+    Directory,
+    Symlink,
+    Other,
+}
+
+#[allow(dead_code)]
+pub struct Stat {
+    filesize: i64,
+    modtime: i64,
+    createtime: i64,
+    accesstime: i64,
+    filetype: FileType,
+    readonly: bool,
+}
+
+pub fn stat(filename: &str) -> Result<Stat> {
+    let c_filename = CString::new(filename)?;
+    let mut st = naevc::PHYSFS_Stat {
+        filesize: 0,
+        modtime: 0,
+        createtime: 0,
+        accesstime: 0,
+        filetype: 0,
+        readonly: 0,
+    };
+    match unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), (&mut st) as *mut naevc::PHYSFS_Stat) } {
+        0 => Err(physfs::error_as_io_error()),
+        _ => Ok(Stat {
+            filesize: st.filesize,
+            modtime: st.modtime,
+            createtime: st.createtime,
+            accesstime: st.accesstime,
+            filetype: match st.filetype {
+                naevc::PHYSFS_FileType_PHYSFS_FILETYPE_REGULAR => FileType::Regular,
+                naevc::PHYSFS_FileType_PHYSFS_FILETYPE_DIRECTORY => FileType::Directory,
+                naevc::PHYSFS_FileType_PHYSFS_FILETYPE_SYMLINK => FileType::Symlink,
+                _ => FileType::Other,
+            },
+            readonly: st.readonly != 0,
+        }),
+    }
 }
