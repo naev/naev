@@ -174,10 +174,6 @@ impl LightingUniform {
 pub struct ModelShader {
     shader: Shader,
     lighting_buffer: Buffer,
-    vertex: u32,
-    normal: u32,
-    tex0: u32,
-    tex1: u32,
     primitive_uniform: u32,
     material_uniform: u32,
     lighting_uniform: u32,
@@ -217,11 +213,6 @@ impl ModelShader {
             .sampler("occlusion_tex", 4)
             .build(gl)?;
 
-        let vertex = shader.get_attrib(gl, "vertex")?;
-        let normal = shader.get_attrib(gl, "v_normal")?;
-        let tex0 = shader.get_attrib(gl, "v_tex0")?;
-        let tex1 = shader.get_attrib(gl, "v_tex1")?;
-
         let primitive_uniform = shader.get_uniform_block(gl, "Primitive")?;
         let material_uniform = shader.get_uniform_block(gl, "Material")?;
         let lighting_uniform = shader.get_uniform_block(gl, "Lighting")?;
@@ -236,10 +227,6 @@ impl ModelShader {
         Ok(ModelShader {
             shader,
             lighting_buffer,
-            vertex,
-            normal,
-            tex0,
-            tex1,
             primitive_uniform,
             material_uniform,
             lighting_uniform,
@@ -446,14 +433,14 @@ impl Primitive {
                 },
                 VertexArrayBuffer {
                     buffer: &vertices,
-                    size: 3,
+                    size: 2,
                     stride: vertex_size,
                     offset: std::mem::offset_of!(Vertex, tex0) as i32,
                     divisor: 0,
                 },
                 VertexArrayBuffer {
                     buffer: &vertices,
-                    size: 3,
+                    size: 2,
                     stride: vertex_size,
                     offset: std::mem::offset_of!(Vertex, tex1) as i32,
                     divisor: 0,
@@ -529,22 +516,22 @@ impl Mesh {
 
             let m = &p.material;
 
+            // Attributes
+            p.vao.bind(ctx);
+
+            // Uniforms
+            p.uniform_buffer.bind_base(ctx, shader.primitive_uniform);
+            m.uniform_buffer.bind_base(ctx, shader.material_uniform);
+
+            // Textures
+            m.metallic.bind(ctx, 1);
+            m.emissive.bind(ctx, 2);
+            m.normalmap.bind(ctx, 3);
+            m.ambientocclusion.bind(ctx, 4);
+            m.diffuse.bind(ctx, 0); // Have to end on TEXTURE0
+
             // Render
             unsafe {
-                // Attributes
-                p.vao.bind(ctx);
-
-                // Uniforms
-                p.uniform_buffer.bind_base(ctx, shader.primitive_uniform);
-                m.uniform_buffer.bind_base(ctx, shader.material_uniform);
-
-                // Textures
-                m.metallic.bind(ctx, 1);
-                m.emissive.bind(ctx, 2);
-                m.normalmap.bind(ctx, 3);
-                m.ambientocclusion.bind(ctx, 4);
-                m.diffuse.bind(ctx, 0); // Have to end on TEXTURE0
-
                 if m.double_sided {
                     gl.disable(glow::CULL_FACE);
                 }
@@ -561,6 +548,13 @@ impl Mesh {
                     gl.depth_mask(true);
                 }
             }
+
+            // Clean up, TODO do better
+            unsafe {
+                gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
+                gl.bind_buffer(glow::ARRAY_BUFFER, None);
+            }
+            VertexArray::unbind(ctx);
         }
         Ok(())
     }
@@ -698,9 +692,6 @@ impl Scene {
 
         // Clean up
         unsafe {
-            gl.disable_vertex_attrib_array(shader.vertex);
-            gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
-            gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.use_program(None);
             gl.disable(glow::DEPTH_TEST);
             gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);

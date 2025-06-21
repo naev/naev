@@ -34,11 +34,11 @@ uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
 /* Vertex outputs. */
-out vec2 tex_coord0;
-out vec2 tex_coord1;
-out vec3 position;
-out vec3 shadow[MAX_LIGHTS];
-out vec3 normal;
+in vec2 tex_coord0;
+in vec2 tex_coord1;
+in vec3 position;
+in vec3 shadow[MAX_LIGHTS];
+in vec3 normal;
 /* Fragment outputs. */
 layout(location = 0) out vec4 colour_out;
 
