@@ -32,7 +32,6 @@ encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 thunderdome = "0"
 mlua = { version = "0", features = ["luajit", "anyhow", "send", "serialize"] }
 serde_yaml2 = "0.1"
-parking_lot = "0"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
