@@ -32,6 +32,84 @@
 #define STR_HELPER( x ) #x
 #define STR( x ) STR_HELPER( x )
 
+/*
+ * EV:Nova
+ * -> key light is top left, slight elevation, pointed at ship. directional
+ * light
+ * -> 1 to 3 fill lights. Depends on ship. Point lights.
+ */
+const Lighting L_default_const = {
+   .ambient_r = 0.,
+   .ambient_g = 0.,
+   .ambient_b = 0.,
+   .intensity = 1.,
+   .nlights   = 2,
+   .lights =
+      {
+         {
+            /* Key Light. */
+            .colour = { .v = { 1., 1., 1. } },
+            // Endless Sky (point) power: 150, pos: -12.339, 10.559, -11.787
+            /*
+             */
+            .sun       = 0,
+            .pos       = { .v = { -3., 2.75, -3. } },
+            .intensity = 80.,
+            // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
+            /*
+               .sun = 1,
+               .pos = { .v = { 12., 10.5, -12. } },
+               .intensity = 2.5,
+               */
+         },
+         {
+            /* Fill light. */
+            .colour = { .v = { 1., 1., 1. } },
+            // Endless Sky (directional) power: 1.5,
+            // direction: 9.772, 11.602, 6.988
+            /*
+             */
+            .sun       = 1,
+            .pos       = { .v = { 10., 11.5, 7. } },
+            .intensity = 1.,
+            // Sharky (point) power: 2000., position: -12.339, 10.559, 11.787
+            /*
+               .sun = 0,
+               .pos = { .v = { -12.5, 10.5, 12. } },
+               .intensity = 2000.,
+               */
+         },
+         { 0 },
+      },
+};
+const Lighting L_store_const = {
+   .ambient_r = 0.1,
+   .ambient_g = 0.1,
+   .ambient_b = 0.1,
+   .nlights   = 2,
+   .intensity = 1.5,
+   .lights =
+      {
+         {
+            /* Key Light. */
+            .colour    = { .v = { 1., 1., 1. } },
+            .sun       = 0,
+            .pos       = { .v = { -3., 2.75, -3. } },
+            .intensity = 100.,
+         },
+         {
+            /* Fill light. */
+            .colour    = { .v = { 1., 1., 1. } },
+            .sun       = 1,
+            .pos       = { .v = { 10., 11.5, 7. } },
+            .intensity = 1.,
+         },
+         { 0 },
+      },
+};
+Lighting L_default;
+
+#if 0
 typedef struct Texture {
    GLuint  tex;      /**< True texture. */
    GLuint  texcoord; /**< Coordinates it uses. */
@@ -39,7 +117,7 @@ typedef struct Texture {
                         textures). */
 #ifdef HAVE_NAEV
    glTexture *gtex; /**< Used for caching textures. */
-#endif              /* HAVE_NAEV */
+#endif /* HAVE_NAEV */
 } Texture;
 
 /**
@@ -225,90 +303,14 @@ typedef struct ShaderLight_ {
    GLuint shadowmap_tex; /* sampler2D */
 } ShaderLight;
 
-/*
- * EV:Nova
- * -> key light is top left, slight elevation, pointed at ship. directional
- * light
- * -> 1 to 3 fill lights. Depends on ship. Point lights.
- */
-const Lighting L_default_const = {
-   .ambient_r = 0.,
-   .ambient_g = 0.,
-   .ambient_b = 0.,
-   .intensity = 1.,
-   .nlights   = 2,
-   .lights =
-      {
-         {
-            /* Key Light. */
-            .colour = { .v = { 1., 1., 1. } },
-            // Endless Sky (point) power: 150, pos: -12.339, 10.559, -11.787
-            /*
-             */
-            .sun       = 0,
-            .pos       = { .v = { -3., 2.75, -3. } },
-            .intensity = 80.,
-            // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
-            /*
-            .sun = 1,
-            .pos = { .v = { 12., 10.5, -12. } },
-            .intensity = 2.5,
-             */
-         },
-         {
-            /* Fill light. */
-            .colour = { .v = { 1., 1., 1. } },
-            // Endless Sky (directional) power: 1.5,
-            // direction: 9.772, 11.602, 6.988
-            /*
-             */
-            .sun       = 1,
-            .pos       = { .v = { 10., 11.5, 7. } },
-            .intensity = 1.,
-            // Sharky (point) power: 2000., position: -12.339, 10.559, 11.787
-            /*
-            .sun = 0,
-            .pos = { .v = { -12.5, 10.5, 12. } },
-            .intensity = 2000.,
-             */
-         },
-         { 0 },
-      },
-};
-const Lighting L_store_const = {
-   .ambient_r = 0.1,
-   .ambient_g = 0.1,
-   .ambient_b = 0.1,
-   .nlights   = 2,
-   .intensity = 1.5,
-   .lights =
-      {
-         {
-            /* Key Light. */
-            .colour    = { .v = { 1., 1., 1. } },
-            .sun       = 0,
-            .pos       = { .v = { -3., 2.75, -3. } },
-            .intensity = 100.,
-         },
-         {
-            /* Fill light. */
-            .colour    = { .v = { 1., 1., 1. } },
-            .sun       = 1,
-            .pos       = { .v = { 10., 11.5, 7. } },
-            .intensity = 1.,
-         },
-         { 0 },
-      },
-};
-Lighting L_default;
 
 static GLuint light_fbo_low[MAX_LIGHTS]; /**< FBO correpsonding to the light. */
 static GLuint
-   light_tex_low[MAX_LIGHTS]; /**< Texture corresponding to the light. */
+light_tex_low[MAX_LIGHTS]; /**< Texture corresponding to the light. */
 static GLuint light_fbo_high[MAX_LIGHTS]; /**< FBO correpsonding to the light,
-                                             with high resolution. */
+                                            with high resolution. */
 static GLuint light_tex_high[MAX_LIGHTS]; /**< Texture corresponding to the
-                                             light with high resolution. */
+                                            light with high resolution. */
 static GLuint  shadowmap_size = SHADOWMAP_SIZE_LOW;
 static GLuint *light_fbo      = light_fbo_low;
 static GLuint *light_tex      = light_tex_low;
@@ -390,7 +392,6 @@ static GltfObject *cache_get( const char *filename, int *new );
 static int         cache_dec( GltfObject *obj );
 static void        gltf_applyAnim( GltfObject *obj, GLfloat time );
 
-#if 0
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
  *
