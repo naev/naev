@@ -2485,12 +2485,14 @@ void pilot_outfitLCleanup( Pilot *pilot )
 int pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
                           int data )
 {
-   int           oldmem;
+   int           oldmem, modified;
    const Outfit *o = po->outfit;
    if ( outfit_luaMessage( o ) == LUA_NOREF )
       return 0;
 
-   nlua_env *env = outfit_luaEnv( o );
+   nlua_env *env        = outfit_luaEnv( o );
+   modified             = pilotoutfit_modified;
+   pilotoutfit_modified = 0;
 
    /* Set the memory. */
    oldmem = pilot_outfitLmem( po, env );
@@ -2511,6 +2513,14 @@ int pilot_outfitLMessage( Pilot *pilot, PilotOutfitSlot *po, const char *msg,
       ret = 0;
    }
    pilot_outfitLunmem( env, oldmem );
+
+   /* Recalculate if anything changed. */
+   if ( pilotoutfit_modified ) {
+      /* TODO pilot_calcStats can be called twice here. */
+      pilot_weapSetUpdateOutfitState( pilot );
+      pilot_calcStats( pilot );
+   }
+   pilotoutfit_modified = modified;
    return ret;
 }
 
