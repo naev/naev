@@ -933,6 +933,42 @@ pub extern "C" fn gltf_lightTransform_(
 }
 
 #[unsafe(no_mangle)]
+pub extern "C" fn gltf_sceneBody_(_model: *mut Model) -> u32 {
+    // TODO
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_sceneEngine_(_model: *mut Model) -> u32 {
+    // TODO
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_numAnimations_(_model: *mut Model) -> u32 {
+    // TODO
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_trails_(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfTrail {
+    // TODO
+    unsafe {
+        *num = 0;
+    }
+    std::ptr::null()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_mount_(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfMount {
+    // TODO
+    unsafe {
+        *num = 0;
+    }
+    std::ptr::null()
+}
+
+#[unsafe(no_mangle)]
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
     let ctx = Context::get().unwrap().as_wrap();
