@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 
-from sys import stderr
+import os
+from sys import stderr, exit
 import xml.etree.ElementTree as ET
-from os.path import basename
 from ssys import nam2base, getpath, PATH
 
 
@@ -31,25 +31,30 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
    faction_color[f] = faction_color['pirate']
 
 def get_spob_faction( nam ):
-   T = ET.parse(getpath(PATH, "spob", nam+".xml")).getroot()
+   T = ET.parse(getpath(PATH, "spob", nam + ".xml")).getroot()
    e = T.find("./presence/faction")
-   return nam2base(e.text) if e is not None else None
+   return None if e is None else nam2base(e.text)
 
+def all_ssys( args = None ):
+   def gen():
+      if args is None or args == []:
+         path = os.path.join(PATH, 'ssys')
+         for arg in os.listdir(path):
+            yield arg, os.path.join(path, arg)
+      else:
+         for a in args:
+            yield os.path.basename(a), a
+   for a, b in gen():
+      if a[-4:] == '.xml':
+         yield a[:-4], b
 
-# V, E, pos, tradelane, color = xml_files_to_graph(args, use_color)
-def xml_files_to_graph( args, get_colors = False ):
+# Vnames, Vpos, E, tradelane, color = xml_files_to_graph(args, use_color)
+def xml_files_to_graph( args = None, get_colors = False ):
    name2id = dict()
    name, acc, pos, tradelane, color = [], [], [], set(), dict()
-
-   for i in range(len(args)):
-      bname = basename(args[i])
-      if bname[-4:] != '.xml':
-         stderr.write('err: "' + args[i] + '"\n')
-         continue
-
-      bname = bname[:-4]
+   for bname, filename in all_ssys(args):
       name.append(bname)
-      T=ET.parse(args[i]).getroot()
+      T=ET.parse(filename).getroot()
 
       try:
          name[-1] = T.attrib['name']
@@ -91,25 +96,20 @@ def xml_files_to_graph( args, get_colors = False ):
          try:
             acc[-1].append((e.attrib['target'], e.find('hidden') is not None))
          except:
-            stderr.write('no target defined in "'+args[i]+'"jump#'+str(count)+'\n')
+            stderr.write('no target defined in "'+filename+'"jump#'+str(count)+'\n')
       count += 1
 
-   n2i = lambda x:name2id[x]
-   ids = [n2i(x) for x in name]
-   acc = [[(n2i(t[0]),t[1]) for t in L] for L in acc]
+   ids = [name2id[x] for x in name]
+   acc = [[(name2id[t[0]],t[1]) for t in L] for L in acc]
    return dict(zip(ids,name)), dict(pos), dict(zip(ids,acc)), tradelane, color
+
 
 if __name__ == '__main__':
    from sys import argv, exit, stdout, stderr, stdin
-   import os
 
-   def do_reading():
-      for arg in os.listdir(PATH):
-         if arg[-4:] != '.xml':
-            continue
-
-         bname = arg[:-4]
-         T = ET.parse(os.path.join(PATH, arg)).getroot()
+   def do_reading(args):
+      for bname, filename in all_ssys(args):
+         T = ET.parse(filename).getroot()
          try:
             name = T.attrib['name']
          except:
@@ -121,39 +121,54 @@ if __name__ == '__main__':
             stderr.write('no position defined in "' + bname + '"\n')
          print(bname, x, y, name)
 
-   def do_writing( scale = 1.0 ):
-      from ssys import fil_ET
+   def _read_stdin_and_scale(scale):
       for l in stdin:
          if (line := l.strip()) != '':
-            (n, x, y) = l.strip().split(" ")[:3]
-            name = os.path.join(PATH, n+'.xml')
-            T = fil_ET(name)
-            e = T.getroot().find('pos')
+            (n, x, y, r) = (l.strip().split(' ',4) + [''])[:4]
             x = str(float(x) * scale)
             y = str(float(y) * scale)
-            e.attrib['x'], e.attrib['y'] = x, y
-            T.write(name)
+            yield n, x, y, r
+
+   def do_writing( scale = 1.0 ):
+      from ssys import fil_ET
+      for n, x, y, _ in _read_stdin_and_scale(scale):
+         name = os.path.join(PATH, 'ssys', n + '.xml')
+         T = fil_ET(name)
+         e = T.getroot().find('pos')
+         e.attrib['x'], e.attrib['y'] = x, y
+         T.write(name)
+
+   def do_scaling( scale = 1.0 ):
+      for t in _read_stdin_and_scale(scale):
+         print(' '.join(t).strip())
 
    if do_write := ('-w' in argv[1:]):
       argv.remove('-w')
-      if argv[1:] != []:
-         scale = float(argv.pop(1))
-      else:
-         scale = 1.0
+      scale = 1.0
 
-   if argv[1:] != []:
-      ok = '-h' in argv or '--help' in argv[1:]
-      fp = stdout if ok else stderr
-      fp.write('usage:  ' + os.path.basename(argv[0]) + ' [-w [scale]]\n')
-      fp.write('  Lists (ssys, x, y, name) for all ssys in dat/ssys.\n')
-      fp.write('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.\n')
+   if do_scale := ('-s' in argv[1:]):
+      index = argv.index('-s')
+      argv.pop(index)
+      try:
+         scale = float(argv.pop(index))
+      except:
+         stderr.write('Error: expected <scale> after -s.\n')
+         exit(1)
+
+   help_f = '-h' in argv or '--help' in argv[1:]
+   if help_f or (argv[1:] != [] and do_write):
+      msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
+      msg('usage:  ' + os.path.basename(argv[0]) + ' (-s <scale> [-w]) | -w | [<files>..]')
+      msg('  Lists (ssys, x, y, name) for all ssys in <files.xml>')
+      msg('  If <files.xml> not provided, uses dat/ssys/*.xml.')
+      msg('  If -s is set, reads (ssys, x, y, ...) on stdin, rescales it')
+      msg('  with <scale> and, unless -w is set, outputs the result on stdout.')
+      msg('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.')
       exit(0 if ok else 1)
-
-   getpath = lambda *x: os.path.realpath(os.path.join(*x))
-   script_dir = os.path.dirname(__file__)
-   PATH = getpath(script_dir, '..', '..', 'dat', 'ssys')
 
    if do_write:
       do_writing(scale)
+   elif do_scale:
+      do_scaling(scale)
    else:
-      do_reading()
+      do_reading(argv[1:])

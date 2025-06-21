@@ -9,14 +9,20 @@ autocmd BufRead,BufNewFile /path/to/naev/* call NaevOptions()
 autocmd BufRead,BufNewFile /path/to/naev/*.{c,lua} call NaevALEOptions()
 function NaevOptions()
    " Indentation
-   set expandtab    " Make sure that every file uses real tabs, not spaces
-   set shiftround   " Round indent to multiple of 'shiftwidth'
-   set smartindent  " Do smart indenting when starting a new line
-   set autoindent   " Copy indent from current line, over to the new line
-   let s:tabwidth=3 " Set the tab width
+   set expandtab     " Make sure that every file uses real tabs, not spaces
+   set shiftround    " Round indent to multiple of 'shiftwidth'
+   set smartindent   " Do smart indenting when starting a new line
+   set autoindent    " Copy indent from current line, over to the new line
+   set tabstop=3     " indents
+   set softtabstop=3 " treat 3 spaces as a single character (when deleting)
+   set shiftwidth=3  " more indents
+   let s:tabwidth=3  " Set the tab width
    exec 'set tabstop='    .s:tabwidth
    exec 'set shiftwidth=' .s:tabwidth
    exec 'set softtabstop='.s:tabwidth
+   autocmd BufNewFile,BufRead *.mvx set syntax=xml
+   highlight RedundantSpacesOrOverLength ctermbg=darkred ctermfg=white
+   match RedundantSpacesOrOverLength /\(\s\+$\)\|\(\%85v.\+\)/
 endfunction
 function NaevALEOptions()
    call ale#handlers#languagetool#DefineLinter('lua')

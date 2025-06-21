@@ -2,66 +2,64 @@
 
 
 from sys import stdin, stderr, argv, exit
-from ssys import vec, fil_ET, ssys_fil, ssysneigh, vec_from_element, vec_to_element
-from geometry import bb
+from ssys_graph import xml_files_to_graph
+from geometry import bb, vec, segment
 
 
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
 if argv[1:] != []:
-   stderr.write('usage: '+argv[0]+'\n')
+   stderr.write('usage: ' + argv[0].split('/')[-1] + '\n')
    stderr.write('  Reads a dot file on stdin, applies a pre-processing,\n')
-   stderr.write('  and then applies it to ssys.\n')
+   stderr.write('  and then writes the resulting graph on stdout.\n')
    exit(0)
 
-
 # positions
-pos = dict()
 
-def process( lin ):
-   if len(lin.split('--')) != 1:
-      return
-   lin = lin.strip()
-   for c in ['\n', '\t', 3*' ', 2*' ']:
-      lin = lin.replace(c, ' ')
+def input_blocks(it):
+   acc = ''
+   for line in it:
+      n = line.find(']')
+      acc += line[:n]
+      if n != -1:
+         for c in ['\n', '\t', 3*' ', 2*' ']:
+            acc = acc.replace(c, ' ')
+         yield acc.strip()
+         acc = ''
+
+pos = dict()
+for lin in input_blocks(stdin):
+   if lin.find('--') != -1:
+      continue
 
    if (nam := lin.split(' ')[0]) in ['graph', 'edge', 'node']:
-      return
-   position = lin.split('pos="')[1].split('"')[0].split(',')
+      continue
+
+   if nam[0] == '"' and nam[-1] =='"':
+      nam = nam[1:-1]
+   position = lin.split('pos="', 1)[1]
+   position = position[:position.find('"')].split(',')
    x, y = float(position[0]), float(position[1])
    pos[nam] = vec(x, y)
 
-acc = ''
-for line in stdin:
-   n = line.find(']')
-   acc += line[:n]
-   if n != -1:
-      process(acc)
-      acc = ''
-
-bbox = bb()
-oldbb = bb()
-
+_V, oldpos, E, tradelane, _color = xml_files_to_graph()
+bbox, oldbb = bb(), bb()
 for k in pos:
    pos[k] *= 3.0/2.0
-   bbox += pos[k]
    if k[0] != '_':
-      nam = k
-      if nam[0] == '"':
-         nam = nam[1:-1]
-      T = fil_ET(ssys_fil(nam)).getroot()
-      if (e := T.find('pos')) is not None:
-         oldbb += vec_from_element(e)
+      bbox += pos[k]
+      if k not in oldpos:
+         stderr.write('"' + k + '" not found in ssys. why ?\n')
+      else:
+         oldbb += oldpos[k]
 
 again = bb()
 for k in pos:
    pos[k] += oldbb.mini() - bbox.mini()
    again += pos[k]
 
-stderr.write(str(oldbb) + ' -> ' + str(bbox))
-stderr.write(' -> ' + str(again) + '\n')
-
+stderr.write(' -> '.join([str(oldbb), str(bbox), str(again)]) + '\n')
 
 # Post - processing
 
@@ -78,10 +76,13 @@ for (i,j,q) in small:
 
 pos['syndania'] = vec(pos['syndania'][0], pos['stint'][1])
 
-Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star', 'veses', 'alpha_centauri', 'padonia']
+Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star',
+   'veses', 'alpha_centauri', 'padonia']
 
-Scenter = (pos[Spir[0]]+pos[Spir[4]]) / 2.0
+Scenter = (pos[Spir[0]] + pos[Spir[4]]) / 2.0
 v = (pos[Spir[0]] - Scenter) * 0.75
+v = v.rotate(-50)
+Scenter = (pos['scholzs_star'] + Scenter) / 2.0 + v.size()/4.0*vec(0,1)
 for i,s in enumerate(Spir):
    rad = pow(1.25,-(i%4))
    pos[s] = Scenter + v.rotate(-i*45)*rad
@@ -99,8 +100,16 @@ def toward(src, dst, q):
    global pos
    pos[src] += (pos[dst]-pos[src]) * q
 
+toward('syndania', 'jommel', 1.0/4.0)
+#toward('scholzs_star', 'haered', 1.0/4.0)
+
+length = (pos['haered']-pos['cleai']).size()
+haered = pos['haered']
+pos['haered'] = pos['cleai'] + (pos['haered']-pos['cleai']).rotate(60)
+
 v = pos['hystera'] - pos['leporis']
-pos['leporis'] = pos['haered'] + (pos['leporis']-pos['haered']).normalize(v.size())
+v = v.rotate(-60)
+pos['leporis'] = pos['haered'] + (pos['leporis']-haered).normalize(v.size())
 pos['hystera'] = pos['leporis'] + v
 
 u = v.rotate(-60)
@@ -111,6 +120,24 @@ pos['mida'] = pos['apik'] + u
 pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
 
+L = segment(pos['haered'], pos['south_bell']).line()
+pos['cleai'] += (L - pos['cleai'])
+L = segment(pos['cleai'], pos['south_bell']).line()
+for s in ['maron', 'machea']:
+   # mirror it across L
+   pos[s] = pos[s] + 2.0*(L - pos[s])
+
+pos['machea'] = pos['maron'] + (pos['machea']-pos['maron']).rotate(30)
+pos['cleai'] = (pos['haered']+pos['maron']) / 2.0
+
+proteron = ['leporis', 'hystera', 'korifa', 'apik', 'telika', 'mida', 'ekta', 'akra']
+for s in proteron:
+   pos[s] = pos['haered'] + (pos[s]-pos['haered']).rotate(-30)
+
+u = pos['haered']-pos['cleai']
+v = u.rotate(-75)-u
+for s in proteron + ['haered', 'cleai']:
+   pos[s] += v
 
 #v = (pos['possum']-pos['moor']) / 3.0
 #for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
@@ -171,19 +198,10 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
 
 # Smoothen tradelane
 
-tradelane = set()
-for k in pos:
-   if k[0] != '_':
-      T = fil_ET(ssys_fil(k)).getroot()
-      for e in T.findall('tags/tag'):
-         if e.text == 'tradelane':
-            tradelane.add(k)
-            break
-
 newp = dict()
 for k in pos:
    if k[0] != '_' and (k in tradelane):
-      tln = [s for (s, _) in ssysneigh(k) if (s in tradelane)]
+      tln = [s for (s, _) in E[k] if (s in tradelane)]
       if (n := len(tln)) > 1:
          p = sum([pos[s] for s in tln], vec())
          newp[k] = pos[k]*(1.0-n*0.125) + p*0.125
@@ -198,14 +216,14 @@ total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, _) in ssysneigh(k) if (s in tradelane)]:
+      for n in [s for (s, _) in E[k] if (s in tradelane)]:
          total += (pos[n]-pos[k]).size()
          count += 1
 avg = total / count
 
 for k in pos:
    if k[:3] == 'ngc' and k[3:] not in ['22375', '20489', '4746', '9415']:
-      if len(n := ssysneigh(k)) == 1:
+      if len(n := E[k]) == 1:
          n = n[0][0]
          v = pos[k] - pos[n]
          if v.size() < avg:
@@ -229,12 +247,7 @@ for f, t, a in [
 # Apply to ssys/
 
 off = (pos['dohriabi'] - pos['anubis_black_hole']) / 2.0
-for k in pos:
-   pos[k] += off
-   pos[k] = round(pos[k], 9)
+for k, v in pos.items():
    if k[0] != '_':
-      nam = ssys_fil(k)
-      o = fil_ET(nam)
-      if (e := o.getroot().find('pos')) is not None:
-         vec_to_element(e, pos[k])
-      o.write(nam)
+      v = round(v + off, 9)
+      print(k, v[0], v[1])
