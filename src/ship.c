@@ -603,7 +603,7 @@ int ship_gfxLoaded( const Ship *s )
  */
 int ship_gfxLoadNeeded( void )
 {
-#if 1
+#if 0
    ThreadQueue *tq = vpool_create();
    SDL_GL_MakeCurrent( gl_screen.window, NULL );
 

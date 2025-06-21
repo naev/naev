@@ -390,6 +390,7 @@ static GltfObject *cache_get( const char *filename, int *new );
 static int         cache_dec( GltfObject *obj );
 static void        gltf_applyAnim( GltfObject *obj, GLfloat time );
 
+#if 0
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
  *
@@ -606,7 +607,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    otex->tex = tex;
 #ifdef HAVE_NAEV
    tex_setTex( otex->gtex, tex ); /* Update the texture. */
-#endif                            /* HAVE_NAEV */
+#endif /* HAVE_NAEV */
    return 0;
 }
 
@@ -1906,9 +1907,9 @@ static void gltf_freeTex( Texture *tex )
 
 #ifdef HAVE_NAEV
    gl_freeTexture( tex->gtex ); /* Frees texture too. */
-#else                           /* HAVE_NAEV */
+#else  /* HAVE_NAEV */
    glDeleteTextures( 1, &tex->tex );
-#endif                          /* HAVE_NAEV */
+#endif /* HAVE_NAEV */
    gl_checkErr();
 }
 
@@ -2432,3 +2433,4 @@ const GltfMount *gltf_mounts( const GltfObject *obj, int *num )
    *num = array_size( obj->mounts );
    return obj->mounts;
 }
+#endif

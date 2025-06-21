@@ -849,15 +849,23 @@ static mut CAMBIENT: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
 static mut CINTENSITY: f64 = 1.0;
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightReset_() {
+pub extern "C" fn gltf_init() -> c_int {
+    0
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_exit() {}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_lightReset() {
     unsafe {
         CLIGHTING = LightingUniform::default();
     }
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_int {
-    let n: usize = 2 + idx as usize;
+pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int {
+    let n: usize = (2 + idx).try_into().unwrap();
     if n >= MAX_LIGHTS {
         warn!("Trying to set more lights than MAX_LIGHTS allows!");
         return -1;
@@ -883,14 +891,14 @@ pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_in
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightAmbient_(r: c_double, g: c_double, b: c_double) {
+pub extern "C" fn gltf_lightAmbient(r: c_double, g: c_double, b: c_double) {
     unsafe {
         CLIGHTING.ambient = Vector3::new(r as f32, g as f32, b as f32);
     }
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightAmbientGet_(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
+pub extern "C" fn gltf_lightAmbientGet(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
     unsafe {
         *r = CLIGHTING.ambient.x as f64;
         *g = CLIGHTING.ambient.y as f64;
@@ -899,19 +907,19 @@ pub extern "C" fn gltf_lightAmbientGet_(r: *mut c_double, g: *mut c_double, b: *
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightIntensity_(strength: c_double) {
+pub extern "C" fn gltf_lightIntensity(strength: c_double) {
     unsafe {
         CINTENSITY = strength;
     }
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightIntensityGet_() -> c_double {
+pub extern "C" fn gltf_lightIntensityGet() -> c_double {
     unsafe { CINTENSITY }
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_lightTransform_(
+pub extern "C" fn gltf_lightTransform(
     _lighting: *mut naevc::Lighting,
     transform: *const Matrix4<f32>,
 ) {
@@ -933,25 +941,25 @@ pub extern "C" fn gltf_lightTransform_(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_sceneBody_(_model: *mut Model) -> u32 {
+pub extern "C" fn gltf_sceneBody(_model: *mut Model) -> u32 {
     // TODO
     0
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_sceneEngine_(_model: *mut Model) -> u32 {
+pub extern "C" fn gltf_sceneEngine(_model: *mut Model) -> u32 {
     // TODO
     0
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_numAnimations_(_model: *mut Model) -> u32 {
+pub extern "C" fn gltf_numAnimations(_model: *mut Model) -> u32 {
     // TODO
     0
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_trails_(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfTrail {
+pub extern "C" fn gltf_trails(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfTrail {
     // TODO
     unsafe {
         *num = 0;
@@ -960,7 +968,7 @@ pub extern "C" fn gltf_trails_(_model: *mut Model, num: *mut c_int) -> *const na
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_mount_(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfMount {
+pub extern "C" fn gltf_mounts(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfMount {
     // TODO
     unsafe {
         *num = 0;
@@ -969,7 +977,7 @@ pub extern "C" fn gltf_mount_(_model: *mut Model, num: *mut c_int) -> *const nae
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
+pub extern "C" fn gltf_loadFromFile(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
     let ctx = Context::get().unwrap().as_wrap();
     let model = Model::from_path(&ctx, path.to_str().unwrap()).unwrap();
@@ -977,23 +985,25 @@ pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_free_(model: *mut Model) {
-    let _ = unsafe { Box::from_raw(model) }; // should drop
+pub extern "C" fn gltf_free(model: *mut Model) {
+    if !model.is_null() {
+        let _ = unsafe { Box::from_raw(model) }; // should drop
+    }
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_render_(
+pub extern "C" fn gltf_render(
     fb: naevc::GLuint,
     model: *mut Model,
     transform: *const Matrix4<f32>,
     time: f32,
     size: f64,
 ) {
-    gltf_renderScene_(fb, model, 0, transform, time, size)
+    gltf_renderScene(fb, model, 0, transform, time, size)
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_renderScene_(
+pub extern "C" fn gltf_renderScene(
     fb: naevc::GLuint,
     model: *mut Model,
     scene: c_int,
