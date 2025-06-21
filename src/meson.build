@@ -19,6 +19,7 @@ source_rust = files(
    'nlua.rs',
    'ntime.rs',
    'nxml.rs',
+   'outfit.rs',
    'physfs.rs',
    'physics.rs',
    'render.rs',

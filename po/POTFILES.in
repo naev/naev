@@ -4053,6 +4053,7 @@ src/options.c
 src/options.h
 src/outfit.c
 src/outfit.h
+src/outfit.rs
 src/pause.c
 src/pause.h
 src/perlin.c

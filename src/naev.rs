@@ -27,6 +27,7 @@ mod nebula;
 mod nlua;
 mod ntime;
 mod nxml;
+mod outfit;
 mod physfs;
 mod physics;
 mod render;
