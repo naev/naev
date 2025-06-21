@@ -48,9 +48,12 @@ struct Puff {
 }
 impl Puff {
     fn new(ctx: &context::Context, fg: bool) -> Self {
-        let dims = ctx.dimensions.lock().unwrap();
-        let x = (dims.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
-        let y = (dims.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+        let (x, y) = {
+            let dims = ctx.dimensions.lock().unwrap();
+            let x = (dims.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+            let y = (dims.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
+            (x, y)
+        };
         let rx = rng::rngf32() * 2000.0 - 1000.0;
         let ry = rng::rngf32() * 2000.0 - 1000.0;
         let height = {
@@ -217,12 +220,16 @@ impl NebulaData {
             .frag_file("nebula_puff.frag")
             .build(gl)?;
 
-        let dims = ctx.dimensions.lock().unwrap();
-
-        let puff_uniform = PuffUniform {
-            screen: Vector2::new(dims.view_width * 0.5, dims.view_height * 0.5),
-            scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
-            ..Default::default()
+        let puff_uniform = {
+            let (vw, vh) = {
+                let dims = ctx.dimensions.lock().unwrap();
+                (dims.view_width, dims.view_height)
+            };
+            PuffUniform {
+                screen: Vector2::new(vw * 0.5, vh * 0.5),
+                scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
+                ..Default::default()
+            }
         };
         let puff_buffer = BufferBuilder::new(Some("Nebula Puff Uniform Buffer"))
             .target(BufferTarget::Uniform)
@@ -291,13 +298,13 @@ impl NebulaData {
         VertexArray::unbind(ctx);
         self.buffer.unbind(ctx);
 
-        let dims = ctx.dimensions.lock().unwrap();
         unsafe {
             let screen =
                 std::num::NonZero::new(naevc::gl_screen.current_fbo).map(NativeFramebuffer);
             gl.bind_framebuffer(glow::READ_FRAMEBUFFER, Some(self.framebuffer.framebuffer));
             gl.bind_framebuffer(glow::DRAW_FRAMEBUFFER, screen);
             let (w, h) = (self.framebuffer.w as i32, self.framebuffer.h as i32);
+            let dims = ctx.dimensions.lock().unwrap();
             gl.blit_framebuffer(
                 0,
                 0,
@@ -340,12 +347,14 @@ impl NebulaData {
             gl.bind_framebuffer(glow::FRAMEBUFFER, screen);
         }
 
-        let dims = ctx.dimensions.lock().unwrap();
-
-        // Copy over
-        self.framebuffer
-            .texture
-            .draw(ctx, 0.0, 0.0, dims.view_width, dims.view_height)?;
+        {
+            let (vw, vh) = {
+                let dims = ctx.dimensions.lock().unwrap();
+                (dims.view_width, dims.view_height)
+            };
+            // Copy over
+            self.framebuffer.texture.draw(ctx, 0.0, 0.0, vw, vh)?;
+        }
 
         self.puffs_fg.render(ctx, self)
     }
@@ -365,15 +374,19 @@ impl NebulaData {
                 (1.0, 0.0)
             }
         };
-        let dims = ctx.dimensions.lock().unwrap();
-        self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * dims.view_scale;
+        {
+            let dims = ctx.dimensions.lock().unwrap();
+            self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * dims.view_scale;
+        }
 
-        let cam = crate::camera::CAMERA.lock().unwrap();
-        let z = cam.zoom as f32;
+        let z = {
+            let cam = crate::camera::CAMERA.lock().unwrap();
+            self.puff_uniform.offset.x = cam.pos.x as f32;
+            self.puff_uniform.offset.y = cam.pos.y as f32;
+            cam.zoom as f32
+        };
         self.uniform.horizon = self.view * z / self.scale;
         self.uniform.eddy_scale = self.dx * z / self.scale;
-        self.puff_uniform.offset.x = cam.pos.x as f32;
-        self.puff_uniform.offset.y = cam.pos.y as f32;
         self.puff_uniform.offset.z = z;
 
         // Write updates to uniform buffer
@@ -394,10 +407,12 @@ impl NebulaData {
         volatility: f32,
         hue: f32,
     ) -> Result<()> {
-        let dims = ctx.dimensions.lock().unwrap();
+        {
+            let dims = ctx.dimensions.lock().unwrap();
+            self.dx = 25e3 / density.powf(1.0 / 3.0) * dims.view_scale;
+        }
         self.density = density;
         self.speed = (2.0 * density + 200.0) / 10e3; // Faster at higher density
-        self.dx = 25e3 / density.powf(1.0 / 3.0) * dims.view_scale;
 
         let saturation = unsafe { naevc::conf.nebu_saturation as f32 };
         let value = saturation * 0.5 + 0.5;

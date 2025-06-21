@@ -93,3 +93,4 @@ pprint = require "dev.pprint"
 -- luacheck: globals dev
 dev = {}
 dev.weapon_test = require "dev.weapon_test"
+dev.system_tour = function () naev.eventStart("System Tour") end
