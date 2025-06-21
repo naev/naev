@@ -7,7 +7,7 @@ use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
 use std::os::raw::c_double;
-use std::sync::{Arc, Mutex, MutexGuard, OnceLock};
+use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock};
 use std::thread::ThreadId;
 
 use crate::buffer::{
@@ -149,7 +149,7 @@ pub struct Context {
     pub gl_context: sdl::video::GLContext,
     main_thread: ThreadId,
     // We should be able to get rid of this mutex when fully moved to Rust
-    pub dimensions: Mutex<Dimensions>,
+    pub dimensions: RwLock<Dimensions>,
 
     // Useful "globals"
     pub program_texture: Shader,
@@ -559,7 +559,7 @@ impl Context {
             .build_gl(&gl)?;
 
         // Load up initial dimensions
-        let dimensions = Mutex::new(Dimensions::new(&window));
+        let dimensions = RwLock::new(Dimensions::new(&window));
 
         unsafe {
             gl.bind_vertex_array(Some(vao_core)); // Set default C VAO
@@ -588,7 +588,7 @@ impl Context {
     }
 
     pub fn resize(&self) -> Result<()> {
-        *self.dimensions.lock().unwrap() = Dimensions::new(&self.window);
+        *self.dimensions.write().unwrap() = Dimensions::new(&self.window);
         Ok(())
     }
 
@@ -604,7 +604,7 @@ impl Context {
     }
 
     pub fn draw_rect(&self, x: f32, y: f32, w: f32, h: f32, colour: Vector4<f32>) -> Result<()> {
-        let dims = self.dimensions.lock().unwrap();
+        let dims = self.dimensions.read().unwrap();
         #[rustfmt::skip]
         let transform: Matrix3<f32> = dims.projection * Matrix3::new(
              w,  0.0,  x,

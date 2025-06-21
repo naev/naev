@@ -321,7 +321,7 @@ impl Texture {
     }
 
     pub fn draw(&self, ctx: &context::Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
-        let dims = ctx.dimensions.lock().unwrap();
+        let dims = ctx.dimensions.read().unwrap();
         #[rustfmt::skip]
         let transform: Matrix3<f32> = dims.projection * Matrix3::new(
              w,  0.0,  x,
@@ -1283,7 +1283,7 @@ pub extern "C" fn gl_renderTexture(
         true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
         false => unsafe { *c },
     };
-    let dims = ctx.dimensions.lock().unwrap();
+    let dims = ctx.dimensions.read().unwrap();
     #[rustfmt::skip]
     let transform: Matrix3<f32> = dims.projection * {
         if angle.abs() > 1e-5 {

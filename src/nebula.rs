@@ -49,7 +49,7 @@ struct Puff {
 impl Puff {
     fn new(ctx: &context::Context, fg: bool) -> Self {
         let (x, y) = {
-            let dims = ctx.dimensions.lock().unwrap();
+            let dims = ctx.dimensions.read().unwrap();
             let x = (dims.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
             let y = (dims.view_height + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
             (x, y)
@@ -222,7 +222,7 @@ impl NebulaData {
 
         let puff_uniform = {
             let (vw, vh) = {
-                let dims = ctx.dimensions.lock().unwrap();
+                let dims = ctx.dimensions.read().unwrap();
                 (dims.view_width, dims.view_height)
             };
             PuffUniform {
@@ -271,7 +271,7 @@ impl NebulaData {
             .build(ctx)
             .unwrap();
 
-        let dims = ctx.dimensions.lock().unwrap();
+        let dims = ctx.dimensions.read().unwrap();
         self.uniform.camera = Vector2::new(dims.view_width * 0.5, dims.view_height * 0.5);
 
         self.puff_uniform.screen = Vector2::new(
@@ -304,7 +304,7 @@ impl NebulaData {
             gl.bind_framebuffer(glow::READ_FRAMEBUFFER, Some(self.framebuffer.framebuffer));
             gl.bind_framebuffer(glow::DRAW_FRAMEBUFFER, screen);
             let (w, h) = (self.framebuffer.w as i32, self.framebuffer.h as i32);
-            let dims = ctx.dimensions.lock().unwrap();
+            let dims = ctx.dimensions.read().unwrap();
             gl.blit_framebuffer(
                 0,
                 0,
@@ -349,7 +349,7 @@ impl NebulaData {
 
         {
             let (vw, vh) = {
-                let dims = ctx.dimensions.lock().unwrap();
+                let dims = ctx.dimensions.read().unwrap();
                 (dims.view_width, dims.view_height)
             };
             // Copy over
@@ -375,7 +375,7 @@ impl NebulaData {
             }
         };
         {
-            let dims = ctx.dimensions.lock().unwrap();
+            let dims = ctx.dimensions.read().unwrap();
             self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * dims.view_scale;
         }
 
@@ -408,7 +408,7 @@ impl NebulaData {
         hue: f32,
     ) -> Result<()> {
         {
-            let dims = ctx.dimensions.lock().unwrap();
+            let dims = ctx.dimensions.read().unwrap();
             self.dx = 25e3 / density.powf(1.0 / 3.0) * dims.view_scale;
         }
         self.density = density;
