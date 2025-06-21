@@ -841,6 +841,10 @@ impl Model {
 
         Ok(())
     }
+
+    pub fn into_ptr(self) -> *mut Model {
+        Box::into_raw(Box::new(self))
+    }
 }
 
 /// Just use cglobals for C stuff and hope it doesn't catch on fire :/
@@ -935,10 +939,9 @@ pub extern "C" fn gltf_lightTransform_(
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_loadFromFile_(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get().unwrap();
-    let wctx: ContextWrapper = ctx.into();
-    let model = Model::from_path(&wctx, path.to_str().unwrap()).unwrap();
-    Box::into_raw(Box::new(model))
+    let ctx = Context::get().unwrap().as_wrap();
+    let model = Model::from_path(&ctx, path.to_str().unwrap()).unwrap();
+    model.into_ptr()
 }
 
 #[unsafe(no_mangle)]
