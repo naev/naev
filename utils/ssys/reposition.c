@@ -103,17 +103,6 @@ static inline float dist_sq(const float *v1, const float *v2)
    return scal(tmp, tmp);
 }
 
-struct s_bbox {
-   float x[2];
-   float y[2];
-};
-
-static void update_bb(struct s_bbox *b, const float v[2])
-{
-   update_range(b->x, v[0]);
-   update_range(b->y, v[1]);
-}
-
 struct point_list {
    float (*lst)[2];
    int nb;
@@ -224,17 +213,59 @@ static float *poscpy(int n, const int *lst, const struct s_ssys *map,
    return dst;
 }
 
+// could be opt by specifying upper bound.
+static float max_distsq(const float pt[2], const float *pts, int nb)
+{
+   float dst_sq = 0.0f;
+
+   for (int i = 0; i < nb; i++) {
+      const float d = dist_sq(pt, pts + i * 2);
+      if (d > dst_sq)
+         dst_sq = d;
+   }
+   return dst_sq;
+}
+
+#define SRT3_2 0.8660254037844386
+static float bounding_circle(float dst[2], const float *pts, int nb)
+{
+   const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
+                             {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
+   const int   n_dirs     = 6;
+
+   const float eps   = 0.000001f;
+   float       delta = 1.0f;
+   float       max_d = max_distsq(pts, pts, nb);
+   vcpy(dst, pts);
+
+   while (1) {
+      int i;
+      for (i = 0; i < n_dirs; i++) {
+         const float cand[2] = {dst[0] + delta * dirs[i][0],
+                                dst[1] + delta * dirs[i][1]};
+         const float dcand   = max_distsq(cand, pts, nb);
+         if (dcand < max_d) {
+            vcpy(dst, cand);
+            max_d = dcand;
+            break;
+         }
+      }
+      if (i == n_dirs && ((delta /= 2.0f) < eps))
+         break;
+   }
+   return max_d;
+}
+
 int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool quiet,
                    bool ppm)
 {
-   struct s_bbox bb = {.x = INIT_RANGE, .y = INIT_RANGE};
-   int          *id_neigh;
-   float        *neigh;
-   int           n_neigh  = 0;
-   float         edge_len = 0.0f;
-   float        *around;
-   int          *id_around;
-   int           n_around = 0;
+   int   *id_neigh;
+   float *neigh;
+   int    n_neigh  = 0;
+   float  edge_len = 0.0f;
+   float *around;
+   int   *id_around;
+   int    n_around = 0;
 
    for (int i = 0; i < map->njumps; i++)
       edge_len += sqrt(dist_sq(map->sys[map->jumps[2 * i]].v,
@@ -268,17 +299,10 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool quiet,
    if (!quiet)
       fprintf(stderr, "\e[033;1m[%s]\e[0m\n", map->sys_nam[ssys]);
    neigh = poscpy(n_neigh, id_neigh, map, "neigh", quiet);
-   for (int i = 0; i < n_neigh; i++)
-      update_bb(&bb, neigh + 2 * i);
 
-   // fprintf(stderr, "bb [%f %f] x [%f %f]\n", bb.x[0], bb.x[1], bb.y[0],
-   // bb.y[1]);
-
-   float ul[2] = {bb.x[0], bb.y[0]};
-   // bounding circle of the bounding square (because bounding circle not impl)
-   float center[2] = {(bb.x[0] + bb.x[1]) / 2.0, (bb.y[0] + bb.y[1]) / 2.0};
-   float sqrad     = dist_sq(center, ul);
-   float rad       = sqrt(sqrad);
+   float center[2];
+   float sqrad = bounding_circle(center, neigh, n_neigh);
+   float rad   = sqrt(sqrad);
 
    if (rad < edge_len) {
       rad   = edge_len;
