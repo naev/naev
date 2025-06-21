@@ -101,18 +101,16 @@ impl MaterialUniform {
 #[repr(C)]
 #[derive(Debug, Copy, Default, Clone, ShaderType)]
 pub struct LightUniform {
-    sun: u32,
     position: Vector3<f32>,
     colour: Vector3<f32>,
-    intensity: f32,
+    sun: u32,
 }
 impl LightUniform {
     pub const fn default() -> Self {
         LightUniform {
-            sun: 0,
             position: Vector3::new(0.0, 0.0, 0.0),
             colour: Vector3::new(0.0, 0.0, 0.0),
-            intensity: 0.0,
+            sun: 0,
         }
     }
 }
@@ -142,15 +140,13 @@ impl LightingUniform {
                 // Key Light
                 LightUniform {
                     position: Vector3::new(-3.0, 2.75, -3.0),
-                    colour: Vector3::new(1.0, 1.0, 1.0),
-                    intensity: 80.0,
+                    colour: Vector3::new(80.0, 80.0, 80.0),
                     sun: 0,
                 },
                 // Fill Light
                 LightUniform {
                     position: Vector3::new(10.0, 11.5, 7.0),
                     colour: Vector3::new(1.0, 1.0, 1.0),
-                    intensity: 1.0,
                     sun: 1,
                 },
                 LightUniform::default(),
@@ -867,6 +863,7 @@ pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_in
         return -1;
     }
     unsafe {
+        let intensity = (*light).intensity as f32;
         CLIGHTING.nlights = CLIGHTING.nlights.max((n + 1) as u32);
         CLIGHTING.lights[n] = LightUniform {
             sun: (*light).sun as u32,
@@ -876,11 +873,10 @@ pub extern "C" fn gltf_lightSet_(idx: c_int, light: *const naevc::Light) -> c_in
                 (*light).pos.v[2] as f32,
             ),
             colour: Vector3::new(
-                (*light).colour.v[0] as f32,
-                (*light).colour.v[1] as f32,
-                (*light).colour.v[2] as f32,
+                ((*light).colour.v[0] as f32) * intensity,
+                ((*light).colour.v[1] as f32) * intensity,
+                ((*light).colour.v[2] as f32) * intensity,
             ),
-            intensity: (*light).intensity as f32,
         }
     }
     0

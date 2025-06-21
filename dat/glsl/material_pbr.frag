@@ -1,6 +1,5 @@
-#ifndef MAX_LIGHTS
-#  define MAX_LIGHTS 7
-#endif
+#include "material_pbr.glsl"
+#include "lib/math.glsl"
 
 #define HAS_AO 1
 #define HAS_NORMAL 1
@@ -8,7 +7,6 @@
 /*
  * Physically Based Rendering Shader (WIP)
  */
-const float M_PI        = 3.14159265358979323846;  /* pi */
 
 /* pbr_metallic_roughness */
 layout(std140) uniform Material {
@@ -32,29 +30,16 @@ uniform sampler2D metallic_tex; /**< Metallic texture. */
 uniform sampler2D emissive_tex; /**< Emission texture. */
 uniform sampler2D normal_tex; /**< Normal map. */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
-
-/**
- * @brief Lighting information.
- */
-struct Light {
-   int sun;         /**< Whether or not a sun. */
-   vec3 position;    /**< Position or orientation if sun. */
-   vec3 colour;      /**< Colour to use. */
-   float intensity;  /**< Strength of the light. */
-};
-layout(std140) uniform Lighting {
-   vec3 u_ambient; /**< Ambient lighting. */
-   int u_nlights;
-   Light u_lights[ MAX_LIGHTS ];
-};
+/* Shadow map textures. */
 uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
-/* Input/Output */
-in vec2 tex_coord0;
-in vec2 tex_coord1;
-in vec3 position;
-in vec3 shadow[MAX_LIGHTS];
-in vec3 normal;
+/* Vertex outputs. */
+out vec2 tex_coord0;
+out vec2 tex_coord1;
+out vec3 position;
+out vec3 shadow[MAX_LIGHTS];
+out vec3 normal;
+/* Fragment outputs. */
 layout(location = 0) out vec4 colour_out;
 
 float pow5( float x ) {
@@ -210,7 +195,7 @@ vec3 light_intensity( Light L, float dist )
       attenuation = max(min(1.0 - pow(dist / L.range, 4.0), 1.0), 0.0) / pow(dist, 2.0);
 #endif
    float attenuation =  1.0 / pow(dist,2.0);
-   return L.colour * L.intensity * attenuation;
+   return L.colour * attenuation;
 }
 
 #if 0
@@ -602,7 +587,7 @@ void main (void)
 
       if (L.sun!=0) {
          l = L.position;
-         intensity = L.colour * L.intensity;
+         intensity = L.colour;
       }
       else {
          vec3 pointToLight = L.position - position;

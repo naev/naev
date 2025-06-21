@@ -314,6 +314,12 @@ pub fn naev() -> Result<()> {
         );
     }
 
+    {
+        let path = "gfx/ship3d/Admonisher/admonisher.gltf";
+        let ctx = crate::context::Context::get().unwrap().as_safe_wrap();
+        crate::model::Model::from_path(&ctx, &path)?;
+    }
+
     // Load game data
     load_all(load_env)?;
 

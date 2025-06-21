@@ -225,13 +225,6 @@ SHADERS = [
       }
    ),
    Shader(
-      name = "material",
-      vs_path = "material.vert",
-      fs_path = "material.frag",
-      attributes = ["vertex", "vertex_normal", "vertex_tex"],
-      uniforms = ["projection", "model", "map_Kd", "map_Ks", "map_Ke", "map_Bump", "Ns", "Ka", "Kd", "Ks", "Ke", "Ni", "d", "bm"],
-   ),
-   Shader(
       name = "colourblind_sim",
       vs_path = "postprocess.vert",
       fs_path = "colourblind_sim.frag",

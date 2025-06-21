@@ -1,10 +1,6 @@
-#ifndef MAX_LIGHTS
-#  define MAX_LIGHTS 5
-#endif
+#include "material_pbr.glsl"
+#include "lib/math.glsl"
 
-/* Not including math.glsl here because a python script reads this also and
-	can't handle include preprocessor. */
-const float M_PI        = 3.14159265358979323846;  /* pi */
 const float view_angle = -M_PI / 4.0;
 const mat4 view = mat4(
       1.0,            0.0,              0.0, 0.0,
@@ -18,27 +14,17 @@ layout(std140) uniform Primitive {
    mat4 u_shadow[MAX_LIGHTS];
 };
 
-struct Light {
-   int sun;         /**< Whether or not a sun. */
-   vec3 position;    /**< Position or orientation if sun. */
-   vec3 colour;      /**< Colour to use. */
-   float intensity;  /**< Strength of the light. */
-};
-layout(std140) uniform Lighting {
-   vec3 u_ambient; /**< Ambient lighting. */
-   int u_nlights;
-   Light u_lights[ MAX_LIGHTS ];
-};
-
+/* Vertex inputs. */
 layout(location = 0) in vec3 vertex;
 layout(location = 1) in vec3 vertex_normal;
 layout(location = 2) in vec2 vertex_tex0;
 layout(location = 3) in vec2 vertex_tex1;
+/* Vertex outputs. */
+out vec2 tex_coord0;
+out vec2 tex_coord1;
 out vec3 position;
 out vec3 shadow[MAX_LIGHTS];
 out vec3 normal;
-out vec2 tex_coord0;
-out vec2 tex_coord1;
 
 void main (void)
 {
