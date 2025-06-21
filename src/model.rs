@@ -427,7 +427,7 @@ impl Primitive {
             topology,
             vertices,
             indices,
-            element_type: glow::FLOAT,
+            element_type: glow::UNSIGNED_INT,
             num_indices: index_data.len() as i32,
             material,
             center,
