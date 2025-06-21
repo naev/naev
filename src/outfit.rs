@@ -40,7 +40,7 @@ pub extern "C" fn outfit_gfxStoreLoadNeeded() {
 
         let gfx_path = unsafe { CStr::from_ptr(o.gfx_store_path).to_str().unwrap() };
         let path = {
-            match gfx_path.chars().nth(0) {
+            match gfx_path.chars().next() {
                 Some('/') => String::from(gfx_path),
                 _ => format!("gfx/outfit/store/{}", gfx_path),
             }

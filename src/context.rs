@@ -299,7 +299,7 @@ impl Context {
     }
 
     pub fn as_wrap(&self) -> ContextWrapper {
-        ContextWrapper::Context(&self)
+        ContextWrapper::Context(self)
     }
 
     fn create_context(
