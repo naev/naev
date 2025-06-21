@@ -213,7 +213,6 @@ static float *poscpy(int n, const int *lst, const struct s_ssys *map,
    return dst;
 }
 
-// could be opt by specifying upper bound.
 static float max_distsq(const float pt[2], const float *pts, int nb)
 {
    float dst_sq = 0.0f;
@@ -232,12 +231,11 @@ static float bounding_circle(float dst[2], const float *pts, int nb)
    const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
                              {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
    const int   n_dirs     = 6;
+   const float eps        = 0.000001f;
+   float       delta      = 1.0f;
 
-   const float eps   = 0.000001f;
-   float       delta = 1.0f;
-   float       max_d = max_distsq(pts, pts, nb);
+   float max_d = max_distsq(pts, pts, nb);
    vcpy(dst, pts);
-
    while (1) {
       int i;
       for (i = 0; i < n_dirs; i++) {
@@ -256,52 +254,72 @@ static float bounding_circle(float dst[2], const float *pts, int nb)
    return max_d;
 }
 
-int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool quiet,
-                   bool ppm)
+static float total_score(float score_es, float score_so)
 {
-   int   *id_neigh;
-   float *neigh;
-   int    n_neigh  = 0;
-   float  edge_len = 0.0f;
-   float *around;
-   int   *id_around;
-   int    n_around = 0;
+   return 0.25 * score_es + score_so;
+}
+
+struct s_cost_params {
+   const float *neigh;
+   int          n_neigh;
+   const float *around;
+   int          n_around;
+   float        radius;
+   float        falloff;
+};
+
+static float sys_total_score(struct s_cost_params *sys_p, const float v[2])
+{
+   const float score_es =
+      edge_stretch_score(sys_p->neigh, sys_p->n_neigh, v, sys_p->radius);
+   const float score_so = sys_overlap_score(sys_p->around, sys_p->n_around, v,
+                                            sys_p->radius, sys_p->falloff);
+   return total_score(score_es, score_so);
+}
+
+int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
+                   bool quiet, bool ppm)
+{
+   struct s_cost_params ssys_p = {.n_neigh = 0, .n_around = 0};
+   int                 *id_neigh;
+   float                edge_len = 0.0f;
+   int                 *id_around;
 
    for (int i = 0; i < map->njumps; i++)
       edge_len += sqrt(dist_sq(map->sys[map->jumps[2 * i]].v,
                                map->sys[map->jumps[2 * i + 1]].v));
 
    edge_len /= map->njumps;
-   const float ssys_radius  = 2.0 * edge_len / 3.0;
-   const float ssys_falloff = ssys_fallscale * ssys_radius;
-   // fprintf(stderr, "sys rad %f\n", ssys_radius);
+   ssys_p.radius  = 2.0 * edge_len / 3.0;
+   ssys_p.falloff = ssys_fallscale * ssys_p.radius;
+   // fprintf(stderr, "sys rad %f\n", ssys_p.radius);
 
    for (int i = 0; i < 2 * map->njumps; i++)
       if (map->jumps[i] == ssys)
-         n_neigh++;
+         ssys_p.n_neigh++;
 
-   if (!n_neigh) {
+   if (!ssys_p.n_neigh) {
       vcpy(dst, map->sys[ssys].v);
       return 1;
    }
 
-   id_neigh = calloc(n_neigh, sizeof(int));
-   n_neigh  = 0;
+   id_neigh       = calloc(ssys_p.n_neigh, sizeof(int));
+   ssys_p.n_neigh = 0;
    for (int i = 0; i < map->njumps; i++) {
       int n = 2 * i;
 
       if (map->jumps[n] == ssys)
          n = n ^ 1;
       if (map->jumps[n ^ 1] == ssys)
-         id_neigh[n_neigh++] = map->jumps[n];
+         id_neigh[ssys_p.n_neigh++] = map->jumps[n];
    }
-   n_neigh = in_place_rem_duplicates(id_neigh, n_neigh);
+   ssys_p.n_neigh = in_place_rem_duplicates(id_neigh, ssys_p.n_neigh);
    if (!quiet)
       fprintf(stderr, "\e[033;1m[%s]\e[0m\n", map->sys_nam[ssys]);
-   neigh = poscpy(n_neigh, id_neigh, map, "neigh", quiet);
+   ssys_p.neigh = poscpy(ssys_p.n_neigh, id_neigh, map, "neigh", quiet);
 
    float center[2];
-   float sqrad = bounding_circle(center, neigh, n_neigh);
+   float sqrad = bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh);
    float rad   = sqrt(sqrad);
 
    if (rad < edge_len) {
@@ -312,65 +330,88 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool quiet,
    float UL[2] = {center[0] - rad, center[1] - rad};
    float LR[2] = {center[0] + rad, center[1] + rad};
 
-   float best[2]    = {center[0], center[1]};
-   float best_score = FLT_MAX;
-   int   best_id    = 0;
-
    id_around    = calloc(map->nsys, sizeof(int));
-   float max_sq = rad + ssys_falloff;
+   float max_sq = rad + ssys_p.falloff;
    max_sq *= max_sq;
 
    for (int i = 0; i < map->nsys; i++)
       if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq)
-         id_around[n_around++] = i;
-   around = poscpy(n_around, id_around, map, "around", quiet);
+         id_around[ssys_p.n_around++] = i;
+   ssys_p.around = poscpy(ssys_p.n_around, id_around, map, "around", quiet);
 
-   // Iterate over points of the circle
-   float  v[2];
-   float *samples = malloc(SAMP * SAMP * 3 * sizeof(float));
-   for (int i = 0; i < SAMP; i++) {
-      v[0] = (1.0 * i / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
-      for (int j = 0; j < SAMP; j++) {
-         v[1] = (1.0 * j / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
-         if (dist_sq(center, v) <= sqrad) {
-            const float score_es =
-               edge_stretch_score(neigh, n_neigh, v, ssys_radius);
-            const float score_so = sys_overlap_score(around, n_around, v,
-                                                     ssys_radius, ssys_falloff);
-            const float score    = 0.25 * score_es + score_so;
-            samples[3 * (i * SAMP + j) + 0] = score_es;
-            samples[3 * (i * SAMP + j) + 1] = score_so;
-            samples[3 * (i * SAMP + j) + 2] = 1.0f;
-            if (score < best_score) {
-               vcpy(best, v);
-               best_score = score;
-               best_id    = i * SAMP + j;
+   if (g_opt || ppm) {
+      float best[2]    = {center[0], center[1]};
+      float best_score = FLT_MAX;
+      int   best_id    = 0;
+
+      // Iterate over points of the circle
+      float  v[2];
+      float *samples = calloc(SAMP * SAMP, 3 * sizeof(float)); // IEEE754
+      for (int i = 0; i < SAMP; i++) {
+         v[0] = (1.0 * i / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
+         for (int j = 0; j < SAMP; j++) {
+            v[1] = (1.0 * j / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
+            if (dist_sq(center, v) <= sqrad) {
+               const float score_es = edge_stretch_score(
+                  ssys_p.neigh, ssys_p.n_neigh, v, ssys_p.radius);
+               const float score_so =
+                  sys_overlap_score(ssys_p.around, ssys_p.n_around, v,
+                                    ssys_p.radius, ssys_p.falloff);
+               const float score = total_score(score_es, score_so);
+               samples[3 * (i * SAMP + j) + 0] = score_es;
+               samples[3 * (i * SAMP + j) + 1] = score_so;
+               samples[3 * (i * SAMP + j) + 2] = 1.0f;
+               if (score < best_score) {
+                  vcpy(best, v);
+                  best_score = score;
+                  best_id    = i * SAMP + j;
+               }
             }
-         } else
-            for (int k = 0; k < 3; k++)
-               samples[3 * (i * SAMP + j) + k] = 0.0f;
+         }
       }
-   }
-   if (ppm) {
-      samples[3 * best_id + 0] = 0.0f;
-      samples[3 * best_id + 1] = 0.0f;
-      samples[3 * best_id + 2] = 2.0f;
-      output_ppm(map->sys_nam[ssys], samples, SAMP, SAMP);
+      if (ppm) {
+         const float blue[] = {0.0f, 0.0f, 2.0f};
+         for (int k = 0; k < 3; k++)
+            samples[3 * best_id + k] = blue[k];
+         output_ppm(map->sys_nam[ssys], samples, SAMP, SAMP);
+      }
+      free(samples);
+      if (g_opt)
+         vcpy(dst, best);
    }
 
-   vcpy(dst, best);
+   const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
+                             {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
+   const int   n_dirs     = 6;
+   const float eps        = 0.000001f;
+   float       delta      = 1.0f;
 
-   free(samples);
+   float min_sc = sys_total_score(&ssys_p, dst);
+   while (1) {
+      int i;
+      for (i = 0; i < n_dirs; i++) {
+         const float cand[2] = {dst[0] + delta * dirs[i][0],
+                                dst[1] + delta * dirs[i][1]};
+         const float sc      = sys_total_score(&ssys_p, cand);
+         if (sc < min_sc) {
+            vcpy(dst, cand);
+            min_sc = sc;
+            break;
+         }
+      }
+      if (i == n_dirs && ((delta /= 2.0f) < eps))
+         break;
+   }
    free(id_neigh);
-   free(neigh);
-   free(around);
+   free((void *) ssys_p.neigh);
+   free((void *) ssys_p.around);
    free(id_around);
 
    return 0;
 }
 
-void gen_map_reposition(struct s_ssys *map, bool quiet, bool gen_map, bool only,
-                        float ratio)
+void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
+                        bool gen_map, bool only, float ratio)
 {
    char buff[512];
    int  num;
@@ -390,9 +431,9 @@ void gen_map_reposition(struct s_ssys *map, bool quiet, bool gen_map, bool only,
 
    for (int i = num; i < map->nosys; i += THREADS)
       if (map->sys[i].w != 0.0f) {
-         float v[2];
+         float v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
 
-         if (reposition_sys(v, map, i, quiet, gen_map)) {
+         if (reposition_sys(v, map, i, g_opt, quiet, gen_map)) {
             if (!quiet)
                fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
          } else {
@@ -436,7 +477,7 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
 }
 
 /* main */
-int do_it(char **onam, int n_onam, const bool gen_map, const bool only,
+int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool only,
           float weight)
 {
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
@@ -474,39 +515,44 @@ int do_it(char **onam, int n_onam, const bool gen_map, const bool only,
          free(bufs[i]);
    }
    free(line);
+   g_hash_table_destroy(h);
 
    const bool quiet = !map.nosys;
    if (!map.nosys)
       map.nosys = map.nsys;
 
-   gen_map_reposition(&map, quiet, gen_map, only, weight);
+   gen_map_reposition(&map, g_opt, quiet, gen_map, only, weight);
 
    for (int i = 0; i < map.nsys; i++)
       free(map.sys_nam[i]);
    free(map.sys_nam);
    free(map.jumps);
-   g_hash_table_destroy(h);
    return EXIT_SUCCESS;
 }
 
-int usage(char *nam, int ret, float w)
+static int usage(char *nam, int ret, float w)
 {
-   fprintf(stderr, "Usage:  %s  [-o] [-p] [-w<weight>] [<names>...]\n",
+   fprintf(stderr, "Usage:  %s  [-g] [-o] [-p] [-w<weight>] [<names>...]\n",
            basename(nam));
-   fprintf(stderr, "  Reads a set of node pos in input from standard input.\n");
-   fprintf(stderr,
-           "  Applies repositioning to <names> and outputs the result.\n");
-   fprintf(stderr, "  If <names> is not provided, use all input names.\n");
-   fprintf(stderr, "  <names> is a set of ssys basenames.\n");
-   fprintf(stderr, "  If files are provided instead, their basename without "
-                   "\".xml\" is used.");
-   fprintf(stderr, "  If -o is set, only output processed systems.\n");
-   fprintf(stderr,
-           "  If -p is set, outputs a ppm for each processed system.\n");
-   fprintf(stderr,
-           "  If <weight> is set (positive), outputs values in the form:\n");
-   fprintf(stderr, "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n");
-   fprintf(stderr, "  If not specified, <weight> defaults to %f.\n", w);
+   fprintf(
+      stderr,
+      "  Reads a graph from standard input.\n"
+      "  Applies repositioning to <names> and outputs the result.\n\n"
+      "  If <names> is not provided, use all input names.\n"
+      "  <names> is a set of ssys basenames.\n"
+      "  If files are provided instead, their basename without "
+      "\".xml\" is used.\n\n"
+      "  If -g is set, look for global optimum (slower, and\n"
+      "    might result in a different planar embedding).\n\n"
+      "  If -o is set, only output processed systems.\n"
+      "  If -p is set, outputs a ppm for each processed system.\n\n"
+      "  If <weight> is set (positive), outputs values in the form:\n"
+      "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n"
+      "   - If not specified, <weight> defaults to %.1f.\n"
+      "   - If you repos systems that are neighbors, its is strongly advised\n"
+      "       to choose <weight> at the very least greater than 1.0.\n"
+      "   - If you repos independent systems, you can (and should) use 0.0.\n",
+      w);
    return ret;
 }
 
@@ -518,6 +564,7 @@ static int cmpstringp(const void *p1, const void *p2)
 int main(int argc, char **argv)
 {
    char *nam            = argv[0];
+   bool  g_opt          = false;
    bool  processed_only = false;
    bool  gen_map        = false;
 
@@ -533,6 +580,11 @@ int main(int argc, char **argv)
       }
 
    qsort(argv + fst_opt, fst_non_opt - fst_opt, sizeof(char *), cmpstringp);
+
+   if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-g")) {
+      g_opt = true;
+      fst_opt++;
+   }
 
    if (fst_non_opt > fst_opt &&
        (!strcmp(argv[fst_opt], "-h") || !strcmp(argv[fst_opt], "--help")))
@@ -572,6 +624,6 @@ int main(int argc, char **argv)
             return usage(nam, EXIT_FAILURE, weight);
       }
    }
-   return do_it(argv + fst_non_opt, argc - fst_non_opt, gen_map, processed_only,
-                weight);
+   return do_it(argv + fst_non_opt, argc - fst_non_opt, g_opt, gen_map,
+                processed_only, weight);
 }
