@@ -353,6 +353,11 @@ impl Texture {
 
         Ok(())
     }
+
+    pub fn into_ptr(self) -> *mut Self {
+        unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
+        Box::into_raw(Box::new(self))
+    }
 }
 
 #[derive(Clone, Copy)]
@@ -960,10 +965,7 @@ pub extern "C" fn gl_texExistsOrCreate(
     };
 
     let out = match builder.build(ctx) {
-        Ok(tex) => {
-            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex))
-        }
+        Ok(tex) => tex.into_ptr(),
         _ => std::ptr::null_mut(),
     };
     unsafe {
@@ -1018,10 +1020,7 @@ pub extern "C" fn gl_loadImageData(
     }
 
     let out = match builder.build(ctx) {
-        Ok(tex) => {
-            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex))
-        }
+        Ok(tex) => tex.into_ptr(),
         Err(e) => {
             warn_err!(e);
             std::ptr::null_mut()
@@ -1065,10 +1064,7 @@ pub extern "C" fn gl_newSprite(
     }
 
     let out = match builder.build(ctx) {
-        Ok(tex) => {
-            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex))
-        }
+        Ok(tex) => tex.into_ptr(),
         Err(e) => {
             warn_err(e.context("unable to build texture for new sprite"));
             std::ptr::null_mut()
@@ -1134,10 +1130,7 @@ pub extern "C" fn gl_newSpriteRWops(
     };
 
     let out = match builder.build(ctx) {
-        Ok(tex) => {
-            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex))
-        }
+        Ok(tex) => tex.into_ptr(),
         Err(e) => {
             warn_err(e.context("unable to build texture for new sprite from rwops"));
             std::ptr::null_mut()
@@ -1205,10 +1198,7 @@ pub extern "C" fn gl_rawTexture(
     };
 
     let out = match builder.build(ctx) {
-        Ok(tex) => {
-            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex))
-        }
+        Ok(tex) => tex.into_ptr(),
         Err(e) => {
             warn_err(e.context("unable to build texture for raw texture"));
             std::ptr::null_mut()

@@ -2,7 +2,6 @@ use crate::context::Context;
 use crate::texture::TextureBuilder;
 use rayon::prelude::*;
 use std::ffi::{c_void, CStr};
-use std::sync::Arc;
 
 struct OutfitWrapper(naevc::Outfit);
 //unsafe impl Sync for OutfitWrapper {}
@@ -48,10 +47,7 @@ pub extern "C" fn outfit_gfxStoreLoadNeeded() {
         };
 
         let tex = TextureBuilder::new().path(&path).build_wrap(&ctx).unwrap();
-        o.gfx_store = {
-            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
-            Box::into_raw(Box::new(tex))
-        } as *mut naevc::glTexture;
+        o.gfx_store = tex.into_ptr() as *mut naevc::glTexture;
     });
 }
 
