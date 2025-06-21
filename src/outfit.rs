@@ -1,5 +1,8 @@
+use crate::context::Context;
+use crate::texture::TextureBuilder;
 use rayon::prelude::*;
 use std::ffi::{c_void, CStr};
+use std::sync::Arc;
 
 struct OutfitWrapper(naevc::Outfit);
 //unsafe impl Sync for OutfitWrapper {}
@@ -23,9 +26,8 @@ fn get_mut() -> &'static mut [OutfitWrapper] {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn outfit_gfxStoreLoadNeeded_() {
-    //let ctx = Context::get().unwrap();
-    //let sctx = SafeContext
+pub extern "C" fn outfit_gfxStoreLoadNeeded() {
+    let ctx = Context::get().unwrap().as_safe_wrap();
 
     get_mut().par_iter_mut().for_each(|ptr| {
         let o = &mut ptr.0;
@@ -37,9 +39,19 @@ pub extern "C" fn outfit_gfxStoreLoadNeeded_() {
             return;
         }
 
-        let path = unsafe { CStr::from_ptr(o.gfx_store_path).to_str().unwrap() };
+        let gfx_path = unsafe { CStr::from_ptr(o.gfx_store_path).to_str().unwrap() };
+        let path = {
+            match gfx_path.chars().nth(0) {
+                Some('/') => String::from(gfx_path),
+                _ => format!("gfx/outfit/store/{}", gfx_path),
+            }
+        };
 
-        // TODO reimplement outfit_gfxSToreLoad here
+        let tex = TextureBuilder::new().path(&path).build_wrap(&ctx).unwrap();
+        o.gfx_store = {
+            unsafe { Arc::increment_strong_count(Arc::into_raw(tex.texture.clone())) }
+            Box::into_raw(Box::new(tex))
+        } as *mut naevc::glTexture;
     });
 }
 

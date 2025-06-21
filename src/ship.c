@@ -664,6 +664,7 @@ int ship_gfxLoad( Ship *s )
       int              nmounts;
 
       // DEBUG( "Found 3D graphics for '%s' at '%s'!", s->name, str );
+      // s->gfx_3d = gltf_loadFromFile_( str );
       s->gfx_3d = gltf_loadFromFile( str );
       trails    = gltf_trails( s->gfx_3d, &ntrails );
       mounts    = gltf_mounts( s->gfx_3d, &nmounts );

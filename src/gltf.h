@@ -66,6 +66,7 @@ void gltf_exit( void );
 
 /* Loading and freeing. */
 GltfObject *gltf_loadFromFile( const char *filename );
+GltfObject *gltf_loadFromFile_( const char *filename );
 void        gltf_free( GltfObject *obj );
 
 /* Rendering and updating. */

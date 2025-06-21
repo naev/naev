@@ -174,6 +174,7 @@ int outfit_gfxStoreLoaded( const Outfit *o )
    return ( o->gfx_store != NULL );
 }
 
+#if 0
 int outfit_gfxStoreLoadNeeded( void )
 {
 #if 1
@@ -200,6 +201,7 @@ int outfit_gfxStoreLoadNeeded( void )
 #endif
    return 0;
 }
+#endif
 
 /**
  * @brief Loads the store graphics for the outfit.
