@@ -16,9 +16,9 @@ layout(std140) uniform Primitive {
 
 /* Vertex inputs. */
 layout(location = 0) in vec3 vertex;
-layout(location = 1) in vec3 vertex_normal;
-layout(location = 2) in vec2 vertex_tex0;
-layout(location = 3) in vec2 vertex_tex1;
+layout(location = 1) in vec3 v_normal;
+layout(location = 2) in vec2 v_tex0;
+layout(location = 3) in vec2 v_tex1;
 /* Vertex outputs. */
 out vec2 tex_coord0;
 out vec2 tex_coord1;
@@ -31,11 +31,11 @@ void main (void)
    /* Coordinates and position. */
    vec4 pos    = u_model * vec4( vertex, 1.0 );
    position    = pos.xyz / pos.w;
-   tex_coord0  = vertex_tex0;
-   tex_coord1  = vertex_tex1;
+   tex_coord0  = v_tex0;
+   tex_coord1  = v_tex1;
 
    /* Compute normal vector. */
-   normal      = -normalize(u_normal * vertex_normal); /* TODO why is it inverted?? */
+   normal      = -normalize(u_normal * v_normal); /* TODO why is it inverted?? */
 
    /* Position for fragment shader. */
    gl_Position = view * pos;

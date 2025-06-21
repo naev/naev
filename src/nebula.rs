@@ -106,7 +106,7 @@ impl PuffLayer {
             data.push(Puff::new(ctx, fg));
         }
 
-        let puff_size = std::mem::size_of::<Puff>();
+        let puff_size = std::mem::size_of::<Puff>() as i32;
         let buffer = BufferBuilder::new(Some("Nebula Puff Buffer"))
             .usage(BufferUsage::Static)
             .data(match n {
@@ -127,14 +127,14 @@ impl PuffLayer {
                 VertexArrayBuffer {
                     buffer: &buffer,
                     size: 4,
-                    stride: puff_size as i32,
+                    stride: puff_size,
                     offset: 0,
                     divisor: 1, // Advances once per instance
                 },
                 VertexArrayBuffer {
                     buffer: &buffer,
                     size: 2,
-                    stride: puff_size as i32,
+                    stride: puff_size,
                     offset: std::mem::offset_of!(Puff, rand) as i32,
                     divisor: 1,
                 },

@@ -8,7 +8,10 @@ use std::ffi::CStr;
 use std::os::raw::{c_char, c_double, c_int};
 use std::rc::Rc;
 
-use crate::buffer::{Buffer, BufferBuilder, BufferTarget, BufferUsage};
+use crate::buffer::{
+    Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
+    VertexArrayBuilder,
+};
 use crate::context::{Context, ContextWrapper};
 use crate::ndata;
 use crate::shader::{Shader, ShaderBuilder};
@@ -172,6 +175,9 @@ pub struct ModelShader {
     shader: Shader,
     lighting_buffer: Buffer,
     vertex: u32,
+    normal: u32,
+    tex0: u32,
+    tex1: u32,
     primitive_uniform: u32,
     material_uniform: u32,
     lighting_uniform: u32,
@@ -212,6 +218,9 @@ impl ModelShader {
             .build(gl)?;
 
         let vertex = shader.get_attrib(gl, "vertex")?;
+        let normal = shader.get_attrib(gl, "v_normal")?;
+        let tex0 = shader.get_attrib(gl, "v_tex0")?;
+        let tex1 = shader.get_attrib(gl, "v_tex1")?;
 
         let primitive_uniform = shader.get_uniform_block(gl, "Primitive")?;
         let material_uniform = shader.get_uniform_block(gl, "Material")?;
@@ -228,6 +237,9 @@ impl ModelShader {
             shader,
             lighting_buffer,
             vertex,
+            normal,
+            tex0,
+            tex1,
             primitive_uniform,
             material_uniform,
             lighting_uniform,
@@ -332,6 +344,7 @@ pub struct Primitive {
     uniform_data: PrimitiveUniform,
     uniform_buffer: Buffer,
     topology: u32,
+    vao: VertexArray,
     vertices: Buffer,
     indices: Buffer,
     num_indices: i32,
@@ -414,6 +427,40 @@ impl Primitive {
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&index_data))
             .build(gl)?;
+        let vertex_size = std::mem::size_of::<Vertex>() as i32;
+        let vao = VertexArrayBuilder::new(None)
+            .buffers(&[
+                VertexArrayBuffer {
+                    buffer: &vertices,
+                    size: 3,
+                    stride: vertex_size,
+                    offset: std::mem::offset_of!(Vertex, pos) as i32,
+                    divisor: 0,
+                },
+                VertexArrayBuffer {
+                    buffer: &vertices,
+                    size: 3,
+                    stride: vertex_size,
+                    offset: std::mem::offset_of!(Vertex, nor) as i32,
+                    divisor: 0,
+                },
+                VertexArrayBuffer {
+                    buffer: &vertices,
+                    size: 3,
+                    stride: vertex_size,
+                    offset: std::mem::offset_of!(Vertex, tex0) as i32,
+                    divisor: 0,
+                },
+                VertexArrayBuffer {
+                    buffer: &vertices,
+                    size: 3,
+                    stride: vertex_size,
+                    offset: std::mem::offset_of!(Vertex, tex1) as i32,
+                    divisor: 0,
+                },
+            ])
+            .indices(Some(&indices))
+            .build_gl(gl)?;
         let uniform_data = PrimitiveUniform::default();
         let uniform_buffer = BufferBuilder::new(None)
             .target(BufferTarget::Uniform)
@@ -425,6 +472,7 @@ impl Primitive {
             uniform_data,
             uniform_buffer,
             topology,
+            vao,
             vertices,
             indices,
             element_type: glow::UNSIGNED_INT,
@@ -452,12 +500,6 @@ impl Mesh {
         transform: &Matrix4<f32>,
     ) -> Result<()> {
         #[rustfmt::skip]
-        const OPENGL_TO_WGPU: Matrix4<f32> = Matrix4::new(
-            1.0, 0.0, 0.0, 0.0,
-            0.0, 1.0, 0.0, 0.0,
-            0.0, 0.0, 0.5, 0.5,
-            0.0, 0.0, 0.0, 1.0, );
-        #[rustfmt::skip]
         #[allow(non_snake_case)]
         let VIEW: Matrix4<f32> = {
             const VIEW_ANGLE: f32 = -std::f32::consts::FRAC_PI_4;
@@ -476,7 +518,7 @@ impl Mesh {
             // Update the primitive uniform
             let new_transform = VIEW * transform;
             let mut data = p.uniform_data;
-            data.view = OPENGL_TO_WGPU * new_transform;
+            data.view = new_transform;
             data.normal = new_transform
                 .fixed_resize::<3, 3>(0.0)
                 .try_inverse()
@@ -489,23 +531,12 @@ impl Mesh {
 
             // Render
             unsafe {
-                gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, Some(p.indices.buffer));
-                gl.bind_buffer(glow::ARRAY_BUFFER, Some(p.vertices.buffer));
-                gl.enable_vertex_attrib_array(shader.vertex);
+                // Attributes
+                p.vao.bind(ctx);
 
                 // Uniforms
-                p.uniform_buffer.bind(ctx);
-                gl.bind_buffer_base(
-                    glow::UNIFORM_BUFFER,
-                    shader.primitive_uniform,
-                    Some(p.uniform_buffer.buffer),
-                );
-                m.uniform_buffer.bind(ctx);
-                gl.bind_buffer_base(
-                    glow::UNIFORM_BUFFER,
-                    shader.material_uniform,
-                    Some(p.uniform_buffer.buffer),
-                );
+                p.uniform_buffer.bind_base(ctx, shader.primitive_uniform);
+                m.uniform_buffer.bind_base(ctx, shader.material_uniform);
 
                 // Textures
                 m.metallic.bind(ctx, 1);
@@ -630,17 +661,13 @@ impl Scene {
         let gl = &ctx.gl;
 
         // Update lighting
+        shader.shader.use_program(gl);
         shader
             .lighting_buffer
             .write(ctx, lighting.buffer()?.into_inner().as_slice())?;
-        shader.lighting_buffer.bind(ctx);
-        unsafe {
-            gl.bind_buffer_base(
-                glow::UNIFORM_BUFFER,
-                shader.lighting_uniform,
-                Some(shader.lighting_buffer.buffer),
-            );
-        };
+        shader
+            .lighting_buffer
+            .bind_base(ctx, shader.lighting_uniform);
 
         unsafe {
             gl.enable(glow::BLEND);
