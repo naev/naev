@@ -1,5 +1,5 @@
 use rayon::prelude::*;
-use std::ffi::c_void;
+use std::ffi::{c_void, CStr};
 
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
@@ -26,9 +26,16 @@ fn get_mut() -> &'static mut [ShipWrapper] {
 pub extern "C" fn ship_gfxLoadNeeded_() {
     get_mut().par_iter_mut().for_each(|ptr| {
         let s = &mut ptr.0;
-        if s.flags & naevc::SHIP_NEEDSGFX > 0 {
-            // TODO oad graphics here
-            s.flags &= !naevc::SHIP_NEEDSGFX;
+        if s.flags & naevc::SHIP_NEEDSGFX == 0 {
+            return;
         }
+        s.flags &= !naevc::SHIP_NEEDSGFX;
+        if !s.gfx_3d.is_null() || !s.gfx_space.is_null() {
+            return;
+        }
+
+        let gfx_path = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
+
+        // TODO reimplement ship_gfxLoad here
     });
 }
