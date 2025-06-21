@@ -8,7 +8,7 @@ use std::ops::Deref;
 use std::sync::{Mutex, RwLock};
 
 use crate::array::ArrayCString;
-use crate::context::{Context, SafeContext};
+use crate::context::{Context, ContextWrapper};
 use crate::gettext::gettext;
 use crate::log::warn_err;
 use crate::nlua::LuaEnv;
@@ -302,7 +302,7 @@ struct FactionLoad {
 impl FactionLoad {
     /// Loads the elementary faction stuff, does not fill out information dependent on other
     /// factions
-    fn new(ctx: &SafeContext, lua: &Mutex<NLua>, filename: &str) -> Result<Self> {
+    fn new(ctx: &ContextWrapper, lua: &Mutex<NLua>, filename: &str) -> Result<Self> {
         let mut fctload = FactionLoad::default();
         let fct = &mut fctload.data;
 
@@ -354,8 +354,11 @@ impl FactionLoad {
                 "colour" => continue,
                 "logo" => {
                     let gfxname = nxml::node_texturepath(node, "gfx/logo/")?;
-                    let nctx = ctx.lock();
-                    fct.logo = Some(texture::TextureBuilder::new().path(&gfxname).build(&nctx)?);
+                    fct.logo = Some(
+                        texture::TextureBuilder::new()
+                            .path(&gfxname)
+                            .build_wrap(ctx)?,
+                    );
                 }
                 "known" => fct.f_known = true,
                 "static" => fct.f_static = true,
@@ -472,7 +475,7 @@ use std::sync::OnceLock;
 pub static FACTIONDATA: OnceLock<Vec<FactionData>> = OnceLock::new();
 
 pub fn load() -> Result<()> {
-    let ctx = SafeContext::new(Context::get().unwrap());
+    let ctx = Context::get().unwrap().as_safe_wrap();
     let files = ndata::read_dir("factions/")?;
 
     // First pass: set up factions
