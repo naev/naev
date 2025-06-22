@@ -102,6 +102,10 @@
       * Improved AI braking skills
       * Game will not save in certain cases like loading the game and immediately being forced to take off by a load hook
 
+* 0.12.6 (unreleased)
+   * Dvaered Negotiation 1: update the location of the target on the map
+   * Dvaered Sabotage: no longer fail the mission if the target jumps out after boarding
+
 * 0.12.5
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
