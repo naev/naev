@@ -1,3 +1,7 @@
+* 0.12.6 (unreleased)
+   * Dvaered Negotiation 1: update the location of the target on the map
+   * Dvaered Sabotage: no longer fail the mission if the target jumps out after boarding
+
 * 0.12.5
    * Fixed bug causing lower diversity in ship spawning
    * Fixed autonav not respecting shield thresholds
