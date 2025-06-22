@@ -40,7 +40,7 @@ static inline float grav_pot(float xs, float ys, float x, float y)
       return -1.0f / d;
 }
 
-// The derivative of the previous one.
+// The derivative of the previous ones.
 static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
                            float y, float m)
 {
@@ -57,6 +57,46 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
       f = 2.0f * d * mul_ct;
    else
       f = 1.0f / d * d;
+
+   f *= m;
+   *vx += f * dx;
+   *vy += f * dy;
+}
+
+#define F_ATT 0.04f
+#define A_ATT 0.00f
+static inline float wav_pot(float xs, float ys, float x, float y)
+{
+   const float dx = xs - x;
+   const float dy = ys - y;
+   const float d  = sqrt(dx * dx + dy * dy) * inv_fact;
+
+   return cos(d * M_PI / (1.0f + F_ATT * d)) / (1.0f + A_ATT * d) - 1.0f;
+}
+
+// The derivative of the previous ones.
+static inline void wav_f(float *vx, float *vy, float xs, float ys, float x,
+                         float y, float m)
+{
+   float dx = xs - x;
+   float dy = ys - y;
+   float d  = sqrt(dx * dx + dy * dy);
+   float f;
+
+   if (dx == 0.0f && dy == 0.0f)
+      return;
+
+   dx /= d;
+   dy /= d;
+
+   d *= inv_fact;
+   const float inside = d * M_PI / (1.0f + F_ATT * d);
+   const float den    = (1.0 + A_ATT * d) * (1.0 + A_ATT * d);
+   f = M_PI / (1.0f + F_ATT * d) / (1.0f + F_ATT * d) * (-sin(inside)) *
+          (1.0f + A_ATT) -
+       F_ATT * cos(inside);
+   f /= den;
+   f *= 10.0f;
 
    f *= m;
    *vx += f * dx;
@@ -99,10 +139,9 @@ static float potential_at_ij(float *lst, size_t nb, enum e_pot p, int i, int j)
          accu += lst[4 * n + 2] *
                  grav_pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
       return accu;
-   } else if (p == WAVES) {
-      // TODO
-      return 0.0f;
-   } else
+   } else if (p == WAVES)
+      return wav_pot(lst[0], lst[1], (float) j, (float) i);
+   else
       return 0.0f;
 }
 
@@ -222,7 +261,8 @@ void gen_potential(float *lst, size_t nb, enum e_pot typ, float scale)
 #undef FROM
 }
 
-void apply_gravity(const float *lst, const size_t nb, const char **nam)
+void apply_potential(const float *lst, size_t nb, enum e_pot t,
+                     const char **nam)
 {
    char buff[512];
    int  num;
@@ -237,10 +277,15 @@ void apply_gravity(const float *lst, const size_t nb, const char **nam)
       float  x = lst[4 * i + 0], y = lst[4 * i + 1];
       float  dx = 0.0f, dy = 0.0f;
       size_t n;
-      for (size_t j = 0; j < nb; j++)
-         if (j != i)
-            accum_f(&dx, &dy, lst[4 * j + 0], lst[4 * j + 1], x, y,
-                    lst[4 * j + 2]);
+
+      if (t == GRAVITY) {
+         for (size_t j = 0; j < nb; j++)
+            if (j != i)
+               accum_f(&dx, &dy, lst[4 * j + 0], lst[4 * j + 1], x, y,
+                       lst[4 * j + 2]);
+      } else if (t == WAVES)
+         wav_f(&dx, &dy, lst[0], lst[1], x, y, lst[2]);
+
       dx *= GRAV_FACT;
       dy *= GRAV_FACT;
       n = snprintf(buff, 511, "%s %f %f\n", nam[i], x + dx, y + dy);
@@ -306,8 +351,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply)
    inv_fact = 1.0f / fact;
 
    if (apply) {
-      if (type == GRAVITY)
-         apply_gravity(lst, nb, (const char **) nam);
+      apply_potential(lst, nb, type, (const char **) nam);
       for (size_t i = 0; i < nb; i++)
          free(nam[i]);
       free(nam);
