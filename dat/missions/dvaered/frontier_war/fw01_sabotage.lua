@@ -330,8 +330,8 @@ function spawn_phalanx()
    mem.pattacked = hook.pilot( p, "attacked", "phalanx_attacked" )
    mem.pboarded = hook.pilot( p, "board", "phalanx_boarded" )
    hook.pilot( p, "death", "phalanx_died" )
-   hook.pilot( p, "jump", "phalanx_safe" )
-   hook.pilot( p, "land", "phalanx_safe" )
+   mem.pjump = hook.pilot( p, "jump", "phalanx_safe" )
+   mem.pland = hook.pilot( p, "land", "phalanx_safe" )
 
    mem.stage = 4
    misn.osdActive(2)
@@ -353,6 +353,8 @@ end
 
 function phalanx_boarded()
    hook.rm(mem.pboarded)
+   hook.rm(mem.pjump)
+   hook.rm(mem.pland)
    tk.msg( _("Boarding"), fmt.f(_([[All the members of the commando unit have put on their battle suits. Hamfresser gives the final orders. "Nikolov, Tronk, and I will enter first and clear the area. Remember, we don't have our usual Dudley combat androids. We're stuck with the two useless plumber bots and the few security droids of {player}'s ship so we'll have to get our hands dirty. Corvettes are typically protected by a few 629 Spitfires and an occasional 711 Grillmeister. That's not very much, but still enough to send the inattentive soldier ad patres."
    When the corvette's airlock falls under Nikolov's circular saw, the captain waves and the small team enters the ship. You hear shots and explosions coming from further and further into the enemy ship. Finally, you hear a laconic message coming from the disabled corvette: "Strafer here, everything went well. We'll now transfer the cargo into the Phalanx... Now that the maneuver is finished, you may leave." Happy to have survived the operation so far, you start your engines and respond "Good luck, folks!" The lieutenant answers "Thanks, citizen, I'm glad to have met you."]]), {player=player.name()}) )
    mem.stage = 5
