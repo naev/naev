@@ -606,7 +606,6 @@ void main(void) {
 #define VERTEX
 layout(location = 0) in vec4 VertexPosition;
 layout(location = 1) in vec4 VertexTexCoord;
-layout(location = 2) in vec4 VertexColour;
 
 #if GLSL_VERSION >= 440
 layout(location=0) out InterfBLock {

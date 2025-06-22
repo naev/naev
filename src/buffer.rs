@@ -274,14 +274,15 @@ impl<'a> VertexArrayBuilder<'a> {
 
             // Bind Vertex Buffers
             for (idx, buffer) in self.buffers.iter().enumerate() {
+                let idx = idx as u32;
                 if buffer.size < 1 || buffer.size > 4 {
                     warn!("invalid VertexArray size");
                     //    self.size = self.size.clamp(1, 4);
                 }
                 gl.bind_buffer(glow::ARRAY_BUFFER, Some(buffer.buffer.buffer));
-                gl.enable_vertex_attrib_array(idx as u32);
+                gl.enable_vertex_attrib_array(idx);
                 gl.vertex_attrib_pointer_f32(
-                    idx as u32,
+                    idx,
                     buffer.size,
                     self.data_type,
                     self.normalized,
