@@ -1,21 +1,29 @@
 #!/usr/bin/bash
 
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0") [<#iterations>] [reposition args]" >&2
-   echo "  Applies reposition repeatedly (or once if not provided)" >&2
-   exit 0
-fi
-
 #FLAGS=("-pg" "-O1")
 FLAGS=("-O3")
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+   echo "usage:  $(basename "$0") [<#iterations>|-C] [reposition args]" >&2
+   echo "  If -C is set, just compile reposition." >&2
+   echo "  Applies reposition <#iterations> times (or once if not provided)" >&2
+   echo "  <#iterations> might be 0 (just output current ssys positions).">&2
+   echo "  Use reposition -h to get info on reposition args." >&2
+   exit 0
+fi
 
 if [ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null; then
    N="$1"
    shift
 else
    N=1
+   for j in "$@"; do
+      if [ "$j" = "-C" ]; then
+         N="C";
+         break
+      fi
+   done
 fi
-echo "Apply reposition $N time(s)." >&2
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 read -ra FLG <<< "$(pkg-config glib-2.0 --cflags)"
@@ -30,6 +38,11 @@ if [ ! -f "$SCRIPT_DIR"/reposition ] || [ ! "$SCRIPT_DIR"/reposition -nt "$SCRIP
    || exit 1
    echo >&2
 fi
+
+if [ "$N" = "C" ] ; then
+   exit 0
+fi
+echo "Apply reposition $N time(s)." >&2
 
 TMP=$(mktemp)
 trap 'rm -f "$TMP"' EXIT

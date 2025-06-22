@@ -28,3 +28,7 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `gravity` generates the __gravity potential__ of the star map as a picture (black means minimum potential, and white means 0 potential (upper bound).
  - `height_map.pov` allows to display that potential in 3D. Use `gen_pot.sh` to do it all.
  - `gravity` can also __apply gravity__, see `apply_g.sh` and `apply_g_to_ssys.sh`.
+
+### auto-positionning system
+ - `repos.sh` read current ssys info and applies reposition repeatedly. See `repos.sh -h`.
+ - `reposition` reads systems position and edges in input, and outputs the list of repositionned systems. The system you want to reposition are given as arguments. See `reposition -h`.
