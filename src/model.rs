@@ -1040,14 +1040,13 @@ pub extern "C" fn gltf_renderScene(
 ) {
     // TODO animations
     let model = unsafe { &mut *model };
-    let ctransform = match ctransform.is_null() {
+    let transform = match ctransform.is_null() {
         true => &Matrix4::identity(),
         false => unsafe { &*ctransform },
     };
     let ctx = Context::get().unwrap(); /* Lock early. */
     #[allow(static_mut_refs)]
     let lighting = unsafe { &CLIGHTING };
-    let transform = ctransform.append_scaling(size as f32);
     let _ = model.render_scene(
         ctx,
         &FramebufferTarget::from_gl(fb, size as usize, size as usize),
