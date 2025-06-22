@@ -554,12 +554,21 @@ function graphics.newShader( pixelcode, vertexcode )
 #define love_PixelCoord love_getPixelCoord()
 
 // Uniforms shared by pixel and vertex shaders
+#if GLSL_VERSION < 440
 uniform mat4 ViewSpaceFromLocal;
 uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
-uniform vec4 ConstantColour = vec4(1.0);
+uniform vec4 ConstantColour;
+#else /* GLSL_VERSION < 440 */
+layout(location=0) uniform mat4 ViewSpaceFromLocal;
+layout(location=1) uniform mat4 ClipSpaceFromView;
+layout(location=2) uniform mat4 ClipSpaceFromLocal;
+layout(location=3) uniform mat3 ViewNormalFromLocal;
+layout(location=4) uniform vec4 love_ScreenSize;
+layout(location=5) uniform vec4 ConstantColour;
+#endif /* GLSL_VERSION < 440 */
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -571,40 +580,52 @@ uniform vec4 ConstantColour = vec4(1.0);
 #define PIXEL
 uniform sampler2D MainTex;
 
-in vec4 VaryingTexCoord;
-in vec4 VaryingColour;
-in vec2 VaryingPosition;
-out vec4 colour_out;
+#if GLSL_VERSION >= 440
+layout(location=0) in InterfBLock {
+#else /* GLSL_VERSION >= 440 */
+in InterfBLock {
+#endif /* GLSL_VERSION >= 440 */
+   vec4 VaryingTexCoord;
+   vec4 VaryingColour;
+   vec2 VaryingPosition;
+} IN;
+layout(location = 0) out vec4 colour_out;
 
 vec2 love_getPixelCoord() {
-   vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
+   vec2 uv = love_ScreenSize.xy * (0.5*IN.VaryingPosition+0.5);
    return uv;
 }
 
 vec4 effect( vec4 vcolour, Image tex, vec2 texcoord, vec2 pixcoord );
 
 void main(void) {
-   love_PixelColour = effect( VaryingColour, MainTex, VaryingTexCoord.st, love_PixelCoord );
+   love_PixelColour = effect( IN.VaryingColour, MainTex, IN.VaryingTexCoord.st, love_PixelCoord );
 }
 ]]
    local vert = [[
 #define VERTEX
-in vec4 VertexPosition;
-in vec4 VertexTexCoord;
-in vec4 VertexColour;
+layout(location = 0) in vec4 VertexPosition;
+layout(location = 1) in vec4 VertexTexCoord;
+layout(location = 2) in vec4 VertexColour;
 
-out vec4 VaryingTexCoord;
-out vec4 VaryingColour;
-out vec2 VaryingPosition;
+#if GLSL_VERSION >= 440
+layout(location=0) out InterfBLock {
+#else /* GLSL_VERSION >= 440 */
+out InterfBLock {
+#endif /* GLSL_VERSION >= 440 */
+   vec4 VaryingTexCoord;
+   vec4 VaryingColour;
+   vec2 VaryingPosition;
+} OUT;
 
 vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
-    VaryingTexCoord  = VertexTexCoord;
-    VaryingTexCoord  = ViewSpaceFromLocal * VaryingTexCoord;
-    VaryingColour    = ConstantColour;
-    love_Position    = position( ClipSpaceFromLocal, VertexPosition );
-    VaryingPosition  = love_Position.xy;
+    OUT.VaryingTexCoord = VertexTexCoord;
+    OUT.VaryingTexCoord = ViewSpaceFromLocal * VertexTexCoord;
+    OUT.VaryingColour   = ConstantColour;
+    love_Position       = position( ClipSpaceFromLocal, VertexPosition );
+    OUT.VaryingPosition = love_Position.xy;
 }
 ]]
    local s = graphics.Shader.new()
@@ -614,6 +635,7 @@ void main(void) {
          prepend..vert..vertexcode )
    -- Set some default uniform values for when post-process shaders are used
    s.shader:sendRaw( "love_ScreenSize", love.w, love.h, 1.0, 0.0 )
+   s.shader:sendRaw( "ConstantColour", 1, 1, 1, 1 )
    return s
 end
 function graphics.setShader( shader )
