@@ -8,12 +8,6 @@ const mat4 view = mat4(
       0.0,-sin(view_angle), cos(view_angle), 0.0,
       0.0,            0.0,              0.0, 1.0 );
 
-layout(std140) uniform Primitive {
-   mat4 u_model;
-   mat3 u_normal;
-   mat4 u_shadow[MAX_LIGHTS];
-};
-
 /* Vertex inputs. */
 layout(location = 0) in vec3 vertex;
 layout(location = 1) in vec3 v_normal;

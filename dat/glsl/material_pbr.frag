@@ -8,22 +8,6 @@
  * Physically Based Rendering Shader (WIP)
  */
 
-/* pbr_metallic_roughness */
-layout(std140) uniform Material {
-   vec4 baseColour;
-   vec3 emissive;
-   float metallicFactor;
-   float roughnessFactor;
-   int u_blend;
-   int baseColour_texcoord;
-   int metallic_texcoord;
-   int emissive_texcoord;
-   int normal_texcoord;
-   int occlusion_texcoord;
-   int u_has_normal; /**< Whether or not has a normal map. */
-   float normal_scale;
-};
-
 /* Textures. */
 uniform sampler2D baseColour_tex; /**< Base colour. */
 uniform sampler2D metallic_tex; /**< Metallic texture. */
