@@ -21,11 +21,12 @@ use crate::{gettext, warn};
 
 const MAX_LIGHTS: usize = 7;
 
-fn tex_value(ctx: &ContextWrapper, value: [u8; 3]) -> Result<Rc<Texture>> {
+fn tex_value(ctx: &ContextWrapper, name: Option<&str>, value: [u8; 3]) -> Result<Rc<Texture>> {
     let mut img = image::RgbImage::new(1, 1);
     img.put_pixel(0, 0, image::Rgb(value));
     Ok(Rc::new(
         TextureBuilder::new()
+            .name(name)
             .width(1)
             .height(1)
             .image(&img.into())
@@ -33,10 +34,10 @@ fn tex_value(ctx: &ContextWrapper, value: [u8; 3]) -> Result<Rc<Texture>> {
     ))
 }
 fn tex_zeros(ctx: &ContextWrapper) -> Result<Rc<Texture>> {
-    tex_value(ctx, [0, 0, 0])
+    tex_value(ctx, Some("Black"), [0, 0, 0])
 }
 fn tex_ones(ctx: &ContextWrapper) -> Result<Rc<Texture>> {
-    tex_value(ctx, [255, 255, 255])
+    tex_value(ctx, Some("White"), [255, 255, 255])
 }
 
 #[repr(C)]
@@ -306,7 +307,7 @@ impl Material {
         let uniform_buffer = {
             let lctx = ctx.lock();
             let gl = &lctx.gl;
-            BufferBuilder::new(None)
+            BufferBuilder::new(mat.name())
                 .target(BufferTarget::Uniform)
                 .usage(BufferUsage::Static)
                 .data(data.buffer()?.into_inner().as_slice())
@@ -406,16 +407,16 @@ impl Primitive {
 
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let vertices = BufferBuilder::new(None)
+        let vertices = BufferBuilder::new(Some("Vertices"))
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&vertex_data))
             .build(gl)?;
-        let indices = BufferBuilder::new(None)
+        let indices = BufferBuilder::new(Some("Indices"))
             .usage(BufferUsage::Static)
             .data(bytemuck::cast_slice(&index_data))
             .build(gl)?;
         let vertex_size = std::mem::size_of::<Vertex>() as i32;
-        let vao = VertexArrayBuilder::new(None)
+        let vao = VertexArrayBuilder::new(Some("Vertex Array Object"))
             .buffers(&[
                 VertexArrayBuffer {
                     buffer: &vertices,
@@ -449,7 +450,7 @@ impl Primitive {
             .indices(Some(&indices))
             .build_gl(gl)?;
         let uniform_data = PrimitiveUniform::default();
-        let uniform_buffer = BufferBuilder::new(None)
+        let uniform_buffer = BufferBuilder::new(Some("PrimitiveUniform"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(uniform_data.buffer()?.into_inner().as_slice())
@@ -548,13 +549,6 @@ impl Mesh {
                     gl.depth_mask(true);
                 }
             }
-
-            // Clean up, TODO do better
-            unsafe {
-                gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
-                gl.bind_buffer(glow::ARRAY_BUFFER, None);
-            }
-            VertexArray::unbind(ctx);
         }
         Ok(())
     }
@@ -691,7 +685,10 @@ impl Scene {
         }
 
         // Clean up
+        VertexArray::unbind(ctx);
         unsafe {
+            gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
+            gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.use_program(None);
             gl.disable(glow::DEPTH_TEST);
             gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
@@ -724,7 +721,7 @@ fn load_gltf_texture(
     base: &std::path::Path,
 ) -> Result<Texture> {
     let sampler = node.sampler();
-    let mut tb = TextureBuilder::new();
+    let mut tb = TextureBuilder::new().name(node.name());
 
     tb = match node.source().source() {
         gltf::image::Source::Uri { uri, .. } => {
