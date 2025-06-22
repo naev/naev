@@ -1,5 +1,12 @@
 #!/usr/bin/bash
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+   echo "usage:  $(basename "$0")" >&2
+   echo "  Output the list of ssys jumps in the form:" >&2
+   echo "  <src_sys_name> <dst_sys_name>" >&2
+   exit 0
+fi
+
 TMP=$(mktemp)
 TMP2=$(mktemp)
 trap 'rm -f "$TMP" "$TMP2"' EXIT
