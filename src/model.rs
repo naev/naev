@@ -512,16 +512,15 @@ impl Mesh {
                 .try_inverse()
                 .unwrap()
                 .transpose();
-            p.uniform_buffer
-                .write(ctx, data.buffer()?.into_inner().as_slice())?;
+            p.uniform_buffer.bind_write_base(
+                ctx,
+                data.buffer()?.into_inner().as_slice(),
+                shader.primitive_uniform,
+            )?;
 
             let m = &p.material;
 
-            // Attributes
-            p.vao.bind(ctx);
-
-            // Uniforms
-            p.uniform_buffer.bind_base(ctx, shader.primitive_uniform);
+            // Material Uniform should be as is
             m.uniform_buffer.bind_base(ctx, shader.material_uniform);
 
             // Textures
@@ -530,6 +529,9 @@ impl Mesh {
             m.normalmap.bind(ctx, 3);
             m.ambientocclusion.bind(ctx, 4);
             m.diffuse.bind(ctx, 0); // Have to end on TEXTURE0
+
+            // Attributes
+            p.vao.bind(ctx);
 
             // Render
             unsafe {
@@ -649,13 +651,11 @@ impl Scene {
         let gl = &ctx.gl;
 
         // Update lighting
-        shader.shader.use_program(gl);
-        shader
-            .lighting_buffer
-            .write(ctx, lighting.buffer()?.into_inner().as_slice())?;
-        shader
-            .lighting_buffer
-            .bind_base(ctx, shader.lighting_uniform);
+        shader.lighting_buffer.bind_write_base(
+            ctx,
+            lighting.buffer()?.into_inner().as_slice(),
+            shader.lighting_uniform,
+        )?;
 
         unsafe {
             gl.enable(glow::BLEND);
@@ -673,6 +673,9 @@ impl Scene {
 
         // Set up
         shader.shader.use_program(gl);
+        shader
+            .lighting_buffer
+            .bind_base(ctx, shader.lighting_uniform);
 
         // Mesh pass
         unsafe {
