@@ -1,10 +1,19 @@
 #!/usr/bin/bash
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+   echo "usage:  $(basename "$0")  ( -g | -w )" >&2
+   echo "  Generates a (downscaled) map \"pot.png\" of the potential given in argument." >&2
+   echo "  -g stands for gravity; -w for waves." >&2
+   echo "  See potential -h for more information." >&2
+   echo "  povray is invoked to generate \"height_map.png\"." >&2
+   exit 0
+fi
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 if [ ! -f "$SCRIPT_DIR"/potential ] || [ ! "$SCRIPT_DIR"/potential -nt "$SCRIPT_DIR"/potential.c ] ; then
    gcc -Wall -Wextra -Ofast "$SCRIPT_DIR"/potential.c -o "$SCRIPT_DIR"/potential -lm || exit 1
 fi
-"$SCRIPT_DIR"/ssys_pos.sh | "$SCRIPT_DIR"/potential -s0.5 "$@" | pnmtopng > "$SCRIPT_DIR"/pot.png &&
+"$SCRIPT_DIR"/ssys_pos.sh | "$SCRIPT_DIR"/potential -s0.5 "$1" | pnmtopng > "$SCRIPT_DIR"/pot.png &&
 BACK=$(pwd) &&
 cd "$SCRIPT_DIR" &&
 povray +A0.1 +AM2 +R3 "$SCRIPT_DIR"/height_map.pov +O"$SCRIPT_DIR"/height_map.png &&

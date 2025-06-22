@@ -4,8 +4,10 @@ N=10
 RESCALE=1.7
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0")" >&2
+   echo "usage:  $(basename "$0") -C | ( -g | -w )" >&2
    echo "  Applies potential $N times and rescales x$RESCALE." >&2
+   echo "  -g stands for gravity; -w for waves." >&2
+   echo "  See potential -h for more information." >&2
    echo "  Output the positions of systems in the same form as ssys_pos.sh." >&2
    echo "  If -C is set, just compile potential." >&2
    exit 0
@@ -35,5 +37,5 @@ for j in "$@"; do
 done
 
 "$SCRIPT_DIR"/ssys_pos.sh |
-repiper "$N" "$SCRIPT_DIR"/potential -a "$@" |
+repiper "$N" "$SCRIPT_DIR"/potential -a "$1" |
 "$SCRIPT_DIR"/ssys_graph.py -s "$RESCALE"

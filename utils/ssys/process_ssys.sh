@@ -1,5 +1,11 @@
 #!/usr/bin/bash
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+   echo "usage:  $(basename "$0")" >&2
+   echo "  Applies the whole remap process. See the script content." >&2
+   exit 0
+fi
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 BAS=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat")
 DST="$BAS/ssys"
