@@ -24,7 +24,7 @@ echo -n "gen final graph " >&2
 echo -e -n "\ngen colored sys map... " >&2
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_fin.png
 echo -n "apply gravity -> colored sys map... " >&2
-cmd=$( "$SCRIPT_DIR"/apply_g.sh | "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml) &&
+cmd=$( "$SCRIPT_DIR"/apply_pot.sh -g | "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml) &&
 $cmd 2>/dev/null && mv -v out.png map_fin_g.png
 echo "relax ssys.." >&2
 echo "total relaxed : $("$SCRIPT_DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)" >&2

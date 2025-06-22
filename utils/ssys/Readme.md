@@ -24,10 +24,10 @@ These are designed to manage the **internal geometry of systems**, that might ge
     - bb for bounding box. use += to enlarge the bb with a new element, and `in` to test if inside. Nothing fancy.
  - `ssys.py` everything else.
 
-### gravity
- - `gravity` generates the __gravity potential__ of the star map as a picture (black means minimum potential, and white means 0 potential (upper bound).
+### potential
+ - `potential -g` generates the __gravity potential__ of the star map as a picture (black means minimum potential, and white means 0 potential (upper bound).
  - `height_map.pov` allows to display that potential in 3D. Use `gen_pot.sh` to do it all.
- - `gravity` can also __apply gravity__, see `apply_g.sh` and `apply_g_to_ssys.sh`.
+ - `potential -a` can __apply potential__, see `apply_pot.sh` and `apply_pot_to_ssys.sh`.
 
 ### auto-positionning system
  - `repos.sh` read current ssys info and applies reposition repeatedly. See `repos.sh -h`.
