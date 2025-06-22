@@ -5,9 +5,9 @@ RESCALE=1.7
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "usage:  $(basename "$0")" >&2
-   echo "  Applies gravity $N times and rescales x$RESCALE." >&2
+   echo "  Applies potential $N times and rescales x$RESCALE." >&2
    echo "  Output the positions of systems in the same form as ssys_pos.sh." >&2
-   echo "  If -C is set, just compile gravity." >&2
+   echo "  If -C is set, just compile potential." >&2
    exit 0
 fi
 
@@ -24,8 +24,8 @@ repiper() {
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-if [ ! -f "$SCRIPT_DIR"/gravity ] || [ ! "$SCRIPT_DIR"/gravity -nt "$SCRIPT_DIR"/gravity.c ] ; then
-   gcc -Wall -Wextra -Ofast "$SCRIPT_DIR"/gravity.c -o "$SCRIPT_DIR"/gravity -lm || exit 1
+if [ ! -f "$SCRIPT_DIR"/potential ] || [ ! "$SCRIPT_DIR"/potential -nt "$SCRIPT_DIR"/potential.c ] ; then
+   gcc -Wall -Wextra -Ofast "$SCRIPT_DIR"/potential.c -o "$SCRIPT_DIR"/potential -lm || exit 1
 fi
 
 for j in "$@"; do
@@ -35,5 +35,5 @@ for j in "$@"; do
 done
 
 "$SCRIPT_DIR"/ssys_pos.sh |
-repiper "$N" "$SCRIPT_DIR"/gravity -a |
+repiper "$N" "$SCRIPT_DIR"/potential -a "$@" |
 "$SCRIPT_DIR"/ssys_graph.py -s "$RESCALE"
