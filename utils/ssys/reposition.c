@@ -420,7 +420,6 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
       for (int i = map->nosys; i < map->nsys; i++) {
          const size_t n = snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
                                    map->sys[i].v[0], map->sys[i].v[1]);
-
          fwrite(buff, sizeof(char), n, stdout);
          fflush(stdout);
       }
