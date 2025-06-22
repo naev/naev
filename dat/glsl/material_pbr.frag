@@ -18,11 +18,13 @@ uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
 /* Vertex outputs. */
-in vec2 tex_coord0;
-in vec2 tex_coord1;
-in vec3 position;
-in vec3 shadow[MAX_LIGHTS];
-in vec3 normal;
+in InterfBlock {
+   vec3 position;
+   vec3 normal;
+   vec2 tex0;
+   vec2 tex1;
+   vec3 shadow[MAX_LIGHTS];
+} IN;
 /* Fragment outputs. */
 layout(location = 0) out vec4 colour_out;
 
@@ -226,11 +228,11 @@ vec3 get_normal (void)
 #if HAS_NORMAL
    if (u_has_normal==0) {
       if (gl_FrontFacing)
-         return normalize(normal);
+         return normalize(IN.normal);
       else
-         return -normalize(normal);
+         return -normalize(IN.normal);
    }
-   vec2 coords = (normal_texcoord==1 ? tex_coord1 : tex_coord0);
+   vec2 coords = (normal_texcoord==1 ? IN.tex1 : IN.tex0);
 
    vec2 uv    = coords;
    vec2 uv_dx = dFdx(uv);
@@ -240,10 +242,10 @@ vec3 get_normal (void)
    if (length(uv_dy) <= 1e-2)
       uv_dy = vec2(0.0, 1.0);
 
-   vec3 t_ = (uv_dy.t * dFdx(position) - uv_dx.t * dFdy(position)) /
+   vec3 t_ = (uv_dy.t * dFdx(IN.position) - uv_dx.t * dFdy(IN.position)) /
              (uv_dx.s * uv_dy.t - uv_dy.s * uv_dx.t);
 
-   vec3 ng = normalize(normal);
+   vec3 ng = normalize(IN.normal);
    vec3 t = normalize(t_ - ng * dot(ng, t_));
    vec3 b = cross(ng, t);
 
@@ -259,9 +261,9 @@ vec3 get_normal (void)
    return normalize( mat3(t, b, ng) * n);
 #else /* HAS_NORMAL */
    if (gl_FrontFacing)
-      return normalize(normal);
+      return normalize(IN.normal);
    else
-      return -normalize(normal);
+      return -normalize(IN.normal);
 #endif /* HAS_NORMAL */
 }
 
@@ -498,9 +500,9 @@ void main (void)
 
    /* Material values. */
    MaterialValue M;
-   //M.albedo    = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   M.albedo    = baseColour * texture(baseColour_tex, (baseColour_texcoord==1 ? tex_coord1 : tex_coord0));
-   vec4 metallicroughness = texture(metallic_tex, (metallic_texcoord==1 ? tex_coord1: tex_coord0));
+   //M.albedo    = baseColour.rgb * texture(baseColour_tex, IN.tex0).rgb;
+   M.albedo    = baseColour * texture(baseColour_tex, (baseColour_texcoord==1 ? IN.tex1 : IN.tex0));
+   vec4 metallicroughness = texture(metallic_tex, (metallic_texcoord==1 ? IN.tex1: IN.tex0));
    M.perceptualRoughness = roughnessFactor * metallicroughness.g;
    M.roughness = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
    M.metallic  = metallicFactor * metallicroughness.b;
@@ -524,7 +526,7 @@ void main (void)
 
    /* Ambient occlusion. */
 #ifdef HAS_AO
-   float ao = texture(occlusion_tex, (occlusion_texcoord==1 ? tex_coord1 : tex_coord0)).r;
+   float ao = texture(occlusion_tex, (occlusion_texcoord==1 ? IN.tex1 : IN.tex0)).r;
    f_diffuse *= ao;
 #endif /* HAS_AO */
 
@@ -533,31 +535,31 @@ void main (void)
    float f_shadow[MAX_LIGHTS];
 #if MAX_LIGHTS > 0
    if (u_nlights>0)
-      f_shadow[0] = shadow_map( shadowmap_tex[0], shadow[0] );
+      f_shadow[0] = shadow_map( shadowmap_tex[0], IN.shadow[0] );
 #endif /* MAX_LIGHTS > 0 */
 #if MAX_LIGHTS > 1
    if (u_nlights>1)
-      f_shadow[1] = shadow_map( shadowmap_tex[1], shadow[1] );
+      f_shadow[1] = shadow_map( shadowmap_tex[1], IN.shadow[1] );
 #endif /* MAX_LIGHTS > 1 */
 #if MAX_LIGHTS > 2
    if (u_nlights>2)
-      f_shadow[2] = shadow_map( shadowmap_tex[2], shadow[2] );
+      f_shadow[2] = shadow_map( shadowmap_tex[2], IN.shadow[2] );
 #endif /* MAX_LIGHTS > 2 */
 #if MAX_LIGHTS > 3
    if (u_nlights>3)
-      f_shadow[3] = shadow_map( shadowmap_tex[3], shadow[3] );
+      f_shadow[3] = shadow_map( shadowmap_tex[3], IN.shadow[3] );
 #endif /* MAX_LIGHTS > 3 */
 #if MAX_LIGHTS > 4
    if (u_nlights>4)
-      f_shadow[4] = shadow_map( shadowmap_tex[4], shadow[4] );
+      f_shadow[4] = shadow_map( shadowmap_tex[4], IN.shadow[4] );
 #endif /* MAX_LIGHTS > 4 */
 #if MAX_LIGHTS > 5
    if (u_nlights>5)
-      f_shadow[5] = shadow_map( shadowmap_tex[5], shadow[5] );
+      f_shadow[5] = shadow_map( shadowmap_tex[5], IN.shadow[5] );
 #endif /* MAX_LIGHTS > 5 */
 #if MAX_LIGHTS > 6
    if (u_nlights>6)
-      f_shadow[6] = shadow_map( shadowmap_tex[6], shadow[6] );
+      f_shadow[6] = shadow_map( shadowmap_tex[6], IN.shadow[6] );
 #endif /* MAX_LIGHTS > 6 */
 #endif
 
@@ -574,7 +576,7 @@ void main (void)
          intensity = L.colour;
       }
       else {
-         vec3 pointToLight = L.position - position;
+         vec3 pointToLight = L.position - IN.position;
          l = normalize(pointToLight);
          intensity = light_intensity( L, length(pointToLight) );
       }
@@ -595,7 +597,7 @@ void main (void)
 #if GLSL_VERSION < 460
          vec3 NoLintensity = NoL * intensity * f_shadow[i];
 #else /* GLSL_VERSION < 460 */
-         vec3 NoLintensity = NoL * intensity * shadow_map( shadowmap_tex[i], shadow[i] );
+         vec3 NoLintensity = NoL * intensity * shadow_map( shadowmap_tex[i], IN.shadow[i] );
 #endif /* GLSL_VERSION < 460 */
 
          f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
@@ -605,7 +607,7 @@ void main (void)
    }
 
    /* Do emissive. */
-   vec4 tex_emmissive = texture( emissive_tex, (emissive_texcoord==1 ? tex_coord1 : tex_coord0) );
+   vec4 tex_emmissive = texture( emissive_tex, (emissive_texcoord==1 ? IN.tex1 : IN.tex0) );
    f_emissive = emissive * tex_emmissive.rgb * tex_emmissive.a;
 
    /* Combine diffuse, emissive, and specular.. */

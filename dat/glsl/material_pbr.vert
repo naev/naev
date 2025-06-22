@@ -14,22 +14,24 @@ layout(location = 1) in vec3 v_normal;
 layout(location = 2) in vec2 v_tex0;
 layout(location = 3) in vec2 v_tex1;
 /* Vertex outputs. */
-out vec2 tex_coord0;
-out vec2 tex_coord1;
-out vec3 position;
-out vec3 shadow[MAX_LIGHTS];
-out vec3 normal;
+out InterfBlock {
+   vec3 position;
+   vec3 normal;
+   vec2 tex0;
+   vec2 tex1;
+   vec3 shadow[MAX_LIGHTS];
+} OUT;
 
 void main (void)
 {
    /* Coordinates and position. */
    vec4 pos    = u_model * vec4( vertex, 1.0 );
-   position    = pos.xyz / pos.w;
-   tex_coord0  = v_tex0;
-   tex_coord1  = v_tex1;
+   OUT.position= pos.xyz / pos.w;
+   OUT.tex0    = v_tex0;
+   OUT.tex1    = v_tex1;
 
    /* Compute normal vector. */
-   normal      = -normalize(u_normal * v_normal); /* TODO why is it inverted?? */
+   OUT.normal  = -normalize(u_normal * v_normal); /* TODO why is it inverted?? */
 
    /* Position for fragment shader. */
    gl_Position = view * pos;
@@ -37,7 +39,7 @@ void main (void)
    /* Shadows. */
    for (int i=0; i<u_nlights; i++) {
       vec4 shadow_pos = u_shadow[i] * pos;
-      shadow[i] = shadow_pos.rgb / shadow_pos.w;
-      shadow[i] = shadow[i] * 0.5 + 0.5;
+      OUT.shadow[i] = shadow_pos.rgb / shadow_pos.w;
+      OUT.shadow[i] = OUT.shadow[i] * 0.5 + 0.5;
    }
 }
