@@ -25,20 +25,20 @@ out InterfBlock {
 void main (void)
 {
    /* Coordinates and position. */
-   vec4 pos    = u_model * vec4( vertex, 1.0 );
+   vec4 pos    = primitive.model * vec4( vertex, 1.0 );
    OUT.position= pos.xyz / pos.w;
    OUT.tex0    = v_tex0;
    OUT.tex1    = v_tex1;
 
    /* Compute normal vector. */
-   OUT.normal  = -normalize(u_normal * v_normal); /* TODO why is it inverted?? */
+   OUT.normal  = -normalize(primitive.normal * v_normal); /* TODO why is it inverted?? */
 
    /* Position for fragment shader. */
    gl_Position = view * pos;
 
    /* Shadows. */
-   for (int i=0; i<u_nlights; i++) {
-      vec4 shadow_pos = u_shadow[i] * pos;
+   for (int i=0; i<lighting.nlights; i++) {
+      vec4 shadow_pos = primitive.shadow[i] * pos;
       OUT.shadow[i] = shadow_pos.rgb / shadow_pos.w;
       OUT.shadow[i] = OUT.shadow[i] * 0.5 + 0.5;
    }

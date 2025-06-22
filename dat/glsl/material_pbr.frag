@@ -226,13 +226,13 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 vec3 get_normal (void)
 {
 #if HAS_NORMAL
-   if (u_has_normal==0) {
+   if (material.has_normal==0) {
       if (gl_FrontFacing)
          return normalize(IN.normal);
       else
          return -normalize(IN.normal);
    }
-   vec2 coords = (normal_texcoord==1 ? IN.tex1 : IN.tex0);
+   vec2 coords = (material.normal_texcoord==1 ? IN.tex1 : IN.tex0);
 
    vec2 uv    = coords;
    vec2 uv_dx = dFdx(uv);
@@ -257,7 +257,7 @@ vec3 get_normal (void)
    }
 
    vec3 n = texture(normal_tex, coords).rgb * 2.0 - vec3(1.0);
-   n *= vec3(normal_scale, normal_scale, 1.0);
+   n *= vec3(material.normal_scale, material.normal_scale, 1.0);
    return normalize( mat3(t, b, ng) * n);
 #else /* HAS_NORMAL */
    if (gl_FrontFacing)
@@ -501,11 +501,11 @@ void main (void)
    /* Material values. */
    MaterialValue M;
    //M.albedo    = baseColour.rgb * texture(baseColour_tex, IN.tex0).rgb;
-   M.albedo    = baseColour * texture(baseColour_tex, (baseColour_texcoord==1 ? IN.tex1 : IN.tex0));
-   vec4 metallicroughness = texture(metallic_tex, (metallic_texcoord==1 ? IN.tex1: IN.tex0));
-   M.perceptualRoughness = roughnessFactor * metallicroughness.g;
+   M.albedo    = material.baseColour * texture(baseColour_tex, (material.baseColour_texcoord==1 ? IN.tex1 : IN.tex0));
+   vec4 metallicroughness = texture(metallic_tex, (material.metallic_texcoord==1 ? IN.tex1: IN.tex0));
+   M.perceptualRoughness = material.roughnessFactor * metallicroughness.g;
    M.roughness = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
-   M.metallic  = metallicFactor * metallicroughness.b;
+   M.metallic  = material.metallicFactor * metallicroughness.b;
    M.f0        = mix( vec3(0.04), M.albedo.rgb, M.metallic );
    M.f90       = vec3(1.0);
    M.c_diff    = mix( M.albedo.rgb, vec3(0.), M.metallic );
@@ -522,11 +522,11 @@ void main (void)
    //f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
 
    /* Slight diffuse ambient lighting. */
-   f_diffuse += u_ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
+   f_diffuse += lighting.ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
 
    /* Ambient occlusion. */
 #ifdef HAS_AO
-   float ao = texture(occlusion_tex, (occlusion_texcoord==1 ? IN.tex1 : IN.tex0)).r;
+   float ao = texture(occlusion_tex, (material.occlusion_texcoord==1 ? IN.tex1 : IN.tex0)).r;
    f_diffuse *= ao;
 #endif /* HAS_AO */
 
@@ -534,31 +534,31 @@ void main (void)
 #if GLSL_VERSION < 460
    float f_shadow[MAX_LIGHTS];
 #if MAX_LIGHTS > 0
-   if (u_nlights>0)
+   if (lighting.nlights>0)
       f_shadow[0] = shadow_map( shadowmap_tex[0], IN.shadow[0] );
 #endif /* MAX_LIGHTS > 0 */
 #if MAX_LIGHTS > 1
-   if (u_nlights>1)
+   if (lighting.nlights>1)
       f_shadow[1] = shadow_map( shadowmap_tex[1], IN.shadow[1] );
 #endif /* MAX_LIGHTS > 1 */
 #if MAX_LIGHTS > 2
-   if (u_nlights>2)
+   if (lighting.nlights>2)
       f_shadow[2] = shadow_map( shadowmap_tex[2], IN.shadow[2] );
 #endif /* MAX_LIGHTS > 2 */
 #if MAX_LIGHTS > 3
-   if (u_nlights>3)
+   if (lighting.nlights>3)
       f_shadow[3] = shadow_map( shadowmap_tex[3], IN.shadow[3] );
 #endif /* MAX_LIGHTS > 3 */
 #if MAX_LIGHTS > 4
-   if (u_nlights>4)
+   if (lighting.nlights>4)
       f_shadow[4] = shadow_map( shadowmap_tex[4], IN.shadow[4] );
 #endif /* MAX_LIGHTS > 4 */
 #if MAX_LIGHTS > 5
-   if (u_nlights>5)
+   if (lighting.nlights>5)
       f_shadow[5] = shadow_map( shadowmap_tex[5], IN.shadow[5] );
 #endif /* MAX_LIGHTS > 5 */
 #if MAX_LIGHTS > 6
-   if (u_nlights>6)
+   if (lighting.nlights>6)
       f_shadow[6] = shadow_map( shadowmap_tex[6], IN.shadow[6] );
 #endif /* MAX_LIGHTS > 6 */
 #endif
@@ -566,8 +566,8 @@ void main (void)
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, -1.0) ); /* Fixed view vector. */
    float NoV = clamp(dot(n,v), 1e-4, 1.0); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
-   for (int i=0; i<u_nlights; i++) {
-      Light L = u_lights[i];
+   for (int i=0; i<lighting.nlights; i++) {
+      Light L = lighting.lights[i];
       vec3 l;
       vec3 intensity;
 
@@ -607,11 +607,11 @@ void main (void)
    }
 
    /* Do emissive. */
-   vec4 tex_emmissive = texture( emissive_tex, (emissive_texcoord==1 ? IN.tex1 : IN.tex0) );
-   f_emissive = emissive * tex_emmissive.rgb * tex_emmissive.a;
+   vec4 tex_emmissive = texture( emissive_tex, (material.emissive_texcoord==1 ? IN.tex1 : IN.tex0) );
+   f_emissive = material.emissive * tex_emmissive.rgb * tex_emmissive.a;
 
    /* Combine diffuse, emissive, and specular.. */
-   colour_out.a = (u_blend==1) ? M.albedo.a : 1.0;
+   colour_out.a = (material.blend==1) ? M.albedo.a : 1.0;
    //colour_out = vec4( f_emissive + mix(f_diffuse,f_subsurface,sheen) + f_sheen + f_specular, alpha );
    //colour_out.rgb = f_emissive + f_diffuse + f_sheen + f_specular;
    colour_out.rgb = f_emissive + f_diffuse + f_specular;

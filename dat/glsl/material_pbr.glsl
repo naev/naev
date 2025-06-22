@@ -10,10 +10,10 @@ struct Light {
    int sun;          /**< Whether or not a sun. */
 };
 layout(std140) uniform Lighting {
-   vec3 u_ambient; /**< Ambient lighting. */
-   int u_nlights;
-   Light u_lights[ MAX_LIGHTS ];
-};
+   vec3 ambient; /**< Ambient lighting. */
+   int nlights;
+   Light lights[ MAX_LIGHTS ];
+} lighting;
 
 /* PBR material. Set once per draw call. */
 layout(std140) uniform Material {
@@ -21,19 +21,19 @@ layout(std140) uniform Material {
    vec3 emissive;
    float metallicFactor;
    float roughnessFactor;
-   int u_blend;
+   int blend;
    int baseColour_texcoord;
    int metallic_texcoord;
    int emissive_texcoord;
    int normal_texcoord;
    int occlusion_texcoord;
-   int u_has_normal; /**< Whether or not has a normal map. */
+   int has_normal; /**< Whether or not has a normal map. */
    float normal_scale;
-};
+} material ;
 
 /* Primitive information. Set once per draw call. */
 layout(std140) uniform Primitive {
-   mat4 u_model;
-   mat3 u_normal;
-   mat4 u_shadow[MAX_LIGHTS];
-};
+   mat4 model;
+   mat3 normal;
+   mat4 shadow[MAX_LIGHTS];
+} primitive;
