@@ -1,7 +1,11 @@
 #!/usr/bin/bash
 
 N=10
-RESCALE=1.7
+if [ "$1" = "-g" ]; then
+   RESCALE=1.75
+else
+   RESCALE=1.0
+fi
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "usage:  $(basename "$0") -C | ( -g | -w )" >&2
