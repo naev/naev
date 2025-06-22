@@ -256,7 +256,7 @@ impl ShaderBuilder {
                         gl.uniform_1_i32(Some(&uniformid), idx);
                     }
                     None => {
-                        anyhow::bail!("shader '{}' does not have sampler '{}'", name, samplername)
+                        warn!("shader '{}' does not have sampler '{}'", &name, samplername);
                     }
                 }
             }
