@@ -1,8 +1,9 @@
 #include "material_pbr.glsl"
 #include "lib/math.glsl"
 
-#define HAS_AO 1
-#define HAS_NORMAL 1
+#define HAS_AO       1
+#define HAS_NORMAL   1
+#define TONEMAP      2 // ACES Approximation
 
 /*
  * Physically Based Rendering Shader (WIP)
@@ -18,7 +19,11 @@ uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform sampler2D shadowmap_tex[ MAX_LIGHTS ];
 
 /* Vertex outputs. */
+#if GLSL_VERSION >= 440
+layout(location=0) in InterfBlock {
+#else
 in InterfBlock {
+#endif
    vec3 position;
    vec3 normal;
    vec2 tex0;
@@ -297,7 +302,6 @@ float shadow_map( sampler2D tex, vec3 pos )
 vec3 tonemap( vec3 x )
 {
 /* Mainly taken from https://dmnsgn.github.io/glsl-tone-map/. */
-#define TONEMAP   2
 #if TONEMAP==1
    /* ACES Fancy. */
    const mat3 m1 = mat3(

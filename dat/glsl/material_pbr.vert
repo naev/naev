@@ -14,7 +14,11 @@ layout(location = 1) in vec3 v_normal;
 layout(location = 2) in vec2 v_tex0;
 layout(location = 3) in vec2 v_tex1;
 /* Vertex outputs. */
+#if GLSL_VERSION >= 440
+layout(location=0) out InterfBlock {
+#else
 out InterfBlock {
+#endif
    vec3 position;
    vec3 normal;
    vec2 tex0;
