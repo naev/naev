@@ -33,12 +33,6 @@ fn tex_value(ctx: &ContextWrapper, name: Option<&str>, value: [u8; 3]) -> Result
             .build_wrap(ctx)?,
     ))
 }
-fn tex_zeros(ctx: &ContextWrapper) -> Result<Rc<Texture>> {
-    tex_value(ctx, Some("Black"), [0, 0, 0])
-}
-fn tex_ones(ctx: &ContextWrapper) -> Result<Rc<Texture>> {
-    tex_value(ctx, Some("White"), [255, 255, 255])
-}
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, bytemuck::Pod, bytemuck::Zeroable)]
@@ -204,15 +198,19 @@ impl ModelShader {
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
-        let shader = ShaderBuilder::new(Some("PBR Shader"))
+        let mut shaderbuilder = ShaderBuilder::new(Some("PBR Shader"))
             .vert_file("material_pbr.vert")
             .frag_file("material_pbr.frag")
             .sampler("baseColour_tex", 0)
             .sampler("metallic_tex", 1)
             .sampler("emissive_tex", 2)
             .sampler("normal_tex", 3)
-            .sampler("occlusion_tex", 4)
-            .build(gl)?;
+            .sampler("occlusion_tex", 4);
+        for i in 0..MAX_LIGHTS {
+            let sname = format!("shadowmap_tex[{}]", i);
+            shaderbuilder = shaderbuilder.sampler(&sname, (5 + i) as i32);
+        }
+        let shader = shaderbuilder.build(gl)?;
 
         let primitive_uniform = shader.get_uniform_block(gl, "Primitive")?;
         let material_uniform = shader.get_uniform_block(gl, "Material")?;
@@ -251,6 +249,8 @@ impl Material {
     pub fn from_gltf(
         ctx: &ContextWrapper,
         mat: &gltf::Material,
+        tex_zeros: &Rc<Texture>,
+        tex_ones: &Rc<Texture>,
         textures: &[Rc<Texture>],
     ) -> Result<Self> {
         let mut data = MaterialUniform::new();
@@ -271,21 +271,21 @@ impl Material {
                 data.diffuse_texcoord = info.tex_coord();
                 textures[info.texture().index()].clone()
             }
-            None => tex_ones(ctx)?,
+            None => tex_ones.clone(),
         };
         let metallic = match pbr.metallic_roughness_texture() {
             Some(info) => {
                 data.metallic_texcoord = info.tex_coord();
                 textures[info.texture().index()].clone()
             }
-            None => tex_ones(ctx)?,
+            None => tex_ones.clone(),
         };
         let emissive = match mat.emissive_texture() {
             Some(info) => {
                 data.emissive_texcoord = info.tex_coord();
                 textures[info.texture().index()].clone()
             }
-            None => tex_zeros(ctx)?,
+            None => tex_zeros.clone(),
         };
         let normalmap = match mat.normal_texture() {
             Some(info) => {
@@ -293,7 +293,7 @@ impl Material {
                 data.normal_scale = info.scale();
                 textures[info.texture().index()].clone()
             }
-            None => tex_zeros(ctx)?,
+            None => tex_zeros.clone(),
         };
         let ambientocclusion = match mat.occlusion_texture() {
             Some(info) => {
@@ -301,7 +301,7 @@ impl Material {
                 data.occlusion_texcoord = info.tex_coord();
                 textures[info.texture().index()].clone()
             }
-            None => tex_ones(ctx)?,
+            None => tex_ones.clone(),
         };
 
         let uniform_buffer = {
@@ -489,6 +489,7 @@ impl Mesh {
         shader: &ModelShader,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
+        /*
         #[rustfmt::skip]
         #[allow(non_snake_case)]
         let VIEW: Matrix4<f32> = {
@@ -502,11 +503,13 @@ impl Mesh {
                 0.0, -VIEWSIN, VIEWCOS, 0.0,
                 0.0,    0.0,     0.0,   1.0 )
         };
+        */
 
         let gl = &ctx.gl;
         for p in &self.primitives {
             // Update the primitive uniform
-            let new_transform = VIEW * transform;
+            let new_transform = transform.clone();
+            //let new_transform = VIEW * transform;
             let mut data = p.uniform_data;
             data.view = new_transform;
             data.normal = new_transform
@@ -670,6 +673,8 @@ impl Scene {
         }
 
         // TODO shadow pass
+        //for i in 1..lighting.nlights {
+        //}
 
         // Set up
         shader.shader.use_program(gl);
@@ -690,6 +695,12 @@ impl Scene {
         // Clean up
         VertexArray::unbind(ctx);
         unsafe {
+            for idx in (0..5 + MAX_LIGHTS).rev() {
+                let idx = idx as u32;
+                gl.active_texture(glow::TEXTURE0 + idx);
+                gl.bind_texture(glow::TEXTURE_2D, None);
+                gl.bind_sampler(idx, None);
+            }
             gl.bind_buffer(glow::ELEMENT_ARRAY_BUFFER, None);
             gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.use_program(None);
@@ -776,6 +787,10 @@ impl Model {
         let gltf = Gltf::from_reader(ndata::open(path)?)?;
         let base = Path::new(path).parent().unwrap();
 
+        // Helper textures
+        let tex_zeros = tex_value(ctx, Some("Black"), [0, 0, 0])?;
+        let tex_ones = tex_value(ctx, Some("White"), [255, 255, 255])?;
+
         let buffer_data: Vec<Vec<u8>> = gltf
             .buffers()
             .map(|buf| load_buffer(&buf, base))
@@ -791,10 +806,12 @@ impl Model {
 
         let materials: Vec<Rc<Material>> = gltf
             .materials()
-            .map(|mat| match Material::from_gltf(ctx, &mat, &textures) {
-                Ok(some) => Ok(Rc::new(some)),
-                Err(e) => Err(e),
-            })
+            .map(
+                |mat| match Material::from_gltf(ctx, &mat, &tex_zeros, &tex_ones, &textures) {
+                    Ok(some) => Ok(Rc::new(some)),
+                    Err(e) => Err(e),
+                },
+            )
             .collect::<Result<Vec<_>, _>>()?;
 
         let meshes: Vec<Rc<Mesh>> = gltf
