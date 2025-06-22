@@ -618,7 +618,6 @@ pub struct Scene {
     name: Option<String>,
     nodes: Vec<Node>,
     radius: f32,
-    scale: Matrix4<f32>,
 }
 
 impl Scene {
@@ -634,17 +633,10 @@ impl Scene {
             radius = radius.max(node.radius(Matrix4::identity()));
         }
 
-        let invradius = 1.0 / radius;
-        let scale = Matrix4::<f32>::new(
-            invradius, 0.0, 0.0, 0.0, 0.0, invradius, 0.0, 0.0, 0.0, 0.0, -invradius, 0.0, 0.0,
-            0.0, 0.0, 1.0,
-        );
-
         Ok(Scene {
             nodes,
             name,
             radius,
-            scale,
         })
     }
 
@@ -690,10 +682,9 @@ impl Scene {
             let (w, h) = target.dimensions();
             gl.viewport(0, 0, w as i32, h as i32);
         }
-        let scene_transform = transform.clone() * self.scale;
         target.bind(ctx);
         for node in &mut self.nodes {
-            node.render(ctx, shader, &scene_transform)?;
+            node.render(ctx, shader, transform)?;
         }
 
         // Clean up
@@ -714,6 +705,7 @@ pub struct Model {
     scenes: Vec<Scene>,
     shader: Arc<ModelShader>,
     radius: f32,
+    transform_scale: Matrix4<f32>,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -831,11 +823,19 @@ impl Model {
         for scene in &scenes {
             radius = radius.max(scene.radius);
         }
+        let invradius = 1.0 / radius;
+        #[rustfmt::skip]
+        let transform_scale = Matrix4::<f32>::new(
+            invradius, 0.0, 0.0, 0.0,
+            0.0, invradius, 0.0, 0.0,
+            0.0, 0.0,-invradius, 0.0,
+            0.0, 0.0, 0.0, 1.0 );
 
         Ok(Model {
             scenes,
             shader: shader.clone(),
             radius,
+            transform_scale,
         })
     }
 
@@ -846,7 +846,8 @@ impl Model {
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        self.render_scene(ctx, fb, 0, lighting, transform)
+        let scene_transform = transform.clone() * self.transform_scale;
+        self.render_scene(ctx, fb, 0, lighting, &scene_transform)
     }
 
     pub fn render_scene(
@@ -857,11 +858,10 @@ impl Model {
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
+        let scene_transform = transform.clone() * self.transform_scale;
         if let Some(scene) = self.scenes.get_mut(sceneid) {
-            let transform = transform.append_scaling(1.0 / self.radius);
-            scene.render(ctx, fb, &self.shader, &transform, lighting)?;
+            scene.render(ctx, fb, &self.shader, &scene_transform, lighting)?;
         }
-
         Ok(())
     }
 
