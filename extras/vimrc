@@ -22,7 +22,9 @@ function NaevOptions()
    exec 'set softtabstop='.s:tabwidth
    autocmd BufNewFile,BufRead *.mvx set syntax=xml
    highlight RedundantSpacesOrOverLength ctermbg=darkred ctermfg=white
-   match RedundantSpacesOrOverLength /\(\s\+$\)\|\(\%85v.\+\)/
+   match RedundantSpaces /\s\+$/
+   set colorcolumn=85
+   highlight ColorColumn ctermbg=darkblue
 endfunction
 function NaevALEOptions()
    call ale#handlers#languagetool#DefineLinter('lua')

@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0") [#iterations] [reposition args]" >&2
+   echo "usage:  $(basename "$0") [<#iterations>] [reposition args]" >&2
    echo "  Applies reposition repeatedly (or once if not provided)" >&2
    exit 0
 fi
