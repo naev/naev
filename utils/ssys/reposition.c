@@ -14,7 +14,8 @@
 #include <unistd.h>
 
 #define THREADS 2
-#define SAMP 100
+#define SAMP 200
+#define EDGE_FACT 1.5
 
 #include <glib.h>
 
@@ -63,9 +64,6 @@ void output_ppm(const char *basnam, float *map, int w, int h)
 
             // gamma
             norm[k] *= norm[k];
-            if (k == 2 && norm[2] <= 0.5f)
-               norm[2] = norm[0];
-
             const unsigned u          = 65535.0f * norm[k];
             line[2 * (3 * j + k)]     = u >> 8;
             line[2 * (3 * j + k) + 1] = u & 0xff;
@@ -85,36 +83,38 @@ static inline void vcpy(float *vdst, const float *vsrc)
    vdst[1] = vsrc[1];
 }
 
-static inline void vdif(float *vdst, const float *vsrc1, const float *vsrc2)
-{
-   vdst[0] = vsrc1[0] - vsrc2[0];
-   vdst[1] = vsrc1[1] - vsrc2[1];
-}
+#define INIT_VDIF(v1, v2) {(v1)[0] - (v2)[0], (v1)[1] - (v2)[1]}
+#define SCAL(v1, v2) ((v1)[0] * (v2)[0] + (v1)[1] * (v2)[1])
 
-static inline float scal(const float *v1, const float *v2)
+static inline void norm_v(float *u)
 {
-   return v1[0] * v2[0] + v1[1] * v2[1];
+   const float w = 1.0f / sqrt(SCAL(u, u));
+   u[0] *= w;
+   u[1] *= w;
 }
 
 static inline float dist_sq(const float *v1, const float *v2)
 {
-   float tmp[2];
-   vdif(tmp, v1, v2);
-   return scal(tmp, tmp);
+   float tmp[2] = INIT_VDIF(v1, v2);
+   return SCAL(tmp, tmp);
 }
 
-struct point_list {
-   float (*lst)[2];
-   int nb;
-};
+static inline float seg_dist_sq(const float *A, const float *B, const float *u,
+                                const float *O)
+{
+   const float OA[2] = INIT_VDIF(A, O);
+   const float OB[2] = INIT_VDIF(B, O);
+   const float p     = SCAL(OA, u);
+   const float q     = SCAL(OB, u);
+   const float P[2]  = {A[0] - p * u[0], A[1] - p * u[1]};
 
-struct lin_list {
-   struct {
-      float pt[2];
-      float u[2];
-   }  *lst;
-   int nb;
-};
+   if (p * q < 0.0f)
+      return dist_sq(O, P);
+   else if (p > 0.0f)
+      return SCAL(OA, OA);
+   else
+      return SCAL(OB, OB);
+}
 
 struct s_ssys {
    struct sys {
@@ -152,32 +152,81 @@ static float edge_stretch_score(const float *neigh, int n_neigh,
    return acc / n_neigh;
 }
 
-static float sys_overlap_score(const float *lst, int n, const float v[2],
-                               float radius, float falloff)
+static inline float repulsive(float d_sq, float radius, float falloff)
 {
    // S(x) =
    //   S0 - x         if x <= radius
    //   a(x-falloff)^2 if radius <= x <= falloff with
    //   0              if x >= falloff
    // with C1-continuity.
-   const float a   = 0.5f / (falloff - radius); // Can be Nan
-   const float S0  = (radius + falloff) / 2.0f;
-   float       acc = 0.0f;
+   const float a  = 0.5f / (falloff - radius); // Can be Nan
+   const float S0 = (radius + falloff) / 2.0f;
 
+   if (d_sq <= falloff * falloff) {
+      const float dist = sqrt(d_sq);
+      if (dist <= radius)
+         return S0 - dist;
+      else {
+         const float bef_fall = falloff - dist;
+         return a * bef_fall * bef_fall;
+      }
+   } else
+      return 0.0f;
+}
+
+static float sys_overlap_score(const float *lst, int n, const float v[2],
+                               float radius, float falloff)
+{
+   float acc = 0.0f;
    for (int i = 0; i < n; i++) {
       const float sq = dist_sq(lst + 2 * i, v);
-
-      if (sq <= falloff * falloff) {
-         const float dist = sqrt(sq);
-         if (dist <= radius)
-            acc += S0 - dist;
-         else {
-            const float bef_fall = falloff - dist;
-            acc += a * bef_fall * bef_fall;
-         }
-      }
+      acc += repulsive(sq, radius, falloff);
    }
    return acc;
+}
+
+struct s_cost_params {
+   const float *neigh; // N[2]
+   int          n_neigh;
+   const float *around;
+   int          n_around;
+   // int          n_nnaround;
+   float *edges; // A[2] B[2] u[2]
+   int    n_edges;
+   float  radius;
+   float  falloff;
+};
+
+static float edge_overlap_score(struct s_cost_params *cp, const float v[2])
+{
+   const float F = EDGE_FACT;
+   // S_e(x) = S(F*x)/F
+
+   float acc = 0.0f;
+
+   for (int i = 0; i < cp->n_edges; i++) {
+      const float *E  = cp->edges + 6 * i;
+      const float  sq = F * F * seg_dist_sq(E, E + 2, E + 4, v);
+
+      acc += repulsive(sq, cp->radius, cp->falloff);
+   }
+   for (int i = 0; i < cp->n_neigh; i++) {
+      const float *N    = cp->neigh + 2 * i;
+      float        u[2] = INIT_VDIF(N, v);
+      norm_v(u);
+
+      for (int j = 0; j < cp->n_around; j++) {
+         const float *P   = cp->around + 2 * j;
+         float        res = 0.0f;
+         if (memcmp(P, N, 2 * sizeof(float))) {
+            const float sq = (F * F) * seg_dist_sq(v, N, u, P);
+            // because the responsibility is divided between crt sys and N
+            res = 0.5f * repulsive(sq, cp->radius, cp->falloff);
+         }
+         acc += res;
+      }
+   }
+   return acc / F;
 }
 
 static int _compar(const void *a, const void *b)
@@ -185,7 +234,7 @@ static int _compar(const void *a, const void *b)
    return *((int *) a) - *((int *) b);
 }
 
-static int in_place_rem_duplicates(int *lst, int n)
+static int in_place_sort_u(int *lst, int n)
 {
    int w = 1;
    qsort((void *) lst, n, sizeof(int), _compar);
@@ -254,19 +303,10 @@ static float bounding_circle(float dst[2], const float *pts, int nb)
    return max_d;
 }
 
-static float total_score(float score_es, float score_so)
+static float total_score(float score_es, float score_so, float score_eo)
 {
-   return 0.25 * score_es + score_so;
+   return 0.25 * score_es + score_so + score_eo;
 }
-
-struct s_cost_params {
-   const float *neigh;
-   int          n_neigh;
-   const float *around;
-   int          n_around;
-   float        radius;
-   float        falloff;
-};
 
 static float sys_total_score(struct s_cost_params *sys_p, const float v[2])
 {
@@ -274,13 +314,14 @@ static float sys_total_score(struct s_cost_params *sys_p, const float v[2])
       edge_stretch_score(sys_p->neigh, sys_p->n_neigh, v, sys_p->radius);
    const float score_so = sys_overlap_score(sys_p->around, sys_p->n_around, v,
                                             sys_p->radius, sys_p->falloff);
-   return total_score(score_es, score_so);
+   const float score_eo = edge_overlap_score(sys_p, v);
+   return total_score(score_es, score_so, score_eo);
 }
 
 int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
                    bool quiet, bool ppm)
 {
-   struct s_cost_params ssys_p = {.n_neigh = 0, .n_around = 0};
+   struct s_cost_params ssys_p = {.n_neigh = 0, .n_around = 0, .n_edges = 0};
    int                 *id_neigh;
    float                edge_len = 0.0f;
    int                 *id_around;
@@ -313,7 +354,7 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
       if (map->jumps[n ^ 1] == ssys)
          id_neigh[ssys_p.n_neigh++] = map->jumps[n];
    }
-   ssys_p.n_neigh = in_place_rem_duplicates(id_neigh, ssys_p.n_neigh);
+   ssys_p.n_neigh = in_place_sort_u(id_neigh, ssys_p.n_neigh);
    if (!quiet)
       fprintf(stderr, "\e[033;1m[%s]\e[0m\n", map->sys_nam[ssys]);
    id_neigh[ssys_p.n_neigh] = ssys;
@@ -334,7 +375,37 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
    for (int i = 0; i < map->nsys; i++)
       if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq)
          id_around[ssys_p.n_around++] = i;
+
+   //  ssys_p.n_nnaround = 0;
+   //  for (int i = 0, j = 0; i < ssys_p.n_around;)
+   //     if (j == ssys_p.n_neigh || id_around[i] < id_neigh[j])
+   //        id_around[ssys_p.n_nnaround++] = id_around[i++];
+   //     else if (id_around[i] == id_neigh[j++])
+   //        i++;
+   //  for (int i = 0; i < ssys_p.n_neigh; i++)
+   //     id_around[ssys_p.n_nnaround + i] = id_neigh[i];
+
    ssys_p.around = poscpy(ssys_p.n_around, id_around, map, "around", quiet);
+
+   ssys_p.edges = calloc(map->njumps * 6, sizeof(float));
+   for (int i = 0; i < map->njumps; i++) {
+      int n = 2 * i;
+      if (map->jumps[n] == ssys || map->jumps[n + 1] == ssys)
+         continue;
+
+      float *A    = map->sys[map->jumps[n]].v;
+      float *B    = map->sys[map->jumps[n + 1]].v;
+      float  u[2] = INIT_VDIF(B, A);
+      norm_v(u);
+      if (seg_dist_sq(A, B, u, center) < max_sq) {
+         vcpy(ssys_p.edges + ssys_p.n_edges * 6, A);
+         vcpy(ssys_p.edges + ssys_p.n_edges * 6 + 2, B);
+         vcpy(ssys_p.edges + ssys_p.n_edges * 6 + 4, u);
+         ssys_p.n_edges++;
+      }
+   }
+   ssys_p.edges =
+      realloc((void *) ssys_p.edges, ssys_p.n_edges * 6 * sizeof(float));
 
    if (g_opt || ppm) {
       float best[2]    = {center[0], center[1]};
@@ -354,10 +425,11 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
                const float score_so =
                   sys_overlap_score(ssys_p.around, ssys_p.n_around, v,
                                     ssys_p.radius, ssys_p.falloff);
-               const float score = total_score(score_es, score_so);
+               const float score_eo = edge_overlap_score(&ssys_p, v);
+               const float score    = total_score(score_es, score_so, score_eo);
                samples[3 * (i * SAMP + j) + 0] = score_es;
                samples[3 * (i * SAMP + j) + 1] = score_so;
-               samples[3 * (i * SAMP + j) + 2] = 1.0f;
+               samples[3 * (i * SAMP + j) + 2] = score_eo;
                if (score < best_score) {
                   vcpy(best, v);
                   best_score = score;
@@ -367,9 +439,8 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
          }
       }
       if (ppm) {
-         const float blue[] = {0.0f, 0.0f, 2.0f};
          for (int k = 0; k < 3; k++)
-            samples[3 * best_id + k] = blue[k];
+            samples[3 * best_id + k] = 0.0f;
          output_ppm(map->sys_nam[ssys], samples, SAMP, SAMP);
       }
       free(samples);
@@ -400,9 +471,10 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
          break;
    }
    free(id_neigh);
+   free(id_around);
    free((void *) ssys_p.neigh);
    free((void *) ssys_p.around);
-   free(id_around);
+   free((void *) ssys_p.edges);
 
    return 0;
 }
@@ -444,6 +516,8 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
 
    if (num < THREADS - 1)
       exit(EXIT_SUCCESS);
+   while (wait(NULL) != -1)
+      ;
 }
 
 static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
