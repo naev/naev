@@ -20,9 +20,9 @@ pub static ENV: LazyLock<AppEnv> = LazyLock::new(detect);
  This ensures the C side always sees valid, non-dangling pointers.
 */
 
-static cappimage: OnceLock<CString> = OnceLock::new();
-static cargv0: OnceLock<CString> = OnceLock::new();
-static cappdir: OnceLock<CString> = OnceLock::new();
+static CAPPIMAGE: OnceLock<CString> = OnceLock::new();
+static CARGV0: OnceLock<CString> = OnceLock::new();
+static CAPPDIR: OnceLock<CString> = OnceLock::new();
 
 fn detect() -> AppEnv {
     let mut e = AppEnv {
@@ -54,17 +54,17 @@ fn detect() -> AppEnv {
      OnceLock guarantees only one initialization and shared access is safe.
     */
 
-    cappimage
+    CAPPIMAGE
         .set(CString::new(e.appimage.clone()).unwrap())
         .ok();
-    cargv0.set(CString::new(e.argv0.clone()).unwrap()).ok();
-    cappdir.set(CString::new(e.appdir.clone()).unwrap()).ok();
+    CARGV0.set(CString::new(e.argv0.clone()).unwrap()).ok();
+    CAPPDIR.set(CString::new(e.appdir.clone()).unwrap()).ok();
 
     unsafe {
         naevc::env.isAppImage = if e.is_appimage { 1 } else { 0 };
-        naevc::env.appimage = cappimage.get().unwrap().as_ptr() as *mut c_char;
-        naevc::env.argv0 = cargv0.get().unwrap().as_ptr() as *mut c_char;
-        naevc::env.appdir = cappdir.get().unwrap().as_ptr() as *mut c_char;
+        naevc::env.appimage = CAPPIMAGE.get().unwrap().as_ptr() as *mut c_char;
+        naevc::env.argv0 = CARGV0.get().unwrap().as_ptr() as *mut c_char;
+        naevc::env.appdir = CAPPDIR.get().unwrap().as_ptr() as *mut c_char;
     }
     e
 }
