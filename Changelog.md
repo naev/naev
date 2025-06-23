@@ -63,7 +63,7 @@
  - Support for price_mod on tech group commodities
  - Mission and Event NPC's priority default to the priority of the parent
  - Local maps can have a range parameter now
- - Intrinsic outfits for ships are defined in <intrinsics> instead of <slots> now
+ - Intrinsic outfits for ships are defined in \<intrinsics\> instead of \<slots\> now
  - Systems can have waypoints that are accessible from missions
  - Fixed some flickering at the end of ship trails
  - Diff mode in the editor remembers filenames and diff names
@@ -471,7 +471,7 @@
  - Fixed camouflage burster not activating stealth
  - Fixed bug where beams were counted as giving energy in the equipment optimizer
  - shadowvigil: claim entire route
- - sh01_corvette: should be completable on easy difficulties now
+ - `sh01_corvette`: should be completable on easy difficulties now
  - patrol: fixed escorts and fighters becoming hostile if hostile to the mission giving faction
  - Fixed debugging paranoid builds under Windows
  - Fixed autonav not respecting shield thresholds
