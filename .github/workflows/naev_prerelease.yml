@@ -41,7 +41,7 @@ jobs:
           cp -r source/extras/macos/dmg_assets build/dist
           cp source/extras/macos/entitlements.plist build/dist
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
-          cp source/CHANGELOG build/dist
+          cp source/Changelog.md build/dist
           cp source/dat/VERSION build/dist
 
       - name: Upload Source Artifact
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: naev-changelog
-          path: ${{ github.workspace }}/build/dist/CHANGELOG
+          path: ${{ github.workspace }}/build/dist/Changelog.md
           if-no-files-found: error
 
       - name: Upload Version Artifact
