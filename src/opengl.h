@@ -128,10 +128,10 @@ int gl_checkHandleError( const char *func, int line );
 #define gl_debugGroupStart()                                                   \
    do {                                                                        \
    } while ( 0 )
-#define gl_debugGroupStartID()                                                 \
+#define gl_debugGroupStartID( id )                                             \
    do {                                                                        \
    } while ( 0 )
-#define gl_debugGroupStartName()                                               \
+#define gl_debugGroupStartName( name )                                         \
    do {                                                                        \
    } while ( 0 )
 #define gl_debugGroupEnd()                                                     \

@@ -1,6 +1,7 @@
 use std::env;
 use std::ffi::CString;
 use std::os::raw::c_char;
+use std::sync::OnceLock;
 
 #[derive(Clone)]
 pub struct AppEnv {
@@ -12,6 +13,16 @@ pub struct AppEnv {
 
 use std::sync::LazyLock;
 pub static ENV: LazyLock<AppEnv> = LazyLock::new(detect);
+
+/*
+ These static CStrings are used to provide valid pointers to the C FFI struct
+ for the lifetime of the program. They are set once at startup and never changed.
+ This ensures the C side always sees valid, non-dangling pointers.
+*/
+
+static CAPPIMAGE: OnceLock<CString> = OnceLock::new();
+static CARGV0: OnceLock<CString> = OnceLock::new();
+static CAPPDIR: OnceLock<CString> = OnceLock::new();
 
 fn detect() -> AppEnv {
     let mut e = AppEnv {
@@ -38,15 +49,22 @@ fn detect() -> AppEnv {
         }
     }
 
-    /* TODO remove. */
-    let cappimage: CString = CString::new(e.appimage.clone()).unwrap();
-    let cargv0: CString = CString::new(e.argv0.clone()).unwrap();
-    let cappdir: CString = CString::new(e.appdir.clone()).unwrap();
+    /*
+     TODO remove.
+     OnceLock guarantees only one initialization and shared access is safe.
+    */
+
+    CAPPIMAGE
+        .set(CString::new(e.appimage.clone()).unwrap())
+        .ok();
+    CARGV0.set(CString::new(e.argv0.clone()).unwrap()).ok();
+    CAPPDIR.set(CString::new(e.appdir.clone()).unwrap()).ok();
+
     unsafe {
         naevc::env.isAppImage = if e.is_appimage { 1 } else { 0 };
-        naevc::env.appimage = cappimage.as_ptr() as *mut c_char;
-        naevc::env.argv0 = cargv0.as_ptr() as *mut c_char;
-        naevc::env.appdir = cappdir.as_ptr() as *mut c_char;
+        naevc::env.appimage = CAPPIMAGE.get().unwrap().as_ptr() as *mut c_char;
+        naevc::env.argv0 = CARGV0.get().unwrap().as_ptr() as *mut c_char;
+        naevc::env.appdir = CAPPDIR.get().unwrap().as_ptr() as *mut c_char;
     }
     e
 }
