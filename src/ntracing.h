@@ -30,13 +30,14 @@ ALWAYS_INLINE static inline void *nmalloc( size_t size )
 {
    void *ptr = malloc( size );
    /* Sigh... */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunknown-warning-option"
+#if __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif /* __GNUC__ */
    NTracingAlloc( ptr, size );
+#if __GNUC__
 #pragma GCC diagnostic pop
-#pragma clang diagnostic pop
+#endif /* __GNUC__ */
    return ptr;
 }
 ALWAYS_INLINE static inline void nfree( void *ptr )
