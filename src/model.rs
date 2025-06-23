@@ -686,6 +686,8 @@ impl Scene {
         unsafe {
             let (w, h) = target.dimensions();
             gl.viewport(0, 0, w as i32, h as i32);
+            gl.cull_face(glow::FRONT);
+            gl.enable(glow::CULL_FACE);
         }
         target.bind(ctx);
         for node in &mut self.nodes {
@@ -705,7 +707,9 @@ impl Scene {
             gl.bind_buffer(glow::ARRAY_BUFFER, None);
             gl.use_program(None);
             gl.disable(glow::DEPTH_TEST);
+            gl.disable(glow::CULL_FACE);
             gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
+            target.unbind(ctx);
         }
 
         Ok(())
@@ -847,6 +851,12 @@ impl Model {
             0.0, invradius, 0.0, 0.0,
             0.0, 0.0,-invradius, 0.0,
             0.0, 0.0, 0.0, 1.0 );
+
+        // Have to restore the core after loading
+        let lctx = ctx.lock();
+        unsafe {
+            lctx.gl.bind_vertex_array(Some(lctx.vao_core));
+        }
 
         Ok(Model {
             scenes,

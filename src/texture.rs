@@ -718,6 +718,15 @@ impl FramebufferTarget {
             ctx.gl.bind_framebuffer(glow::FRAMEBUFFER, fb);
         }
     }
+
+    pub fn unbind(&self, ctx: &context::Context) {
+        unsafe {
+            ctx.gl.bind_framebuffer(
+                glow::FRAMEBUFFER,
+                NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
+            );
+        }
+    }
 }
 
 pub struct Framebuffer {
@@ -743,7 +752,10 @@ impl Framebuffer {
 
     pub fn unbind(ctx: &context::Context) {
         unsafe {
-            ctx.gl.bind_framebuffer(glow::FRAMEBUFFER, None);
+            ctx.gl.bind_framebuffer(
+                glow::FRAMEBUFFER,
+                NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
+            );
         }
     }
 }
