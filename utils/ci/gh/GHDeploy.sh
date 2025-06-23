@@ -125,9 +125,9 @@ if [ "$DRYRUN" == "false" ]; then
         gh release create "$TAGNAME" --title "Nightly Build" --prerelease --generate-notes --verify-tag --repo "$REPONAME"
     else
         if [ "$PRERELEASE" == "true" ]; then
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --prerelease --verify-tag --repo "$REPONAME"
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/Changelog.md" --prerelease --verify-tag --repo "$REPONAME"
         else
-            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/CHANGELOG" --verify-tag --repo "$REPONAME"
+            gh release create "$TAGNAME" --title "$TAGNAME" --notes-file "build/staging/naev-changelog/Changelog.md" --verify-tag --repo "$REPONAME"
         fi
     fi
 
@@ -150,9 +150,9 @@ elif [ "$DRYRUN" == "true" ]; then
         echo "Would create release: gh release create $TAGNAME --title 'Nightly Build' --prerelease --generate-notes --verify-tag --repo $REPONAME"
     else
         if [ "$PRERELEASE" == "true" ]; then
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --prerelease --verify-tag --repo $REPONAME"
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/Changelog.md --prerelease --verify-tag --repo $REPONAME"
         else
-            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/CHANGELOG --verify-tag --repo $REPONAME"
+            echo "Would create release: gh release create $TAGNAME --title $TAGNAME --notes-file build/staging/naev-changelog/Changelog.md --verify-tag --repo $REPONAME"
         fi
     fi
     # Simulate asset uploads
