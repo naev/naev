@@ -230,6 +230,12 @@ for k in pos:
             pos[k] = pos[n] + v.normalize(avg)
 
 
+# Qorel Corridor
+
+pos['firk'] = (pos['gamma_polaris'] + pos['shakar'] + pos['apez']) / 3.0
+pos['effetey'] = (pos['majesteka'] + pos['trohem']) / 2.0
+
+
 # Position virtual systems
 
 v = vec(avg, 0) * 0.4
