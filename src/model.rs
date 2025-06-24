@@ -154,27 +154,6 @@ pub struct ModelShader {
     lighting_uniform: u32,
 }
 impl ModelShader {
-    fn get_uniform_tex(
-        gl: &glow::Context,
-        shader: &Shader,
-        name: &str,
-        default: i32,
-    ) -> Result<glow::UniformLocation> {
-        match unsafe { gl.get_uniform_location(shader.program, name) } {
-            Some(idx) => {
-                unsafe {
-                    shader.use_program(gl);
-                    gl.uniform_1_i32(Some(&idx), default);
-                    gl.use_program(None);
-                }
-                Ok(idx)
-            }
-            None => {
-                anyhow::bail!("Model shader does not have '{}' uniform!", name);
-            }
-        }
-    }
-
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
@@ -196,11 +175,10 @@ impl ModelShader {
         let material_uniform = shader.get_uniform_block(gl, "Material")?;
         let lighting_uniform = shader.get_uniform_block(gl, "Lighting")?;
 
-        let lighting_data = LightingUniform::default();
         let lighting_buffer = BufferBuilder::new(Some("PBR Lighting Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(&lighting_data.buffer()?)
+            .data(&LightingUniform::default().buffer()?)
             .build(gl)?;
 
         Ok(ModelShader {
@@ -221,7 +199,32 @@ struct ShadowUniform {
 
 struct ShadowShader {
     shader: Shader,
-    uniform: ShadowUniform,
+    uniform: u32,
+    buffer: Buffer,
+}
+
+impl ShadowShader {
+    pub fn new(ctx: &ContextWrapper) -> Result<Self> {
+        let lctx = ctx.lock();
+        let gl = &lctx.gl;
+        let shader = ShaderBuilder::new(Some("PBR Shader"))
+            .vert_file("shadow_rust.vert")
+            .frag_file("shadow.frag")
+            .build(gl)?;
+
+        let uniform = shader.get_uniform_block(gl, "Shadow")?;
+        let buffer = BufferBuilder::new(Some("Shadow Buffer"))
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(&ShadowUniform::default().buffer()?)
+            .build(gl)?;
+
+        Ok(ShadowShader {
+            shader,
+            uniform,
+            buffer,
+        })
+    }
 }
 
 pub struct Material {
@@ -773,6 +776,7 @@ fn load_gltf_texture(
 // calling them with a dead context, chances are we are hosed anyways...
 use std::sync::OnceLock;
 static SHADER: OnceLock<ModelShader> = OnceLock::new();
+static SHADER_SHADOW: OnceLock<ShadowShader> = OnceLock::new();
 
 impl Model {
     pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
@@ -828,6 +832,7 @@ impl Model {
 
         // Initialize shaders
         let _ = SHADER.get_or_init(|| ModelShader::new(ctx).unwrap());
+        let _ = SHADER_SHADOW.get_or_init(|| ShadowShader::new(ctx).unwrap());
 
         // Get model radius
         let mut radius: f32 = 0.;
