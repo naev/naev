@@ -123,11 +123,32 @@ fn ortho3( left: f32, right: f32, bottom: f32, top: f32 ) -> Matrix3<f32> {
 
 impl Dimensions {
     pub fn new(window: &sdl::video::Window) -> Self {
+        let (draw_width, draw_height) = window.drawable_size();
         let (window_width, window_height) = window.size();
+        let (dwscale, dhscale) = (
+            (window_width as f32) / (draw_width as f32),
+            (window_height as f32) / (draw_height as f32),
+        );
+        let scalefactor = unsafe { naevc::conf.scalefactor as f32 };
+        let scale = f32::max(dwscale, dhscale) / scalefactor;
         let (view_width, view_height, view_scale) = {
-            let (w, h) = (window_width as f32, window_height as f32);
-            let scale = unsafe { naevc::conf.scalefactor as f32 };
-            (w / scale, h / scale, 1.0 / scale)
+            let (vw, vh) = (
+                (window_width as f32) * scale,
+                (window_height as f32) * scale,
+            );
+            if vw < naevc::RESOLUTION_W_MIN as f32 || vh < naevc::RESOLUTION_H_MIN as f32 {
+                warn!("Screen size is too small, upscaling...");
+                let scalew = naevc::RESOLUTION_W_MIN as f32 / vw as f32;
+                let scaleh = naevc::RESOLUTION_H_MIN as f32 / vh as f32;
+                let scale = scale * f32::max(scalew, scaleh);
+                (
+                    (window_width as f32) * scale,
+                    (window_height as f32) * scale,
+                    scale,
+                )
+            } else {
+                (vw, vh, scale)
+            }
         };
         let projection = ortho3(0.0, view_width, 0.0, view_height);
 
