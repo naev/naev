@@ -547,8 +547,8 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
 }
 
 /* main */
-int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool only,
-          float weight)
+int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
+          bool only, float weight)
 {
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
    struct s_ssys map     = {0};
@@ -592,7 +592,16 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool only,
       map.nosys = map.nsys;
 
    gen_map_reposition(&map, g_opt, quiet, gen_map, only, weight);
-
+   if (edges) {
+      char buff[512];
+      for (int i = 0; i < map.njumps; i++) {
+         size_t n =
+            snprintf(buff, 511, "%s %s\n", map.sys_nam[map.jumps[i * 2]],
+                     map.sys_nam[map.jumps[i * 2 + 1]]);
+         fwrite(buff, sizeof(char), n, stdout);
+      }
+      fflush(stdout);
+   }
    for (int i = 0; i < map.nsys; i++)
       free(map.sys_nam[i]);
    free(map.sys_nam);
@@ -602,7 +611,8 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool only,
 
 static int usage(char *nam, int ret, float w)
 {
-   fprintf(stderr, "Usage:  %s  [-g] [-o] [-p] [-w<weight>] [<names>...]\n",
+   fprintf(stderr,
+           "Usage:  %s  [-g] [-o | -e] [-p] [-w<weight>] [<names>...]\n",
            basename(nam));
    fprintf(
       stderr,
@@ -615,6 +625,7 @@ static int usage(char *nam, int ret, float w)
       "  If -g is set, look for global optimum (slower, and\n"
       "    might result in a different planar embedding).\n\n"
       "  If -o is set, only output processed systems.\n"
+      "  If -e is set, also output edges (as is).\n"
       "  If -p is set, outputs a ppm for each processed system.\n\n"
       "  If <weight> is set (positive), outputs values in the form:\n"
       "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n"
@@ -636,6 +647,7 @@ int main(int argc, char **argv)
    char *nam            = argv[0];
    bool  g_opt          = false;
    bool  processed_only = false;
+   bool  output_edges   = false;
    bool  gen_map        = false;
 
    int   fst_opt     = 1;
@@ -650,6 +662,11 @@ int main(int argc, char **argv)
       }
 
    qsort(argv + fst_opt, fst_non_opt - fst_opt, sizeof(char *), cmpstringp);
+
+   if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-e")) {
+      output_edges = true;
+      fst_opt++;
+   }
 
    if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-g")) {
       g_opt = true;
@@ -695,5 +712,5 @@ int main(int argc, char **argv)
       }
    }
    return do_it(argv + fst_non_opt, argc - fst_non_opt, g_opt, gen_map,
-                processed_only, weight);
+                output_edges, processed_only, weight);
 }
