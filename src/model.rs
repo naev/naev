@@ -664,8 +664,11 @@ impl Scene {
         }
 
         // TODO shadow pass
-        //for i in 1..lighting.nlights {
-        //}
+        let shadow_shader = &COMMON.get().unwrap().shader_shadow;
+        shadow_shader.shader.use_program(gl);
+        /*for i in 1..lighting.nlights {
+            node.render_shadow(ctx, &shadow_shader, transform)?;
+        }*/
 
         // Set up
         shader.shader.use_program(gl);
@@ -775,8 +778,22 @@ fn load_gltf_texture(
 // This is actually bad because they technically depend on the context existing, but if we are
 // calling them with a dead context, chances are we are hosed anyways...
 use std::sync::OnceLock;
-static SHADER: OnceLock<ModelShader> = OnceLock::new();
-static SHADER_SHADOW: OnceLock<ShadowShader> = OnceLock::new();
+struct Common {
+    shader: ModelShader,
+    shader_shadow: ShadowShader,
+}
+impl Common {
+    fn new(ctx: &ContextWrapper) -> Result<Self> {
+        let shader = ModelShader::new(ctx)?;
+        let shader_shadow = ShadowShader::new(ctx)?;
+
+        Ok(Common {
+            shader,
+            shader_shadow,
+        })
+    }
+}
+static COMMON: OnceLock<Common> = OnceLock::new();
 
 impl Model {
     pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
@@ -830,9 +847,8 @@ impl Model {
             .map(|scene| Scene::from_gltf(&scene, &meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
-        // Initialize shaders
-        let _ = SHADER.get_or_init(|| ModelShader::new(ctx).unwrap());
-        let _ = SHADER_SHADOW.get_or_init(|| ShadowShader::new(ctx).unwrap());
+        // Common stuff
+        let _ = COMMON.get_or_init(|| Common::new(ctx).unwrap());
 
         // Get model radius
         let mut radius: f32 = 0.;
@@ -881,7 +897,13 @@ impl Model {
     ) -> Result<()> {
         let scene_transform = transform.clone() * self.transform_scale;
         if let Some(scene) = self.scenes.get_mut(sceneid) {
-            scene.render(ctx, fb, &SHADER.get().unwrap(), &scene_transform, lighting)?;
+            scene.render(
+                ctx,
+                fb,
+                &COMMON.get().unwrap().shader,
+                &scene_transform,
+                lighting,
+            )?;
         }
         Ok(())
     }
