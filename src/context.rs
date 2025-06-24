@@ -391,8 +391,11 @@ impl Context {
         let (window, gl_context) = match Self::create_context(&sdlvid, &gl_attr, 4, 6) {
             Ok(v) => v,
             _ => match Self::create_context(&sdlvid, &gl_attr, 3, 3) {
-                Ok(v) => v,
-                _ => anyhow::bail!("Foo"),
+                Ok(v) => {
+                    warn!("Falling back to OpenGL 3.3 context!");
+                    v
+                }
+                _ => anyhow::bail!("Failed to create OpenGL context!"),
             },
         };
         let mut gl = unsafe {
