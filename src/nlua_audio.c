@@ -574,8 +574,12 @@ static int audioL_new( lua_State *L )
       /* Set the format */
       if ( la.info->channels == 1 )
          la.format = AL_FORMAT_MONO16;
-      else
+      else if ( la.info->channels == 2 )
          la.format = AL_FORMAT_STEREO16;
+      else {
+         la.format = AL_FORMAT_STEREO16;
+         WARN( _( "Audio '%s' is neither mono nor stereo!" ), name );
+      }
 
       la.active = 0;
       la.lock   = SDL_CreateMutex();
