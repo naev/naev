@@ -718,7 +718,6 @@ impl Scene {
 
 pub struct Model {
     scenes: Vec<Scene>,
-    shader: Arc<ModelShader>,
     radius: f32,
     transform_scale: Matrix4<f32>,
 }
@@ -782,8 +781,10 @@ fn load_gltf_texture(
     tb.build_wrap(ctx)
 }
 
-use std::sync::{Arc, OnceLock};
-static SHADER: OnceLock<Arc<ModelShader>> = OnceLock::new();
+// This is actually bad because they technically depend on the context existing, but if we are
+// calling them with a dead context, chances are we are hosed anyways...
+use std::sync::OnceLock;
+static SHADER: OnceLock<ModelShader> = OnceLock::new();
 
 impl Model {
     pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
@@ -837,7 +838,8 @@ impl Model {
             .map(|scene| Scene::from_gltf(&scene, &meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let shader = SHADER.get_or_init(|| Arc::new(ModelShader::new(ctx).unwrap()));
+        // Initialize shaders
+        let _ = SHADER.get_or_init(|| ModelShader::new(ctx).unwrap());
 
         // Get model radius
         let mut radius: f32 = 0.;
@@ -860,7 +862,6 @@ impl Model {
 
         Ok(Model {
             scenes,
-            shader: shader.clone(),
             radius,
             transform_scale,
         })
@@ -887,7 +888,7 @@ impl Model {
     ) -> Result<()> {
         let scene_transform = transform.clone() * self.transform_scale;
         if let Some(scene) = self.scenes.get_mut(sceneid) {
-            scene.render(ctx, fb, &self.shader, &scene_transform, lighting)?;
+            scene.render(ctx, fb, &SHADER.get().unwrap(), &scene_transform, lighting)?;
         }
         Ok(())
     }
