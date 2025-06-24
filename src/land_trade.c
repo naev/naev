@@ -165,9 +165,6 @@ static void commodity_exchange_genList( unsigned int wid )
    iw = 565 + ( w - LAND_WIDTH );
    ih = h - 60;
 
-   double     *prices = NULL;
-   Commodity **tech   = tech_getCommodity( land_spob->tech, &prices );
-
    if ( exists ) {
       toolkit_saveImageArrayData( wid, "iarTrade", &idat );
       window_destroyWidget( wid, "iarTrade" );
@@ -197,14 +194,14 @@ static void commodity_exchange_genList( unsigned int wid )
    for ( int i = 0; i < array_size( land_spob->commodities ); i++ ) {
       Commodity *com = land_spob->commodities[i];
       /* Ignore if already in the list. */
-      int found = 0;
+      int found = -1;
       for ( int k = 0; k < array_size( commodity_list ); k++ ) {
          if ( com == commodity_list[k].com ) {
             found = k;
             break;
          }
       }
-      if ( found ) {
+      if ( found >= 0 ) {
          commodity_list[found].buyable = INT_MAX;
          continue;
       }
@@ -217,10 +214,12 @@ static void commodity_exchange_genList( unsigned int wid )
    }
 
    /* Next add local specialties. */
+   double     *prices = NULL;
+   Commodity **tech   = tech_getCommodity( land_spob->tech, &prices );
    for ( int i = 0; i < array_size( tech ); i++ ) {
       Commodity *com = tech[i];
       /* Ignore if already in the list. */
-      int found = 0;
+      int found = -1;
       for ( int k = 0; k < array_size( commodity_list ); k++ ) {
          if ( com == commodity_list[k].com ) {
             if ( FABS( prices[i] - 1. ) > DOUBLE_TOL )
@@ -230,7 +229,7 @@ static void commodity_exchange_genList( unsigned int wid )
             break;
          }
       }
-      if ( found ) {
+      if ( found >= 0 ) {
          commodity_list[found].buyable = INT_MAX;
          continue;
       }
