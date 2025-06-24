@@ -615,7 +615,7 @@ pub struct Scene {
 }
 
 impl Scene {
-    pub fn from_gltf(scene: &gltf::Scene, meshes: &[Rc<Mesh>]) -> Result<Self> {
+    fn from_gltf(scene: &gltf::Scene, meshes: &[Rc<Mesh>]) -> Result<Self> {
         let nodes: Vec<Node> = scene
             .nodes()
             .map(|node| Node::from_gltf(&node, meshes))
@@ -634,8 +634,9 @@ impl Scene {
         })
     }
 
-    pub fn render(
+    fn render(
         &mut self,
+        common: &Common,
         ctx: &Context,
         target: &FramebufferTarget,
         shader: &ModelShader,
@@ -664,7 +665,7 @@ impl Scene {
         }
 
         // TODO shadow pass
-        let shadow_shader = &COMMON.get().unwrap().shader_shadow;
+        let shadow_shader = &common.shader_shadow;
         shadow_shader.shader.use_program(gl);
         /*for i in 1..lighting.nlights {
             node.render_shadow(ctx, &shadow_shader, transform)?;
@@ -714,6 +715,7 @@ pub struct Model {
     scenes: Vec<Scene>,
     radius: f32,
     transform_scale: Matrix4<f32>,
+    common: &'static Common,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -848,7 +850,7 @@ impl Model {
             .collect::<Result<Vec<_>, _>>()?;
 
         // Common stuff
-        let _ = COMMON.get_or_init(|| Common::new(ctx).unwrap());
+        let common = COMMON.get_or_init(|| Common::new(ctx).unwrap());
 
         // Get model radius
         let mut radius: f32 = 0.;
@@ -873,6 +875,7 @@ impl Model {
             scenes,
             radius,
             transform_scale,
+            common,
         })
     }
 
@@ -898,9 +901,10 @@ impl Model {
         let scene_transform = transform.clone() * self.transform_scale;
         if let Some(scene) = self.scenes.get_mut(sceneid) {
             scene.render(
+                self.common,
                 ctx,
                 fb,
-                &COMMON.get().unwrap().shader,
+                &self.common.shader,
                 &scene_transform,
                 lighting,
             )?;
