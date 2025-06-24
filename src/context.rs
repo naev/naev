@@ -152,6 +152,23 @@ impl Dimensions {
         };
         let projection = ortho3(0.0, view_width, 0.0, view_height);
 
+        // TODO remove the C stuff
+        unsafe {
+            naevc::gl_screen.rw = draw_width as i32;
+            naevc::gl_screen.rh = draw_height as i32;
+            naevc::gl_screen.dwscale = dwscale as f64;
+            naevc::gl_screen.dhscale = dhscale as f64;
+            naevc::gl_screen.scale = view_scale as f64;
+            naevc::gl_screen.nw = (naevc::gl_screen.rw as f64 * view_scale as f64).round() as i32;
+            naevc::gl_screen.nh = (naevc::gl_screen.rh as f64 * view_scale as f64).round() as i32;
+            naevc::gl_screen.w = naevc::gl_screen.nw;
+            naevc::gl_screen.h = naevc::gl_screen.nh;
+            naevc::gl_screen.wscale = 1.0;
+            naevc::gl_screen.hscale = 1.0;
+            naevc::gl_screen.mxscale = naevc::gl_screen.w as f64 / naevc::gl_screen.rw as f64;
+            naevc::gl_screen.myscale = naevc::gl_screen.h as f64 / naevc::gl_screen.rh as f64;
+        }
+
         Dimensions {
             window_width,
             window_height,
@@ -671,7 +688,9 @@ pub extern "C" fn gl_renderRect(
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_resize() {
+    {
+        let ctx = CONTEXT.get().unwrap();
+        let _ = ctx.resize();
+    }
     unsafe { naevc::gl_resize_c() };
-    let ctx = CONTEXT.get().unwrap();
-    let _ = ctx.resize();
 }

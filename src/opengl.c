@@ -65,7 +65,6 @@ mat4       gl_view_matrix = { { { { 0 } } } };
 static int gl_getFullscreenMode( void );
 static int gl_getGLInfo( void );
 static int gl_defState( void );
-static int gl_setupScaling( void );
 
 /*
  *
@@ -318,56 +317,6 @@ static int gl_defState( void )
 }
 
 /**
- * @brief Sets up dimensions in gl_screen, including scaling as needed.
- *
- *    @return 0 on success.
- */
-static int gl_setupScaling( void )
-{
-   /* Get the basic dimensions from SDL2. */
-   SDL_GetWindowSize( gl_screen.window, &gl_screen.w, &gl_screen.h );
-   SDL_GL_GetDrawableSize( gl_screen.window, &gl_screen.rw, &gl_screen.rh );
-   gl_checkErr();
-
-   /* Calculate scale factor, if OS has native HiDPI scaling. */
-   gl_screen.dwscale = (double)gl_screen.w / (double)gl_screen.rw;
-   gl_screen.dhscale = (double)gl_screen.h / (double)gl_screen.rh;
-
-   /* Combine scale factor from OS with the one in Naev's config */
-   gl_screen.scale =
-      fmax( gl_screen.dwscale, gl_screen.dhscale ) / conf.scalefactor;
-   // glLineWidth( 1. / gl_screen.scale );
-   glPointSize( 1. / gl_screen.scale + 2.0 );
-
-   /* New window is real window scaled. */
-   gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
-   gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
-   /* Small windows get handled here. */
-   if ( ( gl_screen.nw < RESOLUTION_W_MIN ) ||
-        ( gl_screen.nh < RESOLUTION_H_MIN ) ) {
-      double scalew, scaleh;
-      if ( gl_screen.scale != 1. )
-         WARN( _( "Screen size too small, upscaling..." ) );
-      scalew = RESOLUTION_W_MIN / (double)gl_screen.nw;
-      scaleh = RESOLUTION_H_MIN / (double)gl_screen.nh;
-      gl_screen.scale *= MAX( scalew, scaleh );
-      /* Rescale. */
-      gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
-      gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
-   }
-   /* Viewport matches new window size. */
-   gl_screen.w = gl_screen.nw;
-   gl_screen.h = gl_screen.nh;
-   /* Set scale factors. */
-   gl_screen.wscale  = (double)gl_screen.nw / (double)gl_screen.w;
-   gl_screen.hscale  = (double)gl_screen.nh / (double)gl_screen.h;
-   gl_screen.mxscale = (double)gl_screen.w / (double)gl_screen.rw;
-   gl_screen.myscale = (double)gl_screen.h / (double)gl_screen.rh;
-
-   return 0;
-}
-
-/**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
@@ -456,7 +405,6 @@ int gl_init( void )
  */
 void gl_resize_c( void )
 {
-   gl_setupScaling();
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
