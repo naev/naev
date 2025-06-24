@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 use anyhow::Result;
-use encase::{ShaderSize, ShaderType};
+use encase::ShaderType;
 use glow::HasContext;
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
@@ -14,6 +14,7 @@ use crate::buffer::{
 };
 use crate::context::{Context, ContextWrapper};
 use crate::ndata;
+use crate::render::Uniform;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
@@ -57,12 +58,6 @@ impl PrimitiveUniform {
             ..Default::default()
         }
     }
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
-        let mut buffer =
-            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
-        buffer.write(self)?;
-        Ok(buffer)
-    }
 }
 
 #[repr(C)]
@@ -87,12 +82,6 @@ impl MaterialUniform {
         MaterialUniform {
             ..Default::default()
         }
-    }
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
-        let mut buffer =
-            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
-        buffer.write(self)?;
-        Ok(buffer)
     }
 }
 
@@ -155,15 +144,6 @@ impl LightingUniform {
             ],
         }
     }
-
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
-        let mut buffer =
-            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
-        //let mut buffer =
-        //    encase::UniformBuffer::new(Vec::<u8>::with_capacity(self.size().get() as usize));
-        buffer.write(self)?;
-        Ok(buffer)
-    }
 }
 
 pub struct ModelShader {
@@ -220,7 +200,7 @@ impl ModelShader {
         let lighting_buffer = BufferBuilder::new(Some("PBR Lighting Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(lighting_data.buffer()?.into_inner().as_slice())
+            .data(&lighting_data.buffer()?)
             .build(gl)?;
 
         Ok(ModelShader {
@@ -231,6 +211,17 @@ impl ModelShader {
             lighting_uniform,
         })
     }
+}
+
+#[repr(C)]
+#[derive(Debug, Clone, Default, ShaderType)]
+struct ShadowUniform {
+    transform: Matrix4<f32>,
+}
+
+struct ShadowShader {
+    shader: Shader,
+    uniform: ShadowUniform,
 }
 
 pub struct Material {
@@ -310,7 +301,7 @@ impl Material {
             BufferBuilder::new(mat.name())
                 .target(BufferTarget::Uniform)
                 .usage(BufferUsage::Static)
-                .data(data.buffer()?.into_inner().as_slice())
+                .data(&data.buffer()?)
                 .build(gl)?
         };
 
@@ -444,7 +435,7 @@ impl Primitive {
         let uniform_buffer = BufferBuilder::new(Some("PrimitiveUniform"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(uniform_data.buffer()?.into_inner().as_slice())
+            .data(&uniform_data.buffer()?)
             .build(gl)?;
 
         Ok(Primitive {
@@ -517,11 +508,8 @@ impl Mesh {
                 .try_inverse()
                 .unwrap()
                 .transpose();
-            p.uniform_buffer.bind_write_base(
-                ctx,
-                data.buffer()?.into_inner().as_slice(),
-                shader.primitive_uniform,
-            )?;
+            p.uniform_buffer
+                .bind_write_base(ctx, &data.buffer()?, shader.primitive_uniform)?;
 
             let m = &p.material;
 
@@ -656,7 +644,7 @@ impl Scene {
         // Update lighting
         shader.lighting_buffer.bind_write_base(
             ctx,
-            lighting.buffer()?.into_inner().as_slice(),
+            &lighting.buffer()?,
             shader.lighting_uniform,
         )?;
 

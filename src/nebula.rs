@@ -1,6 +1,7 @@
 #![allow(dead_code)]
+use crate::render::Uniform;
 use anyhow::Result;
-use encase::{ShaderSize, ShaderType};
+use encase::ShaderType;
 use glow::*;
 use nalgebra::{Vector2, Vector3};
 use palette::rgb::Srgb;
@@ -30,14 +31,6 @@ struct NebulaUniform {
     volatility: f32,
     saturation: f32,
     camera: Vector2<f32>,
-}
-impl NebulaUniform {
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
-        let mut buffer =
-            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
-        buffer.write(self)?;
-        Ok(buffer)
-    }
 }
 
 #[repr(C)]
@@ -79,14 +72,6 @@ struct PuffUniform {
     colour: Vector3<f32>,
     elapsed: f32,
     scale: f32,
-}
-impl PuffUniform {
-    pub fn buffer(&self) -> Result<encase::UniformBuffer<Vec<u8>>> {
-        let mut buffer =
-            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
-        buffer.write(self)?;
-        Ok(buffer)
-    }
 }
 
 struct PuffLayer {
@@ -203,7 +188,7 @@ impl NebulaData {
         let buffer = BufferBuilder::new(Some("Nebula Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(uniform.buffer()?.into_inner().as_slice())
+            .data(&uniform.buffer()?)
             .build(gl)?;
 
         let shader_bg = ShaderBuilder::new(Some("Nebula Background Shader"))
@@ -234,7 +219,7 @@ impl NebulaData {
         let puff_buffer = BufferBuilder::new(Some("Nebula Puff Uniform Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(puff_uniform.buffer()?.into_inner().as_slice())
+            .data(&puff_uniform.buffer()?)
             .build(gl)?;
 
         Ok(NebulaData {
@@ -390,12 +375,10 @@ impl NebulaData {
         self.puff_uniform.offset.z = z;
 
         // Write updates to uniform buffer
-        self.buffer
-            .write(ctx, self.uniform.buffer()?.into_inner().as_slice())?;
+        self.buffer.write(ctx, &self.uniform.buffer()?)?;
 
         // Update and writes to puff buffer
-        self.puff_buffer
-            .write(ctx, self.puff_uniform.buffer()?.into_inner().as_slice())?;
+        self.puff_buffer.write(ctx, &self.puff_uniform.buffer()?)?;
 
         Ok(())
     }
