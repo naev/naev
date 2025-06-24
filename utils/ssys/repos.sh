@@ -9,6 +9,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "  Applies reposition <#iterations> times (or once if not provided)" >&2
    echo "  <#iterations> might be 0 (just output current ssys positions).">&2
    echo "  Use reposition -h to get info on reposition args." >&2
+   echo "  reposition args -e and -o are managed even if <#iterations> is 0." >&2
    exit 0
 fi
 
@@ -67,7 +68,10 @@ repeat() {
       cat - <("$SCRIPT_DIR"/ssys_edges.sh | tee "$TMP") |
       "$SCRIPT_DIR"/reposition "$@" |
       (if (( N-1 )); then repeat "$((N-1))" "$@"; else cat; fi)
-   else
+   elif [ ! "$1" = "-o" ] ; then
       cat
+      if [ "$1" = "-e" ] ; then
+         "$SCRIPT_DIR"/ssys_edges.sh
+      fi
    fi
 )
