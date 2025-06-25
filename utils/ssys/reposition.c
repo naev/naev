@@ -84,13 +84,19 @@ static inline void vcpy(float *vdst, const float *vsrc)
 }
 
 #define INIT_VDIF(v1, v2) {(v1)[0] - (v2)[0], (v1)[1] - (v2)[1]}
+#define INIT_VAVG(v1, v2)                                                      \
+   {0.5f * ((v1)[0] + (v2)[0]), 0.5f * ((v1)[1] + (v2)[1])}
 #define SCAL(v1, v2) ((v1)[0] * (v2)[0] + (v1)[1] * (v2)[1])
+
+static inline void vmul(float *u, float k)
+{
+   u[0] *= k;
+   u[1] *= k;
+}
 
 static inline void norm_v(float *u)
 {
-   const float w = 1.0f / sqrt(SCAL(u, u));
-   u[0] *= w;
-   u[1] *= w;
+   vmul(u, 1.0f / sqrt(SCAL(u, u)));
 }
 
 static inline float dist_sq(const float *v1, const float *v2)
@@ -179,8 +185,10 @@ static float sys_overlap_score(const float *lst, int n, const float v[2],
 {
    float acc = 0.0f;
    for (int i = 0; i < n; i++) {
-      const float sq = dist_sq(lst + 2 * i, v);
-      acc += repulsive(sq, radius, falloff);
+      const float sq  = dist_sq(lst + 2 * i, v);
+      float       res = repulsive(sq, radius, falloff);
+      if (res > acc)
+         acc = res;
    }
    return acc;
 }
@@ -262,45 +270,77 @@ static float *poscpy(int n, const int *lst, const struct s_ssys *map,
    return dst;
 }
 
-static float max_distsq(const float pt[2], const float *pts, int nb)
+// !! Au & Bu should not be colinear
+static inline void inter_lines(float dst[2], const float A[2],
+                               const float Au[2], const float B[2],
+                               const float Bu[2])
 {
-   float dst_sq = 0.0f;
+   const float *u    = Au;
+   const float  v[2] = {-Bu[1], Bu[0]};
 
-   for (int i = 0; i < nb; i++) {
-      const float d = dist_sq(pt, pts + i * 2);
-      if (d > dst_sq)
-         dst_sq = d;
-   }
-   return dst_sq;
+   const float O_S[] = INIT_VDIF(B, A);
+   const float f     = SCAL(O_S, v) / SCAL(u, v);
+
+   dst[0] = A[0] + f * u[0];
+   dst[1] = A[1] + f * u[1];
 }
 
-#define SRT3_2 0.8660254037844386
+// !! A must not be s.t. CA.AB > AB.BC && > BC.CA (we don't want AB and AC
+// colinear)
+static void circum(float dst[2], const float *A, const float *B, const float *C)
+{
+   const float AB[]  = INIT_VDIF(B, A);
+   const float AC[]  = INIT_VDIF(C, A);
+   const float u[]   = {AB[1], -AB[0]};
+   const float v[]   = {AC[1], -AC[0]};
+   const float BB[2] = INIT_VAVG(A, B);
+   const float CC[2] = INIT_VAVG(A, C);
+   inter_lines(dst, BB, u, CC, v);
+}
+
 static float bounding_circle(float dst[2], const float *pts, int nb)
 {
-   const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
-                             {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
-   const int   n_dirs     = 6;
-   const float eps        = 0.000001f;
-   float       delta      = 1.0f;
-
-   float max_d = max_distsq(pts, pts, nb);
+   float dst_sq = 0.0f;
    vcpy(dst, pts);
-   while (1) {
-      int i;
-      for (i = 0; i < n_dirs; i++) {
-         const float cand[2] = {dst[0] + delta * dirs[i][0],
-                                dst[1] + delta * dirs[i][1]};
-         const float dcand   = max_distsq(cand, pts, nb);
-         if (dcand < max_d) {
-            vcpy(dst, cand);
-            max_d = dcand;
-            break;
+
+   for (int i = 0; i < nb; i++)
+      for (int j = i + 1; j < nb; j++) {
+         const float d = 0.25 * dist_sq(pts + i * 2, pts + j * 2);
+         if (d > dst_sq) {
+            const float avg[2] = INIT_VAVG(pts + i * 2, pts + j * 2);
+            dst_sq             = d;
+            vcpy(dst, avg);
          }
       }
-      if (i == n_dirs && ((delta /= 2.0f) < eps))
-         break;
-   }
-   return max_d;
+   for (int i = 0; i < nb; i++)
+      for (int j = i + 1; j < nb; j++)
+         for (int k = j + 1; k < nb; k++) {
+            // Trust your compiler
+            const float *A     = pts + i * 2;
+            const float *B     = pts + j * 2;
+            const float *C     = pts + k * 2;
+            const float  AB[2] = INIT_VDIF(B, A);
+            const float  BC[2] = INIT_VDIF(C, B);
+            const float  CA[2] = INIT_VDIF(A, C);
+            const float sb = SCAL(AB, BC), sc = SCAL(BC, CA), sa = SCAL(CA, AB);
+
+            // if ABC acute
+            if (sb < 0.0f && sc < 0.0f && sa < 0.0f) {
+               float tmpr[2];
+
+               if (sb < sc)
+                  circum(tmpr, B, C, A);
+               else
+                  circum(tmpr, C, A, B);
+
+               const float res = dist_sq(A, tmpr);
+               if (res > dst_sq) {
+                  dst_sq = res;
+                  vcpy(dst, tmpr);
+               }
+            }
+         }
+   return dst_sq;
 }
 
 static float total_score(float score_es, float score_so, float score_eo)
@@ -318,6 +358,7 @@ static float sys_total_score(struct s_cost_params *sys_p, const float v[2])
    return total_score(score_es, score_so, score_eo);
 }
 
+#define SRT3_2 0.8660254037844386
 int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
                    bool quiet, bool ppm)
 {
@@ -333,7 +374,6 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
    edge_len /= map->njumps;
    ssys_p.radius  = 2.0 * edge_len / 3.0;
    ssys_p.falloff = ssys_fallscale * ssys_p.radius;
-   // fprintf(stderr, "sys rad %f\n", ssys_p.radius);
 
    for (int i = 0; i < 2 * map->njumps; i++)
       if (map->jumps[i] == ssys)
@@ -362,8 +402,10 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
 
    float center[2];
    // include self in the list -> "+ 1"
-   float sqrad = bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh + 1);
-   float rad   = sqrt(sqrad);
+   // Allow angles down to 60° -> 3.0f *
+   float sqrad =
+      3.0f * bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh + 1);
+   float rad = sqrt(sqrad);
 
    float UL[2] = {center[0] - rad, center[1] - rad};
    float LR[2] = {center[0] + rad, center[1] + rad};
@@ -415,10 +457,10 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
       // Iterate over points of the circle
       float  v[2];
       float *samples = calloc(SAMP * SAMP, 3 * sizeof(float)); // IEEE754
-      for (int i = 0; i < SAMP; i++) {
-         v[1] = (1.0 * i / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
+      for (int i = 0; i < SAMP; i++)
          for (int j = 0; j < SAMP; j++) {
             v[0] = (1.0 * j / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
+            v[1] = (1.0 * i / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
             if (dist_sq(center, v) <= sqrad) {
                const float score_es = edge_stretch_score(
                   ssys_p.neigh, ssys_p.n_neigh, v, ssys_p.radius);
@@ -437,7 +479,6 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
                }
             }
          }
-      }
       if (ppm) {
          for (int k = 0; k < 3; k++)
             samples[3 * best_id + k] = 0.0f;
@@ -454,6 +495,7 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
    const float eps        = 0.000001f;
    float       delta      = 1.0f;
 
+   // TODO: improve this
    float min_sc = sys_total_score(&ssys_p, dst);
    while (1) {
       int i;
@@ -614,26 +656,27 @@ static int usage(char *nam, int ret, float w)
    fprintf(stderr,
            "Usage:  %s  [-g] [-o | -e] [-p] [-w<weight>] [<names>...]\n",
            basename(nam));
-   fprintf(
-      stderr,
-      "  Reads a graph from standard input.\n"
-      "  Applies repositioning to <names> and outputs the result.\n\n"
-      "  If <names> is not provided, use all input names.\n"
-      "  <names> is a set of ssys basenames.\n"
-      "  If files are provided instead, their basename without "
-      "\".xml\" is used.\n\n"
-      "  If -g is set, look for global optimum (slower, and\n"
-      "    might result in a different planar embedding).\n\n"
-      "  If -o is set, only output processed systems.\n"
-      "  If -e is set, also output edges (as is).\n"
-      "  If -p is set, outputs a ppm for each processed system.\n\n"
-      "  If <weight> is set (positive), outputs values in the form:\n"
-      "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n"
-      "   - If not specified, <weight> defaults to %.1f.\n"
-      "   - If you repos systems that are neighbors, its is strongly advised\n"
-      "       to choose <weight> at the very least greater than 1.0.\n"
-      "   - If you repos independent systems, you can (and should) use 0.0.\n",
-      w);
+   fprintf(stderr,
+           "  Reads a graph from standard input.\n"
+           "  Applies repositioning to <names> and outputs the result.\n\n"
+           "  If <names> is not provided, use all input names.\n"
+           "  <names> is a set of ssys basenames.\n"
+           "  If files are provided instead, their basename without "
+           "\".xml\" is used.\n\n"
+           "  If -g is set, look for global optimum (slower, and\n"
+           "    might result in a different planar embedding).\n\n"
+           "  If -o is set, only output processed systems.\n"
+           "  If -e is set, also output edges (as is).\n"
+           "  If -p is set, outputs a ppm for each processed system.\n\n"
+           "  If <weight> is set (positive), outputs values in the form:\n"
+           "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n"
+           "   - If not specified, <weight> defaults to %.1f.\n"
+           "   - If you repos systems that are neighbors, its is strongly "
+           "advised\n"
+           "       to choose <weight> at the very least greater than 1.0.\n"
+           "   - If you repos independent systems, you can (and should) use "
+           "0.0.\n",
+           w);
    return ret;
 }
 
