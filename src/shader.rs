@@ -180,6 +180,7 @@ pub struct ShaderBuilder {
     frag: ShaderSource,
     prepend: String,
     samplers: Vec<(String, i32)>,
+    uniform_buffers: Vec<(String, u32)>,
 }
 impl ShaderBuilder {
     pub fn new(name: Option<&str>) -> Self {
@@ -189,6 +190,7 @@ impl ShaderBuilder {
             frag: ShaderSource::None,
             prepend: Default::default(),
             samplers: Vec::new(),
+            uniform_buffers: Vec::new(),
         }
     }
 
@@ -219,6 +221,11 @@ impl ShaderBuilder {
 
     pub fn sampler(mut self, name: &str, idx: i32) -> Self {
         self.samplers.push((name.to_string(), idx));
+        self
+    }
+
+    pub fn uniform_buffer(mut self, name: &str, idx: u32) -> Self {
+        self.uniform_buffers.push((name.to_string(), idx));
         self
     }
 
@@ -257,6 +264,19 @@ impl ShaderBuilder {
                     }
                     None => {
                         warn!("shader '{}' does not have sampler '{}'", &name, samplername);
+                    }
+                }
+            }
+            for (uniformname, idx) in self.uniform_buffers {
+                match gl.get_uniform_block_index(program, &uniformname) {
+                    Some(uniformid) => {
+                        gl.uniform_block_binding(program, uniformid, idx);
+                    }
+                    None => {
+                        warn!(
+                            "shader '{}' does not have uniform block '{}'",
+                            &name, uniformname
+                        );
                     }
                 }
             }

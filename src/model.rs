@@ -149,11 +149,12 @@ impl LightingUniform {
 pub struct ModelShader {
     shader: Shader,
     lighting_buffer: Buffer,
-    primitive_uniform: u32,
-    material_uniform: u32,
-    lighting_uniform: u32,
 }
 impl ModelShader {
+    const U_LIGHTING: u32 = 0;
+    const U_MATERIAL: u32 = 1;
+    const U_PRIMITIVE: u32 = 2;
+
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
@@ -164,16 +165,15 @@ impl ModelShader {
             .sampler("metallic_tex", 1)
             .sampler("emissive_tex", 2)
             .sampler("normal_tex", 3)
-            .sampler("occlusion_tex", 4);
+            .sampler("occlusion_tex", 4)
+            .uniform_buffer("Lighting", Self::U_LIGHTING)
+            .uniform_buffer("Material", Self::U_MATERIAL)
+            .uniform_buffer("Primitive", Self::U_PRIMITIVE);
         for i in 0..MAX_LIGHTS {
             let sname = format!("shadowmap_tex[{}]", i);
             shaderbuilder = shaderbuilder.sampler(&sname, (5 + i) as i32);
         }
         let shader = shaderbuilder.build(gl)?;
-
-        let primitive_uniform = shader.get_uniform_block(gl, "Primitive")?;
-        let material_uniform = shader.get_uniform_block(gl, "Material")?;
-        let lighting_uniform = shader.get_uniform_block(gl, "Lighting")?;
 
         let lighting_buffer = BufferBuilder::new(Some("PBR Lighting Buffer"))
             .target(BufferTarget::Uniform)
@@ -184,9 +184,6 @@ impl ModelShader {
         Ok(ModelShader {
             shader,
             lighting_buffer,
-            primitive_uniform,
-            material_uniform,
-            lighting_uniform,
         })
     }
 }
@@ -199,31 +196,28 @@ struct ShadowUniform {
 
 struct ShadowShader {
     shader: Shader,
-    uniform: u32,
     buffer: Buffer,
 }
 
 impl ShadowShader {
+    const U_SHADOW: u32 = 0;
+
     pub fn new(ctx: &ContextWrapper) -> Result<Self> {
         let lctx = ctx.lock();
         let gl = &lctx.gl;
         let shader = ShaderBuilder::new(Some("PBR Shader"))
+            .uniform_buffer("Shadow", Self::U_SHADOW)
             .vert_file("shadow_rust.vert")
             .frag_file("shadow.frag")
             .build(gl)?;
 
-        let uniform = shader.get_uniform_block(gl, "Shadow")?;
         let buffer = BufferBuilder::new(Some("Shadow Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
             .data(&ShadowUniform::default().buffer()?)
             .build(gl)?;
 
-        Ok(ShadowShader {
-            shader,
-            uniform,
-            buffer,
-        })
+        Ok(ShadowShader { shader, buffer })
     }
 }
 
@@ -512,12 +506,12 @@ impl Mesh {
                 .unwrap()
                 .transpose();
             p.uniform_buffer
-                .bind_write_base(ctx, &data.buffer()?, shader.primitive_uniform)?;
+                .bind_write_base(ctx, &data.buffer()?, ModelShader::U_PRIMITIVE)?;
 
             let m = &p.material;
 
             // Material Uniform should be as is
-            m.uniform_buffer.bind_base(ctx, shader.material_uniform);
+            m.uniform_buffer.bind_base(ctx, ModelShader::U_MATERIAL);
 
             // Textures
             m.metallic.bind(ctx, 1);
@@ -645,13 +639,6 @@ impl Scene {
     ) -> Result<()> {
         let gl = &ctx.gl;
 
-        // Update lighting
-        shader.lighting_buffer.bind_write_base(
-            ctx,
-            &lighting.buffer()?,
-            shader.lighting_uniform,
-        )?;
-
         unsafe {
             gl.enable(glow::BLEND);
             gl.blend_func_separate(
@@ -671,11 +658,13 @@ impl Scene {
             node.render_shadow(ctx, &shadow_shader, transform)?;
         }*/
 
-        // Set up
+        // Update lighting
         shader.shader.use_program(gl);
-        shader
-            .lighting_buffer
-            .bind_base(ctx, shader.lighting_uniform);
+        shader.lighting_buffer.bind_write_base(
+            ctx,
+            &lighting.buffer()?,
+            ModelShader::U_LIGHTING,
+        )?;
 
         // Mesh pass
         unsafe {
