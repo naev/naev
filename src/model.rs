@@ -17,10 +17,12 @@ use crate::ndata;
 use crate::render::Uniform;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
-use crate::texture::{FramebufferTarget, Texture, TextureBuilder};
+use crate::texture::{Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder};
 use crate::{gettext, warn};
 
 const MAX_LIGHTS: usize = 7;
+const SHADOWMAP_SIZE_LOW: usize = 128;
+const SHADOWMAP_SIZE_HIGH: usize = 512;
 
 fn tex_value(ctx: &ContextWrapper, name: Option<&str>, value: [u8; 3]) -> Result<Rc<Texture>> {
     let mut img = image::RgbImage::new(1, 1);
@@ -772,15 +774,36 @@ use std::sync::OnceLock;
 struct Common {
     shader: ModelShader,
     shader_shadow: ShadowShader,
+    light_fbo_low: [Framebuffer; MAX_LIGHTS],
 }
 impl Common {
     fn new(ctx: &ContextWrapper) -> Result<Self> {
         let shader = ModelShader::new(ctx)?;
         let shader_shadow = ShadowShader::new(ctx)?;
 
+        let light_fbo_low = core::array::from_fn::<_, MAX_LIGHTS, _>(|i| {
+            let fb = FramebufferBuilder::new(Some(&format!("light_fbo_low[{i}]")))
+                .width(SHADOWMAP_SIZE_LOW)
+                .height(SHADOWMAP_SIZE_LOW)
+                .texture(false)
+                .depth(true)
+                .build_wrap(ctx)
+                .unwrap();
+            let lctx = ctx.lock();
+            let gl = &lctx.gl;
+            fb.bind_gl(gl);
+            unsafe {
+                gl.read_buffer(glow::NONE);
+                gl.draw_buffer(glow::NONE);
+            }
+            Framebuffer::unbind_gl(gl);
+            fb
+        });
+
         Ok(Common {
             shader,
             shader_shadow,
+            light_fbo_low,
         })
     }
 }

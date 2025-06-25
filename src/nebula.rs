@@ -341,7 +341,10 @@ impl NebulaData {
                 (dims.view_width, dims.view_height)
             };
             // Copy over
-            self.framebuffer.texture.draw(ctx, 0.0, 0.0, vw, vh)?;
+            match self.framebuffer.texture {
+                Some(ref tex) => tex.draw(ctx, 0.0, 0.0, vw, vh)?,
+                None => (),
+            };
         }
 
         self.puffs_fg.render(ctx, self)

@@ -56,13 +56,23 @@ impl TextureFormat {
         }) as i32
     }
 
-    pub fn to_gl(self) -> i32 {
+    pub fn to_gl(self) -> u32 {
+        (match self {
+            Self::RGB => glow::RGB,
+            Self::RGBA => glow::RGBA,
+            Self::SRGB => glow::RGB,
+            Self::SRGBA => glow::RGBA,
+            Self::Depth => glow::DEPTH_COMPONENT,
+        }) as u32
+    }
+
+    pub fn to_sized_gl(self) -> i32 {
         (match self {
             Self::RGB => glow::RGB,
             Self::RGBA => glow::RGBA,
             Self::SRGB => glow::SRGB,
             Self::SRGBA => glow::SRGB_ALPHA,
-            Self::Depth => glow::DEPTH_COMPONENT,
+            Self::Depth => glow::DEPTH_COMPONENT32,
         }) as i32
     }
 
@@ -110,11 +120,11 @@ impl TextureData {
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
                 0,
-                format.to_gl(),
+                format.to_sized_gl(),
                 w as i32,
                 h as i32,
                 0,
-                glow::RGBA,
+                format.to_gl(),
                 glow::UNSIGNED_BYTE,
                 glow::PixelUnpackData::Slice(None),
             );
@@ -304,7 +314,10 @@ impl Texture {
     }
 
     pub fn bind(&self, ctx: &context::Context, idx: u32) {
-        let gl = &ctx.gl;
+        self.bind_gl(&ctx.gl, idx)
+    }
+
+    pub fn bind_gl(&self, gl: &glow::Context, idx: u32) {
         unsafe {
             gl.active_texture(glow::TEXTURE0 + idx);
             gl.bind_texture(glow::TEXTURE_2D, Some(self.texture.texture));
@@ -313,7 +326,10 @@ impl Texture {
     }
 
     pub fn unbind(ctx: &context::Context) {
-        let gl = &ctx.gl;
+        Self::unbind_gl(&ctx.gl)
+    }
+
+    pub fn unbind_gl(gl: &glow::Context) {
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, None);
             gl.bind_sampler(0, None); // TODO handle index?
@@ -703,7 +719,7 @@ impl FramebufferTarget {
     pub fn dimensions(&self) -> (usize, usize) {
         match self {
             Self::Screen => todo!(),
-            Self::Framebuffer(fb) => (fb.texture.texture.w, fb.texture.texture.h),
+            Self::Framebuffer(fb) => (fb.w, fb.h),
             Self::FramebufferC(fb) => (fb.w, fb.h),
         }
     }
@@ -733,7 +749,7 @@ pub struct Framebuffer {
     pub framebuffer: glow::Framebuffer,
     pub w: usize,
     pub h: usize,
-    pub texture: Texture,
+    pub texture: Option<Texture>,
     pub depth: Option<Texture>,
 }
 impl Drop for Framebuffer {
@@ -744,15 +760,21 @@ impl Drop for Framebuffer {
 }
 impl Framebuffer {
     pub fn bind(&self, ctx: &context::Context) {
+        self.bind_gl(&ctx.gl)
+    }
+
+    pub fn bind_gl(&self, gl: &glow::Context) {
         unsafe {
-            ctx.gl
-                .bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
+            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(self.framebuffer));
         }
     }
 
     pub fn unbind(ctx: &context::Context) {
+        Framebuffer::unbind_gl(&ctx.gl)
+    }
+    pub fn unbind_gl(gl: &glow::Context) {
         unsafe {
-            ctx.gl.bind_framebuffer(
+            gl.bind_framebuffer(
                 glow::FRAMEBUFFER,
                 NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
             );
@@ -764,6 +786,7 @@ pub struct FramebufferBuilder {
     name: Option<String>,
     w: usize,
     h: usize,
+    texture: bool,
     depth: bool,
     filter: FilterMode,
     address_mode: AddressMode,
@@ -775,6 +798,7 @@ impl FramebufferBuilder {
             name: name.map(String::from),
             w: 0,
             h: 0,
+            texture: true,
             depth: false,
             filter: FilterMode::Linear,
             address_mode: AddressMode::ClampToBorder,
@@ -788,6 +812,11 @@ impl FramebufferBuilder {
 
     pub fn height(mut self, height: usize) -> Self {
         self.h = height;
+        self
+    }
+
+    pub fn texture(mut self, enable: bool) -> Self {
+        self.texture = enable;
         self
     }
 
@@ -812,29 +841,22 @@ impl FramebufferBuilder {
     }
 
     pub fn build(self, ctx: &context::Context) -> Result<Framebuffer> {
-        let gl = &ctx.gl;
+        let wctx: ContextWrapper = ctx.into();
+        self.build_wrap(&wctx)
+    }
 
-        let texture = TextureBuilder::new()
-            .width(self.w)
-            .height(self.h)
-            .filter(self.filter)
-            .address_mode(self.address_mode)
-            .build(ctx)?;
-
-        let framebuffer = unsafe { gl.create_framebuffer().map_err(|e| anyhow::anyhow!(e)) }?;
-        texture.bind(ctx, 0);
-        unsafe {
-            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
-            gl.framebuffer_texture_2d(
-                glow::FRAMEBUFFER,
-                glow::COLOR_ATTACHMENT0,
-                glow::TEXTURE_2D,
-                Some(texture.texture.texture),
-                0,
-            );
-            #[cfg(debug_assertions)]
-            gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
-        }
+    pub fn build_wrap(self, ctx: &context::ContextWrapper) -> Result<Framebuffer> {
+        let texture = if self.texture {
+            let texture = TextureBuilder::new()
+                .width(self.w)
+                .height(self.h)
+                .filter(self.filter)
+                .address_mode(self.address_mode)
+                .build_wrap(ctx)?;
+            Some(texture)
+        } else {
+            None
+        };
 
         let depth = if self.depth {
             let depth = TextureBuilder::new()
@@ -843,8 +865,37 @@ impl FramebufferBuilder {
                 .height(self.h)
                 .filter(self.filter)
                 .address_mode(self.address_mode)
-                .build(ctx)?;
-            depth.bind(ctx, 0);
+                .build_wrap(ctx)?;
+            Some(depth)
+        } else {
+            None
+        };
+
+        let lctx = ctx.lock();
+        let gl = &lctx.gl;
+
+        let framebuffer = unsafe { gl.create_framebuffer().map_err(|e| anyhow::anyhow!(e)) }?;
+        unsafe {
+            gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
+            #[cfg(debug_assertions)]
+            gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
+        }
+
+        if let Some(ref texture) = texture {
+            texture.bind_gl(gl, 0);
+            unsafe {
+                gl.framebuffer_texture_2d(
+                    glow::FRAMEBUFFER,
+                    glow::COLOR_ATTACHMENT0,
+                    glow::TEXTURE_2D,
+                    Some(texture.texture.texture),
+                    0,
+                );
+            }
+        }
+
+        if let Some(ref depth) = depth {
+            depth.bind_gl(gl, 0);
             unsafe {
                 gl.framebuffer_texture_2d(
                     glow::FRAMEBUFFER,
@@ -854,9 +905,6 @@ impl FramebufferBuilder {
                     0,
                 );
             }
-            Some(depth)
-        } else {
-            None
         };
 
         let status = unsafe { gl.check_framebuffer_status(glow::FRAMEBUFFER) };
@@ -865,7 +913,7 @@ impl FramebufferBuilder {
         }
 
         unsafe {
-            Texture::unbind(ctx);
+            Texture::unbind_gl(gl);
             gl.bind_framebuffer(
                 glow::FRAMEBUFFER,
                 NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
