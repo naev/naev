@@ -303,7 +303,7 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
       return 1;
    }
 
-   id_neigh       = calloc(ssys_p.n_neigh, sizeof(int));
+   id_neigh       = calloc(ssys_p.n_neigh + 1, sizeof(int));
    ssys_p.n_neigh = 0;
    for (int i = 0; i < map->njumps; i++) {
       int n = 2 * i;
@@ -316,16 +316,13 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
    ssys_p.n_neigh = in_place_rem_duplicates(id_neigh, ssys_p.n_neigh);
    if (!quiet)
       fprintf(stderr, "\e[033;1m[%s]\e[0m\n", map->sys_nam[ssys]);
-   ssys_p.neigh = poscpy(ssys_p.n_neigh, id_neigh, map, "neigh", quiet);
+   id_neigh[ssys_p.n_neigh] = ssys;
+   ssys_p.neigh = poscpy(ssys_p.n_neigh + 1, id_neigh, map, "neigh", quiet);
 
    float center[2];
-   float sqrad = bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh);
+   // include self in the list -> "+ 1"
+   float sqrad = bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh + 1);
    float rad   = sqrt(sqrad);
-
-   if (rad < edge_len) {
-      rad   = edge_len;
-      sqrad = rad * rad;
-   }
 
    float UL[2] = {center[0] - rad, center[1] - rad};
    float LR[2] = {center[0] + rad, center[1] + rad};
@@ -348,9 +345,9 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
       float  v[2];
       float *samples = calloc(SAMP * SAMP, 3 * sizeof(float)); // IEEE754
       for (int i = 0; i < SAMP; i++) {
-         v[0] = (1.0 * i / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
+         v[1] = (1.0 * i / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
          for (int j = 0; j < SAMP; j++) {
-            v[1] = (1.0 * j / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
+            v[0] = (1.0 * j / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
             if (dist_sq(center, v) <= sqrad) {
                const float score_es = edge_stretch_score(
                   ssys_p.neigh, ssys_p.n_neigh, v, ssys_p.radius);
