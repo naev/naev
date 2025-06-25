@@ -192,14 +192,17 @@ impl NebulaData {
             .build(gl)?;
 
         let shader_bg = ShaderBuilder::new(Some("Nebula Background Shader"))
+            .uniform_buffer("NebulaData", 0)
             .vert_file("nebula.vert")
             .frag_file("nebula_background.frag")
             .build(gl)?;
         let shader_overlay = ShaderBuilder::new(Some("Nebula Overlay Shader"))
+            .uniform_buffer("NebulaData", 0)
             .vert_file("nebula.vert")
             .frag_file("nebula_overlay.frag")
             .build(gl)?;
         let shader_puff = ShaderBuilder::new(Some("Nebula Puff Shader"))
+            .uniform_buffer("PuffData", 0)
             .prepend(&format!("const float PUFF_BUFFER = {:.1};\n", PUFF_BUFFER))
             .vert_file("nebula_puff.vert")
             .frag_file("nebula_puff.frag")

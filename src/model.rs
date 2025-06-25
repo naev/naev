@@ -474,7 +474,7 @@ impl Mesh {
     pub fn render(
         &self,
         ctx: &Context,
-        shader: &ModelShader,
+        _shader: &ModelShader,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
         /*

@@ -532,6 +532,7 @@ impl Context {
         // Initialize some useful globals
         // The texture shader
         let program_texture = ShaderBuilder::new(Some("Texture Shader"))
+            .uniform_buffer("TextureData", 0)
             .vert_file("rust_texture.vert")
             .frag_file("rust_texture.frag")
             .sampler("sampler", 0)
@@ -544,6 +545,7 @@ impl Context {
             .build(&gl)?;
         // The solid shader
         let program_solid = ShaderBuilder::new(Some("Solid Shader"))
+            .uniform_buffer("SolidData", 0)
             .vert_file("rust_solid.vert")
             .frag_file("rust_solid.frag")
             .build(&gl)?;
