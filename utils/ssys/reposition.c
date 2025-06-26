@@ -129,6 +129,7 @@ struct s_ssys {
       float _unused;
    }     *sys;
    char **sys_nam;
+   char **sys_aux;
    int    nsys;
    int    nosys;
 
@@ -468,7 +469,7 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
 
       if (map->jumps[n] == ssys)
          n = n ^ 1;
-      if (map->jumps[n ^ 1] == ssys)
+      if (map->jumps[n ^ 1] == ssys && map->sys[map->jumps[n]].w != 0.0f)
          id_neigh[ssys_p.n_neigh++] = map->jumps[n];
    }
    ssys_p.n_neigh = in_place_sort_u(id_neigh, ssys_p.n_neigh);
@@ -492,7 +493,8 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
    max_sq *= max_sq;
 
    for (int i = 0; i < map->nsys; i++)
-      if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq)
+      if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq &&
+             map->sys[i].w != 0.0f)
          id_around[ssys_p.n_around++] = i;
 
    //  ssys_p.n_nnaround = 0;
@@ -577,8 +579,9 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
 
    if (!only)
       for (int i = map->nosys; i < map->nsys; i++) {
-         const size_t n = snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
-                                   map->sys[i].v[0], map->sys[i].v[1]);
+         const size_t n =
+            snprintf(buff, 511, "%s %f %f %s\n", map->sys_nam[i],
+                     map->sys[i].v[0], map->sys[i].v[1], map->sys_aux[i]);
          fwrite(buff, sizeof(char), n, stdout);
          fflush(stdout);
       }
@@ -611,7 +614,7 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
 }
 
 static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
-                       const float *src, bool upd)
+                       const float *src, char *aux, bool upd)
 {
    size_t this = (size_t) g_hash_table_lookup(h, s);
 
@@ -622,8 +625,10 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
          const size_t new_siz = (map->nsys << 1) | 3;
          map->sys             = realloc(map->sys, new_siz * sizeof(struct sys));
          map->sys_nam         = realloc(map->sys_nam, new_siz * sizeof(char *));
+         map->sys_aux         = realloc(map->sys_aux, new_siz * sizeof(char *));
       }
       upd                       = true;
+      map->sys_aux[map->nsys]   = NULL;
       map->sys_nam[map->nsys++] = str;
       this                      = map->nsys;
       g_hash_table_insert(h, (void *) str, (void *) this);
@@ -632,38 +637,47 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
    if (upd) {
       vcpy(map->sys[this].v, src);
       map->sys[this].w = 0.0;
+      if (aux && *aux) {
+         const size_t n = strlen(aux) - 1;
+         if (aux[n] == '\n')
+            aux[n] = '\0';
+         map->sys_aux[this] = strdup(aux);
+      }
    }
    return this;
 }
 
 /* main */
 int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
-          bool only, float weight)
+          bool only, bool ign_alone, float weight)
 {
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
    struct s_ssys map     = {0};
    const float   nulv[2] = {0.0f, 0.0f};
 
    for (int i = 0; i < n_onam; i++)
-      (void) ssys_num(h, onam[i], &map, nulv, false);
+      (void) ssys_num(h, onam[i], &map, nulv, NULL, false);
    map.nosys = map.nsys;
 
    char  *line = NULL;
    size_t n    = 0;
    while (getline(&line, &n, stdin) != -1) {
       char *bufs[3] = {NULL, NULL, NULL};
-      float tmp[2]  = {0.0f, 0.0f};
+      int   r;
+      float tmp[2] = {0.0f, 0.0f};
 
-      if (3 == sscanf(line, "%ms %f %f", bufs, tmp, tmp + 1)) {
-         const size_t id = ssys_num(h, bufs[0], &map, tmp, true);
+      if (3 == sscanf(line, "%ms %f %f %n", bufs, tmp, tmp + 1, &r)) {
+         const size_t id = ssys_num(h, bufs[0], &map, tmp, line + r, true);
          map.sys[id].w   = 1.0;
       } else if (2 == sscanf(line, "%ms %ms", bufs + 1, bufs + 2)) {
          if ((map.njumps & (map.njumps + 1)) == 0) {
             const size_t new_siz = (map.njumps << 1) | 1;
             map.jumps = realloc(map.jumps, new_siz * 2 * sizeof(int));
          }
-         map.jumps[map.njumps * 2 + 0] = ssys_num(h, bufs[1], &map, tmp, false);
-         map.jumps[map.njumps * 2 + 1] = ssys_num(h, bufs[2], &map, tmp, false);
+         map.jumps[map.njumps * 2 + 0] =
+            ssys_num(h, bufs[1], &map, tmp, NULL, false);
+         map.jumps[map.njumps * 2 + 1] =
+            ssys_num(h, bufs[2], &map, tmp, NULL, false);
          map.njumps++;
       } else if (line[0] != '\0' && line[0] != '\n') {
          const int n = strlen(line);
@@ -676,6 +690,18 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    }
    free(line);
    g_hash_table_destroy(h);
+
+   if (ign_alone) {
+      // mark alone sys as 0-weighted.
+      for (int i = 0; i < 2 * map.njumps; i++) {
+         const int n = map.jumps[i];
+         if (map.sys[n].w > 0.0f && map.sys[n].w <= 1.0f)
+            map.sys[n].w += 1.0f;
+      }
+      for (int i = 0; i < map.nsys; i++)
+         if (map.sys[i].w > 0.0f)
+            map.sys[i].w -= 1.0f;
+   }
 
    const bool quiet = !map.nosys;
    if (!map.nosys)
@@ -692,9 +718,12 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
          fflush(stdout);
       }
    }
-   for (int i = 0; i < map.nsys; i++)
+   for (int i = 0; i < map.nsys; i++) {
+      free(map.sys_aux[i]);
       free(map.sys_nam[i]);
+   }
    free(map.sys_nam);
+   free(map.sys_aux);
    free(map.jumps);
    return EXIT_SUCCESS;
 }
@@ -702,7 +731,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
 static int usage(char *nam, int ret, float w)
 {
    fprintf(stderr,
-           "Usage:  %s  [-g] [-o | -e] [-p] [-w<weight>] [<names>...]\n",
+           "Usage:  %s  [-g] [-i] [-o | -e] [-p] [-w<weight>] [<names>...]\n",
            basename(nam));
    fprintf(stderr,
            "  Reads a graph from standard input.\n"
@@ -713,6 +742,7 @@ static int usage(char *nam, int ret, float w)
            "\".xml\" is used.\n\n"
            "  If -g is set, look for global optimum (slower, and\n"
            "    might result in a different planar embedding).\n\n"
+           "  If -i is set, isolated sys have no effect.\n"
            "  If -o is set, only output processed systems.\n"
            "  If -e is set, also output edges (as is).\n"
            "  If -p is set, outputs a ppm for each processed system.\n\n"
@@ -740,6 +770,7 @@ int main(int argc, char **argv)
    bool  processed_only = false;
    bool  output_edges   = false;
    bool  gen_map        = false;
+   bool  ign_alone      = false;
 
    int   fst_opt     = 1;
    int   fst_non_opt = 1;
@@ -768,6 +799,11 @@ int main(int argc, char **argv)
        (!strcmp(argv[fst_opt], "-h") || !strcmp(argv[fst_opt], "--help")))
       return usage(
          nam, fst_opt == fst_non_opt + 1 ? EXIT_SUCCESS : EXIT_FAILURE, weight);
+
+   if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-i")) {
+      ign_alone = true;
+      fst_opt++;
+   }
 
    if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-o")) {
       processed_only = true;
@@ -803,5 +839,5 @@ int main(int argc, char **argv)
       }
    }
    return do_it(argv + fst_non_opt, argc - fst_non_opt, g_opt, gen_map,
-                output_edges, processed_only, weight);
+                output_edges, processed_only, ign_alone, weight);
 }

@@ -6,7 +6,7 @@ if __name__ != '__main__':
 
 from sys import argv, stderr
 
-from ssys_graph import xml_files_to_graph
+from ssys_graph import xml_files_to_graph, color_values
 
 
 del_edges = [
@@ -93,6 +93,8 @@ for i in virtual_edges:
 
 def main( args, fixed_pos = False, color = False ):
    V, pos, E, tl, colors = xml_files_to_graph(args, color)
+   if color:
+      colors = { k: color_values[v] for k, v in colors.items() }
    print('graph g{')
    print('\tepsilon=0.000001')
    print('\tmaxiter=2000')

@@ -7,24 +7,42 @@ import xml.etree.ElementTree as ET
 from ssys import nam2base, getpath, PATH
 
 
-default_col = (0.25, 0.25, 0.25)
+color_values = {
+   'default': (0.25, 0.25, 0.25),
+   'green':   (0.0,  0.85, 0.0),
+   'darkred': (0.6,  0.0,  0.0),
+   'brown':   (0.6,  0.2,  0.0),
+   'teal':    (0.0,  0.7,  0.8),
+   'orange':  (0.95, 0.5,  0.0),
+   'yellow':  (0.8,  0.8,  0.0),
+   'red':     (1.0,  0.0,  0.0),
+   'blue':    (0.0,  0.0,  1.0),
+   'magenta': (0.9,  0.0,  0.9),
+   'grey':    (0.5,  0.5,  0.5),
+   'white':   (0.8,  0.8,  0.8),
+   'blue2':   (0.0,  0.1,  1.0),
+   'skyblue': (0.0,  0.4,  0.9),
+}
+
+default_col = color_values['default']
+
 faction_color = {
-   None:                default_col,
-   'empire':            (0.0,  0.85, 0.0),
-   'zalek':             (0.6,  0.0,  0.0),
-   'dvaered':           (0.6,  0.2,  0.0),
-   'sirius':            (0.0,  0.7,  0.8),
-   'soromid':           (0.95, 0.5,  0.0),
-   'frontier':          (0.8,  0.8,  0.0),
-   'pirate':            (1.0,  0.0,  0.0),
-   'independent':       (0.0,  0.0,  1.0),
-   'proteron':          (0.9,  0.0,  0.9),
-   'thurion':           (0.5,  0.5,  0.5),
-   'collective':        (0.8,  0.8,  0.8),
-   'goddard':           (0.0,  0.1,  1.0),
-   'traders_society':   (0.0,  0.1,  1.0),
-   'orez':              (0.0,  0.4,  0.9),
-   'flf':               (0.9,  0.9,  0.0),
+   None:              'default',
+   'empire':          'green',
+   'zalek':           'darkred',
+   'dvaered':         'brown',
+   'sirius':          'teal',
+   'soromid':         'orange',
+   'frontier':        'yellow',
+   'pirate':          'red',
+   'independent':     'blue',
+   'proteron':        'magenta',
+   'thurion':         'grey',
+   'collective':      'white',
+   'goddard':         'blue2',
+   'traders_society': 'blue2',
+   'orez':            'skyblue',
+   'flf':             'yellow',
 }
 
 for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
@@ -74,11 +92,27 @@ def xml_files_to_graph( args = None, get_colors = False ):
 
       if get_colors:
          fact = dict()
+         spobs = []
          for e in T.findall('spobs/spob'):
-            if f := get_spob_faction(nam2base(e.text)):
+            spobs.append(nam2base(e.text))
+
+         nb = len(spobs)
+         maxi = 0
+
+         for s in spobs:
+            res = None
+            if f := get_spob_faction(s):
                if f not in fact:
                   fact[f] = 0
+               res = f;
+            if res is None :
+               nb -= 1
+            else:
                fact[f] += 1
+               if fact[f] > maxi:
+                  maxi = fact[f]
+            if maxi >= (nb+1) / 2:
+               break
 
          fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
          if len(fact)>1 and fact[0][1]=='independent' and fact[0][0] == fact[1][0]:
@@ -108,26 +142,16 @@ if __name__ == '__main__':
    from sys import argv, exit, stdout, stderr, stdin
 
    def do_reading(args):
-      for bname, filename in all_ssys(args):
-         T = ET.parse(filename).getroot()
-         """
-         try:
-            name = T.attrib['name']
-         except:
-            stderr.write('no name defined in "' + bname + '"\n')
-         """
-         try:
-            e = T.find('pos')
-            x, y = (e.attrib['x'], e.attrib['y'])
-         except:
-            stderr.write('no position defined in "' + bname + '"\n')
-         #print(bname, x, y, name)
-         print(bname, x, y)
+      _Vnames, Vpos, _E, _tradelane, color = xml_files_to_graph(args, True)
+      for bname, (x, y) in Vpos.items():
+         print(bname, x, y, color[bname])
 
    def _read_stdin_and_scale(scale):
       for l in stdin:
          if (line := l.strip()) != '':
-            (n, x, y, r) = (l.strip().split(' ',4) + [''])[:4]
+            (n, x, y, r) = (l.strip().split(' ',4) + ['', ''])[:4]
+            if y == '': # This is an edge!
+               continue
             x = str(float(x) * scale)
             y = str(float(y) * scale)
             yield n, x, y, r

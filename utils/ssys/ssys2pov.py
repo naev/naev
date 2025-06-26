@@ -6,7 +6,7 @@ if __name__ != '__main__':
 
 from sys import argv, stdin, stderr, exit
 
-from ssys_graph import xml_files_to_graph, default_col
+from ssys_graph import xml_files_to_graph, default_col, color_values
 from geometry import bb, vec
 
 
@@ -23,6 +23,8 @@ def main( args, pos = None, color = False, halo = False ):
          dst.write(3*indent*' ' + str(s) + '\n')
 
    V, _pos, E, tradelane, colors = xml_files_to_graph(args, color)
+   if color:
+      colors = { k: color_values[v] for k, v in colors.items() }
    if pos is None or pos == {}:
       pos = _pos
    else:
