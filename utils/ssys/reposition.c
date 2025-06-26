@@ -183,14 +183,14 @@ static inline float repulsive(float d_sq, float radius, float falloff)
 static float sys_overlap_score(const float *lst, int n, const float v[2],
                                float radius, float falloff)
 {
-   float acc = 0.0f;
+   float maxi = 0.0f;
    for (int i = 0; i < n; i++) {
       const float sq  = dist_sq(lst + 2 * i, v);
       float       res = repulsive(sq, radius, falloff);
-      if (res > acc)
-         acc = res;
+      if (res > maxi)
+         maxi = res;
    }
-   return acc;
+   return maxi;
 }
 
 struct s_cost_params {
@@ -210,13 +210,14 @@ static float edge_overlap_score(struct s_cost_params *cp, const float v[2])
    const float F = EDGE_FACT;
    // S_e(x) = S(F*x)/F
 
-   float acc = 0.0f;
+   float maxi = 0.0f;
 
    for (int i = 0; i < cp->n_edges; i++) {
-      const float *E  = cp->edges + 6 * i;
-      const float  sq = F * F * seg_dist_sq(E, E + 2, E + 4, v);
-
-      acc += repulsive(sq, cp->radius, cp->falloff);
+      const float *E   = cp->edges + 6 * i;
+      const float  sq  = F * F * seg_dist_sq(E, E + 2, E + 4, v);
+      const float  res = repulsive(sq, cp->radius, cp->falloff);
+      if (res > maxi)
+         maxi = res;
    }
    for (int i = 0; i < cp->n_neigh; i++) {
       const float *N    = cp->neigh + 2 * i;
@@ -228,13 +229,13 @@ static float edge_overlap_score(struct s_cost_params *cp, const float v[2])
          float        res = 0.0f;
          if (memcmp(P, N, 2 * sizeof(float))) {
             const float sq = (F * F) * seg_dist_sq(v, N, u, P);
-            // because the responsibility is divided between crt sys and N
-            res = 0.5f * repulsive(sq, cp->radius, cp->falloff);
+            res            = 0.5f * repulsive(sq, cp->radius, cp->falloff);
+            if (res > maxi)
+               maxi = res;
          }
-         acc += res;
       }
    }
-   return acc / F;
+   return maxi / F;
 }
 
 static int _compar(const void *a, const void *b)
@@ -358,30 +359,79 @@ static float sys_total_score(float *dst, struct s_cost_params *sys_p,
    return 0.25 * dst[0] + dst[1] + dst[2];
 }
 
+static bool can_beat(float alpha, float beta, float total_delta, float goal)
+{
+   if (alpha > beta) {
+      total_delta -= alpha - beta;
+      alpha = beta;
+   } else
+      total_delta -= beta - alpha;
+
+   return alpha - 0.5f * total_delta < goal;
+}
+
+static float local_opt_search(float dst[2], struct s_cost_params *ssys_p,
+                              const float A[2], float Ca, const float B[2],
+                              float Cb, int depth, float beat, float max_d)
+{
+   if (depth == 0)
+      return beat;
+
+   if (!can_beat(Ca, Cb, max_d, beat))
+      return beat;
+
+   const float Pmid[2] = INIT_VAVG(A, B);
+   const float Cmid    = sys_total_score(NULL, ssys_p, Pmid);
+   if (Cmid < beat) {
+      vcpy(dst, Pmid);
+      return Cmid;
+   }
+   max_d /= 2.0f;
+   const float res =
+      local_opt_search(dst, ssys_p, A, Ca, Pmid, Cmid, depth - 1, beat, max_d);
+   if (res < beat)
+      return res;
+   else
+      return local_opt_search(dst, ssys_p, Pmid, Cmid, A, Cb, depth - 1, beat,
+                              max_d);
+}
+
 #define SRT3_2 0.8660254037844386
+#define PEEK_D 4
 static void local_opt(float dst[2], struct s_cost_params *ssys_p)
 {
-   const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
+   const float base[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
                              {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
    const int   n_dirs     = 6;
-   const float eps        = 0.000001f;
    float       delta      = 1.0f;
+   const float eps        = 0.00001f;
+   // This is the max possible slope.
+   const float sl = 2.25;
 
-   // TODO: improve this
    float min_sc = sys_total_score(NULL, ssys_p, dst);
    while (1) {
-      int i;
-      for (i = 0; i < n_dirs; i++) {
-         const float cand[2] = {dst[0] + delta * dirs[i][0],
-                                dst[1] + delta * dirs[i][1]};
-         const float sc      = sys_total_score(NULL, ssys_p, cand);
-         if (sc < min_sc) {
-            vcpy(dst, cand);
-            min_sc = sc;
-            break;
+      float beat = min_sc;
+      float dirs[6][2], cost[6];
+
+      for (int n = 0; n < n_dirs; n++) {
+         dirs[n][0] = dst[0] + delta * base[n][0];
+         dirs[n][1] = dst[1] + delta * base[n][1];
+         cost[n]    = sys_total_score(NULL, ssys_p, dirs[n]);
+         if (cost[n] < beat) {
+            beat = cost[n];
+            vcpy(dst, dirs[n]);
          }
       }
-      if (i == n_dirs && ((delta /= 2.0f) < eps))
+
+      for (int n = 0; n < n_dirs; n++) {
+         int m = (n + 1) % n_dirs;
+         beat  = local_opt_search(dst, ssys_p, dirs[n], cost[n], dirs[m],
+                                  cost[m], PEEK_D, beat, sl * delta);
+      }
+      if (beat < min_sc) {
+         min_sc = beat;
+         continue;
+      } else if ((delta /= 2.0f) < eps)
          break;
    }
 }
@@ -639,8 +689,8 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
             snprintf(buff, 511, "%s %s\n", map.sys_nam[map.jumps[i * 2]],
                      map.sys_nam[map.jumps[i * 2 + 1]]);
          fwrite(buff, sizeof(char), n, stdout);
+         fflush(stdout);
       }
-      fflush(stdout);
    }
    for (int i = 0; i < map.nsys; i++)
       free(map.sys_nam[i]);
