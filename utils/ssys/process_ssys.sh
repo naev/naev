@@ -32,9 +32,14 @@ echo -n "gen final graph " >&2
 "$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k | neato -n2 -Tpng 2>/dev/null > final.png
 echo -e -n "\ngen colored sys map... " >&2
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_fin.png
-echo -e -n "\nrepos " >&2
+echo -e -n "\nselect Sirius systems " >&2
+read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py | grep 'teal' | cut '-d ' -f1)"
+echo -e -n "\nreposition " >&2
 "$SCRIPT_DIR"/repos.sh -C
-"$SCRIPT_DIR"/repos.sh 1 -e -w0 "${repos_systems[@]}" | "$SCRIPT_DIR"/reposition  -w0 "${repos_systems2[@]}" | "$SCRIPT_DIR"/ssys_graph.py -w
+"$SCRIPT_DIR"/repos.sh 5 -e -i "${SIRIUS[@]}" |
+"$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |
+"$SCRIPT_DIR"/reposition -w0 "${repos_systems2[@]}" |
+"$SCRIPT_DIR"/ssys_graph.py -w
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_repos.png
 echo -n "apply gravity -> colored sys map... " >&2
 cmd=$( "$SCRIPT_DIR"/apply_pot.sh -g | "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml) &&
