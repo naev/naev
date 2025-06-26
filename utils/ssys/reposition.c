@@ -285,8 +285,8 @@ static inline void inter_lines(float dst[2], const float A[2],
    dst[1] = A[1] + f * u[1];
 }
 
-// !! A must not be s.t. CA.AB > AB.BC && > BC.CA (we don't want AB and AC
-// colinear)
+// !! A must not be s.t. CA.AB > AB.BC && > BC.CA
+// (we don't want AB and AC colinear)
 static void circum(float dst[2], const float *A, const float *B, const float *C)
 {
    const float AB[]  = INIT_VDIF(B, A);
@@ -343,22 +343,49 @@ static float bounding_circle(float dst[2], const float *pts, int nb)
    return dst_sq;
 }
 
-static float total_score(float score_es, float score_so, float score_eo)
+static float sys_total_score(float *dst, struct s_cost_params *sys_p,
+                             const float v[2])
 {
-   return 0.25 * score_es + score_so + score_eo;
-}
+   float res[3];
 
-static float sys_total_score(struct s_cost_params *sys_p, const float v[2])
-{
-   const float score_es =
-      edge_stretch_score(sys_p->neigh, sys_p->n_neigh, v, sys_p->radius);
-   const float score_so = sys_overlap_score(sys_p->around, sys_p->n_around, v,
-                                            sys_p->radius, sys_p->falloff);
-   const float score_eo = edge_overlap_score(sys_p, v);
-   return total_score(score_es, score_so, score_eo);
+   if (!dst)
+      dst = res;
+
+   dst[0] = edge_stretch_score(sys_p->neigh, sys_p->n_neigh, v, sys_p->radius);
+   dst[1] = sys_overlap_score(sys_p->around, sys_p->n_around, v, sys_p->radius,
+                              sys_p->falloff);
+   dst[2] = edge_overlap_score(sys_p, v);
+   return 0.25 * dst[0] + dst[1] + dst[2];
 }
 
 #define SRT3_2 0.8660254037844386
+static void local_opt(float dst[2], struct s_cost_params *ssys_p)
+{
+   const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
+                             {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
+   const int   n_dirs     = 6;
+   const float eps        = 0.000001f;
+   float       delta      = 1.0f;
+
+   // TODO: improve this
+   float min_sc = sys_total_score(NULL, ssys_p, dst);
+   while (1) {
+      int i;
+      for (i = 0; i < n_dirs; i++) {
+         const float cand[2] = {dst[0] + delta * dirs[i][0],
+                                dst[1] + delta * dirs[i][1]};
+         const float sc      = sys_total_score(NULL, ssys_p, cand);
+         if (sc < min_sc) {
+            vcpy(dst, cand);
+            min_sc = sc;
+            break;
+         }
+      }
+      if (i == n_dirs && ((delta /= 2.0f) < eps))
+         break;
+   }
+}
+
 int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
                    bool quiet, bool ppm)
 {
@@ -462,16 +489,8 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
             v[0] = (1.0 * j / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
             v[1] = (1.0 * i / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
             if (dist_sq(center, v) <= sqrad) {
-               const float score_es = edge_stretch_score(
-                  ssys_p.neigh, ssys_p.n_neigh, v, ssys_p.radius);
-               const float score_so =
-                  sys_overlap_score(ssys_p.around, ssys_p.n_around, v,
-                                    ssys_p.radius, ssys_p.falloff);
-               const float score_eo = edge_overlap_score(&ssys_p, v);
-               const float score    = total_score(score_es, score_so, score_eo);
-               samples[3 * (i * SAMP + j) + 0] = score_es;
-               samples[3 * (i * SAMP + j) + 1] = score_so;
-               samples[3 * (i * SAMP + j) + 2] = score_eo;
+               const float score =
+                  sys_total_score(samples + 3 * (i * SAMP + j), &ssys_p, v);
                if (score < best_score) {
                   vcpy(best, v);
                   best_score = score;
@@ -489,29 +508,8 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
          vcpy(dst, best);
    }
 
-   const float dirs[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
-                             {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
-   const int   n_dirs     = 6;
-   const float eps        = 0.000001f;
-   float       delta      = 1.0f;
+   local_opt(dst, &ssys_p);
 
-   // TODO: improve this
-   float min_sc = sys_total_score(&ssys_p, dst);
-   while (1) {
-      int i;
-      for (i = 0; i < n_dirs; i++) {
-         const float cand[2] = {dst[0] + delta * dirs[i][0],
-                                dst[1] + delta * dirs[i][1]};
-         const float sc      = sys_total_score(&ssys_p, cand);
-         if (sc < min_sc) {
-            vcpy(dst, cand);
-            min_sc = sc;
-            break;
-         }
-      }
-      if (i == n_dirs && ((delta /= 2.0f) < eps))
-         break;
-   }
    free(id_neigh);
    free(id_around);
    free((void *) ssys_p.neigh);
