@@ -775,35 +775,45 @@ struct Common {
     shader: ModelShader,
     shader_shadow: ShadowShader,
     light_fbo_low: [Framebuffer; MAX_LIGHTS],
+    light_fbo_high: [Framebuffer; MAX_LIGHTS],
+    light_mat: [Matrix4<f32>; MAX_LIGHTS],
 }
 impl Common {
     fn new(ctx: &ContextWrapper) -> Result<Self> {
         let shader = ModelShader::new(ctx)?;
         let shader_shadow = ShadowShader::new(ctx)?;
 
-        let light_fbo_low = core::array::from_fn::<_, MAX_LIGHTS, _>(|i| {
-            let fb = FramebufferBuilder::new(Some(&format!("light_fbo_low[{i}]")))
-                .width(SHADOWMAP_SIZE_LOW)
-                .height(SHADOWMAP_SIZE_LOW)
-                .texture(false)
-                .depth(true)
-                .build_wrap(ctx)
-                .unwrap();
-            let lctx = ctx.lock();
-            let gl = &lctx.gl;
-            fb.bind_gl(gl);
-            unsafe {
-                gl.read_buffer(glow::NONE);
-                gl.draw_buffer(glow::NONE);
-            }
-            Framebuffer::unbind_gl(gl);
-            fb
-        });
+        fn make_fbos(ctx: &ContextWrapper, name: &str, size: usize) -> [Framebuffer; MAX_LIGHTS] {
+            core::array::from_fn::<_, MAX_LIGHTS, _>(|i| {
+                let fb = FramebufferBuilder::new(Some(&format!("{name}[{i}]")))
+                    .width(size)
+                    .height(size)
+                    .texture(false)
+                    .depth(true)
+                    .build_wrap(ctx)
+                    .unwrap();
+                let lctx = ctx.lock();
+                let gl = &lctx.gl;
+                fb.bind_gl(gl);
+                unsafe {
+                    gl.read_buffer(glow::NONE);
+                    gl.draw_buffer(glow::NONE);
+                }
+                Framebuffer::unbind_gl(gl);
+                fb
+            })
+        }
+
+        let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW);
+        let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
+        let light_mat = core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity());
 
         Ok(Common {
             shader,
             shader_shadow,
             light_fbo_low,
+            light_fbo_high,
+            light_mat,
         })
     }
 }
