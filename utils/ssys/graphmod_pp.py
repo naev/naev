@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 
-from sys import stdin, stderr, argv, exit
-from geometry import bb, vec, segment
+from sys import stderr, argv, exit
 
 
 if __name__ != '__main__':
@@ -14,11 +13,8 @@ if argv[1:] != []:
    stderr.write('  Intended as a postprocessing for neato output.\n')
    exit(0)
 
-pos = {}
-for inp in stdin:
-   if (line := inp.strip()) != '':
-      bname, x, y = tuple(line.split(' '))
-      pos[bname] = vec(x, y)
+from geometry import bb, vec, segment
+from graphmod import sys_pos as pos
 
 small = [
    ('carnis_minor', 'carnis_major', 0.7),
@@ -53,7 +49,7 @@ v = (pos['urillian'] - pos['sagittarius']) + (pos['haered']-pos['cleai'])/6.0
 for i in Spir + ['urillian', 'baitas', 'protera', 'tasopa']:
    pos[i] += v
 
-def toward(src, dst, q):
+def toward( src, dst, q ):
    global pos
    pos[src] += (pos[dst]-pos[src]) * q
 
@@ -182,10 +178,6 @@ pos['firk'] = (pos['gamma_polaris'] + pos['shakar'] + pos['apez']) / 3.0
 pos['effetey'] = (pos['majesteka'] + pos['trohem']) / 2.0
 
 
-# Output it
-
 off = (pos['dohriabi'] - pos['anubis_black_hole']) / 2.0
 for k, v in pos.items():
-   if k[0] != '_':
-      v = round(v + off, 9)
-      print(k, v[0], v[1])
+   pos[k] += off
