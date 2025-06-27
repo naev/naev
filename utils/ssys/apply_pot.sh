@@ -12,7 +12,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "  Applies potential $N times and rescales x$RESCALE." >&2
    echo "  -g stands for gravity; -w for waves." >&2
    echo "  See potential -h for more information." >&2
-   echo "  Output the positions of systems in the same form as ssys_pos.sh." >&2
+   echo "  Output the positions of systems in the same form as ssys_graph.sh." >&2
    echo "  If -C is set, just compile potential." >&2
    exit 0
 fi
@@ -40,6 +40,6 @@ for j in "$@"; do
    fi
 done
 
-"$SCRIPT_DIR"/ssys_pos.sh |
+"$SCRIPT_DIR"/ssys_graph.sh -v |
 repiper "$N" "$SCRIPT_DIR"/potential -a "$1" |
 "$SCRIPT_DIR"/ssys_graph.py -s "$RESCALE"

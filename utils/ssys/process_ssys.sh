@@ -39,12 +39,13 @@ echo -e -n "\nselect Sirius systems " >&2
 read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py | grep 'teal' | cut '-d ' -f1)"
 echo -e -n "\nreposition " >&2
 "$SCRIPT_DIR"/repos.sh -C
-("$SCRIPT_DIR"/repos.sh 5 -i -q "${SIRIUS[@]}" && "$SCRIPT_DIR"/ssys_edges.sh) |
+("$SCRIPT_DIR"/repos.sh 5 -i -q "${SIRIUS[@]}" && "$SCRIPT_DIR"/ssys_graph.sh -e) |
 "$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |
 "$SCRIPT_DIR"/reposition -w0 "${repos_systems2[@]}" |
 "$SCRIPT_DIR"/ssys_graph.py -w
-echo -n "\nposition virtual sys + smooth tradelane " >&2
-"$SCRIPT_DIR"/ssys_pos.sh |
+
+echo -n "position virtual sys + smooth tradelane " >&2
+"$SCRIPT_DIR"/ssys_graph.sh -v |
 "$SCRIPT_DIR"/graph_repos_virt.py |
 "$SCRIPT_DIR"/ssys_graph.py -w
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_repos.png
