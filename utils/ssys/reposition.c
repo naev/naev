@@ -19,34 +19,34 @@
 
 #include <glib.h>
 
-const float ssys_fallscale = 1.5f;
+const double ssys_fallscale = 1.5;
 
 // defaults to 1.0
 const struct {
-   char *nam;
-   float w;
+   char  *nam;
+   double w;
 } weights[] = {
-   {"anubis_black_hole", 5.5f}, {NULL} // Sentinel
+   {"anubis_black_hole", 5.5}, {NULL} // Sentinel
 };
 
-#define INIT_RANGE {FLT_MAX, FLT_MIN}
-static inline void update_range(float *r, const float v)
+#define INIT_RANGE {DBL_MAX, DBL_MIN}
+static inline void update_range(double *r, const double v)
 {
    r[0] = (v < r[0]) ? v : r[0];
    r[1] = (v > r[1]) ? v : r[1];
 }
 
-void output_ppm(const char *basnam, float *map, int w, int h)
+void output_ppm(const char *basnam, double *map, int w, int h)
 {
    size_t len      = strlen(basnam) + 4;
    char  *filename = calloc(len + 1, sizeof(char));
    snprintf(filename, len + 1, "%s.ppm", basnam);
-   FILE *fp         = fopen(filename, "wb");
-   float mran[3][2] = {INIT_RANGE, INIT_RANGE, INIT_RANGE};
+   FILE  *fp         = fopen(filename, "wb");
+   double mran[3][2] = {INIT_RANGE, INIT_RANGE, INIT_RANGE};
 
    for (int i = 0; i < w * h; i++)
       for (int k = 0; k < 3; k++)
-         if (map[3 * i + k] != 0.0f)
+         if (map[3 * i + k] != 0.0)
             update_range(mran[k], map[3 * i + k]);
 
    uint8_t *line;
@@ -56,15 +56,15 @@ void output_ppm(const char *basnam, float *map, int w, int h)
    line = (uint8_t *) calloc((size_t) w, 2 * 3 * sizeof(uint8_t));
    for (int i = 0; i < h; i++) {
       for (int j = 0; j < w; j++) {
-         float norm[3] = {0.0f, 0.0f, 0.0f};
+         double norm[3] = {0.0, 0.0, 0.0};
          for (int k = 0; k < 3; k++) {
-            const float sample = map[3 * ((h - i - 1) * w + j) + k];
-            if (sample != 0.0f)
+            const double sample = map[3 * ((h - i - 1) * w + j) + k];
+            if (sample != 0.0)
                norm[k] = (sample - mran[k][0]) / (mran[k][1] - mran[k][0]);
 
             // gamma
             norm[k] *= norm[k];
-            const unsigned u          = 65535.0f * norm[k];
+            const unsigned u          = 65535.0 * norm[k];
             line[2 * (3 * j + k)]     = u >> 8;
             line[2 * (3 * j + k) + 1] = u & 0xff;
          }
@@ -77,46 +77,45 @@ void output_ppm(const char *basnam, float *map, int w, int h)
 }
 
 /* geometry*/
-static inline void vcpy(float *vdst, const float *vsrc)
+static inline void vcpy(double *vdst, const double *vsrc)
 {
    vdst[0] = vsrc[0];
    vdst[1] = vsrc[1];
 }
 
 #define INIT_VDIF(v1, v2) {(v1)[0] - (v2)[0], (v1)[1] - (v2)[1]}
-#define INIT_VAVG(v1, v2)                                                      \
-   {0.5f * ((v1)[0] + (v2)[0]), 0.5f * ((v1)[1] + (v2)[1])}
+#define INIT_VAVG(v1, v2) {0.5 * ((v1)[0] + (v2)[0]), 0.5 * ((v1)[1] + (v2)[1])}
 #define SCAL(v1, v2) ((v1)[0] * (v2)[0] + (v1)[1] * (v2)[1])
 
-static inline void vmul(float *u, float k)
+static inline void vmul(double *u, double k)
 {
    u[0] *= k;
    u[1] *= k;
 }
 
-static inline void norm_v(float *u)
+static inline void norm_v(double *u)
 {
-   vmul(u, 1.0f / sqrt(SCAL(u, u)));
+   vmul(u, 1.0 / sqrt(SCAL(u, u)));
 }
 
-static inline float dist_sq(const float *v1, const float *v2)
+static inline double dist_sq(const double *v1, const double *v2)
 {
-   float tmp[2] = INIT_VDIF(v1, v2);
+   double tmp[2] = INIT_VDIF(v1, v2);
    return SCAL(tmp, tmp);
 }
 
-static inline float seg_dist_sq(const float *A, const float *B, const float *u,
-                                const float *O)
+static inline double seg_dist_sq(const double *A, const double *B,
+                                 const double *u, const double *O)
 {
-   const float OA[2] = INIT_VDIF(A, O);
-   const float OB[2] = INIT_VDIF(B, O);
-   const float p     = SCAL(OA, u);
-   const float q     = SCAL(OB, u);
-   const float P[2]  = {A[0] - p * u[0], A[1] - p * u[1]};
+   const double OA[2] = INIT_VDIF(A, O);
+   const double OB[2] = INIT_VDIF(B, O);
+   const double p     = SCAL(OA, u);
+   const double q     = SCAL(OB, u);
+   const double P[2]  = {A[0] - p * u[0], A[1] - p * u[1]};
 
-   if (p * q < 0.0f)
+   if (p * q < 0.0)
       return dist_sq(O, P);
-   else if (p > 0.0f)
+   else if (p > 0.0)
       return SCAL(OA, OA);
    else
       return SCAL(OB, OB);
@@ -124,9 +123,9 @@ static inline float seg_dist_sq(const float *A, const float *B, const float *u,
 
 struct s_ssys {
    struct sys {
-      float v[2];
-      float w;
-      float _unused;
+      double v[2];
+      double w;
+      double _unused;
    }     *sys;
    char **sys_nam;
    char **sys_aux;
@@ -137,18 +136,18 @@ struct s_ssys {
    int  njumps;
 };
 
-static float edge_stretch_score(const float *neigh, int n_neigh,
-                                const float v[2], float radius)
+static double edge_stretch_score(const double *neigh, int n_neigh,
+                                 const double v[2], double radius)
 {
    // S(x) =
    //   a*x^2         if x <= radius
    //   x+c           if radius <= x
-   const float a = 1.0f / (2.0f * radius);
-   const float c = -radius / 2.0f;
+   const double a = 1.0 / (2.0 * radius);
+   const double c = -radius / 2.0;
 
-   float acc = 0.0;
+   double acc = 0.0;
    for (int i = 0; i < n_neigh; i++) {
-      const float d = sqrt(dist_sq(neigh + 2 * i, v));
+      const double d = sqrt(dist_sq(neigh + 2 * i, v));
 
       if (d < radius)
          acc += a * d * d;
@@ -159,82 +158,91 @@ static float edge_stretch_score(const float *neigh, int n_neigh,
    return acc / n_neigh;
 }
 
-static inline float repulsive(float d_sq, float radius, float falloff)
+static inline double repulsive(double d_sq, double radius, double falloff)
 {
    // S(x) =
    //   S0 - x         if x <= radius
    //   a(x-falloff)^2 if radius <= x <= falloff with
    //   0              if x >= falloff
    // with C1-continuity.
-   const float a  = 0.5f / (falloff - radius); // Can be Nan
-   const float S0 = (radius + falloff) / 2.0f;
+   const double a  = 0.5 / (falloff - radius); // Can be Nan
+   const double S0 = (radius + falloff) / 2.0;
 
-   if (d_sq <= falloff * falloff) {
-      const float dist = sqrt(d_sq);
+   if (d_sq < falloff * falloff) {
+      const double dist = sqrt(d_sq);
       if (dist <= radius)
          return S0 - dist;
       else {
-         const float bef_fall = falloff - dist;
+         const double bef_fall = falloff - dist;
          return a * bef_fall * bef_fall;
       }
    } else
-      return 0.0f;
+      return 0.0;
 }
 
-static float sys_overlap_score(const float *lst, int n, const float v[2],
-                               float radius, float falloff)
+static double sys_overlap_score(const double *lst, int n, const double v[2],
+                                double radius, double falloff)
 {
-   float maxi = 0.0f;
+   double mini = DBL_MAX;
+
    for (int i = 0; i < n; i++) {
-      const float sq  = dist_sq(lst + 2 * i, v);
-      float       res = repulsive(sq, radius, falloff);
-      if (res > maxi)
-         maxi = res;
+      const double sq = dist_sq(lst + 2 * i, v);
+
+      if (sq < mini)
+         mini = sq;
    }
-   return maxi;
+   return repulsive(mini, radius, falloff);
 }
 
 struct s_cost_params {
-   const float *neigh; // N[2]
-   int          n_neigh;
-   const float *around;
-   int          n_around;
+   const double *neigh; // N[2]
+   int           n_neigh;
+   const double *around;
+   int           n_around;
    // int          n_nnaround;
-   float *edges; // A[2] B[2] u[2]
-   int    n_edges;
-   float  radius;
-   float  falloff;
+   double *edges; // A[2] B[2] u[2]
+   int     n_edges;
+   double  radius;
+   double  falloff;
 };
 
-static float edge_overlap_score(struct s_cost_params *cp, const float v[2])
+static double edge_overlap_score(struct s_cost_params *cp, const double v[2])
 {
-   const float F = EDGE_FACT;
+   const double F = EDGE_FACT;
    // S_e(x) = S(F*x)/F
 
-   float maxi = 0.0f;
+   double mini = DBL_MAX;
+   double maxi = 0.0;
 
    for (int i = 0; i < cp->n_edges; i++) {
-      const float *E   = cp->edges + 6 * i;
-      const float  sq  = F * F * seg_dist_sq(E, E + 2, E + 4, v);
-      const float  res = repulsive(sq, cp->radius, cp->falloff);
-      if (res > maxi)
-         maxi = res;
+      const double *E  = cp->edges + 6 * i;
+      const double  sq = seg_dist_sq(E, E + 2, E + 4, v);
+
+      if (sq < mini)
+         mini = sq;
    }
+   if (mini < DBL_MAX)
+      maxi = repulsive(F * F * mini, cp->radius, cp->falloff);
+
+   mini = DBL_MAX;
    for (int i = 0; i < cp->n_neigh; i++) {
-      const float *N    = cp->neigh + 2 * i;
-      float        u[2] = INIT_VDIF(N, v);
+      const double *N    = cp->neigh + 2 * i;
+      double        u[2] = INIT_VDIF(N, v);
       norm_v(u);
 
       for (int j = 0; j < cp->n_around; j++) {
-         const float *P   = cp->around + 2 * j;
-         float        res = 0.0f;
-         if (memcmp(P, N, 2 * sizeof(float))) {
-            const float sq = (F * F) * seg_dist_sq(v, N, u, P);
-            res            = 0.5f * repulsive(sq, cp->radius, cp->falloff);
-            if (res > maxi)
-               maxi = res;
+         const double *P = cp->around + 2 * j;
+         if (memcmp(P, N, 2 * sizeof(double))) {
+            const double sq = seg_dist_sq(v, N, u, P);
+            if (sq < mini)
+               mini = sq;
          }
       }
+   }
+   if (mini < DBL_MAX) {
+      const double res = 0.5 * repulsive(F * F * mini, cp->radius, cp->falloff);
+      if (res > maxi)
+         maxi = res;
    }
    return maxi / F;
 }
@@ -255,10 +263,10 @@ static int in_place_sort_u(int *lst, int n)
    return w;
 }
 
-static float *poscpy(int n, const int *lst, const struct s_ssys *map,
-                     const char *nam, bool quiet)
+static double *poscpy(int n, const int *lst, const struct s_ssys *map,
+                      const char *nam, bool quiet)
 {
-   float *dst = malloc(n * 2 * sizeof(float));
+   double *dst = malloc(n * 2 * sizeof(double));
 
    for (int i = 0; i < n; i++)
       vcpy(dst + 2 * i, map->sys[lst[i]].v);
@@ -273,15 +281,15 @@ static float *poscpy(int n, const int *lst, const struct s_ssys *map,
 }
 
 // !! Au & Bu should not be colinear
-static inline void inter_lines(float dst[2], const float A[2],
-                               const float Au[2], const float B[2],
-                               const float Bu[2])
+static inline void inter_lines(double dst[2], const double A[2],
+                               const double Au[2], const double B[2],
+                               const double Bu[2])
 {
-   const float *u    = Au;
-   const float  v[2] = {-Bu[1], Bu[0]};
+   const double *u    = Au;
+   const double  v[2] = {-Bu[1], Bu[0]};
 
-   const float O_S[] = INIT_VDIF(B, A);
-   const float f     = SCAL(O_S, v) / SCAL(u, v);
+   const double O_S[] = INIT_VDIF(B, A);
+   const double f     = SCAL(O_S, v) / SCAL(u, v);
 
    dst[0] = A[0] + f * u[0];
    dst[1] = A[1] + f * u[1];
@@ -289,28 +297,29 @@ static inline void inter_lines(float dst[2], const float A[2],
 
 // !! A must not be s.t. CA.AB > AB.BC && > BC.CA
 // (we don't want AB and AC colinear)
-static void circum(float dst[2], const float *A, const float *B, const float *C)
+static void circum(double dst[2], const double *A, const double *B,
+                   const double *C)
 {
-   const float AB[]  = INIT_VDIF(B, A);
-   const float AC[]  = INIT_VDIF(C, A);
-   const float u[]   = {AB[1], -AB[0]};
-   const float v[]   = {AC[1], -AC[0]};
-   const float BB[2] = INIT_VAVG(A, B);
-   const float CC[2] = INIT_VAVG(A, C);
+   const double AB[]  = INIT_VDIF(B, A);
+   const double AC[]  = INIT_VDIF(C, A);
+   const double u[]   = {AB[1], -AB[0]};
+   const double v[]   = {AC[1], -AC[0]};
+   const double BB[2] = INIT_VAVG(A, B);
+   const double CC[2] = INIT_VAVG(A, C);
    inter_lines(dst, BB, u, CC, v);
 }
 
-static float bounding_circle(float dst[2], const float *pts, int nb)
+static double bounding_circle(double dst[2], const double *pts, int nb)
 {
-   float dst_sq = 0.0f;
+   double dst_sq = 0.0;
    vcpy(dst, pts);
 
    for (int i = 0; i < nb; i++)
       for (int j = i + 1; j < nb; j++) {
-         const float d = 0.25 * dist_sq(pts + i * 2, pts + j * 2);
+         const double d = 0.25 * dist_sq(pts + i * 2, pts + j * 2);
          if (d > dst_sq) {
-            const float avg[2] = INIT_VAVG(pts + i * 2, pts + j * 2);
-            dst_sq             = d;
+            const double avg[2] = INIT_VAVG(pts + i * 2, pts + j * 2);
+            dst_sq              = d;
             vcpy(dst, avg);
          }
       }
@@ -318,24 +327,25 @@ static float bounding_circle(float dst[2], const float *pts, int nb)
       for (int j = i + 1; j < nb; j++)
          for (int k = j + 1; k < nb; k++) {
             // Trust your compiler
-            const float *A     = pts + i * 2;
-            const float *B     = pts + j * 2;
-            const float *C     = pts + k * 2;
-            const float  AB[2] = INIT_VDIF(B, A);
-            const float  BC[2] = INIT_VDIF(C, B);
-            const float  CA[2] = INIT_VDIF(A, C);
-            const float sb = SCAL(AB, BC), sc = SCAL(BC, CA), sa = SCAL(CA, AB);
+            const double *A     = pts + i * 2;
+            const double *B     = pts + j * 2;
+            const double *C     = pts + k * 2;
+            const double  AB[2] = INIT_VDIF(B, A);
+            const double  BC[2] = INIT_VDIF(C, B);
+            const double  CA[2] = INIT_VDIF(A, C);
+            const double  sb = SCAL(AB, BC), sc = SCAL(BC, CA),
+                         sa = SCAL(CA, AB);
 
             // if ABC acute
-            if (sb < 0.0f && sc < 0.0f && sa < 0.0f) {
-               float tmpr[2];
+            if (sb < 0.0 && sc < 0.0 && sa < 0.0) {
+               double tmpr[2];
 
                if (sb < sc)
                   circum(tmpr, B, C, A);
                else
                   circum(tmpr, C, A, B);
 
-               const float res = dist_sq(A, tmpr);
+               const double res = dist_sq(A, tmpr);
                if (res > dst_sq) {
                   dst_sq = res;
                   vcpy(dst, tmpr);
@@ -345,10 +355,10 @@ static float bounding_circle(float dst[2], const float *pts, int nb)
    return dst_sq;
 }
 
-static float sys_total_score(float *dst, struct s_cost_params *sys_p,
-                             const float v[2])
+static double sys_total_score(double *dst, struct s_cost_params *sys_p,
+                              const double v[2])
 {
-   float res[3];
+   double res[3];
 
    if (!dst)
       dst = res;
@@ -360,7 +370,7 @@ static float sys_total_score(float *dst, struct s_cost_params *sys_p,
    return 0.25 * dst[0] + dst[1] + dst[2];
 }
 
-static bool can_beat(float alpha, float beta, float total_delta, float goal)
+static bool can_beat(double alpha, double beta, double total_delta, double goal)
 {
    if (alpha > beta) {
       total_delta -= alpha - beta;
@@ -368,12 +378,12 @@ static bool can_beat(float alpha, float beta, float total_delta, float goal)
    } else
       total_delta -= beta - alpha;
 
-   return alpha - 0.5f * total_delta < goal;
+   return alpha - 0.5 * total_delta < goal;
 }
 
-static float local_opt_search(float dst[2], struct s_cost_params *ssys_p,
-                              const float A[2], float Ca, const float B[2],
-                              float Cb, int depth, float beat, float max_d)
+static double local_opt_search(double dst[2], struct s_cost_params *ssys_p,
+                               const double A[2], double Ca, const double B[2],
+                               double Cb, int depth, double beat, double max_d)
 {
    if (depth == 0)
       return beat;
@@ -381,14 +391,14 @@ static float local_opt_search(float dst[2], struct s_cost_params *ssys_p,
    if (!can_beat(Ca, Cb, max_d, beat))
       return beat;
 
-   const float Pmid[2] = INIT_VAVG(A, B);
-   const float Cmid    = sys_total_score(NULL, ssys_p, Pmid);
+   const double Pmid[2] = INIT_VAVG(A, B);
+   const double Cmid    = sys_total_score(NULL, ssys_p, Pmid);
    if (Cmid < beat) {
       vcpy(dst, Pmid);
       return Cmid;
    }
-   max_d /= 2.0f;
-   const float res =
+   max_d /= 2.0;
+   const double res =
       local_opt_search(dst, ssys_p, A, Ca, Pmid, Cmid, depth - 1, beat, max_d);
    if (res < beat)
       return res;
@@ -399,20 +409,20 @@ static float local_opt_search(float dst[2], struct s_cost_params *ssys_p,
 
 #define SRT3_2 0.8660254037844386
 #define PEEK_D 4
-static void local_opt(float dst[2], struct s_cost_params *ssys_p)
+static void local_opt(double dst[2], struct s_cost_params *ssys_p)
 {
-   const float base[6][2] = {{0.0f, +1.0f}, {-0.5f, +SRT3_2}, {-0.5f, -SRT3_2},
-                             {0.0f, -1.0f}, {+0.5f, -SRT3_2}, {+0.5f, +SRT3_2}};
-   const int   n_dirs     = 6;
-   float       delta      = 1.0f;
-   const float eps        = 0.00001f;
+   const double base[6][2] = {{0.0, +1.0}, {-0.5, +SRT3_2}, {-0.5, -SRT3_2},
+                              {0.0, -1.0}, {+0.5, -SRT3_2}, {+0.5, +SRT3_2}};
+   const int    n_dirs     = 6;
+   double       delta      = 1.0;
+   const double eps        = 0.00001;
    // This is the max possible slope.
-   const float sl = 2.25;
+   const double sl = 2.25;
 
-   float min_sc = sys_total_score(NULL, ssys_p, dst);
+   double min_sc = sys_total_score(NULL, ssys_p, dst);
    while (1) {
-      float beat = min_sc;
-      float dirs[6][2], cost[6];
+      double beat = min_sc;
+      double dirs[6][2], cost[6];
 
       for (int n = 0; n < n_dirs; n++) {
          dirs[n][0] = dst[0] + delta * base[n][0];
@@ -432,17 +442,17 @@ static void local_opt(float dst[2], struct s_cost_params *ssys_p)
       if (beat < min_sc) {
          min_sc = beat;
          continue;
-      } else if ((delta /= 2.0f) < eps)
+      } else if ((delta /= 2.0) < eps)
          break;
    }
 }
 
-int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
-                   bool quiet, bool ppm)
+int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
+                   bool g_opt, bool quiet, bool ppm)
 {
    struct s_cost_params ssys_p = {.n_neigh = 0, .n_around = 0, .n_edges = 0};
    int                 *id_neigh;
-   float                edge_len = 0.0f;
+   double               edge_len = 0.0;
    int                 *id_around;
 
    for (int i = 0; i < map->njumps; i++)
@@ -469,7 +479,7 @@ int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
 
       if (map->jumps[n] == ssys)
          n = n ^ 1;
-      if (map->jumps[n ^ 1] == ssys && map->sys[map->jumps[n]].w != 0.0f)
+      if (map->jumps[n ^ 1] == ssys && map->sys[map->jumps[n]].w != 0.0)
          id_neigh[ssys_p.n_neigh++] = map->jumps[n];
    }
    ssys_p.n_neigh = in_place_sort_u(id_neigh, ssys_p.n_neigh);
@@ -478,23 +488,23 @@ int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
    id_neigh[ssys_p.n_neigh] = ssys;
    ssys_p.neigh = poscpy(ssys_p.n_neigh + 1, id_neigh, map, "neigh", quiet);
 
-   float center[2];
+   double center[2];
    // include self in the list -> "+ 1"
-   // Allow angles down to 60° -> 3.0f *
-   float sqrad =
-      3.0f * bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh + 1);
-   float rad = sqrt(sqrad);
+   // Allow angles down to 60° -> 3.0 *
+   double sqrad =
+      3.0 * bounding_circle(center, ssys_p.neigh, ssys_p.n_neigh + 1);
+   double rad = sqrt(sqrad);
 
-   float UL[2] = {center[0] - rad, center[1] - rad};
-   float LR[2] = {center[0] + rad, center[1] + rad};
+   double UL[2] = {center[0] - rad, center[1] - rad};
+   double LR[2] = {center[0] + rad, center[1] + rad};
 
-   id_around    = calloc(map->nsys, sizeof(int));
-   float max_sq = rad + ssys_p.falloff;
+   id_around     = calloc(map->nsys, sizeof(int));
+   double max_sq = rad + ssys_p.falloff;
    max_sq *= max_sq;
 
    for (int i = 0; i < map->nsys; i++)
       if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq &&
-          map->sys[i].w != 0.0f)
+          map->sys[i].w != 0.0)
          id_around[ssys_p.n_around++] = i;
 
    //  ssys_p.n_nnaround = 0;
@@ -508,15 +518,15 @@ int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
 
    ssys_p.around = poscpy(ssys_p.n_around, id_around, map, "around", quiet);
 
-   ssys_p.edges = calloc(map->njumps * 6, sizeof(float));
+   ssys_p.edges = calloc(map->njumps * 6, sizeof(double));
    for (int i = 0; i < map->njumps; i++) {
       int n = 2 * i;
       if (map->jumps[n] == ssys || map->jumps[n + 1] == ssys)
          continue;
 
-      float *A    = map->sys[map->jumps[n]].v;
-      float *B    = map->sys[map->jumps[n + 1]].v;
-      float  u[2] = INIT_VDIF(B, A);
+      double *A    = map->sys[map->jumps[n]].v;
+      double *B    = map->sys[map->jumps[n + 1]].v;
+      double  u[2] = INIT_VDIF(B, A);
       norm_v(u);
       if (seg_dist_sq(A, B, u, center) < max_sq) {
          vcpy(ssys_p.edges + ssys_p.n_edges * 6, A);
@@ -526,22 +536,22 @@ int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
       }
    }
    ssys_p.edges =
-      realloc((void *) ssys_p.edges, ssys_p.n_edges * 6 * sizeof(float));
+      realloc((void *) ssys_p.edges, ssys_p.n_edges * 6 * sizeof(double));
 
    if (g_opt || ppm) {
-      float best[2]    = {center[0], center[1]};
-      float best_score = FLT_MAX;
-      int   best_id    = 0;
+      double best[2]    = {center[0], center[1]};
+      double best_score = DBL_MAX;
+      int    best_id    = 0;
 
       // Iterate over points of the circle
-      float  v[2];
-      float *samples = calloc(SAMP * SAMP, 3 * sizeof(float)); // IEEE754
+      double  v[2];
+      double *samples = calloc(SAMP * SAMP, 3 * sizeof(double)); // IEEE754
       for (int i = 0; i < SAMP; i++)
          for (int j = 0; j < SAMP; j++) {
             v[0] = (1.0 * j / (SAMP - 1)) * (LR[0] - UL[0]) + UL[0];
             v[1] = (1.0 * i / (SAMP - 1)) * (LR[1] - UL[1]) + UL[1];
             if (dist_sq(center, v) <= sqrad) {
-               const float score =
+               const double score =
                   sys_total_score(samples + 3 * (i * SAMP + j), &ssys_p, v);
                if (score < best_score) {
                   vcpy(best, v);
@@ -552,7 +562,7 @@ int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
          }
       if (ppm) {
          for (int k = 0; k < 3; k++)
-            samples[3 * best_id + k] = 0.0f;
+            samples[3 * best_id + k] = 0.0;
          output_ppm(map->sys_nam[ssys], samples, SAMP, SAMP);
       }
       free(samples);
@@ -572,7 +582,7 @@ int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
 }
 
 void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
-                        bool gen_map, bool only, float ratio)
+                        bool gen_map, bool only, double ratio)
 {
    char buff[512];
    int  num;
@@ -580,7 +590,7 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
    if (!only)
       for (int i = map->nosys; i < map->nsys; i++) {
          const size_t n =
-            snprintf(buff, 511, "%s %f %f %s\n", map->sys_nam[i],
+            snprintf(buff, 511, "%s %lf %lf %s\n", map->sys_nam[i],
                      map->sys[i].v[0], map->sys[i].v[1], map->sys_aux[i]);
          fwrite(buff, sizeof(char), n, stdout);
          fflush(stdout);
@@ -591,14 +601,14 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
          break;
 
    for (int i = num; i < map->nosys; i += THREADS)
-      if (map->sys[i].w != 0.0f) {
-         float v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
+      if (map->sys[i].w != 0.0) {
+         double v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
 
          if (reposition_sys(v, map, i, g_opt, quiet, gen_map) && (!quiet))
             fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
 
          const size_t n =
-            snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
+            snprintf(buff, 511, "%s %lf %lf\n", map->sys_nam[i],
                      (v[0] + ratio * map->sys[i].v[0]) / (1.0 + ratio),
                      (v[1] + ratio * map->sys[i].v[1]) / (1.0 + ratio));
          fwrite(buff, sizeof(char), n, stdout);
@@ -612,7 +622,7 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
 }
 
 static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
-                       const float *src, char *aux, bool upd)
+                       const double *src, char *aux, bool upd)
 {
    size_t this = (size_t) g_hash_table_lookup(h, s);
 
@@ -649,11 +659,11 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
 
 /* main */
 int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
-          bool only, bool ign_alone, bool quiet, float weight)
+          bool only, bool ign_alone, bool quiet, double weight)
 {
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
    struct s_ssys map     = {0};
-   const float   nulv[2] = {0.0f, 0.0f};
+   const double  nulv[2] = {0.0, 0.0};
 
    for (int i = 0; i < n_onam; i++)
       (void) ssys_num(h, onam[i], &map, nulv, NULL, false);
@@ -662,11 +672,11 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    char  *line = NULL;
    size_t n    = 0;
    while (getline(&line, &n, stdin) != -1) {
-      char *bufs[3] = {NULL, NULL, NULL};
-      int   r;
-      float tmp[2] = {0.0f, 0.0f};
+      char  *bufs[3] = {NULL, NULL, NULL};
+      int    r;
+      double tmp[2] = {0.0, 0.0};
 
-      if (3 == sscanf(line, "%ms %f %f %n", bufs, tmp, tmp + 1, &r)) {
+      if (3 == sscanf(line, "%ms %lf %lf %n", bufs, tmp, tmp + 1, &r)) {
          const size_t id = ssys_num(h, bufs[0], &map, tmp, line + r, true);
          map.sys[id].w   = 1.0;
       } else if (2 == sscanf(line, "%ms %ms", bufs + 1, bufs + 2)) {
@@ -695,12 +705,12 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       // mark alone sys as 0-weighted.
       for (int i = 0; i < 2 * map.njumps; i++) {
          const int n = map.jumps[i];
-         if (map.sys[n].w > 0.0f && map.sys[n].w <= 1.0f)
-            map.sys[n].w += 1.0f;
+         if (map.sys[n].w > 0.0 && map.sys[n].w <= 1.0)
+            map.sys[n].w += 1.0;
       }
       for (int i = 0; i < map.nsys; i++)
-         if (map.sys[i].w > 0.0f)
-            map.sys[i].w -= 1.0f;
+         if (map.sys[i].w > 0.0)
+            map.sys[i].w -= 1.0;
    }
 
    quiet = quiet || !map.nosys;
@@ -728,7 +738,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    return EXIT_SUCCESS;
 }
 
-static int usage(char *nam, int ret, float w)
+static int usage(char *nam, int ret, double w)
 {
    fprintf(
       stderr,
@@ -775,9 +785,9 @@ int main(int argc, char **argv)
    bool  ign_alone      = false;
    bool  quiet          = false;
 
-   int   fst_opt     = 1;
-   int   fst_non_opt = 1;
-   float weight      = 2.0f;
+   int    fst_opt     = 1;
+   int    fst_non_opt = 1;
+   double weight      = 2.0;
 
    for (int i = 1; i < argc; i++)
       if (argv[i][0] == '-') {
@@ -828,9 +838,9 @@ int main(int argc, char **argv)
    }
 
    if (fst_non_opt > fst_opt && !strncmp(argv[fst_opt], "-w", 2)) {
-      if (sscanf(argv[fst_opt], "-w%f", &weight) != 1)
+      if (sscanf(argv[fst_opt], "-w%lf", &weight) != 1)
          return usage(nam, EXIT_FAILURE, weight);
-      if (weight < 0.0f) {
+      if (weight < 0.0) {
          fprintf(stderr, "<weight> is supposed to be positive.\n");
          return EXIT_FAILURE;
       }
