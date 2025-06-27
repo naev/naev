@@ -39,7 +39,7 @@ echo -e -n "\nselect Sirius systems " >&2
 read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py | grep 'teal' | cut '-d ' -f1)"
 echo -e -n "\nreposition " >&2
 "$SCRIPT_DIR"/repos.sh -C
-"$SCRIPT_DIR"/repos.sh 5 -e -i "${SIRIUS[@]}" |
+("$SCRIPT_DIR"/repos.sh 5 -i -q "${SIRIUS[@]}" && "$SCRIPT_DIR"/ssys_edges.sh) |
 "$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |
 "$SCRIPT_DIR"/reposition -w0 "${repos_systems2[@]}" |
 "$SCRIPT_DIR"/ssys_graph.py -w
