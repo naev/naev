@@ -1,8 +1,5 @@
 #!/usr/bin/bash
 
-repos_systems=(doowa flok firk)
-repos_systems2=(terminus)
-
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "usage:  $(basename "$0")" >&2
    echo "  Applies the whole remap process. See the script content." >&2
@@ -42,14 +39,21 @@ echo -n "gen final graph " >&2
 echo -e -n "\ngen colored sys map... " >&2
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_fin.png
 
-echo -e -n "\nselect Sirius systems " >&2
-read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py | grep 'teal' | cut '-d ' -f1)"
+#echo -e -n "\nselect Sirius systems " >&2
+#read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py -v | grep 'teal' | cut '-d ' -f1)"
 
 echo -e -n "\nreposition " >&2
-"$SCRIPT_DIR"/repos.sh -C
-("$SCRIPT_DIR"/repos.sh 5 -i -q "${SIRIUS[@]}" && "$SCRIPT_DIR"/ssys_graph.sh -e) |
-"$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |
-"$SCRIPT_DIR"/reposition -w0 "${repos_systems2[@]}" |
+s=(doowa flok firk)
+#repos_systems2=(terminus)
+#leporis hystera korifa apik telika mida ekta akra
+SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
+ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
+TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
+read -ra ALM_ALL <<< "$("$SCRIPT_DIR"/ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TWINS[@]}")"
+"$SCRIPT_DIR"/repos.sh 3 "${ALM_ALL[@]}" |
+#("$SCRIPT_DIR"/repos.sh 5 -i "${SIRIUS[@]}" && "$SCRIPT_DIR"/ssys_graph.sh -e) |
+#"$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |
+#"$SCRIPT_DIR"/reposition -w0 "${repos_systems2[@]}" |
 "$SCRIPT_DIR"/ssys_graph.py -w
 
 echo -n "position virtual sys + smooth tradelane " >&2
