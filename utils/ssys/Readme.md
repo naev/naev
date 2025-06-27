@@ -5,8 +5,11 @@ These are designed to change the star map by **changing systems position**.
  - `process_ssys.sh` The main. Currently used for tests. Performs several steps:
     - Calls `ssys2dot.py` to extract systems information and turn it into a dot file. At this point, the __pre-processing__ occurs: some invisible edges are added to enforce desired properties.
     - Calls `neato` to compute the graph layout.
-    - Calls `dot2graph.py` to extract layout information from the dot input and outputs the resulting graph. At this point, the __post-processing__ occurs: some geometrical transformations are applied : compute the wild space layout, enforce co-circularity of some points around Anubis BH, rotate some parts, get twin systems closer, etc.
-   - Calls `ssysgraph.py -w` to apply the new graph coordinates to the `ssys/*.xml` files. `ssysgraph.py` with no option, reads to `ssys/*.xml` files and outputs a graph, while `ssysgraph.py -w` does the opposite.
+    - Calls `dot2graph.py` to extract layout information from the dot input and outputs the resulting graph.
+    - Calls `pp_graph.py`. At this point, the __post-processing__ occurs: some geometrical transformations are applied : compute the wild space layout, enforce co-circularity of some points around Anubis BH, rotate some parts, get twin systems closer, etc.
+    - `graph_repos_virt.py` repositions virtual systems and smoothen the tradelane.
+    - `apply_pot.sh -g` applies gravity.
+    - Calls `ssysgraph.py -w` to apply the new graph coordinates to the `ssys/*.xml` files. `ssysgraph.py` with no option, reads to `ssys/*.xml` files and outputs a graph, while `ssysgraph.py -w` does the opposite.
 
 ### ssys process tools
 These are designed to manage the **internal geometry of systems**, that might get affected by the position changes. (because autojumps move when the systems move)

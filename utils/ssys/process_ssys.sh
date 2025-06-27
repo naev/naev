@@ -27,7 +27,10 @@ echo -n -e "\ngen after graph " >&2
 "$SCRIPT_DIR"/ssys2dot.py "$DST"/*.xml | tee before.dot | neato 2>/dev/null |
 tee after.dot | neato -n2 -Tpng 2>/dev/null > after.png
 echo -n -e "\napply after graph " >&2
-"$SCRIPT_DIR"/dot2graph.py < after.dot | "$SCRIPT_DIR"/ssys_graph.py -w
+"$SCRIPT_DIR"/dot2graph.py < after.dot |
+"$SCRIPT_DIR"/pp_graph.py |
+"$SCRIPT_DIR"/graph_repos_virt.py |
+"$SCRIPT_DIR"/ssys_graph.py -w
 echo -n "gen final graph " >&2
 "$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k | neato -n2 -Tpng 2>/dev/null > final.png
 echo -e -n "\ngen colored sys map... " >&2
@@ -39,6 +42,10 @@ echo -e -n "\nreposition " >&2
 "$SCRIPT_DIR"/repos.sh 5 -e -i "${SIRIUS[@]}" |
 "$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |
 "$SCRIPT_DIR"/reposition -w0 "${repos_systems2[@]}" |
+"$SCRIPT_DIR"/ssys_graph.py -w
+echo -n "\nposition virtual sys + smooth tradelane " >&2
+"$SCRIPT_DIR"/ssys_pos.sh |
+"$SCRIPT_DIR"/graph_repos_virt.py |
 "$SCRIPT_DIR"/ssys_graph.py -w
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_repos.png
 echo -n "apply gravity -> colored sys map... " >&2
