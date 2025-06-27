@@ -52,7 +52,7 @@ repeat() {
    local -i n="$1";
    n="$((n-1))"
    shift;
-   cat - "$TMP" | "$SCRIPT_DIR"/reposition "$@" |
+   cat - "$TMP" | "$SCRIPT_DIR"/reposition -q "$@" |
    (
       if (( n )); then
          repeat "$n" "$@"
@@ -66,7 +66,7 @@ repeat() {
 (
    if [ "$N" -gt "0" ]; then
       cat - <("$SCRIPT_DIR"/ssys_edges.sh | tee "$TMP") |
-      "$SCRIPT_DIR"/reposition "$@" |
+      "$SCRIPT_DIR"/reposition -q "$@" |
       (if (( N-1 )); then repeat "$((N-1))" "$@"; else cat; fi)
    elif [ ! "$1" = "-o" ] ; then
       cat

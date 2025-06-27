@@ -437,7 +437,7 @@ static void local_opt(float dst[2], struct s_cost_params *ssys_p)
    }
 }
 
-int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
+int reposition_sys(float dst[2], const struct s_ssys *map, int ssys, bool g_opt,
                    bool quiet, bool ppm)
 {
    struct s_cost_params ssys_p = {.n_neigh = 0, .n_around = 0, .n_edges = 0};
@@ -494,7 +494,7 @@ int reposition_sys(float *dst, const struct s_ssys *map, int ssys, bool g_opt,
 
    for (int i = 0; i < map->nsys; i++)
       if (i != ssys && dist_sq(center, map->sys[i].v) < max_sq &&
-             map->sys[i].w != 0.0f)
+          map->sys[i].w != 0.0f)
          id_around[ssys_p.n_around++] = i;
 
    //  ssys_p.n_nnaround = 0;
@@ -594,17 +594,15 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
       if (map->sys[i].w != 0.0f) {
          float v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
 
-         if (reposition_sys(v, map, i, g_opt, quiet, gen_map)) {
-            if (!quiet)
-               fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
-         } else {
-            const size_t n =
-               snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
-                        (v[0] + ratio * map->sys[i].v[0]) / (1.0 + ratio),
-                        (v[1] + ratio * map->sys[i].v[1]) / (1.0 + ratio));
-            fwrite(buff, sizeof(char), n, stdout);
-            fflush(stdout);
-         }
+         if (reposition_sys(v, map, i, g_opt, quiet, gen_map) && (!quiet))
+            fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
+
+         const size_t n =
+            snprintf(buff, 511, "%s %f %f\n", map->sys_nam[i],
+                     (v[0] + ratio * map->sys[i].v[0]) / (1.0 + ratio),
+                     (v[1] + ratio * map->sys[i].v[1]) / (1.0 + ratio));
+         fwrite(buff, sizeof(char), n, stdout);
+         fflush(stdout);
       }
 
    if (num < THREADS - 1)
@@ -637,11 +635,13 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
    if (upd) {
       vcpy(map->sys[this].v, src);
       map->sys[this].w = 0.0;
-      if (aux && *aux) {
-         const size_t n = strlen(aux) - 1;
-         if (aux[n] == '\n')
+      if (aux) {
+         aux            = strdup(aux);
+         const size_t n = strlen(aux);
+         if (n && aux[n - 1] == '\n')
             aux[n] = '\0';
-         map->sys_aux[this] = strdup(aux);
+         free(map->sys_aux[this]);
+         map->sys_aux[this] = aux;
       }
    }
    return this;
@@ -649,7 +649,7 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
 
 /* main */
 int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
-          bool only, bool ign_alone, float weight)
+          bool only, bool ign_alone, bool quiet, float weight)
 {
    GHashTable   *h       = g_hash_table_new(g_str_hash, g_str_equal);
    struct s_ssys map     = {0};
@@ -703,7 +703,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
             map.sys[i].w -= 1.0f;
    }
 
-   const bool quiet = !map.nosys;
+   quiet = quiet || !map.nosys;
    if (!map.nosys)
       map.nosys = map.nsys;
 
@@ -730,9 +730,10 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
 
 static int usage(char *nam, int ret, float w)
 {
-   fprintf(stderr,
-           "Usage:  %s  [-g] [-i] [-o | -e] [-p] [-w<weight>] [<names>...]\n",
-           basename(nam));
+   fprintf(
+      stderr,
+      "Usage:  %s  [-g] [-i] [-o | -e] [-p] [-q] [-w<weight>] [<names>...]\n",
+      basename(nam));
    fprintf(stderr,
            "  Reads a graph from standard input.\n"
            "  Applies repositioning to <names> and outputs the result.\n\n"
@@ -745,7 +746,8 @@ static int usage(char *nam, int ret, float w)
            "  If -i is set, isolated sys have no effect.\n"
            "  If -o is set, only output processed systems.\n"
            "  If -e is set, also output edges (as is).\n"
-           "  If -p is set, outputs a ppm for each processed system.\n\n"
+           "  If -p is set, outputs a ppm for each processed system.\n"
+           "  If -q is set, forces quiet mode.\n\n"
            "  If <weight> is set (positive), outputs values in the form:\n"
            "    (<weight>*old_pos + new_pos) / (<weight> + 1.0)\n"
            "   - If not specified, <weight> defaults to %.1f.\n"
@@ -771,6 +773,7 @@ int main(int argc, char **argv)
    bool  output_edges   = false;
    bool  gen_map        = false;
    bool  ign_alone      = false;
+   bool  quiet          = false;
 
    int   fst_opt     = 1;
    int   fst_non_opt = 1;
@@ -784,6 +787,10 @@ int main(int argc, char **argv)
       }
 
    qsort(argv + fst_opt, fst_non_opt - fst_opt, sizeof(char *), cmpstringp);
+   fst_opt = fst_non_opt;
+   for (int i = fst_non_opt - 1; i > 0; i--)
+      if (strcmp(argv[i], argv[i - 1]))
+         argv[--fst_opt - 1] = argv[i - 1];
 
    if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-e")) {
       output_edges = true;
@@ -815,6 +822,11 @@ int main(int argc, char **argv)
       fst_opt++;
    }
 
+   if (fst_non_opt > fst_opt && !strcmp(argv[fst_opt], "-q")) {
+      quiet = true;
+      fst_opt++;
+   }
+
    if (fst_non_opt > fst_opt && !strncmp(argv[fst_opt], "-w", 2)) {
       if (sscanf(argv[fst_opt], "-w%f", &weight) != 1)
          return usage(nam, EXIT_FAILURE, weight);
@@ -839,5 +851,5 @@ int main(int argc, char **argv)
       }
    }
    return do_it(argv + fst_non_opt, argc - fst_non_opt, g_opt, gen_map,
-                output_edges, processed_only, ign_alone, weight);
+                output_edges, processed_only, ign_alone, quiet, weight);
 }
