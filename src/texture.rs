@@ -847,7 +847,12 @@ impl FramebufferBuilder {
 
     pub fn build_wrap(self, ctx: &context::ContextWrapper) -> Result<Framebuffer> {
         let texture = if self.texture {
+            let name = match self.name {
+                Some(ref name) => Some(format!("{}-Texture", name)),
+                None => None,
+            };
             let texture = TextureBuilder::new()
+                .name(name.as_deref())
                 .width(self.w)
                 .height(self.h)
                 .filter(self.filter)
@@ -859,7 +864,12 @@ impl FramebufferBuilder {
         };
 
         let depth = if self.depth {
+            let name = match self.name {
+                Some(ref name) => Some(format!("{}-Depth", name)),
+                None => None,
+            };
             let depth = TextureBuilder::new()
+                .name(name.as_deref())
                 .empty(TextureFormat::Depth)
                 .width(self.w)
                 .height(self.h)
