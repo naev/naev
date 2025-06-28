@@ -715,7 +715,7 @@ impl Scene {
             data.light_mat.clone()
         };
         shadow_shader.shader.use_program(gl);
-        for i in 1..(lighting.nlights as usize) {
+        for i in 0..(lighting.nlights as usize) {
             let shadow_fbo = &common.light_fbo_high[i];
             let shadow_size = SHADOWMAP_SIZE_HIGH as i32;
             let shadow_transform = &light_mat[i];
@@ -863,6 +863,10 @@ struct CommonMut {
 }
 impl CommonMut {
     fn shadow_matrix(light: &LightUniform) -> Matrix4<f32> {
+        dbg!(light);
+        if light.position.magnitude() <= 1e-8 {
+            return Matrix4::identity();
+        }
         const UP: Vector3<f32> = Vector3::new(0.0, 1.0, 0.0);
         const CENTER: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
         const R: f32 = 1.0;
