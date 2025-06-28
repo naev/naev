@@ -16,12 +16,13 @@ if argv[1:] != []:
 from geometry import bb, vec, segment
 from graphmod import sys_pos as pos
 
-from ssys_graph import twins as small
-for (i,j), q in small.items():
-   a = pos[i]*q + pos[j]*(1.0-q)
-   pos[i] = (pos[i]+a) / 2.0
-   pos[j] = (pos[j]+a) / 2.0
-
+# Now reposition does it.
+#from ssys_graph import twins as small
+#for (i,j), q in small.items():
+#   a = pos[i]*q + pos[j]*(1.0-q)
+#   pos[i] = (pos[i]+a) / 2.0
+#   pos[j] = (pos[j]+a) / 2.0
+#
 
 pos['syndania'] = vec(pos['syndania'][0], pos['stint'][1])
 
