@@ -711,7 +711,7 @@ impl Scene {
         // TODO shadow pass
         let shadow_shader = &common.shader_shadow;
         let light_mat = {
-            let data = common.data.lock().unwrap();
+            let data = common.data.read().unwrap();
             data.light_mat.clone()
         };
         shadow_shader.shader.use_program(gl);
@@ -848,13 +848,13 @@ fn load_gltf_texture(
 
 // This is actually bad because they technically depend on the context existing, but if we are
 // calling them with a dead context, chances are we are hosed anyways...
-use std::sync::{Mutex, OnceLock};
+use std::sync::{OnceLock, RwLock};
 struct Common {
     shader: ModelShader,
     shader_shadow: ShadowShader,
     light_fbo_low: [Framebuffer; MAX_LIGHTS],
     light_fbo_high: [Framebuffer; MAX_LIGHTS],
-    data: Mutex<CommonMut>,
+    data: RwLock<CommonMut>,
 }
 struct CommonMut {
     light_mat: [Matrix4<f32>; MAX_LIGHTS],
@@ -920,7 +920,7 @@ impl Common {
         let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW);
         let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
 
-        let data = Mutex::new({
+        let data = RwLock::new({
             let mut com = CommonMut {
                 light_mat: core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity()),
                 light_uniform: Default::default(),
@@ -1063,6 +1063,10 @@ impl Model {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_init() -> c_int {
+    let _ = COMMON.get_or_init(|| {
+        let ctx = Context::get().unwrap().as_wrap();
+        Common::new(&ctx).unwrap()
+    });
     0
 }
 
@@ -1071,7 +1075,7 @@ pub extern "C" fn gltf_exit() {}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightReset() {
-    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let mut data = COMMON.get().unwrap().data.write().unwrap();
     data.light_uniform = Default::default();
     data.update_matrices();
 }
@@ -1083,7 +1087,7 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
         warn!("Trying to set more lights than MAX_LIGHTS allows!");
         return -1;
     }
-    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let mut data = COMMON.get().unwrap().data.write().unwrap();
     unsafe {
         let intensity = (*light).intensity as f32;
         data.light_intensity = intensity;
@@ -1108,13 +1112,13 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbient(r: c_double, g: c_double, b: c_double) {
-    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let mut data = COMMON.get().unwrap().data.write().unwrap();
     data.light_uniform.ambient = Vector3::new(r as f32, g as f32, b as f32);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbientGet(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
-    let data = COMMON.get().unwrap().data.lock().unwrap();
+    let data = COMMON.get().unwrap().data.read().unwrap();
     let amb = data.light_uniform.ambient;
     unsafe {
         *r = amb.x as f64;
@@ -1125,7 +1129,7 @@ pub extern "C" fn gltf_lightAmbientGet(r: *mut c_double, g: *mut c_double, b: *m
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensity(strength: c_double) {
-    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let mut data = COMMON.get().unwrap().data.write().unwrap();
     let old_intensity = data.light_intensity;
     let new_intensity = strength as f32;
     data.light_intensity = new_intensity;
@@ -1134,7 +1138,7 @@ pub extern "C" fn gltf_lightIntensity(strength: c_double) {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensityGet() -> c_double {
-    let data = COMMON.get().unwrap().data.lock().unwrap();
+    let data = COMMON.get().unwrap().data.read().unwrap();
     data.light_intensity as f64
 }
 
@@ -1144,7 +1148,7 @@ pub extern "C" fn gltf_lightTransform(
     transform: *const Matrix4<f32>,
 ) {
     let transform = unsafe { &*transform };
-    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let mut data = COMMON.get().unwrap().data.write().unwrap();
     let lighting = &mut data.light_uniform;
     for i in 0..lighting.nlights as usize {
         let l = &mut lighting.lights[i];
@@ -1238,7 +1242,7 @@ pub extern "C" fn gltf_renderScene(
     };
     let ctx = Context::get().unwrap(); /* Lock early. */
     #[allow(static_mut_refs)]
-    let data = COMMON.get().unwrap().data.lock().unwrap();
+    let data = COMMON.get().unwrap().data.read().unwrap();
     let lighting = &data.light_uniform;
     let _ = model.render_scene(
         ctx,
