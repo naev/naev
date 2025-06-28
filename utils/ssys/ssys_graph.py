@@ -7,6 +7,14 @@ import xml.etree.ElementTree as ET
 from ssys import nam2base, getpath, PATH
 
 
+twins = {
+   ('carnis_minor', 'carnis_major'): 0.7,
+   ('gliese', 'gliese_minor'): 0.5,
+   ('kruger', 'krugers_pocket'): 0.5
+}
+
+twins = {tuple(sorted(k)):v for k, v in twins.items()}
+
 color_values = {
    'default': (0.25, 0.25, 0.25),
    'green':   (0.0,  0.85, 0.0),
@@ -141,20 +149,33 @@ def xml_files_to_graph( args = None, get_colors = False ):
 if __name__ == '__main__':
    from sys import argv, exit, stdout, stderr, stdin
 
-   def do_reading(args):
-      _Vnames, Vpos, _E, _tradelane, color = xml_files_to_graph(args, True)
-      for bname, (x, y) in Vpos.items():
-         print(bname, x, y, color[bname])
+   def do_reading( args, do_V = True, do_E = True ):
+      _Vnames, Vpos, E, tradelane, color = xml_files_to_graph(args, do_V)
+      if do_V:
+         for bname, (x, y) in Vpos.items():
+            print(bname, x, y, color[bname])
+      if do_E:
+         for fst, L in E.items():
+            for snd, hid in L:
+               if hid:
+                  print(fst, snd, 'hidden')
+               elif fst in tradelane and snd in tradelane:
+                  print(fst, snd, 'tradelane')
+               elif (t:= tuple(sorted([fst, snd]))) in twins:
+                  print(fst, snd, twins[t])
+               else:
+                  print(fst, snd)
 
-   def _read_stdin_and_scale(scale):
+   def _read_stdin_and_scale( scale ):
       for l in stdin:
          if (line := l.strip()) != '':
-            (n, x, y, r) = (l.strip().split(' ',4) + ['', ''])[:4]
-            if y == '': # This is an edge!
-               continue
-            x = str(float(x) * scale)
-            y = str(float(y) * scale)
-            yield n, x, y, r
+            try:
+               (n, x, y, r) = (l.strip().split(' ',4) + ['', '']) [:4]
+               x = str(float(x) * scale)
+               y = str(float(y) * scale)
+               yield n, x, y, r
+            except:
+               pass
 
    def do_writing( scale = 1.0 ):
       from ssys import fil_ET
@@ -168,6 +189,12 @@ if __name__ == '__main__':
    def do_scaling( scale = 1.0 ):
       for t in _read_stdin_and_scale(scale):
          print(' '.join(t).strip())
+
+   if only_V:= ('-v' in argv[1:]):
+      argv.remove('-v')
+
+   if only_E:= ('-e' in argv[1:]):
+      argv.remove('-e')
 
    if do_write := ('-w' in argv[1:]):
       argv.remove('-w')
@@ -185,12 +212,24 @@ if __name__ == '__main__':
    help_f = '-h' in argv or '--help' in argv[1:]
    if help_f or (argv[1:] != [] and do_write):
       msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
-      msg('usage:  ' + os.path.basename(argv[0]) + ' (-s <scale> [-w]) | -w | [<files>..]')
-      msg('  Lists (ssys, x, y, name) for all ssys in <files.xml>')
-      msg('  If <files.xml> not provided, uses dat/ssys/*.xml.')
-      msg('  If -s is set, reads (ssys, x, y, ...) on stdin, rescales it')
-      msg('  with <scale> and, unless -w is set, outputs the result on stdout.')
-      msg('  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.')
+      DOC = [
+         'usage:  ' + os.path.basename(argv[0]) +
+            '[ -v | -e ]  (-s <scale> [-w]) | -w | [<files>..]',
+         '  Output the (enriched) graph of ssys',
+         '  Vertices are in the form:',
+         '  <sys_name> <x> <y> <color>',
+         '  Edges are in the form:',
+         '  <src_sys_name> <dst_sys_name> <aux>',
+         '  If <files.xml> is provided, only outputs vertices provided.',
+         '  If -v is set, only outputs vertices.',
+         '  If -e is set, only outputs edges.',
+         '',
+         '  If -s is set, reads (ssys, x, y, ...) on stdin, rescales it',
+         '  with <scale> and, unless -w is set, outputs the result on stdout.',
+         '  If -w is set, reads (ssys, x, y, ...) on stdin and update dat/ssys.',
+      ]
+      for l in DOC:
+         msg(l)
       exit(0 if ok else 1)
 
    if do_write:
@@ -198,4 +237,4 @@ if __name__ == '__main__':
    elif do_scale:
       do_scaling(scale)
    else:
-      do_reading(argv[1:])
+      do_reading(argv[1:], not only_E, not only_V)
