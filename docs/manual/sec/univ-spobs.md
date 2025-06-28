@@ -93,18 +93,23 @@ where the above example would signify the spob is focused on research.
 
 These tags significantly change the functionality of the spob:
 
-* **restricted**: player should not normally have access here, and normal missions shouldn't spawn or try to come to the spob
-* **nonpc**: there should be no normal generic NPCs spawning at the spaceport bar
-* **nonews**: there is no news at the spaceport bar
+* **restricted**: player should not normally have access here, and normal missions shouldn't spawn or try to come to the spob.
+* **nonpc**: There should be no normal generic NPCs spawning at the spaceport bar.
+* **nonews**: There is no news at the spaceport bar.
+* **nosightseeing**: Will never be a point of interest for sightseeing missions.
+* **garbage**: Can be used as a garbage dump for the waste desposal missions.
+* **wormhole**: The spob is a wormhole. Doesn't really do anything yet though.
+* **hypergate**: The spob is a hypergate, is necessary for the spob to be a valid hypergate target.
+* **obelisk**: Is a special obelisk that can be used to gain Sirius flow abilities.
+* **active**: The spob is active (currently only matters for hypergates) and can be used. This allows the hypergate interface to be used and allows hypergates to connect to them.
 
 #### Descriptive Tags
 
 Below is the complete list of dominantly used descriptive tags. It should be noted that tagging is incomplete at present and it is possible that none of these tags will apply to many spobs (e.g. uninhabited, average, uninteresting or deserted spobs). Most others will only have one or two tags - they are supposed to represent important facets of the spob in its own estimation, not minor elements e.g. while the (temporary) Imperial Homeworld has many criminals and military personnel neither tag applies since its defining tags would be rich, urban and maybe tourism or trade.
 
+These tags allow missions to randomly target spobs with specific properties, so they may have fairly localized specific effects.
+
 * **station**: the spob is a space station or gas giant spaceport
-* **wormhole**: the spob is a wormhole
-* **hypergate**: the spob is a hypergate
-* **active**: the spob is active (currently only matters for hypergates)
 * **ruined**: the spob is ruined (currently only matters for hypergates)
 * **new**: recently colonised worlds / recently built stations (definitely post-Incident)
 * **old**: long-time colonised worlds / old stations (definitely pre-Incident)
@@ -120,13 +125,17 @@ Below is the complete list of dominantly used descriptive tags. It should be not
 * **trade**: trade is an important part of the spob economy
 * **shipbuilding**: shipbuilding is an important part of the spob economy
 * **research**: the spob has a strong focus in research (special research laboratories, etc...)
-* **immigration**: the spob draws in a large number of immigrants or is being colonised
+* **immigration**: the spob draws in many immigrants or is being colonised
 * **refuel**: the spobs reason for existance is as a fueling point
 * **government**: the spob has important government functions or hosts the central government
 * **military**: the spob has an important factional military presence
 * **religious**: the spob has an important religious significance or presence
 * **prison**: the spob has important prison installations
 * **criminal**: the spob has a large criminal element such as important pirate or mafia presence
+* **ringworld**: Is a ring world.
+* **toxic**: Is a toxic location, dangerous to stay too long.
+* **refuel**: Is mainly used as a refueling location with few or no other services.
+
 
 ### Lua Scripting
 
