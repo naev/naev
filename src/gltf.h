@@ -83,6 +83,7 @@ void   gltf_lightAmbientGet( double *r, double *g, double *b );
 void   gltf_lightIntensity( double strength );
 double gltf_lightIntensityGet( void );
 void   gltf_lightTransform( Lighting *L, const mat4 *H );
+int    gltf_numLights( void );
 
 int              gltf_sceneBody( const GltfObject *obj );
 int              gltf_sceneEngine( const GltfObject *obj );

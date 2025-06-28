@@ -886,7 +886,6 @@ struct CommonMut {
 }
 impl CommonMut {
     fn shadow_matrix(light: &LightUniform) -> Matrix4<f32> {
-        dbg!(light);
         if light.position.magnitude() <= 1e-8 {
             return Matrix4::identity();
         }
@@ -1124,34 +1123,34 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbient(r: c_double, g: c_double, b: c_double) {
+    const FACTOR: f32 = 1.0 / std::f32::consts::PI;
     let mut data = COMMON.get().unwrap().data.write().unwrap();
-    data.light_uniform.ambient = Vector3::new(r as f32, g as f32, b as f32);
+    data.light_uniform.ambient =
+        Vector3::new(r as f32 * FACTOR, g as f32 * FACTOR, b as f32 * FACTOR);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbientGet(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
     let data = COMMON.get().unwrap().data.read().unwrap();
     let amb = data.light_uniform.ambient;
+    const FACTOR: f64 = std::f64::consts::PI;
     unsafe {
-        *r = amb.x as f64;
-        *g = amb.y as f64;
-        *b = amb.z as f64;
+        *r = amb.x as f64 * FACTOR;
+        *g = amb.y as f64 * FACTOR;
+        *b = amb.z as f64 * FACTOR;
     }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensity(strength: c_double) {
     let mut data = COMMON.get().unwrap().data.write().unwrap();
-    let old_intensity = data.light_intensity;
-    let new_intensity = strength as f32;
-    data.light_intensity = new_intensity;
-    data.light_uniform.ambient *= new_intensity / old_intensity;
+    data.light_uniform.intensity *= strength as f32;
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensityGet() -> c_double {
     let data = COMMON.get().unwrap().data.read().unwrap();
-    data.light_intensity as f64
+    data.light_uniform.intensity as f64
 }
 
 #[unsafe(no_mangle)]
@@ -1280,4 +1279,10 @@ pub extern "C" fn gltf_renderScene(
         lighting,
         &transform,
     );
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_numLights() -> c_int {
+    let data = COMMON.get().unwrap().data.read().unwrap();
+    data.light_uniform.nlights as c_int
 }

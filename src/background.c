@@ -378,7 +378,7 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
        pow2( a * bkg->radiosity.b );
    if ( d > 1e-3 ) {
       /* Get index. */
-      bkg->L_idx = L_default.nlights - L_default_const.nlights;
+      bkg->L_idx = gltf_numLights() - L_default_const.nlights;
 
       /* Normalize so RGB is unitary. Compensate modifying alpha. */
       bkg->radiosity.r /= d;
@@ -392,6 +392,14 @@ unsigned int background_addImage( const glTexture *image, double x, double y,
       bkg->L.colour.v[1] = bkg->radiosity.g;
       bkg->L.colour.v[2] = bkg->radiosity.b;
       bkg->L.intensity   = bkg->radiosity.a;
+      double cx, cy, rx, ry;
+      cam_getPos( &cx, &cy );
+      /* Relative coordinates. */
+      rx              = ( bkg->x - cx ) * bkg->move;
+      ry              = ( bkg->y - cy ) * bkg->move;
+      bkg->L.pos.v[0] = rx;
+      bkg->L.pos.v[1] = 2. * hypot( rx, ry ) - 300.;
+      bkg->L.pos.v[2] = ry;
       if ( gltf_lightSet( bkg->L_idx, &bkg->L ) )
          bkg->L_idx = -1; /* Failed to add. */
    }

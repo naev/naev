@@ -186,7 +186,7 @@ vec3 light_intensity( Light L, float dist )
       attenuation = max(min(1.0 - pow(dist / L.range, 4.0), 1.0), 0.0) / pow(dist, 2.0);
 #endif
    float attenuation =  1.0 / pow(dist,2.0);
-   return L.colour * attenuation;
+   return L.colour * L.intensity * attenuation;
 }
 
 #if 0
@@ -526,7 +526,7 @@ void main (void)
    //f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
 
    /* Slight diffuse ambient lighting. */
-   f_diffuse += lighting.ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
+   f_diffuse += lighting.intensity * lighting.ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
 
    /* Ambient occlusion. */
 #ifdef HAS_AO
@@ -577,13 +577,14 @@ void main (void)
 
       if (L.sun!=0) {
          l = L.position;
-         intensity = L.colour;
+         intensity = L.colour * L.intensity;
       }
       else {
          vec3 pointToLight = L.position - IN.position;
          l = normalize(pointToLight);
          intensity = light_intensity( L, length(pointToLight) );
       }
+      intensity *= lighting.intensity;
 
       vec3 h = normalize(l + v); /* Halfway vector. */
       float NoL = clampedDot(n, l);
