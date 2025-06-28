@@ -504,22 +504,6 @@ impl Mesh {
         _shader: &ModelShader,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        /*
-        #[rustfmt::skip]
-        #[allow(non_snake_case)]
-        let VIEW: Matrix4<f32> = {
-            const VIEW_ANGLE: f32 = -std::f32::consts::FRAC_PI_4;
-            // TODO const cos/sin are not stabilized yet
-            let VIEWCOS: f32 = VIEW_ANGLE.cos();
-            let VIEWSIN: f32 = VIEW_ANGLE.sin();
-            Matrix4::new(
-                1.0,    0.0,     0.0,   0.0,
-                0.0,  VIEWCOS, VIEWSIN, 0.0,
-                0.0, -VIEWSIN, VIEWCOS, 0.0,
-                0.0,    0.0,     0.0,   1.0 )
-        };
-        */
-
         let gl = &ctx.gl;
         for p in &self.primitives {
             // Update the primitive uniform
@@ -929,6 +913,8 @@ impl Common {
                     .height(size)
                     .texture(false)
                     .depth(true)
+                    // Probably clamp to a (1,1,1,1) border makes more sense
+                    .address_mode(texture::AddressMode::ClampToEdge)
                     .build_wrap(ctx)
                     .unwrap();
                 let lctx = ctx.lock();
