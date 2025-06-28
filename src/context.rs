@@ -2,7 +2,7 @@
 use crate::render::Uniform;
 use anyhow::Result;
 use glow::*;
-use nalgebra::{Matrix3, Vector4};
+use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
@@ -113,12 +113,27 @@ pub struct Dimensions {
 }
 
 #[rustfmt::skip]
-fn ortho3( left: f32, right: f32, bottom: f32, top: f32 ) -> Matrix3<f32> {
+pub fn ortho3( left: f32, right: f32, bottom: f32, top: f32 ) -> Matrix3<f32> {
     Matrix3::new(
         2.0/(right-left), 0.0,              -(right+left)/(right-left),
         0.0,              2.0/(top-bottom), -(top+bottom)/(top-bottom),
         0.0,              0.0,              1.0,
     )
+}
+
+#[rustfmt::skip]
+pub fn ortho4( left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32 ) -> Matrix4<f32> {
+    Matrix4::new(
+        2.0/(right-left),   0.0,  0.0, -(right+left)/(right-left),
+        0.0,    2.0/(top-bottom), 0.0, -(top+bottom)/(top-bottom),
+        0.0, 0.0, -2.0 / (far - near), -(far+near)/(far-near),
+        0.0,        0.0,          0.0, 1.0,
+    )
+}
+
+pub fn look_at4(eye: &Vector3<f32>, target: &Vector3<f32>, up: &Vector3<f32>) -> Matrix4<f32> {
+    nalgebra::Isometry3::look_at_rh(&Point3::from(*eye), &Point3::from(*target), up)
+        .to_homogeneous()
 }
 
 impl Dimensions {
