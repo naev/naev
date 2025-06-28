@@ -239,8 +239,10 @@ int                   ship_gfxAnimated( const Ship *s );
  * Misc.
  */
 void   ships_resize( void );
+void   ship_gfxLoad( Ship *s );
 int    ship_gfxLoaded( const Ship *s );
 int    ship_gfxLoadNeeded( void );
-int    ship_gfxLoad( Ship *temp );
+int    ship_gfxLoadPost3D( Ship *temp );
+int    ship_gfxLoad2D( Ship *temp );
 int    ship_compareTech( const void *arg1, const void *arg2 );
 double ship_maxSize( void );

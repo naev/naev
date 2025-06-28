@@ -1,8 +1,10 @@
 use crate::context::Context;
 use crate::model::Model;
 use crate::ndata;
+use crate::{gettext, warn};
 use rayon::prelude::*;
 use std::ffi::{c_void, CStr};
+use std::sync::Mutex;
 
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
@@ -26,7 +28,8 @@ fn get_mut() -> &'static mut [ShipWrapper] {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn ship_gfxLoadNeeded_() {
+pub extern "C" fn ship_gfxLoadNeeded() {
+    let needs2d: Mutex<Vec<&mut ShipWrapper>> = Mutex::new(vec![]);
     let ctx = Context::get().unwrap().as_safe_wrap();
     get_mut().par_iter_mut().for_each(|ptr| {
         let s = &mut ptr.0;
@@ -38,15 +41,41 @@ pub extern "C" fn ship_gfxLoadNeeded_() {
             return;
         }
 
-        let path = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
-        match ndata::stat(path) {
-            Ok(_) => {
-                s.gfx_3d =
-                    Model::from_path(&ctx, &path).unwrap().into_ptr() as *mut naevc::GltfObject;
-            }
-            Err(_) => {}
+        let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
+        let base_path = unsafe {
+            CStr::from_ptr(match s.base_path.is_null() {
+                true => s.base_type,
+                false => s.base_path,
+            })
+            .to_str()
+            .unwrap()
         };
+        let path = format!("gfx/ship3d/{}/{}.gltf", base_path, cpath);
+        match ndata::stat(&path) {
+            Ok(_) => match Model::from_path(&ctx, &path) {
+                Ok(m) => {
+                    s.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
+                    unsafe {
+                        naevc::ship_gfxLoadPost3D(s as *mut naevc::Ship);
+                    }
+                }
+                Err(e) => {
+                    warn!("Failure loading 3D model '{}': {}", path, e);
+                    needs2d.lock().unwrap().push(ptr);
+                }
+            },
+            Err(_) => {
+                needs2d.lock().unwrap().push(ptr);
+            }
+        };
+    });
+    drop(ctx); // Need to drop
 
-        // TODO reimplement ship_gfxLoad here
+    // 2D doesn't use the saef context system yet, so it can't be threaded with 3D
+    needs2d.lock().unwrap().iter_mut().for_each(|ptr| {
+        let s = &mut ptr.0;
+        unsafe {
+            naevc::ship_gfxLoad2D(s as *mut naevc::Ship);
+        }
     });
 }

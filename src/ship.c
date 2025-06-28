@@ -378,6 +378,12 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
    }
 }
 
+void ship_gfxLoad( Ship *s )
+{
+   ship_setFlag( s, SHIP_NEEDSGFX );
+   ship_gfxLoadNeeded();
+}
+
 /**
  * @brief Get the store gfx.
  */
@@ -599,113 +605,76 @@ int ship_gfxLoaded( const Ship *s )
 }
 
 /**
- * @brief Tries to load the graphics for all ships that need it.
- */
-int ship_gfxLoadNeeded( void )
-{
-#if 0
-   ThreadQueue *tq = vpool_create();
-   SDL_GL_MakeCurrent( gl_screen.window, NULL );
-
-   for ( int i = 0; i < array_size( ship_stack ); i++ ) {
-      Ship *s = &ship_stack[i];
-      if ( !ship_isFlag( s, SHIP_NEEDSGFX ) )
-         continue;
-      vpool_enqueue( tq, (int ( * )( void * ))ship_gfxLoad, s );
-      ship_rmFlag( s, SHIP_NEEDSGFX );
-   }
-
-   vpool_wait( tq );
-   vpool_cleanup( tq );
-
-   SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
-#else
-   for ( int i = 0; i < array_size( ship_stack ); i++ ) {
-      Ship *s = &ship_stack[i];
-      if ( !ship_isFlag( s, SHIP_NEEDSGFX ) )
-         continue;
-      ship_gfxLoad( s );
-      ship_rmFlag( s, SHIP_NEEDSGFX );
-   }
-#endif
-   return 0;
-}
-
-/**
  * @brief Loads the graphics for a ship if necessary.
  *
  *    @param s Ship to load into.
  */
-int ship_gfxLoad( Ship *s )
+int ship_gfxLoadPost3D( Ship *s )
 {
-   char        str[PATH_MAX], *base;
-   const char *delim, *base_path;
-   const char *ext    = ".webp";
-   const char *buf    = s->gfx_path;
+   const GltfTrail *trails;
+   const GltfMount *mounts;
+   int              ntrails;
+   int              nmounts;
+
+   trails = gltf_trails( s->gfx_3d, &ntrails );
+   mounts = gltf_mounts( s->gfx_3d, &nmounts );
+
+   /* Replace trails if applicable. */
+   if ( ntrails > 0 ) {
+      array_erase( &s->trail_emitters, array_begin( s->trail_emitters ),
+                   array_end( s->trail_emitters ) );
+      ship_setFlag( s, SHIP_3DTRAILS );
+
+      for ( int i = 0; i < ntrails; i++ ) {
+         const GltfTrail *t = &trails[i];
+         ShipTrailEmitter trail;
+
+         /* New trail. */
+         trail.pos = t->pos;
+         vec3_scale( &trail.pos, s->size * 0.5 ); /* Convert to "pixels" */
+         trail.trail_spec = trailSpec_get( t->generator );
+         trail.flags      = 0;
+
+         if ( trail.trail_spec != NULL )
+            array_push_back( &s->trail_emitters, trail );
+      }
+   }
+
+   /* Replace mount points if applicable. */
+   if ( nmounts > 0 ) {
+      ship_setFlag( s, SHIP_3DMOUNTS );
+      if ( nmounts < array_size( s->outfit_weapon ) )
+         WARN( _( "Number of 3D weapon mounts from GLTF file for ship '%s' "
+                  "is less than the "
+                  "number of ship weapons! Got %d, expected at least %d." ),
+               s->name, nmounts, array_size( s->outfit_weapon ) );
+
+      for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
+         ShipMount *sm = &s->outfit_weapon[i].mount;
+         vec3_copy( &sm->pos, &mounts[i % nmounts].pos ); /* Loop over. */
+         vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
+      }
+   }
+
+   /* Load the polygon. */
+   ship_loadPLG( s,
+                 ( s->polygon_path != NULL ) ? s->polygon_path : s->gfx_path );
+   return 0;
+}
+
+int ship_gfxLoad2D( Ship *s )
+{
    int         sx     = s->sx;
    int         sy     = s->sy;
    int         engine = !s->noengine;
-
-   /* If already loaded, just ignore. */
-   if ( ship_gfxLoaded( s ) )
-      return 0;
+   char        str[PATH_MAX], *base;
+   const char *delim;
+   const char *ext = ".webp";
+   const char *buf = s->gfx_path;
 
    /* Get base path. */
-   delim     = strchr( buf, '_' );
-   base      = delim == NULL ? strdup( buf ) : strndup( buf, delim - buf );
-   base_path = ( s->base_path != NULL ) ? s->base_path : s->base_type;
-
-   /* Load the 3d model */
-   snprintf( str, sizeof( str ), SHIP_3DGFX_PATH "%s/%s.gltf", base_path, buf );
-   if ( PHYSFS_exists( str ) ) {
-      const GltfTrail *trails;
-      const GltfMount *mounts;
-      int              ntrails;
-      int              nmounts;
-
-      // DEBUG( "Found 3D graphics for '%s' at '%s'!", s->name, str );
-      // s->gfx_3d = gltf_loadFromFile_( str );
-      s->gfx_3d = gltf_loadFromFile( str );
-      trails    = gltf_trails( s->gfx_3d, &ntrails );
-      mounts    = gltf_mounts( s->gfx_3d, &nmounts );
-
-      /* Replace trails if applicable. */
-      if ( ntrails > 0 ) {
-         array_erase( &s->trail_emitters, array_begin( s->trail_emitters ),
-                      array_end( s->trail_emitters ) );
-         ship_setFlag( s, SHIP_3DTRAILS );
-
-         for ( int i = 0; i < ntrails; i++ ) {
-            const GltfTrail *t = &trails[i];
-            ShipTrailEmitter trail;
-
-            /* New trail. */
-            trail.pos = t->pos;
-            vec3_scale( &trail.pos, s->size * 0.5 ); /* Convert to "pixels" */
-            trail.trail_spec = trailSpec_get( t->generator );
-            trail.flags      = 0;
-
-            if ( trail.trail_spec != NULL )
-               array_push_back( &s->trail_emitters, trail );
-         }
-      }
-
-      /* Replace mount points if applicable. */
-      if ( nmounts > 0 ) {
-         ship_setFlag( s, SHIP_3DMOUNTS );
-         if ( nmounts < array_size( s->outfit_weapon ) )
-            WARN( _( "Number of 3D weapon mounts from GLTF file for ship '%s' "
-                     "is less than the "
-                     "number of ship weapons! Got %d, expected at least %d." ),
-                  s->name, nmounts, array_size( s->outfit_weapon ) );
-
-         for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
-            ShipMount *sm = &s->outfit_weapon[i].mount;
-            vec3_copy( &sm->pos, &mounts[i % nmounts].pos ); /* Loop over. */
-            vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
-         }
-      }
-   }
+   delim = strchr( buf, '_' );
+   base  = delim == NULL ? strdup( buf ) : strndup( buf, delim - buf );
 
    /* Determine extension path. */
    if ( buf[0] == '/' ) /* absolute path. */
@@ -722,12 +691,6 @@ int ship_gfxLoad( Ship *s )
    /* Load the polygon. */
    ship_loadPLG( s,
                  ( s->polygon_path != NULL ) ? s->polygon_path : s->gfx_path );
-
-   /* If we have 3D, we'll ignore the 2D stuff. */
-   if ( s->gfx_3d != NULL ) {
-      free( base );
-      return 0;
-   }
 
    /* Get the comm graphic for future loading. */
    if ( s->gfx_comm == NULL )
