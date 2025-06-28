@@ -176,3 +176,4 @@ These are some tags mainly used by the Naev files, but can be useful for plugins
 * **drone**: Used to change the text to ROBOTIC for some AI and missions.
 * **bioship**: Indicates the ship is a bioship and thus should have skill points. Also used in several missions and the equipment scripts.
 * **feral**: Indicates a bioship is feral. Currently unused.
+* **FACTION NAMES (e.g., dvaered)**: Indicate the ship is used dominantly by the faction. Used by some missions.
