@@ -12,7 +12,7 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::context::{Context, ContextWrapper};
+use crate::context::{look_at4, ortho4, Context, ContextWrapper};
 use crate::ndata;
 use crate::render::Uniform;
 use crate::shader::{Shader, ShaderBuilder};
@@ -861,6 +861,36 @@ struct CommonMut {
     light_uniform: LightingUniform,
     light_intensity: f32,
 }
+impl CommonMut {
+    fn shadow_matrix(light: &LightUniform) -> Matrix4<f32> {
+        const UP: Vector3<f32> = Vector3::new(0.0, 1.0, 0.0);
+        const CENTER: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
+        const R: f32 = 1.0;
+        if light.sun != 0 {
+            let pos = light.position.normalize();
+            let l = look_at4(&pos, &CENTER, &UP);
+            let o = ortho4(-R, R, -R, R, 0.0, 2.0);
+            l * o
+        } else {
+            let pos = light.position;
+            let l = look_at4(&pos, &CENTER, &UP);
+            let norm = pos.magnitude();
+            let o = ortho4(-R, R, -R, R, norm - 1.0, norm + 1.0);
+            l * o
+        }
+    }
+
+    fn update_matrix(&mut self, idx: usize) {
+        self.light_mat[idx] = CommonMut::shadow_matrix(&self.light_uniform.lights[idx]);
+    }
+
+    fn update_matrices(&mut self) {
+        // Update lights as necessary.
+        for i in 0..self.light_uniform.nlights as usize {
+            self.light_mat[i] = CommonMut::shadow_matrix(&self.light_uniform.lights[i]);
+        }
+    }
+}
 impl Common {
     fn new(ctx: &ContextWrapper) -> Result<Self> {
         let shader = ModelShader::new(ctx)?;
@@ -890,10 +920,14 @@ impl Common {
         let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW);
         let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
 
-        let data = Mutex::new(CommonMut {
-            light_mat: core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity()),
-            light_uniform: Default::default(),
-            light_intensity: 1.0,
+        let data = Mutex::new({
+            let mut com = CommonMut {
+                light_mat: core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity()),
+                light_uniform: Default::default(),
+                light_intensity: 1.0,
+            };
+            com.update_matrices();
+            com
         });
 
         Ok(Common {
@@ -1039,6 +1073,7 @@ pub extern "C" fn gltf_exit() {}
 pub extern "C" fn gltf_lightReset() {
     let mut data = COMMON.get().unwrap().data.lock().unwrap();
     data.light_uniform = Default::default();
+    data.update_matrices();
 }
 
 #[unsafe(no_mangle)]
@@ -1065,7 +1100,8 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
                 ((*light).colour.v[1] as f32) * intensity,
                 ((*light).colour.v[2] as f32) * intensity,
             ),
-        }
+        };
+        data.update_matrix(n);
     }
     0
 }
