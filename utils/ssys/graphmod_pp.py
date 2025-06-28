@@ -16,12 +16,8 @@ if argv[1:] != []:
 from geometry import bb, vec, segment
 from graphmod import sys_pos as pos
 
-small = [
-   ('carnis_minor', 'carnis_major', 0.7),
-   ('gliese', 'gliese_minor', 0.5),
-   ('kruger', 'krugers_pocket', 0.5)
-]
-for (i,j,q) in small:
+from ssys_graph import twins as small
+for (i,j), q in small.items():
    a = pos[i]*q + pos[j]*(1.0-q)
    pos[i] = (pos[i]+a) / 2.0
    pos[j] = (pos[j]+a) / 2.0
