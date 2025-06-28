@@ -546,6 +546,42 @@ impl Mesh {
         }
         Ok(())
     }
+
+    fn render_shadow(
+        &self,
+        ctx: &Context,
+        shader: &ShadowShader,
+        transform: &Matrix4<f32>,
+        shadow_transform: &Matrix4<f32>,
+    ) -> Result<()> {
+        let gl = &ctx.gl;
+        for p in &self.primitives {
+            let data = ShadowUniform {
+                transform: shadow_transform * transform,
+            };
+            shader
+                .buffer
+                .bind_write_base(ctx, &data.buffer()?, ShadowShader::U_SHADOW)?;
+            let m = &p.material;
+
+            // Attributes
+            p.vao.bind(ctx);
+
+            // Render
+            unsafe {
+                if m.double_sided {
+                    gl.disable(glow::CULL_FACE);
+                }
+
+                gl.draw_elements(p.topology, p.num_indices, p.element_type, 0);
+
+                if m.double_sided {
+                    gl.enable(glow::CULL_FACE);
+                }
+            }
+        }
+        Ok(())
+    }
 }
 
 pub struct Node {
@@ -602,6 +638,23 @@ impl Node {
         }
         Ok(())
     }
+
+    fn render_shadow(
+        &mut self,
+        ctx: &Context,
+        shader: &ShadowShader,
+        transform: &Matrix4<f32>,
+        shadow_transform: &Matrix4<f32>,
+    ) -> Result<()> {
+        let new_transform = self.transform * transform;
+        if let Some(mesh) = &self.mesh {
+            mesh.render_shadow(ctx, shader, &new_transform, shadow_transform)?;
+        }
+        for child in &mut self.children {
+            child.render_shadow(ctx, shader, &new_transform, shadow_transform)?;
+        }
+        Ok(())
+    }
 }
 
 pub struct Scene {
@@ -655,10 +708,33 @@ impl Scene {
 
         // TODO shadow pass
         let shadow_shader = &common.shader_shadow;
+        let light_mat = {
+            let data = common.data.lock().unwrap();
+            data.light_mat.clone()
+        };
         shadow_shader.shader.use_program(gl);
-        /*for i in 1..lighting.nlights {
-            node.render_shadow(ctx, &shadow_shader, transform)?;
-        }*/
+        for i in 1..(lighting.nlights as usize) {
+            let shadow_fbo = &common.light_fbo_high[i];
+            let shadow_size = SHADOWMAP_SIZE_HIGH as i32;
+            let shadow_transform = &light_mat[i];
+            shadow_fbo.bind(ctx);
+            unsafe {
+                gl.clear(glow::DEPTH_BUFFER_BIT);
+                gl.viewport(0, 0, shadow_size, shadow_size);
+            }
+
+            // Render depth buffer
+            for node in &mut self.nodes {
+                node.render_shadow(ctx, &shadow_shader, transform, shadow_transform)?;
+            }
+
+            // TODO blur shadows
+
+            // Bind the texture
+            if let Some(tex) = &shadow_fbo.depth {
+                tex.bind(ctx, 5 + i as u32);
+            }
+        }
 
         // Update lighting
         shader.shader.use_program(gl);
@@ -770,13 +846,18 @@ fn load_gltf_texture(
 
 // This is actually bad because they technically depend on the context existing, but if we are
 // calling them with a dead context, chances are we are hosed anyways...
-use std::sync::OnceLock;
+use std::sync::{Mutex, OnceLock};
 struct Common {
     shader: ModelShader,
     shader_shadow: ShadowShader,
     light_fbo_low: [Framebuffer; MAX_LIGHTS],
     light_fbo_high: [Framebuffer; MAX_LIGHTS],
+    data: Mutex<CommonMut>,
+}
+struct CommonMut {
     light_mat: [Matrix4<f32>; MAX_LIGHTS],
+    light_uniform: LightingUniform,
+    light_intensity: f32,
 }
 impl Common {
     fn new(ctx: &ContextWrapper) -> Result<Self> {
@@ -806,14 +887,19 @@ impl Common {
 
         let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW);
         let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
-        let light_mat = core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity());
+
+        let data = Mutex::new(CommonMut {
+            light_mat: core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity()),
+            light_uniform: Default::default(),
+            light_intensity: 1.0,
+        });
 
         Ok(Common {
             shader,
             shader_shadow,
             light_fbo_low,
             light_fbo_high,
-            light_mat,
+            data,
         })
     }
 }
@@ -939,11 +1025,6 @@ impl Model {
     }
 }
 
-/// Just use cglobals for C stuff and hope it doesn't catch on fire :/
-static mut CLIGHTING: LightingUniform = LightingUniform::default();
-static mut CAMBIENT: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
-static mut CINTENSITY: f64 = 1.0;
-
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_init() -> c_int {
     0
@@ -954,9 +1035,8 @@ pub extern "C" fn gltf_exit() {}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightReset() {
-    unsafe {
-        CLIGHTING = LightingUniform::default();
-    }
+    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    data.light_uniform = Default::default();
 }
 
 #[unsafe(no_mangle)]
@@ -966,10 +1046,12 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
         warn!("Trying to set more lights than MAX_LIGHTS allows!");
         return -1;
     }
+    let mut data = COMMON.get().unwrap().data.lock().unwrap();
     unsafe {
         let intensity = (*light).intensity as f32;
-        CLIGHTING.nlights = CLIGHTING.nlights.max((n + 1) as u32);
-        CLIGHTING.lights[n] = LightUniform {
+        data.light_intensity = intensity;
+        data.light_uniform.nlights = data.light_uniform.nlights.max((n + 1) as u32);
+        data.light_uniform.lights[n] = LightUniform {
             sun: (*light).sun as u32,
             position: Vector3::new(
                 (*light).pos.v[0] as f32,
@@ -988,30 +1070,34 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbient(r: c_double, g: c_double, b: c_double) {
-    unsafe {
-        CLIGHTING.ambient = Vector3::new(r as f32, g as f32, b as f32);
-    }
+    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    data.light_uniform.ambient = Vector3::new(r as f32, g as f32, b as f32);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightAmbientGet(r: *mut c_double, g: *mut c_double, b: *mut c_double) {
+    let data = COMMON.get().unwrap().data.lock().unwrap();
+    let amb = data.light_uniform.ambient;
     unsafe {
-        *r = CLIGHTING.ambient.x as f64;
-        *g = CLIGHTING.ambient.y as f64;
-        *b = CLIGHTING.ambient.z as f64;
+        *r = amb.x as f64;
+        *g = amb.y as f64;
+        *b = amb.z as f64;
     }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensity(strength: c_double) {
-    unsafe {
-        CINTENSITY = strength;
-    }
+    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let old_intensity = data.light_intensity;
+    let new_intensity = strength as f32;
+    data.light_intensity = new_intensity;
+    data.light_uniform.ambient *= new_intensity / old_intensity;
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_lightIntensityGet() -> c_double {
-    unsafe { CINTENSITY }
+    let data = COMMON.get().unwrap().data.lock().unwrap();
+    data.light_intensity as f64
 }
 
 #[unsafe(no_mangle)]
@@ -1019,19 +1105,18 @@ pub extern "C" fn gltf_lightTransform(
     _lighting: *mut naevc::Lighting,
     transform: *const Matrix4<f32>,
 ) {
-    // TODO manipulate L
-    unsafe {
-        let transform = &*transform;
-        for i in 0..CLIGHTING.nlights as usize {
-            let mut l = CLIGHTING.lights[i];
-            if l.sun != 0 {
-                l.position = transform.transform_vector(&l.position);
-            } else {
-                l.position = Vector3::from_homogeneous(
-                    transform.transform_point(&Point3::from(l.position)).into(),
-                )
-                .unwrap();
-            }
+    let transform = unsafe { &*transform };
+    let mut data = COMMON.get().unwrap().data.lock().unwrap();
+    let lighting = &mut data.light_uniform;
+    for i in 0..lighting.nlights as usize {
+        let l = &mut lighting.lights[i];
+        if l.sun != 0 {
+            l.position = transform.transform_vector(&l.position);
+        } else {
+            l.position = Vector3::from_homogeneous(
+                transform.transform_point(&Point3::from(l.position)).into(),
+            )
+            .unwrap();
         }
     }
 }
@@ -1115,7 +1200,8 @@ pub extern "C" fn gltf_renderScene(
     };
     let ctx = Context::get().unwrap(); /* Lock early. */
     #[allow(static_mut_refs)]
-    let lighting = unsafe { &CLIGHTING };
+    let data = COMMON.get().unwrap().data.lock().unwrap();
+    let lighting = &data.light_uniform;
     let _ = model.render_scene(
         ctx,
         &FramebufferTarget::from_gl(fb, size as usize, size as usize),

@@ -2303,7 +2303,7 @@ double gltf_lightIntensityGet( void )
 }
 
 /**
- * @brief Transforms the lighting positions based on a trasnnform matrix.
+ * @brief Transforms the lighting positions based on a trasnform matrix.
  */
 void gltf_lightTransform( Lighting *L, const mat4 *H )
 {
