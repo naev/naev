@@ -7,6 +7,7 @@
 struct Light {
    vec3 position;    /**< Position or orientation if sun. */
    vec3 colour;      /**< Colour to use. */
+   float intensity;  /**< Intensity of all lighting. */
    int sun;          /**< Whether or not a sun. */
 };
 #if GLSL_VERSION >= 420
@@ -14,6 +15,7 @@ layout(std140, binding=0) uniform Lighting {
 #else
 layout(std140) uniform Lighting {
 #endif
+   float intensity; /**< Intensity of the light. */
    vec3 ambient; /**< Ambient lighting. */
    int nlights;
    Light lights[ MAX_LIGHTS ];

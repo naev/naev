@@ -92,50 +92,73 @@ impl MaterialUniform {
 pub struct LightUniform {
     position: Vector3<f32>,
     colour: Vector3<f32>,
+    intensity: f32,
     sun: u32,
 }
-impl LightUniform {
-    pub const fn default() -> Self {
+impl From<&naevc::Light> for LightUniform {
+    fn from(light: &naevc::Light) -> Self {
         LightUniform {
-            position: Vector3::new(0.0, 0.0, 0.0),
-            colour: Vector3::new(0.0, 0.0, 0.0),
-            sun: 0,
+            intensity: light.intensity as f32,
+            sun: light.sun as u32,
+            position: Vector3::new(
+                light.pos.v[0] as f32,
+                light.pos.v[1] as f32,
+                light.pos.v[2] as f32,
+            ),
+            colour: Vector3::new(
+                light.colour.v[0] as f32,
+                light.colour.v[1] as f32,
+                light.colour.v[2] as f32,
+            ),
         }
     }
 }
 
 #[repr(C)]
-#[derive(Debug, Clone, Default, ShaderType)]
+#[derive(Debug, Clone, ShaderType)]
 pub struct LightingUniform {
+    intensity: f32,
     ambient: Vector3<f32>,
     nlights: u32,
     //#[size(runtime)]
     //lights: Vec<LightUniform>,
     lights: [LightUniform; MAX_LIGHTS],
 }
-
-impl LightingUniform {
-    pub fn new() -> Self {
+impl From<&naevc::Lighting> for LightingUniform {
+    fn from(lighting: &naevc::Lighting) -> Self {
+        let lights: [LightUniform; 7] =
+            core::array::from_fn::<_, MAX_LIGHTS, _>(|i| (&lighting.lights[i]).into());
         LightingUniform {
-            ..Default::default()
+            intensity: lighting.intensity as f32,
+            ambient: Vector3::new(
+                lighting.ambient_r as f32,
+                lighting.ambient_g as f32,
+                lighting.ambient_b as f32,
+            ),
+            nlights: lighting.nlights as u32,
+            lights,
         }
     }
-
-    pub const fn default() -> Self {
+}
+impl Default for LightingUniform {
+    fn default() -> Self {
         LightingUniform {
+            intensity: 1.0,
             ambient: Vector3::new(0.0, 0.0, 0.0),
             nlights: 2,
             lights: [
                 // Key Light
                 LightUniform {
                     position: Vector3::new(-3.0, 2.75, -3.0),
-                    colour: Vector3::new(80.0, 80.0, 80.0),
+                    colour: Vector3::new(1.0, 1.0, 1.0),
+                    intensity: 80.0,
                     sun: 0,
                 },
                 // Fill Light
                 LightUniform {
                     position: Vector3::new(10.0, 11.5, 7.0),
                     colour: Vector3::new(1.0, 1.0, 1.0),
+                    intensity: 1.0,
                     sun: 1,
                 },
                 LightUniform::default(),
@@ -1092,25 +1115,10 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
         return -1;
     }
     let mut data = COMMON.get().unwrap().data.write().unwrap();
-    unsafe {
-        let intensity = (*light).intensity as f32;
-        data.light_intensity = intensity;
-        data.light_uniform.nlights = data.light_uniform.nlights.max((n + 1) as u32);
-        data.light_uniform.lights[n] = LightUniform {
-            sun: (*light).sun as u32,
-            position: Vector3::new(
-                (*light).pos.v[0] as f32,
-                (*light).pos.v[1] as f32,
-                (*light).pos.v[2] as f32,
-            ),
-            colour: Vector3::new(
-                ((*light).colour.v[0] as f32) * intensity,
-                ((*light).colour.v[1] as f32) * intensity,
-                ((*light).colour.v[2] as f32) * intensity,
-            ),
-        };
-        data.update_matrix(n);
-    }
+    let light = unsafe { &*light };
+    data.light_uniform.nlights = data.light_uniform.nlights.max((n + 1) as u32);
+    data.light_uniform.lights[n] = light.into();
+    data.update_matrix(n);
     0
 }
 
@@ -1222,11 +1230,25 @@ pub extern "C" fn gltf_free(model: *mut Model) {
 pub extern "C" fn gltf_render(
     fb: naevc::GLuint,
     model: *mut Model,
-    transform: *const Matrix4<f32>,
-    time: f32,
+    ctransform: *const Matrix4<f32>,
+    _time: f32,
     size: f64,
 ) {
-    gltf_renderScene(fb, model, 0, transform, time, size)
+    let model = unsafe { &mut *model };
+    let transform = match ctransform.is_null() {
+        true => &Matrix4::identity(),
+        false => unsafe { &*ctransform },
+    };
+    let ctx = Context::get().unwrap(); /* Lock early. */
+    let data = COMMON.get().unwrap().data.read().unwrap();
+    let lighting = &data.light_uniform;
+    let _ = model.render_scene(
+        ctx,
+        &FramebufferTarget::from_gl(fb, size as usize, size as usize),
+        0,
+        lighting,
+        &transform,
+    );
 }
 
 #[unsafe(no_mangle)]
@@ -1237,6 +1259,7 @@ pub extern "C" fn gltf_renderScene(
     ctransform: *const Matrix4<f32>,
     _time: f32,
     size: f64,
+    clighting: *const naevc::Lighting,
 ) {
     // TODO animations
     let model = unsafe { &mut *model };
@@ -1245,9 +1268,11 @@ pub extern "C" fn gltf_renderScene(
         false => unsafe { &*ctransform },
     };
     let ctx = Context::get().unwrap(); /* Lock early. */
-    #[allow(static_mut_refs)]
     let data = COMMON.get().unwrap().data.read().unwrap();
-    let lighting = &data.light_uniform;
+    let lighting = match clighting.is_null() {
+        true => &data.light_uniform,
+        false => &(unsafe { &*clighting }).into(),
+    };
     let _ = model.render_scene(
         ctx,
         &FramebufferTarget::from_gl(fb, size as usize, size as usize),
