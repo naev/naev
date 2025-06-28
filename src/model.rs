@@ -224,7 +224,7 @@ impl ShadowShader {
 }
 
 pub struct Material {
-    uniform_data: MaterialUniform,
+    //uniform_data: MaterialUniform,
     uniform_buffer: Buffer,
     diffuse: Rc<Texture>,
     metallic: Rc<Texture>,
@@ -305,7 +305,7 @@ impl Material {
         };
 
         Ok(Material {
-            uniform_data: data,
+            //uniform_data: data,
             uniform_buffer,
             diffuse,
             metallic,
@@ -323,12 +323,14 @@ pub struct Primitive {
     uniform_buffer: Buffer,
     topology: u32,
     vao: VertexArray,
-    vertices: Buffer,
-    indices: Buffer,
     num_indices: i32,
     element_type: u32,
     material: Rc<Material>,
     vertex_data: Option<Vec<Vertex>>,
+    #[allow(dead_code)]
+    vertices: Buffer,
+    #[allow(dead_code)]
+    indices: Buffer,
 }
 
 impl Primitive {
@@ -780,7 +782,7 @@ impl Scene {
 
 pub struct Model {
     scenes: Vec<Scene>,
-    radius: f32,
+    //radius: f32,
     transform_scale: Matrix4<f32>,
     common: &'static Common,
 }
@@ -981,7 +983,7 @@ impl Model {
 
         Ok(Model {
             scenes,
-            radius,
+            //radius,
             transform_scale,
             common,
         })
