@@ -121,6 +121,11 @@ static inline double seg_dist_sq(const double *A, const double *B,
       return SCAL(OB, OB);
 }
 
+struct s_edge {
+   int    jmp[2];
+   double len;
+};
+
 struct s_ssys {
    struct sys {
       double v[2];
@@ -132,8 +137,8 @@ struct s_ssys {
    int    nsys;
    int    nosys;
 
-   int *jumps;
-   int  njumps;
+   struct s_edge *jumps;
+   int            njumps;
 };
 
 static double edge_stretch_score(const double *neigh, int n_neigh,
@@ -456,15 +461,15 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
    int                 *id_around;
 
    for (int i = 0; i < map->njumps; i++)
-      edge_len += sqrt(dist_sq(map->sys[map->jumps[2 * i]].v,
-                               map->sys[map->jumps[2 * i + 1]].v));
+      edge_len += sqrt(dist_sq(map->sys[map->jumps[i].jmp[0]].v,
+                               map->sys[map->jumps[i].jmp[1]].v));
 
    edge_len /= map->njumps;
    ssys_p.radius  = 2.0 * edge_len / 3.0;
    ssys_p.falloff = ssys_fallscale * ssys_p.radius;
 
    for (int i = 0; i < 2 * map->njumps; i++)
-      if (map->jumps[i] == ssys)
+      if (map->jumps[i / 2].jmp[i % 2] == ssys)
          ssys_p.n_neigh++;
 
    if (!ssys_p.n_neigh) {
@@ -475,12 +480,13 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
    id_neigh       = calloc(ssys_p.n_neigh + 1, sizeof(int));
    ssys_p.n_neigh = 0;
    for (int i = 0; i < map->njumps; i++) {
-      int n = 2 * i;
+      int n = 0;
 
-      if (map->jumps[n] == ssys)
-         n = n ^ 1;
-      if (map->jumps[n ^ 1] == ssys && map->sys[map->jumps[n]].w != 0.0)
-         id_neigh[ssys_p.n_neigh++] = map->jumps[n];
+      if (map->jumps[i].jmp[n] == ssys)
+         n = 1;
+      if (map->jumps[i].jmp[n ^ 1] == ssys &&
+          map->sys[map->jumps[i].jmp[n]].w != 0.0)
+         id_neigh[ssys_p.n_neigh++] = map->jumps[i].jmp[n];
    }
    ssys_p.n_neigh = in_place_sort_u(id_neigh, ssys_p.n_neigh);
    if (!quiet)
@@ -520,12 +526,11 @@ int reposition_sys(double dst[2], const struct s_ssys *map, int ssys,
 
    ssys_p.edges = calloc(map->njumps * 6, sizeof(double));
    for (int i = 0; i < map->njumps; i++) {
-      int n = 2 * i;
-      if (map->jumps[n] == ssys || map->jumps[n + 1] == ssys)
+      if (map->jumps[i].jmp[0] == ssys || map->jumps[i].jmp[1] == ssys)
          continue;
 
-      double *A    = map->sys[map->jumps[n]].v;
-      double *B    = map->sys[map->jumps[n + 1]].v;
+      double *A    = map->sys[map->jumps[i].jmp[0]].v;
+      double *B    = map->sys[map->jumps[i].jmp[1]].v;
       double  u[2] = INIT_VDIF(B, A);
       norm_v(u);
       if (seg_dist_sq(A, B, u, center) < max_sq) {
@@ -675,19 +680,21 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       char  *bufs[3] = {NULL, NULL, NULL};
       int    r;
       double tmp[2] = {0.0, 0.0};
+      double len    = 1.0;
 
       if (3 == sscanf(line, "%ms %lf %lf %n", bufs, tmp, tmp + 1, &r)) {
          const size_t id = ssys_num(h, bufs[0], &map, tmp, line + r, true);
          map.sys[id].w   = 1.0;
-      } else if (2 == sscanf(line, "%ms %ms", bufs + 1, bufs + 2)) {
+      } else if (2 <= sscanf(line, "%ms %ms %lf", bufs + 1, bufs + 2, &len)) {
          if ((map.njumps & (map.njumps + 1)) == 0) {
             const size_t new_siz = (map.njumps << 1) | 1;
-            map.jumps = realloc(map.jumps, new_siz * 2 * sizeof(int));
+            map.jumps = realloc(map.jumps, new_siz * sizeof(struct s_edge));
          }
-         map.jumps[map.njumps * 2 + 0] =
+         map.jumps[map.njumps].jmp[0] =
             ssys_num(h, bufs[1], &map, tmp, NULL, false);
-         map.jumps[map.njumps * 2 + 1] =
+         map.jumps[map.njumps].jmp[1] =
             ssys_num(h, bufs[2], &map, tmp, NULL, false);
+         map.jumps[map.njumps].len = len;
          map.njumps++;
       } else if (line[0] != '\0' && line[0] != '\n') {
          const int n = strlen(line);
@@ -704,7 +711,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    if (ign_alone) {
       // mark alone sys as 0-weighted.
       for (int i = 0; i < 2 * map.njumps; i++) {
-         const int n = map.jumps[i];
+         const int n = map.jumps[i / 2].jmp[i % 2];
          if (map.sys[n].w > 0.0 && map.sys[n].w <= 1.0)
             map.sys[n].w += 1.0;
       }
@@ -722,8 +729,12 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       char buff[512];
       for (int i = 0; i < map.njumps; i++) {
          size_t n =
-            snprintf(buff, 511, "%s %s\n", map.sys_nam[map.jumps[i * 2]],
-                     map.sys_nam[map.jumps[i * 2 + 1]]);
+            snprintf(buff, 511, "%s %s", map.sys_nam[map.jumps[i].jmp[0]],
+                     map.sys_nam[map.jumps[i].jmp[1]]);
+         if (map.jumps[i].len != 1.0)
+            n += snprintf(buff + n, 511 - n, " %f\n", map.jumps[i].len);
+         else
+            n += snprintf(buff + n, 511 - n, "\n");
          fwrite(buff, sizeof(char), n, stdout);
          fflush(stdout);
       }
