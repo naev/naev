@@ -48,8 +48,8 @@ s=(doowa flok firk)
 #leporis hystera korifa apik telika mida ekta akra
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
-TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
-read -ra ALM_ALL <<< "$("$SCRIPT_DIR"/ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TWINS[@]}")"
+#TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
+read -ra ALM_ALL <<< "$("$SCRIPT_DIR"/ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 "$SCRIPT_DIR"/repos.sh 3 "${ALM_ALL[@]}" |
 #("$SCRIPT_DIR"/repos.sh 5 -i "${SIRIUS[@]}" && "$SCRIPT_DIR"/ssys_graph.sh -e) |
 #"$SCRIPT_DIR"/reposition -e -w0 "${repos_systems[@]}" |

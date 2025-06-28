@@ -1,8 +1,7 @@
 #!/usr/bin/bash
 
 #FLAGS=("-pg" "-O1")
-#FLAGS=("-Ofast")
-FLAGS=("-O3")
+FLAGS=("-Ofast")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "usage:  $(basename "$0") [<#iterations>|-C] [reposition args]" >&2
