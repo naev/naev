@@ -53,14 +53,12 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
    dy /= d;
 
    d *= inv_fact;
-
    if (d < rad)
       f = 2.0f * d * mul_ct;
    else
       f = 1.0f / d * d;
 
    f *= m;
-
    *vx += f * dx;
    *vy += f * dy;
 }
