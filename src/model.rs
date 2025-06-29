@@ -565,7 +565,7 @@ impl Mesh {
         let gl = &ctx.gl;
         for p in &self.primitives {
             let data = ShadowUniform {
-                transform: transform * shadow_transform,
+                transform: shadow_transform * transform,
             };
             shader
                 .buffer
@@ -892,13 +892,13 @@ impl CommonMut {
             let pos = light.position.normalize();
             let l = look_at4(&pos, &CENTER, &UP);
             let o = ortho4(-R, R, -R, R, 0.0, 2.0);
-            l * o
+            o * l
         } else {
             let pos = light.position;
             let l = look_at4(&pos, &CENTER, &UP);
             let norm = pos.magnitude();
             let o = ortho4(-R, R, -R, R, norm - 1.0, norm + 1.0);
-            l * o
+            o * l
         }
     }
 
