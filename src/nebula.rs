@@ -203,7 +203,7 @@ impl NebulaData {
             .build(gl)?;
         let shader_puff = ShaderBuilder::new(Some("Nebula Puff Shader"))
             .uniform_buffer("PuffData", 0)
-            .prepend(&format!("const float PUFF_BUFFER = {:.1};\n", PUFF_BUFFER))
+            .prepend(&format!("const float PUFF_BUFFER = {PUFF_BUFFER:.1};\n"))
             .vert_file("nebula_puff.vert")
             .frag_file("nebula_puff.frag")
             .build(gl)?;
@@ -341,9 +341,8 @@ impl NebulaData {
                 (dims.view_width, dims.view_height)
             };
             // Copy over
-            match self.framebuffer.texture {
-                Some(ref tex) => tex.draw(ctx, 0.0, 0.0, vw, vh)?,
-                None => (),
+            if let Some(ref tex) = self.framebuffer.texture {
+                tex.draw(ctx, 0.0, 0.0, vw, vh)?
             };
         }
 

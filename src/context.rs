@@ -28,7 +28,7 @@ fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str)
         glow::DEBUG_SOURCE_THIRD_PARTY => "third_party",
         glow::DEBUG_SOURCE_APPLICATION => "application",
         glow::DEBUG_SOURCE_OTHER => "other",
-        _ => &format!("{}", source),
+        _ => &format!("{source}"),
     };
     let s_type = match msg_type {
         glow::DEBUG_TYPE_ERROR => "error",
@@ -40,15 +40,15 @@ fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str)
         glow::DEBUG_TYPE_PUSH_GROUP => "push_group",
         glow::DEBUG_TYPE_POP_GROUP => "pop_group",
         glow::DEBUG_TYPE_OTHER => "other",
-        _ => &format!("{}", msg_type),
+        _ => &format!("{msg_type}"),
     };
-    let s_id = format!("{}", id);
+    let s_id = format!("{id}");
     let s_severity = match severity {
         glow::DEBUG_SEVERITY_LOW => "low",
         glow::DEBUG_SEVERITY_MEDIUM => "medium",
         glow::DEBUG_SEVERITY_HIGH => "high",
         glow::DEBUG_SEVERITY_NOTIFICATION => "notification",
-        _ => &format!("{}", severity),
+        _ => &format!("{severity}"),
     };
 
     if severity == glow::DEBUG_SEVERITY_LOW {
@@ -153,8 +153,8 @@ impl Dimensions {
             );
             if vw < naevc::RESOLUTION_W_MIN as f32 || vh < naevc::RESOLUTION_H_MIN as f32 {
                 warn!("Screen size is too small, upscaling...");
-                let scalew = naevc::RESOLUTION_W_MIN as f32 / vw as f32;
-                let scaleh = naevc::RESOLUTION_H_MIN as f32 / vh as f32;
+                let scalew = naevc::RESOLUTION_W_MIN as f32 / vw;
+                let scaleh = naevc::RESOLUTION_H_MIN as f32 / vh;
                 let scale = scale * f32::max(scalew, scaleh);
                 (
                     (window_width as f32) * scale,

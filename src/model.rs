@@ -195,7 +195,7 @@ impl ModelShader {
             .uniform_buffer("Material", Self::U_MATERIAL)
             .uniform_buffer("Primitive", Self::U_PRIMITIVE);
         for i in 0..MAX_LIGHTS {
-            let sname = format!("shadowmap_tex[{}]", i);
+            let sname = format!("shadowmap_tex[{i}]");
             shaderbuilder = shaderbuilder.sampler(&sname, (5 + i) as i32);
         }
         let shader = shaderbuilder.build(gl)?;
@@ -507,7 +507,7 @@ impl Mesh {
         let gl = &ctx.gl;
         for p in &self.primitives {
             // Update the primitive uniform
-            let new_transform = transform.clone();
+            let new_transform = *transform;
             //let new_transform = VIEW * transform;
             let mut data = p.uniform_data;
             data.view = new_transform;
@@ -619,7 +619,7 @@ impl Node {
 
     pub fn radius(&self, transform: Matrix4<f32>) -> f32 {
         let mut radius: f32 = 0.0;
-        let transform = self.transform * transform.clone();
+        let transform = self.transform * transform;
         if let Some(mesh) = &self.mesh {
             for primitive in &mesh.primitives {
                 let rad = primitive.radius(&transform);
@@ -719,7 +719,7 @@ impl Scene {
         let shadow_shader = &common.shader_shadow;
         let light_mat = {
             let data = common.data.read().unwrap();
-            data.light_mat.clone()
+            data.light_mat
         };
         shadow_shader.shader.use_program(gl);
         for i in 0..(lighting.nlights as usize) {
@@ -734,7 +734,7 @@ impl Scene {
 
             // Render depth buffer
             for node in &mut self.nodes {
-                node.render_shadow(ctx, &shadow_shader, transform, shadow_transform)?;
+                node.render_shadow(ctx, shadow_shader, transform, shadow_transform)?;
             }
 
             // TODO blur shadows
@@ -1042,7 +1042,7 @@ impl Model {
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        let scene_transform = transform.clone() * self.transform_scale;
+        let scene_transform = *transform * self.transform_scale;
         self.render_scene(ctx, fb, 0, lighting, &scene_transform)
     }
 
@@ -1054,7 +1054,7 @@ impl Model {
         lighting: &LightingUniform,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        let scene_transform = transform.clone() * self.transform_scale;
+        let scene_transform = *transform * self.transform_scale;
         if let Some(scene) = self.scenes.get_mut(sceneid) {
             scene.render(
                 self.common,
@@ -1232,7 +1232,7 @@ pub extern "C" fn gltf_render(
         &FramebufferTarget::from_gl(fb, size as usize, size as usize),
         0,
         lighting,
-        &transform,
+        transform,
     );
 }
 
@@ -1263,7 +1263,7 @@ pub extern "C" fn gltf_renderScene(
         &FramebufferTarget::from_gl(fb, size as usize, size as usize),
         scene as usize,
         lighting,
-        &transform,
+        transform,
     );
 }
 

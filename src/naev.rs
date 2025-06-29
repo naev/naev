@@ -85,7 +85,7 @@ pub fn naev() -> Result<()> {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
         if naevc::PHYSFS_init(argv0.as_ptr() as *const c_char) == 0 {
             let err = physfs::error_as_io_error();
-            println!("{}", err);
+            println!("{err}");
             return Err(Error::new(err));
             /* TODO probably move the error handling to the "real" main, when shit hits the
                 * fan. Below depends on sdl3
@@ -115,12 +115,12 @@ pub fn naev() -> Result<()> {
     /* Initialize SDL. */
     let sdlctx = match sdl::init() {
         Ok(s) => s,
-        Err(e) => panic!("Unable to initialize SDL: {}", e),
+        Err(e) => panic!("Unable to initialize SDL: {e}"),
     };
 
     let sdltime = match sdlctx.timer() {
         Ok(s) => s,
-        Err(e) => panic!("Unable to initialize SDL Timer: {}", e),
+        Err(e) => panic!("Unable to initialize SDL Timer: {e}"),
     };
     let starttime = sdltime.ticks();
 
@@ -138,7 +138,7 @@ pub fn naev() -> Result<()> {
 
     let sdlvid = match sdlctx.video() {
         Ok(s) => s,
-        Err(e) => panic!("Unable to initialize SDL Video: {}", e),
+        Err(e) => panic!("Unable to initialize SDL Video: {e}"),
     };
 
     unsafe {
@@ -168,7 +168,7 @@ pub fn naev() -> Result<()> {
         let conf_file = CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char)
             .to_str()
             .unwrap();
-        format!("{}{}", rpath, conf_file)
+        format!("{rpath}{conf_file}")
     };
 
     unsafe {

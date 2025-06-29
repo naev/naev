@@ -57,13 +57,13 @@ impl TextureFormat {
     }
 
     pub fn to_gl(self) -> u32 {
-        (match self {
+        match self {
             Self::RGB => glow::RGB,
             Self::RGBA => glow::RGBA,
             Self::SRGB => glow::RGB,
             Self::SRGBA => glow::RGBA,
             Self::Depth => glow::DEPTH_COMPONENT,
-        }) as u32
+        }
     }
 
     pub fn to_sized_gl(self) -> i32 {
@@ -845,10 +845,7 @@ impl FramebufferBuilder {
 
     pub fn build_wrap(self, ctx: &context::ContextWrapper) -> Result<Framebuffer> {
         let texture = if self.texture {
-            let name = match self.name {
-                Some(ref name) => Some(format!("{}-Texture", name)),
-                None => None,
-            };
+            let name = self.name.as_ref().map(|name| format!("{name}-Texture"));
             let texture = TextureBuilder::new()
                 .name(name.as_deref())
                 .width(self.w)
@@ -862,10 +859,7 @@ impl FramebufferBuilder {
         };
 
         let depth = if self.depth {
-            let name = match self.name {
-                Some(ref name) => Some(format!("{}-Depth", name)),
-                None => None,
-            };
+            let name = self.name.as_ref().map(|name| format!("{name}-Depth"));
             let depth = TextureBuilder::new()
                 .name(name.as_deref())
                 .empty(TextureFormat::Depth)

@@ -50,7 +50,7 @@ pub extern "C" fn ship_gfxLoadNeeded() {
             .to_str()
             .unwrap()
         };
-        let path = format!("gfx/ship3d/{}/{}.gltf", base_path, cpath);
+        let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
         match ndata::stat(&path) {
             Ok(_) => match Model::from_path(&ctx, &path) {
                 Ok(m) => {

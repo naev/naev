@@ -232,7 +232,7 @@ impl ShaderBuilder {
         let mut fragdata = ShaderSource::to_string(&self.frag)?;
 
         let glsl = unsafe { naevc::gl_screen.glsl };
-        let mut prepend = format!("#version {}\n\n#define GLSL_VERSION {}\n", glsl, glsl);
+        let mut prepend = format!("#version {glsl}\n\n#define GLSL_VERSION {glsl}\n");
         prepend.push_str("#define HAS_GL_ARB_shader_subroutine 1\n");
 
         if !self.prepend.is_empty() {

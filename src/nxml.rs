@@ -84,6 +84,6 @@ pub fn node_texturepath(node: Node, default: &str) -> Result<String> {
     let path = node_string(node)?;
     Ok(match path.starts_with('/') {
         true => path,
-        false => format!("{}{}", default, path),
+        false => format!("{default}{path}"),
     })
 }

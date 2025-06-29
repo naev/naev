@@ -287,7 +287,7 @@ impl<'a> VertexArrayBuilder<'a> {
                     buffer.stride,
                     buffer.offset,
                 );
-                gl.vertex_attrib_divisor(idx as u32, buffer.divisor);
+                gl.vertex_attrib_divisor(idx, buffer.divisor);
             }
 
             // Bind Index Buffer

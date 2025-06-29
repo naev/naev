@@ -126,7 +126,7 @@ pub fn load() -> Result<Vec<SlotProperty>> {
             match SlotProperty::load(&ctx, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 Err(err) => {
-                    warn_err(err.context(format!("unable to load Slot Property '{}'!", filename)));
+                    warn_err(err.context(format!("unable to load Slot Property '{filename}'!")));
                     None
                 }
             }

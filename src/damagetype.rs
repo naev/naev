@@ -211,7 +211,7 @@ pub fn load() -> Result<Vec<DamageType>> {
             match DamageType::load(filename.as_str()) {
                 Ok(dt) => Some(dt),
                 Err(err) => {
-                    warn_err(err.context(format!("unable to load Damage Type '{}'!", filename)));
+                    warn_err(err.context(format!("unable to load Damage Type '{filename}'!")));
                     None
                 }
             }

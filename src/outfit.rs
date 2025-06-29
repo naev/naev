@@ -41,7 +41,7 @@ pub extern "C" fn outfit_gfxStoreLoadNeeded() {
         let path = {
             match gfx_path.chars().next() {
                 Some('/') => String::from(gfx_path),
-                _ => format!("gfx/outfit/store/{}", gfx_path),
+                _ => format!("gfx/outfit/store/{gfx_path}"),
             }
         };
 

@@ -350,7 +350,7 @@ impl NLua {
                 let lib: mlua::Value = preload.get(name.clone())?;
                 match lib {
                     mlua::Value::Nil => Ok(mlua::Value::String(
-                        lua.create_string(format!("\n\tno field package.preload['{}']", name))?,
+                        lua.create_string(format!("\n\tno field package.preload['{name}']"))?,
                     )),
                     v => Ok(v),
                 }
