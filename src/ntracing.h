@@ -18,7 +18,7 @@
 #define NTracingAlloc( ptr, size )                                             \
    do {                                                                        \
       _uninitialized_var( ptr );                                               \
-      TracyCAlloc( ptr, size )                                                 \
+      TracyCAlloc( ptr, size );                                                \
    } while ( 0 )
 #define NTracingFree( ptr )                                                    \
    do {                                                                        \
