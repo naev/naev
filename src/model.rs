@@ -508,7 +508,6 @@ impl Mesh {
         for p in &self.primitives {
             // Update the primitive uniform
             let new_transform = *transform;
-            //let new_transform = VIEW * transform;
             let mut data = p.uniform_data;
             data.view = new_transform;
             data.normal = new_transform
@@ -566,7 +565,7 @@ impl Mesh {
         let gl = &ctx.gl;
         for p in &self.primitives {
             let data = ShadowUniform {
-                transform: shadow_transform * transform,
+                transform: transform * shadow_transform,
             };
             shader
                 .buffer
@@ -619,7 +618,7 @@ impl Node {
 
     pub fn radius(&self, transform: Matrix4<f32>) -> f32 {
         let mut radius: f32 = 0.0;
-        let transform = self.transform * transform;
+        let transform = transform * self.transform;
         if let Some(mesh) = &self.mesh {
             for primitive in &mesh.primitives {
                 let rad = primitive.radius(&transform);
@@ -638,7 +637,7 @@ impl Node {
         shader: &ModelShader,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
-        let new_transform = self.transform * transform;
+        let new_transform = transform * self.transform;
         // If determinant is negative, we have to invert the winding
         let det = new_transform.fixed_resize::<3, 3>(0.0).determinant();
         unsafe {
@@ -663,7 +662,7 @@ impl Node {
         transform: &Matrix4<f32>,
         shadow_transform: &Matrix4<f32>,
     ) -> Result<()> {
-        let new_transform = self.transform * transform;
+        let new_transform = transform * self.transform;
         if let Some(mesh) = &self.mesh {
             mesh.render_shadow(ctx, shader, &new_transform, shadow_transform)?;
         }

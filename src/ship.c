@@ -347,8 +347,8 @@ void ship_renderGfxStore( GLuint fbo, const Ship *s, int size, double dir,
       /* We rotate the model so it's staring at the player and facing slightly
        * down. */
       H = mat4_identity();
-      mat4_rotate( &H, -M_PI_4 + dir, 0.0, 1.0, 0.0 );
-      mat4_rotate( &H, -M_PI_4 * 0.25 + updown, 1.0, 0.0, 0.0 );
+      mat4_rotate( &H, M_PI_4 - dir, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, M_PI_4 * 0.25 - updown, 1.0, 0.0, 0.0 );
 
       /* Render the model. */
       ship_renderFramebuffer3D( s, fbo, size, gl_screen.nw, gl_screen.nh, glow,
@@ -452,17 +452,17 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       /* We rotate the model so it's staring at the player and facing slightly
        * down. */
       H = mat4_identity();
-      mat4_rotate( &H, -M_PI_4, 0.0, 1.0, 0.0 );
-      mat4_rotate( &H, -M_PI_4 * 0.25, 1.0, 0.0, 0.0 );
+      mat4_rotate( &H, M_PI_4, 0.0, 1.0, 0.0 );
+      mat4_rotate( &H, M_PI_4 * 0.25, 1.0, 0.0, 0.0 );
 
       /* Transform the light so it's consistent with the 3D model. */
       Hlight = mat4_identity();
       if ( fabs( tilt ) > DOUBLE_TOL ) {
-         mat4_rotate( &Hlight, M_PI_2, 0.0, 1.0, 0.0 );
-         mat4_rotate( &Hlight, -tilt, 1.0, 0.0, 0.0 );
-         mat4_rotate( &Hlight, dir, 0.0, 1.0, 0.0 );
+         mat4_rotate( &Hlight, -M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &Hlight, tilt, 1.0, 0.0, 0.0 );
+         mat4_rotate( &Hlight, -dir, 0.0, 1.0, 0.0 );
       } else
-         mat4_rotate( &Hlight, dir + M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &Hlight, -dir - M_PI_2, 0.0, 1.0, 0.0 );
       gltf_lightTransform( &L, &Hlight );
 
       /* Increase ambient a wee bit. */
@@ -1565,11 +1565,11 @@ void ship_renderFramebuffer( const Ship *s, GLuint fbo, double fw, double fh,
       /* Determine the model transformation. */
       mat4 H = mat4_identity();
       if ( fabs( tilt ) > DOUBLE_TOL ) {
-         mat4_rotate( &H, M_PI_2, 0.0, 1.0, 0.0 );
-         mat4_rotate( &H, -tilt, 1.0, 0.0, 0.0 );
-         mat4_rotate( &H, dir, 0.0, 1.0, 0.0 );
+         mat4_rotate( &H, -M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &H, tilt, 1.0, 0.0, 0.0 );
+         mat4_rotate( &H, -dir, 0.0, 1.0, 0.0 );
       } else
-         mat4_rotate( &H, dir + M_PI_2, 0.0, 1.0, 0.0 );
+         mat4_rotate( &H, -dir - M_PI_2, 0.0, 1.0, 0.0 );
 
       ship_renderFramebuffer3D( s, fbo, s->size, fw, fh, engine_glow, t, c, L,
                                 &H, 1 );
