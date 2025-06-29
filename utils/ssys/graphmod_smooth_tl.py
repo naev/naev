@@ -13,18 +13,15 @@ if argv[1:] != []:
    exit(0)
 
 from geometry import vec
-from graphmod import sys_pos as pos
+from graphmod import sys_pos as pos, sys_jmp as E
 
 
 # Smoothen tradelane
-from ssys_graph import xml_files_to_graph
-# TODO: get tradelane directly from input
-_V, _pos, E, tradelane, _color = xml_files_to_graph()
 
 newp = dict()
 for k in pos:
-   if k[0] != '_' and (k in tradelane):
-      tln = [s for (s, _) in E[k] if (s in tradelane)]
+   if k[0] != '_':
+      tln = [s for (s, t) in E[k] if (t == 'tradelane')]
       if (n := len(tln)) > 1:
          p = sum([pos[s] for s in tln], vec())
          newp[k] = pos[k] * (1.0 - n*0.125)  +  p * 0.125

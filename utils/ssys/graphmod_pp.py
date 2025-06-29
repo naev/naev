@@ -15,7 +15,8 @@ if argv[1:] != []:
 
 
 from geometry import bb, vec, segment
-from graphmod import sys_pos as pos
+from graphmod import sys_pos as pos, sys_jmp as E
+
 
 pos['syndania'] = vec(pos['syndania'][0], pos['stint'][1])
 
@@ -140,15 +141,12 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
 
 # Increase terminal ngc dist to neighbour to at least average edge length.
 
-from ssys_graph import xml_files_to_graph
-_V, _pos, E, tradelane, _color = xml_files_to_graph()
-
 total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, _) in E[k] if (s in tradelane)]:
-         total += (pos[n]-pos[k]).size()
+      for n in [s for (s, t) in E[k] if t == 'tradelane']:
+         total += (pos[n] - pos[k]).size()
          count += 1
 avg = total / count
 
@@ -165,7 +163,6 @@ for k in pos:
 
 pos['firk'] = (pos['gamma_polaris'] + pos['shakar'] + pos['apez']) / 3.0
 pos['effetey'] = (pos['majesteka'] + pos['trohem']) / 2.0
-
 
 off = (pos['dohriabi'] - pos['anubis_black_hole']) / 2.0
 for k, v in pos.items():

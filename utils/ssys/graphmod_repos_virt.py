@@ -13,18 +13,14 @@ if argv[1:] != []:
    exit(0)
 
 from geometry import vec
-from graphmod import sys_pos as pos
-
-from ssys_graph import xml_files_to_graph
-# TODO: get tradelane directly from input
-_V, _pos, E, tradelane, _color = xml_files_to_graph()
+from graphmod import sys_pos as pos, sys_jmp as E
 
 # average edge length.
 total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, _) in E[k] if (s in tradelane)]:
+      for n in [s for (s, t) in E[k] if (t == 'tradelane')]:
          total += (pos[n] - pos[k]).size()
          count += 1
 avg = total / count
