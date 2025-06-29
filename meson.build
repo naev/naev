@@ -452,8 +452,14 @@ naevcrs = rust.bindgen(
 
    # Next handle setting up and passing stuff to Cargo
    msrv = '1.77.2'
+   # Since Rust debug is significantly slower than release, we try to use our
+   # custom release-with-debug profile that runs quite fast while still having
+   # pretty good debugging properties. Use 'debug_rust' option to explicitly
+   # force Rust to be debug mode.
    if get_option('debug_rust')
       rust_target = 'debug'
+   elif get_option('debug')
+      rust_target = 'release-with-debug'
    else
       rust_target = 'release'
    endif
@@ -466,9 +472,10 @@ naevcrs = rust.bindgen(
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
-   if rust_target == 'release'
-      cargo_options += ['--release']
-   endif
+   #if rust_target == 'release'
+   #   cargo_options += ['--release']
+   #endif
+   cargo_options += [ '--profile', rust_target ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    if target_triplet != ''
       cargo_options += ['--target', target_triplet]
