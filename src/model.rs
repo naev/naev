@@ -927,6 +927,26 @@ impl Common {
                 let gl = &lctx.gl;
                 fb.bind_gl(gl);
                 unsafe {
+                    if let Some(depth) = &fb.depth {
+                        // Can't currently use FramebufferBuilder to set the following, so we do it
+                        // as post-processing
+                        let sampler = depth.sampler;
+                        gl.sampler_parameter_i32(
+                            sampler,
+                            glow::TEXTURE_WRAP_S,
+                            glow::CLAMP_TO_BORDER as i32,
+                        );
+                        gl.sampler_parameter_i32(
+                            sampler,
+                            glow::TEXTURE_WRAP_T,
+                            glow::CLAMP_TO_BORDER as i32,
+                        );
+                        gl.sampler_parameter_f32_slice(
+                            sampler,
+                            glow::TEXTURE_BORDER_COLOR,
+                            &[1.0, 1.0, 1.0, 1.0],
+                        );
+                    };
                     gl.read_buffer(glow::NONE);
                     gl.draw_buffer(glow::NONE);
                 }

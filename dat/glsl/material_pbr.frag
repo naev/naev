@@ -597,7 +597,7 @@ void main (void)
       /* TODO this check will always be true if we do the NoV trick above. */
       //if (NoL > 0.0 || NoV > 0.0) {
 
-      /* Long story short, GLSL 4.60 only supports  dynamically uniform expressions.
+      /* Long story short, GLSL 4.60 only supports dynamically uniform expressions.
        * https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)#Dynamically_uniform_expression */
 #if GLSL_VERSION < 460
          vec3 NoLintensity = NoL * intensity * f_shadow[i];
