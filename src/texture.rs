@@ -185,16 +185,20 @@ impl TextureData {
         ctx: &context::Context,
         name: Option<&str>,
         img: &image::DynamicImage,
+        flipv: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
 
         let has_alpha = img.color().has_alpha();
         let (w, h) = (img.width(), img.height());
-        //let imgdata = img.flipv().to_rgba8().into_raw();
+        let img = match flipv {
+            true => &img.flipv(),
+            false => img,
+        };
         let imgdata = match has_alpha {
-            true => img.flipv().to_rgba8().into_raw(),
-            false => img.flipv().to_rgb8().into_raw(),
+            true => img.to_rgba8().into_raw(),
+            false => img.to_rgb8().into_raw(),
         };
 
         let is_srgb = true;
@@ -421,6 +425,7 @@ impl TextureSource {
         sctx: &ContextWrapper,
         w: usize,
         h: usize,
+        flipv: bool,
         mipmaps: bool,
         name: Option<&str>,
     ) -> Result<Arc<TextureData>> {
@@ -450,11 +455,11 @@ impl TextureSource {
                     let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
                     let img = surface_to_image(sur)?;
                     let ctx = &sctx.lock();
-                    TextureData::from_image(ctx, name, &img)?
+                    TextureData::from_image(ctx, name, &img, flipv)?
                 }
                 TextureSource::Image(img) => {
                     let ctx = &sctx.lock();
-                    TextureData::from_image(ctx, name, img)?
+                    TextureData::from_image(ctx, name, img, flipv)?
                 }
                 TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
                 TextureSource::Empty(fmt) => {
@@ -516,7 +521,7 @@ impl TextureBuilder {
             mag_filter: FilterMode::Linear,
             min_filter: FilterMode::Linear,
             mipmaps: false,
-            flipv: false,
+            flipv: true, // We flip by so it matches the viewport, but not the 3D textures
         }
     }
 
@@ -635,6 +640,7 @@ impl TextureBuilder {
             sctx,
             self.w,
             self.h,
+            self.flipv,
             self.mipmaps,
             self.name.as_deref(),
         )?;
