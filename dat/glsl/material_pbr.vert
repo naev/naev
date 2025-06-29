@@ -42,7 +42,7 @@ void main (void)
 
    /* Shadows. */
    for (int i=0; i<lighting.nlights; i++) {
-      vec4 shadow_pos = primitive.shadow[i] * pos;
+      vec4 shadow_pos = lighting.lights[i].shadow * pos;
       OUT.shadow[i] = shadow_pos.rgb / shadow_pos.w;
       OUT.shadow[i] = OUT.shadow[i] * 0.5 + 0.5;
    }

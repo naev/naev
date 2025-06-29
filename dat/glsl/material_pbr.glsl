@@ -5,16 +5,17 @@
 
 /* Lighting information. Set once per scene. */
 struct Light {
+   mat4 shadow;      /**< Shadow map transformation. */
    vec3 position;    /**< Position or orientation if sun. */
    vec3 colour;      /**< Colour to use. */
    float intensity;  /**< Intensity of all lighting. */
    int sun;          /**< Whether or not a sun. */
 };
 layout(std140) uniform Lighting {
-   float intensity;
-   vec3 ambient; /**< Ambient lighting. */
-   int nlights;
    Light lights[ MAX_LIGHTS ];
+   vec3 ambient; /**< Ambient lighting. */
+   float intensity;
+   int nlights;
 } lighting;
 
 /* PBR material. Set once per draw call. */
@@ -37,5 +38,4 @@ layout(std140) uniform Material {
 layout(std140) uniform Primitive {
    mat4 model;
    mat3 normal;
-   mat4 shadow[MAX_LIGHTS];
 } primitive;

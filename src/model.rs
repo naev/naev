@@ -51,7 +51,6 @@ pub struct Vertex {
 pub struct PrimitiveUniform {
     view: Matrix4<f32>,
     normal: Matrix3<f32>,
-    shadow: [Matrix4<f32>; MAX_LIGHTS],
 }
 
 impl PrimitiveUniform {
@@ -90,14 +89,39 @@ impl MaterialUniform {
 #[repr(C)]
 #[derive(Debug, Copy, Default, Clone, ShaderType)]
 pub struct LightUniform {
+    shadow: Matrix4<f32>,
     position: Vector3<f32>,
     colour: Vector3<f32>,
     intensity: f32,
     sun: u32,
 }
+impl LightUniform {
+    fn update_shadow(&mut self) {
+        if self.position.magnitude() <= 1e-8 {
+            self.shadow = Matrix4::identity();
+            return;
+        }
+        const CENTER: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
+        const UP: Vector3<f32> = Vector3::new(0.0, 1.0, 0.0);
+        const R: f32 = 1.0;
+        self.shadow = if self.sun != 0 {
+            let pos = self.position.normalize();
+            let l = look_at4(&pos, &CENTER, &UP);
+            let o = ortho4(-R, R, -R, R, 0.0, 2.0);
+            o * l
+        } else {
+            let pos = self.position;
+            let l = look_at4(&pos, &CENTER, &UP);
+            let norm = pos.magnitude();
+            let o = ortho4(-R, R, -R, R, norm - 1.0, norm + 1.0);
+            o * l
+        };
+    }
+}
 impl From<&naevc::Light> for LightUniform {
     fn from(light: &naevc::Light) -> Self {
-        LightUniform {
+        let mut l = LightUniform {
+            shadow: Matrix4::identity(),
             intensity: light.intensity as f32,
             sun: light.sun as u32,
             position: Vector3::new(
@@ -110,19 +134,19 @@ impl From<&naevc::Light> for LightUniform {
                 light.colour.v[1] as f32,
                 light.colour.v[2] as f32,
             ),
-        }
+        };
+        l.update_shadow();
+        l
     }
 }
 
 #[repr(C)]
 #[derive(Debug, Clone, ShaderType)]
 pub struct LightingUniform {
-    intensity: f32,
-    ambient: Vector3<f32>,
-    nlights: u32,
-    //#[size(runtime)]
-    //lights: Vec<LightUniform>,
     lights: [LightUniform; MAX_LIGHTS],
+    ambient: Vector3<f32>,
+    intensity: f32,
+    nlights: u32,
 }
 impl From<&naevc::Lighting> for LightingUniform {
     fn from(lighting: &naevc::Lighting) -> Self {
@@ -142,13 +166,14 @@ impl From<&naevc::Lighting> for LightingUniform {
 }
 impl Default for LightingUniform {
     fn default() -> Self {
-        LightingUniform {
+        let mut uniform = LightingUniform {
             intensity: 1.0,
             ambient: Vector3::new(0.0, 0.0, 0.0),
             nlights: 2,
             lights: [
                 // Key Light
                 LightUniform {
+                    shadow: Matrix4::identity(),
                     position: Vector3::new(-3.0, 2.75, -3.0),
                     colour: Vector3::new(1.0, 1.0, 1.0),
                     intensity: 80.0,
@@ -156,6 +181,7 @@ impl Default for LightingUniform {
                 },
                 // Fill Light
                 LightUniform {
+                    shadow: Matrix4::identity(),
                     position: Vector3::new(10.0, 11.5, 7.0),
                     colour: Vector3::new(1.0, 1.0, 1.0),
                     intensity: 1.0,
@@ -167,7 +193,11 @@ impl Default for LightingUniform {
                 LightUniform::default(),
                 LightUniform::default(),
             ],
+        };
+        for idx in 0..uniform.nlights as usize {
+            uniform.lights[idx].update_shadow();
         }
+        uniform
     }
 }
 
@@ -725,10 +755,7 @@ impl Scene {
 
         // TODO shadow pass
         let shadow_shader = &common.shader_shadow;
-        let light_mat = {
-            let data = common.data.read().unwrap();
-            data.light_mat
-        };
+        let data = common.data.read().unwrap();
         shadow_shader.shader.use_program(gl);
         for i in 0..(lighting.nlights as usize) {
             let (shadow_fbo, shadow_size) = {
@@ -738,7 +765,7 @@ impl Scene {
                     (&common.light_fbo_low[i], SHADOWMAP_SIZE_LOW as i32)
                 }
             };
-            let shadow_transform = &light_mat[i];
+            let shadow_transform = &data.light_uniform.lights[i].shadow;
             shadow_fbo.bind(ctx);
             unsafe {
                 gl.clear(glow::DEPTH_BUFFER_BIT);
@@ -757,6 +784,7 @@ impl Scene {
                 tex.bind(ctx, 5 + i as u32);
             }
         }
+        drop(data);
 
         // Update lighting
         shader.shader.use_program(gl);
@@ -876,42 +904,8 @@ struct Common {
     data: RwLock<CommonMut>,
 }
 struct CommonMut {
-    light_mat: [Matrix4<f32>; MAX_LIGHTS],
     light_uniform: LightingUniform,
     light_intensity: f32,
-}
-impl CommonMut {
-    fn shadow_matrix(light: &LightUniform) -> Matrix4<f32> {
-        if light.position.magnitude() <= 1e-8 {
-            return Matrix4::identity();
-        }
-        const CENTER: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
-        const UP: Vector3<f32> = Vector3::new(0.0, 1.0, 0.0);
-        const R: f32 = 1.0;
-        if light.sun != 0 {
-            let pos = light.position.normalize();
-            let l = look_at4(&pos, &CENTER, &UP);
-            let o = ortho4(-R, R, -R, R, 0.0, 2.0);
-            o * l
-        } else {
-            let pos = light.position;
-            let l = look_at4(&pos, &CENTER, &UP);
-            let norm = pos.magnitude();
-            let o = ortho4(-R, R, -R, R, norm - 1.0, norm + 1.0);
-            o * l
-        }
-    }
-
-    fn update_matrix(&mut self, idx: usize) {
-        self.light_mat[idx] = CommonMut::shadow_matrix(&self.light_uniform.lights[idx]);
-    }
-
-    fn update_matrices(&mut self) {
-        // Update lights as necessary.
-        for i in 0..self.light_uniform.nlights as usize {
-            self.light_mat[i] = CommonMut::shadow_matrix(&self.light_uniform.lights[i]);
-        }
-    }
 }
 impl Common {
     fn new(ctx: &ContextWrapper) -> Result<Self> {
@@ -945,13 +939,10 @@ impl Common {
         let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
 
         let data = RwLock::new({
-            let mut com = CommonMut {
-                light_mat: core::array::from_fn::<_, MAX_LIGHTS, _>(|_| Matrix4::identity()),
+            CommonMut {
                 light_uniform: Default::default(),
                 light_intensity: 1.0,
-            };
-            com.update_matrices();
-            com
+            }
         });
 
         Ok(Common {
@@ -1101,7 +1092,6 @@ pub extern "C" fn gltf_exit() {}
 pub extern "C" fn gltf_lightReset() {
     let mut data = COMMON.get().unwrap().data.write().unwrap();
     data.light_uniform = Default::default();
-    data.update_matrices();
 }
 
 #[unsafe(no_mangle)]
@@ -1115,7 +1105,6 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
     let light = unsafe { &*light };
     data.light_uniform.nlights = data.light_uniform.nlights.max((n + 1) as u32);
     data.light_uniform.lights[n] = light.into();
-    data.update_matrix(n);
     0
 }
 
