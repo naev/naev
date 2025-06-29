@@ -25,13 +25,16 @@ msg() {
 git checkout "$BAS/spob" "$DST"
 
 msg "gen colored sys map..."
-cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) && $cmd 2>/dev/null && mv -v out.png map_bef.png
+cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
+$cmd 2>/dev/null && mv -v out.png map_bef.png
 
 msg "freeze non-nempty:"
-echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml | "$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
+echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
+"$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
 
 msg "gen before graph"
-"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k | neato -n2 -Tpng 2>/dev/null > before.png
+"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |
+neato -n2 -Tpng 2>/dev/null > before.png
 
 msg "\ngen after graph"
 "$SCRIPT_DIR"/ssys2dot.py "$DST"/*.xml | tee before.dot | neato 2>/dev/null |
@@ -52,10 +55,12 @@ $cmd 2>/dev/null && mv -v out.png map_fin.png
 
 
 msg "gen final graph"
-"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k | neato -n2 -Tpng 2>/dev/null > final.png
+"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |
+neato -n2 -Tpng 2>/dev/null > final.png
 
 #msg "\nselect Sirius systems " >&2
-#read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py -v | grep 'teal' | cut '-d ' -f1)"
+#read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py -v |
+#grep 'teal' | cut '-d ' -f1)"
 
 #s=(doowa flok firk)
 #repos_systems2=(terminus)
@@ -69,8 +74,10 @@ read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}
 "$SCRIPT_DIR"/repos.sh -C
 for i in $(seq "$N"); do
    "$SCRIPT_DIR"/ssys_graph.sh |
-   "$SCRIPT_DIR"/reposition -q -e -i "${ALMOST_ALL[@]}" |
-   "$SCRIPT_DIR"/graphmod_smooth_tl.py |
+   (
+      "$SCRIPT_DIR"/reposition -q -i "${ALMOST_ALL[@]}" ;
+      "$SCRIPT_DIR"/ssys_graph.sh -e
+   ) | "$SCRIPT_DIR"/graphmod_smooth_tl.py |
    "$SCRIPT_DIR"/ssys_graph.py -w
    msg "\e[32m$i"
 done

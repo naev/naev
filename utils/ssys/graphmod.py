@@ -10,14 +10,18 @@ class _pos(dict):
             v = round(v, 9)
             print(k, v[0], v[1])
 
-class _E(dict):
+class _jmp(dict):
    def __del__( self ):
       for i, l in self.items():
          for j, f in l:
             print(i, j, f)
 
+   def __missing__( self, elt ):
+      self[elt] = []
+      return self[elt]
+
 sys_pos = _pos()
-sys_jmp = _E()
+sys_jmp = _jmp()
 
 for inp in stdin:
    if (line := inp.strip()) != '':
@@ -27,7 +31,5 @@ for inp in stdin:
          continue
       except:
          pass
-      bname1, bname2, tag = tuple((line.split(' ',2) + [None]) [:3])
-      if bname1 not in sys_jmp:
-         sys_jmp[bname1] = []
+      bname1, bname2, tag = tuple((line.split(' ', 2) + [None]) [:3])
       sys_jmp[bname1].append((bname2, tag))

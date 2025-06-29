@@ -111,7 +111,6 @@ if __name__ == '__main__':
       print('  Writes "out.pov". Outputs povray commandline to stdout.')
       print('  If -g is set, use the positions from graph read on stdin.')
       print('  If -g is set but no pos in input, uses dat/ssys/*.xml.')
-      print('  If -g is set, use the positions from graph read on stdin.')
       print('  If -c is set, use faction colors (slower).')
       print('  If -C is set, use color halos (implies -c).')
       print('  Is <ssys.xml> not provided, uses dat/ssys/*.xml.')
