@@ -639,9 +639,17 @@ impl Node {
         transform: &Matrix4<f32>,
     ) -> Result<()> {
         let new_transform = self.transform * transform;
+        // If determinant is negative, we have to invert the winding
+        let det = new_transform.fixed_resize::<3, 3>(0.0).determinant();
+        unsafe {
+            ctx.gl
+                .front_face(if det < 0.0 { glow::CW } else { glow::CCW });
+        }
+        // Draw the meshes
         if let Some(mesh) = &self.mesh {
             mesh.render(ctx, shader, &new_transform)?;
         }
+        // Draw the children
         for child in &mut self.children {
             child.render(ctx, shader, &new_transform)?;
         }
@@ -702,6 +710,7 @@ impl Scene {
         lighting: &LightingUniform,
     ) -> Result<()> {
         let gl = &ctx.gl;
+        let (fbo_w, fbo_h) = target.dimensions();
 
         unsafe {
             gl.enable(glow::BLEND);
@@ -723,8 +732,13 @@ impl Scene {
         };
         shadow_shader.shader.use_program(gl);
         for i in 0..(lighting.nlights as usize) {
-            let shadow_fbo = &common.light_fbo_high[i];
-            let shadow_size = SHADOWMAP_SIZE_HIGH as i32;
+            let (shadow_fbo, shadow_size) = {
+                if fbo_w.max(fbo_h) > 255 {
+                    (&common.light_fbo_high[i], SHADOWMAP_SIZE_HIGH as i32)
+                } else {
+                    (&common.light_fbo_low[i], SHADOWMAP_SIZE_LOW as i32)
+                }
+            };
             let shadow_transform = &light_mat[i];
             shadow_fbo.bind(ctx);
             unsafe {
@@ -755,8 +769,7 @@ impl Scene {
 
         // Mesh pass
         unsafe {
-            let (w, h) = target.dimensions();
-            gl.viewport(0, 0, w as i32, h as i32);
+            gl.viewport(0, 0, fbo_w as i32, fbo_h as i32);
             gl.cull_face(glow::FRONT);
             gl.enable(glow::CULL_FACE);
         }
@@ -873,8 +886,8 @@ impl CommonMut {
         if light.position.magnitude() <= 1e-8 {
             return Matrix4::identity();
         }
-        const UP: Vector3<f32> = Vector3::new(0.0, 1.0, 0.0);
         const CENTER: Vector3<f32> = Vector3::new(0.0, 0.0, 0.0);
+        const UP: Vector3<f32> = Vector3::new(0.0, 1.0, 0.0);
         const R: f32 = 1.0;
         if light.sun != 0 {
             let pos = light.position.normalize();
