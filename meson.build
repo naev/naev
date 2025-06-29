@@ -75,6 +75,7 @@ if buildExec.disabled() == false
    app_metadata = configuration_data()  # For Info.plist, resource.rc, etc.
    naev_deps = []
    debug = get_option('debug')
+   debug_rust = get_option('debug_rust')
    debug_arrays = get_option('debug_arrays')
    tracy = get_option('tracy')
    paranoid = get_option('paranoid')
@@ -451,7 +452,7 @@ naevcrs = rust.bindgen(
 
    # Next handle setting up and passing stuff to Cargo
    msrv = '1.77.2'
-   if get_option('debug')
+   if get_option('debug_rust')
       rust_target = 'debug'
    else
       rust_target = 'release'
@@ -465,7 +466,7 @@ naevcrs = rust.bindgen(
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
-   if not get_option('debug')
+   if rust_target == 'release'
       cargo_options += ['--release']
    endif
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
