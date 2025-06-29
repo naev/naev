@@ -292,8 +292,6 @@ impl Texture {
             }
         }
         unsafe {
-            // Has to be called after it is initialized with any call
-            #[cfg(debug_assertions)]
             gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
         }
 
