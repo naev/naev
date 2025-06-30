@@ -1,10 +1,11 @@
 #![allow(dead_code)]
+use anyhow::Context as anyhow_context;
 use anyhow::Result;
 use encase::ShaderType;
 use glow::HasContext;
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int};
 use std::rc::Rc;
 
@@ -621,16 +622,65 @@ impl Mesh {
     }
 }
 
+#[derive(Clone)]
+pub struct Trail {
+    generator: String,
+    position: Vector3<f32>,
+    // TODO remove
+    cstr: CString,
+}
+impl Trail {
+    fn from_json(json: &gltf::json::Value, transform: &Matrix4<f32>) -> Result<Self> {
+        let generator = match json {
+            gltf::json::Value::String(str) => str.to_string(),
+            _ => {
+                anyhow::bail!("invalid value")
+            }
+        };
+        let v = transform * Vector4::new(0.0, 0.0, 0.0, 1.0);
+        Ok(Self {
+            cstr: CString::new(generator.as_str())?,
+            generator,
+            position: v.fixed_resize::<3, 1>(0.0),
+        })
+    }
+}
+
+#[derive(Clone)]
+pub struct Mount {
+    id: u32,
+    position: Vector3<f32>,
+}
+impl Mount {
+    fn from_json(json: &gltf::json::Value, transform: &Matrix4<f32>) -> Result<Self> {
+        let id = match json {
+            gltf::json::Value::String(str) => str.parse::<u32>()?,
+            gltf::json::Value::Number(num) => {
+                num.as_u64().context("unable to convert to u64")? as u32
+            }
+            _ => {
+                anyhow::bail!("invalid value")
+            }
+        };
+        let v = transform * Vector4::new(0.0, 0.0, 0.0, 1.0);
+        Ok(Self {
+            id,
+            position: v.fixed_resize::<3, 1>(0.0),
+        })
+    }
+}
+
 pub struct Node {
     transform: Matrix4<f32>,
     mesh: Option<Rc<Mesh>>,
     children: Vec<Node>,
+    trail: Option<Trail>,
+    mount: Option<Mount>,
 }
 
 impl Node {
     pub fn from_gltf(node: &gltf::Node, meshes: &[Rc<Mesh>]) -> Result<Self> {
         let transform: Matrix4<f32> = node.transform().matrix().into();
-
         let mesh = node.mesh().map(|mesh| meshes[mesh.index()].clone());
 
         let children: Vec<Node> = node
@@ -638,10 +688,36 @@ impl Node {
             .map(|child| Node::from_gltf(&child, meshes))
             .collect::<Result<Vec<_>, _>>()?;
 
+        let mut trail = None;
+        let mut mount = None;
+        if let Some(extras) = node.extras() {
+            let json: gltf::json::Value = gltf::json::deserialize::from_str(extras.get()).unwrap();
+            if let Some(value) = json.get("NAEV_trail_generator") {
+                trail = match Trail::from_json(value, &transform) {
+                    Ok(data) => Some(data),
+                    Err(e) => {
+                        warn!("{}", e);
+                        None
+                    }
+                };
+            }
+            if let Some(value) = json.get("NAEV_weapon_mount") {
+                mount = match Mount::from_json(value, &transform) {
+                    Ok(data) => Some(data),
+                    Err(e) => {
+                        warn!("{}", e);
+                        None
+                    }
+                };
+            }
+        }
+
         Ok(Node {
             transform,
             mesh,
             children,
+            trail,
+            mount,
         })
     }
 
@@ -830,6 +906,8 @@ pub struct Model {
     scenes: Vec<Scene>,
     transform_scale: Matrix4<f32>,
     common: &'static Common,
+    trails: Vec<Trail>,
+    mounts: Vec<Mount>,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -1040,6 +1118,25 @@ impl Model {
             0.0, 0.0,-invradius, 0.0,
             0.0, 0.0, 0.0, 1.0 );
 
+        // Store Trails and Mounts
+        let mut trails: Vec<Trail> = vec![];
+        let mut mounts: Vec<Mount> = vec![];
+        for s in &scenes {
+            for n in &s.nodes {
+                if let Some(trail) = &n.trail {
+                    let mut t = trail.clone();
+                    t.position *= invradius;
+                    trails.push(t);
+                }
+                if let Some(mount) = &n.mount {
+                    let mut m = mount.clone();
+                    m.position *= invradius;
+                    mounts.push(m);
+                }
+            }
+        }
+        // TODO sort trails and mounts
+
         // Have to restore the core after loading
         let lctx = ctx.lock();
         unsafe {
@@ -1050,6 +1147,8 @@ impl Model {
             scenes,
             transform_scale,
             common,
+            trails,
+            mounts,
         })
     }
 
@@ -1287,4 +1386,41 @@ pub extern "C" fn gltf_renderScene(
 pub extern "C" fn gltf_numLights() -> c_int {
     let data = COMMON.get().unwrap().data.read().unwrap();
     data.light_uniform.nlights as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_numTrails(obj: *const Model) -> c_int {
+    let model = unsafe { &*obj };
+    model.trails.len() as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_trailName(obj: *const Model, id: c_int) -> *const c_char {
+    let model = unsafe { &*obj };
+    let g = &model.trails[id as usize].cstr;
+    g.as_ptr()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_trailPosition(obj: *const Model, id: c_int) -> Vector3<f64> {
+    let model = unsafe { &*obj };
+    model.trails[id as usize].position.cast::<f64>()
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_numMounts(obj: *const Model) -> c_int {
+    let model = unsafe { &*obj };
+    model.mounts.len() as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_mountIndex(obj: *const Model, id: c_int) -> c_int {
+    let model = unsafe { &*obj };
+    model.mounts[id as usize].id as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_mountPosition(obj: *const Model, id: c_int) -> Vector3<f64> {
+    let model = unsafe { &*obj };
+    model.mounts[id as usize].position.cast::<f64>()
 }

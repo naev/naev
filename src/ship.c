@@ -611,13 +611,8 @@ int ship_gfxLoaded( const Ship *s )
  */
 int ship_gfxLoadPost3D( Ship *s )
 {
-   const GltfTrail *trails;
-   const GltfMount *mounts;
-   int              ntrails;
-   int              nmounts;
-
-   trails = gltf_trails( s->gfx_3d, &ntrails );
-   mounts = gltf_mounts( s->gfx_3d, &nmounts );
+   int ntrails = gltf_numTrails( s->gfx_3d );
+   int nmounts = gltf_numMounts( s->gfx_3d );
 
    /* Replace trails if applicable. */
    if ( ntrails > 0 ) {
@@ -626,13 +621,16 @@ int ship_gfxLoadPost3D( Ship *s )
       ship_setFlag( s, SHIP_3DTRAILS );
 
       for ( int i = 0; i < ntrails; i++ ) {
-         const GltfTrail *t = &trails[i];
+         const GltfTrail t = {
+            .generator = gltf_trailName( s->gfx_3d, i ),
+            .pos       = gltf_trailPosition( s->gfx_3d, i ),
+         };
          ShipTrailEmitter trail;
 
          /* New trail. */
-         trail.pos = t->pos;
+         trail.pos = t.pos;
          vec3_scale( &trail.pos, s->size * 0.5 ); /* Convert to "pixels" */
-         trail.trail_spec = trailSpec_get( t->generator );
+         trail.trail_spec = trailSpec_get( t.generator );
          trail.flags      = 0;
 
          if ( trail.trail_spec != NULL )
@@ -650,8 +648,12 @@ int ship_gfxLoadPost3D( Ship *s )
                s->name, nmounts, array_size( s->outfit_weapon ) );
 
       for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
+         const GltfMount m = {
+            .id  = gltf_mountIndex( s->gfx_3d, i % nmounts ),
+            .pos = gltf_mountPosition( s->gfx_3d, i % nmounts ),
+         };
          ShipMount *sm = &s->outfit_weapon[i].mount;
-         vec3_copy( &sm->pos, &mounts[i % nmounts].pos ); /* Loop over. */
+         vec3_copy( &sm->pos, &m.pos );         /* Loop over. */
          vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
       }
    }
