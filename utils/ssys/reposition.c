@@ -254,22 +254,30 @@ static double edge_overlap_score(struct s_cost_params *cp, const double v[2])
       const double *N    = cp->neigh + OFF_N * i;
       const double  len  = MAYBE(cp->neigh[OFF_N * i + 2]);
       double        u[2] = INIT_VDIF(N, v);
+      double        mini = DBL_MAX;
       norm_v(u);
 
       for (int j = 0; j < cp->n_around; j++) {
          const double *P   = cp->around + 2 * j;
-         const double  sq  = Fsq / (len * len) * seg_dist_sq(v, N, u, P);
-         const double  res = 0.5 * repulsive(sq, cp->radius, cp->falloff) * len;
-         if (res > maxi)
-            maxi = res;
+         const double  sq  = seg_dist_sq(v, N, u, P);
+
+         if (sq < mini)
+            mini = sq;
       }
+      mini *= Fsq / (len * len);
+      const double this_res =
+         0.5 * repulsive(mini, cp->radius, cp->falloff) * len;
+      if (this_res > maxi)
+         maxi = this_res;
+
       for (int j = 0; j < cp->n_neigh; j++) {
          if (i != j) {
             const double *P    = cp->neigh + OFF_N * j;
             const double  len2 = MAYBE(cp->neigh[OFF_N * j + 2]);
-            const double  sq   = Fsq / (len2 * len2) * seg_dist_sq(v, N, u, P);
-            const double  res =
-               0.5 * repulsive(sq, cp->radius, cp->falloff) * len2;
+            const double  sq =
+               Fsq / (len2 * len2) / (len * len) * seg_dist_sq(v, N, u, P);
+            const double res =
+               0.5 * repulsive(sq, cp->radius, cp->falloff) * len2 * len;
             if (res > maxi)
                maxi = res;
          }
