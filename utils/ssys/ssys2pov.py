@@ -13,7 +13,7 @@ from geometry import bb, vec
 def main( args, pos = None, color = False, halo = False ):
    dst = open('out.pov', 'w')
 
-   def write_pov(s, indent = -1):
+   def write_pov( s, indent = -1 ):
       if hasattr(s, '__iter__') and not isinstance(s, str):
          for sub in s:
             write_pov(sub, indent+1)

@@ -45,7 +45,6 @@ def toward( src, dst, q ):
    pos[src] += (pos[dst]-pos[src]) * q
 
 toward('syndania', 'jommel', 1.0/4.0)
-#toward('scholzs_star', 'haered', 1.0/4.0)
 
 length = (pos['haered']-pos['cleai']).size()
 haered = pos['haered']

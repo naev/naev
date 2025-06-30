@@ -15,7 +15,7 @@ if argv[1:] != []:
    exit(0)
 
 
-def input_blocks(it):
+def input_blocks( it ):
    acc = ''
    for line in it:
       n = line.find(']')
