@@ -13,7 +13,7 @@ DST="$BAS/ssys"
 COL=-C
 
 msg() {
-   echo -e "$1" | while IFS=$'\n' read -ra line; do
+   echo -e "$1" | while IFS=$'\n' read -r line; do
       if [ -z "$line" ] ; then
          echo ""
       else
@@ -67,7 +67,7 @@ neato -n2 -Tpng 2>/dev/null > final.png
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 #TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
 N=4
-msg "(reposition sys + smooth tradelane)x$N  +  position virtual"
+msg "\n(reposition sys + smooth tradelane)x$N  +  position virtual"
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
