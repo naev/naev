@@ -277,7 +277,6 @@ impl ShadowShader {
 }
 
 pub struct Material {
-    //uniform_data: MaterialUniform,
     uniform_buffer: Buffer,
     diffuse: Rc<Texture>,
     metallic: Rc<Texture>,
@@ -753,7 +752,7 @@ impl Scene {
             gl.depth_func(glow::LESS);
         }
 
-        // TODO shadow pass
+        // Shadow pass
         let shadow_shader = &common.shader_shadow;
         let data = common.data.read().unwrap();
         shadow_shader.shader.use_program(gl);
@@ -829,7 +828,6 @@ impl Scene {
 
 pub struct Model {
     scenes: Vec<Scene>,
-    //radius: f32,
     transform_scale: Matrix4<f32>,
     common: &'static Common,
 }
@@ -838,7 +836,6 @@ fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec
     match buf.source() {
         gltf::buffer::Source::Uri(uri) => {
             let filename = base.join(uri);
-            //Ok(std::fs::read(filename.as_path().to_str().unwrap())?)
             Ok(ndata::read(filename.as_path().to_str().unwrap())?)
         }
         gltf::buffer::Source::Bin => todo!(),
@@ -919,7 +916,6 @@ impl Common {
                     .height(size)
                     .texture(false)
                     .depth(true)
-                    // Probably clamp to a (1,1,1,1) border makes more sense
                     .address_mode(texture::AddressMode::ClampToEdge)
                     .build_wrap(ctx)
                     .unwrap();
@@ -1052,7 +1048,6 @@ impl Model {
 
         Ok(Model {
             scenes,
-            //radius,
             transform_scale,
             common,
         })
