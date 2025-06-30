@@ -82,9 +82,9 @@ function hypergate.load()
       if type(mem.cost_mod)=="table" then
          mem._cost_mod = 1
          local standing = mem.spob:reputation()
-         for k,v in ipairs(mem.cost_mod) do
-            if standing >= k then
-               mem._cost_mod = v
+         for i = math.floor( standing ), 0, (standing < 0 and 1 or -1) do
+            if mem.cost_mod[i] ~= nil then
+               mem._cost_mod = mem.cost_mod[i]
                break
             end
          end
