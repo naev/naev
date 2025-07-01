@@ -24,11 +24,11 @@ msg() {
 
 git checkout "$BAS/spob" "$DST"
 
-msg "gen colored sys map..."
+msg "gen crt sys map"
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
 $cmd 2>/dev/null && mv -v out.png map_bef.png
 
-msg "freeze non-nempty:"
+msg "freeze non-nempty"
 echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
 "$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
 
@@ -38,8 +38,8 @@ neato -n2 -Tpng 2>/dev/null > before.png
 
 msg "\ngen after graph"
 "$SCRIPT_DIR"/ssys2dot.py "$DST"/*.xml | tee before.dot | neato 2>/dev/null |
-tee after.dot | neato -n2 -Tpng 2>/dev/null > after.png
-("$SCRIPT_DIR"/dot2graph.py < after.dot && "$SCRIPT_DIR"/ssys_graph.sh -e) |
+#tee after.dot | neato -n2 -Tpng 2>/dev/null > after.png
+("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys_graph.sh -e) |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
 "$SCRIPT_DIR"/ssys_graph.py -w
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
@@ -51,12 +51,7 @@ msg "pprocess"
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
 "$SCRIPT_DIR"/ssys_graph.py -w
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_fin.png
-
-
-msg "gen final graph"
-"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |
-neato -n2 -Tpng 2>/dev/null > final.png
+$cmd 2>/dev/null && mv -v out.png map_post.png
 
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py -v |
@@ -67,7 +62,7 @@ neato -n2 -Tpng 2>/dev/null > final.png
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 #TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
 N=4
-msg "\n(reposition sys + smooth tradelane)x$N  +  position virtual"
+msg "${N} x (reposition sys + smooth tradelane) +  position virtual"
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
@@ -89,10 +84,14 @@ msg ""
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
 $cmd 2>/dev/null && mv -v out.png map_repos.png
 
-msg "apply gravity -> colored sys map..."
+msg "apply gravity"
 cmd=$( "$SCRIPT_DIR"/apply_pot.sh -g |
 "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_fin_g.png
+$cmd 2>/dev/null && mv -v out.png map_grav.png
 
-msg "relax ssys..\n"
+msg "gen final graph"
+"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |
+neato -n2 -Tpng 2>/dev/null > final.png
+
+msg "\nrelax ssys..\n"
 msg "total relaxed: \e[32m$("$SCRIPT_DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)\n"

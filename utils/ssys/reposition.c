@@ -736,6 +736,8 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       if (3 == sscanf(line, "%ms %lf %lf %n", bufs, tmp, tmp + 1, &r)) {
          const size_t id = ssys_num(h, bufs[0], &map, tmp, line + r, true);
          map.sys[id].w   = 1.0;
+      //TODO: manage other tags
+      //} else if (3 <= sscanf(line, "%ms %ms %n%lf%n", bufs + 1, bufs + 2, &r, &len, &r2)) {
       } else if (2 <= sscanf(line, "%ms %ms %lf", bufs + 1, bufs + 2, &len)) {
          if ((map.njumps & (map.njumps + 1)) == 0) {
             const size_t new_siz = (map.njumps << 1) | 1;
