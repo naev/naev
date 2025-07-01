@@ -1,9 +1,13 @@
 #!/usr/bin/bash
 
-N=10
-if [ "$1" = "-g" ]; then
+if [ "$1" = "-g" ] ; then
+   N=15
    RESCALE=1.75
+elif [ "$1" = "-E" ] ; then
+   N=45
+   RESCALE=1.2
 else
+   N=15
    RESCALE=1.0
 fi
 

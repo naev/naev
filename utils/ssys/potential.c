@@ -42,7 +42,7 @@ static inline float grav_pot(float xs, float ys, float x, float y)
 
 // The derivative of the previous ones.
 static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
-                           float y, float m)
+                           float y, float m, bool alt)
 {
    float dx = xs - x;
    float dy = ys - y;
@@ -55,8 +55,13 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
    d *= inv_fact;
    if (d < rad)
       f = 2.0f * d * mul_ct;
-   else
+   else{
       f = 1.0f / d * d;
+      if (alt)
+         f *= rad / d;
+   }
+   if (alt)
+      f *= 2.0;
 
    f *= m;
    *vx += f * dx;
@@ -262,7 +267,7 @@ void gen_potential(float *lst, size_t nb, enum e_pot typ, float scale)
 }
 
 void apply_potential(const float *lst, size_t nb, enum e_pot t,
-                     const char **nam)
+                     const char **nam, bool alt)
 {
    char buff[512];
    int  num;
@@ -282,7 +287,7 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
          for (size_t j = 0; j < nb; j++)
             if (j != i)
                accum_f(&dx, &dy, lst[4 * j + 0], lst[4 * j + 1], x, y,
-                       lst[4 * j + 2]);
+                       lst[4 * j + 2], alt);
       } else if (t == WAVES)
          wav_f(&dx, &dy, lst[0], lst[1], x, y, lst[2]);
 
@@ -297,7 +302,8 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
       exit(EXIT_SUCCESS);
 }
 
-int do_it(const enum e_pot type, const float scale, const bool apply)
+int do_it(const enum e_pot type, const float scale, const bool apply,
+          const bool alt)
 {
    char   buf[256];
    float *lst = NULL;
@@ -351,7 +357,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply)
    inv_fact = 1.0f / fact;
 
    if (apply) {
-      apply_potential(lst, nb, type, (const char **) nam);
+      apply_potential(lst, nb, type, (const char **) nam, alt);
       for (size_t i = 0; i < nb; i++)
          free(nam[i]);
       free(nam);
@@ -363,7 +369,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply)
 
 int usage(char *nam, int ret)
 {
-   fprintf(stderr, "Usage: %s  [ -s<scale> | -a ]  ( -g | -w )\n",
+   fprintf(stderr, "Usage: %s  [ -s<scale> | -a ]  ( -E | -g | -w )\n",
            basename(nam));
    fprintf(
       stderr,
@@ -376,6 +382,8 @@ int usage(char *nam, int ret)
       "  If -s is set, applies the scaling factor <scale> to "
       "input, e.g. 0.25\n"
       "\n"
+      "  If -E is set, uses experimental alternate gravity. DOES ONLY WORK "
+      "with -a.\n"
       "  If -g is set, generates the gravity potential.\n"
       "  If -w is set, generates the waves potential.\n"
       "\n");
@@ -386,13 +394,12 @@ int main(int argc, char **argv)
 {
    enum e_pot type  = NONE;
    char      *nam   = argv[0];
+   bool       alt   = false;
    bool       apply = false;
    float      scale = 1.0f;
 
    if (argc > 1 && !strncmp(argv[1], "-s", 2)) {
-      if (apply)
-         return usage(nam, EXIT_FAILURE);
-      else if (argc < 3 || sscanf(argv[1], "-s%f", &scale) != 1) {
+      if (argc < 3 || sscanf(argv[1], "-s%f", &scale) != 1) {
          fprintf(stderr, "float expected, found \"%s\".\n", argv[1] + 2);
          return usage(nam, EXIT_FAILURE);
       }
@@ -402,6 +409,15 @@ int main(int argc, char **argv)
 
    if (argc > 1 && !strcmp(argv[1], "-a")) {
       apply = true;
+      argv++;
+      argc--;
+   }
+
+   if (argc > 1 && !strcmp(argv[1], "-E")) {
+      if (!apply)
+         return usage(nam, EXIT_FAILURE);
+      type = GRAVITY;
+      alt  = true;
       argv++;
       argc--;
    }
@@ -428,5 +444,5 @@ int main(int argc, char **argv)
       else
          return usage(nam, EXIT_FAILURE);
    else
-      return do_it(type, scale, apply);
+      return do_it(type, scale, apply, alt);
 }
