@@ -6,7 +6,7 @@ use glow::HasContext;
 use gltf::Gltf;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use std::ffi::{CStr, CString};
-use std::os::raw::{c_char, c_double, c_int};
+use std::os::raw::{c_char, c_double, c_int, c_uint};
 use std::rc::Rc;
 
 use crate::buffer::{
@@ -933,6 +933,8 @@ pub struct Model {
     common: &'static Common,
     trails: Vec<Trail>,
     mounts: Vec<Mount>,
+    body: i32,
+    engine: i32,
 }
 
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
@@ -1128,10 +1130,23 @@ impl Model {
         // Common stuff
         let common = COMMON.get_or_init(|| Common::new(ctx).unwrap());
 
-        // Get model radius
+        // Get model radius and scenes
+        let mut body = 0;
+        let mut engine = -1;
         let mut radius: f32 = 0.;
-        for scene in &scenes {
+        for (idx, scene) in scenes.iter().enumerate() {
             radius = radius.max(scene.radius);
+            if let Some(name) = &scene.name {
+                match name.as_str() {
+                    "body" => {
+                        body = idx as i32;
+                    }
+                    "engine" => {
+                        engine = idx as i32;
+                    }
+                    _ => (),
+                }
+            }
         }
         let invradius = 1.0 / radius;
         #[rustfmt::skip]
@@ -1173,6 +1188,8 @@ impl Model {
             common,
             trails,
             mounts,
+            body,
+            engine,
         })
     }
 
@@ -1300,39 +1317,21 @@ pub extern "C" fn gltf_lightTransform(
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_sceneBody(_model: *mut Model) -> u32 {
+pub extern "C" fn gltf_sceneBody(obj: *mut Model) -> c_int {
+    let model = unsafe { &*obj };
+    model.body as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_sceneEngine(obj: *mut Model) -> c_int {
+    let model = unsafe { &*obj };
+    model.engine as c_int
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gltf_numAnimations(_obj: *mut Model) -> c_uint {
     // TODO
     0
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gltf_sceneEngine(_model: *mut Model) -> u32 {
-    // TODO
-    0
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gltf_numAnimations(_model: *mut Model) -> u32 {
-    // TODO
-    0
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gltf_trails(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfTrail {
-    // TODO
-    unsafe {
-        *num = 0;
-    }
-    std::ptr::null()
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn gltf_mounts(_model: *mut Model, num: *mut c_int) -> *const naevc::GltfMount {
-    // TODO
-    unsafe {
-        *num = 0;
-    }
-    std::ptr::null()
 }
 
 #[unsafe(no_mangle)]
@@ -1413,9 +1412,9 @@ pub extern "C" fn gltf_numLights() -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_numTrails(obj: *const Model) -> c_int {
+pub extern "C" fn gltf_numTrails(obj: *const Model) -> c_uint {
     let model = unsafe { &*obj };
-    model.trails.len() as c_int
+    model.trails.len() as c_uint
 }
 
 #[unsafe(no_mangle)]
@@ -1432,15 +1431,15 @@ pub extern "C" fn gltf_trailPosition(obj: *const Model, id: c_int) -> Vector3<f6
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_numMounts(obj: *const Model) -> c_int {
+pub extern "C" fn gltf_numMounts(obj: *const Model) -> c_uint {
     let model = unsafe { &*obj };
-    model.mounts.len() as c_int
+    model.mounts.len() as c_uint
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gltf_mountIndex(obj: *const Model, id: c_int) -> c_int {
+pub extern "C" fn gltf_mountIndex(obj: *const Model, id: c_int) -> c_uint {
     let model = unsafe { &*obj };
-    model.mounts[id as usize].id as c_int
+    model.mounts[id as usize].id as c_uint
 }
 
 #[unsafe(no_mangle)]

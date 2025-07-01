@@ -85,15 +85,15 @@ double gltf_lightIntensityGet( void );
 void   gltf_lightTransform( Lighting *L, const mat4 *H );
 int    gltf_numLights( void );
 
-int   gltf_sceneBody( const GltfObject *obj );
-int   gltf_sceneEngine( const GltfObject *obj );
-int   gltf_numAnimations( const GltfObject *obj );
-int   gltf_numTrails( const GltfObject *obj );
-char *gltf_trailName( const GltfObject *obj, int id );
-vec3  gltf_trailPosition( const GltfObject *obj, int id );
-int   gltf_numMounts( const GltfObject *obj );
-int   gltf_mountIndex( const GltfObject *obj, int id );
-vec3  gltf_mountPosition( const GltfObject *obj, int id );
+int          gltf_sceneBody( const GltfObject *obj );
+int          gltf_sceneEngine( const GltfObject *obj );
+unsigned int gltf_numAnimations( const GltfObject *obj );
+unsigned int gltf_numTrails( const GltfObject *obj );
+char        *gltf_trailName( const GltfObject *obj, int id );
+vec3         gltf_trailPosition( const GltfObject *obj, int id );
+unsigned int gltf_numMounts( const GltfObject *obj );
+unsigned int gltf_mountIndex( const GltfObject *obj, int id );
+vec3         gltf_mountPosition( const GltfObject *obj, int id );
 
 /* Misc functions. */
 GLuint gltf_shadowmap( int light );
