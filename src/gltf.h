@@ -14,26 +14,12 @@
 
 #include "mat4.h"
 #include "vec3.h"
-#ifdef HAVE_NAEV
-#include "opengl_tex.h"
-#endif /* HAVE_NAEV */
 
 #define MAX_LIGHTS                                                             \
    7 /**< Maximum amount of lights. TODO deferred rendering.                   \
       */
 
 typedef struct GltfObject GltfObject;
-
-typedef struct GltfTrail {
-   char *generator; /**< Type of the trail to use. */
-   vec3  pos;       /**< Location of the trail. */
-} GltfTrail;
-
-typedef struct GltfMount {
-   int id;   /**< ID of the mount, should match with the position of the XML
-                value. */
-   vec3 pos; /**< Position of the mount. */
-} GltfMount;
 
 /**
  * @brief Simple point/sun light model.
@@ -58,7 +44,6 @@ typedef struct Lighting {
 extern const Lighting
    L_default_const; /**< Default constant lighting for resetting. */
 extern const Lighting L_store_const; /**< Default store lighting setting. */
-extern Lighting       L_default;     /**< Default space lighting. */
 
 /* Framework itself. */
 int  gltf_init( void );
@@ -94,6 +79,3 @@ vec3         gltf_trailPosition( const GltfObject *obj, int id );
 unsigned int gltf_numMounts( const GltfObject *obj );
 unsigned int gltf_mountIndex( const GltfObject *obj, int id );
 vec3         gltf_mountPosition( const GltfObject *obj, int id );
-
-/* Misc functions. */
-GLuint gltf_shadowmap( int light );

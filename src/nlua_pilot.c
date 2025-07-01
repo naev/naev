@@ -6959,8 +6959,7 @@ static int pilotL_renderComm( lua_State *L )
 {
    const Pilot *p    = luaL_validpilot( L, 1 );
    int          size = luaL_optinteger( L, 2, 512 );
-   glTexture   *tex =
-      ship_gfxComm( p->ship, size, p->tilt, p->solid.dir, &L_default );
+   glTexture *tex = ship_gfxComm( p->ship, size, p->tilt, p->solid.dir, NULL );
    if ( tex == NULL ) {
       NLUA_WARN( L, _( "Unable to get ship comm graphic for '%s'." ),
                  p->ship->name );

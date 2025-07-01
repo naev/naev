@@ -441,10 +441,9 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
    if ( s->gfx_3d != NULL ) {
-      Lighting L = ( Lscene == NULL ) ? L_default : *Lscene;
-      mat4     H, Hlight;
-      double   t = SDL_GetTicks() / 1000.;
-      double   rendersize =
+      mat4   H;
+      double t = SDL_GetTicks() / 1000.;
+      double rendersize =
          MIN( MIN( ceil( ship_aa_scale_base * fbosize ), gl_screen.rw ),
               gl_screen.rh );
       snprintf( buf, sizeof( buf ), "%s_fbo_gfx_comm_%d", s->name, size );
@@ -455,8 +454,10 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       mat4_rotate( &H, M_PI_4, 0.0, 1.0, 0.0 );
       mat4_rotate( &H, M_PI_4 * 0.25, 1.0, 0.0, 0.0 );
 
+      /* TODO restore. */
+#if 0
       /* Transform the light so it's consistent with the 3D model. */
-      Hlight = mat4_identity();
+      mat4 Hlight = mat4_identity();
       if ( fabs( tilt ) > DOUBLE_TOL ) {
          mat4_rotate( &Hlight, -M_PI_2, 0.0, 1.0, 0.0 );
          mat4_rotate( &Hlight, tilt, 1.0, 0.0, 0.0 );
@@ -470,12 +471,14 @@ glTexture *ship_gfxComm( const Ship *s, int size, double tilt, double dir,
       L.ambient_g += 0.1;
       L.ambient_b += 0.1;
       L.intensity *= 1.5;
+#endif
 
       /* Render the model. */
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       gltf_renderScene( gl_screen.fbo[2], s->gfx_3d,
-                        gltf_sceneBody( s->gfx_3d ), &H, t, rendersize, &L );
+                        gltf_sceneBody( s->gfx_3d ), &H, t, rendersize,
+                        Lscene );
       glBindFramebuffer( GL_READ_FRAMEBUFFER, gl_screen.fbo[2] );
       glBindFramebuffer( GL_DRAW_FRAMEBUFFER, fbo );
       glBlitFramebuffer( 0, 0, rendersize, rendersize, 0, 0, fbosize, fbosize,
@@ -621,16 +624,14 @@ int ship_gfxLoadPost3D( Ship *s )
       ship_setFlag( s, SHIP_3DTRAILS );
 
       for ( int i = 0; i < ntrails; i++ ) {
-         const GltfTrail t = {
-            .generator = gltf_trailName( s->gfx_3d, i ),
-            .pos       = gltf_trailPosition( s->gfx_3d, i ),
-         };
+         const char      *generator = gltf_trailName( s->gfx_3d, i );
+         vec3             pos       = gltf_trailPosition( s->gfx_3d, i );
          ShipTrailEmitter trail;
 
          /* New trail. */
-         trail.pos = t.pos;
+         trail.pos = pos;
          vec3_scale( &trail.pos, s->size * 0.5 ); /* Convert to "pixels" */
-         trail.trail_spec = trailSpec_get( t.generator );
+         trail.trail_spec = trailSpec_get( generator );
          trail.flags      = 0;
 
          if ( trail.trail_spec != NULL )
@@ -648,12 +649,10 @@ int ship_gfxLoadPost3D( Ship *s )
                s->name, nmounts, array_size( s->outfit_weapon ) );
 
       for ( int i = 0; i < array_size( s->outfit_weapon ); i++ ) {
-         const GltfMount m = {
-            .id  = gltf_mountIndex( s->gfx_3d, i % nmounts ),
-            .pos = gltf_mountPosition( s->gfx_3d, i % nmounts ),
-         };
+         vec3 pos = gltf_mountPosition( s->gfx_3d, i % nmounts );
+
          ShipMount *sm = &s->outfit_weapon[i].mount;
-         vec3_copy( &sm->pos, &m.pos );         /* Loop over. */
+         vec3_copy( &sm->pos, &pos );           /* Loop over. */
          vec3_scale( &sm->pos, s->size * 0.5 ); /* Convert to "pixels" */
       }
    }
