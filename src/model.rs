@@ -721,6 +721,29 @@ impl Node {
         })
     }
 
+    fn sort(&mut self) {
+        for c in &mut self.children {
+            c.sort();
+        }
+        self.children.sort_by(|a, b| a.blend().cmp(&b.blend()));
+    }
+
+    fn blend(&self) -> bool {
+        if let Some(m) = &self.mesh {
+            for p in &m.primitives {
+                if p.material.blend {
+                    return true;
+                }
+            }
+        }
+        for c in &self.children {
+            if c.blend() {
+                return true;
+            }
+        }
+        false
+    }
+
     pub fn radius(&self, transform: Matrix4<f32>) -> f32 {
         let mut radius: f32 = 0.0;
         let transform = transform * self.transform;
@@ -786,10 +809,14 @@ pub struct Scene {
 
 impl Scene {
     fn from_gltf(scene: &gltf::Scene, meshes: &[Rc<Mesh>]) -> Result<Self> {
-        let nodes: Vec<Node> = scene
+        let mut nodes: Vec<Node> = scene
             .nodes()
             .map(|node| Node::from_gltf(&node, meshes))
             .collect::<Result<Vec<_>, _>>()?;
+        for n in &mut nodes {
+            n.sort();
+        }
+        nodes.sort_by(|a, b| a.blend().cmp(&b.blend()));
         let name = scene.name().map(|s| s.to_owned());
 
         let mut radius: f32 = 0.0;
@@ -1135,7 +1162,8 @@ impl Model {
                 }
             }
         }
-        // TODO sort trails and mounts
+        trails.sort_by(|a, b| a.position.y.total_cmp(&b.position.y));
+        mounts.sort_by(|a, b| a.id.cmp(&b.id));
 
         // Have to restore the core after loading
         let lctx = ctx.lock();
