@@ -39,23 +39,23 @@ neato -n2 -Tpng 2>/dev/null > before.png
 msg "\ngen after graph"
 "$SCRIPT_DIR"/ssys2dot.py "$DST"/*.xml | tee before.dot | neato 2>/dev/null |
 #tee after.dot | neato -n2 -Tpng 2>/dev/null > after.png
-("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys_graph.sh -e) |
+("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
-"$SCRIPT_DIR"/ssys_graph.py -w
+"$SCRIPT_DIR"/graph2ssys.py
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
 $cmd 2>/dev/null && mv -v out.png map_dot.png
 
 msg "pprocess"
-"$SCRIPT_DIR"/ssys_graph.sh |
+"$SCRIPT_DIR"/ssys2graph.sh |
 "$SCRIPT_DIR"/graphmod_pp.py |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
-"$SCRIPT_DIR"/ssys_graph.py -w
+"$SCRIPT_DIR"/graph2ssys.py
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
 $cmd 2>/dev/null && mv -v out.png map_post.png
 
 #msg "\nselect Sirius systems " >&2
-#read -ra SIRIUS <<< "$(./utils/ssys/ssys_graph.py -v |
-#grep 'teal' | cut '-d ' -f1)"
+#read -ra SIRIUS <<< "$("$SCRIPT_DIR"/ssys_graph.sh -v |
+# "$SCRIPT_DIR"/graph_faction.py | grep 'sirius' | cut '-d ' -f1)"
 
 #s=(doowa flok firk)
 #repos_systems2=(terminus)
@@ -68,17 +68,17 @@ ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc1
 read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 "$SCRIPT_DIR"/repos.sh -C
 for i in $(seq "$N"); do
-   "$SCRIPT_DIR"/ssys_graph.sh |
+   "$SCRIPT_DIR"/ssys2graph.sh |
    (
       "$SCRIPT_DIR"/reposition -q -i "${ALMOST_ALL[@]}" ;
-      "$SCRIPT_DIR"/ssys_graph.sh -e
+      "$SCRIPT_DIR"/ssys2graph.sh -e
    ) | "$SCRIPT_DIR"/graphmod_smooth_tl.py |
-   "$SCRIPT_DIR"/ssys_graph.py -w
+   "$SCRIPT_DIR"/graph2ssys.py
    msg "\e[32m$i"
 done
-"$SCRIPT_DIR"/ssys_graph.sh |
+"$SCRIPT_DIR"/ssys2graph.sh |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
-"$SCRIPT_DIR"/ssys_graph.py -w
+"$SCRIPT_DIR"/graph2ssys.py
 msg ""
 
 cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&

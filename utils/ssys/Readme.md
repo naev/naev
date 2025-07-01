@@ -4,7 +4,7 @@
 All you need to convert from/to a graph.
 Input formats:
  - ssys: denotes current system map, that is stored in `ssys/*.xml`.
- - graph: (see `ssys_graph.py -h` for format description)
+ - graph: (see `ssys_graph.sh -h` for format description)
  - dot: `graphviz` graph format. Can be used to generate positions and `png` output.
 
 Output formats:
@@ -14,9 +14,8 @@ Output formats:
  - pov: povray file that allows to generate `png` with `povray`
 
 Scripts:
- - `ssys_graph.py` / `ssys_graph.sh`: Reads current system map, outputs a graph, see `ssys_graph.{py, sh} -h`. The first one offers a richer output, the second one is much faster.
- - `ssys_graph.py -w`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
- - `ssys_graph.py -s`: Reads a graph in input, scales it, and outputs the resulting graph.
+ - `ssys2graph.sh`: Reads current system map, outputs a graph, see `ssys_graph.{py, sh} -h`. The first one offers a richer output, the second one is much faster.
+ - `graph2ssys.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
  - `ssys2dot.py`: As the name suggests, reads current system map and outputs a graph in dot format. Also, currently applies ad hoc operations.
@@ -24,7 +23,10 @@ Scripts:
  - `ssys2pov.py -g`: The same, but takes a graph in input.
 
 ## graphmod
-`graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source.
+`graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source. By convention, we call `graph_xxx.py` the generic utilities and `graphmod_xxx.py` the ad hoc modifiers.
+ - `graph_faction.py`: Reads a graph in input, add faction tag to vertex aux field, and outputs the result. With, `-c`, adds the color instead of the faction. Also provides color values when imported.
+ - `graph_scale.py`: Reads a graph in input, scales it, and outputs the resulting graph.
+
 
 ## auto-positioning system
 Another graph modifier.

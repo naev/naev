@@ -11,8 +11,6 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
       ""
       "  If -v is set, only vertices are output."
       "  If -e is set, only edges are output."
-      ""
-      "  This is a faster version of ssys_graph.py with less options."
    )
    for i in "${DOC[@]}"; do
       echo "$i"

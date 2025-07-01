@@ -144,7 +144,7 @@ total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, t) in E[k] if t == 'tradelane']:
+      for n in [s for (s, t) in E[k] if 'tradelane' in t]:
          total += (pos[n] - pos[k]).size()
          count += 1
 avg = total / count
