@@ -1111,16 +1111,14 @@ impl Model {
         let meshes: Vec<Rc<Mesh>> = gltf
             .meshes()
             .map(|mesh| {
-                let primitives = mesh
+                let mut primitives = mesh
                     .primitives()
                     .map(|prim| Primitive::from_gltf(ctx, &prim, &buffer_data, &materials))
-                    .collect::<Result<Vec<_>, _>>();
-                match primitives {
-                    Ok(primitives) => Ok(Rc::new(Mesh::new(ctx, primitives))),
-                    Err(e) => Err(e),
-                }
+                    .collect::<Result<Vec<_>, _>>()?;
+                primitives.sort_by(|a, b| a.material.blend.cmp(&b.material.blend));
+                Ok(Rc::new(Mesh::new(ctx, primitives)))
             })
-            .collect::<Result<Vec<_>, _>>()?;
+            .collect::<Result<Vec<_>, anyhow::Error>>()?;
 
         let scenes: Vec<Scene> = gltf
             .scenes()
