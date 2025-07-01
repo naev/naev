@@ -495,7 +495,7 @@ impl Primitive {
             element_type: glow::UNSIGNED_INT,
             num_indices: index_data.len() as i32,
             material,
-            vertex_data: vertex_data,
+            vertex_data,
         })
     }
 
@@ -717,7 +717,7 @@ impl Node {
         for c in &mut self.children {
             c.sort();
         }
-        self.children.sort_by(|a, b| a.blend().cmp(&b.blend()));
+        self.children.sort_by_key(|a| a.blend());
     }
 
     fn blend(&self) -> bool {
@@ -808,7 +808,7 @@ impl Scene {
         for n in &mut nodes {
             n.sort();
         }
-        nodes.sort_by(|a, b| a.blend().cmp(&b.blend()));
+        nodes.sort_by_key(|a| a.blend());
         let name = scene.name().map(|s| s.to_owned());
 
         let mut radius: f32 = 0.0;
