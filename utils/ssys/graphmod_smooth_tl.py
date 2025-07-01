@@ -21,7 +21,7 @@ from graphmod import sys_pos as pos, sys_jmp as E
 newp = dict()
 for k in pos:
    if k[0] != '_':
-      tln = [s for (s, t) in E[k] if (t == 'tradelane')]
+      tln = [s for (s, t) in E[k] if 'tradelane' in t]
       if (n := len(tln)) > 1:
          p = sum([pos[s] for s in tln], vec())
          newp[k] = pos[k] * (1.0 - n*0.125)  +  p * 0.125

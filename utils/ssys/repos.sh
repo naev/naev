@@ -62,16 +62,16 @@ repeat() {
    )
 }
 
-"$SCRIPT_DIR"/ssys_graph.sh -v |
+"$SCRIPT_DIR"/ssys2graph.sh -v |
 (
    if [ "$N" -gt "0" ]; then
-      cat - <("$SCRIPT_DIR"/ssys_graph.sh -e | tee "$TMP") |
+      cat - <("$SCRIPT_DIR"/ssys2graph.sh -e | tee "$TMP") |
       "$SCRIPT_DIR"/reposition -q "$@" |
       (if (( N-1 )); then repeat "$((N-1))" "$@"; else cat; fi)
    elif [ ! "$1" = "-o" ] ; then
       cat
       if [ "$1" = "-e" ] ; then
-         "$SCRIPT_DIR"/ssys_graph.sh -e
+         "$SCRIPT_DIR"/ssys2graph.sh -e
       fi
    fi
 )
