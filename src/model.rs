@@ -379,7 +379,7 @@ pub struct Primitive {
     num_indices: i32,
     element_type: u32,
     material: Rc<Material>,
-    vertex_data: Option<Vec<Vertex>>,
+    vertex_data: Vec<Vertex>,
     #[allow(dead_code)]
     vertices: Buffer,
     #[allow(dead_code)]
@@ -502,18 +502,16 @@ impl Primitive {
             element_type: glow::UNSIGNED_INT,
             num_indices: index_data.len() as i32,
             material,
-            vertex_data: Some(vertex_data),
+            vertex_data: vertex_data,
         })
     }
 
     fn radius(&self, transform: &Matrix4<f32>) -> f32 {
         let mut radius: f32 = 0.0;
-        if let Some(vertex_data) = &self.vertex_data {
-            for vertex in vertex_data {
-                //vertex.pos
-                let pos = transform.transform_point(&Point3::from(vertex.pos));
-                radius = radius.max(pos.coords.magnitude());
-            }
+        for vertex in &self.vertex_data {
+            //vertex.pos
+            let pos = transform.transform_point(&Point3::from(vertex.pos));
+            radius = radius.max(pos.coords.magnitude());
         }
         radius
     }
