@@ -84,7 +84,6 @@ pub struct LightUniform {
     shadow: Matrix4<f32>,
     position: Vector3<f32>,
     colour: Vector3<f32>,
-    intensity: f32,
     sun: u32,
 }
 impl LightUniform {
@@ -112,9 +111,9 @@ impl LightUniform {
 }
 impl From<&naevc::Light> for LightUniform {
     fn from(light: &naevc::Light) -> Self {
+        let intensity = light.intensity as f32;
         let mut l = LightUniform {
             shadow: Matrix4::identity(),
-            intensity: light.intensity as f32,
             sun: light.sun as u32,
             position: Vector3::new(
                 light.pos.v[0] as f32,
@@ -122,9 +121,9 @@ impl From<&naevc::Light> for LightUniform {
                 light.pos.v[2] as f32,
             ),
             colour: Vector3::new(
-                light.colour.v[0] as f32,
-                light.colour.v[1] as f32,
-                light.colour.v[2] as f32,
+                light.colour.v[0] as f32 * intensity,
+                light.colour.v[1] as f32 * intensity,
+                light.colour.v[2] as f32 * intensity,
             ),
         };
         l.update_shadow();
@@ -164,19 +163,21 @@ impl Default for LightingUniform {
             nlights: 2,
             lights: [
                 // Key Light
+                // Endless Sky (point): power: 150, pos: -12.339, 10.559, -11.787
+                // Sharky (directional) power: 5, direction: 10.75, -12.272, 7.463
                 LightUniform {
                     shadow: Matrix4::identity(),
                     position: Vector3::new(-3.0, 2.75, -3.0),
-                    colour: Vector3::new(1.0, 1.0, 1.0),
-                    intensity: 80.0,
+                    colour: Vector3::new(80.0, 80.0, 80.0),
                     sun: 0,
                 },
                 // Fill Light
+                // Endless Sky (directional) pomer: 1.5, direction: 9.772, 11.602, 6.988
+                // Sharky (point): 2000., position: -12.339, 10.559, 11.787
                 LightUniform {
                     shadow: Matrix4::identity(),
                     position: Vector3::new(10.0, 11.5, 7.0),
                     colour: Vector3::new(1.0, 1.0, 1.0),
-                    intensity: 1.0,
                     sun: 1,
                 },
                 LightUniform::default(),

@@ -185,8 +185,8 @@ vec3 light_intensity( Light L, float dist )
    else
       attenuation = max(min(1.0 - pow(dist / L.range, 4.0), 1.0), 0.0) / pow(dist, 2.0);
 #endif
-   float attenuation =  1.0 / pow(dist,2.0);
-   return L.colour * L.intensity * attenuation;
+   float attenuation = 1.0 / pow(dist,2.0);
+   return L.colour * attenuation;
 }
 
 #if 0
@@ -577,7 +577,7 @@ void main (void)
 
       if (L.sun!=0) {
          l = L.position;
-         intensity = L.colour * L.intensity;
+         intensity = L.colour;
       }
       else {
          vec3 pointToLight = L.position - IN.position;

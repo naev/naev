@@ -8,7 +8,6 @@ struct Light {
    mat4 shadow;      /**< Shadow map transformation. */
    vec3 position;    /**< Position or orientation if sun. */
    vec3 colour;      /**< Colour to use. */
-   float intensity;  /**< Intensity of all lighting. */
    int sun;          /**< Whether or not a sun. */
 };
 layout(std140) uniform Lighting {
