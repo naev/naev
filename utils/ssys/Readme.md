@@ -56,13 +56,13 @@ Performed by `process_ssys.sh`. Several steps:
  - __3__ Call `dot2graph.py` to extract layout information from the dot input and output the resulting graph.
  - generate `map_dot.png`
  - __4__ Call `graphmod_pp.py`. At this point, the __post-processing__ occurs: some geometrical transformations are applied: compute the wild space layout, enforce co-circularity of some points around Anubis BH, rotate some parts, etc.
- - generate `map_fin.png`
+ - generate `map_post.png`
  - __5__ apply 3 times:
     - `reposition`
     - `graphmod_smooth_tl.py`
  - generate `map_repos.png`
  - __6__ `apply_pot.sh -g` applies gravity.
- - generate `map_fin_g.png`
+ - generate `map_grav.png`
 
 Notice `graphmod_repos_virt.py` is applied at each step to avoid noise in `png`s.
 
@@ -88,8 +88,10 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 
 # TODO
-
+ - manage vertex tags in `graphmod.py`
  - `reposition.c`: fix tunnel effect
- - `reposition.c -e`: should also repeat 'tradelane' / 'hidden' tags.
+ - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.
+ - `reposition.c -e`: should also repeat 'tradelane' / 'hidden' tags. See TODO.
  - `graphmod_smooth_tl.py` can be improved.
+ - try gravity variant
  - implement `extend_faction.py` that appends a color tag to neutral systems in a zone of influence.

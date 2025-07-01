@@ -8,9 +8,9 @@ from ssys import nam2base, getpath, PATH
 
 
 twins = {
-   ('carnis_minor', 'carnis_major'): 0.7,
+   ('carnis_minor', 'carnis_major'): 0.2,
    ('gliese', 'gliese_minor'): 0.5,
-   ('kruger', 'krugers_pocket'): 0.5
+   ('kruger', 'krugers_pocket'): 0.1
 }
 
 twins = {tuple(sorted(k)):v for k, v in twins.items()}
