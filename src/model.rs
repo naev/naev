@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use anyhow::Context as anyhow_context;
 use anyhow::Result;
 use encase::ShaderType;
@@ -52,14 +51,6 @@ pub struct Vertex {
 pub struct PrimitiveUniform {
     view: Matrix4<f32>,
     normal: Matrix3<f32>,
-}
-
-impl PrimitiveUniform {
-    pub fn new() -> Self {
-        PrimitiveUniform {
-            ..Default::default()
-        }
-    }
 }
 
 #[repr(C)]
@@ -622,6 +613,7 @@ impl Mesh {
 
 #[derive(Clone)]
 pub struct Trail {
+    #[allow(dead_code)]
     generator: String,
     position: Vector3<f32>,
     // TODO remove
@@ -1189,17 +1181,6 @@ impl Model {
             body,
             engine,
         })
-    }
-
-    pub fn render(
-        &mut self,
-        ctx: &Context,
-        fb: &FramebufferTarget,
-        lighting: &LightingUniform,
-        transform: &Matrix4<f32>,
-    ) -> Result<()> {
-        let scene_transform = *transform * self.transform_scale;
-        self.render_scene(ctx, fb, 0, lighting, &scene_transform)
     }
 
     pub fn render_scene(
