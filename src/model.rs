@@ -325,6 +325,7 @@ impl Material {
             Some(info) => {
                 data.normal_texcoord = info.tex_coord();
                 data.normal_scale = info.scale();
+                data.has_normal = 1;
                 textures[info.texture().index()].clone()
             }
             None => tex_zeros.clone(),
