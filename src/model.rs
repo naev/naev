@@ -1007,7 +1007,6 @@ struct Common {
 }
 struct CommonMut {
     light_uniform: LightingUniform,
-    light_intensity: f32,
 }
 impl Common {
     fn new(ctx: &ContextWrapper) -> Result<Self> {
@@ -1062,7 +1061,6 @@ impl Common {
         let data = RwLock::new({
             CommonMut {
                 light_uniform: Default::default(),
-                light_intensity: 1.0,
             }
         });
 
