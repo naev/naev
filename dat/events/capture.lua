@@ -3,6 +3,9 @@
 <event name="Ship Capture">
  <location>none</location>
  <chance>0</chance>
+ <tags>
+  <tag>fleetcap_10</tag>
+ </tags>
 </event>
 --]]
 --[[
@@ -12,6 +15,7 @@ local fmt = require 'format'
 local vn = require 'vn'
 local ccomm = require "common.comm"
 local escapepod = require "outfits.lib.escape_pod"
+local tut = require "common.tutorial"
 
 local plt
 local function setup_pilot( p )
@@ -222,6 +226,22 @@ function land ()
          pp:outfitAddIntrinsic( v )
       end
       player.shipSwap( name, true )
+
+      -- First capture gives fleet capacity bonus
+      if not player.evtDone("Ship Capture") then
+         vn.clear()
+         vn.scene()
+         local sai = vn.newCharacter( tut.vn_shipai() )
+         vn.transition( tut.shipai.transition )
+
+         vn.na(_([[Your ship AI materializes in front of you.]]))
+         sai(fmt.f(_([["Hello, {player}. I have been following your capturing of the {shp}. Following your technique, I have been able to adjust the fleet control hyper-parameters of your ship, potentially allowing you to have more ships deployed at once."]]),
+            {player=player.name(), shp=mem.ship}))
+
+         vn.done( tut.shipai.transition )
+         vn.run()
+      end
+
       evt.finish(true)
    end
    mem.spb = cur
