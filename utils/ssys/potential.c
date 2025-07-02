@@ -340,12 +340,8 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
             }
          }
          nb++;
-      } else if (line[0] != '\0' && line[0] != '\n') {
-         const int n = strlen(line);
-         if (line[n - 1] == '\n')
-            line[n - 1] = '\0';
-         fprintf(stderr, "Ignored line : \"%s\"\n", line);
-      }
+      }else if(apply)
+         fputs(line, stdout);
    }
    // fprintf(stderr,"[%zd systems]\n",nb);
    free(line);

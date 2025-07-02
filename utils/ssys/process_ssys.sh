@@ -87,7 +87,7 @@ $cmd 2>/dev/null && mv -v out.png map_repos.png
 msg "apply gravity"
 cmd=$(
    "$SCRIPT_DIR"/ssys2graph.sh -v |
-   "$SCRIPT_DIR"/apply_pot.sh -E |
+   "$SCRIPT_DIR"/apply_pot.sh -g |
    "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml
 ) && $cmd 2>/dev/null && mv -v out.png map_grav.png
 
