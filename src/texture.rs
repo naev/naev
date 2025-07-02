@@ -88,8 +88,8 @@ impl TextureFormat {
 pub struct TextureData {
     name: Option<String>,
     texture: glow::Texture,
-    w: usize,
-    h: usize,
+    pub w: usize,
+    pub h: usize,
     is_srgb: bool,
     is_sdf: bool,
     mipmaps: bool,
@@ -314,19 +314,31 @@ impl Texture {
     }
 
     pub fn scale(&self, ctx: &context::Context, w: usize, h: usize) -> Result<Self> {
+        self.scale_wrap(&ctx.as_wrap(), w, h)
+    }
+
+    pub fn scale_wrap(&self, ctx: &context::ContextWrapper, w: usize, h: usize) -> Result<Self> {
         let mut fbo = FramebufferBuilder::new(Some("Downscaler"))
             .width(w)
             .height(h)
-            .build(ctx)?;
+            .build_wrap(ctx)?;
 
-        fbo.bind(ctx);
+        let lctx = ctx.lock();
+        let gl = &lctx.gl;
+        fbo.bind_gl(gl);
+        unsafe {
+            gl.viewport(0, 0, w as i32, h as i32);
+        }
         let scale = (w as f32 / self.texture.w as f32).min(h as f32 / self.texture.h as f32);
         let uniform = render::TextureScaleUniform {
             scale,
             ..Default::default()
         };
-        self.draw_scale_ex(ctx, &uniform)?;
-        Framebuffer::unbind(ctx);
+        //self.draw_scale_ex( lctx, &uniform )?;
+        Framebuffer::unbind_gl(gl);
+        unsafe {
+            gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
+        }
 
         fbo.into_texture()
     }
