@@ -32,6 +32,8 @@ fn tex_value(ctx: &ContextWrapper, name: Option<&str>, value: [u8; 3]) -> Result
             .name(name)
             .width(1)
             .height(1)
+            .srgb(false)
+            .flipv(false)
             .image(&img.into())
             .build_wrap(ctx)?,
     ))
@@ -1108,7 +1110,10 @@ impl Model {
                 })
                 .collect::<Vec<_>>();
             for m in gltf.materials() {
+                // Diffuse and emissive textures should be srgb, rest should be linear
                 if let Some(info) = m.pbr_metallic_roughness().base_color_texture() {
+                    texture_wraps[info.texture().index()].srgb = true;
+                } else if let Some(info) = m.emissive_texture() {
                     texture_wraps[info.texture().index()].srgb = true;
                 }
             }
