@@ -186,6 +186,7 @@ impl TextureData {
         name: Option<&str>,
         img: &image::DynamicImage,
         flipv: bool,
+        srgb: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
@@ -201,9 +202,7 @@ impl TextureData {
             false => img.to_rgb8().into_raw(),
         };
 
-        let is_srgb = true;
-
-        let internalformat = TextureFormat::auto(has_alpha, is_srgb);
+        let internalformat = TextureFormat::auto(has_alpha, srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
             let gldata = glow::PixelUnpackData::Slice(Some(imgdata.as_slice()));
@@ -232,7 +231,7 @@ impl TextureData {
             w: w as usize,
             h: h as usize,
             texture,
-            is_srgb,
+            is_srgb: srgb,
             is_sdf: false,
             mipmaps: false,
             vmax: 1.,
@@ -425,6 +424,7 @@ impl TextureSource {
         sctx: &ContextWrapper,
         w: usize,
         h: usize,
+        srgb: bool,
         flipv: bool,
         mipmaps: bool,
         name: Option<&str>,
@@ -455,11 +455,11 @@ impl TextureSource {
                     let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
                     let img = surface_to_image(sur)?;
                     let ctx = &sctx.lock();
-                    TextureData::from_image(ctx, name, &img, flipv)?
+                    TextureData::from_image(ctx, name, &img, flipv, srgb)?
                 }
                 TextureSource::Image(img) => {
                     let ctx = &sctx.lock();
-                    TextureData::from_image(ctx, name, img, flipv)?
+                    TextureData::from_image(ctx, name, img, flipv, srgb)?
                 }
                 TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
                 TextureSource::Empty(fmt) => {
@@ -494,7 +494,7 @@ pub struct TextureBuilder {
     sy: usize,
     is_srgb: bool,
     is_sdf: bool,
-    flipv: bool,
+    is_flipv: bool,
     border_value: Option<Vector4<f32>>,
     address_u: AddressMode,
     address_v: AddressMode,
@@ -515,13 +515,13 @@ impl TextureBuilder {
             sy: 1,
             is_srgb: true,
             is_sdf: false,
+            is_flipv: true, // We flip by so it matches the viewport, but not the 3D textures
             border_value: None,
             address_u: AddressMode::Repeat,
             address_v: AddressMode::Repeat,
             mag_filter: FilterMode::Linear,
             min_filter: FilterMode::Linear,
             mipmaps: false,
-            flipv: true, // We flip by so it matches the viewport, but not the 3D textures
         }
     }
 
@@ -567,7 +567,7 @@ impl TextureBuilder {
     }
 
     pub fn flipv(mut self, enable: bool) -> Self {
-        self.flipv = enable;
+        self.is_flipv = enable;
         self
     }
 
@@ -640,7 +640,8 @@ impl TextureBuilder {
             sctx,
             self.w,
             self.h,
-            self.flipv,
+            self.is_srgb,
+            self.is_flipv,
             self.mipmaps,
             self.name.as_deref(),
         )?;
@@ -694,7 +695,7 @@ impl TextureBuilder {
             srh,
             texture,
             sampler,
-            flipv: self.flipv,
+            flipv: self.is_flipv,
             mipmaps: self.mipmaps,
         })
     }

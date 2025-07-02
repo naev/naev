@@ -947,7 +947,10 @@ fn load_gltf_texture(
     base: &std::path::Path,
 ) -> Result<Texture> {
     let sampler = node.sampler();
-    let mut tb = TextureBuilder::new().name(node.name()).flipv(false);
+    let mut tb = TextureBuilder::new()
+        .name(node.name())
+        .flipv(false)
+        .srgb(false);
 
     tb = match node.source().source() {
         gltf::image::Source::Uri { uri, .. } => {
