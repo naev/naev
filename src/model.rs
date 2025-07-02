@@ -302,6 +302,9 @@ impl Material {
             gltf::material::AlphaMode::Blend => 1,
         };
         data.emissive_factor = mat.emissive_factor().into();
+        if let Some(strength) = mat.emissive_strength() {
+            data.emissive_factor *= strength;
+        }
 
         let diffuse = match pbr.base_color_texture() {
             Some(info) => {
