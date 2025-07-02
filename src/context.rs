@@ -15,7 +15,7 @@ use crate::buffer::{
     VertexArrayBuilder,
 };
 use crate::log::warn_err;
-use crate::render::{SolidUniform, TextureUniform};
+use crate::render::{SolidUniform, TextureScaleUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{debug, warn};
 use crate::{gettext, log, ndata};
@@ -207,6 +207,8 @@ pub struct Context {
     // Useful "globals"
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
+    pub program_texture_scale: Shader,
+    pub buffer_texture_scale: Buffer,
     pub program_solid: Shader,
     pub buffer_solid: Buffer,
     pub vbo_square: Buffer,
@@ -552,11 +554,22 @@ impl Context {
             .frag_file("rust_texture.frag")
             .sampler("sampler", 0)
             .build(&gl)?;
-        let uniform = TextureUniform::default();
         let buffer_texture = BufferBuilder::new(Some("Texture Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(&uniform.buffer()?)
+            .data(&TextureUniform::default().buffer()?)
+            .build(&gl)?;
+        // Downscaling texture shader
+        let program_texture_scale = ShaderBuilder::new(Some("Scaling Texture Shader"))
+            .uniform_buffer("TextureData", 0)
+            .vert_file("rust_magic.vert")
+            .frag_file("rust_magic.frag")
+            .sampler("sampler", 0)
+            .build(&gl)?;
+        let buffer_texture_scale = BufferBuilder::new(Some("Scaling Texture Buffer"))
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(&TextureScaleUniform::default().buffer()?)
             .build(&gl)?;
         // The solid shader
         let program_solid = ShaderBuilder::new(Some("Solid Shader"))
@@ -564,11 +577,10 @@ impl Context {
             .vert_file("rust_solid.vert")
             .frag_file("rust_solid.frag")
             .build(&gl)?;
-        let uniform = SolidUniform::default();
         let buffer_solid = BufferBuilder::new(Some("Solid Buffer"))
             .target(BufferTarget::Uniform)
             .usage(BufferUsage::Dynamic)
-            .data(&uniform.buffer()?)
+            .data(&SolidUniform::default().buffer()?)
             .build(&gl)?;
 
         // Square VBO
@@ -631,6 +643,8 @@ impl Context {
             dimensions,
             program_texture,
             buffer_texture,
+            program_texture_scale,
+            buffer_texture_scale,
             program_solid,
             buffer_solid,
             vbo_square,

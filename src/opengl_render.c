@@ -1109,6 +1109,7 @@ void gl_renderScaleAspect( const glTexture *texture, double bx, double by,
    gl_renderScale( texture, bx, by, nw, nh, c );
 }
 
+#if 0
 /**
  * @brief Blits a texture scaling it to fit a rectangle, but conserves aspect
  * ratio using expensive filtering with the "Magic" Kernel. Should ideally be
@@ -1165,6 +1166,7 @@ void gl_renderScaleAspectMagic( const glTexture *texture, double bx, double by,
       glBindSampler( 0, 0 );
    gl_checkErr();
 }
+#endif
 
 /**
  * @brief Blits a texture to a position

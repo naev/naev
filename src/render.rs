@@ -24,10 +24,31 @@ pub struct TextureUniform {
 }
 impl Default for TextureUniform {
     fn default() -> Self {
-        TextureUniform {
+        Self {
             texture: Matrix3::identity(),
             transform: Matrix3::identity(),
             colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, ShaderType)]
+pub struct TextureScaleUniform {
+    pub texture: Matrix3<f32>,
+    pub transform: Matrix3<f32>,
+    pub colour: Vector4<f32>,
+    pub scale: f32,
+    pub radius: f32,
+}
+impl Default for TextureScaleUniform {
+    fn default() -> Self {
+        Self {
+            texture: Matrix3::identity(),
+            transform: Matrix3::identity(),
+            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+            scale: 0.25,
+            radius: 8.0,
         }
     }
 }
@@ -40,7 +61,7 @@ pub struct SolidUniform {
 }
 impl Default for SolidUniform {
     fn default() -> Self {
-        SolidUniform {
+        Self {
             transform: Matrix3::identity(),
             colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
         }

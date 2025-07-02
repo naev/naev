@@ -370,6 +370,53 @@ impl Texture {
         Ok(())
     }
 
+    pub fn draw_scale(
+        &self,
+        ctx: &context::Context,
+        x: f32,
+        y: f32,
+        w: f32,
+        h: f32,
+        scale: f32,
+    ) -> Result<()> {
+        let dims = ctx.dimensions.read().unwrap();
+        #[rustfmt::skip]
+        let transform: Matrix3<f32> = dims.projection * Matrix3::new(
+             w,  0.0,  x,
+            0.0,  h,   y,
+            0.0, 0.0, 1.0,
+        );
+        let uniform = render::TextureScaleUniform {
+            transform,
+            scale,
+            ..Default::default()
+        };
+        self.draw_scale_ex(ctx, &uniform)
+    }
+
+    pub fn draw_scale_ex(
+        &self,
+        ctx: &context::Context,
+        uniform: &render::TextureScaleUniform,
+    ) -> Result<()> {
+        let gl = &ctx.gl;
+        ctx.program_texture_scale.use_program(gl);
+        self.bind(ctx, 0);
+        ctx.vao_square.bind(ctx);
+
+        ctx.buffer_texture_scale
+            .bind_write_base(ctx, &uniform.buffer()?, 0)?;
+        unsafe {
+            gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
+        }
+
+        Texture::unbind(ctx);
+        buffer::VertexArray::unbind(ctx);
+        ctx.buffer_texture_scale.unbind(ctx);
+
+        Ok(())
+    }
+
     pub fn into_ptr(self) -> *mut Self {
         unsafe { Arc::increment_strong_count(Arc::into_raw(self.texture.clone())) }
         Box::into_raw(Box::new(self))
@@ -1393,4 +1440,28 @@ pub extern "C" fn gl_renderTexture(
 
     let tex = unsafe { &*ctex };
     let _ = tex.draw_ex(ctx, &data);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderScaleAspectMagic(
+    ctex: *mut Texture,
+    bx: c_double,
+    by: c_double,
+    bw: c_double,
+    bh: c_double,
+) {
+    let ctx = Context::get().unwrap();
+    let dims = ctx.dimensions.read().unwrap();
+    let tex = unsafe { &*ctex };
+    let tw = tex.texture.w as f32;
+    let th = tex.texture.h as f32;
+    let x = bx as f32;
+    let y = by as f32;
+    let w = bw as f32;
+    let h = bw as f32;
+    let scale = (w / tw).min(h / th);
+    let nw = scale * tw;
+    let nh = scale * th;
+
+    let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
 }
