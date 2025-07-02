@@ -313,6 +313,24 @@ impl Texture {
         })
     }
 
+    pub fn scale(&self, ctx: &context::Context, w: usize, h: usize) -> Result<Self> {
+        let mut fbo = FramebufferBuilder::new(Some("Downscaler"))
+            .width(w)
+            .height(h)
+            .build(ctx)?;
+
+        fbo.bind(ctx);
+        let scale = (w as f32 / self.texture.w as f32).min(h as f32 / self.texture.h as f32);
+        let uniform = render::TextureScaleUniform {
+            scale,
+            ..Default::default()
+        };
+        self.draw_scale_ex(ctx, &uniform)?;
+        Framebuffer::unbind(ctx);
+
+        fbo.into_texture()
+    }
+
     pub fn bind(&self, ctx: &context::Context, idx: u32) {
         self.bind_gl(&ctx.gl, idx)
     }
@@ -828,6 +846,13 @@ impl Framebuffer {
                 glow::FRAMEBUFFER,
                 NonZero::new(naevc::gl_screen.current_fbo).map(glow::NativeFramebuffer),
             );
+        }
+    }
+
+    pub fn into_texture(&mut self) -> Result<Texture> {
+        match self.texture.take() {
+            Some(tex) => Ok(tex),
+            None => anyhow::bail!("unable to remove texture from framebuffer"),
         }
     }
 }
