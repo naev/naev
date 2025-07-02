@@ -55,7 +55,7 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
    d *= inv_fact;
    if (d < rad)
       f = 2.0f * d * mul_ct;
-   else{
+   else {
       f = 1.0f / d * d;
       if (alt)
          f *= rad / d;
@@ -300,6 +300,8 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
 
    if (num < THREADS - 1)
       exit(EXIT_SUCCESS);
+   while (wait(NULL) != -1)
+      ;
 }
 
 int do_it(const enum e_pot type, const float scale, const bool apply,
@@ -340,7 +342,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
             }
          }
          nb++;
-      }else if(apply)
+      } else if (apply)
          fputs(line, stdout);
    }
    // fprintf(stderr,"[%zd systems]\n",nb);
@@ -353,6 +355,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
    inv_fact = 1.0f / fact;
 
    if (apply) {
+      fflush(stdout);
       apply_potential(lst, nb, type, (const char **) nam, alt);
       for (size_t i = 0; i < nb; i++)
          free(nam[i]);

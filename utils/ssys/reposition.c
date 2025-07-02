@@ -258,8 +258,8 @@ static double edge_overlap_score(struct s_cost_params *cp, const double v[2])
       norm_v(u);
 
       for (int j = 0; j < cp->n_around; j++) {
-         const double *P   = cp->around + 2 * j;
-         const double  sq  = seg_dist_sq(v, N, u, P);
+         const double *P  = cp->around + 2 * j;
+         const double  sq = seg_dist_sq(v, N, u, P);
 
          if (sq < mini)
             mini = sq;
@@ -726,8 +726,9 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    map.nosys = map.nsys;
 
    char  *line = NULL;
-   size_t n    = 0;
-   while (getline(&line, &n, stdin) != -1) {
+   size_t _n   = 0;
+   int    n;
+   while ((n = getline(&line, &_n, stdin)) != -1) {
       char  *bufs[3] = {NULL, NULL, NULL};
       int    r;
       double tmp[2] = {0.0, 0.0};
@@ -736,8 +737,6 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       if (3 == sscanf(line, "%ms %lf %lf %n", bufs, tmp, tmp + 1, &r)) {
          const size_t id = ssys_num(h, bufs[0], &map, tmp, line + r, true);
          map.sys[id].w   = 1.0;
-      //TODO: manage other tags
-      //} else if (3 <= sscanf(line, "%ms %ms %n%lf%n", bufs + 1, bufs + 2, &r, &len, &r2)) {
       } else if (2 <= sscanf(line, "%ms %ms %lf", bufs + 1, bufs + 2, &len)) {
          if ((map.njumps & (map.njumps + 1)) == 0) {
             const size_t new_siz = (map.njumps << 1) | 1;
@@ -749,8 +748,11 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
             ssys_num(h, bufs[2], &map, tmp, NULL, false);
          map.jumps[map.njumps].len = len;
          map.njumps++;
+         if (edges) {
+            fwrite(line, sizeof(char), n, stdout);
+            fflush(stdout);
+         }
       } else if (line[0] != '\0' && line[0] != '\n') {
-         const int n = strlen(line);
          if (line[n - 1] == '\n')
             line[n - 1] = '\0';
          fprintf(stderr, "Ignored line : \"%s\"\n", line);
@@ -778,19 +780,6 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
       map.nosys = map.nsys;
 
    gen_map_reposition(&map, g_opt, quiet, gen_map, only, weight);
-   if (edges) {
-      char buff[512];
-      for (int i = 0; i < map.njumps; i++) {
-         size_t n =
-            snprintf(buff, 511, "%s %s", map.sys_nam[map.jumps[i].jmp[0]],
-                     map.sys_nam[map.jumps[i].jmp[1]]);
-         if (map.jumps[i].len != 1.0)
-            n += snprintf(buff + n, 511 - n, " %f", map.jumps[i].len);
-         n += snprintf(buff + n, 511 - n, "\n");
-         fwrite(buff, sizeof(char), n, stdout);
-         fflush(stdout);
-      }
-   }
    for (int i = 0; i < map.nsys; i++) {
       free(map.sys_aux[i]);
       free(map.sys_nam[i]);
