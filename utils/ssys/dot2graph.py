@@ -41,7 +41,8 @@ for lin in input_blocks(stdin):
    x, y = float(position[0]), float(position[1])
    pos[nam] = vec(x, y)
 
-_V, oldpos, E, tradelane, _color = xml_files_to_graph()
+
+oldpos = xml_files_to_graph()[1]
 
 bbox, oldbb = bb(), bb()
 for k in pos:

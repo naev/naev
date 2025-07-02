@@ -2,7 +2,7 @@
 
 if [ "$1" = "-g" ] ; then
    N=15
-   RESCALE=1.75
+   RESCALE=1.7
 elif [ "$1" = "-E" ] ; then
    N=20
    RESCALE=1.2
@@ -42,5 +42,5 @@ for j in "$@"; do
    if [ "$j" = "-C" ]; then exit 0; fi
 done
 
-repiper "$N" "$SCRIPT_DIR"/potential -a "$1" |
-"$SCRIPT_DIR"/graph_scale.py "$RESCALE"
+"$SCRIPT_DIR"/graph_scale.py "$RESCALE" |
+repiper "$N" "$SCRIPT_DIR"/potential -a "$1"

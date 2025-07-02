@@ -25,8 +25,11 @@ msg() {
 git checkout "$BAS/spob" "$DST"
 
 msg "gen crt sys map"
-cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_bef.png
+cmd=$(
+   "$SCRIPT_DIR"/ssys2graph.sh       |
+   "$SCRIPT_DIR"/graph_faction.py -c |
+   "$SCRIPT_DIR"/graph2pov.py -C
+) && $cmd 2>/dev/null && mv -v out.png map_bef.png
 
 msg "freeze non-nempty"
 echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
@@ -42,16 +45,22 @@ msg "\ngen after graph"
 ("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
 "$SCRIPT_DIR"/graph2ssys.py
-cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_dot.png
+cmd=$(
+   "$SCRIPT_DIR"/ssys2graph.sh       |
+   "$SCRIPT_DIR"/graph_faction.py -c |
+   "$SCRIPT_DIR"/graph2pov.py -C
+) && $cmd 2>/dev/null && mv -v out.png map_dot.png
 
 msg "pprocess"
 "$SCRIPT_DIR"/ssys2graph.sh |
 "$SCRIPT_DIR"/graphmod_pp.py |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
 "$SCRIPT_DIR"/graph2ssys.py
-cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_post.png
+cmd=$(
+   "$SCRIPT_DIR"/ssys2graph.sh |
+   "$SCRIPT_DIR"/graph_faction.py -c |
+   "$SCRIPT_DIR"/graph2pov.py -C
+) && $cmd 2>/dev/null && mv -v out.png map_post.png
 
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$("$SCRIPT_DIR"/ssys_graph.sh -v |
@@ -69,10 +78,8 @@ read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}
 "$SCRIPT_DIR"/repos.sh -C
 for i in $(seq "$N"); do
    "$SCRIPT_DIR"/ssys2graph.sh |
-   (
-      "$SCRIPT_DIR"/reposition -q -i "${ALMOST_ALL[@]}" ;
-      "$SCRIPT_DIR"/ssys2graph.sh -e
-   ) | "$SCRIPT_DIR"/graphmod_smooth_tl.py |
+   "$SCRIPT_DIR"/reposition -q -i "${ALMOST_ALL[@]}" |
+   "$SCRIPT_DIR"/graphmod_smooth_tl.py |
    "$SCRIPT_DIR"/graph2ssys.py
    msg "\e[32m$i"
 done
@@ -81,14 +88,18 @@ done
 "$SCRIPT_DIR"/graph2ssys.py
 msg ""
 
-cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_repos.png
+cmd=$(
+   "$SCRIPT_DIR"/ssys2graph.sh |
+   "$SCRIPT_DIR"/graph_faction.py -c |
+   "$SCRIPT_DIR"/graph2pov.py -C
+) && $cmd 2>/dev/null && mv -v out.png map_repos.png
 
 msg "apply gravity"
-cmd=$(
-   "$SCRIPT_DIR"/ssys2graph.sh -v |
-   "$SCRIPT_DIR"/apply_pot.sh -g |
-   "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml
+cmd=$( (
+      "$SCRIPT_DIR"/ssys2graph.sh -v | "$SCRIPT_DIR"/apply_pot.sh -g ;
+      "$SCRIPT_DIR"/ssys2graph.sh -e
+   ) | "$SCRIPT_DIR"/graph_faction.py -c |
+   "$SCRIPT_DIR"/graph2pov.py -C
 ) && $cmd 2>/dev/null && mv -v out.png map_grav.png
 
 msg "gen final graph"

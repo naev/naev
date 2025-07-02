@@ -18,9 +18,8 @@ Scripts:
  - `graph2ssys.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
+ - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colors if input vertices have color tags (i.e. input is obtained from `ssys2graph | graph_faction -c`.
  - `ssys2dot.py`: As the name suggests, reads current system map and outputs a graph in dot format. Also, currently applies ad hoc operations.
- - `ssys2pov.py`: Reads current system map, and generates a `png` using `povray`.
- - `ssys2pov.py -g`: The same, but takes a graph in input.
 
 ## graphmod
 `graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source. By convention, we call `graph_xxx.py` the generic utilities and `graphmod_xxx.py` the ad hoc modifiers.
@@ -94,8 +93,8 @@ These are designed to manage the **internal geometry of systems**, that might ge
     - `reposition.c -e`: should also transmit edge tags. See TODO.
     - `potential.c`: should also transmit vertex tags.
     - `ssys2dot` -> `graph2dot`
-    - `ssys2pov` -> `graph2pov`
     - have `process.sh` do it all with one main pipe (only one call to `graph_faction`)
+    - why does apply_pot fail when edges provided ?
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.
  - `graphmod_smooth_tl.py` can be improved.
