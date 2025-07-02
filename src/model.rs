@@ -61,12 +61,12 @@ pub struct MaterialUniform {
     metallic_factor: f32,
     roughness_factor: f32,
     blend: i32,
-    diffuse_texcoord: u32,
-    metallic_texcoord: u32,
-    emissive_texcoord: u32,
-    normal_texcoord: u32,
-    occlusion_texcoord: u32,
-    has_normal: u32,
+    diffuse_texcoord: i32,
+    metallic_texcoord: i32,
+    emissive_texcoord: i32,
+    normal_texcoord: i32,
+    occlusion_texcoord: i32,
+    has_normal: i32,
     normal_scale: f32,
 }
 
@@ -84,7 +84,7 @@ pub struct LightUniform {
     shadow: Matrix4<f32>,
     position: Vector3<f32>,
     colour: Vector3<f32>,
-    sun: u32,
+    sun: i32,
 }
 impl LightUniform {
     fn update_shadow(&mut self) {
@@ -114,7 +114,7 @@ impl From<&naevc::Light> for LightUniform {
         let intensity = light.intensity as f32;
         let mut l = LightUniform {
             shadow: Matrix4::identity(),
-            sun: light.sun as u32,
+            sun: light.sun as i32,
             position: Vector3::new(
                 light.pos.v[0] as f32,
                 light.pos.v[1] as f32,
@@ -137,7 +137,7 @@ pub struct LightingUniform {
     lights: [LightUniform; MAX_LIGHTS],
     ambient: Vector3<f32>,
     intensity: f32,
-    nlights: u32,
+    nlights: i32,
 }
 impl From<&naevc::Lighting> for LightingUniform {
     fn from(lighting: &naevc::Lighting) -> Self {
@@ -150,7 +150,7 @@ impl From<&naevc::Lighting> for LightingUniform {
                 lighting.ambient_g as f32,
                 lighting.ambient_b as f32,
             ),
-            nlights: lighting.nlights as u32,
+            nlights: lighting.nlights as i32,
             lights,
         }
     }
@@ -303,28 +303,28 @@ impl Material {
 
         let diffuse = match pbr.base_color_texture() {
             Some(info) => {
-                data.diffuse_texcoord = info.tex_coord();
+                data.diffuse_texcoord = info.tex_coord() as i32;
                 textures[info.texture().index()].clone()
             }
             None => tex_ones.clone(),
         };
         let metallic = match pbr.metallic_roughness_texture() {
             Some(info) => {
-                data.metallic_texcoord = info.tex_coord();
+                data.metallic_texcoord = info.tex_coord() as i32;
                 textures[info.texture().index()].clone()
             }
             None => tex_ones.clone(),
         };
         let emissive = match mat.emissive_texture() {
             Some(info) => {
-                data.emissive_texcoord = info.tex_coord();
+                data.emissive_texcoord = info.tex_coord() as i32;
                 textures[info.texture().index()].clone()
             }
             None => tex_zeros.clone(),
         };
         let normalmap = match mat.normal_texture() {
             Some(info) => {
-                data.normal_texcoord = info.tex_coord();
+                data.normal_texcoord = info.tex_coord() as i32;
                 data.normal_scale = info.scale();
                 data.has_normal = 1;
                 textures[info.texture().index()].clone()
@@ -334,7 +334,7 @@ impl Material {
         let ambientocclusion = match mat.occlusion_texture() {
             Some(info) => {
                 // TODO strength?
-                data.occlusion_texcoord = info.tex_coord();
+                data.occlusion_texcoord = info.tex_coord() as i32;
                 textures[info.texture().index()].clone()
             }
             None => tex_ones.clone(),
@@ -1239,7 +1239,7 @@ pub extern "C" fn gltf_lightSet(idx: c_int, light: *const naevc::Light) -> c_int
     }
     let mut data = COMMON.get().unwrap().data.write().unwrap();
     let light = unsafe { &*light };
-    data.light_uniform.nlights = data.light_uniform.nlights.max((n + 1) as u32);
+    data.light_uniform.nlights = data.light_uniform.nlights.max((n + 1) as i32);
     data.light_uniform.lights[n] = light.into();
     0
 }
