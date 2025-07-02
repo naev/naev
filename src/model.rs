@@ -116,7 +116,7 @@ impl From<&naevc::Light> for LightUniform {
         let intensity = light.intensity as f32;
         let mut l = LightUniform {
             shadow: Matrix4::identity(),
-            sun: light.sun as i32,
+            sun: light.sun,
             position: {
                 let v = Vector3::new(
                     light.pos.v[0] as f32,
@@ -158,7 +158,7 @@ impl From<&naevc::Lighting> for LightingUniform {
                 lighting.ambient_g as f32,
                 lighting.ambient_b as f32,
             ),
-            nlights: lighting.nlights as i32,
+            nlights: lighting.nlights,
             lights,
         }
     }
