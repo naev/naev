@@ -4,7 +4,7 @@ if [ "$1" = "-g" ] ; then
    N=15
    RESCALE=1.75
 elif [ "$1" = "-E" ] ; then
-   N=25
+   N=20
    RESCALE=1.2
 else
    N=15
@@ -12,9 +12,9 @@ else
 fi
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0") -C | ( -g | -w )" >&2
-   echo "  Applies potential $N times and rescales x$RESCALE." >&2
-   echo "  -g stands for gravity; -w for waves." >&2
+   echo "usage:  $(basename "$0") -C | ( -E | -g | -w )" >&2
+   echo "  Applies potential $N times and rescales x$RESCALE to input graph." >&2
+   echo "  -g stands for gravity; -w for waves. (-E for experimental grav.)" >&2
    echo "  See potential -h for more information." >&2
    echo "  Output the positions of systems in the same form as ssys2graph.sh." >&2
    echo "  If -C is set, just compile potential." >&2
@@ -39,11 +39,8 @@ if [ ! -f "$SCRIPT_DIR"/potential ] || [ ! "$SCRIPT_DIR"/potential -nt "$SCRIPT_
 fi
 
 for j in "$@"; do
-   if [ "$j" = "-C" ]; then
-      exit 0
-   fi
+   if [ "$j" = "-C" ]; then exit 0; fi
 done
 
-"$SCRIPT_DIR"/ssys2graph.sh -v |
 repiper "$N" "$SCRIPT_DIR"/potential -a "$1" |
 "$SCRIPT_DIR"/graph_scale.py "$RESCALE"

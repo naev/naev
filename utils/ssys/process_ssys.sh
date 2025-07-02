@@ -13,7 +13,7 @@ DST="$BAS/ssys"
 COL=-C
 
 msg() {
-   echo -e "$1" | while IFS=$'\n' read -r line; do
+   echo -e "$1" | while read -r line; do
       if [ -z "$line" ] ; then
          echo ""
       else
@@ -85,9 +85,11 @@ cmd=$("$SCRIPT_DIR"/ssys2pov.py -C "$DST"/*.xml) &&
 $cmd 2>/dev/null && mv -v out.png map_repos.png
 
 msg "apply gravity"
-cmd=$( "$SCRIPT_DIR"/apply_pot.sh -E |
-"$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml) &&
-$cmd 2>/dev/null && mv -v out.png map_grav.png
+cmd=$(
+   "$SCRIPT_DIR"/ssys2graph.sh -v |
+   "$SCRIPT_DIR"/apply_pot.sh -E |
+   "$SCRIPT_DIR"/ssys2pov.py -g -C "$DST"/*.xml
+) && $cmd 2>/dev/null && mv -v out.png map_grav.png
 
 msg "gen final graph"
 "$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |

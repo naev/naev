@@ -38,7 +38,7 @@ Another graph modifier.
 ## potential
  - `potential -g` generates the __gravity potential__ of the star map as a picture (black means minimum potential, and white means 0 potential (upper bound).
  - `height_map.pov` allows to display that potential in 3D. Use `gen_pot.sh` to do it all.
- - `potential -a` can __apply potential__, see `apply_pot.sh` and `apply_pot_to_ssys.sh`.
+ - `potential -a` can __apply potential__, see `apply_pot.sh`.
 
 
 # Specific scripts and Current process
