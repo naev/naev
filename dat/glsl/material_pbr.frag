@@ -576,7 +576,7 @@ void main (void)
       vec3 intensity;
 
       if (L.sun!=0) {
-         l = L.position;
+         l = L.position; // Should be already normalized
          intensity = L.colour;
       }
       else {

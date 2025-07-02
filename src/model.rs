@@ -117,11 +117,17 @@ impl From<&naevc::Light> for LightUniform {
         let mut l = LightUniform {
             shadow: Matrix4::identity(),
             sun: light.sun as i32,
-            position: Vector3::new(
-                light.pos.v[0] as f32,
-                light.pos.v[1] as f32,
-                light.pos.v[2] as f32,
-            ),
+            position: {
+                let v = Vector3::new(
+                    light.pos.v[0] as f32,
+                    light.pos.v[1] as f32,
+                    light.pos.v[2] as f32,
+                );
+                match light.sun {
+                    0 => v,
+                    _ => v.normalize(),
+                }
+            },
             colour: Vector3::new(
                 light.colour.v[0] as f32 * intensity,
                 light.colour.v[1] as f32 * intensity,
@@ -178,7 +184,7 @@ impl Default for LightingUniform {
                 // Sharky (point): 2000., position: -12.339, 10.559, 11.787
                 LightUniform {
                     shadow: Matrix4::identity(),
-                    position: Vector3::new(10.0, 11.5, 7.0),
+                    position: Vector3::new(10.0, 11.5, 7.0).normalize(),
                     colour: Vector3::new(1.0, 1.0, 1.0),
                     sun: 1,
                 },
