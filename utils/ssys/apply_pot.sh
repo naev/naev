@@ -2,7 +2,7 @@
 
 if [ "$1" = "-g" ] ; then
    N=20
-   RESCALE=1.6
+   RESCALE=1.8
 elif [ "$1" = "-E" ] ; then
    N=20
    RESCALE=1.2
@@ -23,12 +23,11 @@ fi
 
 repiper() {
    local -i n="$1";
-   n="$((n-1))"
    shift;
    if (( n )); then
-      "$@" | repiper "$n" "$@"
+      "$@" | repiper "$((n-1))" "$@"
    else
-      "$@"
+      cat
    fi
 }
 

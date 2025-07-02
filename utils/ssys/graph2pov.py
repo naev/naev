@@ -5,12 +5,14 @@ if __name__ != '__main__':
 
 
 from sys import argv, stdin, stderr, exit
+import subprocess
+import os
 
-from ssys_graph import xml_files_to_graph, default_col, color_values
+from graph_faction import default_col, color_values
 from geometry import bb, vec
 
 
-def main( halo = False ):
+def main( pov_out = None, halo = False, silent = False ):
    dst = open('out.pov', 'w')
 
    def write_pov( s, indent = -1 ):
@@ -25,7 +27,7 @@ def main( halo = False ):
    from graphmod import sys_pos as V, sys_jmp as E
    E.silence()
    V.silence()
-   colors = { k: color_values[v[0]] for k, v in V.aux.items()}
+   colors = { k: color_values[(v+['default'])[0]] for k, v in V.aux.items()}
 
    b = bb()
 
@@ -100,15 +102,45 @@ def main( halo = False ):
       '+W' + str(int(base*ratio)), '+H' + str(base),
       '+A0.1', '+AM2', '+R4', '+BM2'
    ]
+   if pov_out is not None:
+      cmd += ['+O' + pov_out]
+
    print(' '.join(cmd))
 
-if '-h' in argv[1:] or '--help' in argv[1:] or argv[1:]!=['-C']:
-   print("usage  ", argv[0], '[-C]')
+   if pov_out is not None:
+      if silent:
+         arg = {'stderr':open(os.devnull, 'wb')}
+      else:
+         arg = {}
+      subprocess.run(cmd, **arg)
+      stderr.write('<' + pov_out + '>\n')
+
+non_opt = [a for a in argv[1:] if a[:2] not in ['-c', '-p', '-q']]
+if '-h' in non_opt or '--help' in non_opt or non_opt!=[]:
+   print("usage  ", argv[0], '[-c] [-p|-q]')
    print('  Writes "out.pov". Outputs povray commandline to stdout.')
    print('  If color tags are present in inputs, they will be used.')
-   print('  If -C is set, use color halos.')
+   print('  If -c is set, use color halos.')
+   print('  If -p is set, calls povray and output the graph.')
+   print('  -q does the same as -p, but quiets povray output.')
 else:
-   if halo:= '-C' in argv[1:]:
-      argv.remove('-C')
+   silent = False
+   if halo:= '-s' in argv[1:]:
+      argv.remove('-s')
 
-   main(halo)
+   if halo:= '-c' in argv[1:]:
+      argv.remove('-c')
+
+   pov_out = None
+   if '-p' in [a[:2] for a in argv[1:]]:
+      a = argv[[a[:2] for a in argv[1:]].index('-p') + 1]
+      pov_out = a[2:]
+      argv.remove(a)
+
+   if '-q' in [a[:2] for a in argv[1:]]:
+      a = argv[[a[:2] for a in argv[1:]].index('-q') + 1]
+      pov_out = a[2:]
+      argv.remove(a)
+      silent = True
+
+   main(pov_out, halo, silent)

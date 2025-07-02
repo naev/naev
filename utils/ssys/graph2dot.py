@@ -5,8 +5,8 @@ if __name__ != '__main__':
 
 
 from sys import argv, stderr
-
-from ssys_graph import xml_files_to_graph, color_values
+from graph_faction import color_values
+from ssys_graph import xml_files_to_graph
 
 
 del_edges = [
@@ -91,10 +91,16 @@ for i in virtual_edges:
    else:
       already.add(i)
 
-def main( args, fixed_pos = False, color = False ):
-   V, pos, E, tl, colors = xml_files_to_graph(args, color)
+from graphmod import sys_pos as pos, sys_jmp as E
+E.silence()
+pos.silence()
+
+def main( args, color = False, fixed_pos = False ):
    if color:
-      colors = { k: color_values[v] for k, v in colors.items() }
+      colors = { k: color_values[(v+['default'])[0]] for k, v in pos.aux.items()}
+      V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
+   else:
+      V = {k:' '.join(l) for k, l in pos.aux.items()}
    print('graph g{')
    print('\tepsilon=0.000001')
    print('\tmaxiter=2000')
@@ -152,14 +158,15 @@ def main( args, fixed_pos = False, color = False ):
             s += ';color=red'
 
          print(s + ']')
-         for dst, hid in E[i]:
+         for dst, aux in E[i]:
+            hid = 'hidden' in aux
             suff = []
             if (i, dst) in del_edges:
                if fixed_pos:
                   suff.append('color="red"')
                else:
                   continue
-            if i in tl and dst in tl:
+            if 'tradelane' in aux:
                suff.extend(['style=bold', 'penwidth=4.0'])
             elif hid:
                suff.extend(['style=dotted', 'penwidth=2.5'])
@@ -195,26 +202,23 @@ def main( args, fixed_pos = False, color = False ):
 
 if __name__ == '__main__':
    if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)<2:
-      print('usage: ', argv[0], '[-c|-C]', '[-k]', '<ssys1.xml>', '...')
+      print('usage: ', argv[0], '[-c]', '[-k]', '<ssys1.xml>', '...')
       print('Outputs the graph in dot format.')
-      print('If -c or -C is set, use faction colors (slower).')
+      print('By default, interprets the vertex aux as the name.')
+      print('If -c is set, interprets the first aux field as color.')
       print('If -k is set, the nodes have the keep_position marker.')
       print('Examples:')
       print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml -k | neato -Tpng > before.png')
       print('  > ./utils/ssys/ssys2dot.py dat/ssys/*.xml | neato -Tpng > after.png')
       print('  > display before.png after.png')
    else:
-      if keep := '-k' in argv:
-         argv.remove('-k')
-
       if color := '-c' in argv:
          argv.remove('-c')
 
-      if '-C' in argv:
-         color = True
-         argv.remove('-C')
+      if keep := '-k' in argv:
+         argv.remove('-k')
 
       if (ign := [f for f in argv[1:] if not f.endswith('.xml')]) != []:
          stderr.write('Ignored: "' + '", "'.join(ign) + '"\n')
 
-      main([f for f in argv[1:] if f.endswith('.xml')], keep, color)
+      main([f for f in argv[1:] if f.endswith('.xml')], color, keep)

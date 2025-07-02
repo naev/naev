@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+N_ITER=4
+
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    echo "usage:  $(basename "$0")" >&2
    echo "  Applies the whole remap process. See the script content." >&2
@@ -9,8 +11,6 @@ fi
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 BAS=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat")
 DST="$BAS/ssys"
-
-COL=-C
 
 msg() {
    echo -e "$1" | while read -r line; do
@@ -22,88 +22,77 @@ msg() {
    done >&2
 }
 
-git checkout "$BAS/spob" "$DST"
+pmsg() {
+   cat
+   msg "$@"
+}
 
-msg "gen crt sys map"
-cmd=$(
-   "$SCRIPT_DIR"/ssys2graph.sh       |
-   "$SCRIPT_DIR"/graph_faction.py -c |
-   "$SCRIPT_DIR"/graph2pov.py -C
-) && $cmd 2>/dev/null && mv -v out.png map_bef.png
+git checkout "$BAS/spob" "$DST"
 
 msg "freeze non-nempty"
 echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
 "$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
 
 msg "gen before graph"
-"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |
-neato -n2 -Tpng 2>/dev/null > before.png
+"$SCRIPT_DIR"/ssys2graph.sh |
+"$SCRIPT_DIR"/graph_faction.py -c -n |
+tee >(
+   "$SCRIPT_DIR"/graph2dot.py -c "$DST"/*.xml -k |
+   neato -n2 -Tpng 2>/dev/null > before.png
+) |
+pmsg "\ngen crt sys map" |
+tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_bef.png') |
+"$SCRIPT_DIR"/graph2ssys.py
 
-msg "\ngen after graph"
-"$SCRIPT_DIR"/ssys2dot.py "$DST"/*.xml | tee before.dot | neato 2>/dev/null |
+msg "apply neato"
+"$SCRIPT_DIR"/ssys2graph.sh |
+"$SCRIPT_DIR"/graph_faction.py -n |
+"$SCRIPT_DIR"/graph2dot.py "$DST"/*.xml | tee before.dot | neato 2>/dev/null |
 #tee after.dot | neato -n2 -Tpng 2>/dev/null > after.png
 ("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
-"$SCRIPT_DIR"/graph2ssys.py
-cmd=$(
-   "$SCRIPT_DIR"/ssys2graph.sh       |
-   "$SCRIPT_DIR"/graph_faction.py -c |
-   "$SCRIPT_DIR"/graph2pov.py -C
-) && $cmd 2>/dev/null && mv -v out.png map_dot.png
-
-msg "pprocess"
-"$SCRIPT_DIR"/ssys2graph.sh |
+"$SCRIPT_DIR"/graph_faction.py -c |
+tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_dot.png') |
+pmsg "pprocess" |
 "$SCRIPT_DIR"/graphmod_pp.py |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
+tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_post.png') |
 "$SCRIPT_DIR"/graph2ssys.py
-cmd=$(
-   "$SCRIPT_DIR"/ssys2graph.sh |
-   "$SCRIPT_DIR"/graph_faction.py -c |
-   "$SCRIPT_DIR"/graph2pov.py -C
-) && $cmd 2>/dev/null && mv -v out.png map_post.png
 
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$("$SCRIPT_DIR"/ssys_graph.sh -v |
 # "$SCRIPT_DIR"/graph_faction.py | grep 'sirius' | cut '-d ' -f1)"
-
 #s=(doowa flok firk)
 #repos_systems2=(terminus)
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 #TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
-N=4
-msg "${N} x (reposition sys + smooth tradelane) + position virtual"
+msg "${N_ITER} x (reposition sys + smooth tradelane) + position virtual"
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 "$SCRIPT_DIR"/repos.sh -C
-for i in $(seq "$N"); do
+for i in $(seq "$N_ITER"); do
    "$SCRIPT_DIR"/ssys2graph.sh |
    "$SCRIPT_DIR"/reposition -e -q -i "${ALMOST_ALL[@]}" |
    "$SCRIPT_DIR"/graphmod_smooth_tl.py |
    "$SCRIPT_DIR"/graph2ssys.py
    msg "\e[32m$i"
 done
+
 "$SCRIPT_DIR"/ssys2graph.sh |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
 "$SCRIPT_DIR"/graph2ssys.py
 msg ""
 
-cmd=$(
-   "$SCRIPT_DIR"/ssys2graph.sh |
-   "$SCRIPT_DIR"/graph_faction.py -c |
-   "$SCRIPT_DIR"/graph2pov.py -C
-) && $cmd 2>/dev/null && mv -v out.png map_repos.png
-
-msg "apply gravity"
-cmd=$(
-   "$SCRIPT_DIR"/ssys2graph.sh |
-   "$SCRIPT_DIR"/apply_pot.sh -g |
-   "$SCRIPT_DIR"/graph_faction.py -c |
-   "$SCRIPT_DIR"/graph2pov.py -C
-) && $cmd 2>/dev/null && mv -v out.png map_grav.png
-
-msg "gen final graph"
-"$SCRIPT_DIR"/ssys2dot.py $COL "$DST"/*.xml -k |
+"$SCRIPT_DIR"/ssys2graph.sh |
+"$SCRIPT_DIR"/graph_faction.py -c |
+tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_repos.png') |
+pmsg "apply gravity" |
+"$SCRIPT_DIR"/apply_pot.sh -g |
+tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_grav.png') |
+pmsg "gen final graph" |
+"$SCRIPT_DIR"/graph_faction.py -c -n |
+"$SCRIPT_DIR"/graph2dot.py -c "$DST"/*.xml -k |
 neato -n2 -Tpng 2>/dev/null > final.png
 
 msg "\nrelax ssys..\n"
