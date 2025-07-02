@@ -286,8 +286,7 @@ impl Material {
         mat: &gltf::Material,
         tex_zeros: &Rc<Texture>,
         tex_ones: &Rc<Texture>,
-        textures: &[gltf::texture::Texture],
-        base: &std::path::Path,
+        textures: &[Rc<Texture>],
     ) -> Result<Self> {
         let mut data = MaterialUniform::new();
 
@@ -305,21 +304,21 @@ impl Material {
         let diffuse = match pbr.base_color_texture() {
             Some(info) => {
                 data.diffuse_texcoord = info.tex_coord() as i32;
-                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, true)?
+                textures[info.texture().index()].clone()
             }
             None => tex_ones.clone(),
         };
         let metallic = match pbr.metallic_roughness_texture() {
             Some(info) => {
                 data.metallic_texcoord = info.tex_coord() as i32;
-                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
+                textures[info.texture().index()].clone()
             }
             None => tex_ones.clone(),
         };
         let emissive = match mat.emissive_texture() {
             Some(info) => {
                 data.emissive_texcoord = info.tex_coord() as i32;
-                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
+                textures[info.texture().index()].clone()
             }
             None => tex_zeros.clone(),
         };
@@ -328,7 +327,7 @@ impl Material {
                 data.normal_texcoord = info.tex_coord() as i32;
                 data.normal_scale = info.scale();
                 data.has_normal = 1;
-                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
+                textures[info.texture().index()].clone()
             }
             None => tex_zeros.clone(),
         };
@@ -336,7 +335,7 @@ impl Material {
             Some(info) => {
                 // TODO strength?
                 data.occlusion_texcoord = info.tex_coord() as i32;
-                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
+                textures[info.texture().index()].clone()
             }
             None => tex_ones.clone(),
         };
@@ -947,7 +946,7 @@ fn load_gltf_texture(
     node: &gltf::texture::Texture,
     base: &std::path::Path,
     srgb: bool,
-) -> Result<Rc<Texture>> {
+) -> Result<Texture> {
     let sampler = node.sampler();
     let mut tb = TextureBuilder::new()
         .name(node.name())
@@ -991,7 +990,7 @@ fn load_gltf_texture(
         gltf::texture::WrappingMode::Repeat => texture::AddressMode::Repeat,
     });
 
-    Ok(Rc::new(tb.build_wrap(ctx)?))
+    tb.build_wrap(ctx)
 }
 
 // This is actually bad because they technically depend on the context existing, but if we are
@@ -1074,6 +1073,11 @@ impl Common {
 }
 static COMMON: OnceLock<Common> = OnceLock::new();
 
+struct TextureWrap<'a> {
+    texture: gltf::texture::Texture<'a>,
+    srgb: bool,
+}
+
 impl Model {
     pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
         use std::path::Path;
@@ -1089,16 +1093,39 @@ impl Model {
             .map(|buf| load_buffer(&buf, base))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let textures: Vec<gltf::Texture> = gltf.textures().collect::<Vec<_>>();
+        let textures: Vec<Rc<Texture>> = {
+            // GLTF doesn't tell us if the textures are SRGB or not, so we have to look ourselves.
+            let mut texture_wraps: Vec<TextureWrap> = gltf
+                .textures()
+                .map(|texture| TextureWrap {
+                    texture,
+                    srgb: false,
+                })
+                .collect::<Vec<_>>();
+            for m in gltf.materials() {
+                if let Some(info) = m.pbr_metallic_roughness().base_color_texture() {
+                    texture_wraps[info.texture().index()].srgb = true;
+                }
+            }
+            texture_wraps
+                .iter()
+                .map(
+                    |tex| match load_gltf_texture(ctx, &tex.texture, base, tex.srgb) {
+                        Ok(some) => Ok(Rc::new(some)),
+                        Err(e) => Err(e),
+                    },
+                )
+                .collect::<Result<Vec<_>, _>>()?
+        };
 
         let materials: Vec<Rc<Material>> = gltf
             .materials()
-            .map(|mat| {
-                match Material::from_gltf(ctx, &mat, &tex_zeros, &tex_ones, &textures, base) {
+            .map(
+                |mat| match Material::from_gltf(ctx, &mat, &tex_zeros, &tex_ones, &textures) {
                     Ok(some) => Ok(Rc::new(some)),
                     Err(e) => Err(e),
-                }
-            })
+                },
+            )
             .collect::<Result<Vec<_>, _>>()?;
 
         let meshes: Vec<Rc<Mesh>> = gltf
