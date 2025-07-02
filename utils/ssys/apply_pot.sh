@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 if [ "$1" = "-g" ] ; then
-   N=15
-   RESCALE=1.7
+   N=20
+   RESCALE=1.6
 elif [ "$1" = "-E" ] ; then
    N=20
    RESCALE=1.2
