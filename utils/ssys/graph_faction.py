@@ -24,6 +24,10 @@ faction_color = {
    'flf':             'yellow',
 }
 
+faction = {s :s for s in faction_color}
+for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
+   faction[f] = 'pirate'
+
 
 if __name__ != '__main__':
    color_values = {
@@ -48,22 +52,21 @@ else:
    if do_color := ('-c' in argv[1:]):
       argv.remove('-c')
 
+   if do_names := ('-n' in argv[1:]):
+      argv.remove('-n')
+
    if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:] != []:
       msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
       DOC = [
          'usage:  ' + os.path.basename(argv[0]) + ' [ -c ]',
          '  Adds faction name to vertices aux field.',
          '  If -c is set, adds color instead.',
+         '  If -c and -n is set, adds color + name.',
+         '  If only -n is set, adds name.',
       ]
       for l in DOC:
          msg(l)
       exit(0 if ok else 1)
-
-
-   faction = {s :s for s in faction_color}
-
-   for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
-      faction[f] = 'pirate'
 
 
    import xml.etree.ElementTree as ET
@@ -87,32 +90,37 @@ else:
       for e in T.findall('spobs/spob'):
          spobs.append(nam2base(e.text))
 
-      nb = len(spobs)
-      maxi = 0
-      fact = {}
-      for s in spobs:
-         res = None
-         if f := get_spob_faction(s):
-            if f not in fact:
-               fact[f] = 0
-            res = f;
-         if res is None :
-            nb -= 1
+      if not(do_names and not do_color):
+         nb = len(spobs)
+         maxi = 0
+         fact = {}
+         for s in spobs:
+            res = None
+            if f := get_spob_faction(s):
+               if f not in fact:
+                  fact[f] = 0
+               res = f;
+            if res is None :
+               nb -= 1
+            else:
+               fact[f] += 1
+               if fact[f] > maxi:
+                  maxi = fact[f]
+            if maxi >= (nb+1) / 2:
+               break
+
+         fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
+         if len(fact)>1 and fact[0][1]=='independent' and fact[0][0] == fact[1][0]:
+            fact = fact[1]
          else:
-            fact[f] += 1
-            if fact[f] > maxi:
-               maxi = fact[f]
-         if maxi >= (nb+1) / 2:
-            break
+            fact = (fact+[(None,None)])[0]
+         if (fact:= fact[1]) not in faction_color:
+            fact = None
 
-      fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
-      if len(fact)>1 and fact[0][1]=='independent' and fact[0][0] == fact[1][0]:
-         fact = fact[1]
-      else:
-         fact = (fact+[(None,None)])[0]
-      if (fact:= fact[1]) not in faction_color:
-         fact = None
-
-      aux = faction_color[fact] if do_color else fact
-      if aux is not None:
-         V.aux[bnam].append(aux)
+         aux = faction_color[fact] if do_color else fact
+         if aux is not None:
+            V.aux[bnam].append(aux)
+         elif do_names:
+            V.aux[bnam].append('default')
+      if do_names:
+         V.aux[bnam].extend(T.attrib['name'].split(' '))

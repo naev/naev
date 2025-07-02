@@ -293,7 +293,7 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
 
       dx *= GRAV_FACT;
       dy *= GRAV_FACT;
-      n = snprintf(buff, 1023, "%s %f %f%s\n", nam[2 * i], x + dx, y + dy,
+      n = snprintf(buff, 1023, "%s %f %f %s\n", nam[2 * i], x + dx, y + dy,
                    nam[2 * i + 1]);
       fwrite(buff, sizeof(char), n, stdout);
       fflush(stdout);

@@ -90,9 +90,10 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 # TODO
  - Finish general cleanup:
-    - `ssys2dot` -> `graph2dot`
+    - `graph2dot` -> `graph_preproc.py | graph2dot`
+    - `graph_faction` -> `graph_aux` + improve usage + doc
     - have `process.sh` do it all with one main pipe (only one call to `graph_faction`)
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.
  - `graphmod_smooth_tl.py` can be improved.
- - implement `extend_faction.py` that appends a color tag to neutral systems in a zone of influence.
+ - implement `graph_faction.py -e` that extends faction to neutral systems in a zone of influence.
