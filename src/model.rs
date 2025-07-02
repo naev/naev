@@ -585,6 +585,11 @@ impl Mesh {
     ) -> Result<()> {
         let gl = &ctx.gl;
         for p in &self.primitives {
+            // Assumption transparent (or pseudo transparent) don't cast shadows
+            if p.material.blend {
+                continue;
+            }
+
             let data = ShadowUniform {
                 transform: shadow_transform * transform,
             };
