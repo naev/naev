@@ -286,7 +286,8 @@ impl Material {
         mat: &gltf::Material,
         tex_zeros: &Rc<Texture>,
         tex_ones: &Rc<Texture>,
-        textures: &[Rc<Texture>],
+        textures: &[gltf::texture::Texture],
+        base: &std::path::Path,
     ) -> Result<Self> {
         let mut data = MaterialUniform::new();
 
@@ -304,21 +305,21 @@ impl Material {
         let diffuse = match pbr.base_color_texture() {
             Some(info) => {
                 data.diffuse_texcoord = info.tex_coord() as i32;
-                textures[info.texture().index()].clone()
+                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, true)?
             }
             None => tex_ones.clone(),
         };
         let metallic = match pbr.metallic_roughness_texture() {
             Some(info) => {
                 data.metallic_texcoord = info.tex_coord() as i32;
-                textures[info.texture().index()].clone()
+                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
             }
             None => tex_ones.clone(),
         };
         let emissive = match mat.emissive_texture() {
             Some(info) => {
                 data.emissive_texcoord = info.tex_coord() as i32;
-                textures[info.texture().index()].clone()
+                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
             }
             None => tex_zeros.clone(),
         };
@@ -327,7 +328,7 @@ impl Material {
                 data.normal_texcoord = info.tex_coord() as i32;
                 data.normal_scale = info.scale();
                 data.has_normal = 1;
-                textures[info.texture().index()].clone()
+                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
             }
             None => tex_zeros.clone(),
         };
@@ -335,7 +336,7 @@ impl Material {
             Some(info) => {
                 // TODO strength?
                 data.occlusion_texcoord = info.tex_coord() as i32;
-                textures[info.texture().index()].clone()
+                load_gltf_texture(ctx, &textures[info.texture().index()].clone(), base, false)?
             }
             None => tex_ones.clone(),
         };
@@ -945,12 +946,13 @@ fn load_gltf_texture(
     ctx: &ContextWrapper,
     node: &gltf::texture::Texture,
     base: &std::path::Path,
-) -> Result<Texture> {
+    srgb: bool,
+) -> Result<Rc<Texture>> {
     let sampler = node.sampler();
     let mut tb = TextureBuilder::new()
         .name(node.name())
         .flipv(false)
-        .srgb(false);
+        .srgb(srgb);
 
     tb = match node.source().source() {
         gltf::image::Source::Uri { uri, .. } => {
@@ -989,7 +991,7 @@ fn load_gltf_texture(
         gltf::texture::WrappingMode::Repeat => texture::AddressMode::Repeat,
     });
 
-    tb.build_wrap(ctx)
+    Ok(Rc::new(tb.build_wrap(ctx)?))
 }
 
 // This is actually bad because they technically depend on the context existing, but if we are
@@ -1087,22 +1089,16 @@ impl Model {
             .map(|buf| load_buffer(&buf, base))
             .collect::<Result<Vec<_>, _>>()?;
 
-        let textures: Vec<Rc<Texture>> = gltf
-            .textures()
-            .map(|tex| match load_gltf_texture(ctx, &tex, base) {
-                Ok(some) => Ok(Rc::new(some)),
-                Err(e) => Err(e),
-            })
-            .collect::<Result<Vec<_>, _>>()?;
+        let textures: Vec<gltf::Texture> = gltf.textures().collect::<Vec<_>>();
 
         let materials: Vec<Rc<Material>> = gltf
             .materials()
-            .map(
-                |mat| match Material::from_gltf(ctx, &mat, &tex_zeros, &tex_ones, &textures) {
+            .map(|mat| {
+                match Material::from_gltf(ctx, &mat, &tex_zeros, &tex_ones, &textures, base) {
                     Ok(some) => Ok(Rc::new(some)),
                     Err(e) => Err(e),
-                },
-            )
+                }
+            })
             .collect::<Result<Vec<_>, _>>()?;
 
         let meshes: Vec<Rc<Mesh>> = gltf
