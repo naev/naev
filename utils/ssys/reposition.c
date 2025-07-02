@@ -729,36 +729,35 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    size_t _n   = 0;
    int    n;
    while ((n = getline(&line, &_n, stdin)) != -1) {
-      char  *bufs[3] = {NULL, NULL, NULL};
-      int    r;
+      int    r1, r2, r3 = 0;
       double tmp[2] = {0.0, 0.0};
       double len    = 1.0;
 
-      if (3 == sscanf(line, "%ms %lf %lf %n", bufs, tmp, tmp + 1, &r)) {
-         const size_t id = ssys_num(h, bufs[0], &map, tmp, line + r, true);
+      if (line[n - 1] == '\n')
+         line[--n] = '\0';
+      if (2 == sscanf(line, "%*s%n %lf %lf %n", &r1, tmp, tmp + 1, &r2)) {
+         line[r1]        = '\0';
+         const size_t id = ssys_num(h, line, &map, tmp, line + r2, true);
          map.sys[id].w   = 1.0;
-      } else if (2 <= sscanf(line, "%ms %ms %lf", bufs + 1, bufs + 2, &len)) {
-         if ((map.njumps & (map.njumps + 1)) == 0) {
-            const size_t new_siz = (map.njumps << 1) | 1;
-            map.jumps = realloc(map.jumps, new_siz * sizeof(struct s_edge));
-         }
-         map.jumps[map.njumps].jmp[0] =
-            ssys_num(h, bufs[1], &map, tmp, NULL, false);
-         map.jumps[map.njumps].jmp[1] =
-            ssys_num(h, bufs[2], &map, tmp, NULL, false);
-         map.jumps[map.njumps].len = len;
-         map.njumps++;
-         if (edges) {
-            fwrite(line, sizeof(char), n, stdout);
-            fflush(stdout);
-         }
-      } else if (line[0] != '\0' && line[0] != '\n') {
-         if (line[n - 1] == '\n')
-            line[n - 1] = '\0';
-         fprintf(stderr, "Ignored line : \"%s\"\n", line);
+      } else {
+         sscanf(line, "%*s%n %n%*s%n%lf", &r1, &r2, &r3, &len);
+         if (r3 > 0) {
+            if (edges)
+               puts(line);
+            if ((map.njumps & (map.njumps + 1)) == 0) {
+               const size_t new_siz = (map.njumps << 1) | 1;
+               map.jumps = realloc(map.jumps, new_siz * sizeof(struct s_edge));
+            }
+            line[r1] = line[r3] = '\0';
+            map.jumps[map.njumps].jmp[0] =
+               ssys_num(h, line, &map, tmp, NULL, false);
+            map.jumps[map.njumps].jmp[1] =
+               ssys_num(h, line + r2, &map, tmp, NULL, false);
+            map.jumps[map.njumps].len = len;
+            map.njumps++;
+         } else if (line[0] != '\0')
+            fprintf(stderr, "Ignored line : \"%s\"\n", line);
       }
-      for (int i = 0; i < 3; i++)
-         free(bufs[i]);
    }
    free(line);
    g_hash_table_destroy(h);
@@ -779,6 +778,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    if (!map.nosys)
       map.nosys = map.nsys;
 
+   fflush(stdout);
    gen_map_reposition(&map, g_opt, quiet, gen_map, only, weight);
    for (int i = 0; i < map.nsys; i++) {
       free(map.sys_aux[i]);

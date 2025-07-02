@@ -114,4 +114,5 @@ else:
          fact = None
 
       aux = faction_color[fact] if do_color else fact
-      V.aux[bnam].append(aux)
+      if aux is not None:
+         V.aux[bnam].append(aux)

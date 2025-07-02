@@ -269,7 +269,7 @@ void gen_potential(float *lst, size_t nb, enum e_pot typ, float scale)
 void apply_potential(const float *lst, size_t nb, enum e_pot t,
                      const char **nam, bool alt)
 {
-   char buff[512];
+   char buff[1024];
    int  num;
 
    for (num = 0; num < THREADS - 1; num++)
@@ -293,7 +293,8 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
 
       dx *= GRAV_FACT;
       dy *= GRAV_FACT;
-      n = snprintf(buff, 511, "%s %f %f\n", nam[i], x + dx, y + dy);
+      n = snprintf(buff, 1023, "%s %f %f%s\n", nam[2 * i], x + dx, y + dy,
+                   nam[2 * i + 1]);
       fwrite(buff, sizeof(char), n, stdout);
       fflush(stdout);
    }
@@ -307,34 +308,40 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
 int do_it(const enum e_pot type, const float scale, const bool apply,
           const bool alt)
 {
-   char   buf[256];
    float *lst = NULL;
    char **nam = NULL;
    size_t nb  = 0;
 
    char  *line = NULL;
-   size_t n    = 0;
-   while (getline(&line, &n, stdin) != -1) {
+   size_t _n   = 0;
+   int    len1, len2, n;
+   while ((n = getline(&line, &_n, stdin)) != -1) {
+      if (line[n - 1] == '\n')
+         line[n - 1] = '\0';
       if ((nb & (nb + 1)) == 0) {
          lst = realloc(lst, ((nb << 1) | 1) * sizeof(float) * 4);
          if (apply)
-            nam = realloc(nam, ((nb << 1) | 1) * sizeof(char *));
+            nam = realloc(nam, ((nb << 1) | 1) * 2 * sizeof(char *));
       }
 
       float *const dst = lst + 4 * nb;
-      if (3 == sscanf(line, "%255s %f %f", buf, dst, dst + 1)) {
-         if (apply)
-            nam[nb] = strdup(buf);
+      if (2 == sscanf(line, "%*s%n %f %f %n", &len1, dst, dst + 1, &len2)) {
+         if (apply) {
+            nam[2 * nb]     = strndup(line, len1);
+            nam[2 * nb + 1] = strdup(line + len2);
+         }
          dst[2] = 1.0;
          for (int i = 0; weights[i].nam; i++)
-            if (!strcmp(weights[i].nam, buf))
+            if (!strncmp(weights[i].nam, line, len1) && !weights[i].nam[len1])
                dst[2] = weights[i].w;
-         if (type == WAVES && !strcmp(buf, "sol")) { // sol first!
-            if (apply) {
-               char *const sswp = nam[nb];
-               nam[nb]          = nam[0];
-               nam[0]           = sswp;
-            }
+         if (type == WAVES && !strncmp(line, "sol", len1) &&
+             len1 == 3) { // sol first!
+            if (apply)
+               for (int k = 0; k < 2; k++) {
+                  char *const sswp = nam[2 * nb + k];
+                  nam[2 * nb + k]  = nam[k];
+                  nam[k]           = sswp;
+               }
             for (int k = 0; k < 3; k++) {
                const float swp = lst[k];
                lst[k]          = dst[k];
@@ -343,7 +350,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
          }
          nb++;
       } else if (apply)
-         fputs(line, stdout);
+         puts(line);
    }
    // fprintf(stderr,"[%zd systems]\n",nb);
    free(line);
@@ -357,7 +364,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
    if (apply) {
       fflush(stdout);
       apply_potential(lst, nb, type, (const char **) nam, alt);
-      for (size_t i = 0; i < nb; i++)
+      for (size_t i = 0; i < 2 * nb; i++)
          free(nam[i]);
       free(nam);
    } else

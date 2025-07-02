@@ -71,14 +71,14 @@ cmd=$(
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 #TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
 N=4
-msg "${N} x (reposition sys + smooth tradelane) +  position virtual"
+msg "${N} x (reposition sys + smooth tradelane) + position virtual"
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 "$SCRIPT_DIR"/repos.sh -C
 for i in $(seq "$N"); do
    "$SCRIPT_DIR"/ssys2graph.sh |
-   "$SCRIPT_DIR"/reposition -q -i "${ALMOST_ALL[@]}" |
+   "$SCRIPT_DIR"/reposition -e -q -i "${ALMOST_ALL[@]}" |
    "$SCRIPT_DIR"/graphmod_smooth_tl.py |
    "$SCRIPT_DIR"/graph2ssys.py
    msg "\e[32m$i"
