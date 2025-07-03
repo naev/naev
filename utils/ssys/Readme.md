@@ -18,12 +18,12 @@ Scripts:
  - `graph2ssys.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
- - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colors if input vertices have color tags (i.e. input is obtained from `ssys2graph | graph_faction -c`.
+ - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colors if input vertices have color tags (i.e. input is obtained from `ssys2graph | graph_vaux -c`.
  - `graph2dot.py`: As the name suggests, reads current system map and outputs a graph in dot format.
 
 ## graphmod
 `graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source. By convention, we call `graph_xxx.py` the generic utilities and `graphmod_xxx.py` the ad hoc modifiers.
- - `graph_faction.py`: Reads a graph in input, add faction tag to vertex aux field, and outputs the result. With, `-c`, adds the color instead of the faction. Also provides color values when imported.
+ - `graph_vaux.py`: Reads a graph in input, add faction tag to vertex aux field, and outputs the result. With, `-c`, adds the color instead of the faction. Also provides color values when imported.
  - `graph_scale.py`: Reads a graph in input, scales it, and outputs the resulting graph.
 
 
@@ -90,9 +90,9 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 
 # TODO
+ - repair `hidden` tag management
  - Finish general cleanup:
-    - `graph_faction` -> `graph_aux` + improve usage + doc
+    - `graph_vaux` improved usage + doc
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.
- - `graphmod_smooth_tl.py` can be improved.
- - implement `graph_faction.py -e` that extends faction to neutral systems in a zone of influence.
+ - implement `graph_vaux.py -e` that extends faction to neutral systems in a zone of influence.

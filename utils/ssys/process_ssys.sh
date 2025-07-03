@@ -26,10 +26,10 @@ pmsg() {
    msg "$@"
 }
 
-N_ITER=4
+N_ITER=5
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$("$SCRIPT_DIR"/ssys_graph.sh -v |
-# "$SCRIPT_DIR"/graph_faction.py | grep 'sirius' | cut '-d ' -f1)"
+# "$SCRIPT_DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
 #s=(doowa flok firk)
 #repos_systems2=(terminus)
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
@@ -50,7 +50,7 @@ echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
 
 msg "gen crt sys map"
 "$SCRIPT_DIR"/ssys2graph.sh |
-"$SCRIPT_DIR"/graph_faction.py -c -n |
+"$SCRIPT_DIR"/graph_vaux.py -c -n |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_bef.png') |
 pmsg "gen before graph" |
 "$SCRIPT_DIR"/graphmod_prep.py |
@@ -62,7 +62,7 @@ pmsg "\napply neato" |
 "$SCRIPT_DIR"/graph2dot.py -c | tee before.dot | neato 2>/dev/null |
 ("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
 ("$SCRIPT_DIR"/graphmod_repos_virt.py && echo 'zied 0 0') |
-"$SCRIPT_DIR"/graph_faction.py -c |
+"$SCRIPT_DIR"/graph_vaux.py -c -n |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_dot.png') |
 pmsg "pprocess" |
 "$SCRIPT_DIR"/graphmod_postp.py |
@@ -75,6 +75,7 @@ pmsg "" |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_repos.png') |
 pmsg "apply gravity" |
 "$SCRIPT_DIR"/apply_pot.sh -g |
+"$SCRIPT_DIR"/graphmod_repos.sh "$SCRIPT_DIR"|
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_grav.png') |
 pmsg "gen final graph" |
 tee >("$SCRIPT_DIR"/graph2ssys.py) |
