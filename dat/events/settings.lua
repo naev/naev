@@ -141,15 +141,15 @@ function settings ()
    y = y + 30
    chk_reset_lockon = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Stop autonav when missile lock-on detected"), nil, reset_lockon )
    y = y + 30
-   chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping"), nil, uselanes_jump )
+   chk_uselanes_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when jumping with autonav"), nil, uselanes_jump )
    y = y + 30
-   chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object"), nil, uselanes_spob )
+   chk_uselanes_spob = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Use patrol lanes when travelling to a space object with autonav"), nil, uselanes_spob )
    y = y + 30
-   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with the slowest ship in your fleet"), nil, match_fleet )
+   chk_match_fleet = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Match speed with the slowest ship in your fleet with autonav"), nil, match_fleet )
    y = y + 30
-   chk_follow_land_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump and/or land to follow pilots"), nil, follow_land_jump )
+   chk_follow_land_jump = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Jump and/or land to follow pilots with autonav"), nil, follow_land_jump )
    y = y + 30
-   chk_brake_pos = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Brake when heading to a position"), nil, brake_pos )
+   chk_brake_pos = luatk.newCheckbox( wdw, 20, y, w-40, 20, _("Brake when heading to a position with autonav"), nil, brake_pos )
    y = y + 40
 
    luatk.newText( wdw, 20, y, w-40, 20, "#n".._("GUI") )
