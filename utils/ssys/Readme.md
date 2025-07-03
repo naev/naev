@@ -19,7 +19,7 @@ Scripts:
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
  - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colors if input vertices have color tags (i.e. input is obtained from `ssys2graph | graph_faction -c`.
- - `ssys2dot.py`: As the name suggests, reads current system map and outputs a graph in dot format. Also, currently applies ad hoc operations.
+ - `graph2dot.py`: As the name suggests, reads current system map and outputs a graph in dot format.
 
 ## graphmod
 `graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source. By convention, we call `graph_xxx.py` the generic utilities and `graphmod_xxx.py` the ad hoc modifiers.
@@ -45,14 +45,15 @@ Another graph modifier.
 These are designed to change the star map by **changing systems position**.
 
 ## graphmods
- - `graphmod_pp.py`: A set of ad hoc operations designed to serve as a post-processing for neato output. See section below.
+ - `graphmod_prep.py`: A set virtual edge addition designed to serve as a pre-processing for `neato`.
+ - `graphmod_postp.py`: A set of ad hoc operations designed to serve as a post-processing for neato output. See section below.
  - `graphmod_repos_virt.py`: gives a position of virtual systems (eg. gauntlet, test of ...)
  - `graphmod_smooth_tl.py`: smoothens the tradelane. Interesting in combination with `reposition`.
 
 ## main process
 Performed by `process_ssys.sh`. Several steps:
  - generate `map_bef.png`
- - __1__ Call `ssys2dot.py` to extract systems information and turn it into a dot file. At this point, the __pre-processing__ occurs: some invisible edges are added to enforce desired properties.
+ - __1__ Call `graphmod_prep` At this point, the __pre-processing__ occurs: some invisible edges are added to enforce desired properties. Then `graph2dot` is called to turn the graph into a dot file.
  - __2__ Call `neato` (from `graphviz` package) to compute the dot graph layout.
  - __3__ Call `dot2graph.py` to extract layout information from the dot input and output the resulting graph.
  - generate `map_dot.png`
@@ -90,7 +91,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 # TODO
  - Finish general cleanup:
-    - `graph2dot` -> `graph_preproc.py | graph2dot`
     - `graph_faction` -> `graph_aux` + improve usage + doc
     - have `process.sh` do it all with one main pipe (only one call to `graph_faction`)
  - `reposition.c`: fix tunnel effect

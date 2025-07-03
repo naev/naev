@@ -13,7 +13,11 @@ from geometry import bb, vec
 
 
 def main( pov_out = None, halo = False, silent = False ):
-   dst = open('out.pov', 'w')
+   if pov_out:
+      pov = pov_out.replace('.png', '.pov', 1)
+   else:
+      pov = 'out.pov'
+   dst = open(pov, 'w')
 
    def write_pov( s, indent = -1 ):
       if hasattr(s, '__iter__') and not isinstance(s, str):
@@ -62,7 +66,7 @@ def main( pov_out = None, halo = False, silent = False ):
       '',
    ])
    for i in V:
-      col = (0.5,0.5,0.5) if i not in colors else colors[i]
+      col = (0.5, 0.5, 0.5) if i not in colors else colors[i]
       if not (i == 'sol' and halo):
          write_pov([ 'sphere{', [
             '<' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 0>,',
@@ -98,7 +102,7 @@ def main( pov_out = None, halo = False, silent = False ):
 
    base = 1080
    cmd = [
-      'povray', 'out.pov',
+      'povray', pov,
       '+W' + str(int(base*ratio)), '+H' + str(base),
       '+A0.1', '+AM2', '+R4', '+BM2'
    ]
@@ -117,12 +121,13 @@ def main( pov_out = None, halo = False, silent = False ):
 
 non_opt = [a for a in argv[1:] if a[:2] not in ['-c', '-p', '-q']]
 if '-h' in non_opt or '--help' in non_opt or non_opt!=[]:
-   print("usage  ", argv[0], '[-c] [-p|-q]')
+   print("usage  ", argv[0], '[-c] [ (-p | -q)<file.png> ]')
    print('  Writes "out.pov". Outputs povray commandline to stdout.')
    print('  If color tags are present in inputs, they will be used.')
    print('  If -c is set, use color halos.')
    print('  If -p is set, calls povray and output the graph.')
    print('  -q does the same as -p, but quiets povray output.')
+   print('  If these cases, the pov file name is built up from the png file name.')
 else:
    silent = False
    if halo:= '-s' in argv[1:]:

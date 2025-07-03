@@ -30,7 +30,7 @@ fi
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 if [ ! -f "$SCRIPT_DIR"/reposition ] || [ ! "$SCRIPT_DIR"/reposition -nt "$SCRIPT_DIR"/reposition.c ] || [ ! "$SCRIPT_DIR"/reposition -nt "$SCRIPT_DIR"/repos.sh ] ; then
-   echo -n 'Compile.. ' >&2
+   echo -n 'compile reposition.. ' >&2
 
    read -ra FLG <<< "$(pkg-config glib-2.0 --cflags)"
    read -ra LIB <<< "$(pkg-config glib-2.0 --libs)"

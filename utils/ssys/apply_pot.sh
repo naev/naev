@@ -3,12 +3,15 @@
 if [ "$1" = "-g" ] ; then
    N=20
    RESCALE=1.8
+   POST_RESCALE=1.2
 elif [ "$1" = "-E" ] ; then
    N=20
    RESCALE=1.2
+   POST_RESCALE=1.0
 else
    N=15
    RESCALE=1.0
+   POST_RESCALE=1.0
 fi
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
@@ -34,7 +37,9 @@ repiper() {
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [ ! -f "$SCRIPT_DIR"/potential ] || [ ! "$SCRIPT_DIR"/potential -nt "$SCRIPT_DIR"/potential.c ] ; then
+   echo -n 'compile potential.. ' >&2
    gcc -Wall -Wextra -Ofast "$SCRIPT_DIR"/potential.c -o "$SCRIPT_DIR"/potential -lm || exit 1
+   echo >&2
 fi
 
 for j in "$@"; do
@@ -42,4 +47,5 @@ for j in "$@"; do
 done
 
 "$SCRIPT_DIR"/graph_scale.py "$RESCALE" |
-repiper "$N" "$SCRIPT_DIR"/potential -a "$1"
+repiper "$N" "$SCRIPT_DIR"/potential -a "$1" |
+"$SCRIPT_DIR"/graph_scale.py "$POST_RESCALE"
