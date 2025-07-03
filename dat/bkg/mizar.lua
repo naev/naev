@@ -137,7 +137,7 @@ function renderov( dt )
 
    local x, y, z = camera.get()
    local m = 1
-   shader_ov:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
+   shader_ov:send( "u_camera", x*m/sf*0.5, y*m/sf*0.5, z*sf )
 
    sov:render( dt, rgba )
 end
@@ -146,7 +146,7 @@ function renderbg( dt )
    local x, y, z = camera.get()
    local m = 1
    if nonuninformity > 0.0 then
-      shader_bg:send( "u_camera", x*m/sf*0.5, -y*m/sf*0.5, z*sf )
+      shader_bg:send( "u_camera", x*m/sf*0.5, y*m/sf*0.5, z*sf )
    end
 
    sbg:render( dt, rgba )

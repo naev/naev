@@ -77,7 +77,7 @@ function renderov( dt )
    -- Get camera properties
    local x, y, z = camera.get()
    local m = 1
-   shader:send( "u_camera", x*m/sf, -y*m/sf, z*sf )
+   shader:send( "u_camera", x*m/sf, y*m/sf, z*sf )
 
    --shaze:render( dt, {0.9, 0.1, 0.4, 1.0} )
    shaze:render( dt, {0xE5/0xFF, 0x1A/0xFF, 0x4C/0xFF, 0.5} )

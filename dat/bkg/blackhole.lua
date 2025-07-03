@@ -52,7 +52,7 @@ function renderbg( dt )
    time = time + dt
    shader:send( "u_time", time )
 
-   shader:send( "u_camera", bx+x*move, -by-y*move, sf )
+   shader:send( "u_camera", bx+x*move, by+y*move, sf )
 
    lg.setCanvas( bgstars )
    starfield.render( dt )
