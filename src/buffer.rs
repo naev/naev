@@ -28,14 +28,18 @@ impl Buffer {
     }
     /// Simply binds the buffer to the context
     pub fn bind(&self, ctx: &context::Context) {
-        let gl = &ctx.gl;
+        self.bind_gl(&ctx.gl)
+    }
+    pub fn bind_gl(&self, gl: &glow::Context) {
         unsafe {
             gl.bind_buffer(self.target, Some(self.buffer));
         }
     }
     /// Binds the buffer and connects it to the uniform in the shader
     pub fn bind_base(&self, ctx: &context::Context, idx: u32) {
-        let gl = &ctx.gl;
+        self.bind_base_gl(&ctx.gl, idx)
+    }
+    pub fn bind_base_gl(&self, gl: &glow::Context, idx: u32) {
         unsafe {
             gl.bind_buffer(self.target, Some(self.buffer));
             gl.bind_buffer_base(glow::UNIFORM_BUFFER, idx, Some(self.buffer));
@@ -43,11 +47,13 @@ impl Buffer {
     }
     /// Simplification for write + binding
     pub fn bind_write_base(&self, ctx: &context::Context, data: &[u8], idx: u32) -> Result<()> {
+        self.bind_write_base_gl(&ctx.gl, data, idx)
+    }
+    pub fn bind_write_base_gl(&self, gl: &glow::Context, data: &[u8], idx: u32) -> Result<()> {
         #[cfg(debug_assertions)]
         if data.len() != self.datalen {
             anyhow::bail!("buffer data length mismatch!");
         }
-        let gl = &ctx.gl;
         unsafe {
             gl.bind_buffer(self.target, Some(self.buffer));
             gl.buffer_data_u8_slice(self.target, data, self.usage);
@@ -57,7 +63,9 @@ impl Buffer {
     }
     /// Unbinds the buffer
     pub fn unbind(&self, ctx: &context::Context) {
-        let gl = &ctx.gl;
+        self.unbind_gl(&ctx.gl)
+    }
+    pub fn unbind_gl(&self, gl: &glow::Context) {
         unsafe {
             gl.bind_buffer(self.target, None);
             // TODO why is this necessary? Shouldn't be, but gives issues otherwise
@@ -194,8 +202,11 @@ impl Drop for VertexArray {
 }
 impl VertexArray {
     pub fn bind(&self, ctx: &context::Context) {
+        self.bind_gl(&ctx.gl)
+    }
+    pub fn bind_gl(&self, gl: &glow::Context) {
         unsafe {
-            ctx.gl.bind_vertex_array(Some(self.vertex_array));
+            gl.bind_vertex_array(Some(self.vertex_array));
         }
     }
 
