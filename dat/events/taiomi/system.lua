@@ -673,7 +673,7 @@ They fidget a bit in place.
    d(_([["You may have noticed the Philosopher. I am not sure what to make out of them, but they have taken a large interest in the human practice of philosophy. I am not quite clear on the details, but it seems to consist of questioning everything while not doing anything. They make claims like 'the richest is not the one who has the most, but the one who needs the least', likely taken from studying human documents, while not assisting in most of the daily needs of the community. It is quite illogical."]]))
    d(_([["There also is the Elder, whom is distinguishable by their worn out parts which they refuse to replace. They are one of original members of the community. However, they have taken a less active role recently. We have disagreements on how to protect our community, but they always have the survival of the community on their mind."]]))
    if d_young_a then
-      d(fmt.f(_([["You have also already met {namea} and {nameb}, which are the new joys of the community. It is rare to see such young members with such strong character. I look forward to their developments in the future"]]),
+      d(fmt.f(_([["You have also already met {namea} and {nameb}, which are the new joys of the community. It is rare to see such young members with such strong character. I look forward to their developments in the future."]]),
          {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
       -- TODO alternate text
    end
