@@ -222,7 +222,6 @@ impl ModelShader {
             .sampler("metallic_tex", 1)
             .sampler("emissive_tex", 2)
             .sampler("normal_tex", 3)
-            .sampler("occlusion_tex", 4)
             .uniform_buffer("Lighting", Self::U_LIGHTING)
             .uniform_buffer("Material", Self::U_MATERIAL)
             .uniform_buffer("Primitive", Self::U_PRIMITIVE);
@@ -233,6 +232,8 @@ impl ModelShader {
         let low_memory = unsafe { naevc::conf.low_memory != 0 };
         if low_memory {
             shaderbuilder = shaderbuilder.prepend("#define HAS_AO 0\n");
+        } else {
+            shaderbuilder = shaderbuilder.sampler("occlusion_tex", 4)
         }
         let shader = shaderbuilder.build(gl)?;
 
