@@ -276,12 +276,7 @@ impl Drop for Texture {
     }
 }
 impl Texture {
-    pub fn try_clone(&self) -> Result<Self> {
-        let ctx = Context::get().unwrap();
-        let gl = &ctx.gl;
-        let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
-
-        // Copy necessaryparameters over
+    fn copy_sampler_params(gl: &glow::Context, dst: &glow::Sampler, src: &glow::Sampler) {
         for param in [
             glow::TEXTURE_WRAP_S,
             glow::TEXTURE_WRAP_T,
@@ -289,10 +284,19 @@ impl Texture {
             glow::TEXTURE_MAG_FILTER,
         ] {
             unsafe {
-                let val = gl.get_sampler_parameter_i32(self.sampler, param);
-                gl.sampler_parameter_i32(sampler, param, val);
+                let val = gl.get_sampler_parameter_i32(*src, param);
+                gl.sampler_parameter_i32(*dst, param, val);
             }
         }
+        // TODO copy border, but not possible atm because of
+        // https://github.com/grovesNL/glow/issues/342
+    }
+
+    pub fn try_clone(&self) -> Result<Self> {
+        let ctx = Context::get().unwrap();
+        let gl = &ctx.gl;
+        let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
+        Self::copy_sampler_params(gl, &sampler, &self.sampler);
         unsafe {
             gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
         }
@@ -357,7 +361,10 @@ impl Texture {
             gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
         }
 
-        fbo.into_texture()
+        // Have to copy the parameters over
+        let tex = fbo.into_texture()?;
+        Self::copy_sampler_params(gl, &tex.sampler, &self.sampler);
+        Ok(tex)
     }
 
     pub fn bind(&self, ctx: &context::Context, idx: u32) {
@@ -722,7 +729,10 @@ impl TextureBuilder {
 
     pub fn border(mut self, border_value: Option<Vector4<f32>>) -> Self {
         self.border_value = border_value;
-        self.address_mode(AddressMode::ClampToBorder)
+        match border_value {
+            Some(_) => self.address_mode(AddressMode::ClampToBorder),
+            None => self,
+        }
     }
 
     pub fn mipmaps(mut self, enable: bool) -> Self {
