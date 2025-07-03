@@ -317,24 +317,41 @@ impl Texture {
         self.scale_wrap(&ctx.as_wrap(), w, h)
     }
 
-    pub fn scale_wrap(&self, ctx: &context::ContextWrapper, w: usize, h: usize) -> Result<Self> {
+    pub fn scale_wrap(&self, wctx: &context::ContextWrapper, w: usize, h: usize) -> Result<Self> {
         let mut fbo = FramebufferBuilder::new(Some("Downscaler"))
             .width(w)
             .height(h)
-            .build_wrap(ctx)?;
+            .build_wrap(wctx)?;
 
-        let lctx = ctx.lock();
-        let gl = &lctx.gl;
+        let ctx = wctx.lock();
+        let gl = &ctx.gl;
         fbo.bind_gl(gl);
         unsafe {
             gl.viewport(0, 0, w as i32, h as i32);
         }
         let scale = (w as f32 / self.texture.w as f32).min(h as f32 / self.texture.h as f32);
         let uniform = render::TextureScaleUniform {
+            transform: context::ortho3(0.0, 1.0, 0.0, 1.0),
             scale,
             ..Default::default()
         };
-        //self.draw_scale_ex( lctx, &uniform )?;
+        ctx.program_texture_scale.use_program(gl);
+        self.bind_gl(gl, 0);
+        ctx.vao_square.bind_gl(gl);
+
+        ctx.buffer_texture_scale
+            .bind_write_base_gl(gl, &uniform.buffer()?, 0)?;
+        unsafe {
+            gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
+        }
+
+        Texture::unbind_gl(gl);
+        //buffer::VertexArray::unbind_wrap(ctx);
+        unsafe {
+            gl.bind_vertex_array(Some(ctx.vao_core));
+        }
+        ctx.buffer_texture_scale.unbind_gl(gl);
+
         Framebuffer::unbind_gl(gl);
         unsafe {
             gl.viewport(0, 0, naevc::gl_screen.rw, naevc::gl_screen.rh);
@@ -429,6 +446,15 @@ impl Texture {
         ctx: &context::Context,
         uniform: &render::TextureScaleUniform,
     ) -> Result<()> {
+        self.draw_scale_ex_wrap(&ctx.as_wrap(), uniform)
+    }
+
+    pub fn draw_scale_ex_wrap(
+        &self,
+        wctx: &context::ContextWrapper,
+        uniform: &render::TextureScaleUniform,
+    ) -> Result<()> {
+        let ctx = &wctx.lock();
         let gl = &ctx.gl;
         ctx.program_texture_scale.use_program(gl);
         self.bind(ctx, 0);
@@ -443,7 +469,6 @@ impl Texture {
         Texture::unbind(ctx);
         buffer::VertexArray::unbind(ctx);
         ctx.buffer_texture_scale.unbind(ctx);
-
         Ok(())
     }
 
