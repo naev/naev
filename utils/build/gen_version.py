@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import os
 import subprocess
 import sys
@@ -10,6 +9,10 @@ import logging
 logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
 def parse_version(version_str):
+    """
+    Parses a git describe version string into a standardized version format.
+    Handles tags with additional commit/dirtiness info.
+    """
     try:
         version_parts = version_str.split('-')
         if len(version_parts) >= 2:
@@ -21,18 +24,56 @@ def parse_version(version_str):
         logging.error(f"Error parsing version string: {e}")
         return ''
 
-def get_version(source_root, version_match):
+def get_matching_tag(source_root, version_prefix):
+    """
+    Returns the latest tag that matches the given version prefix (e.g., 'v0.13').
+    Looks for tags in the git repository that start with the specified prefix.
+    """
+    try:
+        tags_proc = subprocess.run(
+            ['git', '-C', source_root, 'tag', '--list', f'v{version_prefix}*', '--sort=-v:refname'],
+            capture_output=True, text=True, check=True
+        )
+        tags = tags_proc.stdout.strip().splitlines()
+        if tags:
+            return tags[0]
+    except Exception as e:
+        logging.warning(f"Could not find matching tag for version {version_prefix}: {e}")
+    return None
+
+def get_version(source_root):
+    """
+    Determines the project version using git tags or a VERSION file.
+    Prefers a git tag matching the provided version argument, if available.
+    Falls back to the VERSION file or a default dev version if necessary.
+    """
     version_file = os.path.join(source_root, 'dat', 'VERSION')
     version = ""
 
     if os.path.isdir(os.path.join(source_root, '.git')):
         # In the git repo. Build the tag from git info
         try:
-            git_describe = subprocess.run(['git', '-C', source_root, 'describe', '--tags', '--match', version_match, '--dirty'], capture_output=True, text=True)
-            git_output = git_describe.stdout.strip()
-            version = parse_version(git_output[1:])
-            with open(version_file, 'w') as f:
-                f.write(version)
+            version_arg = sys.argv[1] if len(sys.argv) > 1 else None
+            tag_to_match = None
+            if version_arg:
+                tag_to_match = get_matching_tag(source_root, version_arg)
+            if tag_to_match:
+                git_describe = subprocess.run(
+                    ['git', '-C', source_root, 'describe', '--tags', '--match', tag_to_match, '--dirty'],
+                    capture_output=True, text=True, check=True
+                )
+                git_output = git_describe.stdout.strip()
+                version = parse_version(git_output[1:])
+            else:
+                git_describe = subprocess.run(
+                    ['git', '-C', source_root, 'describe', '--tags', '--match', 'v*', '--dirty'],
+                    capture_output=True, text=True, check=True
+                )
+                git_output = git_describe.stdout.strip()
+                version = parse_version(git_output[1:])
+            if version:
+                with open(version_file, 'w') as f:
+                    f.write(version)
         except subprocess.CalledProcessError:
             pass
 
@@ -46,7 +87,7 @@ def get_version(source_root, version_match):
         # Did you clone the repo with --depth=1?
         # Did you download the zip'd repo instead of a release?
         if len(sys.argv) > 1:
-            version = f"{version_match}+dev"
+            version = f"{sys.argv[1]}+dev"
         else:
             version = "0.0.0+dev"
         with open(version_file, 'w') as f:
@@ -55,13 +96,9 @@ def get_version(source_root, version_match):
     return version
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument('-v', '--version-match', type=str, default='v*', help="Tags to match when generating description based on git.")
-    args = ap.parse_args()
-
     source_root = os.getenv('MESON_SOURCE_ROOT')
     if source_root:
-        version = get_version( source_root, args.version_match )
+        version = get_version(source_root)
         logging.info(f"Version retrieved: {version}")
         print(version)
     else:
