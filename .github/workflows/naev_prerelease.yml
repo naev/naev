@@ -22,8 +22,8 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
           path: source
+          fetch-depth: 0
           submodules: true
 
       - name: Configure Rust
