@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import argv, stderr
-from graph_faction import color_values
+from graph_vaux import color_values
 
 
 from graphmod import sys_pos as pos, sys_jmp as E

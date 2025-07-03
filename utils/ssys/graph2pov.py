@@ -8,7 +8,7 @@ from sys import argv, stdin, stderr, exit
 import subprocess
 import os
 
-from graph_faction import default_col, color_values
+from graph_vaux import default_col, color_values
 from geometry import bb, vec
 
 
@@ -94,7 +94,7 @@ def main( pov_out = None, halo = False, silent = False ):
          write_pov([ 'cylinder{', [
             '<' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 0>,',
             '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',
-            str(2.9 if 'tradelane' in tags else 1.35),
+            str(2.9 if 'tradelane' in tags else 1.4),
             'pigment {color rgb<' + ('0.5,0,0' if hid else '0.3,0.3,0.3') + '>}',
          ], '}', '' ])
 

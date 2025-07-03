@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import argv, stderr
-from graph_faction import color_values
+from graph_vaux import color_values
 from ssys_graph import xml_files_to_graph
 
 
