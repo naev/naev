@@ -881,18 +881,27 @@ impl Scene {
         // Shadow pass
         let shadow_shader = &common.shader_shadow;
         let data = common.data.read().unwrap();
-        shadow_shader.shader.use_program(gl);
         for i in 0..(lighting.nlights as usize) {
-            let (shadow_fbo, shadow_size) = {
+            let (light_fbo, shadow_size, shadow_fbo) = {
                 if fbo_w.max(fbo_h) > 255 {
-                    (&common.light_fbo_high[i], SHADOWMAP_SIZE_HIGH as i32)
+                    (
+                        &common.light_fbo_high[i],
+                        SHADOWMAP_SIZE_HIGH as i32,
+                        &common.shadow_fbo_high,
+                    )
                 } else {
-                    (&common.light_fbo_low[i], SHADOWMAP_SIZE_LOW as i32)
+                    (
+                        &common.light_fbo_low[i],
+                        SHADOWMAP_SIZE_LOW as i32,
+                        &common.shadow_fbo_low,
+                    )
                 }
             };
+            shadow_shader.shader.use_program(gl);
             let shadow_transform = &data.light_uniform.lights[i].shadow;
-            shadow_fbo.bind(ctx);
+            light_fbo.bind(ctx);
             unsafe {
+                gl.enable(glow::CULL_FACE);
                 gl.clear(glow::DEPTH_BUFFER_BIT);
                 gl.viewport(0, 0, shadow_size, shadow_size);
             }
@@ -902,10 +911,35 @@ impl Scene {
                 node.render_shadow(ctx, shadow_shader, transform, shadow_transform)?;
             }
 
-            // TODO blur shadows
+            // Blur pass
+            unsafe {
+                gl.disable(glow::CULL_FACE);
+            }
+            fn blur_pass(
+                ctx: &Context,
+                buf_in: &Framebuffer,
+                buf_out: &Framebuffer,
+                shader: &Shader,
+            ) {
+                let gl = &ctx.gl;
+                shader.use_program(gl);
+                ctx.vao_square.bind(ctx);
+                buf_out.bind(ctx);
+                unsafe {
+                    gl.clear(glow::DEPTH_BUFFER_BIT);
+                }
+                if let Some(tex) = &buf_in.depth {
+                    tex.bind(ctx, 0);
+                    unsafe {
+                        gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
+                    }
+                }
+            }
+            blur_pass(ctx, &light_fbo, &shadow_fbo, &common.shader_blur_x);
+            blur_pass(ctx, &shadow_fbo, &light_fbo, &common.shader_blur_y);
 
             // Bind the texture
-            if let Some(tex) = &shadow_fbo.depth {
+            if let Some(tex) = &light_fbo.depth {
                 tex.bind(ctx, 5 + i as u32);
             }
         }
@@ -1040,9 +1074,13 @@ fn load_gltf_texture(
 use std::sync::{OnceLock, RwLock};
 struct Common {
     shader: ModelShader,
+    shader_blur_x: Shader,
+    shader_blur_y: Shader,
     shader_shadow: ShadowShader,
     light_fbo_low: [Framebuffer; MAX_LIGHTS],
     light_fbo_high: [Framebuffer; MAX_LIGHTS],
+    shadow_fbo_low: Framebuffer,
+    shadow_fbo_high: Framebuffer,
     data: RwLock<CommonMut>,
 }
 struct CommonMut {
@@ -1053,50 +1091,58 @@ impl Common {
         let shader = ModelShader::new(ctx)?;
         let shader_shadow = ShadowShader::new(ctx)?;
 
+        fn make_fbo_single(ctx: &ContextWrapper, name: &str, size: usize) -> Framebuffer {
+            let fb = FramebufferBuilder::new(Some(name))
+                .width(size)
+                .height(size)
+                .texture(false)
+                .depth(true)
+                .address_mode(texture::AddressMode::ClampToEdge)
+                .build_wrap(ctx)
+                .unwrap();
+            let lctx = ctx.lock();
+            let gl = &lctx.gl;
+            fb.bind_gl(gl);
+            unsafe {
+                if let Some(depth) = &fb.depth {
+                    // Can't currently use FramebufferBuilder to set the following, so we do it
+                    // as post-processing
+                    let sampler = depth.sampler;
+                    gl.sampler_parameter_i32(
+                        sampler,
+                        glow::TEXTURE_WRAP_S,
+                        glow::CLAMP_TO_BORDER as i32,
+                    );
+                    gl.sampler_parameter_i32(
+                        sampler,
+                        glow::TEXTURE_WRAP_T,
+                        glow::CLAMP_TO_BORDER as i32,
+                    );
+                    gl.sampler_parameter_f32_slice(
+                        sampler,
+                        glow::TEXTURE_BORDER_COLOR,
+                        &[1.0, 1.0, 1.0, 1.0],
+                    );
+                };
+                gl.read_buffer(glow::NONE);
+                gl.draw_buffer(glow::NONE);
+            }
+            Framebuffer::unbind_gl(gl);
+            fb
+        }
+
         fn make_fbos(ctx: &ContextWrapper, name: &str, size: usize) -> [Framebuffer; MAX_LIGHTS] {
             core::array::from_fn::<_, MAX_LIGHTS, _>(|i| {
-                let fb = FramebufferBuilder::new(Some(&format!("{name}[{i}]")))
-                    .width(size)
-                    .height(size)
-                    .texture(false)
-                    .depth(true)
-                    .address_mode(texture::AddressMode::ClampToEdge)
-                    .build_wrap(ctx)
-                    .unwrap();
-                let lctx = ctx.lock();
-                let gl = &lctx.gl;
-                fb.bind_gl(gl);
-                unsafe {
-                    if let Some(depth) = &fb.depth {
-                        // Can't currently use FramebufferBuilder to set the following, so we do it
-                        // as post-processing
-                        let sampler = depth.sampler;
-                        gl.sampler_parameter_i32(
-                            sampler,
-                            glow::TEXTURE_WRAP_S,
-                            glow::CLAMP_TO_BORDER as i32,
-                        );
-                        gl.sampler_parameter_i32(
-                            sampler,
-                            glow::TEXTURE_WRAP_T,
-                            glow::CLAMP_TO_BORDER as i32,
-                        );
-                        gl.sampler_parameter_f32_slice(
-                            sampler,
-                            glow::TEXTURE_BORDER_COLOR,
-                            &[1.0, 1.0, 1.0, 1.0],
-                        );
-                    };
-                    gl.read_buffer(glow::NONE);
-                    gl.draw_buffer(glow::NONE);
-                }
-                Framebuffer::unbind_gl(gl);
-                fb
+                let name = &format!("{name}[{i}]");
+                make_fbo_single(ctx, name, size)
             })
         }
 
         let light_fbo_low = make_fbos(ctx, "light_fbo_low", SHADOWMAP_SIZE_LOW);
         let light_fbo_high = make_fbos(ctx, "light_fbo_high", SHADOWMAP_SIZE_HIGH);
+        // Used for the shadow blurring
+        let shadow_fbo_low = make_fbo_single(ctx, "shadow_fbo_low", SHADOWMAP_SIZE_LOW);
+        let shadow_fbo_high = make_fbo_single(ctx, "shadow_fbo_high", SHADOWMAP_SIZE_HIGH);
 
         let data = RwLock::new({
             CommonMut {
@@ -1104,11 +1150,29 @@ impl Common {
             }
         });
 
+        // Blur Shaders
+        let lctx = ctx.lock();
+        let gl = &lctx.gl;
+        let shader_blur_x = ShaderBuilder::new(Some("Blur X Shader"))
+            .sampler("sampler", 0)
+            .vert_file("blur.vert")
+            .frag_file("blurX.frag")
+            .build(&gl)?;
+        let shader_blur_y = ShaderBuilder::new(Some("Blur Y Shader"))
+            .sampler("sampler", 0)
+            .vert_file("blur.vert")
+            .frag_file("blurY.frag")
+            .build(&gl)?;
+
         Ok(Common {
             shader,
+            shader_blur_x,
+            shader_blur_y,
             shader_shadow,
             light_fbo_low,
             light_fbo_high,
+            shadow_fbo_low,
+            shadow_fbo_high,
             data,
         })
     }
