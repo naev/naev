@@ -497,8 +497,6 @@ static void commodity_buy( unsigned int wid, const char *str )
       price; /* To show the player how much they paid for it */
    price *= q;
    player_modCredits( -price );
-   commodity_update( wid, NULL );
-   // commodity_exchange_genList( wid );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
@@ -507,6 +505,9 @@ static void commodity_buy( unsigned int wid, const char *str )
    hparam[1].u.num       = q;
    hparam[2].type        = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_buy", hparam );
+
+   commodity_exchange_genList( wid );
+   commodity_update( wid, NULL );
    land_needsTakeoff( 1 );
 }
 
@@ -547,8 +548,6 @@ static void commodity_sell( unsigned int wid, const char *str )
    if ( pfleet_cargoOwned( com ) == 0 ) /* None left, set purchase price to
                                            zero, in case missions add cargo. */
       com->lastPurchasePrice = 0;
-   commodity_update( wid, NULL );
-   // commodity_exchange_genList( wid );
 
    /* Run hooks. */
    hparam[0].type        = HOOK_PARAM_COMMODITY;
@@ -557,6 +556,9 @@ static void commodity_sell( unsigned int wid, const char *str )
    hparam[1].u.num       = q;
    hparam[2].type        = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_sell", hparam );
+
+   commodity_exchange_genList( wid );
+   commodity_update( wid, NULL );
    land_needsTakeoff( 1 );
 }
 
