@@ -302,8 +302,8 @@ jobs:
         run: |
           meson setup build source \
               --prefix="$(pwd)"/source/extras/windows/installer \
-              --bindir=bin \
-              -Dndata_path=bin \
+              --bindir=. \
+              -Dndata_path=. \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
