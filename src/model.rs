@@ -205,6 +205,7 @@ impl Default for LightingUniform {
 pub struct ModelShader {
     shader: Shader,
     lighting_buffer: Buffer,
+    use_ao: bool,
 }
 impl ModelShader {
     const U_LIGHTING: u32 = 0;
@@ -229,6 +230,10 @@ impl ModelShader {
             let sname = format!("shadowmap_tex[{i}]");
             shaderbuilder = shaderbuilder.sampler(&sname, (5 + i) as i32);
         }
+        let low_memory = unsafe { naevc::conf.low_memory != 0 };
+        if low_memory {
+            shaderbuilder = shaderbuilder.prepend("#define HAS_AO 0\n");
+        }
         let shader = shaderbuilder.build(gl)?;
 
         let lighting_buffer = BufferBuilder::new(Some("PBR Lighting Buffer"))
@@ -240,6 +245,7 @@ impl ModelShader {
         Ok(ModelShader {
             shader,
             lighting_buffer,
+            use_ao: !low_memory,
         })
     }
 }
@@ -342,13 +348,20 @@ impl Material {
             }
             None => tex_zeros.clone(),
         };
-        let ambientocclusion = match mat.occlusion_texture() {
-            Some(info) => {
-                // TODO strength?
-                data.occlusion_texcoord = info.tex_coord() as i32;
-                textures[info.texture().index()].clone()
+        // Don't load Ambient Occlusion if using low memory mode
+        let ambientocclusion = {
+            if unsafe { naevc::conf.low_memory != 0 } {
+                tex_ones.clone()
+            } else {
+                match mat.occlusion_texture() {
+                    Some(info) => {
+                        // TODO strength?
+                        data.occlusion_texcoord = info.tex_coord() as i32;
+                        textures[info.texture().index()].clone()
+                    }
+                    None => tex_ones.clone(),
+                }
             }
-            None => tex_ones.clone(),
         };
 
         let uniform_buffer = {
@@ -533,7 +546,7 @@ impl Mesh {
     pub fn render(
         &self,
         ctx: &Context,
-        _shader: &ModelShader,
+        shader: &ModelShader,
         transform: &Matrix4<f32>,
     ) -> Result<()> {
         let gl = &ctx.gl;
@@ -559,7 +572,9 @@ impl Mesh {
             m.metallic.bind(ctx, 1);
             m.emissive.bind(ctx, 2);
             m.normalmap.bind(ctx, 3);
-            m.ambientocclusion.bind(ctx, 4);
+            if shader.use_ao {
+                m.ambientocclusion.bind(ctx, 4);
+            }
             m.diffuse.bind(ctx, 0); // Have to end on TEXTURE0
 
             // Attributes

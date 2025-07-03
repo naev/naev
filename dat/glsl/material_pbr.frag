@@ -1,9 +1,15 @@
 #include "material_pbr.glsl"
 #include "lib/math.glsl"
 
+#ifndef HAS_AO
 #define HAS_AO       1
+#endif /* HAS_AO */
+#ifndef HAS_NORMAL
 #define HAS_NORMAL   1
+#endif /* HAS_NORMAL */
+#ifndef TONEMAP
 #define TONEMAP      2 // ACES Approximation
+#endif /* TONEMAP */
 
 /*
  * Physically Based Rendering Shader (WIP)
@@ -529,7 +535,7 @@ void main (void)
    f_diffuse += lighting.ambient * M.c_diff;/* * (1.0 / M_PI); premultiplied */
 
    /* Ambient occlusion. */
-#ifdef HAS_AO
+#if HAS_AO
    float ao = texture(occlusion_tex, (material.occlusion_texcoord==1 ? IN.tex1 : IN.tex0)).r;
    f_diffuse *= ao;
 #endif /* HAS_AO */
