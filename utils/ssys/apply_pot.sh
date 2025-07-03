@@ -24,16 +24,6 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    exit 0
 fi
 
-repiper() {
-   local -i n="$1";
-   shift;
-   if (( n )); then
-      "$@" | repiper "$((n-1))" "$@"
-   else
-      cat
-   fi
-}
-
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [ ! -f "$SCRIPT_DIR"/potential ] || [ ! "$SCRIPT_DIR"/potential -nt "$SCRIPT_DIR"/potential.c ] ; then
@@ -47,5 +37,5 @@ for j in "$@"; do
 done
 
 "$SCRIPT_DIR"/graph_scale.py "$RESCALE" |
-repiper "$N" "$SCRIPT_DIR"/potential -a "$1" |
+"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/potential -a "$1" |
 "$SCRIPT_DIR"/graph_scale.py "$POST_RESCALE"

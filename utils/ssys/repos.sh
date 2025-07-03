@@ -47,15 +47,5 @@ if [ "$N" = "C" ] ; then
 fi
 echo "Apply reposition $N time(s)." >&2
 
-repeat() {
-   local -i n="$1";
-   shift;
-   if [ ! "$n" = "0" ] ; then
-      n="$((n - 1))"
-      "$SCRIPT_DIR"/reposition "$@" | repeat "$n" "$@"
-   elif [ ! "$1" = "-o" ] ; then
-      cat
-   fi
-}
-
-repeat "$N" -e -q "$@"
+ARGS="$*"
+"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/reposition -e -q "$ARGS"
