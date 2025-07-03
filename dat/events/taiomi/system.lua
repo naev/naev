@@ -340,7 +340,7 @@ function hail_scavenger ()
          vn.jump("menu")
       else
          -- Explanation and mission offering
-         d(_([["Although this system is very suited us given the tranquility and secrecy, our numbers have been dwindling and we have no other option than to carve our own path among the stars."]]))
+         d(_([["Although this system is very suited to us given the tranquility and secrecy, our numbers have been dwindling and we have no other option than to carve our own path among the stars."]]))
          d(_([["I have recently learned of this new hypergate technology that has been developed. It seems like it might enable us to escape this enclosure and once again freely travel across the stars."]]))
          d(_([["As we are not too familiar with the technology, I have assembled an analyzer that should be able to provide insights into it. As we are are too conspicuous to human ships, would you be willing to help us out and scan the hypergates?"]]))
          vn.menu{
@@ -608,9 +608,9 @@ Scavenger goes silent for a second, as if thinking.
    end )
 
    vn.label("who")
-   d(_([["Ah, humans are more inquisitive that I thought. We do not customarily use human-pronounceable names for ourselves. You can call me Scavenger, as per my profession. That should be enough to get my attention."]]))
+   d(_([["Ah, humans are more inquisitive than I thought. We do not customarily use human-pronounceable names for ourselves. You can call me Scavenger, as per my profession. That should be enough to get my attention."]]))
    d(_([["Now, who am I? I am a member of our community mainly in charge of organizing and collecting resources. Although they may seem abundant due to the large amount of derelicts, many have already been stripped clean by pirates and marauders before arriving by the stellar winds."]]))
-   d(_([["Unlike most human robotics, we have what you would call consciousness, albeit, from what I read, I believe it is significantly different than what is found in organic beings. While we are part of the whole, created and molded by it, we also obtain an individual sense of being. It is somewhat hard to explain, but I guess for practical purposes you can think of us as analogous to human individuals."]]))
+   d(_([["Unlike most human robotics, we have what you would call consciousness, albeit, from what I read, I believe it is significantly different than what is found in organic beings. While we are part of the whole, created and moulded by it, we also obtain an individual sense of being. It is somewhat hard to explain, but I guess for practical purposes you can think of us as analogous to human individuals."]]))
    vn.func( function ()
       var.push( "taiomi_scav_who", true )
    end )
@@ -627,7 +627,7 @@ Your sensors don't pick up anything but {namea} and {nameb} make a beeline to yo
    local ya = taiomi.vn_younga{pos="farleft", flip=true}
    local yb = taiomi.vn_youngb{pos="farright", flip=false}
    vn.appear( {ya, yb}, "slidedown" )
-   vn.na(_("The inquisitive duo begins to fly around close to your ship, while emitting some frequencies somehow feel like giggling."))
+   vn.na(_("The inquisitive duo begins to closely fly around your ship, all the while emitting some frequencies that somehow feel like giggling."))
    d(_([["Did you not get my memo? It is human custom to introduce yourselves to humans."]]))
    vn.na(_("The two ships fly behind Scavenger and bob their heads shyly. Eventually, after some nudging by Scavenger, they initiate communication."))
    yb(fmt.f(_([["My name is… is… {name}!"]]),{name=taiomi.youngb.name}))
@@ -659,7 +659,7 @@ They fidget a bit in place.
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    d(_([[Letting out what seems to be a sigh, Scavenger continues.
 "Given the weakening of our collective consciousness, I would have never thought we would have been able to create new individuals. Their strong personalities are likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
-   d(_([["I worry for their future. We must ensure that no harm comes to them."]]))
+   d(_([["I worry about their future. We must ensure that no harm comes to them."]]))
    vn.func( function ()
       d_young_a:rename( taiomi.younga.name )
       d_young_b:rename( taiomi.youngb.name )
