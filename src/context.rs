@@ -439,7 +439,7 @@ impl Context {
         }
         gl_attr.set_framebuffer_srgb_compatible(true);
         gl_attr.set_context_flags().forward_compatible().set();
-        //#[cfg(debug_assertions)]
+        #[cfg(debug_assertions)]
         gl_attr.set_context_flags().debug().set();
 
         let (window, gl_context) = match Self::create_context(&sdlvid, &gl_attr, 4, 6) {
@@ -471,7 +471,7 @@ impl Context {
             false => log::warn("unable to set framebuffer to SRGB!"),
         };
 
-        //#[cfg(debug_assertions)]
+        #[cfg(debug_assertions)]
         match gl_attr.context_flags().has_debug() {
             true => unsafe {
                 gl.enable(glow::DEBUG_OUTPUT);

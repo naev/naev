@@ -13,6 +13,8 @@ path = @PATH@
 [profile.release-with-debug]
 inherits = "release"
 debug = true
+debug-assertions = true
+overflow-checks = true
 
 [dependencies]
 naevc = { path=@NAEVC@ }
