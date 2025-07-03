@@ -646,7 +646,7 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
    if (!only)
       for (int i = map->nosys; i < map->nsys; i++) {
          const size_t n =
-            snprintf(buff, 511, "%s %lf %lf %s\n", map->sys_nam[i],
+            snprintf(buff, 511, "%s %lf %lf%s\n", map->sys_nam[i],
                      map->sys[i].v[0], map->sys[i].v[1], map->sys_aux[i]);
          fwrite(buff, sizeof(char), n, stdout);
          fflush(stdout);
@@ -656,20 +656,19 @@ void gen_map_reposition(struct s_ssys *map, bool g_opt, bool quiet,
       if (fork() == 0)
          break;
 
-   for (int i = num; i < map->nosys; i += THREADS)
-      if (map->sys[i].w != 0.0) {
-         double v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
+   for (int i = num; i < map->nosys; i += THREADS) {
+      double v[2] = {map->sys[i].v[0], map->sys[i].v[1]};
 
-         if (reposition_sys(v, map, i, g_opt, quiet, gen_map) && (!quiet))
-            fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
+      if (reposition_sys(v, map, i, g_opt, quiet, gen_map) && (!quiet))
+         fprintf(stderr, "\"%s\" has no neighbor !\n", map->sys_nam[i]);
 
-         const size_t n =
-            snprintf(buff, 511, "%s %lf %lf\n", map->sys_nam[i],
-                     (v[0] + ratio * map->sys[i].v[0]) / (1.0 + ratio),
-                     (v[1] + ratio * map->sys[i].v[1]) / (1.0 + ratio));
-         fwrite(buff, sizeof(char), n, stdout);
-         fflush(stdout);
-      }
+      const size_t n = snprintf(
+         buff, 511, "%s %lf %lf%s\n", map->sys_nam[i],
+         (v[0] + ratio * map->sys[i].v[0]) / (1.0 + ratio),
+         (v[1] + ratio * map->sys[i].v[1]) / (1.0 + ratio), map->sys_aux[i]);
+      fwrite(buff, sizeof(char), n, stdout);
+      fflush(stdout);
+   }
 
    if (num < THREADS - 1)
       exit(EXIT_SUCCESS);
@@ -692,7 +691,7 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
          map->sys_aux         = realloc(map->sys_aux, new_siz * sizeof(char *));
       }
       upd                       = true;
-      map->sys_aux[map->nsys]   = NULL;
+      map->sys_aux[map->nsys]   = strdup("");
       map->sys_nam[map->nsys++] = str;
       this                      = map->nsys;
       g_hash_table_insert(h, (void *) str, (void *) this);
@@ -735,7 +734,7 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
 
       if (line[n - 1] == '\n')
          line[--n] = '\0';
-      if (2 == sscanf(line, "%*s%n %lf %lf %n", &r1, tmp, tmp + 1, &r2)) {
+      if (2 == sscanf(line, "%*s%n %lf %lf%n", &r1, tmp, tmp + 1, &r2)) {
          line[r1]        = '\0';
          const size_t id = ssys_num(h, line, &map, tmp, line + r2, true);
          map.sys[id].w   = 1.0;

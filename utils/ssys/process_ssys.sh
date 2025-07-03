@@ -37,8 +37,8 @@ N_ITER=4
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
-"$SCRIPT_DIR"/repos.sh -C
-"$SCRIPT_DIR"/apply_pot.sh -C
+"$SCRIPT_DIR"/repos.sh -C || exit 1
+"$SCRIPT_DIR"/apply_pot.sh -C || exit 1
 
 
 # Ok, let's go!
@@ -60,38 +60,24 @@ tee >(
 ) |
 pmsg "\napply neato" |
 "$SCRIPT_DIR"/graph2dot.py -c | tee before.dot | neato 2>/dev/null |
-#tee after.dot | neato -n2 -Tpng 2>/dev/null > after.png
 ("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
-"$SCRIPT_DIR"/graphmod_repos_virt.py |
+("$SCRIPT_DIR"/graphmod_repos_virt.py && echo 'zied 0 0') |
 "$SCRIPT_DIR"/graph_faction.py -c |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_dot.png') |
 pmsg "pprocess" |
 "$SCRIPT_DIR"/graphmod_postp.py |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_post.png') |
-"$SCRIPT_DIR"/graph2ssys.py
-
-msg "${N_ITER} x (reposition sys + smooth tradelane) + position virtual"
-for i in $(seq "$N_ITER"); do
-   "$SCRIPT_DIR"/ssys2graph.sh |
-   "$SCRIPT_DIR"/reposition -e -q -i "${ALMOST_ALL[@]}" |
-   "$SCRIPT_DIR"/graphmod_smooth_tl.py |
-   "$SCRIPT_DIR"/graph2ssys.py
-   msg "\e[32m$i"
-done
-
-"$SCRIPT_DIR"/ssys2graph.sh |
+pmsg "${N_ITER} x (reposition sys + smooth tradelane) + position virtual" |
+"$SCRIPT_DIR"/repeat.sh "$N_ITER" "$SCRIPT_DIR"/graphmod_repos.sh "$SCRIPT_DIR" "${ALMOST_ALL[@]}" |
 "$SCRIPT_DIR"/graphmod_repos_virt.py |
-"$SCRIPT_DIR"/graph2ssys.py
-msg ""
-
-"$SCRIPT_DIR"/ssys2graph.sh |
-"$SCRIPT_DIR"/graph_faction.py -c -n |
+pmsg "" |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_repos.png') |
 pmsg "apply gravity" |
 "$SCRIPT_DIR"/apply_pot.sh -g |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_grav.png') |
 pmsg "gen final graph" |
+tee >("$SCRIPT_DIR"/graph2ssys.py) |
 "$SCRIPT_DIR"/graph2dot.py -c -k |
 neato -n2 -Tpng 2>/dev/null > final.png
 

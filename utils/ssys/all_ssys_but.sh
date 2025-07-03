@@ -9,4 +9,6 @@ fi
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/ssys")" &&
-ls | grep -v -F -f <( for i in "$@"; do echo "$i"; done ) | sed 's/.xml$//' | tr '\n' ' '
+for i in *.xml; do
+   echo "$i"
+done | grep -v -F -f <( for i in "$@"; do echo "$i"; done ) | sed 's/.xml$//' | tr '\n' ' '

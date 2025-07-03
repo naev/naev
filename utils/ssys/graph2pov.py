@@ -109,7 +109,7 @@ def main( pov_out = None, halo = False, silent = False ):
    if pov_out is not None:
       cmd += ['+O' + pov_out]
 
-   print(' '.join(cmd))
+   stderr.write(' '.join(cmd) + '\n')
 
    if pov_out is not None:
       if silent:
