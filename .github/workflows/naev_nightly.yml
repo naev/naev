@@ -12,7 +12,6 @@ jobs:
       contents: read  #  to fetch code (actions/checkout)
 
     runs-on: ubuntu-latest
-
     container:
       image: "ghcr.io/naev/naev-release:latest"
 
@@ -23,6 +22,19 @@ jobs:
           ref: main
           path: source
           submodules: true
+
+      - name: Configure Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: "x86_64-unknown-linux-gnu"
+          override: true
+
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
+          git: https://github.com/rust-lang/rust-bindgen.git
+          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
 
       - name: Package Dist
         run: |
@@ -111,6 +123,14 @@ jobs:
     defaults:
       run:
         shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-steamruntime
+            config: linux_steamruntime.ini
+            wrap_mode: default
+            target: x86_64-unknown-linux-gnu
     container:
       image: "ghcr.io/naev/naev-steamruntime:latest"
       volumes:
@@ -127,12 +147,26 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
+      - name: Configure Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: "${{ matrix.target }}"
+          override: true
+
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
+          git: https://github.com/rust-lang/rust-bindgen.git
+          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
+
       - name: Meson Setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=debug \
-              --force-fallback-for=glpk,SuiteSparse \
+              --wrap-mode=${{ matrix.wrap_mode }} \
+              --force-fallback-for=sdl2_image,glpk,SuiteSparse \
               -Dsteamruntime=true \
               -Dprefix="/usr" \
               -Dinstaller=true \
@@ -222,10 +256,22 @@ jobs:
 
   "Windows_Naev_Release":
     needs: "Package_Source"
-    runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-windows
+            config: windows_cross_mingw.ini
+            target: x86_64-pc-windows-gnu
+
+    runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-windows:latest"
+      env:
+        PKG_CONFIG: "x86_64-w64-mingw32-pkg-config"
+        PKG_CONFIG_PATH: "/usr/x86_64-w64-mingw32/sys-root/mingw/lib/pkgconfig:/__w/naev/naev/source/subprojects/LuaJIT-04dca7911ea255f37be799c18d74c305b921c1a6/etc"
+        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/x86_64-w64-mingw32/sys-root/mingw --target=x86_64-w64-mingw32"
 
     steps:
       - name: Get Source
@@ -238,16 +284,30 @@ jobs:
           mkdir source
           tar -xf source.tar.xz -C source --strip 1
 
+      - name: Configure Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: "${{ matrix.target }}"
+          override: true
+
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
+          git: https://github.com/rust-lang/rust-bindgen.git
+          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
+
       - name: Meson Setup
         # We disable b_lto here because it messes with backtraces on windows
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/build/windows \
-              --bindir=. \
-              -Dndata_path=. \
-              --cross-file='source/utils/build/windows_cross_mingw.ini' \
+              --prefix="$(pwd)"/source/extras/windows/installer \
+              --bindir=bin \
+              -Dndata_path=bin \
+              --cross-file='source/utils/build/${{ matrix.config }}' \
+              --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
-              --force-fallback-for=glpk,SuiteSparse \
+              --wrap-mode=nopromote \
               -Dinstaller=true \
               -Drelease=true \
               -Db_lto=false \
@@ -296,6 +356,9 @@ jobs:
         BUILDARCH: "${{ matrix.arch }}"
         HOST: "${{ matrix.arch }}-apple-darwin23"
         MACOSX_DEPLOYMENT_TARGET: "${{ matrix.deploymenttarget }}"
+        PKG_CONFIG: "${{ matrix.arch }}-apple-darwin23-pkg-config"
+        PKG_CONFIG_PATH: "/usr/lib/osxcross/macports/pkgs/opt/local/lib/pkgconfig"
+        BINDGEN_EXTRA_CLANG_ARGS: "--sysroot=/usr/lib/osxcross/SDK/MacOSX14.sdk --target=${{ matrix.arch }}-apple-darwin"
 
     steps:
       - name: Configure Build Environment
@@ -312,6 +375,19 @@ jobs:
             rm -f /usr/lib/osxcross/macports
             ln -s /usr/lib/osxcross/macports.x86_64 /usr/lib/osxcross/macports
           fi
+
+      - name: Configure Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: "${{ matrix.arch }}-apple-darwin"
+          override: true
+
+      - name: Install bindgen-cli
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: bindgen-cli
+          git: https://github.com/rust-lang/rust-bindgen.git
+          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
 
       - name: Get Source
         uses: actions/download-artifact@v4
@@ -330,6 +406,7 @@ jobs:
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
+              --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
               -Dinstaller=false \
               -Drelease=true \
