@@ -1006,7 +1006,18 @@ fn load_gltf_texture(
         gltf::texture::WrappingMode::Repeat => texture::AddressMode::Repeat,
     });
 
-    tb.build_wrap(ctx)
+    let tex = tb.build_wrap(ctx)?;
+
+    // Downscale as necessary
+    if unsafe { naevc::conf.low_memory != 0 } {
+        let max_tex_size = unsafe { naevc::conf.max_3d_tex_size } as usize;
+        if max_tex_size <= 0 || max_tex_size >= tex.texture.w.max(tex.texture.h) {
+            return Ok(tex);
+        }
+        tex.scale_wrap(ctx, max_tex_size, max_tex_size)
+    } else {
+        Ok(tex)
+    }
 }
 
 // This is actually bad because they technically depend on the context existing, but if we are
