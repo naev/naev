@@ -322,7 +322,7 @@ impl Texture {
     }
 
     pub fn scale_wrap(&self, wctx: &context::ContextWrapper, w: usize, h: usize) -> Result<Self> {
-        let mut fbo = FramebufferBuilder::new(Some("Downscaler"))
+        let fbo = FramebufferBuilder::new(Some("Downscaler"))
             .width(w)
             .height(h)
             .build_wrap(wctx)?;
@@ -896,7 +896,7 @@ impl Framebuffer {
         }
     }
 
-    pub fn into_texture(&mut self) -> Result<Texture> {
+    pub fn into_texture(mut self) -> Result<Texture> {
         match self.texture.take() {
             Some(tex) => Ok(tex),
             None => anyhow::bail!("unable to remove texture from framebuffer"),

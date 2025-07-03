@@ -936,8 +936,8 @@ impl Scene {
                     }
                 }
             }
-            blur_pass(ctx, &light_fbo, &shadow_fbo, &common.shader_blur_x);
-            blur_pass(ctx, &shadow_fbo, &light_fbo, &common.shader_blur_y);
+            blur_pass(ctx, light_fbo, shadow_fbo, &common.shader_blur_x);
+            blur_pass(ctx, shadow_fbo, light_fbo, &common.shader_blur_y);
 
             // Bind the texture
             if let Some(tex) = &light_fbo.depth {
@@ -1061,7 +1061,7 @@ fn load_gltf_texture(
     // Downscale as necessary
     if unsafe { naevc::conf.low_memory != 0 } {
         let max_tex_size = unsafe { naevc::conf.max_3d_tex_size } as usize;
-        if max_tex_size <= 0 || max_tex_size >= tex.texture.w.max(tex.texture.h) {
+        if max_tex_size == 0 || max_tex_size >= tex.texture.w.max(tex.texture.h) {
             return Ok(tex);
         }
         tex.scale_wrap(ctx, max_tex_size, max_tex_size)
@@ -1158,12 +1158,12 @@ impl Common {
             .sampler("sampler", 0)
             .vert_file("blur.vert")
             .frag_file("blurX.frag")
-            .build(&gl)?;
+            .build(gl)?;
         let shader_blur_y = ShaderBuilder::new(Some("Blur Y Shader"))
             .sampler("sampler", 0)
             .vert_file("blur.vert")
             .frag_file("blurY.frag")
-            .build(&gl)?;
+            .build(gl)?;
 
         Ok(Common {
             shader,
