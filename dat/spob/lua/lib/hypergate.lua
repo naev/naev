@@ -200,7 +200,7 @@ function hypergate.window ()
          end
          table.insert( destnames, str )
       else
-         local rng = prng.new( d:nameRaw() )
+         local rng = prng.new( csys:nameRaw()..d:nameRaw() )
          local hash = string.format( "%05X", rng:random(0, math.pow(16,5) ) )
          table.insert( destnames, fmt.f(_("Unknown Signature {hash}"),{hash=hash}) )
       end
