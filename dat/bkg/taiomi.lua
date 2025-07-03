@@ -240,15 +240,13 @@ local function update ()
    -- Calculate player motion
    local npos = camera.pos()
    local z = camera.getZoom()
-   local diff = npos - pos
-   local dx, dy = diff:get()
-   dx = -dx
+   local dx, dy = (pos - npos):get()
    pos = npos
 
    -- Update the parts
    local function update_part( p )
       p.x = p.x + dx * p.s
-      p.y = p.y + dy * p.s
+      p.y = p.y - dy * p.s
       -- tw and th include 2*buffer
       if p.x < -buffer then
          p.x = p.x + tw
@@ -266,8 +264,8 @@ local function update ()
       local y = (p.y - znh2) / z + nh2
       p.rx = x
       p.ry = y
-      local w = p.w * zmax
-      local h = p.h * zmax
+      local w = p.w * zmax * p.s
+      local h = p.h * zmax * p.s
       p.r  = (x > -w and y > -h and x <= nw+w and y <= nh+h)
    end
 
@@ -287,9 +285,9 @@ renderbg = starfield.render
 local function draw_part( p, s, z )
    if p.r then
       if p.q then
-         p.i.i:draw( p.q,  p.x, p.y, 0, p.s * s / z )
+         p.i.i:draw( p.q,  p.rx, p.ry, 0, p.s * s / z )
       else
-         p.i.i:draw( p.id, p.x, p.y, 0, p.s * s / z )
+         p.i.i:draw( p.id, p.rx, p.ry, 0, p.s * s / z )
       end
    end
 end
