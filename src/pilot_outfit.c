@@ -15,6 +15,7 @@
 #include "difficulty.h"
 #include "escort.h"
 #include "gui.h"
+#include "land.h"
 #include "log.h"
 #include "nlua.h"
 #include "nlua_outfit.h"
@@ -1076,7 +1077,7 @@ static void pilot_calcStatsSlot( Pilot *pilot, PilotOutfitSlot *slot,
  */
 void pilot_calcStats( Pilot *pilot )
 {
-   double     ac, sc, ec, tm; /* temporary health coefficients to set */
+   double     ac, sc, ec, fc, tm; /* temporary health coefficients to set */
    ShipStats *s;
 
    /*
@@ -1101,6 +1102,10 @@ void pilot_calcStats( Pilot *pilot )
    ac = ( pilot->armour_max > 0. ) ? pilot->armour / pilot->armour_max : 0.;
    sc = ( pilot->shield_max > 0. ) ? pilot->shield / pilot->shield_max : 0.;
    ec = ( pilot->energy_max > 0. ) ? pilot->energy / pilot->energy_max : 0.;
+   fc = ( pilot->fuel_max > 0. ) ? pilot->fuel / pilot->fuel_max : 0.;
+   if ( landed && ( land_spob != NULL ) &&
+        spob_hasService( land_spob, SPOB_SERVICE_REFUEL ) )
+      fc = 1.;
    pilot->armour_max   = pilot->ship->armour;
    pilot->shield_max   = pilot->ship->shield;
    pilot->fuel_max     = pilot->ship->fuel;
@@ -1228,6 +1233,7 @@ void pilot_calcStats( Pilot *pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
+   pilot->fuel   = fc * pilot->fuel_max;
 
    /* Some sanity checks. */
    pilot->stats.time_speedup = MAX( pilot->stats.time_speedup, 0. );
