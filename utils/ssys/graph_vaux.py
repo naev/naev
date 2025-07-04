@@ -44,7 +44,7 @@ main_col = {faction_color[f] for f in main_fact}
 if __name__ != '__main__':
    color_values = {
       'default': (0.25, 0.25, 0.25),
-      'green':   (0.0,  0.85, 0.0),
+      'green':   (0.0,  0.8,  0.0),
       'darkred': (0.6,  0.0,  0.0),
       'brown':   (0.6,  0.2,  0.0),
       'teal':    (0.0,  0.7,  0.8),
@@ -60,7 +60,7 @@ if __name__ != '__main__':
    }
    default_col = color_values['default']
    is_default = lambda s: s is None or s.split('@')[0] == 'default'
-   col_avg = lambda u, v: tuple([(2.0 * i + j) / 3.0 for (i, j) in zip(u, v)])
+   col_avg = lambda u, v: tuple([(i + 1.5*j + 0.5*0) / 4.0 for (i, j) in zip(u, v)])
    for c in main_col:
       color_values['default@' + c] = col_avg(default_col, color_values[c])
 
@@ -147,21 +147,46 @@ else:
       from graphmod import sys_jmp as E
       newt = {}
       infl = main_col if do_color else main_fact
-      _is_def = lambda a: a[0] == 'default'
+      _is_def = lambda a: a == [] or a[0] == 'default'
       _nhn = lambda i: [j for j, k in E[i] if 'hidden' not in k]
+      nhtwn = lambda i: [j for j in _nhn(i) if i in _nhn(j)]
       for bnam in V:
          if _is_def(V.aux[bnam]):
             newt[bnam] = None
-            N = [(j, V.aux[j]) for j in _nhn(bnam) if bnam in _nhn(j)]
+            N = [(j, V.aux[j]) for j in nhtwn(bnam)]
             facts = [(e, a[0]) for (e, a) in N if not _is_def(a)]
             if len({j for i, j in facts}) == 1 and (f := facts[0][1]) in infl:
                newt[bnam] = f
          else:
             newt[bnam] = V.aux[bnam][0]
-      #TODO: propagate
+
+      def unpropag( i, val ):
+         if newt[i] in [None, True]:
+            newt[i] = val
+            for k in nhtwn(i):
+               unpropag(k, val)
+
+      def propag( i, crt ):
+         out = newt[i]
+         if newt[i] is None:
+            newt[i] = True
+            for k in nhtwn(i):
+               res = propag(k, crt)
+               if res not in crt:
+                  if len(crt) == 1:
+                     crt.append(res)
+                  else:
+                     return 'default'
+               out = crt[-1]
+         return out
+
       for bnam in V:
-         if newt[bnam] not in [None, 'default']:
+         if newt[bnam] is None:
+            res = propag(bnam, [True])
+            unpropag(bnam, res if res in infl else 'default')
+
+         if newt[bnam] != 'default':
             if V.aux[bnam] == []:
-               V.aux[bnam].append('default@' + newt[bnam])
-            elif V.aux[bnam][0] == 'default':
+               V.aux[bnam].append('default')
+            if V.aux[bnam][0] == 'default':
                V.aux[bnam][0] += '@' + newt[bnam]
