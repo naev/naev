@@ -3,11 +3,11 @@
 if [ "$1" = "-g" ] ; then
    N=20
    RESCALE=1.8
-   POST_RESCALE=1.2
+   POST_RESCALE=1.1
 elif [ "$1" = "-E" ] ; then
    N=20
-   RESCALE=1.2
-   POST_RESCALE=1.0
+   RESCALE=0.95
+   POST_RESCALE=1.5
 else
    N=15
    RESCALE=1.0
