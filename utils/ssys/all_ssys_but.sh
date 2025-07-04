@@ -2,8 +2,11 @@
 
 
 if [ "$1" = "" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0") <names>.." >&2
-   echo "  Output all ssys names but the ones in argument." >&2
+   DOC=(
+      "usage:  $(basename "$0") <names>.."
+      "  Output all ssys names but the ones in argument."
+   )
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 

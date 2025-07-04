@@ -42,7 +42,7 @@ static inline float grav_pot(float xs, float ys, float x, float y)
 
 // The derivative of the previous ones.
 static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
-                           float y, float m, bool alt)
+                           float y, float m, int alt)
 {
    float dx = xs - x;
    float dy = ys - y;
@@ -57,11 +57,15 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
       f = 2.0f * d * mul_ct;
    else {
       f = 1.0f / d * d;
-      if (alt)
+      if (alt == 1)
          f *= rad / d;
+      else if (alt == 2)
+         f *= sqrt(rad / d);
    }
-   if (alt)
+   if (alt == 1)
       f *= 8.0;
+   else if (alt == 2)
+      f *= 4.0;
 
    f *= m;
    *vx += f * dx;
@@ -267,7 +271,7 @@ void gen_potential(float *lst, size_t nb, enum e_pot typ, float scale)
 }
 
 void apply_potential(const float *lst, size_t nb, enum e_pot t,
-                     const char **nam, bool alt)
+                     const char **nam, int alt)
 {
    char buff[1024];
    int  num;
@@ -306,7 +310,7 @@ void apply_potential(const float *lst, size_t nb, enum e_pot t,
 }
 
 int do_it(const enum e_pot type, const float scale, const bool apply,
-          const bool alt)
+          const int alt)
 {
    float *lst = NULL;
    char **nam = NULL;
@@ -375,7 +379,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
 
 int usage(char *nam, int ret)
 {
-   fprintf(stderr, "Usage: %s  [ -s<scale> | -a ]  ( -E | -g | -w )\n",
+   fprintf(stderr, "Usage: %s  [ -s<scale> | -a ]  ( -E(1|2) | -g | -w )\n",
            basename(nam));
    fprintf(
       stderr,
@@ -388,8 +392,8 @@ int usage(char *nam, int ret)
       "  If -s is set, applies the scaling factor <scale> to "
       "input, e.g. 0.25\n"
       "\n"
-      "  If -E is set, uses experimental alternate gravity. DOES ONLY WORK "
-      "with -a.\n"
+      "  If -E<n> is set, uses experimental alternate gravity. DOES ONLY WORK "
+      "with -a. n is expected to be 1 or 2.\n"
       "  If -g is set, generates the gravity potential.\n"
       "  If -w is set, generates the waves potential.\n"
       "\n");
@@ -400,7 +404,7 @@ int main(int argc, char **argv)
 {
    enum e_pot type  = NONE;
    char      *nam   = argv[0];
-   bool       alt   = false;
+   int        alt   = false;
    bool       apply = false;
    float      scale = 1.0f;
 
@@ -419,11 +423,11 @@ int main(int argc, char **argv)
       argc--;
    }
 
-   if (argc > 1 && !strcmp(argv[1], "-E")) {
+   if (argc > 1 && !strncmp(argv[1], "-E", 2)) {
       if (!apply)
          return usage(nam, EXIT_FAILURE);
       type = GRAVITY;
-      alt  = true;
+      alt  = argv[1][2] - '0';
       argv++;
       argc--;
    }

@@ -2,8 +2,11 @@
 
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0")" >&2
-   echo "  Applies the whole remap process. See the script content." >&2
+   DOC=(
+      "usage:  $(basename "$0")"
+      "  Applies the whole remap process. See the script content."
+   )
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 
@@ -74,6 +77,7 @@ pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"    |
 "$SCRIPT_DIR"/graphmod_virtual.py                              |
 pmsg ""                                                        |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_repos.png')         |
+tee >("$SCRIPT_DIR"/graph2ssys.py)                             |
 pmsg "apply gravity"                                           |
 "$SCRIPT_DIR"/apply_pot.sh -g                                  |
 "$SCRIPT_DIR"/graphmod_abh.py                                  |
@@ -81,9 +85,7 @@ pmsg "apply gravity"                                           |
 "$SCRIPT_DIR"/graphmod_abh.py                                  |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_grav.png')          |
 pmsg "gen final graph"                                         |
-tee >("$SCRIPT_DIR"/graph2ssys.py)                             |
-"$SCRIPT_DIR"/graph2dot.py -c -k                               |
-neato -n2 -Tpng 2>/dev/null > after.png
+"$SCRIPT_DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
 
 msg "\nrelax ssys..\n"
 msg "total relaxed: \e[32m$("$SCRIPT_DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)\n"
