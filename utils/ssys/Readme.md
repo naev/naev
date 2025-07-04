@@ -47,8 +47,9 @@ These are designed to change the star map by **changing systems position**.
 ## graphmods
  - `graphmod_prep.py`: A set virtual edge addition designed to serve as a pre-processing for `neato`.
  - `graphmod_postp.py`: A set of ad hoc operations designed to serve as a post-processing for neato output. See section below.
- - `graphmod_repos_virt.py`: gives a position of virtual systems (eg. gauntlet, test of ...)
+ - `graphmod_virtual.py`: gives a position of virtual systems (eg. gauntlet, test of ...)
  - `graphmod_smooth_tl.py`: smoothens the tradelane. Interesting in combination with `reposition`.
+ - `graphmod_abh.py`: Repairs the stretching of Anubis Black Hole after gravity application.
 
 ## main process
 Performed by `process_ssys.sh`. Several steps:
@@ -66,7 +67,7 @@ Performed by `process_ssys.sh`. Several steps:
  - __6__ `apply_pot.sh -g` applies gravity.
  - generate `map_grav.png`
 
-Notice `graphmod_repos_virt.py` is applied at each step to avoid noise in `png`s.
+Notice `graphmod_virtual.py` is applied at each step to avoid noise in `png`s.
 
 
 # Others
@@ -91,8 +92,7 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 # TODO
  - repair `hidden` tag management
- - Finish general cleanup:
-    - `graph_vaux` improved usage + doc
+ - implement `graph_vaux.py -e` that extends faction to neutral systems in a zone of influence.
+ - `graph_vaux` improved usage + doc
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.
- - implement `graph_vaux.py -e` that extends faction to neutral systems in a zone of influence.

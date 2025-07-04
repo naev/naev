@@ -61,7 +61,7 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
          f *= rad / d;
    }
    if (alt)
-      f *= 4.0;
+      f *= 8.0;
 
    f *= m;
    *vx += f * dx;

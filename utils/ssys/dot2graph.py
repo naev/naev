@@ -2,7 +2,7 @@
 
 
 from sys import stdin, stderr, argv, exit
-from ssys_graph import xml_files_to_graph
+from ssys_graph import ssys_pos
 from geometry import bb, vec
 
 
@@ -42,7 +42,7 @@ for lin in input_blocks(stdin):
    pos[nam] = vec(x, y)
 
 
-oldpos = xml_files_to_graph()[1]
+oldpos = ssys_pos()
 
 bbox, oldbb = bb(), bb()
 for k in pos:

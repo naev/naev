@@ -6,7 +6,6 @@ if __name__ != '__main__':
 
 from sys import argv, stderr
 from graph_vaux import color_values
-from ssys_graph import xml_files_to_graph
 
 
 anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
