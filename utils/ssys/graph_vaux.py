@@ -41,10 +41,16 @@ main_fact = {
 }
 main_col = {faction_color[f] for f in main_fact}
 
+#TODO: manage the fact that pirates know hidden jumps
+influence_except = {
+   'quai', 'dendria', 'surano',
+   'haven', 'haered', 'acheron'
+}
+
 if __name__ != '__main__':
    color_values = {
       'default': (0.25, 0.25, 0.25),
-      'green':   (0.0,  0.8,  0.0),
+      'green':   (0.0,  0.75,  0.0),
       'darkred': (0.6,  0.0,  0.0),
       'brown':   (0.6,  0.2,  0.0),
       'teal':    (0.0,  0.7,  0.8),
@@ -149,28 +155,32 @@ else:
       infl = main_col if do_color else main_fact
       _is_def = lambda a: a == [] or a[0] == 'default'
       _nhn = lambda i: [j for j, k in E[i] if 'hidden' not in k]
-      nhtwn = lambda i: [j for j in _nhn(i) if i in _nhn(j)]
+      twn = lambda i: [j for j,_ in E[i] if i in _nhn(j)]
       for bnam in V:
          if _is_def(V.aux[bnam]):
             newt[bnam] = None
-            N = [(j, V.aux[j]) for j in nhtwn(bnam)]
+            N = [(j, V.aux[j]) for j in _nhn(bnam) if bnam in _nhn(j)]
             facts = [(e, a[0]) for (e, a) in N if not _is_def(a)]
             if len({j for i, j in facts}) == 1 and (f := facts[0][1]) in infl:
                newt[bnam] = f
          else:
             newt[bnam] = V.aux[bnam][0]
 
+      for i in influence_except:
+         newt[i] = 'default'
+
+      twn = lambda i: [j for j,_ in E[i] if i in _nhn(j)]
       def unpropag( i, val ):
          if newt[i] in [None, True]:
             newt[i] = val
-            for k in nhtwn(i):
+            for k in twn(i):
                unpropag(k, val)
 
       def propag( i, crt ):
          out = newt[i]
          if newt[i] is None:
             newt[i] = True
-            for k in nhtwn(i):
+            for k in twn(i):
                res = propag(k, crt)
                if res not in crt:
                   if len(crt) == 1:

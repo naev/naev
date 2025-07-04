@@ -12,9 +12,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
       "  If -v is set, only vertices are output."
       "  If -e is set, only edges are output."
    )
-   for i in "${DOC[@]}"; do
-      echo "$i"
-   done >&2
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 

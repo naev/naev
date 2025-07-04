@@ -4,14 +4,15 @@
 FLAGS=("-Ofast")
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   (
-      echo "usage:  $(basename "$0") [<#iterations>|-C] [reposition args]"
-      echo "  If -C is set, just compile reposition."
-      echo "  Applies reposition <#iterations> times (or once if not provided)"
-      echo "  <#iterations> might be 0 (just output current ssys positions)."
-      echo "  Use reposition -h to get info on reposition args."
-      echo "  reposition arg -o is managed even if <#iterations> is 0."
-   ) >&2
+   DOC=(
+      "usage:  $(basename "$0") [<#iterations>|-C] [reposition args]"
+      "  If -C is set, just compile reposition."
+      "  Applies reposition <#iterations> times (or once if not provided)"
+      "  <#iterations> might be 0 (just output current ssys positions)."
+      "  Use reposition -h to get info on reposition args."
+      "  reposition arg -o is managed even if <#iterations> is 0."
+   )
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 

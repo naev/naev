@@ -12,7 +12,7 @@ if argv[1:] != []:
    stderr.write('  Repositions Anubis Black Hole.\n')
    exit(0)
 
-from geometry import vec, bounded_circles, bounding_circle
+from geometry import vec, bounded_circles, bounding_circle, line
 from graphmod import sys_pos as pos
 
 anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
@@ -23,7 +23,7 @@ def repos_center():
       pos['anubis_black_hole'] = C.center
       break
 
-F = 0.03
+F = 0.04
 for k in range(2):
    repos_center()
    for i in anbh:
@@ -31,3 +31,8 @@ for k in range(2):
 
 C = bounding_circle([pos[x] for x in anbh])
 pos['anubis_black_hole'] = C.center
+
+#res = line(pos['ngc2601'], vec(0, 1)) & C
+#res = res[0] if res[0][1] < res[1][1] else res[1]
+#if res[1] < pos['ngc2601'][1]:
+#   pos['ngc2601'] = res

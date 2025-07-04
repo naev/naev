@@ -1,11 +1,14 @@
 #!/usr/bin/bash
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0")  ( -g | -w )" >&2
-   echo "  Generates a (downscaled) map \"pot.png\" of the potential given in argument." >&2
-   echo "  -g stands for gravity; -w for waves." >&2
-   echo "  See potential -h for more information." >&2
-   echo "  povray is invoked to generate \"height_map.png\"." >&2
+   DOC=(
+      "usage:  $(basename "$0")  ( -g | -w )"
+      "  Generates a (downscaled) map \"pot.png\" of the potential given in argument."
+      "  -g stands for gravity; -w for waves."
+      "  See potential -h for more information."
+      "  povray is invoked to generate \"height_map.png\"."
+   )
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 

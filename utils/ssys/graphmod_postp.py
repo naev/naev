@@ -18,6 +18,8 @@ from geometry import bb, vec, segment
 from graphmod import sys_pos as pos, sys_jmp as E
 
 
+# Spiral
+
 pos['syndania'] = vec(pos['syndania'][0], pos['stint'][1])
 
 Spir = ['syndania', 'nirtos', 'sagittarius', 'hopa', 'scholzs_star',
@@ -46,6 +48,9 @@ def toward( src, dst, q ):
 
 toward('syndania', 'jommel', 1.0/4.0)
 
+
+# Proteron space (shape it)
+
 length = (pos['haered']-pos['cleai']).size()
 haered = pos['haered']
 pos['haered'] = pos['cleai'] + (pos['haered']-pos['cleai']).rotate(60)
@@ -63,6 +68,9 @@ pos['mida'] = pos['apik'] + u
 pos['ekta'] = pos['mida'] - v
 pos['akra'] = pos['mida'] + u
 
+
+# Thurion west side
+
 L = segment(pos['haered'], pos['south_bell']).line()
 pos['cleai'] += (L - pos['cleai'])
 L = segment(pos['cleai'], pos['south_bell']).line()
@@ -73,6 +81,9 @@ for s in ['maron', 'machea']:
 pos['machea'] = pos['maron'] + (pos['machea']-pos['maron']).rotate(30)
 pos['cleai'] = (pos['haered']+pos['maron']) / 2.0
 
+
+# Proteron space (rotate it)
+
 proteron = ['leporis', 'hystera', 'korifa', 'apik', 'telika', 'mida', 'ekta', 'akra']
 for s in proteron:
    pos[s] = pos['haered'] + (pos[s]-pos['haered']).rotate(-30)
@@ -82,6 +93,9 @@ v = u.rotate(-75)-u
 for s in proteron + ['haered', 'cleai']:
    pos[s] += v
 
+
+# Soromid West
+
 #v = (pos['possum']-pos['moor']) / 3.0
 #for i in ['stint', 'moor', 'taxumi', 'longbow', 'herculis', 'starlight_end']:
 #   pos[i] += v
@@ -90,14 +104,19 @@ toward('stint', 'longbow', 1.0/6.0)
 v = pos['treacle'] - pos['taxumi']
 pos['starlight_end'] = (pos['treacle']+pos['taxumi'])/2.0 + v.rotate(-90)/2.0*0.7
 
-toward('ngc1317', 'stelman', -1.0/3.0)
 
+# Za'lek
+
+toward('ngc1317', 'stelman', -1.0/3.0)
 pos['reptile'] += (pos['newmarch']-pos['armorhead']) / 6.0
+
+
+# Sirius
 
 v = (pos['aesir']-pos['vanir']) / 4.0
 pos['aesir'] += v
 pos['vanir'] += v
-
+pos['porro'] = (pos['tarmak'] + pos['churchill']) / 2.0
 
 # Anubis BH
 
@@ -129,7 +148,7 @@ v = pos['ngc5483'] - pos['anubis_black_hole']
 pos['ngc11935'] = pos['anubis_black_hole'] + (pos['ngc11935'] - pos['anubis_black_hole']).normalize(v.size())
 
 
-# Thurion space
+# Thurion north
 
 pos['nava'] = pos['flow'] + pos['vean'] - pos['aesria']
 
