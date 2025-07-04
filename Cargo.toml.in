@@ -12,7 +12,7 @@ path = @PATH@
 
 [profile.release-with-debug]
 inherits = "release"
-debug = true
+debug = 1
 debug-assertions = true
 overflow-checks = true
 
