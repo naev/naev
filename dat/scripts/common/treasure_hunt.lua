@@ -84,7 +84,12 @@ function lib.render( systems, jumps, w, h, target, names, rng )
    local c = love_shaders.paper( w, h, nil, rng )
    lg.setCanvas( c )
    lg.setColour( 0, 0, 0, 1 )
-   local R = 20
+
+   -- Something similar to below works
+   -- 0.005 -> 20
+   -- 0.0025 -> 10
+   -- Tweaked a bit more to be exact
+   local R = 5 + 10 * scale / 0.0035
    for k,j in ipairs(jumps) do
       local x1, y1 = pos( j:system():pos():get() )
       local x2, y2 = pos( j:dest():pos():get() )
