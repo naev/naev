@@ -6,7 +6,7 @@ from sys import stderr, exit, argv
 
 
 faction_color = {
-   None:              'default',
+   'default':         'default',
    'empire':          'green',
    'zalek':           'darkred',
    'dvaered':         'brown',
@@ -23,11 +23,23 @@ faction_color = {
    'orez':            'skyblue',
    'flf':             'yellow',
 }
+faction_color[None] = faction_color['default']
 
 faction = {s :s for s in faction_color}
 for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
    faction[f] = 'pirate'
 
+main_fact = {
+   'empire',
+   'zalek',
+   'dvaered',
+   'sirius',
+   'soromid',
+   'frontier',
+   'proteron',
+   'thurion',
+}
+main_col = {faction_color[f] for f in main_fact}
 
 if __name__ != '__main__':
    color_values = {
@@ -46,11 +58,18 @@ if __name__ != '__main__':
       'blue2':   (0.0,  0.1,  1.0),
       'skyblue': (0.0,  0.4,  0.9),
    }
-
    default_col = color_values['default']
+   is_default = lambda s: s is None or s.split('@')[0] == 'default'
+   col_avg = lambda u, v: tuple([(2.0 * i + j) / 3.0 for (i, j) in zip(u, v)])
+   for c in main_col:
+      color_values['default@' + c] = col_avg(default_col, color_values[c])
+
 else:
    if do_color := ('-c' in argv[1:]):
       argv.remove('-c')
+
+   if extended := ('-e' in argv[1:]):
+      argv.remove('-e')
 
    if do_names := ('-n' in argv[1:]):
       argv.remove('-n')
@@ -58,8 +77,9 @@ else:
    if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:] != []:
       msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
       DOC = [
-         'usage:  ' + os.path.basename(argv[0]) + ' [ -c ]',
+         'usage:  ' + os.path.basename(argv[0]) + '[-e] [ -c ] [ -n ]',
          '  Adds faction name to vertices aux field.',
+         '  If -e is set, extends tags to influence zone.',
          '  If -c is set, adds color instead.',
          '  If -c and -n is set, adds color + name.',
          '  If only -n is set, adds name.',
@@ -67,7 +87,6 @@ else:
       for l in DOC:
          msg(l)
       exit(0 if ok else 1)
-
 
    import xml.etree.ElementTree as ET
    from ssys import getpath, PATH, nam2base
@@ -122,5 +141,27 @@ else:
             V.aux[bnam].append(aux)
          elif do_names:
             V.aux[bnam].append('default')
-      if do_names:
-         V.aux[bnam].extend(T.attrib['name'].split(' '))
+         if do_names:
+            V.aux[bnam].extend(T.attrib['name'].split(' '))
+   if extended:
+      from graphmod import sys_jmp as E
+      newt = {}
+      infl = main_col if do_color else main_fact
+      _is_def = lambda a: a[0] == 'default'
+      _nhn = lambda i: [j for j, k in E[i] if 'hidden' not in k]
+      for bnam in V:
+         if _is_def(V.aux[bnam]):
+            newt[bnam] = None
+            N = [(j, V.aux[j]) for j in _nhn(bnam) if bnam in _nhn(j)]
+            facts = [(e, a[0]) for (e, a) in N if not _is_def(a)]
+            if len({j for i, j in facts}) == 1 and (f := facts[0][1]) in infl:
+               newt[bnam] = f
+         else:
+            newt[bnam] = V.aux[bnam][0]
+      #TODO: propagate
+      for bnam in V:
+         if newt[bnam] not in [None, 'default']:
+            if V.aux[bnam] == []:
+               V.aux[bnam].append('default@' + newt[bnam])
+            elif V.aux[bnam][0] == 'default':
+               V.aux[bnam][0] += '@' + newt[bnam]

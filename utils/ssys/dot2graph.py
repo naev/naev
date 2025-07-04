@@ -2,8 +2,11 @@
 
 
 from sys import stdin, stderr, argv, exit
-from ssys_graph import ssys_pos
 from geometry import bb, vec
+import os
+import xml.etree.ElementTree as ET
+from ssys import getpath, PATH
+
 
 
 if __name__ != '__main__':
@@ -14,6 +17,25 @@ if argv[1:] != []:
    stderr.write('  Reads a dot file on stdin, writes the graph on stdout.\n')
    exit(0)
 
+# for comparison with new values, we need the old ones.
+def ssys_pos( ):
+   def all_ssys( args = None ):
+      path = os.path.join(PATH, 'ssys')
+      for arg in os.listdir(path):
+         if arg[-4:] == '.xml':
+            yield arg[:-4], os.path.join(path, arg)
+
+   pos = {}
+   for bname, filename in all_ssys():
+      T=ET.parse(filename).getroot()
+
+      try:
+         e = T.find('pos')
+         pos[bname] = (e.attrib['x'], e.attrib['y'])
+      except:
+         stderr.write('no position defined in "' + bname + '"\n')
+
+   return pos
 
 def input_blocks( it ):
    acc = ''

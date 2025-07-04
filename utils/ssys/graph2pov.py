@@ -8,7 +8,7 @@ from sys import argv, stdin, stderr, exit
 import subprocess
 import os
 
-from graph_vaux import default_col, color_values
+from graph_vaux import is_default, color_values
 from geometry import bb, vec
 
 
@@ -31,10 +31,10 @@ def main( pov_out = None, halo = False, silent = False ):
    from graphmod import sys_pos as V, sys_jmp as E
    E.silence()
    V.silence()
-   colors = { k: color_values[(v+['default'])[0]] for k, v in V.aux.items()}
+   colors = { k: color_values[(v+['default'])[0]] for k, v in V.aux.items() }
+   is_def = { k: is_default((v+['default'])[0]) for k, v in V.aux.items() }
 
    b = bb()
-
    for i in V:
       b += V[i]
 
@@ -77,7 +77,7 @@ def main( pov_out = None, halo = False, silent = False ):
       if i == 'sol':
          col = (0.3,  0.0,  1.2)
 
-      if halo and col != default_col:
+      if halo and not is_def[i]:
          radius = '9' if i == 'sol' else '3'
          write_pov([ 'cylinder{', [
             '<0,0,-1>,',

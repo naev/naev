@@ -50,7 +50,7 @@ echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
 
 msg "gen crt sys map"
 "$SCRIPT_DIR"/ssys2graph.sh                                    |
-"$SCRIPT_DIR"/graph_vaux.py -c -n                              |
+"$SCRIPT_DIR"/graph_vaux.py -e -c -n                           |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_bef.png')           |
 pmsg "gen before graph"                                        |
 "$SCRIPT_DIR"/graphmod_prep.py                                 |
@@ -63,7 +63,7 @@ pmsg "\napply neato"                                           |
 neato 2>/dev/null                                              |
 ("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
 ("$SCRIPT_DIR"/graphmod_virtual.py && echo 'zied 0 0')         |
-"$SCRIPT_DIR"/graph_vaux.py -c -n                              |
+"$SCRIPT_DIR"/graph_vaux.py -e -c -n                           |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_dot.png')           |
 pmsg "pprocess"                                                |
 "$SCRIPT_DIR"/graphmod_postp.py                                |
@@ -83,7 +83,7 @@ tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_grav.png')          |
 pmsg "gen final graph"                                         |
 tee >("$SCRIPT_DIR"/graph2ssys.py)                             |
 "$SCRIPT_DIR"/graph2dot.py -c -k                               |
-neato -n2 -Tpng 2>/dev/null > final.png
+neato -n2 -Tpng 2>/dev/null > after.png
 
 msg "\nrelax ssys..\n"
 msg "total relaxed: \e[32m$("$SCRIPT_DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)\n"

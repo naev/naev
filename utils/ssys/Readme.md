@@ -4,7 +4,7 @@
 All you need to convert from/to a graph.
 Input formats:
  - ssys: denotes current system map, that is stored in `ssys/*.xml`.
- - graph: (see `ssys_graph.sh -h` for format description)
+ - graph: (see `ssys2graph.sh -h` for format description)
  - dot: `graphviz` graph format. Can be used to generate positions and `png` output.
 
 Output formats:
@@ -14,7 +14,7 @@ Output formats:
  - pov: povray file that allows to generate `png` with `povray`
 
 Scripts:
- - `ssys2graph.sh`: Reads current system map, outputs a graph, see `ssys_graph.{py, sh} -h`. The first one offers a richer output, the second one is much faster.
+ - `ssys2graph.sh`: Reads current system map, outputs a graph, see `ssys2graph.sh -h`.
  - `graph2ssys.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
@@ -69,6 +69,7 @@ Performed by `process_ssys.sh`. Several steps:
 
 Notice `graphmod_virtual.py` is applied at each step to avoid noise in `png`s.
 
+The labeled maps `before.png` and `after.png` are generated, with obvious meaning.
 
 # Others
 
@@ -91,7 +92,5 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 
 # TODO
- - implement `graph_vaux.py -e` that extends faction to neutral systems in a zone of influence.
- - `graph_vaux` improved usage + doc
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.
