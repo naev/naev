@@ -3525,7 +3525,7 @@ static int player_saveShipSlot( xmlTextWriterPtr       writer,
       if ( slot->sslot->name != NULL )
          xmlw_attr( writer, "slotname", "%s", slot->sslot->name );
    }
-   xmlw_str( writer, "%s", outfit_name( o ) );
+   xmlw_str( writer, "%s", outfit_rawname( o ) );
    xmlw_endElem( writer ); /* "outfit" */
    return 0;
 }
