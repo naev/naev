@@ -23,7 +23,7 @@ Scripts:
 
 ## graphmod
 `graphmod.py` provides all that is necessary to build a graph modifier such as the programs described in the section graphmods below. As a simple example of use, see `graphmod_repos_virt.py` source. By convention, we call `graph_xxx.py` the generic utilities and `graphmod_xxx.py` the ad hoc modifiers.
- - `graph_vaux.py`: Reads a graph in input, add faction tag to vertex aux field, and outputs the result. With, `-c`, adds the color instead of the faction. Also provides color values when imported.
+ - `graph_vaux.py`: Reads a graph in input, adds faction tag to vertex aux field, and outputs the result. With, `-c`, adds the color instead of the faction. Also provides color values when imported.
  - `graph_scale.py`: Reads a graph in input, scales it, and outputs the resulting graph.
 
 
@@ -91,7 +91,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 
 # TODO
- - repair `hidden` tag management
  - implement `graph_vaux.py -e` that extends faction to neutral systems in a zone of influence.
  - `graph_vaux` improved usage + doc
  - `reposition.c`: fix tunnel effect
