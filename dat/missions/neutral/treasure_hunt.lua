@@ -120,8 +120,8 @@ end
 
 local function landed( data )
    if data.trigger then
+      naev.trigger( data.trigger, false )
       th.map_completed()
-      naev.trigger( data.trigger, true )
       return true
    end
 
