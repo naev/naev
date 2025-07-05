@@ -24,6 +24,7 @@ faction_color = {
    'flf':             'yellow',
 }
 faction_color[None] = faction_color['default']
+faction_color['nebula'] = 'nebula'
 
 faction = {s :s for s in faction_color}
 for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
@@ -41,10 +42,9 @@ main_fact = {
 }
 main_col = {faction_color[f] for f in main_fact}
 
-#TODO: manage the fact that pirates know hidden jumps
 influence_except = {
-   'quai', 'dendria', 'surano',
-   'haven', 'haered', 'acheron'
+   'quai', 'dendria', 'surano',  # pirate blockades
+   'gamel', 'acheron', 'muran', 'sigur', 'ngc10284', 'sheffield', # pirate access
 }
 
 if __name__ != '__main__':
@@ -65,6 +65,7 @@ if __name__ != '__main__':
       'skyblue': (0.0,  0.4,  0.9),
    }
    default_col = color_values['default']
+   color_values['nebula'] = color_values['default']
    is_default = lambda s: s is None or s.split('@')[0] == 'default'
    col_avg = lambda u, v: tuple([(i + 1.5*j + 0.5*0) / 4.0 for (i, j) in zip(u, v)])
    for c in main_col:
@@ -115,7 +116,7 @@ else:
       for e in T.findall('spobs/spob'):
          spobs.append(nam2base(e.text))
 
-      if not(do_names and not do_color):
+      if not(do_names and not do_color and not extended):
          nb = len(spobs)
          maxi = 0
          fact = {}
@@ -143,10 +144,14 @@ else:
             fact = None
 
          aux = faction_color[fact] if do_color else fact
-         if aux is not None:
+         aux = 'default' if aux is None else aux
+         if aux == 'default':
+            if T.find('general/nebula') is not None:
+               V.aux[bnam].append('nebula')
+            elif do_names:
+               V.aux[bnam].append('default')
+         else:
             V.aux[bnam].append(aux)
-         elif do_names:
-            V.aux[bnam].append('default')
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:
@@ -155,9 +160,8 @@ else:
       infl = main_col if do_color else main_fact
       _is_def = lambda a: a == [] or a[0] == 'default'
       _nhn = lambda i: [j for j, k in E[i] if 'hidden' not in k]
-      twn = lambda i: [j for j,_ in E[i] if i in _nhn(j)]
       for bnam in V:
-         if _is_def(V.aux[bnam]):
+         if _is_def(V.aux[bnam]) and bnam not in influence_except:
             newt[bnam] = None
             N = [(j, V.aux[j]) for j in _nhn(bnam) if bnam in _nhn(j)]
             facts = [(e, a[0]) for (e, a) in N if not _is_def(a)]
@@ -166,10 +170,7 @@ else:
          else:
             newt[bnam] = V.aux[bnam][0]
 
-      for i in influence_except:
-         newt[i] = 'default'
-
-      twn = lambda i: [j for j,_ in E[i] if i in _nhn(j)]
+      twn = lambda i: [j for j in _nhn(i) if newt[j] != 'nebula' and i in _nhn(j)]
       def unpropag( i, val ):
          if newt[i] in [None, True]:
             newt[i] = val
@@ -200,3 +201,4 @@ else:
                V.aux[bnam].append('default')
             if V.aux[bnam][0] == 'default':
                V.aux[bnam][0] += '@' + newt[bnam]
+
