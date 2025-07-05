@@ -518,11 +518,13 @@ static void map_system_render( double bx, double by, double w, double h,
                            _( "#nFaction:#0 N/A\n" ) );
       } else {
          if ( i ==
-              array_size( sys->spobs ) ) /* saw them all and all the same */
-            cnt +=
-               scnprintf( &buf[cnt], sizeof( buf ) - cnt,
-                          _( "#nFaction:#0 %s\n#nStanding:#0 %s\n" ),
-                          faction_longname( f ), faction_getStandingText( f ) );
+              array_size( sys->spobs ) ) { /* saw them all and all the same */
+            double rep = system_getReputationOrGlobal( sys, f );
+            cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt,
+                              _( "#nFaction:#0 %s\n#nStanding:#0 %s\n" ),
+                              faction_longname( f ),
+                              faction_getStandingTextAtValue( f, rep ) );
+         }
          /* display the logo */
          logo = faction_logo( f );
          if ( logo != NULL ) {
@@ -538,7 +540,8 @@ static void map_system_render( double bx, double by, double w, double h,
             continue;
          hasPresence = 1;
          if ( faction_isKnown( sys->presence[i].faction ) ) {
-            t = faction_reputationColourChar( sys->presence[i].faction );
+            t = faction_reputationColourCharSystem( sys->presence[i].faction,
+                                                    sys );
             cnt += scnprintf( &buf[cnt], sizeof( buf ) - cnt, "#n%s: #%c%.0f\n",
                               faction_shortname( sys->presence[i].faction ), t,
                               sys->presence[i].value );
