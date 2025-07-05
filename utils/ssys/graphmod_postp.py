@@ -104,6 +104,11 @@ toward('stint', 'longbow', 1.0/6.0)
 v = pos['treacle'] - pos['taxumi']
 pos['starlight_end'] = (pos['treacle']+pos['taxumi'])/2.0 + v.rotate(-90)/2.0*0.7
 
+u = pos['herculis'] - pos['longbow']
+v = (pos['stint'] - pos['moor']).rotate(60)
+pos['longbow'] = pos['moor'] + v
+pos['herculis'] = pos['longbow'] + v.rotate(-60)
+
 
 # Za'lek
 
