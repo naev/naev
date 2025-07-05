@@ -200,9 +200,9 @@ function edergast_pirate_ambush_found( aborted )
    vn.na(_([[As you approach what you believe to be the location marked in the treasure map, you scanners pick up something in low orbit.]]))
    vn.na(fmt.f(_([[You slowly approach the object while hoping it's not another ambush. Luckily enough, you pick up nothing strange as you near what seems to be some sort of capsule orbiting {spob}.]]),
       {spob=spob.cur()}))
-   vn.na(fmt.f(_([[You manage to pry open the capsule, and inside you find some weird pirate king fanfics, but more importantly, you see a {reward}. You flip through some of the fanfic, it doesn't seem to be too original or interesting, so you leave that, the {reward} on the other hand seems like something you should come with you.]]),
+   vn.na(fmt.f(_([[You manage to pry open the capsule, and inside you find some weird pirate king fanfics, but more importantly, you see a #g{reward}#0. You flip through some of the fanfic, it doesn't seem to be too original or interesting, so you leave that, the {reward} on the other hand seems like something you should come with you.]]),
       {reward=REWARD}))
-   vn.na(fmt.f(_([[You take the {reward}, but leave the fanfic for the next person to find the capsule. You can imagine they'll be very happy.]]),
+   vn.na(fmt.f(_([[You take the #g{reward}#0, but leave the fanfic for the next person to find the capsule. You can imagine they'll be very happy.]]),
       {reward=REWARD}))
    vn.sfxVictory()
    vn.func( function ()
