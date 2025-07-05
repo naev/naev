@@ -2,12 +2,15 @@
  <pos x="4776.054003" y="4977.952083"/>
  <GFX>
   <space>J08.webp</space>
-  <exterior>station00.webp</exterior>
+  <exterior>uninhabited-rocky-red-01.webp</exterior>
  </GFX>
  <general>
   <class>J</class>
   <population>0</population>
   <hide>3.000000</hide>
-  <services/>
+  <services>
+   <land/>
+  </services>
+  <description>Originally significantly larger, Akrikros has very low density due to what has been documented as "excessive rotation speed" in the documents from the original Za'lek inspection. Over time, the upper atmosphere has been leaked into space, resulting in the reduced size it has now. The high rotational speed makes it popular along joyriders who like to "surf" the atmosphere, however, care has to be taken as turbulences can knock the ship towards the core where all the electromagnetic interference nullifies the sensory equipment. Very few survive such accidents, which have made the activity illegal due to repeated incidents.</description>
  </general>
 </spob>

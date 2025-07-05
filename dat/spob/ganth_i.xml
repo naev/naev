@@ -2,12 +2,17 @@
  <pos x="-7430.205851" y="-5372.576113"/>
  <GFX>
   <space>O02.webp</space>
-  <exterior>station03.webp</exterior>
+  <exterior>uninhabited-rocky-cyan-02.webp</exterior>
  </GFX>
  <general>
   <class>O</class>
   <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <hide>2.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>Ganth I seems to have been initially a super-dense asteroid with a significant gravitational field, that over a few billion years was able to capture large amounts of a hydrogen polyoxides from a local nebula. Ship scanners still pick up an abnormal core, however, so far, no Za'lek expedition has been able to figure out anything due to the depth and instability of the surface. Or so that is the official story, while rumours point to funding issues compounded with Imperial vetoes have left the planet under-explored.
+
+The surface of the planet has been testimony of different efforts to resolve occasional tensions between Za'lek and Imperial military forces, usually with pointless shows of bravado trying to show off how well they can survive with minimal gear in the sub-100 kelvin environment. Usually such shows end up with a visit to life care support, however, there are no noted deaths yet, although the practice is officially discouraged.</description>
  </general>
 </spob>
