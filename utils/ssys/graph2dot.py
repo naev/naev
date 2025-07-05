@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import argv, stderr
-from graph_vaux import color_values
+from graph_vaux import color_values, ssys_color, ssys_nebula
 
 
 from graphmod import sys_pos as pos, sys_jmp as E
@@ -14,8 +14,8 @@ pos.silence()
 
 def main( color = False, fixed_pos = False ):
    if color:
-      nebula = { k for k, v in pos.aux.items() if v[:1] == ['nebula'] }
-      colors = { k: color_values[(v+['default'])[0]] for k, v in pos.aux.items()}
+      colors = { k: color_values[ssys_color(pos, k)] for k in pos }
+      nebula = { k for k in pos if ssys_nebula(pos, k) }
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
       V = {k:' '.join(l) for k, l in pos.aux.items()}

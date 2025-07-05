@@ -3,8 +3,9 @@
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
-      "usage:  $(basename "$0")"
+      "usage:  $(basename "$0") [-S]"
       "  Applies the whole remap process. See the script content."
+      "  Is -S (simulate) is set, does not save anything."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
@@ -47,9 +48,11 @@ read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}
 # Ok, let's go!
 git checkout "$BAS/spob" "$DST"
 
-msg "freeze non-nempty"
-echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
-"$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
+if [ ! "$1" = '-S' ] ; then
+   msg "freeze non-nempty"
+   echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
+   "$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
+fi
 
 msg "gen crt sys map"
 "$SCRIPT_DIR"/ssys2graph.sh                                    |
@@ -77,7 +80,11 @@ pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"    |
 "$SCRIPT_DIR"/graphmod_virtual.py                              |
 pmsg ""                                                        |
 tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_repos.png')         |
-tee >("$SCRIPT_DIR"/graph2ssys.py)                             |
+if [ "$1" = "-S" ] ; 
+   then cat ; 
+else
+   tee >("$SCRIPT_DIR"/graph2ssys.py)
+fi                                                             |
 pmsg "apply gravity"                                           |
 "$SCRIPT_DIR"/apply_pot.sh -g                                  |
 "$SCRIPT_DIR"/graphmod_abh.py                                  |

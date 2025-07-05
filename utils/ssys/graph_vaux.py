@@ -24,7 +24,6 @@ faction_color = {
    'flf':             'yellow',
 }
 faction_color[None] = faction_color['default']
-faction_color['nebula'] = 'nebula'
 
 faction = {s :s for s in faction_color}
 for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'marauder']:
@@ -65,11 +64,16 @@ if __name__ != '__main__':
       'skyblue': (0.0,  0.4,  0.9),
    }
    default_col = color_values['default']
-   color_values['nebula'] = color_values['default']
    is_default = lambda s: s is None or s.split('@')[0] == 'default'
    col_avg = lambda u, v: tuple([(i + 1.5*j + 0.5*0) / 4.0 for (i, j) in zip(u, v)])
    for c in main_col:
       color_values['default@' + c] = col_avg(default_col, color_values[c])
+
+   def ssys_color( V, ssys ):
+      return V.aux[ssys][0].split(':', 1)[0]
+
+   def ssys_nebula( V, ssys ):
+      return V.aux[ssys][0].split(':')[1:2] == [ 'nebula' ]
 
 else:
    if do_color := ('-c' in argv[1:]):
@@ -84,12 +88,12 @@ else:
    if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:] != []:
       msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
       DOC = [
-         'usage:  ' + os.path.basename(argv[0]) + '[-e] [ -c ] [ -n ]',
+         'usage:  ' + os.path.basename(argv[0]) + '[ -c ] [ -n ] [-e]',
          '  Adds faction name to vertices aux field.',
-         '  If -e is set, extends tags to influence zone.',
          '  If -c is set, adds color instead.',
          '  If -c and -n is set, adds color + name.',
          '  If only -n is set, adds name.',
+         '  If -e is set, extends faction/color tags to influence zone.',
       ]
       for l in DOC:
          msg(l)
@@ -146,12 +150,12 @@ else:
          aux = faction_color[fact] if do_color else fact
          aux = 'default' if aux is None else aux
          if aux == 'default':
-            if T.find('general/nebula') is not None:
-               V.aux[bnam].append('nebula')
-            elif do_names:
+            if do_names or extended:
                V.aux[bnam].append('default')
          else:
             V.aux[bnam].append(aux)
+         if V.aux[bnam] != [] and T.find('general/nebula') is not None:
+            V.aux[bnam][-1] += ':nebula'
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:
@@ -167,6 +171,8 @@ else:
             facts = [(e, a[0]) for (e, a) in N if not _is_def(a)]
             if len({j for i, j in facts}) == 1 and (f := facts[0][1]) in infl:
                newt[bnam] = f
+         elif V.aux[bnam][0].split(':')[-1] == 'nebula':
+            newt[bnam] = 'nebula'
          else:
             newt[bnam] = V.aux[bnam][0]
 
