@@ -144,8 +144,17 @@ function create ()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 5,
       function(s)
-         local p = s:presences()[mem.target_faction:nameRaw()]
-         return p ~= nil and p > 0
+         local pres = s:presences()
+         -- Target faction must have presence in system
+         local p = pres[mem.target_faction:nameRaw()] or 0
+         if p <= 0 then
+            return false
+         end
+         -- Need some independent standing so the player can ask for hints and such
+         if (pres["Independent"] or 0) <= 0 then
+            return false
+         end
+         return true
       end )
 
    -- Create the table of system the player will visit now (to claim)
