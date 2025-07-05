@@ -5,7 +5,6 @@ from sys import stdin, stderr, argv, exit
 from geometry import bb, vec
 import os
 import xml.etree.ElementTree as ET
-from ssys import getpath, PATH
 
 
 
@@ -16,26 +15,6 @@ if argv[1:] != []:
    stderr.write('usage: ' + argv[0].split('/')[-1] + '\n')
    stderr.write('  Reads a dot file on stdin, writes the graph on stdout.\n')
    exit(0)
-
-# for comparison with new values, we need the old ones.
-def ssys_pos( ):
-   def all_ssys( args = None ):
-      path = os.path.join(PATH, 'ssys')
-      for arg in os.listdir(path):
-         if arg[-4:] == '.xml':
-            yield arg[:-4], os.path.join(path, arg)
-
-   pos = {}
-   for bname, filename in all_ssys():
-      T=ET.parse(filename).getroot()
-
-      try:
-         e = T.find('pos')
-         pos[bname] = (e.attrib['x'], e.attrib['y'])
-      except:
-         stderr.write('no position defined in "' + bname + '"\n')
-
-   return pos
 
 def input_blocks( it ):
    acc = ''
@@ -48,7 +27,9 @@ def input_blocks( it ):
          yield acc.strip()
          acc = ''
 
-pos = dict()
+from graphmod import sys_pos as sys_pos, sys_jmp
+
+dotpos = dict()
 for lin in input_blocks(stdin):
    if lin.find('--') != -1:
       continue
@@ -61,28 +42,30 @@ for lin in input_blocks(stdin):
    position = lin.split('pos="', 1)[1]
    position = position[:position.find('"')].split(',')
    x, y = float(position[0]), float(position[1])
-   pos[nam] = vec(x, y)
-
-
-oldpos = ssys_pos()
+   dotpos[nam] = vec(x, y)
 
 bbox, oldbb = bb(), bb()
-for k in pos:
-   pos[k] *= 3.0/2.0
+for k, v in sys_pos.items():
    if k[0] != '_':
-      bbox += pos[k]
-      if k not in oldpos:
-         stderr.write('"' + k + '" not found in ssys. why ?\n')
-      else:
-         oldbb += oldpos[k]
+      oldbb += v
+      if k not in dotpos and sys_jmp[k]!=[]:
+         stderr.write('"' + k + '" not found in dot output. why ?\n')
 
+for k in dotpos:
+   dotpos[k] *= 3.0/2.0
+   if k[0] != '_':
+      bbox += dotpos[k]
+      if k not in sys_pos:
+         stderr.write('"' + k + '" not found in ssys. why ?\n')
 
 again = bb()
 
-for k, v in pos.items():
-   pos[k] += oldbb.mini() - bbox.mini()
-   again += pos[k]
+for k, v in dotpos.items():
+   dotpos[k] += oldbb.mini() - bbox.mini()
+   again += dotpos[k]
    if k[0] != '_':
-      v = round(v, 9)
-      print(k, v[0], v[1])
+      sys_pos[k] = v
 stderr.write(' -> '.join([str(oldbb), str(bbox), str(again)]) + '\n')
+
+for i in sys_jmp:
+   sys_jmp[i] = [(e, t) for (e, t) in sys_jmp[i] if 'virtual' not in t]

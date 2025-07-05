@@ -743,6 +743,12 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
          if (r3 > 0) {
             if (edges)
                puts(line);
+            char *where = line + r3;
+            do {
+               where = strstr(where, " fake");
+            } while (where && !strchr(" \n", *where));
+            if (where)
+               continue;
             if ((map.njumps & (map.njumps + 1)) == 0) {
                const size_t new_siz = (map.njumps << 1) | 1;
                map.jumps = realloc(map.jumps, new_siz * sizeof(struct s_edge));
@@ -756,6 +762,8 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
             map.njumps++;
          } else if (line[0] != '\0')
             fprintf(stderr, "Ignored line : \"%s\"\n", line);
+         else
+            break;
       }
    }
    free(line);

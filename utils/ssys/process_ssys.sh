@@ -3,16 +3,16 @@
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
-      "usage:  $(basename "$0") [-S]"
+      "usage:  $(basename "$0") [-f]"
       "  Applies the whole remap process. See the script content."
-      "  Is -S (simulate) is set, does not save anything."
+      "  Unless -f is set, does not save anything."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-BAS=$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat")
+DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+BAS=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
 DST="$BAS/ssys"
 
 msg() {
@@ -30,68 +30,66 @@ pmsg() {
    msg "$@"
 }
 
-N_ITER=5
+N_ITER=6
 #msg "\nselect Sirius systems " >&2
-#read -ra SIRIUS <<< "$("$SCRIPT_DIR"/ssys_graph.sh -v |
-# "$SCRIPT_DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
+#read -ra SIRIUS <<< "$("$DIR"/ssys_graph.sh -v |
+# "$DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
 #s=(doowa flok firk)
 #repos_systems2=(terminus)
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 #TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
-read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
-"$SCRIPT_DIR"/repos.sh -C || exit 1
-"$SCRIPT_DIR"/apply_pot.sh -C || exit 1
+read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
+"$DIR"/repos.sh -C || exit 1
+"$DIR"/apply_pot.sh -C || exit 1
 
+# handy debug line to insert anywhere:
+#tee >(cat >&2) | # DEBUG OUTPUT
 
 # Ok, let's go!
-if [ ! "$1" = '-S' ] ; then
+if [ "$1" = '-f' ] ; then
    #git checkout "$BAS/spob" "$DST"
    msg "freeze non-nempty"
-   echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
-   "$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
+   echo -e "\e[32m$(
+      "$DIR"/ssys_empty.py -r "$DST"/*.xml |
+      "$DIR"/ssys_freeze.py -f | wc -l)\e[0m" >&2
 fi
 
-msg "gen crt sys map"
-"$SCRIPT_DIR"/ssys2graph.sh                                    |
-"$SCRIPT_DIR"/graph_vaux.py -e -c -n                           |
-tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_bef.png')           |
-pmsg "gen before graph"                                        |
-"$SCRIPT_DIR"/graphmod_prep.py                                 |
-tee >(
-   "$SCRIPT_DIR"/graph2dot.py -c -k |
-   neato -n2 -Tpng 2>/dev/null > before.png
-                                                             ) |
-pmsg "\napply neato"                                           |
-"$SCRIPT_DIR"/graph2dot.py -c | tee before.dot                 |
-neato 2>/dev/null                                              |
-("$SCRIPT_DIR"/dot2graph.py && "$SCRIPT_DIR"/ssys2graph.sh -e) |
-("$SCRIPT_DIR"/graphmod_virtual.py && echo 'zied 0 0')         |
-"$SCRIPT_DIR"/graph_vaux.py -e -c -n                           |
-tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_dot.png')           |
-pmsg "pprocess"                                                |
-"$SCRIPT_DIR"/graphmod_postp.py                                |
-"$SCRIPT_DIR"/graphmod_virtual.py                              |
-tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_post.png')          |
-pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"    |
-"$SCRIPT_DIR"/repeat.sh "$N_ITER" "$SCRIPT_DIR"/graphmod_repos.sh "$SCRIPT_DIR" "${ALMOST_ALL[@]}" |
-"$SCRIPT_DIR"/graphmod_virtual.py                              |
-pmsg ""                                                        |
-tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_repos.png')         |
-if [ "$1" = "-S" ] ; 
-   then cat ; 
-else
-   tee >("$SCRIPT_DIR"/graph2ssys.py)
-fi                                                             |
-pmsg "apply gravity"                                           |
-"$SCRIPT_DIR"/apply_pot.sh -g                                  |
-"$SCRIPT_DIR"/graphmod_abh.py                                  |
-"$SCRIPT_DIR"/graphmod_repos.sh "$SCRIPT_DIR"                  |
-"$SCRIPT_DIR"/graphmod_abh.py                                  |
-tee >("$SCRIPT_DIR"/graph2pov.py -c -q'map_grav.png')          |
-pmsg "gen final graph"                                         |
-"$SCRIPT_DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
+msg "gen before graph"
+"$DIR"/ssys2graph.sh                                                          |
+"$DIR"/graph_vaux.py -e -c -n                                                 |
+"$DIR"/graphmod_prep.py                                                       |
+tee >("$DIR"/graph2pov.py -c -q'map_bef.png')                                 |
+tee                                                                        >(
+   "$DIR"/graph2dot.py -c -k |
+   neato -n2 -Tpng 2>/dev/null > before.png                                 ) |
+pmsg "apply neato"                                                            |
+tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                             |
+"$DIR"/dot2graph.py                                                           |
+"$DIR"/graphmod_virtual.py                                                    |
+tee >("$DIR"/graph2pov.py -c -q'map_dot.png')                                 |
+pmsg "pprocess"                                                               |
+"$DIR"/graphmod_postp.py                                                      |
+"$DIR"/graphmod_virtual.py                                                    |
+tee >("$DIR"/graph2pov.py -c -q'map_post.png')                                |
+pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
+"$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
+"$DIR"/graphmod_virtual.py                                                    |
+pmsg ""                                                                       |
+tee >("$DIR"/graph2pov.py -c -q'map_repos.png')                               |
+if [ "$1" = "-f" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
+pmsg "apply gravity"                                                          |
+"$DIR"/apply_pot.sh -g                                                        |
+"$DIR"/graphmod_abh.py                                                        |
+"$DIR"/graphmod_repos.sh "$DIR"                                               |
+"$DIR"/graphmod_abh.py                                                        |
+tee >("$DIR"/graph2pov.py -c -q'map_grav.png')                                |
+pmsg "gen final graph"                                                        |
+"$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
 
-msg "\nrelax ssys..\n"
-msg "total relaxed: \e[32m$("$SCRIPT_DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)\n"
+msg ""
+if [ "$1" = '-f' ] ; then
+   msg "relax ssys..\n"
+   msg "total relaxed: \e[32m$("$DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)\n"
+fi

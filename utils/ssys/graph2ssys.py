@@ -23,11 +23,9 @@ if help_f or (argv[1:] != [] and do_write):
       msg(l)
    exit(0 if help_f else 1)
 
-from graphmod import sys_pos as pos, sys_jmp
+from graphmod import sys_pos as pos, sys_jmp, no_graph_out
 
-# Do not output anything
-pos.silence()
-sys_jmp.silence()
+no_graph_out()
 
 from ssys import fil_ET
 for n, (x, y) in pos.items():

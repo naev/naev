@@ -30,6 +30,7 @@ if [ ! "$1" = "-v" ]; then
    TMP2=$(mktemp)
    trap 'rm -f "$TMP" "$TMP2"' EXIT
    (
+      echo -n "!"
       grep -ro '^\s*<\(\(jump target="[^"]*"\)\|\(hidden/>\)\)' --include="*.xml" |
       sed -e '/hidden/c\! hidden' -e 's/^\([^.]*\).xml\:\s*<jump target="\([^"]*\)"/\1 \2/' |
       tee >(cut '-d ' -f1> "$TMP") |
@@ -44,4 +45,5 @@ if [ ! "$1" = "-v" ]; then
       grep -rl 'tradelane' --include="*.xml" |
       sed -e 's/.xml$//' -e 's/^\(.*\)$/\/\1\/ s\/\$\/ T\//'
    ) | sed -e 's/ T T$/ tradelane/' -e 's/ T$//'
+   echo ""
 fi

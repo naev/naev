@@ -8,9 +8,8 @@ from sys import argv, stderr
 from graph_vaux import color_values, ssys_color, ssys_nebula
 
 
-from graphmod import sys_pos as pos, sys_jmp as E
-E.silence()
-pos.silence()
+from graphmod import sys_pos as pos, sys_jmp as E, no_graph_out
+no_graph_out()
 
 def main( color = False, fixed_pos = False ):
    if color:
@@ -76,15 +75,20 @@ def main( color = False, fixed_pos = False ):
       for dst, aux in E[i]:
          suff = []
          if 'virtual' in aux:
-            continue
+            continue;
          elif 'tradelane' in aux:
             suff.extend(['style=bold', 'penwidth=4.0'])
          elif 'hidden' in aux:
             suff.extend(['style=dotted', 'penwidth=2.5'])
+         elif 'new' in aux:
+            suff.extend(['color=green'])
+         elif 'fake' in aux:
+            suff.extend(['color=red', 'weight=0'])
 
          suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
          oneway = i not in map(lambda t:t[0], E[dst])
-         edge = '->' if oneway else '--'
+         edge = ':' if oneway else '--'
+         #edge = '--'
          if oneway or i<dst:
             print('"'.join(['\t', i, edge, dst, suff]))
 
@@ -92,7 +96,7 @@ def main( color = False, fixed_pos = False ):
    print('\tedge[style="dashed";color="grey";penwidth=1.5]')
    for f, k in E.items():
       for t, aux in k:
-         if 'virtual' not in aux:
+         if fixed_pos or 'virtual' not in aux:
             continue
          try:
             l = float(aux[0])
@@ -100,11 +104,8 @@ def main( color = False, fixed_pos = False ):
             l = 1.0
 
          prop = []
-         if not fixed_pos:
-            if f[0] == '_' or t[0] == '_':
-               prop.append('style="invis"')
-         else:
-            continue
+         if f[0] == '_' or t[0] == '_':
+            prop.append('style="invis"')
 
          if l != 1.0:
             prop.append('len='+str(l*reflen))

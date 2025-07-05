@@ -28,9 +28,8 @@ def main( pov_out = None, halo = False, silent = False ):
       else:
          dst.write(3*indent*' ' + str(s) + '\n')
 
-   from graphmod import sys_pos as V, sys_jmp as E
-   E.silence()
-   V.silence()
+   from graphmod import sys_pos as V, sys_jmp as E, no_graph_out
+   no_graph_out()
    colors = { k: color_values[ssys_color(V, k)] for k in V }
    nebula = { k for k in V if ssys_nebula(V, k) }
    is_def = { k: is_default((v+['default'])[0]) for k, v in V.aux.items() }
@@ -45,6 +44,8 @@ def main( pov_out = None, halo = False, silent = False ):
    ratio = 1.0 * hs[0] / hs[1]
 
    for i in V:
+      if i[0] == '_':
+         continue
       V[i] -= C
       V[i] = -V[i]
 
@@ -102,13 +103,25 @@ def main( pov_out = None, halo = False, silent = False ):
             'translate <' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 6>',
          ], '}', ''])
       for dstsys, tags in E[i]:
-         hid = 'hidden' in tags
-         other = (V[i] + V[dstsys]) / 2.0
+         if dstsys not in V:
+            continue
+         if V[i] == V[dstsys]:
+            stderr.write(i+' and '+dstsys+' have same pos '+str(V[i])+'!\n')
+            continue
+         if 'virtual' in tags:
+            other = V[dstsys]
+         else:
+            other = (V[i] + V[dstsys]) / 2.0
+         edge_col='0.3,0.3,0.3'
+         for t, c in [('hidden','0.5,0,0.5'), ('virtual','0,0,1'),
+             ('fake','1,0,0'), ('new','0,1,0'), ]:
+            if t in tags:
+               edge_col = c
          write_pov([ 'cylinder{', [
             '<' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 0>,',
             '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',
             str(2.9 if 'tradelane' in tags else 1.4),
-            'pigment {color rgb<' + ('0.5,0,0' if hid else '0.3,0.3,0.3') + '>}',
+            'pigment {color rgb<' + edge_col + '>}',
          ], '}', '' ])
 
    dst.close()

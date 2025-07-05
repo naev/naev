@@ -11,18 +11,16 @@ from graph_vaux import color_values
 anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
    'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
 
-#del_edges = [
+del_edges = [
 #   ('titus', 'vedalus'),
 #   ('kelvos', 'mason'),
 #   ('khaas', 'diadem'),
-#]
+]
 
-#del_edges = set(del_edges + [(j, i) for (i, j) in del_edges])
-
-#new_edges = [
-#  ('khaas', 'vedalus',
-#  ('andres', 'mason',
-#]
+new_edges = [
+#  ('khaas', 'vedalus'),
+#  ('andres', 'mason'),
+]
 
 # In the form: (from, to [, length])
 virtual_edges = [
@@ -76,7 +74,6 @@ for j, i in enumerate(anbh):
       prv = None
 
 if prv is not None:
-   virtual_edges.append((prv,                           i))
    virtual_edges.append(('_'+str(prvj),   '_'+str(prvj+2)))
    virtual_edges.append(('_'+str(prvj+2),             prv))
    virtual_edges.append(('_'+str(prvj+2),      '_'+str(1)))
@@ -84,6 +81,8 @@ if prv is not None:
 already = set()
 for t in virtual_edges:
    i, j = tuple(t[:2])
+   if i==j:
+      stderr.write(t[0] + ' appears twice in the same edge!\n')
    if (i, j) in already or (j, i) in already:
       stderr.write(str(tuple(t[:2])) + ' appears twice in virtual_edges list !\n')
    else:
@@ -95,3 +94,16 @@ for t in virtual_edges:
    i, j = tuple(t[:2])
    a = [str(f) for f in t[2:]]
    E[i].append((j, a + ['virtual']))
+
+del_edges = set(del_edges + [(j, i) for (i, j) in del_edges])
+new_edges = set(new_edges + [(j, i) for (i, j) in new_edges])
+
+for v in V:
+   for e, t in E[v]:
+      if (v, e) in del_edges:
+         t.append('fake')
+      if (v, e) in new_edges:
+         new_edges.remove((v, e))
+
+for (i, j) in new_edges:
+   E[i].append((j, ['new']))

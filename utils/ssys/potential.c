@@ -353,7 +353,9 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
             }
          }
          nb++;
-      } else if (apply)
+      } else if (*line == '\0')
+         break;
+      else if (apply)
          puts(line);
    }
    // fprintf(stderr,"[%zd systems]\n",nb);
@@ -368,6 +370,7 @@ int do_it(const enum e_pot type, const float scale, const bool apply,
    if (apply) {
       fflush(stdout);
       apply_potential(lst, nb, type, (const char **) nam, alt);
+      puts("");
       for (size_t i = 0; i < 2 * nb; i++)
          free(nam[i]);
       free(nam);
