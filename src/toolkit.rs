@@ -1,12 +1,6 @@
-#![allow(dead_code)]
+#![allow(dead_code, unused_variables)]
 use crate::context::Context;
-
-/*
-enum WidgetOnPress<'a, Message> {
-    Direct(Message),
-    Closure(Box<dyn Fn() -> Message + 'a>),
-}
-*/
+use sdl2 as sdl;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Shape {
@@ -21,21 +15,23 @@ impl Shape {
     }
 }
 
-enum Status {
+#[derive(PartialEq)]
+enum WgtStatus {
     Normal,
     MouseOver,
     MouseDown,
     Scrolling,
 }
 
-pub enum Message<'a> {
-    KeyEvent(u32, u32),
-    TextEvent(&'a str),
+pub enum WgtMessage {
+    KeyDown(Option<sdl::keyboard::Keycode>, sdl::keyboard::Mod, bool),
+    KeyUp(Option<sdl::keyboard::Keycode>, sdl::keyboard::Mod, bool),
+    TextInput(String),
     MouseMove(f32, f32, f32, f32),
-    MousePressed(u32, f32, f32),
-    MouseReleased(u32, f32, f32),
-    MouseDoubleClick(u32, f32, f32),
-    MouseWheel(u32, f32, f32),
+    MouseButtonDown(u8, f32, f32),
+    MouseButtonUp(u8, f32, f32),
+    MouseDoubleClick(u8, f32, f32),
+    MouseWheel(u8, f32, f32),
     Resize(Shape),
     ScrollDone,
     VisibilityGain,
@@ -44,7 +40,9 @@ pub enum Message<'a> {
     FocusLost,
 }
 
-pub trait Widget {
+pub trait Widget<Message> {
+    type Message;
+
     /// Gets the name of the widget
     fn name(&self) -> &str;
     /// Gets the shape of the widget
@@ -62,21 +60,25 @@ pub trait Widget {
 
     /// Return true if message was consumed, false if we pass it through
     /// Some messages will be passed through irregardless such as mouse movement.
-    fn message(&mut self, msg: Message) -> bool;
+    fn message(&mut self, msg: WgtMessage) -> (bool, Option<Message>);
 }
 
 pub struct Button {
     name: String,
-    status: Status,
+    status: WgtStatus,
     shape: Shape,
 
     display: String,
     disabled: bool,
     softdisable: bool,
     key: u32,
-    //on_press: Option<WidgetOnPress>,
 }
-impl Widget for Button {
+impl<Message> Widget<Message> for Button
+where
+    Message: Send + std::fmt::Debug,
+{
+    type Message = Message;
+
     fn name(&self) -> &str {
         &self.name
     }
@@ -94,21 +96,31 @@ impl Widget for Button {
     fn draw(&self, ctx: &Context, bx: f32, by: f32) {}
     fn draw_overlay(&self, ctx: &Context, bx: f32, by: f32) {}
 
-    fn message(&mut self, msg: Message) -> bool {
+    fn message(&mut self, msg: WgtMessage) -> (bool, Option<Message>) {
         match msg {
-            Message::MousePressed(btn, x, y) => true,
-            Message::MouseReleased(btn, x, y) => {
+            WgtMessage::Resize(shape) => {
+                self.shape = shape;
+                (true, None)
+            }
+            WgtMessage::MouseButtonDown(btn, x, y) => {
+                self.status = WgtStatus::MouseDown;
+                (true, None)
+            }
+            WgtMessage::MouseButtonUp(btn, x, y) => {
+                if self.status != WgtStatus::MouseDown {
+                    return (false, None);
+                }
                 match self.shape.inbounds(x, y) {
                     true => {
-                        self.status = Status::Normal;
+                        self.status = WgtStatus::Normal;
                     }
                     false => {
                         todo!();
                     }
                 }
-                false
+                (false, None)
             }
-            _ => false,
+            _ => (false, None),
         }
     }
 }
