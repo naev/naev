@@ -19,7 +19,6 @@ local poi = require "common.poi"
 local SPB, SYS = spob.getS("Edergast")
 
 function create ()
-   if not var.peek("testing") then evt.finish(false) end -- disable for now
    if not evt.claim( SYS ) then return evt.finish() end
 
    local ambush = false
