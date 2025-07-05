@@ -14,6 +14,7 @@ pos.silence()
 
 def main( color = False, fixed_pos = False ):
    if color:
+      nebula = { k for k, v in pos.aux.items() if v[:1] == ['nebula'] }
       colors = { k: color_values[(v+['default'])[0]] for k, v in pos.aux.items()}
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
@@ -57,6 +58,8 @@ def main( color = False, fixed_pos = False ):
          s += 'label="' + label + '"'
 
          if color:
+            if i in nebula:
+               s += ';fontcolor=darkred'
             cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
             s += ';fillcolor="#'+rgb+'"'

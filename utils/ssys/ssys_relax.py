@@ -31,7 +31,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
    mapvs, sysvs, names = [], [], []
    for f in T.findall('./jumps/jump'):
       dst = nam2base(f.attrib['target'])
-      e= f.find('pos')
+      e = f.find('pos')
       # should we require 'was_auto' ?
       if e is not None and 'was_auto' in e.attrib:
          names.append(dst)
