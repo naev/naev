@@ -8,7 +8,7 @@ from sys import argv, stdin, stderr, exit
 import subprocess
 import os
 
-from graph_vaux import is_default, color_values
+from graph_vaux import is_default, color_values, ssys_color, ssys_nebula
 from geometry import bb, vec
 
 
@@ -31,7 +31,8 @@ def main( pov_out = None, halo = False, silent = False ):
    from graphmod import sys_pos as V, sys_jmp as E
    E.silence()
    V.silence()
-   colors = { k: color_values[(v+['default'])[0]] for k, v in V.aux.items() }
+   colors = { k: color_values[ssys_color(V, k)] for k in V }
+   nebula = { k for k in V if ssys_nebula(V, k) }
    is_def = { k: is_default((v+['default'])[0]) for k, v in V.aux.items() }
 
    b = bb()
@@ -75,18 +76,30 @@ def main( pov_out = None, halo = False, silent = False ):
          ], '}', '' ])
 
       if i == 'sol':
-         col = (0.3,  0.0,  1.2)
+         col = (0.5,  0.0,  1.2)
 
+      if i in nebula:
+         radius = '7'
+         write_pov([ 'cylinder{', [
+            '<0,0,-1>,',
+            '<0,0,0>,',
+            '0.5',
+            'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>]' +
+               '[0.9, rgbt<0.4,0,0.8,0.5>]}}',
+            'scale 11*' + radius,
+            'translate <' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 3>',
+         ], '}', ''])
       if halo and not is_def[i]:
-         radius = '9' if i == 'sol' else '3'
+         the_col = tuple([2.0*x for x in col])
+         radius = '5' if i == 'sol' else '3'
          write_pov([ 'cylinder{', [
             '<0,0,-1>,',
             '<0,0,0>,',
             '0.7',
             'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>]' +
-               '[1.0, rgbt<' + ','.join(map(str,col)) + ',0>]}}',
+               '[1.0, rgbt<' + ','.join(map(str,the_col)) + ',0.5>]}}',
             'scale 11*' + radius,
-            'translate <' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 3>',
+            'translate <' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 6>',
          ], '}', ''])
       for dstsys, tags in E[i]:
          hid = 'hidden' in tags
