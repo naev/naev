@@ -117,6 +117,7 @@ local function test_ravenclan () return spob.cur():faction()==fct_ravenclan end
 local function test_dreamerclan () return spob.cur():faction()==fct_dreamerclan end
 local function test_blacklotus () return spob.cur():faction()==fct_blacklotus end
 local function test_chapter0 () return (player.chapter()=="0") end
+local function test_event( e ) return not player.evtDone(e) end
 local function tneg( f ) return function () return not f() end end
 
 local msg_cond = {
@@ -127,6 +128,7 @@ local msg_cond = {
    { test_dreamerclan,_([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
    { test_chapter0,_([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
    { tneg(test_chapter0), _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
+   { test_event("Haven's Curse"), _([["There's been rumours about strange things happening around Old Man Jack in the Haven system. Got to be them ghosts. Nuthin' ever good comes out of system-wide atrocities."]]) },
 }
 
 -- Returns a lore message for the given faction.
