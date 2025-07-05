@@ -37,6 +37,7 @@ mod ship;
 mod slots;
 mod start;
 mod texture;
+mod toolkit;
 mod utils;
 mod vec2;
 mod version;

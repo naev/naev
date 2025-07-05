@@ -29,6 +29,7 @@ source_rust = files(
    'slots.rs',
    'start.rs',
    'texture.rs',
+   'toolkit.rs',
    'utils.rs',
    'vec2.rs',
    'version.rs',
