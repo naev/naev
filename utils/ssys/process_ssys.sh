@@ -46,9 +46,8 @@ read -ra ALMOST_ALL <<< "$("$SCRIPT_DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}
 
 
 # Ok, let's go!
-git checkout "$BAS/spob" "$DST"
-
 if [ ! "$1" = '-S' ] ; then
+   #git checkout "$BAS/spob" "$DST"
    msg "freeze non-nempty"
    echo -e "\e[32m$("$SCRIPT_DIR"/ssys_empty.py -r "$DST"/*.xml |
    "$SCRIPT_DIR"/ssys_freeze.py -f | wc -l)" >&2
