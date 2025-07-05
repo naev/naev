@@ -2333,7 +2333,8 @@ void pilot_renderOverlay( Pilot *p )
 
    /* Show health / friendlyness */
    if ( conf.healthbars && !playerdead && !pilot_isPlayer( p ) &&
-        !pilot_isFlag( p, PILOT_DEAD ) && !pilot_isDisabled( p ) &&
+        !pilot_isFlag( p, PILOT_INVISIBLE ) && !pilot_isFlag( p, PILOT_DEAD ) &&
+        !pilot_isDisabled( p ) &&
         ( pilot_isFlag( p, PILOT_COMBAT ) || ( p->shield < p->shield_max ) ) ) {
       double x, y, w, h;
 
