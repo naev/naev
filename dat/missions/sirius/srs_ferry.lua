@@ -210,7 +210,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
       if outcome == 3 then
          -- Rank 2 will demand to be delivered to Sirius
          can_downgrade = false
-         no_clearance_text = _([[Apparently you are not fit to be the pilot for my pilgrimage. It is the will of Sirichana to teach me patience…"]])
+         no_clearance_text = _([[Apparently you are not fit to be the pilot for my pilgrimage. It is the will of the Sirichana to teach me patience…"]])
       elseif outcome == 2 then
          -- Rank 1 will accept an alternate destination, but cut your fare
          mem.reward = mem.reward / 2

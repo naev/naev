@@ -137,7 +137,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/fighter_bays/zalek_light_drone_bay.xml',
    root / 'dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml',
    root / 'dat/outfits/flow/abilities/astral_projection.xml',
-   root / 'dat/outfits/flow/abilities/avatar_of_sirichana.xml',
+   root / 'dat/outfits/flow/abilities/avatar_of_the_sirichana.xml',
    root / 'dat/outfits/flow/abilities/cleansing_flames.xml',
    root / 'dat/outfits/flow/abilities/feather_drive.xml',
    root / 'dat/outfits/flow/abilities/house_of_mirrors.xml',

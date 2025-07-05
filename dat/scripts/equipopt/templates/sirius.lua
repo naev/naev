@@ -48,7 +48,7 @@ local sirius_abilities = {
    outfit.get("Feather Drive"),
    outfit.get("Cleansing Flames"),
    outfit.get("Astral Projection"),
-   outfit.get("Avatar of Sirichana"),
+   outfit.get("Avatar of the Sirichana"),
 }
 local sirius_abilities_w = {
    10,

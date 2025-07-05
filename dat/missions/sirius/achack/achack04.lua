@@ -105,9 +105,9 @@ function land()
 
       vn.na(_([[You and Harja finish the post-landing protocol and meet up at the terminal. Harja seems a little apprehensive - he clearly doesn't like the idea of meeting Joanne face to face much. But he doesn't complain. In this, he really does appear to be a man of his word. Together, you make your way to a small conference room Joanne booked for the occasion.]]))
       joanne(_([[Joanne greets you, and Harja somewhat more stiffly. You notice she looks a bit tired. "My apologies," she says when she notices your glance. "I just came off my shift, and my work can be a bit taxing at times. But never mind that, we're not here to talk about my job today."]]))
-      joanne(fmt.f(_([[She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with {player} here, I was told that you swore your innocence, by Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."]]),
+      joanne(fmt.f(_([[She turns to Harja. "There's something I want to ask you, Harja. Last time we both had dealings with {player} here, I was told that you swore your innocence, by the Sirichana's name." Harja doesn't respond. He doesn't even meet Joanne's gaze. She continues regardless. "If this is true, then I want you to repeat that oath, here and now, at me directly."]]),
          {player=player.name()}))
-      hrj(_([[There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of Sirichana, I so swear."]]))
+      hrj(_([[There is silence for a few moments, but then Harja makes up his mind. He looks at Joanne and speaks. "Very well. I did not do the things I have been accused of. I did not tamper in any way with the central computer of the High Academy. By the grace of the Touched and the Word of the Sirichana, I so swear."]]))
       vn.na(_([[There is silence again. Harja's oath sounded practiced and formal, but despite that you feel he was being very sincere when he spoke it.]]))
       joanne(_([[Joanne takes a few breaths. She repeats Harja's oath, almost word for word, claiming that she, too, is innocent of the deeds Harja suspects her of having committed. You get the feeling you've just been witness to something unusual, some sort of demonstration of faith that only true Sirians could hope to comprehend. It certainly has an impact on the two in front of you. Both struggle with the reality of the situation, each finding their personal convictions conflicting with a shared belief that runs much deeper.]]))
       joanne(_([[Joanne is the one to break the silence. "Alright," she says. "From one Sirian to another, I accept your oath. I believe that it wasn't you."]]))
@@ -144,7 +144,7 @@ function talkJoanne()
          {player=player.name()}))
 
    else
-      joanne(fmt.f(_([[Joanne greets you warmly. She is clearly glad to see you again. "Thank you for coming, {player}," she says. "As I already mentioned in my message, I've decided that I want to clear up this whole mess with Harja and the academy incident. Too much has happened for me to just forget about it, and whatever my opinion of Harja may be, I cannot ignore his oath as a follower of Sirichana. This matter has evolved from an old grudge to a mystery."]]),
+      joanne(fmt.f(_([[Joanne greets you warmly. She is clearly glad to see you again. "Thank you for coming, {player}," she says. "As I already mentioned in my message, I've decided that I want to clear up this whole mess with Harja and the academy incident. Too much has happened for me to just forget about it, and whatever my opinion of Harja may be, I cannot ignore his oath as a follower of the Sirichana. This matter has evolved from an old grudge to a mystery."]]),
          {player=player.name()}))
 
    end

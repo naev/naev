@@ -1,7 +1,7 @@
 local obelisk = require "spob.lua.lib.obelisk"
 local fmt = require "format"
 
-local reward = outfit.get("Avatar of Sirichana")
+local reward = outfit.get("Avatar of the Sirichana")
 local reqs = {
    outfit.get("Cleansing Flames"),
    outfit.get("Astral Projection"),

@@ -49,7 +49,7 @@ end
 
 local function turnon( p, po )
    if p:mass() > mem.mass_limit then
-      helper.msgnospam("#r".._("Your ship is above the mass limit to use Avatar of Sirichana.").."#0")
+      helper.msgnospam("#r".._("Your ship is above the mass limit to use Avatar of the Sirichana.").."#0")
       return false
    end
 
@@ -65,7 +65,7 @@ local function turnon( p, po )
    mem.active = true
 
    -- Apply effect
-   p:effectAdd("Avatar of Sirichana")
+   p:effectAdd("Avatar of the Sirichana")
 
    -- Sound effect
    if mem.isp then
@@ -107,7 +107,7 @@ function update( p, po, dt )
       po:progress( flow.get(p) / flow.max(p) )
 
       -- Reapply effect
-      p:effectAdd("Avatar of Sirichana")
+      p:effectAdd("Avatar of the Sirichana")
    end
 end
 

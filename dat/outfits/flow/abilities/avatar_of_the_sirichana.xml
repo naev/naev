@@ -1,4 +1,4 @@
-<outfit name="Avatar of Sirichana">
+<outfit name="Avatar of the Sirichana">
  <general>
   <typename>Flow Ability</typename>
   <slot>utility</slot>
@@ -12,7 +12,7 @@
   <limit>avatar_of_sirichana</limit>
  </general>
  <specific type="modification">
-  <lua>outfits/flow/abilities/avatar_of_sirichana.lua</lua>
+  <lua>outfits/flow/abilities/avatar_of_the_sirichana.lua</lua>
  </specific>
  <tags>
   <tag>flow_ability</tag>

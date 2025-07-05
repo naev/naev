@@ -8,7 +8,7 @@
 </event>
 --]]
 --[[
-   Trial that provides Avatar of Sirichana from Kal Sitra Obelisk.
+   Trial that provides Avatar of the Sirichana from Kal Sitra Obelisk.
    Meant to be the 5th Obelisk the player does.
 
    Player has to survive a constant surge of enemies.
@@ -19,7 +19,7 @@ local srs = require "common.sirius"
 local fmt = require "format"
 
 local prevship
-local reward = outfit.get("Avatar of Sirichana")
+local reward = outfit.get("Avatar of the Sirichana")
 local obelisk = spob.get("Kal Sitra Obelisk")
 local survivetime = 180 -- in seconds
 

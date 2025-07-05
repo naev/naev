@@ -54,7 +54,7 @@ function accept ()
    vn.na(_([[The Fyrra echelon individual seems to be clearly staring at you. After you notice, your head starts to throb painfully. You hold on tight to your conscience and manage to not pass out.]]))
    vn.na(_([[Believing the individual to be somehow related to your headaches, you approach them.]]))
    f(_([[The stare at you even as you get close before yelping in astonishment.
-"By Sirichana! You have just awakened, haven't you?]]))
+"By the Sirichana! You have just awakened, haven't you?]]))
    vn.menu{
       {_([["Awakened?"]]), "cont01"},
       {_([["What have you done to me!?"]]), "cont01"},
@@ -117,7 +117,7 @@ They help you up.
 
    vn.label("cont05")
    f(_([["With the basics I just taught you, you should be able to avoid the constant headaches. However, to unlock the full abilities you'll need to equip a Flow amplifier or fly a House Sirius ship."]]))
-   f(fmt.f(_([["By Sirichana! I almost forgot. To truly master Flow, you have to tune into Sirichana's Obelisks. It has been ages since I tried their challenges, but I can mark the {spob} on your map if you wish to endeavour in learning to control Flow."]]),{spob=obelisk}))
+   f(fmt.f(_([["By the Sirichana! I almost forgot. To truly master Flow, you have to tune into the Sirichana's Obelisks. It has been ages since I tried their challenges, but I can mark the {spob} on your map if you wish to endeavour in learning to control Flow."]]),{spob=obelisk}))
    vn.menu{
       {_([[Get the Obelisk coordinates.]]), "cont06_obelisk"},
       {_([[Pass on the headache stuff.]]), "cont06_pass"},
@@ -131,14 +131,14 @@ They help you up.
    }
 
    vn.label("cont06_pass2")
-   f(_([["Oh well, I'm sure you'll turn around. May Sirichana guide you."]]))
+   f(_([["Oh well, I'm sure you'll turn around. May the Sirichana guide you."]]))
    vn.na(_([[You step away from them not wanting anything to do with more headaches. It may still be worth looking into the Obelisks if you feel so inclined.]]))
    vn.done()
 
    vn.label("cont06_obelisk")
    vn.func( function() accepted = true end )
    f(fmt.f(_([[They joyfully give you the coordinates to the {spob}.
-"Make sure to have a Flow amplifier equipped, be it an external outfit or a built-in House Sirius ship one, and use the exercises I taught you to tune into the obelisk. You should be able to figure out the rest from there. May Sirichana guide you."]]),{spob=obelisk}))
+"Make sure to have a Flow amplifier equipped, be it an external outfit or a built-in House Sirius ship one, and use the exercises I taught you to tune into the obelisk. You should be able to figure out the rest from there. May the Sirichana guide you."]]),{spob=obelisk}))
    vn.na(_([[You take your leave and hope you haven't bitten off more than you can chew.]]))
 
    vn.run()

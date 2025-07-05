@@ -33,25 +33,25 @@ local attackers, curr, follower, followers, hailHook, praiser, preacher, rep, ta
 local althoughEnemy={
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!"),
-_("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!")
+_("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are the Sirichana's child!")
 }
 
 local friend={
 _("{player}, I foresee in you a great Sirian citizen, and I look forward to your friendship!"),
-_("{player}, I foresee a bright future for you, illuminated by Sirichana's light!"),
-_("{player}, may Sirichana's light illuminate your path!")
+_("{player}, I foresee a bright future for you, illuminated by the Sirichana's light!"),
+_("{player}, may the Sirichana's light illuminate your path!")
 }
 
 local followSirichana={
-_("You shall all follow Sirichana henceforth!"),
-_("Sirichana shall lead you to peace and wisdom!"),
-_("Sirichana is the Father of you all!"),
-_("Sirichana's grace shall liberate you!"),
-_("May Sirichana's light shine on you henceforth!")
+_("You shall all follow the Sirichana henceforth!"),
+_("The Sirichana shall lead you to peace and wisdom!"),
+_("The Sirichana is the Father of you all!"),
+_("The Sirichana's grace shall liberate you!"),
+_("May the Sirichana's light shine on you henceforth!")
 }
 
 local praiseSirichana={
-_("We shall all follow Sirichana now!"),
+_("We shall all follow the Sirichana now!"),
 _("We have been liberated from our evil ways!"),
 _("No more shall we tread the path of evil!"), -- codespell:ignore tread
 _("We see the True path now!"),
@@ -62,13 +62,13 @@ local attackerPunished={
 _("Serves you right for attacking a Touched!"),
 _("Fry in hell, demon!"),
 _("May you suffer eternal torment!"),
-_("Your doom is Sirichana's curse!")
+_("Your doom is the Sirichana's curse!")
 }
 
 local attackersDead={
 _("All the attackers are dead!"),
 _("We can resume our Quest now!"),
-_("The glory of Sirichana remains unblemished!"),
+_("The glory of the Sirichana remains unblemished!"),
 _("All heretics have been destroyed!")
 }
 
@@ -96,7 +96,7 @@ _("Hell awaits, fools!")
 
 local preacherDead={
 _("Oh no! The Touched One is dead!"),
-_("Sirichana save our souls!"),
+_("The Sirichana save our souls!"),
 _("We shall never forget You, O Touched One!"),
 _("We swear eternal revenge!")
 }
@@ -245,7 +245,7 @@ function theFunBegins()
    end
    preacher:setFriendly()
 
-   --pick a random follower and have him praise Sirichana, after a delay
+   --pick a random follower and have him praise the Sirichana, after a delay
    hook.timer(4.0, "praise")
 
    --have the preacher say something cool
@@ -413,7 +413,7 @@ function hail()
    vn.transition("electric")
 
    vnp(_([[A Sirian appears on your viewscreen. They seems different than most Sirii you've met. They regards you with a neutral, yet intense, gaze.]]))
-   vnp(_([["Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. They shall guide you to peace and wisdom. They are the sole refuge for humans like you and me. You MUST follow them!"]]))
+   vnp(_([["Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, the Sirichana. They shall guide you to peace and wisdom. They are the sole refuge for humans like you and me. You MUST follow them!"]]))
    vn.na(_([[You feel a brief but overpowering urge to follow them, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
    vn.done("electric")
 

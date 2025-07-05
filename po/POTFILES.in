@@ -69,7 +69,7 @@ dat/effects/ambush_hunter_i.xml
 dat/effects/ambush_hunter_ii.xml
 dat/effects/antimatter_taint.xml
 dat/effects/astral_projection.xml
-dat/effects/avatar_of_sirichana.xml
+dat/effects/avatar_of_the_sirichana.xml
 dat/effects/black.xml
 dat/effects/blink.xml
 dat/effects/bloodlust.xml
@@ -277,7 +277,7 @@ dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
 dat/outfits/flow/abilities/astral_projection.xml
-dat/outfits/flow/abilities/avatar_of_sirichana.xml
+dat/outfits/flow/abilities/avatar_of_the_sirichana.xml
 dat/outfits/flow/abilities/cleansing_flames.xml
 dat/outfits/flow/abilities/feather_drive.xml
 dat/outfits/flow/abilities/house_of_mirrors.xml
@@ -3404,7 +3404,7 @@ dat/outfits/core_sets/corsair_engine.lua
 dat/outfits/core_sets/corsair_hull.lua
 dat/outfits/core_sets/corsair_systems.lua
 dat/outfits/flow/abilities/astral_projection.lua
-dat/outfits/flow/abilities/avatar_of_sirichana.lua
+dat/outfits/flow/abilities/avatar_of_the_sirichana.lua
 dat/outfits/flow/abilities/cleansing_flames.lua
 dat/outfits/flow/abilities/feather_drive.lua
 dat/outfits/flow/abilities/house_of_mirrors.lua

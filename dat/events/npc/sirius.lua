@@ -18,9 +18,9 @@ local desc_serra = {
 local msg_lore = {
    shaira = {
       _([["I hope to meet one of the Touched one day!"]]),
-      _([["They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?"]]),
+      _([["They say the Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?"]]),
       _([["My cousin was called to Mutris a cycle ago… He must be in Crater City by now. And one day, he will become one of the Touched!"]]),
-      _([["The Shaira echelon is the backbone of House Sirius. We keep the ships flying and the economy running. It is an honour to play such an important role for Sirichana!"]]),
+      _([["The Shaira echelon is the backbone of House Sirius. We keep the ships flying and the economy running. It is an honour to play such an important role for the Sirichana!"]]),
       _([["Manual labour fulfils me. I try to make everything with as much care as would be necessary for the Sirichana."]]),
    },
    fyrra = {
@@ -29,14 +29,14 @@ local msg_lore = {
       _([["Commercial among the Sirius is always prosperous. I wish I could say the same about striking business deals with the Dvaered or Za'lek."]]),
    },
    serra = {
-      _([["Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal."]]),
+      _([["Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of the Sirichana. Spiritually, we are equal."]]),
       _([["There is no such greater honour than to serve the Sirichana in the Serra echelon."]]),
    },
 }
 -- Common stuff added to all echelons
 local msg_lore_common = {
-   _([["Greetings, traveller. May Sirichana's wisdom guide you as it guides me."]]),
-   _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else."]]),
+   _([["Greetings, traveller. May the Sirichana's wisdom guide you as it guides me."]]),
+   _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow the Sirichana, and no-one else."]]),
    _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."]]),
 }
 for k,v in pairs(msg_lore) do

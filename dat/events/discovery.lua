@@ -154,7 +154,7 @@ local faction_events = {
       type = "enter",
       name = "disc_sirius",
       title = _("The Sirius Territories"),
-      subtitle = _("Sirichana Will Lead the Way"),
+      subtitle = _("The Sirichana Will Lead the Way"),
    },
    Proteron = {
       type = "enter",

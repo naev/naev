@@ -251,7 +251,7 @@ local function getFactionStuff( fct )
             return "Sirius Preacher"
          end
       end
-      tester_broadcast = _("For Sirichana!")
+      tester_broadcast = _("For the Sirichana!")
       boss_broadcast = _("Starting ritual!")
    elseif fct == "Soromid" then
       bossship = "Soromid Arx"
