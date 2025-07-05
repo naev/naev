@@ -1859,6 +1859,9 @@ void input_handle( SDL_Event *event )
       SDL_Keymod mod = input_translateMod( event->key.keysym.mod );
       if ( ( input_paste->key == event->key.keysym.sym ) &&
            ( input_paste->mod & mod ) ) {
+         // https://github.com/libsdl-org/SDL/issues/13223
+         WARN( "Due to an upstream bug, pasting is currently disabled." );
+#if 0
          SDL_Event   evt;
          const char *txt = SDL_GetClipboardText();
          evt.type        = SDL_TEXTINPUT;
@@ -1872,6 +1875,7 @@ void input_handle( SDL_Event *event )
             evt.text.windowID  = 0;
             SDL_PushEvent( &evt );
          }
+#endif
          return;
       }
    }
