@@ -1422,7 +1422,7 @@ double outfit_duration( const Outfit *o )
          return o->u.mod.duration;
    } else if ( outfit_isAfterburner( o ) )
       return INFINITY;
-   return 0.;
+   return outfit_launcherDuration( o );
 }
 /**
  * @brief Gets the outfit's cooldown.

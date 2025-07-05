@@ -1597,7 +1597,7 @@ double pilot_outfitSpeed( const Pilot *p, const Outfit *o )
       double accel     = outfit_launcherAccel( o );
       double speed     = outfit_launcherSpeed( o );
       double speed_max = outfit_launcherSpeedMax( o );
-      double duration  = outfit_duration( o );
+      double duration  = outfit_launcherDuration( o );
       if ( p != NULL ) {
          speed *= p->stats.launch_speed;
          accel *= p->stats.launch_accel;
