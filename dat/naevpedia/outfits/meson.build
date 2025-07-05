@@ -9,6 +9,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/accessory/fuzzy_dice.xml',
    root / 'dat/outfits/accessory/goatee_marker.xml',
    root / 'dat/outfits/accessory/handbook_for_dvaered_good_manners.xml',
+   root / 'dat/outfits/accessory/jacks_eyepatch.xml',
    root / 'dat/outfits/accessory/left_boot.xml',
    root / 'dat/outfits/accessory/love_letter.xml',
    root / 'dat/outfits/accessory/pentagram_of_valor.xml',

@@ -2,6 +2,7 @@ local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
 local fmt = require "format"
 local helper = require "outfits.lib.helper"
+local blib = require "outfits.lib.blink"
 
 local limit = 500
 local masslimit = limit^2 -- squared
@@ -63,7 +64,7 @@ local function doblink( p, po, blinkdir )
    p:addEnergy( -energy )
 
    -- Blink!
-   local dist = jumpdist
+   local dist = jumpdist * blib.bonus_range( p )
    local m = p:mass()
    m = m*m
    -- We use squared values here so twice the masslimit is 25% efficiency

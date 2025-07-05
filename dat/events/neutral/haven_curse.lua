@@ -20,7 +20,7 @@ local spb, sys = spob.getS("Old Man Jack")
 local pos = sys:waypoints("haven_curse_spawn")
 
 local REWARD1 = outfit.get("Corsair Systems")
---local REWARD2 = "TODO"
+local REWARD2 = outfit.get("Jack's Eyepatch")
 
 local ghost, ghost_waypoints
 local ghost_pos = 1
@@ -144,6 +144,7 @@ function heartbeat ()
                end
                derelict = p
                lmisn.sfxEerie()
+               player.msg(_([[A suspicious derelict has appeared nearby.]]))
                pilotai.clear()
                pilot.toggleSpawn(false)
                return -- done
@@ -452,16 +453,55 @@ end
 function boss_board ()
    player.unboard()
 
+   local effectstr = 0
+   local function effect_change( str )
+      local estart, eend
+      vn.func( function ()
+         estart = effectstr
+         eend = str
+      end )
+      vn.animation( 0.5, function (progress)
+         effectstr = estart*(1-progress) + eend*progress
+      end )
+   end
+
    vn.reset()
    vn.scene()
    vn.sfx( der.sfx.board )
    local voice = vn.newCharacter( _("Voice"), {colour={0.8, 0.2, 0.2}} )
+   vn.func( function ()
+      vn.setBackground( function ()
+         local nw, nh = naev.gfx.dim()
+         vn.setColour( {0, 0, 0, effectstr} )
+         lg.rectangle("fill", 0, 0, nw, nh )
+      end )
+   end )
    vn.transition()
    vn.na(fmt.f(_([[Against your better judgement, you board the mysterious {shipname}. It is covered with strange markings you don't identify.]]),
       {shipname=boss:name()}))
    vn.na(_([[From the moment you enter the ship, you feel something is amiss, and a throbbing pain starts at the back of your head.]]))
-   voice(_([[]]))
-   vn.sfx( der.sfx.unboard )
+   effect_change( 0.2 )
+   voice(_([[You hear some sort of hissing and rasping that seems to come from everywhere at once.]]))
+   effect_change( 0.4 )
+   vn.na(_([[Clutching your head, you stumble forward, lured in by the ship.]]))
+   effect_change( 0.6 )
+   voice(_([[".... ... sshhhss .... ...ssshhhhssssss.... ..ssshaaaaveeen.... hhhhhh..."]]))
+   effect_change( 0.7 )
+   vn.na(_([[You miss your footing and fall on all hours, crawling your way forward.]]))
+   effect_change( 0.8 )
+   voice(_([["... sshshh... haven... mmmmusshhsshs... ..."]]))
+   effect_change( 0.9 )
+   vn.na(_([[Struggling with blurry vision, you seem to find you have crawled into a slightly more open room. You strain forward, feeling your head about to burst.]]))
+   effect_change( 1.0 )
+   vn.na(_([[As you feel your way around, you grasp a small piece of cloth, and are compelled to put it on your head. Suddenly your mind goes clear, your mind goes clear and you open your eyes, noticing you can only see on one side.]]))
+   vn.na(_([[You quickly put your hands on the face, fumble around and notice it's because you have an eyepatch on. Did you put it on? Before you have time to think, the voice bellows.]]))
+   voice(_([["Haven must not fall. Jack! It all depends on you!"]]))
+   vn.scene()
+   vn.func( function () effectstr = 0.0 end )
+   vn.transition( "blinkout" )
+   vn.na(_([[You blink and find yourself back on your ship. What the hell was that about?]]))
+   vn.func( function () player.outfitAdd(REWARD2) end )
+   vn.na(fmt.reward(REWARD2))
    vn.run()
 
    boss:effectAdd("Fade-Out")
