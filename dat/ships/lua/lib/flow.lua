@@ -60,7 +60,7 @@ local flow_mod = {
    ["Astral Projection Lesser"]  = 1.3,
    -- Outfits
    ["Astral Projection"]         = 1/1.3,
-   ["Avatar of Sthe irichana"]   = 1/1.3,
+   ["Avatar of the Sirichana"]   = 1/1.3,
    ["Cleansing Flames"]          = 1/1.3,
    ["Feather Drive"]             = 1/1.3,
    ["House of Mirrors"]          = 1/1.3,
