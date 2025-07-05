@@ -110,6 +110,18 @@ pos['longbow'] = pos['moor'] + v
 pos['herculis'] = pos['longbow'] + v.rotate(-60)
 
 
+# Around New Haven
+
+def sym(s, a, b):
+   u = (b - a).normalize()
+   v = (s - a)
+   w = u*(v*u)
+   return a+2*w-v
+
+pos['khaas'] = sym(pos['khaas'], pos['diadem'], pos['hatter'])
+pos['babylon'] = sym(pos['babylon'], pos['diadem'], pos['elza'])
+
+
 # Za'lek
 
 toward('ngc1317', 'stelman', -1.0/3.0)

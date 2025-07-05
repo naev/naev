@@ -47,4 +47,5 @@ if [ ! "$1" = "-v" ]; then
       grep -rl 'tradelane' --include="*.xml" |
       sed -e 's/.xml$//' -e 's/^\(.*\)$/\/\1\/ s\/\$\/ T\//'
    ) | sed -e 's/ T T$/ tradelane/' -e 's/ T$//'
+   echo ""
 fi

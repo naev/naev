@@ -2,7 +2,7 @@
 
 
 import os
-from sys import stderr, exit, argv
+from sys import stderr, exit, argv, stdout
 
 
 faction_color = {
@@ -97,7 +97,7 @@ else:
       ]
       for l in DOC:
          msg(l)
-      exit(0 if ok else 1)
+      exit(0 if help_f else 1)
 
    import xml.etree.ElementTree as ET
    from ssys import getpath, PATH, nam2base
