@@ -63,7 +63,21 @@ pub trait Widget<Message> {
     fn message(&mut self, msg: WgtMessage) -> (bool, Option<Message>);
 }
 
-pub struct Button {
+enum OnPress<'a, Message> {
+    Direct(Message),
+    Closure(Box<dyn Fn() -> Message + 'a>),
+}
+
+impl<Message: Clone> OnPress<'_, Message> {
+    fn get(&self) -> Message {
+        match self {
+            OnPress::Direct(message) => message.clone(),
+            OnPress::Closure(f) => f(),
+        }
+    }
+}
+
+pub struct Button<'a, Message> {
     name: String,
     status: WgtStatus,
     shape: Shape,
@@ -72,10 +86,12 @@ pub struct Button {
     disabled: bool,
     softdisable: bool,
     key: u32,
+
+    on_press: Option<OnPress<'a, Message>>,
 }
-impl<Message> Widget<Message> for Button
+impl<Message> Widget<Message> for Button<'_, Message>
 where
-    Message: Send + std::fmt::Debug,
+    Message: Clone + Send + std::fmt::Debug,
 {
     type Message = Message;
 
@@ -110,18 +126,20 @@ where
                 if self.status != WgtStatus::MouseDown {
                     return (false, None);
                 }
+                self.status = WgtStatus::Normal;
                 match self.shape.inbounds(x, y) {
                     true => {
                         self.status = WgtStatus::Normal;
+                        match &self.on_press {
+                            Some(on_press) => (true, Some(on_press.get())),
+                            None => (true, None),
+                        }
                     }
-                    false => {
-                        todo!();
-                    }
+                    false => (false, None),
                 }
-                (false, None)
             }
             _ => (false, None),
         }
     }
 }
-impl Button {}
+impl<Message> Button<'_, Message> {}
