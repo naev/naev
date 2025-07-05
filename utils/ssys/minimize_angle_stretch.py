@@ -49,9 +49,9 @@ def _debug_relax( p, inter, t, out, cost ):
 
    (x, _y) = t
    plot = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.plot')
-   dat = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.dat')
+   dat  = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '.dat')
    dat2 = tempfile.NamedTemporaryFile(mode = 'w+t', suffix = '_c.dat')
-   png = out + '.png'
+   png  = out + '.png'
 
    for i in range(500+1):
       f = 2.0*pi*i/500

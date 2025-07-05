@@ -1,8 +1,11 @@
 #!/usr/bin/bash
 
 if [ "$#" = "0" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-   echo "usage:  $(basename "$0")  <file1> .." >&2
-   echo "  Relaxes and unfreezes its input xml ssys files." >&2
+   DOC=(
+      "usage:  $(basename "$0")  <file1> .."
+      "  Relaxes and unfreezes its input xml ssys files."
+   )
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 
