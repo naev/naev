@@ -8,7 +8,7 @@ out vec4 colour_out;
 
 void main(void)
 {
-   float d = 1.0-distance( pos, vec2(0.0,1.0) );
+   float d = 1.0-distance( pos, vec2(0.0,0.0) );
    colour_out = colour;
    colour_out.a *= pow(d,0.75);
 }
