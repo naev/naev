@@ -403,9 +403,9 @@ jobs:
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --native-file='source/utils/build/linux.ini' \
-              --buildtype=debug \
+              --buildtype=release \
               -Dinstaller=false \
-              -Drelease=false \
+              -Drelease=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \

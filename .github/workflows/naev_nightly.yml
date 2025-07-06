@@ -410,7 +410,7 @@ jobs:
               --native-file='source/utils/build/linux.ini' \
               --buildtype=debug \
               -Dinstaller=false \
-              -Drelease=false \
+              -Drelease=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
