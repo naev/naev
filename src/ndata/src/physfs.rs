@@ -3,7 +3,6 @@
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
-use std::mem;
 use std::os::raw::c_void;
 
 // Some stuff is based on the physfs-rs package.
@@ -101,11 +100,10 @@ impl Read for File<'_> {
     /// Reads from a file
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         let ret = unsafe {
-            naevc::PHYSFS_read(
+            naevc::PHYSFS_readBytes(
                 self.raw,
                 buf.as_ptr() as *mut c_void,
-                mem::size_of::<u8>() as naevc::PHYSFS_uint32,
-                buf.len() as naevc::PHYSFS_uint32,
+                buf.len() as naevc::PHYSFS_uint64,
             )
         };
         match ret {
@@ -121,11 +119,10 @@ impl Write for File<'_> {
     /// that the buffer is the correct length.
     fn write(&mut self, buf: &[u8]) -> Result<usize> {
         let ret = unsafe {
-            naevc::PHYSFS_write(
+            naevc::PHYSFS_writeBytes(
                 self.raw,
                 buf.as_ptr() as *const c_void,
-                mem::size_of::<u8>() as naevc::PHYSFS_uint32,
-                buf.len() as naevc::PHYSFS_uint32,
+                buf.len() as naevc::PHYSFS_uint64,
             )
         };
 
