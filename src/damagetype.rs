@@ -3,7 +3,6 @@ use rayon::prelude::*;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 
-use crate::gettext::gettext;
 use crate::log::warn_err;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::warn;

@@ -5,7 +5,6 @@ use std::os::raw::{c_char, c_int};
 
 use crate::array::ArrayCString;
 use crate::context::{Context, ContextWrapper};
-use crate::gettext::gettext;
 use crate::log::warn_err;
 use crate::texture;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};

@@ -17,7 +17,7 @@ use crate::render::Uniform;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;
 use crate::texture::{Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder};
-use crate::{gettext, warn};
+use crate::warn;
 
 const MAX_LIGHTS: usize = 7;
 const SHADOWMAP_SIZE_LOW: usize = 128;

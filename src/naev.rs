@@ -18,7 +18,6 @@ mod context;
 mod damagetype;
 mod env;
 mod faction;
-mod gettext;
 mod linebreak;
 mod log;
 mod model;
@@ -42,7 +41,7 @@ mod lua {
     pub mod ryaml;
 }
 
-use crate::gettext::gettext;
+use gettext::gettext;
 
 pub static APPNAME: &str = "Naev";
 

@@ -1,0 +1,12 @@
+[package]
+name = "gettext"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "@SOURCE@/src/gettext/src/lib.rs"
+
+[dependencies]
+naevc = { workspace = true }

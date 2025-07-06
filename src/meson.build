@@ -2,9 +2,11 @@
 # Rust Stuff
 ####
 subdir('ndata')
+subdir('gettext')
 source_rust = files(
    'ndata/src/lib.rs',
    'ndata/src/physfs.rs',
+   'gettext/src/lib.rs',
    'array.rs',
    'buffer.rs',
    'camera.rs',
@@ -12,7 +14,6 @@ source_rust = files(
    'damagetype.rs',
    'env.rs',
    'faction.rs',
-   'gettext.rs',
    'linebreak.rs',
    'log.rs',
    'model.rs',

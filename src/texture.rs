@@ -13,7 +13,7 @@ use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::context::{Context, ContextWrapper};
 use crate::log::warn_err;
-use crate::{buffer, context, gettext, render};
+use crate::{buffer, context, render};
 use crate::{warn, warn_err};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =

@@ -1,6 +1,6 @@
 use crate::context::Context;
 use crate::model::Model;
-use crate::{gettext, warn};
+use crate::warn;
 use rayon::prelude::*;
 use std::ffi::{c_void, CStr};
 use std::sync::Mutex;

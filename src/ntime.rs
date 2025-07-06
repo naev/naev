@@ -1,5 +1,5 @@
-use crate::gettext::gettext;
 use formatx::formatx;
+use gettext::gettext;
 use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};

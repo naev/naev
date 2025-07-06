@@ -3849,7 +3849,7 @@ src/gatherable.c
 src/gatherable.h
 src/gettext.c
 src/gettext.h
-src/gettext.rs
+src/gettext/src/lib.rs
 src/glad.c
 src/glad.h
 src/gltf.c

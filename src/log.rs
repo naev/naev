@@ -5,7 +5,6 @@ use std::sync::atomic::AtomicU32;
 pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;
 
-use crate::gettext::gettext;
 use crate::{debug, einfo, info, warn, warn_err};
 
 pub fn init() {
@@ -68,7 +67,7 @@ macro_rules! warn {
                 &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
         if nw==$crate::log::WARN_MAX {
-            eprintln!("{}",gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
+            eprintln!("{}",gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
             #[cfg(unix)]
@@ -89,7 +88,7 @@ macro_rules! warn_err {
         if nw == $crate::log::WARN_MAX {
             eprintln!(
                 "{}",
-                gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
+                gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
             );
         }
         if naevc::config::DEBUG_PARANOID {

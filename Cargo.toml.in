@@ -20,6 +20,7 @@ overflow-checks = true
 [workspace]
 resolver = "3"
 members = [
+   "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
 ]
 
@@ -35,6 +36,7 @@ anyhow = "1"
 
 [dependencies]
 naevc = { path=@NAEVC@ }
+gettext = { path="@BUILD@/src/gettext" }
 ndata = { path="@BUILD@/src/ndata" }
 anyhow = "1"
 roxmltree = "0"
