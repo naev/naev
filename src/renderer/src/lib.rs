@@ -446,7 +446,7 @@ impl Context {
         let mut wdwbuild = sdlvid.window(
             format!(
                 "{} - {}",
-                "Naev",
+                naev_core::APPNAME,
                 start::start().name.clone().into_string()?
             )
             .as_str(),

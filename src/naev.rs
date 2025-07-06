@@ -34,8 +34,6 @@ mod lua {
 
 use gettext::gettext;
 
-pub static APPNAME: &str = "Naev";
-
 use std::sync::atomic::AtomicBool;
 static _QUIT: AtomicBool = AtomicBool::new(false);
 
@@ -120,7 +118,7 @@ pub fn naev() -> Result<()> {
     if cfg!(unix) {
         /* Set window class and name. */
         unsafe {
-            std::env::set_var("SDL_VIDEO_X11_WMCLASS", APPNAME);
+            std::env::set_var("SDL_VIDEO_X11_WMCLASS", naev_core::APPNAME);
         }
     }
 
