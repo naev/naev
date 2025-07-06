@@ -997,11 +997,11 @@ pub struct Model {
     engine: i32,
 }
 
-fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec<u8>> {
+fn load_buffer(buf: &gltf::buffer::Buffer, base: &str) -> Result<Vec<u8>> {
     match buf.source() {
         gltf::buffer::Source::Uri(uri) => {
-            let filename = base.join(uri);
-            Ok(ndata::read(filename.as_path().to_str().unwrap())?)
+            let filename = format!("{}/{}", base, uri);
+            Ok(ndata::read(&filename)?)
         }
         gltf::buffer::Source::Bin => todo!(),
     }
@@ -1010,7 +1010,7 @@ fn load_buffer(buf: &gltf::buffer::Buffer, base: &std::path::Path) -> Result<Vec
 fn load_gltf_texture(
     ctx: &ContextWrapper,
     node: &gltf::texture::Texture,
-    base: &std::path::Path,
+    base: &str,
     srgb: bool,
 ) -> Result<Texture> {
     let sampler = node.sampler();
@@ -1021,8 +1021,8 @@ fn load_gltf_texture(
 
     tb = match node.source().source() {
         gltf::image::Source::Uri { uri, .. } => {
-            let filename = base.join(uri);
-            tb.path(filename.as_path().to_str().unwrap())
+            let filename = format!("{}/{}", base, uri);
+            tb.path(&filename)
         }
         _ => todo!(),
     };
@@ -1189,7 +1189,10 @@ impl Model {
     pub fn from_path(ctx: &ContextWrapper, path: &str) -> Result<Self> {
         use std::path::Path;
         let gltf = Gltf::from_reader(ndata::open(path)?)?;
-        let base = Path::new(path).parent().unwrap();
+        let base = match Path::new(path).parent() {
+            Some(val) => val.to_str().unwrap(),
+            None => "",
+        };
 
         // Helper textures
         let tex_zeros = tex_value(ctx, Some("Black"), [0, 0, 0])?;
