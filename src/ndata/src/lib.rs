@@ -67,7 +67,7 @@ pub fn stat(filename: &str) -> Result<Stat> {
         readonly: 0,
     };
     match unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), (&mut st) as *mut naevc::PHYSFS_Stat) } {
-        0 => Err(physfs::error_as_io_error()),
+        0 => Err(physfs::error_as_io_error("PHYSFS_stat")),
         _ => Ok(Stat {
             filesize: st.filesize,
             modtime: st.modtime,

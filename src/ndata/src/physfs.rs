@@ -7,14 +7,15 @@ use std::os::raw::c_void;
 
 // Some stuff is based on the physfs-rs package.
 // Modified to not use a global context and use functions from naevc
-pub fn error_as_io_error() -> Error {
+pub fn error_as_io_error(func: &str) -> Error {
     let cerrstr = unsafe {
         CStr::from_ptr(naevc::PHYSFS_getErrorByCode(
             naevc::PHYSFS_getLastErrorCode(),
         ))
     };
     Error::other(format!(
-        "PhysicsFS Error: `{}`",
+        "PhysicsFS Error with '{}': `{}`",
+        func,
         cerrstr.to_str().unwrap_or("Unknown")
     ))
 }
@@ -42,6 +43,25 @@ impl File<'_> {
     /// Opens a file with a specific mode.
     pub fn open<'g>(filename: &str, mode: Mode) -> Result<File<'g>> {
         let c_filename = CString::new(filename)?;
+
+        let mut stat: naevc::PHYSFS_Stat = naevc::PHYSFS_Stat {
+            filesize: 0,
+            modtime: 0,
+            createtime: 0,
+            accesstime: 0,
+            filetype: naevc::PHYSFS_FileType_PHYSFS_FILETYPE_OTHER,
+            readonly: 0,
+        };
+        match unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), &mut stat) } {
+            0 => {
+                return Err(error_as_io_error("PHYSFS_stat"));
+            }
+            _ => (),
+        }
+        if stat.filetype != naevc::PHYSFS_FileType_PHYSFS_FILETYPE_REGULAR {
+            return Err(Error::other(format!("'{filename}' is not a regular file")));
+        }
+
         let raw = unsafe {
             match mode {
                 Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
@@ -51,7 +71,7 @@ impl File<'_> {
         };
 
         if raw.is_null() {
-            Err(error_as_io_error())
+            Err(error_as_io_error("PHYSFS_open"))
         } else {
             Ok(File {
                 raw,
@@ -64,7 +84,7 @@ impl File<'_> {
     /// Closes a file handle.
     fn close(&self) -> Result<()> {
         match unsafe { naevc::PHYSFS_close(self.raw) } {
-            0 => Err(error_as_io_error()),
+            0 => Err(error_as_io_error("PHYSFS_close")),
             _ => Ok(()),
         }
     }
@@ -82,7 +102,7 @@ impl File<'_> {
         if len >= 0 {
             Ok(len as u64)
         } else {
-            Err(error_as_io_error())
+            Err(error_as_io_error("PHYSFS_fileLength"))
         }
     }
 
@@ -90,7 +110,7 @@ impl File<'_> {
     pub fn tell(&self) -> Result<u64> {
         let ret = unsafe { naevc::PHYSFS_tell(self.raw) };
         match ret {
-            -1 => Err(error_as_io_error()),
+            -1 => Err(error_as_io_error("PHYSFS_tell")),
             _ => Ok(ret as u64),
         }
     }
@@ -107,7 +127,7 @@ impl Read for File<'_> {
             )
         };
         match ret {
-            -1 => Err(error_as_io_error()),
+            -1 => Err(error_as_io_error("PHYSFS_readBytes")),
             _ => Ok(ret as usize),
         }
     }
@@ -127,7 +147,7 @@ impl Write for File<'_> {
         };
 
         match ret {
-            -1 => Err(error_as_io_error()),
+            -1 => Err(error_as_io_error("PHYSFS_writeBytes")),
             _ => Ok(ret as usize),
         }
     }
@@ -136,7 +156,7 @@ impl Write for File<'_> {
     fn flush(&mut self) -> Result<()> {
         let ret = unsafe { naevc::PHYSFS_flush(self.raw) };
         match ret {
-            0 => Err(error_as_io_error()),
+            0 => Err(error_as_io_error("PHYSFS_flush")),
             _ => Ok(()),
         }
     }
@@ -158,7 +178,7 @@ impl Seek for File<'_> {
         };
         let result = unsafe { naevc::PHYSFS_seek(self.raw, seek_pos as naevc::PHYSFS_uint64) };
         if result == -1 {
-            return Err(error_as_io_error());
+            return Err(error_as_io_error("PHYSFS_seek"));
         }
         self.tell()
     }
@@ -174,7 +194,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     let c_path = CString::new(path)?;
     let mut list = unsafe { naevc::PHYSFS_enumerateFiles(c_path.as_ptr()) };
     if list.is_null() {
-        return Err(error_as_io_error());
+        return Err(error_as_io_error("PHYSFS_enumerateFiles"));
     }
     let listptr = list;
 
@@ -203,7 +223,7 @@ pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
         }
     };
     if raw.is_null() {
-        Err(error_as_io_error())
+        Err(error_as_io_error("PHYSFS_open"))
     } else {
         Ok(unsafe { sdl::rwops::RWops::from_ll(raw as *mut sdl::sys::SDL_RWops) })
     }
