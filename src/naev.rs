@@ -26,7 +26,6 @@ mod physics;
 mod rng;
 mod ship;
 mod slots;
-mod utils;
 mod vec2;
 mod version;
 mod lua {

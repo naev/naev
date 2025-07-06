@@ -3800,6 +3800,7 @@ src/core/src/lib.rs
 src/core/src/ntime.rs
 src/core/src/nxml.rs
 src/core/src/start.rs
+src/core/src/utils.rs
 src/damagetype.h
 src/damagetype.rs
 src/debris.c
@@ -4101,7 +4102,6 @@ src/queue.c
 src/queue.h
 src/render.c
 src/render.h
-src/render.rs
 src/renderer/src/buffer.rs
 src/renderer/src/lib.rs
 src/renderer/src/shader.rs
@@ -4169,7 +4169,6 @@ src/union_find.c
 src/union_find.h
 src/utf8.c
 src/utf8.h
-src/utils.rs
 src/valgrind.h
 src/vec2.c
 src/vec2.h
