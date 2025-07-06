@@ -102,7 +102,10 @@ def otool_results(bin_src):
 
 
 def find_dylib_dependency(dylib, rpaths, loader_path):
-    """ Return the path to the dependency "dylib", and the value from "rpaths" that found it. """
+    """ Return the path to the dependency "dylib", and the value from "rpaths" that found it.
+        Also search the build directory for subproject or local dylibs.
+    """
+    build_root = os.environ.get('MESON_BUILD_ROOT', '')
 
     if dylib.startswith(LOCAL_LIB_ROOTS):
         lib_dir = os.path.realpath(os.path.dirname(dylib))
@@ -112,10 +115,26 @@ def find_dylib_dependency(dylib, rpaths, loader_path):
         return dylib, None
     elif dylib.startswith('@rpath/'):
         lib_base = dylib.replace('@rpath/', '', 1)
+        # Try rpaths
         for rpath in list(rpaths):
             trial_path = os.path.join(rpath.replace('@loader_path', loader_path), lib_base)
             if os.path.exists(trial_path):
                 return trial_path, rpath
+        # Try build directory (for subprojects or local builds)
+        if build_root:
+            for root, dirs, files in os.walk(build_root):
+                if lib_base in files:
+                    return os.path.join(root, lib_base), None
+    elif not os.path.isabs(dylib):
+        # Relative path: search build directory
+        if build_root:
+            for root, dirs, files in os.walk(build_root):
+                if os.path.basename(dylib) in files:
+                    return os.path.join(root, os.path.basename(dylib)), None
+    else:
+        # Absolute path: check if it's in build directory
+        if build_root and dylib.startswith(build_root):
+            return dylib, None
     return None, None
 
 
