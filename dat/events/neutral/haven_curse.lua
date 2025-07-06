@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Haven Curse">
+<event name="Haven's Curse">
  <location>enter</location>
  <chance>100</chance>
  <system>Haven</system>
