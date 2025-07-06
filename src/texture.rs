@@ -1081,6 +1081,10 @@ macro_rules! capi_tex {
     ($funcname: ident, $field: tt) => {
         #[unsafe(no_mangle)]
         pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
+            if ctex.is_null() {
+                warn!("Received NULL texture!");
+                return 0.0;
+            }
             let tex = unsafe { &*ctex };
             tex.texture.$field as f64
         }
@@ -1090,6 +1094,10 @@ macro_rules! capi {
     ($funcname: ident, $field: tt) => {
         #[unsafe(no_mangle)]
         pub extern "C" fn $funcname(ctex: *mut Texture) -> c_double {
+            if ctex.is_null() {
+                warn!("Received NULL texture!");
+                return 0.0;
+            }
             let tex = unsafe { &*ctex };
             tex.$field as f64
         }
