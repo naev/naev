@@ -396,14 +396,15 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/build/macos/Naev.app \
+              --prefix="$(pwd)"/build/dist/Naev.app \
               --bindir=Contents/MacOS \
+              --libdir=Contents/Frameworks \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --native-file='source/utils/build/linux.ini' \
-              --buildtype=debugoptimized \
+              --buildtype=debug \
               -Dinstaller=false \
-              -Drelease=true \
+              -Drelease=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
