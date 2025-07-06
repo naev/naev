@@ -1,7 +1,8 @@
 #![allow(dead_code)]
-use crate::render::Uniform;
 use anyhow::Result;
+use encase::{ShaderSize, ShaderType};
 use glow::*;
+use naev_core::start;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
@@ -10,14 +11,16 @@ use std::os::raw::c_double;
 use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock};
 use std::thread::ThreadId;
 
+pub mod buffer;
+pub mod shader;
+pub mod texture;
+
 use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::render::{SolidUniform, TextureScaleUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
-use crate::{debug, warn};
-use log::warn_err;
+use log::{debug, warn, warn_err};
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
     let s_source = match source {
@@ -60,6 +63,72 @@ fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str)
             "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
             s_source, s_type, s_id, s_severity, msg
         );
+    }
+}
+
+/// Implements buffer writing for Uniforms
+pub trait Uniform {
+    fn buffer(&self) -> Result<Vec<u8>>;
+}
+impl<T: ShaderSize + encase::internal::WriteInto> Uniform for T {
+    fn buffer(&self) -> Result<Vec<u8>> {
+        let mut buffer =
+            encase::UniformBuffer::new(Vec::<u8>::with_capacity(Self::SHADER_SIZE.get() as usize));
+        buffer.write(self)?;
+        Ok(buffer.into_inner())
+    }
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, ShaderType)]
+pub struct TextureUniform {
+    pub texture: Matrix3<f32>,
+    pub transform: Matrix3<f32>,
+    pub colour: Vector4<f32>,
+}
+impl Default for TextureUniform {
+    fn default() -> Self {
+        Self {
+            texture: Matrix3::identity(),
+            transform: Matrix3::identity(),
+            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, ShaderType)]
+pub struct TextureScaleUniform {
+    pub texture: Matrix3<f32>,
+    pub transform: Matrix3<f32>,
+    pub colour: Vector4<f32>,
+    pub scale: f32,
+    pub radius: f32,
+}
+impl Default for TextureScaleUniform {
+    fn default() -> Self {
+        Self {
+            texture: Matrix3::identity(),
+            transform: Matrix3::identity(),
+            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+            scale: 0.25,
+            radius: 8.0,
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, ShaderType)]
+pub struct SolidUniform {
+    pub transform: Matrix3<f32>,
+    pub colour: Vector4<f32>,
+}
+impl Default for SolidUniform {
+    fn default() -> Self {
+        Self {
+            transform: Matrix3::identity(),
+            colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        }
     }
 }
 
@@ -377,8 +446,8 @@ impl Context {
         let mut wdwbuild = sdlvid.window(
             format!(
                 "{} - {}",
-                crate::APPNAME,
-                crate::start::start().name.clone().into_string()?
+                "Naev",
+                start::start().name.clone().into_string()?
             )
             .as_str(),
             width.max(naevc::RESOLUTION_W_MIN),

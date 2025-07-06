@@ -1,0 +1,18 @@
+[package]
+name = "naev_core"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "@SOURCE@/src/core/src/lib.rs"
+
+[dependencies]
+naevc = { workspace = true }
+ndata = { workspace = true }
+roxmltree = { workspace = true }
+gettext = { workspace = true }
+formatx = { workspace = true }
+log = { workspace = true }
+anyhow = { workspace = true }

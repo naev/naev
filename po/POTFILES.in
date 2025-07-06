@@ -3772,7 +3772,6 @@ src/base64.c
 src/base64.h
 src/board.c
 src/board.h
-src/buffer.rs
 src/camera.c
 src/camera.h
 src/camera.rs
@@ -3797,7 +3796,10 @@ src/console.c
 src/console.h
 src/constants.c
 src/constants.h
-src/context.rs
+src/core/src/lib.rs
+src/core/src/ntime.rs
+src/core/src/nxml.rs
+src/core/src/start.rs
 src/damagetype.h
 src/damagetype.rs
 src/debris.c
@@ -4035,11 +4037,9 @@ src/npc.h
 src/nstring.c
 src/nstring.h
 src/ntime.h
-src/ntime.rs
 src/ntracing.h
 src/nxml.c
 src/nxml.h
-src/nxml.rs
 src/nxml_lua.c
 src/nxml_lua.h
 src/opengl.c
@@ -4102,6 +4102,10 @@ src/queue.h
 src/render.c
 src/render.h
 src/render.rs
+src/renderer/src/buffer.rs
+src/renderer/src/lib.rs
+src/renderer/src/shader.rs
+src/renderer/src/texture.rs
 src/rng.h
 src/rng.rs
 src/safelanes.c
@@ -4109,7 +4113,6 @@ src/safelanes.h
 src/save.c
 src/save.h
 src/semver.c
-src/shader.rs
 src/ship.c
 src/ship.h
 src/ship.rs
@@ -4127,11 +4130,9 @@ src/space_fdecl.h
 src/spfx.c
 src/spfx.h
 src/start.h
-src/start.rs
 src/target.h
 src/tech.c
 src/tech.h
-src/texture.rs
 src/threadpool.c
 src/threadpool.h
 src/tk/toolkit_priv.h

@@ -20,9 +20,11 @@ overflow-checks = true
 [workspace]
 resolver = "3"
 members = [
+   "@BUILD@/src/core",
    "@BUILD@/src/log",
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
+   "@BUILD@/src/renderer",
 ]
 
 [workspace.package]
@@ -34,33 +36,43 @@ rust-version = "1.85"
 naevc = { path=@NAEVC@ }
 sdl2 = { version = "0", features = ["image"] }
 anyhow = "1"
+naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
 ndata = { path="@BUILD@/src/ndata" }
+renderer = { path="@BUILD@/src/renderer" }
 formatx = "0"
+glow = "0"
+nalgebra = { version = "0", features = ["bytemuck"]  }
+bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
+encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
+image = "0"
+roxmltree = "0"
 
 [dependencies]
 naevc = { workspace = true }
+naev_core = { workspace = true }
 gettext = { workspace = true }
 log = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
 sdl2 = { workspace = true }
-roxmltree = "0"
+renderer = { workspace = true }
+glow = { workspace = true }
+nalgebra = { workspace = true }
+bytemuck = { workspace = true }
+encase = { workspace = true }
+roxmltree = { workspace = true }
+image = { workspace = true }
 constcat = "0"
 derive_more = { version = "2", features = ["from", "into"] }
 semver = "1"
 rand = "0"
-glow = "0"
 rayon = "1" # parallel computation
-image = "0"
 static_assertions = "1"
 #etagere = "0" # Texture Atlas generation
 palette = "0" # Colour conversion
-nalgebra = { version = "0", features = ["bytemuck"]  }
-bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
-encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 thunderdome = "0"
 mlua = { version = "0", features = ["luajit", "anyhow", "send", "serialize"] }
 serde_yaml2 = "0.1"

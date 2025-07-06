@@ -4,8 +4,7 @@ use glow::*;
 use std::ffi::CStr;
 use std::os::raw::c_char;
 
-use crate::context;
-use crate::context::Context;
+use crate::Context;
 use log::{einfo, warn};
 
 pub enum ShaderType {
@@ -29,10 +28,10 @@ pub struct Shader {
 }
 impl Drop for Shader {
     fn drop(&mut self) {
-        context::MESSAGE_QUEUE
+        crate::MESSAGE_QUEUE
             .lock()
             .unwrap()
-            .push(context::Message::DeleteProgram(self.program));
+            .push(crate::Message::DeleteProgram(self.program));
     }
 }
 impl Shader {

@@ -1,6 +1,6 @@
-use crate::context::Context;
-use crate::texture::TextureBuilder;
 use rayon::prelude::*;
+use renderer::texture::TextureBuilder;
+use renderer::Context;
 use std::ffi::{c_void, CStr};
 
 struct OutfitWrapper(naevc::Outfit);

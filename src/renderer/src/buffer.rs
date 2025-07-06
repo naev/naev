@@ -2,9 +2,8 @@
 use anyhow::Result;
 use glow::*;
 
-use crate::context;
-use crate::context::Context;
 use crate::warn;
+use crate::Context;
 
 pub struct Buffer {
     pub buffer: glow::Buffer,
@@ -27,7 +26,7 @@ impl Buffer {
         Ok(())
     }
     /// Simply binds the buffer to the context
-    pub fn bind(&self, ctx: &context::Context) {
+    pub fn bind(&self, ctx: &Context) {
         self.bind_gl(&ctx.gl)
     }
     pub fn bind_gl(&self, gl: &glow::Context) {
@@ -36,7 +35,7 @@ impl Buffer {
         }
     }
     /// Binds the buffer and connects it to the uniform in the shader
-    pub fn bind_base(&self, ctx: &context::Context, idx: u32) {
+    pub fn bind_base(&self, ctx: &Context, idx: u32) {
         self.bind_base_gl(&ctx.gl, idx)
     }
     pub fn bind_base_gl(&self, gl: &glow::Context, idx: u32) {
@@ -46,7 +45,7 @@ impl Buffer {
         }
     }
     /// Simplification for write + binding
-    pub fn bind_write_base(&self, ctx: &context::Context, data: &[u8], idx: u32) -> Result<()> {
+    pub fn bind_write_base(&self, ctx: &Context, data: &[u8], idx: u32) -> Result<()> {
         self.bind_write_base_gl(&ctx.gl, data, idx)
     }
     pub fn bind_write_base_gl(&self, gl: &glow::Context, data: &[u8], idx: u32) -> Result<()> {
@@ -62,7 +61,7 @@ impl Buffer {
         Ok(())
     }
     /// Unbinds the buffer
-    pub fn unbind(&self, ctx: &context::Context) {
+    pub fn unbind(&self, ctx: &Context) {
         self.unbind_gl(&ctx.gl)
     }
     pub fn unbind_gl(&self, gl: &glow::Context) {
@@ -76,10 +75,10 @@ impl Buffer {
 }
 impl Drop for Buffer {
     fn drop(&mut self) {
-        context::MESSAGE_QUEUE
+        crate::MESSAGE_QUEUE
             .lock()
             .unwrap()
-            .push(context::Message::DeleteBuffer(self.buffer));
+            .push(crate::Message::DeleteBuffer(self.buffer));
     }
 }
 
@@ -194,14 +193,14 @@ pub struct VertexArray {
 }
 impl Drop for VertexArray {
     fn drop(&mut self) {
-        context::MESSAGE_QUEUE
+        crate::MESSAGE_QUEUE
             .lock()
             .unwrap()
-            .push(context::Message::DeleteVertexArray(self.vertex_array));
+            .push(crate::Message::DeleteVertexArray(self.vertex_array));
     }
 }
 impl VertexArray {
-    pub fn bind(&self, ctx: &context::Context) {
+    pub fn bind(&self, ctx: &Context) {
         self.bind_gl(&ctx.gl)
     }
     pub fn bind_gl(&self, gl: &glow::Context) {
@@ -210,7 +209,7 @@ impl VertexArray {
         }
     }
 
-    pub fn unbind(ctx: &context::Context) {
+    pub fn unbind(ctx: &Context) {
         unsafe {
             ctx.gl.bind_vertex_array(Some(ctx.vao_core));
         }
@@ -267,7 +266,7 @@ impl<'a> VertexArrayBuilder<'a> {
         self
     }
 
-    pub fn build(self, ctx: &context::Context) -> Result<VertexArray> {
+    pub fn build(self, ctx: &Context) -> Result<VertexArray> {
         let vao = self.build_gl(&ctx.gl)?;
         unsafe {
             ctx.gl.bind_vertex_array(Some(ctx.vao_core)); // Unbind everything AFTER the VAO

@@ -8,16 +8,17 @@ use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_double, c_int, c_uint};
 use std::rc::Rc;
 
-use crate::buffer::{
+use log::warn;
+use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::context::{look_at4, ortho4, Context, ContextWrapper};
-use crate::render::Uniform;
-use crate::shader::{Shader, ShaderBuilder};
-use crate::texture;
-use crate::texture::{Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder};
-use crate::warn;
+use renderer::shader::{Shader, ShaderBuilder};
+use renderer::texture;
+use renderer::texture::{
+    Framebuffer, FramebufferBuilder, FramebufferTarget, Texture, TextureBuilder,
+};
+use renderer::{look_at4, ortho4, Context, ContextWrapper, Uniform};
 
 const MAX_LIGHTS: usize = 7;
 const SHADOWMAP_SIZE_LOW: usize = 128;

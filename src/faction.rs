@@ -7,16 +7,16 @@ use std::ffi::{CStr, CString};
 use std::ops::Deref;
 use std::sync::{Mutex, RwLock};
 
+use crate::array;
 use crate::array::ArrayCString;
-use crate::context::{Context, ContextWrapper};
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use crate::{array, texture};
 use crate::{formatx, warn};
-use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use gettext::gettext;
 use log::warn_err;
+use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use renderer::{texture, Context, ContextWrapper};
 use thunderdome::{Arena, Index};
 
 enum Grid {

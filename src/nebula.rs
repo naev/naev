@@ -1,5 +1,4 @@
 #![allow(dead_code)]
-use crate::render::Uniform;
 use anyhow::Result;
 use encase::ShaderType;
 use glow::*;
@@ -9,13 +8,14 @@ use palette::FromColor;
 use palette::Hsv;
 use std::os::raw::c_double;
 
-use crate::buffer::{
+use crate::rng;
+use renderer::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::shader::{Shader, ShaderBuilder};
-use crate::texture::{Framebuffer, FramebufferBuilder};
-use crate::{context, rng};
+use renderer::shader::{Shader, ShaderBuilder};
+use renderer::texture::{Framebuffer, FramebufferBuilder};
+use renderer::Uniform;
 
 pub const DEFAULT_HUE: f64 = 260.0;
 pub const PUFF_BUFFER: f32 = 300.;
@@ -40,7 +40,7 @@ struct Puff {
     rand: [f32; 2], // Randomness
 }
 impl Puff {
-    fn new(ctx: &context::Context, fg: bool) -> Self {
+    fn new(ctx: &renderer::Context, fg: bool) -> Self {
         let (x, y) = {
             let dims = ctx.dimensions.read().unwrap();
             let x = (dims.view_width + PUFF_BUFFER) * (rng::rngf32() * 2.0 - 1.0);
@@ -85,7 +85,7 @@ impl PuffLayer {
         rand: [0.0, 0.0],
     };
 
-    fn new(ctx: &context::Context, n: usize, fg: bool) -> Result<Self> {
+    fn new(ctx: &renderer::Context, n: usize, fg: bool) -> Result<Self> {
         let mut data = vec![];
         for _ in 0..n {
             data.push(Puff::new(ctx, fg));
@@ -133,7 +133,7 @@ impl PuffLayer {
         })
     }
 
-    fn render(&self, ctx: &context::Context, data: &NebulaData) -> Result<()> {
+    fn render(&self, ctx: &renderer::Context, data: &NebulaData) -> Result<()> {
         let gl = &ctx.gl;
 
         let count = self.data.len();
@@ -170,7 +170,7 @@ struct NebulaData {
 }
 
 impl NebulaData {
-    fn new(ctx: &context::Context) -> Result<Self> {
+    fn new(ctx: &renderer::Context) -> Result<Self> {
         let gl = &ctx.gl;
         let (w, h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
         let framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
@@ -244,7 +244,7 @@ impl NebulaData {
         })
     }
 
-    pub fn resize(&mut self, ctx: &context::Context) {
+    pub fn resize(&mut self, ctx: &renderer::Context) {
         let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
         let w = (unsafe { naevc::gl_screen.nw as f32 } / scale).round() as usize;
         let h = (unsafe { naevc::gl_screen.nh as f32 } / scale).round() as usize;
@@ -268,7 +268,7 @@ impl NebulaData {
         );
     }
 
-    pub fn render(&self, ctx: &context::Context) -> Result<()> {
+    pub fn render(&self, ctx: &renderer::Context) -> Result<()> {
         let gl = &ctx.gl;
 
         self.framebuffer.bind(ctx);
@@ -312,7 +312,7 @@ impl NebulaData {
         self.puffs_bg.render(ctx, self)
     }
 
-    pub fn render_overlay(&self, ctx: &context::Context) -> Result<()> {
+    pub fn render_overlay(&self, ctx: &renderer::Context) -> Result<()> {
         let gl = &ctx.gl;
 
         self.framebuffer.bind(ctx);
@@ -349,7 +349,7 @@ impl NebulaData {
         self.puffs_fg.render(ctx, self)
     }
 
-    pub fn update(&mut self, ctx: &context::Context, dt: f64) -> Result<()> {
+    pub fn update(&mut self, ctx: &renderer::Context, dt: f64) -> Result<()> {
         let dt = (dt as f32) * self.speed;
         self.uniform.elapsed += dt;
         self.puff_uniform.elapsed += dt;
@@ -390,7 +390,7 @@ impl NebulaData {
 
     pub fn setup(
         &mut self,
-        ctx: &context::Context,
+        ctx: &renderer::Context,
         density: f32,
         volatility: f32,
         hue: f32,
@@ -440,7 +440,7 @@ impl NebulaData {
 
 use std::sync::{LazyLock, Mutex};
 static NEBULA: LazyLock<Mutex<NebulaData>> = LazyLock::new(|| {
-    let ctx = context::Context::get().unwrap();
+    let ctx = renderer::Context::get().unwrap();
     Mutex::new(NebulaData::new(ctx).unwrap())
 });
 
@@ -449,7 +449,7 @@ pub extern "C" fn nebu_init() {}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_resize() {
-    let ctx = context::Context::get().unwrap();
+    let ctx = renderer::Context::get().unwrap();
     let mut neb = NEBULA.lock().unwrap();
     neb.resize(ctx);
 }
@@ -460,21 +460,21 @@ pub extern "C" fn nebu_exit() {}
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_render(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
-    let ctx = context::Context::get().unwrap();
+    let ctx = renderer::Context::get().unwrap();
     let _ = neb.render(ctx);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_renderOverlay(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
-    let ctx = context::Context::get().unwrap();
+    let ctx = renderer::Context::get().unwrap();
     let _ = neb.render_overlay(ctx);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_update(dt: f64) {
     let mut neb = NEBULA.lock().unwrap();
-    let ctx = context::Context::get().unwrap();
+    let ctx = renderer::Context::get().unwrap();
     let _ = neb.update(ctx, dt);
 }
 
@@ -487,7 +487,7 @@ pub extern "C" fn nebu_getSightRadius() -> c_double {
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_prep(density: c_double, volatility: c_double, hue: c_double) {
     let mut neb = NEBULA.lock().unwrap();
-    let ctx = context::Context::get().unwrap();
+    let ctx = renderer::Context::get().unwrap();
     let _ = neb.setup(ctx, density as f32, volatility as f32, hue as f32);
 }
 

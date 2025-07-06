@@ -13,9 +13,7 @@ unsafe extern "C" {
 }
 
 mod array;
-mod buffer;
 mod camera;
-mod context;
 mod damagetype;
 mod env;
 mod faction;
@@ -23,17 +21,11 @@ mod linebreak;
 mod model;
 mod nebula;
 mod nlua;
-mod ntime;
-mod nxml;
 mod outfit;
 mod physics;
-mod render;
 mod rng;
-mod shader;
 mod ship;
 mod slots;
-mod start;
-mod texture;
 mod utils;
 mod vec2;
 mod version;
@@ -236,7 +228,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Set up OpenGL. */
-    let context = context::Context::new(sdlvid)?;
+    let context = renderer::Context::new(sdlvid)?;
 
     unsafe {
         if naevc::gl_init() != 0 {

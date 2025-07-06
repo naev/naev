@@ -1,0 +1,24 @@
+[package]
+name = "renderer"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "@SOURCE@/src/renderer/src/lib.rs"
+
+[dependencies]
+glow = { workspace = true }
+naevc = { workspace = true }
+log = { workspace = true }
+ndata = { workspace = true }
+anyhow = { workspace = true }
+nalgebra = { workspace = true }
+encase = { workspace = true }
+bytemuck = { workspace = true }
+sdl2 = { workspace = true }
+image = { workspace = true }
+gettext = { workspace = true }
+formatx = { workspace = true }
+naev_core = { workspace = true }

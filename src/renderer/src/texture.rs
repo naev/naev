@@ -1,5 +1,4 @@
 #![allow(dead_code, unused_variables)]
-use crate::render::Uniform;
 use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
@@ -12,8 +11,8 @@ use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
-use crate::context::{Context, ContextWrapper};
-use crate::{buffer, context, render};
+use crate::buffer;
+use crate::{Context, ContextWrapper, TextureScaleUniform, TextureUniform, Uniform};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
@@ -96,17 +95,17 @@ pub struct TextureData {
 }
 impl Drop for TextureData {
     fn drop(&mut self) {
-        context::MESSAGE_QUEUE
+        crate::MESSAGE_QUEUE
             .lock()
             .unwrap()
-            .push(context::Message::DeleteTexture(self.texture));
+            .push(crate::Message::DeleteTexture(self.texture));
         // TODO remove from TEXTURE_DATA ideally...
     }
 }
 
 impl TextureData {
     /// Creates a new TextureData of size w x h without any data.
-    fn new(ctx: &context::Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
+    fn new(ctx: &Context, format: TextureFormat, w: usize, h: usize) -> Result<Self> {
         let gl = &ctx.gl;
         if w == 0 || h == 0 {
             return Err(anyhow::anyhow!(
@@ -181,7 +180,7 @@ impl TextureData {
 
     /// Creates a new TextureData from an image wrapper
     fn from_image(
-        ctx: &context::Context,
+        ctx: &Context,
         name: Option<&str>,
         img: &image::DynamicImage,
         flipv: bool,
@@ -268,10 +267,10 @@ pub struct Texture {
 }
 impl Drop for Texture {
     fn drop(&mut self) {
-        context::MESSAGE_QUEUE
+        crate::MESSAGE_QUEUE
             .lock()
             .unwrap()
-            .push(context::Message::DeleteSampler(self.sampler));
+            .push(crate::Message::DeleteSampler(self.sampler));
     }
 }
 impl Texture {
@@ -316,11 +315,11 @@ impl Texture {
         })
     }
 
-    pub fn scale(&self, ctx: &context::Context, w: usize, h: usize) -> Result<Self> {
+    pub fn scale(&self, ctx: &Context, w: usize, h: usize) -> Result<Self> {
         self.scale_wrap(&ctx.as_wrap(), w, h)
     }
 
-    pub fn scale_wrap(&self, wctx: &context::ContextWrapper, w: usize, h: usize) -> Result<Self> {
+    pub fn scale_wrap(&self, wctx: &ContextWrapper, w: usize, h: usize) -> Result<Self> {
         let fbo = FramebufferBuilder::new(Some("Downscaler"))
             .width(w)
             .height(h)
@@ -333,8 +332,8 @@ impl Texture {
             gl.viewport(0, 0, w as i32, h as i32);
         }
         let scale = (w as f32 / self.texture.w as f32).min(h as f32 / self.texture.h as f32);
-        let uniform = render::TextureScaleUniform {
-            transform: context::ortho3(0.0, 1.0, 0.0, 1.0),
+        let uniform = TextureScaleUniform {
+            transform: crate::ortho3(0.0, 1.0, 0.0, 1.0),
             scale,
             ..Default::default()
         };
@@ -366,7 +365,7 @@ impl Texture {
         Ok(tex)
     }
 
-    pub fn bind(&self, ctx: &context::Context, idx: u32) {
+    pub fn bind(&self, ctx: &Context, idx: u32) {
         self.bind_gl(&ctx.gl, idx)
     }
 
@@ -378,7 +377,7 @@ impl Texture {
         }
     }
 
-    pub fn unbind(ctx: &context::Context) {
+    pub fn unbind(ctx: &Context) {
         Self::unbind_gl(&ctx.gl)
     }
 
@@ -389,7 +388,7 @@ impl Texture {
         }
     }
 
-    pub fn draw(&self, ctx: &context::Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
+    pub fn draw(&self, ctx: &Context, x: f32, y: f32, w: f32, h: f32) -> Result<()> {
         let dims = ctx.dimensions.read().unwrap();
         #[rustfmt::skip]
         let transform: Matrix3<f32> = dims.projection * Matrix3::new(
@@ -397,14 +396,14 @@ impl Texture {
             0.0,  h,   y,
             0.0, 0.0, 1.0,
         );
-        let uniform = render::TextureUniform {
+        let uniform = TextureUniform {
             transform,
             ..Default::default()
         };
         self.draw_ex(ctx, &uniform)
     }
 
-    pub fn draw_ex(&self, ctx: &context::Context, uniform: &render::TextureUniform) -> Result<()> {
+    pub fn draw_ex(&self, ctx: &Context, uniform: &TextureUniform) -> Result<()> {
         let gl = &ctx.gl;
         ctx.program_texture.use_program(gl);
         self.bind(ctx, 0);
@@ -425,7 +424,7 @@ impl Texture {
 
     pub fn draw_scale(
         &self,
-        ctx: &context::Context,
+        ctx: &Context,
         x: f32,
         y: f32,
         w: f32,
@@ -439,7 +438,7 @@ impl Texture {
             0.0,  h,   y,
             0.0, 0.0, 1.0,
         );
-        let uniform = render::TextureScaleUniform {
+        let uniform = TextureScaleUniform {
             transform,
             scale,
             ..Default::default()
@@ -447,18 +446,14 @@ impl Texture {
         self.draw_scale_ex(ctx, &uniform)
     }
 
-    pub fn draw_scale_ex(
-        &self,
-        ctx: &context::Context,
-        uniform: &render::TextureScaleUniform,
-    ) -> Result<()> {
+    pub fn draw_scale_ex(&self, ctx: &Context, uniform: &TextureScaleUniform) -> Result<()> {
         self.draw_scale_ex_wrap(&ctx.as_wrap(), uniform)
     }
 
     pub fn draw_scale_ex_wrap(
         &self,
-        wctx: &context::ContextWrapper,
-        uniform: &render::TextureScaleUniform,
+        wctx: &ContextWrapper,
+        uniform: &TextureScaleUniform,
     ) -> Result<()> {
         let ctx = &wctx.lock();
         let gl = &ctx.gl;
@@ -739,12 +734,12 @@ impl TextureBuilder {
         self
     }
 
-    pub fn build(self, ctx: &context::Context) -> Result<Texture> {
+    pub fn build(self, ctx: &Context) -> Result<Texture> {
         let wctx: ContextWrapper = ctx.into();
         self.build_wrap(&wctx)
     }
 
-    pub fn build_wrap(self, sctx: &context::ContextWrapper) -> Result<Texture> {
+    pub fn build_wrap(self, sctx: &ContextWrapper) -> Result<Texture> {
         /* TODO handle SDF. */
         let texture = self.source.to_texture_data(
             sctx,
@@ -838,7 +833,7 @@ impl FramebufferTarget {
         }
     }
 
-    pub fn bind(&self, ctx: &context::Context) {
+    pub fn bind(&self, ctx: &Context) {
         let fb = match self {
             Self::Screen => None,
             Self::Framebuffer(fb) => Some(fb.framebuffer),
@@ -849,7 +844,7 @@ impl FramebufferTarget {
         }
     }
 
-    pub fn unbind(&self, ctx: &context::Context) {
+    pub fn unbind(&self, ctx: &Context) {
         unsafe {
             ctx.gl.bind_framebuffer(
                 glow::FRAMEBUFFER,
@@ -873,7 +868,7 @@ impl Drop for Framebuffer {
     }
 }
 impl Framebuffer {
-    pub fn bind(&self, ctx: &context::Context) {
+    pub fn bind(&self, ctx: &Context) {
         self.bind_gl(&ctx.gl)
     }
 
@@ -883,7 +878,7 @@ impl Framebuffer {
         }
     }
 
-    pub fn unbind(ctx: &context::Context) {
+    pub fn unbind(ctx: &Context) {
         Framebuffer::unbind_gl(&ctx.gl)
     }
     pub fn unbind_gl(gl: &glow::Context) {
@@ -961,12 +956,12 @@ impl FramebufferBuilder {
         self
     }
 
-    pub fn build(self, ctx: &context::Context) -> Result<Framebuffer> {
+    pub fn build(self, ctx: &Context) -> Result<Framebuffer> {
         let wctx: ContextWrapper = ctx.into();
         self.build_wrap(&wctx)
     }
 
-    pub fn build_wrap(self, ctx: &context::ContextWrapper) -> Result<Framebuffer> {
+    pub fn build_wrap(self, ctx: &ContextWrapper) -> Result<Framebuffer> {
         let texture = if self.texture {
             let name = self.name.as_ref().map(|name| format!("{name}-Texture"));
             let texture = TextureBuilder::new()
@@ -1511,7 +1506,7 @@ pub extern "C" fn gl_renderTexture(
         0.0,      th as f32, ty as f32,
         0.0,       0.0,       1.0,
     );
-    let data = render::TextureUniform {
+    let data = TextureUniform {
         texture,
         transform,
         colour,

@@ -1,18 +1,25 @@
 ####
 # Rust Stuff
 ####
+subdir('core')
 subdir('ndata')
 subdir('gettext')
 subdir('log')
+subdir('renderer')
 source_rust = files(
+   'core/src/ntime.rs',
+   'core/src/nxml.rs',
+   'core/src/start.rs',
    'ndata/src/lib.rs',
    'ndata/src/physfs.rs',
    'gettext/src/lib.rs',
    'log/src/lib.rs',
+   'renderer/src/lib.rs',
+   'renderer/src/buffer.rs',
+   'renderer/src/shader.rs',
+   'renderer/src/texture.rs',
    'array.rs',
-   'buffer.rs',
    'camera.rs',
-   'context.rs',
    'damagetype.rs',
    'env.rs',
    'faction.rs',
@@ -21,17 +28,11 @@ source_rust = files(
    'naev.rs',
    'nebula.rs',
    'nlua.rs',
-   'ntime.rs',
-   'nxml.rs',
    'outfit.rs',
    'physics.rs',
-   'render.rs',
    'rng.rs',
-   'shader.rs',
    'ship.rs',
    'slots.rs',
-   'start.rs',
-   'texture.rs',
    'toolkit.rs',
    'utils.rs',
    'vec2.rs',
