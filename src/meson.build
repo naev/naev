@@ -6,6 +6,7 @@ subdir('ndata')
 subdir('gettext')
 subdir('log')
 subdir('renderer')
+subdir('toolkit')
 source_rust = files(
    'core/src/ntime.rs',
    'core/src/nxml.rs',
@@ -19,6 +20,8 @@ source_rust = files(
    'renderer/src/buffer.rs',
    'renderer/src/shader.rs',
    'renderer/src/texture.rs',
+   'toolkit/src/lib.rs',
+   'toolkit/src/widget.rs',
    'array.rs',
    'camera.rs',
    'damagetype.rs',
@@ -34,7 +37,6 @@ source_rust = files(
    'rng.rs',
    'ship.rs',
    'slots.rs',
-   'toolkit.rs',
    'vec2.rs',
    'version.rs',
    'lua/ryaml.rs',

@@ -4162,6 +4162,8 @@ src/tk/widget/text.h
 src/toolkit.c
 src/toolkit.h
 src/toolkit.rs
+src/toolkit/src/lib.rs
+src/toolkit/src/widget.rs
 src/unidata.h
 src/unidiff.c
 src/unidiff.h

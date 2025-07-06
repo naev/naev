@@ -25,6 +25,7 @@ members = [
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
    "@BUILD@/src/renderer",
+   "@BUILD@/src/toolkit",
 ]
 
 [workspace.package]
@@ -41,6 +42,7 @@ gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
+toolkit = { path="@BUILD@/src/toolkit" }
 formatx = "0"
 glow = "0"
 nalgebra = { version = "0", features = ["bytemuck"]  }

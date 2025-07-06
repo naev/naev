@@ -1,0 +1,12 @@
+[package]
+name = "toolkit"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "@SOURCE@/src/toolkit/src/lib.rs"
+
+[dependencies]
+sdl2 = { workspace = true }
