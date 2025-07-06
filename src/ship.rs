@@ -1,6 +1,5 @@
 use crate::context::Context;
 use crate::model::Model;
-use crate::ndata;
 use crate::{gettext, warn};
 use rayon::prelude::*;
 use std::ffi::{c_void, CStr};

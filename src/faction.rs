@@ -14,7 +14,7 @@ use crate::log::warn_err;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
-use crate::{array, ndata, texture};
+use crate::{array, texture};
 use crate::{formatx, warn};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use thunderdome::{Arena, Index};

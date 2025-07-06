@@ -13,7 +13,6 @@ use crate::buffer::{
     VertexArrayBuilder,
 };
 use crate::context::{look_at4, ortho4, Context, ContextWrapper};
-use crate::ndata;
 use crate::render::Uniform;
 use crate::shader::{Shader, ShaderBuilder};
 use crate::texture;

@@ -1,7 +1,10 @@
 ####
-# Source lists
+# Rust Stuff
 ####
+subdir('ndata')
 source_rust = files(
+   'ndata/src/lib.rs',
+   'ndata/src/physfs.rs',
    'array.rs',
    'buffer.rs',
    'camera.rs',
@@ -15,12 +18,10 @@ source_rust = files(
    'model.rs',
    'naev.rs',
    'nebula.rs',
-   'ndata.rs',
    'nlua.rs',
    'ntime.rs',
    'nxml.rs',
    'outfit.rs',
-   'physfs.rs',
    'physics.rs',
    'render.rs',
    'rng.rs',
@@ -35,6 +36,9 @@ source_rust = files(
    'version.rs',
    'lua/ryaml.rs',
 )
+####
+# C Source lists
+####
 source = files(
    'array.c',
    'asteroid.c',

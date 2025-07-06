@@ -18,7 +18,7 @@ use crate::log::warn_err;
 use crate::render::{SolidUniform, TextureScaleUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{debug, warn};
-use crate::{gettext, log, ndata};
+use crate::{gettext, log};
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
     let s_source = match source {

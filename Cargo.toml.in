@@ -6,6 +6,7 @@ edition = "2024"
 # 1.84 New random syntax
 # 1.85 Rust 2024
 rust-version = "1.85"
+publish = false
 
 [lib]
 path = @PATH@
@@ -16,8 +17,25 @@ debug = 1
 debug-assertions = true
 overflow-checks = true
 
+[workspace]
+resolver = "3"
+members = [
+   "@BUILD@/src/ndata",
+]
+
+[workspace.package]
+version = @VERSION@
+edition = "2024"
+rust-version = "1.85"
+
+[workspace.dependencies]
+naevc = { path=@NAEVC@ }
+sdl2 = { version = "0", features = ["image"] }
+anyhow = "1"
+
 [dependencies]
 naevc = { path=@NAEVC@ }
+ndata = { path="@BUILD@/src/ndata" }
 anyhow = "1"
 roxmltree = "0"
 formatx = "0"

@@ -2,6 +2,8 @@
 use crate::context::Context;
 use sdl2 as sdl;
 
+pub trait Message: Send + std::fmt::Debug + Clone {}
+
 #[derive(Copy, Clone, Debug)]
 pub struct Shape {
     x: f32,
@@ -40,7 +42,10 @@ pub enum WgtMessage {
     FocusLost,
 }
 
-pub trait Widget<Message> {
+pub trait Widget<Message>
+where
+    Message: Clone + Send + std::fmt::Debug,
+{
     type Message;
 
     /// Gets the name of the widget

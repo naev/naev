@@ -469,7 +469,10 @@ naevcrs = rust.bindgen(
    cargo_data.set_quoted('VERSION', meson.project_version())
    cargo_data.set_quoted('PATH', meson.project_source_root() / 'src' / 'naev.rs')
    cargo_data.set_quoted('NAEVC', naevc_crate.full_path() )
+   cargo_data.set('BUILD', meson.project_build_root() )
+   cargo_data.set('SOURCE', meson.project_source_root() )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
+   #cargo_toolkit_toml = configure_file( input: 'src' 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
    #if rust_target == 'release'

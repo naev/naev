@@ -4,9 +4,9 @@ use glow::*;
 use std::ffi::CStr;
 use std::os::raw::c_char;
 
+use crate::context;
 use crate::context::Context;
 use crate::gettext::gettext;
-use crate::{context, ndata};
 use crate::{einfo, warn};
 
 pub enum ShaderType {

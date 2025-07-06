@@ -3929,7 +3929,8 @@ src/naevpedia.c
 src/naevpedia.h
 src/ndata.c
 src/ndata.h
-src/ndata.rs
+src/ndata/src/lib.rs
+src/ndata/src/physfs.rs
 src/nebula.c
 src/nebula.h
 src/nebula.rs
@@ -4060,7 +4061,6 @@ src/pause.c
 src/pause.h
 src/perlin.c
 src/perlin.h
-src/physfs.rs
 src/physfs_archiver_blacklist.c
 src/physfs_archiver_blacklist.h
 src/physfsrwops.c

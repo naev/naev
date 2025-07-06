@@ -7,9 +7,9 @@ use crate::array::ArrayCString;
 use crate::context::{Context, ContextWrapper};
 use crate::gettext::gettext;
 use crate::log::warn_err;
+use crate::texture;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::warn;
-use crate::{ndata, texture};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 #[derive(Default)]

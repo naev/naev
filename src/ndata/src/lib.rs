@@ -2,7 +2,7 @@ use sdl2 as sdl;
 use std::ffi::CString;
 use std::io::{Read, Result};
 
-use crate::physfs;
+pub mod physfs;
 
 pub const GFX_PATH: &str = "gfx/";
 
