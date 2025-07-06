@@ -20,6 +20,20 @@ pub fn error_as_io_error(func: &str) -> Error {
     ))
 }
 
+pub fn error_as_io_error_with_file(func: &str, file: &str) -> Error {
+    let cerrstr = unsafe {
+        CStr::from_ptr(naevc::PHYSFS_getErrorByCode(
+            naevc::PHYSFS_getLastErrorCode(),
+        ))
+    };
+    Error::other(format!(
+        "PhysicsFS Error with '{}' on file '{}': `{}`",
+        func,
+        file,
+        cerrstr.to_str().unwrap_or("Unknown")
+    ))
+}
+
 /// Possible ways to open a file.
 #[allow(dead_code)]
 #[derive(Copy, Clone)]
@@ -54,7 +68,7 @@ impl File<'_> {
         };
         match unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), &mut stat) } {
             0 => {
-                return Err(error_as_io_error("PHYSFS_stat"));
+                return Err(error_as_io_error_with_file("PHYSFS_stat", filename));
             }
             _ => (),
         }
@@ -71,7 +85,7 @@ impl File<'_> {
         };
 
         if raw.is_null() {
-            Err(error_as_io_error("PHYSFS_open"))
+            Err(error_as_io_error_with_file("PHYSFS_open", filename))
         } else {
             Ok(File {
                 raw,
@@ -194,7 +208,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     let c_path = CString::new(path)?;
     let mut list = unsafe { naevc::PHYSFS_enumerateFiles(c_path.as_ptr()) };
     if list.is_null() {
-        return Err(error_as_io_error("PHYSFS_enumerateFiles"));
+        return Err(error_as_io_error_with_file("PHYSFS_enumerateFiles", path));
     }
     let listptr = list;
 
@@ -223,7 +237,7 @@ pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
         }
     };
     if raw.is_null() {
-        Err(error_as_io_error("PHYSFS_open"))
+        Err(error_as_io_error_with_file("PHYSFS_open", filename))
     } else {
         Ok(unsafe { sdl::rwops::RWops::from_ll(raw as *mut sdl::sys::SDL_RWops) })
     }
