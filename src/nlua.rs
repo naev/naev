@@ -5,8 +5,8 @@ use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
 
 use crate::lua::ryaml;
 use crate::vec2;
-use crate::{warn, warn_err};
 use gettext::{gettext, ngettext, pgettext};
+use log::{warn, warn_err};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.

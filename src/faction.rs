@@ -9,7 +9,6 @@ use std::sync::{Mutex, RwLock};
 
 use crate::array::ArrayCString;
 use crate::context::{Context, ContextWrapper};
-use crate::log::warn_err;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -17,6 +16,7 @@ use crate::{array, texture};
 use crate::{formatx, warn};
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use gettext::gettext;
+use log::warn_err;
 use thunderdome::{Arena, Index};
 
 enum Grid {

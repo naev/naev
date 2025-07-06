@@ -1,0 +1,18 @@
+[package]
+name = "log"
+workspace = "@BUILD@"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "@SOURCE@/src/log/src/lib.rs"
+
+[dependencies]
+gettext = { workspace = true }
+naevc = { workspace = true }
+anyhow = { workspace = true }
+formatx = { workspace = true }
+
+[target.'cfg(unix)'.dependencies]
+nix = { version="0", features=["signal"] }

@@ -5,7 +5,7 @@ use std::sync::atomic::AtomicU32;
 pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;
 
-use crate::{debug, einfo, info, warn, warn_err};
+pub use nix;
 
 pub fn init() {
     unsafe {
@@ -59,20 +59,20 @@ macro_rules! debug {
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        let nw = $crate::log::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
-        if nw <= $crate::log::WARN_MAX {
+        let nw = $crate::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
+        if nw <= $crate::WARN_MAX {
             eprintln!("{}WARNING {}:{}: {}",
                 std::backtrace::Backtrace::force_capture(),
                 file!(), line!(),
                 &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
-        if nw==$crate::log::WARN_MAX {
+        if nw==$crate::WARN_MAX {
             eprintln!("{}",gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
             #[cfg(unix)]
             {
-                nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
+                $crate::nix::sys::signal::raise($crate::nix::sys::signal::Signal::SIGINT).unwrap();
             }
         }
     };
@@ -81,11 +81,11 @@ macro_rules! warn {
 #[macro_export]
 macro_rules! warn_err {
     ($err:ident) => {
-        let nw = $crate::log::WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-        if nw <= $crate::log::WARN_MAX {
+        let nw = $crate::WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        if nw <= $crate::WARN_MAX {
             eprintln!("WARNING: {:?}", $err);
         }
-        if nw == $crate::log::WARN_MAX {
+        if nw == $crate::WARN_MAX {
             eprintln!(
                 "{}",
                 gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
@@ -94,7 +94,7 @@ macro_rules! warn_err {
         if naevc::config::DEBUG_PARANOID {
             #[cfg(unix)]
             {
-                nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
+                $crate::nix::sys::signal::raise($crate::nix::sys::signal::Signal::SIGINT).unwrap();
             }
         }
     };

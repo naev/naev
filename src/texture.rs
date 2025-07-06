@@ -2,6 +2,7 @@
 use crate::render::Uniform;
 use anyhow::Result;
 use glow::*;
+use log::{warn, warn_err};
 use nalgebra::{Matrix3, Vector4};
 use sdl2 as sdl;
 use sdl2::image::ImageRWops;
@@ -12,9 +13,7 @@ use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::context::{Context, ContextWrapper};
-use crate::log::warn_err;
 use crate::{buffer, context, render};
-use crate::{warn, warn_err};
 
 static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));

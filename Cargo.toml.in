@@ -20,6 +20,7 @@ overflow-checks = true
 [workspace]
 resolver = "3"
 members = [
+   "@BUILD@/src/log",
    "@BUILD@/src/gettext",
    "@BUILD@/src/ndata",
 ]
@@ -33,9 +34,12 @@ rust-version = "1.85"
 naevc = { path=@NAEVC@ }
 sdl2 = { version = "0", features = ["image"] }
 anyhow = "1"
+gettext = { path="@BUILD@/src/gettext" }
+formatx = "0"
 
 [dependencies]
 naevc = { path=@NAEVC@ }
+log = { path="@BUILD@/src/log" }
 gettext = { path="@BUILD@/src/gettext" }
 ndata = { path="@BUILD@/src/ndata" }
 anyhow = "1"
@@ -61,6 +65,3 @@ serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
-
-[target.'cfg(unix)'.dependencies]
-nix = { version="0", features=["signal"] }

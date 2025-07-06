@@ -5,11 +5,11 @@ use std::os::raw::{c_char, c_int};
 
 use crate::array::ArrayCString;
 use crate::context::{Context, ContextWrapper};
-use crate::log::warn_err;
 use crate::texture;
 use crate::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use crate::warn;
 use crate::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
+use log::warn_err;
 
 #[derive(Default)]
 pub struct SlotProperty {

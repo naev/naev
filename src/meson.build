@@ -3,10 +3,12 @@
 ####
 subdir('ndata')
 subdir('gettext')
+subdir('log')
 source_rust = files(
    'ndata/src/lib.rs',
    'ndata/src/physfs.rs',
    'gettext/src/lib.rs',
+   'log/src/lib.rs',
    'array.rs',
    'buffer.rs',
    'camera.rs',
@@ -15,7 +17,6 @@ source_rust = files(
    'env.rs',
    'faction.rs',
    'linebreak.rs',
-   'log.rs',
    'model.rs',
    'naev.rs',
    'nebula.rs',

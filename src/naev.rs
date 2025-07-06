@@ -1,6 +1,7 @@
 pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
+use log::{debug, info, warn};
 use sdl2 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
@@ -19,7 +20,6 @@ mod damagetype;
 mod env;
 mod faction;
 mod linebreak;
-mod log;
 mod model;
 mod nebula;
 mod nlua;

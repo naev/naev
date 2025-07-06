@@ -14,11 +14,10 @@ use crate::buffer::{
     Buffer, BufferBuilder, BufferTarget, BufferUsage, VertexArray, VertexArrayBuffer,
     VertexArrayBuilder,
 };
-use crate::log;
-use crate::log::warn_err;
 use crate::render::{SolidUniform, TextureScaleUniform, TextureUniform};
 use crate::shader::{Shader, ShaderBuilder};
 use crate::{debug, warn};
+use log::warn_err;
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
     let s_source = match source {

@@ -2,7 +2,7 @@ use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
 use std::os::raw::c_void;
 
-use crate::warn_err;
+use log::warn_err;
 
 use crate::nlua::{LuaEnv, NLUA};
 

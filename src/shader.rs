@@ -6,7 +6,7 @@ use std::os::raw::c_char;
 
 use crate::context;
 use crate::context::Context;
-use crate::{einfo, warn};
+use log::{einfo, warn};
 
 pub enum ShaderType {
     Fragment,
