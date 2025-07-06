@@ -59,7 +59,7 @@ pub extern "C" fn ship_gfxLoadNeeded() {
                     }
                 }
                 Err(e) => {
-                    warn!("Failure loading 3D model '{}': {}", path, e);
+                    warn!("Failure loading 3D model '{}': {}", &path, e);
                     needs2d.lock().unwrap().push(ptr);
                 }
             },
@@ -70,7 +70,7 @@ pub extern "C" fn ship_gfxLoadNeeded() {
     });
     drop(ctx); // Need to drop
 
-    // 2D doesn't use the saef context system yet, so it can't be threaded with 3D
+    // 2D doesn't use the safe context system yet, so it can't be threaded with 3D
     needs2d.lock().unwrap().iter_mut().for_each(|ptr| {
         let s = &mut ptr.0;
         unsafe {
