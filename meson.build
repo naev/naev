@@ -494,7 +494,11 @@ naevcrs = rust.bindgen(
    #   output: 'libnaev.rlib',
    #   console: true,
    #   command: [ cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
-   naev_rlib_lib = library('naev_rlib', naev_rlib)
+   naev_rlib_lib = library(
+   'naev_rlib',
+   naev_rlib,
+   install : true
+   )
    # We create naev.rs with naev_rlib as a dependency to force rlib to be
    # compiled first, otherwise meson tries to compile both naev.rs and
    # naev_rlib in parallel and it fails.
