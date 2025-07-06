@@ -397,7 +397,7 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/build/dist/Naev.app \
+              --prefix="$(pwd)"/build/macos/Naev.app \
               --bindir=Contents/MacOS \
               --libdir=Contents/Frameworks \
               -Dndata_path=Contents/Resources \
