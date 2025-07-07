@@ -6,26 +6,36 @@ use std::os::raw::{c_double, c_int, c_uint};
 use std::sync::{LazyLock, Mutex};
 
 // Sound is currently in "screen" coordinates, and doesn't react to ship turning
-// Would probably havne to be relative to heading for accessibility support (when enabled)
+// Would probably have to be relative to heading for accessibility support (when enabled)
 const CAMERA_DIR: f64 = std::f64::consts::FRAC_PI_2;
 
+/// Represents tho global camera
 #[derive(Default, Clone)]
 pub struct Camera {
+    /// Current location
     pub pos: Point2<f64>,
+    /// Location of previosu frame
     old: Point2<f64>,
+    /// Target location it is trying to go to
     target: Point2<f64>,
+    /// Movement from last frame
     der: Vector2<f64>,
+    /// Current velocity
     vel: Vector2<f64>,
-    // For transitions
+    /// Whether or not it is transitioning over to a target
     fly: bool,
+    /// Speed at which it should move to the target
     fly_speed: f64,
-    // For handling zoom
+    /// Current zoom level of the camera
     pub zoom: f64,
+    /// Target zoom level
     zoom_target: f64,
+    /// Speed at which it moves to a zoom level
     zoom_speed: f64,
+    /// Whether or not the zoom is overriden
     zoom_override: bool,
-    // For pilots
-    follow_pilot: c_uint,
+    /// Pilot the camera is following
+    follow_pilot: Option<c_uint>,
 }
 
 pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(|| {
@@ -44,23 +54,26 @@ impl Camera {
         let mut p: *mut naevc::Pilot = std::ptr::null_mut();
 
         if self.fly {
-            if self.follow_pilot != 0 {
-                p = unsafe { naevc::pilot_get(self.follow_pilot) };
-                if p.is_null() {
-                    self.follow_pilot = 0;
-                    self.fly = false;
-                } else {
-                    let pos = unsafe { Point2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y) };
-                    self.update_fly(pos, dt);
-                    self.update_pilot_zoom(p, std::ptr::null(), dt);
+            match self.follow_pilot {
+                Some(plt) => {
+                    p = unsafe { naevc::pilot_get(plt) };
+                    if p.is_null() {
+                        self.follow_pilot = None;
+                        self.fly = false;
+                    } else {
+                        let pos = unsafe { Point2::<f64>::new((*p).solid.pos.x, (*p).solid.pos.y) };
+                        self.update_fly(pos, dt);
+                        self.update_pilot_zoom(p, std::ptr::null(), dt);
+                    }
                 }
-            } else {
-                self.update_fly(self.target, dt);
+                None => {
+                    self.update_fly(self.target, dt);
+                }
             }
-        } else if self.follow_pilot != 0 {
-            p = unsafe { naevc::pilot_get(self.follow_pilot) };
+        } else if let Some(plt) = self.follow_pilot {
+            p = unsafe { naevc::pilot_get(plt) };
             if p.is_null() {
-                self.follow_pilot = 0;
+                self.follow_pilot = None;
             } else {
                 self.update_pilot(p, dt);
             }
@@ -362,7 +375,10 @@ pub unsafe extern "C" fn cam_vel(vx: c_double, vy: c_double) {
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.follow_pilot = follow;
+    cam.follow_pilot = match follow {
+        0 => None,
+        _ => Some(follow),
+    };
 
     if soft_over == 0 {
         if follow != 0 {
@@ -390,7 +406,7 @@ pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
     let mut cam = CAMERA.lock().unwrap();
-    cam.follow_pilot = 0;
+    cam.follow_pilot = None;
     if soft_over == 0 {
         cam.pos.x = x;
         cam.pos.y = y;
@@ -410,7 +426,10 @@ pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getTarget() -> c_uint {
     let cam = CAMERA.lock().unwrap();
-    cam.follow_pilot
+    match cam.follow_pilot {
+        Some(plt) => plt,
+        None => 0,
+    }
 }
 
 #[unsafe(no_mangle)]
