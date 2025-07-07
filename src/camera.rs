@@ -348,8 +348,9 @@ pub unsafe extern "C" fn cam_getZoomTarget() -> c_double {
 pub unsafe extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
     let cam = CAMERA.lock().unwrap();
     unsafe {
-        *x = cam.pos.x as c_double;
-        *y = cam.pos.y as c_double;
+        let pos = cam.pos();
+        *x = pos.x as c_double;
+        *y = pos.y as c_double;
     }
 }
 
