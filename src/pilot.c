@@ -1627,6 +1627,11 @@ void pilot_updateDisable( Pilot *p, unsigned int shooter )
       p->dtimer       = 8. * pow( p->solid.mass, 1. / 3. );
       p->dtimer_accum = 0.;
 
+      /* Lose all shield. */
+      p->shield = 0.;
+      p->stimer = CTS.PILOT_SHIELD_DOWN_TIME * p->stats.shielddown_mod;
+      p->sbonus = 3.;
+
       /* Disable active outfits. */
       pilotoutfit_modified = 0;
       if ( ( pilot_outfitOffAll( p ) > 0 ) || pilotoutfit_modified )
