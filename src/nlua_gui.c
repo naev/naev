@@ -14,6 +14,7 @@
 
 #include "nlua_gui.h"
 
+#include "camera.h"
 #include "gui.h"
 #include "gui_omsg.h"
 #include "gui_osd.h"
@@ -33,6 +34,7 @@ static int guiL_targetPilotGFX( lua_State *L );
 static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
 static int guiL_setMapOverlayBounds( lua_State *L );
+static int guiL_cameraOffset( lua_State *L );
 
 static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
@@ -47,6 +49,7 @@ static const luaL_Reg guiL_methods[] = {
    { "mouseClickEnable", guiL_mouseClickEnable },
    { "mouseMoveEnable", guiL_mouseMoveEnable },
    { "setMapOverlayBounds", guiL_setMapOverlayBounds },
+   { "cameraOffset", guiL_cameraOffset },
    { 0, 0 } }; /**< GUI methods. */
 
 /**
@@ -309,7 +312,7 @@ static int guiL_mouseMoveEnable( lua_State *L )
 }
 
 /**
- * @brief Sets map boundaries
+ * @brief Sets map boundaries.
  *
  *    @luatparam number top Top boundary in pixels
  *    @luatparam number right Right boundary in pixels
@@ -325,5 +328,20 @@ static int guiL_setMapOverlayBounds( lua_State *L )
    int left   = luaL_checkinteger( L, 4 );
 
    ovr_boundsSet( top, right, bottom, left );
+   return 0;
+}
+
+/**
+ * @brief Sets the offset of the camera.
+ *
+ *    @luatparam number x X offset.
+ *    @luatparam number y Y offset.
+ * @luafunc cameraOffset
+ */
+static int guiL_cameraOffset( lua_State *L )
+{
+   double x = luaL_checknumber( L, 1 );
+   double y = luaL_checknumber( L, 2 );
+   cam_setOffset( x, y );
    return 0;
 }

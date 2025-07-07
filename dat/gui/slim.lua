@@ -22,6 +22,8 @@ local slot, slotend, slotframe
 -- luacheck: globals armour energy shield speed stress (_G[v])
 local fps_y = 32
 
+local BOTTOM_BAR_HEIGHT = 30
+
 -- Namespaces
 local bgs = {}
 local cols = {}
@@ -55,6 +57,7 @@ function create()
    --Get sizes
    screen_w, screen_h = gfx.dim()
    --gui.viewport( 0, 28, screen_w, screen_h - 28 )
+   gui.cameraOffset( 0, 14 )
 
    --Colours
    cols.txt_bar = colour.new( 192/255, 198/255, 217/255 )
@@ -1180,11 +1183,10 @@ function render( dt, dt_mod )
    end
 
    --Bottom bar
-   --[=[
    local length = 5
    local fuelstring
    local credits = player.credits()
-   gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, BOTTOM_BAR_HEIGHT, 1, 1, 0, 0, 1, 1 )
 
    local jumps = player.jumps()
    local fuel = player.fuel()
@@ -1234,7 +1236,6 @@ function render( dt, dt_mod )
       length = length + gfx.printDim( true, _("none") ) + 6
    end
    gfx.print( true, cargofree, length, 6, cols.txt_std )
-   --]=]
 
    lg.setShader( sh )
 end

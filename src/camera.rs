@@ -13,7 +13,9 @@ const CAMERA_DIR: f64 = std::f64::consts::FRAC_PI_2;
 #[derive(Default, Clone)]
 pub struct Camera {
     /// Current location
-    pub pos: Point2<f64>,
+    pos: Point2<f64>,
+    /// Fixed camera offset
+    offset: Vector2<f64>,
     /// Location of previosu frame
     old: Point2<f64>,
     /// Target location it is trying to go to
@@ -47,6 +49,10 @@ pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(|| {
 });
 
 impl Camera {
+    pub fn pos(&self) -> Point2<f64> {
+        self.pos + self.offset
+    }
+
     /// Handles updating the camera at every frame
     pub fn update(&mut self, dt: f64) {
         let der = self.pos;
@@ -436,6 +442,12 @@ pub unsafe extern "C" fn cam_getTarget() -> c_uint {
 pub unsafe extern "C" fn cam_update(dt: c_double) {
     let mut cam = CAMERA.lock().unwrap();
     cam.update(dt);
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn cam_setOffset(x: c_double, y: c_double) {
+    let mut cam = CAMERA.lock().unwrap();
+    cam.offset = Vector2::new(x, y);
 }
 
 /// @brief Lua bindings to interact with the Camera.
