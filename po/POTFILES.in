@@ -3772,7 +3772,6 @@ src/base64.c
 src/base64.h
 src/board.c
 src/board.h
-src/camera.c
 src/camera.h
 src/camera.rs
 src/cgltf.h
@@ -3934,7 +3933,6 @@ src/ndata.c
 src/ndata.h
 src/ndata/src/lib.rs
 src/ndata/src/physfs.rs
-src/nebula.c
 src/nebula.h
 src/nebula.rs
 src/news.c
