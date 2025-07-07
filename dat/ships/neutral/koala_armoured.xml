@@ -1,7 +1,7 @@
 <ship inherits="Koala" name="Koala Armoured">
  <rarity>2</rarity>
  <price>550000</price>
- <description>The Koala is one of the more sturdy courier ships, with a small size that also aids it in survival. The armoured variant sacrifices speed for even durability, allowing it to survive risky deliveries by sturdiness and not speed. Furthermore, a revamped weapon system allows it to wield a medium-sized weapon instead of two small weapons, allowing it to ward off larger ships efficiently. It is commonly used for delivery of critical cargo without raising too much attention.</description>
+ <description>The Koala is one of the sturdier courier ships, with a small size that also aids it in survival. The armoured variant sacrifices speed for even more durability, allowing it to survive risky deliveries by sturdiness and not speed. Furthermore, a revamped weapon system allows it to wield a medium-sized weapon instead of two small weapons, allowing it to ward off larger ships efficiently. It is commonly used for the delivery of critical cargo without raising too much attention.</description>
  <slots>
   <weapon y="0" h="-7" size="medium" x="11" />
   <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
