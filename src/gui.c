@@ -76,14 +76,6 @@ static int       gui_L_mclick = 0;    /**< Use mouse click callback. */
 static int       gui_L_mmove  = 0;    /**< Use mouse movement callback. */
 
 /**
- * Cropping.
- */
-static double gui_viewport_x = 0.; /**< GUI Viewport X offset. */
-static double gui_viewport_y = 0.; /**< GUI Viewport Y offset. */
-static double gui_viewport_w = 0.; /**< GUI Viewport width. */
-static double gui_viewport_h = 0.; /**< GUI Viewport height. */
-
-/**
  * @struct Radar
  *
  * @brief Represents the player's radar.
@@ -128,12 +120,6 @@ static int gui_mesg_w = 0; /**< Width of messages. */
 static int gui_mesg_x = 0; /**< X positioning of messages. */
 static int gui_mesg_y = 0; /**< Y positioning of messages. */
 
-/* Calculations to speed up borders. */
-static double gui_tr = 0.; /**< Border top-right. */
-static double gui_br = 0.; /**< Border bottom-right. */
-static double gui_tl = 0.; /**< Border top-left. */
-static double gui_bl = 0.; /**< Border bottom-left. */
-
 /* Intrinsic graphical stuff. */
 static glTexture *gui_ico_hail     = NULL; /**< Hailing icon. */
 static glTexture *gui_target_spob  = NULL; /**< Spob targeting icon. */
@@ -170,12 +156,9 @@ extern void weapon_minimap( const double res, const double w, const double h,
 static void gui_renderTargetReticles( const SimpleShader *shd, double x,
                                       double y, double radius, double angle,
                                       const glColour *c );
-static void gui_borderIntersection( double *cx, double *cy, double rx,
-                                    double ry, double hw, double hh );
 /* Render GUI. */
 static void            gui_renderPilotTarget( void );
 static void            gui_renderSpobTarget( void );
-static void            gui_renderBorder( double dt );
 static void            gui_renderMessages( double dt );
 static const glColour *gui_getSpobColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx,
@@ -183,7 +166,6 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx,
 static void gui_blink( double cx, double cy, double vr, const glColour *col,
                        double blinkInterval, double blinkVar );
 static const glColour *gui_getPilotColour( const Pilot *p );
-static void            gui_calcBorders( void );
 /* Lua GUI. */
 static int gui_doFunc( int func_ref, const char *func_name );
 static int gui_prepFunc( int func_ref, const char *func_name );
@@ -499,151 +481,11 @@ static void gui_renderPilotTarget( void )
 }
 
 /**
- * @brief Gets the intersection with the border.
- *
- * http://en.wikipedia.org/wiki/Intercept_theorem
- *
- *    @param[out] cx X intersection.
- *    @param[out] cy Y intersection.
- *    @param rx Center X position of intersection.
- *    @param ry Center Y position of intersection.
- *    @param hw Screen half-width.
- *    @param hh Screen half-height.
- */
-static void gui_borderIntersection( double *cx, double *cy, double rx,
-                                    double ry, double hw, double hh )
-{
-   double a;
-   double w, h;
-
-   /* Get angle. */
-   a = atan2( ry, rx );
-   if ( a < 0. )
-      a += 2. * M_PI;
-
-   /* Helpers. */
-   w = hw - 7.;
-   h = hh - 7.;
-
-   /* Handle by quadrant. */
-   if ( ( a > gui_tr ) && ( a < gui_tl ) ) { /* Top. */
-      *cx = h * ( rx / ry );
-      *cy = h;
-   } else if ( ( a > gui_tl ) && ( a < gui_bl ) ) { /* Left. */
-      *cx = -w;
-      *cy = -w * ( ry / rx );
-   } else if ( ( a > gui_bl ) && ( a < gui_br ) ) { /* Bottom. */
-      *cx = -h * ( rx / ry );
-      *cy = -h;
-   } else { /* Right. */
-      *cx = w;
-      *cy = w * ( ry / rx );
-   }
-
-   /* Translate. */
-   *cx += hw;
-   *cy += hh;
-}
-
-/**
- * @brief Renders the ships/spobs in the border.
- *
- *    @param dt Current delta tick.
- */
-static void gui_renderBorder( double dt )
-{
-   (void)dt;
-   int             hw, hh;
-   double          rx, ry;
-   double          cx, cy;
-   const glColour *col;
-   Pilot *const   *pilot_stack;
-
-   NTracingZone( _ctx, 1 );
-   gl_debugGroupStart();
-
-   /* Get player position. */
-   hw = SCREEN_W / 2;
-   hh = SCREEN_H / 2;
-
-   /* Render borders to enhance contrast. */
-   gl_renderRect( 0., 0., 15., SCREEN_H, &cBlackHilight );
-   gl_renderRect( SCREEN_W - 15., 0., 15., SCREEN_H, &cBlackHilight );
-   gl_renderRect( 15., 0., SCREEN_W - 30., 15., &cBlackHilight );
-   gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
-
-   /* Draw spobs. */
-   for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
-      const Spob *pnt = cur_system->spobs[i];
-
-      /* Skip if unknown. */
-      if ( !spob_isKnown( pnt ) )
-         continue;
-
-      /* Check if out of range. */
-      if ( !gui_onScreenSpob( &rx, &ry, NULL, pnt ) ) {
-
-         /* Get border intersection. */
-         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
-
-         col = gui_getSpobColour( i );
-         gl_renderCircle( cx, cy, 5, col, 0 );
-      }
-   }
-
-   /* Draw jump routes. */
-   for ( int i = 0; i < array_size( cur_system->jumps ); i++ ) {
-      const JumpPoint *jp = &cur_system->jumps[i];
-
-      /* Skip if unknown or exit-only. */
-      if ( !jp_isUsable( jp ) )
-         continue;
-
-      /* Check if out of range. */
-      if ( !gui_onScreenSpob( &rx, &ry, jp, NULL ) ) {
-
-         /* Get border intersection. */
-         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
-
-         if ( i == player.p->nav_hyperspace )
-            col = &cGreen;
-         else
-            col = &cWhite;
-
-         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., col );
-      }
-   }
-
-   /* Draw pilots. */
-   pilot_stack = pilot_getAll();
-   for ( int i = 1; i < array_size( pilot_stack ); i++ ) { /* skip the player */
-      const Pilot *plt = pilot_stack[i];
-
-      /* See if in sensor range. */
-      if ( !pilot_inRangePilot( player.p, plt, NULL ) )
-         continue;
-
-      /* Check if out of range. */
-      if ( !gui_onScreenPilot( &rx, &ry, plt ) ) {
-
-         /* Get border intersection. */
-         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
-
-         col = gui_getPilotColour( plt );
-         gl_renderRectEmpty( cx - 5, cy - 5, 10, 10, col );
-      }
-   }
-
-   gl_debugGroupEnd();
-   NTracingZoneEnd( _ctx );
-}
-
-/**
  * @brief Takes a pilot and returns whether it's on screen, plus its relative
  * position.
  *
- * @param[out] rx Relative X position (factoring in viewport offset)
- * @param[out] ry Relative Y position (factoring in viewport offset)
+ * @param[out] rx Relative X position.
+ * @param[out] ry Relative Y position.
  * @param pilot Pilot to determine the visibility and position of
  * @return Whether or not the pilot is on-screen.
  */
@@ -676,8 +518,8 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
  * @brief Takes a spob or jump point and returns whether it's on screen, plus
  * its relative position.
  *
- * @param[out] rx Relative X position (factoring in viewport offset)
- * @param[out] ry Relative Y position (factoring in viewport offset)
+ * @param[out] rx Relative X position.
+ * @param[out] ry Relative Y position.
  * @param jp Jump point to determine the visibility and position of
  * @param pnt Spob to determine the visibility and position of
  * @return Whether or not the given spob is on-screen.
@@ -754,7 +596,6 @@ void gui_render( double dt )
           ( ( player.p != NULL ) && pilot_isFlag( player.p, PILOT_DEAD ) ) ) ) {
       NTracingZone( _ctx, 1 );
 
-      gl_viewport( 0., 0., SCREEN_W, SCREEN_H );
       spfx_cinematic();
       gl_defViewport();
 
@@ -784,11 +625,6 @@ void gui_render( double dt )
    if ( blink_spob < 0. )
       blink_spob += RADAR_BLINK_SPOB;
 
-   /* Render the border ships and targets. */
-   gui_renderBorder( dt );
-
-   /* Set viewport. */
-   gl_viewport( 0., 0., gl_screen.rw, gl_screen.rh );
    glClear( GL_DEPTH_BUFFER_BIT );
 
    /* Run Lua. */
@@ -875,9 +711,6 @@ void gui_render( double dt )
       /* Check errors. */
       gl_checkErr();
    }
-
-   /* Reset viewport. */
-   gl_defViewport();
 
    /* Render messages. */
    omsg_render( dt );
@@ -1718,62 +1551,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h,
 }
 
 /**
- * @brief Sets the viewport.
- */
-void gui_setViewport( double x, double y, double w, double h )
-{
-   gui_viewport_x = x;
-   gui_viewport_y = y;
-   gui_viewport_w = w;
-   gui_viewport_h = h;
-
-   /* We now set the viewport. */
-   gl_setDefViewport( gui_viewport_x, gui_viewport_y, gui_viewport_w,
-                      gui_viewport_h );
-   gl_defViewport();
-
-   /* Run border calculations. */
-   gui_calcBorders();
-}
-
-/**
- * @brief Resets the viewport.
- */
-void gui_clearViewport( void )
-{
-   gl_setDefViewport( 0., 0., gl_screen.nw, gl_screen.nh );
-   gl_defViewport();
-}
-
-/**
- * @brief Calculates and sets the GUI borders.
- */
-static void gui_calcBorders( void )
-{
-   double w, h;
-
-   /* Precalculations. */
-   w = SCREEN_W / 2.;
-   h = SCREEN_H / 2.;
-
-   /*
-    * Borders.
-    */
-   gui_tl = atan2( +h, -w );
-   if ( gui_tl < 0. )
-      gui_tl += 2 * M_PI;
-   gui_tr = atan2( +h, +w );
-   if ( gui_tr < 0. )
-      gui_tr += 2 * M_PI;
-   gui_bl = atan2( -h, -w );
-   if ( gui_bl < 0. )
-      gui_bl += 2 * M_PI;
-   gui_br = atan2( -h, +w );
-   if ( gui_br < 0. )
-      gui_br += 2 * M_PI;
-}
-
-/**
  * @brief Initializes the GUI system.
  *
  *    @return 0 on success;
@@ -1816,9 +1593,6 @@ int gui_init( void )
 
    /* OSD */
    osd_setup( 30., SCREEN_H - 90., 150., 300. );
-
-   /* Set viewport. */
-   gui_setViewport( 0., 0., gl_screen.w, gl_screen.h );
 
    /* Icons. */
    gui_ico_hail = gl_newSprite( GUI_GFX_PATH "hail.webp", 5, 2, 0 );
@@ -2121,9 +1895,6 @@ void gui_cleanup( void )
    gui_mouseClickEnable( 0 );
    gui_mouseMoveEnable( 0 );
 
-   /* Set the viewport. */
-   gui_clearViewport();
-
    /* Set overlay bounds. */
    ovr_boundsSet( 0, 0, 0, 0 );
 
@@ -2277,68 +2048,6 @@ int gui_radarClickEvent( SDL_Event *event )
    y = ( myr - cy ) * gui_radar.res + player.p->solid.pos.y;
    return input_clickPos( event, x, y, 1., 10. * gui_radar.res,
                           15. * gui_radar.res );
-}
-
-/**
- * @brief Handles clicks on the GUI border icons.
- *
- *    @brief event The click event.
- *    @return Whether the click was used to trigger an action.
- */
-int gui_borderClickEvent( SDL_Event *event )
-{
-   unsigned int pid;
-   double       ang, angp, mouseang;
-   int          mx, my;
-   int          pntid, jpid, astid, fieid;
-   double       x, y;
-   int          autonav = ( event->button.button == SDL_BUTTON_RIGHT ) ? 1 : 0;
-   double       px      = player.p->solid.pos.x;
-   double       py      = player.p->solid.pos.y;
-   gui_eventToScreenPos( &mx, &my, event->button.x, event->button.y );
-   mx -= gui_viewport_x;
-   my -= gui_viewport_y;
-
-   /* No intersection with border. */
-   if ( !( ( mx <= 15 || my <= 15 ) ||
-           ( my >= gl_screen.h - 15 || mx >= gl_screen.w - 15 ) ) )
-      return 0;
-
-   /* Border targeting is handled as a special case, as it uses angles,
-    * not coordinates. */
-   x        = ( mx - ( gl_screen.w / 2. ) ) + px;
-   y        = ( my - ( gl_screen.h / 2. ) ) + py;
-   mouseang = atan2( py - y, px - x );
-   angp     = pilot_getNearestAng( player.p, &pid, mouseang, 1 );
-   ang = system_getClosestAng( cur_system, &pntid, &jpid, &astid, &fieid, x, y,
-                               mouseang );
-
-   if ( ( ABS( angle_diff( mouseang, angp ) ) > M_PI / 64 ) ||
-        ABS( angle_diff( mouseang, ang ) ) <
-           ABS( angle_diff( mouseang, angp ) ) )
-      pid = PLAYER_ID; /* Pilot angle is too great, or spob/jump is closer. */
-   if ( ABS( angle_diff( mouseang, ang ) ) > M_PI / 64 )
-      jpid = pntid = astid = fieid =
-         -1; /* Spob angle difference is too great. */
-
-   if ( pid != PLAYER_ID ) {
-      if ( input_clickedPilot( pid, autonav ) )
-         return 1;
-   } else if ( pntid >= 0 ) { /* Spob is closest. */
-      if ( input_clickedSpob( pntid, autonav, 1 ) )
-         return 1;
-   } else if ( jpid >= 0 ) { /* Jump point is closest. */
-      if ( input_clickedJump( jpid, autonav ) )
-         return 1;
-   } else if ( astid >= 0 ) { /* Asteroid is closest. */
-      if ( input_clickedAsteroid( fieid, astid ) )
-         return 1;
-   } else if ( pntid >= 0 ) { /* Spob is closest. */
-      if ( input_clickedSpob( pntid, autonav, 0 ) )
-         return 1;
-   }
-
-   return 0;
 }
 
 /**

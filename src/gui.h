@@ -63,7 +63,6 @@ void gui_messageScrollDown( int lines );
 int  gui_radarInit( int circle, int w, int h );
 void gui_radarRender( double x, double y );
 void gui_radarGetRes( double *res );
-int  gui_borderClickEvent( SDL_Event *event );
 int  gui_radarClickEvent( SDL_Event *event );
 
 /*
@@ -96,8 +95,6 @@ void gui_mouseMoveEnable( int enabel );
 /*
  * Misc.
  */
-void        gui_setViewport( double x, double y, double w, double h );
-void        gui_clearViewport( void );
 void        gui_setDefaults( void );
 void        gui_setRadarResolution( double res );
 void        gui_setRadarRel( int mod );

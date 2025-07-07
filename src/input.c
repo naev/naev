@@ -1519,9 +1519,6 @@ static void input_clickevent( SDL_Event *event )
         event->button.button != SDL_BUTTON_RIGHT )
       return;
 
-   if ( gui_borderClickEvent( event ) )
-      return;
-
    if ( gui_radarClickEvent( event ) )
       return;
 
