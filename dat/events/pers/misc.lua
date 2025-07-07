@@ -53,10 +53,21 @@ return function ()
                return (not player.pilot():areEnemies(p) and p:fuel() < amount)
             end
 
-            plt:hailPlayer()
             plt:credits( plt:credits() + reward )
             plt:setFuel( 0 )
-            mem.ad = _("Looking for some fuel. Can anyone help?")
+            -- We use a function here and only try to hail once, delayed
+            mem.ad = function( p )
+               local pmem = p:memory()
+               -- Make sure player is visible to hail
+               local inr, nofuz = p:inrange( player.pilot() )
+               if not pmem.fuel_hail and inr and nofuz then
+                  plt:hailPlayer()
+                  pmem.fuel_hail = true
+               end
+               if needs_refuel( p ) then
+                  return _("Looking for some fuel. Can anyone help?")
+               end
+            end
             mem.comm_greet = function ( p )
                if needs_refuel( p ) then
                   return fmt.f(_([["I'm in somewhat of a pinch. Could you spare {amount} u of fuel? I'll pay {reward}."]]), {reward=fmt.credits(reward), amount=fmt.number(amount)})
