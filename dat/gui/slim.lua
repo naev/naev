@@ -58,7 +58,7 @@ function create()
    --Get sizes
    screen_w, screen_h = gfx.dim()
    --gui.viewport( 0, 28, screen_w, screen_h - 28 )
-   gui.cameraOffset( 0, 14 )
+   gui.cameraOffset( 0, -14 )
 
    --Colours
    cols.txt_bar = colour.new( 192/255, 198/255, 217/255 )
