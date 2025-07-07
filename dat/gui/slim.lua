@@ -20,7 +20,8 @@ local slot, slotend, slotframe
 -- Unfortunately, it is an error to make any function a closure over more than 60 variables.
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
-local fps_y = 32
+local FPS_Y = 16
+local OSD_Y = 30
 
 local BOTTOM_BAR_HEIGHT = 30
 
@@ -174,7 +175,7 @@ function create()
 
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
-   slot_y = screen_h - slot_h - 16
+   slot_y = screen_h - slot_h - 4
    slot_img_offs_x = 4
    slot_img_offs_y = 6
    slot_img_w = 48
@@ -197,14 +198,14 @@ function create()
    cooldown_sheen_y = cooldown_bg_y + 12
 
    --Messages
-   gui.mesgInit( screen_w - 400, 20, 28+15+5 )
+   gui.mesgInit( screen_w - 400, 20, 28+5 )
 
    --Get positions
    --Player pane
    local pl_pane_w, pl_pane_h = player_pane_t:dim()
    pl_pane_w_b, pl_pane_h_b = player_pane_b:dim()
-   pl_pane_x = screen_w - pl_pane_w - 16
-   pl_pane_y = screen_h - pl_pane_h - 16
+   pl_pane_x = screen_w - pl_pane_w - 4
+   pl_pane_y = screen_h - pl_pane_h - 4
 
    --Radar
    local radar_w = radar_gfx:dim()
@@ -256,8 +257,8 @@ function create()
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
-   ta_pane_x = screen_w - ta_pane_w - 16
-   ta_pane_y = 44
+   ta_pane_x = screen_w - ta_pane_w - 4
+   ta_pane_y = 30
 
    --Target image background
    ta_image_x = ta_pane_x + 14
@@ -323,8 +324,8 @@ function create()
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
-   ta_pnt_pane_x = 16
-   ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 16
+   ta_pnt_pane_x = 4
+   ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 4
 
    -- Planet faction icon
    ta_pnt_fact_x = ta_pnt_pane_x + 140
@@ -340,10 +341,10 @@ function create()
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h * 0.5
 
    -- Set FPS
-   gui.fpsPos( 15, screen_h - fps_y )
+   gui.fpsPos( 3, screen_h - FPS_Y )
 
    -- Set OSD
-   gui.osdInit( 23, screen_h - 63, 150, 500 )
+   gui.osdInit( 8, screen_h - OSD_Y, 150, 500 )
 
    -- Timer stuff
    timers = {}
@@ -398,8 +399,8 @@ function update_nav()
    local autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
-      gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
-      gui.fpsPos( ta_pnt_pane_x+ta_pnt_pane_w+3, screen_h - fps_y )
+      gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - OSD_Y, 150, 500 )
+      gui.fpsPos( ta_pnt_pane_x+ta_pnt_pane_w+3, screen_h - FPS_Y )
 
       ta_pnt_gfx = nav_pnt:gfxSpace()
       ta_pnt_gfx_w, ta_pnt_gfx_h = ta_pnt_gfx:dim()
@@ -440,8 +441,8 @@ function update_nav()
          nav_spob.nservices = #nav_spob.services
       end
    else
-      gui.osdInit( 23, screen_h - 63, 150, 500 )
-      gui.fpsPos( 15, screen_h - fps_y )
+      gui.osdInit( 8, screen_h - OSD_Y, 150, 500 )
+      gui.fpsPos( 4, screen_h - FPS_Y )
    end
    if nav_hyp then
       if nav_hyp:known() then
