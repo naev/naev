@@ -996,6 +996,8 @@ function create_pre ()
    mem.jumpedin   = p:flags("jumpingin")
    mem.carried    = p:flags("carried")
    mem.mothership = p:mothership()
+   --mem.creation_outfit is set when created automagically and points to the
+   --outfit that created the pilot (if launched from a  fighter bay)
 
    -- Amount of faction lost when the pilot distresses at the player, is modulated later
    mem.distress_hit = p:points()
