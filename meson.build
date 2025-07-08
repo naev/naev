@@ -389,7 +389,7 @@ bindgen_args = [
    '--override-abi', 'luaopen_utf8=C-unwind',
    '--override-abi', 'luaopen_cmark=C-unwind',
    '--override-abi', 'luaopen_enet=C-unwind',
-   '--raw-line', '#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes, unnecessary_transmutes)]\npub mod config;',
+   '--raw-line', '#![allow(clippy::all)]\n#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, improper_ctypes, unnecessary_transmutes)]\npub mod config;',
 
 ]
 # Handle issues with bindgen and the math.h header
