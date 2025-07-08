@@ -1537,13 +1537,13 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     let tex = unsafe { &*ctex };
     let tw = tex.texture.w as f32;
     let th = tex.texture.h as f32;
-    let x = bx as f32;
-    let y = by as f32;
     let w = bw as f32;
-    let h = bw as f32;
+    let h = bh as f32;
     let scale = (w / tw).min(h / th);
     let nw = scale * tw;
     let nh = scale * th;
+    let x = bx as f32 + (w - nw) * 0.5;
+    let y = by as f32 + (h - nh) * 0.5;
 
     let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
 }
