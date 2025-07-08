@@ -114,6 +114,8 @@
 
  - Dvaered Negotiation 1: update the location of the target on the map
  - Dvaered Sabotage: no longer fail the mission if the target jumps out after boarding
+ - Fixed point defense turning off all the time
+ - Minor typo fixes and translation updates
 
 
 ## 0.12.5
