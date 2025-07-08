@@ -244,8 +244,8 @@ impl Dimensions {
             naevc::gl_screen.dwscale = dwscale as f64;
             naevc::gl_screen.dhscale = dhscale as f64;
             naevc::gl_screen.scale = view_scale as f64;
-            naevc::gl_screen.nw = (naevc::gl_screen.rw as f64 * view_scale as f64).round() as i32;
-            naevc::gl_screen.nh = (naevc::gl_screen.rh as f64 * view_scale as f64).round() as i32;
+            naevc::gl_screen.nw = view_width.round() as i32;
+            naevc::gl_screen.nh = view_height.round() as i32;
             naevc::gl_screen.w = naevc::gl_screen.nw;
             naevc::gl_screen.h = naevc::gl_screen.nh;
             naevc::gl_screen.wscale = 1.0;
