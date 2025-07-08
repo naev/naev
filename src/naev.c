@@ -343,9 +343,11 @@ int naev_shouldRenderLoadscreen( void )
 void naev_doRenderLoadscreen( void )
 {
    /* Stop from being unresponsive. */
+   /*
    SDL_Event event;
    while ( SDL_PollEvent( &event ) )
       ;
+   */
 
    SDL_mutexP( load_mutex );
    load_last_render = SDL_GetTicks();
