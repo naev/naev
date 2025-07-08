@@ -8,6 +8,9 @@ edition = "2024"
 rust-version = "1.85"
 publish = false
 
+[lints]
+workspace = true
+
 [lib]
 path = @PATH@
 
@@ -27,6 +30,9 @@ members = [
    "@BUILD@/src/renderer",
    "@BUILD@/src/toolkit",
 ]
+
+[workspace.lints.clippy]
+not_unsafe_ptr_arg_deref = "allow"
 
 [workspace.package]
 version = @VERSION@

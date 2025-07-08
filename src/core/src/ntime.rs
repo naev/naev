@@ -115,11 +115,11 @@ pub extern "C" fn ntime_create(scu: c_int, stp: c_int, stu: c_int) -> NTimeC {
     NTime::new(scu, stp, stu).0
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_get() -> NTimeC {
+pub extern "C" fn ntime_get() -> NTimeC {
     get().0
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_getR(
+pub extern "C" fn ntime_getR(
     cycles: *mut c_int,
     periods: *mut c_int,
     seconds: *mut c_int,
@@ -135,27 +135,27 @@ pub unsafe extern "C" fn ntime_getR(
     }
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_getCycles(t: NTimeC) -> c_int {
+pub extern "C" fn ntime_getCycles(t: NTimeC) -> c_int {
     NTime(t).cycles()
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_getPeriods(t: NTimeC) -> c_int {
+pub extern "C" fn ntime_getPeriods(t: NTimeC) -> c_int {
     NTime(t).periods()
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_getSeconds(t: NTimeC) -> c_int {
+pub extern "C" fn ntime_getSeconds(t: NTimeC) -> c_int {
     NTime(t).seconds()
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_convertSeconds(t: NTimeC) -> c_double {
+pub extern "C" fn ntime_convertSeconds(t: NTimeC) -> c_double {
     NTime(t).to_seconds()
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_getRemainder(t: NTimeC) -> c_double {
+pub extern "C" fn ntime_getRemainder(t: NTimeC) -> c_double {
     NTime(t).remainder()
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
+pub extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
     let mut str: [c_char; 64] = [0; 64];
     unsafe {
         ntime_prettyBuf(
@@ -168,7 +168,7 @@ pub unsafe extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
     }
 }
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, d: c_int) {
+pub extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, d: c_int) {
     let nt = if t == 0 {
         TIME.lock().unwrap().time
     } else {

@@ -1,3 +1,4 @@
+#![allow(clippy::not_unsafe_ptr_arg_deref)]
 pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
