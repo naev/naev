@@ -3,6 +3,18 @@
 #HEIGHT = 720
 HEIGHT = 1080
 
+decorators = {
+   'anubis_black_hole': 'blackhole',
+   'gamma_polaris': 'empire',
+   'dvaer': 'dvaered',
+   'aesir' : 'sirius',
+   'feye' : 'soromid',
+   'zalek' : 'zalek',
+   'gilligans_light': 'frontier',
+   'apik': 'proteron',
+}
+#'nebula'
+
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
@@ -70,8 +82,15 @@ def main( pov_out = None, halo = False, silent = False ):
          'look_at 0',
       ], '}',
       '',
+      '#include "decorators.inc"',
+      '',
    ])
    for i in V:
+      if i in decorators:
+         write_pov([ 'object{', [
+            decorators[i],
+            'translate <' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 0>',
+         ], '}', ])
       col = (0.5, 0.5, 0.5) if i not in colors else colors[i]
       if not (i == 'sol' and halo):
          write_pov([ 'sphere{', [

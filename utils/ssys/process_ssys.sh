@@ -43,6 +43,7 @@ ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc1
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
+"$DIR"/gen_decorators.sh -C || exit 1
 
 # handy debug line to insert anywhere:
 #tee >(cat >&2) | # DEBUG OUTPUT
