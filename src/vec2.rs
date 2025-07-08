@@ -21,7 +21,7 @@ impl FromLua for Vec2 {
         match value {
             Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
             Value::Integer(num) => Ok(Self::new(num as f64, num as f64)),
-            Value::Number(num) => Ok(Self::new(num as f64, num as f64)),
+            Value::Number(num) => Ok(Self::new(num, num)),
             val => Err(mlua::Error::RuntimeError(format!(
                 "unable to convert {} to Vec2",
                 val.type_name()

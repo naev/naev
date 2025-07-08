@@ -122,7 +122,7 @@ impl Faction {
 #[derive(Debug)]
 pub enum DataWrapper {
     Static(&'static FactionData),
-    Dynamic(FactionData),
+    Dynamic(Box<FactionData>),
 }
 impl Deref for DataWrapper {
     type Target = FactionData;

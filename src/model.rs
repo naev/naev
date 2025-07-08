@@ -1000,7 +1000,7 @@ pub struct Model {
 fn load_buffer(buf: &gltf::buffer::Buffer, base: &str) -> Result<Vec<u8>> {
     match buf.source() {
         gltf::buffer::Source::Uri(uri) => {
-            let filename = format!("{}/{}", base, uri);
+            let filename = format!("{base}/{uri}");
             Ok(ndata::read(&filename)?)
         }
         gltf::buffer::Source::Bin => todo!(),
@@ -1021,7 +1021,7 @@ fn load_gltf_texture(
 
     tb = match node.source().source() {
         gltf::image::Source::Uri { uri, .. } => {
-            let filename = format!("{}/{}", base, uri);
+            let filename = format!("{base}/{uri}");
             tb.path(&filename)
         }
         _ => todo!(),

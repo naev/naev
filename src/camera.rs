@@ -433,10 +433,7 @@ pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getTarget() -> c_uint {
     let cam = CAMERA.lock().unwrap();
-    match cam.follow_pilot {
-        Some(plt) => plt,
-        None => 0,
-    }
+    cam.follow_pilot.unwrap_or_default()
 }
 
 #[unsafe(no_mangle)]
