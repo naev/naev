@@ -44,19 +44,24 @@ for lin in input_blocks(stdin):
    x, y = float(position[0]), float(position[1])
    dotpos[nam] = vec(x, y)
 
+count = 0
 bbox, oldbb = bb(), bb()
 for k, v in sys_pos.items():
    if k[0] != '_':
       oldbb += v
-      if k not in dotpos and sys_jmp[k]!=[]:
+      if count<3 and k not in dotpos and sys_jmp[k]!=[]:
          stderr.write('"' + k + '" not found in dot output. why ?\n')
+         count +=1
+         if count == 3:
+            stderr.write("(won't be repeated)\n")
 
 for k in dotpos:
    dotpos[k] *= 3.0/2.0
    if k[0] != '_':
       bbox += dotpos[k]
       if k not in sys_pos:
-         stderr.write('"' + k + '" not found in ssys. why ?\n')
+         stderr.write('"' + k + '" not found in ssys. Bye !\n')
+         exit(-1)
 
 again = bb()
 

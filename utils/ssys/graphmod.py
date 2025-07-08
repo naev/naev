@@ -1,6 +1,6 @@
 # python3
 
-from sys import stdin
+from sys import stdin, stderr, exit
 from geometry import vec
 
 class _pos(dict):
@@ -62,3 +62,7 @@ for inp in stdin:
       sys_jmp[bname1].append((bname2, l[2:]))
    else:
       break
+
+if len(sys_pos) == 0 or len(sys_jmp) == 0:
+   stderr.write('Empty input ! Bye !\n')
+   exit(-1)

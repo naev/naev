@@ -19,7 +19,7 @@ box = bb()
 for (_, v) in pos.items():
    box += v
 
-STRETCH = 0.15
+STRETCH = 0.20
 def f(x):
    x = 1.0 - x
    x = 2.0*x
