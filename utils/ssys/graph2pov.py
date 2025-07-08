@@ -6,14 +6,14 @@ HEIGHT = 1080
 decorators = {
    'anubis_black_hole': 'blackhole',
    'gamma_polaris': 'empire',
-   'dvaer': 'dvaered',
-   'aesir' : 'sirius',
-   'feye' : 'soromid',
+   'beeklo': 'dvaered',
+   'eiderdown': 'sirius',
+   'pisces_prime' : 'soromid',
    'zalek' : 'zalek',
-   'gilligans_light': 'frontier',
-   'apik': 'proteron',
+   'chraan': 'frontier',
+   'mida': 'proteron',
+   'tide': 'nebula'
 }
-#'nebula'
 
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
