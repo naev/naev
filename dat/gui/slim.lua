@@ -21,7 +21,7 @@ local slot, slotend, slotframe
 -- Caution: the below **are** accessed via _G.
 -- luacheck: globals armour energy shield speed stress (_G[v])
 local FPS_Y = 16
-local OSD_Y = 30
+local OSD_Y = 38
 
 local BOTTOM_BAR_HEIGHT = 30
 
