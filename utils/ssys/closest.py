@@ -16,14 +16,12 @@ no_graph_out()
 
 v = vec(float(argv[1]), float(argv[2]))
 
-which = None
-best = None
+best, which = None, None
 for n, p in pos.items():
    dif = p - v
    crt = dif * dif
    if best is None or crt < best:
-      best = crt
-      which = n
+      best, which = crt, n
 
 v -= pos[which]
 print (which, '+',  v)
