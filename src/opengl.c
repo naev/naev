@@ -52,8 +52,6 @@ static unsigned int cb_simulate_pp =
 /*
  * Viewport offsets
  */
-static int gl_view_x      = 0; /* X viewport offset. */
-static int gl_view_y      = 0; /* Y viewport offset. */
 static int gl_view_w      = 0; /* Viewport width. */
 static int gl_view_h      = 0; /* Viewport height. */
 mat4       gl_view_matrix = { { { { 0 } } } };
@@ -406,7 +404,7 @@ int gl_init( void )
 void gl_resize_c( void )
 {
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-   gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
+   gl_setDefViewport( gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 
    /* Set up framebuffer. */
@@ -441,7 +439,7 @@ void gl_resize_c( void )
 /**
  * @brief Sets the opengl viewport.
  */
-void gl_viewport( int x, int y, int w, int h )
+void gl_viewport( int w, int h )
 {
    mat4 proj = mat4_ortho( 0.,           /* Left edge. */
                            gl_screen.nw, /* Right edge. */
@@ -449,11 +447,6 @@ void gl_viewport( int x, int y, int w, int h )
                            gl_screen.nh, /* Top edge. */
                            -1.,          /* near */
                            1. );         /* far */
-
-   /* Take into account possible translation. */
-   gl_screen.x = x;
-   gl_screen.y = y;
-   mat4_translate_xy( &proj, x, y );
 
    /* Set screen size. */
    gl_screen.w = w;
@@ -469,10 +462,8 @@ void gl_viewport( int x, int y, int w, int h )
 /**
  * @brief Sets the default viewport.
  */
-void gl_setDefViewport( int x, int y, int w, int h )
+void gl_setDefViewport( int w, int h )
 {
-   gl_view_x = x;
-   gl_view_y = y;
    gl_view_w = w;
    gl_view_h = h;
 }
@@ -482,7 +473,7 @@ void gl_setDefViewport( int x, int y, int w, int h )
  */
 void gl_defViewport( void )
 {
-   gl_viewport( gl_view_x, gl_view_y, gl_view_w, gl_view_h );
+   gl_viewport( gl_view_w, gl_view_h );
 }
 
 /**
@@ -493,9 +484,8 @@ void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
    wx /= gl_screen.dwscale;
    wy /= gl_screen.dhscale;
 
-   *sx = gl_screen.mxscale * (double)wx - (double)gl_screen.x;
-   *sy =
-      gl_screen.myscale * (double)( gl_screen.rh - wy ) - (double)gl_screen.y;
+   *sx = gl_screen.mxscale * (double)wx;
+   *sy = gl_screen.myscale * (double)( gl_screen.rh - wy );
 }
 
 /**
@@ -503,9 +493,8 @@ void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
  */
 void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
 {
-   *wx = ( sx + (double)gl_screen.x ) / gl_screen.mxscale;
-   *wy =
-      (double)gl_screen.rh - ( sy + (double)gl_screen.y ) / gl_screen.myscale;
+   *wx = sx / gl_screen.mxscale;
+   *wy = (double)gl_screen.rh - sy / gl_screen.myscale;
 
    *wx *= gl_screen.dwscale;
    *wy *= gl_screen.dhscale;

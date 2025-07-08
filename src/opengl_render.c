@@ -1313,8 +1313,8 @@ void gl_renderLine( double x1, double y1, double x2, double y2,
 void gl_clipRect( int x, int y, int w, int h )
 {
    double rx, ry, rw, rh;
-   rx = ( x + gl_screen.x ) / gl_screen.mxscale;
-   ry = ( y + gl_screen.y ) / gl_screen.myscale;
+   rx = x / gl_screen.mxscale;
+   ry = y / gl_screen.myscale;
    rw = w / gl_screen.mxscale;
    rh = h / gl_screen.myscale;
    glScissor( rx, ry, rw, rh );

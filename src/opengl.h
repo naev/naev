@@ -38,8 +38,6 @@ typedef struct glInfo_ {
    unsigned char major; /**< OpenGL major version. */
    unsigned char minor; /**< OpenGL minor version. */
    int           glsl;  /**< GLSL version. */
-   int           x;     /**< X offset of window viewport. */
-   int           y;     /**< Y offset of window viewport. */
    /* Viewport considers x/y offset. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
@@ -79,8 +77,6 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 
 extern mat4 gl_view_matrix;
 
-#define SCREEN_X gl_screen.x /**< Screen X offset. */
-#define SCREEN_Y gl_screen.y /**< Screen Y offset. */
 #define SCREEN_W gl_screen.w /**< Screen width. */
 #define SCREEN_H gl_screen.h /**< Screen height. */
 
@@ -97,9 +93,9 @@ void gl_resize_c( void );
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy );
 void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy );
-void gl_viewport( int x, int y, int w, int h );
+void gl_viewport( int w, int h );
 void gl_defViewport( void );
-void gl_setDefViewport( int x, int y, int w, int h );
+void gl_setDefViewport( int w, int h );
 int  gl_setupFullscreen( void );
 
 /*
