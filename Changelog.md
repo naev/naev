@@ -110,7 +110,7 @@
  - Game will not save in certain cases like loading the game and immediately being forced to take off by a load hook
 
 
-## 0.12.6 (unreleased)
+## 0.12.6
 
  - Dvaered Negotiation 1: update the location of the target on the map
  - Dvaered Sabotage: no longer fail the mission if the target jumps out after boarding
