@@ -92,6 +92,10 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 
 # TODO
+ - document new postgrav processing
+ - allow high/low def output for process_ssys
+ - allow disabling decorators in graph2pov
+ - graph2ssys should also update decorators position
  - `graph2dot`: display one-way hidden/one-way normal connections.
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.

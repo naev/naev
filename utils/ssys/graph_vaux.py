@@ -69,11 +69,14 @@ if __name__ != '__main__':
    for c in main_col:
       color_values['default@' + c] = col_avg(default_col, color_values[c])
 
+   def _ssys_color( V, ssys ):
+      return (V.aux[ssys] + ['default'])[0]
+
    def ssys_color( V, ssys ):
-      return V.aux[ssys][0].split(':', 1)[0]
+      return _ssys_color(V, ssys).split(':', 1)[0]
 
    def ssys_nebula( V, ssys ):
-      return V.aux[ssys][0].split(':')[1:2] == [ 'nebula' ]
+      return _ssys_color(V, ssys).split(':', 1)[1:2] == [ 'nebula' ]
 
 else:
    if do_color := ('-c' in argv[1:]):

@@ -43,6 +43,7 @@ ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc1
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
+"$DIR"/gen_decorators.sh -C || exit 1
 
 # handy debug line to insert anywhere:
 #tee >(cat >&2) | # DEBUG OUTPUT
@@ -82,13 +83,13 @@ if [ "$1" = "-f" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
 "$DIR"/graphmod_stretch_north.py                                              |
+tee >("$DIR"/graph2pov.py -c -q'map_grav.png')                                |
 "$DIR"/graphmod_abh.py                                                        |
+pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_repos.sh "$DIR"                                               |
 "$DIR"/graphmod_abh.py                                                        |
-tee >("$DIR"/graph2pov.py -c -q'map_grav.png')                                |
 "$DIR"/graphmod_final.py                                                      |
 tee >("$DIR"/graph2pov.py -c -q'map_final.png')                               |
-pmsg "gen final graph"                                                        |
 "$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
 
 msg ""

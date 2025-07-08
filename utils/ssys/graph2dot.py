@@ -116,25 +116,24 @@ def main( color = False, fixed_pos = False ):
          print('\t"' + f + '"--"' + t + '"' + prop)
    print('}')
 
-if __name__ == '__main__':
-   if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)>3:
-      print('usage: ', argv[0], '[-c]', '[-k]')
-      print('  Outputs the graph in dot format.')
-      print('  By default, interprets the vertex aux as the name.')
-      print('  If -c is set, interprets the first aux field as color.')
-      print('  If -k is set, the nodes have the keep_position marker.')
-      print('Examples:')
-      print('  > ./utils/ssys/ssys2dot.py -k | neato -Tpng > before.png')
-      print('  > ./utils/ssys/ssys2dot.py | neato -Tpng > after.png')
-      print('  > display before.png after.png')
-   else:
-      if color := '-c' in argv:
-         argv.remove('-c')
+if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)>3:
+   print('usage: ', argv[0], '[-c]', '[-k]')
+   print('  Outputs the graph in dot format.')
+   print('  By default, interprets the vertex aux as the name.')
+   print('  If -c is set, interprets the first aux field as color.')
+   print('  If -k is set, the nodes have the keep_position marker.')
+   print('Examples:')
+   print('  > ./utils/ssys/ssys2dot.py -k | neato -Tpng > before.png')
+   print('  > ./utils/ssys/ssys2dot.py | neato -Tpng > after.png')
+   print('  > display before.png after.png')
+else:
+   if color := '-c' in argv:
+      argv.remove('-c')
 
-      if keep := '-k' in argv:
-         argv.remove('-k')
+   if keep := '-k' in argv:
+      argv.remove('-k')
 
-      if argv[1:] != []:
-         stderr.write('Ignored: "' + '", "'.join(argv[1:]) + '"\n')
+   if argv[1:] != []:
+      stderr.write('Ignored: "' + '", "'.join(argv[1:]) + '"\n')
 
-      main(color, keep)
+   main(color, keep)
