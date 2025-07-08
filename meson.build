@@ -520,7 +520,7 @@ naevcrs = rust.bindgen(
 
    # Add console subsystem linker flag on Windows to show console window
    naev_bin_link_args = []
-   if host_machine.system() == 'windows'
+   if get_option('debug') and host_machine.system() == 'windows'
       naev_bin_link_args += ['-Wl,--subsystem,console']
    endif
 
