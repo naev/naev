@@ -113,8 +113,8 @@ impl Default for TextureScaleUniform {
             texture: Matrix3::identity(),
             transform: Matrix3::identity(),
             colour: Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
-            scale: 0.25,
-            radius: 8.0,
+            scale: 1.0,
+            radius: 4.0,
         }
     }
 }
