@@ -105,6 +105,7 @@ int  gl_setupFullscreen( void );
 /*
  * misc
  */
+int    gl_supportsDebug( void );
 void   gl_colourblind( void );
 GLenum gl_stringToFilter( const char *s );
 GLenum gl_stringToClamp( const char *s );

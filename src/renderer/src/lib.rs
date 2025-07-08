@@ -796,3 +796,12 @@ pub extern "C" fn gl_resize() {
     }
     unsafe { naevc::gl_resize_c() };
 }
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
+    let ctx = CONTEXT.get().unwrap();
+    match ctx.gl.supports_debug() {
+        true => 1,
+        false => 0,
+    }
+}

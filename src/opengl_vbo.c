@@ -88,10 +88,12 @@ static gl_vbo *gl_vboCreate( GLenum target, GLsizei size, const void *data,
 
 void gl_vboLabel( gl_vbo *vbo, const char *name )
 {
-   if ( name == NULL )
-      glObjectLabel( GL_BUFFER, vbo->id, 0, NULL );
-   else
-      glObjectLabel( GL_BUFFER, vbo->id, strlen( name ), name );
+   if ( gl_supportsDebug() ) {
+      if ( name == NULL )
+         glObjectLabel( GL_BUFFER, vbo->id, 0, NULL );
+      else
+         glObjectLabel( GL_BUFFER, vbo->id, strlen( name ), name );
+   }
 }
 
 /**

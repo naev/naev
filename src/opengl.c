@@ -423,14 +423,16 @@ void gl_resize_c( void )
                       gl_screen.rw, gl_screen.rh );
 
       /* Names for debugging. */
-      char buf[STRMAX_SHORT];
-      snprintf( buf, sizeof( buf ), "Screen Framebuffer %d", i );
-      glObjectLabel( GL_FRAMEBUFFER, gl_screen.fbo[i], strlen( buf ), buf );
-      snprintf( buf, sizeof( buf ), "Screen Texture %d", i );
-      glObjectLabel( GL_TEXTURE, gl_screen.fbo_tex[i], strlen( buf ), buf );
-      snprintf( buf, sizeof( buf ), "Screen Depth %d", i );
-      glObjectLabel( GL_TEXTURE, gl_screen.fbo_depth_tex[i], strlen( buf ),
-                     buf );
+      if ( gl_supportsDebug() ) {
+         char buf[STRMAX_SHORT];
+         snprintf( buf, sizeof( buf ), "Screen Framebuffer %d", i );
+         glObjectLabel( GL_FRAMEBUFFER, gl_screen.fbo[i], strlen( buf ), buf );
+         snprintf( buf, sizeof( buf ), "Screen Texture %d", i );
+         glObjectLabel( GL_TEXTURE, gl_screen.fbo_tex[i], strlen( buf ), buf );
+         snprintf( buf, sizeof( buf ), "Screen Depth %d", i );
+         glObjectLabel( GL_TEXTURE, gl_screen.fbo_depth_tex[i], strlen( buf ),
+                        buf );
+      }
    }
 
    gl_checkErr();
