@@ -49,6 +49,9 @@
   </categories>
 
   <releases>
+    <release version="0.12.6" type="stable" date="2025-07-09">
+      <url>https://naev.org/blarg/2025-07-09_0.12.6/</url>
+    </release>
     <release version="0.12.5" type="stable" date="2025-05-23">
       <url>https://naev.org/blarg/2025-05-23_0.12.5/</url>
     </release>
