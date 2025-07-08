@@ -11,9 +11,11 @@ decorators = {
    'pisces_prime' : 'soromid',
    'zalek' : 'zalek',
    'chraan': 'frontier',
-   'mida': 'proteron',
-   'tide': 'nebula'
+   'korifa': 'proteron',
+   'oriantis': 'nebula'
 }
+
+decorators = {s: (d, -i*0.1) for i, (s, d) in enumerate(decorators.items())}
 
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
@@ -87,9 +89,11 @@ def main( pov_out = None, halo = False, silent = False ):
    ])
    for i in V:
       if i in decorators:
+         nam, depth = decorators[i]
+         x, y = str(V[i][0]), str(V[i][1])
          write_pov([ 'object{', [
-            decorators[i],
-            'translate <' + str(V[i][0]) + ', ' + str(V[i][1]) + ', 0>',
+            nam,
+            'translate <' + x + ', ' + y + ', ' + str(depth) + '>',
          ], '}', ])
       col = (0.5, 0.5, 0.5) if i not in colors else colors[i]
       if not (i == 'sol' and halo):
