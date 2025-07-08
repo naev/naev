@@ -81,10 +81,13 @@ tee >("$DIR"/graph2pov.py -c -q'map_repos.png')                               |
 if [ "$1" = "-f" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
+"$DIR"/graphmod_stretch_north.py                                              |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_repos.sh "$DIR"                                               |
 "$DIR"/graphmod_abh.py                                                        |
 tee >("$DIR"/graph2pov.py -c -q'map_grav.png')                                |
+"$DIR"/graphmod_final.py                                                      |
+tee >("$DIR"/graph2pov.py -c -q'map_final.png')                               |
 pmsg "gen final graph"                                                        |
 "$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
 
