@@ -518,6 +518,12 @@ naevcrs = rust.bindgen(
       use_export_dynamic = get_option('debug')
    endif
 
+   # Add console subsystem linker flag on Windows to show console window
+   naev_bin_link_args = []
+   if host_machine.system() == 'windows'
+      naev_bin_link_args += ['-Wl,--subsystem,console']
+   endif
+
    # Finally, build the executable with Rust again, but using meson to link it all together
    naev_bin = executable(
       'naev',
@@ -528,6 +534,7 @@ naevcrs = rust.bindgen(
       dependencies: naev_deps,
       link_with: [naev_rlib_lib],
       export_dynamic: use_export_dynamic,
+      link_args: naev_bin_link_args,
       install: true)
 
    # Naevlua is unused and unsupported with rust for now.
@@ -539,7 +546,6 @@ naevcrs = rust.bindgen(
    #   export_dynamic: get_option('debug'),
    #   override_options: ['-DNOMAIN=1'],
    #   install: false)
-
    gen_authors = find_program(join_paths('utils','build','gen_authors.py'))
    authors = custom_target(
       'authors',
