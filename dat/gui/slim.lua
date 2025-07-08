@@ -198,7 +198,7 @@ function create()
    cooldown_sheen_y = cooldown_bg_y + 12
 
    --Messages
-   gui.mesgInit( screen_w - 400, 20, 28+5 )
+   gui.mesgInit( screen_w - 400, 14, 28+10 )
 
    --Get positions
    --Player pane
