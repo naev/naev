@@ -94,7 +94,7 @@ class _transf:
       elif self.vec < -1.0:
          self.vec = -1.0
       if v1*v2 < 0:
-         self.vec = -self.vec
+         self.vec  = -self.vec
 
    def __str__( self ):
       return str({'fact': self.fact, 'vec': self.vec})
@@ -152,10 +152,16 @@ class line:
          if (cl := (other.center + u)) not in other:
             return []
          else:
-            v = u.orth().normalize() * sqrt(other.radius*other.radius - u*u)
-            if v.size() < EPS:
+            d = sqrt(other.radius*other.radius - u*u)
+            if d < EPS:
                return [cl]
             else:
+               # both might be close to null vector
+               if self.v.size() > u.size():
+                  v = self.v
+               else:
+                  v = u.orth()
+               v = v.normalize(d)
                return [cl - v, cl + v]
       else:
          return NotImplemented

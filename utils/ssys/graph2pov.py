@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
+#HEIGHT = 720
+HEIGHT = 1080
+
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
+SHOW_VIRTUAL = False
 
 from sys import argv, stdin, stderr, exit
 import subprocess
@@ -109,6 +113,8 @@ def main( pov_out = None, halo = False, silent = False ):
             stderr.write(i+' and '+dstsys+' have same pos '+str(V[i])+'!\n')
             continue
          if 'virtual' in tags:
+            if not SHOW_VIRTUAL:
+               continue
             other = V[dstsys]
          else:
             other = (V[i] + V[dstsys]) / 2.0
@@ -126,7 +132,7 @@ def main( pov_out = None, halo = False, silent = False ):
 
    dst.close()
 
-   base = 1080
+   base = HEIGHT
    cmd = [
       'povray', pov,
       '+W' + str(int(base*ratio)), '+H' + str(base),
