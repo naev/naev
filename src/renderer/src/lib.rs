@@ -8,7 +8,7 @@ use sdl2 as sdl;
 use sdl2::image::ImageRWops;
 use std::ops::Deref;
 use std::os::raw::c_double;
-use std::sync::{Arc, Mutex, MutexGuard, OnceLock, RwLock};
+use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
 use std::thread::ThreadId;
 
 pub mod buffer;
@@ -21,6 +21,8 @@ use crate::buffer::{
 };
 use crate::shader::{Shader, ShaderBuilder};
 use log::{debug, warn, warn_err};
+
+static DEBUG: AtomicBool = AtomicBool::new(false);
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
     let s_source = match source {
@@ -523,6 +525,7 @@ impl Context {
         let mut gl = unsafe {
             glow::Context::from_loader_function(|s| sdlvid.gl_get_proc_address(s) as *const _)
         };
+        DEBUG.store(gl.supports_debug(), Ordering::Relaxed);
 
         // Final touches
         sdlvid
@@ -799,8 +802,7 @@ pub extern "C" fn gl_resize() {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
-    let ctx = CONTEXT.get().unwrap();
-    match ctx.gl.supports_debug() {
+    match DEBUG.load(Ordering::Relaxed) {
         true => 1,
         false => 0,
     }
