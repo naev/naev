@@ -539,7 +539,7 @@ impl Context {
             false => log::warn("unable to set framebuffer to SRGB!"),
         };
 
-        #[cfg(debug_assertions)]
+        #[cfg(all(debug_assertions, not(target_os = "macos")))]
         match gl_attr.context_flags().has_debug() {
             true => unsafe {
                 gl.enable(glow::DEBUG_OUTPUT);
