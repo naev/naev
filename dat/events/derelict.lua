@@ -394,7 +394,7 @@ function goodevent()
    local armour, shield = pp:health()
    if armour < 50 and stats.armour_regen <= 0 then
       table.insert( goodevent_list, function ()
-         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and stripped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
+         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and stripped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai}, your ship AI, and without thinking too deeply about it, you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()}))
          pp:setHealth( 100, shield )
       end )
    end
