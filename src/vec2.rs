@@ -1,4 +1,4 @@
-use mlua::{Either, FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use nalgebra::Vector2;
 use std::os::raw::c_void;
 
@@ -10,36 +10,29 @@ use crate::nlua::{LuaEnv, NLUA};
 pub struct Vec2(Vector2<f64>);
 
 impl Vec2 {
+    /// Creates a new Vec2
     pub fn new(x: f64, y: f64) -> Self {
         Vec2(Vector2::new(x, y))
     }
 
-    fn lua_add(self, val: Either<f64, Vec2>) -> mlua::Result<Self> {
-        match val {
-            Either::Left(n) => Ok(Vec2::new(self.0.x + n, self.0.y + n)),
-            Either::Right(vec2) => Ok(Vec2::new(self.0.x + vec2.0.x, self.0.y + vec2.0.y)),
-        }
+    /// Adds two vectors
+    fn lua_add(self, vec2: Self) -> mlua::Result<Self> {
+        Ok(Self(self.0 + vec2.0))
     }
 
-    fn lua_sub(self, val: Either<f64, Vec2>) -> mlua::Result<Self> {
-        match val {
-            Either::Left(n) => Ok(Vec2::new(self.0.x - n, self.0.y - n)),
-            Either::Right(vec2) => Ok(Vec2::new(self.0.x - vec2.0.x, self.0.y - vec2.0.y)),
-        }
+    /// Subtraction of two vectors
+    fn lua_sub(self, vec2: Self) -> mlua::Result<Self> {
+        Ok(Self(self.0 - vec2.0))
     }
 
-    fn lua_mul(self, val: Either<f64, Vec2>) -> mlua::Result<Self> {
-        match val {
-            Either::Left(n) => Ok(Vec2::new(self.0.x * n, self.0.y * n)),
-            Either::Right(vec2) => Ok(Vec2::new(self.0.x * vec2.0.x, self.0.y * vec2.0.y)),
-        }
+    /// Multiplication of two vectors
+    fn lua_mul(self, vec2: Self) -> mlua::Result<Self> {
+        Ok(Self(self.0.component_mul(&vec2.0)))
     }
 
-    fn lua_div(self, val: Either<f64, Vec2>) -> mlua::Result<Self> {
-        match val {
-            Either::Left(n) => Ok(Vec2::new(self.0.x / n, self.0.y / n)),
-            Either::Right(vec2) => Ok(Vec2::new(self.0.x / vec2.0.x, self.0.y / vec2.0.y)),
-        }
+    /// Division of two vectors
+    fn lua_div(self, vec2: Self) -> mlua::Result<Self> {
+        Ok(Self(self.0.component_div(&vec2.0)))
     }
 }
 
@@ -47,7 +40,12 @@ impl FromLua for Vec2 {
     fn from_lua(value: Value, _: &Lua) -> mlua::Result<Self> {
         match value {
             Value::UserData(ud) => Ok(*ud.borrow::<Self>()?),
-            _ => unreachable!(),
+            Value::Integer(num) => Ok(Self::new(num as f64, num as f64)),
+            Value::Number(num) => Ok(Self::new(num as f64, num as f64)),
+            val => Err(mlua::Error::RuntimeError(format!(
+                "unable to convert {} to Vec2",
+                val.type_name()
+            ))),
         }
     }
 }
@@ -147,11 +145,10 @@ impl UserData for Vec2 {
         ///    @luatparam number|nil y Y coordinate or nil to add to.
         ///    @luatreturn Vec2 The result of the vector operation.
         /// @luafunc add
-        methods.add_meta_function(
-            MetaMethod::Add,
-            |_, (vec, val): (Self, Either<f64, Vec2>)| vec.lua_add(val),
-        );
-        methods.add_method("add", |_, vec, val: Either<f64, Vec2>| vec.lua_add(val));
+        methods.add_meta_function(MetaMethod::Add, |_, (vec, val): (Self, Self)| {
+            vec.lua_add(val)
+        });
+        methods.add_method("add", |_, vec, val| vec.lua_add(val));
 
         /// @brief Subtracts two vectors or a vector and some cartesian coordinates.
         ///
@@ -167,11 +164,10 @@ impl UserData for Vec2 {
         ///    @luatparam number|nil y Y coordinate or nil to subtract.
         ///    @luatreturn Vec2 The result of the vector operation.
         /// @luafunc sub
-        methods.add_meta_function(
-            MetaMethod::Sub,
-            |_, (vec, val): (Self, Either<f64, Vec2>)| vec.lua_sub(val),
-        );
-        methods.add_method("sub", |_, vec, val: Either<f64, Vec2>| vec.lua_sub(val));
+        methods.add_meta_function(MetaMethod::Sub, |_, (vec, val): (Self, Self)| {
+            vec.lua_sub(val)
+        });
+        methods.add_method("sub", |_, vec, val| vec.lua_sub(val));
 
         /// @brief Multiplies a vector by a number.
         ///
@@ -182,11 +178,10 @@ impl UserData for Vec2 {
         ///    @luatparam number mod Amount to multiply by.
         ///    @luatreturn Vec2 The result of the vector operation.
         /// @luafunc mul
-        methods.add_meta_function(
-            MetaMethod::Mul,
-            |_, (vec, val): (Self, Either<f64, Vec2>)| vec.lua_mul(val),
-        );
-        methods.add_method("mul", |_, vec, val: Either<f64, Vec2>| vec.lua_mul(val));
+        methods.add_meta_function(MetaMethod::Mul, |_, (vec, val): (Self, Self)| {
+            vec.lua_mul(val)
+        });
+        methods.add_method("mul", |_, vec, val| vec.lua_mul(val));
 
         /// @brief Divides a vector by a number.
         ///
@@ -197,11 +192,10 @@ impl UserData for Vec2 {
         ///    @luatparam number mod Amount to divide by.
         ///    @luatreturn Vec2 The result of the vector operation.
         /// @luafunc div
-        methods.add_meta_function(
-            MetaMethod::Div,
-            |_, (vec, val): (Self, Either<f64, Vec2>)| vec.lua_div(val),
-        );
-        methods.add_method("div", |_, vec, val: Either<f64, Vec2>| vec.lua_div(val));
+        methods.add_meta_function(MetaMethod::Div, |_, (vec, val): (Self, Self)| {
+            vec.lua_div(val)
+        });
+        methods.add_method("div", |_, vec, val| vec.lua_div(val));
 
         methods.add_meta_function(MetaMethod::Unm, |_, vec: Self| {
             Ok(Vec2::new(-vec.0.x, -vec.0.y))
