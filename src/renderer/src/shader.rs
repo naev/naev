@@ -48,7 +48,9 @@ impl Shader {
         unsafe {
             gl.shader_source(shader, source);
             gl.compile_shader(shader);
-            gl.object_label(glow::SHADER, shader.0.into(), Some(name));
+            if gl.supports_debug() {
+                gl.object_label(glow::SHADER, shader.0.into(), Some(name));
+            }
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
             for (i, line) in source.lines().enumerate() {
@@ -74,7 +76,9 @@ impl Shader {
             gl.link_program(program);
             gl.delete_shader(vertshader);
             gl.delete_shader(fragshader);
-            gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
+            if gl.supports_debug() {
+                gl.object_label(glow::PROGRAM, program.0.into(), Some(name));
+            }
         }
         if unsafe { !gl.get_program_link_status(program) } {
             let slog = unsafe { gl.get_program_info_log(program) };

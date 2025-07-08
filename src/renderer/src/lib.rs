@@ -539,44 +539,46 @@ impl Context {
             false => log::warn("unable to set framebuffer to SRGB!"),
         };
 
-        #[cfg(all(debug_assertions, not(target_os = "macos")))]
-        match gl_attr.context_flags().has_debug() {
-            true => unsafe {
-                gl.enable(glow::DEBUG_OUTPUT);
-                gl.debug_message_callback(debug_callback);
-                // Hide stuff that is useful for RenderDoc
-                for msg_type in [
-                    glow::DEBUG_TYPE_PUSH_GROUP,
-                    glow::DEBUG_TYPE_POP_GROUP,
-                    glow::DEBUG_TYPE_MARKER,
-                ] {
+        #[cfg(debug_assertions)]
+        if gl.supports_debug() {
+            match gl_attr.context_flags().has_debug() {
+                true => unsafe {
+                    gl.enable(glow::DEBUG_OUTPUT);
+                    gl.debug_message_callback(debug_callback);
+                    // Hide stuff that is useful for RenderDoc
+                    for msg_type in [
+                        glow::DEBUG_TYPE_PUSH_GROUP,
+                        glow::DEBUG_TYPE_POP_GROUP,
+                        glow::DEBUG_TYPE_MARKER,
+                    ] {
+                        gl.debug_message_control(
+                            glow::DEBUG_SOURCE_APPLICATION,
+                            msg_type,
+                            glow::DONT_CARE,
+                            &[],
+                            false,
+                        );
+                    }
+                    // Notifications about putting stuff in GPU memory, which we want
                     gl.debug_message_control(
-                        glow::DEBUG_SOURCE_APPLICATION,
-                        msg_type,
                         glow::DONT_CARE,
+                        glow::DONT_CARE,
+                        glow::DEBUG_SEVERITY_NOTIFICATION,
                         &[],
                         false,
                     );
-                }
-                // Notifications about putting stuff in GPU memory, which we want
-                gl.debug_message_control(
-                    glow::DONT_CARE,
-                    glow::DONT_CARE,
-                    glow::DEBUG_SEVERITY_NOTIFICATION,
-                    &[],
-                    false,
-                );
-                // NVIDIA warnings about recompiling shaders, don't think we can do much here
-                gl.debug_message_control(
-                    glow::DEBUG_SOURCE_API,
-                    glow::DEBUG_TYPE_PERFORMANCE,
-                    glow::DONT_CARE,
-                    &[131218],
-                    false,
-                );
-            },
-            false => log::warn("unable to set OpenGL debug mode!"),
-        };
+                    // NVIDIA warnings about recompiling shaders, don't think we can do much here
+                    gl.debug_message_control(
+                        glow::DEBUG_SOURCE_API,
+                        glow::DEBUG_TYPE_PERFORMANCE,
+                        glow::DONT_CARE,
+                        &[131218],
+                        false,
+                    );
+                },
+                false => log::warn("unable to set OpenGL debug mode!"),
+            };
+        }
 
         unsafe {
             naevc::gl_screen.window = window.raw() as *mut naevc::SDL_Window;
@@ -605,11 +607,13 @@ impl Context {
         let vao_core = unsafe {
             let vao = gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))?;
             gl.bind_vertex_array(Some(vao));
-            gl.object_label(
-                glow::VERTEX_ARRAY,
-                vao.0.into(),
-                Some("C Core Vertex Array"),
-            );
+            if gl.supports_debug() {
+                gl.object_label(
+                    glow::VERTEX_ARRAY,
+                    vao.0.into(),
+                    Some("C Core Vertex Array"),
+                );
+            }
             vao
         };
 

@@ -219,7 +219,9 @@ impl TextureData {
                 glow::UNSIGNED_BYTE,
                 gldata,
             );
-            gl.object_label(glow::TEXTURE, texture.0.into(), name);
+            if gl.supports_debug() {
+                gl.object_label(glow::TEXTURE, texture.0.into(), name);
+            }
             gl.bind_texture(glow::TEXTURE_2D, None);
         }
 
@@ -295,8 +297,10 @@ impl Texture {
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         Self::copy_sampler_params(gl, &sampler, &self.sampler);
-        unsafe {
-            gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
+        if gl.supports_debug() {
+            unsafe {
+                gl.object_label(glow::SAMPLER, sampler.0.into(), self.path.clone());
+            }
         }
 
         Ok(Texture {
@@ -776,7 +780,9 @@ impl TextureBuilder {
                 }
                 gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_S, self.address_u.to_gl());
                 gl.sampler_parameter_i32(sampler, glow::TEXTURE_WRAP_T, self.address_v.to_gl());
-                gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
+                if gl.supports_debug() {
+                    gl.object_label(glow::SAMPLER, sampler.0.into(), self.name.clone());
+                }
             }
             sampler
         };
@@ -997,7 +1003,9 @@ impl FramebufferBuilder {
         let framebuffer = unsafe { gl.create_framebuffer().map_err(|e| anyhow::anyhow!(e)) }?;
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
-            gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
+            if gl.supports_debug() {
+                gl.object_label(glow::FRAMEBUFFER, framebuffer.0.into(), self.name);
+            }
         }
 
         if let Some(ref texture) = texture {

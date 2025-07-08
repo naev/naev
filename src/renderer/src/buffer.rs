@@ -164,7 +164,9 @@ impl<'a> BufferBuilder<'a> {
         unsafe {
             gl.bind_buffer(target, Some(buffer));
             gl.buffer_data_u8_slice(target, self.data, usage);
-            gl.object_label(glow::BUFFER, buffer.0.into(), self.name);
+            if gl.supports_debug() {
+                gl.object_label(glow::BUFFER, buffer.0.into(), self.name);
+            }
             gl.bind_buffer(target, None);
         }
 
@@ -278,7 +280,9 @@ impl<'a> VertexArrayBuilder<'a> {
         let vertex_array = unsafe { gl.create_vertex_array().map_err(|e| anyhow::anyhow!(e))? };
         unsafe {
             gl.bind_vertex_array(Some(vertex_array));
-            gl.object_label(glow::VERTEX_ARRAY, vertex_array.0.into(), self.name);
+            if gl.supports_debug() {
+                gl.object_label(glow::VERTEX_ARRAY, vertex_array.0.into(), self.name);
+            }
 
             // Bind Vertex Buffers
             for (idx, buffer) in self.buffers.iter().enumerate() {
