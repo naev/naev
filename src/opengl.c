@@ -42,7 +42,6 @@ glInfo gl_screen = {
    .window = NULL, /* Should be initialized to NULL as is used for cases of
                       SDL_ShowSimpleMessageBox. */
 }; /**< Gives data of current opengl settings. */
-static int gl_activated = 0; /**< Whether or not a window is activated. */
 
 static unsigned int cb_correct_pp =
    0; /**< Colourblind post-process shader id for correction. */
@@ -60,7 +59,6 @@ mat4 gl_view_matrix = { { { { 0 } } } };
 /* gl */
 static int gl_getFullscreenMode( void );
 static int gl_getGLInfo( void );
-static int gl_defState( void );
 
 /*
  *
@@ -292,33 +290,11 @@ static int gl_getGLInfo( void )
 }
 
 /**
- * @brief Sets the opengl state to its default parameters.
- *
- *    @return 0 on success.
- */
-static int gl_defState( void )
-{
-   glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
-   glEnable( GL_BLEND );       /* alpha blending ftw */
-   glEnable(
-      GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails &
-                           map routes are thin & anti-aliased. */
-
-   /* Set the blending/shading model to use. */
-   glBlendEquation( GL_FUNC_ADD );
-   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE,
-                        GL_ONE_MINUS_SRC_ALPHA );
-
-   return 0;
-}
-
-/**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
 int gl_init( void )
 {
-
    /* Set Vsync. */
    if ( SDL_GL_GetSwapInterval() )
       gl_screen.flags |= OPENGL_VSYNC;
@@ -330,7 +306,6 @@ int gl_init( void )
       gl_screen.fbo_tex[i]       = GL_INVALID_VALUE;
       gl_screen.fbo_depth_tex[i] = GL_INVALID_VALUE;
    }
-   gl_activated = 1; /* Opengl is now activated. */
 
    /* Apply the configured fullscreen display mode, if any. */
    gl_setupFullscreen();
@@ -355,21 +330,9 @@ int gl_init( void )
       WARN( "Naev requires OpenGL %d.%d, but got OpenGL %d.%d!", 3, 3,
             GLVersion.major, GLVersion.minor );
 
-   /* Some OpenGL options. */
-   glClearColor( 0., 0., 0., 0. );
-
-   /* Set default opengl state. */
-   gl_defState();
-   gl_checkErr();
-
    /* Handles resetting the viewport and scaling, rw/rh are set in createWindow.
     */
    gl_resize();
-
-   /* Finishing touches. */
-   glClear( GL_COLOR_BUFFER_BIT |
-            GL_DEPTH_BUFFER_BIT ); /* must clear the buffer first */
-   gl_checkErr();
 
    /* Initialize subsystems.*/
    gl_initTextures();
@@ -383,9 +346,6 @@ int gl_init( void )
 
    /* Set colourblind shader if necessary. */
    gl_colourblind();
-
-   /* Set colourspace. */
-   glEnable( GL_FRAMEBUFFER_SRGB );
 
    /* Load the gltf framework. */
    gltf_init();

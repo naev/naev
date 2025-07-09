@@ -705,8 +705,23 @@ impl Context {
         // Load up initial dimensions
         let dimensions = RwLock::new(Dimensions::new(&window));
 
+        // Set up the OpenGL state
         unsafe {
+            gl.enable(glow::FRAMEBUFFER_SRGB);
             gl.bind_vertex_array(Some(vao_core)); // Set default C VAO
+            gl.disable(glow::DEPTH_TEST);
+            gl.enable(glow::BLEND);
+            // We use SDF shaders for most shapes, but star trails & map routes are thin & anti-aliased.
+            gl.enable(glow::LINE_SMOOTH);
+            gl.blend_equation(glow::FUNC_ADD);
+            gl.blend_func_separate(
+                glow::SRC_ALPHA,
+                glow::ONE_MINUS_SRC_ALPHA,
+                glow::ONE,
+                glow::ONE_MINUS_SRC_ALPHA,
+            );
+            gl.clear_color(0.0, 0.0, 0.0, 0.0);
+            gl.clear(glow::COLOR_BUFFER_BIT | glow::DEPTH_BUFFER_BIT);
         }
         let ctx = Context {
             sdlvid,
