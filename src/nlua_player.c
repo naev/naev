@@ -979,7 +979,7 @@ static int playerL_cinematics( lua_State *L )
          player_setFlag( PLAYER_CINEMATICS_2X );
 
       /* Redo viewport. */
-      gl_setDefViewport( gl_screen.nw, gl_screen.nh );
+      gl_defViewport();
    } else {
       /* Reset speed properly to player speed. */
       player_resetSpeed();

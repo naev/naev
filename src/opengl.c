@@ -52,9 +52,7 @@ static unsigned int cb_simulate_pp =
 /*
  * Viewport offsets
  */
-static int gl_view_w      = 0; /* Viewport width. */
-static int gl_view_h      = 0; /* Viewport height. */
-mat4       gl_view_matrix = { { { { 0 } } } };
+mat4 gl_view_matrix = { { { { 0 } } } };
 
 /*
  * prototypes
@@ -453,23 +451,6 @@ void gl_viewport( int w, int h )
       mat4_scale( &proj, gl_screen.wscale, gl_screen.hscale, 1. );
 
    gl_view_matrix = proj;
-}
-
-/**
- * @brief Sets the default viewport.
- */
-void gl_setDefViewport( int w, int h )
-{
-   gl_view_w = w;
-   gl_view_h = h;
-}
-
-/**
- * @brief Resets viewport to default
- */
-void gl_defViewport( void )
-{
-   gl_viewport( gl_view_w, gl_view_h );
 }
 
 /**

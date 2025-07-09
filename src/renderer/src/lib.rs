@@ -742,8 +742,7 @@ impl Context {
         );
         unsafe {
             gl.viewport(0, 0, vw, vh);
-            naevc::gl_setDefViewport(vw, vh);
-            naevc::gl_defViewport();
+            naevc::gl_viewport(vw, vh);
         }
         *self.dimensions.write().unwrap() = dims;
         Ok(())
@@ -816,5 +815,18 @@ pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
     match DEBUG.load(Ordering::Relaxed) {
         true => 1,
         false => 0,
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_defViewport() {
+    let ctx = Context::get().unwrap();
+    let dims = ctx.dimensions.read().unwrap();
+    let (vw, vh) = (
+        dims.view_width.round() as i32,
+        dims.view_height.round() as i32,
+    );
+    unsafe {
+        naevc::gl_viewport(vw, vh);
     }
 }
