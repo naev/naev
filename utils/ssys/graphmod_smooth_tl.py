@@ -10,9 +10,11 @@ if expe := '-e' in argv[1:]:
    argv.remove('-e')
 
 if argv[1:] != []:
-   stderr.write('usage: ' + argv[0].split('/')[-1] + '\n')
-   stderr.write('  Reads a graph file on stdin, outputs a graph on stdout.\n')
-   stderr.write('  Intended as a postprocessing for neato output.\n')
+   stderr.write(
+      'usage: ' + argv[0].split('/')[-1] + '\n'
+      '  Reads a graph file on stdin, outputs a graph on stdout.\n'
+      '  Intended as a postprocessing for neato output.\n'
+   )
    exit(0)
 
 from geometry import vec

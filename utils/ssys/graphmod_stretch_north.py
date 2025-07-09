@@ -7,9 +7,11 @@ if __name__ != '__main__':
 from sys import stderr, argv, exit
 
 if argv[1:] != []:
-   stderr.write('usage: ' + argv[0].split('/')[-1] + '\n')
-   stderr.write('  Reads a graph file on stdin, outputs a graph on stdout.\n')
-   stderr.write('  Horizontally stretches the north.\n')
+   stderr.write(
+      'usage: ' + argv[0].split('/')[-1] + '\n'
+      '  Reads a graph file on stdin, outputs a graph on stdout.\n'
+      '  Horizontally stretches the north.\n'
+   )
    exit(0)
 
 from geometry import vec, bb

@@ -8,10 +8,10 @@ from sys import argv, stderr
 from graph_vaux import color_values, ssys_color, ssys_nebula
 
 
-from graphmod import sys_pos as pos, sys_jmp as E, no_graph_out
-no_graph_out()
-
 def main( color = False, fixed_pos = False ):
+   from graphmod import sys_pos as pos, sys_jmp as E, no_graph_out
+   no_graph_out()
+
    if color:
       colors = { k: color_values[ssys_color(pos, k)] for k in pos }
       nebula = { k for k in pos if ssys_nebula(pos, k) }
@@ -114,23 +114,25 @@ def main( color = False, fixed_pos = False ):
          print('\t"' + f + '"--"' + t + '"' + prop)
    print('}')
 
-if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)>3:
-   print('usage: ', argv[0], '[-c]', '[-k]')
-   print('  Outputs the graph in dot format.')
-   print('  By default, interprets the vertex aux as the name.')
-   print('  If -c is set, interprets the first aux field as color.')
-   print('  If -k is set, the nodes have the keep_position marker.')
-   print('Examples:')
-   print('  > ./utils/ssys/ssys2dot.py -k | neato -Tpng > before.png')
-   print('  > ./utils/ssys/ssys2dot.py | neato -Tpng > after.png')
-   print('  > display before.png after.png')
+if color := '-c' in argv:
+   argv.remove('-c')
+
+if keep := '-k' in argv:
+   argv.remove('-k')
+
+if '-h' in argv[1:] or '--help' in argv[1:]:
+   print(
+      'usage: ', argv[0], '[-c]', '[-k]', '\n'
+      '  Outputs the graph in dot format.\n'
+      '  By default, interprets the vertex aux as the name.\n'
+      '  If -c is set, interprets the first aux field as color.\n'
+      '  If -k is set, the nodes have the keep_position marker.\n'
+      'Examples:\n'
+      '  > ./utils/ssys/ssys2dot.py -k | neato -Tpng > before.png\n'
+      '  > ./utils/ssys/ssys2dot.py | neato -Tpng > after.png\n'
+      '  > display before.png after.png'
+   )
 else:
-   if color := '-c' in argv:
-      argv.remove('-c')
-
-   if keep := '-k' in argv:
-      argv.remove('-k')
-
    if argv[1:] != []:
       stderr.write('Ignored: "' + '", "'.join(argv[1:]) + '"\n')
 

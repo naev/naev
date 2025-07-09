@@ -53,15 +53,17 @@ if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:] != []:
    if not h:
       stderr.write('Unrecognized: ' + ', '.join(argv[1]) + '\n')
    from os.path import basename
-   print("usage  ", basename(argv[0]), '[-d]', '[-H]', '[ (-p | -q)<file.png> ]')
-   print('  Writes "out.pov". Outputs povray commandline to stdout.')
-   print('  If color tags are present in inputs, they will be used.')
-   print('  If -d is set, uses decorators.')
-   print('  If -H is set, output is 1080p instead of 720p.')
-   print('  If -n is set, no preview is dispalyed.')
-   print('  If -p is set, calls povray and output the graph.')
-   print('  -q does the same as -p, but quiets povray output.')
-   print('  If these cases, the pov file name is built up from the png file name.')
+   print (
+      'usage ', basename(argv[0]), '[-d]', '[-H]', '[ (-p | -q)<file.png> ]\n'
+      '  Writes "out.pov". Outputs povray commandline to stdout.\n'
+      '  If color tags are present in inputs, they will be used.\n'
+      '  If -d is set, uses decorators.\n'
+      '  If -H is set, output is 1080p instead of 720p.\n'
+      '  If -n is set, no preview is dispalyed.\n'
+      '  If -p is set, calls povray and output the graph.\n'
+      '  -q does the same as -p, but quiets povray output.\n'
+      '  If these cases, the pov file name is built up from the png file name.'
+   )
    exit(0)
 
 from graph_vaux import is_default, color_values, ssys_color, ssys_nebula
@@ -200,7 +202,7 @@ cmd = [
    '+A0.1', '+AM2', '+R4', '+BM2'
 ]
 if no_preview:
-   cmd += ['+D0']
+   cmd += ['-D']
 
 stderr.write(' '.join(cmd) + '\n')
 

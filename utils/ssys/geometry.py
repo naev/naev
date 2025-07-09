@@ -428,6 +428,14 @@ class bb:
 # example
 
 if __name__ == '__main__':
+   from sys import argv, exit
+   if '-h' in argv[1:] or '--help' in argv[1:]:
+      print(
+         'usage:  '+ argv[0]+'\n'
+         '  Use povray to generate a test figure.'
+      )
+      exit(0)
+
    from tempfile import NamedTemporaryFile
    from subprocess import run
    from random import random

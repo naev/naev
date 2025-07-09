@@ -106,7 +106,7 @@ pmsg "apply gravity"                                                          |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')                     |
 "$DIR"/graphmod_abh.py                                                        |
 pmsg "gen final graph"                                                        |
-"$DIR"/graphmod_repos.sh "$DIR"                                               |
+"$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"                            |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
 tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png)    |

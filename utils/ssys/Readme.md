@@ -64,10 +64,10 @@ Performed by `process_ssys.sh`. Several steps:
     - `reposition`
     - `graphmod_smooth_tl.py`
  - generate `map_repos.png`
- - __6__ `apply_pot.sh -g` applies gravity.
+ - __6__ `apply_pot.sh -g` applies gravity + some graphmods.
  - generate `map_grav.png`
-
-Notice `graphmod_virtual.py` is applied at each step to avoid noise in `png`s.
+ - __7__ A bit of post processing. See `process_ssys.sh` for more details.
+ - generate `map_after.png`
 
 The labeled maps `before.png` and `after.png` are generated, with obvious meaning.
 
@@ -92,8 +92,7 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 
 # TODO
- - document new postgrav processing
- - graph2ssys should also update decorators position
+ - `graph2ssys` should also update decorators position
  - `graph2dot`: display one-way hidden/one-way normal connections.
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.

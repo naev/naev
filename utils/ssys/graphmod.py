@@ -1,7 +1,21 @@
-# python3
+#!/usr/bin/env python3
 
-from sys import stdin, stderr, exit
+from sys import stdin, stderr, argv, exit
 from geometry import vec
+
+if __name__ == '__main__':
+   if '-h' in argv[1:] or '--help' in argv[1:]:
+      stderr.write(
+         'usage  ' + argv[0].split('/')[-1] + '\n'
+         '   This is intended as a module to build graphmods,\n'
+         '   i.e. programs reading a graph on stdin and outputting a modified\n'
+         '   version of the graph on stdout.\n'
+         '   Calling this module as an executable works as a NO-OP graphmod,\n'
+         '   i.e. it outputs the same exact graph that was in input.\n'
+         '   However, this has a latching effect: no output is sent until all\n'
+         '   the input has been read.\n'
+      )
+      exit(0)
 
 class _pos(dict):
    aux = {}
