@@ -7,9 +7,11 @@ if __name__ != '__main__':
 from sys import stderr, argv, exit
 
 if argv[1:] != []:
-   stderr.write('usage: ' + argv[0].split('/')[-1] + '\n')
-   stderr.write('  Reads a graph file on stdin, outputs a graph on stdout.\n')
-   stderr.write('  Post-gravity final corrections.\n')
+   stderr.write(
+      'usage: ' + argv[0].split('/')[-1] + '\n'
+      '  Reads a graph file on stdin, outputs a graph on stdout.\n'
+      '  Post-gravity final corrections.\n'
+   )
    exit(0)
 
 from graphmod import sys_pos as pos

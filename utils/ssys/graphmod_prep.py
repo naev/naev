@@ -7,6 +7,14 @@ if __name__ != '__main__':
 from sys import argv, stderr
 from graph_vaux import color_values
 
+if argv[1:] != []:
+   stderr.write(
+      'usage: ' + argv[0].split('/')[-1] + '\n'
+      '  Reads a graph file on stdin, outputs a graph on stdout.\n'
+      '  Graphmod intended to be used as a preprocessing before neato is applied.\n'
+      '  Mainly adds virtual edges.\n'
+   )
+   exit(0)
 
 anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
    'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]

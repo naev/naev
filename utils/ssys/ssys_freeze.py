@@ -32,10 +32,12 @@ if __name__ == '__main__':
    args = argv[1:]
 
    if '-h' in args or '--help' in args or args == []:
-      stderr.write('usage:  ' + basename(argv[0]) + '  -f | (<file1> ..)\n')
-      stderr.write('  Freezes its input xml ssys files.\n')
-      stderr.write('  The actually modified ssys files are output.\n')
-      stderr.write('  If -f is set, reads the list on stdin.\n')
+      stderr.write(
+         'usage:  ' + basename(argv[0]) + '  -f | (<file1> ..)\n'
+         '  Freezes its input xml ssys files.\n'
+         '  The actually modified ssys files are output.\n'
+         '  If -f is set, reads the list on stdin.\n'
+      )
       exit(0)
 
    if '-f' in args:

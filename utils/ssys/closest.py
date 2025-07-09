@@ -5,8 +5,10 @@ if __name__ != '__main__':
 
 from sys import argv, stderr, exit
 if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)>3:
-   stderr.write('Usage: ' + argv[0] + '<x> <y>' + '\n')
-   stderr.write('Read a graph in input, and output the vertex closest to <x> <y>\n' + '\n')
+   stderr.write(
+      'Usage:  ' + argv[0].split('/')[-1] + ' <x> <y>' + '\n'
+      '  Reads a graph in input, and outputs the vertex closest to <x> <y>\n'
+   )
    exit(0)
 
 from graphmod import sys_pos as pos, no_graph_out

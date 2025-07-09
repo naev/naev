@@ -26,7 +26,7 @@ while read -r picnam ; do
       if [ ! -f "$OUT" ] || [ "$pic" -nt "$OUT" ] ; then
          convert "$pic" "$OUT"
       else
-         echo -n "[already here]" >&2
+         echo -n " [already here]" >&2
       fi
       echo "" >&2
       echo -e "#declare $bas = box{\n\t<0,0,0>\n\t<1,1,-1>"

@@ -94,6 +94,14 @@ def relax_dir( sys_dirs, sm_dirs, eps = 0.00001, debug = False, quiet = False ):
    return alpha, mi[1]
 
 if __name__ == '__main__':
+   from sys import argv, exit
+   if '-h' in argv[1:] or '--help' in argv[1:]:
+      print(
+         'usage:  '+ argv[0]+'\n'
+         '  Use gnuplot to illustrate a test. Creates a file "out.png".'
+      )
+      exit(0)
+
    from random import random
 
    N = 3
