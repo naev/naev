@@ -77,20 +77,18 @@ def main( color = False, fixed_pos = False ):
          if 'virtual' in aux:
             continue;
          elif 'tradelane' in aux:
-            suff.extend(['style=bold', 'penwidth=4.0'])
+            suff += ['style=bold', 'penwidth=4.0']
          elif 'hidden' in aux:
-            suff.extend(['style=dotted', 'penwidth=2.5'])
+            suff += ['style=dotted', 'penwidth=2.5']
          elif 'new' in aux:
-            suff.extend(['color=green'])
+            suff += ['color=green']
          elif 'fake' in aux:
-            suff.extend(['color=red', 'weight=0'])
+            suff += ['color=red', 'weight=0']
 
          suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
          oneway = i not in map(lambda t:t[0], E[dst])
-         edge = ':' if oneway else '--'
-         #edge = '--'
          if oneway or i<dst:
-            print('"'.join(['\t', i, edge, dst, suff]))
+            print('"'.join(['\t', i, '--', dst, suff]))
 
    print('\tedge[len=' + str(reflen) + ']')
    print('\tedge[style="dashed";color="grey";penwidth=1.5]')
@@ -105,10 +103,10 @@ def main( color = False, fixed_pos = False ):
 
          prop = []
          if f[0] == '_' or t[0] == '_':
-            prop.append('style="invis"')
+            prop += ['style="invis"']
 
          if l != 1.0:
-            prop.append('len='+str(l*reflen))
+            prop += ['len='+str(l*reflen)]
 
          prop = ';'.join(prop)
          if prop != '':

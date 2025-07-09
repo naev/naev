@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-#HEIGHT = 720
-HEIGHT = 1080
 SHOW_VIRTUAL = False
-SHOW_DECORATORS = True
-
 
 decorators = {
    'anubis_black_hole': 'blackhole',
@@ -27,42 +23,53 @@ from sys import argv, stdin, stderr, exit
 import subprocess
 import os
 
-non_opt = [a for a in argv[1:] if a[:2] not in ['-c', '-p', '-q']]
-if '-h' in non_opt or '--help' in non_opt or non_opt!=[]:
-   print("usage  ", argv[0], '[-c] [ (-p | -q)<file.png> ]')
+silent = False
+pov_out = None
+
+if no_preview := '-n' in argv[1:]:
+   argv.remove('-n')
+
+if show_decorators := '-d' in argv[1:]:
+   argv.remove('-d')
+
+if '-H' in argv[1:]:
+   argv.remove('-H')
+   height = 1080
+else:
+   height = 720
+
+if '-p' in [a[:2] for a in argv[1:]]:
+   a = argv[[a[:2] for a in argv[1:]].index('-p') + 1]
+   pov_out = a[2:]
+   argv.remove(a)
+
+if '-q' in [a[:2] for a in argv[1:]]:
+   a = argv[[a[:2] for a in argv[1:]].index('-q') + 1]
+   pov_out = a[2:]
+   argv.remove(a)
+   silent = True
+
+if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:] != []:
+   if not h:
+      stderr.write('Unrecognized: ' + ', '.join(argv[1]) + '\n')
+   from os.path import basename
+   print("usage  ", basename(argv[0]), '[-d]', '[-H]', '[ (-p | -q)<file.png> ]')
    print('  Writes "out.pov". Outputs povray commandline to stdout.')
    print('  If color tags are present in inputs, they will be used.')
-   print('  If -c is set, use color halos.')
+   print('  If -d is set, uses decorators.')
+   print('  If -H is set, output is 1080p instead of 720p.')
+   print('  If -n is set, no preview is dispalyed.')
    print('  If -p is set, calls povray and output the graph.')
    print('  -q does the same as -p, but quiets povray output.')
    print('  If these cases, the pov file name is built up from the png file name.')
    exit(0)
-else:
-   silent = False
-   if halo:= '-s' in argv[1:]:
-      argv.remove('-s')
-
-   if halo:= '-c' in argv[1:]:
-      argv.remove('-c')
-
-   pov_out = None
-   if '-p' in [a[:2] for a in argv[1:]]:
-      a = argv[[a[:2] for a in argv[1:]].index('-p') + 1]
-      pov_out = a[2:]
-      argv.remove(a)
-
-   if '-q' in [a[:2] for a in argv[1:]]:
-      a = argv[[a[:2] for a in argv[1:]].index('-q') + 1]
-      pov_out = a[2:]
-      argv.remove(a)
-      silent = True
 
 from graph_vaux import is_default, color_values, ssys_color, ssys_nebula
 from geometry import bb, vec
 
 
 if pov_out:
-   pov = pov_out.replace('.png', '.pov', 1)
+   pov = pov_out + '.pov'
 else:
    pov = 'out.pov'
 dst = open(pov, 'w')
@@ -115,11 +122,11 @@ write_pov([ '',
    ], '}',
    '',
 ])
-if SHOW_DECORATORS:
+if show_decorators:
    write_pov([ '#include "decorators.inc"', '', ])
 
 for i, p in V.items():
-   if SHOW_DECORATORS and i in decorators:
+   if show_decorators and i in decorators:
       nam, depth = decorators[i]
       x, y = str(p[0]), str(p[1])
       write_pov([ 'object{', [
@@ -127,7 +134,7 @@ for i, p in V.items():
          'translate <' + x + ', ' + y + ', ' + str(depth) + '>',
       ], '}', ])
    col = (0.5, 0.5, 0.5) if i not in colors else colors[i]
-   if not (i == 'sol' and halo):
+   if not (i == 'sol'):
       write_pov([ 'sphere{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
          '9.0',
@@ -148,7 +155,7 @@ for i, p in V.items():
          'scale 11*' + radius,
          'translate <' + str(p[0]) + ', ' + str(p[1]) + ', 3>',
       ], '}', ''])
-   if halo and not is_def[i]:
+   if not is_def[i]:
       the_col = tuple([2.0*x for x in col])
       radius = '5' if i == 'sol' else '3'
       write_pov([ 'cylinder{', [
@@ -186,21 +193,21 @@ for i, p in V.items():
 
 dst.close()
 
-base = HEIGHT
+base = height
 cmd = [
    'povray', pov,
    '+W' + str(int(base*ratio)), '+H' + str(base),
    '+A0.1', '+AM2', '+R4', '+BM2'
 ]
-if pov_out is not None:
-   cmd += ['+O' + pov_out]
+if no_preview:
+   cmd += ['+D0']
 
 stderr.write(' '.join(cmd) + '\n')
 
 if pov_out is not None:
    if silent:
-      arg = {'stderr':open(os.devnull, 'wb')}
+      arg = {'stderr': open(os.devnull, 'wb')}
    else:
       arg = {}
    subprocess.run(cmd, **arg)
-   stderr.write('<' + pov_out + '>\n')
+   stderr.write('<' + pov_out + '.png>\n')

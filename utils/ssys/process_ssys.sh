@@ -1,17 +1,37 @@
 #!/usr/bin/bash
 
+trap 'exit 0' SIGINT
+DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
    DOC=(
-      "usage:  $(basename "$0") [-f]"
+      "usage:  $(basename "$0") [-H] [-f] [-v]"
       "  Applies the whole remap process. See the script content."
       "  Unless -f is set, does not save anything."
+      "  If -H is set, pov outputs are 1080p."
+      "  If -v is set, povray output is displayed."
+      "  If -n is set, no povray preview."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
 fi
 
-DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+POVF=()
+POVO='-q'
+for i in "$@" ; do
+   if [ "$i" = "-f" ] ; then
+      FORCE=1
+   elif [ "$i" = "-H" ] ; then
+      POVF+=("-H")
+   elif [ "$i" = "-n" ] ; then
+      POVF+=("-n")
+   elif [ "$i" = "-v" ] ; then
+      POVO='-p'
+   else
+      echo "Ignored: \"$i\"" >&2
+   fi
+done
+
 BAS=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
 DST="$BAS/ssys"
 
@@ -49,7 +69,7 @@ read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 #tee >(cat >&2) | # DEBUG OUTPUT
 
 # Ok, let's go!
-if [ "$1" = '-f' ] ; then
+if [ -n "$FORCE" ] ; then
    #git checkout "$BAS/spob" "$DST"
    msg "freeze non-nempty"
    echo -e "\e[32m$(
@@ -61,7 +81,7 @@ msg "gen before graph"
 "$DIR"/ssys2graph.sh                                                          |
 "$DIR"/graph_vaux.py -e -c -n                                                 |
 "$DIR"/graphmod_prep.py                                                       |
-tee >("$DIR"/graph2pov.py -c -q'map_bef.png')                                 |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_bef')                   |
 tee                                                                        >(
    "$DIR"/graph2dot.py -c -k |
    neato -n2 -Tpng 2>/dev/null > before.png                                 ) |
@@ -69,31 +89,31 @@ pmsg "apply neato"                                                            |
 tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                             |
 "$DIR"/dot2graph.py                                                           |
 "$DIR"/graphmod_virtual.py                                                    |
-tee >("$DIR"/graph2pov.py -c -q'map_dot.png')                                 |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')                      |
 pmsg "pprocess"                                                               |
 "$DIR"/graphmod_postp.py                                                      |
 "$DIR"/graphmod_virtual.py                                                    |
-tee >("$DIR"/graph2pov.py -c -q'map_post.png')                                |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')                     |
 pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
 "$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
 "$DIR"/graphmod_virtual.py                                                    |
 pmsg ""                                                                       |
-tee >("$DIR"/graph2pov.py -c -q'map_repos.png')                               |
-if [ "$1" = "-f" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')                    |
+if [ -n "$FORCE" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
 "$DIR"/graphmod_stretch_north.py                                              |
-tee >("$DIR"/graph2pov.py -c -q'map_grav.png')                                |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')                     |
 "$DIR"/graphmod_abh.py                                                        |
 pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_repos.sh "$DIR"                                               |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
-tee >("$DIR"/graph2pov.py -c -q'map_final.png')                               |
-"$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
+tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png)    |
+"$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_after'                        |
 
 msg ""
-if [ "$1" = '-f' ] ; then
+if [ -n "$FORCE" ] ; then
    msg "relax ssys..\n"
    msg "total relaxed: \e[32m$("$DIR"/ssys_relax.py -j 4 "$DST"/*.xml | wc -l)\n"
 fi
