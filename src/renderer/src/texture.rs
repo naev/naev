@@ -1545,5 +1545,8 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     let x = bx as f32 + (w - nw) * 0.5;
     let y = by as f32 + (h - nh) * 0.5;
 
-    let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
+    // TODO Disable for now, reactivate in a better way with Texture::scale caching into framebuffers in
+    // the widgets
+    let _ = tex.draw(ctx, x, y, nw, nh);
+    //let _ = tex.draw_scale(ctx, x, y, nw, nh, scale);
 }
