@@ -457,9 +457,10 @@ impl Context {
             width.max(MIN_WIDTH),
             height.max(MIN_HEIGHT),
         );
-        if resizable {
-            wdwbuild.resizable();
-        }
+        // Issue documented below
+        //if resizable {
+        //    wdwbuild.resizable();
+        //}
         if borderless {
             wdwbuild.borderless();
         }
@@ -468,6 +469,13 @@ impl Context {
             .position_centered()
             .allow_highdpi()
             .build()?;
+
+        // It seems like setting the build time flag can give smaller windows than we want, at
+        // least on Wayland. Workaround is to set RESIZABLE flag after creation.
+        // https://github.com/libsdl-org/SDL/issues/13344
+        if resizable {
+            window.set_resizable(true);
+        }
 
         window
             .set_minimum_size(MIN_WIDTH, MIN_HEIGHT)
