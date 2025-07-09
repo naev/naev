@@ -22,6 +22,10 @@ use crate::buffer::{
 use crate::shader::{Shader, ShaderBuilder};
 use log::{debug, warn, warn_err};
 
+const MIN_WIDTH: u32 = 1280;
+const MIN_HEIGHT: u32 = 720;
+const MIN_WIDTH_F: f32 = MIN_WIDTH as f32;
+const MIN_HEIGHT_F: f32 = MIN_HEIGHT as f32;
 static DEBUG: AtomicBool = AtomicBool::new(false);
 
 fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str) {
@@ -172,7 +176,7 @@ impl Message {
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
 pub static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Dimensions {
     pub window_width: u32,  // In real pixels
     pub window_height: u32, // In real pixels
@@ -221,10 +225,10 @@ impl Dimensions {
                 (window_width as f32) * scale,
                 (window_height as f32) * scale,
             );
-            if vw < naevc::RESOLUTION_W_MIN as f32 || vh < naevc::RESOLUTION_H_MIN as f32 {
+            if vw < MIN_WIDTH_F || vh < MIN_HEIGHT_F {
                 warn!("Screen size is too small, upscaling...");
-                let scalew = naevc::RESOLUTION_W_MIN as f32 / vw;
-                let scaleh = naevc::RESOLUTION_H_MIN as f32 / vh;
+                let scalew = MIN_WIDTH_F / vw;
+                let scaleh = MIN_HEIGHT_F / vh;
                 let scale = scale * f32::max(scalew, scaleh);
                 (
                     (window_width as f32) * scale,
@@ -443,8 +447,6 @@ impl Context {
         };
         gl_attr.set_context_version(major, minor);
 
-        //() = crate::start::start().name.into_string()?.as_str();
-
         let mut wdwbuild = sdlvid.window(
             format!(
                 "{} - {}",
@@ -452,8 +454,8 @@ impl Context {
                 start::start().name.clone().into_string()?
             )
             .as_str(),
-            width.max(naevc::RESOLUTION_W_MIN),
-            height.max(naevc::RESOLUTION_H_MIN),
+            width.max(MIN_WIDTH),
+            height.max(MIN_HEIGHT),
         );
         if resizable {
             wdwbuild.resizable();
@@ -461,11 +463,14 @@ impl Context {
         if borderless {
             wdwbuild.borderless();
         }
-        wdwbuild.opengl().position_centered().allow_highdpi();
-        let mut window = wdwbuild.build()?;
+        let mut window = wdwbuild
+            .opengl()
+            .position_centered()
+            .allow_highdpi()
+            .build()?;
 
         window
-            .set_minimum_size(naevc::RESOLUTION_W_MIN, naevc::RESOLUTION_H_MIN)
+            .set_minimum_size(MIN_WIDTH, MIN_HEIGHT)
             .unwrap_or_else(|err| {
                 warn_err(anyhow::Error::new(err).context("unable to set minimum window size."))
             });
