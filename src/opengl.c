@@ -403,10 +403,6 @@ int gl_init( void )
  */
 void gl_resize_c( void )
 {
-   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-   gl_setDefViewport( gl_screen.nw, gl_screen.nh );
-   gl_defViewport();
-
    /* Set up framebuffer. */
    for ( int i = 0; i < OPENGL_NUM_FBOS; i++ ) {
       if ( gl_screen.fbo[i] != GL_INVALID_VALUE ) {

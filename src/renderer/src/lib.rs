@@ -734,7 +734,18 @@ impl Context {
     }
 
     pub fn resize(&self) -> Result<()> {
-        *self.dimensions.write().unwrap() = Dimensions::new(&self.window);
+        let dims = Dimensions::new(&self.window);
+        let gl = &self.gl;
+        let (vw, vh) = (
+            dims.view_width.round() as i32,
+            dims.view_height.round() as i32,
+        );
+        unsafe {
+            gl.viewport(0, 0, vw, vh);
+            naevc::gl_setDefViewport(vw, vh);
+            naevc::gl_defViewport();
+        }
+        *self.dimensions.write().unwrap() = dims;
         Ok(())
     }
 
