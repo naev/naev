@@ -431,29 +431,6 @@ void gl_resize_c( void )
 }
 
 /**
- * @brief Sets the opengl viewport.
- */
-void gl_viewport( int w, int h )
-{
-   mat4 proj = mat4_ortho( 0.,           /* Left edge. */
-                           gl_screen.nw, /* Right edge. */
-                           0.,           /* Bottom edge. */
-                           gl_screen.nh, /* Top edge. */
-                           -1.,          /* near */
-                           1. );         /* far */
-
-   /* Set screen size. */
-   gl_screen.w = w;
-   gl_screen.h = h;
-
-   /* Take into account possible scaling. */
-   if ( gl_screen.scale != 1. )
-      mat4_scale( &proj, gl_screen.wscale, gl_screen.hscale, 1. );
-
-   gl_view_matrix = proj;
-}
-
-/**
  * @brief Translates the window position to screen position.
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )

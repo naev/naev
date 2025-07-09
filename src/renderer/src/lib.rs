@@ -742,7 +742,14 @@ impl Context {
         );
         unsafe {
             gl.viewport(0, 0, vw, vh);
-            naevc::gl_viewport(vw, vh);
+            naevc::gl_view_matrix = naevc::mat4_ortho(
+                0.0,
+                dims.view_width.into(),
+                0.0,
+                dims.view_height.into(),
+                -1.0,
+                1.0,
+            );
         }
         *self.dimensions.write().unwrap() = dims;
         Ok(())
@@ -822,11 +829,14 @@ pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
 pub extern "C" fn gl_defViewport() {
     let ctx = Context::get().unwrap();
     let dims = ctx.dimensions.read().unwrap();
-    let (vw, vh) = (
-        dims.view_width.round() as i32,
-        dims.view_height.round() as i32,
-    );
     unsafe {
-        naevc::gl_viewport(vw, vh);
+        naevc::gl_view_matrix = naevc::mat4_ortho(
+            0.0,
+            dims.view_width.into(),
+            0.0,
+            dims.view_height.into(),
+            -1.0,
+            1.0,
+        );
     }
 }

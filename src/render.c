@@ -256,9 +256,6 @@ void render_all( double game_dt, double real_dt )
       NTracingZoneEnd( _ctx_pp_gui );
    }
 
-   /* We set the to fullscreen, ignoring the GUI modifications. */
-   gl_viewport( gl_screen.nw, gl_screen.nh );
-
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
    NTracingZoneName( _ctx_rendertop, "hooks[rendertop]", 1 );
