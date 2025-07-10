@@ -206,15 +206,14 @@ int naev_main_events( void )
 {
    SDL_Event event;
    while ( !quit && SDL_PollEvent( &event ) ) { /* event loop */
-      if ( event.type == SDL_QUIT ) {
-         SDL_FlushEvent( SDL_QUIT ); /* flush event to prevent it from
+      if ( event.type == SDL_EVENT_QUIT ) {
+         SDL_FlushEvent( SDL_EVENT_QUIT ); /* flush event to prevent it from
                                           quitting when lagging a bit. */
          if ( quit || menu_askQuit() ) {
             quit = 1; /* quit is handled here */
             break;
          }
-      } else if ( event.type == SDL_WINDOWEVENT &&
-                  event.window.event == SDL_WINDOWEVENT_RESIZED ) {
+      } else if ( event.type == SDL_EVENT_WINDOW_RESIZED ) {
          naev_resize();
          continue;
       }
@@ -261,7 +260,7 @@ int naev_main_cleanup( void )
 
    /* Free the icon. */
    if ( naev_icon )
-      SDL_FreeSurface( naev_icon );
+      SDL_DestroySurface( naev_icon );
 
    /* Clean up parser. */
    xmlCleanupParser();

@@ -225,7 +225,7 @@ static int intro_event_handler( int *stop, double *offset, double *vel )
       }
 
       if ( event.type == SDL_WINDOWEVENT &&
-           event.window.event == SDL_WINDOWEVENT_RESIZED ) {
+           event.window.event == SDL_EVENT_WINDOW_RESIZED ) {
          naev_resize();
          continue;
       }

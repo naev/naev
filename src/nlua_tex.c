@@ -355,7 +355,7 @@ static int texL_readData( lua_State *L )
    lua_pushinteger( L, surface->h );
 
    /* Clean up. */
-   SDL_FreeSurface( surface );
+   SDL_DestroySurface( surface );
 
    return 3;
 }
@@ -403,7 +403,7 @@ static int texL_writeData( lua_State *L )
    else
       IMG_SavePNG_RW( surface, rw, 1 );
 
-   SDL_FreeSurface( surface );
+   SDL_DestroySurface( surface );
 
    lua_pushboolean( L, 1 );
    return 1;

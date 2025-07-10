@@ -2060,7 +2060,7 @@ int gui_handleEvent( SDL_Event *evt )
 
    if ( player.p == NULL )
       return 0;
-   if ( ( evt->type == SDL_MOUSEBUTTONDOWN ) &&
+   if ( ( evt->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) &&
         ( pilot_isFlag( player.p, PILOT_HYP_PREP ) ||
           pilot_isFlag( player.p, PILOT_HYP_BEGIN ) ||
           pilot_isFlag( player.p, PILOT_HYPERSPACE ) ) )
@@ -2069,7 +2069,7 @@ int gui_handleEvent( SDL_Event *evt )
    ret = 0;
    switch ( evt->type ) {
    /* Mouse motion. */
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       if ( !gui_L_mmove )
          break;
       if ( gui_prepFunc( gui_lua_mouse_move, "mouse_move" ) == 0 ) {
@@ -2081,8 +2081,8 @@ int gui_handleEvent( SDL_Event *evt )
       break;
 
    /* Mouse click. */
-   case SDL_MOUSEBUTTONDOWN:
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       if ( !gui_L_mclick )
          break;
       if ( gui_prepFunc( gui_lua_mouse_click, "mouse_click" ) == 0 ) {
@@ -2090,7 +2090,7 @@ int gui_handleEvent( SDL_Event *evt )
          gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
-         lua_pushboolean( naevL, ( evt->type == SDL_MOUSEBUTTONDOWN ) );
+         lua_pushboolean( naevL, ( evt->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) );
          gui_runFunc( "mouse_click", 4, 1 );
          ret = lua_toboolean( naevL, -1 );
          lua_pop( naevL, 1 );

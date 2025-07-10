@@ -46,8 +46,8 @@ typedef struct LuaAudio_s {
           rg_max_scale; /**< Replaygain maximum scale factor before clipping. */
    ALuint stream_buffers[2]; /**< Double buffering for streaming. */
    int    active;            /**< Active buffer. */
-   SDL_Thread *th;           /**< Buffering thread. */
-   SDL_cond   *cond;         /**< For message passing. */
+   SDL_Thread    *th;        /**< Buffering thread. */
+   SDL_Condition *cond;      /**< For message passing. */
 } LuaAudio_t;
 
 /*

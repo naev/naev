@@ -365,7 +365,7 @@ void input_setDefault( int wasd )
    input_setKeybind( KST_CONSOLE, KEYBIND_KEYBOARD, SDLK_F2, NMOD_ANY );
 
 #if SDL_PLATFORM_MACOS
-   input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_META );
+   input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_V, NMOD_META );
 #else
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_V, NMOD_CTRL );
 #endif
@@ -384,9 +384,9 @@ void input_init( void )
    SDL_SetEventEnabled( SDL_KEYUP, SDL_ENABLE );
 
    /* Mice. */
-   SDL_SetEventEnabled( SDL_MOUSEMOTION, SDL_ENABLE );
-   SDL_SetEventEnabled( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
-   SDL_SetEventEnabled( SDL_MOUSEBUTTONUP, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_MOTION, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_UP, SDL_ENABLE );
 
    /* Joystick, enabled in joystick.c if needed. */
    SDL_SetEventEnabled( SDL_JOYAXISMOTION, SDL_DISABLE );
@@ -405,7 +405,7 @@ void input_init( void )
                         SDL_DISABLE ); /* Enabled on a per-widget basis. */
 
    /* Mouse. */
-   SDL_SetEventEnabled( SDL_MOUSEWHEEL, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_WHEEL, SDL_ENABLE );
 
    /* Create safe null keybinding for each. */
    for ( int i = 0; i < KST_END; i++ ) {
@@ -730,13 +730,13 @@ const char *input_getKeybindDescription( KeySemanticType keybind )
 SDL_Keymod input_translateMod( SDL_Keymod mod )
 {
    SDL_Keymod mod_filtered = 0;
-   if ( mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) )
+   if ( mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) )
       mod_filtered |= NMOD_SHIFT;
-   if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) )
+   if ( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) )
       mod_filtered |= NMOD_CTRL;
-   if ( mod & ( KMOD_LALT | KMOD_RALT ) )
+   if ( mod & ( SDL_KMOD_LALT | SDL_KMOD_RALT ) )
       mod_filtered |= NMOD_ALT;
-   if ( mod & ( KMOD_LGUI | KMOD_RGUI ) )
+   if ( mod & ( SDL_KMOD_LGUI | SDL_KMOD_RGUI ) )
       mod_filtered |= NMOD_META;
    return mod_filtered;
 }
@@ -1491,7 +1491,7 @@ static void input_clickevent( SDL_Event *event )
    hparam[0].type  = HOOK_PARAM_NUMBER;
    hparam[0].u.num = event->button.button;
    hparam[1].type  = HOOK_PARAM_BOOL;
-   hparam[1].u.b   = ( event->type == SDL_MOUSEBUTTONDOWN );
+   hparam[1].u.b   = ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN );
    hparam[2].type  = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
@@ -1840,9 +1840,9 @@ void input_handle( SDL_Event *event )
    int ismouse;
 
    /* Special case mouse stuff. */
-   if ( ( event->type == SDL_MOUSEMOTION ) ||
-        ( event->type == SDL_MOUSEBUTTONDOWN ) ||
-        ( event->type == SDL_MOUSEBUTTONUP ) ) {
+   if ( ( event->type == SDL_EVENT_MOUSE_MOTION ) ||
+        ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) ||
+        ( event->type == SDL_EVENT_MOUSE_BUTTON_UP ) ) {
       input_mouseTimer = conf.mouse_hide;
       SDL_ShowCursor( SDL_ENABLE );
       ismouse = 1;
@@ -1918,16 +1918,16 @@ void input_handle( SDL_Event *event )
                       0 );
       break;
 
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       input_clickevent( event );
       break;
-   case SDL_MOUSEWHEEL:
+   case SDL_EVENT_MOUSE_WHEEL:
       if ( event->wheel.y > 0 )
          input_clickZoom( 1.1 );
       else if ( event->wheel.y < 0 )
          input_clickZoom( 0.9 );
       break;
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       input_mouseMove( event );
       break;
 

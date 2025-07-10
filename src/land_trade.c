@@ -94,13 +94,13 @@ void commodity_exchange_open( unsigned int wid )
    bw = MIN( LAND_BUTTON_WIDTH, ( dw - 40 ) / 3 );
    snprintf( buf, sizeof( buf ), _( "Buy (%d %s)" ), q, UNIT_MASS );
    window_addButtonKey( wid, 40 + iw, 20, bw, LAND_BUTTON_HEIGHT,
-                        "btnCommodityBuy", buf, commodity_buy, SDLK_b );
+                        "btnCommodityBuy", buf, commodity_buy, SDLK_B );
    snprintf( buf, sizeof( buf ), _( "Sell (%d %s)" ), q, UNIT_MASS );
    window_addButtonKey( wid, 60 + iw + bw, 20, bw, LAND_BUTTON_HEIGHT,
-                        "btnCommoditySell", buf, commodity_sell, SDLK_s );
+                        "btnCommoditySell", buf, commodity_sell, SDLK_S );
    window_addButtonKey( wid, 80 + iw + 2 * bw, 20, bw, LAND_BUTTON_HEIGHT,
                         "btnCommodityClose", _( "Take Off" ),
-                        land_buttonTakeoff, SDLK_t );
+                        land_buttonTakeoff, SDLK_T );
 
    /* handle multipliers. */
    window_handleEvents( wid, commodity_exchange_events );
@@ -570,11 +570,11 @@ static int commodity_getMod( void )
 {
    SDL_Keymod mods = SDL_GetModState();
    int        q    = 10;
-   if ( mods & ( KMOD_LCTRL | KMOD_RCTRL ) )
+   if ( mods & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) )
       q *= 5;
-   if ( mods & ( KMOD_LSHIFT | KMOD_RSHIFT ) )
+   if ( mods & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) )
       q *= 10;
-   if ( mods & ( KMOD_LALT | KMOD_RALT ) )
+   if ( mods & ( SDL_KMOD_LALT | SDL_KMOD_RALT ) )
       q = 1;
    return q;
 }

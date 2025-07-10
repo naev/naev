@@ -386,9 +386,9 @@ int dialogue_YesNoRaw( const char *caption, const char *msg )
    window_addText( wid, 20, -40, w - 40, h, 0, "txtYesNo", font, NULL, msg );
    /* buttons */
    window_addButtonKey( wid, w / 2 - 100 - 10, 20, 100, 30, "btnYes",
-                        _( "Yes" ), dialogue_YesNoClose, SDLK_y );
+                        _( "Yes" ), dialogue_YesNoClose, SDLK_Y );
    window_addButtonKey( wid, w / 2 + 10, 20, 100, 30, "btnNo", _( "No" ),
-                        dialogue_YesNoClose, SDLK_n );
+                        dialogue_YesNoClose, SDLK_N );
 
    /* tricky secondary loop */
    done[1] = -1; /* Default to negative. */
@@ -858,9 +858,9 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
    cd                                  = (struct dialogue_custom_data_s *)data;
 
    /* We translate mouse coords here. */
-   if ( ( event->type == SDL_MOUSEBUTTONDOWN ) ||
-        ( event->type == SDL_MOUSEBUTTONUP ) ||
-        ( event->type == SDL_MOUSEMOTION ) ) {
+   if ( ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) ||
+        ( event->type == SDL_EVENT_MOUSE_BUTTON_UP ) ||
+        ( event->type == SDL_EVENT_MOUSE_MOTION ) ) {
       gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
       mx += cd->mx;
       my += cd->my;
@@ -1037,7 +1037,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       main_loop( 1 );
 
       while ( !naev_isQuit() && SDL_PollEvent( &event ) ) { /* event loop */
-         if ( event.type == SDL_QUIT ) {
+         if ( event.type == SDL_EVENT_QUIT ) {
             if ( menu_askQuit() ) {
                naev_quit();    /* Quit is handled here */
                *loop_done = 1; /* Exit loop and exit game. */
@@ -1049,29 +1049,28 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
             SDL_PushEvent(
                &event ); /* Replicate event until out of all loops. */
             break;
-         } else if ( event.type == SDL_WINDOWEVENT &&
-                     event.window.event == SDL_WINDOWEVENT_RESIZED )
+         } else if ( event.type == SDL_EVENT_WINDOW_RESIZED ) {
             naev_resize();
 
-         input_handle(
-            &event ); /* handles all the events and player keybinds */
-      }
+            input_handle(
+               &event ); /* handles all the events and player keybinds */
+         }
 
-      /* Update stuff. */
-      if ( du != NULL ) {
-         /* Run update. */
-         if ( ( *du->update )( naev_getrealdt(), du->data ) ) {
-            /* Hack to override data. */
-            window_setData( du->wid, loop_done );
-            dialogue_close( du->wid, NULL );
+         /* Update stuff. */
+         if ( du != NULL ) {
+            /* Run update. */
+            if ( ( *du->update )( naev_getrealdt(), du->data ) ) {
+               /* Hack to override data. */
+               window_setData( du->wid, loop_done );
+               dialogue_close( du->wid, NULL );
+            }
          }
       }
+
+      /* Close dialogue. */
+      dialogue_open--;
+      if ( dialogue_open < 0 )
+         WARN( _( "Dialogue counter not in sync!" ) );
+
+      return quit_game;
    }
-
-   /* Close dialogue. */
-   dialogue_open--;
-   if ( dialogue_open < 0 )
-      WARN( _( "Dialogue counter not in sync!" ) );
-
-   return quit_game;
-}

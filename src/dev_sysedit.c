@@ -234,7 +234,7 @@ void sysedit_open( StarSystem *sys )
 
    /* Close button. */
    window_addButtonKey( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose",
-                        _( "Exit" ), sysedit_close, SDLK_x );
+                        _( "Exit" ), sysedit_close, SDLK_X );
    i = 1;
 
    /* Scale. */
@@ -246,13 +246,13 @@ void sysedit_open( StarSystem *sys )
    /* Reset. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnReset", _( "Reset Jumps" ),
-                        sysedit_btnReset, SDLK_r );
+                        sysedit_btnReset, SDLK_R );
    i += 1;
 
    /* Editing. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnEdit", _( "Edit" ), sysedit_btnEdit,
-                        SDLK_e );
+                        SDLK_E );
    i += 1;
 
    /* Remove. */
@@ -264,19 +264,19 @@ void sysedit_open( StarSystem *sys )
    /* New spob. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnNewSpob", _( "New Spob" ),
-                        sysedit_btnNewSpob, SDLK_n );
+                        sysedit_btnNewSpob, SDLK_N );
    i += 1;
 
    /* New asteroids. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnNewAsteroids", _( "New Asteroids" ),
-                        sysedit_btnNewAsteroids, SDLK_a );
+                        sysedit_btnNewAsteroids, SDLK_A );
    i += 1;
 
    /* Toggle Grid. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * i, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnGrid", _( "Grid" ), sysedit_btnGrid,
-                        SDLK_g );
+                        SDLK_G );
 
    /* Options button. */
    window_addButton( wid, -15 - BUTTON_WIDTH - 20, 20, BUTTON_HEIGHT,
@@ -1197,7 +1197,7 @@ static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y,
       sysedit_tsel    = *sel;
 
       /* Check modifier. */
-      if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) )
+      if ( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) )
          sysedit_tadd = 0;
       else {
          /* Detect double click to open spob editor. */
@@ -1217,7 +1217,7 @@ static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y,
    }
 
    /* Add the system if not selected. */
-   if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) )
+   if ( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) )
       sysedit_selectAdd( sel );
    else {
       sysedit_deselect();
@@ -1245,7 +1245,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
    switch ( event->type ) {
 
-   case SDL_MOUSEWHEEL:
+   case SDL_EVENT_MOUSE_WHEEL:
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
@@ -1257,7 +1257,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
       return 1;
 
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
@@ -1335,7 +1335,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
 
       /* Start dragging. */
-      if ( !( mod & ( KMOD_LCTRL | KMOD_RCTRL ) ) ) {
+      if ( !( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) ) ) {
          sysedit_drag      = 1;
          sysedit_dragTime  = SDL_GetTicks();
          sysedit_moved     = 0;
@@ -1343,7 +1343,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
       return 1;
 
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       if ( sysedit_drag ) {
          if ( ( SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD ) &&
               ( sysedit_moved < SYSEDIT_MOVE_THRESHOLD ) ) {
@@ -1389,7 +1389,7 @@ static int sysedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
       break;
 
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       /* Update mouse positions. */
       sysedit_mx = mx;
       sysedit_my = my;

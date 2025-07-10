@@ -252,7 +252,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    /* Close button. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnClose", _( "Exit" ),
-                        uniedit_close, SDLK_x );
+                        uniedit_close, SDLK_X );
    buttonPos++;
 
    /* Save button. */
@@ -277,31 +277,31 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    /* Jump toggle. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnJump", _( "Jump" ),
-                        uniedit_btnJump, SDLK_j );
+                        uniedit_btnJump, SDLK_J );
    buttonPos++;
 
    /* Edit system. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnEdit", _( "Edit" ),
-                        uniedit_btnEdit, SDLK_e );
+                        uniedit_btnEdit, SDLK_E );
    buttonPos++;
 
    /* New system. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnNew", _( "New Sys" ),
-                        uniedit_btnNew, SDLK_n );
+                        uniedit_btnNew, SDLK_N );
    buttonPos++;
 
    /* Open a system. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnOpen", _( "Open" ),
-                        uniedit_btnOpen, SDLK_o );
+                        uniedit_btnOpen, SDLK_O );
    buttonPos++;
 
    /* Find a system or spob. */
    window_addButtonKey( wid, -15, 20 + ( BUTTON_HEIGHT + 20 ) * buttonPos,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnFind", _( "Find" ),
-                        uniedit_btnFind, SDLK_f );
+                        uniedit_btnFind, SDLK_F );
    // buttonPos++;
 
    /* Options button. */
@@ -446,8 +446,8 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
       uniedit_mode = UNIEDIT_DEFAULT;
       return 1;
 
-   case SDLK_a:
-      if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) ) {
+   case SDLK_A:
+      if ( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) ) {
          uniedit_deselect();
          for ( int i = 0; i < array_size( systems_stack ); i++ )
             uniedit_selectAdd( &systems_stack[i] );
@@ -455,7 +455,7 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
       }
       return 0;
 
-   case SDLK_r:
+   case SDLK_R:
       n = array_size( uniedit_sys );
       if ( n > 1 ) {
          uniedit_mode      = UNIEDIT_ROTATE;
@@ -1384,7 +1384,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
    switch ( event->type ) {
 
-   case SDL_MOUSEWHEEL:
+   case SDL_EVENT_MOUSE_WHEEL:
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ) )
          return 0;
@@ -1396,7 +1396,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
       return 1;
 
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ) )
          return 0;
@@ -1470,7 +1470,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          uniedit_dragSys = 1;
          uniedit_tsys    = clickedsys;
          /* Check modifier. */
-         if ( mod & ( KMOD_LCTRL | KMOD_RCTRL ) )
+         if ( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) )
             uniedit_tadd = 0;
          else
             uniedit_tadd = -1;
@@ -1481,7 +1481,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       /* Clicked on non-selected system. */
       if ( clickedsys != NULL ) {
          /* Add the system if not selected. */
-         if ( !( mod & ( KMOD_LCTRL | KMOD_RCTRL ) ) )
+         if ( !( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) ) )
             uniedit_deselect();
          uniedit_selectAdd( clickedsys );
          uniedit_tsys = NULL;
@@ -1491,8 +1491,9 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       /* Start dragging. */
       uniedit_moved = 0;
       uniedit_tsys  = NULL;
-      if ( mod & ( KMOD_LCTRL | KMOD_RCTRL | KMOD_LSHIFT | KMOD_RSHIFT ) ) {
-         if ( mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) )
+      if ( mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL | SDL_KMOD_LSHIFT |
+                   SDL_KMOD_RSHIFT ) ) {
+         if ( mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) )
             uniedit_deselect();
          uniedit_dragSel  = 1;
          uniedit_dragSelX = mx;
@@ -1504,7 +1505,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
       break;
 
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       if ( uniedit_drag ) {
          if ( ( SDL_GetTicks() - uniedit_lastClick < UNIEDIT_DRAG_THRESHOLD ) &&
               ( uniedit_moved < UNIEDIT_MOVE_THRESHOLD ) ) {
@@ -1562,7 +1563,7 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       }
       break;
 
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       /* Update mouse positions. */
       uniedit_mx = mx;
       uniedit_my = my;

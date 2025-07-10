@@ -419,6 +419,7 @@ def generate_h_file():
     yield f"""
 #pragma once
 
+#include <SDL3/SDL_timer.h>
 #include <time.h>
 
 #include "glad.h"
@@ -462,7 +463,6 @@ def generate_c_file():
 
     yield """
 #include <string.h>
-#include "SDL_timer.h"
 #include "shaders.gen.h"
 #include "opengl_shader.h"
 
@@ -507,7 +507,7 @@ const SimpleShader *shaders_getSimple( const char *name )
 }
 
 void shaders_load (void) {
-   Uint32 time = SDL_GetTicks();
+   Uint64 time = SDL_GetTicks();
 """
 
     for i, shader in enumerate(SHADERS):

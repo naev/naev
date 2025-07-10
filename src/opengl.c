@@ -104,7 +104,7 @@ void gl_screenshot( const char *filename )
    gl_checkErr();
 
    /* Free memory. */
-   SDL_FreeSurface( surface );
+   SDL_DestroySurface( surface );
 }
 
 void gl_saveFboDepth( GLuint fbo, const char *filename )
@@ -155,7 +155,7 @@ void gl_saveFboDepth( GLuint fbo, const char *filename )
    IMG_SavePNG( s, filename );
 
    /* Free memory. */
-   SDL_FreeSurface( s );
+   SDL_DestroySurface( s );
 }
 
 /*

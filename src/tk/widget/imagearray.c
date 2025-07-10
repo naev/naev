@@ -493,7 +493,7 @@ static int iar_mdoubleclick( Widget *iar, int button, int x, int y )
  */
 static int iar_mwheel( Widget *iar, SDL_MouseWheelEvent event )
 {
-   if ( SDL_GetModState() & ( KMOD_LCTRL | KMOD_RCTRL ) ) {
+   if ( SDL_GetModState() & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) ) {
       double zoom;
       if ( event.y > 0 )
          zoom = 1.1;

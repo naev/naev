@@ -297,9 +297,9 @@ static void bar_open( unsigned int wid )
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, bw, bh, "btnCloseBar", _( "Take Off" ),
-                        land_buttonTakeoff, SDLK_t );
+                        land_buttonTakeoff, SDLK_T );
    window_addButtonKey( wid, -20 - bw - 20, 20, bw, bh, "btnApproach",
-                        p_( "bar", "Approach" ), bar_approach, SDLK_a );
+                        p_( "bar", "Approach" ), bar_approach, SDLK_A );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40, w - iw - 60, dh, 0, "txtDescription",
@@ -597,13 +597,13 @@ static void misn_open( unsigned int wid )
    /* buttons */
    int bw = MIN( LAND_BUTTON_WIDTH, ( w / 2 - 80 ) / 3 );
    window_addButtonKey( wid, -20, 20, bw, LAND_BUTTON_HEIGHT, "btnCloseMission",
-                        _( "Take Off" ), land_buttonTakeoff, SDLK_t );
+                        _( "Take Off" ), land_buttonTakeoff, SDLK_T );
    window_addButtonKey( wid, -20 - bw - 20, 20, bw, LAND_BUTTON_HEIGHT,
                         "btnAcceptMission", _( "Accept Mission" ), misn_accept,
-                        SDLK_a );
+                        SDLK_A );
    window_addButtonKey( wid, -20 - 2 * ( bw + 20 ), 20, bw, LAND_BUTTON_HEIGHT,
                         "btnAutonavMission", _( "Autonav" ), misn_autonav,
-                        SDLK_n );
+                        SDLK_N );
 
    /* text */
    y = -60;
@@ -1110,7 +1110,7 @@ void land_updateMainTab( void )
       snprintf( buf, sizeof( buf ), _( "Buy Local Map (%s)" ), cred );
       window_addButtonKey( land_windows[0], -20 - LAND_BUTTON_WIDTH - 20, 20,
                            LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap", buf,
-                           spaceport_buyMap, SDLK_b );
+                           spaceport_buyMap, SDLK_B );
    }
 
    /* Make sure player can click it. */
@@ -1562,7 +1562,7 @@ static void land_createMainTab( unsigned int wid )
    /* first column */
    window_addButtonKey( wid, -20, 20, LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT,
                         "btnTakeoff", _( "Take Off" ), land_buttonTakeoff,
-                        SDLK_t );
+                        SDLK_T );
 
    /* Additional notices if necessary. */
    l      = 0;

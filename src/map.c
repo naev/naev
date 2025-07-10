@@ -198,7 +198,7 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
    (void)mod;
    (void)isrepeat;
 
-   if ( ( key == SDLK_SLASH ) || ( key == SDLK_f ) ) {
+   if ( ( key == SDLK_SLASH ) || ( key == SDLK_F ) ) {
       map_inputFind( wid, NULL );
       return 1;
    }
@@ -417,24 +417,24 @@ void map_open( void )
    /* Find button */
    window_addButtonKey( wid, -20 - 2 * ( BUTTON_WIDTH + 20 ), y, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnFind", _( "Find" ), map_inputFind,
-                        SDLK_f );
+                        SDLK_F );
    /* Autonav button */
    window_addButtonKey( wid, -20 - 3 * ( BUTTON_WIDTH + 20 ), y, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnAutonav", _( "Autonav" ),
-                        player_autonavStartWindow, SDLK_a );
+                        player_autonavStartWindow, SDLK_A );
    /* MInimal button */
    window_addButtonKey( wid, -20 - 4 * ( BUTTON_WIDTH + 20 ), y, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnMinimal", NULL, map_buttonMinimal,
-                        SDLK_v );
+                        SDLK_V );
    map_setMinimal( wid, map_minimal_mode );
    /* System info button */
    window_addButtonKey( wid, -20 - 5 * ( BUTTON_WIDTH + 20 ), y, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnSystem", _( "System Info" ),
-                        map_buttonSystemMap, SDLK_s );
+                        map_buttonSystemMap, SDLK_S );
    /* Mark this system button */
    window_addButtonKey( wid, -20 - 6 * ( BUTTON_WIDTH + 20 ), y, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnMarkSystem", _( "Toggle Note" ),
-                        map_buttonMarkSystem, SDLK_n );
+                        map_buttonMarkSystem, SDLK_N );
 
    /*
     * Bottom stuff
@@ -2114,7 +2114,7 @@ static int map_mouse( unsigned int wid, const SDL_Event *event, double mx,
    const double t = 15. * 15.; /* threshold */
 
    switch ( event->type ) {
-   case SDL_MOUSEWHEEL:
+   case SDL_EVENT_MOUSE_WHEEL:
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
@@ -2124,7 +2124,7 @@ static int map_mouse( unsigned int wid, const SDL_Event *event, double mx,
          map_buttonZoom( wid, "btnZoomOut" );
       return 1;
 
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
@@ -2159,17 +2159,17 @@ static int map_mouse( unsigned int wid, const SDL_Event *event, double mx,
                   cst->drag = 0;
                }
             }
-            map_select( sys, ( SDL_GetModState() & KMOD_SHIFT ) );
+            map_select( sys, ( SDL_GetModState() & SDL_KMOD_SHIFT ) );
             break;
          }
       }
       return 1;
 
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       cst->drag = 0;
       break;
 
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       if ( cst->drag ) {
          /* axis is inverted */
          cst->xtarget = cst->xpos -= rx;
@@ -2395,7 +2395,7 @@ static void map_buttonCommodity( unsigned int wid, const char *str )
       map modes. If ctrl is pressed, will toggle between current mode and
       default */
    mods = SDL_GetModState();
-   if ( mods & ( KMOD_LCTRL | KMOD_RCTRL ) ) { /* toggle on/off */
+   if ( mods & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) ) { /* toggle on/off */
       static int cur_commod_last      = 0;
       static int cur_commod_mode_last = 0;
       static int map_mode_last        = MAPMODE_TRAVEL;

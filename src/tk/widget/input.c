@@ -273,7 +273,7 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
       /* Move pointer. */
       if ( key == SDLK_LEFT ) {
          if ( inp->dat.inp.pos > 0 ) {
-            if ( mod & KMOD_CTRL ) {
+            if ( mod & SDL_KMOD_CTRL ) {
                /* We want to position the cursor at the start of the previous or
                 * current word. */
                /* Begin by skipping all breakers. */
@@ -294,7 +294,7 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
       } else if ( key == SDLK_RIGHT ) {
          size_t len = strlen( inp->dat.inp.input );
          if ( inp->dat.inp.pos < len ) {
-            if ( mod & KMOD_CTRL ) {
+            if ( mod & SDL_KMOD_CTRL ) {
                /* We want to position the cursor at the start of the next word.
                 */
                /* Begin by skipping all non-breakers. */
@@ -374,7 +374,7 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
        * caught between it and curpos at the end. */
       size_t curpos = inp->dat.inp.pos;
       if ( inp->dat.inp.pos > 0 ) {
-         if ( mod & KMOD_CTRL ) {
+         if ( mod & SDL_KMOD_CTRL ) {
             /* We want to delete up to the start of the previous or current
              * word. */
             /* Begin by skipping all breakers. */
@@ -412,7 +412,7 @@ static int inp_key( Widget *inp, SDL_Keycode key, SDL_Keymod mod, int isrepeat )
        * it and inp->dat.inp.pos at the end. */
       size_t curpos = inp->dat.inp.pos;
       if ( inp->dat.inp.pos < len ) {
-         if ( mod & KMOD_CTRL ) {
+         if ( mod & SDL_KMOD_CTRL ) {
             /* We want to delete up until the start of the next word. */
             /* Begin by skipping all non-breakers. */
             while ( !inp_isBreaker( inp->dat.inp.input[curpos] ) &&

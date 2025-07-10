@@ -691,15 +691,15 @@ void load_loadGameMenu( void )
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnBack",
-                        _( "Back" ), load_menu_close, SDLK_b );
+                        _( "Back" ), load_menu_close, SDLK_B );
    window_addButtonKey( wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 15,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnSnapshots",
-                        _( "Snapshots" ), load_menu_snapshots, SDLK_s );
+                        _( "Snapshots" ), load_menu_snapshots, SDLK_S );
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 15, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnLoad", _( "Load" ), load_menu_load,
-                        SDLK_l );
+                        SDLK_L );
    window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnDelete",
-                        _( "Delete" ), load_menu_delete, SDLK_d );
+                        _( "Delete" ), load_menu_delete, SDLK_D );
 
    if ( old_saves_detected && !player_warned ) {
       char buf[STRMAX_SHORT];
@@ -794,15 +794,15 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnBack",
-                        _( "Back" ), load_snapshot_menu_close, SDLK_b );
+                        _( "Back" ), load_snapshot_menu_close, SDLK_B );
    window_addButtonKey( wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 15,
                         BUTTON_WIDTH, BUTTON_HEIGHT, "btnSave", _( "Save As" ),
-                        load_snapshot_menu_save, SDLK_s );
+                        load_snapshot_menu_save, SDLK_S );
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT + 15, BUTTON_WIDTH,
                         BUTTON_HEIGHT, "btnLoad", _( "Load" ),
-                        load_snapshot_menu_load, SDLK_l );
+                        load_snapshot_menu_load, SDLK_L );
    window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnDelete",
-                        _( "Delete" ), load_snapshot_menu_delete, SDLK_d );
+                        _( "Delete" ), load_snapshot_menu_delete, SDLK_D );
 
    if ( disablesave || window_exists( "wdwLoadGameMenu" ) )
       window_disableButton( wid, "btnSave" );

@@ -127,16 +127,16 @@ void shipyard_open( unsigned int wid )
    /* buttons */
    off = -20;
    window_addButtonKey( wid, off, 20, bw, bh, "btnCloseShipyard",
-                        _( "Take Off" ), land_buttonTakeoff, SDLK_t );
+                        _( "Take Off" ), land_buttonTakeoff, SDLK_T );
    off -= 20 + bw;
    window_addButtonKey( wid, off, 20, bw, bh, "btnTradeShip", _( "Trade-In" ),
-                        shipyard_trade, SDLK_r );
+                        shipyard_trade, SDLK_R );
    off -= 20 + bw;
    window_addButtonKey( wid, off, 20, bw, bh, "btnBuyShip", _( "Buy" ),
-                        shipyard_buy, SDLK_b );
+                        shipyard_buy, SDLK_B );
    off -= 20 + bw;
    window_addButtonKey( wid, off, 20, bw, bh, "btnNaevpediaOutfits",
-                        _( "Archives" ), shipyard_naevpedia, SDLK_a );
+                        _( "Archives" ), shipyard_naevpedia, SDLK_A );
 
    /* ship review */
    window_addRect( wid, -40 + 4, -40 + 4, sw + 8, sh + 8, "rctTarget", &cBlack,
@@ -808,7 +808,7 @@ static int shipyard_mouseSlots( unsigned int wid, const SDL_Event *event,
       return 0;
 
    /* Only care about motion. */
-   if ( event->type != SDL_MOUSEMOTION )
+   if ( event->type != SDL_EVENT_MOUSE_MOTION )
       return 0;
 
    /* Find what row. */
@@ -909,17 +909,17 @@ static int preview_mouse( unsigned int wid, const SDL_Event *event, double mx,
       return 0;
 
    switch ( event->type ) {
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       p->mousedown = 0;
       return 0;
 
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
       p->mousedown = 1;
       return 1;
 
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       if ( !p->mousedown )
          return 0;
       p->dir += rx / ( SHIP_GFX_SIZE / M_PI * 0.5 );

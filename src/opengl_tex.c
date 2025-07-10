@@ -338,7 +338,7 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
    }
    SDL_UnlockSurface( rgba );
    if ( rgba != surface )
-      SDL_FreeSurface( rgba );
+      SDL_DestroySurface( rgba );
 
    /* Create mipmaps. */
    if ( flags & OPENGL_TEX_MIPMAPS ) {
@@ -358,7 +358,7 @@ static GLuint gl_loadSurface( SDL_Surface *surface, unsigned int flags,
 
    /* cleanup */
    if ( freesur )
-      SDL_FreeSurface( surface );
+      SDL_DestroySurface( surface );
    gl_checkErr();
 
    gl_contextUnset();

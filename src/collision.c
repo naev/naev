@@ -59,26 +59,26 @@ void poly_load( CollPoly *polygon, xmlNodePtr base, const char *name )
             char *saveptr;
             char *list = xml_get( cur );
             /* split the list of coordinates */
-            char *ch = SDL_strtokr( list, ",", &saveptr );
+            char *ch = SDL_strtok_r( list, ",", &saveptr );
             while ( ch != NULL ) {
                float d = atof( ch );
                array_push_back( &view->x, d );
                view->xmin = MIN( view->xmin, d );
                view->xmax = MAX( view->xmax, d );
-               ch         = SDL_strtokr( NULL, ",", &saveptr );
+               ch         = SDL_strtok_r( NULL, ",", &saveptr );
             }
             continue;
          } else if ( xml_isNode( cur, "y" ) ) {
             char *saveptr;
             char *list = xml_get( cur );
             /* split the list of coordinates */
-            char *ch = SDL_strtokr( list, ",", &saveptr );
+            char *ch = SDL_strtok_r( list, ",", &saveptr );
             while ( ch != NULL ) {
                float d = atof( ch );
                array_push_back( &view->y, d );
                view->ymin = MIN( view->ymin, d );
                view->ymax = MAX( view->ymax, d );
-               ch         = SDL_strtokr( NULL, ",", &saveptr );
+               ch         = SDL_strtok_r( NULL, ",", &saveptr );
             }
             continue;
          }

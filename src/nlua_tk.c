@@ -656,15 +656,15 @@ static int cust_event( unsigned int wid, SDL_Event *event, void *data )
 
    /* Handle all the events. */
    switch ( event->type ) {
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       return cust_mouse( 1, event->button.button, event->button.x,
                          event->button.y, cf );
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       return cust_mouse( 2, event->button.button, event->button.x,
                          event->button.y, cf );
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       return cust_mouse( 3, -1, event->button.x, event->button.y, cf );
-   case SDL_MOUSEWHEEL:
+   case SDL_EVENT_MOUSE_WHEEL:
       return cust_mouse( 4, -1, event->wheel.x, event->wheel.y, cf );
 
    case SDL_KEYDOWN:
@@ -766,7 +766,7 @@ static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h,
    int        b;
    lua_State *L = cf->L;
 
-   if ( event == SDL_WINDOWEVENT_RESIZED )
+   if ( event == SDL_EVENT_WINDOW_RESIZED )
       return 1;
 
    lua_rawgeti( L, LUA_REGISTRYINDEX, cf->resize );

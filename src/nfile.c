@@ -679,12 +679,12 @@ int nfile_simplifyPath( char path[static 1] )
    char  *saveptr  = NULL;
    size_t n        = strlen( path );
    int    absolute = ( path[0] == '/' );
-   char  *token    = SDL_strtokr( path, "/", &saveptr );
+   char  *token    = SDL_strtok_r( path, "/", &saveptr );
 
    while ( token != NULL ) {
       /* Skip noop. */
       if ( ( strcmp( token, "" ) == 0 ) || ( strcmp( token, "." ) == 0 ) ) {
-         token = SDL_strtokr( NULL, "/", &saveptr );
+         token = SDL_strtok_r( NULL, "/", &saveptr );
          continue;
       }
 
@@ -700,7 +700,7 @@ int nfile_simplifyPath( char path[static 1] )
       }
 
       /* On to the next one. */
-      token = SDL_strtokr( NULL, "/", &saveptr );
+      token = SDL_strtok_r( NULL, "/", &saveptr );
    }
 
    /* If nothing, we're empty. */

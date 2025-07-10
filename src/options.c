@@ -747,12 +747,12 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
        * SDL_GetKeyName.). */
       if ( key < 0x100 && isalpha( key ) )
          snprintf( binding, sizeof( binding ), _( "keyboard:   %s%s%c" ),
-                   ( mod != KMOD_NONE ) ? input_modToText( mod ) : "",
-                   ( mod != KMOD_NONE ) ? " + " : "", toupper( key ) );
+                   ( mod != SDL_KMOD_NONE ) ? input_modToText( mod ) : "",
+                   ( mod != SDL_KMOD_NONE ) ? " + " : "", toupper( key ) );
       else
          snprintf( binding, sizeof( binding ), _( "keyboard:   %s%s%s" ),
-                   ( mod != KMOD_NONE ) ? input_modToText( mod ) : "",
-                   ( mod != KMOD_NONE ) ? " + " : "",
+                   ( mod != SDL_KMOD_NONE ) ? input_modToText( mod ) : "",
+                   ( mod != SDL_KMOD_NONE ) ? " + " : "",
                    pgettext_var( "keyname", SDL_GetKeyName( key ) ) );
       break;
    case KEYBIND_JAXISPOS:
@@ -1057,13 +1057,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       else {
          SDL_Keymod ev_mod = event->key.keysym.mod;
          mod               = 0;
-         if ( ev_mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) )
+         if ( ev_mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) )
             mod |= NMOD_SHIFT;
-         if ( ev_mod & ( KMOD_LCTRL | KMOD_RCTRL ) )
+         if ( ev_mod & ( SDL_KMOD_LCTRL | SDL_KMOD_RCTRL ) )
             mod |= NMOD_CTRL;
-         if ( ev_mod & ( KMOD_LALT | KMOD_RALT ) )
+         if ( ev_mod & ( SDL_KMOD_LALT | SDL_KMOD_RALT ) )
             mod |= NMOD_ALT;
-         if ( ev_mod & ( KMOD_LGUI | KMOD_RGUI ) )
+         if ( ev_mod & ( SDL_KMOD_LGUI | SDL_KMOD_RGUI ) )
             mod |= NMOD_META;
       }
       /* Set key. */

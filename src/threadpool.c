@@ -70,7 +70,7 @@ struct ThreadQueue_ {
    SDL_Mutex *h_lock; /**< Same as tail lock, except it's head lock */
    SDL_Mutex *r_lock; /**< For reserve buffer. */
    /* For vpools. */
-   SDL_cond                *cond;
+   SDL_Condition           *cond;
    SDL_Mutex               *mutex;
    struct vpoolThreadData_ *arg;
    int                      cnt;
@@ -101,8 +101,8 @@ typedef struct ThreadData_ {
  * @brief Virtual thread pool data.
  */
 struct vpoolThreadData_ {
-   SDL_cond *cond; /**< Condition variable for signalling all jobs in the vpool
-                      are done */
+   SDL_Condition *cond; /**< Condition variable for signalling all jobs in the
+                      vpool are done */
    SDL_Mutex *mutex; /**< The mutex to use with the above condition variable */
    int *count; /**< Variable to count number of finished jobs in the vpool */
    ThreadQueueData node;    /**< The job to be done */

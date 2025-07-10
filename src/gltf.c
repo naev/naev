@@ -501,7 +501,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
       if ( surface->format->format != fmt ) {
          SDL_Surface *temp = surface;
          surface           = SDL_ConvertSurfaceFormat( temp, fmt, 0 );
-         SDL_FreeSurface( temp );
+         SDL_DestroySurface( temp );
       }
 
       SDL_LockSurface( surface );
@@ -598,7 +598,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    glGenerateMipmap( GL_TEXTURE_2D );
 
    /* Free the surface. */
-   SDL_FreeSurface( surface );
+   SDL_DestroySurface( surface );
 
    glBindTexture( GL_TEXTURE_2D, 0 );
 

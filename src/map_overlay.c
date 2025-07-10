@@ -179,7 +179,7 @@ int ovr_input( SDL_Event *event )
    double x, y;
 
    /* We only want mouse events. */
-   if ( event->type != SDL_MOUSEBUTTONDOWN )
+   if ( event->type != SDL_EVENT_MOUSE_BUTTON_DOWN )
       return 0;
 
    /* Player must not be NULL. */

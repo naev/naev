@@ -1564,10 +1564,10 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    if ( !window_isFlag( wdw, WINDOW_KILL ) ) {
       /* Pass it on. */
       switch ( event->type ) {
-      case SDL_MOUSEMOTION:
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEBUTTONUP:
-      case SDL_MOUSEWHEEL:
+      case SDL_EVENT_MOUSE_MOTION:
+      case SDL_EVENT_MOUSE_BUTTON_DOWN:
+      case SDL_EVENT_MOUSE_BUTTON_UP:
+      case SDL_EVENT_MOUSE_WHEEL:
          ret |= toolkit_mouseEvent( wdw, event );
          break;
 
@@ -1613,14 +1613,14 @@ Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event, int *x,
                                      int *y, int *rx, int *ry )
 {
    /* Extract the position as event. */
-   if ( event->type == SDL_MOUSEMOTION ) {
+   if ( event->type == SDL_EVENT_MOUSE_MOTION ) {
       *x = event->motion.x;
       *y = event->motion.y;
-   } else if ( ( event->type == SDL_MOUSEBUTTONDOWN ) ||
-               ( event->type == SDL_MOUSEBUTTONUP ) ) {
+   } else if ( ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) ||
+               ( event->type == SDL_EVENT_MOUSE_BUTTON_UP ) ) {
       *x = event->button.x;
       *y = event->button.y;
-   } else if ( event->type == SDL_MOUSEWHEEL )
+   } else if ( event->type == SDL_EVENT_MOUSE_WHEEL )
       SDL_GetMouseState( x, y );
 
    /* Translate offset. */
@@ -1631,7 +1631,7 @@ Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event, int *x,
    *y -= w->y;
 
    /* Relative only matter if mouse motion. */
-   if ( event->type == SDL_MOUSEMOTION ) {
+   if ( event->type == SDL_EVENT_MOUSE_MOTION ) {
       *ry = (double)event->motion.yrel * gl_screen.mxscale;
       *rx = (double)event->motion.xrel * gl_screen.myscale;
    } else {
@@ -1707,7 +1707,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt, SDL_Event *event,
    y -= wgt->y;
 
    /* Handle mouse event. */
-   if ( event->type == SDL_MOUSEMOTION )
+   if ( event->type == SDL_EVENT_MOUSE_MOTION )
       button = event->motion.state;
    else
       button = event->button.button;
@@ -1718,7 +1718,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt, SDL_Event *event,
    /* Regular widgets. */
    ret = 0;
    switch ( event->type ) {
-   case SDL_MOUSEMOTION:
+   case SDL_EVENT_MOUSE_MOTION:
       /* Change the status of the widget if mouse isn't down. */
 
       /* Not scrolling. */
@@ -1741,7 +1741,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt, SDL_Event *event,
 
       break;
 
-   case SDL_MOUSEWHEEL:
+   case SDL_EVENT_MOUSE_WHEEL:
       if ( !inbounds )
          break;
 
@@ -1753,7 +1753,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt, SDL_Event *event,
 
       break;
 
-   case SDL_MOUSEBUTTONDOWN:
+   case SDL_EVENT_MOUSE_BUTTON_DOWN:
       if ( !inbounds )
          break;
 
@@ -1778,7 +1778,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt, SDL_Event *event,
       }
       break;
 
-   case SDL_MOUSEBUTTONUP:
+   case SDL_EVENT_MOUSE_BUTTON_UP:
       /* Since basically only buttons are handled here, we ignore
        * it all except the left mouse button. */
       if ( button != SDL_BUTTON_LEFT )
@@ -1828,17 +1828,17 @@ static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
 {
    switch ( key ) {
    case SDLK_LCTRL:
-      return KMOD_LCTRL;
+      return SDL_KMOD_LCTRL;
    case SDLK_RCTRL:
-      return KMOD_RCTRL;
+      return SDL_KMOD_RCTRL;
    case SDLK_LALT:
-      return KMOD_LALT;
+      return SDL_KMOD_LALT;
    case SDLK_RALT:
-      return KMOD_RALT;
+      return SDL_KMOD_RALT;
    case SDLK_LSHIFT:
-      return KMOD_LSHIFT;
+      return SDL_KMOD_LSHIFT;
    case SDLK_RSHIFT:
-      return KMOD_RSHIFT;
+      return SDL_KMOD_RSHIFT;
    default:
       return 0;
    }
@@ -1978,7 +1978,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event *event )
 
    /* Placed here so it can be overriden in console for tab completion. */
    if ( key == SDLK_TAB ) {
-      if ( mod & ( KMOD_LSHIFT | KMOD_RSHIFT ) )
+      if ( mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) )
          toolkit_prevFocus( wdw );
       else
          toolkit_nextFocus( wdw );

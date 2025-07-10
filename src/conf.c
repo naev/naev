@@ -216,22 +216,22 @@ void conf_setAudioDefaults( void )
  */
 void conf_setVideoDefaults( void )
 {
-   int             w, h, f;
-   SDL_DisplayMode resolution;
+   int w, h, f;
 
    conf.num_backups = NUM_BACKUPS_DEFAULT;
 
    /* More complex resolution handling. */
-   f = 0;
-   if ( SDL_GetCurrentDisplayMode( 0, &resolution ) == 0 ) {
+   f                                 = 0;
+   const SDL_DisplayMode *resolution = SDL_GetCurrentDisplayMode( 0 );
+   if ( resolution != NULL ) {
       /* Try higher resolution. */
       w = RESOLUTION_W_DEFAULT;
       h = RESOLUTION_H_DEFAULT;
 
       /* Fullscreen and fit everything onscreen. */
-      if ( ( resolution.w <= w ) || ( resolution.h <= h ) ) {
-         w = resolution.w;
-         h = resolution.h;
+      if ( ( resolution->w <= w ) || ( resolution->h <= h ) ) {
+         w = resolution->w;
+         h = resolution->h;
          f = FULLSCREEN_DEFAULT;
       }
    } else {
