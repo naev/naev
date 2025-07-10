@@ -295,9 +295,6 @@ int gl_init( void )
       gl_screen.fbo_depth_tex[i] = GL_INVALID_VALUE;
    }
 
-   /* Apply the configured fullscreen display mode, if any. */
-   gl_setupFullscreen();
-
    /* Load extensions. */
    if ( !gladLoadGLLoader( (void *)SDL_GL_GetProcAddress ) ) {
       char buf[STRMAX];

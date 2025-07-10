@@ -83,6 +83,7 @@ int    naev_versionCompareTarget( const char *version, const char *target );
 void   naev_quit( void );
 int    naev_isQuit( void );
 double naev_getrealdt( void );
+int    naev_event_resize( Uint32 type );
 
 int       naev_shouldRenderLoadscreen( void );
 void      naev_doRenderLoadscreen( void );

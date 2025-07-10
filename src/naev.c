@@ -201,6 +201,23 @@ int         naev_main_setup( void )
 }
 
 /**
+ * @brief Sees if we want to resize. SDL3 has more events now.
+ */
+int naev_event_resize( Uint32 type )
+{
+   switch ( type ) {
+   case SDL_EVENT_WINDOW_RESIZED:
+   case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+   case SDL_EVENT_WINDOW_ENTER_FULLSCREEN:
+   case SDL_EVENT_WINDOW_LEAVE_FULLSCREEN:
+   case SDL_EVENT_WINDOW_MAXIMIZED:
+      return 1;
+   default:
+      return 0;
+   }
+}
+
+/**
  * @brief The entry point of Naev.
  *
  *    @return EXIT_SUCCESS on success.
@@ -216,7 +233,8 @@ int naev_main_events( void )
             quit = 1; /* quit is handled here */
             break;
          }
-      } else if ( event.type == SDL_EVENT_WINDOW_RESIZED ) {
+      } else if ( event.type == SDL_EVENT_WINDOW_RESIZED ||
+                  event.type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED ) {
          naev_resize();
          continue;
       }

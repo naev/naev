@@ -1542,10 +1542,9 @@ static int opt_videoSave( unsigned int wid, const char *str )
    /* Only change if necessary or it causes some flicker. */
    if ( ( conf.width != w ) || ( conf.height != h ) ||
         ( fullscreen != conf.fullscreen ) ) {
-      ret = opt_setVideoMode( w, h, fullscreen, 1 );
+      opt_setVideoMode( w, h, fullscreen, 1 );
       window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
-      if ( ret != 0 )
-         return ret;
+      return 0;
    }
 
    /* FPS. */
@@ -1685,7 +1684,6 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
       SDL_SetWindowPosition( gl_screen.window, SDL_WINDOWPOS_CENTERED,
                              SDL_WINDOWPOS_CENTERED );
    }
-   naev_resize();
 
    opt_getVideoMode( &new_w, &new_h, &new_f );
    changed_size = ( new_w != old_w ) || ( new_h != old_h );
@@ -1694,8 +1692,6 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
 
    if ( confirm && !changed_size && maximized )
       dialogue_alertRaw( _( "Resolution can't be changed while maximized." ) );
-   if ( confirm && ( ( status != 0 ) || ( new_f != fullscreen ) ) )
-      opt_needRestart();
 
    if ( confirm && ( ( status != 0 ) || changed_size || ( new_f != old_f ) ) &&
         !dialogue_YesNo( _( "Keep Video Settings" ),

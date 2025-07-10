@@ -678,6 +678,10 @@ static int cust_event( unsigned int wid, SDL_Event *event, void *data )
       return cust_text( event->text.text, cf );
 
    case SDL_EVENT_WINDOW_RESIZED:
+   case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+   case SDL_EVENT_WINDOW_ENTER_FULLSCREEN:
+   case SDL_EVENT_WINDOW_LEAVE_FULLSCREEN:
+   case SDL_EVENT_WINDOW_MAXIMIZED:
       return cust_event_window( event->window.type, event->window.data1,
                                 event->window.data2, cf );
 
@@ -766,7 +770,7 @@ static int cust_event_window( Uint32 event, Sint32 w, Sint32 h,
    int        b;
    lua_State *L = cf->L;
 
-   if ( event == SDL_EVENT_WINDOW_RESIZED )
+   if ( naev_event_resize( event ) )
       return 1;
 
    lua_rawgeti( L, LUA_REGISTRYINDEX, cf->resize );

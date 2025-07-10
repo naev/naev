@@ -1048,8 +1048,10 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
             SDL_PushEvent(
                &event ); /* Replicate event until out of all loops. */
             break;
-         } else if ( event.type == SDL_EVENT_WINDOW_RESIZED )
+         } else if ( naev_event_resize( event.type ) ) {
             naev_resize();
+            break;
+         }
 
          /* handles all the events and player keybinds */
          input_handle( &event );
