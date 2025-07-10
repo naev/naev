@@ -383,9 +383,9 @@ static int threadpool_handler( void *data )
           * just stop a worker thread and wait until it gets something to do.
           */
          if ( SDL_WaitSemaphoreTimeout( global_queue->semaphore,
-                                        THREADPOOL_TIMEOUT ) != 0 ) {
+                                        THREADPOOL_TIMEOUT ) == 0 ) {
             /* There weren't any new jobs so we'll start killing threads ;) */
-            if ( SDL_TryWaitSemaphore( idle->semaphore ) == 0 ) {
+            if ( SDL_TryWaitSemaphore( idle->semaphore ) ) {
                threadarg = tq_dequeue( idle );
                /* Set signal to stop worker thread */
                threadarg->signal = THREADSIG_STOP;
@@ -421,10 +421,10 @@ static int threadpool_handler( void *data )
        * until another thread becomes idle.
        */
       /* Idle thread available */
-      if ( SDL_TryWaitSemaphore( idle->semaphore ) == 0 )
+      if ( SDL_TryWaitSemaphore( idle->semaphore ) )
          threadarg = tq_dequeue( idle );
       /* Make a new thread */
-      else if ( SDL_TryWaitSemaphore( stopped->semaphore ) == 0 ) {
+      else if ( SDL_TryWaitSemaphore( stopped->semaphore ) ) {
          threadarg         = tq_dequeue( stopped );
          threadarg->signal = THREADSIG_RUN;
          newthread         = 1;
