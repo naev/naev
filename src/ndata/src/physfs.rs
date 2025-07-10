@@ -231,9 +231,9 @@ pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream> {
     let raw = unsafe {
         let c_filename = CString::new(filename)?;
         match mode {
-            Mode::Append => naevc::PHYSFSRWOPS_openAppend(c_filename.as_ptr()),
-            Mode::Read => naevc::PHYSFSRWOPS_openRead(c_filename.as_ptr()),
-            Mode::Write => naevc::PHYSFSRWOPS_openWrite(c_filename.as_ptr()),
+            Mode::Append => unimplemented!(), //naevc::PHYSFSRWOPS_openAppend(c_filename.as_ptr()),
+            Mode::Read => naevc::SDL_PhysFS_IOFromFile(c_filename.as_ptr()),
+            Mode::Write => unimplemented!(), //naevc::PHYSFSRWOPS_openWrite(c_filename.as_ptr()),
         }
     };
     if raw.is_null() {

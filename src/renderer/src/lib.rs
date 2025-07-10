@@ -598,7 +598,7 @@ impl Context {
 
         unsafe {
             naevc::gl_screen.window = window.raw() as *mut naevc::SDL_Window;
-            naevc::gl_screen.context = gl_context.raw() as *mut std::os::raw::c_void;
+            naevc::gl_screen.context = gl_context.raw() as *mut naevc::SDL_GLContextState;
             (naevc::gl_screen.major, naevc::gl_screen.minor) = gl_attr.context_version();
             let major: i32 = naevc::gl_screen.major.into();
             let minor: i32 = naevc::gl_screen.minor.into();

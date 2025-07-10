@@ -1276,7 +1276,7 @@ pub extern "C" fn gl_newSprite(
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_newSpriteRWops(
     cpath: *const c_char,
-    rw: *mut naevc::SDL_RWops,
+    rw: *mut naevc::SDL_IOStream,
     sx: c_int,
     sy: c_int,
     cflags: c_uint,

@@ -70,7 +70,7 @@ pub fn naev() -> Result<()> {
     /* Start up PHYSFS. */
     unsafe {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
-        if naevc::SDL_PhysFS_init(argv0.as_ptr() as *const c_char) == 0 {
+        if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
             let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
             println!("{err}");
             return Err(Error::new(err));
