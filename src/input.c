@@ -366,9 +366,9 @@ void input_setDefault( int wasd )
 
 #if SDL_PLATFORM_MACOS
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_V, NMOD_META );
-#else
+#else  /* SDL_PLATFORM_MACOS */
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_V, NMOD_CTRL );
-#endif
+#endif /* SDL_PLATFORM_MACOS */
 }
 
 /**
@@ -1852,23 +1852,14 @@ void input_handle( SDL_Event *event )
       SDL_Keymod mod = input_translateMod( event->key.mod );
       if ( ( input_paste->key == event->key.key ) &&
            ( input_paste->mod & mod ) ) {
-         // https://github.com/libsdl-org/SDL/issues/13223
-         WARN( "Due to an upstream bug, pasting is currently disabled." );
-#if 0
          SDL_Event   evt;
-         const char *txt = SDL_GetClipboardText();
-         evt.type        = SDL_EVENT_TEXT_INPUT;
-         size_t   i      = 0;
-         uint32_t ch;
-         Uint32   timestamp = SDL_GetTicks();
-         while ( ( ch = u8_nextchar( txt, &i ) ) ) {
-            size_t e           = u8_wc_toutf8( evt.text.text, ch );
-            evt.text.text[e]   = '\0';
-            evt.text.timestamp = timestamp;
-            evt.text.windowID  = 0;
-            SDL_PushEvent( &evt );
-         }
-#endif
+         const char *txt    = SDL_GetClipboardText();
+         evt.type           = SDL_EVENT_TEXT_INPUT;
+         Uint32 timestamp   = SDL_GetTicks();
+         evt.text.text      = strdup( txt );
+         evt.text.timestamp = timestamp;
+         evt.text.windowID  = 0;
+         SDL_PushEvent( &evt );
          return;
       }
    }
