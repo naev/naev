@@ -19,7 +19,7 @@ use crate::buffer::{
     VertexArrayBuilder,
 };
 use crate::shader::{Shader, ShaderBuilder};
-use log::{debug, warn, warn_err};
+use log::{debug, info, warn, warn_err};
 
 const MIN_WIDTH: u32 = 1280;
 const MIN_HEIGHT: u32 = 720;
@@ -225,7 +225,7 @@ impl Dimensions {
                 (window_height as f32) * scale,
             );
             if vw < MIN_WIDTH_F || vh < MIN_HEIGHT_F {
-                warn!("Screen size is too small, upscaling...");
+                info!("Screen size is too small, upscaling...");
                 let scalew = MIN_WIDTH_F / vw;
                 let scaleh = MIN_HEIGHT_F / vh;
                 let scale = scale * f32::max(scalew, scaleh);
@@ -463,7 +463,11 @@ impl Context {
         if borderless {
             wdwbuild.borderless();
         }
-        let mut window = wdwbuild.opengl().position_centered().build()?;
+        let mut window = wdwbuild
+            .opengl()
+            .position_centered()
+            .high_pixel_density()
+            .build()?;
 
         // It seems like setting the build time flag can give smaller windows than we want, at
         // least on Wayland. Workaround is to set RESIZABLE flag after creation.
