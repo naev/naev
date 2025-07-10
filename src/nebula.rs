@@ -249,8 +249,8 @@ impl NebulaData {
             (dims.view_width, dims.view_height, dims.view_scale)
         };
         let scale = unsafe { naevc::conf.nebu_scale as f32 } * scale;
-        let w = (vw / scale).round() as usize;
-        let h = (vh / scale).round() as usize;
+        let w = vw.round() as usize;
+        let h = vh.round() as usize;
         if self.framebuffer.w == w && self.framebuffer.h == h {
             return;
         }
@@ -261,7 +261,6 @@ impl NebulaData {
             .height(h)
             .build(ctx)
             .unwrap();
-
         self.uniform.camera = Vector2::new(vw * 0.5, vh * 0.5);
 
         self.puff_uniform.screen = Vector2::new(vw + 2.0 * PUFF_BUFFER, vh + 2.0 * PUFF_BUFFER);
@@ -298,8 +297,8 @@ impl NebulaData {
                 h,
                 0,
                 0,
-                dims.window_width as i32,
-                dims.window_height as i32,
+                dims.pixels_width as i32,
+                dims.pixels_height as i32,
                 glow::COLOR_BUFFER_BIT,
                 glow::LINEAR,
             );

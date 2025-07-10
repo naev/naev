@@ -177,12 +177,14 @@ pub static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
 
 #[derive(Clone, Debug)]
 pub struct Dimensions {
-    pub window_width: u32,  // In real pixels
-    pub window_height: u32, // In real pixels
-    pub view_width: f32,    // In scaled pixels
-    pub view_height: f32,   // In scaled pixels
-    pub view_scale: f32,    // In scaling value
-    pub projection: Matrix3<f32>,
+    pub pixels_width: u32,        // In real pixels
+    pub pixels_height: u32,       // In real pixels
+    pub window_width: u32,        // In window units
+    pub window_height: u32,       // In window units
+    pub view_width: f32,          // In viewport scaled pixels
+    pub view_height: f32,         // In viewport scaled pixels
+    pub view_scale: f32,          // Viewport scaling value
+    pub projection: Matrix3<f32>, // Projection matrix for drawing
 }
 
 #[rustfmt::skip]
@@ -211,16 +213,19 @@ pub fn look_at4(eye: &Vector3<f32>, target: &Vector3<f32>, up: &Vector3<f32>) ->
 
 impl Dimensions {
     pub fn new(window: &sdl::video::Window) -> Self {
-        let (draw_width, draw_height) = window.size_in_pixels();
+        let (pixels_width, pixels_height) = window.size_in_pixels();
         let (window_width, window_height) = window.size();
         let (dwscale, dhscale) = (
-            (window_width as f32) / (draw_width as f32),
-            (window_height as f32) / (draw_height as f32),
+            (window_width as f32) / (pixels_width as f32),
+            (window_height as f32) / (pixels_height as f32),
         );
         let scalefactor = unsafe { naevc::conf.scalefactor as f32 };
         let scale = f32::max(dwscale, dhscale) / scalefactor;
         let (view_width, view_height, view_scale) = {
-            let (vw, vh) = ((draw_width as f32) * scale, (draw_height as f32) * scale);
+            let (vw, vh) = (
+                (pixels_width as f32) * scale,
+                (pixels_height as f32) * scale,
+            );
             if vw < MIN_WIDTH_F || vh < MIN_HEIGHT_F {
                 info!("Screen size is too small, upscaling...");
                 let scalew = MIN_WIDTH_F / vw;
@@ -239,8 +244,8 @@ impl Dimensions {
 
         // TODO remove the C stuff
         unsafe {
-            naevc::gl_screen.rw = draw_width as i32;
-            naevc::gl_screen.rh = draw_height as i32;
+            naevc::gl_screen.rw = pixels_width as i32;
+            naevc::gl_screen.rh = pixels_height as i32;
             naevc::gl_screen.dwscale = dwscale as f64;
             naevc::gl_screen.dhscale = dhscale as f64;
             naevc::gl_screen.scale = view_scale as f64;
@@ -257,6 +262,8 @@ impl Dimensions {
         Dimensions {
             window_width,
             window_height,
+            pixels_width,
+            pixels_height,
             view_width,
             view_height,
             view_scale,
