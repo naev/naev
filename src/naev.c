@@ -12,8 +12,7 @@
  * @brief Controls the overall game flow: data loading/unloading and game loop.
  */
 /** @cond */
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL3/SDL.h>
 
 #include "naev.h"
 
@@ -263,9 +262,6 @@ int naev_main_cleanup( void )
    /* Free the icon. */
    if ( naev_icon )
       SDL_FreeSurface( naev_icon );
-
-   IMG_Quit(); /* quits SDL_image */
-   SDL_Quit(); /* quits SDL */
 
    /* Clean up parser. */
    xmlCleanupParser();

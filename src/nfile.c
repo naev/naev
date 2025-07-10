@@ -23,21 +23,21 @@
 #include <sys/types.h>
 #include <unistd.h>
 #endif /* HAS_POSIX */
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
 #include <windows.h>
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
 /** @endcond */
 
 #include "nfile.h"
 
 #include "array.h"
 #include "conf.h"
-#if __MACOSX__
+#if SDL_PLATFORM_MACOS
 #include "glue_macos.h"
-#endif /* __MACOSX__ */
+#endif /* SDL_PLATFORM_MACOS */
 #include "log.h"
 
-#if HAS_UNIX && !__MACOSX__
+#if HAS_UNIX && !SDL_PLATFORM_MACOS
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -102,7 +102,7 @@ static char *xdgGetRelativeHome( const char *envname,
    }
    return relhome;
 }
-#endif /* HAS_UNIX && !__MACOSX__ */
+#endif /* HAS_UNIX && !SDL_PLATFORM_MACOS */
 
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
 /**
@@ -119,7 +119,7 @@ const char *nfile_configPath( void )
                    conf.datapath );
          return naev_configPath;
       }
-#if __MACOSX__
+#if SDL_PLATFORM_MACOS
       if ( macos_configPath( naev_configPath, sizeof( naev_configPath ) ) !=
            0 ) {
          WARN( _( "Cannot determine config path, using current directory." ) );
@@ -134,7 +134,7 @@ const char *nfile_configPath( void )
 
       snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
       free( path );
-#elif __WIN32__
+#elif SDL_PLATFORM_WIN32
       char *path = SDL_getenv( "APPDATA" );
       if ( path == NULL ) {
          WARN( _( "%%APPDATA%% isn't set, using current directory." ) );
@@ -168,7 +168,7 @@ const char *nfile_cachePath( void )
                    conf.datapath );
          return naev_cachePath;
       }
-#if __MACOSX__
+#if SDL_PLATFORM_MACOS
       if ( macos_cachePath( naev_cachePath, sizeof( naev_cachePath ) ) != 0 ) {
          WARN( _( "Cannot determine cache path, using current directory." ) );
          snprintf( naev_cachePath, sizeof( naev_cachePath ), "./naev/" );
@@ -182,7 +182,7 @@ const char *nfile_cachePath( void )
 
       snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
       free( path );
-#elif __WIN32__
+#elif SDL_PLATFORM_WIN32
       char *path = SDL_getenv( "APPDATA" );
       if ( path == NULL ) {
          WARN( _( "%%APPDATA%% isn't set, using current directory." ) );
@@ -201,7 +201,7 @@ const char *nfile_cachePath( void )
    return naev_cachePath;
 }
 
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
 #define MKDIR !CreateDirectory( opath, NULL )
 static int mkpath( const char *path )
 #elif HAS_POSIX
@@ -285,7 +285,7 @@ int nfile_dirMakeExist( const char *path )
 
 #if HAS_POSIX
    if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
-#elif __WIN32__
+#elif SDL_PLATFORM_WIN32
    if ( mkpath( path ) < 0 ) {
 #elif SDL_VERSION_ATLEAST( 3, 0, 0 )
    if ( SDL_CreateDirectory( path ) < 0 ) {
@@ -606,10 +606,10 @@ int nfile_isSeparator( uint32_t c )
 {
    if ( c == '/' )
       return 1;
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
    else if ( c == '\\' )
       return 1;
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
    return 0;
 }
 
@@ -750,12 +750,12 @@ void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
    NFD_Init();
 
    nfdchar_t *outPath;
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
    (void)default_location;
    nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, NULL );
-#else  /* __WIN32__ */
+#else  /* SDL_PLATFORM_WIN32 */
    nfdresult_t result = NFD_OpenDialog( &outPath, fitem, n, default_location );
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
    switch ( result ) {
    case NFD_OKAY:
       filelist[0] = outPath;
@@ -789,12 +789,12 @@ void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
    NFD_Init();
 
    nfdchar_t *outPath;
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
    (void)default_location;
    nfdresult_t result = NFD_PickFolder( &outPath, NULL );
-#else  /* __WIN32__ */
+#else  /* SDL_PLATFORM_WIN32 */
    nfdresult_t result = NFD_PickFolder( &outPath, default_location );
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
    switch ( result ) {
    case NFD_OKAY:
       filelist[0] = outPath;
@@ -845,11 +845,11 @@ void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
    NFD_Init();
 
    nfdchar_t *outPath;
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
    nfdresult_t result = NFD_SaveDialog( &outPath, fitem, n, NULL, bname );
-#else  /* __WIN32__ */
+#else  /* SDL_PLATFORM_WIN32 */
    nfdresult_t result = NFD_SaveDialog( &outPath, fitem, n, dname, bname );
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
    switch ( result ) {
    case NFD_OKAY:
       filelist[0] = outPath;

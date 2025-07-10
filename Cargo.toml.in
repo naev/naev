@@ -41,7 +41,7 @@ rust-version = "1.85"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl2 = { version = "0", features = ["image"] }
+sdl3 = { version = "0", features = ["image"] }
 anyhow = "1"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
@@ -65,7 +65,7 @@ log = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
-sdl2 = { workspace = true }
+sdl3 = { workspace = true }
 renderer = { workspace = true }
 glow = { workspace = true }
 nalgebra = { workspace = true }

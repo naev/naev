@@ -11,9 +11,9 @@
  */
 /** @cond */
 #include <stdlib.h>
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
 #include <windows.h>
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
 
 #include "SDL_stdinc.h"
 #include "physfs.h"
@@ -26,9 +26,9 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
-#if __MACOSX__
+#if SDL_PLATFORM_MACOS
 #include "glue_macos.h"
-#endif /* __MACOSX__ */
+#endif /* SDL_PLATFORM_MACOS */
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
@@ -136,13 +136,13 @@ void ndata_setupWriteDir( void )
       PHYSFS_setWriteDir( conf.datapath );
       return;
    }
-#if __MACOSX__
+#if SDL_PLATFORM_MACOS
    /* For historical reasons predating physfs adoption, this case is different.
     */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
 #else
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
-#endif /* __MACOSX__ */
+#endif /* SDL_PLATFORM_MACOS */
    if ( PHYSFS_getWriteDir() == NULL ) {
       WARN( _( "Cannot determine data path, using current directory." ) );
       PHYSFS_setWriteDir( "./naev/" );
@@ -159,23 +159,23 @@ void ndata_setupReadDirs( void )
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG( _( "Added datapath from conf.lua file: %s" ), conf.ndata );
 
-#if __MACOSX__
+#if SDL_PLATFORM_MACOS
    if ( !ndata_found() && macos_isBundle() &&
         macos_resourcesPath( buf, PATH_MAX - 4 ) >= 0 &&
         strncat( buf, "/dat", 4 ) ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /* __MACOSX__ */
+#endif /* SDL_PLATFORM_MACOS */
 
-#if __LINUX__
+#if SDL_PLATFORM_LINUX
    if ( !ndata_found() && env.isAppImage &&
         nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >=
            0 ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /*__LINUX__ */
+#endif /*SDL_PLATFORM_LINUX */
 
    if ( !ndata_found() &&
         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), "dat" ) >= 0 ) {

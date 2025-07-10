@@ -1,6 +1,6 @@
 #![allow(dead_code, unused_variables)]
 use crate::context::Context;
-use sdl2 as sdl;
+use sdl3 as sdl;
 
 pub trait Message: Send + std::fmt::Debug + Clone {}
 

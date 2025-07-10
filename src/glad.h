@@ -112,7 +112,7 @@ typedef void            *GLeglClientBufferEXT;
 typedef void            *GLeglImageOES;
 typedef char             GLchar;
 typedef char             GLcharARB;
-#ifdef __APPLE__
+#ifdef SDL_PLATFORM_APPLE
 typedef void *GLhandleARB;
 #else
 typedef unsigned int GLhandleARB;

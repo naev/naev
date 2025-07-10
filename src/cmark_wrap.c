@@ -92,7 +92,7 @@
 #endif
 
 #ifndef SWIGEXPORT
-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+# if defined(_WIN32) || defined(SDL_PLATFORM_WIN32) || defined(__CYGWIN__)
 #   if defined(STATIC_LINKED)
 #     define SWIGEXPORT
 #   else
@@ -109,7 +109,7 @@
 
 /* calling conventions for Windows */
 #ifndef SWIGSTDCALL
-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+# if defined(_WIN32) || defined(SDL_PLATFORM_WIN32) || defined(__CYGWIN__)
 #   define SWIGSTDCALL __stdcall
 # else
 #   define SWIGSTDCALL
@@ -127,7 +127,7 @@
 #endif
 
 /* Deal with Apple's deprecated 'AssertMacros.h' from Carbon-framework */
-#if defined(__APPLE__) && !defined(__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES)
+#if defined(SDL_PLATFORM_APPLE) && !defined(__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES)
 # define __ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES 0
 #endif
 

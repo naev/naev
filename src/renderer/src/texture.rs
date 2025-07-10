@@ -3,8 +3,7 @@ use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
 use nalgebra::{Matrix3, Vector4};
-use sdl2 as sdl;
-use sdl2::image::ImageRWops;
+use sdl3 as sdl;
 use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::num::NonZero;
@@ -21,7 +20,7 @@ static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
 pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImage> {
     //let has_alpha = sur.pixel_format_enum().supports_alpha();
     let sur = sur
-        .convert_format(sdl::pixels::PixelFormatEnum::RGBA32)
+        .convert_format(sdl::pixels::PixelFormatEnum::RGBA8888.into())
         .map_err(|e| anyhow::anyhow!(e))?;
     let (w, h) = sur.size();
     // TODO this always converts to rgba so we store more memory and such...
@@ -554,12 +553,15 @@ impl TextureSource {
         let tex = Arc::new({
             let mut inner = match self {
                 TextureSource::Path(path) => {
-                    //let bytes = ndata::read(path.as_str())?;
-                    //let img = image::load_from_memory(&bytes)?;
                     let cpath = ndata::simplify_path(path)?;
-                    let rw = ndata::rwops(&cpath).map_err(|e| anyhow::anyhow!(e))?;
-                    let sur = rw.load().map_err(|e| anyhow::anyhow!(e))?;
-                    let img = surface_to_image(sur)?;
+                    //let bytes = ndata::read(&cpath)?;
+                    //let img = image::load_from_memory(&bytes)?;
+                    let rw = ndata::iostream(&cpath)?;
+                    let img = image::ImageReader::new(std::io::BufReader::new(rw))
+                        .with_guessed_format()
+                        .unwrap()
+                        .decode()
+                        .unwrap();
                     let ctx = &sctx.lock();
                     TextureData::from_image(ctx, name, &img, flipv, srgb)?
                 }
@@ -1303,14 +1305,10 @@ pub extern "C" fn gl_newSpriteRWops(
     builder = match TextureData::exists(pathname) {
         Some(tex) => builder.texture_data(&tex),
         None => {
-            let rw = unsafe { sdl::rwops::RWops::from_ll(rw as *mut sdl::sys::SDL_RWops) };
-            /* TODO support image when it's faster...
-            let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                .with_guessed_format()
-                .unwrap()
-                .decode()
-                .unwrap();
-            */
+            let rw = unsafe {
+                sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
+            };
+            /*
             let img = match rw.load() {
                 Ok(sur) => surface_to_image(sur).unwrap(),
                 Err(e) => {
@@ -1320,6 +1318,13 @@ pub extern "C" fn gl_newSpriteRWops(
                     return std::ptr::null_mut();
                 }
             };
+            */
+            // TODO support image when it's faster...
+            let img = image::ImageReader::new(std::io::BufReader::new(rw))
+                .with_guessed_format()
+                .unwrap()
+                .decode()
+                .unwrap();
             builder.image(&img)
         }
     };

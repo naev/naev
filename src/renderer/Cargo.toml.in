@@ -20,7 +20,7 @@ anyhow = { workspace = true }
 nalgebra = { workspace = true }
 encase = { workspace = true }
 bytemuck = { workspace = true }
-sdl2 = { workspace = true }
+sdl3 = { workspace = true }
 image = { workspace = true }
 gettext = { workspace = true }
 formatx = { workspace = true }

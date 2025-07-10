@@ -131,9 +131,9 @@
 #undef PLAT_amd64_solaris
 
 
-#if defined(__APPLE__) && defined(__i386__)
+#if defined(SDL_PLATFORM_APPLE) && defined(__i386__)
 #  define PLAT_x86_darwin 1
-#elif defined(__APPLE__) && defined(__x86_64__)
+#elif defined(SDL_PLATFORM_APPLE) && defined(__x86_64__)
 #  define PLAT_amd64_darwin 1
 #elif defined(__FreeBSD__) && defined(__i386__)
 #  define PLAT_x86_freebsd 1

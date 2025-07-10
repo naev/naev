@@ -4,8 +4,7 @@ use encase::{ShaderSize, ShaderType};
 use glow::*;
 use naev_core::start;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
-use sdl2 as sdl;
-use sdl2::image::ImageRWops;
+use sdl3 as sdl;
 use std::ops::Deref;
 use std::os::raw::c_double;
 use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
@@ -212,7 +211,7 @@ pub fn look_at4(eye: &Vector3<f32>, target: &Vector3<f32>, up: &Vector3<f32>) ->
 
 impl Dimensions {
     pub fn new(window: &sdl::video::Window) -> Self {
-        let (draw_width, draw_height) = window.drawable_size();
+        let (draw_width, draw_height) = window.size_in_pixels();
         let (window_width, window_height) = window.size();
         let (dwscale, dhscale) = (
             (window_width as f32) / (draw_width as f32),
@@ -458,24 +457,20 @@ impl Context {
             height.max(MIN_HEIGHT),
         );
         // Issue documented below
-        //if resizable {
-        //    wdwbuild.resizable();
-        //}
+        if resizable {
+            wdwbuild.resizable();
+        }
         if borderless {
             wdwbuild.borderless();
         }
-        let mut window = wdwbuild
-            .opengl()
-            .position_centered()
-            .allow_highdpi()
-            .build()?;
+        let mut window = wdwbuild.opengl().position_centered().build()?;
 
         // It seems like setting the build time flag can give smaller windows than we want, at
         // least on Wayland. Workaround is to set RESIZABLE flag after creation.
         // https://github.com/libsdl-org/SDL/issues/13344
-        if resizable {
-            window.set_resizable(true);
-        }
+        //if resizable {
+        //    window.set_resizable(true);
+        //}
 
         window
             .set_minimum_size(MIN_WIDTH, MIN_HEIGHT)
@@ -488,14 +483,16 @@ impl Context {
         };
 
         // Try to load the icon.
+        /*
         let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
-        match ndata::rwops(filename.as_str()) {
+        match ndata::iostream(filename.as_str()) {
             Ok(rw) => match rw.load() {
                 Ok(icon) => window.set_icon(icon),
                 Err(e) => anyhow::bail!(e),
             },
             Err(e) => anyhow::bail!(e),
         }
+        */
 
         Ok((window, gl_context))
     }
@@ -536,7 +533,10 @@ impl Context {
             },
         };
         let mut gl = unsafe {
-            glow::Context::from_loader_function(|s| sdlvid.gl_get_proc_address(s) as *const _)
+            glow::Context::from_loader_function(|s| match sdlvid.gl_get_proc_address(s) {
+                Some(f) => f as *const _,
+                None => std::ptr::null(),
+            })
         };
         DEBUG.store(gl.supports_debug(), Ordering::Relaxed);
 
@@ -598,7 +598,7 @@ impl Context {
 
         unsafe {
             naevc::gl_screen.window = window.raw() as *mut naevc::SDL_Window;
-            naevc::gl_screen.context = gl_context.raw();
+            naevc::gl_screen.context = gl_context.raw() as *mut std::os::raw::c_void;
             (naevc::gl_screen.major, naevc::gl_screen.minor) = gl_attr.context_version();
             let major: i32 = naevc::gl_screen.major.into();
             let minor: i32 = naevc::gl_screen.minor.into();

@@ -365,11 +365,11 @@ int log_warn( const char *file, size_t line, const char *func, const char *fmt,
    warn_last_msg = buf;
 
 #ifdef DEBUG_PARANOID
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
    __debugbreak();
 #else
    raise( SIGINT );
-#endif /* __WIN32__ */
+#endif /* SDL_PLATFORM_WIN32 */
 #endif /* DEBUG_PARANOID */
    return n;
 }

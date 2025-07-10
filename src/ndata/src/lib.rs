@@ -1,4 +1,4 @@
-use sdl2 as sdl;
+use sdl3 as sdl;
 use std::ffi::CString;
 use std::io::{Read, Result};
 
@@ -31,8 +31,8 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     physfs::read_dir(path)
 }
 
-pub fn rwops(path: &str) -> Result<sdl::rwops::RWops> {
-    physfs::rwops(path, physfs::Mode::Read)
+pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream> {
+    physfs::iostream(path, physfs::Mode::Read)
 }
 
 pub fn open(path: &str) -> Result<physfs::File> {

@@ -1,6 +1,6 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
-use sdl2 as sdl;
+use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
@@ -227,7 +227,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(res)
 }
 
-pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
+pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream> {
     let raw = unsafe {
         let c_filename = CString::new(filename)?;
         match mode {
@@ -239,6 +239,8 @@ pub fn rwops(filename: &str, mode: Mode) -> Result<sdl::rwops::RWops> {
     if raw.is_null() {
         Err(error_as_io_error_with_file("PHYSFS_open", filename))
     } else {
-        Ok(unsafe { sdl::rwops::RWops::from_ll(raw as *mut sdl::sys::SDL_RWops) })
+        Ok(unsafe {
+            sdl::iostream::IOStream::from_ll(raw as *mut sdl::sys::iostream::SDL_IOStream)
+        })
     }
 }

@@ -3,7 +3,7 @@ pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
 use log::{debug, info, warn};
-use sdl2 as sdl;
+use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
 
@@ -105,11 +105,7 @@ pub fn naev() -> Result<()> {
         Err(e) => panic!("Unable to initialize SDL: {e}"),
     };
 
-    let sdltime = match sdlctx.timer() {
-        Ok(s) => s,
-        Err(e) => panic!("Unable to initialize SDL Timer: {e}"),
-    };
-    let starttime = sdltime.ticks();
+    let starttime = sdl::timer::ticks();
 
     unsafe {
         naevc::threadpool_init();
@@ -347,7 +343,7 @@ pub fn naev() -> Result<()> {
         if naevc::conf.devmode != 0 {
             info!(
                 gettext("Reached main menu in {:.3f} s"),
-                (sdltime.ticks() - starttime) as f32 / 1000.
+                (sdl::timer::ticks() - starttime) as f32 / 1000.
             );
         } else {
             info!(gettext("Reached main menu"));
