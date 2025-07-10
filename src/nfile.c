@@ -141,12 +141,11 @@ const char *nfile_configPath( void )
          path = ".";
       }
       snprintf( naev_configPath, sizeof( naev_configPath ), "%s/naev/", path );
-#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+#else
+      // TODO just use SDL instead of custom implementations?
       char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
       strncpy( naev_configPath, sizeof( naev_configPath ), prefpath );
       SDL_free( prefpath );
-#else
-#error "Feature needs implementation on this Operating System for Naev to work."
 #endif
    }
 
@@ -189,12 +188,11 @@ const char *nfile_cachePath( void )
          path = ".";
       }
       snprintf( naev_cachePath, sizeof( naev_cachePath ), "%s/naev/", path );
-#elif SDL_VERSION_ATLEAST( 3, 0, 0 )
+#else
+      // TODO just use SDL instead of custom implementations?
       char *prefpath = SDL_GetPrefPath( "Naev DevTeam", "Naev" );
       strncpy( naev_cachePath, sizeof( naev_cachePath ), prefpath );
       SDL_free( prefpath );
-#else
-#error "Feature needs implementation on this Operating System for Naev to work."
 #endif
    }
 

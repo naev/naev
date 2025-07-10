@@ -92,11 +92,9 @@ static void ndata_testVersion( void )
                 _( "Unable to find game data. You may need to install, specify "
                    "a datapath, or run using %s (if developing)." ),
                 "naev.py" );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
       SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
                                 _( "Naev Critical Error" ), err,
                                 gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
       ERR( "%s", err );
    }
 
@@ -113,11 +111,9 @@ static void ndata_testVersion( void )
          char err[STRMAX];
          snprintf( err, sizeof( err ),
                    _( "Please get a compatible ndata version!" ) );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
          SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
                                    _( "Naev Critical Error" ), err,
                                    gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
          ERR( "%s", err );
       }
       if ( ABS( diff ) > 1 )
