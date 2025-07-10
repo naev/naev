@@ -1731,15 +1731,16 @@ static void opt_getVideoMode( int *w, int *h, int *fullscreen )
     * whereas SDL2 window flags report a fullscreen mode. Mitigation: be strict
     * about how the setup is done in opt_setVideoMode / gl_setupFullscreen, and
     * never bypass them. */
-   *fullscreen =
-      ( SDL_GetWindowFlags( gl_screen.window ) & SDL_WINDOW_FULLSCREEN ) != 0;
-   if ( *fullscreen && conf.modesetting ) {
-      const SDL_DisplayMode *mode =
-         SDL_GetWindowFullscreenMode( gl_screen.window );
-      *w = mode->w;
-      *h = mode->h;
-   } else
+   const SDL_DisplayMode *mode =
+      SDL_GetWindowFullscreenMode( gl_screen.window );
+   if ( mode != NULL ) {
+      *fullscreen = 1;
+      *w          = mode->w;
+      *h          = mode->h;
+   } else {
+      *fullscreen = 0;
       SDL_GetWindowSize( gl_screen.window, w, h );
+   }
 }
 
 /**
