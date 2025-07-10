@@ -1579,7 +1579,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
       case SDL_EVENT_TEXT_INPUT:
          ret |= toolkit_textEvent( wdw, event );
          break;
-      case SDL_TEXTEDITING:
+      case SDL_EVENT_TEXT_EDITING:
          break;
       }
    }
@@ -1609,8 +1609,8 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
  *    @param[out] ry Relative Y movement (only valid for motion).
  *    @return The type of the event.
  */
-Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event, int *x,
-                                     int *y, int *rx, int *ry )
+Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event,
+                                     float *x, float *y, float *rx, float *ry )
 {
    /* Extract the position as event. */
    if ( event->type == SDL_EVENT_MOUSE_MOTION ) {
@@ -1674,7 +1674,7 @@ static int toolkit_mouseEventReverse( Window *w, SDL_Event *event, Widget *wgt,
  */
 static int toolkit_mouseEvent( Window *w, SDL_Event *event )
 {
-   int x, y, rx, ry;
+   float x, y, rx, ry;
 
    /* Translate mouse coords. */
    toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
@@ -1903,8 +1903,8 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event *event )
    int         rep, ret;
 
    /* Event info. */
-   key = event->key.keysym.sym;
-   mod = event->key.keysym.mod;
+   key = event->key.key;
+   mod = event->key.mod;
    rep = event->key.repeat;
 
    /* Hack to simulate key repetition */

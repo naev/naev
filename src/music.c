@@ -8,7 +8,7 @@
  */
 
 /** @cond */
-#include "physfsrwops.h"
+#include "SDL_PhysFS.h"
 #include <SDL3/SDL.h>
 
 #include "naev.h"
@@ -163,7 +163,7 @@ static int music_find( void )
       return 0;
 
    /* get the file list */
-   files = PHYSFS_enumerateFiles( MUSIC_PATH );
+   files = SDL_PhysFS_LoadDirectoryFiles( MUSIC_PATH );
 
    /* load the profiles */
    nmusic = 0;
@@ -181,7 +181,7 @@ static int music_find( void )
    DEBUG( n_( "Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
-   PHYSFS_freeList( files );
+   SDL_PhysFS_FreeDirectoryFiles( files );
 
    return 0;
 }

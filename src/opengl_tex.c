@@ -7,7 +7,6 @@
  * @brief This file handles the opengl texture wrapper routines.
  */
 /** @cond */
-#include "physfsrwops.h"
 #include <SDL3_image/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -70,14 +69,14 @@ typedef struct glTexList_ {
    unsigned int flags; /**< Flags being used. */
 } glTexList;
 static SDL_Mutex   *gl_lock = NULL; /**< Lock for OpenGL functions. */
-static SDL_threadID tex_mainthread;
+static SDL_ThreadID tex_mainthread;
 static SDL_Mutex   *tex_lock = NULL; /**< Lock for texture list manipulation. */
 
 int gl_initTextures( void )
 {
    gl_lock        = SDL_CreateMutex();
    tex_lock       = SDL_CreateMutex();
-   tex_mainthread = SDL_ThreadID();
+   tex_mainthread = SDL_GetCurrentThreadID();
    return 0;
 }
 
@@ -92,13 +91,13 @@ void gl_exitTextures( void )
 
 static void tex_ctxSet( void )
 {
-   if ( SDL_ThreadID() != tex_mainthread )
+   if ( SDL_GetCurrentThreadID() != tex_mainthread )
       SDL_GL_MakeCurrent( gl_screen.window, gl_screen.context );
 }
 
 static void tex_ctxUnset( void )
 {
-   if ( SDL_ThreadID() != tex_mainthread )
+   if ( SDL_GetCurrentThreadID() != tex_mainthread )
       SDL_GL_MakeCurrent( gl_screen.window, NULL );
 }
 

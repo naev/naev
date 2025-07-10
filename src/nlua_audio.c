@@ -7,7 +7,7 @@
  * @brief Bindings for Special effects functionality from Lua.
  */
 /** @cond */
-#include "physfsrwops.h"
+#include "SDL_PhysFS.h"
 #include <lauxlib.h>
 
 #include "naev.h"
@@ -132,7 +132,7 @@ static int stream_thread( void *la_data )
       /* Case finished. */
       if ( la->active < 0 ) {
          la->th = NULL;
-         SDL_CondBroadcast( la->cond );
+         SDL_BroadcastCond( la->cond );
          alSourceStop( la->source );
          soundUnlock();
          return 0;
@@ -149,7 +149,7 @@ static int stream_thread( void *la_data )
              * lead to the thread being gc'd and having active = -1. We have to
              * add a check here to not mess around with stuff. */
             la->th = NULL;
-            SDL_CondBroadcast( la->cond );
+            SDL_BroadcastCond( la->cond );
             alSourceStop( la->source );
             soundUnlock();
             return 0;
@@ -519,7 +519,7 @@ static int audioL_new( lua_State *L )
       lua_pushaudio( L, la );
       return 1;
    }
-   rw = PHYSFSRWOPS_openRead( name );
+   rw = SDL_PhysFS_IOFromFile( name );
    if ( rw == NULL )
       return NLUA_ERROR( L, "Unable to open '%s'", name );
    la.name = strdup( name );
@@ -527,7 +527,7 @@ static int audioL_new( lua_State *L )
    soundLock();
    la.ok = audio_genSource( &la.source );
    if ( la.ok ) {
-      SDL_RWclose( rw ); /* Clean up. */
+      SDL_CloseIO( rw ); /* Clean up. */
       la.nocleanup = 1;  /* Not initialized so no need to clean up. */
       lua_pushaudio( L, la );
       return 1;
@@ -544,7 +544,7 @@ static int audioL_new( lua_State *L )
       alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
       /* Clean up. */
-      SDL_RWclose( rw );
+      SDL_CloseIO( rw );
    } else {
       vorbis_comment *vc;
       ALfloat         track_gain_db, track_peak;
@@ -553,7 +553,7 @@ static int audioL_new( lua_State *L )
       la.type = LUA_AUDIO_STREAM;
       /* ov_clear will close rw for us. */
       if ( ov_open_callbacks( rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0 ) {
-         SDL_RWclose( rw );
+         SDL_CloseIO( rw );
          return NLUA_ERROR(
             L, _( "Audio '%s' does not appear to be a Vorbis bitstream." ),
             name );

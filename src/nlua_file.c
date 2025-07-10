@@ -146,7 +146,7 @@ static int fileL_gc( lua_State *L )
 {
    LuaFile_t *lf = luaL_checkfile( L, 1 );
    if ( lf->rw != NULL ) {
-      SDL_RWclose( lf->rw );
+      SDL_CloseIO( lf->rw );
       lf->rw = NULL;
    }
    return 0;
@@ -208,7 +208,7 @@ static int fileL_open( lua_State *L )
    else if ( strcmp( mode, "a" ) == 0 )
       lf->rw = PHYSFSRWOPS_openAppend( lf->path );
    else
-      lf->rw = PHYSFSRWOPS_openRead( lf->path );
+      lf->rw = SDL_PhysFS_IOFromFile( lf->path );
    if ( lf->rw == NULL ) {
       lua_pushboolean( L, 0 );
       lua_pushstring( L, SDL_GetError() );
@@ -232,7 +232,7 @@ static int fileL_close( lua_State *L )
 {
    LuaFile_t *lf = luaL_checkfile( L, 1 );
    if ( lf->rw != NULL ) {
-      SDL_RWclose( lf->rw );
+      SDL_CloseIO( lf->rw );
       lf->rw = NULL;
    }
    lf->mode = 'c';

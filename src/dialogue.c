@@ -25,7 +25,6 @@
 
 #include "dialogue.h"
 
-#include "conf.h"
 #include "input.h"
 #include "log.h"
 #include "menu.h"
@@ -852,7 +851,7 @@ static void dialogue_choiceClose( unsigned int wid, const char *str )
 
 static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
 {
-   int                            mx, my;
+   float                          mx, my;
    struct dialogue_custom_data_s *cd;
    void                          *data = window_getData( wid );
    cd                                  = (struct dialogue_custom_data_s *)data;

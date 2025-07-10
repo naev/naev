@@ -34,7 +34,7 @@
 /**
  * @brief Stores data about the current opengl environment.
  */
-typedef struct glInfo_ {
+typedef struct glInfo {
    unsigned char major; /**< OpenGL major version. */
    unsigned char minor; /**< OpenGL minor version. */
    int           glsl;  /**< GLSL version. */
@@ -91,8 +91,8 @@ void gl_resize_c( void );
 /*
  * Viewport.
  */
-void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy );
-void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy );
+void gl_windowToScreenPos( float *sx, float *sy, float wx, float wy );
+void gl_screenToWindowPos( float *wx, float *wy, float sx, float sy );
 void gl_defViewport( void );
 int  gl_setupFullscreen( void );
 

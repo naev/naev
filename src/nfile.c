@@ -46,9 +46,9 @@
  *    @param name Name of environment variable.
  *    @return The environment variable or NULL if an error occurs.
  */
-static char *xdgGetEnv( const char *name )
+static const char *xdgGetEnv( const char *name )
 {
-   char *env = SDL_getenv( name );
+   const char *env = SDL_getenv( name );
    if ( ( env != NULL ) && ( env[0] != '\0' ) )
       return env;
    /* What errno signifies missing env var? */

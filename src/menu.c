@@ -594,7 +594,7 @@ static void exit_game( void )
       land_cleanup();
    }
    SDL_Event quit;
-   quit.type = SDL_QUIT;
+   quit.type = SDL_EVENT_QUIT;
    SDL_PushEvent( &quit );
 }
 

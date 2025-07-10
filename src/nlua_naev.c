@@ -939,7 +939,7 @@ static int naevL_setTextInput( lua_State *L )
       SDL_SetTextInputRect( &input_pos );
    } else {
       SDL_StopTextInput();
-      SDL_EventState( SDL_EVENT_TEXT_INPUT, SDL_DISABLE );
+      SDL_EventState( SDL_EVENT_TEXT_INPUT, 0 );
    }
    return 0;
 }

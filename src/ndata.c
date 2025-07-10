@@ -26,6 +26,7 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
+#include "opengl.h"
 #if SDL_PLATFORM_MACOS
 #include "glue_macos.h"
 #endif /* SDL_PLATFORM_MACOS */

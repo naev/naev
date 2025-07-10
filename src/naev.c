@@ -14,6 +14,9 @@
 /** @cond */
 #include <SDL3/SDL.h>
 
+#define SDL_PHYSFS_IMPLEMENTATION
+#include "SDL_PhysFS.h"
+
 #include "naev.h"
 
 #if HAS_POSIX

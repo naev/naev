@@ -245,11 +245,11 @@ static int texL_new( lua_State *L )
    if ( path != NULL )
       tex = gl_newSprite( path, sx, sy, 0 );
    else {
-      rw = PHYSFSRWOPS_openRead( lf->path );
+      rw = SDL_PhysFS_IOFromFile( lf->path );
       if ( rw == NULL )
          return NLUA_ERROR( L, "Unable to open '%s'", lf->path );
       tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
-      // SDL_RWclose( rw ); /* cleaned up rust-side now. */
+      // SDL_CloseIO( rw ); /* cleaned up rust-side now. */
    }
 
    /* Failed to load. */
@@ -319,7 +319,7 @@ static int texL_readData( lua_State *L )
       s  = lf->path;
    } else
       s = luaL_checkstring( L, 1 );
-   rw = PHYSFSRWOPS_openRead( s );
+   rw = SDL_PhysFS_IOFromFile( s );
    if ( rw == NULL )
       return NLUA_ERROR( L, _( "problem opening file '%s' for reading" ), s );
 

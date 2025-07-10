@@ -3757,6 +3757,7 @@ dat/spob/lua/wormhole_zied.lua
 dat/spob/lua/yetmer_orez.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
+src/SDL_PhysFS.h
 src/SDL_keynames.h
 src/ai.c
 src/ai.h
@@ -4062,8 +4063,6 @@ src/perlin.c
 src/perlin.h
 src/physfs_archiver_blacklist.c
 src/physfs_archiver_blacklist.h
-src/physfsrwops.c
-src/physfsrwops.h
 src/physics.c
 src/physics.h
 src/physics.rs

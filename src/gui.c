@@ -2014,7 +2014,7 @@ void gui_targetPilotGFX( const glTexture *gfx )
 /**
  * @brief Translates a mouse position from an SDL_Event to GUI coordinates.
  */
-static void gui_eventToScreenPos( int *sx, int *sy, int ex, int ey )
+static void gui_eventToScreenPos( float *sx, float *sy, float ex, float ey )
 {
    gl_windowToScreenPos( sx, sy, ex, ey );
 }
@@ -2027,7 +2027,8 @@ static void gui_eventToScreenPos( int *sx, int *sy, int ex, int ey )
  */
 int gui_radarClickEvent( SDL_Event *event )
 {
-   int    mxr, myr, in_bounds;
+   float  mxr, myr;
+   int    in_bounds;
    double x, y, cx, cy;
 
    gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
@@ -2055,8 +2056,8 @@ int gui_radarClickEvent( SDL_Event *event )
  */
 int gui_handleEvent( SDL_Event *evt )
 {
-   int ret;
-   int x, y;
+   int   ret;
+   float x, y;
 
    if ( player.p == NULL )
       return 0;

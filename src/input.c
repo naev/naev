@@ -376,9 +376,6 @@ void input_setDefault( int wasd )
  */
 void input_init( void )
 {
-   /* Window. */
-   SDL_SetEventEnabled( SDL_SYSWMEVENT, SDL_DISABLE );
-
    /* Keyboard. */
    SDL_SetEventEnabled( SDL_EVENT_KEY_DOWN, 1 );
    SDL_SetEventEnabled( SDL_EVENT_KEY_UP, 1 );
@@ -389,20 +386,20 @@ void input_init( void )
    SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_UP, 1 );
 
    /* Joystick, enabled in joystick.c if needed. */
-   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_AXIS_MOTION, SDL_DISABLE );
-   SDL_SetEventEnabled( SDL_JOYHATMOTION, SDL_DISABLE );
-   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_BUTTON_DOWN, SDL_DISABLE );
-   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_BUTTON_UP, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_AXIS_MOTION, 0 );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_HAT_MOTION, 0 );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_BUTTON_DOWN, 0 );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_BUTTON_UP, 0 );
 
    /* Quit. */
-   SDL_SetEventEnabled( SDL_QUIT, 1 );
+   SDL_SetEventEnabled( SDL_EVENT_QUIT, 1 );
 
    /* Window. */
-   SDL_SetEventEnabled( SDL_WINDOWEVENT, 1 );
+   SDL_SetEventEnabled( SDL_EVENT_WINDOW_RESIZED, 1 );
 
    /* Keyboard. */
    SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT,
-                        SDL_DISABLE ); /* Enabled on a per-widget basis. */
+                        0 ); /* Enabled on a per-widget basis. */
 
    /* Mouse. */
    SDL_SetEventEnabled( SDL_EVENT_MOUSE_WHEEL, 1 );
@@ -1471,7 +1468,7 @@ static void input_clickZoom( double modifier )
  */
 static void input_mouseMove( SDL_Event *event )
 {
-   int mx, my;
+   float mx, my;
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
    player.mousex = mx;
    player.mousey = my;
@@ -1482,7 +1479,7 @@ static void input_mouseMove( SDL_Event *event )
  */
 static void input_clickevent( SDL_Event *event )
 {
-   int       mx, my;
+   float     mx, my;
    int       res;
    double    x, y, zoom;
    HookParam hparam[3];
@@ -1844,16 +1841,16 @@ void input_handle( SDL_Event *event )
         ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) ||
         ( event->type == SDL_EVENT_MOUSE_BUTTON_UP ) ) {
       input_mouseTimer = conf.mouse_hide;
-      SDL_ShowCursor( 1 );
+      SDL_ShowCursor();
       ismouse = 1;
    } else
       ismouse = 0;
 
    /* Special case paste. */
    if ( event->type == SDL_EVENT_KEY_DOWN && SDL_HasClipboardText() &&
-        SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, SDL_QUERY ) == 1 ) {
-      SDL_Keymod mod = input_translateMod( event->key.keysym.mod );
-      if ( ( input_paste->key == event->key.keysym.sym ) &&
+        SDL_EventEnabled( SDL_EVENT_TEXT_INPUT ) == 1 ) {
+      SDL_Keymod mod = input_translateMod( event->key.mod );
+      if ( ( input_paste->key == event->key.key ) &&
            ( input_paste->mod & mod ) ) {
          // https://github.com/libsdl-org/SDL/issues/13223
          WARN( "Due to an upstream bug, pasting is currently disabled." );
@@ -1901,21 +1898,19 @@ void input_handle( SDL_Event *event )
    case SDL_EVENT_JOYSTICK_BUTTON_UP:
       input_joyevent( KEY_RELEASE, event->jbutton.button );
       break;
-   case SDL_JOYHATMOTION:
+   case SDL_EVENT_JOYSTICK_HAT_MOTION:
       input_joyhatevent( event->jhat.value, event->jhat.hat );
       break;
 
    case SDL_EVENT_KEY_DOWN:
       if ( event->key.repeat != 0 )
          return;
-      input_keyevent( KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod,
-                      0 );
+      input_keyevent( KEY_PRESS, event->key.key, event->key.mod, 0 );
       break;
    case SDL_EVENT_KEY_UP:
       if ( event->key.repeat != 0 )
          return;
-      input_keyevent( KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod,
-                      0 );
+      input_keyevent( KEY_RELEASE, event->key.key, event->key.mod, 0 );
       break;
 
    case SDL_EVENT_MOUSE_BUTTON_DOWN:

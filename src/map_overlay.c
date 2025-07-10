@@ -175,7 +175,7 @@ static void map_overlayToScreenPos( double *ox, double *oy, double x, double y )
  */
 int ovr_input( SDL_Event *event )
 {
-   int    mx, my;
+   float  mx, my;
    double x, y;
 
    /* We only want mouse events. */

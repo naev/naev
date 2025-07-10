@@ -1039,7 +1039,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    /* See how to handle it. */
    switch ( event->type ) {
    case SDL_EVENT_KEY_DOWN:
-      key = event->key.keysym.sym;
+      key = event->key.key;
       /* If control key make player hit twice. */
       test_key_event = ( key == SDLK_NUMLOCKCLEAR ) ||
                        ( key == SDLK_CAPSLOCK ) || ( key == SDLK_SCROLLLOCK ) ||
@@ -1055,7 +1055,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       if ( window_checkboxState( wid, "chkAny" ) )
          mod = NMOD_ANY;
       else {
-         SDL_Keymod ev_mod = event->key.keysym.mod;
+         SDL_Keymod ev_mod = event->key.mod;
          mod               = 0;
          if ( ev_mod & ( SDL_KMOD_LSHIFT | SDL_KMOD_RSHIFT ) )
             mod |= NMOD_SHIFT;
@@ -1087,7 +1087,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       mod  = NMOD_ANY;
       break;
 
-   case SDL_JOYHATMOTION:
+   case SDL_EVENT_JOYSTICK_HAT_MOTION:
       switch ( event->jhat.value ) {
       case SDL_HAT_UP:
          type = KEYBIND_JHAT_UP;
@@ -1367,14 +1367,15 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x + 20 + 100, y, 100, 20, "chkFullscreen",
                        _( "Fullscreen" ), NULL, conf.fullscreen );
    y -= 30;
-   SDL_DisplayMode mode;
-   int             k;
-   int display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
-   int n             = SDL_GetNumDisplayModes( display_index );
-   j                 = 1;
-   for ( i = 0; i < n; i++ ) {
-      SDL_GetDisplayMode( display_index, i, &mode );
-      if ( ( mode.w == (int)conf.width ) && ( mode.h == (int)conf.height ) )
+   int k;
+   int display_index = SDL_GetDisplayForWindow( gl_screen.window );
+   int count;
+   SDL_DisplayMode **mode =
+      SDL_GetFullscreenDisplayModes( display_index, &count );
+   j = 1;
+   for ( i = 0; i < count; i++ ) {
+      if ( ( mode[i]->w == (int)conf.width ) &&
+           ( mode[i]->h == (int)conf.height ) )
          j = 0;
    }
    res     = malloc( sizeof( char * ) * ( i + j ) );
@@ -1384,9 +1385,8 @@ static void opt_video( unsigned int wid )
       SDL_asprintf( &res[0], "%dx%d", conf.width, conf.height );
       nres = 1;
    }
-   for ( i = 0; i < n; i++ ) {
-      SDL_GetDisplayMode( display_index, i, &mode );
-      SDL_asprintf( &res[nres], "%dx%d", mode.w, mode.h );
+   for ( i = 0; i < count; i++ ) {
+      SDL_asprintf( &res[nres], "%dx%d", mode[i]->w, mode[i]->h );
 
       /* Make sure doesn't already exist. */
       for ( k = 0; k < nres; k++ )
@@ -1398,7 +1398,8 @@ static void opt_video( unsigned int wid )
       }
 
       /* Add as default if necessary and increment. */
-      if ( ( mode.w == (int)conf.width ) && ( mode.h == (int)conf.height ) )
+      if ( ( mode[i]->w == (int)conf.width ) &&
+           ( mode[i]->h == (int)conf.height ) )
          res_def = i;
       nres++;
    }
@@ -1724,7 +1725,6 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
  */
 static void opt_getVideoMode( int *w, int *h, int *fullscreen )
 {
-   SDL_DisplayMode mode;
    /* Warning: this test may be inadequate depending on our setup.
     * Example (Wayland): if I called SDL_SetWindowDisplayMode with an impossibly
     * large size, then SDL_SetWindowFullscreen, I see a window on my desktop
@@ -1734,9 +1734,10 @@ static void opt_getVideoMode( int *w, int *h, int *fullscreen )
    *fullscreen =
       ( SDL_GetWindowFlags( gl_screen.window ) & SDL_WINDOW_FULLSCREEN ) != 0;
    if ( *fullscreen && conf.modesetting ) {
-      SDL_GetWindowDisplayMode( gl_screen.window, &mode );
-      *w = mode.w;
-      *h = mode.h;
+      const SDL_DisplayMode *mode =
+         SDL_GetWindowFullscreenMode( gl_screen.window );
+      *w = mode->w;
+      *h = mode->h;
    } else
       SDL_GetWindowSize( gl_screen.window, w, h );
 }
@@ -2153,7 +2154,7 @@ static void opt_plugins_add( unsigned int wid, const char *name )
    };
    /* Open dialogue to load the diff. */
    SDL_ShowOpenFileDialog( opt_plugins_add_callback, &wid, gl_screen.window,
-                           filter, conf.dev_data_dir, 0 );
+                           filter, 1, conf.dev_data_dir, 0 );
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )

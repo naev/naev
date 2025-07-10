@@ -31,14 +31,13 @@
  * - Reverb
  */
 /** @cond */
+#include "SDL_PhysFS.h"
 #include "physfs.h"
 #include <SDL3/SDL_mutex.h>
 #include <sys/stat.h>
 
 #include "naev.h"
 /** @endcond */
-
-#include "physfsrwops.h"
 
 #include "sound.h"
 
@@ -249,17 +248,17 @@ static size_t ovpack_read( void *ptr, size_t size, size_t nmemb,
                            void *datasource )
 {
    SDL_IOStream *rw = datasource;
-   return (size_t)SDL_RWread( rw, ptr, size, nmemb );
+   return (size_t)SDL_ReadIO( rw, ptr, size * nmemb );
 }
 static int ovpack_seek( void *datasource, ogg_int64_t offset, int whence )
 {
    SDL_IOStream *rw = datasource;
-   return SDL_RWseek( rw, offset, whence );
+   return SDL_SeekIO( rw, offset, whence );
 }
 static int ovpack_close( void *datasource )
 {
    SDL_IOStream *rw = datasource;
-   return SDL_RWclose( rw );
+   return SDL_CloseIO( rw );
 }
 static int ovpack_closeFake( void *datasource )
 {
@@ -269,7 +268,7 @@ static int ovpack_closeFake( void *datasource )
 static long ovpack_tell( void *datasource )
 {
    SDL_IOStream *rw = datasource;
-   return SDL_RWseek( rw, 0, SEEK_CUR );
+   return SDL_SeekIO( rw, 0, SEEK_CUR );
 }
 ov_callbacks sound_al_ovcall = {
    .read_func  = ovpack_read,
@@ -1240,14 +1239,14 @@ static int sound_makeList( void )
 
       /* Load the sound. */
       snprintf( path, sizeof( path ), SOUND_PATH "%s", files[i] );
-      rw = PHYSFSRWOPS_openRead( path );
+      rw = SDL_PhysFS_IOFromFile( path );
 
       /* remove the suffix */
       len           = flen - suflen;
       files[i][len] = '\0';
 
       source_newRW( rw, files[i], 0 );
-      SDL_RWclose( rw );
+      SDL_CloseIO( rw );
    }
 
    DEBUG( n_( "Loaded %d Sound", "Loaded %d Sounds", array_size( sound_list ) ),
@@ -1818,9 +1817,9 @@ int source_newRW( SDL_IOStream *rw, const char *name, unsigned int flags )
  */
 int source_new( const char *filename, unsigned int flags )
 {
-   SDL_IOStream *rw = PHYSFSRWOPS_openRead( filename );
+   SDL_IOStream *rw = SDL_PhysFS_IOFromFile( filename );
    int           id = source_newRW( rw, filename, flags );
-   SDL_RWclose( rw );
+   SDL_CloseIO( rw );
    return id;
 }
 
@@ -1879,29 +1878,24 @@ static int al_loadWav( ALuint *buf, SDL_IOStream *rw )
    Uint8        *wav_buffer;
    ALenum        format;
 
-   SDL_RWseek( rw, 0, SEEK_SET );
+   SDL_SeekIO( rw, 0, SEEK_SET );
 
    /* Load WAV. */
-   if ( SDL_LoadWAV_RW( rw, 0, &wav_spec, &wav_buffer, &wav_length ) == NULL ) {
+   if ( !SDL_LoadWAV_IO( rw, 0, &wav_spec, &wav_buffer, &wav_length ) ) {
       WARN( _( "SDL_LoadWav_RW failed: %s" ), SDL_GetError() );
       return -1;
    }
 
    /* Handle format. */
    switch ( wav_spec.format ) {
-   case AUDIO_U8:
-   case AUDIO_S8:
+   case SDL_AUDIO_U8:
+   case SDL_AUDIO_S8:
       format = ( wav_spec.channels == 1 ) ? AL_FORMAT_MONO8 : AL_FORMAT_STEREO8;
       break;
-   case AUDIO_U16LSB:
-   case AUDIO_S16LSB:
+   case SDL_AUDIO_S16:
       format =
          ( wav_spec.channels == 1 ) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
       break;
-   case AUDIO_U16MSB:
-   case AUDIO_S16MSB:
-      WARN( _( "Big endian WAVs unsupported!" ) );
-      return -1;
    default:
       WARN( _( "Invalid WAV format!" ) );
       return -1;
@@ -1917,7 +1911,7 @@ static int al_loadWav( ALuint *buf, SDL_IOStream *rw )
    soundUnlock();
 
    /* Clean up. */
-   SDL_FreeWAV( wav_buffer );
+   SDL_free( wav_buffer );
    return 0;
 }
 

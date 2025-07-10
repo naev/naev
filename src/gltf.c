@@ -5,8 +5,6 @@
 #include <libgen.h>
 #include <math.h>
 
-#include "physfsrwops.h"
-
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
@@ -457,7 +455,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
 #endif /* HAVE_NAEV */
 
    /* Load the image data as a surface. */
-   rw = PHYSFSRWOPS_openRead( filepath );
+   rw = SDL_PhysFS_IOFromFile( filepath );
    if ( rw == NULL ) {
       WARN( _( "Unable to open '%s': %s" ), filepath, SDL_GetError() );
       *otex = *def;

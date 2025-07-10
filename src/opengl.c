@@ -23,7 +23,7 @@
  *  * (SCREEN_W, SCREEN_H) is bottom right.
  */
 /** @cond */
-#include "physfsrwops.h"
+#include "SDL_PhysFS.h"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
@@ -57,7 +57,6 @@ mat4 gl_view_matrix = { { { { 0 } } } };
  * prototypes
  */
 /* gl */
-static int gl_getFullscreenMode( void );
 static int gl_getGLInfo( void );
 
 /*
@@ -82,7 +81,8 @@ void gl_screenshot( const char *filename )
    w         = gl_screen.rw;
    h         = gl_screen.rh;
    screenbuf = malloc( sizeof( GLubyte ) * 3 * w * h );
-   surface   = SDL_CreateRGBSurface( 0, w, h, 24, RGBAMASK );
+   surface   = SDL_CreateSurface(
+      w, h, SDL_GetPixelFormatForMasks( 24, RMASK, GMASK, BMASK, AMASK ) );
 
    /* Read pixels from buffer -- SLOW. */
    glPixelStorei( GL_PACK_ALIGNMENT, 1 ); /* Force them to pack the bytes. */
@@ -95,10 +95,12 @@ void gl_screenshot( const char *filename )
    free( screenbuf );
 
    /* Save PNG. */
+   /* TODO
    if ( !( rw = PHYSFSRWOPS_openWrite( filename ) ) )
       WARN( _( "Aborting screenshot" ) );
    else
-      IMG_SavePNG_RW( surface, rw, 1 );
+      IMG_SavePNG_IO( surface, rw, 1 );
+      */
 
    /* Check to see if an error occurred. */
    gl_checkErr();
@@ -117,7 +119,8 @@ void gl_saveFboDepth( GLuint fbo, const char *filename )
    w         = gl_screen.rw; /* TODO get true size. */
    h         = gl_screen.rh;
    screenbuf = malloc( sizeof( GLfloat ) * 1 * w * h );
-   s         = SDL_CreateRGBSurface( 0, w, h, 24, RGBAMASK );
+   s         = SDL_CreateSurface(
+      w, h, SDL_GetPixelFormatForMasks( 24, RMASK, GMASK, BMASK, AMASK ) );
 
    /* Read pixels from buffer -- SLOW. */
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
@@ -145,7 +148,7 @@ void gl_saveFboDepth( GLuint fbo, const char *filename )
          float f = screenbuf[( h - i - 1 ) * w + j];
          Uint8 v = f * 255.;
          for ( int k = 0; k < 3; k++ ) {
-            d[i * s->pitch + j * s->format->BytesPerPixel + k] = v;
+            d[i * s->pitch + j * SDL_BYTESPERPIXEL( s->format ) + k] = v;
          }
       }
    }
@@ -214,44 +217,30 @@ int gl_checkHandleError( const char *func, int line )
 int gl_setupFullscreen( void )
 {
    int ok;
-   int display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
+   int display_index = SDL_GetDisplayForWindow( gl_screen.window );
    if ( conf.fullscreen && conf.modesetting ) {
       SDL_DisplayMode target, closest;
       /* Try to use desktop resolution if nothing is specifically set. */
       if ( conf.explicit_dim ) {
-         SDL_GetWindowDisplayMode( gl_screen.window, &target );
+         target   = *SDL_GetWindowFullscreenMode( gl_screen.window );
          target.w = conf.width;
          target.h = conf.height;
       } else
-         SDL_GetDesktopDisplayMode( display_index, &target );
+         target = *SDL_GetDesktopDisplayMode( display_index );
 
-      if ( SDL_GetClosestDisplayMode( display_index, &target, &closest ) ==
-           NULL )
-         SDL_GetDisplayMode( display_index, 0,
-                             &closest ); /* fall back to the best one */
+      if ( !SDL_GetClosestFullscreenDisplayMode( display_index, target.w,
+                                                 target.h, 0.0, 1, &closest ) )
+         return -1;
 
-      SDL_SetWindowDisplayMode( gl_screen.window, &closest );
+      SDL_SetWindowFullscreenMode( gl_screen.window, &closest );
    }
-   ok = SDL_SetWindowFullscreen( gl_screen.window, gl_getFullscreenMode() );
+   ok = SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen );
    /* HACK: Force pending resize events to be processed, particularly on
     * Wayland. */
    SDL_PumpEvents();
    SDL_GL_SwapWindow( gl_screen.window );
    SDL_GL_SwapWindow( gl_screen.window );
    return ok;
-}
-
-/**
- * @brief Returns the fullscreen configuration as SDL2 flags.
- *
- * @return Appropriate combination of SDL_WINDOW_FULLSCREEN* flags.
- */
-static int gl_getFullscreenMode( void )
-{
-   if ( conf.fullscreen )
-      return conf.modesetting ? SDL_WINDOW_FULLSCREEN
-                              : SDL_WINDOW_FULLSCREEN_DESKTOP;
-   return 0;
 }
 
 /**
@@ -296,7 +285,8 @@ static int gl_getGLInfo( void )
 int gl_init( void )
 {
    /* Set Vsync. */
-   if ( SDL_GL_GetSwapInterval() )
+   int interval;
+   if ( SDL_GL_GetSwapInterval( &interval ) )
       gl_screen.flags |= OPENGL_VSYNC;
 
    /* Finish getting attributes. */
@@ -311,7 +301,7 @@ int gl_init( void )
    gl_setupFullscreen();
 
    /* Load extensions. */
-   if ( !gladLoadGLLoader( SDL_GL_GetProcAddress ) ) {
+   if ( !gladLoadGLLoader( (void *)SDL_GL_GetProcAddress ) ) {
       char buf[STRMAX];
       snprintf( buf, sizeof( buf ), _( "Unable to load OpenGL using GLAD!" ) );
 #if SDL_VERSION_ATLEAST( 3, 0, 0 )
@@ -393,7 +383,7 @@ void gl_resize_c( void )
 /**
  * @brief Translates the window position to screen position.
  */
-void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
+void gl_windowToScreenPos( float *sx, float *sy, float wx, float wy )
 {
    wx /= gl_screen.dwscale;
    wy /= gl_screen.dhscale;
@@ -405,7 +395,7 @@ void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 /**
  * @brief Translates the screen position to windos position.
  */
-void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
+void gl_screenToWindowPos( float *wx, float *wy, float sx, float sy )
 {
    *wx = sx / gl_screen.mxscale;
    *wy = (double)gl_screen.rh - sy / gl_screen.myscale;

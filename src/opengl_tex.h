@@ -13,10 +13,10 @@
 #include "colour.h"
 
 /* Recommended for compatibility and such */
-#define RMASK SDL_SwapLE32( 0x000000ff ) /**< Red bit mask. */
-#define GMASK SDL_SwapLE32( 0x0000ff00 ) /**< Green bit mask. */
-#define BMASK SDL_SwapLE32( 0x00ff0000 ) /**< Blue bit mask. */
-#define AMASK SDL_SwapLE32( 0xff000000 ) /**< Alpha bit mask. */
+#define RMASK SDL_Swap32LE( 0x000000ff ) /**< Red bit mask. */
+#define GMASK SDL_Swap32LE( 0x0000ff00 ) /**< Green bit mask. */
+#define BMASK SDL_Swap32LE( 0x00ff0000 ) /**< Blue bit mask. */
+#define AMASK SDL_Swap32LE( 0xff000000 ) /**< Alpha bit mask. */
 #define RGBAMASK RMASK, GMASK, BMASK, AMASK
 
 /*

@@ -262,5 +262,5 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 /* Input stuff. */
-Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event, int *x,
-                                     int *y, int *rx, int *ry );
+Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event,
+                                     float *x, float *y, float *rx, float *ry );

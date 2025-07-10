@@ -1039,7 +1039,7 @@ static int spfx_hapticInit( void )
    efx->periodic.fade_length    = 1000;
    efx->periodic.fade_level     = 0;
 
-   haptic_rumble = SDL_HapticNewEffect( haptic, efx );
+   haptic_rumble = SDL_CreateHapticEffect( haptic, efx );
    if ( haptic_rumble < 0 ) {
       WARN( _( "Unable to upload haptic effect: %s." ), SDL_GetError() );
       return -1;
@@ -1068,7 +1068,7 @@ static void spfx_hapticRumble( double mod )
       return;
 
    /* Stop the effect if it was playing. */
-   SDL_HapticStopEffect( haptic, haptic_rumble );
+   SDL_StopHapticEffect( haptic, haptic_rumble );
 
    /* Get length and magnitude. */
    len = 1000. * shake_force_mod / SPFX_SHAKE_DECAY;
@@ -1079,14 +1079,14 @@ static void spfx_hapticRumble( double mod )
    efx->periodic.magnitude   = (int16_t)mag;
    efx->periodic.length      = (uint32_t)len;
    efx->periodic.fade_length = MIN( efx->periodic.length, 1000 );
-   if ( SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) <
+   if ( SDL_UpdateHapticEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) ==
         0 ) {
       WARN( _( "Failed to update haptic effect: %s." ), SDL_GetError() );
       return;
    }
 
    /* Run the new effect. */
-   SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
+   SDL_RunHapticEffect( haptic, haptic_rumble, 1 );
 
    /* Set timer again. */
    haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
