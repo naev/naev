@@ -207,40 +207,6 @@ int gl_checkHandleError( const char *func, int line )
 #endif /* DEBUGGING */
 
 /**
- * @brief Tries to apply the configured display mode to the window.
- *
- *    @note Caller is responsible for calling gl_resize/naev_resize afterward.
- *    @return 0 on success.
- */
-int gl_setupFullscreen( void )
-{
-#if 0
-   int display_index = SDL_GetDisplayForWindow( gl_screen.window );
-   if ( conf.fullscreen ) {
-      /* Try to use desktop resolution if nothing is specifically set. */
-      SDL_DisplayMode target;
-      if ( conf.explicit_dim ) {
-         target   = *SDL_GetWindowFullscreenMode( gl_screen.window );
-         target.w = conf.width;
-         target.h = conf.height;
-      } else
-         target = *SDL_GetDesktopDisplayMode( display_index );
-
-      SDL_DisplayMode closest;
-      if ( !SDL_GetClosestFullscreenDisplayMode( display_index, target.w,
-                                                 target.h, 0.0, 1, &closest ) )
-         return -1;
-
-      SDL_SetWindowFullscreenMode( gl_screen.window, NULL );
-   }
-#endif
-   int ok = SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen );
-   if ( !ok )
-      WARN( "Failed to set full screen state!" );
-   return ok;
-}
-
-/**
  * @brief Gets some information about the OpenGL window.
  *
  *    @return 0 on success.

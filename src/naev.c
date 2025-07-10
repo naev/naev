@@ -587,7 +587,9 @@ void naev_resize( void )
  */
 void naev_toggleFullscreen( void )
 {
-   opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
+   conf.fullscreen = !conf.fullscreen;
+   if ( !SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen ) )
+      WARN( "Failed to set full screen state!" );
 }
 
 /**

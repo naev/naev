@@ -94,7 +94,6 @@ void gl_resize_c( void );
 void gl_windowToScreenPos( float *sx, float *sy, float wx, float wy );
 void gl_screenToWindowPos( float *wx, float *wy, float sx, float sy );
 void gl_defViewport( void );
-int  gl_setupFullscreen( void );
 
 /*
  * misc
