@@ -51,7 +51,7 @@ static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, int isrepeat,
 static int cust_text( const char *str, custom_functions_t *cf );
 static int cust_mouse( int type, int button, double x, double y,
                        custom_functions_t *cf );
-static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h,
+static int cust_event_window( Uint32 event, Sint32 w, Sint32 h,
                               custom_functions_t *cf );
 
 /* Toolkit methods. */
@@ -668,17 +668,17 @@ static int cust_event( unsigned int wid, SDL_Event *event, void *data )
       return cust_mouse( 4, -1, event->wheel.x, event->wheel.y, cf );
 
    case SDL_EVENT_KEY_DOWN:
-      return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1,
-                       event->key.repeat, cf );
+      return cust_key( event->key.key, event->key.mod, 1, event->key.repeat,
+                       cf );
    case SDL_EVENT_KEY_UP:
-      return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0,
-                       event->key.repeat, cf );
+      return cust_key( event->key.key, event->key.mod, 0, event->key.repeat,
+                       cf );
 
    case SDL_EVENT_TEXT_INPUT:
       return cust_text( event->text.text, cf );
 
-   case SDL_WINDOWEVENT:
-      return cust_event_window( event->window.event, event->window.data1,
+   case SDL_EVENT_WINDOW_RESIZED:
+      return cust_event_window( event->window.type, event->window.data1,
                                 event->window.data2, cf );
 
    default:
@@ -760,7 +760,7 @@ static int cust_mouse( int type, int button, double x, double y,
    lua_pop( L, 1 );
    return b;
 }
-static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h,
+static int cust_event_window( Uint32 event, Sint32 w, Sint32 h,
                               custom_functions_t *cf )
 {
    int        b;

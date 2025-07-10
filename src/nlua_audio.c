@@ -132,7 +132,7 @@ static int stream_thread( void *la_data )
       /* Case finished. */
       if ( la->active < 0 ) {
          la->th = NULL;
-         SDL_BroadcastCond( la->cond );
+         SDL_BroadcastCondition( la->cond );
          alSourceStop( la->source );
          soundUnlock();
          return 0;
@@ -149,7 +149,7 @@ static int stream_thread( void *la_data )
              * lead to the thread being gc'd and having active = -1. We have to
              * add a check here to not mess around with stuff. */
             la->th = NULL;
-            SDL_BroadcastCond( la->cond );
+            SDL_BroadcastCondition( la->cond );
             alSourceStop( la->source );
             soundUnlock();
             return 0;
@@ -366,8 +366,7 @@ void audio_cleanup( LuaAudio_t *la )
       soundLock();
       if ( la->th != NULL ) {
          la->active = -1;
-         if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
-              SDL_MUTEX_TIMEDOUT )
+         if ( SDL_WaitConditionTimeout( la->cond, sound_lock, 3000 ) == 0 )
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );
@@ -377,7 +376,7 @@ void audio_cleanup( LuaAudio_t *la )
       if ( alIsBuffer( la->stream_buffers[0] ) == AL_TRUE )
          alDeleteBuffers( 2, la->stream_buffers );
       if ( la->cond != NULL )
-         SDL_DestroyCond( la->cond );
+         SDL_DestroyCondition( la->cond );
       if ( la->lock != NULL )
          SDL_DestroyMutex( la->lock );
       ov_clear( &la->stream );
@@ -583,7 +582,7 @@ static int audioL_new( lua_State *L )
 
       la.active = 0;
       la.lock   = SDL_CreateMutex();
-      la.cond   = SDL_CreateCond();
+      la.cond   = SDL_CreateCondition();
       alGenBuffers( 2, la.stream_buffers );
       /* Buffers get queued later. */
    }
@@ -771,8 +770,7 @@ static int audioL_stop( lua_State *L )
       /* Kill the thread first. */
       if ( la->th != NULL ) {
          la->active = -1;
-         if ( SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) ==
-              SDL_MUTEX_TIMEDOUT )
+         if ( SDL_WaitConditionTimeout( la->cond, sound_lock, 3000 ) == 0 )
             WARN( _( "Timed out while waiting for audio thread of '%s' to "
                      "finish!" ),
                   la->name );

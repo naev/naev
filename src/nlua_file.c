@@ -10,7 +10,7 @@
 #include <lauxlib.h>
 /** @endcond */
 
-#include "physfsrwops.h"
+#include "SDL_PhysFS.h"
 
 #include "nlua_file.h"
 
@@ -204,9 +204,11 @@ static int fileL_open( lua_State *L )
 
    /* TODO handle mode. */
    if ( strcmp( mode, "w" ) == 0 )
-      lf->rw = PHYSFSRWOPS_openWrite( lf->path );
+      NLUA_ERROR( L, "unimplemented" );
+   // lf->rw = PHYSFSRWOPS_openWrite( lf->path );
    else if ( strcmp( mode, "a" ) == 0 )
-      lf->rw = PHYSFSRWOPS_openAppend( lf->path );
+      NLUA_ERROR( L, "unimplemented" );
+   // lf->rw = PHYSFSRWOPS_openAppend( lf->path );
    else
       lf->rw = SDL_PhysFS_IOFromFile( lf->path );
    if ( lf->rw == NULL ) {
@@ -215,7 +217,7 @@ static int fileL_open( lua_State *L )
       return 2;
    }
    lf->mode = mode[0];
-   lf->size = (size_t)SDL_RWsize( lf->rw );
+   lf->size = (size_t)SDL_GetIOSize( lf->rw );
 
    lua_pushboolean( L, 1 );
    return 1;
@@ -259,11 +261,11 @@ static int fileL_read( lua_State *L )
       return NLUA_ERROR( L, _( "file not open!" ) );
 
    /* Figure out how much to read. */
-   readlen = luaL_optinteger( L, 2, SDL_RWsize( lf->rw ) );
+   readlen = luaL_optinteger( L, 2, SDL_GetIOSize( lf->rw ) );
 
    /* Create buffer and read into it. */
    buf = malloc( readlen );
-   len = SDL_RWread( lf->rw, buf, 1, readlen );
+   len = SDL_ReadIO( lf->rw, buf, readlen );
 
    lua_pushlstring( L, buf, len );
    lua_pushinteger( L, len );
@@ -291,7 +293,7 @@ static int fileL_write( lua_State *L )
    buf   = luaL_checklstring( L, 2, &len );
    write = luaL_optlong( L, 3, len );
 
-   wrote = SDL_RWwrite( lf->rw, buf, 1, write );
+   wrote = SDL_WriteIO( lf->rw, buf, write );
    if ( wrote != write ) {
       lua_pushboolean( L, 0 );
       lua_pushstring( L, SDL_GetError() );
@@ -321,7 +323,7 @@ static int fileL_seek( lua_State *L )
       return 1;
    }
 
-   ret = SDL_RWseek( lf->rw, pos, RW_SEEK_SET );
+   ret = SDL_SeekIO( lf->rw, pos, SDL_IO_SEEK_SET );
 
    lua_pushboolean( L, ret >= 0 );
    return 1;

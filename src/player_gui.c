@@ -7,10 +7,11 @@
  * @brief Handles the GUIs the player owns.
  */
 /** @cond */
-#include "physfsrwops.h"
-
 #include "naev.h"
 /** @endcond */
+
+#include "SDL_PhysFS.h"
+#include <SDL3/SDL_iostream.h>
 
 #include "player_gui.h"
 

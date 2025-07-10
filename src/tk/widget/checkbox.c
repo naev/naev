@@ -12,7 +12,6 @@
 #include <stdlib.h>
 /** @endcond */
 
-#include "nstring.h"
 #include "tk/toolkit_priv.h"
 
 static Widget *chk_getWgt( unsigned int wid, const char *name );

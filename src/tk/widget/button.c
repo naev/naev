@@ -11,7 +11,6 @@
 #include <stdlib.h>
 /** @endcond */
 
-#include "nstring.h"
 #include "tk/toolkit_priv.h"
 
 static int     btn_mclick( Widget *btn, int button, int x, int y );

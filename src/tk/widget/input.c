@@ -713,19 +713,21 @@ void window_setInputCallback( unsigned int wid, const char *name,
  */
 static void inp_focusGain( Widget *inp )
 {
-   SDL_Rect input_pos;
-   Window  *w;
+   float         x, y;
+   SDL_Rect      input_pos;
+   const Window *w;
 
    w = window_wget( inp->wdw );
-   gl_screenToWindowPos( &input_pos.x, &input_pos.y, w->x + inp->x + 5.,
-                         w->y + inp->y );
-   input_pos.y -= inp->h;
+   gl_screenToWindowPos( &x, &y, w->x + inp->x + 5., w->y + inp->y );
+   input_pos.x = x;
+   input_pos.y = y - inp->h;
    input_pos.w = (int)inp->w;
    input_pos.h = (int)inp->h;
 
-   SDL_EventState( SDL_EVENT_TEXT_INPUT, 1 );
-   SDL_StartTextInput();
-   SDL_SetTextInputRect( &input_pos );
+   SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, 1 );
+   SDL_StartTextInput( gl_screen.window );
+   // TODO cursor offset
+   SDL_SetTextInputArea( gl_screen.window, &input_pos, 0 );
 }
 
 /**
@@ -736,6 +738,6 @@ static void inp_focusGain( Widget *inp )
 static void inp_focusLose( Widget *inp )
 {
    (void)inp;
-   SDL_StopTextInput();
-   SDL_EventState( SDL_EVENT_TEXT_INPUT, 0 );
+   SDL_StopTextInput( gl_screen.window );
+   SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, 0 );
 }

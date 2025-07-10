@@ -11,7 +11,7 @@
 #include <lauxlib.h>
 /** @endcond */
 
-#include "physfsrwops.h"
+#include "SDL_PhysFS.h"
 
 #include "nlua_tex.h"
 
@@ -262,7 +262,7 @@ static int texL_new( lua_State *L )
 
 static inline uint32_t get_pixel( SDL_Surface *surface, int x, int y )
 {
-   int bpp = surface->format->BytesPerPixel;
+   int bpp = SDL_BYTESPERPIXEL( surface->format );
    /* Here p is the address to the pixel we want to retrieve */
    uint8_t *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
@@ -324,7 +324,7 @@ static int texL_readData( lua_State *L )
       return NLUA_ERROR( L, _( "problem opening file '%s' for reading" ), s );
 
    /* Try to read the image. */
-   surface = IMG_Load_RW( rw, 1 );
+   surface = IMG_Load_IO( rw, 1 );
    if ( surface == NULL )
       return NLUA_ERROR( L, _( "problem opening image for reading" ) );
 
@@ -339,7 +339,8 @@ static int texL_readData( lua_State *L )
    for ( int i = 0; i < surface->h; i++ ) {
       for ( int j = 0; j < surface->w; j++ ) {
          pix = get_pixel( surface, j, i );
-         SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
+         SDL_GetRGBA( pix, SDL_GetPixelFormatDetails( surface->format ),
+                      SDL_GetSurfacePalette( surface ), &r, &g, &b, &a );
          size_t pos    = 4 * ( ( surface->h - i - 1 ) * surface->w + j );
          data[pos + 0] = ( (float)r ) / 255.;
          data[pos + 1] = ( (float)g ) / 255.;
@@ -389,7 +390,8 @@ static int texL_writeData( lua_State *L )
       NLUA_ERROR( L, _( "OpenGL Error!" ) );
 
    /* Convert to PNG. */
-   surface = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
+   surface = SDL_CreateSurface(
+      w, h, SDL_GetPixelFormatForMasks( 32, RMASK, GMASK, BMASK, AMASK ) );
    for ( int i = 0; i < h; i++ )
       memcpy( (GLubyte *)surface->pixels + i * ( 4 * w ),
               &data[( h - i - 1 ) * ( 4 * w )], 4 * w );
@@ -398,10 +400,12 @@ static int texL_writeData( lua_State *L )
    free( data );
 
    /* Save to file. */
+   /*
    if ( !( rw = PHYSFSRWOPS_openWrite( filename ) ) )
       return NLUA_ERROR( L, _( "Unable to open '%s' for writing!" ), filename );
    else
       IMG_SavePNG_RW( surface, rw, 1 );
+      */
 
    SDL_DestroySurface( surface );
 

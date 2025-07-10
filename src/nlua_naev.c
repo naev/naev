@@ -911,8 +911,7 @@ static int naevL_unpause( lua_State *L )
  */
 static int naevL_hasTextInput( lua_State *L )
 {
-   lua_pushboolean( L, SDL_EventState( SDL_EVENT_TEXT_INPUT, SDL_QUERY ) ==
-                          SDL_TRUE );
+   lua_pushboolean( L, SDL_EventEnabled( SDL_EVENT_TEXT_INPUT ) );
    return 1;
 }
 
@@ -934,12 +933,12 @@ static int naevL_setTextInput( lua_State *L )
       input_pos.y = luaL_checkinteger( L, 3 );
       input_pos.w = luaL_checkinteger( L, 4 );
       input_pos.h = luaL_checkinteger( L, 5 );
-      SDL_EventState( SDL_EVENT_TEXT_INPUT, 1 );
-      SDL_StartTextInput();
-      SDL_SetTextInputRect( &input_pos );
+      SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, 1 );
+      SDL_StartTextInput( gl_screen.window );
+      SDL_SetTextInputArea( gl_screen.window, &input_pos, 0 );
    } else {
-      SDL_StopTextInput();
-      SDL_EventState( SDL_EVENT_TEXT_INPUT, 0 );
+      SDL_StopTextInput( gl_screen.window );
+      SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, 0 );
    }
    return 0;
 }

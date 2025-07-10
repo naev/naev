@@ -5,6 +5,7 @@
 
 /** @cond */
 #include "al.h"
+#include <SDL3/SDL_mutex.h>
 #include <SDL3/SDL_thread.h>
 #include <vorbis/vorbisfile.h>
 /** @endcond */

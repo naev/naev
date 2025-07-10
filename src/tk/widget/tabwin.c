@@ -210,7 +210,7 @@ static int tab_mouse( Widget *tab, SDL_Event *event )
 {
    int     i, p, old, change;
    Window *parent;
-   int     x, y, rx, ry;
+   float   x, y, rx, ry;
 
    /* Get parent window. */
    parent = window_wget( tab->wdw );
@@ -293,8 +293,8 @@ static int tab_key( Widget *tab, SDL_Event *event )
       return 0;
 
    /* Event info. */
-   key = event->key.keysym.sym;
-   mod = input_translateMod( event->key.keysym.mod );
+   key = event->key.key;
+   mod = input_translateMod( event->key.mod );
 
    /* Handle tab changing. */
    change = -1;
