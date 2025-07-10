@@ -308,7 +308,7 @@ void player_messageRaw( const char *str )
       free( m->dstr );
       m->dstr = NULL;
       if ( iter.l_begin == 0 ) {
-         m->str = strndup( &str[iter.l_begin], iter.l_end - iter.l_begin );
+         m->str = SDL_strndup( &str[iter.l_begin], iter.l_end - iter.l_begin );
          gl_printRestoreInit( &m->restore );
       } else {
          m->str = malloc( iter.l_end - iter.l_begin + 2 );

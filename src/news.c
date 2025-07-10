@@ -286,8 +286,8 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
    while ( gl_printLineIteratorNext( &iter ) ) {
       /* Copy the line. */
-      array_push_back( &news_lines, strndup( &buf[iter.l_begin],
-                                             iter.l_end - iter.l_begin ) );
+      array_push_back( &news_lines, SDL_strndup( &buf[iter.l_begin],
+                                                 iter.l_end - iter.l_begin ) );
       if ( array_size( news_restores ) == 0 )
          gl_printRestoreInit( &array_grow( &news_restores ) );
       else {

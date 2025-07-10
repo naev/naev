@@ -90,8 +90,8 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    omsg->msg = array_create( char * );
    gl_printLineIteratorInit( &iter, font, msg, omsg_center_w );
    while ( gl_printLineIteratorNext( &iter ) )
-      array_push_back( &omsg->msg, strndup( &iter.text[iter.l_begin],
-                                            iter.l_end - iter.l_begin ) );
+      array_push_back( &omsg->msg, SDL_strndup( &iter.text[iter.l_begin],
+                                                iter.l_end - iter.l_begin ) );
 }
 
 /**

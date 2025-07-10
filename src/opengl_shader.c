@@ -93,8 +93,8 @@ static char *gl_shader_preprocess( size_t *size, const char *fbuf,
     * can't be anywhere in the code. Extra whitespace should also be handled. */
    keyword = "#include";
    subs    = buf;
-   while ( ( substart = strnstr( subs, keyword, bufsize - ( subs - buf ) ) ) !=
-           NULL ) {
+   while ( ( substart = SDL_strnstr( subs, keyword,
+                                     bufsize - ( subs - buf ) ) ) != NULL ) {
       subs = substart + strlen( keyword ) + 1;
       /* Allow whitespace infront of #include, but not other characters. */
       int whitespaceonly = 1;
@@ -115,7 +115,7 @@ static char *gl_shader_preprocess( size_t *size, const char *fbuf,
       }
       i = 0;
       /* Find the argument - we only support " atm. */
-      subss = strnstr( subs, "\"", bufsize - ( subs - buf ) );
+      subss = SDL_strnstr( subs, "\"", bufsize - ( subs - buf ) );
       if ( subss == NULL ) {
          WARN( _( "Invalid #include syntax in '%s%s'!" ), GLSL_PATH, filename );
          continue;

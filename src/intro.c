@@ -378,8 +378,8 @@ int intro_display( const char *text, const char *mus )
          /* One line has scrolled off, and another one on. */
          if ( gl_printLineIteratorNext( &iter ) ) {
             free( sb_arr[sb_index] );
-            sb_arr[sb_index] =
-               strndup( &iter.text[iter.l_begin], iter.l_end - iter.l_begin );
+            sb_arr[sb_index] = SDL_strndup( &iter.text[iter.l_begin],
+                                            iter.l_end - iter.l_begin );
             offset -= line_height;
             sb_index = ( sb_index + 1 ) % lines_per_screen;
          } else if ( cmd_index < array_size( intro_cmds ) ) {

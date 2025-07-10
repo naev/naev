@@ -1244,9 +1244,9 @@ static int mission_parseFile( const char *file, MissionData *temp )
    }
 
    /* Skip if no XML. */
-   pos = strnstr( filebuf, "</mission>", bufsize );
+   pos = SDL_strnstr( filebuf, "</mission>", bufsize );
    if ( pos == NULL ) {
-      pos = strnstr( filebuf, "function create", bufsize );
+      pos = SDL_strnstr( filebuf, "function create", bufsize );
       if ( ( pos != NULL ) && !strncmp( pos, "--common", bufsize ) )
          WARN( _( "Mission '%s' has create function but no XML header!" ),
                file );
@@ -1255,8 +1255,8 @@ static int mission_parseFile( const char *file, MissionData *temp )
    }
 
    /* Separate XML header and Lua. */
-   start_pos = strnstr( filebuf, "<?xml ", bufsize );
-   pos       = strnstr( filebuf, "--]]", bufsize );
+   start_pos = SDL_strnstr( filebuf, "<?xml ", bufsize );
+   pos       = SDL_strnstr( filebuf, "--]]", bufsize );
    if ( pos == NULL || start_pos == NULL ) {
       WARN( _( "Mission file '%s' has missing XML header!" ), file );
       return -1;

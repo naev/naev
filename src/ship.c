@@ -675,7 +675,7 @@ int ship_gfxLoad2D( Ship *s )
 
    /* Get base path. */
    delim = strchr( buf, '_' );
-   base  = delim == NULL ? strdup( buf ) : strndup( buf, delim - buf );
+   base  = delim == NULL ? strdup( buf ) : SDL_strndup( buf, delim - buf );
 
    /* Determine extension path. */
    if ( buf[0] == '/' ) /* absolute path. */

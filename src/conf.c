@@ -841,14 +841,15 @@ int conf_saveConfig( const char *file )
       /* See if we can find the generated section and preserve
        * whatever the user wrote before it */
       const char *tmp =
-         strnstr( old, "-- " GENERATED_START_COMMENT "\n", oldsize );
+         SDL_strnstr( old, "-- " GENERATED_START_COMMENT "\n", oldsize );
       if ( tmp != NULL ) {
          /* Copy over the user content */
          pos = MIN( sizeof( buf ), (size_t)( tmp - old ) );
          memcpy( buf, old, pos );
 
          /* See if we can find the end of the section */
-         tmp = strnstr( tmp, "-- " GENERATED_END_COMMENT "\n", oldsize - pos );
+         tmp =
+            SDL_strnstr( tmp, "-- " GENERATED_END_COMMENT "\n", oldsize - pos );
          if ( tmp != NULL ) {
             /* Everything after this should also be preserved */
             oldfooter = tmp + strlen( "-- " GENERATED_END_COMMENT "\n" );

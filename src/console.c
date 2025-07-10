@@ -317,7 +317,7 @@ static void cli_addMessageMax( const char *msg, const int l )
    /* Not initialized. */
    if ( cli_env == NULL )
       return;
-   buf                       = strndup( ( msg != NULL ) ? msg : "", l );
+   buf                       = SDL_strndup( ( msg != NULL ) ? msg : "", l );
    array_grow( &cli_buffer ) = buf;
    cli_history               = array_size( cli_buffer ) - 1;
 }
@@ -361,7 +361,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
          if ( strncmp( cli_buffer[i], "#C>", 3 ) == 0 ) {
             /* Strip escape codes from beginning and end */
             char *str =
-               strndup( cli_buffer[i] + 5, strlen( cli_buffer[i] ) - 7 );
+               SDL_strndup( cli_buffer[i] + 5, strlen( cli_buffer[i] ) - 7 );
             if ( i == cli_history &&
                  strcmp( window_getInput( wid, "inpInput" ), str ) == 0 ) {
                free( str );
@@ -387,7 +387,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
       for ( int i = cli_history + 1; i < array_size( cli_buffer ); i++ ) {
          if ( strncmp( cli_buffer[i], "#C>", 3 ) == 0 ) {
             char *str =
-               strndup( cli_buffer[i] + 5, strlen( cli_buffer[i] ) - 7 );
+               SDL_strndup( cli_buffer[i] + 5, strlen( cli_buffer[i] ) - 7 );
             window_setInput( wid, "inpInput", str );
             free( str );
             return 1;

@@ -24,10 +24,6 @@
  * the formatted items (if any) start. */
 #define PRINTF_FORMAT( i, j ) FORMAT( BUILTIN_PRINTF_FORMAT, i, j )
 
-/*const*/ char *strnstr( const char *haystack, const char *needle,
-                         size_t size );
-char           *strndup( const char *s, size_t n );
-
 PRINTF_FORMAT( 3, 4 )
 int scnprintf( char *text, size_t maxlen, const char *fmt, ... );
 
