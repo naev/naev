@@ -220,10 +220,7 @@ impl Dimensions {
         let scalefactor = unsafe { naevc::conf.scalefactor as f32 };
         let scale = f32::max(dwscale, dhscale) / scalefactor;
         let (view_width, view_height, view_scale) = {
-            let (vw, vh) = (
-                (window_width as f32) * scale,
-                (window_height as f32) * scale,
-            );
+            let (vw, vh) = ((draw_width as f32) * scale, (draw_height as f32) * scale);
             if vw < MIN_WIDTH_F || vh < MIN_HEIGHT_F {
                 info!("Screen size is too small, upscaling...");
                 let scalew = MIN_WIDTH_F / vw;
