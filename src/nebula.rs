@@ -172,18 +172,21 @@ struct NebulaData {
 impl NebulaData {
     fn new(ctx: &renderer::Context) -> Result<Self> {
         let gl = &ctx.gl;
-        let (w, h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
+        let (vw, vh, scale) = {
+            let dims = ctx.dimensions.read().unwrap();
+            (dims.view_width, dims.view_height, dims.view_scale)
+        };
+        let scale = unsafe { naevc::conf.nebu_scale as f32 } * scale;
         let framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
-            .width(w as usize)
-            .height(h as usize)
+            .width(vw.round() as usize)
+            .height(vh.round() as usize)
             .build(ctx)?;
 
         let uniform = NebulaUniform {
             nonuninformity: unsafe { naevc::conf.nebu_nonuniformity } as f32,
-            camera: Vector2::new((w as f32) * 0.5, (h as f32) * 0.5),
+            camera: Vector2::new(vw * 0.5, vh * 0.5),
             ..Default::default()
         };
-        let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
 
         let buffer = BufferBuilder::new(Some("Nebula Buffer"))
             .target(BufferTarget::Uniform)
@@ -209,10 +212,6 @@ impl NebulaData {
             .build(gl)?;
 
         let puff_uniform = {
-            let (vw, vh) = {
-                let dims = ctx.dimensions.read().unwrap();
-                (dims.view_width, dims.view_height)
-            };
             PuffUniform {
                 screen: Vector2::new(vw * 0.5, vh * 0.5),
                 scale: unsafe { 1.0 / naevc::conf.zoom_far as f32 },
@@ -245,9 +244,13 @@ impl NebulaData {
     }
 
     pub fn resize(&mut self, ctx: &renderer::Context) {
-        let scale = unsafe { naevc::conf.nebu_scale * naevc::gl_screen.scale } as f32;
-        let w = (unsafe { naevc::gl_screen.nw as f32 } / scale).round() as usize;
-        let h = (unsafe { naevc::gl_screen.nh as f32 } / scale).round() as usize;
+        let (vw, vh, scale) = {
+            let dims = ctx.dimensions.read().unwrap();
+            (dims.view_width, dims.view_height, dims.view_scale)
+        };
+        let scale = unsafe { naevc::conf.nebu_scale as f32 } * scale;
+        let w = (vw / scale).round() as usize;
+        let h = (vh / scale).round() as usize;
         if self.framebuffer.w == w && self.framebuffer.h == h {
             return;
         }
@@ -259,13 +262,9 @@ impl NebulaData {
             .build(ctx)
             .unwrap();
 
-        let dims = ctx.dimensions.read().unwrap();
-        self.uniform.camera = Vector2::new(dims.view_width * 0.5, dims.view_height * 0.5);
+        self.uniform.camera = Vector2::new(vw * 0.5, vh * 0.5);
 
-        self.puff_uniform.screen = Vector2::new(
-            dims.view_width + 2.0 * PUFF_BUFFER,
-            dims.view_height + 2.0 * PUFF_BUFFER,
-        );
+        self.puff_uniform.screen = Vector2::new(vw + 2.0 * PUFF_BUFFER, vh + 2.0 * PUFF_BUFFER);
     }
 
     pub fn render(&self, ctx: &renderer::Context) -> Result<()> {
@@ -273,7 +272,6 @@ impl NebulaData {
 
         self.framebuffer.bind(ctx);
         unsafe {
-            gl.clear_color(0.0, 0.0, 0.0, 0.0);
             gl.clear(glow::COLOR_BUFFER_BIT);
         }
 

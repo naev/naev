@@ -537,10 +537,6 @@ void naev_resize( void )
    int w, h;
    SDL_GetWindowSizeInPixels( gl_screen.window, &w, &h );
 
-   /* Update options menu, if open. (Never skip, in case the fullscreen mode
-    * alone changed.) */
-   opt_resize();
-
    /* Nothing to do. */
    if ( ( w == gl_screen.rw ) && ( h == gl_screen.rh ) )
       return;

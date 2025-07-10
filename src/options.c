@@ -235,16 +235,6 @@ static void opt_close( unsigned int wid, const char *name )
    conf_free( &local_conf );
 }
 
-/**
- * @brief Handles resize events for the options menu.
- */
-void opt_resize( void )
-{
-   /* Nothing to do if not open. */
-   if ( !opt_wid )
-      return;
-}
-
 /*
  * Gets the list of languages available. Options look like "[ 81%] de".
  */

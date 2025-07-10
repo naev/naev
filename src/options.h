@@ -4,4 +4,3 @@
 #pragma once
 
 void opt_menu( void );
-void opt_resize( void );
