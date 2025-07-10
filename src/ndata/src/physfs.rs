@@ -230,11 +230,15 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
 pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream> {
     let raw = unsafe {
         let c_filename = CString::new(filename)?;
-        match mode {
-            Mode::Append => unimplemented!(), //naevc::PHYSFSRWOPS_openAppend(c_filename.as_ptr()),
-            Mode::Read => naevc::SDL_PhysFS_IOFromFile(c_filename.as_ptr()),
-            Mode::Write => unimplemented!(), //naevc::PHYSFSRWOPS_openWrite(c_filename.as_ptr()),
+        let phys = match mode {
+            Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
+            Mode::Read => naevc::PHYSFS_openRead(c_filename.as_ptr()),
+            Mode::Write => naevc::PHYSFS_openWrite(c_filename.as_ptr()),
+        };
+        if phys.is_null() {
+            return Err(error_as_io_error_with_file("PHYSFS_open", filename));
         }
+        naevc::SDL_PhysFS_OpenIO(phys)
     };
     if raw.is_null() {
         Err(error_as_io_error_with_file("PHYSFS_open", filename))

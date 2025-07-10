@@ -95,12 +95,10 @@ void gl_screenshot( const char *filename )
    free( screenbuf );
 
    /* Save PNG. */
-   /* TODO
-   if ( !( rw = PHYSFSRWOPS_openWrite( filename ) ) )
+   if ( !( rw = SDL_PhysFS_OpenIO( PHYSFS_openWrite( filename ) ) ) )
       WARN( _( "Aborting screenshot" ) );
    else
       IMG_SavePNG_IO( surface, rw, 1 );
-      */
 
    /* Check to see if an error occurred. */
    gl_checkErr();

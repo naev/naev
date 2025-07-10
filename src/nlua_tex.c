@@ -400,12 +400,11 @@ static int texL_writeData( lua_State *L )
    free( data );
 
    /* Save to file. */
-   /*
-   if ( !( rw = PHYSFSRWOPS_openWrite( filename ) ) )
+   if ( !( rw = SDL_PhysFS_OpenIO( PHYSFS_openWrite( filename ) ) ) ) {
+      SDL_DestroySurface( surface );
       return NLUA_ERROR( L, _( "Unable to open '%s' for writing!" ), filename );
-   else
-      IMG_SavePNG_RW( surface, rw, 1 );
-      */
+   }
+   IMG_SavePNG_IO( surface, rw, 1 );
 
    SDL_DestroySurface( surface );
 

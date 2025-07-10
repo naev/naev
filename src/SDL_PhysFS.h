@@ -23,6 +23,9 @@
  * 2. Altered source versions must be plainly marked as such, and must not be
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
+ *
+ * Modified for naev by:
+ * 1. Exposing SDL_PhysFS_OpenIO as part of the API.
  */
 #ifndef SDL_PHYSFS_H__
 #define SDL_PHYSFS_H__
@@ -32,6 +35,7 @@ extern "C" {
 #endif
 
 #include <SDL3/SDL.h>
+#include "physfs.h"
 
 #ifndef SDL_PHYSFS_DEF
 #ifdef SDL_PHYSFS_STATIC
@@ -57,6 +61,9 @@ SDL_PHYSFS_DEF char** SDL_PhysFS_LoadDirectoryFiles(const char *directory);
 SDL_PHYSFS_DEF void SDL_PhysFS_FreeDirectoryFiles(char** files);
 SDL_PHYSFS_DEF bool SDL_PhysFS_Exists(const char* file);
 SDL_PHYSFS_DEF SDL_IOStatus SDL_PhysFS_IOStatus(int error);
+
+/* Our modifications. */
+SDL_IOStream *SDL_PhysFS_OpenIO(PHYSFS_File *handle);
 
 #ifndef SDL_PhysFS_IMG_Load
 /**
