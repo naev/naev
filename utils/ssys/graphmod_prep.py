@@ -32,6 +32,7 @@ new_edges = [
 
 # In the form: (from, to [, length])
 virtual_edges = [
+   ('ngc902', 'ngc4087'),
    ('flow', 'basel', 2),
    ('deneb', 'booster', 1.5),
    ('ngc4746', 'logania'),

@@ -67,7 +67,7 @@ Performed by `process_ssys.sh`. Several steps:
  - __6__ `apply_pot.sh -g` applies gravity + some graphmods.
  - generate `map_grav.png`
  - __7__ A bit of post processing. See `process_ssys.sh` for more details.
- - generate `map_after.png`
+ - generate `map_aft.png`
 
 The labeled maps `before.png` and `after.png` are generated, with obvious meaning.
 

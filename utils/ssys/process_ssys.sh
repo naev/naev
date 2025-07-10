@@ -113,7 +113,7 @@ pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_final.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png)    |
-"$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_after'                        |
+"$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft'                          |
 
 msg ""
 if [ -n "$FORCE" ] ; then
