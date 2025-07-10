@@ -304,11 +304,9 @@ int gl_init( void )
    if ( !gladLoadGLLoader( (void *)SDL_GL_GetProcAddress ) ) {
       char buf[STRMAX];
       snprintf( buf, sizeof( buf ), _( "Unable to load OpenGL using GLAD!" ) );
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
       SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
                                 _( "Naev Critical Error" ), buf,
                                 gl_screen.window );
-#endif /* SDL_VERSION_ATLEAST( 3, 0, 0 ) */
       ERR( "%s", buf );
    }
 

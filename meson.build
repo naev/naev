@@ -121,19 +121,6 @@ int main (void) { return 0; }''')
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
 
-   # Due to linking quirks with Windows, lets avoid static linking nfd for now
-   if host_machine.system() in ['windows', 'darwin']
-      static_nfd = false
-   else
-      static_nfd = true
-   endif
-
-   # TODO replace nfd with SDL3 native functions when possible
-   nfd = dependency('nfd', required: false, static: static_nfd)
-   if not nfd.found()
-      nfd = dependency('nativefiledialog-extended', required: true, fallback: ['nativefiledialog-extended'], static: static_nfd)
-   endif
-
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
@@ -158,7 +145,6 @@ int main (void) { return 0; }''')
       pcre2,
       sdl,
       sdl_image,
-      nfd,
       dependency('libpng', required: true),
       dependency('libwebp', required: true, static: get_option('steamruntime')),
    ]

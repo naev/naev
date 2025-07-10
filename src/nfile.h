@@ -41,27 +41,3 @@ int   nfile_touch( const char *path );
 int   nfile_writeFile( const char *data, size_t len, const char *path );
 int   nfile_isSeparator( uint32_t c );
 int   nfile_simplifyPath( char path[static 1] );
-
-#if !SDL_VERSION_ATLEAST( 3, 0, 0 )
-typedef struct SDL_DialogFileFilter {
-   const char *name;
-   const char *pattern;
-} SDL_DialogFileFilter;
-
-typedef void( SDLCALL *SDL_DialogFileCallback )( void              *userdata,
-                                                 const char *const *filelist,
-                                                 int                filter );
-
-void SDL_ShowOpenFileDialog( SDL_DialogFileCallback callback, void *userdata,
-                             SDL_Window                 *window,
-                             const SDL_DialogFileFilter *filters,
-                             const char                 *default_location,
-                             SDL_bool                    allow_many );
-void SDL_ShowOpenFolderDialog( SDL_DialogFileCallback callback, void *userdata,
-                               SDL_Window *window, const char *default_location,
-                               SDL_bool allow_many );
-void SDL_ShowSaveFileDialog( SDL_DialogFileCallback callback, void *userdata,
-                             SDL_Window                 *window,
-                             const SDL_DialogFileFilter *filters,
-                             const char                 *default_location );
-#endif /* !SDL_VERSION_ATLEAST( 3, 0, 0 ) */

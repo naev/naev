@@ -495,25 +495,13 @@ void main_loop( int nested )
 
       /* if fps is limited */
       if ( !conf.vsync && conf.fps_max != 0 ) {
-#if !SDL_VERSION_ATLEAST( 3, 0, 0 ) && HAS_POSIX
-         struct timespec ts;
-#endif /* HAS_POSIX */
          const double fps_max = 1. / (double)conf.fps_max;
          Uint64       t       = SDL_GetPerformanceCounter();
          double       dt =
             (double)( t - last_t ) / (double)SDL_GetPerformanceFrequency();
          double delay = fps_max - dt;
-         if ( delay > 0. ) {
-#if SDL_VERSION_ATLEAST( 3, 0, 0 )
+         if ( delay > 0. )
             SDL_DelayNS( delay * 1e9 );
-#elif HAS_POSIX
-            ts.tv_sec  = floor( delay );
-            ts.tv_nsec = fmod( delay, 1. ) * 1e9;
-            nanosleep( &ts, NULL );
-#else  /* HAS_POSIX */
-            SDL_Delay( (unsigned int)round( delay * 1000. ) );
-#endif /* HAS_POSIX */
-         }
       }
 
       NTracingFrameMark;
