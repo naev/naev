@@ -9,8 +9,8 @@
  */
 
 /** @cond */
-#include "SDL_timer.h"
 #include "physfs.h"
+#include <SDL3/SDL_timer.h>
 #include <glpk.h>
 #include <lauxlib.h>
 

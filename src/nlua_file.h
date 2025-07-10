@@ -4,7 +4,7 @@
 #pragma once
 
 /** @cond */
-#include "SDL.h"
+#include <SDL3/SDL.h>
 
 #include "naev.h"
 /** @endcond */
@@ -17,10 +17,10 @@
  * @brief Wrapper to files.
  */
 typedef struct LuaFile_s {
-   char       path[PATH_MAX]; /**< Filename or path. */
-   char       mode;
-   size_t     size;
-   SDL_RWops *rw; /**< RWops. */
+   char          path[PATH_MAX]; /**< Filename or path. */
+   char          mode;
+   size_t        size;
+   SDL_IOStream *rw; /**< RWops. */
 } LuaFile_t;
 
 /*

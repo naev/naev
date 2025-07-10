@@ -64,8 +64,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "SDL_timer.h"
 #include "physfs.h"
+#include <SDL3/SDL_timer.h>
 
 #include "naev.h"
 /** @endcond */

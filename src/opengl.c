@@ -23,9 +23,9 @@
  *  * (SCREEN_W, SCREEN_H) is bottom right.
  */
 /** @cond */
-#include "SDL.h"
-#include "SDL_image.h"
 #include "physfsrwops.h"
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 
 #include "naev.h"
 /** @endcond */
@@ -73,10 +73,10 @@ static int gl_getGLInfo( void );
  */
 void gl_screenshot( const char *filename )
 {
-   GLubyte     *screenbuf;
-   SDL_RWops   *rw;
-   SDL_Surface *surface;
-   int          w, h;
+   GLubyte      *screenbuf;
+   SDL_IOStream *rw;
+   SDL_Surface  *surface;
+   int           w, h;
 
    /* Allocate data. */
    w         = gl_screen.rw;

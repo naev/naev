@@ -1,7 +1,7 @@
 #include "gltf.h"
 
-#include "SDL_image.h"
 #include "glad.h"
+#include <SDL3_image/SDL_image.h>
 #include <libgen.h>
 #include <math.h>
 
@@ -287,7 +287,7 @@ typedef struct ObjectCache {
    int         refcount; /**< Reference counting. */
 } ObjectCache;
 static ObjectCache *obj_cache  = NULL;
-static SDL_mutex   *cache_lock = NULL;
+static SDL_Mutex   *cache_lock = NULL;
 
 static Material material_default;
 
@@ -411,7 +411,7 @@ static int gltf_loadTexture( const GltfObject *obj, Texture *otex,
    int                       has_alpha;
    const char               *path;
    GLint                     internalformat;
-   SDL_RWops                *rw;
+   SDL_IOStream                *rw;
 #ifdef HAVE_NAEV
    has_alpha = 0;
 #endif /* HAVE_NAEV */
@@ -2348,7 +2348,7 @@ static int cache_cmp( const void *p1, const void *p2 )
  */
 static GltfObject *cache_get( const char *filename, int *new )
 {
-   SDL_mutexP( cache_lock );
+   SDL_LockMutex( cache_lock );
    const ObjectCache cache = {
       .name = (char *)filename,
    };
@@ -2368,13 +2368,13 @@ static GltfObject *cache_get( const char *filename, int *new )
              cache_cmp );
       *new = 1;
       obj  = newcache.obj;
-      SDL_mutexV( cache_lock );
+      SDL_UnlockMutex( cache_lock );
       return obj;
    }
    hit->refcount++;
    *new = 0;
    obj  = hit->obj;
-   SDL_mutexV( cache_lock );
+   SDL_UnlockMutex( cache_lock );
    return obj;
 }
 
@@ -2387,7 +2387,7 @@ static GltfObject *cache_get( const char *filename, int *new )
  */
 static int cache_dec( GltfObject *obj )
 {
-   SDL_mutexP( cache_lock );
+   SDL_LockMutex( cache_lock );
    for ( int i = 0; i < array_size( obj_cache ); i++ ) {
       ObjectCache *c = &obj_cache[i];
       if ( c->obj != obj )
@@ -2397,14 +2397,14 @@ static int cache_dec( GltfObject *obj )
       if ( c->refcount <= 0 ) {
          free( c->name );
          array_erase( &obj_cache, &c[0], &c[1] );
-         SDL_mutexV( cache_lock );
+         SDL_UnlockMutex( cache_lock );
          return 1;
       }
-      SDL_mutexV( cache_lock );
+      SDL_UnlockMutex( cache_lock );
       return 0;
    }
    WARN( _( "GltfObject '%s' not found in cache!" ), obj->path );
-   SDL_mutexV( cache_lock );
+   SDL_UnlockMutex( cache_lock );
    return 0;
 }
 

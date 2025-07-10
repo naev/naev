@@ -9,7 +9,7 @@
 /** @cond */
 #include <stdlib.h>
 
-#include "SDL_timer.h"
+#include <SDL3/SDL_timer.h>
 
 #include "naev.h"
 /** @endcond */

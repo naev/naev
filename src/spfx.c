@@ -7,8 +7,8 @@
  * @brief Handles the special effects.
  */
 /** @cond */
-#include "SDL_haptic.h"
-#include "SDL_timer.h"
+#include <SDL3/SDL_haptic.h>
+#include <SDL3/SDL_timer.h>
 /** @endcond */
 
 #include "spfx.h"

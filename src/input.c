@@ -270,37 +270,37 @@ void input_setDefault( int wasd )
 {
    /* Movement */
    if ( wasd ) {
-      input_setKeybind( KST_ACCEL, KEYBIND_KEYBOARD, SDLK_w, NMOD_ANY );
-      input_setKeybind( KST_LEFT, KEYBIND_KEYBOARD, SDLK_a, NMOD_ANY );
-      input_setKeybind( KST_RIGHT, KEYBIND_KEYBOARD, SDLK_d, NMOD_ANY );
-      input_setKeybind( KST_REVERSE, KEYBIND_KEYBOARD, SDLK_s, NMOD_ANY );
+      input_setKeybind( KST_ACCEL, KEYBIND_KEYBOARD, SDLK_W, NMOD_ANY );
+      input_setKeybind( KST_LEFT, KEYBIND_KEYBOARD, SDLK_A, NMOD_ANY );
+      input_setKeybind( KST_RIGHT, KEYBIND_KEYBOARD, SDLK_D, NMOD_ANY );
+      input_setKeybind( KST_REVERSE, KEYBIND_KEYBOARD, SDLK_S, NMOD_ANY );
    } else {
       input_setKeybind( KST_ACCEL, KEYBIND_KEYBOARD, SDLK_UP, NMOD_ANY );
       input_setKeybind( KST_LEFT, KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ANY );
       input_setKeybind( KST_RIGHT, KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ANY );
       input_setKeybind( KST_REVERSE, KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ANY );
    }
-   input_setKeybind( KST_STEALTH, KEYBIND_KEYBOARD, SDLK_f, NMOD_NONE );
+   input_setKeybind( KST_STEALTH, KEYBIND_KEYBOARD, SDLK_F, NMOD_NONE );
 
    /* Targeting */
    if ( wasd ) {
-      input_setKeybind( KST_TARGET_NEXT, KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
-      input_setKeybind( KST_TARGET_PREV, KEYBIND_KEYBOARD, SDLK_q, NMOD_CTRL );
-      input_setKeybind( KST_TARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_t, NMOD_ANY );
+      input_setKeybind( KST_TARGET_NEXT, KEYBIND_KEYBOARD, SDLK_E, NMOD_CTRL );
+      input_setKeybind( KST_TARGET_PREV, KEYBIND_KEYBOARD, SDLK_Q, NMOD_CTRL );
+      input_setKeybind( KST_TARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_T, NMOD_ANY );
       input_setKeybind( KST_HTARGET_NEXT, KEYBIND_NULL, SDLK_UNKNOWN,
                         NMOD_NONE );
       input_setKeybind( KST_HTARGET_PREV, KEYBIND_NULL, SDLK_UNKNOWN,
                         NMOD_NONE );
-      input_setKeybind( KST_HTARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_r, NMOD_ANY );
-      input_setKeybind( KST_TARGET_CLEAR, KEYBIND_KEYBOARD, SDLK_c, NMOD_ANY );
+      input_setKeybind( KST_HTARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_R, NMOD_ANY );
+      input_setKeybind( KST_TARGET_CLEAR, KEYBIND_KEYBOARD, SDLK_C, NMOD_ANY );
    } else {
-      input_setKeybind( KST_TARGET_NEXT, KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
-      input_setKeybind( KST_TARGET_PREV, KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
-      input_setKeybind( KST_TARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
-      input_setKeybind( KST_HTARGET_NEXT, KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
+      input_setKeybind( KST_TARGET_NEXT, KEYBIND_KEYBOARD, SDLK_T, NMOD_NONE );
+      input_setKeybind( KST_TARGET_PREV, KEYBIND_KEYBOARD, SDLK_T, NMOD_CTRL );
+      input_setKeybind( KST_TARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_N, NMOD_NONE );
+      input_setKeybind( KST_HTARGET_NEXT, KEYBIND_KEYBOARD, SDLK_R, NMOD_CTRL );
       input_setKeybind( KST_HTARGET_PREV, KEYBIND_NULL, SDLK_UNKNOWN,
                         NMOD_NONE );
-      input_setKeybind( KST_HTARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_r,
+      input_setKeybind( KST_HTARGET_CLOSE, KEYBIND_KEYBOARD, SDLK_R,
                         NMOD_NONE );
       input_setKeybind( KST_TARGET_CLEAR, KEYBIND_KEYBOARD, SDLK_BACKSPACE,
                         NMOD_ANY );
@@ -310,9 +310,9 @@ void input_setDefault( int wasd )
    input_setKeybind( KST_FIRE_PRIMARY, KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ANY );
 
    if ( wasd )
-      input_setKeybind( KST_FACE, KEYBIND_KEYBOARD, SDLK_q, NMOD_NONE );
+      input_setKeybind( KST_FACE, KEYBIND_KEYBOARD, SDLK_Q, NMOD_NONE );
    else
-      input_setKeybind( KST_FACE, KEYBIND_KEYBOARD, SDLK_a, NMOD_ANY );
+      input_setKeybind( KST_FACE, KEYBIND_KEYBOARD, SDLK_A, NMOD_ANY );
 
    /* Secondary Weapons */
    input_setKeybind( KST_FIRE_SECONDARY, KEYBIND_KEYBOARD, SDLK_LSHIFT,
@@ -336,19 +336,19 @@ void input_setDefault( int wasd )
                      NMOD_ANY );
    input_setKeybind( KST_ESCORT_CLEAR, KEYBIND_KEYBOARD, SDLK_HOME, NMOD_ANY );
    /* Space Navigation */
-   input_setKeybind( KST_AUTONAV, KEYBIND_KEYBOARD, SDLK_j, NMOD_CTRL );
-   input_setKeybind( KST_TARGET_SPOB, KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
-   input_setKeybind( KST_APPROACH, KEYBIND_KEYBOARD, SDLK_l, NMOD_NONE );
-   input_setKeybind( KST_TARGET_JUMP, KEYBIND_KEYBOARD, SDLK_h, NMOD_NONE );
-   input_setKeybind( KST_STAR_MAP, KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
-   input_setKeybind( KST_JUMP, KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
+   input_setKeybind( KST_AUTONAV, KEYBIND_KEYBOARD, SDLK_J, NMOD_CTRL );
+   input_setKeybind( KST_TARGET_SPOB, KEYBIND_KEYBOARD, SDLK_P, NMOD_NONE );
+   input_setKeybind( KST_APPROACH, KEYBIND_KEYBOARD, SDLK_L, NMOD_NONE );
+   input_setKeybind( KST_TARGET_JUMP, KEYBIND_KEYBOARD, SDLK_H, NMOD_NONE );
+   input_setKeybind( KST_STAR_MAP, KEYBIND_KEYBOARD, SDLK_M, NMOD_NONE );
+   input_setKeybind( KST_JUMP, KEYBIND_KEYBOARD, SDLK_J, NMOD_NONE );
    input_setKeybind( KST_OVERLAY_MAP, KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ANY );
-   input_setKeybind( KST_MOUSE_FLYING, KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
-   input_setKeybind( KST_COOLDOWN, KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
+   input_setKeybind( KST_MOUSE_FLYING, KEYBIND_KEYBOARD, SDLK_X, NMOD_CTRL );
+   input_setKeybind( KST_COOLDOWN, KEYBIND_KEYBOARD, SDLK_S, NMOD_CTRL );
    /* Communication */
-   input_setKeybind( KST_HAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_NONE );
-   input_setKeybind( KST_AUTOHAIL, KEYBIND_KEYBOARD, SDLK_y, NMOD_CTRL );
-   input_setKeybind( KST_SCAN, KEYBIND_KEYBOARD, SDLK_u, NMOD_ANY ),
+   input_setKeybind( KST_HAIL, KEYBIND_KEYBOARD, SDLK_Y, NMOD_NONE );
+   input_setKeybind( KST_AUTOHAIL, KEYBIND_KEYBOARD, SDLK_Y, NMOD_CTRL );
+   input_setKeybind( KST_SCAN, KEYBIND_KEYBOARD, SDLK_U, NMOD_ANY ),
       input_setKeybind( KST_LOG_UP, KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ANY );
    input_setKeybind( KST_LOG_DOWN, KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ANY );
    /* Misc. */
@@ -359,16 +359,15 @@ void input_setDefault( int wasd )
    input_setKeybind( KST_SCREENSHOT, KEYBIND_KEYBOARD, SDLK_F11, NMOD_ANY );
    input_setKeybind( KST_PAUSE, KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ANY );
 
-   input_setKeybind( KST_GAME_SPEED, KEYBIND_KEYBOARD, SDLK_BACKQUOTE,
-                     NMOD_ANY );
+   input_setKeybind( KST_GAME_SPEED, KEYBIND_KEYBOARD, SDLK_GRAVE, NMOD_ANY );
    input_setKeybind( KST_MENU_SMALL, KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ANY );
-   input_setKeybind( KST_MENU_INFO, KEYBIND_KEYBOARD, SDLK_i, NMOD_NONE );
+   input_setKeybind( KST_MENU_INFO, KEYBIND_KEYBOARD, SDLK_I, NMOD_NONE );
    input_setKeybind( KST_CONSOLE, KEYBIND_KEYBOARD, SDLK_F2, NMOD_ANY );
 
 #if SDL_PLATFORM_MACOS
    input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_META );
 #else
-   input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_v, NMOD_CTRL );
+   input_setKeybind( KST_PASTE, KEYBIND_KEYBOARD, SDLK_V, NMOD_CTRL );
 #endif
 }
 
@@ -378,35 +377,35 @@ void input_setDefault( int wasd )
 void input_init( void )
 {
    /* Window. */
-   SDL_EventState( SDL_SYSWMEVENT, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_SYSWMEVENT, SDL_DISABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
-   SDL_EventState( SDL_KEYUP, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_KEYDOWN, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_KEYUP, SDL_ENABLE );
 
    /* Mice. */
-   SDL_EventState( SDL_MOUSEMOTION, SDL_ENABLE );
-   SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
-   SDL_EventState( SDL_MOUSEBUTTONUP, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_MOUSEMOTION, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_MOUSEBUTTONUP, SDL_ENABLE );
 
    /* Joystick, enabled in joystick.c if needed. */
-   SDL_EventState( SDL_JOYAXISMOTION, SDL_DISABLE );
-   SDL_EventState( SDL_JOYHATMOTION, SDL_DISABLE );
-   SDL_EventState( SDL_JOYBUTTONDOWN, SDL_DISABLE );
-   SDL_EventState( SDL_JOYBUTTONUP, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_JOYAXISMOTION, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_JOYHATMOTION, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_JOYBUTTONDOWN, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_JOYBUTTONUP, SDL_DISABLE );
 
    /* Quit. */
-   SDL_EventState( SDL_QUIT, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_QUIT, SDL_ENABLE );
 
    /* Window. */
-   SDL_EventState( SDL_WINDOWEVENT, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_WINDOWEVENT, SDL_ENABLE );
 
    /* Keyboard. */
-   SDL_EventState( SDL_TEXTINPUT,
-                   SDL_DISABLE ); /* Enabled on a per-widget basis. */
+   SDL_SetEventEnabled( SDL_TEXTINPUT,
+                        SDL_DISABLE ); /* Enabled on a per-widget basis. */
 
    /* Mouse. */
-   SDL_EventState( SDL_MOUSEWHEEL, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_MOUSEWHEEL, SDL_ENABLE );
 
    /* Create safe null keybinding for each. */
    for ( int i = 0; i < KST_END; i++ ) {
@@ -1852,7 +1851,7 @@ void input_handle( SDL_Event *event )
 
    /* Special case paste. */
    if ( event->type == SDL_KEYDOWN && SDL_HasClipboardText() &&
-        SDL_EventState( SDL_TEXTINPUT, SDL_QUERY ) == SDL_ENABLE ) {
+        SDL_SetEventEnabled( SDL_TEXTINPUT, SDL_QUERY ) == SDL_ENABLE ) {
       SDL_Keymod mod = input_translateMod( event->key.keysym.mod );
       if ( ( input_paste->key == event->key.keysym.sym ) &&
            ( input_paste->mod & mod ) ) {

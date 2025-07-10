@@ -4,9 +4,9 @@
 #pragma once
 
 /** @cond */
-#include "SDL_mutex.h"
-#include "SDL_rwops.h"
 #include "nopenal.h"
+#include <SDL3/SDL_iostream.h>
+#include <SDL3/SDL_mutex.h>
 #include <vorbis/vorbisfile.h>
 /** @endcond */
 
@@ -77,7 +77,7 @@ void   sound_setSpeed( double s );
 /*
  * source management
  */
-int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags );
+int source_newRW( SDL_IOStream *rw, const char *name, unsigned int flags );
 int source_new( const char *filename, unsigned int flags );
 
 /*
@@ -126,8 +126,8 @@ typedef struct rg_filter_param_s {
 void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 
 /* Lock for OpenAL operations. */
-int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name );
-extern SDL_mutex
+int sound_al_buffer( ALuint *buf, SDL_IOStream *rw, const char *name );
+extern SDL_Mutex
    *sound_lock; /**< Global sound lock, used for all OpenAL calls. */
-#define soundLock() SDL_mutexP( sound_lock )
-#define soundUnlock() SDL_mutexV( sound_lock )
+#define soundLock() SDL_LockMutex( sound_lock )
+#define soundUnlock() SDL_UnlockMutex( sound_lock )

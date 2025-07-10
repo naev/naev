@@ -27,8 +27,8 @@
 /** @cond */
 #include <stdlib.h>
 
-#include "SDL_cpuinfo.h"
-#include "SDL_thread.h"
+#include <SDL3/SDL_cpuinfo.h>
+#include <SDL3/SDL_thread.h>
 /** @endcond */
 
 #include "threadpool.h"
@@ -66,12 +66,12 @@ struct ThreadQueue_ {
    Node *reserve; /**< Reserve buffer. */
    /* A semaphore to ensure reads only happen when the queue is not empty */
    SDL_sem   *semaphore;
-   SDL_mutex *t_lock; /**< Tail lock. Lock when reading/updating tail */
-   SDL_mutex *h_lock; /**< Same as tail lock, except it's head lock */
-   SDL_mutex *r_lock; /**< For reserve buffer. */
+   SDL_Mutex *t_lock; /**< Tail lock. Lock when reading/updating tail */
+   SDL_Mutex *h_lock; /**< Same as tail lock, except it's head lock */
+   SDL_Mutex *r_lock; /**< For reserve buffer. */
    /* For vpools. */
    SDL_cond                *cond;
-   SDL_mutex               *mutex;
+   SDL_Mutex               *mutex;
    struct vpoolThreadData_ *arg;
    int                      cnt;
 };
@@ -103,7 +103,7 @@ typedef struct ThreadData_ {
 struct vpoolThreadData_ {
    SDL_cond *cond; /**< Condition variable for signalling all jobs in the vpool
                       are done */
-   SDL_mutex *mutex; /**< The mutex to use with the above condition variable */
+   SDL_Mutex *mutex; /**< The mutex to use with the above condition variable */
    int *count; /**< Variable to count number of finished jobs in the vpool */
    ThreadQueueData node;    /**< The job to be done */
    ThreadQueueData wrapper; /**< Wrapper to avoid malloc. */
@@ -167,7 +167,7 @@ static void tq_enqueue( ThreadQueue *q, void *data )
    Node *n;
 
    /* Try to grab reserved struct if possible. */
-   SDL_mutexP( q->r_lock );
+   SDL_LockMutex( q->r_lock );
    if ( q->reserve != NULL ) {
       n          = q->reserve;
       q->reserve = n->next;
@@ -175,10 +175,10 @@ static void tq_enqueue( ThreadQueue *q, void *data )
       n = malloc( sizeof( Node ) );
    n->data = data;
    n->next = NULL;
-   SDL_mutexV( q->r_lock );
+   SDL_UnlockMutex( q->r_lock );
 
    /* Lock */
-   SDL_mutexP( q->t_lock );
+   SDL_LockMutex( q->t_lock );
 
    /* Enqueue. */
    q->last->next = n;
@@ -187,7 +187,7 @@ static void tq_enqueue( ThreadQueue *q, void *data )
    /* Signal and unlock. This wil break if someone tries to enqueue 2^32+1
     * elements or something. */
    SDL_SemPost( q->semaphore );
-   SDL_mutexV( q->t_lock );
+   SDL_UnlockMutex( q->t_lock );
 }
 
 /**
@@ -205,7 +205,7 @@ static void *tq_dequeue( ThreadQueue *q )
    Node *newhead, *node;
 
    /* Lock the head. */
-   SDL_mutexP( q->h_lock );
+   SDL_LockMutex( q->h_lock );
 
    /* Start running. */
    node    = q->first;
@@ -216,7 +216,7 @@ static void *tq_dequeue( ThreadQueue *q )
       WARN( _( "Tried to dequeue while the queue was empty!" ) );
       /* Ugly fix :/ */
       /*
-      SDL_mutexV(q->h_lock);
+      SDL_UnlockMutex(q->h_lock);
       return NULL;
       */
       /* We prefer to wait until the cache updates :/ */
@@ -231,13 +231,13 @@ static void *tq_dequeue( ThreadQueue *q )
    q->first = newhead;
 
    /* Unlock */
-   SDL_mutexV( q->h_lock );
+   SDL_UnlockMutex( q->h_lock );
 
    /* Save memory in reserve. */
-   SDL_mutexP( q->r_lock );
+   SDL_LockMutex( q->r_lock );
    node->next = q->reserve;
    q->reserve = node;
-   SDL_mutexV( q->r_lock );
+   SDL_UnlockMutex( q->r_lock );
 
    return d;
 }
@@ -559,12 +559,12 @@ static int vpool_worker( void *data )
    work->node.function( work->node.data );
 
    /* Decrement the counter and signal vpool_wait if all threads are done */
-   SDL_mutexP( work->mutex );
+   SDL_LockMutex( work->mutex );
    cnt = *( work->count ) - 1;
    if ( cnt <= 0 )                  /* All jobs done. */
       SDL_CondSignal( work->cond ); /* Signal waiting thread */
    *( work->count ) = cnt;
-   SDL_mutexV( work->mutex );
+   SDL_UnlockMutex( work->mutex );
 
    return 0;
 }
@@ -591,7 +591,7 @@ void vpool_wait( ThreadQueue *queue )
       return;
 
    /* Allocate all vpoolThreadData objects */
-   SDL_mutexP( queue->mutex );
+   SDL_LockMutex( queue->mutex );
    /* Initialize the vpoolThreadData */
    for ( int i = 0; i < cnt; i++ ) {
       vpoolThreadData *arg;
@@ -608,7 +608,7 @@ void vpool_wait( ThreadQueue *queue )
 
    /* Wait for the threads to finish */
    SDL_CondWait( queue->cond, queue->mutex );
-   SDL_mutexV( queue->mutex );
+   SDL_UnlockMutex( queue->mutex );
 
    /* Can toss away all the queue stuff. */
    array_erase( &queue->arg, array_begin( queue->arg ),

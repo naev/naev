@@ -7,8 +7,8 @@
  * @brief Handles the star system editor.
  */
 /** @cond */
-#include "SDL_events.h"
 #include "physfs.h"
+#include <SDL3/SDL_events.h>
 
 #include "naev.h"
 /** @endcond */

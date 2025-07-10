@@ -7,7 +7,7 @@
  * @brief Handles the important game menus.
  */
 /** @cond */
-#include "SDL_events.h"
+#include <SDL3/SDL_events.h>
 
 #include "naev.h"
 /** @endcond */

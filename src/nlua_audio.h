@@ -4,8 +4,8 @@
 #pragma once
 
 /** @cond */
-#include "SDL_thread.h"
 #include "al.h"
+#include <SDL3/SDL_thread.h>
 #include <vorbis/vorbisfile.h>
 /** @endcond */
 
@@ -35,7 +35,7 @@ typedef struct LuaAudio_s {
    /* When not streaming. */
    LuaBuffer_t *buf; /**< Shared buffer. */
    /* When streaming. */
-   SDL_mutex
+   SDL_Mutex
       *lock; /**< Lock for vorbis file stream. This should be locked
        only when stream is accessed and not while soundLock() is active. */
    OggVorbis_File stream;          /**< Vorbis file stream. */

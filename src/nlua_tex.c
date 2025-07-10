@@ -7,7 +7,7 @@
  * @brief Handles the Lua texture bindings.
  */
 /** @cond */
-#include "SDL_image.h"
+#include <SDL3_image/SDL_image.h>
 #include <lauxlib.h>
 /** @endcond */
 
@@ -193,11 +193,11 @@ static int texL_close( lua_State *L )
  */
 static int texL_new( lua_State *L )
 {
-   const char *path;
-   glTexture  *tex;
-   LuaFile_t  *lf;
-   int         sx, sy;
-   SDL_RWops  *rw;
+   const char   *path;
+   glTexture    *tex;
+   LuaFile_t    *lf;
+   int           sx, sy;
+   SDL_IOStream *rw;
 
    /* Defaults. */
    lf   = NULL;
@@ -303,15 +303,15 @@ static inline uint32_t get_pixel( SDL_Surface *surface, int x, int y )
  */
 static int texL_readData( lua_State *L )
 {
-   LuaFile_t   *lf;
-   LuaData_t    ld;
-   SDL_Surface *surface;
-   SDL_RWops   *rw;
-   const char  *s;
-   size_t       size;
-   uint8_t      r, g, b, a;
-   uint32_t     pix;
-   float       *data;
+   LuaFile_t    *lf;
+   LuaData_t     ld;
+   SDL_Surface  *surface;
+   SDL_IOStream *rw;
+   const char   *s;
+   size_t        size;
+   uint8_t       r, g, b, a;
+   uint32_t      pix;
+   float        *data;
 
    s = NULL;
    if ( lua_isfile( L, 1 ) ) {
@@ -369,13 +369,13 @@ static int texL_readData( lua_State *L )
  */
 static int texL_writeData( lua_State *L )
 {
-   glTexture   *tex      = luaL_checktex( L, 1 );
-   const char  *filename = luaL_checkstring( L, 2 );
-   int          w, h;
-   size_t       len;
-   char        *data;
-   SDL_Surface *surface;
-   SDL_RWops   *rw;
+   glTexture    *tex      = luaL_checktex( L, 1 );
+   const char   *filename = luaL_checkstring( L, 2 );
+   int           w, h;
+   size_t        len;
+   char         *data;
+   SDL_Surface  *surface;
+   SDL_IOStream *rw;
 
    w    = tex_w( tex );
    h    = tex_h( tex );

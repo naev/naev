@@ -7,8 +7,8 @@
  * @brief This file handles the opengl texture wrapper routines.
  */
 /** @cond */
-#include "SDL_image.h"
 #include "physfsrwops.h"
+#include <SDL3_image/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -69,9 +69,9 @@ typedef struct glTexList_ {
    int          sy;    /**< Y sprites */
    unsigned int flags; /**< Flags being used. */
 } glTexList;
-static SDL_mutex   *gl_lock = NULL; /**< Lock for OpenGL functions. */
+static SDL_Mutex   *gl_lock = NULL; /**< Lock for OpenGL functions. */
 static SDL_threadID tex_mainthread;
-static SDL_mutex   *tex_lock = NULL; /**< Lock for texture list manipulation. */
+static SDL_Mutex   *tex_lock = NULL; /**< Lock for texture list manipulation. */
 
 int gl_initTextures( void )
 {
@@ -104,14 +104,14 @@ static void tex_ctxUnset( void )
 
 void gl_contextSet( void )
 {
-   SDL_mutexP( gl_lock );
+   SDL_LockMutex( gl_lock );
    tex_ctxSet();
 }
 
 void gl_contextUnset( void )
 {
    tex_ctxUnset();
-   SDL_mutexV( gl_lock );
+   SDL_UnlockMutex( gl_lock );
 }
 
 /**
@@ -127,7 +127,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
 {
    GLenum status;
 
-   SDL_mutexP( gl_lock );
+   SDL_LockMutex( gl_lock );
    // tex_ctxSet();
 
    /* Create the render buffer. */
@@ -158,7 +158,7 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
 
    // tex_ctxUnset();
-   SDL_mutexV( gl_lock );
+   SDL_UnlockMutex( gl_lock );
 
    gl_checkErr();
 
@@ -172,7 +172,7 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
 {
    GLenum status;
 
-   SDL_mutexP( gl_lock );
+   SDL_LockMutex( gl_lock );
    // tex_ctxSet();
 
    /* Create the render buffer. */
@@ -200,7 +200,7 @@ int gl_fboAddDepth( GLuint fbo, GLuint *tex, GLsizei width, GLsizei height )
    glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.current_fbo );
 
    // tex_ctxUnset();
-   SDL_mutexV( gl_lock );
+   SDL_UnlockMutex( gl_lock );
 
    gl_checkErr();
 

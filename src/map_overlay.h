@@ -4,7 +4,7 @@
 #pragma once
 
 /** @cond */
-#include "SDL.h" // IWYU pragma: keep
+#include <SDL3/SDL.h> // IWYU pragma: keep
 /** @endcond */
 
 /* Init/Exit. */

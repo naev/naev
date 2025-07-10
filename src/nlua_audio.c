@@ -187,7 +187,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
          .rg_max_scale    = la->rg_max_scale,
       };
 
-      SDL_mutexP( la->lock );
+      SDL_LockMutex( la->lock );
       result =
          ov_read_filter( &la->stream,          /* stream */
                          &buf[size],           /* data */
@@ -197,7 +197,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
                          &section,  /* current bitstream */
                          rg_filter, /* filter function */
                          &param );  /* filter parameter */
-      SDL_mutexV( la->lock );
+      SDL_UnlockMutex( la->lock );
 
       /* End of file. */
       if ( result == 0 ) {
@@ -484,12 +484,12 @@ static int audio_genSource( ALuint *source )
  */
 static int audioL_new( lua_State *L )
 {
-   LuaAudio_t  la;
-   LuaFile_t  *lf;
-   double      master;
-   int         stream;
-   const char *name;
-   SDL_RWops  *rw;
+   LuaAudio_t    la;
+   LuaFile_t    *lf;
+   double        master;
+   int           stream;
+   const char   *name;
+   SDL_IOStream *rw;
 
    /* First parameter. */
    if ( lua_isstring( L, 1 ) )
@@ -787,9 +787,9 @@ static int audioL_stop( lua_State *L )
       alSourceUnqueueBuffers( la->source, alstate, removed );
 
       /* Seek the stream to the beginning. */
-      SDL_mutexP( la->lock );
+      SDL_LockMutex( la->lock );
       ov_pcm_seek( &la->stream, 0 );
-      SDL_mutexV( la->lock );
+      SDL_UnlockMutex( la->lock );
       break;
    }
    al_checkErr();
@@ -829,9 +829,9 @@ static int audioL_rewind( lua_State *L )
       soundUnlock();
       break;
    case LUA_AUDIO_STREAM:
-      SDL_mutexP( la->lock );
+      SDL_LockMutex( la->lock );
       ov_raw_seek( &la->stream, 0 );
-      SDL_mutexV( la->lock );
+      SDL_UnlockMutex( la->lock );
       break;
    case LUA_AUDIO_NULL:
       break;
@@ -878,12 +878,12 @@ static int audioL_seek( lua_State *L )
       break;
 
    case LUA_AUDIO_STREAM:
-      SDL_mutexP( la->lock );
+      SDL_LockMutex( la->lock );
       if ( seconds )
          ov_time_seek( &la->stream, offset );
       else
          ov_pcm_seek( &la->stream, offset );
-      SDL_mutexV( la->lock );
+      SDL_UnlockMutex( la->lock );
       /* TODO force a reset of the buffers. */
       break;
 
@@ -936,12 +936,12 @@ static int audioL_tell( lua_State *L )
       break;
 
    case LUA_AUDIO_STREAM:
-      SDL_mutexP( la->lock );
+      SDL_LockMutex( la->lock );
       if ( seconds )
          offset = ov_time_tell( &la->stream );
       else
          offset = ov_pcm_tell( &la->stream );
-      SDL_mutexV( la->lock );
+      SDL_UnlockMutex( la->lock );
       break;
 
    case LUA_AUDIO_NULL:
@@ -1004,12 +1004,12 @@ static int audioL_getDuration( lua_State *L )
       break;
 
    case LUA_AUDIO_STREAM:
-      SDL_mutexP( la->lock );
+      SDL_LockMutex( la->lock );
       if ( seconds )
          duration = ov_time_total( &la->stream, -1 );
       else
          duration = ov_pcm_total( &la->stream, -1 );
-      SDL_mutexV( la->lock );
+      SDL_UnlockMutex( la->lock );
       break;
 
    case LUA_AUDIO_NULL:

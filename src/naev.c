@@ -107,7 +107,7 @@ static nlua_env *load_env =
    NULL; /**< Environment for displaying load messages and stuff. */
 static int          load_force_render = 0;
 static unsigned int load_last_render  = 0;
-static SDL_mutex   *load_mutex;
+static SDL_Mutex   *load_mutex;
 
 /*
  * prototypes
@@ -326,13 +326,13 @@ int naev_shouldRenderLoadscreen( void )
 {
    unsigned int t = SDL_GetTicks();
    int          ret;
-   SDL_mutexP( load_mutex );
+   SDL_LockMutex( load_mutex );
    /* Only render if forced or try for low 10 FPS. */
    if ( !load_force_render && ( t - load_last_render ) < 100 )
       ret = 0;
    else
       ret = 1;
-   SDL_mutexV( load_mutex );
+   SDL_UnlockMutex( load_mutex );
    return ret;
 }
 
@@ -345,7 +345,7 @@ void naev_doRenderLoadscreen( void )
       ;
    */
 
-   SDL_mutexP( load_mutex );
+   SDL_LockMutex( load_mutex );
    load_last_render = SDL_GetTicks();
 
    /* Clear background. */
@@ -367,7 +367,7 @@ void naev_doRenderLoadscreen( void )
 
    /* Clear forcing. */
    load_force_render = 0;
-   SDL_mutexV( load_mutex );
+   SDL_UnlockMutex( load_mutex );
 }
 
 /**
@@ -527,7 +527,7 @@ void naev_resize( void )
 {
    /* Auto-detect window size. */
    int w, h;
-   SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
+   SDL_GetWindowSizeInPixels( gl_screen.window, &w, &h );
 
    /* Update options menu, if open. (Never skip, in case the fullscreen mode
     * alone changed.) */
@@ -765,30 +765,18 @@ void update_routine( double dt, int dohooks )
  */
 void print_SDLversion( void )
 {
-   const SDL_version *linked;
-   SDL_version        compiled;
-   unsigned int       version_linked, version_compiled;
-
    /* Extract information. */
-   SDL_VERSION( &compiled );
-   SDL_version ll;
-   SDL_GetVersion( &ll );
-   linked = &ll;
-   DEBUG( _( "SDL: %d.%d.%d [compiled: %d.%d.%d]" ), linked->major,
-          linked->minor, linked->patch, compiled.major, compiled.minor,
-          compiled.patch );
-#ifndef DEBUGGING /* Shuts up cppcheck. */
-   (void)compiled.patch;
-#endif /* DEBUGGING */
-
-   /* Get version as number. */
-   version_linked   = linked->major * 100 + linked->minor;
-   version_compiled = compiled.major * 100 + compiled.minor;
+   const int compiled = SDL_VERSION;
+   const int linked   = SDL_GetVersion();
+   DEBUG( _( "SDL: %d.%d.%d [compiled: %d.%d.%d]" ),
+          SDL_VERSIONNUM_MAJOR( compiled ), SDL_VERSIONNUM_MINOR( compiled ),
+          SDL_VERSIONNUM_MICRO( compiled ), SDL_VERSIONNUM_MAJOR( linked ),
+          SDL_VERSIONNUM_MINOR( linked ), SDL_VERSIONNUM_MICRO( linked ) );
 
    /* Check if major/minor version differ. */
-   if ( version_linked > version_compiled )
+   if ( linked > compiled )
       WARN( _( "SDL is newer than compiled version" ) );
-   if ( version_linked < version_compiled )
+   if ( linked < compiled )
       WARN( _( "SDL is older than compiled version." ) );
 }
 

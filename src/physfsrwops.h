@@ -26,7 +26,7 @@
 #define _INCLUDE_PHYSFSRWOPS_H_
 
 #include "physfs.h"
-#include "SDL.h"
+#include <SDL3/SDL.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,51 +34,51 @@ extern "C" {
 
 /**
  * Open a platform-independent filename for reading, and make it accessible
- *  via an SDL_RWops structure. The file will be closed in PhysicsFS when the
+ *  via an SDL_IOStream structure. The file will be closed in PhysicsFS when the
  *  RWops is closed. PhysicsFS should be configured to your liking before
  *  opening files through this method.
  *
  *   @param filename File to open in platform-independent notation.
- *  @return A valid SDL_RWops structure on success, NULL on error. Specifics
+ *  @return A valid SDL_IOStream structure on success, NULL on error. Specifics
  *           of the error can be gleaned from PHYSFS_getLastError().
  */
-PHYSFS_DECL SDL_RWops *PHYSFSRWOPS_openRead(const char *fname);
+PHYSFS_DECL SDL_IOStream *PHYSFSRWOPS_openRead(const char *fname);
 
 /**
  * Open a platform-independent filename for writing, and make it accessible
- *  via an SDL_RWops structure. The file will be closed in PhysicsFS when the
+ *  via an SDL_IOStream structure. The file will be closed in PhysicsFS when the
  *  RWops is closed. PhysicsFS should be configured to your liking before
  *  opening files through this method.
  *
  *   @param filename File to open in platform-independent notation.
- *  @return A valid SDL_RWops structure on success, NULL on error. Specifics
+ *  @return A valid SDL_IOStream structure on success, NULL on error. Specifics
  *           of the error can be gleaned from PHYSFS_getLastError().
  */
-PHYSFS_DECL SDL_RWops *PHYSFSRWOPS_openWrite(const char *fname);
+PHYSFS_DECL SDL_IOStream *PHYSFSRWOPS_openWrite(const char *fname);
 
 /**
  * Open a platform-independent filename for appending, and make it accessible
- *  via an SDL_RWops structure. The file will be closed in PhysicsFS when the
+ *  via an SDL_IOStream structure. The file will be closed in PhysicsFS when the
  *  RWops is closed. PhysicsFS should be configured to your liking before
  *  opening files through this method.
  *
  *   @param filename File to open in platform-independent notation.
- *  @return A valid SDL_RWops structure on success, NULL on error. Specifics
+ *  @return A valid SDL_IOStream structure on success, NULL on error. Specifics
  *           of the error can be gleaned from PHYSFS_getLastError().
  */
-PHYSFS_DECL SDL_RWops *PHYSFSRWOPS_openAppend(const char *fname);
+PHYSFS_DECL SDL_IOStream *PHYSFSRWOPS_openAppend(const char *fname);
 
 /**
- * Make a SDL_RWops from an existing PhysicsFS file handle. You should
+ * Make a SDL_IOStream from an existing PhysicsFS file handle. You should
  *  dispose of any references to the handle after successful creation of
  *  the RWops. The actual PhysicsFS handle will be destroyed when the
  *  RWops is closed.
  *
  *   @param handle a valid PhysicsFS file handle.
- *  @return A valid SDL_RWops structure on success, NULL on error. Specifics
+ *  @return A valid SDL_IOStream structure on success, NULL on error. Specifics
  *           of the error can be gleaned from PHYSFS_getLastError().
  */
-PHYSFS_DECL SDL_RWops *PHYSFSRWOPS_makeRWops(PHYSFS_File *handle);
+PHYSFS_DECL SDL_IOStream *PHYSFSRWOPS_makeRWops(PHYSFS_File *handle);
 
 #ifdef __cplusplus
 }

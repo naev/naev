@@ -24,7 +24,7 @@
 /** @cond */
 #include <math.h> // IWYU pragma: export
 
-#include "SDL_stdinc.h"
+#include <SDL3/SDL_stdinc.h>
 /** @endcond */
 
 #define APPNAME "Naev" /**< Application name. */

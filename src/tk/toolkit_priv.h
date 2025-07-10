@@ -4,8 +4,8 @@
 #pragma once
 
 /** @cond */
-#include "SDL_keycode.h"
 #include "naev.h"
+#include <SDL3/SDL_keycode.h>
 /** @endcond */
 
 #include "tk/widget.h"

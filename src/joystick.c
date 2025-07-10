@@ -7,9 +7,9 @@
  * @brief Handles joystick initialization.
  */
 /** @cond */
-#include "SDL.h"
-#include "SDL_haptic.h"
-#include "SDL_joystick.h"
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_haptic.h>
+#include <SDL3/SDL_joystick.h>
 /** @endcond */
 
 #include "joystick.h"

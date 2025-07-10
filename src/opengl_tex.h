@@ -4,8 +4,8 @@
 #pragma once
 
 /** @cond */
-#include "SDL_endian.h"
-#include "SDL_rwops.h"
+#include <SDL3/SDL_endian.h>
+#include <SDL3/SDL_iostream.h>
 #include <stdint.h>
 /** @endcond */
 
@@ -53,7 +53,7 @@ USE_RESULT glTexture *gl_loadImageData( float *data, int w, int h, int sx,
 USE_RESULT glTexture *gl_newImage( const char *path, const unsigned int flags );
 USE_RESULT glTexture *gl_newSprite( const char *path, const int sx,
                                     const int sy, const unsigned int flags );
-USE_RESULT glTexture *gl_newSpriteRWops( const char *path, SDL_RWops *rw,
+USE_RESULT glTexture *gl_newSpriteRWops( const char *path, SDL_IOStream *rw,
                                          const int sx, const int sy,
                                          const unsigned int flags );
 USE_RESULT glTexture *gl_dupTexture( const glTexture *texture );

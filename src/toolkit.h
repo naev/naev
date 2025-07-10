@@ -4,7 +4,7 @@
 #pragma once
 
 /** @cond */
-#include "SDL_events.h"
+#include <SDL3/SDL_events.h>
 /** @endcond */
 
 #include "tk/widget.h" // IWYU pragma: export

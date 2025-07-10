@@ -8,8 +8,8 @@
  */
 
 /** @cond */
-#include "SDL.h"
 #include "physfsrwops.h"
+#include <SDL3/SDL.h>
 
 #include "naev.h"
 /** @endcond */

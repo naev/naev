@@ -15,8 +15,8 @@
 #include <windows.h>
 #endif /* SDL_PLATFORM_WIN32 */
 
-#include "SDL_stdinc.h"
 #include "physfs.h"
+#include <SDL3/SDL_stdinc.h>
 
 #include "naev.h"
 /** @endcond */

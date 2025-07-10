@@ -9,8 +9,8 @@
 /** @cond */
 #include <inttypes.h>
 
-#include "SDL.h"
 #include "physfs.h"
+#include <SDL3/SDL.h>
 #include <inttypes.h>
 
 #include "naev.h"

@@ -31,8 +31,8 @@
  * - Reverb
  */
 /** @cond */
-#include "SDL_mutex.h"
 #include "physfs.h"
+#include <SDL3/SDL_mutex.h>
 #include <sys/stat.h>
 
 #include "naev.h"
@@ -141,7 +141,7 @@ static alSound *sound_list = NULL; /**< List of available sounds. */
 static int        voice_genid  = 0;    /**< Voice identifier generator. */
 static alVoice   *voice_active = NULL; /**< Active voices. */
 static alVoice   *voice_pool   = NULL; /**< Pool of free voices. */
-static SDL_mutex *voice_mutex  = NULL; /**< Lock for voices. */
+static SDL_Mutex *voice_mutex  = NULL; /**< Lock for voices. */
 
 /*
  * Internally used sounds.
@@ -161,7 +161,7 @@ static void sound_free( alSound *snd );
 /*
  * Global sound lock.
  */
-SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
+SDL_Mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
                                    using any OpenAL functions. */
 
 /*
@@ -219,8 +219,8 @@ static int         al_enableEFX( void );
  */
 static int al_playVoice( alVoice *v, alSound *s, ALfloat px, ALfloat py,
                          ALfloat vx, ALfloat vy, ALint relative );
-static int al_load( alSound *snd, SDL_RWops *rw, const char *name );
-static int al_loadWav( ALuint *buf, SDL_RWops *rw );
+static int al_load( alSound *snd, SDL_IOStream *rw, const char *name );
+static int al_loadWav( ALuint *buf, SDL_IOStream *rw );
 static int al_loadOgg( ALuint *buf, OggVorbis_File *vf );
 /*
  * Pausing.
@@ -248,17 +248,17 @@ static void al_volumeUpdate( void );
 static size_t ovpack_read( void *ptr, size_t size, size_t nmemb,
                            void *datasource )
 {
-   SDL_RWops *rw = datasource;
+   SDL_IOStream *rw = datasource;
    return (size_t)SDL_RWread( rw, ptr, size, nmemb );
 }
 static int ovpack_seek( void *datasource, ogg_int64_t offset, int whence )
 {
-   SDL_RWops *rw = datasource;
+   SDL_IOStream *rw = datasource;
    return SDL_RWseek( rw, offset, whence );
 }
 static int ovpack_close( void *datasource )
 {
-   SDL_RWops *rw = datasource;
+   SDL_IOStream *rw = datasource;
    return SDL_RWclose( rw );
 }
 static int ovpack_closeFake( void *datasource )
@@ -268,7 +268,7 @@ static int ovpack_closeFake( void *datasource )
 }
 static long ovpack_tell( void *datasource )
 {
-   SDL_RWops *rw = datasource;
+   SDL_IOStream *rw = datasource;
    return SDL_RWseek( rw, 0, SEEK_CUR );
 }
 ov_callbacks sound_al_ovcall = {
@@ -1222,10 +1222,10 @@ static int sound_makeList( void )
    /* load the profiles */
    suflen = strlen( SOUND_SUFFIX_WAV );
    for ( size_t i = 0; files[i] != NULL; i++ ) {
-      int        len;
-      char       path[PATH_MAX];
-      SDL_RWops *rw;
-      int        flen = strlen( files[i] );
+      int           len;
+      char          path[PATH_MAX];
+      SDL_IOStream *rw;
+      int           flen = strlen( files[i] );
 
       /* Must be longer than suffix. */
       if ( flen < suflen )
@@ -1792,7 +1792,7 @@ alVoice *voice_get( int id )
 /**
  * @brief Loads a new sound source from a RWops.
  */
-int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags )
+int source_newRW( SDL_IOStream *rw, const char *name, unsigned int flags )
 {
    int     ret;
    alSound snd, *sndl;
@@ -1818,8 +1818,8 @@ int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags )
  */
 int source_new( const char *filename, unsigned int flags )
 {
-   SDL_RWops *rw = PHYSFSRWOPS_openRead( filename );
-   int        id = source_newRW( rw, filename, flags );
+   SDL_IOStream *rw = PHYSFSRWOPS_openRead( filename );
+   int           id = source_newRW( rw, filename, flags );
    SDL_RWclose( rw );
    return id;
 }
@@ -1872,7 +1872,7 @@ static alGroup_t *al_getGroup( int group )
  *    @param buf Buffer to load wav into.
  *    @param rw Data for the wave.
  */
-static int al_loadWav( ALuint *buf, SDL_RWops *rw )
+static int al_loadWav( ALuint *buf, SDL_IOStream *rw )
 {
    SDL_AudioSpec wav_spec;
    Uint32        wav_length;
@@ -2080,7 +2080,7 @@ static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
  *    @param rw File to load from.
  *    @param name Name for debugging purposes.
  */
-int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name )
+int sound_al_buffer( ALuint *buf, SDL_IOStream *rw, const char *name )
 {
    int            ret;
    OggVorbis_File vf;
@@ -2121,7 +2121,7 @@ int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name )
  *    @param rw File to load from.
  *    @param name Name for debugging purposes.
  */
-int al_load( alSound *snd, SDL_RWops *rw, const char *name )
+int al_load( alSound *snd, SDL_IOStream *rw, const char *name )
 {
    ALint freq, bits, channels, size;
    int   ret = sound_al_buffer( &snd->buf, rw, name );

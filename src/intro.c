@@ -9,7 +9,7 @@
  * @todo Allow handling of images and other fancy things once we get them.
  */
 /** @cond */
-#include "SDL.h"
+#include <SDL3/SDL.h>
 
 #include "naev.h"
 /** @endcond */

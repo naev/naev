@@ -54,8 +54,8 @@ int player_guiAdd( const char *name )
 
 #ifdef DEBUGGING
    /* Make sure the GUI is vaild. */
-   SDL_RWops *rw;
-   char       buf[PATH_MAX];
+   SDL_IOStream *rw;
+   char          buf[PATH_MAX];
    snprintf( buf, sizeof( buf ), GUI_PATH "%s.lua", name );
    rw = PHYSFSRWOPS_openRead( buf );
    if ( rw == NULL ) {

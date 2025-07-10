@@ -10,7 +10,7 @@
 /** @cond */
 #include "naev.h"
 
-#include "SDL.h"
+#include <SDL3/SDL.h>
 /** @endcond */
 
 #include "collision.h"

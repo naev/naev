@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include "SDL_stdinc.h"
+#include <SDL3/SDL_stdinc.h>
 
 #include <errno.h>
 #include <libgen.h> /* dirname / basename */
