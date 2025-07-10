@@ -1386,7 +1386,10 @@ static void opt_video( unsigned int wid )
       nres = 1;
    }
    for ( i = 0; i < count; i++ ) {
-      SDL_asprintf( &res[nres], "%dx%d", mode[i]->w, mode[i]->h );
+      int lowres =
+         ( mode[i]->w < RESOLUTION_W_MIN || mode[i]->h < RESOLUTION_H_MIN );
+      SDL_asprintf( &res[nres], lowres ? "#r%dx%d#0" : "%dx%d", mode[i]->w,
+                    mode[i]->h );
 
       /* Make sure doesn't already exist. */
       for ( k = 0; k < nres; k++ )
