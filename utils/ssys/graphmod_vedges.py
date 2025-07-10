@@ -18,6 +18,7 @@ if argv[1:] != []:
 # In the form: (from, to [, length])
 virtual_edges = [
    ('ngc902', 'ngc4087'),
+   ('ngc728', 'ngc1872'),
 ]
 
 from graphmod import sys_pos as V, sys_jmp as E
