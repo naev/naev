@@ -62,8 +62,6 @@ class _graph():
          except BrokenPipeError:
             stderr.write('Broken output pipe. Bye !\n')
             exit(0)
-         except:
-            pass
 
 graph = _graph()
 sys_pos = graph.pos
@@ -83,8 +81,12 @@ try:
             success = False
 
          if not success:
-            bname1, bname2 = tuple(l[:2])
-            sys_jmp[bname1].append((bname2, l[2:]))
+            if len(l) >= 2:
+               bname1, bname2 = tuple(l[:2])
+               sys_jmp[bname1].append((bname2, l[2:]))
+            else:
+               stderr.write('Ignored invalid line: ' + line + '\n')
+               continue
       else:
          break
 except KeyboardInterrupt:

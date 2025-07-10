@@ -73,6 +73,3 @@ for k, v in dotpos.items():
    if k[0] != '_':
       sys_pos[k] = v
 stderr.write(' -> '.join([str(oldbb), str(bbox), str(again)]) + '\n')
-
-for i in sys_jmp:
-   sys_jmp[i] = [(e, t) for (e, t) in sys_jmp[i] if 'virtual' not in t]

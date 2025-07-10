@@ -81,6 +81,7 @@ msg "gen before graph"
 "$DIR"/ssys2graph.sh                                                          |
 "$DIR"/graph_vaux.py -e -c -n                                                 |
 "$DIR"/graphmod_prep.py                                                       |
+"$DIR"/graphmod_vedges.py                                                     |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_bef')                   |
 tee                                                                        >(
    "$DIR"/graph2dot.py -c -k |
@@ -88,29 +89,34 @@ tee                                                                        >(
 pmsg "apply neato"                                                            |
 tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                             |
 "$DIR"/dot2graph.py                                                           |
-"$DIR"/graphmod_virtual.py                                                    |
+grep -v ' virtual$'                                                           |
+"$DIR"/graphmod_vedges.py                                                     |
+"$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')                      |
 pmsg "pprocess"                                                               |
 "$DIR"/graphmod_postp.py                                                      |
-"$DIR"/graphmod_virtual.py                                                    |
+"$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')                     |
 pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
 "$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
-"$DIR"/graphmod_virtual.py                                                    |
 pmsg ""                                                                       |
+"$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')                    |
 if [ -n "$FORCE" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
 "$DIR"/graphmod_stretch_north.py                                              |
+"$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')                     |
 "$DIR"/graphmod_abh.py                                                        |
 pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"                            |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
+"$DIR"/graphmod_virtual_ssys.py                                               |
+grep -v ' virtual$'                                                           |
 tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png)    |
-"$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_after'                        |
+"$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft'                          |
 
 msg ""
 if [ -n "$FORCE" ] ; then
