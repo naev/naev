@@ -1,8 +1,7 @@
 # python3
 
-
 def add_virtual_edges( E, virtual ):
-   already = {}
+   already = set()
    virtual_edges = [x for x in virtual]
    for t in virtual_edges:
       i, j = tuple(t[:2])
@@ -14,4 +13,4 @@ def add_virtual_edges( E, virtual ):
          stderr.write(str(tuple(t[:2])) + ' already implied by an existing edge!\n')
       else:
          already.add((i,j))
-         E[i].append((j, a + ['virtual']))
+         E[i].append((j, list(t)[2:] + ['virtual']))
