@@ -433,12 +433,13 @@ impl Context {
         major: u8,
         minor: u8,
     ) -> Result<(sdl::video::Window, sdl::video::GLContext)> {
-        let (width, height, resizable, borderless) = unsafe {
+        let (width, height, resizable, borderless, fullscreen) = unsafe {
             (
                 naevc::conf.width,
                 naevc::conf.height,
                 naevc::conf.notresizable == 0,
                 naevc::conf.borderless != 0,
+                naevc::conf.fullscreen != 0,
             )
         };
         gl_attr.set_context_version(major, minor);
@@ -459,6 +460,9 @@ impl Context {
         }
         if borderless {
             wdwbuild.borderless();
+        }
+        if fullscreen {
+            wdwbuild.fullscreen();
         }
         let mut window = wdwbuild
             .opengl()
