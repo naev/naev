@@ -214,11 +214,11 @@ int gl_checkHandleError( const char *func, int line )
  */
 int gl_setupFullscreen( void )
 {
-   int ok;
+#if 0
    int display_index = SDL_GetDisplayForWindow( gl_screen.window );
-   if ( conf.fullscreen && conf.modesetting ) {
-      SDL_DisplayMode target, closest;
+   if ( conf.fullscreen ) {
       /* Try to use desktop resolution if nothing is specifically set. */
+      SDL_DisplayMode target;
       if ( conf.explicit_dim ) {
          target   = *SDL_GetWindowFullscreenMode( gl_screen.window );
          target.w = conf.width;
@@ -226,18 +226,17 @@ int gl_setupFullscreen( void )
       } else
          target = *SDL_GetDesktopDisplayMode( display_index );
 
+      SDL_DisplayMode closest;
       if ( !SDL_GetClosestFullscreenDisplayMode( display_index, target.w,
                                                  target.h, 0.0, 1, &closest ) )
          return -1;
 
-      SDL_SetWindowFullscreenMode( gl_screen.window, &closest );
+      SDL_SetWindowFullscreenMode( gl_screen.window, NULL );
    }
-   ok = SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen );
-   /* HACK: Force pending resize events to be processed, particularly on
-    * Wayland. */
-   SDL_PumpEvents();
-   SDL_GL_SwapWindow( gl_screen.window );
-   SDL_GL_SwapWindow( gl_screen.window );
+#endif
+   int ok = SDL_SetWindowFullscreen( gl_screen.window, conf.fullscreen );
+   if ( !ok )
+      WARN( "Failed to set full screen state!" );
    return ok;
 }
 

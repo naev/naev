@@ -359,7 +359,6 @@ int conf_loadConfig( const char *file )
    conf_loadFloat( L, "scalefactor", conf.scalefactor );
    conf_loadFloat( L, "nebu_scale", conf.nebu_scale );
    conf_loadBool( L, "fullscreen", conf.fullscreen );
-   conf_loadBool( L, "modesetting", conf.modesetting );
    conf_loadBool( L, "notresizable", conf.notresizable );
    conf_loadBool( L, "borderless", conf.borderless );
    conf_loadBool( L, "minimize", conf.minimize );
@@ -947,10 +946,6 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Run Naev in full-screen mode" ) );
    conf_saveBool( "fullscreen", conf.fullscreen );
-   conf_saveEmptyLine();
-
-   conf_saveComment( _( "Use video modesetting when fullscreen is enabled" ) );
-   conf_saveBool( "modesetting", conf.modesetting );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Disable allowing resizing the window." ) );

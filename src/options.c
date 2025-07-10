@@ -99,7 +99,6 @@ static void opt_listColourblind( unsigned int wid, const char *str );
 static void opt_setGameSpeed( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
-static void opt_videoRes( unsigned int wid, const char *str );
 static int  opt_videoSave( unsigned int wid, const char *str );
 static void opt_videoDefaults( unsigned int wid, const char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
@@ -241,17 +240,9 @@ static void opt_close( unsigned int wid, const char *name )
  */
 void opt_resize( void )
 {
-   int  w, h, fullscreen;
-   char buf[16];
-
    /* Nothing to do if not open. */
    if ( !opt_wid )
       return;
-
-   /* Update the resolution input widget. */
-   opt_getVideoMode( &w, &h, &fullscreen );
-   snprintf( buf, sizeof( buf ), "%dx%d", w, h );
-   window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
 /*
@@ -1339,10 +1330,8 @@ static void opt_accessibilityDefaults( unsigned int wid, const char *str )
  */
 static void opt_video( unsigned int wid )
 {
-   int         i, j, nres, res_def;
    char        buf[16];
    int         cw, w, h, y, x, l;
-   char      **res;
    const char *s;
 
    /* Get size. */
@@ -1360,55 +1349,11 @@ static void opt_video( unsigned int wid )
    x  = 20;
    y  = -40;
    window_addText( wid, x, y, 100, 20, 0, "txtSRes", NULL, cHeader,
-                   _( "Resolution:" ) );
+                   _( "Window:" ) );
    y -= 30;
-   window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
-   window_addCheckbox( wid, x + 20 + 100, y, 100, 20, "chkFullscreen",
-                       _( "Fullscreen" ), NULL, conf.fullscreen );
+   window_addCheckbox( wid, x, y, 100, 20, "chkFullscreen",
+                       _( "Fullscreen Window" ), NULL, conf.fullscreen );
    y -= 30;
-   int k;
-   int display_index = SDL_GetDisplayForWindow( gl_screen.window );
-   int count;
-   SDL_DisplayMode **mode =
-      SDL_GetFullscreenDisplayModes( display_index, &count );
-   j = 1;
-   for ( i = 0; i < count; i++ ) {
-      if ( ( mode[i]->w == (int)conf.width ) &&
-           ( mode[i]->h == (int)conf.height ) )
-         j = 0;
-   }
-   res     = malloc( sizeof( char * ) * ( i + j ) );
-   nres    = 0;
-   res_def = 0;
-   if ( j ) {
-      SDL_asprintf( &res[0], "%dx%d", conf.width, conf.height );
-      nres = 1;
-   }
-   for ( i = 0; i < count; i++ ) {
-      int lowres =
-         ( mode[i]->w < RESOLUTION_W_MIN || mode[i]->h < RESOLUTION_H_MIN );
-      SDL_asprintf( &res[nres], lowres ? "#r%dx%d#0" : "%dx%d", mode[i]->w,
-                    mode[i]->h );
-
-      /* Make sure doesn't already exist. */
-      for ( k = 0; k < nres; k++ )
-         if ( strcmp( res[k], res[nres] ) == 0 )
-            break;
-      if ( k < nres ) {
-         free( res[nres] );
-         continue;
-      }
-
-      /* Add as default if necessary and increment. */
-      if ( ( mode[i]->w == (int)conf.width ) &&
-           ( mode[i]->h == (int)conf.height ) )
-         res_def = i;
-      nres++;
-   }
-   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes,
-                   NULL );
-   y -= 110;
    window_addText( wid, x, y - 3, 130, 20, 0, "txtScale", NULL, NULL, NULL );
    window_addFader( wid, x + 140, y, cw - 160, 20, "fadScale", log( 1. ),
                     log( 3. ), log( conf.scalefactor ), opt_setScalefactor );
@@ -1440,15 +1385,11 @@ static void opt_video( unsigned int wid )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSFPS", NULL, NULL, s );
    window_addInput( wid, x + l + 20, y, 40, 20, "inpFPS", 4, 1, NULL );
-   toolkit_setListPos( wid, "lstRes", res_def );
    window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
    snprintf( buf, sizeof( buf ), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    window_addCheckbox( wid, x + l + 20 + 40 + 20, y, cw, 20, "chkFPS",
                        _( "Show FPS" ), NULL, conf.fps_show );
-
-   /* Sets inpRes to current resolution, must be after lstRes is added. */
-   opt_resize();
 
    /* OpenGL options. */
    x = 20 + cw + 20;
@@ -1509,40 +1450,20 @@ static void opt_needRestart( void )
 }
 
 /**
- * @brief Callback when resolution changes.
- */
-static void opt_videoRes( unsigned int wid, const char *str )
-{
-   const char *buf = toolkit_getList( wid, str );
-   window_setInput( wid, "inpRes", buf );
-}
-
-/**
  * @brief Saves the video settings.
  */
 static int opt_videoSave( unsigned int wid, const char *str )
 {
    (void)str;
-   const char  *inp;
-   int          ret, f, fullscreen;
-   unsigned int w, h;
-
-   /* Handle resolution. */
-   inp = window_getInput( wid, "inpRes" );
-   ret = sscanf( inp, " %d %*[^0-9] %d", &w, &h );
-   if ( ret != 2 || w <= 0 || h <= 0 ) {
-      dialogue_alertRaw(
-         _( "Height/Width invalid. Should be formatted like 1024x768." ) );
-      return 1;
-   }
+   const char *inp;
+   int         f, fullscreen;
 
    /* Fullscreen. */
    fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
    /* Only change if necessary or it causes some flicker. */
-   if ( ( conf.width != w ) || ( conf.height != h ) ||
-        ( fullscreen != conf.fullscreen ) ) {
-      opt_setVideoMode( w, h, fullscreen, 1 );
+   if ( fullscreen != conf.fullscreen ) {
+      opt_setVideoMode( conf.width, conf.height, fullscreen, 1 );
       window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
       return 0;
    }
@@ -1695,9 +1616,7 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
 
    if ( confirm && ( ( status != 0 ) || changed_size || ( new_f != old_f ) ) &&
         !dialogue_YesNo( _( "Keep Video Settings" ),
-                         _( "Do you want to keep running at %dx%d %s?" ), new_w,
-                         new_h,
-                         new_f ? _( "fullscreen" ) : _( "windowed" ) ) ) {
+                         _( "Do you want to keep these window settings?" ) ) ) {
 
       opt_setVideoMode( old_conf_w, old_conf_h, old_conf_f, 0 );
       conf.explicit_dim = old_exp;
@@ -1752,9 +1671,6 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
 
    /* Restore settings. */
    /* Inputs. */
-   snprintf( buf, sizeof( buf ), "%dx%d", RESOLUTION_W_DEFAULT,
-             RESOLUTION_H_DEFAULT );
-   window_setInput( wid, "inpRes", buf );
    snprintf( buf, sizeof( buf ), "%d", FPS_MAX_DEFAULT );
    window_setInput( wid, "inpFPS", buf );
 
