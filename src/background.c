@@ -15,7 +15,6 @@
 #include "array.h"
 #include "camera.h"
 #include "conf.h"
-#include "gui.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
@@ -427,7 +426,9 @@ static void background_renderImages( background_image_t *bkg_arr )
 
       cam_getPos( &cx, &cy );
       m = bkg->move;
-      z = bkg->scale;
+      z = bkg->scale * RESOLUTION_W_MIN * RESOLUTION_H_MIN /
+          ( gl_screen.nw * gl_screen.nh );
+      ;
       /* Relative coordinates. */
       rx = ( bkg->x - cx ) * m;
       ry = ( bkg->y - cy ) * m;
