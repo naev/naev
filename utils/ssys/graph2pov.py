@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-SHOW_VIRTUAL = False
+SHOW_VIRTUAL = True
 
 decorators = {
    'anubis_black_hole': 'blackhole',

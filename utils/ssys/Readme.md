@@ -47,7 +47,7 @@ These are designed to change the star map by **changing systems position**.
 ## graphmods
  - `graphmod_prep.py`: A set virtual edge addition designed to serve as a pre-processing for `neato`.
  - `graphmod_postp.py`: A set of ad hoc operations designed to serve as a post-processing for neato output. See section below.
- - `graphmod_virtual.py`: gives a position of virtual systems (eg. gauntlet, test of ...)
+ - `graphmod_virtual_ssys.py`: gives a position of virtual systems (eg. gauntlet, test of ...)
  - `graphmod_smooth_tl.py`: smoothens the tradelane. Interesting in combination with `reposition`.
  - `graphmod_abh.py`: Repairs the stretching of Anubis Black Hole after gravity application.
 

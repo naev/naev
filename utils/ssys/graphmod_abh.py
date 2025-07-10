@@ -25,7 +25,7 @@ def repos_center():
       pos['anubis_black_hole'] = C.center
       break
 
-F = 0.04
+F = 0.05
 for k in range(2):
    repos_center()
    for i in anbh:

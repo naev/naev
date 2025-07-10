@@ -210,4 +210,3 @@ else:
                V.aux[bnam].append('default')
             if V.aux[bnam][0] == 'default':
                V.aux[bnam][0] += '@' + newt[bnam]
-
