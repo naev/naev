@@ -389,10 +389,10 @@ void input_init( void )
    SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_UP, 1 );
 
    /* Joystick, enabled in joystick.c if needed. */
-   SDL_SetEventEnabled( SDL_JOYAXISMOTION, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_AXIS_MOTION, SDL_DISABLE );
    SDL_SetEventEnabled( SDL_JOYHATMOTION, SDL_DISABLE );
-   SDL_SetEventEnabled( SDL_JOYBUTTONDOWN, SDL_DISABLE );
-   SDL_SetEventEnabled( SDL_JOYBUTTONUP, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_BUTTON_DOWN, SDL_DISABLE );
+   SDL_SetEventEnabled( SDL_EVENT_JOYSTICK_BUTTON_UP, SDL_DISABLE );
 
    /* Quit. */
    SDL_SetEventEnabled( SDL_QUIT, 1 );
@@ -1892,13 +1892,13 @@ void input_handle( SDL_Event *event )
       return;
 
    switch ( event->type ) {
-   case SDL_JOYAXISMOTION:
+   case SDL_EVENT_JOYSTICK_AXIS_MOTION:
       input_joyaxis( event->jaxis.axis, event->jaxis.value );
       break;
-   case SDL_JOYBUTTONDOWN:
+   case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
       input_joyevent( KEY_PRESS, event->jbutton.button );
       break;
-   case SDL_JOYBUTTONUP:
+   case SDL_EVENT_JOYSTICK_BUTTON_UP:
       input_joyevent( KEY_RELEASE, event->jbutton.button );
       break;
    case SDL_JOYHATMOTION:

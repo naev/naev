@@ -1070,7 +1070,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       opt_lastKeyPress = key;
       break;
 
-   case SDL_JOYAXISMOTION:
+   case SDL_EVENT_JOYSTICK_AXIS_MOTION:
       if ( event->jaxis.value > 0 )
          type = KEYBIND_JAXISPOS;
       else if ( event->jaxis.value < 0 )
@@ -1081,7 +1081,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       mod = NMOD_ANY;
       break;
 
-   case SDL_JOYBUTTONDOWN:
+   case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
       type = KEYBIND_JBUTTON;
       key  = event->jbutton.button;
       mod  = NMOD_ANY;

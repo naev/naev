@@ -34,14 +34,17 @@ static void joystick_initHaptic( void );
  */
 int joystick_get( const char *namjoystick )
 {
-   for ( int i = 0; i < SDL_NumJoysticks(); i++ ) {
-      const char *jname = SDL_JoystickNameForIndex( i );
+   int             count;
+   SDL_JoystickID *jsid = SDL_GetJoysticks( &count );
+   for ( int i = 0; i < count; i++ ) {
+      const char *jname = SDL_GetJoystickNameForID( jsid[i] );
       if ( strstr( jname, namjoystick ) )
          return i;
    }
 
-   WARN( _( "Joystick '%s' not found, using default joystick '%s'" ),
-         namjoystick, SDL_JoystickName( 0 ) );
+   if ( count > 0 )
+      WARN( _( "Joystick '%s' not found, using default joystick '%s'" ),
+            namjoystick, SDL_GetJoystickNameForID( jsid[0] ) );
    return 0;
 }
 
@@ -53,10 +56,12 @@ int joystick_get( const char *namjoystick )
  */
 int joystick_use( int indjoystick )
 {
-   const char *jname;
+   int             count;
+   SDL_JoystickID *jsid = SDL_GetJoysticks( &count );
+   const char     *jname;
 
    /* Check to see if it exists. */
-   if ( ( indjoystick < 0 ) || ( indjoystick >= SDL_NumJoysticks() ) ) {
+   if ( ( indjoystick < 0 ) || ( indjoystick >= count ) ) {
       WARN( _( "Joystick of index number %d does not exist, switching to "
                "default 0" ),
             indjoystick );
@@ -65,21 +70,22 @@ int joystick_use( int indjoystick )
 
    /* Close if already open. */
    if ( joystick != NULL ) {
-      SDL_JoystickClose( joystick );
+      SDL_CloseJoystick( joystick );
       joystick = NULL;
    }
 
    /* Start using joystick. */
-   joystick = SDL_JoystickOpen( indjoystick );
-   jname    = SDL_JoystickNameForIndex( indjoystick );
+   joystick = SDL_OpenJoystick( jsid[indjoystick] );
+   jname    = SDL_GetJoystickNameForID( jsid[indjoystick] );
    if ( joystick == NULL ) {
       WARN( _( "Error opening joystick %d [%s]" ), indjoystick, jname );
       return -1;
    }
    LOG( _( "Using joystick %d - %s" ), indjoystick, jname );
-   DEBUG( _( "   with %d axes, %d buttons, %d balls and %d hats" ),
-          SDL_JoystickNumAxes( joystick ), SDL_JoystickNumButtons( joystick ),
-          SDL_JoystickNumBalls( joystick ), SDL_JoystickNumHats( joystick ) );
+   DEBUG(
+      _( "   with %d axes, %d buttons, %d balls and %d hats" ),
+      SDL_GetNumJoystickAxes( joystick ), SDL_GetNumJoystickButtons( joystick ),
+      SDL_GetNumJoystickBalls( joystick ), SDL_GetNumJoystickHats( joystick ) );
 
    /* Initialize the haptic if possible. */
    joystick_initHaptic();
@@ -95,26 +101,26 @@ int joystick_use( int indjoystick )
  */
 static void joystick_initHaptic( void )
 {
-   if ( !has_haptic || !SDL_JoystickIsHaptic( joystick ) )
+   if ( !has_haptic || !SDL_IsJoystickHaptic( joystick ) )
       return;
 
    /* Close haptic if already open. */
    if ( haptic != NULL ) {
-      SDL_HapticClose( haptic );
+      SDL_CloseHaptic( haptic );
       haptic = NULL;
    }
 
    /* Try to create haptic device. */
-   haptic = SDL_HapticOpenFromJoystick( joystick );
+   haptic = SDL_OpenHapticFromJoystick( joystick );
    if ( haptic == NULL ) {
       WARN( _( "Unable to initialize force feedback: %s" ), SDL_GetError() );
       return;
    }
 
    /* Check to see what it supports. */
-   haptic_query = SDL_HapticQuery( haptic );
+   haptic_query = SDL_GetHapticFeatures( haptic );
    if ( !( haptic_query & SDL_HAPTIC_SINE ) ) {
-      SDL_HapticClose( haptic );
+      SDL_CloseHaptic( haptic );
       haptic = NULL;
       return;
    }
@@ -128,12 +134,12 @@ static void joystick_initHaptic( void )
  */
 static void joystick_debug( void )
 {
+   int             count;
+   SDL_JoystickID *jsid = SDL_GetJoysticks( &count );
    /* figure out how many joysticks there are */
-   int numjoysticks = SDL_NumJoysticks();
-   DEBUG( n_( "%d joystick detected", "%d joysticks detected", numjoysticks ),
-          numjoysticks );
-   for ( int i = 0; i < numjoysticks; i++ ) {
-      const char *jname = SDL_JoystickNameForIndex( i );
+   DEBUG( n_( "%d joystick detected", "%d joysticks detected", count ), count );
+   for ( int i = 0; i < count; i++ ) {
+      const char *jname = SDL_GetJoystickNameForID( jsid[i] );
       DEBUG( "  %d. %s", i, jname );
    }
 }
@@ -160,7 +166,7 @@ int joystick_init( void )
 #endif /* DEBUGGING */
 
    /* enables joystick events */
-   SDL_JoystickEventState( 1 );
+   SDL_SetJoystickEventsEnabled( 1 );
 
    return 0;
 }
@@ -171,12 +177,12 @@ int joystick_init( void )
 void joystick_exit( void )
 {
    if ( haptic != NULL ) {
-      SDL_HapticClose( haptic );
+      SDL_CloseHaptic( haptic );
       haptic = NULL;
    }
 
    if ( joystick != NULL ) {
-      SDL_JoystickClose( joystick );
+      SDL_CloseJoystick( joystick );
       joystick = NULL;
    }
 }
