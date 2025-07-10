@@ -81,6 +81,7 @@ msg "gen before graph"
 "$DIR"/ssys2graph.sh                                                          |
 "$DIR"/graph_vaux.py -e -c -n                                                 |
 "$DIR"/graphmod_prep.py                                                       |
+"$DIR"/graphmod_vedges.py                                                     |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_bef')                   |
 tee                                                                        >(
    "$DIR"/graph2dot.py -c -k |
@@ -89,6 +90,7 @@ pmsg "apply neato"                                                            |
 tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                             |
 "$DIR"/dot2graph.py                                                           |
 grep -v ' virtual$'                                                           |
+"$DIR"/graphmod_vedges.py                                                     |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')                      |
 pmsg "pprocess"                                                               |
@@ -112,6 +114,7 @@ pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
+grep -v ' virtual$'                                                           |
 tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png)    |
 "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft'                          |
 

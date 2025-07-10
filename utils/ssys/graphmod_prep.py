@@ -32,7 +32,6 @@ new_edges = [
 
 # In the form: (from, to [, length])
 virtual_edges = [
-   ('ngc902', 'ngc4087'),
    ('flow', 'basel', 2),
    ('deneb', 'booster', 1.5),
    ('ngc4746', 'logania'),
@@ -87,25 +86,11 @@ if prv is not None:
    virtual_edges.append(('_'+str(prvj+2),             prv))
    virtual_edges.append(('_'+str(prvj+2),      '_'+str(1)))
 
-already = set()
-for t in virtual_edges:
-   i, j = tuple(t[:2])
-   if i==j:
-      stderr.write(t[0] + ' appears twice in the same edge!\n')
-   if (i, j) in already or (j, i) in already:
-      stderr.write(str(tuple(t[:2])) + ' appears twice in virtual_edges list !\n')
-   else:
-      already.add((i,j))
-
 from graphmod import sys_pos as V, sys_jmp as E
+from virtual_edges import add_virtual_edges
 
-for t in virtual_edges:
-   i, j = tuple(t[:2])
-   a = [str(f) for f in t[2:]]
-   E[i].append((j, a + ['virtual']))
+add_virtual_edges(E, virtual_edges):
 
-del_edges = set(del_edges + [(j, i) for (i, j) in del_edges])
-new_edges = set(new_edges + [(j, i) for (i, j) in new_edges])
 
 for v in V:
    for e, t in E[v]:
