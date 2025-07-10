@@ -537,7 +537,7 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
          { NULL, NULL },
       };
       SDL_ShowSaveFileDialog( uniedit_save_callback, NULL, gl_screen.window,
-                              filter, uniedit_diff.filename );
+                              filter, 1, uniedit_diff.filename );
    } else {
       int ret = 0;
       ret |= dsys_saveAll();
@@ -2226,7 +2226,7 @@ static int uniedit_sortCompare( const void *p1, const void *p2 )
    const map_find_t *f1 = (map_find_t *)p1;
    const map_find_t *f2 = (map_find_t *)p2;
    /* Sort by name, nothing more. */
-   return strcasecmp( f1->sys->name, f2->sys->name );
+   return SDL_strcasecmp( f1->sys->name, f2->sys->name );
 }
 
 /**
@@ -3251,7 +3251,7 @@ static void uniedit_diff_load( unsigned int wid, const char *wgt )
    };
    /* Open dialogue to load the diff. */
    SDL_ShowOpenFileDialog( uniedit_diff_load_callback, &wid, gl_screen.window,
-                           filter, conf.dev_data_dir, 0 );
+                           filter, 1, conf.dev_data_dir, 0 );
 }
 
 static void uniedit_diff_remove( unsigned int wid, const char *unused )

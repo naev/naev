@@ -64,7 +64,8 @@ static void commodity_exchange_modifiers( unsigned int wid )
 
 static int commodity_exchange_events( unsigned int wid, SDL_Event *evt )
 {
-   if ( ( evt->type == SDL_KEYDOWN ) || ( evt->type == SDL_KEYUP ) )
+   if ( ( evt->type == SDL_EVENT_KEY_DOWN ) ||
+        ( evt->type == SDL_EVENT_KEY_UP ) )
       commodity_exchange_modifiers( wid );
    return 0;
 }

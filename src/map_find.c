@@ -249,7 +249,7 @@ static int map_sortCompare( const void *p1, const void *p2 )
       return -1;
 
    /* If they're the same it doesn't matter, so we'll sort by name. */
-   return strcasecmp( f1->sys->name, f2->sys->name );
+   return SDL_strcasecmp( f1->sys->name, f2->sys->name );
 }
 
 /**

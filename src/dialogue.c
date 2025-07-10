@@ -1049,28 +1049,28 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
             SDL_PushEvent(
                &event ); /* Replicate event until out of all loops. */
             break;
-         } else if ( event.type == SDL_EVENT_WINDOW_RESIZED ) {
+         } else if ( event.type == SDL_EVENT_WINDOW_RESIZED )
             naev_resize();
 
-            input_handle(
-               &event ); /* handles all the events and player keybinds */
-         }
-
-         /* Update stuff. */
-         if ( du != NULL ) {
-            /* Run update. */
-            if ( ( *du->update )( naev_getrealdt(), du->data ) ) {
-               /* Hack to override data. */
-               window_setData( du->wid, loop_done );
-               dialogue_close( du->wid, NULL );
-            }
-         }
+         /* handles all the events and player keybinds */
+         input_handle( &event );
       }
 
-      /* Close dialogue. */
-      dialogue_open--;
-      if ( dialogue_open < 0 )
-         WARN( _( "Dialogue counter not in sync!" ) );
-
-      return quit_game;
+      /* Update stuff. */
+      if ( du != NULL ) {
+         /* Run update. */
+         if ( ( *du->update )( naev_getrealdt(), du->data ) ) {
+            /* Hack to override data. */
+            window_setData( du->wid, loop_done );
+            dialogue_close( du->wid, NULL );
+         }
+      }
    }
+
+   /* Close dialogue. */
+   dialogue_open--;
+   if ( dialogue_open < 0 )
+      WARN( _( "Dialogue counter not in sync!" ) );
+
+   return quit_game;
+}

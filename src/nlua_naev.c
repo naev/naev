@@ -825,17 +825,17 @@ static int naevL_menuInfo( lua_State *L )
    }
 
    /* Parse string. */
-   if ( strcasecmp( str, "main" ) == 0 )
+   if ( SDL_strcasecmp( str, "main" ) == 0 )
       window = INFO_MAIN;
-   else if ( strcasecmp( str, "ship" ) == 0 )
+   else if ( SDL_strcasecmp( str, "ship" ) == 0 )
       window = INFO_SHIP;
-   else if ( strcasecmp( str, "weapons" ) == 0 )
+   else if ( SDL_strcasecmp( str, "weapons" ) == 0 )
       window = INFO_WEAPONS;
-   else if ( strcasecmp( str, "cargo" ) == 0 )
+   else if ( SDL_strcasecmp( str, "cargo" ) == 0 )
       window = INFO_CARGO;
-   else if ( strcasecmp( str, "missions" ) == 0 )
+   else if ( SDL_strcasecmp( str, "missions" ) == 0 )
       window = INFO_MISSIONS;
-   else if ( strcasecmp( str, "standings" ) == 0 )
+   else if ( SDL_strcasecmp( str, "standings" ) == 0 )
       window = INFO_STANDINGS;
    else
       return NLUA_ERROR( L, _( "Invalid window info name '%s'." ), str );
@@ -911,7 +911,8 @@ static int naevL_unpause( lua_State *L )
  */
 static int naevL_hasTextInput( lua_State *L )
 {
-   lua_pushboolean( L, SDL_EventState( SDL_TEXTINPUT, SDL_QUERY ) == SDL_TRUE );
+   lua_pushboolean( L, SDL_EventState( SDL_EVENT_TEXT_INPUT, SDL_QUERY ) ==
+                          SDL_TRUE );
    return 1;
 }
 
@@ -933,12 +934,12 @@ static int naevL_setTextInput( lua_State *L )
       input_pos.y = luaL_checkinteger( L, 3 );
       input_pos.w = luaL_checkinteger( L, 4 );
       input_pos.h = luaL_checkinteger( L, 5 );
-      SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE );
+      SDL_EventState( SDL_EVENT_TEXT_INPUT, 1 );
       SDL_StartTextInput();
       SDL_SetTextInputRect( &input_pos );
    } else {
       SDL_StopTextInput();
-      SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE );
+      SDL_EventState( SDL_EVENT_TEXT_INPUT, SDL_DISABLE );
    }
    return 0;
 }

@@ -123,7 +123,7 @@ const Ship *ship_getW( const char *name )
 const char *ship_existsCase( const char *name )
 {
    for ( int i = 0; i < array_size( ship_stack ); i++ )
-      if ( strcasecmp( name, ship_stack[i].name ) == 0 )
+      if ( SDL_strcasecmp( name, ship_stack[i].name ) == 0 )
          return ship_stack[i].name;
    return NULL;
 }

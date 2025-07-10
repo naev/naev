@@ -131,7 +131,8 @@ static void outfit_modifiers( unsigned int wid )
 static int outfit_events( unsigned int wid, SDL_Event *evt )
 {
    (void)evt; /* For constness warning. */
-   if ( ( evt->type == SDL_KEYDOWN ) || ( evt->type == SDL_KEYUP ) )
+   if ( ( evt->type == SDL_EVENT_KEY_DOWN ) ||
+        ( evt->type == SDL_EVENT_KEY_UP ) )
       outfit_modifiers( wid );
    return 0;
 }

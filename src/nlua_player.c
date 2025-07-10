@@ -1278,19 +1278,19 @@ static int playerL_landWindow( lua_State *L )
                          _( "Must be landed to set the active land window." ) );
 
    str = luaL_checkstring( L, 1 );
-   if ( strcasecmp( str, "main" ) == 0 )
+   if ( SDL_strcasecmp( str, "main" ) == 0 )
       win = LAND_WINDOW_MAIN;
-   else if ( strcasecmp( str, "bar" ) == 0 )
+   else if ( SDL_strcasecmp( str, "bar" ) == 0 )
       win = LAND_WINDOW_BAR;
-   else if ( strcasecmp( str, "missions" ) == 0 )
+   else if ( SDL_strcasecmp( str, "missions" ) == 0 )
       win = LAND_WINDOW_MISSION;
-   else if ( strcasecmp( str, "outfits" ) == 0 )
+   else if ( SDL_strcasecmp( str, "outfits" ) == 0 )
       win = LAND_WINDOW_OUTFITS;
-   else if ( strcasecmp( str, "shipyard" ) == 0 )
+   else if ( SDL_strcasecmp( str, "shipyard" ) == 0 )
       win = LAND_WINDOW_SHIPYARD;
-   else if ( strcasecmp( str, "equipment" ) == 0 )
+   else if ( SDL_strcasecmp( str, "equipment" ) == 0 )
       win = LAND_WINDOW_EQUIPMENT;
-   else if ( strcasecmp( str, "commodity" ) == 0 )
+   else if ( SDL_strcasecmp( str, "commodity" ) == 0 )
       win = LAND_WINDOW_COMMODITY;
    else
       NLUA_INVALID_PARAMETER( L, 1 );

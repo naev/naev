@@ -1013,15 +1013,15 @@ Mission *missions_genList( int faction, const Spob *pnt, const StarSystem *sys,
 static int mission_location( const char *loc )
 {
    if ( loc != NULL ) {
-      if ( strcasecmp( loc, "None" ) == 0 )
+      if ( SDL_strcasecmp( loc, "None" ) == 0 )
          return MIS_AVAIL_NONE;
-      else if ( strcasecmp( loc, "Computer" ) == 0 )
+      else if ( SDL_strcasecmp( loc, "Computer" ) == 0 )
          return MIS_AVAIL_COMPUTER;
-      else if ( strcasecmp( loc, "Bar" ) == 0 )
+      else if ( SDL_strcasecmp( loc, "Bar" ) == 0 )
          return MIS_AVAIL_BAR;
-      else if ( strcasecmp( loc, "Land" ) == 0 )
+      else if ( SDL_strcasecmp( loc, "Land" ) == 0 )
          return MIS_AVAIL_LAND;
-      else if ( strcasecmp( loc, "Enter" ) == 0 )
+      else if ( SDL_strcasecmp( loc, "Enter" ) == 0 )
          return MIS_AVAIL_ENTER;
    }
    return -1;

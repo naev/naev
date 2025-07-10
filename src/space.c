@@ -199,23 +199,23 @@ const char *spob_getServiceName( int service )
  */
 int spob_getService( const char *name )
 {
-   if ( strcasecmp( name, "Land" ) == 0 )
+   if ( SDL_strcasecmp( name, "Land" ) == 0 )
       return SPOB_SERVICE_LAND;
-   else if ( strcasecmp( name, "Inhabited" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Inhabited" ) == 0 )
       return SPOB_SERVICE_INHABITED;
-   else if ( strcasecmp( name, "Refuel" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Refuel" ) == 0 )
       return SPOB_SERVICE_REFUEL;
-   else if ( strcasecmp( name, "Bar" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Bar" ) == 0 )
       return SPOB_SERVICE_BAR;
-   else if ( strcasecmp( name, "Missions" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Missions" ) == 0 )
       return SPOB_SERVICE_MISSIONS;
-   else if ( strcasecmp( name, "Commodity" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Commodity" ) == 0 )
       return SPOB_SERVICE_COMMODITY;
-   else if ( strcasecmp( name, "Outfits" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Outfits" ) == 0 )
       return SPOB_SERVICE_OUTFITS;
-   else if ( strcasecmp( name, "Shipyard" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Shipyard" ) == 0 )
       return SPOB_SERVICE_SHIPYARD;
-   else if ( strcasecmp( name, "Blackmarket" ) == 0 )
+   else if ( SDL_strcasecmp( name, "Blackmarket" ) == 0 )
       return SPOB_SERVICE_BLACKMARKET;
    return -1;
 }
@@ -931,7 +931,7 @@ StarSystem *system_getAll( void )
 const char *system_existsCase( const char *sysname )
 {
    for ( int i = 0; i < array_size( systems_stack ); i++ )
-      if ( strcasecmp( sysname, systems_stack[i].name ) == 0 )
+      if ( SDL_strcasecmp( sysname, systems_stack[i].name ) == 0 )
          return systems_stack[i].name;
    return NULL;
 }
@@ -1194,7 +1194,7 @@ int spob_exists( const char *spobname )
 const char *spob_existsCase( const char *spobname )
 {
    for ( int i = 0; i < array_size( spob_stack ); i++ )
-      if ( strcasecmp( spob_stack[i].name, spobname ) == 0 )
+      if ( SDL_strcasecmp( spob_stack[i].name, spobname ) == 0 )
          return spob_stack[i].name;
    return NULL;
 }

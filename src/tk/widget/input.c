@@ -723,7 +723,7 @@ static void inp_focusGain( Widget *inp )
    input_pos.w = (int)inp->w;
    input_pos.h = (int)inp->h;
 
-   SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE );
+   SDL_EventState( SDL_EVENT_TEXT_INPUT, 1 );
    SDL_StartTextInput();
    SDL_SetTextInputRect( &input_pos );
 }
@@ -737,5 +737,5 @@ static void inp_focusLose( Widget *inp )
 {
    (void)inp;
    SDL_StopTextInput();
-   SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE );
+   SDL_EventState( SDL_EVENT_TEXT_INPUT, SDL_DISABLE );
 }

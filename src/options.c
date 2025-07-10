@@ -1038,7 +1038,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 
    /* See how to handle it. */
    switch ( event->type ) {
-   case SDL_KEYDOWN:
+   case SDL_EVENT_KEY_DOWN:
       key = event->key.keysym.sym;
       /* If control key make player hit twice. */
       test_key_event = ( key == SDLK_NUMLOCKCLEAR ) ||

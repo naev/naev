@@ -230,7 +230,7 @@ static int intro_event_handler( int *stop, double *offset, double *vel )
          continue;
       }
 
-      if ( event.type != SDL_KEYDOWN )
+      if ( event.type != SDL_EVENT_KEY_DOWN )
          continue;
 
       /* Escape skips directly. */

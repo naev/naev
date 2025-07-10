@@ -1571,12 +1571,12 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          ret |= toolkit_mouseEvent( wdw, event );
          break;
 
-      case SDL_KEYDOWN:
-      case SDL_KEYUP:
+      case SDL_EVENT_KEY_DOWN:
+      case SDL_EVENT_KEY_UP:
          ret |= toolkit_keyEvent( wdw, event );
          break;
 
-      case SDL_TEXTINPUT:
+      case SDL_EVENT_TEXT_INPUT:
          ret |= toolkit_textEvent( wdw, event );
          break;
       case SDL_TEXTEDITING:
@@ -1908,9 +1908,9 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event *event )
    rep = event->key.repeat;
 
    /* Hack to simulate key repetition */
-   if ( event->type == SDL_KEYDOWN )
+   if ( event->type == SDL_EVENT_KEY_DOWN )
       toolkit_regKey( key );
-   else if ( event->type == SDL_KEYUP )
+   else if ( event->type == SDL_EVENT_KEY_UP )
       toolkit_unregKey( key );
 
    /* See if window is valid. */
@@ -1921,7 +1921,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event *event )
    wgt = toolkit_getFocus( wdw );
 
    /* We only want keydown from now on. */
-   if ( event->type != SDL_KEYDOWN )
+   if ( event->type != SDL_EVENT_KEY_DOWN )
       return 0;
 
    /* Trigger event function if exists. */

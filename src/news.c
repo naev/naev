@@ -226,7 +226,7 @@ int *generate_news( int faction )
       /* Check to see if matches tag. */
       if ( tags != NULL ) {
          for ( int j = 0; j < array_size( tags ); j++ ) {
-            if ( strcasecmp( tags[j], n->faction ) == 0 ) {
+            if ( SDL_strcasecmp( tags[j], n->faction ) == 0 ) {
                match_tag = 1;
                break;
             }
@@ -234,8 +234,8 @@ int *generate_news( int faction )
       }
 
       /* if article is okay */
-      if ( match_tag ||
-           ( ( fname != NULL ) && ( strcasecmp( n->faction, fname ) == 0 ) ) ) {
+      if ( match_tag || ( ( fname != NULL ) &&
+                          ( SDL_strcasecmp( n->faction, fname ) == 0 ) ) ) {
          if ( n->date != 0 ) {
             char *article_time = ntime_pretty( n->date, 1 );
             p += scnprintf( buf + p, NEWS_MAX_LENGTH - p,

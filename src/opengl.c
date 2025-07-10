@@ -422,9 +422,9 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
  */
 GLenum gl_stringToFilter( const char *s )
 {
-   if ( strcasecmp( s, "linear" ) == 0 )
+   if ( SDL_strcasecmp( s, "linear" ) == 0 )
       return GL_LINEAR;
-   else if ( strcasecmp( s, "nearest" ) == 0 )
+   else if ( SDL_strcasecmp( s, "nearest" ) == 0 )
       return GL_NEAREST;
    WARN( _( "Unknown %s '%s'!" ), "OpenGL Filter", s );
    return 0;
@@ -438,11 +438,11 @@ GLenum gl_stringToFilter( const char *s )
  */
 GLenum gl_stringToClamp( const char *s )
 {
-   if ( strcasecmp( s, "clamp" ) == 0 )
+   if ( SDL_strcasecmp( s, "clamp" ) == 0 )
       return GL_CLAMP_TO_EDGE;
-   else if ( strcasecmp( s, "repeat" ) == 0 )
+   else if ( SDL_strcasecmp( s, "repeat" ) == 0 )
       return GL_REPEAT;
-   else if ( strcasecmp( s, "mirroredrepeat" ) == 0 )
+   else if ( SDL_strcasecmp( s, "mirroredrepeat" ) == 0 )
       return GL_MIRRORED_REPEAT;
    WARN( _( "Unknown %s '%s'!" ), "OpenGL Clamp", s );
    return 0;
@@ -456,15 +456,15 @@ GLenum gl_stringToClamp( const char *s )
  */
 GLenum gl_stringToBlendFunc( const char *s )
 {
-   if ( strcasecmp( s, "add" ) == 0 )
+   if ( SDL_strcasecmp( s, "add" ) == 0 )
       return GL_FUNC_ADD;
-   else if ( strcasecmp( s, "subrtract" ) == 0 )
+   else if ( SDL_strcasecmp( s, "subrtract" ) == 0 )
       return GL_FUNC_SUBTRACT;
-   else if ( strcasecmp( s, "reverse_subtract" ) == 0 )
+   else if ( SDL_strcasecmp( s, "reverse_subtract" ) == 0 )
       return GL_FUNC_REVERSE_SUBTRACT;
-   else if ( strcasecmp( s, "min" ) == 0 )
+   else if ( SDL_strcasecmp( s, "min" ) == 0 )
       return GL_MIN;
-   else if ( strcasecmp( s, "max" ) == 0 )
+   else if ( SDL_strcasecmp( s, "max" ) == 0 )
       return GL_MAX;
    WARN( _( "Unknown %s '%s'!" ), "OpenGL BlendFunc", s );
    return 0;
@@ -478,27 +478,27 @@ GLenum gl_stringToBlendFunc( const char *s )
  */
 GLenum gl_stringToBlendFactor( const char *s )
 {
-   if ( strcasecmp( s, "zero" ) == 0 )
+   if ( SDL_strcasecmp( s, "zero" ) == 0 )
       return GL_ZERO;
-   else if ( strcasecmp( s, "one" ) == 0 )
+   else if ( SDL_strcasecmp( s, "one" ) == 0 )
       return GL_ONE;
-   else if ( strcasecmp( s, "src_color" ) == 0 )
+   else if ( SDL_strcasecmp( s, "src_color" ) == 0 )
       return GL_SRC_COLOR;
-   else if ( strcasecmp( s, "one_minus_src_color" ) == 0 )
+   else if ( SDL_strcasecmp( s, "one_minus_src_color" ) == 0 )
       return GL_ONE_MINUS_SRC_COLOR;
-   else if ( strcasecmp( s, "src_alpha" ) == 0 )
+   else if ( SDL_strcasecmp( s, "src_alpha" ) == 0 )
       return GL_SRC_ALPHA;
-   else if ( strcasecmp( s, "one_minus_src_alpha" ) == 0 )
+   else if ( SDL_strcasecmp( s, "one_minus_src_alpha" ) == 0 )
       return GL_ONE_MINUS_SRC_ALPHA;
-   else if ( strcasecmp( s, "dst_color" ) == 0 )
+   else if ( SDL_strcasecmp( s, "dst_color" ) == 0 )
       return GL_DST_COLOR;
-   else if ( strcasecmp( s, "one_minus_dst_color" ) == 0 )
+   else if ( SDL_strcasecmp( s, "one_minus_dst_color" ) == 0 )
       return GL_ONE_MINUS_DST_COLOR;
-   else if ( strcasecmp( s, "dst_alpha" ) == 0 )
+   else if ( SDL_strcasecmp( s, "dst_alpha" ) == 0 )
       return GL_DST_ALPHA;
-   else if ( strcasecmp( s, "one_minus_dst_alpha" ) == 0 )
+   else if ( SDL_strcasecmp( s, "one_minus_dst_alpha" ) == 0 )
       return GL_ONE_MINUS_DST_ALPHA;
-   else if ( strcasecmp( s, "src_alpha_saturate" ) == 0 )
+   else if ( SDL_strcasecmp( s, "src_alpha_saturate" ) == 0 )
       return GL_SRC_ALPHA_SATURATE;
    WARN( _( "Unknown %s '%s'!" ), "OpenGL BlendFactor", s );
    return 0;

@@ -380,13 +380,13 @@ void input_init( void )
    SDL_SetEventEnabled( SDL_SYSWMEVENT, SDL_DISABLE );
 
    /* Keyboard. */
-   SDL_SetEventEnabled( SDL_KEYDOWN, SDL_ENABLE );
-   SDL_SetEventEnabled( SDL_KEYUP, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_KEY_DOWN, 1 );
+   SDL_SetEventEnabled( SDL_EVENT_KEY_UP, 1 );
 
    /* Mice. */
-   SDL_SetEventEnabled( SDL_EVENT_MOUSE_MOTION, SDL_ENABLE );
-   SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_ENABLE );
-   SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_UP, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_MOTION, 1 );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_DOWN, 1 );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_BUTTON_UP, 1 );
 
    /* Joystick, enabled in joystick.c if needed. */
    SDL_SetEventEnabled( SDL_JOYAXISMOTION, SDL_DISABLE );
@@ -395,17 +395,17 @@ void input_init( void )
    SDL_SetEventEnabled( SDL_JOYBUTTONUP, SDL_DISABLE );
 
    /* Quit. */
-   SDL_SetEventEnabled( SDL_QUIT, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_QUIT, 1 );
 
    /* Window. */
-   SDL_SetEventEnabled( SDL_WINDOWEVENT, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_WINDOWEVENT, 1 );
 
    /* Keyboard. */
-   SDL_SetEventEnabled( SDL_TEXTINPUT,
+   SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT,
                         SDL_DISABLE ); /* Enabled on a per-widget basis. */
 
    /* Mouse. */
-   SDL_SetEventEnabled( SDL_EVENT_MOUSE_WHEEL, SDL_ENABLE );
+   SDL_SetEventEnabled( SDL_EVENT_MOUSE_WHEEL, 1 );
 
    /* Create safe null keybinding for each. */
    for ( int i = 0; i < KST_END; i++ ) {
@@ -458,7 +458,7 @@ void input_toggleEnable( KeySemanticType key, int enable )
  */
 void input_mouseShow( void )
 {
-   SDL_ShowCursor( SDL_ENABLE );
+   SDL_ShowCursor();
    input_mouseCounter++;
 }
 
@@ -479,7 +479,7 @@ void input_mouseHide( void )
  */
 int input_mouseIsShown( void )
 {
-   return SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE;
+   return SDL_CursorVisible();
 }
 
 /**
@@ -751,7 +751,7 @@ void input_update( double dt )
 
       /* Hide if necessary. */
       if ( ( input_mouseTimer < 0. ) && ( input_mouseCounter <= 0 ) )
-         SDL_ShowCursor( SDL_DISABLE );
+         SDL_HideCursor();
    }
 
    /* Key repeat if applicable. */
@@ -1844,14 +1844,14 @@ void input_handle( SDL_Event *event )
         ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN ) ||
         ( event->type == SDL_EVENT_MOUSE_BUTTON_UP ) ) {
       input_mouseTimer = conf.mouse_hide;
-      SDL_ShowCursor( SDL_ENABLE );
+      SDL_ShowCursor( 1 );
       ismouse = 1;
    } else
       ismouse = 0;
 
    /* Special case paste. */
-   if ( event->type == SDL_KEYDOWN && SDL_HasClipboardText() &&
-        SDL_SetEventEnabled( SDL_TEXTINPUT, SDL_QUERY ) == SDL_ENABLE ) {
+   if ( event->type == SDL_EVENT_KEY_DOWN && SDL_HasClipboardText() &&
+        SDL_SetEventEnabled( SDL_EVENT_TEXT_INPUT, SDL_QUERY ) == 1 ) {
       SDL_Keymod mod = input_translateMod( event->key.keysym.mod );
       if ( ( input_paste->key == event->key.keysym.sym ) &&
            ( input_paste->mod & mod ) ) {
@@ -1860,7 +1860,7 @@ void input_handle( SDL_Event *event )
 #if 0
          SDL_Event   evt;
          const char *txt = SDL_GetClipboardText();
-         evt.type        = SDL_TEXTINPUT;
+         evt.type        = SDL_EVENT_TEXT_INPUT;
          size_t   i      = 0;
          uint32_t ch;
          Uint32   timestamp = SDL_GetTicks();
@@ -1905,13 +1905,13 @@ void input_handle( SDL_Event *event )
       input_joyhatevent( event->jhat.value, event->jhat.hat );
       break;
 
-   case SDL_KEYDOWN:
+   case SDL_EVENT_KEY_DOWN:
       if ( event->key.repeat != 0 )
          return;
       input_keyevent( KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod,
                       0 );
       break;
-   case SDL_KEYUP:
+   case SDL_EVENT_KEY_UP:
       if ( event->key.repeat != 0 )
          return;
       input_keyevent( KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod,

@@ -60,10 +60,11 @@ void gettext_init( void )
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
    /* Try to get info from SDL. */
-   SDL_Locale *locales = SDL_GetPreferredLocales();
-   if ( locales != NULL ) {
-      if ( locales[0].language != NULL ) {
-         gettext_systemLanguage = strdup( locales[0].language );
+   int          count;
+   SDL_Locale **locales = SDL_GetPreferredLocales( &count );
+   if ( count > 0 ) {
+      if ( locales[0]->language != NULL ) {
+         gettext_systemLanguage = strdup( locales[0]->language );
          SDL_free( locales );
          return;
       }

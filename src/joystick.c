@@ -160,7 +160,7 @@ int joystick_init( void )
 #endif /* DEBUGGING */
 
    /* enables joystick events */
-   SDL_JoystickEventState( SDL_ENABLE );
+   SDL_JoystickEventState( 1 );
 
    return 0;
 }

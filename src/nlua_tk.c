@@ -667,14 +667,14 @@ static int cust_event( unsigned int wid, SDL_Event *event, void *data )
    case SDL_EVENT_MOUSE_WHEEL:
       return cust_mouse( 4, -1, event->wheel.x, event->wheel.y, cf );
 
-   case SDL_KEYDOWN:
+   case SDL_EVENT_KEY_DOWN:
       return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1,
                        event->key.repeat, cf );
-   case SDL_KEYUP:
+   case SDL_EVENT_KEY_UP:
       return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0,
                        event->key.repeat, cf );
 
-   case SDL_TEXTINPUT:
+   case SDL_EVENT_TEXT_INPUT:
       return cust_text( event->text.text, cf );
 
    case SDL_WINDOWEVENT:

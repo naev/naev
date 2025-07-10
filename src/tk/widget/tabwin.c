@@ -184,7 +184,7 @@ static int tab_raw( Widget *tab, SDL_Event *event )
    ret = 0;
    if ( event->type == SDL_EVENT_MOUSE_BUTTON_DOWN )
       ret = tab_mouse( tab, event );
-   else if ( event->type == SDL_KEYDOWN )
+   else if ( event->type == SDL_EVENT_KEY_DOWN )
       ret = tab_key( tab, event );
 
    /* Took the event. */

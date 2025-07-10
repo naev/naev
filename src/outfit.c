@@ -277,7 +277,7 @@ Outfit *outfit_getAll_rust( void )
 const char *outfit_existsCase( const char *name )
 {
    for ( int i = 0; i < array_size( outfit_stack ); i++ )
-      if ( strcasecmp( name, outfit_stack[i].name ) == 0 )
+      if ( SDL_strcasecmp( name, outfit_stack[i].name ) == 0 )
          return outfit_stack[i].name;
    return NULL;
 }
@@ -569,11 +569,11 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
       return OUTFIT_SLOT_SIZE_NA;
    }
 
-   if ( strcasecmp( s, "Large" ) == 0 )
+   if ( SDL_strcasecmp( s, "Large" ) == 0 )
       return OUTFIT_SLOT_SIZE_HEAVY;
-   else if ( strcasecmp( s, "Medium" ) == 0 )
+   else if ( SDL_strcasecmp( s, "Medium" ) == 0 )
       return OUTFIT_SLOT_SIZE_MEDIUM;
-   else if ( strcasecmp( s, "Small" ) == 0 )
+   else if ( SDL_strcasecmp( s, "Small" ) == 0 )
       return OUTFIT_SLOT_SIZE_LIGHT;
 
    WARN( _( "'%s' does not match any outfit slot sizes." ), s );
@@ -1823,7 +1823,7 @@ void outfit_freeSlot( OutfitSlot *s )
 }
 
 #define O_CMP( s, t )                                                          \
-   if ( strcasecmp( buf, ( s ) ) == 0 )                                        \
+   if ( SDL_strcasecmp( buf, ( s ) ) == 0 )                                    \
    return t /**< Define to help with outfit_strToOutfitType. */
 /**
  * @brief Gets the outfit type from a human readable string.
