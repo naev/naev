@@ -89,7 +89,7 @@ if prv is not None:
 from graphmod import sys_pos as V, sys_jmp as E
 from virtual_edges import add_virtual_edges
 
-add_virtual_edges(E, virtual_edges):
+add_virtual_edges(E, virtual_edges)
 
 
 for v in V:
