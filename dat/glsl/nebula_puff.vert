@@ -1,5 +1,9 @@
 uniform mat4 projection;
 
+#ifndef PUFF_BUFFER
+#  define PUFF_BUFFER 300
+#endif
+
 layout(std140) uniform PuffData {
    vec2 screen; // Actually half-screen
    vec3 offset;

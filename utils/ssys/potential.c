@@ -28,7 +28,7 @@ const float _rad = 30.0f;
 // See HERE for their computation
 float rad, mul_ct, add_ct, inv_fact;
 
-static inline float _pot(float xs, float ys, float x, float y)
+static inline float grav_pot(float xs, float ys, float x, float y)
 {
    const float dx = xs - x;
    const float dy = ys - y;
@@ -40,9 +40,9 @@ static inline float _pot(float xs, float ys, float x, float y)
       return -1.0f / d;
 }
 
-// The derivative of the previous one.
+// The derivative of the previous ones.
 static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
-                           float y, float m)
+                           float y, float m, int alt)
 {
    float dx = xs - x;
    float dy = ys - y;
@@ -55,8 +55,57 @@ static inline void accum_f(float *vx, float *vy, float xs, float ys, float x,
    d *= inv_fact;
    if (d < rad)
       f = 2.0f * d * mul_ct;
-   else
+   else {
       f = 1.0f / d * d;
+      if (alt == 1)
+         f *= rad / d;
+      else if (alt == 2)
+         f *= sqrt(rad / d);
+   }
+   if (alt == 1)
+      f *= 8.0;
+   else if (alt == 2)
+      f *= 4.0;
+
+   f *= m;
+   *vx += f * dx;
+   *vy += f * dy;
+}
+
+#define F_ATT 0.04f
+#define A_ATT 0.00f
+static inline float wav_pot(float xs, float ys, float x, float y)
+{
+   const float dx = xs - x;
+   const float dy = ys - y;
+   const float d  = sqrt(dx * dx + dy * dy) * inv_fact;
+
+   return cos(d * M_PI / (1.0f + F_ATT * d)) / (1.0f + A_ATT * d) - 1.0f;
+}
+
+// The derivative of the previous ones.
+static inline void wav_f(float *vx, float *vy, float xs, float ys, float x,
+                         float y, float m)
+{
+   float dx = xs - x;
+   float dy = ys - y;
+   float d  = sqrt(dx * dx + dy * dy);
+   float f;
+
+   if (dx == 0.0f && dy == 0.0f)
+      return;
+
+   dx /= d;
+   dy /= d;
+
+   d *= inv_fact;
+   const float inside = d * M_PI / (1.0f + F_ATT * d);
+   const float den    = (1.0 + A_ATT * d) * (1.0 + A_ATT * d);
+   f = M_PI / (1.0f + F_ATT * d) / (1.0f + F_ATT * d) * (-sin(inside)) *
+          (1.0f + A_ATT) -
+       F_ATT * cos(inside);
+   f /= den;
+   f *= 10.0f;
 
    f *= m;
    *vx += f * dx;
@@ -89,7 +138,23 @@ void output_map(FILE *fp, float *map, int w, int h, float fact, float ct)
    free(line);
 }
 
-void gen_potential(float *lst, size_t nb, float scale)
+enum e_pot { NONE, GRAVITY, WAVES };
+
+static float potential_at_ij(float *lst, size_t nb, enum e_pot p, int i, int j)
+{
+   if (p == GRAVITY) {
+      float accu = 0.0f;
+      for (size_t n = 0; n < nb; n++)
+         accu += lst[4 * n + 2] *
+                 grav_pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
+      return accu;
+   } else if (p == WAVES)
+      return wav_pot(lst[0], lst[1], (float) j, (float) i);
+   else
+      return 0.0f;
+}
+
+void gen_potential(float *lst, size_t nb, enum e_pot typ, float scale)
 {
    static float *maps[THREADS - 1];
    static int   *percent;
@@ -127,7 +192,7 @@ void gen_potential(float *lst, size_t nb, float scale)
    const int h    = maxi - mini + 1;
 
    if (isatty(1)) {
-      fprintf(stderr, "The (binary) pgm should be sent to a terminal.");
+      fprintf(stderr, "The (binary) pgm should not be sent to a terminal.\n");
       output_map_header(stdout, w, h);
       fprintf(stderr, "[...] (truncated here)\n");
       return;
@@ -162,13 +227,9 @@ void gen_potential(float *lst, size_t nb, float scale)
                fwrite(buf, sizeof(char), count, stderr);
             }
 
-            for (int j = minj; j <= maxj; j++) {
-               float f = 0.0f;
-               for (n = 0; n < nb; n++)
-                  f += lst[4 * n + 2] *
-                       _pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
-               maps[num][(i - FROM(num)) * w + (j - minj)] = f;
-            }
+            for (int j = minj; j <= maxj; j++)
+               maps[num][(i - FROM(num)) * w + (j - minj)] =
+                  potential_at_ij(lst, nb, typ, i, j);
          }
          msync(maps[num], (FROM(num + 1) - FROM(num)) * w * sizeof(float),
                MS_SYNC);
@@ -187,13 +248,8 @@ void gen_potential(float *lst, size_t nb, float scale)
          fwrite(buf, sizeof(char), count, stderr);
       }
 
-      for (int j = minj; j <= maxj; j++) {
-         float acc = 0.0f;
-         for (n = 0; n < nb; n++)
-            acc += lst[4 * n + 2] *
-                   _pot(lst[4 * n], lst[4 * n + 1], (float) j, (float) i);
-         map[(i - mini) * w + (j - minj)] = acc;
-      }
+      for (int j = minj; j <= maxj; j++)
+         map[(i - mini) * w + (j - minj)] = potential_at_ij(lst, nb, typ, i, j);
    }
 
    while (wait(NULL) != -1)
@@ -214,9 +270,10 @@ void gen_potential(float *lst, size_t nb, float scale)
 #undef FROM
 }
 
-void apply_gravity(const float *lst, const size_t nb, const char **nam)
+void apply_potential(const float *lst, size_t nb, enum e_pot t,
+                     const char **nam, int alt)
 {
-   char buff[512];
+   char buff[1024];
    int  num;
 
    for (num = 0; num < THREADS - 1; num++)
@@ -229,52 +286,77 @@ void apply_gravity(const float *lst, const size_t nb, const char **nam)
       float  x = lst[4 * i + 0], y = lst[4 * i + 1];
       float  dx = 0.0f, dy = 0.0f;
       size_t n;
-      for (size_t j = 0; j < nb; j++)
-         if (j != i)
-            accum_f(&dx, &dy, lst[4 * j + 0], lst[4 * j + 1], x, y,
-                    lst[4 * j + 2]);
+
+      if (t == GRAVITY) {
+         for (size_t j = 0; j < nb; j++)
+            if (j != i)
+               accum_f(&dx, &dy, lst[4 * j + 0], lst[4 * j + 1], x, y,
+                       lst[4 * j + 2], alt);
+      } else if (t == WAVES)
+         wav_f(&dx, &dy, lst[0], lst[1], x, y, lst[2]);
+
       dx *= GRAV_FACT;
       dy *= GRAV_FACT;
-      n = snprintf(buff, 511, "%s %f %f\n", nam[i], x + dx, y + dy);
+      n = snprintf(buff, 1023, "%s %f %f %s\n", nam[2 * i], x + dx, y + dy,
+                   nam[2 * i + 1]);
       fwrite(buff, sizeof(char), n, stdout);
       fflush(stdout);
    }
 
    if (num < THREADS - 1)
       exit(EXIT_SUCCESS);
+   while (wait(NULL) != -1)
+      ;
 }
 
-int do_it(const float scale, const bool apply)
+int do_it(const enum e_pot type, const float scale, const bool apply,
+          const int alt)
 {
-   char   buf[256];
    float *lst = NULL;
    char **nam = NULL;
    size_t nb  = 0;
 
    char  *line = NULL;
-   size_t n    = 0;
-   while (getline(&line, &n, stdin) != -1) {
+   size_t _n   = 0;
+   int    len1, len2, n;
+   while ((n = getline(&line, &_n, stdin)) != -1) {
+      if (line[n - 1] == '\n')
+         line[n - 1] = '\0';
       if ((nb & (nb + 1)) == 0) {
          lst = realloc(lst, ((nb << 1) | 1) * sizeof(float) * 4);
          if (apply)
-            nam = realloc(nam, ((nb << 1) | 1) * sizeof(char *));
+            nam = realloc(nam, ((nb << 1) | 1) * 2 * sizeof(char *));
       }
 
       float *const dst = lst + 4 * nb;
-      if (3 == sscanf(line, "%255s %f %f", buf, dst, dst + 1)) {
-         if (apply)
-            nam[nb] = strdup(buf);
+      if (2 == sscanf(line, "%*s%n %f %f %n", &len1, dst, dst + 1, &len2)) {
+         if (apply) {
+            nam[2 * nb]     = strndup(line, len1);
+            nam[2 * nb + 1] = strdup(line + len2);
+         }
          dst[2] = 1.0;
          for (int i = 0; weights[i].nam; i++)
-            if (!strcmp(weights[i].nam, buf))
+            if (!strncmp(weights[i].nam, line, len1) && !weights[i].nam[len1])
                dst[2] = weights[i].w;
+         if (type == WAVES && !strncmp(line, "sol", len1) &&
+             len1 == 3) { // sol first!
+            if (apply)
+               for (int k = 0; k < 2; k++) {
+                  char *const sswp = nam[2 * nb + k];
+                  nam[2 * nb + k]  = nam[k];
+                  nam[k]           = sswp;
+               }
+            for (int k = 0; k < 3; k++) {
+               const float swp = lst[k];
+               lst[k]          = dst[k];
+               dst[k]          = swp;
+            }
+         }
          nb++;
-      } else if (line[0] != '\0' && line[0] != '\n') {
-         const int n = strlen(line);
-         if (line[n - 1] == '\n')
-            line[n - 1] = '\0';
-         fprintf(stderr, "Ignored line : \"%s\"\n", line);
-      }
+      } else if (*line == '\0')
+         break;
+      else if (apply)
+         puts(line);
    }
    // fprintf(stderr,"[%zd systems]\n",nb);
    free(line);
@@ -286,35 +368,57 @@ int do_it(const float scale, const bool apply)
    inv_fact = 1.0f / fact;
 
    if (apply) {
-      apply_gravity(lst, nb, (const char **) nam);
-      for (size_t i = 0; i < nb; i++)
+      fflush(stdout);
+      apply_potential(lst, nb, type, (const char **) nam, alt);
+      puts("");
+      for (size_t i = 0; i < 2 * nb; i++)
          free(nam[i]);
       free(nam);
    } else
-      gen_potential(lst, nb, scale);
+      gen_potential(lst, nb, type, scale);
    free(lst);
    return EXIT_SUCCESS;
 }
 
 int usage(char *nam, int ret)
 {
-   fprintf(stderr, "Usage: %s [ (-s <scale>) | -a ]\n", basename(nam));
-   fprintf(stderr, "  Reads a set of node pos in input from standard input.\n");
-   fprintf(stderr, "  If -s is set, applies the scaling factor <scale> to "
-                   "input, e.g. 0.25\n");
+   fprintf(stderr, "Usage: %s  [ -s<scale> | -a ]  ( -E(1|2) | -g | -w )\n",
+           basename(nam));
    fprintf(
       stderr,
-      "  If -a is set, applies resulting gravity and outputs the result.\n");
-   fprintf(stderr, "  If not, outputs a pgm of the gravity potential.\n");
-   fprintf(stderr, "  All outputs are sent to standard output.\n");
+      "  Reads a set of node pos in input from standard input.\n"
+      "\n"
+      "  If -a is set, applies resulting potential and outputs the result.\n"
+      "  If not, outputs a pgm of the potential.\n"
+      "  All outputs are sent to standard output.\n"
+      "\n"
+      "  If -s is set, applies the scaling factor <scale> to "
+      "input, e.g. 0.25\n"
+      "\n"
+      "  If -E<n> is set, uses experimental alternate gravity. DOES ONLY WORK "
+      "with -a. n is expected to be 1 or 2.\n"
+      "  If -g is set, generates the gravity potential.\n"
+      "  If -w is set, generates the waves potential.\n"
+      "\n");
    return ret;
 }
 
 int main(int argc, char **argv)
 {
-   char *nam   = argv[0];
-   bool  apply = false;
-   float scale = 1.0f;
+   enum e_pot type  = NONE;
+   char      *nam   = argv[0];
+   int        alt   = false;
+   bool       apply = false;
+   float      scale = 1.0f;
+
+   if (argc > 1 && !strncmp(argv[1], "-s", 2)) {
+      if (argc < 3 || sscanf(argv[1], "-s%f", &scale) != 1) {
+         fprintf(stderr, "float expected, found \"%s\".\n", argv[1] + 2);
+         return usage(nam, EXIT_FAILURE);
+      }
+      argv++;
+      argc--;
+   }
 
    if (argc > 1 && !strcmp(argv[1], "-a")) {
       apply = true;
@@ -322,15 +426,29 @@ int main(int argc, char **argv)
       argc--;
    }
 
-   if (argc > 1 && !strcmp(argv[1], "-s")) {
-      if (apply)
+   if (argc > 1 && !strncmp(argv[1], "-E", 2)) {
+      if (!apply)
          return usage(nam, EXIT_FAILURE);
-      else if (argc < 3 || sscanf(argv[2], "%f", &scale) != 1) {
-         fprintf(stderr, "float expected, found \"%s\".\n", argv[2]);
+      type = GRAVITY;
+      alt  = argv[1][2] - '0';
+      argv++;
+      argc--;
+   }
+
+   if (argc > 1 && !strcmp(argv[1], "-g")) {
+      type = GRAVITY;
+      argv++;
+      argc--;
+   }
+
+   if (argc > 1 && !strcmp(argv[1], "-w")) {
+      if (type == GRAVITY) {
+         fprintf(stderr, "Warning: incompatible -g and -w.\n");
          return usage(nam, EXIT_FAILURE);
-      }
-      argv += 2;
-      argc -= 2;
+      } else
+         type = WAVES;
+      argv++;
+      argc--;
    }
 
    if (argc > 1)
@@ -339,5 +457,5 @@ int main(int argc, char **argv)
       else
          return usage(nam, EXIT_FAILURE);
    else
-      return do_it(scale, apply);
+      return do_it(type, scale, apply, alt);
 }

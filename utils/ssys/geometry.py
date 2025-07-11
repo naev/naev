@@ -94,7 +94,7 @@ class _transf:
       elif self.vec < -1.0:
          self.vec = -1.0
       if v1*v2 < 0:
-         self.vec = -self.vec
+         self.vec  = -self.vec
 
    def __str__( self ):
       return str({'fact': self.fact, 'vec': self.vec})
@@ -152,10 +152,16 @@ class line:
          if (cl := (other.center + u)) not in other:
             return []
          else:
-            v = u.orth().normalize() * sqrt(other.radius*other.radius - u*u)
-            if v.size() < EPS:
+            d = sqrt(other.radius*other.radius - u*u)
+            if d < EPS:
                return [cl]
             else:
+               # both might be close to null vector
+               if self.v.size() > u.size():
+                  v = self.v
+               else:
+                  v = u.orth()
+               v = v.normalize(d)
                return [cl - v, cl + v]
       else:
          return NotImplemented
@@ -275,7 +281,7 @@ def bounding_circle( L ):
                break
    return best
 
-def acute_T(A, B, C):
+def acute_T( A, B, C ):
    return (B-A)*(B-C)>=0.0-EPS and (C-B)*(C-A)>=0.0-EPS and (A-C)*(A-B)>=0.0-EPS
 
 def interstices( edges, vertices = [], povfp = None ):
@@ -422,6 +428,14 @@ class bb:
 # example
 
 if __name__ == '__main__':
+   from sys import argv, exit
+   if '-h' in argv[1:] or '--help' in argv[1:]:
+      print(
+         'usage:  '+ argv[0]+'\n'
+         '  Use povray to generate a test figure.'
+      )
+      exit(0)
+
    from tempfile import NamedTemporaryFile
    from subprocess import run
    from random import random
@@ -449,23 +463,23 @@ if __name__ == '__main__':
    povfp.write(pov_head)
 
    point_it = lambda P: '<'+str(P[0])+','+str(P[1])+',0>'
-   def print_point(fp, P, c = 'White'):
+   def print_point( fp, P, c = 'White' ):
       fp.write('sphere{ ' + point_it(P) + ', 0.002 pigment{color ' + c + '}}\n')
 
-   def print_seg(fp, A, B, c = 'White'):
+   def print_seg( fp, A, B, c = 'White' ):
       fp.write('cylinder{ ' + point_it(A) + ','+ point_it(B))
       fp.write( ', 0.002 pigment{color ' + c + '}}\n')
 
-   def print_cross(fp, A, c = 'White', alt_cross = False):
+   def print_cross( fp, A, c = 'White', alt_cross = False ):
       u = (0.016 * vec(1,0)) if alt_cross else (0.008 * vec(1,1))
       print_seg(fp, A - u, A + u, c)
       print_seg(fp, A - u.orth(), A + u.orth(), c)
 
-   def print_poly(fp, L, c = 'White'):
+   def print_poly( fp, L, c = 'White' ):
       [print_seg(fp, *t, c) for t in zip(L,L[1:]+L[:1])]
       [print_point(povfp, P) for P in L]
 
-   def print_circle(fp, C, c = 'White', alt_cross = False):
+   def print_circle( fp, C, c = 'White', alt_cross = False ):
       print_cross(fp, C.center, c, alt_cross)
       fp.write('torus{ ' + str(C.radius) + ', 0.002 ')
       fp.write('rotate 90*x ' + 'translate '+point_it(C.center))

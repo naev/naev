@@ -12,7 +12,7 @@ def parse_includes( linesin ):
         lines[i] = lines[i].replace("%d","0");
         lines[i] = lines[i].replace("%f","0.0");
         lines[i] = lines[i].replace("%s","A");
-        m = re.match('#include\s+"([^"]+)"', lines[i].strip())
+        m = re.match(r'#include\s+"([^"]+)"', lines[i].strip())
         if m:
             with open("dat/glsl/" + m.group(1)) as f:
                 contents = f.read()
@@ -32,11 +32,11 @@ def preprocess( shader, shadertype ):
     for l in lines:
         if not islove and not ispp:
             # Pretty bad detection, but no false positives... for now
-            if shadertype=="frag" and re.match("vec4 effect\(\s*vec4", l.strip()):
+            if shadertype=="frag" and re.match(r"vec4 effect\(\s*vec4", l.strip()):
                 islove = True
-            elif shadertype=="vert" and re.match("vec4 position\(\s*mat4", l.strip()):
+            elif shadertype=="vert" and re.match(r"vec4 position\(\s*mat4", l.strip()):
                 islove = True
-            elif shadertype=="frag" and re.match("vec4 effect\(\s*sampler2D", l.strip()):
+            elif shadertype=="frag" and re.match(r"vec4 effect\(\s*sampler2D", l.strip()):
                 ispp = True
 
     # Love shaders need some additional voodoo
