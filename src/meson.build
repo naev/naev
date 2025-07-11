@@ -8,6 +8,7 @@ subdir('log')
 subdir('renderer')
 subdir('toolkit')
 source_rust = files(
+   'core/src/lib.rs',
    'core/src/ntime.rs',
    'core/src/nxml.rs',
    'core/src/start.rs',

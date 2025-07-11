@@ -1,6 +1,0 @@
-[wrap-git]
-url = https://github.com/ianlancetaylor/libbacktrace.git
-revision = 0034e33946824057b48c5e686a3aefc761b37384
-depth = 1
-
-patch_directory = libbacktrace

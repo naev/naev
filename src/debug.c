@@ -13,8 +13,6 @@
 #include <signal.h>
 
 #if DEBUGGING
-#include <backtrace.h>
-
 #ifndef __USE_GNU
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
@@ -23,8 +21,6 @@
 #include <dlfcn.h>
 #endif /* __USE_GNU */
 #endif /* DEBUGGING */
-
-#include "naev.h"
 /** @endcond */
 
 #include "debug.h"
@@ -32,8 +28,7 @@
 #include "log.h"
 
 #if DEBUGGING
-static struct backtrace_state *debug_bs = NULL;
-DebugFlags                     debug_flags;
+DebugFlags debug_flags;
 
 /**
  * @brief Gets the string related to the signal code.
@@ -126,89 +121,6 @@ const char *debug_sigCodeToStr( int sig, int sig_code )
 #endif /* DEBUGGING */
 
 #if DEBUGGING
-typedef struct {
-   void       *data;
-   uintptr_t   pc;
-   const char *file;
-   int         line;
-   const char *func;
-} FrameInfo;
-
-/**
- * @brief Callback for handling one frame of a backtrace, after function lookup
- * has succeeded (or it failed but we supplied null data).
- */
-static void debug_backtrace_syminfo_callback( void *data, uintptr_t pc,
-                                              const char *symname,
-                                              uintptr_t   symval,
-                                              uintptr_t   symsize )
-{
-   (void)symsize;
-   FrameInfo *fi   = data;
-   Dl_info    addr = { 0 };
-   dladdr( (void *)pc, &addr );
-   uintptr_t offset = pc - ( symval ? symval : (uintptr_t)addr.dli_fbase );
-   pc -= (uintptr_t)addr.dli_fbase;
-   symname        = symname ? symname : "??";
-   fi->func       = fi->func ? fi->func : symname;
-   fi->file       = fi->file ? fi->file : "??";
-   addr.dli_fname = addr.dli_fname ? addr.dli_fname : "??";
-   int width = snprintf( NULL, 0, "%s at %s:%u", fi->func, fi->file, fi->line );
-   int pad   = MAX( 0, 80 - width );
-   LOGERR( "[%#14" PRIxPTR "] %s at %s:%u %*s| %s(%s+%#" PRIxPTR ")", pc,
-           fi->func, fi->file, fi->line, pad, "", addr.dli_fname,
-           symval ? symname : "", offset );
-}
-
-/**
- * @brief Callback for handling one frame of a backtrace, after function lookup
- * has failed.
- */
-static void debug_backtrace_error_callback( void *data, const char *msg,
-                                            int errnum )
-{
-   FrameInfo *fi = data;
-   (void)msg;
-   (void)errnum;
-   debug_backtrace_syminfo_callback( data, fi->pc, "??", 0, 0 );
-}
-
-/**
- * @brief Callback for handling one frame of a backtrace.
- */
-static int debug_backtrace_full_callback( void *data, uintptr_t pc,
-                                          const char *file, int line,
-                                          const char *func )
-{
-   FrameInfo fi = {
-      .data = data, .pc = pc, .file = file, .line = line, .func = func };
-   if ( pc != 0 && ~pc != 0 )
-      backtrace_syminfo( debug_bs, pc, debug_backtrace_syminfo_callback,
-                         debug_backtrace_error_callback, &fi );
-
-   return 0;
-}
-
-/**
- * @brief Callback for handling ignoring an error in libbacktrace. :-)
- */
-static void debug_backtrace_full_error_callback( void *data, const char *msg,
-                                                 int errnum )
-{
-   (void)data;
-   (void)msg;
-   (void)errnum;
-}
-
-/**
- * @brief Logs a backtrace to stderr.
- */
-void debug_logBacktrace( void )
-{
-   backtrace_full( debug_bs, 1, debug_backtrace_full_callback,
-                   debug_backtrace_full_error_callback, NULL );
-}
-
 #if HAVE_SIGACTION
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 #else  /* HAVE_SIGACTION */
@@ -263,16 +175,6 @@ static void debug_sigHandlerWarn( int sig )
 void debug_sigInit( void )
 {
 #if DEBUGGING
-   Dl_info addr = { 0 };
-#if SDL_PLATFORM_WIN32
-   dladdr( debug_sigInit,
-           &addr ); /* Get the filename using dlfcn-win32; libbacktrace fucks
-                       this up (as of 2022-08-18). */
-#endif              /* SDL_PLATFORM_WIN32 */
-
-   debug_bs =
-      backtrace_create_state( addr.dli_fname, /*threaded:*/ 1, NULL, NULL );
-
    /* Set up handler. */
 #if HAVE_SIGACTION
    const char      *str = _( "Unable to set up %s signal handler." );

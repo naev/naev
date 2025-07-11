@@ -228,14 +228,6 @@ int main (void) { return 0; }''')
 
    ### Soft deps (required: false)
 
-   if get_option('debug')
-      libbacktrace = cc.find_library('backtrace', has_headers: 'backtrace.h', required: false)
-      if not libbacktrace.found() or 'backtrace' in forced_fallbacks or 'libbacktrace' in forced_fallbacks or get_option('wrap_mode') == 'forcefallback'
-         libbacktrace = dependency('backtrace', fallback: ['libbacktrace', 'libbacktrace_dep'], required: true)
-      endif
-      naev_deps += libbacktrace
-   endif
-
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
