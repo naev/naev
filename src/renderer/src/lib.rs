@@ -161,6 +161,12 @@ impl Message {
             },
             Self::DeleteTexture(tex) => unsafe {
                 ctx.gl.delete_texture(tex);
+                // Some simple garbage collection for when there are too many dead references
+                if texture::GC_COUNTER.fetch_add(1, Ordering::SeqCst) > texture::GC_THRESHOLD {
+                    let data = &mut texture::TEXTURE_DATA.lock().unwrap();
+                    data.retain(|x| x.strong_count() > 0);
+                    texture::GC_COUNTER.store(0, Ordering::Relaxed);
+                }
             },
             Self::DeleteSampler(smp) => unsafe {
                 ctx.gl.delete_sampler(smp);

@@ -8,13 +8,18 @@ use std::boxed::Box;
 use std::ffi::{CStr, CString};
 use std::num::NonZero;
 use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
-use std::sync::{Arc, LazyLock, Mutex, MutexGuard, Weak};
+use std::sync::{atomic::AtomicU32, Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::buffer;
 use crate::{Context, ContextWrapper, TextureScaleUniform, TextureUniform, Uniform};
 
-static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
+/// All the shared texture data to look up
+pub static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
     LazyLock::new(|| Mutex::new(Default::default()));
+/// Counter for how many textures were destroyed
+pub static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
+/// Number of destroyed textures to start garbage collecting the cache
+pub const GC_THRESHOLD: u32 = 128;
 
 // Temporary hack until image-rs significantly increases performance...
 pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImage> {
@@ -98,7 +103,6 @@ impl Drop for TextureData {
             .lock()
             .unwrap()
             .push(crate::Message::DeleteTexture(self.texture));
-        // TODO remove from TEXTURE_DATA ideally...
     }
 }
 
