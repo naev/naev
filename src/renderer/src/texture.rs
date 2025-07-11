@@ -88,6 +88,14 @@ impl TextureFormat {
     }
 }
 
+struct TextureSearch<'a> {
+    name: &'a str,
+    srgb: bool,
+    flipv: bool,
+    mipmaps: bool,
+    sdf: bool,
+}
+
 #[derive(Debug)]
 pub struct TextureData {
     /// Name of the texture
@@ -99,13 +107,15 @@ pub struct TextureData {
     /// Height of the texture
     pub h: usize,
     /// Whether or not the image is in SRGB format
-    is_srgb: bool,
+    srgb: bool,
     /// Whether or not the image is a Signed Distance Function
-    is_sdf: bool,
+    sdf: bool,
     /// Whether or not the texture has mipmaps
     mipmaps: bool,
     /// Maximum value for Signed Distance Function images
     vmax: f32,
+    /// Whether or not it was flipped
+    flipv: bool,
 }
 impl Drop for TextureData {
     fn drop(&mut self) {
@@ -147,10 +157,11 @@ impl TextureData {
             w,
             h,
             texture,
-            is_srgb: format.is_srgb(),
-            is_sdf: false,
+            srgb: format.is_srgb(),
+            sdf: false,
             mipmaps: false,
             vmax: 1.,
+            flipv: false,
         })
     }
 
@@ -177,6 +188,27 @@ impl TextureData {
         None
     }
 
+    fn search_textures(
+        s: &TextureSearch,
+        textures: &MutexGuard<'_, Vec<Weak<TextureData>>>,
+    ) -> Option<Arc<Self>> {
+        for tex in textures.iter() {
+            if let Some(t) = tex.upgrade() {
+                if let Some(tname) = &t.name {
+                    if s.name == tname
+                        && s.srgb == t.srgb
+                        && s.flipv == t.flipv
+                        && s.mipmaps == t.mipmaps
+                        && s.sdf == t.sdf
+                    {
+                        return Some(t);
+                    }
+                }
+            }
+        }
+        None
+    }
+
     /// Creates a new TextureData from
     fn from_raw(raw: glow::NativeTexture, w: usize, h: usize) -> Result<Self> {
         Ok(TextureData {
@@ -184,10 +216,11 @@ impl TextureData {
             w,
             h,
             texture: raw,
-            is_srgb: true,
-            is_sdf: false,
+            srgb: true,
+            sdf: false,
             mipmaps: false,
             vmax: 1.,
+            flipv: false,
         })
     }
 
@@ -244,10 +277,11 @@ impl TextureData {
             w: w as usize,
             h: h as usize,
             texture,
-            is_srgb: srgb,
-            is_sdf: false,
+            srgb: srgb,
+            sdf: false,
             mipmaps: false,
             vmax: 1.,
+            flipv,
         })
     }
 
@@ -310,10 +344,11 @@ impl TextureData {
             w: w as usize,
             h: h as usize,
             texture,
-            is_srgb: false,
-            is_sdf: true,
+            srgb: false,
+            sdf: true,
             mipmaps: false,
             vmax: vmax as f32,
+            flipv,
         })
     }
 
@@ -651,10 +686,16 @@ impl TextureSource {
 
         let mut textures = TEXTURE_DATA.lock().unwrap();
 
-        // Try to load from name if possible
+        // Try to see if a texture that matches everything already exists
         if let Some(name) = name {
-            if let Some(t) = TextureData::exists_textures(name, &textures) {
-                // TODO we would actually have to make sure it has mipmaps if we want them...
+            let search = TextureSearch {
+                name,
+                srgb,
+                flipv,
+                mipmaps,
+                sdf,
+            };
+            if let Some(t) = TextureData::search_textures(&search, &textures) {
                 return Ok(t);
             }
         }
@@ -1574,7 +1615,7 @@ pub extern "C" fn tex_name(ctex: *mut Texture) -> *const c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
     let tex = unsafe { &*ctex };
-    tex.texture.is_sdf as i32
+    tex.texture.sdf as i32
 }
 
 #[unsafe(no_mangle)]
