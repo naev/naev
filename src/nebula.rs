@@ -153,10 +153,11 @@ impl PuffLayer {
 
 struct NebulaData {
     density: f32,
-    view: f32,  // How far the player can see
-    dx: f32,    // Length scale (space coords) for tubulence/eddies we draw.
-    speed: f32, // speed of change
-    scale: f32, // How much to scale nebula
+    view: f32,       // How far the player can see
+    dx: f32,         // Length scale (space coords) for tubulence/eddies we draw.
+    speed: f32,      // speed of change
+    scale: f32,      // How much to scale nebula
+    nebu_scale: f32, // Downscaling of the nebula
     framebuffer: Framebuffer,
     uniform: NebulaUniform,
     buffer: Buffer,
@@ -176,15 +177,17 @@ impl NebulaData {
             let dims = ctx.dimensions.read().unwrap();
             (dims.view_width, dims.view_height, dims.view_scale)
         };
-        let scale = unsafe { naevc::conf.nebu_scale as f32 } * scale;
+        let nebu_scale = unsafe { naevc::conf.nebu_scale as f32 };
+        let nw = (vw / nebu_scale).round();
+        let nh = (vh / nebu_scale).round();
         let framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
-            .width(vw.round() as usize)
-            .height(vh.round() as usize)
+            .width(nw as usize)
+            .height(nh as usize)
             .build(ctx)?;
 
         let uniform = NebulaUniform {
             nonuninformity: unsafe { naevc::conf.nebu_nonuniformity } as f32,
-            camera: Vector2::new(vw * 0.5, vh * 0.5),
+            camera: Vector2::new(nw * 0.5, nh * 0.5),
             ..Default::default()
         };
 
@@ -230,6 +233,7 @@ impl NebulaData {
             dx: 0.0,
             speed: 0.0,
             scale,
+            nebu_scale,
             framebuffer,
             uniform,
             buffer,
@@ -248,21 +252,20 @@ impl NebulaData {
             let dims = ctx.dimensions.read().unwrap();
             (dims.view_width, dims.view_height, dims.view_scale)
         };
-        let scale = unsafe { naevc::conf.nebu_scale as f32 } * scale;
-        let w = vw.round() as usize;
-        let h = vh.round() as usize;
-        if self.framebuffer.w == w && self.framebuffer.h == h {
-            return;
+        let nebu_scale = unsafe { naevc::conf.nebu_scale as f32 };
+        let nw = (vw / nebu_scale).round();
+        let nh = (vh / nebu_scale).round();
+        if self.framebuffer.w != nw as usize || self.framebuffer.h != nh as usize {
+            self.framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
+                .width(nw as usize)
+                .height(nh as usize)
+                .build(ctx)
+                .unwrap();
+            self.uniform.camera = Vector2::new(nw * 0.5, nh * 0.5);
         }
 
         self.scale = scale;
-        self.framebuffer = FramebufferBuilder::new(Some("Nebula Framebuffer"))
-            .width(w)
-            .height(h)
-            .build(ctx)
-            .unwrap();
-        self.uniform.camera = Vector2::new(vw * 0.5, vh * 0.5);
-
+        self.nebu_scale = nebu_scale;
         self.puff_uniform.screen = Vector2::new(vw + 2.0 * PUFF_BUFFER, vh + 2.0 * PUFF_BUFFER);
     }
 
@@ -361,10 +364,7 @@ impl NebulaData {
                 (1.0, 0.0)
             }
         };
-        {
-            let dims = ctx.dimensions.read().unwrap();
-            self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * dims.view_scale;
-        }
+        self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * self.scale;
 
         let z = {
             let cam = crate::camera::CAMERA.lock().unwrap();
@@ -375,6 +375,7 @@ impl NebulaData {
         };
         self.uniform.horizon = self.view * z / self.scale;
         self.uniform.eddy_scale = self.dx * z / self.scale;
+        dbg!(self.uniform.horizon, self.uniform.eddy_scale);
         self.puff_uniform.offset.z = z;
 
         // Write updates to uniform buffer
@@ -393,10 +394,7 @@ impl NebulaData {
         volatility: f32,
         hue: f32,
     ) -> Result<()> {
-        {
-            let dims = ctx.dimensions.read().unwrap();
-            self.dx = 25e3 / density.powf(1.0 / 3.0) * dims.view_scale;
-        }
+        self.dx = 25e3 / density.powf(1.0 / 3.0) * self.scale / 8.0;
         self.density = density;
         self.speed = (2.0 * density + 200.0) / 10e3; // Faster at higher density
 
