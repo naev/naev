@@ -66,11 +66,8 @@ impl File<'_> {
             filetype: naevc::PHYSFS_FileType_PHYSFS_FILETYPE_OTHER,
             readonly: 0,
         };
-        match unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), &mut stat) } {
-            0 => {
-                return Err(error_as_io_error_with_file("PHYSFS_stat", filename));
-            }
-            _ => (),
+        if unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), &mut stat) } == 0 {
+            return Err(error_as_io_error_with_file("PHYSFS_stat", filename));
         }
         if stat.filetype != naevc::PHYSFS_FileType_PHYSFS_FILETYPE_REGULAR {
             return Err(Error::other(format!("'{filename}' is not a regular file")));
@@ -117,6 +114,14 @@ impl File<'_> {
             Ok(len as u64)
         } else {
             Err(error_as_io_error("PHYSFS_fileLength"))
+        }
+    }
+
+    /// Determine if file is empty
+    pub fn is_empty(&self) -> bool {
+        match self.len() {
+            Ok(len) => len > 0,
+            Err(_) => true,
         }
     }
 

@@ -528,6 +528,7 @@ pub enum TextureSource {
     Empty(TextureFormat),
 }
 impl TextureSource {
+    #[allow(clippy::too_many_arguments)]
     fn to_texture_data(
         &self,
         sctx: &ContextWrapper,
@@ -613,6 +614,12 @@ pub struct TextureBuilder {
     mag_filter: FilterMode,
     min_filter: FilterMode,
     mipmaps: bool,
+}
+
+impl Default for TextureBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl TextureBuilder {
