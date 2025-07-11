@@ -4,8 +4,9 @@ use glow::*;
 use naev_core::start;
 use nalgebra::{Matrix3, Matrix4, Point3, Vector3, Vector4};
 use sdl3 as sdl;
+use std::ffi::CStr;
 use std::ops::Deref;
-use std::os::raw::c_double;
+use std::os::raw::{c_char, c_double};
 use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
 
 pub mod buffer;
@@ -865,6 +866,32 @@ impl Context {
 
         Ok(())
     }
+
+    /// Takes a screenshot of the game
+    pub fn screenshot(&self, filename: &str) -> Result<()> {
+        let dims = self.dimensions.read().unwrap();
+        let (w, h) = (dims.pixels_width as u32, dims.pixels_height as u32);
+        let mut data: Vec<u8> = vec![0; (w * h * 3) as usize];
+        let gl = &self.gl;
+        unsafe {
+            gl.pixel_store_i32(glow::PACK_ALIGNMENT, 1);
+            gl.read_pixels(
+                0,
+                0,
+                w as i32,
+                h as i32,
+                glow::RGB,
+                glow::UNSIGNED_BYTE,
+                glow::PixelPackData::Slice(Some(&mut data)),
+            );
+        }
+        let img = match image::RgbImage::from_vec(w, h, data) {
+            Some(img) => image::DynamicImage::ImageRgb8(img).flipv(),
+            None => anyhow::bail!("failed to create ImageBuffer"),
+        };
+        let mut writer = ndata::physfs::File::open(filename, ndata::physfs::Mode::Write)?;
+        Ok(img.write_to(&mut writer, image::ImageFormat::Png)?)
+    }
 }
 
 #[unsafe(no_mangle)]
@@ -910,5 +937,17 @@ pub extern "C" fn gl_defViewport() {
             -1.0,
             1.0,
         );
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
+    let path = unsafe { CStr::from_ptr(cpath) };
+    let ctx = Context::get().unwrap();
+    match ctx.screenshot(path.to_str().unwrap()) {
+        Ok(_) => (),
+        Err(e) => {
+            warn!("Failed to take a screenshot: {}", e);
+        }
     }
 }

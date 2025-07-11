@@ -25,7 +25,6 @@
 /** @cond */
 #include "SDL_PhysFS.h"
 #include <SDL3/SDL.h>
-#include <SDL3_image/SDL_image.h>
 
 #include "naev.h"
 /** @endcond */
@@ -58,54 +57,6 @@ mat4 gl_view_matrix = { { { { 0 } } } };
  */
 /* gl */
 static int gl_getGLInfo( void );
-
-/*
- *
- * M I S C
- *
- */
-/**
- * @brief Takes a screenshot.
- *
- *    @param filename PhysicsFS path (e.g., "screenshots/screenshot042.png") of
- * the file to save screenshot as.
- */
-void gl_screenshot( const char *filename )
-{
-   GLubyte      *screenbuf;
-   SDL_IOStream *rw;
-   SDL_Surface  *surface;
-   int           w, h;
-
-   /* Allocate data. */
-   w         = gl_screen.rw;
-   h         = gl_screen.rh;
-   screenbuf = malloc( sizeof( GLubyte ) * 3 * w * h );
-   surface   = SDL_CreateSurface(
-      w, h, SDL_GetPixelFormatForMasks( 24, RMASK, GMASK, BMASK, AMASK ) );
-
-   /* Read pixels from buffer -- SLOW. */
-   glPixelStorei( GL_PACK_ALIGNMENT, 1 ); /* Force them to pack the bytes. */
-   glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
-
-   /* Convert data. */
-   for ( int i = 0; i < h; i++ )
-      memcpy( (GLubyte *)surface->pixels + i * surface->pitch,
-              &screenbuf[( h - i - 1 ) * ( 3 * w )], 3 * w );
-   free( screenbuf );
-
-   /* Save PNG. */
-   if ( !( rw = SDL_PhysFS_OpenIO( PHYSFS_openWrite( filename ) ) ) )
-      WARN( _( "Aborting screenshot" ) );
-   else
-      IMG_SavePNG_IO( surface, rw, 1 );
-
-   /* Check to see if an error occurred. */
-   gl_checkErr();
-
-   /* Free memory. */
-   SDL_DestroySurface( surface );
-}
 
 /*
  *
