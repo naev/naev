@@ -22,20 +22,6 @@ pub static GC_COUNTER: AtomicU32 = AtomicU32::new(0);
 /// Number of destroyed textures to start garbage collecting the cache
 pub const GC_THRESHOLD: u32 = 128;
 
-// Temporary hack until image-rs significantly increases performance...
-pub fn surface_to_image(sur: sdl::surface::Surface) -> Result<image::DynamicImage> {
-    //let has_alpha = sur.pixel_format_enum().supports_alpha();
-    let sur = sur
-        .convert_format(sdl::pixels::PixelFormatEnum::RGBA8888.into())
-        .map_err(|e| anyhow::anyhow!(e))?;
-    let (w, h) = sur.size();
-    // TODO this always converts to rgba so we store more memory and such...
-    sur.with_lock(|data| {
-        let buf = image::ImageBuffer::<image::Rgba<u8>, _>::from_vec(w, h, data.to_vec()).unwrap();
-        Ok(image::DynamicImage::ImageRgba8(buf))
-    })
-}
-
 #[allow(clippy::upper_case_acronyms)]
 #[derive(Clone, Copy, Debug)]
 pub enum TextureFormat {
@@ -703,10 +689,8 @@ impl TextureSource {
                     //let img = image::load_from_memory(&bytes)?;
                     let rw = ndata::iostream(&cpath)?;
                     let img = image::ImageReader::new(std::io::BufReader::new(rw))
-                        .with_guessed_format()
-                        .unwrap()
-                        .decode()
-                        .unwrap();
+                        .with_guessed_format()?
+                        .decode()?;
                     let ctx = &sctx.lock();
                     match sdf {
                         true => TextureData::from_image_sdf(ctx, name, &img, flipv)?,
@@ -1472,18 +1456,6 @@ pub extern "C" fn gl_newSpriteRWops(
             let rw = unsafe {
                 sdl::iostream::IOStream::from_ll(rw as *mut sdl::sys::iostream::SDL_IOStream)
             };
-            /*
-            let img = match rw.load() {
-                Ok(sur) => surface_to_image(sur).unwrap(),
-                Err(e) => {
-                    // SDL2 uses strings as errors...
-                    //warn_err!(e, "unable to load image '{}'", pathname);
-                    warn!("unable to load image '{}': {}", pathname, e);
-                    return std::ptr::null_mut();
-                }
-            };
-            */
-            // TODO support image when it's faster...
             let img = image::ImageReader::new(std::io::BufReader::new(rw))
                 .with_guessed_format()
                 .unwrap()
