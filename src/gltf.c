@@ -1,7 +1,6 @@
 #include "gltf.h"
 
 #include "glad.h"
-#include <SDL3_image/SDL_image.h>
 #include <libgen.h>
 #include <math.h>
 

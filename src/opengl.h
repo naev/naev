@@ -105,7 +105,6 @@ GLenum gl_stringToClamp( const char *s );
 GLenum gl_stringToBlendFunc( const char *s );
 GLenum gl_stringToBlendFactor( const char *s );
 void   gl_screenshot( const char *filename );
-void   gl_saveFboDepth( GLuint fbo, const char *filename );
 #ifdef DEBUGGING
 #define gl_debugGroupStart()                                                   \
    if ( gl_supportsDebug() ) {                                                 \

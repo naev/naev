@@ -7,7 +7,6 @@
  * @brief This file handles the opengl texture wrapper routines.
  */
 /** @cond */
-#include <SDL3_image/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 
