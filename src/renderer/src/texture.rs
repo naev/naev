@@ -772,7 +772,7 @@ impl TextureBuilder {
 
     pub fn sdf(mut self, enable: bool) -> Self {
         self.is_sdf = enable;
-        self
+        self.border(Some(Vector4::from([0., 0., 0., 0.])))
     }
 
     pub fn flipv(mut self, enable: bool) -> Self {
