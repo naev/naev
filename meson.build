@@ -117,7 +117,6 @@ int main (void) { return 0; }''')
    enet = dependency('libenet', required: true, version: '>=1.3', fallback: ['enet', 'enet_dep'], static: get_option('steamruntime'))
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
    sdl = dependency('sdl3', version: '>=3.2.0', required: true)
-   sdl_image = dependency('sdl3_image', required: true)
    libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak'], static: get_option('steamruntime'))
    cmark = dependency('libcmark', required: true, version: '>=0.31.0', fallback: ['cmark', 'cmark_dep'], static: get_option('steamruntime'))
 
@@ -144,7 +143,6 @@ int main (void) { return 0; }''')
       libxml2,
       pcre2,
       sdl,
-      sdl_image,
       dependency('libpng', required: true),
       dependency('libwebp', required: true, static: get_option('steamruntime')),
    ]

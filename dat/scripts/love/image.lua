@@ -4,7 +4,7 @@
 local class = require 'class'
 local love = require 'love'
 local data = require 'love.data'
-local filesystem = require 'love.filesystem'
+--local filesystem = require 'love.filesystem'
 
 local image = {}
 image.ImageData = class.inheritsFrom( data.Data )
@@ -17,9 +17,11 @@ function image.newImageData( ... )
       w = arg[1]
       h = arg[2]
       d = naev.data.new( w*h*4, "number" )
+   --[[
    elseif t=="string" then
       local f = filesystem.newFile(arg[1])
       d, w, h = naev.tex.readData( f )
+   --]]
    else
       love._unimplemented()
    end

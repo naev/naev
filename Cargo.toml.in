@@ -41,7 +41,7 @@ rust-version = "1.85"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
-sdl3 = { version = "0", features = ["image"] }
+sdl3 = "0"
 anyhow = "1"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }

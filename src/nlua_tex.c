@@ -7,7 +7,6 @@
  * @brief Handles the Lua texture bindings.
  */
 /** @cond */
-#include <SDL3_image/SDL_image.h>
 #include <lauxlib.h>
 /** @endcond */
 
@@ -21,14 +20,11 @@
 #include "nluadef.h"
 #include "physics.h"
 
-/* Helpers. */
-static inline uint32_t get_pixel( SDL_Surface *surface, int x, int y );
-
 /* Texture metatable methods. */
 static int texL_close( lua_State *L );
 static int texL_new( lua_State *L );
-static int texL_readData( lua_State *L );
-static int texL_writeData( lua_State *L );
+// static int texL_readData( lua_State *L );
+// static int texL_writeData( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
@@ -39,8 +35,8 @@ static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
    { "new", texL_new },
    { "open", texL_new },
-   { "readData", texL_readData },
-   { "writeData", texL_writeData },
+   //{ "readData", texL_readData },
+   //{ "writeData", texL_writeData },
    { "dim", texL_dim },
    { "sprites", texL_sprites },
    { "spriteFromDir", texL_spriteFromDir },
@@ -260,6 +256,7 @@ static int texL_new( lua_State *L )
    return 1;
 }
 
+#if 0
 static inline uint32_t get_pixel( SDL_Surface *surface, int x, int y )
 {
    int bpp = SDL_BYTESPERPIXEL( surface->format );
@@ -411,6 +408,7 @@ static int texL_writeData( lua_State *L )
    lua_pushboolean( L, 1 );
    return 1;
 }
+#endif
 
 /**
  * @brief Gets the dimensions of the texture.
