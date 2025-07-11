@@ -81,16 +81,16 @@ impl NTime {
         let seconds = self.seconds();
         // TODO try to move 2 to variable decimal length, but not that important
         if cycles == 0 && periods == 0 {
-            formatx!(gettext("{:04d} s").to_string(), seconds).unwrap()
+            formatx!(gettext("{:04} s").to_string(), seconds).unwrap()
         } else if cycles == 0 {
             formatx!(
-                gettext("{p:.2f} s").to_string(),
+                gettext("{p:.2} s").to_string(),
                 p = periods as f64 + 0.0001 * seconds as f64
             )
             .unwrap()
         } else {
             formatx!(
-                gettext("UST {c}:{p:.2f}").to_string(),
+                gettext("UST {c}:{p:04.2}").to_string(),
                 c = cycles,
                 p = periods as f64 + 0.0001 * seconds as f64
             )
