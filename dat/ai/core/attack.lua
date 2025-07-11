@@ -67,7 +67,7 @@ function atk.think( target, si, noretarget )
 
       -- Use shield booster if applicable
       if mem._o.shield_booster then
-         local _a, s = p:health()
+         local s = p:shield()
          local e = p:energy()
          if s < 50 and e > 20 then
             p:outfitToggle( mem._o.shield_booster, true )
