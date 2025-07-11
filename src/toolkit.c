@@ -1384,8 +1384,11 @@ void window_render( Window *w, int top )
          continue;
 
       /* Only render non-dynamics. */
-      if ( !wgt_isFlag( wgt, WGT_FLAG_DYNAMIC ) || !top )
+      if ( !wgt_isFlag( wgt, WGT_FLAG_DYNAMIC ) || !top ) {
+         gl_debugGroupStartName( wgt->name );
          wgt->render( wgt, w->x, w->y );
+         gl_debugGroupEnd();
+      }
 
       if ( wgt->id == w->focus ) {
          double wx = w->x + wgt->x - 2;
@@ -1409,10 +1412,16 @@ void window_renderDynamic( Window *w )
       if ( wgt_isFlag( wgt, WGT_FLAG_KILL ) )
          continue;
       if ( wgt_isFlag( wgt, WGT_FLAG_DYNAMIC ) ||
-           window_isFlag( w, WINDOW_DYNAMIC ) )
+           window_isFlag( w, WINDOW_DYNAMIC ) ) {
+         gl_debugGroupStartName( wgt->name );
          wgt->render( wgt, w->x, w->y );
-      if ( wgt->renderDynamic != NULL )
+         gl_debugGroupEnd();
+      }
+      if ( wgt->renderDynamic != NULL ) {
+         gl_debugGroupStartName( wgt->name );
          wgt->renderDynamic( wgt, w->x, w->y );
+         gl_debugGroupEnd();
+      }
    }
 }
 
@@ -1425,8 +1434,12 @@ void window_renderOverlay( Window *w )
 {
    /* Draw overlays. */
    for ( Widget *wgt = w->widgets; wgt != NULL; wgt = wgt->next )
-      if ( ( wgt->renderOverlay != NULL ) && !wgt_isFlag( wgt, WGT_FLAG_KILL ) )
+      if ( ( wgt->renderOverlay != NULL ) &&
+           !wgt_isFlag( wgt, WGT_FLAG_KILL ) ) {
+         gl_debugGroupStartName( wgt->name );
          wgt->renderOverlay( wgt, w->x, w->y );
+         gl_debugGroupEnd();
+      }
 }
 
 /**
