@@ -507,16 +507,26 @@ impl Context {
         };
 
         // Try to load the icon.
-        /*
-        let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
-        match ndata::iostream(filename.as_str()) {
-            Ok(rw) => match rw.load() {
-                Ok(icon) => window.set_icon(icon),
-                Err(e) => anyhow::bail!(e),
-            },
-            Err(e) => anyhow::bail!(e),
+        fn set_icon(window: &mut sdl::video::Window) -> Result<()> {
+            let filename = format!("{}{}", ndata::GFX_PATH, "icon.webp");
+            let rw = ndata::iostream(&filename)?;
+            let img = image::ImageReader::new(std::io::BufReader::new(rw))
+                .with_guessed_format()?
+                .decode()?;
+            let mut data = img.to_rgba8().into_flat_samples();
+            let sur = sdl::surface::Surface::from_data(
+                &mut data.samples,
+                data.layout.width,
+                data.layout.height,
+                data.layout.height_stride as u32,
+                sdl::pixels::PixelFormatEnum::RGBA8888.into(),
+            )?;
+            window.set_icon(sur);
+            Ok(())
         }
-        */
+        if let Err(e) = set_icon(&mut window) {
+            warn!("Unable to set window icon: {}", e);
+        }
 
         Ok((window, gl_context))
     }

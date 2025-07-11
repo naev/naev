@@ -685,8 +685,6 @@ impl TextureSource {
             let mut inner = match self {
                 TextureSource::Path(path) => {
                     let cpath = ndata::simplify_path(path)?;
-                    //let bytes = ndata::read(&cpath)?;
-                    //let img = image::load_from_memory(&bytes)?;
                     let rw = ndata::iostream(&cpath)?;
                     let img = image::ImageReader::new(std::io::BufReader::new(rw))
                         .with_guessed_format()?

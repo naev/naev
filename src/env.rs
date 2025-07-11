@@ -19,7 +19,6 @@ pub static ENV: LazyLock<AppEnv> = LazyLock::new(detect);
  for the lifetime of the program. They are set once at startup and never changed.
  This ensures the C side always sees valid, non-dangling pointers.
 */
-
 static CAPPIMAGE: OnceLock<CString> = OnceLock::new();
 static CARGV0: OnceLock<CString> = OnceLock::new();
 static CAPPDIR: OnceLock<CString> = OnceLock::new();
@@ -50,10 +49,9 @@ fn detect() -> AppEnv {
     }
 
     /*
-     TODO remove.
+     TODO remove when we don't need it anymore.
      OnceLock guarantees only one initialization and shared access is safe.
     */
-
     CAPPIMAGE
         .set(CString::new(e.appimage.clone()).unwrap())
         .ok();
