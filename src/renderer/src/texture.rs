@@ -506,12 +506,12 @@ impl Texture {
         Ok(())
     }
 
-    pub fn draw_sdf_ex(&self, ctx: &Context, uniform: &TextureUniform, outline: f32) -> Result<()> {
-        let sdf = TextureSDFUniform {
-            m: 2.0 * self.texture.vmax,
-            outline,
-        };
-
+    pub fn draw_sdf_ex(
+        &self,
+        ctx: &Context,
+        uniform: &TextureUniform,
+        sdf: &TextureSDFUniform,
+    ) -> Result<()> {
         let gl = &ctx.gl;
         ctx.program_texture_sdf.use_program(gl);
         self.bind(ctx, 0);
@@ -1710,9 +1710,12 @@ pub extern "C" fn gl_renderSDF(
         colour,
         ..Default::default()
     };
-
     let tex = unsafe { &*ctex };
-    let _ = tex.draw_sdf_ex(ctx, &data, outline as f32);
+    let sdf = TextureSDFUniform {
+        m: 2.0 * tex.texture.vmax * (w as f32 + 2.) / tex.texture.w as f32,
+        outline: outline as f32,
+    };
+    let _ = tex.draw_sdf_ex(ctx, &data, &sdf);
 }
 
 #[unsafe(no_mangle)]
