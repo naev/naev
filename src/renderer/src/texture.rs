@@ -295,7 +295,7 @@ impl TextureData {
                 w as i32,
                 h as i32,
                 0,
-                glow::RED as u32,
+                glow::RED,
                 glow::FLOAT,
                 gldata,
             );
@@ -681,8 +681,8 @@ impl TextureSource {
                 TextureSource::Image(img) => {
                     let ctx = &sctx.lock();
                     match sdf {
-                        true => TextureData::from_image_sdf(ctx, name, &img, flipv, srgb)?,
-                        false => TextureData::from_image(ctx, name, &img, flipv, srgb)?,
+                        true => TextureData::from_image_sdf(ctx, name, img, flipv, srgb)?,
+                        false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
                 TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
