@@ -187,6 +187,7 @@ impl TextureData {
         None
     }
 
+    /// Searches to see if a TextureData exists, not only considering name
     fn search_textures(
         s: &TextureSearch,
         textures: &MutexGuard<'_, Vec<Weak<TextureData>>>,

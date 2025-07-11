@@ -7,12 +7,6 @@
 #include "ntime.h"
 
 /*
- * Initialization/clean up.
- */
-int  start_load( void );
-void start_cleanup( void );
-
-/*
  * Getting data.
  */
 const char *start_name( void );

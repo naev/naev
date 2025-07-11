@@ -2,7 +2,7 @@ use crate::ntime::{NTime, NTimeC};
 use crate::nxml_warn_node_unknown;
 use anyhow::Result;
 use std::ffi::CString;
-use std::os::raw::{c_char, c_int};
+use std::os::raw::c_char;
 
 use crate::nxml;
 
@@ -172,9 +172,4 @@ pub extern "C" fn start_position(x: *mut f64, y: *mut f64) {
         *x = START.pos_x;
         *y = START.pos_y;
     }
-}
-#[unsafe(no_mangle)]
-pub extern "C" fn start_load() -> c_int {
-    let _ = START;
-    0
 }

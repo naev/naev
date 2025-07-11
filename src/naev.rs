@@ -45,6 +45,24 @@ unsafe fn cptr_to_cstr<'a>(s: *const c_char) -> &'a str {
 
 /// Entry Point
 pub fn naev() -> Result<()> {
+    match naevmain() {
+        Ok(_) => Ok(()),
+        Err(e) => {
+            sdl::messagebox::show_simple_message_box(
+                sdl::messagebox::MessageBoxFlag::ERROR,
+                gettext("Naev Critical Error"),
+                &format!(
+                    "{}:\n{e}",
+                    gettext("Naev Failed to start due to a critical error")
+                ),
+                None,
+            )?;
+            Err(e)
+        }
+    }
+}
+
+fn naevmain() -> Result<()> {
     /* Load up the argv and argc for the C main. */
     let args: Vec<String> = std::env::args().collect();
     let mut cargs = vec![];
@@ -72,14 +90,7 @@ pub fn naev() -> Result<()> {
         let argv0 = CString::new(env::ENV.argv0.clone()).unwrap();
         if !naevc::SDL_PhysFS_Init(argv0.as_ptr() as *const c_char) {
             let err = ndata::physfs::error_as_io_error("SDL_PhysFS_init");
-            println!("{err}");
             return Err(Error::new(err));
-            /* TODO probably move the error handling to the "real" main, when shit hits the
-                * fan. Below depends on sdl3
-            SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                _( "Naev Critical Error" ), buf,
-                gl_screen.window );
-            */
         }
         naevc::PHYSFS_permitSymbolicLinks(1);
     }
@@ -100,10 +111,7 @@ pub fn naev() -> Result<()> {
     }
 
     /* Initialize SDL. */
-    let sdlctx = match sdl::init() {
-        Ok(s) => s,
-        Err(e) => panic!("Unable to initialize SDL: {e}"),
-    };
+    let sdlctx = sdl::init()?;
 
     let starttime = sdl::timer::ticks();
 
@@ -119,10 +127,7 @@ pub fn naev() -> Result<()> {
         }
     }
 
-    let sdlvid = match sdlctx.video() {
-        Ok(s) => s,
-        Err(e) => panic!("Unable to initialize SDL Video: {e}"),
-    };
+    let sdlvid = sdlctx.video()?;
 
     unsafe {
         naevc::nxml_init(); /* We'll be parsing XML. */
@@ -205,12 +210,6 @@ pub fn naev() -> Result<()> {
             naevc::debug_enableFPUExcept();
         }
 
-        if naevc::start_load() != 0 {
-            let err = gettext("Failed to load start data.");
-            warn!(err);
-            // TODO show some simple error message
-            anyhow::bail!(err);
-        }
         info!(
             " {}\n",
             CStr::from_ptr(naevc::start_name()).to_str().unwrap()
@@ -228,7 +227,6 @@ pub fn naev() -> Result<()> {
         if naevc::gl_init() != 0 {
             let err = gettext("Initializing video output failed, exiting…");
             warn!(err);
-            // TODO show some simple error message
             anyhow::bail!(err);
         }
 
@@ -382,13 +380,6 @@ pub fn naev() -> Result<()> {
     }
 
     Ok(())
-    /*
-    #if SDL_VERSION_ATLEAST( 3, 0, 0 )
-          SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR,
-                                    _( "Naev Critical Error" ), buf,
-                                    gl_screen.window );
-    #endif
-            */
 }
 
 /// Small wrapper to handle loading
