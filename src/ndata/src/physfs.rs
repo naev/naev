@@ -57,22 +57,6 @@ impl File<'_> {
     /// Opens a file with a specific mode.
     pub fn open<'g>(filename: &str, mode: Mode) -> Result<File<'g>> {
         let c_filename = CString::new(filename)?;
-
-        let mut stat: naevc::PHYSFS_Stat = naevc::PHYSFS_Stat {
-            filesize: 0,
-            modtime: 0,
-            createtime: 0,
-            accesstime: 0,
-            filetype: naevc::PHYSFS_FileType_PHYSFS_FILETYPE_OTHER,
-            readonly: 0,
-        };
-        if unsafe { naevc::PHYSFS_stat(c_filename.as_ptr(), &mut stat) } == 0 {
-            return Err(error_as_io_error_with_file("PHYSFS_stat", filename));
-        }
-        if stat.filetype != naevc::PHYSFS_FileType_PHYSFS_FILETYPE_REGULAR {
-            return Err(Error::other(format!("'{filename}' is not a regular file")));
-        }
-
         let raw = unsafe {
             match mode {
                 Mode::Append => naevc::PHYSFS_openAppend(c_filename.as_ptr()),
