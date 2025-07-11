@@ -6,7 +6,7 @@ pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;
 
 #[cfg(unix)]
-pub use nix; 
+pub use nix;
 
 pub fn init() {
     unsafe {
