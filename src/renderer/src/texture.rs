@@ -745,7 +745,6 @@ impl TextureSource {
 pub struct TextureBuilder {
     name: Option<String>,
     source: TextureSource,
-    format: TextureFormat,
     w: usize,
     h: usize,
     sx: usize,
@@ -772,7 +771,6 @@ impl TextureBuilder {
         TextureBuilder {
             name: None,
             source: TextureSource::Empty(TextureFormat::SRGBA),
-            format: TextureFormat::SRGBA,
             w: 0,
             h: 0,
             sx: 1,
@@ -1225,6 +1223,7 @@ impl FramebufferBuilder {
 
 // BELOW THIS IS THE C API CODE
 
+#[allow(dead_code)]
 struct Flags {
     maptrans: bool,
     mipmaps: bool,

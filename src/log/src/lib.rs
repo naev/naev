@@ -1,6 +1,4 @@
 // Logging tools
-#![allow(dead_code)]
-
 use std::sync::atomic::AtomicU32;
 pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;

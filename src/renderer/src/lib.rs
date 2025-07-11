@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use anyhow::Result;
 use encase::{ShaderSize, ShaderType};
 use glow::*;
@@ -8,7 +7,6 @@ use sdl3 as sdl;
 use std::ops::Deref;
 use std::os::raw::c_double;
 use std::sync::{atomic::AtomicBool, atomic::Ordering, Arc, Mutex, MutexGuard, OnceLock, RwLock};
-use std::thread::ThreadId;
 
 pub mod buffer;
 pub mod shader;
@@ -290,7 +288,6 @@ pub struct Context {
     pub gl: glow::Context,
     pub window: sdl::video::Window,
     pub gl_context: sdl::video::GLContext,
-    main_thread: ThreadId,
     // We should be able to get rid of this mutex when fully moved to Rust
     pub dimensions: RwLock<Dimensions>,
 
@@ -781,7 +778,6 @@ impl Context {
             window,
             gl_context,
             gl,
-            main_thread: std::thread::current().id(),
             dimensions,
             program_texture,
             buffer_texture,
@@ -823,10 +819,6 @@ impl Context {
         }
         *self.dimensions.write().unwrap() = dims;
         Ok(())
-    }
-
-    fn is_main_thread(&self) -> bool {
-        self.main_thread == std::thread::current().id()
     }
 
     pub fn execute_messages(&self) {

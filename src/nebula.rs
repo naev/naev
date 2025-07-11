@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use anyhow::Result;
 use encase::ShaderType;
 use glow::*;
@@ -17,8 +16,9 @@ use renderer::shader::{Shader, ShaderBuilder};
 use renderer::texture::{Framebuffer, FramebufferBuilder};
 use renderer::Uniform;
 
+#[allow(dead_code)]
 pub const DEFAULT_HUE: f64 = 260.0;
-pub const PUFF_BUFFER: f32 = 300.;
+const PUFF_BUFFER: f32 = 300.;
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default, ShaderType)]
@@ -76,8 +76,9 @@ struct PuffUniform {
 
 struct PuffLayer {
     data: Vec<Puff>,
-    buffer: Buffer,
     vertex_array: VertexArray,
+    #[allow(dead_code)]
+    buffer: Buffer,
 }
 impl PuffLayer {
     const ZERO: Puff = Puff {
