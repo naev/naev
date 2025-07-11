@@ -7,8 +7,6 @@
  *
  * @brief Handles low-level debugging hooks.
  */
-
-/** @cond */
 #include <inttypes.h>
 #include <signal.h>
 
