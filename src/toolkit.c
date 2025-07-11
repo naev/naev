@@ -1477,7 +1477,8 @@ void toolkit_render( double dt )
    NTracingZone( _ctx, 1 );
    gl_debugGroupStart();
 
-   if ( toolkit_needsRender ) {
+   // if ( toolkit_needsRender ) {
+   if ( 1 ) {
       GLuint current_fbo    = gl_screen.current_fbo;
       gl_screen.current_fbo = gl_screen.fbo[3];
       toolkit_needsRender   = 0;

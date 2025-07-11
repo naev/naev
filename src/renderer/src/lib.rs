@@ -102,6 +102,13 @@ impl Default for TextureUniform {
 }
 
 #[repr(C)]
+#[derive(Default, Debug, Copy, Clone, ShaderType)]
+pub struct TextureSDFUniform {
+    pub m: f32,
+    pub outline: f32,
+}
+
+#[repr(C)]
 #[derive(Debug, Copy, Clone, ShaderType)]
 pub struct TextureScaleUniform {
     pub texture: Matrix3<f32>,
@@ -290,6 +297,8 @@ pub struct Context {
     // Useful "globals"
     pub program_texture: Shader,
     pub buffer_texture: Buffer,
+    pub program_texture_sdf: Shader,
+    pub buffer_texture_sdf: Buffer,
     pub program_texture_scale: Shader,
     pub buffer_texture_scale: Buffer,
     pub program_solid: Shader,
@@ -664,6 +673,19 @@ impl Context {
             .usage(BufferUsage::Dynamic)
             .data(&TextureUniform::default().buffer()?)
             .build(&gl)?;
+        // SDF texture shader
+        let program_texture_sdf = ShaderBuilder::new(Some("SDF Texture Shader"))
+            .uniform_buffer("TextureData", 0)
+            .uniform_buffer("SDFData", 1)
+            .vert_file("rust_texture_sdf.vert")
+            .frag_file("rust_texture_sdf.frag")
+            .sampler("sampler", 0)
+            .build(&gl)?;
+        let buffer_texture_sdf = BufferBuilder::new(Some("SDF Texture Buffer"))
+            .target(BufferTarget::Uniform)
+            .usage(BufferUsage::Dynamic)
+            .data(&TextureSDFUniform::default().buffer()?)
+            .build(&gl)?;
         // Downscaling texture shader
         let program_texture_scale = ShaderBuilder::new(Some("Scaling Texture Shader"))
             .uniform_buffer("TextureData", 0)
@@ -763,6 +785,8 @@ impl Context {
             dimensions,
             program_texture,
             buffer_texture,
+            program_texture_sdf,
+            buffer_texture_sdf,
             program_texture_scale,
             buffer_texture_scale,
             program_solid,

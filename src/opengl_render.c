@@ -449,7 +449,6 @@ void gl_/enderTexture( const glTexture *texture, double x, double y, double w,
    gl_renderTextureRaw( tex_tex( texture ), tex_sampler( texture ), 0, x, y, w,
                         h, tx, ty, tw, th, c, angle );
 }
-#endif
 
 /**
  * @brief SDF Texture blitting backend.
@@ -524,6 +523,7 @@ void gl_renderSDF( const glTexture *texture, double x, double y, double w,
 
    glUseProgram( 0 );
 }
+#endif
 
 /**
  * @brief Texture blitting backend for interpolated texture.

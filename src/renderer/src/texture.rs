@@ -487,7 +487,12 @@ impl Texture {
 
     pub fn draw_ex(&self, ctx: &Context, uniform: &TextureUniform) -> Result<()> {
         let gl = &ctx.gl;
-        ctx.program_texture.use_program(gl);
+        if self.texture.is_sdf {
+            ctx.program_texture_sdf.use_program(gl);
+            ctx.buffer_texture_sdf.bind_base(ctx, 1);
+        } else {
+            ctx.program_texture.use_program(gl);
+        }
         self.bind(ctx, 0);
         ctx.vao_square.bind(ctx);
 
@@ -499,6 +504,9 @@ impl Texture {
 
         Texture::unbind(ctx);
         buffer::VertexArray::unbind(ctx);
+        if self.texture.is_sdf {
+            ctx.buffer_texture_sdf.unbind(ctx);
+        }
         ctx.buffer_texture.unbind(ctx);
 
         Ok(())
@@ -1615,7 +1623,6 @@ pub extern "C" fn gl_renderTexture(
             )
         }
     };
-    // Our coordinate system rust-side is inverted with respect to Lua and textures
     #[rustfmt::skip]
     let texture: Matrix3<f32> = Matrix3::new(
         tw as f32, 0.0,       tx as f32,
@@ -1626,6 +1633,61 @@ pub extern "C" fn gl_renderTexture(
         texture,
         transform,
         colour,
+    };
+
+    let tex = unsafe { &*ctex };
+    let _ = tex.draw_ex(ctx, &data);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gl_renderSDF(
+    ctex: *mut Texture,
+    x: c_double,
+    y: c_double,
+    w: c_double,
+    h: c_double,
+    c: *mut Vector4<f32>,
+    angle: c_double,
+    outline: c_double,
+) {
+    let ctx = Context::get().unwrap();
+    let colour = match c.is_null() {
+        true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
+        false => unsafe { *c },
+    };
+    let dims = ctx.dimensions.read().unwrap();
+    #[rustfmt::skip]
+    let transform: Matrix3<f32> = dims.projection * {
+        if angle.abs() > 1e-5 {
+            let hw = 0.5 * w as f32;
+            let hh = 0.5 * h as f32;
+            let c = angle.cos() as f32;
+            let s = angle.sin() as f32;
+            Matrix3::new(
+                1.0, 0.0, x as f32 + hw,
+                0.0, 1.0, y as f32 + hh,
+                0.0, 0.0, 1.0,
+            ) * Matrix3::new(
+                 c,  -s,  0.0,
+                 s,   c,  0.0,
+                0.0, 0.0, 1.0,
+            ) * Matrix3::new(
+                w as f32, 0.0,      -hw,
+                0.0,      h as f32, -hh,
+                0.0,      0.0,      1.0,
+            )
+        } else {
+            Matrix3::new(
+                w as f32, 0.0,      x as f32,
+                0.0,      h as f32, y as f32,
+                0.0,      0.0,      1.0,
+            )
+        }
+    };
+    let data = TextureUniform {
+        transform,
+        colour,
+        ..Default::default()
     };
 
     let tex = unsafe { &*ctex };
