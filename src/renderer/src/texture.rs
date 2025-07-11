@@ -379,8 +379,6 @@ pub struct Texture {
     // Data
     pub texture: Arc<TextureData>,
     pub sampler: glow::Sampler,
-    pub flipv: bool,
-    pub mipmaps: bool,
 }
 impl Drop for Texture {
     fn drop(&mut self) {
@@ -429,8 +427,6 @@ impl Texture {
             srh: self.srh,
             texture: self.texture.clone(),
             sampler,
-            flipv: self.flipv,
-            mipmaps: self.mipmaps,
         })
     }
 
@@ -980,8 +976,6 @@ impl TextureBuilder {
             srh,
             texture,
             sampler,
-            flipv: self.is_flipv,
-            mipmaps: self.mipmaps,
         })
     }
 }
