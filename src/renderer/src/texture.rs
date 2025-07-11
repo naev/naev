@@ -11,7 +11,9 @@ use std::os::raw::{c_char, c_double, c_float, c_int, c_uint};
 use std::sync::{atomic::AtomicU32, Arc, LazyLock, Mutex, MutexGuard, Weak};
 
 use crate::buffer;
-use crate::{Context, ContextWrapper, TextureScaleUniform, TextureUniform, Uniform};
+use crate::{
+    Context, ContextWrapper, TextureSDFUniform, TextureScaleUniform, TextureUniform, Uniform,
+};
 
 /// All the shared texture data to look up
 pub static TEXTURE_DATA: LazyLock<Mutex<Vec<Weak<TextureData>>>> =
@@ -487,12 +489,7 @@ impl Texture {
 
     pub fn draw_ex(&self, ctx: &Context, uniform: &TextureUniform) -> Result<()> {
         let gl = &ctx.gl;
-        if self.texture.is_sdf {
-            ctx.program_texture_sdf.use_program(gl);
-            ctx.buffer_texture_sdf.bind_base(ctx, 1);
-        } else {
-            ctx.program_texture.use_program(gl);
-        }
+        ctx.program_texture.use_program(gl);
         self.bind(ctx, 0);
         ctx.vao_square.bind(ctx);
 
@@ -504,9 +501,33 @@ impl Texture {
 
         Texture::unbind(ctx);
         buffer::VertexArray::unbind(ctx);
-        if self.texture.is_sdf {
-            ctx.buffer_texture_sdf.unbind(ctx);
+        ctx.buffer_texture.unbind(ctx);
+
+        Ok(())
+    }
+
+    pub fn draw_sdf_ex(&self, ctx: &Context, uniform: &TextureUniform, outline: f32) -> Result<()> {
+        let sdf = TextureSDFUniform {
+            m: 2.0 * self.texture.vmax,
+            outline,
+        };
+
+        let gl = &ctx.gl;
+        ctx.program_texture_sdf.use_program(gl);
+        self.bind(ctx, 0);
+        ctx.vao_square.bind(ctx);
+
+        ctx.buffer_texture_sdf
+            .bind_write_base(ctx, &sdf.buffer()?, 1)?;
+        ctx.buffer_texture
+            .bind_write_base(ctx, &uniform.buffer()?, 0)?;
+        unsafe {
+            gl.draw_arrays(glow::TRIANGLE_STRIP, 0, 4);
         }
+
+        Texture::unbind(ctx);
+        buffer::VertexArray::unbind(ctx);
+        ctx.buffer_texture_sdf.unbind(ctx);
         ctx.buffer_texture.unbind(ctx);
 
         Ok(())
@@ -1691,7 +1712,7 @@ pub extern "C" fn gl_renderSDF(
     };
 
     let tex = unsafe { &*ctex };
-    let _ = tex.draw_ex(ctx, &data);
+    let _ = tex.draw_sdf_ex(ctx, &data, outline as f32);
 }
 
 #[unsafe(no_mangle)]

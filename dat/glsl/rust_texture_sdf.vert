@@ -9,6 +9,6 @@ out vec2 tex_coord;
 
 void main(void) {
    vec3 pos = vec3( vertex, 1.0 );
-   tex_coord = (tex_mat * (pos*0.5+0.5)).st;
+   tex_coord = (tex_mat * pos).st;
    gl_Position = vec4( (transform * pos).xy, 0.0, 1.0 );
 }
