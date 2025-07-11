@@ -88,14 +88,22 @@ impl TextureFormat {
 
 #[derive(Debug)]
 pub struct TextureData {
+    /// Name of the texture
     name: Option<String>,
+    /// Underlying OpenGL texture
     texture: glow::Texture,
+    /// Width of the texture
     pub w: usize,
+    /// Height of the texture
     pub h: usize,
+    /// Whether or not the image is in SRGB format
     is_srgb: bool,
+    /// Whether or not the image is a Signed Distance Function
     is_sdf: bool,
+    /// Whether or not the texture has mipmaps
     mipmaps: bool,
-    vmax: f64, // For SDF
+    /// Maximum value for Signed Distance Function images
+    vmax: f32,
 }
 impl Drop for TextureData {
     fn drop(&mut self) {
@@ -198,6 +206,7 @@ impl TextureData {
             true => &img.flipv(),
             false => img,
         };
+
         let imgdata = match has_alpha {
             true => img.to_rgba8().into_raw(),
             false => img.to_rgb8().into_raw(),
@@ -237,6 +246,72 @@ impl TextureData {
             is_sdf: false,
             mipmaps: false,
             vmax: 1.,
+        })
+    }
+
+    /// Creates a new TextureData from an image wrapper
+    fn from_image_sdf(
+        ctx: &Context,
+        name: Option<&str>,
+        img: &image::DynamicImage,
+        flipv: bool,
+        srgb: bool,
+    ) -> Result<Self> {
+        let gl = &ctx.gl;
+        let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
+
+        let has_alpha = img.color().has_alpha();
+        if !has_alpha {
+            anyhow::bail!("Trying to create SDF from image without alpha!");
+        }
+        let (w, h) = (img.width(), img.height());
+        let img = match flipv {
+            true => &img.flipv(),
+            false => img,
+        };
+        let (imgdata, vmax) = {
+            // Get only the alpha channel
+            let mut rawdata: Vec<_> = img.to_luma_alpha8().pixels().map(|p| p.0[1]).collect();
+            let mut vmax: f64 = 0.0;
+            // Compute the distance transform
+            let sdfdata = unsafe {
+                let data = naevc::make_distance_mapbf(rawdata.as_mut_ptr(), w, h, &mut vmax);
+                std::slice::from_raw_parts(data, (w * h) as usize)
+            };
+            (sdfdata, vmax)
+        };
+
+        let internalformat = TextureFormat::auto(has_alpha, srgb);
+        unsafe {
+            gl.bind_texture(glow::TEXTURE_2D, Some(texture));
+            let (prefix, floats, suffix) = imgdata.align_to::<u8>();
+            let gldata = glow::PixelUnpackData::Slice(Some(floats));
+            gl.tex_image_2d(
+                glow::TEXTURE_2D,
+                0,
+                glow::RED as i32,
+                w as i32,
+                h as i32,
+                0,
+                glow::RED as u32,
+                glow::FLOAT,
+                gldata,
+            );
+            if gl.supports_debug() {
+                gl.object_label(glow::TEXTURE, texture.0.into(), name);
+            }
+            gl.bind_texture(glow::TEXTURE_2D, None);
+        }
+
+        Ok(TextureData {
+            name: name.map(String::from),
+            w: w as usize,
+            h: h as usize,
+            texture,
+            is_srgb: false,
+            is_sdf: true,
+            mipmaps: false,
+            vmax: vmax as f32,
         })
     }
 
@@ -537,6 +612,7 @@ impl TextureSource {
         srgb: bool,
         flipv: bool,
         mipmaps: bool,
+        sdf: bool,
         name: Option<&str>,
     ) -> Result<Arc<TextureData>> {
         if let TextureSource::TextureData(tex) = self {
@@ -568,11 +644,17 @@ impl TextureSource {
                         .decode()
                         .unwrap();
                     let ctx = &sctx.lock();
-                    TextureData::from_image(ctx, name, &img, flipv, srgb)?
+                    match sdf {
+                        true => TextureData::from_image_sdf(ctx, name, &img, flipv, srgb)?,
+                        false => TextureData::from_image(ctx, name, &img, flipv, srgb)?,
+                    }
                 }
                 TextureSource::Image(img) => {
                     let ctx = &sctx.lock();
-                    TextureData::from_image(ctx, name, img, flipv, srgb)?
+                    match sdf {
+                        true => TextureData::from_image_sdf(ctx, name, &img, flipv, srgb)?,
+                        false => TextureData::from_image(ctx, name, &img, flipv, srgb)?,
+                    }
                 }
                 TextureSource::Raw(tex) => TextureData::from_raw(*tex, w, h)?,
                 TextureSource::Empty(fmt) => {
@@ -757,7 +839,16 @@ impl TextureBuilder {
     }
 
     pub fn build_wrap(self, sctx: &ContextWrapper) -> Result<Texture> {
-        /* TODO handle SDF. */
+        // Some checks
+        if self.is_sdf {
+            match self.source {
+                TextureSource::TextureData(_) | TextureSource::Raw(_) | TextureSource::Empty(_) => {
+                    anyhow::bail!("SDF must use Path of Image as source!")
+                }
+                _ => (),
+            }
+        }
+
         let texture = self.source.to_texture_data(
             sctx,
             self.w,
@@ -765,6 +856,7 @@ impl TextureBuilder {
             self.is_srgb,
             self.is_flipv,
             self.mipmaps,
+            self.is_sdf,
             self.name.as_deref(),
         )?;
 
