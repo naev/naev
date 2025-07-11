@@ -2,13 +2,17 @@ build_gl_version = 'Unknown'
 test_renderer = 'System'
 note = 'Could not find a software renderer.'
 
-gl_result = cc.run(files('getglversion.c'), dependencies: sdl)
-if not gl_result.compiled()
-    warning('GL Version test failed to compile')
-elif gl_result.returncode() != 0
-    warning('GL Version test failed to run')
+if sdl.type_name() == 'internal'
+    warning('Skipping GL Version test due to SDL being an internal dependency')
 else
-    build_gl_version = gl_result.stdout()
+  gl_result = cc.run(files('getglversion.c'), dependencies: sdl)
+  if not gl_result.compiled()
+      warning('GL Version test failed to compile')
+  elif gl_result.returncode() != 0
+      warning('GL Version test failed to run')
+  else
+      build_gl_version = gl_result.stdout()
+  endif
 endif
 
 summary('System OpenGL Version', build_gl_version, section: 'Tests')
