@@ -1,4 +1,3 @@
-#![allow(dead_code, unused_variables)]
 use anyhow::Result;
 use glow::*;
 use log::{warn, warn_err};
@@ -291,7 +290,6 @@ impl TextureData {
         name: Option<&str>,
         img: &image::DynamicImage,
         flipv: bool,
-        srgb: bool,
     ) -> Result<Self> {
         let gl = &ctx.gl;
         let texture = unsafe { gl.create_texture().map_err(|e| anyhow::anyhow!(e)) }?;
@@ -317,10 +315,9 @@ impl TextureData {
             (sdfdata, vmax)
         };
 
-        let internalformat = TextureFormat::auto(has_alpha, srgb);
         unsafe {
             gl.bind_texture(glow::TEXTURE_2D, Some(texture));
-            let (prefix, floats, suffix) = imgdata.align_to::<u8>();
+            let (_prefix, floats, _suffix) = imgdata.align_to::<u8>();
             let gldata = glow::PixelUnpackData::Slice(Some(floats));
             gl.tex_image_2d(
                 glow::TEXTURE_2D,
@@ -711,14 +708,14 @@ impl TextureSource {
                         .unwrap();
                     let ctx = &sctx.lock();
                     match sdf {
-                        true => TextureData::from_image_sdf(ctx, name, &img, flipv, srgb)?,
+                        true => TextureData::from_image_sdf(ctx, name, &img, flipv)?,
                         false => TextureData::from_image(ctx, name, &img, flipv, srgb)?,
                     }
                 }
                 TextureSource::Image(img) => {
                     let ctx = &sctx.lock();
                     match sdf {
-                        true => TextureData::from_image_sdf(ctx, name, img, flipv, srgb)?,
+                        true => TextureData::from_image_sdf(ctx, name, img, flipv)?,
                         false => TextureData::from_image(ctx, name, img, flipv, srgb)?,
                     }
                 }
@@ -727,7 +724,7 @@ impl TextureSource {
                     let ctx = &sctx.lock();
                     TextureData::new(ctx, *fmt, w, h)?
                 }
-                TextureSource::TextureData(tex) => unreachable!(),
+                TextureSource::TextureData(_) => unreachable!(),
             };
             if mipmaps {
                 let ctx = &sctx.lock();
@@ -1346,11 +1343,11 @@ pub extern "C" fn gl_loadImageData(
     sx: c_int,
     sy: c_int,
     cname: *const c_char,
-    cflags: c_uint,
+    _cflags: c_uint,
 ) -> *mut Texture {
     let ctx = Context::get().unwrap(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
-    let flags = Flags::from(cflags);
+    //let flags = Flags::from(cflags);
 
     unsafe {
         naevc::gl_contextSet();
@@ -1613,13 +1610,13 @@ pub extern "C" fn tex_isSDF(ctex: *mut Texture) -> c_int {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gl_isTrans(ctex: *mut Texture, x: c_int, y: c_int) -> c_int {
+pub extern "C" fn gl_isTrans(_ctex: *mut Texture, _x: c_int, _y: c_int) -> c_int {
     // TODO
     0
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn tex_hasTrans(ctex: *mut Texture) -> c_int {
+pub extern "C" fn tex_hasTrans(_ctex: *mut Texture) -> c_int {
     // TODO
     0
 }
@@ -1762,7 +1759,6 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     bh: c_double,
 ) {
     let ctx = Context::get().unwrap();
-    let dims = ctx.dimensions.read().unwrap();
     let tex = unsafe { &*ctex };
     let tw = tex.texture.w as f32;
     let th = tex.texture.h as f32;
