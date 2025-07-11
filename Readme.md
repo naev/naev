@@ -41,16 +41,13 @@ Naev's dependencies are intended to be widely available. In addition to a
 graphics card and driver supporting at least OpenGL 3.3, Naev requires:
 * rust 2024
 * bindgen
-* SDL2
+* SDL3`*`
 * libxml2
 * freetype2
-* libpng
-* libwebp
 * OpenAL
 * OpenBLAS
 * libvorbis
 * intltool
-* pyyaml
 * SuiteSparse`*`
 * enet`*`
 * physfs`*`
@@ -59,7 +56,7 @@ graphics card and driver supporting at least OpenGL 3.3, Naev requires:
 * GLPK`*`
 * libunibreak`*`
 * cmark`*`
-* libyaml`*`
+* pyyaml (compilation only)
 
 Dependencies marked with `*` will use subprojects if not found in the host system.
 
