@@ -373,8 +373,9 @@ impl NebulaData {
             self.puff_uniform.offset.y = cam_pos.y as f32;
             cam.zoom as f32
         };
-        self.uniform.horizon = self.view * z / self.scale;
-        self.uniform.eddy_scale = self.dx * z / self.scale;
+        let s = self.scale * self.nebu_scale * 4.0; // 16.0 is a correction term to be same as before
+        self.uniform.horizon = self.view * z / s;
+        self.uniform.eddy_scale = self.dx * z / s;
         self.puff_uniform.offset.z = z;
 
         // Write updates to uniform buffer
@@ -393,7 +394,7 @@ impl NebulaData {
         volatility: f32,
         hue: f32,
     ) -> Result<()> {
-        self.dx = 25e3 / density.powf(1.0 / 3.0) * self.scale / 16.0;
+        self.dx = 25e3 / density.powf(1.0 / 3.0) * self.scale;
         self.density = density;
         self.speed = (2.0 * density + 200.0) / 10e3; // Faster at higher density
 
