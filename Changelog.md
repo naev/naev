@@ -58,6 +58,7 @@
 
 #### Engine
  - Begin porting to rust
+ - Using SDL3
  - Engine supports modifying some important constants such as those related to the physics model for use in plugins
  - Use instancing instead of geometry shaders for space dust
  - Ship Lua scripting supports "onshootany" now
@@ -109,6 +110,7 @@
  - Cryogenic Nanobots no longer restore health to 100% on completing cooldown regardless of damage taken
  - Improved AI braking skills
  - Game will not save in certain cases like loading the game and immediately being forced to take off by a load hook
+ - Improved handling of fullscreen toggling and resolution changes
 
 
 ## 0.12.6
