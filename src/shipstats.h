@@ -15,7 +15,7 @@
  * #1 is D for double, A for absolute double, I for integer or B for boolean.
  * #2 is the name.
  */
-typedef enum ShipStatsType_ {
+typedef enum ShipStatsType {
    SS_TYPE_NIL, /**< Invalid type. */
 
    /*
@@ -206,7 +206,7 @@ typedef struct ShipStatList ShipStatList;
  * Booleans:
  *  1 or 0 values wher 1 indicates property is set.
  */
-typedef struct ShipStats_ {
+typedef struct ShipStats {
    /* Movement. */
    double speed;     /**< Speed modifier. */
    double turn;      /**< Turn modifier. */

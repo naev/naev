@@ -62,7 +62,7 @@ typedef enum StatDataType_ {
  * Makes it much easier to work with stats at the cost of some minor
  * performance.
  */
-typedef struct ShipStatsLookup_ {
+typedef struct ShipStatsLookup {
    /* Explicitly set. */
    ShipStatsType type; /**< Type of the stat. */
    const char *
