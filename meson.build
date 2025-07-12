@@ -23,6 +23,9 @@ c_args = cc.get_supported_arguments([
    '-Wshadow',
    '-fno-signed-zeros'
 ])
+# TODO Is there a better way to get rust compiler?
+rustc = find_program('rustc', version: '>=1.85.0', required: true)
+bindgen = find_program('bindgen', version: '>=0.72.0', required: true)
 
 if host_machine.system() == 'linux'
    c_args += ['-D_XOPEN_SOURCE=700']
@@ -347,10 +350,6 @@ clang = find_program('clang', required: false)
 if not clang.found()
    error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
 endif
-
-# Check bindgen version
-# We'll need https://github.com/rust-lang/rust-bindgen/pull/3124 (should be next version after 0.71.1) to compile without warnings with 2024 rust
-bindgen = find_program('bindgen', version: '>=0.62.0', required: true)
 
 bindgen_args = [
    '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
