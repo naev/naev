@@ -348,7 +348,9 @@ end
 local function wave_compute_score ()
    local pp = player.pilot()
    local score = 0
-   local bonus = 100
+   -- Positive bonuses are addeded, negative are multiplied
+   local bonus = 1
+   local bonus_mul = 1
    local str = {}
 
    local elapsed = (naev.ticksGame()-mem.wave_started_time)
@@ -368,89 +370,90 @@ local function wave_compute_score ()
       local h
       if b > 0 then
          h = "#g"
+         bonus = bonus + b
       else
          h = "#r"
+         bonus_mul = bonus_mul * (1 + b)
       end
-      table.insert( str, h .. string.format(s,b) )
-      bonus = bonus + b
+      table.insert( str, h .. string.format(s,b*100) )
    end
    local s = pp:ship()
    local c = _(s:class())
    local civ = s:tags().civilian
    if mem.wave_category == "skirmisher" then
       local SIZES = {
-         [1] = 10,
-       --[2] = 0,
-         [3] = -20,
-         [4] = -40,
-         [5] = -80,
-         [6] = -90,
+         [1] = 0.10,
+       --[2] = 0.00,
+         [3] = -0.20,
+         [4] = -0.40,
+         [5] = -0.80,
+         [6] = -0.90,
       }
       local b = SIZES[pp:ship():size()]
       if civ then
-         b = (b or 0) + 10
+         b = (b or 0) + 0.10
       end
       if b then
          newbonus( fmt.f(_("{class} %d%%"), {class=c} ), b )
       end
       if elapsed < 15 then
-         newbonus( _("Fast Clear (<15s) %d%%"), 25 )
+         newbonus( _("Fast Clear (<15s) %d%%"), 0.25 )
       elseif elapsed > 90 then
-         newbonus( _("Slow Clear (>90s) %d%%"), -25 )
+         newbonus( _("Slow Clear (>90s) %d%%"), -0.25 )
       end
    elseif mem.wave_category == "warrior" then
       local SIZES = {
-         [1] = 150,
-         [2] = 100,
-         [3] = 25,
-       --[4] = 0,
-         [5] = -20,
-         [6] = -30,
+         [1] = 0.15,
+         [2] = 0.10,
+         [3] = 0.25,
+       --[4] = 0.00,
+         [5] = -0.20,
+         [6] = -0.30,
       }
       local b = SIZES[pp:ship():size()]
       if civ then
-         b = (b or 0) + 25
+         b = (b or 0) + 0.25
       end
       if b then
          newbonus( fmt.f(_("{class} %d%%"), {class=c} ), b )
       end
       if elapsed < 25 then
-         newbonus( _("Fast Clear (<25s) %d%%"), 25 )
+         newbonus( _("Fast Clear (<25s) %d%%"), 0.25 )
       elseif elapsed > 120 then
-         newbonus( _("Slow Clear (>120s) %d%%"), -25 )
+         newbonus( _("Slow Clear (>120s) %d%%"), -0.25 )
       end
    elseif mem.wave_category == "warlord" then
       local SIZES = {
-         [1] = 700,
-         [2] = 500,
-         [3] = 100,
-         [4] = 50,
-         [5] = 25,
-       --[6] = 0,
+         [1] = 7.00,
+         [2] = 5.00,
+         [3] = 1.00,
+         [4] = 0.50,
+         [5] = 0.25,
+       --[6] = 0.00,
       }
       local b = SIZES[pp:ship():size()]
       if civ then
-         b = (b or 0) + 50
+         b = (b or 0) + 0.50
       end
       if b then
          newbonus( fmt.f(_("{class} %d%%"), {class=c} ), b )
       end
       if elapsed < 40 then
-         newbonus( _("Fast Clear (<40s) %d%%"), 25 )
+         newbonus( _("Fast Clear (<40s) %d%%"), 0.25 )
       elseif elapsed > 180 then
-         newbonus( _("Slow Clear (>180s) %d%%"), -25 )
+         newbonus( _("Slow Clear (>180s) %d%%"), -0.25 )
       end
    end
 
    -- Implement global modifier bonuses here
    if gmods.doubledmgtaken then
-      newbonus( _("Double Damage Enemies %d%%"), 50 )
+      newbonus( _("Double Damage Enemies %d%%"), 0.50 )
    end
    if gmods.nohealing then
-      newbonus( _("No Healing Between Waves %d%%"), 25 )
+      newbonus( _("No Healing Between Waves %d%%"), 0.25 )
    end
 
-   score = math.max( 0, score * bonus / 100 )
+   score = math.max( 0, math.floor(score * bonus * bonus_mul + 0.5) )
 
    mem.total_score = mem.total_score + score
    table.insert( str, string.format(_("TOTAL %d (#g+%d#0)"), mem.total_score, score ) )

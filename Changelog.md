@@ -25,6 +25,7 @@
  - Ships can have a minimum cargo-less mass of 50% of the ship base mass
  - Damage over time effects now can cause faction loss and other effects
  - New harder difficulty
+ - Gauntlet negative bonuses are now multiplicative
 
 #### Quality of Life
  - Autonav improvements
