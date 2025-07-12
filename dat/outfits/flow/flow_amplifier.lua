@@ -35,3 +35,12 @@ end
 function onhit( p, _po, armour, shield )
    flow.onhit( p, armour, shield )
 end
+
+function onremove( p, _po )
+   -- Can't use flow.recalculate() because this is run while the outfit is
+   -- still equipped. So we just disable the internals.
+   local sm = p:shipMemory()
+   sm._flow_mod = nil
+   sm._flow_base = nil
+   sm._flow_regen = nil
+end
