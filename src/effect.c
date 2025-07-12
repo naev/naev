@@ -156,20 +156,7 @@ static int effect_parse( EffectData *efx, const char *file )
       }
 
       if ( xml_isNode( node, "stats" ) ) {
-         xmlNodePtr cur = node->children;
-         do {
-            ShipStatList *ll;
-            xml_onlyNodes( cur );
-            /* Stats. */
-            ll = ss_listFromXML( cur );
-            if ( ll != NULL ) {
-               ll->next   = efx->stats;
-               efx->stats = ll;
-               continue;
-            }
-            WARN( _( "Effect '%s' has unknown node '%s'" ), efx->name,
-                  cur->name );
-         } while ( xml_nextNode( cur ) );
+         efx->stats = ss_listFromXML( node );
          continue;
       }
       // cppcheck-suppress nullPointerRedundantCheck

@@ -44,7 +44,6 @@
 #include "space.h"
 #include "spfx.h"
 #include "start.h"
-#include "threadpool.h"
 
 #define XML_OUTFIT_TAG "outfit" /**< XML section identifier. */
 
@@ -2075,10 +2074,9 @@ static int outfit_loadGFX( Outfit *temp, const xmlNodePtr node )
  */
 static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
 {
-   ShipStatList *ll;
-   xmlNodePtr    node;
-   double        dshield, darmour, dknockback;
-   int           l;
+   xmlNodePtr node;
+   double     dshield, darmour, dknockback;
+   int        l;
 
    /* Defaults */
    temp->u.blt.gfx.size    = -1.;
@@ -2196,12 +2194,9 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
       }
 
       /* Stats. */
-      ll = ss_listFromXML( node );
-      if ( ll != NULL ) {
-         ll->next    = temp->stats;
-         temp->stats = ll;
+      temp->stats = ss_listFromXMLSingle( temp->stats, node );
+      if ( temp->stats != NULL )
          continue;
-      }
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -2308,11 +2303,10 @@ static void outfit_parseSBolt( Outfit *temp, const xmlNodePtr parent )
  */
 static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
 {
-   ShipStatList *ll;
-   int           l;
-   xmlNodePtr    node;
-   double        dshield, darmour, dknockback;
-   char         *shader;
+   int        l;
+   xmlNodePtr node;
+   double     dshield, darmour, dknockback;
+   char      *shader;
 
    /* Defaults. */
    temp->u.bem.spfx_armour  = -1;
@@ -2401,12 +2395,9 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
       }
 
       /* Stats. */
-      ll = ss_listFromXML( node );
-      if ( ll != NULL ) {
-         ll->next    = temp->stats;
-         temp->stats = ll;
+      temp->stats = ss_listFromXMLSingle( temp->stats, node );
+      if ( temp->stats != NULL )
          continue;
-      }
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -2477,10 +2468,9 @@ static void outfit_parseSBeam( Outfit *temp, const xmlNodePtr parent )
  */
 static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
 {
-   ShipStatList *ll;
-   xmlNodePtr    node;
-   double        dshield, darmour, dknockback;
-   int           l;
+   xmlNodePtr node;
+   double     dshield, darmour, dknockback;
+   int        l;
 
    temp->u.lau.trackmin    = -1.;
    temp->u.lau.trackmax    = -1.;
@@ -2622,12 +2612,9 @@ static void outfit_parseSLauncher( Outfit *temp, const xmlNodePtr parent )
       }
 
       /* Stats. */
-      ll = ss_listFromXML( node );
-      if ( ll != NULL ) {
-         ll->next    = temp->stats;
-         temp->stats = ll;
+      temp->stats = ss_listFromXMLSingle( temp->stats, node );
+      if ( temp->stats != NULL )
          continue;
-      }
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -2798,8 +2785,6 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node = parent->children;
 
    do { /* load all the data */
-      ShipStatList *ll;
-
       xml_onlyNodes( node );
       xmlr_strd( node, "lua", temp->lua_file );
       xmlr_strd( node, "lua_inline", temp->lua_inline );
@@ -2817,12 +2802,9 @@ static void outfit_parseSMod( Outfit *temp, const xmlNodePtr parent )
       }
 
       /* Stats. */
-      ll = ss_listFromXML( node );
-      if ( ll != NULL ) {
-         ll->next    = temp->stats;
-         temp->stats = ll;
+      temp->stats = ss_listFromXMLSingle( temp->stats, node );
+      if ( temp->stats != NULL )
          continue;
-      }
 
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
@@ -2856,8 +2838,6 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
    temp->u.afb.speed = 1.;
 
    do { /* parse the data */
-      ShipStatList *ll;
-
       xml_onlyNodes( node );
       xmlr_float( node, "rumble", temp->u.afb.rumble );
       xmlr_strd( node, "lua", temp->lua_file );
@@ -2880,12 +2860,9 @@ static void outfit_parseSAfterburner( Outfit *temp, const xmlNodePtr parent )
       xmlr_float( node, "mass_limit", temp->u.afb.mass_limit );
 
       /* Stats. */
-      ll = ss_listFromXML( node );
-      if ( ll != NULL ) {
-         ll->next    = temp->stats;
-         temp->stats = ll;
+      temp->stats = ss_listFromXMLSingle( temp->stats, node );
+      if ( temp->stats != NULL )
          continue;
-      }
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -2934,8 +2911,6 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node = parent->children;
 
    do {
-      ShipStatList *ll;
-
       xml_onlyNodes( node );
       xmlr_float( node, "delay", temp->u.bay.delay );
       xmlr_float( node, "reload_time", temp->u.bay.reload_time );
@@ -2946,12 +2921,9 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_strd( node, "lua_inline", temp->lua_inline );
 
       /* Stats. */
-      ll = ss_listFromXML( node );
-      if ( ll != NULL ) {
-         ll->next    = temp->stats;
-         temp->stats = ll;
+      temp->stats = ss_listFromXMLSingle( temp->stats, node );
+      if ( temp->stats != NULL )
          continue;
-      }
       WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name, node->name );
    } while ( xml_nextNode( node ) );
 
@@ -3382,15 +3354,11 @@ static int outfit_parse( Outfit *temp, const char *file )
       if ( xml_isNode( node, "stats" ) ) {
          xmlNodePtr cur = node->children;
          do {
-            ShipStatList *ll;
             xml_onlyNodes( cur );
             /* Stats. */
-            ll = ss_listFromXML( cur );
-            if ( ll != NULL ) {
-               ll->next    = temp->stats;
-               temp->stats = ll;
+            temp->stats = ss_listFromXMLSingle( temp->stats, cur );
+            if ( temp->stats != NULL )
                continue;
-            }
             WARN( _( "Outfit '%s' has unknown node '%s'" ), temp->name,
                   cur->name );
          } while ( xml_nextNode( cur ) );

@@ -25,7 +25,6 @@
 #include "nlua_camera.h"
 #include "nlua_gfx.h"
 #include "nlua_ship.h"
-#include "nstring.h"
 #include "nxml.h"
 #include "opengl_tex.h"
 #include "shipstats.h"
@@ -1023,15 +1022,8 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       ARRAYDUP_( temp->outfit_weapon, base->outfit_weapon );
       temp->desc_stats = STRDUP_( base->desc_stats );
       temp->stats      = NULL;
-      ShipStatList *ll = base->stats;
-      while ( ll != NULL ) {
-         ShipStatList *ln = calloc( 1, sizeof( ShipStatList ) );
-         *ln              = *ll;
-         ln->next         = temp->stats;
-         temp->stats      = ln;
-         ll               = ll->next;
-      }
-      temp->tags = array_create( char * );
+      temp->stats      = ss_dupList( base->stats );
+      temp->tags       = array_create( char * );
       for ( int i = 0; i < array_size( base->tags ); i++ )
          array_push_back( &temp->tags, strdup( base->tags[i] ) );
       temp->lua_file = STRDUP_( base->lua_file );
@@ -1304,24 +1296,12 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
 
       /* Parse ship stats. */
       if ( xml_isNode( node, "stats" ) ) {
-         xmlNodePtr cur = node->children;
          /* Clear if duplicated. */
          if ( temp->stats != NULL ) {
             ss_free( temp->stats );
             temp->stats = NULL;
          }
-         do {
-            ShipStatList *ll;
-            xml_onlyNodes( cur );
-            ll = ss_listFromXML( cur );
-            if ( ll != NULL ) {
-               ll->next    = temp->stats;
-               temp->stats = ll;
-               continue;
-            }
-            WARN( _( "Ship '%s' has unknown stat '%s'." ), temp->name,
-                  cur->name );
-         } while ( xml_nextNode( cur ) );
+         temp->stats = ss_listFromXML( node );
 
          /* Load array. */
          ss_sort( &temp->stats );

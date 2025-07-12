@@ -37,7 +37,7 @@ int difficulty_load( void )
    for ( int i = 0; i < array_size( difficulty_files ); i++ ) {
       Difficulty d;
       xmlDocPtr  doc;
-      xmlNodePtr node, cur;
+      xmlNodePtr node;
 
       /* Load and read the data. */
       doc = xml_parsePhysFS( difficulty_files[i] );
@@ -61,22 +61,11 @@ int difficulty_load( void )
       xmlr_attr_int_opt( node, "default", d.def );
 
       /* Get the stats. */
-      cur = node->xmlChildrenNode;
+      xmlNodePtr cur = node->children;
       do {
          xml_onlyNodes( cur );
-
-         /* Load the description. */
          xmlr_strd( cur, "description", d.description );
-
-         /* Rest should be ship stats. */
-         ShipStatList *ll = ss_listFromXML( cur );
-         if ( ll != NULL ) {
-            ll->next = d.stats;
-            d.stats  = ll;
-            continue;
-         }
-         WARN( _( "Difficulty '%s' has unknown node '%s'" ), d.name,
-               cur->name );
+         d.stats = ss_listFromXMLSingle( d.stats, cur );
       } while ( xml_nextNode( cur ) );
 
       xmlFreeDoc( doc );

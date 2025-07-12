@@ -23,6 +23,29 @@ static int ss_statsMergeSingleScale( ShipStats *stats, const ShipStatList *list,
                                      double scale, int multiply );
 
 /**
+ * @brief Represents relative ship statistics as a linked list.
+ *
+ * Doubles:
+ *  These values are relative so something like -0.15 would be -15%.
+ *
+ * Absolute and Integers:
+ *  These values are just absolute values.
+ *
+ * Booleans:
+ *  Can only be 1.
+ */
+typedef struct ShipStatList {
+   struct ShipStatList *next; /**< Next pointer. */
+
+   int           target; /**< Whether or not it affects the target. */
+   ShipStatsType type;   /**< Type of stat. */
+   union {
+      double d; /**< Floating point data. */
+      int    i; /**< Integer data. */
+   } d;         /**< Stat data. */
+} ShipStatList;
+
+/**
  * @brief The data type.
  */
 typedef enum StatDataType_ {
@@ -352,13 +375,7 @@ ShipStatList *ss_statsSetList( ShipStatList *head, ShipStatsType type,
    return newhead;
 }
 
-/**
- * @brief Creates a shipstat list element from an xml node.
- *
- *    @param node Node to create element from.
- *    @return List element created from node.
- */
-ShipStatList *ss_listFromXML( xmlNodePtr node )
+ShipStatList *ss_listFromXMLSingle( ShipStatList *head, xmlNodePtr node )
 {
    const ShipStatsLookup *sl;
    ShipStatList          *ll;
@@ -366,12 +383,14 @@ ShipStatList *ss_listFromXML( xmlNodePtr node )
 
    /* Try to get type. */
    type = ss_typeFromName( (char *)node->name );
-   if ( type == SS_TYPE_NIL )
-      return NULL;
+   if ( type == SS_TYPE_NIL ) {
+      WARN( "Ship Stat List has unknown node '%s'", node->name );
+      return head;
+   }
 
    /* Allocate. */
    ll         = malloc( sizeof( ShipStatList ) );
-   ll->next   = NULL;
+   ll->next   = head;
    ll->target = 0;
    ll->type   = type;
 
@@ -400,6 +419,23 @@ ShipStatList *ss_listFromXML( xmlNodePtr node )
    ss_sort( &ll );
 
    return ll;
+}
+
+/**
+ * @brief Creates a shipstat list element from an xml node.
+ *
+ *    @param node Node to create element from.
+ *    @return List element created from node.
+ */
+ShipStatList *ss_listFromXML( xmlNodePtr node )
+{
+   ShipStatList *head = NULL;
+   xmlNodePtr    cur  = node->children;
+   do {
+      xml_onlyNodes( cur );
+      head = ss_listFromXMLSingle( head, cur );
+   } while ( xml_nextNode( cur ) );
+   return head;
 }
 
 /**
@@ -963,6 +999,22 @@ void ss_free( ShipStatList *ll )
       ll                = ll->next;
       free( tmp );
    }
+}
+
+/**
+ * @brief Duplicates a ship stat list.
+ */
+ShipStatList *ss_dupList( const ShipStatList *ll )
+{
+   ShipStatList *head = NULL;
+   while ( ll != NULL ) {
+      ShipStatList *ln = calloc( 1, sizeof( ShipStatList ) );
+      *ln              = *ll;
+      ln->next         = head;
+      head             = ln;
+      ll               = ll->next;
+   }
+   return head;
 }
 
 /**

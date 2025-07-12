@@ -184,29 +184,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_SENTINEL /**< Sentinel for end of types. */
 } ShipStatsType;
-
-/**
- * @brief Represents relative ship statistics as a linked list.
- *
- * Doubles:
- *  These values are relative so something like -0.15 would be -15%.
- *
- * Absolute and Integers:
- *  These values are just absolute values.
- *
- * Booleans:
- *  Can only be 1.
- */
-typedef struct ShipStatList_ {
-   struct ShipStatList_ *next; /**< Next pointer. */
-
-   int           target; /**< Whether or not it affects the target. */
-   ShipStatsType type;   /**< Type of stat. */
-   union {
-      double d; /**< Floating point data. */
-      int    i; /**< Integer data. */
-   } d;         /**< Stat data. */
-} ShipStatList;
+typedef struct ShipStatList ShipStatList;
 
 /**
  * @brief Represents ship statistics, properties ship can use.
@@ -374,9 +352,11 @@ int ss_check( void );
  * Loading.
  */
 ShipStatList *ss_listFromXML( xmlNodePtr node );
+ShipStatList *ss_listFromXMLSingle( ShipStatList *head, xmlNodePtr node );
 int           ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll );
 int           ss_sort( ShipStatList **ll );
 void          ss_free( ShipStatList *ll );
+ShipStatList *ss_dupList( const ShipStatList *ll );
 
 /*
  * Manipulation

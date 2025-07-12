@@ -3279,18 +3279,7 @@ static int system_parse( StarSystem *sys, const char *filename )
       }
 
       if ( xml_isNode( node, "stats" ) ) {
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes( cur );
-            ShipStatList *ll = ss_listFromXML( cur );
-            if ( ll != NULL ) {
-               ll->next   = sys->stats;
-               sys->stats = ll;
-               continue;
-            }
-            WARN( _( "System '%s' has unknown stat '%s'." ), sys->name,
-                  cur->name );
-         } while ( xml_nextNode( cur ) );
+         sys->stats = ss_listFromXML( node );
          continue;
       }
 
