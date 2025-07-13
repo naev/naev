@@ -333,7 +333,7 @@ jobs:
         include:
           - image: naev-macos
             arch: x86_64
-            deploymenttarget: "10.13"
+            deploymenttarget: "11.0"
             config: macos_cross_osxcross.ini
 #          - image: naev-macos
 #            arch: aarch64
