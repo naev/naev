@@ -35,6 +35,10 @@ bindgen = find_program('bindgen', version: bindgen_needed_version, required: fal
 if not bindgen.found()
    error('Need at least bindgen version @0@\nYou can get an up-to-date version by running "cargo install bindgen-cli"'.format(bindgen_needed_version))
 endif
+clang = find_program('clang', required: false)
+if not clang.found()
+   error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
+endif
 
 if host_machine.system() == 'linux'
    c_args += ['-D_XOPEN_SOURCE=700']
@@ -305,9 +309,8 @@ if buildExec.disabled() == false
       naev_source += mac_source
       naevlua_source += mac_source
       naev_deps += dependency('Foundation', required: true )
-   endif
 
-   if host_machine.system() == 'windows'
+   elif host_machine.system() == 'windows'
       windows = import('windows')
       icon = files('extras/logos/logo.ico')
       install_data(icon, install_dir: '.')
@@ -344,13 +347,6 @@ if buildExec.disabled() == false
       capture: true,
       output: 'naevc.h',
    )
-
-
-# Check for clang compiler
-clang = find_program('clang', required: false)
-if not clang.found()
-   error('Clang is required for bindgen to find the standard library correctly. See issue: https://github.com/servo/gecko-media/issues/71')
-endif
 
 bindgen_args = [
    '--wrap-unsafe-ops', # Needed to try to lower warnings with 2024 rust https://github.com/rust-lang/rust-bindgen/issues/3147
