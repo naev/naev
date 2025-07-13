@@ -14,7 +14,7 @@ if argv[1:] != []:
    )
    exit(0)
 
-from graphmod import sys_pos as pos
+from graphmod import ssys_pos as pos
 from geometry import segment, circumscribed
 
 

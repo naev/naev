@@ -12,5 +12,5 @@ def add_virtual_edges( E, virtual ):
       elif i in [ x for x, _ in E[j]] or j in [ y for y, _ in E[i]]:
          stderr.write(str(tuple(t[:2])) + ' already implied by an existing edge!\n')
       else:
-         already.add((i,j))
+         already.add((i, j))
          E[i].append((j, [str(o) for o in t[2:]] + ['virtual']))

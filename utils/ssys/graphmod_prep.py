@@ -86,18 +86,17 @@ if prv is not None:
    virtual_edges.append(('_'+str(prvj+2),             prv))
    virtual_edges.append(('_'+str(prvj+2),      '_'+str(1)))
 
-from graphmod import sys_pos as V, sys_jmp as E
+from graphmod import ssys_pos, ssys_jmp
 from virtual_edges import add_virtual_edges
+add_virtual_edges(ssys_jmp, virtual_edges)
 
-add_virtual_edges(E, virtual_edges)
 
-
-for v in V:
-   for e, t in E[v]:
+for v in ssys_pos:
+   for e, t in ssys_jmp[v]:
       if (v, e) in del_edges:
          t.append('fake')
       if (v, e) in new_edges:
          new_edges.remove((v, e))
 
 for (i, j) in new_edges:
-   E[i].append((j, ['new']))
+   ssys_pos[i].append((j, ['new']))

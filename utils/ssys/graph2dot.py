@@ -9,7 +9,7 @@ from graph_vaux import color_values, ssys_color, ssys_nebula
 
 
 def main( color = False, fixed_pos = False ):
-   from graphmod import sys_pos as pos, sys_jmp as E, no_graph_out
+   from graphmod import ssys_pos as pos, ssys_jmp as E, no_graph_out
    no_graph_out()
 
    if color:

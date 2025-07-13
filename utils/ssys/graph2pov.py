@@ -74,7 +74,7 @@ def write_pov( s, indent = -1 ):
    else:
       dst.write(3*indent*' ' + str(s) + '\n')
 
-from graphmod import sys_pos as V, sys_jmp as E, no_graph_out
+from graphmod import ssys_pos as V, ssys_jmp as E, no_graph_out
 no_graph_out()
 colors = { k: color_values[ssys_color(V, k)] for k in V }
 nebula = { k for k in V if ssys_nebula(V, k) }

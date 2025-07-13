@@ -12,7 +12,7 @@ if argv[1:] != []:
    )
    exit(0)
 
-from graphmod import sys_pos, sys_jmp, no_graph_out
+from graphmod import ssys_pos, ssys_jmp, no_graph_out
 no_graph_out()
 
-print (' '.join([i for i in sys_pos if len(sys_jmp[i]) <= 1]))
+print (' '.join([i for i in ssys_pos if len(ssys_jmp[i]) <= 1]))

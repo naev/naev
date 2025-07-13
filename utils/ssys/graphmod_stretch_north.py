@@ -15,7 +15,7 @@ if argv[1:] != []:
    exit(0)
 
 from geometry import vec, bb
-from graphmod import sys_pos as pos
+from graphmod import ssys_pos as pos
 
 box = bb()
 for (_, v) in pos.items():

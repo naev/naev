@@ -29,7 +29,7 @@ def input_blocks( it ):
          yield acc.strip()
          acc = ''
 
-from graphmod import sys_pos as sys_pos, sys_jmp
+from graphmod import ssys_pos, ssys_jmp
 
 dotpos = dict()
 for lin in input_blocks(stdin):
@@ -48,10 +48,10 @@ for lin in input_blocks(stdin):
 
 count = 0
 bbox, oldbb = bb(), bb()
-for k, v in sys_pos.items():
+for k, v in ssys_pos.items():
    if k[0] != '_':
       oldbb += v
-      if count<3 and k not in dotpos and sys_jmp[k]!=[]:
+      if count<3 and k not in dotpos and ssys_jmp[k] != []:
          stderr.write('"' + k + '" not found in dot output. why ?\n')
          count +=1
          if count == 3:
@@ -61,7 +61,7 @@ for k in dotpos:
    dotpos[k] *= 3.0/2.0
    if k[0] != '_':
       bbox += dotpos[k]
-      if k not in sys_pos:
+      if k not in ssys_pos:
          stderr.write('"' + k + '" not found in ssys. Bye !\n')
          exit(-1)
 
@@ -71,5 +71,5 @@ for k, v in dotpos.items():
    dotpos[k] += oldbb.mini() - bbox.mini()
    again += dotpos[k]
    if k[0] != '_':
-      sys_pos[k] = v
+      ssys_pos[k] = v
 stderr.write(' -> '.join([str(oldbb), str(bbox), str(again)]) + '\n')

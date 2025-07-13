@@ -17,7 +17,7 @@ if argv[1:] != []:
 
 
 from geometry import bb, vec, segment
-from graphmod import sys_pos as pos, sys_jmp as E
+from graphmod import ssys_pos as pos, ssys_jmp as E
 
 
 # Spiral

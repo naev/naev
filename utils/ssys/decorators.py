@@ -14,7 +14,7 @@ decorators = {
 
 if __name__ == '__main__':
    from ssys import getpath, PATH, fil_ET
-   from graphmod import sys_pos as V, no_graph_out
+   from graphmod import ssys_pos as V, no_graph_out
    no_graph_out()
    DIR = getpath(PATH, 'map_decorator')
    for i in decorators:

@@ -15,14 +15,14 @@ if argv[1:] != []:
    exit(0)
 
 from geometry import vec
-from graphmod import sys_pos as pos, sys_jmp as E
+from graphmod import ssys_pos as pos, ssys_jmp
 
 # average edge length.
 total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, t) in E[k] if 'tradelane' in t]:
+      for n in [s for (s, t) in ssys_jmp[k] if 'tradelane' in t]:
          total += (pos[n] - pos[k]).size()
          count += 1
 avg = total / count

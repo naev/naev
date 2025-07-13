@@ -22,7 +22,7 @@ virtual_edges = [
    ('brumerebus', 'antlejos'),
 ]
 
-from graphmod import sys_pos as V, sys_jmp as E
+from graphmod import ssys_jmp
 from virtual_edges import add_virtual_edges
 
-add_virtual_edges(E, virtual_edges)
+add_virtual_edges(ssys_jmp, virtual_edges)

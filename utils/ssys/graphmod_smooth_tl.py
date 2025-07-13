@@ -14,10 +14,10 @@ if argv[1:] != []:
    )
    exit(0)
 
-from graphmod import sys_pos, sys_jmp as E
+from graphmod import ssys_pos, ssys_jmp
 from smoothen import smoothen
 
 
-neigh = { k: {s for (s, t) in E[k] if 'tradelane' in t} for k in sys_pos }
-for k, v in smoothen(sys_pos, neigh).items():
-   sys_pos[k] = v
+neigh = { k: {s for (s, t) in ssys_jmp[k] if 'tradelane' in t} for k in ssys_pos }
+for k, v in smoothen(ssys_pos, neigh).items():
+   ssys_pos[k] = v

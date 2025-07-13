@@ -23,12 +23,11 @@ if help_f or (argv[1:] != [] and do_write):
       msg(l)
    exit(0 if help_f else 1)
 
-from graphmod import sys_pos as pos, sys_jmp, no_graph_out
-
+from graphmod import ssys_pos, no_graph_out
 no_graph_out()
 
 from ssys import fil_ET
-for n, (x, y) in pos.items():
+for n, (x, y) in ssys_pos.items():
    name = os.path.join(PATH, 'ssys', n + '.xml')
    T = fil_ET(name)
    e = T.getroot().find('pos')

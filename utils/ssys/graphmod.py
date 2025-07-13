@@ -64,8 +64,8 @@ class _graph():
             exit(0)
 
 graph = _graph()
-sys_pos = graph.pos
-sys_jmp = graph.jmp
+ssys_pos = graph.pos
+ssys_jmp = graph.jmp
 no_graph_out = lambda:graph.silence()
 
 try:
@@ -74,8 +74,8 @@ try:
          l = line.split(' ')
          try:
             bname, x, y = tuple((l[:3]))
-            sys_pos[bname] = vec(x, y)
-            sys_pos.aux[bname] = l[3:]
+            ssys_pos[bname] = vec(x, y)
+            ssys_pos.aux[bname] = l[3:]
             success = True
          except:
             success = False
@@ -83,7 +83,7 @@ try:
          if not success:
             if len(l) >= 2:
                bname1, bname2 = tuple(l[:2])
-               sys_jmp[bname1].append((bname2, l[2:]))
+               ssys_jmp[bname1].append((bname2, l[2:]))
             else:
                stderr.write('Ignored invalid line: ' + line + '\n')
                continue
@@ -95,6 +95,6 @@ except BrokenPipeError:
    stderr.write('Broken input pipe. Bye !\n')
    exit(0)
 
-if len(sys_pos) == 0 or len(sys_jmp) == 0:
+if len(ssys_pos) == 0 or len(ssys_jmp) == 0:
    stderr.write('Empty input ! Bye !\n')
    exit(-1)

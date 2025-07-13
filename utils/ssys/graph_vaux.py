@@ -114,7 +114,7 @@ else:
       return None if fnam not in faction else faction[fnam]
 
 
-   from graphmod import sys_pos as V
+   from graphmod import ssys_pos as V
 
    for bnam in V:
       T = ET.parse(getpath(PATH, "ssys", bnam + ".xml")).getroot()
@@ -162,7 +162,7 @@ else:
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:
-      from graphmod import sys_jmp as E
+      from graphmod import ssys_jmp as E
       newt = {}
       infl = main_col if do_color else main_fact
       _is_def = lambda a: a == [] or a[0] == 'default'
