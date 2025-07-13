@@ -527,14 +527,13 @@ naevcrs = rust.bindgen(
       install_dir: ndata_path / 'dat/gettext_stats',
    )
 
-   # TODO we probably have to do this in a more general way with more generated
-   # outfits and such
+   # Need to add other generated data files here as necessary
    gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
-   gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
-   gen_zip_command += ['--cd', 'outfits']
-   foreach target: gen_outfits
-       gen_zip_command += target
-   endforeach
+   gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors, '--cd', 'gettext_stats', gettext_stats]
+   #gen_zip_command += ['--cd', 'outfits']
+   #foreach target: gen_outfits
+   #    gen_zip_command += target
+   #endforeach
    zip_overlay = custom_target(
       'zip_overlay',
       command: gen_zip_command,
