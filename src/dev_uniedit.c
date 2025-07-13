@@ -54,8 +54,10 @@
 #define UNIEDIT_DOUBLECLICK_THRESHOLD 300 /**< Drag threshold (ms). */
 
 #define UNIEDIT_ZOOM_STEP 1.1 /**< Factor to zoom by for each zoom level. */
-#define UNIEDIT_ZOOM_MAX 5.   /**< Maximum uniedit zoom level (close). */
-#define UNIEDIT_ZOOM_MIN -5.  /**< Minimum uniedit zoom level (far). */
+#define UNIEDIT_ZOOM_MAX                                                       \
+   pow( UNIEDIT_ZOOM_STEP, 10. ) /**< Maximum uniedit zoom level (close). */
+#define UNIEDIT_ZOOM_MIN                                                       \
+   pow( UNIEDIT_ZOOM_STEP, -10. ) /**< Minimum uniedit zoom level (far). */
 
 /*
  * The editor modes.
@@ -1388,10 +1390,11 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
       if ( ( mx < 0. ) || ( mx > w - 130. ) || ( my < 60. ) || ( my > h ) )
          return 0;
 
-      if ( event->wheel.y > 0 )
-         uniedit_zoomApply( UNIEDIT_ZOOM_STEP );
-      else if ( event->wheel.y < 0 )
-         uniedit_zoomApply( 1. / UNIEDIT_ZOOM_STEP );
+      float val = event->wheel.y * 0.5;
+      if ( val > 0. )
+         uniedit_zoomApply( 1. + val );
+      else if ( val < 0. )
+         uniedit_zoomApply( 1. / ( 1. - val ) );
 
       return 1;
 
@@ -2012,8 +2015,7 @@ void uniedit_selectText( void )
 static void uniedit_zoomApply( double zoom )
 {
    uniedit_zoom =
-      CLAMP( pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN ),
-             pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MAX ), uniedit_zoom * zoom );
+      CLAMP( UNIEDIT_ZOOM_MIN, UNIEDIT_ZOOM_MAX, uniedit_zoom * zoom );
 }
 
 /**

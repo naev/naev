@@ -153,6 +153,7 @@ static void          map_reset( CstMapWidget *cst, MapMode mode );
 static CstMapWidget *map_globalCustomData( unsigned int wid );
 static int  map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod,
                             int isrepeat );
+static void map_applyZoom( unsigned int wid, double zoom );
 static void map_buttonZoom( unsigned int wid, const char *str );
 static void map_setMinimal( unsigned int wid, int value );
 static void map_buttonMarkSystem( unsigned int wid, const char *str );
@@ -2118,10 +2119,12 @@ static int map_mouse( unsigned int wid, const SDL_Event *event, double mx,
       /* Must be in bounds. */
       if ( ( mx < 0. ) || ( mx > w ) || ( my < 0. ) || ( my > h ) )
          return 0;
-      if ( event->wheel.y > 0 )
-         map_buttonZoom( wid, "btnZoomIn" );
-      else if ( event->wheel.y < 0 )
-         map_buttonZoom( wid, "btnZoomOut" );
+
+      float val = event->wheel.y * 0.5;
+      if ( val > 0. )
+         map_applyZoom( wid, 1. + val );
+      else if ( val < 0. )
+         map_applyZoom( wid, 1. / ( 1. - val ) );
       return 1;
 
    case SDL_EVENT_MOUSE_BUTTON_DOWN:
@@ -2182,13 +2185,8 @@ static int map_mouse( unsigned int wid, const SDL_Event *event, double mx,
 
    return 0;
 }
-/**
- * @brief Handles the button zoom clicks.
- *
- *    @param wid Unused.
- *    @param str Name of the button creating the event.
- */
-static void map_buttonZoom( unsigned int wid, const char *str )
+
+static void map_applyZoom( unsigned int wid, double zoom )
 {
    CstMapWidget *cst = map_globalCustomData( wid );
 
@@ -2199,13 +2197,7 @@ static void map_buttonZoom( unsigned int wid, const char *str )
    cst->ytarget /= cst->zoom;
 
    /* Apply zoom. */
-   if ( strcmp( str, "btnZoomIn" ) == 0 ) {
-      cst->zoom *= 1.2;
-      cst->zoom = MIN( 2.5, cst->zoom );
-   } else if ( strcmp( str, "btnZoomOut" ) == 0 ) {
-      cst->zoom *= 0.8;
-      cst->zoom = MAX( 0.5, cst->zoom );
-   }
+   cst->zoom = CLAMP( 0.5, 2.5, cst->zoom * zoom );
 
    map_setZoom( wid, cst->zoom );
 
@@ -2214,6 +2206,21 @@ static void map_buttonZoom( unsigned int wid, const char *str )
    cst->ypos *= cst->zoom;
    cst->xtarget *= cst->zoom;
    cst->ytarget *= cst->zoom;
+}
+
+/**
+ * @brief Handles the button zoom clicks.
+ *
+ *    @param wid Unused.
+ *    @param str Name of the button creating the event.
+ */
+static void map_buttonZoom( unsigned int wid, const char *str )
+{
+   /* Apply zoom. */
+   if ( strcmp( str, "btnZoomIn" ) == 0 )
+      map_applyZoom( wid, 1.2 );
+   else if ( strcmp( str, "btnZoomOut" ) == 0 )
+      map_applyZoom( wid, 1.0 / 1.2 );
 }
 
 /**
