@@ -94,7 +94,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
- - `graph2ssys` should also update decorators position
  - `graph2dot`: display one-way hidden/one-way normal connections.
  - `reposition.c`: fix tunnel effect
  - `reposition.c`: possible opt: manage separately neigh with non-1.0 len.

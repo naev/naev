@@ -106,7 +106,9 @@ pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
 pmsg ""                                                                       |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')                    |
-if [ -n "$FORCE" ] ; then tee >("$DIR"/graph2ssysmap.py) ; else cat ; fi      |
+if [ -n "$FORCE" ] ;                                                    then
+   tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
+else cat ;                                                                fi  |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
 "$DIR"/graphmod_stretch_north.py                                              |

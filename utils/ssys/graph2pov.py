@@ -2,19 +2,8 @@
 
 SHOW_VIRTUAL = True
 
-decorators = {
-   'anubis_black_hole': 'blackhole',
-   'gamma_polaris': 'empire',
-   'beeklo': 'dvaered',
-   'eiderdown': 'sirius',
-   'pisces_prime' : 'soromid',
-   'zalek' : 'zalek',
-   'chraan': 'frontier',
-   'korifa': 'proteron',
-   'oriantis': 'nebula'
-}
-
-decorators = {s: (d, -i*0.1) for i, (s, d) in enumerate(decorators.items())}
+from decorators import decorators
+decorators = {s: (d, -i*0.1) for i, (d, s) in enumerate(decorators.items())}
 
 if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
