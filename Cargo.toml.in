@@ -1,11 +1,8 @@
 [package]
 name = @NAME@
 version = @VERSION@
-edition = "2024"
-# 1.80 LazyLock
-# 1.84 New random syntax
-# 1.85 Rust 2024
-rust-version = "1.85" # Note this has to be set in meson.build too!
+edition.workspace = true
+rust-version.workspace = true
 publish = false
 
 [lints]
@@ -31,13 +28,16 @@ members = [
    "@BUILD@/src/toolkit",
 ]
 
-[workspace.lints.clippy]
-not_unsafe_ptr_arg_deref = "allow"
-
 [workspace.package]
 version = @VERSION@
 edition = "2024"
-rust-version = "1.85"
+# 1.80 LazyLock
+# 1.84 New random syntax
+# 1.85 Rust 2024
+rust-version = "1.85" # Note this has to be set in meson.build too!
+
+[workspace.lints.clippy]
+not_unsafe_ptr_arg_deref = "allow"
 
 [workspace.dependencies]
 naevc = { path=@NAEVC@ }
