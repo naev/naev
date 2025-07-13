@@ -208,9 +208,11 @@ int naev_event_resize( Uint32 type )
    switch ( type ) {
    case SDL_EVENT_WINDOW_RESIZED:
    case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+   case SDL_EVENT_WINDOW_MAXIMIZED:
+   case SDL_EVENT_WINDOW_RESTORED:
+   case SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED:
    case SDL_EVENT_WINDOW_ENTER_FULLSCREEN:
    case SDL_EVENT_WINDOW_LEAVE_FULLSCREEN:
-   case SDL_EVENT_WINDOW_MAXIMIZED:
       return 1;
    default:
       return 0;
@@ -233,8 +235,7 @@ int naev_main_events( void )
             quit = 1; /* quit is handled here */
             break;
          }
-      } else if ( event.type == SDL_EVENT_WINDOW_RESIZED ||
-                  event.type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED ) {
+      } else if ( naev_event_resize( event.type ) ) {
          naev_resize();
          continue;
       }
@@ -358,13 +359,6 @@ int naev_shouldRenderLoadscreen( void )
 
 void naev_doRenderLoadscreen( void )
 {
-   /* Stop from being unresponsive. */
-   /*
-   SDL_Event event;
-   while ( SDL_PollEvent( &event ) )
-      ;
-   */
-
    SDL_LockMutex( load_mutex );
    load_last_render = SDL_GetTicks();
 
