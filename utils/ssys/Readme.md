@@ -90,6 +90,8 @@ These are designed to manage the **internal geometry of systems**, that might ge
     - Bounding circle / bounded circle.
  - `ssys.py` everything else.
 
+## ssysmap history
+ - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
  - `graph2ssys` should also update decorators position
