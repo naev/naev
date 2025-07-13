@@ -26,6 +26,7 @@ function create ()
    plt:control(true)
    plt:brake()
    plt:setActiveBoard(true)
+   plt:setHilight(true)
    shield = plt:shield()
 
    hook.pilot( plt, "board", "board" )
@@ -52,6 +53,7 @@ function attacked( p, attacker )
    end
 
    plt:setActiveBoard(false)
+   plt:setHilight(false)
    plt:control(false)
    evt.finish()
 end
@@ -74,6 +76,7 @@ function board ()
    -- Done, time to go away
    plt:memory().refueled = true -- Stop refueling again
    plt:setActiveBoard(false)
+   plt:setHilight(false)
    plt:control(false)
    pilotai.hyperspace( plt )
    player.unboard()
