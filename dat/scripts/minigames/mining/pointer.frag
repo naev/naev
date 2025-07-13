@@ -11,7 +11,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    float d = abs(length(uv)-0.9)-0.1;
    float m = 1.0 / radius;
 
-   float a = atan( uv.y, uv.x );
+   float a = -atan( uv.y, uv.x );
    if ((a < 0.0) && (pointer > M_PI))
       a += 2.0*M_PI;
    if (pointer < a)

@@ -304,7 +304,7 @@ fn naevmain() -> Result<()> {
     */
 
     // Load game data
-    load_all(load_env)?;
+    load_all(&sdlctx, load_env)?;
 
     unsafe {
         // Detect size changes that occurred during load.
@@ -411,7 +411,7 @@ impl LoadStage {
     }
 }
 
-fn load_all(env: &nlua::LuaEnv) -> Result<()> {
+fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
     unsafe {
         // Misc init stuff
         naevc::render_init();
@@ -482,6 +482,7 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
     // Load one by one in order
     let mut stage: f32 = 0.0;
     let nstages: f32 = stages.len() as f32;
+    let mut event_pump = sdlctx.event_pump().unwrap();
     for s in stages {
         loadscreen_update(env, (stage + 1.0) / (nstages + 2.0), s.msg).unwrap_or_else(|err| {
             log::warn_err(err.context("loadscreen failed to update!"));
@@ -490,6 +491,9 @@ fn load_all(env: &nlua::LuaEnv) -> Result<()> {
         (s.f)().unwrap_or_else(|err| {
             log::warn_err(err.context("loadscreen update function failed to run!"));
         });
+
+        // Stops the window from going unresponsive
+        for _ in event_pump.poll_iter() {}
     }
 
     loadscreen_update(env, 1.0, gettext("Loading Completed!")).unwrap_or_else(|err| {

@@ -40,10 +40,7 @@ function update( p, po, _dt )
       if n > 0 then
          po:state( "on" )
          -- Add extra bonus
-         if n > 1 then
-            n = n-1
-            po:set( "weapon_damage", n*BONUS )
-         end
+         po:set( "weapon_damage", n*BONUS )
       else
          po:state( "off" )
          po:clear()
