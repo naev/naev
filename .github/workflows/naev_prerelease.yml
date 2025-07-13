@@ -36,8 +36,6 @@ jobs:
         uses: baptiste0928/cargo-install@v3
         with:
           crate: bindgen-cli
-          git: https://github.com/rust-lang/rust-bindgen.git
-          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
 
       - name: Package Dist
         run: |
@@ -160,8 +158,6 @@ jobs:
         uses: baptiste0928/cargo-install@v3
         with:
           crate: bindgen-cli
-          git: https://github.com/rust-lang/rust-bindgen.git
-          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
 
       - name: Meson Setup
         run: |
@@ -288,8 +284,6 @@ jobs:
         uses: baptiste0928/cargo-install@v3
         with:
           crate: bindgen-cli
-          git: https://github.com/rust-lang/rust-bindgen.git
-          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
 
       - name: Meson Setup
         # We disable b_lto here because it messes with backtraces on windows
@@ -380,8 +374,6 @@ jobs:
         uses: baptiste0928/cargo-install@v3
         with:
           crate: bindgen-cli
-          git: https://github.com/rust-lang/rust-bindgen.git
-          commit: 97ab9152b5edb1fda1ced9bc1604f5e4dc9cfaa9
 
       - name: Get Source
         uses: actions/download-artifact@v4
