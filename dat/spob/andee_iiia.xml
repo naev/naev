@@ -2,12 +2,15 @@
  <pos x="13929.329926" y="-6969.106766"/>
  <GFX>
   <space>moon-P00.webp</space>
-  <exterior>mining2.webp</exterior>
+  <exterior>uninhabited-rocky-airless-00.webp</exterior>
  </GFX>
  <general>
   <class>P</class>
   <population>0</population>
-  <hide>2.000000</hide>
-  <services/>
+  <hide>0.400000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A moon of the X-class highly radioactive Andee III, although the planet is deemed highly uninhabitable by any of the habitability metrics of the Empire, Andee IIIa shows as beautiful as is dangerous atmospheric displays of light when the eccentric orbit passes close to the primary. Originally used as a tour spot that some wealthier Touched pilgrims would detour to see on their way to Mutris, after the fated incident of the Provenius Mule-class ship where 300 pilgrims lost their lives, House Sirius forbid tourism under strict penalties. Nowadays few venture out to visit, making it a very solemn site.</description>
  </general>
 </spob>
