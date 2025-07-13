@@ -26,7 +26,7 @@ c_args = cc.get_supported_arguments([
    '-Wshadow',
    '-fno-signed-zeros'
 ])
-# TODO Is there a better way to get rust compiler?
+# TODO Is there a better way to get rust compiler version?
 rustc = find_program('rustc', version: rustc_needed_version, required: false)
 if not rustc.found()
    error('Need at least rustc version @0@\nYou can get an up-to-date version by installing rustup and running "rustup update"'.format(rustc_needed_version))
@@ -112,13 +112,7 @@ if buildExec.disabled() == false
    summary('Paranoid', paranoid    , section: 'Debug', bool_yn: true)
    summary('Arrays'  , debug_arrays, section: 'Debug', bool_yn: true)
 
-   # Some OS voodoo TODO these are not very correct, but ported from ncompat.h . Maybe use .system?
-   has_posix = host_machine.system()=='darwin' or cc.compiles('''#if !(defined(__unix) || defined(__unix__))
-#error "Not unix"
-#endif
-int main (void) { return 0; }''')
-   # Version below requires meson 1.3.0 or later, so just use the horrible hack above for now
-   #has_posix = cc.has_define('__unix__') or cc.has_define('__unix') or host_machine.system()=='darwin'
+   has_posix = cc.has_define('__unix__') or cc.has_define('__unix') or host_machine.system()=='darwin'
    config_data.set10('HAS_POSIX', has_posix)
    config_data.set10('HAS_UNIX', has_posix)
 
@@ -155,8 +149,6 @@ int main (void) { return 0; }''')
       libxml2,
       pcre2,
       sdl,
-      dependency('libpng', required: true),
-      dependency('libwebp', required: true, static: get_option('steamruntime')),
    ]
 
    # Lua
