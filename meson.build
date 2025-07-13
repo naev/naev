@@ -440,12 +440,8 @@ naevcrs = rust.bindgen(
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
-   #cargo_toolkit_toml = configure_file( input: 'src' 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
-   #if rust_target == 'release'
-   #   cargo_options += ['--release']
-   #endif
    cargo_options += [ '--profile', rust_target ]
    cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
    if target_triplet != ''
@@ -455,21 +451,13 @@ naevcrs = rust.bindgen(
    naev_rlib = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
       depend_files: source_rust + cargo_toml,
-      #output: 'src', # Dummy directory, hope it doesn't error
       output: 'libnaev.rlib',
       console: true,
-      #command: [ 'env', cargo_env, cargo, 'build', cargo_options, ] )
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
-   #naev_rlib_cp = custom_target( 'cargo-build-cp',
-   #   depends: [naev_rlib, naevcrs, naevc_crate, naev_clib],
-   #   output: 'libnaev.rlib',
-   #   console: true,
-   #   command: [ cp, 'src' / rust_target / 'libnaev.rlib', '@OUTPUT@', ] )
    naev_rlib_lib = library(
-   'naev_rlib',
-   naev_rlib,
-   install : true
-   )
+      'naev_rlib',
+      naev_rlib,
+      install : true )
    # We create naev.rs with naev_rlib as a dependency to force rlib to be
    # compiled first, otherwise meson tries to compile both naev.rs and
    # naev_rlib in parallel and it fails.
@@ -539,12 +527,17 @@ naevcrs = rust.bindgen(
       install_dir: ndata_path / 'dat/gettext_stats',
    )
 
+   # TODO we probably have to do this in a more general way with more generated
+   # outfits and such
    gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors.full_path(), '--cd', 'gettext_stats', gettext_stats.full_path()]
+   gen_zip_command += ['--cd', 'outfits']
+   foreach target: gen_outfits
+       gen_zip_command += target
+   endforeach
    gen_zip_command += ['--cd', 'outfits/bioship']
-   #gen_zip_command += bio_outfits.to_list()
    foreach target: bio_outfits
-     gen_zip_command += target
+       gen_zip_command += target
    endforeach
    zip_overlay = custom_target(
       'zip_overlay',
