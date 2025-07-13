@@ -586,8 +586,8 @@ naevcrs = rust.bindgen(
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build' ],
-      exclude_directories: 'outfits/bioship/templates',
+      exclude_files: ['AUTHORS', 'outfits/meson.build', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build' ],
+      exclude_directories: ['outfits/py', 'outfits/bioship/templates'],
    )
 
    install_subdir(
