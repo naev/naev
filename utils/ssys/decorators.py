@@ -9,7 +9,7 @@ decorators = {
    'zalek' : 'zalek',
    'frontier': 'chraan',
    'proteron': 'korifa',
-   'nebula': 'oriantis'
+   'nebula': 'midoros'
 }
 
 if __name__ == '__main__':

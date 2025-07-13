@@ -82,6 +82,7 @@ fi
 
 msg "gen before graph"
 "$DIR"/ssysmap2graph.sh                                                       |
+sed 's/\(.*aesir.*\) tradelane/\1/'                                           |
 "$DIR"/graph_vaux.py -e -c -n                                                 |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini')                   |
 "$DIR"/graphmod_prep.py                                                       |

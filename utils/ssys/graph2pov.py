@@ -178,7 +178,7 @@ for i, p in V.items():
       write_pov([ 'cylinder{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
          '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',
-         str(2.9 if 'tradelane' in tags else 1.4),
+         str(3.0 if 'tradelane' in tags else 1.55),
          'pigment {color rgb<' + edge_col + '>}',
       ], '}', '' ])
 

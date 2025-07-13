@@ -20,6 +20,10 @@ virtual_edges = [
    ('ngc902', 'ngc4087'),
    ('ngc728', 'ngc1872'),
    ('brumerebus', 'antlejos'),
+   ('kiwi', 'suna'),
+   ('pellmell', 'fulcrum'),
+   ('nasona', 'oriantis'),
+   ('tau_ceti', 'arcanis'),
 ]
 
 from graphmod import ssys_jmp

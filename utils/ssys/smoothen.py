@@ -31,3 +31,21 @@ def smoothen( pos, neigh, hard = False ):
             count += 1
          newp[k] = acc / count
    return newp
+
+from math import sqrt
+def circleify( pos, L, center ):
+   newp = dict()
+   V = [(pos[i] - pos[center]).size() for i in L]
+   avg = sum(V) / len(V)
+   for i in L:
+      p = pos[center] + (pos[i]-pos[center]).normalize(avg)
+      pos[i] = (pos[i] + 2.0*p) / 3.0
+   """
+   for i, j, k in zip(L[:-2],L[1:-1],L[2:]):
+      c = (pos[i] + pos[k]) / 2.0
+      v1, v2 = pos[i] - pos[center], pos[k] - pos[center]
+      #avg = lambda x, y: (x + y) / 2.0
+      avg = lambda x, y: sqrt(x * y)
+      newp[j] = pos[center] + (pos[j] - pos[center]).normalize(avg(v1.size(), v2.size()))
+   """
+   return newp

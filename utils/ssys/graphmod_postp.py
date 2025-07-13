@@ -132,10 +132,12 @@ pos['reptile'] += (pos['newmarch']-pos['armorhead']) / 6.0
 
 # Sirius
 
-v = (pos['aesir']-pos['vanir']) / 4.0
+v = (pos['aesir']-pos['vanir']) / 2.0
 pos['aesir'] += v
 pos['vanir'] += v
 pos['porro'] = (pos['tarmak'] + pos['churchill']) / 2.0
+pos['ngc20489'] = (pos['ngc9607'] + pos['ngc15670'] + pos['ngc14676'] + pos['ngc7319']) / 4.0
+pos['voproid'] += 2 * (segment(pos['botarn'],pos['ngc7319']).line() - pos['voproid'])
 
 # Anubis BH
 
