@@ -1089,7 +1089,7 @@ static int gfxL_setBlendState( lua_State *L )
 }
 
 /**
- * @brief Sets the scissor clipping.
+ * @brief Sets the scissor clipping, with (0,0) at top-left.
  *
  * Calling setScissor with no parameters disables the clipping.
  *
@@ -1106,10 +1106,20 @@ static int gfxL_setScissor( lua_State *L )
       GLint   y = luaL_optinteger( L, 2, 0 );
       GLsizei w = luaL_optinteger( L, 3, 0 );
       GLsizei h = luaL_optinteger( L, 4, 0 );
-      gl_clipRect( x, y, w, h );
+
+      double rx, ry, rw, rh;
+      rx = x / gl_screen.mxscale;
+      ry = y / gl_screen.myscale;
+      rw = w / gl_screen.mxscale;
+      rh = h / gl_screen.myscale;
+      glScissor( rx, gl_screen.rh - rh - ry, rw, rh );
+      glEnable( GL_SCISSOR_TEST );
+
       render_needsReset();
-   } else
-      gl_unclipRect();
+   } else {
+      glDisable( GL_SCISSOR_TEST );
+      glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
+   }
 
    if ( gl_checkErr() )
       NLUA_ERROR( L, _( "OpenGL Error!" ) );
