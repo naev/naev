@@ -1633,8 +1633,10 @@ Uint32 toolkit_inputTranslateCoords( const Window *w, SDL_Event *event,
                ( event->type == SDL_EVENT_MOUSE_BUTTON_UP ) ) {
       *x = event->button.x;
       *y = event->button.y;
-   } else if ( event->type == SDL_EVENT_MOUSE_WHEEL )
-      SDL_GetMouseState( x, y );
+   } else if ( event->type == SDL_EVENT_MOUSE_WHEEL ) {
+      *x = event->wheel.mouse_x;
+      *y = event->wheel.mouse_y;
+   }
 
    /* Translate offset. */
    gl_windowToScreenPos( x, y, *x, *y );

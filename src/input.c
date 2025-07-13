@@ -34,7 +34,6 @@
 #include "player.h"
 #include "player_autonav.h"
 #include "toolkit.h"
-#include "utf8.h"
 
 /* keybinding structure */
 /**

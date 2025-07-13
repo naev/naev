@@ -12,7 +12,6 @@
 #include "naev.h"
 /** @endcond */
 
-#include <ctype.h>
 #include <libgen.h>
 #include <string.h>
 #include <unistd.h>
@@ -39,7 +38,6 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 #include "unidiff.h"
-#include "utf8.h"
 
 #define BUTTON_WIDTH 100 /**< Map button width. */
 #define BUTTON_HEIGHT 30 /**< Map button height. */
@@ -55,7 +53,7 @@
 #define UNIEDIT_CLICK_THRESHOLD 20.       /**< Click threshold (px). */
 #define UNIEDIT_DOUBLECLICK_THRESHOLD 300 /**< Drag threshold (ms). */
 
-#define UNIEDIT_ZOOM_STEP 1.2 /**< Factor to zoom by for each zoom level. */
+#define UNIEDIT_ZOOM_STEP 1.1 /**< Factor to zoom by for each zoom level. */
 #define UNIEDIT_ZOOM_MAX 5.   /**< Maximum uniedit zoom level (close). */
 #define UNIEDIT_ZOOM_MIN -5.  /**< Minimum uniedit zoom level (far). */
 
@@ -165,6 +163,7 @@ static void uniedit_btnRmTag( unsigned int wid, const char *unused );
 static void uniedit_btnNewTag( unsigned int wid, const char *unused );
 static void uniedit_btnTagsClose( unsigned int wid, const char *unused );
 /* Custom system editor widget. */
+static void uniedit_zoomApply( double zoom );
 static void uniedit_buttonZoom( unsigned int wid, const char *str );
 static void uniedit_render( double bx, double by, double w, double h,
                             void *data );
@@ -1390,9 +1389,9 @@ static int uniedit_mouse( unsigned int wid, const SDL_Event *event, double mx,
          return 0;
 
       if ( event->wheel.y > 0 )
-         uniedit_buttonZoom( 0, "btnZoomIn" );
+         uniedit_zoomApply( UNIEDIT_ZOOM_STEP );
       else if ( event->wheel.y < 0 )
-         uniedit_buttonZoom( 0, "btnZoomOut" );
+         uniedit_zoomApply( 1. / UNIEDIT_ZOOM_STEP );
 
       return 1;
 
@@ -2010,6 +2009,13 @@ void uniedit_selectText( void )
                       -40 - window_getTextHeight( uniedit_wid, "txtNebula" ) );
 }
 
+static void uniedit_zoomApply( double zoom )
+{
+   uniedit_zoom =
+      CLAMP( pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN ),
+             pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MAX ), uniedit_zoom * zoom );
+}
+
 /**
  * @brief Handles the button zoom clicks.
  *
@@ -2024,15 +2030,10 @@ static void uniedit_buttonZoom( unsigned int wid, const char *str )
    uniedit_ypos /= uniedit_zoom;
 
    /* Apply zoom. */
-   if ( strcmp( str, "btnZoomIn" ) == 0 ) {
-      uniedit_zoom *= UNIEDIT_ZOOM_STEP;
-      uniedit_zoom =
-         MIN( pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MAX ), uniedit_zoom );
-   } else if ( strcmp( str, "btnZoomOut" ) == 0 ) {
-      uniedit_zoom /= UNIEDIT_ZOOM_STEP;
-      uniedit_zoom =
-         MAX( pow( UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN ), uniedit_zoom );
-   }
+   if ( strcmp( str, "btnZoomIn" ) == 0 )
+      uniedit_zoomApply( UNIEDIT_ZOOM_STEP );
+   else if ( strcmp( str, "btnZoomOut" ) == 0 )
+      uniedit_zoomApply( 1. / UNIEDIT_ZOOM_STEP );
 
    /* Transform coords back. */
    uniedit_xpos *= uniedit_zoom;
