@@ -530,6 +530,8 @@ naevcrs = rust.bindgen(
    # Need to add other generated data files here as necessary
    gen_zip_overlay = find_program(join_paths('utils','build','gen_zip_overlay.py'))
    gen_zip_command = [gen_zip_overlay, '@OUTPUT@', authors, '--cd', 'gettext_stats', gettext_stats]
+   # Note that generated outfits populate build/dat/ which is included with
+   # naev.py, so no need to put them in the overlay on top
    #gen_zip_command += ['--cd', 'outfits']
    #foreach target: gen_outfits
    #    gen_zip_command += target
@@ -538,7 +540,7 @@ naevcrs = rust.bindgen(
       'zip_overlay',
       command: gen_zip_command,
       output: 'meson_overlay.zip',
-      depends: [authors, gettext_stats] + gen_outfits,
+      depends: [authors, gettext_stats], # + gen_outfits,
       build_by_default: true
    )
 
