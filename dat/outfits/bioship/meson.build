@@ -234,7 +234,6 @@ gen_bioship = find_program('generate.py')
 bio_cmd = [gen_bioship, '@INPUT@', '-o', '@OUTPUT@']
 bio_dir = ndata_path / 'dat/outfits/bioship'
 
-bio_outfits = []
 foreach name, data : biooutfits
    depend_files = []
    if 'depend_files' in data
@@ -243,7 +242,7 @@ foreach name, data : biooutfits
       endforeach
    endif
 
-   bio_outfits += [custom_target( name, command: bio_cmd, install: true, install_dir: bio_dir,
+   gen_outfits += [custom_target( name, command: bio_cmd, install: true, install_dir: bio_dir,
       input: files('templates/' + data['template'] + '.xml.template'),
       depend_files: depend_files,
       output: data['output'],

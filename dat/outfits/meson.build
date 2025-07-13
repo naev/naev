@@ -1,3 +1,7 @@
+# All generated outfits should be tossed in here so that the
+# other scripts can be happy with it
+gen_outfits = []
+
 subdir('bioship')
 
 customoutfits = {
@@ -28,7 +32,6 @@ customoutfits = {
    },
 }
 
-gen_outfits = []
 foreach name, data : customoutfits
   gen_outfits += [custom_target( name,
     command: [find_program( 'py' / data['command'] ), '@INPUT@', '@OUTPUT@', ],

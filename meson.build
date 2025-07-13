@@ -535,15 +535,11 @@ naevcrs = rust.bindgen(
    foreach target: gen_outfits
        gen_zip_command += target
    endforeach
-   gen_zip_command += ['--cd', 'outfits/bioship']
-   foreach target: bio_outfits
-       gen_zip_command += target
-   endforeach
    zip_overlay = custom_target(
       'zip_overlay',
       command: gen_zip_command,
       output: 'meson_overlay.zip',
-      depends: [authors, gettext_stats] + bio_outfits + gen_outfits,
+      depends: [authors, gettext_stats] + gen_outfits,
       build_by_default: true
    )
 
