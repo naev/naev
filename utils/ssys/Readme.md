@@ -3,19 +3,19 @@
 ## I/O
 All you need to convert from/to a graph.
 Input formats:
- - ssys: denotes current system map, that is stored in `ssys/*.xml`.
+ - ssysmap: denotes current system map, that is stored in `ssys/*.xml`.
  - graph: (see `ssys2graph.sh -h` for format description)
  - dot: `graphviz` graph format. Can be used to generate positions and `png` output.
 
 Output formats:
- - ssys
+ - ssysmap
  - graph
  - dot
  - pov: povray file that allows to generate `png` with `povray`
 
 Scripts:
- - `ssys2graph.sh`: Reads current system map, outputs a graph, see `ssys2graph.sh -h`.
- - `graph2ssys.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
+ - `ssysmap2graph.sh`: Reads current system map, outputs a graph, see `ssys2graph.sh -h`.
+ - `graph2ssysmap.py`: Reads a graph in input, updates current system map accordingly. This is the only way to actually modify it.
 
  - `dot2graph.py`: As the name suggests, turns a graph in dot format into a graph in our basic format.
  - `graph2pov.py`: Reads graph input, and generates a `png` using `povray`. Will have colors if input vertices have color tags (i.e. input is obtained from `ssys2graph | graph_vaux -c`.

@@ -61,6 +61,9 @@ N_ITER=6
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
+read -ra TERM_SSYS <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/terminal_ssys.py )"
+read -ra ALMOST_ALL_BUT_TERM <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" )"
+
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
 "$DIR"/gen_decorators.sh -C || exit 1
@@ -78,11 +81,12 @@ if [ -n "$FORCE" ] ; then
 fi
 
 msg "gen before graph"
-"$DIR"/ssys2graph.sh                                                          |
+"$DIR"/ssysmap2graph.sh                                                       |
 "$DIR"/graph_vaux.py -e -c -n                                                 |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini')                   |
 "$DIR"/graphmod_prep.py                                                       |
 "$DIR"/graphmod_vedges.py                                                     |
-tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_bef')                   |
+tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef')                      |
 tee                                                                        >(
    "$DIR"/graph2dot.py -c -k |
    neato -n2 -Tpng 2>/dev/null > before.png                                 ) |
@@ -102,7 +106,7 @@ pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
 pmsg ""                                                                       |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')                    |
-if [ -n "$FORCE" ] ; then tee >("$DIR"/graph2ssys.py) ; else cat ; fi         |
+if [ -n "$FORCE" ] ; then tee >("$DIR"/graph2ssysmap.py) ; else cat ; fi      |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
 "$DIR"/graphmod_stretch_north.py                                              |
@@ -110,7 +114,7 @@ pmsg "apply gravity"                                                          |
 tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')                     |
 "$DIR"/graphmod_abh.py                                                        |
 pmsg "gen final graph"                                                        |
-"$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"                            |
+"$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL_BUT_TERM[@]}"                   |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
