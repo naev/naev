@@ -9,6 +9,9 @@ project('naev', ['c', 'rust'],
    ],
    # Requires meson 1.7.0 for rust_std=2024
    meson_version: '>=1.7.0')
+# Dependency requirements
+rustc_needed_version = '>=1.85.0'
+bindgen_needed_version = '>=0.72.0'
 
 copyright_year = 2025
 forced_fallbacks = get_option('force_fallback_for')
@@ -24,8 +27,14 @@ c_args = cc.get_supported_arguments([
    '-fno-signed-zeros'
 ])
 # TODO Is there a better way to get rust compiler?
-rustc = find_program('rustc', version: '>=1.85.0', required: true)
-bindgen = find_program('bindgen', version: '>=0.72.0', required: true)
+rustc = find_program('rustc', version: rustc_needed_version, required: false)
+if not rustc.found()
+   error('Need at least rustc version @0@\nYou can get an up-to-date version by installing rustup and running "rustup update"'.format(rustc_needed_version))
+endif
+bindgen = find_program('bindgen', version: bindgen_needed_version, required: false)
+if not bindgen.found()
+   error('Need at least bindgen version @0@\nYou can get an up-to-date version by running "cargo install bindgen-cli"'.format(bindgen_needed_version))
+endif
 
 if host_machine.system() == 'linux'
    c_args += ['-D_XOPEN_SOURCE=700']
