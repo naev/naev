@@ -29,7 +29,7 @@ c_args = cc.get_supported_arguments([
 # TODO Is there a better way to get rust compiler version?
 rustc = find_program('rustc', version: rustc_needed_version, required: false)
 if not rustc.found()
-   error('Need at least rustc version @0@\nYou can get an up-to-date version by installing rustup and running "rustup update"'.format(rustc_needed_version))
+   error('Need at least rustc version @0@\nYou can get an up-to-date version by installing rustup and running "rustup defaul stable" and "rustup update"'.format(rustc_needed_version))
 endif
 bindgen = find_program('bindgen', version: bindgen_needed_version, required: false)
 if not bindgen.found()
