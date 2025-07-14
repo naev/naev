@@ -43,6 +43,8 @@ endif
 if host_machine.system() == 'linux'
    c_args += ['-D_XOPEN_SOURCE=700']
 elif host_machine.system() == 'windows'
+   # We need SDL_DISABLE_ALLOCA because of
+   # https://github.com/libsdl-org/SDL/issues/13358
    c_args += ['-D_USE_MATH_DEFINES', '-DSDL_DISABLE_ALLOCA']
 elif host_machine.system() == 'darwin'
    c_args += ['-D_DARWIN_C_SOURCE', '-D_POSIX_C_SOURCE=200809L']
