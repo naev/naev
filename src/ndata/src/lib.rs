@@ -28,7 +28,23 @@ pub fn read(path: &str) -> Result<Vec<u8>> {
 }
 
 pub fn read_dir(path: &str) -> Result<Vec<String>> {
-    physfs::read_dir(path)
+    Ok(physfs::read_dir(path)?
+        .into_iter()
+        .map(|f| {
+            let dir = match stat(&f) {
+                Ok(s) => s.filetype == FileType::Directory,
+                Err(_) => false,
+            };
+            match dir {
+                true => match read_dir(&f) {
+                    Ok(files) => files,
+                    Err(_) => Vec::new(),
+                },
+                false => vec![f],
+            }
+        })
+        .flatten()
+        .collect())
 }
 
 pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream> {
@@ -39,6 +55,7 @@ pub fn open(path: &str) -> Result<physfs::File> {
     physfs::File::open(path, physfs::Mode::Read)
 }
 
+#[derive(PartialEq)]
 pub enum FileType {
     Regular,
     Directory,
