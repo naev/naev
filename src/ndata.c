@@ -33,6 +33,7 @@
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "physfs_archiver_blacklist.c"
 #include "plugin.h"
 
 /*
@@ -293,6 +294,13 @@ char **ndata_listRecursive( const char *path )
          array_erase( &files, &files[i], &files[i + 1] );
          i--; /* We're not done checking for dups of files[i]. */
       }
+   for ( int i = 0; i < array_size( files ); i++ ) {
+      if ( blacklist_isBlacklisted( files[i] ) ) {
+         free( files[i] );
+         array_erase( &files, &files[i], &files[i + 1] );
+         i--; /* We're not done checking for dups of files[i]. */
+      }
+   }
    return files;
 }
 

@@ -13,10 +13,10 @@
 #include "physfs.h"
 #include <pcre2.h>
 
+#define BLACKLIST_FILENAME "naev.BLACKLIST"
+
 #include "array.h"
 #include "log.h"
-
-#define BLACKLIST_FILENAME "naev.BLACKLIST"
 
 /**
  * @brief Represents a file in a directory. Used to enumerate files.
@@ -40,6 +40,8 @@ static char **blk_dirnames = NULL; /**< List of blacklisted directories (for
                                       direct access, necessary to enumerate). */
 static BlkFile *blk_fs =
    NULL; /**< Fake filesystem structure of directory-file pairs. */
+
+static int _init = 0; /**< Actually initialized. */
 
 /*
  * Prototypes.
@@ -154,12 +156,12 @@ static int blk_enumerateCallback( void *data, const char *origdir,
                _( PHYSFS_getErrorByCode( err ) ) );
       free( path );
    } else if ( stat.filetype == PHYSFS_FILETYPE_REGULAR ) {
-      int rc;
+      int isgood = 0;
 
       /* First try whitelist. */
       if ( wht_re != NULL ) {
-         rc = pcre2_match( wht_re, (PCRE2_SPTR)path, strlen( path ), 0, 0,
-                           wht_match, NULL );
+         int rc = pcre2_match( wht_re, (PCRE2_SPTR)path, strlen( path ), 0, 0,
+                               wht_match, NULL );
          if ( rc < 0 ) {
             switch ( rc ) {
             case PCRE2_ERROR_NOMATCH:
@@ -168,28 +170,31 @@ static int blk_enumerateCallback( void *data, const char *origdir,
                WARN( _( "Matching error %d" ), rc );
                break;
             }
-         } else if ( rc > 0 ) {
-            free( path );
-            return PHYSFS_ENUM_OK;
+         } else if ( rc > 0 ) { /* Something matched. */
+            isgood = 1;
          }
       }
 
       /* Only run matches if not found in whitelist. */
-      rc = pcre2_match( blk_re, (PCRE2_SPTR)path, strlen( path ), 0, 0,
-                        blk_match, NULL );
-      if ( rc < 0 ) {
-         switch ( rc ) {
-         case PCRE2_ERROR_NOMATCH:
-            free( path );
-            break;
-         default:
-            WARN( _( "Matching error %d" ), rc );
-            free( path );
-            break;
+      if ( !isgood ) {
+         int rc = pcre2_match( blk_re, (PCRE2_SPTR)path, strlen( path ), 0, 0,
+                               blk_match, NULL );
+         if ( rc < 0 ) {
+            isgood = 1;
+            switch ( rc ) {
+            case PCRE2_ERROR_NOMATCH:
+               break;
+            default:
+               WARN( _( "Matching error %d" ), rc );
+               break;
+            }
+         } else if ( rc <= 0 ) {
+            isgood = 1;
          }
-      } else if ( rc == 0 )
-         free( path );
-      else {
+      }
+
+      /* Not in whitelist and in blacklist. */
+      if ( !isgood ) {
          int    *added = data;
          int     f     = -1;
          BlkFile bf    = {
@@ -210,7 +215,10 @@ static int blk_enumerateCallback( void *data, const char *origdir,
 
          if ( added )
             *added = 1;
-      }
+      } else
+         free( path );
+
+      return PHYSFS_ENUM_OK;
    } else if ( stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
       int added = 0;
       PHYSFS_enumerate( path, blk_enumerateCallback, &added );
@@ -304,6 +312,7 @@ int blacklist_init( void )
       return 0;
 
    /* Register archiver and load it from memory. */
+   _init = 1;
    PHYSFS_registerArchiver( &blk_archiver );
    int ret =
       PHYSFS_mountMemory( &blk_archiver, 0, NULL, BLACKLIST_FILENAME, NULL, 0 );
@@ -515,4 +524,19 @@ static int blk_flush( struct PHYSFS_Io *io )
 static void blk_destroy( struct PHYSFS_Io *io )
 {
    free( io );
+}
+
+/**
+ * @brief Make sure it's not blacklisted.
+ */
+int blacklist_isBlacklisted( const char *filename )
+{
+   if ( _init == 0 )
+      return 0;
+   if ( filename == NULL )
+      return 0;
+   const char *realdir = PHYSFS_getRealDir( filename );
+   if ( realdir == NULL )
+      return 0;
+   return ( strcmp( realdir, BLACKLIST_FILENAME ) == 0 );
 }
