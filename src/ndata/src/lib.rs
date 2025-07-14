@@ -30,17 +30,20 @@ pub fn read(path: &str) -> Result<Vec<u8>> {
 pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
-        .map(|f| {
+        .filter_map(|f| {
             let dir = match stat(&f) {
                 Ok(s) => s.filetype == FileType::Directory,
                 Err(_) => false,
             };
             match dir {
                 true => match read_dir(&f) {
-                    Ok(files) => files,
-                    Err(_) => Vec::new(),
+                    Ok(files) => Some(files),
+                    Err(_) => None,
                 },
-                false => vec![f],
+                false => match physfs::blacklisted(&f) {
+                    true => None,
+                    false => Some(vec![f]),
+                },
             }
         })
         .flatten()
