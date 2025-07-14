@@ -13,9 +13,10 @@ class sedserver:
 
    def __call__( self, inp ):
       line = inp.rstrip('\n') + '\n'
-      self.proc.stdin.write(line.encode('utf-8'))
+      line = line.encode('ISO-8859-1').lower()
+      self.proc.stdin.write(line)
       self.proc.stdin.flush()
-      return self.proc.stdout.readline().decode('utf-8').rstrip('\n')
+      return self.proc.stdout.readline().decode('ISO-8859-1').rstrip('\n')
 
    def mine( self ):
       return self.parent == getpid()
@@ -30,10 +31,9 @@ def xml_name( s ):
    global xml_filter
    if xml_filter is None or not xml_filter.mine():
       xml_filter = sedserver()
-   return xml_filter(s.lower())
+   return xml_filter(s)
 
 if __name__ == '__main__':
    from sys import stdin
-
    for i in stdin:
       print(xml_name(i.strip()))
