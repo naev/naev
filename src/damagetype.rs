@@ -9,6 +9,9 @@ use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn dtype_get(name: *const c_char) -> c_int {
+    if name.is_null() {
+        return 0;
+    }
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
     match binary_search_by_key_ref(&DAMAGE_TYPES, name, |dt: &DamageType| &dt.name) {
