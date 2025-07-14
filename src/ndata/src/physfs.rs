@@ -237,3 +237,13 @@ pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream> {
         })
     }
 }
+
+pub fn blacklisted(filename: &str) -> bool {
+    let c_filename = CString::new(filename).unwrap();
+    let realdir = unsafe { naevc::PHYSFS_getRealDir(c_filename.as_ptr()) };
+    if realdir.is_null() {
+        return false;
+    }
+    let realdir = unsafe { CStr::from_ptr(realdir) };
+    realdir.to_str().unwrap() == "naev.BLACKLIST"
+}
