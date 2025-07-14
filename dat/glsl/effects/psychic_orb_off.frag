@@ -11,8 +11,8 @@ uniform float u_dir     = 0.0;
 
 in vec2 tex_coord;
 in vec2 tex_scale;
+in vec2 pos;
 out vec4 colour_out;
-out vec2 pos;
 
 void main(void)
 {
