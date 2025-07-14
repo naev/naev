@@ -15,7 +15,7 @@
 
 #define THREADS 2
 #define SAMP 200
-#define EDGE_FACT 1.5
+#define EDGE_FACT 1.6
 #define PEEK_D 4
 
 #include <glib.h>

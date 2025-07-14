@@ -16,7 +16,7 @@ if argv[1:] != []:
    exit(0)
 
 
-from geometry import bb, vec, segment
+from geometry import bb, vec, segment, symmetry
 from graphmod import ssys_pos as pos, ssys_jmp as E
 
 
@@ -75,10 +75,9 @@ pos['akra'] = pos['mida'] + u
 
 L = segment(pos['haered'], pos['south_bell']).line()
 pos['cleai'] += (L - pos['cleai'])
-L = segment(pos['cleai'], pos['south_bell']).line()
+Sym = symmetry(pos['cleai'], pos['south_bell'])
 for s in ['maron', 'machea']:
-   # mirror it across L
-   pos[s] = pos[s] + 2.0*(L - pos[s])
+   pos[s] = Sym(pos[s])
 
 pos['machea'] = pos['maron'] + (pos['machea']-pos['maron']).rotate(30)
 pos['cleai'] = (pos['haered']+pos['maron']) / 2.0
@@ -114,14 +113,8 @@ pos['herculis'] = pos['longbow'] + v.rotate(-60)
 
 # Around New Haven
 
-def sym(s, a, b):
-   u = (b - a).normalize()
-   v = (s - a)
-   w = u*(v*u)
-   return a+2*w-v
-
-pos['khaas'] = sym(pos['khaas'], pos['diadem'], pos['hatter'])
-pos['babylon'] = sym(pos['babylon'], pos['diadem'], pos['elza'])
+pos['khaas'] = symmetry(pos['diadem'], pos['hatter'])(pos['khaas'])
+pos['babylon'] = symmetry(pos['diadem'], pos['elza'])(pos['babylon'])
 
 
 # Za'lek
@@ -137,7 +130,7 @@ pos['aesir'] += v
 pos['vanir'] += v
 pos['porro'] = (pos['tarmak'] + pos['churchill']) / 2.0
 pos['ngc20489'] = (pos['ngc9607'] + pos['ngc15670'] + pos['ngc14676'] + pos['ngc7319']) / 4.0
-pos['voproid'] += 2 * (segment(pos['botarn'],pos['ngc7319']).line() - pos['voproid'])
+pos['voproid'] = symmetry(pos['botarn'], pos['ngc7319'])(pos['voproid'])
 
 # Anubis BH
 
@@ -178,8 +171,8 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
    pos[i] -= v
 
 
-# Increase terminal ngc dist to neighbour to at least average edge length.
-
+# Increase terminal ngc dist to neighbour to at least average edge length * F.
+F = 1.0
 total = 0.0
 count = 0
 for k in pos:
@@ -194,8 +187,8 @@ for k in pos:
       if len(n := E[k]) == 1:
          n = n[0][0]
          v = pos[k] - pos[n]
-         if v.size() < avg:
-            pos[k] = pos[n] + v.normalize(avg)
+         if v.size() < avg * F:
+            pos[k] = pos[n] + v.normalize(avg * F)
 
 
 # Qorel Corridor
@@ -206,3 +199,14 @@ pos['effetey'] = (pos['majesteka'] + pos['trohem']) / 2.0
 off = (pos['dohriabi'] - pos['anubis_black_hole']) / 2.0
 for k, v in pos.items():
    pos[k] += off
+
+x1, y1 = pos['vadornla']
+x2, y2 = pos['blacin']
+pos['vadornla'] = vec(x2, y1)
+pos['blacin'] = vec(x1, y2)
+
+
+# misc
+
+pos['carnis_major'] = symmetry(pos['tau_ceti'], pos['carnis_minor'])(pos['carnis_major'])
+pos['carnis_minor'], pos['carnis_major'] = pos['carnis_major'], pos['carnis_minor']
