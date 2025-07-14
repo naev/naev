@@ -550,6 +550,10 @@ end
 
 -- Manage activities of gangs squadrons.
 function nextActivity( leader )
+   -- Gang died? Just ignore the stuff then
+   -- TODO maybe something fancier
+   if not leader:exists() then return end
+
    local mem = leader:memory()
    hook.rm( mem.MV_hook ) -- Clear hook
 
