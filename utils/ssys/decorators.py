@@ -4,7 +4,7 @@ decorators = {
    'blackhole': 'anubis_black_hole',
    'empire': 'gamma_polaris',
    'dvaered': 'beeklo',
-   'sirius': 'eiderdown',
+   'sirius': 'adraia',
    'soromid': 'pisces_prime',
    'zalek' : 'zalek',
    'frontier': 'chraan',

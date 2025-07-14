@@ -9,5 +9,5 @@ sed -e 's/<x>//' -e 's/<\/x>/X/' -e 's/$/X/' -e 's/XX/ /' |
 tr -d '\n' | tr 'X' '\n' |
 while read -ra line ; do
    echo -n "${line[0]} = "
-   "$SCRIPT_DIR"/ssys2graph.sh | "$SCRIPT_DIR"/closest.py "${line[@]:1:2}"
+   "$SCRIPT_DIR"/ssysmap2graph.sh | "$SCRIPT_DIR"/closest.py "${line[@]:1:2}"
 done
