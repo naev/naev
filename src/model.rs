@@ -311,7 +311,9 @@ impl Material {
         data.diffuse_factor = pbr.base_color_factor().into();
         data.blend = match mat.alpha_mode() {
             gltf::material::AlphaMode::Opaque => 0,
-            gltf::material::AlphaMode::Mask => todo!(),
+            gltf::material::AlphaMode::Mask => {
+                anyhow::bail!("mask alpha not supported for materials yet")
+            }
             gltf::material::AlphaMode::Blend => 1,
         };
         data.emissive_factor = mat.emissive_factor().into();
@@ -410,6 +412,7 @@ impl Primitive {
         prim: &gltf::Primitive,
         buffer_data: &[Vec<u8>],
         materials: &[Rc<Material>],
+        material_default: &Rc<Material>,
     ) -> Result<Self> {
         let mut vertex_data: Vec<Vertex> = vec![];
         let reader = prim.reader(|buf| Some(&buffer_data[buf.index()]));
@@ -446,7 +449,7 @@ impl Primitive {
 
         let material = match prim.material().index() {
             Some(idx) => materials[idx].clone(),
-            None => todo!(),
+            None => material_default.clone(),
         };
 
         let topology = match prim.mode() {
@@ -1003,7 +1006,8 @@ fn load_buffer(buf: &gltf::buffer::Buffer, base: &str) -> Result<Vec<u8>> {
             let filename = format!("{base}/{uri}");
             Ok(ndata::read(&filename)?)
         }
-        gltf::buffer::Source::Bin => todo!(),
+        // TODO implement
+        gltf::buffer::Source::Bin => anyhow::bail!("binary buffer data not supported yet"),
     }
 }
 
@@ -1024,7 +1028,8 @@ fn load_gltf_texture(
             let filename = format!("{base}/{uri}");
             tb.path(&filename)
         }
-        _ => todo!(),
+        // TODO implement
+        _ => anyhow::bail!("unsupported image source!"),
     };
 
     if let Some(filter) = sampler.mag_filter() {
@@ -1197,6 +1202,23 @@ impl Model {
         // Helper textures
         let tex_zeros = tex_value(ctx, Some("Black"), [0, 0, 0])?;
         let tex_ones = tex_value(ctx, Some("White"), [255, 255, 255])?;
+        let material_default = Rc::new(Material {
+            uniform_buffer: {
+                let lctx = ctx.lock();
+                BufferBuilder::new(Some("Default Material"))
+                    .target(BufferTarget::Uniform)
+                    .usage(BufferUsage::Static)
+                    .data(&MaterialUniform::default().buffer()?)
+                    .build(&lctx.gl)?
+            },
+            diffuse: tex_ones.clone(),
+            metallic: tex_ones.clone(),
+            emissive: tex_zeros.clone(),
+            normalmap: tex_zeros.clone(),
+            ambientocclusion: tex_ones.clone(),
+            blend: false,
+            double_sided: false,
+        });
 
         let buffer_data: Vec<Vec<u8>> = gltf
             .buffers()
@@ -1246,7 +1268,15 @@ impl Model {
             .map(|mesh| {
                 let mut primitives = mesh
                     .primitives()
-                    .map(|prim| Primitive::from_gltf(ctx, &prim, &buffer_data, &materials))
+                    .map(|prim| {
+                        Primitive::from_gltf(
+                            ctx,
+                            &prim,
+                            &buffer_data,
+                            &materials,
+                            &material_default,
+                        )
+                    })
                     .collect::<Result<Vec<_>, _>>()?;
                 primitives.sort_by(|a, b| a.material.blend.cmp(&b.material.blend));
                 Ok(Rc::new(Mesh::new(ctx, primitives)))
