@@ -1,4 +1,4 @@
-return {
+local constants = {
    -- Constants used by the Engine
    PHYSICS_SPEED_DAMP   = 4, -- Was 3 until 0.13.0
    STEALTH_MIN_DIST     = 1000., -- Minimum distance (excluding system factors)
@@ -16,3 +16,18 @@ return {
    BITE_ACCEL_MOD = 390, -- like hades_torch (was 500 before 0.13.0)
    BITE_SPEED_MOD = 110, -- like adrenal_glands_ii (was 80 before 0.13.0)
 }
+
+local cts_list = {}
+for k,v in ipairs(file.enumerate( "constants")) do
+   local cts = require("constants."..string.gsub(v,".lua",""))()
+   cts.priority = cts.priority or 5
+   table.insert( cts_list, cts )
+end
+table.sort( cts_list, function( a, b )
+   return a.priority > b.priority
+end )
+for k,cts in ipairs(cts_list) do
+   constants = tmerge( constants, cts )
+end
+
+return constants

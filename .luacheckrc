@@ -261,6 +261,7 @@ files["dat/bkg/**/*.lua"].std = STANDARD .. GFX .. "+bkg+camera+API_background"
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
 files["dat/common.lua"].std = STANDARD
+files["dat/constants.lua"].std = "+file"
 files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
 files["dat/events/**/*.lua"].std = STANDARD .. "+API_evt+evt+hook+camera+tex+bkg+music+munition" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
