@@ -132,6 +132,16 @@ pos['porro'] = (pos['tarmak'] + pos['churchill']) / 2.0
 pos['ngc20489'] = (pos['ngc9607'] + pos['ngc15670'] + pos['ngc14676'] + pos['ngc7319']) / 4.0
 pos['voproid'] = symmetry(pos['botarn'], pos['ngc7319'])(pos['voproid'])
 
+for sys in ['ngc127', 'ngc344', 'ngc4363']:
+   n, _ = E[sys][0]
+   acc = vec()
+   for e, _ in E[n]:
+      if e != sys:
+         acc += (pos[n] - pos[e]).normalize()
+   v = pos[sys] - pos[n]
+   pos[sys] = pos[n] + acc.normalize(v.size())
+
+
 # Anubis BH
 
 pos['dohriabi'] += (pos['dohriabi']-pos['overture']) / 4.0
