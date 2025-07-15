@@ -30,7 +30,6 @@ function nebula_image.init( filename )
 
       local path  = "gfx/bkg/nebula/"..filename
       local img   = tex.open( path )
-      local nw,nh = gfx.dim()
       local w,h   = img:dim()
       local r     = prng:random() * csys:radius()
       local a     = 2*math.pi*prng:random()
@@ -44,7 +43,9 @@ function nebula_image.init( filename )
       if 1280 < scale * md then
          scale = 1280 / md
       end
-      scale = scale * (nw*nh)/(1280*720) * 0.75
+      -- Don't scale based on screen size, gives weird zoom effect when toggling fullscreen
+      --local nw,nh = gfx.dim()
+      --scale = scale * (nw+nh)/(1280+720) * 0.5
       bkg.image( img, x, y, move, scale, angle, col )
 
       -- Default nebula background

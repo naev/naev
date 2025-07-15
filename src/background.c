@@ -449,7 +449,7 @@ static void background_renderImages( background_image_t *bkg_arr )
       if ( bkg->L_idx >= 0 ) {
          double d = hypot( rx, ry );
          /* Update Light. */
-         /*
+         /* Not scaling light based on distance and assuming it is constant.
          double w = 1. / sqrt(3.);
          double a = CLAMP( 0., 1., d/5000. );
          bkg->L.colour.v[0] = bkg->radiosity.r * (1.-a) + a*w;
