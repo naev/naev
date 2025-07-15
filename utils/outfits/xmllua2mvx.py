@@ -10,7 +10,8 @@ from sys import argv, stderr, exit
 
 
 # everything ont in this list goes to specific intead of general
-general = ['mass', 'cpu']
+#general = ['mass', 'cpu']
+general = ['cpu']
 
 def numeval(s):
    try:
