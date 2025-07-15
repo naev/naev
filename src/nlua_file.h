@@ -27,6 +27,7 @@ typedef struct LuaFile_s {
  * Library loading
  */
 int nlua_loadFile( nlua_env *env );
+int nlua_loadFileNoEnv( lua_State *L );
 
 /* Basic operations. */
 LuaFile_t *lua_tofile( lua_State *L, int ind );

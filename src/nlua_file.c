@@ -65,6 +65,12 @@ int nlua_loadFile( nlua_env *env )
    nlua_register( env, FILE_METATABLE, fileL_methods, 1 );
    return 0;
 }
+int nlua_loadFileNoEnv( lua_State *L )
+{
+   luaL_register( L, FILE_METATABLE, fileL_methods );
+   lua_pop( L, 1 );
+   return 0;
+}
 
 /**
  * @brief Lua bindings to interact with files.

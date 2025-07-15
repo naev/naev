@@ -8,6 +8,7 @@
 
 #include "ndata.h"
 #include "nlua.h"
+#include "nlua_file.h"
 
 constants CTS = {
    .PHYSICS_SPEED_DAMP     = 3., /* Default before 0.13.0. */
@@ -35,6 +36,7 @@ int constants_init( void )
 
    lua_State *L = luaL_newstate();
    luaL_openlibs( L );
+   nlua_loadFileNoEnv( L );
 
    if ( ( nlua_loadbuffer( L, buf, size, file ) || lua_pcall( L, 0, 1, 0 ) ) ) {
       WARN( _( "Failed to parse '%s':\n%s" ), file, lua_tostring( L, -1 ) );
