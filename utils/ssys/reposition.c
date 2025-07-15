@@ -18,6 +18,9 @@
 #define EDGE_FACT 1.6
 #define PEEK_D 4
 
+// stretch penalty is max rather than avg of indiv. stretches.
+#define MAX_STRETCH
+
 #include <glib.h>
 
 const double ssys_fallscale = 1.5;
@@ -191,22 +194,35 @@ static double edge_stretch_score(struct s_cost_params *cp, const double v[2])
    const double a = 1.0 / (2.0 * cp->radius);
    const double c = -cp->radius / 2.0;
 
-   double tot = 0.0;
    double acc = 0.0;
+#ifndef MAX_STRETCH
+   double tot = 0.0;
+#endif
 
    for (int i = 0; i < cp->n_neigh; i++) {
       const double len = MAYBE(cp->neigh[OFF_N * i + 2]);
       const double d   = sqrt(dist_sq(cp->neigh + OFF_N * i, v)) / len;
+      double       cost;
 
       if (d < cp->radius)
-         acc += (a * d * d);
+         cost = (a * d * d);
       else
-         acc += (d + c);
-      tot += 1.0 / len;
-   }
+         cost = (d + c);
 
-   // return acc / tot;
-   return acc / cp->n_neigh;
+#ifdef MAX_STRETCH
+      if (cost > acc)
+         acc = cost;
+#else
+      acc = cost;
+      tot += 1.0 / len;
+#endif
+   }
+#ifdef MAX_STRETCH
+   return acc;
+#else
+   return acc / tot;
+// return acc / cp->n_neigh;
+#endif
 }
 
 static double sys_overlap_score(struct s_cost_params *cp, const double v[2])
