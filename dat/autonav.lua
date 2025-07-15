@@ -961,13 +961,6 @@ function autonav_enter ()
          return false
       end
 
-      -- Restore autonav speed in case it was reset when jumping, because some
-      -- outfits will change time constants when jumping, which causes the
-      -- autonav time to reset, and it doesn't restore until it gets triggered
-      -- again
-      local dt_default = player.dt_default()
-      player.autonavSetSpeed( tc_mod, tc_mod / dt_default )
-
       -- Keep on going
       player.msg("#o"..fmt.f(n_(
          "Autonav continuing until {sys} ({n} jump left).",

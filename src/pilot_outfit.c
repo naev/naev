@@ -1261,7 +1261,8 @@ void pilot_calcStats( Pilot *pilot )
    pilot_weapSetUpdateStats( pilot );
 
    /* In case the time_mod has changed. */
-   if ( pilot_isPlayer( pilot ) && ( tm != s->time_mod ) )
+   if ( pilot_isPlayer( pilot ) && ( tm != s->time_mod ) &&
+        !player_isFlag( PLAYER_AUTONAV ) )
       player_resetSpeed();
 }
 
