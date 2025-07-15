@@ -2,6 +2,14 @@ local fmt = require "format"
 
 local fb = {}
 
+function fb.spawnerOutfit( p )
+   local m = p:mothership()
+   if not m then return end
+   local ds = p:dockslot()
+   if not ds then return end
+   m:outfitGet( ds )
+end
+
 function fb.equip( p, olist )
    for k,v in pairs(olist) do
       if type(k)=="string" then
