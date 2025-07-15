@@ -59,7 +59,7 @@ local function star_add( added, num_added )
    local nmove = math.max( 0.05, prng:random()*0.1 )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1 - nmove/0.2)/5
-   scale = scale * 0.75
+   scale = scale * 0.5
    -- Normalize the radiosity so all stars are same brightness for same value of rad and equivalent to white light
    local cr, cg, cb = data.r:rgb()
    local cn = math.sqrt( cr*cr + cg*cg + cb*cb )
