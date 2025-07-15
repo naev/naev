@@ -1,13 +1,36 @@
 use crate::model::Model;
+use anyhow::Result;
 use log::warn;
 use rayon::prelude::*;
-use renderer::Context;
+use renderer::{Context, ContextWrapper};
 use std::ffi::{c_void, CStr};
 use std::sync::Mutex;
 
 struct ShipWrapper(naevc::Ship);
 //unsafe impl Sync for ShipWrapper {}
 unsafe impl Send for ShipWrapper {}
+
+impl ShipWrapper {
+    pub fn name(&self) -> String {
+        let s = unsafe { CStr::from_ptr(self.0.name).to_str().unwrap() };
+        s.to_string()
+    }
+
+    fn load_gfx_3d(&mut self, path: &str, ctx: &ContextWrapper) -> Result<()> {
+        ndata::stat(&path)?;
+        let m = Model::from_path(ctx, &path)?;
+        self.0.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
+        unsafe {
+            naevc::ship_gfxLoadPost3D(&mut self.0 as *mut naevc::Ship);
+        }
+        Ok(())
+    }
+
+    fn load_gfx_2d(&mut self) -> Result<()> {
+        unsafe { naevc::ship_gfxLoad2D(&mut self.0 as *mut naevc::Ship) };
+        Ok(())
+    }
+}
 
 #[allow(dead_code)]
 fn get() -> &'static [ShipWrapper] {
@@ -50,31 +73,21 @@ pub extern "C" fn ship_gfxLoadNeeded() {
             .unwrap()
         };
         let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
-        match ndata::stat(&path) {
-            Ok(_) => match Model::from_path(&ctx, &path) {
-                Ok(m) => {
-                    s.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
-                    unsafe {
-                        naevc::ship_gfxLoadPost3D(s as *mut naevc::Ship);
-                    }
-                }
-                Err(e) => {
-                    warn!("Failure loading 3D model '{}': {}", &path, e);
-                    needs2d.lock().unwrap().push(ptr);
-                }
-            },
-            Err(_) => {
-                needs2d.lock().unwrap().push(ptr);
-            }
-        };
+        if ptr.load_gfx_3d(&path, &ctx).is_err() {
+            needs2d.lock().unwrap().push(ptr);
+        }
     });
     drop(ctx); // Need to drop
 
     // 2D doesn't use the safe context system yet, so it can't be threaded with 3D
-    needs2d.lock().unwrap().iter_mut().for_each(|ptr| {
-        let s = &mut ptr.0;
-        unsafe {
-            naevc::ship_gfxLoad2D(s as *mut naevc::Ship);
-        }
-    });
+    needs2d
+        .lock()
+        .unwrap()
+        .iter_mut()
+        .for_each(|ptr| match ptr.load_gfx_2d() {
+            Ok(_) => (),
+            Err(e) => {
+                warn!("Unable to load graphics for ship '{}': {}", ptr.name(), e);
+            }
+        });
 }
