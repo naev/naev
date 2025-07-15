@@ -827,6 +827,8 @@ impl Context {
                 -1.0,
                 1.0,
             );
+            naevc::conf.width = dims.window_width;
+            naevc::conf.height = dims.window_height;
         }
         *self.dimensions.write().unwrap() = dims;
         Ok(())
