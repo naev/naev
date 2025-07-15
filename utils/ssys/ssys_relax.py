@@ -7,6 +7,7 @@ from geometry import transf, vec
 from ssys import nam2base, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
 from math import sin, pi
 from minimize_angle_stretch import relax_dir
+from xml_name import end_xml_name
 
 sm = starmap()
 
@@ -147,6 +148,8 @@ if __name__ == '__main__':
                   stdout.flush()
          exit(0)
    try:
+      # this one would interfere
+      end_xml_name()
       while wait() != -1:
          pass
    except:
