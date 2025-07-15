@@ -483,6 +483,15 @@ static int has_plugin( const char *plugin )
    return 0;
 }
 
+static int save_has_plugin( const nsave_t *ns, const char *plugin )
+{
+   for ( int i = 0; i < array_size( ns->plugins ); i++ ) {
+      if ( strcmp( plugin, ns->plugins[i] ) == 0 )
+         return 1;
+   }
+   return 0;
+}
+
 /**
  * @brief Checks to see if a save is compatible with current Naev.
  */
@@ -495,6 +504,11 @@ static SaveCompatibility load_compatibility( const nsave_t *ns )
 
    for ( int i = 0; i < array_size( ns->plugins ); i++ ) {
       if ( !has_plugin( ns->plugins[i] ) )
+         return SAVE_COMPATIBILITY_PLUGINS;
+   }
+   const plugin_t *plugins = plugin_list();
+   for ( int j = 0; j < array_size( plugins ); j++ ) {
+      if ( !save_has_plugin( ns, plugin_name( &plugins[j] ) ) )
          return SAVE_COMPATIBILITY_PLUGINS;
    }
 
