@@ -76,7 +76,8 @@ if __name__ != '__main__':
       return _ssys_color(V, ssys).split(':', 1)[0]
 
    def ssys_nebula( V, ssys ):
-      return _ssys_color(V, ssys).split(':', 1)[1:2] == [ 'nebula' ]
+      v = _ssys_color(V, ssys).split(':', 1)[1:2]
+      return False if v == [] else float(v[0])
 
 else:
    if do_color := ('-c' in argv[1:]):
@@ -157,8 +158,13 @@ else:
                V.aux[bnam].append('default')
          else:
             V.aux[bnam].append(aux)
-         if V.aux[bnam] != [] and T.find('general/nebula') is not None:
-            V.aux[bnam][-1] += ':nebula'
+         if (e := T.find('general/nebula')) is not None:
+            if V.aux[bnam] == []:
+               V.aux[bnam] = ['default']
+            if 'volatility' in e.attrib:
+               V.aux[bnam][-1] += ':' + str(float(e.attrib['volatility']))
+            else:
+               V.aux[bnam][-1] += ':' + str(0.0)
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:

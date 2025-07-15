@@ -14,7 +14,7 @@ def main( color = False, fixed_pos = False ):
 
    if color:
       colors = { k: color_values[ssys_color(pos, k)] for k in pos }
-      nebula = { k for k in pos if ssys_nebula(pos, k) }
+      nebula = { k: ssys_nebula(pos, k) for k in pos if ssys_nebula(pos, k) }
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
       V = {k:' '.join(l) for k, l in pos.aux.items()}
@@ -58,7 +58,16 @@ def main( color = False, fixed_pos = False ):
 
          if color:
             if i in nebula:
-               s += ';fontcolor=darkred'
+               if nebula[i] == 0.0:
+                  s += ';fontcolor=blue'
+               elif nebula[i] < 10.0:
+                  s += ';fontcolor=purple'
+               elif nebula[i] < 45.0:
+                  s += ';fontcolor=pink'
+               elif nebula[i] < 75.0:
+                  s += ';fontcolor=darkred'
+               else:
+                  s += ';fontcolor=red'
             cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
             s += ';fillcolor="#'+rgb+'"'

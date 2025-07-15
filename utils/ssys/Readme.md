@@ -99,7 +99,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
     - show haze/plasma storm/stellar winds *
  - `graph2pov`:
     - show haze/plasma storm/stellar winds
-    - show nebula levels *
  - `reposition.c`:
     - clearify ow Vs tw *
     - fixed point algorithm

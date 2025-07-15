@@ -9,6 +9,7 @@ if __name__ != '__main__':
    raise Exception('This module is only intended to be used as main.')
 
 from sys import argv, stdin, stderr, exit
+from math import log, sqrt
 import subprocess
 import os
 
@@ -77,7 +78,7 @@ def write_pov( s, indent = -1 ):
 from graphmod import ssys_pos as V, ssys_jmp as E, no_graph_out
 no_graph_out()
 colors = { k: color_values[ssys_color(V, k)] for k in V }
-nebula = { k for k in V if ssys_nebula(V, k) }
+nebula = { k: ssys_nebula(V, k) for k in V if ssys_nebula(V, k) is not False }
 is_def = { k: is_default((v+['default'])[0]) for k, v in V.aux.items() }
 
 b = bb()
@@ -132,20 +133,25 @@ for i, p in V.items():
          'pigment {color rgb<' + ','.join(map(str, col)) + '>}',
       ], '}', '' ])
 
-   if i == 'sol':
-      col = (0.5,  0.0,  1.2)
-
    if i in nebula:
+      q = log((nebula[i]+100.0)/100.0)/log(2.0)
+      q = sqrt(q)
+      b = 0.8 - 0.2*q
+      r = 0.4 + 1.0*q
       radius = '7'
       write_pov([ 'cylinder{', [
          '<0,0,-1>,',
          '<0,0,0>,',
          '0.5',
          'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>]' +
-            '[0.9, rgbt<0.4,0,0.8,0.5>]}}',
+            '[0.9, rgbt<' + str(r) + ',0,' + str(b) + ',0.5>]}}',
          'scale 11*' + radius,
          'translate <' + str(p[0]) + ', ' + str(p[1]) + ', 3>',
       ], '}', ''])
+
+   if i == 'sol':
+      col = (0.5,  0.0,  1.2)
+
    if not is_def[i]:
       the_col = tuple([2.0*x for x in col])
       radius = '5' if i == 'sol' else '3'
