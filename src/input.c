@@ -860,7 +860,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
          player_accel( kabs );
       } else { /* prevent it from getting stuck */
          if ( isdoubletap ) {
-            if ( NODEAD() ) {
+            if ( NOHYP() && NODEAD() ) {
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_ACCEL );
                pilot_afterburn( player.p );
                /* Allow keeping it on outside of weapon sets. */
@@ -870,7 +870,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
                }
             }
          } else if ( value == KEY_RELEASE ) {
-            if ( NODEAD() ) {
+            if ( NOHYP() && NODEAD() ) {
                pilot_outfitLOnkeyrelease( player.p, OUTFIT_KEY_ACCEL );
                /* Make sure to release the weapon set lock. */
                if ( player.p->afterburner != NULL ) {
@@ -901,7 +901,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
          player_left = kabs;
       } else {
          if ( isdoubletap ) {
-            if ( NODEAD() )
+            if ( NOHYP() && NODEAD() )
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_LEFT );
          } else if ( value == KEY_RELEASE ) {
             player_rmFlag( PLAYER_TURN_LEFT );
@@ -924,7 +924,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
          player_right = kabs;
       } else {
          if ( isdoubletap ) {
-            if ( NODEAD() )
+            if ( NOHYP() && NODEAD() )
                pilot_outfitLOnkeydoubletap( player.p, OUTFIT_KEY_RIGHT );
          } else if ( value == KEY_RELEASE ) {
             player_rmFlag( PLAYER_TURN_RIGHT );
@@ -939,7 +939,7 @@ static void input_key( KeySemanticType keynum, double value, double kabs,
       break;
    /* turn around to face vel */
    case KST_REVERSE:
-      if ( repeat )
+      if ( repeat || HYP() || !INGAME() )
          break;
       if ( value == KEY_PRESS ) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
