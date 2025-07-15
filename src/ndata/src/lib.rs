@@ -27,24 +27,32 @@ pub fn read(path: &str) -> Result<Vec<u8>> {
     Ok(out)
 }
 
+pub fn is_dir(path: &str) -> bool {
+    match stat(path) {
+        Ok(s) => s.filetype == FileType::Directory,
+        Err(_) => false,
+    }
+}
+
+pub fn is_file(path: &str) -> bool {
+    match stat(path) {
+        Ok(s) => s.filetype == FileType::Regular,
+        Err(_) => false,
+    }
+}
+
 pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
-        .filter_map(|f| {
-            let dir = match stat(&f) {
-                Ok(s) => s.filetype == FileType::Directory,
-                Err(_) => false,
-            };
-            match dir {
-                true => match read_dir(&f) {
-                    Ok(files) => Some(files),
-                    Err(_) => None,
-                },
-                false => match physfs::blacklisted(&f) {
-                    true => None,
-                    false => Some(vec![f]),
-                },
-            }
+        .filter_map(|f| match is_dir(&f) {
+            true => match read_dir(&f) {
+                Ok(files) => Some(files),
+                Err(_) => None,
+            },
+            false => match physfs::blacklisted(&f) {
+                true => None,
+                false => Some(vec![f]),
+            },
         })
         .flatten()
         .collect())
