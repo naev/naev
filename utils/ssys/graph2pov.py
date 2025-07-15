@@ -56,7 +56,7 @@ if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:] != []:
    )
    exit(0)
 
-from graph_vaux import is_default, color_values, ssys_color, ssys_nebula
+from graph_vaux import is_default, color_values, ssys_color, ssys_nebula, ssys_others
 from geometry import bb, vec
 
 
@@ -78,7 +78,8 @@ def write_pov( s, indent = -1 ):
 from graphmod import ssys_pos as V, ssys_jmp as E, no_graph_out
 no_graph_out()
 colors = { k: color_values[ssys_color(V, k)] for k in V }
-nebula = { k: ssys_nebula(V, k) for k in V if ssys_nebula(V, k) is not False }
+nebula = { k: ssys_nebula(V, k) for k in V if ssys_nebula(V, k) is not None}
+others = { k: ssys_others(V, k) for k in V }
 is_def = { k: is_default((v+['default'])[0]) for k, v in V.aux.items() }
 
 b = bb()
@@ -133,18 +134,29 @@ for i, p in V.items():
          'pigment {color rgb<' + ','.join(map(str, col)) + '>}',
       ], '}', '' ])
 
+   b = None
    if i in nebula:
       q = log((nebula[i]+100.0)/100.0)/log(2.0)
       q = sqrt(q)
-      b = 0.8 - 0.2*q
-      r = 0.4 + 1.0*q
+      r, g, b = 0.4 + 1.0*q, 0.0, 0.8 - 0.2*q
+   elif i in others:
+      d = {
+         'stellarwind': (0.2, 0.5, 0.7),
+         'plasmastorm': (0.5, 0.3, 0.6),
+         'haze':        (0.7, 0.0, 0.0)
+      }
+      for c in (d[t] for t in others[i] if t in d):
+         (r, g, b) = c
+         break
+
+   if b is not None:
       radius = '7'
       write_pov([ 'cylinder{', [
          '<0,0,-1>,',
          '<0,0,0>,',
          '0.5',
          'pigment {spherical turbulence 0.1 colour_map {[0, rgbt <0,0,0,1>]' +
-            '[0.9, rgbt<' + str(r) + ',0,' + str(b) + ',0.5>]}}',
+            '[0.9, rgbt<' + str(r) + ',' + str(g) + ',' + str(b) + ',0.6>]}}',
          'scale 11*' + radius,
          'translate <' + str(p[0]) + ', ' + str(p[1]) + ', 3>',
       ], '}', ''])
@@ -154,7 +166,7 @@ for i, p in V.items():
 
    if not is_def[i]:
       the_col = tuple([2.0*x for x in col])
-      radius = '5' if i == 'sol' else '3'
+      radius = '9' if i == 'sol' else '3'
       write_pov([ 'cylinder{', [
          '<0,0,-1>,',
          '<0,0,0>,',
@@ -176,11 +188,11 @@ for i, p in V.items():
          other = V[dstsys]
       else:
          other = (p + V[dstsys]) / 2.0
-      edge_col='0.3,0.3,0.3'
-      for t, c in [('hidden','0.5,0,0.5'), ('virtual','0,0,1'),
-          ('fake','1,0,0'), ('new','0,1,0'), ]:
+      edge_col = '0.3,0.3,0.3'
+      tagcol = {'hidden': '0.5,0,0.5', 'virtual': '0,0,1', 'fake': '1,0,0', 'new': '0,1,0' }
+      for t in tagcol:
          if t in tags:
-            edge_col = c
+            edge_col = tagcol[t]
       write_pov([ 'cylinder{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
          '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',

@@ -5,6 +5,7 @@ import os
 from sys import stderr, exit, argv, stdout
 
 
+Rtags = {'stellarwind', 'thenebula', 'haze', 'plasmastorm', 'spoiler'}
 faction_color = {
    'default':         'default',
    'empire':          'green',
@@ -64,7 +65,7 @@ if __name__ != '__main__':
       'skyblue': (0.0,  0.4,  0.9),
    }
    default_col = color_values['default']
-   is_default = lambda s: s is None or s.split('@')[0] == 'default'
+   is_default = lambda s: s is None or s.split('@')[0].split(':')[0] == 'default'
    col_avg = lambda u, v: tuple([(i + 1.5*j + 0.5*0) / 4.0 for (i, j) in zip(u, v)])
    for c in main_col:
       color_values['default@' + c] = col_avg(default_col, color_values[c])
@@ -75,9 +76,15 @@ if __name__ != '__main__':
    def ssys_color( V, ssys ):
       return _ssys_color(V, ssys).split(':', 1)[0]
 
+   def ssys_others( V, ssys ):
+      return _ssys_color(V, ssys).split(':')[2:]
+
    def ssys_nebula( V, ssys ):
-      v = _ssys_color(V, ssys).split(':', 1)[1:2]
-      return False if v == [] else float(v[0])
+      v = _ssys_color(V, ssys).split(':', 2)[1:2]
+      try:
+         return float(v[0])
+      except:
+         return None
 
 else:
    if do_color := ('-c' in argv[1:]):
@@ -158,13 +165,18 @@ else:
                V.aux[bnam].append('default')
          else:
             V.aux[bnam].append(aux)
-         if (e := T.find('general/nebula')) is not None:
+         if (tags := [e.text for e in T.findall('tags/tag') if e.text in Rtags]) != []:
             if V.aux[bnam] == []:
                V.aux[bnam] = ['default']
-            if 'volatility' in e.attrib:
-               V.aux[bnam][-1] += ':' + str(float(e.attrib['volatility']))
-            else:
-               V.aux[bnam][-1] += ':' + str(0.0)
+            V.aux[bnam][-1] += ':'
+            if 'thenebula' in tags:
+               tags.remove('thenebula')
+               volatility = 0.0
+               if (e := T.find('general/nebula')) is not None:
+                  if 'volatility' in e.attrib:
+                     volatility = float(e.attrib['volatility'])
+               V.aux[bnam][-1] += str(volatility)
+            V.aux[bnam][-1] += ':'.join([''] + tags)
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:

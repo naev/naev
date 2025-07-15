@@ -94,14 +94,12 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
- - `graph2dot`:
-    - display one-way hidden/one-way normal connections.
-    - show haze/plasma storm/stellar winds *
- - `graph2pov`:
-    - show haze/plasma storm/stellar winds
+ - have a -s flag for no-spoiler +
  - `reposition.c`:
     - clearify ow Vs tw *
+    - penalty map +
     - fixed point algorithm
-    - penalty map
-    - fix tunnel effect
     - possible opt: manage separately neigh with non-1.0 len.
+    - fix tunnel effect -
+ - `graph2dot`:
+    - display one-way hidden/one-way normal connections. -

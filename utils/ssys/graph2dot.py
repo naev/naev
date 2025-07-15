@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 
 from sys import argv, stderr
-from graph_vaux import color_values, ssys_color, ssys_nebula
+from graph_vaux import color_values, ssys_color, ssys_nebula, ssys_others
 
 
 def main( color = False, fixed_pos = False ):
@@ -14,7 +14,8 @@ def main( color = False, fixed_pos = False ):
 
    if color:
       colors = { k: color_values[ssys_color(pos, k)] for k in pos }
-      nebula = { k: ssys_nebula(pos, k) for k in pos if ssys_nebula(pos, k) }
+      nebula = { k: ssys_nebula(pos, k) for k in pos if ssys_nebula(pos, k) is not None }
+      others = { k: ssys_others(pos, k) for k in pos }
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
       V = {k:' '.join(l) for k, l in pos.aux.items()}
@@ -32,10 +33,10 @@ def main( color = False, fixed_pos = False ):
 
    print('\tinputscale=72')
    print('\tnotranslate=true') # don't make upper left at 0,0
-   print('\tnode[fixedsize=true,shape=circle,color=white,fillcolor=grey,style="filled"]')
+   print('\tnode[fixedsize=true,shape=circle,penwidth=0,color=white,fillcolor=grey,style="filled"]')
    reflen = 0.5
    print('\tnode[width=0.5]')
-   print('\tedge[len='+str(reflen)+']')
+   print('\tedge[len=' + str(reflen) + ']')
 
    if fixed_pos:
       print('\tnode[pin=true]')
@@ -45,32 +46,41 @@ def main( color = False, fixed_pos = False ):
          continue
       # Don't include disconnected systems
       if E[i] != [] or fixed_pos:
-         s = '\t"'+i+'" ['
+         s = '\t"' + i + '" ['
          if i[0] != '_':
             (x, y) = pos[i]
             x = round(float(x)*factor, 9)
             y = round(float(y)*factor, 9)
             s += 'pos="'+str(x)+','+str(y)+('!' if fixed_pos else '')+'";'
          label = V[i]
-         for t in [('-','- '), (' ','\\n'), ('Test\\nof','Test of')]:
+         for t in {'-': '- ', ' ': '\\n', 'Test\\nof': 'Test of'}.items():
             label = label.replace(*t)
          s += 'label="' + label + '"'
 
          if color:
             if i in nebula:
-               if nebula[i] == 0.0:
-                  s += ';fontcolor=blue'
-               elif nebula[i] < 10.0:
-                  s += ';fontcolor=purple'
-               elif nebula[i] < 45.0:
-                  s += ';fontcolor=pink'
-               elif nebula[i] < 75.0:
-                  s += ';fontcolor=darkred'
-               else:
-                  s += ';fontcolor=red'
+               for lev, col in {
+                  0:'blue',
+                  10:'purple',
+                  45:'fuchsia',
+                  75:'deeppink',
+                  100:'red'
+               }.items():
+                  if nebula[i] <= lev:
+                     s += ';fontcolor='+col
+                     break
+            c = {
+               'stellarwind': 'lightskyblue',
+               'haze':        'pink',
+               'plasmastorm': '".833 .2 1"'
+            }
+            for o in others[i]:
+               if o in c:
+                  s += 'penwidth=4.0;color='+c[o]
+                  break
             cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
-            s += ';fillcolor="#'+rgb+'"'
+            s += ';fillcolor="#' + rgb + '"'
 
          if i == 'sol':
             s += ';color=red'
