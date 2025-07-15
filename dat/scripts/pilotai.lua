@@ -124,69 +124,82 @@ end
       @tparam[opt=false] boolean allpilots Whether or not to affect all non-player pilots, or just natural pilots.
 --]]
 function pilotai.clear( allpilots )
-   for k,p in ipairs(pilot.get()) do
-      local m = p:memory()
-      if not p:withPlayer() and (m.natural or allpilots) then
-         m.force_leave  = true -- for most AI
-         m.loiter       = -1 -- for generic AI
-         m.boarded      = 1 -- for pirate AI
-         m.doscans      = false
-         m.vulnerability = math.huge -- Have them be targeted less
-         p:taskClear()
-
-         -- Try to make them leave from the closest place
-         local pp = p:pos()
-         local pfct = p:faction()
-         local dist = math.huge
-         local distj = math.huge
-         local candspob, candjump, closestjump
-         for i,s in ipairs(system.cur():spobs()) do
-            local sfct = s:faction()
-            if s:services().land and sfct and not pfct:areEnemies(sfct) then
-               local d = s:pos():dist2( pp )
-               if d < dist then
-                  candspob = s
-                  dist = d
-               end
-            end
-         end
-         for i,j in ipairs(system.cur():jumps(true)) do
-            local jfct = j:dest():faction()
-            if jfct and not pfct:areEnemies(jfct) then
-               local d = j:pos():dist2( pp )
-               if d < dist then
-                  candspob = nil
-                  candjump = j
-                  dist = d
-               end
-               if d < distj then
-                  closestjump = j
-                  distj = d
-               end
-            end
-         end
-
-         -- Try to get them out
-         if candspob then
-            m.goal = "planet"
-            m.goal_planet = candspob
-            m.goal_pos = candspob:pos()
-            p:pushtask("land", m.goal_planet)
-         elseif candjump then
-            m.goal = "hyperspace"
-            m.goal_hyperspace = candjump
-            m.goal_pos = candjump:pos()
-            p:pushtask("hyperspace",m.goal_hyperspace)
-         elseif closestjump then
-            -- Get them out the closest jump
-            candjump = closestjump
-            m.goal = "hyperspace"
-            m.goal_hyperspace = candjump
-            m.goal_pos = candjump:pos()
-            p:pushtask("hyperspace",m.goal_hyperspace)
+   local t = type(allpilots)
+   local plts
+   if t=="nil" then
+      plts = {}
+      for k,p in ipairs(pilot.get()) do
+         if not p:withPlayer() and (p:memory().natural or allpilots) then
+            table.insert( plts, p )
          end
       end
+   elseif t=="boolean" and allpilots then
+      plts = pilot.get()
+   else
+      plts = allpilots
    end
+
+   pilotai.apply( plts, function ( p )
+      local m = p:memory()
+      m.force_leave  = true -- for most AI
+      m.loiter       = -1 -- for generic AI
+      m.boarded      = 1 -- for pirate AI
+      m.doscans      = false
+      m.vulnerability = math.huge -- Have them be targeted less
+      p:taskClear()
+
+      -- Try to make them leave from the closest place
+      local pp = p:pos()
+      local pfct = p:faction()
+      local dist = math.huge
+      local distj = math.huge
+      local candspob, candjump, closestjump
+      for i,s in ipairs(system.cur():spobs()) do
+         local sfct = s:faction()
+         if s:services().land and sfct and not pfct:areEnemies(sfct) then
+            local d = s:pos():dist2( pp )
+            if d < dist then
+               candspob = s
+               dist = d
+            end
+         end
+      end
+      for i,j in ipairs(system.cur():jumps(true)) do
+         local jfct = j:dest():faction()
+         if jfct and not pfct:areEnemies(jfct) then
+            local d = j:pos():dist2( pp )
+            if d < dist then
+               candspob = nil
+               candjump = j
+               dist = d
+            end
+            if d < distj then
+               closestjump = j
+               distj = d
+            end
+         end
+      end
+
+      -- Try to get them out
+      if candspob then
+         m.goal = "planet"
+         m.goal_planet = candspob
+         m.goal_pos = candspob:pos()
+         p:pushtask("land", m.goal_planet)
+      elseif candjump then
+         m.goal = "hyperspace"
+         m.goal_hyperspace = candjump
+         m.goal_pos = candjump:pos()
+         p:pushtask("hyperspace",m.goal_hyperspace)
+      elseif closestjump then
+         -- Get them out the closest jump
+         candjump = closestjump
+         m.goal = "hyperspace"
+         m.goal_hyperspace = candjump
+         m.goal_pos = candjump:pos()
+         p:pushtask("hyperspace",m.goal_hyperspace)
+      end
+   end )
 end
 
 return pilotai
