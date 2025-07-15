@@ -148,7 +148,7 @@ impl NLua {
             naevc::lua_init();
             let state = naevc::naevL as *mut mlua::lua_State;
             mlua::ffi::luaopen_base(state); // Needed for ipairs and friends
-            mlua::Lua::init_from_ptr(state)
+            mlua::Lua::get_or_init_from_ptr(state)
         };
 
         // Load base libraries NOT SUFFICIENT
@@ -233,7 +233,7 @@ impl NLua {
                 )))
             })?,
         )?;
-        globals.set_metatable(Some(globals_mt));
+        globals.set_metatable(Some(globals_mt))?;
 
         // Our new globals should be usable now
         let wrapped = lua.globals();
@@ -262,7 +262,7 @@ impl NLua {
                 },
             )?,
         )?;
-        wrapped.set_metatable(Some(wrapped_mt));
+        wrapped.set_metatable(Some(wrapped_mt))?;
 
         let env_mt = lua.create_table()?;
         env_mt.set("__index", globals.clone())?;
@@ -275,7 +275,7 @@ impl NLua {
             env_mt,
             envs: envs.clone(),
             envs_rk: lua.create_registry_value(envs)?,
-            lua,
+            lua: lua.clone(),
         })
     }
 
@@ -286,7 +286,7 @@ impl NLua {
         t.set("__name", name)?;
 
         // Metatable
-        t.set_metatable(Some(self.env_mt.clone()));
+        t.set_metatable(Some(self.env_mt.clone()))?;
 
         // Set up paths.
         // "package.path" to look in the data.
