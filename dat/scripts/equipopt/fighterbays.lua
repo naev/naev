@@ -7,7 +7,7 @@ function fb.spawnerOutfit( p )
    if not m then return end
    local ds = p:dockslot()
    if not ds then return end
-   m:outfitGet( ds )
+   return m:outfitGet( ds )
 end
 
 function fb.equip( p, olist )
