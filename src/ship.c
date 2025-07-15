@@ -669,7 +669,7 @@ int ship_gfxLoad2D( Ship *s )
    int         engine = !s->noengine;
    char        str[PATH_MAX], *base;
    const char *delim;
-   const char *ext = ".webp";
+   const char *ext = s->gfx_extension != NULL ? s->gfx_extension : ".webp";
    const char *buf = s->gfx_path;
 
    /* Get base path. */
@@ -681,11 +681,6 @@ int ship_gfxLoad2D( Ship *s )
       snprintf( str, sizeof( str ), "%s", buf );
    else {
       snprintf( str, sizeof( str ), SHIP_GFX_PATH "%s/%s%s", base, buf, ext );
-      if ( !PHYSFS_exists( str ) ) {
-         ext = ".png";
-         snprintf( str, sizeof( str ), SHIP_GFX_PATH "%s/%s%s", base, buf,
-                   ext );
-      }
    }
 
    /* Load the polygon. */
@@ -1005,6 +1000,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
       temp->description   = STRDUP_( base->description );
       temp->desc_extra    = STRDUP_( base->desc_extra );
       temp->gfx_path      = STRDUP_( base->gfx_path );
+      temp->gfx_extension = STRDUP_( base->gfx_extension );
       temp->polygon_path  = STRDUP_( base->polygon_path );
       temp->gfx_comm      = STRDUP_( base->gfx_comm );
       if ( base->gfx_overlays != NULL ) {
@@ -1068,6 +1064,7 @@ static int ship_parse( Ship *temp, const char *filename, int firstpass )
          xmlr_attr_strd_free( node, "comm", temp->gfx_comm );
          xmlr_attr_int( node, "noengine", temp->noengine );
          xmlr_attr_strd_free( node, "polygon", temp->polygon_path );
+         xmlr_attr_strd_free( node, "extension", temp->gfx_extension );
 
          /* Graphics are now lazy loaded. */
 

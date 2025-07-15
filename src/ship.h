@@ -146,16 +146,17 @@ typedef struct Ship {
                          absorption. */
 
    /* Graphics */
-   double      size;         /**< Size of the ship. */
-   char       *gfx_path;     /**< Path to load GFX from (lazy loading). */
-   char       *polygon_path; /**< Path to load polygon. */
-   int         noengine;     /**< Don't try to load engine graphics. */
-   GltfObject *gfx_3d;       /**< 3d model of the ship */
-   glTexture  *gfx_space;    /**< Space sprite sheet. */
-   glTexture  *gfx_engine;   /**< Space engine glow sprite sheet. */
-   glTexture  *_gfx_store;   /**< Store graphic. */
-   char       *gfx_comm;     /**< Name of graphic for communication. */
-   glTexture **gfx_overlays; /**< Array (array.h): Store overlay graphics. */
+   double      size;          /**< Size of the ship. */
+   char       *gfx_path;      /**< Path to load GFX from (lazy loading). */
+   char       *polygon_path;  /**< Path to load polygon. */
+   char       *gfx_extension; /**< Extension for 2D images. */
+   int         noengine;      /**< Don't try to load engine graphics. */
+   GltfObject *gfx_3d;        /**< 3d model of the ship */
+   glTexture  *gfx_space;     /**< Space sprite sheet. */
+   glTexture  *gfx_engine;    /**< Space engine glow sprite sheet. */
+   glTexture  *_gfx_store;    /**< Store graphic. */
+   char       *gfx_comm;      /**< Name of graphic for communication. */
+   glTexture **gfx_overlays;  /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter *trail_emitters; /**< Trail emitters. */
    int               sx; /* TODO remove this and sy when possible. */
    int               sy;
