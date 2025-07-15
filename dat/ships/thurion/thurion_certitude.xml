@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>200</points>
  <base_type>Certitude</base_type>
- <gfx sy="12" sx="12" size="120">certitude</gfx>
+ <gfx sy="12" sx="12" size="120">certitude.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
- <gfx size="72">odium</gfx>
+ <gfx size="72">odium.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>

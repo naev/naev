@@ -1,7 +1,7 @@
 <ship name="Goddard">
  <points>200</points>
  <base_type>Goddard</base_type>
- <gfx sy="12" sx="12" size="125">goddard</gfx>
+ <gfx sy="12" sx="12" size="125">goddard.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

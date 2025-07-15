@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>40</points>
  <base_type>Ingenuity</base_type>
- <gfx size="56">ingenuity</gfx>
+ <gfx size="56">ingenuity.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Fighter</class>

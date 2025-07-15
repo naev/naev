@@ -1,7 +1,7 @@
 <ship name="Hawking">
  <points>150</points>
  <base_type>Hawking</base_type>
- <gfx size="139" sx="12" sy="12">hawking</gfx>
+ <gfx size="139" sx="12" sy="12">hawking.gltf</gfx>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>4800000</price>

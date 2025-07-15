@@ -1,7 +1,7 @@
 <ship name="Llama">
  <points>20</points>
  <base_type>Llama</base_type>
- <gfx size="47">llama</gfx>
+ <gfx size="47">llama.gltf</gfx>
  <sound>engine</sound>
  <class>Yacht</class>
  <price>120000</price>

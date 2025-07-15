@@ -1,7 +1,7 @@
 <ship name="Proteron Pythagoras">
  <points>150</points>
  <base_type>Pythagoras</base_type>
- <gfx size="124" sx="12" sy="12">pythagoras</gfx>
+ <gfx size="124" sx="12" sy="12">pythagoras.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>

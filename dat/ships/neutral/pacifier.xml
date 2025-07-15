@@ -1,7 +1,7 @@
 <ship name="Pacifier">
  <points>90</points>
  <base_type>Pacifier</base_type>
- <gfx sy="10" sx="10" size="77">pacifier</gfx>
+ <gfx sy="10" sx="10" size="77">pacifier.gltf</gfx>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1900000</price>

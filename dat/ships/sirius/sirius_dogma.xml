@@ -2,7 +2,7 @@
  <lua>sirius_dogma.lua</lua>
  <points>200</points>
  <base_type>Dogma</base_type>
- <gfx sy="12" sx="12" size="128">dogma</gfx>
+ <gfx sy="12" sx="12" size="128">dogma.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

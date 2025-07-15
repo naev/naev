@@ -1,5 +1,5 @@
 <ship name="Pirate Blue Shark" inherits="Pirate Shark">
- <gfx size="54">shark_pirate_blue</gfx>
+ <gfx size="54">shark_pirate_blue.gltf</gfx>
  <rarity>3</rarity>
  <price>390000</price>
  <description>As any good pirate would know, you can hardly pillage a ship if you blow it to pieces. Building upon the popular Pirate Shark, this variant has been additionally refitted to aid in disabling targets, even without using disabling weapons. Despite being widely considered a superior version of the ship, the blue colours prevent it gaining significant traction in popularity. "Everyone knows Red makes ships go fast, Blue makes them go slower!" is a common ill-informed complaint.</description>

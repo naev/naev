@@ -2,7 +2,7 @@
  <lua>pirate.lua</lua>
  <points>80</points>
  <base_type>Rhino</base_type>
- <gfx sy="10" sx="10" size="100">rhino_pirate</gfx>
+ <gfx sy="10" sx="10" size="100">rhino_pirate.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Armoured Transport</class>

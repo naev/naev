@@ -402,11 +402,11 @@ foreach ns: naevpedia_outfits_sources
     )
 endforeach
 
-genlist = []
-foreach gen: gen_outfits
-    genlist += gen.to_list()
+biolist = []
+foreach bio: bio_outfits
+  biolist += bio.to_list()
 endforeach
-foreach ns: genlist
+foreach ns: biolist
   naevpedia_outfits += custom_target( ns.full_path().replace('/','_'),
       command: outfits_gen,
       input: ns,

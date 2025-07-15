@@ -73,7 +73,7 @@ pub extern "C" fn ship_gfxLoadNeeded() {
         };
         let path = match cpath.chars().next() == Some('/') {
             true => cpath,
-            false => &format!("gfx/ship3d/{cpath}"),
+            false => &format!("gfx/ship3d/{base_path}/{cpath}"),
         };
         if match ndata::is_file(&path) {
             true => ptr.load_gfx_3d(&path, &ctx),

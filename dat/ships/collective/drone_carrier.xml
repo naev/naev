@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>160</points>
  <base_type path="Drone_Carrier">Drone Carrier</base_type>
- <gfx sy="12" sx="12" size="96">drone_carrier</gfx>
+ <gfx sy="12" sx="12" size="96">drone_carrier.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class display="Robotic Carrier">Carrier</class>

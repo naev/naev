@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>40</points>
  <base_type>Scintillation</base_type>
- <gfx size="70">scintillation</gfx>
+ <gfx size="70">scintillation.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Bomber</class>

@@ -2,7 +2,7 @@
  <lua>pirate.lua</lua>
  <points>40</points>
  <base_type>Ancestor</base_type>
- <gfx size="65">ancestor_pirate</gfx>
+ <gfx size="65">ancestor_pirate.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Bomber</class>

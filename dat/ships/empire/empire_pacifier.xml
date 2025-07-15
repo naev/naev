@@ -1,7 +1,7 @@
 <ship name="Empire Pacifier">
  <points>90</points>
  <base_type>Pacifier</base_type>
- <gfx sy="10" sx="10" size="77">pacifier_empire</gfx>
+ <gfx sy="10" sx="10" size="77">pacifier_empire.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>

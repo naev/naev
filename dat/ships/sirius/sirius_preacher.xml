@@ -2,7 +2,7 @@
  <lua>sirius_preacher.lua</lua>
  <points>60</points>
  <base_type>Preacher</base_type>
- <gfx size="70" sx="10" sy="10">preacher</gfx>
+ <gfx size="70" sx="10" sy="10">preacher.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>

@@ -2,7 +2,7 @@
  <lua>zalek.lua</lua>
  <points>110</points>
  <base_type>Mammon</base_type>
- <gfx sy="12" sx="12" size="128">mammon_zalek</gfx>
+ <gfx sy="12" sx="12" size="128">mammon_zalek.gltf</gfx>
  <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Bulk Freighter</class>

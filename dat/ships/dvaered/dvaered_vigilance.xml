@@ -2,7 +2,7 @@
  <lua>dvaered.lua</lua>
  <points>90</points>
  <base_type>Vigilance</base_type>
- <gfx sy="10" sx="10" size="95">vigilance_dvaered</gfx>
+ <gfx sy="10" sx="10" size="95">vigilance_dvaered.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>

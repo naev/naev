@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>80</points>
  <base_type>Taciturnity</base_type>
- <gfx sy="10" sx="10" size="80">taciturnity</gfx>
+ <gfx sy="10" sx="10" size="80">taciturnity.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <trail_generator y="0" h="0" x="-20">thurion</trail_generator>

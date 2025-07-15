@@ -2,7 +2,7 @@
  <lua>zalek.lua</lua>
  <points>26</points>
  <base_type path="Zalek_Light_Drone">Za'lek Light Drone</base_type>
- <gfx size="30">zalek_drone_light</gfx>
+ <gfx size="30">zalek_drone_light.gltf</gfx>
  <sound>engine_zalek</sound>
  <class display="Robotic Interceptor">Interceptor</class>
  <price>90000</price>

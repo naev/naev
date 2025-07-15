@@ -1,7 +1,7 @@
 <ship name="Koala">
  <points>30</points>
  <base_type>Koala</base_type>
- <gfx size="46">koala</gfx>
+ <gfx size="46">koala.gltf</gfx>
  <sound>engine</sound>
  <class>Courier</class>
  <price>420000</price>

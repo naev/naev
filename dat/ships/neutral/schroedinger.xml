@@ -1,7 +1,7 @@
 <ship name="Schroedinger">
  <points>20</points>
  <base_type>Schroedinger</base_type>
- <gfx size="47">schroedinger</gfx>
+ <gfx size="47">schroedinger.gltf</gfx>
  <sound>engine</sound>
  <class>Scout</class>
  <price>180000</price>

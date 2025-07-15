@@ -1,7 +1,7 @@
 <ship name="Hyena">
  <points>30</points>
  <base_type>Hyena</base_type>
- <gfx size="44">hyena</gfx>
+ <gfx size="44">hyena.gltf</gfx>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>210000</price>

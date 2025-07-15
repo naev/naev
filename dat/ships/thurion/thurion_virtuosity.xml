@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>60</points>
  <base_type>Virtuosity</base_type>
- <gfx size="70">virtuosity</gfx>
+ <gfx size="70">virtuosity.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Corvette</class>

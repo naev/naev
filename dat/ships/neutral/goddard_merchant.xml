@@ -1,5 +1,5 @@
 <ship inherits="Goddard" name="Goddard Merchantman">
- <gfx sy="12" sx="12" size="125">goddard_merchant</gfx>
+ <gfx sy="12" sx="12" size="125">goddard_merchant.gltf</gfx>
  <rarity>2</rarity>
  <price>6850000</price>
  <description>It all began with an insurance dispute at Manuel Station when a sensor malfunction resulted in a Zebra being damaged beyond repair while delivering a large shipment of gambling chips and bar furniture to Minerva Station. Due to the importance of the cargo job and strict deadline, the insurance provider offered the Zebra captain a used Goddard that had been sold by a retired bounty hunter. The Captain, knowing that a Goddard is worth more than a Zebra, agreed with the idea of later trading it in. The goods would not have fit if it had not been for the idea of filling the fighter bays up to the brim with gambling chips.

@@ -2,7 +2,7 @@
  <lua>dvaered.lua</lua>
  <points>50</points>
  <base_type>Vendetta</base_type>
- <gfx size="49">vendetta_dvaered</gfx>
+ <gfx size="49">vendetta_dvaered.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Fighter</class>

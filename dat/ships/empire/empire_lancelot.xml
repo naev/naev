@@ -1,7 +1,7 @@
 <ship name="Empire Lancelot">
  <points>40</points>
  <base_type>Lancelot</base_type>
- <gfx size="56">lancelot_empire</gfx>
+ <gfx size="56">lancelot_empire.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Fighter</class>

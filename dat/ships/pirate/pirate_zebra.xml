@@ -2,7 +2,7 @@
  <lua>pirate.lua</lua>
  <points>160</points>
  <base_type>Zebra</base_type>
- <gfx sy="12" sx="12" size="128">zebra_pirate</gfx>
+ <gfx sy="12" sx="12" size="128">zebra_pirate.gltf</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Carrier</class>

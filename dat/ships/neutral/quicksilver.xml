@@ -1,7 +1,7 @@
 <ship name="Quicksilver">
  <points>40</points>
  <base_type>Quicksilver</base_type>
- <gfx sy="10" sx="10" size="70">quicksilver</gfx>
+ <gfx sy="10" sx="10" size="70">quicksilver.gltf</gfx>
  <sound>engine</sound>
  <class>Courier</class>
  <price>510000</price>

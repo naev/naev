@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>60</points>
  <base_type>Revenant</base_type>
- <gfx size="76">revenant</gfx>
+ <gfx size="76">revenant.gltf</gfx>
  <rarity>2</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Corvette">Corvette</class>

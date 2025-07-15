@@ -1,5 +1,5 @@
 <ship name="Gawain XY-37" inherits="Gawain">
- <gfx size="56">gawain_xy37</gfx>
+ <gfx size="56">gawain_xy37.gltf</gfx>
  <lua>gawain_xy37.lua</lua>
  <price>1200000</price>
  <rarity>3</rarity>

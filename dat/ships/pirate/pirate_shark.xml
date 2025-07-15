@@ -2,7 +2,7 @@
  <lua>pirate.lua</lua>
  <points>30</points>
  <base_type>Shark</base_type>
- <gfx size="54">shark_pirate</gfx>
+ <gfx size="54">shark_pirate.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Interceptor</class>

@@ -1,7 +1,7 @@
 <ship name="Phalanx">
  <points>60</points>
  <base_type>Phalanx</base_type>
- <gfx size="95" sx="10" sy="10">phalanx</gfx>
+ <gfx size="95" sx="10" sy="10">phalanx.gltf</gfx>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>850000</price>

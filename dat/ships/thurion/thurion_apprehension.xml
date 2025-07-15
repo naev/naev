@@ -2,7 +2,7 @@
  <lua>thurion.lua</lua>
  <points>90</points>
  <base_type>Apprehension</base_type>
- <gfx sy="12" sx="12" size="90">apprehension</gfx>
+ <gfx sy="12" sx="12" size="90">apprehension.gltf</gfx>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class>Destroyer</class>

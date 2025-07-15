@@ -3,7 +3,7 @@
  <points>40</points>
  <base_type>Shaman</base_type>
  <rarity>1</rarity>
- <gfx size="68">shaman</gfx>
+ <gfx size="68">shaman.gltf</gfx>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>525000</price>

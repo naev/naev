@@ -1,7 +1,7 @@
 <ship name="Lancelot">
  <points>40</points>
  <base_type>Lancelot</base_type>
- <gfx size="56">lancelot</gfx>
+ <gfx size="56">lancelot.gltf</gfx>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>450000</price>

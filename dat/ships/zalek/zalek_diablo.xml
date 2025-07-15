@@ -2,7 +2,7 @@
  <lua>zalek.lua</lua>
  <points>200</points>
  <base_type>Diablo</base_type>
- <gfx sy="12" sx="12" size="171">diablo</gfx>
+ <gfx sy="12" sx="12" size="171">diablo.gltf</gfx>
  <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Carrier</class>

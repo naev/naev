@@ -1,7 +1,7 @@
 <ship name="Bedivere">
  <points>75</points>
  <base_type>Bedivere</base_type>
- <gfx size="83">bedivere</gfx>
+ <gfx size="83">bedivere.gltf</gfx>
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1300000</price>

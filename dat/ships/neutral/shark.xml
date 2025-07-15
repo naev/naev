@@ -1,7 +1,7 @@
 <ship name="Shark">
  <points>30</points>
  <base_type>Shark</base_type>
- <gfx size="54">shark</gfx>
+ <gfx size="54">shark.gltf</gfx>
  <sound>engine</sound>
  <class>Interceptor</class>
  <price>250000</price>

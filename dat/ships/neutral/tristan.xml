@@ -1,7 +1,7 @@
 <ship name="Tristan">
  <points>35</points>
  <base_type>Tristan</base_type>
- <gfx size="39">tristan</gfx>
+ <gfx size="39">tristan.gltf</gfx>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>250000</price>

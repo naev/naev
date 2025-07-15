@@ -2,7 +2,7 @@
  <lua>dvaered.lua</lua>
  <points>150</points>
  <base_type>Retribution</base_type>
- <gfx size="128" sx="12" sy="12">retribution_dvaered</gfx>
+ <gfx size="128" sx="12" sy="12">retribution_dvaered.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>

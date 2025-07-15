@@ -1,7 +1,7 @@
 <ship name="Mule">
  <points>60</points>
  <base_type>Mule</base_type>
- <gfx sy="10" sx="10" size="96">mule</gfx>
+ <gfx sy="10" sx="10" size="96">mule.gltf</gfx>
  <sound>engine</sound>
  <class>Freighter</class>
  <price>900000</price>

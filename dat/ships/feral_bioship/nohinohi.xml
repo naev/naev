@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>40</points>
  <base_type>Reaver</base_type>
- <gfx size="68">reaver_feral</gfx>
+ <gfx size="68">reaver_feral.gltf</gfx>
  <rarity>5</rarity>
  <flags>
   <noplayer/>

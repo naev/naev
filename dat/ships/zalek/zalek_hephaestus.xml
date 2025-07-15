@@ -2,7 +2,7 @@
  <lua>zalek.lua</lua>
  <points>300</points>
  <base_type>Hephaestus</base_type>
- <gfx sy="12" sx="12" size="171">hephaestus</gfx>
+ <gfx sy="12" sx="12" size="171">hephaestus.gltf</gfx>
  <rarity>1</rarity>
  <sound pitch="0.5">engine_zalek</sound>
  <class>Carrier</class>

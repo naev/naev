@@ -2,7 +2,7 @@
  <points>1</points>
  <!--<base_type>Psychic Orb</base_type>-->
  <base_type>Sphere</base_type>
- <gfx size="46">sphere</gfx>
+ <gfx size="46">sphere.gltf</gfx>
  <sound>engine</sound>
  <class display="Unknown">Interceptor</class>
  <price>1</price>

@@ -1,5 +1,5 @@
 <ship name="Llama Voyager" inherits="Llama">
- <gfx size="47">llama_voyager</gfx>
+ <gfx size="47">llama_voyager.gltf</gfx>
  <rarity>2</rarity>
  <price>235000</price>
  <description>The Llama's popularity is based on the wide availability of the base ship, and is most pilots introduction to spacefaring. Inspired by the popularity, Melendez Corporation released a premium series nicknamed Voyager. Although the new model nearly sports double the price tag, it comes with more efficient hyperdrive coupling, and more importantly, a built-in fuel ramscoop that is able to capture and filter minuscule space dust to slowly refill fuel.</description>

@@ -2,7 +2,7 @@
  <lua>dvaered.lua</lua>
  <points>40</points>
  <base_type>Ancestor</base_type>
- <gfx size="65">ancestor_dvaered</gfx>
+ <gfx size="65">ancestor_dvaered.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Bomber</class>

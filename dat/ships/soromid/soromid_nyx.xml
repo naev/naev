@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>90</points>
  <base_type>Nyx</base_type>
- <gfx size="96" sx="10" sy="10">nyx</gfx>
+ <gfx size="96" sx="10" sy="10">nyx.gltf</gfx>
  <rarity>1</rarity>
  <sound pitch="0.75">engine_soromid</sound>
  <class display="Bio-Destroyer">Destroyer</class>

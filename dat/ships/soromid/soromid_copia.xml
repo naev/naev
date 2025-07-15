@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>120</points>
  <base_type>Copia</base_type>
- <gfx size="132" sx="12" sy="12">copia</gfx>
+ <gfx size="132" sx="12" sy="12">copia.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine_soromid</sound>
  <class display="Bio-Freighter">Bulk Freighter</class>

@@ -2,7 +2,7 @@
  <lua>pirate.lua</lua>
  <points>200</points>
  <base_type>Dealbreaker</base_type>
- <gfx size="125">dealbreaker</gfx>
+ <gfx size="125">dealbreaker.gltf</gfx>
  <rarity>2</rarity>
  <sound>engine</sound>
  <class>Battleship</class>

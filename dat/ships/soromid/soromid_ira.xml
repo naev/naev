@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>200</points>
  <base_type>Ira</base_type>
- <gfx size="112" sx="12" sy="12">ira</gfx>
+ <gfx size="112" sx="12" sy="12">ira.gltf</gfx>
  <rarity>1</rarity>
  <sound pitch="0.6">engine_soromid</sound>
  <class display="Bio-Cruiser">Cruiser</class>

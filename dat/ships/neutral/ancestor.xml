@@ -1,7 +1,7 @@
 <ship name="Ancestor">
  <points>40</points>
  <base_type>Ancestor</base_type>
- <gfx size="65">ancestor</gfx>
+ <gfx size="65">ancestor.gltf</gfx>
  <sound>engine</sound>
  <class>Bomber</class>
  <price>500000</price>

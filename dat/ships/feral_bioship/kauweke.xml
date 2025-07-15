@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>200</points>
  <base_type>Arx</base_type>
- <gfx size="128" sx="12" sy="12">arx_feral</gfx>
+ <gfx size="128" sx="12" sy="12">arx_feral.gltf</gfx>
  <rarity>5</rarity>
  <flags>
   <noplayer/>

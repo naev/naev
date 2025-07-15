@@ -1,7 +1,7 @@
 <ship name="Rhino">
  <points>80</points>
  <base_type>Rhino</base_type>
- <gfx sy="10" sx="10" size="100">rhino</gfx>
+ <gfx sy="10" sx="10" size="100">rhino.gltf</gfx>
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1400000</price>

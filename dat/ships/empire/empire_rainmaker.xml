@@ -1,7 +1,7 @@
 <ship name="Empire Rainmaker">
  <points>120</points>
  <base_type>Rainmaker</base_type>
- <gfx sy="12" sx="12" size="128">rainmaker_empire</gfx>
+ <gfx sy="12" sx="12" size="128">rainmaker_empire.gltf</gfx>
  <rarity>1</rarity>
  <sound>engine</sound>
  <class>Bulk Freighter</class>

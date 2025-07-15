@@ -2,7 +2,7 @@
  <lua>soromid.lua</lua>
  <points>60</points>
  <base_type>Odium</base_type>
- <gfx size="76">odium_feral</gfx>
+ <gfx size="76">odium_feral.gltf</gfx>
  <rarity>5</rarity>
  <flags>
   <noplayer/>
