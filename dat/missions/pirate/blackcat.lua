@@ -46,7 +46,7 @@ function create ()
    vn.music( der.sfx.ambient )
    local cat = vn.Character.new( _("Black Cat"), {image=cat_image, colour=cat_colour} )
    vn.transition()
-   vn.na(_([[You make your way through the derelict, each step you take resonating throughout the vacuous vessel. As your traverse a hallway you notice a peculiar texture on one of the walls. As your light illuminates the wall, you can make out a hastily written graffiti. Although it is hard to read, you can make out the following text "#rBEW-RE OF C-T#0". What could it mean?]]))
+   vn.na(_([[You make your way through the derelict, each step you take resonating throughout the vacuous vessel. As your traverse a hallway you notice a peculiar texture on one of the walls. As your light illuminates the wall, you can make out hastily written graffiti. Although it is hard to read, you can make out the following text "#rBEW-RE OF C-T#0". What could it mean?]]))
    vn.na(_([[You eventually reach the command room when your ship suddenly informs you that there is a life form present on the ship. Not only that, it's very close! You frantically ready for a fight and prepare for the worst…
 
 It's right on top of you!]]))
@@ -142,7 +142,7 @@ local event_list = {
       local pp = player.pilot()
       luaspfx.sfx( false, nil, meow )
       if lmisn.islucky() then
-         player.msg(_("The black cat managed to accidentally disconnect the energy capacitors, but the back up system takes over while you fix it."), true)
+         player.msg(_("The black cat managed to accidentally disconnect the energy capacitors, but the back-up system takes over while you fix it."), true)
          return
       end
       pp:setEnergy( 0 )
@@ -293,7 +293,7 @@ function owner_board ()
    vn.na(_("You run to try to catch it, but hear the sound of the airlock closing and detaching of the locking clamps. You run back to your command chair to see what the other ship is doing, but you can not find it anywhere. They seem to have a knack for fleeing."))
    vn.na(fmt.f(_("You sit resigned and outwitted at your command chair when you notice a credit chip with {credits} on the floor. It looks like it has cat bite marks too."),{credits=fmt.credits(credit_reward)}))
    vn.sfxVictory()
-   vn.na(_("You then get around to cleaning up the copious amounts of cat hair invading every last corner of your ship. With the amount collected you make a cute black cat doll. It's like a tiny version of the real thing without the assholiness."))
+   vn.na(_("You then get around to cleaning up the copious amounts of cat hair invading every last corner of your ship. With the amount collected you make a cute black cat doll. It's like a tiny version of the real thing without the assholeness."))
    vn.run()
 
    player.pay( credit_reward )
