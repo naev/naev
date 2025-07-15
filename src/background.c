@@ -426,9 +426,8 @@ static void background_renderImages( background_image_t *bkg_arr )
 
       cam_getPos( &cx, &cy );
       m = bkg->move;
-      z = bkg->scale * RESOLUTION_W_MIN * RESOLUTION_H_MIN /
-          ( gl_screen.nw * gl_screen.nh );
-      ;
+      z = bkg->scale;
+
       /* Relative coordinates. */
       rx = ( bkg->x - cx ) * m;
       ry = ( bkg->y - cy ) * m;
