@@ -1086,8 +1086,9 @@ int economy_sysLoad( xmlNodePtr parent )
             } else if ( xml_isNode( cur, "lastPurchase" ) ) {
                xmlr_attr_strd( cur, "name", str );
                if ( str ) {
-                  Commodity *c         = commodity_get( str );
-                  c->lastPurchasePrice = xml_getLong( cur );
+                  Commodity *c = commodity_get( str );
+                  if ( c != NULL )
+                     c->lastPurchasePrice = xml_getLong( cur );
                   free( str );
                }
             }
