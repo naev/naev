@@ -1593,6 +1593,9 @@ pub extern "C" fn tex_hasTrans(_ctex: *mut Texture) -> c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn tex_setTex(ctex: *mut Texture, texture: naevc::GLuint) {
+    if ctex.is_null() {
+        return;
+    }
     let tex = unsafe { &mut *ctex };
     let ntex = glow::NativeTexture(std::num::NonZero::new(texture).unwrap());
     tex.texture = Arc::new(TextureData::from_raw(ntex, tex.texture.w, tex.texture.h).unwrap());
@@ -1612,6 +1615,10 @@ pub extern "C" fn gl_renderTexture(
     c: *mut Vector4<f32>,
     angle: c_double,
 ) {
+    if ctex.is_null() {
+        return;
+    }
+
     let ctx = Context::get().unwrap();
     let colour = match c.is_null() {
         true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
@@ -1728,6 +1735,9 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     bw: c_double,
     bh: c_double,
 ) {
+    if ctex.is_null() {
+        return;
+    }
     let ctx = Context::get().unwrap();
     let tex = unsafe { &*ctex };
     let tw = tex.texture.w as f32;
