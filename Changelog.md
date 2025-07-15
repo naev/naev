@@ -42,7 +42,7 @@
  - Game will prompt if exiting the game when save data loss can occur
 
 #### Content
- - 12 new missions and events
+ - 13 new missions and events
     - Go treasure hunting
  - 8 new ship variants
  - 8 new outfits and reworked cores
