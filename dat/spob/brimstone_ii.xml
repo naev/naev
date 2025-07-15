@@ -2,12 +2,15 @@
  <pos x="-12602.170307" y="3097.932606"/>
  <GFX>
   <space>J04.webp</space>
-  <exterior>station03.webp</exterior>
+  <exterior>uninhabited-rocky-blue-04.webp</exterior>
  </GFX>
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>1.000000</hide>
-  <services/>
+  <hide>1.500000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A prominent gas giant that is constantly wracked by extreme storms, that can whittle down the strongest defenses in a manner of seconds. While not technically possible to land on, it is fairly easy to find a geostationary orbit to park your ship.</description>
  </general>
 </spob>
