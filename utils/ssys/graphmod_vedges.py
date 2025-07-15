@@ -24,6 +24,8 @@ virtual_edges = [
    ('pellmell', 'fulcrum'),
    ('nasona', 'oriantis'),
    ('tau_ceti', 'arcanis'),
+   #('carrza', 'tepvin'),
+   #('tepvin', 'hakoi'),
 ]
 
 from graphmod import ssys_jmp
