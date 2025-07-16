@@ -5,7 +5,7 @@ import os
 from sys import stderr, exit, argv, stdout
 
 
-Rtags = {'stellarwind', 'thenebula', 'haze', 'plasmastorm', 'spoiler'}
+Rtags = {'stellarwind', 'thenebula', 'haze', 'plasmastorm', 'spoiler', 'corridor'}
 faction_color = {
    'default':         'default',
    'empire':          'green',
