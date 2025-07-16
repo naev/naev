@@ -91,7 +91,7 @@ add_virtual_edges(ssys_jmp, virtual_edges)
 
 
 for v in ssys_pos:
-   for e, t in ssys_jmp[v]:
+   for e, t in ssys_jmp[v].items():
       if (v, e) in del_edges:
          t.append('fake')
       if (v, e) in new_edges:

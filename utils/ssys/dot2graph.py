@@ -51,7 +51,7 @@ bbox, oldbb = bb(), bb()
 for k, v in ssys_pos.items():
    if k[0] != '_':
       oldbb += v
-      if count<3 and k not in dotpos and ssys_jmp[k] != []:
+      if count<3 and k not in dotpos and ssys_jmp[k] != {}:
          stderr.write('"' + k + '" not found in dot output. why ?\n')
          count +=1
          if count == 3:

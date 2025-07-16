@@ -45,7 +45,7 @@ def main( color = False, fixed_pos = False ):
       if i[0] == '_' and fixed_pos:
          continue
       # Don't include disconnected systems
-      if E[i] != [] or fixed_pos:
+      if E[i] != {} or fixed_pos:
          s = '\t"' + i + '" ['
          if i[0] != '_':
             (x, y) = pos[i]
@@ -91,28 +91,35 @@ def main( color = False, fixed_pos = False ):
    print('\tnode [label="",style=invis]')
 
    for i in V:
-      for dst, aux in E[i]:
+      for dst, aux in E[i].items():
          suff = []
          if 'virtual' in aux:
             continue;
          elif 'tradelane' in aux:
             suff += ['style=bold', 'penwidth=4.0']
-         elif 'hidden' in aux:
-            suff += ['style=dotted', 'penwidth=2.5']
-         elif 'new' in aux:
-            suff += ['color=green']
          elif 'fake' in aux:
-            suff += ['color=red', 'weight=0']
+            suff += ['weight=0']
 
-         suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
-         oneway = i not in map(lambda t:t[0], E[dst])
-         if oneway or i<dst:
+         cols = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
+         srcc = ([cols[a] for a in aux if a in cols] + ['black'])[0]
+
+         if (oneway := i not in E[dst]) or i<dst:
+            if oneway:
+               dstc = 'white'
+            else:
+               dstc = ([cols[a] for a in E[dst][i] if a in cols] + ['black'])[0]
+
+            if srcc != dstc:
+               suff += ['color="' + srcc + ';0.5:' + dstc + '"']
+            else:
+               suff += ['color="' + srcc + '"']
+            suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
             print('"'.join(['\t', i, '--', dst, suff]))
 
    print('\tedge[len=' + str(reflen) + ']')
    print('\tedge[style="dashed";color="grey";penwidth=1.5]')
    for f, k in E.items():
-      for t, aux in k:
+      for t, aux in k.items():
          if fixed_pos or 'virtual' not in aux:
             continue
          try:

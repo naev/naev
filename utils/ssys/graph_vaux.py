@@ -178,7 +178,7 @@ else:
       newt = {}
       infl = main_col if do_color else main_fact
       _is_def = lambda a: a == [] or a[0] == 'default'
-      _nhn = lambda i: [j for j, k in E[i] if 'hidden' not in k]
+      _nhn = lambda i: [j for j, k in E[i].items() if 'hidden' not in k]
       for bnam in V:
          if _is_def(V.aux[bnam]) and bnam not in influence_except:
             newt[bnam] = None

@@ -22,7 +22,7 @@ total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, t) in ssys_jmp[k] if 'tradelane' in t]:
+      for n in [s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t]:
          total += (pos[n] - pos[k]).size()
          count += 1
 avg = total / count

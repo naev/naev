@@ -176,7 +176,7 @@ for i, p in V.items():
          'scale 11*' + radius,
          'translate <' + str(p[0]) + ', ' + str(p[1]) + ', 6>',
       ], '}', ''])
-   for dstsys, tags in E[i]:
+   for dstsys, tags in E[i].items():
       if dstsys not in V:
          continue
       if p == V[dstsys]:
@@ -189,14 +189,14 @@ for i, p in V.items():
       else:
          other = (p + V[dstsys]) / 2.0
       edge_col = '0.3,0.3,0.3'
-      tagcol = {'hidden': '0.5,0,0.5', 'virtual': '0,0,1', 'fake': '1,0,0', 'new': '0,1,0' }
+      tagcol = {'hidden': '0.4,0,0.4', 'virtual': '0,0,1', 'fake': '1,0,0', 'new': '0,1,0' }
       for t in tagcol:
          if t in tags:
             edge_col = tagcol[t]
       write_pov([ 'cylinder{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
          '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',
-         str(3.0 if 'tradelane' in tags else 1.55),
+         str(3.0 if 'tradelane' in tags else 1.6),
          'pigment {color rgb<' + edge_col + '>}',
       ], '}', '' ])
 

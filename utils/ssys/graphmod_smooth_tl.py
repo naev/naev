@@ -18,7 +18,7 @@ from graphmod import ssys_pos, ssys_jmp
 from smoothen import smoothen, circleify
 
 L = ['palovi', 'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'monogram', 'kraft', 'pike']
-neigh = { k: {s for (s, t) in ssys_jmp[k] if 'tradelane' in t} for k in ssys_pos }
+neigh = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t} for k in ssys_pos }
 TL = { k: v for k, v in ssys_pos.items() if k not in L[1:-1]}
 for k, v in circleify(ssys_pos, L, 'suna').items():
    ssys_pos[k] = v

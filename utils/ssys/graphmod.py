@@ -32,11 +32,11 @@ class _pos(dict):
 class _jmp(dict):
    def output( self ):
       for i, l in self.items():
-         for j, f in l:
+         for j, f in l.items():
             print(' '.join([i, j] + f))
 
    def __missing__( self, elt ):
-      self[elt] = []
+      self[elt] = {}
       return self[elt]
 
 class _graph():
@@ -83,7 +83,7 @@ try:
          if not success:
             if len(l) >= 2:
                bname1, bname2 = tuple(l[:2])
-               ssys_jmp[bname1].append((bname2, l[2:]))
+               ssys_jmp[bname1][bname2] = l[2:]
             else:
                stderr.write('Ignored invalid line: ' + line + '\n')
                continue

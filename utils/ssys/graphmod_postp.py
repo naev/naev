@@ -133,9 +133,9 @@ pos['ngc20489'] = (pos['ngc9607'] + pos['ngc15670'] + pos['ngc14676'] + pos['ngc
 pos['voproid'] = symmetry(pos['botarn'], pos['ngc7319'])(pos['voproid'])
 
 for sys in ['ngc127', 'ngc344', 'ngc4363']:
-   n, _ = E[sys][0]
+   n = next(iter(E[sys].keys()))
    acc = vec()
-   for e, _ in E[n]:
+   for e in E[n]:
       if e != sys:
          acc += (pos[n] - pos[e]).normalize()
    v = pos[sys] - pos[n]
@@ -187,7 +187,7 @@ total = 0.0
 count = 0
 for k in pos:
    if k[0] != '_':
-      for n in [s for (s, t) in E[k] if 'tradelane' in t]:
+      for n in [s for (s, t) in E[k].items() if 'tradelane' in t]:
          total += (pos[n] - pos[k]).size()
          count += 1
 avg = total / count
@@ -195,7 +195,7 @@ avg = total / count
 for k in pos:
    if k[:3] == 'ngc' and k[3:] not in ['22375', '20489', '4746', '9415']:
       if len(n := E[k]) == 1:
-         n = n[0][0]
+         n = next(iter(n))
          v = pos[k] - pos[n]
          if v.size() < avg * F:
             pos[k] = pos[n] + v.normalize(avg * F)

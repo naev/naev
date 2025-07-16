@@ -51,7 +51,7 @@ def is_hostile( sys ):
    return get_col(sys) in hostile_color or (ssys_nebula(ssys_pos, sys) or 0.0) > 5.0
 
 def non_hidden( sys ):
-   return { n for n, t in ssys_jmp[sys] if 'hidden' not in t }
+   return { n for n, t in ssys_jmp[sys].items() if 'hidden' not in t }
 
 def insert( sys, keep = {} ):
    if sys in keep:
@@ -78,4 +78,4 @@ for i in [j for j in ssys_jmp]:
    if i not in keep:
       del ssys_jmp[i]
    else:
-      ssys_jmp[i] = [(a, b) for (a, b) in ssys_jmp[i] if a in keep and 'hidden' not in b]
+      ssys_jmp[i] = {a: b for (a, b) in ssys_jmp[i].items() if a in keep and 'hidden' not in b}
