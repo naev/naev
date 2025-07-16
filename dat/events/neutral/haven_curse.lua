@@ -32,6 +32,7 @@ end
 
 local fct
 function create ()
+   -- Only works when can inclusively claim the system
    if not evt.claim( sys, true ) then return evt.finish(false) end
 
    fct = faction.dynAdd( "Marauder", "Haven Ghost", _("Marauder"), {clear_enemies=true, clear_allies=true} )

@@ -25,7 +25,7 @@ local msg_lore = {
    _([["The Soromid have a rough history. Have you read up on it? First the Empire confined them to a deadly planet and doomed them to extinction. Then, when they overcame those odds, the Incident blew up their homeworld. The fact that they're still thriving now despite that is phenomenal, I must say."]]),
    _([["I'm not sure if it's the upload process or the access to the vast information, but many people change character significantly after they get uploaded. Maybe I would change too if I was uploaded!"]]),
    _([["Sometimes I feel like the uploaded treat us inits as pets they have to take care of just because we can't backup ourselves if something goes wrong."]]),
-   _([["Many uploaded have backups. If for some reason their ship blows up or their processor blows up, their backups get automatically activated and they can keep on going like nothing happened!"]]),
+   _([["Many uploaded have backups. If for some reason their ship blows up or their processor blows up, their backups get automatically activated and they can keep ongoing like nothing happened!"]]),
    _([["Lots of uploaded modify their memory and edit themselves, is this why their personality changes so much after uploading?"]]),
    _([["I never really understood why non-uploaded Thurions were called inits until it was explained to me. It is because we can be seeds to initialize uploads!"]]),
 }
