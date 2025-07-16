@@ -50,7 +50,7 @@ In fact, it is the one thing universally agreed upon and honored in Dvaered soci
 
 ### Warlords
 
-When a General retires from High Command, they often takes with them a small contingent of the armed forces.
+When a General retires from High Command, they often take with them a small contingent of the armed forces.
 These are soldiers and sailors have sworn allegiance to the person, not the banner, and they will continue to serve until the bitter end.
 The General, now known as a Warlord, will then use their private military to secure rule over one or more Dvaered worlds, usually by usurping the position from another Warlord.
 This method of local government is commonly accepted, and no Dvaered citizen will be surprised when suddenly a new set of local laws will be passed.
