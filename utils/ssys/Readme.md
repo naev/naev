@@ -94,7 +94,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
- - have a -s flag for no-spoiler +
  - `reposition.c`:
     - clearify ow Vs tw *
     - penalty map +

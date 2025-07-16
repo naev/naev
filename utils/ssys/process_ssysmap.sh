@@ -12,6 +12,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
       "  If -v is set, povray output is displayed."
       "  If -n is set, no povray preview."
       "  If -N is set, no picture generated."
+      "  If -S is set, no spoilers on pictures."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
@@ -19,6 +20,7 @@ fi
 
 POVF=()
 POVO='-q'
+SPOIL_FILTER=cat
 for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
       FORCE=1
@@ -28,6 +30,8 @@ for i in "$@" ; do
       NOPIC=1
    elif [ "$i" = "-n" ] ; then
       POVF+=("-n")
+   elif [ "$i" = "-S" ] ; then
+      SPOIL_FILTER="$DIR"/graph_unspoil.sh
    elif [ "$i" = "-v" ] ; then
       POVO='-p'
    else
@@ -88,20 +92,16 @@ msg "gen before graph"
 sed 's/\(.*aesir.*\) tradelane/\1/'                                           |
 "$DIR"/graph_vaux.py -e -c -n                                                 |
 if [ -z "$NOPIC" ] ;                                                     then
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini') |
    tee >(
-      "$DIR"/graph2dot.py -c -k |
-      neato -n2 -Tpng 2>/dev/null > before.png
+      $SPOIL_FILTER |
+      tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini') |
+      "$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > before.png
    )
 else pmsg "" ;                                                             fi |
 "$DIR"/graphmod_prep.py                                                       |
 "$DIR"/graphmod_vedges.py                                                     |
 if [ -z "$NOPIC" ] ;                                                     then
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef') |
-   tee >(
-      "$DIR"/graph2dot.py -c -k |
-      neato -n2 -Tpng 2>/dev/null > before.png
-   )
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef')
 else pmsg "" ;                                                             fi |
 pmsg "apply neato"                                                            |
 tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                             |
@@ -110,20 +110,20 @@ grep -v ' virtual$'                                                           |
 "$DIR"/graphmod_vedges.py                                                     |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
 else pmsg "" ;                                                             fi |
 pmsg "pprocess"                                                               |
 "$DIR"/graphmod_postp.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
 else psmg "" ;                                                             fi |
 pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
 "$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
 pmsg ""                                                                       |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
 else pmsg "" ;                                                             fi |
 if [ -n "$FORCE" ] ;                                                    then
    tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
@@ -133,7 +133,7 @@ pmsg "apply gravity"                                                          |
 "$DIR"/graphmod_stretch_north.py                                              |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
 else pmsg "" ;                                                             fi |
 "$DIR"/graphmod_abh.py                                                        |
 pmsg "gen final graph"                                                        |
@@ -143,8 +143,9 @@ pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 grep -v ' virtual$'                                                           |
 if [ -z "$NOPIC" ] ; then
-   tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
-   "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft'
+   $SPOIL_FILTER |
+   tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft') |
+   "$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
 else
    pmsg ""
 fi
