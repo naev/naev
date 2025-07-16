@@ -56,7 +56,7 @@ function create ()
    local log = vne.flashbackTextStart()
    -- Same as the outfit description
    log(_([[Research Log UST 102:2718
-   The last prototype has exceeded expectations in shield regeneration capabilities, this may be the breakthrough we were hoping for. With such incredible results, the Empire shall surely see the power of the clustered sentience interface. Although the shield capacity parameters are suboptimal, that is just a matter of time. It is only a matter of time before Project Thurion become the technological backbone of civilization!]]))
+   The last prototype has exceeded expectations in shield regeneration capabilities, this may be the breakthrough we were hoping for. With such incredible results, the Empire shall surely see the power of the clustered sentience interface. Although the shield capacity parameters are suboptimal, that is just a matter of time. It is only a matter of time before Project Thurion becomes the technological backbone of civilization!]]))
    vne.flashbackTextEnd()
 
    if thurion_known then
