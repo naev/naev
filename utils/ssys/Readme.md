@@ -95,7 +95,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 # TODO
  - `reposition.c`:
-    - clearify ow Vs tw *
     - penalty map +
     - fixed point algorithm
     - possible opt: manage separately neigh with non-1.0 len.
