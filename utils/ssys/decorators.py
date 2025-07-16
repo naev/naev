@@ -25,4 +25,3 @@ if __name__ == '__main__':
          x.text = str(v[0])
          y.text = str(v[1])
          T.write(fnam)
-

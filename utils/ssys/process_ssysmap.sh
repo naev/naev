@@ -105,10 +105,10 @@ sed 's/\(.*aesir.*\) tradelane/\1/'                                           |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >(
       $SPOIL_FILTER |
-      tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini') |
-      "$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > before.png
+      tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > before.png) |
+      "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini'
    )
-else pmsg "" ;                                                             fi |
+else cat ;                                                                 fi |
 "$DIR"/graphmod_prep.py                                                       |
 "$DIR"/graphmod_vedges.py                                                     |
 if [ -z "$NOPIC" ] ;                                                     then
@@ -122,20 +122,20 @@ grep -v ' virtual$'                                                           |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
-else pmsg "" ;                                                             fi |
+else cat ;                                                                 fi |
 pmsg "pprocess"                                                               |
 "$DIR"/graphmod_postp.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
-else psmg "" ;                                                             fi |
+else pmsg "" ;                                                             fi |
 pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
 "$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
 pmsg ""                                                                       |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
-else pmsg "" ;                                                             fi |
+else cat ;                                                                 fi |
 if [ -n "$FORCE" ] ;                                                    then
    tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
 else cat ;                                                                fi  |
@@ -146,8 +146,8 @@ pmsg "apply gravity"                                                          |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
 else pmsg "" ;                                                             fi |
-"$DIR"/graphmod_abh.py                                                        |
 pmsg "gen final graph"                                                        |
+"$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL_BUT_TERM[@]}"                   |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
@@ -155,10 +155,10 @@ pmsg "gen final graph"                                                        |
 grep -v ' virtual$'                                                           |
 if [ -z "$NOPIC" ] ; then
    $SPOIL_FILTER |
-   tee >("$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft') |
-   "$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png
+   tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
+   "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft'
 else
-   pmsg ""
+   pmsg "" >/dev/null
 fi
 
 if [ -n "$FORCE" ] ; then
