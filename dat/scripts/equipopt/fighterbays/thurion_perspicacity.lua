@@ -13,6 +13,7 @@ return {
             hull = outfit.get("Unicorp D-2 Light Plating"),
             -- Other outfits
             outfit.get("Laser Cannon MK2"),
+            outfit.get("Nexus Concealment Coating"),
             outfit.get("Reactor Class I"),
          }
       end
