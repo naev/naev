@@ -13,6 +13,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
       "  If -n is set, no povray preview."
       "  If -N is set, no picture generated."
       "  If -S is set, no spoilers on pictures."
+      "  If -E is set, early game map."
    )
    ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
    exit 0
@@ -20,7 +21,9 @@ fi
 
 POVF=()
 POVO='-q'
-SPOIL_FILTER=cat
+SPOIL_FILTER="cat"
+E_FILTER="$DIR"/graphmod_earlygame.py
+S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
       FORCE=1
@@ -31,7 +34,15 @@ for i in "$@" ; do
    elif [ "$i" = "-n" ] ; then
       POVF+=("-n")
    elif [ "$i" = "-S" ] ; then
-      SPOIL_FILTER="$DIR"/graph_unspoil.sh
+      if [ "SPOIL_FILTER" = "$E_FILTER" ] ; then
+         echo "warning: -S overwrites previous -E." >&2
+      fi
+      SPOIL_FILTER="$S_FILTER"
+   elif [ "$i" = "-E" ] ; then
+      if [ "SPOIL_FILTER" = "$S_FILTER" ] ; then
+         echo "warning: -E overwrites previous -S." >&2
+      fi
+      SPOIL_FILTER="$E_FILTER"
    elif [ "$i" = "-v" ] ; then
       POVO='-p'
    else

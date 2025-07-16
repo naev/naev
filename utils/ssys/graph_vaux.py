@@ -31,14 +31,8 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
    faction[f] = 'pirate'
 
 main_fact = {
-   'empire',
-   'zalek',
-   'dvaered',
-   'sirius',
-   'soromid',
-   'frontier',
-   'proteron',
-   'thurion',
+   'empire', 'zalek', 'dvaered', 'sirius', 'soromid',
+   'frontier', 'proteron', 'thurion',
 }
 main_col = {faction_color[f] for f in main_fact}
 
