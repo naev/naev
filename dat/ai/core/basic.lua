@@ -475,7 +475,7 @@ function runaway( target )
    -- Fighters will fly back to the mothership and swap the runaway task for
    -- the flyback task
    if mem.carried and mem.mothership and mem.mothership:exists() then
-      ai.poptask()
+      ai.pilot():taskClear()
       ai.pushtask( "flyback", true )
       return
    end

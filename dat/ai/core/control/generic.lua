@@ -333,7 +333,7 @@ local message_handler_funcs = {
    e_attack = function( p, _si, dopush, sender, data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data==nil or not data:exists() or data:leader() == l then return false end
-      clean_task()
+      p:taskClear()
       --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
       if data:flags("disabled") then
          ai.pushtask("attack_forced_kill", data)
@@ -345,12 +345,14 @@ local message_handler_funcs = {
    e_hold = function( p, _si, dopush, sender, _data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      p:taskClear()
       ai.pushtask("hold")
       return true
    end,
    e_return = function( p, _si, dopush, sender, _data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      p:taskClear()
       ai.pushtask( "flyback", mem.carried )
       return true
    end,
@@ -364,6 +366,7 @@ local message_handler_funcs = {
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
       if ai.taskname() ~= "follow_fleet" then
+         p:taskClear()
          ai.pushtask( "flyback", false )
          return true
       end
@@ -523,7 +526,9 @@ function control_funcs.generic_attack( si, noretarget )
       ai.pushtask("runaway", target)
    -- Carried fighters are a bit more jumpy
    elseif mem.carried and parmour < mem.armour_run then
-      ai.pushtask("runaway", target)
+      ai.pilot():taskClear()
+      ai.pushtask( "flyback", true )
+      return false
    else
       -- Cool down, if necessary.
       should_cooldown()
