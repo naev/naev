@@ -491,8 +491,7 @@ static void think_seeker( Weapon *w, double dt )
  */
 static void think_beam( Weapon *w, double dt )
 {
-   Pilot           *p, *t;
-   Asteroid        *ast;
+   Pilot           *p;
    double           diff, mod;
    vec2             v;
    PilotOutfitSlot *slot;
@@ -524,46 +523,51 @@ static void think_beam( Weapon *w, double dt )
    }
 
    /* Get the targets. */
-   t   = NULL;
-   ast = NULL;
+   const vec2 *tpos = NULL;
+   turn_off         = 0;
    switch ( w->target.type ) {
-   case TARGET_PILOT:
-      t = pilot_get( w->target.u.id );
-      break;
+   case TARGET_PILOT: {
+      const Pilot *t = pilot_get( w->target.u.id );
+      if ( t != NULL )
+         tpos = &t->solid.pos;
+   } break;
    case TARGET_ASTEROID: {
       const AsteroidAnchor *field =
          &cur_system->asteroids[w->target.u.ast.anchor];
-      ast = &field->asteroids[w->target.u.ast.asteroid];
+      const Asteroid *ast = &field->asteroids[w->target.u.ast.asteroid];
+      if ( ast->state == ASTEROID_FG )
+         tpos = &ast->sol.pos;
+   } break;
+   case TARGET_WEAPON: {
+      const Weapon *wtarget = weapon_getID( w->target.u.id );
+      if ( wtarget != NULL )
+         tpos = &wtarget->solid.pos;
    } break;
    default:
       turn_off = 1;
       break;
    }
+   if ( tpos == NULL )
+      turn_off = 1;
 
    /* Check the beam is still in range. */
-   if ( slot->inrange ) {
+   if ( !turn_off && slot->inrange ) {
       turn_off = 1;
-      if ( t != NULL ) {
-         if ( vec2_dist( &p->solid.pos, &t->solid.pos ) <=
-              outfit_range( slot->outfit ) * w->range_mod )
-            turn_off = 0;
-      }
-      if ( ast != NULL ) {
-         if ( vec2_dist( &p->solid.pos, &ast->sol.pos ) <=
-              outfit_range( slot->outfit ) * w->range_mod )
-            turn_off = 0;
-      }
-
-      /* Attempt to turn the beam off. */
-      if ( turn_off ) {
-         w->timer = -1;
-      }
+      if ( vec2_dist( &p->solid.pos, tpos ) <=
+           outfit_range( slot->outfit ) * w->range_mod )
+         turn_off = 0;
    }
 
    /* Use mount position. */
    pilot_getMount( p, slot, &v );
    w->solid.pos.x = p->solid.pos.x + v.x;
    w->solid.pos.y = p->solid.pos.y + v.y;
+
+   /* Attempt to turn the beam off. */
+   if ( turn_off ) {
+      w->timer = -1;
+      return;
+   }
 
    /* Handle aiming at the target. */
    switch ( outfit_type( w->outfit ) ) {
@@ -587,15 +591,11 @@ static void think_beam( Weapon *w, double dt )
       /* If target is dead beam stops moving. Targeting
        * self is invalid so in that case we ignore the target.
        */
-      else if ( t == NULL ) {
-         if ( ast != NULL ) {
-            diff = angle_diff( w->solid.dir, /* Get angle to target pos */
-                               vec2_angle( &w->solid.pos, &ast->sol.pos ) );
-         } else
-            diff = angle_diff( w->solid.dir, p->solid.dir );
-      } else
+      else if ( tpos != NULL )
          diff = angle_diff( w->solid.dir, /* Get angle to target pos */
-                            vec2_angle( &w->solid.pos, &t->solid.pos ) );
+                            vec2_angle( &w->solid.pos, tpos ) );
+      else
+         diff = 0.;
 
       double turn = outfit_turn( w->outfit );
       weapon_setTurn( w, p->stats.time_speedup *
@@ -2614,7 +2614,8 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    case OUTFIT_TYPE_TURRET_BEAM:
       rdir = dir;
       if ( outfit_type( outfit ) == OUTFIT_TYPE_TURRET_BEAM ) {
-         if ( aim ) {
+         if ( aim ||
+              outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) ) {
             AsteroidAnchor *field;
             Asteroid       *ast;
             Weapon         *wtarget;
