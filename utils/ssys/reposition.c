@@ -17,9 +17,7 @@
 #define SAMP 200
 #define EDGE_FACT 1.6
 #define PEEK_D 4
-
-// stretch penalty is max rather than avg of indiv. stretches.
-#define MAX_STRETCH
+#define MAX_STRETCH // penalty is max rather than avg of indiv. stretches
 
 #include <glib.h>
 
@@ -221,7 +219,6 @@ static double edge_stretch_score(struct s_cost_params *cp, const double v[2])
    return acc;
 #else
    return acc / tot;
-// return acc / cp->n_neigh;
 #endif
 }
 
@@ -732,7 +729,11 @@ int edge_cmp(const void *a, const void *b)
 {
    const struct s_edge *sa = (const struct s_edge *) a;
    const struct s_edge *sb = (const struct s_edge *) b;
-   return (sa->jmp[0] - sb->jmp[0]) ?: (sa->jmp[1] - sb->jmp[1]);
+   return
+      (sa->jmp[0] - sb->jmp[0]) ?:
+      (sa->jmp[1] - sb->jmp[1]) ?:
+      (sa->len < sb->len) ? -1 : (sa->len > sb->len)
+   ;
 }
 
 /* main */
