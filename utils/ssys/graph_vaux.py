@@ -5,6 +5,7 @@ import os
 from sys import stderr, exit, argv, stdout
 
 
+Rtags = {'stellarwind', 'thenebula', 'haze', 'plasmastorm', 'spoiler', 'corridor'}
 faction_color = {
    'default':         'default',
    'empire':          'green',
@@ -30,14 +31,8 @@ for f in ['wild_ones', 'raven_clan', 'dreamer_clan', 'black_lotus', 'lost', 'mar
    faction[f] = 'pirate'
 
 main_fact = {
-   'empire',
-   'zalek',
-   'dvaered',
-   'sirius',
-   'soromid',
-   'frontier',
-   'proteron',
-   'thurion',
+   'empire', 'zalek', 'dvaered', 'sirius', 'soromid',
+   'frontier', 'proteron', 'thurion',
 }
 main_col = {faction_color[f] for f in main_fact}
 
@@ -64,7 +59,7 @@ if __name__ != '__main__':
       'skyblue': (0.0,  0.4,  0.9),
    }
    default_col = color_values['default']
-   is_default = lambda s: s is None or s.split('@')[0] == 'default'
+   is_default = lambda s: s is None or s.split('@')[0].split(':')[0] == 'default'
    col_avg = lambda u, v: tuple([(i + 1.5*j + 0.5*0) / 4.0 for (i, j) in zip(u, v)])
    for c in main_col:
       color_values['default@' + c] = col_avg(default_col, color_values[c])
@@ -75,8 +70,15 @@ if __name__ != '__main__':
    def ssys_color( V, ssys ):
       return _ssys_color(V, ssys).split(':', 1)[0]
 
+   def ssys_others( V, ssys ):
+      return _ssys_color(V, ssys).split(':')[2:]
+
    def ssys_nebula( V, ssys ):
-      return _ssys_color(V, ssys).split(':', 1)[1:2] == [ 'nebula' ]
+      v = _ssys_color(V, ssys).split(':', 2)[1:2]
+      try:
+         return float(v[0])
+      except:
+         return None
 
 else:
    if do_color := ('-c' in argv[1:]):
@@ -114,7 +116,7 @@ else:
       return None if fnam not in faction else faction[fnam]
 
 
-   from graphmod import sys_pos as V
+   from graphmod import ssys_pos as V
 
    for bnam in V:
       T = ET.parse(getpath(PATH, "ssys", bnam + ".xml")).getroot()
@@ -157,16 +159,26 @@ else:
                V.aux[bnam].append('default')
          else:
             V.aux[bnam].append(aux)
-         if V.aux[bnam] != [] and T.find('general/nebula') is not None:
-            V.aux[bnam][-1] += ':nebula'
+         if (tags := [e.text for e in T.findall('tags/tag') if e.text in Rtags]) != []:
+            if V.aux[bnam] == []:
+               V.aux[bnam] = ['default']
+            V.aux[bnam][-1] += ':'
+            if 'thenebula' in tags:
+               tags.remove('thenebula')
+               volatility = 0.0
+               if (e := T.find('general/nebula')) is not None:
+                  if 'volatility' in e.attrib:
+                     volatility = float(e.attrib['volatility'])
+               V.aux[bnam][-1] += str(volatility)
+            V.aux[bnam][-1] += ':'.join([''] + tags)
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:
-      from graphmod import sys_jmp as E
+      from graphmod import ssys_jmp as E
       newt = {}
       infl = main_col if do_color else main_fact
       _is_def = lambda a: a == [] or a[0] == 'default'
-      _nhn = lambda i: [j for j, k in E[i] if 'hidden' not in k]
+      _nhn = lambda i: [j for j, k in E[i].items() if 'hidden' not in k]
       for bnam in V:
          if _is_def(V.aux[bnam]) and bnam not in influence_except:
             newt[bnam] = None

@@ -14,11 +14,11 @@ if argv[1:] != []:
    )
    exit(0)
 
-from graphmod import sys_pos as pos
+from graphmod import ssys_pos as pos
 from geometry import segment, circumscribed
 
 
-# Repair collective area symetry
+# Repair collective area symmetry
 
 C = circumscribed(pos['c59'], pos['c43'], pos['c28'])
 
@@ -38,16 +38,6 @@ else:
 
 pos['c00'] = Pt1
 pos['c14'] = Pt2
-
-
-# Twist Carnis M{in,aj}or
-
-C = (pos['carnis_minor'] + pos['carnis_major']) / 2.0
-pos['carnis_minor'] = C + (pos['carnis_minor'] - C).rotate(110)
-pos['carnis_major'] = C + (pos['carnis_major'] - C).rotate(110)
-d = pos['carnis_major'] - pos['carnis_minor']
-pos['carnis_minor'] += d / 2.0
-pos['carnis_major'] += d / 2.0
 
 
 # ABH *again*

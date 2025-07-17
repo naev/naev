@@ -11,7 +11,7 @@ if '-h' in argv[1:] or '--help' in argv[1:] or len(argv)>3:
    )
    exit(0)
 
-from graphmod import sys_pos as pos, no_graph_out
+from graphmod import ssys_pos as pos, no_graph_out
 from geometry import vec
 
 no_graph_out()

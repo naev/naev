@@ -17,6 +17,9 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <tags>
+  <tag>corridor</tag>
+ </tags>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>

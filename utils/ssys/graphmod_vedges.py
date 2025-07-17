@@ -19,9 +19,16 @@ if argv[1:] != []:
 virtual_edges = [
    ('ngc902', 'ngc4087'),
    ('ngc728', 'ngc1872'),
+   ('brumerebus', 'antlejos'),
+   ('kiwi', 'suna'),
+   ('pellmell', 'fulcrum'),
+   ('nasona', 'oriantis'),
+   ('tau_ceti', 'arcanis'),
+   #('carrza', 'tepvin'),
+   #('tepvin', 'hakoi'),
 ]
 
-from graphmod import sys_pos as V, sys_jmp as E
+from graphmod import ssys_jmp
 from virtual_edges import add_virtual_edges
 
-add_virtual_edges(E, virtual_edges)
+add_virtual_edges(ssys_jmp, virtual_edges)

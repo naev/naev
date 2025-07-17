@@ -5,16 +5,17 @@ if __name__ != '__main__':
 
 
 from sys import argv, stderr
-from graph_vaux import color_values, ssys_color, ssys_nebula
+from graph_vaux import color_values, ssys_color, ssys_nebula, ssys_others
 
 
 def main( color = False, fixed_pos = False ):
-   from graphmod import sys_pos as pos, sys_jmp as E, no_graph_out
+   from graphmod import ssys_pos as pos, ssys_jmp as E, no_graph_out
    no_graph_out()
 
    if color:
       colors = { k: color_values[ssys_color(pos, k)] for k in pos }
-      nebula = { k for k in pos if ssys_nebula(pos, k) }
+      nebula = { k: ssys_nebula(pos, k) for k in pos if ssys_nebula(pos, k) is not None }
+      others = { k: ssys_others(pos, k) for k in pos }
       V = {k:' '.join(l[1:]) for k, l in pos.aux.items()}
    else:
       V = {k:' '.join(l) for k, l in pos.aux.items()}
@@ -32,10 +33,10 @@ def main( color = False, fixed_pos = False ):
 
    print('\tinputscale=72')
    print('\tnotranslate=true') # don't make upper left at 0,0
-   print('\tnode[fixedsize=true,shape=circle,color=white,fillcolor=grey,style="filled"]')
+   print('\tnode[fixedsize=true,shape=circle,penwidth=0,color=white,fillcolor=grey,style="filled"]')
    reflen = 0.5
    print('\tnode[width=0.5]')
-   print('\tedge[len='+str(reflen)+']')
+   print('\tedge[len=' + str(reflen) + ']')
 
    if fixed_pos:
       print('\tnode[pin=true]')
@@ -44,24 +45,42 @@ def main( color = False, fixed_pos = False ):
       if i[0] == '_' and fixed_pos:
          continue
       # Don't include disconnected systems
-      if E[i] != [] or fixed_pos:
-         s = '\t"'+i+'" ['
+      if E[i] != {} or fixed_pos:
+         s = '\t"' + i + '" ['
          if i[0] != '_':
             (x, y) = pos[i]
             x = round(float(x)*factor, 9)
             y = round(float(y)*factor, 9)
             s += 'pos="'+str(x)+','+str(y)+('!' if fixed_pos else '')+'";'
          label = V[i]
-         for t in [('-','- '), (' ','\\n'), ('Test\\nof','Test of')]:
+         for t in {'-': '- ', ' ': '\\n', 'Test\\nof': 'Test of'}.items():
             label = label.replace(*t)
          s += 'label="' + label + '"'
 
          if color:
             if i in nebula:
-               s += ';fontcolor=darkred'
+               for lev, col in {
+                  0:'blue',
+                  10:'purple',
+                  45:'fuchsia',
+                  75:'deeppink',
+                  100:'red'
+               }.items():
+                  if nebula[i] <= lev:
+                     s += ';fontcolor='+col
+                     break
+            c = {
+               'stellarwind': 'lightskyblue',
+               'haze':        'pink',
+               'plasmastorm': '".833 .2 1"'
+            }
+            for o in others[i]:
+               if o in c:
+                  s += 'penwidth=4.0;color='+c[o]
+                  break
             cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
-            s += ';fillcolor="#'+rgb+'"'
+            s += ';fillcolor="#' + rgb + '"'
 
          if i == 'sol':
             s += ';color=red'
@@ -72,28 +91,35 @@ def main( color = False, fixed_pos = False ):
    print('\tnode [label="",style=invis]')
 
    for i in V:
-      for dst, aux in E[i]:
+      for dst, aux in E[i].items():
          suff = []
          if 'virtual' in aux:
             continue;
          elif 'tradelane' in aux:
             suff += ['style=bold', 'penwidth=4.0']
-         elif 'hidden' in aux:
-            suff += ['style=dotted', 'penwidth=2.5']
-         elif 'new' in aux:
-            suff += ['color=green']
          elif 'fake' in aux:
-            suff += ['color=red', 'weight=0']
+            suff += ['weight=0']
 
-         suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
-         oneway = i not in map(lambda t:t[0], E[dst])
-         if oneway or i<dst:
+         cols = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
+         srcc = ([cols[a] for a in aux if a in cols] + ['black'])[0]
+
+         if (oneway := i not in E[dst]) or i<dst:
+            if oneway:
+               dstc = 'white'
+            else:
+               dstc = ([cols[a] for a in E[dst][i] if a in cols] + ['black'])[0]
+
+            if srcc != dstc:
+               suff += ['color="' + srcc + ';0.5:' + dstc + '"']
+            else:
+               suff += ['color="' + srcc + '"']
+            suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
             print('"'.join(['\t', i, '--', dst, suff]))
 
    print('\tedge[len=' + str(reflen) + ']')
    print('\tedge[style="dashed";color="grey";penwidth=1.5]')
    for f, k in E.items():
-      for t, aux in k:
+      for t, aux in k.items():
          if fixed_pos or 'virtual' not in aux:
             continue
          try:
