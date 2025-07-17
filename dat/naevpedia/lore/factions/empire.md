@@ -9,7 +9,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Empire" )
 # The Empire
 
 The Empire is the backbone of modern civilization.
-Its governmental system is a mixture of a republic and a dictatorship, with the Emperor presiding over all other powers of state.
+Its governmental system is a mixture of a republic and a monarchy, with the Emperor presiding over all other powers of state.
 The Emperor delegates some power to the Imperial Council, consisting of 20 councilors who pass laws to be carried out by the Imperial Bureaucracy which commands the Imperial Navy and governs the citizens.
 However, all the councilors can be overruled by the Emperor.
 From the Empire came the Great Houses, and they interact with the Imperial government through their respective liaisons.

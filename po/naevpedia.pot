@@ -484,19 +484,19 @@ msgid "The Empire is the backbone of modern civilization."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:10
-msgid "Its governmental system is a mixture of a republic and a monarchy, with The Emperor presiding over all other powers of state."
+msgid "Its governmental system is a mixture of a republic and a monarchy, with the Emperor presiding over all other powers of state."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:11
-msgid "The Emperor delegates some of his power to the Imperial Council, consisting of 20 councilors who pass laws to be carried out by the Imperial bureaucracy which commands the Imperial army and governs the citizens."
+msgid "The Emperor delegates some power to the Imperial Council, consisting of 20 councilors who pass laws to be carried out by the Imperial Bureaucracy which commands the Imperial Navy and governs the citizens."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:12
-msgid "However, all the councilors can be overruled by The Emperor."
+msgid "However, all the councilors can be overruled by the Emperor."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:13
-msgid "From The Empire came the Great Houses, and they interact with the Imperial government through their respective liaisons."
+msgid "From the Empire came the Great Houses, and they interact with the Imperial government through their respective liaisons."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:15
@@ -536,7 +536,7 @@ msgid "His success meant the end of the Faction Wars and started the period now 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:28
-msgid "The following period of peace was a Golden Age of The Empire, with new trade routes bringing wealth and prosperity to Empire worlds, patrols effectively extinguishing piracy and, apart from minor incidents, peace reigning in all of Empire Space."
+msgid "The following period of peace was a Golden Age of the Empire, with new trade routes bringing wealth and prosperity to Empire worlds, patrols effectively extinguishing piracy and, apart from minor incidents, peace reigning in all of Imperial space."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:30
@@ -556,7 +556,7 @@ msgid "Many Empire worlds were devastated in the initial blast, and many station
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:35
-msgid "The Empire's power has declined since then and the security that was ensured in the Golden Age has diminished greatly as the Imperial military, once the guardian of much of inhabited space, now finds itself struggling to keep the core systems of the Empire's former territory secure, let alone the sparsely-populated border systems or the vast expanses beyond."
+msgid "The Empire's power has declined since then and the security that was ensured in the Golden Age has diminished greatly as the Imperial military, once the guardian of much of inhabited space, now finds itself struggling to keep the core systems of the Empire's former territory secure. Even more daunting is the task of trying to keep peace in the sparsely-populated border systems or the vast expanses beyond."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:37
@@ -564,15 +564,15 @@ msgid "The current Emperor was elected by what remained of the Council shortly a
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:38
-msgid "They are fairly inexperienced and refuses to acknowledge that the Empire is in decline."
+msgid "The Emperor is fairly inexperienced and refuses to acknowledge that the Empire is in decline."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:39
-msgid "It was they who had the Emperor's Wrath built, and who initiated the Emperor's Fist project, despite the state the rest of his realm is in."
+msgid "This Emperor had Emperor's Wrath built and initiated the Emperor's Fist project despite the state the rest of the realm is in."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:40
-msgid "Many believe they will not be Emperor much longer."
+msgid "Many believe this Emperor's reign will not last much longer."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:42
@@ -580,7 +580,7 @@ msgid "## Territory"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:44
-msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of The Emperor."
+msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:45
@@ -648,7 +648,7 @@ msgid "Empire engineers in collaboration with [Nexus Shipyards](lore/fabricators
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:65
-msgid "These are the flagships of any larger Empire fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_admonisher) and [Lancelots](ships/empire_lancelot)."
+msgid "These are the flagships of any larger Imperial fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_admonisher) and [Lancelots](ships/empire_lancelot)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:67
@@ -656,7 +656,7 @@ msgid "## Political System"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:69
-msgid "The Emperor is ultimately the seat of all power and has the ability to overrule anyone, but a lone man cannot single-handedly govern an entity the size of the Empire at any meaningfully low level."
+msgid "The Emperor is ultimately the seat of all power and has the ability to overrule anyone, but a lone person cannot single-handedly govern an entity the size of the Empire at any meaningfully low level."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:70
@@ -672,19 +672,19 @@ msgid "### The Imperial Bureaucracy"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:75
-msgid "The council does not oversee the laws being carried out, that task falls to the Imperial bureaucracy."
+msgid "The Council does not oversee the laws being carried out, that task falls to the Imperial Bureaucracy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:76
-msgid "It is the largest part of the Empire administration besides the military."
+msgid "It is the largest part of Empire administration besides the military."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:77
-msgid "Enforcing the large number of laws passed by generations of councils word for word is impossible."
+msgid "Enforcing the large number of laws passed by generations of Councils word for word is impossible."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:78
-msgid "Therefore, most members of the bureaucracy follow what they in their best judgment believe to be the idea behind the laws."
+msgid "Therefore, most members of the Bureaucracy follow what they, in their best judgment, believe to be the intention behind the laws."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:79
@@ -692,19 +692,19 @@ msgid "But even that task is becoming ever more difficult and social progress ha
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:80
-msgid "The bureaucracy is also the only organ of the state the people interact with directly."
+msgid "The Bureaucracy is also the only organ of the state the people interact with directly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:81
-msgid "Requests for audiences with the council or similar may be directed at the bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the bureaucracy."
+msgid "Requests for audiences with the Council may be directed to the Bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the Bureaucracy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:83
-msgid "Finally, it is the bureaucracy's task to manage the Empire military, which it does with some success."
+msgid "Finally, it is the Bureaucracy's task to manage the Imperial military, which it does with some success."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:84
-msgid "The Emperor and the Council place great value on the defense of their borders and the bureaucracy must ensure that those wishes are carried out."
+msgid "The Emperor and the Council place great value on the defense of their borders and the Bureaucracy must ensure that those wishes are carried out."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:85
@@ -712,7 +712,7 @@ msgid "The military works quite well on their own and usually requires little ov
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:86
-msgid "The Generals and Commanders of the army are known to work with great efficiency, thus, the military is often called the most efficient part of the Empire administration."
+msgid "The commanding officers of the Imperial Navy are known to work with great effectiveness, thus the military is often called the most efficient part of the Empire administration."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:88
@@ -724,47 +724,31 @@ msgid "The Houses are still bound to the Empire via contracts but are effectivel
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:91
-msgid "They interact with the Imperial countries via Liaisons, chosen representatives of the Houses' governments."
+msgid "They interact with the Imperial Council via Liaisons, chosen representatives of the Houses' governments."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:92
-msgid "When the Emperor has a particular request to one of the houses, the Council passes his decree on to the responsible Liaison, who in turn passes it on to his superiors."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:93
-msgid "This is by no means a binding contract or even an order."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:94
-msgid "Today, the Houses are not required to follow the Emperor's orders and may decide for themselves whether to grant the Emperor's request."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:96
-msgid "The Great Houses interact with the Imperial Council through liaisons, who represent the \"vassals of the Empire\"."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:97
 msgid "Whenever the Emperor requires one or more of the Great Houses to do his bidding, the Council will pass on the Imperial Decree to the relevant liaisons, who in turn convey the message to their respective leaders."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:98
+#: dat/naevpedia/lore/factions/empire.md:93
 msgid "This is often only a courtesy however, as the Great Houses are no longer bound to the core of the Empire beyond ancient treaties and vows of allegiance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:99
+#: dat/naevpedia/lore/factions/empire.md:94
 msgid "Typically, a Great House will put on a token show of loyalty, and subsequently ignore the Emperor's will to pursue its own agenda."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:101
+#: dat/naevpedia/lore/factions/empire.md:96
 msgid "### Minor Houses"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:103
+#: dat/naevpedia/lore/factions/empire.md:98
 msgid "Next to the Great Houses, some Minor Houses exist, as well."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:104
-msgid "The status of a Minor House is given for various reasons like an achievement or as is the case with the [House Goddard](lore/factions/goddard), in return for a service."
+#: dat/naevpedia/lore/factions/empire.md:99
+msgid "The status of a Minor House is given for various reasons like an achievement or, as is the case with the [House Goddard](lore/factions/goddard), in return for a service."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:2
@@ -6440,19 +6424,19 @@ msgid "The Empire is the backbone of modern civilization."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:10
-msgid "Its governmental system is a mixture of a republic and a monarchy, with The Emperor presiding over all other powers of state."
+msgid "Its governmental system is a mixture of a republic and a monarchy, with the Emperor presiding over all other powers of state."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:11
-msgid "The Emperor delegates some of his power to the Imperial Council, consisting of 20 councilors who pass laws to be carried out by the Imperial bureaucracy which commands the Imperial army and governs the citizens."
+msgid "The Emperor delegates some power to the Imperial Council, consisting of 20 councilors who pass laws to be carried out by the Imperial Bureaucracy which commands the Imperial Navy and governs the citizens."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:12
-msgid "However, all the councilors can be overruled by The Emperor."
+msgid "However, all the councilors can be overruled by the Emperor."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:13
-msgid "From The Empire came the Great Houses, and they interact with the Imperial government through their respective liaisons."
+msgid "From the Empire came the Great Houses, and they interact with the Imperial government through their respective liaisons."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:15
@@ -6492,7 +6476,7 @@ msgid "His success meant the end of the Faction Wars and started the period now 
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:28
-msgid "The following period of peace was a Golden Age of The Empire, with new trade routes bringing wealth and prosperity to Empire worlds, patrols effectively extinguishing piracy and, apart from minor incidents, peace reigning in all of Empire Space."
+msgid "The following period of peace was a Golden Age of the Empire, with new trade routes bringing wealth and prosperity to Empire worlds, patrols effectively extinguishing piracy and, apart from minor incidents, peace reigning in all of Imperial space."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:30
@@ -6512,7 +6496,7 @@ msgid "Many Empire worlds were devastated in the initial blast, and many station
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:35
-msgid "The Empire's power has declined since then and the security that was ensured in the Golden Age has diminished greatly as the Imperial military, once the guardian of much of inhabited space, now finds itself struggling to keep the core systems of the Empire's former territory secure, let alone the sparsely-populated border systems or the vast expanses beyond."
+msgid "The Empire's power has declined since then and the security that was ensured in the Golden Age has diminished greatly as the Imperial military, once the guardian of much of inhabited space, now finds itself struggling to keep the core systems of the Empire's former territory secure. Even more daunting is the task of trying to keep peace in the sparsely-populated border systems or the vast expanses beyond."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:37
@@ -6520,15 +6504,15 @@ msgid "The current Emperor was elected by what remained of the Council shortly a
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:38
-msgid "They are fairly inexperienced and refuses to acknowledge that the Empire is in decline."
+msgid "The Emperor is fairly inexperienced and refuses to acknowledge that the Empire is in decline."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:39
-msgid "It was they who had the Emperor's Wrath built, and who initiated the Emperor's Fist project, despite the state the rest of his realm is in."
+msgid "This Emperor had Emperor's Wrath built and initiated the Emperor's Fist project despite the state the rest of the realm is in."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:40
-msgid "Many believe they will not be Emperor much longer."
+msgid "Many believe this Emperor's reign will not last much longer."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:42
@@ -6536,7 +6520,7 @@ msgid "## Territory"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:44
-msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of The Emperor."
+msgid "The Empire still has the largest territorial claim in the galaxy, holding a major part of the inhabited Galaxy centered around Polaris Prime in the Gamma Polaris system, the official seat of the Emperor."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:45
@@ -6604,7 +6588,7 @@ msgid "Empire engineers in collaboration with [Nexus Shipyards](lore/fabricators
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:65
-msgid "These are the flagships of any larger Empire fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_admonisher) and [Lancelots](ships/empire_lancelot)."
+msgid "These are the flagships of any larger Imperial fleets, while local patrols usually consist primarily of [Admonishers](ships/empire_admonisher) and [Lancelots](ships/empire_lancelot)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:67
@@ -6612,7 +6596,7 @@ msgid "## Political System"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:69
-msgid "The Emperor is ultimately the seat of all power and has the ability to overrule anyone, but a lone man cannot single-handedly govern an entity the size of the Empire at any meaningfully low level."
+msgid "The Emperor is ultimately the seat of all power and has the ability to overrule anyone, but a lone person cannot single-handedly govern an entity the size of the Empire at any meaningfully low level."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:70
@@ -6628,19 +6612,19 @@ msgid "### The Imperial Bureaucracy"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:75
-msgid "The council does not oversee the laws being carried out, that task falls to the Imperial bureaucracy."
+msgid "The Council does not oversee the laws being carried out, that task falls to the Imperial Bureaucracy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:76
-msgid "It is the largest part of the Empire administration besides the military."
+msgid "It is the largest part of Empire administration besides the military."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:77
-msgid "Enforcing the large number of laws passed by generations of councils word for word is impossible."
+msgid "Enforcing the large number of laws passed by generations of Councils word for word is impossible."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:78
-msgid "Therefore, most members of the bureaucracy follow what they in their best judgment believe to be the idea behind the laws."
+msgid "Therefore, most members of the Bureaucracy follow what they, in their best judgment, believe to be the intention behind the laws."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:79
@@ -6648,19 +6632,19 @@ msgid "But even that task is becoming ever more difficult and social progress ha
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:80
-msgid "The bureaucracy is also the only organ of the state the people interact with directly."
+msgid "The Bureaucracy is also the only organ of the state the people interact with directly."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:81
-msgid "Requests for audiences with the council or similar may be directed at the bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the bureaucracy."
+msgid "Requests for audiences with the Council may be directed to the Bureaucracy, though they are seldom granted and some have been known to simply disappear within the immense, monolithic complexity of the Bureaucracy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:83
-msgid "Finally, it is the bureaucracy's task to manage the Empire military, which it does with some success."
+msgid "Finally, it is the Bureaucracy's task to manage the Imperial military, which it does with some success."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:84
-msgid "The Emperor and the Council place great value on the defense of their borders and the bureaucracy must ensure that those wishes are carried out."
+msgid "The Emperor and the Council place great value on the defense of their borders and the Bureaucracy must ensure that those wishes are carried out."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:85
@@ -6668,7 +6652,7 @@ msgid "The military works quite well on their own and usually requires little ov
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:86
-msgid "The Generals and Commanders of the army are known to work with great efficiency, thus, the military is often called the most efficient part of the Empire administration."
+msgid "The commanding officers of the Imperial Navy are known to work with great effectiveness, thus the military is often called the most efficient part of the Empire administration."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:88
@@ -6680,47 +6664,31 @@ msgid "The Houses are still bound to the Empire via contracts but are effectivel
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:91
-msgid "They interact with the Imperial countries via Liaisons, chosen representatives of the Houses' governments."
+msgid "They interact with the Imperial Council via Liaisons, chosen representatives of the Houses' governments."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/empire.md:92
-msgid "When the Emperor has a particular request to one of the houses, the Council passes his decree on to the responsible Liaison, who in turn passes it on to his superiors."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:93
-msgid "This is by no means a binding contract or even an order."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:94
-msgid "Today, the Houses are not required to follow the Emperor's orders and may decide for themselves whether to grant the Emperor's request."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:96
-msgid "The Great Houses interact with the Imperial Council through liaisons, who represent the \"vassals of the Empire\"."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/empire.md:97
 msgid "Whenever the Emperor requires one or more of the Great Houses to do his bidding, the Council will pass on the Imperial Decree to the relevant liaisons, who in turn convey the message to their respective leaders."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:98
+#: dat/naevpedia/lore/factions/empire.md:93
 msgid "This is often only a courtesy however, as the Great Houses are no longer bound to the core of the Empire beyond ancient treaties and vows of allegiance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:99
+#: dat/naevpedia/lore/factions/empire.md:94
 msgid "Typically, a Great House will put on a token show of loyalty, and subsequently ignore the Emperor's will to pursue its own agenda."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:101
+#: dat/naevpedia/lore/factions/empire.md:96
 msgid "### Minor Houses"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:103
+#: dat/naevpedia/lore/factions/empire.md:98
 msgid "Next to the Great Houses, some Minor Houses exist, as well."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/empire.md:104
-msgid "The status of a Minor House is given for various reasons like an achievement or as is the case with the [House Goddard](lore/factions/goddard), in return for a service."
+#: dat/naevpedia/lore/factions/empire.md:99
+msgid "The status of a Minor House is given for various reasons like an achievement or, as is the case with the [House Goddard](lore/factions/goddard), in return for a service."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:2
