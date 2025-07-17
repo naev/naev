@@ -521,8 +521,9 @@ function control_funcs.generic_attack( si, noretarget )
          (parmour < mem.armour_run
             and parmour < target_parmour ) then
       ai.pushtask("runaway", target)
-
-   -- Think like normal
+   -- Carried fighters are a bit more jumpy
+   elseif mem.carried and parmour < mem.armour_run then
+      ai.pushtask("runaway", target)
    else
       -- Cool down, if necessary.
       should_cooldown()
@@ -875,6 +876,14 @@ function control( dt )
          control_funcs.generic_attack( si )
       end
       return
+   end
+
+   -- See if we have to fly back due to low health
+   if mem.carried then
+      if p:armour() < mem.armour_run then
+         ai.pushtask( "flyback", true )
+         return
+      end
    end
 
    -- Cooldown completes silently.
