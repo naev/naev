@@ -22,7 +22,7 @@ enum GridEntry {
     None,
     Enemies,
     Allies,
-    Neutral,
+    Neutrals,
 }
 #[derive(Default)]
 struct Grid {
@@ -32,26 +32,13 @@ struct Grid {
 impl std::ops::Index<(usize, usize)> for Grid {
     type Output = GridEntry;
     fn index(&self, index: (usize, usize)) -> &Self::Output {
-        let (i, j) = {
-            if index.0 <= index.1 {
-                (index.0, index.1)
-            } else {
-                (index.1, index.0)
-            }
-        };
-        &self.data[i * self.size + j]
+        &self.data[self.offset(index)]
     }
 }
 impl std::ops::IndexMut<(usize, usize)> for Grid {
     fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
-        let (i, j) = {
-            if index.0 <= index.1 {
-                (index.0, index.1)
-            } else {
-                (index.1, index.0)
-            }
-        };
-        &mut self.data[i * self.size + j]
+        let offset = self.offset(index);
+        &mut self.data[offset]
     }
 }
 impl Grid {
@@ -62,11 +49,19 @@ impl Grid {
         }
     }
 
+    fn offset(&self, idx: (usize, usize)) -> usize {
+        if idx.0 <= idx.1 {
+            idx.0 * self.size + idx.1
+        } else {
+            idx.1 * self.size + idx.0
+        }
+    }
+
     fn recompute(&mut self) -> Result<()> {
         let factions = FACTIONS.read().unwrap();
-        let size = factions.len();
+        self.size = factions.len();
         self.data.clear();
-        self.data.resize(size * size, GridEntry::None);
+        self.data.resize(self.size * self.size, GridEntry::None);
 
         for (id, fct) in factions.iter().enumerate() {
             let dat = &fct.data;
@@ -92,11 +87,11 @@ impl Grid {
                 }
             }
             for n in &dat.neutrals {
-                self[(dat.id, *n)] = GridEntry::Neutral;
+                self[(dat.id, *n)] = GridEntry::Neutrals;
                 #[cfg(debug_assertions)]
                 {
                     let ent = self[(dat.id, *n)];
-                    if ent != GridEntry::Neutral && ent != GridEntry::None {
+                    if ent != GridEntry::Neutrals && ent != GridEntry::None {
                         warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*n].data.name);
                     }
                 }
@@ -138,8 +133,45 @@ impl FactionID {
         }
     }
 
+    /// Checks to see if two factions are allies
+    pub fn are_allies(&self, other: &Self) -> bool {
+        if self == other {
+            true
+        } else if other == PLAYER.get().unwrap() {
+            self.call(|fct| fct.standing.read().unwrap().player >= fct.data.friendly_at)
+                .unwrap_or_else(|err| {
+                    warn_err!(err);
+                    false
+                })
+        } else {
+            GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Enemies
+        }
+    }
+
+    /// Checks to see if two factions are enemies
     pub fn are_enemies(&self, other: &Self) -> bool {
-        GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Enemies
+        if self == other {
+            false
+        } else if other == PLAYER.get().unwrap() {
+            self.call(|fct| fct.standing.read().unwrap().player < 0.)
+                .unwrap_or_else(|err| {
+                    warn_err!(err);
+                    false
+                })
+        } else {
+            GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Enemies
+        }
+    }
+
+    /// Checks to see if two factions are true neutrals
+    pub fn are_neutrals(&self, other: &Self) -> bool {
+        if self == other {
+            false
+        } else if other == PLAYER.get().unwrap() {
+            false
+        } else {
+            GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Neutrals
+        }
     }
 }
 
