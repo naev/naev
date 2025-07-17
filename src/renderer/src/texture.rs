@@ -263,7 +263,7 @@ impl TextureData {
             w: w as usize,
             h: h as usize,
             texture,
-            srgb: srgb,
+            srgb,
             sdf: false,
             mipmaps: false,
             vmax: 1.,

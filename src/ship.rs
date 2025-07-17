@@ -17,7 +17,7 @@ impl ShipWrapper {
     }
 
     fn load_gfx_3d(&mut self, path: &str, ctx: &ContextWrapper) -> Result<()> {
-        let m = Model::from_path(ctx, &path)?;
+        let m = Model::from_path(ctx, path)?;
         self.0.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
         unsafe {
             naevc::ship_gfxLoadPost3D(&mut self.0 as *mut naevc::Ship);
@@ -71,12 +71,12 @@ pub extern "C" fn ship_gfxLoadNeeded() {
             .to_str()
             .unwrap()
         };
-        let path = match cpath.chars().next() == Some('/') {
+        let path = match cpath.starts_with('/') {
             true => cpath,
             false => &format!("gfx/ship3d/{base_path}/{cpath}"),
         };
-        if match ndata::is_file(&path) {
-            true => ptr.load_gfx_3d(&path, &ctx),
+        if match ndata::is_file(path) {
+            true => ptr.load_gfx_3d(path, &ctx),
             false => {
                 let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
                 ptr.load_gfx_3d(&path, &ctx)

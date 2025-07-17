@@ -168,9 +168,7 @@ impl FactionID {
 
     /// Checks to see if two factions are true neutrals
     pub fn are_neutrals(&self, other: &Self) -> bool {
-        if self == other {
-            false
-        } else if other == PLAYER.get().unwrap() {
+        if self == other || other == PLAYER.get().unwrap() {
             false
         } else {
             GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Neutrals
@@ -242,7 +240,7 @@ impl Faction {
     }
 
     fn init_lua(&self, lua: &NLua) -> Result<()> {
-        self.data.init_lua(&lua)?;
+        self.data.init_lua(lua)?;
         if let Some(env) = &self.data.lua_env {
             // Store important stuff here
             let mut std = self.standing.write().unwrap();

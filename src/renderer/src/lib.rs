@@ -872,7 +872,7 @@ impl Context {
     /// Takes a screenshot of the game
     pub fn screenshot(&self, filename: &str) -> Result<()> {
         let dims = self.dimensions.read().unwrap();
-        let (w, h) = (dims.pixels_width as u32, dims.pixels_height as u32);
+        let (w, h) = (dims.pixels_width, dims.pixels_height);
         let mut data: Vec<u8> = vec![0; (w * h * 3) as usize];
         let gl = &self.gl;
         unsafe {

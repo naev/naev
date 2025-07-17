@@ -155,7 +155,7 @@ impl NLua {
         lua.load_std_libs(mlua::StdLib::ALL_SAFE).unwrap();
 
         // Set up gettext stuff
-        open_gettext(&lua)?;
+        open_gettext(lua)?;
 
         // Add some more functions.
         let globals = lua.globals();
