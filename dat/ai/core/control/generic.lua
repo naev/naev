@@ -886,6 +886,7 @@ function control( dt )
    -- See if we have to fly back due to low health
    if mem.carried then
       if p:armour() < mem.armour_run then
+         p:taskClear()
          ai.pushtask( "flyback", true )
          return
       end
@@ -938,6 +939,9 @@ function control( dt )
          local dist = ai.dist( l )
          if lmd < dist then
             if task ~= "flyback" then
+               if mem.carried then
+                  p:taskClear()
+               end
                ai.pushtask("flyback", false)
             end
             return
