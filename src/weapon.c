@@ -1398,17 +1398,25 @@ static void weapon_updateCollide( Weapon *w, double dt )
          /* We can only hit ammo weapons, so no beams. */
          wchit.w         = whit;
          wchit.explosion = 0;
-         wchit.beam      = 0;
-         wchit.gfx       = outfit_gfx( w->outfit );
-         if ( wchit.gfx->tex != NULL ) {
-            wchit.polygon  = outfit_plg( w->outfit );
-            wchit.polyview = poly_view( wchit.polygon, w->solid.dir );
-            wchit.range =
-               wchit.gfx->size; /* Range is set to size in this case. */
+         wchit.beam      = outfit_isBeam( whit->outfit );
+         if ( !wchit.beam ) {
+            wchit.gfx = outfit_gfx( whit->outfit );
+            if ( wchit.gfx->tex != NULL ) {
+               wchit.polygon  = outfit_plg( whit->outfit );
+               wchit.polyview = poly_view( wchit.polygon, whit->solid.dir );
+               wchit.range =
+                  wchit.gfx->size; /* Range is set to size in this case. */
+            } else {
+               wchit.polygon  = NULL;
+               wchit.polyview = NULL;
+               wchit.range    = wchit.gfx->col_size;
+            }
          } else {
-            wchit.polygon  = NULL;
-            wchit.polyview = NULL;
-            wchit.range    = wchit.gfx->col_size;
+            wchit.gfx       = NULL;
+            wchit.polygon   = NULL;
+            wchit.polyview  = NULL;
+            wchit.range     = outfit_width( whit->outfit ) * 0.5;
+            wchit.beamrange = outfit_range( whit->outfit ) * whit->range_mod;
          }
 
          /* Do the real collision test. */
