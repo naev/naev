@@ -25,8 +25,10 @@ if show_decorators := '-d' in argv[1:]:
 if '-H' in argv[1:]:
    argv.remove('-H')
    height = 1080
+   cmd = [ '+A0.1', '+AM2', '+R4', '+BM2' ]
 else:
    height = 720
+   cmd = [ '+A0.3', '+AM2', '+R3', '+BM2' ]
 
 if '-p' in [a[:2] for a in argv[1:]]:
    a = argv[[a[:2] for a in argv[1:]].index('-p') + 1]
@@ -188,26 +190,22 @@ for i, p in V.items():
          other = V[dstsys]
       else:
          other = (p + V[dstsys]) / 2.0
-      edge_col = '0.3,0.3,0.3'
-      tagcol = {'hidden': '0.4,0,0.4', 'virtual': '0,0,1', 'fake': '1,0,0', 'new': '0,1,0' }
+      edge_col = '0.3,0.3,0.3' if 'tradelane' in tags else '0.22,0.22,0.22'
+      tagcol = {'hidden': '0.28,0,0.28', 'virtual': '0,0,0.7', 'fake': '0.7,0,0', 'new': '0,0.6,0' }
       for t in tagcol:
          if t in tags:
             edge_col = tagcol[t]
       write_pov([ 'cylinder{', [
          '<' + str(p[0]) + ', ' + str(p[1]) + ', 0>,',
          '<' + str(other[0]) + ', ' + str(other[1]) + ', 0>,',
-         str(3.0 if 'tradelane' in tags else 1.6),
+         str(3.0 if 'tradelane' in tags else 1.8),
          'pigment {color rgb<' + edge_col + '>}',
       ], '}', '' ])
 
 dst.close()
 
 base = height
-cmd = [
-   'povray', pov,
-   '+W' + str(int(base*ratio)), '+H' + str(base),
-   '+A0.1', '+AM2', '+R4', '+BM2'
-]
+cmd = ['povray', pov, '+W' + str(int(base*ratio)), '+H' + str(base)] + cmd
 if no_preview:
    cmd += ['-D']
 
