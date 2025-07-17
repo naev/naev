@@ -134,8 +134,7 @@ if [ "$DRYRUN" == "false" ]; then
     gh --version
     gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage" --repo "$REPONAME" --clobber
     gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync" --repo "$REPONAME" --clobber
-    #gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
-    gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-x86-64.dmg" --repo "$REPONAME" --clobber
+    gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
     gh release upload "$TAGNAME" "$OUTDIR/win64/naev-${VERSION}-win64.exe" --repo "$REPONAME" --clobber
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
         gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-soundtrack.zip" --repo "$REPONAME" --clobber
@@ -158,8 +157,7 @@ elif [ "$DRYRUN" == "true" ]; then
     # Simulate asset uploads
     echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage --repo $REPONAME --clobber"
     echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync --repo $REPONAME --clobber"
-    #echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-x86-64.dmg --repo $REPONAME --clobber"
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
     echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/win64/naev-${VERSION}-win64.exe --repo $REPONAME --clobber"
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
         echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-soundtrack.zip --repo $REPONAME --clobber"

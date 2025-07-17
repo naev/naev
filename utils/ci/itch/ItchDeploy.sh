@@ -156,8 +156,7 @@ if [ "$DRYRUN" == "false" ]; then
     run_butler -V
     if [ "$NIGHTLY" == "true" ]; then
         run_butler push --userversion="$VERSION" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
-        #run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-nightly
-        run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-x86-64-nightly
+        run_butler push --userversion="$VERSION" "$OUTDIR"/macos naev/naev:macos-universal-nightly
         run_butler push --userversion="$VERSION" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
 
     else
