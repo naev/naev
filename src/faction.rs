@@ -138,11 +138,14 @@ impl FactionID {
         if self == other {
             true
         } else if other == PLAYER.get().unwrap() {
-            self.call(|fct| fct.standing.read().unwrap().player >= fct.data.friendly_at)
-                .unwrap_or_else(|err| {
-                    warn_err!(err);
-                    false
-                })
+            self.call(|fct| {
+                let std = fct.standing.read().unwrap();
+                std.player >= std.friendly_at
+            })
+            .unwrap_or_else(|err| {
+                warn_err!(err);
+                false
+            })
         } else {
             GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Enemies
         }
@@ -177,6 +180,7 @@ impl FactionID {
 
 #[derive(Debug)]
 pub struct Standing {
+    friendly_at: f32,
     player: f32,
     p_override: Option<f32>,
     f_known: bool,
@@ -234,6 +238,15 @@ impl Faction {
             DataWrapper::Static(_) => false,
             DataWrapper::Dynamic(_) => true,
         }
+    }
+
+    fn init_lua(&self, lua: &NLua) -> Result<()> {
+        self.data.init_lua(&lua)?;
+        if let Some(env) = &self.data.lua_env {
+            // Store important stuff here
+            self.standing.write().unwrap().friendly_at = env.get("friendly_at")?;
+        }
+        Ok(())
     }
 }
 
@@ -307,7 +320,6 @@ pub struct FactionData {
     sched_env: Option<LuaEnv>,
 
     // Behaviour
-    friendly_at: f32,
     lua_env: Option<LuaEnv>,
 
     // Equipping
@@ -716,6 +728,7 @@ pub fn load() -> Result<()> {
         .iter()
         .map(|fct| Faction {
             standing: RwLock::new(Standing {
+                friendly_at: 70.,
                 player: fct.player_def,
                 p_override: None,
                 f_known: fct.f_known,
@@ -732,7 +745,7 @@ pub fn load() -> Result<()> {
 pub fn load_lua() -> Result<()> {
     // Last pass: initialize Lua
     let lua = NLUA.lock().unwrap();
-    for fct in FACTIONDATA.get().unwrap() {
+    for fct in FACTIONS.read().unwrap().iter() {
         fct.init_lua(&lua)?;
     }
     Ok(())
