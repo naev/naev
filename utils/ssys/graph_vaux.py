@@ -74,9 +74,8 @@ if __name__ != '__main__':
       return _ssys_color(V, ssys).split(':')[2:]
 
    def ssys_nebula( V, ssys ):
-      v = _ssys_color(V, ssys).split(':', 2)[1:2]
       try:
-         return float(v[0])
+         return float(_ssys_color(V, ssys).split(':', 2)[1])
       except:
          return None
 
@@ -109,11 +108,9 @@ else:
 
    def get_spob_faction( nam ):
       T = ET.parse(getpath(PATH, "spob", nam + ".xml")).getroot()
-      e = T.find("./presence/faction")
-      if e is None:
-         return None
-      fnam = nam2base(e.text)
-      return None if fnam not in faction else faction[fnam]
+      if (e := T.find("./presence/faction")) is not None:
+         fnam = nam2base(e.text)
+         return None if fnam not in faction else faction[fnam]
 
 
    from graphmod import ssys_pos as V
@@ -148,7 +145,7 @@ else:
          if len(fact)>1 and fact[0][1]=='independent' and fact[0][0] == fact[1][0]:
             fact = fact[1]
          else:
-            fact = (fact+[(None,None)])[0]
+            fact = (fact + [(None,None)])[0]
          if (fact:= fact[1]) not in faction_color:
             fact = None
 
@@ -174,11 +171,11 @@ else:
          if do_names:
             V.aux[bnam].extend(T.attrib['name'].split(' '))
    if extended:
-      from graphmod import ssys_jmp as E
+      from graphmod import ssys_jmp
       newt = {}
       infl = main_col if do_color else main_fact
       _is_def = lambda a: a == [] or a[0] == 'default'
-      _nhn = lambda i: [j for j, k in E[i].items() if 'hidden' not in k]
+      _nhn = lambda i: [j for j, k in ssys_jmp[i].items() if 'hidden' not in k]
       for bnam in V:
          if _is_def(V.aux[bnam]) and bnam not in influence_except:
             newt[bnam] = None
@@ -193,7 +190,7 @@ else:
 
       twn = lambda i: [j for j in _nhn(i) if newt[j] != 'nebula' and i in _nhn(j)]
       def unpropag( i, val ):
-         if newt[i] in [None, True]:
+         if newt[i] in {None, True}:
             newt[i] = val
             for k in twn(i):
                unpropag(k, val)

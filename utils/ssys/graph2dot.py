@@ -48,10 +48,9 @@ def main( color = False, fixed_pos = False ):
       if E[i] != {} or fixed_pos:
          s = '\t"' + i + '" ['
          if i[0] != '_':
-            (x, y) = pos[i]
-            x = round(float(x)*factor, 9)
-            y = round(float(y)*factor, 9)
-            s += 'pos="'+str(x)+','+str(y)+('!' if fixed_pos else '')+'";'
+            (x, y) = round(pos[i] * factor, 9)
+            fixed = '!' if fixed_pos else ''
+            s += 'pos="' + str(x) + ',' + str(y) + fixed + '";'
          label = V[i]
          for t in {'-': '- ', ' ': '\\n', 'Test\\nof': 'Test of'}.items():
             label = label.replace(*t)
@@ -67,7 +66,7 @@ def main( color = False, fixed_pos = False ):
                   100:'red'
                }.items():
                   if nebula[i] <= lev:
-                     s += ';fontcolor='+col
+                     s += ';fontcolor=' + col
                      break
             c = {
                'stellarwind': 'lightskyblue',
@@ -76,7 +75,7 @@ def main( color = False, fixed_pos = False ):
             }
             for o in others[i]:
                if o in c:
-                  s += 'penwidth=4.0;color='+c[o]
+                  s += 'penwidth=4.0;color=' + c[o]
                   break
             cols = [int(255.0*(f/3.0+2.0/3.0)) for f in colors[i]]
             rgb = ''.join([('0'+(hex(v)[2:]))[-2:] for v in cols])
@@ -100,18 +99,18 @@ def main( color = False, fixed_pos = False ):
          elif 'fake' in aux:
             suff += ['weight=0']
 
-         cols = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
-         srcc = ([cols[a] for a in aux if a in cols] + ['black'])[0]
+         jmp_c = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
+         srcc = ([jmp_c[a] for a in aux if a in jmp_c] + ['black'])[0]
 
          if (oneway := i not in E[dst]) or i<dst:
             if oneway:
                dstc = 'white'
             else:
-               dstc = ([cols[a] for a in E[dst][i] if a in cols] + ['black'])[0]
+               dstc = ([jmp_c[a] for a in E[dst][i] if a in jmp_c] + ['black'])[0]
 
             if srcc != dstc:
                suff += ['color="' + srcc + ';0.5:' + dstc + '"']
-            else:
+            elif srcc!= 'black':
                suff += ['color="' + srcc + '"']
             suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
             print('"'.join(['\t', i, '--', dst, suff]))

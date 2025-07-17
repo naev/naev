@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-
 TMP=$(mktemp)
 trap 'rm -f "$TMP"' EXIT
 
