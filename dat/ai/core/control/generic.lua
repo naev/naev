@@ -363,8 +363,10 @@ local message_handler_funcs = {
    e_autonav = function( p, _si, dopush, sender, _data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
-      ai.pushtask( "flyback", false )
-      return true
+      if ai.taskname() ~= "follow_fleet" then
+         ai.pushtask( "flyback", false )
+         return true
+      end
    end
 }
 
