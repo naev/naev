@@ -13,25 +13,25 @@ local dvaered_outfits = eoutfits.merge{{
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "Enygma Systems Turreted Fury Launcher", "Enygma Systems Turreted Headhunter Launcher",
    -- Small Weapons
-   "Shredder", "Vulcan Gun", "Gauss Gun",
+   "Shredder", "Vulcan Gun", "Gauss Gun", "Turreted Gauss Gun",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Point Defense
    "Dvaered Flare Battery",
    "Ratchet Point Defense",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
-   "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Emergency Shield Booster",
+   "Unicorp Scrambler", "Milspec Scrambler", "Unicorp Light Afterburner",
+   "Sensor Array", "Emergency Shield Booster", "Unicorp Jammer",
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    -- Heavy Structural
-   "Large Fuel Pod", "Battery III", "Reactor Class III",
+   "Battery III", "Battery IV", "Reactor Class III",
    "Shield Capacitor III", "Nanobond Plating",
    -- Medium Structural
-   "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
-   "Active Plating", "Reactor Class II",
+   "Battery II", "Shield Capacitor II",
+   "Active Plating", "Microbond Plating", "Reactor Class II",
    -- Small Structural
-   "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
-   "Reactor Class I", "Small Fuel Pod",
+   "Plasteel Plating", "Battery I", "Improved Stabilizer",
+   "Reactor Class I", "Engine Reroute",
 }}
 
 local dvaered_params = {

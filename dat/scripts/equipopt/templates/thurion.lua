@@ -15,31 +15,31 @@ local thurion_outfits = eoutfits.merge{{
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher", "Convulsion Launcher",
    "Enygma Systems Turreted Fury Launcher",
-   "Turreted Convulsion Launcher",
+   "Turreted Convulsion Launcher", "Grave Lance",
    "Laser Turret MK2", "Razor Battery S2", "Orion Beam",
-   "EMP Grenade Launcher", "Enygma Systems Turreted Fury Launcher",
+   "EMP Grenade Launcher", "Heavy Ion Cannon",
    -- Small Weapons
-   "Ripper Cannon", "Laser Cannon MK2", "Laser Cannon MK1",
-   "Razor Artillery S2", "Razor Artillery S1",
-   "TeraCom Mace Launcher", "TeraCom Banshee Launcher", "Electron Burst Cannon",
+   "Ripper Cannon", "Laser Cannon MK2", "Laser Turret MK1", "Laser Cannon MK1",
+   "Razor Artillery S2", "Razor Artillery S1", "Particle Beam",
+   "Electron Burst Cannon", "Orion Lance", "Ion Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
-   "Milspec Jammer", "Emergency Shield Booster",
-   "Weapons Ionizer", "Sensor Array",
-   "Nebula Resistant Coating",
+   "Targeting Array", "Agility Combat AI", "Unicorp Scrambler", "Hyperbolic Blink Engine",
+   "Milspec Jammer", "Emergency Shield Booster", "Unicorp Jammer",
+   "Sensor Array", "Agility Combat AI", "Flicker Drive",
+   "Nebula Resistant Coating", "Efficiency Combat AI", "Weakness Harmonizer AI",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
-   "Large Shield Booster",
+   "Reactor Class III", "Battery IV", "Auxiliary Processing Unit IV",
+   "Large Shield Booster", "Auxiliary Processing Unit III",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Medium Shield Booster", "Auxiliary Processing Unit II",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Adaptive Camouflage Plating",
-   "Small Shield Booster",
+   "Small Shield Booster", "Auxiliary Processing Unit I",
 }}
 
 local thurion_params = {

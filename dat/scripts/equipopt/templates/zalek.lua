@@ -19,24 +19,27 @@ local zalek_outfits = eoutfits.merge{{
    "Za'lek Hunter Launcher", "Za'lek Reaper Launcher",
    "Grave Lance", "Orion Beam",
    -- Small Weapons
-   "Particle Beam", "Particle Lance",
+   "Particle Beam", "Particle Lance", "Orion Lance", "Electron Burst Cannon",
+   -- Point Defense TODO give Za'lek their own point defense
+   "Guardian Overseer System",
+   "Guardian Interception System",
    -- Utility
-   "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
-   "Milspec Jammer", "Emergency Shield Booster",
-   "Weapons Ionizer", "Sensor Array",
+   "Droid Repair Crew", "Milspec Scrambler", "Unicorp Scrambler",
+   "Targeting Array", "Agility Combat AI", "Unicorp Jammer", "Hyperbolic Blink Engine",
+   "Milspec Jammer", "Emergency Shield Booster", "Weakness Harmonizer AI",
+   "Weapons Ionizer", "Sensor Array", "Sensor Array", "Flicker Drive",
    "Faraday Tempest Coating", "Hive Combat AI",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
-   "Large Shield Booster",
+   "Reactor Class III", "Battery IV", "Auxiliary Processing Unit IV",
+   "Large Shield Booster", "Auxiliary Processing Unit III",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Medium Shield Booster", "Auxiliary Processing Unit II",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Small Shield Booster", "Auxiliary Processing Unit I",
 }}
 
 local zalek_params = {

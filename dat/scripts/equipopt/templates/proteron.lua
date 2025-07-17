@@ -19,20 +19,19 @@ local proteron_outfits = eoutfits.merge{{
    "Plasma Turret MK1", "Plasma Blaster MK1",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array",
    "Hunting Combat AI", "Agility Combat AI",
-   "Milspec Impacto-Plastic Coating", "Photo-Voltaic Nanobot Coating",
+   "Milspec Impacto-Plastic Coating", "Targeting Array",
    "Milspec Jammer", "Emergency Shield Booster",
-   "Weapons Ionizer", "Sensor Array",
+   "Sensor Array",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III",
-   "Reactor Class III", "Large Shield Booster",
+   "Battery III", "Shield Capacitor III", "Battery IV", "Nanobond Plating",
+   "Reactor Class III", "Large Shield Booster", "Auxiliary Processing Unit III",
    -- Medium Structural
-   "Battery II", "Shield Capacitor II",
-   "Reactor Class II", "Medium Shield Booster",
+   "Battery II", "Shield Capacitor II", "Auxiliary Processing Unit II",
+   "Reactor Class II", "Medium Shield Booster", "Microbond Plating",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute", "Plasteel Plating",
-   "Battery I", "Shield Capacitor I",
+   "Battery I", "Shield Capacitor I", "Auxiliary Processing Unit I",
    "Reactor Class I", "Small Shield Booster",
 }}
 

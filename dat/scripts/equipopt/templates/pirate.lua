@@ -9,41 +9,40 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 local pirate_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Pirate Hyena Dock", "Pirate Hyena Bay",
+   "Pirate Hyena Bay",
    "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    -- Medium Weapons
+   "Pirate Hyena Dock",
    "Enygma Systems Turreted Fury Launcher",
    "Enygma Systems Turreted Headhunter Launcher",
    "Laser Turret MK2", "Turreted Vulcan Gun",
-   "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
+   "Plasma Turret MK2", "Orion Beam", "Grave Lance", "EMP Grenade Launcher",
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
-   "TeraCom Imperator Launcher",
-   "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
-   "Orion Lance", "Ion Cannon",
+   "TeraCom Imperator Launcher", "Heavy Ion Cannon",
    -- Small Weapons
-   "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
-   "Laser Turret MK1", "Turreted Gauss Gun",
-   "Plasma Turret MK1", "Particle Beam",
+   "Laser Cannon MK1", "Laser Cannon MK2", "Gauss Gun", "Vulcan Gun", "Plasma Blaster MK1",
+   "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Blaster MK2",
+   "Plasma Turret MK1", "Particle Beam", "Particle Lance", "Ion Cannon",
    "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
    -- Utility
-   "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Emergency Shield Booster",
-   "Unicorp Medium Afterburner", "Droid Repair Crew",
-   "Scanning Combat AI",
+   "Unicorp Scrambler", "Unicorp Light Afterburner", "Boarding Androids MK2",
+   "Sensor Array", "Emergency Shield Booster", "Nexus Concealment Coating", "Stealth Burster",
+   "Unicorp Medium Afterburner", "Droid Repair Crew", "Boarding Androids MK1", "Flicker Drive",
+   "Scanning Combat AI", "Agility Combat AI", "Low Radiation Sensor Modulator",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Reactor Class III",
-   "Large Shield Booster",
+   "Large Shield Booster", "Nanobond Plating",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Medium Shield Booster", "Microbond Plating",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Small Shield Booster", "Plasteel Plating",
 }}
 
 local pirate_class = { "standard", "elite" }
