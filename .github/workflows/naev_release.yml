@@ -468,7 +468,7 @@ jobs:
         run: |
               mkdir -p arm64 x86_64
               chmod +x buildUniversalBundle.sh
-              #unzip naev-macos-aarch64.zip -d arm64
+              unzip naev-macos-aarch64.zip -d arm64
               unzip naev-macos-x86_64.zip -d x86_64
               ./buildUniversalBundle.sh -d -i ./dmg_assets -e ./entitlements.plist -a ./arm64 -x ./x86_64 -b ./build
 
