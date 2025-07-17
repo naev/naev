@@ -4,7 +4,7 @@ use anyhow::Result;
 use nalgebra::{Vector3, Vector4};
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
-use std::sync::{Mutex, RwLock};
+use std::sync::{Mutex, OnceLock, RwLock};
 
 use crate::array;
 use crate::array::ArrayCString;
@@ -16,7 +16,6 @@ use log::warn_err;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
 use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use renderer::{texture, Context, ContextWrapper};
-use thunderdome::{Arena, Index};
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 enum GridEntry {
@@ -69,27 +68,38 @@ impl Grid {
         self.data.clear();
         self.data.resize(size * size, GridEntry::None);
 
-        for fctid in factions.iter() {
-            let (id, fct) = fctid;
+        for (id, fct) in factions.iter().enumerate() {
             let dat = &fct.data;
             self[(dat.id, dat.id)] = GridEntry::Allies;
             for a in &dat.allies {
-                /*
                 #[cfg(debug_assertions)]
                 {
-                    let e = self[(dat.id, *a)];
-                    if e != GridEntry::Allies && e != GridEntry::None {
-                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, "UNKNOWN");
+                    let ent = self[(dat.id, *a)];
+                    if ent != GridEntry::Allies && ent != GridEntry::None {
+                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*a].data.name);
                     }
                 }
-                */
                 self[(dat.id, *a)] = GridEntry::Allies;
             }
             for e in &dat.enemies {
                 self[(dat.id, *e)] = GridEntry::Enemies;
+                #[cfg(debug_assertions)]
+                {
+                    let ent = self[(dat.id, *e)];
+                    if ent != GridEntry::Enemies && ent != GridEntry::None {
+                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*e].data.name);
+                    }
+                }
             }
             for n in &dat.neutrals {
                 self[(dat.id, *n)] = GridEntry::Neutral;
+                #[cfg(debug_assertions)]
+                {
+                    let ent = self[(dat.id, *n)];
+                    if ent != GridEntry::Neutral && ent != GridEntry::None {
+                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, &factions[*n].data.name);
+                    }
+                }
             }
         }
         Ok(())
@@ -98,16 +108,18 @@ impl Grid {
 static GRID: RwLock<Grid> = RwLock::new(Grid::new());
 
 /// Full faction data
-pub static FACTIONS: RwLock<Arena<Faction>> = RwLock::new(Arena::new());
+pub static FACTIONS: RwLock<Vec<Faction>> = RwLock::new(Vec::new());
+pub static PLAYER: OnceLock<FactionID> = OnceLock::new();
+const PLAYER_FACTION_NAME: &str = "Escort";
 
+#[derive(PartialEq, Debug)]
 pub struct FactionID {
-    id: Index,
+    id: usize,
 }
 impl FactionID {
     pub fn new(name: &str) -> Option<FactionID> {
         let factions = FACTIONS.read().unwrap();
-        for fctid in factions.iter() {
-            let (id, fct) = fctid;
+        for (id, fct) in factions.iter().enumerate() {
             if fct.data.name == name {
                 return Some(FactionID { id });
             }
@@ -124,6 +136,10 @@ impl FactionID {
             Some(fct) => Ok(f(fct)),
             None => anyhow::bail!("faction not found"),
         }
+    }
+
+    pub fn are_enemies(&self, other: &Self) -> bool {
+        GRID.read().unwrap()[(self.id, other.id)] == GridEntry::Enemies
     }
 }
 
@@ -586,7 +602,6 @@ impl FactionLoad {
     }
 }
 
-use std::sync::OnceLock;
 /// Static factions that are never modified after creation
 pub static FACTIONDATA: OnceLock<Vec<FactionData>> = OnceLock::new();
 
@@ -614,8 +629,8 @@ pub fn load() -> Result<()> {
     // Add Player before sorting
     factionload.push(FactionLoad {
         data: FactionData {
-            name: String::from("Escort"),
-            cname: CString::new("Escort")?,
+            name: String::from(PLAYER_FACTION_NAME),
+            cname: CString::new(PLAYER_FACTION_NAME)?,
             f_static: true,
             f_invisible: true,
             ..Default::default()
@@ -652,12 +667,22 @@ pub fn load() -> Result<()> {
         .collect();
 
     // Save the data
-    FACTIONDATA.set(factions).unwrap();
+    FACTIONDATA.set(factions).unwrap_or_else(|err| {
+        warn_err!(err);
+    });
+    match FactionID::new(PLAYER_FACTION_NAME) {
+        Some(id) => PLAYER.set(id).unwrap_or_else(|err| {
+            warn_err!(err);
+        }),
+        None => unreachable!(),
+    };
 
     // Populate the arena with the static factions
-    let mut factions = FACTIONS.write().unwrap();
-    for fct in FACTIONDATA.get().unwrap() {
-        let _ = factions.insert(Faction {
+    *FACTIONS.write().unwrap() = FACTIONDATA
+        .get()
+        .unwrap()
+        .iter()
+        .map(|fct| Faction {
             standing: RwLock::new(Standing {
                 player: fct.player_def,
                 p_override: None,
@@ -665,12 +690,11 @@ pub fn load() -> Result<()> {
                 f_invisible: fct.f_invisible,
             }),
             data: DataWrapper::Static(fct),
-        });
-    }
+        })
+        .collect();
 
     // Compute grid
-
-    Ok(())
+    GRID.write().unwrap().recompute()
 }
 
 pub fn load_lua() -> Result<()> {
@@ -691,7 +715,7 @@ pub extern "C" fn _faction_isFaction(f: c_int) -> c_int {
     if f < 0 {
         return 0;
     }
-    match FACTIONS.read().unwrap().contains_slot(f as u32) {
+    match FACTIONS.read().unwrap().get(f as usize) {
         Some(_) => 1,
         None => 0,
     }
@@ -701,10 +725,9 @@ pub extern "C" fn _faction_isFaction(f: c_int) -> c_int {
 pub extern "C" fn _faction_exists(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
-    for fct in FACTIONS.read().unwrap().iter() {
-        let (key, val) = fct;
+    for (id, val) in FACTIONS.read().unwrap().iter().enumerate() {
         if name == val.data.name {
-            return key.slot() as c_int;
+            return id as c_int;
         }
     }
     0
@@ -714,10 +737,9 @@ pub extern "C" fn _faction_exists(name: *const c_char) -> c_int {
 pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
-    for fct in FACTIONS.read().unwrap().iter() {
-        let (key, val) = fct;
+    for (id, val) in FACTIONS.read().unwrap().iter().enumerate() {
         if name == val.data.name {
-            return key.slot() as c_int;
+            return id as c_int;
         }
     }
     warn!(gettext("Faction '{}' not found in stack."), name);
@@ -727,9 +749,8 @@ pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_getAll() -> *const c_int {
     let mut fcts: Vec<c_int> = vec![];
-    for fct in FACTIONS.read().unwrap().iter() {
-        let (key, val) = fct;
-        fcts.push(key.slot() as c_int);
+    for (id, val) in FACTIONS.read().unwrap().iter().enumerate() {
+        fcts.push(id as c_int);
     }
     let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
     arr.as_ptr() as *const c_int
@@ -738,10 +759,9 @@ pub extern "C" fn _faction_getAll() -> *const c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_getAllVisible() -> *const c_int {
     let mut fcts: Vec<c_int> = vec![];
-    for fct in FACTIONS.read().unwrap().iter() {
-        let (key, val) = fct;
-        if !val.data.f_invisible {
-            fcts.push(key.slot() as c_int);
+    for (id, fct) in FACTIONS.read().unwrap().iter().enumerate() {
+        if !fct.data.f_invisible {
+            fcts.push(id as c_int);
         }
     }
     let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
@@ -751,10 +771,9 @@ pub extern "C" fn _faction_getAllVisible() -> *const c_int {
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_getKnown() -> *const c_int {
     let mut fcts: Vec<c_int> = vec![];
-    for fct in FACTIONS.read().unwrap().iter() {
-        let (key, val) = fct;
+    for (id, val) in FACTIONS.read().unwrap().iter().enumerate() {
         if !val.data.f_invisible && !val.standing.read().unwrap().f_known {
-            fcts.push(key.slot() as c_int);
+            fcts.push(id as c_int);
         }
     }
     let arr = ManuallyDrop::new(array::Array::new(&fcts).unwrap());
@@ -763,8 +782,7 @@ pub extern "C" fn _faction_getKnown() -> *const c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _faction_clearKnown() {
-    for fct in FACTIONS.read().unwrap().iter() {
-        let (key, val) = fct;
+    for val in FACTIONS.read().unwrap().iter() {
         val.standing.write().unwrap().f_known = val.data.f_known;
     }
 }
@@ -775,8 +793,8 @@ where
     F: Fn(&Faction) -> R,
 {
     let factions = FACTIONS.read().unwrap();
-    match factions.get_by_slot(id.try_into().unwrap()) {
-        Some((_idx, fct)) => Ok(f(fct)),
+    match factions.get(id as usize) {
+        Some(fct) => Ok(f(fct)),
         None => anyhow::bail!("faction not found"),
     }
 }
