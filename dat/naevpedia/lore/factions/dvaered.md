@@ -32,13 +32,13 @@ They banded together into what could be considered the biggest labor union in al
 When [the Empire](lore/factions/empire) was less than forthcoming, the laborers began to take more drastic measures.
 The peaceful labor union demands turned into an armed resistance movement that escalated into open rebellion on several worlds.
 History names this movement the Dvaered Revolts.
-While the origin of that name is lost to time, it became a badge of honor among the rebelling workers.
+While the origin of that name is lost to time, it became a badge of honour among the rebelling workers.
 
 Cycles of civil unrest on the working planets and fruitless attempts on the part of [the Empire](lore/factions/empire) to quell it eventually led the Emperor to agree to the Dvaereds' demands.
 Their leaders were granted the right to establish a Great House, and direct control over a sizeable chunk of space, in reparation for the lives lost during the Dvaered Revolts.
 
 Eager to claim their place among the other big players, the Dvaered leadership decided that discipline was the most effective way to shape a society.
-House Dvaered became a military regime, and the values of honor, strength, and discipline were etched into the Dvaered soul.
+House Dvaered became a military regime, and the values of honour, strength, and discipline were etched into the Dvaered soul.
 
 ## Government
 
@@ -46,7 +46,7 @@ Today, House Dvaered is ruled by the Generals of Dvaered High Command.
 The amount of Generals varies from time to time, but there are always enough to feed the fires of internal discord.
 Influence is usually determined by the amount of medals and commendations a General has collected in their career.
 This stands undisputed, for House Dvaered has meticulous protocols for dispensing awards and commendations.
-In fact, it is the one thing universally agreed upon and honored in Dvaered society.
+In fact, it is the one thing universally agreed upon and honoured in Dvaered society.
 
 ### Warlords
 
