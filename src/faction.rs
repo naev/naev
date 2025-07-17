@@ -4,7 +4,6 @@ use anyhow::Result;
 use nalgebra::{Vector3, Vector4};
 use rayon::prelude::*;
 use std::ffi::{CStr, CString};
-use std::ops::Deref;
 use std::sync::{Mutex, RwLock};
 
 use crate::array;
@@ -19,12 +18,84 @@ use naev_core::{nxml, nxml_err_attr_missing, nxml_warn_node_unknown};
 use renderer::{texture, Context, ContextWrapper};
 use thunderdome::{Arena, Index};
 
-enum Grid {
+#[derive(Copy, Clone, Debug, PartialEq)]
+enum GridEntry {
     None,
     Enemies,
     Allies,
     Neutral,
 }
+#[derive(Default)]
+struct Grid {
+    data: Vec<GridEntry>,
+    size: usize,
+}
+impl std::ops::Index<(usize, usize)> for Grid {
+    type Output = GridEntry;
+    fn index(&self, index: (usize, usize)) -> &Self::Output {
+        let (i, j) = {
+            if index.0 <= index.1 {
+                (index.0, index.1)
+            } else {
+                (index.1, index.0)
+            }
+        };
+        &self.data[i * self.size + j]
+    }
+}
+impl std::ops::IndexMut<(usize, usize)> for Grid {
+    fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
+        let (i, j) = {
+            if index.0 <= index.1 {
+                (index.0, index.1)
+            } else {
+                (index.1, index.0)
+            }
+        };
+        &mut self.data[i * self.size + j]
+    }
+}
+impl Grid {
+    const fn new() -> Self {
+        Self {
+            data: vec![],
+            size: 0,
+        }
+    }
+
+    fn recompute(&mut self) -> Result<()> {
+        let factions = FACTIONS.read().unwrap();
+        let size = factions.len();
+        self.data.clear();
+        self.data.resize(size * size, GridEntry::None);
+
+        for fctid in factions.iter() {
+            let (id, fct) = fctid;
+            let dat = &fct.data;
+            self[(dat.id, dat.id)] = GridEntry::Allies;
+            for a in &dat.allies {
+                /*
+                #[cfg(debug_assertions)]
+                {
+                    let e = self[(dat.id, *a)];
+                    if e != GridEntry::Allies && e != GridEntry::None {
+                        warn!("Incoherent faction grid! '{}' and '{}' already have contradictory relationships!", &dat.name, "UNKNOWN");
+                    }
+                }
+                */
+                self[(dat.id, *a)] = GridEntry::Allies;
+            }
+            for e in &dat.enemies {
+                self[(dat.id, *e)] = GridEntry::Enemies;
+            }
+            for n in &dat.neutrals {
+                self[(dat.id, *n)] = GridEntry::Neutral;
+            }
+        }
+        Ok(())
+    }
+}
+static GRID: RwLock<Grid> = RwLock::new(Grid::new());
 
 /// Full faction data
 pub static FACTIONS: RwLock<Arena<Faction>> = RwLock::new(Arena::new());
@@ -124,9 +195,9 @@ pub enum DataWrapper {
     Static(&'static FactionData),
     Dynamic(Box<FactionData>),
 }
-impl Deref for DataWrapper {
+impl std::ops::Deref for DataWrapper {
     type Target = FactionData;
-    fn deref(&self) -> &<Self as Deref>::Target {
+    fn deref(&self) -> &<Self as std::ops::Deref>::Target {
         match self {
             Self::Static(d) => d,
             Self::Dynamic(d) => d,
@@ -254,6 +325,51 @@ impl FactionData {
             env.call::<()>(lua, &func, ())?;
         }
         Ok(())
+    }
+
+    /// Checks to see if two factions are allies
+    fn are_allies(&self, other: &Self) -> bool {
+        for a in &self.allies {
+            if other.id == *a {
+                return true;
+            }
+        }
+        for a in &other.allies {
+            if self.id == *a {
+                return true;
+            }
+        }
+        false
+    }
+
+    /// Checks to see if two factions are enemies
+    fn are_enemies(&self, other: &Self) -> bool {
+        for a in &self.enemies {
+            if other.id == *a {
+                return true;
+            }
+        }
+        for a in &other.enemies {
+            if self.id == *a {
+                return true;
+            }
+        }
+        false
+    }
+
+    /// Checks to see if two factions are truly neutral to each other
+    fn are_neutrals(&self, other: &Self) -> bool {
+        for a in &self.neutrals {
+            if other.id == *a {
+                return true;
+            }
+        }
+        for a in &other.neutrals {
+            if self.id == *a {
+                return true;
+            }
+        }
+        false
     }
 }
 
