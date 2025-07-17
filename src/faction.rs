@@ -181,6 +181,7 @@ impl FactionID {
 #[derive(Debug)]
 pub struct Standing {
     friendly_at: f32,
+    hit: Option<mlua::Function>,
     player: f32,
     p_override: Option<f32>,
     f_known: bool,
@@ -244,7 +245,15 @@ impl Faction {
         self.data.init_lua(&lua)?;
         if let Some(env) = &self.data.lua_env {
             // Store important stuff here
-            self.standing.write().unwrap().friendly_at = env.get("friendly_at")?;
+            let mut std = self.standing.write().unwrap();
+            std.friendly_at = env.get("friendly_at")?;
+            std.hit = match env.get::<mlua::Function>("hit") {
+                Ok(hit) => Some(hit),
+                Err(e) => {
+                    warn_err!(e);
+                    None
+                }
+            };
         }
         Ok(())
     }
@@ -729,6 +738,7 @@ pub fn load() -> Result<()> {
         .map(|fct| Faction {
             standing: RwLock::new(Standing {
                 friendly_at: 70.,
+                hit: None,
                 player: fct.player_def,
                 p_override: None,
                 f_known: fct.f_known,
