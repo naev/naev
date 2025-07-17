@@ -22,7 +22,7 @@ fi
 POVF=()
 POVO='-q'
 SPOIL_FILTER="cat"
-E_FILTER="$DIR"/graphmod_earlygame.py
+E_FILTER="$DIR"/graph_earlygame.py
 S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
