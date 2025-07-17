@@ -133,6 +133,25 @@ impl FactionID {
         }
     }
 
+    pub fn hit(&self, val: f32, source: &str, single: bool) -> Result<f32> {
+        let factions = FACTIONS.read().unwrap();
+        match factions.get(self.id) {
+            Some(fct) => {
+                let ret = fct.hit_lua(val, source, false, None)?;
+                if !single {
+                    for a in &fct.data.allies {
+                        factions[*a].hit_lua(val, source, true, Some(&fct))?;
+                    }
+                    for e in &fct.data.enemies {
+                        factions[*e].hit_lua(-val, source, true, Some(&fct))?;
+                    }
+                }
+                Ok(ret)
+            }
+            None => anyhow::bail!("faction not found"),
+        }
+    }
+
     /// Checks to see if two factions are allies
     pub fn are_allies(&self, other: &Self) -> bool {
         if self == other {
@@ -180,6 +199,10 @@ impl FactionID {
 pub struct Standing {
     friendly_at: f32,
     hit: Option<mlua::Function>,
+    hit_test: Option<mlua::Function>,
+    text_rank: Option<mlua::Function>,
+    text_broad: Option<mlua::Function>,
+    reputation_max: Option<mlua::Function>,
     player: f32,
     p_override: Option<f32>,
     f_known: bool,
@@ -242,18 +265,47 @@ impl Faction {
     fn init_lua(&self, lua: &NLua) -> Result<()> {
         self.data.init_lua(lua)?;
         if let Some(env) = &self.data.lua_env {
+            fn load_func(env: &LuaEnv, name: &str) -> Option<mlua::Function> {
+                match env.get(name) {
+                    Ok(f) => Some(f),
+                    Err(e) => {
+                        warn_err!(e);
+                        None
+                    }
+                }
+            }
+
             // Store important stuff here
             let mut std = self.standing.write().unwrap();
             std.friendly_at = env.get("friendly_at")?;
-            std.hit = match env.get::<mlua::Function>("hit") {
-                Ok(hit) => Some(hit),
-                Err(e) => {
-                    warn_err!(e);
-                    None
-                }
-            };
+            std.hit = load_func(env, "hit");
+            std.hit_test = load_func(env, "hit_test");
+            std.text_rank = load_func(env, "text_rank");
+            std.text_broad = load_func(env, "text_broad");
+            std.reputation_max = load_func(env, "reputation_max");
         }
         Ok(())
+    }
+
+    fn hit_lua(
+        &self,
+        val: f32,
+        source: &str,
+        secondary: bool,
+        parent: Option<&Faction>,
+    ) -> Result<f32> {
+        if self.data.f_static {
+            return Ok(0.);
+        }
+        let std = self.standing.write().unwrap();
+        if let Some(_) = std.p_override {
+            return Ok(0.);
+        }
+        let ret: f32 = match &std.hit {
+            Some(hit) => hit.call((val, source, secondary))?,
+            None => anyhow::bail!("hit function not defined for faction '{}'", &self.data.name),
+        };
+        Ok(ret)
     }
 }
 
@@ -737,6 +789,10 @@ pub fn load() -> Result<()> {
             standing: RwLock::new(Standing {
                 friendly_at: 70.,
                 hit: None,
+                hit_test: None,
+                text_rank: None,
+                text_broad: None,
+                reputation_max: None,
                 player: fct.player_def,
                 p_override: None,
                 f_known: fct.f_known,
