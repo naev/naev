@@ -24,8 +24,9 @@ wgtfct = require("naevpedia.lore.faction").init( "Pirate" )
 
 # Galactic Space Pirates
 
-The Galactic Space Pirates are split into to main groups, the clans and independent pirates.
-Independent pirates are further split into marauders, extremely aggressive and not very well-equipped pirates, and the normal pirates, which tend to be better equip and usually strive to join one of the major pirate clans.
+The Galactic Space Pirates are split into two main groups, the clans and independent pirates.
+Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped. 
+Other pirates tend to be better equipped and usually strive to join one of the major pirate clans.
 
 The four main clans are the <%= strblacklotus %>, <%= strwildones %>, <%= strravenclan %>, and <%= strdreamerclan %>.
 
@@ -51,7 +52,7 @@ They are tolerated by other pirates, who tend to exploit them and give them scra
 ## Pirate Assemblies
 
 Usually occurring once a cycle, pirate assemblies are as formal of a gathering as you can find in the pirate world.
-They are usually held at more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking.
+They are usually held at a more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking.
 The main event consists of the meeting of the Pirate Lords who will listen to proposals and decide on courses of actions, while letting their crew loose.
 
 The assemblies tend to be a good opportunity for the Pirate Lords to calculate each other strengths, where they tend to bring significant ships from their fleet.
@@ -78,9 +79,9 @@ Although they get along well with the <%= strravenclan %>, they tend to get into
 <% if fravenclan:known() then %>
 ## Raven Clan
 
-Arguably the clan that connects all the pirates and maintains infrastructure for their success.
+Arguably the clan that connects all the pirates and maintains the infrastructure for their success.
 The Raven Clan is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing.
-Although they deal in smuggling and black market trade, they do not shun nor turn away from the occasional raid and normal piracy.
+Although they deal in smuggling and black-market trade, they do not shun nor turn away from the occasional raid or assassination.
 They are very diplomatic and put strong emphasis on human relationships, which they foster to maximize the success of their trading endeavours.
 
 The Raven Clan mainly inhabits the Qorel tunnel, which is a chain of systems not accessible through standard jump points.
@@ -98,6 +99,7 @@ Discipline is swift and punishment is carried out in public form to make sure ev
 
 They inhabit the pocket of space between [House Za'lek](lore/factions/zalek) and [House Dvaered](lore/factions/dvaered), where they make a fortune from specializing in stolen research equipment and oddities from the universe.
 They also tend to run protection rackets, which are often favoured over the whimsical [Dvaered](lore/factions/dvaered) Warlords and can provide more stability to the area.
+While the price of these protection contracts is quite high, wealthy citizens have found that they are well worth the money, as any failed protection contract is met with swift discipline for those who failed, making failure rates extremely low.
 <% end %>
 
 <% if fdreamerclan:known() then %>
