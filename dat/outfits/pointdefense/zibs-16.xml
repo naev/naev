@@ -11,23 +11,23 @@
   <cpu>-50</cpu>
  </general>
  <specific type="turret beam">
+  <delay min="0">0.9</delay>
+  <duration>0.3</duration>
   <lua>outfits/pointdefense/pointdefense.lua</lua>
-  <delay min="1">1</delay>
-  <duration>1</duration>
-  <range>300</range>
-  <turn>180</turn>
-  <energy>16</energy>
+  <range>250</range>
+  <turn>360</turn>
+  <energy>41</energy>
   <damage>
    <type>energy</type>
-   <penetrate>50</penetrate>
-   <physical>40</physical>
+   <penetrate>11</penetrate>
+   <physical>95</physical>
   </damage>
   <pointdefense />
   <spfx_shield>Shi-S</spfx_shield>
   <spfx_armour>Exp-S</spfx_armour>
   <sound>beam_fuzzy</sound>
   <sound_off>beam_fuzzy_off</sound_off>
-  <shader r="1.0" g="0.2" b="0.8" a="1." width="8.">beam_default</shader>
+  <shader r="0.7" g="0.2" b="0.85" a="1." width="11.5">beam_default</shader>
  </specific>
  <tags>
   <tag>zalek</tag>
