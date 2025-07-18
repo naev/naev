@@ -417,6 +417,7 @@ int conf_loadConfig( const char *file )
    conf.map_overlay_opacity = CLAMP( 0, 1, conf.map_overlay_opacity );
    conf_loadBool( L, "big_icons", conf.big_icons );
    conf_loadBool( L, "always_radar", conf.always_radar );
+   conf_loadBool( L, "show_viewport", conf.show_viewport );
 
    /* Key repeat. */
    conf_loadInt( L, "repeat_delay", conf.repeat_delay );
