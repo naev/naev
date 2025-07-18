@@ -453,10 +453,7 @@ static void think_seeker( Weapon *w, double dt )
       else {
          double diff = angle_diff( w->solid.dir, /* Get angle to target pos */
                                    vec2_angle( &w->solid.pos, &p->solid.pos ) );
-         weapon_setTurn( w,
-                         CLAMP( -turn_max, turn_max,
-                                10 * diff * outfit_launcherTurn( w->outfit ) *
-                                   w->turn_mod ) );
+         weapon_setTurn( w, CLAMP( -turn_max, turn_max, diff / dt ) );
       }
       break;
 
@@ -598,8 +595,8 @@ static void think_beam( Weapon *w, double dt )
          diff = 0.;
 
       double turn = outfit_turn( w->outfit );
-      weapon_setTurn( w, p->stats.time_speedup *
-                            CLAMP( -turn, turn, 10. * diff * turn ) );
+      weapon_setTurn( w,
+                      p->stats.time_speedup * CLAMP( -turn, turn, diff / dt ) );
       break;
 
    default:
