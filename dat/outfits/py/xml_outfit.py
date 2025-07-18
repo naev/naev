@@ -60,10 +60,9 @@ class _outfit_node( dict ):
 
    def __getitem__ (self, key):
       if isinstance(key, str) and key[0]=='$':
-         val = intify(float(dict.__getitem__(self, key[1:])))
+         return intify(float(dict.__getitem__(self, key[1:])))
       else:
-         val = dict.__getitem__(self, key)
-      return val
+         return dict.__getitem__(self, key)
 
    def __setitem__(self, key, val):
       if isinstance(key, str) and key[0]=='$':
