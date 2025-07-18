@@ -39,16 +39,11 @@ hostile_color = { faction_color[i] for i in hostile }
 
 def get_col( sys ):
    f = ssys_color(ssys_pos, sys)
-   if f in faction_color:
-      return faction_color[f]
-   else:
-      return f
+   return faction_color[f] if f in faction_color else f
 
-def is_friendly( sys ):
-   return get_col(sys) in friendly_color
-
-def is_hostile( sys ):
-   return get_col(sys) in hostile_color or (ssys_nebula(ssys_pos, sys) or 0.0) > 5.0
+is_friendly = lambda sys: get_col(sys) in friendly_color
+is_dangerous = lambda sys: (ssys_nebula(ssys_pos, sys) or 0.0) > 5.0
+is_hostile = lambda sys: get_col(sys) in hostile_color or is_dangerous(sys)
 
 def non_hidden( sys ):
    return { n for n, t in ssys_jmp[sys].items() if 'hidden' not in t }
@@ -74,7 +69,7 @@ keep = insert('delta_polaris')
 for i in [i for i in ssys_pos if i not in keep]:
    del ssys_pos[i]
 
-for i in [j for j in ssys_jmp]:
+for i in list(ssys_jmp):
    if i not in keep:
       del ssys_jmp[i]
    else:

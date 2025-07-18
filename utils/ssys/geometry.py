@@ -423,21 +423,13 @@ class bb:
       return str(round(self.mini())) + ':' + str(round(self.maxi()))
 
 def symmetry( fst, snd = None ):
-   axis = None
-   if snd is None:
-      if isinstance(fst, line):
-         axis = fst
-      elif isinstance(fst, segment):
-         axis = fst.line()
-      elif isinstance(fst, _vec):
-         # central symmetry
-         return lambda v: 2.0 * fst - v
-   elif isinstance(fst, _vec) and isinstance(fst, _vec):
-      axis = segment(fst, snd).line()
-   if axis is None:
+   if isinstance(fst, _vec) and isinstance(fst, _vec):
+      fst = segment(fst, snd)
+   if isinstance(fst, segment):
+      fst = fst.line()
+   if not isinstance(fst, line) and not isinstance(fst, _vec):
       raise ValueError("symmetry accepts 1 or 2 points, 1 segment or 1 line.")
-   else:
-      return lambda p: p + 2.0*(axis - p)
+   return lambda p: p + 2.0 * (fst - p)
 
 
 # example
