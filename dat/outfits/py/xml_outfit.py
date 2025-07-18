@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-#TODO: unparse can't fold <tag attr=...></tag>. Do it for him.
 """
 A slim layer on top of xmltodict. Used as follows:
   o = xml_outfit('input.xml')
@@ -36,13 +35,15 @@ A slim layer on top of xmltodict. Used as follows:
   # If not called, save destination is the same as input.
   o.save_as('output.xml')
   o.save()
+  # xmltodict's unparse was missing a final newline and unable to fold empty
+  # tags. This has been fixed.
 """
 
 from xmltodict import *
 from sys import stderr
 from os import devnull
+import re
 
-_headless = lambda s: s.replace('<?xml version="1.0" encoding="utf-8"?>\n', '', 1)
 intify = lambda x: int(x) if x == round(x) else x
 
 class _outfit_node( dict ):
@@ -73,7 +74,7 @@ class _outfit_node( dict ):
       self._change()
 
 class xml_outfit( _outfit_node ):
-   def __init__( self, fnam, read_only = False ):
+   def __init__( self, fnam = devnull, read_only = False ):
       self._filename = devnull if read_only else fnam
       self._uptodate = False
       with open(fnam, 'r') as fp:
@@ -83,7 +84,9 @@ class xml_outfit( _outfit_node ):
       if self._uptodate:
          stderr.write('Warning: saving unchanged file "' + self.filename + '".\n')
       with open(self._filename, 'w') as fp:
-         fp.write(_headless(unparse(self, pretty=True, indent=1)) + '\n')
+         s = unparse(self, pretty=True, indent=1)
+         s = s.replace('<?xml version="1.0" encoding="utf-8"?>\n', '', 1)
+         fp.write(re.sub(r'<([^ ]*)([^>]*)></\1>', r'<\1\2/>', s) + '\n')
       self._uptodate = True
 
    def save_as( self, filename ):
