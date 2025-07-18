@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# python3
 
 keep_in_xml = set(['priority', 'rarity'])
 
@@ -93,21 +93,3 @@ def mvx2xmllua( argin, argout, quiet ):
          stderr.write('mvx2xmllua: ' + (nam if argout == '-' else argout) + '\n')
       o.write(argout)
    return o
-
-if __name__ == '__main__':
-   import argparse
-
-   parser = argparse.ArgumentParser(
-      description =
-   """Takes an extended outfit as input and outputs a xml (potentially with inlined lua) on output.
-The name the output should have is written on <stderr>.
-If the input is invalid, nothing is written on stdout and stderr and non-zero is returned.
-The special values "-" mean stdin/stdout.
-"""
-   )
-   parser.add_argument('input', nargs = '?', default = "-")
-   parser.add_argument('output', nargs = '?', default = "-")
-   parser.add_argument('-q', '--quiet', action = 'store_true')
-   args = parser.parse_args()
-   o = mvx2xmllua(args.input, args.output, args.quiet)
-   exit(1 if o is None else 0)
