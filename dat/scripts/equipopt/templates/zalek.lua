@@ -20,9 +20,8 @@ local zalek_outfits = eoutfits.merge{{
    "Grave Lance", "Orion Beam",
    -- Small Weapons
    "Particle Beam", "Particle Lance", "Orion Lance", "Electron Burst Cannon",
-   -- Point Defense TODO give Za'lek their own point defense
-   "Guardian Overseer System",
-   "Guardian Interception System",
+   -- Point Defense
+   "ZIBS-16", "ZIBS-32",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler", "Unicorp Scrambler",
    "Targeting Array", "Agility Combat AI", "Unicorp Jammer", "Hyperbolic Blink Engine",
