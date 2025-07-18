@@ -14,18 +14,6 @@ def read():
    o.save_as(OUTPUT)
    return o
 
-def write( data ):
-   data.save()
-
-def mul_i( d, f, v ):
-    d['$' + f] = round( d['$' + f] * v )
-
-def add_i( d, f, v ):
-    d['$' + f] += v
-
-def mul_f( d, f, v ):
-    d['$' + f] *= v
-
 def get_outfit_dict( name, core = False ):
    try:
       if core:

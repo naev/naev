@@ -24,4 +24,4 @@ specific['lua_inline'] = '\n'.join([
    'require("outfits.core_sets.corsair_engine").init()'
 ])
 
-h.write( data )
+data.save()
