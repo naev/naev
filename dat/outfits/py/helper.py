@@ -1,5 +1,5 @@
 import sys
-import xmltodict
+from xml_outfit import xml_outfit
 from os import path
 script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfits')
 sys.path.append(path.realpath(script_dir))
@@ -10,24 +10,21 @@ INPUT = sys.argv[1]
 OUTPUT = sys.argv[2]
 
 def read():
-    with open(INPUT,'r') as f:
-        return xmltodict.parse( f.read() )
+   o = xml_outfit(INPUT)
+   o.save_as(OUTPUT)
+   return o
 
 def write( data ):
-    with open(OUTPUT,'w') as f:
-        f.write( tostring(data) )
-
-def tostring( data ):
-    return xmltodict.unparse( data, pretty=True )
+   data.save()
 
 def mul_i( d, f, v ):
-    d[f] = str(round(float(d[f])*v))
+    d['$' + f] = round( d['$' + f] * v )
 
 def add_i( d, f, v ):
-    d[f] = str(int(d[f])+int(v))
+    d['$' + f] += v
 
 def mul_f( d, f, v ):
-    d[f] = str(float(d[f])*v)
+    d['$' + f] *= v
 
 def get_outfit_dict( name, core = False ):
    try:
@@ -39,8 +36,8 @@ def get_outfit_dict( name, core = False ):
       raise Exception('Could not read "' + path.basename(name) + '"')
    return o.to_dict()
 
-def to_multicore_lua( ref, pri_only = True, setfunc = "nil" ):
-    out = """local multicore = require("outfits.lib.multicore").init({"""
+def to_multicore_lua( ref, pri_only = True, setfunc = 'nil' ):
+    out = """local multicore = require('outfits.lib.multicore').init({"""
     # We operate under the assumption that dictionaries are ordered in python now
     specific = False
     for r in ref:

@@ -36,7 +36,7 @@ class _outfit_node( dict ):
 class xml_outfit( _outfit_node ):
    def __init__( self, fnam ):
       self._uptodate = False
-      selfi_.filename = fnam
+      self._filename = fnam
       with open(fnam, 'r') as fp:
          _outfit_node.__init__(self, parse(fp.read()))
 
@@ -48,9 +48,9 @@ class xml_outfit( _outfit_node ):
       self._uptodate = True
 
    def save_as( self, filename ):
-      self._uptodate = self._uptodate and (filename == self.filename)
+      self._uptodate = self._uptodate and (filename == self._filename)
       self._filename = filename
 
    def __del__( self ):
-      if not self.uptodate:
-         stderr.write('Warning: unsaved file "' + self.filename + '" at exit.\n')
+      if not self._uptodate:
+         stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')

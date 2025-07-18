@@ -7,7 +7,7 @@ data['outfit']['@name'] = N_('Reaver Cannon')
 
 general = data['outfit']['general']
 general['rarity'] = '2'
-general['description'] = N_("The complex engineering specifications and difficulty of mass production doomed the Reaver Cannon from the start. However, in the right hands, given the extreme long range and high penetration for a weapon of its size, it can be very deadly.")
+general['description'] = N_('The complex engineering specifications and difficulty of mass production doomed the Reaver Cannon from the start. However, in the right hands, given the extreme long range and high penetration for a weapon of its size, it can be very deadly.')
 h.add_i(general, 'price', 130e3 )
 h.add_i(general, 'mass', 2 )
 h.mul_i(general, 'cpu', 1.1 )
@@ -19,12 +19,12 @@ h.mul_f(specific, 'delay', 2 )
 h.mul_f(specific, 'energy', 2.0 )
 h.mul_f(specific, 'swivel', 1.5 )
 h.mul_i(specific, 'trackmax', 0.8333333333 )
-specific['lua'] = "outfits/lib/matrix_sell.lua"
+specific['lua'] = 'outfits/lib/matrix_sell.lua'
 specific['gfx'] = {
-    "@type" : "shader",
-    "@size" : "10",
-    "@col_size" : "8",
-    "#text" : "particles/reaver.frag",
+    '@type' : 'shader',
+    '@size' : '10',
+    '@col_size' : '8',
+    '#text' : 'particles/reaver.frag',
 }
 
 damage = specific['damage']
