@@ -239,6 +239,8 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/pointdefense/guardian_overseer_system.xml',
    root / 'dat/outfits/pointdefense/ratchet_point_defense.xml',
    root / 'dat/outfits/pointdefense/spittle_tubuloid_cluster.xml',
+   root / 'dat/outfits/pointdefense/zibs-16.xml',
+   root / 'dat/outfits/pointdefense/zibs-32.xml',
    root / 'dat/outfits/special/base_ripper_mk2.xml',
    root / 'dat/outfits/special/bikers_fury_launcher.xml',
    root / 'dat/outfits/special/four_winds_laser_cannon.xml',
