@@ -172,9 +172,10 @@ function hail ()
       tk.msg( _("Opportunism is an art"), fmt.f( _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to {pnt} in the {sys} system, citizen. I will personally meet you there."]]), {pnt=mem.DVplanet, sys=mem.DVsys} ) )
 
       faction.get("FLF"):setReputationGlobal( -100 )
-      local standing = faction.get("Dvaered"):reputationGlobal()
+      local fct_dv = faction.get("Dvaered")
+      local standing = fct_dv:reputationGlobal()
       if standing < 0 then
-         faction.get("Dvaered"):setReputationGlobal( 0 )
+         fct_dv:setReputationGlobal( 0 )
       end
 
       for i, j in ipairs( fleetDV ) do
@@ -255,9 +256,10 @@ function pilot_death_dv ()
       hook.rm( mem.rehailer )
 
       mem.job_done = true
-      local standing = faction.get("Dvaered"):reputationGlobal()
-      if standing > -20 then
-         faction.get("Dvaered"):setReputationGlobal( -20 )
+      local fct_dv = faction.get("Dvaered")
+      local standing = fct_dv:reputationGlobal()
+      if standing > -20 and not mem.job_done then
+         fct_dv:setReputationGlobal( -20 )
       end
       misn.osdActive( 3 )
       misn.markerRm( mem.marker )
