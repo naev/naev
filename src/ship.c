@@ -662,26 +662,12 @@ int ship_gfxLoadPost3D( Ship *s )
    return 0;
 }
 
-int ship_gfxLoad2D( Ship *s )
+int ship_gfxLoad2D( Ship *s, const char *base, const char *ext )
 {
-   int         sx     = s->sx;
-   int         sy     = s->sy;
-   int         engine = !s->noengine;
-   char        str[PATH_MAX], *base;
-   const char *delim;
-   const char *ext = s->gfx_extension != NULL ? s->gfx_extension : ".webp";
-   const char *buf = s->gfx_path;
-
-   /* Get base path. */
-   delim = strchr( buf, '_' );
-   base  = delim == NULL ? strdup( buf ) : SDL_strndup( buf, delim - buf );
-
-   /* Determine extension path. */
-   if ( buf[0] == '/' ) /* absolute path. */
-      snprintf( str, sizeof( str ), "%s", buf );
-   else {
-      snprintf( str, sizeof( str ), SHIP_GFX_PATH "%s/%s%s", base, buf, ext );
-   }
+   int  sx     = s->sx;
+   int  sy     = s->sy;
+   int  engine = !s->noengine;
+   char str[PATH_MAX];
 
    /* Load the polygon. */
    ship_loadPLG( s,
@@ -689,22 +675,20 @@ int ship_gfxLoad2D( Ship *s )
 
    /* Get the comm graphic for future loading. */
    if ( s->gfx_comm == NULL )
-      SDL_asprintf( &s->gfx_comm, SHIP_GFX_PATH "%s/%s" SHIP_COMM "%s", base,
-                    buf, ext );
+      SDL_asprintf( &s->gfx_comm, "%s" SHIP_COMM "%s", base, ext );
 
    /* Load the space sprite. */
+   snprintf( str, sizeof( str ), "%s%s", base, ext );
    ship_loadSpaceImage( s, str, sx, sy );
 
    /* Load the engine sprite .*/
    if ( engine ) {
-      snprintf( str, sizeof( str ), SHIP_GFX_PATH "%s/%s" SHIP_ENGINE "%s",
-                base, buf, ext );
+      snprintf( str, sizeof( str ), "%s" SHIP_ENGINE "%s", base, ext );
       ship_loadEngineImage( s, str, sx, sy );
       if ( s->gfx_engine == NULL )
          WARN( _( "Ship '%s' does not have an engine sprite (%s)." ), s->name,
                str );
    }
-   free( base );
 
 #if 0
 #if DEBUGGING

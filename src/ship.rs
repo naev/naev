@@ -3,7 +3,7 @@ use anyhow::Result;
 use log::warn;
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper};
-use std::ffi::{c_void, CStr};
+use std::ffi::{c_void, CStr, CString};
 use std::sync::Mutex;
 
 struct ShipWrapper(naevc::Ship);
@@ -25,8 +25,16 @@ impl ShipWrapper {
         Ok(())
     }
 
-    fn load_gfx_2d(&mut self) -> Result<()> {
-        unsafe { naevc::ship_gfxLoad2D(&mut self.0 as *mut naevc::Ship) };
+    fn load_gfx_2d(&mut self, path: &str, ext: &str) -> Result<()> {
+        let cpath = CString::new(path).unwrap();
+        let cext = CString::new(ext).unwrap();
+        unsafe {
+            naevc::ship_gfxLoad2D(
+                &mut self.0 as *mut naevc::Ship,
+                cpath.as_ptr() as *const i8,
+                cext.as_ptr() as *const i8,
+            )
+        };
         Ok(())
     }
 }
@@ -90,14 +98,25 @@ pub extern "C" fn ship_gfxLoadNeeded() {
     drop(ctx); // Need to drop
 
     // 2D doesn't use the safe context system yet, so it can't be threaded with 3D
-    needs2d
-        .lock()
-        .unwrap()
-        .iter_mut()
-        .for_each(|ptr| match ptr.load_gfx_2d() {
+    needs2d.lock().unwrap().iter_mut().for_each(|ptr| {
+        let s = ptr.0;
+        let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
+        let base = cpath.split('_').next().unwrap_or("");
+        let ext = unsafe {
+            match s.gfx_extension.is_null() {
+                true => ".webp",
+                false => CStr::from_ptr(s.gfx_extension).to_str().unwrap(),
+            }
+        };
+        let path = match cpath.starts_with('/') {
+            true => cpath,
+            false => &format!("gfx/ship/{base}/{cpath}"),
+        };
+        match ptr.load_gfx_2d(path, ext) {
             Ok(_) => (),
             Err(e) => {
                 warn!("Unable to load graphics for ship '{}': {}", ptr.name(), e);
             }
-        });
+        }
+    });
 }

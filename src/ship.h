@@ -244,6 +244,6 @@ void   ship_gfxLoad( Ship *s );
 int    ship_gfxLoaded( const Ship *s );
 int    ship_gfxLoadNeeded( void );
 int    ship_gfxLoadPost3D( Ship *temp );
-int    ship_gfxLoad2D( Ship *temp );
+int    ship_gfxLoad2D( Ship *s, const char *base, const char *ext );
 int    ship_compareTech( const void *arg1, const void *arg2 );
 double ship_maxSize( void );
