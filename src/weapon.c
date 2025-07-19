@@ -471,10 +471,12 @@ static void think_seeker( Weapon *w, double dt )
    speed_mod *= ( w->status == WEAPON_STATUS_JAMMED_SLOWED ) ? w->falloff : 1.;
 
    /* Limit speed here */
-   w->real_vel = MIN( speed_mod * outfit_launcherSpeedMax( w->outfit ),
-                      w->real_vel + outfit_launcherAccel( w->outfit ) *
-                                       w->accel_mod * dt );
-   vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
+   if ( w->real_vel > 0. ) {
+      w->real_vel = MIN( speed_mod * outfit_launcherSpeedMax( w->outfit ),
+                         w->real_vel + outfit_launcherAccel( w->outfit ) *
+                                          w->accel_mod * dt );
+      vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
+   }
 
    /* Modulate max speed. */
    // w->solid.speed_max = w->outfit_launcherSpeed(outfit) * ewtrack;
@@ -2479,7 +2481,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    if ( outfit_speed_dispersion( outfit ) > 0. )
       m += RNG_1SIGMA() * outfit_speed_dispersion( outfit );
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   w->real_vel = VMOD( v );
 
    /* Set up ammo details. */
    mass     = outfit_massAmmo( w->outfit );
@@ -2495,7 +2496,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
       w->solid.speed_max = outfit_launcherSpeedMax( w->outfit ) * w->speed_mod;
       if ( outfit_launcherSpeed( w->outfit ) > 0. )
          w->solid.speed_max = -1; /* No limit. */
-   }
+      w->real_vel = VMOD( v );
+   } else
+      w->real_vel = 0.;
 
    /* Handle health if necessary. */
    if ( outfit_launcherArmour( w->outfit ) > 0. ) {
