@@ -11,18 +11,17 @@ del general['shortname']
 general['unique'] = None
 general['rarity'] = 6
 general['price'] = 1e6
-general['description'] = "TODO"
+general['description'] = 'TODO'
 del general['slot']['@prop_extra']
 
 specific = o['specific']
 ref = h.get_outfit_dict( h.INPUT, True )
 ref['absorb'] = (ref['absorb'][0]-5.0,)
 ref['ew_stealth_timer'] = (-10,)
-lua = f"""
-local set = require("outfits.lib.set")
-{h.to_multicore_lua( ref, True, "set.set" )}
-require("outfits.core_sets.corsair_hull").init()
-"""
-specific['lua_inline'] = lua
+specific['lua_inline'] = '\n'.join([
+   "local set = require('outfits.lib.set')",
+   h.to_multicore_lua( ref, True, 'set.set' ),
+   "require('outfits.core_sets.corsair_hull').init()"
+])
 
-h.write( data )
+data.save()
