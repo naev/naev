@@ -26,20 +26,14 @@ if [ ! "$1" = "-e" ] ; then
 fi
 
 if [ ! "$1" = "-v" ]; then
-   TMP=$(mktemp)
-   TMP2=$(mktemp)
-   trap 'rm -f "$TMP" "$TMP2"' EXIT
    (
       echo -n "!"
       grep -ro '^\s*<\(\(jump target="[^"]*"\)\|\(hidden/>\)\|\(exitonly/>\)\)' --include="*.xml" |
       sed 's/^\([^.]*\).xml\:\s*<jump target="\([^"]*\)"/\1 \2/' |
       sed -e '/hidden/c\! hidden' -e '/exitonly/c\! exitonly' |
-      tee >(cut '-d ' -f1> "$TMP") |
-      cut '-d ' -f2- |
-      tr "[:upper:]" "[:lower:]" |
-      ../../utils/xml_name.sed > "$TMP2" &&
-      paste '-d ' "$TMP" "$TMP2" ;
-   ) | sed  -e "s/^/!/" -e "s/^!!//" |
+      ../../utils/xml_name_row.sh '2-'
+   ) |
+   sed  -e "s/^/!/" -e "s/^!!//" |
    tr -d '\n' | tr '!' '\n' |
    grep -v ' exitonly$' |
    "$SCRIPT_DIR"/edge_len.sed |
@@ -47,5 +41,6 @@ if [ ! "$1" = "-v" ]; then
       grep -rl 'tradelane' --include="*.xml" |
       sed -e 's/.xml$//' -e 's/^\(.*\)$/\/\1\/ s\/\$\/ T\//'
    ) | sed -e 's/ T T$/ tradelane/' -e 's/ T$//'
-   echo ""
 fi
+
+echo ''
