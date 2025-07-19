@@ -31,8 +31,8 @@ impl ShipWrapper {
         unsafe {
             naevc::ship_gfxLoad2D(
                 &mut self.0 as *mut naevc::Ship,
-                cpath.as_ptr() as *const i8,
-                cext.as_ptr() as *const i8,
+                cpath.as_ptr(),
+                cext.as_ptr(),
             )
         };
         Ok(())

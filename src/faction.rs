@@ -140,10 +140,10 @@ impl FactionID {
                 let ret = fct.hit_lua(val, source, false, None)?;
                 if !single {
                     for a in &fct.data.allies {
-                        factions[*a].hit_lua(val, source, true, Some(&fct))?;
+                        factions[*a].hit_lua(val, source, true, Some(fct))?;
                     }
                     for e in &fct.data.enemies {
-                        factions[*e].hit_lua(-val, source, true, Some(&fct))?;
+                        factions[*e].hit_lua(-val, source, true, Some(fct))?;
                     }
                 }
                 Ok(ret)
@@ -297,8 +297,8 @@ impl Faction {
         if self.data.f_static {
             return Ok(0.);
         }
-        let std = self.standing.write().unwrap();
-        if let Some(_) = std.p_override {
+        let std = self.standing.read().unwrap();
+        if std.p_override.is_some() {
             return Ok(0.);
         }
         let ret: f32 = match &std.hit {
