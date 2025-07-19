@@ -784,230 +784,238 @@ msgid "# Galactic Space Pirates"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:10
-msgid "The Galactic Space Pirates are split into to main groups, the clans and independent pirates."
+msgid "The Galactic Space Pirates are split into two main groups, the clans and independent pirates."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
-msgid "Independent pirates are further split into marauders, extremely aggressive and not very well-equipped pirates, and the normal pirates, which tend to be better equip and usually strive to join one of the major pirate clans."
+msgid "Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:13
+#: dat/naevpedia/lore/factions/pirates.md:12
+msgid "Other pirates tend to be better equipped and usually strive to join one of the major pirate clans."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:14
 msgid "The four main clans are the <%= strblacklotus %>, <%= strwildones %>, <%= strravenclan %>, and <%= strdreamerclan %>."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:15
+#: dat/naevpedia/lore/factions/pirates.md:16
 msgid "## Organization"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:17
+#: dat/naevpedia/lore/factions/pirates.md:18
 msgid "* **Leader:** Pirate Lords from the diverse clans"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:18
+#: dat/naevpedia/lore/factions/pirates.md:19
 msgid "* **Leading Structure:** Pirate Assembly"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:19
+#: dat/naevpedia/lore/factions/pirates.md:20
 msgid "* **Government:** Aristocracy (varies by clan)"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:20
+#: dat/naevpedia/lore/factions/pirates.md:21
 msgid "* **Formation:** Beginning of History"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:21
+#: dat/naevpedia/lore/factions/pirates.md:22
 msgid "* **Homeworld:** Varies by Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:23
+#: dat/naevpedia/lore/factions/pirates.md:24
 msgid "## Independent Pirates"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:25
+#: dat/naevpedia/lore/factions/pirates.md:26
 msgid "Formed by individuals that have given up on society and turned to piracy to make a living."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:26
+#: dat/naevpedia/lore/factions/pirates.md:27
 msgid "They form a large part of all pirates and end up doing lots of the grunt work for the clans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:27
+#: dat/naevpedia/lore/factions/pirates.md:28
 msgid "As long as they do not cause problems they are welcome at all pirate clansworlds."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:29
+#: dat/naevpedia/lore/factions/pirates.md:30
 msgid "## Marauders"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:31
+#: dat/naevpedia/lore/factions/pirates.md:32
 msgid "Usually formed by individuals that are not fit by the clans due to extreme violence, no critical thinking, problematic behaviour, no hygiene, or all of the above."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:32
+#: dat/naevpedia/lore/factions/pirates.md:33
 msgid "They are tolerated by other pirates, who tend to exploit them and give them scraps, but they usually end up with short life spans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:34
+#: dat/naevpedia/lore/factions/pirates.md:35
 msgid "## Pirate Assemblies"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:36
+#: dat/naevpedia/lore/factions/pirates.md:37
 msgid "Usually occurring once a cycle, pirate assemblies are as formal of a gathering as you can find in the pirate world."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:37
-msgid "They are usually held at more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking."
+#: dat/naevpedia/lore/factions/pirates.md:38
+msgid "They are usually held at a more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:38
+#: dat/naevpedia/lore/factions/pirates.md:39
 msgid "The main event consists of the meeting of the Pirate Lords who will listen to proposals and decide on courses of actions, while letting their crew loose."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:40
+#: dat/naevpedia/lore/factions/pirates.md:41
 msgid "The assemblies tend to be a good opportunity for the Pirate Lords to calculate each other strengths, where they tend to bring significant ships from their fleet."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:41
+#: dat/naevpedia/lore/factions/pirates.md:42
 msgid "In many ways, the pirate assemblies tend to not only determine the future of the space pirates, but also tend to shape the future of the galaxy."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:43
+#: dat/naevpedia/lore/factions/pirates.md:44
 msgid "The events tend to also attract the attention of other actors in the galaxy, with most Great Houses and [the Empire](lore/factions/empire) sending somewhat undercover agents to try to get a glimpse of what is going on and gain advantage over other Great Houses."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:44
+#: dat/naevpedia/lore/factions/pirates.md:45
 msgid "It is also common for less scrupulous merchants to show up as it can be a very profitable opportunity to sell grog and equipment to the drunken pirates."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:47
+#: dat/naevpedia/lore/factions/pirates.md:48
 msgid "## Wild Ones Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:49
+#: dat/naevpedia/lore/factions/pirates.md:50
 msgid "Formed mainly by [Empire](lore/factions/empire) and [Soromid](lore/factions/soromid) outcasts, the Wild Ones are a violent and aggressive clan where strength is of utmost importance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:50
+#: dat/naevpedia/lore/factions/pirates.md:51
 msgid "Weaker individuals tend to follow the stronger ones, and the strongest compete against each other."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:51
+#: dat/naevpedia/lore/factions/pirates.md:52
 msgid "That said, there are few deadly confrontations between clan members, as usually the weaker one will back out and submit when they see they don't have a chance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:52
+#: dat/naevpedia/lore/factions/pirates.md:53
 msgid "They tend to not hold grudges, which allows for their society to work."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:54
+#: dat/naevpedia/lore/factions/pirates.md:55
 msgid "The clan's territory is the sparsely inhabited area between the [Empire](lore/factions/empire) and the [Soromid](lore/factions/soromid)."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:55
+#: dat/naevpedia/lore/factions/pirates.md:56
 msgid "Their main clansworld was Haven, until it was destroyed in an offensive by the Empire and Great Houses."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:56
+#: dat/naevpedia/lore/factions/pirates.md:57
 msgid "Since then, they have moved to a more secluded area known as New Haven where they are careful to not repeat the same fate."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:58
+#: dat/naevpedia/lore/factions/pirates.md:59
 msgid "Although they get along well with the <%= strravenclan %>, they tend to get into fights with the <%= strblacklotus %>, and look down upon the <%= strdreamerclan %>."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:62
+#: dat/naevpedia/lore/factions/pirates.md:63
 msgid "## Raven Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:64
-msgid "Arguably the clan that connects all the pirates and maintains infrastructure for their success."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/pirates.md:65
-msgid "The Raven Clan is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing."
+msgid "Arguably the clan that connects all the pirates and maintains the infrastructure for their success."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:66
-msgid "Although they deal in smuggling and black market trade, they do not shun nor turn away from the occasional raid and normal piracy."
+msgid "The Raven Clan is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:67
+msgid "Although they deal in smuggling and black-market trade, they do not shun nor turn away from the occasional raid or assassination."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:68
 msgid "They are very diplomatic and put strong emphasis on human relationships, which they foster to maximize the success of their trading endeavours."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:69
+#: dat/naevpedia/lore/factions/pirates.md:70
 msgid "The Raven Clan mainly inhabits the Qorel tunnel, which is a chain of systems not accessible through standard jump points."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:70
+#: dat/naevpedia/lore/factions/pirates.md:71
 msgid "They have several bases along it and use their cunning and secrecy to supply goods and connect all the pirates together."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:71
+#: dat/naevpedia/lore/factions/pirates.md:72
 msgid "Due to their fundamental role, they tend to have strong connections and relationships with all the other pirate clans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:72
+#: dat/naevpedia/lore/factions/pirates.md:73
 msgid "They also work with corrupt officials of the Great Houses, and pretty much anyone that has the credits to pay."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:76
+#: dat/naevpedia/lore/factions/pirates.md:77
 msgid "## Black Lotus"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:78
+#: dat/naevpedia/lore/factions/pirates.md:79
 msgid "One of the most well organized pirate clans, the Black Lotus prides itself in methodology and organization."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:79
+#: dat/naevpedia/lore/factions/pirates.md:80
 msgid "Members follow strict recruitment policies to slowly go up in the ranks and gain more power in the hierarchy, very similar to large corporations."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:80
+#: dat/naevpedia/lore/factions/pirates.md:81
 msgid "Discipline is swift and punishment is carried out in public form to make sure everyone follows the rules, making them one of the most rigid pirate clans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:82
+#: dat/naevpedia/lore/factions/pirates.md:83
 msgid "They inhabit the pocket of space between [House Za'lek](lore/factions/zalek) and [House Dvaered](lore/factions/dvaered), where they make a fortune from specializing in stolen research equipment and oddities from the universe."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:83
+#: dat/naevpedia/lore/factions/pirates.md:84
 msgid "They also tend to run protection rackets, which are often favoured over the whimsical [Dvaered](lore/factions/dvaered) Warlords and can provide more stability to the area."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:87
-msgid "## Dreamer Clan"
+#: dat/naevpedia/lore/factions/pirates.md:85
+msgid "While the price of these protection contracts is quite high, wealthy citizens have found that they are well worth the money, as any failed protection contract is met with swift discipline for those who failed, making failure rates extremely low."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:89
-msgid "The newest of the main pirate clans, the Dreamer Clan was able to capitalize on [the Incident](lore/history/incident) and establish itself as a force to be reckoned with."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/pirates.md:90
-msgid "Formed mainly by refugees and outcasts of the so-called \"civilized society\", the Dreamer Clan is formed by individuals who do not want to follow rules."
+msgid "## Dreamer Clan"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:91
-msgid "They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action."
+msgid "The newest of the main pirate clans, the Dreamer Clan was able to capitalize on [the Incident](lore/history/incident) and establish itself as a force to be reckoned with."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:92
-msgid "Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/history/incident)."
+msgid "Formed mainly by refugees and outcasts of the so-called \"civilized society\", the Dreamer Clan is formed by individuals who do not want to follow rules."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:93
-msgid "They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse."
+msgid "They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:94
+msgid "Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/history/incident)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:95
-msgid "They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontier), making use of abandoned planets and stations, which they adapt to their purposes."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/pirates.md:96
-msgid "Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the <%= strravenclan %>, which wants access to the lucrative drug trade."
+msgid "They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:97
+msgid "They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontier), making use of abandoned planets and stations, which they adapt to their purposes."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:98
+msgid "Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the <%= strravenclan %>, which wants access to the lucrative drug trade."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:99
 msgid "Although in general less organized than other clans, they can be ruthless at raiding convoys, sometimes going deep into [House Sirius](lore/factions/sirius) space."
 msgstr ""
 
@@ -1767,7 +1775,7 @@ msgid "# Soromid"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:9
-msgid "The Soromid are an important faction, and although they are not a Great House of [the Empire](lore/factions/empire), they are very close in practice."
+msgid "The Soromid are a faction that although not a recognized Great House of [the Empire](lore/factions/empire), they are very close in practice."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:11
@@ -1879,11 +1887,11 @@ msgid "The people of Sorom had been abandoned."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:47
-msgid "The plague claimed more and more lives every day."
+msgid "The plague claimed more and more lives every period."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:48
-msgid "It would be a matter of years, maybe months before nobody was left alive."
+msgid "It would be a matter of cycles, maybe decaperiods before nobody was left alive."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:49
@@ -1971,11 +1979,11 @@ msgid "The population of Sorom was drastically diminished, but those who survive
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:75
-msgid "With the new gene treatment it had become possible to surpass the limits of the human body, including fertility."
+msgid "With the new gene treatment, it had become possible to surpass the limits of the human body, including fertility."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:76
-msgid "In only a couple of centuries the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment."
+msgid "In only a couple of centacycles the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:77
@@ -1991,7 +1999,7 @@ msgid "Soon, the Soromid decided that it was time to return to the stars."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:81
-msgid "The Imperial blockade had left the system many decades past, so nothing was to stop them."
+msgid "The Imperial blockade had left the system many decacycles past, so nothing was to stop them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:82
@@ -2011,11 +2019,11 @@ msgid "For years Sorom had been in the books as a hazard world that could suppor
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:87
-msgid "[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever the Emperor begrudgingly acknowledged their presence in the galaxy."
+msgid "[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever, the Emperor begrudgingly acknowledged their presence in the galaxy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:88
-msgid "It also helped that the Soromid ships proved to be quite combat capable."
+msgid "In truth, the combat capabilities of the Soromid ships had been far greater than the Imperial Navy was able to sufficiently manage."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:90
@@ -2031,7 +2039,7 @@ msgid "[The Za'lek](lore/factions/zalek) in particular weren't amused with the n
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:94
-msgid "Unfazed by the reception of the other factions, the Soromid went to work."
+msgid "Unfazed by the reception of the other factions, the Soromid persisted."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:95
@@ -2039,7 +2047,7 @@ msgid "The galaxy had plenty of suitable worlds left to colonize - at least, wor
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:96
-msgid "The Soromid had a far greater tolerance for hostile worlds than humans did, and where they did not they could adjust themselves appropriately."
+msgid "The Soromid had a far greater tolerance for hostile worlds than humans did, and where they did not, they could adjust themselves appropriately."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:97
@@ -2091,11 +2099,11 @@ msgid "## Political Structure"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:113
-msgid "Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that revolves around the idea of tribes."
+msgid "Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that is best described as tribal rule."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:114
-msgid "Generally, each tribe has a council that oversees the day to day management, where all individuals delegate most responsibility."
+msgid "Generally, each tribe has a council that oversees the period-to-period management, where all individuals are given responsibilities."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:115
@@ -2107,7 +2115,7 @@ msgid "Periodically, and when needed, the tribe will gather in councils to decid
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:117
-msgid "The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole."
+msgid "The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives gather to reach consensus over matters that affect the Soromid as a whole."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:119
@@ -2752,179 +2760,179 @@ msgid "* **Homeworld:** Ruadan Prime (Ruadan system)"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:20
-msgid "## Za'lek Society"
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:22
-msgid "As House Za'lek was and is a gigantic think tank, its social structure leaves something to be desired."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:23
-msgid "The Za'lek half-heartedly mimic [the Empire](lore/factions/empire), with one all-important Chairman of the Board, who is naturally ignored by every other Za'lek in existence."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:24
-msgid "What passes for politics in Za'lek terms is a big room full of furious, shouting scientists, each trying to prove that their way of running the House is best, often producing charts and graphs that are indistinguishable from any other charts and graphs the Za'lek produce."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:26
-msgid "Nevertheless, the Za'lek get by, and their worlds run well enough to sustain the many research labs, observatories and computer cores that litter any Za'lek planet's surface."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:27
-msgid "The local economies are kept running by non-researchers, whose main purpose is to keep the sizable intellectual elite happy."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:28
-msgid "This seems a thankless life, but it is actually quite attractive for some, as the Za'lek seem utterly disinterested in passing law over those they consider irrelevant to progress."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:29
-msgid "Effectively, this means the normal people in Za'lek space enjoy as much freedom as anyone in the galaxy, bound only by the unreasonable demands placed on them by the Za'lek scientists, and whatever laws they impose on themselves."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:31
-msgid "The Za'lek have a standing army as is befitting a Great House, but it is unclear how they manage to maintain it."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:32
-msgid "As a general rule, Za'lek scientists don't bother with anything they consider finished and thought out, so most concepts are never put into service except for a small number of prototypes."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:33
-msgid "Nevertheless, the Za'lek possess more-or-less standardized military forces, so someone out there must be putting theory to practical use."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:35
 msgid "## History"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:37
+#: dat/naevpedia/lore/factions/zalek.md:22
 msgid "### Project Za'lek"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:39
+#: dat/naevpedia/lore/factions/zalek.md:24
 msgid "Project Za'lek was the second Great Project [the Empire](lore/factions/empire) called into existence."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:40
-msgid "It was felt that instead of spending a portion of [the Empire](lore/factions/empire)'s own budget to research and development, better results could be attained by dedicating one or more entire worlds to the pursuit of knowledge."
+#: dat/naevpedia/lore/factions/zalek.md:25
+msgid "It was felt that instead of spending a portion of [the Empire](lore/factions/empire)'s own budget on research and development, better results could be attained by dedicating one or more entire worlds to the pursuit of knowledge."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:41
+#: dat/naevpedia/lore/factions/zalek.md:26
 msgid "A suitable world was found near the border of Empire space, and there a new colony was built, geared solely towards scientific research."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:43
-msgid "The colony prospered, and after a few decades it was found that the planet had become too small to facilitate all the experiments and institutes necessary to meet the ever increasing flow of research proposals."
+#: dat/naevpedia/lore/factions/zalek.md:28
+msgid "The colony prospered, and after a few decacycles it was found that the planet had become too small to facilitate all the experiments and institutes necessary to meet the ever-increasing flow of research proposals."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:44
+#: dat/naevpedia/lore/factions/zalek.md:29
 msgid "A second world was added to Project Za'lek, and soon after a third."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:45
+#: dat/naevpedia/lore/factions/zalek.md:30
 msgid "A few generations later, Project Za'lek had accumulated enough mass to develop a stable internal economy."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:46
+#: dat/naevpedia/lore/factions/zalek.md:31
 msgid "By this time the Project had produced numerous advances in almost every scientific field, so the Emperor chose to bestow on the Project the noble title of Great House."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:48
+#: dat/naevpedia/lore/factions/zalek.md:33
 msgid "### House Za'lek"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:50
+#: dat/naevpedia/lore/factions/zalek.md:35
 msgid "House Za'lek continued to grow and advance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:51
+#: dat/naevpedia/lore/factions/zalek.md:36
 msgid "Over time, it became the only place of consequence to be for any scientists, since [the Empire](lore/factions/empire)'s own R&D budget had all but dried up."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:52
+#: dat/naevpedia/lore/factions/zalek.md:37
 msgid "Gradually, the Imperial intellectual elite shifted its weight to Za'lek space."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:53
+#: dat/naevpedia/lore/factions/zalek.md:38
 msgid "The Empire took notice of this, but given the steady flow of research from House Za'lek under their oath of loyalty, it did not consider it a problem."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:55
+#: dat/naevpedia/lore/factions/zalek.md:40
 msgid "This changed when [the Empire](lore/factions/empire) was finally starved of its top minds."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:56
+#: dat/naevpedia/lore/factions/zalek.md:41
 msgid "Without scientists to keep up with the rapid pace of the Za'lek advancement, the Emperor found that the latest discoveries were poorly understood by his subjects, if they were understood at all."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:57
+#: dat/naevpedia/lore/factions/zalek.md:42
 msgid "Measures were taken to reverse the process, but the damage had been done."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:58
+#: dat/naevpedia/lore/factions/zalek.md:43
 msgid "House Za'lek's momentum could no longer be stopped."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:59
+#: dat/naevpedia/lore/factions/zalek.md:44
 msgid "Before long, all [the Empire](lore/factions/empire) was getting out of its former Great Project was a yearly file of unintelligible reports, articles and theorems, many of which used forms of mathematics the Imperial engineers had never even heard of before."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:60
+#: dat/naevpedia/lore/factions/zalek.md:45
 msgid "When asked to provide [the Empire](lore/factions/empire) with tangible results such as pre-produced weapons or ships, the Za'lek indignantly replied that things like manufacturing things that had been successfully prototyped were beneath them."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:61
+#: dat/naevpedia/lore/factions/zalek.md:46
 msgid "They could not be coaxed to change their disposition."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:62
+#: dat/naevpedia/lore/factions/zalek.md:47
 msgid "[The Empire](lore/factions/empire), in short, was left behind."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:64
+#: dat/naevpedia/lore/factions/zalek.md:49
 msgid "Over the years, House Za'lek built up an impressive technological lead."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:65
+#: dat/naevpedia/lore/factions/zalek.md:50
 msgid "At the same time, it became more isolated, its scientists choosing to devote their time to working on their myriad of projects rather than waste it on \"the simpletons elsewhere\"."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:66
+#: dat/naevpedia/lore/factions/zalek.md:51
 msgid "The Empire in turn lost its motivation to seek gain from the Za'lek, as it became clear nobody within its borders was ever going to grasp what any of them were talking about."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:67
+#: dat/naevpedia/lore/factions/zalek.md:52
 msgid "House Za'lek became the equivalent of an ivory tower, forgotten by some, ignored by most."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:69
+#: dat/naevpedia/lore/factions/zalek.md:54
 msgid "Then, a few years before the present time, there was a change in House Za'lek that would have attracted notice had anyone been paying attention."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:70
+#: dat/naevpedia/lore/factions/zalek.md:55
 msgid "Though the Za'lek had always been secretive and withdrawn, they became much more so almost overnight."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:71
+#: dat/naevpedia/lore/factions/zalek.md:56
 msgid "The few traders who frequent Za'lek space say that while the border guard is almost unchanged, security in many other systems has been dismantled, their forces relocated to one single planet: Ruadan."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:72
+#: dat/naevpedia/lore/factions/zalek.md:57
 msgid "Little is known of Ruadan, other than that it is one of Za'lek's youngest worlds."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:73
+#: dat/naevpedia/lore/factions/zalek.md:58
 msgid "Nobody knows what goes on on its surface, as the Za'lek don't brook anyone in the system who isn't expressly authorized."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:74
+#: dat/naevpedia/lore/factions/zalek.md:59
 msgid "However, it is clear to anyone who will see that the Za'lek have found something, or maybe created it, and whatever this something is, they consider it extremely important."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/zalek.md:60
+msgid "It is unknown what they are doing, but it may well be that the universe will not like finding out..."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:62
+msgid "## Za'lek Society"
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:64
+msgid "As House Za'lek was and is a gigantic think tank, its social structure leaves something to be desired."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:65
+msgid "The Za'lek half-heartedly mimic [the Empire](lore/factions/empire), with one all-important Chairman of the Board, who is naturally ignored by every other Za'lek in existence."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:66
+msgid "What passes for politics in Za'lek terms is a big room full of furious, shouting scientists, each trying to prove that their way of running the House is best, often producing charts and graphs that are indistinguishable from any other charts and graphs the Za'lek produce."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:68
+msgid "Nevertheless, the Za'lek get by, and their worlds run well enough to sustain the many research labs, observatories and computer cores that litter any Za'lek planet's surface."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:69
+msgid "The local economies are kept running by non-researchers, whose main purpose is to keep the sizable intellectual elite happy."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:70
+msgid "This seems a thankless life, but it is actually quite attractive for some, as the Za'lek seem utterly disinterested in passing law over those they consider irrelevant to progress."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:71
+msgid "Effectively, this means the normal people in Za'lek space enjoy as much freedom as anyone in the galaxy, bound only by the unreasonable demands placed on them by the Za'lek scientists, and whatever laws they impose on themselves."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:73
+msgid "The Za'lek have a standing army as is befitting a Great House, but it is unclear how they manage to maintain it."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:74
+msgid "As a general rule, Za'lek scientists don't bother with anything they consider finished and thought out, so most concepts are never put into service except for a small number of prototypes."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/zalek.md:75
-msgid "It is unknown what they are planning, but it may well be that the universe will not like finding out..."
+msgid "Nevertheless, the Za'lek possess more-or-less standardized military forces, so someone out there must be putting theory to practical use."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:2
@@ -6724,230 +6732,238 @@ msgid "# Galactic Space Pirates"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:10
-msgid "The Galactic Space Pirates are split into to main groups, the clans and independent pirates."
+msgid "The Galactic Space Pirates are split into two main groups, the clans and independent pirates."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:11
-msgid "Independent pirates are further split into marauders, extremely aggressive and not very well-equipped pirates, and the normal pirates, which tend to be better equip and usually strive to join one of the major pirate clans."
+msgid "Amoung the independent pirates are marauders who are extremely aggressive and not very well-equipped."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:13
+#: dat/naevpedia/lore/factions/pirates.md:12
+msgid "Other pirates tend to be better equipped and usually strive to join one of the major pirate clans."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:14
 msgid "The four main clans are the <%= strblacklotus %>, <%= strwildones %>, <%= strravenclan %>, and <%= strdreamerclan %>."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:15
+#: dat/naevpedia/lore/factions/pirates.md:16
 msgid "## Organization"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:17
+#: dat/naevpedia/lore/factions/pirates.md:18
 msgid "* **Leader:** Pirate Lords from the diverse clans"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:18
+#: dat/naevpedia/lore/factions/pirates.md:19
 msgid "* **Leading Structure:** Pirate Assembly"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:19
+#: dat/naevpedia/lore/factions/pirates.md:20
 msgid "* **Government:** Aristocracy (varies by clan)"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:20
+#: dat/naevpedia/lore/factions/pirates.md:21
 msgid "* **Formation:** Beginning of History"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:21
+#: dat/naevpedia/lore/factions/pirates.md:22
 msgid "* **Homeworld:** Varies by Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:23
+#: dat/naevpedia/lore/factions/pirates.md:24
 msgid "## Independent Pirates"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:25
+#: dat/naevpedia/lore/factions/pirates.md:26
 msgid "Formed by individuals that have given up on society and turned to piracy to make a living."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:26
+#: dat/naevpedia/lore/factions/pirates.md:27
 msgid "They form a large part of all pirates and end up doing lots of the grunt work for the clans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:27
+#: dat/naevpedia/lore/factions/pirates.md:28
 msgid "As long as they do not cause problems they are welcome at all pirate clansworlds."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:29
+#: dat/naevpedia/lore/factions/pirates.md:30
 msgid "## Marauders"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:31
+#: dat/naevpedia/lore/factions/pirates.md:32
 msgid "Usually formed by individuals that are not fit by the clans due to extreme violence, no critical thinking, problematic behaviour, no hygiene, or all of the above."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:32
+#: dat/naevpedia/lore/factions/pirates.md:33
 msgid "They are tolerated by other pirates, who tend to exploit them and give them scraps, but they usually end up with short life spans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:34
+#: dat/naevpedia/lore/factions/pirates.md:35
 msgid "## Pirate Assemblies"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:36
+#: dat/naevpedia/lore/factions/pirates.md:37
 msgid "Usually occurring once a cycle, pirate assemblies are as formal of a gathering as you can find in the pirate world."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:37
-msgid "They are usually held at more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking."
+#: dat/naevpedia/lore/factions/pirates.md:38
+msgid "They are usually held at a more neutral pirate clansworld, such as those of the <%= strravenclan %>, and consist of several [decaperiods](mechanics/time) of partying and lawmaking."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:38
+#: dat/naevpedia/lore/factions/pirates.md:39
 msgid "The main event consists of the meeting of the Pirate Lords who will listen to proposals and decide on courses of actions, while letting their crew loose."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:40
+#: dat/naevpedia/lore/factions/pirates.md:41
 msgid "The assemblies tend to be a good opportunity for the Pirate Lords to calculate each other strengths, where they tend to bring significant ships from their fleet."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:41
+#: dat/naevpedia/lore/factions/pirates.md:42
 msgid "In many ways, the pirate assemblies tend to not only determine the future of the space pirates, but also tend to shape the future of the galaxy."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:43
+#: dat/naevpedia/lore/factions/pirates.md:44
 msgid "The events tend to also attract the attention of other actors in the galaxy, with most Great Houses and [the Empire](lore/factions/empire) sending somewhat undercover agents to try to get a glimpse of what is going on and gain advantage over other Great Houses."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:44
+#: dat/naevpedia/lore/factions/pirates.md:45
 msgid "It is also common for less scrupulous merchants to show up as it can be a very profitable opportunity to sell grog and equipment to the drunken pirates."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:47
+#: dat/naevpedia/lore/factions/pirates.md:48
 msgid "## Wild Ones Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:49
+#: dat/naevpedia/lore/factions/pirates.md:50
 msgid "Formed mainly by [Empire](lore/factions/empire) and [Soromid](lore/factions/soromid) outcasts, the Wild Ones are a violent and aggressive clan where strength is of utmost importance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:50
+#: dat/naevpedia/lore/factions/pirates.md:51
 msgid "Weaker individuals tend to follow the stronger ones, and the strongest compete against each other."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:51
+#: dat/naevpedia/lore/factions/pirates.md:52
 msgid "That said, there are few deadly confrontations between clan members, as usually the weaker one will back out and submit when they see they don't have a chance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:52
+#: dat/naevpedia/lore/factions/pirates.md:53
 msgid "They tend to not hold grudges, which allows for their society to work."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:54
+#: dat/naevpedia/lore/factions/pirates.md:55
 msgid "The clan's territory is the sparsely inhabited area between the [Empire](lore/factions/empire) and the [Soromid](lore/factions/soromid)."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:55
+#: dat/naevpedia/lore/factions/pirates.md:56
 msgid "Their main clansworld was Haven, until it was destroyed in an offensive by the Empire and Great Houses."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:56
+#: dat/naevpedia/lore/factions/pirates.md:57
 msgid "Since then, they have moved to a more secluded area known as New Haven where they are careful to not repeat the same fate."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:58
+#: dat/naevpedia/lore/factions/pirates.md:59
 msgid "Although they get along well with the <%= strravenclan %>, they tend to get into fights with the <%= strblacklotus %>, and look down upon the <%= strdreamerclan %>."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:62
+#: dat/naevpedia/lore/factions/pirates.md:63
 msgid "## Raven Clan"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:64
-msgid "Arguably the clan that connects all the pirates and maintains infrastructure for their success."
-msgstr ""
-
 #: dat/naevpedia/lore/factions/pirates.md:65
-msgid "The Raven Clan is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing."
+msgid "Arguably the clan that connects all the pirates and maintains the infrastructure for their success."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:66
-msgid "Although they deal in smuggling and black market trade, they do not shun nor turn away from the occasional raid and normal piracy."
+msgid "The Raven Clan is formed by many ex-merchants who were fed up with the corruption and bureaucracy of the Imperial system, and decided to do their own thing."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:67
+msgid "Although they deal in smuggling and black-market trade, they do not shun nor turn away from the occasional raid or assassination."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:68
 msgid "They are very diplomatic and put strong emphasis on human relationships, which they foster to maximize the success of their trading endeavours."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:69
+#: dat/naevpedia/lore/factions/pirates.md:70
 msgid "The Raven Clan mainly inhabits the Qorel tunnel, which is a chain of systems not accessible through standard jump points."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:70
+#: dat/naevpedia/lore/factions/pirates.md:71
 msgid "They have several bases along it and use their cunning and secrecy to supply goods and connect all the pirates together."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:71
+#: dat/naevpedia/lore/factions/pirates.md:72
 msgid "Due to their fundamental role, they tend to have strong connections and relationships with all the other pirate clans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:72
+#: dat/naevpedia/lore/factions/pirates.md:73
 msgid "They also work with corrupt officials of the Great Houses, and pretty much anyone that has the credits to pay."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:76
+#: dat/naevpedia/lore/factions/pirates.md:77
 msgid "## Black Lotus"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:78
+#: dat/naevpedia/lore/factions/pirates.md:79
 msgid "One of the most well organized pirate clans, the Black Lotus prides itself in methodology and organization."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:79
+#: dat/naevpedia/lore/factions/pirates.md:80
 msgid "Members follow strict recruitment policies to slowly go up in the ranks and gain more power in the hierarchy, very similar to large corporations."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:80
+#: dat/naevpedia/lore/factions/pirates.md:81
 msgid "Discipline is swift and punishment is carried out in public form to make sure everyone follows the rules, making them one of the most rigid pirate clans."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:82
+#: dat/naevpedia/lore/factions/pirates.md:83
 msgid "They inhabit the pocket of space between [House Za'lek](lore/factions/zalek) and [House Dvaered](lore/factions/dvaered), where they make a fortune from specializing in stolen research equipment and oddities from the universe."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:83
+#: dat/naevpedia/lore/factions/pirates.md:84
 msgid "They also tend to run protection rackets, which are often favoured over the whimsical [Dvaered](lore/factions/dvaered) Warlords and can provide more stability to the area."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/pirates.md:87
-msgid "## Dreamer Clan"
+#: dat/naevpedia/lore/factions/pirates.md:85
+msgid "While the price of these protection contracts is quite high, wealthy citizens have found that they are well worth the money, as any failed protection contract is met with swift discipline for those who failed, making failure rates extremely low."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:89
-msgid "The newest of the main pirate clans, the Dreamer Clan was able to capitalize on [the Incident](lore/history/incident) and establish itself as a force to be reckoned with."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/pirates.md:90
-msgid "Formed mainly by refugees and outcasts of the so-called \"civilized society\", the Dreamer Clan is formed by individuals who do not want to follow rules."
+msgid "## Dreamer Clan"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:91
-msgid "They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action."
+msgid "The newest of the main pirate clans, the Dreamer Clan was able to capitalize on [the Incident](lore/history/incident) and establish itself as a force to be reckoned with."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:92
-msgid "Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/history/incident)."
+msgid "Formed mainly by refugees and outcasts of the so-called \"civilized society\", the Dreamer Clan is formed by individuals who do not want to follow rules."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:93
-msgid "They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse."
+msgid "They have no hierarchy and form an eclectic and anarchistic bunch, giving lots of leeway for personal freedom and using voting and other systems to decide how to take action."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:94
+msgid "Although they rely heavily on piracy, most individuals pursue artistic talents when not raiding nearby convoys or scavenging from wrecks from [the Incident](lore/history/incident)."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:95
-msgid "They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontier), making use of abandoned planets and stations, which they adapt to their purposes."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/pirates.md:96
-msgid "Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the <%= strravenclan %>, which wants access to the lucrative drug trade."
+msgid "They are also renowned for being a large hub of illicit substances, which their members use freely and some claim to get Sirius-like psychic powers from substance abuse."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/pirates.md:97
+msgid "They are located in the Nebula, near [House Sirius](lore/factions/sirius) and [the Frontier](lore/factions/frontier), making use of abandoned planets and stations, which they adapt to their purposes."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:98
+msgid "Although they tend to have little contact with other pirates outside of assemblies, they have lots of trade with the <%= strravenclan %>, which wants access to the lucrative drug trade."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/pirates.md:99
 msgid "Although in general less organized than other clans, they can be ruthless at raiding convoys, sometimes going deep into [House Sirius](lore/factions/sirius) space."
 msgstr ""
 
@@ -7707,7 +7723,7 @@ msgid "# Soromid"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:9
-msgid "The Soromid are an important faction, and although they are not a Great House of [the Empire](lore/factions/empire), they are very close in practice."
+msgid "The Soromid are a faction that although not a recognized Great House of [the Empire](lore/factions/empire), they are very close in practice."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:11
@@ -7819,11 +7835,11 @@ msgid "The people of Sorom had been abandoned."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:47
-msgid "The plague claimed more and more lives every day."
+msgid "The plague claimed more and more lives every period."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:48
-msgid "It would be a matter of years, maybe months before nobody was left alive."
+msgid "It would be a matter of cycles, maybe decaperiods before nobody was left alive."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:49
@@ -7911,11 +7927,11 @@ msgid "The population of Sorom was drastically diminished, but those who survive
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:75
-msgid "With the new gene treatment it had become possible to surpass the limits of the human body, including fertility."
+msgid "With the new gene treatment, it had become possible to surpass the limits of the human body, including fertility."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:76
-msgid "In only a couple of centuries the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment."
+msgid "In only a couple of centacycles the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:77
@@ -7931,7 +7947,7 @@ msgid "Soon, the Soromid decided that it was time to return to the stars."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:81
-msgid "The Imperial blockade had left the system many decades past, so nothing was to stop them."
+msgid "The Imperial blockade had left the system many decacycles past, so nothing was to stop them."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:82
@@ -7951,11 +7967,11 @@ msgid "For years Sorom had been in the books as a hazard world that could suppor
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:87
-msgid "[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever the Emperor begrudgingly acknowledged their presence in the galaxy."
+msgid "[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever, the Emperor begrudgingly acknowledged their presence in the galaxy."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:88
-msgid "It also helped that the Soromid ships proved to be quite combat capable."
+msgid "In truth, the combat capabilities of the Soromid ships had been far greater than the Imperial Navy was able to sufficiently manage."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:90
@@ -7971,7 +7987,7 @@ msgid "[The Za'lek](lore/factions/zalek) in particular weren't amused with the n
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:94
-msgid "Unfazed by the reception of the other factions, the Soromid went to work."
+msgid "Unfazed by the reception of the other factions, the Soromid persisted."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:95
@@ -7979,7 +7995,7 @@ msgid "The galaxy had plenty of suitable worlds left to colonize - at least, wor
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:96
-msgid "The Soromid had a far greater tolerance for hostile worlds than humans did, and where they did not they could adjust themselves appropriately."
+msgid "The Soromid had a far greater tolerance for hostile worlds than humans did, and where they did not, they could adjust themselves appropriately."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:97
@@ -8031,11 +8047,11 @@ msgid "## Political Structure"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:113
-msgid "Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that revolves around the idea of tribes."
+msgid "Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that is best described as tribal rule."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:114
-msgid "Generally, each tribe has a council that oversees the day to day management, where all individuals delegate most responsibility."
+msgid "Generally, each tribe has a council that oversees the period-to-period management, where all individuals are given responsibilities."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:115
@@ -8047,7 +8063,7 @@ msgid "Periodically, and when needed, the tribe will gather in councils to decid
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:117
-msgid "The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole."
+msgid "The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives gather to reach consensus over matters that affect the Soromid as a whole."
 msgstr ""
 
 #: dat/naevpedia/lore/factions/soromid.md:119
@@ -8692,179 +8708,179 @@ msgid "* **Homeworld:** Ruadan Prime (Ruadan system)"
 msgstr ""
 
 #: dat/naevpedia/lore/factions/zalek.md:20
-msgid "## Za'lek Society"
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:22
-msgid "As House Za'lek was and is a gigantic think tank, its social structure leaves something to be desired."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:23
-msgid "The Za'lek half-heartedly mimic [the Empire](lore/factions/empire), with one all-important Chairman of the Board, who is naturally ignored by every other Za'lek in existence."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:24
-msgid "What passes for politics in Za'lek terms is a big room full of furious, shouting scientists, each trying to prove that their way of running the House is best, often producing charts and graphs that are indistinguishable from any other charts and graphs the Za'lek produce."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:26
-msgid "Nevertheless, the Za'lek get by, and their worlds run well enough to sustain the many research labs, observatories and computer cores that litter any Za'lek planet's surface."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:27
-msgid "The local economies are kept running by non-researchers, whose main purpose is to keep the sizable intellectual elite happy."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:28
-msgid "This seems a thankless life, but it is actually quite attractive for some, as the Za'lek seem utterly disinterested in passing law over those they consider irrelevant to progress."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:29
-msgid "Effectively, this means the normal people in Za'lek space enjoy as much freedom as anyone in the galaxy, bound only by the unreasonable demands placed on them by the Za'lek scientists, and whatever laws they impose on themselves."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:31
-msgid "The Za'lek have a standing army as is befitting a Great House, but it is unclear how they manage to maintain it."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:32
-msgid "As a general rule, Za'lek scientists don't bother with anything they consider finished and thought out, so most concepts are never put into service except for a small number of prototypes."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:33
-msgid "Nevertheless, the Za'lek possess more-or-less standardized military forces, so someone out there must be putting theory to practical use."
-msgstr ""
-
-#: dat/naevpedia/lore/factions/zalek.md:35
 msgid "## History"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:37
+#: dat/naevpedia/lore/factions/zalek.md:22
 msgid "### Project Za'lek"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:39
+#: dat/naevpedia/lore/factions/zalek.md:24
 msgid "Project Za'lek was the second Great Project [the Empire](lore/factions/empire) called into existence."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:40
-msgid "It was felt that instead of spending a portion of [the Empire](lore/factions/empire)'s own budget to research and development, better results could be attained by dedicating one or more entire worlds to the pursuit of knowledge."
+#: dat/naevpedia/lore/factions/zalek.md:25
+msgid "It was felt that instead of spending a portion of [the Empire](lore/factions/empire)'s own budget on research and development, better results could be attained by dedicating one or more entire worlds to the pursuit of knowledge."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:41
+#: dat/naevpedia/lore/factions/zalek.md:26
 msgid "A suitable world was found near the border of Empire space, and there a new colony was built, geared solely towards scientific research."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:43
-msgid "The colony prospered, and after a few decades it was found that the planet had become too small to facilitate all the experiments and institutes necessary to meet the ever increasing flow of research proposals."
+#: dat/naevpedia/lore/factions/zalek.md:28
+msgid "The colony prospered, and after a few decacycles it was found that the planet had become too small to facilitate all the experiments and institutes necessary to meet the ever-increasing flow of research proposals."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:44
+#: dat/naevpedia/lore/factions/zalek.md:29
 msgid "A second world was added to Project Za'lek, and soon after a third."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:45
+#: dat/naevpedia/lore/factions/zalek.md:30
 msgid "A few generations later, Project Za'lek had accumulated enough mass to develop a stable internal economy."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:46
+#: dat/naevpedia/lore/factions/zalek.md:31
 msgid "By this time the Project had produced numerous advances in almost every scientific field, so the Emperor chose to bestow on the Project the noble title of Great House."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:48
+#: dat/naevpedia/lore/factions/zalek.md:33
 msgid "### House Za'lek"
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:50
+#: dat/naevpedia/lore/factions/zalek.md:35
 msgid "House Za'lek continued to grow and advance."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:51
+#: dat/naevpedia/lore/factions/zalek.md:36
 msgid "Over time, it became the only place of consequence to be for any scientists, since [the Empire](lore/factions/empire)'s own R&D budget had all but dried up."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:52
+#: dat/naevpedia/lore/factions/zalek.md:37
 msgid "Gradually, the Imperial intellectual elite shifted its weight to Za'lek space."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:53
+#: dat/naevpedia/lore/factions/zalek.md:38
 msgid "The Empire took notice of this, but given the steady flow of research from House Za'lek under their oath of loyalty, it did not consider it a problem."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:55
+#: dat/naevpedia/lore/factions/zalek.md:40
 msgid "This changed when [the Empire](lore/factions/empire) was finally starved of its top minds."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:56
+#: dat/naevpedia/lore/factions/zalek.md:41
 msgid "Without scientists to keep up with the rapid pace of the Za'lek advancement, the Emperor found that the latest discoveries were poorly understood by his subjects, if they were understood at all."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:57
+#: dat/naevpedia/lore/factions/zalek.md:42
 msgid "Measures were taken to reverse the process, but the damage had been done."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:58
+#: dat/naevpedia/lore/factions/zalek.md:43
 msgid "House Za'lek's momentum could no longer be stopped."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:59
+#: dat/naevpedia/lore/factions/zalek.md:44
 msgid "Before long, all [the Empire](lore/factions/empire) was getting out of its former Great Project was a yearly file of unintelligible reports, articles and theorems, many of which used forms of mathematics the Imperial engineers had never even heard of before."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:60
+#: dat/naevpedia/lore/factions/zalek.md:45
 msgid "When asked to provide [the Empire](lore/factions/empire) with tangible results such as pre-produced weapons or ships, the Za'lek indignantly replied that things like manufacturing things that had been successfully prototyped were beneath them."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:61
+#: dat/naevpedia/lore/factions/zalek.md:46
 msgid "They could not be coaxed to change their disposition."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:62
+#: dat/naevpedia/lore/factions/zalek.md:47
 msgid "[The Empire](lore/factions/empire), in short, was left behind."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:64
+#: dat/naevpedia/lore/factions/zalek.md:49
 msgid "Over the years, House Za'lek built up an impressive technological lead."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:65
+#: dat/naevpedia/lore/factions/zalek.md:50
 msgid "At the same time, it became more isolated, its scientists choosing to devote their time to working on their myriad of projects rather than waste it on \"the simpletons elsewhere\"."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:66
+#: dat/naevpedia/lore/factions/zalek.md:51
 msgid "The Empire in turn lost its motivation to seek gain from the Za'lek, as it became clear nobody within its borders was ever going to grasp what any of them were talking about."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:67
+#: dat/naevpedia/lore/factions/zalek.md:52
 msgid "House Za'lek became the equivalent of an ivory tower, forgotten by some, ignored by most."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:69
+#: dat/naevpedia/lore/factions/zalek.md:54
 msgid "Then, a few years before the present time, there was a change in House Za'lek that would have attracted notice had anyone been paying attention."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:70
+#: dat/naevpedia/lore/factions/zalek.md:55
 msgid "Though the Za'lek had always been secretive and withdrawn, they became much more so almost overnight."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:71
+#: dat/naevpedia/lore/factions/zalek.md:56
 msgid "The few traders who frequent Za'lek space say that while the border guard is almost unchanged, security in many other systems has been dismantled, their forces relocated to one single planet: Ruadan."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:72
+#: dat/naevpedia/lore/factions/zalek.md:57
 msgid "Little is known of Ruadan, other than that it is one of Za'lek's youngest worlds."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:73
+#: dat/naevpedia/lore/factions/zalek.md:58
 msgid "Nobody knows what goes on on its surface, as the Za'lek don't brook anyone in the system who isn't expressly authorized."
 msgstr ""
 
-#: dat/naevpedia/lore/factions/zalek.md:74
+#: dat/naevpedia/lore/factions/zalek.md:59
 msgid "However, it is clear to anyone who will see that the Za'lek have found something, or maybe created it, and whatever this something is, they consider it extremely important."
 msgstr ""
 
+#: dat/naevpedia/lore/factions/zalek.md:60
+msgid "It is unknown what they are doing, but it may well be that the universe will not like finding out..."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:62
+msgid "## Za'lek Society"
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:64
+msgid "As House Za'lek was and is a gigantic think tank, its social structure leaves something to be desired."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:65
+msgid "The Za'lek half-heartedly mimic [the Empire](lore/factions/empire), with one all-important Chairman of the Board, who is naturally ignored by every other Za'lek in existence."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:66
+msgid "What passes for politics in Za'lek terms is a big room full of furious, shouting scientists, each trying to prove that their way of running the House is best, often producing charts and graphs that are indistinguishable from any other charts and graphs the Za'lek produce."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:68
+msgid "Nevertheless, the Za'lek get by, and their worlds run well enough to sustain the many research labs, observatories and computer cores that litter any Za'lek planet's surface."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:69
+msgid "The local economies are kept running by non-researchers, whose main purpose is to keep the sizable intellectual elite happy."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:70
+msgid "This seems a thankless life, but it is actually quite attractive for some, as the Za'lek seem utterly disinterested in passing law over those they consider irrelevant to progress."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:71
+msgid "Effectively, this means the normal people in Za'lek space enjoy as much freedom as anyone in the galaxy, bound only by the unreasonable demands placed on them by the Za'lek scientists, and whatever laws they impose on themselves."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:73
+msgid "The Za'lek have a standing army as is befitting a Great House, but it is unclear how they manage to maintain it."
+msgstr ""
+
+#: dat/naevpedia/lore/factions/zalek.md:74
+msgid "As a general rule, Za'lek scientists don't bother with anything they consider finished and thought out, so most concepts are never put into service except for a small number of prototypes."
+msgstr ""
+
 #: dat/naevpedia/lore/factions/zalek.md:75
-msgid "It is unknown what they are planning, but it may well be that the universe will not like finding out..."
+msgid "Nevertheless, the Za'lek possess more-or-less standardized military forces, so someone out there must be putting theory to practical use."
 msgstr ""
 
 #: dat/naevpedia/lore/history.md:2

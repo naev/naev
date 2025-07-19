@@ -4187,3 +4187,4 @@ dat/outfits/py/corsair_systems.py
 dat/outfits/py/helper.py
 dat/outfits/py/neutralizer.py
 dat/outfits/py/reaver.py
+dat/outfits/py/xml_outfit.py
