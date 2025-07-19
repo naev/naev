@@ -1204,8 +1204,7 @@ void gui_renderViewportFrame( double res, double render_radius, int overlay )
       return;
    }
 
-   const double z =
-      cam_getZoom() * res * ( overlay ? 1.0 : 1.0 / gl_screen.scale );
+   const double z           = cam_getZoom() * res;
    const double vp_corner_x = SCREEN_W / 2.0 / z;
    const double vp_corner_y = SCREEN_H / 2.0 / z;
    if ( isfinite( render_radius ) &&
