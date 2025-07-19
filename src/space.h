@@ -53,6 +53,7 @@
 #define SPOB_RADIUS ( 1 << 10 )     /**< Spob has radius defined. */
 #define SPOB_NOCOMMODITIES                                                     \
    ( 1 << 11 ) /**< Spob doesn't have standard commodities. */
+#define SPOB_RESTRICTED ( 1 << 12 )                  /**< Spob is restricted. */
 #define spob_isFlag( p, f ) ( ( p )->flags & ( f ) ) /**< Checks spob flag. */
 #define spob_setFlag( p, f )                                                   \
    ( ( p )->flags |= ( f ) ) /**< Sets a spob flag.                            \

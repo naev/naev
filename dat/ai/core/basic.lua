@@ -402,7 +402,7 @@ function __choose_land_target ( target )
 
    -- Make sure target is valid
    if target == nil then
-      local landspob = ai.landspob()
+      local landspob = ai.landspob( mem.land_friendly )
       if landspob ~= nil then
          target = landspob
 

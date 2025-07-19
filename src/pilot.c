@@ -3851,9 +3851,13 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf,
    ind = array_create_size( int, array_size( cur_system->spobs ) );
    for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
       const Spob *pnt = cur_system->spobs[i];
-      if ( spob_hasService( pnt, SPOB_SERVICE_INHABITED ) &&
-           !areEnemies( lf, pnt->presence.faction ) )
-         array_push_back( &ind, i );
+      if ( spob_hasService( pnt, SPOB_SERVICE_INHABITED ) ||
+           areEnemies( lf, pnt->presence.faction ) )
+         continue;
+      if ( spob_isFlag( pnt, SPOB_RESTRICTED ) &&
+           !areAllies( lf, pnt->presence.faction ) )
+         continue;
+      array_push_back( &ind, i );
    }
 
    /* Build jumpable jump table. */
