@@ -20,9 +20,33 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../dat/ssys")" &&
 
 if [ ! "$1" = "-e" ] ; then
-   grep -ro -m 1 '^\s*<pos x=\(["'"\'"']\)-\?[0-9.]*\1 y=\1-\?[0-9.]*\1' --include="*.xml" |
-   sed  -e 's ^.*/  '  -e 's/^\s*//' |
-   sed  's/^\(.*\)\.xml:\s*<pos x=\(["'"\'"']\)\(-\?[0-9.]*\)\2 y=\2\(-\?[0-9.]*\)\2/\1 \3 \4/'
+   join -a1 <(
+      grep -ro -m 1 '^\s*<pos x=\(["'"\'"']\)-\?[0-9.]*\1 y=\1-\?[0-9.]*\1' --include="*.xml" |
+      sed -e 's ^.*/  '  -e 's/^\s*//' |
+      sed 's/^\(.*\)\.xml:\s*<pos x=\"\(-\?[0-9.]*\)\" y=\"\(-\?[0-9.]*\)\"/\1 \2 \3/' |
+      sed 's/\([0-9][0-9]*\.[0-9]*[1-9]\)0*\>/\1/g' |
+      sort -k 1b,1
+   ) <(
+      cd "$SCRIPT_DIR"/../../dat/ || exit 1
+
+      join -o 1.2 2.2 <(
+            grep '<spob>' ssys/*.xml |
+            sed 's/^ssys\/\([^.]*\)\.xml:\ *<spob>\([^<]*\)<\/spob>/\1 \2/' |
+            ../utils/xml_name_row.sh '2-' |
+            awk '{print $2,$1}' |
+            sort -k 1b,1
+         ) <(
+            grep '<faction>' spob/*.xml |
+            sed 's/^spob\/\([^.]*\)\.xml:\ *<faction>\([^<]*\)<\/faction>/\1 \2/' |
+            grep -v Derelict |
+            ../utils/xml_name_row.sh '2-' |
+            sort -k 1b,1
+         ) |
+      sort | uniq -c | sed 's/^ *//' |
+      sed 's/^[0-9]* \([^ ]*\) \(\(independent\)\|\(traders_society\)\)/0 \1 \2/' |
+      awk '{print $2,$1,$3}' | sort -r -b |
+      awk '{print $3,$1}' | uniq -f1 | awk '{print $2,$1}' | tac
+   )
 fi
 
 if [ ! "$1" = "-v" ]; then
@@ -43,4 +67,4 @@ if [ ! "$1" = "-v" ]; then
    ) | sed -e 's/ T T$/ tradelane/' -e 's/ T$//'
 fi
 
-echo ''
+if [ ! "$1" = "-v" ] && [ ! "$1" = "-e" ] ; then echo '' ; fi
