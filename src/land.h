@@ -36,7 +36,7 @@ typedef struct MissionComputerOptions_ {
 extern MissionComputerOptions misn_opts;
 
 /* global/main window */
-#define LAND_WIDTH RESOLUTION_W_MIN  /**< Land window width. */
+#define LAND_WIDTH RESOLUTION_W_MIN /**< Land window width. */
 #define LAND_HEIGHT RESOLUTION_H_MIN /**< Land window height. */
 #define PORTRAIT_WIDTH 200
 #define PORTRAIT_HEIGHT 150
