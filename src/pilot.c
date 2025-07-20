@@ -2825,7 +2825,7 @@ void pilot_update( Pilot *pilot, double dt )
       pilot->solid.speed_max = -1.; /* Disables max speed. */
 
    /* Set engine glow. */
-   if ( pilot->solid.accel > 0. ) {
+   if ( pilot->solid.accel > pilot->accel * 0.1 ) {
       /*pilot->engine_glow += pilot->accel / pilot->speed * dt;*/
       pilot->engine_glow += pilot->accel / pilot->speed * dt;
       if ( pilot->engine_glow > 1. )
