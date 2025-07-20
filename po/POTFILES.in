@@ -271,6 +271,7 @@ dat/outfits/fighter_bays/sirius_shaman_bay.xml
 dat/outfits/fighter_bays/soromid_brigand_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_dock.xml
+dat/outfits/fighter_bays/thurion_scintillation_bay.xml
 dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml
 dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml
 dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml
@@ -3549,6 +3550,7 @@ dat/scripts/equipopt/fighterbays/sirius_fidelity.lua
 dat/scripts/equipopt/fighterbays/sirius_shaman.lua
 dat/scripts/equipopt/fighterbays/soromid_brigand.lua
 dat/scripts/equipopt/fighterbays/thurion_perspicacity.lua
+dat/scripts/equipopt/fighterbays/thurion_scintillation.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
 dat/scripts/equipopt/params.lua
