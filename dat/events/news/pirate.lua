@@ -17,6 +17,11 @@ local articles = {
       head = N_([[Skull and Bones Improving]]),
       body = _([[The technology behind Skull and Bones is advancing. Not only do they steal ships, but they improve on the original design. "This gives us pirates an edge against the injustice of the Empire," says Millicent Felecia Black, lead Skull and Bones engineer.]])
    },
+   {
+      test = function () return diff.isApplied("energy_harpoon") end,
+      head = N_([[New Breakthrough in Weapon Technology]]),
+      body = _([[Lord Maikki has announced the development of a new line of weapons dubbed "Energy Harpoon", available at New Haven. Weapons connoisseurs flock ]]),
+   },
    --[[
       Business
    --]]
@@ -53,6 +58,14 @@ local articles = {
    {
       head = N_([[Rumours and Whispers]]),
       body = _([[A large Za'lek derelict ship is rumoured to have been found. Several maps have been circulated among the most prominent treasure seekers, but none has yet to be verified.]])
+   },
+   {
+      head = N_([[Calmest Limerick Competition in Cycles]]),
+      body = _([[Onlookers left disappointed as the Galactic Pirate Limerick Competition ended without a massive brawl for first time in history. "Does nobody respect tradition any more?" said one angry spectator. Organizers blame Pirate Lord Pizarros birthday party a few periods before for drying out all the reservoirs of Rum and giving most participants a deca-period long hangover.]]),
+   },
+   {
+      head = N_([[Ghost in the Shell?]]),
+      body = _([[Haunted peanuts may be an Imperial psyops operation to destabilize the Clans says Dreamer Clans spokespirate. Recommends people to stay away from unknown drugs coming in from Sirius space.]]),
    },
 }
 
