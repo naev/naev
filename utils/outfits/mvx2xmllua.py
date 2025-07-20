@@ -61,7 +61,7 @@ def _toxmllua( o ):
    acc2, tr2 = _process_group(R, './specific')
 
    found = False
-   if e:= in R.find('./specific'):
+   if e:= R.find('./specific'):
       for elt in e:
          if elt.tag == 'lua_inline':
             found = True
@@ -80,7 +80,6 @@ def _toxmllua( o ):
          el.text = ''
          e.append(el)
       el.text = _mklua(acc1 + acc2) + el.text
-      break
 
 def mvx2xmllua( argin, argout, quiet ):
    o = outfit(argin)

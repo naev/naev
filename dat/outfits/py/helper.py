@@ -2,8 +2,8 @@ import sys
 from os import path
 script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils')
 sys.path.append(path.realpath(script_dir))
-sys.path.append(path.realpath(path.join(script_dir), 'outfits'))
-from naev_xml import xml_outfit
+sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
+from naev_xml import naev_xml
 from core_outfit import core_outfit, outfit
 
 INPUT = sys.argv[1]
