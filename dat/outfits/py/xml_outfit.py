@@ -83,7 +83,7 @@ class xml_outfit( _outfit_node ):
       if self._uptodate:
          stderr.write('Warning: saving unchanged file "' + self.filename + '".\n')
       with open(self._filename, 'w') as fp:
-         s = unparse(self, pretty=True, indent=1)
+         s = unparse(self, pretty=True, indent=' ')
          s = s.replace('<?xml version="1.0" encoding="utf-8"?>\n', '', 1)
          fp.write(re.sub(r'<([^ ]*)([^>]*)></\1>', r'<\1\2/>', s) + '\n')
       self._uptodate = True
