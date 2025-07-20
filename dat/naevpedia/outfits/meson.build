@@ -131,6 +131,7 @@ naevpedia_outfits_sources = files(
    root / 'dat/outfits/fighter_bays/soromid_brigand_bay.xml',
    root / 'dat/outfits/fighter_bays/thurion_perspicacity_bay.xml',
    root / 'dat/outfits/fighter_bays/thurion_perspicacity_dock.xml',
+   root / 'dat/outfits/fighter_bays/thurion_scintillation_bay.xml',
    root / 'dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml',
    root / 'dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml',
    root / 'dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml',
