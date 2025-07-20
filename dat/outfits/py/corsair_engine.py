@@ -11,7 +11,11 @@ del general['shortname']
 general['unique'] = None
 general['rarity'] = 6
 general['price'] = 1e6
-general['description'] = 'TODO'
+general['description'] = N_("""there once was a big mighty corsair
+who was said to be the finest heir
+of some noble great house
+almost tied as a spouse
+before they quickly took to the air""")
 del general['slot']['@prop_extra']
 
 specific = o['specific']
