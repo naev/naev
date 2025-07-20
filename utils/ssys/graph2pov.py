@@ -41,7 +41,7 @@ if '-q' in [a[:2] for a in argv[1:]]:
    argv.remove(a)
    silent = True
 
-if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:] != []:
+if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:]:
    if not h:
       stderr.write('Unrecognized: ' + ', '.join(argv[1]) + '\n')
    from os.path import basename

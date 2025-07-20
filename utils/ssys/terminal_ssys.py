@@ -5,7 +5,7 @@ if __name__ != '__main__':
 
 from sys import stderr, argv, exit
 
-if argv[1:] != []:
+if argv[1:]:
    stderr.write(
       'usage: ' + argv[0].split('/')[-1] + '\n'
       '  Reads a graph file on stdin. Outputs the list of term ssys.\n'

@@ -13,10 +13,10 @@ LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'tr
 
 def shorten( s ):
    L = s.split(' ')
-   while L != [] and L[0][1:2] == '.':
+   while L and L[0][1:2] == '.':
       L = L[1:]
 
-   if L == []:
+   if not L:
       return '???'
    elif L[0] == 'Beat':
       if L[2] == 'Medium':

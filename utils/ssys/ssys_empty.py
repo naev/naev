@@ -37,7 +37,7 @@ if __name__ == '__main__':
    from os.path import basename
    args = argv[1:]
 
-   if '-h' in args or '--help' in args or args == []:
+   if '-h' in args or '--help' in args or not args:
       stderr.write(
          'usage:  ' + basename(argv[0]) + '  [-r]  -f | (<file1> ..)\n'
          '  Lists the empty ssys among its input xml ssys files.\n'

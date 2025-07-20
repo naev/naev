@@ -13,7 +13,7 @@ from slst import Slst
 out = lambda x: stdout.write(x + '\n')
 
 def line_drawing(gith = False, color = False, term = False):
-   head, rule, line, alt_line = Slst([]), Slst([]), Slst([]), Slst([])
+   head, rule, line, alt_line = Slst(), Slst(), Slst(), Slst()
 
    if color or term:
       head += [ ('|', ' ', 1) ]

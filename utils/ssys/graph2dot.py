@@ -112,7 +112,7 @@ def main( color = False, fixed_pos = False ):
                suff += ['color="' + srcc + ';0.5:' + dstc + '"']
             elif srcc!= 'black':
                suff += ['color="' + srcc + '"']
-            suff = '[' + ';'.join(suff) + ']' if suff != [] else ''
+            suff = '[' + ';'.join(suff) + ']' if suff else ''
             print('"'.join(['\t', i, '--', dst, suff]))
 
    print('\tedge[len=' + str(reflen) + ']')
@@ -158,7 +158,7 @@ if '-h' in argv[1:] or '--help' in argv[1:]:
       '  > display before.png after.png'
    )
 else:
-   if argv[1:] != []:
+   if argv[1:]:
       stderr.write('Ignored: "' + '", "'.join(argv[1:]) + '"\n')
 
    main(color, keep)

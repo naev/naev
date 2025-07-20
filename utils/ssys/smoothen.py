@@ -13,7 +13,7 @@ def smoothen( pos, neigh, hard = False ):
       if (n := len(neigh[k])) > 1:
          acc, count = (vec(), count) if hard else (pos[k], 1)
          for s in neigh[k]:
-            if (N := [pos[i] for i in neigh[s] if i != k]) != []:
+            if N := [pos[i] for i in neigh[s] if i != k]:
                acc += 1.5*pos[s] - 0.5*sum(N, vec())/len(N)
             else:
                acc += pos[s]

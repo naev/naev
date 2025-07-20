@@ -90,7 +90,7 @@ else:
    if do_names := ('-n' in argv[1:]):
       argv.remove('-n')
 
-   if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:] != []:
+   if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:]:
       msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
       for l in [
          'usage:  ' + os.path.basename(argv[0]) + ' [ -c ] [ -n ] [-e]',
@@ -112,7 +112,7 @@ else:
 
       if not(do_names and not do_color and not extended):
          fact = V.aux[bnam]
-         fact = None if fact == [] else fact[0]
+         fact = fact[0] if fact else None
          fact = faction[fact]
 
          aux = faction_color[fact] if do_color else fact
@@ -123,7 +123,7 @@ else:
          else:
             V.aux[bnam] = [aux]
 
-         if (tags := [e.text for e in T.findall('tags/tag') if e.text in Rtags]) != []:
+         if tags := [e.text for e in T.findall('tags/tag') if e.text in Rtags]:
             if V.aux[bnam] == []:
                V.aux[bnam] = ['default']
             V.aux[bnam][-1] += ':'

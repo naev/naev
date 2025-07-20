@@ -131,7 +131,7 @@ def mk_subs( a, name = None ):
       o.autostack(doubled)
       sub.append(ls2vals(line, o.size(doubled)))
 
-   if sub == []:
+   if not sub:
       return None
 
    return {k:(v1, sub[-1][k]) for k, v1 in sub[0].items()}
@@ -164,7 +164,7 @@ def main( args ):
          acc = apply_ls(sub, o)
          if acc is not None:
             err(o.fil.split('/')[-1]+': ', nnl = True)
-            if acc != []:
+            if acc:
                err(', '.join([i+':'+j+'->'+k for i, j, k in acc]))
                core_write(o, o.fil)
             else:
@@ -243,12 +243,12 @@ if __name__ == '__main__':
    args = parser.parse_args()
 
    if args.generate:
-      if args.args[4:] != []:
+      if args.args[4:]:
          err('Ignored: '+', '.join([repr(a) for a in args.args[4:]]))
          args.args = args.args[:4]
       exit(gen_line(args.args))
    else:
-      if args.files or args.args == []:
+      if args.files or not args.args:
          args.args += [l.strip() for l in stdin.readlines()]
       args.args = [a for a in args.args if a.endswith('.xml')]
       exit(main(args.args))

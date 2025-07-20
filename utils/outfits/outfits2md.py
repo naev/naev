@@ -28,7 +28,7 @@ def nfmt( n ):
 
 def main( args, gith = False, color = False, term = False, noext = False,
       sortit = False, autostack = False, combine = False, good = False ):
-   if args == []:
+   if not args:
       return 0
 
    rang = dict()
@@ -194,7 +194,7 @@ with \'2x\' (or: \'1x\') or suffixed with \'x2\' (or: \'x1\').""")
       print('Warning: -C is subsumed by -G', file = stderr, flush = True)
 
    ign = [f for f in args.filename if not f.endswith('.xml') and not f.endswith('.mvx')]
-   if ign != []:
+   if ign:
       print('Ignored: "'+'", "'.join(ign)+'"', file = stderr, flush = True)
 
    sortby = args.sort or (args.sortbymass and 'mass') or False
@@ -202,7 +202,7 @@ with \'2x\' (or: \'1x\') or suffixed with \'x2\' (or: \'x1\').""")
    if sortby:
       print('sorted by "'+str(sortby)+'"', file = stderr, flush = True)
 
-   if args.files or args.filename == []:
+   if args.files or not args.filename:
       args.filename += [l.strip() for l in stdin.readlines()]
 
    main([f for f in args.filename if f not in ign],
