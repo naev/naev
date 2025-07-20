@@ -73,27 +73,29 @@ But sure you won’t see home
 --]]
    _([["I love the space pirate shanty, but every time I learn the lyrics I end up getting piss drunk and forget them the next morning…"]]),
    -- First part of the space pirate shanty
-   {_([["I lost my friend and fam’ly to a pirate raid
+   {_([[They are singing the first part of the Space Pirate Shanty.]]),
+    _([[♬"I lost my friend and fam’ly to a pirate raid
 The captain stood before me, I thought meself for dead
 Instead he told me rise up, come to the endless sea
-Into the black I followed, a pirate’s life for me."]]),
-   _([["Yo ho yo ho a pirate life for me
+Into the black I followed, a pirate’s life for me."♬]]),
+   _([[♬"Yo ho yo ho a pirate life for me
 In endless black we gonna attack
-A pirate’s life for me"]]),
-   _([["Yo ho yo ho, up in the endless sea
+A pirate’s life for me"♬]]),
+   _([[♬"Yo ho yo ho, up in the endless sea
 I may be hanged, don’t give a damn
-A pirate’s life for me"]])},
+A pirate’s life for me"♬]])},
    -- Second part of the space pirate shanty
-   {_([["The empire sent their warships, to capture our fair crew
+   {_([[They are singing the second part of the Space Pirate Shanty.]]),
+   _([[♬"The empire sent their warships, to capture our fair crew
 A thousand ships before us, and surely we were screwed
 The captain said 'Me hearties! At last we sail to hell!'
-My life was maybe short, but I’m sure I’ve spent it well"]]),
-   _([["Yo ho yo ho go down on your knee
+My life was maybe short, but I’m sure I’ve spent it well"♬]]),
+   _([[♬"Yo ho yo ho go down on your knee
 Man the guns and hit them hard
-A pirate’s death for me"]]),
-   _([["Yo ho yo ho life with sword and gun
+A pirate’s death for me"♬]]),
+   _([[♬"Yo ho yo ho life with sword and gun
 May get you wealth, just fly in stealth
-But sure you won’t see home"]])},
+But sure you won’t see home"♬]])},
 }
 
 local msg_tip = {
@@ -128,7 +130,7 @@ local msg_cond = {
    { test_dreamerclan,_([["I ate a weird mushroom yesterday, and I haven't stopped tripping. Are you real?"]]) },
    { test_chapter0,_([["Ya noticed all the large constructions being built recently in space? They need a lot of rare resources which the resource ships great targets for plundering! Arr!"]]) },
    { tneg(test_chapter0), _([["There been news of all these hypergates going online throughout the Empire. Rumour's that the Black Lotus have one too!"]]) },
-   { test_event("Haven's Curse"), _([["There's been rumours about strange things happening around Old Man Jack in the Haven system. Got to be them ghosts. Nuthin' ever good comes out of system-wide atrocities."]]) },
+   { test_event("Haven's Curse"), _([["There's been rumours about strange things happening around Old Man Jack in the Haven system. Got to be them ghosts. If you fly around in a circle three times counterclockwise, it takes its real form. Not gonna try that. Nuthin' ever good comes out of system-wide atrocities."]]) },
 }
 
 -- Returns a lore message for the given faction.
