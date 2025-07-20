@@ -86,7 +86,7 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     globals.set("N_", gettext_noop.clone())?;
     gettext_table.set("gettext_noop", gettext_noop)?;
     let ngettext = lua.create_function(
-        |_lua, (msg1, msg2, n): (String, String, i32)| -> mlua::Result<String> {
+        |_lua, (msg1, msg2, n): (String, String, u64)| -> mlua::Result<String> {
             Ok(ngettext(msg1.as_str(), msg2.as_str(), n).to_owned())
         },
     )?;
