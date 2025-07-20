@@ -13,7 +13,8 @@ def mk_combine(args, combine, autostack, good):
             stderr.write('"' + i + '" incompatible with -A/-C options -> ignored.\n')
          else:
             o = some_outfit(i)
-            if ((p, s) := o.can_pri_sec()) != (False, False)
+            (p, s) = o.can_pri_sec()
+            if p or s:
                acc.append((p, s, o.size(), o))
             else:
                stderr.write('"' + i + '" is not multicore. Ignored.\n')
@@ -44,14 +45,14 @@ def mk_combine(args, combine, autostack, good):
             s = s[2:] if s[:2] == '2x' else s[:-2]
             s = s + '+' + s
          s = s.split('+')
-         if o := some_outfit(s[0]) and o.can_pri():
-            if len(s) == 2:
+         if o := some_outfit(s[0]):
+            if len(s) == 2 :
                if s[1].strip() == '':
                   if o.can_alone():
                      yield o.stack()
-               else:
+               elif o.can_pri():
                   o2 = some_outfit(s[1])
                   if o2 and o2.can_sec() and o.can_stack(o2):
                      yield o.stack(o2)
-            else:
+            elif len(s) == 1 and o.can_alone():
                yield o

@@ -1,7 +1,7 @@
 # python
 
 import xml.etree.ElementTree as ET
-from sys import stdin, stdout
+import sys
 from os import path
 script_dir = path.join(path.dirname(__file__), '..')
 sys.path.append(path.realpath(script_dir))
@@ -93,7 +93,7 @@ class _outfit():
       if content:
          self.r = ET.fromstring(fil)
       elif type(fil) == type(''):
-         with stdin if fil == '-' else open(fil, 'rt') as fp:
+         with sys.stdin if fil == '-' else open(fil, 'rt') as fp:
             self.r = ET.parse(fp).getroot()
       else:
          self.r = ET.parse(fil).getroot()
@@ -209,7 +209,7 @@ class _outfit():
 
       return iter(_subs(self.r))
 
-   def write( self, dst = stdout ):
+   def write( self, dst = sys.stdout ):
       def output_r( e, fp, ind = 0 ):
          li = [e.tag] + [fmt_kv(x) for x in e.attrib.items()]
 
@@ -235,7 +235,7 @@ class _outfit():
 
       closeit = False
       if dst == '-':
-         dest = stdout
+         dest = sys.stdout
       elif type(dst) == type(''):
          dest = open(dst, 'w')
          closeit = True

@@ -14,10 +14,10 @@ def mvx_nam(xml):
 def _gen_if_needed( xml, force = False, quiet = False, multicore_only = False ):
    mvx = mvx_nam(xml)
    exists = (not force) and Path(mvx).is_file()
-   if not exists and not path.getmtime(mvx) < path.getmtime(xml):
-      return xmllua2mvx(xml, mvx, quiet, multicore_only)
-   else:
+   if exists and not path.getmtime(mvx) < path.getmtime(xml):
       return outfit(mvx)
+   else:
+      return xmllua2mvx(xml, mvx, quiet, multicore_only)
 
 def core_outfit( nam, try_again = False, quiet = False ):
    if nam.endswith('.xml'):
