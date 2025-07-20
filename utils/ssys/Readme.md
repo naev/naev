@@ -100,4 +100,3 @@ These are designed to manage the **internal geometry of systems**, that might ge
     - possible opt: manage separately neigh with non-1.0 len.
     - fix tunnel effect -
  - maybe manage tags in `ssysmap2graph.sh` instead of `graph_vaux.py`
- - povray dependency warning
