@@ -129,7 +129,7 @@ class _outfit():
          res = self.find('size')
          for i, k in enumerate(['small', 'medium', 'large']):
             if res == k:
-               return 2*i+(2 if doubled else 1)
+               return 2*i + (2 if doubled else 1)
       except:
          pass
 
@@ -165,7 +165,7 @@ class _outfit():
          self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
       res = self.eml()
       if type(res) == type(()):
-            (eml1, _) = res
+         (eml1, _) = res
       else:
          eml1 = res
 
@@ -219,7 +219,7 @@ class _outfit():
 
    def write( self, dst = stdout ):
       def output_r( e, fp, ind = 0 ):
-         li = [e.tag]+[fmt_kv(x) for x in e.attrib.items()]
+         li = [e.tag] + [fmt_kv(x) for x in e.attrib.items()]
 
          try:
             iter(e).next()

@@ -8,7 +8,7 @@ class Slst(list):
          (s, t, c) = (T[0], (T+('',))[1], (T+(None, None))[2])
          if c is None:
             st = st.replace(s, t)
-         elif c<0:
+         elif c < 0:
             st = ((st[::-1]).replace(s[::-1], t[::-1], -c))[::-1]
          else:
             st = st.replace(s, t, c)

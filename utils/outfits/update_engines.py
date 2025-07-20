@@ -176,7 +176,6 @@ def gen_line( params ):
    outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
    engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.xml')
 
-   #usage = " %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...)",
    lin = params[0]
    try:
       params = list(map(float, params[1:]))
