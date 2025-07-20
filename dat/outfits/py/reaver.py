@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#'input'  : 'weapons/heavy_ripper_cannon.xml',
 import helper as h
 N_ = lambda text: text
 data = h.read()
