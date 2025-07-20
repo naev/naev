@@ -21,5 +21,5 @@ L = ['palovi', 'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'mono
 neigh = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t} for k in ssys_pos }
 TL = { k: v for k, v in ssys_pos.items() if k not in L[1:-1]}
 
-ssys_pos.update(circleify(ssys_pos, L, 'suna'))
-ssys_pos.update(smoothen(ssys_pos, neigh))
+ssys_pos |= circleify(ssys_pos, L, 'suna')
+ssys_pos |= smoothen(ssys_pos, neigh)

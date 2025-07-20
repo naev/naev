@@ -60,7 +60,7 @@ def fmt( t, half = False ):
 
 def dec( f ):
    n = math.floor(f)
-   q = 1.0*f-n
+   q = 1.0*f - n
    n = int(n)
    return pow(dec_i(n), 1.0-q)*pow(dec_i(n+1), q)
 
@@ -76,8 +76,8 @@ def ls2vals( line, size ):
    # Modulate ratio based on outfit
    r *= line_stats[line]['ratio']
 
-   speed = fullspeed*(1.0-r)
-   accel = fullspeed*r*PHYSICS_SPEED_DAMP
+   speed = fullspeed * (1.0-r)
+   accel = fullspeed * r * PHYSICS_SPEED_DAMP
 
    turn = TURN_CT * fullspeed * pow(r/STD_R, AG_EXP)
    if 'turn' in stats:
@@ -86,7 +86,7 @@ def ls2vals( line, size ):
    return {
       'speed' : fmt(speed),
       'accel' : fmt(accel),
-      'turn' : fmt(turn, True)
+      'turn' :  fmt(turn, True)
    }
 
 def get_line( name ):
@@ -118,7 +118,7 @@ def mk_subs( a, name = None ):
          o = None
 
       if o is None:
-         stderr.write('Invalid outfit "'+a+'" ignored\n')
+         stderr.write('Invalid outfit "' + a + '" ignored\n')
          return None
 
       if name is None:
@@ -197,7 +197,7 @@ def gen_line( params ):
          err('Beat up small engine, used as dummy, was not found!')
          return 1
 
-      nam = lin+' '+s+' Engine'
+      nam = lin + ' ' + s + ' Engine'
       o.set_name(nam)
       fil = nam2fil(nam+'.xml')
 

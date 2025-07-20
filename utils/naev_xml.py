@@ -72,6 +72,16 @@ class _xml_node( dict ):
       dict.__setitem__(self, key, val)
       self._change()
 
+   def contents( self ):
+      for k, v in self.items():
+         try:
+            yield k, intify(float(v))
+         except:
+            yield k, v
+         if isinstance(v, _xml_node):
+            for t in v.contents():
+               yield t
+
 class naev_xml( _xml_node ):
    def __init__( self, fnam = devnull, read_only = False ):
       self._filename = devnull if read_only else fnam

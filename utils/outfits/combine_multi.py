@@ -9,7 +9,7 @@ def mk_combine(args, combine, autostack, good):
    if combine or autostack:
       acc = []
       for i in args:
-         if i[:2] in {'1x', '2x'} or i[-2:] in {'x1', 'x2'} or '+' in i:
+         if {i[:2], i[-2:][::-1]} & {'1x', '2x'} or '+' in i:
             stderr.write('"' + i + '" incompatible with -A/-C options -> ignored.\n')
          else:
             o = some_outfit(i)
@@ -38,10 +38,10 @@ def mk_combine(args, combine, autostack, good):
                yield o.stack(o)
    else: # No need for copy here.
       for s in args:
-         if s[:2] == '1x' or s[-2:] == 'x1':
+         if '1x' in {s[:2], s[-2:][::-1]}:
             s = s[2:] if s[:2] == '1x' else s[:-2]
             s = s + '+'
-         elif s[:2] == '2x' or s[-2:] == 'x2':
+         elif '2x' in {s[:2], s[-2:][::-1]}:
             s = s[2:] if s[:2] == '2x' else s[:-2]
             s = s + '+' + s
          s = s.split('+')
