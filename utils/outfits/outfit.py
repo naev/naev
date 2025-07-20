@@ -1,16 +1,15 @@
 # python
 
-from sys import stdin, stdout
-
 import xml.etree.ElementTree as ET
+from sys import stdin, stdout
+from os import path
+script_dir = path.join(path.dirname(__file__), '..')
+sys.path.append(path.realpath(script_dir))
+from xml_name import xml_name as nam2fil
+
 
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
 LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'trackmax', 'dispersion', 'speed_dispersion', 'energy_regen_malus', 'ew_stealth', 'ew_stealth_timer', 'ew_signature', 'launch_lockon', 'launch_calibration', 'fwd_energy', 'tur_energy', 'ew_track', 'cooldown_time', 'cargo_inertia', 'land_delay', 'jump_delay', 'delay', 'reload_time', 'iflockon', 'jump_warmup', 'rumble', 'ammo_mass', 'time_mod', 'ew_hide', 'launch_reload'}
-
-def nam2fil( s ):
-   for c in [('Red Star', 'rs'), (' ', '_'), ('-', ''), ("'", ''), ('&', '')]:
-      s = s.replace(*c)
-   return s.lower()
 
 def shorten( s ):
    L = s.split(' ')
@@ -78,9 +77,9 @@ def unstackvals( tag, text1, text2, eml1, eml2 ):
 def readval( what ):
    if what is None:
       what = ''
-   if len(what.split('/')) <= 2:
+   if len(prisec := what.split('/')) <= 2:
       try:
-         what = tuple(map(float, what.split('/')))
+         what = tuple(map(float, prisec)))
          if len(what) == 1:
             what = what[0]
       except:
@@ -108,30 +107,23 @@ class _outfit():
       self.r.attrib['name'] = name
 
    def find( self, tag, el = False ):
-      for e in self:
-         if e.tag == tag:
-            return e if el else e.text
+      for i in (e if el else e.text for e in self if e.tag == tag):
+         return i
 
    def shortname( self ):
-      if self.short:
-         return self.short
-      res = self.find('shortname')
-      if res is None:
-         res = self.name()
-
-      if res.split(' ')[-1] == 'Engine':
-         res = ' '.join(res.split(' ')[:-1])
-      self.short = res
-      return res
+      if not self.short:
+         if (res := self.find('shortname')) is None:
+            res = self.name()
+         if res.split(' ')[-1] == 'Engine':
+            res = ' '.join(res.split(' ')[:-1])
+         self.short = res
+      return self.short
 
    def size( self, doubled = False ):
-      try:
-         res = self.find('size')
-         for i, k in enumerate(['small', 'medium', 'large']):
-            if res == k:
-               return 2*i + (2 if doubled else 1)
-      except:
-         pass
+      res = self.find('size')
+      for i, k in enumerate(['small', 'medium', 'large']):
+         if res == k:
+            return 2*i + (2 if doubled else 1)
 
    def can_pri_sec( self ):
       if self.pri is None:
