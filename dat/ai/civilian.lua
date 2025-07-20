@@ -1,7 +1,6 @@
 require 'ai.core.core'
 require 'ai.core.idle.civilian'
 require 'ai.core.misc.distress'
-local fmt = require "format"
 
 mem.lanes_useneutral = true
 mem.atk_skill = 0
@@ -30,8 +29,7 @@ function hail ()
 
    -- Refueling
    mem.refuel = rnd.rnd( 1000, 3000 )
-   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
-         {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 
    mem.setuphail = true
 end

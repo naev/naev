@@ -1,6 +1,5 @@
 require 'ai.core.core'
 require 'ai.core.idle.pirate'
-local fmt = require "format"
 
 -- Settings
 mem.aggressive    = true
@@ -82,7 +81,7 @@ function hail ()
          (standing > 30 and mem.refuel_rng > 0.8) or
          (standing > 0 and mem.refuel_rng > 0.5) then
       mem.refuel = mem.refuel_base
-      mem.refuel_msg = fmt.f(_([["I should be able to spare some fuel for {credits}."]]), {credits=fmt.credits(mem.refuel)})
+      mem.refuel_msg = _([["I should be able to spare some fuel for {credits}."]])
    else
       mem.refuel_no = _([["I can't spare fuel for you."]])
    end

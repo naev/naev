@@ -1,8 +1,6 @@
 require "ai.pirate"
 local pirlib = require "ai.core.misc.pirate"
 
-local fmt = require "format"
-
 local taunt_list = {
    _("The Raven's talons always find their mark!"),
    _("Prepare for a lesson in resource redistribution!"),
@@ -36,7 +34,7 @@ end
 function hail ()
    pirlib.hail()
    -- Overwrite messages
-   mem.refuel_msg = fmt.f(_([["For a transaction of {credits} a jump, I can refuel your ship."]]), {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["For a transaction of {credits} a jump, I can refuel your ship."]])
 end
 
 function taunt( target, offense )

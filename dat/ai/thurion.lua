@@ -1,5 +1,4 @@
 require 'ai.core.core'
-local fmt = require "format"
 
 mem.shield_run    = 20
 mem.armour_run    = 20
@@ -81,8 +80,7 @@ function hail ()
 
    -- Refuel
    mem.refuel = mem.refuel_base
-   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
-         {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 
    -- No bribe
    mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

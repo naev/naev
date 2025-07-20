@@ -1,5 +1,4 @@
 require 'ai.core.core'
-local fmt = require "format"
 
 -- Settings
 mem.aggressive    = true
@@ -76,7 +75,7 @@ function hail ()
          (mem.refuel_rng > 0.3) then
       mem.refuel_no = _([["Mare magno turbantibus. That means that I don't care about your problems."]])
    else
-      mem.refuel_msg = fmt.f(_([["For you I could make an exception for {credits}."]]), {credits=fmt.credits(mem.refuel)})
+      mem.refuel_msg = _([["For you I could make an exception for {credits}."]])
    end
 
    -- Handle bribing

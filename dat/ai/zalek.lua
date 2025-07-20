@@ -125,9 +125,9 @@ function hail ()
    end
    -- Most likely no chance to refuel
    if mem.isdrone then
-      mem.refuel_msg = fmt.f( _([["INSERT {credits} TO COMMENCE REFUELLING OPERATIONS."]]), {credits=fmt.credits(mem.refuel)} )
+      mem.refuel_msg = _([["INSERT {credits} TO COMMENCE REFUELLING OPERATIONS."]])
    else
-      mem.refuel_msg = fmt.f( _([["I will agree to refuel your ship for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
+      mem.refuel_msg = _([["I will agree to refuel your ship for {credits}."]])
    end
 
    -- See if can be bribed

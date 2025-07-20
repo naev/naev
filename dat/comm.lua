@@ -476,8 +476,9 @@ function comm( plt )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = fmt.f(_([["I should be able to refuel you for {credits} for 100 units of fuel."]]), {credits=cstr})
+         str = ([["I should be able to refuel you for {credits} for 100 units of fuel."]])
       end
+      str = fmt.f( str, {credits=cstr} )
       if cost <= 0 then
          -- It's free so give as much as the player wants
          vn.jump("refuel_trypay_max")

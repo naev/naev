@@ -1,6 +1,4 @@
 require 'ai.core.core'
-local fmt = require "format"
-
 
 mem.shield_run = 100
 mem.armour_run = 100
@@ -14,7 +12,6 @@ local bribe_no_list = {
    _([["Get away from me!"]])
 }
 
-
 function create ()
    create_pre()
 
@@ -25,14 +22,12 @@ function create ()
    create_post()
 end
 
-
 function hail ()
    if mem.setuphail then return end
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
-   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
-         {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 
    -- No bribe
    mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

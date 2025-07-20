@@ -1,5 +1,4 @@
 require 'ai.core.core'
-local fmt = require "format"
 
 -- Settings
 mem.armour_run    = 40
@@ -67,8 +66,7 @@ function hail ()
 
    -- Refuel
    mem.refuel = mem.refuel_base
-   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
-         {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 
    -- Set up bribes
    mem.bribe = mem.bribe_base

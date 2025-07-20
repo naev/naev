@@ -1,5 +1,4 @@
 require 'ai.core.core'
-local fmt = require "format"
 
 -- Settings
 mem.armour_run    = 40
@@ -96,7 +95,7 @@ function hail ()
       mem.refuel = mem.refuel * 0.5
    end
    -- Most likely no chance to refuel
-   mem.refuel_msg = fmt.f( _([["I suppose I could spare some fuel for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
+   mem.refuel_msg = _([["I suppose I could spare some fuel for {credits}."]])
 
    -- Handle bribing
    mem.bribe = mem.bribe_base
