@@ -73,7 +73,7 @@ function hail ()
    -- Set up bribes
    mem.bribe = mem.bribe_base
    if mem.allowbribe or (mem.natural and mem.bribe_rng > 0.7) then
-      mem.bribe_prompt = fmt.f(_([["Your life is worth {credits} to me."]]), {credits=fmt.credits(mem.bribe)} )
+      mem.bribe_prompt = _([["Your life is worth {credits} to me."]])
       mem.bribe_paid = _([["Beat it."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

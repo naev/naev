@@ -139,8 +139,9 @@ local function bribe_msg( plt, group )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = fmt.f(_([["I'm gonna need at least {credits} to not leave you as a hunk of floating debris."]]), {credits=cstr})
+         str = _([["I'm gonna need at least {credits} to not leave you as a hunk of floating debris."]])
       end
+      str = fmt.f( str, {credits=cstr} )
       return fmt.f(_("{msg}\n\nYou have {credits}. Pay #r{price}#0?"), {msg=str, credits=chave, price=cstr} ), cost
    end
 end

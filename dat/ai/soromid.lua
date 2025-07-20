@@ -105,7 +105,7 @@ function hail ()
          (standing > -20 and mem.bribe_rng > 0.6) or
          (standing > -50 and mem.bribe_rng > 0.4) or
          (rnd.rnd() > 0.2))) then
-      mem.bribe_prompt = fmt.f(_([["For {credits} I'll give you enough time to get out of my sight."]]), {credits=fmt.credits(mem.bribe)} )
+      mem.bribe_prompt = _([["For {credits} I'll give you enough time to get out of my sight."]])
       mem.bribe_paid = _([["Now get out of my sight."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

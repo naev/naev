@@ -71,7 +71,7 @@ function hail ()
    if mem.allowbribe or (mem.natural and (standing > -30 or
          (standing > -60 and mem.bribe_rng > 0.8) or
          (mem.bribe_rng > 0.4))) then
-      mem.bribe_prompt = fmt.f(_([["It'll cost you {credits} for me to ignore your dirty presence."]]), {credits=fmt.credits(mem.bribe)})
+      mem.bribe_prompt = _([["It'll cost you {credits} for me to ignore your dirty presence."]])
       mem.bribe_paid = _([["Begone before I change my mind."]])
    else
       mem.bribe_no = _([["The only way to deal with scum like you is with cannons!"]])
