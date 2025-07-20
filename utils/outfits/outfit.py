@@ -79,7 +79,7 @@ def readval( what ):
       what = ''
    if len(prisec := what.split('/')) <= 2:
       try:
-         what = tuple(map(float, prisec)))
+         what = tuple(map(float, prisec))
          if len(what) == 1:
             what = what[0]
       except:

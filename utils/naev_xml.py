@@ -2,7 +2,7 @@
 
 """
 A slim layer on top of xmltodict. Used as follows:
-  o = xml_outfit('input.xml')
+  o = naev_xml('input.xml')
   # Here o is just the regular xmltodict-generated dictionary, except:
 
   #  1. the subtrees you insert are deep-copied. This prevents accidentally turning
@@ -46,9 +46,9 @@ import re
 
 intify = lambda x: int(x) if x == round(x) else x
 
-class _outfit_node( dict ):
+class _xml_node( dict ):
    def __init__ ( self, mapping, parent = None ):
-      mknode = lambda v: _outfit_node(v) if isinstance(v, dict) else v
+      mknode = lambda v: _xml_node(v) if isinstance(v, dict) else v
       dict.__init__(self, {k: mknode(v) for k, v in mapping.items()})
       self._parent = parent
 
@@ -58,26 +58,26 @@ class _outfit_node( dict ):
       else:
          self._parent._change()
 
-   def __getitem__ (self, key):
-      if isinstance(key, str) and key[0]=='$':
+   def __getitem__ ( self, key ):
+      if isinstance(key, str) and key[0] == '$':
          return intify(float(dict.__getitem__(self, key[1:])))
       else:
          return dict.__getitem__(self, key)
 
-   def __setitem__(self, key, val):
-      if isinstance(key, str) and key[0]=='$':
+   def __setitem__( self, key, val ):
+      if isinstance(key, str) and key[0] == '$':
          key, val = key[1:], intify(val)
-      elif isinstance(val, dict) and not isinstance(val, _outfit_node):
-         val = _outfit_node(val, self)
+      elif isinstance(val, dict) and not isinstance(val, _xml_node):
+         val = _xml_node(val, self)
       dict.__setitem__(self, key, val)
       self._change()
 
-class xml_outfit( _outfit_node ):
+class naev_xml( _xml_node ):
    def __init__( self, fnam = devnull, read_only = False ):
       self._filename = devnull if read_only else fnam
       self._uptodate = False
       with open(fnam, 'r') as fp:
-         _outfit_node.__init__(self, parse(fp.read()))
+         _xml_node.__init__(self, parse(fp.read()))
 
    def save( self ):
       if self._uptodate:
