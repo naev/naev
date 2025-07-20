@@ -43,6 +43,17 @@ local msg_lore = {
    _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quit drinking…"]]),
    _([["There are four major pirate clans: the Wild Ones, the Ravens, the Dreamers, and the Black Lotus. It's sometimes hard for them to get along."]]),
    _([["Pirate assemblies are the pinnacle of pirate society. Booze! Grog! Fights! Shanties! Jigs! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
+   -- Some Corsair Limericks, because why not?
+   _([["Behold ye sturdy pirate corsair
+who was once caught in an evil snare
+was shot up with a gun
+the Empire thought them done
+appeared back in Haven with fanfare"]]),
+   _([["Have ye heard of the cunning corsair?
+whose ship was never in need of repair
+asked why it is so strong
+hadn't had it for long
+it's best when it's new stolen hardware!"]]),
 -- This is the full 'space pirate shanty' (by theElerd)
 --[[
 I lost my friend and fam’ly to a pirate raid
