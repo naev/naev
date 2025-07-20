@@ -6,15 +6,14 @@ local eparams = require 'equipopt.params'
 local thurion_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Heavy Laser Turret", "Ragnarok Beam",
-   "Thurion Perspicacity Bay",
-   "Thurion Perspicacity Dock",
+   "Thurion Perspicacity Bay", "Thurion Scintillation Bay",
    "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
    -- Medium Weapons
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher", "Convulsion Launcher",
-   "Enygma Systems Turreted Fury Launcher",
+   "Enygma Systems Turreted Fury Launcher", "Thurion Perspicacity Dock",
    "Turreted Convulsion Launcher", "Grave Lance",
    "Laser Turret MK2", "Razor Battery S2", "Orion Beam",
    "EMP Grenade Launcher", "Heavy Ion Cannon",
