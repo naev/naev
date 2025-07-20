@@ -722,26 +722,6 @@ function attacked( attacker )
    local task = ai.taskname()
    local si = _stateinfo( task )
 
-   -- See if should investigate
-   if not p:inrange( attacker ) then
-      -- TODO ideally not use the _current_ attacker position, but something
-      -- related to where the weapon was fired from
-      local ap = attacker:pos()
-      -- Don't use should_investigate here, because it needs to be more aggressive
-      if not si.fighting or si.forced or si.noattack then
-         local d = ap:dist( p:pos() )
-         local fuzz = math.max(500, d*0.5)
-         local target = ap + vec2.newP( fuzz*rnd.rnd(), rnd.angle () )
-         ai.pushtask("inspect_attacker", target )
-
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "l_investigate", ap + vec2.newP(fuzz*rnd.rnd(), rnd.angle()) )
-         end
-         return true
-      end
-      return
-   end
-
    -- Notify that pilot has been attacked before
    if not mem.attacked then
       mem.attacked = true
@@ -768,6 +748,31 @@ function attacked( attacker )
       else
          return
       end
+   end
+
+   -- See if should investigate
+   if not p:inrange( attacker ) then
+      -- TODO ideally not use the _current_ attacker position, but something
+      -- related to where the weapon was fired from
+      local ap = attacker:pos()
+      -- Don't use should_investigate here, because it needs to be more aggressive
+      if not si.fighting or si.forced or si.noattack then
+         local d = ap:dist( p:pos() )
+         local fuzz = math.max(500, d*0.5)
+         local target = ap + vec2.newP( fuzz*rnd.rnd(), rnd.angle () )
+         ai.pushtask("inspect_attacker", target )
+
+         -- So this is a corner case with friendly factions not breaking stealth or messing with the player
+         local wp = attacker:withPlayer()
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "l_investigate", ap + vec2.newP(fuzz*rnd.rnd(), rnd.angle()) )
+            if wp then
+               v:setHostile(true)
+            end
+         end
+         return true
+      end
+      return
    end
 
    -- Notify followers that we've been attacked
