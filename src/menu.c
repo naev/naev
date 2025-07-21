@@ -20,7 +20,6 @@
 #include "dev_mapedit.h"
 #include "dev_uniedit.h"
 #include "dialogue.h"
-#include "gui.h"
 #include "hook.h"
 #include "info.h"
 #include "intro.h"
@@ -192,7 +191,8 @@ void menu_main( void )
    player_soundStop(); /* Stop sound. */
    player_resetSpeed();
    render_postprocessCleanup();
-   space_gfxUnload( cur_system ); /* Should stop wormhole sound and such. */
+   if ( bg_needs_reset )
+      space_gfxUnload( cur_system ); /* Should stop wormhole sound and such. */
 
    /* Play load music. */
    music_choose( "load" );
