@@ -7,7 +7,7 @@ if __name__ != '__main__':
 from sys import argv, stderr
 from graph_vaux import color_values
 
-if argv[1:] != []:
+if argv[1:]:
    stderr.write(
       'usage: ' + argv[0].split('/')[-1] + '\n'
       '  Reads a graph file on stdin, outputs a graph on stdout.\n'

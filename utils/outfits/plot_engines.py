@@ -42,28 +42,28 @@ def mkline( line ):
 
    if len(L) == 4:  # That's Krain!
       # Complete with padding
-      L = L+2*[('.', '.')]
+      L = L + 2*[('.', '.')]
 
    return L
 
 def main( ):
    bas = os.path.splitext(os.path.basename(__file__))[0]
    bas = os.path.join('.', bas)
-   dat = bas+'.dat'
+   dat = bas + '.dat'
    fp = open(dat, 'wt')
 
    pstr = lambda t:str(t[0])+' '+str(t[1])
    for i, t in enumerate(zip(*tuple(map(mkline, lines)))):
-      fp.write(' '.join([str(i+1)]+list(map(pstr, list(t))))+'\n')
+      fp.write(' '.join([str(i+1)] + list(map(pstr, list(t)))) + '\n')
 
    fp.close()
-   stderr.write('<'+bas+'.dat>\n')
+   stderr.write('<' + bas + '.dat>\n')
 
-   plt = bas+'.plot'
+   plt = bas + '.plot'
    fp = open(plt, 'wt')
    fp.write("""#!/usr/bin/gnuplot\n
 set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enhanced\n""")
-   fp.write('set output "'+bas+'.png"\n')
+   fp.write('set output "' + bas + '.png"\n')
    fp.write("""set key outside
    set termoption dashed
    set logscale y sqrt(sqrt(2))
@@ -78,14 +78,11 @@ set terminal pngcairo transparent truecolor size 600,400 font "Helvetica,10" enh
    def fmt( dat, off, i, l ):
       if off == 0:
          #w = 'linespoint'
-         w = 'lines'
-         sp = ''
-         lw = '0.9'
+         w, sp, lw = 'lines', '', '0.9'
       else:
-         w = 'lines'
-         sp = ' (drift)'
-         lw = '0.85 dt "-"'
-      l = '"'+l.replace('_', ' ')+sp+'"'
+         w, sp, lw = 'lines', ' (drift)', '0.85 dt "-"'
+
+      l = '"' + l.replace('_', ' ') + sp + '"'
       n = i+1
       if n >= 5:
          n += 1

@@ -1,23 +1,22 @@
 # python
 
-from sys import stdin, stdout
-
 import xml.etree.ElementTree as ET
+import sys
+from os import path
+script_dir = path.join(path.dirname(__file__), '..')
+sys.path.append(path.realpath(script_dir))
+from xml_name import xml_name as nam2fil
+
 
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
 LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'trackmax', 'dispersion', 'speed_dispersion', 'energy_regen_malus', 'ew_stealth', 'ew_stealth_timer', 'ew_signature', 'launch_lockon', 'launch_calibration', 'fwd_energy', 'tur_energy', 'ew_track', 'cooldown_time', 'cargo_inertia', 'land_delay', 'jump_delay', 'delay', 'reload_time', 'iflockon', 'jump_warmup', 'rumble', 'ammo_mass', 'time_mod', 'ew_hide', 'launch_reload'}
 
-def nam2fil( s ):
-   for c in [('Red Star', 'rs'), (' ', '_'), ('-', ''), ("'", ''), ('&', '')]:
-      s = s.replace(*c)
-   return s.lower()
-
 def shorten( s ):
    L = s.split(' ')
-   while L != [] and L[0][1:2] == '.':
+   while L and L[0][1:2] == '.':
       L = L[1:]
 
-   if L == []:
+   if not L:
       return '???'
    elif L[0] == 'Beat':
       if L[2] == 'Medium':
@@ -78,9 +77,9 @@ def unstackvals( tag, text1, text2, eml1, eml2 ):
 def readval( what ):
    if what is None:
       what = ''
-   if len(what.split('/')) <= 2:
+   if len(prisec := what.split('/')) <= 2:
       try:
-         what = tuple(map(float, what.split('/')))
+         what = tuple(map(float, prisec))
          if len(what) == 1:
             what = what[0]
       except:
@@ -94,7 +93,7 @@ class _outfit():
       if content:
          self.r = ET.fromstring(fil)
       elif type(fil) == type(''):
-         with stdin if fil == '-' else open(fil, 'rt') as fp:
+         with sys.stdin if fil == '-' else open(fil, 'rt') as fp:
             self.r = ET.parse(fp).getroot()
       else:
          self.r = ET.parse(fil).getroot()
@@ -108,30 +107,23 @@ class _outfit():
       self.r.attrib['name'] = name
 
    def find( self, tag, el = False ):
-      for e in self:
-         if e.tag == tag:
-            return e if el else e.text
+      for i in (e if el else e.text for e in self if e.tag == tag):
+         return i
 
    def shortname( self ):
-      if self.short:
-         return self.short
-      res = self.find('shortname')
-      if res is None:
-         res = self.name()
-
-      if res.split(' ')[-1] == 'Engine':
-         res = ' '.join(res.split(' ')[:-1])
-      self.short = res
-      return res
+      if not self.short:
+         if (res := self.find('shortname')) is None:
+            res = self.name()
+         if res.split(' ')[-1] == 'Engine':
+            res = ' '.join(res.split(' ')[:-1])
+         self.short = res
+      return self.short
 
    def size( self, doubled = False ):
-      try:
-         res = self.find('size')
-         for i, k in enumerate(['small', 'medium', 'large']):
-            if res == k:
-               return 2*i+(2 if doubled else 1)
-      except:
-         pass
+      res = self.find('size')
+      for i, k in enumerate(['small', 'medium', 'large']):
+         if res == k:
+            return 2*i + (2 if doubled else 1)
 
    def can_pri_sec( self ):
       if self.pri is None:
@@ -165,7 +157,7 @@ class _outfit():
          self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
       res = self.eml()
       if type(res) == type(()):
-            (eml1, _) = res
+         (eml1, _) = res
       else:
          eml1 = res
 
@@ -217,9 +209,9 @@ class _outfit():
 
       return iter(_subs(self.r))
 
-   def write( self, dst = stdout ):
+   def write( self, dst = sys.stdout ):
       def output_r( e, fp, ind = 0 ):
-         li = [e.tag]+[fmt_kv(x) for x in e.attrib.items()]
+         li = [e.tag] + [fmt_kv(x) for x in e.attrib.items()]
 
          try:
             iter(e).next()
@@ -243,7 +235,7 @@ class _outfit():
 
       closeit = False
       if dst == '-':
-         dest = stdout
+         dest = sys.stdout
       elif type(dst) == type(''):
          dest = open(dst, 'w')
          closeit = True

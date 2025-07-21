@@ -6,7 +6,7 @@ if __name__ != '__main__':
 
 from sys import stderr, argv, exit
 
-if argv[1:] != []:
+if argv[1:]:
    stderr.write(
       'usage: ' + argv[0].split('/')[-1] + '\n'
       '  Reads a graph file on stdin, outputs a graph on stdout.\n'
@@ -21,5 +21,5 @@ L = ['palovi', 'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'mono
 neigh = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t} for k in ssys_pos }
 TL = { k: v for k, v in ssys_pos.items() if k not in L[1:-1]}
 
-ssys_pos.update(circleify(ssys_pos, L, 'suna'))
-ssys_pos.update(smoothen(ssys_pos, neigh))
+ssys_pos |= circleify(ssys_pos, L, 'suna')
+ssys_pos |= smoothen(ssys_pos, neigh)

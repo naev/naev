@@ -41,7 +41,7 @@ if '-q' in [a[:2] for a in argv[1:]]:
    argv.remove(a)
    silent = True
 
-if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:] != []:
+if (h := ('-h' in argv[1:] or '--help' in argv[1:])) or argv[1:]:
    if not h:
       stderr.write('Unrecognized: ' + ', '.join(argv[1]) + '\n')
    from os.path import basename
@@ -216,5 +216,11 @@ if pov_out is not None:
       arg = {'stderr': open(os.devnull, 'wb')}
    else:
       arg = {}
-   subprocess.run(cmd, **arg)
-   stderr.write('<' + pov_out + '.png>\n')
+   try:
+      subprocess.run(cmd, **arg)
+      stderr.write('<' + pov_out + '.png>\n')
+   except FileNotFoundError:
+      stderr.write(
+         '\033[31mError\033[0m povray not installed ! Try:\n'
+         '  sudo apt-get install povray\n'
+      )

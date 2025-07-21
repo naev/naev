@@ -21,6 +21,7 @@ faction_color = {
    'collective':      'white',
    'goddard':         'blue2',
    'traders_society': 'blue2',
+   'yetmer':          'skyblue',
    'orez':            'skyblue',
    'flf':             'yellow',
 }
@@ -89,74 +90,40 @@ else:
    if do_names := ('-n' in argv[1:]):
       argv.remove('-n')
 
-   if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:] != []:
+   if (help_f := '-h' in argv or '--help' in argv[1:]) or argv[1:]:
       msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
-      DOC = [
-         'usage:  ' + os.path.basename(argv[0]) + '[ -c ] [ -n ] [-e]',
-         '  Adds faction name to vertices aux field.',
-         '  If -c is set, adds color instead.',
-         '  If -c and -n is set, adds color + name.',
-         '  If only -n is set, adds name.',
+      for l in [
+         'usage:  ' + os.path.basename(argv[0]) + ' [ -c ] [ -n ] [-e]',
+         '  Replaces faction name by faction group name in vertices aux field,',
+         '  and adds tags amongst ' + ', '.join(Rtags) + '.',
+         '  If -c is set, replaces it with color instead.',
+         '  If -n is set, adds ssys full name.',
          '  If -e is set, extends faction/color tags to influence zone.',
-      ]
-      for l in DOC:
+      ]:
          msg(l)
       exit(0 if help_f else 1)
 
    import xml.etree.ElementTree as ET
    from ssys import getpath, PATH, nam2base
-
-   def get_spob_faction( nam ):
-      T = ET.parse(getpath(PATH, "spob", nam + ".xml")).getroot()
-      if (e := T.find("./presence/faction")) is not None:
-         fnam = nam2base(e.text)
-         return None if fnam not in faction else faction[fnam]
-
-
    from graphmod import ssys_pos as V
 
    for bnam in V:
       T = ET.parse(getpath(PATH, "ssys", bnam + ".xml")).getroot()
 
-      spobs = []
-      for e in T.findall('spobs/spob'):
-         spobs.append(nam2base(e.text))
-
       if not(do_names and not do_color and not extended):
-         nb = len(spobs)
-         maxi = 0
-         fact = {}
-         for s in spobs:
-            res = None
-            if f := get_spob_faction(s):
-               if f not in fact:
-                  fact[f] = 0
-               res = f;
-            if res is None :
-               nb -= 1
-            else:
-               fact[f] += 1
-               if fact[f] > maxi:
-                  maxi = fact[f]
-            if maxi >= (nb+1) / 2:
-               break
-
-         fact = list(sorted([(n,f) for (f,n) in fact.items()], reverse = True))
-         if len(fact)>1 and fact[0][1]=='independent' and fact[0][0] == fact[1][0]:
-            fact = fact[1]
-         else:
-            fact = (fact + [(None,None)])[0]
-         if (fact:= fact[1]) not in faction_color:
-            fact = None
+         fact = V.aux[bnam]
+         fact = fact[0] if fact else None
+         fact = faction[fact]
 
          aux = faction_color[fact] if do_color else fact
          aux = 'default' if aux is None else aux
          if aux == 'default':
             if do_names or extended:
-               V.aux[bnam].append('default')
+               V.aux[bnam] = ['default']
          else:
-            V.aux[bnam].append(aux)
-         if (tags := [e.text for e in T.findall('tags/tag') if e.text in Rtags]) != []:
+            V.aux[bnam] = [aux]
+
+         if tags := [e.text for e in T.findall('tags/tag') if e.text in Rtags]:
             if V.aux[bnam] == []:
                V.aux[bnam] = ['default']
             V.aux[bnam][-1] += ':'

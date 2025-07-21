@@ -1,6 +1,6 @@
 # python3
 
-keep_in_xml = set(['priority', 'rarity'])
+keep_in_xml = {'priority', 'rarity'}
 
 from sys import argv, stderr, stdin, stdout, exit
 from outfit import outfit, nam2fil, MOBILITY_PARAMS, text2val, roundit, ET
@@ -47,13 +47,13 @@ def _mklua( L ):
 
    for (nam,(main, sec)) in L:
       if nam not in keep_in_xml:
-         output += ind+'{ "'+nam+'", '
+         output += ind + '{ "' + nam + '", '
          output += fmt(main)
          if main != sec:
-            output += ', '+fmt(sec)
+            output += ', ' + fmt(sec)
          output += '},\n'
 
-   return output+'}\n'
+   return output + '}\n'
 
 def _toxmllua( o ):
    R = o.r
@@ -61,28 +61,25 @@ def _toxmllua( o ):
    acc2, tr2 = _process_group(R, './specific')
 
    found = False
-   for e in R.findall('./specific'):
+   if e:= R.find('./specific'):
       for elt in e:
          if elt.tag == 'lua_inline':
             found = True
          break
-      break
 
-   for (r, e) in tr1+tr2:
+   for (r, e) in tr1 + tr2:
       r.remove(e)
 
-   el = None
-   for e in R.findall('./specific'):
+   if e:
       for elt in e:
          if elt.tag == 'lua_inline':
             el = elt
             break
-      if el is None:
+      else:
          el = ET.Element('lua_inline')
          el.text = ''
          e.append(el)
-      el.text = _mklua(acc1+acc2) + el.text
-      break
+      el.text = _mklua(acc1 + acc2) + el.text
 
 def mvx2xmllua( argin, argout, quiet ):
    o = outfit(argin)

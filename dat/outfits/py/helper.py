@@ -1,16 +1,16 @@
 import sys
-from xml_outfit import xml_outfit
 from os import path
-script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfits')
+script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils')
 sys.path.append(path.realpath(script_dir))
-from core_outfit import core_outfit
-from outfit import outfit
+sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
+from naev_xml import naev_xml
+from core_outfit import core_outfit, outfit
 
 INPUT = sys.argv[1]
 OUTPUT = sys.argv[2]
 
 def read():
-   o = xml_outfit(INPUT)
+   o = naev_xml(INPUT)
    o.save_as(OUTPUT)
    return o
 

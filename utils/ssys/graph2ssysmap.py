@@ -13,7 +13,7 @@ if __name__ != '__main__':
 from sys import argv, exit, stdout, stderr, stdin
 
 help_f = '-h' in argv or '--help' in argv[1:]
-if help_f or (argv[1:] != [] and do_write):
+if help_f or (argv[1:] and do_write):
    msg = lambda s: (stdout if help_f else stderr).write(s + '\n')
    DOC = [
       'usage:  ' + os.path.basename(argv[0]),

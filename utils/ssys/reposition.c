@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define THREADS 2
+#define THREADS 4
 #define SAMP 200
 #define EDGE_FACT 1.6
 #define PEEK_D 4

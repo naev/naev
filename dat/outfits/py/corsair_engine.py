@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#'input'  : 'core_engine/medium/nexus_arrow_700_engine.xml',
 import helper as h
 N_ = lambda text: text
 data = h.read()

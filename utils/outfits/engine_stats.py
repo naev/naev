@@ -13,7 +13,7 @@ from slst import Slst
 out = lambda x: stdout.write(x + '\n')
 
 def line_drawing(gith = False, color = False, term = False):
-   head, rule, line, alt_line = Slst([]), Slst([]), Slst([]), Slst([])
+   head, rule, line, alt_line = Slst(), Slst(), Slst(), Slst()
 
    if color or term:
       head += [ ('|', ' ', 1) ]
@@ -63,7 +63,7 @@ def field( a, f ):
       if type(res) == type(()):
          res = res[0]
 
-      if type(res) == type(""):
+      if type(res) == type(''):
          res = float(res)
    except:
       res = 0.0
@@ -74,11 +74,11 @@ speed =        lambda a: field(a, 'speed')
 eml =          lambda a: field(a, 'engine_limit')
 turn =         lambda a: field(a, 'turn')
 
-maxspeed =     lambda a: speed(a)+accel(a)/PHYSICS_SPEED_DAMP
-fullsptime =   lambda a: maxspeed(a)/accel(a) if accel(a) else 0.0
-radius =       lambda a: round(maxspeed(a)/(turn(a)/180.0*math.pi))
-fullspdist =   lambda a: round(maxspeed(a)*fullsptime(a)/2.0)
-turntime =     lambda a: 180.0/turn(a)
+maxspeed =     lambda a: speed(a) + accel(a) / PHYSICS_SPEED_DAMP
+fullsptime =   lambda a: maxspeed(a) / accel(a) if accel(a) else 0.0
+radius =       lambda a: round(maxspeed(a) / (turn(a)/180.0*math.pi))
+fullspdist =   lambda a: round(maxspeed(a) * fullsptime(a) / 2.0)
+turntime =     lambda a: 180.0 / turn(a)
 
 def key( A ):
    (a, _) = A
@@ -181,7 +181,7 @@ Can also be two outfits separated by \'+\', or an outfit prefixed with \'2x\' or
 
    if args.files or args.filename == []:
       args.filename += [l.strip() for l in stdin.readlines()]
-   args.filename = [f for f in args.filename if f[-4:] in [".mvx", ".xml"]]
+   args.filename = [f for f in args.filename if f[-4:] in {".mvx", ".xml"}]
    main(args.filename, args.github, args.color or args.term, args.term,
       args.autostack, args.combinations or args.good, args.no_sort, args.good)
 else:

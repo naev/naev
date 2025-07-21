@@ -9,10 +9,6 @@ from outfit import outfit, ET
 from sys import argv, stderr, exit
 
 
-# everything ont in this list goes to specific intead of general
-#general = ['mass', 'cpu']
-general = ['cpu']
-
 def numeval(s):
    try:
       return int(s)
@@ -53,12 +49,7 @@ def xmllua2mvx( argin, argout, quiet = False, multicore_only = False ):
       return None
 
    o.is_multi = (fields != [])
-   d = {'general': [], 'specific': []}
-   for t in fields:
-      if t[0] in general:
-         d['general'].append(t)
-      else:
-         d['specific'].append(t)
+   d = {'general': [], 'specific': fields}
 
    for e in o:
       if e.tag in ['general', 'specific']:
