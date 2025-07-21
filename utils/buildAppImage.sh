@@ -157,14 +157,11 @@ build_appimage() {
         SUFFIX="$SUFFIX-unknown"
     fi
 
-    export OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
+    OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
+    UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
 
-    # Disable appstream test
-    export NO_APPSTREAM=1
-
-    export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
     pushd "$WORKPATH/dist"
-    "$appimagetool" -n -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
+    "$appimagetool" --comp zstd -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
     popd
     echo "Completed."
 }
