@@ -44,13 +44,20 @@ from sys import stderr
 from os import devnull
 import re
 
-intify = lambda x: int(x) if x == round(x) else x
+
+def _numify( s ):
+   for f in [int, float]:
+      try:
+         return f(s)
+      except:
+         pass
 
 class _xml_node( dict ):
-   def __init__ ( self, mapping, parent = None ):
+   def __init__ ( self, mapping, parent = None, key = None ):
       mknode = lambda v: _xml_node(v) if isinstance(v, dict) else v
       dict.__init__(self, {k: mknode(v) for k, v in mapping.items()})
       self._parent = parent
+      self._key = key
 
    def _change( self ):
       if self._parent is None:
@@ -60,32 +67,40 @@ class _xml_node( dict ):
 
    def __getitem__ ( self, key ):
       if isinstance(key, str) and key[0] == '$':
-         return intify(float(dict.__getitem__(self, key[1:])))
+         return _numify(dict.__getitem__(self, key[1:]))
       else:
          return dict.__getitem__(self, key)
 
    def __setitem__( self, key, val ):
       if isinstance(key, str) and key[0] == '$':
-         key, val = key[1:], intify(val)
+         val = numify(val)
+         if not val:
+            raise ValueError(str(val) + ' is not a number.')
+         key = key[1:]
       elif isinstance(val, dict) and not isinstance(val, _xml_node):
-         val = _xml_node(val, self)
+         val = _xml_node(val, self, key)
       dict.__setitem__(self, key, val)
       self._change()
 
-   def contents( self ):
+   def parent( self ):
+      return self._parent, self._key
+
+   def nodes( self, lookfor = None ):
       for k, v in self.items():
-         try:
-            yield k, intify(float(v))
-         except:
-            yield k, v
+         if not lookfor or k in lookfor:
+            if _numify(v) is None:
+               yield self, k
+            else:
+               yield self, '$' + k
          if isinstance(v, _xml_node):
-            for t in v.contents():
+            for t in v.nodes(lookfor):
                yield t
 
 class naev_xml( _xml_node ):
    def __init__( self, fnam = devnull, read_only = False ):
       self._filename = devnull if read_only else fnam
-      self._uptodate = False
+      self._uptodate = True
+      self.short = False
       with open(fnam, 'r') as fp:
          _xml_node.__init__(self, parse(fp.read()))
 
@@ -108,3 +123,7 @@ class naev_xml( _xml_node ):
    def __del__( self ):
       if not self._uptodate and self._filename != devnull:
          stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
+
+   def find( self, key, ref = False):
+      for d, k in self.nodes(lookfor = { key }):
+         return d if ref else d[k]
