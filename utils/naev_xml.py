@@ -46,11 +46,11 @@ import re
 
 
 def _numify( s ):
-   for f in [int, float]:
-      try:
-         return f(s)
-      except:
-         pass
+   try:
+      f = float(s)
+      return int(f) if round(f) == f else f
+   except:
+      pass
 
 class _xml_node( dict ):
    def __init__ ( self, mapping, parent = None, key = None ):
@@ -73,14 +73,17 @@ class _xml_node( dict ):
 
    def __setitem__( self, key, val ):
       if isinstance(key, str) and key[0] == '$':
-         val = numify(val)
-         if not val:
+         val = _numify(val)
+         if val is None:
             raise ValueError(str(val) + ' is not a number.')
          key = key[1:]
       elif isinstance(val, dict) and not isinstance(val, _xml_node):
          val = _xml_node(val, self, key)
       dict.__setitem__(self, key, val)
       self._change()
+
+   def __delitem__ ( self, key ):
+      dict.__delitem__(self, key[1:] if key[:1] == '$' else key)
 
    def parent( self ):
       return self._parent, self._key
@@ -98,6 +101,8 @@ class _xml_node( dict ):
 
 class naev_xml( _xml_node ):
    def __init__( self, fnam = devnull, read_only = False ):
+      if type(fnam) != type('') or not fnam.endswith('.xml'):
+         raise Exception('Invalid xml filename "' + repr(fnam) + '"')
       self._filename = devnull if read_only else fnam
       self._uptodate = True
       self.short = False

@@ -2,7 +2,7 @@
 
 
 import sys
-from sys import stderr
+#from sys import stderr
 from os import path
 script_dir = path.join(path.dirname(__file__), '..')
 sys.path.append(path.realpath(script_dir))
@@ -13,11 +13,25 @@ import re
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
 LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'trackmax', 'dispersion', 'speed_dispersion', 'energy_regen_malus', 'ew_stealth', 'ew_stealth_timer', 'ew_signature', 'launch_lockon', 'launch_calibration', 'fwd_energy', 'tur_energy', 'ew_track', 'cooldown_time', 'cargo_inertia', 'land_delay', 'jump_delay', 'delay', 'reload_time', 'iflockon', 'jump_warmup', 'rumble', 'ammo_mass', 'time_mod', 'ew_hide', 'launch_reload'}
 
-def numeval(s):
-   try:
-      return int(s)
-   except:
-      return float(s)
+def shorten( s ):
+   L = s.split(' ')
+   while L and L[0][1:2] == '.':
+      L = L[1:]
+
+   if not L:
+      return '???'
+   elif L[0] == 'Beat':
+      if L[2] == 'Medium':
+         L[2] = 'Med.'
+      return 'B. ' + L[2]
+   else:
+      return L[0]
+
+def prisec( tag, r1, r2, eml1, eml2 ):
+   if tag in MOBILITY_PARAMS:
+      return round(2.0 * (r1*eml1 + r2*eml2) / (eml1 + eml2)) / 2
+   else:
+      return r1 + r2
 
 def parse_lua_multicore( si ):
    name = ' ("|\')([^"\']*)\\1'
@@ -41,7 +55,7 @@ def parse_lua_multicore( si ):
    for d in L:
       if d['sec'] is None:
          d['sec'] = d['pri']
-   L = [(d['name'], numeval(d['pri']), numeval(d['sec'])) for d in L]
+   L = [(d['name'], d['pri'], d['sec']) for d in L]
    return L, si[match.span()[1]:]
 
 def un_multicore( o ):
@@ -62,8 +76,10 @@ def un_multicore( o ):
 
 class outfit():
    # None means auto
-   def __init__( self, filename, is_multi = None ):
-      self.o = naev_xml(filename)
+   def __init__( self, filename, is_multi = None, read_only = False ):
+      self.o = naev_xml(filename, read_only = read_only)
+      if 'outfit' not in self.o:
+         raise Exception('Invalid xml filename "' + repr(fnam) + '"')
       self.short = None
       self.is_multi = False
       if is_multi or is_multi is None:
@@ -82,20 +98,65 @@ class outfit():
    can_sec = lambda self: self.can_pri_sec()[1]
 
    def can_alone( self ):
-      return True
+      return self.name().find('Twin') == -1
+
+   def can_stack( self, other ):
+      return(
+         (self.name() == other.name() and self.name().find('Twin') != -1) or
+         (self.name().split(' ')[0] != 'Krain' and other.name().split(' ')[0] != 'Krain')
+      )
+
+   def size( self, doubled = False ):
+      res = self.o.find('size')
+      for i, k in enumerate(['small', 'medium', 'large']):
+         if res == k:
+            return 2*i + (2 if doubled else 1)
 
    def stack( self, other = None ):
+      if other is None:
+         self.short = self.shortname() + ' x1'
+      elif self.shortname() == other.shortname():
+         self.short = self.shortname() + ' x2'
+      else:
+         self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
+
+      if other:
+         sec = {k: v for d, k, v in other.equipped(sec = True)}
+         el2 = other.o.find('engine_limit')
+      else:
+         sec = {}
+         el2 = 0
+
+      el1 = self.o.find('engine_limit')
+      done = set()
+
+      for d, k, v in self.equipped(sec = False):
+         e = sec[k] if k in sec else 0
+         d[k] = prisec(k, v, e, el1, el2)
+         done.add(k)
+
+      e = self.o.find('specific')
+      for d, k, v in other.equipped(sec = True) if other else []:
+         if k not in done:
+            e[k] = prisec(k, 0, v, el1, el2)
       return self
 
-   def to_dict( self, num_only = True ):
-      out = {}
+   def equipped( self, sec = False):
+      pri_sec = ('sec', 'pri') if sec else ('pri', 'sec')
       for d, k in self.o.nodes():
-         if k[:1] == '$' and k[1:2] != '@':
-            if k[1:] not in {'pri', 'sec'}:
-               out[k[1:]] = d[k]
-            elif k[1:] == 'pri' and 'sec' in set(d):
-               out[d.parent()[1]] = (d['pri'], d['sec'])
-      return out
+         D, K = d.parent()
+         if k[-3:] == pri_sec[1]:
+            if pri_sec[0] not in d:
+               yield D, '$' + K, 0
+         elif k[-3:] == pri_sec[0]:
+            yield D, '$' + K, d[k]
+         elif k[:1]=='$' and k[1:2]!='@':
+            yield d, k, d[k]
+
+   def to_dict( self ):
+      pri = ((k[1:], v) for (_d, k, v) in self.equipped(sec = False))
+      sec = ((k[1:], v) for (_d, k, v) in self.equipped(sec = True))
+      return {k: ((v1, v2) if v1!=v2 else v1) for ((k, v1), (_k, v2)) in zip(pri, sec)}
 
    def name( self ):
       return self.o['outfit']['@name']

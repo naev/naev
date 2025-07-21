@@ -52,7 +52,7 @@ def prisec( tag, r1, r2, eml1, eml2 ):
 
    if r2 is not None:
       if tag in MOBILITY_PARAMS:
-         a = (a*eml1+r2[1]*eml2)/(eml1+eml2)
+         a = (a*eml1+r2[1]*eml2) / (eml1+eml2)
       else:
          a += r2[1]
 
