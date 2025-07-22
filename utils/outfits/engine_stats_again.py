@@ -5,7 +5,7 @@ from sys import stdout, stderr, stdin
 import math
 
 from getconst import PHYSICS_SPEED_DAMP
-from combine_multi import mk_combine
+from combine_multi_again import mk_combine
 from slst import Slst
 
 

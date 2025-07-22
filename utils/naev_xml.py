@@ -101,10 +101,10 @@ class _xml_node( dict ):
 
 class naev_xml( _xml_node ):
    def __init__( self, fnam = devnull, read_only = False ):
+      self._uptodate = True
       if type(fnam) != type('') or not fnam.endswith('.xml'):
          raise Exception('Invalid xml filename "' + repr(fnam) + '"')
       self._filename = devnull if read_only else fnam
-      self._uptodate = True
       self.short = False
       with open(fnam, 'r') as fp:
          _xml_node.__init__(self, parse(fp.read()))

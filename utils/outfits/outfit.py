@@ -154,7 +154,7 @@ class _outfit():
       elif self.shortname() == other.shortname():
          self.short = self.shortname() + ' x2'
       else:
-         self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
+         self.short = shorten(self.shortname()) + ' + ' + shorten(other.shortname())
       res = self.eml()
       if type(res) == type(()):
          (eml1, _) = res

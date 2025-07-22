@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sys import stderr, stdin
-from new_outfit import outfit, LOWER_BETTER
+from new_outfit import LOWER_BETTER
 from combine_multi_again import mk_combine
 
 def transpose( M ):

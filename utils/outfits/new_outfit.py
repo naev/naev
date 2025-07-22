@@ -29,7 +29,7 @@ def shorten( s ):
 
 def prisec( tag, r1, r2, eml1, eml2 ):
    if tag in MOBILITY_PARAMS:
-      return round(2.0 * (r1*eml1 + r2*eml2) / (eml1 + eml2)) / 2
+      return round(2.0 * float(r1*eml1 + r2*eml2) / float(eml1 + eml2)) / 2
    else:
       return r1 + r2
 
@@ -77,6 +77,7 @@ def un_multicore( o ):
 class outfit():
    # None means auto
    def __init__( self, filename, is_multi = None, read_only = False ):
+      self.pri = None
       self.o = naev_xml(filename, read_only = read_only)
       if 'outfit' not in self.o:
          raise Exception('Invalid xml filename "' + repr(fnam) + '"')
@@ -89,10 +90,12 @@ class outfit():
             raise ValueError('"' + filename +'" is not a valid multicore.')
 
    def can_pri_sec( self ):
-      if self.is_multi:
-         return True, True
-      else:
-         return False, False
+      if self.pri is None:
+         k = self.o.find('slot')
+         self.pri = '@prop' in k and k['@prop'].find('secondary') == -1
+         self.sec = '@prop_extra' in k and k['@prop_extra'].find('secondary') != -1
+         self.sec = self.sec or '@prop' in k and k['@prop'].find('secondary') != -1
+      return self.pri, self.sec
 
    can_pri = lambda self: self.can_pri_sec()[0]
    can_sec = lambda self: self.can_pri_sec()[1]
@@ -118,27 +121,30 @@ class outfit():
       elif self.shortname() == other.shortname():
          self.short = self.shortname() + ' x2'
       else:
-         self.short = shorten(self.shortname())+' + '+shorten(other.shortname())
+         self.short = shorten(self.shortname()) + ' + ' + shorten(other.shortname())
 
       if other:
          sec = {k: v for d, k, v in other.equipped(sec = True)}
-         el2 = other.o.find('engine_limit')
+         el2 = sec['$engine_limit']
       else:
          sec = {}
          el2 = 0
 
-      el1 = self.o.find('engine_limit')
-      done = set()
+      for d, k, v in self.equipped(sec = False):
+         if k == '$engine_limit':
+            el1 = v
+            break
 
+      done = set()
       for d, k, v in self.equipped(sec = False):
          e = sec[k] if k in sec else 0
-         d[k] = prisec(k, v, e, el1, el2)
+         d[k] = prisec(k.lstrip('$'), v, e, el1, el2)
          done.add(k)
 
       e = self.o.find('specific')
       for d, k, v in other.equipped(sec = True) if other else []:
          if k not in done:
-            e[k] = prisec(k, 0, v, el1, el2)
+            e[k] = prisec(k.lstrip('$'), 0, v, el1, el2)
       return self
 
    def equipped( self, sec = False):

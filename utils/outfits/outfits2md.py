@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from sys import stderr, stdin
-from core_outfit import some_outfit
 from outfit import LOWER_BETTER
 from combine_multi import mk_combine
 
