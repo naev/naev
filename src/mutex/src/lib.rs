@@ -1,5 +1,4 @@
 #![allow(dead_code)]
-#![feature(negative_impls)]
 use sdl3 as sdl;
 use std::cell::UnsafeCell;
 use std::ffi::CStr;
@@ -43,7 +42,7 @@ unsafe impl<T: ?Sized + Send> Sync for Mutex<T> {}
 pub struct MutexGuard<'a, T: ?Sized + 'a> {
     lock: &'a Mutex<T>,
 }
-impl<T: ?Sized> !Send for MutexGuard<'_, T> {}
+//impl<T: ?Sized> !Send for MutexGuard<'_, T> {}
 unsafe impl<T: ?Sized + Sync> Sync for MutexGuard<'_, T> {}
 impl<'mutex, T: ?Sized> MutexGuard<'mutex, T> {
     unsafe fn new(lock: &'mutex Mutex<T>) -> LockResult<MutexGuard<'mutex, T>> {
