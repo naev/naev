@@ -32,13 +32,6 @@ impl Drop for Lock {
     }
 }
 
-pub struct Mutex<T: ?Sized> {
-    inner: Lock,
-    data: UnsafeCell<T>,
-}
-unsafe impl<T: ?Sized + Send> Send for Mutex<T> {}
-unsafe impl<T: ?Sized + Send> Sync for Mutex<T> {}
-
 pub struct MutexGuard<'a, T: ?Sized + 'a> {
     lock: &'a Mutex<T>,
 }
@@ -67,6 +60,12 @@ impl<T: ?Sized> Drop for MutexGuard<'_, T> {
     }
 }
 
+pub struct Mutex<T: ?Sized> {
+    inner: Lock,
+    data: UnsafeCell<T>,
+}
+unsafe impl<T: ?Sized + Send> Send for Mutex<T> {}
+unsafe impl<T: ?Sized + Send> Sync for Mutex<T> {}
 impl<T> Mutex<T> {
     #[inline]
     pub fn new(t: T) -> Mutex<T> {
@@ -77,7 +76,7 @@ impl<T> Mutex<T> {
     }
 }
 impl<T: ?Sized> Mutex<T> {
-    pub fn lock(&mut self) -> LockResult<MutexGuard<'_, T>> {
+    pub fn lock(&self) -> LockResult<MutexGuard<'_, T>> {
         unsafe {
             self.inner.lock();
             MutexGuard::new(self)
@@ -93,6 +92,11 @@ impl<T: ?Sized> Mutex<T> {
         }
     }
 }
+impl<T: ?Sized + Default> Default for Mutex<T> {
+    fn default() -> Mutex<T> {
+        Mutex::new(Default::default())
+    }
+}
 
 #[test]
 fn test_mutex() {
@@ -104,8 +108,8 @@ fn test_mutex() {
 
         threads.push(std::thread::spawn(move || {
             for _ in 0..1_000_000 {
-                let counter = &mut mutex_ref.lock().unwrap();
-                **counter += 1;
+                let mut counter = mutex_ref.lock().unwrap();
+                *counter += 1;
             }
         }));
     }
