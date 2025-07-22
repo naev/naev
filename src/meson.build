@@ -30,6 +30,7 @@ source_rust = files(
    'faction.rs',
    'linebreak.rs',
    'model.rs',
+   'mutex.rs',
    'naev.rs',
    'nebula.rs',
    'nlua.rs',

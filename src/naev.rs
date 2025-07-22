@@ -20,6 +20,7 @@ mod env;
 mod faction;
 mod linebreak;
 mod model;
+mod mutex;
 mod nebula;
 mod nlua;
 mod outfit;
