@@ -1,4 +1,4 @@
-# python3
+#!/usr/bin/env python3
 
 
 import sys
@@ -11,6 +11,7 @@ from naev_xml import naev_xml, _xml_node
 import re
 
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
+KEEP_IN_XML = set(['priority', 'rarity', 'price'])
 LOWER_BETTER = {'mass', 'price', 'delay', 'ew_range', 'falloff', 'trackmin', 'trackmax', 'dispersion', 'speed_dispersion', 'energy_regen_malus', 'ew_stealth', 'ew_stealth_timer', 'ew_signature', 'launch_lockon', 'launch_calibration', 'fwd_energy', 'tur_energy', 'ew_track', 'cooldown_time', 'cargo_inertia', 'land_delay', 'jump_delay', 'delay', 'reload_time', 'iflockon', 'jump_warmup', 'rumble', 'ammo_mass', 'time_mod', 'ew_hide', 'launch_reload'}
 
 def shorten( s ):
@@ -65,11 +66,7 @@ def un_multicore( o ):
    except:
       return False
 
-   if bef:
-      e['lua_inline'] = bef
-   else:
-      del e['lua_inline']
-
+   e['lua_inline'] = bef
    if aft:
       e['lua_inline_post'] = aft
 
@@ -79,24 +76,24 @@ def un_multicore( o ):
       dst[k] = {'pri': v1, 'sec': v2}
    return True
 
-class outfit():
+class outfit(naev_xml):
    # None means auto
    def __init__( self, filename, is_multi = None, read_only = False ):
       self.pri = None
-      self.o = naev_xml(filename, read_only = read_only)
-      if 'outfit' not in self.o:
+      naev_xml.__init__(self, filename, read_only = read_only)
+      if 'outfit' not in self:
          raise Exception('Invalid xml filename "' + repr(fnam) + '"')
       self.short = None
       self.is_multi = False
       if is_multi or is_multi is None:
-         if un_multicore(self.o):
+         if un_multicore(self):
             self.is_multi = True
          elif is_multi:
             raise ValueError('"' + filename +'" is not a valid multicore.')
 
    def can_pri_sec( self ):
       if self.pri is None:
-         k = self.o.find('slot')
+         k = self.find('slot')
          self.pri = '@prop' in k and k['@prop'].find('secondary') == -1
          self.sec = '@prop_extra' in k and k['@prop_extra'].find('secondary') != -1
          self.sec |= '@prop' in k and k['@prop'].find('secondary') != -1
@@ -115,10 +112,10 @@ class outfit():
       )
 
    def size_name( self, doubled = False ):
-      return self.o.find('size')
+      return self.find('size')
 
    def size( self, doubled = False ):
-      res = self.o.find('size')
+      res = self.find('size')
       for i, k in enumerate(['small', 'medium', 'large']):
          if res == k:
             return 2*i + (2 if doubled else 1)
@@ -150,7 +147,7 @@ class outfit():
          d[k] = prisec(k.lstrip('$'), v, e, el1, el2)
          done.add(k)
 
-      e = self.o.find('specific')
+      e = self.find('specific')
       for d, k, v in other.equipped(sec = True) if other else []:
          if k not in done:
             e[k] = prisec(k.lstrip('$'), 0, v, el1, el2)
@@ -158,7 +155,7 @@ class outfit():
 
    def equipped( self, sec = False):
       pri_sec = ('sec', 'pri') if sec else ('pri', 'sec')
-      for d, k in self.o.nodes():
+      for d, k in self.nodes():
          D, K = d.parent()
          if k[-3:] == pri_sec[1]:
             if pri_sec[0] not in d:
@@ -174,21 +171,48 @@ class outfit():
       return {k: ((v1, v2) if v1!=v2 else v1) for ((k, v1), (_, v2)) in zip(pri, sec)}
 
    def name( self ):
-      return self.o['outfit']['@name']
+      return self['outfit']['@name']
 
    def set_name( self, name ):
-      self.o['outfit']['@name'] = name
+      self['outfit']['@name'] = name
 
    def shortname( self ):
       if not self.short:
-         if (res := self.o.find('shortname')) is None:
+         if (res := self.find('shortname')) is None:
             res = self.name()
          if res.split(' ')[-1] == 'Engine':
             res = ' '.join(res.split(' ')[:-1])
          self.short = res
       return self.short
 
+   def save( self ):
+      if self.is_multi:
+         # make a deep copy
+         out = naev_xml()
+         out.save_as(self._filename)
+         oout = out['outfit'] = self['outfit']
+
+         ind = 3*' '
+         lua_inline = '\nrequire("outfits.lib.multicore").init{\n'
+         for k, v in self.to_dict().items():
+            if k in KEEP_IN_XML:
+               continue
+            if not isinstance(v, tuple):
+               v = (v,)
+            lua_inline += ind + '{ ' + ', '.join(['"'+k+'"'] + [str(u) for u in v]) + '},\n'
+            del oout['specific'][k]
+         lua_inline += '}'
+         print(oout)
+         oout['specific']['lua_inline'] += lua_inline
+         if 'lua_inline_post' in oout['specific']:
+            oout['specific']['lua_inline'] += oout['specific']['lua_inline_post']
+            del oout['specific']['lua_inline_post']
+      else:
+         out = self
+      naev_xml.save(out)
+
 if __name__ == '__main__':
+   from sys import argv
    for i in argv[1:]:
       o = outfit(i)
-      o.o.save()
+      o.save()

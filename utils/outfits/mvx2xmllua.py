@@ -1,6 +1,6 @@
 # python3
 
-keep_in_xml = {'priority', 'rarity'}
+keep_in_xml = {'priority', 'rarity', 'price'}
 
 from sys import argv, stderr, stdin, stdout, exit
 from old_outfit import outfit, nam2fil, MOBILITY_PARAMS, text2val, roundit, ET
@@ -47,8 +47,7 @@ def _mklua( L ):
 
    for (nam,(main, sec)) in L:
       if nam not in keep_in_xml:
-         output += ind + '{ "' + nam + '", '
-         output += fmt(main)
+         output += ind + '{ "' + nam + '", ' + fmt(main)
          if main != sec:
             output += ', ' + fmt(sec)
          output += '},\n'

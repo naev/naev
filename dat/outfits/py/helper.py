@@ -4,7 +4,7 @@ script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils')
 sys.path.append(path.realpath(script_dir))
 sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
 from naev_xml import naev_xml
-from new_outfit import outfit
+from new_outfit import outfit, KEEP_IN_XML
 
 INPUT = sys.argv[1]
 OUTPUT = sys.argv[2]
@@ -22,7 +22,7 @@ def to_multicore_lua( ref, pri_only = True, setfunc = 'nil' ):
    # We operate under the assumption that dictionaries are ordered in python now
    print(ref)
    for r in ref:
-      if r in {'price', 'priority'}:
+      if r in KEEP_IN_XML:
          continue
       v = ref[r]
       if type(v) in {int,  float}:
