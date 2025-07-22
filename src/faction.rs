@@ -537,7 +537,7 @@ struct FactionLoad {
 impl FactionLoad {
     /// Loads the elementary faction stuff, does not fill out information dependent on other
     /// factions
-    fn new(ctx: &ContextWrapper, lua: &Mutex<NLua>, filename: &str) -> Result<Self> {
+    fn new(ctx: &ContextWrapper, lua: &NLua, filename: &str) -> Result<Self> {
         let mut fctload = FactionLoad::default();
         let fct = &mut fctload.data;
 
@@ -656,25 +656,24 @@ impl FactionLoad {
 
         // Initaialize Lua scripts
         {
-            let lua = lua.lock().unwrap();
             if !fct.script_spawn.is_empty() {
                 fct.sched_env = Some({
                     let mut env = lua.environment_new(&fct.script_spawn)?;
-                    env.load_standard(&lua)?;
+                    env.load_standard(lua)?;
                     env
                 });
             }
             if !fct.script_equip.is_empty() {
                 fct.equip_env = Some({
                     let mut env = lua.environment_new(&fct.script_equip)?;
-                    env.load_standard(&lua)?;
+                    env.load_standard(lua)?;
                     env
                 });
             }
             if !fct.script_standing.is_empty() {
                 fct.lua_env = Some({
                     let mut env = lua.environment_new(&fct.script_standing)?;
-                    env.load_standard(&lua)?;
+                    env.load_standard(lua)?;
                     env
                 });
             }
@@ -808,9 +807,9 @@ pub fn load() -> Result<()> {
 
 pub fn load_lua() -> Result<()> {
     // Last pass: initialize Lua
-    let lua = NLUA.lock().unwrap();
+    let lua = &NLUA;
     for fct in FACTIONS.read().unwrap().iter() {
-        fct.init_lua(&lua)?;
+        fct.init_lua(lua)?;
     }
     Ok(())
 }

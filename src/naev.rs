@@ -503,9 +503,9 @@ fn load_all(sdlctx: &sdl::Sdl, env: &nlua::LuaEnv) -> Result<()> {
 }
 
 fn loadscreen_update(env: &nlua::LuaEnv, done: f32, msg: &str) -> Result<()> {
-    let lua = nlua::NLUA.lock().unwrap();
+    let lua = &nlua::NLUA;
     let update: mlua::Function = env.get("update")?;
-    env.call::<()>(&lua, &update, (done, msg))?;
+    env.call::<()>(lua, &update, (done, msg))?;
     unsafe {
         naevc::naev_doRenderLoadscreen();
     }
