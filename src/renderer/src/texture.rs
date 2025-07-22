@@ -104,10 +104,7 @@ pub struct TextureData {
 }
 impl Drop for TextureData {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteTexture(self.texture));
+        crate::message_push(crate::Message::DeleteTexture(self.texture));
     }
 }
 
@@ -366,10 +363,7 @@ pub struct Texture {
 }
 impl Drop for Texture {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteSampler(self.sampler));
+        crate::message_push(crate::Message::DeleteSampler(self.sampler));
     }
 }
 impl Texture {

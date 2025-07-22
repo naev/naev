@@ -3,7 +3,7 @@ use crate::vec2::Vec2;
 use anyhow::Result;
 use nalgebra::{Point2, Vector2};
 use std::os::raw::{c_double, c_int, c_uint};
-use std::sync::{LazyLock, Mutex};
+use std::sync::{LazyLock, RwLock};
 
 // Sound is currently in "screen" coordinates, and doesn't react to ship turning
 // Would probably have to be relative to heading for accessibility support (when enabled)
@@ -40,8 +40,8 @@ pub struct Camera {
     follow_pilot: Option<c_uint>,
 }
 
-pub static CAMERA: LazyLock<Mutex<Camera>> = LazyLock::new(|| {
-    Mutex::new(Camera {
+pub static CAMERA: LazyLock<RwLock<Camera>> = LazyLock::new(|| {
+    RwLock::new(Camera {
         zoom: 1.0,
         zoom_speed: unsafe { naevc::conf.zoom_speed },
         ..Default::default()
@@ -311,13 +311,13 @@ impl Camera {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_zoomOverride(enable: c_int) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     cam.zoom_override = enable != 0;
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     unsafe {
         cam.zoom = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
     }
@@ -325,7 +325,7 @@ pub unsafe extern "C" fn cam_setZoom(zoom: c_double) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     unsafe {
         cam.zoom_target = zoom.clamp(naevc::conf.zoom_far, naevc::conf.zoom_near);
     }
@@ -334,19 +334,19 @@ pub unsafe extern "C" fn cam_setZoomTarget(zoom: c_double, speed: c_double) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getZoom() -> c_double {
-    let cam = CAMERA.lock().unwrap();
+    let cam = CAMERA.read().unwrap();
     cam.zoom as c_double
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getZoomTarget() -> c_double {
-    let cam = CAMERA.lock().unwrap();
+    let cam = CAMERA.read().unwrap();
     cam.zoom_target as c_double
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
-    let cam = CAMERA.lock().unwrap();
+    let cam = CAMERA.read().unwrap();
     unsafe {
         let pos = cam.pos();
         *x = pos.x as c_double;
@@ -356,7 +356,7 @@ pub unsafe extern "C" fn cam_getPos(x: *mut c_double, y: *mut c_double) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getDPos(dx: *mut c_double, dy: *mut c_double) {
-    let cam = CAMERA.lock().unwrap();
+    let cam = CAMERA.read().unwrap();
     unsafe {
         *dx = cam.der.x as c_double;
         *dy = cam.der.y as c_double;
@@ -365,7 +365,7 @@ pub unsafe extern "C" fn cam_getDPos(dx: *mut c_double, dy: *mut c_double) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
-    let cam = CAMERA.lock().unwrap();
+    let cam = CAMERA.read().unwrap();
     unsafe {
         *vx = cam.vel.x as c_double;
         *vy = cam.vel.y as c_double;
@@ -374,14 +374,14 @@ pub unsafe extern "C" fn cam_getVel(vx: *mut c_double, vy: *mut c_double) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_vel(vx: c_double, vy: c_double) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     cam.vel.x = vx;
     cam.vel.y = vy;
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     cam.follow_pilot = match follow {
         0 => None,
         _ => Some(follow),
@@ -412,7 +412,7 @@ pub unsafe extern "C" fn cam_setTargetPilot(follow: c_uint, soft_over: c_int) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c_int) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     cam.follow_pilot = None;
     if soft_over == 0 {
         cam.pos.x = x;
@@ -432,19 +432,19 @@ pub unsafe extern "C" fn cam_setTargetPos(x: c_double, y: c_double, soft_over: c
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_getTarget() -> c_uint {
-    let cam = CAMERA.lock().unwrap();
+    let cam = CAMERA.read().unwrap();
     cam.follow_pilot.unwrap_or_default()
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_update(dt: c_double) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     cam.update(dt);
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn cam_setOffset(x: c_double, y: c_double) {
-    let mut cam = CAMERA.lock().unwrap();
+    let mut cam = CAMERA.write().unwrap();
     cam.offset = Vector2::new(x, y);
 }
 
@@ -477,7 +477,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     api.set(
         "set",
         lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
-            let cam = CAMERA.lock().unwrap();
+            let cam = CAMERA.read().unwrap();
             Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
         })?,
     )?;
@@ -490,7 +490,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     api.set(
         "get",
         lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
-            let cam = CAMERA.lock().unwrap();
+            let cam = CAMERA.read().unwrap();
             Ok((cam.pos.x, cam.pos.y, 1.0 / cam.zoom))
         })?,
     )?;
@@ -501,7 +501,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     api.set(
         "pos",
         lua.create_function(|_lua, ()| -> mlua::Result<Vec2> {
-            let cam = CAMERA.lock().unwrap();
+            let cam = CAMERA.read().unwrap();
             Ok(Vec2::new(cam.pos.x, cam.pos.y))
         })?,
     )?;
@@ -521,7 +521,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     api.set(
         "setZoom",
         lua.create_function(|_lua, ()| -> mlua::Result<Vec2> {
-            let cam = CAMERA.lock().unwrap();
+            let cam = CAMERA.read().unwrap();
             Ok(Vec2::new(cam.pos.x, cam.pos.y))
         })?,
     )?;
@@ -534,7 +534,7 @@ pub fn open_camera(lua: &mlua::Lua) -> Result<()> {
     api.set(
         "getZoom",
         lua.create_function(|_lua, ()| -> mlua::Result<(f64, f64, f64)> {
-            let cam = CAMERA.lock().unwrap();
+            let cam = CAMERA.read().unwrap();
             let (zoom_far, zoom_near) = unsafe { (naevc::conf.zoom_far, naevc::conf.zoom_near) };
             Ok((1.0 / cam.zoom, 1.0 / zoom_far, 1.0 / zoom_near))
         })?,

@@ -27,10 +27,7 @@ pub struct Shader {
 }
 impl Drop for Shader {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteProgram(self.program));
+        crate::message_push(crate::Message::DeleteProgram(self.program));
     }
 }
 impl Shader {

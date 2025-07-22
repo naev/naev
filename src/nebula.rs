@@ -368,7 +368,7 @@ impl NebulaData {
         self.view = ((1600. - self.density) * modifier + bonus) * 4.0 * self.scale;
 
         let z = {
-            let cam = crate::camera::CAMERA.lock().unwrap();
+            let cam = crate::camera::CAMERA.read().unwrap();
             let cam_pos = cam.pos();
             self.puff_uniform.offset.x = cam_pos.x as f32;
             self.puff_uniform.offset.y = cam_pos.y as f32;

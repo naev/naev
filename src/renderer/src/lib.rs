@@ -185,7 +185,10 @@ impl Message {
 }
 
 pub static CONTEXT: OnceLock<Context> = OnceLock::new();
-pub static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
+static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
+pub(crate) fn message_push(msg: Message) {
+    MESSAGE_QUEUE.lock().unwrap().push(msg);
+}
 
 #[derive(Clone, Debug)]
 pub struct Dimensions {
@@ -311,7 +314,9 @@ pub struct Context {
     // To be phased out when moved to rust
     pub vao_core: glow::VertexArray,
 }
-// Not actually safe, to fix someday... T_T
+// The issue is the SDL structs use raw pointers. If they wrapped in AtomicPtr, it would be
+// Send+Sync safe, but it is not.
+// See https://github.com/vhspace/sdl3-rs/issues/196
 unsafe impl Sync for Context {}
 unsafe impl Send for Context {}
 
