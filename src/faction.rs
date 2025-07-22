@@ -159,7 +159,8 @@ impl FactionID {
         } else if other == PLAYER.get().unwrap() {
             self.call(|fct| {
                 let std = fct.standing.read().unwrap();
-                std.player >= std.friendly_at
+                let api = fct.api.get().unwrap();
+                std.player >= api.friendly_at
             })
             .unwrap_or_else(|err| {
                 warn_err!(err);
@@ -196,13 +197,17 @@ impl FactionID {
 }
 
 #[derive(Debug)]
-pub struct Standing {
+struct StandingAPI {
     friendly_at: f32,
     hit: Option<mlua::Function>,
     hit_test: Option<mlua::Function>,
     text_rank: Option<mlua::Function>,
     text_broad: Option<mlua::Function>,
     reputation_max: Option<mlua::Function>,
+}
+
+#[derive(Debug)]
+struct Standing {
     player: f32,
     p_override: Option<f32>,
     f_known: bool,
@@ -211,6 +216,7 @@ pub struct Standing {
 
 #[derive(Debug)]
 pub struct Faction {
+    api: OnceLock<StandingAPI>,
     standing: RwLock<Standing>,
     pub data: DataWrapper,
 }
@@ -276,13 +282,14 @@ impl Faction {
             }
 
             // Store important stuff here
-            let mut std = self.standing.write().unwrap();
-            std.friendly_at = env.get("friendly_at")?;
-            std.hit = load_func(env, "hit");
-            std.hit_test = load_func(env, "hit_test");
-            std.text_rank = load_func(env, "text_rank");
-            std.text_broad = load_func(env, "text_broad");
-            std.reputation_max = load_func(env, "reputation_max");
+            self.api.set(StandingAPI {
+                friendly_at: env.get("friendly_at")?,
+                hit: load_func(env, "hit"),
+                hit_test: load_func(env, "hit_test"),
+                text_rank: load_func(env, "text_rank"),
+                text_broad: load_func(env, "text_broad"),
+                reputation_max: load_func(env, "reputation_max"),
+            })?;
         }
         Ok(())
     }
@@ -296,12 +303,13 @@ impl Faction {
     ) -> Result<f32> {
         if self.data.f_static {
             return Ok(0.);
+        } else {
+            let std = self.standing.read().unwrap();
+            if std.p_override.is_some() {
+                return Ok(0.);
+            }
         }
-        let std = self.standing.read().unwrap();
-        if std.p_override.is_some() {
-            return Ok(0.);
-        }
-        let ret: f32 = match &std.hit {
+        let ret: f32 = match &self.api.get().unwrap().hit {
             Some(hit) => hit.call((val, source, secondary))?,
             None => anyhow::bail!("hit function not defined for faction '{}'", &self.data.name),
         };
@@ -785,13 +793,8 @@ pub fn load() -> Result<()> {
         .unwrap()
         .iter()
         .map(|fct| Faction {
+            api: OnceLock::new(),
             standing: RwLock::new(Standing {
-                friendly_at: 70.,
-                hit: None,
-                hit_test: None,
-                text_rank: None,
-                text_broad: None,
-                reputation_max: None,
                 player: fct.player_def,
                 p_override: None,
                 f_known: fct.f_known,
