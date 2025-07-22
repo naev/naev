@@ -581,7 +581,6 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "nebu_scale", conf.nebu_scale );
    PUSH_BOOL( L, "fullscreen", conf.fullscreen );
    PUSH_BOOL( L, "notresizable", conf.notresizable );
-   PUSH_BOOL( L, "borderless", conf.borderless );
    PUSH_BOOL( L, "minimize", conf.minimize );
    PUSH_DOUBLE( L, "colourblind_sim", conf.colourblind_sim );
    PUSH_DOUBLE( L, "colourblind_correct", conf.colourblind_correct );

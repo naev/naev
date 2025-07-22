@@ -117,7 +117,6 @@ typedef struct PlayerConf_s {
                                nebula. */
    int    fullscreen;       /**< Whether or not game is fullscreen. */
    int    notresizable;     /**< Whether or not the window is resizable. */
-   int    borderless;       /**< Whether to disable window decorations. */
    int    minimize;         /**< Whether to minimize on focus loss. */
    double colourblind_sim; /**< Whether to enable colourblindness simulation. */
    int    colourblind_type; /**< Type of colourblindness. */

@@ -453,12 +453,11 @@ impl Context {
         major: u8,
         minor: u8,
     ) -> Result<(sdl::video::Window, sdl::video::GLContext)> {
-        let (width, height, resizable, borderless, fullscreen) = unsafe {
+        let (width, height, resizable, fullscreen) = unsafe {
             (
                 naevc::conf.width,
                 naevc::conf.height,
                 naevc::conf.notresizable == 0,
-                naevc::conf.borderless != 0,
                 naevc::conf.fullscreen != 0,
             )
         };
@@ -477,9 +476,6 @@ impl Context {
         // Issue documented below
         if resizable {
             wdwbuild.resizable();
-        }
-        if borderless {
-            wdwbuild.borderless();
         }
         if fullscreen {
             wdwbuild.fullscreen();

@@ -360,7 +360,6 @@ int conf_loadConfig( const char *file )
    conf_loadFloat( L, "nebu_scale", conf.nebu_scale );
    conf_loadBool( L, "fullscreen", conf.fullscreen );
    conf_loadBool( L, "notresizable", conf.notresizable );
-   conf_loadBool( L, "borderless", conf.borderless );
    conf_loadBool( L, "minimize", conf.minimize );
    cb = 0;
    conf_loadBool( L, "colourblind", cb ); /* TODO remove in 0.13.0 or so. */
@@ -951,12 +950,6 @@ int conf_saveConfig( const char *file )
 
    conf_saveComment( _( "Disable allowing resizing the window." ) );
    conf_saveBool( "notresizable", conf.notresizable );
-   conf_saveEmptyLine();
-
-   conf_saveComment(
-      _( "Disable window decorations. Use with care and know the keyboard "
-         "controls to quit and toggle fullscreen." ) );
-   conf_saveBool( "borderless", conf.borderless );
    conf_saveEmptyLine();
 
    conf_saveComment( _( "Minimize the game on focus loss." ) );
