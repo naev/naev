@@ -2,7 +2,7 @@
 
 import math
 from sys import stderr, stdout, stdin
-from new_outfit import nam2fil, outfit, MOBILITY_PARAMS
+from outfit import nam2fil, outfit, MOBILITY_PARAMS
 from getconst import PHYSICS_SPEED_DAMP
 
 

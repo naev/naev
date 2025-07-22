@@ -1,6 +1,6 @@
 # python3
 
-from new_outfit import outfit
+from outfit import outfit
 from copy import deepcopy
 from sys import stderr
 

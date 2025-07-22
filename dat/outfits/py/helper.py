@@ -4,7 +4,7 @@ script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils')
 sys.path.append(path.realpath(script_dir))
 sys.path.append(path.realpath(path.join(script_dir, 'outfits')))
 from naev_xml import naev_xml
-from new_outfit import outfit, KEEP_IN_XML
+from outfit import outfit, KEEP_IN_XML
 
 INPUT = sys.argv[1]
 OUTPUT = sys.argv[2]

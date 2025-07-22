@@ -16,7 +16,7 @@ from sys import path, stderr, argv
 path.insert(0, util_dir)
 
 from getconst import PHYSICS_SPEED_DAMP
-from new_outfit import outfit
+from outfit import outfit
 
 
 def iter_line( line ):

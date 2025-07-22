@@ -9,7 +9,7 @@ N_ = lambda text: text
 
 script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfits')
 sys.path.append(path.realpath(script_dir))
-from new_outfit import outfit
+from outfit import outfit
 
 def get_outfit_dict( nam, core = False, doubled = False ):
    nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
