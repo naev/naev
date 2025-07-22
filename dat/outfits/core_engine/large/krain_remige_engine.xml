@@ -19,7 +19,6 @@ require("outfits.lib.multicore").init{
    { "speed", 159},
    { "accel", 68},
    { "turn", 75},
-}
-require "outfits.lib.alone"</lua_inline>
+}require "outfits.lib.alone"</lua_inline>
  </specific>
 </outfit>

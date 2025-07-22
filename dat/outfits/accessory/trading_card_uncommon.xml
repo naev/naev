@@ -1,6 +1,6 @@
 <outfit name="Trading Card (Uncommon)">
  <general>
-  <unique />
+  <unique/>
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>

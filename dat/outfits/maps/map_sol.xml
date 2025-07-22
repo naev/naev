@@ -6,7 +6,6 @@
   <gfx_store>map_vicinity.webp</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Sol">
-  </sys>
+  <sys name="Sol"/>
  </specific>
 </outfit>

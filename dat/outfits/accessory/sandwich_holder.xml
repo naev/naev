@@ -1,6 +1,6 @@
 <outfit name="Sandwich Holder">
  <general>
-  <unique />
+  <unique/>
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -9,7 +9,8 @@
   <price>1000000</price>
   <description>It appears to be a limited edition Nexus Shipyards sandwich holder. Very useful for hands-free eating of sandwiches in zero gravity. Apparently the CEO really loves his sandwiches.</description>
   <gfx_store>sandwich_holder.webp</gfx_store>
- <rarity>6</rarity></general>
+  <rarity>6</rarity>
+ </general>
  <specific type="modification">
   <tur_damage>8</tur_damage>
   <tur_energy>-8</tur_energy>

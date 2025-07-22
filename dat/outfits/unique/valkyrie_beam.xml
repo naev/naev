@@ -1,7 +1,7 @@
 <outfit name="Valkyrie Beam">
  <general>
   <slot>weapon</slot>
-  <unique />
+  <unique/>
   <size>large</size>
   <license>Heavy Weapon</license>
   <mass>55</mass>
@@ -10,7 +10,8 @@
   <desc_extra>#rDrains 80 shield per second when firing and for one second after.#0</desc_extra>
   <gfx_store>valkyrie_beam.webp</gfx_store>
   <cpu>-350</cpu>
- <rarity>6</rarity></general>
+  <rarity>6</rarity>
+ </general>
  <specific type="turret beam">
   <lua>outfits/unique/valkyrie_beam.lua</lua>
   <delay min="4">10</delay>

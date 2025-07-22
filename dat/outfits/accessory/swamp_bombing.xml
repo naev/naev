@@ -1,6 +1,6 @@
 <outfit name="Swamp Bombing">
  <general>
-  <unique />
+  <unique/>
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -9,7 +9,8 @@
   <price>1000000</price>
   <description>A fairly mediocre cocktail that you don't intend to drink. At least it looks good as an accessory.</description>
   <gfx_store>swamp_bombing.webp</gfx_store>
- <rarity>6</rarity></general>
+  <rarity>6</rarity>
+ </general>
  <specific type="modification">
   <ew_hide>-10</ew_hide>
   <jump_delay>-10</jump_delay>

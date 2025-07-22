@@ -1,6 +1,6 @@
 <outfit name="Homebrew Processing Unit">
  <general>
-  <unique />
+  <unique/>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>

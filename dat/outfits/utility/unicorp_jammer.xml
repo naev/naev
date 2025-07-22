@@ -10,7 +10,7 @@
   <limit>jammer</limit>
  </general>
  <specific type="modification">
-  <active cooldown="5" />
+  <active cooldown="5"/>
   <ew_signature>-18</ew_signature>
   <jam_chance>80</jam_chance>
   <energy_regen_malus>25</energy_regen_malus>

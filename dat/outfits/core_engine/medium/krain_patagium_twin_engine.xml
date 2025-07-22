@@ -19,8 +19,6 @@ require("outfits.lib.multicore").init{
    { "speed", 204},
    { "accel", 110},
    { "turn", 104},
-}
-require("outfits.lib.twins").init()
-  </lua_inline>
+}require("outfits.lib.twins").init()</lua_inline>
  </specific>
 </outfit>

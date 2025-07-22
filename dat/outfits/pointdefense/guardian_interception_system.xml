@@ -29,7 +29,7 @@
    <penetrate>10</penetrate>
    <physical>15</physical>
   </damage>
-  <pointdefense />
+  <pointdefense/>
  </specific>
  <tags>
   <tag>empire</tag>
