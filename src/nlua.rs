@@ -68,7 +68,6 @@ pub struct NLua {
     env_mt: mlua::Table,
     // TODO remove below when we can
     envs: mlua::Table,
-    envs_rk: mlua::RegistryKey,
 }
 
 /// Opens the gettext library
@@ -274,7 +273,6 @@ impl NLua {
             globals,
             env_mt,
             envs: envs.clone(),
-            envs_rk: lua.create_registry_value(envs)?,
             lua: lua.clone(),
         })
     }
@@ -559,14 +557,6 @@ pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *mut LuaEnv) {
     let env = unsafe { &*env };
     unsafe {
         mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, env.rk.id().into());
-    }
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn nlua_pushEnvTable(lua: *mut mlua::lua_State) {
-    let nlua = NLUA.lock().unwrap();
-    unsafe {
-        mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, nlua.envs_rk.id().into());
     }
 }
 

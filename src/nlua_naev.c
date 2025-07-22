@@ -76,7 +76,6 @@ static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 static int naevL_difficulty( lua_State *L );
 #if DEBUGGING
-static int naevL_envs( lua_State *L );
 static int naevL_debugTrails( lua_State *L );
 static int naevL_debugCollisions( lua_State *L );
 #endif /* DEBUGGING */
@@ -121,7 +120,6 @@ static const luaL_Reg naev_methods[] = {
    { "quadtreeParams", naevL_quadtreeParams },
    { "difficulty", naevL_difficulty },
 #if DEBUGGING
-   { "envs", naevL_envs },
    { "debugTrails", naevL_debugTrails },
    { "debugCollisions", naevL_debugCollisions },
 #endif         /* DEBUGGING */
@@ -1034,20 +1032,6 @@ static int naevL_difficulty( lua_State *L )
 }
 
 #if DEBUGGING
-/**
- * @brief Gets a table with all the active Naev environments.
- *
- * Only available only debug builds.
- *
- *    @luatreturn table Unordered table containing all the environments.
- * @luafunc envs
- */
-static int naevL_envs( lua_State *L )
-{
-   nlua_pushEnvTable( L );
-   return 1;
-}
-
 /**
  * @brief Toggles the trail emitters.
  *
