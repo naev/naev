@@ -1,0 +1,4 @@
+ - repair update_engine display
+ - check for roundings etc
+ - simplify outfits/py/
+ - clarify and document

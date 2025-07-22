@@ -53,7 +53,7 @@ def _numify( s ):
       pass
 
 class _xml_node( dict ):
-   def __init__ ( self, mapping, parent = None, key = None ):
+   def __init__ ( self, mapping, parent= None, key= None ):
       mknode = lambda v: _xml_node(v) if isinstance(v, dict) else v
       dict.__init__(self, {k: mknode(v) for k, v in mapping.items()})
       self._parent = parent
@@ -65,7 +65,7 @@ class _xml_node( dict ):
       else:
          self._parent._change()
 
-   def __getitem__ ( self, key ):
+   def __getitem__( self, key ):
       if isinstance(key, str) and key[0] == '$':
          return _numify(dict.__getitem__(self, key[1:]))
       else:
@@ -82,13 +82,13 @@ class _xml_node( dict ):
       dict.__setitem__(self, key, val)
       self._change()
 
-   def __delitem__ ( self, key ):
+   def __delitem__( self, key ):
       dict.__delitem__(self, key[1:] if key[:1] == '$' else key)
 
    def parent( self ):
       return self._parent, self._key
 
-   def nodes( self, lookfor = None ):
+   def nodes( self, lookfor= None ):
       for k, v in self.items():
          if not lookfor or k in lookfor:
             if _numify(v) is None:
@@ -100,7 +100,7 @@ class _xml_node( dict ):
                yield t
 
 class naev_xml( _xml_node ):
-   def __init__( self, fnam = devnull, read_only = False ):
+   def __init__( self, fnam = devnull, read_only= False ):
       self._uptodate = True
       if type(fnam) != type('') or (not fnam.endswith('.xml') and fnam != devnull):
          raise Exception('Invalid xml filename ' + repr(fnam))
@@ -110,15 +110,21 @@ class naev_xml( _xml_node ):
          _xml_node.__init__(self, {})
       else:
          with open(fnam, 'r') as fp:
-            _xml_node.__init__(self, parse(fp.read()))
+            _xml_node.__init__(self, parse(fp.read(), process_comments= True))
 
    def save( self ):
       if self._uptodate:
          stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
       with open(self._filename, 'w') as fp:
-         s = unparse(self, pretty=True, indent=' ')
-         s = s.replace('<?xml version="1.0" encoding="utf-8"?>\n', '', 1)
-         fp.write(re.sub(r'<([^ ]*)([^>]*)></\1>', r'<\1\2/>', s) + '\n')
+         s = unparse(self, pretty= True, indent= ' ')
+         L = s.split('\n')
+         for i, l in enumerate(L):
+            if i == 0 and l == '<?xml version="1.0" encoding="utf-8"?>':
+               continue
+            if len(u := l.split('<#comment>',1)) == 2 and len(v := u[1].split('</#comment>',1)) == 2:
+               l = u[0] + '<!-- ' + v[0].replace('&lt;', '<').replace('&gt;', '>') + ' -->' + v[1]
+            l = re.sub(r'<([^ ]*)([^>]*)></\1>', r'<\1\2/>', l)
+            fp.write(l + '\n')
       self._uptodate = True
 
    def save_as( self, filename ):

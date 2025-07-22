@@ -22,7 +22,7 @@
   <shield_regen_mod>-35</shield_regen_mod>
   <armour_regen_mod>-35</armour_regen_mod>
   <!-- Disabled until we can equip intrinsic outfits before equipopt. -->
-  <!--<energy_regen_mod>-35</energy_regen_mod>-->
+  <!-- <energy_regen_mod>-35</energy_regen_mod> -->
   <ew_signature>20</ew_signature>
   <stress_dissipation>-35</stress_dissipation>
  </specific>
