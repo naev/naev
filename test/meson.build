@@ -45,3 +45,11 @@ test('search_for_unsupported_sysdep_strings',
    args: ['-q', '%<PRI', join_paths(meson.project_source_root(), 'po', 'naev.pot')],
    should_fail: true,
    )
+
+
+# Run all our Rust tests (if we have them)
+test('cargo test --workspace',
+  find_program('cargo'),
+  args: ['test', '--workspace'],
+  workdir: meson.project_build_root(),
+  )
