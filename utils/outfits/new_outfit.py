@@ -99,7 +99,7 @@ class outfit():
          k = self.o.find('slot')
          self.pri = '@prop' in k and k['@prop'].find('secondary') == -1
          self.sec = '@prop_extra' in k and k['@prop_extra'].find('secondary') != -1
-         self.sec = self.sec or '@prop' in k and k['@prop'].find('secondary') != -1
+         self.sec |= '@prop' in k and k['@prop'].find('secondary') != -1
       return self.pri, self.sec
 
    can_pri = lambda self: self.can_pri_sec()[0]
@@ -113,6 +113,9 @@ class outfit():
          (self.name() == other.name() and self.name().find('Twin') != -1) or
          (self.name().split(' ')[0] != 'Krain' and other.name().split(' ')[0] != 'Krain')
       )
+
+   def size_name( self, doubled = False ):
+      return self.o.find('size')
 
    def size( self, doubled = False ):
       res = self.o.find('size')
@@ -130,11 +133,12 @@ class outfit():
 
       if other:
          sec = {k: v for d, k, v in other.equipped(sec = True)}
-         el2 = sec['$engine_limit']
+         el2 = '$engine_limit' in sec and sec['$engine_limit'] or 0
       else:
          sec = {}
          el2 = 0
 
+      el1 = None
       for d, k, v in self.equipped(sec = False):
          if k == '$engine_limit':
             el1 = v
@@ -167,7 +171,7 @@ class outfit():
    def to_dict( self ):
       pri = ((k[1:], v) for (_d, k, v) in self.equipped(sec = False))
       sec = ((k[1:], v) for (_d, k, v) in self.equipped(sec = True))
-      return {k: ((v1, v2) if v1!=v2 else v1) for ((k, v1), (_k, v2)) in zip(pri, sec)}
+      return {k: ((v1, v2) if v1!=v2 else v1) for ((k, v1), (_, v2)) in zip(pri, sec)}
 
    def name( self ):
       return self.o['outfit']['@name']

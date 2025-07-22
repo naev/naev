@@ -9,21 +9,15 @@ N_ = lambda text: text
 
 script_dir = path.join(path.dirname(__file__), '..', '..', '..', 'utils', 'outfits')
 sys.path.append(path.realpath(script_dir))
-from core_outfit import core_outfit
-from outfit import outfit
-
+from new_outfit import outfit
 
 def get_outfit_dict( nam, core = False, doubled = False ):
    nam = path.realpath(path.join(path.dirname( __file__ ), '..', nam))
-   try:
-      if core:
-         o = core_outfit(nam, try_again = True, quiet = True)
-      else:
-         o = outfit(nam)
-   except:
-      raise Exception('Could not read "' + path.basename(nam) + '"')
-   o.autostack(doubled)
-   return o.to_dict()
+   o = outfit(nam, is_multi = core, read_only=True)
+   o.stack(o if doubled else None)
+   out = o.to_dict()
+   out['size'] = o.size_name()
+   return out
 
 # Based on some XML templates and the specs below, we're going to generate families of outfit XML files.
 # First things first: what are we supposed to be doing?
@@ -213,7 +207,7 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
       'gfx_store':    'organic_hull_' + gfx + '.webp',
       'cargo':        lerpr( ref2['cargo'],    round((ref1['cargo']+ref2['cargo'])/2.0) ),
       'absorb':       lerpr( ref1['absorb']-3, ref2['absorb']-3 ),
-      'armour':       lerpr(  ref1['armour'],   ref2['armour'] )
+      'armour':       lerpr( ref1['armour'],   ref2['armour'] )
    } ).run( [ N_(output_pref + " Cortex " + s) for s in outputs ] )
 
 
