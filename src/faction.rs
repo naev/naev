@@ -281,15 +281,22 @@ impl Faction {
                 }
             }
 
-            // Store important stuff here
-            self.api.set(StandingAPI {
-                friendly_at: env.get("friendly_at")?,
-                hit: load_func(env, "hit"),
-                hit_test: load_func(env, "hit_test"),
-                text_rank: load_func(env, "text_rank"),
-                text_broad: load_func(env, "text_broad"),
-                reputation_max: load_func(env, "reputation_max"),
-            })?;
+            // Store important non-changing stuff here
+            self.api
+                .set(StandingAPI {
+                    friendly_at: env.get("friendly_at")?,
+                    hit: load_func(env, "hit"),
+                    hit_test: load_func(env, "hit_test"),
+                    text_rank: load_func(env, "text_rank"),
+                    text_broad: load_func(env, "text_broad"),
+                    reputation_max: load_func(env, "reputation_max"),
+                })
+                .map_err(|_| {
+                    anyhow::anyhow!(
+                        "Failed to load StandingAPI for faction '{}'",
+                        self.data.name
+                    )
+                })?;
         }
         Ok(())
     }

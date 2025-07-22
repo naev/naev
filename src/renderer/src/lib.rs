@@ -433,7 +433,7 @@ impl Context {
         -0.25, -0.433_012_7];
 
     pub fn get() -> &'static Self {
-        &CONTEXT.get().expect("No context!")
+        CONTEXT.get().expect("No context!")
     }
 
     pub fn as_safe_wrap(&self) -> ContextWrapper {
