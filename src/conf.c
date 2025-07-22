@@ -783,6 +783,12 @@ static size_t quoteLuaString( char *str, size_t size, const char *text )
 
 #define conf_saveComment( t )                                                  \
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "-- %s\n", t );
+#define conf_saveCommentVar( str, ... )                                        \
+   do {                                                                        \
+      char _BUF[STRMAX_SHORT];                                                 \
+      scnprintf( _BUF, sizeof( _BUF ), str, ##__VA_ARGS__ );                   \
+      pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "-- %s\n", _BUF );     \
+   } while ( 0 )
 
 #define conf_saveEmptyLine()                                                   \
    if ( sizeof( buf ) != pos )                                                 \
@@ -984,9 +990,10 @@ int conf_saveConfig( const char *file )
    conf_saveBool( "healthbars", conf.healthbars );
    conf_saveEmptyLine();
 
-   conf_saveComment(
+   conf_saveCommentVar(
       _( "Background brightness. 1 is full brightness while setting it to 0 "
-         "would make the backgrounds pitch black. Defaults to 0.5." ) );
+         "would make the backgrounds pitch black. Defaults to %.1f." ),
+      BG_BRIGHTNESS_DEFAULT );
    conf_saveFloat( "bg_brightness", conf.bg_brightness );
    conf_saveEmptyLine();
 

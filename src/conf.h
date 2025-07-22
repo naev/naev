@@ -61,7 +61,7 @@
 #define GAME_SPEED_DEFAULT 1. /**< Game speed. */
 #define HEALTHBARS_DEFAULT 1  /**< Whether or not to show pilot health bars. */
 #define BG_BRIGHTNESS_DEFAULT                                                  \
-   0.5 /**< How much to darken (or lighten) the backgrounds. */
+   0.7 /**< How much to darken (or lighten) the backgrounds. */
 #define NEBU_NONUNIFORMITY_DEFAULT                                             \
    1. /**< How much to darken (or lighten) the nebula stuff. */
 #define NEBU_SATURATION_DEFAULT                                                \
