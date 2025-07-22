@@ -5,6 +5,7 @@ subdir('core')
 subdir('ndata')
 subdir('gettext')
 subdir('log')
+subdir('mutex')
 subdir('renderer')
 subdir('toolkit')
 source_rust = files(
@@ -30,7 +31,6 @@ source_rust = files(
    'faction.rs',
    'linebreak.rs',
    'model.rs',
-   'mutex.rs',
    'naev.rs',
    'nebula.rs',
    'nlua.rs',
