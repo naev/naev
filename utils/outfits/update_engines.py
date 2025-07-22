@@ -2,7 +2,7 @@
 
 import math
 from sys import stderr, stdout, stdin
-from outfit import nam2fil, fmtval, unstackvals
+from old_outfit import nam2fil, fmtval, unstackvals
 from core_outfit import core_outfit, core_write
 from getconst import PHYSICS_SPEED_DAMP
 

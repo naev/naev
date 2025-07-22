@@ -5,7 +5,7 @@
 
 
 import re
-from outfit import outfit, ET
+from oldoutfit import outfit, ET
 from sys import argv, stderr, exit
 
 

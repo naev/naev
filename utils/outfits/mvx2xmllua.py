@@ -3,7 +3,7 @@
 keep_in_xml = {'priority', 'rarity'}
 
 from sys import argv, stderr, stdin, stdout, exit
-from outfit import outfit, nam2fil, MOBILITY_PARAMS, text2val, roundit, ET
+from old_outfit import outfit, nam2fil, MOBILITY_PARAMS, text2val, roundit, ET
 
 
 def fmt( f ):

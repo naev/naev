@@ -3,7 +3,7 @@
 from os import path, utime
 from sys import stderr
 from pathlib import Path
-from outfit import outfit
+from old_outfit import outfit
 
 from xmllua2mvx import xmllua2mvx
 from mvx2xmllua import mvx2xmllua
@@ -30,9 +30,6 @@ def core_outfit( nam, try_again = False, quiet = False ):
       if o is not None:
          o.fil = nam
       return o
-
-def some_outfit( nam, quiet = False ):
-   return _gen_if_needed(nam, force = False, quiet = quiet, multicore_only = True)
 
 def core_write( o, fil ):
    mvx = mvx_nam(fil)
