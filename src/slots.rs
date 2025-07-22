@@ -113,7 +113,7 @@ pub fn get(name: &str) -> Result<&'static SlotProperty> {
 }
 
 pub fn load() -> Result<Vec<SlotProperty>> {
-    let ctx = Context::get().unwrap().as_safe_wrap();
+    let ctx = Context::get().as_safe_wrap();
     let files = ndata::read_dir("slots/")?;
     let mut sp_data: Vec<SlotProperty> = files
         .par_iter()

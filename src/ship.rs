@@ -59,7 +59,7 @@ fn get_mut() -> &'static mut [ShipWrapper] {
 #[unsafe(no_mangle)]
 pub extern "C" fn ship_gfxLoadNeeded() {
     let needs2d: Mutex<Vec<&mut ShipWrapper>> = Mutex::new(vec![]);
-    let ctx = Context::get().unwrap().as_safe_wrap();
+    let ctx = Context::get().as_safe_wrap();
     get_mut().par_iter_mut().for_each(|ptr| {
         let s = &mut ptr.0;
         if s.flags & naevc::SHIP_NEEDSGFX == 0 {

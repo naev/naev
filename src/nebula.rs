@@ -437,7 +437,7 @@ impl NebulaData {
 
 use std::sync::{LazyLock, Mutex};
 static NEBULA: LazyLock<Mutex<NebulaData>> = LazyLock::new(|| {
-    let ctx = renderer::Context::get().unwrap();
+    let ctx = renderer::Context::get();
     Mutex::new(NebulaData::new(ctx).unwrap())
 });
 
@@ -446,7 +446,7 @@ pub extern "C" fn nebu_init() {}
 
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_resize() {
-    let ctx = renderer::Context::get().unwrap();
+    let ctx = renderer::Context::get();
     let mut neb = NEBULA.lock().unwrap();
     neb.resize(ctx);
 }
@@ -457,21 +457,21 @@ pub extern "C" fn nebu_exit() {}
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_render(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
-    let ctx = renderer::Context::get().unwrap();
+    let ctx = renderer::Context::get();
     let _ = neb.render(ctx);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_renderOverlay(_dt: f64) {
     let neb = NEBULA.lock().unwrap();
-    let ctx = renderer::Context::get().unwrap();
+    let ctx = renderer::Context::get();
     let _ = neb.render_overlay(ctx);
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_update(dt: f64) {
     let mut neb = NEBULA.lock().unwrap();
-    let ctx = renderer::Context::get().unwrap();
+    let ctx = renderer::Context::get();
     let _ = neb.update(ctx, dt);
 }
 
@@ -484,7 +484,7 @@ pub extern "C" fn nebu_getSightRadius() -> c_double {
 #[unsafe(no_mangle)]
 pub extern "C" fn nebu_prep(density: c_double, volatility: c_double, hue: c_double) {
     let mut neb = NEBULA.lock().unwrap();
-    let ctx = renderer::Context::get().unwrap();
+    let ctx = renderer::Context::get();
     let _ = neb.setup(ctx, density as f32, volatility as f32, hue as f32);
 }
 

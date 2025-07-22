@@ -1384,7 +1384,7 @@ impl Model {
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_init() -> c_int {
     let _ = COMMON.get_or_init(|| {
-        let ctx = Context::get().unwrap().as_wrap();
+        let ctx = Context::get().as_wrap();
         Common::new(&ctx).unwrap()
     });
     0
@@ -1487,7 +1487,7 @@ pub extern "C" fn gltf_numAnimations(_obj: *mut Model) -> c_uint {
 #[unsafe(no_mangle)]
 pub extern "C" fn gltf_loadFromFile(cpath: *const c_char) -> *const Model {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get().unwrap().as_wrap();
+    let ctx = Context::get().as_wrap();
     let model = Model::from_path(&ctx, path.to_str().unwrap()).unwrap();
     model.into_ptr()
 }
@@ -1512,7 +1512,7 @@ pub extern "C" fn gltf_render(
         true => &Matrix4::identity(),
         false => unsafe { &*ctransform },
     };
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
     let data = COMMON.get().unwrap().data.read().unwrap();
     let lighting = &data.light_uniform;
     let _ = model.render_scene(
@@ -1540,7 +1540,7 @@ pub extern "C" fn gltf_renderScene(
         true => &Matrix4::identity(),
         false => unsafe { &*ctransform },
     };
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
     let data = COMMON.get().unwrap().data.read().unwrap();
     let lighting = match clighting.is_null() {
         true => &data.light_uniform,

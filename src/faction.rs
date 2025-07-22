@@ -708,7 +708,7 @@ impl FactionLoad {
 pub static FACTIONDATA: OnceLock<Vec<FactionData>> = OnceLock::new();
 
 pub fn load() -> Result<()> {
-    let ctx = Context::get().unwrap().as_safe_wrap();
+    let ctx = Context::get().as_safe_wrap();
     let files = ndata::read_dir("factions/")?;
 
     // First pass: set up factions

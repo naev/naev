@@ -184,7 +184,7 @@ impl Message {
     }
 }
 
-pub static CONTEXT: OnceLock<Context> = OnceLock::new();
+static CONTEXT: OnceLock<Context> = OnceLock::new();
 static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
 pub(crate) fn message_push(msg: Message) {
     MESSAGE_QUEUE.lock().unwrap().push(msg);
@@ -432,12 +432,8 @@ impl Context {
         -0.25,  0.433_012_7,
         -0.25, -0.433_012_7];
 
-    pub fn get() -> Result<&'static Self> {
-        //CONTEXT.get()?.lock()
-        match CONTEXT.get() {
-            Some(ctx) => Ok(ctx),
-            None => anyhow::bail!("No context"),
-        }
+    pub fn get() -> &'static Self {
+        &CONTEXT.get().expect("No context!")
     }
 
     pub fn as_safe_wrap(&self) -> ContextWrapper {
@@ -905,7 +901,7 @@ pub extern "C" fn gl_renderRect(
     h: c_double,
     c: *mut Vector4<f32>,
 ) {
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let colour = unsafe { *c };
     let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
 }
@@ -929,7 +925,7 @@ pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_defViewport() {
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let dims = ctx.dimensions.read().unwrap();
     unsafe {
         naevc::gl_view_matrix = naevc::mat4_ortho(
@@ -946,7 +942,7 @@ pub extern "C" fn gl_defViewport() {
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     match ctx.screenshot(path.to_str().unwrap()) {
         Ok(_) => (),
         Err(e) => {
