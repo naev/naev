@@ -442,6 +442,7 @@ naevcrs = rust.bindgen(
    cargo_data.set('BUILD', meson.project_build_root() )
    cargo_data.set('SOURCE', meson.project_source_root() )
    cargo_toml = configure_file( input: 'Cargo.toml.in', output: 'Cargo.toml', configuration: cargo_data )
+   buildrs = configure_file( input: 'build.rs.in', output: 'build.rs', configuration: cargo_data )
    cargo_env = [ 'CARGO_HOME=' + meson.project_build_root() / 'cargo-home' ]
    cargo_options = [ '--manifest-path', cargo_toml ]
    cargo_options += [ '--profile', rust_target ]
@@ -452,7 +453,7 @@ naevcrs = rust.bindgen(
 
    naev_rlib = custom_target( 'cargo-build',
       depends: [naevcrs, naevc_crate, naev_clib],
-      depend_files: source_rust + cargo_toml,
+      depend_files: source_rust + cargo_toml + buildrs,
       output: 'libnaev.rlib',
       console: true,
       command: [ 'env', cargo_env, cargo, 'build', cargo_options, '&&', copydir, meson.project_build_root(), 'src' / target_triplet / rust_target / '@OUTPUT@', ] )
