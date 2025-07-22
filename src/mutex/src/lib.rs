@@ -1,13 +1,14 @@
-#![allow(dead_code)]
 use sdl3 as sdl;
 use std::cell::UnsafeCell;
 use std::ffi::CStr;
 use std::ops::{Deref, DerefMut};
-use std::sync::{LockResult, TryLockError, TryLockResult};
+use std::sync::{
+    atomic::AtomicBool, atomic::Ordering, LockResult, PoisonError, TryLockError, TryLockResult,
+};
 
-pub struct Lock(*mut sdl::sys::mutex::SDL_Mutex);
+struct Lock(*mut sdl::sys::mutex::SDL_Mutex);
 impl Lock {
-    pub fn new() -> Self {
+    fn new() -> Self {
         let lock = unsafe { sdl::sys::mutex::SDL_CreateMutex() };
         if lock.is_null() {
             let e = unsafe { CStr::from_ptr(sdl::sys::error::SDL_GetError()) };
@@ -16,13 +17,13 @@ impl Lock {
         }
         Self(lock)
     }
-    pub fn lock(&self) {
+    fn lock(&self) {
         unsafe { sdl::sys::mutex::SDL_LockMutex(self.0) }
     }
-    pub fn unlock(&self) {
+    fn unlock(&self) {
         unsafe { sdl::sys::mutex::SDL_UnlockMutex(self.0) }
     }
-    pub fn try_lock(&self) -> bool {
+    fn try_lock(&self) -> bool {
         unsafe { sdl::sys::mutex::SDL_TryLockMutex(self.0) }
     }
 }
@@ -34,12 +35,25 @@ impl Drop for Lock {
 
 pub struct MutexGuard<'a, T: ?Sized + 'a> {
     lock: &'a Mutex<T>,
+    _phantom: not_send::PhantomNotSend,
 }
 //impl<T: ?Sized> !Send for MutexGuard<'_, T> {}
 unsafe impl<T: ?Sized + Sync> Sync for MutexGuard<'_, T> {}
 impl<'mutex, T: ?Sized> MutexGuard<'mutex, T> {
     unsafe fn new(lock: &'mutex Mutex<T>) -> LockResult<MutexGuard<'mutex, T>> {
-        Ok(MutexGuard { lock })
+        match lock
+            .poison
+            .compare_exchange(false, true, Ordering::Acquire, Ordering::Relaxed)
+        {
+            Ok(_) => Ok(MutexGuard {
+                lock,
+                _phantom: not_send::PhantomNotSend::default(),
+            }),
+            Err(_) => Err(PoisonError::new(MutexGuard {
+                lock,
+                _phantom: not_send::PhantomNotSend::default(),
+            })),
+        }
     }
 }
 impl<T: ?Sized> Deref for MutexGuard<'_, T> {
@@ -56,12 +70,14 @@ impl<T: ?Sized> DerefMut for MutexGuard<'_, T> {
 impl<T: ?Sized> Drop for MutexGuard<'_, T> {
     #[inline]
     fn drop(&mut self) {
+        self.lock.poison.store(false, Ordering::Relaxed);
         self.lock.inner.unlock();
     }
 }
 
 pub struct Mutex<T: ?Sized> {
     inner: Lock,
+    poison: AtomicBool,
     data: UnsafeCell<T>,
 }
 unsafe impl<T: ?Sized + Send> Send for Mutex<T> {}
@@ -71,6 +87,7 @@ impl<T> Mutex<T> {
     pub fn new(t: T) -> Mutex<T> {
         Mutex {
             inner: Lock::new(),
+            poison: AtomicBool::new(false),
             data: UnsafeCell::new(t),
         }
     }
@@ -119,3 +136,12 @@ fn test_mutex() {
     }
     assert_eq!(*mutex.lock().unwrap(), 4_000_000);
 }
+
+/*
+#[test]
+fn test_mutexguard_not_send() {
+    fn require_not_send<T: !Send>(_t: T) {}
+    let mutex = Mutex::new(());
+    require_not_send( mutex.lock().unwrap() );
+}
+*/
