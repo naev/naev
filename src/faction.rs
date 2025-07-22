@@ -656,7 +656,7 @@ impl FactionLoad {
 
         // Initaialize Lua scripts
         {
-            let mut lua = lua.lock().unwrap();
+            let lua = lua.lock().unwrap();
             if !fct.script_spawn.is_empty() {
                 fct.sched_env = Some({
                     let mut env = lua.environment_new(&fct.script_spawn)?;

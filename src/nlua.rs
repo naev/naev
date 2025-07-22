@@ -277,7 +277,7 @@ impl NLua {
         })
     }
 
-    pub fn environment_new(&mut self, name: &str) -> Result<LuaEnv> {
+    pub fn environment_new(&self, name: &str) -> Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
 
@@ -520,7 +520,7 @@ use std::ffi::CStr;
 pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
-    let mut lua = NLUA.lock().unwrap();
+    let lua = NLUA.lock().unwrap();
     match lua.environment_new(name) {
         Ok(env) => Box::into_raw(Box::new(env)),
         Err(e) => {
