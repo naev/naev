@@ -2,8 +2,7 @@
 
 import math
 from sys import stderr, stdout, stdin
-from old_outfit import nam2fil, fmtval, unstackvals
-from core_outfit import core_outfit, core_write
+from new_outfit import nam2fil, outfit, MOBILITY_PARAMS
 from getconst import PHYSICS_SPEED_DAMP
 
 
@@ -48,6 +47,20 @@ line_stats = {
 
 ALPHA, BETA = 1.14, 0.048
 
+
+def r_prisec( tag, v1, v2, eml1, eml2 ):
+   if tag in MOBILITY_PARAMS:
+      return v1, round((v2*(eml1+eml2) - eml1*v1)/float(eml2))
+   else:
+      return v1, v2-v1
+
+def unstackvals( tag, text1, text2, eml1, eml2 ):
+   o1, o2 = r_prisec(tag, float(text1), 0 if text2 == '' else float(text2), eml1, eml2)
+   if o2 == o1:
+      return o1
+   else:
+      return {'pri': o1, 'sec': o2}
+
 def dec_i( n ):
    if n <= 1:
       return 400.0
@@ -56,7 +69,7 @@ def dec_i( n ):
 
 def fmt( t, half = False ):
    red = 2 if half and t<45 else 1
-   return fmtval(round(red*t)/float(red))
+   return round(red*t)/float(red)
 
 def dec( f ):
    n = math.floor(f)
@@ -103,17 +116,18 @@ def apply_ls( sub, o, additional = dict() ):
          if k not in sub:
             sub[k] = v
       acc = []
-      for i in o:
-         if i.tag in sub and i.text != sub[i.tag]:
-            acc.append((i.tag, i.text, sub[i.tag]))
-            i.text = sub[i.tag]
+      for d, k in o.nodes():
+         k = k.lstrip('$')
+         if k in sub and str(d[k]) != str(sub[k]):
+            acc.append((k, d[k], sub[k]))
+            d[k] = sub[k]
       return acc
 
 def mk_subs( a, name = None ):
    sub = []
    for doubled in [False, True]:
       try:
-         o = core_outfit(a)
+         o = outfit(a)
       except:
          o = None
 
@@ -144,7 +158,7 @@ def main( args ):
       if sub is None:
          continue
 
-      o = core_outfit(a)
+      o = outfit(a)
       t = o.to_dict()['engine_limit']
       if type(t) == type(()):
          (eml1, eml2) = t
@@ -163,10 +177,10 @@ def main( args ):
       if sub is not None:
          acc = apply_ls(sub, o)
          if acc is not None:
-            err(o.fil.split('/')[-1]+': ', nnl = True)
+            err(o._filename.split('/')[-1]+': ', nnl = True)
             if acc:
-               err(', '.join([i+':'+j+'->'+k for i, j, k in acc]))
-               core_write(o, o.fil)
+               err(', '.join([i+':'+str(j)+'->'+str(k) for i, j, k in acc]))
+               o.save()
             else:
                err('_')
    return 0
@@ -191,7 +205,7 @@ def gen_line( params ):
 
    for i, s in enumerate(['Small', 'Medium', 'Large']):
       engine = engine_dir.replace('small', s.lower())
-      o = core_outfit(engine)
+      o = outfit(engine, is_multi = True)
 
       if o is None:
          err('Beat up small engine, used as dummy, was not found!')
@@ -199,7 +213,7 @@ def gen_line( params ):
 
       nam = lin + ' ' + s + ' Engine'
       o.set_name(nam)
-      fil = nam2fil(nam+'.xml')
+      fil = nam2fil(nam + '.xml')
 
       sized_params = lambda n: {
          'mass':str(10*n),
