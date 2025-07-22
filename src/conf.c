@@ -992,8 +992,8 @@ int conf_saveConfig( const char *file )
    conf_saveEmptyLine();
 
    conf_saveComment(
-      _( "Background brightness. 1 is normal brightness while setting it to 0 "
-         "would make the backgrounds pitch black." ) );
+      _( "Background brightness. 1 is full brightness while setting it to 0 "
+         "would make the backgrounds pitch black. Defaults to 0.5." ) );
    conf_saveFloat( "bg_brightness", conf.bg_brightness );
    conf_saveEmptyLine();
 
