@@ -197,9 +197,6 @@ class _outfit():
             e.text = str(prisec(e.tag, res, res2, eml1, eml2))
       return self
 
-   def autostack( self, doubled = False ):
-      self.stack(self if doubled else None)
-
    def __iter__( self ):
       def _subs( r ):
          for e in r:

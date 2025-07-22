@@ -56,18 +56,23 @@ def parse_lua_multicore( si ):
       if d['sec'] is None:
          d['sec'] = d['pri']
    L = [(d['name'], d['pri'], d['sec']) for d in L]
-   return L, si[match.span()[1]:]
+   return L, si[:match.span()[0]], si[match.span()[1]:]
 
 def un_multicore( o ):
    try:
       e = o.find('lua_inline', ref = True)
-      L, remains = parse_lua_multicore( e['lua_inline'] )
+      L, bef, aft = parse_lua_multicore( e['lua_inline'] )
    except:
       return False
 
-   e['lua_inline'] = remains
-   if not e['lua_inline']:
+   if bef:
+      e['lua_inline'] = bef
+   else:
       del e['lua_inline']
+
+   if aft:
+      e['lua_inline_post'] = aft
+
    if not (dst := o.find('specific')):
       dst = o['specific'] = {}
    for (k, v1, v2) in L:

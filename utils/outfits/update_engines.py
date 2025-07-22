@@ -128,7 +128,7 @@ def mk_subs( a, name = None ):
       if line is None:
          break
 
-      o.autostack(doubled)
+      o.stack(o if doubled else None)
       sub.append(ls2vals(line, o.size(doubled)))
 
    if not sub:

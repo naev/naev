@@ -21,7 +21,7 @@ from core_outfit import core_outfit
 
 def iter_line( line ):
    for d in ['small', 'medium', 'large']:
-      for i in glob(os.path.join( engine_dir, d, line+'*.xml')):
+      for i in glob(os.path.join( engine_dir, d, line + '*.xml')):
          yield i
 
 def max_sp( sp, ac ):
