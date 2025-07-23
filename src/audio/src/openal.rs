@@ -111,6 +111,12 @@ pub const AL_FORMAT_MONO16: ALenum = 0x1101;
 pub const AL_FORMAT_STEREO8: ALenum = 0x1102;
 pub const AL_FORMAT_STEREO16: ALenum = 0x1103;
 
+pub const AL_INVALID_NAME: ALenum = 0xa001;
+pub const AL_INVALID_ENUM: ALenum = 0xa002;
+pub const AL_INVALID_VALUE: ALenum = 0xa003;
+pub const AL_INVALID_OPERATION: ALenum = 0xa004;
+pub const AL_OUT_OF_MEMORY: ALenum = 0xa005;
+
 unsafe extern "C" {
     pub fn alGetError() -> ALenum;
 
@@ -206,4 +212,40 @@ unsafe extern "C" {
     pub fn alDopplerFactor(dopplerFactor: ALfloat);
     pub fn alDopplerVelocity(dopplerVelocity: ALfloat);
     pub fn alSpeedOfSound(speed: ALfloat);
+}
+
+use anyhow::Result;
+pub fn get_error(e: ALenum) -> &'static str {
+    match e {
+        AL_INVALID_NAME => "a bad name (ID) was passed to an OpenAL function",
+        AL_INVALID_ENUM => "an invalid enum value was passed to an OpenAL function",
+        AL_INVALID_VALUE => "an invalid value was passed to an OpenAL function",
+        AL_INVALID_OPERATION => "the requested operation is not valid",
+        AL_OUT_OF_MEMORY => "the requested operation resulted in OpenAL running out of memory",
+        _ => "unknown error",
+    }
+}
+
+pub fn create_source() -> Result<ALuint> {
+    let mut src = 0;
+    unsafe { alGenSources(1, &mut src) };
+    match src {
+        0 => {
+            let e = unsafe { alGetError() };
+            anyhow::bail!(get_error(e))
+        }
+        v => Ok(v),
+    }
+}
+
+pub fn create_buffer() -> Result<ALuint> {
+    let mut src = 0;
+    unsafe { alGenBuffers(1, &mut src) };
+    match src {
+        0 => {
+            let e = unsafe { alGetError() };
+            anyhow::bail!(get_error(e))
+        }
+        v => Ok(v),
+    }
 }
