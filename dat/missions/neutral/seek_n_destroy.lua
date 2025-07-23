@@ -428,7 +428,7 @@ function hail( target )
 
    -- Custom option
    local lbl = "seekndestroy_check"
-   local mmem = mem -- have to use auxiliary variable here
+   local mmem = mem -- have to use auxiliary variable here to set the upvalue
    local nextsys = mmem.mysys[mmem.cursys+1]
    ccomm.customComm( target, function ()
       if mmem.stage ~= 0 or system.cur() ~= mmem.mysys[mmem.cursys] or inlist( hailed, target )then
