@@ -53,11 +53,10 @@ return function ()
             spawn = function ()
                -- ZHD stands for Za'lek Heavy Drone
                local p = pilot.add("Za'lek Heavy Drone", "Za'lek", nil, _("ZHD-08-5820"), {naked=true, ai="pers_patrol"})
-               p:outfitAddIntrinsic("Escape Pod")
                p:intrinsicSet( "shield_mod", 100 )
+               p:setNoDisable(true)
                equipopt.zalek( p )
                local m = p:memory()
-               m.capturable = true
                m.ad = _("Damn it's a good day today. Erm, I mean. *BEEP* *BEEP* SCANNING SYSTEM. *BEEP*")
                m.comm_greet = _([["Hello! I mean *BEEP* COMMUNICATION AUTHORIZED. *BEEP*"]])
                m.taunt = _("Die, scum! I mean *BEEP* EXTERMINATING *BEEP*")
