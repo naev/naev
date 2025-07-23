@@ -116,11 +116,9 @@ class naev_xml( _xml_node ):
       if self._uptodate:
          stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
       with open(self._filename, 'w') as fp:
-         s = unparse(self, pretty= True, indent= ' ')
+         s = unparse(self, pretty= True, indent= ' ', full_document= False)
          L = s.split('\n')
          for i, l in enumerate(L):
-            if i == 0 and l == '<?xml version="1.0" encoding="utf-8"?>':
-               continue
             if len(u := l.split('<#comment>',1)) == 2 and len(v := u[1].split('</#comment>',1)) == 2:
                l = u[0] + '<!-- ' + v[0].replace('&lt;', '<').replace('&gt;', '>') + ' -->' + v[1]
             l = re.sub(r'<([^ ]*)([^>]*)></\1>', r'<\1\2/>', l)
