@@ -54,13 +54,14 @@ class MesonBuild(Build):
 
 build = MesonBuild(*sys.argv[1:]) if sys.argv[2:3] == ['-o'] else Build()
 
+intify = lambda x: int(x) if round(x) == x else x
 # Hopefully we can refactor this once the behavior is finalized and we're unafraid of merge conflicts. Anyway, back to the show.
 
 def lerpt( t ):
     return lambda x: t[int(math.floor(x*(len(t)*0.99999)))]
 
 def lerp( a, b, ta = 0.0, tb = 1.0 ):
-    return lambda x: a + (x-ta) * (b-a) / (tb-ta)
+    return lambda x: intify(a + (x-ta) * (b-a) / (tb-ta))
 
 def lerpr( a, b, ta = 0.0, tb = 1.0 ):
     def f( x ):
@@ -72,7 +73,7 @@ from math import log, exp
 
 # Does geometric interpolation instead of arithmetic interpolation.
 def eerp( a, b, ta = 0.0, tb = 1.0 ):
-    return lambda x: round(exp(lerp(log(a), log(b), ta, tb)(x)), 2)
+    return lambda x: intify(round(exp(lerp(log(a), log(b), ta, tb)(x)), 2))
 
 def eerpr( a, b, ta = 0.0, tb = 1.0 ):
     return lambda x: int(round(eerp(a, b, ta, tb)(x)))
