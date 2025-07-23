@@ -12,7 +12,7 @@ local board_lootOne -- forward-declared function, defined at bottom of file
 local board_fcthit_check
 local loot_mod
 local special_col = {0.7, 0.45, 0.22} -- Dark Gold
-local board_close
+local board_close, cargo_resetButton
 
 -- TODO put this in some file and load it there
 local LOOTABLES = {
@@ -690,11 +690,21 @@ local function cargo_jettison( cargo, max )
    end )
 end
 
+function cargo_resetButton()
+   if #player.fleetCargoList() <= 0 then
+      cargo_btn:disable()
+      cargo_btn:setAlt(_("You have no cargo to manage."))
+   else
+      cargo_btn:enable()
+      cargo_btn:setAlt()
+   end
+end
+
 local function manage_cargo ()
    local clist, cnames = cargo_list ()
    if #cnames <= 0 then return end
 
-   local w, h = 300, 400
+   local w, h = 400, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
    cargo_wdw = wdw
 
@@ -995,6 +1005,9 @@ function board_lootOneDo( wgt, nomsg )
       if l.q <= 0 then
          clear = true
       end
+
+      -- See if have to update the button
+      cargo_resetButton()
    elseif l.type=="func" then
       l.data()
       board_fcthit_apply( 0 )
