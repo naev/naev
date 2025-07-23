@@ -8,13 +8,14 @@
   <limit>badship</limit>
  </general>
  <specific type="modification">
-  <speed_mod>-20</speed_mod>
+  <speed_mod>-11</speed_mod>
   <turn_mod>-20</turn_mod>
   <accel_mod>-20</accel_mod>
   <weapon_firerate>-20</weapon_firerate>
   <weapon_damage>-20</weapon_damage>
   <weapon_range>-20</weapon_range>
   <ew_track>-20</ew_track>
+  <ew_detect>-20</ew_detect>
   <armour_mod>-20</armour_mod>
   <shield_mod>-20</shield_mod>
   <energy_mod>-20</energy_mod>
@@ -23,6 +24,7 @@
   <!-- Disabled until we can equip intrinsic outfits before equipopt. -->
   <!--<energy_regen_mod>-35</energy_regen_mod>-->
   <ew_signature>20</ew_signature>
+  <stress_dissipation>-35</stress_dissipation>
  </specific>
  <tags>
   <tag>nosteal</tag>
