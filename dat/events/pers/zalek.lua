@@ -54,6 +54,7 @@ return function ()
                -- ZHD stands for Za'lek Heavy Drone
                local p = pilot.add("Za'lek Heavy Drone", "Za'lek", nil, _("ZHD-08-5820"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "shield_mod", 100 )
+               p:outfitAddIntrinsic("Escape Pod") -- Are they man? Are they machine? Are they cool? (yes)
                p:setNoDisable(true)
                equipopt.zalek( p )
                local m = p:memory()
