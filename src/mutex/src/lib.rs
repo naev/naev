@@ -1,7 +1,6 @@
 use sdl3 as sdl;
 use std::cell::UnsafeCell;
 use std::ffi::CStr;
-use std::ops::{Deref, DerefMut};
 use std::sync::{
     atomic::AtomicBool, atomic::Ordering, LockResult, PoisonError, TryLockError, TryLockResult,
 };
@@ -12,7 +11,6 @@ impl Lock {
         let lock = unsafe { sdl::sys::mutex::SDL_CreateMutex() };
         if lock.is_null() {
             let e = unsafe { CStr::from_ptr(sdl::sys::error::SDL_GetError()) };
-            //panic!(String::from(e.to_str().unwrap()));
             panic!("{}", e.to_str().unwrap());
         }
         Self(lock)
@@ -56,17 +54,21 @@ impl<'mutex, T: ?Sized> MutexGuard<'mutex, T> {
         }
     }
 }
-impl<T: ?Sized> Deref for MutexGuard<'_, T> {
+impl<T: ?Sized> std::ops::Deref for MutexGuard<'_, T> {
     type Target = T;
     fn deref(&self) -> &T {
         unsafe { &*self.lock.data.get() }
     }
 }
-impl<T: ?Sized> DerefMut for MutexGuard<'_, T> {
+// Don't allow getting mutable references and force using RefCell so it doesn't violate Rust's no
+// double borrowed muts rule.
+/*
+impl<T: ?Sized> std::ops::DerefMut for MutexGuard<'_, T> {
     fn deref_mut(&mut self) -> &mut T {
         unsafe { &mut *self.lock.data.get() }
     }
 }
+*/
 impl<T: ?Sized> Drop for MutexGuard<'_, T> {
     #[inline]
     fn drop(&mut self) {
