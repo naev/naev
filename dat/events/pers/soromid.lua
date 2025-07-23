@@ -22,6 +22,7 @@ return function ()
                         "bite1","bite2","bite3","bite4","bite5",
                         "health1","health2","health3","health4","health5"} } )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["Do you feel the ebb of the universe? Only through harmony will we surpass our frail selves."]])
                m.taunt = _("You shall make a good sacrifice to my bioship!")
                m.bribe_no = _([["We do not deal with the tainted."]])
@@ -39,6 +40,7 @@ return function ()
                         "plasma1", "plasma2", "plasma3",
                         "health1","health2"} } )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["The sky omens indicate troubled times ahead."]])
                m.taunt = _("You disrupt the order of nature!")
                m.bribe_no = _([["We do not deal with the tainted."]])

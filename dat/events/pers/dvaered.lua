@@ -22,6 +22,7 @@ return function ()
                p:intrinsicSet( "absorb", 10*(npack-1) )
                equipopt.dvaered( p, {turret=0} )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["Think not of what the pack will do for you, but only what you can do for the pack."]])
                m.taunt = _("The pack will tear you limb from limb!")
                m.bribe_no = _([["We only wish for blood!"]])
@@ -32,6 +33,7 @@ return function ()
                for i=1,npack do
                   local e = pilot.add("Dvaered Vendetta", "Dvaered", pos )
                   local em = p:memory()
+                  em.capturable = true
                   em.comm_no = _([["*BARK*"]])
                   em.__packleader = p
                   e:setVel(vel)

@@ -16,6 +16,7 @@ return function ()
             spawn = function ()
                local p = pilot.add("Thurion Perspicacity Beta", "Thurion", nil, _("Eye of the Hive"), {ai="pers_runaway"})
                local m = p:memory()
+               m.capturable = true
                -- TODO have these actually mean something
                m.greet = strmess.tobinary( "You should not be seeing me.", true )
                m.taunt = strmess.tobinary( "Bye.", true )

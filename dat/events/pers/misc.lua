@@ -40,6 +40,7 @@ return function ()
             local plt = pilot.add(ship, "Independent", nil, nil, { ai="pers" } )
 
             local mem = plt:memory()
+            mem.capturable = true
             mem.vulnerability = math.huge -- Less likely to be attacked
             mem.natural = true -- Can be captured and such
             mem.refuel_no = _([["Sorry, I'm also in need of fuel."]])

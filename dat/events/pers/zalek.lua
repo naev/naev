@@ -20,6 +20,7 @@ return function ()
                   outfits_add={"Emergency Shield Booster"},
                   prefer={["Emergency Shield Booster"] = 100}} )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["Nothing in life is to be feared; it is only to be understood."]])
                m.taunt = _("Your death shall be swift and easy!")
                m.bribe_no = _([["You must be eliminated. For science!"]])
@@ -34,6 +35,7 @@ return function ()
                   outfits_add={"Neural Accelerator Interface"},
                   prefer={["Neural Accelerator Interface"] = 100}} )
                local m = p:memory()
+               m.capturable = true
                m.comm_greet = _([["What do you want? Can't you see I'm busy writing a grant?"]])
                m.taunt = _("Do not get in the way of science!")
                m.bribe_prompt = _([["I could use {credits} more in funding."]])
@@ -55,6 +57,7 @@ return function ()
                p:intrinsicSet( "shield_mod", 100 )
                equipopt.zalek( p )
                local m = p:memory()
+               m.capturable = true
                m.ad = _("Damn it's a good day today. Erm, I mean. *BEEP* *BEEP* SCANNING SYSTEM. *BEEP*")
                m.comm_greet = _([["Hello! I mean *BEEP* COMMUNICATION AUTHORIZED. *BEEP*"]])
                m.taunt = _("Die, scum! I mean *BEEP* EXTERMINATING *BEEP*")
@@ -77,6 +80,7 @@ return function ()
                   outfits_add={"Combat Hologram Projector"},
                   prefer={["Combat Hologram Projector"] = 100}} )
                local m = p:memory()
+               m.capturable = true
                m.ad = { _("Oh shit, did I miss another deadline?"),
                         _("I'll never get into tenure track with my current Z-index…"),
                         _("Seventh time in a row my papers was rejected…"), }
