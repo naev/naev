@@ -1,6 +1,7 @@
 ####
 # Rust Stuff
 ####
+subdir('audio')
 subdir('core')
 subdir('ndata')
 subdir('gettext')
@@ -9,11 +10,14 @@ subdir('mutex')
 subdir('renderer')
 subdir('toolkit')
 source_rust = files(
+   'audio/src/lib.rs',
+   'audio/src/openal.rs',
    'core/src/lib.rs',
    'core/src/ntime.rs',
    'core/src/nxml.rs',
    'core/src/start.rs',
    'core/src/utils.rs',
+   'mutex/src/lib.rs',
    'ndata/src/lib.rs',
    'ndata/src/physfs.rs',
    'gettext/src/lib.rs',

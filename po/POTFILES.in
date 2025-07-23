@@ -3773,6 +3773,8 @@ src/array.rs
 src/asteroid.c
 src/asteroid.h
 src/attributes.h
+src/audio/src/lib.rs
+src/audio/src/openal.rs
 src/background.c
 src/background.h
 src/base64.c

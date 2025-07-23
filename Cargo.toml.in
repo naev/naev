@@ -21,6 +21,7 @@ overflow-checks = true
 [workspace]
 resolver = "3"
 members = [
+   "@BUILD@/src/audio",
    "@BUILD@/src/core",
    "@BUILD@/src/log",
    "@BUILD@/src/gettext",
@@ -45,6 +46,7 @@ not_unsafe_ptr_arg_deref = "allow"
 naevc = { path=@NAEVC@ }
 sdl3 = "0"
 anyhow = "1"
+audio = { path="@BUILD@/src/audio" }
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
@@ -59,8 +61,11 @@ bytemuck = { version = "1", features = ["derive"] } # Needed for shader voodoo
 encase = { version = "0", features = ["nalgebra"] } # Needed for shader voodoo
 image = "0"
 roxmltree = "0"
+mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
+symphonia = "0.5"
 
 [dependencies]
+audio = { workspace = true }
 naevc = { workspace = true }
 naev_core = { workspace = true }
 gettext = { workspace = true }
@@ -77,6 +82,7 @@ bytemuck = { workspace = true }
 encase = { workspace = true }
 roxmltree = { workspace = true }
 image = { workspace = true }
+mlua = { workspace = true }
 constcat = "0"
 derive_more = { version = "2", features = ["from", "into"] }
 semver = "1"
@@ -84,7 +90,6 @@ rand = "0"
 rayon = "1" # parallel computation
 static_assertions = "1"
 palette = "0" # Colour conversion
-mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }

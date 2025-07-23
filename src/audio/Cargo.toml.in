@@ -1,5 +1,5 @@
 [package]
-name = "ndata"
+name = "audio"
 workspace = "@BUILD@"
 version.workspace = true
 edition.workspace = true
@@ -9,9 +9,12 @@ rust-version.workspace = true
 workspace = true
 
 [lib]
-path = "@SOURCE@/src/ndata/src/lib.rs"
+path = "@SOURCE@/src/audio/src/lib.rs"
 
 [dependencies]
-sdl3 = { workspace = true }
 naevc = { workspace = true }
+mlua = { workspace = true }
+ndata = { workspace = true }
+anyhow = { workspace = true }
 symphonia = { workspace = true }
+log = { workspace = true }

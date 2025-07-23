@@ -6,6 +6,9 @@ pub const WARN_MAX: u32 = 1000;
 #[cfg(unix)]
 pub use nix;
 
+// Re-export so this doesn't depend on anything.
+pub use gettext;
+
 pub fn init() {
     unsafe {
         naevc::log_init();
@@ -66,7 +69,7 @@ macro_rules! warn {
                 &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
         if nw==$crate::WARN_MAX {
-            eprintln!("{}",gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
+            eprintln!("{}",$crate::gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
             #[cfg(unix)]
@@ -87,7 +90,7 @@ macro_rules! warn_err {
         if nw == $crate::WARN_MAX {
             eprintln!(
                 "{}",
-                gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
+                $crate::gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
             );
         }
         if naevc::config::DEBUG_PARANOID {
