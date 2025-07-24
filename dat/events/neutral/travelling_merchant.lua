@@ -150,6 +150,8 @@ function gen_outfits ()
       'Air Freshener',
       'Valkyrie Beam',
       'Hades Torch',
+      "Apollo's Gaze",
+      "Kratos' Glove",
    }
 
    -- Wild space

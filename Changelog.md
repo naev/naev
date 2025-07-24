@@ -45,7 +45,7 @@
  - 13 new missions and events
     - Go treasure hunting
  - 8 new ship variants
- - 10 new outfits and reworked cores
+ - 12 new outfits and reworked cores
     - Outfit sets that gain bonuses as more elements of the set are equipped
  - New sensor anomalies
  - Two new intertwined minor houses of the Empire with new systems and lore
