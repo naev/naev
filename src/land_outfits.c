@@ -576,6 +576,7 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    ( ( youhave ) != NULL ) ? youhave : buf_credits );
+
    if ( outfit_license( outfit ) ) {
       int meets_reqs = player_hasLicense( outfit_license( outfit ) );
       k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
@@ -588,9 +589,7 @@ void outfits_update( unsigned int wid, const char *str )
                        meets_reqs ? "" : "#r", _( outfit_license( outfit ) ) );
    }
    if ( outfit_cond( outfit ) ) {
-      int meets_reqs = 0;
-      if ( land_spob != NULL )
-         meets_reqs = cond_check( outfit_cond( outfit ) );
+      int meets_reqs = cond_check( outfit_cond( outfit ) );
       /*k +=*/scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Requires:" ) );
       if ( blackmarket )
          /*l +=*/scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",
