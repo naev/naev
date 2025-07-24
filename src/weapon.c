@@ -543,10 +543,9 @@ static void think_beam( Weapon *w, double dt )
          tpos = &wtarget->solid.pos;
    } break;
    default:
-      turn_off = 1;
       break;
    }
-   if ( tpos == NULL )
+   if ( slot->inrange && tpos == NULL )
       turn_off = 1;
 
    /* Check the beam is still in range. */
