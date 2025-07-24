@@ -505,6 +505,9 @@ You will still have to escort the ship and land with it to perform the repairs a
          -- Messages gets done by event separately
          --player.msg("#r"..fmt.f(_("You lost {amt} reputation with {fct}."),{amt=realhit,fct=fct}).."#0")
 
+         -- Piss off nearby ships
+         board_plt:distress( player.pilot() )
+
          -- Start capture script
          local nc = naev.cache()
          nc.capture_pilot = {
