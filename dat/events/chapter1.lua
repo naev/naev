@@ -20,6 +20,7 @@ local textoverlay = require "textoverlay"
 local pp_shaders = require "pp_shaders"
 local lmusic = require "lmusic"
 local luaspfx = require "luaspfx"
+local cinema = require "cinema"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
@@ -303,7 +304,7 @@ local origsys, boss, tester, tester_broadcast, boss_broadcast
 function cutscene_main0 ()
    fg.alpha_vel = 2 -- Back to fast transitions
 
-   player.cinematics( true )
+   cinema.on()
    player.canDiscover( false )
    setHide( true )
 
@@ -615,7 +616,7 @@ function cutscene_nebu_fade ()
    player.teleport( origsys, false, true )
    camera.set( nil, true )
    camera.setZoom() -- Reset zoom
-   player.cinematics( false )
+   cinema.off()
    fadein()
    hook.timer( 2, "cutscene_cleanup" )
 end
