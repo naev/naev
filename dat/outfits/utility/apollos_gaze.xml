@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Apollo's Gaze">
  <general>
   <rarity>1</rarity>
@@ -11,8 +10,9 @@
   <gfx_store>placeholder.webp</gfx_store>
   </general>
  <specific type="modification">
+  <lua>outfits/unique/poi_data_cheap.lua</lua>
   <weapon_damage>-10</weapon_damage>
   <weapon_range>15</weapon_range>
-  <launch_speed>15</launch_speed> 
+  <launch_speed>15</launch_speed>
  </specific>
 </outfit>

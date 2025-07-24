@@ -434,6 +434,7 @@ dat/outfits/unique/squadron_synchronizer_module.xml
 dat/outfits/unique/valkyrie_beam.xml
 dat/outfits/unique/veil_of_penelope.xml
 dat/outfits/unique/zd5_guardian_unit.xml
+dat/outfits/utility/apollos_gaze.xml
 dat/outfits/utility/asteroid_scanner.xml
 dat/outfits/utility/berserk_chip.xml
 dat/outfits/utility/blink_drive.xml
@@ -465,6 +466,7 @@ dat/outfits/utility/hullcoating/nexus_concealment_coating.xml
 dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml
 dat/outfits/utility/hyperbolic_blink_engine.xml
 dat/outfits/utility/jump_scanner.xml
+dat/outfits/utility/kratos_glove.xml
 dat/outfits/utility/low_radiation_sensor_modulator.xml
 dat/outfits/utility/milspec_jammer.xml
 dat/outfits/utility/milspec_scrambler.xml
@@ -3436,6 +3438,7 @@ dat/outfits/lib/matrix_sell.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lib/multicore.lua
 dat/outfits/lib/multiengines.lua
+dat/outfits/lib/poi_data.lua
 dat/outfits/lib/set.lua
 dat/outfits/lib/sets/corsair.lua
 dat/outfits/lib/twins.lua
@@ -3450,6 +3453,7 @@ dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/fuelshell_plating.lua
 dat/outfits/unique/poi_data.lua
+dat/outfits/unique/poi_data_cheap.lua
 dat/outfits/unique/pulse_scanner.lua
 dat/outfits/unique/squadron_synchronizer_module.lua
 dat/outfits/unique/valkyrie_beam.lua
