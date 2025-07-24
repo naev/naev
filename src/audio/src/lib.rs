@@ -22,6 +22,19 @@ pub enum AudioType {
     Stream,
 }
 
+/*
+struct BufferDataType<T> {
+    data: Vec<T>,
+}
+
+struct BufferData {
+    MonoU8(BufferDataType<u8>),
+    StereoU8((BufferDataType<u8>, BufferDataType<u8>)),
+    MonoS16(BufferDataType<i16>),
+    StereoS16((BufferDataType<i16>,BufferDataType<i16>)),
+}
+*/
+
 #[derive(Clone)]
 pub struct AudioBuffer {
     buffer: Arc<ALuint>,
@@ -57,13 +70,17 @@ impl Audio {
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
 
         let mut hint = Hint::new();
-        hint.with_extension("mp3");
-
-        // Use the default options for metadata and format readers.
-        let meta_opts: MetadataOptions = Default::default();
-        let fmt_opts: FormatOptions = Default::default();
+        if let Some(ext) = std::path::Path::new(path)
+            .extension()
+            .map(|s| s.to_str())
+            .flatten()
+        {
+            hint.with_extension(ext);
+        }
 
         // Probe the media source.
+        let meta_opts: MetadataOptions = Default::default();
+        let fmt_opts: FormatOptions = Default::default();
         let probed = symphonia::default::get_probe().format(&hint, mss, &fmt_opts, &meta_opts)?;
 
         // Get the instantiated format reader.
@@ -114,14 +131,12 @@ impl Audio {
             .ok_or(anyhow::anyhow!("unsupported codec"))?;
         let track_id = track.id;
 
-        // Use the default options for the decoder.
-        let dec_opts: DecoderOptions = Default::default();
-
         // Create a decoder for the track.
+        let dec_opts: DecoderOptions = Default::default();
         let mut decoder = symphonia::default::get_codecs().make(&track.codec_params, &dec_opts)?;
 
         // The decode loop.
-        let data: Vec<u8> = vec![];
+        let mut data: Vec<symphonia::core::audio::AudioBuffer<u8>> = vec![];
         loop {
             // Get the next packet from the media format.
             let packet = match format.next_packet() {
@@ -134,14 +149,6 @@ impl Audio {
                 }
             };
 
-            // Consume any new metadata that has been read since the last packet.
-            while !format.metadata().is_latest() {
-                // Pop the old head of the metadata queue.
-                format.metadata().pop();
-
-                // Consume the new metadata at the head of the metadata queue.
-            }
-
             // If the packet does not belong to the selected track, skip over it.
             if packet.track_id() != track_id {
                 continue;
@@ -149,7 +156,9 @@ impl Audio {
 
             // Decode the packet into audio samples.
             match decoder.decode(&packet) {
-                Ok(decoded) => {}
+                Ok(decoded) => {
+                    data.push(decoded.make_equivalent());
+                }
                 Err(Error::IoError(e)) => {
                     if e.kind() == std::io::ErrorKind::UnexpectedEof
                         && e.to_string() == "end of stream"
