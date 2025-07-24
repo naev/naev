@@ -303,6 +303,7 @@ end
 function finish ()
    player.pay( mem.credits )
    flf.setReputation( 90 )
+   --diff.apply("flf_victory")
    faction.get("FLF"):hit( mem.reputation )
    flf.addLog( _([[You led the charge to destroy Fort Raglan, a source of deep penetration of Dvaered forces into the Frontier. As a result, Dvaered forces have started to be pushed out of Frontier space, the first time the FLF has ever done so and a major victory for the Frontier.]]) )
    misn.finish( true )
