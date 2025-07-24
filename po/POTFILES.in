@@ -521,7 +521,6 @@ dat/outfits/weapons/plasma_cluster_cannon.xml
 dat/outfits/weapons/plasma_eruptor.xml
 dat/outfits/weapons/plasma_turret_mk1.xml
 dat/outfits/weapons/plasma_turret_mk2.xml
-dat/outfits/weapons/radiance_beam.xml
 dat/outfits/weapons/ragnarok_beam.xml
 dat/outfits/weapons/railgun.xml
 dat/outfits/weapons/railgun_turret.xml
@@ -532,7 +531,6 @@ dat/outfits/weapons/razor_battery_s2.xml
 dat/outfits/weapons/repeating_railgun.xml
 dat/outfits/weapons/ripper_cannon.xml
 dat/outfits/weapons/shredder.xml
-dat/outfits/weapons/snowgrave_beam.xml
 dat/outfits/weapons/turbolaser.xml
 dat/outfits/weapons/turreted_gauss_gun.xml
 dat/outfits/weapons/turreted_vulcan_gun.xml
@@ -3563,10 +3561,12 @@ dat/scripts/equipopt/fighterbays/thurion_scintillation.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
 dat/scripts/equipopt/params.lua
+dat/scripts/equipopt/templates/black_lotus.lua
 dat/scripts/equipopt/templates/dvaered.lua
 dat/scripts/equipopt/templates/empire.lua
 dat/scripts/equipopt/templates/generic.lua
 dat/scripts/equipopt/templates/pirate.lua
+dat/scripts/equipopt/templates/pirate_base.lua
 dat/scripts/equipopt/templates/proteron.lua
 dat/scripts/equipopt/templates/sirius.lua
 dat/scripts/equipopt/templates/soromid.lua

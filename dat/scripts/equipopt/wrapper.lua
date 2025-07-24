@@ -11,6 +11,7 @@ equipopt.dvaered  = require 'equipopt.templates.dvaered'
 equipopt.sirius   = require 'equipopt.templates.sirius'
 equipopt.soromid  = require 'equipopt.templates.soromid'
 equipopt.pirate   = require 'equipopt.templates.pirate'
+equipopt.black_lotus = require 'equipopt.templates.black_lotus'
 equipopt.thurion  = require 'equipopt.templates.thurion'
 equipopt.proteron = require 'equipopt.templates.proteron'
 return equipopt
