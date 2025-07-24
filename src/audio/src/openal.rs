@@ -256,6 +256,13 @@ impl Source {
         self.0
     }
 }
+impl Drop for Source {
+    fn drop(&mut self) {
+        unsafe {
+            alDeleteSources(1, &self.0);
+        }
+    }
+}
 
 pub struct Buffer(ALuint);
 impl Buffer {
@@ -274,5 +281,12 @@ impl Buffer {
     #[inline]
     pub fn raw(&self) -> ALuint {
         self.0
+    }
+}
+impl Drop for Buffer {
+    fn drop(&mut self) {
+        unsafe {
+            alDeleteBuffers(1, &self.0);
+        }
     }
 }

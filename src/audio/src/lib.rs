@@ -32,11 +32,10 @@ enum AudioType {
     Stream,
 }
 
-#[derive(Clone)]
 struct AudioBuffer {
     track_gain_db: f64,
     track_peak: f64,
-    buffer: Arc<al::Buffer>,
+    buffer: al::Buffer,
 }
 impl AudioBuffer {
     fn from_path(path: &str) -> Result<Self> {
@@ -242,7 +241,7 @@ impl AudioBuffer {
         };
 
         Ok(Self {
-            buffer: Arc::new(buffer),
+            buffer,
             track_gain_db,
             track_peak,
         })
@@ -257,7 +256,7 @@ pub struct Audio {
     source: al::Source,
     slot: ALuint,
     volume: f64,
-    buffer: AudioBuffer,
+    buffer: Arc<AudioBuffer>,
 }
 impl Audio {
     pub fn new(path: &str) -> Result<Self> {
@@ -266,7 +265,7 @@ impl Audio {
         let atype = AudioType::Static;
 
         let source = al::Source::new()?;
-        let buffer = AudioBuffer::from_path(path)?;
+        let buffer = Arc::new(AudioBuffer::from_path(path)?);
 
         Ok(Self {
             name,
