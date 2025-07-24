@@ -10,7 +10,6 @@
   <gfx_store>placeholder.webp</gfx_store>
   </general>
  <specific type="modification">
-  <lua>outfits/unique/poi_data_cheap.lua</lua>
   <weapon_damage>20</weapon_damage>
   <energy_regen_mod>-5</energy_regen_mod>
   <weapon_firerate>-20</weapon_firerate>
