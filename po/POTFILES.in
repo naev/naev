@@ -484,6 +484,8 @@ dat/outfits/utility/unicorp_scrambler.xml
 dat/outfits/utility/weakness_harmonizer_ai.xml
 dat/outfits/utility/weapons_ionizer.xml
 dat/outfits/weapons/antimatter_lance.xml
+dat/outfits/weapons/arc_blade.xml
+dat/outfits/weapons/arc_machete.xml
 dat/outfits/weapons/disruptor_artillery_s1.xml
 dat/outfits/weapons/disruptor_artillery_s2.xml
 dat/outfits/weapons/disruptor_battery_s2.xml
@@ -519,6 +521,7 @@ dat/outfits/weapons/plasma_cluster_cannon.xml
 dat/outfits/weapons/plasma_eruptor.xml
 dat/outfits/weapons/plasma_turret_mk1.xml
 dat/outfits/weapons/plasma_turret_mk2.xml
+dat/outfits/weapons/radiance_beam.xml
 dat/outfits/weapons/ragnarok_beam.xml
 dat/outfits/weapons/railgun.xml
 dat/outfits/weapons/railgun_turret.xml
@@ -529,6 +532,7 @@ dat/outfits/weapons/razor_battery_s2.xml
 dat/outfits/weapons/repeating_railgun.xml
 dat/outfits/weapons/ripper_cannon.xml
 dat/outfits/weapons/shredder.xml
+dat/outfits/weapons/snowgrave_beam.xml
 dat/outfits/weapons/turbolaser.xml
 dat/outfits/weapons/turreted_gauss_gun.xml
 dat/outfits/weapons/turreted_vulcan_gun.xml
