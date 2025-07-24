@@ -110,6 +110,8 @@ pub const AL_FORMAT_MONO8: ALenum = 0x1100;
 pub const AL_FORMAT_MONO16: ALenum = 0x1101;
 pub const AL_FORMAT_STEREO8: ALenum = 0x1102;
 pub const AL_FORMAT_STEREO16: ALenum = 0x1103;
+pub const AL_FORMAT_MONO_FLOAT32: ALenum = 0x10010;
+pub const AL_FORMAT_STEREO_FLOAT32: ALenum = 0x10011;
 
 pub const AL_INVALID_NAME: ALenum = 0xa001;
 pub const AL_INVALID_ENUM: ALenum = 0xa002;
@@ -215,7 +217,7 @@ unsafe extern "C" {
 }
 
 use anyhow::Result;
-pub fn get_error(e: ALenum) -> &'static str {
+pub(crate) fn get_error(e: ALenum) -> &'static str {
     match e {
         AL_INVALID_NAME => "a bad name (ID) was passed to an OpenAL function",
         AL_INVALID_ENUM => "an invalid enum value was passed to an OpenAL function",
@@ -226,26 +228,51 @@ pub fn get_error(e: ALenum) -> &'static str {
     }
 }
 
-pub fn create_source() -> Result<ALuint> {
-    let mut src = 0;
-    unsafe { alGenSources(1, &mut src) };
-    match src {
-        0 => {
-            let e = unsafe { alGetError() };
-            anyhow::bail!(get_error(e))
-        }
-        v => Ok(v),
+#[inline]
+pub(crate) fn is_error() -> Option<ALenum> {
+    let e = unsafe { alGetError() };
+    match e {
+        AL_NO_ERROR => None,
+        err => Some(err),
     }
 }
 
-pub fn create_buffer() -> Result<ALuint> {
-    let mut src = 0;
-    unsafe { alGenBuffers(1, &mut src) };
-    match src {
-        0 => {
-            let e = unsafe { alGetError() };
-            anyhow::bail!(get_error(e))
+pub struct Source(ALuint);
+impl Source {
+    pub fn new() -> Result<Self> {
+        let mut src = 0;
+        unsafe { alGenSources(1, &mut src) };
+        match src {
+            0 => {
+                let e = unsafe { alGetError() };
+                anyhow::bail!(get_error(e))
+            }
+            v => Ok(Self(v)),
         }
-        v => Ok(v),
+    }
+
+    #[inline]
+    pub fn raw(&self) -> ALuint {
+        self.0
+    }
+}
+
+pub struct Buffer(ALuint);
+impl Buffer {
+    pub fn new() -> Result<Self> {
+        let mut src = 0;
+        unsafe { alGenBuffers(1, &mut src) };
+        match src {
+            0 => {
+                let e = unsafe { alGetError() };
+                anyhow::bail!(get_error(e))
+            }
+            v => Ok(Self(v)),
+        }
+    }
+
+    #[inline]
+    pub fn raw(&self) -> ALuint {
+        self.0
     }
 }

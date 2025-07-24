@@ -10,6 +10,16 @@ use log::warn_err;
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use std::sync::Arc;
 
+#[inline]
+pub(crate) fn check_error() {
+    match al::is_error() {
+        Some(e) => {
+            warn_err!(e);
+        }
+        None => (),
+    }
+}
+
 struct LuaAudioEfx {
     name: String,
     effect: ALuint,
@@ -17,54 +27,27 @@ struct LuaAudioEfx {
 }
 
 #[derive(Clone, PartialEq)]
-pub enum AudioType {
+enum AudioType {
     Static,
     Stream,
 }
 
-/*
-struct BufferDataType<T> {
-    data: Vec<T>,
-}
-
-struct BufferData {
-    MonoU8(BufferDataType<u8>),
-    StereoU8((BufferDataType<u8>, BufferDataType<u8>)),
-    MonoS16(BufferDataType<i16>),
-    StereoS16((BufferDataType<i16>,BufferDataType<i16>)),
-}
-*/
-
 #[derive(Clone)]
-pub struct AudioBuffer {
-    buffer: Arc<ALuint>,
-}
-
-#[derive(Clone)]
-pub struct Audio {
-    name: String,
-    ok: bool,
-    atype: AudioType,
-    nocleanup: bool,
-    source: ALuint,
-    slot: ALuint,
-    volume: f64,
-    buffer: Option<AudioBuffer>,
+struct AudioBuffer {
     track_gain_db: f64,
     track_peak: f64,
+    buffer: Arc<al::Buffer>,
 }
-impl Audio {
-    pub fn new(path: &str) -> Result<Self> {
-        let name = String::from(path);
-
-        let atype = AudioType::Static;
-
-        use symphonia::core::codecs::{DecoderOptions, CODEC_TYPE_NULL};
+impl AudioBuffer {
+    fn from_path(path: &str) -> Result<Self> {
+        use symphonia::core::audio::{AudioBuffer, Channels, SampleBuffer, Signal};
+        use symphonia::core::codecs::{CodecParameters, Decoder, DecoderOptions, CODEC_TYPE_NULL};
         use symphonia::core::errors::Error;
-        use symphonia::core::formats::{FormatOptions, FormatReader};
+        use symphonia::core::formats::{FormatOptions, FormatReader, Track};
         use symphonia::core::io::MediaSourceStream;
         use symphonia::core::meta::{MetadataOptions, StandardTagKey, Tag, Value};
-        use symphonia::core::probe::Hint;
+        use symphonia::core::probe::{Hint, ProbeResult};
+        use symphonia::core::sample::{Sample, SampleFormat};
 
         let src = ndata::open(path)?;
         let mss = MediaSourceStream::new(Box::new(src), Default::default());
@@ -129,65 +112,161 @@ impl Audio {
             .iter()
             .find(|t| t.codec_params.codec != CODEC_TYPE_NULL)
             .ok_or(anyhow::anyhow!("unsupported codec"))?;
-        let track_id = track.id;
 
-        // Create a decoder for the track.
-        let dec_opts: DecoderOptions = Default::default();
-        let mut decoder = symphonia::default::get_codecs().make(&track.codec_params, &dec_opts)?;
+        // Templated function to load samples of different types
+        fn parse_data<T: Sample>(
+            format: &mut Box<dyn FormatReader>,
+            codec_params: &CodecParameters,
+            track_id: u32,
+            stereo: bool,
+        ) -> Result<Vec<T>> {
+            let dec_opts: DecoderOptions = Default::default();
+            let mut decoder = symphonia::default::get_codecs().make(codec_params, &dec_opts)?;
 
-        // The decode loop.
-        let mut data: Vec<symphonia::core::audio::AudioBuffer<u8>> = vec![];
-        loop {
-            // Get the next packet from the media format.
-            let packet = match format.next_packet() {
-                Ok(packet) => packet,
-                Err(Error::ResetRequired) => {
-                    unimplemented!();
+            let mut buffers: Vec<AudioBuffer<T>> = vec![];
+            loop {
+                // Get the next packet from the media format.
+                let packet = match format.next_packet() {
+                    Ok(packet) => packet,
+                    Err(Error::ResetRequired) => {
+                        unimplemented!();
+                    }
+                    Err(err) => {
+                        anyhow::bail!(err);
+                    }
+                };
+
+                // If the packet does not belong to the selected track, skip over it.
+                if packet.track_id() != track_id {
+                    continue;
                 }
-                Err(err) => {
-                    anyhow::bail!(err);
-                }
-            };
 
-            // If the packet does not belong to the selected track, skip over it.
-            if packet.track_id() != track_id {
-                continue;
-            }
-
-            // Decode the packet into audio samples.
-            match decoder.decode(&packet) {
-                Ok(decoded) => {
-                    data.push(decoded.make_equivalent());
-                }
-                Err(Error::IoError(e)) => {
-                    if e.kind() == std::io::ErrorKind::UnexpectedEof
-                        && e.to_string() == "end of stream"
-                    {
-                        // End of File
-                        break;
-                    } else {
+                // Decode the packet into audio samples.
+                match decoder.decode(&packet) {
+                    Ok(decoded) => {
+                        let spec = decoded.spec();
+                        buffers.push(decoded.make_equivalent());
+                    }
+                    Err(Error::IoError(e)) => {
+                        if e.kind() == std::io::ErrorKind::UnexpectedEof
+                            && e.to_string() == "end of stream"
+                        {
+                            // End of File
+                            break;
+                        } else {
+                            anyhow::bail!(e);
+                        }
+                    }
+                    Err(e) => {
                         anyhow::bail!(e);
                     }
                 }
-                Err(e) => {
-                    anyhow::bail!(e);
-                }
             }
+            let left = buffers.iter().map(|b| b.chan(0).to_vec()).flatten();
+            let data: Vec<_> = match stereo {
+                true => {
+                    let right = buffers.iter().map(|b| b.chan(1).to_vec()).flatten();
+                    left.chain(right).collect()
+                }
+                false => left.collect(),
+            };
+            Ok(data)
         }
 
-        let source = al::create_source()?;
-        let buffer = al::create_buffer()?;
-        /*
-        unsafe {
-            alBufferData(
-                buffer,
-                AL_FORMAT_STEREO16,
-                data,
-                size, // in bytes
-                freq, // frequency
-            )
+        let codec = track.codec_params.clone();
+        let rate = codec
+            .sample_rate
+            .ok_or(anyhow::anyhow!("no sampling rate"))?;
+        let channels = codec.channels.ok_or(anyhow::anyhow!("no channels"))?;
+        if !channels.contains(Channels::FRONT_LEFT) {
+            anyhow::bail!("no mono channel");
         }
-        */
+        let stereo = channels.contains(Channels::FRONT_RIGHT);
+        let track_id = track.id;
+        let buffer = match codec.sample_format {
+            Some(fmt) => {
+                let buffer = al::Buffer::new()?;
+                match fmt {
+                    SampleFormat::U8 | SampleFormat::S8 => {
+                        let data = parse_data::<u8>(&mut format, &codec, track_id, stereo)?;
+                        unsafe {
+                            alBufferData(
+                                buffer.raw(),
+                                match stereo {
+                                    true => AL_FORMAT_STEREO8,
+                                    false => AL_FORMAT_MONO8,
+                                },
+                                data.as_ptr() as *const ALvoid,
+                                (data.len() * std::mem::size_of::<u8>()) as i32,
+                                rate as ALsizei,
+                            );
+                        }
+                    }
+                    // Just make F64 be F32
+                    SampleFormat::F32 | SampleFormat::F64 => {
+                        let data = parse_data::<f32>(&mut format, &codec, track_id, stereo)?;
+                        unsafe {
+                            alBufferData(
+                                buffer.raw(),
+                                match stereo {
+                                    true => AL_FORMAT_STEREO_FLOAT32,
+                                    false => AL_FORMAT_MONO_FLOAT32,
+                                },
+                                data.as_ptr() as *const ALvoid,
+                                (data.len() * std::mem::size_of::<f32>()) as i32,
+                                rate as ALsizei,
+                            );
+                        }
+                    }
+                    //SampleFormat::U16 | SampleFormat::S16 => {
+                    _ => {
+                        let data = parse_data::<i16>(&mut format, &codec, track_id, stereo)?;
+                        unsafe {
+                            alBufferData(
+                                buffer.raw(),
+                                match stereo {
+                                    true => AL_FORMAT_STEREO16,
+                                    false => AL_FORMAT_MONO16,
+                                },
+                                data.as_ptr() as *const ALvoid,
+                                (data.len() * std::mem::size_of::<i16>()) as i32,
+                                rate as ALsizei,
+                            );
+                        }
+                    }
+                }
+                check_error();
+                buffer
+            }
+            None => anyhow::bail!("no format!"),
+        };
+
+        Ok(Self {
+            buffer: Arc::new(buffer),
+            track_gain_db,
+            track_peak,
+        })
+    }
+}
+
+pub struct Audio {
+    name: String,
+    ok: bool,
+    atype: AudioType,
+    nocleanup: bool,
+    source: al::Source,
+    slot: ALuint,
+    volume: f64,
+    buffer: AudioBuffer,
+}
+impl Audio {
+    pub fn new(path: &str) -> Result<Self> {
+        let name = String::from(path);
+
+        let atype = AudioType::Static;
+
+        let source = al::Source::new()?;
+        let buffer = AudioBuffer::from_path(path)?;
 
         Ok(Self {
             name,
@@ -197,9 +276,7 @@ impl Audio {
             source,
             slot: 0,
             volume: 1.0,
-            buffer: None,
-            track_gain_db,
-            track_peak,
+            buffer,
         })
     }
 }
