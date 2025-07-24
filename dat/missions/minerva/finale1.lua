@@ -81,7 +81,7 @@ She sort of slumps at the wall, you're not sure if she's still conscious.]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(_([[Suddenly, an alarm starts blaring. It seems like the situation is getting worse and the station is headed for a lock down.]]))
    vn.na(_([[As the station gates begin to close, you deftly activate your ship, hit the accelerator and aim for free space. It's a close call with the spaceport almost clamping down on your ship, but you break through.]]))
-   vn.na(_([[You almost begin to celebrate, but it seems like it a short while you won't be alone anymore. There are bogeys on your tail!]]))
+   vn.na(_([[You almost begin to celebrate, but it seems like in a short while you won't be alone anymore. There are bogeys on your tail!]]))
 
    vn.run()
 
@@ -443,7 +443,7 @@ She closes her eyes and rubs her temples.]]))
    vn.label("05_zuri")
    maikki(_([["She's a tough cookie to crack. We've been together through much harder times. Pirate doctors are second to none when it comes to experience."
 You sense some worry and uneasiness despite the strong words.]]))
-   maikki(_([["One time, we were doing your standard hit operation in Delta Pavonis, some Empire Combat Bureaucrat had a bounty on the head, and I figure we might as well cash in. Sources said they would be flying a Pacifier, no deal, right? Turns out it was a bloody Peacemaker with a full entourage."]]))
+   maikki(_([["One time, we were doing your standard hit operation in Delta Pavonis, some Empire Combat Bureaucrat had a bounty on their head, and I figure we might as well cash in. Sources said they would be flying a Pacifier, no deal, right? Turns out it was a bloody Peacemaker with a full entourage."]]))
    maikki(_([["Was about to back off when a second Peacemaker jumped in behind us. The bastards set us up for a trap. With no way out, we charged the Bureaucrat asshole and smashed the captain's bridge right into the fighter bay, and went to fight our way through the ship."]]))
    maikki(_([["While we were trying to take hold of the hangar, Zuri grabbed a bunch of weapons and charged basically charged through the ship. When we found her in the bridge, she had somehow managed to single-handedly cross the entire ship and capture it by herself!"]]))
    maikki(_([["Of course, she had nearly blown herself into two, and was riddled with laser holes, but we were lucky that the field surgeon was with us and was able to somehow stabilize her while I rammed the peacemaker into the second one."]]))

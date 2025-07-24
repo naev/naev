@@ -180,9 +180,9 @@ function land()
       local joanne = vn.newCharacter( achack.vn_joanne() )
       vn.transition()
       vn.na(_([[After you both land your ships, you meet Joanne in the spaceport bar.]]))
-      joanne(fmt.f(_([["Whew! That was definitely the most exciting round I've done to date! Thank you {player}, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved already anyway..."]]),
+      joanne(fmt.f(_([["Whew! That was definitely the most exciting round I've done to date! Thank you {player}, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved anyway..."]]),
          {player=player.name()}))
-      vn.na(_([[You decide to sit down and listen to Joanne's story, not in the last place because you're rather curious yourself.]]))
+      vn.na(_([[You decide to sit down and listen to Joanne's story, not in the least because you're rather curious yourself.]]))
       joanne(fmt.f(_([["Thank you, {player}," Joanne says, "I appreciate it. Well, I guess I should start at the beginning."]]),
          {player=player.name()}))
       joanne(_([[She continues. "Several cycles ago, Harja and I were both students at the High Academy on Sinass. It's a very prestigious place among us Sirii, as you may or may not know. It's only one jump away from Mutris itself and... Well, anyway, it's one of the best academies in all of Sirius space, and only the most capable students are allowed to attend. Now, I don't mean to brag, you understand, but even in that environment I was among the top-rated students. And, believe it or not, so was Harja. We were in the same study unit, actually.]]))
