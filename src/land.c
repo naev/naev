@@ -38,6 +38,7 @@
 #include "ndata.h"
 #include "news.h"
 #include "nlua.h"
+#include "nlua_spfx.h"
 #include "nlua_tk.h"
 #include "npc.h"
 #include "nstring.h"
@@ -1443,6 +1444,8 @@ void land( Spob *p, int load )
 
    player_addEscorts(); /* TODO only regenerate fleet if planet has a shipyard
                          */
+
+   spfxL_clear();
 
    /* Stop player sounds. */
    player_soundStop();

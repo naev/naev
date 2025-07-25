@@ -755,7 +755,6 @@ static void spfxL_renderLayer( int func, const char *funcname, double dt )
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
       lua_pushnumber( naevL, dt );
-      // if ( lua_pcall( naevL, 5, 0, 0 ) != 0 ) {
       if ( nlua_pcall( ls->env, 5, 0 ) != 0 ) {
          WARN( _( "Spfx failed to run '%s':\n%s" ), funcname,
                luaL_tolstring( naevL, -1, NULL ) );
