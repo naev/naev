@@ -118,17 +118,22 @@ They've taken over entire ship now, with Rackham himself leading the charge. He 
 
          -- Set up cargo for 2nd and 3rd mission
          local function add_cargo(q)
-            q = q or rnd.rnd(200, 250)
-            local added
-            vn.func(function()
-               added = player.fleetCargoAdd(reward, q)
-            end)
-            vn.na(function()
-               return fmt.f(_("You have received #g{amount} of {reward}#0."), {
-                  amount = fmt.tonnes(added),
-                  reward = reward
-               })
-            end)
+            if player.fleetCargoFree() > 0 then
+               q = q or rnd.rnd(200, 250)
+               local added
+               vn.func(function()
+                  added = player.fleetCargoAdd(reward, q)
+               end)
+               vn.na(function()
+                  return fmt.f(_("You have received #g{amount} of {reward}#0."), {
+                     amount = fmt.tonnes(added),
+                     reward = reward
+                  })
+               end)
+            else
+               vn.na(fmt.f(_([[You are unable to fit any {reward} on your ship.]]),
+                  {reward=reward}))
+            end
          end
 
          vn.func(function()
