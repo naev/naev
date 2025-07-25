@@ -26,6 +26,7 @@
  - Damage over time effects now can cause faction loss and other effects
  - New harder difficulty
  - Gauntlet negative bonuses are now multiplicative
+ - Stealthing will temporarily jam locked on munitions
 
 #### Quality of Life
  - Autonav improvements

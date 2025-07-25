@@ -362,11 +362,19 @@ static void think_seeker( Weapon *w, double dt )
       return;
    }
 
+   /* If the player stealths, treat the weapon as jammed when out of range.. */
+   WeaponStatus status = w->status;
+   if ( pilot_isFlag( p, PILOT_STEALTH ) && status == WEAPON_STATUS_OK ) {
+      double d = vec2_dist2( &p->solid.pos, &w->solid.pos );
+      if ( d > pow2( p->ew_stealth ) )
+         status = WEAPON_STATUS_JAMMED;
+   }
+
    // ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p,
    // w->outfit->u.lau.resist );
 
    /* Handle by status. */
-   switch ( w->status ) {
+   switch ( status ) {
    case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
       w->timer2 -= dt;
       if ( w->timer2 >= 0. )
@@ -380,8 +388,8 @@ static void think_seeker( Weapon *w, double dt )
       jc = p->stats.jam_chance - outfit_launcherResist( w->outfit );
       if ( jc > 0. ) {
          /* Roll based on distance. */
-         double d = vec2_dist( &p->solid.pos, &w->solid.pos );
-         if ( d < w->r * p->ew_signature ) {
+         double d = vec2_dist2( &p->solid.pos, &w->solid.pos );
+         if ( d < pow2( w->r * p->ew_signature ) ) {
             if ( RNGF() < jc ) {
                double r = RNGF();
                if ( r < 0.3 ) {
