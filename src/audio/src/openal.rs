@@ -110,12 +110,38 @@ pub const AL_STOPPED: ALenum = 0x1014;
 pub const AL_BUFFERS_QUEUED: ALenum = 0x1015;
 pub const AL_BUFFERS_PROCESSED: ALenum = 0x1016;
 
+pub const AL_REFERENCE_DISTANCE: ALenum = 0x1020;
+pub const AL_ROLLOFF_FACTOR: ALenum = 0x1021;
+pub const AL_CONE_OUTER_GAIN: ALenum = 0x1022;
+pub const AL_MAX_DISTANCE: ALenum = 0x1023;
+
+pub const AL_SEC_OFFSET: ALenum = 0x1024;
+pub const AL_SAMPLE_OFFSET: ALenum = 0x1025;
+pub const AL_BYTE_OFFSET: ALenum = 0x1026;
+
+pub const AL_SOURCE_TYPE: ALenum = 0x1027;
+pub const AL_STATIC: ALenum = 0x1028;
+pub const AL_STREAMING: ALenum = 0x1029;
+pub const AL_UNDETERMINED: ALenum = 0x1030;
+
 pub const AL_FORMAT_MONO8: ALenum = 0x1100;
 pub const AL_FORMAT_MONO16: ALenum = 0x1101;
 pub const AL_FORMAT_STEREO8: ALenum = 0x1102;
 pub const AL_FORMAT_STEREO16: ALenum = 0x1103;
 pub const AL_FORMAT_MONO_FLOAT32: ALenum = 0x10010;
 pub const AL_FORMAT_STEREO_FLOAT32: ALenum = 0x10011;
+
+pub const AL_DOPPLER_FACTOR: ALenum = 0xC000;
+pub const AL_DOPPLER_VELOCITY: ALenum = 0xC001;
+pub const AL_SPEED_OF_SOUND: ALenum = 0xC003;
+
+pub const AL_DISABLE_MODEL: ALenum = 0xD000;
+pub const AL_INVERSE_DISTANCE: ALenum = 0xD001;
+pub const AL_INVERSE_DISTANCE_CLAMPED: ALenum = 0xD001;
+pub const AL_LINEAR_DISTANCE: ALenum = 0xD003;
+pub const AL_LINEAR_DISTANCE_CLAMPED: ALenum = 0xD003;
+pub const AL_EXPONENT_DISTANCE: ALenum = 0xD005;
+pub const AL_EXPONENT_DISTANCE_CLAMPED: ALenum = 0xD005;
 
 pub const AL_INVALID_NAME: ALenum = 0xa001;
 pub const AL_INVALID_ENUM: ALenum = 0xa002;
@@ -134,6 +160,8 @@ unsafe extern "C" {
     pub fn alIsSource(source: ALuint) -> ALboolean;
 
     pub fn alEnable(capability: ALenum);
+
+    pub fn alGetString(param: ALCenum) -> *const ALCchar;
 
     pub fn alGetBufferi(buffer: ALuint, param: ALenum, value: *const ALint);
 
@@ -256,6 +284,11 @@ pub(crate) fn is_error() -> Option<ALenum> {
     }
 }
 
+pub fn get_parameter_str(parameter: ALenum) -> &'static str {
+    let val = unsafe { CStr::from_ptr(alGetString(parameter)) };
+    val.to_str().unwrap()
+}
+
 pub struct Device(AtomicPtr<ALCdevice>);
 impl Device {
     pub fn new(devicename: Option<&str>) -> Result<Self> {
@@ -283,12 +316,17 @@ impl Device {
         }
     }
 
+    pub fn get_parameter_str(&self, parameter: ALCenum) -> &'static str {
+        let val = unsafe { CStr::from_ptr(alcGetString(self.raw(), parameter)) };
+        val.to_str().unwrap()
+    }
+
     pub fn get_parameter_i32(&self, parameter: ALCenum) -> ALCint {
+        let mut val: ALCint = 0;
         unsafe {
-            let mut val: ALCint = 0;
             alcGetIntegerv(self.raw(), parameter, 1, &mut val);
-            val
         }
+        val
     }
 }
 impl Drop for Device {
@@ -327,6 +365,18 @@ impl Source {
     #[inline]
     pub fn raw(&self) -> ALuint {
         self.0
+    }
+
+    pub fn parameter_f32(&self, param: ALenum, value: ALfloat) {
+        unsafe {
+            alSourcef(self.raw(), param, value);
+        }
+    }
+
+    pub fn parameter_3_i32(&self, param: ALenum, v1: ALint, v2: ALint, v3: ALint) {
+        unsafe {
+            alSource3i(self.raw(), param, v1, v2, v3);
+        }
     }
 }
 impl Drop for Source {

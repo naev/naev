@@ -18,3 +18,4 @@ ndata = { workspace = true }
 anyhow = { workspace = true }
 symphonia = { workspace = true }
 log = { workspace = true }
+gettext = { workspace = true }

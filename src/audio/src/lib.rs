@@ -6,11 +6,16 @@ use crate::openal::alc_types::*;
 use crate::openal::*;
 
 use anyhow::Result;
-use log::{warn, warn_err};
+use gettext::gettext;
+use log::{debug, warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
 use std::ffi::{CStr, CString};
 use std::sync::atomic::{AtomicPtr, Ordering};
 use std::sync::Arc;
+
+const NUM_VOICES: usize = 64;
+const REFERENCE_DISTANCE: f32 = 500.;
+const MAX_DISTANCE: f32 = 25_000.;
 
 #[inline]
 pub(crate) fn check_error() {
@@ -284,18 +289,19 @@ impl Audio {
 
 pub struct AudioSystem {
     device: al::Device,
-    context: AtomicPtr<ALCcontext>,
+    context: al::Context,
 
     volume: f32,
     volume_lin: f32,
     volume_speed: f32,
 
-    freq: u32,
+    freq: i32,
     output_limiter: bool,
-    efx: bool,
-    efx_version: (i32, i32),
+    efx: Option<(i32, i32)>,
     efx_reverb: bool,
     efx_echo: bool,
+
+    voices: Vec<al::Source>,
 }
 impl AudioSystem {
     pub fn new() -> Result<Self> {
@@ -320,7 +326,7 @@ impl AudioSystem {
         }
         attribs.push(0); // Has to be NULL terminated
 
-        let context = al::Context::new(&device, &attribs);
+        let context = al::Context::new(&device, &attribs)?;
         if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
             warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
         }
@@ -332,9 +338,65 @@ impl AudioSystem {
 
         let mut efx_reverb = false;
         let mut efx_echo = false;
-        if efx {}
+        let efx_version = if efx {
+            Some((
+                device.get_parameter_i32(ALC_EFX_MAJOR_VERSION),
+                device.get_parameter_i32(ALC_EFX_MINOR_VERSION),
+            ))
+        } else {
+            None
+        };
 
-        todo!();
+        let voices: Vec<_> = [0..NUM_VOICES]
+            .iter()
+            .map(|_| al::Source::new())
+            .flatten()
+            .collect();
+        for v in &voices {
+            v.parameter_f32(AL_REFERENCE_DISTANCE, REFERENCE_DISTANCE);
+            v.parameter_f32(AL_MAX_DISTANCE, MAX_DISTANCE);
+            v.parameter_f32(AL_ROLLOFF_FACTOR, 1.);
+
+            if efx {}
+        }
+
+        unsafe {
+            alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
+        }
+
+        debug!(gettext("OpenAL started: {} Hz"), freq);
+        debug!(gettext("Renderer: %s"), al::get_parameter_str(AL_RENDERER));
+        if let Some((major, minor)) = efx_version {
+            debug!(
+                gettext("Version: {} with EFX {}.{}"),
+                al::get_parameter_str(AL_VERSION),
+                major,
+                minor
+            );
+        } else {
+            debug!(
+                gettext("Version: {} without EFX"),
+                al::get_parameter_str(AL_VERSION)
+            );
+        }
+        debug!("");
+
+        Ok(Self {
+            device,
+            context,
+
+            volume: 1.,
+            volume_lin: 1.,
+            volume_speed: 1.,
+
+            freq,
+            output_limiter,
+            efx: efx_version,
+            efx_reverb,
+            efx_echo,
+
+            voices,
+        })
     }
 }
 
