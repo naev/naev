@@ -12,5 +12,7 @@
   <gfx_store>placeholder.webp</gfx_store>
   <rarity>6</rarity>
  </general>
- <specific type="modification"/>
+ <specific type="modification">
+  <!-- Implemented in dat/outfits/lib/blink.lua -->
+ </specific>
 </outfit>
