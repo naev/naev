@@ -1,11 +1,7 @@
-/*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/.
- */
 //! OpenAL (Soft) bindings
-
 #![allow(non_snake_case, dead_code)]
+use std::ffi::{CStr, CString};
+use std::sync::atomic::{AtomicPtr, Ordering};
 
 // === alc.h ===
 
@@ -63,6 +59,14 @@ unsafe extern "C" {
     pub fn alcGetError(device: *mut ALCdevice) -> ALCenum;
 
     pub fn alcGetString(device: *mut ALCdevice, param: ALCenum) -> *const ALCchar;
+    pub fn alcGetIntegerv(
+        device: *mut ALCdevice,
+        param: ALCenum,
+        size: ALCsizei,
+        data: *mut ALCint,
+    );
+
+    pub fn alcIsExtensionPresent(device: *mut ALCdevice, extname: *const ALchar) -> ALCboolean;
 }
 
 // === al.h ===
@@ -216,6 +220,21 @@ unsafe extern "C" {
     pub fn alSpeedOfSound(speed: ALfloat);
 }
 
+// === efx.h ===
+
+pub const ALC_EXT_EFX_NAME: &CStr = c"ALC_EXT_EFX";
+
+pub const ALC_EFX_MAJOR_VERSION: ALCenum = 0x20001;
+pub const ALC_EFX_MINOR_VERSION: ALCenum = 0x20002;
+pub const ALC_MAX_AUXILIARY_SENDS: ALCenum = 0x20003;
+
+// === Misc Extensions ===
+
+pub const ALC_OUTPUT_LIMITER_SOFT_NAME: &CStr = c"ALC_SOFT_output_limiter";
+pub const ALC_OUTPUT_LIMITER_SOFT: ALCenum = 0x199A;
+
+// === Rust ===
+
 use anyhow::Result;
 pub(crate) fn get_error(e: ALenum) -> &'static str {
     match e {
@@ -234,6 +253,60 @@ pub(crate) fn is_error() -> Option<ALenum> {
     match e {
         AL_NO_ERROR => None,
         err => Some(err),
+    }
+}
+
+pub struct Device(AtomicPtr<ALCdevice>);
+impl Device {
+    pub fn new(devicename: Option<&str>) -> Result<Self> {
+        let devicename = devicename.map(|s| CString::new(s).unwrap());
+        let device = unsafe {
+            alcOpenDevice(match devicename {
+                None => std::ptr::null(),
+                Some(n) => n.as_ptr(),
+            })
+        };
+        if device.is_null() {
+            anyhow::bail!("unable to open default sound device");
+        }
+        Ok(Self(AtomicPtr::new(device)))
+    }
+
+    pub fn raw(&self) -> *mut ALCdevice {
+        self.0.load(Ordering::Relaxed)
+    }
+
+    pub fn is_extension_present(&self, extname: &CStr) -> bool {
+        match unsafe { alcIsExtensionPresent(self.raw(), extname.as_ptr()) } {
+            ALC_TRUE => true,
+            _ => false,
+        }
+    }
+
+    pub fn get_parameter_i32(&self, parameter: ALCenum) -> ALCint {
+        unsafe {
+            let mut val: ALCint = 0;
+            alcGetIntegerv(self.raw(), parameter, 1, &mut val);
+            val
+        }
+    }
+}
+impl Drop for Device {
+    fn drop(&mut self) {
+        unsafe {
+            alcCloseDevice(self.raw());
+        }
+    }
+}
+
+pub struct Context(AtomicPtr<ALCcontext>);
+impl Context {
+    pub fn new(device: &Device, attribs: &[ALCenum]) -> Result<Self> {
+        let context = unsafe { alcCreateContext(device.raw(), attribs.as_ptr()) };
+        if context.is_null() {
+            anyhow::bail!("unable to create context");
+        }
+        Ok(Self(AtomicPtr::new(context)))
     }
 }
 

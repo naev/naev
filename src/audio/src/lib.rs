@@ -6,8 +6,10 @@ use crate::openal::alc_types::*;
 use crate::openal::*;
 
 use anyhow::Result;
-use log::warn_err;
+use log::{warn, warn_err};
 use mlua::{FromLua, Lua, MetaMethod, UserData, UserDataMethods, Value};
+use std::ffi::{CStr, CString};
+use std::sync::atomic::{AtomicPtr, Ordering};
 use std::sync::Arc;
 
 #[inline]
@@ -277,6 +279,62 @@ impl Audio {
             volume: 1.0,
             buffer,
         })
+    }
+}
+
+pub struct AudioSystem {
+    device: al::Device,
+    context: AtomicPtr<ALCcontext>,
+
+    volume: f32,
+    volume_lin: f32,
+    volume_speed: f32,
+
+    freq: u32,
+    output_limiter: bool,
+    efx: bool,
+    efx_version: (i32, i32),
+    efx_reverb: bool,
+    efx_echo: bool,
+}
+impl AudioSystem {
+    pub fn new() -> Result<Self> {
+        let device = al::Device::new(None)?;
+
+        let mut attribs: Vec<ALint> = vec![ALC_MONO_SOURCES, 512, ALC_STEREO_SOURCES, 32];
+        let efx = match unsafe { naevc::conf.al_efx } {
+            0 => false,
+            _ => match device.is_extension_present(ALC_EXT_EFX_NAME) {
+                true => {
+                    attribs.push(ALC_MAX_AUXILIARY_SENDS);
+                    attribs.push(4);
+                    true
+                }
+                false => false,
+            },
+        };
+        let output_limiter = device.is_extension_present(ALC_OUTPUT_LIMITER_SOFT_NAME);
+        if output_limiter {
+            attribs.push(ALC_OUTPUT_LIMITER_SOFT);
+            attribs.push(ALC_TRUE as i32);
+        }
+        attribs.push(0); // Has to be NULL terminated
+
+        let context = al::Context::new(&device, &attribs);
+        if output_limiter && device.get_parameter_i32(ALC_OUTPUT_LIMITER_SOFT) != ALC_TRUE as i32 {
+            warn!("failed to set ALC_OUTPUT_LIMITER_SOFT");
+        }
+
+        // Get context information
+        let freq = device.get_parameter_i32(ALC_FREQUENCY);
+        let nmono = device.get_parameter_i32(ALC_MONO_SOURCES);
+        let nstereo = device.get_parameter_i32(ALC_STEREO_SOURCES);
+
+        let mut efx_reverb = false;
+        let mut efx_echo = false;
+        if efx {}
+
+        todo!();
     }
 }
 
