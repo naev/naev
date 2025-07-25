@@ -88,12 +88,6 @@ class xml_node( dict ):
       else:
          return self.__getitem(key)
 
-   def __setitem( self, key, val ):
-      if key[:1] == '@':
-         self.attr[key] = val
-      else:
-         dict.__setitem__(self, key, val)
-
    def __setitem__( self, key, val ):
       if isinstance(key, str) and key[0] == '$':
          val = _numify(val)
@@ -102,7 +96,10 @@ class xml_node( dict ):
          key = key[1:]
       elif isinstance(val, dict) and not isinstance(val, xml_node):
          val = xml_node(val, self, key)
-      dict.__setitem__(self, key, val)
+      if key[:1] == '@':
+         self.attr[key] = val
+      else:
+         dict.__setitem__(self, key, val)
       self._change()
 
    def __delitem__( self, key ):

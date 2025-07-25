@@ -156,7 +156,7 @@ class outfit(naev_xml):
       for d, k, v in other.equipped(sec = True) if other else []:
          if k not in done:
             e[k] = prisec(k.lstrip('$'), 0, v, el1, el2)
-      self._uptodate = utd 
+      self._uptodate = utd
       return self
 
    def equipped( self, sec = False):
