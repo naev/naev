@@ -1,4 +1,3 @@
- - switch to new `naev_xml.py`
  - separate `parent()` and `tag()`
  - repair update_engine display
  - simplify outfits/py/

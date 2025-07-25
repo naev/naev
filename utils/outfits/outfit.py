@@ -7,7 +7,7 @@ from os import path
 script_dir = path.join(path.dirname(__file__), '..')
 sys.path.append(path.realpath(script_dir))
 from xml_name import xml_name as nam2fil
-from naev_xml import naev_xml, _xml_node
+from naev_xml import naev_xml
 import re
 
 MOBILITY_PARAMS = {'speed', 'turn', 'accel', 'thrust'}
