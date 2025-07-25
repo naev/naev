@@ -85,7 +85,9 @@ function accept ()
       vn.func( function ()
          mem.reward = mem.reward * 2 --look at you go, double the reward
       end )
-      michal(fmt.f(_([[The man grabs your arm as you begin to get up. "Alright, how about {credits}? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]]), {credits=fmt.credits(mem.reward)} ) )
+      michal(function ()
+         return fmt.f(_([[The man grabs your arm as you begin to get up. "Alright, how about {credits}? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]]), {credits=fmt.credits(mem.reward)} )
+      end )
       vn.menu{
          {_([[Yes]]), "2yes"},
          {_([[No]]), "decline"},
