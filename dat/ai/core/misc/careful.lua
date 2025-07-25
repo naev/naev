@@ -73,10 +73,14 @@ end
 
 -- Estimate the strength of a group of pilots
 local function __estimate_strength( pilots )
+   local level = 1/naev.difficultyLevel()
    local str = 0
    for k,p in pairs(pilots) do
       local s = p:ship()
       local pts = s:points()
+      if p:withPlayer() then
+         pts = pts*level
+      end
       if s:tags().transport then
          pts = pts*0.5
       end
