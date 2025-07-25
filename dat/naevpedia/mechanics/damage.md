@@ -20,7 +20,7 @@ Note that penetration can not increase the damage past 100%, and absorption can 
 ## Disable Damage and Stress
 
 Disable damage is the only way to disable ships, by applying stress.
-When a ship's stress is larger than the available armour, it becomes disable, and [can be boarded](mechanics/boarding).
+When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding).
 Unlike regular damage, disable damage can penetrate shields, however, it suffers a large penalty when shields are up.
 In particular, it will deal 50% stress when the target has 100% shields, and 100% stress when the target has 0% shields.
 Disable damage is also affected by absorption and penetration.

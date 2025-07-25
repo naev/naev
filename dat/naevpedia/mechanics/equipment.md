@@ -17,13 +17,13 @@ There are fundamentally four different types of slots a ship can have:
 
 Furthermore, slots can have special properties such as:
 
-1. **Fighter Bays**: Modifies weapno slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons.
+1. **Fighter Bays**: Modifies weapon slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons.
 1. **Accessories**: A special slot that only allows equipping accessory-type outfits.
 
 ## Equipment Window
 
 The equipment window is available when [landing](mechanics/landing) on spaceports with refueling capabilities.
-It allows you to, not only change ships, but also change the outfits the ship has equipped.
+It allows you to not only change ships but also to change the outfits the ship has equipped.
 You can also see updated statistics and properties of the ships you own.
 <% if player.fleetCapacity() > 0 then %>
 Additionally, you can control what ships are currently deployed to define your fleet.
