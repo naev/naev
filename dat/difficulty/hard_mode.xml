@@ -1,5 +1,6 @@
 <difficulty name="Hard Mode">
  <description>Makes the game significantly harder for the player.</description>
+ <level>1.5</level>
  <armour_mod>-25</armour_mod>
  <shield_mod>-25</shield_mod>
  <energy_mod>-25</energy_mod>
