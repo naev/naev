@@ -109,7 +109,7 @@ class xml_node( dict ):
       if key[:1] == '@':
          del self.attr[key]
       else:
-         dict.__delitem__(self, key, val)
+         dict.__delitem__(self, key)
 
    def __repr__( self ):
       return dict.__repr__(self.attr | self)
@@ -201,7 +201,7 @@ class naev_xml( xml_node ):
       self._uptodate = True
 
    def save_as( self, filename ):
-      self._uptodate = self._uptodate and (filename == self._filename)
+      self._uptodate = (self._uptodate and filename == self._filename) or filename == devnull
       self._filename = filename
 
    def find( self, key, ref = False):

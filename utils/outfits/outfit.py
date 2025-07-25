@@ -73,7 +73,10 @@ def un_multicore( o ):
    if not (dst := o.find('specific')):
       dst = o['specific'] = {}
    for (k, v1, v2) in L:
-      dst[k] = {'pri': v1, 'sec': v2}
+      if v1 == v2:
+         dst[k] = v1
+      else:
+         dst[k] = {'pri': v1, 'sec': v2}
    return True
 
 class outfit(naev_xml):
@@ -88,6 +91,7 @@ class outfit(naev_xml):
       if is_multi or is_multi is None:
          if un_multicore(self):
             self.is_multi = True
+            self._uptodate = True
          elif is_multi:
             raise ValueError('"' + filename +'" is not a valid multicore.')
 
@@ -121,6 +125,7 @@ class outfit(naev_xml):
             return 2*i + (2 if doubled else 1)
 
    def stack( self, other = None ):
+      utd = self._uptodate
       if other is None:
          self.short = self.shortname() + ' x1'
       elif self.shortname() == other.shortname():
@@ -151,6 +156,7 @@ class outfit(naev_xml):
       for d, k, v in other.equipped(sec = True) if other else []:
          if k not in done:
             e[k] = prisec(k.lstrip('$'), 0, v, el1, el2)
+      self._uptodate = utd 
       return self
 
    def equipped( self, sec = False):
@@ -202,7 +208,6 @@ class outfit(naev_xml):
             lua_inline += ind + '{ ' + ', '.join(['"'+k+'"'] + [str(u) for u in v]) + '},\n'
             del oout['specific'][k]
          lua_inline += '}'
-         print(oout)
          oout['specific']['lua_inline'] += lua_inline
          if 'lua_inline_post' in oout['specific']:
             oout['specific']['lua_inline'] += oout['specific']['lua_inline_post']
@@ -210,6 +215,7 @@ class outfit(naev_xml):
       else:
          out = self
       naev_xml.save(out)
+      self._uptodate = True
 
 if __name__ == '__main__':
    from sys import argv
