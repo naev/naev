@@ -8,7 +8,7 @@
   <price>75000</price>
   <description>The Razor Artillery S3 is the highest powered member of the Razor series, proven to be excellent at stripping the shields from those who would stand against House Sirius. It is commonly employed by Sirius Preachers and other corvettes.</description>
   <gfx_store>razor3.webp</gfx_store>
-  <cpu>-100</cpu>
+  <cpu>-72</cpu>
  </general>
  <specific type="bolt">
   <gfx type="shader" size="6.6" col_size="6.6">particles/razor_s3.frag</gfx>
