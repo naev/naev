@@ -156,7 +156,7 @@ class outfit(naev_xml):
    def equipped( self, sec = False):
       pri_sec = ('sec', 'pri') if sec else ('pri', 'sec')
       for d, k in self.nodes():
-         D, K = d.parent()
+         D, K = d.parent(), d.tag()
          if k[-3:] == pri_sec[1]:
             if pri_sec[0] not in d:
                yield D, '$' + K, 0

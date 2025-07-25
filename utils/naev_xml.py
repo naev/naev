@@ -69,8 +69,11 @@ class xml_node( dict ):
       else:
          self._parent._change()
 
+   def tag( self ):
+      return self._key
+
    def parent( self ):
-      return self._parent, self._key
+      return self._parent
 
    def __contains__ ( self, key ):
       key = key[1:] if key[:1] == '$' else key
