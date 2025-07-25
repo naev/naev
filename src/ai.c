@@ -3270,7 +3270,7 @@ static int aiL_canboard( lua_State *L )
    }
 
    /* Check if can be boarded. */
-   lua_pushboolean( L, !pilot_isFlag( p, PILOT_BOARDED ) );
+   lua_pushboolean( L, !pilot_isFlag( p, PILOT_BOARDED_PILOT ) );
    return 1;
 }
 
