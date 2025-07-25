@@ -59,7 +59,6 @@ fs = import('fs')
 python_module = import('python')
 python = python_module.find_installation('python3', required: true)
 pyyaml = python_module.find_installation('python3', modules: ['yaml'], required: true)
-xmltodict = python_module.find_installation('python3', modules: ['xmltodict'], required: true)
 mutagen = python_module.find_installation('python3', modules: ['mutagen'], required: false)
 
 subdir('utils')
