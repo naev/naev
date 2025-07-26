@@ -18,6 +18,7 @@ require("outfits.lib.multicore").init{
    { "energy_regen", 30, 18},
    { "shield", 405, 120},
    { "shield_regen", 9, 2},
+   { "ew_track", 8, 2},
 }</lua_inline>
  </specific>
 </outfit>

@@ -18,6 +18,7 @@ require("outfits.lib.multicore").init{
    { "shield_regen", 9, 2},
    { "energy", 950, 1050},
    { "energy_regen", 95, 25},
+   { "cooldown_mod", -10, -6},
 }</lua_inline>
  </specific>
 </outfit>
