@@ -65,24 +65,34 @@ local dvaered_params = {
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local dvaered_cores = { -- Basically elite hulls excluding stealth
    ["Dvaered Vendetta"] = function () return {
+         systems = choose_one{ "Milspec Orion 2301 Core System", "Milspec Prometheus 2203 Core System" },
+         systems_secondary = choose_one{ "Milspec Orion 2301 Core System", "Milspec Prometheus 2203 Core System" },
          hull = "S&K Skirmish Plating",
          hull_secondary = "S&K Skirmish Plating",
       } end,
    ["Dvaered Ancestor"] = function () return {
+         systems = choose_one{ "Milspec Orion 2301 Core System", "Milspec Prometheus 2203 Core System" },
+         systems_secondary = choose_one{ "Milspec Orion 2301 Core System", "Milspec Prometheus 2203 Core System" },
          hull = "S&K Skirmish Plating",
          hull_secondary = "S&K Skirmish Plating",
       } end,
    ["Dvaered Phalanx"] = function () return {
+         systems = choose_one{ "Milspec Orion 4801 Core System", "Milspec Prometheus 4703 Core System" },
          hull = "S&K Battle Plating",
       } end,
    ["Dvaered Vigilance"] = function () return {
+         systems = choose_one{ "Milspec Orion 4801 Core System", "Milspec Prometheus 4703 Core System" },
+         systems_secondary = choose_one{ "Milspec Orion 4801 Core System", "Milspec Prometheus 4703 Core System" },
          hull = "S&K Battle Plating",
          hull_secondary = "S&K Battle Plating",
       } end,
    ["Dvaered Retribution"] = function () return {
+         systems = choose_one{ "Milspec Orion 8601 Core System", "Milspec Prometheus 8503 Core System" },
          hull = "S&K War Plating",
       } end,
    ["Dvaered Goddard"] = function () return {
+         systems = choose_one{ "Milspec Orion 8601 Core System", "Milspec Prometheus 8503 Core System" },
+         systems_secondary = choose_one{ "Milspec Orion 8601 Core System", "Milspec Prometheus 8503 Core System" },
          hull = "S&K War Plating",
          hull_secondary = "S&K War Plating",
       } end,

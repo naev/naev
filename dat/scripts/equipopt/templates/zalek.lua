@@ -56,21 +56,21 @@ local zalek_params = {
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {
    ["Za'lek Sting"] = function (_p) return {
-         systems = choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
+         systems = choose_one{ "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System" },
          engines = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          hull = choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
       } end,
    ["Za'lek Demon"] = function (_p) return {
-         systems = choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
-         systems_secondary = choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
+         systems = choose_one{ "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System" },
+         systems_secondary = choose_one{ "Milspec Aegis 4701 Core System", "Milspec Thalos 4702 Core System" },
          engines = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          engines_secondary = choose_one{ "Tricon Cyclone Engine", "Nexus Arrow 700 Engine", "Melendez Buffalo Engine" },
          hull = choose_one{ "Nexus Ghost Weave", "S&K Battle Plating" },
          hull_secondary = "S&K Battle Plating",
       } end,
    ["Za'lek Mephisto"] = function (_p) return {
-         systems = "Milspec Orion 8601 Core System",
-         systems_secondary = "Milspec Orion 8601 Core System",
+         systems = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
+         systems_secondary = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
          engines = choose_one{ "Nexus Bolt 3000 Engine", "Tricon Typhoon Engine" },
          engines_secondary = choose_one{ "Nexus Bolt 3000 Engine", "Tricon Typhoon Engine" },
          hull = "Unicorp D-58 Heavy Plating",
@@ -78,8 +78,8 @@ local zalek_cores = {
          hull_secondary = "Unicorp D-58 Heavy Plating",
       } end,
    ["Za'lek Diablo"] = function (_p) return {
-         systems = "Milspec Thalos 8502 Core System",
-         systems_secondary = "Milspec Thalos 8502 Core System",
+         systems = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
+         systems_secondary = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
          hull = "Unicorp D-58 Heavy Plating",
          --hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "Dummy Plating" },
          hull_secondary = "Unicorp D-58 Heavy Plating",
@@ -87,8 +87,8 @@ local zalek_cores = {
          engines_secondary = choose_one{ "Nexus Bolt 3000 Engine", "Melendez Mammoth Engine" },
       } end,
    ["Za'lek Hephaestus"] = function (_p) return {
-         systems = "Milspec Thalos 8502 Core System",
-         systems_secondary = "Milspec Thalos 8502 Core System",
+         systems = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
+         systems_secondary = choose_one{ "Milspec Aegis 8501 Core System", "Milspec Thalos 8502 Core System" },
          hull = choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" }, -- Ideally, should chose twice the same
          hull_secondary = choose_one{ "Unicorp D-58 Heavy Plating", "S&K War Plating" },
          engines = "Melendez Mammoth Engine",
