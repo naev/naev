@@ -25,38 +25,35 @@ outfits.standard.weapons = {
    "Heavy Laser Turret", "Railgun Turret", "Heavy Ion Turret",
    "Railgun", "Grave Beam",
    -- Medium Weapons
-   "Hyena Dock",
-   "Enygma Systems Turreted Fury Launcher",
+   "Hyena Dock", "Heavy Ripper Cannon", "Mass Driver",
+   "Enygma Systems Turreted Fury Launcher", "Heavy Ion Cannon",
    "Enygma Systems Turreted Headhunter Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
-   "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
-   "Laser Turret MK2", "Turreted Vulcan Gun",
-   "Plasma Turret MK2", "Orion Beam",
-   "EMP Grenade Launcher",
+   "Turreted Vulcan Gun", "EMP Grenade Launcher",
+   "Plasma Turret MK2", "Orion Beam", "Razor Battery S2",
    -- Small Weapons
-   "Shredder", "Plasma Cannon",
-   "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
-   "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
-   "Ion Cannon",
+   "Shredder", "Plasma Cannon", "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
+   "Laser Turret MK2", "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
+   "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1", "Razor Artillery S1",
+   "Ion Cannon", "Razor Artillery S2", "Razor Artillery S3", "Ripper Cannon", "Particle Beam",
    -- Point Defense
    "Guardian Overseer System",
    "Guardian Interception System",
 }
 outfits.standard.utility = {
-   --"Unicorp Scrambler", "Unicorp Light Afterburner",
-   --"Sensor Array", "Unicorp Medium Afterburner", "Droid Repair Crew",
+   "Unicorp Scrambler", "Sensor Array",
 }
 outfits.standard.structural = {
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Reactor Class III",
-   "Large Shield Booster",
+   "Large Shield Booster", "Nanobond Plating",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Medium Shield Booster", "Microbond Plating",
    -- Small Structural
    --"Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Small Shield Booster", "Plasteel Plating",
 }
 outfits.standard.set = outfits.merge{
    outfits.standard.weapons,
@@ -68,17 +65,25 @@ outfits.standard.set = outfits.merge{
 outfits.elite = {}
 outfits.elite.weapons = outfits.merge{ {
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
-   "TeraCom Mace Launcher",
+   "TeraCom Mace Launcher", "Enygma Systems Spearhead Launcher",
+   "Unicorp Caesar IV Launcher", "Enygma Systems Huntsman Launcher",
+   "Plasma Cluster Cannon", "Grave Lance", "Ragnarok Beam",
+   "Heavy Ripper Turret", "Orion Lance", "Particle Lance",
    }, outfits.standard.weapons,
 }
 outfits.elite.utility = outfits.merge{ {
-   "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Unicorp Medium Afterburner",
-   "Droid Repair Crew",
+   "Unicorp Light Afterburner", "Targeting Array",
+   "Unicorp Medium Afterburner", "Emergency Shield Booster",
+   "Droid Repair Crew", "Hyperbolic Blink Engine",
+   "Flicker Drive", "Milspec Scrambler", "Targeting Conduit",
+   "Milspec Impacto-Plastic Coating", "Photo-Voltaic Nanobot Coating",
+   "Nexus Concealment Coating",
    }, outfits.standard.utility,
 }
 outfits.elite.structural = outfits.merge{ {
-   "Improved Stabilizer", "Engine Reroute",
+   "Improved Stabilizer", "Engine Reroute", "Auxiliary Processing Unit I",
+   "Auxiliary Processing Unit II", "Auxiliary Processing Unit III",
+   "Auxiliary Processing Unit IV", "Battery IV", "Shield Capacitor IV",
    }, outfits.standard.structural
 }
 outfits.elite.set = outfits.merge{
