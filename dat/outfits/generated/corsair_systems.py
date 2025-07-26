@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#'input'  : 'core_system/medium/unicorp_pt200_core_system.xml',
 import helper as h
 N_ = lambda text: text
 data = h.read()

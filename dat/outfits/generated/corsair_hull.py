@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#'input'  : 'core_hull/medium/nexus_ghost_weave.xml',
 import helper as h
 N_ = lambda text: text
 data = h.read()
