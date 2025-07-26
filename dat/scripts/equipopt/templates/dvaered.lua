@@ -3,6 +3,8 @@ local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
 
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+
 local dvaered_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Railgun", "Repeating Railgun", "Railgun Turret",
