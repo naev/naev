@@ -165,16 +165,19 @@
  <item>Unicorp PT-16 Core System</item>
  <item>Milspec Aegis 2201 Core System</item>
  <item>Milspec Thalos 2202 Core System</item>
+ <item>Milspec Prometheus 2203 Core System</item>
  <item>Milspec Orion 2301 Core System</item>
  <item>Previous Generation Medium Systems</item>
  <item>Unicorp PT-200 Core System</item>
  <item>Milspec Aegis 4701 Core System</item>
  <item>Milspec Thalos 4702 Core System</item>
+ <item>Milspec Prometheus 4703 Core System</item>
  <item>Milspec Orion 4801 Core System</item>
  <item>Previous Generation Large Systems</item>
  <item>Unicorp PT-440 Core System</item>
  <item>Milspec Aegis 8501 Core System</item>
  <item>Milspec Thalos 8502 Core System</item>
+ <item>Milspec Prometheus 8503 Core System</item>
  <item>Milspec Orion 8601 Core System</item>
  <item>Beat Up Small Engine</item>
  <item>Unicorp Hawk 160 Engine</item>
@@ -274,4 +277,5 @@
  <item>Arc Blade</item>
  <item>Apollo's Gaze</item>
  <item>Kratos' Glove</item>
+ <item>Compact Lightsail</item>
 </tech>
