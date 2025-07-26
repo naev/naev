@@ -23,7 +23,7 @@
    <outfits/>
   </services>
   <description>Zepei has a modest native population, and a sizeable non-permanent population. The surface of the planet is covered with holiday resorts, nature parks and outdoor sports areas. Most of the vacation goers are Soromid. Non-modified humans would find the recreational activities too rough for comfort.</description>
-  <bar>The spaceport bar is not frequented much. The Soromid who come here on vacation typically go straight to the terminals, and they constitute most of the spaceport's traffic. The bar is used only by the captains of the supply and trade ships that land on Zeppei.</bar>
+  <bar>The spaceport bar is not frequented much. The Soromid who come here on vacation typically go straight to the terminals, and they constitute most of the spaceport's traffic. The bar is used only by the captains of the supply and trade ships that land on Zepei.</bar>
  </general>
  <tech>
   <item>Hulls Medium</item>
@@ -32,7 +32,7 @@
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>
   <item>Missiles 1</item>
-  <item>Systems High</item>
+  <item>Systems High (Soromid)</item>
  </tech>
  <tags>
   <tag>tourism</tag>
