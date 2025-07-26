@@ -36,7 +36,7 @@ foreach name, data : customoutfits
   gen_outfits += [custom_target( name,
     command: [find_program( 'py' / data['command'] ), '@INPUT@', '@OUTPUT@', ],
     install: true,
-    install_dir: ndata_path / 'dat/outfits',
+    install_dir: ndata_path / 'dat/outfits/sets',
     depend_files: 'py' / data['command'],
     input: data['input'],
     output: data['output'],
