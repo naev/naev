@@ -539,16 +539,16 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
    /* Do fuzzy search. */
    for ( int i = 0; i < array_size( o ); i++ ) {
       if ( SDL_strcasestr( outfit_name( o[i] ), name ) != NULL )
-         array_push_back( &names, (char *)outfit_name( o[i] ) );
+         array_push_back( &names, (char *)outfit_rawname( o[i] ) );
       else if ( SDL_strcasestr( outfit_getType( o[i] ), name ) != NULL )
-         array_push_back( &names, (char *)outfit_name( o[i] ) );
+         array_push_back( &names, (char *)outfit_rawname( o[i] ) );
       else if ( ( outfit_condstr( o[i] ) != NULL ) &&
                 SDL_strcasestr( outfit_condstr( o[i] ), name ) != NULL )
-         array_push_back( &names, (char *)outfit_name( o[i] ) );
+         array_push_back( &names, (char *)outfit_rawname( o[i] ) );
       else if ( SDL_strcasestr( outfit_description( o[i] ), name ) != NULL )
-         array_push_back( &names, (char *)outfit_name( o[i] ) );
+         array_push_back( &names, (char *)outfit_rawname( o[i] ) );
       else if ( SDL_strcasestr( outfit_summary( o[i], 0 ), name ) != NULL )
-         array_push_back( &names, (char *)outfit_name( o[i] ) );
+         array_push_back( &names, (char *)outfit_rawname( o[i] ) );
    }
 
    return names;

@@ -98,6 +98,7 @@ void msgcat_init( msgcat_t* p, const void* map, size_t map_size )
  */
 const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* msgid2, uint64_t n )
 {
+   if (!msgid1) return NULL;
    const char *trans = msgcat_mo_lookup(p->map, p->map_size, msgid1);
    if (!trans) return NULL;
 
