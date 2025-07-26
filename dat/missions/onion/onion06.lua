@@ -35,7 +35,7 @@ local title = _("Emergency Conclave")
 
 -- Create the mission
 function create()
-   misn.finish() -- Not ready yet
+   if not var.peek("testing") then return misn.finish() end -- Not ready yet
 
    local prt = love_shaders.shaderimage2canvas( love_shaders.hologram(), onion.img_onion() )
    misn.setNPC( _("Onion Society Conclave"), prt.t.tex, _([[It seems like your Ship AI is able to set you up with a connection to the Onion Society Conclave.]]) )

@@ -1445,6 +1445,10 @@ void land( Spob *p, int load )
    player_addEscorts(); /* TODO only regenerate fleet if planet has a shipyard
                          */
 
+   /* So the issue is that spfxL use the parents environment, which can be from
+    * a mission or event. They usually get cleared when landing, which can
+    * cause the spfx to be stale and floating until the player takes off.
+    * TODO fix this shit with Rust. */
    spfxL_clear();
 
    /* Stop player sounds. */

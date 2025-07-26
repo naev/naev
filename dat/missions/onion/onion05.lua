@@ -56,7 +56,7 @@ mem.state = STATE_ACCEPTED
 
 -- Create the mission
 function create()
-   misn.finish() -- Not ready yet
+   if not var.peek("testing") then return misn.finish() end -- Not ready yet
 
    -- Claims some systems
    if not misn.claim{  deliversys } then
