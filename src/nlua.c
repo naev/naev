@@ -141,10 +141,7 @@ int nlua_dobufenv( nlua_env *env, const char *buff, size_t sz,
       debug_enableFPUExcept();
 #endif /* DEBUGGING */
 
-   ret = nlua_pcall( env, 0, LUA_MULTRET );
-   if ( ret != 0 )
-      return ret;
-   return 0;
+   return nlua_pcall( env, 0, LUA_MULTRET );
 }
 
 /*

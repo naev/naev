@@ -11,7 +11,6 @@
  *  to and open an entire set of events.
  */
 /** @cond */
-#include "nstring.h"
 #include <stdlib.h>
 
 #include <SDL3/SDL_timer.h>
