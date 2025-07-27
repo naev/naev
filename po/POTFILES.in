@@ -441,6 +441,7 @@ dat/outfits/utility/berserk_chip.xml
 dat/outfits/utility/blink_drive.xml
 dat/outfits/utility/boarding_androids_mk1.xml
 dat/outfits/utility/boarding_androids_mk2.xml
+dat/outfits/utility/cargo_damper.xml
 dat/outfits/utility/catalytic_energy_drill.xml
 dat/outfits/utility/cloaking_device.xml
 dat/outfits/utility/combat_hologram_projector.xml
@@ -465,6 +466,7 @@ dat/outfits/utility/hullcoating/milspec_impacto-plastic_coating.xml
 dat/outfits/utility/hullcoating/nebula_resistant_coating.xml
 dat/outfits/utility/hullcoating/nexus_concealment_coating.xml
 dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml
+dat/outfits/utility/hullcoating/reconstructive_nanobot_coating.xml
 dat/outfits/utility/hyperbolic_blink_engine.xml
 dat/outfits/utility/jump_scanner.xml
 dat/outfits/utility/kratos_glove.xml
@@ -2645,6 +2647,7 @@ dat/tech/heavy_weapons_2.xml
 dat/tech/high_tech_upgrades_1.xml
 dat/tech/high_tech_upgrades_2.xml
 dat/tech/high_tech_upgrades_3.xml
+dat/tech/high_tech_upgrades_4.xml
 dat/tech/hulls_cargo.xml
 dat/tech/hulls_elite.xml
 dat/tech/hulls_high.xml
@@ -2682,6 +2685,7 @@ dat/tech/pirate_strongholds_map.xml
 dat/tech/plasma_1.xml
 dat/tech/plasma_2.xml
 dat/tech/port_n_polish.xml
+dat/tech/proteron_elite_outfits.xml
 dat/tech/proteron_maps.xml
 dat/tech/proteron_military_outfits.xml
 dat/tech/proteron_military_ships.xml

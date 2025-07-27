@@ -163,7 +163,7 @@ function gen_outfits ()
    if faction.get("Proteron"):known() then
       table.insert( outfits, "Reconstructive Nanobot Coating" )
    end
-   
+
    -- Treasure hunt
    if th.maps_solved() > 0 then
       table.insert( outfits, "Mystery Outfit" )
