@@ -16,11 +16,11 @@ DST=$(realpath --relative-to="$PWD" "$DIR"/../outfits)
 
 for i in $(find "$DST" -type 'd' |
    sed 's/$/\//' |
-   grep -v -F -f <(IFS=$'\n'; echo -n "${EXCLUDED_DIRS[*]}")
+   grep -vF -f <(IFS=$'\n'; echo -n "${EXCLUDED_DIRS[*]}")
 ) ; do
    FILES=("$i"*.xml)
    if [ ! "${FILES[0]}" = "$i"'*.xml' ] ; then
-      grep -vlF -f <(
+      grep -LF -f <(
          for k in "${EXCLUDED_TAGS[@]}" ; do
             echo '<tag>'"$k"'</tag>'
          done
