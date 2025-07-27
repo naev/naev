@@ -1,5 +1,6 @@
 <outfit name="Four Winds Laser Cannon">
  <general>
+  <shortname>F.W. Laser Cannon</shortname>
   <slot>weapon</slot>
   <size>small</size>
   <mass>1</mass>

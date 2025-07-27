@@ -1,5 +1,6 @@
 <outfit name="Unicorp Jammer">
  <general>
+  <shortname>U. Jammer</shortname>
   <typename>Electronic Warfare Jammer</typename>
   <slot>utility</slot>
   <size>small</size>

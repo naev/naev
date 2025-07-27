@@ -1,5 +1,6 @@
 <outfit name="Unicorp Scrambler">
  <general>
+  <shortname>U. Scrambler</shortname>
   <typename>Electronic Warfare Scrambler</typename>
   <slot>utility</slot>
   <size>small</size>

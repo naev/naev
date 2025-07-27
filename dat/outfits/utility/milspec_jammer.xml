@@ -1,5 +1,6 @@
 <outfit name="Milspec Jammer">
  <general>
+  <shortname>M. Jammer</shortname>
   <typename>Electronic Warfare Jammer</typename>
   <slot>utility</slot>
   <size>medium</size>
