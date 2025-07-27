@@ -12,7 +12,7 @@ EXCLUDED_NAM_PAT=('GUI' 'Dummy')
 
 
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DST=$(realpath --relative-to="$PWD" "$DIR"/../dat/outfits)
+DST=$(realpath --relative-to="$PWD" "$DIR"/../outfits)
 (
    echo -n '<tech name="All Outfits">'
    for i in $(find "$DST"/ -type 'd' |
@@ -34,4 +34,4 @@ DST=$(realpath --relative-to="$PWD" "$DIR"/../dat/outfits)
    grep -v -f <(IFS=$'\n'; echo -n "${EXCLUDED_NAM_PAT[*]}") |
    sed 's/^\([^"]*\)\".*$/ <item>\1<\/item>/'
    echo '</tech>'
-) >"$(realpath --relative-to="$PWD" "$DIR"/../dat/tech/all_outfits.xml)"
+) >"$(realpath --relative-to="$PWD" "$DIR"/all_outfits.xml)"

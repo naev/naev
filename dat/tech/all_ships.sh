@@ -8,7 +8,7 @@ EXCLUDED_TAGS=('station')
 EXCLUDED_NAM_PAT=('Astral')
 
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DST=$(realpath --relative-to="$PWD" "$DIR"/../dat/ships)
+DST=$(realpath --relative-to="$PWD" "$DIR"/../ships)
 (
    echo -n '<tech name="All Ships">'
 
@@ -25,4 +25,4 @@ DST=$(realpath --relative-to="$PWD" "$DIR"/../dat/ships)
 
    echo
    echo '</tech>'
-) >"$(realpath --relative-to="$PWD" "$DIR"/../dat/tech/all_ships.xml)"
+) >"$(realpath --relative-to="$PWD" "$DIR"/all_ships.xml)"
