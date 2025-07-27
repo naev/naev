@@ -21,7 +21,7 @@ local proteron_outfits = eoutfits.merge{{
    "Droid Repair Crew", "Milspec Scrambler",
    "Hunting Combat AI", "Agility Combat AI",
    "Targeting Array", "Reconstructive Nanobot Coating",
-   "Milspec Jammer", "Emergency Shield Booster", "Sensor Array", 
+   "Milspec Jammer", "Emergency Shield Booster", "Sensor Array",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Battery IV", "Nanobond Plating",
    "Reactor Class III", "Large Shield Booster", "Auxiliary Processing Unit III",
