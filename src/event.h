@@ -46,6 +46,8 @@ void events_trigger( EventTrigger_t trigger );
 /*
  * Handling.
  */
+int         event_exists( unsigned int eventid );
+nlua_env   *event_getEnv( unsigned int eventid );
 Event_t    *event_get( unsigned int eventid );
 void        event_remove( unsigned int eventid );
 int         event_save( unsigned int eventid );
