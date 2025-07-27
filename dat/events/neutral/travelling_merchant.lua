@@ -159,6 +159,11 @@ function gen_outfits ()
       table.insert( outfits, "Berserk Chip" )
    end
 
+   -- To make the proteron coating easier to obtain for now:
+   if faction.get("Proteron"):known() then
+      table.insert( outfits, "Reconstructive Nanobot Coating" )
+   end
+   
    -- Treasure hunt
    if th.maps_solved() > 0 then
       table.insert( outfits, "Mystery Outfit" )
