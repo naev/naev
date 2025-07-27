@@ -1,5 +1,6 @@
 <outfit name="Unicorp Light Afterburner">
  <general>
+  <shortname>U. Light Afterburner</shortname>
   <slot>utility</slot>
   <size>small</size>
   <mass>3</mass>

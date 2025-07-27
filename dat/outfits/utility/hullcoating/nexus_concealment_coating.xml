@@ -1,5 +1,6 @@
 <outfit name="Nexus Concealment Coating">
  <general>
+  <shortname>N. Concealment Coating</shortname>
   <typename>Hull Coating</typename>
   <slot>utility</slot>
   <size>small</size>

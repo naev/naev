@@ -1,5 +1,6 @@
 <outfit name="Unicorp Medium Afterburner">
  <general>
+  <shortname>U. Medium Afterburner</shortname>
   <slot>utility</slot>
   <size>medium</size>
   <mass>12</mass>

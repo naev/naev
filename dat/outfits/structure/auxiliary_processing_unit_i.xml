@@ -1,5 +1,6 @@
 <outfit name="Auxiliary Processing Unit I">
  <general>
+  <shortname>A.P.U. I</shortname>
   <typename>CPU Modifier</typename>
   <slot>structure</slot>
   <size>small</size>

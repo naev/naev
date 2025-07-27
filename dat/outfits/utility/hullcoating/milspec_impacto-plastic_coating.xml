@@ -1,5 +1,6 @@
 <outfit name="Milspec Impacto-Plastic Coating">
  <general>
+  <shortname>M. Impacto-Plastic Coating</shortname>
   <typename>Hull Coating</typename>
   <slot>utility</slot>
   <size>small</size>

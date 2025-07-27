@@ -1,5 +1,6 @@
 <outfit name="Milspec Scrambler">
  <general>
+  <shortname>M. Scrambler</shortname>
   <typename>Electronic Warfare Scrambler</typename>
   <slot>utility</slot>
   <size>medium</size>
