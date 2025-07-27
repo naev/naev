@@ -1,4 +1,4 @@
-<ship inherits="Za'lek Sting" name="Za'lek Sting Type II">
+<ship name="Za'lek Sting Type II" inherits="Za'lek Sting">
  <rarity>3</rarity>
  <price>1950000</price>
  <cond>require("buyrep")("Za'lek", 50)</cond>
