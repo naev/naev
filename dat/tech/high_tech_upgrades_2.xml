@@ -1,21 +1,35 @@
 <tech name="High Tech Upgrades 2">
- <item>Auxiliary Processing Unit III</item>
+ <item>Auxiliary Processing Unit I</item>
+ <item>Battery I</item>
+ <item>Battery II</item>
  <item>Battery III</item>
  <item>Battery IV</item>
+ <item>Reactor Class I</item>
  <item>Reactor Class II</item>
  <item>Reactor Class III</item>
- <item>Shield Capacitor III</item>
- <item>Shield Capacitor IV</item>
+ <item>Shield Capacitor I</item>
+ <item>Shield Capacitor II</item>
+ <item>Small Shield Booster</item>
+ <item>Medium Shield Booster</item>
+ <item>Large Shield Booster</item>
  <item>Droid Repair Crew</item>
  <item>Milspec Scrambler</item>
  <item>Milspec Jammer</item>
- <item>Medium Weapon License</item>
  <item>Emergency Shield Booster</item>
+ <item>Plasteel Plating</item>
+ <item>Microbond Plating</item>
+ <item>Active Plating</item>
+ <item>Unicorp Light Afterburner</item>
+ <item>Unicorp Medium Afterburner</item>
+ <item>Small Fuel Pod</item>
  <item>Medium Fuel Pod</item>
  <item>Large Fuel Pod</item>
- <item>Weapons Ionizer</item>
- <item>Boarding Androids MK2</item>
+ <item>Small Cargo Pod</item>
+ <item>Medium Cargo Pod</item>
+ <item>Large Cargo Pod</item>
+ <item>Boarding Androids MK1</item>
  <item>Hyperbolic Blink Engine</item>
+ <item>Agility Combat AI</item>
  <item>Weakness Harmonizer AI</item>
- <item>Neural Accelerator Interface</item>
+ <item>Medium Weapon License</item>
 </tech>
