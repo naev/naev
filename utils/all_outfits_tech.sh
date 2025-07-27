@@ -1,25 +1,37 @@
 #!/usr/bin/bash
 
-DIRS=("fighter_bays" "pointdefense" "weapons" "launchers" "core_engine" "core_system" "core_hull" "structure" "flow/structure" "utility" "maps" "misc" "intrinsic" "unique" "sets")
-# "special"
+
+# forbid '/__excl_dir__/' in path
+EXCLUDED_DIRS=('bioship' 'special' 'abilities', 'astral_projection')
+
+# forbid '<tag>__excl_tag__</tag>' in file
+EXCLUDED_TAGS=('nosteal')
+
+# forbid '__excl_nam_pattern__' in outfit name
+EXCLUDED_NAM_PAT=('GUI' 'Dummy')
+
 
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-"$DIR"/../dat/outfits/py/do_it.sh
-
+DST=$(realpath --relative-to="$PWD" "$DIR"/../dat/outfits)
 (
-   echo '<tech name="All Outfits">'
-   for i in "${DIRS[@]}" ; do
-      grep -ho '\(<outfit name=\"[^"]*\"\)\|\(<size>[^<]*</size>\)' -r "$DIR/../dat/outfits/$i" --include "*.xml" |
-      sed -e 's/^[^"]*"//' -e 's/\"\.*$/\"/' -e 's/<\/size>$/!/' |
-      sed -e 's/^<size>large/<s>a/' -e 's/^<size>medium/<s>b/'  -e 's/^<size>small/<s>c/' |
-      tr -d $'\n' |  tr '!' $'\n' |
-      sed -e 's/"<s>/<s>/' -e 's/"/<s>c"/g' |
-      tr '"' $'\n' |
-      sed 's/^\([^<]*\)<s>\(.*\)/\2\1/' |
-      sort -s
+   echo -n '<tech name="All Outfits">'
+   for i in $(find "$DST"/ -type 'd' |
+       sed 's/$/\//' |
+      grep -v -F -f <(IFS=$'\n'; echo "${EXCLUDED_DIRS[*]}")
+   ) ; do
+      FILES="$(echo "$i"/*.xml)"
+      if [ ! "$FILES" = "$i"'/*.xml' ] ; then
+         grep -ho '\(<outfit name=\"[^"]*\"\)\|\(<tag>[^<]*</tag>\)' "$i"/*.xml
+      fi
    done |
-   grep -v -F -e "GUI" -e "Dummy" |
-   sed -e 's/^./ <item>/' -e 's/$/<\/item>/'
+   sed -e 's/^[^"]*"/!/' |
+   tr -d $'\n' | tr '!' $'\n' |
+   grep -v -f <(
+      for k in "${EXCLUDED_TAGS[@]}" ; do
+         echo '<tag>'"$k"'</tag>$'
+      done
+   ) |
+   grep -v -f <(IFS=$'\n'; echo "${EXCLUDED_NAM_PAT[*]}") |
+   sed 's/^\([^"]*\)\".*$/ <item>\1<\/item>/'
    echo '</tech>'
-) > "$DIR"/../dat/tech/all_outfits.xml
+) >$(realpath --relative-to="$PWD" "$DIR"/../dat/tech/all_outfits.xml)
