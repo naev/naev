@@ -152,7 +152,9 @@ impl NLua {
         };
 
         // Load base libraries NOT SUFFICIENT
-        lua.load_std_libs(mlua::StdLib::ALL_SAFE).unwrap();
+        lua.load_std_libs(mlua::StdLib::ALL_SAFE)?;
+        #[cfg(debug_assertions)]
+        lua.load_std_libs(mlua::StdLib::DEBUG)?;
 
         // Set up gettext stuff
         open_gettext(lua)?;
