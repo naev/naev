@@ -6,10 +6,6 @@
  *
  * @brief Handles the event Lua bindings.
  */
-/** @cond */
-#include <stdio.h>
-#include <stdlib.h>
-/** @endcond */
 
 #include "nlua_evt.h"
 
