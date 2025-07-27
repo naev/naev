@@ -4208,9 +4208,9 @@ src/version.rs
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py
-dat/outfits/py/corsair_engine.py
-dat/outfits/py/corsair_hull.py
-dat/outfits/py/corsair_systems.py
-dat/outfits/py/helper.py
-dat/outfits/py/neutralizer.py
-dat/outfits/py/reaver.py
+dat/outfits/generated/corsair_engine.py
+dat/outfits/generated/corsair_hull.py
+dat/outfits/generated/corsair_systems.py
+dat/outfits/generated/helper.py
+dat/outfits/generated/neutralizer.py
+dat/outfits/generated/reaver.py
