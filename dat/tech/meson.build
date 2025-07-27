@@ -1,6 +1,6 @@
 
 
-c = run_command(find_program('all_ships_dep.sh'), check: true)
+c = run_command([find_program('all_ships_dep.sh'), meson.project_source_root() / 'dat/ships/' ] check: true)
 ship_sources = c.stdout().strip().split('\n')
 custom_target( 'all_ships',
    command: [find_program( 'gen_all_ships_tech.sh' ), '@INPUT@'],
