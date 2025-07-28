@@ -11,10 +11,7 @@ EXCLUDED_TAGS=('nosteal')
 EXCLUDED_FIL_PAT=('gui-' 'dummy')
 
 
-DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DST=$(realpath --relative-to="$PWD" "$DIR"/../outfits)
-
-for i in $(find "$DST" -type 'd' |
+for i in $(find "$1" -type 'd' |
    sed 's/$/\//' |
    grep -vF -f <(IFS=$'\n'; echo -n "${EXCLUDED_DIRS[*]}")
 ) ; do
