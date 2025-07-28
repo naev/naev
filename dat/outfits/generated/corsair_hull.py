@@ -20,13 +20,9 @@ irresistible buccaneer stare""")
 del general['slot']['@prop_extra']
 
 specific = o['specific']
-ref = h.get_outfit_dict( h.INPUT, True )
-ref['absorb'] = (ref['absorb'][0]-5.0,)
-ref['ew_stealth_timer'] = (-10,)
-specific['lua_inline'] = '\n'.join([
-   "local set = require('outfits.lib.set')",
-   h.to_multicore_lua( ref, True, 'set.set' ),
-   "require('outfits.core_sets.corsair_hull').init()"
-])
+specific['absorb']['$pri'] -= 5.0
+specific['ew_stealth_timer'] = { 'pri': -10 }
+#specific['lua_inline'] = 'local set = require("outfits.lib.set")'
+specific['lua_inline_post'] = 'require("outfits.core_sets.corsair_hull").init()'
 
 data.save()

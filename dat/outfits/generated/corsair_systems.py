@@ -21,13 +21,9 @@ in space is it also mal de mer?""")
 del general['slot']['@prop_extra']
 
 specific = o['specific']
-ref = h.get_outfit_dict( h.INPUT, True )
-del ref['cooldown_time']
-ref['ew_detect'] = (ref['ew_detect'][0]+5.0,)
-specific['lua_inline'] = '\n'.join([
-   "local set = require('outfits.lib.set')",
-   h.to_multicore_lua( ref, True, 'set.set' ),
-   "require('outfits.core_sets.corsair_systems').init()"
-])
+del specific['cooldown_time']
+specific['ew_detect']['$pri'] += 5
+#specific['lua_inline'] = "local set = require('outfits.lib.set')"
+specific['lua_inline_post'] = "require('outfits.core_sets.corsair_systems').init()"
 
 data.save()

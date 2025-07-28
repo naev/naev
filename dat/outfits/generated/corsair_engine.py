@@ -20,13 +20,9 @@ before they quickly took to the air""")
 del general['slot']['@prop_extra']
 
 specific = o['specific']
-ref = h.get_outfit_dict( h.INPUT, True )
-del ref['time_mod']
-ref['jump_distance'] = (25,)
-specific['lua_inline'] = '\n'.join([
-   'local set = require("outfits.lib.set")',
-   h.to_multicore_lua( ref, True, 'set.set' ),
-   'require("outfits.core_sets.corsair_engine").init()'
-])
+del specific['time_mod']
+specific['jump_distance'] = { 'pri': 25 }
+#specific['lua_inline'] = 'local set = require("outfits.lib.set")'
+specific['lua_inline_post'] = 'require("outfits.core_sets.corsair_engine").init()'
 
 data.save()

@@ -66,7 +66,7 @@ def un_multicore( o ):
    except:
       return False
 
-   e['lua_inline'] = bef
+   e['lua_inline'] = bef.strip()
    if aft:
       e['lua_inline_post'] = aft
 
@@ -208,9 +208,9 @@ class outfit(naev_xml):
             lua_inline += ind + '{ ' + ', '.join(['"'+k+'"'] + [str(u) for u in v]) + '},\n'
             del oout['specific'][k]
          lua_inline += '}'
-         oout['specific']['lua_inline'] += lua_inline
+         oout['specific']['lua_inline'] = (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
          if 'lua_inline_post' in oout['specific']:
-            oout['specific']['lua_inline'] += oout['specific']['lua_inline_post']
+            oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post']
             del oout['specific']['lua_inline_post']
       else:
          out = self
