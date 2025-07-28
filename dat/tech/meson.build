@@ -12,18 +12,12 @@ custom_target( 'all_ships',
 
 com_outifts = run_command([find_program('all_outfits_dep.sh'), meson.project_source_root() / 'dat/outfits/' ], check: true)
 outfits_sources = com_outifts.stdout().strip().split('\n')
-gen_files = ['neutralizer.xml', 'reaver_cannon.xml', 'corsair_systems.xml', 'corsair_hull_plating.xml', 'corsair_engine.xml']
-
-generated = []
-foreach nam : gen_files
-   generated += [meson.project_build_root() / 'dat/outfits/generated' / nam]
-endforeach
 
 custom_target( 'all_outfits',
-   command: [find_program( 'gen_all_outfits_tech.sh' ), '@OUTPUT@', '@INPUT@'] + generated,
+   command: [find_program( 'gen_all_outfits_tech.sh' ), '@OUTPUT@', '@INPUT@'],
    install: true,
    install_dir: ndata_path / 'dat/tech',
-   depends: [gen_outfits] ,
-   input: outfits_sources,
+   depends: gen_outfits ,
+   input: outfits_sources + gen_outfits,
    output: 'all_outfits.xml',
 )
