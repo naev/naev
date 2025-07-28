@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 
 # forbid '/__excl_dir__/' in path
@@ -10,8 +10,6 @@ EXCLUDED_TAGS=('nosteal')
 # forbid '__excl_filnam_pattern__' in outfit filename
 EXCLUDED_FIL_PAT=('gui-' 'dummy')
 
-
-echo "Start $0 $1" >&2
 
 for i in $(find "$1" -type 'd' |
    sed 's/$/\//' |
@@ -27,5 +25,3 @@ for i in $(find "$1" -type 'd' |
    fi
 done |
 grep -v -f <(IFS=$'\n'; echo -n "${EXCLUDED_FIL_PAT[*]}")
-echo "Stop $0" >&2
-exit 0
