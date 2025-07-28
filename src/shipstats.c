@@ -244,8 +244,8 @@ static const ShipStatsLookup ss_lookup[] = {
             _UNIT_POWER ),
    AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,
             N_( "Armour Damage" ), _UNIT_POWER ),
-   A__ELEM( SS_TYPE_A_DAMAGE, damage, N_( "Damage" ), _UNIT_POWER ),
-   A__ELEM( SS_TYPE_A_DISABLE, disable, N_( "Disable" ), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_DAMAGE, damage, N_( "Damage" ), _UNIT_POWER ),
+   AI_ELEM( SS_TYPE_A_DISABLE, disable, N_( "Disable" ), _UNIT_POWER ),
 
    AI_ELEM( SS_TYPE_A_MASS, mass, N_( "Ship Mass" ), _UNIT_MASS ),
    A__ELEM( SS_TYPE_A_CPU, cpu, N_( "CPU Usage" ), _UNIT_CPU ),
