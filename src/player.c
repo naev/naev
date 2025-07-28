@@ -1732,16 +1732,16 @@ int player_land( int loud )
    /* End autonav. */
    player_autonavEnd();
 
-   /* Stop afterburning. */
-   pilot_afterburnOver( player.p );
+   /* Stop all on outfits. */
+   // if ( pilot_outfitOffAll( player.p ) > 0 )
+   pilot_outfitOffAll( player.p );
+   pilot_calcStats( player.p ); /* Always update stats for now as something is
+                                   funky with afterburners. */
+
    /* Stop accelerating. */
    player_accelOver();
    /* Stop stealth. */
    pilot_destealth( player.p );
-
-   /* Stop all on outfits. */
-   if ( pilot_outfitOffAll( player.p ) > 0 )
-      pilot_calcStats( player.p );
 
    /* Do whatever the spob wants to do. */
    if ( spob->lua_land != LUA_NOREF ) {
@@ -2633,7 +2633,6 @@ void player_cooldownBrake( void )
    if ( pilot_isFlag( player.p, PILOT_HYPERSPACE ) )
       return;
 
-   pilot_afterburnOver( player.p );
    stopped = pilot_isStopped( player.p );
    if ( stopped && !pilot_isFlag( player.p, PILOT_COOLDOWN ) )
       pilot_cooldown( player.p, 1 );
