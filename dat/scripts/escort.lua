@@ -380,6 +380,9 @@ function escort.spawn( pos )
             escort_outfits[k] = p:outfits()
          end
       end
+
+      -- Ensure they have at least one jump of fuel
+      p:setFuel( math.max( p:fuel(), p:stats().fuel_consumption ) )
    end
 
    -- See if we have a post-processing function
