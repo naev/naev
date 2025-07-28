@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 
 # forbid '<tag>__excl_tag__</tag>' in file
