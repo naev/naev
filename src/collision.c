@@ -884,6 +884,14 @@ int CollideCirclePolygon( const vec2 *ap, double ar, const CollPolyView *bt,
         ( ap->y - ar > p1.y ) && ( ap->y + ar < p2.y ) )
       return 0;
 
+   /* See if center is in polygon. */
+   if ( PointInPolygon( bt, bp, ap->x, ap->y ) ) {
+      crash[real_hits].x = ap->x;
+      crash[real_hits].y = ap->y;
+      real_hits++;
+      return 1;
+   }
+
    /*
     * Now we check any line of the polygon
     */
@@ -895,7 +903,7 @@ int CollideCirclePolygon( const vec2 *ap, double ar, const CollPolyView *bt,
       crash[real_hits].x = tmp_crash[0].x;
       crash[real_hits].y = tmp_crash[0].y;
       real_hits++;
-      if ( real_hits == 2 )
+      if ( real_hits >= 2 )
          return 1;
    }
    for ( int i = 0; i <= bt->npt - 2; i++ ) {
@@ -907,7 +915,7 @@ int CollideCirclePolygon( const vec2 *ap, double ar, const CollPolyView *bt,
          crash[real_hits].x = tmp_crash[0].x;
          crash[real_hits].y = tmp_crash[0].y;
          real_hits++;
-         if ( real_hits == 2 )
+         if ( real_hits >= 2 )
             return 1;
       }
    }
