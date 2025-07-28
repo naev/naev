@@ -99,26 +99,30 @@ local goodness_override = {
 local goodness_special = {
    ["Black Cat Doll"] = 0.25, -- Only active when stealthing
    ["TeraCom Mace Launcher"] = 0.5,
-   ["Enygma Systems Huntsman Launcher"] = 0.5,
-   ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
-   ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
+   ["Unicorp Caesar IV Launcher"] = 0.6, -- high damage but slow with bad tracking
+   ["Enygma Systems Huntsman Launcher"] = 0.6,
+   ["Enygma Systems Spearhead Launcher"] = 0.6, -- high damage but shield only
+   ["TeraCom Vengeance Launcher"] = 0.6,
+   ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable
    ["Droid Repair Crew"] = 0.4, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
+   ["Particle Beam"] = 0.8,
+   
    -- Plasma do a lot of damage over time
-   ["Plasma Blaster MK1"] = 1 / 0.75,
-   ["Plasma Blaster MK2"] = 1 / 0.75,
-   ["Plasma Cannon"] = 1 / 0.75,
-   ["Plasma Cluster Cannon"] = 1 / 0.75,
-   ["Plasma Turret MK1"] = 1 / 0.75,
-   ["Plasma Turret MK2"] = 1 / 0.75,
+   ["Plasma Blaster MK1"] = 1 / 0.63,
+   ["Plasma Blaster MK2"] = 1 / 0.63,
+   ["Plasma Cannon"] = 1 / 0.63,
+   ["Plasma Cluster Cannon"] = 1 / 0.63,
+   ["Plasma Turret MK1"] = 1 / 0.70,
+   ["Plasma Turret MK2"] = 1 / 0.70,
    -- Razor/Disruptors do disable over time (and energy drain!)
-   ["Razor Artillery S1"] = 1 / 0.75,
-   ["Razor Artillery S2"] = 1 / 0.75,
-   ["Razor Artillery S3"] = 1 / 0.75,
-   ["Razor Battery S3"] = 1 / 0.75,
-   ["Disruptor Artillery S1"] = 1 / 0.75,
-   ["Disruptor Artillery S2"] = 1 / 0.75,
-   ["Disruptor Battery S3"] = 1 / 0.75,
+   ["Razor Artillery S1"] = 1 / 0.80,
+   ["Razor Artillery S2"] = 1 / 0.80,
+   ["Razor Artillery S3"] = 1 / 0.80,
+   ["Razor Battery S3"] = 1 / 0.80,
+   ["Disruptor Artillery S1"] = 1 / 0.80,
+   ["Disruptor Artillery S2"] = 1 / 0.80,
+   ["Disruptor Battery S3"] = 1 / 0.80,
 }
 
 
