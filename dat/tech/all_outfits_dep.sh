@@ -11,6 +11,8 @@ EXCLUDED_TAGS=('nosteal')
 EXCLUDED_FIL_PAT=('gui-' 'dummy')
 
 
+echo "Start $0 $1" >&2
+
 for i in $(find "$1" -type 'd' |
    sed 's/$/\//' |
    grep -vF -f <(IFS=$'\n'; echo -n "${EXCLUDED_DIRS[*]}")
@@ -25,3 +27,5 @@ for i in $(find "$1" -type 'd' |
    fi
 done |
 grep -v -f <(IFS=$'\n'; echo -n "${EXCLUDED_FIL_PAT[*]}")
+echo "Stop $0" >&2
+exit 0
