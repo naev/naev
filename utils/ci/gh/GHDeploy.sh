@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # GITHUB DEPLOYMENT SCRIPT FOR NAEV
 #

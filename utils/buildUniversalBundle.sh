@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # macOS Universal Bundle BUILD SCRIPT FOR NAEV
 #

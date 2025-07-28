@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # Convert Doxygen comments to Luadoc comments
 # CAUTION: We need to support BSD/macOS sed in addition to GNU sed.

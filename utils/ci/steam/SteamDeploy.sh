@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -87,7 +87,7 @@ tar -Jxf "$TEMPPATH"/naev-linux-appdir-x86-64/naev-appdir.tar.xz --strip-compone
 mv "$STEAMPATH"/content/lin64/naev.x64 "$STEAMPATH"/content/lin64/naev
 # Create wrapper script to preload OpenAL
 cat > "$STEAMPATH"/content/lin64/naev.x64 <<'EOF'
-#!/bin/sh
+#!/usr/bin/env sh
 BASEDIR="$(dirname "$(readlink -f "$0")")"
 export LD_LIBRARY_PATH="$BASEDIR:$LD_LIBRARY_PATH"
 exec "$BASEDIR/naev" "$@"

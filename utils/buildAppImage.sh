@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # AppDir BUILD SCRIPT FOR NAEV
 #

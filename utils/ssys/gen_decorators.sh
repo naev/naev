@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PIC="$(realpath --relative-to="$PWD" "${SCRIPT_DIR}/../../artwork/gfx/map")"
