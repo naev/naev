@@ -21,8 +21,7 @@ del general['slot']['@prop_extra']
 
 specific = o['specific']
 del specific['time_mod']
-specific['jump_distance'] = { 'pri': 25 }
-#specific['lua_inline'] = 'local set = require("outfits.lib.set")'
+specific['jump_distance'] = 25
 specific['lua_inline_post'] = 'require("outfits.core_sets.corsair_engine").init()'
 
 data.prisec_only(sec= False)

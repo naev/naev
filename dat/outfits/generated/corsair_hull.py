@@ -20,9 +20,8 @@ irresistible buccaneer stare""")
 del general['slot']['@prop_extra']
 
 specific = o['specific']
-specific['absorb']['$pri'] -= 5.0
-specific['ew_stealth_timer'] = { 'pri': -10 }
-#specific['lua_inline'] = 'local set = require("outfits.lib.set")'
+specific['absorb']['$pri'] -= 5
+specific['ew_stealth_timer'] = -10
 specific['lua_inline_post'] = 'require("outfits.core_sets.corsair_hull").init()'
 
 data.prisec_only(sec= False)
