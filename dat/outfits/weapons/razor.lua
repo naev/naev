@@ -4,7 +4,6 @@ local disable, penetration, isturret, duration, energy
 duration = 3
 function onload( o )
    local s     = o:specificstats()
-   --damage      = s.damage
    disable     = s.disable*0.5
    energy      = s.damage*2.5
    penetration = s.penetration
