@@ -30,35 +30,44 @@ local function can_bribe( plt )
    return true
 end
 
+local function filter_bribeable( group )
+   local ng = {}
+   for k,v in ipairs(group) do
+      if can_bribe( v ) then
+         table.insert( ng, v )
+      end
+   end
+   return ng
+end
+
 -- See if part of a fleet
 local function bribe_fleet( plt )
+   -- Current pilot must be bribeable
+   if not can_bribe(plt) then return nil end
+
+   -- Get leader and followers, making sure they exist
    local lea = plt:leader()
    local fol = plt:followers()
    if #fol==0 then fol = nil end
-   bribe_group = nil
-   if lea or fol then
-      if lea then
-         if not can_bribe(lea) then
-            return nil
-         end
-         bribe_group = lea:followers()
-         table.insert( bribe_group, lea )
-      else
-         if not can_bribe(plt) then
-            return nil
-         end
-         bribe_group = fol
-         table.insert( bribe_group, plt )
-      end
-      local ng = {}
-      for k,v in ipairs(bribe_group) do
-         if can_bribe( v ) then
-            table.insert( ng, v )
-         end
-      end
-      bribe_group = ng
+
+   -- Try to figure out the group
+   local group = nil
+   if lea then
+      -- If leader is not bribeable, allow bribing the current pilot anyway,
+      -- but not the group
+      if not can_bribe(lea) then return nil end
+      -- Should include the current pilot
+      -- We want the entire fleet to be bribeable if the leader is
+      group = lea:followers()
+      table.insert( group, lea )
+   elseif fol then
+      -- Make sure there are actually followers to bribe
+      group = filter_bribeable(fol)
+      if #group <= 0 then return nil end
+      table.insert( group, plt )
    end
-   return bribe_group
+
+   return group
 end
 
 -- Get nearby pilots for bribing (includes current pilot)
@@ -69,21 +78,22 @@ local function nearby_bribeable( plt, difffactok )
    for k,v in ipairs(pp:getVisible()) do
       if (v:faction() == plt:faction() or (difffactok and not v:areEnemies(plt))) and can_bribe(v) then
          local flt = bribe_fleet( v )
-         if flt then
-            for i,p in ipairs(flt) do
-               local found = false
-               for j,c in ipairs(ret) do
-                  if c==p then
-                     found = true
-                     break
-                  end
-               end
-               if not found then
-                  table.insert( ret, p )
+         -- No fleet, so assume single pilot
+         if not flt then
+            flt = {v}
+         end
+         -- Make sure it's not already there to avoid duplicates
+         for i,p in ipairs(flt) do
+            local found = false
+            for j,c in ipairs(ret) do
+               if c==p then
+                  found = true
+                  break
                end
             end
-         else
-            table.insert( ret, v )
+            if not found then
+               table.insert( ret, p )
+            end
          end
       end
    end
@@ -102,7 +112,7 @@ local function bribe_cost( plt )
    local mem = plt:memory()
    if not mem.bribe then
       warn(fmt.f(_("Pilot '{plt}' accepts bribes but doesn't give a price!"), {plt=plt} ))
-      return 1e6 -- just ridiculous for now, players should report it
+      return 1e9 -- just ridiculous for now, players should report it
    end
    return mem.bribe
 end
@@ -159,6 +169,11 @@ function comm( plt )
 
    local p = ccomm.newCharacter( vn, plt )
 
+   -- For bribing purposes
+   bribe_group   = bribe_fleet( plt )
+   bribeable     = nearby_bribeable( plt )
+   bribeable_all = nearby_bribeable( plt, true )
+
    vn.transition()
    local msg
    if mem.comm_greet then
@@ -186,9 +201,6 @@ function comm( plt )
          elseif (mem.bribe and mem.bribe == 0) or mem.bribed_once then
             table.insert( opts, 1, {_("Bribe"), "bribe_0"} )
          else
-            bribe_group = bribe_fleet( plt )
-            bribeable = nearby_bribeable( plt ) -- global
-            bribeable_all = nearby_bribeable( plt, true ) -- global
             if #bribeable_all > 1 and #bribeable_all ~= #bribeable then
                table.insert( opts, 1, {
                   fmt.f(
@@ -264,7 +276,7 @@ function comm( plt )
 
    vn.label("bribe")
    p( function ()
-      local str, _cost = bribe_msg( plt, bribe_group )
+      local str = bribe_msg( plt, bribe_group )
       return str
    end )
    vn.menu{
