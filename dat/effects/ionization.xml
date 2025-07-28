@@ -7,6 +7,6 @@
  <stats>
   <!-- Set to 1/duration so that it is 1 point per strength. -->
   <disable>0.3333333333333333</disable>
-  <energy_regen_malus>2.0</energy_regen_malus> <!-- Energy is 6x times disable -->
+  <energy_regen_malus>1.0</energy_regen_malus> <!-- Energy is 3x times disable -->
  </stats>
 </effect>

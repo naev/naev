@@ -7,7 +7,7 @@ function onload( o )
    -- The effect applies a fixed ratio of energy vs disable and is normalized
    -- around disable.
    disable     = s.disable*0.5
-   energy      = s.disable*3
+   energy      = s.disable*1.5
    penetration = s.penetration
    isturret    = s.isturret
 end
