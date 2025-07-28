@@ -11,6 +11,6 @@
  </general>
  <specific type="modification">
   <armour_regen>1</armour_regen>
-  <armour_regen_mod>20</armour_regen_mod>
+  <armour_regen_mod>25</armour_regen_mod>
  </specific>
 </outfit>
