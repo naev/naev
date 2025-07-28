@@ -865,7 +865,10 @@ function optimize.debug_goodness( p, params, outfits )
    local ocache = compute_goodness( outfits, p, st, ss, params, {} )
    local oo = {}
    for k,v in pairs(ocache) do
-      table.insert( oo, v )
+      -- Skip core outfits
+      if not v.outfit:tags().core then
+         table.insert( oo, v )
+      end
    end
    table.sort( oo, function ( a, b )
       return a.goodness > b.goodness
