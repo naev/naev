@@ -16,4 +16,7 @@
   <energy_regen_malus>{energy_malus}</energy_regen_malus>
   <engine_limit>{engine_limit}</engine_limit>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

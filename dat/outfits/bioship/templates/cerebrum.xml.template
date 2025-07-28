@@ -15,4 +15,7 @@
   <energy>{energy}</energy>
   <energy_regen>{energy_regen}</energy_regen>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

@@ -18,4 +18,7 @@
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>
