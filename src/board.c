@@ -289,7 +289,7 @@ void pilot_boardComplete( Pilot *p )
    } else {
       /* Steal stuff, we only do credits for now. */
       p->credits += target->credits * p->stats.loot_mod;
-      target->credits = 0.;
+      target->credits = 0;
    }
 
    /* Finish the boarding. */

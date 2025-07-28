@@ -584,7 +584,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
 
    /* money. */
    player.p->credits = player_creds;
-   player_creds      = 0;
+   player_creds      = start_credits();
    player_payback    = 0;
 
    return ps;
@@ -886,7 +886,7 @@ void player_cleanup( void )
    /* nothing left */
 
    /* Reset some player stuff. */
-   player_creds   = 0;
+   player_creds   = start_credits();
    player_payback = 0;
    free( player.gui );
    player.gui = NULL;
@@ -3953,24 +3953,23 @@ static void player_tryAddLicense( const char *name )
  */
 static Spob *player_parse( xmlNodePtr parent )
 {
-   const char *spob = NULL;
-   Spob       *pnt  = NULL;
-   xmlNodePtr  node;
+   const char *spob                = NULL;
+   Spob       *pnt                 = NULL;
    int         map_overlay_enabled = 0;
    StarSystem *sys;
    double      a, r;
    int         time_set = 0;
+   credits_t   creds    = start_credits();
 
    xmlr_attr_strd( parent, "name", player.name );
    assert( player.p == NULL );
    player_ran_updater = 0;
-   player_creds       = start_credits();
    player_payback     = 0;
 
    player.radar_res = RADAR_RES_DEFAULT;
 
    /* Must get spob first. */
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       xmlr_str( node, "location", spob );
    } while ( xml_nextNode( node ) );
@@ -3979,7 +3978,7 @@ static Spob *player_parse( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       /* global stuff */
-      xmlr_ulong( node, "credits", player_creds );
+      xmlr_ulong( node, "credits", creds );
       xmlr_strd( node, "gui", player.gui );
       xmlr_strd( node, "chapter", player.chapter );
       xmlr_int( node, "mapOverlay", map_overlay_enabled );
@@ -4098,7 +4097,7 @@ static Spob *player_parse( xmlNodePtr parent )
    player.speed = conf.game_speed;
 
    /* set global thingies */
-   player.p->credits = player_creds + player_payback;
+   player.p->credits = creds + player_payback;
    if ( !time_set ) {
       WARN(
          _( "Save has no time information, setting to start information." ) );
