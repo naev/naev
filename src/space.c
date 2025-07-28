@@ -1497,7 +1497,7 @@ void space_update( double dt, double real_dt )
       Damage        dmg;
       dmg.type        = dtype_get( "nebula" );
       dmg.damage      = cur_system->nebu_volatility * dt;
-      dmg.penetration = 1.; /* Full penetration. */
+      dmg.penetration = FULL_PENETRATION; /* Full penetration. */
       dmg.disable     = 0.;
 
       /* Damage pilots in volatile systems. */

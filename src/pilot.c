@@ -2548,7 +2548,7 @@ void pilot_update( Pilot *pilot, double dt )
       Damage dmg;
       dmg.type        = dtype_get( "raw" );
       dmg.damage      = pilot->stats.damage * dt;
-      dmg.penetration = 1.; /* Full penetration. */
+      dmg.penetration = FULL_PENETRATION; /* Full penetration. */
       dmg.disable     = pilot->stats.disable * dt;
       pilot_hit( pilot, NULL, applicator, &dmg, NULL, LUA_NOREF, 0 );
    }
@@ -2603,7 +2603,7 @@ void pilot_update( Pilot *pilot, double dt )
             dmg.type = dtype_get( "explosion_splash" );
             dmg.damage =
                MAX( 0., 2. * ( a * ( 1. + sqrt( pilot->fuel + 1. ) / 28. ) ) );
-            dmg.penetration = 1.; /* Full penetration. */
+            dmg.penetration = FULL_PENETRATION; /* Full penetration. */
             dmg.disable     = 0.;
             expl_explode( pilot->solid.pos.x, pilot->solid.pos.y,
                           pilot->solid.vel.x, pilot->solid.vel.y,
