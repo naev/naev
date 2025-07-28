@@ -21,4 +21,7 @@ require("outfits.lib.multicore").init{
    { "engine_limit", 3000, 3500},
 }</lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

@@ -21,4 +21,7 @@ require("outfits.lib.multicore").init{
    { "turn", 104},
 }require("outfits.lib.twins").init()</lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

@@ -24,4 +24,7 @@ require("outfits.lib.multicore").init{
    { "jam_chance", 42, 0},
 }</lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

@@ -21,4 +21,7 @@ require("outfits.lib.multicore").init{
    { "cooldown_mod", -10, -6},
 }</lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

@@ -22,4 +22,7 @@ require("outfits.lib.multicore").init{
    { "time_mod", -10, -2},
 }</lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>

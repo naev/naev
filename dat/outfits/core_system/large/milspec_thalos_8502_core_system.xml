@@ -21,4 +21,7 @@ require("outfits.lib.multicore").init{
    { "ew_track", 8, 2},
 }</lua_inline>
  </specific>
+ <tags>
+  <tag>core</tag>
+ </tags>
 </outfit>
