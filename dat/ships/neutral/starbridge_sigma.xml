@@ -1,4 +1,4 @@
-<ship inherits="Starbridge" name="Starbridge Sigma">
+<ship name="Starbridge Sigma" inherits="Starbridge">
  <rarity>2</rarity>
  <price>2300000</price>
  <description>Heavily modified, the Starbridge Sigma boasts the capability of housing fighters in new modified weapon mounts. The increased weapon room is obtained by shrinking the cargo hold and battery capacity. At the same time, the hull has been reinforced and systems interfaced tuned. The resulting ship is a premium variant of the Starbridge capable of holding its own in deep space.</description>

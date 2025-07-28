@@ -1,4 +1,4 @@
-<ship inherits="Goddard" name="Goddard Merchantman">
+<ship name="Goddard Merchantman" inherits="Goddard">
  <gfx sy="12" sx="12" size="125">goddard_merchant.gltf</gfx>
  <rarity>2</rarity>
  <price>6850000</price>

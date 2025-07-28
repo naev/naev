@@ -80,6 +80,7 @@ summary('NData Path', ndata_path, section: 'Features')
 # Subdirs
 subdir('src')
 subdir('dat/outfits') # Has to be before naevpedia
+subdir('dat/tech')    # Has to be after outfits.
 subdir('dat/naevpedia')
 subdir('dat/scripts')
 subdir('docs')
