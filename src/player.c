@@ -483,7 +483,7 @@ PlayerShip_t *player_newShip( const Ship *ship, const char *def_name, int trade,
    PlayerShip_t *ps;
 
    /* temporary values while player doesn't exist */
-   player_creds = ( player.p != NULL ) ? player.p->credits : 0;
+   player_creds = ( player.p != NULL ) ? player.p->credits : start_credits();
    player_ship  = ship;
    if ( !noname )
       ship_name = dialogue_input( _( "Ship Name" ), 1, 60,
@@ -3955,7 +3955,7 @@ static Spob *player_parse( xmlNodePtr parent )
 {
    const char *spob = NULL;
    Spob       *pnt  = NULL;
-   xmlNodePtr  node, cur;
+   xmlNodePtr  node;
    int         map_overlay_enabled = 0;
    StarSystem *sys;
    double      a, r;
@@ -3964,6 +3964,8 @@ static Spob *player_parse( xmlNodePtr parent )
    xmlr_attr_strd( parent, "name", player.name );
    assert( player.p == NULL );
    player_ran_updater = 0;
+   player_creds       = start_credits();
+   player_payback     = 0;
 
    player.radar_res = RADAR_RES_DEFAULT;
 
@@ -3988,9 +3990,9 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Time. */
       if ( xml_isNode( node, "time" ) ) {
-         double rem    = -1.;
-         int    cycles = -1, periods = -1, seconds = -1;
-         cur = node->xmlChildrenNode;
+         double     rem    = -1.;
+         int        cycles = -1, periods = -1, seconds = -1;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xmlr_int( cur, "SCU", cycles );
             xmlr_int( cur, "STP", periods );
@@ -4010,7 +4012,7 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Parse ships. */
       else if ( xml_isNode( node, "ships" ) ) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "ship" ) )
                player_parseShip( cur, 0 );
@@ -4019,7 +4021,7 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Parse GUIs. */
       else if ( xml_isNode( node, "guis" ) ) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "gui" ) )
                player_guiAdd( xml_get( cur ) );
@@ -4028,12 +4030,11 @@ static Spob *player_parse( xmlNodePtr parent )
 
       /* Parse outfits. */
       else if ( xml_isNode( node, "outfits" ) ) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "outfit" ) ) {
-               int           q;
-               const Outfit *o;
-               const char   *oname = xml_get( cur );
+               int         q;
+               const char *oname = xml_get( cur );
                xmlr_attr_float( cur, "quantity", q );
                if ( q == 0 ) {
                   WARN( _( "Outfit '%s' was saved without quantity!" ),
@@ -4041,7 +4042,7 @@ static Spob *player_parse( xmlNodePtr parent )
                   continue;
                }
 
-               o = player_tryGetOutfit( oname, q );
+               const Outfit *o = player_tryGetOutfit( oname, q );
                if ( o == NULL )
                   continue;
 
