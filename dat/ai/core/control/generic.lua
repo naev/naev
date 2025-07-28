@@ -1037,7 +1037,7 @@ function create_pre ()
          p:setFuel( true ) -- Full fuel
       else
          local f = (rnd.twosigma()/4 + 0.5)*(ps.fuel_max-ps.fuel_consumption)
-         f = f + ps.fuel_consumption
+         f = math.max( f, 0 ) + ps.fuel_consumption
          p:setFuel( f )
       end
    end
