@@ -107,7 +107,7 @@ local goodness_special = {
    ["Droid Repair Crew"] = 0.4, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
    ["Particle Beam"] = 0.8,
-   
+
    -- Plasma do a lot of damage over time
    ["Plasma Blaster MK1"] = 1 / 0.63,
    ["Plasma Blaster MK2"] = 1 / 0.63,
