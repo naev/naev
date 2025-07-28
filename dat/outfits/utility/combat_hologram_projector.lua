@@ -35,10 +35,8 @@ local function turnon( p, po )
    aisetup.setup( np ) -- Initialize AI
    -- No damage and low health
    np:intrinsicSet( {
-      launch_damage  = -1000,
+      weapon_damage  = -1000,
       fbay_damage    = -1000,
-      fwd_damage     = -1000,
-      tur_damage     = -1000,
       armour_mod     = -50,
       shield_mod     = -50,
    }, true ) -- overwrite all

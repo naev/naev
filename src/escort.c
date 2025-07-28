@@ -143,11 +143,7 @@ unsigned int escort_create( Pilot *p, const Ship *ship, const vec2 *pos,
       if ( p->stats.fbay_damage != 1. ) {
          double mod = ss_statsGetRaw( &p->stats, SS_TYPE_D_FBAY_DAMAGE );
          pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_LAUNCH_DAMAGE, mod, 0, 1 );
-         pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_FORWARD_DAMAGE, mod, 0, 1 );
-         pe->intrinsic_stats = ss_statsSetList(
-            pe->intrinsic_stats, SS_TYPE_D_TURRET_DAMAGE, mod, 0, 1 );
+            pe->intrinsic_stats, SS_TYPE_D_WEAPON_DAMAGE, mod, 0, 1 );
       }
       /* Health. */
       if ( p->stats.fbay_health != 1. ) {

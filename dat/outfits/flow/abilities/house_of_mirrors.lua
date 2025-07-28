@@ -70,10 +70,8 @@ local function turnon( p, po )
       end
       aisetup.setup( np ) -- Initialize AI
       np:intrinsicSet( {
-         launch_damage  = -80,
+         weapon_damage  = -80,
          fbay_damage    = -80,
-         fwd_damage     = -80,
-         tur_damage     = -80,
       }, true ) -- overwrite all
       np:setDir( p:dir() )
       np:setVel( p:vel() )

@@ -28,7 +28,7 @@ function onimpact( p, target )
       else
          mod = p:shipstat("fwd_damage",true)
       end
-      dmg = dmg * mod
+      dmg = dmg * mod * p:shipstat("weapon_damage",true)
    end
 
    target:effectAdd( "Ionization", duration, dmg, p )
