@@ -25,4 +25,5 @@ specific['ew_stealth_timer'] = { 'pri': -10 }
 #specific['lua_inline'] = 'local set = require("outfits.lib.set")'
 specific['lua_inline_post'] = 'require("outfits.core_sets.corsair_hull").init()'
 
+data.prisec_only(sec= False)
 data.save()

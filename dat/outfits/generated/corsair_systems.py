@@ -26,4 +26,5 @@ specific['ew_detect']['$pri'] += 5
 #specific['lua_inline'] = "local set = require('outfits.lib.set')"
 specific['lua_inline_post'] = "require('outfits.core_sets.corsair_systems').init()"
 
+data.prisec_only(sec= False)
 data.save()

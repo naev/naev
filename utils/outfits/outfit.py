@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# python3
 
 
 import sys
@@ -191,6 +191,10 @@ class outfit(naev_xml):
          self.short = res
       return self.short
 
+   def prisec_only(self, sec = False):
+      for d, k, v in list(self.equipped(sec)):
+         d[k] = v
+
    def save( self ):
       if self.is_multi:
          # make a deep copy
@@ -205,7 +209,7 @@ class outfit(naev_xml):
                continue
             if not isinstance(v, tuple):
                v = (v,)
-            lua_inline += ind + '{ ' + ', '.join(['"'+k+'"'] + [str(u) for u in v]) + '},\n'
+            lua_inline += ind + '{' + ', '.join(["'"+k+"'"] + [str(u) for u in v]) + ' },\n'
             del oout['specific'][k]
          lua_inline += '}'
          oout['specific']['lua_inline'] = (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
@@ -216,9 +220,3 @@ class outfit(naev_xml):
          out = self
       naev_xml.save(out)
       self._uptodate = True
-
-if __name__ == '__main__':
-   from sys import argv
-   for i in argv[1:]:
-      o = outfit(i)
-      o.save()
