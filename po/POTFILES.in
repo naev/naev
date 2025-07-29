@@ -3569,6 +3569,7 @@ dat/scripts/equipopt/cargo.lua
 dat/scripts/equipopt/cores.lua
 dat/scripts/equipopt/fighterbays.lua
 dat/scripts/equipopt/fighterbays/empire_lancelot.lua
+dat/scripts/equipopt/fighterbays/hyena.lua
 dat/scripts/equipopt/fighterbays/lancelot.lua
 dat/scripts/equipopt/fighterbays/pirate_hyena.lua
 dat/scripts/equipopt/fighterbays/proteron_dalton.lua
