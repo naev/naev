@@ -57,6 +57,9 @@ local neutral_m = {
    "neutral/thief2.webp",
    -- New images
    {"neutral/male1n.webp"},
+   {"neutral/male1n_v2.webp"},
+   {"neutral/male1n_v3.webp"},
+   {"neutral/male1n_v4.webp"},
    {"neutral/male2n.webp"},
    {"neutral/male3n.webp"},
    {"neutral/male3n_v2.webp"},
