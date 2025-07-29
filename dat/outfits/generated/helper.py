@@ -12,5 +12,5 @@ def read():
    o = outfit(INPUT)
    o.save_as(OUTPUT)
    if o.is_multi:
-      o['outfit']['specific']['multicore_args'] = ['require("outfits.lib.set").set']
+      o['outfit']['specific']['multicore_args'] = ["require('outfits.lib.set').set"]
    return o

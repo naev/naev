@@ -22,7 +22,7 @@ del general['slot']['@prop_extra']
 specific = o['specific']
 specific['absorb']['$pri'] -= 5
 specific['ew_stealth_timer'] = -10
-specific['lua_inline_post'] = 'require("outfits.core_sets.corsair_hull").init()'
+specific['lua_inline_post'] = "require('outfits.core_sets.corsair_hull').init()"
 
 data.prisec_only(sec= False)
 data.save()
