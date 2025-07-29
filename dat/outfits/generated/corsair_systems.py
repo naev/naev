@@ -11,7 +11,7 @@ general = o['general']
 del general['shortname']
 general['unique'] = None
 general['rarity'] = 6
-general['price'] = 1e6
+general['$price'] = 1e6
 general['description'] = N_("""
 oh, the ferocious mighty corsair
 never sitting in their captain's chair

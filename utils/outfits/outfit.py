@@ -1,4 +1,4 @@
-# python3
+#!/usr/bin/env python3
 
 
 import sys
@@ -203,15 +203,22 @@ class outfit(naev_xml):
          oout = out['outfit'] = self['outfit']
 
          ind = 3*' '
-         lua_inline = '\nrequire("outfits.lib.multicore").init{\n'
+         lua_inline_mcarg = '{\n'
          for k, v in self.to_dict().items():
             if k in KEEP_IN_XML:
                continue
             if not isinstance(v, tuple):
                v = (v,)
-            lua_inline += ind + '{' + ', '.join(["'"+k+"'"] + [str(u) for u in v]) + ' },\n'
+            lua_inline_mcarg += ind + '{' + ', '.join(["'"+k+"'"] + [str(u) for u in v]) + ' },\n'
             del oout['specific'][k]
-         lua_inline += '}'
+         lua_inline_mcarg += '}'
+         lua_inline_mcargs = [lua_inline_mcarg]
+         if 'multicore_args' in oout['specific']:
+            L = oout['specific']['multicore_args']
+            del oout['specific']['multicore_args']
+            lua_inline_mcargs += L if isinstance(L, list) else [L]
+         lua_inline = '\nrequire("outfits.lib.multicore").init(' + ', '.join(lua_inline_mcargs)
+         lua_inline += ')'
          oout['specific']['lua_inline'] = (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
          if 'lua_inline_post' in oout['specific']:
             oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post']
@@ -220,3 +227,10 @@ class outfit(naev_xml):
          out = self
       naev_xml.save(out)
       self._uptodate = True
+
+if __name__ == '__main__':
+   import sys
+   for i in sys.argv[1:]:
+      o = outfit(i)
+      o.touch()
+      o.save()
