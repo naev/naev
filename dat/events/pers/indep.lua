@@ -42,7 +42,8 @@ return function ()
             for i=1,4 do
                local e = pilot.add("Shark", "Independent", pos, _("Follower of Jeanne"), {naked=true})
                equipopt.generic( e, {beam=10}, "elite" )
-               e.capturable = true
+               local em = e:memory()
+               em.capturable = true
                e:setLeader( p )
                e:setVel( vel )
             end
