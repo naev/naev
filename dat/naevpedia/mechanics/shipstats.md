@@ -24,7 +24,7 @@ The core stats define basic properties of the ship.
 Movement is based on Newtonian physics, however, ships have a maximum speed limit when acceleration is not being applied.
 
 * [Mass](mechanics/movement): How heavy the ship is. If the mass of a ship goes over the [mass limit](mechanics/mass) of the engine, it will receive a penalty to [movement](mechanics/movement).
-* [Jump Time](mechanics/time): Determines how long much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace).
+* [Jump Time](mechanics/time): Determines how much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace).
 * [Accel](mechanics/movement): Specifies how fast a ship can accelerate. While accelerating, a ship can go over the [max speed](mechanics/movement).
 * [Speed](mechanics/movement): Determines the max speed of the ship when not accelerating.
 * [Turn](mechanics/movement): Specifies how fast the ship can rotate.
@@ -41,7 +41,7 @@ Electronic warfare determines how ships see and target each other.
 
 ## Health Stats
 
-* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration.
+* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, this can be overcome by weapon penetration.
 * [Shield](mechanics/damage): The ship's first line of defense. Shields naturally regenerate and provide the ship with a first line of defense, absorbing weapon fire that would otherwise damage the hull.
 * [Armour](mechanics/damage): The last line of defense of a ship. When armour is completely depleted, the ship will begin to combust and finally, explode.
 * [Energy](mechanics/energy): Primarily used to power weapons and other outfits. A ship is not able to take off with negative energy.

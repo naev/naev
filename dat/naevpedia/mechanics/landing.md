@@ -56,6 +56,6 @@ You can use the tabs and the outfit filter to further control what outfits are v
 ### Commodity Exchange
 
 Here you can buy or sell commodities.
-The price will depend on the location, which you compare on [the universe map](mechanics/map).
+The price will depend on the location, which you can compare on [the universe map](mechanics/map).
 By buying low and selling high, you can turn quite a profit.
 Similarly to the outfitter, you can hold #bshift#0 and #bcontrol#0 to increase the amount of commodities you buy or sell at a time.

@@ -35,7 +35,7 @@ If the outfit in the slot is changed, this will not affect the weapon set bindin
 There are three types of weapons sets:
 
 1. **Default**: Behaviour depends on whether the key is tapped or held. When tapped, it will behave like a **Toggle** weapon set, while when held, it will behave like a **Hold** weapon set.
-1. **Hold**: Activates the bound outfits when the button only when held, and releasing will stop the outfits.
+1. **Hold**: Activates the bound outfits of the button only when held, and releasing will stop the outfits.
 1. **Toggle**: Activates the bound outfits when pressed. Pressing again will turn the bound outfits off.
 
 You have a total of 12 weapon sets, including primary and secondary, and any number of weapon slots can be bound to each weapon set.
