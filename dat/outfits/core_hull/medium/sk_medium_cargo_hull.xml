@@ -10,14 +10,15 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require('outfits.lib.multicore').init({
-   {'mass', 120, 160},
-   {'cargo', 80, 40},
-   {'absorb', 17, 9},
-   {'armour', 170, 190},
-   {'cargo_inertia', -25, -10},
-   {'cargo_mod', 25, 10},
-})</lua_inline>
+   require('outfits.lib.multicore').init({
+      {'mass', 120, 160},
+      {'cargo', 80, 40},
+      {'absorb', 17, 9},
+      {'armour', 170, 190},
+      {'cargo_inertia', -25, -10},
+      {'cargo_mod', 25, 10},
+   })
+  </lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

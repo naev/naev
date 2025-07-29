@@ -11,15 +11,16 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require('outfits.lib.multicore').init({
-   {'mass', 20, 5},
-   {'energy_regen_malus', 12, 15},
-   {'engine_limit', 630, 610},
-   {'fuel', 800, 200},
-   {'speed', 222, 137},
-   {'accel', 203, 51},
-   {'turn', 131, 61},
-})</lua_inline>
+   require('outfits.lib.multicore').init({
+      {'mass', 20, 5},
+      {'energy_regen_malus', 12, 15},
+      {'engine_limit', 630, 610},
+      {'fuel', 800, 200},
+      {'speed', 222, 137},
+      {'accel', 203, 51},
+      {'turn', 131, 61},
+   })
+  </lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

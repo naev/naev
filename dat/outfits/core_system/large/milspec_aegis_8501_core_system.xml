@@ -11,15 +11,16 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require('outfits.lib.multicore').init({
-   {'mass', 500, 700},
-   {'cpu_max', 485, 1495},
-   {'shield', 1050, 310},
-   {'shield_regen', 18, 4},
-   {'energy', 2210, 1240},
-   {'energy_regen', 60, 67},
-   {'shielddown_mod', -19, -6},
-})</lua_inline>
+   require('outfits.lib.multicore').init({
+      {'mass', 500, 700},
+      {'cpu_max', 485, 1495},
+      {'shield', 1050, 310},
+      {'shield_regen', 18, 4},
+      {'energy', 2210, 1240},
+      {'energy_regen', 60, 67},
+      {'shielddown_mod', -19, -6},
+   })
+  </lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

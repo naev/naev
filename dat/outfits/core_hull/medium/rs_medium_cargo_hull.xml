@@ -11,18 +11,19 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require('outfits.lib.multicore').init({
-   {'mass', 120, 160},
-   {'cpu', -64, 0},
-   {'cargo', 55, 25},
-   {'absorb', 26, 13},
-   {'armour', 170, 190},
-   {'cargo_inertia', -10, -4},
-   {'cargo_mod', 10, 4},
-   {'ew_detected', 25, 0},
-   {'ew_signature', -10, 0},
-   {'jam_chance', 42, 0},
-})</lua_inline>
+   require('outfits.lib.multicore').init({
+      {'mass', 120, 160},
+      {'cpu', -64, 0},
+      {'cargo', 55, 25},
+      {'absorb', 26, 13},
+      {'armour', 170, 190},
+      {'cargo_inertia', -10, -4},
+      {'cargo_mod', 10, 4},
+      {'ew_detected', 25, 0},
+      {'ew_signature', -10, 0},
+      {'jam_chance', 42, 0},
+   })
+  </lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

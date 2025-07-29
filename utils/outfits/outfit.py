@@ -244,8 +244,9 @@ class outfit(naev_xml):
          lua_inline += ')'
          oout['specific']['lua_inline'] = '\n' + (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
          if 'lua_inline_post' in oout['specific']:
-            oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post'].strip() + '\n  '
+            oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post'].strip()
             del oout['specific']['lua_inline_post']
+         oout['specific']['lua_inline'] = oout['specific']['lua_inline'].replace('\n','\n'+3*' ') + '\n  '
       else:
          out = self
       naev_xml.save(out)
