@@ -4,6 +4,7 @@ local multiengines = {
    mobility_params = {'accel', 'turn', 'speed', 'engine_limit'},
    is_mobility = {},
    mobility_stats = {},
+   tfs = tfs,
 }
 
 for _k,s in ipairs(multiengines.mobility_params) do
