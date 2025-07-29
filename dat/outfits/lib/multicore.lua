@@ -357,6 +357,7 @@ function multicore.init( params, setfunc )
 end
 
 function multicore.set( p, po )
+   local fuel = p:fuel()
    po:clear()
    if mem.stats then
       for s, val in pairs(mem.stats) do
@@ -367,6 +368,7 @@ function multicore.set( p, po )
    if SETFUNC then
       SETFUNC(p, po)
    end
+   p:setFuel( math.max( fuel, p:fuel() ) )
 end
 
 function multicore.setworkingstatus( p, po, on )
