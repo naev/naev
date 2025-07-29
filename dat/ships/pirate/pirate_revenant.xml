@@ -40,7 +40,7 @@ An additional medium weapon slot and the possibility to use any armour makes it 
   <utility size="medium" prop="bio_organ" name="adrenal_gland" />
   <utility size="medium" prop="bio_organ" name="feral_rage" />
   <utility size="medium" prop="bio_organ" name="the_bite" />
-  <utility size="medium" prop="accessory" />
+  <utility size="medium" prop="accessory" name="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />

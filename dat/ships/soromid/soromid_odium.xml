@@ -36,7 +36,7 @@
   <utility size="medium" prop="bio_organ" name="adrenal_gland" />
   <utility size="medium" prop="bio_organ" name="feral_rage" />
   <utility size="medium" prop="bio_organ" name="the_bite" />
-  <utility size="medium" prop="accessory" />
+  <utility size="medium" prop="accessory" name="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <structure size="medium" prop="bio_engines" name="genedrive">Mediocris Gene Drive I</structure>

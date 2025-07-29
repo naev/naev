@@ -31,7 +31,7 @@
   <weapon y="-9" h="-1" size="small" x="-2" />
   <utility prop="systems" name="systems" size="small">Previous Generation Small Systems</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="small" />
-  <utility prop="accessory" size="small" />
+  <utility prop="accessory" name="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />

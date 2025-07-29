@@ -39,7 +39,7 @@
   <weapon y="-12" h="4" size="medium" x="-32" />
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="accessory" size="large" />
+  <utility prop="accessory" name="accessory" size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />

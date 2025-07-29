@@ -11,7 +11,7 @@
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
   <utility size="medium" prop="systems" name="systems">Milspec Thalos 4702 Core System</utility>
-  <utility size="medium" prop="accessory" />
+  <utility size="medium" prop="accessory" name="accessory" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />

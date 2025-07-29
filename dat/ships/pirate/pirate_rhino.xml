@@ -33,7 +33,7 @@
   <weapon y="3" h="4" prop="fighter_bay" x="-15" size="medium" />
   <utility prop="systems" name="systems" size="medium">Previous Generation Medium Systems</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="medium" />
-  <utility prop="accessory" size="medium" />
+  <utility prop="accessory" name="accessory" size="medium" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />

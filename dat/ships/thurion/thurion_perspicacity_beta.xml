@@ -16,7 +16,7 @@
  </characteristics>
  <slots>
   <utility size="small" prop="systems" name="systems">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" />
+  <utility size="small" prop="accessory" name="accessory" />
   <utility size="small" />
   <utility size="small" />
   <structure size="small" prop="engines" name="engines">Unicorp Hawk 160 Engine</structure>

@@ -41,7 +41,7 @@
   <utility size="large" prop="bio_organ" name="the_bite" />
   <utility size="large" prop="bio_organ" name="feral_rage" />
   <utility size="large" prop="bio_organ" name="plasma_burst" />
-  <utility size="large" prop="accessory" />
+  <utility size="large" prop="accessory" name="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />

@@ -34,7 +34,7 @@
   <weapon y="0" h="2" size="small" x="3" />
   <utility prop="systems" name="systems" size="small">Previous Generation Small Systems</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="small" />
-  <utility prop="accessory" size="small" />
+  <utility prop="accessory" name="accessory" size="small" />
   <utility size="small" />
   <utility size="small" />
   <structure prop="engines" name="engines" size="small">Beat Up Small Engine</structure>

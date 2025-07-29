@@ -11,7 +11,7 @@
  <slots>
   <weapon size="medium" x="12" y="0" h="-2" />
   <utility size="small" prop="systems" name="systems">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" />
+  <utility size="small" prop="accessory" name="accessory" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />

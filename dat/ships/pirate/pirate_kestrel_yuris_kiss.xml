@@ -12,7 +12,7 @@ The model diverges from the classic Kestrel design by removing the fighter bays 
   <weapon size="medium" x="-24" y="-8" h="8" />
   <weapon size="medium" x="-24" y="8" h="8" />
   <utility size="large" prop="systems" name="systems">Previous Generation Large Systems</utility>
-  <utility size="large" prop="accessory" />
+  <utility size="large" prop="accessory" name="accessory" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />

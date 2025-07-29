@@ -34,7 +34,7 @@
   <weapon y="7" h="1" size="small" x="4" />
   <utility prop="systems" name="systems" size="medium">Previous Generation Medium Systems</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="medium">Previous Generation Medium Systems</utility>
-  <utility prop="accessory" size="medium" />
+  <utility prop="accessory" name="accessory" size="medium" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />

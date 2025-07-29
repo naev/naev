@@ -34,7 +34,7 @@
   <utility size="medium" prop="bio_systems" name="brain">Largum Cerebrum I</utility>
   <utility size="medium" prop="bio_organ" name="feral_rage" />
   <utility size="medium" prop="bio_organ" name="the_bite" />
-  <utility size="medium" prop="accessory" />
+  <utility size="medium" prop="accessory" name="accessory" />
   <utility size="large" />
   <utility size="medium" />
   <structure size="medium" prop="bio_engines" name="genedrive">Largus Gene Drive I</structure>

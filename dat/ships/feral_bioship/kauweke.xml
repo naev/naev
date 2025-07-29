@@ -41,7 +41,7 @@
   <utility size="large" prop="bio_organ" name="the_bite">The Bite</utility>
   <utility size="large" prop="bio_organ" name="feral_rage" />
   <utility size="large" prop="bio_organ" name="plasma_burst" />
-  <utility size="large" prop="accessory" />
+  <utility size="large" prop="accessory" name="accessory" />
   <structure size="large" prop="bio_engines" name="genedrive">Immanis Gene Drive III</structure>
   <structure size="large" prop="bio_hull" name="shell">Immanis Cortex III</structure>
  </slots>
