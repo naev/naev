@@ -11,7 +11,8 @@
   <gfx_store>cargo_hull_m.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 28},
    {'cargo', 10, 4},
    {'absorb', 1},

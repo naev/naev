@@ -9,7 +9,8 @@
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 640, 800},
    {'cpu_max', 380, 1100},
    {'energy', 1760, 800},

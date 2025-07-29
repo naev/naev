@@ -10,7 +10,8 @@
   <gfx_store>krain_patagium_engine.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 10},
    {'energy_regen_malus', 11},
    {'engine_limit', 475},

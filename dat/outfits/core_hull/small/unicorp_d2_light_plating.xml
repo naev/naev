@@ -10,7 +10,8 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 24},
    {'cargo', 10, 4},
    {'absorb', 3, 6},

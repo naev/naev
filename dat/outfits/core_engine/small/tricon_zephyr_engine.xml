@@ -10,7 +10,8 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 10},
    {'energy_regen_malus', 4, 8},
    {'engine_limit', 140, 165},

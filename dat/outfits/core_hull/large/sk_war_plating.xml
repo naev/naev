@@ -9,7 +9,8 @@
   <gfx_store>combat_hull_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 600, 650},
    {'cargo', 55, 25},
    {'absorb', 66, 14},

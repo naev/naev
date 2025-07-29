@@ -10,7 +10,8 @@
   <gfx_store>rs_hull_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 550},
    {'cpu', -160, 0},
    {'cargo', 270, 130},

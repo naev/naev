@@ -9,7 +9,8 @@
   <gfx_store>plating_patchwork.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 130, 165},
    {'cargo', 8, 4},
    {'absorb', 12, 6},

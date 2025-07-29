@@ -8,7 +8,8 @@
   <gfx_store>engine3.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>require('outfits.lib.multicore').init({
+  <lua_inline>
+require('outfits.lib.multicore').init({
    {'mass', 30, 8},
    {'energy_regen_malus', 15, 20},
    {'engine_limit', 550},
