@@ -274,7 +274,6 @@ function multicore.init( params, setfunc )
 
          -- Deferred setting of stats
          if not setfunc then
-            po:clear()
             multicore.set(p, po)
          end
       end
@@ -314,7 +313,6 @@ function multicore.init( params, setfunc )
          elseif msg == "halt" then
             if multiengines.halt_n(mem.gathered_data, dat.id, dat.off) then
                multiengines.refresh(mem.gathered_data, po, false)
-               po:clear()
                multicore.set(p, po)
             end
          elseif msg == "ask" then
@@ -323,7 +321,6 @@ function multicore.init( params, setfunc )
             multiengines.decl_engine_stats(mem.gathered_data, dat.id, dat.sign, dat.t)
          elseif msg == "done" then
             multiengines.refresh(mem.gathered_data, po, true)
-            po:clear()
             multicore.set(p, po)
          elseif msg == "wtf?" then
             return mem.gathered_data
@@ -360,6 +357,7 @@ function multicore.init( params, setfunc )
 end
 
 function multicore.set( p, po )
+   po:clear()
    if mem.stats then
       for s, val in pairs(mem.stats) do
          po:set(s, val)
