@@ -78,7 +78,6 @@ class _vec(tuple):
       else:
          return self / size * new_size
 
-
 class _transf:
    """
    A rotation and a scaling.
@@ -423,6 +422,14 @@ class bb:
    def __str__( self ):
       return str(round(self.mini())) + ':' + str(round(self.maxi()))
 
+def symmetry( fst, snd = None ):
+   if isinstance(fst, _vec) and isinstance(fst, _vec):
+      fst = segment(fst, snd)
+   if isinstance(fst, segment):
+      fst = fst.line()
+   if not isinstance(fst, line) and not isinstance(fst, _vec):
+      raise ValueError("symmetry accepts 1 or 2 points, 1 segment or 1 line.")
+   return lambda p: p + 2.0 * (fst - p)
 
 
 # example

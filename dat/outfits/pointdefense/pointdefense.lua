@@ -20,8 +20,11 @@ function descextra( _p, _o )
    if not hitships then
       return "#b".._("When on, automatically fires at nearby incoming missiles.").."#0"
    end
-   return "#b"..fmt.f(_("When on, automatically fires at nearby incoming missiles and hostile ships, prioritizing missiles and then ships with under {trackmax} {unit} signature.").."#0",
-      {trackmax=fmt.number(trackmax), unit=naev.unit("distance")})
+   if trackmax then
+      return "#b"..fmt.f(_("When on, automatically fires at nearby incoming missiles and hostile ships, prioritizing missiles and then ships with under {trackmax} {unit} signature.").."#0",
+         {trackmax=fmt.number(trackmax), unit=naev.unit("distance")})
+   end
+   return "#b".._("When on, automatically fires at nearby incoming missiles and hostile ships, prioritizing missiles and then ships.").."#0"
 end
 
 function init( _p, po )
@@ -95,10 +98,14 @@ function update( p, po, dt )
          local pall = p:getEnemies( range, nil, nil, false, true )
          if #pall > 0 then
             local ptarget = {}
-            for k,e in ipairs(pall) do
-               if e:signature() < trackmax then
-                  table.insert( ptarget, e )
+            if trackmax then
+               for k,e in ipairs(pall) do
+                  if e:signature() < trackmax then
+                     table.insert( ptarget, e )
+                  end
                end
+            else
+               ptarget = pall
             end
             if #ptarget > 0 then
                m = ptarget[ rnd.rnd(1,#mall) ]

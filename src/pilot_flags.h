@@ -43,10 +43,12 @@ enum {
    PILOT_HYP_END,    /**< Pilot is exiting hyperspace. */
    PILOT_HAILING,    /**< Pilot is hailing the player. */
    /* Boarding. */
-   PILOT_BOARDABLE, /**< Pilot can be boarded even while active. */
-   PILOT_BOARDED,   /**< Pilot has been boarded already. */
-   PILOT_NOBOARD,   /**< Pilot can't be boarded. */
-   PILOT_BOARDING,  /**< Pilot is currently boarding its target. */
+   PILOT_BOARDABLE,      /**< Pilot can be boarded even while active. */
+   PILOT_BOARDED_PILOT,  /**< Pilot has been boarded by a non-player pilot
+                            already. */
+   PILOT_BOARDED_PLAYER, /**< Pilot has been boarded by the player already. */
+   PILOT_NOBOARD,        /**< Pilot can't be boarded. */
+   PILOT_BOARDING,       /**< Pilot is currently boarding its target. */
    /* Disabling. */
    PILOT_NODISABLE,     /**< Pilot can't be disabled. */
    PILOT_DISABLED,      /**< Pilot is disabled. */

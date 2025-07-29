@@ -184,8 +184,11 @@ impl Message {
     }
 }
 
-pub static CONTEXT: OnceLock<Context> = OnceLock::new();
-pub static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
+static CONTEXT: OnceLock<Context> = OnceLock::new();
+static MESSAGE_QUEUE: Mutex<Vec<Message>> = Mutex::new(vec![]);
+pub(crate) fn message_push(msg: Message) {
+    MESSAGE_QUEUE.lock().unwrap().push(msg);
+}
 
 #[derive(Clone, Debug)]
 pub struct Dimensions {
@@ -311,7 +314,9 @@ pub struct Context {
     // To be phased out when moved to rust
     pub vao_core: glow::VertexArray,
 }
-// Not actually safe, to fix someday... T_T
+// The issue is the SDL structs use raw pointers. If they wrapped in AtomicPtr, it would be
+// Send+Sync safe, but it is not.
+// See https://github.com/vhspace/sdl3-rs/issues/196
 unsafe impl Sync for Context {}
 unsafe impl Send for Context {}
 
@@ -427,12 +432,8 @@ impl Context {
         -0.25,  0.433_012_7,
         -0.25, -0.433_012_7];
 
-    pub fn get() -> Result<&'static Self> {
-        //CONTEXT.get()?.lock()
-        match CONTEXT.get() {
-            Some(ctx) => Ok(ctx),
-            None => anyhow::bail!("No context"),
-        }
+    pub fn get() -> &'static Self {
+        CONTEXT.get().expect("No context!")
     }
 
     pub fn as_safe_wrap(&self) -> ContextWrapper {
@@ -453,12 +454,11 @@ impl Context {
         major: u8,
         minor: u8,
     ) -> Result<(sdl::video::Window, sdl::video::GLContext)> {
-        let (width, height, resizable, borderless, fullscreen) = unsafe {
+        let (width, height, resizable, fullscreen) = unsafe {
             (
                 naevc::conf.width,
                 naevc::conf.height,
                 naevc::conf.notresizable == 0,
-                naevc::conf.borderless != 0,
                 naevc::conf.fullscreen != 0,
             )
         };
@@ -477,9 +477,6 @@ impl Context {
         // Issue documented below
         if resizable {
             wdwbuild.resizable();
-        }
-        if borderless {
-            wdwbuild.borderless();
         }
         if fullscreen {
             wdwbuild.fullscreen();
@@ -872,7 +869,7 @@ impl Context {
     /// Takes a screenshot of the game
     pub fn screenshot(&self, filename: &str) -> Result<()> {
         let dims = self.dimensions.read().unwrap();
-        let (w, h) = (dims.pixels_width as u32, dims.pixels_height as u32);
+        let (w, h) = (dims.pixels_width, dims.pixels_height);
         let mut data: Vec<u8> = vec![0; (w * h * 3) as usize];
         let gl = &self.gl;
         unsafe {
@@ -904,7 +901,7 @@ pub extern "C" fn gl_renderRect(
     h: c_double,
     c: *mut Vector4<f32>,
 ) {
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let colour = unsafe { *c };
     let _ = ctx.draw_rect(x as f32, y as f32, w as f32, h as f32, colour);
 }
@@ -928,7 +925,7 @@ pub extern "C" fn gl_supportsDebug() -> std::os::raw::c_int {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_defViewport() {
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let dims = ctx.dimensions.read().unwrap();
     unsafe {
         naevc::gl_view_matrix = naevc::mat4_ortho(
@@ -945,7 +942,7 @@ pub extern "C" fn gl_defViewport() {
 #[unsafe(no_mangle)]
 pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
     let path = unsafe { CStr::from_ptr(cpath) };
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     match ctx.screenshot(path.to_str().unwrap()) {
         Ok(_) => (),
         Err(e) => {

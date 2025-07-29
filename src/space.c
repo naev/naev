@@ -2573,6 +2573,14 @@ static int spob_parse( Spob *spob, const char *filename )
          spob->lua_file = strdup( str );
    }
 
+   /* Set some stuff from tags. */
+   for ( int i = 0; i < array_size( spob->tags ); i++ ) {
+      if ( strcmp( spob->tags[i], "restricted" ) == 0 ) {
+         spob_setFlag( spob, SPOB_RESTRICTED );
+         break;
+      }
+   }
+
    /* Save the filename. */
    spob->filename = strdup( filename );
 

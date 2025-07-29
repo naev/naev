@@ -1,8 +1,6 @@
 require "ai.pirate"
 local pirlib = require "ai.core.misc.pirate"
 
-local fmt = require "format"
-
 local taunt_list = {
    _("Rawwwr!"),
    _("Awoooooo!"),
@@ -41,7 +39,7 @@ function hail ()
    end
 
    pirlib.hail()
-   mem.refuel_msg = fmt.f(_([["The pack has got your back! I'll give you fuel for {credits} a jump!"]]), {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["The pack has got your back! I'll give you fuel for {credits} a jump!"]])
 end
 
 function taunt( target, offense )

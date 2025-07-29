@@ -114,37 +114,40 @@ def add_notes( name, parent, base_campaign, campaigns_list, tiers_list ):
 
 # Reads all the missions
 for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
-    print(missionfile)
+    try:
+        print(missionfile)
 
-    with open(missionfile,'r') as f:
-        buf = f.read()
-    if buf.find('</mission>') < 0:
-        continue
-    p = buf.find('--]]')
-    if p < 0:
-        continue
-    xml = buf[5:p]
+        with open(missionfile,'r') as f:
+            buf = f.read()
+        if buf.find('</mission>') < 0:
+            continue
+        p = buf.find('--]]')
+        if p < 0:
+            continue
+        xml = buf[5:p]
 
-    tree = ET.ElementTree(ET.fromstring(xml))
-    misn = tree.getroot()
+        tree = ET.ElementTree(ET.fromstring(xml))
+        misn = tree.getroot()
 
-    name = 'Misn: '+misn.attrib['name']
-    names.append(name)
-    namdict[name] = i
+        name = 'Misn: '+misn.attrib['name']
+        names.append(name)
+        namdict[name] = i
 
-    done = misn.find('done')  # TODO: I guess findall is needed if there are more than one
-    dones.append(done)
+        done = misn.find('done')  # TODO: I guess findall is needed if there are more than one
+        dones.append(done)
 
-    unique = misn.find('unique')
-    if unique == None:
-        uniques.append(False)
-    else:
-        uniques.append(True)
+        unique = misn.find('unique')
+        if unique == None:
+            uniques.append(False)
+        else:
+            uniques.append(True)
 
-    # Read the notes
-    add_notes( name, misn, "Generic Missions", camp, tierL )
+        # Read the notes
+        add_notes( name, misn, "Generic Missions", camp, tierL )
 
-    i += 1
+        i += 1
+    except:
+        pass
 
 namdictE  = {} # Index from name
 namesE    = []

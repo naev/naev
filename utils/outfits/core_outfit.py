@@ -14,14 +14,13 @@ def mvx_nam(xml):
 def _gen_if_needed( xml, force = False, quiet = False, multicore_only = False ):
    mvx = mvx_nam(xml)
    exists = (not force) and Path(mvx).is_file()
-   uptodate = exists and not path.getmtime(mvx) < path.getmtime(xml)
-   if not uptodate:
-      return xmllua2mvx(xml, mvx, quiet, multicore_only)
-   else:
+   if exists and not path.getmtime(mvx) < path.getmtime(xml):
       return outfit(mvx)
+   else:
+      return xmllua2mvx(xml, mvx, quiet, multicore_only)
 
 def core_outfit( nam, try_again = False, quiet = False ):
-   if nam[-4:] == '.xml':
+   if nam.endswith('.xml'):
       try:
          o = _gen_if_needed(nam, False, quiet)
       except:
@@ -39,6 +38,5 @@ def core_write( o, fil ):
    mvx = mvx_nam(fil)
    o.write(mvx)
    mvx2xmllua(mvx, fil, quiet = True)
-   # mark mvx as up to date
-   with open(mvx, 'ab'):
+   with open(mvx, 'ab'):   # mark mvx as up to date
       utime(mvx, None)

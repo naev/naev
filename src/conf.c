@@ -360,7 +360,6 @@ int conf_loadConfig( const char *file )
    conf_loadFloat( L, "nebu_scale", conf.nebu_scale );
    conf_loadBool( L, "fullscreen", conf.fullscreen );
    conf_loadBool( L, "notresizable", conf.notresizable );
-   conf_loadBool( L, "borderless", conf.borderless );
    conf_loadBool( L, "minimize", conf.minimize );
    cb = 0;
    conf_loadBool( L, "colourblind", cb ); /* TODO remove in 0.13.0 or so. */
@@ -417,6 +416,7 @@ int conf_loadConfig( const char *file )
    conf.map_overlay_opacity = CLAMP( 0, 1, conf.map_overlay_opacity );
    conf_loadBool( L, "big_icons", conf.big_icons );
    conf_loadBool( L, "always_radar", conf.always_radar );
+   conf_loadBool( L, "show_viewport", conf.show_viewport );
 
    /* Key repeat. */
    conf_loadInt( L, "repeat_delay", conf.repeat_delay );
@@ -783,6 +783,12 @@ static size_t quoteLuaString( char *str, size_t size, const char *text )
 
 #define conf_saveComment( t )                                                  \
    pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "-- %s\n", t );
+#define conf_saveCommentVar( str, ... )                                        \
+   do {                                                                        \
+      char _BUF[STRMAX_SHORT];                                                 \
+      scnprintf( _BUF, sizeof( _BUF ), str, ##__VA_ARGS__ );                   \
+      pos += scnprintf( &buf[pos], sizeof( buf ) - pos, "-- %s\n", _BUF );     \
+   } while ( 0 )
 
 #define conf_saveEmptyLine()                                                   \
    if ( sizeof( buf ) != pos )                                                 \
@@ -952,12 +958,6 @@ int conf_saveConfig( const char *file )
    conf_saveBool( "notresizable", conf.notresizable );
    conf_saveEmptyLine();
 
-   conf_saveComment(
-      _( "Disable window decorations. Use with care and know the keyboard "
-         "controls to quit and toggle fullscreen." ) );
-   conf_saveBool( "borderless", conf.borderless );
-   conf_saveEmptyLine();
-
    conf_saveComment( _( "Minimize the game on focus loss." ) );
    conf_saveBool( "minimize", conf.minimize );
    conf_saveEmptyLine();
@@ -990,9 +990,10 @@ int conf_saveConfig( const char *file )
    conf_saveBool( "healthbars", conf.healthbars );
    conf_saveEmptyLine();
 
-   conf_saveComment(
-      _( "Background brightness. 1 is normal brightness while setting it to 0 "
-         "would make the backgrounds pitch black." ) );
+   conf_saveCommentVar(
+      _( "Background brightness. 1 is full brightness while setting it to 0 "
+         "would make the backgrounds pitch black. Defaults to %.1f." ),
+      BG_BRIGHTNESS_DEFAULT );
    conf_saveFloat( "bg_brightness", conf.bg_brightness );
    conf_saveEmptyLine();
 

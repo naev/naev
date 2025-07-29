@@ -13,10 +13,11 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define THREADS 2
+#define THREADS 4
 #define SAMP 200
-#define EDGE_FACT 1.5
+#define EDGE_FACT 1.6
 #define PEEK_D 4
+#define MAX_STRETCH // penalty is max rather than avg of indiv. stretches
 
 #include <glib.h>
 
@@ -191,22 +192,34 @@ static double edge_stretch_score(struct s_cost_params *cp, const double v[2])
    const double a = 1.0 / (2.0 * cp->radius);
    const double c = -cp->radius / 2.0;
 
-   double tot = 0.0;
    double acc = 0.0;
+#ifndef MAX_STRETCH
+   double tot = 0.0;
+#endif
 
    for (int i = 0; i < cp->n_neigh; i++) {
       const double len = MAYBE(cp->neigh[OFF_N * i + 2]);
       const double d   = sqrt(dist_sq(cp->neigh + OFF_N * i, v)) / len;
+      double       cost;
 
       if (d < cp->radius)
-         acc += (a * d * d);
+         cost = (a * d * d);
       else
-         acc += (d + c);
-      tot += 1.0 / len;
-   }
+         cost = (d + c);
 
-   // return acc / tot;
-   return acc / cp->n_neigh;
+#ifdef MAX_STRETCH
+      if (cost > acc)
+         acc = cost;
+#else
+      acc = cost;
+      tot += 1.0 / len;
+#endif
+   }
+#ifdef MAX_STRETCH
+   return acc;
+#else
+   return acc / tot;
+#endif
 }
 
 static double sys_overlap_score(struct s_cost_params *cp, const double v[2])
@@ -712,6 +725,17 @@ static size_t ssys_num(GHashTable *h, const char *s, struct s_ssys *map,
    return this;
 }
 
+int edge_cmp(const void *a, const void *b)
+{
+   const struct s_edge *sa = (const struct s_edge *) a;
+   const struct s_edge *sb = (const struct s_edge *) b;
+   return
+      (sa->jmp[0] - sb->jmp[0]) ?:
+      (sa->jmp[1] - sb->jmp[1]) ?:
+      (sa->len < sb->len) ? -1 : (sa->len > sb->len)
+   ;
+}
+
 /* main */
 int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
           bool only, bool ign_alone, bool quiet, double weight)
@@ -754,11 +778,12 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
                map.jumps = realloc(map.jumps, new_siz * sizeof(struct s_edge));
             }
             line[r1] = line[r3] = '\0';
-            map.jumps[map.njumps].jmp[0] =
-               ssys_num(h, line, &map, tmp, NULL, false);
-            map.jumps[map.njumps].jmp[1] =
-               ssys_num(h, line + r2, &map, tmp, NULL, false);
-            map.jumps[map.njumps].len = len;
+            const int a         = ssys_num(h, line, &map, tmp, NULL, false);
+            const int b   = ssys_num(h, line + r2, &map, tmp, NULL, false);
+            const int swp = (a > b) && 1;
+            map.jumps[map.njumps].jmp[0 ^ swp] = a;
+            map.jumps[map.njumps].jmp[1 ^ swp] = b;
+            map.jumps[map.njumps].len          = len;
             map.njumps++;
          } else if (line[0] != '\0')
             fprintf(stderr, "Ignored line : \"%s\"\n", line);
@@ -784,6 +809,15 @@ int do_it(char **onam, int n_onam, bool g_opt, bool gen_map, bool edges,
    quiet = quiet || !map.nosys;
    if (!map.nosys)
       map.nosys = map.nsys;
+
+   qsort(map.jumps, map.njumps, sizeof(struct s_edge), edge_cmp);
+   int w = 1;
+   for (int i = 1; i < map.njumps; i++)
+      if (edge_cmp((const void *) (map.jumps + i),
+                   (const void *) (map.jumps + w - 1)))
+         memcpy((void *) (map.jumps + (w++)), (void *) (map.jumps + i),
+                sizeof(struct s_edge));
+   map.njumps = w;
 
    fflush(stdout);
    gen_map_reposition(&map, g_opt, quiet, gen_map, only, weight);

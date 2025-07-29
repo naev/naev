@@ -333,7 +333,7 @@ local message_handler_funcs = {
    e_attack = function( p, _si, dopush, sender, data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data==nil or not data:exists() or data:leader() == l then return false end
-      clean_task()
+      p:taskClear()
       --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
       if data:flags("disabled") then
          ai.pushtask("attack_forced_kill", data)
@@ -345,12 +345,14 @@ local message_handler_funcs = {
    e_hold = function( p, _si, dopush, sender, _data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      p:taskClear()
       ai.pushtask("hold")
       return true
    end,
    e_return = function( p, _si, dopush, sender, _data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
+      p:taskClear()
       ai.pushtask( "flyback", mem.carried )
       return true
    end,
@@ -363,8 +365,11 @@ local message_handler_funcs = {
    e_autonav = function( p, _si, dopush, sender, _data )
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l then return false end
-      ai.pushtask( "flyback", false )
-      return true
+      if ai.taskname() ~= "follow_fleet" then
+         p:taskClear()
+         ai.pushtask( "flyback", false )
+         return true
+      end
    end
 }
 
@@ -519,8 +524,11 @@ function control_funcs.generic_attack( si, noretarget )
          (parmour < mem.armour_run
             and parmour < target_parmour ) then
       ai.pushtask("runaway", target)
-
-   -- Think like normal
+   -- Carried fighters are a bit more jumpy
+   elseif mem.carried and parmour < mem.armour_run then
+      ai.pilot():taskClear()
+      ai.pushtask( "flyback", true )
+      return false
    else
       -- Cool down, if necessary.
       should_cooldown()
@@ -714,26 +722,6 @@ function attacked( attacker )
    local task = ai.taskname()
    local si = _stateinfo( task )
 
-   -- See if should investigate
-   if not p:inrange( attacker ) then
-      -- TODO ideally not use the _current_ attacker position, but something
-      -- related to where the weapon was fired from
-      local ap = attacker:pos()
-      -- Don't use should_investigate here, because it needs to be more aggressive
-      if not si.fighting or si.forced or si.noattack then
-         local d = ap:dist( p:pos() )
-         local fuzz = math.max(500, d*0.5)
-         local target = ap + vec2.newP( fuzz*rnd.rnd(), rnd.angle () )
-         ai.pushtask("inspect_attacker", target )
-
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "l_investigate", ap + vec2.newP(fuzz*rnd.rnd(), rnd.angle()) )
-         end
-         return true
-      end
-      return
-   end
-
    -- Notify that pilot has been attacked before
    if not mem.attacked then
       mem.attacked = true
@@ -760,6 +748,31 @@ function attacked( attacker )
       else
          return
       end
+   end
+
+   -- See if should investigate
+   if not p:inrange( attacker ) then
+      -- TODO ideally not use the _current_ attacker position, but something
+      -- related to where the weapon was fired from
+      local ap = attacker:pos()
+      -- Don't use should_investigate here, because it needs to be more aggressive
+      if not si.fighting or si.forced or si.noattack then
+         local d = ap:dist( p:pos() )
+         local fuzz = math.max(500, d*0.5)
+         local target = ap + vec2.newP( fuzz*rnd.rnd(), rnd.angle () )
+         ai.pushtask("inspect_attacker", target )
+
+         -- So this is a corner case with friendly factions not breaking stealth or messing with the player
+         local wp = attacker:withPlayer()
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "l_investigate", ap + vec2.newP(fuzz*rnd.rnd(), rnd.angle()) )
+            if wp then
+               v:setHostile(true)
+            end
+         end
+         return true
+      end
+      return
    end
 
    -- Notify followers that we've been attacked
@@ -875,6 +888,15 @@ function control( dt )
       return
    end
 
+   -- See if we have to fly back due to low health
+   if mem.carried then
+      if p:armour() < mem.armour_run then
+         p:taskClear()
+         ai.pushtask( "flyback", true )
+         return
+      end
+   end
+
    -- Cooldown completes silently.
    if mem.cooldown then
       mem.tickssincecooldown = 0
@@ -922,6 +944,9 @@ function control( dt )
          local dist = ai.dist( l )
          if lmd < dist then
             if task ~= "flyback" then
+               if mem.carried then
+                  p:taskClear()
+               end
                ai.pushtask("flyback", false)
             end
             return

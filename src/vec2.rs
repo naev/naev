@@ -444,7 +444,7 @@ use std::os::raw::{c_char, c_int};
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn nlua_loadVector(env: *mut LuaEnv) -> c_int {
-    let lua = NLUA.lock().unwrap();
+    let lua = &NLUA;
     let env = unsafe { &*env };
     match open_vec2(&lua.lua, env) {
         Err(e) => {

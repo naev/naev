@@ -8,7 +8,6 @@
  */
 /** @cond */
 #include "vec2.h"
-#include <stdio.h>
 
 #include "naev.h"
 /** @endcond */
@@ -146,6 +145,10 @@ void gatherable_update( double dt )
       pilot_collideQueryIL( &gather_qtquery, x - r, y - r, x + r, y + r );
       for ( int j = 0; j < il_size( &gather_qtquery ); j++ ) {
          Pilot *p = pilot_stack[il_get( &gather_qtquery, j, 0 )];
+
+         /* Fighters don't pick up stuff. */
+         if ( pilot_isFlag( p, PILOT_CARRIED ) )
+            continue;
 
          /* See if in distance. */
          if ( vec2_dist2( &p->solid.pos, &g->pos ) > pow2( GATHER_DIST ) )

@@ -6,8 +6,10 @@
 #include "shipstats.h"
 
 typedef struct Difficulty_ {
-   char *name;        /**< Name of the difficulty. */
-   char *description; /**< Description of the difficulty. */
+   char  *name;        /**< Name of the difficulty. */
+   char  *description; /**< Description of the difficulty. */
+   double level; /**< Difficulty level where 1. would be default, 0.5 would be
+                    half as difficulty, and 2.0 would be twice as difficult. */
    ShipStatList
       *stats; /**< Modifications done to the player on the difficulty. */
    int def;   /**< Whether or not the default difficulty. */

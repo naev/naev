@@ -74,10 +74,7 @@ impl Buffer {
 }
 impl Drop for Buffer {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteBuffer(self.buffer));
+        crate::message_push(crate::Message::DeleteBuffer(self.buffer));
     }
 }
 
@@ -194,10 +191,7 @@ pub struct VertexArray {
 }
 impl Drop for VertexArray {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteVertexArray(self.vertex_array));
+        crate::message_push(crate::Message::DeleteVertexArray(self.vertex_array));
     }
 }
 impl VertexArray {

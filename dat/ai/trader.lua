@@ -2,7 +2,6 @@ require 'ai.core.core'
 require 'ai.core.idle.trader'
 --require 'ai.core.control.trader'
 require 'ai.core.misc.distress'
-local fmt = require "format"
 
 -- Always run away
 mem.aggressive    = false
@@ -57,8 +56,7 @@ function hail ()
    elseif standing > 80 then
       mem.refuel = mem.refuel * 0.5
    end
-   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
-         {credits=fmt.credits(mem.refuel)})
+   mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 
    -- Bribes
    mem.bribe_no = _([["The Space Traders do not negotiate with criminals."]])

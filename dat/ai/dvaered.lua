@@ -1,5 +1,4 @@
 require 'ai.core.core'
-local fmt = require "format"
 
 -- Settings
 mem.aggressive = true
@@ -73,7 +72,7 @@ function hail ()
       mem.refuel_no = _([["You are not worthy of my attention."]])
    else
       mem.refuel = mem.refuel_base
-      mem.refuel_msg = fmt.f(_([["For you I could make an exception for {credits}."]]), {credits=fmt.credits(mem.refuel)})
+      mem.refuel_msg = _([["For you I could make an exception for {credits}."]])
    end
 
    -- Handle bribing

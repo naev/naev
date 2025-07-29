@@ -31,7 +31,6 @@
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_outfit.h"
-#include "nlua_pilotoutfit.h"
 #include "nlua_ship.h"
 #include "nlua_spob.h"
 #include "nlua_system.h"
@@ -41,7 +40,6 @@
 #include "pilot.h"
 #include "pilot_ship.h"
 #include "player.h"
-#include "player_autonav.h"
 #include "rng.h"
 #include "space.h"
 #include "weapon.h"
@@ -3458,7 +3456,23 @@ static int pilotL_setHilight( lua_State *L )
  */
 static int pilotL_setBribed( lua_State *L )
 {
-   return pilotL_setFlagWrapper( L, PILOT_BRIBED );
+   int    state;
+   Pilot *p = luaL_validpilot( L, 1 );
+
+   /* Get state. */
+   if ( lua_isnone( L, 2 ) )
+      state = 1;
+   else
+      state = lua_toboolean( L, 2 );
+
+   /* Set or remove the flag. */
+   if ( state ) {
+      pilot_rmFlag( p, PILOT_HOSTILE );
+      pilot_setFlag( p, PILOT_BRIBED );
+   } else
+      pilot_rmFlag( p, PILOT_BRIBED );
+
+   return 0;
 }
 
 /**

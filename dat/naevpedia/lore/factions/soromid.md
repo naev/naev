@@ -8,7 +8,7 @@ wgtfct = require("naevpedia.lore.faction").init( "Soromid" )
 
 # Soromid
 
-The Soromid are an important faction, and although they are not a Great House of [the Empire](lore/factions/empire), they are very close in practice.
+The Soromid are a faction that although not a recognized Great House of [the Empire](lore/factions/empire), they are very close in practice.
 
 ## Organization
 
@@ -46,8 +46,8 @@ The people of Sorom were left to die.
 ### Gene Treatment
 
 The people of Sorom had been abandoned.
-The plague claimed more and more lives every day.
-It would be a matter of years, maybe months before nobody was left alive.
+The plague claimed more and more lives every period.
+It would be a matter of cycles, maybe decaperiods before nobody was left alive.
 Faced with no hope of survival, the remaining hospitals and research centers decided to gamble everything on a bold plan.
 If the human immune system couldn't combat the disease, then it was deficient.
 It was to be replaced by something better, something that could purify the system of the pathogen.
@@ -74,28 +74,28 @@ But it was enough.
 ### The Soromid
 
 The population of Sorom was drastically diminished, but those who survived found themselves more able than before.
-With the new gene treatment it had become possible to surpass the limits of the human body, including fertility.
-In only a couple of centuries the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment.
+With the new gene treatment, it had become possible to surpass the limits of the human body, including fertility.
+In only a couple of centacycles the people of Sorom had replenished their numbers, and their offspring all shared their compatibility with the gene treatment.
 They altered their appearances and improved on nearly every part of the human design.
 The people felt that they had now become something more than mere human, so they styled themselves the Soromid, after the world that had nearly destroyed them, and begin their new life as neohumans.
 
 Soon, the Soromid decided that it was time to return to the stars.
-The Imperial blockade had left the system many decades past, so nothing was to stop them.
+The Imperial blockade had left the system many decacycles past, so nothing was to stop them.
 But rather than rebuild to ancient specifications, the Soromid chose to start from scratch.
 They used their understanding of genetics to grow semi-organic ships, thereby improving over known ship designs.
 Then they ventured out into the galaxy.
 
 For years Sorom had been in the books as a hazard world that could support no human life, so the appearance of the Soromid came as a shock to the rest of inhabited space.
-[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever the Emperor begrudgingly acknowledged their presence in the galaxy.
-It also helped that the Soromid ships proved to be quite combat capable.
+[The Empire](lore/factions/empire) briefly tried to suppress the Soromid by force on the basis that the plague could still be a threat to other worlds, but when it became apparent that the Soromid carried no infectious diseases whatsoever, the Emperor begrudgingly acknowledged their presence in the galaxy.
+In truth, the combat capabilities of the Soromid ships had been far greater than the Imperial Navy was able to sufficiently manage.
 
 The Soromid were met with distrust.
 Their physical appearance and their uncanny tendency to outperform normal people did not ingratiate them with humanity.
 [The Za'lek](lore/factions/zalek) in particular weren't amused with the newcomers, as they couldn't stomach that someone other than them had developed new technology, and technology [the Za'lek](lore/factions/zalek) could not reproduce at that.
 
-Unfazed by the reception of the other factions, the Soromid went to work.
+Unfazed by the reception of the other factions, the Soromid persisted.
 The galaxy had plenty of suitable worlds left to colonize - at least, worlds suitable to the Soromid.
-The Soromid had a far greater tolerance for hostile worlds than humans did, and where they did not they could adjust themselves appropriately.
+The Soromid had a far greater tolerance for hostile worlds than humans did, and where they did not, they could adjust themselves appropriately.
 In time, the Soromid claimed many worlds nobody else had ever given a second glance.
 
 And then came the Incident.
@@ -112,11 +112,11 @@ However, the Soromid have the monopoly on anything beyond that.
 
 ## Political Structure
 
-Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that revolves around the idea of tribes.
-Generally, each tribe has a council that oversees the day to day management, where all individuals delegate most responsibility.
+Instead of having a fixed political structure, the Soromid have a very loose and organic political structure that is best described as tribal rule.
+Generally, each tribe has a council that oversees the period-to-period management, where all individuals are given responsibilities.
 The members of the council are not necessarily fixed, and fluidly change over time.
 Periodically, and when needed, the tribe will gather in councils to decide positions on particular issues or proposals, where efforts are made to reach a consensus.
-The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives get together to reach consensus over matters that affect the Soromid as a whole.
+The same structure of councils happens at a larger scale, where instead of all individuals, tribal representatives gather to reach consensus over matters that affect the Soromid as a whole.
 
 Although it would seem that the overhead of such a system would make it unmanageable at a large scale, due to historic issues and through strong education, young Soromid neohumans are raised with a strong focus on putting the community over the individual.
 Such a social education, combined with strong customs, helps keep most friction at a minimum, allowing fast and effective decision-making.

@@ -1,5 +1,6 @@
 <difficulty name="Easy Mode">
  <description>Makes the game easier for the player, without trivializing most things.</description>
+ <level>0.75</level>
  <armour_mod>50</armour_mod>
  <shield_mod>50</shield_mod>
  <energy_mod>50</energy_mod>

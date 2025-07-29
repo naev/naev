@@ -97,6 +97,28 @@ local neutral_f = {
 vni.genericMale = get_list( neutral_m )
 vni.genericFemale = get_list( neutral_f )
 vni.generic = get_list( neutral_m, neutral_f )
+local neutral_new = {
+   {"neutral/male1n.webp"},
+   {"neutral/male2n.webp"},
+   {"neutral/male3n.webp"},
+   {"neutral/male3n_v2.webp"},
+   {"neutral/female1n.webp"},
+   {"neutral/female1n_v2.webp"},
+   {"neutral/female1n_v3.webp"},
+   {"neutral/female1n_v4.webp"},
+   {"neutral/female1n_v5.webp"},
+   {"neutral/female2n.webp"},
+   {"neutral/female2n_nogog.webp"},
+   {"neutral/female3n.webp"},
+   {"neutral/female4n.webp"},
+   {"neutral/female5n.webp"},
+   {"neutral/female6n.webp"},
+   {"neutral/female7n.webp"},
+   {"neutral/female7n_v2.webp"},
+   {"neutral/female7n_v3.webp"},
+}
+-- Temporary function until we only have new images
+vni.genericNew = get_list( neutral_new )
 
 vni.trader = vni.generic
 vni.traderMale = vni.genericMale

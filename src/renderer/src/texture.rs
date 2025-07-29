@@ -104,10 +104,7 @@ pub struct TextureData {
 }
 impl Drop for TextureData {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteTexture(self.texture));
+        crate::message_push(crate::Message::DeleteTexture(self.texture));
     }
 }
 
@@ -263,7 +260,7 @@ impl TextureData {
             w: w as usize,
             h: h as usize,
             texture,
-            srgb: srgb,
+            srgb,
             sdf: false,
             mipmaps: false,
             vmax: 1.,
@@ -366,10 +363,7 @@ pub struct Texture {
 }
 impl Drop for Texture {
     fn drop(&mut self) {
-        crate::MESSAGE_QUEUE
-            .lock()
-            .unwrap()
-            .push(crate::Message::DeleteSampler(self.sampler));
+        crate::message_push(crate::Message::DeleteSampler(self.sampler));
     }
 }
 impl Texture {
@@ -390,7 +384,7 @@ impl Texture {
     }
 
     pub fn try_clone(&self) -> Result<Self> {
-        let ctx = Context::get().unwrap();
+        let ctx = Context::get();
         let gl = &ctx.gl;
         let sampler = unsafe { gl.create_sampler() }.map_err(|e| anyhow::anyhow!(e))?;
         Self::copy_sampler_params(gl, &sampler, &self.sampler);
@@ -1016,7 +1010,7 @@ pub struct Framebuffer {
 }
 impl Drop for Framebuffer {
     fn drop(&mut self) {
-        let ctx = Context::get().unwrap();
+        let ctx = Context::get();
         unsafe { ctx.gl.delete_framebuffer(self.framebuffer) };
     }
 }
@@ -1273,7 +1267,7 @@ pub extern "C" fn gl_texExistsOrCreate(
     sy: c_int,
     created: *mut c_int,
 ) -> *mut Texture {
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
 
     unsafe {
         naevc::gl_contextSet();
@@ -1327,7 +1321,7 @@ pub extern "C" fn gl_loadImageData(
     cname: *const c_char,
     _cflags: c_uint,
 ) -> *mut Texture {
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
     let name = unsafe { CStr::from_ptr(cname) };
     //let flags = Flags::from(cflags);
 
@@ -1387,7 +1381,7 @@ pub extern "C" fn gl_newSprite(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
 
@@ -1427,7 +1421,7 @@ pub extern "C" fn gl_newSpriteRWops(
     sy: c_int,
     cflags: c_uint,
 ) -> *mut Texture {
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
     let path = unsafe { CStr::from_ptr(cpath) };
     let flags = Flags::from(cflags);
     unsafe {
@@ -1500,7 +1494,7 @@ pub extern "C" fn gl_rawTexture(
     w: c_double,
     h: c_double,
 ) -> *mut Texture {
-    let ctx = Context::get().unwrap(); /* Lock early. */
+    let ctx = Context::get(); /* Lock early. */
     unsafe {
         naevc::gl_contextSet();
     }
@@ -1619,7 +1613,7 @@ pub extern "C" fn gl_renderTexture(
         return;
     }
 
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let colour = match c.is_null() {
         true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
         false => unsafe { *c },
@@ -1680,7 +1674,7 @@ pub extern "C" fn gl_renderSDF(
     angle: c_double,
     outline: c_double,
 ) {
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let colour = match c.is_null() {
         true => Vector4::<f32>::from([1.0, 1.0, 1.0, 1.0]),
         false => unsafe { *c },
@@ -1738,7 +1732,7 @@ pub extern "C" fn gl_renderScaleAspectMagic(
     if ctex.is_null() {
         return;
     }
-    let ctx = Context::get().unwrap();
+    let ctx = Context::get();
     let tex = unsafe { &*ctex };
     let tw = tex.texture.w as f32;
     let th = tex.texture.h as f32;

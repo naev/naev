@@ -39,7 +39,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
          mapvs.append((sm[dst] - sm[myname]).normalize())
          sysvs.append(vec_from_element(e).normalize())
 
-   if names != []:
+   if names:
       nop = lambda v: v
       flip = nop
       pi1, pi2 = mk_p(mapvs), mk_p(sysvs)
@@ -86,7 +86,7 @@ def ssys_relax( sys, quiet = True, graph = False ):
       if cost > 0.5:
          wrn += [('3', '[badness ' + str((int)((100*cost)/2)) + '%]')]
 
-      if wrn != []:
+      if wrn:
          wrn[0] = (wrn[0][0], '"' + basename(sys) + '": ' + wrn[0][1])
          stderr.write(' '.join(['\033[3'+str(i)+'m' + j + '\033[0m' for i, j in wrn]) + '\n')
          stderr.flush()
@@ -113,7 +113,7 @@ if __name__ == '__main__':
    args = argv[1:]
    jobs = 1
 
-   if '-h' in args or '--help' in args or args == []:
+   if '-h' in args or '--help' in args or not args:
       stderr.write(
          'usage:  ' + basename(argv[0]) + '[-j <n>]  [-v|-g]  <file1> ..\n'
          '  Relaxes its input xml ssys files.\n'

@@ -25,22 +25,20 @@ local soromid_outfits = eoutfits.merge{{
    -- Point Defense
    "Spittle Tubuloid Cluster",
    -- Utility
-   "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
+   "Droid Repair Crew", "Milspec Scrambler", "Unicorp Scrambler",
+   "Targeting Array", "Nexus Concealment Coating", "Unicorp Jammer",
    "Milspec Jammer", "Emergency Shield Booster",
-   "Weapons Ionizer", "Sensor Array",
-   "Bio-Neural Combat AI", "Nexus Concealment Coating",
+   "Sensor Array", "Bio-Neural Combat AI",
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
-   "Reactor Class III",
-   "Large Shield Booster",
+   "Reactor Class III", "Large Shield Booster", "Nanobond Plating",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
-   "Medium Shield Booster",
+   "Medium Shield Booster", "Microbond Plating",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-   "Small Shield Booster",
+   "Small Shield Booster", "Plasteel Plating",
 }}
 
 local soromid_params = {

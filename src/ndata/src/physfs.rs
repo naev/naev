@@ -4,6 +4,7 @@ use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
+use std::sync::atomic::{AtomicPtr, Ordering};
 
 // Some stuff is based on the physfs-rs package.
 // Modified to not use a global context and use functions from naevc
@@ -48,7 +49,7 @@ pub enum Mode {
 
 /// A file handle.
 pub struct File<'f> {
-    raw: *mut naevc::PHYSFS_File,
+    raw: AtomicPtr<naevc::PHYSFS_File>,
     //mode: Mode,
     _marker: std::marker::PhantomData<&'f isize>,
 }
@@ -69,7 +70,7 @@ impl File<'_> {
             Err(error_as_io_error_with_file("PHYSFS_open", filename))
         } else {
             Ok(File {
-                raw,
+                raw: AtomicPtr::new(raw),
                 //mode,
                 _marker: std::marker::PhantomData,
             })
@@ -78,7 +79,7 @@ impl File<'_> {
 
     /// Closes a file handle.
     fn close(&self) -> Result<()> {
-        match unsafe { naevc::PHYSFS_close(self.raw) } {
+        match unsafe { naevc::PHYSFS_close(self.raw.load(Ordering::Relaxed)) } {
             0 => Err(error_as_io_error("PHYSFS_close")),
             _ => Ok(()),
         }
@@ -87,13 +88,13 @@ impl File<'_> {
     /// Checks whether eof is reached or not.
     #[allow(dead_code)]
     pub fn eof(&self) -> bool {
-        let ret = unsafe { naevc::PHYSFS_eof(self.raw) };
+        let ret = unsafe { naevc::PHYSFS_eof(self.raw.load(Ordering::Relaxed)) };
         ret != 0
     }
 
     /// Determine length of file, if possible
     pub fn len(&self) -> Result<u64> {
-        let len = unsafe { naevc::PHYSFS_fileLength(self.raw) };
+        let len = unsafe { naevc::PHYSFS_fileLength(self.raw.load(Ordering::Relaxed)) };
         if len >= 0 {
             Ok(len as u64)
         } else {
@@ -111,7 +112,7 @@ impl File<'_> {
 
     /// Determines current position within a file
     pub fn tell(&self) -> Result<u64> {
-        let ret = unsafe { naevc::PHYSFS_tell(self.raw) };
+        let ret = unsafe { naevc::PHYSFS_tell(self.raw.load(Ordering::Relaxed)) };
         match ret {
             -1 => Err(error_as_io_error("PHYSFS_tell")),
             _ => Ok(ret as u64),
@@ -124,7 +125,7 @@ impl Read for File<'_> {
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         let ret = unsafe {
             naevc::PHYSFS_readBytes(
-                self.raw,
+                self.raw.load(Ordering::Relaxed),
                 buf.as_ptr() as *mut c_void,
                 buf.len() as naevc::PHYSFS_uint64,
             )
@@ -143,7 +144,7 @@ impl Write for File<'_> {
     fn write(&mut self, buf: &[u8]) -> Result<usize> {
         let ret = unsafe {
             naevc::PHYSFS_writeBytes(
-                self.raw,
+                self.raw.load(Ordering::Relaxed),
                 buf.as_ptr() as *const c_void,
                 buf.len() as naevc::PHYSFS_uint64,
             )
@@ -157,7 +158,7 @@ impl Write for File<'_> {
 
     /// Flushes a file if buffered; no-op if unbuffered.
     fn flush(&mut self) -> Result<()> {
-        let ret = unsafe { naevc::PHYSFS_flush(self.raw) };
+        let ret = unsafe { naevc::PHYSFS_flush(self.raw.load(Ordering::Relaxed)) };
         match ret {
             0 => Err(error_as_io_error("PHYSFS_flush")),
             _ => Ok(()),
@@ -179,7 +180,12 @@ impl Seek for File<'_> {
                 n + curr_pos as i64
             }
         };
-        let result = unsafe { naevc::PHYSFS_seek(self.raw, seek_pos as naevc::PHYSFS_uint64) };
+        let result = unsafe {
+            naevc::PHYSFS_seek(
+                self.raw.load(Ordering::Relaxed),
+                seek_pos as naevc::PHYSFS_uint64,
+            )
+        };
         if result == -1 {
             return Err(error_as_io_error("PHYSFS_seek"));
         }

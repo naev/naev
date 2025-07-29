@@ -271,6 +271,7 @@ dat/outfits/fighter_bays/sirius_shaman_bay.xml
 dat/outfits/fighter_bays/soromid_brigand_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_dock.xml
+dat/outfits/fighter_bays/thurion_scintillation_bay.xml
 dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml
 dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml
 dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml
@@ -379,6 +380,8 @@ dat/outfits/pointdefense/guardian_interception_system.xml
 dat/outfits/pointdefense/guardian_overseer_system.xml
 dat/outfits/pointdefense/ratchet_point_defense.xml
 dat/outfits/pointdefense/spittle_tubuloid_cluster.xml
+dat/outfits/pointdefense/zibs-16.xml
+dat/outfits/pointdefense/zibs-32.xml
 dat/outfits/special/base_ripper_mk2.xml
 dat/outfits/special/bikers_fury_launcher.xml
 dat/outfits/special/four_winds_laser_cannon.xml
@@ -394,6 +397,7 @@ dat/outfits/structure/battery_ii.xml
 dat/outfits/structure/battery_iii.xml
 dat/outfits/structure/battery_iv.xml
 dat/outfits/structure/biometal_armour.xml
+dat/outfits/structure/compact_lightsail.xml
 dat/outfits/structure/engine_reroute.xml
 dat/outfits/structure/improved_stabilizer.xml
 dat/outfits/structure/large_cargo_pod.xml
@@ -431,6 +435,7 @@ dat/outfits/unique/squadron_synchronizer_module.xml
 dat/outfits/unique/valkyrie_beam.xml
 dat/outfits/unique/veil_of_penelope.xml
 dat/outfits/unique/zd5_guardian_unit.xml
+dat/outfits/utility/apollos_gaze.xml
 dat/outfits/utility/asteroid_scanner.xml
 dat/outfits/utility/berserk_chip.xml
 dat/outfits/utility/blink_drive.xml
@@ -462,6 +467,7 @@ dat/outfits/utility/hullcoating/nexus_concealment_coating.xml
 dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml
 dat/outfits/utility/hyperbolic_blink_engine.xml
 dat/outfits/utility/jump_scanner.xml
+dat/outfits/utility/kratos_glove.xml
 dat/outfits/utility/low_radiation_sensor_modulator.xml
 dat/outfits/utility/milspec_jammer.xml
 dat/outfits/utility/milspec_scrambler.xml
@@ -479,6 +485,8 @@ dat/outfits/utility/unicorp_scrambler.xml
 dat/outfits/utility/weakness_harmonizer_ai.xml
 dat/outfits/utility/weapons_ionizer.xml
 dat/outfits/weapons/antimatter_lance.xml
+dat/outfits/weapons/arc_blade.xml
+dat/outfits/weapons/arc_machete.xml
 dat/outfits/weapons/disruptor_artillery_s1.xml
 dat/outfits/weapons/disruptor_artillery_s2.xml
 dat/outfits/weapons/disruptor_battery_s2.xml
@@ -2670,6 +2678,7 @@ dat/tech/nexus_ships.xml
 dat/tech/pirate_elite_outfits.xml
 dat/tech/pirate_maps.xml
 dat/tech/pirate_ships.xml
+dat/tech/pirate_strongholds_map.xml
 dat/tech/plasma_1.xml
 dat/tech/plasma_2.xml
 dat/tech/port_n_polish.xml
@@ -3432,6 +3441,7 @@ dat/outfits/lib/matrix_sell.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lib/multicore.lua
 dat/outfits/lib/multiengines.lua
+dat/outfits/lib/poi_data.lua
 dat/outfits/lib/set.lua
 dat/outfits/lib/sets/corsair.lua
 dat/outfits/lib/twins.lua
@@ -3446,6 +3456,7 @@ dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/fuelshell_plating.lua
 dat/outfits/unique/poi_data.lua
+dat/outfits/unique/poi_data_cheap.lua
 dat/outfits/unique/pulse_scanner.lua
 dat/outfits/unique/squadron_synchronizer_module.lua
 dat/outfits/unique/valkyrie_beam.lua
@@ -3547,13 +3558,16 @@ dat/scripts/equipopt/fighterbays/sirius_fidelity.lua
 dat/scripts/equipopt/fighterbays/sirius_shaman.lua
 dat/scripts/equipopt/fighterbays/soromid_brigand.lua
 dat/scripts/equipopt/fighterbays/thurion_perspicacity.lua
+dat/scripts/equipopt/fighterbays/thurion_scintillation.lua
 dat/scripts/equipopt/optimize.lua
 dat/scripts/equipopt/outfits.lua
 dat/scripts/equipopt/params.lua
+dat/scripts/equipopt/templates/black_lotus.lua
 dat/scripts/equipopt/templates/dvaered.lua
 dat/scripts/equipopt/templates/empire.lua
 dat/scripts/equipopt/templates/generic.lua
 dat/scripts/equipopt/templates/pirate.lua
+dat/scripts/equipopt/templates/pirate_base.lua
 dat/scripts/equipopt/templates/proteron.lua
 dat/scripts/equipopt/templates/sirius.lua
 dat/scripts/equipopt/templates/soromid.lua
@@ -3924,6 +3938,7 @@ src/msgcat.c
 src/msgcat.h
 src/music.c
 src/music.h
+src/mutex/src/lib.rs
 src/naev.c
 src/naev.h
 src/naev.rs

@@ -16,27 +16,27 @@ local sirius_outfits = eoutfits.merge{{
    "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
-   "TeraCom Imperator Launcher",
-   "Disruptor Artillery S2", "Razor Battery S2",
+   "TeraCom Imperator Launcher", "Heavy Ion Cannon",
+   "Disruptor Artillery S1", "Razor Battery S2",
    -- Small Weapons
    "Razor Artillery S3", "Razor Artillery S2", "Razor Artillery S1",
    "Ion Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
-   "Targeting Array", "Agility Combat AI",
+   "Targeting Array", "Unicorp Scrambler", "Unicorp Jammer",
    "Milspec Jammer", "Emergency Shield Booster",
-   "Weapons Ionizer", "Sensor Array",
-   "Pinpoint Combat AI", "Lattice Thermal Coating",
+   "Sensor Array", "Lattice Thermal Coating",
+   "Pinpoint Combat AI",
    -- Heavy Structural
-   "Battery III", "Shield Capacitor III",
-   "Reactor Class III", "Large Shield Booster",
+   "Battery III", "Shield Capacitor III", "Auxiliary Processing Unit III",
+   "Reactor Class III", "Large Shield Booster", "Nanobond Plating",
    -- Medium Structural
-   "Battery II", "Shield Capacitor II",
-   "Reactor Class II", "Medium Shield Booster",
+   "Battery II", "Shield Capacitor II", "Auxiliary Processing Unit II",
+   "Reactor Class II", "Medium Shield Booster", "Microbond Plating",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
-   "Battery I", "Shield Capacitor I",
-   "Reactor Class I", "Small Shield Booster",
+   "Battery I", "Shield Capacitor I", "Auxiliary Processing Unit I",
+   "Reactor Class I", "Small Shield Booster", "Plasteel Plating",
    -- Flow stuff
    "Large Flow Amplifier", "Medium Flow Amplifier", "Small Flow Amplifier",
    "Large Flow Resonator", "Medium Flow Resonator", "Small Flow Resonator",

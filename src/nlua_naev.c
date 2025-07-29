@@ -75,8 +75,8 @@ static int naevL_shipstats( lua_State *L );
 static int naevL_unit( lua_State *L );
 static int naevL_quadtreeParams( lua_State *L );
 static int naevL_difficulty( lua_State *L );
+static int naevL_difficultyLevel( lua_State *L );
 #if DEBUGGING
-static int naevL_envs( lua_State *L );
 static int naevL_debugTrails( lua_State *L );
 static int naevL_debugCollisions( lua_State *L );
 #endif /* DEBUGGING */
@@ -120,8 +120,8 @@ static const luaL_Reg naev_methods[] = {
    { "unit", naevL_unit },
    { "quadtreeParams", naevL_quadtreeParams },
    { "difficulty", naevL_difficulty },
+   { "difficultyLevel", naevL_difficultyLevel },
 #if DEBUGGING
-   { "envs", naevL_envs },
    { "debugTrails", naevL_debugTrails },
    { "debugCollisions", naevL_debugCollisions },
 #endif         /* DEBUGGING */
@@ -583,7 +583,6 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "nebu_scale", conf.nebu_scale );
    PUSH_BOOL( L, "fullscreen", conf.fullscreen );
    PUSH_BOOL( L, "notresizable", conf.notresizable );
-   PUSH_BOOL( L, "borderless", conf.borderless );
    PUSH_BOOL( L, "minimize", conf.minimize );
    PUSH_DOUBLE( L, "colourblind_sim", conf.colourblind_sim );
    PUSH_DOUBLE( L, "colourblind_correct", conf.colourblind_correct );
@@ -1033,21 +1032,20 @@ static int naevL_difficulty( lua_State *L )
    return 2;
 }
 
-#if DEBUGGING
 /**
- * @brief Gets a table with all the active Naev environments.
+ * @brief Gets the difficulty level settings.
  *
- * Only available only debug builds.
- *
- *    @luatreturn table Unordered table containing all the environments.
- * @luafunc envs
+ *    @luatreturn number Difficulty level settings.
+ * @luafunc difficultyLevel
  */
-static int naevL_envs( lua_State *L )
+static int naevL_difficultyLevel( lua_State *L )
 {
-   nlua_pushEnvTable( L );
+   const Difficulty *dif = difficulty_cur();
+   lua_pushnumber( L, dif->level );
    return 1;
 }
 
+#if DEBUGGING
 /**
  * @brief Toggles the trail emitters.
  *

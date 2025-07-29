@@ -8,13 +8,16 @@
 # Output destination is ${WORKPATH}/dist
 
 set -e
+set -o pipefail
 
 # Defaults
 SOURCEPATH="$(pwd)"
 BUILDTYPE="release"
 MAKEAPPIMAGE="false"
 PACKAGE="false"
+NIGHTLY="false"
 
+# Parse arguments
 while getopts dnipa:s:b: OPTION "$@"; do
     case $OPTION in
     d)
@@ -45,7 +48,7 @@ while getopts dnipa:s:b: OPTION "$@"; do
     esac
 done
 
-# Creates temp dir if needed
+# Setup working paths
 if [ -z "$BUILDPATH" ]; then
     BUILDPATH="$(mktemp -d)"
     WORKPATH=$(readlink -mf "$BUILDPATH")
@@ -62,7 +65,6 @@ fi
 BUILDPATH="$WORKPATH/builddir"
 
 # Output configured variables
-
 echo "SCRIPT WORKING PATH: $WORKPATH"
 echo "APPDIR PATH:         $APPDIRPATH"
 echo "SOURCE PATH:         $SOURCEPATH"
@@ -74,14 +76,14 @@ mkdir -p "$WORKPATH"/{dist,utils}
 
 # Get arch for use with linuxdeploy and to help make the linuxdeploy URL more architecture agnostic.
 ARCH=$(arch)
-
 export ARCH
 
-get_tools(){
+get_tools() {
     # Get linuxdeploy's AppImage
     linuxdeploy="$WORKPATH/utils/linuxdeploy.AppImage"
     if [ ! -f "$linuxdeploy" ]; then
-        curl -L -o "$linuxdeploy" "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-$ARCH.AppImage"
+        curl -L -o "$linuxdeploy" "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-$ARCH.AppImage" \
+            || { echo "Failed to download linuxdeploy"; exit 1; }
         #
         # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
         # For the layman: makes appimages run in docker containers properly again.
@@ -93,7 +95,8 @@ get_tools(){
     # Get appimagetool's AppImage
     appimagetool="$WORKPATH/utils/appimagetool.AppImage"
     if [ ! -f "$appimagetool" ]; then
-        curl -L -o "$appimagetool" "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$ARCH.AppImage"
+        curl -L -o "$appimagetool" "https://github.com/AppImage/appimagetool/releases/download/1.9.0/appimagetool-$ARCH.AppImage" \
+            || { echo "Failed to download appimagetool"; exit 1; }
         #
         # This fiddles with some magic bytes in the ELF header. Don't ask me what this means.
         # For the layman: makes appimages run in docker containers properly again.
@@ -104,23 +107,21 @@ get_tools(){
     fi
 }
 
-build_appdir(){
+build_appdir() {
     # Honours the MESON variable set by the environment before setting it manually
-
     if [ -z "$MESON" ]; then
         MESON="$SOURCEPATH/meson.py"
     fi
-
     "$MESON" setup "$BUILDPATH" "$SOURCEPATH" \
-    --native-file "$SOURCEPATH/utils/build/linux_steamruntime.ini" \
-    --buildtype "$BUILDTYPE" \
-    --force-fallback-for=glpk,SuiteSparse \
-    -Dsteamruntime=true \
-    -Dprefix="/usr" \
-    -Db_lto=true \
-    -Dauto_features=enabled \
-    -Ddocs_c=disabled \
-    -Ddocs_lua=disabled
+        --native-file "$SOURCEPATH/utils/build/linux_steamruntime.ini" \
+        --buildtype "$BUILDTYPE" \
+        --force-fallback-for=glpk,SuiteSparse \
+        -Dsteamruntime=true \
+        -Dprefix="/usr" \
+        -Db_lto=true \
+        -Dauto_features=enabled \
+        -Ddocs_c=disabled \
+        -Ddocs_lua=disabled
     # Compile and Install Naev to DISTDIR
     DESTDIR=$APPDIRPATH "$MESON" install -C "$BUILDPATH"
     # Rename metainfo file
@@ -128,10 +129,9 @@ build_appdir(){
     pushd "$WORKPATH"
     "$linuxdeploy" --appdir "$APPDIRPATH"
     popd
-
 }
 
-build_appimage(){
+build_appimage() {
     # Set VERSION and OUTPUT variables
     if [ -f "$APPDIRPATH/usr/share/naev/dat/VERSION" ]; then
         VERSION="$(<"$APPDIRPATH/usr/share/naev/dat/VERSION")"
@@ -157,23 +157,20 @@ build_appimage(){
         SUFFIX="$SUFFIX-unknown"
     fi
 
-    export OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
+    OUTPUT="$WORKPATH/dist/naev-$SUFFIX.AppImage"
+    UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
 
-    # Disable appstream test
-    export NO_APPSTREAM=1
-
-    export UPDATE_INFORMATION="gh-releases-zsync|naev|naev|$TAG|naev-*.AppImage.zsync"
     pushd "$WORKPATH/dist"
-    "$appimagetool" -n -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
+    "$appimagetool" --comp zstd -v -u "$UPDATE_INFORMATION" "$APPDIRPATH" "$OUTPUT"
     popd
-echo "Completed."
+    echo "Completed."
 }
 
 get_tools
+
 if [[ "$MAKEAPPIMAGE" =~ "true" ]]; then
     build_appdir
     build_appimage
-
 elif [[ "$PACKAGE" =~ "true" ]]; then
     build_appimage
 else

@@ -8,7 +8,7 @@ local msg_combined
 local desc_list = {}
 desc_list["generic"] = {
    _("A neohuman civilian is twirling their drink."),
-   _("A genetic-modified individual is idle at the bar."),
+   _("A genetically-modified individual is idle at the bar."),
    _("A neohuman individual, sitting alone at the bar, lost in contemplation."),
 }
 desc_list["heavy"] = {

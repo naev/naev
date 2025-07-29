@@ -362,11 +362,19 @@ static void think_seeker( Weapon *w, double dt )
       return;
    }
 
+   /* If the player stealths, treat the weapon as jammed when out of range.. */
+   WeaponStatus status = w->status;
+   if ( pilot_isFlag( p, PILOT_STEALTH ) && status == WEAPON_STATUS_OK ) {
+      double d = vec2_dist2( &p->solid.pos, &w->solid.pos );
+      if ( d > pow2( p->ew_stealth ) )
+         status = WEAPON_STATUS_JAMMED;
+   }
+
    // ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p,
    // w->outfit->u.lau.resist );
 
    /* Handle by status. */
-   switch ( w->status ) {
+   switch ( status ) {
    case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
       w->timer2 -= dt;
       if ( w->timer2 >= 0. )
@@ -380,8 +388,8 @@ static void think_seeker( Weapon *w, double dt )
       jc = p->stats.jam_chance - outfit_launcherResist( w->outfit );
       if ( jc > 0. ) {
          /* Roll based on distance. */
-         double d = vec2_dist( &p->solid.pos, &w->solid.pos );
-         if ( d < w->r * p->ew_signature ) {
+         double d = vec2_dist2( &p->solid.pos, &w->solid.pos );
+         if ( d < pow2( w->r * p->ew_signature ) ) {
             if ( RNGF() < jc ) {
                double r = RNGF();
                if ( r < 0.3 ) {
@@ -453,10 +461,7 @@ static void think_seeker( Weapon *w, double dt )
       else {
          double diff = angle_diff( w->solid.dir, /* Get angle to target pos */
                                    vec2_angle( &w->solid.pos, &p->solid.pos ) );
-         weapon_setTurn( w,
-                         CLAMP( -turn_max, turn_max,
-                                10 * diff * outfit_launcherTurn( w->outfit ) *
-                                   w->turn_mod ) );
+         weapon_setTurn( w, CLAMP( -turn_max, turn_max, diff / dt ) );
       }
       break;
 
@@ -474,10 +479,12 @@ static void think_seeker( Weapon *w, double dt )
    speed_mod *= ( w->status == WEAPON_STATUS_JAMMED_SLOWED ) ? w->falloff : 1.;
 
    /* Limit speed here */
-   w->real_vel = MIN( speed_mod * outfit_launcherSpeedMax( w->outfit ),
-                      w->real_vel + outfit_launcherAccel( w->outfit ) *
-                                       w->accel_mod * dt );
-   vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
+   if ( w->real_vel > 0. ) {
+      w->real_vel = MIN( speed_mod * outfit_launcherSpeedMax( w->outfit ),
+                         w->real_vel + outfit_launcherAccel( w->outfit ) *
+                                          w->accel_mod * dt );
+      vec2_pset( &w->solid.vel, /* ewtrack * */ w->real_vel, w->solid.dir );
+   }
 
    /* Modulate max speed. */
    // w->solid.speed_max = w->outfit_launcherSpeed(outfit) * ewtrack;
@@ -491,8 +498,7 @@ static void think_seeker( Weapon *w, double dt )
  */
 static void think_beam( Weapon *w, double dt )
 {
-   Pilot           *p, *t;
-   Asteroid        *ast;
+   Pilot           *p;
    double           diff, mod;
    vec2             v;
    PilotOutfitSlot *slot;
@@ -524,46 +530,50 @@ static void think_beam( Weapon *w, double dt )
    }
 
    /* Get the targets. */
-   t   = NULL;
-   ast = NULL;
+   const vec2 *tpos = NULL;
+   turn_off         = 0;
    switch ( w->target.type ) {
-   case TARGET_PILOT:
-      t = pilot_get( w->target.u.id );
-      break;
+   case TARGET_PILOT: {
+      const Pilot *t = pilot_get( w->target.u.id );
+      if ( t != NULL )
+         tpos = &t->solid.pos;
+   } break;
    case TARGET_ASTEROID: {
       const AsteroidAnchor *field =
          &cur_system->asteroids[w->target.u.ast.anchor];
-      ast = &field->asteroids[w->target.u.ast.asteroid];
+      const Asteroid *ast = &field->asteroids[w->target.u.ast.asteroid];
+      if ( ast->state == ASTEROID_FG )
+         tpos = &ast->sol.pos;
+   } break;
+   case TARGET_WEAPON: {
+      const Weapon *wtarget = weapon_getID( w->target.u.id );
+      if ( wtarget != NULL )
+         tpos = &wtarget->solid.pos;
    } break;
    default:
-      turn_off = 1;
       break;
    }
+   if ( slot->inrange && tpos == NULL )
+      turn_off = 1;
 
    /* Check the beam is still in range. */
-   if ( slot->inrange ) {
+   if ( !turn_off && slot->inrange ) {
       turn_off = 1;
-      if ( t != NULL ) {
-         if ( vec2_dist( &p->solid.pos, &t->solid.pos ) <=
-              outfit_range( slot->outfit ) * w->range_mod )
-            turn_off = 0;
-      }
-      if ( ast != NULL ) {
-         if ( vec2_dist( &p->solid.pos, &ast->sol.pos ) <=
-              outfit_range( slot->outfit ) * w->range_mod )
-            turn_off = 0;
-      }
-
-      /* Attempt to turn the beam off. */
-      if ( turn_off ) {
-         w->timer = -1;
-      }
+      if ( vec2_dist( &p->solid.pos, tpos ) <=
+           outfit_range( slot->outfit ) * w->range_mod )
+         turn_off = 0;
    }
 
    /* Use mount position. */
    pilot_getMount( p, slot, &v );
    w->solid.pos.x = p->solid.pos.x + v.x;
    w->solid.pos.y = p->solid.pos.y + v.y;
+
+   /* Attempt to turn the beam off. */
+   if ( turn_off ) {
+      w->timer = -1;
+      return;
+   }
 
    /* Handle aiming at the target. */
    switch ( outfit_type( w->outfit ) ) {
@@ -587,19 +597,15 @@ static void think_beam( Weapon *w, double dt )
       /* If target is dead beam stops moving. Targeting
        * self is invalid so in that case we ignore the target.
        */
-      else if ( t == NULL ) {
-         if ( ast != NULL ) {
-            diff = angle_diff( w->solid.dir, /* Get angle to target pos */
-                               vec2_angle( &w->solid.pos, &ast->sol.pos ) );
-         } else
-            diff = angle_diff( w->solid.dir, p->solid.dir );
-      } else
+      else if ( tpos != NULL )
          diff = angle_diff( w->solid.dir, /* Get angle to target pos */
-                            vec2_angle( &w->solid.pos, &t->solid.pos ) );
+                            vec2_angle( &w->solid.pos, tpos ) );
+      else
+         diff = 0.;
 
       double turn = outfit_turn( w->outfit );
-      weapon_setTurn( w, p->stats.time_speedup *
-                            CLAMP( -turn, turn, 10. * diff * turn ) );
+      weapon_setTurn( w,
+                      p->stats.time_speedup * CLAMP( -turn, turn, diff / dt ) );
       break;
 
    default:
@@ -1398,17 +1404,25 @@ static void weapon_updateCollide( Weapon *w, double dt )
          /* We can only hit ammo weapons, so no beams. */
          wchit.w         = whit;
          wchit.explosion = 0;
-         wchit.beam      = 0;
-         wchit.gfx       = outfit_gfx( w->outfit );
-         if ( wchit.gfx->tex != NULL ) {
-            wchit.polygon  = outfit_plg( w->outfit );
-            wchit.polyview = poly_view( wchit.polygon, w->solid.dir );
-            wchit.range =
-               wchit.gfx->size; /* Range is set to size in this case. */
+         wchit.beam      = outfit_isBeam( whit->outfit );
+         if ( !wchit.beam ) {
+            wchit.gfx = outfit_gfx( whit->outfit );
+            if ( wchit.gfx->tex != NULL ) {
+               wchit.polygon  = outfit_plg( whit->outfit );
+               wchit.polyview = poly_view( wchit.polygon, whit->solid.dir );
+               wchit.range =
+                  wchit.gfx->size; /* Range is set to size in this case. */
+            } else {
+               wchit.polygon  = NULL;
+               wchit.polyview = NULL;
+               wchit.range    = wchit.gfx->col_size;
+            }
          } else {
-            wchit.polygon  = NULL;
-            wchit.polyview = NULL;
-            wchit.range    = wchit.gfx->col_size;
+            wchit.gfx       = NULL;
+            wchit.polygon   = NULL;
+            wchit.polyview  = NULL;
+            wchit.range     = outfit_width( whit->outfit ) * 0.5;
+            wchit.beamrange = outfit_range( whit->outfit ) * whit->range_mod;
          }
 
          /* Do the real collision test. */
@@ -2474,7 +2488,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
    if ( outfit_speed_dispersion( outfit ) > 0. )
       m += RNG_1SIGMA() * outfit_speed_dispersion( outfit );
    vec2_cadd( &v, m * cos( rdir ), m * sin( rdir ) );
-   w->real_vel = VMOD( v );
 
    /* Set up ammo details. */
    mass     = outfit_massAmmo( w->outfit );
@@ -2490,7 +2503,9 @@ static void weapon_createAmmo( Weapon *w, const Outfit *outfit, double dir,
       w->solid.speed_max = outfit_launcherSpeedMax( w->outfit ) * w->speed_mod;
       if ( outfit_launcherSpeed( w->outfit ) > 0. )
          w->solid.speed_max = -1; /* No limit. */
-   }
+      w->real_vel = VMOD( v );
+   } else
+      w->real_vel = 0.;
 
    /* Handle health if necessary. */
    if ( outfit_launcherArmour( w->outfit ) > 0. ) {
@@ -2606,7 +2621,8 @@ static int weapon_create( Weapon *w, PilotOutfitSlot *po, const Outfit *ref,
    case OUTFIT_TYPE_TURRET_BEAM:
       rdir = dir;
       if ( outfit_type( outfit ) == OUTFIT_TYPE_TURRET_BEAM ) {
-         if ( aim ) {
+         if ( aim ||
+              outfit_isProp( w->outfit, OUTFIT_PROP_WEAP_POINTDEFENSE ) ) {
             AsteroidAnchor *field;
             Asteroid       *ast;
             Weapon         *wtarget;

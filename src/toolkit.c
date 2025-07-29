@@ -46,18 +46,46 @@ static SDL_Keymod  input_mod = 0; /**< Current pressed modifier. */
 /*
  * default outline colours
  */
-const glColour *toolkit_colLight = &cGrey50; /**< Light outline colour. */
-const glColour *toolkit_col      = &cGrey20; /**< Normal outline colour. */
-const glColour *toolkit_colDark  = &cGrey5;  /**< Dark outline colour. */
+const glColour  _toolkit_colLight = { .r = 0.17953507505959196,
+                                      .g = 0.17953507505959196,
+                                      .b = 0.19599417930148813,
+                                      .a = 1.0 }; /**< Light outline colour. */
+const glColour *toolkit_colLight  = &_toolkit_colLight;
+const glColour  _toolkit_col      = { .r = 0.02842782824665854,
+                                      .g = 0.02842782824665854,
+                                      .b = 0.030666681641938164,
+                                      .a = 1.0 }; /**< Normal outline colour. */
+const glColour *toolkit_col       = &_toolkit_col;
+const glColour  _toolkit_colDark  = { .r = 0.0035924493743964936,
+                                      .g = 0.0035924493743964936,
+                                      .b = 0.00375840377954798,
+                                      .a = 1.0 }; /**< Dark outline colour. */
+const glColour *toolkit_colDark   = &_toolkit_colDark;
 
 /*
  * Tab colours
  */
-const glColour *tab_active     = &cGrey20; /**< Light outline colour. */
-const glColour *tab_activeB    = &cGrey10; /**< Light outline colour. */
-const glColour *tab_inactive   = &cGrey15; /**< Normal outline colour. */
-const glColour *tab_inactiveB  = &cGrey10; /**< Normal outline colour. */
-const glColour *tab_background = &cBlack;  /**< Dark outline colour. */
+const glColour  _tab_active    = { .r = 0.02842782824665854,
+                                   .g = 0.02842782824665854,
+                                   .b = 0.030666681641938164,
+                                   .a = 1.0 }; /**< Light outline colour. */
+const glColour *tab_active     = &_tab_active;
+const glColour  _tab_activeB   = { .r = 0.008848905697420069,
+                                   .g = 0.008848905697420069,
+                                   .b = 0.009413232170634472,
+                                   .a = 1.0 }; /**< Light outline colour. */
+const glColour *tab_activeB    = &_tab_activeB;
+const glColour  _tab_inactive  = { .r = 0.017014804602423293,
+                                   .g = 0.017014804602423293,
+                                   .b = 0.01825750718659873,
+                                   .a = 1.0 }; /**< Normal outline colour. */
+const glColour *tab_inactive   = &_tab_inactive;
+const glColour  _tab_inactiveB = { .r = 0.008848905697420069,
+                                   .g = 0.008848905697420069,
+                                   .b = 0.009413232170634472,
+                                   .a = 1.0 }; /**< Normal outline colour. */
+const glColour *tab_inactiveB  = &_tab_inactiveB;
+const glColour *tab_background = &cBlack; /**< Dark outline colour. */
 
 /*
  * static prototypes

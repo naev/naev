@@ -8,7 +8,6 @@
 --]]
 local lf = require "love.filesystem"
 
-
 -- Parse directory to add personas
 local pers_func_list = {}
 for k,v in ipairs(lf.getDirectoryItems("events/pers")) do
@@ -62,6 +61,7 @@ function enter ()
    -- (more often with time compression)
    --spawn_chance =  0.034064 -- 50% chance every 20 ticks (10 minutes)
    spawn_chance = 0.066967 -- 50% chance every 10 ticks (5 minutes)
+   -- Spawn more in Zied
    if scur == system.get("Zied") then
       spawn_chance = 0.3
    end
@@ -139,7 +139,6 @@ local function spawn_pers ()
 end
 
 function timer ()
-   -- Spawn more in Zied
    if rnd.rnd() < spawn_chance then
       spawn_pers()
    end

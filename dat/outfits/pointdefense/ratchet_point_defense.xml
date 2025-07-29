@@ -20,7 +20,7 @@
   <spfx_armour>Firework30</spfx_armour>
   <delay>0.2</delay>
   <reload_time>2</reload_time>
-  <amount>50</amount>
+  <amount>30</amount>
   <speed>800</speed>
   <duration>0.6</duration>
   <trackmin>0</trackmin>
@@ -29,13 +29,13 @@
   <damage>
    <type>kinetic</type>
    <penetrate>0</penetrate>
-   <physical>15</physical>
+   <physical>7</physical>
   </damage>
   <radius>30</radius>
   <ai>unguided</ai>
   <pointdefense />
   <miss_explode />
-  <dispersion>5</dispersion>
+  <dispersion>6</dispersion>
   <speed_dispersion>100</speed_dispersion>
  </specific>
  <tags>

@@ -45,10 +45,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(physfs::read_dir(path)?
         .into_iter()
         .filter_map(|f| match is_dir(&f) {
-            true => match read_dir(&f) {
-                Ok(files) => Some(files),
-                Err(_) => None,
-            },
+            true => read_dir(&f).ok(),
             false => match physfs::blacklisted(&f) {
                 true => None,
                 false => Some(vec![f]),

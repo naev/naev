@@ -1284,37 +1284,41 @@ int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, const Target *target,
 void pilot_getRateMod( double *rate_mod, double *energy_mod, const Pilot *p,
                        const Outfit *o )
 {
+   double rate;
    switch ( outfit_type( o ) ) {
    case OUTFIT_TYPE_BOLT:
    case OUTFIT_TYPE_BEAM:
-      *rate_mod   = 1. / ( p->stats.fwd_firerate *
-                         p->stats.weapon_firerate ); /* Invert. */
+      rate        = p->stats.fwd_firerate * p->stats.weapon_firerate;
       *energy_mod = p->stats.fwd_energy * p->stats.weapon_energy;
       break;
    case OUTFIT_TYPE_TURRET_BOLT:
    case OUTFIT_TYPE_TURRET_BEAM:
-      *rate_mod   = 1. / ( p->stats.tur_firerate *
-                         p->stats.weapon_firerate ); /* Invert. */
+      rate        = p->stats.tur_firerate * p->stats.weapon_firerate;
       *energy_mod = p->stats.tur_energy * p->stats.weapon_energy;
       break;
 
    case OUTFIT_TYPE_LAUNCHER:
    case OUTFIT_TYPE_TURRET_LAUNCHER:
-      *rate_mod =
-         1. / ( p->stats.launch_rate * p->stats.weapon_firerate ); /* Invert. */
+      rate        = p->stats.launch_rate * p->stats.weapon_firerate;
       *energy_mod = p->stats.launch_energy * p->stats.weapon_energy;
       break;
 
    case OUTFIT_TYPE_FIGHTER_BAY:
-      *rate_mod   = 1. / p->stats.fbay_rate;
+      rate        = p->stats.fbay_rate;
       *energy_mod = 1.;
       break;
 
    default:
-      *rate_mod   = 1.;
+      rate        = 1.;
       *energy_mod = 1.;
       break;
    }
+
+   /* Compute rate in the case of negative values. */
+   if ( rate <= 0. )
+      *rate_mod = INFINITY;
+   else
+      *rate_mod = 1. / rate;
 }
 
 /**

@@ -2,6 +2,7 @@
 use anyhow::Result;
 use constcat::concat;
 use mlua::{FromLua, FromLuaMulti, IntoLua, IntoLuaMulti};
+use std::sync::LazyLock;
 
 use crate::lua::ryaml;
 use crate::vec2;
@@ -27,12 +28,12 @@ pub struct LuaEnv {
 impl Drop for LuaEnv {
     // TODO something more robust here perhaps
     fn drop(&mut self) {
-        let lua = NLUA.lock().unwrap();
+        let lua = &NLUA;
 
         // Try to run the __gc function if available
         match self.get("__gc") {
             Ok(mlua::Nil) => (),
-            Ok(mlua::Value::Function(func)) => match self.call(&lua, &func, ()) {
+            Ok(mlua::Value::Function(func)) => match self.call(lua, &func, ()) {
                 Ok(()) => (),
                 Err(e) => {
                     warn!("Error calling Lua enviroment __gc function: {}", e);
@@ -68,7 +69,6 @@ pub struct NLua {
     env_mt: mlua::Table,
     // TODO remove below when we can
     envs: mlua::Table,
-    envs_rk: mlua::RegistryKey,
 }
 
 /// Opens the gettext library
@@ -86,7 +86,7 @@ fn open_gettext(lua: &mlua::Lua) -> mlua::Result<()> {
     globals.set("N_", gettext_noop.clone())?;
     gettext_table.set("gettext_noop", gettext_noop)?;
     let ngettext = lua.create_function(
-        |_lua, (msg1, msg2, n): (String, String, i32)| -> mlua::Result<String> {
+        |_lua, (msg1, msg2, n): (String, String, u64)| -> mlua::Result<String> {
             Ok(ngettext(msg1.as_str(), msg2.as_str(), n).to_owned())
         },
     )?;
@@ -155,7 +155,7 @@ impl NLua {
         lua.load_std_libs(mlua::StdLib::ALL_SAFE).unwrap();
 
         // Set up gettext stuff
-        open_gettext(&lua)?;
+        open_gettext(lua)?;
 
         // Add some more functions.
         let globals = lua.globals();
@@ -274,12 +274,11 @@ impl NLua {
             globals,
             env_mt,
             envs: envs.clone(),
-            envs_rk: lua.create_registry_value(envs)?,
             lua: lua.clone(),
         })
     }
 
-    pub fn environment_new(&mut self, name: &str) -> Result<LuaEnv> {
+    pub fn environment_new(&self, name: &str) -> Result<LuaEnv> {
         let lua = &self.lua;
         let t = lua.create_table()?;
 
@@ -480,10 +479,9 @@ impl LuaEnv {
     }
 }
 
-use std::sync::{LazyLock, Mutex};
-pub static NLUA: LazyLock<Mutex<NLua>> = LazyLock::new(|| Mutex::new(NLua::new().unwrap()));
+pub static NLUA: LazyLock<NLua> = LazyLock::new(|| NLua::new().unwrap());
 pub fn init() -> Result<()> {
-    let _unused = NLUA.lock();
+    let _unused = &NLUA;
     Ok(())
 }
 
@@ -522,7 +520,7 @@ use std::ffi::CStr;
 pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
     let ptr = unsafe { CStr::from_ptr(name) };
     let name = ptr.to_str().unwrap();
-    let mut lua = NLUA.lock().unwrap();
+    let lua = &NLUA;
     match lua.environment_new(name) {
         Ok(env) => Box::into_raw(Box::new(env)),
         Err(e) => {
@@ -539,7 +537,7 @@ pub extern "C" fn nlua_dupEnv(env: *mut LuaEnv) -> *mut LuaEnv {
     }
     let env = unsafe { &*env };
     let t = &env.table;
-    let lua = &NLUA.lock().unwrap();
+    let lua = &&NLUA;
     let newenv = LuaEnv {
         table: t.clone(),
         rk: lua.lua.create_registry_value(t).unwrap(),
@@ -563,16 +561,8 @@ pub extern "C" fn nlua_pushenv(lua: *mut mlua::lua_State, env: *mut LuaEnv) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn nlua_pushEnvTable(lua: *mut mlua::lua_State) {
-    let nlua = NLUA.lock().unwrap();
-    unsafe {
-        mlua::ffi::lua_rawgeti(lua, mlua::ffi::LUA_REGISTRYINDEX, nlua.envs_rk.id().into());
-    }
-}
-
-#[unsafe(no_mangle)]
 pub extern "C" fn nlua_resize() {
-    let lua = NLUA.lock().unwrap();
+    let lua = &NLUA;
     let (screen_w, screen_h) = unsafe { (naevc::gl_screen.w, naevc::gl_screen.h) };
     lua.resize(screen_w, screen_h).unwrap();
 }
@@ -582,9 +572,9 @@ pub extern "C" fn nlua_loadStandard(env: *mut LuaEnv) -> c_int {
     if env.is_null() {
         return -1;
     }
-    let nlua = NLUA.lock().unwrap();
+    let nlua = &NLUA;
     let env = unsafe { &mut *env };
-    match env.load_standard(&nlua) {
+    match env.load_standard(nlua) {
         Ok(()) => 0,
         Err(e) => {
             warn_err!(e);

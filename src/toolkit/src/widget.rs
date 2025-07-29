@@ -1,5 +1,5 @@
 #![allow(dead_code, unused_variables)]
-use super::context::Context;
+use renderer::Context;
 use sdl3 as sdl;
 
 pub trait Message: Send + std::fmt::Debug + Clone {}

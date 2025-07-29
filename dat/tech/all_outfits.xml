@@ -150,6 +150,7 @@
  <item>Za'lek Bomber Drone Bay</item>
  <item>Thurion Perspicacity Bay</item>
  <item>Thurion Perspicacity Dock</item>
+ <item>Thurion Scintillation Bay</item>
  <item>Proteron Dalton Dock</item>
  <item>Proteron Dalton Bay</item>
  <item>Soromid Brigand Bay</item>
@@ -267,4 +268,10 @@
  <item>Reaver Cannon</item>
  <item>Pincushion Battery</item>
  <item>Plasma Eruptor</item>
+ <item>ZIBS-16</item>
+ <item>ZIBS-32</item>
+ <item>Arc Machete</item>
+ <item>Arc Blade</item>
+ <item>Apollo's Gaze</item>
+ <item>Kratos' Glove</item>
 </tech>

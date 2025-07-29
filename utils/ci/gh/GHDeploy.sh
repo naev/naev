@@ -87,8 +87,7 @@ cp "$TEMPPATH"/naev-linux-x86-64/*.zsync "$OUTDIR"/lin64/naev-"$VERSION"-linux-x
 chmod +x "$OUTDIR"/lin64/naev-"$VERSION"-linux-x86-64.AppImage
 
 # Move macOS dmg image to deployment location
-#cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$VERSION"-macos-universal.dmg
-cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$VERSION"-macos-x86-64.dmg
+cp "$TEMPPATH"/naev-macos/*.dmg "$OUTDIR"/macos/naev-"$VERSION"-macos-universal.dmg
 
 # Move Windows installer to deployment location
 cp "$TEMPPATH"/naev-win64/naev*.exe "$OUTDIR"/win64/naev-"$VERSION"-win64.exe
@@ -134,8 +133,7 @@ if [ "$DRYRUN" == "false" ]; then
     gh --version
     gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage" --repo "$REPONAME" --clobber
     gh release upload "$TAGNAME" "$OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync" --repo "$REPONAME" --clobber
-    #gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
-    gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-x86-64.dmg" --repo "$REPONAME" --clobber
+    gh release upload "$TAGNAME" "$OUTDIR/macos/naev-${VERSION}-macos-universal.dmg" --repo "$REPONAME" --clobber
     gh release upload "$TAGNAME" "$OUTDIR/win64/naev-${VERSION}-win64.exe" --repo "$REPONAME" --clobber
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
         gh release upload "$TAGNAME" "$OUTDIR/dist/naev-${VERSION}-soundtrack.zip" --repo "$REPONAME" --clobber
@@ -158,8 +156,7 @@ elif [ "$DRYRUN" == "true" ]; then
     # Simulate asset uploads
     echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage --repo $REPONAME --clobber"
     echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/lin64/naev-${VERSION}-linux-x86-64.AppImage.zsync --repo $REPONAME --clobber"
-    #echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
-    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-x86-64.dmg --repo $REPONAME --clobber"
+    echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/macos/naev-${VERSION}-macos-universal.dmg --repo $REPONAME --clobber"
     echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/win64/naev-${VERSION}-win64.exe --repo $REPONAME --clobber"
     if [ "$NIGHTLY" == "false" ] && [ "$PRERELEASE" == "false" ]; then
         echo "Would upload asset: gh release upload $TAGNAME $OUTDIR/dist/naev-${VERSION}-soundtrack.zip --repo $REPONAME --clobber"

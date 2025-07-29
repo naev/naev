@@ -4,6 +4,7 @@ version = @VERSION@
 edition.workspace = true
 rust-version.workspace = true
 publish = false
+build = "@BUILD@/build.rs"
 
 [lints]
 workspace = true
@@ -23,6 +24,7 @@ members = [
    "@BUILD@/src/core",
    "@BUILD@/src/log",
    "@BUILD@/src/gettext",
+   "@BUILD@/src/mutex",
    "@BUILD@/src/ndata",
    "@BUILD@/src/renderer",
    "@BUILD@/src/toolkit",
@@ -46,6 +48,7 @@ anyhow = "1"
 naev_core = { path="@BUILD@/src/core" }
 gettext = { path="@BUILD@/src/gettext" }
 log = { path="@BUILD@/src/log" }
+mutex = { path="@BUILD@/src/mutex" }
 ndata = { path="@BUILD@/src/ndata" }
 renderer = { path="@BUILD@/src/renderer" }
 toolkit = { path="@BUILD@/src/toolkit" }
@@ -62,6 +65,7 @@ naevc = { workspace = true }
 naev_core = { workspace = true }
 gettext = { workspace = true }
 log = { workspace = true }
+mutex = { workspace = true }
 ndata = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
@@ -79,11 +83,13 @@ semver = "1"
 rand = "0"
 rayon = "1" # parallel computation
 static_assertions = "1"
-#etagere = "0" # Texture Atlas generation
 palette = "0" # Colour conversion
-thunderdome = "0"
 mlua = { version = "0.11", features = ["luajit", "anyhow", "send", "serialize"] }
 serde_yaml2 = "0.1"
 # gltf-rs crate doesn't support WEBP in any release atm...
 gltf = { git = "https://github.com/gltf-rs/gltf.git", rev = "12fc1b7ce28c7b4c6d1b881a30df24060dccfbda", features = ["extras", "names", "utils", "EXT_texture_webp", "KHR_materials_emissive_strength"] }
 #gltf = { version = "1", features = ["extras", "names", "utils"] }
+
+# Probably useful
+#etagere = "0" # Texture Atlas generation
+#thunderdome = "0"

@@ -2437,13 +2437,16 @@ static int aiL_getlandspob( lua_State *L )
    for ( int i = 0; i < array_size( cur_system->spobs ); i++ ) {
       Spob *pnt = cur_system->spobs[i];
 
+      /* Is Spob restricted. */
+      int restricted = spob_isFlag( pnt, SPOB_RESTRICTED );
+
       if ( !spob_hasService( pnt, SPOB_SERVICE_LAND ) )
          continue;
       if ( !spob_hasService( pnt, SPOB_SERVICE_INHABITED ) )
          continue;
 
       /* Check conditions. */
-      if ( only_friend &&
+      if ( ( only_friend || restricted ) &&
            !areAllies( cur_pilot->faction, pnt->presence.faction ) )
          continue;
       if ( areEnemies( cur_pilot->faction, pnt->presence.faction ) )
@@ -3267,7 +3270,7 @@ static int aiL_canboard( lua_State *L )
    }
 
    /* Check if can be boarded. */
-   lua_pushboolean( L, !pilot_isFlag( p, PILOT_BOARDED ) );
+   lua_pushboolean( L, !pilot_isFlag( p, PILOT_BOARDED_PILOT ) );
    return 1;
 }
 

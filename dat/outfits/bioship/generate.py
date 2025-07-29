@@ -78,7 +78,7 @@ from math import log, exp
 
 # Does geometric interpolation instead of arithmetic interpolation.
 def eerp( a, b, ta = 0.0, tb = 1.0 ):
-    return lambda x: exp(lerp(log(a), log(b), ta, tb)(x))
+    return lambda x: round(exp(lerp(log(a), log(b), ta, tb)(x)), 2)
 
 def eerpr( a, b, ta = 0.0, tb = 1.0 ):
     return lambda x: int(round(eerp(a, b, ta, tb)(x)))
@@ -210,11 +210,11 @@ for pref, nam1, nam2, dbl, gfx, output_pref, outputs in [
       'price':        lerpr( ref2['price']/2,  ref2['price'] ),
       'mass':         int(ref2['mass']),
       'desc':         desc['hull'],
-      'gfx_store':    'organic_hull_'+gfx+'.webp',
+      'gfx_store':    'organic_hull_' + gfx + '.webp',
       'cargo':        lerpr( ref2['cargo'],    round((ref1['cargo']+ref2['cargo'])/2.0) ),
       'absorb':       lerpr( ref1['absorb']-3, ref2['absorb']-3 ),
       'armour':       lerpr(  ref1['armour'],   ref2['armour'] )
-   } ).run( [ N_(output_pref+" Cortex "+s) for s in outputs ] )
+   } ).run( [ N_(output_pref + " Cortex " + s) for s in outputs ] )
 
 
 ##

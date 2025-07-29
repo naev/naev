@@ -139,8 +139,9 @@ local function bribe_msg( plt, group )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = fmt.f(_([["I'm gonna need at least {credits} to not leave you as a hunk of floating debris."]]), {credits=cstr})
+         str = _([["I'm gonna need at least {credits} to not leave you as a hunk of floating debris."]])
       end
+      str = fmt.f( str, {credits=cstr} )
       return fmt.f(_("{msg}\n\nYou have {credits}. Pay #r{price}#0?"), {msg=str, credits=chave, price=cstr} ), cost
    end
 end
@@ -475,8 +476,9 @@ function comm( plt )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = fmt.f(_([["I should be able to refuel you for {credits} for 100 units of fuel."]]), {credits=cstr})
+         str = ([["I should be able to refuel you for {credits} for 100 units of fuel."]])
       end
+      str = fmt.f( str, {credits=cstr} )
       if cost <= 0 then
          -- It's free so give as much as the player wants
          vn.jump("refuel_trypay_max")

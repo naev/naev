@@ -51,7 +51,7 @@ function create()
    misn.setReward(_("A Reunited Family"))
    misn.setDesc(_([[Search for the kidnapped children, then rescue the children and return them to their parents.]]))
 
-   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys3, pnt=pnt1})})
+   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on {pnt}"), {sys=sys3, pnt=pnt1})})
 
    mem.misn_mark = misn.markerAdd(pnt1, "low")
 
@@ -103,7 +103,7 @@ function firstpirates()
    misn.npcRm(mem.bar1pir1)
    misn.npcRm(mem.bar1pir2)
 
-   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys4, pnt=pnt2})})
+   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on {pnt}"), {sys=sys4, pnt=pnt2})})
 
    misn.markerMove(mem.misn_mark, pnt2)
 
@@ -199,7 +199,7 @@ end
 
 function boardkidnappers()
    vntk.msg(_("You did it!"), fmt.f(_([[After disabling the ship, you and your small crew go in ready for a fight! But when you get on the small Koala, you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can pilot a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to {pnt} and reunite the parents with their children.]]), {pnt=pnthome}))
-   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Return the children to the {sys} system on planet {pnt}"), {sys=sys1, pnt=pnthome})})
+   misn.osdCreate(_("Kidnapped"), {fmt.f(_("Return the children to {pnt} ({sys} system)"), {sys=sys1, pnt=pnthome})})
    misn.markerMove(mem.misn_mark, pnthome)
    kidnappers:setHilight(false)
    kidnappers:hookClear()

@@ -7,12 +7,13 @@ function outfits.merge( t )
    local e = {}
    for i,m in ipairs(t) do
       for j,n in ipairs(m) do
-         e[ outfit.get(n) ] = true
+         local o = outfit.get(n)
+         e[ o:nameRaw() ] = o
       end
    end
    local o = {}
    for k,v in pairs(e) do
-      table.insert( o, k )
+      table.insert( o, v )
    end
    return o
 end

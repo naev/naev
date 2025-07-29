@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# python3
 
 # Tries to revert xml with inlined lua using multicore back to multi-valued xml.
 # exits 1 if anything turns wrong.
@@ -8,10 +8,6 @@ import re
 from outfit import outfit, ET
 from sys import argv, stderr, exit
 
-
-# everything ont in this list goes to specific intead of general
-#general = ['mass', 'cpu']
-general = ['cpu']
 
 def numeval(s):
    try:
@@ -53,12 +49,7 @@ def xmllua2mvx( argin, argout, quiet = False, multicore_only = False ):
       return None
 
    o.is_multi = (fields != [])
-   d = {'general': [], 'specific': []}
-   for t in fields:
-      if t[0] in general:
-         d['general'].append(t)
-      else:
-         d['specific'].append(t)
+   d = {'general': [], 'specific': fields}
 
    for e in o:
       if e.tag in ['general', 'specific']:
@@ -80,21 +71,3 @@ def xmllua2mvx( argin, argout, quiet = False, multicore_only = False ):
          stderr.write('xmllua2mvx: ' + o.name() + '\n')
       o.write(argout)
    return o
-
-if __name__ == '__main__':
-   import argparse
-
-   parser = argparse.ArgumentParser(
-      description =
-   """Takes a xml outfit as input (potentially with inlined lua) and produces a mvx on output.
-The name the output should have is written on <stderr>.
-If the input is invalid, nothing is written on stdout and stderr and non-zero is returned.
-The special values "-" mean stdin/stdout.
-"""
-   )
-   parser.add_argument('-q', '--quiet', action = 'store_true')
-   parser.add_argument('input', nargs = '?', default = '-')
-   parser.add_argument('output', nargs = '?', default = '-')
-   args = parser.parse_args()
-   o = xmllua2mvx(args.input, args.output, args.quiet)
-   exit(1 if o is None else 0)

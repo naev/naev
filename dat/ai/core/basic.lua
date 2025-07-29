@@ -402,7 +402,7 @@ function __choose_land_target ( target )
 
    -- Make sure target is valid
    if target == nil then
-      local landspob = ai.landspob()
+      local landspob = ai.landspob( mem.land_friendly )
       if landspob ~= nil then
          target = landspob
 
@@ -472,18 +472,11 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway( target )
-   if mem.mothership and mem.mothership:exists() then
-      local goal = ai.follow_accurate( mem.mothership, 0, 0, mem.Kp, mem.Kd )
-      local dir  = ai.face( goal )
-      local dist = ai.dist( goal )
-
-      if dist > 300 then
-         if dir < math.rad(10) then
-            ai.accel()
-         end
-      else -- Time to dock
-         ai.dock( mem.mothership )
-      end
+   -- Fighters will fly back to the mothership and swap the runaway task for
+   -- the flyback task
+   if mem.carried and mem.mothership and mem.mothership:exists() then
+      ai.pilot():taskClear()
+      ai.pushtask( "flyback", true )
       return
    end
 

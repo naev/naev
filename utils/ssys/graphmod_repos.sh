@@ -3,7 +3,7 @@
 # an internal component of process_ssys (used repeatedly there)
 SCRIPT_DIR="$1"
 shift
-"$SCRIPT_DIR"/graphmod_smooth_tl.py -e |
+"$SCRIPT_DIR"/graphmod_smooth_tl.py    |
 "$SCRIPT_DIR"/reposition -e -q -i "$@" |
 (
    cat

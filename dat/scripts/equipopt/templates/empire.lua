@@ -9,32 +9,32 @@ local empire_outfits = eoutfits.merge{{
    "Turbolaser", "Heavy Ripper Turret",
    "Heavy Laser Turret",
    -- Medium Weapons
-   "Heavy Ripper Cannon", "Laser Turret MK2",
+   "Heavy Ripper Cannon", "Laser Turret MK2", "Heavy Ion Cannon",
    "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
    "TeraCom Vengeance Launcher", "Enygma Systems Spearhead Launcher",
    "Unicorp Caesar IV Launcher", "Enygma Systems Turreted Fury Launcher",
    -- Small Weapons
-   "TeraCom Banshee Launcher",
-   "Laser Cannon MK1", "Ripper Cannon",
+   "TeraCom Banshee Launcher", "Unicorp Storm Launcher", "Ion Cannon",
+   "Laser Cannon MK1", "Laser Cannon MK2", "Ripper Cannon",
    -- Point Defense
    "Guardian Overseer System",
    "Guardian Interception System",
    -- Utility
    "Hunting Combat AI", "Photo-Voltaic Nanobot Coating",
-   "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Emergency Shield Booster",
-   "Unicorp Medium Afterburner", "Droid Repair Crew",
+   "Unicorp Scrambler", "Unicorp Light Afterburner", "Milspec Jammer",
+   "Sensor Array", "Emergency Shield Booster", "Milspec Scrambler",
+   "Unicorp Medium Afterburner", "Droid Repair Crew", "Unicorp Jammer",
    -- Heavy Structural
    "Battery IV", "Large Fuel Pod", "Battery III", "Reactor Class III",
-   "Shield Capacitor III", "Nanobond Plating",
+   "Shield Capacitor III", "Nanobond Plating", "Auxiliary Processing Unit III",
    "Large Shield Booster",
    -- Medium Structural
-   "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
-   "Active Plating", "Reactor Class II",
-   "Medium Shield Booster",
+   "Battery II", "Shield Capacitor II",
+   "Active Plating", "Reactor Class II", "Auxiliary Processing Unit II",
+   "Medium Shield Booster", "Microbond Plating",
    -- Small Structural
    "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
-   "Reactor Class I", "Small Fuel Pod",
+   "Reactor Class I", "Auxiliary Processing Unit I",
    "Small Shield Booster",
 }}
 local empire_outfits_collective = eoutfits.merge{

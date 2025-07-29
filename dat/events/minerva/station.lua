@@ -33,12 +33,12 @@ local blackjack_portrait = "blackjack.png"
 local chuckaluck_portrait, chuckaluck_image
 if var.peek("minerva_chuckaluck_change") then
    -- Becomes a random NPC
-   chuckaluck_image, chuckaluck_portrait = vni.generic()
+   chuckaluck_image, chuckaluck_portrait = vni.genericNew()
 else
    chuckaluck_portrait = minerva.mole.portrait
    chuckaluck_image = minerva.mole.image
 end
-local blackjack_image = vni.generic()
+local blackjack_image = vni.genericNew()
 local greeter_image = vni.generic() -- TODO replace?
 
 -- Special

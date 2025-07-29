@@ -18,7 +18,7 @@ if scale is None:
    )
    exit(0 if '-h' in argv[1:] else 1)
 
-from graphmod import sys_pos as pos
+from graphmod import ssys_pos
 
-for t in pos:
-   pos[t] *= scale
+for t in ssys_pos:
+   ssys_pos[t] *= scale

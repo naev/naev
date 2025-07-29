@@ -41,4 +41,11 @@
    <pos x="3806.027290" y="10105.230858"/>
   </exclusion>
  </asteroids>
+ <stats>
+  <fuel_regen>1.000000</fuel_regen>
+ </stats>
+ <tags>
+  <tag>southstellarwind</tag>
+  <tag>stellarwind</tag>
+ </tags>
 </ssys>

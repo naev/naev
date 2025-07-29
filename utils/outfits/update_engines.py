@@ -60,7 +60,7 @@ def fmt( t, half = False ):
 
 def dec( f ):
    n = math.floor(f)
-   q = 1.0*f-n
+   q = 1.0*f - n
    n = int(n)
    return pow(dec_i(n), 1.0-q)*pow(dec_i(n+1), q)
 
@@ -76,8 +76,8 @@ def ls2vals( line, size ):
    # Modulate ratio based on outfit
    r *= line_stats[line]['ratio']
 
-   speed = fullspeed*(1.0-r)
-   accel = fullspeed*r*PHYSICS_SPEED_DAMP
+   speed = fullspeed * (1.0-r)
+   accel = fullspeed * r * PHYSICS_SPEED_DAMP
 
    turn = TURN_CT * fullspeed * pow(r/STD_R, AG_EXP)
    if 'turn' in stats:
@@ -86,7 +86,7 @@ def ls2vals( line, size ):
    return {
       'speed' : fmt(speed),
       'accel' : fmt(accel),
-      'turn' : fmt(turn, True)
+      'turn' :  fmt(turn, True)
    }
 
 def get_line( name ):
@@ -118,7 +118,7 @@ def mk_subs( a, name = None ):
          o = None
 
       if o is None:
-         stderr.write('Invalid outfit "'+a+'" ignored\n')
+         stderr.write('Invalid outfit "' + a + '" ignored\n')
          return None
 
       if name is None:
@@ -131,7 +131,7 @@ def mk_subs( a, name = None ):
       o.autostack(doubled)
       sub.append(ls2vals(line, o.size(doubled)))
 
-   if sub == []:
+   if not sub:
       return None
 
    return {k:(v1, sub[-1][k]) for k, v1 in sub[0].items()}
@@ -164,7 +164,7 @@ def main( args ):
          acc = apply_ls(sub, o)
          if acc is not None:
             err(o.fil.split('/')[-1]+': ', nnl = True)
-            if acc != []:
+            if acc:
                err(', '.join([i+':'+j+'->'+k for i, j, k in acc]))
                core_write(o, o.fil)
             else:
@@ -176,7 +176,6 @@ def gen_line( params ):
    outf_dir = os.path.join( os.path.dirname( __file__ ), '..', '..', 'dat', 'outfits')
    engine_dir = os.path.join( outf_dir, 'core_engine', 'small', 'beat_up_small_engine.xml')
 
-   #usage = " %(prog)s (-g line_name [speed_rank [ratio [turn]]]) | (filename ...)",
    lin = params[0]
    try:
       params = list(map(float, params[1:]))
@@ -198,7 +197,7 @@ def gen_line( params ):
          err('Beat up small engine, used as dummy, was not found!')
          return 1
 
-      nam = lin+' '+s+' Engine'
+      nam = lin + ' ' + s + ' Engine'
       o.set_name(nam)
       fil = nam2fil(nam+'.xml')
 
@@ -244,12 +243,12 @@ if __name__ == '__main__':
    args = parser.parse_args()
 
    if args.generate:
-      if args.args[4:] != []:
+      if args.args[4:]:
          err('Ignored: '+', '.join([repr(a) for a in args.args[4:]]))
          args.args = args.args[:4]
       exit(gen_line(args.args))
    else:
-      if args.files or args.args == []:
+      if args.files or not args.args:
          args.args += [l.strip() for l in stdin.readlines()]
       args.args = [a for a in args.args if a.endswith('.xml')]
       exit(main(args.args))

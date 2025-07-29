@@ -125,9 +125,9 @@ function hail ()
    end
    -- Most likely no chance to refuel
    if mem.isdrone then
-      mem.refuel_msg = fmt.f( _([["INSERT {credits} TO COMMENCE REFUELLING OPERATIONS."]]), {credits=fmt.credits(mem.refuel)} )
+      mem.refuel_msg = _([["INSERT {credits} TO COMMENCE REFUELLING OPERATIONS."]])
    else
-      mem.refuel_msg = fmt.f( _([["I will agree to refuel your ship for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
+      mem.refuel_msg = _([["I will agree to refuel your ship for {credits}."]])
    end
 
    -- See if can be bribed
@@ -137,10 +137,10 @@ function hail ()
          (standing > -50 and mem.bribe_rng > 0.6) or
          (rnd.rnd() > 0.4))) then
       if mem.isdrone then
-         mem.bribe_prompt = fmt.f(_([["INSERT {credits} TO CEASE HOSTILITIES."]]), {credits=fmt.credits(mem.bribe)} )
+         mem.bribe_prompt = _([["INSERT {credits} TO CEASE HOSTILITIES."]])
          mem.bribe_paid = _([["PEACE PROTOCOL INITIATED."]])
       else
-         mem.bribe_prompt = fmt.f(_([["We will agree to end the battle for {credits}."]]), {credits=fmt.credits(mem.bribe)} )
+         mem.bribe_prompt = _([["We will agree to end the battle for {credits}."]])
          mem.bribe_paid = _([["Temporarily stopping fire."]])
       end
    else

@@ -37,7 +37,7 @@ def fil_ET( name ):
       if need_repair == []:
          def _repair_ET():
             global need_repair
-            if need_repair != []:
+            if need_repair:
                subprocess.run([cmd] + need_repair)
             need_repair = []
          register(_repair_ET)

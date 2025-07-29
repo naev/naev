@@ -3,7 +3,7 @@ use anyhow::Result;
 use log::warn;
 use rayon::prelude::*;
 use renderer::{Context, ContextWrapper};
-use std::ffi::{c_void, CStr};
+use std::ffi::{c_void, CStr, CString};
 use std::sync::Mutex;
 
 struct ShipWrapper(naevc::Ship);
@@ -17,7 +17,7 @@ impl ShipWrapper {
     }
 
     fn load_gfx_3d(&mut self, path: &str, ctx: &ContextWrapper) -> Result<()> {
-        let m = Model::from_path(ctx, &path)?;
+        let m = Model::from_path(ctx, path)?;
         self.0.gfx_3d = m.into_ptr() as *mut naevc::GltfObject;
         unsafe {
             naevc::ship_gfxLoadPost3D(&mut self.0 as *mut naevc::Ship);
@@ -25,8 +25,16 @@ impl ShipWrapper {
         Ok(())
     }
 
-    fn load_gfx_2d(&mut self) -> Result<()> {
-        unsafe { naevc::ship_gfxLoad2D(&mut self.0 as *mut naevc::Ship) };
+    fn load_gfx_2d(&mut self, path: &str, ext: &str) -> Result<()> {
+        let cpath = CString::new(path).unwrap();
+        let cext = CString::new(ext).unwrap();
+        unsafe {
+            naevc::ship_gfxLoad2D(
+                &mut self.0 as *mut naevc::Ship,
+                cpath.as_ptr(),
+                cext.as_ptr(),
+            )
+        };
         Ok(())
     }
 }
@@ -51,7 +59,7 @@ fn get_mut() -> &'static mut [ShipWrapper] {
 #[unsafe(no_mangle)]
 pub extern "C" fn ship_gfxLoadNeeded() {
     let needs2d: Mutex<Vec<&mut ShipWrapper>> = Mutex::new(vec![]);
-    let ctx = Context::get().unwrap().as_safe_wrap();
+    let ctx = Context::get().as_safe_wrap();
     get_mut().par_iter_mut().for_each(|ptr| {
         let s = &mut ptr.0;
         if s.flags & naevc::SHIP_NEEDSGFX == 0 {
@@ -71,12 +79,12 @@ pub extern "C" fn ship_gfxLoadNeeded() {
             .to_str()
             .unwrap()
         };
-        let path = match cpath.chars().next() == Some('/') {
+        let path = match cpath.starts_with('/') {
             true => cpath,
             false => &format!("gfx/ship3d/{base_path}/{cpath}"),
         };
-        if match ndata::is_file(&path) {
-            true => ptr.load_gfx_3d(&path, &ctx),
+        if match ndata::is_file(path) {
+            true => ptr.load_gfx_3d(path, &ctx),
             false => {
                 let path = format!("gfx/ship3d/{base_path}/{cpath}.gltf");
                 ptr.load_gfx_3d(&path, &ctx)
@@ -90,14 +98,25 @@ pub extern "C" fn ship_gfxLoadNeeded() {
     drop(ctx); // Need to drop
 
     // 2D doesn't use the safe context system yet, so it can't be threaded with 3D
-    needs2d
-        .lock()
-        .unwrap()
-        .iter_mut()
-        .for_each(|ptr| match ptr.load_gfx_2d() {
+    needs2d.lock().unwrap().iter_mut().for_each(|ptr| {
+        let s = ptr.0;
+        let cpath = unsafe { CStr::from_ptr(s.gfx_path).to_str().unwrap() };
+        let base = cpath.split('_').next().unwrap_or("");
+        let ext = unsafe {
+            match s.gfx_extension.is_null() {
+                true => ".webp",
+                false => CStr::from_ptr(s.gfx_extension).to_str().unwrap(),
+            }
+        };
+        let path = match cpath.starts_with('/') {
+            true => cpath,
+            false => &format!("gfx/ship/{base}/{cpath}"),
+        };
+        match ptr.load_gfx_2d(path, ext) {
             Ok(_) => (),
             Err(e) => {
                 warn!("Unable to load graphics for ship '{}': {}", ptr.name(), e);
             }
-        });
+        }
+    });
 }

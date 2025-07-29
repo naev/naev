@@ -3,14 +3,22 @@ use gettext::gettext;
 use std::collections::VecDeque;
 use std::ffi::CString;
 use std::os::raw::{c_char, c_double, c_int, c_ulong};
-use std::sync::Mutex;
+use std::sync::{Mutex, RwLock};
 
 pub type NTimeC = i64;
-#[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
 pub struct NTime(i64);
 struct NTimeInternal {
     time: NTime,
     remainder: f64,
+}
+impl NTimeInternal {
+    pub const fn new() -> Self {
+        Self {
+            time: NTime(0),
+            remainder: 0.,
+        }
+    }
 }
 impl<T: Into<i64>> std::ops::Add<T> for NTime {
     type Output = NTime;
@@ -100,10 +108,7 @@ impl NTime {
 }
 
 static DEFERLIST: Mutex<VecDeque<NTime>> = Mutex::new(VecDeque::new());
-static TIME: Mutex<NTimeInternal> = Mutex::new(NTimeInternal {
-    time: NTime(0),
-    remainder: 0.,
-});
+static TIME: RwLock<NTimeInternal> = RwLock::new(NTimeInternal::new());
 static ENABLED: Mutex<bool> = Mutex::new(true);
 
 #[unsafe(no_mangle)]
@@ -125,7 +130,7 @@ pub extern "C" fn ntime_getR(
     seconds: *mut c_int,
     rem: *mut c_double,
 ) {
-    let nt = TIME.lock().unwrap();
+    let nt = TIME.read().unwrap();
     let t = nt.time;
     unsafe {
         *cycles = t.cycles();
@@ -170,7 +175,7 @@ pub extern "C" fn ntime_pretty(t: NTimeC, d: c_int) -> *mut c_char {
 #[unsafe(no_mangle)]
 pub extern "C" fn ntime_prettyBuf(cstr: *mut c_char, max: c_int, t: NTimeC, d: c_int) {
     let nt = if t == 0 {
-        TIME.lock().unwrap().time
+        TIME.read().unwrap().time
     } else {
         NTime(t)
     };
@@ -234,17 +239,17 @@ pub extern "C" fn ntime_refresh() {
 }
 
 pub fn get() -> NTime {
-    TIME.lock().unwrap().time
+    TIME.read().unwrap().time
 }
 
 pub fn set(t: NTime) {
-    let mut nt = TIME.lock().unwrap();
+    let mut nt = TIME.write().unwrap();
     nt.time = t;
     nt.remainder = 0.;
 }
 
 pub fn set_remainder(t: NTime, rem: f64) {
-    let mut nt = TIME.lock().unwrap();
+    let mut nt = TIME.write().unwrap();
     nt.time = t;
     nt.time += NTime(rem.floor() as i64);
     nt.remainder %= 1.0;
@@ -254,7 +259,7 @@ pub fn update(dt: f64) {
     if !*ENABLED.lock().unwrap() {
         return;
     }
-    let mut nt = TIME.lock().unwrap();
+    let mut nt = TIME.write().unwrap();
     let dtt = nt.remainder + dt * 30. * 1000.;
     let tu = dtt.floor();
     let inc = tu as i64;
@@ -268,7 +273,7 @@ pub fn allow_update(enable: bool) {
 }
 
 pub fn inc(t: NTime) {
-    TIME.lock().unwrap().time += t;
+    TIME.write().unwrap().time += t;
     unsafe {
         naevc::economy_update(t.into());
     }
@@ -285,7 +290,7 @@ pub fn inc_queue(t: NTime) {
 
 pub fn refresh() {
     while let Some(t) = DEFERLIST.lock().unwrap().pop_front() {
-        TIME.lock().unwrap().time += t;
+        TIME.write().unwrap().time += t;
         unsafe {
             naevc::economy_update(t.into());
         }

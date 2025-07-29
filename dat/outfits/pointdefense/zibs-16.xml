@@ -1,0 +1,35 @@
+<outfit name="ZIBS-16">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <typename>Point Defense</typename>
+  <mass>23</mass>
+  <price>150000</price>
+  <description>The Za'lek Interception Beam System or ZIBS uses uses a 16-faceted polyhedral focusing crystal which enable very accurate and quick movements, allowing it to effectively intercept incoming missiles and even quickly track small interceptor craft. While most beam weapons make significant concessions to increase the limited weapon range, by minimizing concessions, the initial prototype resulted in a much more powerful penetrating beam. Field-testing quickly showed that the weapon was of very limited use in non-point defense roles, which resulted in the creation of the ZIBS-16, and later ZIBS-32 line of beam-based point defense.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>-50</cpu>
+ </general>
+ <specific type="turret beam">
+  <delay min="0">0.9</delay>
+  <duration>0.3</duration>
+  <lua>outfits/pointdefense/pointdefense.lua</lua>
+  <range>250</range>
+  <turn>360</turn>
+  <energy>41</energy>
+  <damage>
+   <type>energy</type>
+   <penetrate>11</penetrate>
+   <physical>95</physical>
+  </damage>
+  <pointdefense />
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
+  <sound>beam_fuzzy</sound>
+  <sound_off>beam_fuzzy_off</sound_off>
+  <shader r="0.7" g="0.2" b="0.85" a="1." width="11.5">beam_default</shader>
+ </specific>
+ <tags>
+  <tag>zalek</tag>
+ </tags>
+</outfit>

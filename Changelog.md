@@ -26,6 +26,7 @@
  - Damage over time effects now can cause faction loss and other effects
  - New harder difficulty
  - Gauntlet negative bonuses are now multiplicative
+ - Stealthing will temporarily jam locked on munitions
 
 #### Quality of Life
  - Autonav improvements
@@ -45,7 +46,7 @@
  - 13 new missions and events
     - Go treasure hunting
  - 8 new ship variants
- - 8 new outfits and reworked cores
+ - 14 new outfits and reworked cores
     - Outfit sets that gain bonuses as more elements of the set are equipped
  - New sensor anomalies
  - Two new intertwined minor houses of the Empire with new systems and lore

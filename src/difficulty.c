@@ -55,6 +55,7 @@ int difficulty_load( void )
 
       /* Initialize. */
       memset( &d, 0, sizeof( Difficulty ) );
+      d.level = 1.; /* Defaults to 1.0. */
 
       /* Properties. */
       xmlr_attr_strd( node, "name", d.name );
@@ -65,6 +66,7 @@ int difficulty_load( void )
       do {
          xml_onlyNodes( cur );
          xmlr_strd( cur, "description", d.description );
+         xmlr_float( cur, "level", d.level );
          d.stats = ss_listFromXMLSingle( d.stats, cur );
       } while ( xml_nextNode( cur ) );
 

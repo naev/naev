@@ -540,13 +540,12 @@ void outfits_update( unsigned int wid, const char *str )
    /* new text */
    if ( outfit_slotType( outfit ) == OUTFIT_SLOT_INTRINSIC ) {
       scnprintf( buf, sizeof( buf ), "%s\n\n#o%s#0",
-                 pilot_outfitDescription( player.p, outfit, NULL ),
+                 _( outfit_descRaw( outfit ) ),
                  _( "This is an intrinsic outfit that will be directly "
                     "equipped on the current ship and can not be moved." ) );
       window_modifyText( wid, "txtDescription", buf );
    } else
-      window_modifyText( wid, "txtDescription",
-                         pilot_outfitDescription( player.p, outfit, NULL ) );
+      window_modifyText( wid, "txtDescription", _( outfit_descRaw( outfit ) ) );
    buf_price = outfit_getPrice( outfit, outfits_getMod(), &price, &canbuy,
                                 &cansell, &youhave );
    credits2str( buf_credits, player.p->credits, 2 );
@@ -577,6 +576,7 @@ void outfits_update( unsigned int wid, const char *str )
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s", buf_price );
    l += scnprintf( &buf[l], sizeof( buf ) - l, "\n%s",
                    ( ( youhave ) != NULL ) ? youhave : buf_credits );
+
    if ( outfit_license( outfit ) ) {
       int meets_reqs = player_hasLicense( outfit_license( outfit ) );
       k += scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "License:" ) );
@@ -589,9 +589,7 @@ void outfits_update( unsigned int wid, const char *str )
                        meets_reqs ? "" : "#r", _( outfit_license( outfit ) ) );
    }
    if ( outfit_cond( outfit ) ) {
-      int meets_reqs = 0;
-      if ( land_spob != NULL )
-         meets_reqs = cond_check( outfit_cond( outfit ) );
+      int meets_reqs = cond_check( outfit_cond( outfit ) );
       /*k +=*/scnprintf( &lbl[k], sizeof( lbl ) - k, "\n%s", _( "Requires:" ) );
       if ( blackmarket )
          /*l +=*/scnprintf( &buf[l], sizeof( buf ) - l, "\n%s#0",

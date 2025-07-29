@@ -13,3 +13,4 @@ path = "@SOURCE@/src/toolkit/src/lib.rs"
 
 [dependencies]
 sdl3 = { workspace = true }
+renderer = { workspace = true }

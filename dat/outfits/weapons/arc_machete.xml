@@ -1,0 +1,31 @@
+<outfit name="Arc Machete">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon</license>
+  <rarity>1</rarity>
+  <mass>33</mass>
+  <price>315000</price>
+  <description>This weapon unleashes a focused beam of disabling electromagnetic radiation, able to both effectively shred through a target's shielding and render its equipment inoperable in a short amount of time without causing substantial physical harm. It's favoured by the few well-off pirate captains able to get their hands on one, as well as law enforcement on the hunt for those pirates, for similar reasons.</description>
+  <gfx_store>grave_beam.webp</gfx_store>
+  <cpu>-60</cpu>
+ </general>
+ <specific type="turret beam">
+  <delay min="2">5</delay>
+  <duration>5</duration>
+  <range>700</range>
+  <turn>75</turn>
+  <energy>35</energy>
+  <damage>
+   <type>emp</type>
+   <penetrate>49</penetrate>
+   <physical>23</physical>
+   <disable>51</disable>
+  </damage>
+  <spfx_shield>Shi-S</spfx_shield>
+  <spfx_armour>Exp-S</spfx_armour>
+  <sound>beam0</sound>
+  <sound_off>beam_off0</sound_off>
+  <shader r="0.2" g="0.3" b="0.9" a="0.9" width="16.5">beam_arc</shader>
+ </specific>
+</outfit>
