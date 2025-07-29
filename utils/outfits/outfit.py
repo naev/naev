@@ -39,7 +39,7 @@ def parse_lua_multicore( si ):
    sep = ' ,'
    num = ' -? [0-9]+(\\.[0-9]+)?'
 
-   expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\{ '
+   expr = ' require \\(? ("|\')outfits.lib.multicore(\\1) \\)? \\. init \\( \\{ '
    block = ' \\{ ((' + name + sep + num + ' (' + sep + num + ')?) (' + sep + ')?'+ ' ) \\}'
    expr = expr + ' ((' + block + ' ) ( ,' + block + ' )* ,? ) \\} '
    expr = expr.replace(' ', '\\s*')
@@ -66,7 +66,30 @@ def un_multicore( o ):
    except:
       return False
 
-   e['lua_inline'] = bef.strip()
+   paren, args, crt = 1, [], ''
+   for i, c in enumerate(aft):
+      if c == ',' and paren == 1:
+         args.append(crt.strip())
+         crt = ''
+      else:
+         if c == '(':
+            paren += 1
+         elif c == ')':
+            paren -= 1
+            if paren == 0:
+               break
+         crt += c
+   else:
+      return False
+
+   if crt:
+      args.append(crt.strip())
+   aft = aft[i+1:].strip()
+   bef = bef.strip()
+
+   e['lua_inline'] = bef
+   if args:
+      e['multicore_args'] = args
    if aft:
       e['lua_inline_post'] = aft
 
@@ -219,9 +242,9 @@ class outfit(naev_xml):
             lua_inline_mcargs += L if isinstance(L, list) else [L]
          lua_inline = '\nrequire("outfits.lib.multicore").init(' + ', '.join(lua_inline_mcargs)
          lua_inline += ')'
-         oout['specific']['lua_inline'] = (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
+         oout['specific']['lua_inline'] = '\n' + (oout['specific']['lua_inline'] + '\n' + lua_inline).strip()
          if 'lua_inline_post' in oout['specific']:
-            oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post']
+            oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post'].strip() + '\n'
             del oout['specific']['lua_inline_post']
       else:
          out = self
