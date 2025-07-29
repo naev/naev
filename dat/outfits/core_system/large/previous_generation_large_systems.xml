@@ -9,15 +9,14 @@
   <gfx_store>misc02.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 640, 800},
-   { "cpu_max", 380, 1100},
-   { "energy", 1760, 800},
-   { "energy_regen", 35, 40},
-   { "shield", 500, 150},
-   { "shield_regen", 9, 1},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 640, 800},
+   {'cpu_max', 380, 1100},
+   {'energy', 1760, 800},
+   {'energy_regen', 35, 40},
+   {'shield', 500, 150},
+   {'shield_regen', 9, 1},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

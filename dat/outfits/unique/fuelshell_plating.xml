@@ -11,13 +11,13 @@
   <gfx_store>cargo_hull_m.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 28},
-   { "cargo", 10, 4},
-   { "absorb", 1},
-   { "armour", 40, 28},
-   { "fuel_mod", 50, 10},
-}require 'outfits.unique.fuelshell_plating'</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 28},
+   {'cargo', 10, 4},
+   {'absorb', 1},
+   {'armour', 40, 28},
+   {'fuel_mod', 50, 10},
+})
+require 'outfits.unique.fuelshell_plating'</lua_inline>
  </specific>
 </outfit>

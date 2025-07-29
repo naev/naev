@@ -9,13 +9,12 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 30},
-   { "cargo", 2},
-   { "absorb", 5, 10},
-   { "armour", 70, 40},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 30},
+   {'cargo', 2},
+   {'absorb', 5, 10},
+   {'armour', 70, 40},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

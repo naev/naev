@@ -9,13 +9,12 @@
   <gfx_store>plating_patchwork.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 30},
-   { "cargo", 4, 2},
-   { "absorb", 1, 3},
-   { "armour", 35, 12},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 30},
+   {'cargo', 4, 2},
+   {'absorb', 1, 3},
+   {'armour', 35, 12},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

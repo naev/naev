@@ -209,7 +209,7 @@ class outfit(naev_xml):
                continue
             if not isinstance(v, tuple):
                v = (v,)
-            lua_inline_mcarg += ind + '{' + ', '.join(["'"+k+"'"] + [str(u) for u in v]) + ' },\n'
+            lua_inline_mcarg += ind + '{' + ', '.join(["'"+k+"'"] + [str(u) for u in v]) + '},\n'
             del oout['specific'][k]
          lua_inline_mcarg += '}'
          lua_inline_mcargs = [lua_inline_mcarg]

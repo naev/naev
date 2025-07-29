@@ -8,16 +8,15 @@
   <gfx_store>engine11.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 100, 30},
-   { "energy_regen_malus", 28},
-   { "engine_limit", 2500, 2900},
-   { "fuel", 1600, 0},
-   { "speed", 119, 56},
-   { "accel", 31, 7},
-   { "turn", 46, 18},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 100, 30},
+   {'energy_regen_malus', 28},
+   {'engine_limit', 2500, 2900},
+   {'fuel', 1600, 0},
+   {'speed', 119, 56},
+   {'accel', 31, 7},
+   {'turn', 46, 18},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

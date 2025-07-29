@@ -1,6 +1,6 @@
 local fmt = require "format"
 local corsair = require "outfits.lib.sets.corsair"
-local multicore = require "outfits.lib.multicore"
+local multicore = require 'outfits.lib.multicore'
 
 -- Core bonuses
 local ARMOUR_REGEN = 2

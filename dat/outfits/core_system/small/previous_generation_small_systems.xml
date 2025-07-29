@@ -9,15 +9,14 @@
   <gfx_store>apu.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 18, 45},
-   { "cpu_max", 10, 20},
-   { "energy", 100, 50},
-   { "energy_regen", 5, 1},
-   { "shield", 110, 20},
-   { "shield_regen", 4, 0},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 18, 45},
+   {'cpu_max', 10, 20},
+   {'energy', 100, 50},
+   {'energy_regen', 5, 1},
+   {'shield', 110, 20},
+   {'shield_regen', 4, 0},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

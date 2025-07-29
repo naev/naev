@@ -10,19 +10,18 @@
   <gfx_store>rs_hull_l.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 550},
-   { "cpu", -160, 0},
-   { "cargo", 270, 130},
-   { "absorb", 56, 12},
-   { "armour", 800, 300},
-   { "cargo_inertia", -10, -4},
-   { "cargo_mod", 10, 4},
-   { "ew_detected", 25, 0},
-   { "ew_signature", -10, 0},
-   { "jam_chance", 42, 0},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 550},
+   {'cpu', -160, 0},
+   {'cargo', 270, 130},
+   {'absorb', 56, 12},
+   {'armour', 800, 300},
+   {'cargo_inertia', -10, -4},
+   {'cargo_mod', 10, 4},
+   {'ew_detected', 25, 0},
+   {'ew_signature', -10, 0},
+   {'jam_chance', 42, 0},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>

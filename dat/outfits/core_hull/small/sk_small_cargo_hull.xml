@@ -9,15 +9,14 @@
   <gfx_store>cargo_hull_s.webp</gfx_store>
  </general>
  <specific type="modification">
-  <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 30},
-   { "cargo", 20, 10},
-   { "absorb", 2, 4},
-   { "armour", 55, 35},
-   { "cargo_inertia", -25, -10},
-   { "cargo_mod", 25, 10},
-}</lua_inline>
+  <lua_inline>require('outfits.lib.multicore').init({
+   {'mass', 30},
+   {'cargo', 20, 10},
+   {'absorb', 2, 4},
+   {'armour', 55, 35},
+   {'cargo_inertia', -25, -10},
+   {'cargo_mod', 25, 10},
+})</lua_inline>
  </specific>
  <tags>
   <tag>core</tag>
