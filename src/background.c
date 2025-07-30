@@ -425,7 +425,12 @@ static void background_renderImages( background_image_t *bkg_arr )
       background_image_t *bkg = &bkg_arr[i];
 
       cam_getPos( &cx, &cy );
-      z = cam_getZoom();
+      // z = 1. + bkg->move * cam_getZoom(); /* Perspective. */
+      // z = cam_getZoom(); /* Orthorgonal. */
+      // z = cam_getZoom() * (0.5 + 0.5 * bkg->move) + 0.5; /* Average
+      // Orthogonal + Perspective. */
+      z = cam_getZoom() * ( 0.75 + 0.25 * bkg->move ) +
+          0.25; /* 75% Orthogonal, 25% Perspective. */
       m = z * bkg->move;
       s = z * bkg->scale;
 
