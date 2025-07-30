@@ -670,6 +670,7 @@ function control_funcs.attack_forced ()
 end
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
+control_funcs.scan = scans.control_funcs
 function attacked_manual( attacker )
    local p = ai.pilot()
    -- Ignore hits from dead or stealthed pilots.

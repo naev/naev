@@ -175,6 +175,16 @@ local function __wanttoscan( p, target )
 end
 
 --[[
+-- Control function for scanning. Pops if no longer wants to scan the target.
+--]]
+function scans.control_func ()
+   local target = ai.taskdata()
+   if not __wanttoscan(target) then
+      ai.poptask()
+   end
+end
+
+--[[
 -- Tries to get find a good target to scan with some heuristics based on mass
 -- and distance
 --]]
