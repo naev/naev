@@ -206,6 +206,7 @@ function enter ()
       local d = pilot.add( ship, collective_fct, pos, name )
       d:setNoDeath(true)
       d:setFriendly(true)
+      d:setNoBoard(true)
       pilotai.guard( d, pos )
       local m = d:memory()
       m.guarddodist = 2000
