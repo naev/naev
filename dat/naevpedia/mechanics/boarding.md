@@ -16,7 +16,7 @@ Possible actions include looting, or stealing outfits.
 
 You can steal credits, fuel, cargo, and outfits from ships you board.
 Looting anything from a ship will lower your reputation with the faction to which the ship belongs.
-This make also make nearby ships angry if they dislike your action.
+This may also make nearby ships angry if they dislike your action.
 
 The amount of loot available is determined by your **Boarding Bonus** modifier.
 Higher values will allow you to obtain more loot from the ships you board.
@@ -37,6 +37,6 @@ Capturing a ship is a three stage process:
 1. Pay to repair the ship.
 
 The cost of repairing a captured ship is the ship's cost, including equipped outfits, multiplied by `(10 + their crew) / (10 + your crew) + 0.25`.
-Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships of a faction.
+Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships belonging to any faction.
 Once you successfully capture the ship, you will obtain it, outfits and all, and be able to either use it yourself or [deploy it as an escort](mechanics/playerfleet).
 <% end %>

@@ -4,11 +4,12 @@ title: "Electronic Warfare"
 # Electronic Warfare
 
 A large part of combat is not only direct damage, but electronic warfare between the evasive and sensing abilities of ships.
-Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of hips.
+Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of ships.
 There are fundamentally three different levels, from coarse to fine:
+
 1. Detection and hiding
-1. Signature and tracking
-1. Stealth
+2. Signature and tracking
+3. Stealth
 
 All electronic warfare values are based on distances, since they represent the distance at which the ship is fully detected.
 
@@ -39,7 +40,7 @@ For space objects such as planets or stations the base value is <%= constant( "E
 
 ## Signature and Tracking
 
-Electronic warfare plays a critical war in combat too through evasion and tracking.
+Electronic warfare plays a critical part in combat too through evasion and tracking.
 A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value.
 The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship.
 Ships will be able to identify other ships if they are closer than their signature range, otherwise they will be shown an "Unknown".
@@ -49,12 +50,12 @@ Furthermore, turret weapons can aim the entire 360° and shoot at ships in any d
 Weapons try to compensate for target velocities for accurate shots, however, this is reduced based on the signature range of the target ship.
 In particular, weapons have a minimum tracking range, and maximum tracking range.
 Any ship with a signature range above the maximum tracking range will be aimed at nearly perfectly, barring sudden accelerations.
-On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shoots will aim at the current position, not correcting velocity.
+On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shots will aim at the current position, not correcting for velocity.
 For in-between values it will be interpolated linearly.
 
 Similarly, the lock-on time of launchers is modified by the signature range of the target and tracking values of the launcher.
 If the target has a signature range above the maximum tracking range, the lock-on time will be unmodified.
-If the target has a signature range below the maximum tracking range, it will not be able to lock on.
+If the target has a signature range below the minimum tracking range, it will not be able to lock on.
 Similar to bolt weapons, in-between values will be interpolated linearly.
 
 ## Stealth
