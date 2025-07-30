@@ -165,7 +165,7 @@ local function land_lab ()
    vn.scene()
    local sai = tut.vn_shipai()
    vn.transition()
-   vn.na(fmt.f(_([[You discreetly land on {spob} and are able to locate what seems to be the laboratory you have to enter."]]),
+   vn.na(fmt.f(_([[You discreetly land on {spob} and are able to locate what seems to be the laboratory you have to enter.]]),
       {spob=spob.cur()}))
    if fct=="Empire" then
       vn.na(_([[The laboratory is easily accessible from the docks and doesn't seem to have any indicative markings. It could easily be confused with a generic warehouse if it didn't match the description given to you by Scavenger. Now, how to enter the complex?]]))
