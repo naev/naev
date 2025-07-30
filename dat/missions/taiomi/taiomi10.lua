@@ -655,7 +655,7 @@ Erk…"]]))
    sai(_([["It's alive!"]]))
    d(_([["Where… where am I?"]]))
    vn.menu{
-      {fmt.f(_([["This is {sys}.]]),{sys=endsys}), "cont01"},
+      {fmt.f(_([["This is {sys}."]]),{sys=endsys}), "cont01"},
       {_([["You're alive!"]]), "cont01"},
       {_([["What happened?"]]), "cont01"},
       {_([[…]]), "cont01"},
