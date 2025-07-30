@@ -420,13 +420,14 @@ static void background_renderImages( background_image_t *bkg_arr )
 
    /* Render images in order. */
    for ( int i = 0; i < array_size( bkg_arr ); i++ ) {
-      double              cx, cy, x, y, rx, ry, z, m;
+      double              cx, cy, x, y, rx, ry, z, m, s;
       glColour            col;
       background_image_t *bkg = &bkg_arr[i];
 
       cam_getPos( &cx, &cy );
-      m = bkg->move;
-      z = bkg->scale;
+      z = cam_getZoom();
+      m = z * bkg->move;
+      s = z * bkg->scale;
 
       /* Relative coordinates. */
       rx = ( bkg->x - cx ) * m;
@@ -441,8 +442,8 @@ static void background_renderImages( background_image_t *bkg_arr )
       col.g = bkg->col.g * conf.bg_brightness;
       col.b = bkg->col.b * conf.bg_brightness;
       col.a = bkg->col.a;
-      gl_renderTexture( bkg->image, x, y, z * tex_sw( bkg->image ),
-                        z * tex_sh( bkg->image ), 0., 0., tex_srw( bkg->image ),
+      gl_renderTexture( bkg->image, x, y, s * tex_sw( bkg->image ),
+                        s * tex_sh( bkg->image ), 0., 0., tex_srw( bkg->image ),
                         tex_srh( bkg->image ), &col, bkg->angle );
 
       /* See if we have to update scene lighting. */
