@@ -269,7 +269,7 @@ function hypergate.window ()
       totalmass = totalmass + v:mass()
    end
    local cost_mod = mem._cost_mod
-   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * cost_mod
+   local totalcost = math.floor(mem.cost_flat * cost_mod + 0.5) + totalmass * math.floor( mem.cost_mass * cost_mod + 0.5 )
    local hgsys = mem.spob:system()
    local hgfact = mem.spob:faction()
    local standing_value = mem.spob:reputation()
@@ -302,8 +302,8 @@ function hypergate.window ()
       costmod = cost_mod_str,
       totalmass = fmt.tonnes(totalmass),
       totalcost = fmt.credits(totalcost),
-      flatcost = fmt.credits(mem.cost_flat),
-      masscost = fmt.credits(mem.cost_mass),
+      flatcost = fmt.credits(math.floor(mem.cost_flat * cost_mod + 0.5)),
+      masscost = fmt.credits(math.floor(mem.cost_mass * cost_mod + 0.5)),
    }) )
    local txth = txt:height()
    local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )
