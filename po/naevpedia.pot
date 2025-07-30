@@ -3537,31 +3537,35 @@ msgid "# Bioships"
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:7
-msgid "Bioships are hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
+msgid "Bioships are a hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:8
-msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains stages."
+msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains experience."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:9
-msgid "Increasing stages can be done by gaining experience, primarily through doing missions with the ship."
+msgid "Experience is gained primarily through doing missions with the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:10
-msgid "Other than improving the core outfits, stages allows the ship to learn new skills and become significantly more powerful."
+msgid "By gaining experience, a bio-ship will be able to increase its rank."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:12
+#: dat/naevpedia/mechanics/bioships.md:11
+msgid "Other than improving the core outfits, ranks allow the ship to learn new skills and become significantly more powerful."
+msgstr ""
+
+#: dat/naevpedia/mechanics/bioships.md:13
 msgid "## Skills"
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:14
-msgid "Bioship skills, stages, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+#: dat/naevpedia/mechanics/bioships.md:15
+msgid "Bioship skills, ranks, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:15
-msgid "You can also reset the skills by using experience, although this can lower your stage."
+#: dat/naevpedia/mechanics/bioships.md:16
+msgid "You can also reset the skills by using experience, although this can lower your rank."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:2
@@ -3606,7 +3610,7 @@ msgid "Looting anything from a ship will lower your reputation with the faction 
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:19
-msgid "This make also make nearby ships angry if they dislike your action."
+msgid "This may also make nearby ships angry if they dislike your action."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:21
@@ -3658,7 +3662,7 @@ msgid "The cost of repairing a captured ship is the ship's cost, including equip
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:40
-msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships of a faction."
+msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships belonging to any faction."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:41
@@ -3837,7 +3841,7 @@ msgid "Disable damage is the only way to disable ships, by applying stress."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:23
-msgid "When a ship's stress is larger than the available armour, it becomes disable, and [can be boarded](mechanics/boarding)."
+msgid "When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:24
@@ -3976,7 +3980,7 @@ msgid "Furthermore, slots can have special properties such as:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:20
-msgid "1. **Fighter Bays**: Modifies weapno slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
+msgid "1. **Fighter Bays**: Modifies weapon slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:21
@@ -3992,7 +3996,7 @@ msgid "The equipment window is available when [landing](mechanics/landing) on sp
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
-msgid "It allows you to, not only change ships, but also change the outfits the ship has equipped."
+msgid "It allows you to not only change ships but also to change the outfits the ship has equipped."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:27
@@ -4057,234 +4061,234 @@ msgid "A large part of combat is not only direct damage, but electronic warfare 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:7
-msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of hips."
+msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:8
 msgid "There are fundamentally three different levels, from coarse to fine:"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:9
+#: dat/naevpedia/mechanics/ewarfare.md:10
 msgid "1. Detection and hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:10
-msgid "1. Signature and tracking"
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:11
-msgid "1. Stealth"
+msgid "2. Signature and tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:13
+#: dat/naevpedia/mechanics/ewarfare.md:12
+msgid "3. Stealth"
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:14
 msgid "All electronic warfare values are based on distances, since they represent the distance at which the ship is fully detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:15
+#: dat/naevpedia/mechanics/ewarfare.md:16
 msgid "## Scanning"
-msgstr ""
-
-#: dat/naevpedia/mechanics/ewarfare.md:17
-msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:18
-msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
+msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:19
-msgid "When the icon stops rotating, it indicates that the ship has been scanned."
+msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:20
-msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgid "When the icon stops rotating, it indicates that the ship has been scanned."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:21
+msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:22
 msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:23
+#: dat/naevpedia/mechanics/ewarfare.md:24
 msgid "Similarly, other ships will scan your ship when targeting it."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:24
+#: dat/naevpedia/mechanics/ewarfare.md:25
 msgid "This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:25
+#: dat/naevpedia/mechanics/ewarfare.md:26
 msgid "Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:27
+#: dat/naevpedia/mechanics/ewarfare.md:28
 msgid "## Detection and Hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:29
+#: dat/naevpedia/mechanics/ewarfare.md:30
 msgid "Without modifiers, ships are detected based on [their mass](mechanics/mass)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:30
+#: dat/naevpedia/mechanics/ewarfare.md:31
 msgid "In particular, they are detected at a distance of `mass^(1.0/1.8) * 350` which amounts to about 6,513 km for a Llama with 193 tonnes of mass, or 43,278 km for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:31
+#: dat/naevpedia/mechanics/ewarfare.md:32
 msgid "This value gets reduced by the **Detection** bonus of the detecting ship, and multiplied by the **Detection Range** of the ship being detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:32
+#: dat/naevpedia/mechanics/ewarfare.md:33
 msgid "Since this value determines the base signature and stealth values of the ship, it can play a significant role in electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:34
+#: dat/naevpedia/mechanics/ewarfare.md:35
 msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:36
+#: dat/naevpedia/mechanics/ewarfare.md:37
 msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:37
+#: dat/naevpedia/mechanics/ewarfare.md:38
 msgid "This distance can be modified by values such as how well hidden the jump is."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:38
+#: dat/naevpedia/mechanics/ewarfare.md:39
 msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:40
+#: dat/naevpedia/mechanics/ewarfare.md:41
 msgid "## Signature and Tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:42
-msgid "Electronic warfare plays a critical war in combat too through evasion and tracking."
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:43
-msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
+msgid "Electronic warfare plays a critical part in combat too through evasion and tracking."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:44
-msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:45
+msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:46
 msgid "Ships will be able to identify other ships if they are closer than their signature range, otherwise they will be shown an \"Unknown\"."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:47
+#: dat/naevpedia/mechanics/ewarfare.md:48
 msgid "Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:48
+#: dat/naevpedia/mechanics/ewarfare.md:49
 msgid "Furthermore, turret weapons can aim the entire 360° and shoot at ships in any directions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:49
+#: dat/naevpedia/mechanics/ewarfare.md:50
 msgid "Weapons try to compensate for target velocities for accurate shots, however, this is reduced based on the signature range of the target ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:50
+#: dat/naevpedia/mechanics/ewarfare.md:51
 msgid "In particular, weapons have a minimum tracking range, and maximum tracking range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:51
+#: dat/naevpedia/mechanics/ewarfare.md:52
 msgid "Any ship with a signature range above the maximum tracking range will be aimed at nearly perfectly, barring sudden accelerations."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:52
-msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shoots will aim at the current position, not correcting velocity."
+#: dat/naevpedia/mechanics/ewarfare.md:53
+msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shots will aim at the current position, not correcting for velocity."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:53
+#: dat/naevpedia/mechanics/ewarfare.md:54
 msgid "For in-between values it will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:55
+#: dat/naevpedia/mechanics/ewarfare.md:56
 msgid "Similarly, the lock-on time of launchers is modified by the signature range of the target and tracking values of the launcher."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:56
+#: dat/naevpedia/mechanics/ewarfare.md:57
 msgid "If the target has a signature range above the maximum tracking range, the lock-on time will be unmodified."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:57
-msgid "If the target has a signature range below the maximum tracking range, it will not be able to lock on."
+#: dat/naevpedia/mechanics/ewarfare.md:58
+msgid "If the target has a signature range below the minimum tracking range, it will not be able to lock on."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:58
+#: dat/naevpedia/mechanics/ewarfare.md:59
 msgid "Similar to bolt weapons, in-between values will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:60
+#: dat/naevpedia/mechanics/ewarfare.md:61
 msgid "## Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:62
+#: dat/naevpedia/mechanics/ewarfare.md:63
 msgid "The stealth range of a ship is based on 25% of the detection range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:63
+#: dat/naevpedia/mechanics/ewarfare.md:64
 msgid "If there are no ships within the stealth range, the ship will be able to enter stealth mode."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:64
+#: dat/naevpedia/mechanics/ewarfare.md:65
 msgid "In stealth mode, the ship will be undetectable, however, it will have its [movement](mechanics/movement) significantly reduced."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:65
+#: dat/naevpedia/mechanics/ewarfare.md:66
 msgid "In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:66
+#: dat/naevpedia/mechanics/ewarfare.md:67
 msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:68
+#: dat/naevpedia/mechanics/ewarfare.md:69
 msgid "### Jumping with Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:70
+#: dat/naevpedia/mechanics/ewarfare.md:71
 msgid "When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:71
+#: dat/naevpedia/mechanics/ewarfare.md:72
 msgid "Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:72
+#: dat/naevpedia/mechanics/ewarfare.md:73
 msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:74
+#: dat/naevpedia/mechanics/ewarfare.md:75
 msgid "## Scanning"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:76
+#: dat/naevpedia/mechanics/ewarfare.md:77
 msgid "Like the detection range, the scanning time of a ship is determined by its mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:77
+#: dat/naevpedia/mechanics/ewarfare.md:78
 msgid "The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:78
+#: dat/naevpedia/mechanics/ewarfare.md:79
 msgid "This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:80
+#: dat/naevpedia/mechanics/ewarfare.md:81
 msgid "## System Modifiers"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:82
+#: dat/naevpedia/mechanics/ewarfare.md:83
 msgid "System modifiers such as asteroid fields and interference can further affect electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:83
+#: dat/naevpedia/mechanics/ewarfare.md:84
 msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:84
+#: dat/naevpedia/mechanics/ewarfare.md:85
 msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
@@ -4343,7 +4347,7 @@ msgid "# Hailing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:6
-msgid "Communicating with ships or spaceportscan be a good way to request assistance, discourage them from bribing your, or even obtaining information."
+msgid "Communicating with ships or spaceports can be a good way to request assistance, discourage them from attacking your ship through bribing, or even obtaining information."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:7
@@ -4363,7 +4367,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritarians will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -4375,7 +4379,7 @@ msgid "## Bribing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:18
-msgid "When dealing with hostile ships, it is sometimes able to bribe them and their companions."
+msgid "When dealing with hostile ships, you are sometimes able to bribe them and their companions."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:19
@@ -4610,7 +4614,7 @@ msgid "Here you can buy or sell commodities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:59
-msgid "The price will depend on the location, which you compare on [the universe map](mechanics/map)."
+msgid "The price will depend on the location, which you can compare on [the universe map](mechanics/map)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:60
@@ -4893,7 +4897,7 @@ msgid "As the mass increases, a ship's [visibility and signature](mechanics/ewar
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:9
-msgid "Furthermore, ships have a mass limit, determined fundamentally by the core engine."
+msgid "Furthermore, ships have a mass limit, determined by the core engine."
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:10
@@ -5027,7 +5031,7 @@ msgid "# Missions"
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:6
-msgid "Many different factions or individuals will offer you missions where you can help them in exchange for rewards."
+msgid "Many different factions and individuals will offer you missions where you can help them in exchange for rewards."
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:7
@@ -5170,7 +5174,7 @@ msgid "Your reputation is on a per-system basis, however, neighbouring systems o
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:12
-msgid "By default, whenever will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgid "By default, you will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:13
@@ -5275,7 +5279,7 @@ msgid "* [Mass](mechanics/movement): How heavy the ship is. If the mass of a shi
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:27
-msgid "* [Jump Time](mechanics/time): Determines how long much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
+msgid "* [Jump Time](mechanics/time): Determines how much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:28
@@ -5323,7 +5327,7 @@ msgid "## Health Stats"
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:44
-msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration."
+msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, this can be overcome by weapon penetration."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:45
@@ -5665,7 +5669,7 @@ msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. W
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
-msgid "1. **Hold**: Activates the bound outfits when the button only when held, and releasing will stop the outfits."
+msgid "1. **Hold**: Activates the bound outfits of the button only when held, and releasing will stop the outfits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:39
@@ -9493,31 +9497,35 @@ msgid "# Bioships"
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:7
-msgid "Bioships are hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
+msgid "Bioships are a hybrid between man-made constructs and living animals, and are tamed and created by the [Soromid Tribes](lore/factions/soromid)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:8
-msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains stages."
+msgid "Unlike normal ships, bioships have built-in cores that grow stronger as the ship gains experience."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:9
-msgid "Increasing stages can be done by gaining experience, primarily through doing missions with the ship."
+msgid "Experience is gained primarily through doing missions with the ship."
 msgstr ""
 
 #: dat/naevpedia/mechanics/bioships.md:10
-msgid "Other than improving the core outfits, stages allows the ship to learn new skills and become significantly more powerful."
+msgid "By gaining experience, a bio-ship will be able to increase its rank."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:12
+#: dat/naevpedia/mechanics/bioships.md:11
+msgid "Other than improving the core outfits, ranks allow the ship to learn new skills and become significantly more powerful."
+msgstr ""
+
+#: dat/naevpedia/mechanics/bioships.md:13
 msgid "## Skills"
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:14
-msgid "Bioship skills, stages, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+#: dat/naevpedia/mechanics/bioships.md:15
+msgid "Bioship skills, ranks, and other information can be seen from the #bInformation window#0, which can be opened with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
-#: dat/naevpedia/mechanics/bioships.md:15
-msgid "You can also reset the skills by using experience, although this can lower your stage."
+#: dat/naevpedia/mechanics/bioships.md:16
+msgid "You can also reset the skills by using experience, although this can lower your rank."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:2
@@ -9562,7 +9570,7 @@ msgid "Looting anything from a ship will lower your reputation with the faction 
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:19
-msgid "This make also make nearby ships angry if they dislike your action."
+msgid "This may also make nearby ships angry if they dislike your action."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:21
@@ -9614,7 +9622,7 @@ msgid "The cost of repairing a captured ship is the ship's cost, including equip
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:40
-msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships of a faction."
+msgid "Additionally, factions do not take kindly to your trying to capture their ships, and you will suffer a large reputation hit when trying to capture ships belonging to any faction."
 msgstr ""
 
 #: dat/naevpedia/mechanics/boarding.md:41
@@ -9793,7 +9801,7 @@ msgid "Disable damage is the only way to disable ships, by applying stress."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:23
-msgid "When a ship's stress is larger than the available armour, it becomes disable, and [can be boarded](mechanics/boarding)."
+msgid "When a ship's stress is larger than the available armour, it becomes disabled, and [can be boarded](mechanics/boarding)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/damage.md:24
@@ -9932,7 +9940,7 @@ msgid "Furthermore, slots can have special properties such as:"
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:20
-msgid "1. **Fighter Bays**: Modifies weapno slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
+msgid "1. **Fighter Bays**: Modifies weapon slots, allowing the installation of fighter bays, and in some cases, do not allow equipping normal weapons."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:21
@@ -9948,7 +9956,7 @@ msgid "The equipment window is available when [landing](mechanics/landing) on sp
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:26
-msgid "It allows you to, not only change ships, but also change the outfits the ship has equipped."
+msgid "It allows you to not only change ships but also to change the outfits the ship has equipped."
 msgstr ""
 
 #: dat/naevpedia/mechanics/equipment.md:27
@@ -10013,234 +10021,234 @@ msgid "A large part of combat is not only direct damage, but electronic warfare 
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:7
-msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of hips."
+msgid "Electronic warfare plays a large role in determining when ships are seen, how well weapons track or lock onto ships, and stealth abilities of ships."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:8
 msgid "There are fundamentally three different levels, from coarse to fine:"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:9
+#: dat/naevpedia/mechanics/ewarfare.md:10
 msgid "1. Detection and hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:10
-msgid "1. Signature and tracking"
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:11
-msgid "1. Stealth"
+msgid "2. Signature and tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:13
+#: dat/naevpedia/mechanics/ewarfare.md:12
+msgid "3. Stealth"
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:14
 msgid "All electronic warfare values are based on distances, since they represent the distance at which the ship is fully detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:15
+#: dat/naevpedia/mechanics/ewarfare.md:16
 msgid "## Scanning"
-msgstr ""
-
-#: dat/naevpedia/mechanics/ewarfare.md:17
-msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:18
-msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
+msgid "Whenever you target a ship, your ship will begin performing a scan on it."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:19
-msgid "When the icon stops rotating, it indicates that the ship has been scanned."
+msgid "This is indicated by the rotating icon on the ship tab that appears in your ship's interface."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:20
-msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgid "When the icon stops rotating, it indicates that the ship has been scanned."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:21
+msgid "By pressing the <%= \"#b\"..naev.keyGet(\"scan\")..\"#0\" %> key, you can call up the information about the scanned ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:22
 msgid "This will show you things such as the outfits the ship has and the cargo it is carrying."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:23
+#: dat/naevpedia/mechanics/ewarfare.md:24
 msgid "Similarly, other ships will scan your ship when targeting it."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:24
+#: dat/naevpedia/mechanics/ewarfare.md:25
 msgid "This is usually not a problem, however, if you are carrying outfits or commodities that are illegal to the faction of the ship scanning you, it may bring repercussions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:25
+#: dat/naevpedia/mechanics/ewarfare.md:26
 msgid "Ships scanning you are shown on the overlay and if you have illegal items, it will temporarily stop [autonav](mechanics/autonav)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:27
+#: dat/naevpedia/mechanics/ewarfare.md:28
 msgid "## Detection and Hiding"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:29
+#: dat/naevpedia/mechanics/ewarfare.md:30
 msgid "Without modifiers, ships are detected based on [their mass](mechanics/mass)."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:30
+#: dat/naevpedia/mechanics/ewarfare.md:31
 msgid "In particular, they are detected at a distance of `mass^(1.0/1.8) * 350` which amounts to about 6,513 km for a Llama with 193 tonnes of mass, or 43,278 km for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:31
+#: dat/naevpedia/mechanics/ewarfare.md:32
 msgid "This value gets reduced by the **Detection** bonus of the detecting ship, and multiplied by the **Detection Range** of the ship being detected."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:32
+#: dat/naevpedia/mechanics/ewarfare.md:33
 msgid "Since this value determines the base signature and stealth values of the ship, it can play a significant role in electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:34
+#: dat/naevpedia/mechanics/ewarfare.md:35
 msgid "### Detecting Space Objects and Jumps"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:36
+#: dat/naevpedia/mechanics/ewarfare.md:37
 msgid "For detecting general objects such as jump points or asteroids, the detection distance has a base value of <%= constant( \"EW_JUMPDETECT_DIST\", \"distance\" ) %>."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:37
+#: dat/naevpedia/mechanics/ewarfare.md:38
 msgid "This distance can be modified by values such as how well hidden the jump is."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:38
+#: dat/naevpedia/mechanics/ewarfare.md:39
 msgid "For space objects such as planets or stations the base value is <%= constant( \"EW_SPOBDETECT_DIST\", \"distance\" ) %>, subject to the individual properties of the object."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:40
+#: dat/naevpedia/mechanics/ewarfare.md:41
 msgid "## Signature and Tracking"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:42
-msgid "Electronic warfare plays a critical war in combat too through evasion and tracking."
-msgstr ""
-
 #: dat/naevpedia/mechanics/ewarfare.md:43
-msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
+msgid "Electronic warfare plays a critical part in combat too through evasion and tracking."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:44
-msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgid "A ship's signature range represents how well a ship can avoid being tracked by enemy weapons and is 75% of the detection value."
 msgstr ""
 
 #: dat/naevpedia/mechanics/ewarfare.md:45
+msgid "The value can be further modified by the **Signature Range** modifier of the ship, and decreased by the **Tracking** bonus of the enemy ship."
+msgstr ""
+
+#: dat/naevpedia/mechanics/ewarfare.md:46
 msgid "Ships will be able to identify other ships if they are closer than their signature range, otherwise they will be shown an \"Unknown\"."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:47
+#: dat/naevpedia/mechanics/ewarfare.md:48
 msgid "Almost all forward weapons have an amount of swivel, which allows them to aim slightly at the target."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:48
+#: dat/naevpedia/mechanics/ewarfare.md:49
 msgid "Furthermore, turret weapons can aim the entire 360° and shoot at ships in any directions."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:49
+#: dat/naevpedia/mechanics/ewarfare.md:50
 msgid "Weapons try to compensate for target velocities for accurate shots, however, this is reduced based on the signature range of the target ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:50
+#: dat/naevpedia/mechanics/ewarfare.md:51
 msgid "In particular, weapons have a minimum tracking range, and maximum tracking range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:51
+#: dat/naevpedia/mechanics/ewarfare.md:52
 msgid "Any ship with a signature range above the maximum tracking range will be aimed at nearly perfectly, barring sudden accelerations."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:52
-msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shoots will aim at the current position, not correcting velocity."
+#: dat/naevpedia/mechanics/ewarfare.md:53
+msgid "On the other hand, any ship with a signature range below the minimum tracking range will not be locked onto, and the shots will aim at the current position, not correcting for velocity."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:53
+#: dat/naevpedia/mechanics/ewarfare.md:54
 msgid "For in-between values it will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:55
+#: dat/naevpedia/mechanics/ewarfare.md:56
 msgid "Similarly, the lock-on time of launchers is modified by the signature range of the target and tracking values of the launcher."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:56
+#: dat/naevpedia/mechanics/ewarfare.md:57
 msgid "If the target has a signature range above the maximum tracking range, the lock-on time will be unmodified."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:57
-msgid "If the target has a signature range below the maximum tracking range, it will not be able to lock on."
+#: dat/naevpedia/mechanics/ewarfare.md:58
+msgid "If the target has a signature range below the minimum tracking range, it will not be able to lock on."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:58
+#: dat/naevpedia/mechanics/ewarfare.md:59
 msgid "Similar to bolt weapons, in-between values will be interpolated linearly."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:60
+#: dat/naevpedia/mechanics/ewarfare.md:61
 msgid "## Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:62
+#: dat/naevpedia/mechanics/ewarfare.md:63
 msgid "The stealth range of a ship is based on 25% of the detection range."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:63
+#: dat/naevpedia/mechanics/ewarfare.md:64
 msgid "If there are no ships within the stealth range, the ship will be able to enter stealth mode."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:64
+#: dat/naevpedia/mechanics/ewarfare.md:65
 msgid "In stealth mode, the ship will be undetectable, however, it will have its [movement](mechanics/movement) significantly reduced."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:65
+#: dat/naevpedia/mechanics/ewarfare.md:66
 msgid "In particular, acceleration and turn speed will be reduced by 80%, while maximum speed will be reduced by 50%."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:66
+#: dat/naevpedia/mechanics/ewarfare.md:67
 msgid "The minimum range of stealth is <%= constant( \"STEALTH_MIN_DIST\", \"distance\" ) %>, but this can be lowered by being in an asteroid field, being near a jump point, or system interference."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:68
+#: dat/naevpedia/mechanics/ewarfare.md:69
 msgid "### Jumping with Stealth"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:70
+#: dat/naevpedia/mechanics/ewarfare.md:71
 msgid "When in stealth mode, it is possible to start hyperspace jumps at three times the maximum normal distance from jump points."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:71
+#: dat/naevpedia/mechanics/ewarfare.md:72
 msgid "Additionally, when entering a system in stealth mode, the ship will drop out of hyperspace sooner instead of near the jump point."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:72
+#: dat/naevpedia/mechanics/ewarfare.md:73
 msgid "Being within <%= constant( \"EW_JUMP_BONUS_RANGE\", \"distance\" ) %> of jump points also lowers the stealth range by 50%, making it significantly easier to stealth."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:74
+#: dat/naevpedia/mechanics/ewarfare.md:75
 msgid "## Scanning"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:76
+#: dat/naevpedia/mechanics/ewarfare.md:77
 msgid "Like the detection range, the scanning time of a ship is determined by its mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:77
+#: dat/naevpedia/mechanics/ewarfare.md:78
 msgid "The time it takes to scan a ship is determined by `mass^(1/3) * 1.25`, which amounts to 7.22 seconds for a Llama with 193 tonnes of mass or 22.5 seconds for a Goddard with 5,834 tonnes of mass."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:78
+#: dat/naevpedia/mechanics/ewarfare.md:79
 msgid "This value is divided by the **Detection Range** and **Signature Range** values of the ship, and multiplied **Scanned Speed** of the ship."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:80
+#: dat/naevpedia/mechanics/ewarfare.md:81
 msgid "## System Modifiers"
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:82
+#: dat/naevpedia/mechanics/ewarfare.md:83
 msgid "System modifiers such as asteroid fields and interference can further affect electronic warfare."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:83
+#: dat/naevpedia/mechanics/ewarfare.md:84
 msgid "In particular, being in an asteroid will affect the detection range, and consequently, signature range and stealth range depending on the density of asteroids."
 msgstr ""
 
-#: dat/naevpedia/mechanics/ewarfare.md:84
+#: dat/naevpedia/mechanics/ewarfare.md:85
 msgid "Furthermore, the system interference wil lower signature and stealth ranges, but not the detection range, making it harder to track and identify ships."
 msgstr ""
 
@@ -10299,7 +10307,7 @@ msgid "# Hailing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:6
-msgid "Communicating with ships or spaceportscan be a good way to request assistance, discourage them from bribing your, or even obtaining information."
+msgid "Communicating with ships or spaceports can be a good way to request assistance, discourage them from attacking your ship through bribing, or even obtaining information."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:7
@@ -10319,7 +10327,7 @@ msgid "## Requesting Fuel"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:13
-msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritarians will offer to refuel you, usually in exchange for credits."
+msgid "When you run out of [fuel](mechanics/hyperspace), some good samaritans will offer to refuel you, usually in exchange for credits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:14
@@ -10331,7 +10339,7 @@ msgid "## Bribing"
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:18
-msgid "When dealing with hostile ships, it is sometimes able to bribe them and their companions."
+msgid "When dealing with hostile ships, you are sometimes able to bribe them and their companions."
 msgstr ""
 
 #: dat/naevpedia/mechanics/hailing.md:19
@@ -10566,7 +10574,7 @@ msgid "Here you can buy or sell commodities."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:59
-msgid "The price will depend on the location, which you compare on [the universe map](mechanics/map)."
+msgid "The price will depend on the location, which you can compare on [the universe map](mechanics/map)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/landing.md:60
@@ -10849,7 +10857,7 @@ msgid "As the mass increases, a ship's [visibility and signature](mechanics/ewar
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:9
-msgid "Furthermore, ships have a mass limit, determined fundamentally by the core engine."
+msgid "Furthermore, ships have a mass limit, determined by the core engine."
 msgstr ""
 
 #: dat/naevpedia/mechanics/mass.md:10
@@ -10983,7 +10991,7 @@ msgid "# Missions"
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:6
-msgid "Many different factions or individuals will offer you missions where you can help them in exchange for rewards."
+msgid "Many different factions and individuals will offer you missions where you can help them in exchange for rewards."
 msgstr ""
 
 #: dat/naevpedia/mechanics/missions.md:7
@@ -11126,7 +11134,7 @@ msgid "Your reputation is on a per-system basis, however, neighbouring systems o
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:12
-msgid "By default, whenever will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
+msgid "By default, you will get a message whenever there is a reputation change, but you can modify this from the settings in the #binformation window#0 that you can open with the <%= \"#b\"..naev.keyGet(\"info\")..\"#0\" %> key."
 msgstr ""
 
 #: dat/naevpedia/mechanics/reputation.md:13
@@ -11231,7 +11239,7 @@ msgid "* [Mass](mechanics/movement): How heavy the ship is. If the mass of a shi
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:27
-msgid "* [Jump Time](mechanics/time): Determines how long much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
+msgid "* [Jump Time](mechanics/time): Determines how much [time](mechanics/time) it takes for the ship to go through [hyperspace](mechanics/hyperspace)."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:28
@@ -11279,7 +11287,7 @@ msgid "## Health Stats"
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:44
-msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, can be overcome by weapon penetration."
+msgid "* [Absorption](mechanics/damage): Determines how much incoming damage is mitigated, however, this can be overcome by weapon penetration."
 msgstr ""
 
 #: dat/naevpedia/mechanics/shipstats.md:45
@@ -11621,7 +11629,7 @@ msgid "1. **Default**: Behaviour depends on whether the key is tapped or held. W
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:38
-msgid "1. **Hold**: Activates the bound outfits when the button only when held, and releasing will stop the outfits."
+msgid "1. **Hold**: Activates the bound outfits of the button only when held, and releasing will stop the outfits."
 msgstr ""
 
 #: dat/naevpedia/mechanics/weaponsets.md:39
