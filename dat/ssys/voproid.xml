@@ -11,6 +11,7 @@
  <spobs>
   <spob>Voproid Monastery</spob>
   <spob>Voproid Prime</spob>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Botarn">
