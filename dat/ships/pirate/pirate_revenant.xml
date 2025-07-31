@@ -16,9 +16,9 @@
  <trail_generator x="-18" y="0" h="-4" always_under="1">pirate_bio</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <faction>Wild Ones</faction>
- <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, and there are many stories of pirates that have developed strong bonds with their bioships.
+ <description>As Skull and Bones does not have the technology to grow new bioships from scratch they salvage stolen Soromid ships. While the adaptation process can be seen as cruel from an anthropomorphic point of view, leading to some conflicts with anti-animal cruelty pirate organizations, advocates argue that the process does not cause pain nor significant stress to the ships. The modifications do not target internal organs, and focus on redoing the externals, allowing the ship to equip any hull and stronger non-bio weapons. Many pirates who obtain a Revenant become very fond of them and there are many stories of pirates that have developed strong bonds with their bioships.
 
-The Revenant can only obtain half the maximum experience of an equivalent Soromid bioship, and also gains have as much experience.
+The Revenant can only obtain half the maximum experience of an equivalent Soromid bioship, and also gains half as much experience.
  </description>
  <health>
   <armour>170</armour>
