@@ -6,7 +6,7 @@ np_outfits = run_command([find_program(meson.project_source_root() / 'utils/find
 
 naevpedia_outfits_sources = []
 foreach ns: com_ships.stdout().strip().split('\n')
-   naevpedia_outfits_sources += [root / ns]
+   naevpedia_outfits_sources += [outfits_dir / ns]
 endforeach
 
 naevpedia_outfits_sources = files(naevpedia_outfits_sources)
