@@ -11,19 +11,19 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require("outfits.lib.multicore").init{
-   { "mass", 10},
-   { "cpu_max", 10},
-   { "energy", 140},
-   { "energy_regen", 7},
-   { "shield", 130},
-   { "shield_regen", 4},
-   { "ew_detect", 15},
-   { "cooldown_time", -25},
-   { "jump_warmup", -60},
-   { "land_delay", -25},
-   { "jump_delay", -25},
-   { "ew_hide", -20},
-}</lua_inline>
+require('outfits.lib.multicore').init({
+   {'mass', 10},
+   {'cpu_max', 10},
+   {'energy', 140},
+   {'energy_regen', 7},
+   {'shield', 130},
+   {'shield_regen', 4},
+   {'ew_detect', 15},
+   {'cooldown_time', -25},
+   {'jump_warmup', -60},
+   {'land_delay', -25},
+   {'jump_delay', -25},
+   {'ew_hide', -20},
+})</lua_inline>
  </specific>
 </outfit>

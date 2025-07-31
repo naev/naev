@@ -11,7 +11,7 @@ general = o['general']
 del general['shortname']
 general['unique'] = None
 general['rarity'] = 6
-general['price'] = 1e6
+general['$price'] = 1e6
 general['description'] = N_("""wish I be like that lovely corsair
 the prettiest of all pirate hair
 be drinking at the bar
@@ -20,13 +20,9 @@ irresistible buccaneer stare""")
 del general['slot']['@prop_extra']
 
 specific = o['specific']
-ref = h.get_outfit_dict( h.INPUT, True )
-ref['absorb'] = (ref['absorb'][0]-5.0,)
-ref['ew_stealth_timer'] = (-10,)
-specific['lua_inline'] = '\n'.join([
-   "local set = require('outfits.lib.set')",
-   h.to_multicore_lua( ref, True, 'set.set' ),
-   "require('outfits.core_sets.corsair_hull').init()"
-])
+specific['absorb']['$pri'] -= 5
+specific['ew_stealth_timer'] = -10
+specific['lua_inline_post'] = "require('outfits.core_sets.corsair_hull').init()"
 
+data.prisec_only(sec= False)
 data.save()

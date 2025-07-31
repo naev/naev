@@ -1,5 +1,4 @@
-# for testing:
-#!/usr/bin/env python3
+# python3
 
 """
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
@@ -140,8 +139,7 @@ def _parse( node, par, key ):
    return d
 
 def _unparse_elt( v, k, indent):
-   out = ''
-   out += indent*' ' + '<' + k
+   out = indent*' ' + '<' + k
    if isinstance(v, dict):
       for ka, va in v.attr.items():
          out += ' ' + ka[1:] + '="' + va.replace('&', '&amp;') + '"'
@@ -229,12 +227,3 @@ class naev_xml( xml_node ):
    def __del__( self ):
       if not self._uptodate and self._filename != devnull:
          stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
-"""
-if __name__ == '__main__':
-   from sys import argv
-
-   for a in argv[1:]:
-      d = naev_xml(a)
-      d.touch()
-      d.save()
-"""

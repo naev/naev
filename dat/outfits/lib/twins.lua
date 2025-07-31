@@ -1,4 +1,4 @@
-local mc = require "outfits.lib/multicore"
+local mc = require 'outfits.lib/multicore'
 
 local lib = {}
 
