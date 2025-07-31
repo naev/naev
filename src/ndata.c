@@ -154,39 +154,42 @@ void ndata_setupReadDirs( void )
 {
    char buf[PATH_MAX];
 
+   /* Load conf. */
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG( _( "Added datapath from conf.lua file: %s" ), conf.ndata );
 
-#if SDL_PLATFORM_MACOS
-   if ( !ndata_found() && macos_isBundle() &&
-        macos_resourcesPath( buf, PATH_MAX - 4 ) >= 0 &&
-        strncat( buf, "/dat", 4 ) ) {
-      LOG( _( "Trying default datapath: %s" ), buf );
-      PHYSFS_mount( buf, NULL, 1 );
-   }
-#endif /* SDL_PLATFORM_MACOS */
-
-#if SDL_PLATFORM_LINUX
-   if ( !ndata_found() && env.isAppImage &&
-        nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >=
-           0 ) {
-      LOG( _( "Trying default datapath: %s" ), buf );
-      PHYSFS_mount( buf, NULL, 1 );
-   }
-#endif /*SDL_PLATFORM_LINUX */
-
+   /* If not found, try to look other places. */
    if ( !ndata_found() &&
         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), "dat" ) >= 0 ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
-
    if ( !ndata_found() &&
         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, "dat" ) >= 0 ) {
       LOG( _( "Trying default datapath: %s" ), buf );
       PHYSFS_mount( buf, NULL, 1 );
    }
 
+   /* Add the bundled stuff last, so it gets preempted by everything else. */
+#if SDL_PLATFORM_MACOS
+   /* Always add the bundle. */
+   if ( macos_isBundle() && macos_resourcesPath( buf, PATH_MAX - 4 ) >= 0 &&
+        strncat( buf, "/dat", 4 ) ) {
+      LOG( _( "Trying default datapath: %s" ), buf );
+      PHYSFS_mount( buf, NULL, 1 );
+   }
+#elif SDL_PLATFORM_LINUX
+   /* Always add the env appdir. */
+   if ( env.isAppImage ) {
+      if ( nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >=
+           0 ) {
+         LOG( _( "Trying default datapath: %s" ), buf );
+         PHYSFS_mount( buf, NULL, 1 );
+      }
+   }
+#endif /*SDL_PLATFORM_LINUX */
+
+   /* Mount write directory. */
    PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
 
    /* Load plugins I guess. */
