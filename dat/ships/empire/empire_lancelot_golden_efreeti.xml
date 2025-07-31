@@ -1,4 +1,4 @@
-<ship inherits="Empire Lancelot" name="Empire Lancelot Golden Efreeti">
+<ship name="Empire Lancelot Golden Efreeti" inherits="Empire Lancelot">
  <rarity>3</rarity>
  <price>850000</price>
  <cond>require("buyrep")("Empire", 40)</cond>

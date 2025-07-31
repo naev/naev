@@ -85,12 +85,6 @@ repos:
       language: script
       always_run: true
       pass_filenames: false
-    - id: naevpedia
-      name: check for stale naevpedia ships/outfits
-      entry: utils/update-naevpedia.sh . --pre-commit
-      language: script
-      files: dat/(ships|outfits)/.*.xml$
-      pass_filenames: false
     - id: clang-format
       name: Clang formatter
       entry: clang-format -i

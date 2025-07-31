@@ -80,6 +80,7 @@ summary('NData Path', ndata_path, section: 'Features')
 # Subdirs
 subdir('src')
 subdir('dat/outfits') # Has to be before naevpedia
+subdir('dat/tech')
 subdir('dat/naevpedia')
 subdir('dat/scripts')
 subdir('docs')
@@ -589,7 +590,7 @@ naevcrs = rust.bindgen(
       'dat',
       install_dir: ndata_path,
       # Parts of dat/ are used as inputs to custom build targets, which generate the final installed versions.
-      exclude_files: ['AUTHORS', 'outfits/meson.build', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build' ],
+      exclude_files: ['AUTHORS', 'outfits/meson.build', 'outfits/bioship/generate.py', 'outfits/bioship/meson.build', 'scripts/meson.build', 'outfits/tech/meson.build' ],
       exclude_directories: ['outfits/py', 'outfits/bioship/templates'],
    )
 

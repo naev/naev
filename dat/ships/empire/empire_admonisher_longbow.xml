@@ -1,4 +1,4 @@
-<ship inherits="Empire Admonisher" name="Empire Admonisher Longbow">
+<ship name="Empire Admonisher Longbow" inherits="Empire Admonisher">
  <lua>empire_admonisher_longbow.lua</lua>
  <rarity>3</rarity>
  <price>1850000</price>

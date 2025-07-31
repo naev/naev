@@ -1,4 +1,4 @@
-<ship inherits="Za'lek Demon" name="Za'lek Demon Type IV">
+<ship name="Za'lek Demon Type IV" inherits="Za'lek Demon">
  <rarity>3</rarity>
  <price>3800000</price>
  <cond>math.floor(system.cur():reputation("Za'lek")+0.5) >= 60</cond>

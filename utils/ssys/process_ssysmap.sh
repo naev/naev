@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 trap 'exit 0' SIGINT
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
