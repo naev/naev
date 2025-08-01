@@ -277,7 +277,7 @@ local message_handler_funcs = {
    end,
    -- Follower is being attacked
    f_attacked = function( p, si, dopush, sender, data )
-      if sender==nil or not sender:exists() or sender:leader()~=p then return false end
+      if mem.ignoreorders or sender==nil or not sender:exists() or sender:leader()~=p then return false end
       if data and data:exists() then
          ai.hostile( data ) -- Set hostile
          -- Also signal to other followers
@@ -303,7 +303,7 @@ local message_handler_funcs = {
    end,
    -- Leader is being attacked
    l_attacked = function( p, si, dopush, sender, data )
-      if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
       if data and data:exists() then
          ai.hostile( data ) -- Set hostile
          if not si.fighting and should_attack( data, si, true ) then
@@ -314,7 +314,7 @@ local message_handler_funcs = {
       return false
    end,
    l_investigate = function( p, si, dopush, sender, data )
-      if not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
+      if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=p:leader() then return false end
       if not si.fighting then -- inspect_attacker is fighting, so it shouldn't duplicate
          ai.pushtask("inspect_attacker", data)
          return true
