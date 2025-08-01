@@ -574,7 +574,7 @@ Gets all the escort pilots from all the available escort missions.
 function escort.all_mission_pilots()
    local plts = {}
    for k,m in ipairs(player.missions()) do
-      local e = m.memory()._escort
+      local e = m.memory._escort
       if e then
          for i,p in ipairs(e.convoy) do
             if p:exists() then
