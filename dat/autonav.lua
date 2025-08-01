@@ -635,7 +635,7 @@ function autonav_jump_brake ()
    if ai.canHyperspace() then
       if escorts_left_jump() then
          if not wait_msg then
-            player.msg("#0".._("Autonav: waiting for escorts to jump first.").."#0")
+            player.msg("#o".._("Autonav: waiting for escorts to jump first.").."#0")
             wait_msg = true
          end
          return -- wait
@@ -777,7 +777,7 @@ function autonav_spob_land_brake ()
    -- See if we have to wait for escorts
    if escorts_left_land() then
       if not wait_msg then
-         player.msg("#0".._("Autonav: waiting for escorts to land first.").."#0")
+         player.msg("#o".._("Autonav: waiting for escorts to land first.").."#0")
          wait_msg = true
       end
       return
