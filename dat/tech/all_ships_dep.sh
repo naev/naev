@@ -5,7 +5,7 @@
 EXCLUDED_TAGS=('station')
 
 # forbid '__excl_nam_pattern__' in outfit name
-EXCLUDED_FIL_PAT=('astral', 'psychic_orb')
+EXCLUDED_FIL_PAT=('astral' 'psychic_orb')
 
 grep -rL -F --include="*.xml" -f <(
    for k in "${EXCLUDED_TAGS[@]}" ; do
