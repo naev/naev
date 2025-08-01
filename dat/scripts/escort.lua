@@ -457,7 +457,7 @@ function _escort_heartbeat ()
          if doland then
             if destspob:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
                local pm = p:memory()
-               if not pm._escort_land then
+               if not pm._escort_land or not p:task() then
                   p:control(true)
                   p:land( destspob )
                   p:comm( fmt.f(_("Landing on {spb}."), {spb=destspob} ) )
@@ -467,7 +467,7 @@ function _escort_heartbeat ()
          elseif nextjump then
             if nextjump:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
                local pm = p:memory()
-               if not pm._escort_jump then
+               if not pm._escort_jump or not p:task() then
                   p:control(true)
                   p:setNoJump(false)
                   p:hyperspace( nextjump )
