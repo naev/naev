@@ -163,13 +163,6 @@ function escort.setDest( dest, success, failure )
    mem._escort.nextsys = mem._escort.route[ mem._escort.current+1 ]
 end
 
---[[--
-Disables the escorts destination target and makes them follow the player.
---]]
-function escort.setFollow ()
-   escort.setDest()
-end
-
 local exited
 local function run_success ()
    clear_hooks()
@@ -192,6 +185,10 @@ function escort.reset_ai ()
    end
 
    if mem._escort.nofollowplayer then
+      if not mem._escort.destsys then
+         error("Escorts don't follow player and have no destination!")
+      end
+
       -- Find the leader
       local l
       for k,v in ipairs(_escort_convoy) do
