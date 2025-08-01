@@ -47,6 +47,9 @@ local fmt = require "format"
 local vntk = require "vntk"
 local aisetup = require "ai.core.setup"
 
+local DISTANCE_THRESHOLD2 = 1000^2
+local HEARTBEAT_TIMER = 1
+
 local escort_outfits
 
 --[[--
@@ -62,7 +65,7 @@ function escort.init( ships, params )
       ships_orig = ships,
       ships = tcopy(ships),
       faction = params.faction or faction.get("Independent"),
-      followplayer = true,
+      nofollowplayer = params.nofollowplayer,
       nofailifdead = params.nofailifdead,
       hooks = {
          jumpin   = hook.jumpin(  "_escort_jumpin" ),
@@ -136,8 +139,15 @@ Disables the escorts from following the player.
    @tparam[opt] string failure Name of the global function to call on failure. Default will give a vntk message and fail the mission.
 --]]
 function escort.setDest( dest, success, failure )
-   mem._escort.followplayer = false
-   if dest.system then
+   if dest==nil then
+      mem._escort.destspob = nil
+      mem._escort.destsys = nil
+      mem._escort.route = nil
+      mem._escort.current = nil
+      mem._escort.nextsys = nil
+   end
+
+   if dest.system then -- Check to see if it's a spob
       mem._escort.destspob = dest
       mem._escort.destsys = dest:system()
    else
@@ -147,17 +157,17 @@ function escort.setDest( dest, success, failure )
    mem._escort.func_success = success
    mem._escort.func_failure = failure or "_escort_failure"
 
-   mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
+   -- Figure out the route and how to get there
+   mem._escort.route = lmisn.getRoute( system.cur(), mem._escort.destsys )
+   mem._escort.current = 1
+   mem._escort.nextsys = mem._escort.route[ mem._escort.current+1 ]
 end
 
 --[[--
 Disables the escorts destination target and makes them follow the player.
 --]]
 function escort.setFollow ()
-   mem._escort.followplayer = true
-   mem._escort.destspob = nil
-   mem._escort.destsys = nil
-   mem._escort.nextsys = nil
+   escort.setDest()
 end
 
 local exited
@@ -181,7 +191,7 @@ function escort.reset_ai ()
       end
    end
 
-   if not mem._escort.followplayer then
+   if mem._escort.nofollowplayer then
       -- Find the leader
       local l
       for k,v in ipairs(_escort_convoy) do
@@ -262,14 +272,14 @@ function _escort_e_death( p )
             else
                msg = _("All escorts have been lost!")
             end
-            if not mem._escort.followplayer then
-               lmisn.fail( msg )
-            else
+            if mem._escort.nofailifdead then
                player.msg("#r"..msg.."#0")
+            else
+               lmisn.fail( msg )
             end
          else
             -- Set a new leader and tell them to move on
-            if not mem._escort.followplayer then
+            if mem._escort.nofollowplayer then
                if k==1 then
                   hook.safe("_escort_update_leader")
                end
@@ -286,7 +296,7 @@ end
 
 function _escort_e_attacked( p, attacker )
    -- If they are not following the player, the player should protect them
-   if not mem._escort.followplayer then
+   if mem._escort.nofollowplayer then
       player.autonavReset( 3 )
       attacker:setHostile(true) -- Make attacker hostile
    end
@@ -323,7 +333,7 @@ function _escort_e_land( p, landed_spob )
 end
 
 function _escort_e_jump( p, j )
-   if not mem._escort.followplayer and j:dest() == mem._escort.nextsys then
+   if mem._escort.destsys and j:dest() == mem._escort.nextsys then
       table.insert( exited, p )
       if p:exists() then
          player.msg( "#g"..fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ).."#0" )
@@ -357,7 +367,7 @@ function escort.spawn( pos )
       escort_outfits = {}
    end
    local l
-   if mem._escort.followplayer then
+   if not mem._escort.nofollowplayer then
       l = pp
    end
    for k,s in ipairs( mem._escort.ships ) do
@@ -407,7 +417,7 @@ function escort.spawn( pos )
       end
    end
 
-   if not mem._escort.followplayer then
+   if mem._escort.destsys then
       -- Have the leader move as slow as the slowest ship
       l:setHilight(true)
       -- Moving to system
@@ -415,16 +425,52 @@ function escort.spawn( pos )
 
       -- Mark destination
       local scur = system.cur()
-      if mem._escort.nextsys ~= scur then
+      if mem._escort.nextsys then
          system.markerAdd( jump.get( scur, mem._escort.nextsys ):pos() )
       else
          if mem._escort.destspob then
             system.markerAdd( mem._escort.destspob:pos() )
          end
       end
+
+      -- Have to run logic
+      if not mem._escort.nofollowplayer then
+         hook.timerClear()
+         hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
+      end
    end
 
    return _escort_convoy
+end
+
+-- Logic to make the pilots automatically jump or land when near the target
+function _escort_heartbeat ()
+   local destspob = mem._escort.destspob
+   local nextsys = mem._escort.nextsys
+   local doland = (system.cur() == mem._escort.destsys) and (destspob ~= nil)
+   local nextjump
+   if nextsys then
+      nextjump = jump.get( system.cur(), nextsys )
+   end
+   for k,p in ipairs(_escort_convoy) do
+      if p:exists() then
+         if doland then
+            if destspob:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
+               p:control(true)
+               p:land( destspob )
+               p:comm( fmt.f(_("Landing on {spb}."), {spb=destspob} ) )
+            end
+         elseif nextjump then
+            if nextjump:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
+               p:control(true)
+               p:setNoJump(false)
+               p:hyperspace( nextjump )
+               p:comm( fmt.f(_("Proceeding to {sys}."), {sys=nextsys} ) )
+            end
+         end
+      end
+   end
+   hook.timer( HEARTBEAT_TIMER, "_escort_heartbeat" )
 end
 
 function _escort_spawn ()
@@ -442,7 +488,9 @@ function _escort_jumpin ()
       return
    end
    if mem._escort.destsys then
-      mem._escort.nextsys = lmisn.getNextSystem(system.cur(), mem._escort.destsys)
+      -- Progress
+      mem._escort.current = mem._escort.current+1
+      mem._escort.nextsys = mem._escort.route[ mem._escort.current+1 ]
    end
    -- We want to defer it one frame in case an enter hook clears all pilots
    hook.safe( "_escort_spawn" )
@@ -451,20 +499,20 @@ end
 local function update_left ()
    local ships_outfits = {}
    local ships_alive = {}
-   if mem._escort.followplayer then
-      for j,p in ipairs(_escort_convoy) do
-         if p:exists() then
-            table.insert( ships_alive, mem._escort.ships[j] )
-            table.insert( ships_outfits, escort_outfits[j] )
-         end
-      end
-   else
-      for i,p in ipairs(exited) do
-         for j,v in ipairs(_escort_convoy) do
+   if mem._escort.destsys then
+      for j,v in ipairs(_escort_convoy) do
+         for i,p in ipairs(exited) do
             if v==p then
                table.insert( ships_alive, mem._escort.ships[j] )
                table.insert( ships_outfits, escort_outfits[j] )
             end
+         end
+      end
+   else
+      for j,p in ipairs(_escort_convoy) do
+         if p:exists() then
+            table.insert( ships_alive, mem._escort.ships[j] )
+            table.insert( ships_outfits, escort_outfits[j] )
          end
       end
    end
