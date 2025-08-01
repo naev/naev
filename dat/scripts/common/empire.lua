@@ -9,6 +9,7 @@ local vn = require "vn"
 
 local emp = {}
 
+mem.prefix_raw = "#g".._("EMPIRE").."#0"
 emp.prefix = "#g".._("EMPIRE: ").."#0" -- Repeatable Empire mission prefix
 
 function emp.addShippingLog( text )
