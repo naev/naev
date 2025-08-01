@@ -4320,16 +4320,15 @@ static int player_parseEscorts( xmlNodePtr parent )
       if ( name == NULL ) /* Workaround for < 0.10.0 old saves, TODO remove
                              around 0.12.0 or 0.13.0. */
          name = xml_getStrd( node );
-      const Ship *s = player_tryGetShip( name );
-      if ( s == NULL ) {
-         DEBUG( "Escort ship does not exist, skipping!" );
-         continue;
-      }
 
-      if ( strcmp( buf, "bay" ) == 0 )
+      if ( strcmp( buf, "bay" ) == 0 ) {
+         const Ship *s = player_tryGetShip( name );
+         if ( s == NULL ) {
+            DEBUG( "Escort ship does not exist, skipping!" );
+            continue;
+         }
          escort_addList( player.p, s, ESCORT_TYPE_BAY, 0, 1 );
-
-      else if ( strcmp( buf, "fleet" ) == 0 ) {
+      } else if ( strcmp( buf, "fleet" ) == 0 ) {
          PlayerShip_t *ps = player_getPlayerShip( name );
          if ( ps == NULL ) {
             WARN( "Escort ship not found, skipping!" );
