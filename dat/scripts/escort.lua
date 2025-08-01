@@ -67,6 +67,7 @@ function escort.init( ships, params )
       faction = params.faction or faction.get("Independent"),
       nofollowplayer = params.nofollowplayer,
       nofailifdead = params.nofailifdead,
+      followorders = params.followorders,
       hooks = {
          jumpin   = hook.jumpin(  "_escort_jumpin" ),
          jumpout  = hook.jumpout( "_escort_jumpout" ),
@@ -119,14 +120,13 @@ function escort.num_alive ()
    return #mem._escort.ships
 end
 
-local _escort_convoy
 --[[--
 Gets the list of pilots.
 
    @treturn table Table containing the existing pilots. The first will be the leader.
 --]]
 function escort.pilots ()
-   return _escort_convoy
+   return mem._escort.convoy
 end
 
 --[[--
@@ -170,8 +170,10 @@ local function run_success ()
 end
 
 function escort.reset_ai ()
+   local followorders = mem._escort.followorders
+
    -- Clear speed limits and such
-   for k,p in ipairs(_escort_convoy) do
+   for k,p in ipairs(mem._escort.convoy) do
       if p:exists() then
          p:setSpeedLimit(0)
          p:control(false)
@@ -181,6 +183,7 @@ function escort.reset_ai ()
          if pt~="hyperspace" and pt~="land" then
             p:taskClear()
          end
+         p:memory().ignoreorders = not followorders
       end
    end
 
@@ -191,7 +194,7 @@ function escort.reset_ai ()
 
       -- Find the leader
       local l
-      for k,v in ipairs(_escort_convoy) do
+      for k,v in ipairs(mem._escort.convoy) do
          if v:exists() then
             l = v
             break
@@ -201,7 +204,7 @@ function escort.reset_ai ()
 
       -- Find and limit max speed
       local minspeed = player.pilot():stats().speed_max * 0.9
-      for k,p in ipairs(_escort_convoy) do
+      for k,p in ipairs(mem._escort.convoy) do
          if p:exists() then
             minspeed = math.min( p:stats().speed_max * 0.95, minspeed )
          end
@@ -225,7 +228,7 @@ end
 
 function escort.update_leader ()
    local l
-   for k,v in ipairs(_escort_convoy) do
+   for k,v in ipairs(mem._escort.convoy) do
       if v:exists() then
          l = v
          break
@@ -235,7 +238,7 @@ function escort.update_leader ()
 
    l:setLeader()
    l:setHilight(true)
-   for k,v in ipairs(_escort_convoy) do
+   for k,v in ipairs(mem._escort.convoy) do
       if v~=l and v:exists() then
          local pt = v:taskname()
          if pt~="hyperspace" and pt~="land" then
@@ -254,11 +257,11 @@ function _escort_update_leader ()
 end
 
 function _escort_e_death( p )
-   for k,v in ipairs(_escort_convoy) do
+   for k,v in ipairs(mem._escort.convoy) do
       if v==p then
          player.msg( "#r"..fmt.f(_("{plt} has been lost!"), {plt=p} ).."#0" )
 
-         table.remove(_escort_convoy, k)
+         table.remove(mem._escort.convoy, k)
          table.remove(escort_outfits, k)
          table.remove(mem._escort.ships, k)
 
@@ -359,7 +362,7 @@ function escort.spawn( pos )
 
    -- Set up the new convoy for the new system
    exited = {}
-   _escort_convoy = {}
+   mem._escort.convoy = {}
    if not have_outfits then
       escort_outfits = {}
    end
@@ -379,7 +382,7 @@ function escort.spawn( pos )
       else
          p:setLeader( l )
       end
-      _escort_convoy[k] = p
+      mem._escort.convoy[k] = p
       if not donaked then
          if have_outfits then
             p:outfitsEquip( escort_outfits[k] )
@@ -399,7 +402,7 @@ function escort.spawn( pos )
    end
 
    -- Some post-processing for the convoy
-   for k,p in ipairs(_escort_convoy) do
+   for k,p in ipairs(mem._escort.convoy) do
       p:setInvincPlayer(true)
       p:setFriendly(true)
 
@@ -437,7 +440,7 @@ function escort.spawn( pos )
       end
    end
 
-   return _escort_convoy
+   return mem._escort.convoy
 end
 
 -- Logic to make the pilots automatically jump or land when near the target
@@ -449,20 +452,28 @@ function _escort_heartbeat ()
    if nextsys then
       nextjump = jump.get( system.cur(), nextsys )
    end
-   for k,p in ipairs(_escort_convoy) do
+   for k,p in ipairs(mem._escort.convoy) do
       if p:exists() then
          if doland then
             if destspob:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
-               p:control(true)
-               p:land( destspob )
-               p:comm( fmt.f(_("Landing on {spb}."), {spb=destspob} ) )
+               local pm = p:memory()
+               if not pm._escort_land then
+                  p:control(true)
+                  p:land( destspob )
+                  p:comm( fmt.f(_("Landing on {spb}."), {spb=destspob} ) )
+                  pm._escort_land = true
+               end
             end
          elseif nextjump then
             if nextjump:pos():dist2( p:pos() ) <= DISTANCE_THRESHOLD2 then
-               p:control(true)
-               p:setNoJump(false)
-               p:hyperspace( nextjump )
-               p:comm( fmt.f(_("Proceeding to {sys}."), {sys=nextsys} ) )
+               local pm = p:memory()
+               if not pm._escort_jump then
+                  p:control(true)
+                  p:setNoJump(false)
+                  p:hyperspace( nextjump )
+                  p:comm( fmt.f(_("Proceeding to {sys}."), {sys=nextsys} ) )
+                  pm._escort_jump = true
+               end
             end
          end
       end
@@ -497,7 +508,7 @@ local function update_left ()
    local ships_outfits = {}
    local ships_alive = {}
    if mem._escort.destsys then
-      for j,v in ipairs(_escort_convoy) do
+      for j,v in ipairs(mem._escort.convoy) do
          for i,p in ipairs(exited) do
             if v==p then
                table.insert( ships_alive, mem._escort.ships[j] )
@@ -506,7 +517,7 @@ local function update_left ()
          end
       end
    else
-      for j,p in ipairs(_escort_convoy) do
+      for j,p in ipairs(mem._escort.convoy) do
          if p:exists() then
             table.insert( ships_alive, mem._escort.ships[j] )
             table.insert( ships_outfits, escort_outfits[j] )
@@ -519,7 +530,7 @@ end
 
 function _escort_jumpout()
    -- We'll be nice and mark escorts that are currently jumping as jumped out too
-   for j,p in ipairs(_escort_convoy) do
+   for j,p in ipairs(mem._escort.convoy) do
       if p:exists() and p:flags("jumpingout") then
          table.insert( exited, p )
       end
@@ -555,6 +566,24 @@ function _escort_land()
    elseif spob.cur()==mem._escort.destspob then
       run_success()
    end
+end
+
+--[[--
+Gets all the escort pilots from all the available escort missions.
+--]]
+function escort.all_mission_pilots()
+   local plts = {}
+   for k,m in ipairs(player.missions()) do
+      local e = m.memory()._escort
+      if e then
+         for i,p in ipairs(e.convoy) do
+            if p:exists() then
+               table.insert( plts, p )
+            end
+         end
+      end
+   end
+   return plts
 end
 
 return escort
