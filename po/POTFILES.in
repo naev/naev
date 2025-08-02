@@ -309,6 +309,7 @@ dat/outfits/intrinsic/escape_pod.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
 dat/outfits/intrinsic/gauntlet_supreme.xml
 dat/outfits/intrinsic/hyperdrive_retool.xml
+dat/outfits/intrinsic/luxury_furnishing.xml
 dat/outfits/intrinsic/machiavellian_fortune.xml
 dat/outfits/intrinsic/machiavellian_necessity.xml
 dat/outfits/intrinsic/machiavellian_virtue.xml
@@ -3444,6 +3445,7 @@ dat/outfits/flow/structure/meditation_chamber.lua
 dat/outfits/intrinsic/escape_pod.lua
 dat/outfits/intrinsic/gauntlet_supreme.lua
 dat/outfits/intrinsic/hyperdrive_retool.lua
+dat/outfits/intrinsic/luxury_furnishing.lua
 dat/outfits/launchers/pincushion_battery.lua
 dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/alone.lua

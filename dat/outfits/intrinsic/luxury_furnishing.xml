@@ -1,0 +1,17 @@
+<outfit name="Luxury Furnishing">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>1</rarity>
+  <limit>luxury_furnishings</limit>
+ </general>
+ <specific type="modification">
+  <lua>outfits/intrinsic/luxury_furnishings.lua</lua>
+ </specific>
+ <tags>
+  <tag>luxury</tag>
+ </tags>
+</outfit>
