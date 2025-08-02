@@ -169,9 +169,7 @@ end
 
 function enter ()
    if system.cur() == mem.missys and not mem.job_done then
-      if not player.pilot():ship():tags().luxury then
-         mem.nolux = true
-      end
+      mem.nolux = not lmisn.is_luxury()
       set_marks()
       timer()
    end

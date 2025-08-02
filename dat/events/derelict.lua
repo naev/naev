@@ -164,7 +164,7 @@ function board()
 
    -- Roll for events
    local neuprob, goodprob
-   if lmisn.islucky() then
+   if lmisn.is_lucky() then
       goodprob = 0.75
       neuprob = 0.95
    else
