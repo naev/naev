@@ -273,9 +273,7 @@ function multicore.init( params, setfunc )
          end
 
          -- Deferred setting of stats
-         if not setfunc then
-            multicore.set(p, po)
-         end
+         multicore.set(p, po)
       end
    end
 
