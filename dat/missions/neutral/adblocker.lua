@@ -111,15 +111,12 @@ end
 
 function timer_advert_spam()
    if not spammer:exists() then return end
-   -- Return generic ads to spam
-   -- TODO: Return ads based on local system
-   -- Not using random selection as spammer just cycles same ads in order
-   local ads_generic = ads.ads_for_faction("generic")
+
    -- Only spam if not disabled
    if not spammer:flags("disabled") then
       mem.spammer = mem.spammer or 0
-      mem.spammer = math.fmod(mem.spammer, #ads_generic) + 1
-      spammer:broadcast(ads_generic[mem.spammer], true)
+      mem.spammer = math.fmod(mem.spammer, #ads.ads_generic) + 1
+      spammer:broadcast(ads.ads_generic[mem.spammer], true)
    end
 
    mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")

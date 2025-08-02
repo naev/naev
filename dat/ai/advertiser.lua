@@ -28,7 +28,7 @@ function create ()
    mem.refuel_msg = _([["I'll supply your ship with fuel for {credits}."]])
 
    -- Set up potential advertiser messages in msg variable
-   local msg = tmergei( {}, ads.ads_for_faction("generic") )
+   local msg = tmergei( {}, ads.ads_generic )
 
    -- Faction specific messages
    local fpres = system.cur():presences()
@@ -36,14 +36,14 @@ function create ()
    -- Empire messages
    local fem = fpres["Empire"] or 0
    if fem > 1 then
-      msg = tmergei( msg, ads.ads_for_faction("empire") )
-      msg = tmergei( msg, ads.ads_for_faction("cyber") )
+      msg = tmergei( msg, ads.ads_empire )
+      msg = tmergei( msg, ads.ads_cyber )
    end
 
    -- Dvaered messages
    local fdv = fpres["Dvaered"] or 0
    if fdv > 1 then
-      msg = tmergei( msg, ads.ads_for_faction("dvaered") )
+      msg = tmergei( msg, ads.ads_dvaered )
       local badwords = {
          _("a Butthead"),
          _("a Nincompoop"),
@@ -65,7 +65,7 @@ function create ()
    -- Soromid messages
    local fsr = fpres["Soromid"] or 0
    if fsr > 1 then
-      msg = tmergei( msg, ads.ads_for_faction("soromid") )
+      msg = tmergei( msg, ads.ads_soromid )
    end
 
    -- Soromid+Empire messages
@@ -76,8 +76,8 @@ function create ()
    -- Za'lek messages
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
-      msg = tmergei( msg, ads.ads_for_faction("zalek") )
-      msg = tmergei( msg, ads.ads_for_faction("cyber") )
+      msg = tmergei( msg, ads.ads_zalek )
+      msg = tmergei( msg, ads.ads_cyber )
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       local pn = player.name()
@@ -89,7 +89,7 @@ function create ()
    -- Sirius messages
    local fsi = fpres["Sirius"] or 0
    if fsi > 1 then
-      msg = tmergei( msg, ads.ads_for_faction("sirius") )
+      msg = tmergei( msg, ads.ads_sirius )
    end
 
    mem.ad = msg[rnd.rnd(1,#msg)]
