@@ -28,6 +28,7 @@ local fmt = require "format"
 local neu = require 'common.neutral'
 local vn = require "vn"
 local vnimage  = require "vnimage"
+local ads = require "scripts.common.ads"
 
 local mission = {
    name = _("Adblocker"),
@@ -108,23 +109,12 @@ function enter()
    end
 end
 
--- TODO probably not hardcode the advertisements here, but share with dat/ai/advertiser.lua
-local ads_generic = {
-   _("Fly safe, fly Milspec."),
-   _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
-   _("Everyone is faster than light, but only Tricon engines are faster than thought!"),
-   _("Dare excellence! Dare Teracom rockets!"),
-   _("Most people are ordinary. For the others, Nexus designed the Shark fighter."),
-   _("Never take off without your courage. Never take off without your Vendetta."),
-   _("Unicorp: low price and high quality!"),
-   _("Life is short, spend it at Minerva Station in the Limbo System!"),
-   _("Insuperable Sleekness. Introducing the Krain Industries Starbridge."),
-   _("Take care of the ones you do love. Let your Enygma System Turreted Launchers deal with the ones you don't!"),
-}
-
 function timer_advert_spam()
    if not spammer:exists() then return end
-
+   -- Return generic ads to spam
+   -- TODO: Return ads based on local system
+   -- Not using random selection as spammer just cycles same ads in order
+   local ads_generic = ads.ads_for_faction("generic")
    -- Only spam if not disabled
    if not spammer:flags("disabled") then
       mem.spammer = mem.spammer or 0

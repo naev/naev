@@ -3514,6 +3514,7 @@ dat/scripts/cinema.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
 dat/scripts/common/achack.lua
+dat/scripts/common/ads.lua
 dat/scripts/common/antlejos.lua
 dat/scripts/common/astral_orchids.lua
 dat/scripts/common/baron.lua
