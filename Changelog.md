@@ -41,6 +41,11 @@
  - Deployed fighter equipment is no longer random
  - Added support for multiple automatic backups with 5 by default
  - Game will prompt if exiting the game when save data loss can occur
+ - Escort mission revamp
+    - Escorts now follow the player
+    - Autonav will warn the player if jumping or landing will fail the mission
+    - Autonav will wait for escorts when landing or taking off
+
 
 #### Content
  - 13 new missions and events

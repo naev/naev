@@ -586,4 +586,19 @@ function escort.all_mission_pilots()
    return plts
 end
 
+function escort.all_mission_target()
+   for k,m in ipairs(player.missions()) do
+      local e = m.memory._escort
+      if e and e.destsys then
+         if e.nextsys then
+            return e.nextsys
+         elseif system.cur()==e.destsys and e.destspob then
+            return e.destspob
+         else
+            return e.destsys
+         end
+      end
+   end
+end
+
 return escort

@@ -13,7 +13,7 @@ local path, uselanes_jump, uselanes_spob, uselanes_thr, match_fleet, follow_land
 local follow_pilot_fleet
 local already_aboff
 local escorting
-local wait_msg
+local wait_msg, last_try
 
 -- We'll need the physics constants
 local PHYSICS_SPEED_DAMP = require("constants").PHYSICS_SPEED_DAMP
@@ -237,10 +237,20 @@ Autonav to a system, destination is in the player's nav
 local function _autonav_system (do_uselanes)
    local dest
    dest, map_npath = player.autonavDest()
-   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),{sys=get_sys_name(dest)}).."#0")
-
    local pp = player.pilot()
    local jmp = pp:navJump()
+
+   local etarget = escort.all_mission_target()
+   local nextsys = jmp:dest()
+   if last_try~=nextsys and etarget and etarget~=nextsys then
+      last_try = nextsys
+      return autonav_abort(fmt.f(_("jumping to {sys} will fail your escort mission"),
+         {sys=get_sys_name(nextsys)}))
+   end
+
+   player.msg("#o"..fmt.f(_("Autonav: travelling to {sys}."),
+      {sys=get_sys_name(dest)}).."#0")
+
    local pos = jmp:pos()
    local d = jmp:jumpDist( pp )
    target_pos = pos + (pp:pos()-pos):normalize( math.max(0.75*d, d-50) )
@@ -268,6 +278,13 @@ end
 Autonav to a spob, potentially trying to land
 --]]
 local function _autonav_spob(spb, tryland, do_uselanes)
+   local etarget = escort.all_mission_target()
+   if last_try~=spb and etarget and etarget~=spb then
+      last_try = spb
+      return autonav_abort(fmt.f(_("landing on {spb} will fail your escort mission"),
+         {spb=spb}))
+   end
+
    target_spb = spb
    local pp = player.pilot()
    local pos = spb:pos()
@@ -330,6 +347,7 @@ end
 Autonav to follow a target pilot
 --]]
 function autonav_pilot( plt )
+   last_try = nil
    autonav_setup()
    target_plt = plt
    local pltstr
@@ -353,6 +371,7 @@ end
 Autonav to board a pilot
 --]]
 function autonav_board( plt )
+   last_try = nil
    autonav_setup()
    target_plt = plt
    local pltstr
@@ -372,6 +391,7 @@ end
 Autonav to a position specified by the player
 --]]
 function autonav_pos( pos )
+   last_try = nil
    autonav_setup()
    player.msg("#o".._("Autonav: heading to target position.").."#0")
    autonav_set( autonav_pos_approach )
