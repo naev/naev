@@ -394,16 +394,13 @@ function lmisn.fail( reason )
    misn.finish(false)
 end
 
---[[--
-Returns whether or not the player is lucky.
---]]
-function lmisn.is_lucky()
+local function check_player_tag( tag )
    local pp = player.pilot()
-   if pp:ship():tags().lucky then
+   if pp:ship():tags()[tag] then
       return true
    end
    for k,o in ipairs(pp:outfitsList("all")) do
-      if o:tags().lucky then
+      if o:tags()[tag] then
          return true
       end
    end
@@ -411,19 +408,17 @@ function lmisn.is_lucky()
 end
 
 --[[--
+Returns whether or not the player is lucky.
+--]]
+function lmisn.is_lucky()
+   return check_player_tag( "lucky" )
+end
+
+--[[--
 Gets whether or not a ship is a luxury vessel.
 --]]
 function lmisn.is_luxury()
-   local pp = player.pilot()
-   if pp:ship():tags().luxury then
-      return true
-   end
-   for k,o in ipairs(pp:outfitsList("all")) do
-      if o:tags().luxury then
-         return true
-      end
-   end
-   return false
+   return check_player_tag( "luxury" )
 end
 
 return lmisn
