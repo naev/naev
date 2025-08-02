@@ -10,20 +10,6 @@ return function ()
    local pers = {
       {
          spawn = function ()
-            local p = pilot.add("Goddard Merchantman", "Trader", nil, _("Trader Drake"), {naked=true, ai="pers"})
-            p:outfitAddIntrinsic("Escape Pod")
-            local c = equipopt.cores.get( p, { all="elite" } )
-            equipopt.zalek( p, {cores=c, fighterbay=20} )
-            p:cargoAdd( "Nebula Crystals", p:cargoFree() )
-            local m = p:memory()
-            m.capturable = true
-            --m.ad = _("")
-            m.comm_greet = _([["Business with the Za'lek is booming!"]])
-            m.taunt = _("Say hello to my little friends!")
-            return p
-         end
-      }, {
-         spawn = function ()
             local p = pilot.add("Pacifier", "Independent", nil, _("Jeanne d'Arc"), {naked=true, ai="pers"})
             p:outfitAddIntrinsic("Escape Pod")
             p:intrinsicSet( "shield_mod", 25 )

@@ -3052,6 +3052,7 @@ dat/events/pers/pirate.lua
 dat/events/pers/sirius.lua
 dat/events/pers/soromid.lua
 dat/events/pers/thurion.lua
+dat/events/pers/trader.lua
 dat/events/pers/zalek.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
