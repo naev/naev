@@ -1,5 +1,8 @@
 -- Shared resource for advertisement messages
-return {
+local fmt = require "format"
+local dv = require "common.dvaered"
+
+local ads = {
 
    ads_generic = {
       _("Fly safe, fly Milspec."),
@@ -64,3 +67,78 @@ return {
       ),
    },
 }
+
+function ads.system_ads()
+   local msg = tmergei( {}, ads.ads_generic )
+
+   -- Faction specific messages
+   local fpres = system.cur():presences()
+
+   -- Empire messages
+   local fem = fpres["Empire"] or 0
+   if fem > 1 then
+      msg = tmergei( msg, ads.ads_empire )
+      msg = tmergei( msg, ads.ads_cyber )
+   end
+
+   -- Dvaered messages
+   local fdv = fpres["Dvaered"] or 0
+   if fdv > 1 then
+      msg = tmergei( msg, ads.ads_dvaered )
+      local badwords = {
+         _("a Butthead"),
+         _("a Nincompoop"),
+         _("a Dunderhead"),
+         _("an Ass"),
+         _("a Fool"),
+         _("a Coward"),
+      }
+      local lords = dv.warlords () -- Gets all warlorlds
+      local r = rnd.rnd(1,#lords)
+      local butthead = lords[r]
+      table.remove( lords, r )
+      local sponsor = lords[ rnd.rnd(1,#lords) ]
+      local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor}
+      table.insert(msg, fmt.f(_("I hereby declare {butthead} is {badword}. -{sponsor}"), params))
+      table.insert(msg, fmt.f(_("Let it be known that {butthead} is {badword}. -{sponsor}"), params))
+   end
+
+   -- Soromid messages
+   local fsr = fpres["Soromid"] or 0
+   if fsr > 1 then
+      msg = tmergei( msg, ads.ads_soromid )
+   end
+
+   -- Soromid+Empire messages
+   if fsr > 1 and fem > 1 then
+      table.insert(msg, _("Remember to fill in your EX-29528-B form if returning to the Empire from Soromid territory."))
+   end
+
+   -- Za'lek messages
+   local fzl = fpres["Za'lek"] or 0
+   if fzl > 1 then
+      msg = tmergei( msg, ads.ads_zalek )
+      msg = tmergei( msg, ads.ads_cyber )
+      -- Note that when running in the main menu background, player.name() might not exist (==nil), so
+      -- we need to add a check for that.
+      local pn = player.name()
+      if pn then
+         table.insert(msg, fmt.f(_("Dear Prof. {player}, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."), {player=pn}))
+      end
+   end
+
+   -- Sirius messages
+   local fsi = fpres["Sirius"] or 0
+   if fsi > 1 then
+      msg = tmergei( msg, ads.ads_sirius )
+   end
+
+   return msg
+end
+
+function ads.generate_ad ()
+   local a = ads.system_ads()
+   return a[rnd.rnd(1,#a)]
+end
+
+return ads

@@ -109,14 +109,20 @@ function enter()
    end
 end
 
+local adlist
 function timer_advert_spam()
    if not spammer:exists() then return end
+
+   -- Generate ads if not available
+   if not adlist then
+      adlist = rnd.permutation( ads.system_ads() )
+   end
 
    -- Only spam if not disabled
    if not spammer:flags("disabled") then
       mem.spammer = mem.spammer or 0
-      mem.spammer = math.fmod(mem.spammer, #ads.ads_generic) + 1
-      spammer:broadcast(ads.ads_generic[mem.spammer], true)
+      mem.spammer = math.fmod(mem.spammer, #adlist) + 1
+      spammer:broadcast(adlist[mem.spammer], true)
    end
 
    mem.hk_advert_spam = hook.timer(1, "timer_advert_spam")
