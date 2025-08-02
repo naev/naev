@@ -21,5 +21,9 @@ function lib.setup( costfunc )
    function sell( _q )
       return false, _("You can not sell this outfit.")
    end
+
+   function descextra ( _p, _o, _po )
+      return "#o".._("This outfit can not be removed once equipped.").."#0"
+   end
 end
 return lib
