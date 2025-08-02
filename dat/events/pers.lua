@@ -32,6 +32,11 @@ function enter ()
       return
    end
 
+   -- Must not be restricted (although we should probably make exceptions there in the future)
+   if scur:tags().restricted then
+      return false
+   end
+
    -- See what pers we have
    wtotal = 0
    pers_list = {}
