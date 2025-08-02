@@ -14,13 +14,12 @@ local DV_BADWORDS = {
 
 -- Fun generator.
 local function dv_generate_insult( msg )
-   local lords = dv.warlords () -- Gets all warlorlds
-   local r = rnd.rnd(1,#lords)
-   local butthead = lords[r]
-   table.remove( lords, r ) -- So butthead != sponsor
-   local sponsor = lords[ rnd.rnd(1,#lords) ]
-   local params = {butthead=butthead, badword=DV_BADWORDS[rnd.rnd(1,#DV_BADWORDS)], sponsor=sponsor}
-   return fmt.f( msg, params )
+   local lords = rnd.permutation( dv.warlords() ) -- Gets all warlorlds in random order
+   return fmt.f( msg, {
+      butthead = lords[1], -- First random warlord
+      badword  = DV_BADWORDS[rnd.rnd(1,#DV_BADWORDS)],
+      sponsor  = lords[2], -- Second random should be != first
+   } )
 end
 
 local ads = {
@@ -52,7 +51,7 @@ local ads = {
       _("Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"),
       _("Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's battalion today!"),
       _("A Dvaered Success Story: Buy the outstanding autobiography by Lady Bitterfly. "),
-      _("Kids show poor discipline? Warlord Bigbonk's Military Academy can help!"),
+      _("Kids show poor discipline? Lord Bigbonk's Military Academy can help!"),
       function () return dv_generate_insult(_("I hereby declare {butthead} is {badword}. -{sponsor}")) end,
       function () return dv_generate_insult (_("Let it be known that {butthead} is {badword}. -{sponsor}")) end,
    },
