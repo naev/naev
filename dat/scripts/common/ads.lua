@@ -3,7 +3,6 @@ local fmt = require "format"
 local dv = require "common.dvaered"
 
 local ads = {
-
    ads_generic = {
       _("Fly safe, fly Milspec."),
       _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
@@ -25,7 +24,6 @@ local ads = {
       _("Keep your documents properly filed. Unicorp Filing Cabinets."),
       _("Want to test your skills in racing? Come to the Melendez Dome in the Qex system!"),
    },
-
    ads_dvaered = {
       _("Only your hard work will save the Dvaered economy!"),
       _("Together, we will beat the economic crisis!"),
@@ -33,6 +31,7 @@ local ads = {
       _("Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"),
       _("Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's battalion today!"),
       _("A Dvaered Success Story: Buy the outstanding autobiography by Lady Bitterfly. "),
+      _("Kids show poor discipline? Warlord Bigbonk's Military Academy can help!"),
    },
    ads_soromid = {
       _("Remember Sorom."),
@@ -54,10 +53,14 @@ local ads = {
    },
    ads_sirius = {
       _("Want a new look? Try Verrill's Ceremonial Robes at Burnan!"),
+      _("New flow focus courses at Firriot's Academy!"),
+      _("Pilgrim ferry operators wanted! Inquire at your local mission BBS."),
+      _("New call for Flow Resonator Calibrator Specialists. Inquire at your nearest Monastery now!"),
+      _("All Praise Sirichana! Paid for by the Sirichana Preacher Association."),
    },
 
    -- Special ads that can be multi-faction
-   ads_cyber = {
+   ads_empire_zalek = {
       _("Nexus Augmentation: trust the galactic leader in cyber-organs rental!"),
       _(
          "Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain and they will never fail an exam!"
@@ -66,6 +69,9 @@ local ads = {
          "Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save your vital organs from being removed!"
       ),
    },
+   ads_empire_soromid = {
+      _("Remember to fill in your EX-29528-B form if returning to the Empire from Soromid territory."),
+   }
 }
 
 function ads.system_ads()
@@ -78,7 +84,6 @@ function ads.system_ads()
    local fem = fpres["Empire"] or 0
    if fem > 1 then
       msg = tmergei( msg, ads.ads_empire )
-      msg = tmergei( msg, ads.ads_cyber )
    end
 
    -- Dvaered messages
@@ -109,16 +114,10 @@ function ads.system_ads()
       msg = tmergei( msg, ads.ads_soromid )
    end
 
-   -- Soromid+Empire messages
-   if fsr > 1 and fem > 1 then
-      table.insert(msg, _("Remember to fill in your EX-29528-B form if returning to the Empire from Soromid territory."))
-   end
-
    -- Za'lek messages
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
       msg = tmergei( msg, ads.ads_zalek )
-      msg = tmergei( msg, ads.ads_cyber )
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       local pn = player.name()
@@ -131,6 +130,16 @@ function ads.system_ads()
    local fsi = fpres["Sirius"] or 0
    if fsi > 1 then
       msg = tmergei( msg, ads.ads_sirius )
+   end
+
+   -- Soromid+Empire messages
+   if fsr > 1 and fem > 1 then
+      msg = tmergei( msg, ads.ads_empire_soromid )
+   end
+
+   -- Empire+Za'lek messages
+   if fem > 1 or fzl > 1 then
+      msg = tmergei( msg, ads.ads_empire_zalek )
    end
 
    return msg
