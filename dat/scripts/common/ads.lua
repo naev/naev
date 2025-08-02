@@ -2,6 +2,27 @@
 local fmt = require "format"
 local dv = require "common.dvaered"
 
+local DV_BADWORDS = {
+   _("a Butthead"),
+   _("a Nincompoop"),
+   _("a Dunderhead"),
+   _("an Ass"),
+   _("a Fool"),
+   _("a Coward"),
+   _("a vacuous toffee-nosed malodorous Pervert"), -- Monty Python and the Holy Grail
+}
+
+-- Fun generator.
+local function dv_generate_insult( msg )
+   local lords = dv.warlords () -- Gets all warlorlds
+   local r = rnd.rnd(1,#lords)
+   local butthead = lords[r]
+   table.remove( lords, r ) -- So butthead != sponsor
+   local sponsor = lords[ rnd.rnd(1,#lords) ]
+   local params = {butthead=butthead, badword=DV_BADWORDS[rnd.rnd(1,#DV_BADWORDS)], sponsor=sponsor}
+   return fmt.f( msg, params )
+end
+
 local ads = {
    ads_generic = {
       _("Fly safe, fly Milspec."),
@@ -32,17 +53,18 @@ local ads = {
       _("Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's battalion today!"),
       _("A Dvaered Success Story: Buy the outstanding autobiography by Lady Bitterfly. "),
       _("Kids show poor discipline? Warlord Bigbonk's Military Academy can help!"),
+      function () return dv_generate_insult(_("I hereby declare {butthead} is {badword}. -{sponsor}")) end,
+      function () return dv_generate_insult (_("Let it be known that {butthead} is {badword}. -{sponsor}")) end,
    },
    ads_soromid = {
       _("Remember Sorom."),
       _("Special offer on Crow: buy one IR-eye, and the second comes for free!"),
       _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Nidus!"),
-      _(
-         "Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."
-      ),
+      _("Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."),
       _("Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and counting!"),
       _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"),
       _("Preemptively treat your bio-ship for space fleas with Dr. Nastya's Ointment!"),
+      _("Love life lacking? Ask your genetic specialist about Dr. Zoidberg's Sensorial Tentacles and Pheromones enhancements!"), -- Futurama
    },
    ads_zalek = {
       _("Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what you need!"),
@@ -50,6 +72,11 @@ local ads = {
       _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."),
       _("Interested in Genetic Lifeforms research? Apply to Interstice Science!"), -- Reference to Aperture Science (synonyms) from Portal
       _("Want to learn about Anti-Mass Spectrometry? Join Ebony Plateau today!"), -- Reference to Black Mesa (synonyms) from Half-Life
+      function ()
+         -- Player may not exist, so add fallback
+         local pn = player.name() or _("$LASTNAME $FIRSTNAME")
+         return fmt.f(_("Dear Prof. {player}, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."), {player=pn})
+      end,
    },
    ads_sirius = {
       _("Want a new look? Try Verrill's Ceremonial Robes at Burnan!"),
@@ -62,19 +89,21 @@ local ads = {
    -- Special ads that can be multi-faction
    ads_empire_zalek = {
       _("Nexus Augmentation: trust the galactic leader in cyber-organs rental!"),
-      _(
-         "Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain and they will never fail an exam!"
-      ),
-      _(
-         "Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save your vital organs from being removed!"
-      ),
+      _("Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain and they will never fail an exam!"),
+      _("Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save your vital organs from being removed!"),
    },
    ads_empire_soromid = {
       _("Remember to fill in your EX-29528-B form if returning to the Empire from Soromid territory."),
    }
 }
 
-function ads.system_ads()
+--[[--
+Obtains all the available advertisements in a system.
+
+   @tparam Boolean flatten Whether or not to convert all messages to strings as necessary.
+   @treturn Table{String,...} A table of strings (and functions if not flatten) containing the different potential advertisements.
+--]]
+function ads.system_ads( flatten )
    local msg = tmergei( {}, ads.ads_generic )
 
    -- Faction specific messages
@@ -90,22 +119,6 @@ function ads.system_ads()
    local fdv = fpres["Dvaered"] or 0
    if fdv > 1 then
       msg = tmergei( msg, ads.ads_dvaered )
-      local badwords = {
-         _("a Butthead"),
-         _("a Nincompoop"),
-         _("a Dunderhead"),
-         _("an Ass"),
-         _("a Fool"),
-         _("a Coward"),
-      }
-      local lords = dv.warlords () -- Gets all warlorlds
-      local r = rnd.rnd(1,#lords)
-      local butthead = lords[r]
-      table.remove( lords, r )
-      local sponsor = lords[ rnd.rnd(1,#lords) ]
-      local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponsor=sponsor}
-      table.insert(msg, fmt.f(_("I hereby declare {butthead} is {badword}. -{sponsor}"), params))
-      table.insert(msg, fmt.f(_("Let it be known that {butthead} is {badword}. -{sponsor}"), params))
    end
 
    -- Soromid messages
@@ -118,12 +131,6 @@ function ads.system_ads()
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
       msg = tmergei( msg, ads.ads_zalek )
-      -- Note that when running in the main menu background, player.name() might not exist (==nil), so
-      -- we need to add a check for that.
-      local pn = player.name()
-      if pn then
-         table.insert(msg, fmt.f(_("Dear Prof. {player}, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."), {player=pn}))
-      end
    end
 
    -- Sirius messages
@@ -142,12 +149,26 @@ function ads.system_ads()
       msg = tmergei( msg, ads.ads_empire_zalek )
    end
 
+   -- Flatten the functions
+   if flatten then
+      for i,m in ipairs(msg) do
+         msg[i] = ads.ad_to_text(m)
+      end
+   end
+
    return msg
 end
 
 function ads.generate_ad ()
    local a = ads.system_ads()
-   return a[rnd.rnd(1,#a)]
+   return ads.ad_to_text( a[rnd.rnd(1,#a)] )
+end
+
+function ads.ad_to_text( ad )
+   if type(ad)=="function" then
+      return ad()
+   end
+   return ad
 end
 
 return ads

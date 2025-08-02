@@ -115,7 +115,7 @@ function timer_advert_spam()
 
    -- Generate ads if not available
    if not adlist then
-      adlist = rnd.permutation( ads.system_ads() )
+      adlist = rnd.permutation( ads.system_ads(true) )
    end
 
    -- Only spam if not disabled
