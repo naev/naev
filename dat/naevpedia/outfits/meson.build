@@ -28,7 +28,7 @@ endforeach
 foreach ns: genlist
   naevpedia_outfits += custom_target( ns.full_path().replace('/','_'),
       command: outfits_gen,
-      depends: [gen_outfits, gen_bio_outfits] # a bit brute force to depend on gen_outfit stage, but works
+      depends: [gen_outfits, gen_bio_outfits], # a bit brute force to depend on gen_outfit stage, but works
       input: ns,
       output: '@BASENAME@.md',
       install: true,
