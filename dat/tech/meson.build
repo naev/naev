@@ -10,8 +10,8 @@ custom_target( 'all_ships',
 )
 
 
-com_outifts = run_command([find_program('all_outfits_dep.sh'), meson.project_source_root() / 'dat/outfits/' ], check: true)
-outfits_sources = com_outifts.stdout().strip().split('\n')
+com_outfits = run_command([find_program('all_outfits_dep.sh'), meson.project_source_root() / 'dat/outfits/' ], check: true)
+outfits_sources = com_outfits.stdout().strip().split('\n')
 
 custom_target( 'all_outfits',
    command: [find_program( 'gen_all_outfits_tech.sh' ), '@OUTPUT@', '@INPUT@'],
