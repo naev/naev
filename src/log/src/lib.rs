@@ -3,6 +3,9 @@ use std::sync::atomic::AtomicU32;
 pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;
 
+pub use formatx;
+pub use gettext;
+
 #[cfg(unix)]
 pub use nix;
 
@@ -35,14 +38,14 @@ pub fn warn_err(err: anyhow::Error) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        println!("{}",&formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        println!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
 #[macro_export]
 macro_rules! einfo {
     ($($arg:tt)*) => {
-        eprintln!("{}",&formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        eprintln!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
@@ -50,7 +53,7 @@ macro_rules! einfo {
 macro_rules! debug {
     ($($arg:tt)*) => {
         if naevc::config::DEBUG {
-            println!("{}",&formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+            println!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
     };
 }
@@ -63,10 +66,10 @@ macro_rules! warn {
             eprintln!("{}WARNING {}:{}: {}",
                 std::backtrace::Backtrace::force_capture(),
                 file!(), line!(),
-                &formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+                &$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
         }
         if nw==$crate::WARN_MAX {
-            eprintln!("{}",gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
+            eprintln!("{}",$crate::gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
         }
         if naevc::config::DEBUG_PARANOID {
             #[cfg(unix)]
@@ -87,7 +90,7 @@ macro_rules! warn_err {
         if nw == $crate::WARN_MAX {
             eprintln!(
                 "{}",
-                gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
+                $crate::gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
             );
         }
         if naevc::config::DEBUG_PARANOID {
