@@ -32,6 +32,7 @@ py_outfits_extra_deps = files('helper.py')
 py_outfits_extra_deps += meson.project_source_root() / 'utils/outfits/outfit.py'
 py_outfits_extra_deps += meson.project_source_root() / 'utils/naev_xml.py'
 
+gen_outfits = []
 foreach name, data : customoutfits
   gen_outfits += [custom_target( name,
     command: [find_program( data['command'] ), '@INPUT@', '@OUTPUT@', ],
