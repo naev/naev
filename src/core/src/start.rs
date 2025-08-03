@@ -1,10 +1,12 @@
-use crate::ntime::{NTime, NTimeC};
-use crate::nxml_warn_node_unknown;
 use anyhow::Result;
+use gettext::gettext;
+use log::warn;
 use std::ffi::CString;
 use std::os::raw::c_char;
 
+use crate::ntime::{NTime, NTimeC};
 use crate::nxml;
+use crate::nxml_warn_node_unknown;
 
 // TODO get rid of CString and use String
 #[derive(Default, Debug)]
@@ -29,12 +31,32 @@ pub struct StartData {
 
 macro_rules! nxml_attr_str {
     ($node: expr, $name: expr) => {
-        CString::new($node.attribute($name).unwrap())?
+        match $node.attribute($name) {
+            Some(val) => CString::new(val)?,
+            None => {
+                warn!(
+                    "xml node '{}' missing attribute '{}'",
+                    $node.tag_name().name(),
+                    $name
+                );
+                CString::new(gettext("UNKNOWN"))?
+            }
+        }
     };
 }
 macro_rules! nxml_attr_i32 {
     ($node: expr, $name: expr) => {
-        $node.attribute($name).unwrap().parse::<i32>()
+        match $node.attribute($name) {
+            Some(val) => val.parse::<i32>(),
+            None => {
+                warn!(
+                    "xml node '{}' missing attribute '{}'",
+                    $node.tag_name().name(),
+                    $name
+                );
+                Ok(0)
+            }
+        }
     };
 }
 

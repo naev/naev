@@ -55,7 +55,7 @@ pub fn node_str<'a>(node: Node<'a, 'a>) -> Result<&'a str> {
         Some(t) => Ok(t),
         None => Err(Error::other(
             format!(
-                "Node '{node}' has invalid text!",
+                "Node '{node}' has invalid or missing text!",
                 node = node.tag_name().name()
             )
             .as_str(),
