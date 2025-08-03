@@ -247,10 +247,7 @@ impl Drop for File<'_> {
 
 pub fn exists(path: &str) -> bool {
     let cpath = CString::new(path).unwrap();
-    match unsafe { naevc::PHYSFS_exists(cpath.as_ptr()) } {
-        0 => false,
-        _ => true,
-    }
+    !matches!(unsafe { naevc::PHYSFS_exists(cpath.as_ptr()) }, 0)
 }
 
 pub fn read_dir(path: &str) -> Result<Vec<String>> {
