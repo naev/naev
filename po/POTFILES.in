@@ -3926,6 +3926,7 @@ src/load.h
 src/log.c
 src/log.h
 src/log/src/lib.rs
+src/log/src/version.rs
 src/lua/ryaml.rs
 src/lua_enet.c
 src/lua_enet.h
@@ -4210,7 +4211,6 @@ src/vec2.h
 src/vec2.rs
 src/vec3.c
 src/vec3.h
-src/version.rs
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py

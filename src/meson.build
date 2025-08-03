@@ -19,6 +19,7 @@ source_rust = files(
    'ndata/src/physfs.rs',
    'gettext/src/lib.rs',
    'log/src/lib.rs',
+   'log/src/version.rs',
    'renderer/src/lib.rs',
    'renderer/src/buffer.rs',
    'renderer/src/shader.rs',
@@ -41,7 +42,6 @@ source_rust = files(
    'ship.rs',
    'slots.rs',
    'vec2.rs',
-   'version.rs',
    'lua/ryaml.rs',
 )
 ####

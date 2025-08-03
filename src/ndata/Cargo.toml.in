@@ -15,3 +15,4 @@ path = "@SOURCE@/src/ndata/src/lib.rs"
 sdl3 = { workspace = true }
 naevc = { workspace = true }
 log = { workspace = true }
+anyhow = { workspace = true }

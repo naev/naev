@@ -1,13 +1,22 @@
-use log::{warn, warn_err};
+use log::{info, warn, warn_err};
 use sdl3 as sdl;
-use std::ffi::{CStr, CString};
+use std::ffi::{c_char, CStr, CString};
 use std::io::{Read, Result};
+use std::path::Path;
+
+use log::formatx::formatx;
+use log::gettext::gettext;
+use log::{semver, version};
 
 pub mod physfs;
 
 pub const GFX_PATH: &str = "gfx/";
 
-pub fn setup() -> Result<()> {
+fn found() -> bool {
+    physfs::exists("VERSION") && physfs::exists("start.xml")
+}
+
+pub fn setup() -> anyhow::Result<()> {
     // Global override takes preference if applicable
     unsafe {
         if !naevc::conf.datapath.is_null() {
@@ -33,10 +42,111 @@ pub fn setup() -> Result<()> {
         }
     }
 
+    // We need the write directories set up so we can start logging
+    // TODO fix logging
     unsafe {
         naevc::log_redirect();
-        naevc::ndata_setupReadDirs();
     }
+
+    // Load conf
+    if unsafe { !naevc::conf.ndata.is_null() } {
+        let path = unsafe { CStr::from_ptr(naevc::conf.ndata).to_string_lossy() };
+        match physfs::mount(&path, true) {
+            Err(e) => {
+                warn_err!(e);
+            }
+            Ok(()) => {
+                info!("Added datapath from conf.lua file: {}", &path);
+            }
+        }
+    }
+
+    // If not found, try other places
+    for s in [&physfs::get_base_dir(), naevc::config::PKGDATADIR] {
+        if !found() {
+            let path = Path::new(s).join("dat");
+            match physfs::mount(&path.to_string_lossy(), true) {
+                Err(e) => {
+                    warn_err!(e);
+                }
+                Ok(()) => {
+                    info!("Trying default datapath : {}", &path.to_string_lossy());
+                }
+            }
+        }
+    }
+
+    if cfg!(target_os = "macos") {
+        if unsafe { naevc::macos_isBundle() } != 0 {
+            const PATH_MAX: usize = naevc::PATH_MAX as usize;
+            let mut buf: [c_char; PATH_MAX] = [0; PATH_MAX];
+            unsafe {
+                naevc::macos_resourcesPath(buf.as_mut_ptr(), PATH_MAX - 4);
+            }
+            let buf = unsafe { CStr::from_ptr(buf.as_ptr()) };
+            let path = Path::new(buf.to_str()?).join("dat");
+            match physfs::mount(&path.to_string_lossy(), true) {
+                Err(e) => {
+                    warn_err!(e);
+                }
+                Ok(()) => {
+                    info!("Trying default datapath : {}", &path.to_string_lossy());
+                }
+            }
+        }
+    } else if cfg!(target_os = "linux") {
+        if unsafe { naevc::env.isAppImage } != 0 {
+            let buf = unsafe { CStr::from_ptr(naevc::env.appdir) };
+            let path = Path::new(buf.to_str()?)
+                .join(naevc::config::PKGDATADIR)
+                .join("dat");
+            match physfs::mount(&path.to_string_lossy(), true) {
+                Err(e) => {
+                    warn_err!(e);
+                }
+                Ok(()) => {
+                    info!("Trying default datapath : {}", &path.to_string_lossy());
+                }
+            }
+        }
+    }
+
+    physfs::mount(&physfs::get_write_dir(), false)?;
+
+    unsafe {
+        naevc::plugin_init();
+    }
+
+    // Test Version
+    if !found() {
+        // TODO probably push this outside
+        sdl::messagebox::show_simple_message_box(
+            sdl::messagebox::MessageBoxFlag::ERROR,
+            gettext("Naev Critical Error"),
+            &formatx!(gettext("Unable to find game data. You may need to install, specify a datapath, or run using {} (if developing)."), "naev.py" )?,
+            None,
+        )?;
+    }
+
+    // See if version is OK.
+    let version_buf = &read("VERSION")?;
+    let version_str = String::from_utf8_lossy(&version_buf);
+    let version = semver::Version::parse(&version_str)?;
+    let diff = version::compare_versions(&version::VERSION, &version);
+    if diff != 0 {
+        warn!( "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}.", &*version::VERSION_HUMAN, &version_str );
+        if diff.abs() > 2 {
+            sdl::messagebox::show_simple_message_box(
+                sdl::messagebox::MessageBoxFlag::ERROR,
+                gettext("Naev Critical Error"),
+                gettext("Please get a compatible ndata version!"),
+                None,
+            )?;
+        } else if diff.abs() > 1 {
+            info!("Naev will probably crash now as the versions are probably not compatible.");
+        }
+    }
+
     Ok(())
 }
 

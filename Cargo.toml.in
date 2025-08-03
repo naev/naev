@@ -79,7 +79,6 @@ roxmltree = { workspace = true }
 image = { workspace = true }
 constcat = "0"
 derive_more = { version = "2", features = ["from", "into"] }
-semver = "1"
 rand = "0"
 rayon = "1" # parallel computation
 static_assertions = "1"

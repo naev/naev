@@ -117,8 +117,6 @@
 #define SAVE_UPDATER_PATH "save_updater.lua"
 #define DIFFICULTY_PATH "difficulty/"
 
-void   ndata_setupWriteDir( void );
-void   ndata_setupReadDirs( void );
 void  *ndata_read( const char *filename, size_t *filesize );
 char **ndata_listRecursive( const char *path );
 int    ndata_backupIfExists( const char *path );

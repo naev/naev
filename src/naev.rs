@@ -28,7 +28,6 @@ mod rng;
 mod ship;
 mod slots;
 mod vec2;
-mod version;
 mod lua {
     pub mod ryaml;
 }
@@ -100,7 +99,7 @@ fn naevmain() -> Result<()> {
     gettext::init();
 
     /* Print the version */
-    log::info(&version::VERSION_HUMAN);
+    log::info(&log::version::VERSION_HUMAN);
     if cfg!(target_os = "linux") {
         match env::ENV.is_appimage {
             true => {

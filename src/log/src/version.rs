@@ -26,7 +26,7 @@ fn binary_comparison(x: u64, y: u64) -> i32 {
     }
 }
 
-fn compare_versions(vera: &semver::Version, verb: &semver::Version) -> i32 {
+pub fn compare_versions(vera: &semver::Version, verb: &semver::Version) -> i32 {
     let res = binary_comparison(vera.major, verb.major);
     if res != 0 {
         return 3 * res;

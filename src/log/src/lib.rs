@@ -3,8 +3,11 @@ use std::sync::atomic::AtomicU32;
 pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;
 
+pub mod version;
+
 pub use formatx;
 pub use gettext;
+pub use semver;
 
 #[cfg(unix)]
 pub use nix;

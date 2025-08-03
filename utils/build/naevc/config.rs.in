@@ -1,4 +1,3 @@
-
 #![allow(dead_code)]
 
 pub const HOST: &str = @HOST@;

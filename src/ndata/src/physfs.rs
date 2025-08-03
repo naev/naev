@@ -1,7 +1,7 @@
 /* Documentation mentions global lock in settings. Should be thread-safe _except_ for opening the
  * same file and writing + reading/writing with multiple threads. */
 use sdl3 as sdl;
-use std::ffi::{CStr, CString};
+use std::ffi::{c_int, CStr, CString};
 use std::io::{Error, Read, Result, Seek, SeekFrom, Write};
 use std::os::raw::c_void;
 use std::sync::atomic::{AtomicPtr, Ordering};
@@ -42,6 +42,16 @@ pub fn set_write_dir(path: &str) -> Result<()> {
     }
 }
 
+pub fn get_base_dir() -> String {
+    let val = unsafe { CStr::from_ptr(naevc::PHYSFS_getBaseDir()) };
+    String::from(val.to_string_lossy())
+}
+
+pub fn get_write_dir() -> String {
+    let val = unsafe { CStr::from_ptr(naevc::PHYSFS_getWriteDir()) };
+    String::from(val.to_string_lossy())
+}
+
 pub fn get_pref_dir(org: &str, app: &str) -> Result<String> {
     let corg = CString::new(org)?;
     let capp = CString::new(app)?;
@@ -50,6 +60,24 @@ pub fn get_pref_dir(org: &str, app: &str) -> Result<String> {
         Err(error_as_io_error("PHYSFS_getPrefDir"))
     } else {
         unsafe { Ok(String::from(CStr::from_ptr(val).to_string_lossy())) }
+    }
+}
+
+pub fn mount(new_dir: &str, append: bool) -> Result<()> {
+    let cnew_dir = CString::new(new_dir)?;
+    match unsafe { naevc::PHYSFS_mount(cnew_dir.as_ptr(), std::ptr::null(), append as c_int) } {
+        0 => Err(error_as_io_error_with_file("PHYSFS_mount", new_dir)),
+        _ => Ok(()),
+    }
+}
+
+pub fn mount_at(new_dir: &str, mount_point: &str, append: bool) -> Result<()> {
+    let cnew_dir = CString::new(new_dir)?;
+    let cmount_point = CString::new(mount_point)?;
+    match unsafe { naevc::PHYSFS_mount(cnew_dir.as_ptr(), cmount_point.as_ptr(), append as c_int) }
+    {
+        0 => Err(error_as_io_error_with_file("PHYSFS_mount", new_dir)),
+        _ => Ok(()),
     }
 }
 
@@ -214,6 +242,14 @@ impl Seek for File<'_> {
 impl Drop for File<'_> {
     fn drop(&mut self) {
         let _ = self.close();
+    }
+}
+
+pub fn exists(path: &str) -> bool {
+    let cpath = CString::new(path).unwrap();
+    match unsafe { naevc::PHYSFS_exists(cpath.as_ptr()) } {
+        0 => false,
+        _ => true,
     }
 }
 
