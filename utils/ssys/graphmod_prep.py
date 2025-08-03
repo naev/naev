@@ -50,7 +50,7 @@ virtual_edges = [
    ('ngc18451', 'felzen'), ('ngc6057', 'xeric'), ('ngc1098', 'westhaven'),
    ('ngc7061', 'kansas'), ('niger', 'kyo'),
    ('willow', 'palovi'), ('margarita', 'narousse'),
-   ('porro', 'modus_manis'), ('suna', 'vanir'),
+   ('porro', 'modus_manis'),
    ('tobanna', 'brumeria'),('rotide', 'tide'),
    ('padonia', 'basel'), ('ogat', 'wochii'),
    ('griffin', 'pastor'), ('ngc2948', 'ngc9017'),
@@ -85,10 +85,16 @@ if prv is not None:
    virtual_edges.append(('_'+str(prvj+2),             prv))
    virtual_edges.append(('_'+str(prvj+2),      '_'+str(1)))
 
+
+virtual_edges.extend([
+   ('suna', '_suna_vanir'),('_suna_vanir', 'vanir'),
+   ('botarn', '_suna_vanir'),('_suna_vanir', 'monogram'),
+   ('anrique', '_suna_vanir'),
+   ('kraft', 'kiwi')])
+
 from graphmod import ssys_pos, ssys_jmp
 from virtual_edges import add_virtual_edges
 add_virtual_edges(ssys_jmp, virtual_edges)
-
 
 for v in ssys_pos:
    for e, t in ssys_jmp[v].items():

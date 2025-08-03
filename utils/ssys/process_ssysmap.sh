@@ -148,7 +148,7 @@ if [ -z "$NOPIC" ] ;                                                     then
 else pmsg "" ;                                                             fi |
 pmsg "gen final graph"                                                        |
 "$DIR"/graphmod_abh.py                                                        |
-"$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL_BUT_TERM[@]}"                   |
+"$DIR"/repeat.sh 2 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"         |
 "$DIR"/graphmod_abh.py                                                        |
 "$DIR"/graphmod_final.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
