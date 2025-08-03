@@ -45,28 +45,6 @@ static int  ndata_enumerateCallback( void *data, const char *origdir,
                                      const char *fname );
 
 /**
- * @brief Gets the primary path for where the data is.
- */
-const char *ndata_primaryPath( void )
-{
-   static char *primarypath = NULL;
-   if ( primarypath == NULL ) {
-      char **search_path = PHYSFS_getSearchPath();
-      int    n           = 0;
-      for ( char **p = search_path; *p != NULL; p++ )
-         n++;
-      for ( int i = n - 1; i >= 0; i-- ) {
-         if ( nfile_dirExists( search_path[i] ) ) {
-            primarypath = strdup( search_path[i] );
-            break;
-         }
-      }
-      PHYSFS_freeList( search_path );
-   }
-   return primarypath;
-}
-
-/**
  * @brief Checks to see if the physfs search path is enough to find game data.
  */
 static int ndata_found( void )
@@ -138,7 +116,7 @@ void ndata_setupWriteDir( void )
    /* For historical reasons predating physfs adoption, this case is different.
     */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
-#else
+#else  /* SDL_PLATFORM_MACOS */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
 #endif /* SDL_PLATFORM_MACOS */
    if ( PHYSFS_getWriteDir() == NULL ) {

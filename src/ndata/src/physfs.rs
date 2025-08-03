@@ -35,6 +35,24 @@ pub fn error_as_io_error_with_file(func: &str, file: &str) -> Error {
     ))
 }
 
+pub fn set_write_dir(path: &str) -> Result<()> {
+    match unsafe { naevc::PHYSFS_setWriteDir(CString::new(path)?.as_ptr()) } {
+        0 => Err(error_as_io_error("PHYSFS_setWriteDir")),
+        _ => Ok(()),
+    }
+}
+
+pub fn get_pref_dir(org: &str, app: &str) -> Result<String> {
+    let corg = CString::new(org)?;
+    let capp = CString::new(app)?;
+    let val = unsafe { naevc::PHYSFS_getPrefDir(corg.as_ptr(), capp.as_ptr()) };
+    if val.is_null() {
+        Err(error_as_io_error("PHYSFS_getPrefDir"))
+    } else {
+        unsafe { Ok(String::from(CStr::from_ptr(val).to_string_lossy())) }
+    }
+}
+
 /// Possible ways to open a file.
 #[allow(dead_code)]
 #[derive(Copy, Clone)]

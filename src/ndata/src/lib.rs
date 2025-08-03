@@ -1,10 +1,44 @@
+use log::{warn, warn_err};
 use sdl3 as sdl;
-use std::ffi::CString;
+use std::ffi::{CStr, CString};
 use std::io::{Read, Result};
 
 pub mod physfs;
 
 pub const GFX_PATH: &str = "gfx/";
+
+pub fn setup() -> Result<()> {
+    // Global override takes preference if applicable
+    unsafe {
+        if !naevc::conf.datapath.is_null() {
+            let datapath = CStr::from_ptr(naevc::conf.datapath);
+            physfs::set_write_dir(&datapath.to_string_lossy())?;
+            return Ok(());
+        }
+    }
+
+    // For historical reasons predating physfs adoption, this case is different.
+    let app = if cfg!(target_os = "macos") {
+        "org.naev.Naev"
+    } else {
+        "naev"
+    };
+    let pref = physfs::get_pref_dir(".", app)?;
+    match physfs::set_write_dir(&pref) {
+        Ok(_) => (),
+        Err(e) => {
+            warn_err!(e);
+            warn!("Cannot determine data path, using current directory");
+            physfs::set_write_dir("./naev/")?;
+        }
+    }
+
+    unsafe {
+        naevc::log_redirect();
+        naevc::ndata_setupReadDirs();
+    }
+    Ok(())
+}
 
 pub fn simplify_path(path: &str) -> Result<String> {
     let mut out: Vec<&str> = Vec::new();

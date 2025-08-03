@@ -153,9 +153,8 @@ fn naevmain() -> Result<()> {
     /* Set up the configuration. */
     let conf_file_path = unsafe {
         let rpath = cptr_to_cstr(cpath);
-        let conf_file = CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char)
-            .to_str()
-            .unwrap();
+        let conf_file =
+            CStr::from_ptr(naevc::CONF_FILE.as_ptr() as *const c_char).to_string_lossy();
         format!("{rpath}{conf_file}")
     };
 
@@ -163,30 +162,25 @@ fn naevmain() -> Result<()> {
         let cconf_file_path = CString::new(conf_file_path.clone()).unwrap();
         naevc::conf_loadConfig(cconf_file_path.as_ptr()); /* Lua to parse the configuration file */
         naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
+    }
 
+    ndata::setup()?;
+    unsafe {
         /* Set up I/O. */
-        naevc::ndata_setupWriteDir();
-        naevc::log_redirect();
-        naevc::ndata_setupReadDirs();
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
         info!(gettext("Loaded configuration: {}"), conf_file_path);
         let search_path = naevc::PHYSFS_getSearchPath();
         info!(gettext("Read locations, searched in order:"));
-        for p in {
-            let mut out: Vec<&str> = Vec::new();
+        {
             let mut i = 0;
             loop {
                 let sp = *search_path.offset(i);
                 if sp.is_null() {
                     break;
                 }
-                let s = CStr::from_ptr(sp).to_str().unwrap();
-                out.push(s);
+                info!("    {}", cptr_to_cstr(sp));
                 i += 1;
             }
-            out
-        } {
-            info!("    {}", p);
         }
         naevc::PHYSFS_freeList(search_path as *mut c_void);
 
@@ -212,7 +206,7 @@ fn naevmain() -> Result<()> {
 
         info!(
             " {}\n",
-            CStr::from_ptr(naevc::start_name()).to_str().unwrap()
+            CStr::from_ptr(naevc::start_name()).to_string_lossy()
         );
 
         /* Display the SDL version. */
