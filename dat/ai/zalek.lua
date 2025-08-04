@@ -105,6 +105,10 @@ function hail ()
    -- Clean up
    mem.refuel        = 0
    mem.refuel_msg    = nil
+   mem.refuel_low    = nil
+   mem.refuel_start  = nil
+   mem.refuel_busy   = nil
+   mem.refuel_already= nil
    mem.bribe         = 0
    mem.bribe_prompt  = nil
    mem.bribe_prompt_nearby = nil
@@ -126,6 +130,10 @@ function hail ()
    -- Most likely no chance to refuel
    if mem.isdrone then
       mem.refuel_msg = _([["INSERT {credits} TO COMMENCE REFUELLING OPERATIONS."]])
+      mem.refuel_start = _([["INITIALIZING REFUELLING OPERATION."]])
+      mem.refuel_low = _([["INSUFFICIENT FUEL RESERVES TO PROVIDE REFUELLING."]])
+      mem.refuel_busy = _([["INSUFFICIENT TASK PRIORITY TO REFUEL."]])
+      mem.refuel_already = _([["REFUELLING OPERATION IN PROGRESS."]])
    else
       mem.refuel_msg = _([["I will agree to refuel your ship for {credits}."]])
    end

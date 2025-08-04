@@ -309,12 +309,7 @@ function comm( plt )
          vn.jump("bribe_nomoney")
       end
    end )
-   p( function ()
-      if mem.bribe_paid then
-         return mem.bribe_paid
-      end
-      return _([["Pleasure to do business with you."]])
-   end )
+   p( mem.bribe_paid or _([["Pleasure to do business with you."]]) )
    vn.func( function ()
       local cost = bribe_cost( plt )
       player.pay( -cost, true )
@@ -362,12 +357,7 @@ function comm( plt )
          vn.jump("bribe_nearby_nomoney")
       end
    end )
-   p( function ()
-      if mem.bribe_paid then
-         return mem.bribe_paid
-      end
-      return _([["Pleasure to do business with you."]])
-   end )
+   p( mem.bribe_paid or _([["Pleasure to do business with you."]]) )
    vn.func( function ()
       local cost = bribe_nearby_cost
       player.pay( -cost, true )
@@ -408,12 +398,7 @@ function comm( plt )
          vn.jump("bribe_all_nomoney")
       end
    end )
-   p( function ()
-      if mem.bribe_paid then
-         return mem.bribe_paid
-      end
-      return _([["Pleasure to do business with you."]])
-   end )
+   p( mem.bribe_paid or _([["Pleasure to do business with you."]]) )
    vn.func( function ()
       local cost = bribe_all_cost
       player.pay( -cost, true )
@@ -440,19 +425,15 @@ function comm( plt )
    vn.jump("menu")
 
    vn.label("refuel_low")
-   p(_([["Sorry, I don't have enough fuel to spare at the moment."]]))
+   p(mem.refuel_low or _([["Sorry, I don't have enough fuel to spare at the moment."]]))
    vn.jump("menu")
 
    vn.label("refuel_busy")
-   p(_([["Sorry, I'm busy now."]]))
+   p(mem.refuel_busy or _([["Sorry, I'm busy now."]]))
    vn.jump("menu")
 
    vn.label("refueling_already")
-   p(_([["What part of 'on my way' don't you understand?"]]))
-   vn.jump("menu")
-
-   vn.label("refuel_refueling")
-   vn.na(_("Pilot is already refueling you."))
+   p(mem.refuel_already or _([["What part of 'on my way' don't you understand?"]]))
    vn.jump("menu")
 
    vn.label("refuel_refuse")
@@ -544,7 +525,7 @@ function comm( plt )
       plt:refuel( player.pilot() )
    end )
    vn.label("refuel_startmsg")
-   p(_([["On my way."]]))
+   p(mem.refuel_start or _([["On my way."]]))
    vn.jump("menu")
 
    -- Provides fuel for one jump
