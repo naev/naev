@@ -97,7 +97,7 @@ function enter()
       local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.angle())
       local fct = faction.dynAdd("Independent", "adspammer", _("Independent"), { clear_enemies = true,
          clear_allies = true })
-      spammer = pilot.add("Gawain", fct, location, _("Advertiser 108CK"))
+      spammer = pilot.add("Gawain", fct, location, _("Advertiser 108CK"), {ai="advertiser"})
       spammer:control()
       spammer:memory().aggressive = true
       spammer:setHilight(true)
