@@ -69,9 +69,11 @@ pmsg() {
 }
 
 N_ITER=6
+
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$("$DIR"/ssys_graph.sh -v |
 # "$DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
+
 #s=(doowa flok firk)
 #repos_systems2=(terminus)
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
@@ -80,7 +82,8 @@ SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 read -ra TERM_SSYS <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/terminal_ssys.py )"
-read -ra ALMOST_ALL_BUT_TERM <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" )"
+read -ra SMOOTH_SSYS <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/graphmod_smooth.py -L )"
+read -ra ALMOST_ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" "${SMOOTH_SSYS[@]}" )"
 
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
@@ -129,7 +132,7 @@ pmsg "pprocess"                                                               |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
 else pmsg "" ;                                                             fi |
-pmsg "${N_ITER} x (repos sys + smooth tradelane) + virtual"                   |
+pmsg "${N_ITER} x (repos sys + smooth/round lanes) + virtual"                 |
 "$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
 pmsg ""                                                                       |
 "$DIR"/graphmod_virtual_ssys.py                                               |
@@ -146,10 +149,8 @@ pmsg "apply gravity"                                                          |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
 else pmsg "" ;                                                             fi |
-pmsg "gen final graph"                                                        |
-"$DIR"/graphmod_abh.py                                                        |
-"$DIR"/repeat.sh 2 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"         |
-"$DIR"/graphmod_abh.py                                                        |
+pmsg "gen final graph "                                                       |
+"$DIR"/repeat.sh 2 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"  |
 "$DIR"/graphmod_final.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 grep -v ' virtual$'                                                           |

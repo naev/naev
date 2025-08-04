@@ -4,6 +4,7 @@
 from geometry import vec
 
 def smoothen( pos, neigh, hard = False ):
+   w = 0.0 if hard else 1.0
    newp = dict()
    for i in pos:
       for j in neigh[i]:
@@ -11,7 +12,7 @@ def smoothen( pos, neigh, hard = False ):
             neigh[i].add(j)
    for k in pos:
       if (n := len(neigh[k])) > 1:
-         acc, count = (vec(), count) if hard else (pos[k], 1)
+         acc, count = pos[k] * w, w
          for s in neigh[k]:
             if N := [pos[i] for i in neigh[s] if i != k]:
                acc += 1.5*pos[s] - 0.5*sum(N, vec())/len(N)
