@@ -201,19 +201,14 @@ use std::sync::LazyLock;
 static DAMAGE_TYPES: LazyLock<Vec<DamageType>> = LazyLock::new(|| load().unwrap());
 
 pub fn load() -> Result<Vec<DamageType>> {
-    let files = ndata::read_dir("damagetype/")?;
+    let files = ndata::read_dir_filter("damagetype/", |filename| filename.ends_with(".xml"))?;
     let mut dt_data: Vec<DamageType> = files
         .par_iter()
-        .filter_map(|filename| {
-            if !filename.ends_with(".xml") {
-                return None;
-            }
-            match DamageType::load(filename.as_str()) {
-                Ok(dt) => Some(dt),
-                Err(err) => {
-                    warn_err(err.context(format!("unable to load Damage Type '{filename}'!")));
-                    None
-                }
+        .filter_map(|filename| match DamageType::load(filename.as_str()) {
+            Ok(dt) => Some(dt),
+            Err(err) => {
+                warn_err(err.context(format!("unable to load Damage Type '{filename}'!")));
+                None
             }
         })
         .collect();

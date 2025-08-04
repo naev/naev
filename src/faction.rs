@@ -724,24 +724,21 @@ pub static FACTIONDATA: OnceLock<Vec<FactionData>> = OnceLock::new();
 
 pub fn load() -> Result<()> {
     let ctx = Context::get().as_safe_wrap();
-    let files = ndata::read_dir("factions/")?;
+    let files = ndata::read_dir_filter("factions/", |filename| filename.ends_with(".xml"))?;
 
     // First pass: set up factions
     let mut factionload: Vec<FactionLoad> = files
         //.par_iter()
         .iter()
-        .filter_map(|filename| {
-            if !filename.ends_with(".xml") {
-                return None;
-            }
-            match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
+        .filter_map(
+            |filename| match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 Err(e) => {
                     warn!("Unable to load Faction '{}': {}", filename, e);
                     None
                 }
-            }
-        })
+            },
+        )
         .collect();
     // Add Player before sorting
     factionload.push(FactionLoad {
