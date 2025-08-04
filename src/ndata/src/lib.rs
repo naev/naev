@@ -12,16 +12,42 @@ pub mod physfs;
 
 pub const GFX_PATH: &str = "gfx/";
 
+/// Whether or not the data has likely been found
 fn found() -> bool {
     physfs::exists("VERSION") && physfs::exists("start.xml")
 }
 
+/// See if version is OK.
+fn test_version() -> anyhow::Result<()> {
+    let version_buf = &read("VERSION")?;
+    let version_str = String::from_utf8_lossy(version_buf);
+    let version = semver::Version::parse(&version_str)?;
+    let diff = version::compare_versions(&version::VERSION, &version);
+    if diff != 0 {
+        warn!( "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}.", &*version::VERSION_HUMAN, &version_str );
+        if diff.abs() > 2 {
+            sdl::messagebox::show_simple_message_box(
+                sdl::messagebox::MessageBoxFlag::ERROR,
+                gettext("Naev Critical Error"),
+                gettext("Please get a compatible ndata version!"),
+                None,
+            )?;
+        } else if diff.abs() > 1 {
+            info!("Naev will probably crash now as the versions are probably not compatible.");
+        }
+    }
+    Ok(())
+}
+
+/// Initializes the ndata, has to be called first
 pub fn setup() -> anyhow::Result<()> {
     // Global override takes preference if applicable
     unsafe {
         if !naevc::conf.datapath.is_null() {
             let datapath = CStr::from_ptr(naevc::conf.datapath);
-            physfs::set_write_dir(&datapath.to_string_lossy())?;
+            physfs::set_write_dir(&datapath.to_string_lossy()).unwrap_or_else(|e| {
+                warn_err!(e);
+            });
             return Ok(());
         }
     }
@@ -32,15 +58,21 @@ pub fn setup() -> anyhow::Result<()> {
     } else {
         "naev"
     };
-    let pref = physfs::get_pref_dir(".", app)?;
-    match physfs::set_write_dir(&pref) {
-        Ok(_) => (),
+    match physfs::get_pref_dir(".", app) {
+        Ok(pref) => match physfs::set_write_dir(&pref) {
+            Ok(_) => (),
+            Err(e) => {
+                warn_err!(e);
+                warn!("Cannot determine data path, using current directory");
+                physfs::set_write_dir("./naev/").unwrap_or_else(|e| {
+                    warn_err!(e);
+                });
+            }
+        },
         Err(e) => {
             warn_err!(e);
-            warn!("Cannot determine data path, using current directory");
-            physfs::set_write_dir("./naev/")?;
         }
-    }
+    };
 
     // We need the write directories set up so we can start logging
     // TODO fix logging
@@ -84,7 +116,7 @@ pub fn setup() -> anyhow::Result<()> {
                 naevc::macos_resourcesPath(buf.as_mut_ptr(), PATH_MAX - 4);
             }
             let buf = unsafe { CStr::from_ptr(buf.as_ptr()) };
-            let path = Path::new(buf.to_str()?).join("dat");
+            let path = Path::new(&*buf.to_string_lossy()).join("dat");
             match physfs::mount(&path.to_string_lossy(), true) {
                 Err(e) => {
                     warn_err!(e);
@@ -96,7 +128,7 @@ pub fn setup() -> anyhow::Result<()> {
         }
     } else if cfg!(target_os = "linux") && unsafe { naevc::env.isAppImage } != 0 {
         let buf = unsafe { CStr::from_ptr(naevc::env.appdir) };
-        let path = Path::new(buf.to_str()?)
+        let path = Path::new(&*buf.to_string_lossy())
             .join(naevc::config::PKGDATADIR)
             .join("dat");
         match physfs::mount(&path.to_string_lossy(), true) {
@@ -109,8 +141,12 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    physfs::mount(&physfs::get_write_dir(), false)?;
+    // Finally, we mount the write directory also as read
+    physfs::mount(&physfs::get_write_dir(), false).unwrap_or_else(|e| {
+        warn_err!(e);
+    });
 
+    // Plugin initialization before checking the data for consistency
     unsafe {
         naevc::plugin_init();
     }
@@ -126,26 +162,7 @@ pub fn setup() -> anyhow::Result<()> {
         )?;
     }
 
-    // See if version is OK.
-    let version_buf = &read("VERSION")?;
-    let version_str = String::from_utf8_lossy(version_buf);
-    let version = semver::Version::parse(&version_str)?;
-    let diff = version::compare_versions(&version::VERSION, &version);
-    if diff != 0 {
-        warn!( "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}.", &*version::VERSION_HUMAN, &version_str );
-        if diff.abs() > 2 {
-            sdl::messagebox::show_simple_message_box(
-                sdl::messagebox::MessageBoxFlag::ERROR,
-                gettext("Naev Critical Error"),
-                gettext("Please get a compatible ndata version!"),
-                None,
-            )?;
-        } else if diff.abs() > 1 {
-            info!("Naev will probably crash now as the versions are probably not compatible.");
-        }
-    }
-
-    Ok(())
+    test_version()
 }
 
 pub fn simplify_path(path: &str) -> Result<String> {
