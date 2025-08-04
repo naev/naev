@@ -24,14 +24,10 @@ fn test_version() -> anyhow::Result<()> {
     let version = semver::Version::parse(&version_str)?;
     let diff = version::compare_versions(&version::VERSION, &version);
     if diff != 0 {
-        warn!( "ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}.", &*version::VERSION_HUMAN, &version_str );
+        let err_str = formatx!(gettext("ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}."), &*version::VERSION_HUMAN, &version_str)?;
+        warn!(&err_str);
         if diff.abs() > 2 {
-            sdl::messagebox::show_simple_message_box(
-                sdl::messagebox::MessageBoxFlag::ERROR,
-                gettext("Naev Critical Error"),
-                gettext("Please get a compatible ndata version!"),
-                None,
-            )?;
+            anyhow::bail!(err_str);
         } else if diff.abs() > 1 {
             info!("Naev will probably crash now as the versions are probably not compatible.");
         }
@@ -39,7 +35,8 @@ fn test_version() -> anyhow::Result<()> {
     Ok(())
 }
 
-/// Initializes the ndata, has to be called first
+/// Initializes the ndata, has to be called first.
+/// Will only return an Err when it is not recoverable.
 pub fn setup() -> anyhow::Result<()> {
     // Global override takes preference if applicable
     unsafe {
@@ -151,15 +148,9 @@ pub fn setup() -> anyhow::Result<()> {
         naevc::plugin_init();
     }
 
-    // Test Version
+    // If data is not found, we error.
     if !found() {
-        // TODO probably push this outside
-        sdl::messagebox::show_simple_message_box(
-            sdl::messagebox::MessageBoxFlag::ERROR,
-            gettext("Naev Critical Error"),
-            &formatx!(gettext("Unable to find game data. You may need to install, specify a datapath, or run using {} (if developing)."), "naev.py" )?,
-            None,
-        )?;
+        anyhow::bail!(formatx!(gettext("Unable to find game data. You may need to install, specify a datapath, or run using {} (if developing)."), "naev.py" )?);
     }
 
     test_version()

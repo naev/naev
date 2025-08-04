@@ -163,7 +163,9 @@ fn naevmain() -> Result<()> {
         naevc::conf_parseCLI(argv.len() as c_int, argv.as_mut_ptr()); /* parse CLI arguments */
     }
 
+    // Will propagate error out if necessary
     ndata::setup()?;
+
     unsafe {
         /* Set up I/O. */
         naevc::gettext_setLanguage(naevc::conf.language); /* now that we can find translations */
