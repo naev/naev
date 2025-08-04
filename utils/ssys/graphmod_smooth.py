@@ -18,18 +18,25 @@ if argv[1:]:
    )
    exit(0)
 
+from geometry import symmetry
 from graphmod import ssys_pos, ssys_jmp, no_graph_out
 from smoothen import smoothen, circleify
-
+from graph_vaux import ssys_others
 L = { 'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'monogram', 'kraft', 'pike'}
-CIR = {'palovi',} | L
-neigh = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t and not {k, s} < L} for k in ssys_pos }
-ABH = {'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian', 'copernicus', 'ngc13674', 'ngc1562', 'ngc2601'}
+sirius_circle = {'palovi',} | L
+tradelane = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t and not {k, s} < L} for k in ssys_pos }
+stellars = {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)}
+stellarwind = { k: {s for (s, _) in ssys_jmp[k].items() if {k, s} < stellars } for k in ssys_pos }
+abh_circle = {'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian', 'copernicus', 'ngc13674', 'ngc1562', 'ngc2601'}
+
+trad_l_pos = smoothen(ssys_pos, tradelane)
+stel_w_pos = smoothen(ssys_pos | {'pilatis': symmetry(ssys_pos['defa'])(ssys_pos['oberon'])},
+   stellarwind, hard=True)
 
 if JUST_LIST:
    no_graph_out()
-   print('\n'.join({k for k in neigh if neigh[k]}|CIR))
+   print('\n'.join(trad_l_pos.keys() | stel_w_pos.keys() | sirius_circle | abh_circle))
 else:
-   ssys_pos |= circleify(ssys_pos, ABH, 'anubis_black_hole')
-   ssys_pos |= circleify(ssys_pos, CIR, 'suna')
-   ssys_pos |= smoothen(ssys_pos, neigh)
+   ssys_pos |= circleify(ssys_pos, abh_circle, 'anubis_black_hole')
+   ssys_pos |= circleify(ssys_pos, sirius_circle, 'suna', hard= True)
+   ssys_pos |= stel_w_pos | trad_l_pos

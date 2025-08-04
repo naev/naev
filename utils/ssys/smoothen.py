@@ -4,7 +4,9 @@
 from geometry import vec
 
 def smoothen( pos, neigh, hard = False ):
-   w = 0.0 if hard else 1.0
+   original_w = 0.0 if hard else 1.0
+   #d_w = 1.0 / 2.0
+   d_w = 1.0 / 3.0
    newp = dict()
    for i in pos:
       for j in neigh[i]:
@@ -12,10 +14,10 @@ def smoothen( pos, neigh, hard = False ):
             neigh[i].add(j)
    for k in pos:
       if (n := len(neigh[k])) > 1:
-         acc, count = pos[k] * w, w
+         acc, count = pos[k] * original_w, original_w
          for s in neigh[k]:
             if N := [pos[i] for i in neigh[s] if i != k]:
-               acc += 1.5*pos[s] - 0.5*sum(N, vec())/len(N)
+               acc += (1.0 + d_w) * pos[s] - d_w * sum(N, vec())/len(N)
             else:
                acc += pos[s]
             count += 1
@@ -25,7 +27,7 @@ def smoothen( pos, neigh, hard = False ):
 from math import sqrt
 def circleify( pos, L, center ):
    newp = dict()
-   # global approach -> more brutal
+   # global approach -> much more brutal.
    V = [(pos[i] - pos[center]).size() for i in L]
    avg = sum(V) / len(V)
    for i in L:

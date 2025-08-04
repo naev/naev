@@ -1,5 +1,7 @@
 #!/bin/bash
 
+N_ITER=5
+
 trap 'exit 0' SIGINT
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
@@ -68,8 +70,6 @@ pmsg() {
    msg "$@"
 }
 
-N_ITER=6
-
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$("$DIR"/ssys_graph.sh -v |
 # "$DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
@@ -82,7 +82,10 @@ SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 read -ra TERM_SSYS <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/terminal_ssys.py )"
-read -ra SMOOTH_SSYS <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/graphmod_smooth.py -L )"
+read -ra SMOOTH_SSYS <<< "$(
+   "$DIR"/ssysmap2graph.sh       |
+   "$DIR"/graph_vaux.py          |
+   "$DIR"/graphmod_smooth.py -L )"
 read -ra ALMOST_ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" "${SMOOTH_SSYS[@]}" )"
 
 "$DIR"/repos.sh -C || exit 1
