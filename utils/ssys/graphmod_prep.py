@@ -28,6 +28,7 @@ del_edges = [
 new_edges = [
 #  ('khaas', 'vedalus'),
    ('andres', 'mason'),
+   ('sunir', 'suna'), ('sunir', 'vanir'), ('sunir', 'monogram'),
 ]
 
 # In the form: (from, to [, length])
@@ -88,9 +89,7 @@ if prv is not None:
 
 
 virtual_edges.extend([
-   ('suna', 'sunir'),('sunir', 'vanir'),
-   ('botarn', 'sunir'),('sunir', 'monogram'),
-   ('anrique', 'sunir'),
+   ('sunir', 'botarn'), ('sunir', 'anrique'),
    ('kraft', 'kiwi')])
 
 
@@ -98,6 +97,8 @@ from graphmod import ssys_pos, ssys_jmp
 from virtual_edges import add_virtual_edges
 
 ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
+ssys_pos.aux['sunir'] = ["default", "Su'nir"]
+#ssys_pos.aux['sunir'] = ["default::spoiler:plasmastorm", "Su'nir"]
 
 
 add_virtual_edges(ssys_jmp, virtual_edges)
@@ -109,6 +110,5 @@ for v in ssys_pos:
       if (v, e) in new_edges:
          new_edges.remove((v, e))
 
-from sys import stderr
 for (i, j) in new_edges:
    ssys_jmp[i][j] = ['new']

@@ -141,9 +141,6 @@ pmsg ""                                                                       |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
 else cat ;                                                                 fi |
-if [ -n "$FORCE" ] ;                                                    then
-   tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
-else cat ;                                                                fi  |
 pmsg "apply gravity"                                                          |
 "$DIR"/apply_pot.sh -g                                                        |
 "$DIR"/graphmod_stretch_north.py                                              |
@@ -153,18 +150,21 @@ if [ -z "$NOPIC" ] ;                                                     then
 else pmsg "" ;                                                             fi |
 pmsg "gen final graph "                                                       |
 "$DIR"/repeat.sh 2 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"  |
-pmsg ""                                                                       |
 if [ -z "$NOPIC" ] ;                                                     then
+   pmsg "" |
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
 else pmsg "" ;                                                             fi |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 grep -v ' virtual$'                                                           |
+if [ -n "$FORCE" ] ;                                                    then
+   tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
+else cat ;                                                                fi  |
 if [ -z "$NOPIC" ] ; then
    $SPOIL_FILTER |
    tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
    "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_fin'
 else
-   pmsg "" >/dev/null
+   cat >/dev/null
 fi
 
 if [ -n "$FORCE" ] ; then
