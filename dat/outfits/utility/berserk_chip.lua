@@ -1,12 +1,12 @@
 local osh = require 'outfits.shaders'
 
-local threshold = 30 -- armour shield damage to turn off at
+local threshold = 20 -- armour shield damage to turn off at
 local cooldown = 8 -- cooldown time in seconds
-local drain_shield = 1.0 / 2.0 -- inverse of number of seconds needed to drain shield
-local drain_armour = 1.0 / 50.0 -- inverse of number of seconds needed to drain armour (this is accelerated by this amount every second)
+local drain_shield = 1.0 / 5.0 -- inverse of number of seconds needed to drain shield
+local drain_armour = 1.0 / 88.0 -- inverse of number of seconds needed to drain armour (this is accelerated by this amount every second)
 local oshader = osh.new([[
 #include "lib/blend.glsl"
-const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
+const vec3 colmod = vec3( 1.0, 0.1, 0.0 );
 uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
@@ -36,7 +36,7 @@ local function turnon( p, po )
    mem.ainc = ps.armour * drain_armour
    mem.admg = mem.ainc
    po:set( "armour_regen_malus", mem.admg )
-   po:set( "shield_regen_malus",  ps.shield * drain_shield ) -- shield gone in 2 secs
+   po:set( "shield_regen_malus",  ps.shield * drain_shield )
 
    -- Visual effect
    if mem.isp then oshader:on() end
@@ -55,10 +55,6 @@ local function turnoff( p, po )
    oshader:off()
    po:set( "armour_regen_malus", 0 )
    po:set( "shield_regen_malus",  0 )
-   po:set( "weapon_damage", -20 )
-   po:set( "turn_mod", -20 )
-   po:set( "accel_mod", -20 )
-   po:set( "speed_mod", -20 )
    return true
 end
 
