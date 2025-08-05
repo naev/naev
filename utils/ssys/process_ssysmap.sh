@@ -157,7 +157,7 @@ pmsg "gen final graph "                                                       |
 pmsg ""                                                                       |
 if [ -z "$NOPIC" ] ;                                                     then
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
-else pmsg "" >/dev/null ;                                                  fi |
+else pmsg "" ;                                                             fi |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 grep -v ' virtual$'                                                           |
 if [ -z "$NOPIC" ] ; then
