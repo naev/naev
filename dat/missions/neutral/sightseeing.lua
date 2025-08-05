@@ -141,7 +141,7 @@ end
 
 
 function accept ()
-   if not player.pilot():ship():tags().luxury then
+   if not lmisn.is_luxury(player.pilot()) then
       if vntk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a luxury vessel, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(mem.credits_nolux)} ) ) then
          mem.nolux_known = true
          misn.setReward( mem.credits_nolux )
