@@ -145,6 +145,19 @@ for sys in ['ngc127', 'ngc344', 'ngc4363']:
    v = pos[sys] - pos[n]
    pos[sys] = pos[n] + acc.normalize(v.size())
 
+plasma = {'ngc10081', 'ngc10653', 'ngc11050', 'ngc12261', 'ngc14337', 'ngc14430', 'ngc14676',
+   'ngc18269', 'ngc20489', 'ngc22375', 'ngc6901', 'ngc7319', 'ngc9607',}
+off = {}
+for i in plasma - {'ngc20489'}:
+   if len(E[i]) <= 2:
+      off[i] = pos[i] - sum((pos[k] for k in E[i]),vec()) / len(E[i])
+
+for i, o in off.items():
+   pos[i] += o
+
+P1 = 1.5 * pos['euler'] - 0.5 * pos['narousse']
+P2 = 1.5 * pos['ngc11050'] - 0.5 * pos['ngc10081']
+pos['ngc14337'] = (P1 + P2) / 2.0
 
 # Anubis BH
 
