@@ -159,6 +159,7 @@ P1 = 1.5 * pos['euler'] - 0.5 * pos['narousse']
 P2 = 1.5 * pos['ngc11050'] - 0.5 * pos['ngc10081']
 pos['ngc14337'] = (P1 + P2) / 2.0
 
+
 # Anubis BH
 
 pos['dohriabi'] += (pos['dohriabi']-pos['overture']) / 4.0
@@ -199,6 +200,7 @@ for i in ['tempus', 'aesria', 'flow', 'vean', 'nava']:
 
 
 # Increase terminal ngc dist to neighbour to at least average edge length * F.
+
 F = 1.0
 total = 0.0
 count = 0

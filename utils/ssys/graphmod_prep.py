@@ -64,7 +64,7 @@ virtual_edges = [
    ('ngc14479', 'zintar'), ('pudas', 'fried'),
    ('blunderbuss', 'darkstone'), ('ekkodu', 'tarsus'),
    ('ivella', 'jommel'), ('starlight_end', 'possum'),
-   ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
+   ('ngc22375', 'undergate'),
    ('daled', 'andres'),
 ]
 
@@ -88,13 +88,18 @@ if prv is not None:
 
 
 virtual_edges.extend([
-   ('suna', '_suna_vanir'),('_suna_vanir', 'vanir'),
-   ('botarn', '_suna_vanir'),('_suna_vanir', 'monogram'),
-   ('anrique', '_suna_vanir'),
+   ('suna', 'sunir'),('sunir', 'vanir'),
+   ('botarn', 'sunir'),('sunir', 'monogram'),
+   ('anrique', 'sunir'),
    ('kraft', 'kiwi')])
+
 
 from graphmod import ssys_pos, ssys_jmp
 from virtual_edges import add_virtual_edges
+
+ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
+
+
 add_virtual_edges(ssys_jmp, virtual_edges)
 
 for v in ssys_pos:
