@@ -1,8 +1,7 @@
 <commodity>
  <name>Space Moss</name>
- <description>TODO</description>
- <gfx_store>nebula_crystals.webp</gfx_store>
- <gfx_space sx="2">nebula_crystals.webp</gfx_space>
+ <description>It's not entirely clear how a moss can subsist without an atmosphere growing on asteroids, however, speculations point at a mixture of chemosynthesis, radiosynthesis, and photosynthesis. Some research also points at feral bioships tending to the moss, but that has not been established as a standard behaviour, and is limited to a few anecdotes.</description>
+ <gfx_store>seaweed.webp</gfx_store>
  <price>1000</price>
  <always_can_sell/>
  <price_constant/>
