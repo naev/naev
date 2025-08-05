@@ -9,9 +9,8 @@ pub mod version;
 
 pub use formatx;
 pub use gettext;
+pub use log::*;
 pub use semver;
-//pub use log::*;
-pub use log;
 
 #[cfg(unix)]
 pub use nix;
@@ -112,23 +111,23 @@ pub fn warn_err(err: anyhow::Error) {
 }
 
 #[macro_export]
-macro_rules! info {
+macro_rules! infox {
     ($($arg:tt)*) => {
-        $crate::log::info!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        $crate::info!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
 #[macro_export]
-macro_rules! debug {
+macro_rules! debugx {
     ($($arg:tt)*) => {
-        $crate::log::debug!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+        $crate::debug!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
     };
 }
 
 #[macro_export]
-macro_rules! warn {
+macro_rules! warnx {
     ($($arg:tt)*) => {
-        $crate::log::warn!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
+        $crate::warn!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
     };
 }
 

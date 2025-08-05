@@ -7,7 +7,7 @@ use std::sync::LazyLock;
 use crate::lua::ryaml;
 use crate::vec2;
 use gettext::{gettext, ngettext, pgettext};
-use log::{warn, warn_err};
+use log::{warn, warn_err, warnx};
 
 const NLUA_LOAD_TABLE: &str = "_LOADED"; // Table to use to store the status of required libraries.
 const LUA_INCLUDE_PATH: &str = "scripts/"; // Path for Lua includes.
@@ -413,7 +413,7 @@ impl NLua {
                 }
                 _ => {
                     let name = value.get::<String>("__name")?;
-                    warn!(
+                    warnx!(
                         gettext("__resize is not a function or nil for environment '{}'"),
                         name
                     );

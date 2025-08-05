@@ -10,7 +10,7 @@ use crate::array;
 use crate::array::ArrayCString;
 use crate::nlua::LuaEnv;
 use crate::nlua::{NLua, NLUA};
-use crate::{formatx, warn};
+use crate::{formatx, warn, warnx};
 use gettext::gettext;
 use log::warn_err;
 use naev_core::utils::{binary_search_by_key_ref, sort_by_key_ref};
@@ -857,7 +857,7 @@ pub extern "C" fn _faction_get(name: *const c_char) -> c_int {
             return id as c_int;
         }
     }
-    warn!(gettext("Faction '{}' not found in stack."), name);
+    warnx!(gettext("Faction '{}' not found in stack."), name);
     0
 }
 
