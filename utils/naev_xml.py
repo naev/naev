@@ -56,11 +56,11 @@ def _numify( s ):
 
 class xml_node( dict ):
    def __init__ ( self, mapping, parent= None, key= None ):
-      mknode = lambda v: xml_node(v) if isinstance(v, dict) else v
-      self.attr = {k: v for k, v in mapping.items() if k[:1]=='@'}
-      dict.__init__(self, {k: v for k, v in mapping.items() if k[:1]!='@'})
       self._parent = parent
       self._key = key
+      self.attr = {}
+      for k, v in mapping.items():
+         self[k] = v
 
    def _change( self ):
       if self._parent is None:
@@ -140,24 +140,20 @@ def _parse( node, par, key ):
 
 def _unparse_elt( v, k, indent):
    out = indent*' ' + '<' + k
-   if isinstance(v, dict):
+   content = ''
+
+   if isinstance(v, xml_node):
       for ka, va in v.attr.items():
-         out += ' ' + ka[1:] + '="' + va.replace('&', '&amp;') + '"'
-      if v == {}:
-         out += '/>\n'
-      else:
-         out += '>'
-         if not dict.__contains__(v, '#text'):
-            out += '\n'
-            out += unparse(v, indent+1)
-            out += indent*' '
-         else:
-            out += v['#text']
-         out += '</' + k + '>\n'
+         out += ' ' + ka[1:] + '="' + str(va).replace('&', '&amp;') + '"'
+      if dict.__contains__(v, '#text'):
+         content = v['#text']
+      elif sub := unparse(v, indent+1):
+         content = '\n' + sub + indent*' '
    elif v:
-      out += '>'
-      out += str(v).replace('&', '&amp;')
-      out += '</' + k + '>\n'
+      content = str(v).replace('&', '&amp;')
+
+   if content:
+      out += '>' + content + '</' + k + '>\n'
    else:
       out += '/>\n'
    return out
