@@ -36,21 +36,21 @@ impl Drop for LuaEnv {
             Ok(mlua::Value::Function(func)) => match self.call(lua, &func, ()) {
                 Ok(()) => (),
                 Err(e) => {
-                    warn!("Error calling Lua enviroment __gc function: {}", e);
+                    warn!("Error calling Lua enviroment __gc function: {e}");
                 }
             },
             Err(e) => {
-                warn!("Error getting Lua environment __gc function: {}", e);
+                warn!("Error getting Lua environment __gc function: {e}");
             }
             _ => {
                 let name = match self.get::<String>("__name") {
                     Ok(s) => s,
                     Err(e) => {
-                        warn!("environment __name not set: {}", e);
+                        warn!("environment __name not set: {e}");
                         String::from("unknown")
                     }
                 };
-                warn!("__gc is not a function or nil for environment '{}'", name);
+                warn!("__gc is not a function or nil for environment '{name}'");
             }
         }
 
@@ -526,7 +526,7 @@ pub extern "C" fn nlua_newEnv(name: *const c_char) -> *mut LuaEnv {
     match lua.environment_new(name) {
         Ok(env) => Box::into_raw(Box::new(env)),
         Err(e) => {
-            warn!("unable to create Lua environment: {}", e);
+            warn!("unable to create Lua environment: {e}");
             std::ptr::null_mut()
         }
     }

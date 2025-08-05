@@ -723,7 +723,7 @@ impl Node {
                 trail = match Trail::from_json(value, &transform) {
                     Ok(data) => Some(data),
                     Err(e) => {
-                        warn!("{}", e);
+                        warn!("{e}");
                         None
                     }
                 };
@@ -732,7 +732,7 @@ impl Node {
                 mount = match Mount::from_json(value, &transform) {
                     Ok(data) => Some(data),
                     Err(e) => {
-                        warn!("{}", e);
+                        warn!("{e}");
                         None
                     }
                 };

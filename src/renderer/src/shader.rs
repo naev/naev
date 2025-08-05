@@ -51,13 +51,10 @@ impl Shader {
         if unsafe { !gl.get_shader_compile_status(shader) } {
             let mut buf = String::new();
             for (i, line) in source.lines().enumerate() {
-                buf.push_str(&format!("{:04}: {}", i, line));
+                buf.push_str(&format!("{i:04}: {line}"));
             }
             let slog = unsafe { gl.get_shader_info_log(shader) };
-            warn!(
-                "{}\nFailed to compile shader '{}': [[\n{}\n]]",
-                buf, name, slog
-            );
+            warn!("{buf}\nFailed to compile shader '{name}': [[\n{slog}\n]]");
             return Err(anyhow::anyhow!("failed to compile shader program"));
         }
         Ok(shader)
@@ -82,7 +79,7 @@ impl Shader {
         }
         if unsafe { !gl.get_program_link_status(program) } {
             let slog = unsafe { gl.get_program_info_log(program) };
-            warn!("Failed to link shader: [[\n{}\n]]", slog);
+            warn!("Failed to link shader: [[\n{slog}\n]]");
             return Err(anyhow::anyhow!("failed to link shader program"));
         }
         Ok(program)

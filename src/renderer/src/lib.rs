@@ -59,13 +59,11 @@ fn debug_callback(source: u32, msg_type: u32, id: u32, severity: u32, msg: &str)
 
     if severity == glow::DEBUG_SEVERITY_LOW {
         debug!(
-            "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
-            s_source, s_type, s_id, s_severity, msg
+            "OpenGL debug( source={s_source}, type={s_type}, id={s_id}, severity={s_severity} ): {msg}"
         );
     } else {
         warn!(
-            "OpenGL debug( source={}, type={}, id={}, severity={} ): {}",
-            s_source, s_type, s_id, s_severity, msg
+            "OpenGL debug( source={s_source}, type={s_type}, id={s_id}, severity={s_severity} ): {msg}"
         );
     }
 }
@@ -523,7 +521,7 @@ impl Context {
             Ok(())
         }
         if let Err(e) = set_icon(&mut window) {
-            warn!("Unable to set window icon: {}", e);
+            warn!("Unable to set window icon: {e}");
         }
 
         Ok((window, gl_context))
@@ -946,7 +944,7 @@ pub extern "C" fn gl_screenshot(cpath: *mut c_char) {
     match ctx.screenshot(path.to_str().unwrap()) {
         Ok(_) => (),
         Err(e) => {
-            warn!("Failed to take a screenshot: {}", e);
+            warn!("Failed to take a screenshot: {e}");
         }
     }
 }

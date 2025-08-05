@@ -139,7 +139,7 @@ pub extern "C" fn sp_get(name: *const c_char) -> c_int {
         match binary_search_by_key_ref(&SLOT_PROPERTIES, name, |sp: &SlotProperty| &sp.name) {
             Ok(i) => (i + 1) as c_int,
             Err(_) => {
-                warn!("slot property '{}' not found", name);
+                warn!("slot property '{name}' not found");
                 0
             }
         }

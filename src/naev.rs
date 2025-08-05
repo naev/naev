@@ -185,7 +185,7 @@ fn naevmain() -> Result<()> {
                 i += 1;
             }
         }
-        info!("{}", buf);
+        info!("{buf}");
         naevc::PHYSFS_freeList(search_path as *mut c_void);
 
         /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
@@ -224,7 +224,7 @@ fn naevmain() -> Result<()> {
     unsafe {
         if naevc::gl_init() != 0 {
             let err = gettext("Initializing video output failed, exiting…");
-            warn!("{}", err);
+            warn!("{err}");
             anyhow::bail!(err);
         }
 

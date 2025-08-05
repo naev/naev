@@ -95,15 +95,15 @@ pub fn init() -> Result<()> {
 }
 
 pub fn info(msg: &str) {
-    info!("{}", msg);
+    info!("{msg}");
 }
 
 pub fn debug(msg: &str) {
-    debug!("{}", msg);
+    debug!("{msg}");
 }
 
 pub fn warn(msg: &str) {
-    warn!("{}", msg);
+    warn!("{msg}");
 }
 
 pub fn warn_err(err: anyhow::Error) {

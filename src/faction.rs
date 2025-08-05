@@ -712,7 +712,7 @@ impl FactionLoad {
         match binary_search_by_key_ref(factions, name, |fctload: &FactionLoad| &fctload.data.name) {
             Ok(id) => Some(id),
             Err(err) => {
-                warn!("Faction '{}' not found during loading!", name);
+                warn!("Faction '{name}' not found during loading!");
                 None
             }
         }
@@ -734,7 +734,7 @@ pub fn load() -> Result<()> {
             |filename| match FactionLoad::new(&ctx, &NLUA, filename.as_str()) {
                 Ok(sp) => Some(sp),
                 Err(e) => {
-                    warn!("Unable to load Faction '{}': {}", filename, e);
+                    warn!("Unable to load Faction '{filename}': {e}");
                     None
                 }
             },
