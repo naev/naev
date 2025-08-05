@@ -624,7 +624,7 @@ impl Context {
                         false,
                     );
                 },
-                false => log::warn("unable to set OpenGL debug mode!"),
+                false => warn!("unable to set OpenGL debug mode!"),
             };
         }
 

@@ -116,14 +116,18 @@ impl StartData {
                                         }
                                         tag => nxml_warn_node_unknown!(
                                             "Start/player/system",
-                                            start.name.to_str()?,
+                                            start.name.to_string_lossy(),
                                             tag
                                         ),
                                     }
                                 }
                             }
                             tag => {
-                                nxml_warn_node_unknown!("Start/player", start.name.to_str()?, tag)
+                                nxml_warn_node_unknown!(
+                                    "Start/player",
+                                    start.name.to_string_lossy(),
+                                    tag
+                                )
                             }
                         };
                     }
@@ -143,7 +147,7 @@ impl StartData {
                 "local_map_default" => {
                     start.local_map_default = nxml::node_cstring(node)?;
                 }
-                tag => nxml_warn_node_unknown!("Start", start.name.to_str()?, tag),
+                tag => nxml_warn_node_unknown!("Start", start.name.to_string_lossy(), tag),
             };
         }
         Ok(start)

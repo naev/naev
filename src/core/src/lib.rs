@@ -3,6 +3,8 @@ pub mod nxml;
 pub mod start;
 pub mod utils;
 
+pub use log;
+
 pub static APPNAME: &str = "Naev";
 
 #[unsafe(no_mangle)]

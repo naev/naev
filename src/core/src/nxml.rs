@@ -24,7 +24,7 @@ macro_rules! nxml_err_attr_missing {
 #[macro_export]
 macro_rules! nxml_warn_node_unknown {
     ($nodetype: expr, $name: expr, $node: expr) => {
-        log::warn(gettext::gettext(
+        $crate::log::warnx!(gettext::gettext(
             format!(
                 "{nodetype} '{name}' has unknown node '{node}'.",
                 nodetype = $nodetype,
@@ -39,7 +39,7 @@ macro_rules! nxml_warn_node_unknown {
 #[macro_export]
 macro_rules! nxml_warn_attr_missing {
     ($nodetype: expr, $name: expr) => {
-        log::warn(gettext::gettext(
+        $crate::log::warnx!(gettext::gettext(
             format!(
                 "{nodetype} missing attribute '{name}'.",
                 nodetype = $nodetype,
