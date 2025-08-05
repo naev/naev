@@ -26,51 +26,38 @@ impl log::Log for Logger {
     }
 
     fn log(&self, record: &log::Record) {
-        if self.enabled(record.metadata()) {
-            match record.level() {
-                log::Level::Error => {
+        if !self.enabled(record.metadata()) {
+            return;
+        }
+        match record.level() {
+            log::Level::Error => {
+                eprintln!("[E] {}:{}: {}", file!(), line!(), record.args());
+            }
+            log::Level::Warn => {
+                let nw = WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                if nw <= WARN_MAX {
+                    eprintln!("[W] {}:{}: {}", file!(), line!(), record.args());
+                }
+                if nw == WARN_MAX {
                     eprintln!(
-                        "{} {}:{}: {}",
-                        record.level(),
-                        file!(),
-                        line!(),
-                        record.args()
+                        "{}",
+                        gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
                     );
                 }
-                log::Level::Warn => {
-                    let nw = WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-                    if nw <= WARN_MAX {
-                        eprintln!(
-                            "{} {}:{}: {}",
-                            record.level(),
-                            file!(),
-                            line!(),
-                            record.args()
-                        );
-                    }
-                    if nw == WARN_MAX {
-                        eprintln!(
-                            "{}",
-                            gettext::gettext(
-                                "TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"
-                            )
-                        );
-                    }
-                    if naevc::config::DEBUG_PARANOID {
-                        #[cfg(unix)]
-                        {
-                            nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
-                        }
+                if naevc::config::DEBUG_PARANOID {
+                    #[cfg(unix)]
+                    {
+                        nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
                     }
                 }
-                log::Level::Info => {
-                    println!("{} - {}", record.level(), record.args());
-                }
-                log::Level::Debug => {
-                    println!("{} - {}", record.level(), record.args());
-                }
-                log::Level::Trace => (),
             }
+            log::Level::Info => {
+                println!("[I] {}", record.args());
+            }
+            log::Level::Debug => {
+                println!("[D] {}", record.args());
+            }
+            log::Level::Trace => (),
         }
     }
 
