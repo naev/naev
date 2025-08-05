@@ -782,11 +782,11 @@ pub fn load() -> Result<()> {
 
     // Save the data
     FACTIONDATA.set(factions).unwrap_or_else(|err| {
-        warn_err!(err);
+        warn!("unable to set factions");
     });
     match FactionID::new(PLAYER_FACTION_NAME) {
-        Some(id) => PLAYER.set(id).unwrap_or_else(|err| {
-            warn_err!(err);
+        Some(id) => PLAYER.set(id).unwrap_or_else(|_| {
+            warn!("unable to set player faction ID");
         }),
         None => unreachable!(),
     };

@@ -1,5 +1,7 @@
 // Logging tools
+use anyhow::Result;
 use std::sync::atomic::AtomicU32;
+
 pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
 pub const WARN_MAX: u32 = 1000;
 
@@ -8,30 +10,101 @@ pub mod version;
 pub use formatx;
 pub use gettext;
 pub use semver;
+//pub use log::*;
+pub use log;
 
 #[cfg(unix)]
 pub use nix;
 
-pub fn init() {
+struct Logger;
+impl log::Log for Logger {
+    fn enabled(&self, metadata: &log::Metadata) -> bool {
+        if cfg!(debug_assertions) {
+            metadata.level() <= log::Level::Debug
+        } else {
+            metadata.level() <= log::Level::Info
+        }
+    }
+
+    fn log(&self, record: &log::Record) {
+        if self.enabled(record.metadata()) {
+            match record.level() {
+                log::Level::Error => {
+                    eprintln!(
+                        "{} {}:{}: {}",
+                        record.level(),
+                        file!(),
+                        line!(),
+                        record.args()
+                    );
+                }
+                log::Level::Warn => {
+                    let nw = WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                    if nw <= WARN_MAX {
+                        eprintln!(
+                            "{} {}:{}: {}",
+                            record.level(),
+                            file!(),
+                            line!(),
+                            record.args()
+                        );
+                    }
+                    if nw == WARN_MAX {
+                        eprintln!(
+                            "{}",
+                            gettext::gettext(
+                                "TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"
+                            )
+                        );
+                    }
+                    if naevc::config::DEBUG_PARANOID {
+                        #[cfg(unix)]
+                        {
+                            nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
+                        }
+                    }
+                }
+                log::Level::Info => {
+                    println!("{} - {}", record.level(), record.args());
+                }
+                log::Level::Debug => {
+                    println!("{} - {}", record.level(), record.args());
+                }
+                log::Level::Trace => (),
+            }
+        }
+    }
+
+    fn flush(&self) {}
+}
+static LOGGER: Logger = Logger;
+
+pub fn init() -> Result<()> {
+    match log::set_logger(&LOGGER) {
+        Ok(_) => (),
+        Err(_) => anyhow::bail!("unable to set_logger"),
+    }
+    if cfg!(debug_assertions) {
+        log::set_max_level(log::LevelFilter::Debug);
+    } else {
+        log::set_max_level(log::LevelFilter::Info);
+    }
     unsafe {
         naevc::log_init();
     };
-}
-
-pub fn einfo(msg: &str) {
-    einfo!(msg);
+    Ok(())
 }
 
 pub fn info(msg: &str) {
-    info!(msg);
+    info!("{}", msg);
 }
 
 pub fn debug(msg: &str) {
-    debug!(msg);
+    debug!("{}", msg);
 }
 
 pub fn warn(msg: &str) {
-    warn!(msg);
+    warn!("{}", msg);
 }
 
 pub fn warn_err(err: anyhow::Error) {
@@ -41,66 +114,27 @@ pub fn warn_err(err: anyhow::Error) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        println!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
-    };
-}
-
-#[macro_export]
-macro_rules! einfo {
-    ($($arg:tt)*) => {
-        eprintln!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
+        $crate::log::info!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")))
     };
 }
 
 #[macro_export]
 macro_rules! debug {
     ($($arg:tt)*) => {
-        if naevc::config::DEBUG {
-            println!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
-        }
+        $crate::log::debug!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
     };
 }
 
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        let nw = $crate::WARN_NUM.fetch_add( 1, std::sync::atomic::Ordering::SeqCst );
-        if nw <= $crate::WARN_MAX {
-            eprintln!("{}WARNING {}:{}: {}",
-                std::backtrace::Backtrace::force_capture(),
-                file!(), line!(),
-                &$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
-        }
-        if nw==$crate::WARN_MAX {
-            eprintln!("{}",$crate::gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS"));
-        }
-        if naevc::config::DEBUG_PARANOID {
-            #[cfg(unix)]
-            {
-                $crate::nix::sys::signal::raise($crate::nix::sys::signal::Signal::SIGINT).unwrap();
-            }
-        }
+        $crate::log::warn!("{}",&$crate::formatx::formatx!($($arg)*).unwrap_or(String::from("Unknown")));
     };
 }
 
 #[macro_export]
 macro_rules! warn_err {
     ($err:ident) => {
-        let nw = $crate::WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-        if nw <= $crate::WARN_MAX {
-            eprintln!("WARNING: {:?}", $err);
-        }
-        if nw == $crate::WARN_MAX {
-            eprintln!(
-                "{}",
-                $crate::gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
-            );
-        }
-        if naevc::config::DEBUG_PARANOID {
-            #[cfg(unix)]
-            {
-                $crate::nix::sys::signal::raise($crate::nix::sys::signal::Signal::SIGINT).unwrap();
-            }
-        }
+        $crate::warn!("{:?}", $err);
     };
 }

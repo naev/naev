@@ -17,6 +17,7 @@ naevc = { workspace = true }
 anyhow = { workspace = true }
 formatx = { workspace = true }
 semver = "1"
+log = "0"
 
 [target.'cfg(unix)'.dependencies]
 nix = { version="0", features=["signal"] }

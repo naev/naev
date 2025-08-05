@@ -4,7 +4,7 @@ use std::ffi::CStr;
 use std::os::raw::c_char;
 
 use crate::Context;
-use log::{einfo, warn};
+use log::warn;
 
 pub enum ShaderType {
     Fragment,
@@ -49,11 +49,15 @@ impl Shader {
             }
         }
         if unsafe { !gl.get_shader_compile_status(shader) } {
+            let mut buf = String::new();
             for (i, line) in source.lines().enumerate() {
-                einfo!("{:04}: {}", i, line);
+                buf.push_str(&format!("{:04}: {}", i, line));
             }
             let slog = unsafe { gl.get_shader_info_log(shader) };
-            warn!("Failed to compile shader '{}': [[\n{}\n]]", name, slog);
+            warn!(
+                "{}\nFailed to compile shader '{}': [[\n{}\n]]",
+                buf, name, slog
+            );
             return Err(anyhow::anyhow!("failed to compile shader program"));
         }
         Ok(shader)

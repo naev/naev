@@ -142,7 +142,7 @@ pub fn setup() -> anyhow::Result<()> {
     let diff = version::compare_versions(&version::VERSION, &version);
     if diff != 0 {
         let err_str = formatx!(gettext("ndata_version inconsistency with this version of Naev!\nExpected ndata version {} got {}."), &*version::VERSION_HUMAN, &version_str)?;
-        warn!(&err_str);
+        warn!("{}", &err_str);
         if diff.abs() > 2 {
             anyhow::bail!(err_str);
         } else if diff.abs() > 1 {

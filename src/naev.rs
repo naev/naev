@@ -2,7 +2,7 @@
 pub use anyhow;
 use anyhow::{Error, Result};
 use formatx::formatx;
-use log::{debug, info, warn};
+use log::{debug, info, warn, warn_err};
 use sdl3 as sdl;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int, c_uint, c_void}; // Re-export for outter rust shenanigans
@@ -72,7 +72,9 @@ fn naevmain() -> Result<()> {
     argv.shrink_to_fit();
 
     /* Begin logging infrastructure. */
-    log::init();
+    log::init().unwrap_or_else(|e| {
+        warn_err!(e);
+    });
 
     // Workarounds
     if cfg!(target_os = "linux") {
