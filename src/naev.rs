@@ -215,7 +215,6 @@ fn naevmain() -> Result<()> {
 
         /* Display the SDL version. */
         naevc::print_SDLversion();
-        info!("");
     }
 
     /* Set up OpenGL. */

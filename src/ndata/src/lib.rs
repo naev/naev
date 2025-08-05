@@ -42,7 +42,7 @@ pub fn setup() -> anyhow::Result<()> {
             Ok(_) => (),
             Err(e) => {
                 warn_err!(e);
-                warn!("Cannot determine data path, using current directory");
+                info!("Cannot determine data path, using current directory");
                 physfs::set_write_dir("./naev/").unwrap_or_else(|e| {
                     warn_err!(e);
                 });
