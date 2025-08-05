@@ -154,13 +154,16 @@ if [ -z "$NOPIC" ] ;                                                     then
 else pmsg "" ;                                                             fi |
 pmsg "gen final graph "                                                       |
 "$DIR"/repeat.sh 2 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"  |
-"$DIR"/graphmod_final.py                                                      |
+pmsg ""                                                                       |
+if [ -z "$NOPIC" ] ;                                                     then
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
+else pmsg "" >/dev/null ;                                                  fi |
 "$DIR"/graphmod_virtual_ssys.py                                               |
 grep -v ' virtual$'                                                           |
 if [ -z "$NOPIC" ] ; then
    $SPOIL_FILTER |
    tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
-   "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_aft'
+   "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_fin'
 else
    pmsg "" >/dev/null
 fi

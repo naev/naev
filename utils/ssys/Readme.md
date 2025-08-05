@@ -48,14 +48,14 @@ These are designed to change the star map by **changing systems position**.
  - `graphmod_prep.py`: A set virtual edge addition designed to serve as a pre-processing for `neato`.
  - `graphmod_postp.py`: A set of ad hoc operations designed to serve as a post-processing for neato output. See section below.
  - `graphmod_virtual_ssys.py`: gives a position of virtual systems (eg. gauntlet, test of ...)
- - `graphmod_smooth_tl.py`: smoothens the tradelane. Interesting in combination with `reposition`.
- - `graphmod_abh.py`: Repairs the stretching of Anubis Black Hole after gravity application.
+ - `graphmod_smooth.py`: smoothens the tradelane and the wind roads, rounds sirius area and anubis bh. Interesting in combination with `reposition`.
 
 ## main process
 Performed by `process_ssys.sh`. Several steps:
+ - generate `map_ini.png` with decorators
+ - __1__ Call `graphmod_prep` At this point, the __pre-processing__ occurs: some invisible edges are added to enforce desired properties.
  - generate `map_bef.png`
- - __1__ Call `graphmod_prep` At this point, the __pre-processing__ occurs: some invisible edges are added to enforce desired properties. Then `graph2dot` is called to turn the graph into a dot file.
- - __2__ Call `neato` (from `graphviz` package) to compute the dot graph layout.
+ - __2__ Call `graph2dot` to turn the graph into a dot file, then call `neato` (from `graphviz` package) to compute the dot graph layout.
  - __3__ Call `dot2graph.py` to extract layout information from the dot input and output the resulting graph.
  - generate `map_dot.png`
  - __4__ Call `graphmod_pp.py`. At this point, the __post-processing__ occurs: some geometrical transformations are applied: compute the wild space layout, enforce co-circularity of some points around Anubis BH, rotate some parts, etc.
@@ -68,8 +68,9 @@ Performed by `process_ssys.sh`. Several steps:
  - generate `map_grav.png`
  - __7__ A bit of post processing. See `process_ssys.sh` for more details.
  - generate `map_aft.png`
+ - generate `map_fin.png` with decorators
 
-The labeled maps `before.png` and `after.png` are generated, with obvious meaning.
+The labeled maps `before.png` and `after.png` are generated, corresponding to `map_ini.png` and `map_fin.png`.
 
 # Others
 
