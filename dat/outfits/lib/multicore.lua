@@ -85,6 +85,18 @@ local function index( tbl, key )
    return nil
 end
 
+local function is_primary_or_secondary( o )
+   if o:slotExtra()~=nil then
+      return true, true
+   end
+   local _slot_name, _slot_size, slot_prop = o:slot()
+   if slot_prop:match" %(Secondary%)$" then
+      return false, true
+   else
+      return true, false
+   end
+end
+
 local function is_secondary_slot( ps )
    return ps and ps.tags and ps.tags.secondary
 end
@@ -160,10 +172,23 @@ function multicore.init( params, setfunc )
             desc = desc .. "#o" .. fmt.f(_("Equipped as {type} core"),
                {type="#r"..p_("core", "primary").."#o"}) .. "#0"
          else
-            desc = desc .. "#n" .. fmt.f(_("Properties for {pri} / {sec} slots"), {
-               pri= "#r" .. p_("core", "primary") .. "#n",
-               sec= "#y" .. p_("core", "secondary") .. "#n",
-            }) .. "#0"
+            local epri, esec = is_primary_or_secondary( o )
+            if epri and esec then
+               desc = desc .. "#n" .. fmt.f(_("Properties for {pri} / {sec} slots"), {
+                  pri= "#r" .. p_("core", "primary") .. "#n",
+                  sec= "#y" .. p_("core", "secondary") .. "#n",
+               }) .. "#0"
+            else
+               local slotname
+               if epri then
+                  slotname = "#r" .. p_("core", "primary") .. "#n"
+               else
+                  slotname = "#y" .. p_("core", "secondary") .. "#n"
+               end
+               desc = desc .. "#n" .. fmt.f(_("Properties for {slot} slots"), {
+                  slot=slotname,
+               }) .. "#0"
+            end
          end
       end
 
@@ -180,7 +205,10 @@ function multicore.init( params, setfunc )
 
       for k, s in ipairs(stats) do
          local off = multicore_off and (nosec or nomain) and s.name ~= "mass"
-         desc = desc .. "\n" .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name] and s.name ~= "engine_limit", basic)
+         if desc~='' then
+            desc = desc..'\n'
+         end
+         desc = desc .. add_desc(s, nomain or off, nosec or off, averaged and is_mobility[s.name] and s.name ~= "engine_limit", basic)
       end
 
       if multicore_off ~= nil then
@@ -213,9 +241,9 @@ function multicore.init( params, setfunc )
       end
 
       if not basic and o and o:slotExtra() == nil then
-         local _slot_name, _slot_size, slot_prop = o:slot()
+         local _epri, esec = is_primary_or_secondary( o )
          local slot_msg
-         if slot_prop:match" %(Secondary%)$" then
+         if esec then
             slot_msg = '#y' .. _('secondary') .. '#b'
          else
             slot_msg = '#r' .. _('primary') .. '#b'
