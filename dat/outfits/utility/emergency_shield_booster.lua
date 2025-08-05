@@ -1,7 +1,18 @@
+local fmt = require "format"
+
 local active = 4 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
 local boost = 5 -- How much the shield regen is increased by
 local efficiency = 3 -- GJ of energy used per shield recovered
+
+function descextra( _p, _o, _po )
+   return fmt.f(_("Increases shield regeneration by {boost}%. Active for {active} seconds with a cooldown of {cooldown} seconds. Uses {efficiency} GJ of energy for each GJ of shield recovered."),{
+      boost=boost*100,
+      active=active,
+      cooldown=cooldown,
+      efficiency=efficiency,
+   })
+end
 
 local function turnon( p, po )
    -- Still on cooldown
