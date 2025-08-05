@@ -3,13 +3,13 @@
   <typename>Weapon Modifier (Turret)</typename>
   <slot>utility</slot>
   <size>medium</size>
-  <mass>15</mass>
+  <mass>7</mass>
   <price>430000</price>
   <description>An improved targeting array allows your turrets to more quickly acquire targets, and minimises accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
   <gfx_store>accuracy_turret.webp</gfx_store>
  </general>
  <specific type="modification">
-  <launch_lockon>-10</launch_lockon>
-  <tur_firerate>-10</tur_firerate>
+  <launch_lockon>-15</launch_lockon>
+  <tur_firerate>-5</tur_firerate>
  </specific>
 </outfit>
