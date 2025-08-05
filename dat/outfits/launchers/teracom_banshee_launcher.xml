@@ -7,7 +7,7 @@
   <mass>22</mass>
   <price>45000</price>
   <gfx_store>bansheelauncher.webp</gfx_store>
-  <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire. These unguided rockets, while slow, can do quite respectable damage even to fairly large ships.</description>
+  <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire. These unguided rockets, while slow, can do respectable damage even to fairly large ships in the hands of a competent pilot.</description>
   <cpu>-5</cpu>
  </general>
  <specific type="launcher" secondary="1">
