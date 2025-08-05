@@ -1,5 +1,5 @@
 local active = 4 -- active time in seconds
-local cooldown = 8 -- cooldown time in seconds
+local cooldown = 15 -- cooldown time in seconds
 local boost = 5 -- How much the shield regen is increased by
 local efficiency = 3 -- GJ of energy used per shield recovered
 
@@ -21,7 +21,8 @@ local function turnon( p, po )
    -- the effect affecting itself and going to near infinity
    local ps = p:stats()
    local regen = boost * ps.shield_regen
-   po:set( "shield_regen_malus", -regen )
+   po:set( "shield_regen", regen )
+   po:set( "shielddown_mod", -98 )
    po:set( "energy_regen_malus", efficiency * regen )
 
    mem.timer = active
