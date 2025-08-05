@@ -20,14 +20,14 @@ anbh = [ 'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian',
    'copernicus', 'ngc13674', 'ngc1562', 'ngc2601', ]
 
 del_edges = [
-#   ('titus', 'vedalus'),
-#   ('kelvos', 'mason'),
-#   ('khaas', 'diadem'),
+#   {'titus', 'vedalus'},
+    {'kelvos', 'mason'},
+#   {'khaas', 'diadem'},
 ]
 
 new_edges = [
 #  ('khaas', 'vedalus'),
-#  ('andres', 'mason'),
+   ('andres', 'mason'),
 ]
 
 # In the form: (from, to [, length])
@@ -65,6 +65,7 @@ virtual_edges = [
    ('blunderbuss', 'darkstone'), ('ekkodu', 'tarsus'),
    ('ivella', 'jommel'), ('starlight_end', 'possum'),
    ('ngc8338', 'unicorn'), ('ngc22375', 'undergate'),
+   ('daled', 'andres'),
 ]
 
 prv, prvj  = None, None
@@ -98,10 +99,11 @@ add_virtual_edges(ssys_jmp, virtual_edges)
 
 for v in ssys_pos:
    for e, t in ssys_jmp[v].items():
-      if (v, e) in del_edges:
+      if {v, e} in del_edges:
          t.append('fake')
       if (v, e) in new_edges:
          new_edges.remove((v, e))
 
+from sys import stderr
 for (i, j) in new_edges:
-   ssys_pos[i].append((j, ['new']))
+   ssys_jmp[i][j] = ['new']
