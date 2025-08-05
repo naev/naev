@@ -75,7 +75,8 @@ echo "BUILDTYPE:           $BUILDTYPE"
 mkdir -p "$WORKPATH"/{dist,utils}
 
 # Get arch for use with linuxdeploy and to help make the linuxdeploy URL more architecture agnostic.
-ARCH=$(arch)
+#ARCH=$(arch)
+ARCH=$(uname -m)
 export ARCH
 
 get_tools() {
