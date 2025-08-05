@@ -25,14 +25,17 @@ def smoothen( pos, neigh, hard = False ):
    return newp
 
 from math import sqrt
-def circleify( pos, L, center ):
+def circleify( pos, L, center, hard = False ):
    newp = dict()
    # global approach -> much more brutal.
    V = [(pos[i] - pos[center]).size() for i in L]
    avg = sum(V) / len(V)
    for i in L:
       p = pos[center] + (pos[i]-pos[center]).normalize(avg)
-      pos[i] = (pos[i] + 2.0*p) / 3.0
+      if hard:
+         pos[i] = p
+      else:
+         pos[i] = (pos[i] + 2.0*p) / 3.0
    """
    # local approach
    for i, j, k in zip(L[:-2],L[1:-1],L[2:]):
