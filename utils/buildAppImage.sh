@@ -12,7 +12,7 @@ set -o pipefail
 
 # Defaults
 SOURCEPATH="$(pwd)"
-BUILDTYPE="release"
+BUILDTYPE="debug"
 MAKEAPPIMAGE="false"
 PACKAGE="false"
 NIGHTLY="false"
