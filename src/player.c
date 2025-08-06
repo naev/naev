@@ -4076,7 +4076,7 @@ static Spob *player_parse( xmlNodePtr parent )
       const char *err =
          _( "Something went horribly wrong, player does not exist after "
             "load..." );
-      WARN( err );
+      WARN( "%s", err );
       dialogue_alertRaw( err );
       return NULL;
    }

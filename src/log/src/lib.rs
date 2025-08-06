@@ -15,7 +15,7 @@ pub use semver;
 #[cfg(unix)]
 pub use nix;
 
-struct Logger;
+struct Logger {}
 impl log::Log for Logger {
     fn enabled(&self, metadata: &log::Metadata) -> bool {
         if cfg!(debug_assertions) {
@@ -63,7 +63,12 @@ impl log::Log for Logger {
 
     fn flush(&self) {}
 }
-static LOGGER: Logger = Logger;
+impl Logger {
+    const fn new() -> Self {
+        Logger {}
+    }
+}
+static LOGGER: Logger = Logger::new();
 
 pub fn init() -> Result<()> {
     match log::set_logger(&LOGGER) {
@@ -124,3 +129,18 @@ macro_rules! warn_err {
         $crate::warn!("{:?}", $err);
     };
 }
+
+// Some simple C API
+use std::ffi::{c_char, CStr};
+macro_rules! log_c {
+    ($funcname: ident, $macro: ident) => {
+        #[unsafe(no_mangle)]
+        pub extern "C" fn $funcname(msg: *const c_char) {
+            let msg = unsafe { CStr::from_ptr(msg) };
+            $macro!("{}", msg.to_string_lossy());
+        }
+    };
+}
+log_c!(debug_rust, debug);
+log_c!(info_rust, info);
+log_c!(warn_rust, warn);

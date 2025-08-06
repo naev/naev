@@ -1325,7 +1325,7 @@ int diff_patchHunk( UniHunk_t *hunk )
       } else
          WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
                   "system '%s'!" ),
-               hunk->target.type, hunk->u.name, ssys->name );
+               diff_hunkName( hunk->type ), hunk->u.name, ssys->name );
    }
       return -1;
    /* Removing an asteroid field. */
@@ -1338,7 +1338,7 @@ int diff_patchHunk( UniHunk_t *hunk )
       } else
          WARN( _( "Hunk '%s' can not find an asteroid field with label '%s' in "
                   "system '%s'!" ),
-               hunk->target.type, hunk->u.name, ssys->name );
+               diff_hunkName( hunk->type ), hunk->u.name, ssys->name );
    }
       return -1;
    case HUNK_TYPE_SSYS_ASTEROIDS_REMOVE_REVERT:
