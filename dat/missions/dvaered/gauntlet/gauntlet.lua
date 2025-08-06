@@ -301,6 +301,7 @@ function wave_round_setup ()
                equipopt.generic( p, nil, "elite" )
             end
          end
+         p:setEnergy( 100 )
          p:setInvincible(true)
          p:control(true)
          p:setHostile(true)
