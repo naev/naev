@@ -8,7 +8,7 @@
   <price>135000</price>
   <description>A module that lets the ship's generator direct energy to its weapons in larger, more spaced out bursts. It's not perfectly efficent, but has been proven useful in some combat encounters.</description>
   <gfx_store>placeholder.webp</gfx_store>
-  </general>
+ </general>
  <specific type="modification">
   <weapon_damage>20</weapon_damage>
   <energy_regen_mod>-5</energy_regen_mod>
