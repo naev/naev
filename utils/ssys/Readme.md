@@ -68,6 +68,8 @@ Performed by `process_ssys.sh`. Several steps:
  - generate `map_grav.png`
  - __7__ A bit of post processing. See `process_ssys.sh` for more details.
  - generate `map_aft.png`
+ - __8__ Add the stellarwind road, see `graphmod_stellarwind_road.py`
+ - generate `map_swr.png`
  - generate `map_fin.png` with decorators
 
 The labeled maps `before.png` and `after.png` are generated, corresponding to `map_ini.png` and `map_fin.png`.

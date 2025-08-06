@@ -23,7 +23,7 @@ fi
 
 POVF=()
 POVO='-q'
-SPOIL_FILTER="cat"
+SPOIL_FILT="cat"
 E_FILTER="$DIR"/graph_earlygame.py
 S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
@@ -36,15 +36,15 @@ for i in "$@" ; do
    elif [ "$i" = "-n" ] ; then
       POVF+=("-n")
    elif [ "$i" = "-S" ] ; then
-      if [ "SPOIL_FILTER" = "$E_FILTER" ] ; then
+      if [ "SPOIL_FILT" = "$E_FILTER" ] ; then
          echo "warning: -S overwrites previous -E." >&2
       fi
-      SPOIL_FILTER="$S_FILTER"
+      SPOIL_FILT="$S_FILTER"
    elif [ "$i" = "-E" ] ; then
-      if [ "SPOIL_FILTER" = "$S_FILTER" ] ; then
+      if [ "SPOIL_FILT" = "$S_FILTER" ] ; then
          echo "warning: -E overwrites previous -S." >&2
       fi
-      SPOIL_FILTER="$E_FILTER"
+      SPOIL_FILT="$E_FILTER"
    elif [ "$i" = "-v" ] ; then
       POVO='-p'
    else
@@ -66,8 +66,15 @@ msg() {
 }
 
 pmsg() {
-   cat
-   msg "$@"
+   cat;  msg "$@"
+}
+
+IGN() {
+   cat >/dev/null
+}
+
+DEBUG() {
+   tee >(cat >&2)
 }
 
 #msg "\nselect Sirius systems " >&2
@@ -87,13 +94,12 @@ read -ra SMOOTH_SSYS <<< "$(
    "$DIR"/graph_vaux.py          |
    "$DIR"/graphmod_smooth.py -L )"
 read -ra ALMOST_ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" "${SMOOTH_SSYS[@]}" )"
+read -ra SWR <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/graphmod_stellarwind_road.py -L)"
 
 "$DIR"/repos.sh -C || exit 1
 "$DIR"/apply_pot.sh -C || exit 1
 "$DIR"/gen_decorators.sh -C || exit 1
 
-# handy debug line to insert anywhere:
-#tee >(cat >&2) | # DEBUG OUTPUT
 
 # Ok, let's go!
 if [ -n "$FORCE" ] ; then
@@ -105,67 +111,78 @@ if [ -n "$FORCE" ] ; then
 fi
 
 msg "gen before graph"
-"$DIR"/ssysmap2graph.sh                                                       |
-"$DIR"/graph_vaux.py -e -c -n                                                 |
-if [ -z "$NOPIC" ] ;                                                     then
+"$DIR"/ssysmap2graph.sh                                                        |
+"$DIR"/graph_vaux.py -e -c -n                                                  |
+if [ -z "$NOPIC" ] ;                                                      then
+   pmsg "" |
    tee >(
-      $SPOIL_FILTER |
+      $SPOIL_FILT |
       tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > before.png) |
       "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini'
    )
-else cat ;                                                                 fi |
-"$DIR"/graphmod_prep.py                                                       |
-"$DIR"/graphmod_vedges.py                                                     |
-if [ -z "$NOPIC" ] ;                                                     then
-   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef')
-else pmsg "" ;                                                             fi |
-pmsg "apply neato"                                                            |
-tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                             |
-"$DIR"/dot2graph.py                                                           |
-grep -v ' virtual$'                                                           |
-"$DIR"/graphmod_vedges.py                                                     |
-"$DIR"/graphmod_virtual_ssys.py                                               |
-if [ -z "$NOPIC" ] ;                                                     then
-   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
-else cat ;                                                                 fi |
-pmsg "pprocess"                                                               |
-"$DIR"/graphmod_postp.py                                                      |
-"$DIR"/graphmod_virtual_ssys.py                                               |
-if [ -z "$NOPIC" ] ;                                                     then
-   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
-else pmsg "" ;                                                             fi |
-pmsg "${N_ITER} x (repos sys + smooth/round lanes) + virtual"                 |
-"$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}" |
-pmsg ""                                                                       |
-"$DIR"/graphmod_virtual_ssys.py                                               |
-if [ -z "$NOPIC" ] ;                                                     then
-   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
-else cat ;                                                                 fi |
-pmsg "apply gravity"                                                          |
-"$DIR"/apply_pot.sh -g                                                        |
-"$DIR"/graphmod_stretch_north.py                                              |
-"$DIR"/graphmod_virtual_ssys.py                                               |
-if [ -z "$NOPIC" ] ;                                                     then
-   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
-else pmsg "" ;                                                             fi |
-pmsg "gen final graph "                                                       |
-"$DIR"/repeat.sh 2 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"  |
-if [ -z "$NOPIC" ] ;                                                     then
+else cat ;                                                                  fi |
+"$DIR"/graphmod_prep.py                                                        |
+"$DIR"/graphmod_vedges.py                                                      |
+if [ -z "$NOPIC" ] ;                                                      then
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef')
+else pmsg "" ;                                                              fi |
+pmsg "apply neato"                                                             |
+tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                              |
+"$DIR"/dot2graph.py                                                            |
+grep -v ' virtual$'                                                            |
+"$DIR"/graphmod_vedges.py                                                      |
+"$DIR"/graphmod_virtual_ssys.py                                                |
+if [ -z "$NOPIC" ] ;                                                      then
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
+else cat ;                                                                  fi |
+pmsg "pprocess"                                                                |
+"$DIR"/graphmod_postp.py                                                       |
+"$DIR"/graphmod_virtual_ssys.py                                                |
+if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
-   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
-else pmsg "" ;                                                             fi |
-"$DIR"/graphmod_virtual_ssys.py                                               |
-grep -v ' virtual$'                                                           |
-if [ -n "$FORCE" ] ;                                                    then
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
+else pmsg "" ;                                                              fi |
+pmsg "${N_ITER} x (repos sys + smooth/round lanes) + virtual"                  |
+"$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"  |
+pmsg ""                                                                        |
+"$DIR"/graphmod_virtual_ssys.py                                                |
+if [ -z "$NOPIC" ] ;                                                      then
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
+else cat ;                                                                  fi |
+pmsg "apply gravity"                                                           |
+"$DIR"/apply_pot.sh -g                                                         |
+"$DIR"/graphmod_stretch_north.py                                               |
+"$DIR"/graphmod_virtual_ssys.py                                                |
+if [ -z "$NOPIC" ] ;                                                      then
+   pmsg "" |
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
+else pmsg "" ;                                                              fi |
+pmsg "post-process "                                                           |
+"$DIR"/repeat.sh 3 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"   |
+if [ -z "$NOPIC" ] ;                                                      then
+   pmsg "" |
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
+else pmsg "" ;                                                              fi |
+"$DIR"/graphmod_virtual_ssys.py                                                |
+grep -v ' virtual$'                                                            |
+pmsg "stellarwind road"                                                        |
+"$DIR"/graphmod_stellarwind_road.py                                            |
+"$DIR"/repeat.sh 2 "$DIR"/reposition -e -q "${SWR[@]}"                         |
+if [ -z "$NOPIC" ] ;                                                      then
+   pmsg "" |
+   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')
+else pmsg "";                                                               fi |
+"$DIR"/graphmod.py                                                             |
+pmsg "finally"                                                                 |
+if [ -n "$FORCE" ] ;                                                      then
    tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
-else cat ;                                                                fi  |
+else cat ;                                                                  fi |
 if [ -z "$NOPIC" ] ; then
-   $SPOIL_FILTER |
+   pmsg "" |
+   $SPOIL_FILT |
    tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
    "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_fin'
-else
-   cat >/dev/null
-fi
+else pmsg "" >/dev/null ; fi
 
 if [ -n "$FORCE" ] ; then
    msg "relax ssys..\n"
