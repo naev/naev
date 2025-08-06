@@ -106,8 +106,17 @@ local goodness_special = {
    ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable
    ["Droid Repair Crew"] = 0.4, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
-   ["Particle Beam"] = 0.8,
+   ["Particle Beam"] = 0.85,
+   ["EMP Grenade Launcher"] = 0.85,
 
+   -- Point defense works against missiles so it's extra useful
+   ["Dvaered Flare Battery"] = 1.19,
+   ["Ratchet Point Defense"] = 1.25,
+   ["Guardian Interception System"] = 1.25,
+   ["Guardian Overseer System"] = 1.19,
+   ["ZIBS-16"] = 2.77,
+   ["ZIBS-32"] = 2.71,
+   ["Spittle Tubuloid Cluster"] = 1.9,
    -- Plasma do a lot of damage over time
    ["Plasma Blaster MK1"] = 1 / 0.63,
    ["Plasma Blaster MK2"] = 1 / 0.63,
