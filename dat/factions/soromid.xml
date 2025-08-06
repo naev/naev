@@ -1,6 +1,6 @@
 <faction name="Soromid">
  <ai>soromid</ai>
- <known />
+ <known/>
  <logo>soromid.webp</logo>
  <colour>orange</colour>
  <longname>Soromid Tribes</longname>

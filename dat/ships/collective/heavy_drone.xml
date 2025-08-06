@@ -8,7 +8,7 @@
  <class display="Robotic Fighter">Fighter</class>
  <price>750000</price>
  <time_mod>1</time_mod>
- <trail_generator y="0" h="0" x="-15" />
+ <trail_generator y="0" h="0" x="-15"/>
  <fabricator>Robosys</fabricator>
  <faction>Collective</faction>
  <description>This Collective Heavy Drone has been modified by engineers to support a human pilot.</description>
@@ -23,23 +23,23 @@
   <fuel_consumption>100</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon y="1" h="-5" size="medium" x="8" />
-  <weapon y="-1" h="-5" size="medium" x="8" />
-  <weapon y="5" h="-5" size="small" x="5" />
-  <weapon y="-5" h="-5" size="small" x="5" />
+  <weapon y="1" h="-5" size="medium" x="8"/>
+  <weapon y="-1" h="-5" size="medium" x="8"/>
+  <weapon y="5" h="-5" size="small" x="5"/>
+  <weapon y="-5" h="-5" size="small" x="5"/>
   <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="accessory" name="accessory" size="small" />
-  <utility size="medium" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility prop="accessory" name="accessory" size="small"/>
+  <utility size="medium"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure prop="engines" name="engines" size="small">Unicorp Hawk 160 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="small">Unicorp Hawk 160 Engine</structure>
   <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
-  <structure size="medium" />
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="medium"/>
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <turn_mod>10</turn_mod>

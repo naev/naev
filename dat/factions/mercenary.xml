@@ -1,10 +1,10 @@
 <faction name="Mercenary">
  <ai>mercenary</ai>
- <static />
- <invisible />
- <known />
+ <static/>
+ <invisible/>
+ <known/>
  <player>0</player>
  <standing>static</standing>
- <allies />
- <enemies />
+ <allies/>
+ <enemies/>
 </faction>

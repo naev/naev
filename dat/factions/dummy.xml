@@ -1,9 +1,9 @@
 <faction name="Dummy">
  <ai>dummy</ai>
- <static />
- <invisible />
+ <static/>
+ <invisible/>
  <player>0</player>
  <standing>static</standing>
- <allies />
- <enemies />
+ <allies/>
+ <enemies/>
 </faction>

@@ -7,10 +7,10 @@
  <class>Bulk Freighter</class>
  <price>5000000</price>
  <time_mod>1.375</time_mod>
- <trail_generator y="4" h="4" x="-52" />
- <trail_generator y="7" h="1" x="-52" />
- <trail_generator y="-4" h="4" x="-52" />
- <trail_generator y="-7" h="1" x="-52" />
+ <trail_generator y="4" h="4" x="-52"/>
+ <trail_generator y="7" h="1" x="-52"/>
+ <trail_generator y="-4" h="4" x="-52"/>
+ <trail_generator y="-7" h="1" x="-52"/>
  <trail_generator y="8" h="8" x="-44">nebula</trail_generator>
  <trail_generator y="-8" h="8" x="-44">nebula</trail_generator>
  <trail_generator y="19" h="-2" always_under="1" x="-44">nebula</trail_generator>
@@ -32,29 +32,29 @@
   <cargo>370</cargo>
  </characteristics>
  <slots>
-  <weapon y="14" h="0" prop="fighter_bay" x="9" size="large" />
-  <weapon y="-14" h="0" prop="fighter_bay" x="9" size="large" />
-  <weapon y="14" h="0" size="medium" x="41" />
-  <weapon y="-14" h="0" size="medium" x="41" />
-  <weapon y="14" h="0" size="medium" x="-23" />
-  <weapon y="-14" h="0" size="medium" x="-23" />
+  <weapon y="14" h="0" prop="fighter_bay" x="9" size="large"/>
+  <weapon y="-14" h="0" prop="fighter_bay" x="9" size="large"/>
+  <weapon y="14" h="0" size="medium" x="41"/>
+  <weapon y="-14" h="0" size="medium" x="41"/>
+  <weapon y="14" h="0" size="medium" x="-23"/>
+  <weapon y="-14" h="0" size="medium" x="-23"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="accessory" name="accessory" size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="medium" />
-  <utility size="medium" />
+  <utility prop="accessory" name="accessory" size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large" />
+  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <shield_mod>15</shield_mod>

@@ -1,6 +1,6 @@
 <faction name="Dvaered">
  <ai>dvaered</ai>
- <known />
+ <known/>
  <logo>dvaered.webp</logo>
  <colour>brown</colour>
  <longname>House Dvaered</longname>

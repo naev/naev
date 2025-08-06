@@ -9,26 +9,26 @@
   <armour_regen>0</armour_regen>
  </health>
  <slots>
-  <weapon y="0" h="5" size="large" x="28" />
-  <weapon y="0" h="5" size="large" x="18" />
-  <weapon y="0" h="5" prop="fighter_bay" x="0" size="medium" />
-  <weapon y="-8" h="3" size="medium" x="-30" />
-  <weapon y="8" h="3" size="medium" x="-30" />
+  <weapon y="0" h="5" size="large" x="28"/>
+  <weapon y="0" h="5" size="large" x="18"/>
+  <weapon y="0" h="5" prop="fighter_bay" x="0" size="medium"/>
+  <weapon y="-8" h="3" size="medium" x="-30"/>
+  <weapon y="8" h="3" size="medium" x="-30"/>
   <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="accessory" name="accessory" size="medium" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
+  <utility prop="accessory" name="accessory" size="medium"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure prop="engines" name="engines" size="medium">Unicorp Falcon 700 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="medium">Unicorp Falcon 700 Engine</structure>
   <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
-  <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <armour_mod>-40</armour_mod>

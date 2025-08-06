@@ -1,8 +1,8 @@
 <faction name="Independent">
  <ai>independent</ai>
- <static />
- <invisible />
- <known />
+ <static/>
+ <invisible/>
+ <known/>
  <player>3</player>
  <colour>blue</colour>
  <spawn>independent</spawn>

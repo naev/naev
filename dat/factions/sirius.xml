@@ -1,6 +1,6 @@
 <faction name="Sirius">
  <ai>sirius</ai>
- <known />
+ <known/>
  <logo>sirius.webp</logo>
  <colour>aqua</colour>
  <longname>House Sirius</longname>

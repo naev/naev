@@ -5,8 +5,8 @@
   <frag>spfx/firework.frag</frag>
   <size>35</size>
   <uniforms>
-   <u_colour x="1.0" y="0.5" z="0.2" />
-   <u_duration x="1.0" />
+   <u_colour x="1.0" y="0.5" z="0.2"/>
+   <u_duration x="1.0"/>
   </uniforms>
  </shader>
 </spfx>

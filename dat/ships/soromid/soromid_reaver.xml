@@ -28,18 +28,18 @@
   <weapon size="small" prop="bio_weapon" name="leftweap" x="12" y="0" h="0">Stinger Organ I</weapon>
   <weapon size="small" prop="bio_weapon" name="middleweap" x="12" y="0" h="0">Stinger Organ I</weapon>
   <weapon size="small" prop="bio_weapon" name="rightweap" x="12" y="0" h="0">Stinger Organ I</weapon>
-  <weapon size="small" x="-3" y="0" h="2" />
+  <weapon size="small" x="-3" y="0" h="2"/>
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum I</utility>
-  <utility size="small" prop="bio_organ" name="adrenal_gland" />
-  <utility size="small" prop="bio_organ" name="feral_rage" />
-  <utility size="small" prop="bio_organ" name="the_bite" />
-  <utility size="small" prop="accessory" name="accessory" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility size="small" prop="bio_organ" name="adrenal_gland"/>
+  <utility size="small" prop="bio_organ" name="feral_rage"/>
+  <utility size="small" prop="bio_organ" name="the_bite"/>
+  <utility size="small" prop="accessory" name="accessory"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure size="small" prop="bio_engines" name="genedrive">Laeviter Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex I</structure>
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

@@ -31,7 +31,7 @@
   <utility size="small" prop="bio_systems" name="brain">Laevum Cerebrum II</utility>
   <utility size="small" prop="bio_organ" name="adrenal_gland">Adrenal Gland I</utility>
   <utility size="small" prop="bio_organ" name="the_bite">The Bite</utility>
-  <utility size="small" prop="accessory" name="accessory" />
+  <utility size="small" prop="accessory" name="accessory"/>
   <structure size="small" prop="bio_engines" name="genedrive">Laevis Gene Drive II</structure>
   <structure size="small" prop="bio_hull" name="shell">Laevis Cortex II</structure>
  </slots>
