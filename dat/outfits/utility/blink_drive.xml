@@ -6,7 +6,7 @@
   <mass>3</mass>
   <price>470000</price>
   <gfx_store>blink_drive.webp</gfx_store>
-  <description>The blink drive uses hyperdrive technology modified to create a small space-time fold allowing ships to instantly cross short distances. Pilots who often use such devices tend to have a higher amount of strong headaches than usual, but it must be safe, right?</description>
+  <description>The blink drive uses hyperdrive technology modified to create a small space-time fold allowing ships to instantly cross short distances. Pilots who often use such devices tend to have a higher amount of strong headaches than usual, but any effects more adverse than that have yet to be discovered.</description>
   <limit>blinkdrive</limit>
  </general>
  <specific type="modification">

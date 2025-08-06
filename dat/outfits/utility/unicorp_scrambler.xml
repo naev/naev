@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>1</mass>
   <price>200000</price>
-  <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler increases the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited, but on the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
+  <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock onto. The effect is quite limited, but on the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
   <gfx_store>jammer0.webp</gfx_store>
   <limit>scrambler</limit>
  </general>

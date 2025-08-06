@@ -7,7 +7,7 @@
   <stealth_on/>
   <price>170000</price>
   <gfx_store>damage_forward.webp</gfx_store>
-  <description>No one really knows the origin of the stealth burster, however, it seems to have been derived from a more primitive makeshift version used by smugglers to evade patrols. By emitting a barrage of strong signals, it is able to temporarily confuse the sensors of nearby ships and give a significant increase in stealth ability. However, this is only a short temporary effect, and the device takes a long time to recalibrate and load the capacitors.</description>
+  <description>No one really knows the origin of the stealth burster, however, it seems to have been derived from a more primitive makeshift version used by smugglers to evade patrols. By emitting a barrage of strong signals, it is able to temporarily confuse the sensors of nearby ships and give a significant increase in stealth ability. However, this is only a short temporary effect, and the device takes a long time to recalibrate and reload the capacitors.</description>
   <limit>stealth burster</limit>
  </general>
  <specific type="modification">

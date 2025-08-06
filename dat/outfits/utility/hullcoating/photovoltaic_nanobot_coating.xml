@@ -5,7 +5,7 @@
   <size>small</size>
   <mass>0</mass>
   <price>225000</price>
-  <description>A coating of photo-voltaic nanobot paint covers the entire ship hull and is able to harness solar energy and redirect it to the power system of the ship. The nanobots are self-regulating and self-repairing, requiring no maintenance once a colony has been established.</description>
+  <description>A coating of photo-voltaic nanobot paint covers the ship's entire hull and is able to harness solar energy and redirect it to the power system of the ship. The nanobots are self-regulating and self-repairing, requiring no maintenance once a colony has been established.</description>
   <gfx_store>photovoltaic_nanobot_coating.webp</gfx_store>
   <limit>hullcoat</limit>
  </general>
