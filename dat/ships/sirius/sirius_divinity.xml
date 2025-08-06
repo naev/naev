@@ -27,29 +27,29 @@
   <cargo>110</cargo>
  </characteristics>
  <slots>
-  <weapon exclusive="1" x="40" y="0" h="0" size="large" prop="fighter_bay" />
-  <weapon exclusive="1" x="20" y="0" h="0" size="large" prop="fighter_bay" />
-  <weapon y="0" h="0" size="large" x="20" />
-  <weapon y="0" h="0" size="large" x="-20" />
-  <weapon exclusive="1" x="-20" y="0" h="0" size="large" prop="fighter_bay" />
-  <weapon exclusive="1" x="-40" y="0" h="0" size="large" prop="fighter_bay" />
+  <weapon exclusive="1" x="40" y="0" h="0" size="large" prop="fighter_bay"/>
+  <weapon exclusive="1" x="20" y="0" h="0" size="large" prop="fighter_bay"/>
+  <weapon y="0" h="0" size="large" x="20"/>
+  <weapon y="0" h="0" size="large" x="-20"/>
+  <weapon exclusive="1" x="-20" y="0" h="0" size="large" prop="fighter_bay"/>
+  <weapon exclusive="1" x="-40" y="0" h="0" size="large" prop="fighter_bay"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="accessory" name="accessory" size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
+  <utility prop="accessory" name="accessory" size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="large">Unicorp Eagle 3000 Engine</structure>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <intrinsics>
   <intrinsic>Internal Flow Amplifier</intrinsic>

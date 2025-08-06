@@ -2,9 +2,9 @@
  <mapname>Independent</mapname>
  <ai>miner</ai>
  <logo>miner.webp</logo>
- <static />
- <invisible />
- <known />
+ <static/>
+ <invisible/>
+ <known/>
  <player>0</player>
  <spawn>miner</spawn>
  <standing>static</standing>

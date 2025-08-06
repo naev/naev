@@ -10,8 +10,8 @@
  <time_mod>1.3</time_mod>
  <trail_generator y="29" h="0" x="-19">nebula</trail_generator>
  <trail_generator y="-29" h="0" x="-19">nebula</trail_generator>
- <trail_generator y="10" h="0" x="-36" />
- <trail_generator y="-10" h="0" x="-36" />
+ <trail_generator y="10" h="0" x="-36"/>
+ <trail_generator y="-10" h="0" x="-36"/>
  <fabricator>Robosys</fabricator>
  <faction>Collective</faction>
  <license>Heavy Combat Vessel</license>
@@ -27,28 +27,28 @@
   <cargo>100</cargo>
  </characteristics>
  <slots>
-  <weapon exclusive="1" x="18" y="17" h="0" size="large" prop="fighter_bay" />
-  <weapon exclusive="1" x="18" y="-17" h="0" size="large" prop="fighter_bay" />
-  <weapon exclusive="1" x="26" y="13" h="0" size="large" prop="fighter_bay" />
-  <weapon exclusive="1" x="26" y="-13" h="0" size="large" prop="fighter_bay" />
-  <weapon y="9" h="0" prop="fighter_bay" x="34" size="medium" />
-  <weapon y="-9" h="0" prop="fighter_bay" x="34" size="medium" />
+  <weapon exclusive="1" x="18" y="17" h="0" size="large" prop="fighter_bay"/>
+  <weapon exclusive="1" x="18" y="-17" h="0" size="large" prop="fighter_bay"/>
+  <weapon exclusive="1" x="26" y="13" h="0" size="large" prop="fighter_bay"/>
+  <weapon exclusive="1" x="26" y="-13" h="0" size="large" prop="fighter_bay"/>
+  <weapon y="9" h="0" prop="fighter_bay" x="34" size="medium"/>
+  <weapon y="-9" h="0" prop="fighter_bay" x="34" size="medium"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="accessory" name="accessory" size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="medium" />
-  <utility size="medium" />
+  <utility prop="accessory" name="accessory" size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large" />
+  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
+  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <stats>
   <accel_mod>10</accel_mod>

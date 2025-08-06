@@ -5,23 +5,23 @@
  <condstr>You need at least 50% reputation with House Za'lek.</condstr>
  <description>A lot of the popularity of the Za'lek Sting comes from the large amount of drones it can deploy for such a small ship. Seeing that, some engineers at Za'lek Fabricators decided to see if they could fit a third fighter bay. It turns out, that, by stripping out a lot of armour and adding auxiliary computational units, it can be made to work. However, these changes do not come cheap.</description>
  <slots>
-  <weapon size="medium" prop="fighter_bay" x="15" y="0" h="2" />
-  <weapon size="medium" prop="fighter_bay" x="4" y="2" h="-5" />
-  <weapon size="medium" prop="fighter_bay" x="4" y="-2" h="-5" />
-  <weapon size="small" x="-9" y="-5" h="-9" />
-  <weapon size="small" x="-9" y="5" h="-9" />
+  <weapon size="medium" prop="fighter_bay" x="15" y="0" h="2"/>
+  <weapon size="medium" prop="fighter_bay" x="4" y="2" h="-5"/>
+  <weapon size="medium" prop="fighter_bay" x="4" y="-2" h="-5"/>
+  <weapon size="small" x="-9" y="-5" h="-9"/>
+  <weapon size="small" x="-9" y="5" h="-9"/>
   <utility size="medium" prop="systems" name="systems">Milspec Thalos 4702 Core System</utility>
-  <utility size="medium" prop="accessory" name="accessory" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
+  <utility size="medium" prop="accessory" name="accessory"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure size="medium" prop="engines" name="engines">Unicorp Falcon 700 Engine</structure>
   <structure size="medium" prop="hull" name="hull">Unicorp D-23 Medium Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <armour_mod>-50</armour_mod>

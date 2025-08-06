@@ -9,10 +9,10 @@
  <time_mod>1</time_mod>
  <trail_generator x="-11" y="33" h="-2">nebula</trail_generator>
  <trail_generator x="-11" y="-33" h="-2">nebula</trail_generator>
- <trail_generator x="-20" y="5" h="5" />
- <trail_generator x="-20" y="-5" h="5" />
- <trail_generator x="-20" y="5" h="-5" always_under="1" />
- <trail_generator x="-20" y="-5" h="-5" always_under="1" />
+ <trail_generator x="-20" y="5" h="5"/>
+ <trail_generator x="-20" y="-5" h="5"/>
+ <trail_generator x="-20" y="5" h="-5" always_under="1"/>
+ <trail_generator x="-20" y="-5" h="-5" always_under="1"/>
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Empire</faction>
  <license>Medium Combat Vessel</license>
@@ -30,23 +30,23 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="0" h="2" />
-  <weapon size="medium" x="4" y="2" h="-5" />
-  <weapon size="medium" x="4" y="-2" h="-5" />
-  <weapon size="small" x="-9" y="-5" h="-9" />
-  <weapon size="small" x="-9" y="5" h="-9" />
+  <weapon size="medium" x="15" y="0" h="2"/>
+  <weapon size="medium" x="4" y="2" h="-5"/>
+  <weapon size="medium" x="4" y="-2" h="-5"/>
+  <weapon size="small" x="-9" y="-5" h="-9"/>
+  <weapon size="small" x="-9" y="5" h="-9"/>
   <utility size="medium" prop="systems" name="systems">Unicorp PT-200 Core System</utility>
-  <utility size="medium" prop="accessory" name="accessory" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="small" />
+  <utility size="medium" prop="accessory" name="accessory"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
   <structure size="medium" prop="engines" name="engines">Unicorp Falcon 700 Engine</structure>
   <structure size="medium" prop="hull" name="hull">Unicorp D-23 Medium Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <shield_mod>15</shield_mod>

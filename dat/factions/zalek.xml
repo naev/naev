@@ -1,6 +1,6 @@
 <faction name="Za'lek">
  <ai>zalek</ai>
- <known />
+ <known/>
  <logo>zalek.webp</logo>
  <colour>DarkRed</colour>
  <longname>House Za'lek</longname>

@@ -5,9 +5,9 @@
   <frag>explosion.frag</frag>
   <size>400</size>
   <uniforms>
-   <u_grain x="0.7" />
-   <u_speed x="0.3" />
-   <u_steps int="1" x="13" />
+   <u_grain x="0.7"/>
+   <u_speed x="0.3"/>
+   <u_steps int="1" x="13"/>
   </uniforms>
  </shader>
 </spfx>

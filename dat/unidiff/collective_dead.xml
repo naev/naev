@@ -35,6 +35,6 @@
   <item_add>Heavy Drone</item_add>
  </tech>
  <faction name="Collective">
-  <invisible />
+  <invisible/>
  </faction>
 </unidiff>

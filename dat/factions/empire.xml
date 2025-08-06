@@ -1,6 +1,6 @@
 <faction name="Empire">
  <ai>empire</ai>
- <known />
+ <known/>
  <logo>empire.webp</logo>
  <colour>green</colour>
  <player>1</player>

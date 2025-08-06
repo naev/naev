@@ -35,20 +35,20 @@
  <slots>
   <weapon size="large" prop="bio_weapon" name="weap1" x="24" y="15" h="4">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" name="weap2" x="24" y="-15" h="4">Tentacle Organ I</weapon>
-  <weapon size="medium" x="36" y="16" h="-4" />
-  <weapon size="medium" x="36" y="-16" h="-4" />
+  <weapon size="medium" x="36" y="16" h="-4"/>
+  <weapon size="medium" x="36" y="-16" h="-4"/>
   <utility size="large" prop="bio_systems" name="brain">Ponderosum Cerebrum I</utility>
-  <utility size="large" prop="bio_organ" name="the_bite" />
-  <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="plasma_burst" />
-  <utility size="large" prop="accessory" name="accessory" />
-  <utility size="large" />
-  <utility size="large" />
+  <utility size="large" prop="bio_organ" name="the_bite"/>
+  <utility size="large" prop="bio_organ" name="feral_rage"/>
+  <utility size="large" prop="bio_organ" name="plasma_burst"/>
+  <utility size="large" prop="accessory" name="accessory"/>
+  <utility size="large"/>
+  <utility size="large"/>
   <structure size="large" prop="bio_engines" name="genedrive">Grandis Gene Drive I</structure>
   <structure size="large" prop="bio_hull" name="shell">Ponderosus Cortex I</structure>
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

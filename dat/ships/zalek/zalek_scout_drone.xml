@@ -35,8 +35,8 @@
  </characteristics>
  <slots>
   <weapon prop="builtin" size="small" x="0" y="0" h="-2">Particle Lance</weapon>
-  <utility size="small" />
-  <structure size="small" />
+  <utility size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <ew_hide>-17</ew_hide>

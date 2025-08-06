@@ -28,25 +28,25 @@
   <cargo>340</cargo>
  </characteristics>
  <slots>
-  <weapon y="22" h="4" prop="fighter_bay" x="-18" size="large" />
-  <weapon y="-22" h="4" prop="fighter_bay" x="-18" size="large" />
-  <weapon y="18" h="-4" size="large" x="28" />
+  <weapon y="22" h="4" prop="fighter_bay" x="-18" size="large"/>
+  <weapon y="-22" h="4" prop="fighter_bay" x="-18" size="large"/>
+  <weapon y="18" h="-4" size="large" x="28"/>
   <utility prop="systems" name="systems" size="large">Unicorp PT-440 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="large">Unicorp PT-440 Core System</utility>
-  <utility prop="accessory" name="accessory" size="large" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="medium" />
-  <utility size="medium" />
+  <utility prop="accessory" name="accessory" size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure prop="engines" name="engines" size="large">Unicorp Eagle 3000 Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large" />
+  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
   <structure prop="hull" name="hull" size="large">Unicorp D-58 Heavy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <accel_mod>-10</accel_mod>

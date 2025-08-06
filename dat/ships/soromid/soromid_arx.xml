@@ -34,22 +34,22 @@
  <slots>
   <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="leftweap">Tentacle Organ I</weapon>
   <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" name="rightweap">Tentacle Organ I</weapon>
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0" />
-  <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0" />
-  <weapon size="large" prop="fighter_bay" x="20" y="0" h="0" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="0"/>
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="-40" y="0" h="0"/>
+  <weapon size="large" prop="fighter_bay" x="20" y="0" h="0"/>
   <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum I</utility>
-  <utility size="large" prop="bio_organ" name="the_bite" />
-  <utility size="large" prop="bio_organ" name="feral_rage" />
-  <utility size="large" prop="bio_organ" name="plasma_burst" />
-  <utility size="large" prop="accessory" name="accessory" />
-  <utility size="large" />
-  <utility size="large" />
-  <utility size="medium" />
+  <utility size="large" prop="bio_organ" name="the_bite"/>
+  <utility size="large" prop="bio_organ" name="feral_rage"/>
+  <utility size="large" prop="bio_organ" name="plasma_burst"/>
+  <utility size="large" prop="accessory" name="accessory"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
   <structure size="large" prop="bio_engines" name="genedrive">Magnus Gene Drive I</structure>
   <structure size="large" prop="bio_hull" name="shell">Immanis Cortex I</structure>
-  <structure size="large" />
-  <structure size="large" />
-  <structure size="large" />
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

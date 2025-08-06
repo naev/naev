@@ -3,21 +3,21 @@
  <price>550000</price>
  <description>The Koala is one of the sturdier courier ships, with a small size that also aids it in survival. The armoured variant sacrifices speed for even more durability, allowing it to survive risky deliveries by sturdiness and not speed. Furthermore, a revamped weapon system allows it to wield a medium-sized weapon instead of two small weapons, allowing it to ward off larger ships efficiently. It is commonly used for the delivery of critical cargo without raising too much attention.</description>
  <slots>
-  <weapon y="0" h="-7" size="medium" x="11" />
+  <weapon y="0" h="-7" size="medium" x="11"/>
   <utility prop="systems" name="systems" size="small">Unicorp PT-16 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="small">Unicorp PT-16 Core System</utility>
-  <utility prop="accessory" name="accessory" size="small" />
-  <utility size="small" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility prop="accessory" name="accessory" size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure prop="engines" name="engines" size="small">Unicorp Hawk 160 Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="small">Unicorp Hawk 160 Engine</structure>
   <structure prop="hull" name="hull" size="small">Unicorp D-2 Light Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="small">Unicorp D-2 Light Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <accel_mod>-10</accel_mod>

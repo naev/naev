@@ -36,8 +36,8 @@
  <slots>
   <weapon prop="builtin" size="small" x="0" y="9" h="-2">Electron Burst Cannon</weapon>
   <weapon prop="builtin" size="small" x="0" y="-9" h="-2">Electron Burst Cannon</weapon>
-  <utility size="small" />
-  <structure size="small" />
+  <utility size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <launch_rate>10</launch_rate>

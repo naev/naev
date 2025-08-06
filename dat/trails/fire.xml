@@ -3,8 +3,8 @@
  <thickness>8</thickness>
  <ttl>0.35</ttl>
  <accel_mod>1.5</accel_mod>
- <idle r="1" g="1" b="1" a="0.05" />
- <glow r="1" g="0.84" b="0" a="0.7" />
- <afterburn r="1" g="0.5" b="0" a="0.85" scale="1.5" />
- <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="2" />
+ <idle r="1" g="1" b="1" a="0.05"/>
+ <glow r="1" g="0.84" b="0" a="0.7"/>
+ <afterburn r="1" g="0.5" b="0" a="0.85" scale="1.5"/>
+ <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="2"/>
 </trail>

@@ -27,18 +27,18 @@
  <slots>
   <weapon size="small" prop="bio_weapon" x="13" y="5" h="0" name="leftweap">Stinger Organ I</weapon>
   <weapon size="small" prop="bio_weapon" x="13" y="-5" h="0" name="rightweap">Stinger Organ I</weapon>
-  <weapon size="small" x="12" y="0" h="0" />
+  <weapon size="small" x="12" y="0" h="0"/>
   <utility size="small" prop="bio_systems" name="brain">Perleve Cerebrum I</utility>
-  <utility size="small" prop="bio_organ" name="adrenal_gland" />
-  <utility size="small" prop="bio_organ" name="feral_rage" />
-  <utility size="small" prop="bio_organ" name="the_bite" />
-  <utility size="small" prop="accessory" name="accessory" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility size="small" prop="bio_organ" name="adrenal_gland"/>
+  <utility size="small" prop="bio_organ" name="feral_rage"/>
+  <utility size="small" prop="bio_organ" name="the_bite"/>
+  <utility size="small" prop="accessory" name="accessory"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure size="small" prop="bio_engines" name="genedrive">Perlevis Gene Drive I</structure>
   <structure size="small" prop="bio_hull" name="shell">Perlevis Cortex I</structure>
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

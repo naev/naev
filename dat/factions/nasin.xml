@@ -1,10 +1,10 @@
 <faction name="Nasin">
  <!-- TODO make dynamic faction. -->
  <ai>baddie</ai>
- <invisible />
+ <invisible/>
  <logo>sirius.webp</logo>
  <standing>nasin</standing>
- <allies />
+ <allies/>
  <player>0</player>
  <enemies>
   <enemy>Sirius</enemy>

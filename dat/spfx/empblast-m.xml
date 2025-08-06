@@ -5,7 +5,7 @@
   <frag>emp_blast.frag</frag>
   <size>70</size>
   <uniforms>
-   <u_speed x="1.083" />
+   <u_speed x="1.083"/>
   </uniforms>
  </shader>
 </spfx>

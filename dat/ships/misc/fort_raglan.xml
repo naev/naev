@@ -8,7 +8,7 @@
  <time_mod>1</time_mod>
  <fabricator>N/A</fabricator>
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
- <mission />
+ <mission/>
  <movement>
   <accel>1</accel>
   <turn>100</turn>
@@ -32,20 +32,20 @@
   <cargo>5000</cargo>
  </characteristics>
  <slots>
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
-  <weapon y="0" h="5" size="large" x="0" />
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
+  <weapon y="0" h="5" size="large" x="0"/>
   <utility prop="systems" name="systems" size="large">Dummy Systems</utility>
-  <utility prop="systems_secondary" name="systems_secondary" size="large" />
+  <utility prop="systems_secondary" name="systems_secondary" size="large"/>
   <structure prop="engines" name="engines" size="large">Dummy Engine</structure>
-  <structure prop="engines_secondary" name="engines_secondary" size="large" />
+  <structure prop="engines_secondary" name="engines_secondary" size="large"/>
   <structure prop="hull" name="hull" size="large">Dummy Plating</structure>
-  <structure prop="hull_secondary" name="hull_secondary" size="large" />
+  <structure prop="hull_secondary" name="hull_secondary" size="large"/>
  </slots>
  <stats>
   <engine_limit>9999999</engine_limit>

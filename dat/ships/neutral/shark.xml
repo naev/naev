@@ -8,9 +8,9 @@
  <time_mod>0.9</time_mod>
  <trail_generator x="-14" y="12" h="0">nebula</trail_generator>
  <trail_generator x="-14" y="-12" h="0">nebula</trail_generator>
- <trail_generator x="-15" y="7" h="7" />
- <trail_generator x="-15" y="-7" h="7" />
- <trail_generator x="-15" y="0" h="-5" always_under="1" />
+ <trail_generator x="-15" y="7" h="7"/>
+ <trail_generator x="-15" y="-7" h="7"/>
+ <trail_generator x="-15" y="0" h="-5" always_under="1"/>
  <fabricator>Nexus Shipyards</fabricator>
  <faction>Independent</faction>
  <license>Light Combat Vessel</license>
@@ -26,19 +26,19 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="12" y="0" h="0" />
-  <weapon size="small" x="-3" y="0" h="2" />
-  <weapon size="small" x="3" y="0" h="2" />
+  <weapon size="small" x="12" y="0" h="0"/>
+  <weapon size="small" x="-3" y="0" h="2"/>
+  <weapon size="small" x="3" y="0" h="2"/>
   <utility size="small" prop="systems" name="systems">Unicorp PT-16 Core System</utility>
-  <utility size="small" prop="accessory" name="accessory" />
-  <utility size="small" />
-  <utility size="small" />
-  <utility size="small" />
+  <utility size="small" prop="accessory" name="accessory"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
   <structure size="small" prop="engines" name="engines">Unicorp Hawk 160 Engine</structure>
   <structure size="small" prop="hull" name="hull">Unicorp D-2 Light Plating</structure>
-  <structure size="small" />
-  <structure size="small" />
-  <structure size="small" />
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

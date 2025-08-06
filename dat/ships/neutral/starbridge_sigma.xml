@@ -12,27 +12,27 @@
   <cargo>30</cargo>
  </characteristics>
  <slots>
-  <weapon y="-17" h="2" size="large" x="-20" />
-  <weapon y="17" h="2" size="large" x="-20" />
-  <weapon y="0" h="3" prop="fighter_bay" x="15" size="medium" />
-  <weapon y="0" h="2" prop="fighter_bay" x="20" size="medium" />
-  <weapon y="-7" h="1" size="small" x="4" />
-  <weapon y="7" h="1" size="small" x="4" />
+  <weapon y="-17" h="2" size="large" x="-20"/>
+  <weapon y="17" h="2" size="large" x="-20"/>
+  <weapon y="0" h="3" prop="fighter_bay" x="15" size="medium"/>
+  <weapon y="0" h="2" prop="fighter_bay" x="20" size="medium"/>
+  <weapon y="-7" h="1" size="small" x="4"/>
+  <weapon y="7" h="1" size="small" x="4"/>
   <utility prop="systems" name="systems" size="medium">Unicorp PT-200 Core System</utility>
   <utility prop="systems_secondary" name="systems_secondary" size="medium">Unicorp PT-200 Core System</utility>
-  <utility prop="accessory" name="accessory" size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
+  <utility prop="accessory" name="accessory" size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
   <structure prop="engines" name="engines" size="medium">Krain Patagium Twin Engine</structure>
   <structure prop="engines_secondary" name="engines_secondary" size="medium">Krain Patagium Twin Engine</structure>
   <structure prop="hull" name="hull" size="medium">Unicorp D-23 Medium Plating</structure>
   <structure prop="hull_secondary" name="hull_secondary" size="medium">Unicorp D-23 Medium Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

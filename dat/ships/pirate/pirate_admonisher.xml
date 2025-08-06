@@ -28,23 +28,23 @@
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="0" h="2" />
-  <weapon size="medium" x="4" y="2" h="-5" />
-  <weapon size="medium" x="4" y="-2" h="-5" />
-  <weapon size="small" x="-9" y="-5" h="-9" />
-  <weapon size="small" x="-9" y="5" h="-9" />
+  <weapon size="medium" x="15" y="0" h="2"/>
+  <weapon size="medium" x="4" y="2" h="-5"/>
+  <weapon size="medium" x="4" y="-2" h="-5"/>
+  <weapon size="small" x="-9" y="-5" h="-9"/>
+  <weapon size="small" x="-9" y="5" h="-9"/>
   <utility size="medium" prop="systems" name="systems">Previous Generation Medium Systems</utility>
-  <utility size="medium" prop="accessory" name="accessory" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="medium" />
-  <utility size="small" />
+  <utility size="medium" prop="accessory" name="accessory"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
   <structure size="medium" prop="engines" name="engines">Beat Up Medium Engine</structure>
   <structure size="medium" prop="hull" name="hull">Patchwork Medium Plating</structure>
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
-  <structure size="medium" />
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
   <speed_mod>5</speed_mod>

@@ -8,7 +8,7 @@
  <equip>thurion</equip>
  <local_th>3</local_th>
  <description>The Thurion are a mysterious faction located deep in the Nebula. They seem to be out of touch with the external world.</description>
- <enemies />
+ <enemies/>
  <tags>
   <tag>misn_cargo</tag>
  </tags>
