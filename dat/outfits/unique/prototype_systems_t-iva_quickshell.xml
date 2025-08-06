@@ -7,8 +7,8 @@
   <slot prop="systems">utility</slot>
   <size>medium</size>
   <price>650000</price>
-  <description>Research Log UST 102:2718
-   The last prototype has exceeded expectations in shield regeneration capabilities, this may be the breakthrough we were hoping for. With such incredible results, the Empire shall surely see the power of the clustered sentience interface. Although the shield capacity parameters are suboptimal, that is just a matter of time. It is only a matter of time before Project Thurion because the technological backbone of civilization!</description>
+  <description>"Research Log UST 102:2718
+   The last prototype has exceeded expectations in shield regeneration capabilities, this may be the breakthrough we were hoping for. With such incredible results, the Empire shall surely see the power of the clustered sentience interface. Although the shield capacity parameters are suboptimal, that is just a matter of time. It is only a matter of time before Project Thurion becomes the technological backbone of civilization!"</description>
   <gfx_store>core_system_refined_m1.webp</gfx_store>
   <priority>3</priority>
  </general>
@@ -16,13 +16,15 @@
   <lua_inline>
 require('outfits.lib.multicore').init({
    {'mass', 85},
-   {'cpu_max', 270},
-   {'energy', 725},
-   {'energy_regen', 32},
+   {'cpu_max', 225},
+   {'energy', 525},
+   {'energy_regen', 26},
    {'shield', 400},
-   {'shield_regen', 40},
+   {'shield_regen', 32},
+   {'shield_regen_mod', 25},
+   {'shielddown_mod', -68},
    {'shield_mod', -80},
-   {'absorb', -10},
+   {'absorb', -14},
 })</lua_inline>
  </specific>
 </outfit>
