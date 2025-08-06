@@ -29,23 +29,28 @@ if help_f or (argv[1:] and do_write):
       msg(l)
    exit(0 if help_f else 1)
 
-def mk_jump(pos, dst, aux):
-   return {'@target': ssys_nam(pos, dst)}
-
 def new_ssys(name, basenam, pos, ssys_pos, jmp):
    xml = naev_xml()
    xml.save_as(name)
    Nam = ssys_nam(ssys_pos, basenam)
+   if Nam and nam2base(Nam) != basenam:
+      stderr.write('Warning: basename "' + basenam + '" does not match provided name "' + Nam  + '"\n')
    aux = ssys_others(ssys_pos, basenam)
 
+   mk_jump = lambda dst, aux: {
+      '@target': ssys_nam(ssys_pos, dst),
+      'autopos': {},
+      'hide': 1,
+      'tags': {'tag': aux},
+   }
    xml['ssys'] = {
       '@name': Nam or ' '.join([s[0].upper() + s[1:] for s in basenam.split('_')]),
       'general': {'radius': 5000, 'spacedust': 300, 'interference': 0},
       'pos': {'@x': pos[0], '@y': pos[1]},
       'spobs': {},
-      'jumps': {'jump': [mk_jump(ssys_pos, i, a) for i, a in jmp.items()]},
+      'jumps': {'jump': [mk_jump(k, v) for k, v in jmp.items()]},
       'asteroids': {},
-      'tags': [{'tag': t} for t in aux],
+      'tags': {'tag': aux},
    }
    xml.save()
 

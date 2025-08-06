@@ -97,8 +97,7 @@ from graphmod import ssys_pos, ssys_jmp
 from virtual_edges import add_virtual_edges
 
 ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
-ssys_pos.aux['sunir'] = ["default", "Su'nir"]
-#ssys_pos.aux['sunir'] = ["default::spoiler:plasmastorm", "Su'nir"]
+ssys_pos.aux['sunir'] = ["default::spoiler:unused", "Su'nir"]
 
 
 add_virtual_edges(ssys_jmp, virtual_edges)
