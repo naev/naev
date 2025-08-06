@@ -1,9 +1,10 @@
 // Logging tools
 use anyhow::Result;
+use std::fs::File;
 use std::sync::atomic::AtomicU32;
+use std::sync::{LazyLock, Mutex};
 
-pub static WARN_NUM: AtomicU32 = AtomicU32::new(0);
-pub const WARN_MAX: u32 = 1000;
+const WARN_MAX: u32 = 1000;
 
 pub mod version;
 
@@ -15,7 +16,10 @@ pub use semver;
 #[cfg(unix)]
 pub use nix;
 
-struct Logger {}
+struct Logger {
+    warn_num: AtomicU32,
+    logfile: Mutex<Option<File>>,
+}
 impl log::Log for Logger {
     fn enabled(&self, metadata: &log::Metadata) -> bool {
         if cfg!(debug_assertions) {
@@ -31,24 +35,25 @@ impl log::Log for Logger {
         }
         match record.level() {
             log::Level::Error => {
-                eprintln!("[E] {}:{}: {}", file!(), line!(), record.args());
+                let bt = std::backtrace::Backtrace::force_capture();
+                eprintln!("{}[E] {}", bt, record.args());
             }
             log::Level::Warn => {
-                let nw = WARN_NUM.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                let nw = self
+                    .warn_num
+                    .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
                 if nw <= WARN_MAX {
-                    eprintln!("[W] {}:{}: {}", file!(), line!(), record.args());
-                }
-                if nw == WARN_MAX {
+                    let bt = std::backtrace::Backtrace::force_capture();
+                    eprintln!("{}[W] {}", bt, record.args());
+                } else if nw == WARN_MAX {
                     eprintln!(
                         "{}",
-                        gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING TOO WARNINGS")
+                        gettext::gettext("TOO MANY WARNINGS, NO LONGER DISPLAYING WARNINGS")
                     );
                 }
+                #[cfg(unix)]
                 if naevc::config::DEBUG_PARANOID {
-                    #[cfg(unix)]
-                    {
-                        nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
-                    }
+                    nix::sys::signal::raise(nix::sys::signal::Signal::SIGINT).unwrap();
                 }
             }
             log::Level::Info => {
@@ -64,14 +69,23 @@ impl log::Log for Logger {
     fn flush(&self) {}
 }
 impl Logger {
-    const fn new() -> Self {
-        Logger {}
+    fn new() -> Self {
+        Self {
+            warn_num: AtomicU32::new(0),
+            logfile: Mutex::new(None),
+        }
+    }
+
+    fn log_to_file(&self, path: &str) -> Result<()> {
+        let f = File::open(path)?;
+        *self.logfile.lock().unwrap() = Some(f);
+        Ok(())
     }
 }
-static LOGGER: Logger = Logger::new();
+static LOGGER: LazyLock<Logger> = LazyLock::new(|| Logger::new());
 
 pub fn init() -> Result<()> {
-    match log::set_logger(&LOGGER) {
+    match log::set_logger(&*LOGGER) {
         Ok(_) => (),
         Err(_) => anyhow::bail!("unable to set_logger"),
     }
