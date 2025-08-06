@@ -90,7 +90,7 @@ local goodness_override = {
    ["Hidden Jump Scanner"] = 0,
    ["Asteroid Scanner"] = 1,
    ["Blink Drive"] = 3,
-   ["Hyperbolic Blink Engine"] = 3,
+   ["Hyperbolic Blink Engine"] = 2,
    ["S&K Heavy Plasma Drill"] = 1,
    ["S&K Plasma Drill"] = 1,
 }
@@ -104,16 +104,16 @@ local goodness_special = {
    ["Enygma Systems Spearhead Launcher"] = 0.6, -- high damage but shield only
    ["TeraCom Vengeance Launcher"] = 0.6,
    ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable
-   ["Droid Repair Crew"] = 0.4, -- Only work until 50%
+   ["Droid Repair Crew"] = 0.35, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
-   ["Particle Beam"] = 0.85,
-   ["EMP Grenade Launcher"] = 0.85,
+   ["Particle Beam"] = 0.8,
+   ["EMP Grenade Launcher"] = 0.36,
 
    -- Point defense works against missiles so it's extra useful
-   ["Dvaered Flare Battery"] = 1.19,
-   ["Ratchet Point Defense"] = 1.25,
-   ["Guardian Interception System"] = 1.25,
-   ["Guardian Overseer System"] = 1.19,
+   ["Ratchet Point Defense"] = 1.52,
+   ["Dvaered Flare Battery"] = 1.46,
+   ["Guardian Interception System"] = 1.21,
+   ["Guardian Overseer System"] = 1.15,
    ["ZIBS-16"] = 2.77,
    ["ZIBS-32"] = 2.71,
    ["Spittle Tubuloid Cluster"] = 1.9,
