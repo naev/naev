@@ -218,12 +218,17 @@ class outfit(naev_xml):
       for d, k, v in list(self.equipped(sec)):
          d[k] = v
 
+   def copy( self ):
+      out = naev_xml()
+      out.save_as(self._filename)
+      out['outfit'] = self['outfit']
+      return out
+
    def save( self ):
+      prv_lua_inline = False
       if self.is_multi:
-         # make a deep copy
-         out = naev_xml()
-         out.save_as(self._filename)
-         oout = out['outfit'] = self['outfit']
+         out = self.copy()
+         oout = out['outfit']
 
          ind = 3*' '
          lua_inline_mcarg = '{\n'
@@ -246,10 +251,17 @@ class outfit(naev_xml):
          if 'lua_inline_post' in oout['specific']:
             oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post'].strip()
             del oout['specific']['lua_inline_post']
-         oout['specific']['lua_inline'] = oout['specific']['lua_inline'].replace('\n','\n'+3*' ') + '\n  '
+         reindent = lambda s: s.replace('\n','\n'+3*' ') + '\n  '
+         oout['specific']['lua_inline'] = reindent(oout['specific']['lua_inline'])
       else:
          out = self
+         if (oout := out.get('outfit')) and 'specific' in oout and 'lua_inline' in oout['specific']:
+            prv_lua_inline = oout['specific']['lua_inline']
+            oout['specific']['lua_inline'] = '\n   ' + oout['specific']['lua_inline'] + '\n  '
+
       naev_xml.save(out)
+      if prv_lua_inline:
+         oout['specific']['lua_inline'] = prv_lua_inline
       self._uptodate = True
 
 if __name__ == '__main__':

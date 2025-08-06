@@ -10,11 +10,11 @@
  </general>
  <specific type="modification">
   <lua_inline>
-require("outfits.lib.custom_price").setup( function ()
-   local pp = player.pilot()
-   local size = pp:ship():size()
-   return 250e3 * (3+size)
-end )
+   require("outfits.lib.custom_price").setup( function ()
+      local pp = player.pilot()
+      local size = pp:ship():size()
+      return 250e3 * (3+size)
+   end )
   </lua_inline>
   <ew_stealth>-7</ew_stealth>
   <ew_stealth_min>-7</ew_stealth_min>
