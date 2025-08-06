@@ -212,6 +212,9 @@ function optimize.goodness_default( o, p )
       if o.seeker then
          weap = weap * p.seeker
       end
+      if o.ispd then
+         weap = weap * p.pointdefense
+      end
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
       elseif o.typebroad == "Beam Weapon" then
@@ -308,6 +311,7 @@ local function compute_goodness( outfit_list, p, st, ss, params, limits )
       oo.spec     = os.spec
       oo.isturret = oo.spec.isturret
       oo.penetration = oo.spec.penetration
+      oo.ispd     = out:pointdefense()
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement

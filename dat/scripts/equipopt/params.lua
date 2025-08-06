@@ -55,6 +55,7 @@ function params.default( overwrite )
       bolt        = 1,
       fighterbay  = 1,
       seeker      = 1,
+      pointdefense= 1,
    }, overwrite )
 end
 
