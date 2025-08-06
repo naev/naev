@@ -1,5 +1,5 @@
 function update( p, po )
-   local _a, s = p:health()
+   local s = p:shield()
    if s == 100 then
       po:state( "on" )
    else

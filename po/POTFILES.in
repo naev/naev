@@ -3484,6 +3484,7 @@ dat/outfits/utility/blink_drive.lua
 dat/outfits/utility/catalytic_energy_drill.lua
 dat/outfits/utility/cloaking_device.lua
 dat/outfits/utility/combat_hologram_projector.lua
+dat/outfits/utility/conduit.lua
 dat/outfits/utility/cryogenic_repair_nanobots.lua
 dat/outfits/utility/droid_repair_crew.lua
 dat/outfits/utility/emergency_shield_booster.lua
@@ -3495,7 +3496,6 @@ dat/outfits/utility/neural_accelerator_interface.lua
 dat/outfits/utility/sk_heavy_plasma_drill.lua
 dat/outfits/utility/sk_plasma_drill.lua
 dat/outfits/utility/stealth_burster.lua
-dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/outfits/weapons/antimatter_lance.lua
