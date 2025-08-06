@@ -167,7 +167,7 @@ else pmsg "" ;                                                              fi |
 grep -v ' virtual$'                                                            |
 pmsg "stellarwind road"                                                        |
 "$DIR"/graphmod_stellarwind_road.py                                            |
-"$DIR"/repeat.sh 2 "$DIR"/reposition -e -q "${SWR[@]}"                         |
+"$DIR"/repeat.sh 0 "$DIR"/reposition -e -q "${SWR[@]}"                         |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')

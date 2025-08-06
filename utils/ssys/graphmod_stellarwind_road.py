@@ -23,19 +23,20 @@ from geometry import vec
 from graphmod import ssys_pos, ssys_jmp
 
 L = [
-   ('c00', 'c14', 'c28', 'c43', 'c59'),
-   (('swr1', -1), 'c14', 'c43'),
-   ('ngc11718', 'swr2'),
-   ('paradox', 'zemur', 'wolf', 'chloe'),
-   ('paradox', 'zemur', 'delta_polaris'),
-   ('yarn', 'griffin', 'jade'),
-   ('logania', 'palejos', 'jade'),
-   (('swr7', -1), 'palejos', 'logania'),
-   (('swr8', 2), ('swr7', -1)),
-   ('ux', 'octavian'),
-   ('olympus', 'ganth', 'dendria', 'regulus'),
-   ('attaria', 'pultatis', 'provectus_nova', 'ganth', 'regulus'),
-   ('pultatis', 'provectus_nova', 'limbo', 'sollav'),
+   ('c43', 'c59', 'hades'),
+   ('c43', 'hades', 'polack', 'chloe'),
+   ('polack', 'chloe', 'terminus'),
+   ('terminus', 'flok', ('wolf', 1.33)),
+   ('zemur', 'flok', 'sirou'),
+   ('griffin', 'sirou', 'yarn'),
+   ('yarn', 'griffin', 'jade', 'blackwell'),
+   ('logania', 'palejos', 'jade', 'blackwell'),
+   (('swr8', -1), 'palejos', 'logania'),
+   (('swr9', 1.66), ('swr8', -0.66)),
+   ('procyon', 'swr10'),
+   ('procyon', 'olympus'),
+   ('olympus', 'vost', 'hargen', 'regas'),
+   ('hargen', 'regas', ('swr13', -1), ('sollav', 0.2)),
 ]
 
 output = {}
@@ -49,6 +50,11 @@ if JUST_LIST:
 else:
    ssys_pos |= output
    ssys_pos.aux |= {i: ["default::stellarwind:spoiler:unused", 'S'+i[1:]] for i in output}
-   road = ['mason'] + ['swr' + str(i) for i, _ in enumerate(L, 1)] + ['fried']
+   road = ['mason'] + ['swr' + str(i) for i, _ in enumerate(L, 1)] + ['sollav']
    for i, j in zip(road[:-1], road[1:]):
-      ssys_jmp[i][j] = ['new']
+      ssys_jmp[i][j] = ['new', 'hidden']
+
+   for sys in [road[0], road[-1]]:
+      if ':' not in ssys_pos.aux[sys][0]:
+         ssys_pos.aux[sys][0] += ':'
+      ssys_pos.aux[sys][0] += ':stellarwind'
