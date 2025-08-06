@@ -1,4 +1,4 @@
-# python3
+#!/usr/bin/env python3
 
 """
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
@@ -93,6 +93,11 @@ class xml_node( dict ):
          if val is None:
             raise ValueError(str(val) + ' is not a number.')
          key = key[1:]
+      elif isinstance(val, list):
+         val = [
+            xml_node(e, self, key) if isinstance(e, dict) and not isinstance(e, xml_node) else e
+            for e in val
+         ]
       elif isinstance(val, dict) and not isinstance(val, xml_node):
          val = xml_node(val, self, key)
       if key[:1] == '@':
@@ -161,12 +166,9 @@ def _unparse_elt( v, k, indent):
 def unparse( d , indent= 0 ):
    out = ''
    for k, v in d.items():
-      if isinstance(v, list):
-         for ve in v:
-            out += _unparse_elt(ve, k, indent)
-      else:
-         out += _unparse_elt(v, k, indent)
-
+      if not isinstance(v, list):
+         v = [v]
+      out += ''.join((_unparse_elt(ve, k, indent) for ve in v))
    return out
 
 class naev_xml( xml_node ):
@@ -223,3 +225,10 @@ class naev_xml( xml_node ):
    def __del__( self ):
       if not self._uptodate and self._filename != devnull:
          stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
+
+if __name__ == '__main__':
+   import sys
+   for i in sys.argv[1:]:
+      n = naev_xml(i)
+      n.touch()
+      n.save()
