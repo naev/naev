@@ -10,6 +10,6 @@
  </general>
  <specific type="modification">
   <launch_lockon>-15</launch_lockon>
-  <tur_firerate>-5</tur_firerate>
+  <launch_rate>-5</launch_rate>
  </specific>
 </outfit>
