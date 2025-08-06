@@ -3923,7 +3923,6 @@ src/land_trade.h
 src/linebreak.rs
 src/load.c
 src/load.h
-src/log.c
 src/log.h
 src/log/src/lib.rs
 src/log/src/version.rs

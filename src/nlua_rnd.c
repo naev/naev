@@ -9,6 +9,7 @@
 /** @cond */
 #include <lauxlib.h>
 #include <math.h>
+#include <stdlib.h>
 /** @endcond */
 
 #include "nlua_rnd.h"

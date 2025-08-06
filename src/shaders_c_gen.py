@@ -421,6 +421,7 @@ def generate_h_file():
 
 #include <SDL3/SDL_timer.h>
 #include <time.h>
+#include <stdlib.h>
 
 #include "glad.h"
 #include "conf.h"

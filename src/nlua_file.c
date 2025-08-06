@@ -8,6 +8,8 @@
  */
 /** @cond */
 #include <lauxlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 /** @endcond */
 
 #include "SDL_PhysFS.h"

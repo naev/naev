@@ -111,13 +111,16 @@ const char *num2strU( double n, int decimals )
  */
 void print_with_line_numbers( const char *str )
 {
-   int counter = 0;
-   logprintf( stderr, 0, "%03d: ", ++counter );
+   char         buf[1024];
+   unsigned int n       = 0;
+   int          counter = 0;
+   n += scnprintf( &buf[n], sizeof( buf ) - n, "%03d: ", ++counter );
    for ( int i = 0; str[i] != '\0'; i++ ) {
       if ( str[i] == '\n' )
-         logprintf( stderr, 0, "\n%03d: ", ++counter );
+         n += scnprintf( &buf[n], sizeof( buf ) - n, "\n%03d: ", ++counter );
       else // if (str[i]!='\n')
-         logprintf( stderr, 0, "%c", str[i] );
+         n += scnprintf( &buf[n], sizeof( buf ) - n, "%c", str[i] );
    }
-   logprintf( stderr, 0, "\n" );
+   n += scnprintf( &buf[n], sizeof( buf ) - n, "\n" );
+   LOGERR( "%s", buf );
 }

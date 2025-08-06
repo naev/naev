@@ -5,14 +5,9 @@
 
 #define LOGMAX 1024
 
-/** @cond */
-#include <signal.h>
-#include <stdio.h>
-
 #include "gettext.h" // IWYU pragma: keep
-/** @endcond */
-
-#include "nstring.h"
+#include <stdio.h>   // IWYU pragma: keep
+#include <string.h>  // IWYU pragma: keep
 
 #define LOG( str, ... )                                                        \
    do {                                                                        \
@@ -51,14 +46,6 @@
    } while ( 0 )
 #endif /* DEBUG */
 #define DEBUG_BLANK() DEBUG( "%s", "" )
-
-PRINTF_FORMAT( 3, 4 )
-NONNULL( 3 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
-void log_init( void );
-void log_redirect( void );
-void log_clean( void );
-int  log_warn( const char *file, size_t line, const char *func, const char *fmt,
-               ... );
 
 // From Rust
 void debug_rust( const char *msg );

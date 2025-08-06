@@ -16,3 +16,4 @@ sdl3 = { workspace = true }
 naevc = { workspace = true }
 log = { workspace = true }
 anyhow = { workspace = true }
+chrono = "0"

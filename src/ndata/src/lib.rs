@@ -53,11 +53,18 @@ pub fn setup() -> anyhow::Result<()> {
         }
     };
 
-    // We need the write directories set up so we can start logging
-    // TODO fix logging
-    unsafe {
-        naevc::log_redirect();
-    }
+    // Redirect the log after we set up the write directory.
+    let logpath = Path::new(&physfs::get_write_dir()).join("logs");
+    let _ = std::fs::create_dir_all(&logpath);
+    let logfile = logpath.join(
+        chrono::Local::now()
+            .format("%Y-%m-%d_%H-%M-%S.txt")
+            .to_string(),
+    );
+    dbg!(&logfile);
+    log::set_log_file(&logfile.to_string_lossy()).unwrap_or_else(|e| {
+        warn_err!(e);
+    });
 
     // Load conf
     if unsafe { !naevc::conf.ndata.is_null() } {

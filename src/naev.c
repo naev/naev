@@ -290,9 +290,6 @@ int naev_main_cleanup( void )
    /* Clean up signal handler. */
    debug_sigClose();
 
-   /* Delete logs if empty. */
-   log_clean();
-
    /* Really turn the lights off. */
    PHYSFS_deinit();
    gl_fontExit();

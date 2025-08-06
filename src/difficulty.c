@@ -17,6 +17,7 @@
 #include "array.h"
 #include "conf.h"
 #include "ndata.h"
+#include "nstring.h"
 #include "nxml.h"
 
 #define DIFFICULTY_XML_ID "difficulty"

@@ -17,6 +17,7 @@
 
 #include "libxml/parser.h"    // IWYU pragma: export
 #include "libxml/xmlwriter.h" // IWYU pragma: export
+#include <stdlib.h>
 /** @endcond */
 
 #include "attributes.h"

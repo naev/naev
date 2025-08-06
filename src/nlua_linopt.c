@@ -13,6 +13,7 @@
 #include <SDL3/SDL_timer.h>
 #include <glpk.h>
 #include <lauxlib.h>
+#include <stdlib.h>
 
 #include "naev.h"
 /** @endcond */

@@ -14,6 +14,7 @@
 
 #include "log.h"
 #include "nlua.h"
+#include "nstring.h"
 
 static nlua_env *cond_env = NULL; /** Conditional Lua env. */
 
