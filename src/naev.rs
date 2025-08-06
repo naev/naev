@@ -378,6 +378,8 @@ fn naevmain() -> Result<()> {
         naevc::naev_main_cleanup();
     }
 
+    log::close_file();
+
     Ok(())
 }
 

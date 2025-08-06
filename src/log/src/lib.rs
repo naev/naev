@@ -1,7 +1,7 @@
 use anyhow::Result;
 use std::fs::File;
 use std::io::Write;
-use std::sync::atomic::AtomicU32;
+use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::{LazyLock, Mutex};
 
 const WARN_MAX: u32 = 1000;
@@ -21,9 +21,14 @@ pub use nix;
 // * Maybe add colour for warning / whatever in console
 // * Maybe keep a copy of the last warning before moving over
 
+struct LogFile {
+    name: String,
+    file: File,
+}
+
 enum Output {
     Buffer(String),
-    File(File),
+    File(LogFile),
 }
 impl Output {
     fn write(&mut self, msg: &str, level: log::Level) -> Result<()> {
@@ -39,9 +44,9 @@ impl Output {
                 b.push('\n');
                 b.push_str(msg);
             }
-            Self::File(f) => {
-                f.write(b"\n")?;
-                f.write(msg.as_bytes())?;
+            Self::File(lf) => {
+                lf.file.write(b"\n")?;
+                lf.file.write(msg.as_bytes())?;
             }
         }
         Ok(())
@@ -68,13 +73,15 @@ impl log::Log for Logger {
         let level = record.level();
         let msg = match level {
             log::Level::Error => {
+                // Mark it as having at least one warning on error
+                let _ = self
+                    .warn_num
+                    .compare_exchange(0, 1, Ordering::SeqCst, Ordering::Relaxed);
                 let bt = std::backtrace::Backtrace::force_capture();
                 format!("{}[E] {}", bt, record.args())
             }
             log::Level::Warn => {
-                let nw = self
-                    .warn_num
-                    .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                let nw = self.warn_num.fetch_add(1, Ordering::SeqCst);
                 let msg = if nw <= WARN_MAX {
                     let bt = std::backtrace::Backtrace::force_capture();
                     format!("{}[W] {}", bt, record.args())
@@ -98,15 +105,14 @@ impl log::Log for Logger {
                 return;
             }
         };
-        let mut o = self.output.lock().unwrap();
-        let _ = o.write(&msg, level);
+        let _ = self.output.lock().unwrap().write(&msg, level);
     }
 
     fn flush(&self) {
         let mut o = self.output.lock().unwrap();
         match &mut *o {
-            Output::File(f) => {
-                let _ = f.flush();
+            Output::File(lf) => {
+                let _ = lf.file.flush();
             }
             _ => (),
         }
@@ -131,10 +137,14 @@ impl Logger {
                 anyhow::bail!("already logging to file");
             }
         }
-        *o = Output::File(f);
+        *o = Output::File(LogFile {
+            name: String::from(path),
+            file: f,
+        });
         Ok(())
     }
 }
+
 static LOGGER: LazyLock<Logger> = LazyLock::new(|| Logger::new());
 
 pub fn init() -> Result<()> {
@@ -152,6 +162,23 @@ pub fn init() -> Result<()> {
 
 pub fn set_log_file(path: &str) -> Result<()> {
     LOGGER.log_to_file(path)
+}
+
+pub fn close_file() {
+    let nw = LOGGER.warn_num.load(Ordering::Relaxed);
+    if nw == 0 {
+        let o = &mut *LOGGER.output.lock().unwrap();
+        let filename = match o {
+            Output::File(lf) => Some(lf.name.clone()),
+            _ => None,
+        };
+        if let Some(filename) = filename {
+            *o = Output::Buffer(String::new());
+            std::fs::remove_file(filename).unwrap_or_else(|e| {
+                eprintln!("{}", e);
+            });
+        }
+    }
 }
 
 pub fn info(msg: &str) {
