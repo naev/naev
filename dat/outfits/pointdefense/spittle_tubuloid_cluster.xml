@@ -16,22 +16,22 @@
   <sound>plasma</sound>
   <spfx_shield>Pla-S2</spfx_shield>
   <spfx_armour>Pla-S2</spfx_armour>
-  <delay>0.8</delay>
+  <delay>0.75</delay>
   <speed>100</speed>
-  <range>900</range>
-  <falloff>850</falloff>
+  <range>650</range>
+  <falloff>600</falloff>
   <energy>5</energy>
   <trackmin>0</trackmin>
   <trackmax>0</trackmax>
   <damage>
    <type>plasma</type>
    <penetrate>0</penetrate>
-   <physical>8</physical>
+   <physical>10</physical>
   </damage>
   <pointdefense/>
   <miss_ships/>
   <shots>5</shots>
-  <dispersion>30</dispersion>
+  <dispersion>27</dispersion>
   <speed_dispersion>20</speed_dispersion>
  </specific>
  <tags>

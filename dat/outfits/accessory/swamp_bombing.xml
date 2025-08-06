@@ -12,7 +12,7 @@
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <ew_hide>-10</ew_hide>
-  <jump_delay>-10</jump_delay>
+  <ew_hide>-8</ew_hide>
+  <jump_delay>-12</jump_delay>
  </specific>
 </outfit>
