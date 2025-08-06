@@ -75,7 +75,7 @@ outfits.elite.weapons = outfits.merge{ {
 outfits.elite.utility = outfits.merge{ {
    "Targeting Array", "Nexus Concealment Coating",
    "Droid Repair Crew", "Hyperbolic Blink Engine",
-   "Flicker Drive", "Milspec Scrambler", "Targeting Conduit",
+   "Flicker Drive", "Milspec Scrambler",
    "Milspec Impacto-Plastic Coating", "Photo-Voltaic Nanobot Coating",
    }, outfits.standard.utility,
 }
