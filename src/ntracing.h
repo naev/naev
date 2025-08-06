@@ -3,10 +3,11 @@
  */
 #pragma once
 
+#include <stdlib.h>
+
 #if HAVE_TRACY
 #include "attributes.h"
 #include "tracy/TracyC.h"
-#include <stdlib.h>
 #define _uninitialized_var( x )                                                \
    x = *( &( x ) ) // Works with Clang but not GCC...
 #define NTracingFrameMark TracyCFrameMark
