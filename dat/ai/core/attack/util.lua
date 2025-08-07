@@ -133,7 +133,7 @@ end
 function atk.decide_zz( target, dist )
    -- Some AI will not do fancy maneuvers
    if mem.atk_skill <= 0.45+0.55*mem.rand then return false end
-   if target:flags("disabled") then return false end -- Don't be fance with disabled ships
+   if target:disabled() then return false end -- Don't be fance with disabled ships
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
    local pilot  = ai.pilot()
@@ -189,7 +189,7 @@ function atk.com_think( target, dokill )
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and target:flags("disabled") then
+   if not mem.atk_kill and target:disabled() then
       ai.poptask()
       return
    end

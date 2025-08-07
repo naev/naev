@@ -919,7 +919,7 @@ function autonav_plt_follow ()
       target_name = "#"..plt:colourChar()..plt:name().."#o"
    end
 
-   local canboard = plt:flags("disabled") or plt:flags("boardable")
+   local canboard = plt:disabled() or plt:flags("boardable")
    local radius
    if canboard then
       radius = 0

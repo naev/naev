@@ -334,8 +334,8 @@ local message_handler_funcs = {
       local l = p:leader()
       if mem.ignoreorders or not dopush or sender==nil or not sender:exists() or sender~=l or data==nil or not data:exists() or data:leader() == l then return false end
       p:taskClear()
-      --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
-      if data:flags("disabled") then
+      --if (si.attack and si.forced and ai.taskdata()==data) or data:disabled() then
+      if data:disabled() then
          ai.pushtask("attack_forced_kill", data)
       else
          ai.pushtask("attack_forced", data)
