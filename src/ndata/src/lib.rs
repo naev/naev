@@ -6,7 +6,7 @@ use std::path::Path;
 
 use log::formatx::formatx;
 use log::gettext::gettext;
-use log::{semver, version};
+use log::{infox, semver, version};
 
 pub mod physfs;
 
@@ -61,7 +61,7 @@ pub fn setup() -> anyhow::Result<()> {
             .format("%Y-%m-%d_%H-%M-%S.txt")
             .to_string(),
     );
-    dbg!(&logfile);
+    infox!(gettext("Logging to {}"), logfile.to_string_lossy());
     log::set_log_file(&logfile.to_string_lossy()).unwrap_or_else(|e| {
         warn_err!(e);
     });
