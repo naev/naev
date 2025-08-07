@@ -39,7 +39,13 @@ return function ()
             local p = pilot.add("Starbridge", "Independent", nil, _("Bloodhound"), {naked=true, ai="pers_patrol"})
             p:outfitAddIntrinsic("Escape Pod")
             p:intrinsicSet( "ew_detect", 50 )
-            equipopt.sirius( p, {flow_ability=outfit.get("Astral Projection")} )
+            equipopt.sirius( p, {
+            flow_ability=outfit.get("Astral Projection"),
+            outfits_add={"Targeting Conduit"},
+            prefer={
+            ["Targeting Conduit"] = 100,
+            ["Sensor Array"] = 5,
+            }} )
             local m = p:memory()
             m.capturable = true
             m.comm_greet = _([["Space seems much less vast when you can track like a bloodhound."]])
@@ -50,6 +56,7 @@ return function ()
          spawn = function ()
             local p = pilot.add("Sirius Dogma", "Independent", nil, _("White Shield"), {naked=true, ai="pers_patrol"})
             p:outfitAddIntrinsic("Escape Pod")
+            p:intrinsicSet( "absorb", 10 )
             equipopt.sirius( p, { flow_ability=outfit.get("Cleansing Flames") } )
             local m = p:memory()
             m.capturable = true
@@ -96,6 +103,7 @@ return function ()
          spawn = function ()
             local p = pilot.add("Rhino", "Independent", nil, _("Null Mind"), {naked=true, ai="pers"})
             p:outfitAddIntrinsic("Escape Pod")
+            p:intrinsicSet( "stress_dissipation", 35 )
             equipopt.sirius( p, { flow_ability=outfit.get("Reality Rip") } )
             local m = p:memory()
             m.capturable = true
@@ -116,9 +124,9 @@ return function ()
             p:intrinsicSet( "shield_mod", 50 )
             p:intrinsicSet( "shield_regen_mod", 50 )
             p:intrinsicSet( "armour_mod", 50 )
-            p:intrinsicSet( "launch_damage", 50 )
-            p:intrinsicSet( "fwd_damage", 50 )
-            p:intrinsicSet( "tur_damage", 50 )
+            p:intrinsicSet( "weapon_damage", 50 )
+            p:intrinsicSet( "shielddown_mod", -100 )
+            p:intrinsicSet( "stress_dissipation", 200 )
             equipopt.pirate( p, {
                outfits_add={"Emergency Stasis Inducer"},
                prefer={["Emergency Stasis Inducer"] = 100}} )
