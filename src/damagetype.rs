@@ -79,30 +79,6 @@ pub extern "C" fn dtype_calcDamage(
     dmg: *const naevc::Damage,
     ss: *const naevc::ShipStats,
 ) {
-    /*
-    if ( dshield != NULL ) {
-       kkkkkkkif ( ( dtype->soffset == 0 ) || ( s == NULL ) )
-          *dshield = dtype->sdam * dmg->damage * absorb;
-       else {
-          ptr = (char *)s;
-          memcpy( &multiplier, &ptr[dtype->soffset], sizeof( double ) );
-          multiplier = MAX( 0., 1. - multiplier );
-          *dshield   = dtype->sdam * dmg->damage * absorb * multiplier;
-       }
-    }
-    if ( darmour != NULL ) {
-       if ( ( dtype->aoffset ) == 0 || ( s == NULL ) )
-          *darmour = dtype->adam * dmg->damage * absorb;
-       else {
-          ptr = (char *)s;
-          memcpy( &multiplier, &ptr[dtype->aoffset], sizeof( double ) );
-          multiplier = MAX( 0., 1. - multiplier );
-          *darmour   = dtype->adam * dmg->damage * absorb * multiplier;
-       }
-    }
-    if ( knockback != NULL )
-       *knockback = dtype->knock;
-     */
     fn get_stat(stat: Option<usize>, ss: *const naevc::ShipStats) -> f64 {
         match stat {
             Some(o) => {
