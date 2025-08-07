@@ -56,5 +56,13 @@ else:
       ssys_jmp[i][j] = ['new'] + (['hidden'] if i == road[0] else [])
       ssys_jmp[j][i] = ['new'] + (['hidden'] if j == road[-1] else [])
 
+   ssys_jmp[road[3]] |= {'chloe': ['new']}
+   ssys_jmp[road[5]] |= {'flok': ['new']}
+   ssys_jmp[road[7]] |= {'yarn': ['new'], 'delta_polaris': ['new']}
+   ssys_jmp[road[9]] |= {'logania': ['new'], 'palejos': ['new'], 'ngc4746': ['new']}
+   ssys_jmp['ngc4746'] |= {road[9]: ['new', 'hidden']}
+   ssys_jmp[road[11]] |= {'octavian': ['new']}
+   ssys_jmp[road[13]] |= {'olympus': ['new']}
+
    ssys_pos.aux['mason'][0] = ssys_pos.aux['mason'][0].replace(':stellarwind',':stellarwind:northstellarwind:update')
    ssys_pos.aux['sollav'][0] = ssys_pos.aux['sollav'][0].replace(':stellarwind',':stellarwind:southstellarwind:update')
