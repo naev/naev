@@ -128,15 +128,16 @@ pub fn setup() -> anyhow::Result<()> {
         naevc::config::PKGDATADIR,
         &physfs::get_base_dir(),
     ] {
-        if !found() {
-            let path = Path::new(s).join("dat");
-            match physfs::mount(&path.to_string_lossy(), true) {
-                Err(e) => {
-                    warn_err!(e);
-                }
-                Ok(()) => {
-                    info!("Trying default datapath : {}", &path.to_string_lossy());
-                }
+        if found() {
+            break;
+        }
+        let path = Path::new(s).join("dat");
+        match physfs::mount(&path.to_string_lossy(), true) {
+            Err(e) => {
+                warn_err!(e);
+            }
+            Ok(()) => {
+                info!("Trying default datapath : {}", &path.to_string_lossy());
             }
         }
     }
