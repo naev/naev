@@ -1396,6 +1396,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p,
 
          /* Recalculate stats. */
          pilot_outfitLInitAll( eq_wgt.selected->p );
+         pilot_outfitLUpdate( player.p, 0. );
          pilot_calcStats( eq_wgt.selected->p ); /* TODO avoid running twice. */
       }
 
@@ -2045,6 +2046,7 @@ void equipment_updateShips( unsigned int wid, const char *str )
    effect_clear( &ship->effects );
    pilot_outfitOffAll( ship );
    pilot_outfitLInitAll( ship );
+   pilot_outfitLUpdate( player.p, 0. );
    pilot_calcStats( ship );
 
    /* Select. */
