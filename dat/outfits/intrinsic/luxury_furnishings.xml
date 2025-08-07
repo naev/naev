@@ -9,6 +9,7 @@
   <limit>luxury_furnishings</limit>
  </general>
  <specific type="modification">
+  <loot_mod>5</loot_mod>
   <lua>outfits/intrinsic/luxury_furnishings.lua</lua>
  </specific>
  <tags>

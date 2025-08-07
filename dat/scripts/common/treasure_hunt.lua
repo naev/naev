@@ -184,7 +184,7 @@ function lib.good_spob( p )
    if not p:canLand() then
       return false
    end
-   if p:tags():restricted() then
+   if p:tags().restricted then
       return false
    end
    local services = p:services()

@@ -59,6 +59,7 @@ end
 
 function update( p, po, dt )
    if not mem.on then return end
+   if p:disabled() then return end
 
    mem.dt = mem.dt+dt
 
@@ -66,7 +67,7 @@ function update( p, po, dt )
    local m = mem.target
 
    -- Clear target if doesn't exist
-   if not m or not m:exists() or (mem.tpilot and m:flags("disabled")) or (mem.badtarget and mem.dt > SWITCH_TIME) then
+   if not m or not m:exists() or (mem.tpilot and m:disabled()) or (mem.badtarget and mem.dt > SWITCH_TIME) then
       mem.target = nil
       mem.tpilot = false
       mem.badtarget = false

@@ -34,8 +34,9 @@
   <resist>50</resist>
   <damage>
    <type>ion</type>
-   <penetrate>12</penetrate>
-   <physical>150</physical>
+   <penetrate>21</penetrate>
+   <physical>125</physical>
+   <disable>12</disable>
   </damage>
   <ai>smart</ai>
  </specific>

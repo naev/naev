@@ -119,7 +119,7 @@ function timer_advert_spam()
    end
 
    -- Only spam if not disabled
-   if not spammer:flags("disabled") then
+   if not spammer:disabled() then
       mem.spammer = mem.spammer or 0
       mem.spammer = math.fmod(mem.spammer, #adlist) + 1
       spammer:broadcast(adlist[mem.spammer], true)

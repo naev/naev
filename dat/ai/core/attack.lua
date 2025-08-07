@@ -61,7 +61,7 @@ function atk.think( target, si, noretarget )
       local p = ai.pilot()
 
       -- Turn off ionizer when going for a kill
-      if mem._o.ionizer and mem.atk_kill and target:flags("disabled") then
+      if mem._o.ionizer and mem.atk_kill and target:disabled() then
          p:outfitToggle( mem._o.ionizer, false )
       end
 

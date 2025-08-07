@@ -77,38 +77,28 @@ pub extern "C" fn dtype_calcDamage(
     absorb: f64,
     knockback: *mut f64,
     dmg: *const naevc::Damage,
-    _s: *const naevc::ShipStats,
+    ss: *const naevc::ShipStats,
 ) {
-    /*
-    if ( dshield != NULL ) {
-       if ( ( dtype->soffset == 0 ) || ( s == NULL ) )
-          *dshield = dtype->sdam * dmg->damage * absorb;
-       else {
-          ptr = (char *)s;
-          memcpy( &multiplier, &ptr[dtype->soffset], sizeof( double ) );
-          multiplier = MAX( 0., 1. - multiplier );
-          *dshield   = dtype->sdam * dmg->damage * absorb * multiplier;
-       }
+    fn get_stat(stat: Option<usize>, ss: *const naevc::ShipStats) -> f64 {
+        match stat {
+            Some(o) => {
+                if ss.is_null() {
+                    1.
+                } else {
+                    (1. - unsafe { naevc::ss_offsetStat(ss, o) }).max(0.)
+                }
+            }
+            None => 1.,
+        }
     }
-    if ( darmour != NULL ) {
-       if ( ( dtype->aoffset ) == 0 || ( s == NULL ) )
-          *darmour = dtype->adam * dmg->damage * absorb;
-       else {
-          ptr = (char *)s;
-          memcpy( &multiplier, &ptr[dtype->aoffset], sizeof( double ) );
-          multiplier = MAX( 0., 1. - multiplier );
-          *darmour   = dtype->adam * dmg->damage * absorb * multiplier;
-       }
-    }
-    if ( knockback != NULL )
-       *knockback = dtype->knock;
-     */
     if let Some(dt) = get_c(unsafe { (*dmg).type_ }) {
         if !dshield.is_null() {
-            unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb }
+            let mult = get_stat(dt.shield_stat, ss);
+            unsafe { *dshield = dt.shield_mod * (*dmg).damage * absorb * mult }
         }
         if !darmour.is_null() {
-            unsafe { *darmour = dt.armour_mod * (*dmg).damage * absorb }
+            let mult = get_stat(dt.armour_stat, ss);
+            unsafe { *darmour = dt.armour_mod * (*dmg).damage * absorb * mult }
         }
         if !knockback.is_null() {
             unsafe {
@@ -126,7 +116,9 @@ pub struct DamageType {
     shield_mod: f64,
     armour_mod: f64,
     knockback: f64,
-    // TODO ship stat modifiers
+    // Hack for C to be rustified when shipstats get ported
+    shield_stat: Option<usize>,
+    armour_stat: Option<usize>,
 }
 
 impl DamageType {
@@ -155,9 +147,24 @@ impl DamageType {
             if !node.is_element() {
                 continue;
             }
+            fn stat_offset(name: &str) -> Option<usize> {
+                let cname = CString::new(name).unwrap();
+                let sstype = unsafe { naevc::ss_typeFromName(cname.as_ptr()) };
+                if sstype == naevc::ShipStatsType_SS_TYPE_NIL {
+                    return None;
+                }
+                let o = unsafe { naevc::ss_offsetFromType(sstype) };
+                Some(o)
+            }
             match node.tag_name().name().to_lowercase().as_str() {
-                "shield" => dt.shield_mod = nxml::node_f64(node)?,
-                "armour" => dt.armour_mod = nxml::node_f64(node)?,
+                "shield" => {
+                    dt.shield_stat = node.attribute("stat").map(|s| stat_offset(s)).flatten();
+                    dt.shield_mod = nxml::node_f64(node)?
+                }
+                "armour" => {
+                    dt.armour_stat = node.attribute("stat").map(|s| stat_offset(s)).flatten();
+                    dt.armour_mod = nxml::node_f64(node)?
+                }
                 "knockback" => dt.knockback = nxml::node_f64(node)?,
                 tag => nxml_warn_node_unknown!("Damage Type", &dt.name, tag),
             }
@@ -175,6 +182,8 @@ impl Default for DamageType {
             shield_mod: 1.0,
             armour_mod: 1.0,
             knockback: 0.0,
+            shield_stat: None,
+            armour_stat: None,
         }
     }
 }
@@ -188,7 +197,7 @@ impl PartialOrd for DamageType {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         Some(self.cmp(other))
     }
-}
+
 impl PartialEq for DamageType {
     fn eq(&self, other: &Self) -> bool {
         self.name == other.name

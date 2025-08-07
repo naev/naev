@@ -44,6 +44,7 @@ local dvaered_params = {
       } end,
    ["Dvaered Phalanx"] = function () return {
          turret = 1.25,
+         pointdefense = 0.8, -- point defenses are turrets so we compensate
          type_range = {
             ["Launcher"] = { max = rnd.rnd(2,3) },
          }

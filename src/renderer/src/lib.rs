@@ -434,15 +434,15 @@ impl Context {
         CONTEXT.get().expect("No context!")
     }
 
-    pub fn as_safe_wrap(&self) -> ContextWrapper {
+    pub fn as_safe_wrap(&self) -> ContextWrapper<'_> {
         self.as_safe().into_wrap()
     }
 
-    pub fn as_safe(&self) -> SafeContext {
+    pub fn as_safe(&self) -> SafeContext<'_> {
         SafeContext::new(self)
     }
 
-    pub fn as_wrap(&self) -> ContextWrapper {
+    pub fn as_wrap(&self) -> ContextWrapper<'_> {
         ContextWrapper::Context(self)
     }
 

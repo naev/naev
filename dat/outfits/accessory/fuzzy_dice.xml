@@ -15,6 +15,7 @@
  <specific type="modification">
   <stress_dissipation>10</stress_dissipation>
   <engine_limit_rel>3</engine_limit_rel>
+  <jam_chance>7</jam_chance>
  </specific>
  <tags>
   <tag>lucky</tag>

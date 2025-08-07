@@ -90,7 +90,7 @@ local goodness_override = {
    ["Hidden Jump Scanner"] = 0,
    ["Asteroid Scanner"] = 1,
    ["Blink Drive"] = 3,
-   ["Hyperbolic Blink Engine"] = 3,
+   ["Hyperbolic Blink Engine"] = 2,
    ["S&K Heavy Plasma Drill"] = 1,
    ["S&K Plasma Drill"] = 1,
 }
@@ -104,10 +104,19 @@ local goodness_special = {
    ["Enygma Systems Spearhead Launcher"] = 0.6, -- high damage but shield only
    ["TeraCom Vengeance Launcher"] = 0.6,
    ["TeraCom Medusa Launcher"] = 0.6,           -- really high disable
-   ["Droid Repair Crew"] = 0.4, -- Only work until 50%
+   ["Droid Repair Crew"] = 0.35, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
    ["Particle Beam"] = 0.8,
+   ["EMP Grenade Launcher"] = 0.36,
 
+   -- Point defense works against missiles so it's extra useful
+   ["Ratchet Point Defense"] = 1.52,
+   ["Dvaered Flare Battery"] = 1.46,
+   ["Guardian Interception System"] = 1.21,
+   ["Guardian Overseer System"] = 1.15,
+   ["ZIBS-16"] = 2.77,
+   ["ZIBS-32"] = 2.71,
+   ["Spittle Tubuloid Cluster"] = 1.9,
    -- Plasma do a lot of damage over time
    ["Plasma Blaster MK1"] = 1 / 0.63,
    ["Plasma Blaster MK2"] = 1 / 0.63,
@@ -202,6 +211,9 @@ function optimize.goodness_default( o, p )
       end
       if o.seeker then
          weap = weap * p.seeker
+      end
+      if o.ispd then
+         weap = weap * p.pointdefense
       end
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
@@ -299,6 +311,7 @@ local function compute_goodness( outfit_list, p, st, ss, params, limits )
       oo.spec     = os.spec
       oo.isturret = oo.spec.isturret
       oo.penetration = oo.spec.penetration
+      oo.ispd     = out:pointdefense()
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement

@@ -17,7 +17,7 @@
       {'turn', 181, 109},
       {'speed', 295, 222},
       {'fuel', 400, 100},
-      {'energy_regen_malus', 3, 4},
+      {'energy_regen_malus', 2.6, 3.6},
       {'engine_limit', 160, 185},
    })
   </lua_inline>

@@ -108,9 +108,11 @@ You just start to marvel at the self-assurance of one so young when she signals 
    vn.done()
 
    vn.label("nospace")
-   mia(fmt.f(_([["Aw, I forgot" she adds. "We would of course need {needed} of free cargo space for our box."
+   mia( function ()
+      return fmt.f(_([["Aw, I forgot" she adds. "We would of course need {needed} of free cargo space for our box."
 #rYou need an additional {space} of free space.#o]]),
-      {needed=fmt.tonnes(misn_cargoamount2), space=fmt.tonnes(misn_cargoamount2-fs)}))
+         {needed=fmt.tonnes(misn_cargoamount2), space=fmt.tonnes(misn_cargoamount2-fs)})
+   end )
    vn.done()
 
    vn.run()

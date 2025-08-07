@@ -444,7 +444,6 @@ dat/outfits/utility/boarding_androids_mk1.xml
 dat/outfits/utility/boarding_androids_mk2.xml
 dat/outfits/utility/cargo_damper.xml
 dat/outfits/utility/catalytic_energy_drill.xml
-dat/outfits/utility/charging_conduit.xml
 dat/outfits/utility/cloaking_device.xml
 dat/outfits/utility/combat_hologram_projector.xml
 dat/outfits/utility/combatai/agility_combat_ai.xml
@@ -455,6 +454,9 @@ dat/outfits/utility/combatai/hive_combat_ai.xml
 dat/outfits/utility/combatai/hunting_combat_ai.xml
 dat/outfits/utility/combatai/pinpoint_combat_ai.xml
 dat/outfits/utility/combatai/scanning_combat_ai.xml
+dat/outfits/utility/conduit/charge_conduit.xml
+dat/outfits/utility/conduit/pipeline_conduit.xml
+dat/outfits/utility/conduit/targeting_conduit.xml
 dat/outfits/utility/cryogenic_repair_nanobots.xml
 dat/outfits/utility/droid_repair_crew.xml
 dat/outfits/utility/emergency_shield_booster.xml
@@ -481,7 +483,6 @@ dat/outfits/utility/sk_heavy_plasma_drill.xml
 dat/outfits/utility/sk_plasma_drill.xml
 dat/outfits/utility/stealth_burster.xml
 dat/outfits/utility/targeting_array.xml
-dat/outfits/utility/targeting_conduit.xml
 dat/outfits/utility/unicorp_jammer.xml
 dat/outfits/utility/unicorp_light_afterburner.xml
 dat/outfits/utility/unicorp_medium_afterburner.xml
@@ -3485,7 +3486,7 @@ dat/outfits/utility/blink_drive.lua
 dat/outfits/utility/catalytic_energy_drill.lua
 dat/outfits/utility/cloaking_device.lua
 dat/outfits/utility/combat_hologram_projector.lua
-dat/outfits/utility/conduit.lua
+dat/outfits/utility/conduit/conduit.lua
 dat/outfits/utility/cryogenic_repair_nanobots.lua
 dat/outfits/utility/droid_repair_crew.lua
 dat/outfits/utility/emergency_shield_booster.lua
@@ -3870,7 +3871,6 @@ src/effect.c
 src/effect.h
 src/env.c
 src/env.h
-src/env.rs
 src/equipment.c
 src/equipment.h
 src/escort.c
@@ -3969,6 +3969,7 @@ src/naevpedia.c
 src/naevpedia.h
 src/ndata.c
 src/ndata.h
+src/ndata/src/env.rs
 src/ndata/src/lib.rs
 src/ndata/src/physfs.rs
 src/nebula.h

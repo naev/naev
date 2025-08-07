@@ -795,6 +795,17 @@ ShipStatsType ss_typeFromName( const char *name )
 }
 
 /**
+ * @brief Small hack to make our life easier in Rust.
+ */
+double ss_offsetStat( const ShipStats *s, size_t offset )
+{
+   double      out;
+   const char *ptr = (const char *)s;
+   memcpy( &out, &ptr[offset], sizeof( double ) );
+   return out;
+}
+
+/**
  * @brief Some colour coding for ship stats doubles.
  */
 static const char *ss_printD_colour( double d, const ShipStatsLookup *sl )

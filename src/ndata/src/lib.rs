@@ -6,8 +6,9 @@ use std::path::Path;
 
 use log::formatx::formatx;
 use log::gettext::gettext;
-use log::{semver, version};
+use log::{infox, semver, version};
 
+pub mod env;
 pub mod physfs;
 
 pub const GFX_PATH: &str = "gfx/";
@@ -61,7 +62,7 @@ pub fn setup() -> anyhow::Result<()> {
             .format("%Y-%m-%d_%H-%M-%S.txt")
             .to_string(),
     );
-    dbg!(&logfile);
+    infox!(gettext("Logging to {}"), logfile.to_string_lossy());
     log::set_log_file(&logfile.to_string_lossy()).unwrap_or_else(|e| {
         warn_err!(e);
     });
@@ -79,20 +80,17 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    // If not found, try other places
-    for s in [&physfs::get_base_dir(), naevc::config::PKGDATADIR] {
-        if !found() {
-            let path = Path::new(s).join("dat");
-            match physfs::mount(&path.to_string_lossy(), true) {
-                Err(e) => {
-                    warn_err!(e);
-                }
-                Ok(()) => {
-                    info!("Trying default datapath : {}", &path.to_string_lossy());
-                }
-            }
+    // If the path is absolute, .join will replace the path, so we have to make relative
+    let pkgdatadir = {
+        let mut path = Path::new(&naevc::config::PKGDATADIR);
+        if path.is_absolute() {
+            path = match path.strip_prefix("/").ok() {
+                Some(p) => p,
+                None => Path::new(""),
+            };
         }
-    }
+        path.to_string_lossy()
+    };
 
     if cfg!(target_os = "macos") {
         if unsafe { naevc::macos_isBundle() } != 0 {
@@ -112,11 +110,28 @@ pub fn setup() -> anyhow::Result<()> {
                 }
             }
         }
-    } else if cfg!(target_os = "linux") && unsafe { naevc::env.isAppImage } != 0 {
-        let buf = unsafe { CStr::from_ptr(naevc::env.appdir) };
-        let path = Path::new(&*buf.to_string_lossy())
-            .join(naevc::config::PKGDATADIR)
-            .join("dat");
+    } else if cfg!(target_os = "linux") && env::ENV.is_appimage {
+        let path = Path::new(&env::ENV.appdir).join(&*pkgdatadir).join("dat");
+        match physfs::mount(&path.to_string_lossy(), true) {
+            Err(e) => {
+                warn_err!(e);
+            }
+            Ok(()) => {
+                info!("Trying default datapath : {}", &path.to_string_lossy());
+            }
+        }
+    }
+
+    // If not found, try other places
+    for s in [
+        &pkgdatadir,
+        naevc::config::PKGDATADIR,
+        &physfs::get_base_dir(),
+    ] {
+        if found() {
+            break;
+        }
+        let path = Path::new(s).join("dat");
         match physfs::mount(&path.to_string_lossy(), true) {
             Err(e) => {
                 warn_err!(e);
@@ -236,11 +251,13 @@ pub fn read_dir_filter(path: &str, predicate: impl Fn(&str) -> bool) -> Result<V
         .collect())
 }
 
-pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream> {
+/// Gets an SDL IOStream from a file if exists
+pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream<'_>> {
     physfs::iostream(path, physfs::Mode::Read)
 }
 
-pub fn open(path: &str) -> Result<physfs::File> {
+/// Opens a file for reading
+pub fn open(path: &str) -> Result<physfs::File<'_>> {
     physfs::File::open(path, physfs::Mode::Read)
 }
 
@@ -262,6 +279,7 @@ pub struct Stat {
     readonly: bool,
 }
 
+/// Gets information about a file or directory
 pub fn stat(filename: &str) -> Result<Stat> {
     let c_filename = CString::new(filename)?;
     let mut st = naevc::PHYSFS_Stat {
