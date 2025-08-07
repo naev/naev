@@ -80,6 +80,18 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
+    // If the path is absolute, .join will replace the path, so we have to make relative
+    let pkgdatadir = {
+        let mut path = Path::new(&naevc::config::PKGDATADIR);
+        if path.is_absolute() {
+            path = match path.strip_prefix("/").ok() {
+                Some(p) => p,
+                None => Path::new(""),
+            };
+        }
+        path.to_string_lossy()
+    };
+
     if cfg!(target_os = "macos") {
         if unsafe { naevc::macos_isBundle() } != 0 {
             const PATH_MAX: usize = naevc::PATH_MAX as usize;
@@ -99,9 +111,7 @@ pub fn setup() -> anyhow::Result<()> {
             }
         }
     } else if cfg!(target_os = "linux") && env::ENV.is_appimage {
-        let path = Path::new(&env::ENV.appdir)
-            .join(naevc::config::PKGDATADIR)
-            .join("dat");
+        let path = Path::new(&env::ENV.appdir).join(&*pkgdatadir).join("dat");
         match physfs::mount(&path.to_string_lossy(), true) {
             Err(e) => {
                 warn_err!(e);
@@ -113,7 +123,11 @@ pub fn setup() -> anyhow::Result<()> {
     }
 
     // If not found, try other places
-    for s in [naevc::config::PKGDATADIR, &physfs::get_base_dir()] {
+    for s in [
+        &pkgdatadir,
+        naevc::config::PKGDATADIR,
+        &physfs::get_base_dir(),
+    ] {
         if !found() {
             let path = Path::new(s).join("dat");
             match physfs::mount(&path.to_string_lossy(), true) {
