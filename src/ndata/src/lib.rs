@@ -80,21 +80,6 @@ pub fn setup() -> anyhow::Result<()> {
         }
     }
 
-    // If not found, try other places
-    for s in [&physfs::get_base_dir(), naevc::config::PKGDATADIR] {
-        if !found() {
-            let path = Path::new(s).join("dat");
-            match physfs::mount(&path.to_string_lossy(), true) {
-                Err(e) => {
-                    warn_err!(e);
-                }
-                Ok(()) => {
-                    info!("Trying default datapath : {}", &path.to_string_lossy());
-                }
-            }
-        }
-    }
-
     if cfg!(target_os = "macos") {
         if unsafe { naevc::macos_isBundle() } != 0 {
             const PATH_MAX: usize = naevc::PATH_MAX as usize;
@@ -123,6 +108,21 @@ pub fn setup() -> anyhow::Result<()> {
             }
             Ok(()) => {
                 info!("Trying default datapath : {}", &path.to_string_lossy());
+            }
+        }
+    }
+
+    // If not found, try other places
+    for s in [naevc::config::PKGDATADIR, &physfs::get_base_dir()] {
+        if !found() {
+            let path = Path::new(s).join("dat");
+            match physfs::mount(&path.to_string_lossy(), true) {
+                Err(e) => {
+                    warn_err!(e);
+                }
+                Ok(()) => {
+                    info!("Trying default datapath : {}", &path.to_string_lossy());
+                }
             }
         }
     }
