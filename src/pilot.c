@@ -4444,7 +4444,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
    double dps = 0., eps = 0.;
    for ( int i = 0; i < array_size( p->outfits ); i++ ) {
       const Damage *dmg;
-      double        mod_energy, mod_damage, mod_rate;
+      double        mod_energy, mod_damage, mod_rate, mod_erate;
       const Outfit *o = p->outfits[i]->outfit;
       if ( o == NULL )
          continue;
@@ -4452,21 +4452,21 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
       case OUTFIT_TYPE_BOLT:
          mod_energy = p->stats.fwd_energy;
          mod_damage = p->stats.fwd_damage;
-         mod_rate   = p->stats.fwd_firerate * (double)outfit_shots( o ) /
-                    outfit_delay( o );
+         mod_erate  = p->stats.fwd_firerate / outfit_delay( o );
+         mod_rate   = mod_erate * (double)outfit_shots( o );
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
          mod_energy = p->stats.tur_energy;
          mod_damage = p->stats.tur_damage;
-         mod_rate   = p->stats.tur_firerate * (double)outfit_shots( o ) /
-                    outfit_delay( o );
+         mod_erate  = p->stats.tur_firerate / outfit_delay( o );
+         mod_rate   = mod_erate * (double)outfit_shots( o );
          break;
       case OUTFIT_TYPE_LAUNCHER:
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          mod_energy = 1.;
          mod_damage = p->stats.launch_damage;
-         mod_rate   = p->stats.launch_rate * (double)outfit_shots( o ) /
-                    outfit_delay( o );
+         mod_erate  = p->stats.launch_rate / outfit_delay( o );
+         mod_rate   = mod_erate * (double)outfit_shots( o );
          break;
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
@@ -4475,6 +4475,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
             mod_energy = p->stats.fwd_energy;
             mod_damage = p->stats.fwd_damage;
             mod_rate   = p->stats.fwd_firerate;
+            mod_erate  = mod_rate;
          } else {
             mod_energy = p->stats.tur_energy;
             mod_damage = p->stats.tur_damage;
@@ -4483,6 +4484,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
          {
             double duration = outfit_duration( o );
             mod_rate *= duration / ( outfit_delay( o ) + duration );
+            mod_erate = mod_rate;
          }
          break;
       default:
@@ -4491,7 +4493,7 @@ void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
 
       dmg = outfit_damage( o );
       dps += mod_rate * mod_damage * dmg->damage;
-      eps += mod_rate * mod_energy * MAX( outfit_energy( o ), 0. );
+      eps += mod_erate * mod_energy * MAX( outfit_energy( o ), 0. );
    }
    if ( pdps != NULL )
       *pdps = dps;
