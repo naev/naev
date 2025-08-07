@@ -8,6 +8,7 @@
   <price>430000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>The targeting conduit redirects surplus shield energy into the targeting and tracking systems of a ship, allowing for considerably more precise weapon tracking and faster lock-ons while the shields are undamaged, though at the cost of a slight reduction in peak damage output as a result of overloading those systems.</description>
+  <limit>conduit</limit>
  </general>
  <specific type="modification">
   <ew_detect>22</ew_detect>
