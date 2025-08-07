@@ -22,7 +22,8 @@ from geometry import symmetry
 from graphmod import ssys_pos, ssys_jmp, no_graph_out
 from smoothen import smoothen, circleify
 from graph_vaux import ssys_others
-L = { 'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'monogram', 'kraft', 'pike'}
+
+L = {'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'monogram', 'kraft', 'pike'}
 sirius_circle = {'palovi',} | L
 tradelane = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t and not {k, s} < L} for k in ssys_pos }
 stellars = {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)}

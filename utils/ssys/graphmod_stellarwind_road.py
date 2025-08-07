@@ -46,7 +46,7 @@ for i, t in enumerate(L, 1):
    output['swr'+str(i)] = sum([v * w for v, w in wl], vec()) / sum([w for _, w in wl])
 
 if JUST_LIST:
-   print(' '.join(map(str,output.keys())))
+   print(' '.join(output.keys()))
 else:
    ssys_pos |= output
    ssys_pos.aux |= {i: ["default::stellarwind:spoiler:unused", 'S'+i[1:]] for i in output}

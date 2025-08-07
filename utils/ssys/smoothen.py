@@ -5,13 +5,11 @@ from geometry import vec
 
 def smoothen( pos, neigh, hard = False ):
    original_w = 0.0 if hard else 1.0
-   #d_w = 1.0 / 2.0
    d_w = 1.0 / 3.0
    newp = dict()
    for i in pos:
       for j in neigh[i]:
-         if i not in neigh[j]:
-            neigh[i].add(j)
+         neigh[j] |= {i}
    for k in pos:
       if (n := len(neigh[k])) > 1:
          acc, count = pos[k] * original_w, original_w
@@ -32,10 +30,7 @@ def circleify( pos, L, center, hard = False ):
    avg = sum(V) / len(V)
    for i in L:
       p = pos[center] + (pos[i]-pos[center]).normalize(avg)
-      if hard:
-         pos[i] = p
-      else:
-         pos[i] = (pos[i] + 2.0*p) / 3.0
+      pos[i] = p if hard else (pos[i] + 2.0*p) / 3.0
    """
    # local approach
    for i, j, k in zip(L[:-2],L[1:-1],L[2:]):

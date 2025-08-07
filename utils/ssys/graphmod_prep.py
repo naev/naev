@@ -65,8 +65,7 @@ virtual_edges = [
    ('ngc14479', 'zintar'), ('pudas', 'fried'),
    ('blunderbuss', 'darkstone'), ('ekkodu', 'tarsus'),
    ('ivella', 'jommel'), ('starlight_end', 'possum'),
-   ('ngc22375', 'undergate'),
-   ('daled', 'andres'),
+   ('ngc22375', 'undergate'), ('daled', 'andres'),
 ]
 
 prv, prvj  = None, None

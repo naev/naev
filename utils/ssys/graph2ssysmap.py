@@ -2,14 +2,10 @@
 
 
 import os
-from sys import stderr, exit, path
+from sys import stderr, exit
 import xml.etree.ElementTree as ET
-from ssys import nam2base, getpath, PATH
+from ssys import nam2base, getpath, PATH, naev_xml
 from graph_vaux import ssys_others, ssys_nam
-
-script_dir = os.path.join(os.path.dirname(__file__), '..')
-path.append(os.path.realpath(script_dir))
-from naev_xml import naev_xml
 
 
 
@@ -35,8 +31,6 @@ def new_ssys(name, basenam, pos, ssys_pos, jmp):
    Nam = ssys_nam(ssys_pos, basenam)
    if Nam and nam2base(Nam) != basenam:
       stderr.write('Warning: basename "' + basenam + '" does not match provided name "' + Nam  + '"\n')
-   aux = ssys_others(ssys_pos, basenam)
-
    mk_jump = lambda dst, aux: {
       '@target': ssys_nam(ssys_pos, dst),
       'autopos': {},
@@ -50,7 +44,7 @@ def new_ssys(name, basenam, pos, ssys_pos, jmp):
       'spobs': {},
       'jumps': {'jump': [mk_jump(k, v) for k, v in jmp.items()]},
       'asteroids': {},
-      'tags': {'tag': aux},
+      'tags': {'tag': ssys_others(ssys_pos, basenam)},
    }
    xml.save()
 

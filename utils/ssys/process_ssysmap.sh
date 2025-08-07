@@ -23,7 +23,7 @@ fi
 
 POVF=()
 POVO='-q'
-SPOIL_FILT="cat"
+SPOIL_FILTER="cat"
 E_FILTER="$DIR"/graph_earlygame.py
 S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
@@ -36,15 +36,15 @@ for i in "$@" ; do
    elif [ "$i" = "-n" ] ; then
       POVF+=("-n")
    elif [ "$i" = "-S" ] ; then
-      if [ "SPOIL_FILT" = "$E_FILTER" ] ; then
+      if [ "SPOIL_FILTER" = "$E_FILTER" ] ; then
          echo "warning: -S overwrites previous -E." >&2
       fi
-      SPOIL_FILT="$S_FILTER"
+      SPOIL_FILTER="$S_FILTER"
    elif [ "$i" = "-E" ] ; then
-      if [ "SPOIL_FILT" = "$S_FILTER" ] ; then
+      if [ "SPOIL_FILTER" = "$S_FILTER" ] ; then
          echo "warning: -E overwrites previous -S." >&2
       fi
-      SPOIL_FILT="$E_FILTER"
+      SPOIL_FILTER="$E_FILTER"
    elif [ "$i" = "-v" ] ; then
       POVO='-p'
    else
@@ -116,7 +116,7 @@ msg "gen before graph"
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >(
-      $SPOIL_FILT |
+      $SPOIL_FILTER |
       tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > before.png) |
       "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_ini'
    )
@@ -124,7 +124,7 @@ else cat ;                                                                  fi |
 "$DIR"/graphmod_prep.py                                                        |
 "$DIR"/graphmod_vedges.py                                                      |
 if [ -z "$NOPIC" ] ;                                                      then
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_bef')
 else pmsg "" ;                                                              fi |
 pmsg "apply neato"                                                             |
 tee >("$DIR"/graph2dot.py -c | neato 2>/dev/null)                              |
@@ -133,21 +133,21 @@ grep -v ' virtual$'                                                            |
 "$DIR"/graphmod_vedges.py                                                      |
 "$DIR"/graphmod_virtual_ssys.py                                                |
 if [ -z "$NOPIC" ] ;                                                      then
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_dot')
 else cat ;                                                                  fi |
 pmsg "pprocess"                                                                |
 "$DIR"/graphmod_postp.py                                                       |
 "$DIR"/graphmod_virtual_ssys.py                                                |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_post')
 else pmsg "" ;                                                              fi |
 pmsg "${N_ITER} x (repos sys + smooth/round lanes) + virtual"                  |
 "$DIR"/repeat.sh "$N_ITER" "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALL[@]}"  |
 pmsg ""                                                                        |
 "$DIR"/graphmod_virtual_ssys.py                                                |
 if [ -z "$NOPIC" ] ;                                                      then
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_repos')
 else cat ;                                                                  fi |
 pmsg "apply gravity"                                                           |
 "$DIR"/apply_pot.sh -g                                                         |
@@ -155,13 +155,13 @@ pmsg "apply gravity"                                                           |
 "$DIR"/graphmod_virtual_ssys.py                                                |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_grav')
 else pmsg "" ;                                                              fi |
 pmsg "post-process "                                                           |
 "$DIR"/repeat.sh 3 "$DIR"/graphmod_repos.sh "$DIR" "${ALMOST_ALMOST_ALL[@]}"   |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_aft')
 else pmsg "" ;                                                              fi |
 "$DIR"/graphmod_virtual_ssys.py                                                |
 grep -v ' virtual$'                                                            |
@@ -170,7 +170,7 @@ pmsg "stellarwind road"                                                        |
 "$DIR"/repeat.sh 0 "$DIR"/reposition -e -q "${SWR[@]}"                         |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
-   tee >($SPOIL_FILT | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')
+   tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')
 else pmsg "";                                                               fi |
 "$DIR"/graphmod.py                                                             |
 pmsg "finally"                                                                 |
@@ -179,7 +179,7 @@ if [ -n "$FORCE" ] ;                                                      then
 else cat ;                                                                  fi |
 if [ -z "$NOPIC" ] ; then
    pmsg "" |
-   $SPOIL_FILT |
+   $SPOIL_FILTER |
    tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
    "$DIR"/graph2pov.py "${POVF[@]}" -d "$POVO"'map_fin'
 else pmsg "" >/dev/null ; fi
