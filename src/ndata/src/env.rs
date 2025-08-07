@@ -1,34 +1,29 @@
 use std::env;
 use std::ffi::CString;
 use std::os::raw::c_char;
-use std::sync::OnceLock;
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct AppEnv {
     pub is_appimage: bool,
     pub appimage: String,
     pub appdir: String,
     pub argv0: String,
+
+    // These static CStrings are used to provide valid pointers to the C FFI struct
+    // for the lifetime of the program. They are set once at startup and never changed.
+    // This ensures the C side always sees valid, non-dangling pointers.
+    cappimage: CString,
+    cappdir: CString,
+    cargv0: CString,
 }
 
 use std::sync::LazyLock;
 pub static ENV: LazyLock<AppEnv> = LazyLock::new(detect);
 
-/*
- These static CStrings are used to provide valid pointers to the C FFI struct
- for the lifetime of the program. They are set once at startup and never changed.
- This ensures the C side always sees valid, non-dangling pointers.
-*/
-static CAPPIMAGE: OnceLock<CString> = OnceLock::new();
-static CARGV0: OnceLock<CString> = OnceLock::new();
-static CAPPDIR: OnceLock<CString> = OnceLock::new();
-
 fn detect() -> AppEnv {
     let mut e = AppEnv {
         is_appimage: false,
-        appimage: String::default(),
-        appdir: String::default(),
-        argv0: String::default(),
+        ..Default::default()
     };
 
     match env::var("APPIMAGE") {
@@ -48,21 +43,15 @@ fn detect() -> AppEnv {
         }
     }
 
-    /*
-     TODO remove when we don't need it anymore.
-     OnceLock guarantees only one initialization and shared access is safe.
-    */
-    CAPPIMAGE
-        .set(CString::new(e.appimage.clone()).unwrap())
-        .ok();
-    CARGV0.set(CString::new(e.argv0.clone()).unwrap()).ok();
-    CAPPDIR.set(CString::new(e.appdir.clone()).unwrap()).ok();
-
+    // TODO remove when we don't need it anymore.
+    e.cappimage = CString::new(&*e.appimage).ok().unwrap();
+    e.cargv0 = CString::new(&*e.argv0).ok().unwrap();
+    e.cappdir = CString::new(&*e.appdir).ok().unwrap();
     unsafe {
         naevc::env.isAppImage = if e.is_appimage { 1 } else { 0 };
-        naevc::env.appimage = CAPPIMAGE.get().unwrap().as_ptr() as *mut c_char;
-        naevc::env.argv0 = CARGV0.get().unwrap().as_ptr() as *mut c_char;
-        naevc::env.appdir = CAPPDIR.get().unwrap().as_ptr() as *mut c_char;
+        naevc::env.appimage = e.cappimage.as_ptr() as *mut c_char;
+        naevc::env.argv0 = e.cargv0.as_ptr() as *mut c_char;
+        naevc::env.appdir = e.cappdir.as_ptr() as *mut c_char;
     }
     e
 }
