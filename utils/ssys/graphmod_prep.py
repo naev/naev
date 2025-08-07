@@ -98,10 +98,12 @@ from virtual_edges import add_virtual_edges
 ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
 ssys_pos.aux['sunir'] = ["default::spoiler:unused", "Su'nir"]
 
-for sys in ['mason', 'sollav']:
+for side, sys in zip(['north', 'south'], ['mason', 'sollav']):
    if ':' not in ssys_pos.aux[sys][0]:
       ssys_pos.aux[sys][0] += ':'
-   ssys_pos.aux[sys][0] += ':stellarwind'
+   for pref in ['', side]:
+      if ssys_pos.aux[sys][0].find(':' + pref + 'stellarwind') == -1:
+         ssys_pos.aux[sys][0] += ':' + pref + 'stellarwind'
 
 add_virtual_edges(ssys_jmp, virtual_edges)
 

@@ -63,6 +63,3 @@ else:
    ssys_jmp['ngc4746'] |= {road[9]: ['new', 'hidden']}
    ssys_jmp[road[11]] |= {'octavian': ['new']}
    ssys_jmp[road[13]] |= {'olympus': ['new']}
-
-   ssys_pos.aux['mason'][0] = ssys_pos.aux['mason'][0].replace(':stellarwind',':stellarwind:northstellarwind:update')
-   ssys_pos.aux['sollav'][0] = ssys_pos.aux['sollav'][0].replace(':stellarwind',':stellarwind:southstellarwind:update')

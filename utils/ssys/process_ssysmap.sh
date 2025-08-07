@@ -55,6 +55,11 @@ done
 BAS=$(realpath --relative-to="$PWD" "${DIR}/../../dat")
 DST="$BAS/ssys"
 
+"$DIR"/repos.sh -C || exit 1
+"$DIR"/apply_pot.sh -C || exit 1
+"$DIR"/gen_decorators.sh -C || exit 1
+
+
 msg() {
    echo -e "$1" | while read -r line; do
       if [ -z "$line" ] ; then
@@ -66,7 +71,7 @@ msg() {
 }
 
 pmsg() {
-   cat;  msg "$@"
+   cat; msg "$@"
 }
 
 IGN() {
@@ -77,27 +82,26 @@ DEBUG() {
    tee >(cat >&2)
 }
 
+
 #msg "\nselect Sirius systems " >&2
 #read -ra SIRIUS <<< "$("$DIR"/ssys_graph.sh -v |
 # "$DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
+
+msg "extract input graph"
+TMP=$(mktemp)
+trap 'rm -f $TMP' EXIT
+"$DIR"/ssysmap2graph.sh | "$DIR"/graph_vaux.py -e -c -n > "$TMP"
 
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
-read -ra TERM_SSYS <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/terminal_ssys.py )"
-read -ra SMOOTH_SSYS <<< "$(
-   "$DIR"/ssysmap2graph.sh       |
-   "$DIR"/graph_vaux.py          |
-   "$DIR"/graphmod_smooth.py -L )"
+read -ra TERM_SSYS <<< "$("$DIR"/terminal_ssys.py < "$TMP")"
+read -ra SMOOTH_SSYS <<< "$("$DIR"/graphmod_smooth.py -L < "$TMP")"
 read -ra ALMOST_ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" "${SMOOTH_SSYS[@]}" )"
-read -ra SWR <<< "$("$DIR"/ssysmap2graph.sh | "$DIR"/graphmod_stellarwind_road.py -L)"
+read -ra SWR <<< "$("$DIR"/graphmod_stellarwind_road.py -L < "$TMP")"
 
-"$DIR"/repos.sh -C || exit 1
-"$DIR"/apply_pot.sh -C || exit 1
-"$DIR"/gen_decorators.sh -C || exit 1
-
-
+msg ""
 # Ok, let's go!
 if [ -n "$FORCE" ] ; then
    #git checkout "$BAS/spob" "$DST"
@@ -108,8 +112,8 @@ if [ -n "$FORCE" ] ; then
 fi
 
 msg "gen before graph"
-"$DIR"/ssysmap2graph.sh                                                        |
-"$DIR"/graph_vaux.py -e -c -n                                                  |
+# shellcheck disable=SC2002
+cat "$TMP"                                                                    |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >(
@@ -170,7 +174,6 @@ if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')
 else pmsg "";                                                               fi |
-"$DIR"/graphmod.py                                                             |
 pmsg "finally"                                                                 |
 if [ -n "$FORCE" ] ;                                                      then
    tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
