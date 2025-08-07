@@ -6,7 +6,7 @@ local BONUS_INC = 20
 local BONUS_MAX = 80
 
 function descextra( _p )
-   return "#o"..fmt.f(_("Shooting any weapon increases cannon fire rate by {inc}%, to a maximum of {max}%. This effect can only be triggered once per second"),
+   return "#o"..fmt.f(_("Shooting any weapon increases fire rate by {inc}% each second, to a maximum of {max}%."),
       {inc=BONUS_INC, max=BONUS_MAX}).."#0"
 end
 
@@ -22,7 +22,7 @@ function update( p )
       -- Be nice and ramp down, although twice as fast
       mem.bonus = mem.bonus - 2 * BONUS_INC
       if mem.bonus > 0 then
-         p:shippropSet( "fwd_firerate", mem.bonus )
+         p:shippropSet( "weapon_firerate", mem.bonus )
       else
          p:shippropReset()
          mem.bonus = -10 -- we start at -10 or it'll always start at 1 stack
@@ -33,7 +33,7 @@ end
 function onshootany( p )
    if not mem.shot then
       mem.bonus = math.min( mem.bonus + BONUS_INC, BONUS_MAX )
-      p:shippropSet( "fwd_firerate", mem.bonus )
+      p:shippropSet( "weapon_firerate", mem.bonus )
       mem.shot = true
    end
 end

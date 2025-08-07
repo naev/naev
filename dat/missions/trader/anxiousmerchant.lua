@@ -62,7 +62,7 @@ function create()
       mem.time_limit:add(time.new( 0, 0, math.floor((mem.num_jumps-1) / jumpsperstop) * stu_jumps ))
    end
 
-   mem.payment = 20 * (stu_distance + (stu_jumps / 10))
+   mem.payment = 14 * (stu_distance + (stu_jumps / 10))
 
    -- Range of 5-10 tons for tier 0, 21-58 for tier 4.
    mem.cargo_size = rnd.rnd( 5 + 4 * tier, 10 + 12 * tier )

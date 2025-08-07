@@ -11,7 +11,7 @@
  </general>
  <specific type="modification">
   <armour_regen_mod>80</armour_regen_mod>
-  <energy_regen_mod>45</energy_regen_mod>
+  <energy_regen_mod>35</energy_regen_mod>
   <cooldown_mod>-35</cooldown_mod>
   <time_speedup>-3</time_speedup>
   <lua>outfits/utility/conduit/conduit.lua</lua>

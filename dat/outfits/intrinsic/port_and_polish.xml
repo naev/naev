@@ -16,8 +16,9 @@ require("outfits.lib.custom_price").setup( function ()
    return 25e3 * math.pow(2+size, 2)
 end )
   </lua_inline>
-  <speed_mod>5</speed_mod>
-  <turn_mod>5</turn_mod>
-  <accel_mod>5</accel_mod>
+  <speed_mod>4</speed_mod>
+  <turn_mod>4</turn_mod>
+  <accel_mod>4</accel_mod>
+  <engine_limit_rel>2</engine_limit_rel>
  </specific>
 </outfit>

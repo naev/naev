@@ -73,7 +73,7 @@ function create()
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   mem.amount = rnd.rnd(5 + 25 * mem.tier^2.1, 20 + 60 * mem.tier^2.4)
+   mem.amount = rnd.rnd(5 + 25 * mem.tier^1.9, 20 + 60 * mem.tier^2.15)
    local jumpreward = commodity.price(mem.cargo)*1.5
    local distreward = math.log(100*commodity.price(mem.cargo))/80
    mem.reward = 1.5^mem.tier * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1 + 0.05*rnd.twosigma())

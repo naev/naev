@@ -6,6 +6,6 @@
  <stats>
   <armour_mod>15</armour_mod>
   <energy_mod>20</energy_mod>
-  <fwd_firerate>-20</fwd_firerate>
+  <weapon_firerate>-10</weapon_firerate>
  </stats>
 </ship>

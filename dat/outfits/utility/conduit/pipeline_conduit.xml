@@ -13,6 +13,7 @@
   <launch_reload>90</launch_reload>
   <fbay_reload>90</fbay_reload>
   <fbay_rate>50</fbay_rate>
+  <cooldown_time>-25</cooldown_time>
   <cpu_mod>-5</cpu_mod>
   <lua>outfits/utility/conduit/conduit.lua</lua>
  </specific>
