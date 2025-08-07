@@ -71,8 +71,10 @@ function accept ()
    vn.done()
 
    vn.label("nospace")
-   vn.na(fmt.f(_([[You need an additional {space} of free space if you want to accept the mission.]]),
-      {space=fmt.tonnes(cargo_amount - fs)}))
+   vn.na( function ()
+      return fmt.f(_([[You need an additional {space} of free space if you want to accept the mission.]]),
+         {space=fmt.tonnes(cargo_amount - fs)})
+   end )
    vn.done()
 
    vn.label("yes")
