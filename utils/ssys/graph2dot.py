@@ -100,7 +100,11 @@ def main( color = False, fixed_pos = False ):
             suff += ['weight=0']
 
          jmp_c = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
-         srcc = ([jmp_c[a] for a in aux if a in jmp_c] + ['black'])[0]
+         srcc = [jmp_c[a] for a in aux if a in jmp_c]
+         if {'purple', 'green'} <= set(srcc):
+            srcc = 'gold'
+         else:
+            srcc = (srcc + ['black']) [0]
 
          if (oneway := i not in E[dst]) or i<dst:
             if oneway:

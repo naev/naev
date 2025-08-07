@@ -26,35 +26,35 @@ L = [
    ('c43', 'c59', 'hades'),
    ('c43', 'hades', 'polack', 'chloe'),
    ('polack', 'chloe', 'terminus'),
-   ('terminus', 'flok', ('wolf', 1.33)),
-   ('zemur', 'flok', 'sirou'),
+   ('terminus', 'flok', ('wolf', 1.5)),
+   (('zemur', 0.8), 'flok', 'sirou'),
    ('griffin', 'sirou', 'yarn'),
    ('yarn', 'griffin', 'jade', 'blackwell'),
    ('logania', 'palejos', 'jade', 'blackwell'),
-   (('swr8', -1), 'palejos', 'logania'),
-   (('swr9', 1.66), ('swr8', -0.66)),
-   ('procyon', 'swr10'),
+   (('sw8', -1), 'palejos', 'logania'),
+   ('ngc4746', 'ngc7533', 'dendria'),
+   ('procyon', 'sw10', ('olympus', 0.1)),
    ('procyon', 'olympus'),
    ('olympus', 'vost', 'hargen', 'regas'),
-   ('hargen', 'regas', ('swr13', -1), ('sollav', 0.2)),
+   ('hargen', 'regas', ('sw13', -1), ('sollav', 0.2), ('pultatis', 0.3)),
 ]
 
 output = {}
-for i, t in enumerate(L, 1):
+names = ['sw' + str(i) for i, _ in enumerate(L, 1)]
+for n, t in zip(names, L):
    wl = map(lambda s: (s, 1) if isinstance(s, str) else s, t)
    wl = [(vec( (output | ssys_pos) [s] ), w) for s, w in wl]
-   output['swr'+str(i)] = sum([v * w for v, w in wl], vec()) / sum([w for _, w in wl])
+   output[n] = sum([v * w for v, w in wl], vec()) / sum([w for _, w in wl])
 
 if JUST_LIST:
    print(' '.join(output.keys()))
 else:
    ssys_pos |= output
-   ssys_pos.aux |= {i: ["default::stellarwind:spoiler:unused", 'S'+i[1:]] for i in output}
-   road = ['mason'] + ['swr' + str(i) for i, _ in enumerate(L, 1)] + ['sollav']
+   ssys_pos.aux |= {i: ["default::stellarwind:spoiler:new", i.upper().replace('W','W-')] for i in output}
+   road = ['mason'] + names + ['sollav']
    for i, j in zip(road[:-1], road[1:]):
-      ssys_jmp[i][j] = ['new', 'hidden']
+      ssys_jmp[i][j] = ['new'] + (['hidden'] if i == road[0] else [])
+      ssys_jmp[j][i] = ['new'] + (['hidden'] if j == road[-1] else [])
 
-   for sys in [road[0], road[-1]]:
-      if ':' not in ssys_pos.aux[sys][0]:
-         ssys_pos.aux[sys][0] += ':'
-      ssys_pos.aux[sys][0] += ':stellarwind'
+   ssys_pos.aux['mason'][0] = ssys_pos.aux['mason'][0].replace(':stellarwind',':stellarwind:northstellarwind:update')
+   ssys_pos.aux['sollav'][0] = ssys_pos.aux['sollav'][0].replace(':stellarwind',':stellarwind:southstellarwind:update')

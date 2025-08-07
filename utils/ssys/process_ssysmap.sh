@@ -81,10 +81,7 @@ DEBUG() {
 #read -ra SIRIUS <<< "$("$DIR"/ssys_graph.sh -v |
 # "$DIR"/graph_vaux.py | grep 'sirius' | cut '-d ' -f1)"
 
-#s=(doowa flok firk)
-#repos_systems2=(terminus)
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
-#TWINS=(carnis_minor carnis_major gliese gliese_minor kruger krugers_pocket)
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
 ABH=(anubis_black_hole ngc11935 ngc5483 ngc7078 ngc7533 octavian copernicus ngc13674 ngc1562 ngc2601)
 read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
@@ -168,6 +165,7 @@ grep -v ' virtual$'                                                            |
 pmsg "stellarwind road"                                                        |
 "$DIR"/graphmod_stellarwind_road.py                                            |
 "$DIR"/repeat.sh 0 "$DIR"/reposition -e -q "${SWR[@]}"                         |
+"$DIR"/reposition -e -q "yarn" "griffin"                                       |
 if [ -z "$NOPIC" ] ;                                                      then
    pmsg "" |
    tee >($SPOIL_FILTER | "$DIR"/graph2pov.py "${POVF[@]}" "$POVO"'map_swr')

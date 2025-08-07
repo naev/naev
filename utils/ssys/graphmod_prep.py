@@ -27,7 +27,7 @@ del_edges = [
 
 new_edges = [
 #  ('khaas', 'vedalus'),
-   ('andres', 'mason'),
+   ('andres', 'mason'), ('mason', 'andres'),
    ('sunir', 'suna'), ('sunir', 'vanir'), ('sunir', 'monogram'),
 ]
 
@@ -98,6 +98,10 @@ from virtual_edges import add_virtual_edges
 ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
 ssys_pos.aux['sunir'] = ["default::spoiler:unused", "Su'nir"]
 
+for sys in ['mason', 'sollav']:
+   if ':' not in ssys_pos.aux[sys][0]:
+      ssys_pos.aux[sys][0] += ':'
+   ssys_pos.aux[sys][0] += ':stellarwind'
 
 add_virtual_edges(ssys_jmp, virtual_edges)
 

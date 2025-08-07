@@ -154,7 +154,7 @@ def _unparse_elt( v, k, indent):
          content = v['#text']
       elif sub := unparse(v, indent+1):
          content = '\n' + sub + indent*' '
-   elif v:
+   elif v or v == 0:
       content = str(v).replace('&', '&amp;')
 
    if content:

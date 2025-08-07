@@ -44,8 +44,14 @@ def new_ssys(name, basenam, pos, ssys_pos, jmp):
       'spobs': {},
       'jumps': {'jump': [mk_jump(k, v) for k, v in jmp.items()]},
       'asteroids': {},
-      'tags': {'tag': ssys_others(ssys_pos, basenam)},
+      'tags': {'tag': list(set(ssys_others(ssys_pos, basenam)) - {'new', 'update'}) },
    }
+   if 'stellarwind' in ssys_others(ssys_pos, basenam):
+      xml['ssys']['general'] |= {
+        'background': 'stellarwind',
+        'map_shader': 'stellarwind_map.frag',
+        'features': '#bStellar Wind (1 fuel regen)#0'
+      }
    xml.save()
 
 from graphmod import ssys_pos, ssys_jmp, no_graph_out
