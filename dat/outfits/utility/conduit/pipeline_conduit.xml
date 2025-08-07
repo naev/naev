@@ -1,0 +1,19 @@
+<outfit name="Pipeline Conduit">
+ <general>
+  <typename>Conduit</typename>
+  <limit>conduit</limit>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>4</mass>
+  <price>470000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>The Pipeline Conduit funnels shield energy into the ammunition and fighter reconstruction pipelines, greatly speeding up those processes at the cost of extra CPU use.</description>
+ </general>
+ <specific type="modification">
+  <launch_reload>90</launch_reload>
+  <fbay_reload>90</fbay_reload>
+  <fbay_rate>50</fbay_rate>
+  <cpu_mod>-5</cpu_mod>
+  <lua>outfits/utility/conduit/conduit.lua</lua>
+ </specific>
+</outfit>
