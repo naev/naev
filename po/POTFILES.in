@@ -3870,7 +3870,6 @@ src/effect.c
 src/effect.h
 src/env.c
 src/env.h
-src/env.rs
 src/equipment.c
 src/equipment.h
 src/escort.c
@@ -3969,6 +3968,7 @@ src/naevpedia.c
 src/naevpedia.h
 src/ndata.c
 src/ndata.h
+src/ndata/src/env.rs
 src/ndata/src/lib.rs
 src/ndata/src/physfs.rs
 src/nebula.h

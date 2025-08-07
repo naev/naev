@@ -8,6 +8,7 @@ use log::formatx::formatx;
 use log::gettext::gettext;
 use log::{infox, semver, version};
 
+pub mod env;
 pub mod physfs;
 
 pub const GFX_PATH: &str = "gfx/";
@@ -112,9 +113,8 @@ pub fn setup() -> anyhow::Result<()> {
                 }
             }
         }
-    } else if cfg!(target_os = "linux") && unsafe { naevc::env.isAppImage } != 0 {
-        let buf = unsafe { CStr::from_ptr(naevc::env.appdir) };
-        let path = Path::new(&*buf.to_string_lossy())
+    } else if cfg!(target_os = "linux") && env::ENV.is_appimage {
+        let path = Path::new(&env::ENV.appdir)
             .join(naevc::config::PKGDATADIR)
             .join("dat");
         match physfs::mount(&path.to_string_lossy(), true) {
