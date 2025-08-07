@@ -252,12 +252,12 @@ pub fn read_dir_filter(path: &str, predicate: impl Fn(&str) -> bool) -> Result<V
 }
 
 /// Gets an SDL IOStream from a file if exists
-pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream> {
+pub fn iostream(path: &str) -> Result<sdl::iostream::IOStream<'_>> {
     physfs::iostream(path, physfs::Mode::Read)
 }
 
 /// Opens a file for reading
-pub fn open(path: &str) -> Result<physfs::File> {
+pub fn open(path: &str) -> Result<physfs::File<'_>> {
     physfs::File::open(path, physfs::Mode::Read)
 }
 

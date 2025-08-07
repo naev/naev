@@ -273,7 +273,7 @@ pub fn read_dir(path: &str) -> Result<Vec<String>> {
     Ok(res)
 }
 
-pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream> {
+pub fn iostream(filename: &str, mode: Mode) -> Result<sdl::iostream::IOStream<'_>> {
     let raw = unsafe {
         let c_filename = CString::new(filename)?;
         let phys = match mode {
