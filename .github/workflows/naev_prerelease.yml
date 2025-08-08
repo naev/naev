@@ -31,6 +31,7 @@ jobs:
         with:
           target: "x86_64-unknown-linux-gnu"
           override: true
+          rustflags: ""
 
       - name: Install bindgen-cli
         uses: baptiste0928/cargo-install@v3
@@ -153,6 +154,7 @@ jobs:
         with:
           target: "x86_64-unknown-linux-gnu"
           override: true
+          rustflags: ""
 
       - name: Install bindgen-cli
         uses: baptiste0928/cargo-install@v3
@@ -279,6 +281,7 @@ jobs:
         with:
           target: "x86_64-pc-windows-gnu"
           override: true
+          rustflags: ""
 
       - name: Install bindgen-cli
         uses: baptiste0928/cargo-install@v3
@@ -369,6 +372,7 @@ jobs:
         with:
           target: "${{ matrix.arch }}-apple-darwin"
           override: true
+          rustflags: ""
 
       - name: Install bindgen-cli
         uses: baptiste0928/cargo-install@v3
