@@ -308,10 +308,8 @@ function wave_round_setup ()
          p:brake()
          p:face( pp )
          if gmods.doubledmgtaken then
-            p:intrinsicSet("fwd_damage",   100)
-            p:intrinsicSet("tur_damage",   100)
-            p:intrinsicSet("launch_damage",100)
-            p:intrinsicSet("fbay_damage",  100)
+            p:intrinsicSet("weapon_damage", 100)
+            p:intrinsicSet("fbay_damage",  100) -- Not included in weapon_damage
          end
          local aimem = p:memory()
          aimem.comm_no = _("No response.") -- Don't allow talking
