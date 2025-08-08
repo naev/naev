@@ -27,6 +27,7 @@
  - New harder difficulty
  - Gauntlet negative bonuses are now multiplicative
  - Stealthing will temporarily jam locked on munitions
+ - Changed forward weapon aiming algorithm for the player so it is easier to shoot small ships with skill
 
 #### Quality of Life
  - Autonav improvements

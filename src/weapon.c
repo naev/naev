@@ -2191,11 +2191,20 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
       double trackmin = outfit_trackmin( outfit );
       double trackmax = outfit_trackmax( outfit );
       lead = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
-      x    = lead * x + ( 1. - lead ) * rx;
-      y    = lead * y + ( 1. - lead ) * ry;
-   } else
+      // Player interpolates from forward instead of static position, making it
+      // easier to aim with fixed forward weapons
+      if ( pilot_isPlayer( parent ) && outfit_isForward( outfit ) ) {
+         rdir = angle_clean( dir + angle_diff( dir, ANGLE( rx, ry ) ) * lead );
+      } else {
+         // For Turrets and NPCs we lead
+         x    = lead * x + ( 1. - lead ) * rx;
+         y    = lead * y + ( 1. - lead ) * ry;
+         rdir = ANGLE( x, y );
+      }
+   } else {
       lead = 1.;
-   rdir = ANGLE( x, y );
+      rdir = ANGLE( x, y );
+   }
 
    /* For unguided rockets: use a FD quasi-Newton algorithm to aim better. */
    if ( outfit_isLauncher( outfit ) && outfit_launcherAccel( outfit ) > 0. ) {
