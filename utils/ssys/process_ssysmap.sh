@@ -113,7 +113,6 @@ if [ -n "$FORCE" ] ; then
    echo -e "\e[32m$(
       "$DIR"/ssys_empty.py -r "$DST"/*.xml |
       "$DIR"/ssys_freeze.py -f | wc -l)\e[0m" >&2
-   sed '/<waypoints\/>/d' -i "$DST"/*.xml
 fi
 
 msg "gen before graph"

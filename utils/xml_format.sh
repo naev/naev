@@ -11,4 +11,9 @@ OUTFITS=($(grep -l '^[[:space:]]*<outfit ' "${NON_COMMENTED[@]}"))
 
 #shellcheck disable=SC2207
 NON_OUTFITS=($(grep -L '^<outfit ' "${NON_COMMENTED[@]}"))
-"$SCRIPT_DIR"/naev_xml.py "${NON_OUTFITS[@]}"
+SSYS=($(grep -l '^[[:space:]]*<ssys ' "${NON_OUTFITS[@]}"))
+"$SCRIPT_DIR"/ssys/ssys.py "${SSYS[@]}"
+
+#shellcheck disable=SC2207
+NON_SSYS=($(grep -L '^[[:space:]]*<ssys ' "${NON_OUTFITS[@]}"))
+"$SCRIPT_DIR"/naev_xml.py "${NON_SSYS[@]}"

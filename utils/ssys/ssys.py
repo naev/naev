@@ -1,4 +1,4 @@
-# python3
+#!/usr/bin/env python3
 
 
 import os
@@ -22,13 +22,16 @@ _fil =lambda folder: lambda nam : getpath(PATH, folder, nam + '.xml')
 spob_fil = _fil('spob')
 ssys_fil = _fil('ssys')
 
+AVAILABLE_FIELDS = ['jump', 'spob', 'asteroid', 'waypoint']
+MANDATORY_FIELDS = ['jump', 'spob']
+OTHER_FIELDS = set(AVAILABLE_FIELDS) - set(MANDATORY_FIELDS)
 class ssys_xml(naev_xml):
    def __init__(self, *args):
       naev_xml.__init__(self, *args)
       if 'ssys' not in self:
          raise Exception('Invalid ssys filename "' + repr(filename) + '"')
       s = self['ssys']
-      for f in ['jump', 'spob', 'asteroid', 'waypoint']:
+      for f in AVAILABLE_FIELDS:
          fs = f + 's'
          if not s.get(fs):
             s[fs] = {f: []}
@@ -37,6 +40,19 @@ class ssys_xml(naev_xml):
          elif not isinstance(s[fs][f], list):
             # don't deepcopy
             dict.__setitem__(s[fs], f, [s[fs][f]])
+      self._uptodate = True
+
+   def save(self, *args, **kwargs):
+      ssys = self['ssys']
+      utd = self._uptodate
+      for s in OTHER_FIELDS:
+         if ssys[s + 's'] == {s: []}:
+            del ssys[s + 's']
+      self._uptodate = utd
+      naev_xml.save(self, *args, **kwargs)
+      for s in OTHER_FIELDS:
+         if s + 's' not in ssys:
+            ssys[s + 's'] = {s: []}
       self._uptodate = True
 
 class starmap(dict):
@@ -56,3 +72,10 @@ def pos_to_vec( e ):
 
 def vec_to_pos( v ):
    return {'$@x': v[0], '$@y': v[1] }
+
+if __name__ == '__main__':
+   import sys
+   for i in sys.argv[1:]:
+      s = ssys_xml(i)
+      s.touch()
+      s.save()
