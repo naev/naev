@@ -24,6 +24,23 @@ spob_fil = _fil('spob')
 ssys_fil = _fil('ssys')
 
 
+class ssys_xml(naev_xml):
+   def __init__(self, *args):
+      naev_xml.__init__(self, *args)
+      if 'ssys' not in self:
+         raise Exception('Invalid ssys filename "' + repr(filename) + '"')
+      s = self['ssys']
+      for f in ['jump', 'spob', 'asteroid']:
+         fs = f + 's'
+         if not s.get(fs):
+            s[fs] = {f: []}
+         elif f not in s[fs]:
+            s[fs][f] = []
+         elif not isinstance(s[fs][f], list):
+            # TODO: use trusted_node when naev_xml will also deepcopies xml_nodes
+            s[fs][f] = [s[fs][f]]
+      self._uptodate = True
+
 import subprocess
 cmd = getpath(script_dir, '..', 'repair_xml.sh')
 need_repair = []

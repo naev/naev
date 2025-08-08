@@ -184,14 +184,18 @@ class naev_xml( xml_node ):
 
       self._filename = devnull if read_only else fnam
 
-   def save( self ):
+   def save( self, if_needed= False ):
       if self._uptodate:
-         stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
+         if if_needed:
+            return False
+         else:
+            stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
 
       with open(self._filename, 'w') as fp:
          fp.write(unparse(self))
 
       self._uptodate = True
+      return True
 
    def save_as( self, filename ):
       self._uptodate = (self._uptodate and filename == self._filename) or filename == devnull
