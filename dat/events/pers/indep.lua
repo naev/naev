@@ -40,12 +40,13 @@ return function ()
             p:outfitAddIntrinsic("Escape Pod")
             p:intrinsicSet( "ew_detect", 50 )
             equipopt.sirius( p, {
-            flow_ability=outfit.get("Astral Projection"),
-            outfits_add={"Targeting Conduit"},
-            prefer={
-            ["Targeting Conduit"] = 100,
-            ["Sensor Array"] = 5,
-            }} )
+               flow_ability=outfit.get("Astral Projection"),
+               outfits_add={"Targeting Conduit"},
+               prefer={
+                  ["Targeting Conduit"] = 100,
+                  ["Sensor Array"] = 5,
+               },
+            } )
             local m = p:memory()
             m.capturable = true
             m.comm_greet = _([["Space seems much less vast when you can track like a bloodhound."]])
