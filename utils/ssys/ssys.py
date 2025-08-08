@@ -26,8 +26,8 @@ AVAILABLE_FIELDS = ['jump', 'spob', 'asteroid', 'waypoint']
 MANDATORY_FIELDS = ['jump', 'spob']
 OTHER_FIELDS = set(AVAILABLE_FIELDS) - set(MANDATORY_FIELDS)
 class ssys_xml(naev_xml):
-   def __init__(self, *args):
-      naev_xml.__init__(self, *args)
+   def __init__(self, *args, **kwa):
+      naev_xml.__init__(self, *args, **kwa)
       if 'ssys' not in self:
          raise Exception('Invalid ssys filename "' + repr(filename) + '"')
       s = self['ssys']
@@ -49,11 +49,12 @@ class ssys_xml(naev_xml):
          if ssys[s + 's'] == {s: []}:
             del ssys[s + 's']
       self._uptodate = utd
-      naev_xml.save(self, *args, **kwargs)
+      res = naev_xml.save(self, *args, **kwargs)
       for s in OTHER_FIELDS:
          if s + 's' not in ssys:
             ssys[s + 's'] = {s: []}
       self._uptodate = True
+      return res
 
 class starmap(dict):
    def __missing__( self, key ):
