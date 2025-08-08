@@ -31,7 +31,7 @@
   <accel>55</accel>
   <turn>20</turn>
   <speed_max>160</speed_max>
-  <resist>100</resist>
+  <resist>98</resist>
   <damage>
    <type>kinetic</type>
    <penetrate>90</penetrate>

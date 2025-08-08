@@ -32,7 +32,7 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
   <accel>700</accel>
   <turn>35</turn>
   <speed_max>850</speed_max>
-  <resist>50</resist>
+  <resist>45</resist>
   <damage>
    <type>ion</type>
    <penetrate>21</penetrate>

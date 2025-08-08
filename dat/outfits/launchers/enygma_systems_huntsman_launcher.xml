@@ -31,7 +31,7 @@
   <accel>70</accel>
   <turn>25</turn>
   <speed_max>190</speed_max>
-  <resist>100</resist>
+  <resist>85</resist>
   <damage>
    <type>emp</type>
    <penetrate>70</penetrate>
