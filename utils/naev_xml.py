@@ -58,7 +58,10 @@ class xml_node( dict ):
    def __init__ ( self, mapping, parent= None, key= None ):
       self._parent = parent
       self._key = key
-      self.attr = {}
+      if isinstance(mapping, xml_node):
+         self.attr = mapping.attr.copy()
+      else:
+         self.attr = {}
       for k, v in mapping.items():
          self[k] = v
 
@@ -94,11 +97,8 @@ class xml_node( dict ):
             raise ValueError(str(val) + ' is not a number.')
          key = key[1:]
       elif isinstance(val, list):
-         val = [
-            xml_node(e, self, key) if isinstance(e, dict) and not isinstance(e, xml_node) else e
-            for e in val
-         ]
-      elif isinstance(val, dict) and not isinstance(val, xml_node):
+         val = [xml_node(e, self, key) if isinstance(e, dict) else e for e in val]
+      elif isinstance(val, dict):
          val = xml_node(val, self, key)
       if key[:1] == '@':
          self.attr[key] = val

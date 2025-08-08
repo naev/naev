@@ -37,8 +37,8 @@ class ssys_xml(naev_xml):
          elif f not in s[fs]:
             s[fs][f] = []
          elif not isinstance(s[fs][f], list):
-            # TODO: use trusted_node when naev_xml will also deepcopies xml_nodes
-            s[fs][f] = [s[fs][f]]
+            # don't deepcopy
+            dict.__setitem__(s[fs], f, [s[fs][f]])
       self._uptodate = True
 
 import subprocess
