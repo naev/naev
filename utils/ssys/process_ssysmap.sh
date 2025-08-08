@@ -63,7 +63,7 @@ DST="$BAS/ssys"
 msg() {
    echo -e "$1" | while read -r line; do
       if [ -z "$line" ] ; then
-         echo ""
+         echo
       else
          echo -e -n "\e[36m$line\e[0m "
       fi

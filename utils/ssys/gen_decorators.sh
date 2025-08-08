@@ -28,7 +28,7 @@ while read -r picnam ; do
       else
          echo -n " [was already here]" >&2
       fi
-      echo "" >&2
+      echo >&2
       echo -e "#declare $bas = box{\n\t<0,0,0>\n\t<1,1,-1>"
       echo -e "\tpigment{image_map{\"$OUT\"}}"
       echo -e "\ttranslate <-0.5,-0.5,0>\n\tscale <-$W,-$H,1>\n}"

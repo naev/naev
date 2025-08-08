@@ -98,7 +98,6 @@ These are designed to manage the **internal geometry of systems**, that might ge
 
 # TODO
  - implement xml_list dunders (and simplify ssys_relax accordingly)
- - make process deterministic (sort before pot/repos, have them sort ther args)
  - __iadd__ for naev_xml ?
  - `reposition.c`:
     - crash when empty input with 4 args or more *
