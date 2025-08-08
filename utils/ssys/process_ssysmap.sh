@@ -90,7 +90,11 @@ DEBUG() {
 msg "extract input graph"
 TMP=$(mktemp)
 trap 'rm -f $TMP' EXIT
-"$DIR"/ssysmap2graph.sh | "$DIR"/graph_vaux.py -e -c -n > "$TMP"
+"$DIR"/ssysmap2graph.sh       |
+"$DIR"/graph_vaux.py -e -c -n |
+grep -v '^$'                  |
+sort -d                       > "$TMP"
+echo >> "$TMP"
 
 #PROTERON=(leporis hystera korifa apik telika mida ekta akra)
 SPIR=(syndania nirtos sagittarius hopa scholzs_star veses alpha_centauri padonia urillian baitas protera tasopa)
