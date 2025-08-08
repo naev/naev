@@ -4,7 +4,7 @@
 from sys import stdout, stderr
 from os.path import basename
 from geometry import transf, vec
-from ssys import nam2base, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element
+from ssys import nam2base, starmap, fil_ET, spob_fil, vec_to_element, vec_from_element, ssys_xml, vec_to_pos, pos_to_vec, xml_node
 from math import sin, pi
 from minimize_angle_stretch import relax_dir
 from xml_name import end_xml_name
@@ -25,19 +25,19 @@ def mk_p( L ):
    return pi[where:] + pi[:where]
 
 def ssys_relax( sys, quiet = True, graph = False ):
-   p = fil_ET(sys)
-   T = p.getroot()
-   myname = nam2base(T.attrib['name'])
+   p = ssys_xml(sys)
+   T = p['ssys']
+   myname = nam2base(T['@name'])
 
    mapvs, sysvs, names = [], [], []
-   for f in T.findall('./jumps/jump'):
-      dst = nam2base(f.attrib['target'])
-      e = f.find('pos')
+   for f in T['jumps']['jump']:
+      dst = nam2base(f['@target'])
+      e = f.get('pos')
       # should we require 'was_auto' ?
-      if e is not None and 'was_auto' in e.attrib:
+      if e is not None and '@was_auto' in e:
          names.append(dst)
          mapvs.append((sm[dst] - sm[myname]).normalize())
-         sysvs.append(vec_from_element(e).normalize())
+         sysvs.append(pos_to_vec(e).normalize())
 
    if names:
       nop = lambda v: v
@@ -48,7 +48,6 @@ def ssys_relax( sys, quiet = True, graph = False ):
       out = sys.replace('.xml', '') if graph else None
 
       wrn = []
-
       if pi1 == pi2: # same permutation -> everything is fine
          # If only two jumps, we can flip to try improving the result.
          try_flipped, try_unflipped = (len(pi1) == 2), True
@@ -93,18 +92,19 @@ def ssys_relax( sys, quiet = True, graph = False ):
 
       if abs(alpha) > eps or flip != nop:
          func = lambda x: flip(x).rotate(alpha)
-         for e in T.findall('./spobs/spob'):
-            spfil = spob_fil(nam2base(e.text))
+         for e in T['spobs']['spob']:
+            spfil = spob_fil(nam2base(e))
             p2 = fil_ET(spfil)
             f = p2.getroot().find('pos')
             vec_to_element(f, func(vec_from_element(f)))
             p2.write(spfil)
 
-         for i in ['./jumps/jump/pos', './asteroids/asteroid/pos', './waypoints/waypoint']:
-            for e in T.findall(i):
-               vec_to_element(e, func(vec_from_element(e)))
-         p.write(sys)
-         return True
+         for t in ['jump', 'asteroid', 'waypoint']:
+            for i, e in enumerate(T[t + 's'][t]):
+               d, k = (T[t + 's'][t], i) if t == 'waypoint' else (e, "pos")
+               # because of the list defect
+               d[k] = xml_node(d[k]| vec_to_pos(func(pos_to_vec(d[k]))))
+         return p.save()
    return False
 
 if __name__ == '__main__':

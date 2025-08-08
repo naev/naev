@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+#TODO: introduce new list wrapper to fix list breach
 """
 An elementTree-based implementation of xmltodict. 10% slower than pure elementTree,
 but 2x faster than xmltodict with more functionality and correct output

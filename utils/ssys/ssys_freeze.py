@@ -2,7 +2,7 @@
 
 
 
-from ssys import nam2base, starmap, ssys_xml
+from ssys import nam2base, starmap, ssys_xml, vec_to_pos
 sm = starmap()
 
 
@@ -17,11 +17,7 @@ def ssys_freeze( sys ):
          del e['autopos']
          dst = nam2base(e['@target'])
          v = (sm[dst] - sm[myname]).normalize()*radius
-         e['pos'] = {
-            '$@x': v[0],
-            '$@y': v[1],
-            '@was_auto': 'true'
-         }
+         e['pos'] = vec_to_pos(v) | {'@was_auto': 'true'}
    return f.save(if_needed= True)
 
 

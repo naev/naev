@@ -12,7 +12,7 @@ script_dir = os.path.dirname(__file__)
 sys.path.append(getpath(script_dir, '..'))
 
 from xml_name import xml_name as nam2base
-from naev_xml import naev_xml
+from naev_xml import naev_xml, xml_node
 
 PATH = getpath(script_dir, '..', '..', 'dat')
 
@@ -30,7 +30,7 @@ class ssys_xml(naev_xml):
       if 'ssys' not in self:
          raise Exception('Invalid ssys filename "' + repr(filename) + '"')
       s = self['ssys']
-      for f in ['jump', 'spob', 'asteroid']:
+      for f in ['jump', 'spob', 'asteroid', 'waypoint']:
          fs = f + 's'
          if not s.get(fs):
             s[fs] = {f: []}
@@ -86,6 +86,12 @@ def ssysneigh( sys ):
          stderr.write('no target defined in "'+sys+'" jump '+str(count)+'\n')
       count += 1
    return acc
+
+def pos_to_vec( e ):
+   return vec(e['$@x'], e['$@y'])
+
+def vec_to_pos( v ):
+   return {'$@x': v[0], '$@y': v[1] }
 
 def vec_from_element( e ):
    return vec(float(e.attrib['x']), float(e.attrib['y']))
