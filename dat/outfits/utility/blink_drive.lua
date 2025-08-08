@@ -9,18 +9,18 @@ local masslimit = limit^2 -- squared
 local jumpdist = 500
 local cooldown = 7
 local energy = 140
-local sigbonus = -15
+local ewbonus = -15
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
 function descextra( _p, _o )
    return fmt.f(_([[Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets you blink to the sides. Can only be run once every {cooldown} seconds. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy.
-Gives a #g{sigbonus}% Signature Range#0 bonus during cooldown.]]), {
+Gives a #g{ewbonus}% Ship Detectability#0 bonus during cooldown.]]), {
       jumpdist = jumpdist,
       cooldown = cooldown,
       masslimit = fmt.tonnes(limit),
       energy = tostring(energy),
-      sigbonus = sigbonus,
+      ewbonus = ewbonus,
       unit_dist = naev.unit("distance"),
       unit_energy = naev.unit("energy"),
    })
@@ -46,11 +46,11 @@ function update( _p, po, dt )
    po:progress( mem.timer / cooldown )
    if mem.timer <= 0 then
       po:state("off")
-      po:set( "ew_signature", 0 )
+      po:set( "ew_hide", 0 )
       po:set( "ew_stealth_min", 0 )
    else
-      po:set( "ew_signature", sigbonus )
-      po:set( "ew_stealth_min", sigbonus )
+      po:set( "ew_hide", ewbonus )
+      po:set( "ew_stealth_min", ewbonus )
    end
 end
 
