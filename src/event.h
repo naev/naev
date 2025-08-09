@@ -15,6 +15,7 @@ typedef struct Event_s {
    nlua_env    *env;    /**< The environment of the running Lua code. */
    int          save;   /**< Whether or not it should be saved. */
    Claim_t     *claims; /**< Event claims. */
+   int delete;          /**< Should be deleted. */
 } Event_t;
 
 /**

@@ -157,7 +157,8 @@ int misn_tryRun( Mission *misn, const char *func )
 {
    int ret;
    /* Get the function to run. */
-   misn_runStart( misn, func );
+   if ( misn_runStart( misn, func ) )
+      return 2;
    if ( lua_isnil( naevL, -1 ) ) {
       lua_pop( naevL, 1 );
       return 0;
@@ -176,7 +177,8 @@ int misn_tryRun( Mission *misn, const char *func )
  */
 int misn_run( Mission *misn, const char *func )
 {
-   misn_runStart( misn, func );
+   if ( misn_runStart( misn, func ) )
+      return 2;
    return misn_runFunc( misn, func, 0 );
 }
 
@@ -200,15 +202,18 @@ Mission *misn_getFromLua( lua_State *L )
 /**
  * @brief Sets up the mission to run misn_runFunc.
  */
-void misn_runStart( Mission *misn, const char *func )
+int misn_runStart( Mission *misn, const char *func )
 {
    Mission **misnptr;
+   if ( misn->delete )
+      return -1;
    misnptr  = lua_newuserdata( naevL, sizeof( Mission * ) );
    *misnptr = misn;
    nlua_setenv( naevL, misn->env, "__misn" );
 
    /* Set the Lua state. */
    nlua_getenv( naevL, misn->env, func );
+   return 0;
 }
 
 /**
@@ -684,6 +689,7 @@ static int misn_finish( lua_State *L )
 
    lua_pushboolean( L, 1 );
    nlua_setenv( L, cur_mission->env, "__misn_delete" );
+   cur_mission->delete = 1;
 
    if ( b )
       player_missionFinished( mission_getID( cur_mission->data->name ) );

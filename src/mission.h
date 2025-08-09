@@ -85,6 +85,7 @@ typedef struct Mission_ {
    unsigned int
        id; /**< Unique mission identifier, used for keeping track of hooks. */
    int accepted; /**< Mission is a player mission. */
+   int delete;
 
    /* Information displayed to the user. */
    char      *title;    /**< Not to be confused with name */
@@ -184,10 +185,10 @@ int  mission_reload( const char *name );
 /*
  * Actually in nlua_misn.h
  */
-int  misn_tryRun( Mission *misn, const char *func );
-void misn_runStart( Mission *misn, const char *func );
-int  misn_runFunc( const Mission *misn, const char *func, int nargs );
-int  misn_run( Mission *misn, const char *func );
+int misn_tryRun( Mission *misn, const char *func );
+int misn_runStart( Mission *misn, const char *func );
+int misn_runFunc( const Mission *misn, const char *func, int nargs );
+int misn_run( Mission *misn, const char *func );
 
 /*
  * Claims.
