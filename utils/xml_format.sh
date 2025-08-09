@@ -1,6 +1,37 @@
 #!/bin/bash
 #shellcheck disable=SC2207
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+   DOC=(
+      "usage:  $(basename "$0") <xml_file>.."
+      "  Formats the xml file provided in input."
+      "  Based on its path, a xml file is considered either:"
+      "   - outfit: uses the outfits/outfit.py formatter."
+      "     This one expects that the file defines an outfit."
+      "     It understands lua_inline and in particular multicores."
+      "   - ssys: uses the ssys/ssys.py formatter."
+      "     This one expects that the file defines a ssys."
+      "     This one expects that the file defines a ssys."
+      "     It will add empty jump/spob lists (see MANDATORY_FIELDS in ssys.py)"
+      "     if no such list is present."
+      "   - other: uses the generic naev_xml formater."
+      "     Like all the previous ones, indents the xml and fold empty tags."
+      "  The 2 first formatters rely on the third one, that relies on elementTree."
+      "  So far, this module does not manages comments, and they are therefore lost."
+      ""
+      "  We managed a workaround using diff3 and presenting the input file"
+      "  as a new version (a) of its commentless version (o) and the formatted version"
+      "  as a another new version (b) of (o). diff3 allows to merge."
+      "  In case of conflict, the file with annotated conflicting parts of (b) and (a)"
+      "  is written as <filename.xml.patch>, and a non-zero value is returned."
+      ""
+      "  However, this is terribly slow compared to the no-comment case, so only"
+      "  commented files are processed this way."
+   )
+   ( IFS=$'\n'; echo "${DOC[*]}" ) >&2
+   exit 0
+fi
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 res=0

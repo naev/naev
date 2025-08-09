@@ -35,7 +35,7 @@ fi
 if [ "$OP" = "-g" ] || [ "$OP" = "ERR" ] ; then
    N=20
    RESCALE=1.8
-   POST_RESCALE=1.1
+   POST_RESCALE=1.0
 elif [ "$OP" = "-E2" ] ; then
    N=20
    RESCALE=1.5
