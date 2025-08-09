@@ -39,6 +39,7 @@ static int cache_table = LUA_NOREF; /* No reference. */
 /* Naev methods. */
 static int naevL_version( lua_State *L );
 static int naevL_versionTest( lua_State *L );
+static int naevL_versionTestReq( lua_State *L );
 static int naevL_language( lua_State *L );
 static int naevL_lastplayed( lua_State *L );
 static int naevL_date( lua_State *L );
@@ -84,6 +85,7 @@ static int naevL_debugCollisions( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
+   { "versionTestReq", naevL_versionTestReq },
    { "language", naevL_language },
    { "lastplayed", naevL_lastplayed },
    { "date", naevL_date },
@@ -171,20 +173,28 @@ static int naevL_version( lua_State *L )
    return 2;
 }
 
-/**
- * @brief Tests two semver version strings.
- *
- *    @luatparam string v1 Version 1 to test.
- *    @luatparam string v2 Version 2 to test.
- *    @luatreturn number Positive if v1 is newer or negative if v2 is newer.
- * @luafunc versionTest
- */
 static int naevL_versionTest( lua_State *L )
 {
-   const char *s1, *s2;
-   s1 = luaL_checkstring( L, 1 );
-   s2 = luaL_checkstring( L, 2 );
+   NLUA_DEPRECATED( L, "versionTest" );
+   const char *s1 = luaL_checkstring( L, 1 );
+   const char *s2 = luaL_checkstring( L, 2 );
    lua_pushinteger( L, naev_versionCompareTarget( s1, s2 ) );
+   return 1;
+}
+
+/**
+ * @brief Test a version string.
+ *
+ *    @luatparam string v Version to test.
+ *    @luatparam string r Requirement condition.
+ *    @luatreturn boolean Whether or not the version meets the requirements.
+ * @luafunc versionTestReq
+ */
+static int naevL_versionTestReq( lua_State *L )
+{
+   const char *s1 = luaL_checkstring( L, 1 );
+   const char *s2 = luaL_checkstring( L, 2 );
+   lua_pushboolean( L, naev_versionMatchReq( s1, s2 ) );
    return 1;
 }
 

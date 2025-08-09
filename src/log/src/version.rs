@@ -1,3 +1,4 @@
+use crate::warn_err;
 use anyhow::Result;
 use naevc::config;
 use std::cmp::Ordering;
@@ -40,15 +41,17 @@ pub fn compare_versions(vera: &semver::Version, verb: &semver::Version) -> i32 {
 
 fn parse_cstr(ver: *const c_char) -> Result<semver::Version> {
     let ptr = unsafe { CStr::from_ptr(ver) };
-    let cstr = ptr.to_str().unwrap();
-    Ok(semver::Version::parse(cstr)?)
+    Ok(semver::Version::parse(&ptr.to_string_lossy())?)
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn naev_versionCompare(version: *const c_char) -> c_int {
     let ver = match parse_cstr(version) {
         Ok(v) => v,
-        _ => return 0,
+        Err(e) => {
+            warn_err(e);
+            return 0;
+        }
     };
     compare_versions(&VERSION, &ver)
 }
@@ -60,11 +63,37 @@ pub extern "C" fn naev_versionCompareTarget(
 ) -> c_int {
     let vera = match parse_cstr(version) {
         Ok(v) => v,
-        _ => return 0,
+        Err(e) => {
+            warn_err(e);
+            return 0;
+        }
     };
     let verb = match parse_cstr(target) {
         Ok(v) => v,
-        _ => return 0,
+        Err(e) => {
+            warn_err(e);
+            return 0;
+        }
     };
     compare_versions(&vera, &verb)
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn naev_versionMatchReq(version: *const c_char, req: *const c_char) -> c_int {
+    let vera = match parse_cstr(version) {
+        Ok(v) => v,
+        Err(e) => {
+            warn_err(e);
+            return 0;
+        }
+    };
+    let reqstr = unsafe { CStr::from_ptr(req) };
+    let req = match semver::VersionReq::parse(&reqstr.to_string_lossy()) {
+        Ok(r) => r,
+        Err(e) => {
+            warn_err(e.into());
+            return 0;
+        }
+    };
+    req.matches(&vera) as c_int
 }
