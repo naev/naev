@@ -98,7 +98,7 @@ from virtual_edges import add_virtual_edges
 ssys_pos['sunir'] = (ssys_pos['suna'] + ssys_pos['vanir'] + ssys_pos['botarn']) / 3.0
 ssys_pos.aux['sunir'] = ["default::spoiler:unused", "Su'nir"]
 
-for side, sys in zip(['north', 'south'], ['mason', 'sollav']):
+for sys, side in {'mason': 'north', 'c59': 'north', 'sollav': 'south'}.items():
    if ':' not in ssys_pos.aux[sys][0]:
       ssys_pos.aux[sys][0] += ':'
    for pref in ['', side]:

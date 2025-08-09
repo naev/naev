@@ -30,7 +30,7 @@ tradelane = { k: {s for (s, t) in ssys_jmp[k].items() if 'tradelane' in t and no
 rem_tl = lambda l, s: {k: {} if k in s else (v - s) for k, v in l.items()}
 tradelane = rem_tl(tradelane, {'point_zero'})
 
-stellars = {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)}
+stellars = {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)} - {'c59'}
 stellarwind = { k: {s for (s, _) in ssys_jmp[k].items() if {k, s} < stellars } for k in ssys_pos }
 abh_circle = {'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian', 'copernicus', 'ngc13674', 'ngc1562', 'ngc2601'}
 
