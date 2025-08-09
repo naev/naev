@@ -83,6 +83,8 @@ else:
    stellars |= {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)
       and ssys_pos[k][1] < ssys_pos['goddard'][1]}
    ssys_pos |= smoothen_induced(ssys_pos, ssys_jmp, stellars)
+   ssys_pos['sw1'] += 0.12 * (2*ssys_pos['sw2'] -ssys_pos['c59'] -ssys_pos['sw1'])
+   ssys_pos['sw2'] += 0.1 * (ssys_pos['sw3'] - ssys_pos['sw2'])
 
    around_defa = {'draconis', 'pilatis', 'defa', 'oberon', 'shikima'}
    res = smoothen_induced(ssys_pos, ssys_jmp, around_defa)
