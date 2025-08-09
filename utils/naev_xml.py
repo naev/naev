@@ -45,7 +45,7 @@ Used as follows:
 """
 
 import xml.etree.ElementTree as ET
-from sys import stderr
+from sys import stderr, stdout
 from os import devnull
 
 def _numify( s ):
@@ -181,7 +181,10 @@ class naev_xml( xml_node ):
       self.short = False
       _trusted_node.__init__(self, {}, None, None)
       if fnam != devnull:
-         T = ET.parse(fnam).getroot()
+         try:
+            T = ET.parse(fnam).getroot()
+         except:
+            stderr.write('OOPS '+fnam+'\n')
          dict.__setitem__(self, T.tag, _parse(T, self, T.tag))
 
       self._filename = devnull if read_only else fnam
@@ -193,8 +196,11 @@ class naev_xml( xml_node ):
          else:
             stderr.write('Warning: saving unchanged file "' + self._filename + '".\n')
 
-      with open(self._filename, 'w') as fp:
-         fp.write(unparse(self))
+      if self._filename == '-':
+         stdout.write(unparse(self))
+      else:
+         with open(self._filename, 'w') as fp:
+            fp.write(unparse(self))
 
       self._uptodate = True
       return True
@@ -233,8 +239,22 @@ class naev_xml( xml_node ):
          stderr.write('Warning: unsaved file "' + self._filename + '" at exit.\n')
 
 if __name__ == '__main__':
-   import sys
-   for i in sys.argv[1:]:
+   from sys import argv
+
+   if inplace := '-i' in argv[1:]:
+      argv.remove('-i')
+
+   if '-h' in argv[1:]:
+      stderr.write(
+         'usage: ' + argv[0].split('/')[-1] + '  -i  [ file.xml.. ]\n'
+         '  Reads a xml file, formats it and outputs the result.\n'
+         '  If -i is set, does it in place.\n'
+      )
+      exit(0)
+   for i in argv[1:]:
       n = naev_xml(i)
-      n.touch()
+      if inplace:
+         n.touch()
+      else:
+         n.save_as('-')
       n.save()

@@ -3,7 +3,7 @@
   <slot>intrinsic</slot>
   <mass>0</mass>
   <price>0</price>
-  <description>Thi ship is in bad shape and works much less well than usual.</description>
+  <description>This ship is in bad shape and works much less well than usual.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <limit>badship</limit>
  </general>
