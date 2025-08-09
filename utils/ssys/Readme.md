@@ -97,8 +97,8 @@ These are designed to manage the **internal geometry of systems**, that might ge
  - `ssysmap_{push, pop, dequeue}.sh` apply the corresponding operations to ssys map position history.
 
 # TODO
- - implement xml_list dunders (and simplify ssys_relax accordingly)
- - __iadd__ for naev_xml ?
+ - implement xml_list dunders (and simplify ssys_relax accordingly) +
+ - naev_xml/ssys_xml/outfit should understand three args r, w and c.
  - `reposition.c`:
     - crash when empty input with 4 args or more *
     - penalty map +

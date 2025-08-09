@@ -173,7 +173,8 @@ def unparse( d , indent= 0 ):
    return out
 
 class naev_xml( xml_node ):
-   def __init__( self, fnam= devnull, read_only= False ):
+   def __init__( self, fnam= None, read_only= False ):
+      fnam = fnam or devnull
       self._uptodate = True
       if type(fnam) != type('') or (not fnam.endswith('.xml') and fnam != devnull):
          raise Exception('Invalid xml filename ' + repr(fnam))

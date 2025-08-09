@@ -26,10 +26,12 @@ AVAILABLE_FIELDS = ['jump', 'spob', 'asteroid', 'waypoint']
 MANDATORY_FIELDS = ['jump', 'spob']
 OTHER_FIELDS = set(AVAILABLE_FIELDS) - set(MANDATORY_FIELDS)
 class ssys_xml(naev_xml):
-   def __init__(self, *args, **kwa):
-      naev_xml.__init__(self, *args, **kwa)
-      if 'ssys' not in self:
-         raise Exception('Invalid ssys filename "' + repr(filename) + '"')
+   def __init__(self, **kwa):
+      naev_xml.__init__(self, **kwa)
+      if 'fnam' not in kwa:
+         self['ssys'] = {}
+      elif 'ssys' not in self:
+         raise Exception('Invalid ssys filename "' + kwa['fnam'] + '"')
       s = self['ssys']
       for f in AVAILABLE_FIELDS:
          fs = f + 's'

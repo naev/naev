@@ -104,11 +104,13 @@ def un_multicore( o ):
 
 class outfit(naev_xml):
    # None means auto
-   def __init__( self, filename, is_multi = None, read_only = False ):
+   def __init__( self, fnam= None, is_multi= None, read_only= False ):
       self.pri = None
-      naev_xml.__init__(self, filename, read_only = read_only)
-      if 'outfit' not in self:
-         raise Exception('Invalid outfit filename "' + repr(filename) + '"')
+      naev_xml.__init__(self, fnam= fnam, read_only= read_only)
+      if fnam is None:
+         self['outfit'] = {}
+      elif 'outfit' not in self:
+         raise Exception('Invalid outfit filename "' + repr(fnam) + '"')
       self.short = None
       self.is_multi = False
       if is_multi or is_multi is None:
