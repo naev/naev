@@ -77,8 +77,22 @@ def vec_to_pos( v ):
    return {'$@x': v[0], '$@y': v[1] }
 
 if __name__ == '__main__':
-   import sys
-   for i in sys.argv[1:]:
+   from sys import argv
+
+   if inplace := '-i' in argv[1:]:
+      argv.remove('-i')
+
+   if '-h' in argv[1:]:
+      stderr.write(
+         'usage: ' + argv[0].split('/')[-1] + '  -i  [ file.xml.. ]\n'
+         '  Reads a ssys xml file, formats it and outputs the result.\n'
+         '  If -i is set, does it in place.\n'
+      )
+      exit(0)
+   for i in argv[1:]:
       s = ssys_xml(i)
-      s.touch()
+      if inplace:
+         s.touch()
+      else:
+         s.save_as('-')
       s.save()

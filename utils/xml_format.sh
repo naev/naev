@@ -15,10 +15,10 @@ NON_SSYS=($(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}"))
    echo -e "\tformat_xml: ${#NON_SSYS[@]} others" >&2
 } & {
    OUTFITS=($(grep '\<outfits/' <<< "${NON_COMMENTED[*]}"))
-   "$SCRIPT_DIR"/outfits/outfit.py "${OUTFITS[@]}"
+   "$SCRIPT_DIR"/outfits/outfit.py -i "${OUTFITS[@]}"
    echo -e "\tformat_xml: ${#OUTFITS[@]} outfits" >&2
    SSYS=($(grep '\<ssys/' <<< "${NON_OUTFITS[*]}"))
-   "$SCRIPT_DIR"/ssys/ssys.py "${SSYS[@]}"
+   "$SCRIPT_DIR"/ssys/ssys.py -i "${SSYS[@]}"
    echo -e "\tformat_xml: ${#SSYS[@]} ssys" >&2
 } & {
    COMMENTED=($(grep -l "<!--" "${ARGS[@]}"))
@@ -29,16 +29,16 @@ NON_SSYS=($(grep -v '\<ssys/' <<< "${NON_OUTFITS[*]}"))
    UNCO="$TMP"/no_commment.xml
    RES="$TMP"/res.xml
    for i in "${COMMENTED[@]}" ; do
-      if [ -n "$(echo "$i" | grep '\<outfit/')" ] ; then
+      if grep -q '\<outfits/' <<< "$i" ; then
          "$SCRIPT_DIR"/outfits/outfit.py "$i" > "$PARS"
-      elif [ -n "$(echo "$i" | grep '\<ssys/')" ] ; then
+      elif grep -q '\<ssys/' <<< "$i" ; then
          "$SCRIPT_DIR"/ssys/ssys.py "$i" > "$PARS"
       else
          "$SCRIPT_DIR"/naev_xml.py "$i" > "$PARS"
       fi
       "$SCRIPT_DIR"/uncomment_xml.py < "$i" | sed '/^[[:space:]]*$/d' > "$UNCO"
       diff3 -m "$PARS" "$UNCO" "$i" | sed -z 's/|\{7\}.*\(=\{7\}\)/\1/' > "$RES"
-      if [ -z "$(grep -m1 '<<<<<<<' "$RES")" ] ; then
+      if ! grep -q  '<<<<<<<' "$RES" ; then
          mv "$RES" "$i"
       else
          mv "$RES" "$i.patch"
