@@ -2,7 +2,7 @@
  <general>
   <radius>15000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>128.900000</interference>
+  <interference>123.900000</interference>
   <nebula volatility="12.100000" hue="285.000000">500.000000</nebula>
   <nolanes/>
  </general>
@@ -12,11 +12,11 @@
  </spobs>
  <jumps>
   <jump target="Alpha Centauri">
-   <autopos/>
+   <pos x="555.249264" y="-1997.288778"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Scholz's Star">
-   <autopos/>
+   <pos x="14803.071502" y="-2902.208714"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

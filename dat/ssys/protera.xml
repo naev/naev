@@ -2,10 +2,10 @@
  <general>
   <radius>17500.000000</radius>
   <spacedust>100</spacedust>
-  <interference>35.100000</interference>
+  <interference>32.100000</interference>
   <nolanes/>
  </general>
- <pos x="853.594383" y="566.174569"/>
+ <pos x="845.112431" y="561.933593"/>
  <spobs>
   <spob_virtual>Lost Small</spob_virtual>
  </spobs>
@@ -15,11 +15,11 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Tasopa">
-   <pos x="-15544.419686" y="2956.560975"/>
+   <pos x="-16529.483017" y="7509.150966"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Urillian">
-   <pos x="-5022.934399" y="-16015.951942"/>
+   <pos x="-4024.559401" y="-14019.201946"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

@@ -15,7 +15,12 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="Nirtos">
-   <autopos/>
+   <pos x="10818.036399" y="10301.159639"/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Padonia">
+   <pos x="13574.866678" y="-6339.694771"/>
+   <hidden/>
    <hide>1.000000</hide>
   </jump>
  </jumps>
