@@ -20,7 +20,7 @@ if argv[1:]:
 
 from geometry import symmetry
 from graphmod import ssys_pos, ssys_jmp, no_graph_out
-from smoothen import smoothen, circleify
+from smoothen import smoothen, smoothen_induced, circleify
 from graph_vaux import ssys_others
 
 L = {'eiderdown', 'gilligans_tomb', 'adraia', 'vanir', 'botarn', 'monogram', 'kraft', 'pike'}
@@ -31,12 +31,12 @@ rem_tl = lambda l, s: {k: {} if k in s else (v - s) for k, v in l.items()}
 tradelane = rem_tl(tradelane, {'point_zero'})
 
 stellars = {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)} - {'c59'}
-stellarwind = { k: {s for (s, _) in ssys_jmp[k].items() if {k, s} < stellars } for k in ssys_pos }
 abh_circle = {'ngc11935', 'ngc5483', 'ngc7078', 'ngc7533', 'octavian', 'copernicus', 'ngc13674', 'ngc1562', 'ngc2601'}
 
 trad_l_pos = smoothen(ssys_pos, tradelane)
-stel_w_pos = smoothen(ssys_pos | {'pilatis': symmetry(ssys_pos['defa'])(ssys_pos['oberon'])},
-   stellarwind, hard=True)
+stel_w_pos = smoothen_induced(
+   ssys_pos | {'pilatis': symmetry(ssys_pos['defa'])(ssys_pos['oberon'])},
+   ssys_jmp, stellars, hard= True)
 
 if JUST_LIST:
    no_graph_out()

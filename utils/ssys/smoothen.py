@@ -22,6 +22,10 @@ def smoothen( pos, neigh, hard = False ):
          newp[k] = acc / count
    return newp
 
+def smoothen_induced( pos, jmp, S, hard = False ):
+   neigh = {k: {s for (s, _) in jmp[k].items() if {k, s} < S} for k in pos}
+   return smoothen(pos, neigh, hard = hard)
+
 from math import sqrt
 def circleify( pos, L, center, hard = False ):
    newp = dict()

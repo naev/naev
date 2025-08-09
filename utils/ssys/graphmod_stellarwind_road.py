@@ -73,4 +73,18 @@ else:
 
    v = ssys_pos['lalande'] - ssys_pos['pilatis']
    for s in ['draconis', 'pilatis', 'levo']:
-      ssys_pos[s] += 0.1 * v
+      ssys_pos[s] += 0.2 * v
+
+   from smoothen import smoothen_induced
+   from graph_vaux import ssys_others
+   stellars = set(road)
+   ssys_pos |= smoothen_induced(ssys_pos, ssys_jmp, stellars)
+
+   stellars |= {k for k in ssys_pos if 'stellarwind' in ssys_others(ssys_pos, k)
+      and ssys_pos[k][1] < ssys_pos['goddard'][1]}
+   ssys_pos |= smoothen_induced(ssys_pos, ssys_jmp, stellars)
+
+   around_defa = {'draconis', 'pilatis', 'defa', 'oberon', 'shikima'}
+   res = smoothen_induced(ssys_pos, ssys_jmp, around_defa)
+   for k in {'pilatis', 'defa'}:
+      ssys_pos[k] = res[k]
