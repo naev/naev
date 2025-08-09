@@ -89,6 +89,14 @@ def main( color = False, fixed_pos = False ):
    # all others are virtual
    print('\tnode [label="",style=invis]')
 
+   def jump_c_f(aux):
+      jmp_c = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
+      srcc = [jmp_c[a] for a in aux if a in jmp_c]
+      if {'purple', 'green'} <= set(srcc):
+         return 'gold'
+      else:
+         return (srcc + ['black']) [0]
+
    for i in V:
       for dst, aux in E[i].items():
          suff = []
@@ -99,18 +107,9 @@ def main( color = False, fixed_pos = False ):
          elif 'fake' in aux:
             suff += ['weight=0']
 
-         jmp_c = {'hidden': 'purple', 'new': 'green', 'fake': 'red'}
-         srcc = [jmp_c[a] for a in aux if a in jmp_c]
-         if {'purple', 'green'} <= set(srcc):
-            srcc = 'gold'
-         else:
-            srcc = (srcc + ['black']) [0]
-
-         if (oneway := i not in E[dst]) or i<dst:
-            if oneway:
-               dstc = 'white'
-            else:
-               dstc = ([jmp_c[a] for a in E[dst][i] if a in jmp_c] + ['black'])[0]
+         srcc = jump_c_f(aux)
+         if (oneway := i not in E[dst]) or i < dst:
+            dstc = 'grey' if oneway else jump_c_f(E[dst][i])
 
             if srcc != dstc:
                suff += ['color="' + srcc + ';0.5:' + dstc + '"']
