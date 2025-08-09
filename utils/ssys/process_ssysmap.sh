@@ -11,6 +11,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
       "  Applies the whole remap process. See the script content."
       "  Unless -f is set, does not save anything."
       "  If -H is set, pov outputs are 1080p."
+      "  If -F is set, final pov output is 1080p and other outputs disabled."
       "  If -v is set, povray output is displayed."
       "  If -n is set, no povray preview."
       "  If -N is set, no picture generated."
@@ -29,6 +30,9 @@ S_FILTER="$DIR"/graph_unspoil.sh
 for i in "$@" ; do
    if [ "$i" = "-f" ] ; then
       FORCE=1
+   elif [ "$i" = "-F" ] ; then
+      POVF+=("-H")
+      NOPIC=2
    elif [ "$i" = "-H" ] ; then
       POVF+=("-H")
    elif [ "$i" = "-N" ] ; then
@@ -103,7 +107,7 @@ read -ra ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}")"
 read -ra TERM_SSYS <<< "$("$DIR"/terminal_ssys.py < "$TMP")"
 read -ra SMOOTH_SSYS <<< "$("$DIR"/graphmod_smooth.py -L < "$TMP")"
 read -ra ALMOST_ALMOST_ALL <<< "$("$DIR"/all_ssys_but.sh "${SPIR[@]}" "${ABH[@]}" "${TERM_SSYS[@]}" "${SMOOTH_SSYS[@]}" )"
-read -ra SWR <<< "$("$DIR"/graphmod_stellarwind_road.py -L < "$TMP")"
+#read -ra SWR <<< "$("$DIR"/graphmod_stellarwind_road.py -L < "$TMP")"
 
 msg ""
 # Ok, let's go!
@@ -181,7 +185,7 @@ pmsg "finally"                                                                 |
 if [ -n "$FORCE" ] ;                                                      then
    tee >("$DIR"/graph2ssysmap.py) >("$DIR"/decorators.py)
 else cat ;                                                                  fi |
-if [ -z "$NOPIC" ] ; then
+if [ ! "$NOPIC" = "1" ] ; then
    pmsg "" |
    $SPOIL_FILTER |
    tee >("$DIR"/graph2dot.py -c -k | neato -n2 -Tpng 2>/dev/null > after.png) |
