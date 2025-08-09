@@ -6,7 +6,9 @@
   <nebula volatility="4.500000" hue="305.000000">600.000000</nebula>
  </general>
  <pos x="765.894678" y="514.054520"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Alpha Centauri">
    <pos x="-10161.608843" y="5437.263149"/>

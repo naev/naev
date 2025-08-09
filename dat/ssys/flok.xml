@@ -17,9 +17,6 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
- <tags>
-  <tag>corridor</tag>
- </tags>
  <asteroids>
   <asteroid>
    <group>typeA-rich</group>
@@ -27,4 +24,7 @@
    <pos x="0.000000" y="0.000000"/>
   </asteroid>
  </asteroids>
+ <tags>
+  <tag>corridor</tag>
+ </tags>
 </ssys>
