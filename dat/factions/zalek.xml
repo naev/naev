@@ -11,8 +11,7 @@
  <description>House Za'lek is the scientific heart of the Empire. Until recently they were a secretive Great House, but they have recently become much more open.</description>
  <generator weight="0.55">Independent</generator>
  <generator weight="0.45">Trader</generator>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

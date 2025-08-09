@@ -3,17 +3,28 @@
 
 from sys import stderr
 from geometry import vec
-from math import pi
+from math import pi, sqrt
 import heapq
 
 # [0:2.PI] -> [0,2]
 # max(abs(slope)) = 1
 
 fact = 0.2
-def cost_func( sys_dirs, sm_dirs ):
+
+def cost_func_sum( sys_dirs, sm_dirs ):
    f = 1.0 / len(sys_dirs)
    L = [(x.normalize(f), y.normalize((f*(1.0+fact)))) for x, y in zip(sys_dirs, sm_dirs)]
    return lambda a: sum([(x.rotate_rad(a)-y).size() for x, y in L]) - fact
+
+def cost_func_max( sys_dirs, sm_dirs ):
+   L = [(x.normalize(), y.normalize(1.0+fact)) for x, y in zip(sys_dirs, sm_dirs)]
+   return lambda a: max([(x.rotate_rad(a)-y).size() for x, y in L]) - fact
+
+def cost_func_sq( sys_dirs, sm_dirs ):
+   f = 1.0 / sqrt(len(sys_dirs))
+   L = [(x.normalize(f), y.normalize((f*(1.0+fact)))) for x, y in zip(sys_dirs, sm_dirs)]
+   sq = lambda x: x*x
+   return lambda a: sqrt(sum([sq(x.rotate_rad(a)-y) for x, y in L])) - fact
 
 def best( cost, a, b ):
    if b[0] < a[0]:
@@ -21,7 +32,7 @@ def best( cost, a, b ):
    return a[1] - ((b[0]-a[0])-(b[1]-a[1])) / 2.0
 
 def _relax_dir( sys_dirs, sm_dirs, eps = 0.00001 ):
-   cost = cost_func(sys_dirs, sm_dirs)
+   cost = cost_func_sq(sys_dirs, sm_dirs)
    mi = (0, cost(0))
    points = [mi, (2*pi, mi[1])]
    inter = [tuple(points)]

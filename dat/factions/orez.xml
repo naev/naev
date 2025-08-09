@@ -8,8 +8,7 @@
  <equip>dvaered</equip>
  <local_th>5</local_th>
  <description>While still officially part of House Yetmer-O'rez, to all practical effects, House O'rez is an independent minor house, engaged in a long war with House Yetmer.</description>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

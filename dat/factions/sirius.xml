@@ -11,8 +11,7 @@
  <description>House Sirius is defined by its state religion more than anything else, with Sirichana as the focus of worship.</description>
  <generator weight="0.45">Independent</generator>
  <generator weight="0.5">Trader</generator>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Nasin</enemy>
   <enemy>Pirate</enemy>

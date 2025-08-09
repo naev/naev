@@ -8,8 +8,7 @@
  <spawn>trader</spawn>
  <standing>static</standing>
  <equip>trader</equip>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

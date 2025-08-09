@@ -8,7 +8,7 @@
   <price>145000</price>
   <description>This device hooks up to the ship's weapon systems and allows launching projectiles at higher velocities and further than usual. This indeed comes with a performance penalty, however.</description>
   <gfx_store>placeholder.webp</gfx_store>
-  </general>
+ </general>
  <specific type="modification">
   <weapon_damage>-10</weapon_damage>
   <weapon_range>15</weapon_range>

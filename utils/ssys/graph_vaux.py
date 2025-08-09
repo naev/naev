@@ -71,6 +71,9 @@ if __name__ != '__main__':
    def ssys_color( V, ssys ):
       return _ssys_color(V, ssys).split(':', 1)[0]
 
+   def ssys_nam( V, ssys ):
+      return ' '.join(V.aux[ssys][1:])
+
    def ssys_others( V, ssys ):
       return _ssys_color(V, ssys).split(':')[2:]
 

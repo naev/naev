@@ -890,6 +890,7 @@ int main(int argc, char **argv)
       }
 
    qsort(argv + fst_opt, fst_non_opt - fst_opt, sizeof(char *), cmpstringp);
+   qsort(argv + fst_non_opt, argc - fst_non_opt, sizeof(char *), cmpstringp);
    fst_opt = fst_non_opt;
    for (int i = fst_non_opt - 1; i > 0; i--)
       if (strcmp(argv[i], argv[i - 1]))

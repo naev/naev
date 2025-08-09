@@ -8,8 +8,7 @@
  <spawn>independent</spawn>
  <standing>static</standing>
  <generator weight="0.7">Trader</generator>
- <allies>
- </allies>
+ <allies/>
  <enemies>
   <enemy>Pirate</enemy>
   <enemy>Marauder</enemy>

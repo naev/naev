@@ -49,4 +49,4 @@ fi
 echo "Apply reposition $N time(s)." >&2
 
 ARGS="$*"
-"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/reposition -e -q "$ARGS"
+"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/det_reposition.sh -e -q "$ARGS"

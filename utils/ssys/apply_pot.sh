@@ -80,5 +80,5 @@ for j in "$@"; do
 done
 
 "$SCRIPT_DIR"/graph_scale.py "$RESCALE" |
-"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/potential -a "$OP" |
+"$SCRIPT_DIR"/repeat.sh "$N" "$SCRIPT_DIR"/det_potential.sh -a "$OP" |
 "$SCRIPT_DIR"/graph_scale.py "$POST_RESCALE"

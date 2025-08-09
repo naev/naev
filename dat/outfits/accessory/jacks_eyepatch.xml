@@ -12,7 +12,6 @@
   <gfx_store>placeholder.webp</gfx_store>
   <rarity>6</rarity>
  </general>
- <specific type="modification">
-  <!-- Implemented in dat/outfits/lib/blink.lua -->
- </specific>
+ <!-- Implemented in dat/outfits/lib/blink.lua -->
+ <specific type="modification"/>
 </outfit>

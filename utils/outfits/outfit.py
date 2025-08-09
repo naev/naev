@@ -104,11 +104,13 @@ def un_multicore( o ):
 
 class outfit(naev_xml):
    # None means auto
-   def __init__( self, filename, is_multi = None, read_only = False ):
+   def __init__( self, fnam= None, is_multi= None, read_only= False ):
       self.pri = None
-      naev_xml.__init__(self, filename, read_only = read_only)
-      if 'outfit' not in self:
-         raise Exception('Invalid outfit filename "' + repr(filename) + '"')
+      naev_xml.__init__(self, fnam= fnam, read_only= read_only)
+      if fnam is None:
+         self['outfit'] = {}
+      elif 'outfit' not in self:
+         raise Exception('Invalid outfit filename "' + repr(fnam) + '"')
       self.short = None
       self.is_multi = False
       if is_multi or is_multi is None:
@@ -218,12 +220,17 @@ class outfit(naev_xml):
       for d, k, v in list(self.equipped(sec)):
          d[k] = v
 
+   def copy( self ):
+      out = naev_xml()
+      out.save_as(self._filename)
+      out['outfit'] = self['outfit']
+      return out
+
    def save( self ):
+      prv_lua_inline = False
       if self.is_multi:
-         # make a deep copy
-         out = naev_xml()
-         out.save_as(self._filename)
-         oout = out['outfit'] = self['outfit']
+         out = self.copy()
+         oout = out['outfit']
 
          ind = 3*' '
          lua_inline_mcarg = '{\n'
@@ -246,15 +253,37 @@ class outfit(naev_xml):
          if 'lua_inline_post' in oout['specific']:
             oout['specific']['lua_inline'] += '\n' + oout['specific']['lua_inline_post'].strip()
             del oout['specific']['lua_inline_post']
-         oout['specific']['lua_inline'] = oout['specific']['lua_inline'].replace('\n','\n'+3*' ') + '\n  '
+         reindent = lambda s: s.replace('\n','\n'+3*' ') + '\n  '
+         oout['specific']['lua_inline'] = reindent(oout['specific']['lua_inline'])
       else:
          out = self
+         if (oout := out.get('outfit')) and 'specific' in oout and 'lua_inline' in oout['specific']:
+            prv_lua_inline = oout['specific']['lua_inline']
+            oout['specific']['lua_inline'] = '\n   ' + oout['specific']['lua_inline'] + '\n  '
+
       naev_xml.save(out)
+      if prv_lua_inline:
+         oout['specific']['lua_inline'] = prv_lua_inline
       self._uptodate = True
 
 if __name__ == '__main__':
-   import sys
-   for i in sys.argv[1:]:
+   from sys import argv
+
+   if inplace := '-i' in argv[1:]:
+      argv.remove('-i')
+
+   if '-h' in argv[1:]:
+      stderr.write(
+         'usage: ' + argv[0].split('/')[-1] + '  -i  [ file.xml.. ]\n'
+         '  Reads a outfit xml file, formats it and outputs the result.\n'
+         '  If -i is set, does it in place.\n'
+      )
+      exit(0)
+
+   for i in argv[1:]:
       o = outfit(i)
-      o.touch()
+      if inplace:
+         o.touch()
+      else:
+         o.save_as('-')
       o.save()

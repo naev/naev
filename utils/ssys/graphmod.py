@@ -96,5 +96,8 @@ except BrokenPipeError:
    exit(0)
 
 if len(ssys_pos) == 0 or len(ssys_jmp) == 0:
-   stderr.write('Empty input ! Bye !\n')
+   from traceback import extract_stack
+   from os import path
+   from_file = path.basename(extract_stack()[0].filename)
+   stderr.write('\033[31m' + from_file + '\033[0m: empty input, bye !\n')
    exit(-1)
