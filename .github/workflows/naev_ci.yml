@@ -54,6 +54,12 @@ jobs:
       release: false
 
   "Documentation":
+    needs:
+      [
+        Linux_Compile_Naev,
+        Windows_Compile_Naev,
+        Darwin_Compile_Naev,
+      ]
     permissions:
       contents: write
     uses: "naev/naev/.github/workflows/compile_naev.yml@main"
