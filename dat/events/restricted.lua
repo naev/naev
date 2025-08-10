@@ -35,6 +35,7 @@ function create ()
       local pos = careful.getSafePointL( L, nil, vec2.new(), rad, 2e3, 2e3, 2e3 )
       if pos then
          sm( pos, nil, sysfct, {
+            duration = math.huge,
             hostile = true,
             primed = 0, -- Already primed
          } )
