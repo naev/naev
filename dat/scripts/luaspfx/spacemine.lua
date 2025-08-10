@@ -34,7 +34,7 @@ local function update( s, dt )
    if d.triggered then
       -- Time to go boom
       if d.timer > d.triggered then
-         explosion( s:pos(), s:vel(), d.explosion, d.damage, {
+         explosion( sp, s:vel(), d.explosion, d.damage, {
             parent = d.pilot,
             penetration = d.penetration,
             dmgtype = "kinetic",
@@ -43,7 +43,7 @@ local function update( s, dt )
 
          -- Notify pilots in rangea
          -- TODO make detection affect this
-         pilot.msg( nil, pilot.getInrange(10e3), "explosion" )
+         pilot.msg( nil, pilot.getInrange( sp, 10e3 ), "explosion" )
       end
       return
    end
