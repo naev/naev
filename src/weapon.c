@@ -2194,7 +2194,7 @@ static double weapon_aimTurretAngle( const Outfit *outfit, const Pilot *parent,
       // Player interpolates from forward instead of static position, making it
       // easier to aim with fixed forward weapons
       if ( pilot_isPlayer( parent ) && outfit_isForward( outfit ) ) {
-         rdir = angle_clean( dir + angle_diff( dir, ANGLE( rx, ry ) ) * lead );
+         rdir = dir + angle_diff( dir, ANGLE( x, y ) ) * lead;
       } else {
          // For Turrets and NPCs we lead
          x    = lead * x + ( 1. - lead ) * rx;
