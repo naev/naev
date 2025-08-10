@@ -172,19 +172,18 @@ static int naevL_version( lua_State *L )
 }
 
 /**
- * @brief Tests two semver version strings.
+ * @brief Test a version string.
  *
- *    @luatparam string v1 Version 1 to test.
- *    @luatparam string v2 Version 2 to test.
- *    @luatreturn number Positive if v1 is newer or negative if v2 is newer.
+ *    @luatparam string ver Version to test.
+ *    @luatparam string req Requirement condition.
+ *    @luatreturn boolean Whether or not the version meets the requirements.
  * @luafunc versionTest
  */
 static int naevL_versionTest( lua_State *L )
 {
-   const char *s1, *s2;
-   s1 = luaL_checkstring( L, 1 );
-   s2 = luaL_checkstring( L, 2 );
-   lua_pushinteger( L, naev_versionCompareTarget( s1, s2 ) );
+   const char *s1 = luaL_checkstring( L, 1 );
+   const char *s2 = luaL_checkstring( L, 2 );
+   lua_pushboolean( L, naev_versionMatchReq( s1, s2 ) );
    return 1;
 }
 

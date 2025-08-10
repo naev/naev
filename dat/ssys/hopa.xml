@@ -1,19 +1,19 @@
 <ssys name="Hopa">
  <general>
-  <radius>12000.000000</radius>
+  <radius>13000.000000</radius>
   <spacedust>400</spacedust>
-  <interference>189.300000</interference>
+  <interference>159.300000</interference>
   <nebula volatility="8.300000" hue="310.000000">650.000000</nebula>
  </general>
  <pos x="965.097094" y="605.057751"/>
  <spobs/>
  <jumps>
   <jump target="Sagittarius">
-   <pos x="-637.542611" y="8502.854717"/>
+   <pos x="-690.671162" y="9211.425943"/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Urillian">
-   <pos x="2106.793041" y="-10422.837358"/>
+   <pos x="2282.359128" y="-11291.407138"/>
    <exitonly/>
    <hide>1.000000</hide>
   </jump>

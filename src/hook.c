@@ -343,7 +343,8 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
       hook_rmRaw( hook );
 
    /* Set up hook parameters. */
-   misn_runStart( misn, hook->u.misn.func );
+   if ( misn_runStart( misn, hook->u.misn.func ) )
+      return 0;
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
@@ -397,7 +398,9 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
       return -1;
    }
 
-   event_runStart( hook->u.event.parent, hook->u.event.func );
+   /* Make sure event is working. */
+   if ( event_runStart( hook->u.event.parent, hook->u.event.func ) )
+      return 0;
    n = hook_parseParam( param );
 
    /* Add hook parameters. */

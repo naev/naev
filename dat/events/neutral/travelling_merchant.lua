@@ -102,6 +102,8 @@ function create ()
 
    -- Create pilot
    p = pilot.add( "Mule", fctmisi, spawn_pos, trader_name )
+   p:outfitAdd( "Fuzzy Dice" )
+   p:outfitAddIntrinsic( "Machiavellian Fortune" )
    p:setFriendly()
    p:setInvincible()
    p:setVisplayer()

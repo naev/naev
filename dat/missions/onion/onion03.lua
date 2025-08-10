@@ -600,7 +600,7 @@ They seem much lower resolution than before.]]))
 
    vn.label("04_techo")
    l337er(_([["Technomancer, code wizards, sourcerers, hackzerkers, it's all the same. Terms for those who do the impossible with technology. You've got to get a knack for bending the code to your will and interfacing kernel functions here."]]))
-   l337er(_([["The Nexus and most systems are a horrible mess of barely working archaic systems that nabody understands. We exploit vulnerabilities to do as we please."]]))
+   l337er(_([["The Nexus and most systems are a horrible mess of barely working archaic systems that nobody understands. We exploit vulnerabilities to do as we please."]]))
    trixie(_([["It's not all fun and games, it has lots of implications everywhere. It is fun though. :)"]]))
    vn.jump("04_menu")
 

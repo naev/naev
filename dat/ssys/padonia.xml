@@ -1,15 +1,22 @@
 <ssys name="Padonia">
  <general>
-  <radius>15000.000000</radius>
+  <radius>13000.000000</radius>
   <spacedust>400</spacedust>
   <interference>103.100000</interference>
   <nebula volatility="4.500000" hue="305.000000">600.000000</nebula>
  </general>
- <pos x="766.280221" y="510.970174"/>
- <spobs/>
+ <pos x="765.894678" y="514.054520"/>
+ <spobs>
+  <spob_virtual>Pirate All Unpresence (Range 1)</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Alpha Centauri">
-   <pos x="-14393.703210" y="1261.062171"/>
+   <pos x="-10161.608843" y="5437.263149"/>
+   <exitonly/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Syndania">
+   <pos x="-10188.455526" y="-6789.530597"/>
    <hide>1.000000</hide>
   </jump>
  </jumps>

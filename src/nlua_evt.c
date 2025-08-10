@@ -60,12 +60,14 @@ int nlua_loadEvt( nlua_env *env )
 /**
  * @brief Starts running a function, allows programmer to set up arguments.
  */
-void event_runStart( unsigned int eventid, const char *func )
+int event_runStart( unsigned int eventid, const char *func )
 {
    uintptr_t     *evptr;
    const Event_t *ev = event_get( eventid );
    if ( ev == NULL )
-      return;
+      return -1;
+   if ( ev->delete )
+      return -1;
 
    /* Set up event pointer. */
    evptr  = lua_newuserdata( naevL, sizeof( Event_t * ) );
@@ -74,6 +76,7 @@ void event_runStart( unsigned int eventid, const char *func )
 
    /* Get function. */
    nlua_getenv( naevL, ev->env, func );
+   return 0;
 }
 
 /**
@@ -244,10 +247,11 @@ static int evtL_npcRm( lua_State *L )
  */
 static int evtL_finish( lua_State *L )
 {
-   const Event_t *cur_event = event_getFromLua( L );
-   int            b         = lua_toboolean( L, 1 );
+   Event_t *cur_event = event_getFromLua( L );
+   int      b         = lua_toboolean( L, 1 );
    lua_pushboolean( L, 1 );
    nlua_setenv( L, cur_event->env, "__evt_delete" );
+   cur_event->delete = 1;
 
    if ( b )
       player_eventFinished( cur_event->data );

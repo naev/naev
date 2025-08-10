@@ -9,18 +9,18 @@ local masslimit = limit^2 -- squared
 local jumpdist = 300
 local cooldown = 3
 local energy = 40
-local sigbonus = -10
+local ewbonus = -25
 
 local sfx = audio.newSource( 'snd/sounds/blink.ogg' )
 
 function descextra( _p, _o )
    return fmt.f(_([[Blinks you {jumpdist} {unit_dist} forward. Double-tapping left or right lets you blink to the sides. Can only be run once every {cooldown} seconds. Performance degrades over {masslimit} of mass. Blinking costs {energy} {unit_energy} energy.
-Gives a #g{sigbonus}% Signature Range#0 bonus when equipped.]]), {
+Gives a #g{ewbonus}% Ship Detectability#0 bonus during cooldown.]]), {
       jumpdist = jumpdist,
       cooldown = cooldown,
       masslimit = fmt.tonnes(limit),
       energy = tostring(energy),
-      sigbonus = sigbonus,
+      ewbonus = ewbonus,
       unit_dist = naev.unit("distance"),
       unit_energy = naev.unit("energy"),
    })
@@ -30,7 +30,6 @@ function init( p, po )
    po:state("off")
    mem.timer = 0
    mem.isp = (p == player.pilot())
-   po:set("ew_signature",sigbonus) -- Have to set here because the outfit is never "on"
 
    if mem.isp then
       for k,v in ipairs(p:outfits()) do
@@ -45,8 +44,13 @@ end
 function update( _p, po, dt )
    mem.timer = mem.timer - dt
    po:progress( mem.timer / cooldown )
-   if mem.timer < 0 then
+   if mem.timer <= 0 then
       po:state("off")
+      po:set( "ew_hide", 0 )
+      po:set( "ew_stealth_min", 0 )
+   else
+      po:set( "ew_hide", ewbonus )
+      po:set( "ew_stealth_min", ewbonus )
    end
 end
 

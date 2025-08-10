@@ -80,6 +80,7 @@ void                update_routine( double dt, int dohooks );
 const char         *naev_version( int long_version );
 int                 naev_versionCompare( const char *version );
 int    naev_versionCompareTarget( const char *version, const char *target );
+int    naev_versionMatchReq( const char *version, const char *req );
 void   naev_quit( void );
 int    naev_isQuit( void );
 double naev_getrealdt( void );

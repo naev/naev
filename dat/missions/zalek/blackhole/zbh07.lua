@@ -255,13 +255,13 @@ He skips towards the inside of the station, leaving you to recover yourself.]]))
    vn.label("toomanydrones")
    vn.na(_([[You see Icarus seems to get fed up with the drones chasing it around and flies away.
 
-#rMISSION FAILED"0]]))
+#rMISSION FAILED#0]]))
    vn.jump("done")
 
    vn.label("giveup")
    vn.na(_([[You lower your head in resignation and give up. This is worse than cat herding.
 
-#rMISSION FAILED"0]]))
+#rMISSION FAILED#0]]))
 
    vn.label("done")
    vn.done( zbh.zach.transition )
